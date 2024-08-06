@@ -1377,6 +1377,42 @@ public abstract class Base${schemaName}ResourceTestCase {
 				<#if freeMarkerTool.hasRequestBodyMediaType(javaMethodSignature, "multipart/form-data")>
 					assertValid(post${schemaName}, multipartFiles);
 				</#if>
+
+				<#if schema.discriminator?has_content>
+					<#assign discriminatorPropertyName = schema.discriminator.propertyName />
+
+					<#list schema.discriminator.mapping as mappingName, mappingSchema>
+						<#assign
+							childSchemaName = freeMarkerTool.getReferenceName(mappingSchema)
+							childSchema = allSchemas[childSchemaName]
+							childSchemaVarName = freeMarkerTool.getSchemaVarName(childSchemaName)
+							allChildProperties = properties + freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, childSchema, allSchemas)
+						/>
+
+						${childSchemaName} ${childSchemaVarName} = new ${childSchemaName}() {
+							{
+								<#list allChildProperties?keys as propertyName>
+									<#if stringUtil.equals(propertyName, "siteId")>
+										${propertyName} = testGroup.getGroupId();
+									<#elseif stringUtil.equals(allChildProperties[propertyName], "Integer")>
+										${propertyName} = RandomTestUtil.randomInt();
+									<#elseif propertyName?contains("email") && stringUtil.equals(allChildProperties[propertyName], "String")>
+										${propertyName} = StringUtil.toLowerCase(RandomTestUtil.randomString()) + "@liferay.com";
+									<#elseif stringUtil.equals(allChildProperties[propertyName], "String")>
+										${propertyName} = StringUtil.toLowerCase(RandomTestUtil.randomString());
+									<#elseif randomDataTypes?seq_contains(allChildProperties[propertyName])>
+										${propertyName} = RandomTestUtil.random${allChildProperties[propertyName]}();
+									<#elseif stringUtil.equals(allChildProperties[propertyName], "Date")>
+										${propertyName} = RandomTestUtil.nextDate();
+									</#if>
+								</#list>
+								${discriminatorPropertyName} = ${discriminatorPropertyName?cap_first}.create("${mappingName}");
+							}
+						};
+
+						assertEquals(${childSchemaVarName}, test${javaMethodSignature.methodName?cap_first}_add${schemaName}(${childSchemaVarName}));
+					</#list>
+				</#if>
 			}
 
 			protected ${schemaName} test${javaMethodSignature.methodName?cap_first}_add${schemaName}(${schemaName} ${schemaVarName}
@@ -2558,6 +2594,36 @@ public abstract class Base${schemaName}ResourceTestCase {
 				}
 			</#list>
 
+			<#if schema.discriminator?has_content>
+				<#list schema.discriminator.mapping as mappingName, mappingSchema>
+					<#assign
+						childSchema = allSchemas[freeMarkerTool.getReferenceName(mappingSchema)]
+						childSchemaProperties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, childSchema, allSchemas)
+					/>
+					<#if childSchemaProperties?has_content>
+						<#list childSchemaProperties?keys as propertyName>
+							if (Objects.equals("${propertyName}", additionalAssertFieldName)) {
+								if (!(${schemaVarName} instanceof ${mappingName})) {
+									continue;
+								}
+
+								<#assign capitalizedPropertyName = propertyName?cap_first />
+
+								<#if enumSchemas?keys?seq_contains(childSchemaProperties[propertyName])>
+									<#assign capitalizedPropertyName = childSchemaProperties[propertyName] />
+								</#if>
+
+								if (((${mappingName})${schemaVarName}).get${capitalizedPropertyName}() == null) {
+									valid = false;
+								}
+
+								continue;
+							}
+						</#list>
+					</#if>
+				</#list>
+			</#if>
+
 			throw new IllegalArgumentException("Invalid additional assert field name " + additionalAssertFieldName);
 		}
 
@@ -2761,6 +2827,36 @@ public abstract class Base${schemaName}ResourceTestCase {
 					continue;
 				}
 			</#list>
+
+			<#if schema.discriminator?has_content>
+				<#list schema.discriminator.mapping as mappingName, mappingSchema>
+					<#assign
+						childSchema = allSchemas[freeMarkerTool.getReferenceName(mappingSchema)]
+						childSchemaProperties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, childSchema, allSchemas)
+					/>
+					<#if childSchemaProperties?has_content>
+						<#list childSchemaProperties?keys as propertyName>
+							if (Objects.equals("${propertyName}", additionalAssertFieldName)) {
+								if (!(${schemaVarName}1 instanceof ${mappingName}) || !(${schemaVarName}2 instanceof ${mappingName})) {
+									continue;
+								}
+
+								<#assign capitalizedPropertyName = propertyName?cap_first />
+
+								<#if enumSchemas?keys?seq_contains(childSchemaProperties[propertyName])>
+									<#assign capitalizedPropertyName = childSchemaProperties[propertyName] />
+								</#if>
+
+								if (!Objects.deepEquals(((${mappingName})${schemaVarName}1).get${capitalizedPropertyName}(), ((${mappingName})${schemaVarName}2).get${capitalizedPropertyName}())) {
+									return false;
+								}
+
+								continue;
+							}
+						</#list>
+					</#if>
+				</#list>
+			</#if>
 
 			throw new IllegalArgumentException("Invalid additional assert field name " + additionalAssertFieldName);
 		}
@@ -3028,15 +3124,15 @@ public abstract class Base${schemaName}ResourceTestCase {
 									<#list allChildProperties?keys as propertyName>
 										<#if stringUtil.equals(propertyName, "siteId")>
 											${propertyName} = testGroup.getGroupId();
-										<#elseif stringUtil.equals(properties[propertyName], "Integer")>
+										<#elseif stringUtil.equals(allChildProperties[propertyName], "Integer")>
 											${propertyName} = RandomTestUtil.randomInt();
-										<#elseif propertyName?contains("email") && stringUtil.equals(properties[propertyName], "String")>
+										<#elseif propertyName?contains("email") && stringUtil.equals(allChildProperties[propertyName], "String")>
 											${propertyName} = StringUtil.toLowerCase(RandomTestUtil.randomString()) + "@liferay.com";
-										<#elseif stringUtil.equals(properties[propertyName], "String")>
+										<#elseif stringUtil.equals(allChildProperties[propertyName], "String")>
 											${propertyName} = StringUtil.toLowerCase(RandomTestUtil.randomString());
-										<#elseif randomDataTypes?seq_contains(properties[propertyName])>
-											${propertyName} = RandomTestUtil.random${properties[propertyName]}();
-										<#elseif stringUtil.equals(properties[propertyName], "Date")>
+										<#elseif randomDataTypes?seq_contains(allChildProperties[propertyName])>
+											${propertyName} = RandomTestUtil.random${allChildProperties[propertyName]}();
+										<#elseif stringUtil.equals(allChildProperties[propertyName], "Date")>
 											${propertyName} = RandomTestUtil.nextDate();
 										</#if>
 									</#list>

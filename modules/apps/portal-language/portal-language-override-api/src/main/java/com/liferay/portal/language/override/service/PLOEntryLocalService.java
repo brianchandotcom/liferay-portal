@@ -269,8 +269,8 @@ public interface PLOEntryLocalService
 	public PLOEntry getPLOEntry(long ploEntryId) throws PortalException;
 
 	public void importPLOEntries(
-			long companyId, long userId, String languageId,
-			Properties properties)
+			long companyId, String languageId, Properties properties,
+			long userId)
 		throws PortalException;
 
 	public void setPLOEntries(

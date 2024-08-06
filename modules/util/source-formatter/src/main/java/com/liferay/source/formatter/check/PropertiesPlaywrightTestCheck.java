@@ -144,6 +144,8 @@ public class PropertiesPlaywrightTestCheck extends BaseFileCheck {
 					fileName,
 					"Missing property '" + _RELEVANT_RULE_NAMES +
 						"' in test.properties for Playwright tests");
+
+				return content;
 			}
 
 			for (String relevantRuleName : relevantRuleNamesList) {

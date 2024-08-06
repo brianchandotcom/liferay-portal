@@ -62,10 +62,10 @@ type TOrderType = {
 };
 
 export class HeadlessCommerceAdminOrderApiHelper {
-	readonly apiHelpers: ApiHelpers;
+	readonly apiHelpers: ApiHelpers | DataApiHelpers;
 	readonly basePath: string;
 
-	constructor(apiHelpers: ApiHelpers) {
+	constructor(apiHelpers: ApiHelpers | DataApiHelpers) {
 		this.apiHelpers = apiHelpers;
 		this.basePath = 'headless-commerce-admin-order/v1.0/';
 	}
@@ -119,19 +119,29 @@ export class HeadlessCommerceAdminOrderApiHelper {
 	}
 
 	async patchOrder(id: number, order: TOrder) {
-		const postOrder = await this.apiHelpers.patch(
+		await this.apiHelpers.patch(
 			`${this.apiHelpers.baseUrl}${this.basePath}orders/${id}?nestedFields=orderItems`,
 			order
 		);
 
+		const patchOrder = await this.apiHelpers.get(
+			`${this.apiHelpers.baseUrl}${this.basePath}orders/${id}`
+		);
+
 		if (this.apiHelpers instanceof DataApiHelpers) {
-			this.apiHelpers.data.push({
-				id: postOrder.id,
-				type: 'order',
-			});
+			if (
+				!this.apiHelpers.data.find(
+					(element) => element.id === patchOrder.id
+				)
+			) {
+				this.apiHelpers.data.push({
+					id: patchOrder.id,
+					type: 'order',
+				});
+			}
 		}
 
-		return postOrder;
+		return patchOrder;
 	}
 
 	async postTerms(terms: TTerms) {

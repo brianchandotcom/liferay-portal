@@ -98,6 +98,16 @@ public class ExternalReferenceCodeModelDocumentContributorTest {
 			ExternalReferenceCodeModel externalReferenceCodeModel)
 		throws Exception {
 
+		CountSearchRequest countSearchRequest = new CountSearchRequest();
+
+		if (_isSearchEngineSolr()) {
+			countSearchRequest.setIndexNames("liferay");
+		}
+		else {
+			countSearchRequest.setIndexNames(
+				"liferay-" + TestPropsValues.getCompanyId());
+		}
+
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
 		booleanQuery.addMustQueryClauses(
@@ -109,16 +119,6 @@ public class ExternalReferenceCodeModelDocumentContributorTest {
 		if (externalReferenceCodeModel instanceof GroupedModel) {
 			booleanQuery.addMustQueryClauses(
 				_queries.term(Field.GROUP_ID, TestPropsValues.getGroupId()));
-		}
-
-		CountSearchRequest countSearchRequest = new CountSearchRequest();
-
-		if (_isSearchEngineSolr()) {
-			countSearchRequest.setIndexNames("liferay");
-		}
-		else {
-			countSearchRequest.setIndexNames(
-				"liferay-" + TestPropsValues.getCompanyId());
 		}
 
 		countSearchRequest.setQuery(booleanQuery);

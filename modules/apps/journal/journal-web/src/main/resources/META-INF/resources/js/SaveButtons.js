@@ -69,7 +69,7 @@ export default function SaveButtons({
 		);
 
 		if (titleInputComponent?.getValue(defaultLanguageId)) {
-			if (!showPublishModal) {
+			if (articleId && !showPublishModal) {
 				handleButtonClick(action);
 			}
 			else {

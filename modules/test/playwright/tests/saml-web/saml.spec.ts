@@ -51,13 +51,11 @@ test('Create two virtual instances, one IdP and one SP, connect them, perform SP
 		DEFAULT_SP_NAME
 	);
 
-	// Create new page on SP virtual instance
+	// Perform SP initiated SSO
 
 	const spInstancePage = await browser.newPage({
 		baseURL: DEFAULT_SP_URL,
 	});
-
-	// Login as the new user from SP
 
 	await spInstancePage.goto('/');
 
@@ -73,7 +71,7 @@ test('Create two virtual instances, one IdP and one SP, connect them, perform SP
 		.getByText('Redirecting to your identity provider...')
 		.waitFor({timeout: 30 * 1000});
 
-	// Wait a few seconds for redirection, otherwise the expect clause will fail
+	// Wait for redirection to complete, otherwise the expect clause will fail
 
 	await spInstancePage
 		.getByLabel('Email Address')
@@ -100,17 +98,19 @@ test('Create two virtual instances, one IdP and one SP, connect them, perform SP
 
 	expect(await spInstancePage.url()).toContain(DEFAULT_SP_URL);
 
-	// Verify user is logged in
+	// Verify user has been imported to SP and logged in
 
 	await expect(
 		await spInstancePage.getByTitle('User Profile Menu')
 	).toBeVisible();
 
-	// Logout, verify user is also logged out of IdP
+	// Perform SP initiated SLO
 
 	await performLogout(spInstancePage);
 
 	await spInstancePage.waitForTimeout(8000);
+
+	// Verify user has been logged out of SP and IdP
 
 	await expect(
 		await spInstancePage.getByRole('button', {name: 'Sign In'})

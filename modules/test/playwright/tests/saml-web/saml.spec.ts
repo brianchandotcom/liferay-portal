@@ -15,7 +15,7 @@ import {
 	DEFAULT_IDP_URL,
 	DEFAULT_SP_NAME,
 	DEFAULT_SP_URL,
-	createSpAndIdpUser,
+	createIdpUser,
 	deleteVirtualInstance,
 	resetSamlKeystoreManagerTarget,
 	setupSamlInstances,
@@ -45,11 +45,7 @@ test('Create two virtual instances, one IdP and one SP, connect them, perform SP
 
 	// Create a user with identical credentials on each instance
 
-	const userAccount = await createSpAndIdpUser(
-		browser,
-		DEFAULT_IDP_NAME,
-		DEFAULT_SP_NAME
-	);
+	const userAccount = await createIdpUser(browser, DEFAULT_IDP_NAME);
 
 	// Perform SP initiated SSO
 

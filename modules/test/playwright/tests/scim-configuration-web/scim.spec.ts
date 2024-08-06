@@ -60,3 +60,33 @@ test('LPD-23255 AC2 TC2: Reset SCIM Client provisioning data button description 
 
 	await scimConfigurationPage.resetClientData();
 });
+
+test('LPD-23255 AC3 TC3: Verify that clicking the “Reset SCIM Client provisioning data“ button clears the information in the SCIM page', async ({
+	page,
+}) => {
+	const scimConfigurationPage = new SCIMConfigurationPage(page);
+
+	await scimConfigurationPage.goTo();
+
+	await page.waitForTimeout(1000);
+
+	await scimConfigurationPage.configureSCIM('Test SCIM Client', 'email');
+
+	await scimConfigurationPage.resetClientData();
+
+	const oAuth2ApplicationNameField = page.getByLabel(
+		'OAuth 2 Application Name'
+	);
+
+	const matcherField = page.getByLabel('Matcher Field');
+
+	const accessTokenField = page.getByLabel('Access Token', {exact: true});
+
+	await page.waitForTimeout(1000);
+
+	await expect(oAuth2ApplicationNameField).toBeEmpty();
+
+	await expect(matcherField).toHaveValue('');
+
+	await expect(accessTokenField).toBeEmpty();
+});

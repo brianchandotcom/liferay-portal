@@ -106,9 +106,6 @@
 ##
 
 build.profile=dxp
-build.repository.private.password=${working.dir.build.repository.private.password}
-build.repository.private.url=${working.dir.build.repository.private.url}
-build.repository.private.username=${working.dir.build.repository.private.username}
 
 snapshot.bundle.base.url=${working.dir.snapshot.bundle.base.url}
 snapshot.bundle.url=${working.dir.snapshot.bundle.base.url}snapshot-${git.working.branch.name}-private/latest/liferay-portal-tomcat-${git.working.branch.name}-private.${snapshot.bundle.file.extension}</echo>

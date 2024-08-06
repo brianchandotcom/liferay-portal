@@ -29,7 +29,6 @@ import com.liferay.portlet.SecurityPortletContainerWrapper;
 import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -213,35 +212,15 @@ public class SessionAuthToken implements AuthToken {
 		HttpServletRequest httpServletRequest, String key,
 		boolean createToken) {
 
-		String sessionAuthenticationToken = null;
+		HttpServletRequest originalHttpServletRequest =
+			PortalUtil.getOriginalServletRequest(httpServletRequest);
 
-		HttpServletRequest currentHttpServletRequest = httpServletRequest;
-		HttpSession httpSession = null;
+		HttpSession httpSession = originalHttpServletRequest.getSession();
+
 		String tokenKey = WebKeys.AUTHENTICATION_TOKEN.concat(key);
 
-		while (currentHttpServletRequest instanceof HttpServletRequestWrapper) {
-			httpSession = currentHttpServletRequest.getSession();
-
-			sessionAuthenticationToken = (String)httpSession.getAttribute(
-				tokenKey);
-
-			if (Validator.isNotNull(sessionAuthenticationToken)) {
-				break;
-			}
-
-			HttpServletRequestWrapper httpServletRequestWrapper =
-				(HttpServletRequestWrapper)currentHttpServletRequest;
-
-			currentHttpServletRequest =
-				(HttpServletRequest)httpServletRequestWrapper.getRequest();
-		}
-
-		if (Validator.isNull(sessionAuthenticationToken)) {
-			httpSession = currentHttpServletRequest.getSession();
-
-			sessionAuthenticationToken = (String)httpSession.getAttribute(
-				tokenKey);
-		}
+		String sessionAuthenticationToken = (String)httpSession.getAttribute(
+			tokenKey);
 
 		if (createToken && Validator.isNull(sessionAuthenticationToken)) {
 			sessionAuthenticationToken = PwdGenerator.getPassword(

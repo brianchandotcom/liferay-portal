@@ -6,14 +6,14 @@
 import deleteItem from '../../thunks/deleteItem';
 
 function undoAction({action}) {
-	const {itemId} = action;
+	const {itemIds} = action;
 
-	return deleteItem({itemId});
+	return deleteItem({itemIds});
 }
 
 function getDerivedStateForUndo({action}) {
 	return {
-		itemId: action.itemId,
+		itemIds: action.itemIds,
 	};
 }
 

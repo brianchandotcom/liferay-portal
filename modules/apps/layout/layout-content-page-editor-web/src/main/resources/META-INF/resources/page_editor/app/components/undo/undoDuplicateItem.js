@@ -10,7 +10,7 @@ function undoAction({action, store}) {
 }
 
 function getDerivedStateForUndo({action}) {
-	return {itemId: action.itemId};
+	return {itemIds: action.itemIds};
 }
 
 export {undoAction, getDerivedStateForUndo};

@@ -9,18 +9,18 @@ import type {LayoutData} from '../../types/layout_data/LayoutData';
 
 export default function deleteItem({
 	fragmentEntryLinkIds,
-	itemId,
+	itemIds,
 	layoutData,
 	portletIds = [],
 }: {
 	fragmentEntryLinkIds: string[];
-	itemId: string;
+	itemIds: string[];
 	layoutData: LayoutData;
 	portletIds?: string[];
 }) {
 	return {
 		fragmentEntryLinkIds,
-		itemId,
+		itemIds,
 		layoutData,
 		portletIds,
 		type: DELETE_ITEM,

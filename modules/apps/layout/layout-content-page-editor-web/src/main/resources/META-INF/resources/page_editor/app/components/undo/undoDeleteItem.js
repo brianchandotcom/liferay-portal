@@ -8,23 +8,25 @@ import LayoutService from '../../services/LayoutService';
 import getFragmentEntryLinkIdsFromItemId from '../../utils/getFragmentEntryLinkIdsFromItemId';
 
 function undoAction({action, store}) {
-	const {itemId, portletIds} = action;
+	const {itemIds, portletIds} = action;
 
 	return (dispatch) => {
 		return LayoutService.unmarkItemsForDeletion({
-			itemIds: [itemId],
+			itemIds,
 			onNetworkStatus: dispatch,
 			segmentsExperienceId: store.segmentsExperienceId,
 		}).then(({layoutData}) => {
-			const fragmentEntryLinkIds = getFragmentEntryLinkIdsFromItemId({
-				itemId,
-				layoutData,
-			});
+			const fragmentEntryLinkIds = itemIds.flatMap((itemId) =>
+				getFragmentEntryLinkIdsFromItemId({
+					itemId,
+					layoutData,
+				})
+			);
 
 			dispatch(
 				addItem({
 					fragmentEntryLinkIds,
-					itemId,
+					itemIds,
 					layoutData,
 					portletIds,
 				})
@@ -35,7 +37,7 @@ function undoAction({action, store}) {
 
 function getDerivedStateForUndo({action}) {
 	return {
-		itemId: action.itemId,
+		itemIds: action.itemIds,
 		portletIds: action.portletIds,
 	};
 }

@@ -30,7 +30,7 @@ function undoAction({action}) {
 					'numberOfColumns',
 					previousNumberOfColumns
 				),
-				itemId: layoutDataItem.itemId,
+				itemIds: [layoutDataItem.itemId],
 				onNetworkStatus: dispatch,
 				segmentsExperienceId,
 			});

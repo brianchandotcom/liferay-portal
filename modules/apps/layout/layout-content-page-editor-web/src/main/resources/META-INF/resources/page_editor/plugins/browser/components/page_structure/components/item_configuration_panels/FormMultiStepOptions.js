@@ -4,6 +4,7 @@
  */
 
 import {useControlledState} from '@liferay/layout-js-components-web';
+import {openModal} from 'frontend-js-web';
 import React from 'react';
 
 import {SelectField} from '../../../../../../app/components/fragment_configuration_fields/SelectField';
@@ -35,11 +36,29 @@ export default function FormMultiStepOptions({item, onValueSelect}) {
 					},
 				}}
 				onValueSelect={(_name, formType) => {
-					setIsMultiStep(formType === 'multi-step');
-					onValueSelect({
-						isMultiStep: formType === 'multi-step',
-						numberOfSteps: formType === 'multi-step' ? 2 : 1,
-					});
+					const multiStep = formType === 'multi-step';
+
+					setIsMultiStep(multiStep);
+
+					if (multiStep) {
+						onValueSelect({
+							isMultiStep: true,
+							numberOfSteps: 2,
+						});
+					}
+					else {
+						openWarningModal({
+							onCancel: () => {
+								setIsMultiStep(true);
+							},
+							onContinue: () => {
+								onValueSelect({
+									isMultiStep: false,
+									numberOfSteps: 1,
+								});
+							},
+						});
+					}
 				}}
 				value={isMultiStep ? 'multi-step' : 'simple'}
 			/>
@@ -64,4 +83,35 @@ export default function FormMultiStepOptions({item, onValueSelect}) {
 			) : null}
 		</>
 	);
+}
+
+function openWarningModal({onCancel, onContinue}) {
+	openModal({
+		bodyHTML: Liferay.Language.get(
+			'this-action-will-delete-the-stepper-fragment-of-the-form-container.-are-you-sure-you-want-to-continue'
+		),
+
+		buttons: [
+			{
+				autoFocus: true,
+				displayType: 'secondary',
+				label: Liferay.Language.get('cancel'),
+				onClick: ({processClose}) => {
+					processClose();
+					onCancel();
+				},
+				type: 'cancel',
+			},
+			{
+				displayType: 'info',
+				label: Liferay.Language.get('continue'),
+				onClick: ({processClose}) => {
+					processClose();
+					onContinue();
+				},
+			},
+		],
+		status: 'info',
+		title: Liferay.Language.get('convert-to-simple-form'),
+	});
 }

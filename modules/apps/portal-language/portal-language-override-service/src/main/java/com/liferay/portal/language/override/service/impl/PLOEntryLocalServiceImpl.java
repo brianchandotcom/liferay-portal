@@ -100,8 +100,8 @@ public class PLOEntryLocalServiceImpl extends PLOEntryLocalServiceBaseImpl {
 
 	@Override
 	public void importPLOEntries(
-			long companyId, long userId, String languageId,
-			Properties properties)
+			long companyId, String languageId, Properties properties,
+			long userId)
 		throws PortalException {
 
 		languageId = _normalizeLanguageId(languageId);

@@ -48,6 +48,11 @@ public class TestEntityResourceTest extends BaseTestEntityResourceTestCase {
 	}
 
 	@Override
+	protected String[] getAdditionalAssertFieldNames() {
+		return new String[] {"property1", "property2"};
+	}
+
+	@Override
 	protected TestEntity testGetTestEntitiesPage_addTestEntity(
 			TestEntity testEntity)
 		throws Exception {

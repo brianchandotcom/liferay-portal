@@ -12,6 +12,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
+import com.liferay.portal.kernel.servlet.LiferayFilter;
 import com.liferay.portal.kernel.servlet.PluginContextListener;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.AggregateClassLoader;
@@ -57,6 +58,12 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  * @author Brian Wing Shun Chan
  */
 public class InvokerFilterHelper {
+
+	public void clearFilterChainsCache() {
+		for (InvokerFilter invokerFilter : _invokerFilters) {
+			invokerFilter.clearFilterChainsCache();
+		}
+	}
 
 	public void destroy() {
 		_serviceTracker.close();
@@ -245,12 +252,6 @@ public class InvokerFilterHelper {
 		_invokerFilters.add(invokerFilter);
 	}
 
-	protected void clearFilterChainsCache() {
-		for (InvokerFilter invokerFilter : _invokerFilters) {
-			invokerFilter.clearFilterChainsCache();
-		}
-	}
-
 	protected InvokerFilterChain createInvokerFilterChain(
 		HttpServletRequest httpServletRequest, Dispatcher dispatcher,
 		String uri, FilterChain filterChain) {
@@ -269,7 +270,17 @@ public class InvokerFilterHelper {
 				if (filterMapping.isMatch(
 						httpServletRequest, dispatcher, uri)) {
 
-					invokerFilterChain.addFilter(filterMapping.getFilter());
+					Filter filter = filterMapping.getFilter();
+
+					if (filter instanceof LiferayFilter) {
+						LiferayFilter liferayFilter = (LiferayFilter)filter;
+
+						if (!liferayFilter.isFilterEnabled()) {
+							continue;
+						}
+					}
+
+					invokerFilterChain.addFilter(filter);
 				}
 			}
 		}

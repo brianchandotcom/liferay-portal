@@ -8,11 +8,13 @@ package com.liferay.portal.kernel.servlet;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.servlet.filters.invoker.InvokerFilterHelper;
 
 import java.io.IOException;
 
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -80,6 +82,18 @@ public abstract class BaseFilter implements LiferayFilter {
 
 	@Override
 	public void setFilterEnabled(boolean filterEnabled) {
+		if (filterEnabled != _filterEnabled) {
+			ServletContext servletContext = _filterConfig.getServletContext();
+
+			InvokerFilterHelper invokerFilterHelper =
+				(InvokerFilterHelper)servletContext.getAttribute(
+					InvokerFilterHelper.class.getName());
+
+			if (invokerFilterHelper != null) {
+				invokerFilterHelper.clearFilterChainsCache();
+			}
+		}
+
 		_filterEnabled = filterEnabled;
 	}
 

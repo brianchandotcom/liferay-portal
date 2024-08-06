@@ -25,6 +25,7 @@ export class CommerceMiniCartPage {
 	) => Promise<Locator>;
 	readonly quickAddToCartButton: Locator;
 	readonly quickAddToCartSku: (sku: string) => Locator;
+	readonly reviewOrderButton: Locator;
 	readonly searchProductsInput: Locator;
 	readonly selectOption: (
 		optionLabel: string,
@@ -64,6 +65,10 @@ export class CommerceMiniCartPage {
 		this.priceField = async (price: string, container = this.page) => {
 			return container.getByText(price);
 		};
+		this.reviewOrderButton = page.getByRole('button', {
+			exact: true,
+			name: 'Review Order',
+		});
 		this.quickAddToCartButton = page.getByTestId('quickAddToCartButton');
 		this.quickAddToCartSku = (sku) =>
 			page.getByRole('menuitem', {name: sku});

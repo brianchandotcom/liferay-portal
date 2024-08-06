@@ -108,6 +108,9 @@ public class ReturnVariableDeclarationCheck extends BaseCheck {
 		if (_containsMethodCalls(
 				exprDetailASTList,
 				returnVariableDefinitionDetailAST.getLineNo()) ||
+			_containsSynchronizedBlocks(
+				slistDetailAST,
+				returnVariableDefinitionDetailAST.getLineNo()) ||
 			_containsUnusedVariableNames(
 				exprDetailASTList, slistDetailAST,
 				returnVariableDefinitionDetailAST.getLineNo())) {
@@ -245,6 +248,26 @@ public class ReturnVariableDeclarationCheck extends BaseCheck {
 			});
 
 		return !methodCallDetailASTList.isEmpty();
+	}
+
+	private boolean _containsSynchronizedBlocks(
+		DetailAST slistDetailAST, int lineNumber) {
+
+		List<DetailAST> literalSynchronizedDetailASTList = getAllChildTokens(
+			slistDetailAST, false, TokenTypes.LITERAL_SYNCHRONIZED);
+
+		if (literalSynchronizedDetailASTList.isEmpty()) {
+			return false;
+		}
+
+		DetailAST literalSynchronizedDetailAST =
+			literalSynchronizedDetailASTList.get(0);
+
+		if (literalSynchronizedDetailAST.getLineNo() < lineNumber) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private boolean _containsUnusedVariableNames(

@@ -112,7 +112,7 @@ public interface DLFileEntryTypeLocalService
 
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #addFileEntryType(long, long, long, String, Map, Map, long,
+	 #addFileEntryType(String, long, long, long, String, Map, Map, int,
 	 ServiceContext)}
 	 */
 	@Deprecated
@@ -172,6 +172,10 @@ public interface DLFileEntryTypeLocalService
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	public DLFileEntryType deleteDLFileEntryType(long fileEntryTypeId)
+		throws PortalException;
+
+	public void deleteDLFileEntryType(
+			String externalReferenceCode, long groupId)
 		throws PortalException;
 
 	public void deleteDLFolderDLFileEntryType(

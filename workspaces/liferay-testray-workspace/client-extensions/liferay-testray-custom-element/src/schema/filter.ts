@@ -415,10 +415,13 @@ const filterSchema = {
 				isCustomFilter: true,
 				name: 'issues',
 			}),
-			overrides(baseFilters.erros, {
+			{
 				isCustomFilter: true,
+				label: i18n.translate('errors'),
 				name: 'error',
-			}),
+				optionalOperator: 'ne',
+				type: 'textarea',
+			},
 			{
 				isCustomFilter: true,
 				label: i18n.translate('comments'),
@@ -486,11 +489,17 @@ const filterSchema = {
 					},
 				],
 			}),
-			baseFilters.issues,
-			overrides(baseFilters.erros, {
+			overrides(baseFilters.issues, {
 				isCustomFilter: true,
-				name: 'error',
+				name: 'issues',
 			}),
+			{
+				isCustomFilter: true,
+				label: i18n.translate('errors'),
+				name: 'error',
+				optionalOperator: 'ne',
+				type: 'textarea',
+			},
 			{
 				isCustomFilter: true,
 				label: i18n.translate('case-result-warning'),

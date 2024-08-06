@@ -169,7 +169,7 @@ const Runs = () => {
 					navigateTo: ({testrayRunId}) =>
 						`..?${new URLSearchParams({
 							filter: JSON.stringify({
-								'runToCaseResult/id': [testrayRunId],
+								testrayRunId: [testrayRunId],
 							}),
 							filterSchema: 'buildResults',
 						})}`,

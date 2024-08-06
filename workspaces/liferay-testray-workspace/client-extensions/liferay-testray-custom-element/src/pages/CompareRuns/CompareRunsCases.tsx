@@ -6,6 +6,7 @@
 import {memo} from 'react';
 import {Link, useOutletContext, useParams} from 'react-router-dom';
 import Code from '~/components/Code';
+import JiraLink from '~/components/JiraLink';
 import Container from '~/components/Layout/Container';
 import ListView from '~/components/ListView';
 import StatusBadge from '~/components/StatusBadge';
@@ -132,11 +133,23 @@ const CompareRunsCases = () => {
 						},
 						{
 							key: 'issue1',
+							render: (issues: string) => (
+								<JiraLink
+									displayViewInJira={false}
+									issue={issues}
+								/>
+							),
 							size: 'md',
 							value: i18n.sub('issues-in-x', 'run-a'),
 						},
 						{
 							key: 'issue2',
+							render: (issues: string) => (
+								<JiraLink
+									displayViewInJira={false}
+									issue={issues}
+								/>
+							),
 							size: 'md',
 							value: i18n.sub('issues-in-x', 'run-b'),
 						},

@@ -483,10 +483,8 @@ public <#if schema.discriminator?has_content>abstract</#if> class ${schemaName} 
 				propertySchema = freeMarkerTool.getDTOPropertySchema(configYAML, propertyName, schema, allSchemas)!
 			/>
 
-			<#if dtoParentClassName?has_content>
-				<#if !propertySchema?has_content>
-					<#assign propertySchema = freeMarkerTool.getDTOPropertySchema(configYAML, propertyName, dtoParentSchema, allSchemas) />
-				</#if>
+			<#if dtoParentClassName?has_content && !propertySchema?has_content>
+				<#assign propertySchema = freeMarkerTool.getDTOPropertySchema(configYAML, propertyName, dtoParentSchema, allSchemas) />
 			</#if>
 
 			<#if toStringEnumSchemas?keys?seq_contains(propertyType)>

@@ -6,7 +6,7 @@
 package com.liferay.object.web.internal.object.entries.portlet.action;
 
 import com.liferay.object.constants.ObjectWebKeys;
-import com.liferay.object.web.internal.object.entries.display.context.ObjectEntryDisplayContextFactory;
+import com.liferay.object.display.context.ObjectEntryDisplayContextFactory;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;

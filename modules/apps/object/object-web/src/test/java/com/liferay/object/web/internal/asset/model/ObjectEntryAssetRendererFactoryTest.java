@@ -10,7 +10,7 @@ import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectEntryService;
-import com.liferay.object.web.internal.object.entries.display.context.ObjectEntryDisplayContextFactory;
+import com.liferay.object.web.internal.object.entries.display.context.ObjectEntryDisplayContextFactoryImpl;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -36,7 +36,7 @@ public class ObjectEntryAssetRendererFactoryTest {
 	public void setUp() throws Exception {
 		_objectEntryAssetRendererFactory = new ObjectEntryAssetRendererFactory(
 			_assetDisplayPageFriendlyURLProvider, _objectDefinition,
-			_objectEntryDisplayContextFactory, _objectEntryLocalService,
+			_objectEntryDisplayContextFactoryImpl, _objectEntryLocalService,
 			_objectEntryService, _servletContext);
 	}
 
@@ -88,9 +88,9 @@ public class ObjectEntryAssetRendererFactoryTest {
 	private final ObjectDefinition _objectDefinition = Mockito.mock(
 		ObjectDefinition.class);
 	private ObjectEntryAssetRendererFactory _objectEntryAssetRendererFactory;
-	private final ObjectEntryDisplayContextFactory
-		_objectEntryDisplayContextFactory = Mockito.mock(
-			ObjectEntryDisplayContextFactory.class);
+	private final ObjectEntryDisplayContextFactoryImpl
+		_objectEntryDisplayContextFactoryImpl = Mockito.mock(
+			ObjectEntryDisplayContextFactoryImpl.class);
 	private final ObjectEntryLocalService _objectEntryLocalService =
 		Mockito.mock(ObjectEntryLocalService.class);
 	private final ObjectEntryService _objectEntryService = Mockito.mock(

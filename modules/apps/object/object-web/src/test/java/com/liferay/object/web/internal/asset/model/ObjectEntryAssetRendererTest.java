@@ -12,7 +12,7 @@ import com.liferay.info.item.InfoItemReference;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectEntryService;
-import com.liferay.object.web.internal.object.entries.display.context.ObjectEntryDisplayContextFactory;
+import com.liferay.object.web.internal.object.entries.display.context.ObjectEntryDisplayContextFactoryImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -145,7 +145,7 @@ public class ObjectEntryAssetRendererTest {
 
 		return new ObjectEntryAssetRenderer(
 			_assetDisplayPageFriendlyURLProvider, _objectDefinition,
-			_objectEntry, _objectEntryDisplayContextFactory,
+			_objectEntry, _objectEntryDisplayContextFactoryImpl,
 			_objectEntryService);
 	}
 
@@ -155,9 +155,9 @@ public class ObjectEntryAssetRendererTest {
 	private final ObjectDefinition _objectDefinition = Mockito.mock(
 		ObjectDefinition.class);
 	private final ObjectEntry _objectEntry = Mockito.mock(ObjectEntry.class);
-	private final ObjectEntryDisplayContextFactory
-		_objectEntryDisplayContextFactory = Mockito.mock(
-			ObjectEntryDisplayContextFactory.class);
+	private final ObjectEntryDisplayContextFactoryImpl
+		_objectEntryDisplayContextFactoryImpl = Mockito.mock(
+			ObjectEntryDisplayContextFactoryImpl.class);
 	private final ObjectEntryService _objectEntryService = Mockito.mock(
 		ObjectEntryService.class);
 	private final PermissionChecker _permissionChecker = Mockito.mock(

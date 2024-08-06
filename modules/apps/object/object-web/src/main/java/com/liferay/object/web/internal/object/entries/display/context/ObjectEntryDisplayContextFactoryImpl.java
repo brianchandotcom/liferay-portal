@@ -9,6 +9,7 @@ import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.object.display.context.ObjectEntryDisplayContext;
+import com.liferay.object.display.context.ObjectEntryDisplayContextFactory;
 import com.liferay.object.field.business.type.ObjectFieldBusinessTypeRegistry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
@@ -29,8 +30,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Feliphe Marinho
  */
 @Component(service = ObjectEntryDisplayContextFactory.class)
-public class ObjectEntryDisplayContextFactory {
+public class ObjectEntryDisplayContextFactoryImpl
+	implements ObjectEntryDisplayContextFactory {
 
+	@Override
 	public ObjectEntryDisplayContext create(
 		HttpServletRequest httpServletRequest) {
 

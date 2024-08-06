@@ -101,7 +101,7 @@ public class ImportTranslationsMVCActionCommandTest {
 
 		Assert.assertTrue(
 			SessionErrors.contains(
-				mockLiferayPortletActionRequest, "fileInvalid"));
+				mockLiferayPortletActionRequest, "fileEmpty"));
 	}
 
 	@Test

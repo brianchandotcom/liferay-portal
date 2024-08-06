@@ -1681,6 +1681,13 @@
 			<property name="allowTrailingEmptyLines" value="true" />
 			<property name="enabled" value="false" />
 		</check>
+
+		<!-- Liferay Source Checks -->
+
+		<check name="TSConfigFileCheck">
+			<category name="Bug Prevention" />
+			<description name="Finds missing `test.properties` files." />
+		</check>
 	</source-processor>
 	<source-processor name="TXTSourceProcessor">
 		<check name="TXTEmptyLinesCheck">

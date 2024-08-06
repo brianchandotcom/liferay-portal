@@ -74,7 +74,7 @@ public class RelevantRule implements Comparable<RelevantRule> {
 		if (modifiedFilesGlobalExcludes != null) {
 			modifiedFilesExcludesPathMatchers.addAll(
 				JenkinsResultsParserUtil.toPathMatchers(
-					_getParentFilePath() + "/",
+					_getBaseDirPath() + "/",
 					modifiedFilesGlobalExcludes.split(",")));
 		}
 
@@ -113,7 +113,7 @@ public class RelevantRule implements Comparable<RelevantRule> {
 		if (modifiedFilesGlobalIncludes != null) {
 			_modifiedFilesIncludesPathMatchers.addAll(
 				JenkinsResultsParserUtil.toPathMatchers(
-					_getParentFilePath() + "/",
+					_getBaseDirPath() + "/",
 					modifiedFilesGlobalIncludes.split(",")));
 		}
 
@@ -209,6 +209,14 @@ public class RelevantRule implements Comparable<RelevantRule> {
 					"Unable to find modified.files.includes for relevant ",
 					"rule \"", getName(), "\" in ", _filePath));
 		}
+	}
+
+	private String _getBaseDirPath() {
+		RelevantRuleEngine relevantRuleEngine =
+			RelevantRuleEngine.getInstance();
+
+		return JenkinsResultsParserUtil.getCanonicalPath(
+			relevantRuleEngine.getBaseDir());
 	}
 
 	private String _getBaseDirTestProperty(String propertyName) {

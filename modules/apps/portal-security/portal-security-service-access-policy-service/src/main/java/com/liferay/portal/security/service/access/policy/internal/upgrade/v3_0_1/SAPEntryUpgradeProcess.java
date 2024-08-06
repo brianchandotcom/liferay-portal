@@ -9,6 +9,7 @@ import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.kernel.service.ResourceLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
@@ -16,6 +17,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.security.service.access.policy.model.SAPEntry;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -59,11 +61,17 @@ public class SAPEntryUpgradeProcess extends UpgradeProcess {
 						connection.prepareStatement(sb.toString());
 
 					preparedStatement2.setString(1, PortalUUIDUtil.generate());
-					preparedStatement2.setLong(
-						2, CounterLocalServiceUtil.increment());
+
+					long sapEntryId = CounterLocalServiceUtil.increment();
+
+					preparedStatement2.setLong(2, sapEntryId);
+
 					preparedStatement2.setLong(3, companyId);
-					preparedStatement2.setLong(
-						4, UserLocalServiceUtil.getGuestUserId(companyId));
+
+					long guestUserId = UserLocalServiceUtil.getGuestUserId(
+						companyId);
+
+					preparedStatement2.setLong(4, guestUserId);
 
 					Timestamp timestamp = new Timestamp(
 						System.currentTimeMillis());
@@ -95,6 +103,10 @@ public class SAPEntryUpgradeProcess extends UpgradeProcess {
 								companyId)));
 
 					preparedStatement2.execute();
+
+					ResourceLocalServiceUtil.addResources(
+						companyId, 0, guestUserId, SAPEntry.class.getName(),
+						sapEntryId, false, false, false);
 				}
 			});
 	}

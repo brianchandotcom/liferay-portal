@@ -29,7 +29,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.StreamingOutput;
 
@@ -428,7 +427,7 @@ public class TestrayCaseResultResourceImpl
 
 				@Override
 				public void write(OutputStream outputStream)
-					throws IOException, WebApplicationException {
+					throws IOException {
 
 					_write(outputStream, testrayBuildId);
 				}

@@ -7,12 +7,24 @@ import {FrameLocator, Locator, Page} from '@playwright/test';
 
 import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
 import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
+import {searchTableRowByValue} from './commerceDNDTablePage';
+
 export class CommerceAdminChannelDetailsPage {
 	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly channelNameLink: (channelName: string) => Locator;
 	readonly closeSidePanelFrame: (
 		isNestedFrame: boolean,
 		tableName: string
+	) => Promise<Locator>;
+	readonly commerceChannelHealthChecksTable: Locator;
+	readonly commerceChannelHealthChecksTableRow: (
+		colPosition: number,
+		value: number | string,
+		strictEqual?: boolean
+	) => Promise<{column: Locator; row: Locator}>;
+	readonly commerceChannelHealthChecksTableRowAction: (
+		action: string,
+		pageName: string
 	) => Promise<Locator>;
 	readonly countryTab: Locator;
 	readonly detailsButton: (tableName: string) => Promise<Locator>;
@@ -64,6 +76,42 @@ export class CommerceAdminChannelDetailsPage {
 				exact: true,
 				name: channelName,
 			});
+		this.commerceChannelHealthChecksTable = page
+			.locator(
+				'#_com_liferay_commerce_channel_web_internal_portlet_CommerceChannelsPortlet_editChannelContainer .dnd-table'
+			)
+			.filter({hasText: 'Fix Issue'});
+		this.commerceChannelHealthChecksTableRow = async (
+			colPosition: number,
+			value: number | string,
+			strictEqual: boolean = false
+		) => {
+			return await searchTableRowByValue(
+				this.commerceChannelHealthChecksTable,
+				colPosition,
+				String(value),
+				strictEqual
+			);
+		};
+		this.commerceChannelHealthChecksTableRowAction = async (
+			action: string,
+			pageName: string
+		) => {
+			const pagesTableRow =
+				await this.commerceChannelHealthChecksTableRow(
+					0,
+					pageName,
+					true
+				);
+
+			if (pagesTableRow && pagesTableRow.column) {
+				return pagesTableRow.row.getByRole('link', {
+					name: action,
+				});
+			}
+
+			throw new Error(`Cannot locate table row with name ${pageName}`);
+		};
 		this.countryTab = page.getByRole('link', {name: 'Countries'});
 		this.generalCommerceAdminChannelTableLink = async (name: string) => {
 			return page.getByRole('link', {exact: true, name});

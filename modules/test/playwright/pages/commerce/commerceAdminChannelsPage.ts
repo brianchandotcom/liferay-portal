@@ -5,11 +5,13 @@
 
 import {Locator, Page} from '@playwright/test';
 
+import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
 import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
 import {searchTableRowByValue} from './commerceDNDTablePage';
 
 export class CommerceAdminChannelsPage {
 	readonly applicationsMenuPage: ApplicationsMenuPage;
+	readonly buyerOrderApprovalWorkflow: Locator;
 	readonly channelsTable: Locator;
 	readonly channelsTableRow: (
 		colPosition: number,
@@ -24,6 +26,9 @@ export class CommerceAdminChannelsPage {
 
 	constructor(page: Page) {
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);
+		this.buyerOrderApprovalWorkflow = page.getByLabel(
+			'Buyer Order Approval Workflow'
+		);
 		this.channelsTable = page.locator(
 			'#portlet_com_liferay_commerce_channel_web_internal_portlet_CommerceChannelsPortlet .dnd-table'
 		);
@@ -64,6 +69,21 @@ export class CommerceAdminChannelsPage {
 
 	async goto() {
 		await this.applicationsMenuPage.goToCommerceChannels();
+	}
+
+	async changeCommerceChannelBuyerOrderApprovalWorkflow(
+		buyerOrderApprovalWorkflow: string,
+		channelName: string
+	) {
+		await this.goto();
+
+		await (await this.channelsTableRowLink(channelName)).click();
+
+		await this.buyerOrderApprovalWorkflow.selectOption({
+			label: buyerOrderApprovalWorkflow,
+		});
+		await this.headerActionsSaveButton.click();
+		await waitForSuccessAlert(this.page);
 	}
 
 	async changeCommerceChannelSiteType(channelName: string, siteType: string) {

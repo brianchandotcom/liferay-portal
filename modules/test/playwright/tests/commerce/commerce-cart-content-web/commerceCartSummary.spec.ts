@@ -10,6 +10,7 @@ import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTe
 import {commercePagesTest} from '../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import getRandomString from '../../../utils/getRandomString';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -22,23 +23,25 @@ export const test = mergeTests(
 test('LPD-3360 Checkout with single approval', async ({
 	apiHelpers,
 	applicationsMenuPage,
+	commerceAdminChannelsPage,
 	commerceCartSummaryPage,
 	commerceLayoutsPage,
+	commerceMiniCartPage,
 	page,
 }) => {
 	const site = await apiHelpers.headlessSite.createSite({
-		name: 'Cart Single Approval',
+		name: getRandomString(),
 	});
 
 	apiHelpers.data.push({id: site.id, type: 'site'});
 
 	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
-		name: 'Cart Single Approval Channel',
+		name: `${site.name} Channel`,
 		siteGroupId: site.id,
 	});
 
 	const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog({
-		name: 'Cart Single Approval Catalog',
+		name: `${site.name} Catalog`,
 	});
 
 	const product1 = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
@@ -55,7 +58,7 @@ test('LPD-3360 Checkout with single approval', async ({
 	const sku1 = product1Skus[0];
 
 	const account = await apiHelpers.headlessAdminUser.postAccount({
-		name: 'Cart Single Approval Account',
+		name: getRandomString(),
 		type: 'business',
 	});
 
@@ -66,27 +69,15 @@ test('LPD-3360 Checkout with single approval', async ({
 		['test@liferay.com']
 	);
 
-	await applicationsMenuPage.goToCommerceChannels();
+	await commerceAdminChannelsPage.changeCommerceChannelSiteType(
+		channel.name,
+		'B2B'
+	);
 
-	await page.waitForNavigation();
-
-	await expect(page.getByText('Cart Single Approval')).toBeVisible();
-
-	await page.getByText('Cart Single Approval').click();
-
-	await page.getByLabel('Commerce Site Type').selectOption({
-		label: 'B2B',
-	});
-
-	await page.getByLabel('Buyer Order Approval Workflow').selectOption({
-		label: 'Single Approver (Version 1)',
-	});
-
-	await page.getByText('Save').click();
-
-	await expect(
-		page.getByText('Success:Your request completed successfully.')
-	).toBeVisible();
+	await commerceAdminChannelsPage.changeCommerceChannelBuyerOrderApprovalWorkflow(
+		'Single Approver (Version 1)',
+		channel.name
+	);
 
 	await apiHelpers.headlessCommerceDeliveryCart.postCart(
 		{
@@ -103,7 +94,7 @@ test('LPD-3360 Checkout with single approval', async ({
 		channel.id
 	);
 
-	await applicationsMenuPage.goToSite('Cart Single Approval');
+	await applicationsMenuPage.goToSite(site.name);
 
 	await commerceLayoutsPage.goToPages(false);
 	await commerceLayoutsPage.createWidgetPage('Commerce Cart Page');
@@ -112,5 +103,7 @@ test('LPD-3360 Checkout with single approval', async ({
 
 	await commerceCartSummaryPage.addCartSummaryWidget();
 
-	await expect(page.getByText('Submit')).toBeVisible();
+	await commerceMiniCartPage.submitButton.waitFor({state: 'visible'});
+
+	await expect(commerceMiniCartPage.submitButton).toBeVisible();
 });

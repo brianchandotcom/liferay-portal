@@ -21,21 +21,20 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Portal.Language.REST)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Portal.Language.REST.PLOEntryImportExceptionInvalidPropertiesFileExceptionMapper"
+		"osgi.jaxrs.name=Liferay.Portal.Language.REST.PLOEntryImportExceptionEmptyPropertiesFileExceptionMapper"
 	},
 	service = ExceptionMapper.class
 )
-public class PLOEntryImportExceptionInvalidPropertiesFileExceptionMapper
-	extends BaseExceptionMapper<PLOEntryImportException.InvalidPropertiesFile> {
+public class PLOEntryImportExceptionEmptyPropertiesFileExceptionMapper
+	extends BaseExceptionMapper<PLOEntryImportException.EmptyPropertiesFile> {
 
 	@Override
 	protected Problem getProblem(
-		PLOEntryImportException.InvalidPropertiesFile invalidPropertiesFile) {
+		PLOEntryImportException.EmptyPropertiesFile emptyPropertiesFile) {
 
 		return new Problem(
-			invalidPropertiesFile.getMessage(), Response.Status.BAD_REQUEST,
-			null,
-			PLOEntryImportException.InvalidPropertiesFile.class.getName());
+			emptyPropertiesFile.getMessage(), Response.Status.BAD_REQUEST, null,
+			PLOEntryImportException.EmptyPropertiesFile.class.getName());
 	}
 
 }

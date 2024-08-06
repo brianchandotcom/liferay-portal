@@ -40,7 +40,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "import-translations"));
 
 		<liferay-ui:error key="fileEmpty" message="file-does-not-contain-any-translations" />
 		<liferay-ui:error key="fileExtensionInvalid" message='<%= LanguageUtil.format(request, "please-upload-a-file-with-a-valid-extension-x", "properties", false) %>' />
-		<liferay-ui:error key="fileInvalid" message="please-select-a-valid-file" />
+		<liferay-ui:error key="fileEmpty" message="failed-to-import-empty-file" />
 
 		<div class="h5"><liferay-ui:message key="import-file" /></div>
 

@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.language.LanguageResources;
+import com.liferay.portal.language.override.exception.PLOEntryImportException;
 import com.liferay.portal.language.override.model.PLOEntry;
 import com.liferay.portal.language.override.model.PLOEntryModel;
 import com.liferay.portal.language.override.service.PLOEntryService;
@@ -115,7 +116,7 @@ public class MessageResourceImpl extends BaseMessageResourceImpl {
 				"properties")) {
 
 			throw new BadRequestException(
-				"File name must have a \"properties\" file extension");
+				"File must have the \"properties\" extension");
 		}
 
 		try (InputStream inputStream = binaryFile.getInputStream();
@@ -125,6 +126,10 @@ public class MessageResourceImpl extends BaseMessageResourceImpl {
 			Properties properties = new Properties();
 
 			properties.load(reader);
+
+			if (properties.isEmpty()) {
+				throw new PLOEntryImportException.EmptyPropertiesFile();
+			}
 
 			_ploEntryService.importPLOEntries(languageId, properties);
 		}

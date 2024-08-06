@@ -12,10 +12,10 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public class PLOEntryImportException extends PortalException {
 
-	public static class InvalidPropertiesFile extends PLOEntryImportException {
+	public static class EmptyPropertiesFile extends PLOEntryImportException {
 
-		public InvalidPropertiesFile() {
-			super("Invalid properties file");
+		public EmptyPropertiesFile() {
+			super("Empty properties file");
 		}
 
 	}

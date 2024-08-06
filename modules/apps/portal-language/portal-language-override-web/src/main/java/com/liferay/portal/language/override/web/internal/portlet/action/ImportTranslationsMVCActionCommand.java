@@ -91,13 +91,13 @@ public class ImportTranslationsMVCActionCommand extends BaseMVCActionCommand {
 
 			properties.load(reader);
 
-			_ploEntryService.importPLOEntries(languageId, properties);
-		}
-		catch (PLOEntryImportException.InvalidPropertiesFile
-					ploEntryImportException) {
+			if (properties.isEmpty()) {
+				SessionErrors.add(actionRequest, "fileEmpty");
 
-			SessionErrors.add(
-				actionRequest, "fileInvalid", ploEntryImportException);
+				return;
+			}
+
+			_ploEntryService.importPLOEntries(languageId, properties);
 		}
 		catch (PLOEntryImportException.InvalidTranslations
 					ploEntryImportException) {

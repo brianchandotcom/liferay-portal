@@ -676,14 +676,23 @@ public class ClientExtensionProjectConfigurator
 
 		assembleClientExtensionTaskProvider.configure(
 			copy -> {
-				copy.dependsOn(_CLEAN_ASSEMBLE_CLIENT_EXTENSION_TASK_NAME);
-
 				TaskInputs taskInputs = copy.getInputs();
 
 				taskInputs.file(clientExtensionYamlFile);
 
 				copy.into(clientExtensionBuildDir);
 
+				copy.doFirst(
+					new Action<Task>() {
+
+						@Override
+						public void execute(Task task) {
+							Copy copy1 = (Copy)task;
+
+							project.delete(copy1.getDestinationDir());
+						}
+
+					});
 				copy.doLast(
 					new Action<Task>() {
 
@@ -1198,9 +1207,6 @@ public class ClientExtensionProjectConfigurator
 				StringUtil.quote(typeSettingsKey),
 				StringUtil.join(StringUtil.COMMA_AND_SPACE, validValues)));
 	}
-
-	private static final String _CLEAN_ASSEMBLE_CLIENT_EXTENSION_TASK_NAME =
-		"cleanAssembleClientExtension";
 
 	private static final String _CLIENT_EXTENSION_YAML =
 		"client-extension.yaml";

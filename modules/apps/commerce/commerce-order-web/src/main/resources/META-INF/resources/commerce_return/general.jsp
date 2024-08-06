@@ -116,7 +116,7 @@ CommerceOrder commerceOrder = commerceReturnEditDisplayContext.getCommerceReturn
 							elementClasses="py-3"
 							title='<%= LanguageUtil.get(request, "payment-method") %>'
 						>
-							<p class="mb-0" data-qa-id="commerceReturnPaymentMethod"><%= HtmlUtil.escape(commerceOrder.getCommercePaymentMethodKey()) %></p>
+							<p class="mb-0" data-qa-id="commerceReturnPaymentMethod"><%= HtmlUtil.escape(LanguageUtil.get(request, commerceOrder.getCommercePaymentMethodKey())) %></p>
 						</commerce-ui:info-box>
 
 						<commerce-ui:info-box

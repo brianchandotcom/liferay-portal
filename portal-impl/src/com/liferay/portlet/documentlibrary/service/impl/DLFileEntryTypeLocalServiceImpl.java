@@ -160,7 +160,7 @@ public class DLFileEntryTypeLocalServiceImpl
 
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             #addFileEntryType(String, long, long, long, String, Map, Map, long,
+	 *             #addFileEntryType(String, long, long, long, String, Map, Map, int,
 	 *             ServiceContext)}
 	 */
 	@Deprecated
@@ -218,6 +218,16 @@ public class DLFileEntryTypeLocalServiceImpl
 			LocaleUtil.getDefault());
 
 		return dlFileEntryTypePersistence.update(dlFileEntryType);
+	}
+
+	@Override
+	public void deleteDLFileEntryType(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		dlFileEntryTypeLocalService.deleteFileEntryType(
+			getDLFileEntryTypeByExternalReferenceCode(
+				externalReferenceCode, groupId));
 	}
 
 	@Override

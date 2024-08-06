@@ -23,6 +23,8 @@ portletDisplay.setBeta(true);
 				).put(
 					"permissionsURL", fdsAdminDisplayContext.getFDSViewPermissionsURL()
 				).put(
+					"resolvedRESTSchemas", fdsAdminDisplayContext.getRESTApplicationResolvedSchemasJSONArray()
+				).put(
 					"restApplications", fdsAdminDisplayContext.getRESTApplicationsJSONArray()
 				).build()
 			%>'
@@ -38,6 +40,8 @@ portletDisplay.setBeta(true);
 					"namespace", liferayPortletResponse.getNamespace()
 				).put(
 					"permissionsURL", fdsAdminDisplayContext.getFDSEntryPermissionsURL()
+				).put(
+					"resolvedRESTSchemas", fdsAdminDisplayContext.getRESTApplicationResolvedSchemasJSONArray()
 				).put(
 					"restApplications", fdsAdminDisplayContext.getRESTApplicationsJSONArray()
 				).build()

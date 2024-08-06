@@ -10,6 +10,7 @@ import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.frontend.data.set.admin.web.internal.constants.FDSAdminPortletKeys;
 import com.liferay.frontend.data.set.admin.web.internal.constants.FDSAdminWebKeys;
 import com.liferay.frontend.data.set.admin.web.internal.display.context.FDSAdminDisplayContext;
+import com.liferay.frontend.data.set.resolver.FDSRestApplicationURLParameterResolverRegistry;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
@@ -142,8 +143,9 @@ public class FDSAdminPortlet extends MVCPortlet {
 		renderRequest.setAttribute(
 			FDSAdminWebKeys.FDS_ADMIN_DISPLAY_CONTEXT,
 			new FDSAdminDisplayContext(
-				_cetManager, _objectDefinitionLocalService, renderRequest,
-				renderResponse, _serviceTrackerList));
+				_cetManager, _fdsRestApplicationURLParameterResolverRegistry,
+				_objectDefinitionLocalService, renderRequest, renderResponse,
+				_serviceTrackerList));
 
 		super.doDispatch(renderRequest, renderResponse);
 	}
@@ -995,6 +997,10 @@ public class FDSAdminPortlet extends MVCPortlet {
 
 	@Reference
 	private CETManager _cetManager;
+
+	@Reference
+	private FDSRestApplicationURLParameterResolverRegistry
+		_fdsRestApplicationURLParameterResolverRegistry;
 
 	@Reference
 	private Language _language;

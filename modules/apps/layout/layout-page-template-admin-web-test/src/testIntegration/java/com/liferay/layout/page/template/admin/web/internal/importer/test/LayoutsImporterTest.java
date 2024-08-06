@@ -324,6 +324,37 @@ public class LayoutsImporterTest {
 	}
 
 	@Test
+	public void testValidateFileWithDuplicatedBasicLayoutPageTemplateEntryInADifferentLayoutPageTemplateCollection()
+		throws Exception {
+
+		_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+			null, TestPropsValues.getUserId(), _group1.getGroupId(),
+			LayoutPageTemplateConstants.
+				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+			"Page Template", LayoutPageTemplateEntryTypeConstants.BASIC, 0,
+			WorkflowConstants.STATUS_APPROVED,
+			ServiceContextTestUtil.getServiceContext(_group1.getGroupId()));
+
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
+			_layoutPageTemplateCollectionLocalService.
+				addLayoutPageTemplateCollection(
+					null, TestPropsValues.getUserId(), _group1.getGroupId(),
+					LayoutPageTemplateConstants.
+						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+					RandomTestUtil.randomString(), StringPool.BLANK,
+					LayoutPageTemplateEntryTypeConstants.BASIC,
+					ServiceContextTestUtil.getServiceContext(
+						_group1.getGroupId()));
+
+		Assert.assertTrue(
+			_layoutsImporter.validateFile(
+				_group1.getGroupId(),
+				layoutPageTemplateCollection.
+					getLayoutPageTemplateCollectionId(),
+				_getFile(_PAGE_TEMPLATES_RESOURCES_PATH)));
+	}
+
+	@Test
 	public void testValidateFileWithDuplicatedDisplayPageLayoutPageTemplateEntry()
 		throws Exception {
 

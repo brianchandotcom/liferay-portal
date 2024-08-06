@@ -928,6 +928,7 @@
 					"template_ar": {
 						"mapping": {
 							"analyzer": "arabic",
+							"search_analyzer": "liferay_analyzer_ar",
 							"store": true,
 							"term_vector": "with_positions_offsets",
 							"type": "text"
@@ -954,6 +955,7 @@
 					"template_ca": {
 						"mapping": {
 							"analyzer": "catalan",
+							"search_analyzer": "liferay_analyzer_ca",
 							"store": true,
 							"term_vector": "with_positions_offsets",
 							"type": "text"
@@ -1087,6 +1089,7 @@
 					"template_fi": {
 						"mapping": {
 							"analyzer": "finnish",
+							"search_analyzer": "liferay_analyzer_fi",
 							"store": true,
 							"term_vector": "with_positions_offsets",
 							"type": "text"
@@ -1324,6 +1327,7 @@
 					"template_sv": {
 						"mapping": {
 							"analyzer": "swedish",
+							"search_analyzer": "liferay_analyzer_sv",
 							"store": true,
 							"term_vector": "with_positions_offsets",
 							"type": "text"

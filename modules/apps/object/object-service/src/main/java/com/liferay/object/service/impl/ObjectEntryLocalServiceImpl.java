@@ -4865,7 +4865,7 @@ public class ObjectEntryLocalServiceImpl
 			}
 		}
 
-		if (!objectField.hasUniqueValues()) {
+		if (!objectField.hasUniqueValues() || objectField.isLocalized()) {
 			return;
 		}
 

@@ -136,10 +136,10 @@ public class PropertiesPlaywrightTestCheck extends BaseFileCheck {
 
 			properties.load(new StringReader(content));
 
-			List<String> relevantRuleNamesList = ListUtil.fromString(
+			List<String> relevantRuleNames = ListUtil.fromString(
 				properties.getProperty(_RELEVANT_RULE_NAMES), StringPool.COMMA);
 
-			if (ListUtil.isEmpty(relevantRuleNamesList)) {
+			if (ListUtil.isEmpty(relevantRuleNames)) {
 				addMessage(
 					fileName,
 					"Missing property '" + _RELEVANT_RULE_NAMES +
@@ -148,7 +148,7 @@ public class PropertiesPlaywrightTestCheck extends BaseFileCheck {
 				return content;
 			}
 
-			for (String relevantRuleName : relevantRuleNamesList) {
+			for (String relevantRuleName : relevantRuleNames) {
 				String playwrightTestProjectPropertyName = StringBundler.concat(
 					_PLAYWRIGHT_TEST_PROJECT_NAME, "[", relevantRuleName, "]");
 

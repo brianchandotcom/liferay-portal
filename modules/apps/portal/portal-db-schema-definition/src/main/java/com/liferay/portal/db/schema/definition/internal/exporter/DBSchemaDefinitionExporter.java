@@ -276,6 +276,7 @@ public class DBSchemaDefinitionExporter {
 								"Virtual instance ", companyId, " ? tables: "),
 							"TABLE"));
 					sb.append(StringPool.NEW_LINE);
+					sb.append(StringPool.NEW_LINE);
 					sb.append(
 						_getTablesInfo(
 							companyId,

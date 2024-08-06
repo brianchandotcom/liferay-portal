@@ -9,6 +9,7 @@ import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {changeTrackingPagesTest} from '../../fixtures/changeTrackingPagesTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import getRandomString from '../../utils/getRandomString';
+import getBasicWebContentStructureId from '../../utils/structured-content/getBasicWebContentStructureId';
 import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
 import {blogsPagesTest} from '../blogs-web/fixtures/blogsPagesTest';
 import {journalPagesTest} from '../journal-web/fixtures/journalPagesTest';
@@ -197,4 +198,30 @@ test('Publish Parallel Publications', async ({
 	await expect(page.getByRole('link', {name: title1})).toBeVisible();
 
 	await expect(page.getByRole('link', {name: title2})).toBeVisible();
+});
+
+test('LPD-33274 Disable Publish button after first click', async ({
+	apiHelpers,
+	changeTrackingPage,
+	ctCollection,
+	page,
+	site,
+}) => {
+	const basicWebContentStructureId =
+		await getBasicWebContentStructureId(apiHelpers);
+
+	const title = getRandomString();
+
+	await apiHelpers.jsonWebServicesJournal.addWebContent({
+		ddmStructureId: basicWebContentStructureId,
+		groupId: site.id,
+		titleMap: {en_US: title},
+	});
+
+	await changeTrackingPage.goToReviewChanges(ctCollection.name);
+
+	await page.getByRole('link', {name: 'Publish'}).click();
+
+	await page.getByRole('button', {name: 'Publish'}).click();
+	await expect(page.getByRole('button', {name: 'Publish'})).toBeDisabled();
 });

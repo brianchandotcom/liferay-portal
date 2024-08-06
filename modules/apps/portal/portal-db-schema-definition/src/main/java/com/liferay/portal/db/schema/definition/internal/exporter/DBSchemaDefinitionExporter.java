@@ -186,13 +186,7 @@ public class DBSchemaDefinitionExporter {
 					StringPool.NEW_LINE));
 		}
 
-		private Set<String> _getDBTableNames() throws Exception {
-			return _getDBTableNamesByType("TABLE");
-		}
-
-		private Set<String> _getDBTableNamesByType(String type)
-			throws Exception {
-
+		private Set<String> _getDBTableNames(String type) throws Exception {
 			Set<String> tableNames = new HashSet<>();
 
 			DataSource dataSource = InfrastructureUtil.getDataSource();
@@ -213,10 +207,6 @@ public class DBSchemaDefinitionExporter {
 			}
 
 			return tableNames;
-		}
-
-		private Set<String> _getDBViewNames() throws Exception {
-			return _getDBTableNamesByType("VIEW");
 		}
 
 		private Set<String> _getExportTableNames() throws Exception {
@@ -288,8 +278,8 @@ public class DBSchemaDefinitionExporter {
 
 		private String _printCompanyTablesInfo(String type) throws Exception {
 			Set<String> dbTableNames =
-				StringUtil.equals(type, "views") ? _getDBViewNames() :
-					_getDBTableNames();
+				StringUtil.equals(type, "views") ? _getDBTableNames("VIEW") :
+					_getDBTableNames("TABLE");
 			Set<String> exportTableNames =
 				StringUtil.equals(type, "views") ? _getExportViewNames() :
 					_getExportTableNames();
@@ -318,7 +308,7 @@ public class DBSchemaDefinitionExporter {
 		}
 
 		private String _printDefaultCompanyTablesInfo() throws Exception {
-			Set<String> dbTableNames = _getDBTableNames();
+			Set<String> dbTableNames = _getDBTableNames("TABLE");
 			Set<String> exportTableNames = _getExportTableNames();
 
 			String missingTableNames = StringUtil.merge(

@@ -87,14 +87,14 @@ public class ExternalReferenceCodeModelDocumentContributorTest {
 	}
 
 	@Test
-	public void testContributeExternalReferenceCode() throws Exception {
-		_testContributeExternalReferenceCode(_blogsEntry);
-		_testContributeExternalReferenceCode(_journalArticle);
-		_testContributeExternalReferenceCode(_journalFolder);
-		_testContributeExternalReferenceCode(_user);
+	public void testContribute() throws Exception {
+		_testContribute(_blogsEntry);
+		_testContribute(_journalArticle);
+		_testContribute(_journalFolder);
+		_testContribute(_user);
 	}
 
-	private void _testContributeExternalReferenceCode(
+	private void _testContribute(
 			ExternalReferenceCodeModel externalReferenceCodeModel)
 		throws Exception {
 

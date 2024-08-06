@@ -35,7 +35,7 @@ public class DBPartitionPostgreSQLDB implements DBPartitionDB {
 	}
 
 	@Override
-	public List<String> getCreateRulesSQL(String schemaName)
+	public List<String> getCreateRulesSQL(String partitionName)
 		throws SQLException {
 
 		List<String> rules = new ArrayList<>();
@@ -82,7 +82,7 @@ public class DBPartitionPostgreSQLDB implements DBPartitionDB {
 					rules.add(
 						PostgreSQLDB.getCreateRulesSQL(
 							StringBundler.concat(
-								schemaName, StringPool.PERIOD,
+								partitionName, StringPool.PERIOD,
 								ruleTableColumn[0]),
 							ruleTableColumn[1]));
 				}

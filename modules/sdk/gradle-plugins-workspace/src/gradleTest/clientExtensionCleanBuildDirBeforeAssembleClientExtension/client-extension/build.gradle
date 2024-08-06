@@ -1,27 +1,11 @@
-task fooTask(type: Copy)
-task writeDummyFile
-
-fooTask {
-	from "foo"
-	include "*.txt"
-	into buildDir
-}
+task copyDummyFile(type: Copy)
 
 assembleClientExtension {
-	dependsOn writeDummyFile
+	dependsOn copyDummyFile
 }
 
-cleanAssembleClientExtension.mustRunAfter(writeDummyFile)
-
-writeDummyFile {
-	doLast{
-		File clientExtensionBuildDir = new File(buildDir, "liferay-client-extension-build")
-
-		buildDir.mkdir();
-		clientExtensionBuildDir.mkdir();
-
-		File dummyFile = new File(clientExtensionBuildDir,"dummy.js")
-
-		dummyFile.write("dummy text");
-	}
+copyDummyFile {
+	from "foo"
+	include "dummy.txt"
+	into project.file("${buildDir}/liferay-client-extension-build/static")
 }

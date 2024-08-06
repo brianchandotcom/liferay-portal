@@ -3,12 +3,29 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {State} from '../../types/State';
 import updateItemConfigAction from '../actions/updateItemConfig';
+import updateNetwork from '../actions/updateNetwork';
 import LayoutService from '../services/LayoutService';
 import {clearPageContents} from '../utils/usePageContents';
 
-export default function updateItemConfig({itemConfig, itemId}) {
-	return (dispatch, getState) => {
+import type {LayoutDataItem} from '../../types/layout_data/LayoutData';
+
+export default function updateItemConfig({
+	itemConfig,
+	itemId,
+}: {
+	itemConfig: LayoutDataItem['config'];
+	itemId: string;
+}) {
+	return (
+		dispatch: (
+			action: ReturnType<
+				typeof updateNetwork | typeof updateItemConfigAction
+			>
+		) => void,
+		getState: () => State
+	) => {
 		const {segmentsExperienceId} = getState();
 
 		return LayoutService.updateItemConfig({

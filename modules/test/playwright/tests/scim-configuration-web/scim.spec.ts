@@ -6,6 +6,8 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {loginTest} from '../../fixtures/loginTest';
+import {ApiHelpers} from '../../helpers/ApiHelpers';
+import {ApplicationsMenuPage} from '../../pages/product-navigation-applications-menu/ApplicationsMenuPage';
 import {SCIMConfigurationPage} from '../../pages/scim-configuraiton-web/SCIMConfigurationPage';
 
 export const test = mergeTests(loginTest());
@@ -89,4 +91,56 @@ test('LPD-23255 AC3 TC3: Verify that clicking the “Reset SCIM Client provision
 	await expect(matcherField).toHaveValue('');
 
 	await expect(accessTokenField).toBeEmpty();
+});
+
+test('LPD-23255 AC3 TC4: Verify that clicking the “Reset SCIM Client provisioning data“ button revokes the generated OAuth2 token and deletes the OAuth2 Application.', async ({
+	page,
+}) => {
+	const apiHelper = new ApiHelpers(page);
+
+	const scimConfigurationPage = new SCIMConfigurationPage(page);
+
+	const applicationsMenuPage = new ApplicationsMenuPage(page);
+
+	await scimConfigurationPage.goTo();
+	await page.waitForTimeout(1000);
+
+	await scimConfigurationPage.configureSCIM('Test SCIM Client', 'email');
+
+	await scimConfigurationPage.generateToken();
+
+	const accessToken = await page
+		.getByLabel('Access Token', {exact: true})
+		.inputValue();
+
+	const authorizedResponse = await apiHelper.scim.getUsers(
+		accessToken,
+		false
+	);
+	expect(authorizedResponse.status()).toBe(200);
+
+	await applicationsMenuPage.goToOauth2Administration();
+	await page.waitForTimeout(1000);
+
+	const scimOAuthClientRow = await page.getByRole('cell', {
+		exact: true,
+		name: 'Test SCIM Client',
+	});
+	expect(await scimOAuthClientRow).toBeVisible();
+
+	await scimConfigurationPage.goTo();
+	await page.waitForTimeout(1000);
+
+	await scimConfigurationPage.resetClientData();
+
+	const unauthorizedResponse = await apiHelper.scim.getUsers(
+		accessToken,
+		false
+	);
+	expect(unauthorizedResponse.status()).toBe(401);
+
+	await applicationsMenuPage.goToOauth2Administration();
+	await page.waitForTimeout(1000);
+
+	expect(await scimOAuthClientRow).not.toBeVisible();
 });

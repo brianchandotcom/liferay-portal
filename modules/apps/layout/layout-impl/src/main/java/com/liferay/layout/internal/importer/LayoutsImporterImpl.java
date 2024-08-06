@@ -130,6 +130,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.zip.ZipReader;
+import com.liferay.portal.kernel.zip.ZipReaderFactory;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalService;
@@ -288,47 +290,41 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 			long groupId, long layoutPageTemplateCollectionId, File file)
 		throws Exception {
 
-		try (ZipFile zipFile = new ZipFile(file)) {
-			Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
+		ZipReader zipReader = _zipReaderFactory.getZipReader(file);
 
-			while (enumeration.hasMoreElements()) {
-				ZipEntry zipEntry = enumeration.nextElement();
+		for (String entry : zipReader.getEntries()) {
+			String content = zipReader.getEntryAsString(entry);
 
-				if (zipEntry == null) {
-					continue;
-				}
+			if (Validator.isNull(content)) {
+				continue;
+			}
 
-				String content = StringUtil.read(
-					zipFile.getInputStream(zipEntry));
+			if (_isDisplayPageTemplateFile(entry) &&
+				!_isValidDisplayPageLayoutPageTemplateEntry(
+					content, entry, groupId, layoutPageTemplateCollectionId)) {
 
-				if (_isDisplayPageTemplateFile(zipEntry.getName()) &&
-					!_isValidDisplayPageLayoutPageTemplateEntry(
-						content, zipFile.getName(), groupId,
-						layoutPageTemplateCollectionId)) {
+				return false;
+			}
 
-					return false;
-				}
+			if (_isMasterPageFile(entry) &&
+				!_isValidMasterLayoutLayoutPageTemplateEntry(
+					content, entry, groupId)) {
 
-				if (_isMasterPageFile(zipEntry.getName()) &&
-					!_isValidMasterLayoutLayoutPageTemplateEntry(
-						content, zipEntry.getName(), groupId)) {
+				return false;
+			}
 
-					return false;
-				}
+			if (_isPageTemplateCollectionFile(entry) &&
+				!_isValidBasicLayoutPageTemplateCollection(
+					content, entry, groupId)) {
 
-				if (_isPageTemplateCollectionFile(zipEntry.getName()) &&
-					!_isValidBasicLayoutPageTemplateCollection(
-						content, zipEntry.getName(), groupId)) {
+				return false;
+			}
 
-					return false;
-				}
+			if (_isPageTemplateFile(entry) &&
+				!_isValidBasicLayoutPageTemplateEntry(
+					content, entry, groupId)) {
 
-				if (_isPageTemplateFile(zipEntry.getName()) &&
-					!_isValidBasicLayoutPageTemplateEntry(
-						content, zipEntry.getName(), groupId)) {
-
-					return false;
-				}
+				return false;
 			}
 		}
 
@@ -2319,6 +2315,9 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 
 	@Reference
 	private ThemeLocalService _themeLocalService;
+
+	@Reference
+	private ZipReaderFactory _zipReaderFactory;
 
 	private static class DisplayPageTemplateEntry {
 

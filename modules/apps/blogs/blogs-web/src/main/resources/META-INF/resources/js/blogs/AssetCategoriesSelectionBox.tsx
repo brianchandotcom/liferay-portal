@@ -17,15 +17,8 @@ type TCategory = {
 };
 
 export default function AssetCategoriesSelectionBox({
-	availableCategories: initialAvailableCategories = [
-		{label: 'cat-1', value: '1'},
-		{label: 'cat-2', value: '2'},
-		{label: 'cat-3', value: '3'},
-	],
-	currentCategories: initialCurrentCategories = [
-		{label: 'cat-4', value: '4'},
-		{label: 'cat-5', value: '5'},
-	],
+	availableCategories: initialAvailableCategories = [],
+	currentCategories: initialCurrentCategories = [],
 	disabled: initialDisabled,
 	inputAddon = '',
 	portletNamespace,

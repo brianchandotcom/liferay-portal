@@ -1664,6 +1664,11 @@ public class UserWrapper
 	}
 
 	@Override
+	public void setGroup(Group group) {
+		model.setGroup(group);
+	}
+
+	@Override
 	public void setGroupIds(long[] groupIds) {
 		model.setGroupIds(groupIds);
 	}

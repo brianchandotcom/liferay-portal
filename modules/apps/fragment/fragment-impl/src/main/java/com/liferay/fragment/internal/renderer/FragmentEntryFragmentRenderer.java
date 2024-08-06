@@ -261,7 +261,7 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 		FragmentRendererContext fragmentRendererContext, String html,
 		HttpServletRequest httpServletRequest) {
 
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("<div id=\"");
 
@@ -278,7 +278,11 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 			if (fragmentRendererContext.isEditMode() ||
 				fragmentRendererContext.isIndexMode()) {
 
-				sb.append("<style>");
+				sb.append("<style");
+				sb.append(
+					ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
+						httpServletRequest));
+				sb.append(StringPool.GREATER_THAN);
 				sb.append(css);
 				sb.append("</style>");
 			}
@@ -309,7 +313,11 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 				}
 
 				if (!cssLoaded) {
-					sb.append("<style>");
+					sb.append("<style");
+					sb.append(
+						ContentSecurityPolicyNonceProviderUtil.
+							getNonceAttribute(httpServletRequest));
+					sb.append(StringPool.GREATER_THAN);
 					sb.append(css);
 					sb.append("</style>");
 

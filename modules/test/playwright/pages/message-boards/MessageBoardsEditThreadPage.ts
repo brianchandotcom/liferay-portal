@@ -44,7 +44,7 @@ export class MessageBoardsEditThreadPage {
 		await this.messageBoardsPage.goToCreateNewThread();
 	}
 
-	async publishNewBasicTread(
+	async publishNewBasicThread(
 		subject: string,
 		body: string,
 		siteUrl?: Site['friendlyUrlPath'],

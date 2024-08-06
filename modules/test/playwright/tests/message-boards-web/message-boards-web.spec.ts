@@ -31,7 +31,7 @@ test('LPD-25630 Show the status to guest user', async ({
 }) => {
 	await messageBoardsPage.setGuestCategoryPermissions(site.friendlyUrlPath);
 
-	await messageBoardsEditThreadPage.publishNewBasicTread(
+	await messageBoardsEditThreadPage.publishNewBasicThread(
 		'Thread Subject',
 		'Thread Body',
 		site.friendlyUrlPath
@@ -132,7 +132,7 @@ test('LPD-33132 Posting a Document to Forums', async ({
 }) => {
 	const fileName = 'attachment , file.txt';
 
-	await messageBoardsEditThreadPage.publishNewBasicTread(
+	await messageBoardsEditThreadPage.publishNewBasicThread(
 		'Thread Subject',
 		'Thread Body',
 		site.friendlyUrlPath,

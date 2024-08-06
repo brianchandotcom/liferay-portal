@@ -55,7 +55,7 @@ String oAuth2ApplicationName = GetterUtil.getString(request.getAttribute(ScimWeb
 					</div>
 				</div>
 
-				<label for="<portlet:namespace />genetareAccessToken">
+				<label for="<portlet:namespace />generateAccessToken">
 					<liferay-ui:message key="scim-generate-access-token" />
 
 					<span aria-label="<%= LanguageUtil.get(request, "scim-generate-access-token-help") %>" class="lfr-portal-tooltip" tabindex="0" title="<%= LanguageUtil.get(request, "scim-generate-access-token-help") %>">
@@ -66,7 +66,7 @@ String oAuth2ApplicationName = GetterUtil.getString(request.getAttribute(ScimWeb
 				</label>
 
 				<div class="input-group input-group-sm">
-					<aui:button id="genetareAccessToken" label="discard-changes" name="genetareAccessToken" small="<%= true %>" value="generate" />
+					<aui:button id="generateAccessToken" label="discard-changes" name="generateAccessToken" small="<%= true %>" value="generate" />
 				</div>
 			</c:when>
 		</c:choose>
@@ -114,24 +114,24 @@ String oAuth2ApplicationName = GetterUtil.getString(request.getAttribute(ScimWeb
 />
 
 <script>
-	var copyccessToken = document.getElementById(
-		'<portlet:namespace />copyccessToken'
+	var copyAccessToken = document.getElementById(
+		'<portlet:namespace />copyAccessToken'
 	);
 
-	if (copyccessToken) {
-		copyccessToken.addEventListener('click', (event) => {
+	if (copyAccessToken) {
+		copyAccessToken.addEventListener('click', (event) => {
 			this._clipboard = new ClipboardJS('.scim-infopanel-copy-clipboard');
 
 			this._clipboard.on('success', this._handleClipboardSuccess.bind(this));
 		});
 	}
 
-	var genetareAccessToken = document.getElementById(
-		'<portlet:namespace />genetareAccessToken'
+	var generateAccessToken = document.getElementById(
+		'<portlet:namespace />generateAccessToken'
 	);
 
-	if (genetareAccessToken) {
-		genetareAccessToken.addEventListener('click', (event) => {
+	if (generateAccessToken) {
+		generateAccessToken.addEventListener('click', (event) => {
 			Liferay.Util.openConfirmModal({
 				message:
 					'<liferay-ui:message key="are-you-sure-you-want-to-generate-a-new-access-token" />',

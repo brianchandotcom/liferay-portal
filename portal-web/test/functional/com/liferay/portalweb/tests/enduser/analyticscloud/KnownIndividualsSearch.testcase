@@ -188,6 +188,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9021 | Test Summary: Search associated segment will not return results in the individual overview List"
 	@priority = 3
 	test AssertNoResultsInIndividualsOverviewAssociatedSegment {
+		property test.run.type = "single";
+
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
@@ -387,6 +389,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9024 | Test Summary: Search an Individual's Details in the individual List"
 	@priority = 4
 	test SearchIndividualDetails {
+		property test.run.type = "single";
+
 		task ("Connect the DXP to AC") {
 			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}

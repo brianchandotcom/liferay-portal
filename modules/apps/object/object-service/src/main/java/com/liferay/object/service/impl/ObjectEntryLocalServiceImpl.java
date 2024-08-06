@@ -148,6 +148,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
@@ -2679,7 +2680,8 @@ public class ObjectEntryLocalServiceImpl
 		}
 
 		if (locale == null) {
-			User user = GuestOrUserUtil.getGuestOrUser();
+			User user = GuestOrUserUtil.getGuestOrUser(
+				CompanyThreadLocal.getCompanyId());
 
 			locale = user.getLocale();
 		}

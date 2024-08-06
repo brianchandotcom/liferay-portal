@@ -103,7 +103,7 @@ public class DLFileEntryTypeLocalServiceWrapper
 
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #addFileEntryType(long, long, long, String, Map, Map, long,
+	 #addFileEntryType(String, long, long, long, String, Map, Map, int,
 	 ServiceContext)}
 	 */
 	@Deprecated
@@ -199,6 +199,15 @@ public class DLFileEntryTypeLocalServiceWrapper
 
 		return _dlFileEntryTypeLocalService.deleteDLFileEntryType(
 			fileEntryTypeId);
+	}
+
+	@Override
+	public void deleteDLFileEntryType(
+			String externalReferenceCode, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_dlFileEntryTypeLocalService.deleteDLFileEntryType(
+			externalReferenceCode, groupId);
 	}
 
 	@Override

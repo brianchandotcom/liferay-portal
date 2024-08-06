@@ -43,16 +43,39 @@ public class DLFileEntryTypeServiceUtil {
 			nameMap, descriptionMap, serviceContext);
 	}
 
+	public static void deleteDLFileEntryType(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		getService().deleteDLFileEntryType(externalReferenceCode, groupId);
+	}
+
 	public static void deleteFileEntryType(long fileEntryTypeId)
 		throws PortalException {
 
 		getService().deleteFileEntryType(fileEntryTypeId);
 	}
 
+	public static DLFileEntryType fetchFileEntryTypeByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return getService().fetchFileEntryTypeByExternalReferenceCode(
+			externalReferenceCode, groupId);
+	}
+
 	public static DLFileEntryType getFileEntryType(long fileEntryTypeId)
 		throws PortalException {
 
 		return getService().getFileEntryType(fileEntryTypeId);
+	}
+
+	public static DLFileEntryType getFileEntryTypeByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return getService().getFileEntryTypeByExternalReferenceCode(
+			externalReferenceCode, groupId);
 	}
 
 	public static List<DLFileEntryType> getFileEntryTypes(long[] groupIds) {

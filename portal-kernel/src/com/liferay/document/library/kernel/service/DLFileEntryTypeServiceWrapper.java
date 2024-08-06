@@ -43,6 +43,15 @@ public class DLFileEntryTypeServiceWrapper
 	}
 
 	@Override
+	public void deleteDLFileEntryType(
+			String externalReferenceCode, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_dlFileEntryTypeService.deleteDLFileEntryType(
+			externalReferenceCode, groupId);
+	}
+
+	@Override
 	public void deleteFileEntryType(long fileEntryTypeId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -50,10 +59,29 @@ public class DLFileEntryTypeServiceWrapper
 	}
 
 	@Override
+	public DLFileEntryType fetchFileEntryTypeByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _dlFileEntryTypeService.
+			fetchFileEntryTypeByExternalReferenceCode(
+				externalReferenceCode, groupId);
+	}
+
+	@Override
 	public DLFileEntryType getFileEntryType(long fileEntryTypeId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _dlFileEntryTypeService.getFileEntryType(fileEntryTypeId);
+	}
+
+	@Override
+	public DLFileEntryType getFileEntryTypeByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _dlFileEntryTypeService.getFileEntryTypeByExternalReferenceCode(
+			externalReferenceCode, groupId);
 	}
 
 	@Override

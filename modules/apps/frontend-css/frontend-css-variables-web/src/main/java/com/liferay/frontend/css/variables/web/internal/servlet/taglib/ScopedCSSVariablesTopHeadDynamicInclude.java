@@ -11,6 +11,7 @@ import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProviderUtil;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 
@@ -44,7 +45,11 @@ public class ScopedCSSVariablesTopHeadDynamicInclude
 		PrintWriter printWriter = httpServletResponse.getWriter();
 
 		printWriter.print("<style data-senna-track=\"temporary\" ");
-		printWriter.print("type=\"text/css\">\n");
+		printWriter.print("type=\"text/css\"");
+		printWriter.print(
+			ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
+				httpServletRequest));
+		printWriter.print(">\n");
 
 		for (ScopedCSSVariablesProvider scopedCSSVariablesProvider :
 				_scopedCSSVariablesProviders) {

@@ -704,7 +704,7 @@ definition {
 					key_optionName = ${inputValue},
 					locator1 = "ACEventAnalysis#DROPDOWN_BY_OPTION");
 
-				Click(locator1 = "ACEventAnalysis#FILTER_DONE_BUTTON");
+				Click(locator1 = "ACEventAnalysis#FILTER_APPLY_BUTTON");
 			}
 
 			task ("Check that the analysis result appears") {

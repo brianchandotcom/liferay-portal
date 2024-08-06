@@ -97,7 +97,7 @@ definition {
 				locator1 = "Icon#ANY");
 		}
 
-		Click(locator1 = "ACEventAnalysis#FILTER_DONE_BUTTON");
+		Click(locator1 = "ACEventAnalysis#FILTER_APPLY_BUTTON");
 	}
 
 	@summary = "Default summary"

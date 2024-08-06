@@ -40,11 +40,11 @@ public class JenkinsCohort {
 	}
 
 	public int getIdleJenkinsSlaveCount() {
+		int idleJenkinsSlaveCount = 0;
+
 		if (_jenkinsCohortJobsMap.isEmpty()) {
 			update();
 		}
-
-		int idleJenkinsSlaveCount = 0;
 
 		for (JenkinsMaster jenkinsMaster : _jenkinsMastersMap.values()) {
 			idleJenkinsSlaveCount += jenkinsMaster.getIdleJenkinsSlavesCount();
@@ -108,11 +108,11 @@ public class JenkinsCohort {
 	}
 
 	public int getOfflineJenkinsSlaveCount() {
+		int offlineJenkinsSlaveCount = 0;
+
 		if (_jenkinsCohortJobsMap.isEmpty()) {
 			update();
 		}
-
-		int offlineJenkinsSlaveCount = 0;
 
 		for (JenkinsMaster jenkinsMaster : _jenkinsMastersMap.values()) {
 			offlineJenkinsSlaveCount +=
@@ -123,11 +123,11 @@ public class JenkinsCohort {
 	}
 
 	public int getOnlineJenkinsSlaveCount() {
+		int onlineJenkinsSlaveCount = 0;
+
 		if (_jenkinsCohortJobsMap.isEmpty()) {
 			update();
 		}
-
-		int onlineJenkinsSlaveCount = 0;
 
 		for (JenkinsMaster jenkinsMaster : _jenkinsMastersMap.values()) {
 			onlineJenkinsSlaveCount +=
@@ -138,11 +138,11 @@ public class JenkinsCohort {
 	}
 
 	public int getQueuedBuildCount() {
+		int queuedBuildCount = 0;
+
 		if (_jenkinsCohortJobsMap.isEmpty()) {
 			update();
 		}
-
-		int queuedBuildCount = 0;
 
 		for (JenkinsCohortJob jenkinsCohortJob :
 				_jenkinsCohortJobsMap.values()) {
@@ -155,11 +155,11 @@ public class JenkinsCohort {
 	}
 
 	public int getRunningBuildCount() {
+		int runningBuildCount = 0;
+
 		if (_jenkinsCohortJobsMap.isEmpty()) {
 			update();
 		}
-
-		int runningBuildCount = 0;
 
 		for (JenkinsCohortJob jenkinsCohortJob :
 				_jenkinsCohortJobsMap.values()) {

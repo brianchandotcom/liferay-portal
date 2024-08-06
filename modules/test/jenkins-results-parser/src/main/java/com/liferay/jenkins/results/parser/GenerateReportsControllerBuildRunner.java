@@ -147,6 +147,8 @@ public class GenerateReportsControllerBuildRunner
 	}
 
 	private Map<String, Long> _getLatestReportUpdateTimes() {
+		Map<String, Long> latestReportUpdateTimes = new HashMap<>();
+
 		List<Build> builds = _getBuildHistory();
 
 		BuildData buildData = getBuildData();
@@ -155,8 +157,6 @@ public class GenerateReportsControllerBuildRunner
 			buildData.getBuildURL(), null);
 
 		builds.remove(currentBuild);
-
-		Map<String, Long> latestReportUpdateTimes = new HashMap<>();
 
 		for (GenerateReportsBuildRunner.Report report :
 				GenerateReportsBuildRunner.Report.values()) {

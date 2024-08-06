@@ -327,6 +327,8 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 	}
 
 	private Map<String, Long> _getLatestTestSuiteStartTimes() {
+		Map<String, Long> latestTestSuiteStartTimes = new LinkedHashMap<>();
+
 		List<Build> builds = _getBuildHistory();
 
 		BuildData buildData = getBuildData();
@@ -335,8 +337,6 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 			buildData.getBuildURL(), null);
 
 		builds.remove(currentBuild);
-
-		Map<String, Long> latestTestSuiteStartTimes = new LinkedHashMap<>();
 
 		for (String testSuiteName : _getTestSuiteNames()) {
 			for (Build build : builds) {

@@ -165,6 +165,8 @@ public class TestrayRoutine {
 	public List<TestrayBuild> getTestrayBuilds(
 		int maxSize, String... nameFilters) {
 
+		List<TestrayBuild> testrayBuilds = new ArrayList<>();
+
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("r_routineToBuilds_c_routineId eq '");
@@ -186,8 +188,6 @@ public class TestrayRoutine {
 
 			sb.append(")");
 		}
-
-		List<TestrayBuild> testrayBuilds = new ArrayList<>();
 
 		try {
 			List<JSONObject> entityJSONObjects = _testrayServer.requestGraphQL(

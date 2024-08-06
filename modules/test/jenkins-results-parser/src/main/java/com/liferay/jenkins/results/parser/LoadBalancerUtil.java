@@ -337,14 +337,14 @@ public class LoadBalancerUtil {
 	private static List<String> _getBlacklist(
 		Properties properties, boolean verbose) {
 
+		List<String> blacklist = new ArrayList<>();
+
 		String blacklistString = properties.getProperty(
 			"jenkins.load.balancer.blacklist", "");
 
 		if (verbose) {
 			System.out.println("Blacklist: " + blacklistString);
 		}
-
-		List<String> blacklist = new ArrayList<>();
 
 		for (String blacklistItem : blacklistString.split(",")) {
 			blacklist.add(blacklistItem.trim());

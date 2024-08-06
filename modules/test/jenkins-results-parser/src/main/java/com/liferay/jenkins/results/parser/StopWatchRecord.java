@@ -120,6 +120,8 @@ public class StopWatchRecord implements Comparable<StopWatchRecord> {
 	}
 
 	public JSONObject getJSONObject() {
+		JSONObject jsonObject = new JSONObject();
+
 		JSONArray childStopWatchRecordJSONArray = new JSONArray();
 
 		if (_childStopWatchRecords != null) {
@@ -130,8 +132,6 @@ public class StopWatchRecord implements Comparable<StopWatchRecord> {
 					childStopWatchRecord.getJSONObject());
 			}
 		}
-
-		JSONObject jsonObject = new JSONObject();
 
 		if (childStopWatchRecordJSONArray.length() > 0) {
 			jsonObject.put(

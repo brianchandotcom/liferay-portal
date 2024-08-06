@@ -44,9 +44,9 @@ public class URLCompareUtil {
 	}
 
 	private static Map<String, String> _getQueryMap(URL url) {
-		String query = url.getQuery();
-
 		Map<String, String> queryMap = new HashMap<>();
+
+		String query = url.getQuery();
 
 		if (query == null) {
 			return queryMap;

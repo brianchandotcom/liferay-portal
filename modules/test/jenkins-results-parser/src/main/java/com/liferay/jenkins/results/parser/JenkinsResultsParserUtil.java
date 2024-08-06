@@ -2230,11 +2230,11 @@ public class JenkinsResultsParserUtil {
 			String[] resourceIncludesRelativeGlobs, File rootDir)
 		throws IOException {
 
+		final List<URL> includedResourceURLs = new ArrayList<>();
+
 		final List<PathMatcher> pathMatchers = toPathMatchers(
 			getCanonicalPath(rootDir) + File.separator,
 			resourceIncludesRelativeGlobs);
-
-		final List<URL> includedResourceURLs = new ArrayList<>();
 
 		Path rootDirPath = rootDir.toPath();
 

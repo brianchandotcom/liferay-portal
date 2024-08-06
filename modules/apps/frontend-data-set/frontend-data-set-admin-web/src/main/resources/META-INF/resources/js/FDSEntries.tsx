@@ -101,6 +101,7 @@ interface IAddFDSEntryModalContentInterface {
 	closeModal: Function;
 	loadData: Function;
 	namespace: string;
+	resolvedRESTSchemas?: Array<string>;
 	restApplications?: Array<string>;
 }
 
@@ -108,6 +109,7 @@ const AddFDSEntryModalContent = ({
 	closeModal,
 	loadData,
 	namespace,
+	resolvedRESTSchemas,
 	restApplications,
 }: IAddFDSEntryModalContentInterface) => {
 	const [fdsEntryLabel, setFDSEntryLabel] = useState('');
@@ -196,7 +198,10 @@ const AddFDSEntryModalContent = ({
 		return true;
 	};
 
-	const getRESTSchemas = async (restApplication: string) => {
+	const getRESTSchemas = async (
+		restApplication: string,
+		resolvedRESTSchemas: Array<string> = []
+	) => {
 		if (!restApplication) {
 			return;
 		}
@@ -220,7 +225,10 @@ const AddFDSEntryModalContent = ({
 
 		schemaNames.forEach((schemaName) => {
 			paths.forEach((path: string) => {
-				if (!isPathValid(path, ALLOWED_ENDPOINTS_PARAMETERS)) {
+				if (
+					!isPathValid(path, ALLOWED_ENDPOINTS_PARAMETERS) &&
+					!resolvedRESTSchemas.includes(schemaName)
+				) {
 					return;
 				}
 
@@ -332,7 +340,7 @@ const AddFDSEntryModalContent = ({
 
 					setRequiredRESTApplicationValidationError(false);
 
-					getRESTSchemas(item);
+					getRESTSchemas(item, resolvedRESTSchemas);
 				}}
 				restApplications={restApplications!}
 			/>
@@ -537,6 +545,7 @@ interface IFDSEntriesInterface {
 	fdsViewsURL: string;
 	namespace: string;
 	permissionsURL: string;
+	resolvedRESTSchemas: Array<string>;
 	restApplications: Array<string>;
 }
 
@@ -544,6 +553,7 @@ const FDSEntries = ({
 	fdsViewsURL,
 	namespace,
 	permissionsURL,
+	resolvedRESTSchemas,
 	restApplications,
 }: IFDSEntriesInterface) => {
 	const creationMenu = {
@@ -561,6 +571,7 @@ const FDSEntries = ({
 								closeModal={closeModal}
 								loadData={loadData}
 								namespace={namespace}
+								resolvedRESTSchemas={resolvedRESTSchemas}
 								restApplications={restApplications}
 							/>
 						),

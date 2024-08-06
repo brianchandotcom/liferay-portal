@@ -32,7 +32,7 @@ describe('VisibilityButton', () => {
 
 		expect(updateItemStyle).toBeCalledWith(
 			expect.objectContaining({
-				itemId: 'fragment01',
+				itemIds: ['fragment01'],
 				selectedViewportSize: 'tablet',
 				styleName: 'display',
 				styleValue: 'block',

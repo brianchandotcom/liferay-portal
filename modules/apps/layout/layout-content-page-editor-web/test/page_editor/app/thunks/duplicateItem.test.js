@@ -141,8 +141,26 @@ describe('duplicateItem', () => {
 			() => STATE
 		);
 
+		expect(selectItems).toBeCalledWith('heading02', {
+			origin: 'itemActions',
+		});
+	});
+
+	it('calls selecItems with the duplicated ids (LPD-18221)', async () => {
+		Liferay.FeatureFlags['LPD-18221'] = true;
+
+		const dispatch = jest.fn();
+		const selectItems = jest.fn();
+
+		await duplicateItem({itemIds: ['heading01', 'button01'], selectItems})(
+			dispatch,
+			() => STATE
+		);
+
 		expect(selectItems).toBeCalledWith(['heading02', 'button02'], {
 			origin: 'itemActions',
 		});
+
+		Liferay.FeatureFlags['LPD-18221'] = false;
 	});
 });

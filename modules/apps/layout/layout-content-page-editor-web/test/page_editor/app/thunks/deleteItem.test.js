@@ -151,7 +151,7 @@ describe('deleteItem', () => {
 	it('dispatches the delete item action with the portletIds of the removed portlets, if any', async () => {
 		const dispatch = jest.fn();
 
-		await deleteItem({itemId: 'container', store: STATE})(
+		await deleteItem({itemIds: ['container'], store: STATE})(
 			dispatch,
 			() => STATE
 		);

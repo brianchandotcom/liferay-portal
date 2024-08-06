@@ -14,7 +14,7 @@ jest.mock(
 
 const INITIAL_CONFIG = {
 	dispatch: jest.fn(),
-	itemId: 'fragment01',
+	itemIds: ['fragment01'],
 	selectedViewportSize: VIEWPORT_SIZES.desktop,
 	styleName: 'display',
 	styleValue: 'none',
@@ -26,7 +26,7 @@ describe('updateItemStyle', () => {
 
 		expect(updateItemConfig).toBeCalledWith({
 			itemConfig: {styles: {display: 'none'}},
-			itemId: 'fragment01',
+			itemIds: ['fragment01'],
 		});
 	});
 
@@ -38,7 +38,7 @@ describe('updateItemStyle', () => {
 
 		expect(updateItemConfig).toBeCalledWith({
 			itemConfig: {tablet: {styles: {display: 'none'}}},
-			itemId: 'fragment01',
+			itemIds: ['fragment01'],
 		});
 	});
 
@@ -50,7 +50,7 @@ describe('updateItemStyle', () => {
 
 		expect(updateItemConfig).toBeCalledWith({
 			itemConfig: {landscapeMobile: {styles: {display: 'none'}}},
-			itemId: 'fragment01',
+			itemIds: ['fragment01'],
 		});
 	});
 
@@ -62,7 +62,7 @@ describe('updateItemStyle', () => {
 
 		expect(updateItemConfig).toBeCalledWith({
 			itemConfig: {portraitMobile: {styles: {display: 'none'}}},
-			itemId: 'fragment01',
+			itemIds: ['fragment01'],
 		});
 	});
 });

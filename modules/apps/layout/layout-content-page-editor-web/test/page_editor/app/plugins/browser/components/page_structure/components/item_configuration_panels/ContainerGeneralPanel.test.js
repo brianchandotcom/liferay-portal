@@ -84,7 +84,7 @@ describe('ContainerGeneralPanel', () => {
 					target: '_blank',
 				},
 			},
-			itemId: 'some-container-id',
+			itemIds: ['some-container-id'],
 		});
 	});
 
@@ -103,7 +103,7 @@ describe('ContainerGeneralPanel', () => {
 					target: '',
 				},
 			},
-			itemId: 'some-container-id',
+			itemIds: ['some-container-id'],
 		});
 	});
 

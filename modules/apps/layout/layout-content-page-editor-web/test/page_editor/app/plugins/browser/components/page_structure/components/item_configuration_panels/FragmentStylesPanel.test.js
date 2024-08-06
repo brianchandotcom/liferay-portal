@@ -228,7 +228,7 @@ describe('FragmentStylesPanel', () => {
 					},
 				},
 			},
-			itemId: '0',
+			itemIds: ['0'],
 		});
 	});
 });

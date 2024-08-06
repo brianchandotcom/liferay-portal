@@ -55,7 +55,7 @@ const DEFAULT_STATE = {
 };
 
 const renderComponent = ({
-	activeItemIds,
+	activeItemIds = [],
 	dispatch = () => {},
 	state = DEFAULT_STATE,
 } = {}) =>
@@ -163,7 +163,7 @@ describe('ShortcutManager', () => {
 		const setEditedNodeId = useSetEditedNodeId();
 
 		renderComponent({
-			activeItemIds: 'fragment01',
+			activeItemIds: ['fragment01'],
 		});
 
 		document.body.dispatchEvent(
@@ -190,7 +190,7 @@ describe('ShortcutManager', () => {
 		};
 
 		renderComponent({
-			activeItemIds: 'fragment01',
+			activeItemIds: ['fragment01'],
 			state: newState,
 		});
 
@@ -204,7 +204,7 @@ describe('ShortcutManager', () => {
 
 		expect(updateItemStyle).toBeCalledWith(
 			expect.objectContaining({
-				itemId: 'fragment01',
+				itemIds: ['fragment01'],
 				selectedViewportSize: 'desktop',
 				styleName: 'display',
 				styleValue: 'none',

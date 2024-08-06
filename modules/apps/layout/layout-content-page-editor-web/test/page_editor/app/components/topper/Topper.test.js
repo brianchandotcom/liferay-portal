@@ -38,7 +38,7 @@ const renderTopper = ({
 	hasUpdatePermissions = true,
 	lockedExperience = false,
 	rowConfig = {styles: {}},
-	activeItemIds,
+	activeItemIds = [],
 	isActive = true,
 	type = LAYOUT_DATA_ITEM_TYPES.row,
 } = {}) => {
@@ -124,7 +124,7 @@ describe('Topper', () => {
 
 	describe('Ensures that selectItem() is not called when the topper buttons are clicked', () => {
 		const params = {
-			activeItemIds: 'item-1',
+			activeItemIds: ['item-1'],
 			isActive: true,
 			type: 'fragment',
 		};

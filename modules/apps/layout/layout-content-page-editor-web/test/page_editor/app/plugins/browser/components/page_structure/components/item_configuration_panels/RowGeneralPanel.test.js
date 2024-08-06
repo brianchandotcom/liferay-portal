@@ -116,7 +116,7 @@ describe('RowGeneralPanel', () => {
 
 		expect(updateItemConfig).toHaveBeenCalledWith({
 			itemConfig: {gutters: false},
-			itemId: '0',
+			itemIds: ['0'],
 		});
 	});
 
@@ -133,7 +133,7 @@ describe('RowGeneralPanel', () => {
 			itemConfig: {
 				modulesPerRow: 2,
 			},
-			itemId: '0',
+			itemIds: ['0'],
 		});
 	});
 
@@ -183,7 +183,7 @@ describe('RowGeneralPanel', () => {
 			itemConfig: {
 				verticalAlignment: 'middle',
 			},
-			itemId: '0',
+			itemIds: ['0'],
 		});
 	});
 
@@ -218,7 +218,7 @@ describe('RowGeneralPanel', () => {
 			itemConfig: {
 				reverseOrder: true,
 			},
-			itemId: '0',
+			itemIds: ['0'],
 		});
 	});
 
@@ -238,7 +238,7 @@ describe('RowGeneralPanel', () => {
 			itemConfig: {
 				tablet: {modulesPerRow: 1},
 			},
-			itemId: '0',
+			itemIds: ['0'],
 		});
 	});
 

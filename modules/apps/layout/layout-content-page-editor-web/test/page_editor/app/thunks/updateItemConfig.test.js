@@ -27,7 +27,7 @@ describe('updateItemConfig', () => {
 		updateItemConfig({
 			config: {},
 			itemConfig: {},
-			itemId: '0',
+			itemIds: ['0'],
 			segmentsExperienceId: '0',
 		})(
 			() => {},
@@ -56,7 +56,7 @@ describe('updateItemConfig', () => {
 		await runThunk();
 
 		expect(updateItemConfigAction).toHaveBeenCalledWith({
-			itemId: '0',
+			itemIds: ['0'],
 			layoutData: {
 				items: {},
 				version: 1,

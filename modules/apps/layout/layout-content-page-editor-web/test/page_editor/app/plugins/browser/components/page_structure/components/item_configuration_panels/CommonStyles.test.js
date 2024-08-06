@@ -185,7 +185,7 @@ describe('CommonStyles', () => {
 					},
 				},
 			},
-			itemId: '0',
+			itemIds: ['0'],
 		});
 	});
 

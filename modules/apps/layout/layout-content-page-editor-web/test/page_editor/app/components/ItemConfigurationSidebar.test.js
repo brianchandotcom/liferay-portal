@@ -22,7 +22,7 @@ jest.mock(
 	() => jest.fn(() => () => Promise.resolve())
 );
 
-const renderComponent = ({activeItemIds} = {}) => {
+const renderComponent = ({activeItemIds = []} = {}) => {
 	render(
 		<StoreAPIContextProvider getState={() => INITIAL_STATE}>
 			<ControlsProvider

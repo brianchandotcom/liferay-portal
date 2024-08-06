@@ -66,7 +66,25 @@ public class SessionAuthToken implements AuthToken {
 			return;
 		}
 
+		long plid = liferayPortletURL.getPlid();
+
 		String portletId = liferayPortletURL.getPortletId();
+
+		String key = PortletPermissionUtil.getPrimaryKey(plid, portletId);
+
+		Object sessionAuthenticationToken = _getSessionAuthenticationToken(
+			httpServletRequest, key, false);
+
+		if (sessionAuthenticationToken == _NULL_TOKEN) {
+			return;
+		}
+
+		if (sessionAuthenticationToken instanceof String) {
+			liferayPortletURL.setParameter(
+				"p_p_auth", (String)sessionAuthenticationToken);
+
+			return;
+		}
 
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
 			PortalUtil.getCompanyId(httpServletRequest), portletId);
@@ -75,10 +93,10 @@ public class SessionAuthToken implements AuthToken {
 			AuthTokenWhitelistUtil.isPortletURLPortletInvocationWhitelisted(
 				liferayPortletURL)) {
 
+			_setNullSessionAuthenticationToken(httpServletRequest, key);
+
 			return;
 		}
-
-		long plid = liferayPortletURL.getPlid();
 
 		try {
 			Layout layout = LayoutLocalServiceUtil.getLayout(plid);
@@ -87,6 +105,8 @@ public class SessionAuthToken implements AuthToken {
 				(LayoutTypePortlet)layout.getLayoutType();
 
 			if (layoutTypePortlet.hasPortletId(portletId)) {
+				_setNullSessionAuthenticationToken(httpServletRequest, key);
+
 				return;
 			}
 		}
@@ -212,6 +232,20 @@ public class SessionAuthToken implements AuthToken {
 		HttpServletRequest httpServletRequest, String key,
 		boolean createToken) {
 
+		Object sessionAuthenticationToken = _getSessionAuthenticationToken(
+			httpServletRequest, key, createToken);
+
+		if (sessionAuthenticationToken instanceof String) {
+			return (String)sessionAuthenticationToken;
+		}
+
+		return null;
+	}
+
+	private Object _getSessionAuthenticationToken(
+		HttpServletRequest httpServletRequest, String key,
+		boolean createToken) {
+
 		HttpServletRequest originalHttpServletRequest =
 			PortalUtil.getOriginalServletRequest(httpServletRequest);
 
@@ -219,10 +253,12 @@ public class SessionAuthToken implements AuthToken {
 
 		String tokenKey = WebKeys.AUTHENTICATION_TOKEN.concat(key);
 
-		String sessionAuthenticationToken = (String)httpSession.getAttribute(
-			tokenKey);
+		Object sessionAuthenticationToken = httpSession.getAttribute(tokenKey);
 
-		if (createToken && Validator.isNull(sessionAuthenticationToken)) {
+		if (createToken &&
+			((sessionAuthenticationToken == null) ||
+			 (sessionAuthenticationToken == _NULL_TOKEN))) {
+
 			sessionAuthenticationToken = PwdGenerator.getPassword(
 				PropsValues.AUTH_TOKEN_LENGTH);
 
@@ -232,7 +268,22 @@ public class SessionAuthToken implements AuthToken {
 		return sessionAuthenticationToken;
 	}
 
+	private void _setNullSessionAuthenticationToken(
+		HttpServletRequest httpServletRequest, String key) {
+
+		HttpServletRequest originalHttpServletRequest =
+			PortalUtil.getOriginalServletRequest(httpServletRequest);
+
+		HttpSession httpSession = originalHttpServletRequest.getSession();
+
+		String tokenKey = WebKeys.AUTHENTICATION_TOKEN.concat(key);
+
+		httpSession.setAttribute(tokenKey, _NULL_TOKEN);
+	}
+
 	private static final String _CSRF = "#CSRF";
+
+	private static final byte[] _NULL_TOKEN = new byte[0];
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SessionAuthToken.class);

@@ -16,7 +16,7 @@ import {performSamlSafeAdminLogin} from './samlVirtualInstanceUtil';
 
 const _DEFAULT_METADATA_PATH = '/c/portal/saml/metadata';
 
-async function addIdentityProviderConnection(
+export async function addIdentityProviderConnection(
 	idpConnection: TIdpConnection,
 	page
 ) {

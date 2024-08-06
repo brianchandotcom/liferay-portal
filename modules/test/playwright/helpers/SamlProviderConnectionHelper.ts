@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {AttributeMapping} from '../pages/saml-web/IdentityProviderConnectionsPage';
+
 export const DEFAULT_IDP_CONNECTION_VALUES = {
 	enabled: true,
 };
@@ -15,7 +17,7 @@ export const DEFAULT_SP_CONNECTION_VALUES = {
 };
 
 export type TIdpConnection = {
-	attributeMappings?: string;
+	attributeMappings?: AttributeMapping[];
 	clockSkew?: string;
 	enabled?: boolean;
 	entityId?: string;

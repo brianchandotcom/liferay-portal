@@ -43,7 +43,9 @@ public class PortalWorkspaceGitRepository extends BaseWorkspaceGitRepository {
 		boolean relevantEngineEnabled = Boolean.parseBoolean(
 			buildProperties.getProperty("relevant.engine.enabled"));
 
-		if (relevantEngineEnabled) {
+		String upstreamBranchName = getUpstreamBranchName();
+
+		if (relevantEngineEnabled && upstreamBranchName.equals("master")) {
 			RelevantTestSuite relevantTestSuite = new RelevantTestSuite(
 				_getRelevantPortalAcceptancePullRequestJob());
 

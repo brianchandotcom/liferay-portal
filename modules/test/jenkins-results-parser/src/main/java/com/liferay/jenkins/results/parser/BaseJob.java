@@ -149,6 +149,18 @@ public abstract class BaseJob implements Job {
 			boolean relevantEngineEnabled = Boolean.parseBoolean(
 				buildProperties.getProperty("relevant.engine.enabled"));
 
+			if (this instanceof PortalAcceptancePullRequestJob) {
+				PortalAcceptancePullRequestJob portalAcceptancePullRequestJob =
+					(PortalAcceptancePullRequestJob)this;
+
+				String upstreamBranchName =
+					portalAcceptancePullRequestJob.getUpstreamBranchName();
+
+				if (!upstreamBranchName.equals("master")) {
+					relevantEngineEnabled = false;
+				}
+			}
+
 			if (relevantEngineEnabled &&
 				Objects.equals(getTestSuiteName(), "relevant")) {
 

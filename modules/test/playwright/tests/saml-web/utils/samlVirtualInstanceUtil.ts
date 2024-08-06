@@ -109,6 +109,22 @@ export async function deleteVirtualInstance(name: string, page) {
 	await virtualInstancesPage.deleteVirtualInstance(name);
 }
 
+export async function performSamlSafeAdminLogin(browser, domain: string) {
+	const page = await browser.newPage({
+		baseURL: `http://${domain}:8080`,
+	});
+
+	await performLogin(
+		page,
+		'test',
+		'?p_p_id=com_liferay_login_web_portlet_LoginPortlet&' +
+			'p_p_state=maximized',
+		`@${domain}.com`
+	);
+
+	return page;
+}
+
 export async function resetSamlKeystoreManagerTarget(page) {
 	const systemSettingsPage = new SystemSettingsPage(page);
 

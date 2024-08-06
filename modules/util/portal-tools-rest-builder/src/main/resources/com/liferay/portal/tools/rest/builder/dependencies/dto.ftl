@@ -85,8 +85,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 	)
 </#if>
 
-<#assign dtoParentClassName = freeMarkerTool.getDTOParentClassName(openAPIYAML, schemaName)! />
-
 @Generated("")
 @GraphQLName(
 	<#if schema.description?has_content>
@@ -117,6 +115,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 </#if>
 
 @XmlRootElement(name = "${schemaName}")
+
+<#assign dtoParentClassName = freeMarkerTool.getDTOParentClassName(openAPIYAML, schemaName)! />
+
 public <#if schema.discriminator?has_content>abstract</#if> class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoParentClassName}</#if> implements Serializable {
 
 	public static ${schemaName} toDTO(String json) {
@@ -448,12 +449,12 @@ public <#if schema.discriminator?has_content>abstract</#if> class ${schemaName} 
 
 	public String toString() {
 
+		StringBundler sb = new StringBundler();
+
 		<#assign
 			toStringEnumSchemas = enumSchemas
 			toStringProperties = properties
 		/>
-
-		StringBundler sb = new StringBundler();
 
 		<#if dtoParentClassName?has_content>
 			<#assign

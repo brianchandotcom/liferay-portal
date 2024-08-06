@@ -685,6 +685,8 @@ public abstract class BaseBuild implements Build {
 	public Map<String, String> getInjectedEnvironmentVariablesMap()
 		throws IOException {
 
+		Map<String, String> injectedEnvironmentVariablesMap = new HashMap<>();
+
 		String localBuildURL = JenkinsResultsParserUtil.getLocalURL(
 			getBuildURL());
 
@@ -694,8 +696,6 @@ public abstract class BaseBuild implements Build {
 		JSONObject envMapJSONObject = jsonObject.getJSONObject("envMap");
 
 		Set<String> envMapJSONObjectKeySet = envMapJSONObject.keySet();
-
-		Map<String, String> injectedEnvironmentVariablesMap = new HashMap<>();
 
 		for (String key : envMapJSONObjectKeySet) {
 			injectedEnvironmentVariablesMap.put(
@@ -923,11 +923,11 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public TestResult getLongestRunningTest() {
+		TestResult longestRunningTest = null;
+
 		List<TestResult> testResults = getTestResults(null);
 
 		long longestTestDuration = 0;
-
-		TestResult longestRunningTest = null;
 
 		for (TestResult testResult : testResults) {
 			long testDuration = testResult.getDuration();

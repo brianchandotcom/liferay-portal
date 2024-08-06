@@ -110,10 +110,8 @@ public class ${schemaName}SerDes {
 					propertySchema = freeMarkerTool.getDTOPropertySchema(configYAML, propertyName, schema, allSchemas)!
 				/>
 
-				<#if dtoParentClassName?has_content>
-					<#if !propertySchema?has_content>
-						<#assign propertySchema = freeMarkerTool.getDTOPropertySchema(configYAML, propertyName, dtoParentSchema, allSchemas) />
-					</#if>
+				<#if dtoParentClassName?has_content && !propertySchema?has_content>
+					<#assign propertySchema = freeMarkerTool.getDTOPropertySchema(configYAML, propertyName, dtoParentSchema, allSchemas) />
 				</#if>
 
 				<#if enumSchemas?keys?seq_contains(properties[propertyName])>
@@ -233,10 +231,8 @@ public class ${schemaName}SerDes {
 				propertySchema = freeMarkerTool.getDTOPropertySchema(configYAML, propertyName, schema, allSchemas)!
 			/>
 
-			<#if dtoParentClassName?has_content>
-				<#if !propertySchema?has_content>
-					<#assign propertySchema = freeMarkerTool.getDTOPropertySchema(configYAML, propertyName, dtoParentSchema, allSchemas) />
-				</#if>
+			<#if dtoParentClassName?has_content && !propertySchema?has_content>
+				<#assign propertySchema = freeMarkerTool.getDTOPropertySchema(configYAML, propertyName, dtoParentSchema, allSchemas) />
 			</#if>
 
 			<#if enumSchemas?keys?seq_contains(properties[propertyName])>
@@ -288,10 +284,8 @@ public class ${schemaName}SerDes {
 			<#list properties?keys as propertyName>
 				<#assign propertySchema = freeMarkerTool.getDTOPropertySchema(configYAML, propertyName, schema, allSchemas)! />
 
-				<#if dtoParentClassName?has_content>
-					<#if !propertySchema?has_content>
-						<#assign propertySchema = freeMarkerTool.getDTOPropertySchema(configYAML, propertyName, dtoParentSchema, allSchemas) />
-					</#if>
+				<#if dtoParentClassName?has_content && !propertySchema?has_content>
+					<#assign propertySchema = freeMarkerTool.getDTOPropertySchema(configYAML, propertyName, dtoParentSchema, allSchemas) />
 				</#if>
 
 				<#if !propertyName?is_first>
@@ -354,10 +348,8 @@ public class ${schemaName}SerDes {
 			<#list properties?keys as propertyName>
 				<#assign propertySchema = freeMarkerTool.getDTOPropertySchema(configYAML, propertyName, schema, allSchemas)! />
 
-				<#if dtoParentClassName?has_content>
-					<#if !propertySchema?has_content>
-						<#assign propertySchema = freeMarkerTool.getDTOPropertySchema(configYAML, propertyName, dtoParentSchema, allSchemas) />
-					</#if>
+				<#if dtoParentClassName?has_content && !propertySchema?has_content>
+					<#assign propertySchema = freeMarkerTool.getDTOPropertySchema(configYAML, propertyName, dtoParentSchema, allSchemas) />
 				</#if>
 
 				<#if !propertyName?is_first>

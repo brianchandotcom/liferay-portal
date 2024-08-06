@@ -10,11 +10,40 @@ export interface Item {
 	termName: string;
 }
 
-export default function ({itemData}: {itemData: Item}) {
-	navigator.clipboard.writeText(itemData.termName);
-
+function displaySucessToast() {
 	openToast({
 		message: Liferay.Language.get('term-copied-successfully'),
 		type: 'success',
 	});
+}
+
+function fallbackCopyToClipboard(text: string) {
+	const textarea = document.createElement('textarea');
+
+	textarea.value = text;
+	textarea.className = 'sr-only';
+
+	document.body.appendChild(textarea);
+
+	textarea.select();
+
+	try {
+		document.execCommand('copy');
+		displaySucessToast();
+	}
+	catch (error) {
+		console.error(error);
+	}
+
+	document.body.removeChild(textarea);
+}
+
+export default function ({itemData}: {itemData: Item}) {
+	if (window.isSecureContext && navigator.clipboard) {
+		navigator.clipboard.writeText(itemData.termName);
+		displaySucessToast();
+	}
+	else {
+		fallbackCopyToClipboard(itemData.termName);
+	}
 }

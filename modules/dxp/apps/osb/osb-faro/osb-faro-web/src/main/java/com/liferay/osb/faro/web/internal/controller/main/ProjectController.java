@@ -34,6 +34,7 @@ import com.liferay.osb.faro.web.internal.exception.FaroException;
 import com.liferay.osb.faro.web.internal.exception.FaroValidationException;
 import com.liferay.osb.faro.web.internal.model.display.contacts.JoinableProjectDisplay;
 import com.liferay.osb.faro.web.internal.model.display.contacts.ProjectDisplay;
+import com.liferay.osb.faro.web.internal.model.display.contacts.ProjectUsageDisplay;
 import com.liferay.osb.faro.web.internal.model.display.contacts.TimeZoneDisplay;
 import com.liferay.osb.faro.web.internal.model.display.main.FaroSubscriptionDisplay;
 import com.liferay.osb.faro.web.internal.param.FaroParam;
@@ -41,6 +42,7 @@ import com.liferay.osb.faro.web.internal.util.JSONUtil;
 import com.liferay.osb.faro.web.internal.util.TimeZoneUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.GroupFriendlyURLException;
 import com.liferay.portal.kernel.exception.LayoutFriendlyURLException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -60,6 +62,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
@@ -535,6 +538,27 @@ public class ProjectController extends BaseFaroController {
 					return null;
 				}
 			});
+	}
+
+	@GET
+	@Path("/usage")
+	@RolesAllowed(RoleConstants.SITE_ADMINISTRATOR)
+	public List<ProjectUsageDisplay> getProjectUsages(
+		@QueryParam("groupId") Long groupId) {
+
+		List<FaroProject> faroProjects = new ArrayList<>();
+
+		if (Validator.isNotNull(groupId)) {
+			faroProjects.add(
+				_faroProjectLocalService.fetchFaroProjectByGroupId(groupId));
+		}
+		else {
+			faroProjects = _faroProjectLocalService.getFaroProjects(
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		}
+
+		return TransformUtil.transform(
+			faroProjects, faroProject -> new ProjectUsageDisplay(faroProject));
 	}
 
 	@GET

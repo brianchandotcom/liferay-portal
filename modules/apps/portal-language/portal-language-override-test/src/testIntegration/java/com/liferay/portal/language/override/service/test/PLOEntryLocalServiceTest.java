@@ -116,14 +116,16 @@ public class PLOEntryLocalServiceTest {
 						key, LanguageUtil.getLanguageId(locale),
 						RandomTestUtil.randomString());
 
-					throw new Exception("Unable to add PLOEntry");
+					throw new Exception(
+						"Unable to add portal language override entry");
 				});
 
 			Assert.fail();
 		}
 		catch (Exception exception) {
 			Assert.assertEquals(
-				"Unable to add PLOEntry", exception.getMessage());
+				"Unable to add portal language override entry",
+				exception.getMessage());
 
 			Assert.assertEquals(key, _language.get(locale, key));
 		}
@@ -162,14 +164,16 @@ public class PLOEntryLocalServiceTest {
 					_ploEntryLocalService.deletePLOEntry(
 						ploEntry.getPloEntryId());
 
-					throw new Exception("Unable to delete PLOEntry");
+					throw new Exception(
+						"Unable to add portal language override entry");
 				});
 
 			Assert.fail();
 		}
 		catch (Exception exception) {
 			Assert.assertEquals(
-				"Unable to delete PLOEntry", exception.getMessage());
+				"Unable to add portal language override entry",
+				exception.getMessage());
 
 			Assert.assertEquals(value, _language.get(locale, key));
 		}
@@ -192,7 +196,6 @@ public class PLOEntryLocalServiceTest {
 			LanguageUtil.getLanguageId(LocaleUtil.US), properties);
 
 		Assert.assertEquals(value1, _language.get(LocaleUtil.US, key1));
-
 		Assert.assertEquals(value2, _language.get(LocaleUtil.US, key2));
 	}
 
@@ -237,7 +240,6 @@ public class PLOEntryLocalServiceTest {
 		}
 
 		Assert.assertEquals(key1, _language.get(LocaleUtil.US, key1));
-
 		Assert.assertEquals(key2, _language.get(LocaleUtil.US, key2));
 	}
 

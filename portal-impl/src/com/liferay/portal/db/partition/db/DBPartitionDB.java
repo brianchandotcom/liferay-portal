@@ -33,7 +33,7 @@ public interface DBPartitionDB {
 			Connection connection, String partitionName)
 		throws SQLException;
 
-	public default List<String> getCreateRulesSQL(String schemaName)
+	public default List<String> getCreateRulesSQL(String partitionName)
 		throws SQLException {
 
 		return new ArrayList<>();

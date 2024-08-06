@@ -46,7 +46,7 @@ public class TicketAttachmentsInitiateUploadRestController
 			JSONObject jsonObject = new JSONObject(json);
 
 			String fileName = jsonObject.getString("fileName");
-			String md5Checksum = jsonObject.getString("md5Checksum");
+			String md5Checksum = jsonObject.optString("md5Checksum");
 			long zendeskTicketId = jsonObject.getLong("zendeskTicketId");
 
 			TicketAttachment ticketAttachment =

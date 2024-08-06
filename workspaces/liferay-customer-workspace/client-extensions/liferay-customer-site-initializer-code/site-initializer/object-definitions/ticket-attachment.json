@@ -1,4 +1,5 @@
 {
+	"enableObjectEntryDraft": true,
 	"label": {
 		"en-US": "Ticket Attachment"
 	},
@@ -72,7 +73,7 @@
 				"en-US": "MD5 Checksum"
 			},
 			"name": "md5Checksum",
-			"required": true
+			"required": false
 		},
 		{
 			"DBType": "String",

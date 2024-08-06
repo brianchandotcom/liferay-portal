@@ -100,11 +100,11 @@ public class SynonymSearchTest {
 
 			addSynonymSet("dxp,portal");
 			addSynonymSet("efectivo,productivo");
+			addSynonymSet("effectief,productief");
+			addSynonymSet("feliz,alegre");
+			addSynonymSet("glücklich,heiter");
 			addSynonymSet("hatékony,produktív");
 			addSynonymSet("maison,logement");
-			addSynonymSet("glücklich,heiter");
-			addSynonymSet("feliz,alegre");
-			addSynonymSet("effectief,productief");
 		}
 
 		addJournalArticles();

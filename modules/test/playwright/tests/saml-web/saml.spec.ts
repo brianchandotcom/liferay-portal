@@ -6,17 +6,36 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {loginTest} from '../../fixtures/loginTest';
-import {samlAdminPagesTest} from '../../fixtures/samlAdminPagesTest';
+import {searchAdminPageTest} from '../../fixtures/searchAdminPageTest';
+import {usersAndOrganizationsPagesTest} from '../../fixtures/usersAndOrganizationsPagesTest';
 import {virtualInstancesPagesTest} from '../../fixtures/virtualInstancesPagesTest';
+import {TCustomField, TInputField} from '../../helpers/CustomFieldTypesHelper';
+import {
+	DEFAULT_IDP_CONNECTION_VALUES,
+	DEFAULT_SP_CONNECTION_VALUES,
+	TIdpConnection,
+	TSpConnection,
+} from '../../helpers/SamlProviderConnectionHelper';
+import {liferayConfig} from '../../liferay.config';
+import {AttributeMapping} from '../../pages/saml-web/IdentityProviderConnectionsPage';
+import {EditUserPage} from '../../pages/users-admin-web/EditUserPage';
+import {UsersAndOrganizationsPage} from '../../pages/users-admin-web/UsersAndOrganizationsPage';
+import {getRandomInt} from '../../utils/getRandomInt';
 import getRandomString from '../../utils/getRandomString';
 import {performLogout} from '../../utils/performLogin';
+import {
+	editIdentityProviderConnection,
+	editServiceProviderConnection,
+} from './utils/samlProviderConnectionUtil';
 import {
 	DEFAULT_IDP_NAME,
 	DEFAULT_IDP_URL,
 	DEFAULT_SP_NAME,
 	DEFAULT_SP_URL,
+	createCustomField,
 	createIdpUser,
 	deleteVirtualInstance,
+	performSamlSafeAdminLogin,
 	resetSamlKeystoreManagerTarget,
 	setupSamlInstances,
 	updateSamlKeystoreManagerTarget,
@@ -24,7 +43,8 @@ import {
 
 export const test = mergeTests(
 	loginTest(),
-	samlAdminPagesTest,
+	searchAdminPageTest,
+	usersAndOrganizationsPagesTest,
 	virtualInstancesPagesTest
 );
 
@@ -163,4 +183,161 @@ test('Create, edit, and delete a new virtual instance', async ({
 	).toBeVisible();
 
 	await virtualInstancesPage.deleteVirtualInstance(name);
+});
+
+test('Create two virtual instances, one IdP and one SP, and verify Custom User Attributes', async ({
+	browser,
+	editUserPage,
+	page,
+	searchAdminPage,
+	usersAndOrganizationsPage,
+}) => {
+
+	// Set the Keystore Manager Target to Doc Lib, so we can store multiple
+	// certificates in one instance
+
+	await updateSamlKeystoreManagerTarget(
+		page,
+		'Document Library Keystore Manager'
+	);
+
+	await setupSamlInstances(browser, page);
+
+	// Create identical Custom Fields for both instances, except starting value
+
+	const customFieldName = 'CustomField' + getRandomInt();
+
+	const fieldValues: TInputField = {
+		startingValue: 'idpStartingValue',
+	};
+
+	const customField: TCustomField = {
+		fieldName: customFieldName,
+		fieldType: 'inputField',
+		fieldValues,
+		resource: 'User',
+	};
+
+	await createCustomField(browser, customField, DEFAULT_IDP_NAME);
+
+	fieldValues.startingValue = 'spStartingValue';
+
+	customField.fieldValues = fieldValues;
+
+	await createCustomField(browser, customField, DEFAULT_SP_NAME);
+
+	// Edit IdP Connection to include User Custom Field attribute mapping
+
+	const attributeMappings: AttributeMapping[] = [
+		{
+			attributeMappingType: 'User Custom Fields',
+			samlAttribute: customFieldName,
+			userFieldExpression: customFieldName,
+		},
+	];
+
+	const idpConnection: TIdpConnection = {
+		attributeMappings,
+		entityId: DEFAULT_IDP_NAME,
+		idpDomain: `http://${DEFAULT_IDP_NAME}:8080`,
+		idpName: DEFAULT_IDP_NAME,
+		spName: DEFAULT_SP_NAME,
+		...DEFAULT_IDP_CONNECTION_VALUES,
+	};
+
+	await editIdentityProviderConnection(browser, idpConnection);
+
+	// Edit SP Connection to include User Custom Field attribute
+
+	const spConnection: TSpConnection = {
+		entityId: DEFAULT_SP_NAME,
+		idpName: DEFAULT_IDP_NAME,
+		spDomain: `http://${DEFAULT_SP_NAME}:8080`,
+		spName: DEFAULT_SP_NAME,
+		...DEFAULT_SP_CONNECTION_VALUES,
+	};
+
+	spConnection.attributes =
+		spConnection.attributes + `\nexpando:${customFieldName}`;
+
+	await editServiceProviderConnection(browser, spConnection);
+
+	// Create a user on the IdP instance
+
+	const userAccount = await createIdpUser(browser, DEFAULT_IDP_NAME);
+
+	// Perform SSO with the new user
+
+	let spInstancePage = await browser.newPage({
+		baseURL: DEFAULT_SP_URL,
+	});
+
+	await spInstancePage.goto('/');
+
+	const signInButton = await spInstancePage.getByRole('button', {
+		name: 'Sign In',
+	});
+
+	await signInButton.click();
+
+	await spInstancePage
+		.getByLabel('Email Address')
+		.waitFor({timeout: 30 * 1000});
+
+	await spInstancePage
+		.getByLabel('Email Address')
+		.fill(userAccount.emailAddress);
+	await spInstancePage.getByLabel('Password').fill('test');
+	await spInstancePage.getByLabel('Remember Me').check();
+	await spInstancePage.getByRole('button', {name: 'Sign In'}).click();
+
+	await spInstancePage
+		.getByTitle('User Profile Menu')
+		.waitFor({timeout: 30 * 1000});
+
+	await performLogout(spInstancePage);
+
+	// Perform reindex on User object
+
+	await searchAdminPage.goto();
+
+	await searchAdminPage.goToIndexActionsTab();
+
+	await searchAdminPage.reindexIndexActionsItem('User');
+
+	// Login to SP as admin, verify user custom field was imported properly
+
+	const defaultBaseUrl = liferayConfig.environment.baseUrl;
+
+	liferayConfig.environment.baseUrl = DEFAULT_SP_URL;
+
+	spInstancePage = await performSamlSafeAdminLogin(browser, DEFAULT_SP_NAME);
+
+	usersAndOrganizationsPage = await new UsersAndOrganizationsPage(
+		spInstancePage
+	);
+
+	await usersAndOrganizationsPage.goToUsers(false);
+
+	await (
+		await usersAndOrganizationsPage.usersTableRowLink(
+			userAccount.alternateName
+		)
+	).click();
+
+	editUserPage = await new EditUserPage(spInstancePage);
+
+	await expect(await editUserPage.customField(customFieldName)).toHaveValue(
+		'idpStartingValue'
+	);
+
+	liferayConfig.environment.baseUrl = defaultBaseUrl;
+
+	// Lastly, delete both virtual instances and reset the keystore target
+
+	await deleteVirtualInstance(DEFAULT_IDP_NAME, page);
+
+	await deleteVirtualInstance(DEFAULT_SP_NAME, page);
+
+	await resetSamlKeystoreManagerTarget(page);
 });

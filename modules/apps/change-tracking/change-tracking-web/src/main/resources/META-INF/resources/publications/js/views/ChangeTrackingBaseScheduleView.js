@@ -77,7 +77,7 @@ class ChangeTrackingBaseScheduleView extends React.Component {
 			publishTime: publishDate.getTime(),
 		});
 
-		this.setState({scheduleButtonDisabled: true});
+		this.setState({publishButtonDisabled: true});
 
 		fetch(portletURL, {
 			method: 'GET',
@@ -90,18 +90,18 @@ class ChangeTrackingBaseScheduleView extends React.Component {
 				else if (json.validationError) {
 					this.setState({validationError: json.validationError});
 
-					this.setState({scheduleButtonDisabled: false});
+					this.setState({publishButtonDisabled: false});
 				}
 				else if (json.error) {
 					this.setState({formError: json.error});
 
-					this.setState({scheduleButtonDisabled: false});
+					this.setState({publishButtonDisabled: false});
 				}
 			})
 			.catch((response) => {
 				this.setState({formError: response.error});
 
-				this.setState({scheduleButtonDisabled: false});
+				this.setState({publishButtonDisabled: false});
 			});
 	}
 

@@ -21,6 +21,8 @@ import com.liferay.commerce.pricing.constants.CommercePricingPortletKeys;
 import com.liferay.commerce.product.constants.CPActionKeys;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.util.CommerceAccountRoleHelper;
+import com.liferay.list.type.model.ListTypeDefinition;
+import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -81,6 +83,9 @@ public class CommerceAccountRoleHelperImpl
 			_checkRole(
 				AccountRoleConstants.ROLE_NAME_RETURNS_MANAGER,
 				RoleConstants.TYPE_REGULAR, serviceContext);
+
+			_checkRole(
+				RoleConstants.USER, RoleConstants.TYPE_REGULAR, serviceContext);
 		}
 
 		_checkRole(
@@ -397,6 +402,42 @@ public class CommerceAccountRoleHelperImpl
 				}
 			}
 		}
+		else if (name.equals(RoleConstants.USER)) {
+			for (String objectDefinitionName :
+					_RETURNS_MANAGER_OBJECT_DEFINITION_NAMES) {
+
+				ObjectDefinition objectDefinition =
+					_objectDefinitionLocalService.fetchObjectDefinition(
+						role.getCompanyId(), objectDefinitionName);
+
+				if (objectDefinition != null) {
+					companyResourceActionIds.put(
+						"com.liferay.object#" +
+							objectDefinition.getObjectDefinitionId(),
+						new String[] {ObjectActionKeys.ADD_OBJECT_ENTRY});
+				}
+			}
+
+			for (String listTypeDefinitionExternalReferenceCode :
+					_RETURNS_MANAGER_LIST_TYPE_DEFINITION_EXTERNAL_REFERENCE_CODES) {
+
+				ListTypeDefinition listTypeDefinition =
+					_listTypeDefinitionLocalService.
+						fetchListTypeDefinitionByExternalReferenceCode(
+							listTypeDefinitionExternalReferenceCode,
+							role.getCompanyId());
+
+				if (listTypeDefinition != null) {
+					_resourcePermissionLocalService.setResourcePermissions(
+						serviceContext.getCompanyId(),
+						listTypeDefinition.getModelClassName(),
+						ResourceConstants.SCOPE_INDIVIDUAL,
+						String.valueOf(
+							listTypeDefinition.getListTypeDefinitionId()),
+						role.getRoleId(), new String[] {ActionKeys.VIEW});
+				}
+			}
+		}
 
 		_setRolePermissions(
 			serviceContext.getCompanyId(),
@@ -413,6 +454,12 @@ public class CommerceAccountRoleHelperImpl
 		CommercePortletKeys.COMMERCE_RETURN
 	};
 
+	private static final String[]
+		_RETURNS_MANAGER_LIST_TYPE_DEFINITION_EXTERNAL_REFERENCE_CODES = {
+			"L_COMMERCE_RETURN_ITEM_STATUSES", "L_COMMERCE_RETURN_REASONS",
+			"L_COMMERCE_RETURN_RESOLUTION_METHODS", "L_COMMERCE_RETURN_STATUSES"
+		};
+
 	private static final String[] _RETURNS_MANAGER_OBJECT_DEFINITION_NAMES = {
 		"CommerceReturn", "CommerceReturnItem"
 	};
@@ -427,6 +474,9 @@ public class CommerceAccountRoleHelperImpl
 
 	@Reference
 	private AccountRoleLocalService _accountRoleLocalService;
+
+	@Reference
+	private ListTypeDefinitionLocalService _listTypeDefinitionLocalService;
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

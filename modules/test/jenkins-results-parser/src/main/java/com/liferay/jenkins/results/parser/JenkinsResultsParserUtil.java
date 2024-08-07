@@ -2230,8 +2230,6 @@ public class JenkinsResultsParserUtil {
 			String[] resourceIncludesRelativeGlobs, File rootDir)
 		throws IOException {
 
-		final List<URL> includedResourceURLs = new ArrayList<>();
-
 		final List<PathMatcher> pathMatchers = toPathMatchers(
 			getCanonicalPath(rootDir) + File.separator,
 			resourceIncludesRelativeGlobs);
@@ -2243,8 +2241,10 @@ public class JenkinsResultsParserUtil {
 				combine(
 					"Directory ", rootDirPath.toString(), " does not exist."));
 
-			return includedResourceURLs;
+			return Collections.emptyList();
 		}
+
+		final List<URL> includedResourceURLs = new ArrayList<>();
 
 		Files.walkFileTree(
 			rootDirPath,

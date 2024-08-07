@@ -85,14 +85,13 @@ public class CommerceReturnObjectEntryValuesContributor
 		values.put("channelId", commerceChannel.getCommerceChannelId());
 		values.put("channelName", commerceChannel.getName());
 
+		CommerceCurrency commerceCurrency = commerceOrder.getCommerceCurrency();
+
+		values.put("currencyCode", commerceCurrency.getCode());
+		values.put("currencySymbol", commerceCurrency.getSymbol());
+
 		if (!values.containsKey("c_commerceReturnId") &&
 			!values.containsKey("externalReferenceCode")) {
-
-			CommerceCurrency commerceCurrency =
-				commerceOrder.getCommerceCurrency();
-
-			values.put("currencyCode", commerceCurrency.getCode());
-			values.put("currencySymbol", commerceCurrency.getSymbol());
 
 			return;
 		}

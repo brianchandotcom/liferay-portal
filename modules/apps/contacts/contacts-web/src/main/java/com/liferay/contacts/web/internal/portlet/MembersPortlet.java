@@ -21,7 +21,7 @@ import org.osgi.service.component.annotations.Component;
 		"com.liferay.portlet.display-category=category.social",
 		"com.liferay.portlet.friendly-url-mapping=contacts",
 		"com.liferay.portlet.header-portlet-css=/css/main.css",
-		"com.liferay.portlet.header-portlet-javascript=/js/main.js",
+		"com.liferay.portlet.header-portlet-javascript=/js/legacy/main.js",
 		"com.liferay.portlet.icon=/icons/contacts_center.png",
 		"javax.portlet.display-name=Members",
 		"javax.portlet.expiration-cache=0",

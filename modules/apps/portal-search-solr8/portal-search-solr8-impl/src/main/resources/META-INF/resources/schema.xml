@@ -767,6 +767,8 @@
 		<field indexed="true" multiValued="true" name="spellCheckWord" stored="true" type="textSpell" />
 		<field docValues="true" indexed="true" name="startTime" stored="true" type="long" />
 		<field indexed="true" name="status" stored="true" type="string" />
+		<field indexed="true" name="statusByUserExternalReferenceCode" stored="true" type="string" />
+		<field indexed="true" name="statusByUserId" stored="true" type="string" />
 		<field indexed="true" name="subtitle" stored="true" type="text" />
 		<field indexed="true" multiValued="true" name="teamIds" stored="true" type="string" />
 		<field indexed="true" name="threadId" stored="true" type="string" />

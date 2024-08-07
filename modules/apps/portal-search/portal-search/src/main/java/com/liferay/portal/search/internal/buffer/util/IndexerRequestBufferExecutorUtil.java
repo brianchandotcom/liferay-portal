@@ -5,16 +5,12 @@
 
 package com.liferay.portal.search.internal.buffer.util;
 
-import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.SearchException;
-import com.liferay.portal.kernel.transaction.TransactionAttribute;
-import com.liferay.portal.kernel.transaction.TransactionConfig;
-import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.search.internal.buffer.BufferOverflowThreadLocal;
 import com.liferay.portal.search.internal.buffer.IndexerRequest;
 import com.liferay.portal.search.internal.buffer.IndexerRequestBuffer;
@@ -32,46 +28,6 @@ public class IndexerRequestBufferExecutorUtil {
 	}
 
 	public static void execute(
-		IndexerRequestBuffer indexerRequestBuffer, int numRequests) {
-
-		TransactionAttribute transactionAttribute =
-			indexerRequestBuffer.getTransactionAttribute();
-
-		if (transactionAttribute == null) {
-			_execute(indexerRequestBuffer, numRequests);
-
-			return;
-		}
-
-		TransactionConfig.Builder transactionConfigBuilder =
-			new TransactionConfig.Builder();
-
-		TransactionConfig transactionConfig =
-			transactionConfigBuilder.setIsolation(
-				transactionAttribute.getIsolation()
-			).setPropagation(
-				transactionAttribute.getPropagation()
-			).setReadOnly(
-				transactionAttribute.isReadOnly()
-			).setStrictReadOnly(
-				transactionAttribute.isStrictReadOnly()
-			).build();
-
-		try {
-			TransactionInvokerUtil.invoke(
-				transactionConfig,
-				() -> {
-					_execute(indexerRequestBuffer, numRequests);
-
-					return null;
-				});
-		}
-		catch (Throwable throwable) {
-			ReflectionUtil.throwException(throwable);
-		}
-	}
-
-	private static void _execute(
 		IndexerRequestBuffer indexerRequestBuffer, int numRequests) {
 
 		Collection<IndexerRequest> completedIndexerRequests = new ArrayList<>();

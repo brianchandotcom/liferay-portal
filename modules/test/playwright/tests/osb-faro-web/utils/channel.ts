@@ -13,7 +13,10 @@ export async function createChannel({
 }: {
 	apiHelpers: ApiHelpers;
 	channelName: string;
-}) {
+}): Promise<{
+	channel: any;
+	project: any;
+}> {
 	const projects = await apiHelpers.jsonWebServicesOSBFaro.getProjects();
 
 	const project = projects.find(({name}) => name === 'FARO-DEV-liferay');

@@ -160,7 +160,10 @@ export async function syncAnalyticsCloud({
 	page: Page;
 	siteName?: string;
 	userGroupName?: string;
-}) {
+}): Promise<{
+	channel: any;
+	project: any;
+}> {
 	const {channel, project} = await createChannel({
 		apiHelpers,
 		channelName,

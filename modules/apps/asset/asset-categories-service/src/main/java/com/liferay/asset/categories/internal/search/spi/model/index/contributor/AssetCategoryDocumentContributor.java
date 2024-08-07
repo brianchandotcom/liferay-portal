@@ -14,9 +14,11 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentContributor;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -71,6 +73,7 @@ public class AssetCategoryDocumentContributor
 				AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL));
 		_addAssetVocabularyCategoriesFields(
 			document, "assetVocabularyCategoryIds",
+			"groupAssetVocabularyCategoryExternalReferenceCodes",
 			assetVocabularyVisibilityTypeMap.get(
 				AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC));
 	}
@@ -146,9 +149,11 @@ public class AssetCategoryDocumentContributor
 
 	private void _addAssetVocabularyCategoriesFields(
 		Document document, String assetVocabularyCategoryIdsFieldName,
+		String groupAssetVocabularyCategoryERCFieldName,
 		Map<Long, List<AssetCategory>> assetVocabularyMap) {
 
 		String[] assetVocabularyCategories = {};
+		String[] assetVocabularyCategoryERCs = {};
 
 		if (MapUtil.isNotEmpty(assetVocabularyMap)) {
 			for (Map.Entry<Long, List<AssetCategory>> entry :
@@ -162,11 +167,39 @@ public class AssetCategoryDocumentContributor
 							assetCategory.getVocabularyId() + StringPool.DASH +
 								assetCategory.getCategoryId(),
 						String.class));
+
+				assetVocabularyCategoryERCs = ArrayUtil.append(
+					assetVocabularyCategoryERCs,
+					TransformUtil.transformToArray(
+						entry.getValue(),
+						assetCategory ->
+							_getAssetVocabularyCategoryExternalReferenceCodes(
+								assetCategory),
+						String.class));
 			}
 		}
 
 		document.addKeyword(
 			assetVocabularyCategoryIdsFieldName, assetVocabularyCategories);
+		document.addKeyword(
+			groupAssetVocabularyCategoryERCFieldName,
+			assetVocabularyCategoryERCs);
+	}
+
+	private String _getAssetVocabularyCategoryExternalReferenceCodes(
+			AssetCategory assetCategory)
+		throws Exception {
+
+		AssetVocabulary assetVocabulary =
+			_assetVocabularyLocalService.getAssetVocabulary(
+				assetCategory.getVocabularyId());
+
+		Group group = _groupLocalService.getGroup(assetCategory.getGroupId());
+
+		return StringBundler.concat(
+			group.getExternalReferenceCode(), _DELIMITER,
+			assetVocabulary.getExternalReferenceCode(), _DELIMITER,
+			assetCategory.getExternalReferenceCode());
 	}
 
 	private Map<Integer, Map<Long, List<AssetCategory>>>
@@ -202,10 +235,16 @@ public class AssetCategoryDocumentContributor
 		return assetVocabularyVisibilityTypeMap;
 	}
 
+	private static final String _DELIMITER =
+		StringPool.AMPERSAND + StringPool.AMPERSAND;
+
 	@Reference
 	private AssetCategoryLocalService _assetCategoryLocalService;
 
 	@Reference
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 }

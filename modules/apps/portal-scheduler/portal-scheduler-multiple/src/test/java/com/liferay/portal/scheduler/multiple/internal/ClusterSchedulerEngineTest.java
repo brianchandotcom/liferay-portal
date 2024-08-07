@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
 import com.liferay.portal.kernel.servlet.PluginContextLifecycleThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.PropsTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.ObjectValuePair;
@@ -617,6 +618,68 @@ public class ClusterSchedulerEngineTest {
 		Assert.assertTrue(
 			_clusterInvokeAcceptor.accept(
 				ClusterableContextThreadLocal.collectThreadLocalContext()));
+	}
+
+	@Test
+	public void testRunOnMaster() throws SchedulerException {
+		_mockClusterMasterExecutor.reset(true, 0, 0);
+
+		_clusterSchedulerEngine.start();
+
+		long companyId = RandomTestUtil.randomLong();
+
+		_clusterSchedulerEngine.run(
+			companyId, _TEST_JOB_NAME_PREFIX, _MEMORY_CLUSTER_TEST_GROUP_NAME,
+			StorageType.MEMORY_CLUSTERED);
+
+		MethodHandler methodHandler =
+			_mockClusterMasterExecutor.geMethodHandler();
+
+		_mockClusterMasterExecutor.reset(true, 0, 0);
+
+		Assert.assertNull(methodHandler);
+
+		_clusterSchedulerEngine.run(
+			companyId, _TEST_JOB_NAME_PREFIX, _PERSISTENT_TEST_GROUP_NAME,
+			StorageType.PERSISTED);
+
+		methodHandler = _mockClusterMasterExecutor.geMethodHandler();
+
+		Assert.assertNull(methodHandler);
+	}
+
+	@Test
+	public void testRunOnSlave() throws SchedulerException {
+		_mockClusterMasterExecutor.reset(false, 0, 0);
+
+		_clusterSchedulerEngine.start();
+
+		long companyId = RandomTestUtil.randomLong();
+
+		_clusterSchedulerEngine.run(
+			companyId, _TEST_JOB_NAME_PREFIX, _MEMORY_CLUSTER_TEST_GROUP_NAME,
+			StorageType.MEMORY_CLUSTERED);
+
+		MethodHandler methodHandler =
+			_mockClusterMasterExecutor.geMethodHandler();
+
+		Assert.assertNotNull(methodHandler);
+
+		Assert.assertEquals(
+			new MethodKey(
+				SchedulerEngineHelperUtil.class, "run", long.class,
+				String.class, String.class, StorageType.class),
+			methodHandler.getMethodKey());
+
+		_mockClusterMasterExecutor.reset(true, 0, 0);
+
+		_clusterSchedulerEngine.run(
+			companyId, _TEST_JOB_NAME_PREFIX, _PERSISTENT_TEST_GROUP_NAME,
+			StorageType.PERSISTED);
+
+		methodHandler = _mockClusterMasterExecutor.geMethodHandler();
+
+		Assert.assertNull(methodHandler);
 	}
 
 	@Test
@@ -1287,6 +1350,8 @@ public class ClusterSchedulerEngineTest {
 		public <T> NoticeableFuture<T> executeOnMaster(
 			MethodHandler methodHandler) {
 
+			_methodHandler = methodHandler;
+
 			if (_exception) {
 				throw new SystemException();
 			}
@@ -1317,6 +1382,10 @@ public class ClusterSchedulerEngineTest {
 			defaultNoticeableFuture.set(result);
 
 			return defaultNoticeableFuture;
+		}
+
+		public MethodHandler geMethodHandler() {
+			return _methodHandler;
 		}
 
 		public ClusterMasterTokenTransitionListener
@@ -1350,6 +1419,8 @@ public class ClusterSchedulerEngineTest {
 		public void reset(
 			boolean master, int memoryClusterJobs, int persistentJobs) {
 
+			_methodHandler = null;
+
 			_master = master;
 
 			_mockSchedulerEngine.resetJobs(memoryClusterJobs, persistentJobs);
@@ -1363,6 +1434,7 @@ public class ClusterSchedulerEngineTest {
 			_clusterMasterTokenTransitionListener;
 		private boolean _exception;
 		private boolean _master;
+		private MethodHandler _methodHandler;
 		private final MockSchedulerEngine _mockSchedulerEngine =
 			new MockSchedulerEngine();
 

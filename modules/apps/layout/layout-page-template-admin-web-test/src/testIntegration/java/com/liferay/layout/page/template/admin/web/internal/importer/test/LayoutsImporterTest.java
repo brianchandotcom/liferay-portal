@@ -266,14 +266,12 @@ public class LayoutsImporterTest {
 				LayoutPageTemplateConstants.
 					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 				_getFile(_DISPLAY_PAGE_TEMPLATES_RESOURCES_PATH)));
-
 		Assert.assertTrue(
 			_layoutsImporter.validateFile(
 				_group1.getGroupId(),
 				LayoutPageTemplateConstants.
 					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 				_getFile(_MASTER_PAGES_RESOURCES_PATH)));
-
 		Assert.assertTrue(
 			_layoutsImporter.validateFile(
 				_group1.getGroupId(),

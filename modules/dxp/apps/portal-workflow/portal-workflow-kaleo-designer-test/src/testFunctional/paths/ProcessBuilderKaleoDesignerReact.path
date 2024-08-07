@@ -541,7 +541,7 @@
 </tr>
 <tr>
 	<td>DETAILS_FIELDS</td>
-	<td>//div[@class='info-group']//label[contains(text() ,'${key_fieldOption}')]/..//span | //div[@class='info-group']//label[contains(text() ,'${key_fieldOption}')]</td>
+	<td>//div[@class='info-group']//label[contains(text() ,'${key_fieldOption}')]/..//span | //div[@class='info-group' or @class='lfr-workflow__details-tab-info-container']//label[contains(text() ,'${key_fieldOption}')]</td>
 	<td></td>
 </tr>
 <tr>

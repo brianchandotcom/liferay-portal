@@ -29,6 +29,15 @@ public class CPDefinitionVirtualSettingImpl
 	}
 
 	@Override
+	public List<CPDVirtualSettingFileEntry> getCPDVirtualSettingFileEntries(
+		int start, int end) {
+
+		return CPDVirtualSettingFileEntryLocalServiceUtil.
+			getCPDVirtualSettingFileEntries(
+				getCPDefinitionVirtualSettingId(), start, end);
+	}
+
+	@Override
 	public int getCPDVirtualSettingFileEntriesCount() {
 		return CPDVirtualSettingFileEntryLocalServiceUtil.
 			getCPDVirtualSettingFileEntriesCount(

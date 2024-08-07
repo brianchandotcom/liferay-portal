@@ -16,6 +16,7 @@ import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductVirtualSettin
 import com.liferay.headless.commerce.admin.catalog.internal.util.FileEntryUtil;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductVirtualSettingsFileEntryResource;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -33,8 +34,6 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.ActionUtil;
 import com.liferay.upload.UniqueFileNameProvider;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import javax.ws.rs.BadRequestException;
@@ -80,19 +79,19 @@ public class ProductVirtualSettingsFileEntryResourceImpl
 			_cpDefinitionVirtualSettingService.getCPDefinitionVirtualSetting(
 				id);
 
-		List<CPDVirtualSettingFileEntry> cpdVirtualSettingFileEntries =
-			_cpdVirtualSettingFileEntryService.getCPDVirtualSettingFileEntries(
-				CPDefinition.class.getName(),
-				cpDefinitionVirtualSetting.getClassPK(),
-				cpDefinitionVirtualSetting.getCPDefinitionVirtualSettingId(),
-				pagination.getStartPosition(), pagination.getEndPosition());
-
-		int totalItems =
-			cpDefinitionVirtualSetting.getCPDVirtualSettingFileEntriesCount();
-
 		return Page.of(
-			_toProductVirtualSettingsFileEntries(cpdVirtualSettingFileEntries),
-			pagination, totalItems);
+			TransformUtil.transform(
+				_cpdVirtualSettingFileEntryService.
+					getCPDVirtualSettingFileEntries(
+						CPDefinition.class.getName(),
+						cpDefinitionVirtualSetting.getClassPK(),
+						cpDefinitionVirtualSetting.
+							getCPDefinitionVirtualSettingId(),
+						pagination.getStartPosition(),
+						pagination.getEndPosition()),
+				this::_toProductVirtualSettingsFileEntry),
+			pagination,
+			cpDefinitionVirtualSetting.getCPDVirtualSettingFileEntriesCount());
 	}
 
 	@Override
@@ -260,24 +259,6 @@ public class ProductVirtualSettingsFileEntryResourceImpl
 					getCPDefinitionVirtualSettingFileEntryId(),
 				contextUriInfo)
 		).build();
-	}
-
-	private List<ProductVirtualSettingsFileEntry>
-			_toProductVirtualSettingsFileEntries(
-				List<CPDVirtualSettingFileEntry> cpdVirtualSettingFileEntries)
-		throws Exception {
-
-		List<ProductVirtualSettingsFileEntry>
-			productVirtualFileSettingsFileEntries = new ArrayList<>();
-
-		for (CPDVirtualSettingFileEntry cpdVirtualSettingFileEntry :
-				cpdVirtualSettingFileEntries) {
-
-			productVirtualFileSettingsFileEntries.add(
-				_toProductVirtualSettingsFileEntry(cpdVirtualSettingFileEntry));
-		}
-
-		return productVirtualFileSettingsFileEntries;
 	}
 
 	private ProductVirtualSettingsFileEntry _toProductVirtualSettingsFileEntry(

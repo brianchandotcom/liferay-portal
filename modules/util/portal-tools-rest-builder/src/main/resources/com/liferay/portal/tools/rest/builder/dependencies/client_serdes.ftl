@@ -70,7 +70,7 @@ public class ${schemaName}SerDes {
 				<#list schema.discriminator.mapping as mappingName, mappingSchema>
 
 					if (${propertyName}String.equals("${mappingName}")) {
-						return ${freeMarkerTool.getReferenceName(mappingSchema)}SerDes.toJSON((${mappingName})${schemaVarName});
+						return ${freeMarkerTool.getReferenceName(mappingSchema)}SerDes.toJSON((${freeMarkerTool.getReferenceName(mappingSchema)})${schemaVarName});
 					} else
 				</#list>
 					{

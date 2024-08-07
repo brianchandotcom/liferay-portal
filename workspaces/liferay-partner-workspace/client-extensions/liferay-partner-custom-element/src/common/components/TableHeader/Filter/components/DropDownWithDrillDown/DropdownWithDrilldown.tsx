@@ -7,6 +7,9 @@ import ClayDropDown, {ClayDropDownWithDrilldown} from '@clayui/drop-down';
 import classNames from 'classnames';
 import {memo, useEffect, useRef, useState} from 'react';
 
+import getDropDownFilterMenus, {
+	FilterItem,
+} from '../../../../../utils/getDropDownFilterMenus';
 import DrilldownMenuItems from './components/DrilldownMenuItems/DrilldownMenuItems';
 
 type History = {
@@ -14,12 +17,8 @@ type History = {
 	title: string;
 };
 
-type Menu = {
-	[id: string]: React.ComponentProps<typeof DrilldownMenuItems>['items'];
-};
-
 interface IProps {
-	menus: Menu;
+	menuItems: FilterItem[];
 }
 
 const DropDownWithDrillDown = ({
@@ -29,8 +28,8 @@ const DropDownWithDrillDown = ({
 	defaultActiveMenu = 'x0a0',
 	menuElementAttrs,
 	menuHeight,
+	menuItems,
 	menuWidth,
-	menus,
 	offsetFn,
 	trigger,
 }: Omit<React.ComponentProps<typeof ClayDropDownWithDrilldown>, 'menus'> &
@@ -45,6 +44,8 @@ const DropDownWithDrillDown = ({
 	const innerRef = useRef<HTMLDivElement>(null);
 
 	const isKeyboardRef = useRef<boolean>(false);
+
+	const menus = getDropDownFilterMenus(menuItems);
 
 	const menuIds = Object.keys(menus);
 

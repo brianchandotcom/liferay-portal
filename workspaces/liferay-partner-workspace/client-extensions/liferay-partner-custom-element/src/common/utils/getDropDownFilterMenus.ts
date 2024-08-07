@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import DropDownWithDrillDown from '../components/TableHeader/Filter/components/DropDownWithDrillDown';
+import DrilldownMenuItems from '../components/TableHeader/Filter/components/DropDownWithDrillDown/components/DrilldownMenuItems';
 import {FilterProps} from '../components/TableHeader/Filter/components/FilterSelector/FilterSelector';
 
 export interface FilterItem {
@@ -12,10 +12,12 @@ export interface FilterItem {
 	name: string;
 }
 
+type Menu = {
+	[id: string]: React.ComponentProps<typeof DrilldownMenuItems>['items'];
+};
+
 export default function getDropDownFilterMenus(filters: FilterItem[]) {
-	return filters.reduce<
-		React.ComponentProps<typeof DropDownWithDrillDown>['menus']
-	>(
+	return filters.reduce<Menu>(
 		(previousValue, currentValue, index) => ({
 			...previousValue,
 			x0a0: [

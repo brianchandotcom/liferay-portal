@@ -31,7 +31,6 @@ import {
 } from '../../common/utils/constants/filters';
 import {maxPagination} from '../../common/utils/constants/maxPagination';
 import getDoubleParagraph from '../../common/utils/getDoubleParagraph';
-import getDropDownFilterMenus from '../../common/utils/getDropDownFilterMenus';
 import ModalContent from './components/ModalContent';
 import useFilters from './hooks/useFilters';
 import useGetListItemsFromPartnerOpportunities from './hooks/useGetListItemsFromPartnerOpportunities';
@@ -286,9 +285,7 @@ const PartnerOpportunitiesList = ({isRenewalListing, name}: IProps) => {
 					</div>
 
 					<DropDownWithDrillDown
-						className=""
-						defaultActiveMenu="x0a0"
-						menus={getDropDownFilterMenus(filterFields)}
+						menuItems={filterFields}
 						trigger={
 							<ClayButton borderless className="btn-secondary">
 								<span className="inline-item inline-item-before">

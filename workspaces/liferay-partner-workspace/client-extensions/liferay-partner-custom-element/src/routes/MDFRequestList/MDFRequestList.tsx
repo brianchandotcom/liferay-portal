@@ -34,9 +34,6 @@ import TableColumn from '../../common/interfaces/tableColumn';
 import {Liferay} from '../../common/services/liferay';
 import {Filters} from '../../common/utils/constants/filters';
 import {maxPagination} from '../../common/utils/constants/maxPagination';
-import getDropDownFilterMenus, {
-	FilterItem,
-} from '../../common/utils/getDropDownFilterMenus';
 import useDynamicFieldEntries from './hooks/useDynamicFieldEntries';
 import useFilters from './hooks/useFilters';
 import useGetListItemsFromMDFRequests from './hooks/useGetListItemsFromMDFRequests';
@@ -156,8 +153,8 @@ const MDFRequestList = () => {
 		}
 	};
 
-	const getFilters = () => {
-		const filterFields: FilterItem[] = [
+	const getFilterFields = () => {
+		const filterFields = [
 			{
 				component: {
 					initialValues: filters.activityPeriod?.dates,
@@ -303,9 +300,7 @@ const MDFRequestList = () => {
 					</div>
 
 					<DropDownWithDrillDown
-						className=""
-						defaultActiveMenu="x0a0"
-						menus={getDropDownFilterMenus(getFilters())}
+						menuItems={getFilterFields()}
 						trigger={
 							<ClayButton borderless className="btn-secondary">
 								<span className="inline-item inline-item-before">

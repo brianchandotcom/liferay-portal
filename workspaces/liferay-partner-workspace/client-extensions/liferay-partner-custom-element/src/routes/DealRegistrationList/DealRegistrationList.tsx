@@ -40,7 +40,6 @@ import {
 } from '../../common/utils/constants/filters';
 import {maxPagination} from '../../common/utils/constants/maxPagination';
 import getDoubleParagraph from '../../common/utils/getDoubleParagraph';
-import getDropDownFilterMenus from '../../common/utils/getDropDownFilterMenus';
 import ModalContent from './components/ModalContent';
 import useFilters from './hooks/useFilters';
 import useGetListItemsFromDealRegistration from './hooks/useGetListItemsFromDealRegistration';
@@ -306,9 +305,7 @@ const DealRegistrationList = () => {
 					</div>
 
 					<DropDownWithDrillDown
-						className=""
-						initialActiveMenu="x0a0"
-						menus={getDropDownFilterMenus(filterFields)}
+						menuItems={filterFields}
 						trigger={
 							<ClayButton borderless className="btn-secondary">
 								<span className="inline-item inline-item-before">

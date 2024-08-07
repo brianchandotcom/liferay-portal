@@ -280,6 +280,27 @@ public class LayoutsImporterTest {
 	}
 
 	@Test
+	public void testValidateFileWithChildDuplicatedDisplayPageLayoutPageTemplateCollection()
+		throws Exception {
+
+		_layoutPageTemplateCollectionLocalService.
+			addLayoutPageTemplateCollection(
+				null, TestPropsValues.getUserId(), _group1.getGroupId(),
+				LayoutPageTemplateConstants.
+					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+				"Child Display Page Collection", StringPool.BLANK,
+				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE,
+				ServiceContextTestUtil.getServiceContext(_group1.getGroupId()));
+
+		Assert.assertTrue(
+			_layoutsImporter.validateFile(
+				_group1.getGroupId(),
+				LayoutPageTemplateConstants.
+					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+				_getFile(_RESOURCES_PATH_DISPLAY_PAGE_TEMPLATES)));
+	}
+
+	@Test
 	public void testValidateFileWithDuplicatedBasicLayoutPageTemplateCollection()
 		throws Exception {
 
@@ -349,6 +370,91 @@ public class LayoutsImporterTest {
 				layoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId(),
 				_getFile(_RESOURCES_PATH_PAGE_TEMPLATES)));
+	}
+
+	@Test
+	public void testValidateFileWithDuplicatedDisplayPageLayoutPageTemplateCollection()
+		throws Exception {
+
+		_layoutPageTemplateCollectionLocalService.
+			addLayoutPageTemplateCollection(
+				null, TestPropsValues.getUserId(), _group1.getGroupId(),
+				LayoutPageTemplateConstants.
+					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+				"Display Page Collection", StringPool.BLANK,
+				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE,
+				ServiceContextTestUtil.getServiceContext(_group1.getGroupId()));
+
+		Assert.assertFalse(
+			_layoutsImporter.validateFile(
+				_group1.getGroupId(),
+				LayoutPageTemplateConstants.
+					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+				_getFile(_RESOURCES_PATH_DISPLAY_PAGE_TEMPLATES)));
+	}
+
+	@Test
+	public void testValidateFileWithDuplicatedDisplayPageLayoutPageTemplateCollectionInADifferentLayoutPageTemplateCollection()
+		throws Exception {
+
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
+			_layoutPageTemplateCollectionLocalService.
+				addLayoutPageTemplateCollection(
+					null, TestPropsValues.getUserId(), _group1.getGroupId(),
+					LayoutPageTemplateConstants.
+						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+					RandomTestUtil.randomString(), StringPool.BLANK,
+					LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE,
+					ServiceContextTestUtil.getServiceContext(
+						_group1.getGroupId()));
+
+		_layoutPageTemplateCollectionLocalService.
+			addLayoutPageTemplateCollection(
+				null, TestPropsValues.getUserId(), _group1.getGroupId(),
+				layoutPageTemplateCollection.
+					getLayoutPageTemplateCollectionId(),
+				"Display Page Collection", StringPool.BLANK,
+				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE,
+				ServiceContextTestUtil.getServiceContext(_group1.getGroupId()));
+
+		Assert.assertTrue(
+			_layoutsImporter.validateFile(
+				_group1.getGroupId(),
+				LayoutPageTemplateConstants.
+					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+				_getFile(_RESOURCES_PATH_DISPLAY_PAGE_TEMPLATES)));
+	}
+
+	@Test
+	public void testValidateFileWithDuplicatedDisplayPageLayoutPageTemplateCollectionInsideADisplayPageLayoutPageTemplateCollection()
+		throws Exception {
+
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
+			_layoutPageTemplateCollectionLocalService.
+				addLayoutPageTemplateCollection(
+					null, TestPropsValues.getUserId(), _group1.getGroupId(),
+					LayoutPageTemplateConstants.
+						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+					RandomTestUtil.randomString(), StringPool.BLANK,
+					LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE,
+					ServiceContextTestUtil.getServiceContext(
+						_group1.getGroupId()));
+
+		_layoutPageTemplateCollectionLocalService.
+			addLayoutPageTemplateCollection(
+				null, TestPropsValues.getUserId(), _group1.getGroupId(),
+				layoutPageTemplateCollection.
+					getLayoutPageTemplateCollectionId(),
+				"Display Page Collection", StringPool.BLANK,
+				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE,
+				ServiceContextTestUtil.getServiceContext(_group1.getGroupId()));
+
+		Assert.assertFalse(
+			_layoutsImporter.validateFile(
+				_group1.getGroupId(),
+				layoutPageTemplateCollection.
+					getLayoutPageTemplateCollectionId(),
+				_getFile(_RESOURCES_PATH_DISPLAY_PAGE_TEMPLATES)));
 	}
 
 	@Test

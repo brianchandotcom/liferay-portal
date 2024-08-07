@@ -14,6 +14,17 @@ export class SCIMApiHelper {
 		this.basePath = 'scim/v1.0/';
 	}
 
+	async getGroups() {
+		return this.apiHelpers.getResponse(
+			`${this.apiHelpers.baseUrl}${this.basePath}v2/Groups`,
+			false,
+			{
+				'Content-Type': 'application/scim+json',
+				...(await this.apiHelpers.getCSRFTokenHeader()),
+			}
+		);
+	}
+
 	async getUsers(oAuth2Token?: string) {
 		if (oAuth2Token) {
 			return this.apiHelpers.getResponse(
@@ -37,19 +48,6 @@ export class SCIMApiHelper {
 		}
 	}
 
-	async postUser(data: any) {
-		return this.apiHelpers.post(
-			`${this.apiHelpers.baseUrl}${this.basePath}v2/Users`,
-			{
-				data,
-				headers: {
-					'Content-Type': 'application/scim+json',
-					...(await this.apiHelpers.getCSRFTokenHeader()),
-				},
-			}
-		);
-	}
-
 	async postGroup(data: any) {
 		return this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}v2/Groups`,
@@ -63,13 +61,15 @@ export class SCIMApiHelper {
 		);
 	}
 
-	async getGroups() {
-		return this.apiHelpers.getResponse(
-			`${this.apiHelpers.baseUrl}${this.basePath}v2/Groups`,
-			false,
+	async postUser(data: any) {
+		return this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}${this.basePath}v2/Users`,
 			{
-				'Content-Type': 'application/scim+json',
-				...(await this.apiHelpers.getCSRFTokenHeader()),
+				data,
+				headers: {
+					'Content-Type': 'application/scim+json',
+					...(await this.apiHelpers.getCSRFTokenHeader()),
+				},
 			}
 		);
 	}

@@ -29,7 +29,7 @@ test('smoke: test SCIM configuration options', async ({page}) => {
 
 	await page.waitForTimeout(1000);
 
-	await scimConfigurationPage.configureSCIM('test', 'email');
+	await scimConfigurationPage.configureSCIM('email', 'test');
 
 	await scimConfigurationPage.generateToken();
 
@@ -47,7 +47,7 @@ test('LPD-23255 AC1 TC1: Reset SCIM Client provisioning data button is present',
 
 	await page.waitForTimeout(1000);
 
-	await scimConfigurationPage.configureSCIM('Test SCIM Client', 'email');
+	await scimConfigurationPage.configureSCIM('email', 'Test SCIM Client');
 
 	await scimConfigurationPage.resetClientData();
 });
@@ -61,7 +61,7 @@ test('LPD-23255 AC2 TC2: Reset SCIM Client provisioning data button description 
 
 	await page.waitForTimeout(1000);
 
-	await scimConfigurationPage.configureSCIM('Test SCIM Client', 'email');
+	await scimConfigurationPage.configureSCIM('email', 'Test SCIM Client');
 
 	const tooltip = page.getByLabel(RESET_SCIM_HELP_TEXT).locator('use');
 
@@ -79,7 +79,7 @@ test('LPD-23255 AC3 TC3: Verify that clicking the “Reset SCIM Client provision
 
 	await page.waitForTimeout(1000);
 
-	await scimConfigurationPage.configureSCIM('Test SCIM Client', 'email');
+	await scimConfigurationPage.configureSCIM('email', 'Test SCIM Client');
 
 	await scimConfigurationPage.resetClientData();
 
@@ -112,7 +112,7 @@ test('LPD-23255 AC3 TC4: Verify that clicking the “Reset SCIM Client provision
 	await scimConfigurationPage.goTo();
 	await page.waitForTimeout(1000);
 
-	await scimConfigurationPage.configureSCIM('Test SCIM Client', 'email');
+	await scimConfigurationPage.configureSCIM('email', 'Test SCIM Client');
 
 	await scimConfigurationPage.generateToken();
 
@@ -157,7 +157,7 @@ test('LPD-23255 AC3 TC5: Verify that clicking the “Reset SCIM Client provision
 
 	await page.waitForTimeout(1000);
 
-	await scimConfigurationPage.configureSCIM('Test SCIM Client', 'email');
+	await scimConfigurationPage.configureSCIM('email', 'Test SCIM Client');
 
 	const randInt = getRandomInt();
 
@@ -202,7 +202,7 @@ test('LPD-23255 AC3 TC6: Verify that clicking the “Reset SCIM Client provision
 
 	await page.waitForTimeout(1000);
 
-	await scimConfigurationPage.configureSCIM('Test SCIM Client', 'email');
+	await scimConfigurationPage.configureSCIM('email', 'Test SCIM Client');
 
 	const randInt = getRandomInt();
 
@@ -239,7 +239,7 @@ test('LPD-23255 AC4 TC7: Verify that Name field is disabled when SCIM is configu
 
 	expect(oAuth2ApplicationNameField).toBeEditable();
 
-	await scimConfigurationPage.configureSCIM('Test SCIM Client', 'email');
+	await scimConfigurationPage.configureSCIM('email', 'Test SCIM Client');
 	await page.waitForTimeout(1000);
 
 	expect(oAuth2ApplicationNameField).not.toBeEditable();
@@ -260,7 +260,7 @@ test('LPD-23255 AC5 TC8: Verify that the Name field is enabled when scim client 
 		'OAuth 2 Application Name'
 	);
 
-	await scimConfigurationPage.configureSCIM('Test SCIM Client', 'email');
+	await scimConfigurationPage.configureSCIM('email', 'Test SCIM Client');
 
 	expect(oAuth2ApplicationNameField).not.toBeEditable();
 

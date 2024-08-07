@@ -106,14 +106,16 @@ public class CalendarBookingIndexerIndexedFieldsTest
 			"scopeGroupExternalReferenceCode",
 			group.getExternalReferenceCode());
 
+		User user = TestPropsValues.getUser();
+
+		map.put(
+			"statusByUserExternalReferenceCode",
+			user.getExternalReferenceCode());
+
 		map.put(
 			"statusByUserId",
 			String.valueOf(calendarBooking.getStatusByUserId()));
-
-		User user = TestPropsValues.getUser();
-
 		map.put("userExternalReferenceCode", user.getExternalReferenceCode());
-
 		map.put("viewActionId", CalendarActionKeys.VIEW_BOOKING_DETAILS);
 
 		populateTitle(originalTitle, map);

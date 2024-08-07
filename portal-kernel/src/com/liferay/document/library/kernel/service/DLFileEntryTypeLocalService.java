@@ -174,10 +174,6 @@ public interface DLFileEntryTypeLocalService
 	public DLFileEntryType deleteDLFileEntryType(long fileEntryTypeId)
 		throws PortalException;
 
-	public void deleteDLFileEntryType(
-			String externalReferenceCode, long groupId)
-		throws PortalException;
-
 	public void deleteDLFolderDLFileEntryType(
 		long folderId, DLFileEntryType dlFileEntryType);
 
@@ -198,6 +194,10 @@ public interface DLFileEntryTypeLocalService
 		throws PortalException;
 
 	public void deleteFileEntryType(long fileEntryTypeId)
+		throws PortalException;
+
+	public void deleteFileEntryTypeByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
 		throws PortalException;
 
 	public void deleteFileEntryTypes(long groupId) throws PortalException;

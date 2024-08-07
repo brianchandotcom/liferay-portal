@@ -188,13 +188,6 @@ public class DLFileEntryTypeLocalServiceUtil {
 		return getService().deleteDLFileEntryType(fileEntryTypeId);
 	}
 
-	public static void deleteDLFileEntryType(
-			String externalReferenceCode, long groupId)
-		throws PortalException {
-
-		getService().deleteDLFileEntryType(externalReferenceCode, groupId);
-	}
-
 	public static void deleteDLFolderDLFileEntryType(
 		long folderId, DLFileEntryType dlFileEntryType) {
 
@@ -229,6 +222,14 @@ public class DLFileEntryTypeLocalServiceUtil {
 		throws PortalException {
 
 		getService().deleteFileEntryType(fileEntryTypeId);
+	}
+
+	public static void deleteFileEntryTypeByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		getService().deleteFileEntryTypeByExternalReferenceCode(
+			externalReferenceCode, groupId);
 	}
 
 	public static void deleteFileEntryTypes(long groupId)

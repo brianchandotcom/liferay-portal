@@ -3,18 +3,21 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.dynamic.data.mapping.upgrade.v4_3_1.test;
+package com.liferay.dynamic.data.mapping.upgrade.v3_10_2.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.change.tracking.test.util.BaseCTUpgradeProcessTestCase;
+import com.liferay.dynamic.data.mapping.constants.DDMFormInstanceReportConstants;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
-import com.liferay.dynamic.data.mapping.model.DDMFormInstanceSettings;
-import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalService;
-import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
+import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion;
+import com.liferay.dynamic.data.mapping.model.DDMFormInstanceReport;
+import com.liferay.dynamic.data.mapping.service.DDMFormInstanceReportLocalService;
+import com.liferay.dynamic.data.mapping.test.util.DDMFormInstanceRecordTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormInstanceTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
-import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.service.change.tracking.CTService;
@@ -36,10 +39,10 @@ import org.junit.Rule;
 import org.junit.runner.RunWith;
 
 /**
- * @author Paulo Albuquerque
+ * @author Carolina Barbosa
  */
 @RunWith(Arquillian.class)
-public class DDMFormInstanceUpgradeProcessTest
+public class DDMFormInstanceReportCTUpgradeProcessTest
 	extends BaseCTUpgradeProcessTestCase {
 
 	@ClassRule
@@ -51,31 +54,30 @@ public class DDMFormInstanceUpgradeProcessTest
 
 	@Before
 	public void setUp() throws Exception {
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
+			RandomTestUtil.randomString());
+
 		_group = GroupTestUtil.addGroup();
+
+		_ddmFormInstance = DDMFormInstanceTestUtil.addDDMFormInstance(
+			ddmForm, _group, TestPropsValues.getUserId());
+
+		_ddmFormInstanceRecord =
+			DDMFormInstanceRecordTestUtil.addDDMFormInstanceRecord(
+				_ddmFormInstance,
+				DDMFormValuesTestUtil.createDDMFormValues(ddmForm), _group,
+				TestPropsValues.getUserId());
 	}
 
 	@Override
 	protected CTModel<?> addCTModel() throws Exception {
-		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
-			DDMFormFactory.create(DDMFormInstanceSettings.class));
-
-		ddmFormValues.addDDMFormFieldValue(
-			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
-				"workflowDefinition",
-				String.format(
-					"[\"%s@%d\"]", RandomTestUtil.randomString(),
-					RandomTestUtil.randomInt())));
-
-		_ddmFormInstance = DDMFormInstanceTestUtil.addDDMFormInstance(
-			DDMFormTestUtil.createDDMForm(RandomTestUtil.randomString()),
-			_group, ddmFormValues, TestPropsValues.getUserId());
-
-		return _ddmFormInstance;
+		return _ddmFormInstanceReportLocalService.addFormInstanceReport(
+			_ddmFormInstance.getFormInstanceId());
 	}
 
 	@Override
 	protected CTService<?> getCTService() {
-		return _ddmFormInstanceLocalService;
+		return _ddmFormInstanceReportLocalService;
 	}
 
 	@Override
@@ -88,16 +90,21 @@ public class DDMFormInstanceUpgradeProcessTest
 
 	@Override
 	protected CTModel<?> updateCTModel(CTModel<?> ctModel) throws Exception {
-		DDMFormInstance ddmFormInstance = (DDMFormInstance)ctModel;
+		DDMFormInstanceReport ddmFormInstanceReport =
+			(DDMFormInstanceReport)ctModel;
 
-		return DDMFormInstanceTestUtil.updateDDMFormInstance(
-			ddmFormInstance.getFormInstanceId(),
-			DDMFormInstanceTestUtil.createSettingsDDMFormValues());
+		DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion =
+			_ddmFormInstanceRecord.getFormInstanceRecordVersion();
+
+		return _ddmFormInstanceReportLocalService.updateFormInstanceReport(
+			ddmFormInstanceReport.getFormInstanceReportId(),
+			ddmFormInstanceRecordVersion.getFormInstanceRecordVersionId(),
+			DDMFormInstanceReportConstants.EVENT_ADD_RECORD_VERSION);
 	}
 
 	private static final String _CLASS_NAME =
-		"com.liferay.dynamic.data.mapping.internal.upgrade.v4_3_1." +
-			"DDMFormInstanceUpgradeProcess";
+		"com.liferay.dynamic.data.mapping.internal.upgrade.v3_10_2." +
+			"DDMFormInstanceReportUpgradeProcess";
 
 	@Inject(
 		filter = "(&(component.name=com.liferay.dynamic.data.mapping.internal.upgrade.registry.DDMServiceUpgradeStepRegistrator))"
@@ -107,8 +114,12 @@ public class DDMFormInstanceUpgradeProcessTest
 	@DeleteAfterTestRun
 	private DDMFormInstance _ddmFormInstance;
 
+	@DeleteAfterTestRun
+	private DDMFormInstanceRecord _ddmFormInstanceRecord;
+
 	@Inject
-	private DDMFormInstanceLocalService _ddmFormInstanceLocalService;
+	private DDMFormInstanceReportLocalService
+		_ddmFormInstanceReportLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;

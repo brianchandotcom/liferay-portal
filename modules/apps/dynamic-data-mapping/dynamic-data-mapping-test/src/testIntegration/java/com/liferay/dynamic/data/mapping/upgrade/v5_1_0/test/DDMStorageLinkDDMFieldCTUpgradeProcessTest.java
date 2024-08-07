@@ -22,8 +22,8 @@ import org.junit.runner.RunWith;
  * @author Paulo Albuquerque
  */
 @RunWith(Arquillian.class)
-public class DDMStorageLinkDDMFieldUpgradeProcessTest
-	extends DDMFieldUpgradeProcessTest {
+public class DDMStorageLinkDDMFieldCTUpgradeProcessTest
+	extends DDMFieldCTUpgradeProcessTest {
 
 	@ClassRule
 	@Rule

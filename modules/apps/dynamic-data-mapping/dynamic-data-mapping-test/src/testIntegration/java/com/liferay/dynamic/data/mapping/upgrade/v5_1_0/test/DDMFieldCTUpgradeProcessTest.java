@@ -56,7 +56,7 @@ import org.junit.runner.RunWith;
  * @author Paulo Albuquerque
  */
 @RunWith(Arquillian.class)
-public class DDMFieldUpgradeProcessTest extends BaseCTUpgradeProcessTestCase {
+public class DDMFieldCTUpgradeProcessTest extends BaseCTUpgradeProcessTestCase {
 
 	@ClassRule
 	@Rule

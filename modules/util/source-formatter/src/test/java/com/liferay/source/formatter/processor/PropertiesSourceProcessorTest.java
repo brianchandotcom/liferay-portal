@@ -5,6 +5,8 @@
 
 package com.liferay.source.formatter.processor;
 
+import com.liferay.petra.string.StringBundler;
+
 import org.junit.Test;
 
 /**
@@ -21,48 +23,101 @@ public class PropertiesSourceProcessorTest extends BaseSourceProcessorTestCase {
 	public void testLanguageKeysContext() throws Exception {
 		test(
 			SourceProcessorTestParameters.create(
-				"content/Language.testproperties"
+				"IncorrectMethodCalls.testjsp"
 			).addExpectedMessage(
-				"The context '' is invalid in the key 'order[]'"
+				"The key 'a[weekday]' should include a word of context at " +
+					"the end, within a [], to indicate specific meaning",
+				13
 			).addExpectedMessage(
-				"The context '...' is invalid in the key 'order[...]'"
+				StringBundler.concat(
+					"The single-word key 'abstract' should include a word of ",
+					"context at the end, within a [], to indicate specific ",
+					"meaning"),
+				16
 			).addExpectedMessage(
-				"The context '0' is invalid in the key 'order[0]'"
+				"The key 'add[button]' should include a word of context at " +
+					"the end, within a [], to indicate specific meaning",
+				29
 			).addExpectedMessage(
-				"The context '123' is invalid in the key 'order[123]'"
+				"The key 'alert[noun]' should include a word of context at " +
+					"the end, within a [], to indicate specific meaning",
+				32
 			).addExpectedMessage(
-				"The context 'abc' is invalid in the key 'order[abc]'"
+				"The key 'alert[adj]' should include a word of context at " +
+					"the end, within a [], to indicate specific meaning",
+				33
 			).addExpectedMessage(
-				"The context 'x' is invalid in the key 'order[x]'"
+				StringBundler.concat(
+					"The single-word key 'average' should include a word of ",
+					"context at the end, within a [], to indicate specific ",
+					"meaning"),
+				48
 			).addExpectedMessage(
-				"The context 'xyz' is invalid in the key 'order[xyz]'"
+				"The key 'average[verb]' should include a word of context at " +
+					"the end, within a [], to indicate specific meaning",
+				49
 			).addExpectedMessage(
-				"The key 'a' should include a word of context at the end, " +
-					"within a [], to indicate specific meaning"
+				"The key 'average[v]' should include a word of context at " +
+					"the end, within a [], to indicate specific meaning",
+				50
 			).addExpectedMessage(
-				"The key 'add' should include a word of context at the end, " +
-					"within a [], to indicate specific meaning"
+				StringBundler.concat(
+					"The key 'average[adjective]' should include a word of ",
+					"context at the end, within a [], to indicate specific ",
+					"meaning"),
+				51
 			).addExpectedMessage(
-				"The key 'alert' should include a word of context at the " +
-					"end, within a [], to indicate specific meaning"
+				StringBundler.concat(
+					"The single-word key 'order' should include a word of ",
+					"context at the end, within a [], to indicate specific ",
+					"meaning"),
+				53
 			).addExpectedMessage(
-				"The key 'average' should include a word of context at the " +
-					"end, within a [], to indicate specific meaning"
+				"The key 'order[list]' should include a word of context at " +
+					"the end, within a [], to indicate specific meaning",
+				54
 			).addExpectedMessage(
-				"The key 'order' should include a word of context at the " +
-					"end, within a [], to indicate specific meaning"
+				"The context '' is invalid in the key 'order[]'", 55
 			).addExpectedMessage(
-				"The single-word key 'abstract' should include a word of " +
-					"context at the end, within a [], to indicate specific " +
-						"meaning"
+				"The key 'order[]' should include a word of context at the " +
+					"end, within a [], to indicate specific meaning",
+				55
 			).addExpectedMessage(
-				"The single-word key 'average' should include a word of " +
-					"context at the end, within a [], to indicate specific " +
-						"meaning"
+				"The context '...' is invalid in the key 'order[...]'", 56
 			).addExpectedMessage(
-				"The single-word key 'order' should include a word of " +
-					"context at the end, within a [], to indicate specific " +
-						"meaning"
+				"The key 'order[...]' should include a word of context at " +
+					"the end, within a [], to indicate specific meaning",
+				56
+			).addExpectedMessage(
+				"The context 'abc' is invalid in the key 'order[abc]'", 57
+			).addExpectedMessage(
+				"The key 'order[abc]' should include a word of context at " +
+					"the end, within a [], to indicate specific meaning",
+				57
+			).addExpectedMessage(
+				"The context 'xyz' is invalid in the key 'order[xyz]'", 58
+			).addExpectedMessage(
+				"The key 'order[xyz]' should include a word of context at " +
+					"the end, within a [], to indicate specific meaning",
+				58
+			).addExpectedMessage(
+				"The context '123' is invalid in the key 'order[123]'", 59
+			).addExpectedMessage(
+				"The key 'order[123]' should include a word of context at " +
+					"the end, within a [], to indicate specific meaning",
+				59
+			).addExpectedMessage(
+				"The context '0' is invalid in the key 'order[0]'", 60
+			).addExpectedMessage(
+				"The key 'order[0]' should include a word of context at the " +
+					"end, within a [], to indicate specific meaning",
+				60
+			).addExpectedMessage(
+				"The context 'x' is invalid in the key 'order[x]'", 61
+			).addExpectedMessage(
+				"The key 'order[x]' should include a word of context at the " +
+					"end, within a [], to indicate specific meaning",
+				61
 			));
 	}
 

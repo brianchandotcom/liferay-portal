@@ -46,12 +46,18 @@ async function performLogin(
 
 	await page.goto(baseUrl);
 
-	const signInButton = await page.getByRole('button', {name: 'Sign In'});
+	const signInButton = page.getByRole('button', {name: 'Sign In'});
+
+	await expect(page.getByPlaceholder('Search')).toBeVisible();
 
 	await signInButton.click();
 
-	await page.waitForTimeout(500);
-	await page.getByLabel('Email Address').fill(`${screenName}${domain}`);
+	const emailAddressInput = page.getByLabel('Email Address');
+
+	await expect(emailAddressInput).toBeVisible();
+
+	await emailAddressInput.fill(`${screenName}${domain}`);
+
 	await page.getByLabel('Password').fill(password);
 	await page.getByLabel('Remember Me').check();
 

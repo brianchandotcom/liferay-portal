@@ -55,6 +55,16 @@ public class IndexEntryLocalServiceWrapper
 	}
 
 	@Override
+	public boolean addKeywordsEntry(
+		long keywordsEntryId,
+		com.liferay.portal.tools.service.builder.test.model.IndexEntry
+			indexEntry) {
+
+		return _indexEntryLocalService.addKeywordsEntry(
+			keywordsEntryId, indexEntry);
+	}
+
+	@Override
 	public boolean addKeywordsEntryIndexEntries(
 		long keywordsEntryId,
 		java.util.List

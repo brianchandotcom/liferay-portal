@@ -24,6 +24,7 @@ import {
 	IDateFilter,
 	IField,
 	IFilter,
+	ISelectionFilter,
 } from '../../utils/types';
 import {IDataSetSectionProps} from '../DataSet';
 import ClientExtensionFilterModalContent from './modals/ClientExtensionFilter';
@@ -78,7 +79,7 @@ interface IPropsAddFDSFilterModalContent {
 	fdsFilterClientExtensions?: IClientExtensionRenderer[];
 	fieldNames?: string[];
 	fields: IField[];
-	filter?: IFilter;
+	filter?: IFilter | ISelectionFilter;
 	filterType?: EFilterType;
 	namespace: string;
 	onSave: (newFilter: IFilter) => void;

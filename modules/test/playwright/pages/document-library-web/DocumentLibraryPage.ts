@@ -116,6 +116,15 @@ export class DocumentLibraryPage {
 			trigger: this.page.getByRole('button', {exact: true, name: 'New'}),
 		});
 	}
+
+	async goToCreateNewFolder() {
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('menuitem', {name: 'Folder'}),
+			trigger: this.page.getByRole('button', {exact: true, name: 'New'}),
+		});
+	}
+
 	async openCreateAIImage() {
 		await this.openNewButton();
 

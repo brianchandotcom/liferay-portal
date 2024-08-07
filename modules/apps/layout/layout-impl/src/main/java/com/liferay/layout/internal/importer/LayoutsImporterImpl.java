@@ -292,11 +292,21 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 
 		ZipReader zipReader = _zipReaderFactory.getZipReader(file);
 
-		for (String entry : zipReader.getEntries()) {
+		List<String> entries = zipReader.getEntries();
+
+		for (String entry : entries) {
 			String content = zipReader.getEntryAsString(entry);
 
 			if (Validator.isNull(content)) {
 				continue;
+			}
+
+			if (_isDisplayPageTemplateCollectionFile(entry) &&
+				_isRootFolder(entries, entry) &&
+				!_isValidDisplayPageLayoutPageTemplateCollection(
+					content, entry, groupId, layoutPageTemplateCollectionId)) {
+
+				return false;
 			}
 
 			if (_isDisplayPageTemplateFile(entry) &&
@@ -1185,6 +1195,18 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 		return fragmentEntryLinks;
 	}
 
+	private boolean _isDisplayPageTemplateCollectionFile(String fileName) {
+		if (fileName.endsWith(
+				CharPool.SLASH +
+					LayoutPageTemplateExportImportConstants.
+						FILE_NAME_DISPLAY_PAGE_TEMPLATE_COLLECTION)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private boolean _isDisplayPageTemplateFile(String fileName) {
 		if (fileName.endsWith(
 				CharPool.SLASH +
@@ -1231,6 +1253,27 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 		}
 
 		return false;
+	}
+
+	private boolean _isRootFolder(List<String> entries, String fileName) {
+		String[] pathParts = StringUtil.split(fileName, CharPool.SLASH);
+
+		if (pathParts.length > 2) {
+			String path = StringUtil.merge(
+				ArrayUtil.subset(pathParts, 0, pathParts.length - 2),
+				StringPool.SLASH);
+
+			String displayPageTemplateCollectionPath =
+				path + CharPool.SLASH +
+					LayoutPageTemplateExportImportConstants.
+						FILE_NAME_DISPLAY_PAGE_TEMPLATE_COLLECTION;
+
+			if (entries.contains(displayPageTemplateCollectionPath)) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	private boolean _isUtilityPageTemplateFile(String fileName) {
@@ -1305,6 +1348,40 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Invalid basic layout page template entry for: " + fileName,
+					exception);
+			}
+		}
+
+		return true;
+	}
+
+	private boolean _isValidDisplayPageLayoutPageTemplateCollection(
+		String content, String fileName, long groupId,
+		long layoutPageTemplateCollectionId) {
+
+		try {
+			PageTemplateCollectionValidator.validatePageTemplateCollection(
+				content);
+
+			PageTemplateCollection pageTemplateCollection =
+				_objectMapper.readValue(content, PageTemplateCollection.class);
+
+			LayoutPageTemplateCollection layoutPageTemplateCollection =
+				_layoutPageTemplateCollectionLocalService.
+					fetchLayoutPageTemplateCollection(
+						groupId, pageTemplateCollection.getName(),
+						layoutPageTemplateCollectionId,
+						LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE);
+
+			if (layoutPageTemplateCollection != null) {
+				return false;
+			}
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Invalid display page layout page template collection " +
+						"for: " + fileName,
 					exception);
 			}
 		}

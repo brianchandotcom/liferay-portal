@@ -1,0 +1,204 @@
+{
+	"configuration": {
+		"className": "com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
+		"parameters": {
+			"containsHeaders": "true",
+			"createStrategy": "UPSERT",
+			"importStrategy": "ON_ERROR_FAIL",
+			"updateStrategy": "UPDATE"
+		},
+		"taskItemDelegateName": "DEFAULT"
+	},
+	"items": [
+		{
+			"accountEntryRestricted": false,
+			"accountEntryRestrictedObjectFieldName": "",
+			"active": true,
+			"defaultLanguageId": "en_US",
+			"enableCategorization": true,
+			"enableComments": false,
+			"externalReferenceCode": "B9K3_PAYPAL_TRANSACTION",
+			"label": {
+				"en_US": "B9K3 PayPal Transaction"
+			},
+			"modifiable": false,
+			"name": "B9K3PayPalTransaction",
+			"objectFields": [
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "TRANSACTION_CODE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Transaction Code"
+					},
+					"localized": false,
+					"name": "transactionCode",
+					"objectFieldSettings": [
+					],
+					"readOnly": "false",
+					"readOnlyConditionExpression": "",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "String",
+					"unique": false
+				}
+			],
+			"panelCategoryKey": "",
+			"parameterRequired": false,
+			"pluralLabel": {
+				"en_US": "B9K3 PayPal Transactions"
+			},
+			"portlet": false,
+			"restContextPath": "/o/c/b9k3paypaltransactions",
+			"scope": "company",
+			"status": {
+				"code": 0,
+				"label": "approved",
+				"label_i18n": "Approved"
+			},
+			"system": false
+		},
+		{
+			"accountEntryRestricted": false,
+			"accountEntryRestrictedObjectFieldName": "",
+			"active": true,
+			"defaultLanguageId": "en_US",
+			"enableCategorization": true,
+			"enableComments": false,
+			"externalReferenceCode": "B9K3_PAYPAL_WEBHOOK",
+			"label": {
+				"en_US": "B9K3 PayPal Webhook"
+			},
+			"modifiable": false,
+			"name": "B9K3PayPalWebhook",
+			"objectFields": [
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "CLIENT_ID",
+					"indexed": false,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Client Id"
+					},
+					"localized": false,
+					"name": "clientId",
+					"objectFieldSettings": [
+					],
+					"readOnly": "false",
+					"readOnlyConditionExpression": "",
+					"required": true,
+					"state": false,
+					"system": true,
+					"type": "String",
+					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "CLIENT_SECRET",
+					"indexed": false,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Client Secret"
+					},
+					"localized": false,
+					"name": "clientSecret",
+					"objectFieldSettings": [
+					],
+					"readOnly": "false",
+					"readOnlyConditionExpression": "",
+					"required": true,
+					"state": false,
+					"system": true,
+					"type": "String",
+					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "MODE",
+					"indexed": false,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Mode"
+					},
+					"localized": false,
+					"name": "mode",
+					"objectFieldSettings": [
+					],
+					"readOnly": "false",
+					"readOnlyConditionExpression": "",
+					"required": true,
+					"state": false,
+					"system": true,
+					"type": "String",
+					"unique": false
+				},
+				{
+					"DBType": "Long",
+					"externalReferenceCode": "PAYMENT_ENTRY_ID",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Payment Entry Id"
+					},
+					"localized": false,
+					"name": "paymentEntryId",
+					"objectFieldSettings": [
+					],
+					"readOnly": "false",
+					"readOnlyConditionExpression": "",
+					"required": true,
+					"state": false,
+					"system": true,
+					"type": "Long",
+					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "WEBHOOK_ID",
+					"indexed": false,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Webhook ID"
+					},
+					"localized": false,
+					"name": "webhookId",
+					"objectFieldSettings": [
+					],
+					"readOnly": "false",
+					"readOnlyConditionExpression": "",
+					"required": true,
+					"state": false,
+					"system": true,
+					"type": "String",
+					"unique": false
+				}
+			],
+			"panelCategoryKey": "",
+			"parameterRequired": false,
+			"pluralLabel": {
+				"en_US": "B9K3 PayPal Webhooks"
+			},
+			"portlet": false,
+			"restContextPath": "/o/c/b9k3paypalwebhooks",
+			"scope": "company",
+			"status": {
+				"code": 0,
+				"label": "approved",
+				"label_i18n": "Approved"
+			},
+			"system": false
+		}
+	]
+}

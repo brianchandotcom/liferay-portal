@@ -8,72 +8,115 @@
 
 const COMMANDS = {
 	'build': {
-		description: 'builds frontend stuff of current project',
+		description: `
+		Builds current project.
+`,
 		parameters: '',
 		script: './bundle/index.mjs',
 	},
 	'build:custom': {
-		description:
-			'builds frontend stuff using a custom esbuild configuration',
+		description: `
+		Builds artifacts for the current project using a custom esbuild configuration.
+`,
 		parameters: '',
 		script: './bundle/custom.mjs',
 	},
 	'build:report': {
-		description: 'generates an aggregated report of build timings',
-		parameters:
-			'[<timings directory> (falls back to LIFERAY_NPM_SCRIPTS_TIMING env var)]',
+		description: `
+		Generates an aggregated report of build timings.
+
+		The <timings directory> arguments falls back to LIFERAY_NPM_SCRIPTS_TIMING environment
+		variable when not provided.
+`,
+		parameters: '[<timings directory>]',
 		script: './bundle/report.mjs',
 	},
+	'build:theme': {
+		description: `
+		Build a theme project with liferay-theme-tasks and gulp.
+`,
+		script: './bundle/theme.mjs',
+	},
 	'check:preflight': {
-		description: 'runs SF checks not implemented by eslint, prettier, etc.',
-		parameters: '[--all]',
+		description: `
+		Runs "lightweight" global checks not implemented by ESLint or Prettier.
+
+		Typical preflight checks are:
+
+		  - No forbidden configuration file names are used.
+		  - All package.json files are correctly formatted.
+		  - The yarn.lock file is correct (eg: doesn't point to local npm registries).
+		  - The node-scripts hash is correct.
+		  - ...
+`,
 		script: './preflight/index.mjs',
 	},
 	'check:tsc': {
-		description:
-			'runs TypeScript checks in the current project or globally (if run from modules)',
-		parameters: '[--modified-since=<git commit>]',
-		script: './tsc/index.mjs',
+		description: `
+		Runs TypeScript checks in the current project or globally (when run from modules).
+
+		See this help's introduction to find the meaning of --all, --current-branch, ... parameters.
+`,
+		parameters: '[{--all|--current-branch|--local-changes}]',
+		script: './check/tsc.mjs',
 	},
 	'format': {
-		description:
-			'formats source files or optionally only checks with "--check" flag (when run from ' +
-			'modules it also runs check:preflight)',
-		parameters: '[--all] [--check]',
+		description: `
+		Formats and lints source files with eslint and prettier in the current project or globally
+		(when run from modules).
+
+		If --check is passed no file is modified and the command just outputs what files need to be
+		formatted.
+
+		See this help's introduction to find the meaning of --all, --current-branch, ... parameters.
+`,
+		parameters: '[--check] [{--all|--current-branch|--local-changes}]',
 		script: './format/index.mjs',
 	},
 	'format:file': {
-		description: 'formats a single source file.',
+		description: `
+		Formats a single source file with eslint and prettier.
+`,
 		parameters: '<source file path>',
 		script: './format/file.mjs',
 	},
 	'format:self': {
-		description:
-			'formats node-scripts (not to be used externally in any other project).',
+		description: `
+		Formats node-scripts.
+
+		This is a internal command that must not to be used from any other project nor from the
+		command	line.
+`,
 		parameters: '',
 		script: './format/self.mjs',
 	},
 	'generate:tsconfig': {
-		description: 'generates tsconfig.json files for all projects',
+		description: `
+		Generates tsconfig.json files for all projects.
+`,
 		parameters: '',
 		script: './tsconfig/index.mjs',
 	},
 	'setup': {
-		description: 'setup working environment used by node-scripts',
+		description: `
+		Setup working environment used by node-scripts (for example: download the binary Sass
+		compiler when necessary).
+
+		This task is usually invoked by yarn when locally installing node-scripts but it can also be
+		run manually for troubleshooting purposes.
+`,
 		parameters: '',
 		script: './setup.mjs',
 	},
 	'test': {
-		description: 'runs unit tests in a single or multiple projects.',
+		description: `
+		Runs unit tests in a single or multiple projects.
+
+		When multiple projects are tested and --sync argument is given, project tests are run
+		serially.
+`,
+		parameters: '[--sync]',
 		script: './test/index.mjs',
-	},
-	'test:sync': {
-		description: 'Synchronously runs tests across multiple projects.',
-		script: './test/sync.mjs',
-	},
-	'theme:build': {
-		description: 'Build liferay theme with liferay-theme-tasks and gulp',
-		script: './theme/build.mjs',
 	},
 };
 
@@ -99,19 +142,37 @@ function showHelpAndExit() {
 	console.error(`
 Usage: node-scripts <command>
 
+	Where <command> is an action (like 'build', 'check', 'format', 'generate', 'test', ...)
+	optionally qualified by a subject (like ':custom', ':theme', ...).
+
+	Actions can usually be executed:
+
+	  - Only globally (eg: check:preflight).
+	  - Only per project (eg: build).
+	  - Globally or per project based on the directory of invocation (eg: format). Typically these
+	    commands run globally when invoked at 'modules' and per project when invoked from a
+	    project's directory.
+
+	Some actions may receive one of the arguments {--all|--current-branch|--local-changes} to
+	restrict the set of files to which they must be	applied. Typically --all is assumed if none is
+	given.
+
+	The meaning of such flags is:
+
+	  --all:            check everything (may take long to run for some tasks)
+	  --current-branch: only check changed stuff that has been committed to the active branch
+	  --local-changes:  only check locally uncommitted changed stuff
+
+	The word "changed" should be interpreted as "changed as of master branch".
+
+
 Available commands:
 `);
-
-	const maxCommandLength = Object.entries(COMMANDS).reduce(
-		(max, [command, {parameters}]) =>
-			Math.max(max, getCommandDisplayLength(command, parameters)),
-		0
-	);
 
 	for (const [command, {description, parameters}] of Object.entries(
 		COMMANDS
 	)) {
-		let line = '    ';
+		let line = '\t• ';
 
 		line += command;
 
@@ -119,28 +180,15 @@ Available commands:
 			line += ` ${parameters}`;
 		}
 
-		for (
-			let i = getCommandDisplayLength(command, parameters);
-			i < maxCommandLength + 4;
-			i++
-		) {
-			line += ' ';
-		}
-
-		line += description;
+		line += '\n';
+		line += description
+			.split('\n')
+			.map((line) => `\t  ${line.replaceAll('\t', '')}`)
+			.join('\n');
+		line += '\n';
 
 		console.error(line);
 	}
 
-	console.error('');
-
 	process.exit(2);
-}
-
-function getCommandDisplayLength(command, parameters) {
-	if (!parameters) {
-		return command.length;
-	}
-
-	return command.length + 1 + parameters.length;
 }

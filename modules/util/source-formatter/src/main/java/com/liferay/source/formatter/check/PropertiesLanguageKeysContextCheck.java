@@ -66,7 +66,8 @@ public class PropertiesLanguageKeysContextCheck extends BaseFileCheck {
 						StringBundler.concat(
 							"The single-word key '", key,
 							"' should include a word of context at the end, ",
-							"within a [], to indicate specific meaning"));
+							"within a [], to indicate specific meaning"),
+						_getLineNumber(content, key));
 				}
 
 				continue;
@@ -85,13 +86,16 @@ public class PropertiesLanguageKeysContextCheck extends BaseFileCheck {
 				continue;
 			}
 
+			int lineNumber = _getLineNumber(content, key);
+
 			if (properties.containsKey(matcher.group(1))) {
 				addMessage(
 					fileName,
 					StringBundler.concat(
 						"The key '", matcher.group(1), "' should include a ",
 						"word of context at the end, within a [], to indicate ",
-						"specific meaning"));
+						"specific meaning"),
+					lineNumber);
 			}
 
 			String bracketsContent = matcher.group(2);
@@ -108,7 +112,8 @@ public class PropertiesLanguageKeysContextCheck extends BaseFileCheck {
 					fileName,
 					StringBundler.concat(
 						"The context '", bracketsContent,
-						"' is invalid in the key '", key, "'"));
+						"' is invalid in the key '", key, "'"),
+					lineNumber);
 			}
 		}
 
@@ -139,6 +144,16 @@ public class PropertiesLanguageKeysContextCheck extends BaseFileCheck {
 			StringUtil.read(inputStream));
 
 		return _allowedSingleWordLanguageKeys;
+	}
+
+	private int _getLineNumber(String content, String key) {
+		int x = content.indexOf("\n" + key + "=");
+
+		if (x != -1) {
+			return getLineNumber(content, x + 1);
+		}
+
+		return getLineNumber(content, content.indexOf(key + "="));
 	}
 
 	private static final String _CONTEXT_DEPTH_KEY = "contextDepth";

@@ -20,7 +20,7 @@ export const test = mergeTests(
 );
 
 const RESET_SCIM_HELP_TEXT =
-	'All the current SCIM Client related data and the generated OAuth 2 tokens is removed. This is necessary for being able to configure a new SCIM Client.';
+	'All SCIM Client related data and generated OAuth 2 tokens will be removed. This is necessary to configure a new SCIM Client.';
 
 test('smoke: test SCIM configuration options', async ({page}) => {
 	const scimConfigurationPage = new SCIMConfigurationPage(page);

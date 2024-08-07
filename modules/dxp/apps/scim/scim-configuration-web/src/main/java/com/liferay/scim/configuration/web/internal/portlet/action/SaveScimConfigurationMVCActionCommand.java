@@ -190,7 +190,7 @@ public class SaveScimConfigurationMVCActionCommand
 							_userLocalService.getUser(
 								expandoValue.getClassPK()));
 					}
-					else if (className.equals(UserGroup.class.getName())) {
+					else {
 						userGroupIndexer.reindex(
 							_userGroupLocalService.getUserGroup(
 								expandoValue.getClassPK()));

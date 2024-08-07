@@ -618,10 +618,9 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 					);
 				}
 
-				String listTypeDefinitionERC = MapUtil.getString(
-					properties, "source");
+				String source = MapUtil.getString(properties, "source");
 
-				if (Validator.isNotNull(listTypeDefinitionERC)) {
+				if (Validator.isNotNull(source)) {
 					String sourceType = MapUtil.getString(
 						properties, "sourceType");
 
@@ -640,10 +639,10 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 					);
 
 					if (Validator.isNotNull(sourceType) &&
-						Objects.equals(sourceType, "API_HEADLESS")) {
+						Objects.equals(sourceType, "API_REST_APPLICATION")) {
 
 						return selectionFilterJSONObject.put(
-							"apiURL", properties.get("source")
+							"apiURL", source
 						).put(
 							"itemKey", properties.get("itemKey")
 						).put(
@@ -678,8 +677,7 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 					ListTypeDefinition listTypeDefinition =
 						_listTypeDefinitionLocalService.
 							getListTypeDefinitionByExternalReferenceCode(
-								listTypeDefinitionERC,
-								themeDisplay.getCompanyId());
+								source, themeDisplay.getCompanyId());
 
 					List<ListTypeEntry> listTypeEntries =
 						_listTypeEntryLocalService.getListTypeEntries(
@@ -939,11 +937,12 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 			preselectedValues);
 
 		for (int i = 0; i < preselectedValuesJSONArray.length(); i++) {
-			String key = preselectedValuesJSONArray.getString(i);
+			JSONObject jsonObject = preselectedValuesJSONArray.getJSONObject(i);
 
 			for (ListTypeEntry listTypeEntry : listTypeEntries) {
 				if (Objects.equals(
-						listTypeEntry.getExternalReferenceCode(), key)) {
+						listTypeEntry.getExternalReferenceCode(),
+						jsonObject.getString("value"))) {
 
 					jsonArray.put(
 						JSONUtil.put(

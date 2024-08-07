@@ -5,52 +5,51 @@
 
 import ClayAlert from '@clayui/alert';
 import ClayForm, {ClaySelectWithOption} from '@clayui/form';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import classNames from 'classnames';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 
 import RequiredMark from '../../../../../components/RequiredMark';
 import ValidationFeedback from '../../../../../components/ValidationFeedback';
 import getAllPicklists from '../../../../../utils/getAllPicklists';
-import {IFilter, IPickList} from '../../../../../utils/types';
-
-interface IObjectPicklistProps {
-	filter?: IFilter;
-	namespace: string;
-	onChange: Function;
-	sourceValidationError: boolean;
-}
+import {IPickList} from '../../../../../utils/types';
 
 function ObjectPicklist({
-	filter,
 	namespace,
 	onChange,
+	onPicklistsLoad,
+	picklists,
+	selectedPicklist,
 	sourceValidationError,
-}: IObjectPicklistProps) {
-	const [picklists, setPicklists] = useState<IPickList[]>();
-	const [selectedPicklist, setSelectedPicklist] = useState<IPickList>();
-
+}: {
+	namespace: string;
+	onChange: Function;
+	onPicklistsLoad: (picklists: Array<IPickList>) => void;
+	picklists?: Array<IPickList>;
+	selectedPicklist?: IPickList;
+	sourceValidationError: boolean;
+}) {
 	const objectPicklistFormElementId = `${namespace}ObjectPicklist`;
 
 	useEffect(() => {
-		getAllPicklists().then((items) => {
-			setPicklists(items);
+		getAllPicklists().then((picklists) => {
+			onPicklistsLoad(picklists);
 		});
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
-	useEffect(() => {
-		const picklist = picklists?.find(
-			(item) =>
-				String(item.externalReferenceCode) === (filter as any)?.source
+	if (!picklists) {
+		return (
+			<div className="position-relative">
+				<ClayLoadingIndicator />
+			</div>
 		);
-
-		if (picklist) {
-			setSelectedPicklist(picklist);
-		}
-	}, [filter, picklists]);
+	}
 
 	return (
 		<>
-			{picklists && !picklists.length ? (
+			{!picklists.length ? (
 				<ClayAlert displayType="info" title="Info">
 					{Liferay.Language.get(
 						'no-filter-sources-are-available.-create-a-picklist-or-a-vocabulary-for-this-type-of-filter'
@@ -79,7 +78,7 @@ function ObjectPicklist({
 										String(item.externalReferenceCode) ===
 										event.target.value
 								);
-								setSelectedPicklist(picklist);
+
 								onChange(picklist);
 							}}
 							options={[

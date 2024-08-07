@@ -88,25 +88,11 @@ public abstract class BaseJenkinsServerEntity
 	}
 
 	@Override
-	public String getJenkinsUserName() {
-		return _jenkinsUserName;
-	}
-
-	@Override
-	public String getJenkinsUserPassword() {
-		return _jenkinsUserPassword;
-	}
-
-	@Override
 	public JSONObject getJSONObject() {
 		JSONObject jsonObject = super.getJSONObject();
 
 		jsonObject.put(
 			"jenkinsNodeCount", getJenkinsNodeCount()
-		).put(
-			"jenkinsUserName", getJenkinsUserName()
-		).put(
-			"jenkinsUserPassword", getJenkinsUserPassword()
 		).put(
 			"name", getName()
 		).put(
@@ -159,24 +145,12 @@ public abstract class BaseJenkinsServerEntity
 	}
 
 	@Override
-	public void setJenkinsUserName(String jenkinsUserName) {
-		_jenkinsUserName = jenkinsUserName;
-	}
-
-	@Override
-	public void setJenkinsUserPassword(String jenkinsUserPassword) {
-		_jenkinsUserPassword = jenkinsUserPassword;
-	}
-
-	@Override
 	public void setJSONObject(JSONObject jsonObject) {
 		super.setJSONObject(jsonObject);
 
 		_jenkinsCohortEntityId = jsonObject.optLong(
 			"r_jenkinsCohortToJenkinsServers_c_jenkinsCohortId");
 		_jenkinsNodeCount = jsonObject.optInt("jenkinsNodeCount");
-		_jenkinsUserName = jsonObject.optString("jenkinsUserName");
-		_jenkinsUserPassword = jsonObject.optString("jenkinsUserPassword");
 		_name = jsonObject.optString("name");
 		_url = StringUtil.toURL(jsonObject.getString("url"));
 	}
@@ -244,8 +218,6 @@ public abstract class BaseJenkinsServerEntity
 	private JenkinsCohortEntity _jenkinsCohortEntity;
 	private long _jenkinsCohortEntityId;
 	private int _jenkinsNodeCount;
-	private String _jenkinsUserName;
-	private String _jenkinsUserPassword;
 	private String _name;
 	private URL _url;
 

@@ -77,15 +77,10 @@ public class CommerceReturnItemObjectEntryValuesContributor
 
 		CommerceOrder commerceOrder = commerceOrderItem.getCommerceOrder();
 
-		if (!values.containsKey("c_commerceReturnItemId") &&
-			!values.containsKey("externalReferenceCode")) {
+		CommerceCurrency commerceCurrency = commerceOrder.getCommerceCurrency();
 
-			CommerceCurrency commerceCurrency =
-				commerceOrder.getCommerceCurrency();
-
-			values.put("currencyCode", commerceCurrency.getCode());
-			values.put("currencySymbol", commerceCurrency.getSymbol());
-		}
+		values.put("currencyCode", commerceCurrency.getCode());
+		values.put("currencySymbol", commerceCurrency.getSymbol());
 
 		CommerceOrderItemPrice commerceOrderItemPrice =
 			_commerceOrderPriceCalculation.getCommerceOrderItemPricePerUnit(

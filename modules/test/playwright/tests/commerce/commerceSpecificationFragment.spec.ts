@@ -89,7 +89,9 @@ test('LPD-13652 Product specification fragment only shows correct specifications
 	await page
 		.getByText('The Product Specification component will be shown here.')
 		.click();
-	await page.getByLabel('Key').fill(product1.productSpecifications[0].key);
+	await page
+		.getByLabel('Key', {exact: true})
+		.fill(product1.productSpecifications[0].key);
 
 	await commerceLayoutsPage.selectDisplayPageTemplatePreviewItem('Product1');
 

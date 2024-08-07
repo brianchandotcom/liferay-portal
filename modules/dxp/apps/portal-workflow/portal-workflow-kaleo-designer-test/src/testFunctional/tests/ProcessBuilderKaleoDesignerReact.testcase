@@ -4024,7 +4024,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.restorePreviousVersion(number = 1);
 
-		ProcessBuilderKaleoDesignerReact.viewRevisionHistoryVersion(number = 3);
+		ProcessBuilderKaleoDesignerReact.viewCurrentVersionAtRevisionHistoryTab(number = 3);
 
 		ProcessBuilderKaleoDesignerReact.viewRevisionHistoryVersion(number = 2);
 

@@ -5,6 +5,7 @@
 
 package com.liferay.portal.db.schema.definition.internal.sql.provider;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -42,13 +43,6 @@ public class DBPartitionSQLProvider extends BaseSQLProvider {
 		throws Exception {
 
 		super(dbType);
-
-		if (dbType == DBType.MYSQL) {
-			_dbPartitionDB = new DBPartitionMySQLDB();
-		}
-		else {
-			_dbPartitionDB = new DBPartitionPostgreSQLDB();
-		}
 
 		_dbPartitionName = DBPartitionUtil.getPartitionName(companyId);
 
@@ -103,30 +97,24 @@ public class DBPartitionSQLProvider extends BaseSQLProvider {
 	}
 
 	private String _getPartitionIndexesSQL() {
+		List<String> lowerCaseControlTableNames = TransformUtil.transform(
+			_controlTableNames, String::toLowerCase);
+
 		StringBundler sb = new StringBundler();
 
-		List<String> regexControlTableNames = new ArrayList<>(
-			_controlTableNames.size());
-
-		for (String controlTableName : _controlTableNames) {
-			regexControlTableNames.add(
-				" on " + StringUtil.toLowerCase(controlTableName) +
-					StringPool.SPACE);
-		}
-
-		outer:
 		for (String line :
 				StringUtil.split(super.getIndexesSQL(), CharPool.SEMICOLON)) {
 
 			String lowerCaseLine = StringUtil.trim(
 				StringUtil.toLowerCase(line));
 
-			for (String regexControlTableName : regexControlTableNames) {
-				if (StringUtil.count(lowerCaseLine, regexControlTableName) >
-						0) {
+			String[] parts = StringUtil.split(
+				StringUtil.extractLast(lowerCaseLine, " on "), CharPool.SPACE);
 
-					continue outer;
-				}
+			if (lowerCaseControlTableNames.contains(
+					StringUtil.toLowerCase(parts[0]))) {
+
+				continue;
 			}
 
 			sb.append(line);
@@ -210,7 +198,6 @@ public class DBPartitionSQLProvider extends BaseSQLProvider {
 	}
 
 	private static List<String> _controlTableNames;
-	private static final DBPartitionDB _dbPartitionDB;
 	private static String _partitionIndexesSQL;
 	private static String _partitionTablesSQL;
 	private static Set<String[]> _rulesTableColumn;

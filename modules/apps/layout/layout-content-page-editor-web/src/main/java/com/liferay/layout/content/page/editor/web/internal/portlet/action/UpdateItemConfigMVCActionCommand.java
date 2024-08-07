@@ -51,15 +51,19 @@ public class UpdateItemConfigMVCActionCommand
 		long segmentsExperienceId = ParamUtil.getLong(
 			actionRequest, "segmentsExperienceId");
 		String itemConfig = ParamUtil.getString(actionRequest, "itemConfig");
-		String itemId = ParamUtil.getString(actionRequest, "itemId");
+		String[] itemIds = ParamUtil.getStringValues(actionRequest, "itemIds");
 
 		return JSONUtil.put(
 			"layoutData",
 			LayoutStructureUtil.updateLayoutPageTemplateData(
 				themeDisplay.getScopeGroupId(), segmentsExperienceId,
 				themeDisplay.getPlid(),
-				layoutStructure -> layoutStructure.updateItemConfig(
-					_jsonFactory.createJSONObject(itemConfig), itemId)));
+				layoutStructure -> {
+					for (String itemId : itemIds) {
+						layoutStructure.updateItemConfig(
+							_jsonFactory.createJSONObject(itemConfig), itemId);
+					}
+				}));
 	}
 
 	@Reference

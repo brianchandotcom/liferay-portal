@@ -43,7 +43,57 @@
 			},
 			"name": "lastName",
 			"required": false
-		}
+		},
+		{
+			"DBType": "String",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "City Name"
+			},
+			"name": "cityName",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Country Name"
+			},
+			"name": "countryName",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Region Name"
+			},
+			"name": "regionName",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Street"
+			},
+			"name": "street",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Postal Code"
+			},
+			"name": "postalCode",
+			"required": false
+		}	
 	],
 	"pluralLabel": {
 		"en_US": "Person Entries"

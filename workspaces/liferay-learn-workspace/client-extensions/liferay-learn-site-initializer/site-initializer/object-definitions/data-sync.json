@@ -1,21 +1,11 @@
 {
 	"label": {
-		"en_US": "Source Entry"
+		"en_US": "Data Sync"
 	},
-	"name": "SourceEntry",
+	"name": "DataSync",
 	"objectFields": [
 		{
-			"DBType": "String",
-			"indexed": false,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Name"
-			},
-			"name": "name",
-			"required": false
-		},
-		{
-			"DBType": "String",
+			"DBType": "Date",
 			"indexed": false,
 			"indexedAsKeyword": false,
 			"label": {
@@ -23,10 +13,20 @@
 			},
 			"name": "syncDate",
 			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Sync Status"
+			},
+			"name": "syncStatus",
+			"required": false
 		}
 	],
 	"pluralLabel": {
-		"en_US": "Source Entries"
+		"en_US": "Data Syncs"
 	},
 	"scope": "site"
 }

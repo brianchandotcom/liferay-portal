@@ -25,6 +25,7 @@ pre[class*='language-'] {
 	font-size: var(--code-font-size);
 	font-weight: var(--font-weight-normal);
 	line-height: var(--code-line-height);
+	max-width: 50vw;
 	text-align: left;
 	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
 	white-space: pre;
@@ -67,6 +68,7 @@ pre[class*='language-'] {
 	line-height: 1rem;
 	padding: 0.125rem 0.5rem;
 	white-space: normal;
+	word-break: break-all;
 }
 
 :not(pre) > code[class*='language-'] .token {
@@ -432,6 +434,7 @@ pre[class*='language-'] {
 			color: var(--color-neutral-8, #54555f);
 			margin-bottom: 1rem;
 			width: 100%;
+			word-break: break-all;
 
 			td {
 				background-clip: padding-box;
@@ -471,6 +474,7 @@ pre[class*='language-'] {
 			thead th {
 				border-bottom: calc(2 * 0.0625rem) solid #dee2e6;
 				border-top-width: 0;
+				padding-right: 0;
 				vertical-align: middle;
 			}
 		}
@@ -1376,6 +1380,17 @@ pre[class*='language-'] {
 }
 
 @media (max-width: 767.98px) {
+
+	:not(pre) > code[class*='language-'],
+	pre[class*='language-'] {
+		font-size: 0.8rem;
+	}
+
+	code[class*='language-'],
+	pre[class*='language-'] {
+		max-width: 100%;
+	}
+
 	.learn-recipe-container .recipe-main {
 		display: flex;
 		flex-direction: column !important;

@@ -180,6 +180,9 @@ public class RepositoryBrowserServlet extends HttpServlet {
 				return;
 			}
 
+			boolean viewableByGuest = ParamUtil.getBoolean(
+				httpServletRequest, "viewableByGuest");
+
 			UploadServletRequest uploadServletRequest =
 				_portal.getUploadServletRequest(httpServletRequest);
 
@@ -198,8 +201,10 @@ public class RepositoryBrowserServlet extends HttpServlet {
 					ServiceContextFactory.getInstance(
 						FileEntry.class.getName(), httpServletRequest);
 
-				serviceContext.setAddGroupPermissions(true);
-				serviceContext.setAddGuestPermissions(true);
+				if (viewableByGuest) {
+					serviceContext.setAddGroupPermissions(true);
+					serviceContext.setAddGuestPermissions(true);
+				}
 
 				_dlAppService.addFileEntry(
 					null, repositoryId, parentFolderId, sourceFileName,
@@ -225,10 +230,17 @@ public class RepositoryBrowserServlet extends HttpServlet {
 			long parentFolderId = ParamUtil.getLong(
 				httpServletRequest, "parentFolderId");
 
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				Folder.class.getName(), httpServletRequest);
+
+			if (viewableByGuest) {
+				serviceContext.setAddGroupPermissions(true);
+				serviceContext.setAddGuestPermissions(true);
+			}
+
 			_dlAppService.addFolder(
 				null, repositoryId, parentFolderId, name, StringPool.BLANK,
-				ServiceContextFactory.getInstance(
-					Folder.class.getName(), httpServletRequest));
+				serviceContext);
 
 			SessionMessages.add(
 				httpServletRequest, "requestProcessed",

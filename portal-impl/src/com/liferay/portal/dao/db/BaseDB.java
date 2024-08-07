@@ -21,10 +21,13 @@ import com.liferay.portal.kernel.dao.db.Index;
 import com.liferay.portal.kernel.dao.db.IndexMetadata;
 import com.liferay.portal.kernel.dao.db.IndexMetadataFactoryUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.db.partition.DBPartition;
+import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -46,6 +49,7 @@ import java.sql.Statement;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -79,6 +83,10 @@ public abstract class BaseDB implements DB {
 		for (IndexMetadata indexMetadata : indexMetadatas) {
 			String normalizedTableName = dbInspector.normalizeName(
 				indexMetadata.getTableName(), databaseMetaData);
+
+			if (_isSkipIndexOperation(connection, normalizedTableName)) {
+				continue;
+			}
 
 			if (columnTableSizes.get(normalizedTableName) == null) {
 				try (ResultSet resultSet = databaseMetaData.getColumns(
@@ -312,6 +320,10 @@ public abstract class BaseDB implements DB {
 			Connection connection, String tableName, String columnName)
 		throws IOException, SQLException {
 
+		if (_isSkipIndexOperation(connection, tableName)) {
+			return Collections.emptyList();
+		}
+
 		List<IndexMetadata> indexMetadatas = getIndexes(
 			connection, tableName, columnName, false);
 
@@ -351,6 +363,10 @@ public abstract class BaseDB implements DB {
 			Connection connection, String tableName, String columnName,
 			boolean onlyUnique)
 		throws SQLException {
+
+		if (_isSkipIndexOperation(connection, tableName)) {
+			return Collections.emptyList();
+		}
 
 		List<IndexMetadata> indexMetadatas = new ArrayList<>();
 
@@ -481,6 +497,10 @@ public abstract class BaseDB implements DB {
 	public String[] getPrimaryKeyColumnNames(
 			Connection connection, String tableName)
 		throws SQLException {
+
+		if (_isSkipIndexOperation(connection, tableName)) {
+			return new String[0];
+		}
 
 		List<PrimaryKey> primaryKeys = _getPrimaryKeys(connection, tableName);
 
@@ -894,6 +914,10 @@ public abstract class BaseDB implements DB {
 			Connection connection, String tableName, String indexesSQL,
 			boolean dropIndexes)
 		throws Exception {
+
+		if (_isSkipIndexOperation(connection, tableName)) {
+			return;
+		}
 
 		List<Index> indexes = _getIndexes(connection, tableName);
 
@@ -1588,6 +1612,21 @@ public abstract class BaseDB implements DB {
 		}
 
 		return primaryKeys;
+	}
+
+	private boolean _isSkipIndexOperation(
+		Connection connection, String tableName) {
+
+		if (!DBPartition.isPartitionEnabled() ||
+			(CompanyThreadLocal.getCompanyId() ==
+				PortalInstancePool.getDefaultCompanyId())) {
+
+			return false;
+		}
+
+		DBInspector dbInspector = new DBInspector(connection);
+
+		return dbInspector.isControlTable(tableName);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(BaseDB.class);

@@ -54,6 +54,12 @@ public class IndexEntryLocalServiceUtil {
 		return getService().addIndexEntry(companyId, name);
 	}
 
+	public static boolean addKeywordsEntry(
+		long keywordsEntryId, IndexEntry indexEntry) {
+
+		return getService().addKeywordsEntry(keywordsEntryId, indexEntry);
+	}
+
 	public static boolean addKeywordsEntryIndexEntries(
 		long keywordsEntryId, List<IndexEntry> indexEntries) {
 

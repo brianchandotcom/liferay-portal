@@ -67,9 +67,9 @@ test('Allow mapping repeatable fields collection provider', async ({
 
 	// Map editable to image field
 
-	await pageEditorPage.goToSidebarTab('Browser');
+	const imageFragmentId = await pageEditorPage.getFragmentId('Image');
 
-	await page.getByLabel('Select image-square').click();
+	await pageEditorPage.selectEditable(imageFragmentId, 'image-square');
 
 	await page.getByLabel('Source Selection').selectOption('Mapping');
 

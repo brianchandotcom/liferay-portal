@@ -10,7 +10,7 @@ import type {LayoutDataItem} from '../../types/layout_data/LayoutData';
 
 interface Params {
 	dispatch: (action: ReturnType<typeof updateItemConfig>) => void;
-	itemId: string;
+	itemIds: string[];
 	selectedViewportSize: ViewportSize;
 	styleName: 'display';
 	styleValue: 'block' | 'none';
@@ -18,7 +18,7 @@ interface Params {
 
 export default function updateItemStyle({
 	dispatch,
-	itemId,
+	itemIds,
 	selectedViewportSize,
 	styleName,
 	styleValue,
@@ -42,7 +42,7 @@ export default function updateItemStyle({
 	dispatch(
 		updateItemConfig({
 			itemConfig,
-			itemId,
+			itemIds,
 		})
 	);
 }

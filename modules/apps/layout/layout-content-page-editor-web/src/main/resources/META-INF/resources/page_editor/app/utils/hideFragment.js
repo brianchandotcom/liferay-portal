@@ -8,7 +8,7 @@ import updateItemStyle from './updateItemStyle';
 export default function hideFragment({dispatch, itemId, selectedViewportSize}) {
 	updateItemStyle({
 		dispatch,
-		itemId,
+		itemIds: [itemId],
 		selectedViewportSize,
 		styleName: 'display',
 		styleValue: 'none',

@@ -115,7 +115,7 @@ export default function ShortcutManager() {
 	const hideShow = () => {
 		updateItemStyle({
 			dispatch,
-			itemId: activeItemId,
+			itemIds: activeItemIds,
 			selectedViewportSize,
 			styleName: 'display',
 			styleValue:

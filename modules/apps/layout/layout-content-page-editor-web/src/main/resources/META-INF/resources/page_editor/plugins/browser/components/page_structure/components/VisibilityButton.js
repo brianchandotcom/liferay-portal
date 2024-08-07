@@ -54,7 +54,7 @@ export default function VisibilityButton({
 				event.stopPropagation();
 				updateItemStyle({
 					dispatch,
-					itemId: node.id,
+					itemIds: [node.id],
 					selectedViewportSize,
 					styleName: 'display',
 					styleValue: node.hidden ? 'block' : 'none',

@@ -45,7 +45,7 @@ export function CommonStyles({
 	const handleValueSelect = (name, value) => {
 		updateItemStyle({
 			dispatch,
-			itemId: item.itemId,
+			itemIds: [item.itemId],
 			selectedViewportSize,
 			styleName: name,
 			styleValue: value,

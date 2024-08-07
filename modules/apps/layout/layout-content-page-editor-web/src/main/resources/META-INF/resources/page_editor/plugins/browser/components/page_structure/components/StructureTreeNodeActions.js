@@ -148,7 +148,7 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 				action: () => {
 					updateItemStyle({
 						dispatch,
-						itemId: item.id,
+						itemIds: [item.id],
 						selectedViewportSize,
 						styleName: 'display',
 						styleValue: isHidden ? 'block' : 'none',

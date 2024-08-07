@@ -97,6 +97,10 @@ public interface DLFileEntryService extends BaseService {
 	public void deleteFileEntry(long groupId, long folderId, String title)
 		throws PortalException;
 
+	public void deleteFileEntryByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException;
+
 	public void deleteFileVersion(long fileEntryId, String version)
 		throws PortalException;
 

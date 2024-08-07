@@ -580,6 +580,14 @@ public class DLAppServiceUtil {
 		getService().deleteFileEntry(fileEntryId);
 	}
 
+	public static void deleteFileEntryByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		getService().deleteFileEntryByExternalReferenceCode(
+			externalReferenceCode, groupId);
+	}
+
 	/**
 	 * Deletes the file entry with the title in the folder.
 	 *

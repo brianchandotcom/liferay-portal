@@ -587,6 +587,15 @@ public class DLAppServiceWrapper
 		_dlAppService.deleteFileEntry(fileEntryId);
 	}
 
+	@Override
+	public void deleteFileEntryByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_dlAppService.deleteFileEntryByExternalReferenceCode(
+			externalReferenceCode, groupId);
+	}
+
 	/**
 	 * Deletes the file entry with the title in the folder.
 	 *

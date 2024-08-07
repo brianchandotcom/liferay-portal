@@ -296,6 +296,10 @@ public interface DLAppLocalService extends BaseLocalService {
 	 */
 	public void deleteFileEntry(long fileEntryId) throws PortalException;
 
+	public void deleteFileEntryByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException;
+
 	/**
 	 * Deletes the file shortcut. This method is only supported by the Liferay
 	 * repository.

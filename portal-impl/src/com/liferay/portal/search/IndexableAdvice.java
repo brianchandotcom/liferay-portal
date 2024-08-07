@@ -92,12 +92,12 @@ public class IndexableAdvice extends ChainableMethodAdvice {
 			return;
 		}
 
-		TransactionConfig transactionConfig;
-
 		IndexableContext indexableContext =
 			aopMethodInvocation.getAdviceMethodContext();
 
 		Transactional transactional = indexableContext._transactional;
+
+		TransactionConfig transactionConfig;
 
 		if (transactional != null) {
 			transactionConfig = TransactionConfig.Factory.create(

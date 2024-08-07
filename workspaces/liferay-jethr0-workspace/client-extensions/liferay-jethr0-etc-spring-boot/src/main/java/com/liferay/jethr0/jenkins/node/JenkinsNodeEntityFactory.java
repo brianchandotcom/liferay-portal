@@ -6,9 +6,11 @@
 package com.liferay.jethr0.jenkins.node;
 
 import com.liferay.jethr0.entity.factory.BaseEntityFactory;
+import com.liferay.jethr0.event.jenkins.client.JenkinsClient;
 
 import org.json.JSONObject;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -24,10 +26,10 @@ public class JenkinsNodeEntityFactory
 			jsonObject.getJSONObject("type"));
 
 		if (type == JenkinsNodeEntity.Type.MASTER) {
-			return new MasterJenkinsNodeEntity(jsonObject);
+			return new MasterJenkinsNodeEntity(jsonObject, _jenkinsClient);
 		}
 		else if (type == JenkinsNodeEntity.Type.SLAVE) {
-			return new SlaveJenkinsNodeEntity(jsonObject);
+			return new SlaveJenkinsNodeEntity(jsonObject, _jenkinsClient);
 		}
 
 		throw new UnsupportedOperationException();
@@ -36,5 +38,8 @@ public class JenkinsNodeEntityFactory
 	protected JenkinsNodeEntityFactory() {
 		super(JenkinsNodeEntity.class);
 	}
+
+	@Autowired
+	private JenkinsClient _jenkinsClient;
 
 }

@@ -60,6 +60,8 @@ public class RelevantTestSuite {
 		List<RelevantRule> relevantRules =
 			_relevantRuleEngine.getMatchingRelevantRules(_modifiedFiles);
 
+		RelevantRuleValidation.validate(relevantRules);
+
 		Collections.sort(relevantRules);
 
 		System.out.println(

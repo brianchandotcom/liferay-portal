@@ -16,6 +16,7 @@ import {LAYOUT_TYPES} from '../../app/config/constants/layoutTypes';
 import {config} from '../../app/config/index';
 import {useCollectionConfig} from '../../app/contexts/CollectionItemContext';
 import {useDispatch, useSelector} from '../../app/contexts/StoreContext';
+import CollectionService from '../../app/services/CollectionService';
 import InfoItemService from '../../app/services/InfoItemService';
 import {CACHE_KEYS} from '../../app/utils/cache';
 import getMappedRelationship from '../../app/utils/editable_value/getMappedRelationship';
@@ -174,6 +175,33 @@ function getInitialSourceType(mappedItem, relationship) {
 	return MAPPING_SOURCE_TYPES.content;
 }
 
+const loadCollectionFields = (
+	dispatch,
+	fieldName,
+	itemType,
+	itemSubtype,
+	mappingFieldsKey
+) => {
+	CollectionService.getCollectionMappingFields({
+		fieldName: fieldName || '',
+		itemSubtype: itemSubtype || '',
+		itemType,
+	})
+		.then((response) => {
+			dispatch(
+				addMappingFields({
+					fields: response.mappingFields,
+					key: mappingFieldsKey,
+				})
+			);
+		})
+		.catch((error) => {
+			if (process.env.NODE_ENV === 'development') {
+				console.error(error);
+			}
+		});
+};
+
 export default function MappingSelectorWrapper({
 	fieldSelectorLabel,
 	fieldType,
@@ -190,6 +218,37 @@ export default function MappingSelectorWrapper({
 	});
 	const mappingFields = useSelector((state) => state.mappingFields);
 	const pageContents = usePageContents();
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		if (!collectionConfig) {
+			return;
+		}
+
+		const {
+			classNameId,
+			fieldName,
+			itemSubtype,
+			itemType,
+			key: collectionKey,
+		} = collectionConfig.collection;
+
+		const key = classNameId
+			? getMappingFieldsKey(collectionConfig.collection)
+			: fieldName
+				? `${collectionKey}-${fieldName}`
+				: collectionKey;
+
+		if (!mappingFields[key]) {
+			loadCollectionFields(
+				dispatch,
+				fieldName,
+				itemType,
+				itemSubtype,
+				key
+			);
+		}
+	}, [collectionConfig, dispatch, mappingFields]);
 
 	useEffect(() => {
 		if (!collectionConfig) {

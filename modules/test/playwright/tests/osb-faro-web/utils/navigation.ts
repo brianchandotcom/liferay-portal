@@ -8,6 +8,15 @@ import {Page} from '@playwright/test';
 import {faroConfig} from '../faro.config';
 import {waitForLoading} from './loading';
 
+export enum ACPage {
+	sitePage = 'sites',
+	assetPage = 'assets',
+	eventAnalysisPage = 'events',
+	segmentPage = 'segments',
+	individualPage = 'individuals',
+	testPage = 'tests',
+}
+
 export async function navigateTo({
 	page,
 	pageName,
@@ -36,16 +45,18 @@ export async function navigateToACWorkspace({
 		.click();
 }
 
-export async function navigateToACSitesPageViaURL({
+export async function navigateToACPageViaURL({
+	acPage,
 	channelID,
 	page,
 	projectID,
 }: {
+	acPage: ACPage;
 	channelID: string;
 	page: Page;
 	projectID: string;
 }) {
 	await page.goto(
-		`${faroConfig.environment.baseUrl}/workspace/${projectID}/${channelID}/sites`
+		`${faroConfig.environment.baseUrl}/workspace/${projectID}/${channelID}/${acPage}`
 	);
 }

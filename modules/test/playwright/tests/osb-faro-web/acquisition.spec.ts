@@ -13,7 +13,7 @@ import {loginTest} from '../../fixtures/loginTest';
 import {liferayConfig} from '../../liferay.config';
 import getRandomString from '../../utils/getRandomString';
 import {syncAnalyticsCloud} from '../analytics-settings-web/utils/analyticsSettings';
-import {navigateToACSitesPageViaURL} from './utils/navigation';
+import {ACPage, navigateToACPageViaURL} from './utils/navigation';
 import {createSitePage, navigateToDXPandDeleteSite} from './utils/portal';
 import {CardSelectors} from './utils/selectors';
 import {closeSessions} from './utils/sessions';
@@ -118,7 +118,8 @@ test(
 		});
 
 		await test.step('go to AC workspace', async () => {
-			await navigateToACSitesPageViaURL({
+			await navigateToACPageViaURL({
+				acPage: ACPage.sitePage,
 				channelID: channel.id,
 				page,
 				projectID: project.groupId,
@@ -187,7 +188,8 @@ test(
 		});
 
 		await test.step('go to AC workspace', async () => {
-			await navigateToACSitesPageViaURL({
+			await navigateToACPageViaURL({
+				acPage: ACPage.sitePage,
 				channelID: channel.id,
 				page,
 				projectID: project.groupId,
@@ -256,7 +258,8 @@ test(
 		});
 
 		await test.step('go to AC workspace', async () => {
-			await navigateToACSitesPageViaURL({
+			await navigateToACPageViaURL({
+				acPage: ACPage.sitePage,
 				channelID: channel.id,
 				page,
 				projectID: project.groupId,
@@ -325,7 +328,8 @@ test(
 		});
 
 		await test.step('go to AC workspace', async () => {
-			await navigateToACSitesPageViaURL({
+			await navigateToACPageViaURL({
+				acPage: ACPage.sitePage,
 				channelID: channel.id,
 				page,
 				projectID: project.groupId,
@@ -394,7 +398,8 @@ test(
 		});
 
 		await test.step('go to AC workspace', async () => {
-			await navigateToACSitesPageViaURL({
+			await navigateToACPageViaURL({
+				acPage: ACPage.sitePage,
 				channelID: channel.id,
 				page,
 				projectID: project.groupId,
@@ -463,7 +468,8 @@ test(
 		});
 
 		await test.step('go to AC workspace', async () => {
-			await navigateToACSitesPageViaURL({
+			await navigateToACPageViaURL({
+				acPage: ACPage.sitePage,
 				channelID: channel.id,
 				page,
 				projectID: project.groupId,
@@ -532,7 +538,8 @@ test(
 		});
 
 		await test.step('go to AC workspace', async () => {
-			await navigateToACSitesPageViaURL({
+			await navigateToACPageViaURL({
+				acPage: ACPage.sitePage,
 				channelID: channel.id,
 				page,
 				projectID: project.groupId,
@@ -602,7 +609,8 @@ test(
 		});
 
 		await test.step('go to AC workspace', async () => {
-			await navigateToACSitesPageViaURL({
+			await navigateToACPageViaURL({
+				acPage: ACPage.sitePage,
 				channelID: channel.id,
 				page,
 				projectID: project.groupId,
@@ -672,7 +680,8 @@ test(
 		});
 
 		await test.step('go to AC workspace', async () => {
-			await navigateToACSitesPageViaURL({
+			await navigateToACPageViaURL({
+				acPage: ACPage.sitePage,
 				channelID: channel.id,
 				page,
 				projectID: project.groupId,

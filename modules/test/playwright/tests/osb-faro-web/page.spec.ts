@@ -17,8 +17,9 @@ import {createChannel, switchChannel} from './utils/channel';
 import {createIndividuals, generateIndividual} from './utils/individuals';
 import {Nanites, runNanites} from './utils/nanites';
 import {
+	ACPage,
 	navigateTo,
-	navigateToACSitesPageViaURL,
+	navigateToACPageViaURL,
 	navigateToACWorkspace,
 } from './utils/navigation';
 import {createSitePage, navigateToSitePage} from './utils/portal';
@@ -153,7 +154,8 @@ test(
 		});
 
 		await test.step('Go to Analytics Cloud and Switch the property', async () => {
-			await navigateToACSitesPageViaURL({
+			await navigateToACPageViaURL({
+				acPage: ACPage.sitePage,
 				channelID: channel.id,
 				page,
 				projectID: project.groupId,
@@ -410,7 +412,8 @@ test(
 		});
 
 		await test.step('Go to Analytics Cloud and Switch the property', async () => {
-			await navigateToACSitesPageViaURL({
+			await navigateToACPageViaURL({
+				acPage: ACPage.sitePage,
 				channelID: channel.id,
 				page,
 				projectID: project.groupId,

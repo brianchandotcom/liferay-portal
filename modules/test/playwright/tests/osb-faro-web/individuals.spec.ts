@@ -16,7 +16,7 @@ import {
 	viewBreakdownRechartsData,
 } from './utils/distribution';
 import {createIndividuals, generateIndividual} from './utils/individuals';
-import {navigateTo, navigateToACSitesPageViaURL} from './utils/navigation';
+import {ACPage, navigateTo, navigateToACPageViaURL} from './utils/navigation';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -79,7 +79,8 @@ test(
 		});
 
 		await test.step('Go to Analytics Cloud and Switch the property', async () => {
-			await navigateToACSitesPageViaURL({
+			await navigateToACPageViaURL({
+				acPage: ACPage.sitePage,
 				channelID: channel.id,
 				page,
 				projectID: project.groupId,

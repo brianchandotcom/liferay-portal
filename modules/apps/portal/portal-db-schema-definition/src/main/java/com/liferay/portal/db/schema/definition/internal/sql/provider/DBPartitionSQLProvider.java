@@ -13,7 +13,6 @@ import com.liferay.portal.dao.db.PostgreSQLDB;
 import com.liferay.portal.db.partition.util.DBPartitionUtil;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBType;
-import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -73,7 +72,7 @@ public class DBPartitionSQLProvider extends BaseSQLProvider {
 		}
 
 		return StringBundler.concat(
-			_getCreatePartitionSQL(),
+			_getCreatePartitionSQL(), StringPool.NEW_LINE,
 			StringUtil.replace(
 				StringBundler.concat(
 					_partitionTablesSQL, StringPool.NEW_LINE,
@@ -160,11 +159,14 @@ public class DBPartitionSQLProvider extends BaseSQLProvider {
 					}
 				}
 
-				sb.append(
-					createTableSQL + StringPool.SEMICOLON +
-						StringPool.NEW_LINE);
+				sb.append(createTableSQL);
+				sb.append(StringPool.SEMICOLON);
+				sb.append(StringPool.NEW_LINE);
+				sb.append(StringPool.NEW_LINE);
 			}
 		}
+
+		sb.setIndex(sb.index() - 1);
 
 		return sb.toString();
 	}
@@ -186,13 +188,15 @@ public class DBPartitionSQLProvider extends BaseSQLProvider {
 
 		for (String controlTableName : _controlTableNames) {
 			sb.append(
-				_dbPartitionDB.getCreateViewSQL(
-					DBPartitionUtil.getPartitionName(
-						PortalInstancePool.getDefaultCompanyId()),
-					_dbPartitionName, controlTableName));
-			sb.append(StringPool.SEMICOLON);
+				StringBundler.concat(
+					"create or replace view ", _dbPartitionName,
+					StringPool.PERIOD, controlTableName, " as select * from ",
+					controlTableName, StringPool.SEMICOLON,
+					StringPool.NEW_LINE));
 			sb.append(StringPool.NEW_LINE);
 		}
+
+		sb.setIndex(sb.index() - 1);
 
 		return sb.toString();
 	}

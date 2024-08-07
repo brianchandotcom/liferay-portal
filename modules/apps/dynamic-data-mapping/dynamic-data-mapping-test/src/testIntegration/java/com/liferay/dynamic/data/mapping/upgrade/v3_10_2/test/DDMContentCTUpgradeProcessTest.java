@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.dynamic.data.mapping.upgrade.v3_8_0.test;
+package com.liferay.dynamic.data.mapping.upgrade.v3_10_2.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.change.tracking.test.util.BaseCTUpgradeProcessTestCase;
@@ -19,6 +19,8 @@ import com.liferay.dynamic.data.mapping.test.util.DDMFormInstanceRecordTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormInstanceTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
@@ -45,7 +47,8 @@ import org.junit.runner.RunWith;
  * @author David Truong
  */
 @RunWith(Arquillian.class)
-public class DDMContentUpgradeProcessTest extends BaseCTUpgradeProcessTestCase {
+public class DDMContentCTUpgradeProcessTest
+	extends BaseCTUpgradeProcessTestCase {
 
 	@ClassRule
 	@Rule
@@ -103,19 +106,24 @@ public class DDMContentUpgradeProcessTest extends BaseCTUpgradeProcessTestCase {
 
 	@Override
 	protected CTModel<?> addCTModel() throws Exception {
+		JSONObject jsonObject = JSONUtil.put(
+			"name", RandomTestUtil.randomString());
+
+		JSONArray jsonArray = JSONUtil.putAll(
+			JSONUtil.put(
+				"fieldReference", RandomTestUtil.randomString()
+			).put(
+				"instanceId", RandomTestUtil.randomString()
+			).put(
+				"name", RandomTestUtil.randomString()
+			));
+
+		jsonObject.put("fieldValues", jsonArray);
+
 		DDMContent ddmContent = _ddmContentLocalService.addContent(
 			TestPropsValues.getUserId(), _group.getGroupId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			JSONUtil.put(
-				"fieldValues",
-				JSONUtil.putAll(
-					JSONUtil.put(
-						RandomTestUtil.randomString(),
-						RandomTestUtil.randomString()))
-			).put(
-				"name", RandomTestUtil.randomString()
-			).toString(),
-			ServiceContextTestUtil.getServiceContext());
+			jsonObject.toString(), ServiceContextTestUtil.getServiceContext());
 
 		DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion =
 			_ddmFormInstanceRecord.getFormInstanceRecordVersion();
@@ -150,8 +158,12 @@ public class DDMContentUpgradeProcessTest extends BaseCTUpgradeProcessTestCase {
 				"fieldValues",
 				JSONUtil.putAll(
 					JSONUtil.put(
-						RandomTestUtil.randomString(),
-						RandomTestUtil.randomString()))
+						"fieldReference", RandomTestUtil.randomString()
+					).put(
+						"instanceId", RandomTestUtil.randomString()
+					).put(
+						"name", RandomTestUtil.randomString()
+					))
 			).put(
 				"name", RandomTestUtil.randomString()
 			).toString());
@@ -160,7 +172,7 @@ public class DDMContentUpgradeProcessTest extends BaseCTUpgradeProcessTestCase {
 	}
 
 	private static final String _CLASS_NAME =
-		"com.liferay.dynamic.data.mapping.internal.upgrade.v3_8_0." +
+		"com.liferay.dynamic.data.mapping.internal.upgrade.v3_10_2." +
 			"DDMContentUpgradeProcess";
 
 	@Inject(

@@ -3,26 +3,26 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.dynamic.data.mapping.upgrade.v4_3_2.test;
+package com.liferay.dynamic.data.mapping.upgrade.v3_9_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.change.tracking.test.util.BaseCTUpgradeProcessTestCase;
-import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.model.DDMTemplate;
-import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
-import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
-import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
-import com.liferay.journal.model.JournalArticle;
-import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceLocalService;
+import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
+import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -35,10 +35,10 @@ import org.junit.Rule;
 import org.junit.runner.RunWith;
 
 /**
- * @author David Truong
+ * @author Paulo Albuquerque
  */
 @RunWith(Arquillian.class)
-public class DDMTemplateUpgradeProcessTest
+public class DDMDataProviderInstanceCTUpgradeProcessTest
 	extends BaseCTUpgradeProcessTestCase {
 
 	@ClassRule
@@ -50,22 +50,29 @@ public class DDMTemplateUpgradeProcessTest
 
 	@Before
 	public void setUp() throws Exception {
+		_ddmForm = DDMFormTestUtil.createDDMForm(RandomTestUtil.randomString());
+
 		_group = GroupTestUtil.addGroup();
 
-		_ddmStructure = DDMStructureTestUtil.addStructure(
-			_group.getGroupId(), JournalArticle.class.getName());
+		_serviceContext = ServiceContextTestUtil.getServiceContext(
+			_group.getGroupId());
 	}
 
 	@Override
 	protected CTModel<?> addCTModel() throws Exception {
-		return DDMTemplateTestUtil.addTemplate(
-			_ddmStructure.getStructureId(),
-			_portal.getClassNameId(JournalArticle.class.getName()));
+		_ddmDataProviderInstance =
+			_ddmDataProviderInstanceLocalService.addDataProviderInstance(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomLocaleStringMap(), null,
+				DDMFormValuesTestUtil.createDDMFormValues(_ddmForm), "rest",
+				_serviceContext);
+
+		return _ddmDataProviderInstance;
 	}
 
 	@Override
 	protected CTService<?> getCTService() {
-		return _ddmTemplateLocalService;
+		return _ddmDataProviderInstanceLocalService;
 	}
 
 	@Override
@@ -78,16 +85,19 @@ public class DDMTemplateUpgradeProcessTest
 
 	@Override
 	protected CTModel<?> updateCTModel(CTModel<?> ctModel) throws Exception {
-		DDMTemplate ddmTemplate = (DDMTemplate)ctModel;
+		_ddmDataProviderInstance = (DDMDataProviderInstance)ctModel;
 
-		ddmTemplate.setScript(RandomTestUtil.randomString());
-
-		return _ddmTemplateLocalService.updateDDMTemplate(ddmTemplate);
+		return _ddmDataProviderInstanceLocalService.updateDataProviderInstance(
+			_ddmDataProviderInstance.getUserId(),
+			_ddmDataProviderInstance.getDataProviderInstanceId(),
+			_ddmDataProviderInstance.getNameMap(), null,
+			DDMFormValuesTestUtil.createDDMFormValues(_ddmForm),
+			_serviceContext);
 	}
 
 	private static final String _CLASS_NAME =
-		"com.liferay.dynamic.data.mapping.internal.upgrade.v4_3_2." +
-			"DDMTemplateUpgradeProcess";
+		"com.liferay.dynamic.data.mapping.internal.upgrade.v3_9_0." +
+			"DDMDataProviderInstanceUpgradeProcess";
 
 	@Inject(
 		filter = "(&(component.name=com.liferay.dynamic.data.mapping.internal.upgrade.registry.DDMServiceUpgradeStepRegistrator))"
@@ -95,18 +105,17 @@ public class DDMTemplateUpgradeProcessTest
 	private static UpgradeStepRegistrator _upgradeStepRegistrator;
 
 	@DeleteAfterTestRun
-	private DDMStructure _ddmStructure;
+	private DDMDataProviderInstance _ddmDataProviderInstance;
 
 	@Inject
-	private DDMTemplateLocalService _ddmTemplateLocalService;
+	private DDMDataProviderInstanceLocalService
+		_ddmDataProviderInstanceLocalService;
+
+	private DDMForm _ddmForm;
 
 	@DeleteAfterTestRun
 	private Group _group;
 
-	@Inject
-	private JSONFactory _jsonFactory;
-
-	@Inject
-	private Portal _portal;
+	private ServiceContext _serviceContext;
 
 }

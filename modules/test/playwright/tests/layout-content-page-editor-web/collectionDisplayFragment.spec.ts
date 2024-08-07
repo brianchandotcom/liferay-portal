@@ -11,9 +11,9 @@ import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
+import {pageManagementSiteTest} from '../../fixtures/pageManagementSiteTest';
 import {pageViewModePagesTest} from '../../fixtures/pageViewModePagesTest';
-import {wemSiteTest} from '../../fixtures/wemSiteTest';
-import {ANIMALS_COLLECTION_NAME} from '../../setup/wem-site/constants';
+import {ANIMALS_COLLECTION_NAME} from '../../setup/page-management-site/constants';
 import getRandomString from '../../utils/getRandomString';
 import getCollectionDefinition from './utils/getCollectionDefinition';
 import getCollectionItemDefinition from './utils/getCollectionItemDefinition';
@@ -29,7 +29,7 @@ const test = mergeTests(
 	loginTest(),
 	pageEditorPagesTest,
 	pageViewModePagesTest,
-	wemSiteTest
+	pageManagementSiteTest
 );
 
 const testWithIsolatedSite = mergeTests(test, isolatedSiteTest);
@@ -38,7 +38,7 @@ test('Allows adding a Collection Display with a manual collection into another C
 	apiHelpers,
 	collectionsPage,
 	pageEditorPage,
-	wemSite,
+	pageManagementSite,
 }) => {
 
 	// Create definition for a collection mapped to
@@ -56,7 +56,7 @@ test('Allows adding a Collection Display with a manual collection into another C
 
 	const animalsClassPK = await collectionsPage.getCollectionClassPK(
 		ANIMALS_COLLECTION_NAME,
-		wemSite.friendlyUrlPath
+		pageManagementSite.friendlyUrlPath
 	);
 
 	const animalsCollection = getCollectionItemDefinition(getRandomString(), [
@@ -82,13 +82,13 @@ test('Allows adding a Collection Display with a manual collection into another C
 			firstCollectionDefinition,
 			secondCollectionDefinition,
 		]),
-		siteId: wemSite.id,
+		siteId: pageManagementSite.id,
 		title: getRandomString(),
 	});
 
 	// Go to edit mode of page
 
-	await pageEditorPage.goto(layout, wemSite.friendlyUrlPath);
+	await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
 
 	// Calculate the number of recent contents
 
@@ -144,14 +144,14 @@ test('Checks Content Flags, Content Ratings and Content Display are compatible w
 	collectionsPage,
 	page,
 	pageEditorPage,
-	wemSite,
+	pageManagementSite,
 }) => {
 
 	// Create definition for a collection mapped to Animals collection with Content Flags, Content Ratings and Display Content fragments.
 
 	const animalsClassPK = await collectionsPage.getCollectionClassPK(
 		ANIMALS_COLLECTION_NAME,
-		wemSite.friendlyUrlPath
+		pageManagementSite.friendlyUrlPath
 	);
 
 	const animalsCollection = getCollectionItemDefinition(getRandomString(), [
@@ -187,13 +187,13 @@ test('Checks Content Flags, Content Ratings and Content Display are compatible w
 
 	const layout = await apiHelpers.headlessDelivery.createSitePage({
 		pageDefinition: getPageDefinition([collectionDefinition]),
-		siteId: wemSite.id,
+		siteId: pageManagementSite.id,
 		title: getRandomString(),
 	});
 
 	// Go to edit mode of the created
 
-	await pageEditorPage.goto(layout, wemSite.friendlyUrlPath);
+	await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
 
 	// Check that the Content Display shows the content in each item
 
@@ -253,14 +253,14 @@ test('Modifies inline text on all collection items', async ({
 	collectionsPage,
 	page,
 	pageEditorPage,
-	wemSite,
+	pageManagementSite,
 }) => {
 
 	// Create definition for a collection mapped to Animals collection
 
 	const animalsClassPK = await collectionsPage.getCollectionClassPK(
 		ANIMALS_COLLECTION_NAME,
-		wemSite.friendlyUrlPath
+		pageManagementSite.friendlyUrlPath
 	);
 
 	const headingId = getRandomString();
@@ -279,11 +279,11 @@ test('Modifies inline text on all collection items', async ({
 
 	const layout = await apiHelpers.headlessDelivery.createSitePage({
 		pageDefinition: getPageDefinition([collectionDefinition]),
-		siteId: wemSite.id,
+		siteId: pageManagementSite.id,
 		title: getRandomString(),
 	});
 
-	await pageEditorPage.goto(layout, wemSite.friendlyUrlPath);
+	await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
 
 	// Fill new content
 
@@ -305,7 +305,7 @@ test('Checks the different styles for the Display Collection', async ({
 	collectionsPage,
 	page,
 	pageEditorPage,
-	wemSite,
+	pageManagementSite,
 }) => {
 	const checkStyleDisplay = async () => {
 		const listItem = await page.locator(
@@ -358,7 +358,7 @@ test('Checks the different styles for the Display Collection', async ({
 
 	const animalsClassPK = await collectionsPage.getCollectionClassPK(
 		ANIMALS_COLLECTION_NAME,
-		wemSite.friendlyUrlPath
+		pageManagementSite.friendlyUrlPath
 	);
 
 	const animalsCollection = getCollectionItemDefinition(getRandomString(), [
@@ -413,19 +413,21 @@ test('Checks the different styles for the Display Collection', async ({
 			numberedListCollection,
 			unstyledListCollection,
 		]),
-		siteId: wemSite.id,
+		siteId: pageManagementSite.id,
 		title: getRandomString(),
 	});
 
 	// Check the Style Display in edit mode
 
-	await pageEditorPage.goto(layout, wemSite.friendlyUrlPath);
+	await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
 
 	await checkStyleDisplay();
 
 	// Check the Style Display in view mode
 
-	await page.goto(`/web${wemSite.friendlyUrlPath}${layout.friendlyUrlPath}`);
+	await page.goto(
+		`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+	);
 
 	await checkStyleDisplay();
 });
@@ -435,7 +437,7 @@ test('Checks that fragment ids used within a display collection are not repeated
 	collectionsPage,
 	page,
 	pageEditorPage,
-	wemSite,
+	pageManagementSite,
 }) => {
 	const checkNonRepeatedFragmentIds = async () => {
 
@@ -459,7 +461,7 @@ test('Checks that fragment ids used within a display collection are not repeated
 
 	const animalsClassPK = await collectionsPage.getCollectionClassPK(
 		ANIMALS_COLLECTION_NAME,
-		wemSite.friendlyUrlPath
+		pageManagementSite.friendlyUrlPath
 	);
 
 	// Create a first collection definition with headings
@@ -523,19 +525,21 @@ test('Checks that fragment ids used within a display collection are not repeated
 			collectionWithHeadings,
 			collectionWithTabs,
 		]),
-		siteId: wemSite.id,
+		siteId: pageManagementSite.id,
 		title: getRandomString(),
 	});
 
 	// Check that the fragment ids are not repeated in edit mode
 
-	await pageEditorPage.goto(layout, wemSite.friendlyUrlPath);
+	await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
 
 	await checkNonRepeatedFragmentIds();
 
 	// Check that the fragment ids are not repeated in view mode
 
-	await page.goto(`/web${wemSite.friendlyUrlPath}${layout.friendlyUrlPath}`);
+	await page.goto(
+		`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+	);
 
 	await checkNonRepeatedFragmentIds();
 });
@@ -545,14 +549,14 @@ test('Displays correct layout in other viewports', async ({
 	collectionsPage,
 	page,
 	pageEditorPage,
-	wemSite,
+	pageManagementSite,
 }) => {
 
 	// Create definition for a collection mapped to Animals collection
 
 	const animalsClassPK = await collectionsPage.getCollectionClassPK(
 		ANIMALS_COLLECTION_NAME,
-		wemSite.friendlyUrlPath
+		pageManagementSite.friendlyUrlPath
 	);
 
 	const headingId = getRandomString();
@@ -573,11 +577,11 @@ test('Displays correct layout in other viewports', async ({
 
 	const layout = await apiHelpers.headlessDelivery.createSitePage({
 		pageDefinition: getPageDefinition([collectionDefinition]),
-		siteId: wemSite.id,
+		siteId: pageManagementSite.id,
 		title: getRandomString(),
 	});
 
-	await pageEditorPage.goto(layout, wemSite.friendlyUrlPath);
+	await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
 
 	// Change layout to 4 columns in Desktop
 
@@ -592,7 +596,9 @@ test('Displays correct layout in other viewports', async ({
 
 	// Go to view mode and check correct layout is displayed on each viewport
 
-	await page.goto(`/web${wemSite.friendlyUrlPath}${layout.friendlyUrlPath}`);
+	await page.goto(
+		`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+	);
 
 	const row = page.locator('.lfr-layout-structure-item-collection row');
 
@@ -604,7 +610,7 @@ test('Displays correct layout in other viewports', async ({
 
 	// Edit the page again and change layout to 2 columns in Tablet and Mobile
 
-	await pageEditorPage.goto(layout, wemSite.friendlyUrlPath);
+	await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
 
 	await pageEditorPage.switchViewport('Tablet');
 
@@ -628,7 +634,9 @@ test('Displays correct layout in other viewports', async ({
 
 	// Go to view mode again and check correct layout is displayed on each viewport
 
-	await page.goto(`/web${wemSite.friendlyUrlPath}${layout.friendlyUrlPath}`);
+	await page.goto(
+		`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+	);
 
 	for (const col of await row.locator('.col').all()) {
 		await expect(col).toHaveClass(/col-lg-3/);
@@ -642,14 +650,14 @@ test('Activate the first element when a fragment is added to a Collection Displa
 	collectionsPage,
 	page,
 	pageEditorPage,
-	wemSite,
+	pageManagementSite,
 }) => {
 
 	// Create a page with a Collection Display and go to edit mode
 
 	const animalsClassPK = await collectionsPage.getCollectionClassPK(
 		ANIMALS_COLLECTION_NAME,
-		wemSite.friendlyUrlPath
+		pageManagementSite.friendlyUrlPath
 	);
 
 	const collectionWithHeadings = getCollectionDefinition({
@@ -659,11 +667,11 @@ test('Activate the first element when a fragment is added to a Collection Displa
 
 	const layout = await apiHelpers.headlessDelivery.createSitePage({
 		pageDefinition: getPageDefinition([collectionWithHeadings]),
-		siteId: wemSite.id,
+		siteId: pageManagementSite.id,
 		title: getRandomString(),
 	});
 
-	await pageEditorPage.goto(layout, wemSite.friendlyUrlPath);
+	await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
 
 	// Check that the first item is active when a Heading is added to the Collection Display
 
@@ -675,7 +683,7 @@ test('Activate the first element when a fragment is added to a Collection Displa
 
 	const headingId = await pageEditorPage.getFragmentId('Heading');
 
-	await expect(await pageEditorPage.isActive(headingId)).toBe(true);
+	expect(await pageEditorPage.isActive(headingId)).toBe(true);
 
 	// Check that the Collection Display is active when the Heading is removed
 
@@ -684,5 +692,5 @@ test('Activate the first element when a fragment is added to a Collection Displa
 	const collectionDisplayId =
 		await pageEditorPage.getFragmentId('Collection Display');
 
-	await expect(await pageEditorPage.isActive(collectionDisplayId)).toBe(true);
+	expect(await pageEditorPage.isActive(collectionDisplayId)).toBe(true);
 });

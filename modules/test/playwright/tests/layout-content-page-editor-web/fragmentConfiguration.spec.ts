@@ -11,7 +11,7 @@ import {fragmentsPagesTest} from '../../fixtures/fragmentPagesTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
-import {wemSiteTest} from '../../fixtures/wemSiteTest';
+import {pageManagementSiteTest} from '../../fixtures/pageManagementSiteTest';
 import fillAndClickOutside from '../../utils/fillAndClickOutside';
 import getRandomString from '../../utils/getRandomString';
 import getFragmentDefinition from './utils/getFragmentDefinition';
@@ -27,7 +27,7 @@ const test = mergeTests(
 	isolatedSiteTest,
 	loginTest(),
 	pageEditorPagesTest,
-	wemSiteTest
+	pageManagementSiteTest
 );
 
 const STYLES = [
@@ -175,7 +175,7 @@ test.describe('Advanced Configuration', () => {
 		apiHelpers,
 		page,
 		pageEditorPage,
-		wemSite,
+		pageManagementSite,
 	}) => {
 
 		// Create a content page with Wem Site's Apple fragment
@@ -190,13 +190,13 @@ test.describe('Advanced Configuration', () => {
 
 		const layout = await apiHelpers.headlessDelivery.createSitePage({
 			pageDefinition: getPageDefinition([fragmentDefinition]),
-			siteId: wemSite.id,
+			siteId: pageManagementSite.id,
 			title: getRandomString(),
 		});
 
 		// Check advanced configuration appears where it should
 
-		await pageEditorPage.goto(layout, wemSite.friendlyUrlPath);
+		await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
 
 		await page.getByTitle('Browser').click();
 

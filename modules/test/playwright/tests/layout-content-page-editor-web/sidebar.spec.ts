@@ -12,7 +12,7 @@ import {fragmentsPagesTest} from '../../fixtures/fragmentPagesTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
-import {wemSiteTest} from '../../fixtures/wemSiteTest';
+import {pageManagementSiteTest} from '../../fixtures/pageManagementSiteTest';
 import {checkAccessibility} from '../../utils/checkAccessibility';
 import getRandomString from '../../utils/getRandomString';
 import {closeProductMenu, openProductMenu} from '../../utils/productMenu';
@@ -30,7 +30,7 @@ const test = mergeTests(
 	isolatedSiteTest,
 	loginTest(),
 	pageEditorPagesTest,
-	wemSiteTest
+	pageManagementSiteTest
 );
 
 const PANELS: SidebarTab[] = [
@@ -188,12 +188,12 @@ test.describe('Fragments Panel', () => {
 		fragmentsPage,
 		page,
 		pageEditorPage,
-		wemSite,
+		pageManagementSite,
 	}) => {
 
 		// Create unpublished fragment inside Imported fragment set
 
-		await fragmentsPage.goto(wemSite.friendlyUrlPath);
+		await fragmentsPage.goto(pageManagementSite.friendlyUrlPath);
 
 		const unpublishedFragmentName = getRandomString();
 		await fragmentsPage.createFragment('Imported', unpublishedFragmentName);
@@ -202,11 +202,11 @@ test.describe('Fragments Panel', () => {
 
 		const layout = await apiHelpers.headlessDelivery.createSitePage({
 			pageDefinition: getPageDefinition(),
-			siteId: wemSite.id,
+			siteId: pageManagementSite.id,
 			title: getRandomString(),
 		});
 
-		await pageEditorPage.goto(layout, wemSite.friendlyUrlPath);
+		await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
 
 		// Check only published fragment is displayed
 

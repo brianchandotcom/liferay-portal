@@ -5,7 +5,10 @@
 
 import {defineConfig, devices} from '@playwright/test';
 
-import {wemSiteSetup, wemSiteTeardown} from './setup/wem-site/config';
+import {
+	pageManagementSiteSetup,
+	pageManagementSiteTeardown,
+} from './setup/page-management-site/config';
 import {config as accountAdminWebConfig} from './tests/account-admin-web/config';
 import {config as analyticsSettingsWebConfig} from './tests/analytics-settings-web/config';
 import {config as analyticsWebConfig} from './tests/analytics-web/config';
@@ -67,7 +70,7 @@ import {config as partnerConfig} from './tests/workspaces/liferay-partner-worksp
 import {config as commerceWorkspaceConfig} from './tests/workspaces/liferay-workspace-commerce/config';
 import {config as jethr0Config} from './tests/workspaces/liferay-workspace-jethr0/config';
 import {config as marketplaceConfig} from './tests/workspaces/liferay-workspace-marketplace/config';
-const setupProjects = [wemSiteSetup, wemSiteTeardown];
+const setupProjects = [pageManagementSiteSetup, pageManagementSiteTeardown];
 
 export default defineConfig({
 	expect: {

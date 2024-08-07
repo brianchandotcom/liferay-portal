@@ -9,7 +9,7 @@ import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
-import {wemSiteTest} from '../../fixtures/wemSiteTest';
+import {pageManagementSiteTest} from '../../fixtures/pageManagementSiteTest';
 import {clickAndExpectToBeHidden} from '../../utils/clickAndExpectToBeHidden';
 import getRandomString from '../../utils/getRandomString';
 import getFragmentDefinition from './utils/getFragmentDefinition';
@@ -22,7 +22,7 @@ const test = mergeTests(
 	}),
 	loginTest(),
 	pageEditorPagesTest,
-	wemSiteTest
+	pageManagementSiteTest
 );
 
 function getImageWidth(page: Page) {
@@ -35,7 +35,7 @@ test('Allow changing image resolution with direct selection', async ({
 	apiHelpers,
 	page,
 	pageEditorPage,
-	wemSite,
+	pageManagementSite,
 }) => {
 
 	// Create a page with a image fragment
@@ -49,11 +49,11 @@ test('Allow changing image resolution with direct selection', async ({
 
 	const layout = await apiHelpers.headlessDelivery.createSitePage({
 		pageDefinition: getPageDefinition([imageFragment]),
-		siteId: wemSite.id,
+		siteId: pageManagementSite.id,
 		title: getRandomString(),
 	});
 
-	await pageEditorPage.goto(layout, wemSite.friendlyUrlPath);
+	await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
 
 	// Select the image directly
 
@@ -98,7 +98,7 @@ test('Allow changing image resolution with mapping selection', async ({
 	apiHelpers,
 	page,
 	pageEditorPage,
-	wemSite,
+	pageManagementSite,
 }) => {
 
 	// Create a page with a image fragment
@@ -112,11 +112,11 @@ test('Allow changing image resolution with mapping selection', async ({
 
 	const layout = await apiHelpers.headlessDelivery.createSitePage({
 		pageDefinition: getPageDefinition([imageFragment]),
-		siteId: wemSite.id,
+		siteId: pageManagementSite.id,
 		title: getRandomString(),
 	});
 
-	await pageEditorPage.goto(layout, wemSite.friendlyUrlPath);
+	await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
 
 	// Map the editable to a document
 
@@ -146,7 +146,7 @@ test('Allow changing image resolution in other viewports', async ({
 	apiHelpers,
 	page,
 	pageEditorPage,
-	wemSite,
+	pageManagementSite,
 }) => {
 
 	// Create a page with a image fragment
@@ -160,11 +160,11 @@ test('Allow changing image resolution in other viewports', async ({
 
 	const layout = await apiHelpers.headlessDelivery.createSitePage({
 		pageDefinition: getPageDefinition([imageFragment]),
-		siteId: wemSite.id,
+		siteId: pageManagementSite.id,
 		title: getRandomString(),
 	});
 
-	await pageEditorPage.goto(layout, wemSite.friendlyUrlPath);
+	await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
 
 	// Select the image directly
 

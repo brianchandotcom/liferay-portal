@@ -10,8 +10,8 @@ import {collectionsPagesTest} from '../../fixtures/collectionsPagesTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
-import {wemSiteTest} from '../../fixtures/wemSiteTest';
-import {ANIMALS_COLLECTION_NAME} from '../../setup/wem-site/constants';
+import {pageManagementSiteTest} from '../../fixtures/pageManagementSiteTest';
+import {ANIMALS_COLLECTION_NAME} from '../../setup/page-management-site/constants';
 import {clickAndExpectToBeHidden} from '../../utils/clickAndExpectToBeHidden';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../utils/getRandomString';
@@ -29,14 +29,14 @@ const test = mergeTests(
 	}),
 	loginTest(),
 	pageEditorPagesTest,
-	wemSiteTest
+	pageManagementSiteTest
 );
 
 test('Allows selecting specific repeatable field when mapping', async ({
 	apiHelpers,
 	page,
 	pageEditorPage,
-	wemSite,
+	pageManagementSite,
 }) => {
 
 	// Create page with a Heading fragment and go to edit mode
@@ -50,11 +50,11 @@ test('Allows selecting specific repeatable field when mapping', async ({
 				key: 'BASIC_COMPONENT-heading',
 			}),
 		]),
-		siteId: wemSite.id,
+		siteId: pageManagementSite.id,
 		title: getRandomString(),
 	});
 
-	await pageEditorPage.goto(layout, wemSite.friendlyUrlPath);
+	await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
 
 	// Map editable to repeatable field Country
 
@@ -127,7 +127,9 @@ test('Allows selecting specific repeatable field when mapping', async ({
 
 	await pageEditorPage.publishPage();
 
-	await page.goto(`/web${wemSite.friendlyUrlPath}${layout.friendlyUrlPath}`);
+	await page.goto(
+		`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+	);
 
 	expect(fragment).toHaveText('France');
 });
@@ -137,14 +139,14 @@ test('Allows selecting specific repeatable collection provider', async ({
 	collectionsPage,
 	page,
 	pageEditorPage,
-	wemSite,
+	pageManagementSite,
 }) => {
 
 	// Create definition for a collection mapped to Animals collection
 
 	const animalsClassPK = await collectionsPage.getCollectionClassPK(
 		ANIMALS_COLLECTION_NAME,
-		wemSite.friendlyUrlPath
+		pageManagementSite.friendlyUrlPath
 	);
 
 	const animalsCollection = getCollectionItemDefinition(
@@ -162,13 +164,13 @@ test('Allows selecting specific repeatable collection provider', async ({
 
 	const layout = await apiHelpers.headlessDelivery.createSitePage({
 		pageDefinition: getPageDefinition([collectionDefinition]),
-		siteId: wemSite.id,
+		siteId: pageManagementSite.id,
 		title: getRandomString(),
 	});
 
 	// Go to edit mode of page
 
-	await pageEditorPage.goto(layout, wemSite.friendlyUrlPath);
+	await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
 
 	// Add a repeatable field collection with heading fragment
 
@@ -210,7 +212,9 @@ test('Allows selecting specific repeatable collection provider', async ({
 
 	await pageEditorPage.publishPage();
 
-	await page.goto(`/web${wemSite.friendlyUrlPath}${layout.friendlyUrlPath}`);
+	await page.goto(
+		`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+	);
 
 	expect(page.getByText('Balinese')).toBeAttached();
 	expect(page.getByText('Poodle')).toBeAttached();

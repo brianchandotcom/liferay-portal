@@ -8,7 +8,7 @@ import {resolve} from 'path';
 
 import {backendPageTest} from '../../fixtures/backendPageTest';
 import {ApiHelpers} from '../../helpers/ApiHelpers';
-import {WEM_SITE_ERC} from './constants';
+import {PAGE_MANAGEMENT_SITE_ERC} from './constants';
 
 export const test = mergeTests(backendPageTest);
 
@@ -19,11 +19,14 @@ test('Setup: Create site with required data for Web Experience tests', async ({
 
 	const site = await apiHelpers.headlessSite.createSiteFromZip(
 		{
-			externalReferenceCode: WEM_SITE_ERC,
+			externalReferenceCode: PAGE_MANAGEMENT_SITE_ERC,
 			name: 'Web Experience Site',
 		},
 		resolve(__dirname, 'site-initializer')
 	);
 
-	expect(site).toHaveProperty('externalReferenceCode', WEM_SITE_ERC);
+	expect(site).toHaveProperty(
+		'externalReferenceCode',
+		PAGE_MANAGEMENT_SITE_ERC
+	);
 });

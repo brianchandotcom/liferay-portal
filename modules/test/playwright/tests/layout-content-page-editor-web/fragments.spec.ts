@@ -11,12 +11,12 @@ import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {objectPagesTest} from '../../fixtures/objectPagesTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
-import {wemSiteTest} from '../../fixtures/wemSiteTest';
+import {pageManagementSiteTest} from '../../fixtures/pageManagementSiteTest';
 import {PageEditorPage} from '../../pages/layout-content-page-editor-web/PageEditorPage';
 import {
 	LEMON_BASKET_OBJECT_ERC,
 	LEMON_OBJECT_ERC,
-} from '../../setup/wem-site/constants';
+} from '../../setup/page-management-site/constants';
 import {checkAccessibility} from '../../utils/checkAccessibility';
 import {clickAndExpectToBeHidden} from '../../utils/clickAndExpectToBeHidden';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
@@ -40,7 +40,7 @@ const test = mergeTests(
 	loginTest(),
 	objectPagesTest,
 	pageEditorPagesTest,
-	wemSiteTest
+	pageManagementSiteTest
 );
 
 const ENTER_KEY = 'Enter';
@@ -274,12 +274,14 @@ test.describe('Multiselect Fragment', () => {
 			displayPageTemplatesPage,
 			page,
 			pageEditorPage,
-			wemSite,
+			pageManagementSite,
 		}) => {
 
 			// Create a display page for the Lemon Basket objects
 
-			await displayPageTemplatesPage.goto(wemSite.friendlyUrlPath);
+			await displayPageTemplatesPage.goto(
+				pageManagementSite.friendlyUrlPath
+			);
 
 			const displayPageTemplateName = getRandomString();
 
@@ -348,7 +350,7 @@ test.describe('Multiselect Fragment', () => {
 			// Go to display page url and try the form
 
 			await page.goto(
-				`/web${wemSite.friendlyUrlPath}/e/${displayPageTemplateName}/${classNameId}/${classPK}`
+				`/web${pageManagementSite.friendlyUrlPath}/e/${displayPageTemplateName}/${classNameId}/${classPK}`
 			);
 
 			await page.getByText('Submit', {exact: true}).click();
@@ -584,7 +586,7 @@ test.describe('Tags Fragment', () => {
 	test('Uses Tags fragment for Forms in a Content Page', async ({
 		apiHelpers,
 		page,
-		wemSite,
+		pageManagementSite,
 	}) => {
 
 		// Get the id of Lemon object from the site initializer
@@ -636,7 +638,7 @@ test.describe('Tags Fragment', () => {
 
 		const layout = await apiHelpers.headlessDelivery.createSitePage({
 			pageDefinition: getPageDefinition([formDefinition]),
-			siteId: wemSite.id,
+			siteId: pageManagementSite.id,
 			title: getRandomString(),
 		});
 
@@ -645,7 +647,7 @@ test.describe('Tags Fragment', () => {
 		for (const tagName of ['Dogs', 'Cats']) {
 			await apiHelpers.headlessAdminTaxonomy.postSiteKeyword({
 				name: tagName,
-				siteId: wemSite.id,
+				siteId: pageManagementSite.id,
 			});
 		}
 
@@ -662,7 +664,7 @@ test.describe('Tags Fragment', () => {
 		// Go to view mode of the created page, select a tag for each fragment and submit the form
 
 		await page.goto(
-			`/web${wemSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+			`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
 		);
 
 		await page.getByRole('combobox').first().click();
@@ -683,7 +685,7 @@ test.describe('Tags Fragment', () => {
 		// Go to the object definition page and check the Tags fragment
 
 		await page.goto(
-			`/group${wemSite.friendlyUrlPath}${PORTLET_URLS.objects}_${objectDefinitionId}`
+			`/group${pageManagementSite.friendlyUrlPath}${PORTLET_URLS.objects}_${objectDefinitionId}`
 		);
 
 		await page
@@ -710,7 +712,7 @@ test.describe('Tags Fragment', () => {
 		objectDetailsPage,
 		page,
 		pageEditorPage,
-		wemSite,
+		pageManagementSite,
 	}) => {
 
 		// Get Lemon Basket object id from the site initializer
@@ -744,13 +746,13 @@ test.describe('Tags Fragment', () => {
 
 		const layout = await apiHelpers.headlessDelivery.createSitePage({
 			pageDefinition: getPageDefinition([formDefinition]),
-			siteId: wemSite.id,
+			siteId: pageManagementSite.id,
 			title: getRandomString(),
 		});
 
 		// Go to edit mode and check the info message
 
-		await pageEditorPage.goto(layout, wemSite.friendlyUrlPath);
+		await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
 
 		await expect(
 			page.getByText(

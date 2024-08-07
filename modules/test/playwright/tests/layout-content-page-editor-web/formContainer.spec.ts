@@ -9,8 +9,8 @@ import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
-import {wemSiteTest} from '../../fixtures/wemSiteTest';
-import {LEMON_OBJECT_ERC} from '../../setup/wem-site/constants';
+import {pageManagementSiteTest} from '../../fixtures/pageManagementSiteTest';
+import {LEMON_OBJECT_ERC} from '../../setup/page-management-site/constants';
 import getRandomString from '../../utils/getRandomString';
 import getFormContainerDefinition from './utils/getFormContainerDefinition';
 import getFragmentDefinition from './utils/getFragmentDefinition';
@@ -25,7 +25,7 @@ const test = mergeTests(
 	}),
 	loginTest(),
 	pageEditorPagesTest,
-	wemSiteTest
+	pageManagementSiteTest
 );
 
 test.describe('Picklist input field', () => {
@@ -33,7 +33,7 @@ test.describe('Picklist input field', () => {
 		apiHelpers,
 		page,
 		pageEditorPage,
-		wemSite,
+		pageManagementSite,
 	}) => {
 
 		// Create a page with a Form fragment
@@ -46,13 +46,13 @@ test.describe('Picklist input field', () => {
 
 		const layout = await apiHelpers.headlessDelivery.createSitePage({
 			pageDefinition: getPageDefinition([formDefinition]),
-			siteId: wemSite.id,
+			siteId: pageManagementSite.id,
 			title: getRandomString(),
 		});
 
 		// Go to edit mode
 
-		await pageEditorPage.goto(layout, wemSite.friendlyUrlPath);
+		await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
 
 		// Map the form to Lemon Basket object, select fields and publish
 
@@ -66,7 +66,7 @@ test.describe('Picklist input field', () => {
 		// Go to view mode and check picklist values
 
 		await page.goto(
-			`/web${wemSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+			`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
 		);
 
 		await page.getByLabel('Lemon Basket to Lemons').click();
@@ -80,7 +80,7 @@ test.describe('Picklist input field', () => {
 		{
 			tag: '@LPD-31856',
 		},
-		async ({apiHelpers, page, pageEditorPage, wemSite}) => {
+		async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
 
 			// Create a page with a Form fragment
 
@@ -92,13 +92,16 @@ test.describe('Picklist input field', () => {
 
 			const layout = await apiHelpers.headlessDelivery.createSitePage({
 				pageDefinition: getPageDefinition([formDefinition]),
-				siteId: wemSite.id,
+				siteId: pageManagementSite.id,
 				title: getRandomString(),
 			});
 
 			// Go to edit mode and map it to the object
 
-			await pageEditorPage.goto(layout, wemSite.friendlyUrlPath);
+			await pageEditorPage.goto(
+				layout,
+				pageManagementSite.friendlyUrlPath
+			);
 
 			await pageEditorPage.mapFormFragment(formId, 'Lemon Basket', [
 				'Lemon Dimensions',
@@ -110,7 +113,7 @@ test.describe('Picklist input field', () => {
 			await pageEditorPage.publishPage();
 
 			await page.goto(
-				`/web${wemSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+				`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
 			);
 
 			// Check that the value after selecting the item is correct
@@ -128,7 +131,7 @@ test.describe('Relationships', () => {
 	test('Allow selecting fields from main object and relationships in fields modal', async ({
 		apiHelpers,
 		pageEditorPage,
-		wemSite,
+		pageManagementSite,
 	}) => {
 
 		// Create a page with a Form fragment
@@ -141,13 +144,13 @@ test.describe('Relationships', () => {
 
 		const layout = await apiHelpers.headlessDelivery.createSitePage({
 			pageDefinition: getPageDefinition([formDefinition]),
-			siteId: wemSite.id,
+			siteId: pageManagementSite.id,
 			title: getRandomString(),
 		});
 
 		// Go to edit mode
 
-		await pageEditorPage.goto(layout, wemSite.friendlyUrlPath);
+		await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
 
 		// Map the form to Lemon object and select fields
 
@@ -168,7 +171,7 @@ test.describe('Multistep', () => {
 		apiHelpers,
 		page,
 		pageEditorPage,
-		wemSite,
+		pageManagementSite,
 	}) => {
 
 		// Get the id of Lemon object from the site initializer
@@ -197,13 +200,13 @@ test.describe('Multistep', () => {
 
 		const layout = await apiHelpers.headlessDelivery.createSitePage({
 			pageDefinition: getPageDefinition([formDefinition]),
-			siteId: wemSite.id,
+			siteId: pageManagementSite.id,
 			title: getRandomString(),
 		});
 
 		// Go to edit mode
 
-		await pageEditorPage.goto(layout, wemSite.friendlyUrlPath);
+		await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
 
 		// Check steps titles and bullets numbers are displayed
 

@@ -6,15 +6,15 @@
 import {mergeTests} from '@playwright/test';
 
 import {ApiHelpers} from '../helpers/ApiHelpers';
-import {WEM_SITE_ERC} from '../setup/wem-site/constants';
+import {PAGE_MANAGEMENT_SITE_ERC} from '../setup/page-management-site/constants';
 import {backendPageTest} from './backendPageTest';
 
 const test = mergeTests(backendPageTest);
 
-const wemSiteTest = test.extend<{
-	wemSite: Site;
+const pageManagementSiteTest = test.extend<{
+	pageManagementSite: Site;
 }>({
-	wemSite: [
+	pageManagementSite: [
 		async ({backendPage}, use) => {
 			await backendPage.goto('/');
 
@@ -23,13 +23,15 @@ const wemSiteTest = test.extend<{
 			let site: Site;
 
 			try {
-				site = await apiHelpers.headlessSite.getSiteByERC(WEM_SITE_ERC);
+				site = await apiHelpers.headlessSite.getSiteByERC(
+					PAGE_MANAGEMENT_SITE_ERC
+				);
 
 				await use(site);
 			}
 			catch {
 				throw new Error(
-					`Web Experience site could not be fetched, make sure this project has wem-site-setup as dependency`
+					`Web Experience site could not be fetched, make sure this project has page-management-site-setup as dependency`
 				);
 			}
 			finally {
@@ -51,4 +53,4 @@ const wemSiteTest = test.extend<{
 	],
 });
 
-export {WEM_SITE_ERC, wemSiteTest};
+export {PAGE_MANAGEMENT_SITE_ERC, pageManagementSiteTest};

@@ -10,7 +10,7 @@ import {ApiHelpers} from '../../helpers/ApiHelpers';
 import {
 	LEMON_BASKET_OBJECT_ERC,
 	LEMON_OBJECT_ERC,
-	WEM_SITE_ERC,
+	PAGE_MANAGEMENT_SITE_ERC,
 } from './constants';
 
 export const test = mergeTests(backendPageTest);
@@ -36,6 +36,6 @@ test('Teardown: Delete site and data for Web Experience tests', async ({
 	// Delete site
 
 	await expect(
-		await apiHelpers.headlessSite.deleteSiteByERC(WEM_SITE_ERC)
+		await apiHelpers.headlessSite.deleteSiteByERC(PAGE_MANAGEMENT_SITE_ERC)
 	).toBeOK();
 });

@@ -8,4 +8,4 @@ export const ANIMALS_COLLECTION_NAME = 'Animals';
 export const LEMON_OBJECT_ERC = 'lemon-object-erc';
 export const LEMON_BASKET_OBJECT_ERC = 'lemon-basket-object-erc';
 
-export const WEM_SITE_ERC = 'wem-site-erc';
+export const PAGE_MANAGEMENT_SITE_ERC = 'page-management-site-erc';

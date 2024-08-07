@@ -8,7 +8,7 @@ import {expect, mergeTests} from '@playwright/test';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
-import {wemSiteTest} from '../../fixtures/wemSiteTest';
+import {pageManagementSiteTest} from '../../fixtures/pageManagementSiteTest';
 import {clickAndExpectToBeHidden} from '../../utils/clickAndExpectToBeHidden';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../utils/getRandomString';
@@ -22,19 +22,19 @@ const test = mergeTests(
 	}),
 	pageEditorPagesTest,
 	loginTest(),
-	wemSiteTest
+	pageManagementSiteTest
 );
 
 test('Allow mapping repeatable fields collection provider', async ({
 	displayPageTemplatesPage,
 	page,
 	pageEditorPage,
-	wemSite,
+	pageManagementSite,
 }) => {
 
 	// Create DPT for Animal
 
-	await displayPageTemplatesPage.goto(wemSite.friendlyUrlPath);
+	await displayPageTemplatesPage.goto(pageManagementSite.friendlyUrlPath);
 
 	const displayPageTemplateName = getRandomString();
 
@@ -117,12 +117,12 @@ test('Allow mapping repeatable fields collection provider', async ({
 test('Allow mapping editables to fields of related object', async ({
 	displayPageTemplatesPage,
 	pageEditorPage,
-	wemSite,
+	pageManagementSite,
 }) => {
 
 	// Create DPT for Lemon
 
-	await displayPageTemplatesPage.goto(wemSite.friendlyUrlPath);
+	await displayPageTemplatesPage.goto(pageManagementSite.friendlyUrlPath);
 
 	const displayPageTemplateName = getRandomString();
 

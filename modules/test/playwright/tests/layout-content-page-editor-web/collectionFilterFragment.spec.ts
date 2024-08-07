@@ -11,8 +11,8 @@ import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
-import {wemSiteTest} from '../../fixtures/wemSiteTest';
-import {ANIMALS_COLLECTION_NAME} from '../../setup/wem-site/constants';
+import {pageManagementSiteTest} from '../../fixtures/pageManagementSiteTest';
+import {ANIMALS_COLLECTION_NAME} from '../../setup/page-management-site/constants';
 import {clickAndExpectToBeHidden} from '../../utils/clickAndExpectToBeHidden';
 import getRandomString from '../../utils/getRandomString';
 import addApprovedStructuredContent from '../../utils/structured-content/addApprovedStructuredContent';
@@ -49,7 +49,7 @@ const test = mergeTests(
 	journalPagesTest,
 	loginTest(),
 	pageEditorPagesTest,
-	wemSiteTest
+	pageManagementSiteTest
 );
 
 const testWithIsolatedSite = mergeTests(test, isolatedSiteTest);
@@ -106,7 +106,7 @@ test('Filters a web content collection by single and multiple categories', async
 	collectionsPage,
 	page,
 	pageEditorPage,
-	wemSite,
+	pageManagementSite,
 }) => {
 
 	// Create a definition for a Collection Filter
@@ -122,7 +122,7 @@ test('Filters a web content collection by single and multiple categories', async
 
 	const animalsClassPK = await collectionsPage.getCollectionClassPK(
 		ANIMALS_COLLECTION_NAME,
-		wemSite.friendlyUrlPath
+		pageManagementSite.friendlyUrlPath
 	);
 
 	const animalsCollection = getCollectionItemDefinition(getRandomString(), [
@@ -146,11 +146,11 @@ test('Filters a web content collection by single and multiple categories', async
 			collectionFilterDefinition,
 			collectionDefinition,
 		]),
-		siteId: wemSite.id,
+		siteId: pageManagementSite.id,
 		title: getRandomString(),
 	});
 
-	await pageEditorPage.goto(layout, wemSite.friendlyUrlPath);
+	await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
 
 	// Go to edit mode of the created page and select the Collection Filter fragment
 
@@ -168,7 +168,9 @@ test('Filters a web content collection by single and multiple categories', async
 
 	// Go to view mode of the created page
 
-	await page.goto(`/web${wemSite.friendlyUrlPath}${layout.friendlyUrlPath}`);
+	await page.goto(
+		`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+	);
 
 	// Both should be visible initially
 
@@ -193,7 +195,9 @@ test('Filters a web content collection by single and multiple categories', async
 
 	// Select category filter: Cats and Dogs
 
-	await page.goto(`/web${wemSite.friendlyUrlPath}${layout.friendlyUrlPath}`);
+	await page.goto(
+		`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+	);
 
 	await selectFilter(page, ['dogs', 'cats']);
 
@@ -325,7 +329,7 @@ test('Enables search field in dropdown list of Collection Filter', async ({
 	collectionsPage,
 	page,
 	pageEditorPage,
-	wemSite,
+	pageManagementSite,
 }) => {
 
 	// Create a definition for a Collection Filter
@@ -341,7 +345,7 @@ test('Enables search field in dropdown list of Collection Filter', async ({
 
 	const animalsClassPK = await collectionsPage.getCollectionClassPK(
 		ANIMALS_COLLECTION_NAME,
-		wemSite.friendlyUrlPath
+		pageManagementSite.friendlyUrlPath
 	);
 
 	const animalsCollection = getCollectionItemDefinition(getRandomString(), [
@@ -365,13 +369,13 @@ test('Enables search field in dropdown list of Collection Filter', async ({
 			collectionFilterDefinition,
 			collectionDefinition,
 		]),
-		siteId: wemSite.id,
+		siteId: pageManagementSite.id,
 		title: getRandomString(),
 	});
 
 	// Go to edit mode of the created page and select the Collection Filter fragment
 
-	await pageEditorPage.goto(layout, wemSite.friendlyUrlPath);
+	await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
 
 	await pageEditorPage.selectFragment(collectionFilterId);
 
@@ -383,7 +387,9 @@ test('Enables search field in dropdown list of Collection Filter', async ({
 
 	await pageEditorPage.publishPage();
 
-	await page.goto(`/web${wemSite.friendlyUrlPath}${layout.friendlyUrlPath}`);
+	await page.goto(
+		`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+	);
 
 	// Check the categories that appear in the dropdown
 
@@ -405,7 +411,7 @@ test('Filters the collection content by keywords using two filters', async ({
 	collectionsPage,
 	page,
 	pageEditorPage,
-	wemSite,
+	pageManagementSite,
 }) => {
 
 	// Create a definition for a Collection Filter
@@ -427,7 +433,7 @@ test('Filters the collection content by keywords using two filters', async ({
 
 	const animalsClassPK = await collectionsPage.getCollectionClassPK(
 		ANIMALS_COLLECTION_NAME,
-		wemSite.friendlyUrlPath
+		pageManagementSite.friendlyUrlPath
 	);
 
 	const animalsCollection = getCollectionItemDefinition(getRandomString(), [
@@ -452,13 +458,13 @@ test('Filters the collection content by keywords using two filters', async ({
 			secondFilterDefinition,
 			collectionDefinition,
 		]),
-		siteId: wemSite.id,
+		siteId: pageManagementSite.id,
 		title: getRandomString(),
 	});
 
 	// Go to edit mode
 
-	await pageEditorPage.goto(layout, wemSite.friendlyUrlPath);
+	await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
 
 	// Configure the first filter by keywords
 
@@ -478,7 +484,9 @@ test('Filters the collection content by keywords using two filters', async ({
 
 	await pageEditorPage.publishPage();
 
-	await page.goto(`/web${wemSite.friendlyUrlPath}${layout.friendlyUrlPath}`);
+	await page.goto(
+		`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+	);
 
 	// Filter by keywords
 
@@ -502,7 +510,9 @@ test('Filters the collection content by keywords using two filters', async ({
 	).toBeVisible();
 	await expect(page.getByText('Animal 02 - Dogs category')).toBeVisible();
 
-	await page.goto(`/web${wemSite.friendlyUrlPath}${layout.friendlyUrlPath}`);
+	await page.goto(
+		`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+	);
 
 	await firstFilter.fill('rabbit');
 	await firstFilter.press('Enter');

@@ -40,7 +40,6 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -133,19 +132,28 @@ public class ObjectEntryItemSelectorViewDescriptor
 					groupId = 0;
 				}
 
-				List<ObjectEntry> baseModels =
-					objectRelatedModelsProvider.getUnrelatedModels(
-						_objectDefinition.getCompanyId(), groupId,
-						_objectDefinition,
-						ParamUtil.getLong(_portletRequest, "objectEntryId"),
-						ParamUtil.getLong(
-							_portletRequest, "objectRelationshipId"),
-						searchContainer.getStart(), searchContainer.getEnd());
+				long finalGroupId = groupId;
 
 				searchContainer.setResultsAndTotal(
-					() -> baseModels,
+					() -> {
+						if ((finalGroupId == 0) &&
+							ObjectDefinitionConstants.SCOPE_SITE.equals(
+								objectScopeProvider.getKey())) {
+
+							return new ArrayList<>();
+						}
+
+						return objectRelatedModelsProvider.getUnrelatedModels(
+							_objectDefinition.getCompanyId(), finalGroupId,
+							_objectDefinition,
+							ParamUtil.getLong(_portletRequest, "objectEntryId"),
+							ParamUtil.getLong(
+								_portletRequest, "objectRelationshipId"),
+							searchContainer.getStart(),
+							searchContainer.getEnd());
+					},
 					objectRelatedModelsProvider.getUnrelatedModelsCount(
-						_objectDefinition.getCompanyId(), groupId,
+						_objectDefinition.getCompanyId(), finalGroupId,
 						_objectDefinition,
 						ParamUtil.getLong(_portletRequest, "objectEntryId"),
 						ParamUtil.getLong(

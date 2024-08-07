@@ -170,6 +170,8 @@ public class BookmarksEntryIndexerIndexedFieldsTest {
 			BookmarksEntry bookmarksEntry)
 		throws Exception {
 
+		User user = _users.get(0);
+
 		Map<String, String> map = HashMapBuilder.put(
 			Field.ASSET_ENTRY_ID,
 			String.valueOf(_getAssetEntryId(bookmarksEntry))
@@ -207,16 +209,13 @@ public class BookmarksEntryIndexerIndexedFieldsTest {
 		).put(
 			"scopeGroupExternalReferenceCode", _group.getExternalReferenceCode()
 		).put(
+			"statusByUserExternalReferenceCode", user.getExternalReferenceCode()
+		).put(
 			"statusByUserId", String.valueOf(bookmarksEntry.getStatusByUserId())
 		).put(
 			"title_sortable", StringUtil.lowerCase(bookmarksEntry.getName())
 		).put(
-			"userExternalReferenceCode",
-			() -> {
-				User user = _users.get(0);
-
-				return user.getExternalReferenceCode();
-			}
+			"userExternalReferenceCode", user.getExternalReferenceCode()
 		).put(
 			"visible", "true"
 		).build();

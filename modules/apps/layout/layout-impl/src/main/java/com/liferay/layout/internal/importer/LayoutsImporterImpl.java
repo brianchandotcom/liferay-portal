@@ -1103,9 +1103,7 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 				ServiceContextThreadLocal.getServiceContext());
 		}
 
-		String imageFileName =
-			classPK + "_preview." +
-				FileUtil.getExtension(thumbnail.getExtension());
+		String imageFileName = classPK + "_preview." + thumbnail.getExtension();
 
 		FileEntry fileEntry = _portletFileRepository.fetchPortletFileEntry(
 			groupId, repository.getDlFolderId(), imageFileName);
@@ -1149,12 +1147,15 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 				path + _THUMBNAIL_FILE_NAME + thumbnailExtension);
 
 			if (zipEntry != null) {
+				byte[] bytes = null;
+
 				try (InputStream inputStream = zipFile.getInputStream(
 						zipEntry)) {
 
-					return new Thumbnail(
-						FileUtil.getBytes(inputStream), thumbnailExtension);
+					bytes = FileUtil.getBytes(inputStream);
 				}
+
+				return new Thumbnail(bytes, thumbnailExtension);
 			}
 		}
 

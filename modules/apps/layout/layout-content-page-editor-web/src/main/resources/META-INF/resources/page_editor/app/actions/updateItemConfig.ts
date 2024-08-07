@@ -8,14 +8,14 @@ import {UPDATE_ITEM_CONFIG} from './types';
 import type {LayoutData} from '../../types/layout_data/LayoutData';
 
 export default function updateItemConfig({
-	itemId,
+	itemIds,
 	layoutData,
 }: {
-	itemId: string;
+	itemIds: string[];
 	layoutData: LayoutData;
 }) {
 	return {
-		itemId,
+		itemIds,
 		layoutData,
 		type: UPDATE_ITEM_CONFIG,
 	} as const;

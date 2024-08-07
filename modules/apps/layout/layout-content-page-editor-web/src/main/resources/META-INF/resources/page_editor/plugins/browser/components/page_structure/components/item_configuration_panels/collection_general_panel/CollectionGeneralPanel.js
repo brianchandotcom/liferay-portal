@@ -193,7 +193,7 @@ export function CollectionGeneralPanel({item}) {
 			dispatch(
 				updateItemConfig({
 					itemConfig,
-					itemId: item.itemId,
+					itemIds: [item.itemId],
 				})
 			);
 		},

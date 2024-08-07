@@ -13,10 +13,10 @@ import type {LayoutDataItem} from '../../types/layout_data/LayoutData';
 
 export default function updateItemConfig({
 	itemConfig,
-	itemId,
+	itemIds,
 }: {
 	itemConfig: LayoutDataItem['config'];
-	itemId: string;
+	itemIds: string[];
 }) {
 	return (
 		dispatch: (
@@ -30,17 +30,16 @@ export default function updateItemConfig({
 
 		return LayoutService.updateItemConfig({
 			itemConfig,
-			itemId,
+			itemIds,
 			onNetworkStatus: dispatch,
 			segmentsExperienceId,
 		}).then(({layoutData}) => {
 			dispatch(
 				updateItemConfigAction({
-					itemId,
+					itemIds,
 					layoutData,
 				})
 			);
-
 			clearPageContents();
 		});
 	};

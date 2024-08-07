@@ -80,8 +80,7 @@ export default function layoutDataReducer(
 		case UPDATE_RULE:
 			return action.layoutData;
 
-		case UPDATE_FORM_ITEM_CONFIG:
-		case UPDATE_ITEM_CONFIG: {
+		case UPDATE_FORM_ITEM_CONFIG: {
 			const {itemId, layoutData: nextLayoutData} = action;
 
 			const nextItem = nextLayoutData.items[itemId] || {};
@@ -91,6 +90,24 @@ export default function layoutDataReducer(
 				['items', itemId, 'config'],
 				nextItem.config
 			);
+		}
+
+		case UPDATE_ITEM_CONFIG: {
+			const {itemIds, layoutData} = action;
+
+			let nextLayoutData = layoutData;
+
+			for (const itemId of itemIds) {
+				const nextItem = nextLayoutData.items[itemId] || {};
+
+				nextLayoutData = setIn(
+					nextLayoutData,
+					['items', itemId, 'config'],
+					nextItem.config
+				);
+			}
+
+			return nextLayoutData;
 		}
 
 		case UPDATE_PREVIEW_IMAGE: {

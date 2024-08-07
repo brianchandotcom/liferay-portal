@@ -250,7 +250,7 @@ function StructureTreeNodeContent({
 			dispatch(
 				updateItemConfig({
 					itemConfig: {name: trimmedName},
-					itemId: node.id,
+					itemIds: [node.id],
 				})
 			);
 		}

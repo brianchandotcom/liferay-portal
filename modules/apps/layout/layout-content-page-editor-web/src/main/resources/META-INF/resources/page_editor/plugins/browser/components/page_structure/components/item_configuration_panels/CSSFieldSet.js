@@ -57,7 +57,7 @@ export default function CSSFieldSet({item}) {
 		dispatch(
 			updateItemConfig({
 				itemConfig: nextConfig,
-				itemId: item.itemId,
+				itemIds: [item.itemId],
 			})
 		);
 	};

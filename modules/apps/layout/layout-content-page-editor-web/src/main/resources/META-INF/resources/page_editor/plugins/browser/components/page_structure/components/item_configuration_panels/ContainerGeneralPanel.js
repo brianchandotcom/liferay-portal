@@ -70,7 +70,7 @@ export default function ContainerGeneralPanel({item}) {
 		dispatch(
 			updateItemConfig({
 				itemConfig: nextConfig,
-				itemId: item.itemId,
+				itemIds: [item.itemId],
 			})
 		);
 	};

@@ -71,7 +71,7 @@ export default function ContainerDisplayOptions({item}) {
 					dispatch(
 						updateItemConfig({
 							itemConfig,
-							itemId: item.itemId,
+							itemIds: [item.itemId],
 						})
 					);
 				}}
@@ -87,7 +87,7 @@ export default function ContainerDisplayOptions({item}) {
 								itemConfig: {
 									[name]: value,
 								},
-								itemId: item.itemId,
+								itemIds: [item.itemId],
 							})
 						);
 					}}
@@ -106,7 +106,7 @@ export default function ContainerDisplayOptions({item}) {
 					dispatch(
 						updateItemConfig({
 							itemConfig: {[name]: value},
-							itemId: item.itemId,
+							itemIds: [item.itemId],
 						})
 					);
 				}}

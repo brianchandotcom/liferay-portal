@@ -58,7 +58,7 @@ export default function ContainerAdvancedPanel({item}) {
 							dispatch(
 								updateItemConfig({
 									itemConfig,
-									itemId: item.itemId,
+									itemIds: [item.itemId],
 								})
 							);
 						}}
@@ -91,7 +91,7 @@ export default function ContainerAdvancedPanel({item}) {
 									itemConfig: {
 										[name]: value,
 									},
-									itemId: item.itemId,
+									itemIds: [item.itemId],
 								})
 							);
 						}}

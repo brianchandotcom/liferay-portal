@@ -55,7 +55,7 @@ export function HideFromSearchField({item}) {
 					dispatch(
 						updateItemConfig({
 							itemConfig,
-							itemId: item.itemId,
+							itemIds: [item.itemId],
 						})
 					);
 				}}

@@ -412,7 +412,7 @@ const Collection = React.memo(
 											itemType: nextItemType,
 										},
 									},
-									itemId: item.itemId,
+									itemIds: [item.itemId],
 								})
 							);
 						}

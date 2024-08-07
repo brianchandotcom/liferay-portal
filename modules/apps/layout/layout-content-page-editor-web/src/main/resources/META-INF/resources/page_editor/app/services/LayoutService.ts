@@ -250,12 +250,12 @@ export default {
 
 	updateItemConfig({
 		itemConfig,
-		itemId,
+		itemIds,
 		onNetworkStatus,
 		segmentsExperienceId,
 	}: {
 		itemConfig: LayoutDataItem['config'];
-		itemId: string;
+		itemIds: string[];
 		onNetworkStatus: OnNetworkStatus;
 		segmentsExperienceId: string;
 	}) {
@@ -267,7 +267,7 @@ export default {
 			{
 				body: {
 					itemConfig: JSON.stringify(itemConfig),
-					itemId,
+					itemIds,
 					segmentsExperienceId,
 				},
 			},

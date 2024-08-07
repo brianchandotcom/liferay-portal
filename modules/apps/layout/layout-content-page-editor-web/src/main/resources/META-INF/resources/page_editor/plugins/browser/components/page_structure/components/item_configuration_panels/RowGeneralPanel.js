@@ -105,7 +105,7 @@ export function RowGeneralPanel({item}) {
 		dispatch(
 			updateItemConfig({
 				itemConfig,
-				itemId: item.itemId,
+				itemIds: [item.itemId],
 			})
 		);
 	};
@@ -147,7 +147,7 @@ export function RowGeneralPanel({item}) {
 		dispatch(
 			updateItemConfig({
 				itemConfig: itemStyles,
-				itemId: item.itemId,
+				itemIds: [item.itemId],
 			})
 		);
 	};

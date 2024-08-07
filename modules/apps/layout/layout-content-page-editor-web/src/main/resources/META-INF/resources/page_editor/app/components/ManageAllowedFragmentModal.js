@@ -29,7 +29,7 @@ const ManageAllowedFragmentModal = ({item, observer, onClose}) => {
 					allowNewFragmentEntries,
 					fragmentEntryKeys: [...selectedFragments],
 				},
-				itemId: item.itemId,
+				itemIds: [item.itemId],
 			})
 		).then(() => {
 			setLoading(false);

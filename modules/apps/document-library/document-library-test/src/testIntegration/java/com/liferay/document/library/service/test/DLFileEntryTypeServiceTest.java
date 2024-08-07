@@ -214,7 +214,6 @@ public class DLFileEntryTypeServiceTest {
 				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT);
 
 		DLFileEntryType dlFileEntryType1 = _addFileEntryType(null);
-
 		DLFileEntryType dlFileEntryType2 = _addFileEntryType(null);
 
 		_dlAppLocalService.updateFolder(
@@ -259,7 +258,7 @@ public class DLFileEntryTypeServiceTest {
 			_dlFileEntryTypeService.getFileEntryTypeByExternalReferenceCode(
 				"12345678", _group.getGroupId()));
 
-		_dlFileEntryTypeService.deleteDLFileEntryType(
+		_dlFileEntryTypeService.deleteFileEntryTypeByExternalReferenceCode(
 			"12345678", _group.getGroupId());
 
 		_dlFileEntryTypeService.getFileEntryTypeByExternalReferenceCode(

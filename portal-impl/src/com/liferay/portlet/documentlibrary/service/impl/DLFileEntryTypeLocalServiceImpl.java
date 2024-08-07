@@ -221,7 +221,7 @@ public class DLFileEntryTypeLocalServiceImpl
 	}
 
 	@Override
-	public void deleteDLFileEntryType(
+	public void deleteFileEntryTypeByExternalReferenceCode(
 			String externalReferenceCode, long groupId)
 		throws PortalException {
 

@@ -173,6 +173,8 @@ public class MBMessageIndexerIndexedFieldsTest {
 	private Map<String, String> _expectedFieldValues(MBMessage mbMessage)
 		throws Exception {
 
+		User user = TestPropsValues.getUser();
+
 		Map<String, String> map = HashMapBuilder.put(
 			Field.ASSET_ENTRY_ID, String.valueOf(_getAssetEntryId(mbMessage))
 		).put(
@@ -229,6 +231,8 @@ public class MBMessageIndexerIndexedFieldsTest {
 		).put(
 			"scopeGroupExternalReferenceCode", _group.getExternalReferenceCode()
 		).put(
+			"statusByUserExternalReferenceCode", user.getExternalReferenceCode()
+		).put(
 			"statusByUserId", String.valueOf(mbMessage.getStatusByUserId())
 		).put(
 			"threadId", String.valueOf(mbMessage.getThreadId())
@@ -239,12 +243,7 @@ public class MBMessageIndexerIndexedFieldsTest {
 			"urlSubject_String_sortable",
 			HttpComponentsUtil.decodePath(mbMessage.getUrlSubject())
 		).put(
-			"userExternalReferenceCode",
-			() -> {
-				User user = TestPropsValues.getUser();
-
-				return user.getExternalReferenceCode();
-			}
+			"userExternalReferenceCode", user.getExternalReferenceCode()
 		).put(
 			"visible", "true"
 		).build();

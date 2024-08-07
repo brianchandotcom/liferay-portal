@@ -229,7 +229,7 @@ public class IndexEntryTest {
 
 			unsafeConsumer.accept(
 				() -> {
-					_indexEntryLocalService.addKeywordsEntryIndexEntry(
+					_indexEntryLocalService.addKeywordsEntry(
 						keywordsEntryId, _indexEntry);
 
 					return null;

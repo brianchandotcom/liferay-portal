@@ -10,17 +10,22 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portlet.PortalPreferences;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchEngine;
 import com.liferay.portal.kernel.search.SearchEngineHelperUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.PortalPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
@@ -35,6 +40,7 @@ import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.query.Queries;
@@ -49,6 +55,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.util.Arrays;
 import java.util.Dictionary;
 import java.util.List;
 import java.util.Locale;
@@ -113,14 +120,55 @@ public class SynonymSearchTest {
 			addSynonymSet("منتج, فعال");
 		}
 
+		PortalPreferences portalPreferences =
+			PortletPreferencesFactoryUtil.getPortalPreferences(
+				TestPropsValues.getUserId(), true);
+
+		_originalPortalPreferencesXML = PortletPreferencesFactoryUtil.toXML(
+			portalPreferences);
+
+		portalPreferences.setValue(
+			"", "locales",
+			"ar_SA,ca_ES,zh_CN,nl_NL,en_US,pt_PT,fi_FI,fr_FR,de_DE,hu_HU," +
+				"it_IT,ja_JP,pt_BR,es_ES,sv_SE");
+
+		PortalPreferencesLocalServiceUtil.updatePreferences(
+			_company.getCompanyId(),
+			PortletKeys.PREFS_OWNER_TYPE_COMPANY,
+			PortletPreferencesFactoryUtil.toXML(portalPreferences));
+
+		_user = UserTestUtil.getAdminUser(_company.getCompanyId());
+
+		_group = GroupTestUtil.addGroup(
+			_company.getCompanyId(), _user.getUserId(),
+			GroupConstants.DEFAULT_PARENT_GROUP_ID);
+
+		_serviceContext = ServiceContextTestUtil.getServiceContext(
+			_group.getGroupId(), _user.getUserId());
+
+		GroupTestUtil.updateDisplaySettings(
+			_group.getGroupId(),
+			Arrays.asList(_ARABIC_LOCALE, _CATALAN_LOCALE, _FINNISH_LOCALE,
+				_SWEDISH_LOCALE, LocaleUtil.SPAIN, LocaleUtil.US,
+				LocaleUtil.PORTUGAL, LocaleUtil.BRAZIL, LocaleUtil.FRANCE,
+				LocaleUtil.HUNGARY, LocaleUtil.CHINA, LocaleUtil.NETHERLANDS,
+				LocaleUtil.GERMANY, LocaleUtil.ITALY, LocaleUtil.JAPAN),
+			LocaleUtil.US);
+
 		addJournalArticles();
 	}
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
+
 		_companyLocalService.deleteCompany(_company);
 
 		PrincipalThreadLocal.setName(_originalName);
+
+		PortalPreferencesLocalServiceUtil.updatePreferences(
+			TestPropsValues.getCompanyId(),
+			PortletKeys.PREFS_OWNER_TYPE_COMPANY,
+			_originalPortalPreferencesXML);
 	}
 
 	@Test
@@ -153,15 +201,6 @@ public class SynonymSearchTest {
 	}
 
 	protected static void addJournalArticles() throws Exception {
-		_user = UserTestUtil.getAdminUser(_company.getCompanyId());
-
-		_group = GroupTestUtil.addGroup(
-			_company.getCompanyId(), _user.getUserId(),
-			GroupConstants.DEFAULT_PARENT_GROUP_ID);
-
-		_serviceContext = ServiceContextTestUtil.getServiceContext(
-			_group.getGroupId(), _user.getUserId());
-
 		addJournalArticle(
 			HashMapBuilder.put(
 				_ARABIC_LOCALE, "فعال"
@@ -381,6 +420,10 @@ public class SynonymSearchTest {
 	private static String _originalName;
 	private static ServiceContext _serviceContext;
 	private static User _user;
+
+	private static String _originalPortalPreferencesXML;
+
+	private static Long _companyId;
 
 	@Inject
 	private Queries _queries;

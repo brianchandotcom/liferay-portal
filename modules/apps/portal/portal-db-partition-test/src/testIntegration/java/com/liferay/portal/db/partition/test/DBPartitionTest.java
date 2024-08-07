@@ -31,6 +31,9 @@ import com.liferay.portal.model.impl.ClassNameImpl;
 import com.liferay.portal.model.impl.ResourceActionImpl;
 import com.liferay.portal.service.impl.ClassNameLocalServiceImpl;
 import com.liferay.portal.service.impl.ResourceActionLocalServiceImpl;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 
 import java.sql.Connection;
@@ -660,6 +663,36 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 			DBPartitionUtil.forEachCompanyId(
 				companyId -> dropTable(TEST_TABLE_NAME));
 		}
+	}
+
+	@Test
+	public void testUpdateIndexOnControlTable() throws Exception {
+		DataSource dataSource = InfrastructureUtil.getDataSource();
+
+		DBPartitionUtil.forEachCompanyId(
+			companyId -> {
+				if (companyId == PortalInstancePool.getDefaultCompanyId()) {
+					return;
+				}
+
+				try (Connection connection = dataSource.getConnection()) {
+					try (LogCapture logCapture =
+							LoggerTestUtil.configureLog4JLogger(
+								"com.liferay.portal.dao.db.BaseDB",
+								LoggerTestUtil.INFO)) {
+
+						db.updateIndexes(
+							connection, "Company",
+							"create index IX_38EFE3FD on Company (logoId);",
+							true);
+
+						List<LogEntry> logEntries = logCapture.getLogEntries();
+
+						Assert.assertEquals(
+							logEntries.toString(), 0L, logEntries.size());
+					}
+				}
+			});
 	}
 
 	@Test

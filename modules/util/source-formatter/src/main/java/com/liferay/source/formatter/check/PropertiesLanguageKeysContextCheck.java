@@ -56,16 +56,18 @@ public class PropertiesLanguageKeysContextCheck extends BaseFileCheck {
 		while (enumeration.hasMoreElements()) {
 			String key = enumeration.nextElement();
 
-			if (key.matches("\\w+") &&
-				StringUtil.equalsIgnoreCase(key, properties.getProperty(key)) &&
-				!allowedSingleWordLanguageKeys.contains(key)) {
+			if (key.matches("\\w+")) {
+				if (StringUtil.equalsIgnoreCase(
+						key, properties.getProperty(key)) &&
+					!allowedSingleWordLanguageKeys.contains(key)) {
 
-				addMessage(
-					fileName,
-					StringBundler.concat(
-						"The single-word key '", key,
-						"' should include a word of context at the end, ",
-						"within a [], to indicate specific meaning"));
+					addMessage(
+						fileName,
+						StringBundler.concat(
+							"The single-word key '", key,
+							"' should include a word of context at the end, ",
+							"within a [], to indicate specific meaning"));
+				}
 
 				continue;
 			}

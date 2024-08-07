@@ -18,7 +18,7 @@ function handleCreationMenuClick(
 	repositoryBrowserURL
 ) {
 	if (item?.data?.action === 'addFolder') {
-		const createFolderURL = `${repositoryBrowserURL}?repositoryId=${item.data.repositoryId}&parentFolderId=${item.data.parentFolderId}`;
+		const createFolderURL = `${repositoryBrowserURL}?repositoryId=${item.data.repositoryId}&parentFolderId=${item.data.parentFolderId}&viewableByGuest=${item.data.viewableByGuest}`;
 
 		openSimpleInputModal({
 			dialogTitle: Liferay.Language.get('add-folder'),

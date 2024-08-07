@@ -87,7 +87,8 @@ public class RepositoryBrowserTagDisplayContext {
 		long folderId, HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		PortletRequest portletRequest, long repositoryId, long rootFolderId) {
+		PortletRequest portletRequest, long repositoryId, long rootFolderId,
+		boolean viewableByGuest) {
 
 		_actions = actions;
 		_dlAppService = dlAppService;
@@ -102,6 +103,7 @@ public class RepositoryBrowserTagDisplayContext {
 		_portletRequest = portletRequest;
 		_repositoryId = repositoryId;
 		_rootFolderId = rootFolderId;
+		_viewableByGuest = viewableByGuest;
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -190,7 +192,8 @@ public class RepositoryBrowserTagDisplayContext {
 		return new RepositoryBrowserManagementToolbarDisplayContext(
 			_actions, _folderId, _folderModelResourcePermission,
 			_httpServletRequest, _liferayPortletRequest,
-			_liferayPortletResponse, _repositoryId, getSearchContainer());
+			_liferayPortletResponse, _repositoryId, getSearchContainer(),
+			_viewableByGuest);
 	}
 
 	public Map<String, Object> getRepositoryBrowserComponentContext() {
@@ -200,6 +203,8 @@ public class RepositoryBrowserTagDisplayContext {
 			"repositoryBrowserURL", _getRepositoryBrowserURL()
 		).put(
 			"repositoryId", String.valueOf(_repositoryId)
+		).put(
+			"viewableByGuest", String.valueOf(_viewableByGuest)
 		).build();
 	}
 
@@ -713,5 +718,6 @@ public class RepositoryBrowserTagDisplayContext {
 	private final long _rootFolderId;
 	private SearchContainer<Object> _searchContainer;
 	private final ThemeDisplay _themeDisplay;
+	private final boolean _viewableByGuest;
 
 }

@@ -43,7 +43,7 @@ public class RepositoryBrowserManagementToolbarDisplayContext
 		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse, long repositoryId,
-		SearchContainer<Object> searchContainer) {
+		SearchContainer<Object> searchContainer, boolean viewableByGuest) {
 
 		super(
 			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
@@ -53,6 +53,7 @@ public class RepositoryBrowserManagementToolbarDisplayContext
 		_folderId = folderId;
 		_folderModelResourcePermission = folderModelResourcePermission;
 		_repositoryId = repositoryId;
+		_viewableByGuest = viewableByGuest;
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -127,6 +128,8 @@ public class RepositoryBrowserManagementToolbarDisplayContext
 					"parentFolderId", String.valueOf(_folderId));
 				dropdownItem.putData(
 					"repositoryId", String.valueOf(_repositoryId));
+				dropdownItem.putData(
+					"viewableByGuest", String.valueOf(_viewableByGuest));
 				dropdownItem.setIcon("folder");
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "folder"));
@@ -180,5 +183,6 @@ public class RepositoryBrowserManagementToolbarDisplayContext
 		_folderModelResourcePermission;
 	private final long _repositoryId;
 	private final ThemeDisplay _themeDisplay;
+	private final boolean _viewableByGuest;
 
 }

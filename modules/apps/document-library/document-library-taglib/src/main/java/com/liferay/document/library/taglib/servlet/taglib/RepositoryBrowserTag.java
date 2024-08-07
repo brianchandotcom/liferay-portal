@@ -55,6 +55,10 @@ public class RepositoryBrowserTag extends IncludeTag {
 		return _repositoryId;
 	}
 
+	public boolean isViewableByGuest() {
+		return _viewableByGuest;
+	}
+
 	public void setActions(String actions) {
 		_actions = actions;
 	}
@@ -74,6 +78,10 @@ public class RepositoryBrowserTag extends IncludeTag {
 		_repositoryId = repositoryId;
 	}
 
+	public void setViewableByGuest(boolean viewableByGuest) {
+		_viewableByGuest = viewableByGuest;
+	}
+
 	@Override
 	protected void cleanUp() {
 		super.cleanUp();
@@ -81,6 +89,7 @@ public class RepositoryBrowserTag extends IncludeTag {
 		_actions = StringPool.BLANK;
 		_folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 		_repositoryId = 0;
+		_viewableByGuest = false;
 	}
 
 	@Override
@@ -111,7 +120,8 @@ public class RepositoryBrowserTag extends IncludeTag {
 				_getFolderId(), httpServletRequest,
 				PortalUtil.getLiferayPortletRequest(portletRequest),
 				PortalUtil.getLiferayPortletResponse(portletResponse),
-				portletRequest, _getRepositoryId(), getFolderId()));
+				portletRequest, _getRepositoryId(), getFolderId(),
+				isViewableByGuest()));
 	}
 
 	private Set<String> _getActionsSet() {
@@ -160,5 +170,6 @@ public class RepositoryBrowserTag extends IncludeTag {
 	private String _actions = StringPool.BLANK;
 	private long _folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 	private long _repositoryId;
+	private boolean _viewableByGuest;
 
 }

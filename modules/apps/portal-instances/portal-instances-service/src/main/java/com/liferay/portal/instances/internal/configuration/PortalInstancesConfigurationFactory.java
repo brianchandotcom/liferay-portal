@@ -61,21 +61,14 @@ public class PortalInstancesConfigurationFactory {
 		}
 
 		if (company == null) {
-			String adminPassword = portalInstancesConfiguration.adminPassword();
-			String adminScreenName =
-				portalInstancesConfiguration.adminScreenName();
-			String adminEmailAddress =
-				portalInstancesConfiguration.adminEmailAddress();
-			String adminFirstName =
-				portalInstancesConfiguration.adminFirstName();
-			String adminMiddleName =
-				portalInstancesConfiguration.adminMiddleName();
-			String adminLastName = portalInstancesConfiguration.adminLastName();
-
 			company = _companyLocalService.addCompany(
 				null, webId, virtualHostname, mx, maxUsers, active,
-				adminPassword, adminScreenName, adminEmailAddress,
-				adminFirstName, adminMiddleName, adminLastName);
+				portalInstancesConfiguration.adminPassword(),
+				portalInstancesConfiguration.adminScreenName(),
+				portalInstancesConfiguration.adminEmailAddress(),
+				portalInstancesConfiguration.adminFirstName(),
+				portalInstancesConfiguration.adminMiddleName(),
+				portalInstancesConfiguration.adminLastName());
 
 			try (SafeCloseable safeCloseable =
 					CompanyThreadLocal.setWithSafeCloseable(

@@ -158,7 +158,7 @@ public class PaymentMethodCommerceCheckoutStep
 			commerceOrder.getShippingOptionName(), commerceOrder.getSubtotal(),
 			commerceOrder.getTotal(), commerceContext);
 
-		_commerceOrderLocalService.resetTermsAndConditions(
+		commerceOrder = _commerceOrderLocalService.resetTermsAndConditions(
 			commerceOrder.getCommerceOrderId(), false, true);
 
 		actionRequest.setAttribute(

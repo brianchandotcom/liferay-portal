@@ -114,10 +114,7 @@ test('LPD-23255 AC3 TC4: Verify that clicking the “Reset SCIM Client provision
 		.getByLabel('Access Token', {exact: true})
 		.inputValue();
 
-	const authorizedResponse = await apiHelper.scim.getUsers(
-		accessToken,
-		false
-	);
+	const authorizedResponse = await apiHelper.scim.getUsers(accessToken);
 	expect(authorizedResponse.status()).toBe(200);
 
 	await applicationsMenuPage.goToOauth2Administration();
@@ -134,10 +131,7 @@ test('LPD-23255 AC3 TC4: Verify that clicking the “Reset SCIM Client provision
 
 	await scimConfigurationPage.resetClientData();
 
-	const unauthorizedResponse = await apiHelper.scim.getUsers(
-		accessToken,
-		false
-	);
+	const unauthorizedResponse = await apiHelper.scim.getUsers(accessToken);
 	expect(unauthorizedResponse.status()).toBe(401);
 
 	await applicationsMenuPage.goToOauth2Administration();

@@ -14,11 +14,11 @@ export class SCIMApiHelper {
 		this.basePath = 'scim/v1.0/';
 	}
 
-	async getUsers(oAuth2Token?: string, failOnStatusCode?: boolean) {
+	async getUsers(oAuth2Token?: string) {
 		if (oAuth2Token) {
 			return this.apiHelpers.getResponse(
 				`${this.apiHelpers.baseUrl}${this.basePath}v2/Users`,
-				failOnStatusCode,
+				false,
 				{
 					'Authorization': `Bearer ${oAuth2Token}`,
 					'Content-Type': 'application/scim+json',
@@ -28,7 +28,7 @@ export class SCIMApiHelper {
 		else {
 			return this.apiHelpers.getResponse(
 				`${this.apiHelpers.baseUrl}${this.basePath}v2/Users`,
-				failOnStatusCode,
+				false,
 				{
 					'Content-Type': 'application/scim+json',
 					...(await this.apiHelpers.getCSRFTokenHeader()),
@@ -37,12 +37,11 @@ export class SCIMApiHelper {
 		}
 	}
 
-	async postUser(data: any, failOnStatusCode?: boolean) {
+	async postUser(data: any) {
 		return this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}v2/Users`,
 			{
 				data,
-				failOnStatusCode,
 				headers: {
 					'Content-Type': 'application/scim+json',
 					...(await this.apiHelpers.getCSRFTokenHeader()),
@@ -64,10 +63,10 @@ export class SCIMApiHelper {
 		);
 	}
 
-	async getGroups(failOnStatusCode?: boolean) {
+	async getGroups() {
 		return this.apiHelpers.getResponse(
 			`${this.apiHelpers.baseUrl}${this.basePath}v2/Groups`,
-			failOnStatusCode,
+			false,
 			{
 				'Content-Type': 'application/scim+json',
 				...(await this.apiHelpers.getCSRFTokenHeader()),

@@ -10,18 +10,24 @@ import classNames from 'classnames';
 import React from 'react';
 import {CSSTransition} from 'react-transition-group';
 
+import FilterSelector, {
+	FilterProps,
+} from '../../../FilterSelector/FilterSelector';
+
 interface MenuItem extends Omit<IItem, 'child' | 'type'> {
-	child?: string | JSX.Element;
+	child?: string | FilterProps;
 	type?: 'divider' | 'component';
 }
 
 interface IProps {
+	closeFilterMenu: () => void;
 	items: MenuItem[];
 	onKeyDown: (event: {key: string}) => void;
 }
 
 const DrilldownMenuItems = ({
 	active,
+	closeFilterMenu,
 	direction,
 	header,
 	items,
@@ -82,19 +88,29 @@ const DrilldownMenuItems = ({
 									type,
 								},
 								index
-							) =>
-								type === 'divider' ? (
-									<li
-										aria-hidden="true"
-										className="dropdown-divider"
-										key={`${index}-divider`}
-										role="presentation"
-									/>
-								) : type === 'component' ? (
-									<React.Fragment key={`${index}-${title}`}>
-										{child}
-									</React.Fragment>
-								) : (
+							) => {
+								if (type === 'divider') {
+									return (
+										<li
+											aria-hidden="true"
+											className="dropdown-divider"
+											key={`${index}-divider`}
+											role="presentation"
+										/>
+									);
+								}
+
+								if (type === 'component') {
+									return (
+										<FilterSelector
+											closeFilterMenu={closeFilterMenu}
+											filterProps={child as FilterProps}
+											key={`${index}-${title}`}
+										/>
+									);
+								}
+
+								return (
 									<li key={`${index}-${title}`}>
 										<Button
 											className={classNames(
@@ -133,7 +149,8 @@ const DrilldownMenuItems = ({
 											)}
 										</Button>
 									</li>
-								)
+								);
+							}
 						)}
 					</ul>
 				)}

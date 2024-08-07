@@ -102,6 +102,7 @@ const DropDownWithDrillDown = ({
 				{menuIds.map((menuKey) => (
 					<DrilldownMenuItems
 						active={activeMenu === menuKey}
+						closeFilterMenu={() => setActive(false)}
 						direction={direction}
 						header={
 							activeMenu === menuKey && !!history.length

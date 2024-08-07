@@ -4,12 +4,14 @@
  */
 
 import DropDownWithDrillDown from '../components/TableHeader/Filter/components/DropDownWithDrillDown';
+import {FilterProps} from '../components/TableHeader/Filter/components/FilterSelector/FilterSelector';
 
-interface FilterItem {
-	component: JSX.Element;
+export interface FilterItem {
+	component: FilterProps;
 	disabled?: boolean;
 	name: string;
 }
+
 export default function getDropDownFilterMenus(filters: FilterItem[]) {
 	return filters.reduce<
 		React.ComponentProps<typeof DropDownWithDrillDown>['menus']

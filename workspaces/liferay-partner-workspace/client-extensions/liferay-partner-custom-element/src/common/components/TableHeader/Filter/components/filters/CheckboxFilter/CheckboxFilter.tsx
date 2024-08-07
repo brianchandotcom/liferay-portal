@@ -3,26 +3,27 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayButton from '@clayui/button';
+import Button from '@clayui/button';
 import {ClayCheckbox} from '@clayui/form';
 import {useEffect, useState} from 'react';
 
-interface Props {
+interface CheckboxFilterProps {
 	availableItems?: string[];
-	clearCheckboxes: boolean;
-	initialCheckedItems?: string[];
-	updateFilters: (checkedItems: string[]) => void;
+	clearCheckboxes?: boolean;
+	closeFilterMenu: () => void;
+	initialValues?: string[];
+	updateFilter: (filter: any) => void;
 }
 const CheckboxFilter = ({
 	availableItems,
 	clearCheckboxes,
-	initialCheckedItems,
-	updateFilters,
-}: Props) => {
+	closeFilterMenu,
+	initialValues,
+	updateFilter,
+}: CheckboxFilterProps) => {
 	const [checkedItems, setCheckedItems] = useState<string[]>(
-		initialCheckedItems ? initialCheckedItems : []
+		initialValues ? initialValues : []
 	);
-
 	const [showAll, setShowAll] = useState<boolean>(false);
 
 	const itemsToShow = showAll ? availableItems : availableItems?.slice(0, 5);
@@ -66,13 +67,17 @@ const CheckboxFilter = ({
 			</div>
 
 			<div className="mb-3 mt-3 mx-3">
-				<ClayButton
+				<Button
 					className="w-100"
-					onClick={() => updateFilters(checkedItems)}
-					small={true}
+					onClick={() => {
+						updateFilter(checkedItems);
+
+						closeFilterMenu();
+					}}
+					size="sm"
 				>
 					Apply
-				</ClayButton>
+				</Button>
 			</div>
 		</div>
 	);

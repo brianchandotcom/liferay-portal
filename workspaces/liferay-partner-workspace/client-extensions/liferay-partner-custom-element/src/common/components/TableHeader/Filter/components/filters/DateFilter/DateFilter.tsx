@@ -3,33 +3,49 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayButton from '@clayui/button';
+import Button from '@clayui/button';
 import {ClayInput} from '@clayui/form';
 import {useEffect, useState} from 'react';
 
+export interface Dates {
+	endDate: string;
+	startDate: string;
+}
+
+interface Years {
+	endYear: string;
+	startYear: string;
+}
+
 interface IProps {
 	children?: JSX.Element | JSX.Element[];
-	clearInputs?: {dates: {endDate: string; startDate: string}};
-	dateFilters: (dates: {endDate: string; startDate: string}) => void;
+	clearInputs?: {dates: Dates};
+	closeFilterMenu: () => void;
 	filterDescription?: string;
-	initialDates?: {endDate: string; startDate: string};
-	years?: {end: string; start: string};
+	initialValues?: Dates;
+	updateFilter: (dates: Dates) => void;
+	years?: Years;
 }
 
 const DateFilter = ({
 	children,
 	clearInputs,
-	dateFilters,
+	closeFilterMenu,
 	filterDescription,
-	initialDates,
+	initialValues,
+	updateFilter,
 	years,
 }: IProps) => {
 	const [startActivityDate, setStartActivityDate] = useState(
-		initialDates?.startDate ? initialDates?.startDate : ''
+		initialValues?.startDate ? initialValues?.startDate : ''
 	);
 	const [endActivityDate, setEndActivityDate] = useState(
-		initialDates?.endDate ? initialDates?.endDate : ''
+		initialValues?.endDate ? initialValues?.endDate : ''
 	);
+
+	const filterDescriptionFormated = filterDescription
+		? filterDescription + ' '
+		: '';
 
 	useEffect(() => {
 		if (
@@ -43,13 +59,13 @@ const DateFilter = ({
 
 	return (
 		<div className="p-3 w-100">
-			<div className="font-weight-semi-bold pb-3 text-paragraph">
-				{filterDescription}
+			<div className="font-weight-semi-bold mb-3 text-paragraph">
+				{filterDescriptionFormated}
 				On Or After
 				<ClayInput
 					id="basicInputText"
-					max={years?.end}
-					min={years?.start}
+					max={years?.endYear}
+					min={years?.startYear}
 					onChange={(event) => {
 						setStartActivityDate(event.target.value);
 					}}
@@ -58,13 +74,13 @@ const DateFilter = ({
 				/>
 			</div>
 
-			<div className="font-weight-semi-bold pb-3 text-paragraph">
-				{filterDescription}
+			<div className="font-weight-semi-bold mb-3 text-paragraph">
+				{filterDescriptionFormated}
 				On Or Before
 				<ClayInput
 					id="basicInputText"
-					max={years?.end}
-					min={years?.start}
+					max={years?.endYear}
+					min={years?.startYear}
 					onChange={(event) => {
 						setEndActivityDate(event.target.value);
 					}}
@@ -75,20 +91,20 @@ const DateFilter = ({
 
 			{children}
 
-			<div>
-				<ClayButton
-					className="w-100"
-					onClick={() => {
-						dateFilters({
-							endDate: endActivityDate,
-							startDate: startActivityDate,
-						});
-					}}
-					small={true}
-				>
-					Apply
-				</ClayButton>
-			</div>
+			<Button
+				className="w-100"
+				onClick={() => {
+					updateFilter({
+						endDate: endActivityDate,
+						startDate: startActivityDate,
+					});
+
+					closeFilterMenu();
+				}}
+				size="sm"
+			>
+				Apply
+			</Button>
 		</div>
 	);
 };

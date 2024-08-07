@@ -13,7 +13,6 @@ import stylelint from 'stylelint';
 
 import {getRootDir} from '../util/constants.mjs';
 import fileExists from '../util/fileExists.mjs';
-import {getGitModifiedFiles} from '../util/gitCommands.mjs';
 import {readIgnoreFile} from '../util/readIgnoreFile.mjs';
 import {ID_END, ID_START} from './jsp/getPaddedReplacement.mjs';
 import processJSP from './jsp/processJSP.mjs';
@@ -82,13 +81,7 @@ async function getFilesToCheck(rootDir, ignore = []) {
 
 const FALLBACK_FILE_PATH = '__fallback__.js';
 
-export default async function format(
-	fix,
-	{all, filePath} = {
-		all: undefined,
-		filePath: undefined,
-	}
-) {
+export default async function format(fix, filesToFormat) {
 	const rootDir = await getRootDir();
 	const workspacesDir = path.join(rootDir, '..', 'workspaces');
 	const playwrightDir = path.join(rootDir, 'test', 'playwright');
@@ -102,7 +95,7 @@ export default async function format(
 
 	let filepaths = [];
 
-	if (all) {
+	if (!filesToFormat) {
 		filepaths = (
 			await Promise.all([
 				getFilesToCheck(rootDir, rootIgnored),
@@ -111,17 +104,10 @@ export default async function format(
 			])
 		).flat();
 	}
-	else if (filePath) {
-		filepaths = [filePath];
-	}
 	else {
-		const modifiedFiles = await getGitModifiedFiles();
-
-		const filteredModifiedFiles = [];
-
-		for (const file of modifiedFiles) {
+		for (const file of filesToFormat) {
 			if (file.startsWith('modules/test/playwright/')) {
-				filteredModifiedFiles.push(
+				filepaths.push(
 					...micromatch(
 						[file],
 						EXTENSIONS.map((ext) => `**/*.${ext}`),
@@ -131,7 +117,7 @@ export default async function format(
 			}
 
 			if (file.startsWith('modules/')) {
-				filteredModifiedFiles.push(
+				filepaths.push(
 					...micromatch(
 						[file],
 						EXTENSIONS.map((ext) => `**/*.${ext}`),
@@ -141,7 +127,7 @@ export default async function format(
 			}
 
 			if (file.startsWith('workspaces/')) {
-				filteredModifiedFiles.push(
+				filepaths.push(
 					...micromatch(
 						[file],
 						EXTENSIONS.map((ext) => `**/*.${ext}`),
@@ -151,7 +137,7 @@ export default async function format(
 			}
 		}
 
-		filepaths = filteredModifiedFiles.map(
+		filepaths = filepaths.map(
 
 			// make sure the path is absolute
 

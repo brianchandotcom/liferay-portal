@@ -48,7 +48,87 @@ public class PortalInstancesConfigurationFactoryTest {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(), SynchronousMailTestRule.INSTANCE);
 
-	public void checkAdminUserCreation(Dictionary<String, Object> properties)
+	@Before
+	public void setUp() throws Exception {
+		_webId = RandomTestUtil.randomString();
+
+		_domain = _webId.concat(".foo.bar");
+
+		_configuration = _configurationAdmin.getFactoryConfiguration(
+			"com.liferay.portal.instances.internal.configuration." +
+				"PortalInstancesConfiguration",
+			_webId, StringPool.QUESTION);
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		ConfigurationTestUtil.deleteConfiguration(_configuration);
+	}
+
+	@Test
+	public void testAdminUserCreationWithAllProperties() throws Exception {
+		_testCreateCompany(
+			HashMapDictionaryBuilder.<String, Object>put(
+				"adminEmailAddress", "testAdminEmailAddress@" + _domain
+			).put(
+				"adminFirstName", "testAdminFirstName"
+			).put(
+				"adminLastName", "testAdminLastName"
+			).put(
+				"adminMiddleName", "testAdminMiddleName"
+			).put(
+				"adminPassword", RandomTestUtil.randomString()
+			).put(
+				"adminScreenName", "testAdminScreenName"
+			).put(
+				"mx", _domain
+			).put(
+				"virtualHostname", _domain
+			).build());
+	}
+
+	@Test
+	public void testAdminUserCreationWithDefaultProperties() throws Exception {
+		_testCreateCompany(
+			HashMapDictionaryBuilder.<String, Object>put(
+				"mx", _domain
+			).put(
+				"virtualHostname", _domain
+			).build());
+	}
+
+	@Test
+	public void testAdminUserCreationWithPartialProperties() throws Exception {
+		_testCreateCompany(
+			HashMapDictionaryBuilder.<String, Object>put(
+				"adminFirstName", "testAdminFirstName"
+			).put(
+				"adminLastName", "testAdminLastName"
+			).put(
+				"adminPassword", RandomTestUtil.randomString()
+			).put(
+				"mx", _domain
+			).put(
+				"virtualHostname", _domain
+			).build());
+	}
+
+	@Test
+	public void testVirtualInstanceCreation() throws Exception {
+		ConfigurationTestUtil.saveConfiguration(
+			_configuration,
+			HashMapDictionaryBuilder.<String, Object>put(
+				"mx", _domain
+			).put(
+				"virtualHostname", _domain
+			).build());
+
+		_company = _companyLocalService.getCompanyByWebId(_webId);
+
+		Assert.assertNotNull(_company);
+	}
+
+	private void _testCreateCompany(Dictionary<String, Object> properties)
 		throws Exception {
 
 		ConfigurationTestUtil.saveConfiguration(_configuration, properties);
@@ -109,86 +189,6 @@ public class PortalInstancesConfigurationFactoryTest {
 		Assert.assertEquals(adminMiddleName, _adminUser.getMiddleName());
 
 		Assert.assertEquals(adminLastName, _adminUser.getLastName());
-	}
-
-	@Before
-	public void setUp() throws Exception {
-		_webId = RandomTestUtil.randomString();
-
-		_domain = _webId.concat(".foo.bar");
-
-		_configuration = _configurationAdmin.getFactoryConfiguration(
-			"com.liferay.portal.instances.internal.configuration." +
-				"PortalInstancesConfiguration",
-			_webId, StringPool.QUESTION);
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		ConfigurationTestUtil.deleteConfiguration(_configuration);
-	}
-
-	@Test
-	public void testAdminUserCreationWithAllProperties() throws Exception {
-		checkAdminUserCreation(
-			HashMapDictionaryBuilder.<String, Object>put(
-				"adminEmailAddress", "testAdminEmailAddress@" + _domain
-			).put(
-				"adminFirstName", "testAdminFirstName"
-			).put(
-				"adminLastName", "testAdminLastName"
-			).put(
-				"adminMiddleName", "testAdminMiddleName"
-			).put(
-				"adminPassword", RandomTestUtil.randomString()
-			).put(
-				"adminScreenName", "testAdminScreenName"
-			).put(
-				"mx", _domain
-			).put(
-				"virtualHostname", _domain
-			).build());
-	}
-
-	@Test
-	public void testAdminUserCreationWithDefaultProperties() throws Exception {
-		checkAdminUserCreation(
-			HashMapDictionaryBuilder.<String, Object>put(
-				"mx", _domain
-			).put(
-				"virtualHostname", _domain
-			).build());
-	}
-
-	@Test
-	public void testAdminUserCreationWithPartialProperties() throws Exception {
-		checkAdminUserCreation(
-			HashMapDictionaryBuilder.<String, Object>put(
-				"adminFirstName", "testAdminFirstName"
-			).put(
-				"adminLastName", "testAdminLastName"
-			).put(
-				"adminPassword", RandomTestUtil.randomString()
-			).put(
-				"mx", _domain
-			).put(
-				"virtualHostname", _domain
-			).build());
-	}
-
-	@Test
-	public void testVirtualInstanceCreation() throws Exception {
-		ConfigurationTestUtil.saveConfiguration(
-			_configuration,
-			HashMapDictionaryBuilder.<String, Object>put(
-				"mx", _domain
-			).put(
-				"virtualHostname", _domain
-			).build());
-
-		_company = _companyLocalService.getCompanyByWebId(_webId);
-
-		Assert.assertNotNull(_company);
 	}
 
 	@DeleteAfterTestRun

@@ -108,16 +108,12 @@ public class JournalSubscriptionLocalizedContentTest
 
 		addSubscriptionContainerModel(getDefaultContainerModelId());
 
-		_themeDisplay = _getThemeDisplay(creatorUser);
-
 		long journalArticlePrimaryKey = addBaseModel(
 			creatorUser.getUserId(), getDefaultContainerModelId());
 
 		Assert.assertEquals(1, MailServiceTestUtil.getInboxSize());
 
 		MailMessage mailMessage = MailServiceTestUtil.getLastMailMessage();
-
-		_themeDisplay.setUser(user);
 
 		Assert.assertEquals(
 			_getExpectedMailBody(
@@ -138,8 +134,6 @@ public class JournalSubscriptionLocalizedContentTest
 			).build(),
 			getSubscriptionUpdatedBodyPreferenceName());
 
-		_themeDisplay = _getThemeDisplay(creatorUser);
-
 		long journalArticlePrimaryKey = addBaseModel(
 			creatorUser.getUserId(), getDefaultContainerModelId());
 
@@ -150,8 +144,6 @@ public class JournalSubscriptionLocalizedContentTest
 		Assert.assertEquals(1, MailServiceTestUtil.getInboxSize());
 
 		MailMessage mailMessage = MailServiceTestUtil.getLastMailMessage();
-
-		_themeDisplay.setUser(user);
 
 		Assert.assertEquals(
 			_getExpectedMailBody(
@@ -167,9 +159,9 @@ public class JournalSubscriptionLocalizedContentTest
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), userId);
 
-		if (_themeDisplay != null) {
-			serviceContext.setRequest(_themeDisplay.getRequest());
-		}
+		ThemeDisplay themeDisplay = _getThemeDisplay(creatorUser);
+
+		serviceContext.setRequest(themeDisplay.getRequest());
 
 		JournalArticle article = JournalTestUtil.addArticle(
 			group.getGroupId(), containerModelId,
@@ -255,9 +247,9 @@ public class JournalSubscriptionLocalizedContentTest
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), userId);
 
-		if (_themeDisplay != null) {
-			serviceContext.setRequest(_themeDisplay.getRequest());
-		}
+		ThemeDisplay themeDisplay = _getThemeDisplay(creatorUser);
+
+		serviceContext.setRequest(themeDisplay.getRequest());
 
 		JournalTestUtil.updateArticle(
 			userId, _journalArticleLocalService.getArticle(baseModelId),
@@ -282,6 +274,7 @@ public class JournalSubscriptionLocalizedContentTest
 			journalArticlePrimaryKey);
 
 		String journalArticleDiffs = "";
+		ThemeDisplay themeDisplay = _getThemeDisplay(user);
 
 		if (_EMAIL_ARTICLE_UPDATED_BODY.equals(emailArticleBody)) {
 			double previousJournalArticleVersion = journalArticle.getVersion();
@@ -293,13 +286,13 @@ public class JournalSubscriptionLocalizedContentTest
 				_journalHelper.diffHtml(
 					journalArticle.getGroupId(), journalArticle.getArticleId(),
 					previousJournalArticleVersion, journalArticle.getVersion(),
-					user.getLanguageId(), null, _themeDisplay));
+					user.getLanguageId(), null, themeDisplay));
 		}
 
 		JournalArticleDisplay journalArticleDisplay =
 			_journalArticleLocalService.getArticleDisplay(
 				group.getGroupId(), journalArticle.getArticleId(),
-				Constants.VIEW, user.getLanguageId(), _themeDisplay);
+				Constants.VIEW, user.getLanguageId(), themeDisplay);
 
 		return StringUtil.replace(
 			emailArticleBody,
@@ -403,8 +396,6 @@ public class JournalSubscriptionLocalizedContentTest
 
 	@Inject
 	private Portal _portal;
-
-	private ThemeDisplay _themeDisplay;
 
 	@Inject
 	private UserLocalService _userLocalService;

@@ -102,6 +102,7 @@ public class DiscardDraftLayoutMVCActionCommandTest {
 		themeDisplay.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(user));
 		themeDisplay.setScopeGroupId(_group.getGroupId());
+		themeDisplay.setSiteGroupId(_group.getGroupId());
 		themeDisplay.setUser(user);
 
 		mockLiferayPortletActionRequest.setAttribute(

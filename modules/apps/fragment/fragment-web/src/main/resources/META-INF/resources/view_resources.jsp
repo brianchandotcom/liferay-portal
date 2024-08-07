@@ -14,4 +14,5 @@ FragmentCollectionResourcesDisplayContext fragmentCollectionResourcesDisplayCont
 <liferay-document-library:repository-browser
 	folderId="<%= fragmentCollectionResourcesDisplayContext.getFolderId() %>"
 	repositoryId="<%= fragmentCollectionResourcesDisplayContext.getRepositoryId() %>"
+	viewableByGuest="<%= true %>"
 />

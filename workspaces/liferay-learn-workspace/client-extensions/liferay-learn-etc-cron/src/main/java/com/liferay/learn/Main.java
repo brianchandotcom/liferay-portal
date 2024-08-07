@@ -553,9 +553,9 @@ public class Main {
 		_errorMessages.add(errorMessage);
 	}
 
-	private String _findTitle(Node root) {
-		if (root instanceof Heading) {
-			Heading heading = (Heading)root;
+	private String _getTitle(Node node) {
+		if (node instanceof Heading) {
+			Heading heading = (Heading)node;
 
 			if ((heading.getLevel() == 1) && heading.hasChildren()) {
 				TextCollectingVisitor collectingVisitor =
@@ -565,17 +565,17 @@ public class Main {
 			}
 		}
 
-		if ((root instanceof Block) && root.hasChildren()) {
-			Node child = root.getFirstChild();
+		if ((node instanceof Block) && node.hasChildren()) {
+			Node childNode = node.getFirstChild();
 
-			while (child != null) {
-				String title = _findTitle(child);
+			while (childNode != null) {
+				String title = _getTitle(childNode);
 
 				if (title != null) {
 					return title;
 				}
 
-				child = child.getNext();
+				childNode = childNode.getNext();
 			}
 		}
 
@@ -1167,7 +1167,7 @@ public class Main {
 	private String _getTitle(String text) {
 		Node root = _parser.parse(text);
 
-		return _findTitle(root);
+		return _getTitle(root);
 	}
 
 	private String _getUuid(String text) {

@@ -53,6 +53,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -152,7 +153,7 @@ public class DuplicateItemMVCActionCommand
 
 		long segmentsExperienceId = ParamUtil.getLong(
 			actionRequest, "segmentsExperienceId");
-		String itemId = ParamUtil.getString(actionRequest, "itemId");
+		String[] itemIds = ParamUtil.getStringValues(actionRequest, "itemIds");
 
 		Map<Long, Long> duplicatedFragmentEntryLinkIdsMap = new HashMap<>();
 		List<String> duplicatedLayoutStructureItemIds = new ArrayList<>();
@@ -162,7 +163,8 @@ public class DuplicateItemMVCActionCommand
 			themeDisplay.getPlid(),
 			layoutStructure -> {
 				List<LayoutStructureItem> duplicatedLayoutStructureItems =
-					layoutStructure.duplicateLayoutStructureItem(itemId);
+					layoutStructure.duplicateLayoutStructureItem(
+						Arrays.asList(itemIds));
 
 				for (LayoutStructureItem duplicatedLayoutStructureItem :
 						duplicatedLayoutStructureItems) {
@@ -232,10 +234,10 @@ public class DuplicateItemMVCActionCommand
 				duplicatedFragmentEntryLinkIdsMap.keySet(),
 				segmentsExperienceId, themeDisplay)
 		).put(
-			"duplicatedItemId",
+			"duplicatedItemIds",
 			() -> {
 				if (!duplicatedLayoutStructureItemIds.isEmpty()) {
-					return duplicatedLayoutStructureItemIds.get(0);
+					return duplicatedLayoutStructureItemIds;
 				}
 
 				return null;

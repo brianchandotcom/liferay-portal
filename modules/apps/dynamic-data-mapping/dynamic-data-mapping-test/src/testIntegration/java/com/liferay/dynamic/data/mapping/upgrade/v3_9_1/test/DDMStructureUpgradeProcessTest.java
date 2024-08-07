@@ -55,7 +55,7 @@ public class DDMStructureUpgradeProcessTest
 			TestPropsValues.getGroupId(), DDMFormInstance.class.getName(),
 			DDMFormTestUtil.createDDMForm(RandomTestUtil.randomString()));
 
-		_setDefinition(_ddmStructure);
+		setDefinition(_ddmStructure);
 
 		return _ddmStructure;
 	}
@@ -73,16 +73,7 @@ public class DDMStructureUpgradeProcessTest
 		upgradeProcess.upgrade();
 	}
 
-	@Override
-	protected CTModel<?> updateCTModel(CTModel<?> ctModel) throws Exception {
-		_ddmStructure = (DDMStructure)ctModel;
-
-		_setDefinition(_ddmStructure);
-
-		return _ddmStructureLocalService.updateDDMStructure(_ddmStructure);
-	}
-
-	private void _setDefinition(DDMStructure ddmStructure) {
+	protected void setDefinition(DDMStructure ddmStructure) {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
 			RandomTestUtil.randomString());
 
@@ -99,6 +90,15 @@ public class DDMStructureUpgradeProcessTest
 
 		ddmStructure.setDefinition(
 			DDMFormSerializeUtil.serialize(ddmForm, _jsonDDMFormSerializer));
+	}
+
+	@Override
+	protected CTModel<?> updateCTModel(CTModel<?> ctModel) throws Exception {
+		_ddmStructure = (DDMStructure)ctModel;
+
+		setDefinition(_ddmStructure);
+
+		return _ddmStructureLocalService.updateDDMStructure(_ddmStructure);
 	}
 
 	private static final String _CLASS_NAME =

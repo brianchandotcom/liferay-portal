@@ -6,6 +6,7 @@
 package com.liferay.portal.instances.internal.configuration.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -15,6 +16,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -133,43 +135,15 @@ public class PortalInstancesConfigurationFactoryTest {
 
 		ConfigurationTestUtil.saveConfiguration(_configuration, properties);
 
-		String adminEmailAddress = (String)properties.get("adminEmailAddress");
-
-		if (adminEmailAddress == null) {
-			adminEmailAddress =
-				PropsUtil.get(PropsKeys.DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX) +
-					"@" + _domain;
-		}
-
-		String adminScreenName = (String)properties.get("adminScreenName");
-
-		if (adminScreenName == null) {
-			adminScreenName = PropsUtil.get(
-				PropsKeys.DEFAULT_ADMIN_SCREEN_NAME);
-		}
-
-		String adminFirstName = (String)properties.get("adminFirstName");
-
-		if (adminFirstName == null) {
-			adminFirstName = PropsUtil.get(PropsKeys.DEFAULT_ADMIN_FIRST_NAME);
-		}
-
-		String adminMiddleName = (String)properties.get("adminMiddleName");
-
-		if (adminMiddleName == null) {
-			adminMiddleName = PropsUtil.get(
-				PropsKeys.DEFAULT_ADMIN_MIDDLE_NAME);
-		}
-
-		String adminLastName = (String)properties.get("adminLastName");
-
-		if (adminLastName == null) {
-			adminLastName = PropsUtil.get(PropsKeys.DEFAULT_ADMIN_LAST_NAME);
-		}
-
 		_company = _companyLocalService.getCompanyByWebId(_webId);
 
 		Assert.assertNotNull(_company);
+
+		String adminEmailAddress = GetterUtil.getString(
+			properties.get("adminEmailAddress"),
+			StringBundler.concat(
+				PropsUtil.get(PropsKeys.DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX),
+				StringPool.AT, _domain));
 
 		_adminUser = _userLocalService.getUserByEmailAddress(
 			_company.getCompanyId(), adminEmailAddress);
@@ -181,14 +155,29 @@ public class PortalInstancesConfigurationFactoryTest {
 			_adminUser.getEmailAddress());
 
 		Assert.assertEquals(
-			StringUtil.toLowerCase(adminScreenName),
+			StringUtil.toLowerCase(
+				GetterUtil.getString(
+					properties.get("adminScreenName"),
+					PropsUtil.get(PropsKeys.DEFAULT_ADMIN_SCREEN_NAME))),
 			_adminUser.getScreenName());
 
-		Assert.assertEquals(adminFirstName, _adminUser.getFirstName());
+		Assert.assertEquals(
+			GetterUtil.getString(
+				properties.get("adminFirstName"),
+				PropsUtil.get(PropsKeys.DEFAULT_ADMIN_FIRST_NAME)),
+			_adminUser.getFirstName());
 
-		Assert.assertEquals(adminMiddleName, _adminUser.getMiddleName());
+		Assert.assertEquals(
+			GetterUtil.getString(
+				properties.get("adminMiddleName"),
+				PropsUtil.get(PropsKeys.DEFAULT_ADMIN_MIDDLE_NAME)),
+			_adminUser.getMiddleName());
 
-		Assert.assertEquals(adminLastName, _adminUser.getLastName());
+		Assert.assertEquals(
+			GetterUtil.getString(
+				properties.get("adminLastName"),
+				PropsUtil.get(PropsKeys.DEFAULT_ADMIN_LAST_NAME)),
+			_adminUser.getLastName());
 	}
 
 	@DeleteAfterTestRun

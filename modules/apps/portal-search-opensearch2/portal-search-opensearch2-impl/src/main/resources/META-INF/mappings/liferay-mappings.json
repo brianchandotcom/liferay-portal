@@ -1896,6 +1896,10 @@
 			"store": true,
 			"type": "keyword"
 		},
+		"statusByUserExternalReferenceCode": {
+			"store": true,
+			"type": "keyword"
+		},
 		"statusByUserId": {
 			"store": true,
 			"type": "keyword"

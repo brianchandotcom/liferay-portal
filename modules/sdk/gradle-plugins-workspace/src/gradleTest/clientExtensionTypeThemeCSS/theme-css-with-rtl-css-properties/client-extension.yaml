@@ -1,0 +1,7 @@
+theme-css-with-rtl-css-properties:
+    clayRTLURL: css/clay_rtl.css
+    clayURL: css/clay.css
+    mainRTLURL: css/main_rtl.css
+    mainURL: css/main.css
+    name: theme-css-with-rtl-css-properties
+    type: themeCSS

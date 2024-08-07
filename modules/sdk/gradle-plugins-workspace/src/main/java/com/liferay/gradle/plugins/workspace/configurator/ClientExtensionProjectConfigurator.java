@@ -697,7 +697,9 @@ public class ClientExtensionProjectConfigurator
 					new Action<Task>() {
 
 						@Override
-						public void execute(Task copy1) {
+						public void execute(Task task) {
+							Copy copy1 = (Copy)task;
+
 							if (!copy1.getDidWork()) {
 								return;
 							}

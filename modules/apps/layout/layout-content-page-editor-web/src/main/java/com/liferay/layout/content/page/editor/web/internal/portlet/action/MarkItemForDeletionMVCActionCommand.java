@@ -44,7 +44,7 @@ public class MarkItemForDeletionMVCActionCommand
 
 		long segmentsExperienceId = ParamUtil.getLong(
 			actionRequest, "segmentsExperienceId");
-		String itemId = ParamUtil.getString(actionRequest, "itemId");
+		String[] itemIds = ParamUtil.getStringValues(actionRequest, "itemIds");
 		String[] portletIds = ParamUtil.getStringValues(
 			actionRequest, "portletIds");
 
@@ -55,7 +55,7 @@ public class MarkItemForDeletionMVCActionCommand
 				themeDisplay.getPlid(),
 				layoutStructure ->
 					layoutStructure.markLayoutStructureItemForDeletion(
-						itemId, Arrays.asList(portletIds))));
+						Arrays.asList(itemIds), Arrays.asList(portletIds))));
 	}
 
 }

@@ -196,7 +196,7 @@ public class FormItemManager {
 			}
 
 			layoutStructure.markLayoutStructureItemForDeletion(
-				itemId, Collections.emptyList());
+				Collections.singletonList(itemId), Collections.emptyList());
 
 			LayoutStructureItem removedLayoutStructureItem =
 				layoutStructure.getLayoutStructureItem(itemId);

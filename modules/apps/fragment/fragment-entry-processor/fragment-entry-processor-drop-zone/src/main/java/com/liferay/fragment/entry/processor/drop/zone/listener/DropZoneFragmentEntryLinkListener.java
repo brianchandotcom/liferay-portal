@@ -190,7 +190,8 @@ public class DropZoneFragmentEntryLinkListener
 				childrenItemIdsToRemove.forEach(
 					itemId ->
 						layoutStructure.markLayoutStructureItemForDeletion(
-							itemId, Collections.emptyList()));
+							Collections.singletonList(itemId),
+							Collections.emptyList()));
 			}
 			else {
 				for (int i = childrenItemIds.size(); i < elements.size(); i++) {
@@ -379,7 +380,8 @@ public class DropZoneFragmentEntryLinkListener
 					noExistingIdFragmentDropZoneLayoutStructureItems) {
 
 			layoutStructure.markLayoutStructureItemForDeletion(
-				fragmentDropZoneLayoutStructureItem.getItemId(),
+				Collections.singletonList(
+					fragmentDropZoneLayoutStructureItem.getItemId()),
 				Collections.emptyList());
 
 			update = true;
@@ -390,7 +392,8 @@ public class DropZoneFragmentEntryLinkListener
 					noIdFragmentDropZoneLayoutStructureItems) {
 
 			layoutStructure.markLayoutStructureItemForDeletion(
-				fragmentDropZoneLayoutStructureItem.getItemId(),
+				Collections.singletonList(
+					fragmentDropZoneLayoutStructureItem.getItemId()),
 				Collections.emptyList());
 
 			update = true;

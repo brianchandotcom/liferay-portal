@@ -351,6 +351,41 @@ test('can use notification terms and freeMarker variables in notification templa
 		.getByRole('option', {name: objectDefinition.externalReferenceCode})
 		.click();
 
+	const objectDefinitionTerm =
+		objectDefinition.externalReferenceCode.toUpperCase();
+
+	const objectFieldName = objectDefinition.objectFields.find(
+		(objectField) => !objectField.system
+	).name;
+
+	const terms = [
+		'[%CURRENT_USER_FIRST_NAME%]',
+		'[%CURRENT_USER_PREFIX%]',
+		'[%CURRENT_DATE%]',
+		'[%CURRENT_USER_LAST_NAME%]',
+		'[%CURRENT_USER_MIDDLE_NAME%]',
+		'[%CURRENT_USER_EMAIL_ADDRESS%]',
+		'[%CURRENT_USER_ID%]',
+		'[%CURRENT_USER_SUFFIX%]',
+		`[%${objectDefinitionTerm}_CREATEDATE%]`,
+		`[%${objectDefinitionTerm}_AUTHOR_EMAIL_ADDRESS%]`,
+		`[%${objectDefinitionTerm}_AUTHOR_SUFFIX%]`,
+		`[%${objectDefinitionTerm}_AUTHOR_PREFIX%]`,
+		`[%${objectDefinitionTerm}_AUTHOR_FIRST_NAME%]`,
+		`[%${objectDefinitionTerm}_AUTHOR_LAST_NAME%]`,
+		`[%${objectDefinitionTerm}_AUTHOR_MIDDLE_NAME%]`,
+		`[%${objectDefinitionTerm}_AUTHOR_ID%]`,
+		`[%${objectDefinitionTerm}_EXTERNALREFERENCECODE%]`,
+		`[%${objectDefinitionTerm}_ID%]`,
+		`[%${objectDefinitionTerm}_MODIFIEDDATE%]`,
+		`[%${objectDefinitionTerm}_STATUS%]`,
+		`[%${objectDefinitionTerm}_${objectFieldName.toUpperCase()}%]`,
+	];
+
+	for (const term of terms) {
+		await expect(page.locator('div.dnd-td').getByText(term)).toBeVisible();
+	}
+
 	const copyButtons = [
 		emailNotificationTemplatePage.copyButton.first(),
 		emailNotificationTemplatePage.copyButton.last(),
@@ -376,17 +411,10 @@ test('can use notification terms and freeMarker variables in notification templa
 		emailNotificationTemplatePage.primaryRecipientUserEmailAddress
 	).toHaveValue('[%CURRENT_USER_EMAIL_ADDRESS%]');
 
-	const objectDefinitionTerm =
-		objectDefinition.externalReferenceCode.toUpperCase();
-
-	const objectFieldTerm = objectDefinition.objectFields
-		.find((objectField) => !objectField.system)
-		.name.toUpperCase();
-
 	await expect(
 		emailNotificationTemplatePage.richTextField.getByText(
 			'[%CURRENT_USER_FIRST_NAME%]' +
-				`[%${objectDefinitionTerm}_${objectFieldTerm}%]`
+				`[%${objectDefinitionTerm}_${objectFieldName.toUpperCase()}%]`
 		)
 	).toBeVisible();
 
@@ -402,9 +430,34 @@ test('can use notification terms and freeMarker variables in notification templa
 		.getByRole('option', {name: objectDefinition.label['en_US']})
 		.click();
 
+	const freeMarkerVariables = [
+		'Author',
+		'Create Date',
+		'Current URL',
+		'Default',
+		'External Reference Code',
+		'HTTP Request',
+		'ID',
+		'Locale',
+		'Modified Date',
+		'Portal URL',
+		'Publish Date',
+		'Template ID',
+		'Theme Display',
+		'Status',
+		'User Profile Image',
+		objectFieldName,
+	];
+
+	for (const freeMarkerVariable of freeMarkerVariables) {
+		await expect(
+			page.getByRole('button', {exact: true, name: freeMarkerVariable})
+		).toBeVisible();
+	}
+
 	await page.getByRole('button', {name: 'Current URL'}).click();
 
-	await page.getByRole('button', {name: objectFieldTerm}).click();
+	await page.getByRole('button', {name: objectFieldName}).click();
 
 	await emailNotificationTemplatePage.saveButton.click();
 
@@ -416,7 +469,7 @@ test('can use notification terms and freeMarker variables in notification templa
 		page
 			.locator('.CodeMirror-lines')
 			.getByText(
-				'currentURL$' + `{ObjectField_${objectFieldTerm}.getData()}`
+				'currentURL$' + `{ObjectField_${objectFieldName}.getData()}`
 			)
 	).toBeVisible();
 });

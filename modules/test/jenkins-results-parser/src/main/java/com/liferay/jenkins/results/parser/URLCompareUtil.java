@@ -44,13 +44,13 @@ public class URLCompareUtil {
 	}
 
 	private static Map<String, String> _getQueryMap(URL url) {
-		Map<String, String> queryMap = new HashMap<>();
-
 		String query = url.getQuery();
 
 		if (query == null) {
-			return queryMap;
+			return Collections.emptyMap();
 		}
+
+		Map<String, String> queryMap = new HashMap<>();
 
 		Matcher matcher = _queryPattern.matcher(query);
 

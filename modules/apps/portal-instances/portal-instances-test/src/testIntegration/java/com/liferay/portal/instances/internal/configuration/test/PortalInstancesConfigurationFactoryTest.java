@@ -68,7 +68,7 @@ public class PortalInstancesConfigurationFactoryTest {
 	}
 
 	@Test
-	public void testAdminUserCreationWithAllProperties() throws Exception {
+	public void testCreateCompanyWithAllAdminProperties() throws Exception {
 		_testCreateCompany(
 			HashMapDictionaryBuilder.<String, Object>put(
 				"adminEmailAddress", "testAdminEmailAddress@" + _domain
@@ -90,7 +90,7 @@ public class PortalInstancesConfigurationFactoryTest {
 	}
 
 	@Test
-	public void testAdminUserCreationWithDefaultProperties() throws Exception {
+	public void testCreateCompanyWithDefaultProperties() throws Exception {
 		_testCreateCompany(
 			HashMapDictionaryBuilder.<String, Object>put(
 				"mx", _domain
@@ -100,7 +100,7 @@ public class PortalInstancesConfigurationFactoryTest {
 	}
 
 	@Test
-	public void testAdminUserCreationWithPartialProperties() throws Exception {
+	public void testCreateCompanyWithPartialAdminProperties() throws Exception {
 		_testCreateCompany(
 			HashMapDictionaryBuilder.<String, Object>put(
 				"adminFirstName", "testAdminFirstName"

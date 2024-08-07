@@ -13,6 +13,9 @@ public class LayoutPageTemplateExportImportConstants {
 	public static final String FILE_NAME_DISPLAY_PAGE_TEMPLATE =
 		"display-page-template.json";
 
+	public static final String FILE_NAME_DISPLAY_PAGE_TEMPLATE_COLLECTION =
+		"display-page-template-collection.json";
+
 	public static final String FILE_NAME_MASTER_PAGE = "master-page.json";
 
 	public static final String FILE_NAME_PAGE_DEFINITION =

@@ -361,7 +361,7 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 		zipWriter.addEntry(
 			path + StringPool.SLASH +
 				LayoutPageTemplateExportImportConstants.
-					FILE_NAME_PAGE_TEMPLATE_COLLECTION,
+					FILE_NAME_DISPLAY_PAGE_TEMPLATE_COLLECTION,
 			JSONUtil.put(
 				"description", layoutPageTemplateCollection.getDescription()
 			).put(

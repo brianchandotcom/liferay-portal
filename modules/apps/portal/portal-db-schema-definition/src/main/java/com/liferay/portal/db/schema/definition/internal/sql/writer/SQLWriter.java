@@ -5,7 +5,7 @@
 
 package com.liferay.portal.db.schema.definition.internal.sql.writer;
 
-import com.liferay.portal.db.schema.definition.internal.sql.provider.DBPartitionPortalSQLProvider;
+import com.liferay.portal.db.schema.definition.internal.sql.provider.DBPartitionSQLProvider;
 import com.liferay.portal.db.schema.definition.internal.sql.provider.PortalSQLProvider;
 import com.liferay.portal.db.schema.definition.internal.sql.provider.SQLProvider;
 import com.liferay.portal.kernel.dao.db.DBType;
@@ -35,7 +35,7 @@ public class SQLWriter {
 	}
 
 	private void _writeDBPartitionFiles(File directory) throws Exception {
-		DBPartitionPortalSQLProvider.clearCache();
+		DBPartitionSQLProvider.clearCache();
 
 		CompanyLocalServiceUtil.forEachCompanyId(
 			companyId -> {
@@ -45,7 +45,7 @@ public class SQLWriter {
 					return;
 				}
 
-				SQLProvider sqlProvider = new DBPartitionPortalSQLProvider(
+				SQLProvider sqlProvider = new DBPartitionSQLProvider(
 					_dbType, companyId);
 
 				FileUtil.write(

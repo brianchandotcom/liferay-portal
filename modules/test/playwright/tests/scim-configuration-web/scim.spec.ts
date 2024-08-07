@@ -223,3 +223,48 @@ test('LPD-23255 AC3 TC6: Verify that clicking the “Reset SCIM Client provision
 
 	expect(emptyResponse).toContain(`"totalResults":0`);
 });
+
+test('LPD-23255 AC4 TC7: Verify that Name field is disabled when SCIM is configured', async ({
+	page,
+}) => {
+	const scimConfigurationPage = new SCIMConfigurationPage(page);
+
+	await scimConfigurationPage.goTo();
+
+	await page.waitForTimeout(1000);
+
+	const oAuth2ApplicationNameField = page.getByLabel(
+		'OAuth 2 Application Name'
+	);
+
+	expect(oAuth2ApplicationNameField).toBeEditable();
+
+	await scimConfigurationPage.configureSCIM('Test SCIM Client', 'email');
+	await page.waitForTimeout(1000);
+
+	expect(oAuth2ApplicationNameField).not.toBeEditable();
+
+	await scimConfigurationPage.resetClientData();
+});
+
+test('LPD-23255 AC5 TC8: Verify that the Name field is enabled when scim client data is reset', async ({
+	page,
+}) => {
+	const scimConfigurationPage = new SCIMConfigurationPage(page);
+
+	await scimConfigurationPage.goTo();
+
+	await page.waitForTimeout(1000);
+
+	const oAuth2ApplicationNameField = page.getByLabel(
+		'OAuth 2 Application Name'
+	);
+
+	await scimConfigurationPage.configureSCIM('Test SCIM Client', 'email');
+
+	expect(oAuth2ApplicationNameField).not.toBeEditable();
+
+	await scimConfigurationPage.resetClientData();
+
+	expect(oAuth2ApplicationNameField).toBeEditable();
+});

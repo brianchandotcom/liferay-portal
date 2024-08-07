@@ -44,3 +44,41 @@ export async function unzipFile(filePath: string): Promise<string> {
 		});
 	});
 }
+
+export async function readFileFromZip(
+	fileName: string,
+	zipFilePath: string
+): Promise<string> {
+	return new Promise((resolve, reject) => {
+		open(zipFilePath, {lazyEntries: true}, (error, zipfile) => {
+			if (error) {
+				return reject(error);
+			}
+
+			zipfile.readEntry();
+
+			zipfile.on('entry', (entry) => {
+				if (entry.fileName.match(fileName)) {
+					zipfile.openReadStream(entry, (error, readStream) => {
+						if (error) {
+							return reject(error);
+						}
+
+						let data = '';
+
+						readStream.on('data', (chunk) => {
+							data += chunk;
+						});
+
+						readStream.on('end', () => {
+							resolve(data);
+						});
+					});
+				}
+				else {
+					zipfile.readEntry();
+				}
+			});
+		});
+	});
+}

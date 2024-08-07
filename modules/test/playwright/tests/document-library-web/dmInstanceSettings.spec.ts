@@ -9,7 +9,7 @@ import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {documentLibraryPagesTest} from './fixtures/documentLibraryPagesTest';
 
-export const test = mergeTests(
+const test = mergeTests(
 	documentLibraryPagesTest,
 	isolatedSiteTest,
 	loginTest()

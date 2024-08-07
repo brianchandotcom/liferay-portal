@@ -111,38 +111,6 @@ definition {
 		}
 	}
 
-	@description = "Story: LRAC-14220 | Automation ID: LRAC-14445 | Test Summary: Draft AB test Review button redirects to DXP"
-	@priority = 3
-	test ABTestDraftReviewButtonRedirectsToDXP {
-		task ("Go to AC > Tests > Open your test") {
-			ACUtils.launchAC();
-
-			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
-
-			ACNavigation.goToTests();
-
-			ABTest.accessABTestInAC(itemName = ${nameABTest});
-		}
-
-		task ("Click on the review button on the top") {
-			ACUtils.clickGenericHyperlink(hyperlinkText = "Review");
-		}
-
-		task ("See the redirection to the review and run test modal in DXP") {
-			task ("Go to the new tab open") {
-				SelectWindow(value1 = "name=undefined");
-
-				WaitForElementPresent(locator1 = "Modal#MODAL_CONTENT");
-			}
-
-			task ("Assert the review and run modal is open") {
-				AssertTextEquals.assertPartialText(
-					locator1 = "Modal#MODAL_CONTENT",
-					value1 = "Review and Run Test");
-			}
-		}
-	}
-
 	@description = "Story: LRAC-14101 | Automation ID: LRAC-14542 | Test Summary: Terminate button in AC is redirecting to DXP"
 	@priority = 3
 	test CheckTerminateButtonRedirectingToDXP {

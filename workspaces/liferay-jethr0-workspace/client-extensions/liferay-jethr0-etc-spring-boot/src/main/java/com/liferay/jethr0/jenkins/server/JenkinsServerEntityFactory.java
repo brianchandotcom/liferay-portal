@@ -6,9 +6,11 @@
 package com.liferay.jethr0.jenkins.server;
 
 import com.liferay.jethr0.entity.factory.BaseEntityFactory;
+import com.liferay.jethr0.event.jenkins.client.JenkinsClient;
 
 import org.json.JSONObject;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -20,11 +22,14 @@ public class JenkinsServerEntityFactory
 
 	@Override
 	public JenkinsServerEntity newEntity(JSONObject jsonObject) {
-		return new DefaultJenkinsServerEntity(jsonObject);
+		return new DefaultJenkinsServerEntity(jsonObject, _jenkinsClient);
 	}
 
 	protected JenkinsServerEntityFactory() {
 		super(JenkinsServerEntity.class);
 	}
+
+	@Autowired
+	private JenkinsClient _jenkinsClient;
 
 }

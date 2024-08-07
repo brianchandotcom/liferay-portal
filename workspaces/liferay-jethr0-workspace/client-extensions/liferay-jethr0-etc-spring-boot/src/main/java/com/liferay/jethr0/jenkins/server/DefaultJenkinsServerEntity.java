@@ -5,6 +5,8 @@
 
 package com.liferay.jethr0.jenkins.server;
 
+import com.liferay.jethr0.event.jenkins.client.JenkinsClient;
+
 import org.json.JSONObject;
 
 /**
@@ -12,8 +14,10 @@ import org.json.JSONObject;
  */
 public class DefaultJenkinsServerEntity extends BaseJenkinsServerEntity {
 
-	protected DefaultJenkinsServerEntity(JSONObject jsonObject) {
-		super(jsonObject);
+	protected DefaultJenkinsServerEntity(
+		JSONObject jsonObject, JenkinsClient jenkinsClient) {
+
+		super(jsonObject, jenkinsClient);
 	}
 
 }

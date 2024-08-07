@@ -71,180 +71,175 @@ test.afterEach(async ({dataSetManagerApiHelpers, picklistApiHelpers}) => {
 	await picklistApiHelpers.deletePicklist(picklistName);
 });
 
-test.describe('Filters in Data Set Manager', () => {
-	test('Can create a selection filter from picklist source', async ({
-		filtersPage,
-		page,
-	}) => {
-		await test.step('Can not create a selection filter without filling mandatory fields', async () => {
-			await filtersPage.openNewFilterModal({
-				dropdownItemLabel: 'Selection',
-			});
-
-			await filtersPage.saveAddFilterModal();
-
-			await expect(page.getByText('This field is required.')).toHaveCount(
-				3
-			);
-
-			await filtersPage.cancelAddFilterModal();
+test('Create a selection filter of type "Object Picklist"', async ({
+	filtersPage,
+	page,
+}) => {
+	await test.step('Can not create a selection filter without filling mandatory fields', async () => {
+		await filtersPage.openNewFilterModal({
+			dropdownItemLabel: 'Selection',
 		});
 
-		await test.step('Create a selection filter from picklist source', async () => {
-			await filtersPage.createSelectionFilterPicklist({
-				filterBy: 'externalReferenceCode',
-				filterMode: 'Include',
+		await filtersPage.saveAddFilterModal();
+
+		await expect(page.getByText('This field is required.')).toHaveCount(3);
+
+		await filtersPage.cancelAddFilterModal();
+	});
+
+	await test.step('Create a selection filter from picklist source', async () => {
+		await filtersPage.createSelectionFilterPicklist({
+			filterBy: 'externalReferenceCode',
+			filterMode: 'Include',
+			name: SELECTION_PICKLIST_FILTER_NAME,
+			preselectedValues: [PICKLIST_VALUE_NAME],
+			selectionType: 'Single',
+			source: picklistName,
+			sourceType: 'Object Picklist',
+		});
+
+		await filtersPage.saveAddFilterModal();
+	});
+
+	await test.step('Check that the selection filter is in the list', async () => {
+		await expect(
+			page.getByRole('cell', {
+				exact: true,
 				name: SELECTION_PICKLIST_FILTER_NAME,
-				preselectedValues: [PICKLIST_VALUE_NAME],
-				selectionType: 'Single',
-				source: picklistName,
-				sourceType: 'Object Picklist',
-			});
+			})
+		).toBeVisible();
+	});
 
-			await filtersPage.saveAddFilterModal();
+	await test.step('Create a selection filter from picklist source without preselected values', async () => {
+		await filtersPage.createSelectionFilterPicklist({
+			filterBy: 'name',
+			name: SELECTION_PICKLIST_NO_PRESELECTED_VALUES_FILTER_NAME,
+			preselectedValues: [],
+			selectionType: 'Single',
+			source: picklistName,
+			sourceType: 'Object Picklist',
 		});
 
-		await test.step('Check that the selection filter is in the list', async () => {
-			await expect(
-				page.getByRole('cell', {
-					exact: true,
-					name: SELECTION_PICKLIST_FILTER_NAME,
-				})
-			).toBeVisible();
-		});
+		await filtersPage.saveAddFilterModal();
+	});
 
-		await test.step('Create a selection filter from picklist source without preselected values', async () => {
-			await filtersPage.createSelectionFilterPicklist({
-				filterBy: 'name',
+	await test.step('Check that the selection filter is also the list', async () => {
+		await expect(
+			page.getByRole('cell', {
+				exact: true,
 				name: SELECTION_PICKLIST_NO_PRESELECTED_VALUES_FILTER_NAME,
-				preselectedValues: [],
-				selectionType: 'Single',
-				source: picklistName,
-				sourceType: 'Object Picklist',
-			});
+			})
+		).toBeVisible();
+	});
+});
 
-			await filtersPage.saveAddFilterModal();
+test('Create a selection filter of type "API REST Application"', async ({
+	filtersPage,
+	page,
+}) => {
+	await test.step('Create a selection filter from API Headless source', async () => {
+		await filtersPage.createSelectionFilterApiHeadless({
+			filterBy: 'externalReferenceCode',
+			filterMode: 'Include',
+			itemKey: 'id',
+			itemLabel: 'label',
+			name: SELECTION_API_HEADLESS_FILTER_NAME,
+			preselectedValues: [dataSetLabel],
+			restApplication: '/data-set-manager/data-sets',
+			restEndpoint: '/',
+			restSchema: 'FDSView',
+			selectionType: 'Single',
+			sourceType: 'API REST Application',
 		});
 
-		await test.step('Check that the selection filter is also the list', async () => {
-			await expect(
-				page.getByRole('cell', {
-					exact: true,
-					name: SELECTION_PICKLIST_NO_PRESELECTED_VALUES_FILTER_NAME,
-				})
-			).toBeVisible();
-		});
+		await filtersPage.saveAddFilterModal();
 	});
 
-	test('Can create a selection filter with API Headless source', async ({
-		filtersPage,
-		page,
-	}) => {
-		await test.step('Create a selection filter from API Headless source', async () => {
-			await filtersPage.createSelectionFilterApiHeadless({
-				filterBy: 'externalReferenceCode',
-				filterMode: 'Include',
-				itemKey: 'id',
-				itemLabel: 'label',
+	await test.step('Check that the selection filter is in the list', async () => {
+		await expect(
+			page.getByRole('cell', {
+				exact: true,
 				name: SELECTION_API_HEADLESS_FILTER_NAME,
-				preselectedValues: [dataSetLabel],
-				restApplication: '/data-set-manager/data-sets',
-				restEndpoint: '/',
-				restSchema: 'FDSView',
-				selectionType: 'Single',
-				sourceType: 'API REST Application',
-			});
+			})
+		).toBeVisible();
+	});
+});
 
-			await filtersPage.saveAddFilterModal();
+test('Preselected filter values are checked in the multiSelect', async ({
+	filtersPage,
+	page,
+	picklistApiHelpers,
+}) => {
+	await test.step('Create a selection filter', async () => {
+		await filtersPage.createSelectionFilterPicklist({
+			filterBy: 'externalReferenceCode',
+			filterMode: 'Include',
+			name: 'Selection Filter',
+			preselectedValues: [PICKLIST_VALUE_NAME],
+			selectionType: 'Single',
+			source: picklistName,
+			sourceType: 'Object Picklist',
 		});
 
-		await test.step('Check that the selection filter is in the list', async () => {
-			await expect(
-				page.getByRole('cell', {
-					exact: true,
-					name: SELECTION_API_HEADLESS_FILTER_NAME,
-				})
-			).toBeVisible();
-		});
+		await filtersPage.saveAddFilterModal();
 	});
 
-	test('Preselected filter values are checked in the multiSelect', async ({
-		filtersPage,
-		page,
-		picklistApiHelpers,
-	}) => {
-		await test.step('Create a selection filter', async () => {
-			await filtersPage.createSelectionFilterPicklist({
-				filterBy: 'externalReferenceCode',
-				filterMode: 'Include',
-				name: 'Selection Filter',
-				preselectedValues: [PICKLIST_VALUE_NAME],
-				selectionType: 'Single',
-				source: picklistName,
-				sourceType: 'Object Picklist',
-			});
-
-			await filtersPage.saveAddFilterModal();
+	await test.step('Open the edit filter modal', async () => {
+		await filtersPage.goto({
+			dataSetLabel,
 		});
 
-		await test.step('Open the edit filter modal', async () => {
-			await filtersPage.goto({
-				dataSetLabel,
-			});
+		const filterActionsButton = page
+			.getByRole('cell', {name: 'Actions'})
+			.getByRole('button');
 
-			const filterActionsButton = page
-				.getByRole('cell', {name: 'Actions'})
-				.getByRole('button');
+		await expect(filterActionsButton).toBeVisible();
 
-			await expect(filterActionsButton).toBeVisible();
-
-			await clickAndExpectToBeVisible({
-				autoClick: true,
-				target: page.getByRole('menuitem', {name: 'Edit'}),
-				trigger: filterActionsButton,
-			});
-
-			const dialogFilterSourceSubtitle = page.getByRole('heading', {
-				name: 'Filter Source',
-			});
-
-			await expect(dialogFilterSourceSubtitle).toBeVisible();
-
-			const dialogFilterOptionsSubtitle = page.getByRole('heading', {
-				name: 'Filter Options',
-			});
-
-			await expect(dialogFilterOptionsSubtitle).toBeVisible();
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {name: 'Edit'}),
+			trigger: filterActionsButton,
 		});
 
-		await test.step('Check that the preselected value is checked', async () => {
-			const picklist = await picklistApiHelpers.getPicklist(picklistName);
-
-			const preselectedValuesMultiSelect = page.locator(
-				'.form-control.form-control-tag-group.input-group'
-			);
-
-			await expect(preselectedValuesMultiSelect).toBeVisible();
-
-			await expect(preselectedValuesMultiSelect).toContainText(
-				picklist.listTypeEntries[0].name
-			);
-
-			const preselectedValueOption = page.getByRole('option', {
-				name: 'Sample Value',
-			});
-
-			await clickAndExpectToBeVisible({
-				target: preselectedValueOption,
-				trigger: preselectedValuesMultiSelect,
-			});
-
-			const preselectedValueOptionCheckbox =
-				preselectedValueOption.locator(
-					'.custom-control-input.invisible'
-				);
-
-			await expect(preselectedValueOptionCheckbox).toBeChecked();
+		const dialogFilterSourceSubtitle = page.getByRole('heading', {
+			name: 'Filter Source',
 		});
+
+		await expect(dialogFilterSourceSubtitle).toBeVisible();
+
+		const dialogFilterOptionsSubtitle = page.getByRole('heading', {
+			name: 'Filter Options',
+		});
+
+		await expect(dialogFilterOptionsSubtitle).toBeVisible();
+	});
+
+	await test.step('Check that the preselected value is checked', async () => {
+		const picklist = await picklistApiHelpers.getPicklist(picklistName);
+
+		const preselectedValuesMultiSelect = page.locator(
+			'.form-control.form-control-tag-group.input-group'
+		);
+
+		await expect(preselectedValuesMultiSelect).toBeVisible();
+
+		await expect(preselectedValuesMultiSelect).toContainText(
+			picklist.listTypeEntries[0].name
+		);
+
+		const preselectedValueOption = page.getByRole('option', {
+			name: 'Sample Value',
+		});
+
+		await clickAndExpectToBeVisible({
+			target: preselectedValueOption,
+			trigger: preselectedValuesMultiSelect,
+		});
+
+		const preselectedValueOptionCheckbox = preselectedValueOption.locator(
+			'.custom-control-input.invisible'
+		);
+
+		await expect(preselectedValueOptionCheckbox).toBeChecked();
 	});
 });

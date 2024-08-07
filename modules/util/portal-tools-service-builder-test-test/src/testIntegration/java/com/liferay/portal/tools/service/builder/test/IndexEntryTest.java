@@ -6,7 +6,6 @@
 package com.liferay.portal.tools.service.builder.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.SearchEngineHelper;
@@ -41,7 +40,6 @@ import com.liferay.portal.tools.service.builder.test.service.IndexEntryLocalServ
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.Callable;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -103,7 +101,7 @@ public class IndexEntryTest {
 	}
 
 	@Test
-	public void testReindexWithBufferAndWithoutTransaction() throws Throwable {
+	public void testReindexWithBuffer() throws Throwable {
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
 					"com.liferay.portal.search.configuration." +
@@ -112,30 +110,12 @@ public class IndexEntryTest {
 						"buffered", true
 					).build())) {
 
-			_testReindex(Callable::call);
+			_testReindex();
 		}
 	}
 
 	@Test
-	public void testReindexWithBufferAndWithTransaction() throws Throwable {
-		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
-				new ConfigurationTemporarySwapper(
-					"com.liferay.portal.search.configuration." +
-						"IndexerRegistryConfiguration",
-					HashMapDictionaryBuilder.<String, Object>put(
-						"buffered", true
-					).build())) {
-
-			_testReindex(
-				callable -> TransactionInvokerUtil.invoke(
-					_transactionConfig, callable));
-		}
-	}
-
-	@Test
-	public void testReindexWithoutBufferAndWithoutTransaction()
-		throws Throwable {
-
+	public void testReindexWithoutBuffer() throws Throwable {
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
 					"com.liferay.portal.search.configuration." +
@@ -144,30 +124,11 @@ public class IndexEntryTest {
 						"buffered", false
 					).build())) {
 
-			_testReindex(Callable::call);
+			_testReindex();
 		}
 	}
 
-	@Test
-	public void testReindexWithoutBufferAndWithTransaction() throws Throwable {
-		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
-				new ConfigurationTemporarySwapper(
-					"com.liferay.portal.search.configuration." +
-						"IndexerRegistryConfiguration",
-					HashMapDictionaryBuilder.<String, Object>put(
-						"buffered", false
-					).build())) {
-
-			_testReindex(
-				callable -> TransactionInvokerUtil.invoke(
-					_transactionConfig, callable));
-		}
-	}
-
-	private void _testReindex(
-			UnsafeConsumer<Callable<Object>, Throwable> unsafeConsumer)
-		throws Throwable {
-
+	private void _testReindex() throws Throwable {
 		long companyId = RandomTestUtil.nextLong();
 
 		_searchEngineHelper.initialize(companyId);
@@ -193,7 +154,8 @@ public class IndexEntryTest {
 
 			Assert.assertTrue(booleans.isEmpty());
 
-			unsafeConsumer.accept(
+			TransactionInvokerUtil.invoke(
+				_transactionConfig,
 				() -> {
 					_indexEntry = _indexEntryLocalService.addIndexEntry(
 						companyId, RandomTestUtil.randomString());
@@ -227,7 +189,8 @@ public class IndexEntryTest {
 
 			long keywordsEntryId = RandomTestUtil.nextLong();
 
-			unsafeConsumer.accept(
+			TransactionInvokerUtil.invoke(
+				_transactionConfig,
 				() -> {
 					_indexEntryLocalService.addKeywordsEntry(
 						keywordsEntryId, _indexEntry);

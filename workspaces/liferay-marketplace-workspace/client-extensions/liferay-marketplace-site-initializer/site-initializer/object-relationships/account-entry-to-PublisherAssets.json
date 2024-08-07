@@ -1,0 +1,11 @@
+{
+	"deletionType": "cascade",
+	"label": {
+		"en_US": "Account to Publisher Assets"
+	},
+	"name": "accountEntryToPublisherAssets",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:AccountEntry$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:PublisherAssets$]",
+	"objectDefinitionName2": "PublisherAssets",
+	"type": "oneToMany"
+}

@@ -6,13 +6,18 @@
 import fs from 'fs/promises';
 import path from 'path';
 
+import getNamedArguments from '../util/getNamedArguments.mjs';
 import getYarnWorkspaceProjects from '../util/getYarnWorkspaceProjects.mjs';
 import runConcurrentTasks, {
 	MAX_CONCURRENT_TASKS,
 } from '../util/runConcurrentTasks.mjs';
 import runJest from './jest/runJest.mjs';
 
-export default async function (sync = false) {
+export default async function () {
+	const {sync} = getNamedArguments({
+		sync: '--sync',
+	});
+
 	const originalNodeEnv = process.env.NODE_ENV;
 
 	process.env.NODE_ENV = 'test';

@@ -7173,8 +7173,8 @@ information. Make sure to commit in all format-javadoc results.
 		</antcall>
 	</target>
 
-	<target name="modules-integration-project-templates-jdk17_zulu">
-		<get-java-jdk-home type="zulu" version="17" />
+	<target name="modules-integration-project-templates-jdk17_open">
+		<get-java-jdk-home type="open" version="17" />
 
 		<echo append="true" file="build.${user.name}.properties">
 			junit.jvm.override=${java.jdk.home}/bin/java
@@ -7430,8 +7430,8 @@ junit.jvm.override.version=21</echo>
 		</antcall>
 	</target>
 
-	<target name="modules-unit-project-templates-jdk17_zulu">
-		<get-java-jdk-home type="zulu" version="17" />
+	<target name="modules-unit-project-templates-jdk17_open">
+		<get-java-jdk-home type="open" version="17" />
 
 		<echo append="true" file="build.${user.name}.properties">
 			junit.jvm.override=${java.jdk.home}/bin/java

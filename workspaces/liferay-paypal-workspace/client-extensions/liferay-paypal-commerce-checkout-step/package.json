@@ -1,0 +1,13 @@
+{
+	"dependencies": {
+		"react": "16.12.0",
+		"serve": "^14.2.0"
+	},
+	"description": "Liferay PayPal Commerce Checkout Step",
+	"name": "@liferay/liferay-paypal-commerce-checkout-step",
+	"type": "module",
+	"version": "0.0.0",
+	"workspaces": [
+		"src/main/resources/assets/liferay-paypal-commerce-checkout-step"
+	]
+}

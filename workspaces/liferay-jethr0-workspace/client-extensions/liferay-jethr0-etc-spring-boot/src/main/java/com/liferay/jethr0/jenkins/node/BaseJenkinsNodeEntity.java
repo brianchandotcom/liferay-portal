@@ -7,6 +7,7 @@ package com.liferay.jethr0.jenkins.node;
 
 import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.entity.BaseEntity;
+import com.liferay.jethr0.event.jenkins.client.JenkinsClient;
 import com.liferay.jethr0.jenkins.cohort.JenkinsCohortEntity;
 import com.liferay.jethr0.jenkins.server.JenkinsServerEntity;
 import com.liferay.jethr0.job.JobEntity;
@@ -16,12 +17,10 @@ import java.net.URL;
 
 import java.util.Set;
 
-import org.apache.tomcat.util.codec.binary.Base64;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import org.json.JSONObject;
-
-import org.springframework.http.MediaType;
-import org.springframework.web.reactive.function.client.WebClient;
 
 /**
  * @author Michael Hashimoto
@@ -218,31 +217,28 @@ public class BaseJenkinsNodeEntity
 		_offline = computerJSONObject.getBoolean("offline");
 	}
 
-	protected BaseJenkinsNodeEntity(JSONObject jsonObject) {
+	protected BaseJenkinsNodeEntity(
+		JSONObject jsonObject, JenkinsClient jenkinsClient) {
+
 		super(jsonObject);
+
+		_jenkinsClient = jenkinsClient;
 	}
 
 	private JSONObject _getComputerJSONObject() {
-		JenkinsServerEntity jenkinsServerEntity = getJenkinsServerEntity();
+		try {
+			return new JSONObject(
+				_jenkinsClient.requestGet(
+					StringUtil.toURL(
+						StringUtil.combine(getURL(), "/api/json"))));
+		}
+		catch (Exception exception) {
+			if (_log.isInfoEnabled()) {
+				_log.info(exception);
+			}
 
-		String basicAuthorization = StringUtil.combine(
-			jenkinsServerEntity.getJenkinsUserName(), ":",
-			jenkinsServerEntity.getJenkinsUserPassword());
-
-		String response = WebClient.create(
-			StringUtil.combine(getURL(), "/api/json")
-		).get(
-		).accept(
-			MediaType.APPLICATION_JSON
-		).header(
-			"Authorization",
-			"Basic " + Base64.encodeBase64String(basicAuthorization.getBytes())
-		).retrieve(
-		).bodyToMono(
-			String.class
-		).block();
-
-		return new JSONObject(response);
+			return null;
+		}
 	}
 
 	private boolean _hasCompatibleBattery(BuildEntity buildEntity) {
@@ -295,8 +291,12 @@ public class BaseJenkinsNodeEntity
 		return false;
 	}
 
+	private static final Log _log = LogFactory.getLog(
+		BaseJenkinsNodeEntity.class);
+
 	private boolean _goodBattery;
 	private boolean _idle;
+	private final JenkinsClient _jenkinsClient;
 	private JenkinsServerEntity _jenkinsServerEntity;
 	private long _jenkinsServerId;
 	private String _name;

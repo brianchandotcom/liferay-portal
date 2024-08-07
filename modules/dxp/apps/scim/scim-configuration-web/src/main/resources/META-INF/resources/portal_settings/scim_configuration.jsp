@@ -68,24 +68,6 @@ String oAuth2ApplicationName = GetterUtil.getString(request.getAttribute(ScimWeb
 		</div>
 
 		<c:choose>
-			<c:when test="<%= Validator.isNotNull(oAuth2AccessToken) %>">
-				<label for="<portlet:namespace />revokeAccessToken">
-					<liferay-ui:message key="scim-revoke-all" />
-
-					<span aria-label="<%= LanguageUtil.get(request, "scim-revoke-all-help") %>" class="lfr-portal-tooltip" tabindex="0" title="<%= LanguageUtil.get(request, "scim-revoke-all-help") %>">
-						<clay:icon
-							symbol="question-circle-full"
-						/>
-					</span>
-				</label>
-
-				<div class="input-group input-group-sm">
-					<aui:button id="revokeAccessToken" label="discard-changes" name="revokeAccessToken" small="<%= true %>" value="revoke" />
-				</div>
-			</c:when>
-		</c:choose>
-
-		<c:choose>
 			<c:when test="<%= Validator.isNotNull(oAuth2ApplicationName) %>">
 				<label for="<portlet:namespace />resetSCIMClientData">
 					<liferay-ui:message key="scim-reset-client-data" />
@@ -99,6 +81,24 @@ String oAuth2ApplicationName = GetterUtil.getString(request.getAttribute(ScimWeb
 
 				<div class="input-group input-group-sm">
 					<aui:button id="resetSCIMClientData" label="discard-changes" name="resetSCIMClientData" small="<%= true %>" value="reset" />
+				</div>
+			</c:when>
+		</c:choose>
+
+		<c:choose>
+			<c:when test="<%= Validator.isNotNull(oAuth2AccessToken) %>">
+				<label for="<portlet:namespace />revokeAccessToken">
+					<liferay-ui:message key="scim-revoke-all" />
+
+					<span aria-label="<%= LanguageUtil.get(request, "scim-revoke-all-help") %>" class="lfr-portal-tooltip" tabindex="0" title="<%= LanguageUtil.get(request, "scim-revoke-all-help") %>">
+						<clay:icon
+							symbol="question-circle-full"
+						/>
+					</span>
+				</label>
+
+				<div class="input-group input-group-sm">
+					<aui:button id="revokeAccessToken" label="discard-changes" name="revokeAccessToken" small="<%= true %>" value="revoke" />
 				</div>
 			</c:when>
 		</c:choose>
@@ -144,28 +144,6 @@ String oAuth2ApplicationName = GetterUtil.getString(request.getAttribute(ScimWeb
 		});
 	}
 
-	var revokeAccessToken = document.getElementById(
-		'<portlet:namespace />revokeAccessToken'
-	);
-
-	if (revokeAccessToken) {
-		revokeAccessToken.addEventListener('click', (event) => {
-			Liferay.Util.openConfirmModal({
-				message:
-					'<liferay-ui:message key="are-you-sure-you-want-to-revoke-all-access-tokens" />',
-				onConfirm: (isConfirmed) => {
-					if (isConfirmed) {
-						var form = window.document['<portlet:namespace />fm'];
-						form['<portlet:namespace /><%= Constants.CMD %>'].value =
-							'revoke';
-
-						form.submit();
-					}
-				},
-			});
-		});
-	}
-
 	var resetSCIMClientData = document.getElementById(
 		'<portlet:namespace />resetSCIMClientData'
 	);
@@ -180,6 +158,28 @@ String oAuth2ApplicationName = GetterUtil.getString(request.getAttribute(ScimWeb
 						var form = window.document['<portlet:namespace />fm'];
 						form['<portlet:namespace /><%= Constants.CMD %>'].value =
 							'reset';
+
+						form.submit();
+					}
+				},
+			});
+		});
+	}
+
+	var revokeAccessToken = document.getElementById(
+		'<portlet:namespace />revokeAccessToken'
+	);
+
+	if (revokeAccessToken) {
+		revokeAccessToken.addEventListener('click', (event) => {
+			Liferay.Util.openConfirmModal({
+				message:
+					'<liferay-ui:message key="are-you-sure-you-want-to-revoke-all-access-tokens" />',
+				onConfirm: (isConfirmed) => {
+					if (isConfirmed) {
+						var form = window.document['<portlet:namespace />fm'];
+						form['<portlet:namespace /><%= Constants.CMD %>'].value =
+							'revoke';
 
 						form.submit();
 					}

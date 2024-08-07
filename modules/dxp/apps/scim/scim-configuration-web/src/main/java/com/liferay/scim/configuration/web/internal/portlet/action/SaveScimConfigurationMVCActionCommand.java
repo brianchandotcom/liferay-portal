@@ -150,14 +150,6 @@ public class SaveScimConfigurationMVCActionCommand
 			actionRequest.setAttribute(
 				ScimWebKeys.SCIM_OAUTH2_ACCESS_TOKEN, accessToken);
 		}
-		else if (Objects.equals(cmd, "revoke")) {
-			OAuth2Application oAuth2Application =
-				_oAuth2ApplicationLocalService.getOAuth2Application(
-					themeDisplay.getCompanyId(), scimClientId);
-
-			_oAuth2AuthorizationService.revokeAllOAuth2Authorizations(
-				oAuth2Application.getOAuth2ApplicationId());
-		}
 		else if (Objects.equals(cmd, "reset")) {
 			OAuth2Application oAuth2Application =
 				_oAuth2ApplicationLocalService.getOAuth2Application(
@@ -206,6 +198,14 @@ public class SaveScimConfigurationMVCActionCommand
 				});
 
 			query.performActions();
+		}
+		else if (Objects.equals(cmd, "revoke")) {
+			OAuth2Application oAuth2Application =
+				_oAuth2ApplicationLocalService.getOAuth2Application(
+					themeDisplay.getCompanyId(), scimClientId);
+
+			_oAuth2AuthorizationService.revokeAllOAuth2Authorizations(
+				oAuth2Application.getOAuth2ApplicationId());
 		}
 		else {
 			Configuration[] configurations =

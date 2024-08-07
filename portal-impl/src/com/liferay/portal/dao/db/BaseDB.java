@@ -77,13 +77,13 @@ public abstract class BaseDB implements DB {
 		Map<String, Map<String, Integer>> columnTableSizes = new HashMap<>();
 
 		for (IndexMetadata indexMetadata : indexMetadatas) {
-			String normalizedTabledName = dbInspector.normalizeName(
+			String normalizedTableName = dbInspector.normalizeName(
 				indexMetadata.getTableName(), databaseMetaData);
 
-			if (columnTableSizes.get(normalizedTabledName) == null) {
+			if (columnTableSizes.get(normalizedTableName) == null) {
 				try (ResultSet resultSet = databaseMetaData.getColumns(
 						dbInspector.getCatalog(), dbInspector.getSchema(),
-						normalizedTabledName, null)) {
+						normalizedTableName, null)) {
 
 					Map<String, Integer> columnSizes = new HashMap<>();
 
@@ -103,7 +103,7 @@ public abstract class BaseDB implements DB {
 							resultSet.getInt("COLUMN_SIZE"));
 					}
 
-					columnTableSizes.put(normalizedTabledName, columnSizes);
+					columnTableSizes.put(normalizedTableName, columnSizes);
 				}
 			}
 
@@ -113,7 +113,7 @@ public abstract class BaseDB implements DB {
 
 			for (int i = 0; i < columnNames.length; i++) {
 				columnSizes[i] = MapUtil.getInteger(
-					columnTableSizes.get(normalizedTabledName), columnNames[i],
+					columnTableSizes.get(normalizedTableName), columnNames[i],
 					0);
 			}
 

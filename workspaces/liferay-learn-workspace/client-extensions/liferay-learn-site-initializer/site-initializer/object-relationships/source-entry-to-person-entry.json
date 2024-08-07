@@ -1,0 +1,10 @@
+{
+	"deletionType": "cascade",
+	"label": {
+		"en_US": "Source Entry to Person Entry"
+	},
+	"name": "sourceEntryToPersonEntry",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:SourceEntry$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:PersonEntry$]",
+	"type": "oneToMany"
+}

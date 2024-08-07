@@ -1,0 +1,10 @@
+{
+	"deletionType": "cascade",
+	"label": {
+		"en_US": "Exam Result to Exam Entry"
+	},
+	"name": "examResultToExamEntry",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:ExamResult$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:ExamEntry$]",
+	"type": "oneToOne"
+}

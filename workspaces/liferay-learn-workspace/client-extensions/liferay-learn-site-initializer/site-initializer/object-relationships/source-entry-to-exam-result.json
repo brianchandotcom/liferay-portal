@@ -1,0 +1,11 @@
+{
+	"deletionType": "cascade",
+	"label": {
+		"en_US": "Source Entry to Exam Result"
+	},
+	"name": "sourceEntryToExamResult",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:SourceEntry$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:ExamResult$]",
+	"objectDefinitionName2": "ExamResult",
+	"type": "oneToMany"
+}

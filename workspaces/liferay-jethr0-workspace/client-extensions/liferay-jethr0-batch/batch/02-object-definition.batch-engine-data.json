@@ -109,24 +109,6 @@
 					"DBType": "String",
 					"businessType": "Text",
 					"label": {
-						"en_US": "Jenkins User Name"
-					},
-					"name": "jenkinsUserName",
-					"type": "String"
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"label": {
-						"en_US": "Jenkins User Password"
-					},
-					"name": "jenkinsUserPassword",
-					"type": "String"
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"label": {
 						"en_US": "Name"
 					},
 					"name": "name",

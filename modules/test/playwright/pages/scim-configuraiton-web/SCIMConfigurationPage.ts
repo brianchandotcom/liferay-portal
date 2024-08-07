@@ -9,41 +9,36 @@ import {InstanceSettingsPage} from '../configuration-admin-web/InstanceSettingsP
 import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
 
 export class SCIMConfigurationPage {
+	readonly accessTokenField: Locator;
 	readonly applicationsMenuPage: ApplicationsMenuPage;
+	readonly errorMessage: Locator;
 	readonly instanceSettingsPage: InstanceSettingsPage;
+	readonly matcherField: Locator;
+	readonly oAuth2ApplicationNameField: Locator;
 	readonly page: Page;
 	readonly saveButton: Locator;
-	readonly oAuth2ApplicationNameField: Locator;
-	readonly matcherField: Locator;
-	readonly accessTokenField: Locator;
-	readonly errorMessage: Locator;
 	readonly successMessage: Locator;
 
 	constructor(page: Page) {
-		this.page = page;
-		this.instanceSettingsPage = new InstanceSettingsPage(page);
+		this.accessTokenField = page.getByText('Access Token');
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);
-		this.saveButton = page.getByRole('button', {name: 'Save'});
+		this.errorMessage = page.getByText('Your request failed to complete');
+		this.instanceSettingsPage = new InstanceSettingsPage(page);
+		this.matcherField = page.getByLabel('Matcher Field');
 		this.oAuth2ApplicationNameField = page.getByLabel(
 			'OAuth 2 Application Name'
 		);
-		this.matcherField = page.getByLabel('Matcher Field');
-		this.accessTokenField = page.getByText('Access Token');
-		this.successMessage = page.getByText(
-			'Your request completed successfully'
-		);
-		this.errorMessage = page.getByText('Your request failed to complete');
-
+		this.page = page;
 		this.page.on('dialog', async (dialog) => {
 			await dialog.accept();
 		});
+		this.saveButton = page.getByRole('button', {name: 'Save'});
+		this.successMessage = page.getByText(
+			'Your request completed successfully'
+		);
 	}
 
-	async goTo() {
-		await this.instanceSettingsPage.goToInstanceSetting('SCIM', 'SCIM');
-	}
-
-	async configureSCIM(oAuth2ApplicationName: string, matcherField: string) {
+	async configureSCIM(matcherField: string, oAuth2ApplicationName: string) {
 		await this.oAuth2ApplicationNameField.fill(oAuth2ApplicationName);
 
 		await this.matcherField.selectOption({label: matcherField});
@@ -57,18 +52,22 @@ export class SCIMConfigurationPage {
 		await this.page.getByLabel('Generate Access Token').click();
 	}
 
-	async revokeToken() {
-		const revokeAllButton = this.page.getByLabel('Revoke All');
-
-		await expect(revokeAllButton).toBeVisible();
-
-		await revokeAllButton.click();
+	async goTo() {
+		await this.instanceSettingsPage.goToInstanceSetting('SCIM', 'SCIM');
 	}
 
 	async resetClientData() {
 		const revokeAllButton = this.page.getByLabel(
 			'Reset SCIM Client Provisioning Data'
 		);
+
+		await expect(revokeAllButton).toBeVisible();
+
+		await revokeAllButton.click();
+	}
+
+	async revokeToken() {
+		const revokeAllButton = this.page.getByLabel('Revoke All');
 
 		await expect(revokeAllButton).toBeVisible();
 

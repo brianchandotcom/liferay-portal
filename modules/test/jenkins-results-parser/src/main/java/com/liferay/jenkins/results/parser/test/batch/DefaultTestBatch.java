@@ -18,4 +18,8 @@ public class DefaultTestBatch extends BaseTestBatch<BaseTestSelector> {
 		super(name, null);
 	}
 
+	@Override
+	public void merge(TestBatch testBatch) {
+	}
+
 }

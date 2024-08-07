@@ -5,12 +5,14 @@
 
 package com.liferay.change.tracking.rest.internal.resource.v1_0;
 
+import com.liferay.change.tracking.exception.NoSuchEntryException;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.rest.dto.v1_0.CTEntry;
 import com.liferay.change.tracking.rest.internal.odata.entity.v1_0.CTEntryEntityModel;
 import com.liferay.change.tracking.rest.resource.v1_0.CTEntryResource;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.spi.display.CTDisplayRendererRegistry;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.sql.CTSQLModeThreadLocal;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.BaseModel;
@@ -84,6 +86,14 @@ public class CTEntryResourceImpl extends BaseCTEntryResourceImpl {
 		com.liferay.change.tracking.model.CTEntry ctEntry =
 			_ctEntryLocalService.fetchCTEntry(
 				ctCollectionId, modelClassNameId, modelClassPK);
+
+		if (ctEntry == null) {
+			throw new NoSuchEntryException(
+				StringBundler.concat(
+					"No CTEntry exists with ctCollectionId ", ctCollectionId,
+					" , modelClassNameId ", modelClassNameId,
+					" , and modelClassPK ", modelClassPK));
+		}
 
 		return _ctEntryDTOConverter.toDTO(
 			_getDTOConverterContext(ctEntry), ctEntry);

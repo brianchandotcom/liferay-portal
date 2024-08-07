@@ -9,6 +9,7 @@ import {loginTest} from '../../fixtures/loginTest';
 import {ApiHelpers} from '../../helpers/ApiHelpers';
 import {ApplicationsMenuPage} from '../../pages/product-navigation-applications-menu/ApplicationsMenuPage';
 import {SCIMConfigurationPage} from '../../pages/scim-configuraiton-web/SCIMConfigurationPage';
+import {getRandomInt} from '../../utils/getRandomInt';
 
 export const test = mergeTests(loginTest());
 
@@ -143,4 +144,49 @@ test('LPD-23255 AC3 TC4: Verify that clicking the “Reset SCIM Client provision
 	await page.waitForTimeout(1000);
 
 	expect(await scimOAuthClientRow).not.toBeVisible();
+});
+
+test('LPD-23255 AC3 TC5: Verify that clicking the “Reset SCIM Client provisioning data“ button unbinds users', async ({
+	page,
+}) => {
+	const scimConfigurationPage = new SCIMConfigurationPage(page);
+
+	const apiHelper = new ApiHelpers(page);
+
+	await scimConfigurationPage.goTo();
+
+	await page.waitForTimeout(1000);
+
+	await scimConfigurationPage.configureSCIM('Test SCIM Client', 'email');
+
+	const randInt = getRandomInt();
+
+	const newUser = {
+		active: true,
+		emails: [
+			{
+				primary: true,
+				type: 'default',
+				value: `able${randInt}@liferay.com`,
+			},
+		],
+		name: {
+			familyName: `Baker ${randInt}`,
+			givenName: `Able ${randInt}`,
+		},
+		userName: `able${randInt}.baker`,
+	};
+
+	await apiHelper.scim.postUser(newUser);
+
+	const response = await (await apiHelper.scim.getUsers()).text();
+
+	expect(response).toContain(`"totalResults":1`);
+
+	await scimConfigurationPage.resetClientData();
+	await page.waitForTimeout(1000);
+
+	const emptyResponse = await (await apiHelper.scim.getUsers()).text();
+
+	expect(emptyResponse).toContain(`"totalResults":0`);
 });

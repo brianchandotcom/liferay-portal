@@ -339,14 +339,18 @@ const FragmentEditor = ({
 
 						<div className="javascript source-editor">
 							<CodeMirrorEditor
-								codeFooterText="}"
+								codeFooterText="</script>"
 								codeHeaderHelpText={sub(
 									Liferay.Language.get(
 										'parameter-x-provides-access-to-the-current-fragment-node-use-it-to-manipulate-fragment-components'
 									),
 									['fragmentElement']
 								)}
-								codeHeaderText="function(fragmentElement, configuration) {"
+								codeHeaderTexts={[
+									'<script type="module">',
+									'const fragmentElement = ...;',
+									'const configuration = ...;',
+								]}
 								content={initialJS}
 								mode="javascript"
 								onChange={setJs}

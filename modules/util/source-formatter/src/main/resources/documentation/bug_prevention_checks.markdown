@@ -205,6 +205,7 @@ ServiceUpdateCheck | .java | Checks that there are no stale references in servic
 [StaticBlockCheck](check/static_block_check.markdown#staticblockcheck) | .java | Performs several checks on static blocks. |
 SystemEventCheck | .java | Finds missing or redundant usage of @SystemEvent for delete events. |
 TLDTypeCheck | .tld | Ensures the fully qualified name is used for types in `.tld` file. |
+TSConfigFileCheck | .ts or .tsx | Finds missing `test.properties` files. |
 TestClassMissingLiferayUnitTestRuleCheck | .java | Finds missing LiferayUnitTestRule. |
 [ThreadContextClassLoaderCheck](check/thread_context_class_loader_check.markdown#threadcontextclassloadercheck) | .java | Checks usage of `Thread.setContextClassLoader`. |
 TransactionalTestRuleCheck | .java | Finds usage of `TransactionalTestRule` in `*StagedModelDataHandlerTest`. |

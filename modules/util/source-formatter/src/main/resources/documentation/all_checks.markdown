@@ -460,6 +460,7 @@ TFBlockOrderCheck | [Styling](styling_checks.markdown#styling-checks) | .tf | Ch
 TLDElementOrderCheck | [Styling](styling_checks.markdown#styling-checks) | .tld | Checks the order of attributes in `.tld` file. |
 TLDStylingCheck | [Styling](styling_checks.markdown#styling-checks) | .tld | Applies rules to enforce consistency in code style. |
 TLDTypeCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .tld | Ensures the fully qualified name is used for types in `.tld` file. |
+TSConfigFileCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .ts or .tsx | Finds missing `test.properties` files. |
 TXTEmptyLinesCheck | [Styling](styling_checks.markdown#styling-checks) | .txt | Finds missing and unnecessary empty lines. |
 TXTStylingCheck | [Styling](styling_checks.markdown#styling-checks) | .txt | Applies rules to enforce consistency in code style. |
 TernaryOperatorCheck | [Styling](styling_checks.markdown#styling-checks) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds use of ternary operator in `java` files (use if statement instead). |

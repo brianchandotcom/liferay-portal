@@ -5,6 +5,7 @@
 
 package com.liferay.portal.dao.jdbc.util;
 
+import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.spring.hibernate.SpringHibernateThreadLocalUtil;
@@ -105,7 +106,9 @@ public class DynamicDataSource implements DataSource {
 	}
 
 	private DataSource _getDataSource() {
-		if (SpringHibernateThreadLocalUtil.isCurrentTransactionReadOnly()) {
+		if (!_writeDataSourceThreadLocal.get() &&
+			SpringHibernateThreadLocalUtil.isCurrentTransactionReadOnly()) {
+
 			if (_log.isTraceEnabled()) {
 				_log.trace("Returning read data source");
 			}
@@ -117,11 +120,18 @@ public class DynamicDataSource implements DataSource {
 			_log.trace("Returning write data source");
 		}
 
+		_writeDataSourceThreadLocal.set(true);
+
 		return _writeDataSource;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DynamicDataSource.class);
+
+	private static final ThreadLocal<Boolean> _writeDataSourceThreadLocal =
+		new CentralizedThreadLocal<>(
+			DynamicDataSource.class + "._writeDataSourceThreadLocal",
+			() -> false);
 
 	private final DataSource _readDataSource;
 	private final DataSource _writeDataSource;

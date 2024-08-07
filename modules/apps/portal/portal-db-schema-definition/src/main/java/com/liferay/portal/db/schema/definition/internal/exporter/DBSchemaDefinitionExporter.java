@@ -283,7 +283,11 @@ public class DBSchemaDefinitionExporter {
 							StringBundler.concat(
 								"Virtual instance ", companyId, " ? views: "),
 							"VIEW"));
+					sb.append(StringPool.NEW_LINE);
+					sb.append(StringPool.NEW_LINE);
 				});
+
+			sb.setIndex(sb.index() - 2);
 
 			return sb.toString();
 		}

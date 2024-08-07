@@ -618,44 +618,49 @@ public class LayoutStructure {
 	}
 
 	public void markLayoutStructureItemForDeletion(
-		String itemId, List<String> portletIds) {
+		List<String> itemIds, List<String> portletIds) {
 
-		LayoutStructureItem layoutStructureItem = _layoutStructureItems.get(
-			itemId);
+		for (String itemId : itemIds) {
+			LayoutStructureItem layoutStructureItem = _layoutStructureItems.get(
+				itemId);
 
-		if (layoutStructureItem instanceof DropZoneLayoutStructureItem) {
-			throw new UnsupportedOperationException(
-				"Removing the drop zone of a layout structure is not allowed");
+			if (layoutStructureItem instanceof DropZoneLayoutStructureItem) {
+				throw new UnsupportedOperationException(
+					"Removing the drop zone of a layout structure is not " +
+						"allowed");
+			}
+
+			DeletedLayoutStructureItem deletedLayoutStructureItem = null;
+
+			if (Validator.isNotNull(layoutStructureItem.getParentItemId())) {
+				LayoutStructureItem parentLayoutStructureItem =
+					_layoutStructureItems.get(
+						layoutStructureItem.getParentItemId());
+
+				List<String> childrenItemIds =
+					parentLayoutStructureItem.getChildrenItemIds();
+
+				int position = childrenItemIds.indexOf(itemId);
+
+				childrenItemIds.remove(itemId);
+
+				deletedLayoutStructureItem = new DeletedLayoutStructureItem(
+					itemId, portletIds, position, _getChildrenItemIds(itemId));
+			}
+			else {
+				deletedLayoutStructureItem = new DeletedLayoutStructureItem(
+					itemId, portletIds, 0, _getChildrenItemIds(itemId));
+			}
+
+			_updateFragmentEntryLinks(itemId, true);
+
+			_deletedLayoutStructureItems.put(
+				itemId, deletedLayoutStructureItem);
+
+			_deletedItemIds.add(itemId);
+			_deletedItemIds.addAll(
+				deletedLayoutStructureItem.getChildrenItemIds());
 		}
-
-		DeletedLayoutStructureItem deletedLayoutStructureItem = null;
-
-		if (Validator.isNotNull(layoutStructureItem.getParentItemId())) {
-			LayoutStructureItem parentLayoutStructureItem =
-				_layoutStructureItems.get(
-					layoutStructureItem.getParentItemId());
-
-			List<String> childrenItemIds =
-				parentLayoutStructureItem.getChildrenItemIds();
-
-			int position = childrenItemIds.indexOf(itemId);
-
-			childrenItemIds.remove(itemId);
-
-			deletedLayoutStructureItem = new DeletedLayoutStructureItem(
-				itemId, portletIds, position, _getChildrenItemIds(itemId));
-		}
-		else {
-			deletedLayoutStructureItem = new DeletedLayoutStructureItem(
-				itemId, portletIds, 0, _getChildrenItemIds(itemId));
-		}
-
-		_updateFragmentEntryLinks(itemId, true);
-
-		_deletedLayoutStructureItems.put(itemId, deletedLayoutStructureItem);
-
-		_deletedItemIds.add(itemId);
-		_deletedItemIds.addAll(deletedLayoutStructureItem.getChildrenItemIds());
 
 		_deletedPortletIds.addAll(portletIds);
 	}
@@ -1003,7 +1008,8 @@ public class LayoutStructure {
 			String childrenItemId = childrenItemIds.get(i);
 
 			markLayoutStructureItemForDeletion(
-				childrenItemId, Collections.emptyList());
+				Collections.singletonList(childrenItemId),
+				Collections.emptyList());
 		}
 	}
 

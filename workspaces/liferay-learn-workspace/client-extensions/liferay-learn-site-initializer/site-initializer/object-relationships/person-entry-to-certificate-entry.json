@@ -1,0 +1,10 @@
+{
+	"deletionType": "cascade",
+	"label": {
+		"en_US": "Certificate Entry"
+	},
+	"name": "personEntryToCertificateEntry",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:PersonEntry$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:CertificateEntry$]",
+	"type": "oneToMany"
+}

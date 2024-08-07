@@ -15,12 +15,38 @@ export class SCIMApiHelper {
 	}
 
 	async getUsers(oAuth2Token?: string, failOnStatusCode?: boolean) {
-		return this.apiHelpers.getResponse(
+		if (oAuth2Token) {
+			return this.apiHelpers.getResponse(
+				`${this.apiHelpers.baseUrl}${this.basePath}v2/Users`,
+				failOnStatusCode,
+				{
+					'Authorization': `Bearer ${oAuth2Token}`,
+					'Content-Type': 'application/scim+json',
+				}
+			);
+		}
+		else {
+			return this.apiHelpers.getResponse(
+				`${this.apiHelpers.baseUrl}${this.basePath}v2/Users`,
+				failOnStatusCode,
+				{
+					'Content-Type': 'application/scim+json',
+					...(await this.apiHelpers.getCSRFTokenHeader()),
+				}
+			);
+		}
+	}
+
+	async postUser(data: any, failOnStatusCode?: boolean) {
+		return this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}v2/Users`,
-			failOnStatusCode,
 			{
-				'Content-Type': 'application/json',
-				'Authorization': `Bearer ${oAuth2Token}`,
+				data,
+				failOnStatusCode,
+				headers: {
+					'Content-Type': 'application/scim+json',
+					...(await this.apiHelpers.getCSRFTokenHeader()),
+				},
 			}
 		);
 	}

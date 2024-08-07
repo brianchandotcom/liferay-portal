@@ -190,3 +190,36 @@ test('LPD-23255 AC3 TC5: Verify that clicking the “Reset SCIM Client provision
 
 	expect(emptyResponse).toContain(`"totalResults":0`);
 });
+
+test('LPD-23255 AC3 TC6: Verify that clicking the “Reset SCIM Client provisioning data“ button unbinds user groups.', async ({
+	page,
+}) => {
+	const scimConfigurationPage = new SCIMConfigurationPage(page);
+
+	const apiHelper = new ApiHelpers(page);
+
+	await scimConfigurationPage.goTo();
+
+	await page.waitForTimeout(1000);
+
+	await scimConfigurationPage.configureSCIM('Test SCIM Client', 'email');
+
+	const randInt = getRandomInt();
+
+	const newGroup = {
+		displayName: `Foo${randInt}`,
+	};
+
+	await apiHelper.scim.postGroup(newGroup);
+
+	const response = await (await apiHelper.scim.getGroups()).text();
+
+	expect(response).toContain(`"totalResults":1`);
+
+	await scimConfigurationPage.resetClientData();
+	await page.waitForTimeout(1000);
+
+	const emptyResponse = await (await apiHelper.scim.getGroups()).text();
+
+	expect(emptyResponse).toContain(`"totalResults":0`);
+});

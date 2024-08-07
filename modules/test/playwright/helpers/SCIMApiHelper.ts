@@ -50,4 +50,28 @@ export class SCIMApiHelper {
 			}
 		);
 	}
+
+	async postGroup(data: any) {
+		return this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}${this.basePath}v2/Groups`,
+			{
+				data,
+				headers: {
+					'Content-Type': 'application/scim+json',
+					...(await this.apiHelpers.getCSRFTokenHeader()),
+				},
+			}
+		);
+	}
+
+	async getGroups(failOnStatusCode?: boolean) {
+		return this.apiHelpers.getResponse(
+			`${this.apiHelpers.baseUrl}${this.basePath}v2/Groups`,
+			failOnStatusCode,
+			{
+				'Content-Type': 'application/scim+json',
+				...(await this.apiHelpers.getCSRFTokenHeader()),
+			}
+		);
+	}
 }

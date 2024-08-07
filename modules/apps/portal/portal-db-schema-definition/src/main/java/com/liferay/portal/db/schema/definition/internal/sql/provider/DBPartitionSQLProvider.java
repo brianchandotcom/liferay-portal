@@ -12,6 +12,7 @@ import com.liferay.portal.dao.db.PostgreSQLDB;
 import com.liferay.portal.db.partition.util.DBPartitionUtil;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBType;
+import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -28,7 +29,7 @@ import javax.sql.DataSource;
 /**
  * @author Mariano Álvaro Sáiz
  */
-public class DBPartitionPortalSQLProvider extends BaseSQLProvider {
+public class DBPartitionSQLProvider extends BaseSQLProvider {
 
 	public static void clearCache() {
 		_controlTableNames = null;
@@ -37,10 +38,17 @@ public class DBPartitionPortalSQLProvider extends BaseSQLProvider {
 		_rulesTableColumn = null;
 	}
 
-	public DBPartitionPortalSQLProvider(DBType dbType, long companyId)
+	public DBPartitionSQLProvider(DBType dbType, long companyId)
 		throws Exception {
 
 		super(dbType);
+
+		if (dbType == DBType.MYSQL) {
+			_dbPartitionDB = new DBPartitionMySQLDB();
+		}
+		else {
+			_dbPartitionDB = new DBPartitionPostgreSQLDB();
+		}
 
 		_dbPartitionName = DBPartitionUtil.getPartitionName(companyId);
 
@@ -190,17 +198,19 @@ public class DBPartitionPortalSQLProvider extends BaseSQLProvider {
 
 		for (String controlTableName : _controlTableNames) {
 			sb.append(
-				StringBundler.concat(
-					"create or replace view ", _dbPartitionName,
-					StringPool.PERIOD, controlTableName, " as select * from ",
-					controlTableName, StringPool.SEMICOLON,
-					StringPool.NEW_LINE));
+				_dbPartitionDB.getCreateViewSQL(
+					DBPartitionUtil.getPartitionName(
+						PortalInstancePool.getDefaultCompanyId()),
+					_dbPartitionName, controlTableName));
+			sb.append(StringPool.SEMICOLON);
+			sb.append(StringPool.NEW_LINE);
 		}
 
 		return sb.toString();
 	}
 
 	private static List<String> _controlTableNames;
+	private static final DBPartitionDB _dbPartitionDB;
 	private static String _partitionIndexesSQL;
 	private static String _partitionTablesSQL;
 	private static Set<String[]> _rulesTableColumn;

@@ -175,6 +175,9 @@ public class MBThreadIndexerIndexedFieldsTest {
 		).put(
 			"scopeGroupExternalReferenceCode", _group.getExternalReferenceCode()
 		).put(
+			"statusByUserExternalReferenceCode",
+			_user.getExternalReferenceCode()
+		).put(
 			"statusByUserId", String.valueOf(mbThread.getStatusByUserId())
 		).put(
 			"userExternalReferenceCode", _user.getExternalReferenceCode()

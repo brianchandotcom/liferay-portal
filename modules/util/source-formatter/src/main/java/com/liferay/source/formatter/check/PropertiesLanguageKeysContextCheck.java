@@ -56,6 +56,8 @@ public class PropertiesLanguageKeysContextCheck extends BaseFileCheck {
 		while (enumeration.hasMoreElements()) {
 			String key = enumeration.nextElement();
 
+			int lineNumber = _getLineNumber(content, key);
+
 			if (key.matches("\\w+")) {
 				if (StringUtil.equalsIgnoreCase(
 						key, properties.getProperty(key)) &&
@@ -67,7 +69,7 @@ public class PropertiesLanguageKeysContextCheck extends BaseFileCheck {
 							"The single-word key '", key,
 							"' should include a word of context at the end, ",
 							"within a [], to indicate specific meaning"),
-						_getLineNumber(content, key));
+						lineNumber);
 				}
 
 				continue;
@@ -86,15 +88,13 @@ public class PropertiesLanguageKeysContextCheck extends BaseFileCheck {
 				continue;
 			}
 
-			int lineNumber = _getLineNumber(content, key);
-
 			if (properties.containsKey(matcher.group(1))) {
 				addMessage(
 					fileName,
 					StringBundler.concat(
-						"The key '", key, "' should include a ",
-						"word of context at the end, within a [], to indicate ",
-						"specific meaning"),
+						"The key '", key, "' should include a word of context ",
+						"at the end, within a [], to indicate specific ",
+						"meaning"),
 					lineNumber);
 			}
 

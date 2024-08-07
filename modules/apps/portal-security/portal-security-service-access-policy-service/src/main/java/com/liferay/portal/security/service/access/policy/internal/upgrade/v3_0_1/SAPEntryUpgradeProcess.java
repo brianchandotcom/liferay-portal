@@ -8,8 +8,13 @@ package com.liferay.portal.security.service.access.policy.internal.upgrade.v3_0_
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
-import com.liferay.portal.kernel.service.ResourceLocalServiceUtil;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
+import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
@@ -67,11 +72,8 @@ public class SAPEntryUpgradeProcess extends UpgradeProcess {
 					preparedStatement2.setLong(2, sapEntryId);
 
 					preparedStatement2.setLong(3, companyId);
-
-					long guestUserId = UserLocalServiceUtil.getGuestUserId(
-						companyId);
-
-					preparedStatement2.setLong(4, guestUserId);
+					preparedStatement2.setLong(
+						4, UserLocalServiceUtil.getGuestUserId(companyId));
 
 					Timestamp timestamp = new Timestamp(
 						System.currentTimeMillis());
@@ -104,9 +106,14 @@ public class SAPEntryUpgradeProcess extends UpgradeProcess {
 
 					preparedStatement2.execute();
 
-					ResourceLocalServiceUtil.addResources(
-						companyId, 0, guestUserId, SAPEntry.class.getName(),
-						sapEntryId, false, false, false);
+					Role guestRole = RoleLocalServiceUtil.getRole(
+						companyId, RoleConstants.GUEST);
+
+					ResourcePermissionLocalServiceUtil.setResourcePermissions(
+						companyId, SAPEntry.class.getName(),
+						ResourceConstants.SCOPE_INDIVIDUAL,
+						String.valueOf(sapEntryId), guestRole.getRoleId(),
+						new String[] {ActionKeys.VIEW});
 				}
 			});
 	}

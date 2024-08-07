@@ -129,13 +129,13 @@ public class SynonymSearchTest {
 		doAssertSearch("efectivo", Field.TITLE, LocaleUtil.SPAIN, 2);
 		doAssertSearch("effectief", Field.TITLE, LocaleUtil.NETHERLANDS, 2);
 		doAssertSearch("feliz", Field.TITLE, LocaleUtil.BRAZIL, 2);
-		doAssertSearch("feliç", Field.TITLE, _CATALANLOCALE, 2);
+		doAssertSearch("feliç", Field.TITLE, _CATALAN_LOCALE, 2);
 		doAssertSearch("glücklich", Field.TITLE, LocaleUtil.GERMANY, 2);
 		doAssertSearch("hatékony", Field.TITLE, LocaleUtil.HUNGARY, 2);
-		doAssertSearch("lycklig", Field.TITLE, _SWEDISHLOCALE, 2);
+		doAssertSearch("lycklig", Field.TITLE, _SWEDISH_LOCALE, 2);
 		doAssertSearch("maison", Field.TITLE, LocaleUtil.FRANCE, 2);
-		doAssertSearch("tehokas", Field.TITLE, _FINNISHLOCALE, 2);
-		doAssertSearch("فعال", Field.TITLE, _ARABICLOCALE, 2);
+		doAssertSearch("tehokas", Field.TITLE, _FINNISH_LOCALE, 2);
+		doAssertSearch("فعال", Field.TITLE, _ARABIC_LOCALE, 2);
 	}
 
 	protected static void addJournalArticle(Map<Locale, String> localeStringMap)
@@ -160,13 +160,13 @@ public class SynonymSearchTest {
 
 		addJournalArticle(
 			HashMapBuilder.put(
-				_ARABICLOCALE, "فعال"
+				_ARABIC_LOCALE, "فعال"
 			).put(
-				_CATALANLOCALE, "feliç"
+				_CATALAN_LOCALE, "feliç"
 			).put(
-				_FINNISHLOCALE, "tehokas"
+				_FINNISH_LOCALE, "tehokas"
 			).put(
-				_SWEDISHLOCALE, "lycklig"
+				_SWEDISH_LOCALE, "lycklig"
 			).put(
 				LocaleUtil.BRAZIL, "feliz"
 			).put(
@@ -184,13 +184,13 @@ public class SynonymSearchTest {
 			).build());
 		addJournalArticle(
 			HashMapBuilder.put(
-				_ARABICLOCALE, "منتج"
+				_ARABIC_LOCALE, "منتج"
 			).put(
-				_CATALANLOCALE, "satisfet"
+				_CATALAN_LOCALE, "satisfet"
 			).put(
-				_FINNISHLOCALE, "tuottava"
+				_FINNISH_LOCALE, "tuottava"
 			).put(
-				_SWEDISHLOCALE, "nöjd"
+				_SWEDISH_LOCALE, "nöjd"
 			).put(
 				LocaleUtil.BRAZIL, "alegre"
 			).put(
@@ -329,9 +329,9 @@ public class SynonymSearchTest {
 		return _CONFIGURATION_PID_ELASTICSEARCH;
 	}
 
-	private static final Locale _ARABICLOCALE = new Locale("ar", "SA");
+	private static final Locale _ARABIC_LOCALE = new Locale("ar", "SA");
 
-	private static final Locale _CATALANLOCALE = new Locale("ca", "ES");
+	private static final Locale _CATALAN_LOCALE = new Locale("ca", "ES");
 
 	private static final String _CONFIGURATION_PID_ELASTICSEARCH =
 		"com.liferay.portal.search.elasticsearch7.configuration." +
@@ -345,9 +345,9 @@ public class SynonymSearchTest {
 		"com.liferay.portal.search.tuning.synonyms.web.internal." +
 			"configuration.SynonymsConfiguration";
 
-	private static final Locale _FINNISHLOCALE = new Locale("fi", "FI");
+	private static final Locale _FINNISH_LOCALE = new Locale("fi", "FI");
 
-	private static final Locale _SWEDISHLOCALE = new Locale("sv", "SE");
+	private static final Locale _SWEDISH_LOCALE = new Locale("sv", "SE");
 
 	private static Company _company;
 

@@ -51,18 +51,21 @@ public class DDMStructureUpgradeProcess extends UpgradeProcess {
 		try (PreparedStatement selectPreparedStatement =
 				connection.prepareStatement(
 					StringBundler.concat(
-						"select DDMStructure.structureId, ",
+						"select DDMStructure.structureId,",
+						"DDMStructure.ctCollectionId, ",
 						"DDMStructureVersion.definition from DDMStructure ",
 						"inner join DDMStructureVersion on ",
 						"DDMStructure.structureid = ",
-						"DDMStructureVersion.structureid where ",
+						"DDMStructureVersion.structureid and ",
+						"DDMStructure.ctCollectionId = ",
+						"DDMStructureVersion.ctCollectionId where ",
 						"DDMStructure.version = DDMStructureVersion.version ",
 						"and DDMStructure.classNameId = ?"));
 			PreparedStatement updatePreparedStatement =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
 					"update DDMStructure set definition = ? where " +
-						"structureId = ?")) {
+						"structureId = ? and ctCollectionId = ?")) {
 
 			selectPreparedStatement.setLong(
 				1, PortalUtil.getClassNameId(DDMFormInstance.class.getName()));
@@ -73,6 +76,8 @@ public class DDMStructureUpgradeProcess extends UpgradeProcess {
 						1, resultSet.getString("definition"));
 					updatePreparedStatement.setLong(
 						2, resultSet.getLong("structureId"));
+					updatePreparedStatement.setLong(
+						3, resultSet.getLong("ctCollectionId"));
 
 					updatePreparedStatement.addBatch();
 				}
@@ -87,16 +92,19 @@ public class DDMStructureUpgradeProcess extends UpgradeProcess {
 				connection.prepareStatement(
 					StringBundler.concat(
 						"select DDMStructureVersion.structureVersionId, ",
+						"DDMStructureVersion.ctCollectionId, ",
 						"DDMStructureVersion.definition from DDMStructure ",
 						"inner join DDMStructureVersion on ",
 						"DDMStructure.structureId = ",
-						"DDMStructureVersion.structureId where ",
+						"DDMStructureVersion.structureId and ",
+						"DDMStructure.ctCollectionId = ",
+						"DDMStructureVersion.ctCollectionId where ",
 						"DDMStructure.classNameId = ?"));
 			PreparedStatement updatePreparedStatement =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
 					"update DDMStructureVersion set definition = ? where " +
-						"structureVersionId = ?")) {
+						"structureVersionId = ? and ctCollectionId = ?")) {
 
 			selectPreparedStatement.setLong(
 				1, PortalUtil.getClassNameId(DDMFormInstance.class.getName()));
@@ -134,6 +142,9 @@ public class DDMStructureUpgradeProcess extends UpgradeProcess {
 
 					updatePreparedStatement.setLong(
 						2, resultSet.getLong("structureVersionId"));
+
+					updatePreparedStatement.setLong(
+						3, resultSet.getLong("ctCollectionId"));
 
 					updatePreparedStatement.addBatch();
 				}

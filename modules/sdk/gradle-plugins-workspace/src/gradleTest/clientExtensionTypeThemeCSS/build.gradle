@@ -33,6 +33,14 @@ runGradleTest {
 			assert typeSettings.contains("clayURL=css/clay.css")
 			assert typeSettings.contains("mainRTLURL=css/main_rtl.css")
 			assert typeSettings.contains("mainURL=css/main.css")
+
+			Project clientExtensionProject = project ":theme-css-with-rtl-css-properties"
+
+			File clayRTLFile = new File(clientExtensionProject.buildDir, "liferay-client-extension-build/static/css/clay_rtl.css")
+			File mainRTLFile = new File(clientExtensionProject.buildDir, "liferay-client-extension-build/static/css/main_rtl.css")
+
+			assert clayRTLFile.exists()
+			assert mainRTLFile.exists()
 		}
 
 		_testClientExtensionConfigJSON("theme-css-without-frontend-token-definition-json") {

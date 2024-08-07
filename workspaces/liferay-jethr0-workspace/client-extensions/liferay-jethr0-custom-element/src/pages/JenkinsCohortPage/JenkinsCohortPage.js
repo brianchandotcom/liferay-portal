@@ -217,6 +217,18 @@ function JenkinsCohortPage() {
 		getJenkinsCohortById({id, setJenkinsCohort});
 	}
 
+	let jenkinsCohortName = 'Jenkins Cohort #' + id;
+
+	if (jenkinsCohort) {
+		jenkinsCohortName = jenkinsCohort.name;
+	}
+
+	const breadcrumbs = [
+		{active: false, link: '/', name: 'Home'},
+		{active: false, link: '/jenkins-cohorts', name: 'Jenkins'},
+		{active: true, link: '/jenkins-cohorts/' + id, name: jenkinsCohortName},
+	];
+
 	if (!jenkinsCohort) {
 		return (
 			<ClayLayout.Container>
@@ -240,18 +252,6 @@ function JenkinsCohortPage() {
 	function redirectToJenkinsCohortPage() {
 		window.location.replace('/#/jenkins-cohorts/');
 	}
-
-	let jenkinsCohortName = 'Jenkins Cohort #' + id;
-
-	if (jenkinsCohort) {
-		jenkinsCohortName = jenkinsCohort.name;
-	}
-
-	const breadcrumbs = [
-		{active: false, link: '/', name: 'Home'},
-		{active: false, link: '/jenkins-cohorts', name: 'Jenkins'},
-		{active: true, link: '/jenkins-cohorts/' + id, name: jenkinsCohortName},
-	];
 
 	return (
 		<ClayLayout.Container>

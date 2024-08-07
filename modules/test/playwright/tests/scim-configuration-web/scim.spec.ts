@@ -5,13 +5,19 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {ApiHelpers} from '../../helpers/ApiHelpers';
 import {ApplicationsMenuPage} from '../../pages/product-navigation-applications-menu/ApplicationsMenuPage';
 import {SCIMConfigurationPage} from '../../pages/scim-configuraiton-web/SCIMConfigurationPage';
 import {getRandomInt} from '../../utils/getRandomInt';
 
-export const test = mergeTests(loginTest());
+export const test = mergeTests(
+	featureFlagsTest({
+		'LPS-96845': true,
+	}),
+	loginTest()
+);
 
 const RESET_SCIM_HELP_TEXT =
 	'All the current SCIM Client related data and the generated OAuth 2 tokens is removed. This is necessary for being able to configure a new SCIM Client.';

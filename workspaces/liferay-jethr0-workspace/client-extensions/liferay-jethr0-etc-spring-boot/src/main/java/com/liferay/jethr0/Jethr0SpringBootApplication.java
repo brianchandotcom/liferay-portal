@@ -9,12 +9,8 @@ import com.liferay.client.extension.util.spring.boot.ClientExtensionUtilSpringBo
 import com.liferay.jethr0.bui1d.queue.BuildQueue;
 import com.liferay.jethr0.entity.EntityInitializer;
 import com.liferay.jethr0.event.jenkins.JenkinsEventProcessor;
-import com.liferay.jethr0.event.jenkins.client.JenkinsClient;
 import com.liferay.jethr0.jenkins.JenkinsQueue;
 import com.liferay.jethr0.job.queue.JobQueue;
-
-import java.net.MalformedURLException;
-import java.net.URL;
 
 import javax.jms.ConnectionFactory;
 
@@ -76,25 +72,6 @@ public class Jethr0SpringBootApplication {
 				JenkinsEventProcessor.class));
 
 		jenkinsQueue.initialize();
-
-		JenkinsClient jenkinsClient = configurableApplicationContext.getBean(
-			JenkinsClient.class);
-
-		try {
-			System.out.println(
-				jenkinsClient.requestGet(
-					new URL(
-						"https://test-1-0.liferay.com/api/json?" +
-							"tree=assignedLabels[name]")));
-			System.out.println(
-				jenkinsClient.requestGet(
-					new URL(
-						"https://test-1-1.liferay.com/api/json?" +
-							"tree=assignedLabels[name]")));
-		}
-		catch (MalformedURLException malformedURLException) {
-			throw new RuntimeException(malformedURLException);
-		}
 	}
 
 	@Bean

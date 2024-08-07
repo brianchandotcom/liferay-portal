@@ -231,7 +231,7 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 				action: () => {
 					dispatch(
 						deleteItem({
-							itemId: item.id,
+							itemIds: [item.id],
 							selectItem,
 						})
 					);

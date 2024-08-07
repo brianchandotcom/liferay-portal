@@ -116,7 +116,7 @@ export default function TopperItemActions({disabled, item}) {
 				action: () =>
 					dispatch(
 						deleteItem({
-							itemId: item.itemId,
+							itemIds: [item.itemId],
 							selectItem,
 						})
 					),

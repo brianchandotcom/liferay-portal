@@ -49,20 +49,20 @@ export function getPreviousItemId(itemId, layoutData, nextLayoutData) {
 	return parentId;
 }
 
-export default function deleteItem({itemId, selectItem = () => {}}) {
+export default function deleteItem({itemIds, selectItem = () => {}}) {
 	return (dispatch, getState) => {
 		const {fragmentEntryLinks, layoutData, segmentsExperienceId} =
 			getState();
 
 		return markItemForDeletion({
 			fragmentEntryLinks,
-			itemId,
+			itemIds,
 			layoutData,
 			onNetworkStatus: dispatch,
 			segmentsExperienceId,
 		}).then(({portletIds = [], layoutData: nextLayoutData}) => {
 			const nextItemId = getPreviousItemId(
-				itemId,
+				itemIds[0],
 				layoutData,
 				nextLayoutData
 			);
@@ -77,15 +77,17 @@ export default function deleteItem({itemId, selectItem = () => {}}) {
 				origin: ITEM_ACTIVATION_ORIGINS.itemActions,
 			});
 
-			const fragmentEntryLinkIds = getFragmentEntryLinkIdsFromItemId({
-				itemId,
-				layoutData: nextLayoutData,
-			});
+			const fragmentEntryLinkIds = itemIds.flatMap((itemId) =>
+				getFragmentEntryLinkIdsFromItemId({
+					itemId,
+					layoutData: nextLayoutData,
+				})
+			);
 
 			dispatch(
 				deleteItemAction({
 					fragmentEntryLinkIds,
-					itemId,
+					itemIds,
 					layoutData: nextLayoutData,
 					portletIds,
 				})
@@ -93,28 +95,64 @@ export default function deleteItem({itemId, selectItem = () => {}}) {
 
 			clearPageContents();
 
-			maybeShowAlert(layoutData, itemId, fragmentEntryLinks);
+			maybeShowAlert(layoutData, itemIds, fragmentEntryLinks);
 		});
 	};
 }
 
 function markItemForDeletion({
 	fragmentEntryLinks,
-	itemId,
+	itemIds,
 	layoutData,
 	onNetworkStatus: dispatch,
 	segmentsExperienceId,
 }) {
-	const portletIds = findPortletIds(itemId, layoutData, fragmentEntryLinks);
+
+	// We just need to remove the parents of the selected items
+
+	const parentItemIds = getParentItemIds(itemIds, layoutData);
+
+	const portletIds = parentItemIds.flatMap((itemId) =>
+		findPortletIds(itemId, layoutData, fragmentEntryLinks)
+	);
 
 	return LayoutService.markItemForDeletion({
-		itemId,
+		itemIds: parentItemIds,
 		onNetworkStatus: dispatch,
 		portletIds,
 		segmentsExperienceId,
 	}).then((response) => {
 		return {...response, portletIds};
 	});
+}
+
+function getParentItemIds(itemIds, layoutData) {
+	const {items: layoutDataItems} = layoutData;
+	const itemsToRemoveFromSelected = [];
+
+	const hasParentSelected = (itemId) => {
+		const parentId = layoutDataItems[itemId].parentId;
+
+		if (!parentId) {
+			return false;
+		}
+
+		if (itemIds.includes(parentId)) {
+			return true;
+		}
+
+		return hasParentSelected(parentId);
+	};
+
+	itemIds.forEach((itemId) => {
+		if (hasParentSelected(itemId)) {
+			itemsToRemoveFromSelected.push(itemId);
+		}
+	});
+
+	return itemIds.filter(
+		(itemId) => !itemsToRemoveFromSelected.includes(itemId)
+	);
 }
 
 function findPortletIds(itemId, layoutData, fragmentEntryLinks) {
@@ -145,7 +183,8 @@ function findPortletIds(itemId, layoutData, fragmentEntryLinks) {
 	return deletedWidgets;
 }
 
-function maybeShowAlert(layoutData, itemId, fragmentEntryLinks) {
+function maybeShowAlert(layoutData, itemIds, fragmentEntryLinks) {
+	const [itemId] = itemIds;
 	const item = layoutData?.items?.[itemId];
 
 	if (

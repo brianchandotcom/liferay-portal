@@ -62,7 +62,6 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -599,10 +598,9 @@ public class LayoutsImporterTest {
 		throws Exception {
 
 		Assert.assertTrue(
-			layoutPageTemplateEntryKey,
-			ArrayUtil.contains(
-				_DISPLAY_PAGE_LAYOUT_PAGE_TEMPLATE_ENTRY_KEYS,
-				layoutPageTemplateEntryKey));
+			layoutPageTemplateEntryKey.equals(
+				"basic-web-content-display-page-template") ||
+			layoutPageTemplateEntryKey.equals("product-display-page-template"));
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
@@ -1003,12 +1001,6 @@ public class LayoutsImporterTest {
 			expectedRowStyledLayoutStructureItem.getNumberOfColumns(),
 			actualRowStyledLayoutStructureItem.getNumberOfColumns());
 	}
-
-	private static final String[]
-		_DISPLAY_PAGE_LAYOUT_PAGE_TEMPLATE_ENTRY_KEYS = {
-			"basic-web-content-display-page-template",
-			"product-display-page-template"
-		};
 
 	private static final String _RESOURCES_PATH_DISPLAY_PAGE_TEMPLATES =
 		"com/liferay/layout/page/template/admin/web/internal/importer/test" +

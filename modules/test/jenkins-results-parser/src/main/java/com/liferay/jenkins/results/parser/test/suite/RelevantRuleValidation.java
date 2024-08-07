@@ -34,6 +34,69 @@ import java.util.Properties;
  */
 public class RelevantRuleValidation {
 
+	public static void evaluate(List<RelevantRule> relevantRules) {
+		for (RelevantRule relevantRule : relevantRules) {
+			try {
+				relevantRule.validate();
+			}
+			catch (RelevantRuleConfigurationException
+						relevantRuleConfigurationException) {
+
+				RelevantRuleConfigurationException.addException(
+					relevantRuleConfigurationException);
+			}
+
+			for (TestBatch testBatch : relevantRule.getTestBatches()) {
+				if (testBatch instanceof DefaultTestBatch) {
+					continue;
+				}
+
+				TestSelector testSelector = testBatch.getTestSelector();
+
+				try {
+					testSelector.validate();
+				}
+				catch (RelevantRuleConfigurationException
+							relevantRuleConfigurationException) {
+
+					RelevantRuleConfigurationException.addException(
+						relevantRuleConfigurationException);
+				}
+			}
+		}
+	}
+
+	public static void throwExceptions() {
+		StringBuilder sb = new StringBuilder();
+
+		int i = 1;
+
+		for (Exception exception :
+				RelevantRuleConfigurationException.getExceptions()) {
+
+			if (i == 1) {
+				sb.append("The following issues were found:");
+			}
+
+			sb.append("\n");
+			sb.append(i);
+			sb.append(". ");
+			sb.append(exception.getMessage());
+
+			i++;
+		}
+
+		if (sb.length() > 0) {
+			throw new RuntimeException(sb.toString());
+		}
+	}
+
+	public static void validate(List<RelevantRule> relevantRules) {
+		evaluate(relevantRules);
+
+		throwExceptions();
+	}
+
 	public static void validate(
 			String repositoryName, String upstreamBranchName)
 		throws IOException {
@@ -68,64 +131,21 @@ public class RelevantRuleValidation {
 				continue;
 			}
 
+			List<RelevantRule> relevantRules = new ArrayList<>();
+
 			for (String relevantRuleName : relevantRuleNames.split(",")) {
 				RelevantRule relevantRule = new RelevantRule(
 					testPropertiesPath.toString(),
 					portalAcceptancePullRequestJob, relevantRuleName,
 					testProperties);
 
-				try {
-					relevantRule.validate();
-				}
-				catch (RelevantRuleConfigurationException
-							relevantRuleConfigurationException) {
-
-					RelevantRuleConfigurationException.addException(
-						relevantRuleConfigurationException);
-				}
-
-				for (TestBatch testBatch : relevantRule.getTestBatches()) {
-					if (testBatch instanceof DefaultTestBatch) {
-						continue;
-					}
-
-					TestSelector testSelector = testBatch.getTestSelector();
-
-					try {
-						testSelector.validate();
-					}
-					catch (RelevantRuleConfigurationException
-								relevantRuleConfigurationException) {
-
-						RelevantRuleConfigurationException.addException(
-							relevantRuleConfigurationException);
-					}
-				}
-			}
-		}
-
-		StringBuilder sb = new StringBuilder();
-
-		int i = 1;
-
-		for (Exception exception :
-				RelevantRuleConfigurationException.getExceptions()) {
-
-			if (i == 1) {
-				sb.append("The following issues were found:");
+				relevantRules.add(relevantRule);
 			}
 
-			sb.append("\n");
-			sb.append(i);
-			sb.append(". ");
-			sb.append(exception.getMessage());
-
-			i++;
+			evaluate(relevantRules);
 		}
 
-		if (sb.length() > 0) {
-			throw new RuntimeException(sb.toString());
-		}
+		throwExceptions();
 	}
 
 	private static List<Path> _findTestPropertiesPaths(File baseDir)

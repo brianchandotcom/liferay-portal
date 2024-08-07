@@ -150,6 +150,8 @@ public class BlogsEntryIndexerIndexedFieldsTest {
 	private Map<String, String> _expectedFieldValues(BlogsEntry blogsEntry)
 		throws Exception {
 
+		User user = TestPropsValues.getUser();
+
 		Map<String, String> map = HashMapBuilder.put(
 			Field.ASSET_ENTRY_ID, String.valueOf(_getAssetEntryId(blogsEntry))
 		).put(
@@ -190,6 +192,8 @@ public class BlogsEntryIndexerIndexedFieldsTest {
 		).put(
 			"scopeGroupExternalReferenceCode", _group.getExternalReferenceCode()
 		).put(
+			"statusByUserExternalReferenceCode", user.getExternalReferenceCode()
+		).put(
 			"statusByUserId", String.valueOf(blogsEntry.getStatusByUserId())
 		).put(
 			"title_sortable", StringUtil.lowerCase(blogsEntry.getTitle())
@@ -198,12 +202,7 @@ public class BlogsEntryIndexerIndexedFieldsTest {
 		).put(
 			"urlTitle_String_sortable", blogsEntry.getUrlTitle()
 		).put(
-			"userExternalReferenceCode",
-			() -> {
-				User user = TestPropsValues.getUser();
-
-				return user.getExternalReferenceCode();
-			}
+			"userExternalReferenceCode", user.getExternalReferenceCode()
 		).put(
 			"visible", "true"
 		).build();

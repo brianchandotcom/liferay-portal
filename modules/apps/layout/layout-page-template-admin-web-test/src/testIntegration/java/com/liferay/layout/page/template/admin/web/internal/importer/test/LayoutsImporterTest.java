@@ -132,7 +132,7 @@ public class LayoutsImporterTest {
 		try {
 			layoutsImporterResultEntries = _layoutsImporter.importFile(
 				TestPropsValues.getUserId(), _group1.getGroupId(), 0,
-				_getFile(_DISPLAY_PAGE_TEMPLATES_RESOURCES_PATH),
+				_getFile(_RESOURCES_PATH_DISPLAY_PAGE_TEMPLATES),
 				LayoutsImportStrategy.DO_NOT_OVERWRITE, true);
 		}
 		finally {
@@ -265,19 +265,19 @@ public class LayoutsImporterTest {
 				_group1.getGroupId(),
 				LayoutPageTemplateConstants.
 					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-				_getFile(_DISPLAY_PAGE_TEMPLATES_RESOURCES_PATH)));
+				_getFile(_RESOURCES_PATH_DISPLAY_PAGE_TEMPLATES)));
 		Assert.assertTrue(
 			_layoutsImporter.validateFile(
 				_group1.getGroupId(),
 				LayoutPageTemplateConstants.
 					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-				_getFile(_MASTER_PAGES_RESOURCES_PATH)));
+				_getFile(_RESOURCES_PATH_MASTER_PAGES)));
 		Assert.assertTrue(
 			_layoutsImporter.validateFile(
 				_group1.getGroupId(),
 				LayoutPageTemplateConstants.
 					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-				_getFile(_PAGE_TEMPLATES_RESOURCES_PATH)));
+				_getFile(_RESOURCES_PATH_PAGE_TEMPLATES)));
 	}
 
 	@Test
@@ -298,7 +298,7 @@ public class LayoutsImporterTest {
 				_group1.getGroupId(),
 				LayoutPageTemplateConstants.
 					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-				_getFile(_PAGE_TEMPLATES_RESOURCES_PATH)));
+				_getFile(_RESOURCES_PATH_PAGE_TEMPLATES)));
 	}
 
 	@Test
@@ -318,7 +318,7 @@ public class LayoutsImporterTest {
 				_group1.getGroupId(),
 				LayoutPageTemplateConstants.
 					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-				_getFile(_PAGE_TEMPLATES_RESOURCES_PATH)));
+				_getFile(_RESOURCES_PATH_PAGE_TEMPLATES)));
 	}
 
 	@Test
@@ -349,7 +349,7 @@ public class LayoutsImporterTest {
 				_group1.getGroupId(),
 				layoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId(),
-				_getFile(_PAGE_TEMPLATES_RESOURCES_PATH)));
+				_getFile(_RESOURCES_PATH_PAGE_TEMPLATES)));
 	}
 
 	@Test
@@ -370,7 +370,7 @@ public class LayoutsImporterTest {
 				_group1.getGroupId(),
 				LayoutPageTemplateConstants.
 					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-				_getFile(_DISPLAY_PAGE_TEMPLATES_RESOURCES_PATH)));
+				_getFile(_RESOURCES_PATH_DISPLAY_PAGE_TEMPLATES)));
 	}
 
 	@Test
@@ -391,7 +391,7 @@ public class LayoutsImporterTest {
 				_group1.getGroupId(),
 				LayoutPageTemplateConstants.
 					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-				_getFile(_MASTER_PAGES_RESOURCES_PATH)));
+				_getFile(_RESOURCES_PATH_MASTER_PAGES)));
 	}
 
 	private FragmentEntry _addFragmentEntry(
@@ -1010,15 +1010,15 @@ public class LayoutsImporterTest {
 			"product-display-page-template"
 		};
 
-	private static final String _DISPLAY_PAGE_TEMPLATES_RESOURCES_PATH =
+	private static final String _RESOURCES_PATH_DISPLAY_PAGE_TEMPLATES =
 		"com/liferay/layout/page/template/admin/web/internal/importer/test" +
 			"/dependencies/display-page-templates";
 
-	private static final String _MASTER_PAGES_RESOURCES_PATH =
+	private static final String _RESOURCES_PATH_MASTER_PAGES =
 		"com/liferay/layout/page/template/admin/web/internal/importer/test" +
 			"/dependencies/master-pages";
 
-	private static final String _PAGE_TEMPLATES_RESOURCES_PATH =
+	private static final String _RESOURCES_PATH_PAGE_TEMPLATES =
 		"com/liferay/layout/page/template/admin/web/internal/importer/test" +
 			"/dependencies/page-templates";
 

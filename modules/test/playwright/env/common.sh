@@ -91,7 +91,12 @@ function deploy_client_extensions {
 
 				printf "%s\n" ${client_extension_dir}
 
-				echo "Please replace \"${client_extension_name}\" in ${client_extensions_list_file} with a partial file path"
+				echo "Please replace \"${client_extension_name}\" in ${client_extensions_list_file} with one of the following:"
+
+				for each in ${client_extension_dir}
+				do
+					echo "${each//${_PORTAL_PROJECT_DIR}}"
+				done
 
 				client_extension_dir=$(echo ${client_extension_dir} | awk '{print $1}')
 			fi
@@ -153,7 +158,12 @@ function deploy_osgi_modules {
 
 				printf "%s\n" ${osgi_module_dir}
 
-				echo "Please replace \"${osgi_module_name}\" in ${osgi_modules_list_file} with a partial file path"
+				echo "Please replace \"${osgi_module_name}\" in ${osgi_modules_list_file} with one of the following:"
+
+				for each in ${osgi_module_dir}
+				do
+					echo "${each//${_PORTAL_PROJECT_DIR}}"
+				done
 
 				osgi_module_dir=$(echo ${osgi_module_dir} | awk '{print $1}')
 			fi

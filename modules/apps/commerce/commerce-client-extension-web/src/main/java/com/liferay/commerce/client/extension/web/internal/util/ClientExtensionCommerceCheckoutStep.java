@@ -49,18 +49,18 @@ public class ClientExtensionCommerceCheckoutStep
 
 	public ClientExtensionCommerceCheckoutStep(
 		CommerceCheckoutStepCET commerceCheckoutStepCET,
-		JSONFactory jsonFactory, JSPRenderer jspRenderer,
-		PortalCatapult portalCatapult, ServletContext servletContext,
 		CommercePaymentMethodGroupRelLocalService
 			commercePaymentMethodGroupRelLocalService,
+		JSONFactory jsonFactory, JSPRenderer jspRenderer,
+		PortalCatapult portalCatapult, ServletContext servletContext,
 		UserService userService) {
 
+		_commercePaymentMethodGroupRelLocalService =
+			commercePaymentMethodGroupRelLocalService;
 		_jsonFactory = jsonFactory;
 		_jspRenderer = jspRenderer;
 		_portalCatapult = portalCatapult;
 		_servletContext = servletContext;
-		_commercePaymentMethodGroupRelLocalService =
-			commercePaymentMethodGroupRelLocalService;
 		_userService = userService;
 
 		_active = commerceCheckoutStepCET.getActive();

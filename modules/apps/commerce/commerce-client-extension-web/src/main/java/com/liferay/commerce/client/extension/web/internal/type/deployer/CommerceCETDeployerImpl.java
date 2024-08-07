@@ -39,9 +39,10 @@ public class CommerceCETDeployerImpl implements CommerceCETDeployer {
 			_register(
 				CommerceCheckoutStep.class,
 				new ClientExtensionCommerceCheckoutStep(
-					(CommerceCheckoutStepCET)cet, _jsonFactory, _jspRenderer,
-					_portalCatapult, _servletContext,
-					_commercePaymentMethodGroupRelLocalService, _userService)));
+					(CommerceCheckoutStepCET)cet,
+					_commercePaymentMethodGroupRelLocalService, _jsonFactory,
+					_jspRenderer, _portalCatapult, _servletContext,
+					_userService)));
 	}
 
 	@Activate

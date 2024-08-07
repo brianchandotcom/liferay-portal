@@ -672,7 +672,7 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 
 		PostalAddress[] postalAddresses = account.getPostalAddresses();
 
-		if ((postalAddresses == null) || (postalAddresses.length == 0)) {
+		if (ArrayUtil.isEmpty(postalAddresses)) {
 			return;
 		}
 

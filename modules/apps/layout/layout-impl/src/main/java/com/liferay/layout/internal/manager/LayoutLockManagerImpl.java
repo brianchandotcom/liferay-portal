@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -439,8 +440,8 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 				_configurationAdmin.listConfigurations(
 					_getLockedLayoutsGroupConfigurationFilterString(companyId));
 
-			if ((configurations == null) || (configurations.length == 0)) {
-				return lockedLayoutsGroupConfigurations;
+			if (ArrayUtil.isEmpty(configurations)) {
+				return Collections.emptyMap();
 			}
 
 			for (Configuration configuration : configurations) {

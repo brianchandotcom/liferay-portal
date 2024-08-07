@@ -6,6 +6,7 @@
 package com.liferay.commerce.order.importer.item;
 
 import com.liferay.commerce.price.CommerceOrderItemPrice;
+import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.math.BigDecimal;
 
@@ -93,13 +94,7 @@ public class CommerceOrderImporterItemImpl
 
 	@Override
 	public boolean isValid() {
-		String[] errorMessages = getErrorMessages();
-
-		if ((errorMessages == null) || (errorMessages.length == 0)) {
-			return true;
-		}
-
-		return false;
+		return ArrayUtil.isEmpty(getErrorMessages());
 	}
 
 	public void setCommerceOrderItemPrice(

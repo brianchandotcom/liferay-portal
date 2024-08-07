@@ -161,9 +161,7 @@ public class CPDefinitionModelPreFilterContributor
 			booleanFilter.add(termsFilter, BooleanClauseOccur.MUST);
 		}
 		else {
-			long[] groupIds = searchContext.getGroupIds();
-
-			if ((groupIds == null) || (groupIds.length == 0)) {
+			if (ArrayUtil.isEmpty(searchContext.getGroupIds())) {
 				booleanFilter.addTerm(
 					Field.GROUP_ID, "-1", BooleanClauseOccur.MUST);
 			}

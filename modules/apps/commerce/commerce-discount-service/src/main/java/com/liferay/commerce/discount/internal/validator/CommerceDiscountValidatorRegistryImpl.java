@@ -84,7 +84,7 @@ public class CommerceDiscountValidatorRegistryImpl
 				commerceDiscountValidatorServiceWrapper :
 					commerceDiscountValidatorServiceWrappers) {
 
-			if ((types == null) || (types.length == 0)) {
+			if (ArrayUtil.isEmpty(types)) {
 				commerceDiscountValidators.add(
 					commerceDiscountValidatorServiceWrapper.getService());
 

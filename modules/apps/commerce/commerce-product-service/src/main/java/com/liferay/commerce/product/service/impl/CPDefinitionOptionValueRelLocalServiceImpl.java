@@ -68,6 +68,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -529,9 +530,7 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 			long[] cpDefinitionOptionValueRelsId)
 		throws PortalException {
 
-		if ((cpDefinitionOptionValueRelsId == null) ||
-			(cpDefinitionOptionValueRelsId.length == 0)) {
-
+		if (ArrayUtil.isEmpty(cpDefinitionOptionValueRelsId)) {
 			return Collections.emptyList();
 		}
 

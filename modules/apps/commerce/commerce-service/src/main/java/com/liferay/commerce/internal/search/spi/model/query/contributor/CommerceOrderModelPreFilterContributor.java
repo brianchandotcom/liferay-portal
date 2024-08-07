@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.MissingFilter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.search.spi.model.query.contributor.ModelPreFilterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchSettings;
@@ -80,9 +81,7 @@ public class CommerceOrderModelPreFilterContributor
 	private void _filterByGroupIds(
 		BooleanFilter booleanFilter, SearchContext searchContext) {
 
-		long[] groupIds = searchContext.getGroupIds();
-
-		if ((groupIds == null) || (groupIds.length == 0)) {
+		if (ArrayUtil.isEmpty(searchContext.getGroupIds())) {
 			booleanFilter.addTerm(
 				Field.GROUP_ID, "-1", BooleanClauseOccur.MUST);
 		}

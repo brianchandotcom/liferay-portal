@@ -364,6 +364,7 @@ public class JournalSubscriptionLocalizedContentTest
 		themeDisplay.setLocale(LocaleUtil.getSiteDefault());
 		themeDisplay.setLookAndFeel(
 			layoutSet.getTheme(), layoutSet.getColorScheme());
+		themeDisplay.setRealUser(user);
 		themeDisplay.setRequest(_getHttpServletRequest(themeDisplay));
 		themeDisplay.setResponse(new MockHttpServletResponse());
 		themeDisplay.setScopeGroupId(group.getGroupId());

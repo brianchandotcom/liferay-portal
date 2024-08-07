@@ -13,9 +13,9 @@ import {useMemo, useState} from 'react';
 import {CSVLink} from 'react-csv';
 
 import Table from '../../common/components/Table';
-import CheckboxFilter from '../../common/components/TableHeader/Filter/components/CheckboxFilter';
 import DropDownWithDrillDown from '../../common/components/TableHeader/Filter/components/DropDownWithDrillDown';
-import DateFilter from '../../common/components/TableHeader/Filter/components/filters/DateFilter/DateFilter';
+import {FilterTypes} from '../../common/components/TableHeader/Filter/components/FilterSelector/FilterSelector';
+import {Dates} from '../../common/components/TableHeader/Filter/components/filters/DateFilter/DateFilter';
 import Search from '../../common/components/TableHeader/Search/Search';
 import TableHeader from '../../common/components/TableHeader/TableHeader';
 import {MDFColumnKey} from '../../common/enums/mdfColumnKey';
@@ -34,7 +34,9 @@ import TableColumn from '../../common/interfaces/tableColumn';
 import {Liferay} from '../../common/services/liferay';
 import {Filters} from '../../common/utils/constants/filters';
 import {maxPagination} from '../../common/utils/constants/maxPagination';
-import getDropDownFilterMenus from '../../common/utils/getDropDownFilterMenus';
+import getDropDownFilterMenus, {
+	FilterItem,
+} from '../../common/utils/getDropDownFilterMenus';
 import useDynamicFieldEntries from './hooks/useDynamicFieldEntries';
 import useFilters from './hooks/useFilters';
 import useGetListItemsFromMDFRequests from './hooks/useGetListItemsFromMDFRequests';
@@ -153,73 +155,70 @@ const MDFRequestList = () => {
 			);
 		}
 	};
+
 	const getFilters = () => {
-		const filterFields = [
+		const filterFields: FilterItem[] = [
 			{
-				component: (
-					<DateFilter
-						clearInputs={filters?.activityPeriod}
-						dateFilters={(dates: {
-							endDate: string;
-							startDate: string;
-						}) => {
-							onFilter({
-								activityPeriod: {
-									dates,
-								},
-							});
-						}}
-						filterDescription="Activity Date "
-						initialDates={filters.activityPeriod?.dates}
-					/>
-				),
+				component: {
+					initialValues: filters.activityPeriod?.dates,
+					props: {
+						clearInputs: filters?.activityPeriod,
+						filterDescription: 'Activity Date',
+					},
+					type: FilterTypes.DATE,
+					updateFilter: (dates: Dates) =>
+						onFilter({
+							activityPeriod: {
+								dates,
+							},
+						}),
+				},
 				name: 'Activity Period',
 			},
 			{
-				component: (
-					<CheckboxFilter
-						availableItems={
-							openRequestFilter
-								? Filters.MDF_REQUEST_LISTING.openList
-								: Filters.MDF_REQUEST_LISTING.completedList
-						}
-						clearCheckboxes={!filters.status.value?.length}
-						initialCheckedItems={filters.status.value}
-						updateFilters={(checkedItems) =>
-							setFilters((previousFilters) => ({
-								...previousFilters,
-								status: {
-									...previousFilters.status,
-									value: checkedItems,
-								},
-							}))
-						}
-					/>
-				),
+				component: {
+					initialValues: filters.status.value,
+					props: {
+						availableItems: openRequestFilter
+							? Filters.MDF_REQUEST_LISTING.openList
+							: Filters.MDF_REQUEST_LISTING.completedList,
+						clearCheckboxes: !filters.status.value?.length,
+					},
+					type: FilterTypes.CHECKBOX,
+					updateFilter: (checkedItems: string[]) =>
+						setFilters((previousFilters) => ({
+							...previousFilters,
+							status: {
+								...previousFilters.status,
+								value: checkedItems,
+							},
+						})),
+				},
 				name: 'Status',
 			},
 		];
 
 		if (actions?.includes(PermissionActionType.SEE_RESTRICTED_FIELDS)) {
 			filterFields.push({
-				component: (
-					<CheckboxFilter
-						availableItems={companiesEntries?.map<string>(
-							(company) => company.label as string
-						)}
-						clearCheckboxes={!filters.partner.value?.length}
-						initialCheckedItems={filters.partner.value}
-						updateFilters={(checkedItems) =>
-							setFilters((previousFilters) => ({
-								...previousFilters,
-								partner: {
-									...previousFilters.status,
-									value: checkedItems,
-								},
-							}))
-						}
-					/>
-				),
+				component: {
+					initialValues: filters.partner.value,
+					props: {
+						availableItems:
+							companiesEntries?.map<string>(
+								(company) => company.label as string
+							) || [],
+						clearCheckboxes: !filters.partner.value?.length,
+					},
+					type: FilterTypes.CHECKBOX,
+					updateFilter: (checkedItems: string[]) =>
+						setFilters((previousFilters) => ({
+							...previousFilters,
+							partner: {
+								...previousFilters.status,
+								value: checkedItems,
+							},
+						})),
+				},
 				name: 'Partner',
 			});
 		}
@@ -291,7 +290,7 @@ const MDFRequestList = () => {
 											searchTerm: filters.searchTerm,
 										});
 									}}
-									small
+									size="sm"
 								>
 									<ClayIcon
 										className="ml-n2 mr-1"
@@ -305,7 +304,7 @@ const MDFRequestList = () => {
 
 					<DropDownWithDrillDown
 						className=""
-						initialActiveMenu="x0a0"
+						defaultActiveMenu="x0a0"
 						menus={getDropDownFilterMenus(getFilters())}
 						trigger={
 							<ClayButton borderless className="btn-secondary">

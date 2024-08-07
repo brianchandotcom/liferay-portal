@@ -16,9 +16,9 @@ import './index.css';
 import Modal from '../../common/components/Modal';
 import Table from '../../common/components/Table';
 import TableHeader from '../../common/components/TableHeader';
-import CheckboxFilter from '../../common/components/TableHeader/Filter/components/CheckboxFilter';
 import DropDownWithDrillDown from '../../common/components/TableHeader/Filter/components/DropDownWithDrillDown';
-import DateFilter from '../../common/components/TableHeader/Filter/components/filters/DateFilter';
+import {FilterTypes} from '../../common/components/TableHeader/Filter/components/FilterSelector/FilterSelector';
+import {Dates} from '../../common/components/TableHeader/Filter/components/filters/DateFilter/DateFilter';
 import Search from '../../common/components/TableHeader/Search';
 import {PartnerOpportunitiesColumnKey} from '../../common/enums/partnerOpportunitiesColumnKey';
 import {SortableTable} from '../../common/enums/sortableTable';
@@ -132,56 +132,47 @@ const PartnerOpportunitiesList = ({isRenewalListing, name}: IProps) => {
 		start: currentFiscalYearStart,
 	};
 
-	const getFilters = () => {
-		const filterFields = [
-			{
-				component: (
-					<CheckboxFilter
-						availableItems={
-							isRenewalListing
-								? Filters.RENEWAL_LISTING.stages
-								: Filters.OPPORTUNITY_LISTING.stages
-						}
-						clearCheckboxes={!filters.stage.value?.length}
-						initialCheckedItems={filters.stage.value}
-						updateFilters={(checkedItems) =>
-							setFilters((previousFilters) => ({
-								...previousFilters,
-								stage: {
-									...previousFilters.stage,
-									value: checkedItems,
-								},
-							}))
-						}
-					/>
-				),
-				name: 'Stage',
+	const filterFields = [
+		{
+			component: {
+				initialValues: filters.stage.value,
+				props: {
+					availableItems: isRenewalListing
+						? Filters.RENEWAL_LISTING.stages
+						: Filters.OPPORTUNITY_LISTING.stages,
+					clearCheckboxes: !filters.stage.value?.length,
+				},
+				type: FilterTypes.CHECKBOX,
+				updateFilter: (checkedItems: string[]) =>
+					setFilters((previousFilters) => ({
+						...previousFilters,
+						stage: {
+							...previousFilters.stage,
+							value: checkedItems,
+						},
+					})),
 			},
-			{
-				component: (
-					<DateFilter
-						clearInputs={filters?.closeDate}
-						dateFilters={(dates: {
-							endDate: string;
-							startDate: string;
-						}) => {
-							onFilter({
-								closeDate: {
-									dates,
-								},
-							});
-						}}
-						filterDescription="Close Date "
-						initialDates={filters.closeDate?.dates}
-						years={rangeDataPicker}
-					/>
-				),
-				name: 'Close Date',
+			name: 'Stage',
+		},
+		{
+			component: {
+				initialValues: filters.closeDate?.dates,
+				props: {
+					clearInputs: filters?.closeDate,
+					filterDescription: 'Close Date',
+					years: rangeDataPicker,
+				},
+				type: FilterTypes.DATE,
+				updateFilter: (dates: Dates) =>
+					onFilter({
+						closeDate: {
+							dates,
+						},
+					}),
 			},
-		];
-
-		return filterFields;
-	};
+			name: 'Close Date',
+		},
+	];
 
 	const handleCustomClickOnRow = async (row: PartnerOpportunitiesItem) => {
 		setIsVisibleModal(true);
@@ -296,8 +287,8 @@ const PartnerOpportunitiesList = ({isRenewalListing, name}: IProps) => {
 
 					<DropDownWithDrillDown
 						className=""
-						initialActiveMenu="x0a0"
-						menus={getDropDownFilterMenus(getFilters())}
+						defaultActiveMenu="x0a0"
+						menus={getDropDownFilterMenus(filterFields)}
 						trigger={
 							<ClayButton borderless className="btn-secondary">
 								<span className="inline-item inline-item-before">

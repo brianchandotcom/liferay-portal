@@ -14,9 +14,9 @@ import {CSVLink} from 'react-csv';
 
 import Table from '../../common/components/Table';
 import TableHeader from '../../common/components/TableHeader';
-import CheckboxFilter from '../../common/components/TableHeader/Filter/components/CheckboxFilter';
 import DropDownWithDrillDown from '../../common/components/TableHeader/Filter/components/DropDownWithDrillDown';
-import DateFilter from '../../common/components/TableHeader/Filter/components/filters/DateFilter';
+import {FilterTypes} from '../../common/components/TableHeader/Filter/components/FilterSelector/FilterSelector';
+import {Dates} from '../../common/components/TableHeader/Filter/components/filters/DateFilter/DateFilter';
 import Search from '../../common/components/TableHeader/Search';
 import {MDFClaimColumnKey} from '../../common/enums/mdfClaimColumnKey';
 import {ObjectActionName} from '../../common/enums/objectActionName';
@@ -207,101 +207,90 @@ const MDFClaimList = () => {
 
 					<DropDownWithDrillDown
 						className=""
-						initialActiveMenu="x0a0"
+						defaultActiveMenu="x0a0"
 						menus={getDropDownFilterMenus([
 							{
-								component: (
-									<DateFilter
-										clearInputs={filters?.submitDate}
-										dateFilters={(dates: {
-											endDate: string;
-											startDate: string;
-										}) => {
-											onFilter({
-												submitDate: {
-													dates,
-												},
-											});
-										}}
-										filterDescription="Claim Submitted "
-										initialDates={filters.submitDate?.dates}
-									/>
-								),
+								component: {
+									initialValues: filters.submitDate?.dates,
+									props: {
+										clearInputs: filters?.submitDate,
+										filterDescription: 'Claim Submitted',
+									},
+									type: FilterTypes.DATE,
+									updateFilter: (dates: Dates) =>
+										onFilter({
+											submitDate: {
+												dates,
+											},
+										}),
+								},
 								name: 'Date Submitted',
 							},
 							{
-								component: (
-									<CheckboxFilter
-										availableItems={
-											openClaimsFilter
-												? Filters.MDF_CLAIM_LISTING
-														.openList
-												: Filters.MDF_CLAIM_LISTING
-														.completedList
-										}
-										clearCheckboxes={
-											!filters.status.value?.length
-										}
-										initialCheckedItems={
-											filters.status.value
-										}
-										updateFilters={(checkedItems) =>
-											setFilters((previousFilters) => ({
-												...previousFilters,
-												status: {
-													...previousFilters.status,
-													value: checkedItems,
-												},
-											}))
-										}
-									/>
-								),
+								component: {
+									initialValues: filters.status.value,
+									props: {
+										availableItems: openClaimsFilter
+											? Filters.MDF_CLAIM_LISTING.openList
+											: Filters.MDF_CLAIM_LISTING
+													.completedList,
+										clearCheckboxes:
+											!filters.status.value?.length,
+									},
+									type: FilterTypes.CHECKBOX,
+									updateFilter: (checkedItems: string[]) =>
+										setFilters((previousFilters) => ({
+											...previousFilters,
+											status: {
+												...previousFilters.status,
+												value: checkedItems,
+											},
+										})),
+								},
 								name: 'Status',
 							},
 							{
-								component: (
-									<CheckboxFilter
-										availableItems={companiesEntries?.map<string>(
-											(company) => company.label as string
-										)}
-										clearCheckboxes={
-											!filters.partner.value?.length
-										}
-										initialCheckedItems={
-											filters.partner.value
-										}
-										updateFilters={(checkedItems) =>
-											setFilters((previousFilters) => ({
-												...previousFilters,
-												partner: {
-													...previousFilters.status,
-													value: checkedItems,
-												},
-											}))
-										}
-									/>
-								),
+								component: {
+									initialValues: filters.partner.value,
+									props: {
+										availableItems:
+											companiesEntries?.map<string>(
+												(company) =>
+													company.label as string
+											),
+										clearCheckboxes:
+											!filters.partner.value?.length,
+									},
+									type: FilterTypes.CHECKBOX,
+									updateFilter: (checkedItems: string[]) =>
+										setFilters((previousFilters) => ({
+											...previousFilters,
+											partner: {
+												...previousFilters.status,
+												value: checkedItems,
+											},
+										})),
+								},
 								name: 'Partner',
 							},
 							{
-								component: (
-									<CheckboxFilter
-										availableItems={['Full', 'Partial']}
-										clearCheckboxes={
-											!filters.type.value?.length
-										}
-										initialCheckedItems={filters.type.value}
-										updateFilters={(checkedItems) =>
-											setFilters((previousFilters) => ({
-												...previousFilters,
-												type: {
-													...previousFilters.type,
-													value: checkedItems,
-												},
-											}))
-										}
-									/>
-								),
+								component: {
+									initialValues: filters.type.value,
+									props: {
+										availableItems: ['Full', 'Partial'],
+										clearCheckboxes:
+											!filters.type.value?.length,
+									},
+									type: FilterTypes.CHECKBOX,
+									updateFilter: (checkedItems: string[]) =>
+										setFilters((previousFilters) => ({
+											...previousFilters,
+											type: {
+												...previousFilters.type,
+												value: checkedItems,
+											},
+										})),
+								},
 								name: 'Type',
 							},
 						])}

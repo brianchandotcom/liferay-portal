@@ -115,21 +115,6 @@ public class PortalInstancesConfigurationFactoryTest {
 			).build());
 	}
 
-	@Test
-	public void testVirtualInstanceCreation() throws Exception {
-		ConfigurationTestUtil.saveConfiguration(
-			_configuration,
-			HashMapDictionaryBuilder.<String, Object>put(
-				"mx", _domain
-			).put(
-				"virtualHostname", _domain
-			).build());
-
-		_company = _companyLocalService.getCompanyByWebId(_webId);
-
-		Assert.assertNotNull(_company);
-	}
-
 	private void _testCreateCompany(Dictionary<String, Object> properties)
 		throws Exception {
 

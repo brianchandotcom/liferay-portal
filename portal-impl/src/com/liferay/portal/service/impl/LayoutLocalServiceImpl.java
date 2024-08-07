@@ -249,7 +249,11 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		String name = nameMap.get(LocaleUtil.getSiteDefault());
 
 		if (system &&
-			(Objects.equals(type, LayoutConstants.TYPE_COLLECTION) ||
+			((Objects.equals(type, LayoutConstants.TYPE_ASSET_DISPLAY) &&
+			  (classPK > 0) &&
+			  (classNameId == _classNameLocalService.getClassNameId(
+				  Layout.class.getName()))) ||
+			 Objects.equals(type, LayoutConstants.TYPE_COLLECTION) ||
 			 Objects.equals(type, LayoutConstants.TYPE_CONTENT) ||
 			 Objects.equals(type, LayoutConstants.TYPE_UTILITY))) {
 

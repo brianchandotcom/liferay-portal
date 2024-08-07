@@ -30,7 +30,7 @@ add[button]=Add
 add-order=Add Order
 alert=Alert
 alert[noun]=Alert
-alert[adj]
+alert[adj]=adj
 alert-helper-error=Error
 alert-helper-info=Info
 alert-helper-success=Success

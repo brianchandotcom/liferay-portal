@@ -129,10 +129,13 @@ public class ExportImportIndexedFieldsTest {
 	}
 
 	private Map<String, String> _expectedFieldValues(
-		ExportImportConfiguration exportImportConfiguration) {
+			ExportImportConfiguration exportImportConfiguration)
+		throws Exception {
 
 		Map<String, Serializable> setttingMap =
 			exportImportConfiguration.getSettingsMap();
+
+		User user = TestPropsValues.getUser();
 
 		Map<String, String> map = HashMapBuilder.put(
 			Field.COMPANY_ID,
@@ -192,15 +195,12 @@ public class ExportImportIndexedFieldsTest {
 		).put(
 			"setting_userId", String.valueOf(setttingMap.get("userId"))
 		).put(
+			"statusByUserExternalReferenceCode", user.getExternalReferenceCode()
+		).put(
 			"statusByUserId",
 			String.valueOf(exportImportConfiguration.getStatusByUserId())
 		).put(
-			"userExternalReferenceCode",
-			() -> {
-				User user = TestPropsValues.getUser();
-
-				return user.getExternalReferenceCode();
-			}
+			"userExternalReferenceCode", user.getExternalReferenceCode()
 		).build();
 
 		_populateDates(exportImportConfiguration, map);

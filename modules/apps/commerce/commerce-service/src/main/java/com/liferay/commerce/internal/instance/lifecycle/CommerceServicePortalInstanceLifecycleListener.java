@@ -82,6 +82,12 @@ public class CommerceServicePortalInstanceLifecycleListener
 					StringPool.QUESTION),
 				CommercePaymentEntryRefundTypeConfiguration.class.getName(),
 				"product-defect", "Product Defect", company);
+			_createFactoryConfiguration(
+				_configurationAdmin.createFactoryConfiguration(
+					CommercePaymentEntryRefundTypeConfiguration.class.getName(),
+					StringPool.QUESTION),
+				CommercePaymentEntryRefundTypeConfiguration.class.getName(),
+				"return", "Return", company);
 		}
 		catch (Exception exception) {
 			throw new ModelListenerException(exception);

@@ -10,7 +10,7 @@
 		"version": "7.3"
 	},
 	"scripts": {
-		"build": "node-scripts theme:build",
+		"build": "node-scripts build:theme",
 		"checkFormat": "node-scripts format --check",
 		"format": "node-scripts format"
 	}

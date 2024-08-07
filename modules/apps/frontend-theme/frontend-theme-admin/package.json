@@ -20,7 +20,7 @@
 	"name": "liferay-admin-theme",
 	"repository": "liferay/liferay-portal",
 	"scripts": {
-		"build": "node-scripts theme:build",
+		"build": "node-scripts build:theme",
 		"checkFormat": "node-scripts format --check",
 		"format": "node-scripts format"
 	},

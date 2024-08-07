@@ -74,7 +74,7 @@ public class JSONPackageJSONCheck extends BaseFileCheck {
 
 			_checkScript(
 				fileName, scriptsJSONObject, "build", false, "theme build",
-				"theme:build");
+				"build:theme");
 		}
 		else {
 			_checkScript(

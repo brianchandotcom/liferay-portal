@@ -33,6 +33,22 @@ export class CommerceInstanceSettingsPage {
 		await this.applicationsMenuPage.goToInstanceSettings();
 	}
 
+	async goToInstanceSetting(categoryKey: string, configurationName: string) {
+		await this.goto();
+		await this.page
+			.getByRole('link', {
+				exact: true,
+				name: categoryKey,
+			})
+			.click();
+		await this.page
+			.getByRole('menuitem', {
+				exact: true,
+				name: configurationName,
+			})
+			.click();
+	}
+
 	async toggleShowUnselectableOptions(check: boolean) {
 		await this.goto();
 		await this.catalogLink.click();

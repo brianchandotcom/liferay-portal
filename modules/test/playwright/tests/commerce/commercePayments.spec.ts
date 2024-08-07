@@ -145,3 +145,25 @@ test('LPD-5742 Can view payments list admin page', async ({
 	await expect(page.getByText(refundId).first()).toBeVisible();
 	await expect(page.getByText('Refund', {exact: true})).toBeVisible();
 });
+
+test('LPD-32520 Can view in instance settings refund reasons', async ({
+	commerceInstanceSettingsPage,
+	commercePaymentsPage,
+}) => {
+	await commerceInstanceSettingsPage.goToInstanceSetting(
+		'Payment',
+		'Refund Reasons'
+	);
+
+	await expect(
+		commercePaymentsPage.instanceSettingsRefundReasonsLink('return')
+	).toBeVisible();
+	await expect(
+		commercePaymentsPage.instanceSettingsRefundReasonsLink(
+			'damaged-in-transit'
+		)
+	).toBeVisible();
+	await expect(
+		commercePaymentsPage.instanceSettingsRefundReasonsLink('product-defect')
+	).toBeVisible();
+});

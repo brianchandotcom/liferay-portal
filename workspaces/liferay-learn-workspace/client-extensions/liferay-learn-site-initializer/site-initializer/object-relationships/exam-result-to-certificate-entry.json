@@ -6,5 +6,5 @@
 	"name": "examResultToCertificateEntry",
 	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:ExamResult$]",
 	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:CertificateEntry$]",
-	"type": "oneToOne"
+	"type": "oneToMany"
 }

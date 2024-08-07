@@ -30,16 +30,6 @@
 		<pathelement location="${project.dir}/lib/portal/portlet.jar" />
 	</path>
 
-	<target name="build-dtd">
-		<copy
-			todir="docroot/dtd"
-		>
-			<fileset
-				dir="${project.dir}/definitions"
-			/>
-		</copy>
-	</target>
-
 	<target depends="build-common-web.clean,clean-tlds" name="clean">
 		<delete dir="classes" />
 		<delete dir="docroot/dtd" />
@@ -228,7 +218,7 @@ ${oversize.files.jsp}</fail>
 		</antcall>
 	</target>
 
-	<target depends="build-dtd" name="deploy">
+	<target name="deploy">
 		<manifest-macro />
 
 		<antcall target="build-common-web.deploy" />
@@ -262,7 +252,7 @@ ${oversize.files.jsp}</fail>
 		</gradle-execute>
 	</target>
 
-	<target depends="build-dtd" name="war">
+	<target name="war">
 		<manifest-macro />
 
 		<if>

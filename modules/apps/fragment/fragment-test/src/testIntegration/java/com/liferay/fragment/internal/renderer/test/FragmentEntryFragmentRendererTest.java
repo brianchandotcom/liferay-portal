@@ -105,25 +105,23 @@ public class FragmentEntryFragmentRendererTest {
 
 	@Test
 	public void testAddMappedFragmentEntryLinkWithURL() throws Exception {
-		JSONObject jsonObject = JSONUtil.put(
-			"element-text",
-			JSONUtil.put(
-				"config",
-				JSONUtil.put(
-					"href",
-					JSONUtil.put(
-						LocaleUtil.getSiteDefault(
-						).toString(),
-						"https://liferay.com")
-				).put(
-					"mapperType", "link"
-				)
-			).put(
-				"defaultValue", "Heading Example"
-			));
-
 		FragmentEntryLink fragmentEntryLink = _addHeadingFragmentEntryLink(
-			jsonObject);
+			JSONUtil.put(
+				"element-text",
+				JSONUtil.put(
+					"config",
+					JSONUtil.put(
+						"href",
+						JSONUtil.put(
+							LocaleUtil.getSiteDefault(
+							).toString(),
+							"https://liferay.com")
+					).put(
+						"mapperType", "link"
+					)
+				).put(
+					"defaultValue", "Heading Example"
+				)));
 
 		MockHttpServletResponse mockHttpServletResponse =
 			_renderFragmentEntryLink(fragmentEntryLink);
@@ -287,12 +285,10 @@ public class FragmentEntryFragmentRendererTest {
 
 		String originalText = RandomTestUtil.randomString();
 
-		JSONObject jsonObject = JSONUtil.put(
-			"element-text",
-			JSONUtil.put(LocaleUtil.toLanguageId(_locale), originalText));
-
 		FragmentEntryLink fragmentEntryLink = _addHeadingFragmentEntryLink(
-			jsonObject);
+			JSONUtil.put(
+				"element-text",
+				JSONUtil.put(LocaleUtil.toLanguageId(_locale), originalText)));
 
 		_renderFragmentEntryLink(fragmentEntryLink);
 

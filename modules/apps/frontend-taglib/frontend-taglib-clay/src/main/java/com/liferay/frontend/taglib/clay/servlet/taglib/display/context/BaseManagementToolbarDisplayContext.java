@@ -130,7 +130,7 @@ public class BaseManagementToolbarDisplayContext
 	}
 
 	protected Map<String, String> getDefaultEntriesMap(String[] entryKeys) {
-		if ((entryKeys == null) || (entryKeys.length == 0)) {
+		if (ArrayUtil.isEmpty(entryKeys)) {
 			return null;
 		}
 

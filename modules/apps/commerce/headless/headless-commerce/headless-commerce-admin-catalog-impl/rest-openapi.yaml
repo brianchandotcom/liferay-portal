@@ -6553,6 +6553,7 @@ paths:
                 - ProductOptionValue
     "/product-virtual-settings-file-entries/{id}":
         delete:
+            operationId: deleteProductVirtualSettingsFileEntry
             parameters:
                 - in: path
                   explode: false
@@ -6589,6 +6590,7 @@ paths:
             summary: Deletes a product virtual setting file entry by ID.
             tags: ["ProductVirtualSettingsFileEntry"]
         get:
+            operationId: getProductVirtualSettingsFileEntry
             parameters:
                 - in: path
                   explode: false
@@ -6654,6 +6656,7 @@ paths:
             summary: Gets a product virtual setting file entry by ID.
             tags: ["ProductVirtualSettingsFileEntry"]
         patch:
+            operationId: patchProductVirtualSettingsFileEntry
             parameters:
                 - in: path
                   explode: false
@@ -6731,6 +6734,7 @@ paths:
             tags: ["ProductVirtualSettingsFileEntry"]
     "/product-virtual-settings/{id}/product-virtual-settings-file-entries":
         get:
+            operationId: getProductVirtualSettingIdProductVirtualSettingsFileEntriesPage
             parameters:
                 - in: path
                   explode: false
@@ -6805,6 +6809,7 @@ paths:
             summary: Gets a list of virtual settings file entries.
             tags: ["ProductVirtualSettingsFileEntry"]
         post:
+            operationId: postProductVirtualSettingIdProductVirtualSettingsFileEntry
             parameters:
                 - in: path
                   name: id
@@ -14595,6 +14600,7 @@ paths:
             tags: ["SkuUnitOfMeasure"]
     "/sku-virtual-settings-file-entries/{id}":
         delete:
+            operationId: deleteSkuVirtualSettingsFileEntry
             parameters:
                 - in: path
                   explode: false
@@ -14631,6 +14637,7 @@ paths:
             summary: Deletes a sku virtual setting file entry by ID.
             tags: ["SkuVirtualSettingsFileEntry"]
         get:
+            operationId: getSkuVirtualSettingsFileEntry
             parameters:
                 - in: path
                   explode: false
@@ -14696,6 +14703,7 @@ paths:
             summary: Gets a sku virtual setting file entry by ID.
             tags: ["SkuVirtualSettingsFileEntry"]
         patch:
+            operationId: patchSkuVirtualSettingsFileEntry
             parameters:
                 - in: path
                   explode: false
@@ -14773,6 +14781,7 @@ paths:
             tags: ["SkuVirtualSettingsFileEntry"]
     "/sku-virtual-settings/{id}/sku-virtual-settings-file-entries":
         get:
+            operationId: getSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage
             parameters:
                 - in: path
                   explode: false
@@ -14847,6 +14856,7 @@ paths:
             summary: Gets a list of sku virtual settings file entries.
             tags: ["SkuVirtualSettingsFileEntry"]
         post:
+            operationId: postSkuVirtualSettingIdSkuVirtualSettingsFileEntry
             parameters:
                 - in: path
                   name: id

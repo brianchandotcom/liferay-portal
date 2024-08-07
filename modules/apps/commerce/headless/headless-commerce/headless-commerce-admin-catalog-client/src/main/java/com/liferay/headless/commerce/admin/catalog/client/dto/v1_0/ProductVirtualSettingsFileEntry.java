@@ -10,6 +10,7 @@ import com.liferay.headless.commerce.admin.catalog.client.serdes.v1_0.ProductVir
 
 import java.io.Serializable;
 
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -25,6 +26,28 @@ public class ProductVirtualSettingsFileEntry
 	public static ProductVirtualSettingsFileEntry toDTO(String json) {
 		return ProductVirtualSettingsFileEntrySerDes.toDTO(json);
 	}
+
+	public Map<String, Map<String, String>> getActions() {
+		return actions;
+	}
+
+	public void setActions(Map<String, Map<String, String>> actions) {
+		this.actions = actions;
+	}
+
+	public void setActions(
+		UnsafeSupplier<Map<String, Map<String, String>>, Exception>
+			actionsUnsafeSupplier) {
+
+		try {
+			actions = actionsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Map<String, Map<String, String>> actions;
 
 	public String getAttachment() {
 		return attachment;
@@ -46,6 +69,25 @@ public class ProductVirtualSettingsFileEntry
 	}
 
 	protected String attachment;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
+		try {
+			id = idUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long id;
 
 	public String getSrc() {
 		return src;

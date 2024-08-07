@@ -139,6 +139,8 @@ public class OpenAPIResourceImpl {
 
 			add(ProductVirtualSettingsResourceImpl.class);
 
+			add(ProductVirtualSettingsFileEntryResourceImpl.class);
+
 			add(RelatedProductResourceImpl.class);
 
 			add(SkuResourceImpl.class);
@@ -148,6 +150,8 @@ public class OpenAPIResourceImpl {
 			add(SkuUnitOfMeasureResourceImpl.class);
 
 			add(SkuVirtualSettingsResourceImpl.class);
+
+			add(SkuVirtualSettingsFileEntryResourceImpl.class);
 
 			add(SpecificationResourceImpl.class);
 

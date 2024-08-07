@@ -50,6 +50,16 @@ public class SkuVirtualSettingsFileEntrySerDes {
 
 		sb.append("{");
 
+		if (skuVirtualSettingsFileEntry.getActions() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"actions\": ");
+
+			sb.append(_toJSON(skuVirtualSettingsFileEntry.getActions()));
+		}
+
 		if (skuVirtualSettingsFileEntry.getAttachment() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -62,6 +72,16 @@ public class SkuVirtualSettingsFileEntrySerDes {
 			sb.append(_escape(skuVirtualSettingsFileEntry.getAttachment()));
 
 			sb.append("\"");
+		}
+
+		if (skuVirtualSettingsFileEntry.getId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"id\": ");
+
+			sb.append(skuVirtualSettingsFileEntry.getId());
 		}
 
 		if (skuVirtualSettingsFileEntry.getSrc() != null) {
@@ -128,6 +148,15 @@ public class SkuVirtualSettingsFileEntrySerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
+		if (skuVirtualSettingsFileEntry.getActions() == null) {
+			map.put("actions", null);
+		}
+		else {
+			map.put(
+				"actions",
+				String.valueOf(skuVirtualSettingsFileEntry.getActions()));
+		}
+
 		if (skuVirtualSettingsFileEntry.getAttachment() == null) {
 			map.put("attachment", null);
 		}
@@ -135,6 +164,13 @@ public class SkuVirtualSettingsFileEntrySerDes {
 			map.put(
 				"attachment",
 				String.valueOf(skuVirtualSettingsFileEntry.getAttachment()));
+		}
+
+		if (skuVirtualSettingsFileEntry.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(skuVirtualSettingsFileEntry.getId()));
 		}
 
 		if (skuVirtualSettingsFileEntry.getSrc() == null) {
@@ -180,7 +216,13 @@ public class SkuVirtualSettingsFileEntrySerDes {
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(jsonParserFieldName, "attachment")) {
+			if (Objects.equals(jsonParserFieldName, "actions")) {
+				return true;
+			}
+			else if (Objects.equals(jsonParserFieldName, "attachment")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "id")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "src")) {
@@ -201,10 +243,22 @@ public class SkuVirtualSettingsFileEntrySerDes {
 			SkuVirtualSettingsFileEntry skuVirtualSettingsFileEntry,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "attachment")) {
+			if (Objects.equals(jsonParserFieldName, "actions")) {
+				if (jsonParserFieldValue != null) {
+					skuVirtualSettingsFileEntry.setActions(
+						(Map<String, Map<String, String>>)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "attachment")) {
 				if (jsonParserFieldValue != null) {
 					skuVirtualSettingsFileEntry.setAttachment(
 						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "id")) {
+				if (jsonParserFieldValue != null) {
+					skuVirtualSettingsFileEntry.setId(
+						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "src")) {

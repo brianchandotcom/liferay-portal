@@ -28,6 +28,9 @@ import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
+import javax.validation.constraints.DecimalMin;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -49,6 +52,49 @@ public class SkuVirtualSettingsFileEntry implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(
 			SkuVirtualSettingsFileEntry.class, json);
 	}
+
+	@Schema
+	@Valid
+	public Map<String, Map<String, String>> getActions() {
+		if (_actionsSupplier != null) {
+			actions = _actionsSupplier.get();
+
+			_actionsSupplier = null;
+		}
+
+		return actions;
+	}
+
+	public void setActions(Map<String, Map<String, String>> actions) {
+		this.actions = actions;
+
+		_actionsSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setActions(
+		UnsafeSupplier<Map<String, Map<String, String>>, Exception>
+			actionsUnsafeSupplier) {
+
+		_actionsSupplier = () -> {
+			try {
+				return actionsUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Map<String, Map<String, String>> actions;
+
+	@JsonIgnore
+	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
 	@Schema(description = "Base64 encoded file")
 	public String getAttachment() {
@@ -90,6 +136,46 @@ public class SkuVirtualSettingsFileEntry implements Serializable {
 
 	@JsonIgnore
 	private Supplier<String> _attachmentSupplier;
+
+	@DecimalMin("0")
+	@Schema(example = "30324")
+	public Long getId() {
+		if (_idSupplier != null) {
+			id = _idSupplier.get();
+
+			_idSupplier = null;
+		}
+
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+
+		_idSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
+		_idSupplier = () -> {
+			try {
+				return idUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Long id;
+
+	@JsonIgnore
+	private Supplier<Long> _idSupplier;
 
 	@Schema(description = "URL to download the file")
 	public String getSrc() {
@@ -239,6 +325,18 @@ public class SkuVirtualSettingsFileEntry implements Serializable {
 
 		sb.append("{");
 
+		Map<String, Map<String, String>> actions = getActions();
+
+		if (actions != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"actions\": ");
+
+			sb.append(_toJSON(actions));
+		}
+
 		String attachment = getAttachment();
 
 		if (attachment != null) {
@@ -253,6 +351,18 @@ public class SkuVirtualSettingsFileEntry implements Serializable {
 			sb.append(_escape(attachment));
 
 			sb.append("\"");
+		}
+
+		Long id = getId();
+
+		if (id != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"id\": ");
+
+			sb.append(id);
 		}
 
 		String src = getSrc();

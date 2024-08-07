@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -13,14 +13,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
-import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.SkuVirtualSettings;
+import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.SkuVirtualSettingsFileEntry;
 import com.liferay.headless.commerce.admin.catalog.client.http.HttpInvoker;
 import com.liferay.headless.commerce.admin.catalog.client.pagination.Page;
-import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.SkuVirtualSettingsResource;
-import com.liferay.headless.commerce.admin.catalog.client.serdes.v1_0.SkuVirtualSettingsSerDes;
+import com.liferay.headless.commerce.admin.catalog.client.pagination.Pagination;
+import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.SkuVirtualSettingsFileEntryResource;
+import com.liferay.headless.commerce.admin.catalog.client.serdes.v1_0.SkuVirtualSettingsFileEntrySerDes;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -30,6 +32,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -38,6 +41,8 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
+
+import java.io.File;
 
 import java.lang.reflect.Method;
 
@@ -71,7 +76,7 @@ import org.junit.Test;
  * @generated
  */
 @Generated("")
-public abstract class BaseSkuVirtualSettingsResourceTestCase {
+public abstract class BaseSkuVirtualSettingsFileEntryResourceTestCase {
 
 	@ClassRule
 	@Rule
@@ -92,12 +97,12 @@ public abstract class BaseSkuVirtualSettingsResourceTestCase {
 		testCompany = CompanyLocalServiceUtil.getCompany(
 			testGroup.getCompanyId());
 
-		_skuVirtualSettingsResource.setContextCompany(testCompany);
+		_skuVirtualSettingsFileEntryResource.setContextCompany(testCompany);
 
-		SkuVirtualSettingsResource.Builder builder =
-			SkuVirtualSettingsResource.builder();
+		SkuVirtualSettingsFileEntryResource.Builder builder =
+			SkuVirtualSettingsFileEntryResource.builder();
 
-		skuVirtualSettingsResource = builder.authentication(
+		skuVirtualSettingsFileEntryResource = builder.authentication(
 			"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD
 		).locale(
 			LocaleUtil.getDefault()
@@ -128,14 +133,17 @@ public abstract class BaseSkuVirtualSettingsResourceTestCase {
 			}
 		};
 
-		SkuVirtualSettings skuVirtualSettings1 = randomSkuVirtualSettings();
+		SkuVirtualSettingsFileEntry skuVirtualSettingsFileEntry1 =
+			randomSkuVirtualSettingsFileEntry();
 
-		String json = objectMapper.writeValueAsString(skuVirtualSettings1);
+		String json = objectMapper.writeValueAsString(
+			skuVirtualSettingsFileEntry1);
 
-		SkuVirtualSettings skuVirtualSettings2 = SkuVirtualSettingsSerDes.toDTO(
-			json);
+		SkuVirtualSettingsFileEntry skuVirtualSettingsFileEntry2 =
+			SkuVirtualSettingsFileEntrySerDes.toDTO(json);
 
-		Assert.assertTrue(equals(skuVirtualSettings1, skuVirtualSettings2));
+		Assert.assertTrue(
+			equals(skuVirtualSettingsFileEntry1, skuVirtualSettingsFileEntry2));
 	}
 
 	@Test
@@ -155,10 +163,13 @@ public abstract class BaseSkuVirtualSettingsResourceTestCase {
 			}
 		};
 
-		SkuVirtualSettings skuVirtualSettings = randomSkuVirtualSettings();
+		SkuVirtualSettingsFileEntry skuVirtualSettingsFileEntry =
+			randomSkuVirtualSettingsFileEntry();
 
-		String json1 = objectMapper.writeValueAsString(skuVirtualSettings);
-		String json2 = SkuVirtualSettingsSerDes.toJSON(skuVirtualSettings);
+		String json1 = objectMapper.writeValueAsString(
+			skuVirtualSettingsFileEntry);
+		String json2 = SkuVirtualSettingsFileEntrySerDes.toJSON(
+			skuVirtualSettingsFileEntry);
 
 		Assert.assertEquals(
 			objectMapper.readTree(json1), objectMapper.readTree(json2));
@@ -168,203 +179,159 @@ public abstract class BaseSkuVirtualSettingsResourceTestCase {
 	public void testEscapeRegexInStringFields() throws Exception {
 		String regex = "^[0-9]+(\\.[0-9]{1,2})\"?";
 
-		SkuVirtualSettings skuVirtualSettings = randomSkuVirtualSettings();
+		SkuVirtualSettingsFileEntry skuVirtualSettingsFileEntry =
+			randomSkuVirtualSettingsFileEntry();
 
-		skuVirtualSettings.setAttachment(regex);
-		skuVirtualSettings.setSampleAttachment(regex);
-		skuVirtualSettings.setSampleSrc(regex);
-		skuVirtualSettings.setSampleURL(regex);
-		skuVirtualSettings.setSrc(regex);
-		skuVirtualSettings.setUrl(regex);
+		skuVirtualSettingsFileEntry.setAttachment(regex);
+		skuVirtualSettingsFileEntry.setSrc(regex);
+		skuVirtualSettingsFileEntry.setUrl(regex);
+		skuVirtualSettingsFileEntry.setVersion(regex);
 
-		String json = SkuVirtualSettingsSerDes.toJSON(skuVirtualSettings);
+		String json = SkuVirtualSettingsFileEntrySerDes.toJSON(
+			skuVirtualSettingsFileEntry);
 
 		Assert.assertFalse(json.contains(regex));
 
-		skuVirtualSettings = SkuVirtualSettingsSerDes.toDTO(json);
+		skuVirtualSettingsFileEntry = SkuVirtualSettingsFileEntrySerDes.toDTO(
+			json);
 
-		Assert.assertEquals(regex, skuVirtualSettings.getAttachment());
-		Assert.assertEquals(regex, skuVirtualSettings.getSampleAttachment());
-		Assert.assertEquals(regex, skuVirtualSettings.getSampleSrc());
-		Assert.assertEquals(regex, skuVirtualSettings.getSampleURL());
-		Assert.assertEquals(regex, skuVirtualSettings.getSrc());
-		Assert.assertEquals(regex, skuVirtualSettings.getUrl());
+		Assert.assertEquals(regex, skuVirtualSettingsFileEntry.getAttachment());
+		Assert.assertEquals(regex, skuVirtualSettingsFileEntry.getSrc());
+		Assert.assertEquals(regex, skuVirtualSettingsFileEntry.getUrl());
+		Assert.assertEquals(regex, skuVirtualSettingsFileEntry.getVersion());
 	}
 
 	@Test
-	public void testGetSkuByExternalReferenceCodeSkuVirtualSettings()
-		throws Exception {
+	public void testDeleteSkuVirtualSettingsFileEntry() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		SkuVirtualSettingsFileEntry skuVirtualSettingsFileEntry =
+			testDeleteSkuVirtualSettingsFileEntry_addSkuVirtualSettingsFileEntry();
 
-		SkuVirtualSettings postSkuVirtualSettings =
-			testGetSkuByExternalReferenceCodeSkuVirtualSettings_addSkuVirtualSettings();
+		assertHttpResponseStatusCode(
+			204,
+			skuVirtualSettingsFileEntryResource.
+				deleteSkuVirtualSettingsFileEntryHttpResponse(
+					skuVirtualSettingsFileEntry.getId()));
 
-		SkuVirtualSettings getSkuVirtualSettings =
-			skuVirtualSettingsResource.
-				getSkuByExternalReferenceCodeSkuVirtualSettings(
-					testGetSkuByExternalReferenceCodeSkuVirtualSettings_getExternalReferenceCode());
+		assertHttpResponseStatusCode(
+			404,
+			skuVirtualSettingsFileEntryResource.
+				getSkuVirtualSettingsFileEntryHttpResponse(
+					skuVirtualSettingsFileEntry.getId()));
 
-		assertEquals(postSkuVirtualSettings, getSkuVirtualSettings);
-		assertValid(getSkuVirtualSettings);
+		assertHttpResponseStatusCode(
+			404,
+			skuVirtualSettingsFileEntryResource.
+				getSkuVirtualSettingsFileEntryHttpResponse(
+					skuVirtualSettingsFileEntry.getId()));
 	}
 
-	protected String
-			testGetSkuByExternalReferenceCodeSkuVirtualSettings_getExternalReferenceCode()
+	protected SkuVirtualSettingsFileEntry
+			testDeleteSkuVirtualSettingsFileEntry_addSkuVirtualSettingsFileEntry()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected SkuVirtualSettings
-			testGetSkuByExternalReferenceCodeSkuVirtualSettings_addSkuVirtualSettings()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
 	@Test
-	public void testGraphQLGetSkuByExternalReferenceCodeSkuVirtualSettings()
+	public void testGraphQLDeleteSkuVirtualSettingsFileEntry()
 		throws Exception {
-
-		SkuVirtualSettings skuVirtualSettings =
-			testGraphQLGetSkuByExternalReferenceCodeSkuVirtualSettings_addSkuVirtualSettings();
 
 		// No namespace
 
-		Assert.assertTrue(
-			equals(
-				skuVirtualSettings,
-				SkuVirtualSettingsSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"skuByExternalReferenceCodeSkuVirtualSettings",
-								new HashMap<String, Object>() {
-									{
-										put(
-											"externalReferenceCode",
-											"\"" +
-												testGraphQLGetSkuByExternalReferenceCodeSkuVirtualSettings_getExternalReferenceCode() +
-													"\"");
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data",
-						"Object/skuByExternalReferenceCodeSkuVirtualSettings"))));
-
-		// Using the namespace headlessCommerceAdminCatalog_v1_0
+		SkuVirtualSettingsFileEntry skuVirtualSettingsFileEntry1 =
+			testGraphQLDeleteSkuVirtualSettingsFileEntry_addSkuVirtualSettingsFileEntry();
 
 		Assert.assertTrue(
-			equals(
-				skuVirtualSettings,
-				SkuVirtualSettingsSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"headlessCommerceAdminCatalog_v1_0",
-								new GraphQLField(
-									"skuByExternalReferenceCodeSkuVirtualSettings",
-									new HashMap<String, Object>() {
-										{
-											put(
-												"externalReferenceCode",
-												"\"" +
-													testGraphQLGetSkuByExternalReferenceCodeSkuVirtualSettings_getExternalReferenceCode() +
-														"\"");
-										}
-									},
-									getGraphQLFields()))),
-						"JSONObject/data",
-						"JSONObject/headlessCommerceAdminCatalog_v1_0",
-						"Object/skuByExternalReferenceCodeSkuVirtualSettings"))));
-	}
-
-	protected String
-			testGraphQLGetSkuByExternalReferenceCodeSkuVirtualSettings_getExternalReferenceCode()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetSkuByExternalReferenceCodeSkuVirtualSettingsNotFound()
-		throws Exception {
-
-		String irrelevantExternalReferenceCode =
-			"\"" + RandomTestUtil.randomString() + "\"";
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
 					new GraphQLField(
-						"skuByExternalReferenceCodeSkuVirtualSettings",
+						"deleteSkuVirtualSettingsFileEntry",
 						new HashMap<String, Object>() {
 							{
-								put(
-									"externalReferenceCode",
-									irrelevantExternalReferenceCode);
+								put("id", skuVirtualSettingsFileEntry1.getId());
 							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
+						})),
+				"JSONObject/data", "Object/deleteSkuVirtualSettingsFileEntry"));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"skuVirtualSettingsFileEntry",
+					new HashMap<String, Object>() {
+						{
+							put("id", skuVirtualSettingsFileEntry1.getId());
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
 
 		// Using the namespace headlessCommerceAdminCatalog_v1_0
 
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
+		SkuVirtualSettingsFileEntry skuVirtualSettingsFileEntry2 =
+			testGraphQLDeleteSkuVirtualSettingsFileEntry_addSkuVirtualSettingsFileEntry();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
 					new GraphQLField(
 						"headlessCommerceAdminCatalog_v1_0",
 						new GraphQLField(
-							"skuByExternalReferenceCodeSkuVirtualSettings",
+							"deleteSkuVirtualSettingsFileEntry",
 							new HashMap<String, Object>() {
 								{
 									put(
-										"externalReferenceCode",
-										irrelevantExternalReferenceCode);
+										"id",
+										skuVirtualSettingsFileEntry2.getId());
 								}
-							},
-							getGraphQLFields()))),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
+							}))),
+				"JSONObject/data",
+				"JSONObject/headlessCommerceAdminCatalog_v1_0",
+				"Object/deleteSkuVirtualSettingsFileEntry"));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessCommerceAdminCatalog_v1_0",
+					new GraphQLField(
+						"skuVirtualSettingsFileEntry",
+						new HashMap<String, Object>() {
+							{
+								put("id", skuVirtualSettingsFileEntry2.getId());
+							}
+						},
+						new GraphQLField("id")))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
 	}
 
-	protected SkuVirtualSettings
-			testGraphQLGetSkuByExternalReferenceCodeSkuVirtualSettings_addSkuVirtualSettings()
+	protected SkuVirtualSettingsFileEntry
+			testGraphQLDeleteSkuVirtualSettingsFileEntry_addSkuVirtualSettingsFileEntry()
 		throws Exception {
 
-		return testGraphQLSkuVirtualSettings_addSkuVirtualSettings();
+		return testGraphQLSkuVirtualSettingsFileEntry_addSkuVirtualSettingsFileEntry();
 	}
 
 	@Test
-	public void testGetSkuIdSkuVirtualSettings() throws Exception {
-		SkuVirtualSettings postSkuVirtualSettings =
-			testGetSkuIdSkuVirtualSettings_addSkuVirtualSettings();
+	public void testGetSkuVirtualSettingsFileEntry() throws Exception {
+		SkuVirtualSettingsFileEntry postSkuVirtualSettingsFileEntry =
+			testGetSkuVirtualSettingsFileEntry_addSkuVirtualSettingsFileEntry();
 
-		SkuVirtualSettings getSkuVirtualSettings =
-			skuVirtualSettingsResource.getSkuIdSkuVirtualSettings(
-				testGetSkuIdSkuVirtualSettings_getId(postSkuVirtualSettings));
+		SkuVirtualSettingsFileEntry getSkuVirtualSettingsFileEntry =
+			skuVirtualSettingsFileEntryResource.getSkuVirtualSettingsFileEntry(
+				postSkuVirtualSettingsFileEntry.getId());
 
-		assertEquals(postSkuVirtualSettings, getSkuVirtualSettings);
-		assertValid(getSkuVirtualSettings);
+		assertEquals(
+			postSkuVirtualSettingsFileEntry, getSkuVirtualSettingsFileEntry);
+		assertValid(getSkuVirtualSettingsFileEntry);
 	}
 
-	protected Long testGetSkuIdSkuVirtualSettings_getId(
-			SkuVirtualSettings skuVirtualSettings)
-		throws Exception {
-
-		return skuVirtualSettings.getId();
-	}
-
-	protected SkuVirtualSettings
-			testGetSkuIdSkuVirtualSettings_addSkuVirtualSettings()
+	protected SkuVirtualSettingsFileEntry
+			testGetSkuVirtualSettingsFileEntry_addSkuVirtualSettingsFileEntry()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -372,66 +339,60 @@ public abstract class BaseSkuVirtualSettingsResourceTestCase {
 	}
 
 	@Test
-	public void testGraphQLGetSkuIdSkuVirtualSettings() throws Exception {
-		SkuVirtualSettings skuVirtualSettings =
-			testGraphQLGetSkuIdSkuVirtualSettings_addSkuVirtualSettings();
+	public void testGraphQLGetSkuVirtualSettingsFileEntry() throws Exception {
+		SkuVirtualSettingsFileEntry skuVirtualSettingsFileEntry =
+			testGraphQLGetSkuVirtualSettingsFileEntry_addSkuVirtualSettingsFileEntry();
 
 		// No namespace
 
 		Assert.assertTrue(
 			equals(
-				skuVirtualSettings,
-				SkuVirtualSettingsSerDes.toDTO(
+				skuVirtualSettingsFileEntry,
+				SkuVirtualSettingsFileEntrySerDes.toDTO(
 					JSONUtil.getValueAsString(
 						invokeGraphQLQuery(
 							new GraphQLField(
-								"skuIdSkuVirtualSettings",
+								"skuVirtualSettingsFileEntry",
 								new HashMap<String, Object>() {
 									{
 										put(
 											"id",
-											testGraphQLGetSkuIdSkuVirtualSettings_getId(
-												skuVirtualSettings));
+											skuVirtualSettingsFileEntry.
+												getId());
 									}
 								},
 								getGraphQLFields())),
-						"JSONObject/data", "Object/skuIdSkuVirtualSettings"))));
+						"JSONObject/data",
+						"Object/skuVirtualSettingsFileEntry"))));
 
 		// Using the namespace headlessCommerceAdminCatalog_v1_0
 
 		Assert.assertTrue(
 			equals(
-				skuVirtualSettings,
-				SkuVirtualSettingsSerDes.toDTO(
+				skuVirtualSettingsFileEntry,
+				SkuVirtualSettingsFileEntrySerDes.toDTO(
 					JSONUtil.getValueAsString(
 						invokeGraphQLQuery(
 							new GraphQLField(
 								"headlessCommerceAdminCatalog_v1_0",
 								new GraphQLField(
-									"skuIdSkuVirtualSettings",
+									"skuVirtualSettingsFileEntry",
 									new HashMap<String, Object>() {
 										{
 											put(
 												"id",
-												testGraphQLGetSkuIdSkuVirtualSettings_getId(
-													skuVirtualSettings));
+												skuVirtualSettingsFileEntry.
+													getId());
 										}
 									},
 									getGraphQLFields()))),
 						"JSONObject/data",
 						"JSONObject/headlessCommerceAdminCatalog_v1_0",
-						"Object/skuIdSkuVirtualSettings"))));
-	}
-
-	protected Long testGraphQLGetSkuIdSkuVirtualSettings_getId(
-			SkuVirtualSettings skuVirtualSettings)
-		throws Exception {
-
-		return skuVirtualSettings.getId();
+						"Object/skuVirtualSettingsFileEntry"))));
 	}
 
 	@Test
-	public void testGraphQLGetSkuIdSkuVirtualSettingsNotFound()
+	public void testGraphQLGetSkuVirtualSettingsFileEntryNotFound()
 		throws Exception {
 
 		Long irrelevantId = RandomTestUtil.randomLong();
@@ -443,7 +404,7 @@ public abstract class BaseSkuVirtualSettingsResourceTestCase {
 			JSONUtil.getValueAsString(
 				invokeGraphQLQuery(
 					new GraphQLField(
-						"skuIdSkuVirtualSettings",
+						"skuVirtualSettingsFileEntry",
 						new HashMap<String, Object>() {
 							{
 								put("id", irrelevantId);
@@ -462,7 +423,7 @@ public abstract class BaseSkuVirtualSettingsResourceTestCase {
 					new GraphQLField(
 						"headlessCommerceAdminCatalog_v1_0",
 						new GraphQLField(
-							"skuIdSkuVirtualSettings",
+							"skuVirtualSettingsFileEntry",
 							new HashMap<String, Object>() {
 								{
 									put("id", irrelevantId);
@@ -473,15 +434,309 @@ public abstract class BaseSkuVirtualSettingsResourceTestCase {
 				"Object/code"));
 	}
 
-	protected SkuVirtualSettings
-			testGraphQLGetSkuIdSkuVirtualSettings_addSkuVirtualSettings()
+	protected SkuVirtualSettingsFileEntry
+			testGraphQLGetSkuVirtualSettingsFileEntry_addSkuVirtualSettingsFileEntry()
 		throws Exception {
 
-		return testGraphQLSkuVirtualSettings_addSkuVirtualSettings();
+		return testGraphQLSkuVirtualSettingsFileEntry_addSkuVirtualSettingsFileEntry();
 	}
 
-	protected SkuVirtualSettings
-			testGraphQLSkuVirtualSettings_addSkuVirtualSettings()
+	@Test
+	public void testPatchSkuVirtualSettingsFileEntry() throws Exception {
+		SkuVirtualSettingsFileEntry postSkuVirtualSettingsFileEntry =
+			testPatchSkuVirtualSettingsFileEntry_addSkuVirtualSettingsFileEntry();
+
+		SkuVirtualSettingsFileEntry randomPatchSkuVirtualSettingsFileEntry =
+			randomPatchSkuVirtualSettingsFileEntry();
+
+		Map<String, File> multipartFiles = getMultipartFiles();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		SkuVirtualSettingsFileEntry patchSkuVirtualSettingsFileEntry =
+			skuVirtualSettingsFileEntryResource.
+				patchSkuVirtualSettingsFileEntry(
+					postSkuVirtualSettingsFileEntry.getId(),
+					randomPatchSkuVirtualSettingsFileEntry, multipartFiles);
+
+		SkuVirtualSettingsFileEntry expectedPatchSkuVirtualSettingsFileEntry =
+			postSkuVirtualSettingsFileEntry.clone();
+
+		BeanTestUtil.copyProperties(
+			randomPatchSkuVirtualSettingsFileEntry,
+			expectedPatchSkuVirtualSettingsFileEntry);
+
+		SkuVirtualSettingsFileEntry getSkuVirtualSettingsFileEntry =
+			skuVirtualSettingsFileEntryResource.getSkuVirtualSettingsFileEntry(
+				patchSkuVirtualSettingsFileEntry.getId());
+
+		assertEquals(
+			expectedPatchSkuVirtualSettingsFileEntry,
+			getSkuVirtualSettingsFileEntry);
+		assertValid(getSkuVirtualSettingsFileEntry);
+
+		assertValid(getSkuVirtualSettingsFileEntry, multipartFiles);
+	}
+
+	protected SkuVirtualSettingsFileEntry
+			testPatchSkuVirtualSettingsFileEntry_addSkuVirtualSettingsFileEntry()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGetSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage()
+		throws Exception {
+
+		Long id =
+			testGetSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage_getId();
+		Long irrelevantId =
+			testGetSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage_getIrrelevantId();
+
+		Page<SkuVirtualSettingsFileEntry> page =
+			skuVirtualSettingsFileEntryResource.
+				getSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage(
+					id, Pagination.of(1, 10));
+
+		long totalCount = page.getTotalCount();
+
+		if (irrelevantId != null) {
+			SkuVirtualSettingsFileEntry irrelevantSkuVirtualSettingsFileEntry =
+				testGetSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage_addSkuVirtualSettingsFileEntry(
+					irrelevantId,
+					randomIrrelevantSkuVirtualSettingsFileEntry());
+
+			page =
+				skuVirtualSettingsFileEntryResource.
+					getSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage(
+						irrelevantId, Pagination.of(1, (int)totalCount + 1));
+
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
+
+			assertContains(
+				irrelevantSkuVirtualSettingsFileEntry,
+				(List<SkuVirtualSettingsFileEntry>)page.getItems());
+			assertValid(
+				page,
+				testGetSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage_getExpectedActions(
+					irrelevantId));
+		}
+
+		SkuVirtualSettingsFileEntry skuVirtualSettingsFileEntry1 =
+			testGetSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage_addSkuVirtualSettingsFileEntry(
+				id, randomSkuVirtualSettingsFileEntry());
+
+		SkuVirtualSettingsFileEntry skuVirtualSettingsFileEntry2 =
+			testGetSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage_addSkuVirtualSettingsFileEntry(
+				id, randomSkuVirtualSettingsFileEntry());
+
+		page =
+			skuVirtualSettingsFileEntryResource.
+				getSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage(
+					id, Pagination.of(1, 10));
+
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
+
+		assertContains(
+			skuVirtualSettingsFileEntry1,
+			(List<SkuVirtualSettingsFileEntry>)page.getItems());
+		assertContains(
+			skuVirtualSettingsFileEntry2,
+			(List<SkuVirtualSettingsFileEntry>)page.getItems());
+		assertValid(
+			page,
+			testGetSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage_getExpectedActions(
+				id));
+
+		skuVirtualSettingsFileEntryResource.deleteSkuVirtualSettingsFileEntry(
+			skuVirtualSettingsFileEntry1.getId());
+
+		skuVirtualSettingsFileEntryResource.deleteSkuVirtualSettingsFileEntry(
+			skuVirtualSettingsFileEntry2.getId());
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage_getExpectedActions(
+				Long id)
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
+	}
+
+	@Test
+	public void testGetSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPageWithPagination()
+		throws Exception {
+
+		Long id =
+			testGetSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage_getId();
+
+		Page<SkuVirtualSettingsFileEntry> skuVirtualSettingsFileEntryPage =
+			skuVirtualSettingsFileEntryResource.
+				getSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage(
+					id, null);
+
+		int totalCount = GetterUtil.getInteger(
+			skuVirtualSettingsFileEntryPage.getTotalCount());
+
+		SkuVirtualSettingsFileEntry skuVirtualSettingsFileEntry1 =
+			testGetSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage_addSkuVirtualSettingsFileEntry(
+				id, randomSkuVirtualSettingsFileEntry());
+
+		SkuVirtualSettingsFileEntry skuVirtualSettingsFileEntry2 =
+			testGetSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage_addSkuVirtualSettingsFileEntry(
+				id, randomSkuVirtualSettingsFileEntry());
+
+		SkuVirtualSettingsFileEntry skuVirtualSettingsFileEntry3 =
+			testGetSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage_addSkuVirtualSettingsFileEntry(
+				id, randomSkuVirtualSettingsFileEntry());
+
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
+
+		int pageSizeLimit = 500;
+
+		if (totalCount >= (pageSizeLimit - 2)) {
+			Page<SkuVirtualSettingsFileEntry> page1 =
+				skuVirtualSettingsFileEntryResource.
+					getSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage(
+						id,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit));
+
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
+
+			assertContains(
+				skuVirtualSettingsFileEntry1,
+				(List<SkuVirtualSettingsFileEntry>)page1.getItems());
+
+			Page<SkuVirtualSettingsFileEntry> page2 =
+				skuVirtualSettingsFileEntryResource.
+					getSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage(
+						id,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit));
+
+			assertContains(
+				skuVirtualSettingsFileEntry2,
+				(List<SkuVirtualSettingsFileEntry>)page2.getItems());
+
+			Page<SkuVirtualSettingsFileEntry> page3 =
+				skuVirtualSettingsFileEntryResource.
+					getSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage(
+						id,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit));
+
+			assertContains(
+				skuVirtualSettingsFileEntry3,
+				(List<SkuVirtualSettingsFileEntry>)page3.getItems());
+		}
+		else {
+			Page<SkuVirtualSettingsFileEntry> page1 =
+				skuVirtualSettingsFileEntryResource.
+					getSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage(
+						id, Pagination.of(1, totalCount + 2));
+
+			List<SkuVirtualSettingsFileEntry> skuVirtualSettingsFileEntries1 =
+				(List<SkuVirtualSettingsFileEntry>)page1.getItems();
+
+			Assert.assertEquals(
+				skuVirtualSettingsFileEntries1.toString(), totalCount + 2,
+				skuVirtualSettingsFileEntries1.size());
+
+			Page<SkuVirtualSettingsFileEntry> page2 =
+				skuVirtualSettingsFileEntryResource.
+					getSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage(
+						id, Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<SkuVirtualSettingsFileEntry> skuVirtualSettingsFileEntries2 =
+				(List<SkuVirtualSettingsFileEntry>)page2.getItems();
+
+			Assert.assertEquals(
+				skuVirtualSettingsFileEntries2.toString(), 1,
+				skuVirtualSettingsFileEntries2.size());
+
+			Page<SkuVirtualSettingsFileEntry> page3 =
+				skuVirtualSettingsFileEntryResource.
+					getSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage(
+						id, Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(
+				skuVirtualSettingsFileEntry1,
+				(List<SkuVirtualSettingsFileEntry>)page3.getItems());
+			assertContains(
+				skuVirtualSettingsFileEntry2,
+				(List<SkuVirtualSettingsFileEntry>)page3.getItems());
+			assertContains(
+				skuVirtualSettingsFileEntry3,
+				(List<SkuVirtualSettingsFileEntry>)page3.getItems());
+		}
+	}
+
+	protected SkuVirtualSettingsFileEntry
+			testGetSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage_addSkuVirtualSettingsFileEntry(
+				Long id,
+				SkuVirtualSettingsFileEntry skuVirtualSettingsFileEntry)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long
+			testGetSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage_getId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long
+			testGetSkuVirtualSettingIdSkuVirtualSettingsFileEntriesPage_getIrrelevantId()
+		throws Exception {
+
+		return null;
+	}
+
+	@Test
+	public void testPostSkuVirtualSettingIdSkuVirtualSettingsFileEntry()
+		throws Exception {
+
+		SkuVirtualSettingsFileEntry randomSkuVirtualSettingsFileEntry =
+			randomSkuVirtualSettingsFileEntry();
+
+		Map<String, File> multipartFiles = getMultipartFiles();
+
+		SkuVirtualSettingsFileEntry postSkuVirtualSettingsFileEntry =
+			testPostSkuVirtualSettingIdSkuVirtualSettingsFileEntry_addSkuVirtualSettingsFileEntry(
+				randomSkuVirtualSettingsFileEntry, multipartFiles);
+
+		assertEquals(
+			randomSkuVirtualSettingsFileEntry, postSkuVirtualSettingsFileEntry);
+		assertValid(postSkuVirtualSettingsFileEntry);
+
+		assertValid(postSkuVirtualSettingsFileEntry, multipartFiles);
+	}
+
+	protected SkuVirtualSettingsFileEntry
+			testPostSkuVirtualSettingIdSkuVirtualSettingsFileEntry_addSkuVirtualSettingsFileEntry(
+				SkuVirtualSettingsFileEntry skuVirtualSettingsFileEntry,
+				Map<String, File> multipartFiles)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected SkuVirtualSettingsFileEntry
+			testGraphQLSkuVirtualSettingsFileEntry_addSkuVirtualSettingsFileEntry()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -489,13 +744,13 @@ public abstract class BaseSkuVirtualSettingsResourceTestCase {
 	}
 
 	protected void assertContains(
-		SkuVirtualSettings skuVirtualSettings,
-		List<SkuVirtualSettings> skuVirtualSettingses) {
+		SkuVirtualSettingsFileEntry skuVirtualSettingsFileEntry,
+		List<SkuVirtualSettingsFileEntry> skuVirtualSettingsFileEntries) {
 
 		boolean contains = false;
 
-		for (SkuVirtualSettings item : skuVirtualSettingses) {
-			if (equals(skuVirtualSettings, item)) {
+		for (SkuVirtualSettingsFileEntry item : skuVirtualSettingsFileEntries) {
+			if (equals(skuVirtualSettingsFileEntry, item)) {
 				contains = true;
 
 				break;
@@ -503,7 +758,8 @@ public abstract class BaseSkuVirtualSettingsResourceTestCase {
 		}
 
 		Assert.assertTrue(
-			skuVirtualSettingses + " does not contain " + skuVirtualSettings,
+			skuVirtualSettingsFileEntries + " does not contain " +
+				skuVirtualSettingsFileEntry,
 			contains);
 	}
 
@@ -516,45 +772,54 @@ public abstract class BaseSkuVirtualSettingsResourceTestCase {
 	}
 
 	protected void assertEquals(
-		SkuVirtualSettings skuVirtualSettings1,
-		SkuVirtualSettings skuVirtualSettings2) {
+		SkuVirtualSettingsFileEntry skuVirtualSettingsFileEntry1,
+		SkuVirtualSettingsFileEntry skuVirtualSettingsFileEntry2) {
 
 		Assert.assertTrue(
-			skuVirtualSettings1 + " does not equal " + skuVirtualSettings2,
-			equals(skuVirtualSettings1, skuVirtualSettings2));
+			skuVirtualSettingsFileEntry1 + " does not equal " +
+				skuVirtualSettingsFileEntry2,
+			equals(skuVirtualSettingsFileEntry1, skuVirtualSettingsFileEntry2));
 	}
 
 	protected void assertEquals(
-		List<SkuVirtualSettings> skuVirtualSettingses1,
-		List<SkuVirtualSettings> skuVirtualSettingses2) {
+		List<SkuVirtualSettingsFileEntry> skuVirtualSettingsFileEntries1,
+		List<SkuVirtualSettingsFileEntry> skuVirtualSettingsFileEntries2) {
 
 		Assert.assertEquals(
-			skuVirtualSettingses1.size(), skuVirtualSettingses2.size());
+			skuVirtualSettingsFileEntries1.size(),
+			skuVirtualSettingsFileEntries2.size());
 
-		for (int i = 0; i < skuVirtualSettingses1.size(); i++) {
-			SkuVirtualSettings skuVirtualSettings1 = skuVirtualSettingses1.get(
-				i);
-			SkuVirtualSettings skuVirtualSettings2 = skuVirtualSettingses2.get(
-				i);
+		for (int i = 0; i < skuVirtualSettingsFileEntries1.size(); i++) {
+			SkuVirtualSettingsFileEntry skuVirtualSettingsFileEntry1 =
+				skuVirtualSettingsFileEntries1.get(i);
+			SkuVirtualSettingsFileEntry skuVirtualSettingsFileEntry2 =
+				skuVirtualSettingsFileEntries2.get(i);
 
-			assertEquals(skuVirtualSettings1, skuVirtualSettings2);
+			assertEquals(
+				skuVirtualSettingsFileEntry1, skuVirtualSettingsFileEntry2);
 		}
 	}
 
 	protected void assertEqualsIgnoringOrder(
-		List<SkuVirtualSettings> skuVirtualSettingses1,
-		List<SkuVirtualSettings> skuVirtualSettingses2) {
+		List<SkuVirtualSettingsFileEntry> skuVirtualSettingsFileEntries1,
+		List<SkuVirtualSettingsFileEntry> skuVirtualSettingsFileEntries2) {
 
 		Assert.assertEquals(
-			skuVirtualSettingses1.size(), skuVirtualSettingses2.size());
+			skuVirtualSettingsFileEntries1.size(),
+			skuVirtualSettingsFileEntries2.size());
 
-		for (SkuVirtualSettings skuVirtualSettings1 : skuVirtualSettingses1) {
+		for (SkuVirtualSettingsFileEntry skuVirtualSettingsFileEntry1 :
+				skuVirtualSettingsFileEntries1) {
+
 			boolean contains = false;
 
-			for (SkuVirtualSettings skuVirtualSettings2 :
-					skuVirtualSettingses2) {
+			for (SkuVirtualSettingsFileEntry skuVirtualSettingsFileEntry2 :
+					skuVirtualSettingsFileEntries2) {
 
-				if (equals(skuVirtualSettings1, skuVirtualSettings2)) {
+				if (equals(
+						skuVirtualSettingsFileEntry1,
+						skuVirtualSettingsFileEntry2)) {
+
 					contains = true;
 
 					break;
@@ -562,36 +827,27 @@ public abstract class BaseSkuVirtualSettingsResourceTestCase {
 			}
 
 			Assert.assertTrue(
-				skuVirtualSettingses2 + " does not contain " +
-					skuVirtualSettings1,
+				skuVirtualSettingsFileEntries2 + " does not contain " +
+					skuVirtualSettingsFileEntry1,
 				contains);
 		}
 	}
 
-	protected void assertValid(SkuVirtualSettings skuVirtualSettings)
+	protected void assertValid(
+			SkuVirtualSettingsFileEntry skuVirtualSettingsFileEntry)
 		throws Exception {
 
 		boolean valid = true;
 
-		if (skuVirtualSettings.getId() == null) {
+		if (skuVirtualSettingsFileEntry.getId() == null) {
 			valid = false;
 		}
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
-			if (Objects.equals("activationStatus", additionalAssertFieldName)) {
-				if (skuVirtualSettings.getActivationStatus() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"activationStatusInfo", additionalAssertFieldName)) {
-
-				if (skuVirtualSettings.getActivationStatusInfo() == null) {
+			if (Objects.equals("actions", additionalAssertFieldName)) {
+				if (skuVirtualSettingsFileEntry.getActions() == null) {
 					valid = false;
 				}
 
@@ -599,68 +855,7 @@ public abstract class BaseSkuVirtualSettingsResourceTestCase {
 			}
 
 			if (Objects.equals("attachment", additionalAssertFieldName)) {
-				if (skuVirtualSettings.getAttachment() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("duration", additionalAssertFieldName)) {
-				if (skuVirtualSettings.getDuration() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("maxUsages", additionalAssertFieldName)) {
-				if (skuVirtualSettings.getMaxUsages() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("override", additionalAssertFieldName)) {
-				if (skuVirtualSettings.getOverride() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("sampleAttachment", additionalAssertFieldName)) {
-				if (skuVirtualSettings.getSampleAttachment() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("sampleSrc", additionalAssertFieldName)) {
-				if (skuVirtualSettings.getSampleSrc() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("sampleURL", additionalAssertFieldName)) {
-				if (skuVirtualSettings.getSampleURL() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"skuVirtualSettingsFileEntries",
-					additionalAssertFieldName)) {
-
-				if (skuVirtualSettings.getSkuVirtualSettingsFileEntries() ==
-						null) {
-
+				if (skuVirtualSettingsFileEntry.getAttachment() == null) {
 					valid = false;
 				}
 
@@ -668,39 +863,7 @@ public abstract class BaseSkuVirtualSettingsResourceTestCase {
 			}
 
 			if (Objects.equals("src", additionalAssertFieldName)) {
-				if (skuVirtualSettings.getSrc() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"termsOfUseContent", additionalAssertFieldName)) {
-
-				if (skuVirtualSettings.getTermsOfUseContent() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"termsOfUseJournalArticleId", additionalAssertFieldName)) {
-
-				if (skuVirtualSettings.getTermsOfUseJournalArticleId() ==
-						null) {
-
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"termsOfUseRequired", additionalAssertFieldName)) {
-
-				if (skuVirtualSettings.getTermsOfUseRequired() == null) {
+				if (skuVirtualSettingsFileEntry.getSrc() == null) {
 					valid = false;
 				}
 
@@ -708,15 +871,15 @@ public abstract class BaseSkuVirtualSettingsResourceTestCase {
 			}
 
 			if (Objects.equals("url", additionalAssertFieldName)) {
-				if (skuVirtualSettings.getUrl() == null) {
+				if (skuVirtualSettingsFileEntry.getUrl() == null) {
 					valid = false;
 				}
 
 				continue;
 			}
 
-			if (Objects.equals("useSample", additionalAssertFieldName)) {
-				if (skuVirtualSettings.getUseSample() == null) {
+			if (Objects.equals("version", additionalAssertFieldName)) {
+				if (skuVirtualSettingsFileEntry.getVersion() == null) {
 					valid = false;
 				}
 
@@ -731,20 +894,29 @@ public abstract class BaseSkuVirtualSettingsResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<SkuVirtualSettings> page) {
+	protected void assertValid(
+			SkuVirtualSettingsFileEntry skuVirtualSettingsFileEntry,
+			Map<String, File> multipartFiles)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected void assertValid(Page<SkuVirtualSettingsFileEntry> page) {
 		assertValid(page, Collections.emptyMap());
 	}
 
 	protected void assertValid(
-		Page<SkuVirtualSettings> page,
+		Page<SkuVirtualSettingsFileEntry> page,
 		Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
-		java.util.Collection<SkuVirtualSettings> skuVirtualSettingses =
-			page.getItems();
+		java.util.Collection<SkuVirtualSettingsFileEntry>
+			skuVirtualSettingsFileEntries = page.getItems();
 
-		int size = skuVirtualSettingses.size();
+		int size = skuVirtualSettingsFileEntries.size();
 
 		if ((page.getLastPage() > 0) && (page.getPage() > 0) &&
 			(page.getPageSize() > 0) && (page.getTotalCount() > 0) &&
@@ -785,7 +957,7 @@ public abstract class BaseSkuVirtualSettingsResourceTestCase {
 		for (java.lang.reflect.Field field :
 				getDeclaredFields(
 					com.liferay.headless.commerce.admin.catalog.dto.v1_0.
-						SkuVirtualSettings.class)) {
+						SkuVirtualSettingsFileEntry.class)) {
 
 			if (!ArrayUtil.contains(
 					getAdditionalAssertFieldNames(), field.getName())) {
@@ -834,33 +1006,20 @@ public abstract class BaseSkuVirtualSettingsResourceTestCase {
 	}
 
 	protected boolean equals(
-		SkuVirtualSettings skuVirtualSettings1,
-		SkuVirtualSettings skuVirtualSettings2) {
+		SkuVirtualSettingsFileEntry skuVirtualSettingsFileEntry1,
+		SkuVirtualSettingsFileEntry skuVirtualSettingsFileEntry2) {
 
-		if (skuVirtualSettings1 == skuVirtualSettings2) {
+		if (skuVirtualSettingsFileEntry1 == skuVirtualSettingsFileEntry2) {
 			return true;
 		}
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
-			if (Objects.equals("activationStatus", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						skuVirtualSettings1.getActivationStatus(),
-						skuVirtualSettings2.getActivationStatus())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"activationStatusInfo", additionalAssertFieldName)) {
-
-				if (!Objects.deepEquals(
-						skuVirtualSettings1.getActivationStatusInfo(),
-						skuVirtualSettings2.getActivationStatusInfo())) {
+			if (Objects.equals("actions", additionalAssertFieldName)) {
+				if (!equals(
+						(Map)skuVirtualSettingsFileEntry1.getActions(),
+						(Map)skuVirtualSettingsFileEntry2.getActions())) {
 
 					return false;
 				}
@@ -870,19 +1029,8 @@ public abstract class BaseSkuVirtualSettingsResourceTestCase {
 
 			if (Objects.equals("attachment", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						skuVirtualSettings1.getAttachment(),
-						skuVirtualSettings2.getAttachment())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("duration", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						skuVirtualSettings1.getDuration(),
-						skuVirtualSettings2.getDuration())) {
+						skuVirtualSettingsFileEntry1.getAttachment(),
+						skuVirtualSettingsFileEntry2.getAttachment())) {
 
 					return false;
 				}
@@ -892,78 +1040,8 @@ public abstract class BaseSkuVirtualSettingsResourceTestCase {
 
 			if (Objects.equals("id", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						skuVirtualSettings1.getId(),
-						skuVirtualSettings2.getId())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("maxUsages", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						skuVirtualSettings1.getMaxUsages(),
-						skuVirtualSettings2.getMaxUsages())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("override", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						skuVirtualSettings1.getOverride(),
-						skuVirtualSettings2.getOverride())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("sampleAttachment", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						skuVirtualSettings1.getSampleAttachment(),
-						skuVirtualSettings2.getSampleAttachment())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("sampleSrc", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						skuVirtualSettings1.getSampleSrc(),
-						skuVirtualSettings2.getSampleSrc())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("sampleURL", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						skuVirtualSettings1.getSampleURL(),
-						skuVirtualSettings2.getSampleURL())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"skuVirtualSettingsFileEntries",
-					additionalAssertFieldName)) {
-
-				if (!Objects.deepEquals(
-						skuVirtualSettings1.getSkuVirtualSettingsFileEntries(),
-						skuVirtualSettings2.
-							getSkuVirtualSettingsFileEntries())) {
+						skuVirtualSettingsFileEntry1.getId(),
+						skuVirtualSettingsFileEntry2.getId())) {
 
 					return false;
 				}
@@ -973,47 +1051,8 @@ public abstract class BaseSkuVirtualSettingsResourceTestCase {
 
 			if (Objects.equals("src", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						skuVirtualSettings1.getSrc(),
-						skuVirtualSettings2.getSrc())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"termsOfUseContent", additionalAssertFieldName)) {
-
-				if (!equals(
-						(Map)skuVirtualSettings1.getTermsOfUseContent(),
-						(Map)skuVirtualSettings2.getTermsOfUseContent())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"termsOfUseJournalArticleId", additionalAssertFieldName)) {
-
-				if (!Objects.deepEquals(
-						skuVirtualSettings1.getTermsOfUseJournalArticleId(),
-						skuVirtualSettings2.getTermsOfUseJournalArticleId())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"termsOfUseRequired", additionalAssertFieldName)) {
-
-				if (!Objects.deepEquals(
-						skuVirtualSettings1.getTermsOfUseRequired(),
-						skuVirtualSettings2.getTermsOfUseRequired())) {
+						skuVirtualSettingsFileEntry1.getSrc(),
+						skuVirtualSettingsFileEntry2.getSrc())) {
 
 					return false;
 				}
@@ -1023,8 +1062,8 @@ public abstract class BaseSkuVirtualSettingsResourceTestCase {
 
 			if (Objects.equals("url", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						skuVirtualSettings1.getUrl(),
-						skuVirtualSettings2.getUrl())) {
+						skuVirtualSettingsFileEntry1.getUrl(),
+						skuVirtualSettingsFileEntry2.getUrl())) {
 
 					return false;
 				}
@@ -1032,10 +1071,10 @@ public abstract class BaseSkuVirtualSettingsResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("useSample", additionalAssertFieldName)) {
+			if (Objects.equals("version", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						skuVirtualSettings1.getUseSample(),
-						skuVirtualSettings2.getUseSample())) {
+						skuVirtualSettingsFileEntry1.getVersion(),
+						skuVirtualSettingsFileEntry2.getVersion())) {
 
 					return false;
 				}
@@ -1099,13 +1138,15 @@ public abstract class BaseSkuVirtualSettingsResourceTestCase {
 	protected java.util.Collection<EntityField> getEntityFields()
 		throws Exception {
 
-		if (!(_skuVirtualSettingsResource instanceof EntityModelResource)) {
+		if (!(_skuVirtualSettingsFileEntryResource instanceof
+				EntityModelResource)) {
+
 			throw new UnsupportedOperationException(
 				"Resource is not an instance of EntityModelResource");
 		}
 
 		EntityModelResource entityModelResource =
-			(EntityModelResource)_skuVirtualSettingsResource;
+			(EntityModelResource)_skuVirtualSettingsFileEntryResource;
 
 		EntityModel entityModel = entityModelResource.getEntityModel(
 			new MultivaluedHashMap());
@@ -1139,7 +1180,7 @@ public abstract class BaseSkuVirtualSettingsResourceTestCase {
 
 	protected String getFilterString(
 		EntityField entityField, String operator,
-		SkuVirtualSettings skuVirtualSettings) {
+		SkuVirtualSettingsFileEntry skuVirtualSettingsFileEntry) {
 
 		StringBundler sb = new StringBundler();
 
@@ -1151,19 +1192,13 @@ public abstract class BaseSkuVirtualSettingsResourceTestCase {
 		sb.append(operator);
 		sb.append(" ");
 
-		if (entityFieldName.equals("activationStatus")) {
-			sb.append(String.valueOf(skuVirtualSettings.getActivationStatus()));
-
-			return sb.toString();
-		}
-
-		if (entityFieldName.equals("activationStatusInfo")) {
+		if (entityFieldName.equals("actions")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("attachment")) {
-			Object object = skuVirtualSettings.getAttachment();
+			Object object = skuVirtualSettingsFileEntry.getAttachment();
 
 			String value = String.valueOf(object);
 
@@ -1206,11 +1241,6 @@ public abstract class BaseSkuVirtualSettingsResourceTestCase {
 			}
 
 			return sb.toString();
-		}
-
-		if (entityFieldName.equals("duration")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("id")) {
@@ -1218,162 +1248,8 @@ public abstract class BaseSkuVirtualSettingsResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("maxUsages")) {
-			sb.append(String.valueOf(skuVirtualSettings.getMaxUsages()));
-
-			return sb.toString();
-		}
-
-		if (entityFieldName.equals("override")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
-		if (entityFieldName.equals("sampleAttachment")) {
-			Object object = skuVirtualSettings.getSampleAttachment();
-
-			String value = String.valueOf(object);
-
-			if (operator.equals("contains")) {
-				sb = new StringBundler();
-
-				sb.append("contains(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 2)) {
-					sb.append(value.substring(1, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else if (operator.equals("startswith")) {
-				sb = new StringBundler();
-
-				sb.append("startswith(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 1)) {
-					sb.append(value.substring(0, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else {
-				sb.append("'");
-				sb.append(value);
-				sb.append("'");
-			}
-
-			return sb.toString();
-		}
-
-		if (entityFieldName.equals("sampleSrc")) {
-			Object object = skuVirtualSettings.getSampleSrc();
-
-			String value = String.valueOf(object);
-
-			if (operator.equals("contains")) {
-				sb = new StringBundler();
-
-				sb.append("contains(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 2)) {
-					sb.append(value.substring(1, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else if (operator.equals("startswith")) {
-				sb = new StringBundler();
-
-				sb.append("startswith(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 1)) {
-					sb.append(value.substring(0, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else {
-				sb.append("'");
-				sb.append(value);
-				sb.append("'");
-			}
-
-			return sb.toString();
-		}
-
-		if (entityFieldName.equals("sampleURL")) {
-			Object object = skuVirtualSettings.getSampleURL();
-
-			String value = String.valueOf(object);
-
-			if (operator.equals("contains")) {
-				sb = new StringBundler();
-
-				sb.append("contains(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 2)) {
-					sb.append(value.substring(1, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else if (operator.equals("startswith")) {
-				sb = new StringBundler();
-
-				sb.append("startswith(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 1)) {
-					sb.append(value.substring(0, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else {
-				sb.append("'");
-				sb.append(value);
-				sb.append("'");
-			}
-
-			return sb.toString();
-		}
-
-		if (entityFieldName.equals("skuVirtualSettingsFileEntries")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
 		if (entityFieldName.equals("src")) {
-			Object object = skuVirtualSettings.getSrc();
+			Object object = skuVirtualSettingsFileEntry.getSrc();
 
 			String value = String.valueOf(object);
 
@@ -1416,25 +1292,10 @@ public abstract class BaseSkuVirtualSettingsResourceTestCase {
 			}
 
 			return sb.toString();
-		}
-
-		if (entityFieldName.equals("termsOfUseContent")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
-		if (entityFieldName.equals("termsOfUseJournalArticleId")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
-		if (entityFieldName.equals("termsOfUseRequired")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("url")) {
-			Object object = skuVirtualSettings.getUrl();
+			Object object = skuVirtualSettingsFileEntry.getUrl();
 
 			String value = String.valueOf(object);
 
@@ -1479,13 +1340,59 @@ public abstract class BaseSkuVirtualSettingsResourceTestCase {
 			return sb.toString();
 		}
 
-		if (entityFieldName.equals("useSample")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+		if (entityFieldName.equals("version")) {
+			Object object = skuVirtualSettingsFileEntry.getVersion();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
 		}
 
 		throw new IllegalArgumentException(
 			"Invalid entity field " + entityFieldName);
+	}
+
+	protected Map<String, File> getMultipartFiles() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected String invoke(String query) throws Exception {
@@ -1526,47 +1433,41 @@ public abstract class BaseSkuVirtualSettingsResourceTestCase {
 			invoke(queryGraphQLField.toString()));
 	}
 
-	protected SkuVirtualSettings randomSkuVirtualSettings() throws Exception {
-		return new SkuVirtualSettings() {
+	protected SkuVirtualSettingsFileEntry randomSkuVirtualSettingsFileEntry()
+		throws Exception {
+
+		return new SkuVirtualSettingsFileEntry() {
 			{
-				activationStatus = RandomTestUtil.randomInt();
 				attachment = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
-				duration = RandomTestUtil.randomLong();
 				id = RandomTestUtil.randomLong();
-				maxUsages = RandomTestUtil.randomInt();
-				override = RandomTestUtil.randomBoolean();
-				sampleAttachment = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
-				sampleSrc = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
-				sampleURL = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
 				src = StringUtil.toLowerCase(RandomTestUtil.randomString());
-				termsOfUseJournalArticleId = RandomTestUtil.randomLong();
-				termsOfUseRequired = RandomTestUtil.randomBoolean();
 				url = StringUtil.toLowerCase(RandomTestUtil.randomString());
-				useSample = RandomTestUtil.randomBoolean();
+				version = StringUtil.toLowerCase(RandomTestUtil.randomString());
 			}
 		};
 	}
 
-	protected SkuVirtualSettings randomIrrelevantSkuVirtualSettings()
+	protected SkuVirtualSettingsFileEntry
+			randomIrrelevantSkuVirtualSettingsFileEntry()
 		throws Exception {
 
-		SkuVirtualSettings randomIrrelevantSkuVirtualSettings =
-			randomSkuVirtualSettings();
+		SkuVirtualSettingsFileEntry
+			randomIrrelevantSkuVirtualSettingsFileEntry =
+				randomSkuVirtualSettingsFileEntry();
 
-		return randomIrrelevantSkuVirtualSettings;
+		return randomIrrelevantSkuVirtualSettingsFileEntry;
 	}
 
-	protected SkuVirtualSettings randomPatchSkuVirtualSettings()
+	protected SkuVirtualSettingsFileEntry
+			randomPatchSkuVirtualSettingsFileEntry()
 		throws Exception {
 
-		return randomSkuVirtualSettings();
+		return randomSkuVirtualSettingsFileEntry();
 	}
 
-	protected SkuVirtualSettingsResource skuVirtualSettingsResource;
+	protected SkuVirtualSettingsFileEntryResource
+		skuVirtualSettingsFileEntryResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;
@@ -1752,12 +1653,14 @@ public abstract class BaseSkuVirtualSettingsResourceTestCase {
 	}
 
 	private static final com.liferay.portal.kernel.log.Log _log =
-		LogFactoryUtil.getLog(BaseSkuVirtualSettingsResourceTestCase.class);
+		LogFactoryUtil.getLog(
+			BaseSkuVirtualSettingsFileEntryResourceTestCase.class);
 
 	private static DateFormat _dateFormat;
 
 	@Inject
 	private com.liferay.headless.commerce.admin.catalog.resource.v1_0.
-		SkuVirtualSettingsResource _skuVirtualSettingsResource;
+		SkuVirtualSettingsFileEntryResource
+			_skuVirtualSettingsFileEntryResource;
 
 }

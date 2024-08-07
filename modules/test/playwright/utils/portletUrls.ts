@@ -21,6 +21,8 @@ export const PORTLET_URLS = {
 		'/~/control_panel/manage?p_p_id=com_liferay_journal_web_portlet_JournalPortlet&_com_liferay_journal_web_portlet_JournalPortlet_mvcPath=%2Fview_ddm_templates.jsp',
 	knowledgeBase:
 		'/~/control_panel/manage?p_p_id=com_liferay_knowledge_base_web_portlet_AdminPortlet',
+	languageOverride:
+		'/~/control_panel/manage?p_p_id=com_liferay_portal_language_override_web_internal_portlet_PLOPortlet',
 	lockedItems:
 		'/~/control_panel/manage?p_p_id=com_liferay_locked_items_web_internal_portlet_LockedItemsPortlet',
 	masterPages:

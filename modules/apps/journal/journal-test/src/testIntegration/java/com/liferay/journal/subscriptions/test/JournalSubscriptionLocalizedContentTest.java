@@ -16,6 +16,9 @@ import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.journal.util.JournalHelper;
+import com.liferay.mail.kernel.model.Account;
+import com.liferay.mail.kernel.service.MailService;
+import com.liferay.mail.kernel.service.MailServiceUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
@@ -27,6 +30,7 @@ import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.PortletServlet;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceRequest;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -35,6 +39,7 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -54,10 +59,14 @@ import com.liferay.subscription.test.util.BaseSubscriptionLocalizedContentTestCa
 import java.util.Locale;
 import java.util.Map;
 
+import javax.mail.Session;
+import javax.mail.internet.InternetHeaders;
+
 import javax.portlet.PortletPreferences;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -91,6 +100,20 @@ public class JournalSubscriptionLocalizedContentTest
 		group.setName("Sitio de Pruebas en español", LocaleUtil.SPAIN);
 
 		group = _groupLocalService.updateGroup(group);
+
+		_mailService = MailServiceUtil.getService();
+
+		ReflectionTestUtil.setFieldValue(
+			MailServiceUtil.class, "_mailService", _geMailService());
+	}
+
+	@After
+	@Override
+	public void tearDown() throws Exception {
+		ReflectionTestUtil.setFieldValue(
+			MailServiceUtil.class, "_mailService", _mailService);
+
+		super.tearDown();
 	}
 
 	@Test
@@ -266,6 +289,50 @@ public class JournalSubscriptionLocalizedContentTest
 			LocaleUtil.getDefault(), false, true, serviceContext);
 	}
 
+	private MailService _geMailService() {
+		return new MailService() {
+
+			@Override
+			public void clearSession() {
+				_mailService.clearSession();
+			}
+
+			@Override
+			public void clearSession(long companyId) {
+				_mailService.clearSession(companyId);
+			}
+
+			@Override
+			public Session getSession() {
+				return _mailService.getSession();
+			}
+
+			@Override
+			public Session getSession(Account account) {
+				return _mailService.getSession(account);
+			}
+
+			@Override
+			public Session getSession(long companyId) {
+				return _mailService.getSession(companyId);
+			}
+
+			@Override
+			public void sendEmail(
+				com.liferay.mail.kernel.model.MailMessage mailMessage) {
+
+				InternetHeaders internetHeaders = new InternetHeaders();
+
+				internetHeaders.setHeader("Content-Transfer-Encoding", "8bit");
+
+				mailMessage.setInternetHeaders(internetHeaders);
+
+				_mailService.sendEmail(mailMessage);
+			}
+
+		};
+	}
+
 	private String _getExpectedMailBody(
 			String emailArticleBody, long journalArticlePrimaryKey)
 		throws Exception {
@@ -282,11 +349,14 @@ public class JournalSubscriptionLocalizedContentTest
 			journalArticle = _journalArticleLocalService.getLatestArticle(
 				journalArticle.getResourcePrimKey());
 
-			journalArticleDiffs = _diffHtml.replaceStyles(
-				_journalHelper.diffHtml(
-					journalArticle.getGroupId(), journalArticle.getArticleId(),
-					previousJournalArticleVersion, journalArticle.getVersion(),
-					user.getLanguageId(), null, themeDisplay));
+			journalArticleDiffs = HtmlUtil.escape(
+				_diffHtml.replaceStyles(
+					_journalHelper.diffHtml(
+						journalArticle.getGroupId(),
+						journalArticle.getArticleId(),
+						previousJournalArticleVersion,
+						journalArticle.getVersion(), user.getLanguageId(), null,
+						themeDisplay)));
 		}
 
 		JournalArticleDisplay journalArticleDisplay =
@@ -393,6 +463,8 @@ public class JournalSubscriptionLocalizedContentTest
 
 	@Inject
 	private Language _language;
+
+	private MailService _mailService;
 
 	@Inject
 	private Portal _portal;

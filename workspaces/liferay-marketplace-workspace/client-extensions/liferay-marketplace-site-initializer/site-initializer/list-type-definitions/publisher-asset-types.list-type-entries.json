@@ -1,0 +1,29 @@
+[
+	{
+		"externalReferenceCode": "SOURCE-CODE",
+		"key": "sourceCode",
+		"name": "Source Code",
+		"name_i18n": {
+			"en-US": "Source Code"
+		},
+		"type": "string"
+	},
+	{
+		"externalReferenceCode": "PACKAGE",
+		"key": "package",
+		"name": "Package (jar, war, zip)",
+		"name_i18n": {
+			"en-US": "Package (jar, war, zip)"
+		},
+		"type": "string"
+	},
+	{
+		"externalReferenceCode": "LPKG",
+		"key": "lpkg",
+		"name": "Liferay Package (LPKG)",
+		"name_i18n": {
+			"en-US": "Liferay Package (LPKG)"
+		},
+		"type": "string"
+	}
+]

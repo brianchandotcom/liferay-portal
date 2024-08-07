@@ -3,24 +3,14 @@
 		{
 			"DBType": "String",
 			"businessType": "MultiselectPicklist",
-			"defaultValue": "open",
-			"externalReferenceCode": "PUBLISHER-TYPE",
+			"externalReferenceCode": "PUBLISHER-TYPE-FIELD",
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "en_US",
 			"label": {
 				"en_US": "Publisher Type"
 			},
-			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:PublisherType$]",
-			"name": "PublisherType",
-			"objectFieldSettings": [
-				{
-					"name": "stateFlow"
-				},
-				{
-					"name": "defaultValueType",
-					"value": "inputAsValue"
-				}
-			],
+			"listTypeDefinitionExternalReferenceCode": "PUBLISHER-TYPE",
+			"name": "publisherType",
 			"required": false,
 			"state": false
 		}

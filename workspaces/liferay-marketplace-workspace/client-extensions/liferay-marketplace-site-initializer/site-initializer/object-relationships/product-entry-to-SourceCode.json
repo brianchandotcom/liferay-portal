@@ -1,0 +1,11 @@
+{
+	"deletionType": "cascade",
+	"label": {
+		"en_US": "Product to Publisher Assets"
+	},
+	"name": "productEntryToPublisherAssets",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:CPDefinition$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:PublisherAssets$]",
+	"objectDefinitionName2": "PublisherAssets",
+	"type": "oneToMany"
+}

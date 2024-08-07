@@ -113,8 +113,8 @@ public class FragmentEntryFragmentRendererTest {
 					JSONUtil.put(
 						"href",
 						JSONUtil.put(
-							LocaleUtil.getSiteDefault(
-							).toString(),
+							LocaleUtil.toLanguageId(
+								LocaleUtil.getSiteDefault()),
 							"https://liferay.com")
 					).put(
 						"mapperType", "link"

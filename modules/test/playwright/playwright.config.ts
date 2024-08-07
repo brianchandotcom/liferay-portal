@@ -11,6 +11,7 @@ import {config as analyticsWebConfig} from './tests/analytics-web/config';
 import {config as announcementsWebConfig} from './tests/announcements-web/config';
 import {config as batchPlannerConfig} from './tests/batch-planner/config';
 import {config as blogsWebConfig} from './tests/blogs-web/config';
+import {config as calendarWebConfig} from './tests/calendar-web/config';
 import {config as changeTrackingWebConfig} from './tests/change-tracking-web/config';
 import {config as clientExtensionWebConfig} from './tests/client-extension-web/config';
 import {config as commerceConfig} from './tests/commerce/config';
@@ -89,6 +90,7 @@ export default defineConfig({
 		announcementsWebConfig,
 		batchPlannerConfig,
 		blogsWebConfig,
+		calendarWebConfig,
 		cookiesBannerWebConfig,
 		changeTrackingWebConfig,
 		clientExtensionWebConfig,

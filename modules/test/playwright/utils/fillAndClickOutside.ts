@@ -10,9 +10,13 @@ import getRandomString from './getRandomString';
 export default async function fillAndClickOutside(
 	page: Page,
 	element: Locator,
-	content?: string
+	content?: string,
+	clickOutside: boolean = true
 ) {
 	await element.click();
 	await element.fill(content || getRandomString());
-	await page.locator('body').click();
+
+	if (clickOutside) {
+		await page.locator('body').click();
+	}
 }

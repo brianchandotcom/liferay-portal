@@ -202,40 +202,301 @@ public abstract class BaseProductVirtualSettingsResourceTestCase {
 	public void testGetProductByExternalReferenceCodeProductVirtualSettings()
 		throws Exception {
 
-		Assert.assertTrue(false);
+		ProductVirtualSettings postProductVirtualSettings =
+			testGetProductByExternalReferenceCodeProductVirtualSettings_addProductVirtualSettings();
+
+		ProductVirtualSettings getProductVirtualSettings =
+			productVirtualSettingsResource.
+				getProductByExternalReferenceCodeProductVirtualSettings(
+					testGetProductByExternalReferenceCodeProductVirtualSettings_getExternalReferenceCode());
+
+		assertEquals(postProductVirtualSettings, getProductVirtualSettings);
+		assertValid(getProductVirtualSettings);
+	}
+
+	protected String
+			testGetProductByExternalReferenceCodeProductVirtualSettings_getExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected ProductVirtualSettings
+			testGetProductByExternalReferenceCodeProductVirtualSettings_addProductVirtualSettings()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
 	public void testGraphQLGetProductByExternalReferenceCodeProductVirtualSettings()
 		throws Exception {
 
-		Assert.assertTrue(true);
+		ProductVirtualSettings productVirtualSettings =
+			testGraphQLGetProductByExternalReferenceCodeProductVirtualSettings_addProductVirtualSettings();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				productVirtualSettings,
+				ProductVirtualSettingsSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"productByExternalReferenceCodeProductVirtualSettings",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"externalReferenceCode",
+											"\"" +
+												testGraphQLGetProductByExternalReferenceCodeProductVirtualSettings_getExternalReferenceCode() +
+													"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/productByExternalReferenceCodeProductVirtualSettings"))));
+
+		// Using the namespace headlessCommerceAdminCatalog_v1_0
+
+		Assert.assertTrue(
+			equals(
+				productVirtualSettings,
+				ProductVirtualSettingsSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceAdminCatalog_v1_0",
+								new GraphQLField(
+									"productByExternalReferenceCodeProductVirtualSettings",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"externalReferenceCode",
+												"\"" +
+													testGraphQLGetProductByExternalReferenceCodeProductVirtualSettings_getExternalReferenceCode() +
+														"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceAdminCatalog_v1_0",
+						"Object/productByExternalReferenceCodeProductVirtualSettings"))));
+	}
+
+	protected String
+			testGraphQLGetProductByExternalReferenceCodeProductVirtualSettings_getExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
 	public void testGraphQLGetProductByExternalReferenceCodeProductVirtualSettingsNotFound()
 		throws Exception {
 
-		Assert.assertTrue(true);
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"productByExternalReferenceCodeProductVirtualSettings",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceAdminCatalog_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceAdminCatalog_v1_0",
+						new GraphQLField(
+							"productByExternalReferenceCodeProductVirtualSettings",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										irrelevantExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected ProductVirtualSettings
+			testGraphQLGetProductByExternalReferenceCodeProductVirtualSettings_addProductVirtualSettings()
+		throws Exception {
+
+		return testGraphQLProductVirtualSettings_addProductVirtualSettings();
 	}
 
 	@Test
 	public void testGetProductIdProductVirtualSettings() throws Exception {
-		Assert.assertTrue(false);
+		ProductVirtualSettings postProductVirtualSettings =
+			testGetProductIdProductVirtualSettings_addProductVirtualSettings();
+
+		ProductVirtualSettings getProductVirtualSettings =
+			productVirtualSettingsResource.getProductIdProductVirtualSettings(
+				testGetProductIdProductVirtualSettings_getId(
+					postProductVirtualSettings));
+
+		assertEquals(postProductVirtualSettings, getProductVirtualSettings);
+		assertValid(getProductVirtualSettings);
+	}
+
+	protected Long testGetProductIdProductVirtualSettings_getId(
+			ProductVirtualSettings productVirtualSettings)
+		throws Exception {
+
+		return productVirtualSettings.getId();
+	}
+
+	protected ProductVirtualSettings
+			testGetProductIdProductVirtualSettings_addProductVirtualSettings()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
 	public void testGraphQLGetProductIdProductVirtualSettings()
 		throws Exception {
 
-		Assert.assertTrue(true);
+		ProductVirtualSettings productVirtualSettings =
+			testGraphQLGetProductIdProductVirtualSettings_addProductVirtualSettings();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				productVirtualSettings,
+				ProductVirtualSettingsSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"productIdProductVirtualSettings",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"id",
+											testGraphQLGetProductIdProductVirtualSettings_getId(
+												productVirtualSettings));
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/productIdProductVirtualSettings"))));
+
+		// Using the namespace headlessCommerceAdminCatalog_v1_0
+
+		Assert.assertTrue(
+			equals(
+				productVirtualSettings,
+				ProductVirtualSettingsSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceAdminCatalog_v1_0",
+								new GraphQLField(
+									"productIdProductVirtualSettings",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"id",
+												testGraphQLGetProductIdProductVirtualSettings_getId(
+													productVirtualSettings));
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceAdminCatalog_v1_0",
+						"Object/productIdProductVirtualSettings"))));
+	}
+
+	protected Long testGraphQLGetProductIdProductVirtualSettings_getId(
+			ProductVirtualSettings productVirtualSettings)
+		throws Exception {
+
+		return productVirtualSettings.getId();
 	}
 
 	@Test
 	public void testGraphQLGetProductIdProductVirtualSettingsNotFound()
 		throws Exception {
 
-		Assert.assertTrue(true);
+		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"productIdProductVirtualSettings",
+						new HashMap<String, Object>() {
+							{
+								put("id", irrelevantId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceAdminCatalog_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceAdminCatalog_v1_0",
+						new GraphQLField(
+							"productIdProductVirtualSettings",
+							new HashMap<String, Object>() {
+								{
+									put("id", irrelevantId);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected ProductVirtualSettings
+			testGraphQLGetProductIdProductVirtualSettings_addProductVirtualSettings()
+		throws Exception {
+
+		return testGraphQLProductVirtualSettings_addProductVirtualSettings();
+	}
+
+	protected ProductVirtualSettings
+			testGraphQLProductVirtualSettings_addProductVirtualSettings()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected void assertContains(
@@ -326,6 +587,10 @@ public abstract class BaseProductVirtualSettingsResourceTestCase {
 		throws Exception {
 
 		boolean valid = true;
+
+		if (productVirtualSettings.getId() == null) {
+			valid = false;
+		}
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
@@ -625,6 +890,17 @@ public abstract class BaseProductVirtualSettingsResourceTestCase {
 				if (!Objects.deepEquals(
 						productVirtualSettings1.getDuration(),
 						productVirtualSettings2.getDuration())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("id", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						productVirtualSettings1.getId(),
+						productVirtualSettings2.getId())) {
 
 					return false;
 				}
@@ -932,6 +1208,11 @@ public abstract class BaseProductVirtualSettingsResourceTestCase {
 		}
 
 		if (entityFieldName.equals("duration")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("id")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -1248,6 +1529,7 @@ public abstract class BaseProductVirtualSettingsResourceTestCase {
 				attachment = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				duration = RandomTestUtil.randomLong();
+				id = RandomTestUtil.randomLong();
 				maxUsages = RandomTestUtil.randomInt();
 				sampleAttachment = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());

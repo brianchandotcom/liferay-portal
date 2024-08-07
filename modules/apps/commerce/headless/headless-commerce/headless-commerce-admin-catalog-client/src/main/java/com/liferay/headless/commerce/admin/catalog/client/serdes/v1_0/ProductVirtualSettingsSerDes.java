@@ -93,6 +93,16 @@ public class ProductVirtualSettingsSerDes {
 			sb.append(productVirtualSettings.getDuration());
 		}
 
+		if (productVirtualSettings.getId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"id\": ");
+
+			sb.append(productVirtualSettings.getId());
+		}
+
 		if (productVirtualSettings.getMaxUsages() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -302,6 +312,13 @@ public class ProductVirtualSettingsSerDes {
 				String.valueOf(productVirtualSettings.getDuration()));
 		}
 
+		if (productVirtualSettings.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(productVirtualSettings.getId()));
+		}
+
 		if (productVirtualSettings.getMaxUsages() == null) {
 			map.put("maxUsages", null);
 		}
@@ -434,6 +451,9 @@ public class ProductVirtualSettingsSerDes {
 			else if (Objects.equals(jsonParserFieldName, "duration")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "id")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "maxUsages")) {
 				return false;
 			}
@@ -506,6 +526,12 @@ public class ProductVirtualSettingsSerDes {
 			else if (Objects.equals(jsonParserFieldName, "duration")) {
 				if (jsonParserFieldValue != null) {
 					productVirtualSettings.setDuration(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "id")) {
+				if (jsonParserFieldValue != null) {
+					productVirtualSettings.setId(
 						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}

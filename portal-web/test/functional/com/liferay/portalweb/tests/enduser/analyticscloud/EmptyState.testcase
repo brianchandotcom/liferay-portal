@@ -679,9 +679,9 @@ definition {
 
 			ACUtils.clickGenericHyperlink(hyperlinkText = "Access our documentation to learn more.");
 
-			SelectWindow(value1 = "title=Events Analysis - Liferay Learn");
+			SelectWindow(value1 = "title=Events - Liferay Learn");
 
-			ACUtils.viewGenericText(textValueList = "Events Analysis");
+			ACUtils.viewGenericText(textValueList = "Events");
 
 			Close.closeWindow();
 		}

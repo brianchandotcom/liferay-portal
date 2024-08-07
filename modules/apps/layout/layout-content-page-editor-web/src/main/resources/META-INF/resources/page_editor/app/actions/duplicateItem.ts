@@ -10,18 +10,18 @@ import type {FragmentEntryLink} from './addFragmentEntryLinks';
 
 export default function duplicateItem({
 	addedFragmentEntryLinks = [],
-	itemId,
+	itemIds,
 	layoutData,
 	restrictedItemIds,
 }: {
 	addedFragmentEntryLinks?: FragmentEntryLink[];
-	itemId: string;
+	itemIds: string[];
 	layoutData: LayoutData;
 	restrictedItemIds: string[];
 }) {
 	return {
 		addedFragmentEntryLinks,
-		itemId,
+		itemIds,
 		layoutData,
 		restrictedItemIds,
 		type: DUPLICATE_ITEM,

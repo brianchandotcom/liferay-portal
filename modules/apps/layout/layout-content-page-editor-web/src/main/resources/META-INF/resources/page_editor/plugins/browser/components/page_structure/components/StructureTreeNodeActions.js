@@ -201,7 +201,7 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 				action: () => {
 					dispatch(
 						duplicateItem({
-							itemId: item.id,
+							itemIds: [item.id],
 							selectItem,
 						})
 					);

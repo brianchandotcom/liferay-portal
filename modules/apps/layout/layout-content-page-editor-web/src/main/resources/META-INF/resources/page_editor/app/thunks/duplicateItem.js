@@ -7,30 +7,30 @@ import duplicateItemAction from '../actions/duplicateItem';
 import {ITEM_ACTIVATION_ORIGINS} from '../config/constants/itemActivationOrigins';
 import FragmentService from '../services/FragmentService';
 
-export default function duplicateItem({itemId, selectItem = () => {}}) {
+export default function duplicateItem({itemIds, selectItem = () => {}}) {
 	return (dispatch, getState) => {
 		FragmentService.duplicateItem({
-			itemId,
+			itemIds,
 			onNetworkStatus: dispatch,
 			segmentsExperienceId: getState().segmentsExperienceId,
 		}).then(
 			({
 				duplicatedFragmentEntryLinks,
-				duplicatedItemId,
+				duplicatedItemIds,
 				layoutData,
 				restrictedItemIds,
 			}) => {
 				dispatch(
 					duplicateItemAction({
 						addedFragmentEntryLinks: duplicatedFragmentEntryLinks,
-						itemId: duplicatedItemId,
+						itemIds: duplicatedItemIds,
 						layoutData,
 						restrictedItemIds,
 					})
 				);
 
-				if (duplicatedItemId) {
-					selectItem(duplicatedItemId, {
+				if (duplicatedItemIds.length) {
+					selectItem(duplicatedItemIds[0], {
 						origin: ITEM_ACTIVATION_ORIGINS.itemActions,
 					});
 				}

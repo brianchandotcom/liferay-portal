@@ -98,7 +98,7 @@ export default function TopperItemActions({disabled, item}) {
 				action: () =>
 					dispatch(
 						duplicateItem({
-							itemId: item.itemId,
+							itemIds: [item.itemId],
 							selectItem,
 						})
 					),

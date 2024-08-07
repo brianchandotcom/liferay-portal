@@ -173,24 +173,24 @@ export default {
 	},
 
 	duplicateItem({
-		itemId,
+		itemIds,
 		onNetworkStatus,
 		segmentsExperienceId,
 	}: {
-		itemId: string;
+		itemIds: string[];
 		onNetworkStatus: OnNetworkStatus;
 		segmentsExperienceId: string;
 	}) {
 		return draftServiceFetch<{
 			duplicatedFragmentEntryLinks: FragmentEntryLink[];
-			duplicatedItemId: string;
+			duplicatedItemIds: string[];
 			layoutData: LayoutData;
 			restrictedItemIds: string[];
 		}>(
 			config.duplicateItemURL,
 			{
 				body: {
-					itemId,
+					itemIds,
 					segmentsExperienceId,
 				},
 			},

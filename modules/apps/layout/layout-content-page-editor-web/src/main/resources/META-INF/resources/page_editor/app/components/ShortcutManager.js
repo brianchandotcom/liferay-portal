@@ -106,7 +106,7 @@ export default function ShortcutManager() {
 	const duplicate = () => {
 		dispatch(
 			duplicateItem({
-				itemId: activeItemId,
+				itemIds: activeItemIds,
 				selectItem,
 			})
 		);

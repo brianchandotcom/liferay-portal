@@ -157,6 +157,8 @@ public class LayoutIndexerIndexedFieldsTest {
 	private Map<String, String> _expectedFieldValues(Layout layout)
 		throws Exception {
 
+		User user = TestPropsValues.getUser();
+
 		Map<String, String> map = HashMapBuilder.put(
 			Field.CLASS_NAME_ID, String.valueOf(layout.getClassNameId())
 		).put(
@@ -192,16 +194,13 @@ public class LayoutIndexerIndexedFieldsTest {
 		).put(
 			"scopeGroupExternalReferenceCode", _group.getExternalReferenceCode()
 		).put(
+			"statusByUserExternalReferenceCode", user.getExternalReferenceCode()
+		).put(
 			"statusByUserId", String.valueOf(layout.getStatusByUserId())
 		).put(
 			"title_ja_JP", layout.getName(LocaleUtil.JAPAN)
 		).put(
-			"userExternalReferenceCode",
-			() -> {
-				User user = TestPropsValues.getUser();
-
-				return user.getExternalReferenceCode();
-			}
+			"userExternalReferenceCode", user.getExternalReferenceCode()
 		).build();
 
 		indexedFieldsFixture.populateUID(layout, map);

@@ -230,6 +230,18 @@ function JenkinsServerPage() {
 		getJenkinsServerById({id, setJenkinsServer});
 	}
 
+	let jenkinsServerName = 'Jenkins Server #' + id;
+
+	if (jenkinsServer) {
+		jenkinsServerName = jenkinsServer.name;
+	}
+
+	let breadcrumbs = [
+		{active: false, link: '/', name: 'Home'},
+		{active: false, link: '/jenkins-cohorts', name: 'Jenkins'},
+		{active: true, link: '/jenkins-servers/' + id, name: jenkinsServerName},
+	];
+
 	if (!jenkinsServer) {
 		return (
 			<ClayLayout.Container>
@@ -260,18 +272,6 @@ function JenkinsServerPage() {
 			window.location.replace('/#/jenkins-servers/');
 		}
 	}
-
-	let jenkinsServerName = 'Jenkins Server #' + id;
-
-	if (jenkinsServer) {
-		jenkinsServerName = jenkinsServer.name;
-	}
-
-	let breadcrumbs = [
-		{active: false, link: '/', name: 'Home'},
-		{active: false, link: '/jenkins-cohorts', name: 'Jenkins'},
-		{active: true, link: '/jenkins-servers/' + id, name: jenkinsServerName},
-	];
 
 	if (jenkinsServer.jenkinsCohort) {
 		breadcrumbs = [

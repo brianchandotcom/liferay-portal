@@ -52,7 +52,15 @@ public class JenkinsNodeEntityRepository
 	public void createAll(JenkinsServerEntity jenkinsServerEntity) {
 		JSONObject jsonObject = jenkinsServerEntity.getComputerJSONObject();
 
-		JSONArray computerJSONArray = jsonObject.getJSONArray("computer");
+		if (jsonObject == null) {
+			return;
+		}
+
+		JSONArray computerJSONArray = jsonObject.optJSONArray("computer");
+
+		if (computerJSONArray == null) {
+			return;
+		}
 
 		for (int i = 0; i < computerJSONArray.length(); i++) {
 			JSONObject computerJSONObject = computerJSONArray.getJSONObject(i);

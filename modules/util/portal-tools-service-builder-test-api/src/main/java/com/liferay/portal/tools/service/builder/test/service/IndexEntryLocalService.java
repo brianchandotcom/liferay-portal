@@ -72,12 +72,6 @@ public interface IndexEntryLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public IndexEntry addIndexEntry(IndexEntry indexEntry);
 
-	@Indexable(type = IndexableType.REINDEX)
-	public IndexEntry addIndexEntry(long companyId, String name);
-
-	public boolean addKeywordsEntry(
-		long keywordsEntryId, IndexEntry indexEntry);
-
 	public boolean addKeywordsEntryIndexEntries(
 		long keywordsEntryId, List<IndexEntry> indexEntries);
 

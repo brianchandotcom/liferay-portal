@@ -105,25 +105,6 @@ create table FinderWhereClauseEntry (
 	nickname VARCHAR(75) null
 );
 
-create table IndexEntries_KeywordsEntries (
-	companyId LONG not null,
-	indexEntryId LONG not null,
-	keywordsEntryId LONG not null,
-	primary key (indexEntryId, keywordsEntryId)
-);
-
-create table IndexEntry (
-	indexEntryId LONG not null primary key,
-	companyId LONG,
-	name VARCHAR(75) null
-);
-
-create table KeywordsEntry (
-	keywordsEntryId LONG not null primary key,
-	companyId LONG,
-	name VARCHAR(75) null
-);
-
 create table LVEntries_BigDecimalEntries (
 	companyId LONG not null,
 	bigDecimalEntryId LONG not null,

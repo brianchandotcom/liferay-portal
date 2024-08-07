@@ -48,14 +48,16 @@ public class JUnitBatchBuildTestrayCaseResult
 
 	@Override
 	public long getDuration() {
-		long duration = 0;
-
 		List<TestClassResult> testClassResults = _getTestClassResults();
 
-		if (testClassResults != null) {
-			for (TestClassResult testClassResult : testClassResults) {
-				duration += testClassResult.getDuration();
-			}
+		if (testClassResults == null) {
+			return 0;
+		}
+
+		long duration = 0;
+
+		for (TestClassResult testClassResult : testClassResults) {
+			duration += testClassResult.getDuration();
 		}
 
 		return duration;

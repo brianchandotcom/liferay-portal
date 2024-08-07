@@ -44,6 +44,7 @@ import {config as objectWebConfig} from './tests/object-web/config';
 import {config as openIdLinkConfig} from './tests/openid-link/config';
 import {config as osbFaroWebConfig} from './tests/osb-faro-web/config';
 import {config as portalDefaultPermissionsWebConfig} from './tests/portal-default-permissions-web/config';
+import {config as portalLanguageOverrideWebConfig} from './tests/portal-language-override-web/config';
 import {config as portalSearchAdminWebConfig} from './tests/portal-search-admin-web/config';
 import {config as portalSearchWebConfig} from './tests/portal-search-web/config';
 import {config as portalSecurityScriptManagementWebConfig} from './tests/portal-security-script-management-web/config';
@@ -126,6 +127,7 @@ export default defineConfig({
 		osbFaroWebConfig,
 		partnerConfig,
 		portalDefaultPermissionsWebConfig,
+		portalLanguageOverrideWebConfig,
 		portalSearchAdminWebConfig,
 		portalSearchWebConfig,
 		portalSecurityScriptManagementWebConfig,

@@ -92,7 +92,7 @@ public class PropertiesLanguageKeysContextCheck extends BaseFileCheck {
 				addMessage(
 					fileName,
 					StringBundler.concat(
-						"The key '", matcher.group(1), "' should include a ",
+						"The key '", key, "' should include a ",
 						"word of context at the end, within a [], to indicate ",
 						"specific meaning"),
 					lineNumber);

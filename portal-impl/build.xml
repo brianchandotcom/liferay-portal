@@ -788,6 +788,36 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 		<delete file="ServiceBuilder.temp" />
 	</target>
 
+	<target name="git-util">
+		<path id="source.formatter.classpath">
+			<fileset
+				dir="${sdk.dir}/dependencies/com.liferay.source.formatter/lib"
+				includes="*.jar"
+			/>
+			<path refid="project.classpath" />
+		</path>
+
+		<if>
+			<not>
+				<isset property="git.type" />
+			</not>
+			<then>
+				<property name="git.type" value="current-branch" />
+			</then>
+		</if>
+
+		<java
+			classname="com.liferay.portal.tools.GitUtil"
+			classpathref="source.formatter.classpath"
+			dir="${project.dir}"
+			fork="true"
+			newenvironment="true"
+		>
+			<arg value="git.type=${git.type}" />
+			<arg value="git.working.branch.name=${git.working.branch.name}" />
+		</java>
+	</target>
+
 	<target depends="build-common-java.init-compile" name="init-compile">
 		<copy
 			preservelastmodified="true"

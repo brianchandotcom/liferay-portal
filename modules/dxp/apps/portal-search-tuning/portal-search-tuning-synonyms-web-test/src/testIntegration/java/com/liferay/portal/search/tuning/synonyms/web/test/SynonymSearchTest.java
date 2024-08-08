@@ -104,7 +104,7 @@ public class SynonymSearchTest {
 
 		_setUpLocales(userId);
 
-		addJournalArticles();
+		_addJournalArticles();
 	}
 
 	@AfterClass
@@ -121,22 +121,22 @@ public class SynonymSearchTest {
 	public void testSearchOnLocalesWithDefaultSynonymFilters()
 		throws Exception {
 
-		doAssertSearch("carro", Field.TITLE, LocaleUtil.PORTUGAL, 2);
-		doAssertSearch("contento", Field.TITLE, LocaleUtil.ITALY, 2);
-		doAssertSearch("dxp", Field.TITLE, LocaleUtil.US, 2);
-		doAssertSearch("efectivo", Field.TITLE, LocaleUtil.SPAIN, 2);
-		doAssertSearch("effectief", Field.TITLE, LocaleUtil.NETHERLANDS, 2);
-		doAssertSearch("feliz", Field.TITLE, LocaleUtil.BRAZIL, 2);
-		doAssertSearch("feliç", Field.TITLE, _CATALAN_LOCALE, 2);
-		doAssertSearch("glücklich", Field.TITLE, LocaleUtil.GERMANY, 2);
-		doAssertSearch("hatékony", Field.TITLE, LocaleUtil.HUNGARY, 2);
-		doAssertSearch("lycklig", Field.TITLE, _SWEDISH_LOCALE, 2);
-		doAssertSearch("maison", Field.TITLE, LocaleUtil.FRANCE, 2);
-		doAssertSearch("tehokas", Field.TITLE, _FINNISH_LOCALE, 2);
-		doAssertSearch("فعال", Field.TITLE, _ARABIC_LOCALE, 2);
+		_assertSearch("carro", Field.TITLE, LocaleUtil.PORTUGAL, 2);
+		_assertSearch("contento", Field.TITLE, LocaleUtil.ITALY, 2);
+		_assertSearch("dxp", Field.TITLE, LocaleUtil.US, 2);
+		_assertSearch("efectivo", Field.TITLE, LocaleUtil.SPAIN, 2);
+		_assertSearch("effectief", Field.TITLE, LocaleUtil.NETHERLANDS, 2);
+		_assertSearch("feliz", Field.TITLE, LocaleUtil.BRAZIL, 2);
+		_assertSearch("feliç", Field.TITLE, _CATALAN_LOCALE, 2);
+		_assertSearch("glücklich", Field.TITLE, LocaleUtil.GERMANY, 2);
+		_assertSearch("hatékony", Field.TITLE, LocaleUtil.HUNGARY, 2);
+		_assertSearch("lycklig", Field.TITLE, _SWEDISH_LOCALE, 2);
+		_assertSearch("maison", Field.TITLE, LocaleUtil.FRANCE, 2);
+		_assertSearch("tehokas", Field.TITLE, _FINNISH_LOCALE, 2);
+		_assertSearch("فعال", Field.TITLE, _ARABIC_LOCALE, 2);
 	}
 
-	protected static void addJournalArticle(Map<Locale, String> localeStringMap)
+	private static void _addJournalArticle(Map<Locale, String> localeStringMap)
 		throws Exception {
 
 		JournalTestUtil.addArticle(
@@ -146,8 +146,8 @@ public class SynonymSearchTest {
 			_serviceContext);
 	}
 
-	protected static void addJournalArticles() throws Exception {
-		addJournalArticle(
+	private static void _addJournalArticles() throws Exception {
+		_addJournalArticle(
 			HashMapBuilder.put(
 				_ARABIC_LOCALE, "فعال"
 			).put(
@@ -175,7 +175,7 @@ public class SynonymSearchTest {
 			).put(
 				LocaleUtil.US, "dxp"
 			).build());
-		addJournalArticle(
+		_addJournalArticle(
 			HashMapBuilder.put(
 				_ARABIC_LOCALE, "منتج"
 			).put(
@@ -205,7 +205,7 @@ public class SynonymSearchTest {
 			).build());
 	}
 
-	protected static void addSynonymSet(String synonymSet) {
+	private static void _addSynonymSet(String synonymSet) {
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			new MockLiferayPortletActionRequest();
 
@@ -219,7 +219,7 @@ public class SynonymSearchTest {
 			mockLiferayPortletActionRequest);
 	}
 
-	protected static String getResourceAsString(
+	private static String _getResourceAsString(
 		Class<?> clazz, String resourceName) {
 
 		try (InputStream inputStream = clazz.getResourceAsStream(
@@ -233,90 +233,6 @@ public class SynonymSearchTest {
 		}
 	}
 
-	protected static String loadAdditionalIndexConfigurations() {
-		try {
-			return getResourceAsString(
-				SynonymSearchTest.class,
-				"dependencies/" + SynonymSearchTest.class.getSimpleName() +
-					"-additionalIndexConfigurations.json");
-		}
-		catch (Exception exception) {
-			throw new RuntimeException(exception);
-		}
-	}
-
-	protected static String loadOverrideTypeMappings() {
-		try {
-			return getResourceAsString(
-				SynonymSearchTest.class,
-				"dependencies/" + SynonymSearchTest.class.getSimpleName() +
-					"-overrideTypeMappings.json");
-		}
-		catch (Exception exception) {
-			throw new RuntimeException(exception);
-		}
-	}
-
-	protected static Dictionary<String, Object> setUpSearchEngineProperties()
-		throws Exception {
-
-		Configuration configuration = _configurationAdmin.getConfiguration(
-			_getSearchEngineConfigurationPid(), StringPool.QUESTION);
-
-		Dictionary<String, Object> properties = configuration.getProperties();
-
-		if (properties == null) {
-			properties = new HashMapDictionary<>();
-		}
-
-		properties.put("overrideTypeMappings", loadOverrideTypeMappings());
-
-		return properties;
-	}
-
-	protected static Dictionary<String, Object> setUpSynonymsProperties() {
-		return HashMapDictionaryBuilder.<String, Object>put(
-			"filterNames",
-			new String[] {
-				"liferay_filter_synonym_ar", "liferay_filter_synonym_ca",
-				"liferay_filter_synonym_de", "liferay_filter_synonym_en",
-				"liferay_filter_synonym_es", "liferay_filter_synonym_fi",
-				"liferay_filter_synonym_fr", "liferay_filter_synonym_hu",
-				"liferay_filter_synonym_it", "liferay_filter_synonym_nl",
-				"liferay_filter_synonym_pt_BR", "liferay_filter_synonym_pt_PT",
-				"liferay_filter_synonym_sv"
-			}
-		).build();
-	}
-
-	protected void doAssertSearch(
-		String keyword, String fieldName, Locale locale, int expectedCount) {
-
-		String localizedFieldName = Field.getLocalizedName(locale, fieldName);
-
-		SearchRequestBuilder searchRequestBuilder =
-			_searchRequestBuilderFactory.builder(
-			).companyId(
-				_COMPANY_ID
-			).entryClassNames(
-				JournalArticle.class.getName()
-			).groupIds(
-				_group.getGroupId()
-			).queryString(
-				keyword
-			);
-
-		SearchResponse searchResponse = _searcher.search(
-			searchRequestBuilder.build());
-
-		List<Document> documents = searchResponse.getDocuments71();
-
-		DocumentsAssert.assertCount(
-			searchResponse.getRequestString(),
-			documents.toArray(new Document[0]), localizedFieldName,
-			expectedCount);
-	}
-
 	private static String _getSearchEngineConfigurationPid() {
 		SearchEngine searchEngine = SearchEngineHelperUtil.getSearchEngine();
 
@@ -325,6 +241,18 @@ public class SynonymSearchTest {
 		}
 
 		return _CONFIGURATION_PID_ELASTICSEARCH;
+	}
+
+	private static String _loadOverrideTypeMappings() {
+		try {
+			return _getResourceAsString(
+				SynonymSearchTest.class,
+				"dependencies/" + SynonymSearchTest.class.getSimpleName() +
+					"-overrideTypeMappings.json");
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
+		}
 	}
 
 	private static void _setUpLocales(long userId) throws Exception {
@@ -354,31 +282,103 @@ public class SynonymSearchTest {
 			LocaleUtil.US);
 	}
 
+	private static Dictionary<String, Object> _setUpSearchEngineProperties()
+		throws Exception {
+
+		Configuration configuration = _configurationAdmin.getConfiguration(
+			_getSearchEngineConfigurationPid(), StringPool.QUESTION);
+
+		Dictionary<String, Object> properties = configuration.getProperties();
+
+		if (properties == null) {
+			properties = new HashMapDictionary<>();
+		}
+
+		properties.put("overrideTypeMappings", _loadOverrideTypeMappings());
+
+		return properties;
+	}
+
 	private static void _setUpSynonyms() throws Exception {
 		try (ConfigurationTemporarySwapper
 				elasticSearchConfigurationTemporarySwapper =
 					new ConfigurationTemporarySwapper(
 							_getSearchEngineConfigurationPid(),
-						setUpSearchEngineProperties());
+						_setUpSearchEngineProperties());
 
-			ConfigurationTemporarySwapper synonymConfigurationTemporarySwapper =
+			 ConfigurationTemporarySwapper synonymConfigurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
 					_CONFIGURATION_PID_SYNONYMS,
-					setUpSynonymsProperties())) {
+					_setUpSynonymsProperties())) {
 
-			addSynonymSet("carro,automovel");
-			addSynonymSet("contento,soddisfatto");
-			addSynonymSet("dxp,portal");
-			addSynonymSet("efectivo,productivo");
-			addSynonymSet("effectief,productief");
-			addSynonymSet("feliz,alegre");
-			addSynonymSet("feliç,satisfet");
-			addSynonymSet("glücklich,heiter");
-			addSynonymSet("hatékony,produktív");
-			addSynonymSet("lycklig,nöjd");
-			addSynonymSet("maison,logement");
-			addSynonymSet("tehokas,tuottava");
-			addSynonymSet("منتج, فعال");
+			_addSynonymSet("carro,automovel");
+			_addSynonymSet("contento,soddisfatto");
+			_addSynonymSet("dxp,portal");
+			_addSynonymSet("efectivo,productivo");
+			_addSynonymSet("effectief,productief");
+			_addSynonymSet("feliz,alegre");
+			_addSynonymSet("feliç,satisfet");
+			_addSynonymSet("glücklich,heiter");
+			_addSynonymSet("hatékony,produktív");
+			_addSynonymSet("lycklig,nöjd");
+			_addSynonymSet("maison,logement");
+			_addSynonymSet("tehokas,tuottava");
+			_addSynonymSet("منتج, فعال");
+		}
+	}
+
+	private static Dictionary<String, Object> _setUpSynonymsProperties() {
+		return HashMapDictionaryBuilder.<String, Object>put(
+			"filterNames",
+			new String[] {
+				"liferay_filter_synonym_ar", "liferay_filter_synonym_ca",
+				"liferay_filter_synonym_de", "liferay_filter_synonym_en",
+				"liferay_filter_synonym_es", "liferay_filter_synonym_fi",
+				"liferay_filter_synonym_fr", "liferay_filter_synonym_hu",
+				"liferay_filter_synonym_it", "liferay_filter_synonym_nl",
+				"liferay_filter_synonym_pt_BR", "liferay_filter_synonym_pt_PT",
+				"liferay_filter_synonym_sv"
+			}
+		).build();
+	}
+
+	private void _assertSearch(
+		String keyword, String fieldName, Locale locale, int expectedCount) {
+
+		String localizedFieldName = Field.getLocalizedName(locale, fieldName);
+
+		SearchRequestBuilder searchRequestBuilder =
+			_searchRequestBuilderFactory.builder(
+			).companyId(
+				_COMPANY_ID
+			).entryClassNames(
+				JournalArticle.class.getName()
+			).groupIds(
+				_group.getGroupId()
+			).queryString(
+				keyword
+			);
+
+		SearchResponse searchResponse = _searcher.search(
+			searchRequestBuilder.build());
+
+		List<Document> documents = searchResponse.getDocuments71();
+
+		DocumentsAssert.assertCount(
+			searchResponse.getRequestString(),
+			documents.toArray(new Document[0]), localizedFieldName,
+			expectedCount);
+	}
+
+	private String _loadAdditionalIndexConfigurations() {
+		try {
+			return _getResourceAsString(
+				SynonymSearchTest.class,
+				"dependencies/" + SynonymSearchTest.class.getSimpleName() +
+					"-additionalIndexConfigurations.json");
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 	}
 

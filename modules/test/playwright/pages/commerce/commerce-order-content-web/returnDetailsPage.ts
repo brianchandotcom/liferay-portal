@@ -13,6 +13,7 @@ export class ReturnDetailsPage extends CommerceDNDTablePage {
 	readonly returnActionsButton: Locator;
 	readonly returnActionsButtonViewRefunds: Locator;
 	readonly page: Page;
+	readonly submitReturnRequestButton: Locator;
 	readonly viewRefunds: FrameLocator;
 	readonly refundsTitle: Locator;
 
@@ -30,6 +31,9 @@ export class ReturnDetailsPage extends CommerceDNDTablePage {
 			name: 'View Refunds',
 		});
 		this.page = page;
+		this.submitReturnRequestButton = page.getByRole('link', {
+			name: 'Submit Return Request',
+		});
 		this.viewRefunds = page.frameLocator('iframe').nth(1);
 		this.refundsTitle = this.viewRefunds.getByRole('heading', {
 			name: 'Refunds',

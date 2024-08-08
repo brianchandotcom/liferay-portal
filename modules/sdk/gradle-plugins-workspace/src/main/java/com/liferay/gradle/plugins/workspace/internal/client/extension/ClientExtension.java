@@ -66,38 +66,38 @@ public class ClientExtension {
 	}
 
 	public Map<String, Object> toJSONMap(String virtualInstanceId) {
+		Map<String, Object> jsonMap = new HashMap<>();
+
 		Map<String, Object> typeSettings = new HashMap<>(this.typeSettings);
 
 		String pid = _clientExtensionProperties.getProperty(type + ".pid");
-
-		String suffixPath = "";
-		String suffixPid = "";
-
-		if (!this.virtualInstanceId.equals(virtualInstanceId) &&
-			!virtualInstanceId.equals("default")) {
-
-			this.virtualInstanceId = virtualInstanceId;
-			suffixPath = "_" + virtualInstanceId;
-			suffixPid = "/" + virtualInstanceId;
-		}
 
 		if (Objects.equals(type, "instanceSettings")) {
 			pid = typeSettings.remove("pid") + ".scoped";
 		}
 
 		if (pid == null) {
-			return Collections.emptyMap();
+			return jsonMap;
 		}
 
-		Map<String, Object> jsonMap = new HashMap<>();
+		if (!StringUtil.isBlank(virtualInstanceId)) {
+			this.virtualInstanceId = virtualInstanceId;
+		}
+
+		if (StringUtil.isBlank(this.virtualInstanceId)) {
+			this.virtualInstanceId = "default";
+		}
 
 		Map<String, Object> configMap = new HashMap<>();
+
+		String pathSuffix = StringUtil.suffixIfNotBlank(
+			projectName, virtualInstanceId);
 
 		configMap.put(":configurator:policy", "force");
 		configMap.put(
 			"baseURL",
 			typeSettings.getOrDefault(
-				"baseURL", "${portalURL}/o/" + projectName + suffixPath));
+				"baseURL", "${portalURL}/o/" + pathSuffix));
 		configMap.put("buildTimestamp", System.currentTimeMillis());
 		configMap.put("description", description);
 		configMap.put(
@@ -110,8 +110,7 @@ public class ClientExtension {
 		configMap.put("type", type);
 		configMap.put(
 			"webContextPath",
-			typeSettings.getOrDefault(
-				"webContextPath", "/" + projectName + suffixPath));
+			typeSettings.getOrDefault("webContextPath", "/" + pathSuffix));
 
 		if (!pid.contains("CETConfiguration")) {
 			configMap.putAll(typeSettings);
@@ -129,7 +128,10 @@ public class ClientExtension {
 
 		configMap.put("typeSettings", _encode(typeSettings));
 
-		jsonMap.put(pid + "~" + id + suffixPid, configMap);
+		String pidSuffix = StringUtil.suffixIfNotBlank(
+			id, StringUtil.FORWARD_SLASH, virtualInstanceId);
+
+		jsonMap.put(pid + "~" + pidSuffix, configMap);
 
 		return jsonMap;
 	}

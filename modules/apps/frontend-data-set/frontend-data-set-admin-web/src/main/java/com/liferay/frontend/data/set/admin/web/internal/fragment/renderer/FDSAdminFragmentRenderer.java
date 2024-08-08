@@ -1096,9 +1096,7 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 					apiURL, httpServletRequest);
 			}
 			catch (PortalException portalException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(portalException);
-				}
+				_log.error(portalException);
 
 				return apiURL;
 			}

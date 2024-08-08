@@ -278,15 +278,17 @@ public class DBInspector {
 	}
 
 	public boolean isObjectTable(List<Long> companyIds, String tableName) {
+		String lowerCaseTableName = StringUtil.toLowerCase(tableName);
+
 		for (long companyId : companyIds) {
 
 			// See ObjectDefinitionImpl#getExtensionDBTableName and
 			// ObjectDefinitionLocalServiceImpl#_getDBTableName
 
-			if (tableName.endsWith("_x_" + companyId) ||
-				tableName.startsWith("L_" + companyId + "_") ||
-				tableName.startsWith("O_" + companyId + "_") ||
-				tableName.startsWith("R_")) {
+			if (lowerCaseTableName.endsWith("_x_" + companyId) ||
+				lowerCaseTableName.startsWith("l_" + companyId + "_") ||
+				lowerCaseTableName.startsWith("o_" + companyId + "_") ||
+				lowerCaseTableName.startsWith("r_")) {
 
 				return true;
 			}

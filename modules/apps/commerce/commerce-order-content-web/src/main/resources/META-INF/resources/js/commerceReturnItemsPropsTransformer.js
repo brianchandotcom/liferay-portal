@@ -4,6 +4,7 @@
  */
 
 import CommerceCurrencyDataRenderer from './CommerceCurrencyDataRenderer';
+import CommerceReturnItemStatusDataRenderer from './CommerceReturnItemStatusDataRenderer';
 
 function handleRefreshPage() {
 	Liferay.detach('fds-display-updated', handleRefreshPage);
@@ -16,6 +17,8 @@ function commerceReturnItemsPropsTransformer({...props}) {
 		...props,
 		customDataRenderers: {
 			commerceCurrencyDataRenderer: CommerceCurrencyDataRenderer,
+			commerceReturnItemStatusDataRenderer:
+				CommerceReturnItemStatusDataRenderer,
 		},
 		onActionDropdownItemClick: ({
 			action: {

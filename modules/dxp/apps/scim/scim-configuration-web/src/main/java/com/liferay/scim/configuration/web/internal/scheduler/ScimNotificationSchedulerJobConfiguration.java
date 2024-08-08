@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.scheduler.TriggerConfiguration;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
@@ -75,11 +74,22 @@ public class ScimNotificationSchedulerJobConfiguration
 	}
 
 	public boolean hasToSendNotification(
-		int daysToExpire, int daysLastNotification) {
+		Date oAuth2AccessTokenExpirationDate, Date lastNotificationDate) {
+
+		long currentTime = System.currentTimeMillis();
+
+		long daysUntilExpiry = java.util.concurrent.TimeUnit.DAYS.convert(
+			oAuth2AccessTokenExpirationDate.getTime() - currentTime,
+			java.util.concurrent.TimeUnit.MILLISECONDS);
+
+		long daysSinceLastNotification =
+			java.util.concurrent.TimeUnit.DAYS.convert(
+				currentTime - lastNotificationDate.getTime(),
+				java.util.concurrent.TimeUnit.MILLISECONDS);
 
 		for (int notificationDay : NOTIFICATION_DAYS) {
-			if ((notificationDay >= daysToExpire) &&
-				(daysLastNotification > notificationDay)) {
+			if ((notificationDay >= daysUntilExpiry) &&
+				(daysSinceLastNotification > notificationDay)) {
 
 				return true;
 			}
@@ -163,27 +173,10 @@ public class ScimNotificationSchedulerJobConfiguration
 						ExpandoBridge expandoBridge =
 							applicationOAuth2Authorization.getExpandoBridge();
 
-						Date dateLastNotification =
-							(Date)expandoBridge.getAttribute(
-								"lastSuccessfulNotificationDate", false);
-
-						int daysLastNotification = DateUtil.getDaysBetween(
-							dateLastNotification, accessTokenExpirationDate);
-
-						int compareDaysLastNotification = DateUtil.compareTo(
-							accessTokenExpirationDate, dateLastNotification);
-
-						int daysBetweenExpiration = DateUtil.getDaysBetween(
-							new Date(), accessTokenExpirationDate);
-
-						int compareDaysBetweenExpiration = DateUtil.compareTo(
-							accessTokenExpirationDate, new Date());
-
 						if (hasToSendNotification(
-								daysBetweenExpiration *
-									compareDaysBetweenExpiration,
-								daysLastNotification *
-									compareDaysLastNotification)) {
+								accessTokenExpirationDate,
+								(Date)expandoBridge.getAttribute(
+									"lastSuccessfulNotificationDate", false))) {
 
 							_sendNotificationExpirationToken(
 								companyId, accessTokenExpirationDate);

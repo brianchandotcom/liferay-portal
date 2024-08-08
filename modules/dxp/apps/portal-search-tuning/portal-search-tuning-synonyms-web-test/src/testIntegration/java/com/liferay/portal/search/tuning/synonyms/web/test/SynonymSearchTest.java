@@ -83,9 +83,8 @@ public class SynonymSearchTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		_originalName = PrincipalThreadLocal.getName();
-
 		_companyId = TestPropsValues.getCompanyId();
+		_originalName = PrincipalThreadLocal.getName();
 
 		_user = UserTestUtil.getAdminUser(_companyId);
 
@@ -99,9 +98,9 @@ public class SynonymSearchTest {
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			_group.getGroupId(), userId);
 
-		_setUpSynonyms();
-
 		_setUpLocales(userId);
+
+		_setUpSynonyms();
 
 		_addJournalArticles();
 	}

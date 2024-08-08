@@ -143,6 +143,7 @@ renderResponse.setTitle(blogsEditEntryDisplayContext.getPageTitle(resourceBundle
 						<liferay-asset:asset-categories-selector
 							className="<%= BlogsEntry.class.getName() %>"
 							classPK="<%= blogsEditEntryDisplayContext.getEntryId() %>"
+							useDataCategoriesAttribute="<%= true %>"
 							visibilityTypes="<%= AssetVocabularyConstants.VISIBILITY_TYPES %>"
 						/>
 

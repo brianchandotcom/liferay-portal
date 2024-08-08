@@ -99,39 +99,20 @@ export default function AssetCategoriesSelectionBox({
 
 		if (articleCategoriesWrapper) {
 			const mutationObserver = new MutationObserver((mutations) => {
-				mutations.forEach((mutation) => {
-					if (
-						mutation.type !== 'childList' ||
-						![
-							...mutation.addedNodes,
-							...mutation.removedNodes,
-						].some(
-							(node) =>
-								node instanceof HTMLInputElement &&
-								node.name.includes(
-									`${portletNamespace}assetCategoryIds`
-								)
-						)
-					) {
-						return;
-					}
+				mutations.forEach(() => {
+					const dataElements =
+						articleCategoriesWrapper.querySelectorAll<HTMLElement>(
+							'[data-categories]'
+						);
 
-					const labels = articleCategoriesWrapper.querySelectorAll(
-						'.label-item-expand[id*="clay-id-"]'
-					);
+					const articleCategories: Array<TCategory> = [];
 
-					if (!labels) {
-						return;
-					}
+					dataElements.forEach((element) => {
+						const categories = JSON.parse(
+							element.dataset.categories ?? '[]'
+						);
 
-					const articleCategories = Array.from(labels).map((node) => {
-						const regex = /clay-id-\d+-label-(\d+)-span/;
-						const match = node.id.match(regex);
-
-						return {
-							label: node.textContent ?? '',
-							value: match?.[1] ?? '',
-						};
+						articleCategories.push(...categories);
 					});
 
 					setCategories(([_, actualCurrentCategories]) => {
@@ -160,7 +141,7 @@ export default function AssetCategoriesSelectionBox({
 			});
 
 			mutationObserver.observe(articleCategoriesWrapper, {
-				attributeFilter: ['value'],
+				attributeFilter: ['data-categories'],
 				attributes: true,
 				childList: true,
 				subtree: true,

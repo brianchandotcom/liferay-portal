@@ -13,6 +13,9 @@ import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Document;
@@ -98,7 +101,8 @@ public class AssetCategoryDocumentContributor
 
 				for (AssetCategory assetCategory : entry.getValue()) {
 					assetCategoryExternalReferenceCodes.add(
-						assetCategory.getExternalReferenceCode());
+						_getGroupAssetCategoryExternalReferenceCode(
+							assetCategory));
 				}
 
 				assetVocabularyIds = ArrayUtil.append(
@@ -186,7 +190,7 @@ public class AssetCategoryDocumentContributor
 					TransformUtil.transformToArray(
 						entry.getValue(),
 						assetCategory ->
-							_getAssetVocabularyCategoryExternalReferenceCodes(
+							_getGroupAssetVocabularyCategoryExternalReferenceCode(
 								assetCategory),
 						String.class));
 			}
@@ -197,22 +201,6 @@ public class AssetCategoryDocumentContributor
 		document.addKeyword(
 			groupAssetVocabularyCategoryERCFieldName,
 			assetVocabularyCategoryERCs);
-	}
-
-	private String _getAssetVocabularyCategoryExternalReferenceCodes(
-			AssetCategory assetCategory)
-		throws Exception {
-
-		AssetVocabulary assetVocabulary =
-			_assetVocabularyLocalService.getAssetVocabulary(
-				assetCategory.getVocabularyId());
-
-		Group group = _groupLocalService.getGroup(assetCategory.getGroupId());
-
-		return StringBundler.concat(
-			group.getExternalReferenceCode(), _DELIMITER,
-			assetVocabulary.getExternalReferenceCode(), _DELIMITER,
-			assetCategory.getExternalReferenceCode());
 	}
 
 	private Map<Integer, Map<Long, List<AssetCategory>>>
@@ -248,8 +236,68 @@ public class AssetCategoryDocumentContributor
 		return assetVocabularyVisibilityTypeMap;
 	}
 
+	private String _getGroupAssetCategoryExternalReferenceCode(
+		AssetCategory assetCategory) {
+
+		return StringBundler.concat(
+			_getGroupExternalReferenceCode(assetCategory.getGroupId()),
+			_DELIMITER, assetCategory.getExternalReferenceCode());
+	}
+
+	private String _getGroupAssetVocabularyCategoryExternalReferenceCode(
+		AssetCategory assetCategory) {
+
+		String assetVocabularyExternalReferenceCode = StringPool.BLANK;
+
+		try {
+			AssetVocabulary assetVocabulary =
+				_assetVocabularyLocalService.getAssetVocabulary(
+					assetCategory.getVocabularyId());
+
+			assetVocabularyExternalReferenceCode =
+				assetVocabulary.getExternalReferenceCode();
+		}
+		catch (PortalException portalException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to retrieve assetVocabulary " +
+						assetCategory.getVocabularyId() +
+							" while indexing document.",
+					portalException);
+			}
+		}
+
+		return StringBundler.concat(
+			_getGroupExternalReferenceCode(assetCategory.getGroupId()),
+			_DELIMITER, assetVocabularyExternalReferenceCode, _DELIMITER,
+			assetCategory.getExternalReferenceCode());
+	}
+
+	private String _getGroupExternalReferenceCode(long groupId) {
+		String groupExternalReferenceCode = StringPool.BLANK;
+
+		try {
+			Group group = _groupLocalService.getGroup(groupId);
+
+			groupExternalReferenceCode = group.getExternalReferenceCode();
+		}
+		catch (PortalException portalException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to retrieve group " + groupId +
+						" while indexing document.",
+					portalException);
+			}
+		}
+
+		return groupExternalReferenceCode;
+	}
+
 	private static final String _DELIMITER =
 		StringPool.AMPERSAND + StringPool.AMPERSAND;
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AssetCategoryDocumentContributor.class);
 
 	@Reference
 	private AssetCategoryLocalService _assetCategoryLocalService;

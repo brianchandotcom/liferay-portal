@@ -126,30 +126,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editSecurityCredential(securityCredential = null) {
-		Type(
-			locator1 = "SystemSettings#SECURITY_CREDENTIAL_FIELD",
-			value1 = ${securityCredential});
-
-		var key_fieldName = "securityPrincipal";
-
-		Type(
-			locator1 = "FormFields#TEXT_MULTILINE_FIELD",
-			value1 = "test");
-
-		AssertElementPresent(locator1 = "SystemSettings#SECURITY_CREDENTIAL_FIELD");
-
-		ScrollBy(value1 = "0, 500");
-
-		SetWindowSize.maximizeWindow();
-
-		OcularAssertElementImage(
-			locator1 = "SystemSettings#SECURITY_CREDENTIAL_FIELD",
-			value1 = "obscured_credential/ldap_server_security_credential.png",
-			value2 = 70);
-	}
-
-	@summary = "Default summary"
 	macro editTextAreaSetting(settingValue = null, settingName = null) {
 		Type(
 			key_label = ${settingName},

@@ -61,12 +61,14 @@ public class AssetCategoryDocumentContributor
 				_getAssetVocabularyVisibilityTypeMap(assetCategories);
 
 		_addAssetCategoriesFields(
-			document, Field.ASSET_CATEGORY_IDS, Field.ASSET_CATEGORY_TITLES,
+			document, "groupAssetCategoryExternalReferenceCodes",
+			Field.ASSET_CATEGORY_IDS, Field.ASSET_CATEGORY_TITLES,
 			Field.ASSET_VOCABULARY_IDS,
 			assetVocabularyVisibilityTypeMap.get(
 				AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC));
 		_addAssetCategoriesFields(
-			document, Field.ASSET_INTERNAL_CATEGORY_IDS,
+			document, "groupAssetInternalCategoryExternalReferenceCodes",
+			Field.ASSET_INTERNAL_CATEGORY_IDS,
 			Field.ASSET_INTERNAL_CATEGORY_TITLES,
 			Field.ASSET_INTERNAL_VOCABULARY_IDS,
 			assetVocabularyVisibilityTypeMap.get(
@@ -79,11 +81,13 @@ public class AssetCategoryDocumentContributor
 	}
 
 	private void _addAssetCategoriesFields(
-		Document document, String assetCategoryIdsFieldName,
-		String assetCategoryTitlesFieldName, String assetVocabularyIdsFieldName,
+		Document document, String assetCategoryExternalReferenceCodeFieldName,
+		String assetCategoryIdsFieldName, String assetCategoryTitlesFieldName,
+		String assetVocabularyIdsFieldName,
 		Map<Long, List<AssetCategory>> assetVocabularyMap) {
 
 		List<AssetCategory> assetCategories = new ArrayList<>();
+		List<String> assetCategoryExternalReferenceCodes = new ArrayList<>();
 		long[] assetVocabularyIds = {};
 
 		if (MapUtil.isNotEmpty(assetVocabularyMap)) {
@@ -92,10 +96,19 @@ public class AssetCategoryDocumentContributor
 
 				assetCategories.addAll(entry.getValue());
 
+				for (AssetCategory assetCategory : entry.getValue()) {
+					assetCategoryExternalReferenceCodes.add(
+						assetCategory.getExternalReferenceCode());
+				}
+
 				assetVocabularyIds = ArrayUtil.append(
 					assetVocabularyIds, entry.getKey());
 			}
 		}
+
+		document.addKeyword(
+			assetCategoryExternalReferenceCodeFieldName,
+			ArrayUtil.toStringArray(assetCategoryExternalReferenceCodes));
 
 		long[] assetCategoryIds = ListUtil.toLongArray(
 			assetCategories, AssetCategory.CATEGORY_ID_ACCESSOR);

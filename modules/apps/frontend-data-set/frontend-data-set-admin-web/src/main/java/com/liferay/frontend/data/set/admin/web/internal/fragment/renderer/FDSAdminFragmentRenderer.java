@@ -13,8 +13,8 @@ import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.frontend.data.set.constants.FDSEntityFieldTypes;
-import com.liferay.frontend.data.set.resolver.FDSRestApplicationURLParameterResolver;
-import com.liferay.frontend.data.set.resolver.FDSRestApplicationURLParameterResolverRegistry;
+import com.liferay.frontend.data.set.resolver.FDSAPIURLResolver;
+import com.liferay.frontend.data.set.resolver.FDSAPIURLResolverRegistry;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
@@ -1085,14 +1085,14 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 		String apiURL, String restApplication, String restSchema,
 		HttpServletRequest httpServletRequest) {
 
-		FDSRestApplicationURLParameterResolver
-			fdsRestApplicationURLParameterResolver =
-				_fdsRestApplicationURLParameterResolverRegistry.getResolver(
+		FDSAPIURLResolver
+			FDSAPIURLResolver =
+				_fdsAPIURLResolverRegistry.getResolver(
 					restApplication, restSchema);
 
-		if (fdsRestApplicationURLParameterResolver != null) {
+		if (FDSAPIURLResolver != null) {
 			try {
-				return fdsRestApplicationURLParameterResolver.resolve(
+				return FDSAPIURLResolver.resolve(
 					apiURL, httpServletRequest);
 			}
 			catch (PortalException portalException) {
@@ -1114,8 +1114,8 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 	private CETManager _cetManager;
 
 	@Reference
-	private FDSRestApplicationURLParameterResolverRegistry
-		_fdsRestApplicationURLParameterResolverRegistry;
+	private FDSAPIURLResolverRegistry
+		_fdsAPIURLResolverRegistry;
 
 	@Reference
 	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;

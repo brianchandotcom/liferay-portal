@@ -13,11 +13,11 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Gianmarco Brunialti Masera
  */
 @ProviderType
-public interface FDSRestApplicationURLParameterResolverRegistry {
+public interface FDSAPIURLResolverRegistry {
 
-	public FDSRestApplicationURLParameterResolver getResolver(
+	public FDSAPIURLResolver getResolver(
 		String restApplication, String restSchema);
 
-	public List<FDSRestApplicationURLParameterResolver> getResolvers();
+	public List<FDSAPIURLResolver> getResolvers();
 
 }

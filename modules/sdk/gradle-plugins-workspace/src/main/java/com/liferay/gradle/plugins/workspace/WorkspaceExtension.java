@@ -95,7 +95,7 @@ public class WorkspaceExtension {
 		_targetPlatformVersion = _getProperty(
 			settings, "target.platform.version");
 		_virtualInstanceId = GradleUtil.getProperty(
-			settings, "liferay.virtual.instance.id", "default");
+			settings, "liferay.virtual.instance.id");
 
 		_gradle.projectsEvaluated(
 			new Closure<Void>(_gradle) {

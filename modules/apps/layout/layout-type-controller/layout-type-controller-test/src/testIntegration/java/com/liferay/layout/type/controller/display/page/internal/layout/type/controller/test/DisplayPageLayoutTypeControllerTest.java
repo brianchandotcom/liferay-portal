@@ -140,8 +140,56 @@ public class DisplayPageLayoutTypeControllerTest {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
+		ThemeDisplay themeDisplay = _getThemeDisplay(
+			StringPool.BLANK, mockHttpServletRequest,
+			TestPropsValues.getUser());
+
 		mockHttpServletRequest.setAttribute(
-			WebKeys.CURRENT_URL, "/c/portal/comment/discussion/get_comments");
+			WebKeys.CURRENT_URL,
+			themeDisplay.getPathMain() +
+				"/portal/comment/discussion/get_comments");
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
+
+		Assert.assertNull(
+			layoutTypeController.getFriendlyURL(
+				mockHttpServletRequest, layout));
+		Assert.assertNull(
+			layoutTypeController.getFriendlyURL(
+				mockHttpServletRequest, layout.fetchDraftLayout()));
+	}
+
+	@Test
+	public void testDisplayPageTypeControllerGetFriendlyURLWithLocale()
+		throws Exception {
+
+		LayoutTypeController layoutTypeController =
+			LayoutTypeControllerTracker.getLayoutTypeController(
+				LayoutConstants.TYPE_ASSET_DISPLAY);
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
+				null, _group.getGroupId(), 0,
+				_portal.getClassNameId(AssetCategory.class.getName()), 0,
+				RandomTestUtil.randomString(), 0,
+				WorkflowConstants.STATUS_DRAFT, _serviceContext);
+
+		Layout layout = _layoutLocalService.getLayout(
+			layoutPageTemplateEntry.getPlid());
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		ThemeDisplay themeDisplay = _getThemeDisplay(
+			LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()),
+			mockHttpServletRequest, TestPropsValues.getUser());
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.CURRENT_URL,
+			themeDisplay.getPathMain() +
+				"/portal/comment/discussion/get_comments");
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
 
 		Assert.assertNull(
 			layoutTypeController.getFriendlyURL(
@@ -451,7 +499,7 @@ public class DisplayPageLayoutTypeControllerTest {
 
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY,
-			_getThemeDisplay(user, mockHttpServletRequest));
+			_getThemeDisplay(StringPool.BLANK, mockHttpServletRequest, user));
 
 		if (Validator.isNotNull(layoutMode)) {
 			mockHttpServletRequest.setParameter("p_l_mode", layoutMode);
@@ -521,7 +569,8 @@ public class DisplayPageLayoutTypeControllerTest {
 	}
 
 	private ThemeDisplay _getThemeDisplay(
-			User user, HttpServletRequest mockHttpServletRequest)
+			String i18nPath, HttpServletRequest mockHttpServletRequest,
+			User user)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
@@ -537,6 +586,7 @@ public class DisplayPageLayoutTypeControllerTest {
 			_layoutSetLocalService.getLayoutSet(_group.getGroupId(), false));
 		themeDisplay.setLocale(
 			LocaleUtil.fromLanguageId(_group.getDefaultLanguageId()));
+		themeDisplay.setPathMain(i18nPath.concat(_portal.getPathMain()));
 		themeDisplay.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(user));
 		themeDisplay.setPortalDomain(company.getVirtualHostname());

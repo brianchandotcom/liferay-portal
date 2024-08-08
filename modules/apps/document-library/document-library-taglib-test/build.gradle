@@ -1,3 +1,6 @@
 dependencies {
+	testIntegrationImplementation group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "default"
+	testIntegrationImplementation project(":apps:document-library:document-library-taglib")
+	testIntegrationImplementation project(":apps:frontend-taglib:frontend-taglib-clay")
 	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

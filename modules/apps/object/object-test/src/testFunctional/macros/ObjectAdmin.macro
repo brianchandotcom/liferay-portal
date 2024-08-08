@@ -930,27 +930,27 @@ definition {
 	}
 
 	@summary = "Default summary"
+	macro deleteAllCustomObjectRelationships() {
+		var objectDefinitionIds = JSONObject.getAllObjectDefinitionsId();
+
+		for (var objectDefinitionId : list ${objectDefinitionIds}) {
+			var customObjectRelationshipIds = JSONObject.getCustomObjectRelationshipIds(objectDefinitionId = ${objectDefinitionId});
+
+			if (${customObjectRelationshipIds} != "") {
+				for (var customObjectRelationshipId : list ${customObjectRelationshipIds}) {
+					JSONObject.deleteObjectRelationship(objectRelationshipId = ${customObjectRelationshipId});
+				}
+			}
+		}
+	}
+
+	@summary = "Default summary"
 	macro deleteAllCustomObjectsViaAPI(userPassword = null, userEmailAddress = null) {
-		ObjectAdmin.deleteAllCustomRelationships();
+		ObjectAdmin.deleteAllCustomObjectRelationships();
 
 		JSONObject.deleteAllCustomObjects(
 			userEmailAddress = ${userEmailAddress},
 			userPassword = ${userPassword});
-	}
-
-	@summary = "Default summary"
-	macro deleteAllCustomRelationships() {
-		var objectDefinitionIdList = JSONObject.getAllObjectDefinitionsId();
-
-		for (var objectDefinitionId : list ${objectDefinitionIdList}) {
-			var customRelationshipIdList = JSONObject.getCustomObjectRelationships(objectDefinitionId = ${objectDefinitionId});
-
-			if (${customRelationshipIdList} != "") {
-				for (var customRelationshipId : list ${customRelationshipIdList}) {
-					JSONObject.deleteRelationship(objectRelationshipId = ${customRelationshipId});
-				}
-			}
-		}
 	}
 
 	@summary = "Default summary"

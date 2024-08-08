@@ -1040,6 +1040,28 @@ definition {
 	}
 
 	@summary = "Default summary"
+	macro deleteObjectRelationship(objectRelationshipId = null) {
+		Variables.assertDefined(parameterList = ${objectRelationshipId});
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = PropsUtil.get("default.admin.password");
+		}
+
+		var curl = '''
+			${portalURL}/o/object-admin/v1.0/object-relationships/${objectRelationshipId} \
+				-u ${userEmailAddress}:${userPassword}
+		''';
+
+		JSONCurlUtil.delete(${curl});
+	}
+
+	@summary = "Default summary"
 	macro deletePicklist(picklistName = null) {
 		var portalURL = JSONCompany.getPortalURL();
 		var picklistId = JSONObject.getPicklistId(
@@ -1057,28 +1079,6 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/headless-admin-list-type/v1.0/list-type-definitions/${picklistId} \
-				-u ${userEmailAddress}:${userPassword}
-		''';
-
-		JSONCurlUtil.delete(${curl});
-	}
-
-	@summary = "Default summary"
-	macro deleteRelationship(objectRelationshipId = null) {
-		Variables.assertDefined(parameterList = ${objectRelationshipId});
-
-		var portalURL = JSONCompany.getPortalURL();
-
-		if (!(isSet(userEmailAddress))) {
-			var userEmailAddress = "test@liferay.com";
-		}
-
-		if (!(isSet(userPassword))) {
-			var userPassword = PropsUtil.get("default.admin.password");
-		}
-
-		var curl = '''
-			${portalURL}/o/object-admin/v1.0/object-relationships/${objectRelationshipId} \
 				-u ${userEmailAddress}:${userPassword}
 		''';
 
@@ -1134,7 +1134,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro getCustomObjectRelationships(objectName = null) {
+	macro getCustomObjectRelationshipIds(objectName = null) {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (!(isSet(userEmailAddress))) {
@@ -1154,9 +1154,9 @@ definition {
 				-u ${userEmailAddress}:${userPassword}
 		''';
 
-		var relationshipIdList = JSONCurlUtil.get(${curl}, "$.items..id");
+		var customObjectRelationshipIds = JSONCurlUtil.get(${curl}, "$.items..id");
 
-		return ${relationshipIdList};
+		return ${customObjectRelationshipIds};
 	}
 
 	@summary = "Default summary"

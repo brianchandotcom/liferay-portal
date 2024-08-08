@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.saml.opensaml.integration.field.expression.handler.FieldExpressionHandler;
@@ -201,7 +202,7 @@ public abstract class BaseProcessorImpl
 		}
 
 		private <V> V _head(V[] values) {
-			if ((values == null) || (values.length == 0)) {
+			if (ArrayUtil.isEmpty(values)) {
 				return null;
 			}
 
@@ -243,7 +244,7 @@ public abstract class BaseProcessorImpl
 		public <V> V getValue(Class<V> clazz, String fieldExpression) {
 			V[] values = getValueArray(clazz, fieldExpression);
 
-			if ((values == null) || (values.length == 0)) {
+			if (ArrayUtil.isEmpty(values)) {
 				return null;
 			}
 

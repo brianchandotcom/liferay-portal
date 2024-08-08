@@ -12,6 +12,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerJobConfiguration;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -82,7 +83,7 @@ public class AntivirusAsyncFileStoreSchedulerJobConfigurationTest {
 
 		int waitTime = 0;
 
-		while ((serviceReferences == null) || (serviceReferences.length == 0)) {
+		while (ArrayUtil.isEmpty(serviceReferences)) {
 			serviceReferences =
 				(ServiceReference<SchedulerJobConfiguration>[])
 					bundleContext.getServiceReferences(

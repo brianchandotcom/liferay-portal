@@ -25,6 +25,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -37,7 +38,7 @@ public class TestClassFactory {
 
 	public static List<JUnitTestClass> getJUnitTestClasses() {
 		List<JUnitTestClass> jUnitTestClasses = new ArrayList<>(
-			_jUnitTestClasses.values());
+			new HashSet<>(_jUnitTestClasses.values()));
 
 		Collections.sort(jUnitTestClasses);
 

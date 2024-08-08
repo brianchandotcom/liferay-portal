@@ -687,7 +687,7 @@ public class HighlightTranslatorTest {
 	}
 
 	private String _getBoundaryChars(char[] boundaryChars) {
-		if ((boundaryChars == null) || (boundaryChars.length == 0)) {
+		if (ArrayUtil.isEmpty(boundaryChars)) {
 			return null;
 		}
 

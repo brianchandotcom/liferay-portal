@@ -211,7 +211,7 @@ public class HitsImpl implements Hits {
 
 	@Override
 	public String toString() {
-		if ((_docs == null) || (_docs.length == 0)) {
+		if (ArrayUtil.isEmpty(_docs)) {
 			StringBundler sb = new StringBundler(5);
 
 			sb.append("{docs={}, length=");

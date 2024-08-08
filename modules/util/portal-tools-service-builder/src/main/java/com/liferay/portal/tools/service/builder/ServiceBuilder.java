@@ -5643,6 +5643,8 @@ public class ServiceBuilder {
 	private List<JavaMethod> _getMethods(
 		JavaClass javaClass, boolean superclasses) {
 
+		List<JavaMethod> methods = new ArrayList<>();
+
 		List<String> cacheFieldMethods = new ArrayList<>();
 
 		for (JavaField javaField : javaClass.getFields()) {
@@ -5683,8 +5685,6 @@ public class ServiceBuilder {
 				break;
 			}
 		}
-
-		List<JavaMethod> methods = new ArrayList<>();
 
 		for (JavaMethod javaMethod : javaClass.getMethods(superclasses)) {
 			if (!cacheFieldMethods.contains(javaMethod.getName())) {

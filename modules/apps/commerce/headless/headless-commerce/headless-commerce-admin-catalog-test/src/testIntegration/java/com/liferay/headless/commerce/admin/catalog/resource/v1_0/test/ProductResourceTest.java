@@ -250,12 +250,12 @@ public class ProductResourceTest extends BaseProductResourceTestCase {
 
 		getProduct = productResource.getProduct(postProduct.getProductId());
 
-		Assert.assertNotNull(getProduct.getExpirationDate());
-		Assert.assertEquals(
-			getProduct.getExpirationDate(), postProduct.getExpirationDate());
 		Assert.assertNotNull(getProduct.getDisplayDate());
 		Assert.assertEquals(
 			getProduct.getDisplayDate(), postProduct.getDisplayDate());
+		Assert.assertNotNull(getProduct.getExpirationDate());
+		Assert.assertEquals(
+			getProduct.getExpirationDate(), postProduct.getExpirationDate());
 
 		_testPatchProductWithNegativeValue("cost");
 		_testPatchProductWithNegativeValue("depth");

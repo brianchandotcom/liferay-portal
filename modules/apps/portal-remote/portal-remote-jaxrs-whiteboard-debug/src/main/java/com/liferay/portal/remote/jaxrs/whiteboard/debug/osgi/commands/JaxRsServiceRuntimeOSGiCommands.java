@@ -149,9 +149,7 @@ public class JaxRsServiceRuntimeOSGiCommands implements OSGiCommands {
 				_bundleContext.getServiceReferences(
 					(String)null, "(service.id=" + serviceId + ")");
 
-			if ((serviceReferences == null) ||
-				(serviceReferences.length == 0)) {
-
+			if (ArrayUtil.isEmpty(serviceReferences)) {
 				return null;
 			}
 

@@ -369,9 +369,7 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 		for (Map.Entry<String, String[]> entry : configuration.entrySet()) {
 			String[] values = entry.getValue();
 
-			if ((values == null) || (values.length == 0) ||
-				values[0].isEmpty()) {
-
+			if (ArrayUtil.isEmpty(values) || values[0].isEmpty()) {
 				continue;
 			}
 

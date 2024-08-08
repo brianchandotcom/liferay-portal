@@ -1,0 +1,170 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {Locator, Page} from '@playwright/test';
+
+import {PARTNER_SITE_FRIENLY_URL_PATH} from '../../../utils/constants';
+
+export class MDFClaimListPage {
+	readonly actionButton: Locator;
+	readonly dateSubmittedAfterDateInput: Locator;
+	readonly dateSubmittedBeforeDateInput: Locator;
+	readonly activityPartnerButton: Locator;
+	readonly dateSubmittedButton: Locator;
+	readonly claimStatusButton: Locator;
+	readonly applyFilterButton: Locator;
+	readonly cleanSearch: Locator;
+	readonly completedTab: Locator;
+	readonly completeMenuItem: Locator;
+	readonly exportClaimButton: Locator;
+	readonly filterButton: Locator;
+	readonly heading: Locator;
+	readonly mdfClaimHeading: Locator;
+	readonly noEntriesFoundMessage: Locator;
+	readonly openTab: Locator;
+	readonly page: Page;
+	readonly searchInput: Locator;
+
+	constructor(page: Page) {
+		this.page = page;
+
+		this.actionButton = this.page
+			.getByRole('cell', {name: 'Action Button'})
+			.first();
+		this.dateSubmittedAfterDateInput = this.page
+			.locator('div')
+			.filter({hasText: /^Claim Submitted On Or After$/})
+			.locator('#basicInputText');
+		this.dateSubmittedBeforeDateInput = this.page
+			.locator('div')
+			.filter({hasText: /^Claim Submitted On Or Before$/})
+			.locator('#basicInputText');
+		this.activityPartnerButton = this.page.getByRole('button', {
+			name: 'Partner',
+		});
+		this.dateSubmittedButton = this.page.getByRole('button', {
+			name: 'Date Submitted',
+		});
+		this.claimStatusButton = this.page.getByRole('button', {
+			name: 'Status',
+		});
+		this.applyFilterButton = this.page.getByRole('button', {name: 'Apply'});
+		this.cleanSearch = this.page.getByLabel('Clean Search');
+		this.completedTab = this.page.getByRole('tab', {
+			exact: true,
+			name: 'Completed',
+		});
+		this.completeMenuItem = this.page.getByRole('menuitem', {
+			name: 'Complete',
+		});
+		this.exportClaimButton = this.page.getByRole('link', {
+			name: 'Export MDF Claim',
+		});
+		this.filterButton = this.page.getByRole('button', {
+			exact: true,
+			name: 'Filter',
+		});
+		this.heading = this.page.getByText('MDF Claim', { exact: true }); 
+		this.mdfClaimHeading = this.page.getByText('MDF Claim', { exact: true });
+		this.noEntriesFoundMessage = this.page.getByText(
+			'Info:No entries were found'
+		);
+		this.openTab = this.page.getByRole('tab', {exact: true, name: 'Open'});
+		this.searchInput = this.page.getByPlaceholder('Search');
+	}
+
+	async clearAllFilters() {
+		await this.page
+			.getByRole('button', {
+				name: 'Clear All Filters',
+			})
+			.click();
+	}
+
+	async filterMDFRequestByPartner(partner: string) {
+		await this.filterButton.click();
+		await this.activityPartnerButton.click();
+
+		await this.page.getByLabel(partner).check();
+		await this.applyFilterButton.click();
+	}
+
+	async filterMDFClaimByPeriod(
+		dateSubmittedAfterDate: string,
+		dateSubmittedBeforeDate: string
+	) {
+		await this.filterButton.click();
+		await this.dateSubmittedButton.click();
+
+		await this.dateSubmittedAfterDateInput.fill(dateSubmittedAfterDate);
+		await this.dateSubmittedBeforeDateInput.fill(dateSubmittedBeforeDate);
+
+		await this.applyFilterButton.click();
+	}
+
+	async filterMDFCLaimByStatus(status: string) {
+		await this.filterButton.click();
+		await this.claimStatusButton.click();
+
+		await this.page.getByLabel(status).check();
+		await this.applyFilterButton.click();
+	}
+
+	async filterUsingSearchInput(text: string) {
+		await this.searchInput.click();
+		await this.searchInput.fill(text);
+		await this.searchInput.press('Enter');
+	}
+
+	async getCampaignName() {
+		return this.page.locator('td:nth-child(4)').first();
+	}
+
+	async getClaimed(claimed: string) {
+		return this.page.getByRole('cell', {name: claimed});
+	}
+
+	async getsubmitedDate(submitDate: string) {
+		return this.page.getByRole('cell', {name: submitDate}).first();
+	}
+
+	async getGeneratedDataFromRequest(companyName: string) {
+		const row = this.page.locator('tr').filter({hasText: companyName});
+		const claimed = await row.locator('td').nth(0).innerText();
+		const submitDate = await row.locator('td').nth(8).innerText();
+		const status = await row.locator('td').nth(3).innerText();
+
+		return {claimed, status, submitDate};
+	}
+
+	async getPartnerName(partnerName: string) {
+		return this.page.getByRole('cell', {name: partnerName}).first();
+	}
+
+	async getRequested(valueRequested: string) {
+		return this.page.getByRole('cell', {exact: true, name: valueRequested});
+	}
+
+	async getRequestId(requestId: string) {
+		return this.page.getByRole('cell', {name: requestId});
+	}
+
+	async getStartActPeriod(startActPeriod: string) {
+		return this.page.getByRole('cell', {name: startActPeriod}).first();
+	}
+
+	async getStatus(status: string) {
+		return this.page.getByRole('cell', {name: status}).first();
+	}
+
+	async goto() {
+		await this.page.goto(
+			`${PARTNER_SITE_FRIENLY_URL_PATH}/marketing/mdf-claims`,
+			{
+				waitUntil: 'commit',
+			}
+		);
+	}
+}

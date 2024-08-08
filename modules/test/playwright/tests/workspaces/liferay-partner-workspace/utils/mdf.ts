@@ -5,9 +5,9 @@
 
 import moment from 'moment';
 
-import {mdfRequestDataMock, mdfRequestMock} from '../mocks/mdfMock';
+import {mdfClaimDataMock, mdfRequestDataMock, mdfRequestMock} from '../mocks/mdfMock';
 import {TAccount} from '../types/account';
-import {TMDFRequest, TMDFRequestDataFromRequest} from '../types/mdf';
+import {TMDFClaim, TMDFRequest, TMDFRequestDataFromRequest} from '../types/mdf';
 
 export function generateMDFRequestDataForm(
 	parnterAccount: TAccount
@@ -41,4 +41,14 @@ export function generatedDataFromRequest(
 	mdfRequestData.submitDate = new Date().toISOString();
 
 	return mdfRequestData;
+}
+
+export function generatedDataFromClaim(
+	parnterAccount: TAccount
+): TMDFClaim {
+	const mdfClaimData = mdfClaimDataMock;
+	mdfClaimData.companyName = parnterAccount.name
+	mdfClaimData.submitDate = new Date().toISOString();
+
+	return mdfClaimData;
 }

@@ -9,6 +9,7 @@ import {apiHelpersTest} from '../../../../fixtures/apiHelpersTest';
 import {HomePage} from '../pages/HomePage';
 import {MDFRequestFormPage} from '../pages/mdf/MDFRequestFormPage';
 import {MDFRequestListPage} from '../pages/mdf/MDFRequestListPage';
+import {MDFClaimListPage} from '../pages/mdf/mdfClaim/MDFClaimListPage';
 import {partnerHelperTest} from './partnerHelperTest';
 
 const test = mergeTests(apiHelpersTest, partnerHelperTest);
@@ -17,6 +18,7 @@ export const partnerPagesTest = test.extend<{
 	homePage: HomePage;
 	mdfRequestFormPage: MDFRequestFormPage;
 	mdfRequestListPage: MDFRequestListPage;
+	mdfClaimListPage: MDFClaimListPage;
 }>({
 	homePage: async ({page}, use) => {
 		await use(new HomePage(page));
@@ -26,5 +28,8 @@ export const partnerPagesTest = test.extend<{
 	},
 	mdfRequestListPage: async ({page}, use) => {
 		await use(new MDFRequestListPage(page));
+	},
+	mdfClaimListPage: async ({page}, use) => {
+		await use(new MDFClaimListPage(page));
 	},
 });

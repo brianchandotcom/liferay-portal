@@ -173,7 +173,7 @@ public class DLFileEntryTypeServiceTest {
 			_dlFileEntryTypeService.fetchFileEntryTypeByExternalReferenceCode(
 				"12345678", _group.getGroupId()));
 
-		_dlFileEntryTypeService.deleteDLFileEntryType(
+		_dlFileEntryTypeService.deleteFileEntryTypeByExternalReferenceCode(
 			"12345678", _group.getGroupId());
 
 		Assert.assertNull(

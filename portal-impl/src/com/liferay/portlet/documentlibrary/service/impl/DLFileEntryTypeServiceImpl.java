@@ -58,6 +58,21 @@ public class DLFileEntryTypeServiceImpl extends DLFileEntryTypeServiceBaseImpl {
 			fileEntryTypeKey, nameMap, descriptionMap, serviceContext);
 	}
 
+	@Override
+	public void deleteFileEntryType(long fileEntryTypeId)
+		throws PortalException {
+
+		ModelResourcePermission<DLFileEntryType>
+			dlFileEntryTypeModelResourcePermission =
+				ModelResourcePermissionRegistryUtil.getModelResourcePermission(
+					DLFileEntryType.class.getName());
+
+		dlFileEntryTypeModelResourcePermission.check(
+			getPermissionChecker(), fileEntryTypeId, ActionKeys.DELETE);
+
+		dlFileEntryTypeLocalService.deleteFileEntryType(fileEntryTypeId);
+	}
+
 	public void deleteFileEntryTypeByExternalReferenceCode(
 			String externalReferenceCode, long groupId)
 		throws PortalException {
@@ -75,21 +90,6 @@ public class DLFileEntryTypeServiceImpl extends DLFileEntryTypeServiceBaseImpl {
 			getPermissionChecker(), dlFileEntryType, ActionKeys.DELETE);
 
 		dlFileEntryTypeLocalService.deleteFileEntryType(dlFileEntryType);
-	}
-
-	@Override
-	public void deleteFileEntryType(long fileEntryTypeId)
-		throws PortalException {
-
-		ModelResourcePermission<DLFileEntryType>
-			dlFileEntryTypeModelResourcePermission =
-				ModelResourcePermissionRegistryUtil.getModelResourcePermission(
-					DLFileEntryType.class.getName());
-
-		dlFileEntryTypeModelResourcePermission.check(
-			getPermissionChecker(), fileEntryTypeId, ActionKeys.DELETE);
-
-		dlFileEntryTypeLocalService.deleteFileEntryType(fileEntryTypeId);
 	}
 
 	@Override

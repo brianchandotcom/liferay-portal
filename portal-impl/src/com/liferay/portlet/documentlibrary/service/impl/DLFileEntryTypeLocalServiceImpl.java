@@ -221,16 +221,6 @@ public class DLFileEntryTypeLocalServiceImpl
 	}
 
 	@Override
-	public void deleteFileEntryTypeByExternalReferenceCode(
-			String externalReferenceCode, long groupId)
-		throws PortalException {
-
-		dlFileEntryTypeLocalService.deleteFileEntryType(
-			getDLFileEntryTypeByExternalReferenceCode(
-				externalReferenceCode, groupId));
-	}
-
-	@Override
 	@SystemEvent(
 		action = SystemEventConstants.ACTION_SKIP,
 		type = SystemEventConstants.TYPE_DELETE
@@ -291,6 +281,16 @@ public class DLFileEntryTypeLocalServiceImpl
 			dlFileEntryTypePersistence.findByPrimaryKey(fileEntryTypeId);
 
 		dlFileEntryTypeLocalService.deleteFileEntryType(dlFileEntryType);
+	}
+
+	@Override
+	public void deleteFileEntryTypeByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		dlFileEntryTypeLocalService.deleteFileEntryType(
+			getDLFileEntryTypeByExternalReferenceCode(
+				externalReferenceCode, groupId));
 	}
 
 	@Override

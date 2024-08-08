@@ -28,7 +28,6 @@ import javax.ws.rs.core.Response;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -46,7 +45,6 @@ public class HttpMethodApplicationClientTest extends BaseClientTestCase {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@Ignore
 	@Test
 	public void test() throws Exception {
 		WebTarget webTarget = getWebTarget("/methods");
@@ -80,7 +78,6 @@ public class HttpMethodApplicationClientTest extends BaseClientTestCase {
 		}
 	}
 
-	@Ignore
 	@Test
 	public void testIgnoredMethods() throws Exception {
 		WebTarget webTarget = getWebTarget("/methods");

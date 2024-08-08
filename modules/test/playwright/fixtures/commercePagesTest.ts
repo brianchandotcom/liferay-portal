@@ -10,6 +10,8 @@ import {CommerceCartSummaryPage} from '../pages/commerce/commerce-cart-content-w
 import {CheckoutPage} from '../pages/commerce/commerce-checkout-web/checkoutPage';
 import {PendingOrdersPage} from '../pages/commerce/commerce-order-content-web/pendingOrdersPage';
 import {PlacedOrdersPage} from '../pages/commerce/commerce-order-content-web/placedOrdersPage';
+import {ReturnDetailsPage} from '../pages/commerce/commerce-order-content-web/returnDetailsPage';
+import {ReturnsPage} from '../pages/commerce/commerce-order-content-web/returnsPage';
 import {OrganizationManagementPage} from '../pages/commerce/commerce-organization-web/organizationManagementPage';
 import {SpecificationFacetsPage} from '../pages/commerce/commerce-product-content-search-web/specificationFacetsPage';
 import {ProductDetailsPage} from '../pages/commerce/commerce-product-content-web/productDetailsPage';
@@ -31,6 +33,7 @@ import {CommerceAdminProductDetailsPage} from '../pages/commerce/commerceAdminPr
 import {CommerceAdminProductDetailsProductOptionsPage} from '../pages/commerce/commerceAdminProductDetailsProductOptionsPage';
 import {CommerceAdminProductDetailsProductRelationsPage} from '../pages/commerce/commerceAdminProductDetailsProductRelationsPage';
 import {CommerceAdminProductPage} from '../pages/commerce/commerceAdminProductPage';
+import {CommerceAdminReturnsPage} from '../pages/commerce/commerceAdminReturnsPage';
 import {CommerceCatalogPage} from '../pages/commerce/commerceCatalogPage';
 import {CommerceCatalogSystemSettingsPage} from '../pages/commerce/commerceCatalogSystemSettingsPage';
 import {CommerceChannelDefaultsPage} from '../pages/commerce/commerceChannelDefaultsPage';
@@ -55,6 +58,7 @@ const commercePagesTest = test.extend<{
 	commerceAdminProductDetailsProductOptionsPage: CommerceAdminProductDetailsProductOptionsPage;
 	commerceAdminProductDetailsProductRelationsPage: CommerceAdminProductDetailsProductRelationsPage;
 	commerceAdminProductPage: CommerceAdminProductPage;
+	commerceAdminReturnsPage: CommerceAdminReturnsPage;
 	commerceCartPage: CommerceCartPage;
 	commerceCartSummaryPage: CommerceCartSummaryPage;
 	commerceCatalogPage: CommerceCatalogPage;
@@ -72,6 +76,8 @@ const commercePagesTest = test.extend<{
 	placedOrdersPage: PlacedOrdersPage;
 	productDetailsPage: ProductDetailsPage;
 	productPublisherPage: ProductPublisherPage;
+	returnDetailsPage: ReturnDetailsPage;
+	returnsPage: ReturnsPage;
 	specificationFacetsPage: SpecificationFacetsPage;
 }>({
 	attachmentsPage: async ({page}, use) => {
@@ -118,6 +124,9 @@ const commercePagesTest = test.extend<{
 	},
 	commerceAdminProductPage: async ({page}, use) => {
 		await use(new CommerceAdminProductPage(page));
+	},
+	commerceAdminReturnsPage: async ({page}, use) => {
+		await use(new CommerceAdminReturnsPage(page));
 	},
 	commerceCartPage: async ({page}, use) => {
 		await use(new CommerceCartPage(page));
@@ -169,6 +178,12 @@ const commercePagesTest = test.extend<{
 	},
 	productPublisherPage: async ({page}, use) => {
 		await use(new ProductPublisherPage(page));
+	},
+	returnDetailsPage: async ({page}, use) => {
+		await use(new ReturnDetailsPage(page));
+	},
+	returnsPage: async ({page}, use) => {
+		await use(new ReturnsPage(page));
 	},
 	specificationFacetsPage: async ({page}, use) => {
 		await use(new SpecificationFacetsPage(page));

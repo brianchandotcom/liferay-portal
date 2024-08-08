@@ -37,6 +37,7 @@ type TOrder = {
 
 type TOrderItem = {
 	decimalQuantity?: number;
+	id?: number;
 	productId?: number;
 	quantity: number;
 	skuId?: string;

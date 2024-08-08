@@ -16,20 +16,20 @@ const test = mergeTests(apiHelpersTest, partnerHelperTest);
 
 export const partnerPagesTest = test.extend<{
 	homePage: HomePage;
+	mdfClaimListPage: MDFClaimListPage;
 	mdfRequestFormPage: MDFRequestFormPage;
 	mdfRequestListPage: MDFRequestListPage;
-	mdfClaimListPage: MDFClaimListPage;
 }>({
 	homePage: async ({page}, use) => {
 		await use(new HomePage(page));
+	},
+	mdfClaimListPage: async ({page}, use) => {
+		await use(new MDFClaimListPage(page));
 	},
 	mdfRequestFormPage: async ({page}, use) => {
 		await use(new MDFRequestFormPage(page));
 	},
 	mdfRequestListPage: async ({page}, use) => {
 		await use(new MDFRequestListPage(page));
-	},
-	mdfClaimListPage: async ({page}, use) => {
-		await use(new MDFClaimListPage(page));
 	},
 });

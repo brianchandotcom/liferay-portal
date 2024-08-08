@@ -26,7 +26,7 @@ test.describe('MDF Claim List', () => {
 			await apiHelpers.headlessAdminUser.postAccount(accountPlatinumMock);
 
 		await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
-            accountPlatinum.id,
+			accountPlatinum.id,
 			[emailAddress]
 		);
 
@@ -55,27 +55,33 @@ test.describe('MDF Claim List', () => {
 		}
 	});
 
-    test('Filter data by Date Submitted', async ({mdfClaimListPage}) => {
-		
+	test('Filter data by Date Submitted', async ({mdfClaimListPage}) => {
 		const filterEndDate = new Date(mdfClaim.submitDate)
 			.toISOString()
 			.split('T')[0];
 
-		const filterStartDate = new Date(new Date(mdfClaim.submitDate)
-			.setDate(new Date(mdfClaim.submitDate)
-			.getDate() - 1))
-			.toISOString().split('T')[0];
-		
-		const fomartStartDate = new Date(new Date(mdfClaim.submitDate).setDate(new Date(mdfClaim.submitDate).getDate() - 1)).toISOString();
-		
+		const filterStartDate = new Date(
+			new Date(mdfClaim.submitDate).setDate(
+				new Date(mdfClaim.submitDate).getDate() - 1
+			)
+		)
+			.toISOString()
+			.split('T')[0];
+
+		const fomartStartDate = new Date(
+			new Date(mdfClaim.submitDate).setDate(
+				new Date(mdfClaim.submitDate).getDate() - 1
+			)
+		).toISOString();
+
 		const formatSubmitedDate = getDateCustomFormat(
 			fomartStartDate,
 			customFormatDate.SHORT_MONTH
 		);
-		
+
 		const submitedDate =
 			await mdfClaimListPage.getsubmitedDate(formatSubmitedDate);
-		
+
 		await mdfClaimListPage.filterMDFClaimByPeriod(
 			filterStartDate,
 			filterEndDate
@@ -101,11 +107,11 @@ test.describe('MDF Claim List', () => {
 
 	test('Filter data by Status', async ({mdfClaimListPage, page}) => {
 		const generatedDataFromRequest =
-		await mdfClaimListPage.getGeneratedDataFromRequest(
-			mdfClaim.companyName
-		);
+			await mdfClaimListPage.getGeneratedDataFromRequest(
+				mdfClaim.companyName
+			);
 		const status = generatedDataFromRequest.status;
-		
+
 		await mdfClaimListPage.filterMDFCLaimByStatus(status);
 
 		await mdfClaimListPage.mdfClaimHeading.click();
@@ -130,9 +136,7 @@ test.describe('MDF Claim List', () => {
 			mdfClaim.companyName
 		);
 
-		await mdfClaimListPage.filterMDFClaimByPartner(
-			mdfClaim.companyName
-		);
+		await mdfClaimListPage.filterMDFClaimByPartner(mdfClaim.companyName);
 
 		await mdfClaimListPage.heading.click();
 
@@ -160,13 +164,13 @@ test.describe('MDF Claim List', () => {
 	test('Download MDF Claim', async ({mdfClaimListPage, page}) => {
 		const downloadPromise = page.waitForEvent('download');
 		await mdfClaimListPage.exportClaimButton.click();
-	
+
 		const downloadMDFReport = await downloadPromise;
-	
+
 		await downloadMDFReport.saveAs(
 			'~/' + downloadMDFReport.suggestedFilename()
 		);
-	
+
 		expect(downloadMDFReport.suggestedFilename()).toBe('MDF Claim.csv');
 	});
 });

@@ -10,6 +10,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.lang.reflect.Constructor;
@@ -120,7 +121,7 @@ public class ParameterMapUtil {
 			String[] values = _parameterMap.get(
 				_parameterPrefix + name + _parameterSuffix);
 
-			if ((values == null) || (values.length == 0)) {
+			if (ArrayUtil.isEmpty(values)) {
 				return null;
 			}
 

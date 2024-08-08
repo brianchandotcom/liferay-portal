@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.servlet.PortalClassLoaderFilter;
 import com.liferay.portal.kernel.servlet.PortalClassLoaderServlet;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ConcurrentHashMapBuilder;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -213,7 +214,7 @@ public class WabProcessor {
 
 				});
 
-			if ((files == null) || (files.length == 0)) {
+			if (ArrayUtil.isEmpty(files)) {
 				_log.error("Unable to find any WARs in " + parentFile);
 
 				return null;

@@ -84,6 +84,8 @@ public class PropertiesBuildIncludeDirsCheck extends BaseFileCheck {
 	private Set<String> _getBuildIncludeDirs(String absolutePath)
 		throws IOException {
 
+		Set<String> buildIncludeDirs = new TreeSet<>();
+
 		File modulesDir = new File(getPortalDir(), "modules");
 
 		List<String> buildExcludeModuleNames = getAttributeValues(
@@ -92,8 +94,6 @@ public class PropertiesBuildIncludeDirsCheck extends BaseFileCheck {
 		List<String> skipModuleNames = ListUtil.concat(
 			buildExcludeModuleNames,
 			_getIgnoredModuleNames(SourceUtil.getRootDirName(absolutePath)));
-
-		Set<String> buildIncludeDirs = new TreeSet<>();
 
 		Files.walkFileTree(
 			modulesDir.toPath(), EnumSet.noneOf(FileVisitOption.class), 15,

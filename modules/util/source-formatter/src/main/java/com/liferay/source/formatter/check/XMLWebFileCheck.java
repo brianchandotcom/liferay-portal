@@ -142,6 +142,8 @@ public class XMLWebFileCheck extends BaseFileCheck {
 	private Set<String> _getURLPatterns(String absolutePath)
 		throws IOException {
 
+		Set<String> urlPatterns = new TreeSet<>();
+
 		Properties properties = new Properties();
 
 		PropertiesUtil.load(
@@ -153,8 +155,6 @@ public class XMLWebFileCheck extends BaseFileCheck {
 			properties.getProperty(PropsKeys.LOCALES));
 
 		Arrays.sort(locales);
-
-		Set<String> urlPatterns = new TreeSet<>();
 
 		for (String locale : locales) {
 			int pos = locale.indexOf(CharPool.UNDERLINE);

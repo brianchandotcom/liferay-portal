@@ -134,6 +134,8 @@ public class CETUtil {
 	private static List<CET> _getCETs(List<String> fileNames)
 		throws IOException, ParseException {
 
+		List<CET> cets = new ArrayList<>();
+
 		JavaClass baseCETJavaClass = null;
 		List<JavaClass> cetJavaClasses = new ArrayList<>();
 
@@ -160,8 +162,6 @@ public class CETUtil {
 
 			defaultCETProperties.addAll(cet.getCETProperties());
 		}
-
-		List<CET> cets = new ArrayList<>();
 
 		for (JavaClass cetJavaClass : cetJavaClasses) {
 			CET cet = _getCET(defaultCETProperties, cetJavaClass);

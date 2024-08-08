@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.jndi.JNDIUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.JavaDetector;
 import com.liferay.portal.kernel.util.PropertiesUtil;
@@ -338,9 +339,7 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 			String[] ibmSupportedCipherSuites =
 				sslEngine.getSupportedCipherSuites();
 
-			if ((ibmSupportedCipherSuites == null) ||
-				(ibmSupportedCipherSuites.length == 0)) {
-
+			if (ArrayUtil.isEmpty(ibmSupportedCipherSuites)) {
 				return;
 			}
 

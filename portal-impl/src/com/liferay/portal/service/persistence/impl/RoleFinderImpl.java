@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.model.TeamTable;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.persistence.RoleFinder;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -425,7 +426,7 @@ public class RoleFinderImpl extends RoleFinderBaseImpl implements RoleFinder {
 		String description, int[] types, long excludedTeamRoleId,
 		long teamGroupId, boolean inlineSQLHelper) {
 
-		if ((types == null) || (types.length == 0)) {
+		if (ArrayUtil.isEmpty(types)) {
 			return 0;
 		}
 
@@ -638,7 +639,7 @@ public class RoleFinderImpl extends RoleFinderBaseImpl implements RoleFinder {
 		String description, int[] types, long excludedTeamRoleId,
 		long teamGroupId, int start, int end, boolean inlineSQLHelper) {
 
-		if ((types == null) || (types.length == 0)) {
+		if (ArrayUtil.isEmpty(types)) {
 			return Collections.emptyList();
 		}
 

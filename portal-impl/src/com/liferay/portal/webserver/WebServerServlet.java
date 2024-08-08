@@ -90,6 +90,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.trash.helper.TrashHelper;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -583,7 +584,7 @@ public class WebServerServlet extends HttpServlet {
 
 		byte[] textObj = image.getTextObj();
 
-		if ((textObj == null) || (textObj.length == 0)) {
+		if (ArrayUtil.isEmpty(textObj)) {
 			throw new NoSuchFileException();
 		}
 

@@ -293,7 +293,10 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 				for (JsonNode dependencyJsonNode :
 						jsonNode.get("dependencies")) {
 
-					dependencies.add(dependencyJsonNode.textValue());
+					dependencies.add(
+						StringUtil.suffixIfNotBlank(
+							dependencyJsonNode.textValue(),
+							_virtualInstanceId));
 				}
 
 				pluginPackageProperties.put(

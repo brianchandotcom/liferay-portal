@@ -208,7 +208,7 @@ public class CustomSQLImpl implements CustomSQL {
 		BiFunction<Expression<String>, String, Predicate> operatorBiFunction,
 		String[] values) {
 
-		if ((values == null) || (values.length == 0)) {
+		if (ArrayUtil.isEmpty(values)) {
 			return null;
 		}
 

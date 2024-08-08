@@ -9,6 +9,7 @@ import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.ClientDataRequestHelper;
 import com.liferay.portal.kernel.upload.FileItem;
 import com.liferay.portal.kernel.upload.UploadRequest;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
@@ -50,7 +51,7 @@ public class ClientDataRequestHelperImpl implements ClientDataRequestHelper {
 
 		FileItem[] fileItems = multipartParameterMap.get(name);
 
-		if ((fileItems == null) || (fileItems.length == 0)) {
+		if (ArrayUtil.isEmpty(fileItems)) {
 			return null;
 		}
 

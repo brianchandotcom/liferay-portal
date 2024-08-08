@@ -16,6 +16,7 @@ import com.liferay.portal.json.web.service.client.internal.IdleConnectionMonitor
 import com.liferay.portal.json.web.service.client.internal.X509TrustManagerImpl;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.io.IOException;
@@ -1165,7 +1166,7 @@ public abstract class BaseJSONWebServiceClientImpl
 	}
 
 	private List<NameValuePair> _toNameValuePairs(String... keyValuesArray) {
-		if ((keyValuesArray == null) || (keyValuesArray.length == 0)) {
+		if (ArrayUtil.isEmpty(keyValuesArray)) {
 			return Collections.emptyList();
 		}
 

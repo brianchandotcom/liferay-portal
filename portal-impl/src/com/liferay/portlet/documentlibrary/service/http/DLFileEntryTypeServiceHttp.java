@@ -88,15 +88,16 @@ public class DLFileEntryTypeServiceHttp {
 		}
 	}
 
-	public static void deleteDLFileEntryType(
+	public static void deleteFileEntryTypeByExternalReferenceCode(
 			HttpPrincipal httpPrincipal, String externalReferenceCode,
 			long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				DLFileEntryTypeServiceUtil.class, "deleteDLFileEntryType",
-				_deleteDLFileEntryTypeParameterTypes1);
+				DLFileEntryTypeServiceUtil.class,
+				"deleteFileEntryTypeByExternalReferenceCode",
+				_deleteFileEntryTypeByExternalReferenceCodeParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, groupId);
@@ -725,8 +726,9 @@ public class DLFileEntryTypeServiceHttp {
 			java.util.Map.class, java.util.Map.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _deleteDLFileEntryTypeParameterTypes1 =
-		new Class[] {String.class, long.class};
+	private static final Class<?>[]
+		_deleteFileEntryTypeByExternalReferenceCodeParameterTypes1 =
+			new Class[] {String.class, long.class};
 	private static final Class<?>[] _deleteFileEntryTypeParameterTypes2 =
 		new Class[] {long.class};
 	private static final Class<?>[]

@@ -54,11 +54,11 @@ public interface DLFileEntryTypeService extends BaseService {
 			Map<Locale, String> descriptionMap, ServiceContext serviceContext)
 		throws PortalException;
 
-	public void deleteDLFileEntryType(
-			String externalReferenceCode, long groupId)
+	public void deleteFileEntryType(long fileEntryTypeId)
 		throws PortalException;
 
-	public void deleteFileEntryType(long fileEntryTypeId)
+	public void deleteFileEntryTypeByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

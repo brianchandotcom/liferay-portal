@@ -110,9 +110,7 @@ public class SynonymSearchTest {
 	}
 
 	@Test
-	public void testSearchOnLocalesWithDefaultSynonymFilters()
-		throws Exception {
-
+	public void testSearchOnLocalesWithDefaultSynonymFilters() {
 		for (Map.Entry<Locale, String[]> entry : _synonymsMap.entrySet()) {
 			_assertSearch(entry.getValue()[0], entry.getKey());
 		}

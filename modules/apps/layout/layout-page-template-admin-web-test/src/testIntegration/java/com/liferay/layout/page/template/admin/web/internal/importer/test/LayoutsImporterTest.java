@@ -479,6 +479,59 @@ public class LayoutsImporterTest {
 	}
 
 	@Test
+	public void testValidateFileWithDuplicatedDisplayPageLayoutPageTemplateEntryInADifferentLayoutPageTemplateCollection()
+		throws Exception {
+
+		_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+			null, TestPropsValues.getUserId(), _group1.getGroupId(),
+			LayoutPageTemplateConstants.
+				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+			"Basic Web Content Display Page Template",
+			LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0,
+			WorkflowConstants.STATUS_APPROVED,
+			ServiceContextTestUtil.getServiceContext(_group1.getGroupId()));
+
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
+			_layoutPageTemplateCollectionLocalService.
+				addLayoutPageTemplateCollection(
+					null, TestPropsValues.getUserId(), _group1.getGroupId(),
+					LayoutPageTemplateConstants.
+						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+					RandomTestUtil.randomString(), StringPool.BLANK,
+					LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE,
+					ServiceContextTestUtil.getServiceContext(
+						_group1.getGroupId()));
+
+		Assert.assertTrue(
+			_layoutsImporter.validateFile(
+				_group1.getGroupId(),
+				layoutPageTemplateCollection.
+					getLayoutPageTemplateCollectionId(),
+				_getFile(_RESOURCES_PATH_DISPLAY_PAGE_TEMPLATES)));
+	}
+
+	@Test
+	public void testValidateFileWithDuplicatedDisplayPageLayoutPageTemplateEntryInsideAChildDisplayPageLayoutPageTemplateCollection()
+		throws Exception {
+
+		_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+			null, TestPropsValues.getUserId(), _group1.getGroupId(),
+			LayoutPageTemplateConstants.
+				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+			"Blogs Display Page Template",
+			LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0,
+			WorkflowConstants.STATUS_APPROVED,
+			ServiceContextTestUtil.getServiceContext(_group1.getGroupId()));
+
+		Assert.assertTrue(
+			_layoutsImporter.validateFile(
+				_group1.getGroupId(),
+				LayoutPageTemplateConstants.
+					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+				_getFile(_RESOURCES_PATH_DISPLAY_PAGE_TEMPLATES)));
+	}
+
+	@Test
 	public void testValidateFileWithDuplicatedMasterLayoutLayoutPageTemplateEntry()
 		throws Exception {
 

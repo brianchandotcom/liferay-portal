@@ -1,0 +1,6 @@
+{
+	"contentType": {
+		"className": "com.liferay.blogs.model.BlogsEntry"
+	},
+	"name": "Blogs Display Page Template"
+}

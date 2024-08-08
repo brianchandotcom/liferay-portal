@@ -2,6 +2,7 @@
 
 <suppressions>
 	<checkstyle>
+		<suppress checks="ArrayUtilCheck" files="poshi-core/src/main/java/com/liferay/poshi/core/util/ArrayUtil\.java" />
 		<suppress checks="BuilderCheck" files="poshi-core/.*" />
 		<suppress checks="BuilderCheck" files="poshi-runner/.*" />
 		<suppress checks="ExceptionVariableNameCheck" files="poshi-core/src/test/java/com/liferay/poshi/core/script/PoshiScriptParserTest\.java" />

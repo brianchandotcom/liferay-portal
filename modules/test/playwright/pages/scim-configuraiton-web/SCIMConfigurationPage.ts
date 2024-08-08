@@ -5,6 +5,7 @@
 
 import {Locator, Page, expect} from '@playwright/test';
 
+import {reloadUntilVisible} from '../../utils/reloadUntilVisible';
 import {InstanceSettingsPage} from '../configuration-admin-web/InstanceSettingsPage';
 import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
 
@@ -16,6 +17,7 @@ export class SCIMConfigurationPage {
 	readonly matcherField: Locator;
 	readonly oAuth2ApplicationNameField: Locator;
 	readonly page: Page;
+	readonly resetButton: Locator;
 	readonly saveButton: Locator;
 	readonly successMessage: Locator;
 
@@ -32,6 +34,9 @@ export class SCIMConfigurationPage {
 		this.page.on('dialog', async (dialog) => {
 			await dialog.accept();
 		});
+		this.resetButton = page.getByLabel(
+			'Reset SCIM Client Provisioning Data'
+		);
 		this.saveButton = page.getByRole('button', {name: 'Save'});
 		this.successMessage = page.getByText(
 			'Your request completed successfully'
@@ -48,6 +53,11 @@ export class SCIMConfigurationPage {
 		await this.saveButton.click();
 
 		await expect(this.successMessage).toBeVisible();
+
+		await reloadUntilVisible({
+			myLocator: this.resetButton,
+			page: this.page,
+		});
 	}
 
 	async generateToken() {
@@ -59,14 +69,10 @@ export class SCIMConfigurationPage {
 	}
 
 	async resetClientData(assertVisible = true) {
-		const resetButton = this.page.getByLabel(
-			'Reset SCIM Client Provisioning Data'
-		);
+		if (assertVisible || (await this.resetButton.isVisible())) {
+			await expect(this.resetButton).toBeVisible();
 
-		if (assertVisible || await resetButton.isVisible()) {
-			await expect(resetButton).toBeVisible();
-
-			await resetButton.click();
+			await this.resetButton.click();
 		}
 	}
 

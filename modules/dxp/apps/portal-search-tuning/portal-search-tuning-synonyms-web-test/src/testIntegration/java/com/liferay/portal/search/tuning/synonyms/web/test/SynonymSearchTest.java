@@ -100,31 +100,7 @@ public class SynonymSearchTest {
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			_group.getGroupId(), _user.getUserId());
 
-		try (ConfigurationTemporarySwapper
-				elasticSearchConfigurationTemporarySwapper =
-					new ConfigurationTemporarySwapper(
-							_getSearchEngineConfigurationPid(),
-						setUpSearchEngineProperties());
-
-			ConfigurationTemporarySwapper synonymConfigurationTemporarySwapper =
-				new ConfigurationTemporarySwapper(
-					_CONFIGURATION_PID_SYNONYMS,
-					setUpSynonymsProperties())) {
-
-			addSynonymSet("carro,automovel");
-			addSynonymSet("contento,soddisfatto");
-			addSynonymSet("dxp,portal");
-			addSynonymSet("efectivo,productivo");
-			addSynonymSet("effectief,productief");
-			addSynonymSet("feliz,alegre");
-			addSynonymSet("feliç,satisfet");
-			addSynonymSet("glücklich,heiter");
-			addSynonymSet("hatékony,produktív");
-			addSynonymSet("lycklig,nöjd");
-			addSynonymSet("maison,logement");
-			addSynonymSet("tehokas,tuottava");
-			addSynonymSet("منتج, فعال");
-		}
+		_setUpSynonyms();
 
 		PortalPreferences portalPreferences =
 			PortletPreferencesFactoryUtil.getPortalPreferences(userId, true);
@@ -372,6 +348,34 @@ public class SynonymSearchTest {
 		}
 
 		return _CONFIGURATION_PID_ELASTICSEARCH;
+	}
+
+	private static void _setUpSynonyms() throws Exception {
+		try (ConfigurationTemporarySwapper
+				elasticSearchConfigurationTemporarySwapper =
+					new ConfigurationTemporarySwapper(
+							_getSearchEngineConfigurationPid(),
+						setUpSearchEngineProperties());
+
+			ConfigurationTemporarySwapper synonymConfigurationTemporarySwapper =
+				new ConfigurationTemporarySwapper(
+					_CONFIGURATION_PID_SYNONYMS,
+					setUpSynonymsProperties())) {
+
+			addSynonymSet("carro,automovel");
+			addSynonymSet("contento,soddisfatto");
+			addSynonymSet("dxp,portal");
+			addSynonymSet("efectivo,productivo");
+			addSynonymSet("effectief,productief");
+			addSynonymSet("feliz,alegre");
+			addSynonymSet("feliç,satisfet");
+			addSynonymSet("glücklich,heiter");
+			addSynonymSet("hatékony,produktív");
+			addSynonymSet("lycklig,nöjd");
+			addSynonymSet("maison,logement");
+			addSynonymSet("tehokas,tuottava");
+			addSynonymSet("منتج, فعال");
+		}
 	}
 
 	private static final Locale _ARABIC_LOCALE = new Locale("ar", "SA");

@@ -90,9 +90,9 @@ public class CTEntryResourceImpl extends BaseCTEntryResourceImpl {
 		if (ctEntry == null) {
 			throw new NoSuchEntryException(
 				StringBundler.concat(
-					"No CTEntry exists with ctCollectionId ", ctCollectionId,
-					" , modelClassNameId ", modelClassNameId,
-					" , and modelClassPK ", modelClassPK));
+					"No change tracking entry exists with change tracking ",
+					"collection ID ", ctCollectionId, ", model class name ID ",
+					modelClassNameId, ", and model class PK ", modelClassPK));
 		}
 
 		return _ctEntryDTOConverter.toDTO(

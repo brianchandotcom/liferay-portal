@@ -86,19 +86,11 @@ test('LPD-23255 AC3 TC3: Verify that clicking the “Reset SCIM Client provision
 
 	await page.waitForTimeout(1000);
 
-	const accessTokenField = page.getByLabel('Access Token', {exact: true});
+	await expect(scimConfigurationPage.accessTokenField).toBeEmpty();
 
-	await expect(accessTokenField).toBeEmpty();
+	await expect(scimConfigurationPage.oAuth2ApplicationNameField).toBeEmpty();
 
-	const oAuth2ApplicationNameField = page.getByLabel(
-		'OAuth 2 Application Name'
-	);
-
-	await expect(oAuth2ApplicationNameField).toBeEmpty();
-
-	const matcherField = page.getByLabel('Matcher Field');
-
-	await expect(matcherField).toHaveValue('');
+	await expect(scimConfigurationPage.matcherField).toHaveValue('');
 });
 
 test('LPD-23255 AC3 TC4: Verify that clicking the “Reset SCIM Client provisioning data“ button revokes the generated OAuth2 token and deletes the OAuth2 Application.', async ({
@@ -113,9 +105,8 @@ test('LPD-23255 AC3 TC4: Verify that clicking the “Reset SCIM Client provision
 
 	await scimConfigurationPage.generateToken();
 
-	const accessToken = await page
-		.getByLabel('Access Token', {exact: true})
-		.inputValue();
+	const accessToken =
+		await scimConfigurationPage.accessTokenField.inputValue();
 
 	const apiHelper = new ApiHelpers(page);
 
@@ -234,16 +225,12 @@ test('LPD-23255 AC4 TC7: Verify that Name field is disabled when SCIM is configu
 
 	await page.waitForTimeout(1000);
 
-	const oAuth2ApplicationNameField = page.getByLabel(
-		'OAuth 2 Application Name'
-	);
-
-	expect(oAuth2ApplicationNameField).toBeEditable();
+	expect(scimConfigurationPage.oAuth2ApplicationNameField).toBeEditable();
 
 	await scimConfigurationPage.configureSCIM('email', 'Test SCIM Client');
 	await page.waitForTimeout(1000);
 
-	expect(oAuth2ApplicationNameField).not.toBeEditable();
+	expect(scimConfigurationPage.oAuth2ApplicationNameField).not.toBeEditable();
 
 	await scimConfigurationPage.resetClientData();
 });
@@ -257,15 +244,11 @@ test('LPD-23255 AC5 TC8: Verify that the Name field is enabled when scim client 
 
 	await page.waitForTimeout(1000);
 
-	const oAuth2ApplicationNameField = page.getByLabel(
-		'OAuth 2 Application Name'
-	);
-
 	await scimConfigurationPage.configureSCIM('email', 'Test SCIM Client');
 
-	expect(oAuth2ApplicationNameField).not.toBeEditable();
+	expect(scimConfigurationPage.oAuth2ApplicationNameField).not.toBeEditable();
 
 	await scimConfigurationPage.resetClientData();
 
-	expect(oAuth2ApplicationNameField).toBeEditable();
+	expect(scimConfigurationPage.oAuth2ApplicationNameField).toBeEditable();
 });

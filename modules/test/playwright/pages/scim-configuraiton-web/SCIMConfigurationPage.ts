@@ -22,7 +22,7 @@ export class SCIMConfigurationPage {
 	readonly successMessage: Locator;
 
 	constructor(page: Page) {
-		this.accessTokenField = page.getByText('Access Token');
+		this.accessTokenField = page.getByLabel('Access Token', {exact: true});
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);
 		this.errorMessage = page.getByText('Your request failed to complete');
 		this.instanceSettingsPage = new InstanceSettingsPage(page);

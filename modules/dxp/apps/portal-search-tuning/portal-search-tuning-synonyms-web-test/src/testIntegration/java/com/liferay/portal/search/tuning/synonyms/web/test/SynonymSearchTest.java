@@ -113,19 +113,9 @@ public class SynonymSearchTest {
 	public void testSearchOnLocalesWithDefaultSynonymFilters()
 		throws Exception {
 
-		_assertSearch("carro", LocaleUtil.PORTUGAL);
-		_assertSearch("contento", LocaleUtil.ITALY);
-		_assertSearch("dxp", LocaleUtil.US);
-		_assertSearch("efectivo", LocaleUtil.SPAIN);
-		_assertSearch("effectief", LocaleUtil.NETHERLANDS);
-		_assertSearch("feliz", LocaleUtil.BRAZIL);
-		_assertSearch("feliç", _CATALAN_LOCALE);
-		_assertSearch("glücklich", LocaleUtil.GERMANY);
-		_assertSearch("hatékony", LocaleUtil.HUNGARY);
-		_assertSearch("lycklig", _SWEDISH_LOCALE);
-		_assertSearch("maison", LocaleUtil.FRANCE);
-		_assertSearch("tehokas", _FINNISH_LOCALE);
-		_assertSearch("فعال", _ARABIC_LOCALE);
+		for (Map.Entry<Locale, String[]> entry : _synonymsMap.entrySet()) {
+			_assertSearch(entry.getValue()[0], entry.getKey());
+		}
 	}
 
 	private static void _addJournalArticle(Map<Locale, String> localeStringMap)
@@ -140,62 +130,16 @@ public class SynonymSearchTest {
 	}
 
 	private static void _addJournalArticles() throws Exception {
-		_addJournalArticle(
-			HashMapBuilder.put(
-				_ARABIC_LOCALE, "فعال"
-			).put(
-				_CATALAN_LOCALE, "feliç"
-			).put(
-				_FINNISH_LOCALE, "tehokas"
-			).put(
-				_SWEDISH_LOCALE, "lycklig"
-			).put(
-				LocaleUtil.BRAZIL, "feliz"
-			).put(
-				LocaleUtil.FRANCE, "maison"
-			).put(
-				LocaleUtil.GERMANY, "glücklich"
-			).put(
-				LocaleUtil.HUNGARY, "hatékony"
-			).put(
-				LocaleUtil.ITALY, "contento"
-			).put(
-				LocaleUtil.NETHERLANDS, "effectief"
-			).put(
-				LocaleUtil.PORTUGAL, "carro"
-			).put(
-				LocaleUtil.SPAIN, "efectivo"
-			).put(
-				LocaleUtil.US, "dxp"
-			).build());
-		_addJournalArticle(
-			HashMapBuilder.put(
-				_ARABIC_LOCALE, "منتج"
-			).put(
-				_CATALAN_LOCALE, "satisfet"
-			).put(
-				_FINNISH_LOCALE, "tuottava"
-			).put(
-				_SWEDISH_LOCALE, "nöjd"
-			).put(
-				LocaleUtil.BRAZIL, "alegre"
-			).put(
-				LocaleUtil.FRANCE, "logement"
-			).put(
-				LocaleUtil.GERMANY, "heiter"
-			).put(
-				LocaleUtil.HUNGARY, "produktív"
-			).put(
-				LocaleUtil.ITALY, "soddisfatto"
-			).put(
-				LocaleUtil.NETHERLANDS, "productief"
-			).put(
-				LocaleUtil.PORTUGAL, "automovel"
-			).put(
-				LocaleUtil.SPAIN, "productivo"
-			).put(
-				LocaleUtil.US, "portal"
-			).build());
+		for (Map.Entry<Locale, String[]> entry : _synonymsMap.entrySet()) {
+			_addJournalArticle(
+				HashMapBuilder.put(
+					entry.getKey(), entry.getValue()[0]
+				).build());
+			_addJournalArticle(
+				HashMapBuilder.put(
+					entry.getKey(), entry.getValue()[1]
+				).build());
+		}
 	}
 
 	private static void _addSynonymSet(String synonymSet) {
@@ -297,19 +241,9 @@ public class SynonymSearchTest {
 					_CONFIGURATION_PID_SYNONYMS,
 					_setUpSynonymsProperties())) {
 
-			_addSynonymSet("carro,automovel");
-			_addSynonymSet("contento,soddisfatto");
-			_addSynonymSet("dxp,portal");
-			_addSynonymSet("efectivo,productivo");
-			_addSynonymSet("effectief,productief");
-			_addSynonymSet("feliz,alegre");
-			_addSynonymSet("feliç,satisfet");
-			_addSynonymSet("glücklich,heiter");
-			_addSynonymSet("hatékony,produktív");
-			_addSynonymSet("lycklig,nöjd");
-			_addSynonymSet("maison,logement");
-			_addSynonymSet("tehokas,tuottava");
-			_addSynonymSet("منتج, فعال");
+			for (String[] words : _synonymsMap.values()) {
+				_addSynonymSet(String.join(",", words));
+			}
 		}
 	}
 
@@ -391,6 +325,34 @@ public class SynonymSearchTest {
 
 	private static String _originalName;
 	private static String _originalPortalPreferencesXML;
+	private static final Map<Locale, String[]> _synonymsMap =
+		HashMapBuilder.put(
+			_ARABIC_LOCALE, new String[] {"فعال", "منتج"}
+		).put(
+			_CATALAN_LOCALE, new String[] {"feliç", "satisfet"}
+		).put(
+			_FINNISH_LOCALE, new String[] {"tehokas", "tuottava"}
+		).put(
+			_SWEDISH_LOCALE, new String[] {"lycklig", "nöjd"}
+		).put(
+			LocaleUtil.BRAZIL, new String[] {"feliz", "alegre"}
+		).put(
+			LocaleUtil.FRANCE, new String[] {"maison", "logement"}
+		).put(
+			LocaleUtil.GERMANY, new String[] {"glücklich", "heiter"}
+		).put(
+			LocaleUtil.HUNGARY, new String[] {"hatékony", "produktív"}
+		).put(
+			LocaleUtil.ITALY, new String[] {"contento", "soddisfatto"}
+		).put(
+			LocaleUtil.NETHERLANDS, new String[] {"effectief", "productief"}
+		).put(
+			LocaleUtil.PORTUGAL, new String[] {"carro", "automovel"}
+		).put(
+			LocaleUtil.SPAIN, new String[] {"efectivo", "productivo"}
+		).put(
+			LocaleUtil.US, new String[] {"dxp", "portal"}
+		).build();
 	private static User _user;
 
 	@Inject

@@ -115,7 +115,8 @@ test.describe('MDF Claim List', () => {
 		await mdfClaimListPage.clearAllFilters();
 		await mdfClaimListPage.filterButton.click();
 
-		await page.getByText('Show more').click();
+		await mdfClaimListPage.showMoreButton.click();
+
 		await page.getByLabel('Draft').check();
 
 		await mdfClaimListPage.applyFilterButton.click();
@@ -129,7 +130,7 @@ test.describe('MDF Claim List', () => {
 			mdfClaim.companyName
 		);
 
-		await mdfClaimListPage.filterMDFRequestByPartner(
+		await mdfClaimListPage.filterMDFClaimByPartner(
 			mdfClaim.companyName
 		);
 
@@ -154,5 +155,18 @@ test.describe('MDF Claim List', () => {
 
 		await expect(mdfClaimListPage.dateSubmittedAfterDateInput).toBeEmpty();
 		await expect(mdfClaimListPage.dateSubmittedBeforeDateInput).toBeEmpty();
+	});
+
+	test('Download MDF Claim', async ({mdfClaimListPage, page}) => {
+		const downloadPromise = page.waitForEvent('download');
+		await mdfClaimListPage.exportClaimButton.click();
+	
+		const downloadMDFReport = await downloadPromise;
+	
+		await downloadMDFReport.saveAs(
+			'~/' + downloadMDFReport.suggestedFilename()
+		);
+	
+		expect(downloadMDFReport.suggestedFilename()).toBe('MDF Claim.csv');
 	});
 });

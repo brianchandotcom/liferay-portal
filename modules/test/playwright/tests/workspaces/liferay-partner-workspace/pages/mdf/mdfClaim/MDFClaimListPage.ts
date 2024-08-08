@@ -26,6 +26,7 @@ export class MDFClaimListPage {
 	readonly openTab: Locator;
 	readonly page: Page;
 	readonly searchInput: Locator;
+	readonly showMoreButton: Locator;
 
 	constructor(page: Page) {
 		this.page = page;
@@ -73,6 +74,7 @@ export class MDFClaimListPage {
 		);
 		this.openTab = this.page.getByRole('tab', {exact: true, name: 'Open'});
 		this.searchInput = this.page.getByPlaceholder('Search');
+		this.showMoreButton = this.page.getByRole('list').getByText('Show more');
 	}
 
 	async clearAllFilters() {
@@ -83,10 +85,10 @@ export class MDFClaimListPage {
 			.click();
 	}
 
-	async filterMDFRequestByPartner(partner: string) {
+	async filterMDFClaimByPartner(partner: string) {
 		await this.filterButton.click();
 		await this.activityPartnerButton.click();
-
+		await this.showMoreButton.click();
 		await this.page.getByLabel(partner).check();
 		await this.applyFilterButton.click();
 	}

@@ -15,7 +15,7 @@ export default function updateFormItemConfig({
 	addedFragmentEntryLinks = null,
 	deletedItems = [],
 	isMapping,
-	itemId,
+	itemIds,
 	layoutData,
 	removedFragmentEntryLinkIds = [],
 	restoredFragmentEntryLinkIds = [],
@@ -23,7 +23,7 @@ export default function updateFormItemConfig({
 	addedFragmentEntryLinks?: FragmentEntryLinkMap | null;
 	deletedItems?: DeletedLayoutDataItem[];
 	isMapping: boolean;
-	itemId: string;
+	itemIds: string[];
 	layoutData: LayoutData;
 	removedFragmentEntryLinkIds?: string[];
 	restoredFragmentEntryLinkIds?: string[];
@@ -32,7 +32,7 @@ export default function updateFormItemConfig({
 		addedFragmentEntryLinks,
 		deletedItems,
 		isMapping,
-		itemId,
+		itemIds,
 		layoutData,
 		removedFragmentEntryLinkIds,
 		restoredFragmentEntryLinkIds,

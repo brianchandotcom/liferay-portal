@@ -81,7 +81,8 @@ export default function layoutDataReducer(
 			return action.layoutData;
 
 		case UPDATE_FORM_ITEM_CONFIG: {
-			const {itemId, layoutData: nextLayoutData} = action;
+			const {itemIds, layoutData: nextLayoutData} = action;
+			const [itemId] = itemIds;
 
 			const nextItem = nextLayoutData.items[itemId] || {};
 

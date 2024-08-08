@@ -8,8 +8,9 @@ import {openToast} from 'frontend-js-web';
 import updateFormItemConfigAction from '../actions/updateFormItemConfig';
 import FormService from '../services/FormService';
 
-export default function updateFormItemConfig({fields, itemConfig, itemId}) {
+export default function updateFormItemConfig({fields, itemConfig, itemIds}) {
 	const isMapping = Boolean(itemConfig.classNameId);
+	const [itemId] = itemIds;
 
 	return (dispatch, getState) => {
 		return FormService.updateFormItemConfig({
@@ -29,7 +30,7 @@ export default function updateFormItemConfig({fields, itemConfig, itemId}) {
 					updateFormItemConfigAction({
 						addedFragmentEntryLinks,
 						isMapping,
-						itemId,
+						itemIds: [itemId],
 						layoutData,
 						removedFragmentEntryLinkIds,
 					})

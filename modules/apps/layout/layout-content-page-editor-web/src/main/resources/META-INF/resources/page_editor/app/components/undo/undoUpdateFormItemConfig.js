@@ -12,12 +12,13 @@ function undoAction({action, store}) {
 		config,
 		deletedItems,
 		isMapping,
-		itemId,
+		itemIds,
 		removedFragmentEntryLinkIds,
 		restoredFragmentEntryLinkIds,
 	} = action;
 
 	const {layoutData} = store;
+	const [itemId] = itemIds;
 
 	const removedItems = removedFragmentEntryLinkIds.map((id) => ({
 		itemId: getFragmentItem(layoutData, id).itemId,
@@ -52,7 +53,7 @@ function undoAction({action, store}) {
 				updateFormItemConfig({
 					deletedItems,
 					isMapping,
-					itemId,
+					itemIds: [itemId],
 					layoutData: nextLayoutData,
 					removedFragmentEntryLinkIds,
 					restoredFragmentEntryLinkIds,
@@ -66,12 +67,13 @@ function getDerivedStateForUndo({action, state}) {
 	const {
 		addedFragmentEntryLinks,
 		isMapping,
-		itemId,
+		itemIds,
 		removedFragmentEntryLinkIds,
 		restoredFragmentEntryLinkIds,
 	} = action;
 
 	const {layoutData} = state;
+	const [itemId] = itemIds;
 
 	const item = layoutData.items[itemId];
 
@@ -79,7 +81,7 @@ function getDerivedStateForUndo({action, state}) {
 		config: {...item.config, loading: false},
 		deletedItems: layoutData.deletedItems,
 		isMapping,
-		itemId,
+		itemIds: [itemId],
 		removedFragmentEntryLinkIds: addedFragmentEntryLinks
 			? Object.keys(addedFragmentEntryLinks)
 			: restoredFragmentEntryLinkIds,

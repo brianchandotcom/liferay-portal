@@ -12,7 +12,7 @@ function undoAction({action, store}) {
 
 	return (dispatch) => {
 		return LayoutService.unmarkItemsForDeletion({
-			itemIds,
+			itemIds: [...itemIds].reverse(),
 			onNetworkStatus: dispatch,
 			segmentsExperienceId: store.segmentsExperienceId,
 		}).then(({layoutData}) => {

@@ -28,7 +28,7 @@ export function useSaveFormConfig(item) {
 				updateFormItemConfig({
 					fields,
 					itemConfig: nextConfig,
-					itemId: item.itemId,
+					itemIds: [item.itemId],
 				})
 			).then(() =>
 				updateItemLocalConfig(item.itemId, {

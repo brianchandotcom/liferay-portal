@@ -98,34 +98,11 @@ public class SynonymSearchTest {
 			GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
-			_group.getGroupId(), _user.getUserId());
+			_group.getGroupId(), userId);
 
 		_setUpSynonyms();
 
-		PortalPreferences portalPreferences =
-			PortletPreferencesFactoryUtil.getPortalPreferences(userId, true);
-
-		_originalPortalPreferencesXML = PortletPreferencesFactoryUtil.toXML(
-			portalPreferences);
-
-		portalPreferences.setValue(
-			"", "locales",
-			"ar_SA,ca_ES,zh_CN,nl_NL,en_US,pt_PT,fi_FI,fr_FR,de_DE,hu_HU," +
-				"it_IT,ja_JP,pt_BR,es_ES,sv_SE");
-
-		PortalPreferencesLocalServiceUtil.updatePreferences(
-			_COMPANY_ID, PortletKeys.PREFS_OWNER_TYPE_COMPANY,
-			PortletPreferencesFactoryUtil.toXML(portalPreferences));
-
-		GroupTestUtil.updateDisplaySettings(
-			_group.getGroupId(),
-			Arrays.asList(
-				_ARABIC_LOCALE, _CATALAN_LOCALE, _FINNISH_LOCALE,
-				_SWEDISH_LOCALE, LocaleUtil.SPAIN, LocaleUtil.US,
-				LocaleUtil.PORTUGAL, LocaleUtil.BRAZIL, LocaleUtil.FRANCE,
-				LocaleUtil.HUNGARY, LocaleUtil.CHINA, LocaleUtil.NETHERLANDS,
-				LocaleUtil.GERMANY, LocaleUtil.ITALY, LocaleUtil.JAPAN),
-			LocaleUtil.US);
+		_setUpLocales(userId);
 
 		addJournalArticles();
 	}
@@ -348,6 +325,33 @@ public class SynonymSearchTest {
 		}
 
 		return _CONFIGURATION_PID_ELASTICSEARCH;
+	}
+
+	private static void _setUpLocales(long userId) throws Exception {
+		PortalPreferences portalPreferences =
+			PortletPreferencesFactoryUtil.getPortalPreferences(userId, true);
+
+		_originalPortalPreferencesXML = PortletPreferencesFactoryUtil.toXML(
+			portalPreferences);
+
+		portalPreferences.setValue(
+			"", "locales",
+			"ar_SA,ca_ES,zh_CN,nl_NL,en_US,pt_PT,fi_FI,fr_FR,de_DE,hu_HU," +
+				"it_IT,ja_JP,pt_BR,es_ES,sv_SE");
+
+		PortalPreferencesLocalServiceUtil.updatePreferences(
+			_COMPANY_ID, PortletKeys.PREFS_OWNER_TYPE_COMPANY,
+			PortletPreferencesFactoryUtil.toXML(portalPreferences));
+
+		GroupTestUtil.updateDisplaySettings(
+			_group.getGroupId(),
+			Arrays.asList(
+				_ARABIC_LOCALE, _CATALAN_LOCALE, _FINNISH_LOCALE,
+				_SWEDISH_LOCALE, LocaleUtil.SPAIN, LocaleUtil.US,
+				LocaleUtil.PORTUGAL, LocaleUtil.BRAZIL, LocaleUtil.FRANCE,
+				LocaleUtil.HUNGARY, LocaleUtil.CHINA, LocaleUtil.NETHERLANDS,
+				LocaleUtil.GERMANY, LocaleUtil.ITALY, LocaleUtil.JAPAN),
+			LocaleUtil.US);
 	}
 
 	private static void _setUpSynonyms() throws Exception {

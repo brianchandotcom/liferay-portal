@@ -187,6 +187,12 @@ public class DBPartitionSQLProvider extends BaseSQLProvider {
 						_dbPartitionName, StringPool.PERIOD,
 						ruleTableColumn.get(0)),
 					ruleTableColumn.get(1)));
+			sb.append(StringPool.NEW_LINE);
+			sb.append(StringPool.NEW_LINE);
+		}
+
+		if (sb.index() > 1) {
+			sb.setIndex(sb.index() - 1);
 		}
 
 		return sb.toString();

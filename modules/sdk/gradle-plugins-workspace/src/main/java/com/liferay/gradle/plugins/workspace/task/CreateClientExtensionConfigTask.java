@@ -187,15 +187,14 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 
 		substitutionMap.put("__PROJECT_ID__", projectId);
 
-		String suffix = "";
-
-		if (!_virtualInstanceId.equals("default")) {
-			suffix = "_" + _virtualInstanceId;
-		}
+		pluginPackageProperties.put(
+			Constants.BUNDLE_SYMBOLICNAME,
+			StringUtil.suffixIfNotBlank(projectId, _virtualInstanceId));
 
 		pluginPackageProperties.put(
-			Constants.BUNDLE_SYMBOLICNAME, projectId + suffix);
-		pluginPackageProperties.put("name", _project.getName() + suffix);
+			"name",
+			StringUtil.suffixIfNotBlank(
+				_project.getName(), _virtualInstanceId));
 
 		if (!pluginPackageProperties.containsKey("module-group-id")) {
 			pluginPackageProperties.put("module-group-id", "liferay");

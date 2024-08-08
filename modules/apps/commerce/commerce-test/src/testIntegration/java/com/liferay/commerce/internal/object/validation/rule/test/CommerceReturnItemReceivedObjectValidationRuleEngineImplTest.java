@@ -40,7 +40,7 @@ public class CommerceReturnItemReceivedObjectValidationRuleEngineImplTest
 
 	@Test
 	public void test() {
-		Map<String, Object> results = _objectValidationRuleEngineImpl.execute(
+		Map<String, Object> results = _objectValidationRuleEngine.execute(
 			HashMapBuilder.<String, Object>put(
 				"entryDTO",
 				HashMapBuilder.put(
@@ -57,7 +57,7 @@ public class CommerceReturnItemReceivedObjectValidationRuleEngineImplTest
 		Assert.assertFalse(
 			GetterUtil.getBoolean(results.get("validationCriteriaMet")));
 
-		results = _objectValidationRuleEngineImpl.execute(
+		results = _objectValidationRuleEngine.execute(
 			HashMapBuilder.<String, Object>put(
 				"entryDTO",
 				HashMapBuilder.put(
@@ -78,6 +78,6 @@ public class CommerceReturnItemReceivedObjectValidationRuleEngineImplTest
 	@Inject(
 		filter = "component.name=com.liferay.commerce.internal.object.validation.rule.CommerceReturnItemReceivedObjectValidationRuleEngineImpl"
 	)
-	private ObjectValidationRuleEngine _objectValidationRuleEngineImpl;
+	private ObjectValidationRuleEngine _objectValidationRuleEngine;
 
 }

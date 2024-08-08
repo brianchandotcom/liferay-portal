@@ -40,7 +40,7 @@ public class CommerceReturnItemQuantityObjectValidationRuleEngineImplTest
 
 	@Test
 	public void test() throws Exception {
-		Map<String, Object> results = _objectValidationRuleEngineImpl.execute(
+		Map<String, Object> results = _objectValidationRuleEngine.execute(
 			HashMapBuilder.<String, Object>put(
 				"entryDTO",
 				HashMapBuilder.<String, Object>put(
@@ -59,7 +59,7 @@ public class CommerceReturnItemQuantityObjectValidationRuleEngineImplTest
 		Assert.assertFalse(
 			GetterUtil.getBoolean(results.get("validationCriteriaMet")));
 
-		results = _objectValidationRuleEngineImpl.execute(
+		results = _objectValidationRuleEngine.execute(
 			HashMapBuilder.<String, Object>put(
 				"entryDTO",
 				HashMapBuilder.<String, Object>put(
@@ -78,7 +78,7 @@ public class CommerceReturnItemQuantityObjectValidationRuleEngineImplTest
 		Assert.assertFalse(
 			GetterUtil.getBoolean(results.get("validationCriteriaMet")));
 
-		results = _objectValidationRuleEngineImpl.execute(
+		results = _objectValidationRuleEngine.execute(
 			HashMapBuilder.<String, Object>put(
 				"entryDTO",
 				HashMapBuilder.<String, Object>put(
@@ -101,6 +101,6 @@ public class CommerceReturnItemQuantityObjectValidationRuleEngineImplTest
 	@Inject(
 		filter = "component.name=com.liferay.commerce.internal.object.validation.rule.CommerceReturnItemQuantityObjectValidationRuleEngineImpl"
 	)
-	private ObjectValidationRuleEngine _objectValidationRuleEngineImpl;
+	private ObjectValidationRuleEngine _objectValidationRuleEngine;
 
 }

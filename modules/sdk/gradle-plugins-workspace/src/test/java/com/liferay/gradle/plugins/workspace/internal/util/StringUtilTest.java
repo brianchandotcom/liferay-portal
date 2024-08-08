@@ -34,4 +34,22 @@ public class StringUtilTest {
 			"tt-tes-ttt", StringUtil.getDockerSafeName("TTTesTTT"));
 	}
 
+	@Test
+	public void testSuffix() {
+		Assert.assertEquals(
+			"foo_bar", StringUtil.suffixIfNotBlank("foo", "bar"));
+		Assert.assertEquals("foo", StringUtil.suffixIfNotBlank("foo", ""));
+		Assert.assertEquals("foo", StringUtil.suffixIfNotBlank("foo", null));
+		Assert.assertEquals(
+			"foo/bar",
+			StringUtil.suffixIfNotBlank(
+				"foo", StringUtil.FORWARD_SLASH, "bar"));
+		Assert.assertEquals(
+			"foo",
+			StringUtil.suffixIfNotBlank("foo", StringUtil.FORWARD_SLASH, ""));
+		Assert.assertEquals(
+			"foo",
+			StringUtil.suffixIfNotBlank("foo", StringUtil.FORWARD_SLASH, null));
+	}
+
 }

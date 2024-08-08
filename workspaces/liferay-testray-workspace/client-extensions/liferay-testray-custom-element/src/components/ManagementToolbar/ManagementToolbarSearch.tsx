@@ -42,7 +42,12 @@ const ManagementToolbarSearch = () => {
 	return (
 		<ClayManagementToolbar>
 			<ClayManagementToolbar.ItemList>
-				<ClayManagementToolbar.Search>
+				<ClayManagementToolbar.Search
+					onSubmit={(event: React.FormEvent<HTMLFormElement>) => {
+						event.preventDefault();
+						onApply();
+					}}
+				>
 					<ClayInput.Group>
 						<ClayInput.GroupItem>
 							<ClayInput
@@ -51,11 +56,6 @@ const ManagementToolbarSearch = () => {
 								onChange={({target: {value}}) =>
 									setSearch(value)
 								}
-								onKeyDown={(event) => {
-									if (event.key === 'Enter') {
-										onApply();
-									}
-								}}
 								ref={inputRef}
 								type="text"
 								value={search}

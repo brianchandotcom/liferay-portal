@@ -10,8 +10,6 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
-import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.User;
@@ -30,7 +28,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -88,6 +85,21 @@ public class SynonymSearchTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
+		_originalName = PrincipalThreadLocal.getName();
+
+		_user = UserTestUtil.getAdminUser(_COMPANY_ID);
+
+		long userId = _user.getUserId();
+
+		PrincipalThreadLocal.setName(userId);
+
+		_group = GroupTestUtil.addGroup(
+			_COMPANY_ID, _user.getUserId(),
+			GroupConstants.DEFAULT_PARENT_GROUP_ID);
+
+		_serviceContext = ServiceContextTestUtil.getServiceContext(
+			_group.getGroupId(), _user.getUserId());
+
 		try (ConfigurationTemporarySwapper
 				elasticSearchConfigurationTemporarySwapper =
 					new ConfigurationTemporarySwapper(
@@ -98,12 +110,6 @@ public class SynonymSearchTest {
 				new ConfigurationTemporarySwapper(
 					_CONFIGURATION_PID_SYNONYMS,
 					setUpSynonymsProperties())) {
-
-			_originalName = PrincipalThreadLocal.getName();
-
-			PrincipalThreadLocal.setName(TestPropsValues.getUserId());
-
-			_company = CompanyTestUtil.addCompany();
 
 			addSynonymSet("carro,automovel");
 			addSynonymSet("contento,soddisfatto");
@@ -121,8 +127,7 @@ public class SynonymSearchTest {
 		}
 
 		PortalPreferences portalPreferences =
-			PortletPreferencesFactoryUtil.getPortalPreferences(
-				TestPropsValues.getUserId(), true);
+			PortletPreferencesFactoryUtil.getPortalPreferences(userId, true);
 
 		_originalPortalPreferencesXML = PortletPreferencesFactoryUtil.toXML(
 			portalPreferences);
@@ -133,22 +138,13 @@ public class SynonymSearchTest {
 				"it_IT,ja_JP,pt_BR,es_ES,sv_SE");
 
 		PortalPreferencesLocalServiceUtil.updatePreferences(
-			_company.getCompanyId(),
-			PortletKeys.PREFS_OWNER_TYPE_COMPANY,
+			_COMPANY_ID, PortletKeys.PREFS_OWNER_TYPE_COMPANY,
 			PortletPreferencesFactoryUtil.toXML(portalPreferences));
-
-		_user = UserTestUtil.getAdminUser(_company.getCompanyId());
-
-		_group = GroupTestUtil.addGroup(
-			_company.getCompanyId(), _user.getUserId(),
-			GroupConstants.DEFAULT_PARENT_GROUP_ID);
-
-		_serviceContext = ServiceContextTestUtil.getServiceContext(
-			_group.getGroupId(), _user.getUserId());
 
 		GroupTestUtil.updateDisplaySettings(
 			_group.getGroupId(),
-			Arrays.asList(_ARABIC_LOCALE, _CATALAN_LOCALE, _FINNISH_LOCALE,
+			Arrays.asList(
+				_ARABIC_LOCALE, _CATALAN_LOCALE, _FINNISH_LOCALE,
 				_SWEDISH_LOCALE, LocaleUtil.SPAIN, LocaleUtil.US,
 				LocaleUtil.PORTUGAL, LocaleUtil.BRAZIL, LocaleUtil.FRANCE,
 				LocaleUtil.HUNGARY, LocaleUtil.CHINA, LocaleUtil.NETHERLANDS,
@@ -160,9 +156,6 @@ public class SynonymSearchTest {
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
-
-		_companyLocalService.deleteCompany(_company);
-
 		PrincipalThreadLocal.setName(_originalName);
 
 		PortalPreferencesLocalServiceUtil.updatePreferences(
@@ -264,7 +257,7 @@ public class SynonymSearchTest {
 			new MockLiferayPortletActionRequest();
 
 		mockLiferayPortletActionRequest.setAttribute(
-			WebKeys.COMPANY_ID, _company.getCompanyId());
+			WebKeys.COMPANY_ID, _COMPANY_ID);
 		mockLiferayPortletActionRequest.addParameter("synonymSet", synonymSet);
 
 		ReflectionTestUtil.invoke(
@@ -351,7 +344,7 @@ public class SynonymSearchTest {
 		SearchRequestBuilder searchRequestBuilder =
 			_searchRequestBuilderFactory.builder(
 			).companyId(
-				_company.getCompanyId()
+				_COMPANY_ID
 			).entryClassNames(
 				JournalArticle.class.getName()
 			).groupIds(
@@ -385,6 +378,8 @@ public class SynonymSearchTest {
 
 	private static final Locale _CATALAN_LOCALE = new Locale("ca", "ES");
 
+	private static final Long _COMPANY_ID = CompanyThreadLocal.getCompanyId();
+
 	private static final String _CONFIGURATION_PID_ELASTICSEARCH =
 		"com.liferay.portal.search.elasticsearch7.configuration." +
 			"ElasticsearchConfiguration";
@@ -401,8 +396,6 @@ public class SynonymSearchTest {
 
 	private static final Locale _SWEDISH_LOCALE = new Locale("sv", "SE");
 
-	private static Company _company;
-
 	@Inject
 	private static CompanyLocalService _companyLocalService;
 
@@ -418,12 +411,9 @@ public class SynonymSearchTest {
 	private static MVCActionCommand _mvcActionCommand;
 
 	private static String _originalName;
+	private static String _originalPortalPreferencesXML;
 	private static ServiceContext _serviceContext;
 	private static User _user;
-
-	private static String _originalPortalPreferencesXML;
-
-	private static Long _companyId;
 
 	@Inject
 	private Queries _queries;

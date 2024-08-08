@@ -160,6 +160,6 @@ public class DBPartitionPostgreSQLDB implements DBPartitionDB {
 	}
 
 	private static final Pattern _rulePattern = Pattern.compile(
-		"create * rule (.*?) as");
+		"create.* rule (.*?) as");
 
 }

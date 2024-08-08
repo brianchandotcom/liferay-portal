@@ -52,12 +52,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -143,12 +141,9 @@ public class DocumentConversionImpl implements DocumentConversion {
 			PropsValues.DL_FILE_ENTRY_PREVIEW_GENERATION_TIMEOUT_GHOSTSCRIPT,
 			PropsValues.DL_FILE_ENTRY_PREVIEW_GENERATION_TIMEOUT_PDFBOX);
 
-		_noticeableExecutorService = _portalExecutorManager.getPortalExecutor(
-			DocumentConversionImpl.class.getName());
-
 		InputStream finalInputStream = inputStream;
 
-		Future<?> future = _noticeableExecutorService.submit(
+		Future<?> future = _executorService.submit(
 			() -> {
 				try (UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 						new UnsyncByteArrayOutputStream()) {
@@ -333,13 +328,22 @@ public class DocumentConversionImpl implements DocumentConversion {
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
+		_executorService = _portalExecutorManager.getPortalExecutor(
+			DocumentConversionImpl.class.getName());
+
 		_openOfficeConfiguration = ConfigurableUtil.createConfigurable(
 			OpenOfficeConfiguration.class, properties);
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		if (_openOfficeConnection != null) {
+		if (_executorService != null) {
+			_executorService.shutdownNow();
+		}
+
+		if ((_openOfficeConnection != null) &&
+			_openOfficeConnection.isConnected()) {
+
 			_openOfficeConnection.disconnect();
 		}
 	}
@@ -415,7 +419,7 @@ public class DocumentConversionImpl implements DocumentConversion {
 	private CompanyLocalService _companyLocalService;
 
 	private DocumentConverter _documentConverter;
-	private ExecutorService _noticeableExecutorService;
+	private volatile ExecutorService _executorService;
 	private volatile OpenOfficeConfiguration _openOfficeConfiguration;
 	private OpenOfficeConnection _openOfficeConnection;
 

@@ -57,13 +57,13 @@ export class SCIMConfigurationPage {
 	}
 
 	async resetClientData() {
-		const revokeAllButton = this.page.getByLabel(
+		const resetButton = this.page.getByLabel(
 			'Reset SCIM Client Provisioning Data'
 		);
 
-		await expect(revokeAllButton).toBeVisible();
+		await expect(resetButton).toBeVisible();
 
-		await revokeAllButton.click();
+		await resetButton.click();
 	}
 
 	async revokeToken() {

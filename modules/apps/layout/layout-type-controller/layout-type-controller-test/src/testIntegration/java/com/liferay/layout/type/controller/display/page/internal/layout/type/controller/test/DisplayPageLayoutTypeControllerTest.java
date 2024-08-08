@@ -123,80 +123,15 @@ public class DisplayPageLayoutTypeControllerTest {
 
 	@Test
 	public void testDisplayPageTypeControllerGetFriendlyURL() throws Exception {
-		LayoutTypeController layoutTypeController =
-			LayoutTypeControllerTracker.getLayoutTypeController(
-				LayoutConstants.TYPE_ASSET_DISPLAY);
-
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
-				null, _group.getGroupId(), 0,
-				_portal.getClassNameId(AssetCategory.class.getName()), 0,
-				RandomTestUtil.randomString(), 0,
-				WorkflowConstants.STATUS_DRAFT, _serviceContext);
-
-		Layout layout = _layoutLocalService.getLayout(
-			layoutPageTemplateEntry.getPlid());
-
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
-
-		ThemeDisplay themeDisplay = _getThemeDisplay(
-			StringPool.BLANK, mockHttpServletRequest,
-			TestPropsValues.getUser());
-
-		mockHttpServletRequest.setAttribute(
-			WebKeys.CURRENT_URL,
-			themeDisplay.getPathMain() +
-				"/portal/comment/discussion/get_comments");
-		mockHttpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, themeDisplay);
-
-		Assert.assertNull(
-			layoutTypeController.getFriendlyURL(
-				mockHttpServletRequest, layout));
-		Assert.assertNull(
-			layoutTypeController.getFriendlyURL(
-				mockHttpServletRequest, layout.fetchDraftLayout()));
+		_assertDisplayPageTypeControllerGetFriendlyURL(StringPool.BLANK);
 	}
 
 	@Test
 	public void testDisplayPageTypeControllerGetFriendlyURLWithLocale()
 		throws Exception {
 
-		LayoutTypeController layoutTypeController =
-			LayoutTypeControllerTracker.getLayoutTypeController(
-				LayoutConstants.TYPE_ASSET_DISPLAY);
-
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
-				null, _group.getGroupId(), 0,
-				_portal.getClassNameId(AssetCategory.class.getName()), 0,
-				RandomTestUtil.randomString(), 0,
-				WorkflowConstants.STATUS_DRAFT, _serviceContext);
-
-		Layout layout = _layoutLocalService.getLayout(
-			layoutPageTemplateEntry.getPlid());
-
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
-
-		ThemeDisplay themeDisplay = _getThemeDisplay(
-			LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()),
-			mockHttpServletRequest, TestPropsValues.getUser());
-
-		mockHttpServletRequest.setAttribute(
-			WebKeys.CURRENT_URL,
-			themeDisplay.getPathMain() +
-				"/portal/comment/discussion/get_comments");
-		mockHttpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, themeDisplay);
-
-		Assert.assertNull(
-			layoutTypeController.getFriendlyURL(
-				mockHttpServletRequest, layout));
-		Assert.assertNull(
-			layoutTypeController.getFriendlyURL(
-				mockHttpServletRequest, layout.fetchDraftLayout()));
+		_assertDisplayPageTypeControllerGetFriendlyURL(
+			LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()));
 	}
 
 	@Test
@@ -442,6 +377,45 @@ public class DisplayPageLayoutTypeControllerTest {
 			fragmentEntry.getType(), null, 0,
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
 				layout.getPlid()));
+	}
+
+	private void _assertDisplayPageTypeControllerGetFriendlyURL(
+			String languageId)
+		throws Exception {
+
+		LayoutTypeController layoutTypeController =
+			LayoutTypeControllerTracker.getLayoutTypeController(
+				LayoutConstants.TYPE_ASSET_DISPLAY);
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
+				null, _group.getGroupId(), 0,
+				_portal.getClassNameId(AssetCategory.class.getName()), 0,
+				RandomTestUtil.randomString(), 0,
+				WorkflowConstants.STATUS_DRAFT, _serviceContext);
+
+		Layout layout = _layoutLocalService.getLayout(
+			layoutPageTemplateEntry.getPlid());
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		ThemeDisplay themeDisplay = _getThemeDisplay(
+			languageId, mockHttpServletRequest, TestPropsValues.getUser());
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.CURRENT_URL,
+			themeDisplay.getPathMain() +
+				"/portal/comment/discussion/get_comments");
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
+
+		Assert.assertNull(
+			layoutTypeController.getFriendlyURL(
+				mockHttpServletRequest, layout));
+		Assert.assertNull(
+			layoutTypeController.getFriendlyURL(
+				mockHttpServletRequest, layout.fetchDraftLayout()));
 	}
 
 	private void _assertIncludeLayoutContent(

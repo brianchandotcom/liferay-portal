@@ -44,6 +44,8 @@ ext {
 
 task portalYarnCheckFormat
 task portalYarnFormat
+task portalYarnFormatCurrentBranch
+task portalYarnFormatLocalChanges
 task portalYarnInstall
 
 Set<File> bndPrintJarFiles = null
@@ -85,6 +87,14 @@ if (FileUtil.exists(rootProject, "private/yarn.lock")) {
 
 	portalYarnFormat {
 		dependsOn ":private:packageRunFormat"
+	}
+
+	portalYarnFormatCurrentBranch {
+		dependsOn ":private:packageRunFormatCurrentBranch"
+	}
+
+	portalYarnFormatLocalChanges {
+		dependsOn ":private:packageRunFormatLocalChanges"
 	}
 
 	portalYarnInstall {
@@ -135,6 +145,14 @@ portalYarnCheckFormat {
 
 portalYarnFormat {
 	dependsOn ":packageRunFormat"
+}
+
+portalYarnFormatCurrentBranch {
+	dependsOn ":packageRunFormatCurrentBranch"
+}
+
+portalYarnFormatLocalChanges {
+	dependsOn ":packageRunFormatLocalChanges"
 }
 
 portalYarnInstall {

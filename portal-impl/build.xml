@@ -718,7 +718,21 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 								</if>
 							</then>
 							<else>
-								<gradle-execute dir="${project.dir}/modules" task=":portalYarnFormat" />
+								<if>
+									<isset property="format.current.branch" />
+									<then>
+										<gradle-execute dir="${project.dir}/modules" task=":portalYarnFormatCurrentBranch" />
+									</then>
+									<elseif>
+										<isset property="format.local.changes" />
+										<then>
+											<gradle-execute dir="${project.dir}/modules" task=":portalYarnFormatLocalChanges" />
+										</then>
+									</elseif>
+									<else>
+										<gradle-execute dir="${project.dir}/modules" task=":portalYarnFormat" />
+									</else>
+								</if>
 
 								<if>
 									<not>

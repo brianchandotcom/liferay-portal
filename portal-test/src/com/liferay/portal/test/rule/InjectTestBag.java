@@ -10,6 +10,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -234,7 +235,7 @@ public class InjectTestBag {
 		ServiceReference<?>[] serviceReferences =
 			bundleContext.getAllServiceReferences(className, filterString);
 
-		if ((serviceReferences == null) || (serviceReferences.length == 0)) {
+		if (ArrayUtil.isEmpty(serviceReferences)) {
 			return null;
 		}
 

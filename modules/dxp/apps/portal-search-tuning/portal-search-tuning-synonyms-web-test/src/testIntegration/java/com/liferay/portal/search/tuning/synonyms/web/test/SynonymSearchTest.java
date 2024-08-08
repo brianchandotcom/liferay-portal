@@ -10,6 +10,8 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
+import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.User;
@@ -49,7 +51,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import java.io.IOException;
 import java.io.InputStream;
 
-import java.util.Arrays;
 import java.util.Dictionary;
 import java.util.List;
 import java.util.Locale;
@@ -268,15 +269,7 @@ public class SynonymSearchTest {
 			_companyId, PortletKeys.PREFS_OWNER_TYPE_COMPANY,
 			PortletPreferencesFactoryUtil.toXML(portalPreferences));
 
-		GroupTestUtil.updateDisplaySettings(
-			_group.getGroupId(),
-			Arrays.asList(
-				_ARABIC_LOCALE, _CATALAN_LOCALE, _FINNISH_LOCALE,
-				_SWEDISH_LOCALE, LocaleUtil.SPAIN, LocaleUtil.US,
-				LocaleUtil.PORTUGAL, LocaleUtil.BRAZIL, LocaleUtil.FRANCE,
-				LocaleUtil.HUNGARY, LocaleUtil.CHINA, LocaleUtil.NETHERLANDS,
-				LocaleUtil.GERMANY, LocaleUtil.ITALY, LocaleUtil.JAPAN),
-			LocaleUtil.US);
+		LanguageUtil.init();
 	}
 
 	private static Dictionary<String, Object> _setUpSearchEngineProperties()
@@ -393,6 +386,9 @@ public class SynonymSearchTest {
 	private static ConfigurationAdmin _configurationAdmin;
 
 	private static Group _group;
+
+	@Inject
+	private static Language _language;
 
 	@Inject(
 		filter = "mvc.command.name=/synonyms/edit_synonym_sets",

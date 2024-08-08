@@ -7,6 +7,7 @@ package com.liferay.jenkins.results.parser;
 
 import java.net.URL;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;

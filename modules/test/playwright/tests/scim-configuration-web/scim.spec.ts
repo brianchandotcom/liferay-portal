@@ -84,31 +84,27 @@ test('LPD-23255 AC3 TC3: Verify that clicking the “Reset SCIM Client provision
 
 	await scimConfigurationPage.resetClientData();
 
+	await page.waitForTimeout(1000);
+
+	const accessTokenField = page.getByLabel('Access Token', {exact: true});
+
+	await expect(accessTokenField).toBeEmpty();
+
 	const oAuth2ApplicationNameField = page.getByLabel(
 		'OAuth 2 Application Name'
 	);
 
-	const matcherField = page.getByLabel('Matcher Field');
-
-	const accessTokenField = page.getByLabel('Access Token', {exact: true});
-
-	await page.waitForTimeout(1000);
-
 	await expect(oAuth2ApplicationNameField).toBeEmpty();
 
-	await expect(matcherField).toHaveValue('');
+	const matcherField = page.getByLabel('Matcher Field');
 
-	await expect(accessTokenField).toBeEmpty();
+	await expect(matcherField).toHaveValue('');
 });
 
 test('LPD-23255 AC3 TC4: Verify that clicking the “Reset SCIM Client provisioning data“ button revokes the generated OAuth2 token and deletes the OAuth2 Application.', async ({
 	page,
 }) => {
-	const apiHelper = new ApiHelpers(page);
-
 	const scimConfigurationPage = new SCIMConfigurationPage(page);
-
-	const applicationsMenuPage = new ApplicationsMenuPage(page);
 
 	await scimConfigurationPage.goTo();
 	await page.waitForTimeout(1000);
@@ -121,8 +117,12 @@ test('LPD-23255 AC3 TC4: Verify that clicking the “Reset SCIM Client provision
 		.getByLabel('Access Token', {exact: true})
 		.inputValue();
 
+	const apiHelper = new ApiHelpers(page);
+
 	const authorizedResponse = await apiHelper.scim.getUsers(accessToken);
 	expect(authorizedResponse.status()).toBe(200);
+
+	const applicationsMenuPage = new ApplicationsMenuPage(page);
 
 	await applicationsMenuPage.goToOauth2Administration();
 	await page.waitForTimeout(1000);
@@ -152,8 +152,6 @@ test('LPD-23255 AC3 TC5: Verify that clicking the “Reset SCIM Client provision
 }) => {
 	const scimConfigurationPage = new SCIMConfigurationPage(page);
 
-	const apiHelper = new ApiHelpers(page);
-
 	await scimConfigurationPage.goTo();
 
 	await page.waitForTimeout(1000);
@@ -178,6 +176,8 @@ test('LPD-23255 AC3 TC5: Verify that clicking the “Reset SCIM Client provision
 		userName: `able${randomNumber}.baker`,
 	};
 
+	const apiHelper = new ApiHelpers(page);
+
 	await apiHelper.scim.postUser(newUser);
 
 	const response = await (await apiHelper.scim.getUsers()).text();
@@ -197,8 +197,6 @@ test('LPD-23255 AC3 TC6: Verify that clicking the “Reset SCIM Client provision
 }) => {
 	const scimConfigurationPage = new SCIMConfigurationPage(page);
 
-	const apiHelper = new ApiHelpers(page);
-
 	await scimConfigurationPage.goTo();
 
 	await page.waitForTimeout(1000);
@@ -210,6 +208,8 @@ test('LPD-23255 AC3 TC6: Verify that clicking the “Reset SCIM Client provision
 	const newGroup = {
 		displayName: `Foo${randomNumber}`,
 	};
+
+	const apiHelper = new ApiHelpers(page);
 
 	await apiHelper.scim.postGroup(newGroup);
 

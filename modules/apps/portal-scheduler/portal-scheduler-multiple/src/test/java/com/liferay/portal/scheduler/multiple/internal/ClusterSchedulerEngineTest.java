@@ -632,10 +632,7 @@ public class ClusterSchedulerEngineTest {
 			companyId, _TEST_JOB_NAME_PREFIX, _MEMORY_CLUSTER_TEST_GROUP_NAME,
 			StorageType.MEMORY_CLUSTERED);
 
-		MethodHandler methodHandler =
-			_mockClusterMasterExecutor.geMethodHandler();
-
-		Assert.assertNull(methodHandler);
+		Assert.assertNull(_mockClusterMasterExecutor.geMethodHandler());
 
 		_mockClusterMasterExecutor.reset(true, 0, 0);
 
@@ -643,9 +640,7 @@ public class ClusterSchedulerEngineTest {
 			companyId, _TEST_JOB_NAME_PREFIX, _PERSISTENT_TEST_GROUP_NAME,
 			StorageType.PERSISTED);
 
-		methodHandler = _mockClusterMasterExecutor.geMethodHandler();
-
-		Assert.assertNull(methodHandler);
+		Assert.assertNull(_mockClusterMasterExecutor.geMethodHandler());
 	}
 
 	@Test
@@ -677,9 +672,7 @@ public class ClusterSchedulerEngineTest {
 			companyId, _TEST_JOB_NAME_PREFIX, _PERSISTENT_TEST_GROUP_NAME,
 			StorageType.PERSISTED);
 
-		methodHandler = _mockClusterMasterExecutor.geMethodHandler();
-
-		Assert.assertNull(methodHandler);
+		Assert.assertNull(_mockClusterMasterExecutor.geMethodHandler());
 	}
 
 	@Test

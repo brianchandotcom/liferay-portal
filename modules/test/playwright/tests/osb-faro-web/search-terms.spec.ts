@@ -14,7 +14,7 @@ import {liferayConfig} from '../../liferay.config';
 import getRandomString from '../../utils/getRandomString';
 import {createChannel} from './utils/channel';
 import {createIndividuals} from './utils/individuals';
-import {navigateTo, navigateToACSitesPageViaURL} from './utils/navigation';
+import {ACPage, navigateTo, navigateToACPageViaURL} from './utils/navigation';
 import {CardSelectors} from './utils/selectors';
 import {changeTimeFilter} from './utils/time-filter';
 import {viewNameOnTableList} from './utils/utils';
@@ -80,7 +80,8 @@ test(
 		});
 
 		await test.step('Go to Analytics Cloud and Switch the property', async () => {
-			await navigateToACSitesPageViaURL({
+			await navigateToACPageViaURL({
+				acPage: ACPage.sitePage,
 				channelID: channel.id,
 				page,
 				projectID: project.groupId,

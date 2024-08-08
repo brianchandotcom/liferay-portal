@@ -177,7 +177,6 @@
 								class="rounded img-fluid"
 								height="75%"
 								src="${currentStep.Step.Resources.Image.getData()}"
-								width="75%"
 							/>
 						</div>
 					</#if>

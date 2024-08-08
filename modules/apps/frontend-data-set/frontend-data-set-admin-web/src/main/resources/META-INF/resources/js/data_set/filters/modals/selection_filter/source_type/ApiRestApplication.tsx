@@ -52,6 +52,7 @@ interface IApiRestApplicationModalContentProps {
 	}) => void;
 	preselectedValueInput: string;
 	requiredRESTApplicationValidationError: boolean;
+	resolvedRESTSchemas: string[],
 	restApplications: string[];
 	restEndpointValidationError: boolean;
 	restSchemaValidationError: boolean;
@@ -66,6 +67,7 @@ function ApiRestApplication({
 	onChange,
 	preselectedValueInput,
 	requiredRESTApplicationValidationError,
+	resolvedRESTSchemas,
 	restApplications,
 	restEndpointValidationError,
 	restSchemaValidationError,
@@ -160,7 +162,10 @@ function ApiRestApplication({
 		return sourceItems;
 	}
 
-	const getRESTSchemas = async (restApplication: string) => {
+	const getRESTSchemas = async (
+		restApplication: string,
+		resolvedRESTSchemas: string[],
+	) => {
 		if (!restApplication) {
 			return;
 		}
@@ -182,7 +187,10 @@ function ApiRestApplication({
 
 		schemaNames.forEach((schemaName) => {
 			paths.forEach((path: string) => {
-				if (!isPathValid(path, ALLOWED_ENDPOINTS_PARAMETERS)) {
+				if (
+					!isPathValid(path, ALLOWED_ENDPOINTS_PARAMETERS) &&
+					!resolvedRESTSchemas.includes(schemaName)
+				) {
 					return;
 				}
 
@@ -256,7 +264,7 @@ function ApiRestApplication({
 					let restSchema: string | null = null;
 					let restEndpoint: string | null = null;
 
-					getRESTSchemas(restApplication)
+					getRESTSchemas(restApplication, resolvedRESTSchemas)
 						.then((result) => {
 							const schemas = result?.schemas;
 							const schemaEndpoints = result?.schemaEndpoints;
@@ -558,7 +566,7 @@ function ApiRestApplication({
 		setSelectedRESTSchema(filter.restSchema);
 		setSelectedRESTEndpoint(filter.restEndpoint);
 		let initialSourceItems: TItem[] = [];
-		getRESTSchemas(filter.restApplication)
+		getRESTSchemas(filter.restApplication, resolvedRESTSchemas)
 			.then((result) => {
 				const schemas = result?.schemas;
 				const schemaEndpoints = result?.schemaEndpoints;

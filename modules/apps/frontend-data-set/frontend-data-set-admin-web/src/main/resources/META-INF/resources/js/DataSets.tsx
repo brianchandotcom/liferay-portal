@@ -93,11 +93,13 @@ const NewDataSetModalContent = ({
 	closeModal,
 	loadData,
 	namespace,
+	resolvedRESTSchemas,
 	restApplications,
 }: {
 	closeModal: Function;
 	loadData: Function;
 	namespace: string;
+	resolvedRESTSchemas?: Array<string>;
 	restApplications?: Array<string>;
 }) => {
 	const [label, setLabel] = useState('');
@@ -188,7 +190,10 @@ const NewDataSetModalContent = ({
 		return true;
 	};
 
-	const getRESTSchemas = async (restApplication: string) => {
+	const getRESTSchemas = async (
+		restApplication: string,
+		resolvedRESTSchemas: Array<string> = []
+	) => {
 		if (!restApplication) {
 			return;
 		}
@@ -212,7 +217,10 @@ const NewDataSetModalContent = ({
 
 		schemaNames.forEach((schemaName) => {
 			paths.forEach((path: string) => {
-				if (!isPathValid(path, ALLOWED_ENDPOINTS_PARAMETERS)) {
+				if (
+					!isPathValid(path, ALLOWED_ENDPOINTS_PARAMETERS) &&
+					!resolvedRESTSchemas.includes(schemaName)
+				) {
 					return;
 				}
 
@@ -324,7 +332,7 @@ const NewDataSetModalContent = ({
 
 					setRequiredRESTApplicationValidationError(false);
 
-					getRESTSchemas(item);
+					getRESTSchemas(item, resolvedRESTSchemas);
 				}}
 				restApplications={restApplications!}
 			/>
@@ -529,11 +537,13 @@ const DataSets = ({
 	editDataSetURL,
 	namespace,
 	permissionsURL,
+	resolvedRESTSchemas,
 	restApplications,
 }: {
 	editDataSetURL: string;
 	namespace: string;
 	permissionsURL: string;
+	resolvedRESTSchemas: Array<string>,
 	restApplications: Array<string>;
 }) => {
 	const creationMenu = {
@@ -551,6 +561,7 @@ const DataSets = ({
 								closeModal={closeModal}
 								loadData={loadData}
 								namespace={namespace}
+								resolvedRESTSchemas={resolvedRESTSchemas}
 								restApplications={restApplications}
 							/>
 						),

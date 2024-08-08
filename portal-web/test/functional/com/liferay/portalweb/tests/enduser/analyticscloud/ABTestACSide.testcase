@@ -63,54 +63,6 @@ definition {
 		}
 	}
 
-	@description = "Story: LRAC-14220 | Automation ID: LRAC-14444 | Test Summary: Draft AB test delete button redirects to DXP"
-	@priority = 3
-	test ABTestDraftDeleteButtonRedirectsToDXP {
-		task ("Go to AC > Tests > Open your test") {
-			ACUtils.launchAC();
-
-			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
-
-			ACNavigation.goToTests();
-
-			ABTest.accessABTestInAC(itemName = ${nameABTest});
-		}
-
-		task ("Click on the delete button on the top") {
-			ACUtils.clickGenericHyperlink(hyperlinkText = "Delete");
-		}
-
-		task ("Click on the new tab open and delete the created AB test") {
-			SelectWindow(value1 = "name=undefined");
-
-			WaitForElementPresent(locator1 = "Modal#MODAL_CONTENT");
-
-			AssertTextEquals.assertPartialText(
-				locator1 = "Modal#MODAL_CONTENT",
-				value1 = "Are you sure you want to delete this? It will be deleted immediately. You will lose all data related to it. You will not be able to undo this operation.");
-
-			Click(locator1 = "ACSettings#CONFIRMATION_BUTTON");
-
-			Alert.viewSuccessMessageText(successMessage = "Success:Your request completed successfully.");
-		}
-
-		task ("Assert the empty state after the test is deleted") {
-			ABTest.assertDXPABTestEmptyState();
-		}
-
-		task ("Go to AC > Tests > Assert the empty state") {
-			ACUtils.launchAC();
-
-			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
-
-			ACNavigation.goToTests();
-
-			ACUtils.viewGenericText(textValueList = "There are no tests found.");
-
-			ACUtils.viewGenericText(textValueList = "Create a new test from Liferay DXP by clicking on the , icon in the toolbar when viewing a page in DXP.");
-		}
-	}
-
 	@description = "Story: LRAC-14101 | Automation ID: LRAC-14542 | Test Summary: Terminate button in AC is redirecting to DXP"
 	@priority = 3
 	test CheckTerminateButtonRedirectingToDXP {

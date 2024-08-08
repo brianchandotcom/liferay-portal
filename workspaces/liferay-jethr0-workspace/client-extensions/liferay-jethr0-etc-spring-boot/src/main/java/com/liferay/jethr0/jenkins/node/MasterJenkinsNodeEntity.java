@@ -15,9 +15,9 @@ import org.json.JSONObject;
 public class MasterJenkinsNodeEntity extends BaseJenkinsNodeEntity {
 
 	protected MasterJenkinsNodeEntity(
-		JSONObject jsonObject, JenkinsClient jenkinsClient) {
+		JenkinsClient jenkinsClient, JSONObject jsonObject) {
 
-		super(jsonObject, jenkinsClient);
+		super(jenkinsClient, jsonObject);
 	}
 
 }

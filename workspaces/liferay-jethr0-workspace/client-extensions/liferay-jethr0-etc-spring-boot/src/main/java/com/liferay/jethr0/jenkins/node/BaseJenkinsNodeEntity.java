@@ -218,7 +218,7 @@ public class BaseJenkinsNodeEntity
 	}
 
 	protected BaseJenkinsNodeEntity(
-		JSONObject jsonObject, JenkinsClient jenkinsClient) {
+		JenkinsClient jenkinsClient, JSONObject jsonObject) {
 
 		super(jsonObject);
 

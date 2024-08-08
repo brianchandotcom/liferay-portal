@@ -204,7 +204,7 @@ public abstract class BaseJenkinsServerEntity
 	}
 
 	protected BaseJenkinsServerEntity(
-		JSONObject jsonObject, JenkinsClient jenkinsClient) {
+		JenkinsClient jenkinsClient, JSONObject jsonObject) {
 
 		super(jsonObject);
 

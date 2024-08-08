@@ -602,9 +602,9 @@ public abstract class PoshiElement
 	protected List<String> getPoshiScriptSnippets(
 		String poshiScriptBlockContent, boolean splitElseBlocks) {
 
-		StringBuilder sb = new StringBuilder();
-
 		List<String> poshiScriptSnippets = new ArrayList<>();
+
+		StringBuilder sb = new StringBuilder();
 
 		int index = 0;
 		boolean skipBalanceCheck = false;

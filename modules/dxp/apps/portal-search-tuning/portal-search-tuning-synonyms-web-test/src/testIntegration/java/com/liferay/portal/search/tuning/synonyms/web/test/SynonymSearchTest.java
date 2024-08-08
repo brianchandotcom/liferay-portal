@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.search.SearchEngine;
 import com.liferay.portal.kernel.search.SearchEngineHelperUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.PortalPreferencesLocalServiceUtil;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -95,9 +94,6 @@ public class SynonymSearchTest {
 		_group = GroupTestUtil.addGroup(
 			_companyId, userId, GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
-		_serviceContext = ServiceContextTestUtil.getServiceContext(
-			_group.getGroupId(), userId);
-
 		_setUpLocales(userId);
 
 		_setUpSynonyms();
@@ -140,7 +136,8 @@ public class SynonymSearchTest {
 			_group.getGroupId(), 0,
 			PortalUtil.getClassNameId(JournalArticle.class), localeStringMap,
 			null, localeStringMap, LocaleUtil.getSiteDefault(), false, true,
-			_serviceContext);
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), _user.getUserId()));
 	}
 
 	private static void _addJournalArticles() throws Exception {
@@ -397,7 +394,6 @@ public class SynonymSearchTest {
 
 	private static String _originalName;
 	private static String _originalPortalPreferencesXML;
-	private static ServiceContext _serviceContext;
 	private static User _user;
 
 	@Inject

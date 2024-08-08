@@ -114,7 +114,7 @@ public class ClientExtensionProjectConfigurator
 		WorkspaceExtension workspaceExtension = GradleUtil.getExtension(
 			(ExtensionAware)project.getGradle(), WorkspaceExtension.class);
 
-		return _suffix(
+		return StringUtil.suffixIfNotBlank(
 			"liferay-client-extension-build",
 			workspaceExtension.getVirtualInstanceId());
 	}
@@ -360,16 +360,6 @@ public class ClientExtensionProjectConfigurator
 	}
 
 	protected static final String NAME = "client.extension";
-
-	private static String _suffix(String baseString, String virtualInstanceId) {
-		if (Validator.isNotNull(virtualInstanceId) &&
-			!Objects.equals(virtualInstanceId, "default")) {
-
-			return baseString + "_" + virtualInstanceId;
-		}
-
-		return baseString;
-	}
 
 	private void _addDockerTasks(
 		Project project, TaskProvider<Copy> assembleClientExtensionTaskProvider,
@@ -760,7 +750,7 @@ public class ClientExtensionProjectConfigurator
 
 							@Override
 							public String call() throws Exception {
-								return _suffix(
+								return StringUtil.suffixIfNotBlank(
 									project.getName(),
 									workspaceExtension.getVirtualInstanceId());
 							}
@@ -936,6 +926,10 @@ public class ClientExtensionProjectConfigurator
 
 		String liferayVirtualInstanceId =
 			workspaceExtension.getVirtualInstanceId();
+
+		if (StringUtil.isBlank(liferayVirtualInstanceId)) {
+			liferayVirtualInstanceId = "default";
+		}
 
 		environmentVariables.put(
 			_ENV_LIFERAY_ROUTES_CLIENT_EXTENSION,

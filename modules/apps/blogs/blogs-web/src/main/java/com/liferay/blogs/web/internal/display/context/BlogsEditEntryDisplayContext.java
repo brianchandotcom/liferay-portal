@@ -172,9 +172,7 @@ public class BlogsEditEntryDisplayContext {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		long[] assetCategoryIds = _getFriendlyURLAssetCategoryIds();
-
-		for (long assetCategoryId : assetCategoryIds) {
+		for (long assetCategoryId : _getCurrentFriendlyURLAssetCategoryIds()) {
 			_populateJSONArray(
 				jsonArray,
 				AssetCategoryLocalServiceUtil.getCategory(assetCategoryId));
@@ -558,7 +556,7 @@ public class BlogsEditEntryDisplayContext {
 		return _assetAutoTaggerConfiguration.isUpdateAutoTags();
 	}
 
-	private long[] _getFriendlyURLAssetCategoryIds() {
+	private long[] _getCurrentFriendlyURLAssetCategoryIds() {
 		if (_assetCategoryIds == null) {
 			_assetCategoryIds = ParamUtil.getLongValues(
 				_httpServletRequest, "friendlyURLAssetCategoryIds");

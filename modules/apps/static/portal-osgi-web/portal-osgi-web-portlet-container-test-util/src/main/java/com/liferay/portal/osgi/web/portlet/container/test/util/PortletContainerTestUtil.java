@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.FileItem;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ProgressTracker;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -196,7 +197,7 @@ public class PortletContainerTestUtil {
 		String[] cookies = mockMultipartHttpServletRequest.getParameterValues(
 			"Cookie");
 
-		if ((cookies == null) || (cookies.length == 0)) {
+		if (ArrayUtil.isEmpty(cookies)) {
 			throw new IllegalStateException("Cookie is null");
 		}
 

@@ -12,7 +12,6 @@ import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 
 import java.util.List;
 
@@ -118,16 +117,14 @@ public class LayoutClassedModelUsageStagedModelRepository
 			LayoutClassedModelUsage layoutClassedModelUsage)
 		throws PortalException {
 
-		ServiceContextThreadLocal.pushServiceContext(
-			portletDataContext.createServiceContext(layoutClassedModelUsage));
-
-		try {
-			return _layoutClassedModelUsageLocalService.
-				updateLayoutClassedModelUsage(layoutClassedModelUsage);
-		}
-		finally {
-			ServiceContextThreadLocal.popServiceContext();
-		}
+		return _layoutClassedModelUsageLocalService.
+			updateLayoutClassedModelUsage(
+				layoutClassedModelUsage.getClassNameId(),
+				layoutClassedModelUsage.getClassPK(),
+				layoutClassedModelUsage.getContainerKey(),
+				layoutClassedModelUsage.getContainerType(),
+				layoutClassedModelUsage.getLayoutClassedModelUsageId(),
+				layoutClassedModelUsage.getPlid());
 	}
 
 	@Reference

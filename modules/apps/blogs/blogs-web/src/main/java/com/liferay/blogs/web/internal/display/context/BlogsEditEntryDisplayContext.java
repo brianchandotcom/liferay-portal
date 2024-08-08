@@ -100,16 +100,9 @@ public class BlogsEditEntryDisplayContext {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
-			PortalUtil.getClassNameId(BlogsEntry.class), getEntryId());
+		for (long assetCategoryId :
+				_getAvailableFriendlyURLAssetCategoryIds()) {
 
-		if (assetEntry == null) {
-			return jsonArray;
-		}
-
-		long[] assetCategoryIds = assetEntry.getCategoryIds();
-
-		for (long assetCategoryId : assetCategoryIds) {
 			_populateJSONArray(
 				jsonArray,
 				AssetCategoryLocalServiceUtil.getCategory(assetCategoryId));
@@ -556,6 +549,28 @@ public class BlogsEditEntryDisplayContext {
 		return _assetAutoTaggerConfiguration.isUpdateAutoTags();
 	}
 
+	private long[] _getAvailableFriendlyURLAssetCategoryIds() {
+		if (_assetCategoryIds == null) {
+			_assetCategoryIds = ParamUtil.getLongValues(
+				_httpServletRequest, "assetCategoryIds");
+		}
+
+		if (!ArrayUtil.isEmpty(_assetCategoryIds)) {
+			return _assetCategoryIds;
+		}
+
+		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+			PortalUtil.getClassNameId(BlogsEntry.class), getEntryId());
+
+		if (assetEntry == null) {
+			return new long[0];
+		}
+
+		_assetCategoryIds = assetEntry.getCategoryIds();
+
+		return _assetCategoryIds;
+	}
+
 	private long[] _getCurrentFriendlyURLAssetCategoryIds() {
 		if (_friendlyURLAssetCategoryIds == null) {
 			_friendlyURLAssetCategoryIds = ParamUtil.getLongValues(
@@ -637,6 +652,7 @@ public class BlogsEditEntryDisplayContext {
 	private Boolean _allowPingbacks;
 	private Boolean _allowTrackbacks;
 	private final AssetAutoTaggerConfiguration _assetAutoTaggerConfiguration;
+	private long[] _assetCategoryIds;
 	private final AssetVocabularyLocalService _assetVocabularyLocalService;
 	private final BlogsEntry _blogsEntry;
 	private final BlogsFileUploadsConfiguration _blogsFileUploadsConfiguration;

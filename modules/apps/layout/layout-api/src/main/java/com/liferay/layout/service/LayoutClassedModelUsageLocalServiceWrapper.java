@@ -526,6 +526,18 @@ public class LayoutClassedModelUsageLocalServiceWrapper
 	}
 
 	@Override
+	public LayoutClassedModelUsage updateLayoutClassedModelUsage(
+			long classNameId, long classPK, String containerKey,
+			long containerType, long layoutClassedModelUsageId, long plid)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutClassedModelUsageLocalService.
+			updateLayoutClassedModelUsage(
+				classNameId, classPK, containerKey, containerType,
+				layoutClassedModelUsageId, plid);
+	}
+
+	@Override
 	public BasePersistence<?> getBasePersistence() {
 		return _layoutClassedModelUsageLocalService.getBasePersistence();
 	}

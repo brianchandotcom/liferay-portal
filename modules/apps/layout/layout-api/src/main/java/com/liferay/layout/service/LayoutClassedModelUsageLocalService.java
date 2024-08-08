@@ -378,6 +378,11 @@ public interface LayoutClassedModelUsageLocalService
 	public LayoutClassedModelUsage updateLayoutClassedModelUsage(
 		LayoutClassedModelUsage layoutClassedModelUsage);
 
+	public LayoutClassedModelUsage updateLayoutClassedModelUsage(
+			long classNameId, long classPK, String containerKey,
+			long containerType, long layoutClassedModelUsageId, long plid)
+		throws PortalException;
+
 	@Override
 	@Transactional(enabled = false)
 	public CTPersistence<LayoutClassedModelUsage> getCTPersistence();

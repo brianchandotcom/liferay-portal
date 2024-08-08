@@ -51,16 +51,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SECURITY_CREDENTIAL_FIELD</td>
-	<td>//div[contains(@data-field-name,'securityCredential')]//input[@type='password']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SECURITY_CREDENTIAL_HIDDEN_IMAGE</td>
-	<td>portal/screenshots/foundation/ldap_server_security_credential.png</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SETTING_FIELD_NAME_CHECKBOX</td>
 	<td>//span[contains(@class,'custom-control-label-text') and contains(.,'${key_settingFieldName}')]/../..//input[@type='checkbox']</td>
 	<td></td>

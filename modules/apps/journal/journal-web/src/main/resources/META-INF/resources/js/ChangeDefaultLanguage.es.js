@@ -41,7 +41,7 @@ function ChangeDefaultLanguage(props) {
 			{Liferay.FeatureFlags['LPD-11228'] && (
 				<ClayAlert className="border-0 mt-3 p-0" displayType="info">
 					{Liferay.Language.get(
-						'changing-the-default-language-will-reset-the-articles-history'
+						"changing-the-default-language-will-reset-the-article's-history-making-previous-changes-untrackable"
 					)}
 				</ClayAlert>
 			)}

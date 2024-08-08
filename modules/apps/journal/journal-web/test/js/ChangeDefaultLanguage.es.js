@@ -50,7 +50,7 @@ describe('ChangeDefaultLanguage', () => {
 
 		expect(
 			getByText(
-				'changing-the-default-language-will-reset-the-articles-history'
+				"changing-the-default-language-will-reset-the-article's-history-making-previous-changes-untrackable"
 			)
 		).toBeInTheDocument();
 

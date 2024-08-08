@@ -172,7 +172,8 @@ public class DataSourceControllerTest {
 	@Test
 	public void testGetMappings() throws Exception {
 		List<DataSourceMappingDisplay> mappings =
-			_dataSourceController.getMappings(32719, null, 32783);
+			_dataSourceController.getDataSourceMappingDisplays(
+				32719, null, 32783);
 
 		Assert.assertEquals(mappings.toString(), 13, mappings.size());
 	}

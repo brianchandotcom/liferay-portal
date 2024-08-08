@@ -40,7 +40,7 @@ public class ContactsLayoutController extends BaseFaroController {
 
 	@GET
 	@RolesAllowed(RoleConstants.SITE_MEMBER)
-	public ContactsLayoutDisplay get(
+	public ContactsLayoutDisplay getContactsLayoutDisplay(
 			@PathParam("groupId") long groupId,
 			@QueryParam("contactsEntityId") String contactsEntityId,
 			@QueryParam("contactsLayoutTemplateId") long

@@ -67,7 +67,7 @@ public class BlockedKeywordsController extends BaseFaroController {
 	@GET
 	@Path("/{id}")
 	@RolesAllowed(RoleConstants.SITE_MEMBER)
-	public BlockedKeyword get(
+	public BlockedKeyword getBlockedKeyword(
 			@PathParam("groupId") long groupId, @PathParam("id") String id)
 		throws Exception {
 

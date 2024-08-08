@@ -74,7 +74,8 @@ public class OAuth2Controller extends BaseFaroController {
 	@GET
 	@Path("/tokens")
 	@RolesAllowed(RoleConstants.SITE_ADMINISTRATOR)
-	public List<TokenDisplay> getTokens(@PathParam("groupId") long groupId)
+	public List<TokenDisplay> getTokenDisplays(
+			@PathParam("groupId") long groupId)
 		throws Exception {
 
 		return TransformUtil.transform(

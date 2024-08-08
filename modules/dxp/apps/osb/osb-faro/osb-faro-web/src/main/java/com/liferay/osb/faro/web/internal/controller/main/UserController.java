@@ -125,15 +125,9 @@ public class UserController extends BaseFaroController {
 	}
 
 	@GET
-	@Path("/{id}")
-	@RolesAllowed(RoleConstants.SITE_MEMBER)
-	public FaroUserDisplay get(@PathParam("id") long id) throws Exception {
-		return new FaroUserDisplay(_faroUserLocalService.getFaroUser(id));
-	}
-
-	@GET
 	@Path("/current")
-	public FaroUserDisplay getCurrent(@PathParam("groupId") long groupId)
+	public FaroUserDisplay getCurrentFaroUserDisplay(
+			@PathParam("groupId") long groupId)
 		throws Exception {
 
 		if (groupId == 0) {
@@ -142,6 +136,15 @@ public class UserController extends BaseFaroController {
 
 		return new FaroUserDisplay(
 			_faroUserLocalService.getFaroUser(groupId, getUserId()));
+	}
+
+	@GET
+	@Path("/{id}")
+	@RolesAllowed(RoleConstants.SITE_MEMBER)
+	public FaroUserDisplay getFaroUserDisplay(@PathParam("id") long id)
+		throws Exception {
+
+		return new FaroUserDisplay(_faroUserLocalService.getFaroUser(id));
 	}
 
 	@Path("/join_request")

@@ -100,7 +100,8 @@ public class ContactsLayoutTemplateController extends BaseFaroController {
 	@GET
 	@Path("/{id}")
 	@RolesAllowed(RoleConstants.SITE_MEMBER)
-	public ContactsLayoutTemplateDisplay get(@PathParam("id") long id)
+	public ContactsLayoutTemplateDisplay getContactsLayoutTemplateDisplay(
+			@PathParam("id") long id)
 		throws Exception {
 
 		return new ContactsLayoutTemplateDisplay(
@@ -110,8 +111,9 @@ public class ContactsLayoutTemplateController extends BaseFaroController {
 
 	@GET
 	@RolesAllowed(RoleConstants.SITE_MEMBER)
-	public List<ContactsLayoutTemplateDisplay> getList(
-		@PathParam("groupId") long groupId, @QueryParam("type") int type) {
+	public List<ContactsLayoutTemplateDisplay>
+		getContactsLayoutTemplateDisplays(
+			@PathParam("groupId") long groupId, @QueryParam("type") int type) {
 
 		return TransformUtil.transform(
 			_contactsLayoutTemplateLocalService.getContactsLayoutTemplates(

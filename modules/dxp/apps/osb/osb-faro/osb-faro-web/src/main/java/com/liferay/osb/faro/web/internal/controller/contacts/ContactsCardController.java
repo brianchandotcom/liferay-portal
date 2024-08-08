@@ -47,7 +47,7 @@ public class ContactsCardController extends BaseFaroController {
 
 	@GET
 	@RolesAllowed(RoleConstants.SITE_MEMBER)
-	public ContactsCardDisplay get(
+	public ContactsCardDisplay getContactsCardDisplay(
 			@PathParam("groupId") long groupId,
 			@QueryParam("contactsEntityId") String contactsEntityId,
 			@QueryParam("contactsEntityType") int contactsEntityType,
@@ -90,7 +90,7 @@ public class ContactsCardController extends BaseFaroController {
 	@GET
 	@Path("/preview")
 	@RolesAllowed(RoleConstants.SITE_MEMBER)
-	public ContactsCardDisplay get(
+	public ContactsCardDisplay getContactsCardDisplay(
 			@PathParam("groupId") long groupId,
 			@QueryParam("contactsEntityId") String contactsEntityId,
 			@QueryParam("contactsEntityType") int contactsEntityType,

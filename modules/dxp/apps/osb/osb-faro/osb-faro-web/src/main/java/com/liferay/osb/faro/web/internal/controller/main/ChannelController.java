@@ -184,7 +184,7 @@ public class ChannelController extends BaseFaroController {
 	@GET
 	@Path("/{id}")
 	@RolesAllowed(RoleConstants.SITE_MEMBER)
-	public FaroChannelDisplay get(
+	public FaroChannelDisplay getFaroChannelDisplay(
 			@PathParam("groupId") long groupId, @PathParam("id") String id)
 		throws PortalException {
 

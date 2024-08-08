@@ -52,7 +52,7 @@ public class AccountController extends BaseFaroController {
 	@GET
 	@Path("/{id}")
 	@RolesAllowed(RoleConstants.SITE_MEMBER)
-	public AccountDisplay get(
+	public AccountDisplay getAccountDisplay(
 			@PathParam("groupId") long groupId, @PathParam("id") String id)
 		throws Exception {
 

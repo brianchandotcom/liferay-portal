@@ -372,9 +372,62 @@ public class ProjectController extends BaseFaroController {
 	}
 
 	@GET
+	@Path("/{groupId}/email_address_domains")
+	@RolesAllowed(RoleConstants.SITE_MEMBER)
+	public List<String> getEmailAddressDomains(
+		@PathParam("groupId") long groupId) {
+
+		return TransformUtil.transform(
+			_faroProjectEmailDomainLocalService.
+				getFaroProjectEmailDomainsByGroupId(groupId),
+			FaroProjectEmailDomain::getEmailDomain);
+	}
+
+	@GET
+	@Path("/{projectId}/endpoints")
+	@Unauthenticated
+	public Map<String, Object> getEndpoints(
+			@PathParam("projectId") String projectId)
+		throws Exception {
+
+		Map<String, Object> properties = new HashMap<>();
+
+		FaroProject faroProject =
+			faroProjectLocalService.fetchFaroProjectByWeDeployKey(
+				projectId + ".lfr.cloud");
+
+		if (faroProject == null) {
+			return properties;
+		}
+
+		properties.put(
+			"liferayAnalyticsEndpointURL",
+			EngineServiceURLUtil.getPublisherExternalURL(faroProject));
+		properties.put(
+			"liferayAnalyticsFaroBackendURL",
+			EngineServiceURLUtil.getBackendExternalURL(faroProject));
+
+		return properties;
+	}
+
+	@GET
+	@Path("/joinable")
+	public List<JoinableProjectDisplay> getJoinableProjectDisplays()
+		throws PortalException {
+
+		return TransformUtil.transform(
+			_faroProjectLocalService.getJoinableFaroProjects(getUser()),
+			faroProject -> new JoinableProjectDisplay(
+				faroProject.getGroupId(), faroProject.getName(),
+				Objects.nonNull(
+					_faroUserLocalService.fetchFaroUser(
+						faroProject.getGroupId(), getUserId()))));
+	}
+
+	@GET
 	@Path("/{groupId}")
 	@RolesAllowed(RoleConstants.SITE_MEMBER)
-	public ProjectDisplay get(
+	public ProjectDisplay getProjectDisplay(
 			@PathParam("groupId") long groupId,
 			@QueryParam("forceUpdate") boolean forceUpdate,
 			@DefaultValue("true") @QueryParam("updateLastAccess") boolean
@@ -440,7 +493,7 @@ public class ProjectController extends BaseFaroController {
 
 	@GET
 	@Path("/corpProjectUuid/{corpProjectUuid}")
-	public ProjectDisplay get(
+	public ProjectDisplay getProjectDisplay(
 			@PathParam("corpProjectUuid") String corpProjectUuid)
 		throws Exception {
 
@@ -458,60 +511,7 @@ public class ProjectController extends BaseFaroController {
 	}
 
 	@GET
-	@Path("/{groupId}/email_address_domains")
-	@RolesAllowed(RoleConstants.SITE_MEMBER)
-	public List<String> getEmailAddressDomains(
-		@PathParam("groupId") long groupId) {
-
-		return TransformUtil.transform(
-			_faroProjectEmailDomainLocalService.
-				getFaroProjectEmailDomainsByGroupId(groupId),
-			FaroProjectEmailDomain::getEmailDomain);
-	}
-
-	@GET
-	@Path("/{projectId}/endpoints")
-	@Unauthenticated
-	public Map<String, Object> getEndpoints(
-			@PathParam("projectId") String projectId)
-		throws Exception {
-
-		Map<String, Object> properties = new HashMap<>();
-
-		FaroProject faroProject =
-			faroProjectLocalService.fetchFaroProjectByWeDeployKey(
-				projectId + ".lfr.cloud");
-
-		if (faroProject == null) {
-			return properties;
-		}
-
-		properties.put(
-			"liferayAnalyticsEndpointURL",
-			EngineServiceURLUtil.getPublisherExternalURL(faroProject));
-		properties.put(
-			"liferayAnalyticsFaroBackendURL",
-			EngineServiceURLUtil.getBackendExternalURL(faroProject));
-
-		return properties;
-	}
-
-	@GET
-	@Path("/joinable")
-	public List<JoinableProjectDisplay> getJoinableProjects()
-		throws PortalException {
-
-		return TransformUtil.transform(
-			_faroProjectLocalService.getJoinableFaroProjects(getUser()),
-			faroProject -> new JoinableProjectDisplay(
-				faroProject.getGroupId(), faroProject.getName(),
-				Objects.nonNull(
-					_faroUserLocalService.fetchFaroUser(
-						faroProject.getGroupId(), getUserId()))));
-	}
-
-	@GET
-	public List<ProjectDisplay> getProjects() {
+	public List<ProjectDisplay> getProjectDisplays() {
 		return TransformUtil.transform(
 			_faroUserLocalService.getFaroUsersByLiveUserId(
 				getUserId(), FaroUserConstants.STATUS_APPROVED),
@@ -543,7 +543,7 @@ public class ProjectController extends BaseFaroController {
 	@GET
 	@Path("/usage")
 	@RolesAllowed(RoleConstants.SITE_ADMINISTRATOR)
-	public List<ProjectUsageDisplay> getProjectUsages(
+	public List<ProjectUsageDisplay> getProjectUsageDisplays(
 		@QueryParam("groupId") Long groupId) {
 
 		List<FaroProject> faroProjects = new ArrayList<>();
@@ -600,7 +600,7 @@ public class ProjectController extends BaseFaroController {
 		faroProjectLocalService.updateFaroProject(faroProject);
 
 		if (!Validator.isBlank(corpProjectUuid)) {
-			get(groupId, true, true);
+			getProjectDisplay(groupId, true, true);
 		}
 	}
 

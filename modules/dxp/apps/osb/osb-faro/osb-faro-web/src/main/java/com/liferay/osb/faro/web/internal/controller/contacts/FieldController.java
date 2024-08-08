@@ -42,7 +42,7 @@ public class FieldController extends BaseFaroController {
 	@GET
 	@Path("/{id}")
 	@RolesAllowed(RoleConstants.SITE_MEMBER)
-	public Field get(
+	public Field getField(
 			@PathParam("groupId") long groupId, @PathParam("id") String id)
 		throws Exception {
 

@@ -47,7 +47,7 @@ public class ActivityController extends BaseFaroController {
 	@GET
 	@Path("/{id}")
 	@RolesAllowed(RoleConstants.SITE_MEMBER)
-	public ActivityDisplay get(
+	public ActivityDisplay getActivityDisplay(
 			@PathParam("groupId") long groupId, @PathParam("id") String id)
 		throws Exception {
 
@@ -59,7 +59,7 @@ public class ActivityController extends BaseFaroController {
 	@GET
 	@Path("/history")
 	@RolesAllowed(RoleConstants.SITE_MEMBER)
-	public ActivityHistoryDisplay getHistory(
+	public ActivityHistoryDisplay getActivityHistoryDisplay(
 			@PathParam("groupId") long groupId,
 			@QueryParam("channelId") String channelId,
 			@QueryParam("contactsEntityId") String contactsEntityId,

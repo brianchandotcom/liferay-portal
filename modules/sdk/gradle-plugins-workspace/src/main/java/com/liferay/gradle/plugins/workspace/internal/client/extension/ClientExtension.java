@@ -81,6 +81,24 @@ public class ClientExtension {
 		}
 
 		if (!StringUtil.isBlank(virtualInstanceId)) {
+			if (!StringUtil.isBlank(this.virtualInstanceId) &&
+				!Objects.equals(this.virtualInstanceId, virtualInstanceId)) {
+
+				if (_logger.isWarnEnabled()) {
+					String message = String.format(
+						StringUtil.concat(
+							"The client extension ",
+							"dxp.lxc.liferay.com.virtualInstanceId value ",
+							"%s differs from the provided build property ",
+							"liferay.virtual.instance.id value %s. The ",
+							"build property will be used."),
+						StringUtil.quote(this.virtualInstanceId),
+						StringUtil.quote(virtualInstanceId));
+
+					_logger.warn(message);
+				}
+			}
+
 			this.virtualInstanceId = virtualInstanceId;
 		}
 

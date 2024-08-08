@@ -35,6 +35,8 @@ public class StringUtil {
 
 	public static final String STAR = "*";
 
+	public static final String UNDERSCORE = "_";
+
 	public static String capitalize(String s) {
 		if ((s == null) || s.isEmpty()) {
 			return "";
@@ -155,6 +157,20 @@ public class StringUtil {
 		}
 
 		return Arrays.asList(s.split(COMMA));
+	}
+
+	public static String suffixIfNotBlank(String s, String suffix) {
+		return suffixIfNotBlank(s, UNDERSCORE, suffix);
+	}
+
+	public static String suffixIfNotBlank(
+		String s, String separator, String suffix) {
+
+		if (isBlank(suffix)) {
+			return s;
+		}
+
+		return concat(s, separator, suffix);
 	}
 
 	public static String toAlphaNumericLowerCase(String value) {

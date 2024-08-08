@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import java.sql.Connection;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -144,9 +145,12 @@ public class DBPartitionSQLProvider extends BaseSQLProvider {
 				if (StringUtil.startsWith(
 						createTableSQL, "create or replace rule")) {
 
-					_rulesTableColumn.add(
+					String[] ruleTableColumn =
 						DBPartitionPostgreSQLDB.getRuleTableColumn(
-							createTableSQL));
+							createTableSQL);
+
+					_rulesTableColumn.add(
+						Arrays.asList(ruleTableColumn[0], ruleTableColumn[1]));
 
 					continue;
 				}
@@ -176,13 +180,13 @@ public class DBPartitionSQLProvider extends BaseSQLProvider {
 	private String _getRules() {
 		StringBundler sb = new StringBundler();
 
-		for (String[] ruleTableColumn : _rulesTableColumn) {
+		for (List<String> ruleTableColumn : _rulesTableColumn) {
 			sb.append(
 				PostgreSQLDB.getCreateRulesSQL(
 					StringBundler.concat(
 						_dbPartitionName, StringPool.PERIOD,
-						ruleTableColumn[0]),
-					ruleTableColumn[1]));
+						ruleTableColumn.get(0)),
+					ruleTableColumn.get(1)));
 		}
 
 		return sb.toString();
@@ -209,7 +213,7 @@ public class DBPartitionSQLProvider extends BaseSQLProvider {
 	private static List<String> _controlTableNames;
 	private static String _partitionIndexesSQL;
 	private static String _partitionTablesSQL;
-	private static Set<String[]> _rulesTableColumn;
+	private static Set<List<String>> _rulesTableColumn;
 
 	private final String _dbPartitionName;
 	private final ObjectSQLProvider _objectSQLProvider;

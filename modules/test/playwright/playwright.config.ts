@@ -63,6 +63,7 @@ import {config as stableConfig} from './tests/stable/config';
 import {config as stylebookWebConfig} from './tests/style-book-web/config';
 import {config as usersAdminWebConfig} from './tests/users-admin-web/config';
 import {config as wikiWebConfig} from './tests/wiki-web/config';
+import {config as customerConfig} from './tests/workspaces/liferay-customer-workspace/config';
 import {config as partnerConfig} from './tests/workspaces/liferay-partner-workspace/config';
 import {config as commerceWorkspaceConfig} from './tests/workspaces/liferay-workspace-commerce/config';
 import {config as jethr0Config} from './tests/workspaces/liferay-workspace-jethr0/config';
@@ -88,6 +89,7 @@ export default defineConfig({
 		commerceWorkspaceConfig,
 		configurationAdminWebConfig,
 		contentDashboardWebConfig,
+		customerConfig,
 		dispatchWebConfig,
 		documentLibraryWebConfig,
 		dynamicDataMappingFormWebConfig,

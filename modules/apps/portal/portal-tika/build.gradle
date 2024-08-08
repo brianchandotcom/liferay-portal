@@ -1,6 +1,6 @@
 dependencies {
-	compileInclude group: "com.drewnoakes", name: "metadata-extractor", version: "2.19.0"
 	compileInclude group: "com.googlecode.juniversalchardet", name: "juniversalchardet", version: "1.0.3"
+	compileInclude group: "com.liferay", name: "metadata-extractor", version: "2.19.0.LIFERAY-PATCHED-1"
 	compileInclude group: "com.liferay", name: "org.gagravarr.tika", version: "0.8.LIFERAY-PATCHED-1"
 	compileInclude group: "com.liferay", name: "org.mp4parser", version: "1.9.41.2.LIFERAY-PATCHED-2"
 	compileInclude group: "com.pff", name: "java-libpst", version: "0.8.1"

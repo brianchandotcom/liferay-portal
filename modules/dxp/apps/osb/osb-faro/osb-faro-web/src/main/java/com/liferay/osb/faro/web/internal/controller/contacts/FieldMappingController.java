@@ -106,7 +106,7 @@ public class FieldMappingController extends BaseFaroController {
 	@GET
 	@Path("/{fieldName}")
 	@RolesAllowed(RoleConstants.SITE_MEMBER)
-	public FieldMappingDisplay get(
+	public FieldMappingDisplay getFieldMappingDisplay(
 			@PathParam("groupId") long groupId,
 			@PathParam("fieldName") String fieldName)
 		throws Exception {

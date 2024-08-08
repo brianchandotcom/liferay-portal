@@ -114,27 +114,6 @@ public class PreferencesController extends BaseFaroController {
 	}
 
 	@GET
-	@RolesAllowed(RoleConstants.SITE_MEMBER)
-	public FaroPreferencesDisplay get(
-			@PathParam("groupId") long groupId,
-			@DefaultValue(FaroPreferencesConstants.SCOPE_USER)
-			@QueryParam("scope")
-			String scope)
-		throws Exception {
-
-		long ownerId = _getOwnerId(groupId, scope);
-
-		FaroPreferences faroPreferences =
-			_faroPreferencesLocalService.fetchFaroPreferences(groupId, ownerId);
-
-		if (faroPreferences == null) {
-			return new FaroPreferencesDisplay(groupId, ownerId);
-		}
-
-		return new FaroPreferencesDisplay(faroPreferences);
-	}
-
-	@GET
 	@Path("/default_channel_id")
 	@RolesAllowed(RoleConstants.SITE_MEMBER)
 	public Map<String, String> getDefaultChannelId(
@@ -199,6 +178,27 @@ public class PreferencesController extends BaseFaroController {
 			groupId, _getOwnerId(groupId, scope));
 
 		return workspacePreferences.getEmailReportPreferences(null);
+	}
+
+	@GET
+	@RolesAllowed(RoleConstants.SITE_MEMBER)
+	public FaroPreferencesDisplay getFaroPreferencesDisplay(
+			@PathParam("groupId") long groupId,
+			@DefaultValue(FaroPreferencesConstants.SCOPE_USER)
+			@QueryParam("scope")
+			String scope)
+		throws Exception {
+
+		long ownerId = _getOwnerId(groupId, scope);
+
+		FaroPreferences faroPreferences =
+			_faroPreferencesLocalService.fetchFaroPreferences(groupId, ownerId);
+
+		if (faroPreferences == null) {
+			return new FaroPreferencesDisplay(groupId, ownerId);
+		}
+
+		return new FaroPreferencesDisplay(faroPreferences);
 	}
 
 	@GET

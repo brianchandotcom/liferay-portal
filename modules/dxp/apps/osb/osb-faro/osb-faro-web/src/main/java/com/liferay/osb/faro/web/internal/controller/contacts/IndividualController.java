@@ -90,21 +90,7 @@ public class IndividualController extends BaseFaroController {
 			}
 		}
 
-		return get(groupId, id, null);
-	}
-
-	@GET
-	@Path("/{id}")
-	@RolesAllowed(RoleConstants.SITE_MEMBER)
-	public IndividualDisplay get(
-			@PathParam("groupId") long groupId, @PathParam("id") String id,
-			@QueryParam("channelId") String channelId)
-		throws Exception {
-
-		return new IndividualDisplay(
-			contactsEngineClient.getIndividual(
-				faroProjectLocalService.getFaroProjectByGroupId(groupId), id,
-				channelId));
+		return getIndividualDisplay(groupId, id, null);
 	}
 
 	@GET
@@ -182,6 +168,20 @@ public class IndividualController extends BaseFaroController {
 	@Override
 	public int[] getEntityTypes() {
 		return _ENTITY_TYPES.clone();
+	}
+
+	@GET
+	@Path("/{id}")
+	@RolesAllowed(RoleConstants.SITE_MEMBER)
+	public IndividualDisplay getIndividualDisplay(
+			@PathParam("groupId") long groupId, @PathParam("id") String id,
+			@QueryParam("channelId") String channelId)
+		throws Exception {
+
+		return new IndividualDisplay(
+			contactsEngineClient.getIndividual(
+				faroProjectLocalService.getFaroProjectByGroupId(groupId), id,
+				channelId));
 	}
 
 	@Override

@@ -43,7 +43,7 @@ public class PagesVisitedController extends BaseFaroController {
 	@GET
 	@Path("/{id}")
 	@RolesAllowed(RoleConstants.SITE_MEMBER)
-	public PageVisited get(
+	public PageVisited getPageVisited(
 			@PathParam("groupId") long groupId, @PathParam("id") String id)
 		throws Exception {
 

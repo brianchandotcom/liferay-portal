@@ -53,7 +53,7 @@ public class NotificationController extends BaseFaroController {
 
 	@GET
 	@RolesAllowed(RoleConstants.SITE_MEMBER)
-	public List<NotificationDisplay> getNotifications(
+	public List<NotificationDisplay> getNotificationDisplays(
 			@PathParam("groupId") long groupId, @QueryParam("type") String type)
 		throws Exception {
 

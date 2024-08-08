@@ -175,21 +175,6 @@ public class IndividualSegmentController extends BaseFaroController {
 	}
 
 	@GET
-	@Path("/{id}")
-	@RolesAllowed(RoleConstants.SITE_MEMBER)
-	public IndividualSegmentDisplay get(
-			@PathParam("groupId") long groupId, @PathParam("id") String id,
-			@QueryParam("includeReferencedObjects") boolean
-				includeReferencedObjects)
-		throws Exception {
-
-		return new IndividualSegmentDisplay(
-			contactsEngineClient.getIndividualSegment(
-				faroProjectLocalService.getFaroProjectByGroupId(groupId), id,
-				includeReferencedObjects));
-	}
-
-	@GET
 	@Path("/{id}/distribution")
 	@RolesAllowed(RoleConstants.SITE_MEMBER)
 	public List<Map<String, Object>> getDistribution(
@@ -209,6 +194,21 @@ public class IndividualSegmentController extends BaseFaroController {
 	@Override
 	public int[] getEntityTypes() {
 		return _ENTITY_TYPES.clone();
+	}
+
+	@GET
+	@Path("/{id}")
+	@RolesAllowed(RoleConstants.SITE_MEMBER)
+	public IndividualSegmentDisplay getIndividualSegmentDisplay(
+			@PathParam("groupId") long groupId, @PathParam("id") String id,
+			@QueryParam("includeReferencedObjects") boolean
+				includeReferencedObjects)
+		throws Exception {
+
+		return new IndividualSegmentDisplay(
+			contactsEngineClient.getIndividualSegment(
+				faroProjectLocalService.getFaroProjectByGroupId(groupId), id,
+				includeReferencedObjects));
 	}
 
 	@GET

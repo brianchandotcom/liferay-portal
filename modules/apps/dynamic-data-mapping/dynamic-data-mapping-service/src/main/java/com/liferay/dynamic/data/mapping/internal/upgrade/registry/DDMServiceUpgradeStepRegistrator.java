@@ -50,6 +50,7 @@ import com.liferay.dynamic.data.mapping.internal.upgrade.v5_2_1.WorkflowDefiniti
 import com.liferay.dynamic.data.mapping.internal.upgrade.v5_2_2.DLFileEntryDDMFormInstanceRecordUpgradeProcess;
 import com.liferay.dynamic.data.mapping.internal.upgrade.v5_3_3.BrowserSnifferTemplateUpgradeProcess;
 import com.liferay.dynamic.data.mapping.internal.upgrade.v5_4_5.DDMTemplateLinkUpgradeProcess;
+import com.liferay.dynamic.data.mapping.internal.upgrade.v5_5_1.DDMFieldAttributeUpgradeProcess;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutSerializer;
@@ -576,6 +577,12 @@ public class DDMServiceUpgradeStepRegistrator
 				}
 
 			});
+
+		registry.register(
+			"5.5.0", "5.5.1",
+			new com.liferay.dynamic.data.mapping.internal.upgrade.v5_5_1.
+				DDMFieldUpgradeProcess(),
+			new DDMFieldAttributeUpgradeProcess());
 	}
 
 	@Activate

@@ -88,19 +88,17 @@ public class DLFileEntryTypeServiceHttp {
 		}
 	}
 
-	public static void deleteFileEntryTypeByExternalReferenceCode(
-			HttpPrincipal httpPrincipal, String externalReferenceCode,
-			long groupId)
+	public static void deleteFileEntryType(
+			HttpPrincipal httpPrincipal, long fileEntryTypeId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				DLFileEntryTypeServiceUtil.class,
-				"deleteFileEntryTypeByExternalReferenceCode",
-				_deleteFileEntryTypeByExternalReferenceCodeParameterTypes1);
+				DLFileEntryTypeServiceUtil.class, "deleteFileEntryType",
+				_deleteFileEntryTypeParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, externalReferenceCode, groupId);
+				methodKey, fileEntryTypeId);
 
 			try {
 				TunnelUtil.invoke(httpPrincipal, methodHandler);
@@ -126,17 +124,19 @@ public class DLFileEntryTypeServiceHttp {
 		}
 	}
 
-	public static void deleteFileEntryType(
-			HttpPrincipal httpPrincipal, long fileEntryTypeId)
+	public static void deleteFileEntryTypeByExternalReferenceCode(
+			HttpPrincipal httpPrincipal, String externalReferenceCode,
+			long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				DLFileEntryTypeServiceUtil.class, "deleteFileEntryType",
-				_deleteFileEntryTypeParameterTypes2);
+				DLFileEntryTypeServiceUtil.class,
+				"deleteFileEntryTypeByExternalReferenceCode",
+				_deleteFileEntryTypeByExternalReferenceCodeParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, fileEntryTypeId);
+				methodKey, externalReferenceCode, groupId);
 
 			try {
 				TunnelUtil.invoke(httpPrincipal, methodHandler);
@@ -726,11 +726,11 @@ public class DLFileEntryTypeServiceHttp {
 			java.util.Map.class, java.util.Map.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[]
-		_deleteFileEntryTypeByExternalReferenceCodeParameterTypes1 =
-			new Class[] {String.class, long.class};
-	private static final Class<?>[] _deleteFileEntryTypeParameterTypes2 =
+	private static final Class<?>[] _deleteFileEntryTypeParameterTypes1 =
 		new Class[] {long.class};
+	private static final Class<?>[]
+		_deleteFileEntryTypeByExternalReferenceCodeParameterTypes2 =
+			new Class[] {String.class, long.class};
 	private static final Class<?>[]
 		_fetchFileEntryTypeByExternalReferenceCodeParameterTypes3 =
 			new Class[] {String.class, long.class};

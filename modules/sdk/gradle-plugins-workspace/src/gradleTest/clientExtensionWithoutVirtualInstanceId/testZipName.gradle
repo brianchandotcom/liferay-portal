@@ -1,3 +1,5 @@
+import com.liferay.gradle.util.FileUtil
+
 task runGradleTest
 
 runGradleTest {
@@ -6,8 +8,6 @@ runGradleTest {
 	doLast {
 		Project withoutVirtualInstanceIdClientExtensionProject = project(":without-virtual-instance-id-client-extension")
 
-		File withoutVirtualInstanceIdClientExtensionZipFile = withoutVirtualInstanceIdClientExtensionProject.file("dist/without-virtual-instance-id-client-extension.zip")
-
-		assert withoutVirtualInstanceIdClientExtensionZipFile.exists()
+		assert FileUtil.exists(withoutVirtualInstanceIdClientExtensionProject, "dist/without-virtual-instance-id-client-extension.zip")
 	}
 }

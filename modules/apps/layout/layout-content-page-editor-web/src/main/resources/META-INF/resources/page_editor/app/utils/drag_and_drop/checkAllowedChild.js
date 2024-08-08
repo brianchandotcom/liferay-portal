@@ -47,6 +47,17 @@ const LAYOUT_DATA_CHECK_ALLOWED_CHILDREN = {
 					LAYOUT_DATA_ITEM_TYPES.fragment,
 				].includes(child.type)
 			: false,
+	[LAYOUT_DATA_ITEM_TYPES.formStep]: (child) =>
+		[
+			LAYOUT_DATA_ITEM_TYPES.collection,
+			LAYOUT_DATA_ITEM_TYPES.container,
+			LAYOUT_DATA_ITEM_TYPES.dropZone,
+			LAYOUT_DATA_ITEM_TYPES.row,
+			LAYOUT_DATA_ITEM_TYPES.fragment,
+			LAYOUT_DATA_ITEM_TYPES.form,
+		].includes(child.type),
+	[LAYOUT_DATA_ITEM_TYPES.formStepContainer]: (child) =>
+		[LAYOUT_DATA_ITEM_TYPES.formStep].includes(child.type),
 	[LAYOUT_DATA_ITEM_TYPES.row]: (child) =>
 		[LAYOUT_DATA_ITEM_TYPES.column].includes(child.type),
 	[LAYOUT_DATA_ITEM_TYPES.column]: (child) =>

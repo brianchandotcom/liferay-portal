@@ -23,7 +23,7 @@ const FormStepWithControls = React.forwardRef(({children, item}, ref) => {
 			className={getLayoutDataItemTopperUniqueClassName(item.itemId)}
 			item={item}
 		>
-			<FormStep ref={ref}>
+			<FormStep className="page-editor__form-step" ref={ref}>
 				{isEmpty && (
 					<div className="page-editor__no-fragments-state">
 						<p className="page-editor__no-fragments-state__message">
@@ -46,9 +46,9 @@ FormStepWithControls.propTypes = {
 	item: getLayoutDataItemPropTypes().isRequired,
 };
 
-const FormStep = React.forwardRef(({children}, ref) => {
+const FormStep = React.forwardRef(({children, className}, ref) => {
 	return (
-		<div className="page-editor__form-step" ref={ref}>
+		<div className={className} ref={ref}>
 			{children}
 		</div>
 	);

@@ -107,7 +107,7 @@ public class SynonymSearchTest {
 	}
 
 	@AfterClass
-	public static void tearDownClass() throws Exception {
+	public static void tearDownClass() {
 		PrincipalThreadLocal.setName(_originalName);
 
 		PortalPreferencesLocalServiceUtil.updatePreferences(
@@ -253,7 +253,7 @@ public class SynonymSearchTest {
 		}
 	}
 
-	private static void _setUpLocales(long userId) throws Exception {
+	private static void _setUpLocales(long userId) {
 		PortalPreferences portalPreferences =
 			PortletPreferencesFactoryUtil.getPortalPreferences(userId, true);
 

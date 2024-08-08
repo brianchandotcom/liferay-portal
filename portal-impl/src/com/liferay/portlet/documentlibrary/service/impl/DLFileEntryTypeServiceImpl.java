@@ -73,6 +73,7 @@ public class DLFileEntryTypeServiceImpl extends DLFileEntryTypeServiceBaseImpl {
 		dlFileEntryTypeLocalService.deleteFileEntryType(fileEntryTypeId);
 	}
 
+	@Override
 	public void deleteFileEntryTypeByExternalReferenceCode(
 			String externalReferenceCode, long groupId)
 		throws PortalException {

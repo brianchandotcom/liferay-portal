@@ -52,6 +52,7 @@ import com.liferay.portal.model.impl.LayoutModelImpl;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Dictionary;
 import java.util.HashMap;

@@ -564,17 +564,18 @@ public class BlogsEditEntryDisplayContext {
 			PortalUtil.getClassNameId(BlogsEntry.class), getEntryId());
 
 		if (assetEntry == null) {
-			return new long[0];
+			_assetCategoryIds = new long[0];
 		}
+		else {
+			List<Long> assetCategoryIdsList = ListUtil.fromArray(
+				assetEntry.getCategoryIds());
 
-		List<Long> assetCategoryIdsList = ListUtil.fromArray(
-			assetEntry.getCategoryIds());
+			assetCategoryIdsList.removeAll(
+				ListUtil.fromArray(_getCurrentFriendlyURLAssetCategoryIds()));
 
-		assetCategoryIdsList.removeAll(
-			ListUtil.fromArray(_getCurrentFriendlyURLAssetCategoryIds()));
-
-		_assetCategoryIds = ArrayUtil.toArray(
-			assetCategoryIdsList.toArray(new Long[0]));
+			_assetCategoryIds = ArrayUtil.toArray(
+				assetCategoryIdsList.toArray(new Long[0]));
+		}
 
 		return _assetCategoryIds;
 	}
@@ -592,18 +593,20 @@ public class BlogsEditEntryDisplayContext {
 		FriendlyURLEntry friendlyURLEntry = _getFriendlyURLEntry();
 
 		if (friendlyURLEntry == null) {
-			return new long[0];
+			_friendlyURLAssetCategoryIds = new long[0];
 		}
+		else {
+			AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+				PortalUtil.getClassNameId(FriendlyURLEntry.class),
+				friendlyURLEntry.getFriendlyURLEntryId());
 
-		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
-			PortalUtil.getClassNameId(FriendlyURLEntry.class),
-			friendlyURLEntry.getFriendlyURLEntryId());
-
-		if (assetEntry == null) {
-			return new long[0];
+			if (assetEntry == null) {
+				_friendlyURLAssetCategoryIds = new long[0];
+			}
+			else {
+				_friendlyURLAssetCategoryIds = assetEntry.getCategoryIds();
+			}
 		}
-
-		_friendlyURLAssetCategoryIds = assetEntry.getCategoryIds();
 
 		return _friendlyURLAssetCategoryIds;
 	}

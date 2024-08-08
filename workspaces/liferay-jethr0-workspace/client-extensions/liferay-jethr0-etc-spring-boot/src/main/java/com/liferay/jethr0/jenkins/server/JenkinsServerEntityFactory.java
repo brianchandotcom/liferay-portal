@@ -22,7 +22,7 @@ public class JenkinsServerEntityFactory
 
 	@Override
 	public JenkinsServerEntity newEntity(JSONObject jsonObject) {
-		return new DefaultJenkinsServerEntity(jsonObject, _jenkinsClient);
+		return new DefaultJenkinsServerEntity(_jenkinsClient, jsonObject);
 	}
 
 	protected JenkinsServerEntityFactory() {

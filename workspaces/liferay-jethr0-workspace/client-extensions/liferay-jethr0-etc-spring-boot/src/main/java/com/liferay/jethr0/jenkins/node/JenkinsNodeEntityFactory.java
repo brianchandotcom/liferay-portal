@@ -26,10 +26,10 @@ public class JenkinsNodeEntityFactory
 			jsonObject.getJSONObject("type"));
 
 		if (type == JenkinsNodeEntity.Type.MASTER) {
-			return new MasterJenkinsNodeEntity(jsonObject, _jenkinsClient);
+			return new MasterJenkinsNodeEntity(_jenkinsClient, jsonObject);
 		}
 		else if (type == JenkinsNodeEntity.Type.SLAVE) {
-			return new SlaveJenkinsNodeEntity(jsonObject, _jenkinsClient);
+			return new SlaveJenkinsNodeEntity(_jenkinsClient, jsonObject);
 		}
 
 		throw new UnsupportedOperationException();

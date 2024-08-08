@@ -1319,6 +1319,7 @@
 			"template_zh": {
 				"mapping": {
 					"analyzer": "smartcn",
+					"search_analyzer": "liferay_analyzer_zh",
 					"store": true,
 					"term_vector": "with_positions_offsets",
 					"type": "text"

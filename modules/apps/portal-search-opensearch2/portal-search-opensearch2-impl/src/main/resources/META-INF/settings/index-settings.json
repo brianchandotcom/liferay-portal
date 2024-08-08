@@ -157,6 +157,14 @@
 				"tokenizer": "standard",
 				"type": "custom"
 			},
+			"liferay_analyzer_zh": {
+				"filter": [
+					"lowercase",
+					"cjk_width",
+					"liferay_filter_synonym_zh"
+				],
+				"tokenizer": "smartcn_tokenizer"
+			},
 			"reverse_keyword_lowercase": {
 				"filter": [
 					"lowercase",
@@ -211,6 +219,10 @@
 			},
 			"catalan_stop": {
 				"stopwords": "_catalan_",
+				"type": "stop"
+			},
+			"chinese_stop": {
+				"stopwords": "_smartcn_",
 				"type": "stop"
 			},
 			"dutch_override": {
@@ -401,6 +413,12 @@
 				"type": "synonym_graph"
 			},
 			"liferay_filter_synonym_sv": {
+				"lenient": true,
+				"synonyms": [
+				],
+				"type": "synonym_graph"
+			},
+			"liferay_filter_synonym_zh": {
 				"lenient": true,
 				"synonyms": [
 				],

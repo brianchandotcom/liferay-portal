@@ -12,6 +12,8 @@ import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import java.util.Arrays;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -88,6 +90,16 @@ public class DBInspectorUnitTest {
 		Mockito.verify(
 			_preparedStatement, Mockito.never()
 		).executeQuery();
+	}
+
+	@Test
+	public void testIsObjectTable() {
+		DBInspector dbInspector = new DBInspector(_connection);
+
+		Assert.assertTrue(
+			dbInspector.isObjectTable(Arrays.asList(1L), "l_1_tableName"));
+		Assert.assertTrue(
+			dbInspector.isObjectTable(Arrays.asList(1L), "L_1_tableName"));
 	}
 
 	private void _mockTableWithColumn(String tableName, String columnName)

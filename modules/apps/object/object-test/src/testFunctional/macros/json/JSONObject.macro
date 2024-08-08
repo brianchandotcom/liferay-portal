@@ -1134,6 +1134,32 @@ definition {
 	}
 
 	@summary = "Default summary"
+	macro getCustomObjectRelationships(objectName = null) {
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = PropsUtil.get("default.admin.password");
+		}
+
+		if (!(isSet(objectDefinitionId))) {
+			var objectDefinitionId = ObjectDefinitionAPI.getObjectDefinitionIdByName(name = ${objectName});
+		}
+
+		var curl = '''
+			${portalURL}/o/object-admin/v1.0/object-definitions/${objectDefinitionId}/object-relationships?filter=system%20eq%20false \
+				-u ${userEmailAddress}:${userPassword}
+		''';
+
+		var relationshipIdList = JSONCurlUtil.get(${curl}, "$.items..id");
+
+		return ${relationshipIdList};
+	}
+
+	@summary = "Default summary"
 	macro getObjectDefinition(objectName = null) {
 		Variables.assertDefined(parameterList = ${objectName});
 
@@ -1414,32 +1440,6 @@ definition {
 		var objectId = JSONCurlUtil.get(${curl}, "$.items[?(@['name'] == '${objectName}')]['id']");
 
 		return ${objectId};
-	}
-
-	@summary = "Default summary"
-	macro getObjectRelationships(objectName = null) {
-		var portalURL = JSONCompany.getPortalURL();
-
-		if (!(isSet(userEmailAddress))) {
-			var userEmailAddress = "test@liferay.com";
-		}
-
-		if (!(isSet(userPassword))) {
-			var userPassword = PropsUtil.get("default.admin.password");
-		}
-
-		if (!(isSet(objectDefinitionId))) {
-			var objectDefinitionId = ObjectDefinitionAPI.getObjectDefinitionIdByName(name = ${objectName});
-		}
-
-		var curl = '''
-			${portalURL}/o/object-admin/v1.0/object-definitions/${objectDefinitionId}/object-relationships \
-				-u ${userEmailAddress}:${userPassword}
-		''';
-
-		var relationshipIdList = JSONCurlUtil.get(${curl}, "$.items..id");
-
-		return ${relationshipIdList};
 	}
 
 	@summary = "Default summary"

@@ -123,6 +123,34 @@ export class SearchPage {
 		await this.page.goto('/search');
 	}
 
+	async openSearchPortletConfiguration(
+		portletName: string,
+		order: number = 0
+	) {
+		await this.page
+			.locator('.portlet', {
+				hasText: portletName,
+			})
+			.nth(order)
+			.hover();
+
+		await expect(
+			this.page
+				.locator('.portlet-topper', {hasText: portletName})
+				.nth(order)
+		).toBeVisible();
+
+		await this.page
+			.locator('.portlet-topper', {hasText: portletName})
+			.nth(order)
+			.getByLabel('Options')
+			.click();
+
+		await this.configurationMenuItem.click();
+
+		await expect(this.page.locator('#modalIframe')).toBeVisible();
+	}
+
 	async searchKeywordInMainContent(searchText: string) {
 		await this.searchBarInputInMainContent.fill(searchText);
 

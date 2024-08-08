@@ -5,10 +5,62 @@
 
 import {Locator, expect, mergeTests} from '@playwright/test';
 
+import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {searchPageTest} from '../../fixtures/searchPageTest';
+import getRandomString from '../../utils/getRandomString';
 
-export const test = mergeTests(loginTest(), searchPageTest);
+export const test = mergeTests(loginTest(), searchPageTest, dataApiHelpersTest);
+
+test.describe('Category facet configuration for vocabularies', () => {
+	test('lists 20+ sites available to the user @LPD-33194', async ({
+		apiHelpers,
+		searchPage,
+	}) => {
+		const siteName = getRandomString();
+
+		await test.step('Create 21 sites to test listing', async () => {
+			for (let count = 0; count < 21; count++) {
+				const newSite = await apiHelpers.headlessSite.createSite({
+					name: `${siteName}-${count}`,
+				});
+
+				apiHelpers.data.push({id: newSite.id, type: 'site'});
+			}
+		});
+
+		await test.step('Open category facet configurations', async () => {
+			await searchPage.goto();
+
+			await searchPage.searchKeywordInMainContent('test');
+
+			await expect(searchPage.searchResultsTotalLabel).toHaveText(
+				/\d+ Results for test/
+			);
+
+			await searchPage.openSearchPortletConfiguration('Category Facet');
+		});
+
+		await test.step('Assert 21 sites are listed in the configuration', async () => {
+			await searchPage.modalIFrame
+				.getByLabel('Select Vocabularies')
+				.click();
+
+			await searchPage.modalIFrame
+				.getByRole('treeitem', {name: 'Global'})
+				.waitFor();
+
+			for (let count = 0; count < 21; count++) {
+				await expect(
+					searchPage.modalIFrame.getByRole('treeitem', {
+						exact: true,
+						name: `${siteName}-${count}`,
+					})
+				).toBeVisible();
+			}
+		});
+	});
+});
 
 test.describe('Clear and retain facet selections', () => {
 	let typeDocumentFacetCheckbox: Locator;

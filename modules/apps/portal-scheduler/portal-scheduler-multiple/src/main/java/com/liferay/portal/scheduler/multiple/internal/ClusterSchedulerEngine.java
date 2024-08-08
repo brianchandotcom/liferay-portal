@@ -245,8 +245,7 @@ public class ClusterSchedulerEngine
 			StorageType storageType)
 		throws SchedulerException {
 
-		if (_clusterMasterExecutor.isEnabled() &&
-			!_clusterMasterExecutor.isMaster() &&
+		if (!_clusterMasterExecutor.isMaster() &&
 			(storageType == StorageType.MEMORY_CLUSTERED)) {
 
 			MethodHandler methodHandler = new MethodHandler(

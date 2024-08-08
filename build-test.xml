@@ -570,7 +570,7 @@ module.framework.properties.osgi.console=11312</echo>
 							#!/bin/bash
 
 							function get_modifiable_system_object_definition_table_names() {
-								mysql --execute "SHOW TABLES" --password=${database.mysql.password} --user ${database.mysql.username} ${database.schema.name} | grep -E '^L_[0-9]+_'
+								mysql -u ${database.mysql.username} -p${database.mysql.password} -e "SHOW TABLES" ${database.schema.name} | grep -E '^L_[0-9]+_'
 							}
 
 							function main {

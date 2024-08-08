@@ -6,6 +6,16 @@
 package com.liferay.commerce.internal.object.validation.rule.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.commerce.constants.CommerceOrderConstants;
+import com.liferay.commerce.constants.CommerceShipmentConstants;
+import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
+import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseLocalService;
+import com.liferay.commerce.model.CommerceOrderItem;
+import com.liferay.commerce.model.CommerceShipment;
+import com.liferay.commerce.order.engine.CommerceOrderEngine;
+import com.liferay.commerce.service.CommerceOrderLocalService;
+import com.liferay.commerce.service.CommerceShipmentItemLocalService;
+import com.liferay.commerce.service.CommerceShipmentLocalService;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -13,6 +23,7 @@ import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.validation.rule.ObjectValidationRuleEngine;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -29,8 +40,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -51,9 +62,45 @@ public class
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
-	@Ignore
-	@Test
-	public void test() throws Exception {
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+
+		CommerceShipment commerceShipment =
+			_commerceShipmentLocalService.addCommerceShipment(
+				commerceOrder.getCommerceOrderId(), serviceContext);
+
+		for (CommerceOrderItem commerceOrderItem :
+				commerceOrder.getCommerceOrderItems()) {
+
+			List<CommerceInventoryWarehouse> commerceInventoryWarehouses =
+				_commerceInventoryWarehouseLocalService.
+					getCommerceInventoryWarehouses(
+						commerceChannel.getGroupId(),
+						commerceOrderItem.getSku());
+
+			CommerceInventoryWarehouse commerceInventoryWarehouse =
+				commerceInventoryWarehouses.get(0);
+
+			_commerceShipmentItemLocalService.addCommerceShipmentItem(
+				null, commerceShipment.getCommerceShipmentId(),
+				commerceOrderItem.getCommerceOrderItemId(),
+				commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
+				commerceOrderItem.getQuantity(), null, true, serviceContext);
+		}
+
+		_commerceShipmentLocalService.updateStatus(
+			commerceShipment.getCommerceShipmentId(),
+			CommerceShipmentConstants.SHIPMENT_STATUS_SHIPPED);
+
+		commerceOrder = _commerceOrderLocalService.getCommerceOrder(
+			commerceOrder.getCommerceOrderId());
+
+		commerceOrder = _commerceOrderEngine.transitionCommerceOrder(
+			commerceOrder, CommerceOrderConstants.ORDER_STATUS_COMPLETED,
+			user.getUserId(), true);
+
 		List<ObjectDefinition> objectDefinitions =
 			_objectDefinitionLocalService.getObjectDefinitions(
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
@@ -71,7 +118,7 @@ public class
 			}
 		}
 
-		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
+		_objectEntry = _objectEntryLocalService.addObjectEntry(
 			commerceReturnObjectDefinition.getUserId(), 0,
 			commerceReturnObjectDefinition.getObjectDefinitionId(),
 			HashMapBuilder.<String, Serializable>put(
@@ -82,8 +129,11 @@ public class
 				commerceOrder.getCommerceOrderId()
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
+	}
 
-		Map<String, Object> results = _objectValidationRuleEngineImpl.execute(
+	@Test
+	public void test() throws Exception {
+		Map<String, Object> results = _objectValidationRuleEngine.execute(
 			HashMapBuilder.<String, Object>put(
 				"entryDTO",
 				HashMapBuilder.put(
@@ -95,7 +145,7 @@ public class
 					).put(
 						"r_commerceReturnToCommerceReturnItems_c_" +
 							"commerceReturnERC",
-						objectEntry.getExternalReferenceCode()
+						_objectEntry.getExternalReferenceCode()
 					).build()
 				).build()
 			).build(),
@@ -104,7 +154,7 @@ public class
 		Assert.assertFalse(
 			GetterUtil.getBoolean(results.get("validationCriteriaMet")));
 
-		results = _objectValidationRuleEngineImpl.execute(
+		results = _objectValidationRuleEngine.execute(
 			HashMapBuilder.<String, Object>put(
 				"entryDTO",
 				HashMapBuilder.put(
@@ -117,7 +167,7 @@ public class
 					).put(
 						"r_commerceReturnToCommerceReturnItems_c_" +
 							"commerceReturnERC",
-						objectEntry.getExternalReferenceCode()
+						_objectEntry.getExternalReferenceCode()
 					).build()
 				).build()
 			).build(),
@@ -128,7 +178,26 @@ public class
 	}
 
 	@Inject
+	private CommerceInventoryWarehouseLocalService
+		_commerceInventoryWarehouseLocalService;
+
+	@Inject
+	private CommerceOrderEngine _commerceOrderEngine;
+
+	@Inject
+	private CommerceOrderLocalService _commerceOrderLocalService;
+
+	@Inject
+	private CommerceShipmentItemLocalService _commerceShipmentItemLocalService;
+
+	@Inject
+	private CommerceShipmentLocalService _commerceShipmentLocalService;
+
+	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@DeleteAfterTestRun
+	private ObjectEntry _objectEntry;
 
 	@Inject
 	private ObjectEntryLocalService _objectEntryLocalService;
@@ -136,6 +205,6 @@ public class
 	@Inject(
 		filter = "component.name=com.liferay.commerce.internal.object.validation.rule.CommerceReturnItemCommerceOrderItemIdObjectValidationRuleEngineImpl"
 	)
-	private ObjectValidationRuleEngine _objectValidationRuleEngineImpl;
+	private ObjectValidationRuleEngine _objectValidationRuleEngine;
 
 }

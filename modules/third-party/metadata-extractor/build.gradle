@@ -1,0 +1,23 @@
+import com.liferay.gradle.plugins.patcher.PatchTask
+
+apply plugin: "com.liferay.patcher"
+
+task patch(type: PatchTask)
+
+dependencies {
+	compileOnly group: "com.drewnoakes", name: "metadata-extractor", transitive: false, version: "2.19.0"
+}
+
+jarSources {
+	mustRunAfter patch
+}
+
+patch {
+	ext {
+		autoClean = false
+	}
+
+	fileNames "com/drew/imaging/png/PngMetadataReader.java"
+
+	originalLibModuleName = "metadata-extractor"
+}

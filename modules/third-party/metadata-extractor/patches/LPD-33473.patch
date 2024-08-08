@@ -1,0 +1,82 @@
+diff --git a/com/drew/imaging/png/PngMetadataReader.java b/com/drew/imaging/png/PngMetadataReader.java
+index 1a044745..c3f2b1f8 100644
+--- a/com/drew/imaging/png/PngMetadataReader.java
++++ b/com/drew/imaging/png/PngMetadataReader.java
+@@ -44,6 +44,45 @@ import java.util.zip.InflaterInputStream;
+  */
+ public class PngMetadataReader
+ {
++    private static final class TruncatingInputStream extends InputStream {
++        private static final int _DEFAULT_LIMIT = 5 * 1024 * 1024;
++
++        private final InputStream _inputStream;
++        private int _remaining;
++
++        public TruncatingInputStream(InputStream inputStream, int limit) {
++            _inputStream = inputStream;
++            _remaining = limit;
++        }
++
++        public TruncatingInputStream(InputStream inputStream) {
++            this(inputStream, _DEFAULT_LIMIT);
++        }
++
++        @Override
++        public void close() throws IOException {
++            _remaining = 0;
++            _inputStream.close();
++        }
++
++        @Override
++        public int read() throws IOException {
++            if (_remaining == 0) {
++                return -1;
++            }
++
++            int n = _inputStream.read();
++
++            if (n == -1) {
++                _remaining = 0;
++            } else {
++                _remaining--;
++            }
++
++            return n;
++        }
++    }
++
+     private static Set<PngChunkType> _desiredChunkTypes;
+ 
+     /**
+@@ -178,7 +217,7 @@ public class PngMetadataReader
+                 byte[] compressedProfile = reader.getBytes(bytesLeft);
+ 
+                 try {
+-                    InflaterInputStream inflateStream = new InflaterInputStream(new ByteArrayInputStream(compressedProfile));
++                    InputStream inflateStream = new TruncatingInputStream(new InflaterInputStream(new ByteArrayInputStream(compressedProfile)));
+                     new IccReader().extract(new RandomAccessStreamReader(inflateStream), metadata, directory);
+                     inflateStream.close();
+                 } catch(java.util.zip.ZipException zex) {
+@@ -223,7 +262,7 @@ public class PngMetadataReader
+             byte[] textBytes = null;
+             if (compressionMethod == 0) {
+                 try {
+-                    textBytes = StreamUtil.readAllBytes(new InflaterInputStream(new ByteArrayInputStream(bytes, bytes.length - bytesLeft, bytesLeft)));
++                    textBytes = StreamUtil.readAllBytes(new TruncatingInputStream(new InflaterInputStream(new ByteArrayInputStream(bytes, bytes.length - bytesLeft, bytesLeft))));
+                 } catch(java.util.zip.ZipException zex) {
+                     PngDirectory directory = new PngDirectory(PngChunkType.zTXt);
+                     directory.addError(String.format("Exception decompressing PNG zTXt chunk with keyword \"%s\": %s", keyword, zex.getMessage()));
+@@ -267,7 +306,7 @@ public class PngMetadataReader
+             } else if (compressionFlag == 1) {
+                 if (compressionMethod == 0) {
+                     try {
+-                        textBytes = StreamUtil.readAllBytes(new InflaterInputStream(new ByteArrayInputStream(bytes, bytes.length - bytesLeft, bytesLeft)));
++                        textBytes = StreamUtil.readAllBytes(new TruncatingInputStream(new InflaterInputStream(new ByteArrayInputStream(bytes, bytes.length - bytesLeft, bytesLeft))));
+                     } catch(java.util.zip.ZipException zex) {
+                         PngDirectory directory = new PngDirectory(PngChunkType.iTXt);
+                         directory.addError(String.format("Exception decompressing PNG iTXt chunk with keyword \"%s\": %s", keyword, zex.getMessage()));
+@@ -344,3 +383,4 @@ public class PngMetadataReader
+         }
+     }
+ }
++/* @generated */

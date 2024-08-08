@@ -635,9 +635,9 @@ public class ClusterSchedulerEngineTest {
 		MethodHandler methodHandler =
 			_mockClusterMasterExecutor.geMethodHandler();
 
-		_mockClusterMasterExecutor.reset(true, 0, 0);
-
 		Assert.assertNull(methodHandler);
+
+		_mockClusterMasterExecutor.reset(true, 0, 0);
 
 		_clusterSchedulerEngine.run(
 			companyId, _TEST_JOB_NAME_PREFIX, _PERSISTENT_TEST_GROUP_NAME,

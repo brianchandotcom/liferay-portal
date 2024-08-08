@@ -26,6 +26,20 @@ import java.util.regex.Pattern;
  */
 public class DBPartitionPostgreSQLDB implements DBPartitionDB {
 
+	public static String[] getRuleTableColumn(String ruleSQL) {
+		Matcher matcher = _rulePattern.matcher(ruleSQL);
+
+		if (!matcher.find()) {
+			return null;
+		}
+
+		String ruleName = matcher.group(1);
+
+		String[] parts = ruleName.split(StringPool.UNDERLINE, 3);
+
+		return new String[] {parts[1], parts[2]};
+	}
+
 	@Override
 	public String getCreatePartitionSQL(
 			Connection connection, String partitionName)
@@ -62,7 +76,7 @@ public class DBPartitionPostgreSQLDB implements DBPartitionDB {
 
 					String ruleName = resultSet.getString("rulename");
 
-					String[] ruleTableColumn = _getRuleTableColumn(
+					String[] ruleTableColumn = getRuleTableColumn(
 						ruleDefinition);
 
 					if (!StringUtil.equals(
@@ -143,20 +157,6 @@ public class DBPartitionPostgreSQLDB implements DBPartitionDB {
 		throws SQLException {
 
 		connection.setSchema(partitionName);
-	}
-
-	private String[] _getRuleTableColumn(String ruleSQL) {
-		Matcher matcher = _rulePattern.matcher(ruleSQL);
-
-		if (!matcher.find()) {
-			return null;
-		}
-
-		String ruleName = matcher.group(1);
-
-		String[] parts = ruleName.split(StringPool.UNDERLINE, 3);
-
-		return new String[] {parts[1], parts[2]};
 	}
 
 	private static final Pattern _rulePattern = Pattern.compile(

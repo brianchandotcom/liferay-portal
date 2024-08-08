@@ -10,6 +10,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.dao.db.PostgreSQLDB;
+import com.liferay.portal.db.partition.db.DBPartitionPostgreSQLDB;
 import com.liferay.portal.db.partition.util.DBPartitionUtil;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBType;
@@ -144,7 +145,8 @@ public class DBPartitionSQLProvider extends BaseSQLProvider {
 						createTableSQL, "create or replace rule")) {
 
 					_rulesTableColumn.add(
-						PostgreSQLDB.getRuleTableColumn(createTableSQL));
+						DBPartitionPostgreSQLDB.getRuleTableColumn(
+							createTableSQL));
 
 					continue;
 				}
@@ -177,7 +179,10 @@ public class DBPartitionSQLProvider extends BaseSQLProvider {
 		for (String[] ruleTableColumn : _rulesTableColumn) {
 			sb.append(
 				PostgreSQLDB.getCreateRulesSQL(
-					_dbPartitionName, ruleTableColumn[0], ruleTableColumn[1]));
+					StringBundler.concat(
+						_dbPartitionName, StringPool.PERIOD,
+						ruleTableColumn[0]),
+					ruleTableColumn[1]));
 		}
 
 		return sb.toString();

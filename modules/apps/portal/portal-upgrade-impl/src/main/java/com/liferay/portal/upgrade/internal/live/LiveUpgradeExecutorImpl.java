@@ -10,6 +10,7 @@ import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -34,9 +35,7 @@ public class LiveUpgradeExecutorImpl implements LiveUpgradeExecutor {
 			String tableName, LiveUpgradeProcess... liveUpgradeProcesses)
 		throws Exception {
 
-		if ((liveUpgradeProcesses == null) ||
-			(liveUpgradeProcesses.length == 0)) {
-
+		if (ArrayUtil.isEmpty(liveUpgradeProcesses)) {
 			throw new IllegalArgumentException(
 				"At least one live upgrade process is required");
 		}

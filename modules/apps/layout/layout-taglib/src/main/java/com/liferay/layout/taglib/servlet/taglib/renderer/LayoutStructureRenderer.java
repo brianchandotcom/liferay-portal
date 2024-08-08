@@ -42,6 +42,7 @@ import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.ColumnLayoutStructureItem;
 import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.DropZoneLayoutStructureItem;
+import com.liferay.layout.util.structure.FormStepContainerStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
@@ -853,6 +854,54 @@ public class LayoutStructureRenderer {
 		jspWriter.write("</div></div>");
 	}
 
+	private void _renderFormStepContainerStyledLayoutStructureItem(
+			InfoForm infoForm,
+			FormStepContainerStyledLayoutStructureItem
+				formStepContainerStyledLayoutStructureItem)
+		throws Exception {
+
+		JspWriter jspWriter = _pageContext.getOut();
+
+		jspWriter.write("<div class=\"");
+		jspWriter.write(
+			formStepContainerStyledLayoutStructureItem.getUniqueCssClass());
+		jspWriter.write(StringPool.SPACE);
+		jspWriter.write(
+			formStepContainerStyledLayoutStructureItem.getCssClass());
+		jspWriter.write(StringPool.SPACE);
+		jspWriter.write(
+			formStepContainerStyledLayoutStructureItem.getStyledCssClasses());
+		jspWriter.write("\" style=\"");
+
+		jspWriter.write(
+			_renderLayoutStructureDisplayContext.getStyle(
+				formStepContainerStyledLayoutStructureItem));
+		jspWriter.write("\">");
+
+		List<String> childrenItemIds =
+			formStepContainerStyledLayoutStructureItem.getChildrenItemIds();
+
+		for (int i = 0; i < childrenItemIds.size(); i++) {
+			jspWriter.write("<div");
+
+			if (i != 0) {
+				jspWriter.write(" class=\"d-none\"");
+			}
+
+			jspWriter.write(StringPool.GREATER_THAN);
+
+			LayoutStructureItem layoutStructureItem =
+				_layoutStructure.getLayoutStructureItem(childrenItemIds.get(i));
+
+			_renderLayoutStructure(
+				layoutStructureItem.getChildrenItemIds(), infoForm);
+
+			jspWriter.write("</div>");
+		}
+
+		jspWriter.write("</div>");
+	}
+
 	private void _renderFormStyledLayoutStructureItem(
 			InfoForm infoForm,
 			FormStyledLayoutStructureItem formStyledLayoutStructureItem)
@@ -1191,6 +1240,14 @@ public class LayoutStructureRenderer {
 
 				_renderDropZoneLayoutStructureItem(
 					infoForm, layoutStructureItem);
+			}
+			else if (layoutStructureItem instanceof
+						FormStepContainerStyledLayoutStructureItem) {
+
+				_renderFormStepContainerStyledLayoutStructureItem(
+					infoForm,
+					(FormStepContainerStyledLayoutStructureItem)
+						layoutStructureItem);
 			}
 			else if (layoutStructureItem instanceof
 						FormStyledLayoutStructureItem) {

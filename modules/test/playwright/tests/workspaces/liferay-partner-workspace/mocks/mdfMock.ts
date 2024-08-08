@@ -73,3 +73,8 @@ export const mdfRequestDataMock = {
 	totalCostOfExpense: 0,
 	totalMDFRequestAmount: 25000,
 };
+
+export const mdfClaimDataMock = {
+	companyName: 'Test Company ' + namespace,
+    submitDate: "2024-08-07T13:27:12.347Z",
+}

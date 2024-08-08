@@ -58,3 +58,9 @@ export type TMDFRequestDataFromRequest = TMDFRequest & {
 	minDateActivity: string;
 	overallCampaignName: string;
 };
+
+export type TMDFClaim = {	
+	id?: number;
+    companyName: string;
+    submitDate: string;
+};

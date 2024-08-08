@@ -6,7 +6,7 @@
 import {Page} from '@playwright/test';
 
 import {ApiHelpers} from '../../../../helpers/ApiHelpers';
-import {TMDFRequest} from '../types/mdf';
+import {TMDFClaim, TMDFRequest} from '../types/mdf';
 import {TRole} from '../types/role';
 
 export class PartnerHelper {
@@ -70,6 +70,28 @@ export class PartnerHelper {
 
 			throw error;
 		}
+	}
+
+	async createMDFCLaim(mdfClaim: TMDFClaim) {
+		try {
+			const mdfClaimData = await this.apiHelpers.post(
+				'/o/c/mdfclaims',
+				{
+					data: mdfClaim,
+				}
+			);
+
+			return mdfClaimData;
+		}
+		catch (error) {
+			console.error('Error when trying to create an MDF Claim', error);
+
+			throw error;
+		}
+	}
+
+	async deleteMDFClaim(mdfClaimId: number) {
+		await this.apiHelpers.delete(`/o/c/mdfclaims/${mdfClaimId}`);
 	}
 
 	async deleteMDFRequest(mdfRequestId: number) {

@@ -58,8 +58,7 @@ public class DLFileEntryTypeServiceImpl extends DLFileEntryTypeServiceBaseImpl {
 			fileEntryTypeKey, nameMap, descriptionMap, serviceContext);
 	}
 
-	@Override
-	public void deleteDLFileEntryType(
+	public void deleteFileEntryTypeByExternalReferenceCode(
 			String externalReferenceCode, long groupId)
 		throws PortalException {
 

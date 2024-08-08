@@ -87,14 +87,13 @@ public class SynonymSearchTest {
 
 		_user = UserTestUtil.getAdminUser(_companyId);
 
-		long userId = _user.getUserId();
-
-		PrincipalThreadLocal.setName(userId);
+		PrincipalThreadLocal.setName(_user.getUserId());
 
 		_group = GroupTestUtil.addGroup(
-			_companyId, userId, GroupConstants.DEFAULT_PARENT_GROUP_ID);
+			_companyId, _user.getUserId(),
+			GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
-		_setUpLocales(userId);
+		_setUpLocales();
 
 		_setUpSynonyms();
 
@@ -249,9 +248,10 @@ public class SynonymSearchTest {
 		}
 	}
 
-	private static void _setUpLocales(long userId) {
+	private static void _setUpLocales() {
 		PortalPreferences portalPreferences =
-			PortletPreferencesFactoryUtil.getPortalPreferences(userId, true);
+			PortletPreferencesFactoryUtil.getPortalPreferences(
+				_user.getUserId(), true);
 
 		_originalPortalPreferencesXML = PortletPreferencesFactoryUtil.toXML(
 			portalPreferences);

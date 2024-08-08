@@ -34,6 +34,7 @@ function AssetVocabulariesCategoriesSelector({
 	showVocabularyLabel = true,
 	singleSelect,
 	sourceItemsVocabularyIds = [],
+	useDataCategoriesAttribute,
 	useFallbackInput,
 }) {
 	const [inputValue, setInputValue] = useState('');
@@ -199,6 +200,13 @@ function AssetVocabulariesCategoriesSelector({
 					/>
 				)}
 
+				{useDataCategoriesAttribute && !!selectedItems.length && (
+					<div
+						data-categories={JSON.stringify(selectedItems)}
+						hidden
+					/>
+				)}
+
 				{label && (
 					<label
 						className={showVocabularyLabel ? '' : 'sr-only'}
@@ -304,6 +312,7 @@ AssetVocabulariesCategoriesSelector.propTypes = {
 	selectedItems: PropTypes.array,
 	singleSelect: PropTypes.bool,
 	sourceItemsVocabularyIds: PropTypes.array,
+	useDataCategoriesAttribute: PropTypes.bool,
 	useFallbackInput: PropTypes.bool,
 };
 

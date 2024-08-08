@@ -16,6 +16,7 @@ function AssetCategoriesSelector({
 	onVocabulariesChange,
 	portletURL,
 	showLabel,
+	useDataCategoriesAttribute,
 	useFallbackInput,
 	vocabularies = [],
 }) {
@@ -57,6 +58,7 @@ function AssetCategoriesSelector({
 						showLabel={showLabel}
 						singleSelect={vocabulary.singleSelect}
 						sourceItemsVocabularyIds={[vocabulary.id]}
+						useDataCategoriesAttribute={useDataCategoriesAttribute}
 						useFallbackInput={useFallbackInput}
 					/>
 				);
@@ -74,6 +76,7 @@ AssetCategoriesSelector.propTypes = {
 	onVocabulariesChange: PropTypes.func.isRequired,
 	portletURL: PropTypes.string.isRequired,
 	showLabel: PropTypes.bool,
+	useDataCategoriesAttribute: PropTypes.bool,
 	useFallbackInput: PropTypes.bool,
 };
 

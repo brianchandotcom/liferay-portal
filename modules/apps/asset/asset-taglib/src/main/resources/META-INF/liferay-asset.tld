@@ -118,6 +118,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>useDataCategoriesAttribute</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<description>Vocabulary visibility types (public or internal) to show. The default value is <![CDATA[<code>AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC</code>]]>.</description>
 			<name>visibilityTypes</name>
 			<required>false</required>

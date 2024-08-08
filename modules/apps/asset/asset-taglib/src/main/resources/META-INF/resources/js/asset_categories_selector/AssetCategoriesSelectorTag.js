@@ -19,6 +19,7 @@ function AssetCategoriesSelectorTag({
 	inputName,
 	portletURL,
 	showLabel,
+	useDataCategoriesAttribute,
 }) {
 	const [vocabularies, setVocabularies] = useState(initialVocabularies);
 
@@ -31,6 +32,7 @@ function AssetCategoriesSelectorTag({
 			onVocabulariesChange={setVocabularies}
 			portletURL={portletURL}
 			showLabel={showLabel}
+			useDataCategoriesAttribute={useDataCategoriesAttribute}
 			vocabularies={vocabularies}
 		/>
 	);
@@ -45,6 +47,7 @@ AssetCategoriesSelectorTag.propTypes = {
 	learnHowLink: PropTypes.object,
 	portletURL: PropTypes.string,
 	showLabel: PropTypes.bool,
+	useDataCategoriesAttribute: PropTypes.bool,
 };
 
 export default function (props) {

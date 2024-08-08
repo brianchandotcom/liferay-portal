@@ -108,6 +108,10 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 		return _singleSelect;
 	}
 
+	public boolean isUseDataCategoriesAttribute() {
+		return _useDataCategoriesAttribute;
+	}
+
 	public void setCategoryIds(String categoryIds) {
 		_categoryIds = categoryIds;
 	}
@@ -165,6 +169,12 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 		_singleSelect = singleSelect;
 	}
 
+	public void setUseDataCategoriesAttribute(
+		boolean useDataCategoriesAttribute) {
+
+		_useDataCategoriesAttribute = useDataCategoriesAttribute;
+	}
+
 	public void setVisibilityTypes(int[] visibilityTypes) {
 		_visibilityTypes = visibilityTypes;
 	}
@@ -186,6 +196,7 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 		_showOnlyRequiredVocabularies = false;
 		_showRequiredLabel = true;
 		_singleSelect = false;
+		_useDataCategoriesAttribute = false;
 		_visibilityTypes = _VISIBILITY_TYPES;
 	}
 
@@ -433,6 +444,8 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 				).put(
 					"showLabel", isShowLabel()
 				).put(
+					"useDataCategoriesAttribute", isUseDataCategoriesAttribute()
+				).put(
 					"vocabularies", getVocabularies()
 				).build());
 		}
@@ -541,6 +554,7 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 	private boolean _showOnlyRequiredVocabularies;
 	private boolean _showRequiredLabel = true;
 	private boolean _singleSelect;
+	private boolean _useDataCategoriesAttribute;
 	private int[] _visibilityTypes = _VISIBILITY_TYPES;
 
 }

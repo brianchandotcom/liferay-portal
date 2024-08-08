@@ -310,6 +310,7 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 			}
 
 			if (_isDisplayPageTemplateFile(entry) &&
+				_isRootFolder(entries, entry) &&
 				!_isValidDisplayPageLayoutPageTemplateEntry(
 					content, entry, groupId, layoutPageTemplateCollectionId)) {
 

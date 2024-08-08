@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchEngine;
 import com.liferay.portal.kernel.search.SearchEngineHelperUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.PortalPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -39,7 +38,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchResponse;
@@ -392,9 +390,6 @@ public class SynonymSearchTest {
 	private static Long _companyId;
 
 	@Inject
-	private static CompanyLocalService _companyLocalService;
-
-	@Inject
 	private static ConfigurationAdmin _configurationAdmin;
 
 	private static Group _group;
@@ -409,9 +404,6 @@ public class SynonymSearchTest {
 	private static String _originalPortalPreferencesXML;
 	private static ServiceContext _serviceContext;
 	private static User _user;
-
-	@Inject
-	private Queries _queries;
 
 	@Inject
 	private Searcher _searcher;

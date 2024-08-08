@@ -7,6 +7,7 @@ package com.liferay.portal.kernel.cluster;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.security.SecureRandomUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.io.Serializable;
 
@@ -33,9 +34,7 @@ public class ClusterRequest implements Serializable {
 	public static ClusterRequest createUnicastRequest(
 		Serializable payload, String... targetClusterNodeIds) {
 
-		if ((targetClusterNodeIds == null) ||
-			(targetClusterNodeIds.length == 0)) {
-
+		if (ArrayUtil.isEmpty(targetClusterNodeIds)) {
 			throw new NullPointerException("Target cluster node IDs is null");
 		}
 

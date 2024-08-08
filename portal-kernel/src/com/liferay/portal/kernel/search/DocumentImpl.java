@@ -1041,7 +1041,7 @@ public class DocumentImpl implements Document {
 	protected <T extends Number & Comparable<? super T>> void
 		createSortableNumericField(String name, boolean typify, T... values) {
 
-		if ((values == null) || (values.length == 0)) {
+		if (ArrayUtil.isEmpty(values)) {
 			return;
 		}
 

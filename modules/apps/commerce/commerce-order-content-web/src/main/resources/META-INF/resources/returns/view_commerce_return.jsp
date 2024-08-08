@@ -164,7 +164,7 @@ portletDisplay.setURLBack(String.valueOf(renderResponse.createRenderURL()));
 							creationMenu="<%= commerceReturnContentDisplayContext.getCommerceReturnItemCreationMenu() %>"
 							fdsActionDropdownItems="<%= commerceReturnContentDisplayContext.getCommerceReturnItemFDSActionDropdownItems() %>"
 							formName="fm"
-							id="<%= CommerceOrderFDSNames.RETURN_ITEMS %>"
+							id="<%= ((commerceReturn == null) || Objects.equals(commerceReturn.getReturnStatus(), CommerceReturnConstants.RETURN_STATUS_DRAFT)) ? CommerceOrderFDSNames.DRAFT_RETURN_ITEMS : CommerceOrderFDSNames.RETURN_ITEMS %>"
 							itemsPerPage="<%= 10 %>"
 							propsTransformer="{commerceReturnItemsPropsTransformer} from commerce-order-content-web"
 							style="stacked"

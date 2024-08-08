@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -566,7 +567,14 @@ public class BlogsEditEntryDisplayContext {
 			return new long[0];
 		}
 
-		_assetCategoryIds = assetEntry.getCategoryIds();
+		List<Long> assetCategoryIdsList = ListUtil.fromArray(
+			assetEntry.getCategoryIds());
+
+		assetCategoryIdsList.removeAll(
+			ListUtil.fromArray(_getCurrentFriendlyURLAssetCategoryIds()));
+
+		_assetCategoryIds = ArrayUtil.toArray(
+			assetCategoryIdsList.toArray(new Long[0]));
 
 		return _assetCategoryIds;
 	}

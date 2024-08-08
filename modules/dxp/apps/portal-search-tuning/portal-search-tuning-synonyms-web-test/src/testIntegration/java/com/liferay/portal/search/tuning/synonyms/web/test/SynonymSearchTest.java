@@ -370,18 +370,6 @@ public class SynonymSearchTest {
 			expectedCount);
 	}
 
-	private String _loadAdditionalIndexConfigurations() {
-		try {
-			return _getResourceAsString(
-				SynonymSearchTest.class,
-				"dependencies/" + SynonymSearchTest.class.getSimpleName() +
-					"-additionalIndexConfigurations.json");
-		}
-		catch (Exception exception) {
-			throw new RuntimeException(exception);
-		}
-	}
-
 	private static final Locale _ARABIC_LOCALE = new Locale("ar", "SA");
 
 	private static final Locale _CATALAN_LOCALE = new Locale("ca", "ES");

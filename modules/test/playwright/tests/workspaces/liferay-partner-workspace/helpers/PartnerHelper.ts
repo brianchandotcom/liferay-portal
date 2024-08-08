@@ -74,12 +74,9 @@ export class PartnerHelper {
 
 	async createMDFCLaim(mdfClaim: TMDFClaim) {
 		try {
-			const mdfClaimData = await this.apiHelpers.post(
-				'/o/c/mdfclaims',
-				{
-					data: mdfClaim,
-				}
-			);
+			const mdfClaimData = await this.apiHelpers.post('/o/c/mdfclaims', {
+				data: mdfClaim,
+			});
 
 			return mdfClaimData;
 		}

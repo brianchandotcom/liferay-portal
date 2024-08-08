@@ -67,14 +67,16 @@ export class MDFClaimListPage {
 			exact: true,
 			name: 'Filter',
 		});
-		this.heading = this.page.getByText('MDF Claim', { exact: true }); 
-		this.mdfClaimHeading = this.page.getByText('MDF Claim', { exact: true });
+		this.heading = this.page.getByText('MDF Claim', {exact: true});
+		this.mdfClaimHeading = this.page.getByText('MDF Claim', {exact: true});
 		this.noEntriesFoundMessage = this.page.getByText(
 			'Info:No entries were found'
 		);
 		this.openTab = this.page.getByRole('tab', {exact: true, name: 'Open'});
 		this.searchInput = this.page.getByPlaceholder('Search');
-		this.showMoreButton = this.page.getByRole('list').getByText('Show more');
+		this.showMoreButton = this.page
+			.getByRole('list')
+			.getByText('Show more');
 	}
 
 	async clearAllFilters() {

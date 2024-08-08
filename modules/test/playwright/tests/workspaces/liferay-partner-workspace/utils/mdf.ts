@@ -5,7 +5,11 @@
 
 import moment from 'moment';
 
-import {mdfClaimDataMock, mdfRequestDataMock, mdfRequestMock} from '../mocks/mdfMock';
+import {
+	mdfClaimDataMock,
+	mdfRequestDataMock,
+	mdfRequestMock,
+} from '../mocks/mdfMock';
 import {TAccount} from '../types/account';
 import {TMDFClaim, TMDFRequest, TMDFRequestDataFromRequest} from '../types/mdf';
 
@@ -43,11 +47,9 @@ export function generatedDataFromRequest(
 	return mdfRequestData;
 }
 
-export function generatedDataFromClaim(
-	parnterAccount: TAccount
-): TMDFClaim {
+export function generatedDataFromClaim(parnterAccount: TAccount): TMDFClaim {
 	const mdfClaimData = mdfClaimDataMock;
-	mdfClaimData.companyName = parnterAccount.name
+	mdfClaimData.companyName = parnterAccount.name;
 	mdfClaimData.submitDate = new Date().toISOString();
 
 	return mdfClaimData;

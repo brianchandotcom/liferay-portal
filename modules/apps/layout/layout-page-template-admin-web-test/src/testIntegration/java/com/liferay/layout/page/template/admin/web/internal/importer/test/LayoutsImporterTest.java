@@ -141,7 +141,7 @@ public class LayoutsImporterTest {
 		Assert.assertNotNull(layoutsImporterResultEntries);
 
 		Assert.assertEquals(
-			layoutsImporterResultEntries.toString(), 2,
+			layoutsImporterResultEntries.toString(), 3,
 			layoutsImporterResultEntries.size());
 
 		for (LayoutsImporterResultEntry layoutsImporterResultEntry :
@@ -759,6 +759,7 @@ public class LayoutsImporterTest {
 		Assert.assertTrue(
 			layoutPageTemplateEntryKey.equals(
 				"basic-web-content-display-page-template") ||
+			layoutPageTemplateEntryKey.equals("blogs-display-page-template") ||
 			layoutPageTemplateEntryKey.equals("product-display-page-template"));
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
@@ -784,7 +785,10 @@ public class LayoutsImporterTest {
 				classNameId, ddmStructure.getStructureId(),
 				layoutPageTemplateEntry, "JournalArticle_title");
 		}
-		else {
+		else if (Objects.equals(
+					layoutPageTemplateEntryKey,
+					"product-display-page-template")) {
+
 			_assertLayoutPageTemplateEntry(
 				_portal.getClassNameId(
 					"com.liferay.commerce.product.model.CPDefinition"),

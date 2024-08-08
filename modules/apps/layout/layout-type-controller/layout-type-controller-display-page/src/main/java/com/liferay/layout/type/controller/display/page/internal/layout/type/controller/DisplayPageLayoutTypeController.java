@@ -70,9 +70,15 @@ public class DisplayPageLayoutTypeController
 			return null;
 		}
 
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
 		String friendlyURL = _portal.getCurrentURL(httpServletRequest);
 
-		if (friendlyURL.startsWith(Portal.PATH_MAIN)) {
+		if (!Validator.isBlank(themeDisplay.getPathMain()) &&
+			friendlyURL.startsWith(themeDisplay.getPathMain())) {
+
 			return null;
 		}
 

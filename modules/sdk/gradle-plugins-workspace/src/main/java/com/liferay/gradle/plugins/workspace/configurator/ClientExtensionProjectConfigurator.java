@@ -101,6 +101,14 @@ public class ClientExtensionProjectConfigurator
 	public static final String BUILD_SITE_INITIALIZER_ZIP_TASK_NAME =
 		"buildSiteInitializerZip";
 
+	/**
+	 * @deprecated As of 10.2.0, replaced by {@link
+	 *             #getClientExtensionBuildDir(Project)}}
+	 */
+	@Deprecated
+	public static final String CLIENT_EXTENSION_BUILD_DIR =
+		"liferay-client-extension-build";
+
 	public static final String CREATE_CLIENT_EXTENSION_CONFIG_TASK_NAME =
 		"createClientExtensionConfig";
 

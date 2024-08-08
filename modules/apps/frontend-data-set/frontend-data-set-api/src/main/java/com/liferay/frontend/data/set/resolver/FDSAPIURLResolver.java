@@ -12,9 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Gianmarco Brunialti Masera
  */
-public interface FDSRestApplicationURLParameterResolver {
+public interface FDSAPIURLResolver {
 
-	public String getResolvedParametersSchema();
+	public String getSchema();
 
 	public String resolve(String baseURL, HttpServletRequest httpServletRequest)
 		throws PortalException;

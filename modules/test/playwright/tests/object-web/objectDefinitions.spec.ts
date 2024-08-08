@@ -574,9 +574,7 @@ test.describe('Manage object definitions through a Page', () => {
 
 		await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
-		await pageEditorPage.selectFragment(headingDefinition.id);
-
-		await page.getByLabel('Select element-text').click();
+		await page.getByText('Heading Example', {exact: true}).dblclick();
 
 		await page.getByLabel('Select Item').click();
 

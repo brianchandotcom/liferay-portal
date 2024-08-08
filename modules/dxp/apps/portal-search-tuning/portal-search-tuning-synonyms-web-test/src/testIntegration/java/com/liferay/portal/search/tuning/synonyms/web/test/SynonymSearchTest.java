@@ -114,19 +114,19 @@ public class SynonymSearchTest {
 	public void testSearchOnLocalesWithDefaultSynonymFilters()
 		throws Exception {
 
-		_assertSearch("carro", Field.TITLE, LocaleUtil.PORTUGAL, 2);
-		_assertSearch("contento", Field.TITLE, LocaleUtil.ITALY, 2);
-		_assertSearch("dxp", Field.TITLE, LocaleUtil.US, 2);
-		_assertSearch("efectivo", Field.TITLE, LocaleUtil.SPAIN, 2);
-		_assertSearch("effectief", Field.TITLE, LocaleUtil.NETHERLANDS, 2);
-		_assertSearch("feliz", Field.TITLE, LocaleUtil.BRAZIL, 2);
-		_assertSearch("feliç", Field.TITLE, _CATALAN_LOCALE, 2);
-		_assertSearch("glücklich", Field.TITLE, LocaleUtil.GERMANY, 2);
-		_assertSearch("hatékony", Field.TITLE, LocaleUtil.HUNGARY, 2);
-		_assertSearch("lycklig", Field.TITLE, _SWEDISH_LOCALE, 2);
-		_assertSearch("maison", Field.TITLE, LocaleUtil.FRANCE, 2);
-		_assertSearch("tehokas", Field.TITLE, _FINNISH_LOCALE, 2);
-		_assertSearch("فعال", Field.TITLE, _ARABIC_LOCALE, 2);
+		_assertSearch("carro", LocaleUtil.PORTUGAL);
+		_assertSearch("contento", LocaleUtil.ITALY);
+		_assertSearch("dxp", LocaleUtil.US);
+		_assertSearch("efectivo", LocaleUtil.SPAIN);
+		_assertSearch("effectief", LocaleUtil.NETHERLANDS);
+		_assertSearch("feliz", LocaleUtil.BRAZIL);
+		_assertSearch("feliç", _CATALAN_LOCALE);
+		_assertSearch("glücklich", LocaleUtil.GERMANY);
+		_assertSearch("hatékony", LocaleUtil.HUNGARY);
+		_assertSearch("lycklig", _SWEDISH_LOCALE);
+		_assertSearch("maison", LocaleUtil.FRANCE);
+		_assertSearch("tehokas", _FINNISH_LOCALE);
+		_assertSearch("فعال", _ARABIC_LOCALE);
 	}
 
 	private static void _addJournalArticle(Map<Locale, String> localeStringMap)
@@ -328,10 +328,8 @@ public class SynonymSearchTest {
 		).build();
 	}
 
-	private void _assertSearch(
-		String keyword, String fieldName, Locale locale, int expectedCount) {
-
-		String localizedFieldName = Field.getLocalizedName(locale, fieldName);
+	private void _assertSearch(String keyword, Locale locale) {
+		String localizedFieldName = Field.getLocalizedName(locale, Field.TITLE);
 
 		SearchRequestBuilder searchRequestBuilder =
 			_searchRequestBuilderFactory.builder(
@@ -352,8 +350,7 @@ public class SynonymSearchTest {
 
 		DocumentsAssert.assertCount(
 			searchResponse.getRequestString(),
-			documents.toArray(new Document[0]), localizedFieldName,
-			expectedCount);
+			documents.toArray(new Document[0]), localizedFieldName, 2);
 	}
 
 	private static final Locale _ARABIC_LOCALE = new Locale("ar", "SA");

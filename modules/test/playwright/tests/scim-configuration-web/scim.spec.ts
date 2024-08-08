@@ -20,7 +20,8 @@ export const test = mergeTests(
 );
 
 const RESET_SCIM_HELP_TEXT =
-	'All SCIM Client related data and generated OAuth 2 tokens will be removed. This is necessary to configure a new SCIM Client.';
+	'All SCIM Client related data and generated OAuth 2 tokens will be ' +
+	'removed. This is necessary to configure a new SCIM Client.';
 
 test('smoke: test SCIM configuration options', async ({page}) => {
 	const scimConfigurationPage = new SCIMConfigurationPage(page);
@@ -159,7 +160,7 @@ test('LPD-23255 AC3 TC5: Verify that clicking the “Reset SCIM Client provision
 
 	await scimConfigurationPage.configureSCIM('email', 'Test SCIM Client');
 
-	const randInt = getRandomInt();
+	const randomNumber = getRandomInt();
 
 	const newUser = {
 		active: true,
@@ -167,28 +168,28 @@ test('LPD-23255 AC3 TC5: Verify that clicking the “Reset SCIM Client provision
 			{
 				primary: true,
 				type: 'default',
-				value: `able${randInt}@liferay.com`,
+				value: `able${randomNumber}@liferay.com`,
 			},
 		],
 		name: {
-			familyName: `Baker ${randInt}`,
-			givenName: `Able ${randInt}`,
+			familyName: `Baker ${randomNumber}`,
+			givenName: `Able ${randomNumber}`,
 		},
-		userName: `able${randInt}.baker`,
+		userName: `able${randomNumber}.baker`,
 	};
 
 	await apiHelper.scim.postUser(newUser);
 
 	const response = await (await apiHelper.scim.getUsers()).text();
 
-	expect(response).toContain(`"totalResults":1`);
+	expect(response).toContain('"totalResults":1');
 
 	await scimConfigurationPage.resetClientData();
 	await page.waitForTimeout(1000);
 
 	const emptyResponse = await (await apiHelper.scim.getUsers()).text();
 
-	expect(emptyResponse).toContain(`"totalResults":0`);
+	expect(emptyResponse).toContain('"totalResults":0');
 });
 
 test('LPD-23255 AC3 TC6: Verify that clicking the “Reset SCIM Client provisioning data“ button unbinds user groups.', async ({
@@ -204,24 +205,24 @@ test('LPD-23255 AC3 TC6: Verify that clicking the “Reset SCIM Client provision
 
 	await scimConfigurationPage.configureSCIM('email', 'Test SCIM Client');
 
-	const randInt = getRandomInt();
+	const randomNumber = getRandomInt();
 
 	const newGroup = {
-		displayName: `Foo${randInt}`,
+		displayName: `Foo${randomNumber}`,
 	};
 
 	await apiHelper.scim.postGroup(newGroup);
 
 	const response = await (await apiHelper.scim.getGroups()).text();
 
-	expect(response).toContain(`"totalResults":1`);
+	expect(response).toContain('"totalResults":1');
 
 	await scimConfigurationPage.resetClientData();
 	await page.waitForTimeout(1000);
 
 	const emptyResponse = await (await apiHelper.scim.getGroups()).text();
 
-	expect(emptyResponse).toContain(`"totalResults":0`);
+	expect(emptyResponse).toContain('"totalResults":0');
 });
 
 test('LPD-23255 AC4 TC7: Verify that Name field is disabled when SCIM is configured', async ({

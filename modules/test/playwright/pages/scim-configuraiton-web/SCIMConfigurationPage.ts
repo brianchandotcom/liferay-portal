@@ -39,6 +39,8 @@ export class SCIMConfigurationPage {
 	}
 
 	async configureSCIM(matcherField: string, oAuth2ApplicationName: string) {
+		await this.resetClientData(false);
+
 		await this.oAuth2ApplicationNameField.fill(oAuth2ApplicationName);
 
 		await this.matcherField.selectOption({label: matcherField});
@@ -56,14 +58,16 @@ export class SCIMConfigurationPage {
 		await this.instanceSettingsPage.goToInstanceSetting('SCIM', 'SCIM');
 	}
 
-	async resetClientData() {
+	async resetClientData(assertVisible = true) {
 		const resetButton = this.page.getByLabel(
 			'Reset SCIM Client Provisioning Data'
 		);
 
-		await expect(resetButton).toBeVisible();
+		if (assertVisible || await resetButton.isVisible()) {
+			await expect(resetButton).toBeVisible();
 
-		await resetButton.click();
+			await resetButton.click();
+		}
 	}
 
 	async revokeToken() {

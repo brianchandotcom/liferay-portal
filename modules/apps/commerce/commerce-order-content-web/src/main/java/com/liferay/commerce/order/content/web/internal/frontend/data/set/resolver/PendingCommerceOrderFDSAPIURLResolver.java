@@ -12,7 +12,7 @@ import com.liferay.commerce.frontend.constants.CommerceFDSRestApplicationConstan
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
-import com.liferay.frontend.data.set.resolver.FDSRestApplicationURLParameterResolver;
+import com.liferay.frontend.data.set.resolver.FDSAPIURLResolver;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,13 +25,13 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "fds.rest.application.key=" + CommerceFDSRestApplicationConstants.DELIVERY_CART_V1 + "/Cart",
-	service = FDSRestApplicationURLParameterResolver.class
+	service = FDSAPIURLResolver.class
 )
-public class PendingCommerceOrderRestApplicationURLParameterResolver
-	implements FDSRestApplicationURLParameterResolver {
+public class PendingCommerceOrderFDSAPIURLResolver
+	implements FDSAPIURLResolver {
 
 	@Override
-	public String getResolvedParametersSchema() {
+	public String getSchema() {
 		return "Cart";
 	}
 
@@ -57,7 +57,7 @@ public class PendingCommerceOrderRestApplicationURLParameterResolver
 		).replaceAll(
 			"\\{cartId\\}", String.valueOf(commerceOrder.getCommerceOrderId())
 		).replaceAll(
-			"\\{channelExternalReferenceCode}",
+			"\\{channelExternalReferenceCode\\}",
 			String.valueOf(commerceChannel.getExternalReferenceCode())
 		).replaceAll(
 			"\\{channelId\\}",

@@ -5,8 +5,8 @@
 
 package com.liferay.frontend.data.set.internal.resolver;
 
-import com.liferay.frontend.data.set.resolver.FDSRestApplicationURLParameterResolver;
-import com.liferay.frontend.data.set.resolver.FDSRestApplicationURLParameterResolverRegistry;
+import com.liferay.frontend.data.set.resolver.FDSAPIURLResolver;
+import com.liferay.frontend.data.set.resolver.FDSAPIURLResolverRegistry;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory.ServiceWrapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
@@ -28,19 +28,19 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Gianmarco Brunialti Masera
  */
-@Component(service = FDSRestApplicationURLParameterResolverRegistry.class)
-public class FDSRestApplicationURLParameterResolverRegistryImpl
-	implements FDSRestApplicationURLParameterResolverRegistry {
+@Component(service = FDSAPIURLResolverRegistry.class)
+public class FDSAPIURLResolverRegistryImpl
+	implements FDSAPIURLResolverRegistry {
 
 	@Override
-	public FDSRestApplicationURLParameterResolver getResolver(
+	public FDSAPIURLResolver getResolver(
 		String restApplication, String restSchema) {
 
 		String resolverKey = StringBundler.concat(
 			restApplication, "/", restSchema);
 
-		ServiceWrapper<FDSRestApplicationURLParameterResolver>
-			resolverServiceWrapper = _serviceTrackerMap.getService(resolverKey);
+		ServiceWrapper<FDSAPIURLResolver> resolverServiceWrapper =
+			_serviceTrackerMap.getService(resolverKey);
 
 		if (resolverServiceWrapper == null) {
 			if (_log.isDebugEnabled()) {
@@ -55,16 +55,14 @@ public class FDSRestApplicationURLParameterResolverRegistryImpl
 	}
 
 	@Override
-	public List<FDSRestApplicationURLParameterResolver> getResolvers() {
-		List<FDSRestApplicationURLParameterResolver> resolvers =
-			new ArrayList<>();
+	public List<FDSAPIURLResolver> getResolvers() {
+		List<FDSAPIURLResolver> resolvers = new ArrayList<>();
 
-		List<ServiceWrapper<FDSRestApplicationURLParameterResolver>>
-			resolversServiceWrappers = ListUtil.fromCollection(
-				_serviceTrackerMap.values());
+		List<ServiceWrapper<FDSAPIURLResolver>> resolversServiceWrappers =
+			ListUtil.fromCollection(_serviceTrackerMap.values());
 
-		for (ServiceWrapper<FDSRestApplicationURLParameterResolver>
-				resolverServiceWrapper : resolversServiceWrappers) {
+		for (ServiceWrapper<FDSAPIURLResolver> resolverServiceWrapper :
+				resolversServiceWrappers) {
 
 			resolvers.add(resolverServiceWrapper.getService());
 		}
@@ -75,11 +73,9 @@ public class FDSRestApplicationURLParameterResolverRegistryImpl
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, FDSRestApplicationURLParameterResolver.class,
-			"fds.rest.application.key",
-			ServiceTrackerCustomizerFactory.
-				<FDSRestApplicationURLParameterResolver>serviceWrapper(
-					bundleContext));
+			bundleContext, FDSAPIURLResolver.class, "fds.rest.application.key",
+			ServiceTrackerCustomizerFactory.<FDSAPIURLResolver>serviceWrapper(
+				bundleContext));
 	}
 
 	@Deactivate
@@ -88,10 +84,9 @@ public class FDSRestApplicationURLParameterResolverRegistryImpl
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		FDSRestApplicationURLParameterResolverRegistryImpl.class);
+		FDSAPIURLResolverRegistryImpl.class);
 
-	private ServiceTrackerMap
-		<String, ServiceWrapper<FDSRestApplicationURLParameterResolver>>
-			_serviceTrackerMap;
+	private ServiceTrackerMap<String, ServiceWrapper<FDSAPIURLResolver>>
+		_serviceTrackerMap;
 
 }

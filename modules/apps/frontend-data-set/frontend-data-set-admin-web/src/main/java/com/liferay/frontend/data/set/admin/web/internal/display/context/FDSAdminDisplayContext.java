@@ -9,8 +9,8 @@ import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.frontend.data.set.admin.web.internal.constants.FDSAdminPortletKeys;
 import com.liferay.frontend.data.set.admin.web.internal.portlet.FDSAdminPortlet;
-import com.liferay.frontend.data.set.resolver.FDSRestApplicationURLParameterResolver;
-import com.liferay.frontend.data.set.resolver.FDSRestApplicationURLParameterResolverRegistry;
+import com.liferay.frontend.data.set.resolver.FDSAPIURLResolver;
+import com.liferay.frontend.data.set.resolver.FDSAPIURLResolverRegistry;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
@@ -44,16 +44,16 @@ public class FDSAdminDisplayContext {
 
 	public FDSAdminDisplayContext(
 		CETManager cetManager,
-		FDSRestApplicationURLParameterResolverRegistry
-			fdsRestApplicationURLParameterResolverRegistry,
+		FDSAPIURLResolverRegistry
+			fdsAPIURLResolverRegistry,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		RenderRequest renderRequest, RenderResponse renderResponse,
 		ServiceTrackerList<FDSAdminPortlet.CompanyScopedOpenAPIResource>
 			serviceTrackerList) {
 
 		_cetManager = cetManager;
-		_fdsRestApplicationURLParameterResolverRegistry =
-			fdsRestApplicationURLParameterResolverRegistry;
+		_fdsAPIURLResolverRegistry =
+			fdsAPIURLResolverRegistry;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_serviceTrackerList = serviceTrackerList;
@@ -207,11 +207,11 @@ public class FDSAdminDisplayContext {
 	public JSONArray getRESTApplicationResolvedSchemasJSONArray() {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		List<FDSRestApplicationURLParameterResolver> resolvers =
-			_fdsRestApplicationURLParameterResolverRegistry.getResolvers();
+		List<FDSAPIURLResolver> resolvers =
+			_fdsAPIURLResolverRegistry.getResolvers();
 
-		for (FDSRestApplicationURLParameterResolver resolver : resolvers) {
-			jsonArray.put(resolver.getResolvedParametersSchema());
+		for (FDSAPIURLResolver resolver : resolvers) {
+			jsonArray.put(resolver.getSchema());
 		}
 
 		return jsonArray;
@@ -275,8 +275,8 @@ public class FDSAdminDisplayContext {
 
 	private final CETManager _cetManager;
 	private final ObjectDefinition _fdsEntryObjectDefinition;
-	private final FDSRestApplicationURLParameterResolverRegistry
-		_fdsRestApplicationURLParameterResolverRegistry;
+	private final FDSAPIURLResolverRegistry
+		_fdsAPIURLResolverRegistry;
 	private final ObjectDefinition _fdsViewObjectDefinition;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;

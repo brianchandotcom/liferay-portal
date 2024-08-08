@@ -116,6 +116,18 @@
 				"tokenizer": "standard",
 				"type": "custom"
 			},
+			"liferay_analyzer_ja": {
+				"filter": [
+					"kuromoji_baseform",
+					"kuromoji_part_of_speech",
+					"cjk_width",
+					"lowercase",
+					"ja_stop",
+					"liferay_filter_synonym_ja",
+					"kuromoji_stemmer"
+				],
+				"tokenizer": "kuromoji_tokenizer"
+			},
 			"liferay_analyzer_nl": {
 				"filter": [
 					"lowercase",
@@ -389,6 +401,12 @@
 				"type": "synonym_graph"
 			},
 			"liferay_filter_synonym_it": {
+				"lenient": true,
+				"synonyms": [
+				],
+				"type": "synonym_graph"
+			},
+			"liferay_filter_synonym_ja": {
 				"lenient": true,
 				"synonyms": [
 				],

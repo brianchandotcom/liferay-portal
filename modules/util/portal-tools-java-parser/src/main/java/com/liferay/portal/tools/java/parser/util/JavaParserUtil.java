@@ -202,9 +202,9 @@ public class JavaParserUtil {
 	}
 
 	private static int _getArrayDimension(DetailAST detailAST) {
-		DetailAST childDetailAST = detailAST.getFirstChild();
-
 		int arrayDimension = 0;
+
+		DetailAST childDetailAST = detailAST.getFirstChild();
 
 		while (childDetailAST.getType() == TokenTypes.ARRAY_DECLARATOR) {
 			arrayDimension++;

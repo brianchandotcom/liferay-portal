@@ -3,11 +3,15 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Page} from '@playwright/test';
+import {Page, expect} from '@playwright/test';
 
-export async function clickOnReviewButton(page: Page) {
+export async function checkEmptyStateOnACSide(page: Page) {
+	await expect(page.getByText('There are no tests found.')).toBeVisible();
+}
+
+export async function clickOnActionButton({name, page}: {name: string, page: Page}) {
 	const reviewTagA = await page.locator(
-		'xpath=//a[contains(text(),"Review")]'
+		`xpath=//a[contains(text(),"${name}")]`
 	);
 
 	await page.goto(await reviewTagA.getAttribute('href'));

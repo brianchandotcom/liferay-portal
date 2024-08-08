@@ -5,16 +5,14 @@
 
 import {Page, expect} from '@playwright/test';
 
-export async function openABTesSidebar(page: Page) {
-	const sidebar = await page.locator('#segmentsExperimentSidebar');
+export async function checkEmptyStateOnDXPSide(page: Page) {
+	await expect(page.getByText('Create Test')).toBeVisible();
+}
 
-	if (!(await sidebar.isVisible())) {
-		await page
-			.locator('button[data-qa-id=segmentsExperimentPanel]')
-			.click();
-	}
+export async function clickOnDeleteABTestModalButton(page: Page) {
+	const modalFooter = await page.locator('.modal-footer');
 
-	await expect(page.locator('#segmentsExperimentSidebar')).toBeVisible();
+	await modalFooter.getByText('Delete').click();
 }
 
 export async function createABTest({name, page}: {name: string; page: Page}) {
@@ -45,4 +43,16 @@ export async function createVariant({name, page}: {name: string; page: Page}) {
 	await variantModal.getByText('Save').click();
 
 	await expect(page.locator(`[data-title="${name}"]`)).toBeVisible();
+}
+
+export async function openABTesSidebar(page: Page) {
+	const sidebar = await page.locator('#segmentsExperimentSidebar');
+
+	if (!(await sidebar.isVisible())) {
+		await page
+			.locator('button[data-qa-id=segmentsExperimentPanel]')
+			.click();
+	}
+
+	await expect(page.locator('#segmentsExperimentSidebar')).toBeVisible();
 }

@@ -13,11 +13,13 @@ import {loginTest} from '../../fixtures/loginTest';
 import getRandomString from '../../utils/getRandomString';
 import {syncAnalyticsCloud} from '../analytics-settings-web/utils/analyticsSettings';
 import {
+	checkEmptyStateOnDXPSide,
+	clickOnDeleteABTestModalButton,
 	createABTest,
 	createVariant,
 	openABTesSidebar,
 } from '../segment-experiment-web/utils/ab-test';
-import {clickOnReviewButton} from './utils/ab-test';
+import {checkEmptyStateOnACSide, clickOnActionButton} from './utils/ab-test';
 import {ACPage, navigateTo, navigateToACPageViaURL} from './utils/navigation';
 import {
 	createSitePage,
@@ -103,7 +105,7 @@ test(
 				pageName: abTestName,
 			});
 
-			await clickOnReviewButton(page);
+			await clickOnActionButton({name: 'Review', page});
 		});
 
 		await test.step('Check Review and Run Test modal is being displayed', async () => {
@@ -113,6 +115,103 @@ test(
 
 			await expect(modalHeader).toBeVisible();
 		});
+
+		await test.step('Delete the property that was used during automation execution', async () => {
+			await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
+				`[${channel.id}]`,
+				project.groupId
+			);
+		});
+
+		await test.step('delete site on DXP side', async () => {
+			await navigateToDXPandDeleteSite({apiHelpers, page, site});
+		});
+	}
+);
+
+test(
+	'Draft AB test delete button redirects to DXP',
+	{
+		tag: '@LRAC-14220',
+	},
+	async ({apiHelpers, page}) => {
+		const siteName = getRandomString();
+
+		const site = await apiHelpers.headlessSite.createSite({
+			name: siteName,
+		});
+
+		const pageTitle = 'MyPage-' + getRandomString();
+
+		await createSitePage({
+			apiHelpers,
+			pageTitle,
+			siteName,
+		});
+
+		const channelName = 'My Property - ' + getRandomString();
+
+		const {channel, project} = await syncAnalyticsCloud({
+			apiHelpers,
+			channelName,
+			page,
+			siteName,
+		});
+
+		await test.step('Go to site page', async () => {
+			await navigateToSitePage({
+				page,
+				pageName: pageTitle,
+				siteName,
+			});
+
+			await page.waitForSelector('.segments-experiment-icon');
+		});
+
+		const abTestName = 'AB Test -' + getRandomString();
+
+		await test.step('Create a new AB Test with a variant', async () => {
+			await openABTesSidebar(page);
+
+			await createABTest({
+				name: abTestName,
+				page,
+			});
+
+			await createVariant({
+				name: 'Variant -' + getRandomString(),
+				page,
+			});
+		});
+
+		await test.step('Go to AC test page and click on Delete button', async () => {
+			await navigateToACPageViaURL({
+				acPage: ACPage.testPage,
+				channelID: channel.id,
+				page,
+				projectID: project.groupId,
+			});
+
+			await navigateTo({
+				page,
+				pageName: abTestName,
+			});
+
+			await clickOnActionButton({name: 'Delete', page});
+		});
+
+		await clickOnDeleteABTestModalButton(page);
+
+		await checkEmptyStateOnDXPSide(page);
+
+		await navigateToACPageViaURL({
+			acPage: ACPage.testPage,
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		await checkEmptyStateOnACSide(page);
 
 		await test.step('Delete the property that was used during automation execution', async () => {
 			await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(

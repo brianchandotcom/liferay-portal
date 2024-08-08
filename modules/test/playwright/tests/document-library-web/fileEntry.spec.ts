@@ -302,16 +302,17 @@ testSearchInDlPortlet(
 
 		await page.goto('/web' + site.friendlyUrlPath);
 
-		const dlPortlet = page.locator('.portlet-document-library');
-
-		await dlPortlet.getByPlaceholder('Search for').first().fill(title);
-		await dlPortlet.getByPlaceholder('Search for').first().press('Enter');
+		await documentLibraryPage.searchFor(title);
 
 		await clickAndExpectToBeVisible({
 			autoClick: true,
 			target: page.getByRole('menuitem', {name: 'Cards'}),
 			trigger: page.getByLabel('Select View, Currently Selected: '),
 		});
-		await expect(dlPortlet.getByRole('link', {name: title})).toBeVisible();
+		await expect(
+			page
+				.locator('.portlet-document-library')
+				.getByRole('link', {name: title})
+		).toBeVisible();
 	}
 );

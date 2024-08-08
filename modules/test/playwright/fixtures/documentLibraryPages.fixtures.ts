@@ -5,6 +5,7 @@
 
 import {test} from '@playwright/test';
 
+import {AttachmentsPage} from '../pages/commerce/commerce-product-definitions-web/attachmentsPage';
 import {DocumentLibraryEditDocumentTypesPage} from '../pages/document-library-web/DocumentLibraryEditDocumentTypesPage';
 import {DocumentLibraryEditFilePage} from '../pages/document-library-web/DocumentLibraryEditFilePage';
 import {DocumentLibraryEditFolderPage} from '../pages/document-library-web/DocumentLibraryEditFolderPage';
@@ -14,6 +15,7 @@ import {GogoShellPage} from '../pages/product-navigation-applications-menu/GogoS
 
 const documentLibraryPagesTest = test.extend<{
 	aiCreatorInstanceSettingsPage: AICreatorInstanceSettingsPage;
+	attachmentsPage: AttachmentsPage;
 	documentLibraryEditDocumentTypesPage: DocumentLibraryEditDocumentTypesPage;
 	documentLibraryEditFilePage: DocumentLibraryEditFilePage;
 	documentLibraryEditFolderPage: DocumentLibraryEditFolderPage;
@@ -22,6 +24,9 @@ const documentLibraryPagesTest = test.extend<{
 }>({
 	aiCreatorInstanceSettingsPage: async ({page}, use) => {
 		await use(new AICreatorInstanceSettingsPage(page));
+	},
+	attachmentsPage: async ({page}, use) => {
+		await use(new AttachmentsPage(page));
 	},
 	documentLibraryEditDocumentTypesPage: async ({page}, use) => {
 		await use(new DocumentLibraryEditDocumentTypesPage(page));

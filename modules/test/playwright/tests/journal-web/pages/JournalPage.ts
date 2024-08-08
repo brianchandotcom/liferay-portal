@@ -17,6 +17,7 @@ export class JournalPage {
 	readonly newButton: Locator;
 	readonly permissionsFrameLocator: FrameLocator;
 	readonly publishButton: Locator;
+	readonly tagFrameLocator: FrameLocator;
 	readonly templatesLink: Locator;
 	readonly articleTitleInput: Locator;
 	readonly articleContentTextBox: Locator;
@@ -33,6 +34,7 @@ export class JournalPage {
 		this.permissionsFrameLocator = page.frameLocator(
 			'iframe[title="Permissions"]'
 		);
+		this.tagFrameLocator = page.frameLocator('iframe[title="Tags"]');
 		this.templatesLink = page.getByRole('link', {name: 'Templates'});
 		this.publishButton = page.getByRole('button', {name: 'Publish'});
 		this.articleTitleInput = page.locator(
@@ -197,5 +199,33 @@ export class JournalPage {
 		await this.page.getByLabel('Viewable by').waitFor();
 
 		await this.page.getByLabel('Viewable by').selectOption(value);
+	}
+
+	async selectTag(tagName: string) {
+		await this.page.getByRole('button', {name: 'Select Tags'}).click();
+
+		const tagCheckbox = this.tagFrameLocator
+			.locator(`tr:has-text('${tagName}')`)
+			.getByRole('checkbox');
+
+		if (await tagCheckbox.isHidden()) {
+			const tagSearchBar = this.tagFrameLocator
+				.getByPlaceholder('Search for')
+				.first();
+
+			await tagSearchBar.fill(tagName);
+			await tagSearchBar.press('Enter');
+
+			await expect(tagCheckbox).toBeVisible();
+		}
+
+		await tagCheckbox.check();
+
+		await this.page
+			.locator('.modal-footer')
+			.getByRole('button', {name: 'Done'})
+			.click();
+
+		await expect(tagCheckbox).toBeHidden();
 	}
 }

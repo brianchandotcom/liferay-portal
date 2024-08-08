@@ -5,6 +5,8 @@
 
 package com.liferay.jethr0.util;
 
+import com.liferay.portal.kernel.util.ArrayUtil;
+
 import java.io.IOException;
 import java.io.StringReader;
 
@@ -131,7 +133,7 @@ public class PropertiesUtil {
 	private static String _getPropertyName(
 		Properties properties, String basePropertyName, String... opts) {
 
-		if ((opts == null) || (opts.length == 0)) {
+		if (ArrayUtil.isEmpty(opts)) {
 			return basePropertyName;
 		}
 

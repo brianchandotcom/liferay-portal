@@ -23,9 +23,11 @@ import com.liferay.jethr0.git.user.GitUserEntity;
 import com.liferay.jethr0.routine.RoutineEntity;
 import com.liferay.jethr0.routine.repository.RoutineEntityRepository;
 import com.liferay.jethr0.util.StringUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.net.URL;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Map;
@@ -62,11 +64,11 @@ public class GitBranchEntityRepository
 	}
 
 	public Set<GitBranchEntity> getAllByType(GitBranchEntity.Type... types) {
-		Set<GitBranchEntity> gitBranchEntities = new HashSet<>();
-
-		if ((types == null) || (types.length == 0)) {
-			return gitBranchEntities;
+		if (ArrayUtil.isEmpty(types)) {
+			return Collections.emptySet();
 		}
+
+		Set<GitBranchEntity> gitBranchEntities = new HashSet<>();
 
 		for (GitBranchEntity gitBranchEntity : getAll()) {
 			for (GitBranchEntity.Type type : types) {

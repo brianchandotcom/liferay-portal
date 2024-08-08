@@ -557,13 +557,13 @@ public class BlogsEditEntryDisplayContext {
 	}
 
 	private long[] _getCurrentFriendlyURLAssetCategoryIds() {
-		if (_assetCategoryIds == null) {
-			_assetCategoryIds = ParamUtil.getLongValues(
+		if (_friendlyURLAssetCategoryIds == null) {
+			_friendlyURLAssetCategoryIds = ParamUtil.getLongValues(
 				_httpServletRequest, "friendlyURLAssetCategoryIds");
 		}
 
-		if (!ArrayUtil.isEmpty(_assetCategoryIds)) {
-			return _assetCategoryIds;
+		if (!ArrayUtil.isEmpty(_friendlyURLAssetCategoryIds)) {
+			return _friendlyURLAssetCategoryIds;
 		}
 
 		FriendlyURLEntry friendlyURLEntry = _getFriendlyURLEntry();
@@ -580,9 +580,9 @@ public class BlogsEditEntryDisplayContext {
 			return new long[0];
 		}
 
-		_assetCategoryIds = assetEntry.getCategoryIds();
+		_friendlyURLAssetCategoryIds = assetEntry.getCategoryIds();
 
-		return _assetCategoryIds;
+		return _friendlyURLAssetCategoryIds;
 	}
 
 	private FriendlyURLEntry _getFriendlyURLEntry() {
@@ -637,7 +637,6 @@ public class BlogsEditEntryDisplayContext {
 	private Boolean _allowPingbacks;
 	private Boolean _allowTrackbacks;
 	private final AssetAutoTaggerConfiguration _assetAutoTaggerConfiguration;
-	private long[] _assetCategoryIds;
 	private final AssetVocabularyLocalService _assetVocabularyLocalService;
 	private final BlogsEntry _blogsEntry;
 	private final BlogsFileUploadsConfiguration _blogsFileUploadsConfiguration;
@@ -649,6 +648,7 @@ public class BlogsEditEntryDisplayContext {
 	private String _description;
 	private Boolean _emailEntryUpdatedEnabled;
 	private Long _entryId;
+	private long[] _friendlyURLAssetCategoryIds;
 	private final HttpServletRequest _httpServletRequest;
 	private final ItemSelector _itemSelector;
 	private final LiferayPortletResponse _liferayPortletResponse;

@@ -493,9 +493,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 
 		if (ThreadLocalFilterThreadLocal.isFilterInvoked()) {
-			Set<Long> initializedGroupIds = _initializedGroupIds.get();
+			Set<String> initializedGroupIds = _initializedGroupIds.get();
 
-			if (!initializedGroupIds.add(groupId)) {
+			if (!initializedGroupIds.add(
+					StringBundler.concat(
+						groupId, StringPool.POUND, getKey()))) {
+
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						StringBundler.concat(
@@ -5894,7 +5897,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private static final Snapshot<CommerceSiteInitializer>
 		_commerceSiteInitializerSnapshot = new Snapshot<>(
 			BundleSiteInitializer.class, CommerceSiteInitializer.class);
-	private static final ThreadLocal<Set<Long>> _initializedGroupIds =
+	private static final ThreadLocal<Set<String>> _initializedGroupIds =
 		new CentralizedThreadLocal<>(
 			BundleSiteInitializer.class + "._initializedGroupIds",
 			HashSet::new);

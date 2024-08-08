@@ -93,6 +93,13 @@ export class DocumentLibraryPage {
 		});
 	}
 
+	async downloadSelectedFileEntries() {
+		await this.page
+			.locator('.management-bar')
+			.getByRole('button', {name: 'Download'})
+			.click();
+	}
+
 	async editEntry(entryTitle: string) {
 		await this.page
 			.locator(`.card-body:has-text('${entryTitle}')`)
@@ -160,6 +167,7 @@ export class DocumentLibraryPage {
 			.and(this.page.locator('[aria-haspopup]'))
 			.click();
 	}
+
 	async orderBy(name: string) {
 		await clickAndExpectToBeVisible({
 			autoClick: true,
@@ -167,8 +175,30 @@ export class DocumentLibraryPage {
 			trigger: this.orderMenu,
 		});
 	}
+
+	async searchFor(entryTitle: string) {
+		const dlPortlet = this.page.locator('.portlet-document-library');
+
+		await dlPortlet.getByPlaceholder('Search for').first().fill(entryTitle);
+		await dlPortlet.getByPlaceholder('Search for').first().press('Enter');
+	}
+
 	async searchInDL(query: string) {
 		await this.searchInput.fill(query);
 		await this.searchButton.click();
+	}
+
+	async selectFileEntry(entryTitle: string) {
+		const fileEntryCheckbox = this.page
+			.locator(`.card:has-text('${entryTitle}')`)
+			.getByRole('checkbox');
+
+		if (await fileEntryCheckbox.isHidden()) {
+			await this.searchFor(entryTitle);
+
+			await expect(fileEntryCheckbox).toBeVisible();
+		}
+
+		await fileEntryCheckbox.check();
 	}
 }

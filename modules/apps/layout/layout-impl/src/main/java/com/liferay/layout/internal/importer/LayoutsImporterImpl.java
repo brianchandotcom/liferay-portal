@@ -1484,22 +1484,15 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 			}
 
 			try {
-				UtilityPageTemplateEntry utilityPageTemplateEntry =
-					new UtilityPageTemplateEntry(
-						utilityPageTemplate,
-						_getKey(
-							_UTILITY_PAGE_TEMPLATE_ENTRY_KEY_DEFAULT, entry,
-							utilityPageTemplate.getName()),
+				TransactionInvokerUtil.invoke(
+					_transactionConfig,
+					new UtilityPageImporterCallable(
+						groupId, layoutsImporterResultEntries,
+						layoutsImportStrategy,
 						_objectMapper.readValue(
 							pageDefinitionJSON, PageDefinition.class),
-						_getThumbnail(entry, zipReader), entry);
-
-				Callable<Void> callable = new UtilityPageImporterCallable(
-					groupId, layoutsImporterResultEntries,
-					layoutsImportStrategy, preserveItemIds,
-					utilityPageTemplateEntry, userId);
-
-				TransactionInvokerUtil.invoke(_transactionConfig, callable);
+						preserveItemIds, _getThumbnail(entry, zipReader),
+						userId, utilityPageTemplate, entry));
 			}
 			catch (Throwable throwable) {
 				if (_log.isWarnEnabled()) {
@@ -2107,9 +2100,6 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 		".bmp", ".gif", ".jpeg", ".jpg", ".png", ".svg", ".tiff"
 	};
 
-	private static final String _UTILITY_PAGE_TEMPLATE_ENTRY_KEY_DEFAULT =
-		"imported-utility-page";
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutsImporterImpl.class);
 
@@ -2297,48 +2287,6 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 
 		private final byte[] _bytes;
 		private final String _extension;
-
-	}
-
-	private static class UtilityPageTemplateEntry {
-
-		public UtilityPageTemplateEntry(
-			UtilityPageTemplate utilityPageTemplate, String key,
-			PageDefinition pageDefinition, Thumbnail thumbnail,
-			String zipPath) {
-
-			_utilityPageTemplate = utilityPageTemplate;
-			_key = key;
-			_pageDefinition = pageDefinition;
-			_thumbnail = thumbnail;
-			_zipPath = zipPath;
-		}
-
-		public String getKey() {
-			return _key;
-		}
-
-		public PageDefinition getPageDefinition() {
-			return _pageDefinition;
-		}
-
-		public Thumbnail getThumbnail() {
-			return _thumbnail;
-		}
-
-		public UtilityPageTemplate getUtilityPageTemplate() {
-			return _utilityPageTemplate;
-		}
-
-		public String getZipPath() {
-			return _zipPath;
-		}
-
-		private final String _key;
-		private final PageDefinition _pageDefinition;
-		private final Thumbnail _thumbnail;
-		private final UtilityPageTemplate _utilityPageTemplate;
-		private final String _zipPath;
 
 	}
 
@@ -2611,24 +2559,20 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 
 		@Override
 		public Void call() throws Exception {
-			UtilityPageTemplate utilityPageTemplate =
-				_utilityPageTemplateEntry.getUtilityPageTemplate();
-
 			LayoutUtilityPageEntry layoutUtilityPageEntry =
 				_layoutUtilityPageEntryLocalService.
 					fetchLayoutUtilityPageEntryByExternalReferenceCode(
-						utilityPageTemplate.getExternalReferenceCode(),
+						_utilityPageTemplate.getExternalReferenceCode(),
 						_groupId);
 
 			_processLayoutUtilityPageTemplateEntry(
-				utilityPageTemplate.getExternalReferenceCode(), _groupId,
+				_utilityPageTemplate.getExternalReferenceCode(), _groupId,
 				_layoutsImporterResultEntries, _layoutsImportStrategy,
-				layoutUtilityPageEntry, utilityPageTemplate.getName(),
-				_utilityPageTemplateEntry.getPageDefinition(), _preserveItemIds,
+				layoutUtilityPageEntry, _utilityPageTemplate.getName(),
+				_pageDefinition, _preserveItemIds,
 				LayoutUtilityPageEntryTypeConverter.convertToInternalValue(
-					utilityPageTemplate.getTypeAsString()),
-				_userId, _utilityPageTemplateEntry.getThumbnail(),
-				_utilityPageTemplateEntry.getZipPath());
+					_utilityPageTemplate.getTypeAsString()),
+				_userId, _thumbnail, _zipPath);
 
 			return null;
 		}
@@ -2637,24 +2581,31 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 			long groupId,
 			List<LayoutsImporterResultEntry> layoutsImporterResultEntries,
 			LayoutsImportStrategy layoutsImportStrategy,
-			boolean preserveItemIds,
-			UtilityPageTemplateEntry utilityPageTemplateEntry, long userId) {
+			PageDefinition pageDefinition, boolean preserveItemIds,
+			Thumbnail thumbnail, long userId,
+			UtilityPageTemplate utilityPageTemplate, String zipPath) {
 
 			_groupId = groupId;
 			_layoutsImporterResultEntries = layoutsImporterResultEntries;
 			_layoutsImportStrategy = layoutsImportStrategy;
+			_pageDefinition = pageDefinition;
 			_preserveItemIds = preserveItemIds;
-			_utilityPageTemplateEntry = utilityPageTemplateEntry;
+			_thumbnail = thumbnail;
 			_userId = userId;
+			_utilityPageTemplate = utilityPageTemplate;
+			_zipPath = zipPath;
 		}
 
 		private final long _groupId;
 		private final List<LayoutsImporterResultEntry>
 			_layoutsImporterResultEntries;
 		private final LayoutsImportStrategy _layoutsImportStrategy;
+		private final PageDefinition _pageDefinition;
 		private final boolean _preserveItemIds;
+		private final Thumbnail _thumbnail;
 		private final long _userId;
-		private final UtilityPageTemplateEntry _utilityPageTemplateEntry;
+		private final UtilityPageTemplate _utilityPageTemplate;
+		private final String _zipPath;
 
 	}
 

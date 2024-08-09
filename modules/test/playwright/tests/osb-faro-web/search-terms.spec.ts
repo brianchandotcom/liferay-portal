@@ -10,13 +10,13 @@ import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginAnalyticsCloudTest} from '../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {liferayConfig} from '../../liferay.config';
 import getRandomString from '../../utils/getRandomString';
+import {createChannel} from './utils/channel';
+import {createIndividuals} from './utils/individuals';
 import {navigateTo, navigateToACSitesPageViaURL} from './utils/navigation';
 import {CardSelectors} from './utils/selectors';
 import {changeTimeFilter} from './utils/time-filter';
-import {liferayConfig} from '../../liferay.config';
-import {createChannel} from './utils/channel';
-import {createIndividuals} from './utils/individuals';
 import {viewNameOnTableList} from './utils/utils';
 
 export const test = mergeTests(
@@ -102,7 +102,7 @@ test(
 
 		await test.step('Check if user is in the Search Terms tab with the same time filter previously set (Last 24h)', async () => {
 			await expect(
-				page.getByRole('link', {name: 'Search Terms', exact: true})
+				page.getByRole('link', {exact: true, name: 'Search Terms'})
 			).toBeVisible();
 
 			await expect(
@@ -121,7 +121,7 @@ test(
 			});
 
 			await expect(
-				page.getByRole('cell', {name: '1', exact: true})
+				page.getByRole('cell', {exact: true, name: '1'})
 			).toBeVisible();
 		});
 

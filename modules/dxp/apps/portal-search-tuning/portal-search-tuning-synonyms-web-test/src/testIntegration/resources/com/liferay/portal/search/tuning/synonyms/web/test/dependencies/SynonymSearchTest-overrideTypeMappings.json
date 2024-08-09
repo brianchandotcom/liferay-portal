@@ -706,6 +706,18 @@
 			"store": true,
 			"type": "geo_point"
 		},
+		"groupAssetCategoryExternalReferenceCodes": {
+			"store": true,
+			"type": "keyword"
+		},
+		"groupAssetInternalCategoryExternalReferenceCodes": {
+			"store": true,
+			"type": "keyword"
+		},
+		"groupAssetVocabularyCategoryExternalReferenceCodes": {
+			"store": true,
+			"type": "keyword"
+		},
 		"groupExternalReferenceCode": {
 			"store": true,
 			"type": "keyword"

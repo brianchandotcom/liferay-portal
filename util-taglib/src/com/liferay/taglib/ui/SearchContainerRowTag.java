@@ -135,10 +135,8 @@ public class SearchContainerRowTag<R>
 
 		httpServletRequest.setAttribute(
 			"liferay-ui:search-container-row:ariaLabel", _ariaLabel);
-
 		httpServletRequest.setAttribute(
 			"liferay-ui:search-container-row:cssClass", _cssClass);
-
 		httpServletRequest.setAttribute(
 			"liferay-ui:search-container-row:tabIndex", _tabIndex);
 

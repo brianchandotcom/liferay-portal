@@ -88,10 +88,9 @@ public class ScimNotificationSchedulerJobConfiguration
 			return true;
 		}
 
-		for (int i = 1; i < NOTIFICATION_DAYS.length; i++) {
-			if ((NOTIFICATION_DAYS[i - 1] >= daysToExpire) &&
-				(daysToExpire > NOTIFICATION_DAYS[i]) &&
-				(daysLastNotification > NOTIFICATION_DAYS[i - 1])) {
+		for (int i = 0; i < NOTIFICATION_DAYS.length; i++) {
+			if ((NOTIFICATION_DAYS[i] >= daysToExpire) &&
+				(daysLastNotification > NOTIFICATION_DAYS[i])) {
 
 				return true;
 			}

@@ -261,6 +261,10 @@ public class ConfigurationImpl
 			getProperties(), prefix, removePrefix);
 	}
 
+	public List<String> loadedSources() {
+		return _classLoaderAggregateProperties.loadedSources();
+	}
+
 	@Override
 	public void removeProperties(Properties properties) {
 		try {

@@ -5,6 +5,7 @@
 
 package com.liferay.portal.kernel.configuration;
 
+import java.util.List;
 import java.util.Properties;
 
 /**
@@ -29,6 +30,8 @@ public interface Configuration {
 	public Properties getProperties();
 
 	public Properties getProperties(String prefix, boolean removePrefix);
+
+	public List<String> loadedSources();
 
 	public void removeProperties(Properties properties);
 

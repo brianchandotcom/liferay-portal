@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -191,6 +192,12 @@ public class PropsUtil {
 		Configuration configuration = _getConfiguration();
 
 		return configuration.getProperties(prefix, removePrefix);
+	}
+
+	public static List<String> loadedSources() {
+		Configuration configuration = _getConfiguration();
+
+		return configuration.loadedSources();
 	}
 
 	public static void removeProperties(

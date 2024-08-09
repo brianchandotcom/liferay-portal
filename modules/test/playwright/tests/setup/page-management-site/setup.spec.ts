@@ -6,8 +6,8 @@
 import {expect, mergeTests} from '@playwright/test';
 import {resolve} from 'path';
 
-import {backendPageTest} from '../../fixtures/backendPageTest';
-import {ApiHelpers} from '../../helpers/ApiHelpers';
+import {backendPageTest} from '../../../fixtures/backendPageTest';
+import {ApiHelpers} from '../../../helpers/ApiHelpers';
 import {PAGE_MANAGEMENT_SITE_ERC} from './constants';
 
 export const test = mergeTests(backendPageTest);

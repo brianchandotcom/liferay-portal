@@ -5,8 +5,8 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {backendPageTest} from '../../fixtures/backendPageTest';
-import {ApiHelpers} from '../../helpers/ApiHelpers';
+import {backendPageTest} from '../../../fixtures/backendPageTest';
+import {ApiHelpers} from '../../../helpers/ApiHelpers';
 import {
 	LEMON_BASKET_OBJECT_ERC,
 	LEMON_OBJECT_ERC,

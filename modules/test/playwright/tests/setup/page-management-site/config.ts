@@ -6,13 +6,13 @@
 const pageManagementSiteSetup = {
 	name: 'page-management-site-setup',
 	teardown: 'page-management-site-teardown',
-	testDir: 'setup/page-management-site',
+	testDir: 'tests/setup/page-management-site',
 	testMatch: 'setup.spec.ts',
 };
 
 const pageManagementSiteTeardown = {
 	name: 'page-management-site-teardown',
-	testDir: 'setup/page-management-site',
+	testDir: 'tests/setup/page-management-site',
 	testMatch: 'teardown.spec.ts',
 };
 

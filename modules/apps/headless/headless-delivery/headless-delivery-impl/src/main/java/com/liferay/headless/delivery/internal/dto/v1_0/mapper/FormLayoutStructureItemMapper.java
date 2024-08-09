@@ -26,6 +26,7 @@ import com.liferay.layout.converter.JustifyConverter;
 import com.liferay.layout.util.constants.StyledLayoutStructureConstants;
 import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -83,14 +84,17 @@ public class FormLayoutStructureItemMapper
 													saveInlineContent,
 													saveMappingConfiguration,
 													formStyledLayoutStructureItem));
-										setMultiStep(
-											() ->
-												formStyledLayoutStructureItem.
-													isMultiStep());
-										setNumberOfSteps(
-											() ->
-												formStyledLayoutStructureItem.
-													getNumberOfSteps());
+
+										if (FeatureFlagManagerUtil.isEnabled("LPD-10727")) {
+											setMultiStep(
+												() ->
+													formStyledLayoutStructureItem.
+														isMultiStep());
+											setNumberOfSteps(
+												() ->
+													formStyledLayoutStructureItem.
+														getNumberOfSteps());
+										}
 									}
 								});
 							setFragmentStyle(

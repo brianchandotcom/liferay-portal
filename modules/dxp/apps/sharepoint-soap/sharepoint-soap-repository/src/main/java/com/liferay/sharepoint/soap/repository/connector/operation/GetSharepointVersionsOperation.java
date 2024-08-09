@@ -94,6 +94,8 @@ public final class GetSharepointVersionsOperation extends BaseOperation {
 		SharepointObject sharepointObject,
 		GetVersionsResponseDocument getVersionsResponseDocument) {
 
+		List<SharepointVersion> sharepointVersions = new ArrayList<>();
+
 		GetVersionsResponseDocument.GetVersionsResponse getVersionsResponse =
 			getVersionsResponseDocument.getGetVersionsResponse();
 
@@ -103,8 +105,6 @@ public final class GetSharepointVersionsOperation extends BaseOperation {
 		Node getVersionsResultNode = getVersionsResult.getDomNode();
 
 		Node resultNode = getVersionsResultNode.getFirstChild();
-
-		List<SharepointVersion> sharepointVersions = new ArrayList<>();
 
 		NodeList nodeList = resultNode.getChildNodes();
 

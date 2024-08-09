@@ -6,13 +6,13 @@
 package com.liferay.paypal;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.math.BigDecimal;
 
 import java.util.Objects;
 
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -341,9 +341,7 @@ public class SetUpPaymentRestController extends BaseRestController {
 				"shipping_preference", "SET_PROVIDED_ADDRESS");
 		}
 
-		if (ArrayUtil.contains(_FUNDING_SOURCES, fundingSource) ||
-			Objects.equals(_FUNDING_SOURCES, "paypal")) {
-
+		if (ArrayUtils.contains(_FUNDING_SOURCES, fundingSource)) {
 			experienceContextJSONObject.put(
 				"cancel_url", cancelURL
 			).put(
@@ -351,8 +349,14 @@ public class SetUpPaymentRestController extends BaseRestController {
 			);
 		}
 
-		if (fundingSource.equals("paypal")) {
-			experienceContextJSONObject.put("user_action", "PAY_NOW");
+		if (Objects.equals(fundingSource, "paypal")) {
+			experienceContextJSONObject.put(
+				"cancel_url", cancelURL
+			).put(
+				"return_url", callbackURL
+			).put(
+				"user_action", "PAY_NOW"
+			);
 		}
 
 		return experienceContextJSONObject;
@@ -451,7 +455,7 @@ public class SetUpPaymentRestController extends BaseRestController {
 
 		JSONObject paymentSourceJSONObject = new JSONObject();
 
-		if (ArrayUtil.contains(_FUNDING_SOURCES, fundingSource)) {
+		if (ArrayUtils.contains(_FUNDING_SOURCES, fundingSource)) {
 			JSONObject shippingAddressJSONObject =
 				orderJSONObject.getJSONObject("shippingAddress");
 
@@ -586,7 +590,7 @@ public class SetUpPaymentRestController extends BaseRestController {
 			}
 		}
 
-		if (Validator.isNotNull(transactionCode)) {
+		if (StringUtils.isNotBlank(transactionCode)) {
 			delete(
 				"Bearer " + jwt.getTokenValue(),
 				"/o/c/b9k3paypaltransactions/by-external-reference-code/" +

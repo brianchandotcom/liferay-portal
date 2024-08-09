@@ -36,9 +36,12 @@ function BulkActions({
 	selectedItemsValue,
 	total,
 }) {
-	const {actionParameterName, onBulkActionItemClick} = useContext(
-		FrontendDataSetContext
-	);
+	const {
+		actionParameterName,
+		onBulkActionItemClick,
+		showBulkActionsManagementBar,
+		showBulkActionsManagementBarActions,
+	} = useContext(FrontendDataSetContext);
 
 	const [currentSidePanelActionPayload, setCurrentSidePanelActionPayload] =
 		useState(null);
@@ -75,7 +78,10 @@ function BulkActions({
 		else if (onBulkActionItemClick) {
 			onBulkActionItemClick({
 				action: actionDefinition,
+				formId,
+				formName,
 				loadData,
+				namespace,
 				selectedData: {
 					items: selectedItems,
 					keyValues: selectedItemsValue,
@@ -129,7 +135,7 @@ function BulkActions({
 		[selectedItemsValue]
 	);
 
-	return selectedItemsValue.length ? (
+	return showBulkActionsManagementBar && selectedItemsValue.length ? (
 		<FrontendDataSetContext.Consumer>
 			{({formId, formName, loadData, namespace, sidePanelId}) => (
 				<nav className="management-bar management-bar-primary navbar navbar-expand-md pb-2 pt-2 subnav-tbar">
@@ -164,30 +170,34 @@ function BulkActions({
 							</li>
 						</ul>
 
-						<div className="bulk-actions">
-							{bulkActions.map((actionDefinition, i) => (
-								<button
-									className={classNames(
-										'btn btn-monospaced btn-link',
-										i > 0 && 'ml-1'
-									)}
-									key={actionDefinition.label}
-									onClick={() =>
-										handleActionClick(
-											actionDefinition,
-											formId,
-											formName,
-											loadData,
-											namespace,
-											sidePanelId
-										)
-									}
-									type="button"
-								>
-									<ClayIcon symbol={actionDefinition.icon} />
-								</button>
-							))}
-						</div>
+						{showBulkActionsManagementBarActions ? (
+							<div className="bulk-actions">
+								{bulkActions.map((actionDefinition, i) => (
+									<button
+										className={classNames(
+											'btn btn-monospaced btn-link',
+											i > 0 && 'ml-1'
+										)}
+										key={actionDefinition.label}
+										onClick={() =>
+											handleActionClick(
+												actionDefinition,
+												formId,
+												formName,
+												loadData,
+												namespace,
+												sidePanelId
+											)
+										}
+										type="button"
+									>
+										<ClayIcon
+											symbol={actionDefinition.icon}
+										/>
+									</button>
+								))}
+							</div>
+						) : null}
 					</div>
 				</nav>
 			)}

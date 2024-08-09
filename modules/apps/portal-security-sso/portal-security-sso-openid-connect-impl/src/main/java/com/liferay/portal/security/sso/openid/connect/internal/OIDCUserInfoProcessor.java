@@ -289,7 +289,7 @@ public class OIDCUserInfoProcessor {
 			companyId, userInfoJSONObject,
 			userInfoMapperJSONObject.getJSONObject("users_roles"));
 
-		if ((roleIds == null) || (roleIds.length == 0)) {
+		if (ArrayUtil.isEmpty(roleIds)) {
 			roleIds = _getRoleIds(companyId, issuer);
 		}
 

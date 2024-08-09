@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -370,7 +371,7 @@ public class GCSStore implements Store {
 
 		String[] fileNames = _getFilePaths(companyId, repositoryId, path);
 
-		if ((fileNames == null) || (fileNames.length == 0)) {
+		if (ArrayUtil.isEmpty(fileNames)) {
 			if (_log.isDebugEnabled()) {
 				_log.debug("Using default version for " + path);
 			}

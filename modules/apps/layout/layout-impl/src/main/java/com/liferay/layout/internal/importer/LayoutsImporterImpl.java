@@ -670,98 +670,6 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 		return key;
 	}
 
-	private List<UtilityPageTemplateEntry> _getLayoutUtilityPageEntries(
-			List<LayoutsImporterResultEntry> layoutsImporterResultEntries,
-			ZipReader zipReader)
-		throws Exception {
-
-		List<UtilityPageTemplateEntry> utilityPageTemplateEntries =
-			new ArrayList<>();
-
-		for (String entry : zipReader.getEntries()) {
-			if (!_isUtilityPageTemplateFile(entry)) {
-				continue;
-			}
-
-			String content = zipReader.getEntryAsString(entry);
-
-			UtilityPageTemplate utilityPageTemplate = null;
-
-			try {
-				UtilityPageTemplateValidator.validateUtilityPageTemplate(
-					content);
-
-				utilityPageTemplate = _objectMapper.readValue(
-					content, UtilityPageTemplate.class);
-			}
-			catch (JSONValidatorException jsonValidatorException) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Invalid utility page template for: " + entry,
-						jsonValidatorException);
-				}
-
-				layoutsImporterResultEntries.add(
-					new LayoutsImporterResultEntry(
-						entry, LayoutsImporterResultEntry.Status.INVALID,
-						new LayoutsImporterResultEntry.ErrorMessage(
-							new String[] {entry},
-							"x-could-not-be-imported-because-its-utility-" +
-								"page-is-invalid")));
-
-				continue;
-			}
-
-			if (!FeatureFlagManagerUtil.isEnabled("LPD-6378") &&
-				((utilityPageTemplate.getType() ==
-					UtilityPageTemplate.Type.CREATE_ACCOUNT) ||
-				 (utilityPageTemplate.getType() ==
-					 UtilityPageTemplate.Type.FORGOT_PASSWORD) ||
-				 (utilityPageTemplate.getType() ==
-					 UtilityPageTemplate.Type.LOGIN))) {
-
-				continue;
-			}
-
-			try {
-				String pageDefinitionJSON = _getPageDefinitionJSON(
-					entry, zipReader);
-
-				PageDefinitionValidator.validatePageDefinition(
-					pageDefinitionJSON);
-
-				utilityPageTemplateEntries.add(
-					new UtilityPageTemplateEntry(
-						utilityPageTemplate,
-						_getKey(
-							_UTILITY_PAGE_TEMPLATE_ENTRY_KEY_DEFAULT, entry,
-							utilityPageTemplate.getName()),
-						_objectMapper.readValue(
-							pageDefinitionJSON, PageDefinition.class),
-						_getThumbnail(entry, zipReader), entry));
-			}
-			catch (Exception exception) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Invalid page definition for: " +
-							utilityPageTemplate.getName(),
-						exception);
-				}
-
-				layoutsImporterResultEntries.add(
-					new LayoutsImporterResultEntry(
-						utilityPageTemplate.getName(),
-						LayoutsImporterResultEntry.Status.INVALID,
-						new LayoutsImporterResultEntry.ErrorMessage(
-							new String[] {utilityPageTemplate.getName()},
-							"x-could-not-be-imported-because-its-page-" +
-								"definition-is-invalid")));
-			}
-		}
-
-		return utilityPageTemplateEntries;
-	}
-
 	private String _getPageDefinitionJSON(
 		String fileName, ZipReader zipReader) {
 
@@ -1497,33 +1405,71 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 	}
 
 	private void _processLayoutUtilityPageEntries(
-			long groupId,
-			List<LayoutsImporterResultEntry> layoutsImporterResultEntries,
-			LayoutsImportStrategy layoutsImportStrategy,
-			boolean preserveItemIds, long userId, ZipReader zipReader)
-		throws Exception {
+		long groupId,
+		List<LayoutsImporterResultEntry> layoutsImporterResultEntries,
+		LayoutsImportStrategy layoutsImportStrategy, boolean preserveItemIds,
+		long userId, ZipReader zipReader) {
 
-		List<UtilityPageTemplateEntry> utilityPageTemplateEntries =
-			_getLayoutUtilityPageEntries(
-				layoutsImporterResultEntries, zipReader);
+		for (String entry : zipReader.getEntries()) {
+			if (!_isUtilityPageTemplateFile(entry)) {
+				continue;
+			}
 
-		for (UtilityPageTemplateEntry utilityPageTemplateEntry :
-				utilityPageTemplateEntries) {
+			String content = zipReader.getEntryAsString(entry);
 
-			Callable<Void> callable = new UtilityPageImporterCallable(
-				groupId, layoutsImporterResultEntries, layoutsImportStrategy,
-				preserveItemIds, utilityPageTemplateEntry, userId);
+			UtilityPageTemplate utilityPageTemplate = null;
 
 			try {
-				TransactionInvokerUtil.invoke(_transactionConfig, callable);
+				UtilityPageTemplateValidator.validateUtilityPageTemplate(
+					content);
+
+				utilityPageTemplate = _objectMapper.readValue(
+					content, UtilityPageTemplate.class);
 			}
-			catch (Throwable throwable) {
+			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(throwable, throwable);
+					_log.warn(
+						"Invalid utility page template for: " + entry,
+						exception);
 				}
 
-				UtilityPageTemplate utilityPageTemplate =
-					utilityPageTemplateEntry.getUtilityPageTemplate();
+				layoutsImporterResultEntries.add(
+					new LayoutsImporterResultEntry(
+						entry, LayoutsImporterResultEntry.Status.INVALID,
+						new LayoutsImporterResultEntry.ErrorMessage(
+							new String[] {entry},
+							"x-could-not-be-imported-because-its-utility-" +
+								"page-is-invalid")));
+
+				continue;
+			}
+
+			if (!FeatureFlagManagerUtil.isEnabled("LPD-6378") &&
+				((utilityPageTemplate.getType() ==
+					UtilityPageTemplate.Type.CREATE_ACCOUNT) ||
+				 (utilityPageTemplate.getType() ==
+					 UtilityPageTemplate.Type.FORGOT_PASSWORD) ||
+				 (utilityPageTemplate.getType() ==
+					 UtilityPageTemplate.Type.LOGIN))) {
+
+				continue;
+			}
+
+			String pageDefinitionJSON = null;
+
+			try {
+				pageDefinitionJSON = _getPageDefinitionJSON(entry, zipReader);
+
+				PageDefinitionValidator.validatePageDefinition(
+					pageDefinitionJSON);
+			}
+			catch (Exception exception) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Invalid page definition for: " +
+							utilityPageTemplate.getName(),
+						exception);
+				}
 
 				layoutsImporterResultEntries.add(
 					new LayoutsImporterResultEntry(
@@ -1531,8 +1477,42 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 						LayoutsImporterResultEntry.Status.INVALID,
 						new LayoutsImporterResultEntry.ErrorMessage(
 							new String[] {utilityPageTemplate.getName()},
-							"x-could-not-be-imported-because-of-invalid-" +
-								"values-in-its-page-definition")));
+							"x-could-not-be-imported-because-its-page-" +
+								"definition-is-invalid")));
+
+				continue;
+			}
+
+			try {
+				UtilityPageTemplateEntry utilityPageTemplateEntry =
+					new UtilityPageTemplateEntry(
+						utilityPageTemplate,
+						_getKey(
+							_UTILITY_PAGE_TEMPLATE_ENTRY_KEY_DEFAULT, entry,
+							utilityPageTemplate.getName()),
+						_objectMapper.readValue(
+							pageDefinitionJSON, PageDefinition.class),
+						_getThumbnail(entry, zipReader), entry);
+
+				Callable<Void> callable = new UtilityPageImporterCallable(
+					groupId, layoutsImporterResultEntries,
+					layoutsImportStrategy, preserveItemIds,
+					utilityPageTemplateEntry, userId);
+
+				TransactionInvokerUtil.invoke(_transactionConfig, callable);
+			}
+			catch (Throwable throwable) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(throwable, throwable);
+				}
+
+				layoutsImporterResultEntries.add(
+					new LayoutsImporterResultEntry(
+						entry, LayoutsImporterResultEntry.Status.INVALID,
+						new LayoutsImporterResultEntry.ErrorMessage(
+							new String[] {entry},
+							"x-could-not-be-imported-because-its-page-" +
+								"definition-is-invalid")));
 			}
 		}
 	}

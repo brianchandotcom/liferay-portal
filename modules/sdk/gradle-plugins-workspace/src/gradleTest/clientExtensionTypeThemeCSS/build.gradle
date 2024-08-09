@@ -36,7 +36,7 @@ runGradleTest {
 			assert typeSettings.contains("mainRTLURL=css/main_rtl.css")
 			assert typeSettings.contains("mainURL=css/main.css")
 
-			Project clientExtensionProject = project ":theme-css-with-rtl-css-properties"
+			Project clientExtensionProject = project(":theme-css-with-rtl-css-properties")
 
 			assert FileUtil.exists(clientExtensionProject, "build/liferay-client-extension-build/static/css/clay_rtl.css")
 			assert FileUtil.exists(clientExtensionProject, "build/liferay-client-extension-build/static/css/main_rtl.css")
@@ -55,7 +55,7 @@ runGradleTest {
 }
 
 private void _testClientExtensionConfigJSON(String projectName, Closure<Void> valueClosure) {
-	Project clientExtensionProject = project ":${projectName}"
+	Project clientExtensionProject = project(":${projectName}")
 
 	File clientExtensionBuildDir = new File(clientExtensionProject.buildDir, "liferay-client-extension-build")
 

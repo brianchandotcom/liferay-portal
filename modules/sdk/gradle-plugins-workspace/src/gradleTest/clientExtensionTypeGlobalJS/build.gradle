@@ -4,7 +4,7 @@ runGradleTest {
 	dependsOn ":global-js-client-extension:createClientExtensionConfig"
 
 	doLast {
-		Project clientExtensionProject = project ":global-js-client-extension"
+		Project clientExtensionProject = project(":global-js-client-extension")
 
 		File clientExtensionConfigJSONFile = clientExtensionProject.file("${clientExtensionProject.buildDir}/liferay-client-extension-build/global-js-client-extension.client-extension-config.json")
 

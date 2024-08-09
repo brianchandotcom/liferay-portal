@@ -31,7 +31,7 @@ runGradleTest {
 }
 
 private void _testClientExtensionConfig(String projectName, Closure<Void> clientExtensionConfigJSONFileClosure) {
-	Project clientExtensionProject = project ":${projectName}"
+	Project clientExtensionProject = project(":${projectName}")
 
 	File clientExtensionBuildDir = new File(clientExtensionProject.buildDir, "liferay-client-extension-build")
 

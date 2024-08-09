@@ -4,7 +4,7 @@ runGradleTest {
 	dependsOn ":client-extension:deployDev"
 
 	doLast {
-		Project clientExtensionProject = project ":client-extension"
+		Project clientExtensionProject = project(":client-extension")
 
 		File clientExtensionBuildDir = new File(clientExtensionProject.buildDir, "liferay-client-extension-build")
 

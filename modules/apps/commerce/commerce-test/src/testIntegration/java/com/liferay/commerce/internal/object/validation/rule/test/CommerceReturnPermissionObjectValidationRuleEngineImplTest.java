@@ -138,24 +138,24 @@ public class CommerceReturnPermissionObjectValidationRuleEngineImplTest
 				"entryDTO",
 				HashMapBuilder.<String, Object>put(
 					"externalReferenceCode", RandomTestUtil.randomString()
-				).<String, Object>put(
+				).put(
 					"properties",
 					HashMapBuilder.<String, Object>put(
 						"returnStatus",
-						HashMapBuilder.put(
+						HashMapBuilder.<String, Object>put(
 							"key", CommerceReturnConstants.RETURN_STATUS_DRAFT
 						).build()
 					).build()
 				).build()
-			).<String, Object>put(
+			).put(
 				"originalEntryDTO",
 				HashMapBuilder.<String, Object>put(
 					"externalReferenceCode", RandomTestUtil.randomString()
-				).<String, Object>put(
+				).put(
 					"properties",
 					HashMapBuilder.<String, Object>put(
 						"returnStatus",
-						HashMapBuilder.put(
+						HashMapBuilder.<String, Object>put(
 							"key", CommerceReturnConstants.RETURN_STATUS_DRAFT
 						).build()
 					).build()
@@ -176,24 +176,24 @@ public class CommerceReturnPermissionObjectValidationRuleEngineImplTest
 				"entryDTO",
 				HashMapBuilder.<String, Object>put(
 					"externalReferenceCode", externalReferenceCode
-				).<String, Object>put(
+				).put(
 					"properties",
 					HashMapBuilder.<String, Object>put(
 						"returnStatus",
-						HashMapBuilder.put(
+						HashMapBuilder.<String, Object>put(
 							"key", CommerceReturnConstants.RETURN_STATUS_PENDING
 						).build()
 					).build()
 				).build()
-			).<String, Object>put(
+			).put(
 				"originalEntryDTO",
 				HashMapBuilder.<String, Object>put(
 					"externalReferenceCode", externalReferenceCode
-				).<String, Object>put(
+				).put(
 					"properties",
 					HashMapBuilder.<String, Object>put(
 						"returnStatus",
-						HashMapBuilder.put(
+						HashMapBuilder.<String, Object>put(
 							"key", CommerceReturnConstants.RETURN_STATUS_DRAFT
 						).build()
 					).build()
@@ -209,24 +209,24 @@ public class CommerceReturnPermissionObjectValidationRuleEngineImplTest
 				"entryDTO",
 				HashMapBuilder.<String, Object>put(
 					"externalReferenceCode", externalReferenceCode
-				).<String, Object>put(
+				).put(
 					"properties",
 					HashMapBuilder.<String, Object>put(
 						"returnStatus",
-						HashMapBuilder.put(
+						HashMapBuilder.<String, Object>put(
 							"key", CommerceReturnConstants.RETURN_STATUS_DRAFT
 						).build()
 					).build()
 				).build()
-			).<String, Object>put(
+			).put(
 				"originalEntryDTO",
 				HashMapBuilder.<String, Object>put(
 					"externalReferenceCode", externalReferenceCode
-				).<String, Object>put(
+				).put(
 					"properties",
 					HashMapBuilder.<String, Object>put(
 						"returnStatus",
-						HashMapBuilder.put(
+						HashMapBuilder.<String, Object>put(
 							"key", CommerceReturnConstants.RETURN_STATUS_PENDING
 						).build()
 					).build()

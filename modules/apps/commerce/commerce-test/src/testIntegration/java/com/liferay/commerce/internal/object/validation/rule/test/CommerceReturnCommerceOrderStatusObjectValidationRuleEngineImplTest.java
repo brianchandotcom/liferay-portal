@@ -104,9 +104,9 @@ public class CommerceReturnCommerceOrderStatusObjectValidationRuleEngineImplTest
 		results = _objectValidationRuleEngine.execute(
 			HashMapBuilder.<String, Object>put(
 				"entryDTO",
-				HashMapBuilder.put(
+				HashMapBuilder.<String, Object>put(
 					"properties",
-					HashMapBuilder.put(
+					HashMapBuilder.<String, Object>put(
 						"r_commerceOrderToCommerceReturns_commerceOrderId",
 						commerceOrder.getCommerceOrderId()
 					).build()

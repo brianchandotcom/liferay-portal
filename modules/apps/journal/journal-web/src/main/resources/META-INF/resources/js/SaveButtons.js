@@ -14,6 +14,10 @@ import PublishModal from './modals/PublishModal';
 import removeAlert from './removeAlert';
 import showAlert from './showAlert';
 
+const ACTION_PUBLISH = 'publish';
+const ACTION_DRAFT = 'draft';
+const ACTION_SCHEDULE = 'schedule';
+
 export default function SaveButtons({
 	articleId: initialArticleId,
 	defaultLanguageId,
@@ -99,9 +103,9 @@ export default function SaveButtons({
 		);
 
 		if (
-			action === 'publish' ||
-			publishModalAction === 'publish' ||
-			publishModalAction === 'schedule'
+			action === ACTION_PUBLISH ||
+			publishModalAction === ACTION_PUBLISH ||
+			publishModalAction === ACTION_SCHEDULE
 		) {
 			workflowActionInput.value = Liferay.Workflow.ACTION_PUBLISH;
 		}
@@ -179,7 +183,7 @@ export default function SaveButtons({
 					className="mr-3"
 					displayType="secondary"
 					form={formId}
-					onClick={() => onClick('draft')}
+					onClick={() => onClick(ACTION_DRAFT)}
 					title={
 						articleId
 							? null
@@ -228,7 +232,7 @@ export default function SaveButtons({
 				<ClayDropDown.ItemList>
 					<ClayDropDown.Item
 						form={formId}
-						onClick={() => onClick('publish')}
+						onClick={() => onClick(ACTION_PUBLISH)}
 						symbolLeft="arrow-right-full"
 						type={showPublishModal ? 'button' : 'submit'}
 					>
@@ -258,7 +262,7 @@ export default function SaveButtons({
 								titleInputComponent?.getValue(defaultLanguageId)
 							) {
 								setPublishModalState({
-									publishModalAction: 'schedule',
+									publishModalAction: ACTION_SCHEDULE,
 									publishModalVisible: true,
 								});
 							}

@@ -140,12 +140,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 			reportsDir.delete();
 		}
 
-		ReflectionTestUtil.setFieldValue(
-			StartupHelperUtil.class, "_newRelease", false);
-
-		_updatePortalRelease(
-			PortalUpgradeProcess.getLatestSchemaVersion(),
-			ReleaseInfo.getBuildNumber());
+		_restoreRelease();
 
 		_upgradeReportLogger.removeAppender(_logContextAppender);
 
@@ -469,12 +464,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 	@Test
 	public void testNoUpgrade() throws Exception {
-		ReflectionTestUtil.setFieldValue(
-			StartupHelperUtil.class, "_newRelease", false);
-
-		_updatePortalRelease(
-			PortalUpgradeProcess.getLatestSchemaVersion(),
-			ReleaseInfo.getBuildNumber());
+		_restoreRelease();
 
 		_appender.start();
 
@@ -558,12 +548,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 	public void testSchemaVersion() throws Exception {
 		_appender.start();
 
-		ReflectionTestUtil.setFieldValue(
-			StartupHelperUtil.class, "_newRelease", false);
-
-		_updatePortalRelease(
-			PortalUpgradeProcess.getLatestSchemaVersion(),
-			ReleaseInfo.getBuildNumber());
+		_restoreRelease();
 
 		_appender.stop();
 
@@ -753,6 +738,15 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 		Assert.assertTrue(reportsDir.exists());
 
 		return new File(reportsDir, fileName);
+	}
+
+	private void _restoreRelease() throws Exception {
+		ReflectionTestUtil.setFieldValue(
+			StartupHelperUtil.class, "_newRelease", false);
+
+		_updatePortalRelease(
+			PortalUpgradeProcess.getLatestSchemaVersion(),
+			ReleaseInfo.getBuildNumber());
 	}
 
 	private SafeCloseable _setUpgradeReportDLStorageSizeTimeout(long timeout) {

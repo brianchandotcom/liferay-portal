@@ -85,6 +85,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactory;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -555,6 +556,17 @@ public class ExportImportLayoutPageTemplateEntriesTest {
 			"form/success_message_url/expected", null, null);
 		File inputFile = _generateZipFile(
 			"form/success_message_url/input", null, null);
+
+		_validateImportExport(expectedFile, inputFile);
+	}
+
+	@FeatureFlags("LPD-10727")
+	@Test
+	public void testImportExportLayoutPageTemplateEntryFormSteps()
+		throws Exception {
+
+		File expectedFile = _generateZipFile("form/steps/expected", null, null);
+		File inputFile = _generateZipFile("form/steps/input", null, null);
 
 		_validateImportExport(expectedFile, inputFile);
 	}

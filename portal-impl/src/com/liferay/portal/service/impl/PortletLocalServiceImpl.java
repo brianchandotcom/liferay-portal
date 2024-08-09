@@ -16,6 +16,9 @@ import com.liferay.portal.configuration.ConfigurationFactoryImpl;
 import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.application.type.ApplicationType;
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
+import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
 import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.cluster.Clusterable;
 import com.liferay.portal.kernel.configuration.Configuration;
@@ -173,6 +176,12 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 	@Override
 	public void afterPropertiesSet() {
 		super.afterPropertiesSet();
+
+		_portletFriendlyURLMapperMatchPortalCache =
+			PortalCacheHelperUtil.getPortalCache(
+				PortalCacheManagerNames.SINGLE_VM,
+				PortletLocalServiceImpl.class.getName() +
+					"._PortletFriendlyURLMapperMatch");
 
 		Filter filter = SystemBundleUtil.createFilter(
 			"(objectClass=" + FriendlyURLMapper.class.getName() + ")");
@@ -406,6 +415,11 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		super.destroy();
 
 		_serviceTracker.close();
+
+		PortalCacheHelperUtil.removePortalCache(
+			PortalCacheManagerNames.SINGLE_VM,
+			PortletLocalServiceImpl.class.getName() +
+				"._PortletFriendlyURLMapperMatch");
 	}
 
 	@Override
@@ -638,6 +652,17 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 	public PortletFriendlyURLMapperMatch getPortletFriendlyURLMapperMatch(
 		String url) {
 
+		PortletFriendlyURLMapperMatch portletFriendlyURLMapperMatch =
+			_portletFriendlyURLMapperMatchPortalCache.get(url);
+
+		if (portletFriendlyURLMapperMatch != null) {
+			if (portletFriendlyURLMapperMatch == _NULL_HOLDER) {
+				return null;
+			}
+
+			return portletFriendlyURLMapperMatch;
+		}
+
 		for (Portlet portlet : getFriendlyURLMapperPortlets()) {
 			FriendlyURLMapper friendlyURLMapper =
 				portlet.getFriendlyURLMapperInstance();
@@ -665,9 +690,16 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 				continue;
 			}
 
-			return new PortletFriendlyURLMapperMatch(
+			portletFriendlyURLMapperMatch = new PortletFriendlyURLMapperMatch(
 				portlet, friendlyURLMapper, pos);
+
+			_portletFriendlyURLMapperMatchPortalCache.put(
+				url, portletFriendlyURLMapperMatch);
+
+			return portletFriendlyURLMapperMatch;
 		}
+
+		_portletFriendlyURLMapperMatchPortalCache.put(url, _NULL_HOLDER);
 
 		return null;
 	}
@@ -2841,6 +2873,9 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		}
 	}
 
+	private static final PortletFriendlyURLMapperMatch _NULL_HOLDER =
+		new PortletFriendlyURLMapperMatch(null, null, -1);
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortletLocalServiceImpl.class);
 
@@ -2860,6 +2895,9 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 	@BeanReference(type = LayoutLocalService.class)
 	private LayoutLocalService _layoutLocalService;
+
+	private PortalCache<String, PortletFriendlyURLMapperMatch>
+		_portletFriendlyURLMapperMatchPortalCache;
 
 	@BeanReference(type = PortletPreferencesLocalService.class)
 	private PortletPreferencesLocalService _portletPreferencesLocalService;
@@ -2911,6 +2949,8 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 							friendlyURLMapperRootPortletIds,
 							newFriendlyURLMapperRootPortletIds)) {
 
+						_portletFriendlyURLMapperMatchPortalCache.removeAll();
+
 						break;
 					}
 				}
@@ -2943,6 +2983,8 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 					if (_friendlyURLMapperRootPortletIds.compareAndSet(
 							friendlyURLMapperRootPortletIds,
 							newFriendlyURLMapperRootPortletIds)) {
+
+						_portletFriendlyURLMapperMatchPortalCache.removeAll();
 
 						break;
 					}
@@ -2984,6 +3026,8 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 				if (_friendlyURLMapperRootPortletIds.compareAndSet(
 						friendlyURLMapperRootPortletIds,
 						newFriendlyURLMapperRootPortletIds)) {
+
+					_portletFriendlyURLMapperMatchPortalCache.removeAll();
 
 					break;
 				}

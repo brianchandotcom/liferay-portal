@@ -11,7 +11,9 @@ import com.liferay.dispatch.executor.DispatchTaskClusterMode;
 import com.liferay.dispatch.internal.helper.DispatchTriggerHelper;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.service.DispatchTriggerLocalService;
+import com.liferay.portal.kernel.cluster.BaseClusterMasterTokenTransitionListener;
 import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
+import com.liferay.portal.kernel.cluster.ClusterMasterTokenTransitionListener;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Destination;
@@ -42,6 +44,14 @@ public class DispatchConfigurator {
 			new DestinationConfiguration(
 				DestinationConfiguration.DESTINATION_TYPE_PARALLEL,
 				DispatchConstants.EXECUTOR_DESTINATION_NAME);
+
+		if (_clusterMasterExecutor.isEnabled()) {
+			_dispatchClusterMasterTokenTransitionListener =
+				new DispatchClusterMasterTokenTransitionListener();
+
+			_clusterMasterExecutor.addClusterMasterTokenTransitionListener(
+				_dispatchClusterMasterTokenTransitionListener);
+		}
 
 		destinationConfiguration.setMaximumQueueSize(_MAXIMUM_QUEUE_SIZE);
 
@@ -78,6 +88,22 @@ public class DispatchConfigurator {
 		_serviceRegistration = bundleContext.registerService(
 			Destination.class, destination, properties);
 
+		_addScheduledJobs();
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_deleteScheduledJobs();
+
+		_serviceRegistration.unregister();
+
+		if (_clusterMasterExecutor.isEnabled()) {
+			_clusterMasterExecutor.removeClusterMasterTokenTransitionListener(
+				_dispatchClusterMasterTokenTransitionListener);
+		}
+	}
+
+	private void _addScheduledJobs() {
 		for (DispatchTrigger dispatchTrigger :
 				_dispatchTriggerLocalService.getDispatchTriggers(true)) {
 
@@ -102,8 +128,7 @@ public class DispatchConfigurator {
 		}
 	}
 
-	@Deactivate
-	protected void deactivate() {
+	private void _deleteScheduledJobs() {
 		for (DispatchTrigger dispatchTrigger :
 				_dispatchTriggerLocalService.getDispatchTriggers(true)) {
 
@@ -118,8 +143,6 @@ public class DispatchConfigurator {
 			_dispatchTriggerHelper.deleteSchedulerJob(
 				dispatchTrigger, dispatchTaskClusterMode.getStorageType());
 		}
-
-		_serviceRegistration.unregister();
 	}
 
 	private boolean _isSchedulable(
@@ -149,6 +172,9 @@ public class DispatchConfigurator {
 	@Reference
 	private DestinationFactory _destinationFactory;
 
+	private ClusterMasterTokenTransitionListener
+		_dispatchClusterMasterTokenTransitionListener;
+
 	@Reference
 	private DispatchTriggerHelper _dispatchTriggerHelper;
 
@@ -156,5 +182,20 @@ public class DispatchConfigurator {
 	private DispatchTriggerLocalService _dispatchTriggerLocalService;
 
 	private ServiceRegistration<Destination> _serviceRegistration;
+
+	private class DispatchClusterMasterTokenTransitionListener
+		extends BaseClusterMasterTokenTransitionListener {
+
+		@Override
+		protected void doMasterTokenAcquired() throws Exception {
+			_addScheduledJobs();
+		}
+
+		@Override
+		protected void doMasterTokenReleased() throws Exception {
+			_deleteScheduledJobs();
+		}
+
+	}
 
 }

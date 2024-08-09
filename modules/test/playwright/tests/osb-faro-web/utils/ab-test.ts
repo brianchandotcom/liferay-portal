@@ -9,7 +9,13 @@ export async function checkEmptyStateOnACSide(page: Page) {
 	await expect(page.getByText('There are no tests found.')).toBeVisible();
 }
 
-export async function clickOnActionButton({name, page}: {name: string, page: Page}) {
+export async function clickOnActionButton({
+	name,
+	page,
+}: {
+	name: string;
+	page: Page;
+}) {
 	const reviewTagA = await page.locator(
 		`xpath=//a[contains(text(),"${name}")]`
 	);

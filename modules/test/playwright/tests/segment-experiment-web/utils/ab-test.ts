@@ -5,14 +5,32 @@
 
 import {Page, expect} from '@playwright/test';
 
+export async function assertTerminatedABTest(page: Page) {
+	await expect(page.getByText('Terminated')).toBeVisible();
+
+	await expect(
+		page.getByText(
+			'The test has not gathered sufficient data to confidently determine a winner.'
+		)
+	).toBeVisible();
+
+	await expect(page.getByText('Create New Test')).toBeVisible();
+}
+
 export async function checkEmptyStateOnDXPSide(page: Page) {
 	await expect(page.getByText('Create Test')).toBeVisible();
 }
 
-export async function clickOnDeleteABTestModalButton(page: Page) {
+export async function clickOnABTestModalButton({
+	buttonName,
+	page,
+}: {
+	buttonName: string;
+	page: Page;
+}) {
 	const modalFooter = await page.locator('.modal-footer');
 
-	await modalFooter.getByText('Delete').click();
+	await modalFooter.getByText(buttonName).click();
 }
 
 export async function createABTest({name, page}: {name: string; page: Page}) {

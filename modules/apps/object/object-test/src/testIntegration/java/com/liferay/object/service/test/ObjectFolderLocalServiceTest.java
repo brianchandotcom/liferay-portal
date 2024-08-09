@@ -167,11 +167,9 @@ public class ObjectFolderLocalServiceTest {
 			objectFolder = _addObjectFolder(user);
 
 			ObjectDefinitionTestUtil.addCustomObjectDefinition(
-				objectFolder.getObjectFolderId(),
-				_objectDefinitionLocalService);
+				objectFolder.getObjectFolderId());
 			ObjectDefinitionTestUtil.addCustomObjectDefinition(
-				objectFolder.getObjectFolderId(),
-				_objectDefinitionLocalService);
+				objectFolder.getObjectFolderId());
 
 			Assert.assertNotNull(
 				_objectFolderLocalService.getObjectFolder(
@@ -205,9 +203,9 @@ public class ObjectFolderLocalServiceTest {
 		ObjectFolder objectFolder = _addObjectFolder(TestPropsValues.getUser());
 
 		ObjectDefinitionTestUtil.addCustomObjectDefinition(
-			objectFolder.getObjectFolderId(), _objectDefinitionLocalService);
+			objectFolder.getObjectFolderId());
 		ObjectDefinitionTestUtil.addCustomObjectDefinition(
-			objectFolder.getObjectFolderId(), _objectDefinitionLocalService);
+			objectFolder.getObjectFolderId());
 
 		int count =
 			_objectDefinitionLocalService.getObjectFolderObjectDefinitionsCount(

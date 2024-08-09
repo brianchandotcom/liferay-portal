@@ -110,7 +110,6 @@ public class ObjectViewLocalServiceTest {
 				"Test", null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,
-				_objectDefinitionLocalService,
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
 						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
@@ -226,7 +225,6 @@ public class ObjectViewLocalServiceTest {
 				"Test", null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				ObjectDefinitionConstants.SCOPE_SITE, null, 1,
-				_objectDefinitionLocalService,
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
 						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
@@ -397,7 +395,7 @@ public class ObjectViewLocalServiceTest {
 			listTypeDefinition.getListTypeDefinitionId());
 
 		return ObjectDefinitionTestUtil.addCustomObjectDefinition(
-			false, _objectDefinitionLocalService,
+			false,
 			Arrays.asList(
 				objectField,
 				ObjectFieldUtil.createObjectField(
@@ -651,7 +649,7 @@ public class ObjectViewLocalServiceTest {
 
 		ObjectDefinition objectDefinition1 =
 			ObjectDefinitionTestUtil.addCustomObjectDefinition(
-				false, _objectDefinitionLocalService,
+				false,
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
 						ObjectFieldConstants.BUSINESS_TYPE_TEXT,

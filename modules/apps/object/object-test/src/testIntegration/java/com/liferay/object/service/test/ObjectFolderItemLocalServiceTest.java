@@ -74,13 +74,13 @@ public class ObjectFolderItemLocalServiceTest {
 		_objectFolderC = _addObjectFolder();
 
 		_objectDefinition1 = ObjectDefinitionTestUtil.addCustomObjectDefinition(
-			_objectFolderA.getObjectFolderId(), _objectDefinitionLocalService);
+			_objectFolderA.getObjectFolderId());
 		_objectDefinition2 = ObjectDefinitionTestUtil.addCustomObjectDefinition(
-			_objectFolderB.getObjectFolderId(), _objectDefinitionLocalService);
+			_objectFolderB.getObjectFolderId());
 		_objectDefinition3 = ObjectDefinitionTestUtil.addCustomObjectDefinition(
-			_objectFolderA.getObjectFolderId(), _objectDefinitionLocalService);
+			_objectFolderA.getObjectFolderId());
 		_objectDefinition4 = ObjectDefinitionTestUtil.addCustomObjectDefinition(
-			_objectFolderC.getObjectFolderId(), _objectDefinitionLocalService);
+			_objectFolderC.getObjectFolderId());
 
 		ObjectRelationshipTestUtil.addObjectRelationship(
 			_objectRelationshipLocalService, _objectDefinition1,
@@ -147,8 +147,7 @@ public class ObjectFolderItemLocalServiceTest {
 
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionTestUtil.addCustomObjectDefinition(
-				objectFolder.getObjectFolderId(),
-				_objectDefinitionLocalService);
+				objectFolder.getObjectFolderId());
 
 		_assertObjectFolderItems(
 			new Long[] {objectDefinition.getObjectDefinitionId()},
@@ -170,7 +169,7 @@ public class ObjectFolderItemLocalServiceTest {
 		objectFolder = _addObjectFolder();
 
 		objectDefinition = ObjectDefinitionTestUtil.addCustomObjectDefinition(
-			objectFolder.getObjectFolderId(), _objectDefinitionLocalService);
+			objectFolder.getObjectFolderId());
 
 		_assertObjectFolderItems(
 			new Long[] {objectDefinition.getObjectDefinitionId()},

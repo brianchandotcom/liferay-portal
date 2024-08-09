@@ -72,8 +72,8 @@ public class ObjectLayoutLocalServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_objectDefinition = ObjectDefinitionTestUtil.addCustomObjectDefinition(
-			_objectDefinitionLocalService);
+		_objectDefinition =
+			ObjectDefinitionTestUtil.addCustomObjectDefinition();
 	}
 
 	@Test
@@ -98,7 +98,6 @@ public class ObjectLayoutLocalServiceTest {
 				"Test", null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				ObjectDefinitionConstants.SCOPE_SITE, null, 1,
-				_objectDefinitionLocalService,
 				Collections.singletonList(
 					ObjectFieldUtil.createObjectField(
 						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
@@ -117,8 +116,8 @@ public class ObjectLayoutLocalServiceTest {
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			_objectDefinition.getObjectDefinitionId());
 
-		_objectDefinition = ObjectDefinitionTestUtil.addCustomObjectDefinition(
-			_objectDefinitionLocalService);
+		_objectDefinition =
+			ObjectDefinitionTestUtil.addCustomObjectDefinition();
 
 		_objectDefinition.setStorageType(RandomTestUtil.randomString());
 
@@ -153,8 +152,8 @@ public class ObjectLayoutLocalServiceTest {
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			_objectDefinition.getObjectDefinitionId());
 
-		_objectDefinition = ObjectDefinitionTestUtil.addCustomObjectDefinition(
-			_objectDefinitionLocalService);
+		_objectDefinition =
+			ObjectDefinitionTestUtil.addCustomObjectDefinition();
 
 		_objectDefinition.setEnableCategorization(false);
 
@@ -188,8 +187,8 @@ public class ObjectLayoutLocalServiceTest {
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			_objectDefinition.getObjectDefinitionId());
 
-		_objectDefinition = ObjectDefinitionTestUtil.addCustomObjectDefinition(
-			_objectDefinitionLocalService);
+		_objectDefinition =
+			ObjectDefinitionTestUtil.addCustomObjectDefinition();
 
 		AssertUtils.assertFailure(
 			ObjectLayoutBoxCategorizationTypeException.class,
@@ -223,8 +222,8 @@ public class ObjectLayoutLocalServiceTest {
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			_objectDefinition.getObjectDefinitionId());
 
-		_objectDefinition = ObjectDefinitionTestUtil.addCustomObjectDefinition(
-			_objectDefinitionLocalService);
+		_objectDefinition =
+			ObjectDefinitionTestUtil.addCustomObjectDefinition();
 
 		AssertUtils.assertFailure(
 			ObjectLayoutBoxCategorizationTypeException.class,
@@ -284,8 +283,8 @@ public class ObjectLayoutLocalServiceTest {
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			_objectDefinition.getObjectDefinitionId());
 
-		_objectDefinition = ObjectDefinitionTestUtil.addCustomObjectDefinition(
-			_objectDefinitionLocalService);
+		_objectDefinition =
+			ObjectDefinitionTestUtil.addCustomObjectDefinition();
 
 		AssertUtils.assertFailure(
 			ObjectLayoutBoxCategorizationTypeException.class,
@@ -363,7 +362,6 @@ public class ObjectLayoutLocalServiceTest {
 				"Test", null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				ObjectDefinitionConstants.SCOPE_SITE, null, 1,
-				_objectDefinitionLocalService,
 				Collections.singletonList(
 					ObjectFieldUtil.createObjectField(
 						ObjectFieldConstants.BUSINESS_TYPE_TEXT,

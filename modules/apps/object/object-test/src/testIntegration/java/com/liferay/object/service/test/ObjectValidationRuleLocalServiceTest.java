@@ -96,7 +96,7 @@ public class ObjectValidationRuleLocalServiceTest {
 	@Before
 	public void setUp() throws Exception {
 		_objectDefinition = ObjectDefinitionTestUtil.addCustomObjectDefinition(
-			false, _objectDefinitionLocalService,
+			false,
 			Arrays.asList(
 				new DateObjectFieldBuilder(
 				).labelMap(

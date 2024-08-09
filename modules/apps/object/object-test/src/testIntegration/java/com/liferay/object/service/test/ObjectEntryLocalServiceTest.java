@@ -232,7 +232,7 @@ public class ObjectEntryLocalServiceTest {
 	public void setUp() throws Exception {
 		_draftObjectDefinition =
 			ObjectDefinitionTestUtil.addCustomObjectDefinition(
-				false, _objectDefinitionLocalService,
+				false,
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
 						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
@@ -2408,7 +2408,7 @@ public class ObjectEntryLocalServiceTest {
 
 		ObjectDefinition draftObjectDefinition =
 			ObjectDefinitionTestUtil.addCustomObjectDefinition(
-				false, _objectDefinitionLocalService,
+				false,
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
 						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
@@ -3991,8 +3991,7 @@ public class ObjectEntryLocalServiceTest {
 
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionTestUtil.addCustomObjectDefinition(
-				enableLocalization, _objectDefinitionLocalService,
-				objectFields);
+				enableLocalization, objectFields);
 
 		return _objectDefinitionLocalService.publishCustomObjectDefinition(
 			TestPropsValues.getUserId(),

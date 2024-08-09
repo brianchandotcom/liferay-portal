@@ -79,15 +79,13 @@ public class TreeTestUtil {
 			ObjectDefinitionLocalService objectDefinitionLocalService,
 			ObjectRelationshipLocalService objectRelationshipLocalService,
 			TreeFactory treeFactory)
-		throws PortalException {
+		throws Exception {
 
 		ObjectDefinition objectDefinitionA =
-			ObjectDefinitionTestUtil.addCustomObjectDefinition(
-				"A", objectDefinitionLocalService);
+			ObjectDefinitionTestUtil.addCustomObjectDefinition("A");
 
 		ObjectDefinition objectDefinitionAA =
-			ObjectDefinitionTestUtil.addCustomObjectDefinition(
-				"AA", objectDefinitionLocalService);
+			ObjectDefinitionTestUtil.addCustomObjectDefinition("AA");
 
 		bind(
 			objectDefinitionLocalService,
@@ -97,16 +95,13 @@ public class TreeTestUtil {
 					objectDefinitionAA),
 				ObjectRelationshipTestUtil.addObjectRelationship(
 					objectRelationshipLocalService, objectDefinitionAA,
-					ObjectDefinitionTestUtil.addCustomObjectDefinition(
-						"AAA", objectDefinitionLocalService)),
+					ObjectDefinitionTestUtil.addCustomObjectDefinition("AAA")),
 				ObjectRelationshipTestUtil.addObjectRelationship(
 					objectRelationshipLocalService, objectDefinitionAA,
-					ObjectDefinitionTestUtil.addCustomObjectDefinition(
-						"AAB", objectDefinitionLocalService)),
+					ObjectDefinitionTestUtil.addCustomObjectDefinition("AAB")),
 				ObjectRelationshipTestUtil.addObjectRelationship(
 					objectRelationshipLocalService, objectDefinitionA,
-					ObjectDefinitionTestUtil.addCustomObjectDefinition(
-						"AB", objectDefinitionLocalService))));
+					ObjectDefinitionTestUtil.addCustomObjectDefinition("AB"))));
 
 		return treeFactory.createObjectDefinitionTree(
 			objectDefinitionA.getObjectDefinitionId());

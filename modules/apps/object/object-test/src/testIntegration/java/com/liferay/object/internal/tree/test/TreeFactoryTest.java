@@ -10,14 +10,11 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.test.util.TreeTestUtil;
 import com.liferay.object.tree.TreeFactory;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-
-import javax.portlet.PortletException;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -37,7 +34,7 @@ public class TreeFactoryTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testCreate() throws PortalException, PortletException {
+	public void testCreate() throws Exception {
 		TreeTestUtil.assertObjectDefinitionTree(
 			LinkedHashMapBuilder.put(
 				"A", new String[] {"AA", "AB"}

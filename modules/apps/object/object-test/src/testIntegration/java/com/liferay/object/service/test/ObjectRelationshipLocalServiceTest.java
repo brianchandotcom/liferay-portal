@@ -569,10 +569,8 @@ public class ObjectRelationshipLocalServiceTest {
 		ObjectRelationship objectRelationship2 =
 			ObjectRelationshipTestUtil.addObjectRelationship(
 				_objectRelationshipLocalService,
-				ObjectDefinitionTestUtil.addCustomObjectDefinition(
-					"A", _objectDefinitionLocalService),
-				ObjectDefinitionTestUtil.addCustomObjectDefinition(
-					"AA", _objectDefinitionLocalService),
+				ObjectDefinitionTestUtil.addCustomObjectDefinition("A"),
+				ObjectDefinitionTestUtil.addCustomObjectDefinition("AA"),
 				ObjectRelationshipConstants.DELETION_TYPE_PREVENT);
 
 		TreeTestUtil.bind(
@@ -750,7 +748,6 @@ public class ObjectRelationshipLocalServiceTest {
 				ObjectDefinitionTestUtil.getRandomName(), null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,
-				_objectDefinitionLocalService,
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
 						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
@@ -777,7 +774,7 @@ public class ObjectRelationshipLocalServiceTest {
 
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionTestUtil.addCustomObjectDefinition(
-				false, _objectDefinitionLocalService,
+				false,
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
 						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
@@ -1013,7 +1010,7 @@ public class ObjectRelationshipLocalServiceTest {
 
 		ObjectDefinition relatedObjectDefinition =
 			ObjectDefinitionTestUtil.addCustomObjectDefinition(
-				false, _objectDefinitionLocalService,
+				false,
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
 						ObjectFieldConstants.BUSINESS_TYPE_TEXT,

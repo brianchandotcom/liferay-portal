@@ -13,13 +13,13 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.related.models.ObjectRelatedModelsProvider;
 import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistry;
-import com.liferay.object.related.models.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.related.models.test.util.ObjectEntryTestUtil;
 import com.liferay.object.related.models.test.util.ObjectRelationshipTestUtil;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
@@ -56,7 +56,7 @@ public abstract class BaseSystemObjectRelatedModelsProviderTestCase {
 
 	@Before
 	public void setUp() throws Exception {
-		_objectDefinition = ObjectDefinitionTestUtil.addObjectDefinition();
+		_objectDefinition = ObjectDefinitionTestUtil.publishObjectDefinition();
 		_systemObjectDefinition = getSystemObjectDefinition();
 
 		PermissionThreadLocal.setPermissionChecker(

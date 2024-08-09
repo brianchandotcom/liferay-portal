@@ -70,8 +70,7 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommandTest {
 				TestPropsValues.getCompanyId(), "C_AAA");
 
 		ObjectDefinition objectDefinitionAAAA =
-			ObjectDefinitionTestUtil.addCustomObjectDefinition(
-				"AAAA", _objectDefinitionLocalService);
+			ObjectDefinitionTestUtil.addCustomObjectDefinition("AAAA");
 
 		ObjectRelationship objectRelationshipAAA_AAAA =
 			_objectRelationshipLocalService.addObjectRelationship(
@@ -188,8 +187,7 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommandTest {
 		// Object definition, not hierarchical structure
 
 		ObjectDefinition objectDefinitionBBB =
-			ObjectDefinitionTestUtil.addCustomObjectDefinition(
-				"BBB", _objectDefinitionLocalService);
+			ObjectDefinitionTestUtil.addCustomObjectDefinition("BBB");
 
 		ObjectRelationship objectRelationshipBBB_AAAA =
 			_objectRelationshipLocalService.addObjectRelationship(
@@ -228,8 +226,7 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommandTest {
 
 		ObjectDefinition childObjectDefinition1 =
 			ObjectDefinitionTestUtil.addCustomObjectDefinition(
-				ObjectDefinitionTestUtil.getRandomName(),
-				_objectDefinitionLocalService);
+				ObjectDefinitionTestUtil.getRandomName());
 
 		_objectDefinitionLocalService.publishCustomObjectDefinition(
 			TestPropsValues.getUserId(),
@@ -237,8 +234,7 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommandTest {
 
 		ObjectDefinition parentObjectDefinition1 =
 			ObjectDefinitionTestUtil.addCustomObjectDefinition(
-				ObjectDefinitionTestUtil.getRandomName(),
-				_objectDefinitionLocalService);
+				ObjectDefinitionTestUtil.getRandomName());
 
 		ObjectRelationship objectRelationship1 =
 			ObjectRelationshipTestUtil.addObjectRelationship(
@@ -259,12 +255,10 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommandTest {
 
 		ObjectDefinition objectDefinition1 =
 			ObjectDefinitionTestUtil.addCustomObjectDefinition(
-				ObjectDefinitionTestUtil.getRandomName(),
-				_objectDefinitionLocalService);
+				ObjectDefinitionTestUtil.getRandomName());
 		ObjectDefinition objectDefinition2 =
 			ObjectDefinitionTestUtil.addCustomObjectDefinition(
-				ObjectDefinitionTestUtil.getRandomName(),
-				_objectDefinitionLocalService);
+				ObjectDefinitionTestUtil.getRandomName());
 
 		ObjectRelationship objectRelationship2 =
 			_objectRelationshipLocalService.addObjectRelationship(
@@ -290,13 +284,11 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommandTest {
 
 		ObjectDefinition childObjectDefinition2 =
 			ObjectDefinitionTestUtil.addCustomObjectDefinition(
-				ObjectDefinitionTestUtil.getRandomName(),
-				_objectDefinitionLocalService);
+				ObjectDefinitionTestUtil.getRandomName());
 
 		ObjectDefinition parentObjectDefinition2 =
 			ObjectDefinitionTestUtil.addCustomObjectDefinition(
-				ObjectDefinitionTestUtil.getRandomName(),
-				_objectDefinitionLocalService);
+				ObjectDefinitionTestUtil.getRandomName());
 
 		_objectDefinitionLocalService.publishCustomObjectDefinition(
 			TestPropsValues.getUserId(),
@@ -321,8 +313,7 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommandTest {
 
 		ObjectDefinition objectDefinition3 =
 			ObjectDefinitionTestUtil.addCustomObjectDefinition(
-				ObjectDefinitionTestUtil.getRandomName(),
-				_objectDefinitionLocalService);
+				ObjectDefinitionTestUtil.getRandomName());
 
 		ObjectRelationship objectRelationship4 =
 			ObjectRelationshipTestUtil.addObjectRelationship(

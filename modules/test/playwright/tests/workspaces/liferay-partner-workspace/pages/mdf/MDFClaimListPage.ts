@@ -5,7 +5,7 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import {PARTNER_SITE_FRIENLY_URL_PATH} from '../../../utils/constants';
+import {PARTNER_SITE_FRIENLY_URL_PATH} from '../../utils/constants';
 
 export class MDFClaimListPage {
 	readonly actionButton: Locator;
@@ -87,19 +87,12 @@ export class MDFClaimListPage {
 			.click();
 	}
 
-	async filterMDFClaimByPartner(partner: string) {
-		await this.filterButton.click();
-		await this.activityPartnerButton.click();
-		await this.showMoreButton.click();
-		await this.page.getByLabel(partner).check();
-		await this.applyFilterButton.click();
-	}
-
-	async filterMDFClaimByPeriod(
+	async filterByDateSubmitted(
 		dateSubmittedAfterDate: string,
 		dateSubmittedBeforeDate: string
 	) {
 		await this.filterButton.click();
+
 		await this.dateSubmittedButton.click();
 
 		await this.dateSubmittedAfterDateInput.fill(dateSubmittedAfterDate);
@@ -108,58 +101,67 @@ export class MDFClaimListPage {
 		await this.applyFilterButton.click();
 	}
 
-	async filterMDFCLaimByStatus(status: string) {
+	async filterByPartner(partner: string) {
 		await this.filterButton.click();
-		await this.claimStatusButton.click();
 
-		await this.page.getByLabel(status).check();
+		await this.activityPartnerButton.click();
+
+		await this.showMoreButton.click();
+
+		await this.page.getByLabel(partner).check();
+
 		await this.applyFilterButton.click();
 	}
 
-	async filterUsingSearchInput(text: string) {
+	async filterBySearchInput(text: string) {
 		await this.searchInput.click();
+
 		await this.searchInput.fill(text);
+
 		await this.searchInput.press('Enter');
 	}
 
-	async getCampaignName() {
-		return this.page.locator('td:nth-child(4)').first();
+	async filterByStatus(status: string) {
+		await this.filterButton.click();
+
+		await this.claimStatusButton.click();
+
+		await this.page.getByLabel(status).check();
+
+		await this.applyFilterButton.click();
 	}
 
-	async getClaimed(claimed: string) {
-		return this.page.getByRole('cell', {name: claimed});
+	async getRenderedCampaignName(campaignName: string) {
+		return this.page.getByRole('cell', {name: campaignName}).first();
 	}
 
-	async getsubmitedDate(submitDate: string) {
-		return this.page.getByRole('cell', {name: submitDate}).first();
+	async getRenderedClaimed(claimed: string) {
+		return this.page.getByRole('cell', {name: claimed}).first();
 	}
 
-	async getGeneratedDataFromRequest(companyName: string) {
-		const row = this.page.locator('tr').filter({hasText: companyName});
-		const claimed = await row.locator('td').nth(0).innerText();
-		const submitDate = await row.locator('td').nth(8).innerText();
-		const status = await row.locator('td').nth(3).innerText();
-
-		return {claimed, status, submitDate};
+	async getRenderedDateSubmitted(dateSubmitted: string) {
+		return this.page.getByRole('cell', {name: dateSubmitted}).first();
 	}
 
-	async getPartnerName(partnerName: string) {
+	async getRenderedPartnerName(partnerName: string) {
 		return this.page.getByRole('cell', {name: partnerName}).first();
 	}
 
-	async getRequested(valueRequested: string) {
-		return this.page.getByRole('cell', {exact: true, name: valueRequested});
+	async getRenderedRequested(valueRequested: string) {
+		return this.page
+			.getByRole('cell', {exact: true, name: valueRequested})
+			.first();
 	}
 
-	async getRequestId(requestId: string) {
-		return this.page.getByRole('cell', {name: requestId});
+	async getRenderedRequestId(requestId: string) {
+		return this.page.getByRole('cell', {name: requestId}).first();
 	}
 
-	async getStartActPeriod(startActPeriod: string) {
+	async getRenderedStartActPeriod(startActPeriod: string) {
 		return this.page.getByRole('cell', {name: startActPeriod}).first();
 	}
 
-	async getStatus(status: string) {
+	async getRenderedStatus(status: string) {
 		return this.page.getByRole('cell', {name: status}).first();
 	}
 

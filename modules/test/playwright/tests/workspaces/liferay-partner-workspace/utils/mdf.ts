@@ -13,7 +13,7 @@ import {
 import {TAccount} from '../types/account';
 import {TMDFClaim, TMDFRequest, TMDFRequestDataFromRequest} from '../types/mdf';
 
-export function generateMDFRequestDataForm(
+export function generateMDFRequestFormData(
 	parnterAccount: TAccount
 ): TMDFRequest {
 	const mdfRequest = mdfRequestMock;
@@ -30,7 +30,16 @@ export function generateMDFRequestDataForm(
 	return mdfRequest;
 }
 
-export function generatedDataFromRequest(
+export function getGeneratedDataFromClaim(parnterAccount: TAccount): TMDFClaim {
+	const mdfClaimData = mdfClaimDataMock;
+
+	mdfClaimData.companyName = parnterAccount.name;
+	mdfClaimData.submitDate = new Date().toISOString();
+
+	return mdfClaimData;
+}
+
+export function getGeneratedDataFromRequest(
 	parnterAccount: TAccount
 ): TMDFRequestDataFromRequest {
 	const mdfRequestData = mdfRequestDataMock;
@@ -45,12 +54,4 @@ export function generatedDataFromRequest(
 	mdfRequestData.submitDate = new Date().toISOString();
 
 	return mdfRequestData;
-}
-
-export function generatedDataFromClaim(parnterAccount: TAccount): TMDFClaim {
-	const mdfClaimData = mdfClaimDataMock;
-	mdfClaimData.companyName = parnterAccount.name;
-	mdfClaimData.submitDate = new Date().toISOString();
-
-	return mdfClaimData;
 }

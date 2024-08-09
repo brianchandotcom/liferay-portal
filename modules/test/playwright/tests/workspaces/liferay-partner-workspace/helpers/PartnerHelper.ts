@@ -54,6 +54,21 @@ export class PartnerHelper {
 		}
 	}
 
+	async createMDFCLaim(mdfClaim: TMDFClaim) {
+		try {
+			const mdfClaimData = await this.apiHelpers.post('/o/c/mdfclaims', {
+				data: mdfClaim,
+			});
+
+			return mdfClaimData;
+		}
+		catch (error) {
+			console.error('Error when trying to create an MDF Claim', error);
+
+			throw error;
+		}
+	}
+
 	async createMDFRequest(mdfRequest: TMDFRequest) {
 		try {
 			const mdfRequestData = await this.apiHelpers.post(
@@ -67,21 +82,6 @@ export class PartnerHelper {
 		}
 		catch (error) {
 			console.error('Error when trying to create an MDF Request', error);
-
-			throw error;
-		}
-	}
-
-	async createMDFCLaim(mdfClaim: TMDFClaim) {
-		try {
-			const mdfClaimData = await this.apiHelpers.post('/o/c/mdfclaims', {
-				data: mdfClaim,
-			});
-
-			return mdfClaimData;
-		}
-		catch (error) {
-			console.error('Error when trying to create an MDF Claim', error);
 
 			throw error;
 		}

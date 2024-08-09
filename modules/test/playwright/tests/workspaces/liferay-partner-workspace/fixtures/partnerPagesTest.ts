@@ -7,9 +7,9 @@ import {mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../../fixtures/apiHelpersTest';
 import {HomePage} from '../pages/HomePage';
+import {MDFClaimListPage} from '../pages/mdf/MDFClaimListPage';
 import {MDFRequestFormPage} from '../pages/mdf/MDFRequestFormPage';
 import {MDFRequestListPage} from '../pages/mdf/MDFRequestListPage';
-import {MDFClaimListPage} from '../pages/mdf/mdfClaim/MDFClaimListPage';
 import {partnerHelperTest} from './partnerHelperTest';
 
 const test = mergeTests(apiHelpersTest, partnerHelperTest);

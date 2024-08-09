@@ -7,11 +7,28 @@ export enum EAccountRoles {
 	PARTNER_MANAGER = '[Account] Partner Manager (PM)',
 }
 
+export enum EMDFClaimStatuses {
+	APPROVED = 'Approved',
+	DRAFT = 'Draft',
+	IN_DIRECTOR_REVIEW = 'In Director Review',
+	IN_FINANCE_REVIEW = 'In Finance Review',
+	MORE_INFO_REQUESTED = 'More Info Requested',
+	PENDING_MARKETING_REVIEW = 'Pending Marketing Review',
+}
+
 export enum EMDFRequestLiferayBusinessSalesGoals {
 	LEAD_GENERATION = 'leadGeneration',
 	NURTURE_EXISTING_PROSPECTS = 'nurtureExistingProspects',
 	OTHER = 'other',
 	THOUGHT_LEADERSHIP = 'thoughtLeadership',
+}
+
+export enum EMDFRequestStatuses {
+	APPROVED = 'Approved',
+	DRAFT = 'Draft',
+	MARKETING_DIRECTOR_REVIEW = 'Marketing Director Review',
+	MORE_INFO_REQUESTED = 'More Info Requested',
+	PENDING_MARKETING_REVIEW = 'Pending Marketing Review',
 }
 
 export enum EMDFRequestTargetAudienceRoles {

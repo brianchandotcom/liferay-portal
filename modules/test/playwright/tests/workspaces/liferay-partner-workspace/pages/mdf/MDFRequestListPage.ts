@@ -93,19 +93,12 @@ export class MDFRequestListPage {
 		await this.newRequestButton.click();
 	}
 
-	async filterMDFRequestByPartner(partner: string) {
-		await this.filterButton.click();
-		await this.activityPartnerButton.click();
-
-		await this.page.getByLabel(partner).check();
-		await this.applyFilterButton.click();
-	}
-
-	async filterMDFRequestByPeriod(
+	async filterByActivityPeriod(
 		activityAfterDate: string,
 		activityBeforeDate: string
 	) {
 		await this.filterButton.click();
+
 		await this.activityPeriodButton.click();
 
 		await this.activityAfterDateInput.fill(activityAfterDate);
@@ -114,34 +107,67 @@ export class MDFRequestListPage {
 		await this.applyFilterButton.click();
 	}
 
-	async filterMDFRequestByStatus(status: string) {
+	async filterByPartner(partner: string) {
 		await this.filterButton.click();
-		await this.activityStatusButton.click();
 
-		await this.page.getByLabel(status).check();
+		await this.activityPartnerButton.click();
+
+		await this.page.getByLabel(partner).last().check();
+
 		await this.applyFilterButton.click();
 	}
 
-	async filterUsingSearchInput(text: string) {
+	async filterBySearchInput(text: string) {
 		await this.searchInput.click();
+
 		await this.searchInput.fill(text);
+
 		await this.searchInput.press('Enter');
 	}
 
-	async getCampaignName() {
-		return this.page.locator('td:nth-child(4)').first();
+	async filterByStatus(status: string) {
+		await this.filterButton.click();
+
+		await this.activityStatusButton.click();
+
+		await this.page.getByLabel(status).check();
+
+		await this.applyFilterButton.click();
 	}
 
-	async getClaimed(claimed: string) {
-		return this.page.getByRole('cell', {name: claimed});
+	async getRenderedCampaignName(campaignName: string) {
+		return this.page.getByRole('cell', {name: campaignName}).first();
 	}
 
-	async getEndActPeriod(endActPeriod: string) {
+	async getRenderedClaimed(claimed: string) {
+		return this.page.getByRole('cell', {name: claimed}).first();
+	}
+
+	async getRenderedDateSubmitted(dateSubmitted: string) {
+		return this.page.getByRole('cell', {name: dateSubmitted}).first();
+	}
+
+	async getRenderedEndActPeriod(endActPeriod: string) {
 		return this.page.getByRole('cell', {name: endActPeriod}).first();
 	}
 
-	async getGeneratedDataFromRequest(campaignName: string) {
+	async getRenderedPartnerName(partnerName: string) {
+		return this.page.getByRole('cell', {name: partnerName}).first();
+	}
+
+	async getRenderedRequested(valueRequested: string) {
+		return this.page
+			.getByRole('cell', {exact: true, name: valueRequested})
+			.first();
+	}
+
+	async getRenderedRequestId(requestId: string) {
+		return this.page.getByRole('cell', {name: requestId}).first();
+	}
+
+	async getRenderedRow(campaignName: string) {
 		const row = this.page.locator('tr').filter({hasText: campaignName});
+
 		const claimed = await row.locator('td').nth(1).innerText();
 		const requestId = await row.locator('td').nth(0).innerText();
 		const status = await row.locator('td').nth(2).innerText();
@@ -150,23 +176,11 @@ export class MDFRequestListPage {
 		return {claimed, requestId, status, submitDate};
 	}
 
-	async getPartnerName(partnerName: string) {
-		return this.page.getByRole('cell', {name: partnerName}).first();
-	}
-
-	async getRequested(valueRequested: string) {
-		return this.page.getByRole('cell', {exact: true, name: valueRequested});
-	}
-
-	async getRequestId(requestId: string) {
-		return this.page.getByRole('cell', {name: requestId});
-	}
-
-	async getStartActPeriod(startActPeriod: string) {
+	async getRenderedStartActPeriod(startActPeriod: string) {
 		return this.page.getByRole('cell', {name: startActPeriod}).first();
 	}
 
-	async getStatus(status: string) {
+	async getRenderedStatus(status: string) {
 		return this.page.getByRole('cell', {name: status}).first();
 	}
 

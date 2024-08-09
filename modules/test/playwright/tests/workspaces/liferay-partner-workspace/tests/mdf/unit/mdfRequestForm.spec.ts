@@ -10,7 +10,7 @@ import {accountPlatinumMock} from '../../../mocks/accountMock';
 import {userAdminMock} from '../../../mocks/userMock';
 import {TAccount} from '../../../types/account';
 import {EAccountRoles} from '../../../utils/constants';
-import {generateMDFRequestDataForm} from '../../../utils/mdf';
+import {generateMDFRequestFormData} from '../../../utils/mdf';
 
 export const test = mergeTests(partnerPagesTest);
 
@@ -49,10 +49,11 @@ test.describe('MDF Request Form', () => {
 	});
 
 	test('Create a New MDF Request', async ({mdfRequestFormPage}) => {
-		const mdfRequestData = generateMDFRequestDataForm(accountPlatinum);
+		const mdfRequestFormData = generateMDFRequestFormData(accountPlatinum);
 
-		await mdfRequestFormPage.createNewRequest(mdfRequestData);
-		await mdfRequestFormPage.reviewMDFRequest(mdfRequestData);
+		await mdfRequestFormPage.createNewRequest(mdfRequestFormData);
+
+		await mdfRequestFormPage.reviewMDFRequest(mdfRequestFormData);
 
 		await mdfRequestFormPage.submitButton.click();
 

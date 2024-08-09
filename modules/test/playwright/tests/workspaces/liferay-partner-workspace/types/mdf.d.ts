@@ -13,6 +13,12 @@ import {
 	EMDFRequestTargetMarkets,
 } from '../utils/constants';
 
+export type TMDFClaim = {
+	companyName: string;
+	id?: number;
+	submitDate: string;
+};
+
 export type TMDFRequestActivityExpense = {
 	type: EMDFRequestActivityExpenseTypes;
 	value: number;
@@ -57,10 +63,4 @@ export type TMDFRequestDataFromRequest = TMDFRequest & {
 	maxDateActivity: string;
 	minDateActivity: string;
 	overallCampaignName: string;
-};
-
-export type TMDFClaim = {
-	companyName: string;
-	id?: number;
-	submitDate: string;
 };

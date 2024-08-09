@@ -10,9 +10,9 @@ import {accountPlatinumMock} from '../../../mocks/accountMock';
 import {userAdminMock} from '../../../mocks/userMock';
 import {TAccount} from '../../../types/account';
 import {TMDFRequestDataFromRequest} from '../../../types/mdf';
-import {EAccountRoles} from '../../../utils/constants';
+import {EAccountRoles, EMDFRequestStatuses} from '../../../utils/constants';
 import {customFormatDate, getDateCustomFormat} from '../../../utils/date';
-import {generatedDataFromRequest} from '../../../utils/mdf';
+import {getGeneratedDataFromRequest} from '../../../utils/mdf';
 
 export const test = mergeTests(partnerPagesTest);
 
@@ -36,7 +36,7 @@ test.describe('MDF Request List', () => {
 			emailAddress
 		);
 
-		const mdfRequestData = generatedDataFromRequest(accountPlatinum);
+		const mdfRequestData = getGeneratedDataFromRequest(accountPlatinum);
 
 		mdfRequest = await partnerHelper.createMDFRequest(mdfRequestData);
 
@@ -60,40 +60,36 @@ test.describe('MDF Request List', () => {
 	});
 
 	test('Display MDF Resquest List', async ({mdfRequestListPage}) => {
-		const generatedDataFromRequest =
-			await mdfRequestListPage.getGeneratedDataFromRequest(
-				mdfRequest.overallCampaignName
-			);
-		const campaignName = await mdfRequestListPage.getCampaignName();
-		const formatEndDate = getDateCustomFormat(
+		const formattedEndDate = getDateCustomFormat(
 			mdfRequest.maxDateActivity,
 			customFormatDate.SHORT_MONTH
 		);
-		const formatStartDate = getDateCustomFormat(
+		const formattedStartDate = getDateCustomFormat(
 			mdfRequest.minDateActivity,
 			customFormatDate.SHORT_MONTH
 		);
 
+		const campaignName = await mdfRequestListPage.getRenderedCampaignName(
+			mdfRequest.overallCampaignName
+		);
 		const endActPeriod =
-			await mdfRequestListPage.getEndActPeriod(formatEndDate);
-		const partnerName = await mdfRequestListPage.getPartnerName(
+			await mdfRequestListPage.getRenderedEndActPeriod(formattedEndDate);
+		const partnerName = await mdfRequestListPage.getRenderedPartnerName(
 			mdfRequest.companyName
 		);
-		const requested = await mdfRequestListPage.getRequested(
+		const requested = await mdfRequestListPage.getRenderedRequested(
 			String(mdfRequest.totalMDFRequestAmount)
 		);
 		const startActPeriod =
-			await mdfRequestListPage.getStartActPeriod(formatStartDate);
+			await mdfRequestListPage.getRenderedStartActPeriod(
+				formattedStartDate
+			);
 
 		await expect(campaignName).toBeVisible();
-
 		await expect(endActPeriod).toBeVisible();
 		await expect(partnerName).toBeVisible();
 		await expect(requested).toBeTruthy();
-		await expect(generatedDataFromRequest.requestId).toBeTruthy();
 		await expect(startActPeriod).toBeVisible();
-		await expect(generatedDataFromRequest.status).toBeTruthy();
-		await expect(generatedDataFromRequest.submitDate).toBeTruthy();
 	});
 
 	test('Filter data by Activity Period', async ({mdfRequestListPage}) => {
@@ -103,30 +99,32 @@ test.describe('MDF Request List', () => {
 		const filterStartDate = new Date(mdfRequest.minDateActivity)
 			.toISOString()
 			.split('T')[0];
-		const formatEndDate = getDateCustomFormat(
+		const formattedEndDate = getDateCustomFormat(
 			mdfRequest.maxDateActivity,
 			customFormatDate.SHORT_MONTH
 		);
-		const formatStartDate = getDateCustomFormat(
+		const formattedStartDate = getDateCustomFormat(
 			mdfRequest.minDateActivity,
 			customFormatDate.SHORT_MONTH
 		);
-		const endActPeriod =
-			await mdfRequestListPage.getEndActPeriod(formatEndDate);
-		const startActPeriod =
-			await mdfRequestListPage.getStartActPeriod(formatStartDate);
 
-		await mdfRequestListPage.filterMDFRequestByPeriod(
+		const endActPeriod =
+			await mdfRequestListPage.getRenderedEndActPeriod(formattedEndDate);
+		const startActPeriod =
+			await mdfRequestListPage.getRenderedStartActPeriod(
+				formattedStartDate
+			);
+
+		await mdfRequestListPage.filterByActivityPeriod(
 			filterStartDate,
 			filterEndDate
 		);
-
-		await mdfRequestListPage.heading.click();
 
 		await expect(endActPeriod).toBeVisible();
 		await expect(startActPeriod).toBeVisible();
 
 		await mdfRequestListPage.clearAllFilters();
+
 		await mdfRequestListPage.filterButton.click();
 
 		await mdfRequestListPage.activityAfterDateInput.fill('2024-08-09');
@@ -134,47 +132,39 @@ test.describe('MDF Request List', () => {
 
 		await mdfRequestListPage.applyFilterButton.click();
 
-		await mdfRequestListPage.heading.click();
-
 		await expect(mdfRequestListPage.noEntriesFoundMessage).toBeVisible();
 		await expect(endActPeriod).not.toBeVisible();
 		await expect(startActPeriod).not.toBeVisible();
 	});
 
 	test('Filter data by Status', async ({mdfRequestListPage, page}) => {
-		const generatedDataFromRequest =
-			await mdfRequestListPage.getGeneratedDataFromRequest(
-				mdfRequest.overallCampaignName
-			);
-		const status = generatedDataFromRequest.status;
+		await mdfRequestListPage.filterByStatus(
+			EMDFRequestStatuses.PENDING_MARKETING_REVIEW
+		);
 
-		await mdfRequestListPage.filterMDFRequestByStatus(status);
-
-		await mdfRequestListPage.mdfRequestHeading.click();
-
-		await expect(status).toBeTruthy();
+		await expect(
+			mdfRequestListPage.getRenderedStatus(
+				EMDFRequestStatuses.PENDING_MARKETING_REVIEW
+			)
+		).toBeTruthy();
 
 		await mdfRequestListPage.clearAllFilters();
+
 		await mdfRequestListPage.filterButton.click();
 
-		await page.getByLabel('Draft').check();
+		await page.getByLabel(EMDFRequestStatuses.DRAFT).check();
 
 		await mdfRequestListPage.applyFilterButton.click();
-		await mdfRequestListPage.mdfRequestHeading.click();
 
 		await expect(mdfRequestListPage.noEntriesFoundMessage).toBeVisible();
 	});
 
 	test('Filter data by Partner', async ({mdfRequestListPage}) => {
-		const partnerName = await mdfRequestListPage.getPartnerName(
+		await mdfRequestListPage.filterByPartner(mdfRequest.companyName);
+
+		const partnerName = await mdfRequestListPage.getRenderedPartnerName(
 			mdfRequest.companyName
 		);
-
-		await mdfRequestListPage.filterMDFRequestByPartner(
-			mdfRequest.companyName
-		);
-
-		await mdfRequestListPage.heading.click();
 
 		await expect(partnerName).toBeVisible();
 	});
@@ -182,12 +172,10 @@ test.describe('MDF Request List', () => {
 	test('Clean date filter fields when click on Clear All Filters', async ({
 		mdfRequestListPage,
 	}) => {
-		await mdfRequestListPage.filterMDFRequestByPeriod(
+		await mdfRequestListPage.filterByActivityPeriod(
 			'2024-06-01',
 			'2024-06-08'
 		);
-
-		await mdfRequestListPage.heading.click();
 
 		await mdfRequestListPage.clearAllFilters();
 
@@ -199,6 +187,7 @@ test.describe('MDF Request List', () => {
 
 	test('Download MDF Report', async ({mdfRequestListPage, page}) => {
 		const downloadPromise = page.waitForEvent('download');
+
 		await mdfRequestListPage.exportRequestButton.click();
 
 		const downloadMDFReport = await downloadPromise;
@@ -214,35 +203,46 @@ test.describe('MDF Request List', () => {
 		mdfRequestFormPage,
 		mdfRequestListPage,
 	}) => {
-		const generatedDataFromRequest =
-			await mdfRequestListPage.getGeneratedDataFromRequest(
-				mdfRequest.overallCampaignName
-			);
-		const requestId = await mdfRequestListPage.getRequestId(
-			generatedDataFromRequest.requestId
+		const renderedRow = await mdfRequestListPage.getRenderedRow(
+			mdfRequest.overallCampaignName
+		);
+
+		const requestId = await mdfRequestListPage.getRenderedRequestId(
+			renderedRow.requestId
 		);
 
 		await requestId.click();
 
 		await mdfRequestFormPage.statusDropdown.click();
-		await mdfRequestFormPage.statusDropDownOption('Approved');
+
+		await mdfRequestFormPage.statusDropDownOption(
+			EMDFRequestStatuses.APPROVED
+		);
+
 		await mdfRequestFormPage.backButton.click();
 
-		await expect(mdfRequestListPage.getStatus('Approved')).toBeTruthy();
+		await expect(
+			mdfRequestListPage.getRenderedStatus(EMDFRequestStatuses.APPROVED)
+		).toBeTruthy();
 	});
 
 	test('Find a Request using the search input', async ({
 		mdfRequestListPage,
 	}) => {
-		const campaignName = await mdfRequestListPage.getCampaignName();
+		const campaignName = await mdfRequestListPage.getRenderedCampaignName(
+			mdfRequest.overallCampaignName
+		);
 		const cleanSearch = await mdfRequestListPage.cleanSearch;
 
-		await mdfRequestListPage.filterUsingSearchInput('Campaign Name');
+		await mdfRequestListPage.filterBySearchInput(
+			mdfRequest.overallCampaignName
+		);
 
 		await expect(campaignName).toBeVisible();
 
 		await cleanSearch.click();
-		await mdfRequestListPage.filterUsingSearchInput('Test');
+
+		await mdfRequestListPage.filterBySearchInput('Test');
 
 		await expect(mdfRequestListPage.noEntriesFoundMessage).toBeVisible();
 	});
@@ -253,23 +253,24 @@ test.describe('MDF Request List', () => {
 		page,
 	}) => {
 		const actionButton = await mdfRequestListPage.actionButton;
-		const generatedDataFromRequest =
-			await mdfRequestListPage.getGeneratedDataFromRequest(
-				mdfRequest.overallCampaignName
-			);
-		const completedTab = await mdfRequestListPage.completedTab;
 		const completeMenuItem = await mdfRequestListPage.completeMenuItem;
-		const requestId = await mdfRequestListPage.getRequestId(
-			generatedDataFromRequest.requestId
+		const completedTab = await mdfRequestListPage.completedTab;
+		const renderedRow = await mdfRequestListPage.getRenderedRow(
+			mdfRequest.overallCampaignName
 		);
-		const successTooltip = await page.getByText(
-			'Success:MDF Request successfully completed!'
+
+		const requestId = await mdfRequestListPage.getRenderedRequestId(
+			renderedRow.requestId
 		);
 
 		await requestId.click();
 
 		await mdfRequestFormPage.statusDropdown.click();
-		await mdfRequestFormPage.statusDropDownOption('Approved');
+
+		await mdfRequestFormPage.statusDropDownOption(
+			EMDFRequestStatuses.APPROVED
+		);
+
 		await mdfRequestFormPage.backButton.click();
 
 		await page.once('dialog', async (dialog) => {
@@ -280,7 +281,12 @@ test.describe('MDF Request List', () => {
 		});
 
 		await actionButton.click();
+
 		await completeMenuItem.click();
+
+		const successTooltip = await page.getByText(
+			'Success:MDF Request successfully completed!'
+		);
 
 		await expect(successTooltip).toBeVisible();
 

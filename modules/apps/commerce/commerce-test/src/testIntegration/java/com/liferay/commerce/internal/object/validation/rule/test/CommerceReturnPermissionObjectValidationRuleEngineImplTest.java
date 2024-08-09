@@ -23,6 +23,7 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.validation.rule.ObjectValidationRuleEngine;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -30,7 +31,6 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -41,6 +41,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -50,7 +51,6 @@ import org.junit.runner.RunWith;
 /**
  * @author Crescenzo Rega
  */
-@FeatureFlags("LPD-10562")
 @RunWith(Arquillian.class)
 public class CommerceReturnPermissionObjectValidationRuleEngineImplTest
 	extends BaseObjectValidationRuleEngineImplTestCase {
@@ -65,6 +65,8 @@ public class CommerceReturnPermissionObjectValidationRuleEngineImplTest
 	@Before
 	@Override
 	public void setUp() throws Exception {
+		Assume.assumeTrue(FeatureFlagManagerUtil.isEnabled("LPD-10562"));
+
 		super.setUp();
 
 		CommerceShipment commerceShipment =

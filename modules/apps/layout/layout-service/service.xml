@@ -65,7 +65,8 @@
 			<finder-column name="classedModelExternalReferenceCode" />
 			<finder-column name="type" />
 		</finder>
-		<finder name="CN_CPK_CMERC_CK_CT_P" return-type="LayoutClassedModelUsage" unique="true">
+		<finder name="G_CN_CPK_CMERC_CK_CT_P" return-type="LayoutClassedModelUsage" unique="true">
+			<finder-column name="groupId" />
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 			<finder-column name="classedModelExternalReferenceCode" />

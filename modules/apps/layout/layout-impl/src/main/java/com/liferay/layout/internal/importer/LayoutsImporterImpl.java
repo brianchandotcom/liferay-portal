@@ -762,83 +762,6 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 		return utilityPageTemplateEntries;
 	}
 
-	private List<MasterPageEntry> _getMasterPageEntries(
-			List<LayoutsImporterResultEntry> layoutsImporterResultEntries,
-			ZipReader zipReader)
-		throws Exception {
-
-		List<MasterPageEntry> masterPageEntries = new ArrayList<>();
-
-		for (String entry : zipReader.getEntries()) {
-			if (!_isMasterPageFile(entry)) {
-				continue;
-			}
-
-			String content = zipReader.getEntryAsString(entry);
-
-			MasterPage masterPage = null;
-
-			try {
-				MasterPageValidator.validateMasterPage(content);
-
-				masterPage = _objectMapper.readValue(content, MasterPage.class);
-			}
-			catch (JSONValidatorException jsonValidatorException) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Invalid master page for: " + entry,
-						jsonValidatorException);
-				}
-
-				layoutsImporterResultEntries.add(
-					new LayoutsImporterResultEntry(
-						entry, LayoutsImporterResultEntry.Status.INVALID,
-						new LayoutsImporterResultEntry.ErrorMessage(
-							new String[] {entry},
-							"x-could-not-be-imported-because-its-master-page-" +
-								"is-invalid")));
-
-				continue;
-			}
-
-			try {
-				String pageDefinitionJSON = _getPageDefinitionJSON(
-					entry, zipReader);
-
-				PageDefinitionValidator.validatePageDefinition(
-					pageDefinitionJSON);
-
-				masterPageEntries.add(
-					new MasterPageEntry(
-						_getKey(
-							_MASTER_PAGE_ENTRY_KEY_DEFAULT, entry,
-							masterPage.getName()),
-						masterPage,
-						_objectMapper.readValue(
-							pageDefinitionJSON, PageDefinition.class),
-						_getThumbnail(entry, zipReader), entry));
-			}
-			catch (Exception exception) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Invalid page definition for: " + masterPage.getName(),
-						exception);
-				}
-
-				layoutsImporterResultEntries.add(
-					new LayoutsImporterResultEntry(
-						masterPage.getName(),
-						LayoutsImporterResultEntry.Status.INVALID,
-						new LayoutsImporterResultEntry.ErrorMessage(
-							new String[] {masterPage.getName()},
-							"x-could-not-be-imported-because-its-page-" +
-								"definition-is-invalid")));
-			}
-		}
-
-		return masterPageEntries;
-	}
-
 	private String _getPageDefinitionJSON(
 		String fileName, ZipReader zipReader) {
 
@@ -1705,29 +1628,55 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 	}
 
 	private void _processMasterLayoutPageTemplateEntries(
-			long groupId,
-			List<LayoutsImporterResultEntry> layoutsImporterResultEntries,
-			LayoutsImportStrategy layoutsImportStrategy,
-			boolean preserveItemIds, long userId, ZipReader zipReader)
-		throws Exception {
+		long groupId,
+		List<LayoutsImporterResultEntry> layoutsImporterResultEntries,
+		LayoutsImportStrategy layoutsImportStrategy, boolean preserveItemIds,
+		long userId, ZipReader zipReader) {
 
-		List<MasterPageEntry> masterPageEntries = _getMasterPageEntries(
-			layoutsImporterResultEntries, zipReader);
+		for (String entry : zipReader.getEntries()) {
+			if (!_isMasterPageFile(entry)) {
+				continue;
+			}
 
-		for (MasterPageEntry masterPageEntry : masterPageEntries) {
-			Callable<Void> callable = new MasterLayoutTemplatesImporterCallable(
-				groupId, layoutsImporterResultEntries, layoutsImportStrategy,
-				masterPageEntry, preserveItemIds, userId);
+			String content = zipReader.getEntryAsString(entry);
+
+			MasterPage masterPage = null;
 
 			try {
-				TransactionInvokerUtil.invoke(_transactionConfig, callable);
+				MasterPageValidator.validateMasterPage(content);
+
+				masterPage = _objectMapper.readValue(content, MasterPage.class);
 			}
-			catch (Throwable throwable) {
+			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(throwable, throwable);
+					_log.warn("Invalid master page for: " + entry, exception);
 				}
 
-				MasterPage masterPage = masterPageEntry.getMasterPage();
+				layoutsImporterResultEntries.add(
+					new LayoutsImporterResultEntry(
+						entry, LayoutsImporterResultEntry.Status.INVALID,
+						new LayoutsImporterResultEntry.ErrorMessage(
+							new String[] {entry},
+							"x-could-not-be-imported-because-its-master-page-" +
+								"is-invalid")));
+
+				continue;
+			}
+
+			String pageDefinitionJSON = null;
+
+			try {
+				pageDefinitionJSON = _getPageDefinitionJSON(entry, zipReader);
+
+				PageDefinitionValidator.validatePageDefinition(
+					pageDefinitionJSON);
+			}
+			catch (Exception exception) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Invalid page definition for: " + masterPage.getName(),
+						exception);
+				}
 
 				layoutsImporterResultEntries.add(
 					new LayoutsImporterResultEntry(
@@ -1735,6 +1684,40 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 						LayoutsImporterResultEntry.Status.INVALID,
 						new LayoutsImporterResultEntry.ErrorMessage(
 							new String[] {masterPage.getName()},
+							"x-could-not-be-imported-because-its-page-" +
+								"definition-is-invalid")));
+
+				continue;
+			}
+
+			try {
+				MasterPageEntry masterPageEntry = new MasterPageEntry(
+					_getKey(
+						_MASTER_PAGE_ENTRY_KEY_DEFAULT, entry,
+						masterPage.getName()),
+					masterPage,
+					_objectMapper.readValue(
+						pageDefinitionJSON, PageDefinition.class),
+					_getThumbnail(entry, zipReader), entry);
+
+				Callable<Void> callable =
+					new MasterLayoutTemplatesImporterCallable(
+						groupId, layoutsImporterResultEntries,
+						layoutsImportStrategy, masterPageEntry, preserveItemIds,
+						userId);
+
+				TransactionInvokerUtil.invoke(_transactionConfig, callable);
+			}
+			catch (Throwable throwable) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(throwable, throwable);
+				}
+
+				layoutsImporterResultEntries.add(
+					new LayoutsImporterResultEntry(
+						entry, LayoutsImporterResultEntry.Status.INVALID,
+						new LayoutsImporterResultEntry.ErrorMessage(
+							new String[] {entry},
 							"x-could-not-be-imported-because-of-invalid-" +
 								"values-in-its-page-definition")));
 			}

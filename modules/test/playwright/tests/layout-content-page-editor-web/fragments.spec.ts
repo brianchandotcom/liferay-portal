@@ -13,10 +13,6 @@ import {objectPagesTest} from '../../fixtures/objectPagesTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {pageManagementSiteTest} from '../../fixtures/pageManagementSiteTest';
 import {PageEditorPage} from '../../pages/layout-content-page-editor-web/PageEditorPage';
-import {
-	LEMON_BASKET_OBJECT_ERC,
-	LEMON_OBJECT_ERC,
-} from '../../setup/page-management-site/constants';
 import {checkAccessibility} from '../../utils/checkAccessibility';
 import {clickAndExpectToBeHidden} from '../../utils/clickAndExpectToBeHidden';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
@@ -25,6 +21,10 @@ import getRandomString from '../../utils/getRandomString';
 import {PORTLET_URLS} from '../../utils/portletUrls';
 import {journalPagesTest} from '../journal-web/fixtures/journalPagesTest';
 import {displayPageTemplatesPagesTest} from '../layout-page-template-admin-web/fixtures/displayPageTemplatesPagesTest';
+import {
+	LEMON_BASKET_OBJECT_ERC,
+	LEMON_OBJECT_ERC,
+} from '../setup/page-management-site/constants';
 import getFormContainerDefinition from './utils/getFormContainerDefinition';
 import getFragmentDefinition from './utils/getFragmentDefinition';
 import getPageDefinition from './utils/getPageDefinition';

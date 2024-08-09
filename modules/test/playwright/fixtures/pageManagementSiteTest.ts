@@ -6,7 +6,7 @@
 import {mergeTests} from '@playwright/test';
 
 import {ApiHelpers} from '../helpers/ApiHelpers';
-import {PAGE_MANAGEMENT_SITE_ERC} from '../setup/page-management-site/constants';
+import {PAGE_MANAGEMENT_SITE_ERC} from '../tests/setup/page-management-site/constants';
 import {backendPageTest} from './backendPageTest';
 
 const test = mergeTests(backendPageTest);

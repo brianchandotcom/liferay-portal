@@ -5,10 +5,6 @@
 
 import {defineConfig, devices} from '@playwright/test';
 
-import {
-	pageManagementSiteSetup,
-	pageManagementSiteTeardown,
-} from './setup/page-management-site/config';
 import {config as accountAdminWebConfig} from './tests/account-admin-web/config';
 import {config as analyticsSettingsWebConfig} from './tests/analytics-settings-web/config';
 import {config as analyticsWebConfig} from './tests/analytics-web/config';
@@ -60,6 +56,10 @@ import {config as questionsWebConfig} from './tests/questions-web/config';
 import {config as rolesAdminWebConfig} from './tests/roles-admin-web/config';
 import {config as samlWebConfig} from './tests/saml-web/config';
 import {config as searchExperiencesWebConfig} from './tests/search-experiences-web/config';
+import {
+	pageManagementSiteSetup,
+	pageManagementSiteTeardown,
+} from './tests/setup/page-management-site/config';
 import {config as siteAdminWebConfig} from './tests/site-admin-web/config';
 import {config as siteNavigationAdminWebConfig} from './tests/site-navigation-admin-web/config';
 import {config as stableConfig} from './tests/stable/config';
@@ -70,6 +70,7 @@ import {config as partnerConfig} from './tests/workspaces/liferay-partner-worksp
 import {config as commerceWorkspaceConfig} from './tests/workspaces/liferay-workspace-commerce/config';
 import {config as jethr0Config} from './tests/workspaces/liferay-workspace-jethr0/config';
 import {config as marketplaceConfig} from './tests/workspaces/liferay-workspace-marketplace/config';
+
 const setupProjects = [pageManagementSiteSetup, pageManagementSiteTeardown];
 
 export default defineConfig({

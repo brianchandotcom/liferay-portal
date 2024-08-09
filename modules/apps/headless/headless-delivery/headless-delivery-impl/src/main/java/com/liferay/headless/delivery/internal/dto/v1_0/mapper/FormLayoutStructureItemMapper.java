@@ -83,6 +83,14 @@ public class FormLayoutStructureItemMapper
 													saveInlineContent,
 													saveMappingConfiguration,
 													formStyledLayoutStructureItem));
+										setMultiStep(
+											() ->
+												formStyledLayoutStructureItem.
+													isMultiStep());
+										setNumberOfSteps(
+											() ->
+												formStyledLayoutStructureItem.
+													getNumberOfSteps());
 									}
 								});
 							setFragmentStyle(

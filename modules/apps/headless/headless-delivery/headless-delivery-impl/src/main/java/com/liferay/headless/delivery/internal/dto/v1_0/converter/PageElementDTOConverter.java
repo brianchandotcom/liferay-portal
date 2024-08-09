@@ -17,6 +17,8 @@ import com.liferay.headless.delivery.internal.dto.v1_0.mapper.ColumnLayoutStruct
 import com.liferay.headless.delivery.internal.dto.v1_0.mapper.ContainerLayoutStructureItemMapper;
 import com.liferay.headless.delivery.internal.dto.v1_0.mapper.DropZoneLayoutStructureItemMapper;
 import com.liferay.headless.delivery.internal.dto.v1_0.mapper.FormLayoutStructureItemMapper;
+import com.liferay.headless.delivery.internal.dto.v1_0.mapper.FormStepContainerLayoutStructureItemMapper;
+import com.liferay.headless.delivery.internal.dto.v1_0.mapper.FormStepLayoutStructureItemMapper;
 import com.liferay.headless.delivery.internal.dto.v1_0.mapper.FragmentDropZoneLayoutStructureItemMapper;
 import com.liferay.headless.delivery.internal.dto.v1_0.mapper.FragmentLayoutStructureItemMapper;
 import com.liferay.headless.delivery.internal.dto.v1_0.mapper.LayoutStructureItemMapper;
@@ -29,6 +31,8 @@ import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.ColumnLayoutStructureItem;
 import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.DropZoneLayoutStructureItem;
+import com.liferay.layout.util.structure.FormStepContainerStyledLayoutStructureItem;
+import com.liferay.layout.util.structure.FormStepLayoutStructureItem;
 import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.FragmentDropZoneLayoutStructureItem;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
@@ -128,6 +132,13 @@ public class PageElementDTOConverter
 		_layoutStructureItemMappers.put(
 			DropZoneLayoutStructureItem.class,
 			new DropZoneLayoutStructureItemMapper());
+		_layoutStructureItemMappers.put(
+			FormStepContainerStyledLayoutStructureItem.class,
+			new FormStepContainerLayoutStructureItemMapper(
+				_infoItemServiceRegistry, _portal));
+		_layoutStructureItemMappers.put(
+			FormStepLayoutStructureItem.class,
+			new FormStepLayoutStructureItemMapper());
 		_layoutStructureItemMappers.put(
 			FormStyledLayoutStructureItem.class,
 			new FormLayoutStructureItemMapper(

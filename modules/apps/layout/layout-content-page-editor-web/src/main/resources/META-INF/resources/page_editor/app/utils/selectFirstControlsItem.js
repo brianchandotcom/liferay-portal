@@ -8,6 +8,7 @@ import getFirstControlsId from './getFirstControlsId';
 export default function selectFirstControlsItem({
 	itemId,
 	layoutData,
+	origin = null,
 	selectItem,
 }) {
 	const item = layoutData.items[itemId];
@@ -17,5 +18,5 @@ export default function selectFirstControlsItem({
 		layoutData,
 	});
 
-	selectItem(controlsId);
+	selectItem(controlsId, {origin});
 }

@@ -1,3 +1,4 @@
 *.pom	text eol=lf
 .m2-tmp/**/*.pom linguist-generated=true
 ivy.xml	text eol=lf
+modules/_node-scripts/package.json merge=node-scripts

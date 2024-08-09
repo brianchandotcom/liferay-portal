@@ -719,6 +719,9 @@
 		<field docValues="true" indexed="true" name="folderId" stored="true" type="string" />
 		<field indexed="true" name="fullName" stored="true" termPositions="true" termVectors="true" type="text" />
 		<field indexed="true" name="geoLocation" stored="true" type="location" />
+		<field indexed="true" multiValued="true" name="groupAssetCategoryExternalReferenceCodes" stored="true" type="string" />
+		<field indexed="true" multiValued="true" name="groupAssetInternalCategoryExternalReferenceCodes" stored="true" type="string" />
+		<field indexed="true" multiValued="true" name="groupAssetVocabularyCategoryExternalReferenceCodes" stored="true" type="string" />
 		<field indexed="true" name="groupExternalReferenceCode" stored="true" type="string" />
 		<field docValues="true" indexed="true" multiValued="true" name="groupId" stored="true" type="string" />
 		<field indexed="true" multiValued="true" name="groupIds" stored="true" type="string" />

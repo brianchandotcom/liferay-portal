@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.scheduler.TriggerConfiguration;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -77,16 +76,6 @@ public class ScimNotificationSchedulerJobConfiguration
 
 	public boolean hasToSendNotification(
 		int daysToExpire, int daysLastNotification) {
-
-		if ((NOTIFICATION_DAYS.length == 0) ||
-			(daysToExpire > NOTIFICATION_DAYS[0])) {
-
-			return false;
-		}
-
-		if (ArrayUtil.contains(NOTIFICATION_DAYS, daysToExpire)) {
-			return true;
-		}
 
 		for (int notificationDay : NOTIFICATION_DAYS) {
 			if ((notificationDay >= daysToExpire) &&

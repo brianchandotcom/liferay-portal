@@ -3757,7 +3757,7 @@ components:
                     description:
                         The page element's type (collection, collection item, column, drop zone, form, fragment,
                         fragment drop zone, root, row, section or widget).
-                    enum: [Collection, CollectionItem, Column, DropZone, Form, Fragment, FragmentDropZone, Root, Row, Section,
+                    enum: [Collection, CollectionItem, Column, DropZone, Form, FormStep, FormStepContainer, Fragment, FragmentDropZone, Root, Row, Section,
                         Widget]
                     type: string
         PageFormDefinition:
@@ -3805,6 +3805,16 @@ components:
                                 - $ref: "#/components/schemas/SitePageFormSubmissionResult"
                                 - $ref: "#/components/schemas/URLFormSubmissionResult"
                             type: object
+                        multiStep:
+                            # @review
+                            description:
+                                A flag that indicates whether the page form instance is multi step or not.
+                            type: boolean
+                        numberOfSteps:
+                            # @review
+                            description:
+                                The definition for the number of steps of the form.
+                            type: integer
                     type: object
                 fragmentStyle:
                     $ref: "#/components/schemas/FragmentStyle"
@@ -3852,6 +3862,53 @@ components:
                     description:
                         The custom name of of a Page form.
                     type: string
+            type: object
+        PageFormStepContainerDefinition:
+            # @review
+            description:
+                Represents a definition of a Page form step container.
+            properties:
+                cssClasses:
+                    # @review
+                    description:
+                        A list of CSS Classes that are applied to the element.
+                    items:
+                        type: string
+                    type: array
+                customCSS:
+                    # @review
+                    description:
+                        Custom CSS that is applied on the fragment.
+                    type: string
+                customCSSViewports:
+                    # @review
+                    description:
+                        The custom CSS viewports of the page collection.
+                    items:
+                        $ref: "#/components/schemas/CustomCSSViewport"
+                    type: array
+                fragmentStyle:
+                    $ref: "#/components/schemas/FragmentStyle"
+                    # @review
+                    description:
+                        The fragment style of a Page row.
+                fragmentViewports:
+                    # @review
+                    description:
+                        A list of fragment viewports of a Page row.
+                    items:
+                        $ref: "#/components/schemas/FragmentViewport"
+                    type: array
+                indexed:
+                    # @review
+                    description:
+                        A flag that indicates whether the page row is indexed or not.
+                    type: boolean
+            type: object
+        PageFormStepDefinition:
+            # @review
+            description:
+                Represents a definition of a Form Step.
             type: object
         PageFragmentDropZoneDefinition:
             # @review
@@ -5868,7 +5925,7 @@ components:
 info:
     description:
         "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
-        'com.liferay.headless.delivery.client', and version '4.0.83'."
+        'com.liferay.headless.delivery.client', and version '4.0.84'."
     license:
         name: "Apache 2.0"
         url: "http://www.apache.org/licenses/LICENSE-2.0.html"

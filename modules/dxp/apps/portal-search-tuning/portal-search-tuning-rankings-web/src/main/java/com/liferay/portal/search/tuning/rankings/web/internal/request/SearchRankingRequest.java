@@ -157,13 +157,13 @@ public class SearchRankingRequest {
 	}
 
 	private Collection<Sort> _getSorts() {
+		List<Sort> sorts = new ArrayList<>();
+
 		SortOrder sortOrder = SortOrder.ASC;
 
 		if (Objects.equals(_getOrderByType(), "desc")) {
 			sortOrder = SortOrder.DESC;
 		}
-
-		List<Sort> sorts = new ArrayList<>();
 
 		String orderByCol = _getOrderByCol();
 

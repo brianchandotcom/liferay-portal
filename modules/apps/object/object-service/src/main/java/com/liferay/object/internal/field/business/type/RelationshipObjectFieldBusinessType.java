@@ -9,6 +9,7 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.dynamic.data.mapping.form.field.type.constants.ObjectDDMFormFieldTypeConstants;
+import com.liferay.object.exception.NoSuchObjectEntryException;
 import com.liferay.object.exception.ObjectEntryValuesException;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
@@ -23,6 +24,8 @@ import com.liferay.object.system.SystemObjectDefinitionManager;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -87,103 +90,119 @@ public class RelationshipObjectFieldBusinessType
 			ObjectField objectField, long userId, Map<String, Object> values)
 		throws PortalException {
 
-		if (!Objects.equals(
-				objectField.getRelationshipType(),
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY) ||
-			values.containsKey(objectField.getName())) {
-
-			Object value = values.get(objectField.getName());
-
-			Long valueLong = GetterUtil.getLong(value);
-
-			if (Validator.isNull(valueLong)) {
-				return value;
-			}
-
-			ObjectRelationship objectRelationship =
-				_objectRelationshipLocalService.
-					fetchObjectRelationshipByObjectFieldId2(
-						objectField.getObjectFieldId());
-
-			ObjectDefinition objectDefinition =
-				_objectDefinitionLocalService.getObjectDefinition(
-					objectRelationship.getObjectDefinitionId1());
-
-			if (objectDefinition.isUnmodifiableSystemObject()) {
-				SystemObjectDefinitionManager systemObjectDefinitionManager =
-					_systemObjectDefinitionManagerRegistry.
-						getSystemObjectDefinitionManager(
-							objectDefinition.getName());
-
-				BaseModel<?> baseModel =
-					systemObjectDefinitionManager.
-						getBaseModelByExternalReferenceCode(
-							systemObjectDefinitionManager.
-								getBaseModelExternalReferenceCode(valueLong),
-							objectDefinition.getCompanyId());
-
-				return baseModel.getPrimaryKeyObj();
-			}
-
-			ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
-				valueLong);
-
-			if (!Objects.equals(
-					objectDefinition.getObjectDefinitionId(),
-					objectEntry.getObjectDefinitionId())) {
-
-				throw new ObjectEntryValuesException.InvalidValue(
-					objectField.getName());
-			}
-
-			return objectEntry.getObjectEntryId();
-		}
-
 		String objectRelationshipERCObjectFieldName =
 			ObjectFieldSettingUtil.getValue(
 				ObjectFieldSettingConstants.
 					NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME,
 				objectField);
 
-		if (!values.containsKey(objectRelationshipERCObjectFieldName)) {
+		if (Objects.equals(
+				objectField.getRelationshipType(),
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY) &&
+			values.containsKey(objectRelationshipERCObjectFieldName)) {
+
+			String externalReferenceCode = GetterUtil.getString(
+				values.get(objectRelationshipERCObjectFieldName));
+
+			if (Validator.isNull(externalReferenceCode)) {
+				return 0;
+			}
+
+			ObjectDefinition objectDefinition = _getObjectDefinition(
+				objectField);
+
+			if (objectDefinition.isUnmodifiableSystemObject()) {
+				return _getPrimaryKeyObj(
+					externalReferenceCode, objectDefinition, 0L);
+			}
+
+			try {
+				ObjectEntry objectEntry =
+					_objectEntryLocalService.getObjectEntry(
+						externalReferenceCode,
+						objectDefinition.getObjectDefinitionId());
+
+				return objectEntry.getObjectEntryId();
+			}
+			catch (NoSuchObjectEntryException noSuchObjectEntryException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(noSuchObjectEntryException);
+				}
+
+				throw new NoSuchObjectEntryException(
+					externalReferenceCode,
+					objectDefinition.getObjectDefinitionId());
+			}
+		}
+
+		if (!values.containsKey(objectField.getName())) {
 			return null;
 		}
 
-		String externalReferenceCode = GetterUtil.getString(
-			values.get(objectRelationshipERCObjectFieldName));
+		Object value = values.get(objectField.getName());
 
-		if (Validator.isNull(externalReferenceCode)) {
-			return 0;
+		Long valueLong = GetterUtil.getLong(value);
+
+		if (Validator.isNull(valueLong)) {
+			return value;
 		}
+
+		ObjectDefinition objectDefinition = _getObjectDefinition(objectField);
+
+		if (objectDefinition.isUnmodifiableSystemObject()) {
+			return _getPrimaryKeyObj(null, objectDefinition, valueLong);
+		}
+
+		ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
+			valueLong);
+
+		if (!Objects.equals(
+				objectDefinition.getObjectDefinitionId(),
+				objectEntry.getObjectDefinitionId())) {
+
+			throw new ObjectEntryValuesException.InvalidValue(
+				objectField.getName());
+		}
+
+		return objectEntry.getObjectEntryId();
+	}
+
+	private ObjectDefinition _getObjectDefinition(ObjectField objectField)
+		throws PortalException {
 
 		ObjectRelationship objectRelationship =
 			_objectRelationshipLocalService.
 				fetchObjectRelationshipByObjectFieldId2(
 					objectField.getObjectFieldId());
 
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.getObjectDefinition(
-				objectRelationship.getObjectDefinitionId1());
+		return _objectDefinitionLocalService.getObjectDefinition(
+			objectRelationship.getObjectDefinitionId1());
+	}
 
-		if (objectDefinition.isUnmodifiableSystemObject()) {
-			SystemObjectDefinitionManager systemObjectDefinitionManager =
-				_systemObjectDefinitionManagerRegistry.
-					getSystemObjectDefinitionManager(
-						objectDefinition.getName());
+	private Object _getPrimaryKeyObj(
+			String externalReferenceCode, ObjectDefinition objectDefinition,
+			Long primaryKey)
+		throws PortalException {
 
-			BaseModel<?> baseModel =
-				systemObjectDefinitionManager.
-					getBaseModelByExternalReferenceCode(
-						externalReferenceCode, objectDefinition.getCompanyId());
+		SystemObjectDefinitionManager systemObjectDefinitionManager =
+			_systemObjectDefinitionManagerRegistry.
+				getSystemObjectDefinitionManager(objectDefinition.getName());
 
-			return baseModel.getPrimaryKeyObj();
+		if (externalReferenceCode == null) {
+			externalReferenceCode =
+				systemObjectDefinitionManager.getBaseModelExternalReferenceCode(
+					primaryKey);
 		}
 
-		ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
-			externalReferenceCode, objectDefinition.getObjectDefinitionId());
+		BaseModel<?> baseModel =
+			systemObjectDefinitionManager.getBaseModelByExternalReferenceCode(
+				externalReferenceCode, objectDefinition.getCompanyId());
 
-		return objectEntry.getObjectEntryId();
+		return baseModel.getPrimaryKeyObj();
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		RelationshipObjectFieldBusinessType.class);
 
 	@Reference
 	private Language _language;

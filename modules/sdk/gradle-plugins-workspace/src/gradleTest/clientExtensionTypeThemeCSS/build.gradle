@@ -1,3 +1,5 @@
+import com.liferay.gradle.util.FileUtil
+
 import groovy.json.JsonSlurper
 
 task runGradleTest
@@ -36,11 +38,8 @@ runGradleTest {
 
 			Project clientExtensionProject = project ":theme-css-with-rtl-css-properties"
 
-			File clayRTLFile = new File(clientExtensionProject.buildDir, "liferay-client-extension-build/static/css/clay_rtl.css")
-			File mainRTLFile = new File(clientExtensionProject.buildDir, "liferay-client-extension-build/static/css/main_rtl.css")
-
-			assert clayRTLFile.exists()
-			assert mainRTLFile.exists()
+			assert FileUtil.exists(clientExtensionProject, "build/liferay-client-extension-build/static/css/clay_rtl.css")
+			assert FileUtil.exists(clientExtensionProject, "build/liferay-client-extension-build/static/css/main_rtl.css")
 		}
 
 		_testClientExtensionConfigJSON("theme-css-without-frontend-token-definition-json") {

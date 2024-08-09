@@ -58,10 +58,11 @@ public class ClientExtension {
 
 		if (_logger.isWarnEnabled()) {
 			_logger.warn(
-				"WARN: Deprecated property dxp.lxc.liferay.com." +
-					"virtualInstanceId is set in client-extension.yaml. " +
-						"Please use the liferay.virtual.instance.id Gradle " +
-							"property instead.");
+				StringUtil.concat(
+					"The deprecated property ",
+					"dxp.lxc.liferay.com.virtualInstanceId is set in ",
+					"client-extension.yaml. Please set the ",
+					"liferay.virtual.instance.id Gradle property instead."));
 		}
 	}
 
@@ -89,9 +90,9 @@ public class ClientExtension {
 						StringUtil.concat(
 							"The client extension ",
 							"dxp.lxc.liferay.com.virtualInstanceId value ",
-							"%s differs from the provided build property ",
+							"%s differs from the provided Gradle property ",
 							"liferay.virtual.instance.id value %s. The ",
-							"build property will be used."),
+							"Gradle property will be used."),
 						StringUtil.quote(this.virtualInstanceId),
 						StringUtil.quote(virtualInstanceId));
 

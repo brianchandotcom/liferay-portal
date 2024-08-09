@@ -8,7 +8,6 @@ import {
 	Input,
 	RadioField,
 	SingleSelect,
-	Toggle,
 	stringUtils,
 } from '@liferay/object-js-components-web';
 import {InputLocalized} from 'frontend-js-components-web';
@@ -16,6 +15,7 @@ import React, {useMemo} from 'react';
 
 import {NAME_OUTPUT_OBJECT_FIELD_EXTERNAL_REFERENCE_CODE} from '../../utils/constants';
 import {DisabledGroovyScriptAlert} from '../DisabledGroovyScriptAlert';
+import {ObjectValidationActiveToggle} from './ObjectValidationActiveToggle';
 import {TabProps} from './useObjectValidationForm';
 
 export interface BasicInfoProps extends TabProps {
@@ -68,15 +68,6 @@ export function BasicInfo({
 		);
 	}, [creationLanguageId, customObjectFields]);
 
-	let disabledActiveValidationToggle = disabled;
-
-	values.objectValidationRuleSettings?.find((element) => {
-		if (element.name === 'allowActiveStatusUpdate') {
-			disabledActiveValidationToggle =
-				element.value === 'true' ? false : true;
-		}
-	});
-
 	return (
 		<>
 			{disabledGroovyValidation && (
@@ -105,14 +96,11 @@ export function BasicInfo({
 				/>
 
 				{values.engine !== 'compositeKey' && (
-					<Toggle
-						disabled={
-							disabledActiveValidationToggle ||
-							disabledGroovyValidation
-						}
-						label={Liferay.Language.get('active-validation')}
-						onToggle={(active) => setValues({active})}
-						toggled={values.active}
+					<ObjectValidationActiveToggle
+						disabled={disabled}
+						disabledGroovyValidation={disabledGroovyValidation}
+						setValues={setValues}
+						values={values}
 					/>
 				)}
 			</Card>
@@ -144,6 +132,7 @@ export function BasicInfo({
 					<>
 						<RadioField
 							defaultValue={values.outputType}
+							disabled={disabled}
 							inline={false}
 							label={Liferay.Language.get(
 								'output-validation-type'

@@ -87,17 +87,9 @@ public class ShipmentItemResourceTest extends BaseShipmentItemResourceTestCase {
 
 		_commerceOrderItems.addAll(_commerceOrder.getCommerceOrderItems());
 
-		_commerceInventoryWarehouse =
-			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(
-				_serviceContext);
+		_commerceInventoryWarehouse1 = _addCommerceInventoryWarehouse();
 
-		CommerceTestUtil.addWarehouseCommerceChannelRel(
-			_commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
-			_commerceChannel.getCommerceChannelId());
-
-		CommerceInventoryTestUtil.addCommerceInventoryWarehouseItem(
-			_user.getUserId(), _commerceInventoryWarehouse,
-			BigDecimal.valueOf(100), _cpInstance.getSku(), StringPool.BLANK);
+		_commerceInventoryWarehouse2 = _addCommerceInventoryWarehouse();
 
 		_commerceShipment =
 			CommerceShipmentLocalServiceUtil.addCommerceShipment(
@@ -106,6 +98,14 @@ public class ShipmentItemResourceTest extends BaseShipmentItemResourceTestCase {
 				_commerceOrder.getShippingAddressId(),
 				_commerceOrder.getCommerceShippingMethodId(),
 				_commerceOrder.getShippingOptionName(), _serviceContext);
+	}
+
+	@Override
+	@Test
+	public void testPatchShipmentItem() throws Exception {
+		super.testPatchShipmentItem();
+
+		_testPatchShipmentItemWithWarehouseExternalReferenceCode();
 	}
 
 	@Override
@@ -134,6 +134,23 @@ public class ShipmentItemResourceTest extends BaseShipmentItemResourceTestCase {
 	}
 
 	@Override
+	@Test
+	public void testPostShipmentItem() throws Exception {
+		super.testPostShipmentItem();
+
+		_testPostShipmentItemWithOrderItemExternalReferenceCode();
+		_testPostShipmentItemWithWarehouseExternalReferenceCode();
+	}
+
+	@Override
+	@Test
+	public void testPutShipmentByExternalReferenceCodeItem() throws Exception {
+		super.testPutShipmentByExternalReferenceCodeItem();
+
+		_testPutShipmentByExternalReferenceCodeItemWithWarehouseExternalReferenceCode();
+	}
+
+	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {"quantity", "warehouseId"};
 	}
@@ -147,12 +164,16 @@ public class ShipmentItemResourceTest extends BaseShipmentItemResourceTestCase {
 				createDate = RandomTestUtil.nextDate();
 				externalReferenceCode = RandomTestUtil.randomString();
 				modifiedDate = RandomTestUtil.nextDate();
+				orderItemExternalReferenceCode =
+					commerceOrderItem.getExternalReferenceCode();
 				orderItemId = commerceOrderItem.getCommerceOrderItemId();
 				quantity = commerceOrderItem.getQuantity();
 				shipmentId = _commerceShipment.getCommerceShipmentId();
 				userName = commerceOrderItem.getUserName();
+				warehouseExternalReferenceCode =
+					_commerceInventoryWarehouse1.getExternalReferenceCode();
 				warehouseId =
-					_commerceInventoryWarehouse.
+					_commerceInventoryWarehouse1.
 						getCommerceInventoryWarehouseId();
 			}
 		};
@@ -239,7 +260,7 @@ public class ShipmentItemResourceTest extends BaseShipmentItemResourceTestCase {
 				RandomTestUtil.randomString(),
 				_commerceShipment.getCommerceShipmentId(),
 				commerceOrderItem.getCommerceOrderItemId(),
-				_commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
+				_commerceInventoryWarehouse1.getCommerceInventoryWarehouseId(),
 				BigDecimal.ZERO, null, true, _serviceContext);
 
 		_commerceShipmentItems.add(commerceShipmentItem);
@@ -258,6 +279,15 @@ public class ShipmentItemResourceTest extends BaseShipmentItemResourceTestCase {
 
 	@Override
 	protected ShipmentItem
+			testPostShipmentItemByExternalReferenceCode_addShipmentItem(
+				ShipmentItem shipmentItem)
+		throws Exception {
+
+		return testPostShipmentItem_addShipmentItem(shipmentItem);
+	}
+
+	@Override
+	protected ShipmentItem
 			testPutShipmentByExternalReferenceCodeItem_addShipmentItem()
 		throws Exception {
 
@@ -267,6 +297,24 @@ public class ShipmentItemResourceTest extends BaseShipmentItemResourceTestCase {
 			_commerceShipment.getExternalReferenceCode());
 
 		return shipmentItem;
+	}
+
+	private CommerceInventoryWarehouse _addCommerceInventoryWarehouse()
+		throws Exception {
+
+		CommerceInventoryWarehouse commerceInventoryWarehouse =
+			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(
+				_serviceContext);
+
+		CommerceTestUtil.addWarehouseCommerceChannelRel(
+			commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
+			_commerceChannel.getCommerceChannelId());
+
+		CommerceInventoryTestUtil.addCommerceInventoryWarehouseItem(
+			_user.getUserId(), commerceInventoryWarehouse,
+			BigDecimal.valueOf(100), _cpInstance.getSku(), StringPool.BLANK);
+
+		return commerceInventoryWarehouse;
 	}
 
 	private ShipmentItem _addShipmentItem() throws Exception {
@@ -286,7 +334,7 @@ public class ShipmentItemResourceTest extends BaseShipmentItemResourceTestCase {
 		_commerceShipmentItem =
 			CommerceShipmentItemLocalServiceUtil.addCommerceShipmentItem(
 				externalReferenceCode, commerceShipmentId, commerceOrderItemId,
-				_commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
+				_commerceInventoryWarehouse1.getCommerceInventoryWarehouseId(),
 				BigDecimal.valueOf(5), null, true, _serviceContext);
 
 		_commerceShipmentItems.add(_commerceShipmentItem);
@@ -312,7 +360,7 @@ public class ShipmentItemResourceTest extends BaseShipmentItemResourceTestCase {
 			CommerceShipmentItemLocalServiceUtil.addCommerceShipmentItem(
 				externalReferenceCode, shipmentItem.getShipmentId(),
 				shipmentItem.getOrderItemId(),
-				_commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
+				_commerceInventoryWarehouse1.getCommerceInventoryWarehouseId(),
 				quantity, null, true, _serviceContext);
 
 		_commerceShipmentItems.add(_commerceShipmentItem);
@@ -332,6 +380,119 @@ public class ShipmentItemResourceTest extends BaseShipmentItemResourceTestCase {
 
 		return _commerceOrderItems.get(
 			RandomTestUtil.randomInt(0, _commerceOrderItems.size() - 1));
+	}
+
+	private void _testPatchShipmentItemWithWarehouseExternalReferenceCode()
+		throws Exception {
+
+		ShipmentItem postShipmentItem = testPatchShipmentItem_addShipmentItem();
+
+		ShipmentItem randomPatchShipmentItem = randomPatchShipmentItem();
+
+		randomPatchShipmentItem.setWarehouseId(0L);
+		randomPatchShipmentItem.setWarehouseExternalReferenceCode(
+			_commerceInventoryWarehouse2.getExternalReferenceCode());
+
+		ShipmentItem patchShipmentItem = shipmentItemResource.patchShipmentItem(
+			postShipmentItem.getId(), randomPatchShipmentItem);
+
+		randomPatchShipmentItem.setWarehouseId(
+			_commerceInventoryWarehouse2.getCommerceInventoryWarehouseId());
+
+		ShipmentItem expectedPatchShipmentItem = postShipmentItem.clone();
+
+		BeanTestUtil.copyProperties(
+			randomPatchShipmentItem, expectedPatchShipmentItem);
+
+		ShipmentItem getShipmentItem = shipmentItemResource.getShipmentItem(
+			patchShipmentItem.getId());
+
+		assertEquals(expectedPatchShipmentItem, getShipmentItem);
+		assertValid(getShipmentItem);
+	}
+
+	private void _testPostShipmentItemWithOrderItemExternalReferenceCode()
+		throws Exception {
+
+		CommerceOrderItem commerceOrderItem = _getShippableCommerceOrderItem();
+
+		ShipmentItem randomShipmentItem = randomShipmentItem();
+
+		randomShipmentItem.setOrderItemId(0L);
+		randomShipmentItem.setOrderItemExternalReferenceCode(
+			commerceOrderItem.getExternalReferenceCode());
+
+		ShipmentItem postShipmentItem = shipmentItemResource.postShipmentItem(
+			randomShipmentItem.getShipmentId(), randomShipmentItem);
+
+		randomShipmentItem.setOrderItemId(
+			commerceOrderItem.getCommerceOrderItemId());
+
+		assertEquals(randomShipmentItem, postShipmentItem);
+		assertValid(postShipmentItem);
+	}
+
+	private void _testPostShipmentItemWithWarehouseExternalReferenceCode()
+		throws Exception {
+
+		ShipmentItem randomShipmentItem = randomShipmentItem();
+
+		randomShipmentItem.setWarehouseId(0L);
+		randomShipmentItem.setWarehouseExternalReferenceCode(
+			_commerceInventoryWarehouse2.getExternalReferenceCode());
+
+		ShipmentItem postShipmentItem = shipmentItemResource.postShipmentItem(
+			randomShipmentItem.getShipmentId(), randomShipmentItem);
+
+		randomShipmentItem.setWarehouseId(
+			_commerceInventoryWarehouse2.getCommerceInventoryWarehouseId());
+
+		assertEquals(randomShipmentItem, postShipmentItem);
+		assertValid(postShipmentItem);
+	}
+
+	private void _testPutShipmentByExternalReferenceCodeItemWithWarehouseExternalReferenceCode()
+		throws Exception {
+
+		CommerceOrderItem commerceOrderItem = _getShippableCommerceOrderItem();
+
+		CommerceShipmentItem commerceShipmentItem =
+			CommerceShipmentItemLocalServiceUtil.addCommerceShipmentItem(
+				RandomTestUtil.randomString(),
+				_commerceShipment.getCommerceShipmentId(),
+				commerceOrderItem.getCommerceOrderItemId(),
+				_addCommerceInventoryWarehouse().
+					getCommerceInventoryWarehouseId(),
+				BigDecimal.valueOf(5), null, true, _serviceContext);
+
+		commerceShipmentItem.setExternalReferenceCode(
+			_commerceShipment.getExternalReferenceCode());
+
+		ShipmentItem postShipmentItem = _toShipmentItem(commerceShipmentItem);
+
+		ShipmentItem randomShipmentItem = randomShipmentItem();
+
+		randomShipmentItem.setWarehouseId(0L);
+		randomShipmentItem.setWarehouseExternalReferenceCode(
+			_commerceInventoryWarehouse2.getExternalReferenceCode());
+
+		ShipmentItem putShipmentItem =
+			shipmentItemResource.putShipmentByExternalReferenceCodeItem(
+				postShipmentItem.getExternalReferenceCode(),
+				randomShipmentItem);
+
+		randomShipmentItem.setWarehouseId(
+			_commerceInventoryWarehouse2.getCommerceInventoryWarehouseId());
+
+		assertEquals(randomShipmentItem, putShipmentItem);
+		assertValid(putShipmentItem);
+
+		ShipmentItem getShipmentItem =
+			shipmentItemResource.getShipmentByExternalReferenceCodeItem(
+				randomShipmentItem.getExternalReferenceCode());
+
+		assertEquals(putShipmentItem, getShipmentItem);
+		assertValid(getShipmentItem);
 	}
 
 	private ShipmentItem _toShipmentItem(
@@ -361,7 +522,10 @@ public class ShipmentItemResourceTest extends BaseShipmentItemResourceTestCase {
 	private CommerceCurrency _commerceCurrency;
 
 	@DeleteAfterTestRun
-	private CommerceInventoryWarehouse _commerceInventoryWarehouse;
+	private CommerceInventoryWarehouse _commerceInventoryWarehouse1;
+
+	@DeleteAfterTestRun
+	private CommerceInventoryWarehouse _commerceInventoryWarehouse2;
 
 	@DeleteAfterTestRun
 	private CommerceOrder _commerceOrder;

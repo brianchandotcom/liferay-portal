@@ -7,9 +7,11 @@ package com.liferay.headless.commerce.admin.shipment.internal.resource.v1_0;
 
 import com.liferay.commerce.constants.CommerceShipmentConstants;
 import com.liferay.commerce.exception.NoSuchShipmentException;
+import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseService;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceShipment;
 import com.liferay.commerce.service.CommerceAddressService;
+import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.service.CommerceShipmentItemService;
 import com.liferay.commerce.service.CommerceShipmentService;
@@ -461,8 +463,9 @@ public class ShipmentResourceImpl extends BaseShipmentResourceImpl {
 			for (ShipmentItem shipmentItem : shipmentItems) {
 				ShipmentItemUtil.addOrUpdateShipmentItem(
 					shipmentItem.getExternalReferenceCode(), commerceShipment,
-					_commerceShipmentItemService, shipmentItem,
-					_serviceContextHelper);
+					_commerceInventoryWarehouseService,
+					_commerceOrderItemService, _commerceShipmentItemService,
+					shipmentItem, _serviceContextHelper);
 			}
 		}
 
@@ -471,6 +474,13 @@ public class ShipmentResourceImpl extends BaseShipmentResourceImpl {
 
 	@Reference
 	private CommerceAddressService _commerceAddressService;
+
+	@Reference
+	private CommerceInventoryWarehouseService
+		_commerceInventoryWarehouseService;
+
+	@Reference
+	private CommerceOrderItemService _commerceOrderItemService;
 
 	@Reference
 	private CommerceOrderService _commerceOrderService;

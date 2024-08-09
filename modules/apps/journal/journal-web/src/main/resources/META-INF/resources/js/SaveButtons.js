@@ -299,7 +299,9 @@ export default function SaveButtons({
 							publishModalVisible: false,
 						})
 					}
-					onPublishButtonClick={handleButtonClick}
+					onPublishButtonClick={() => {
+						handleButtonClick(ACTION_PUBLISH);
+					}}
 					permissionsURL={permissionsURL}
 					portletNamespace={portletNamespace}
 					timeZone={timeZone}

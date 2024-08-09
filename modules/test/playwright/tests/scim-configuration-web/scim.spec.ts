@@ -249,6 +249,7 @@ test('LPD-23255 AC5 TC8: Verify that the Name field is enabled when scim client 
 	expect(scimConfigurationPage.oAuth2ApplicationNameField).not.toBeEditable();
 
 	await scimConfigurationPage.resetClientData();
+	await page.waitForTimeout(1000);
 
 	expect(scimConfigurationPage.oAuth2ApplicationNameField).toBeEditable();
 });

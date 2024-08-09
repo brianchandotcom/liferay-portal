@@ -282,7 +282,14 @@ public class UpstreamFailureUtil {
 	public static boolean isUpstreamComparisonAvailable(
 		TopLevelBuild topLevelBuild) {
 
-		getUpstreamTopLevelBuildReport(topLevelBuild);
+		try {
+			getUpstreamTopLevelBuildReport(topLevelBuild);
+		}
+		catch (Exception exception) {
+			exception.printStackTrace();
+
+			return false;
+		}
 
 		return _upstreamComparisonAvailable;
 	}

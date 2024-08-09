@@ -14,17 +14,24 @@ import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogLocalServiceUtil;
 import com.liferay.commerce.product.type.simple.constants.SimpleCPTypeConstants;
+import com.liferay.commerce.product.type.virtual.constants.VirtualCPTypeConstants;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Product;
+import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.ProductVirtualSettings;
+import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.ProductVirtualSettingsFileEntry;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Sku;
 import com.liferay.headless.commerce.admin.catalog.client.problem.Problem;
+import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.ProductResource;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.Base64;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -296,6 +303,8 @@ public class ProductResourceTest extends BaseProductResourceTestCase {
 		assertEquals(expectedPostProduct, getProduct);
 
 		assertValid(getProduct);
+
+		_testPostProductVirtual();
 	}
 
 	@Override
@@ -386,6 +395,34 @@ public class ProductResourceTest extends BaseProductResourceTestCase {
 		throws Exception {
 
 		return productResource.postProduct(product);
+	}
+
+	private Product _randomProductVirtual() throws Exception {
+		return new Product() {
+			{
+				active = true;
+				catalogId = _commerceCatalog.getCommerceCatalogId();
+				description = LanguageUtils.getLanguageIdMap(
+					RandomTestUtil.randomLocaleStringMap());
+				externalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				name = LanguageUtils.getLanguageIdMap(
+					RandomTestUtil.randomLocaleStringMap());
+				productType = VirtualCPTypeConstants.NAME;
+				productVirtualSettings = new ProductVirtualSettings() {
+					{
+						attachment = Base64.encode(
+							FileUtil.getBytes(
+								ProductResourceTest.class,
+								"dependencies/image.jpg"));
+						duration = RandomTestUtil.randomLong();
+						maxUsages = RandomTestUtil.randomInt();
+					}
+				};
+				shortDescription = LanguageUtils.getLanguageIdMap(
+					RandomTestUtil.randomLocaleStringMap());
+			}
+		};
 	}
 
 	private Product _randomProductWithSku() throws Exception {
@@ -490,6 +527,40 @@ public class ProductResourceTest extends BaseProductResourceTestCase {
 		}
 	}
 
+	private void _testPostProductVirtual() throws Exception {
+		User omniAdminUser = UserTestUtil.addOmniadminUser();
+
+		String password = RandomTestUtil.randomString();
+
+		_userLocalService.updatePassword(
+			omniAdminUser.getUserId(), password, password, false, true);
+
+		ProductResource productResource = ProductResource.builder(
+		).authentication(
+			omniAdminUser.getEmailAddress(), password
+		).locale(
+			LocaleUtil.getDefault()
+		).parameters(
+			"nestedFields", "productVirtualSettings"
+		).build();
+
+		Product randomVirtualProduct = productResource.postProduct(
+			_randomProductVirtual());
+
+		ProductVirtualSettings productVirtualSettings =
+			randomVirtualProduct.getProductVirtualSettings();
+
+		ProductVirtualSettingsFileEntry[] productVirtualSettingsFileEntries =
+			productVirtualSettings.getProductVirtualSettingsFileEntries();
+
+		Assert.assertTrue(productVirtualSettingsFileEntries.length == 1);
+
+		ProductVirtualSettingsFileEntry productVirtualSettingsFileEntry =
+			productVirtualSettingsFileEntries[0];
+
+		Assert.assertNotNull(productVirtualSettingsFileEntry.getSrc());
+	}
+
 	@DeleteAfterTestRun
 	private CommerceCatalog _commerceCatalog;
 
@@ -501,5 +572,8 @@ public class ProductResourceTest extends BaseProductResourceTestCase {
 
 	@Inject
 	private CPDefinitionLocalService _cpDefinitionLocalService;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

@@ -116,7 +116,7 @@ export default {
 		itemSubtype: string;
 		itemType: string;
 	}) {
-		return serviceFetch<{mappingFields: MappingFieldFieldSet}>(
+		return serviceFetch<{mappingFields: MappingFieldFieldSet[]}>(
 			config.getCollectionMappingFieldsURL,
 			{body}
 		);

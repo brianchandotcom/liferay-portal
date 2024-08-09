@@ -135,65 +135,11 @@ public class DocumentConversionImpl implements DocumentConversion {
 			inputStream = documentHTMLProcessor.process(inputStream);
 		}
 
-		long start = System.currentTimeMillis();
-
-		long timeout = Math.max(
-			PropsValues.DL_FILE_ENTRY_PREVIEW_GENERATION_TIMEOUT_GHOSTSCRIPT,
-			PropsValues.DL_FILE_ENTRY_PREVIEW_GENERATION_TIMEOUT_PDFBOX);
-
-		InputStream finalInputStream = inputStream;
-
-		Future<?> future = _executorService.submit(
-			() -> {
-				try (UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
-						new UnsyncByteArrayOutputStream()) {
-
-					DocumentConverter documentConverter =
-						_getDocumentConverter();
-
-					documentConverter.convert(
-						finalInputStream, inputDocumentFormat,
-						unsyncByteArrayOutputStream, outputDocumentFormat);
-
-					FileUtil.write(
-						file, unsyncByteArrayOutputStream.unsafeGetByteArray(),
-						0, unsyncByteArrayOutputStream.size());
-
-					if (_log.isInfoEnabled()) {
-						_log.info(
-							StringBundler.concat(
-								"Conversion from ",
-								inputDocumentFormat.getName(), " to ",
-								outputDocumentFormat.getName(), " in ",
-								System.currentTimeMillis() - start, " ms"));
-					}
-				}
-				catch (IOException ioException) {
-					throw new RuntimeException(ioException);
-				}
-				finally {
-					try {
-						finalInputStream.close();
-					}
-					catch (IOException ioException) {
-						_log.error("Unable to close input stream", ioException);
-					}
-				}
-			});
-
 		try {
-			future.get(timeout, TimeUnit.SECONDS);
+			_convert(
+				inputDocumentFormat, inputStream, file, outputDocumentFormat);
 		}
 		catch (TimeoutException timeoutException) {
-			String errorMessage =
-				"Timeout when converting for " + file.getPath();
-
-			if (future.cancel(true)) {
-				errorMessage += " resulted in a canceled timeout for " + future;
-			}
-
-			_log.error(errorMessage);
-
 			throw new IOException(timeoutException);
 		}
 		catch (Exception exception) {
@@ -345,6 +291,73 @@ public class DocumentConversionImpl implements DocumentConversion {
 			_openOfficeConnection.isConnected()) {
 
 			_openOfficeConnection.disconnect();
+		}
+	}
+
+	private void _convert(
+			DocumentFormat inputDocumentFormat, InputStream inputStream,
+			File file, DocumentFormat outputDocumentFormat)
+		throws Exception {
+
+		long start = System.currentTimeMillis();
+
+		Future<?> future = _executorService.submit(
+			() -> {
+				try (UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
+						new UnsyncByteArrayOutputStream()) {
+
+					DocumentConverter documentConverter =
+						_getDocumentConverter();
+
+					documentConverter.convert(
+						inputStream, inputDocumentFormat,
+						unsyncByteArrayOutputStream, outputDocumentFormat);
+
+					FileUtil.write(
+						file, unsyncByteArrayOutputStream.unsafeGetByteArray(),
+						0, unsyncByteArrayOutputStream.size());
+
+					if (_log.isInfoEnabled()) {
+						_log.info(
+							StringBundler.concat(
+								"Conversion from ",
+								inputDocumentFormat.getName(), " to ",
+								outputDocumentFormat.getName(), " in ",
+								System.currentTimeMillis() - start, " ms"));
+					}
+				}
+				catch (IOException ioException) {
+					throw new RuntimeException(ioException);
+				}
+				finally {
+					try {
+						inputStream.close();
+					}
+					catch (IOException ioException) {
+						_log.error("Unable to close input stream", ioException);
+					}
+				}
+			});
+
+		try {
+			long timeout = Math.max(
+				PropsValues.
+					DL_FILE_ENTRY_PREVIEW_GENERATION_TIMEOUT_GHOSTSCRIPT,
+				PropsValues.DL_FILE_ENTRY_PREVIEW_GENERATION_TIMEOUT_PDFBOX);
+
+			future.get(timeout, TimeUnit.SECONDS);
+		}
+		catch (TimeoutException timeoutException) {
+			String errorMessage =
+				"Timeout when converting for " + file.getPath();
+
+			if (future.cancel(true)) {
+				errorMessage += " resulted in a canceled timeout for " + future;
+			}
+
+			_log.error(errorMessage);
+
+			throw timeoutException;
 		}
 	}
 

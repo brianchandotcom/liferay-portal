@@ -12,7 +12,6 @@ import {sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useMemo, useRef} from 'react';
 
-import {addMappingFields} from '../../../../../app/actions/index';
 import {fromControlsId} from '../../../../../app/components/layout_data_items/Collection';
 import {ITEM_ACTIVATION_ORIGINS} from '../../../../../app/config/constants/itemActivationOrigins';
 import {ITEM_TYPES} from '../../../../../app/config/constants/itemTypes';
@@ -47,7 +46,6 @@ import {
 	useSelectorRef,
 } from '../../../../../app/contexts/StoreContext';
 import selectCanUpdatePageStructure from '../../../../../app/selectors/selectCanUpdatePageStructure';
-import CollectionService from '../../../../../app/services/CollectionService';
 import moveItem from '../../../../../app/thunks/moveItem';
 import updateItemConfig from '../../../../../app/thunks/updateItemConfig';
 import canBeRenamed from '../../../../../app/utils/canBeRenamed';
@@ -73,35 +71,9 @@ import {formIsUnavailable} from '../../../../../app/utils/formIsUnavailable';
 import getFirstControlsId from '../../../../../app/utils/getFirstControlsId';
 import getMappingFieldsKey from '../../../../../app/utils/getMappingFieldsKey';
 import isItemWidget from '../../../../../app/utils/isItemWidget';
+import loadCollectionFields from '../../../../../app/utils/loadCollectionFields';
 
 const HOVER_EXPAND_DELAY = 1000;
-
-const loadCollectionFields = (
-	dispatch,
-	fieldName,
-	itemType,
-	itemSubtype,
-	mappingFieldsKey
-) => {
-	CollectionService.getCollectionMappingFields({
-		fieldName: fieldName || '',
-		itemSubtype: itemSubtype || '',
-		itemType,
-	})
-		.then((response) => {
-			dispatch(
-				addMappingFields({
-					fields: response.mappingFields,
-					key: mappingFieldsKey,
-				})
-			);
-		})
-		.catch((error) => {
-			if (process.env.NODE_ENV === 'development') {
-				console.error(error);
-			}
-		});
-};
 
 export default function StructureTreeNode({node}) {
 	const activationOrigin = useActivationOrigin();

@@ -16,7 +16,6 @@ import {LAYOUT_TYPES} from '../../app/config/constants/layoutTypes';
 import {config} from '../../app/config/index';
 import {useCollectionConfig} from '../../app/contexts/CollectionItemContext';
 import {useDispatch, useSelector} from '../../app/contexts/StoreContext';
-import CollectionService from '../../app/services/CollectionService';
 import InfoItemService from '../../app/services/InfoItemService';
 import {CACHE_KEYS} from '../../app/utils/cache';
 import getMappedRelationship from '../../app/utils/editable_value/getMappedRelationship';
@@ -26,6 +25,7 @@ import isMappedToStructure from '../../app/utils/editable_value/isMappedToStruct
 import findPageContent from '../../app/utils/findPageContent';
 import getMappingFieldsKey from '../../app/utils/getMappingFieldsKey';
 import itemSelectorValueToInfoItem from '../../app/utils/item_selector_value/itemSelectorValueToInfoItem';
+import loadCollectionFields from '../../app/utils/loadCollectionFields';
 import useCache from '../../app/utils/useCache';
 import usePageContents from '../../app/utils/usePageContents';
 import ItemSelector from './ItemSelector';
@@ -174,33 +174,6 @@ function getInitialSourceType(mappedItem, relationship) {
 
 	return MAPPING_SOURCE_TYPES.content;
 }
-
-const loadCollectionFields = (
-	dispatch,
-	fieldName,
-	itemType,
-	itemSubtype,
-	mappingFieldsKey
-) => {
-	CollectionService.getCollectionMappingFields({
-		fieldName: fieldName || '',
-		itemSubtype: itemSubtype || '',
-		itemType,
-	})
-		.then((response) => {
-			dispatch(
-				addMappingFields({
-					fields: response.mappingFields,
-					key: mappingFieldsKey,
-				})
-			);
-		})
-		.catch((error) => {
-			if (process.env.NODE_ENV === 'development') {
-				console.error(error);
-			}
-		});
-};
 
 export default function MappingSelectorWrapper({
 	fieldSelectorLabel,

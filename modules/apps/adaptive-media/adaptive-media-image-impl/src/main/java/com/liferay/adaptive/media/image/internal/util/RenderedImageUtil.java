@@ -63,7 +63,7 @@ public class RenderedImageUtil {
 			try {
 				imageReader = iterator.next();
 
-				imageReader.setInput(imageInputStream);
+				imageReader.setInput(imageInputStream, false, true);
 
 				int height = imageReader.getHeight(0);
 				int width = imageReader.getWidth(0);

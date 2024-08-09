@@ -21,6 +21,7 @@ import getPortletId from '../utils/getPortletId';
 import {hasFormParent} from '../utils/hasFormParent';
 import {isRequiredFormInput} from '../utils/isRequiredFormInput';
 import {clearPageContents} from '../utils/usePageContents';
+import filterSelectedItems from './filterSelectedItems';
 
 export function getPreviousItemId(itemId, layoutData, nextLayoutData) {
 	const {items} = layoutData;
@@ -129,49 +130,20 @@ async function markItemForDeletion({
 
 	// We just need to remove the parents of the selected items
 
-	const parentItemIds = getParentItemIds(itemIds, layoutData);
+	const selectedItemIds = filterSelectedItems(itemIds, layoutData);
 
-	const portletIds = parentItemIds.flatMap((itemId) =>
+	const portletIds = selectedItemIds.flatMap((itemId) =>
 		findPortletIds(itemId, layoutData, fragmentEntryLinks)
 	);
 
 	return LayoutService.markItemForDeletion({
-		itemIds: parentItemIds,
+		itemIds: selectedItemIds,
 		onNetworkStatus: dispatch,
 		portletIds,
 		segmentsExperienceId,
 	}).then((response) => {
 		return {...response, portletIds};
 	});
-}
-
-function getParentItemIds(itemIds, layoutData) {
-	const {items: layoutDataItems} = layoutData;
-	const itemsToRemoveFromSelected = [];
-
-	const hasParentSelected = (itemId) => {
-		const parentId = layoutDataItems[itemId].parentId;
-
-		if (!parentId) {
-			return false;
-		}
-
-		if (itemIds.includes(parentId)) {
-			return true;
-		}
-
-		return hasParentSelected(parentId);
-	};
-
-	itemIds.forEach((itemId) => {
-		if (hasParentSelected(itemId)) {
-			itemsToRemoveFromSelected.push(itemId);
-		}
-	});
-
-	return itemIds.filter(
-		(itemId) => !itemsToRemoveFromSelected.includes(itemId)
-	);
 }
 
 function findPortletIds(itemId, layoutData, fragmentEntryLinks) {

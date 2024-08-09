@@ -115,7 +115,7 @@ export class ServiceProviderConnectionsPage {
 		await this.page
 			.getByRole('tab', {name: 'Service Provider Connections'})
 			.click();
-		expect(
+		await expect(
 			await this.page.getByRole('button', {name: 'Add Service Provider'})
 		).toBeVisible();
 	}

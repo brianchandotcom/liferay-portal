@@ -1,6 +1,6 @@
 task runGradleTest
 
-String[] defaultRepositories = [
+String[] orderedDefaultRepositories = [
 	"ignoredTestOnlyFlatDirRespository",
 	"https://repository-cdn.liferay.com/nexus/content/groups/public",
 	"https://repo.maven.apache.org/maven2/",
@@ -12,7 +12,7 @@ runGradleTest {
 		project(":module").repositories.eachWithIndex {
 			repository, index ->
 
-			String expectedRepositoryURL = defaultRepositories[index];
+			String expectedRepositoryURL = orderedDefaultRepositories[index];
 
 			if (expectedRepositoryURL.contains("ignored")) {
 				return;

@@ -98,7 +98,6 @@ import com.liferay.portal.json.validator.JSONValidatorException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -143,7 +142,6 @@ import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -558,7 +556,6 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 	}
 
 	private List<DisplayPageTemplateEntry> _getDisplayPageTemplateEntries(
-			long groupId,
 			List<LayoutsImporterResultEntry> layoutsImporterResultEntries,
 			ZipReader zipReader)
 		throws Exception {
@@ -592,11 +589,10 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 				layoutsImporterResultEntries.add(
 					new LayoutsImporterResultEntry(
 						entry, LayoutsImporterResultEntry.Status.INVALID,
-						_getErrorMessage(
-							groupId,
+						new LayoutsImporterResultEntry.ErrorMessage(
+							new String[] {entry},
 							"x-could-not-be-imported-because-its-display-" +
-								"page-template-is-invalid",
-							new String[] {entry})));
+								"page-template-is-invalid")));
 
 				continue;
 			}
@@ -630,34 +626,14 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 					new LayoutsImporterResultEntry(
 						displayPageTemplate.getName(),
 						LayoutsImporterResultEntry.Status.INVALID,
-						_getErrorMessage(
-							groupId,
+						new LayoutsImporterResultEntry.ErrorMessage(
+							new String[] {displayPageTemplate.getName()},
 							"x-could-not-be-imported-because-its-page-" +
-								"definition-is-invalid",
-							new String[] {entry})));
+								"definition-is-invalid")));
 			}
 		}
 
 		return displayPageTemplateEntries;
-	}
-
-	private String _getErrorMessage(
-			long groupId, String languageKey, String[] arguments)
-		throws PortalException {
-
-		Locale locale = null;
-
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		if (serviceContext != null) {
-			locale = serviceContext.getLocale();
-		}
-		else {
-			locale = _portal.getSiteDefaultLocale(groupId);
-		}
-
-		return _language.format(locale, languageKey, arguments);
 	}
 
 	private long _getFileEntryId(long contentDocumentId) {
@@ -695,7 +671,6 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 	}
 
 	private List<UtilityPageTemplateEntry> _getLayoutUtilityPageEntries(
-			long groupId,
 			List<LayoutsImporterResultEntry> layoutsImporterResultEntries,
 			ZipReader zipReader)
 		throws Exception {
@@ -729,11 +704,10 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 				layoutsImporterResultEntries.add(
 					new LayoutsImporterResultEntry(
 						entry, LayoutsImporterResultEntry.Status.INVALID,
-						_getErrorMessage(
-							groupId,
+						new LayoutsImporterResultEntry.ErrorMessage(
+							new String[] {entry},
 							"x-could-not-be-imported-because-its-utility-" +
-								"page-is-invalid",
-							new String[] {entry})));
+								"page-is-invalid")));
 
 				continue;
 			}
@@ -778,11 +752,10 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 					new LayoutsImporterResultEntry(
 						utilityPageTemplate.getName(),
 						LayoutsImporterResultEntry.Status.INVALID,
-						_getErrorMessage(
-							groupId,
+						new LayoutsImporterResultEntry.ErrorMessage(
+							new String[] {utilityPageTemplate.getName()},
 							"x-could-not-be-imported-because-its-page-" +
-								"definition-is-invalid",
-							new String[] {entry})));
+								"definition-is-invalid")));
 			}
 		}
 
@@ -790,7 +763,6 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 	}
 
 	private List<MasterPageEntry> _getMasterPageEntries(
-			long groupId,
 			List<LayoutsImporterResultEntry> layoutsImporterResultEntries,
 			ZipReader zipReader)
 		throws Exception {
@@ -821,11 +793,10 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 				layoutsImporterResultEntries.add(
 					new LayoutsImporterResultEntry(
 						entry, LayoutsImporterResultEntry.Status.INVALID,
-						_getErrorMessage(
-							groupId,
+						new LayoutsImporterResultEntry.ErrorMessage(
+							new String[] {entry},
 							"x-could-not-be-imported-because-its-master-page-" +
-								"is-invalid",
-							new String[] {entry})));
+								"is-invalid")));
 
 				continue;
 			}
@@ -858,11 +829,10 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 					new LayoutsImporterResultEntry(
 						masterPage.getName(),
 						LayoutsImporterResultEntry.Status.INVALID,
-						_getErrorMessage(
-							groupId,
+						new LayoutsImporterResultEntry.ErrorMessage(
+							new String[] {masterPage.getName()},
 							"x-could-not-be-imported-because-its-page-" +
-								"definition-is-invalid",
-							new String[] {entry})));
+								"definition-is-invalid")));
 			}
 		}
 
@@ -883,7 +853,6 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 
 	private Map<String, PageTemplateCollectionEntry>
 			_getPageTemplateCollectionEntryMap(
-				long groupId,
 				List<LayoutsImporterResultEntry> layoutsImporterResultEntries,
 				ZipReader zipReader)
 		throws Exception {
@@ -949,11 +918,10 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 				layoutsImporterResultEntries.add(
 					new LayoutsImporterResultEntry(
 						entry, LayoutsImporterResultEntry.Status.INVALID,
-						_getErrorMessage(
-							groupId,
+						new LayoutsImporterResultEntry.ErrorMessage(
+							new String[] {entry},
 							"x-could-not-be-imported-because-its-page-" +
-								"template-is-invalid",
-							new String[] {entry})));
+								"template-is-invalid")));
 
 				continue;
 			}
@@ -993,11 +961,10 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 						pageTemplate.getName(),
 						LayoutsImporterResultEntry.TYPE_COLLECTION,
 						LayoutsImporterResultEntry.Status.INVALID,
-						_getErrorMessage(
-							groupId,
+						new LayoutsImporterResultEntry.ErrorMessage(
+							new String[] {pageTemplate.getName()},
 							"x-could-not-be-imported-because-its-page-" +
-								"definition-is-invalid",
-							new String[] {entry})));
+								"definition-is-invalid")));
 			}
 		}
 
@@ -1394,7 +1361,7 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 
 		Map<String, PageTemplateCollectionEntry>
 			pageTemplateCollectionEntryMap = _getPageTemplateCollectionEntryMap(
-				groupId, layoutsImporterResultEntries, zipReader);
+				layoutsImporterResultEntries, zipReader);
 
 		for (Map.Entry<String, PageTemplateCollectionEntry> entry :
 				pageTemplateCollectionEntryMap.entrySet()) {
@@ -1430,7 +1397,7 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 
 		List<DisplayPageTemplateEntry> displayPageTemplateEntries =
 			_getDisplayPageTemplateEntries(
-				groupId, layoutsImporterResultEntries, zipReader);
+				layoutsImporterResultEntries, zipReader);
 
 		for (DisplayPageTemplateEntry displayPageTemplateEntry :
 				displayPageTemplateEntries) {
@@ -1455,11 +1422,10 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 					new LayoutsImporterResultEntry(
 						displayPageTemplate.getName(),
 						LayoutsImporterResultEntry.Status.INVALID,
-						_getErrorMessage(
-							groupId,
+						new LayoutsImporterResultEntry.ErrorMessage(
+							new String[] {displayPageTemplate.getName()},
 							"x-could-not-be-imported-because-of-invalid-" +
-								"values-in-its-page-definition",
-							new String[] {displayPageTemplate.getName()})));
+								"values-in-its-page-definition")));
 			}
 		}
 	}
@@ -1557,12 +1523,12 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 				layoutsImporterResultEntries.add(
 					new LayoutsImporterResultEntry(
 						name, LayoutsImporterResultEntry.Status.IGNORED,
-						_getErrorMessage(
-							groupId, _MESSAGE_KEY_IGNORED,
+						new LayoutsImporterResultEntry.ErrorMessage(
 							new String[] {
 								zipPath,
 								_toTypeName(layoutPageTemplateEntryType)
-							})));
+							},
+							_MESSAGE_KEY_IGNORED)));
 			}
 		}
 		catch (DropzoneLayoutStructureItemException
@@ -1582,9 +1548,8 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 			layoutsImporterResultEntries.add(
 				new LayoutsImporterResultEntry(
 					name, LayoutsImporterResultEntry.Status.INVALID,
-					_getErrorMessage(
-						groupId, _MESSAGE_KEY_TYPE_INVALID,
-						new String[] {zipPath})));
+					new LayoutsImporterResultEntry.ErrorMessage(
+						new String[] {zipPath}, _MESSAGE_KEY_TYPE_INVALID)));
 
 			return null;
 		}
@@ -1596,11 +1561,11 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 			layoutsImporterResultEntries.add(
 				new LayoutsImporterResultEntry(
 					name, LayoutsImporterResultEntry.Status.INVALID,
-					_getErrorMessage(
-						groupId, _MESSAGE_KEY_NAME_INVALID,
+					new LayoutsImporterResultEntry.ErrorMessage(
 						new String[] {
 							zipPath, _toTypeName(layoutPageTemplateEntryType)
-						})));
+						},
+						_MESSAGE_KEY_NAME_INVALID)));
 
 			return null;
 		}
@@ -1617,7 +1582,7 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 
 		List<UtilityPageTemplateEntry> utilityPageTemplateEntries =
 			_getLayoutUtilityPageEntries(
-				groupId, layoutsImporterResultEntries, zipReader);
+				layoutsImporterResultEntries, zipReader);
 
 		for (UtilityPageTemplateEntry utilityPageTemplateEntry :
 				utilityPageTemplateEntries) {
@@ -1641,11 +1606,10 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 					new LayoutsImporterResultEntry(
 						utilityPageTemplate.getName(),
 						LayoutsImporterResultEntry.Status.INVALID,
-						_getErrorMessage(
-							groupId,
+						new LayoutsImporterResultEntry.ErrorMessage(
+							new String[] {utilityPageTemplate.getName()},
 							"x-could-not-be-imported-because-of-invalid-" +
-								"values-in-its-page-definition",
-							new String[] {utilityPageTemplate.getName()})));
+								"values-in-its-page-definition")));
 			}
 		}
 	}
@@ -1712,9 +1676,9 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 				layoutsImporterResultEntries.add(
 					new LayoutsImporterResultEntry(
 						name, LayoutsImporterResultEntry.Status.IGNORED,
-						_getErrorMessage(
-							groupId, _MESSAGE_KEY_IGNORED,
-							new String[] {zipPath, "utility page"})));
+						new LayoutsImporterResultEntry.ErrorMessage(
+							new String[] {zipPath, "utility page"},
+							_MESSAGE_KEY_IGNORED)));
 			}
 		}
 		catch (DropzoneLayoutStructureItemException
@@ -1734,9 +1698,9 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 			layoutsImporterResultEntries.add(
 				new LayoutsImporterResultEntry(
 					name, LayoutsImporterResultEntry.Status.INVALID,
-					_getErrorMessage(
-						groupId, _MESSAGE_KEY_NAME_INVALID,
-						new String[] {zipPath, "utility page"})));
+					new LayoutsImporterResultEntry.ErrorMessage(
+						new String[] {zipPath, "utility page"},
+						_MESSAGE_KEY_NAME_INVALID)));
 		}
 	}
 
@@ -1748,7 +1712,7 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 		throws Exception {
 
 		List<MasterPageEntry> masterPageEntries = _getMasterPageEntries(
-			groupId, layoutsImporterResultEntries, zipReader);
+			layoutsImporterResultEntries, zipReader);
 
 		for (MasterPageEntry masterPageEntry : masterPageEntries) {
 			Callable<Void> callable = new MasterLayoutTemplatesImporterCallable(
@@ -1769,11 +1733,10 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 					new LayoutsImporterResultEntry(
 						masterPage.getName(),
 						LayoutsImporterResultEntry.Status.INVALID,
-						_getErrorMessage(
-							groupId,
+						new LayoutsImporterResultEntry.ErrorMessage(
+							new String[] {masterPage.getName()},
 							"x-could-not-be-imported-because-of-invalid-" +
-								"values-in-its-page-definition",
-							new String[] {masterPage.getName()})));
+								"values-in-its-page-definition")));
 			}
 		}
 	}
@@ -1942,11 +1905,10 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 					new LayoutsImporterResultEntry(
 						pageTemplate.getName(),
 						LayoutsImporterResultEntry.Status.INVALID,
-						_getErrorMessage(
-							groupId,
+						new LayoutsImporterResultEntry.ErrorMessage(
+							new String[] {pageTemplate.getName()},
 							"x-could-not-be-imported-because-of-invalid-" +
-								"values-in-its-page-definition",
-							new String[] {pageTemplate.getName()})));
+								"values-in-its-page-definition")));
 			}
 		}
 	}
@@ -2256,9 +2218,6 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 
 	@Reference
 	private InfoSearchClassMapperRegistry _infoSearchClassMapperRegistry;
-
-	@Reference
-	private Language _language;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

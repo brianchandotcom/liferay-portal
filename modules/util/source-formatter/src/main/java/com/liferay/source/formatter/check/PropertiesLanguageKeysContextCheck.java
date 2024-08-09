@@ -88,7 +88,11 @@ public class PropertiesLanguageKeysContextCheck extends BaseFileCheck {
 				continue;
 			}
 
-			if (properties.containsKey(matcher.group(1))) {
+			String keyName = matcher.group(1);
+
+			if (properties.containsKey(keyName) &&
+				!allowedSingleWordLanguageKeys.contains(keyName)) {
+
 				addMessage(
 					fileName,
 					StringBundler.concat(
@@ -96,6 +100,8 @@ public class PropertiesLanguageKeysContextCheck extends BaseFileCheck {
 						"at the end, within a [], to indicate specific ",
 						"meaning"),
 					lineNumber);
+
+				continue;
 			}
 
 			String bracketsContent = matcher.group(2);

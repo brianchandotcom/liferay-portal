@@ -1,10 +1,10 @@
-ext.expectedFilePath = "LCP.json"
 ext.expectedContentStrings = [
 	'"dependencies": [ "foo", "bar" ]',
 	'"foo": "bar"',
 	'"LIFERAY_ROUTES_DXP": "/etc/liferay/lxc/dxp-metadata"'
 	'"memory": 500',
 ]
+ext.expectedFilePath = "LCP.json"
 ext.taskPath = ":client-extension-override-lcp-json:createClientExtensionConfig"
 ext.unexpectedContentStrings = [
 	'"memory": 300',

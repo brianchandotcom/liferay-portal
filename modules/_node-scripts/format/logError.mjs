@@ -5,8 +5,10 @@
 
 const HEAVY_MULTIPLICATION_X = '\u2716';
 
-export default function logError(errorMessages) {
+export default function logError(errorMessages, captureOutput = false) {
 	const filesWithErrors = Object.keys(errorMessages);
+
+	let allOutput = '';
 
 	filesWithErrors.forEach((filepath) => {
 		const messages = errorMessages[filepath];
@@ -79,8 +81,15 @@ export default function logError(errorMessages) {
 			output += summary.join('');
 		}
 
-		console.log(output);
+		if (captureOutput) {
+			allOutput += `${output}\n\n`;
+		}
+		else {
+			console.log(`${output}\n`);
+		}
 	});
+
+	return captureOutput ? allOutput : undefined;
 }
 
 function pluralize(word, count) {

@@ -62,6 +62,18 @@ export default async function main() {
 			.map((file) => path.relative(portalDir, file));
 	}
 
-	console.log('📝 Running format...');
-	await format(!check, files);
+	console.log('📝 Running format...\n');
+
+	const formatOutput = await format(!check, files);
+
+	if (check && formatOutput) {
+		console.error(formatOutput);
+		process.exit(1);
+	}
+	else if (formatOutput) {
+		console.log(formatOutput);
+	}
+	else {
+		console.log('ℹ️ Nothing needed to be formatted (no changes detected).');
+	}
 }

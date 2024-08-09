@@ -16,8 +16,10 @@ import {checkYarnLock} from './checkYarnLock.mjs';
  *
  * Any long check (eg: TypeScript) must be moved to its own command and invoked explicitly from the
  * outer layer.
+ *
+ * @returns string[] An array with strings containing error messages (or empty on no errors).
  */
-export default async function preflight() {
+export default async function runPreflight() {
 	const results = await Promise.all([
 		checkConfigFileNames(),
 		checkPackageJSONFiles(),
@@ -25,14 +27,5 @@ export default async function preflight() {
 		checkNodeScriptsHash(),
 	]);
 
-	const errors = results.flat();
-
-	if (errors.length) {
-		console.error(`
-❌ Preflight check failed:
-${errors.map((error) => `   · ${error}`).join('\n')}
-`);
-
-		throw new Error();
-	}
+	return results.flat();
 }

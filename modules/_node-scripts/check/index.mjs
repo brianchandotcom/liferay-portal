@@ -17,11 +17,10 @@ export default async function main() {
 
 	if (path.resolve('.') !== rootDir) {
 		console.error(`
-                                 ⚠️    WARNING    ⚠️
-
-Since generate:tsconfig is a global task, it will be run from the root of liferay-portal even
-though you have invoked it from a project directory.
+❌ Command generate:tsconfig can only be run from 'modules' directory.
 `);
+
+		process.exit(2);
 	}
 
 	const [projectDirs] = await Promise.all([getProjectDirs()]);

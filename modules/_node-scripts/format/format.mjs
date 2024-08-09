@@ -27,62 +27,213 @@ const GIT_IGNORE_FILE = '.gitignore';
 
 const EXTENSIONS = ['graphql', 'js', 'jsp', 'jspf', 'mjs', 'scss', 'ts', 'tsx'];
 
-async function getIgnoredFiles(rootDir) {
-	const eslintIgnoreFilePath = path.join(rootDir, ESLINT_IGNORE_FILE);
-	const prettierIgnoreFilePath = path.join(rootDir, PRETTIER_IGNORE_FILE);
-	const gitIgnoreFilePath = path.join(rootDir, GIT_IGNORE_FILE);
-
-	const [eslintIgnores, prettierIgnores, gitIgnores] = await Promise.all([
-		readIgnoreFile(eslintIgnoreFilePath),
-		readIgnoreFile(prettierIgnoreFilePath),
-		readIgnoreFile(gitIgnoreFilePath),
-	]);
-
-	return [
-		'**/src/test/**',
-		'**/build_gradle/**',
-		...gitIgnores,
-		...eslintIgnores,
-		...prettierIgnores,
-	].map((ignore) => {
-		if (ignore.startsWith('*') && !ignore.startsWith('**')) {
-			ignore = `**/${ignore}`;
-		}
-
-		if (!ignore.startsWith('*')) {
-			ignore = `**${ignore.startsWith('/') ? '' : '/'}${ignore}`;
-		}
-
-		if (!ignore.endsWith('**') && !ignore.includes('.')) {
-			ignore = `${ignore}${ignore.endsWith('/') ? '' : '/'}**`;
-		}
-
-		return ignore;
-	});
-}
-
-async function getFilesToCheck(rootDir, ignore = []) {
-	const files = await fg(
-		[
-			'**/*.',
-			'*.{graphql,js,mjs,scss,ts,tsx}',
-			'**/*.{graphql,js,mjs,scss,ts,tsx}',
-			'**/src/**/*.{jsp,jspf}',
-		],
-		{
-			cwd: rootDir,
-			dot: true,
-			ignore,
-		}
-	);
-
-	return files.map((filepath) => path.join(rootDir, filepath));
-}
-
 const FALLBACK_FILE_PATH = '__fallback__.js';
 
-export default async function format(fix, filesToFormat) {
+/**
+ * @param string[]|undefined filesToFormat
+ * List of files to format (if undefined all files are formatted).
+ *
+ * @returns string|undefined
+ * A string with the result of the format operation (empty if nothing was formatted or had errors)
+ * or undefined if no files were checked.
+ */
+export default async function format(fix, filesToFormat = undefined) {
 	const rootDir = await getRootDir();
+
+	const filepaths = await getFilePaths(rootDir, filesToFormat);
+
+	if (!filepaths.length) {
+		return undefined;
+	}
+
+	const errMessages = [];
+	const fixedFiles = [];
+
+	// Configure tools
+
+	const [eslintConfig, prettierConfig, stylelintConfig] = await Promise.all([
+		getEslintConfig(rootDir),
+		getPrettierConfig(rootDir),
+		getStylelintConfig(rootDir),
+	]);
+
+	const eslintCLI = new ESLint({
+		baseConfig: eslintConfig,
+		fix: true,
+		ignorePath: path.join(rootDir, ESLINT_IGNORE_FILE),
+		resolvePluginsRelativeTo: rootDir,
+	});
+
+	// Define tool helpers
+
+	async function formatWithPrettier(input, filepath, configOverride = {}) {
+		return await prettier.format(input, {
+			...prettierConfig,
+			...configOverride,
+			filepath,
+		});
+	}
+
+	async function formatWithEslint(input, filepath) {
+		const [lintResult = {}] = await eslintCLI.lintText(input, {
+			filePath: filepath,
+		});
+
+		const {messages, output} = lintResult;
+
+		if (messages?.length) {
+			errMessages[filepath] = errMessages[filepath] || [];
+			errMessages[filepath].push(...messages);
+		}
+
+		return output ?? input;
+	}
+
+	async function formatWithStyleLint(input, filepath) {
+		const extName = path.extname(filepath);
+
+		const {output, results} = await stylelint.lint({
+			code: input,
+			codeFilename: filepath,
+			config: stylelintConfig,
+			fix: true,
+			syntax: extName.replace('.', ''),
+		});
+
+		if (results?.length) {
+			results.forEach((result) => {
+				if (result.warnings.length) {
+					errMessages[filepath] = errMessages[filepath] || [];
+					errMessages[filepath].push(
+						...result.warnings.map(
+							({column, line, rule, text}) => ({
+								column,
+								filepath,
+								line,
+								message: text,
+								ruleId: rule,
+								severity: 2,
+							})
+						)
+					);
+				}
+			});
+		}
+
+		return output.endsWith('\n') ? output : `${output}\n`;
+	}
+
+	// Run the format process
+
+	for (const filepath of filepaths) {
+		if (!(await fileExists(filepath))) {
+			continue;
+		}
+
+		const source = await fs.readFile(filepath, 'utf8');
+
+		if (!source.length) {
+			continue;
+		}
+
+		let transformedContent = source;
+
+		try {
+			switch (path.extname(filepath)) {
+				case '.jsp':
+				case '.jspf': {
+					transformedContent = await processJSP(
+						source,
+						async (input) => {
+							return await formatWithPrettier(
+								input,
+								FALLBACK_FILE_PATH,
+								{
+									commentIgnorePatterns: [
+										BLOCK_CLOSE,
+										BLOCK_OPEN,
+										FILLER_CHAR,
+										ID_END,
+										ID_START,
+										SCRIPTLET_CONTENT,
+										SPACE_CHAR,
+										TAB_CHAR,
+									],
+								}
+							);
+						}
+					);
+					break;
+				}
+
+				case '.css':
+				case '.scss': {
+					transformedContent = await formatWithPrettier(
+						transformedContent,
+						filepath
+					);
+					transformedContent = await formatWithStyleLint(
+						transformedContent,
+						filepath
+					);
+					break;
+				}
+
+				default: {
+					transformedContent = await formatWithPrettier(
+						transformedContent,
+						filepath
+					);
+					transformedContent = await formatWithEslint(
+						transformedContent,
+						filepath
+					);
+				}
+			}
+		}
+		catch (error) {
+
+			// eslint-disable-next-line no-console
+			console.log(`🚨 ${filepath}: ${error}`);
+		}
+
+		if (transformedContent !== source) {
+			if (fix) {
+				await fs.writeFile(filepath, transformedContent);
+
+				fixedFiles.push(filepath);
+			}
+			else {
+				errMessages[filepath] = errMessages[filepath] || [];
+				errMessages[filepath].push({
+					column: 1,
+					filepath,
+					line: 1,
+					message: 'File has format errors.',
+					ruleId: '(format check)',
+					severity: 2,
+				});
+			}
+		}
+	}
+
+	// Return summary
+
+	let summary = '';
+
+	if (Object.keys(errMessages).length) {
+		summary += logError(errMessages, true);
+	}
+
+	if (fixedFiles.length) {
+		summary += `• The following files were automatically formatted:\n`;
+		summary += fixedFiles.map((file) => `  · ${file}`).join('\n');
+	}
+
+	return summary;
+}
+
+async function getFilePaths(rootDir, filesToFormat) {
 	const workspacesDir = path.join(rootDir, '..', 'workspaces');
 	const playwrightDir = path.join(rootDir, 'test', 'playwright');
 
@@ -145,228 +296,59 @@ export default async function format(fix, filesToFormat) {
 		);
 	}
 
-	if (!filepaths.length) {
-		console.log('ℹ️ No files to format');
+	return filepaths;
+}
 
-		return;
-	}
+async function getIgnoredFiles(rootDir) {
+	const eslintIgnoreFilePath = path.join(rootDir, ESLINT_IGNORE_FILE);
+	const prettierIgnoreFilePath = path.join(rootDir, PRETTIER_IGNORE_FILE);
+	const gitIgnoreFilePath = path.join(rootDir, GIT_IGNORE_FILE);
 
-	console.log(`📝 Formatting ${filepaths.length} files`);
-
-	const [eslintConfig, prettierConfig, stylelintConfig] = await Promise.all([
-		getEslintConfig(rootDir),
-		getPrettierConfig(rootDir),
-		getStylelintConfig(rootDir),
+	const [eslintIgnores, prettierIgnores, gitIgnores] = await Promise.all([
+		readIgnoreFile(eslintIgnoreFilePath),
+		readIgnoreFile(prettierIgnoreFilePath),
+		readIgnoreFile(gitIgnoreFilePath),
 	]);
 
-	const eslintCLI = new ESLint({
-		baseConfig: eslintConfig,
-		fix: true,
-		ignorePath: path.join(rootDir, ESLINT_IGNORE_FILE),
-		resolvePluginsRelativeTo: rootDir,
+	return [
+		'**/src/test/**',
+		'**/build_gradle/**',
+		...gitIgnores,
+		...eslintIgnores,
+		...prettierIgnores,
+	].map((ignore) => {
+		if (ignore.startsWith('*') && !ignore.startsWith('**')) {
+			ignore = `**/${ignore}`;
+		}
+
+		if (!ignore.startsWith('*')) {
+			ignore = `**${ignore.startsWith('/') ? '' : '/'}${ignore}`;
+		}
+
+		if (!ignore.endsWith('**') && !ignore.includes('.')) {
+			ignore = `${ignore}${ignore.endsWith('/') ? '' : '/'}**`;
+		}
+
+		return ignore;
 	});
+}
 
-	const badFiles = [];
-	const errMessages = [];
-	let checked = 0;
-	let fixed = 0;
-
-	async function formatWithPrettier(input, filepath, configOverride = {}) {
-		return await prettier.format(input, {
-			...prettierConfig,
-			...configOverride,
-			filepath,
-		});
-	}
-
-	async function formatWithEslint(input, filepath) {
-		const [lintResult = {}] = await eslintCLI.lintText(input, {
-			filePath: filepath,
-		});
-
-		const {messages, output} = lintResult;
-
-		if (messages?.length) {
-			errMessages[filepath] = errMessages[filepath]
-				? errMessages[filepath].push(...messages)
-				: messages;
+async function getFilesToCheck(rootDir, ignore = []) {
+	const files = await fg(
+		[
+			'**/*.',
+			'*.{graphql,js,mjs,scss,ts,tsx}',
+			'**/*.{graphql,js,mjs,scss,ts,tsx}',
+			'**/src/**/*.{jsp,jspf}',
+		],
+		{
+			cwd: rootDir,
+			dot: true,
+			ignore,
 		}
+	);
 
-		return output ?? input;
-	}
-
-	async function formatWithStyleLint(input, filepath) {
-		const extName = path.extname(filepath);
-
-		const {output, results} = await stylelint.lint({
-			code: input,
-			codeFilename: filepath,
-			config: stylelintConfig,
-			fix: true,
-			syntax: extName.replace('.', ''),
-		});
-
-		if (results?.length) {
-			results.forEach((result) => {
-				if (result.warnings.length) {
-					const messages = result.warnings.map(
-						({column, line, rule, text}) => ({
-							column,
-							filepath,
-							line,
-							message: text,
-							ruleId: rule,
-							severity: 2,
-						})
-					);
-
-					errMessages[filepath] = errMessages[filepath]
-						? errMessages[filepath].push(...messages)
-						: messages;
-				}
-			});
-		}
-
-		return output.endsWith('\n') ? output : `${output}\n`;
-	}
-
-	for (const filepath of filepaths) {
-		if (!(await fileExists(filepath))) {
-			continue;
-		}
-
-		checked++;
-
-		const source = await fs.readFile(filepath, 'utf8');
-		const extName = path.extname(filepath);
-
-		let transformedContent = source;
-
-		if (!source.length) {
-			continue;
-		}
-
-		try {
-			switch (extName) {
-				case '.jsp':
-				case '.jspf': {
-					transformedContent = await processJSP(
-						source,
-						async (input) => {
-							return await formatWithPrettier(
-								input,
-								FALLBACK_FILE_PATH,
-								{
-									commentIgnorePatterns: [
-										BLOCK_CLOSE,
-										BLOCK_OPEN,
-										FILLER_CHAR,
-										ID_END,
-										ID_START,
-										SCRIPTLET_CONTENT,
-										SPACE_CHAR,
-										TAB_CHAR,
-									],
-								}
-							);
-						}
-					);
-
-					if (!fix && transformedContent !== source) {
-						const messages = [
-							{
-								column: 1,
-								filepath,
-								line: 1,
-								message: 'Check failed',
-								ruleId: 'Prettier',
-								severity: 2,
-							},
-						];
-
-						errMessages[filepath] = errMessages[filepath]
-							? errMessages[filepath].push(...messages)
-							: messages;
-					}
-
-					break;
-				}
-				case '.css':
-				case '.scss': {
-					transformedContent = await formatWithPrettier(
-						transformedContent,
-						filepath
-					);
-					transformedContent = await formatWithStyleLint(
-						transformedContent,
-						filepath
-					);
-					break;
-				}
-				default: {
-					transformedContent = await formatWithPrettier(
-						transformedContent,
-						filepath
-					);
-					transformedContent = await formatWithEslint(
-						transformedContent,
-						filepath
-					);
-				}
-			}
-		}
-		catch (error) {
-
-			// eslint-disable-next-line no-console
-			console.log(`🚨 ${filepath}: ${error}`);
-		}
-
-		if (transformedContent !== source || errMessages[filepath]) {
-			badFiles.push(filepath);
-
-			if (fix && transformedContent !== source) {
-				fixed++;
-			}
-		}
-
-		if (fixed) {
-			await fs.writeFile(filepath, transformedContent);
-		}
-	}
-
-	const files = (count) => (count === 1 ? 'file' : 'files');
-	const have = (count) => (count === 1 ? 'has' : 'have');
-
-	const summary = [`Format checked ${checked} ${files(checked)}`];
-
-	if (Object.keys(errMessages).length) {
-		logError(errMessages);
-	}
-
-	if (fixed) {
-		summary.push(`fixed ${fixed} ${files(fixed)}`);
-	}
-
-	if (badFiles.length !== fixed) {
-		const totalBad = badFiles.length;
-
-		summary.push(
-			`${totalBad} ${files(totalBad)} ${have(totalBad)} problems`
-		);
-
-		summary.push(
-			badFiles
-				.map((filepath) => `- ${path.relative(rootDir, filepath)}`)
-				.join('\n')
-		);
-
-		throw new Error(summary.join('\n') + '\n');
-	}
-	else {
-
-		// eslint-disable-next-line no-console
-		console.log(summary.join('\n'));
-	}
+	return files.map((filepath) => path.join(rootDir, filepath));
 }
 
 async function getEslintConfig(rootDir) {

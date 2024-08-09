@@ -14,6 +14,7 @@ import {
 } from '../../../../util/fetchUtil';
 import lang from '../../../../util/lang';
 import toLocalDateTimeFormatted from '../../../util/toLocalDateTimeFormatted';
+import {getVersionDetails} from './getVersionDetails';
 
 import './VersionRow.scss';
 
@@ -165,7 +166,10 @@ export function VersionRow({
 						</label>
 
 						<span className="lfr-workflow__version-row-info-date-user">
-							{`${versionCreationDate} ${Liferay.Language.get('by').toLowerCase()} ${creatorName}`}
+							{getVersionDetails(
+								creatorName,
+								versionCreationDate
+							)}
 						</span>
 					</div>
 				) : (

@@ -40,8 +40,11 @@ test.beforeEach(async ({apiHelpers, ctCollection}) => {
 		'demo.unprivileged@liferay.com'
 	);
 
+	const role =
+		await apiHelpers.headlessAdminUser.getRoleByName('Administrator');
+
 	await apiHelpers.headlessAdminUser.assignUserToRole(
-		'Administrator',
+		role.externalReferenceCode,
 		user.id
 	);
 

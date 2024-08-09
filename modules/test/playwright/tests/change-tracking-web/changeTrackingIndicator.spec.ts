@@ -24,8 +24,11 @@ test('LPD-31710 Publication bar disappears when trying to select a publication',
 		surname: user.familyName,
 	};
 
+	const role =
+		await apiHelpers.headlessAdminUser.getRoleByName('Publications User');
+
 	await apiHelpers.headlessAdminUser.assignUserToRole(
-		'Publications User',
+		role.externalReferenceCode,
 		user.id
 	);
 

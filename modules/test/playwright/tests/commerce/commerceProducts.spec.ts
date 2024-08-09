@@ -680,9 +680,7 @@ test('LPD-33075 Verify buyers can view the SKU of a product on the product card 
 		user.emailAddress
 	);
 	const siteRole =
-		await apiHelpers.headlessAdminUser.getRoleByExternalReferenceCode(
-			'Site Member'
-		);
+		await apiHelpers.headlessAdminUser.getRoleByName('Site Member');
 	await apiHelpers.headlessAdminUser.assignUserToSite(
 		siteRole.id,
 		site.id,

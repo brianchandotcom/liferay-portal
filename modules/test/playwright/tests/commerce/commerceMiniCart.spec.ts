@@ -491,7 +491,10 @@ test('LPD-26906 Mini cart bundle quantity edit', async ({
 			'demo.unprivileged@liferay.com'
 		);
 
-	await apiHelpers.headlessAdminUser.assignUserToRole(role.name, user.id);
+	await apiHelpers.headlessAdminUser.assignUserToRole(
+		role.externalReferenceCode,
+		user.id
+	);
 
 	const site = await apiHelpers.headlessSite.createSite({
 		name: getRandomString(),

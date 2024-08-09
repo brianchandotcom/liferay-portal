@@ -468,9 +468,7 @@ test('LPD-28683 When clicking on order item without visibility the user is not r
 		);
 
 	const siteRole =
-		await apiHelpers.headlessAdminUser.getRoleByExternalReferenceCode(
-			'Site Member'
-		);
+		await apiHelpers.headlessAdminUser.getRoleByName('Site Member');
 
 	await apiHelpers.headlessAdminUser.assignUserToSite(
 		siteRole.id,

@@ -144,7 +144,10 @@ test('LPD-26142 A Sales Agent can manage channel defaults', async ({
 			'demo.unprivileged@liferay.com'
 		);
 
-	await apiHelpers.headlessAdminUser.assignUserToRole(role.name, user.id);
+	await apiHelpers.headlessAdminUser.assignUserToRole(
+		role.externalReferenceCode,
+		user.id
+	);
 
 	const account1 = await apiHelpers.headlessAdminUser.postAccount({
 		name: getRandomString(),
@@ -456,12 +459,10 @@ test('LPD-28220 Can user with account manager role view and manage channel defau
 		await performLogin(page, 'test');
 
 		const accountManagerRole =
-			await apiHelpers.headlessAdminUser.getRoleByExternalReferenceCode(
-				'Account Manager'
-			);
+			await apiHelpers.headlessAdminUser.getRoleByName('Account Manager');
 
 		await apiHelpers.jsonWebServicesUser.assignUsersToRole(
-			accountManagerRole.id,
+			String(accountManagerRole.id),
 			userAccount.id
 		);
 

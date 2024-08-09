@@ -131,9 +131,7 @@ test('COMMERCE-6322. As a buyer, I want to be able to search an entry in Catalog
 		['demo.unprivileged@liferay.com']
 	);
 	const siteRole =
-		await apiHelpers.headlessAdminUser.getRoleByExternalReferenceCode(
-			'Site Member'
-		);
+		await apiHelpers.headlessAdminUser.getRoleByName('Site Member');
 	await apiHelpers.headlessAdminUser.assignUserToSite(
 		siteRole.id,
 		site.id,
@@ -194,9 +192,7 @@ test('COMMERCE-6326. As a buyer, I want to be able to search an entry in All Con
 		['demo.unprivileged@liferay.com']
 	);
 	const siteRole =
-		await apiHelpers.headlessAdminUser.getRoleByExternalReferenceCode(
-			'Site Member'
-		);
+		await apiHelpers.headlessAdminUser.getRoleByName('Site Member');
 	await apiHelpers.headlessAdminUser.assignUserToSite(
 		siteRole.id,
 		site.id,
@@ -274,9 +270,7 @@ test('COMMERCE-6321. As a buyer, I want to be able to search an Orders entry usi
 		['demo.unprivileged@liferay.com']
 	);
 	const siteRole =
-		await apiHelpers.headlessAdminUser.getRoleByExternalReferenceCode(
-			'Site Member'
-		);
+		await apiHelpers.headlessAdminUser.getRoleByName('Site Member');
 	await apiHelpers.headlessAdminUser.assignUserToSite(
 		siteRole.id,
 		site.id,

@@ -228,6 +228,20 @@ export class HeadlessAdminUserApiHelper {
 		);
 	}
 
+	async getRoleByName(name: string) {
+		const response = await this.getRoles(name);
+
+		const roles = response.items || [];
+
+		for (const role of roles as TRole[]) {
+			if (role.name.toLowerCase() === name.toLowerCase()) {
+				return role;
+			}
+		}
+
+		return null;
+	}
+
 	async getUserAccountByEmailAddress(emailAddress: string) {
 		return this.apiHelpers.get(
 			`${this.apiHelpers.baseUrl}${this.basePath}/user-accounts/by-email-address/${emailAddress}`

@@ -49,9 +49,7 @@ test('LPD-31658 Users cannot view and download owner limited product attachments
 	};
 
 	const role =
-		await apiHelpers.headlessAdminUser.getRoleByExternalReferenceCode(
-			'Site Member'
-		);
+		await apiHelpers.headlessAdminUser.getRoleByName('Site Member');
 
 	await apiHelpers.headlessAdminUser.assignUserToSite(
 		role.id,
@@ -672,9 +670,7 @@ test(`LPD-29993 Users can view and download a product's attachments`, async ({
 		user.emailAddress
 	);
 	const siteRole =
-		await apiHelpers.headlessAdminUser.getRoleByExternalReferenceCode(
-			'Site Member'
-		);
+		await apiHelpers.headlessAdminUser.getRoleByName('Site Member');
 	await apiHelpers.headlessAdminUser.assignUserToSite(
 		siteRole.id,
 		site.id,

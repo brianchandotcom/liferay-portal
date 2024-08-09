@@ -210,8 +210,13 @@ testAdmin.describe('LPD-27068 Refactor of GDPR#CanAnonymizeAllEntries', () => {
 				surname: userAccount.familyName,
 			};
 
+			const role =
+				await apiHelpers.headlessAdminUser.getRoleByName(
+					'Administrator'
+				);
+
 			await apiHelpers.headlessAdminUser.postRoleByExternalReferenceCodeUserAccountAssociation(
-				'Administrator',
+				role.externalReferenceCode,
 				userAccount.id
 			);
 
@@ -342,8 +347,11 @@ testAdmin(
 			title: 'Page' + getRandomInt(),
 		});
 
+		const role =
+			await apiHelpers.headlessAdminUser.getRoleByName('Administrator');
+
 		await apiHelpers.headlessAdminUser.postRoleByExternalReferenceCodeUserAccountAssociation(
-			'Administrator',
+			role.externalReferenceCode,
 			userAccount.id
 		);
 

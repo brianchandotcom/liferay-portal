@@ -221,9 +221,7 @@ test('LPD-26643 Reorder from placed orders details page', async ({
 	);
 
 	const siteRole =
-		await apiHelpers.headlessAdminUser.getRoleByExternalReferenceCode(
-			'Site Member'
-		);
+		await apiHelpers.headlessAdminUser.getRoleByName('Site Member');
 
 	await apiHelpers.headlessAdminUser.assignUserToSite(
 		siteRole.id,

@@ -78,8 +78,13 @@ export class ChangeTrackingPage {
 			surname: user.familyName,
 		};
 
+		const role =
+			await apiHelpers.headlessAdminUser.getRoleByName(
+				'Publications User'
+			);
+
 		await apiHelpers.headlessAdminUser.assignUserToRole(
-			'Publications User',
+			role.externalReferenceCode,
 			user.id
 		);
 

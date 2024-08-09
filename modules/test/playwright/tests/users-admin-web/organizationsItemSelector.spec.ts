@@ -35,11 +35,9 @@ test('LPD-24824 User only sees the organizations they have permission to view', 
 		user.emailAddress
 	);
 	const organizationOwnerRole =
-		await apiHelpers.headlessAdminUser.getRoleByExternalReferenceCode(
-			'Organization Owner'
-		);
+		await apiHelpers.headlessAdminUser.getRoleByName('Organization Owner');
 	await apiHelpers.headlessAdminUser.assignUserToOrganizationRole(
-		organizationOwnerRole.id,
+		String(organizationOwnerRole.id),
 		user.id,
 		organization1.id
 	);

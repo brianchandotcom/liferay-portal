@@ -280,8 +280,11 @@ test('LPD-32045 All account entry can be seen by admin user', async ({
 		surname: userAccount.familyName,
 	};
 
+	const role =
+		await apiHelpers.headlessAdminUser.getRoleByName('Administrator');
+
 	await apiHelpers.headlessAdminUser.postRoleByExternalReferenceCodeUserAccountAssociation(
-		'Administrator',
+		role.externalReferenceCode,
 		userAccount.id
 	);
 

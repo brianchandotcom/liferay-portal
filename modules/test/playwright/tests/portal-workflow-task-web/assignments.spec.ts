@@ -82,8 +82,11 @@ test('send user back to my workflow tasks page after assign another user to revi
 		surname: '&lt;script&gt;alert(0);&lt;/script&gt;',
 	};
 
+	const role =
+		await apiHelpers.headlessAdminUser.getRoleByName('Administrator');
+
 	await apiHelpers.headlessAdminUser.assignUserToRole(
-		'Administrator',
+		role.externalReferenceCode,
 		user.id
 	);
 

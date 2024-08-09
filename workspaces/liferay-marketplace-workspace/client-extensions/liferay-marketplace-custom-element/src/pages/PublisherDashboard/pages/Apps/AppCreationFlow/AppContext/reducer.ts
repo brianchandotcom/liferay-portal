@@ -144,7 +144,7 @@ export function appReducer(state: InitialStateProps, action: TAction) {
 			const licenseTier: LicenseTier = action.payload.licenseTier;
 			const oldLicensePrice = state.appLicensePrice;
 
-			const newLicensePrices = [...oldLicensePrice[licenseTier]];
+			const newLicensePrices = [...(oldLicensePrice[licenseTier] ?? [])];
 			newLicensePrices[action.payload.index] = action.payload.price;
 
 			return {

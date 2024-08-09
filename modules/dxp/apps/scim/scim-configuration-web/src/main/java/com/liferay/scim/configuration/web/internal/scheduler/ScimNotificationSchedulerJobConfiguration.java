@@ -96,10 +96,6 @@ public class ScimNotificationSchedulerJobConfiguration
 			}
 		}
 
-		if ((daysToExpire < 0) && (daysLastNotification >= 0)) {
-			return true;
-		}
-
 		return false;
 	}
 

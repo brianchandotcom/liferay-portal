@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.model.PortletCategory;
+import com.liferay.portal.kernel.model.PortletFriendlyURLMapperMatch;
 import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
 import com.liferay.portal.kernel.search.Indexable;
@@ -309,6 +310,10 @@ public interface PortletLocalService
 
 	@Transactional(enabled = false)
 	public Portlet getPortletByStrutsPath(long companyId, String strutsPath);
+
+	@Transactional(enabled = false)
+	public PortletFriendlyURLMapperMatch getPortletFriendlyURLMapperMatch(
+		String url);
 
 	@Transactional(enabled = false)
 	public List<Portlet> getPortlets();

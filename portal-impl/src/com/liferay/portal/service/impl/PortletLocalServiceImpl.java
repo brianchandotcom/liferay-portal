@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.model.PortletCategory;
 import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.model.PortletFilter;
+import com.liferay.portal.kernel.model.PortletFriendlyURLMapperMatch;
 import com.liferay.portal.kernel.model.PortletInfo;
 import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.model.PortletURLListener;
@@ -76,6 +77,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -629,6 +631,45 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		}
 
 		return getPortletById(companyId, portletId);
+	}
+
+	@Override
+	@Transactional(enabled = false)
+	public PortletFriendlyURLMapperMatch getPortletFriendlyURLMapperMatch(
+		String url) {
+
+		for (Portlet portlet : getFriendlyURLMapperPortlets()) {
+			FriendlyURLMapper friendlyURLMapper =
+				portlet.getFriendlyURLMapperInstance();
+
+			if (url.endsWith(
+					StringPool.SLASH + friendlyURLMapper.getMapping())) {
+
+				url += StringPool.SLASH;
+			}
+
+			int pos = -1;
+
+			if (friendlyURLMapper.isCheckMappingWithPrefix()) {
+				pos = url.indexOf(
+					Portal.FRIENDLY_URL_SEPARATOR +
+						friendlyURLMapper.getMapping() + StringPool.SLASH);
+			}
+			else {
+				pos = url.indexOf(
+					StringPool.SLASH + friendlyURLMapper.getMapping() +
+						StringPool.SLASH);
+			}
+
+			if (pos == -1) {
+				continue;
+			}
+
+			return new PortletFriendlyURLMapperMatch(
+				portlet, friendlyURLMapper, pos);
+		}
+
+		return null;
 	}
 
 	@Override

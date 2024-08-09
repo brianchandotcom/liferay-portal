@@ -43,9 +43,9 @@ public class CommerceReturnItemAuthorizedObjectValidationRuleEngineImplTest
 		Map<String, Object> results = _objectValidationRuleEngine.execute(
 			HashMapBuilder.<String, Object>put(
 				"entryDTO",
-				HashMapBuilder.put(
+				HashMapBuilder.<String, Object>put(
 					"properties",
-					HashMapBuilder.put(
+					HashMapBuilder.<String, Object>put(
 						"authorized", 2
 					).put(
 						"quantity", 1
@@ -60,9 +60,9 @@ public class CommerceReturnItemAuthorizedObjectValidationRuleEngineImplTest
 		results = _objectValidationRuleEngine.execute(
 			HashMapBuilder.<String, Object>put(
 				"entryDTO",
-				HashMapBuilder.put(
+				HashMapBuilder.<String, Object>put(
 					"properties",
-					HashMapBuilder.put(
+					HashMapBuilder.<String, Object>put(
 						"authorized", 0
 					).put(
 						"quantity", 1

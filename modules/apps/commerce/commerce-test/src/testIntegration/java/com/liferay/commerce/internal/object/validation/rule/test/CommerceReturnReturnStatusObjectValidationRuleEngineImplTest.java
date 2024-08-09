@@ -45,9 +45,9 @@ public class CommerceReturnReturnStatusObjectValidationRuleEngineImplTest
 		Map<String, Object> results = _objectValidationRuleEngine.execute(
 			HashMapBuilder.<String, Object>put(
 				"entryDTO",
-				HashMapBuilder.put(
+				HashMapBuilder.<String, Object>put(
 					"properties",
-					HashMapBuilder.put(
+					HashMapBuilder.<String, Object>put(
 						"r_commerceOrderToCommerceReturns_commerceOrderId",
 						RandomTestUtil.randomLong()
 					).build()
@@ -61,11 +61,11 @@ public class CommerceReturnReturnStatusObjectValidationRuleEngineImplTest
 		results = _objectValidationRuleEngine.execute(
 			HashMapBuilder.<String, Object>put(
 				"entryDTO",
-				HashMapBuilder.put(
+				HashMapBuilder.<String, Object>put(
 					"properties",
-					HashMapBuilder.put(
+					HashMapBuilder.<String, Object>put(
 						"returnStatus",
-						HashMapBuilder.put(
+						HashMapBuilder.<String, Object>put(
 							"key", CommerceReturnConstants.RETURN_STATUS_DRAFT
 						).build()
 					).build()

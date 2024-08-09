@@ -44,9 +44,9 @@ public class CommerceReturnItemAccountEntryIdObjectValidationRuleEngineImplTest
 		Map<String, Object> results = _objectValidationRuleEngine.execute(
 			HashMapBuilder.<String, Object>put(
 				"entryDTO",
-				HashMapBuilder.put(
+				HashMapBuilder.<String, Object>put(
 					"properties",
-					HashMapBuilder.put(
+					HashMapBuilder.<String, Object>put(
 						"r_accountToCommerceReturnItems_accountEntryId",
 						RandomTestUtil.randomLong()
 					).put(
@@ -64,9 +64,9 @@ public class CommerceReturnItemAccountEntryIdObjectValidationRuleEngineImplTest
 		results = _objectValidationRuleEngine.execute(
 			HashMapBuilder.<String, Object>put(
 				"entryDTO",
-				HashMapBuilder.put(
+				HashMapBuilder.<String, Object>put(
 					"properties",
-					HashMapBuilder.put(
+					HashMapBuilder.<String, Object>put(
 						"r_accountToCommerceReturnItems_accountEntryId",
 						accountEntry.getAccountEntryId()
 					).put(

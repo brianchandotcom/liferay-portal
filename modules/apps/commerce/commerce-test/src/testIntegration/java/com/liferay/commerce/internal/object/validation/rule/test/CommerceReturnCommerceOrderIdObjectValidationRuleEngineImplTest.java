@@ -44,18 +44,18 @@ public class CommerceReturnCommerceOrderIdObjectValidationRuleEngineImplTest
 		Map<String, Object> results = _objectValidationRuleEngine.execute(
 			HashMapBuilder.<String, Object>put(
 				"entryDTO",
-				HashMapBuilder.put(
+				HashMapBuilder.<String, Object>put(
 					"properties",
-					HashMapBuilder.put(
+					HashMapBuilder.<String, Object>put(
 						"r_commerceOrderToCommerceReturns_commerceOrderId",
 						commerceOrder.getCommerceOrderId()
 					).build()
 				).build()
 			).put(
 				"originalEntryDTO",
-				HashMapBuilder.put(
+				HashMapBuilder.<String, Object>put(
 					"properties",
-					HashMapBuilder.put(
+					HashMapBuilder.<String, Object>put(
 						"r_commerceOrderToCommerceReturns_commerceOrderId",
 						commerceOrder.getCommerceOrderId()
 					).build()
@@ -69,18 +69,18 @@ public class CommerceReturnCommerceOrderIdObjectValidationRuleEngineImplTest
 		results = _objectValidationRuleEngine.execute(
 			HashMapBuilder.<String, Object>put(
 				"entryDTO",
-				HashMapBuilder.put(
+				HashMapBuilder.<String, Object>put(
 					"properties",
-					HashMapBuilder.put(
+					HashMapBuilder.<String, Object>put(
 						"r_commerceOrderToCommerceReturns_commerceOrderId",
 						RandomTestUtil.randomLong()
 					).build()
 				).build()
 			).put(
 				"originalEntryDTO",
-				HashMapBuilder.put(
+				HashMapBuilder.<String, Object>put(
 					"properties",
-					HashMapBuilder.put(
+					HashMapBuilder.<String, Object>put(
 						"r_commerceOrderToCommerceReturns_commerceOrderId",
 						commerceOrder.getCommerceOrderId()
 					).build()
@@ -94,9 +94,9 @@ public class CommerceReturnCommerceOrderIdObjectValidationRuleEngineImplTest
 		results = _objectValidationRuleEngine.execute(
 			HashMapBuilder.<String, Object>put(
 				"entryDTO",
-				HashMapBuilder.put(
+				HashMapBuilder.<String, Object>put(
 					"properties",
-					HashMapBuilder.put(
+					HashMapBuilder.<String, Object>put(
 						"r_commerceOrderToCommerceReturns_commerceOrderId",
 						commerceOrder.getCommerceOrderId()
 					).build()

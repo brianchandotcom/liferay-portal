@@ -68,8 +68,9 @@ public class AssetPublisherPortletPreferencesUpdater
 
 		LayoutClassedModelUsage layoutClassedModelUsage =
 			_layoutClassedModelUsageLocalService.fetchLayoutClassedModelUsage(
-				classNameId, classPK, StringPool.BLANK, portletId,
-				_portal.getClassNameId(Portlet.class), layout.getPlid());
+				layout.getGroupId(), classNameId, classPK, StringPool.BLANK,
+				portletId, _portal.getClassNameId(Portlet.class),
+				layout.getPlid());
 
 		if (layoutClassedModelUsage != null) {
 			return;

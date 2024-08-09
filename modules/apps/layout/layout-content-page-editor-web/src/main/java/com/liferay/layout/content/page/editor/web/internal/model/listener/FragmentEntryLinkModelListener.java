@@ -245,6 +245,7 @@ public class FragmentEntryLinkModelListener
 			LayoutClassedModelUsage layoutClassedModelUsage =
 				_layoutClassedModelUsageLocalService.
 					fetchLayoutClassedModelUsage(
+						fragmentEntryLink.getGroupId(),
 						layoutDisplayPageObjectProvider.getClassNameId(),
 						layoutDisplayPageObjectProvider.getClassPK(),
 						layoutDisplayPageObjectProvider.

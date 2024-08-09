@@ -450,8 +450,9 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 			LayoutClassedModelUsage layoutClassedModelUsage =
 				_layoutClassedModelUsageLocalService.
 					fetchLayoutClassedModelUsage(
-						_journalArticleClassNameId, classPK, StringPool.BLANK,
-						containerKey, containerType, layout.getPlid());
+						layout.getGroupId(), _journalArticleClassNameId,
+						classPK, StringPool.BLANK, containerKey, containerType,
+						layout.getPlid());
 
 			Assert.assertNotNull(layoutClassedModelUsage);
 			Assert.assertEquals(

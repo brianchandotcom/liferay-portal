@@ -851,8 +851,8 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 
 		LayoutClassedModelUsage layoutClassedModelUsage =
 			_layoutClassedModelUsageLocalService.fetchLayoutClassedModelUsage(
-				classNameId, classPK, StringPool.BLANK, portletResource,
-				_portal.getClassNameId(Portlet.class), plid);
+				groupId, classNameId, classPK, StringPool.BLANK,
+				portletResource, _portal.getClassNameId(Portlet.class), plid);
 
 		if (layoutClassedModelUsage != null) {
 			return;

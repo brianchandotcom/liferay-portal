@@ -237,6 +237,7 @@ public class LayoutLocalServiceWrapper
 					LayoutClassedModelUsage layoutClassedModelUsage =
 						_layoutClassedModelUsageLocalService.
 							fetchLayoutClassedModelUsage(
+								targetLayout.getGroupId(),
 								sourceLayoutLayoutClassedModelUsage.
 									getClassNameId(),
 								sourceLayoutLayoutClassedModelUsage.

@@ -66,6 +66,7 @@ public class LayoutPageTemplateStructureRelModelListener
 			LayoutClassedModelUsage layoutClassedModelUsage =
 				_layoutClassedModelUsageLocalService.
 					fetchLayoutClassedModelUsage(
+						layoutPageTemplateStructure.getGroupId(),
 						layoutDisplayPageObjectProvider.getClassNameId(),
 						layoutDisplayPageObjectProvider.getClassPK(),
 						layoutDisplayPageObjectProvider.

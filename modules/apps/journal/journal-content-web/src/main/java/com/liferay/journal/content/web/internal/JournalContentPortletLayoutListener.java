@@ -165,6 +165,7 @@ public class JournalContentPortletLayoutListener
 
 		LayoutClassedModelUsage layoutClassedModelUsage =
 			_layoutClassedModelUsageLocalService.fetchLayoutClassedModelUsage(
+				layout.getGroupId(),
 				_portal.getClassNameId(JournalArticle.class),
 				article.getResourcePrimKey(), StringPool.BLANK, portletId,
 				_portal.getClassNameId(Portlet.class), layout.getPlid());

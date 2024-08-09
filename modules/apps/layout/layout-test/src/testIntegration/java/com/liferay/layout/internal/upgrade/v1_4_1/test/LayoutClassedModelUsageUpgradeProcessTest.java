@@ -196,7 +196,8 @@ public class LayoutClassedModelUsageUpgradeProcessTest {
 
 		LayoutClassedModelUsage layoutClassedModelUsage =
 			_layoutClassedModelUsageLocalService.fetchLayoutClassedModelUsage(
-				_journalArticleClassNameId, classPK, StringPool.BLANK,
+				fragmentEntryLink.getGroupId(), _journalArticleClassNameId,
+				classPK, StringPool.BLANK,
 				String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()),
 				_fragmentEntryLinkClassNameId, fragmentEntryLink.getPlid());
 

@@ -320,9 +320,9 @@ function getInitialTarget(source, layoutDataRef, fragmentEntryLinksRef) {
 	if (actionType === ACTION_TYPES.add) {
 		const root = layoutData.items[layoutData.rootItems.main];
 
-		if (!checkAllowedChild(source, root, layoutDataRef)) {
-			return null;
-		}
+		const canDropInRoot = checkAllowedChild(source, root, layoutDataRef);
+
+		// Check root children to see if someone is targetable
 
 		let childIndex = root.children.length - 1;
 
@@ -331,26 +331,51 @@ function getInitialTarget(source, layoutDataRef, fragmentEntryLinksRef) {
 			const child = layoutData.items[childId];
 
 			if (!isHidden(child)) {
+
+				// This child is targetable
+
 				const childName = selectLayoutDataItemLabel(
 					{fragmentEntryLinks},
 					child
 				);
 
-				return {
+				// If source can drop in root, return this child as target
+
+				const target = {
 					itemId: child.itemId,
 					name: childName,
 					position: TARGET_POSITIONS.BOTTOM,
 				};
+
+				if (canDropInRoot) {
+					return target;
+				}
+
+				// Otherwise, look for next valid target
+
+				else {
+					return getNextTarget(
+						source,
+						target,
+						fragmentEntryLinks,
+						layoutDataRef,
+						DIRECTIONS.up
+					);
+				}
 			}
 
 			childIndex--;
 		}
 
-		return {
-			itemId: root.itemId,
-			name: root.type,
-			position: TARGET_POSITIONS.MIDDLE,
-		};
+		// Root has no targetable child, return root as target if possible
+
+		return canDropInRoot
+			? {
+					itemId: root.itemId,
+					name: root.type,
+					position: TARGET_POSITIONS.MIDDLE,
+				}
+			: null;
 	}
 	else if (actionType === ACTION_TYPES.move) {
 		return {

@@ -1,6 +1,6 @@
 ext.expectedContentStrings = [
-	'"LIFERAY_BATCH_OAUTH_APP_ERC": "oauth"',
 	'"id": "siteinitializer"',
+	'"LIFERAY_BATCH_OAUTH_APP_ERC": "oauth"',
 ]
 ext.expectedFilePath = "LCP.json"
 ext.taskPath = ":site-initializer:createClientExtensionConfig"

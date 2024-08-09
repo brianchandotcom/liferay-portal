@@ -136,7 +136,7 @@ public class
 		Map<String, Object> results = _objectValidationRuleEngine.execute(
 			HashMapBuilder.<String, Object>put(
 				"entryDTO",
-				HashMapBuilder.put(
+				HashMapBuilder.<String, Object>put(
 					"properties",
 					HashMapBuilder.<String, Object>put(
 						"r_commerceOrderItemToCommerceReturnItems_" +
@@ -157,9 +157,9 @@ public class
 		results = _objectValidationRuleEngine.execute(
 			HashMapBuilder.<String, Object>put(
 				"entryDTO",
-				HashMapBuilder.put(
+				HashMapBuilder.<String, Object>put(
 					"properties",
-					HashMapBuilder.put(
+					HashMapBuilder.<String, Object>put(
 						"r_commerceOrderItemToCommerceReturnItems_" +
 							"commerceOrderItemId",
 						String.valueOf(

@@ -139,30 +139,30 @@ public class CommerceReturnItemPermissionObjectValidationRuleEngineImplTest
 			HashMapBuilder.<String, Object>put(
 				"entryDTO",
 				HashMapBuilder.<String, Object>put(
+					"externalReferenceCode", externalReferenceCode
+				).put(
 					"properties",
 					HashMapBuilder.<String, Object>put(
 						"authorized", 1
-					).<String, Object>put(
+					).put(
 						"r_commerceReturnToCommerceReturnItems_c_" +
 							"commerceReturnId",
 						_objectEntry.getObjectEntryId()
 					).build()
-				).<String, Object>put(
-					"externalReferenceCode", externalReferenceCode
 				).build()
-			).<String, Object>put(
+			).put(
 				"originalEntryDTO",
 				HashMapBuilder.<String, Object>put(
+					"externalReferenceCode", externalReferenceCode
+				).put(
 					"properties",
 					HashMapBuilder.<String, Object>put(
 						"authorized", 0
-					).<String, Object>put(
+					).put(
 						"r_commerceReturnToCommerceReturnItems_c_" +
 							"commerceReturnId",
 						_objectEntry.getObjectEntryId()
 					).build()
-				).<String, Object>put(
-					"externalReferenceCode", externalReferenceCode
 				).build()
 			).build(),
 			null);
@@ -192,32 +192,32 @@ public class CommerceReturnItemPermissionObjectValidationRuleEngineImplTest
 
 		Map<String, Object> results = _objectValidationRuleEngine.execute(
 			HashMapBuilder.<String, Object>put(
-				"originalEntryDTO",
-				HashMapBuilder.<String, Object>put(
-					"properties",
-					HashMapBuilder.<String, Object>put(
-						"authorizeReturnWithoutReturningProducts", false
-					).<String, Object>put(
-						"r_commerceReturnToCommerceReturnItems_c_" +
-							"commerceReturnId",
-						_objectEntry.getObjectEntryId()
-					).build()
-				).<String, Object>put(
-					"externalReferenceCode", externalReferenceCode
-				).build()
-			).<String, Object>put(
 				"entryDTO",
 				HashMapBuilder.<String, Object>put(
+					"externalReferenceCode", externalReferenceCode
+				).put(
 					"properties",
 					HashMapBuilder.<String, Object>put(
 						"authorizeReturnWithoutReturningProducts", true
-					).<String, Object>put(
+					).put(
 						"r_commerceReturnToCommerceReturnItems_c_" +
 							"commerceReturnId",
 						_objectEntry.getObjectEntryId()
 					).build()
-				).<String, Object>put(
+				).build()
+			).put(
+				"originalEntryDTO",
+				HashMapBuilder.<String, Object>put(
 					"externalReferenceCode", externalReferenceCode
+				).put(
+					"properties",
+					HashMapBuilder.<String, Object>put(
+						"authorizeReturnWithoutReturningProducts", false
+					).put(
+						"r_commerceReturnToCommerceReturnItems_c_" +
+							"commerceReturnId",
+						_objectEntry.getObjectEntryId()
+					).build()
 				).build()
 			).build(),
 			null);
@@ -233,7 +233,7 @@ public class CommerceReturnItemPermissionObjectValidationRuleEngineImplTest
 				"entryDTO",
 				HashMapBuilder.<String, Object>put(
 					"externalReferenceCode", RandomTestUtil.randomString()
-				).<String, Object>put(
+				).put(
 					"properties",
 					HashMapBuilder.<String, Object>put(
 						"r_commerceReturnToCommerceReturnItems_c_" +
@@ -241,11 +241,11 @@ public class CommerceReturnItemPermissionObjectValidationRuleEngineImplTest
 						_objectEntry.getObjectEntryId()
 					).build()
 				).build()
-			).<String, Object>put(
+			).put(
 				"originalEntryDTO",
 				HashMapBuilder.<String, Object>put(
 					"externalReferenceCode", RandomTestUtil.randomString()
-				).<String, Object>put(
+				).put(
 					"properties",
 					HashMapBuilder.<String, Object>put(
 						"r_commerceReturnToCommerceReturnItems_c_" +
@@ -269,25 +269,25 @@ public class CommerceReturnItemPermissionObjectValidationRuleEngineImplTest
 				"entryDTO",
 				HashMapBuilder.<String, Object>put(
 					"externalReferenceCode", externalReferenceCode
-				).<String, Object>put(
+				).put(
 					"properties",
 					HashMapBuilder.<String, Object>put(
 						"quantity", 1
-					).<String, Object>put(
+					).put(
 						"r_commerceReturnToCommerceReturnItems_c_" +
 							"commerceReturnId",
 						_objectEntry.getObjectEntryId()
 					).build()
 				).build()
-			).<String, Object>put(
+			).put(
 				"originalEntryDTO",
 				HashMapBuilder.<String, Object>put(
 					"externalReferenceCode", externalReferenceCode
-				).<String, Object>put(
+				).put(
 					"properties",
 					HashMapBuilder.<String, Object>put(
 						"quantity", 0
-					).<String, Object>put(
+					).put(
 						"r_commerceReturnToCommerceReturnItems_c_" +
 							"commerceReturnId",
 						_objectEntry.getObjectEntryId()
@@ -319,23 +319,23 @@ public class CommerceReturnItemPermissionObjectValidationRuleEngineImplTest
 					"properties",
 					HashMapBuilder.<String, Object>put(
 						"externalReferenceCode", externalReferenceCode
-					).<String, Object>put(
+					).put(
 						"quantity", 1
-					).<String, Object>put(
+					).put(
 						"r_commerceReturnToCommerceReturnItems_c_" +
 							"commerceReturnId",
 						_objectEntry.getObjectEntryId()
 					).build()
 				).build()
-			).<String, Object>put(
+			).put(
 				"originalEntryDTO",
 				HashMapBuilder.<String, Object>put(
 					"externalReferenceCode", externalReferenceCode
-				).<String, Object>put(
+				).put(
 					"properties",
 					HashMapBuilder.<String, Object>put(
 						"quantity", 0
-					).<String, Object>put(
+					).put(
 						"r_commerceReturnToCommerceReturnItems_c_" +
 							"commerceReturnId",
 						_objectEntry.getObjectEntryId()
@@ -357,27 +357,27 @@ public class CommerceReturnItemPermissionObjectValidationRuleEngineImplTest
 				"entryDTO",
 				HashMapBuilder.<String, Object>put(
 					"externalReferenceCode", externalReferenceCode
-				).<String, Object>put(
+				).put(
 					"properties",
 					HashMapBuilder.<String, Object>put(
 						"r_commerceReturnToCommerceReturnItems_c_" +
 							"commerceReturnId",
 						_objectEntry.getObjectEntryId()
-					).<String, Object>put(
+					).put(
 						"received", 1
 					).build()
 				).build()
-			).<String, Object>put(
+			).put(
 				"originalEntryDTO",
 				HashMapBuilder.<String, Object>put(
 					"externalReferenceCode", externalReferenceCode
-				).<String, Object>put(
+				).put(
 					"properties",
 					HashMapBuilder.<String, Object>put(
 						"r_commerceReturnToCommerceReturnItems_c_" +
 							"commerceReturnId",
 						_objectEntry.getObjectEntryId()
-					).<String, Object>put(
+					).put(
 						"received", 0
 					).build()
 				).build()
@@ -397,27 +397,27 @@ public class CommerceReturnItemPermissionObjectValidationRuleEngineImplTest
 				"entryDTO",
 				HashMapBuilder.<String, Object>put(
 					"externalReferenceCode", externalReferenceCode
-				).<String, Object>put(
+				).put(
 					"properties",
 					HashMapBuilder.<String, Object>put(
 						"r_commerceReturnToCommerceReturnItems_c_" +
 							"commerceReturnId",
 						_objectEntry.getObjectEntryId()
-					).<String, Object>put(
+					).put(
 						"returnReason", "productDefect"
 					).build()
 				).build()
-			).<String, Object>put(
+			).put(
 				"originalEntryDTO",
 				HashMapBuilder.<String, Object>put(
 					"externalReferenceCode", externalReferenceCode
-				).<String, Object>put(
+				).put(
 					"properties",
 					HashMapBuilder.<String, Object>put(
 						"r_commerceReturnToCommerceReturnItems_c_" +
 							"commerceReturnId",
 						_objectEntry.getObjectEntryId()
-					).<String, Object>put(
+					).put(
 						"returnReason", "changeOfMind"
 					).build()
 				).build()
@@ -445,27 +445,27 @@ public class CommerceReturnItemPermissionObjectValidationRuleEngineImplTest
 				"entryDTO",
 				HashMapBuilder.<String, Object>put(
 					"externalReferenceCode", externalReferenceCode
-				).<String, Object>put(
+				).put(
 					"properties",
 					HashMapBuilder.<String, Object>put(
 						"r_commerceReturnToCommerceReturnItems_c_" +
 							"commerceReturnId",
 						_objectEntry.getObjectEntryId()
-					).<String, Object>put(
+					).put(
 						"returnReason", "changeOfMind"
 					).build()
 				).build()
-			).<String, Object>put(
+			).put(
 				"originalEntryDTO",
 				HashMapBuilder.<String, Object>put(
 					"externalReferenceCode", externalReferenceCode
-				).<String, Object>put(
+				).put(
 					"properties",
 					HashMapBuilder.<String, Object>put(
 						"r_commerceReturnToCommerceReturnItems_c_" +
 							"commerceReturnId",
 						_objectEntry.getObjectEntryId()
-					).<String, Object>put(
+					).put(
 						"returnReason", "productDefect"
 					).build()
 				).build()

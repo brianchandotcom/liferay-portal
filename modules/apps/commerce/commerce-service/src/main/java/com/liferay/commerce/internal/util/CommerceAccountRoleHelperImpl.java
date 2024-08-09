@@ -83,7 +83,6 @@ public class CommerceAccountRoleHelperImpl
 			_checkRole(
 				AccountRoleConstants.ROLE_NAME_RETURNS_MANAGER,
 				RoleConstants.TYPE_REGULAR, serviceContext);
-
 			_checkRole(
 				RoleConstants.USER, RoleConstants.TYPE_REGULAR, serviceContext);
 		}

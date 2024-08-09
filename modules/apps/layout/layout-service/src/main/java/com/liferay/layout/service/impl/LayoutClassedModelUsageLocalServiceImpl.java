@@ -93,12 +93,12 @@ public class LayoutClassedModelUsageLocalServiceImpl
 
 	@Override
 	public LayoutClassedModelUsage fetchLayoutClassedModelUsage(
-		long classNameId, long classPK,
+		long groupId, long classNameId, long classPK,
 		String classedModelExternalReferenceCode, String containerKey,
 		long containerType, long plid) {
 
-		return layoutClassedModelUsagePersistence.fetchByCN_CPK_CMERC_CK_CT_P(
-			classNameId, classPK, classedModelExternalReferenceCode,
+		return layoutClassedModelUsagePersistence.fetchByG_CN_CPK_CMERC_CK_CT_P(
+			groupId, classNameId, classPK, classedModelExternalReferenceCode,
 			containerKey, containerType, plid);
 	}
 

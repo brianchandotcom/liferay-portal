@@ -120,13 +120,12 @@ public class ClientExtensionCommerceCheckoutStep
 					currentUser.getUserId()
 				).get());
 
-			if (Objects.equals(status, "READY") && _active) {
-				if (Validator.isNull(_payment) ||
-					_payment.equals(
-						commerceOrder.getCommercePaymentMethodKey())) {
+			if (Objects.equals(status, "READY") && _active &&
+				(Validator.isNull(_payment) ||
+				 _payment.equals(
+					 commerceOrder.getCommercePaymentMethodKey()))) {
 
-					return true;
-				}
+				return true;
 			}
 		}
 		catch (Exception exception) {

@@ -13,7 +13,10 @@ import React, {useMemo, useState} from 'react';
 import {getLayoutDataItemPropTypes} from '../../../prop_types/index';
 import {FRAGMENT_ENTRY_TYPES} from '../../config/constants/fragmentEntryTypes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
-import {useSelectItem} from '../../contexts/ControlsContext';
+import {
+	useSelectItem,
+	useSelectMultipleItems,
+} from '../../contexts/ControlsContext';
 import {useDispatch, useSelector} from '../../contexts/StoreContext';
 import deleteItem from '../../thunks/deleteItem';
 import duplicateItem from '../../thunks/duplicateItem';
@@ -34,6 +37,7 @@ export default function TopperItemActions({disabled, item}) {
 	const dispatch = useDispatch();
 	const hasRequiredChild = useHasRequiredChild(item.itemId);
 	const selectItem = useSelectItem();
+	const selectMultipleItems = useSelectMultipleItems();
 	const widgets = useSelector((state) => state.widgets);
 
 	const {fragmentEntryLinks, layoutData, selectedViewportSize} = useSelector(
@@ -99,7 +103,7 @@ export default function TopperItemActions({disabled, item}) {
 					dispatch(
 						duplicateItem({
 							itemIds: [item.itemId],
-							selectItem,
+							selectItems: selectMultipleItems,
 						})
 					),
 				icon: 'copy',
@@ -135,6 +139,7 @@ export default function TopperItemActions({disabled, item}) {
 		layoutData,
 		selectedViewportSize,
 		selectItem,
+		selectMultipleItems,
 		widgets,
 	]);
 

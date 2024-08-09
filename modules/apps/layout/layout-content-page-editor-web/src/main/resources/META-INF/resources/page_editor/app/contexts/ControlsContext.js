@@ -36,7 +36,8 @@ const getActiveItemIds = (activeItemIds, itemId) =>
 		: [...activeItemIds, itemId];
 
 const reducer = (state, action) => {
-	const {itemId, itemType, multiSelectIsActive, origin, type} = action;
+	const {activeItemIds, itemId, itemType, multiSelectIsActive, origin, type} =
+		action;
 	let nextState = state;
 
 	if (type === HOVER_ITEM && itemId !== nextState.hoveredItemId) {
@@ -68,6 +69,7 @@ const reducer = (state, action) => {
 	else if (type === MULTI_SELECT) {
 		nextState = {
 			...nextState,
+			activeItemIds: activeItemIds || nextState.activeItemIds,
 			multiSelectIsActive,
 		};
 	}
@@ -208,6 +210,21 @@ const useActivateMultiSelect = () => {
 	);
 };
 
+const useSelectMultipleItems = () => {
+	const activeDispatch = useContext(ActiveDispatchContext);
+
+	return useCallback(
+		(itemIds, {origin = null}) => {
+			activeDispatch({
+				activeItemIds: itemIds,
+				origin,
+				type: MULTI_SELECT,
+			});
+		},
+		[activeDispatch]
+	);
+};
+
 const useMultiSelectIsActivated = () =>
 	useContext(ActiveStateContext).multiSelectIsActive;
 
@@ -226,4 +243,5 @@ export {
 	useIsHovered,
 	useMultiSelectIsActivated,
 	useSelectItem,
+	useSelectMultipleItems,
 };

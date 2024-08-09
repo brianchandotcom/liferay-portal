@@ -21,6 +21,7 @@ import {
 	useActiveItemIds,
 	useActiveItemType,
 	useSelectItem,
+	useSelectMultipleItems,
 } from '../contexts/ControlsContext';
 import {
 	useOpenShorcutModal,
@@ -73,6 +74,7 @@ export default function ShortcutManager() {
 	const [openSaveModal, setOpenSaveModal] = useState(false);
 	const openShortcutModal = useOpenShorcutModal();
 	const selectItem = useSelectItem();
+	const selectMultipleItems = useSelectMultipleItems();
 	const setEditedNodeId = useSetEditedNodeId();
 	const setOpenShorcutModal = useSetOpenShorcutModal();
 	const state = useSelector((state) => state);
@@ -107,7 +109,7 @@ export default function ShortcutManager() {
 		dispatch(
 			duplicateItem({
 				itemIds: activeItemIds,
-				selectItem,
+				selectItems: selectMultipleItems,
 			})
 		);
 	};

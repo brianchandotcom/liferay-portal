@@ -1,0 +1,63 @@
+{
+	"pageElement": {
+		"id": "item1",
+		"pageElements": [
+			{
+				"definition": {
+					"formConfig": {
+						"formReference": {
+							"className": "com.liferay.object.model.ObjectDefinition#00000",
+							"classType": 0
+						},
+						"multiStep": true,
+						"numberOfSteps": 2
+					},
+					"indexed": true,
+					"layout": {
+					}
+				},
+				"id": "item2",
+				"pageElements": [
+					{
+						"definition": {
+						},
+						"id": "item3",
+						"pageElements": [
+							{
+								"definition": {
+								},
+								"id": "item4",
+								"pageElements": [
+									{
+										"definition": {
+											"indexed": true,
+											"layout": {
+											}
+										},
+										"id": "item5",
+										"type": "Section"
+									}
+								],
+								"type": "FormStep"
+							},
+							{
+								"definition": {
+								},
+								"id": "item6",
+								"type": "FormStep"
+							}
+						],
+						"type": "FormStepContainer"
+					}
+				],
+				"type": "Form"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"colorSchemeName": "01",
+		"themeName": "Classic"
+	},
+	"version": 1.1
+}

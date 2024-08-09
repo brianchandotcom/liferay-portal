@@ -340,9 +340,9 @@ public class Serializer {
 	}
 
 	private BufferQueue _getBufferQueue() {
-		Reference<BufferQueue> reference = _bufferQueueThreadLocal.get();
-
 		BufferQueue bufferQueue = null;
+
+		Reference<BufferQueue> reference = _bufferQueueThreadLocal.get();
 
 		if (reference != null) {
 			bufferQueue = reference.get();

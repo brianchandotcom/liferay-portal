@@ -111,6 +111,12 @@ const COMMANDS = {
 		parameters: '',
 		script: './generate/tsconfig.mjs',
 	},
+	'gitmerge:self': {
+		description: `implements a Git merge driver for node-scripts' package.json file`,
+		parameters:
+			'--current=<current file> --base=<base file> --other=<other file>',
+		script: './gitmerge/self.mjs',
+	},
 	'setup': {
 		description: `
 		Setup working environment used by node-scripts (for example: download the binary Sass

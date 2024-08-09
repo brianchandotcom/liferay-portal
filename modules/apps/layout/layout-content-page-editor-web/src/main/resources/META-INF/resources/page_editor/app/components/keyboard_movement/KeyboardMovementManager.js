@@ -311,7 +311,7 @@ export default function KeyboardMovementManager() {
 	return null;
 }
 
-function getInitialTarget(source, layoutDataRef, fragmentEntryLinksRef) {
+export function getInitialTarget(source, layoutDataRef, fragmentEntryLinksRef) {
 	const layoutData = layoutDataRef.current;
 	const fragmentEntryLinks = fragmentEntryLinksRef.current;
 

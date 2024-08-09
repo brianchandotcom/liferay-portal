@@ -1,0 +1,24 @@
+task runGradleTest
+
+String[] defaultRepositories = [
+	"ignoredTestOnlyFlatDirRespository",
+	"https://repository-cdn.liferay.com/nexus/content/groups/public",
+	"https://repo.maven.apache.org/maven2/",
+	"https://repository.liferay.com/nexus/content/groups/public"
+]
+
+runGradleTest {
+	doLast {
+		project(":module").repositories.eachWithIndex {
+			repository, index ->
+
+			String expectedRepositoryURL = defaultRepositories[index];
+
+			if (expectedRepositoryURL.contains("ignored")) {
+				return;
+			}
+
+			assert expectedRepositoryURL == repository.url.toString()
+		}
+	}
+}

@@ -7,6 +7,7 @@ package com.liferay.portal.security.ldap;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +19,7 @@ import java.util.Objects;
 public class SafeLdapFilter {
 
 	public SafeLdapFilter and(SafeLdapFilter... safeLdapFilters) {
-		if ((safeLdapFilters == null) || (safeLdapFilters.length == 0)) {
+		if (ArrayUtil.isEmpty(safeLdapFilters)) {
 			return this;
 		}
 
@@ -87,7 +88,7 @@ public class SafeLdapFilter {
 	}
 
 	public SafeLdapFilter or(SafeLdapFilter... safeLdapFilters) {
-		if ((safeLdapFilters == null) || (safeLdapFilters.length == 0)) {
+		if (ArrayUtil.isEmpty(safeLdapFilters)) {
 			return this;
 		}
 

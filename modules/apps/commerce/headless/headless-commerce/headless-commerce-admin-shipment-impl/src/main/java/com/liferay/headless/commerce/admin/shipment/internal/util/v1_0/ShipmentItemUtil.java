@@ -5,8 +5,12 @@
 
 package com.liferay.headless.commerce.admin.shipment.internal.util.v1_0;
 
+import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
+import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseService;
+import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceShipment;
 import com.liferay.commerce.model.CommerceShipmentItem;
+import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceShipmentItemService;
 import com.liferay.headless.commerce.admin.shipment.dto.v1_0.ShipmentItem;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
@@ -23,10 +27,13 @@ import java.math.BigDecimal;
 public class ShipmentItemUtil {
 
 	public static CommerceShipmentItem addOrUpdateShipmentItem(
-			String externalReferenceCode, CommerceShipment commerceShipment,
+			String externalReferenceCode,
+			CommerceInventoryWarehouseService commerceInventoryWarehouseService,
+			CommerceOrderItemService commerceOrderItemService,
+			CommerceShipment commerceShipment,
 			CommerceShipmentItemService commerceShipmentItemService,
-			ShipmentItem shipmentItem,
-			ServiceContextHelper serviceContextHelper)
+			ServiceContextHelper serviceContextHelper,
+			ShipmentItem shipmentItem)
 		throws Exception {
 
 		long defaultOrderItemId = 0;
@@ -54,14 +61,64 @@ public class ShipmentItemUtil {
 
 		return commerceShipmentItemService.addOrUpdateCommerceShipmentItem(
 			externalReferenceCode, commerceShipment.getCommerceShipmentId(),
-			GetterUtil.getLong(
-				shipmentItem.getOrderItemId(), defaultOrderItemId),
-			GetterUtil.getLong(
-				shipmentItem.getWarehouseId(), defaultWarehouseId),
+			getCommerceOrderItemId(
+				commerceOrderItemService, serviceContext.getCompanyId(),
+				defaultOrderItemId, shipmentItem),
+			getCommerceInventoryWarehouseId(
+				commerceInventoryWarehouseService,
+				serviceContext.getCompanyId(), defaultWarehouseId,
+				shipmentItem),
 			BigDecimalUtil.get(shipmentItem.getQuantity(), defaultQuantity),
 			null,
 			GetterUtil.getBoolean(shipmentItem.getValidateInventory(), true),
 			serviceContext);
+	}
+
+	public static long getCommerceInventoryWarehouseId(
+			CommerceInventoryWarehouseService commerceInventoryWarehouseService,
+			long companyId, long defaultCommerceInventoryWarehouseId,
+			ShipmentItem shipmentItem)
+		throws Exception {
+
+		long commerceInventoryWarehouseId = GetterUtil.getLong(
+			shipmentItem.getWarehouseId());
+
+		if (commerceInventoryWarehouseId > 0) {
+			return commerceInventoryWarehouseId;
+		}
+
+		CommerceInventoryWarehouse commerceInventoryWarehouse =
+			commerceInventoryWarehouseService.fetchByExternalReferenceCode(
+				shipmentItem.getWarehouseExternalReferenceCode(), companyId);
+
+		if (commerceInventoryWarehouse != null) {
+			return commerceInventoryWarehouse.getCommerceInventoryWarehouseId();
+		}
+
+		return defaultCommerceInventoryWarehouseId;
+	}
+
+	public static long getCommerceOrderItemId(
+			CommerceOrderItemService commerceOrderItemService, long companyId,
+			long defaultCommerceOrderItemId, ShipmentItem shipmentItem)
+		throws Exception {
+
+		long commerceOrderItemId = GetterUtil.getLong(
+			shipmentItem.getOrderItemId());
+
+		if (commerceOrderItemId > 0) {
+			return commerceOrderItemId;
+		}
+
+		CommerceOrderItem commerceOrderItem =
+			commerceOrderItemService.fetchByExternalReferenceCode(
+				shipmentItem.getOrderItemExternalReferenceCode(), companyId);
+
+		if (commerceOrderItem != null) {
+			return commerceOrderItem.getCommerceOrderItemId();
+		}
+
+		return defaultCommerceOrderItemId;
 	}
 
 }

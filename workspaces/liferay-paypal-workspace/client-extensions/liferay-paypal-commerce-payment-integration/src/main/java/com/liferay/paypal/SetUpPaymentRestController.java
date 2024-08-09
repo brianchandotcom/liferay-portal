@@ -41,6 +41,25 @@ import org.springframework.web.reactive.function.client.WebClient;
 @RestController
 public class SetUpPaymentRestController extends BaseRestController {
 
+	@GetMapping("get-environment/{clientId}")
+	public ResponseEntity<String> getGoogleEnvironmentInfo(
+		@AuthenticationPrincipal Jwt jwt,
+		@PathVariable("clientId") String clientId) {
+
+		String mode = "TEST";
+
+		if (StringUtils.equals(clientId.substring(0, 3), "li_")) {
+			mode = "PRODUCTION";
+		}
+
+		return new ResponseEntity<>(
+			new JSONObject(
+			).put(
+				"mode", mode
+			).toString(),
+			HttpStatus.OK);
+	}
+
 	@GetMapping("get-order/{orderId}/{countryCode}")
 	public ResponseEntity<String> getGoogleOrderInfo(
 		@AuthenticationPrincipal Jwt jwt, @PathVariable("orderId") long orderId,

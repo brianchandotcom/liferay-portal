@@ -158,6 +158,14 @@ public class ClassicDisplayTag extends BaseDisplayTag {
 		return _style;
 	}
 
+	public boolean isShowBulkActionsManagementBar() {
+		return _showBulkActionsManagementBar;
+	}
+
+	public boolean isShowBulkActionsManagementBarActions() {
+		return _showBulkActionsManagementBarActions;
+	}
+
 	public boolean isShowManagementBar() {
 		return _showManagementBar;
 	}
@@ -233,6 +241,19 @@ public class ClassicDisplayTag extends BaseDisplayTag {
 		_selectionType = selectionType;
 	}
 
+	public void setShowBulkActionsManagementBar(
+		boolean showBulkActionsManagementBar) {
+
+		_showBulkActionsManagementBar = showBulkActionsManagementBar;
+	}
+
+	public void setShowBulkActionsManagementBarActions(
+		boolean showBulkActionsManagementBarActions) {
+
+		_showBulkActionsManagementBarActions =
+			showBulkActionsManagementBarActions;
+	}
+
 	public void setShowManagementBar(boolean showManagementBar) {
 		_showManagementBar = showManagementBar;
 	}
@@ -271,6 +292,8 @@ public class ClassicDisplayTag extends BaseDisplayTag {
 		_nestedItemsReferenceKey = null;
 		_selectedItemsKey = null;
 		_selectionType = null;
+		_showBulkActionsManagementBar = true;
+		_showBulkActionsManagementBarActions = true;
 		_showManagementBar = true;
 		_showPagination = true;
 		_showSearch = true;
@@ -316,6 +339,11 @@ public class ClassicDisplayTag extends BaseDisplayTag {
 				"selectedItemsKey", _toNullOrObject(_selectedItemsKey)
 			).put(
 				"selectionType", _toNullOrObject(_selectionType)
+			).put(
+				"showBulkActionsManagementBar", _showBulkActionsManagementBar
+			).put(
+				"showBulkActionsManagementBarActions",
+				_showBulkActionsManagementBarActions
 			).put(
 				"showManagementBar", _showManagementBar
 			).put(
@@ -378,6 +406,8 @@ public class ClassicDisplayTag extends BaseDisplayTag {
 	private String _nestedItemsReferenceKey;
 	private String _selectedItemsKey;
 	private String _selectionType;
+	private boolean _showBulkActionsManagementBar = true;
+	private boolean _showBulkActionsManagementBarActions = true;
 	private boolean _showManagementBar = true;
 	private boolean _showPagination = true;
 	private boolean _showSearch = true;

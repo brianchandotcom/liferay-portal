@@ -125,6 +125,14 @@ public class HeadlessDisplayTag extends BaseDisplayTag {
 		return _customViewsEnabled;
 	}
 
+	public boolean isShowBulkActionsManagementBar() {
+		return _showBulkActionsManagementBar;
+	}
+
+	public boolean isShowBulkActionsManagementBarActions() {
+		return _showBulkActionsManagementBarActions;
+	}
+
 	public boolean isShowManagementBar() {
 		return _showManagementBar;
 	}
@@ -206,6 +214,19 @@ public class HeadlessDisplayTag extends BaseDisplayTag {
 		_selectionType = selectionType;
 	}
 
+	public void setShowBulkActionsManagementBar(
+		boolean showBulkActionsManagementBar) {
+
+		_showBulkActionsManagementBar = showBulkActionsManagementBar;
+	}
+
+	public void setShowBulkActionsManagementBarActions(
+		boolean showBulkActionsManagementBarActions) {
+
+		_showBulkActionsManagementBarActions =
+			showBulkActionsManagementBarActions;
+	}
+
 	public void setShowManagementBar(boolean showManagementBar) {
 		_showManagementBar = showManagementBar;
 	}
@@ -246,6 +267,8 @@ public class HeadlessDisplayTag extends BaseDisplayTag {
 		_nestedItemsReferenceKey = null;
 		_selectedItemsKey = null;
 		_selectionType = null;
+		_showBulkActionsManagementBar = true;
+		_showBulkActionsManagementBarActions = true;
 		_showManagementBar = true;
 		_showPagination = true;
 		_showSearch = true;
@@ -295,6 +318,11 @@ public class HeadlessDisplayTag extends BaseDisplayTag {
 				"selectedItemsKey", _validateDataAttribute(_selectedItemsKey)
 			).put(
 				"selectionType", _validateDataAttribute(_selectionType)
+			).put(
+				"showBulkActionsManagementBar", _showBulkActionsManagementBar
+			).put(
+				"showBulkActionsManagementBarActions",
+				_showBulkActionsManagementBarActions
 			).put(
 				"showManagementBar", _showManagementBar
 			).put(
@@ -365,6 +393,8 @@ public class HeadlessDisplayTag extends BaseDisplayTag {
 	private String _nestedItemsReferenceKey;
 	private String _selectedItemsKey;
 	private String _selectionType;
+	private boolean _showBulkActionsManagementBar = true;
+	private boolean _showBulkActionsManagementBarActions = true;
 	private boolean _showManagementBar = true;
 	private boolean _showPagination = true;
 	private boolean _showSearch = true;

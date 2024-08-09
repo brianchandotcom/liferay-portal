@@ -139,6 +139,16 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>showBulkActionsManagementBar</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>showBulkActionsManagementBarActions</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>showManagementBar</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -293,6 +303,16 @@
 		</attribute>
 		<attribute>
 			<name>selectionType</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>showBulkActionsManagementBar</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>showBulkActionsManagementBarActions</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

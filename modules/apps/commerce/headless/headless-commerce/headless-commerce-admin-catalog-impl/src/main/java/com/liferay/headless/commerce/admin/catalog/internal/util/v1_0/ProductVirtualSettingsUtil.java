@@ -12,11 +12,13 @@ import com.liferay.commerce.product.type.virtual.model.CPDVirtualSettingFileEntr
 import com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting;
 import com.liferay.commerce.product.type.virtual.service.CPDVirtualSettingFileEntryService;
 import com.liferay.commerce.product.type.virtual.service.CPDefinitionVirtualSettingService;
+import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductVirtualSettings;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductVirtualSettingsFileEntry;
 import com.liferay.headless.commerce.admin.catalog.internal.util.FileEntryUtil;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.portal.kernel.service.RepositoryLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -40,6 +42,8 @@ public class ProductVirtualSettingsUtil {
 			ProductVirtualSettings productVirtualSettings,
 			CPDefinitionVirtualSettingService cpDefinitionVirtualSettingService,
 			CPDVirtualSettingFileEntryService cpdVirtualSettingFileEntryService,
+			DLAppService dlAppService,
+			RepositoryLocalService repositoryLocalService,
 			UniqueFileNameProvider uniqueFileNameProvider,
 			ServiceContext serviceContext)
 		throws Exception {
@@ -52,15 +56,15 @@ public class ProductVirtualSettingsUtil {
 			return _addProductVirtualSettings(
 				cpDefinition, productVirtualSettings,
 				cpDefinitionVirtualSettingService,
-				cpdVirtualSettingFileEntryService, uniqueFileNameProvider,
-				serviceContext);
+				cpdVirtualSettingFileEntryService, dlAppService,
+				repositoryLocalService, uniqueFileNameProvider, serviceContext);
 		}
 
 		return _updateProductVirtualSettings(
-			cpDefinitionVirtualSetting, productVirtualSettings,
+			cpDefinition, cpDefinitionVirtualSetting, productVirtualSettings,
 			cpDefinitionVirtualSettingService,
-			cpdVirtualSettingFileEntryService, uniqueFileNameProvider,
-			serviceContext);
+			cpdVirtualSettingFileEntryService, dlAppService,
+			repositoryLocalService, uniqueFileNameProvider, serviceContext);
 	}
 
 	private static CPDefinitionVirtualSetting _addProductVirtualSettings(
@@ -68,6 +72,8 @@ public class ProductVirtualSettingsUtil {
 			ProductVirtualSettings productVirtualSettings,
 			CPDefinitionVirtualSettingService cpDefinitionVirtualSettingService,
 			CPDVirtualSettingFileEntryService cpdVirtualSettingFileEntryService,
+			DLAppService dlAppService,
+			RepositoryLocalService repositoryLocalService,
 			UniqueFileNameProvider uniqueFileNameProvider,
 			ServiceContext serviceContext)
 		throws Exception {
@@ -76,7 +82,9 @@ public class ProductVirtualSettingsUtil {
 
 		long attachmentFileEntryId = FileEntryUtil.getFileEntryId(
 			productVirtualSettings.getAttachment(), attachmentURL,
-			uniqueFileNameProvider, serviceContext);
+			cpDefinition.getGroupId(), cpdVirtualSettingFileEntryService,
+			dlAppService, repositoryLocalService, uniqueFileNameProvider,
+			serviceContext);
 
 		String sampleAttachmentURL = null;
 		long sampleFileEntryId = 0;
@@ -90,7 +98,9 @@ public class ProductVirtualSettingsUtil {
 
 			sampleFileEntryId = FileEntryUtil.getFileEntryId(
 				productVirtualSettings.getSampleAttachment(),
-				sampleAttachmentURL, uniqueFileNameProvider, serviceContext);
+				sampleAttachmentURL, cpDefinition.getGroupId(),
+				cpdVirtualSettingFileEntryService, dlAppService,
+				repositoryLocalService, uniqueFileNameProvider, serviceContext);
 		}
 
 		Map<Locale, String> termsOfUseContentMap = null;
@@ -137,7 +147,10 @@ public class ProductVirtualSettingsUtil {
 				FileEntryUtil.getFileEntryId(
 					productVirtualSettingsFileEntry.getAttachment(),
 					productVirtualSettingsFileEntry.getUrl(),
-					uniqueFileNameProvider, serviceContext),
+					cpDefinition.getGroupId(),
+					cpdVirtualSettingFileEntryService, dlAppService,
+					repositoryLocalService, uniqueFileNameProvider,
+					serviceContext),
 				productVirtualSettingsFileEntry.getUrl(),
 				productVirtualSettingsFileEntry.getVersion());
 		}
@@ -156,10 +169,13 @@ public class ProductVirtualSettingsUtil {
 	}
 
 	private static CPDefinitionVirtualSetting _updateProductVirtualSettings(
+			CPDefinition cpDefinition,
 			CPDefinitionVirtualSetting cpDefinitionVirtualSetting,
 			ProductVirtualSettings productVirtualSettings,
 			CPDefinitionVirtualSettingService cpDefinitionVirtualSettingService,
 			CPDVirtualSettingFileEntryService cpdVirtualSettingFileEntryService,
+			DLAppService dlAppService,
+			RepositoryLocalService repositoryLocalService,
 			UniqueFileNameProvider uniqueFileNameProvider,
 			ServiceContext serviceContext)
 		throws Exception {
@@ -180,7 +196,10 @@ public class ProductVirtualSettingsUtil {
 			else {
 				attachmentFileEntryId = FileEntryUtil.getFileEntryId(
 					productVirtualSettings.getAttachment(), attachmentURL,
-					uniqueFileNameProvider, serviceContext);
+					cpDefinition.getGroupId(),
+					cpdVirtualSettingFileEntryService, dlAppService,
+					repositoryLocalService, uniqueFileNameProvider,
+					serviceContext);
 			}
 
 			if (attachmentFileEntryId == 0) {
@@ -216,7 +235,9 @@ public class ProductVirtualSettingsUtil {
 				else {
 					sampleFileEntryId = FileEntryUtil.getFileEntryId(
 						productVirtualSettings.getSampleAttachment(),
-						sampleAttachmentURL, uniqueFileNameProvider,
+						sampleAttachmentURL, cpDefinition.getGroupId(),
+						cpdVirtualSettingFileEntryService, dlAppService,
+						repositoryLocalService, uniqueFileNameProvider,
 						serviceContext);
 				}
 
@@ -301,7 +322,10 @@ public class ProductVirtualSettingsUtil {
 				FileEntryUtil.getFileEntryId(
 					productVirtualSettingsFileEntry.getAttachment(),
 					productVirtualSettingsFileEntry.getUrl(),
-					uniqueFileNameProvider, serviceContext),
+					cpDefinition.getGroupId(),
+					cpdVirtualSettingFileEntryService, dlAppService,
+					repositoryLocalService, uniqueFileNameProvider,
+					serviceContext),
 				productVirtualSettingsFileEntry.getUrl(),
 				productVirtualSettingsFileEntry.getVersion());
 		}

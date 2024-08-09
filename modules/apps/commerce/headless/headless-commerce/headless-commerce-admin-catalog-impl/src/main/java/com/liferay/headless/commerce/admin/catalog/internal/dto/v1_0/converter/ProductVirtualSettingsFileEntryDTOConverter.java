@@ -24,11 +24,12 @@ import org.osgi.service.component.annotations.Reference;
  * @author Danny Situ
  */
 @Component(
-	property = "dto.class.name=com.liferay.commerce.product.model.CPDefinition",
+	property = "dto.class.name=com.liferay.commerce.product.type.virtual.model.CPDVirtualSettingFileEntry",
 	service = DTOConverter.class
 )
 public class ProductVirtualSettingsFileEntryDTOConverter
-	implements DTOConverter<CPDefinition, ProductVirtualSettingsFileEntry> {
+	implements DTOConverter
+		<CPDVirtualSettingFileEntry, ProductVirtualSettingsFileEntry> {
 
 	@Override
 	public String getContentType() {
@@ -75,7 +76,7 @@ public class ProductVirtualSettingsFileEntryDTOConverter
 					});
 				setUrl(
 					() -> {
-						if (Validator.isNull(
+						if (Validator.isBlank(
 								cpdVirtualSettingFileEntry.getUrl())) {
 
 							return null;
@@ -85,7 +86,7 @@ public class ProductVirtualSettingsFileEntryDTOConverter
 					});
 				setVersion(
 					() -> {
-						if (Validator.isNull(
+						if (Validator.isBlank(
 								cpdVirtualSettingFileEntry.getVersion())) {
 
 							return null;

@@ -16,9 +16,7 @@ import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductVirtualSettin
 import com.liferay.headless.commerce.admin.catalog.internal.util.FileEntryUtil;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductVirtualSettingsFileEntryResource;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.RepositoryLocalService;
@@ -57,16 +55,7 @@ public class ProductVirtualSettingsFileEntryResourceImpl
 	public void deleteProductVirtualSettingsFileEntry(Long id)
 		throws Exception {
 
-		CPDVirtualSettingFileEntry cpdVirtualSettingFileEntry =
-			_cpdVirtualSettingFileEntryService.getCPDVirtualSettingFileEntry(
-				id);
-
-		CPDefinitionVirtualSetting cpDefinitionVirtualSetting =
-			cpdVirtualSettingFileEntry.getCPDefinitionVirtualSetting();
-
-		_cpdVirtualSettingFileEntryService.deleteCPDVirtualSettingFileEntry(
-			CPDefinition.class.getName(),
-			cpDefinitionVirtualSetting.getClassPK(), id);
+		_cpdVirtualSettingFileEntryService.deleteCPDVirtualSettingFileEntry(id);
 	}
 
 	@Override
@@ -80,15 +69,9 @@ public class ProductVirtualSettingsFileEntryResourceImpl
 				id);
 
 		return Page.of(
-			TransformUtil.transform(
-				_cpdVirtualSettingFileEntryService.
-					getCPDVirtualSettingFileEntries(
-						CPDefinition.class.getName(),
-						cpDefinitionVirtualSetting.getClassPK(),
-						cpDefinitionVirtualSetting.
-							getCPDefinitionVirtualSettingId(),
-						pagination.getStartPosition(),
-						pagination.getEndPosition()),
+			transform(
+				cpDefinitionVirtualSetting.getCPDVirtualSettingFileEntries(
+					pagination.getStartPosition(), pagination.getEndPosition()),
 				this::_toProductVirtualSettingsFileEntry),
 			pagination,
 			cpDefinitionVirtualSetting.getCPDVirtualSettingFileEntriesCount());
@@ -109,11 +92,6 @@ public class ProductVirtualSettingsFileEntryResourceImpl
 			Long id, MultipartBody multipartBody)
 		throws Exception {
 
-		ProductVirtualSettingsFileEntry productVirtualSettingsFileEntry =
-			multipartBody.getValueAsNullableInstance(
-				"productVirtualSettingsFileEntry",
-				ProductVirtualSettingsFileEntry.class);
-
 		CPDVirtualSettingFileEntry cpdVirtualSettingFileEntry =
 			_cpdVirtualSettingFileEntryService.getCPDVirtualSettingFileEntry(
 				id);
@@ -125,25 +103,27 @@ public class ProductVirtualSettingsFileEntryResourceImpl
 		CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(
 			cpDefinitionVirtualSetting.getClassPK());
 
+		ProductVirtualSettingsFileEntry productVirtualSettingsFileEntry =
+			multipartBody.getValueAsNullableInstance(
+				"productVirtualSettingsFileEntry",
+				ProductVirtualSettingsFileEntry.class);
+
 		long fileEntryId = cpdVirtualSettingFileEntry.getFileEntryId();
 
 		BinaryFile binaryFile = multipartBody.getBinaryFile("file");
 
 		if (binaryFile != null) {
-			FileEntry fileEntry = FileEntryUtil.addFileEntry(
+			fileEntryId = FileEntryUtil.getFileEntryId(
 				binaryFile, cpDefinition.getGroupId(),
 				_cpdVirtualSettingFileEntryService, _dlAppService,
-				_repositoryLocalService, _uniqueFileNameProvider,
-				_serviceContextHelper.getServiceContext(
-					cpDefinition.getGroupId()));
-
-			fileEntryId = fileEntry.getFileEntryId();
+				_repositoryLocalService, _uniqueFileNameProvider);
 		}
 		else if (productVirtualSettingsFileEntry.getAttachment() != null) {
 			fileEntryId = FileEntryUtil.getFileEntryId(
 				productVirtualSettingsFileEntry.getAttachment(),
 				productVirtualSettingsFileEntry.getUrl(),
-				_uniqueFileNameProvider,
+				cpDefinition.getGroupId(), _cpdVirtualSettingFileEntryService,
+				_dlAppService, _repositoryLocalService, _uniqueFileNameProvider,
 				_serviceContextHelper.getServiceContext(
 					cpDefinition.getGroupId()));
 		}
@@ -188,20 +168,17 @@ public class ProductVirtualSettingsFileEntryResourceImpl
 		long fileEntryId = 0;
 
 		if (binaryFile != null) {
-			FileEntry fileEntry = FileEntryUtil.addFileEntry(
+			fileEntryId = FileEntryUtil.getFileEntryId(
 				binaryFile, cpDefinition.getGroupId(),
 				_cpdVirtualSettingFileEntryService, _dlAppService,
-				_repositoryLocalService, _uniqueFileNameProvider,
-				_serviceContextHelper.getServiceContext(
-					cpDefinition.getGroupId()));
-
-			fileEntryId = fileEntry.getFileEntryId();
+				_repositoryLocalService, _uniqueFileNameProvider);
 		}
 		else if (productVirtualSettingsFileEntry.getAttachment() != null) {
 			fileEntryId = FileEntryUtil.getFileEntryId(
 				productVirtualSettingsFileEntry.getAttachment(),
 				productVirtualSettingsFileEntry.getUrl(),
-				_uniqueFileNameProvider,
+				cpDefinition.getGroupId(), _cpdVirtualSettingFileEntryService,
+				_dlAppService, _repositoryLocalService, _uniqueFileNameProvider,
 				_serviceContextHelper.getServiceContext(
 					cpDefinition.getGroupId()));
 		}

@@ -6,18 +6,19 @@
 package com.liferay.headless.commerce.admin.catalog.internal.util.v1_0;
 
 import com.liferay.commerce.constants.CommerceOrderConstants;
-import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.type.virtual.constants.VirtualCPTypeConstants;
 import com.liferay.commerce.product.type.virtual.model.CPDVirtualSettingFileEntry;
 import com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting;
 import com.liferay.commerce.product.type.virtual.service.CPDVirtualSettingFileEntryService;
 import com.liferay.commerce.product.type.virtual.service.CPDefinitionVirtualSettingService;
+import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.SkuVirtualSettings;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.SkuVirtualSettingsFileEntry;
 import com.liferay.headless.commerce.admin.catalog.internal.util.FileEntryUtil;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.portal.kernel.service.RepositoryLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -40,6 +41,8 @@ public class SkuVirtualSettingsUtil {
 			CPInstance cpInstance, SkuVirtualSettings skuVirtualSettings,
 			CPDefinitionVirtualSettingService cpDefinitionVirtualSettingService,
 			CPDVirtualSettingFileEntryService cpdVirtualSettingFileEntryService,
+			DLAppService dlAppService,
+			RepositoryLocalService repositoryLocalService,
 			UniqueFileNameProvider uniqueFileNameProvider,
 			ServiceContext serviceContext)
 		throws Exception {
@@ -52,21 +55,23 @@ public class SkuVirtualSettingsUtil {
 			return _addSkuVirtualSettings(
 				cpInstance, skuVirtualSettings,
 				cpDefinitionVirtualSettingService,
-				cpdVirtualSettingFileEntryService, uniqueFileNameProvider,
-				serviceContext);
+				cpdVirtualSettingFileEntryService, dlAppService,
+				repositoryLocalService, uniqueFileNameProvider, serviceContext);
 		}
 
 		return _updateSkuVirtualSettings(
 			cpInstance, cpDefinitionVirtualSetting,
 			cpdVirtualSettingFileEntryService, skuVirtualSettings,
-			cpDefinitionVirtualSettingService, uniqueFileNameProvider,
-			serviceContext);
+			cpDefinitionVirtualSettingService, dlAppService,
+			repositoryLocalService, uniqueFileNameProvider, serviceContext);
 	}
 
 	private static CPDefinitionVirtualSetting _addSkuVirtualSettings(
 			CPInstance cpInstance, SkuVirtualSettings skuVirtualSettings,
 			CPDefinitionVirtualSettingService cpDefinitionVirtualSettingService,
 			CPDVirtualSettingFileEntryService cpdVirtualSettingFileEntryService,
+			DLAppService dlAppService,
+			RepositoryLocalService repositoryLocalService,
 			UniqueFileNameProvider uniqueFileNameProvider,
 			ServiceContext serviceContext)
 		throws Exception {
@@ -79,7 +84,9 @@ public class SkuVirtualSettingsUtil {
 
 		long attachmentFileEntryId = FileEntryUtil.getFileEntryId(
 			skuVirtualSettings.getAttachment(), attachmentURL,
-			uniqueFileNameProvider, serviceContext);
+			cpInstance.getGroupId(), cpdVirtualSettingFileEntryService,
+			dlAppService, repositoryLocalService, uniqueFileNameProvider,
+			serviceContext);
 
 		String sampleAttachmentURL = null;
 		long sampleFileEntryId = 0;
@@ -93,7 +100,9 @@ public class SkuVirtualSettingsUtil {
 
 			sampleFileEntryId = FileEntryUtil.getFileEntryId(
 				skuVirtualSettings.getSampleAttachment(), sampleAttachmentURL,
-				uniqueFileNameProvider, serviceContext);
+				cpInstance.getGroupId(), cpdVirtualSettingFileEntryService,
+				dlAppService, repositoryLocalService, uniqueFileNameProvider,
+				serviceContext);
 		}
 
 		Map<Locale, String> termsOfUseContentMap = null;
@@ -138,6 +147,8 @@ public class SkuVirtualSettingsUtil {
 				FileEntryUtil.getFileEntryId(
 					productVirtualSettingsFileEntry.getAttachment(),
 					productVirtualSettingsFileEntry.getUrl(),
+					cpInstance.getGroupId(), cpdVirtualSettingFileEntryService,
+					dlAppService, repositoryLocalService,
 					uniqueFileNameProvider, serviceContext),
 				productVirtualSettingsFileEntry.getUrl(),
 				productVirtualSettingsFileEntry.getVersion());
@@ -162,6 +173,8 @@ public class SkuVirtualSettingsUtil {
 			CPDVirtualSettingFileEntryService cpdVirtualSettingFileEntryService,
 			SkuVirtualSettings skuVirtualSettings,
 			CPDefinitionVirtualSettingService cpDefinitionVirtualSettingService,
+			DLAppService dlAppService,
+			RepositoryLocalService repositoryLocalService,
 			UniqueFileNameProvider uniqueFileNameProvider,
 			ServiceContext serviceContext)
 		throws Exception {
@@ -191,6 +204,8 @@ public class SkuVirtualSettingsUtil {
 			else {
 				attachmentFileEntryId = FileEntryUtil.getFileEntryId(
 					skuVirtualSettings.getAttachment(), attachmentURL,
+					cpInstance.getGroupId(), cpdVirtualSettingFileEntryService,
+					dlAppService, repositoryLocalService,
 					uniqueFileNameProvider, serviceContext);
 			}
 
@@ -227,7 +242,9 @@ public class SkuVirtualSettingsUtil {
 				else {
 					sampleFileEntryId = FileEntryUtil.getFileEntryId(
 						skuVirtualSettings.getSampleAttachment(),
-						sampleAttachmentURL, uniqueFileNameProvider,
+						sampleAttachmentURL, cpInstance.getGroupId(),
+						cpdVirtualSettingFileEntryService, dlAppService,
+						repositoryLocalService, uniqueFileNameProvider,
 						serviceContext);
 				}
 
@@ -293,7 +310,7 @@ public class SkuVirtualSettingsUtil {
 				cpDefinitionVirtualSetting.getCPDVirtualSettingFileEntries()) {
 
 			cpdVirtualSettingFileEntryService.deleteCPDVirtualSettingFileEntry(
-				CPDefinition.class.getName(),
+				CPInstance.class.getName(),
 				cpDefinitionVirtualSetting.getClassPK(),
 				cpdVirtualSettingFileEntry.
 					getCPDefinitionVirtualSettingFileEntryId());
@@ -304,12 +321,14 @@ public class SkuVirtualSettingsUtil {
 
 			cpdVirtualSettingFileEntryService.addCPDefinitionVirtualSetting(
 				cpDefinitionVirtualSetting.getGroupId(),
-				CPDefinition.class.getName(),
+				CPInstance.class.getName(),
 				cpDefinitionVirtualSetting.getClassPK(),
 				cpDefinitionVirtualSetting.getCPDefinitionVirtualSettingId(),
 				FileEntryUtil.getFileEntryId(
 					skuVirtualSettingsFileEntry.getAttachment(),
 					skuVirtualSettingsFileEntry.getUrl(),
+					cpInstance.getGroupId(), cpdVirtualSettingFileEntryService,
+					dlAppService, repositoryLocalService,
 					uniqueFileNameProvider, serviceContext),
 				skuVirtualSettingsFileEntry.getUrl(),
 				skuVirtualSettingsFileEntry.getVersion());

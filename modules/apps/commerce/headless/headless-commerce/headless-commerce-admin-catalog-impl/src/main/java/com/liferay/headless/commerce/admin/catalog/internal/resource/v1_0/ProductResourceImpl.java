@@ -54,6 +54,7 @@ import com.liferay.commerce.shop.by.diagram.service.CSDiagramEntryService;
 import com.liferay.commerce.shop.by.diagram.service.CSDiagramPinService;
 import com.liferay.commerce.shop.by.diagram.service.CSDiagramSettingService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Attachment;
@@ -115,6 +116,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.RepositoryLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.settings.SystemSettingsLocator;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -1342,7 +1344,8 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 				ProductVirtualSettingsUtil.addOrUpdateProductVirtualSettings(
 					cpDefinition, productVirtualSettings,
 					_cpDefinitionVirtualSettingService,
-					_cpdVirtualSettingFileEntryService, _uniqueFileNameProvider,
+					_cpdVirtualSettingFileEntryService, _dlAppService,
+					_repositoryLocalService, _uniqueFileNameProvider,
 					serviceContext);
 			}
 			else {
@@ -1634,6 +1637,9 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 	@Reference
 	private CSDiagramSettingService _csDiagramSettingService;
 
+	@Reference
+	private DLAppService _dlAppService;
+
 	@Reference(
 		target = "(model.class.name=com.liferay.document.library.kernel.model.DLFileEntry)"
 	)
@@ -1659,6 +1665,9 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 		target = "(component.name=com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter.ProductDTOConverter)"
 	)
 	private DTOConverter<CPDefinition, Product> _productDTOConverter;
+
+	@Reference
+	private RepositoryLocalService _repositoryLocalService;
 
 	@Reference
 	private ServiceContextHelper _serviceContextHelper;

@@ -25,6 +25,7 @@ import com.liferay.commerce.product.type.CPTypeRegistry;
 import com.liferay.commerce.product.type.virtual.constants.VirtualCPTypeConstants;
 import com.liferay.commerce.product.type.virtual.service.CPDVirtualSettingFileEntryService;
 import com.liferay.commerce.product.type.virtual.service.CPDefinitionVirtualSettingService;
+import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Sku;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.SkuSubscriptionConfiguration;
@@ -51,6 +52,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.service.RepositoryLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
@@ -487,7 +489,8 @@ public class SkuResourceImpl extends BaseSkuResourceImpl {
 			SkuVirtualSettingsUtil.addOrUpdateSkuVirtualSettings(
 				cpInstance, skuVirtualSettings,
 				_cpDefinitionVirtualSettingService,
-				_cpdVirtualSettingFileEntryService, _uniqueFileNameProvider,
+				_cpdVirtualSettingFileEntryService, _dlAppService,
+				_repositoryLocalService, _uniqueFileNameProvider,
 				serviceContext);
 		}
 
@@ -758,7 +761,13 @@ public class SkuResourceImpl extends BaseSkuResourceImpl {
 	private CPTypeRegistry _cpTypeRegistry;
 
 	@Reference
+	private DLAppService _dlAppService;
+
+	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
+
+	@Reference
+	private RepositoryLocalService _repositoryLocalService;
 
 	@Reference
 	private ServiceContextHelper _serviceContextHelper;

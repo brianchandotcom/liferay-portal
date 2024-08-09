@@ -7,11 +7,8 @@ package com.liferay.headless.commerce.admin.catalog.internal.util;
 
 import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.type.virtual.service.CPDVirtualSettingFileEntryService;
-import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppService;
-import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.document.library.kernel.util.DLValidatorUtil;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -22,33 +19,76 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
-import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.upload.UniqueFileNameProvider;
 
 import java.io.File;
+import java.io.FileInputStream;
 
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Set;
 
 /**
  * @author Stefano Motta
  */
 public class FileEntryUtil {
 
-	public static FileEntry addFileEntry(
+	public static long getFileEntryId(
 			BinaryFile binaryFile, long commerceCatalogGroupId,
+			CPDVirtualSettingFileEntryService cpdVirtualSettingFileEntryService,
+			DLAppService dlAppService,
+			RepositoryLocalService repositoryLocalService,
+			UniqueFileNameProvider uniqueFileNameProvider)
+		throws PortalException {
+
+		FileEntry fileEntry = _addFileEntry(
+			commerceCatalogGroupId, cpdVirtualSettingFileEntryService,
+			dlAppService, repositoryLocalService, uniqueFileNameProvider,
+			binaryFile);
+
+		return fileEntry.getFileEntryId();
+	}
+
+	public static long getFileEntryId(
+			String attachment, String url, long commerceCatalogGroupId,
 			CPDVirtualSettingFileEntryService cpdVirtualSettingFileEntryService,
 			DLAppService dlAppService,
 			RepositoryLocalService repositoryLocalService,
 			UniqueFileNameProvider uniqueFileNameProvider,
 			ServiceContext serviceContext)
+		throws Exception {
+
+		if (Validator.isNotNull(attachment) && Validator.isNull(url)) {
+			serviceContext.setExpandoBridgeAttributes(new HashMap<>());
+
+			File tempFile = FileUtil.createTempFile(Base64.decode(attachment));
+
+			FileEntry fileEntry = _addFileEntry(
+				commerceCatalogGroupId, cpdVirtualSettingFileEntryService,
+				dlAppService, repositoryLocalService, uniqueFileNameProvider,
+				new BinaryFile(
+					MimeTypesUtil.getContentType(tempFile), tempFile.getName(),
+					new FileInputStream(tempFile), tempFile.length()));
+
+			FileUtil.delete(tempFile);
+
+			return fileEntry.getFileEntryId();
+		}
+
+		return 0;
+	}
+
+	private static FileEntry _addFileEntry(
+			long commerceCatalogGroupId,
+			CPDVirtualSettingFileEntryService cpdVirtualSettingFileEntryService,
+			DLAppService dlAppService,
+			RepositoryLocalService repositoryLocalService,
+			UniqueFileNameProvider uniqueFileNameProvider,
+			BinaryFile binaryFile)
 		throws PortalException {
 
 		DLValidatorUtil.validateFileSize(
-			serviceContext.getScopeGroupId(), binaryFile.getFileName(),
+			commerceCatalogGroupId, binaryFile.getFileName(),
 			binaryFile.getContentType(), binaryFile.getSize());
 
 		Repository repository = repositoryLocalService.fetchRepository(
@@ -64,72 +104,6 @@ public class FileEntryUtil {
 			(repository != null) ? repository.getDlFolderId() : 0,
 			binaryFile.getInputStream(), uniqueFileName,
 			binaryFile.getContentType(), CPConstants.SERVICE_NAME_PRODUCT);
-	}
-
-	public static long getFileEntryId(
-			String attachment, String url,
-			UniqueFileNameProvider uniqueFileNameProvider,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		if (Validator.isNotNull(attachment) && Validator.isNull(url)) {
-			serviceContext.setExpandoBridgeAttributes(new HashMap<>());
-
-			FileEntry fileEntry = _addFileEntry(
-				FileUtil.createTempFile(Base64.decode(attachment)), null,
-				uniqueFileNameProvider, serviceContext);
-
-			return fileEntry.getFileEntryId();
-		}
-
-		return 0;
-	}
-
-	private static FileEntry _addFileEntry(
-			File file, String contentType,
-			UniqueFileNameProvider uniqueFileNameProvider,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		String uniqueFileName = uniqueFileNameProvider.provide(
-			file.getName(),
-			curFileName -> _exists(
-				serviceContext.getScopeGroupId(), serviceContext.getUserId(),
-				curFileName));
-
-		if (Validator.isNull(contentType)) {
-			contentType = MimeTypesUtil.getContentType(file);
-		}
-
-		uniqueFileName = _appendExtension(contentType, uniqueFileName);
-
-		FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
-			null, serviceContext.getScopeGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, uniqueFileName,
-			contentType, uniqueFileName, StringPool.BLANK, null,
-			StringPool.BLANK, file, null, null, null, serviceContext);
-
-		FileUtil.delete(file);
-
-		return fileEntry;
-	}
-
-	private static String _appendExtension(
-		String contentType, String uniqueFileName) {
-
-		String extension = StringPool.BLANK;
-
-		Set<String> extensions = MimeTypesUtil.getExtensions(contentType);
-
-		if (!extensions.isEmpty()) {
-			Iterator<String> iterator = extensions.iterator();
-
-			if (iterator.hasNext()) {
-				extension = iterator.next();
-			}
-		}
-
-		return uniqueFileName.concat(extension);
 	}
 
 	private static boolean _exists(
@@ -158,30 +132,6 @@ public class FileEntryUtil {
 			return false;
 		}
 	}
-
-	private static boolean _exists(
-		long groupId, long userId, String curFileName) {
-
-		try {
-			FileEntry fileEntry = TempFileEntryUtil.getTempFileEntry(
-				groupId, userId, _TEMP_FILE_NAME, curFileName);
-
-			if (fileEntry != null) {
-				return true;
-			}
-
-			return false;
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException);
-			}
-
-			return false;
-		}
-	}
-
-	private static final String _TEMP_FILE_NAME = FileEntryUtil.class.getName();
 
 	private static final Log _log = LogFactoryUtil.getLog(FileEntryUtil.class);
 

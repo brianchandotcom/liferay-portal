@@ -7,7 +7,6 @@ package com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter;
 
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.commerce.media.CommerceMediaResolver;
-import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.type.virtual.model.CPDVirtualSettingFileEntry;
 import com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting;
@@ -25,11 +24,12 @@ import org.osgi.service.component.annotations.Reference;
  * @author Danny Situ
  */
 @Component(
-	property = "dto.class.name=com.liferay.commerce.product.model.CPInstance",
+	property = "dto.class.name=com.liferay.commerce.product.type.virtual.model.CPDVirtualSettingFileEntry",
 	service = DTOConverter.class
 )
 public class SkuVirtualSettingsFileEntryDTOConverter
-	implements DTOConverter<CPDefinition, SkuVirtualSettingsFileEntry> {
+	implements DTOConverter
+		<CPDVirtualSettingFileEntry, SkuVirtualSettingsFileEntry> {
 
 	@Override
 	public String getContentType() {
@@ -76,7 +76,7 @@ public class SkuVirtualSettingsFileEntryDTOConverter
 					});
 				setUrl(
 					() -> {
-						if (Validator.isNull(
+						if (Validator.isBlank(
 								cpdVirtualSettingFileEntry.getUrl())) {
 
 							return null;
@@ -86,7 +86,7 @@ public class SkuVirtualSettingsFileEntryDTOConverter
 					});
 				setVersion(
 					() -> {
-						if (Validator.isNull(
+						if (Validator.isBlank(
 								cpdVirtualSettingFileEntry.getVersion())) {
 
 							return null;

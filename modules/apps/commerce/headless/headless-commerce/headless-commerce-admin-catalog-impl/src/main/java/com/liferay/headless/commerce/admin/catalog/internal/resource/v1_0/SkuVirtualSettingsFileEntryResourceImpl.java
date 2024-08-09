@@ -18,7 +18,6 @@ import com.liferay.headless.commerce.admin.catalog.internal.util.FileEntryUtil;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.SkuVirtualSettingsFileEntryResource;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.RepositoryLocalService;
@@ -34,8 +33,6 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.ActionUtil;
 import com.liferay.upload.UniqueFileNameProvider;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import javax.ws.rs.BadRequestException;
@@ -57,16 +54,7 @@ public class SkuVirtualSettingsFileEntryResourceImpl
 
 	@Override
 	public void deleteSkuVirtualSettingsFileEntry(Long id) throws Exception {
-		CPDVirtualSettingFileEntry cpdVirtualSettingFileEntry =
-			_cpdVirtualSettingFileEntryService.getCPDVirtualSettingFileEntry(
-				id);
-
-		CPDefinitionVirtualSetting cpDefinitionVirtualSetting =
-			cpdVirtualSettingFileEntry.getCPDefinitionVirtualSetting();
-
-		_cpdVirtualSettingFileEntryService.deleteCPDVirtualSettingFileEntry(
-			CPInstance.class.getName(), cpDefinitionVirtualSetting.getClassPK(),
-			id);
+		_cpdVirtualSettingFileEntryService.deleteCPDVirtualSettingFileEntry(id);
 	}
 
 	@Override
@@ -79,19 +67,13 @@ public class SkuVirtualSettingsFileEntryResourceImpl
 			_cpDefinitionVirtualSettingService.getCPDefinitionVirtualSetting(
 				id);
 
-		List<CPDVirtualSettingFileEntry> cpdVirtualSettingFileEntries =
-			_cpdVirtualSettingFileEntryService.getCPDVirtualSettingFileEntries(
-				CPInstance.class.getName(),
-				cpDefinitionVirtualSetting.getClassPK(),
-				cpDefinitionVirtualSetting.getCPDefinitionVirtualSettingId(),
-				pagination.getStartPosition(), pagination.getEndPosition());
-
-		int totalItems =
-			cpDefinitionVirtualSetting.getCPDVirtualSettingFileEntriesCount();
-
 		return Page.of(
-			_toSkuVirtualSettingsFileEntries(cpdVirtualSettingFileEntries),
-			pagination, totalItems);
+			transform(
+				cpDefinitionVirtualSetting.getCPDVirtualSettingFileEntries(
+					pagination.getStartPosition(), pagination.getEndPosition()),
+				this::_toSkuVirtualSettingsFileEntry),
+			pagination,
+			cpDefinitionVirtualSetting.getCPDVirtualSettingFileEntriesCount());
 	}
 
 	@Override
@@ -112,35 +94,33 @@ public class SkuVirtualSettingsFileEntryResourceImpl
 			_cpdVirtualSettingFileEntryService.getCPDVirtualSettingFileEntry(
 				id);
 
-		SkuVirtualSettingsFileEntry skuVirtualSettingsFileEntry =
-			multipartBody.getValueAsNullableInstance(
-				"skuVirtualSettingsFileEntry",
-				SkuVirtualSettingsFileEntry.class);
-
 		CPDefinitionVirtualSetting cpDefinitionVirtualSetting =
 			cpdVirtualSettingFileEntry.getCPDefinitionVirtualSetting();
 
 		CPInstance cpInstance = _cpInstanceLocalService.getCPInstance(
 			cpDefinitionVirtualSetting.getClassPK());
 
+		SkuVirtualSettingsFileEntry skuVirtualSettingsFileEntry =
+			multipartBody.getValueAsNullableInstance(
+				"skuVirtualSettingsFileEntry",
+				SkuVirtualSettingsFileEntry.class);
+
 		long fileEntryId = cpdVirtualSettingFileEntry.getFileEntryId();
 
 		BinaryFile binaryFile = multipartBody.getBinaryFile("file");
 
 		if (binaryFile != null) {
-			FileEntry fileEntry = FileEntryUtil.addFileEntry(
+			fileEntryId = FileEntryUtil.getFileEntryId(
 				binaryFile, cpInstance.getGroupId(),
 				_cpdVirtualSettingFileEntryService, _dlAppService,
-				_repositoryLocalService, _uniqueFileNameProvider,
-				_serviceContextHelper.getServiceContext(
-					cpInstance.getGroupId()));
-
-			fileEntryId = fileEntry.getFileEntryId();
+				_repositoryLocalService, _uniqueFileNameProvider);
 		}
 		else if (skuVirtualSettingsFileEntry.getAttachment() != null) {
 			fileEntryId = FileEntryUtil.getFileEntryId(
 				skuVirtualSettingsFileEntry.getAttachment(),
-				skuVirtualSettingsFileEntry.getUrl(), _uniqueFileNameProvider,
+				skuVirtualSettingsFileEntry.getUrl(), cpInstance.getGroupId(),
+				_cpdVirtualSettingFileEntryService, _dlAppService,
+				_repositoryLocalService, _uniqueFileNameProvider,
 				_serviceContextHelper.getServiceContext(
 					cpInstance.getGroupId()));
 		}
@@ -185,19 +165,17 @@ public class SkuVirtualSettingsFileEntryResourceImpl
 		long fileEntryId = 0;
 
 		if (binaryFile != null) {
-			FileEntry fileEntry = FileEntryUtil.addFileEntry(
+			fileEntryId = FileEntryUtil.getFileEntryId(
 				binaryFile, cpInstance.getGroupId(),
 				_cpdVirtualSettingFileEntryService, _dlAppService,
-				_repositoryLocalService, _uniqueFileNameProvider,
-				_serviceContextHelper.getServiceContext(
-					cpInstance.getGroupId()));
-
-			fileEntryId = fileEntry.getFileEntryId();
+				_repositoryLocalService, _uniqueFileNameProvider);
 		}
 		else if (skuVirtualSettingsFileEntry.getAttachment() != null) {
 			fileEntryId = FileEntryUtil.getFileEntryId(
 				skuVirtualSettingsFileEntry.getAttachment(),
-				skuVirtualSettingsFileEntry.getUrl(), _uniqueFileNameProvider,
+				skuVirtualSettingsFileEntry.getUrl(), cpInstance.getGroupId(),
+				_cpdVirtualSettingFileEntryService, _dlAppService,
+				_repositoryLocalService, _uniqueFileNameProvider,
 				_serviceContextHelper.getServiceContext(
 					cpInstance.getGroupId()));
 		}
@@ -257,23 +235,6 @@ public class SkuVirtualSettingsFileEntryResourceImpl
 					getCPDefinitionVirtualSettingFileEntryId(),
 				contextUriInfo)
 		).build();
-	}
-
-	private List<SkuVirtualSettingsFileEntry> _toSkuVirtualSettingsFileEntries(
-			List<CPDVirtualSettingFileEntry> cpdVirtualSettingFileEntries)
-		throws Exception {
-
-		List<SkuVirtualSettingsFileEntry> skuVirtualFileSettingsFileEntries =
-			new ArrayList<>();
-
-		for (CPDVirtualSettingFileEntry cpdVirtualSettingFileEntry :
-				cpdVirtualSettingFileEntries) {
-
-			skuVirtualFileSettingsFileEntries.add(
-				_toSkuVirtualSettingsFileEntry(cpdVirtualSettingFileEntry));
-		}
-
-		return skuVirtualFileSettingsFileEntries;
 	}
 
 	private SkuVirtualSettingsFileEntry _toSkuVirtualSettingsFileEntry(

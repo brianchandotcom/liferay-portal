@@ -644,7 +644,9 @@ public class ClusterSchedulerEngineTest {
 	}
 
 	@Test
-	public void testRunOnSlave() throws SchedulerException {
+	public void testRunOnSlave()
+		throws NoSuchMethodException, SchedulerException {
+
 		_mockClusterMasterExecutor.reset(false, 0, 0);
 
 		_clusterSchedulerEngine.start();
@@ -660,11 +662,14 @@ public class ClusterSchedulerEngineTest {
 
 		Assert.assertNotNull(methodHandler);
 
+		MethodKey methodKey = methodHandler.getMethodKey();
+
+		Assert.assertNotNull(methodKey.getMethod());
 		Assert.assertEquals(
 			new MethodKey(
 				SchedulerEngineHelperUtil.class, "run", long.class,
 				String.class, String.class, StorageType.class),
-			methodHandler.getMethodKey());
+			methodKey);
 
 		_mockClusterMasterExecutor.reset(true, 0, 0);
 

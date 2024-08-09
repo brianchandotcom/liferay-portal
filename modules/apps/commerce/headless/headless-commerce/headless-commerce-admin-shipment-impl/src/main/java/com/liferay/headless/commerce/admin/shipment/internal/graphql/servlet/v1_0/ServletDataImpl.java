@@ -183,6 +183,11 @@ public class ServletDataImpl implements ServletData {
 							ShipmentItemResourceImpl.class,
 							"patchShipmentItem"));
 					put(
+						"mutation#createShipmentItemByExternalReferenceCode",
+						new ObjectValuePair<>(
+							ShipmentItemResourceImpl.class,
+							"postShipmentItemByExternalReferenceCode"));
+					put(
 						"mutation#updateShipmentByExternalReferenceCodeItem",
 						new ObjectValuePair<>(
 							ShipmentItemResourceImpl.class,

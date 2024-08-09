@@ -154,7 +154,7 @@ export default function AssetCategoriesSelectionBox({
 	}, [portletNamespace]);
 
 	return (
-		<>
+		<fieldset disabled={disabled}>
 			<ClayDualListBox
 				items={categories}
 				left={{
@@ -169,11 +169,13 @@ export default function AssetCategoriesSelectionBox({
 				size={3}
 			/>
 
-			<input
-				name={`${portletNamespace}friendlyURLAssetCategoryIds`}
-				type="hidden"
-				value={currentCategories.map(({value}) => value).join(',')}
-			/>
-		</>
+			{!disabled && (
+				<input
+					name={`${portletNamespace}friendlyURLAssetCategoryIds`}
+					type="hidden"
+					value={currentCategories.map(({value}) => value).join(',')}
+				/>
+			)}
+		</fieldset>
 	);
 }

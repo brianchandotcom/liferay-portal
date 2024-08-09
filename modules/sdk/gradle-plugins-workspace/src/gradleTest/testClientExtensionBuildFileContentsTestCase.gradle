@@ -1,14 +1,14 @@
 task runGradleTest
 
-assert ext.properties.containsKey("taskPath") : "No ext.taskPath extension property set"
 assert ext.properties.containsKey("expectedFilePath") : "No ext.expectedFilePath extension property set"
+assert ext.properties.containsKey("taskPath") : "No ext.taskPath extension property set"
 
 String expectedFilePath = ext.expectedFilePath
 String taskPath = ext.taskPath
 
+String clientExtensionBuildDir = ext.properties['clientExtensionBuildDir'] ?: 'liferay-client-extension-build'
 String[] expectedContentStrings = ext.properties['expectedContentStrings'] ?: []
 String[] unexpectedContentStrings = ext.properties['unexpectedContentStrings'] ?: []
-String clientExtensionBuildDir = ext.properties['clientExtensionBuildDir'] ?: 'liferay-client-extension-build'
 
 Task task = tasks.getByPath(taskPath)
 

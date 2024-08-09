@@ -1,10 +1,10 @@
 ext.clientExtensionBuildDir = "liferay-client-extension-build_test.virtualinstance.me"
-ext.expectedFilePath = "WEB-INF/liferay-plugin-package.properties"
 ext.expectedContentStrings = [
 	'Bundle-SymbolicName=withvirtualinstanceidclientextension_test.virtualinstance.me',
 	'name=with-virtual-instance-id-client-extension_test.virtualinstance.me',
 	'required-deployment-contexts=foo_test.virtualinstance.me'
 ]
+ext.expectedFilePath = "WEB-INF/liferay-plugin-package.properties"
 ext.taskPath = ":with-virtual-instance-id-client-extension:createClientExtensionConfig"
 
 apply from: project.property("commonScript.testClientExtensionBuildFileContentsTestCase.gradle")

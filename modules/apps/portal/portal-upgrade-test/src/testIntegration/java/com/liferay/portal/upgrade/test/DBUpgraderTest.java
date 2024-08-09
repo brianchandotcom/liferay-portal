@@ -92,7 +92,7 @@ public class DBUpgraderTest {
 		try {
 			PropsUtil.set(PropsKeys.UPGRADE_DATABASE_AUTO_RUN, "false");
 
-			DBUpgrader.upgradeModules(false);
+			DBUpgrader.upgradeModules();
 
 			DBInspector dbInspector = new DBInspector(_connection);
 
@@ -100,7 +100,7 @@ public class DBUpgraderTest {
 
 			PropsUtil.set(PropsKeys.UPGRADE_DATABASE_AUTO_RUN, "true");
 
-			DBUpgrader.upgradeModules(false);
+			DBUpgrader.upgradeModules();
 
 			Assert.assertFalse(dbInspector.hasIndex("Lock_", "IX_TEST"));
 		}

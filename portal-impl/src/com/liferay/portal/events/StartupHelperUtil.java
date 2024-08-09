@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
-import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.version.Version;
@@ -44,7 +43,6 @@ import java.sql.Connection;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 import org.osgi.framework.BundleContext;
@@ -85,23 +83,7 @@ public class StartupHelperUtil {
 	}
 
 	public static boolean isNewRelease() {
-		try (Connection connection = DataAccess.getConnection()) {
-			Date currentBuildDate = PortalUpgradeProcess.getCurrentBuildDate(
-				connection);
-
-			if ((currentBuildDate != null) &&
-				currentBuildDate.before(ReleaseInfo.getBuildDate())) {
-
-				return true;
-			}
-		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to check build date", exception);
-			}
-		}
-
-		return false;
+		return _newRelease;
 	}
 
 	public static boolean isUpgrading() {
@@ -130,6 +112,10 @@ public class StartupHelperUtil {
 
 			_dbNew = dbNew;
 		}
+	}
+
+	public static void setNewRelease(boolean newRelease) {
+		_newRelease = newRelease;
 	}
 
 	public static void setUpgrading(boolean upgrading) {
@@ -277,6 +263,7 @@ public class StartupHelperUtil {
 	private static volatile boolean _dbNew;
 	private static final DCLSingleton<Boolean> _dbWarmedSCLSingleton =
 		new DCLSingleton<>();
+	private static boolean _newRelease;
 	private static volatile ServiceRegistration<?> _serviceRegistration;
 	private static volatile boolean _upgrading;
 

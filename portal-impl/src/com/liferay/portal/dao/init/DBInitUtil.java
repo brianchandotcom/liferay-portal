@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.hibernate.DialectDetector;
 import com.liferay.portal.upgrade.PortalUpgradeProcess;
@@ -28,6 +29,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import java.util.Date;
 import java.util.Objects;
 import java.util.Properties;
 
@@ -81,6 +83,12 @@ public class DBInitUtil {
 
 				_setDBNew();
 			}
+
+			Date currentBuildDate = PortalUpgradeProcess.getCurrentBuildDate(
+				connection);
+
+			StartupHelperUtil.setNewRelease(
+				currentBuildDate.before(ReleaseInfo.getBuildDate()));
 
 			return true;
 		}

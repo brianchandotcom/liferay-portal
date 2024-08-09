@@ -219,7 +219,7 @@ public interface LayoutClassedModelUsageLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public LayoutClassedModelUsage fetchLayoutClassedModelUsage(
-		long classNameId, long classPK,
+		long groupId, long classNameId, long classPK,
 		String classedModelExternalReferenceCode, String containerKey,
 		long containerType, long plid);
 

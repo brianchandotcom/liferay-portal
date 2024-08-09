@@ -243,12 +243,12 @@ public class LayoutClassedModelUsageLocalServiceUtil {
 	}
 
 	public static LayoutClassedModelUsage fetchLayoutClassedModelUsage(
-		long classNameId, long classPK,
+		long groupId, long classNameId, long classPK,
 		String classedModelExternalReferenceCode, String containerKey,
 		long containerType, long plid) {
 
 		return getService().fetchLayoutClassedModelUsage(
-			classNameId, classPK, classedModelExternalReferenceCode,
+			groupId, classNameId, classPK, classedModelExternalReferenceCode,
 			containerKey, containerType, plid);
 	}
 

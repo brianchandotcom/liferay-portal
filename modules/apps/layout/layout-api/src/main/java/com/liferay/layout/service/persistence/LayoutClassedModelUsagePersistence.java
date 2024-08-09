@@ -1558,8 +1558,9 @@ public interface LayoutClassedModelUsagePersistence
 		String classedModelExternalReferenceCode, int type);
 
 	/**
-	 * Returns the layout classed model usage where classNameId = &#63; and classPK = &#63; and classedModelExternalReferenceCode = &#63; and containerKey = &#63; and containerType = &#63; and plid = &#63; or throws a <code>NoSuchLayoutClassedModelUsageException</code> if it could not be found.
+	 * Returns the layout classed model usage where groupId = &#63; and classNameId = &#63; and classPK = &#63; and classedModelExternalReferenceCode = &#63; and containerKey = &#63; and containerType = &#63; and plid = &#63; or throws a <code>NoSuchLayoutClassedModelUsageException</code> if it could not be found.
 	 *
+	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
 	 * @param classedModelExternalReferenceCode the classed model external reference code
@@ -1569,15 +1570,16 @@ public interface LayoutClassedModelUsagePersistence
 	 * @return the matching layout classed model usage
 	 * @throws NoSuchLayoutClassedModelUsageException if a matching layout classed model usage could not be found
 	 */
-	public LayoutClassedModelUsage findByCN_CPK_CMERC_CK_CT_P(
-			long classNameId, long classPK,
+	public LayoutClassedModelUsage findByG_CN_CPK_CMERC_CK_CT_P(
+			long groupId, long classNameId, long classPK,
 			String classedModelExternalReferenceCode, String containerKey,
 			long containerType, long plid)
 		throws NoSuchLayoutClassedModelUsageException;
 
 	/**
-	 * Returns the layout classed model usage where classNameId = &#63; and classPK = &#63; and classedModelExternalReferenceCode = &#63; and containerKey = &#63; and containerType = &#63; and plid = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the layout classed model usage where groupId = &#63; and classNameId = &#63; and classPK = &#63; and classedModelExternalReferenceCode = &#63; and containerKey = &#63; and containerType = &#63; and plid = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
+	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
 	 * @param classedModelExternalReferenceCode the classed model external reference code
@@ -1586,14 +1588,15 @@ public interface LayoutClassedModelUsagePersistence
 	 * @param plid the plid
 	 * @return the matching layout classed model usage, or <code>null</code> if a matching layout classed model usage could not be found
 	 */
-	public LayoutClassedModelUsage fetchByCN_CPK_CMERC_CK_CT_P(
-		long classNameId, long classPK,
+	public LayoutClassedModelUsage fetchByG_CN_CPK_CMERC_CK_CT_P(
+		long groupId, long classNameId, long classPK,
 		String classedModelExternalReferenceCode, String containerKey,
 		long containerType, long plid);
 
 	/**
-	 * Returns the layout classed model usage where classNameId = &#63; and classPK = &#63; and classedModelExternalReferenceCode = &#63; and containerKey = &#63; and containerType = &#63; and plid = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the layout classed model usage where groupId = &#63; and classNameId = &#63; and classPK = &#63; and classedModelExternalReferenceCode = &#63; and containerKey = &#63; and containerType = &#63; and plid = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
 	 * @param classedModelExternalReferenceCode the classed model external reference code
@@ -1603,14 +1606,15 @@ public interface LayoutClassedModelUsagePersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching layout classed model usage, or <code>null</code> if a matching layout classed model usage could not be found
 	 */
-	public LayoutClassedModelUsage fetchByCN_CPK_CMERC_CK_CT_P(
-		long classNameId, long classPK,
+	public LayoutClassedModelUsage fetchByG_CN_CPK_CMERC_CK_CT_P(
+		long groupId, long classNameId, long classPK,
 		String classedModelExternalReferenceCode, String containerKey,
 		long containerType, long plid, boolean useFinderCache);
 
 	/**
-	 * Removes the layout classed model usage where classNameId = &#63; and classPK = &#63; and classedModelExternalReferenceCode = &#63; and containerKey = &#63; and containerType = &#63; and plid = &#63; from the database.
+	 * Removes the layout classed model usage where groupId = &#63; and classNameId = &#63; and classPK = &#63; and classedModelExternalReferenceCode = &#63; and containerKey = &#63; and containerType = &#63; and plid = &#63; from the database.
 	 *
+	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
 	 * @param classedModelExternalReferenceCode the classed model external reference code
@@ -1619,15 +1623,16 @@ public interface LayoutClassedModelUsagePersistence
 	 * @param plid the plid
 	 * @return the layout classed model usage that was removed
 	 */
-	public LayoutClassedModelUsage removeByCN_CPK_CMERC_CK_CT_P(
-			long classNameId, long classPK,
+	public LayoutClassedModelUsage removeByG_CN_CPK_CMERC_CK_CT_P(
+			long groupId, long classNameId, long classPK,
 			String classedModelExternalReferenceCode, String containerKey,
 			long containerType, long plid)
 		throws NoSuchLayoutClassedModelUsageException;
 
 	/**
-	 * Returns the number of layout classed model usages where classNameId = &#63; and classPK = &#63; and classedModelExternalReferenceCode = &#63; and containerKey = &#63; and containerType = &#63; and plid = &#63;.
+	 * Returns the number of layout classed model usages where groupId = &#63; and classNameId = &#63; and classPK = &#63; and classedModelExternalReferenceCode = &#63; and containerKey = &#63; and containerType = &#63; and plid = &#63;.
 	 *
+	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
 	 * @param classedModelExternalReferenceCode the classed model external reference code
@@ -1636,8 +1641,8 @@ public interface LayoutClassedModelUsagePersistence
 	 * @param plid the plid
 	 * @return the number of matching layout classed model usages
 	 */
-	public int countByCN_CPK_CMERC_CK_CT_P(
-		long classNameId, long classPK,
+	public int countByG_CN_CPK_CMERC_CK_CT_P(
+		long groupId, long classNameId, long classPK,
 		String classedModelExternalReferenceCode, String containerKey,
 		long containerType, long plid);
 

@@ -274,14 +274,15 @@ public class LayoutClassedModelUsageLocalServiceWrapper
 
 	@Override
 	public LayoutClassedModelUsage fetchLayoutClassedModelUsage(
-		long classNameId, long classPK,
+		long groupId, long classNameId, long classPK,
 		String classedModelExternalReferenceCode, String containerKey,
 		long containerType, long plid) {
 
 		return _layoutClassedModelUsageLocalService.
 			fetchLayoutClassedModelUsage(
-				classNameId, classPK, classedModelExternalReferenceCode,
-				containerKey, containerType, plid);
+				groupId, classNameId, classPK,
+				classedModelExternalReferenceCode, containerKey, containerType,
+				plid);
 	}
 
 	/**

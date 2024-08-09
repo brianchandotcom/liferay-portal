@@ -308,16 +308,17 @@ public class LayoutClassedModelUsagePersistenceTest {
 	}
 
 	@Test
-	public void testCountByCN_CPK_CMERC_CK_CT_P() throws Exception {
-		_persistence.countByCN_CPK_CMERC_CK_CT_P(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(), "", "",
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+	public void testCountByG_CN_CPK_CMERC_CK_CT_P() throws Exception {
+		_persistence.countByG_CN_CPK_CMERC_CK_CT_P(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), "", "", RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
-		_persistence.countByCN_CPK_CMERC_CK_CT_P(
-			0L, 0L, "null", "null", 0L, 0L);
+		_persistence.countByG_CN_CPK_CMERC_CK_CT_P(
+			0L, 0L, 0L, "null", "null", 0L, 0L);
 
-		_persistence.countByCN_CPK_CMERC_CK_CT_P(
-			0L, 0L, (String)null, (String)null, 0L, 0L);
+		_persistence.countByG_CN_CPK_CMERC_CK_CT_P(
+			0L, 0L, 0L, (String)null, (String)null, 0L, 0L);
 	}
 
 	@Test
@@ -663,6 +664,11 @@ public class LayoutClassedModelUsagePersistenceTest {
 				layoutClassedModelUsage, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "groupId"));
 
+		Assert.assertEquals(
+			Long.valueOf(layoutClassedModelUsage.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(
+				layoutClassedModelUsage, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 		Assert.assertEquals(
 			Long.valueOf(layoutClassedModelUsage.getClassNameId()),
 			ReflectionTestUtil.<Long>invoke(

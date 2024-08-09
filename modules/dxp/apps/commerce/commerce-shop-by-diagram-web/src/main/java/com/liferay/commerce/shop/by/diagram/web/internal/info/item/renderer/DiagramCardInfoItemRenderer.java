@@ -102,13 +102,11 @@ public class DiagramCardInfoItemRenderer
 					getCommerceChannelGroupIdBySiteGroupId(groupId),
 				httpServletRequest);
 
-		long accountEntryId = 0;
-
 		if (accountEntry != null) {
-			accountEntryId = accountEntry.getAccountEntryId();
+			return accountEntry.getAccountEntryId();
 		}
 
-		return accountEntryId;
+		return 0;
 	}
 
 	@Reference

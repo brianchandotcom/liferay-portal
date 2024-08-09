@@ -119,7 +119,6 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -137,13 +136,10 @@ import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalService;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -153,8 +149,6 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.function.Consumer;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -191,32 +185,22 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 		List<LayoutsImporterResultEntry> layoutsImporterResultEntries =
 			new ArrayList<>();
 
-		try (ZipFile zipFile = new ZipFile(file)) {
-			_processMasterLayoutPageTemplateEntries(
-				groupId, layoutsImporterResultEntries, layoutsImportStrategy,
-				preserveItemIds, userId, zipFile);
+		ZipReader zipReader = _zipReaderFactory.getZipReader(file);
 
-			_processLayoutUtilityPageEntries(
-				groupId, layoutsImporterResultEntries, layoutsImportStrategy,
-				preserveItemIds, userId, zipFile);
-
-			_processDisplayPageTemplatePageTemplateEntries(
-				groupId, layoutPageTemplateCollectionId,
-				layoutsImporterResultEntries, layoutsImportStrategy,
-				preserveItemIds, userId, zipFile);
-
-			_processBasicLayoutPageTemplateEntries(
-				groupId, layoutPageTemplateCollectionId,
-				layoutsImporterResultEntries, layoutsImportStrategy,
-				preserveItemIds, userId, zipFile);
-		}
-		catch (PortalException portalException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(portalException);
-
-				throw portalException;
-			}
-		}
+		_processMasterLayoutPageTemplateEntries(
+			groupId, layoutsImporterResultEntries, layoutsImportStrategy,
+			preserveItemIds, userId, zipReader);
+		_processLayoutUtilityPageEntries(
+			groupId, layoutsImporterResultEntries, layoutsImportStrategy,
+			preserveItemIds, userId, zipReader);
+		_processDisplayPageTemplatePageTemplateEntries(
+			groupId, layoutPageTemplateCollectionId,
+			layoutsImporterResultEntries, layoutsImportStrategy,
+			preserveItemIds, userId, zipReader);
+		_processBasicLayoutPageTemplateEntries(
+			groupId, layoutPageTemplateCollectionId,
+			layoutsImporterResultEntries, layoutsImportStrategy,
+			preserveItemIds, userId, zipReader);
 
 		return layoutsImporterResultEntries;
 	}
@@ -576,24 +560,18 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 	private List<DisplayPageTemplateEntry> _getDisplayPageTemplateEntries(
 			long groupId,
 			List<LayoutsImporterResultEntry> layoutsImporterResultEntries,
-			ZipFile zipFile)
+			ZipReader zipReader)
 		throws Exception {
 
 		List<DisplayPageTemplateEntry> displayPageTemplateEntries =
 			new ArrayList<>();
 
-		Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
-
-		while (enumeration.hasMoreElements()) {
-			ZipEntry zipEntry = enumeration.nextElement();
-
-			if ((zipEntry == null) ||
-				!_isDisplayPageTemplateFile(zipEntry.getName())) {
-
+		for (String entry : zipReader.getEntries()) {
+			if (!_isDisplayPageTemplateFile(entry)) {
 				continue;
 			}
 
-			String content = StringUtil.read(zipFile.getInputStream(zipEntry));
+			String content = zipReader.getEntryAsString(entry);
 
 			DisplayPageTemplate displayPageTemplate = null;
 
@@ -607,27 +585,25 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 			catch (JSONValidatorException jsonValidatorException) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
-						"Invalid display page template for: " +
-							zipEntry.getName(),
+						"Invalid display page template for: " + entry,
 						jsonValidatorException);
 				}
 
 				layoutsImporterResultEntries.add(
 					new LayoutsImporterResultEntry(
-						zipEntry.getName(),
-						LayoutsImporterResultEntry.Status.INVALID,
+						entry, LayoutsImporterResultEntry.Status.INVALID,
 						_getErrorMessage(
 							groupId,
 							"x-could-not-be-imported-because-its-display-" +
 								"page-template-is-invalid",
-							new String[] {zipEntry.getName()})));
+							new String[] {entry})));
 
 				continue;
 			}
 
 			try {
 				String pageDefinitionJSON = _getPageDefinitionJSON(
-					zipEntry.getName(), zipFile);
+					entry, zipReader);
 
 				PageDefinitionValidator.validatePageDefinition(
 					pageDefinitionJSON);
@@ -636,12 +612,11 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 					new DisplayPageTemplateEntry(
 						displayPageTemplate,
 						_getKey(
-							_DISPLAY_PAGE_TEMPLATE_ENTRY_KEY_DEFAULT,
-							displayPageTemplate.getName(), zipEntry),
+							_DISPLAY_PAGE_TEMPLATE_ENTRY_KEY_DEFAULT, entry,
+							displayPageTemplate.getName()),
 						_objectMapper.readValue(
 							pageDefinitionJSON, PageDefinition.class),
-						_getThumbnail(zipEntry.getName(), zipFile),
-						zipEntry.getName()));
+						_getThumbnail(entry, zipReader), entry));
 			}
 			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
@@ -659,7 +634,7 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 							groupId,
 							"x-could-not-be-imported-because-its-page-" +
 								"definition-is-invalid",
-							new String[] {zipEntry.getName()})));
+							new String[] {entry})));
 			}
 		}
 
@@ -700,9 +675,8 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 		return 0;
 	}
 
-	private String _getKey(String defaultKey, String name, ZipEntry zipEntry) {
-		String[] pathParts = StringUtil.split(
-			zipEntry.getName(), CharPool.SLASH);
+	private String _getKey(String defaultKey, String fileName, String name) {
+		String[] pathParts = StringUtil.split(fileName, CharPool.SLASH);
 
 		String key = defaultKey;
 
@@ -723,24 +697,18 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 	private List<UtilityPageTemplateEntry> _getLayoutUtilityPageEntries(
 			long groupId,
 			List<LayoutsImporterResultEntry> layoutsImporterResultEntries,
-			ZipFile zipFile)
+			ZipReader zipReader)
 		throws Exception {
 
 		List<UtilityPageTemplateEntry> utilityPageTemplateEntries =
 			new ArrayList<>();
 
-		Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
-
-		while (enumeration.hasMoreElements()) {
-			ZipEntry zipEntry = enumeration.nextElement();
-
-			if ((zipEntry == null) ||
-				!_isUtilityPageTemplateFile(zipEntry.getName())) {
-
+		for (String entry : zipReader.getEntries()) {
+			if (!_isUtilityPageTemplateFile(entry)) {
 				continue;
 			}
 
-			String content = StringUtil.read(zipFile.getInputStream(zipEntry));
+			String content = zipReader.getEntryAsString(entry);
 
 			UtilityPageTemplate utilityPageTemplate = null;
 
@@ -754,20 +722,18 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 			catch (JSONValidatorException jsonValidatorException) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
-						"Invalid utility page template for: " +
-							zipEntry.getName(),
+						"Invalid utility page template for: " + entry,
 						jsonValidatorException);
 				}
 
 				layoutsImporterResultEntries.add(
 					new LayoutsImporterResultEntry(
-						zipEntry.getName(),
-						LayoutsImporterResultEntry.Status.INVALID,
+						entry, LayoutsImporterResultEntry.Status.INVALID,
 						_getErrorMessage(
 							groupId,
 							"x-could-not-be-imported-because-its-utility-" +
 								"page-is-invalid",
-							new String[] {zipEntry.getName()})));
+							new String[] {entry})));
 
 				continue;
 			}
@@ -785,7 +751,7 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 
 			try {
 				String pageDefinitionJSON = _getPageDefinitionJSON(
-					zipEntry.getName(), zipFile);
+					entry, zipReader);
 
 				PageDefinitionValidator.validatePageDefinition(
 					pageDefinitionJSON);
@@ -794,12 +760,11 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 					new UtilityPageTemplateEntry(
 						utilityPageTemplate,
 						_getKey(
-							_UTILITY_PAGE_TEMPLATE_ENTRY_KEY_DEFAULT,
-							utilityPageTemplate.getName(), zipEntry),
+							_UTILITY_PAGE_TEMPLATE_ENTRY_KEY_DEFAULT, entry,
+							utilityPageTemplate.getName()),
 						_objectMapper.readValue(
 							pageDefinitionJSON, PageDefinition.class),
-						_getThumbnail(zipEntry.getName(), zipFile),
-						zipEntry.getName()));
+						_getThumbnail(entry, zipReader), entry));
 			}
 			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
@@ -817,7 +782,7 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 							groupId,
 							"x-could-not-be-imported-because-its-page-" +
 								"definition-is-invalid",
-							new String[] {zipEntry.getName()})));
+							new String[] {entry})));
 			}
 		}
 
@@ -827,21 +792,17 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 	private List<MasterPageEntry> _getMasterPageEntries(
 			long groupId,
 			List<LayoutsImporterResultEntry> layoutsImporterResultEntries,
-			ZipFile zipFile)
+			ZipReader zipReader)
 		throws Exception {
 
 		List<MasterPageEntry> masterPageEntries = new ArrayList<>();
 
-		Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
-
-		while (enumeration.hasMoreElements()) {
-			ZipEntry zipEntry = enumeration.nextElement();
-
-			if ((zipEntry == null) || !_isMasterPageFile(zipEntry.getName())) {
+		for (String entry : zipReader.getEntries()) {
+			if (!_isMasterPageFile(entry)) {
 				continue;
 			}
 
-			String content = StringUtil.read(zipFile.getInputStream(zipEntry));
+			String content = zipReader.getEntryAsString(entry);
 
 			MasterPage masterPage = null;
 
@@ -853,26 +814,25 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 			catch (JSONValidatorException jsonValidatorException) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
-						"Invalid master page for: " + zipEntry.getName(),
+						"Invalid master page for: " + entry,
 						jsonValidatorException);
 				}
 
 				layoutsImporterResultEntries.add(
 					new LayoutsImporterResultEntry(
-						zipEntry.getName(),
-						LayoutsImporterResultEntry.Status.INVALID,
+						entry, LayoutsImporterResultEntry.Status.INVALID,
 						_getErrorMessage(
 							groupId,
 							"x-could-not-be-imported-because-its-master-page-" +
 								"is-invalid",
-							new String[] {zipEntry.getName()})));
+							new String[] {entry})));
 
 				continue;
 			}
 
 			try {
 				String pageDefinitionJSON = _getPageDefinitionJSON(
-					zipEntry.getName(), zipFile);
+					entry, zipReader);
 
 				PageDefinitionValidator.validatePageDefinition(
 					pageDefinitionJSON);
@@ -880,13 +840,12 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 				masterPageEntries.add(
 					new MasterPageEntry(
 						_getKey(
-							_MASTER_PAGE_ENTRY_KEY_DEFAULT,
-							masterPage.getName(), zipEntry),
+							_MASTER_PAGE_ENTRY_KEY_DEFAULT, entry,
+							masterPage.getName()),
 						masterPage,
 						_objectMapper.readValue(
 							pageDefinitionJSON, PageDefinition.class),
-						_getThumbnail(zipEntry.getName(), zipFile),
-						zipEntry.getName()));
+						_getThumbnail(entry, zipReader), entry));
 			}
 			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
@@ -903,54 +862,43 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 							groupId,
 							"x-could-not-be-imported-because-its-page-" +
 								"definition-is-invalid",
-							new String[] {zipEntry.getName()})));
+							new String[] {entry})));
 			}
 		}
 
 		return masterPageEntries;
 	}
 
-	private String _getPageDefinitionJSON(String fileName, ZipFile zipFile)
-		throws IOException {
+	private String _getPageDefinitionJSON(
+		String fileName, ZipReader zipReader) {
 
 		String path = fileName.substring(
 			0, fileName.lastIndexOf(StringPool.FORWARD_SLASH) + 1);
 
-		ZipEntry zipEntry = zipFile.getEntry(
+		return zipReader.getEntryAsString(
 			path +
 				LayoutPageTemplateExportImportConstants.
 					FILE_NAME_PAGE_DEFINITION);
-
-		if (zipEntry == null) {
-			return null;
-		}
-
-		return StringUtil.read(zipFile.getInputStream(zipEntry));
 	}
 
 	private Map<String, PageTemplateCollectionEntry>
 			_getPageTemplateCollectionEntryMap(
 				long groupId,
 				List<LayoutsImporterResultEntry> layoutsImporterResultEntries,
-				ZipFile zipFile)
+				ZipReader zipReader)
 		throws Exception {
 
 		Map<String, PageTemplateCollectionEntry> pageTemplateCollectionMap =
 			new HashMap<>();
 
-		Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
+		List<String> entries = zipReader.getEntries();
 
-		while (enumeration.hasMoreElements()) {
-			ZipEntry zipEntry = enumeration.nextElement();
-
-			if ((zipEntry == null) ||
-				!_isPageTemplateCollectionFile(zipEntry.getName())) {
-
+		for (String entry : entries) {
+			if (!_isPageTemplateCollectionFile(entry)) {
 				continue;
 			}
 
-			String[] pathParts = StringUtil.split(
-				zipEntry.getName(), CharPool.SLASH);
+			String[] pathParts = StringUtil.split(entry, CharPool.SLASH);
 
 			String pageTemplateCollectionKey = "imported";
 
@@ -958,7 +906,7 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 				pageTemplateCollectionKey = pathParts[pathParts.length - 2];
 			}
 
-			String content = StringUtil.read(zipFile.getInputStream(zipEntry));
+			String content = zipReader.getEntryAsString(entry);
 
 			PageTemplateCollectionValidator.validatePageTemplateCollection(
 				content);
@@ -972,24 +920,18 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 					pageTemplateCollectionKey, pageTemplateCollection));
 		}
 
-		enumeration = zipFile.entries();
-
 		if (MapUtil.isEmpty(pageTemplateCollectionMap)) {
 			pageTemplateCollectionMap.put(
 				_PAGE_TEMPLATE_COLLECTION_KEY_DEFAULT,
 				_getDefaultPageTemplateCollectionEntry());
 		}
 
-		while (enumeration.hasMoreElements()) {
-			ZipEntry zipEntry = enumeration.nextElement();
-
-			if ((zipEntry == null) ||
-				!_isPageTemplateFile(zipEntry.getName())) {
-
+		for (String entry : entries) {
+			if (!_isPageTemplateFile(entry)) {
 				continue;
 			}
 
-			String content = StringUtil.read(zipFile.getInputStream(zipEntry));
+			String content = zipReader.getEntryAsString(entry);
 
 			PageTemplate pageTemplate = null;
 
@@ -1001,31 +943,28 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 			}
 			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Invalid page template for: " + zipEntry.getName(),
-						exception);
+					_log.warn("Invalid page template for: " + entry, exception);
 				}
 
 				layoutsImporterResultEntries.add(
 					new LayoutsImporterResultEntry(
-						zipEntry.getName(),
-						LayoutsImporterResultEntry.Status.INVALID,
+						entry, LayoutsImporterResultEntry.Status.INVALID,
 						_getErrorMessage(
 							groupId,
 							"x-could-not-be-imported-because-its-page-" +
 								"template-is-invalid",
-							new String[] {zipEntry.getName()})));
+							new String[] {entry})));
 
 				continue;
 			}
 
 			PageTemplateCollectionEntry pageTemplateCollectionEntry =
 				pageTemplateCollectionMap.get(
-					_getPageTemplateCollectionKey(zipEntry.getName(), zipFile));
+					_getPageTemplateCollectionKey(entries, entry));
 
 			try {
 				String pageDefinitionJSON = _getPageDefinitionJSON(
-					zipEntry.getName(), zipFile);
+					entry, zipReader);
 
 				PageDefinitionValidator.validatePageDefinition(
 					pageDefinitionJSON);
@@ -1035,12 +974,11 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 
 				pageTemplateCollectionEntry.addPageTemplateEntry(
 					_getKey(
-						_PAGE_TEMPLATE_ENTRY_KEY_DEFAULT,
-						pageTemplate.getName(), zipEntry),
+						_PAGE_TEMPLATE_ENTRY_KEY_DEFAULT, entry,
+						pageTemplate.getName()),
 					new PageTemplateEntry(
 						pageTemplate, pageDefinition,
-						_getThumbnail(zipEntry.getName(), zipFile),
-						zipEntry.getName()));
+						_getThumbnail(entry, zipReader), entry));
 			}
 			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
@@ -1059,7 +997,7 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 							groupId,
 							"x-could-not-be-imported-because-its-page-" +
 								"definition-is-invalid",
-							new String[] {zipEntry.getName()})));
+							new String[] {entry})));
 			}
 		}
 
@@ -1067,7 +1005,7 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 	}
 
 	private String _getPageTemplateCollectionKey(
-		String fileName, ZipFile zipFile) {
+		List<String> entries, String fileName) {
 
 		if (fileName.lastIndexOf(CharPool.SLASH) == -1) {
 			return "imported";
@@ -1076,13 +1014,13 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 		String path = fileName.substring(
 			0, fileName.lastIndexOf(StringPool.FORWARD_SLASH));
 
-		ZipEntry zipEntry = zipFile.getEntry(
+		int index = entries.indexOf(
 			path + CharPool.SLASH +
 				LayoutPageTemplateExportImportConstants.
 					FILE_NAME_PAGE_TEMPLATE_COLLECTION);
 
-		if (zipEntry == null) {
-			return _getPageTemplateCollectionKey(path, zipFile);
+		if (index < 0) {
+			return _getPageTemplateCollectionKey(entries, path);
 		}
 
 		int pos = path.lastIndexOf(CharPool.SLASH);
@@ -1147,25 +1085,15 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 		return null;
 	}
 
-	private Thumbnail _getThumbnail(String fileName, ZipFile zipFile)
-		throws Exception {
-
+	private Thumbnail _getThumbnail(String fileName, ZipReader zipReader) {
 		String path = fileName.substring(
 			0, fileName.lastIndexOf(StringPool.FORWARD_SLASH) + 1);
 
 		for (String thumbnailExtension : _THUMBNAIL_VALID_EXTENSIONS) {
-			ZipEntry zipEntry = zipFile.getEntry(
+			byte[] bytes = zipReader.getEntryAsByteArray(
 				path + _THUMBNAIL_FILE_NAME + thumbnailExtension);
 
-			if (zipEntry != null) {
-				byte[] bytes = null;
-
-				try (InputStream inputStream = zipFile.getInputStream(
-						zipEntry)) {
-
-					bytes = FileUtil.getBytes(inputStream);
-				}
-
+			if (ArrayUtil.isNotEmpty(bytes)) {
 				return new Thumbnail(bytes, thumbnailExtension);
 			}
 		}
@@ -1461,12 +1389,12 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 			long groupId, long layoutPageTemplateCollectionId,
 			List<LayoutsImporterResultEntry> layoutsImporterResultEntries,
 			LayoutsImportStrategy layoutsImportStrategy,
-			boolean preserveItemIds, long userId, ZipFile zipFile)
+			boolean preserveItemIds, long userId, ZipReader zipReader)
 		throws Exception {
 
 		Map<String, PageTemplateCollectionEntry>
 			pageTemplateCollectionEntryMap = _getPageTemplateCollectionEntryMap(
-				groupId, layoutsImporterResultEntries, zipFile);
+				groupId, layoutsImporterResultEntries, zipReader);
 
 		for (Map.Entry<String, PageTemplateCollectionEntry> entry :
 				pageTemplateCollectionEntryMap.entrySet()) {
@@ -1497,12 +1425,12 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 			long groupId, long layoutPageTemplateCollectionId,
 			List<LayoutsImporterResultEntry> layoutsImporterResultEntries,
 			LayoutsImportStrategy layoutsImportStrategy,
-			boolean preserveItemIds, long userId, ZipFile zipFile)
+			boolean preserveItemIds, long userId, ZipReader zipReader)
 		throws Exception {
 
 		List<DisplayPageTemplateEntry> displayPageTemplateEntries =
 			_getDisplayPageTemplateEntries(
-				groupId, layoutsImporterResultEntries, zipFile);
+				groupId, layoutsImporterResultEntries, zipReader);
 
 		for (DisplayPageTemplateEntry displayPageTemplateEntry :
 				displayPageTemplateEntries) {
@@ -1684,12 +1612,12 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 			long groupId,
 			List<LayoutsImporterResultEntry> layoutsImporterResultEntries,
 			LayoutsImportStrategy layoutsImportStrategy,
-			boolean preserveItemIds, long userId, ZipFile zipFile)
+			boolean preserveItemIds, long userId, ZipReader zipReader)
 		throws Exception {
 
 		List<UtilityPageTemplateEntry> utilityPageTemplateEntries =
 			_getLayoutUtilityPageEntries(
-				groupId, layoutsImporterResultEntries, zipFile);
+				groupId, layoutsImporterResultEntries, zipReader);
 
 		for (UtilityPageTemplateEntry utilityPageTemplateEntry :
 				utilityPageTemplateEntries) {
@@ -1816,11 +1744,11 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 			long groupId,
 			List<LayoutsImporterResultEntry> layoutsImporterResultEntries,
 			LayoutsImportStrategy layoutsImportStrategy,
-			boolean preserveItemIds, long userId, ZipFile zipFile)
+			boolean preserveItemIds, long userId, ZipReader zipReader)
 		throws Exception {
 
 		List<MasterPageEntry> masterPageEntries = _getMasterPageEntries(
-			groupId, layoutsImporterResultEntries, zipFile);
+			groupId, layoutsImporterResultEntries, zipReader);
 
 		for (MasterPageEntry masterPageEntry : masterPageEntries) {
 			Callable<Void> callable = new MasterLayoutTemplatesImporterCallable(

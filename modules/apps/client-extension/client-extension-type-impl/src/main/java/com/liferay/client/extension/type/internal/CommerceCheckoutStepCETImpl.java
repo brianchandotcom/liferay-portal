@@ -66,8 +66,8 @@ public class CommerceCheckoutStepCETImpl
 	}
 
 	@Override
-	public String getPayment() {
-		return getString("payment");
+	public String getPaymentMethodKey() {
+		return getString("paymentMethodKey");
 	}
 
 	@Override

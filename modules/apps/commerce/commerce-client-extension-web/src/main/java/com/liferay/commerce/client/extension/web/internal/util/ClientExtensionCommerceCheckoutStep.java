@@ -72,7 +72,7 @@ public class ClientExtensionCommerceCheckoutStep
 		_oAuth2ApplicationExternalReferenceCode =
 			commerceCheckoutStepCET.getOAuth2ApplicationExternalReferenceCode();
 		_order = commerceCheckoutStepCET.getOrder();
-		_payment = commerceCheckoutStepCET.getPayment();
+		_paymentMethodKey = commerceCheckoutStepCET.getPaymentMethodKey();
 		_sennaDisabled = commerceCheckoutStepCET.getSennaDisabled();
 		_showControls = commerceCheckoutStepCET.getShowControls();
 		_visible = commerceCheckoutStepCET.getVisible();
@@ -120,13 +120,12 @@ public class ClientExtensionCommerceCheckoutStep
 					currentUser.getUserId()
 				).get());
 
-			if (Objects.equals(status, "READY") && _active) {
-				if (Validator.isNull(_payment) ||
-					_payment.equals(
-						commerceOrder.getCommercePaymentMethodKey())) {
+			if (Objects.equals(status, "READY") && _active &&
+				(Validator.isNull(_paymentMethodKey) ||
+				 _paymentMethodKey.equals(
+					 commerceOrder.getCommercePaymentMethodKey()))) {
 
-					return true;
-				}
+				return true;
 			}
 		}
 		catch (Exception exception) {
@@ -197,7 +196,7 @@ public class ClientExtensionCommerceCheckoutStep
 		httpServletRequest.setAttribute(
 			CommerceClientExtensionWebKeys.RENDER_URL, _baseURL + "/index.js");
 
-		if (Validator.isNotNull(_payment)) {
+		if (Validator.isNotNull(_paymentMethodKey)) {
 			_renderPayment(httpServletRequest);
 		}
 
@@ -260,7 +259,7 @@ public class ClientExtensionCommerceCheckoutStep
 	private final String _name;
 	private final String _oAuth2ApplicationExternalReferenceCode;
 	private final boolean _order;
-	private final String _payment;
+	private final String _paymentMethodKey;
 	private final PortalCatapult _portalCatapult;
 	private final boolean _sennaDisabled;
 	private final ServletContext _servletContext;

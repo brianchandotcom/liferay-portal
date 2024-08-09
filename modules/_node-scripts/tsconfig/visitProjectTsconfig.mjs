@@ -15,49 +15,8 @@ import baseTsconfig from './baseTsconfig.mjs';
 
 const GENERATED = '@generated';
 
-export async function writeProjectTestsTsconfig(projectDir) {
-	const tsTests = await fg('test/**/*.{ts,tsx}', {cwd: projectDir});
-
-	if (!tsTests.length) {
-		return;
-	}
-
-	const tsConfig = {
-		'@readonly': '** AUTO-GENERATED: DO NOT EDIT **',
-		'compilerOptions': {
-			allowSyntheticDefaultImports: true,
-			baseUrl: '.',
-			checkJs: false,
-			composite: true,
-			jsx: 'react',
-			module: 'ESNext',
-			moduleResolution: 'node',
-			rootDir: '../',
-			strict: true,
-			target: 'es2020',
-			typeRoots: ['../../../../node_modules/@types'],
-		},
-		'include': ['**/*.ts', '**/*.tsx', '../src/**/*.ts', '../src/**/*.tsx'],
-	};
-
-	tsConfig[GENERATED] = hash(tsConfig);
-
-	let contents = '';
-
-	const testConfigPath = path.join(projectDir, 'test', 'tsconfig.json');
-
-	if (await fileExists(testConfigPath)) {
-		contents = await fs.readFile(testConfigPath, 'utf8');
-	}
-
-	const previousConfig = JSON.parse(contents.trim() ? contents : '{}');
-
-	if (tsConfig[GENERATED] !== previousConfig[GENERATED]) {
-		await fs.writeFile(testConfigPath, objectSF(tsConfig), 'utf-8');
-	}
-}
-
-export default async function writeProjectTsconfig(
+export default async function visitProjectTsconfig(
+	visitorFunction,
 	projectsEntryPoints,
 	projectDependencies,
 	projectDescription,
@@ -149,24 +108,82 @@ export default async function writeProjectTsconfig(
 
 	const previousConfig = JSON.parse(contents.trim() ? contents : '{}');
 
-	if (json[GENERATED] !== previousConfig[GENERATED]) {
-		await fs.writeFile(configPath, objectSF(json), 'utf-8');
+	if (
+		hash(previousConfig) !== previousConfig[GENERATED] ||
+		json[GENERATED] !== previousConfig[GENERATED]
+	) {
 
-		console.log(`Generated new tsconfig.json at ${configPath}`);
+		// await fs.writeFile(configPath, objectSF(json), 'utf-8');
+
+		await visitorFunction(configPath, objectSF(json));
 	}
 
-	await writeProjectTestsTsconfig(projectDir);
+	await visitProjectTestsTsconfig(visitorFunction, projectDir);
+}
+
+async function visitProjectTestsTsconfig(visitorFunction, projectDir) {
+	const tsTests = await fg('test/**/*.{ts,tsx}', {cwd: projectDir});
+
+	if (!tsTests.length) {
+		return false;
+	}
+
+	const tsConfig = {
+		'@readonly': '** AUTO-GENERATED: DO NOT EDIT **',
+		'compilerOptions': {
+			allowSyntheticDefaultImports: true,
+			baseUrl: '.',
+			checkJs: false,
+			composite: true,
+			jsx: 'react',
+			module: 'ESNext',
+			moduleResolution: 'node',
+			rootDir: '../',
+			strict: true,
+			target: 'es2020',
+			typeRoots: ['../../../../node_modules/@types'],
+		},
+		'include': ['**/*.ts', '**/*.tsx', '../src/**/*.ts', '../src/**/*.tsx'],
+	};
+
+	tsConfig[GENERATED] = hash(tsConfig);
+
+	let contents = '';
+
+	const testConfigPath = path.join(projectDir, 'test', 'tsconfig.json');
+
+	if (await fileExists(testConfigPath)) {
+		contents = await fs.readFile(testConfigPath, 'utf8');
+	}
+
+	const previousConfig = JSON.parse(contents.trim() ? contents : '{}');
+
+	if (
+		hash(previousConfig) !== previousConfig[GENERATED] ||
+		tsConfig[GENERATED] !== previousConfig[GENERATED]
+	) {
+
+		// await fs.writeFile(testConfigPath, objectSF(tsConfig), 'utf-8');
+
+		await visitorFunction(testConfigPath, objectSF(tsConfig));
+
+		return true;
+	}
+	else {
+		return false;
+	}
 }
 
 function hash(config) {
 	const shasum = crypto.createHash('sha1');
 
-	shasum.update(
-		JSON.stringify({
-			...config,
-			[GENERATED]: null,
-		})
-	);
+	const configCopy = {
+		...config,
+	};
+
+	delete configCopy[GENERATED];
+
+	shasum.update(objectSF(configCopy));
 
 	return shasum.digest('hex');
 }

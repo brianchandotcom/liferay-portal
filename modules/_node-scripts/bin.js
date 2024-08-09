@@ -37,6 +37,20 @@ const COMMANDS = {
 `,
 		script: './bundle/theme.mjs',
 	},
+	'check:ci': {
+		description: `
+		Runs checks as in CI's pull requests.
+
+		Typical checks are:
+
+		  - Preflight checks (see below).
+		  - Source format checks for modified files.
+		  - Correct generation of tsconfig.json files.
+		  - TypeScript checks for modified files.
+		  - ...
+`,
+		script: './check/ci.mjs',
+	},
 	'check:preflight': {
 		description: `
 		Runs "lightweight" global checks not implemented by ESLint or Prettier.
@@ -49,7 +63,7 @@ const COMMANDS = {
 		  - The node-scripts hash is correct.
 		  - ...
 `,
-		script: './preflight/index.mjs',
+		script: './check/preflight.mjs',
 	},
 	'check:tsc': {
 		description: `
@@ -95,7 +109,7 @@ const COMMANDS = {
 		Generates tsconfig.json files for all projects.
 `,
 		parameters: '',
-		script: './tsconfig/index.mjs',
+		script: './generate/tsconfig.mjs',
 	},
 	'setup': {
 		description: `

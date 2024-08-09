@@ -203,7 +203,8 @@ public class MasterLayoutsImporterTest {
 				"%s/master-pages/%s/master-page.json was ignored because a " +
 					"master page with the same key already exists.",
 				testCaseName, testCaseName),
-			layoutsImporterResultEntry.getErrorMessage());
+			layoutsImporterResultEntry.getErrorMessage(
+				LocaleUtil.getSiteDefault()));
 	}
 
 	@Test

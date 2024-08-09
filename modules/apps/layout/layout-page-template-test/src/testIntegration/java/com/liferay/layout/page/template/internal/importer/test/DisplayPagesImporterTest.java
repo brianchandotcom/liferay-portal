@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactory;
@@ -122,7 +123,8 @@ public class DisplayPagesImporterTest {
 					"ignored because a display page template with the same " +
 						"key already exists.",
 				testCaseName, testCaseName),
-			layoutsImporterResultEntry.getErrorMessage());
+			layoutsImporterResultEntry.getErrorMessage(
+				LocaleUtil.getSiteDefault()));
 	}
 
 	@Test

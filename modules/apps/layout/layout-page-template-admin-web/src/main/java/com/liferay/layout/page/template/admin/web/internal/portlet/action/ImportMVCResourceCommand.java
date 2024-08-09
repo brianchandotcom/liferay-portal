@@ -169,12 +169,12 @@ public class ImportMVCResourceCommand extends BaseMVCResourceCommand {
 							}
 
 							if (Validator.isNotNull(
-									layoutsImporterResultEntry.
-										getErrorMessage())) {
+									layoutsImporterResultEntry.getErrorMessage(
+										locale))) {
 
 								return Collections.singletonList(
-									layoutsImporterResultEntry.
-										getErrorMessage());
+									layoutsImporterResultEntry.getErrorMessage(
+										locale));
 							}
 
 							return Collections.emptyList();

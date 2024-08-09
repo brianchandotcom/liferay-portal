@@ -125,7 +125,7 @@ LayoutUtilityPageEntryImportDisplayContext layoutUtilityPageEntryImportDisplayCo
 						%>
 
 							<li>
-								<span class="<%= dialogType %>-info"><%= HtmlUtil.escape(layoutsImporterResultEntry.getErrorMessage()) %></span>
+								<span class="<%= dialogType %>-info"><%= HtmlUtil.escape(layoutsImporterResultEntry.getErrorMessage(locale)) %></span>
 							</li>
 
 						<%

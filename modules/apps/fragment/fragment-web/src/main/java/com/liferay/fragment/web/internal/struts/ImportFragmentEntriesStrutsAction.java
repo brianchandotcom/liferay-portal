@@ -116,7 +116,8 @@ public class ImportFragmentEntriesStrutsAction implements StrutsAction {
 				pageTemplatesImportResultJSONArray.put(
 					JSONUtil.put(
 						"errorMessage",
-						layoutsImporterResultEntry.getErrorMessage()
+						layoutsImporterResultEntry.getErrorMessage(
+							themeDisplay.getLocale())
 					).put(
 						"name", layoutsImporterResultEntry.getName()
 					).put(

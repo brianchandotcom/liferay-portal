@@ -373,7 +373,8 @@ public class ExportImportDisplayPagesTest {
 					LocaleUtil.getMostRelevantLocale(), errorMessageKey,
 					"display-page-templates/display-page-template-one" +
 						"/display-page-template.json"),
-				layoutsImporterResultEntry.getErrorMessage());
+				layoutsImporterResultEntry.getErrorMessage(
+					LocaleUtil.getSiteDefault()));
 
 			return;
 		}

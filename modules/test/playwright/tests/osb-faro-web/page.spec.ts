@@ -153,19 +153,12 @@ test(
 			await apiHelpers.jsonWebServicesOSBAsah.createSessions(sessions);
 		});
 
-		await test.step('Go to Analytics Cloud and Switch the property', async () => {
+		await test.step('Go to Segments', async () => {
 			await navigateToACPageViaURL({
-				acPage: ACPage.sitePage,
+				acPage: ACPage.segmentPage,
 				channelID: channel.id,
 				page,
 				projectID: project.groupId,
-			});
-		});
-
-		await test.step('Go to Segments', async () => {
-			await navigateTo({
-				page,
-				pageName: 'Segments',
 			});
 		});
 

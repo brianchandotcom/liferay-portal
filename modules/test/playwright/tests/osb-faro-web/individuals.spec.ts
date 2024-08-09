@@ -16,7 +16,7 @@ import {
 	viewBreakdownRechartsData,
 } from './utils/distribution';
 import {createIndividuals, generateIndividual} from './utils/individuals';
-import {ACPage, navigateTo, navigateToACPageViaURL} from './utils/navigation';
+import {ACPage, navigateToACPageViaURL} from './utils/navigation';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -78,17 +78,13 @@ test(
 			await apiHelpers.jsonWebServicesOSBAsah.createSessions(sessions);
 		});
 
-		await test.step('Go to Analytics Cloud and Switch the property', async () => {
+		await test.step('Go to Individuals Dashboard', async () => {
 			await navigateToACPageViaURL({
-				acPage: ACPage.sitePage,
+				acPage: ACPage.individualPage,
 				channelID: channel.id,
 				page,
 				projectID: project.groupId,
 			});
-		});
-
-		await test.step('Go to Individuals Dashboard', async () => {
-			await navigateTo({page, pageName: 'Individuals'});
 		});
 
 		await test.step('Add a new breakdown', async () => {

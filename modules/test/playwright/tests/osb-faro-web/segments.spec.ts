@@ -304,17 +304,13 @@ test(
 			);
 		});
 
-		await test.step('Go to Analytics Cloud and Switch the property', async () => {
+		await test.step('Go to Segments Dashboard and create a Static Segment', async () => {
 			await navigateToACPageViaURL({
-				acPage: ACPage.sitePage,
+				acPage: ACPage.segmentPage,
 				channelID: channel.id,
 				page,
 				projectID: project.groupId,
 			});
-		});
-
-		await test.step('Go to Segments Dashboard and create a Static Segment', async () => {
-			await navigateTo({page, pageName: 'Segments'});
 
 			await createStaticSegment(page);
 
@@ -463,21 +459,14 @@ test(
 			);
 		});
 
-		await test.step('Go to Analytics Cloud and Switch the property', async () => {
-			await navigateToACPageViaURL({
-				acPage: ACPage.sitePage,
-				channelID: channel.id,
-				page,
-				projectID: project.groupId,
-			});
-		});
-
 		const dynamicSegmentName = 'Test Dynamic Segment';
 
 		await test.step('Create dynamic segment', async () => {
-			await navigateTo({
+			await navigateToACPageViaURL({
+				acPage: ACPage.segmentPage,
+				channelID: channel.id,
 				page,
-				pageName: 'Segments',
+				projectID: project.groupId,
 			});
 
 			await createDynamicSegment(page);
@@ -756,19 +745,12 @@ test(
 			);
 		});
 
-		await test.step('Go to Analytics Cloud and Switch the property', async () => {
+		await test.step('Create dynamic segment', async () => {
 			await navigateToACPageViaURL({
-				acPage: ACPage.sitePage,
+				acPage: ACPage.segmentPage,
 				channelID: channel.id,
 				page,
 				projectID: project.groupId,
-			});
-		});
-
-		await test.step('Create dynamic segment', async () => {
-			await navigateTo({
-				page,
-				pageName: 'Segments',
 			});
 
 			await createDynamicSegment(page);
@@ -924,17 +906,13 @@ test(
 			);
 		});
 
-		await test.step('Go to Analytics Cloud and Switch the property', async () => {
+		await test.step('Go to Segments > Create a Static Segment', async () => {
 			await navigateToACPageViaURL({
-				acPage: ACPage.sitePage,
+				acPage: ACPage.segmentPage,
 				channelID: channel.id,
 				page,
 				projectID: project.groupId,
 			});
-		});
-
-		await test.step('Go to Segments > Create a Static Segment', async () => {
-			await navigateTo({page, pageName: 'Segments'});
 
 			await createStaticSegment(page);
 
@@ -1053,17 +1031,13 @@ test(
 			);
 		});
 
-		await test.step('Go to Analytics Cloud and Switch the property', async () => {
+		await test.step('Go to Segments > Create a Static Segment', async () => {
 			await navigateToACPageViaURL({
-				acPage: ACPage.sitePage,
+				acPage: ACPage.segmentPage,
 				channelID: channel.id,
 				page,
 				projectID: project.groupId,
 			});
-		});
-
-		await test.step('Go to Segments > Create a Static Segment', async () => {
-			await navigateTo({page, pageName: 'Segments'});
 
 			await createStaticSegment(page);
 
@@ -1195,19 +1169,12 @@ test(
 			channelName,
 		});
 
-		await test.step('Go to Analytics Cloud and Switch the property', async () => {
+		await test.step('Create dynamic segment with a nested criterion', async () => {
 			await navigateToACPageViaURL({
-				acPage: ACPage.sitePage,
+				acPage: ACPage.segmentPage,
 				channelID: channel.id,
 				page,
 				projectID: project.groupId,
-			});
-		});
-
-		await test.step('Create dynamic segment with a nested criterion', async () => {
-			await navigateTo({
-				page,
-				pageName: 'Segments',
 			});
 
 			await createDynamicSegment(page);
@@ -1360,19 +1327,12 @@ test(
 			await page.waitForTimeout(10000);
 		});
 
-		await test.step('Go to Analytics Cloud and Switch the property', async () => {
+		await test.step('Create dynamic segment using the organization criteria', async () => {
 			await navigateToACPageViaURL({
-				acPage: ACPage.sitePage,
+				acPage: ACPage.segmentPage,
 				channelID: channel.id,
 				page,
 				projectID: project.groupId,
-			});
-		});
-
-		await test.step('Create dynamic segment using the organization criteria', async () => {
-			await navigateTo({
-				page,
-				pageName: 'Segments',
 			});
 
 			await createDynamicSegment(page);
@@ -1509,19 +1469,12 @@ test(
 			await page.waitForTimeout(10000);
 		});
 
-		await test.step('Go to Analytics Cloud and Switch the property', async () => {
+		await test.step('Create dynamic segment using the user group criteria', async () => {
 			await navigateToACPageViaURL({
-				acPage: ACPage.sitePage,
+				acPage: ACPage.segmentPage,
 				channelID: channel.id,
 				page,
 				projectID: project.groupId,
-			});
-		});
-
-		await test.step('Create dynamic segment using the user group criteria', async () => {
-			await navigateTo({
-				page,
-				pageName: 'Segments',
 			});
 
 			await createDynamicSegment(page);

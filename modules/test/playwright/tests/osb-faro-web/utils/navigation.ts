@@ -9,11 +9,11 @@ import {faroConfig} from '../faro.config';
 import {waitForLoading} from './loading';
 
 export enum ACPage {
-	sitePage = 'sites',
 	assetPage = 'assets',
 	eventAnalysisPage = 'events',
-	segmentPage = 'segments',
 	individualPage = 'individuals',
+	segmentPage = 'segments',
+	sitePage = 'sites',
 	testPage = 'tests',
 }
 

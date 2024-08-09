@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.scheduler.TriggerConfiguration;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -42,7 +43,6 @@ import java.io.IOException;
 
 import java.text.SimpleDateFormat;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -57,14 +57,7 @@ import org.osgi.service.component.annotations.Reference;
 public class ScimNotificationSchedulerJobConfiguration
 	implements SchedulerJobConfiguration {
 
-	public static final int DAY = 1;
-
-	public static final int MONTH = 30;
-
-	public static final int TEN_DAYS = 10;
-
-	public static final List<Integer> notificationTime = Arrays.asList(
-		MONTH, TEN_DAYS, DAY);
+	public static final int[] NOTIFICATION_DAYS = {30, 10, 1};
 
 	@Override
 	public UnsafeRunnable<Exception> getJobExecutorUnsafeRunnable() {
@@ -83,23 +76,22 @@ public class ScimNotificationSchedulerJobConfiguration
 	}
 
 	public boolean hasToSendNotification(
-		int daysToExpire, int daysLastNotification,
-		List<Integer> notificationDays) {
+		int daysToExpire, int daysLastNotification) {
 
-		if (ListUtil.isEmpty(notificationDays) ||
-			(daysToExpire > notificationDays.get(0))) {
+		if ((NOTIFICATION_DAYS.length == 0) ||
+			(daysToExpire > NOTIFICATION_DAYS[0])) {
 
 			return false;
 		}
 
-		if (notificationDays.contains(daysToExpire)) {
+		if (ArrayUtil.contains(NOTIFICATION_DAYS, daysToExpire)) {
 			return true;
 		}
 
-		for (int i = 1; i < notificationDays.size(); i++) {
-			if ((notificationDays.get(i - 1) >= daysToExpire) &&
-				(daysToExpire > notificationDays.get(i)) &&
-				(daysLastNotification > notificationDays.get(i - 1))) {
+		for (int i = 1; i < NOTIFICATION_DAYS.length; i++) {
+			if ((NOTIFICATION_DAYS[i - 1] >= daysToExpire) &&
+				(daysToExpire > NOTIFICATION_DAYS[i]) &&
+				(daysLastNotification > NOTIFICATION_DAYS[i - 1])) {
 
 				return true;
 			}
@@ -204,11 +196,10 @@ public class ScimNotificationSchedulerJobConfiguration
 							accessTokenExpirationDate, new Date());
 
 						if (hasToSendNotification(
-							daysBetweenExpiration *
-							compareDaysBetweenExpiration,
-							daysLastNotification *
-							compareDaysLastNotification,
-							notificationTime)) {
+								daysBetweenExpiration *
+									compareDaysBetweenExpiration,
+								daysLastNotification *
+									compareDaysLastNotification)) {
 
 							_sendNotificationExpirationToken(
 								companyId, accessTokenExpirationDate);

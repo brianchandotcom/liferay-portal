@@ -15,7 +15,9 @@ import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
 import java.nio.file.PathMatcher;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
@@ -32,6 +34,13 @@ public class PortalAcceptancePullRequestJob
 	@Override
 	public List<BatchTestClassGroup> getBatchTestClassGroups() {
 		synchronized (jobProperties) {
+			if (batchTestClassGroups != null) {
+				return batchTestClassGroups;
+			}
+
+			batchTestClassGroups = Collections.synchronizedList(
+				new ArrayList<BatchTestClassGroup>());
+
 			if (_isRelevantTestSuite()) {
 				PortalGitWorkingDirectory portalGitWorkingDirectory =
 					getPortalGitWorkingDirectory();

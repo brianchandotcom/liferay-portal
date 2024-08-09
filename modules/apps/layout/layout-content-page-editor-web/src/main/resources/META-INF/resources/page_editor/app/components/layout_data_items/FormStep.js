@@ -3,9 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import classNames from 'classnames';
 import React from 'react';
 
 import {getLayoutDataItemPropTypes} from '../../../prop_types/index';
+import {useItemLocalConfig} from '../../contexts/LocalConfigContext';
 import {useSelectorCallback} from '../../contexts/StoreContext';
 import getLayoutDataItemTopperUniqueClassName from '../../utils/getLayoutDataItemTopperUniqueClassName';
 import isItemEmpty from '../../utils/isItemEmpty';
@@ -18,12 +20,34 @@ const FormStepWithControls = React.forwardRef(({children, item}, ref) => {
 		[item]
 	);
 
+	const index = useSelectorCallback(
+		(state) => {
+			return state.layoutData.items[item.parentId].children.indexOf(
+				item.itemId
+			);
+		},
+		[item]
+	);
+
+	const formId = useSelectorCallback(
+		(state) => state.layoutData.items[item.parentId].parentId,
+
+		[item]
+	);
+
+	const localConfig = useItemLocalConfig(formId);
+
 	return (
 		<TopperEmpty
 			className={getLayoutDataItemTopperUniqueClassName(item.itemId)}
 			item={item}
 		>
-			<FormStep className="page-editor__form-step" ref={ref}>
+			<FormStep
+				className={classNames('page-editor__form-step', {
+					'd-none': index !== 0 && !localConfig.displayAllSteps,
+				})}
+				ref={ref}
+			>
 				{isEmpty && (
 					<div className="page-editor__no-fragments-state">
 						<p className="page-editor__no-fragments-state__message">

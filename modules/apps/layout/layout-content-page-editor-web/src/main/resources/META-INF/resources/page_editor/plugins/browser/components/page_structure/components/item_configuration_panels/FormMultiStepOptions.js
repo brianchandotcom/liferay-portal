@@ -7,8 +7,13 @@ import {useControlledState} from '@liferay/layout-js-components-web';
 import {openModal} from 'frontend-js-web';
 import React from 'react';
 
+import {CheckboxField} from '../../../../../../app/components/fragment_configuration_fields/CheckboxField';
 import {SelectField} from '../../../../../../app/components/fragment_configuration_fields/SelectField';
 import {TextField} from '../../../../../../app/components/fragment_configuration_fields/TextField';
+import {
+	useItemLocalConfig,
+	useUpdateItemLocalConfig,
+} from '../../../../../../app/contexts/LocalConfigContext';
 
 const FORM_TYPE_OPTIONS = [
 	{label: Liferay.Language.get('simple'), value: 'simple'},
@@ -16,6 +21,10 @@ const FORM_TYPE_OPTIONS = [
 ];
 
 export default function FormMultiStepOptions({item, onValueSelect}) {
+	const localConfig = useItemLocalConfig(item.itemId);
+
+	const updateItemLocalConfig = useUpdateItemLocalConfig();
+
 	const [isMultiStep, setIsMultiStep] = useControlledState(
 		item.config.isMultiStep
 	);
@@ -79,6 +88,23 @@ export default function FormMultiStepOptions({item, onValueSelect}) {
 						onValueSelect({numberOfSteps});
 					}}
 					value={numberOfSteps || 2}
+				/>
+			) : null}
+
+			{isMultiStep ? (
+				<CheckboxField
+					field={{
+						label: Liferay.Language.get(
+							'display-all-steps-in-edit-mode'
+						),
+						name: 'displayAllSteps',
+					}}
+					onValueSelect={(_name, value) => {
+						updateItemLocalConfig(item.itemId, {
+							displayAllSteps: value,
+						});
+					}}
+					value={localConfig.displayAllSteps}
 				/>
 			) : null}
 		</>

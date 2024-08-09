@@ -329,6 +329,10 @@ export class ApplicationsMenuPage {
 		await this.sitesItem.click();
 	}
 
+	async goToGlobalSite() {
+		await this.goToSite('Global');
+	}
+
 	async goToSystemSettings() {
 		await this.goToControlPanel();
 		await this.systemSettingsItem.click();

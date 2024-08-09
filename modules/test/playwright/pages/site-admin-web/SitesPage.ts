@@ -25,10 +25,11 @@ export class SitesPage {
 			.frameLocator('iframe[title="Add Site"]')
 			.getByRole('button', {name: 'Add'});
 		this.addSiteButton = page.getByRole('link', {name: 'Add Site'});
-		this.addSiteIFrame = page.frameLocator('iframe[title="Add Site"]');
 		this.customSiteTemplatesItem = page.getByRole('menuitem', {
 			name: 'Custom Site Templates',
 		});
+		this.addSiteIFrame = page.frameLocator('iframe[title="Add Site"]');
+		this.nameBox = this.addSiteIFrame.getByLabel('Name Required');
 		this.defaultPagesAsPrivateCheck = page
 			.frameLocator('iframe[title="Add Site"]')
 			.getByLabel(

@@ -173,9 +173,11 @@ public abstract class BaseShipmentItemResourceTestCase {
 		ShipmentItem shipmentItem = randomShipmentItem();
 
 		shipmentItem.setExternalReferenceCode(regex);
+		shipmentItem.setOrderItemExternalReferenceCode(regex);
 		shipmentItem.setShipmentExternalReferenceCode(regex);
 		shipmentItem.setUnitOfMeasureKey(regex);
 		shipmentItem.setUserName(regex);
+		shipmentItem.setWarehouseExternalReferenceCode(regex);
 
 		String json = ShipmentItemSerDes.toJSON(shipmentItem);
 
@@ -185,9 +187,13 @@ public abstract class BaseShipmentItemResourceTestCase {
 
 		Assert.assertEquals(regex, shipmentItem.getExternalReferenceCode());
 		Assert.assertEquals(
+			regex, shipmentItem.getOrderItemExternalReferenceCode());
+		Assert.assertEquals(
 			regex, shipmentItem.getShipmentExternalReferenceCode());
 		Assert.assertEquals(regex, shipmentItem.getUnitOfMeasureKey());
 		Assert.assertEquals(regex, shipmentItem.getUserName());
+		Assert.assertEquals(
+			regex, shipmentItem.getWarehouseExternalReferenceCode());
 	}
 
 	@Test
@@ -807,6 +813,27 @@ public abstract class BaseShipmentItemResourceTestCase {
 	}
 
 	@Test
+	public void testPostShipmentItemByExternalReferenceCode() throws Exception {
+		ShipmentItem randomShipmentItem = randomShipmentItem();
+
+		ShipmentItem postShipmentItem =
+			testPostShipmentItemByExternalReferenceCode_addShipmentItem(
+				randomShipmentItem);
+
+		assertEquals(randomShipmentItem, postShipmentItem);
+		assertValid(postShipmentItem);
+	}
+
+	protected ShipmentItem
+			testPostShipmentItemByExternalReferenceCode_addShipmentItem(
+				ShipmentItem shipmentItem)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testPutShipmentByExternalReferenceCodeItem() throws Exception {
 		ShipmentItem postShipmentItem =
 			testPutShipmentByExternalReferenceCodeItem_addShipmentItem();
@@ -1228,6 +1255,17 @@ public abstract class BaseShipmentItemResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"orderItemExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (shipmentItem.getOrderItemExternalReferenceCode() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("orderItemId", additionalAssertFieldName)) {
 				if (shipmentItem.getOrderItemId() == null) {
 					valid = false;
@@ -1283,6 +1321,17 @@ public abstract class BaseShipmentItemResourceTestCase {
 					"validateInventory", additionalAssertFieldName)) {
 
 				if (shipmentItem.getValidateInventory() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"warehouseExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (shipmentItem.getWarehouseExternalReferenceCode() == null) {
 					valid = false;
 				}
 
@@ -1472,6 +1521,20 @@ public abstract class BaseShipmentItemResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"orderItemExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						shipmentItem1.getOrderItemExternalReferenceCode(),
+						shipmentItem2.getOrderItemExternalReferenceCode())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("orderItemId", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						shipmentItem1.getOrderItemId(),
@@ -1547,6 +1610,20 @@ public abstract class BaseShipmentItemResourceTestCase {
 				if (!Objects.deepEquals(
 						shipmentItem1.getValidateInventory(),
 						shipmentItem2.getValidateInventory())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"warehouseExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						shipmentItem1.getWarehouseExternalReferenceCode(),
+						shipmentItem2.getWarehouseExternalReferenceCode())) {
 
 					return false;
 				}
@@ -1790,6 +1867,52 @@ public abstract class BaseShipmentItemResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("orderItemExternalReferenceCode")) {
+			Object object = shipmentItem.getOrderItemExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("orderItemId")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1948,6 +2071,52 @@ public abstract class BaseShipmentItemResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("warehouseExternalReferenceCode")) {
+			Object object = shipmentItem.getWarehouseExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("warehouseId")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -2003,6 +2172,8 @@ public abstract class BaseShipmentItemResourceTestCase {
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
 				modifiedDate = RandomTestUtil.nextDate();
+				orderItemExternalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				orderItemId = RandomTestUtil.randomLong();
 				shipmentExternalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
@@ -2012,6 +2183,8 @@ public abstract class BaseShipmentItemResourceTestCase {
 				userName = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				validateInventory = RandomTestUtil.randomBoolean();
+				warehouseExternalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				warehouseId = RandomTestUtil.randomLong();
 			}
 		};

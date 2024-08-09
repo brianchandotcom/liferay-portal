@@ -49,12 +49,20 @@ test.describe('Search Bar directs to correct page', () => {
 		});
 
 		await test.step('Disable search suggestions for added search bar', async () => {
-			await searchPage.selectSearchBarInMainContentConfigurations([
+			await searchPage.searchBarPortletInMainContent
+				.getByLabel('Options')
+				.click();
+
+			await searchPage.configurationMenuItem.click();
+
+			await searchPage.selectPortletConfigurationsCheckbox([
 				{
 					label: 'Enable Suggestions',
 					value: false,
 				},
 			]);
+
+			await searchPage.savePortletConfiguration();
 		});
 
 		await test.step('Impersonate as the test user', async () => {

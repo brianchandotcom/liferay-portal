@@ -151,6 +151,12 @@ export class SearchPage {
 		await expect(this.page.locator('#modalIframe')).toBeVisible();
 	}
 
+	async savePortletConfiguration() {
+		await this.modalIFrame.getByRole('button', {name: 'Save'}).click();
+
+		await this.modalIFrame.getByRole('button', {name: 'Cancel'}).click();
+	}
+
 	async searchKeywordInMainContent(searchText: string) {
 		await this.searchBarInputInMainContent.fill(searchText);
 
@@ -161,25 +167,6 @@ export class SearchPage {
 		await this.searchBarInputInNavBar.fill(searchText);
 
 		await this.searchBarInputInNavBar.press('Enter');
-	}
-
-	async selectCheckboxPortletConfigurations(
-		options: {label: string; value: boolean}[]
-	) {
-		for (const option of options) {
-			const configurationCheckbox = this.modalIFrame.locator(
-				`xpath=//*[text()[contains(.,'${option.label}')]]//input`
-			);
-
-			await this.selectSearchFacetCheckbox(
-				configurationCheckbox,
-				option.value
-			);
-		}
-
-		await this.modalIFrame.getByRole('button', {name: 'Save'}).click();
-
-		await this.modalIFrame.getByRole('button', {name: 'Cancel'}).click();
 	}
 
 	async selectPaginationItemsPerPage(delta: number) {
@@ -209,14 +196,32 @@ export class SearchPage {
 		).toHaveAttribute('aria-current', 'page');
 	}
 
-	async selectSearchBarInMainContentConfigurations(
+	async selectPortletConfigurationsCheckbox(
 		options: {label: string; value: boolean}[]
 	) {
-		await this.searchBarPortletInMainContent.getByLabel('Options').click();
+		for (const option of options) {
+			const configurationCheckbox = this.modalIFrame.locator(
+				`xpath=//*[text()[contains(.,'${option.label}')]]//input`
+			);
 
-		await this.configurationMenuItem.click();
+			await this.selectSearchFacetCheckbox(
+				configurationCheckbox,
+				option.value
+			);
+		}
+	}
 
-		await this.selectCheckboxPortletConfigurations(options);
+	async selectPortletConfigurationsSelect(
+		options: {label: string; value: string}[]
+	) {
+		for (const option of options) {
+			const configurationSelect = this.modalIFrame.getByLabel(
+				option.label,
+				{exact: true}
+			);
+
+			await configurationSelect.selectOption({label: option.value});
+		}
 	}
 
 	async selectSearchFacetCheckbox(
@@ -251,13 +256,5 @@ export class SearchPage {
 				/facet-term-selected/
 			);
 		}
-	}
-
-	async selectSearchOptionCheckboxConfigurations(
-		options: {label: string; value: boolean}[]
-	) {
-		await this.searchOptionsConfigurationLink.click();
-
-		await this.selectCheckboxPortletConfigurations(options);
 	}
 }

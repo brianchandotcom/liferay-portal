@@ -108,7 +108,9 @@ test.describe('Clear and retain facet selections', () => {
 
 		// Teardown by resetting search options
 
-		await searchPage.selectSearchOptionCheckboxConfigurations([
+		await searchPage.searchOptionsConfigurationLink.click();
+
+		await searchPage.selectPortletConfigurationsCheckbox([
 			{
 				label: 'Allow Empty Searches',
 				value: false,
@@ -118,6 +120,8 @@ test.describe('Clear and retain facet selections', () => {
 				value: false,
 			},
 		]);
+
+		await searchPage.savePortletConfiguration();
 	});
 
 	test('clears facet terms after new keyword search @LPD-19994', async ({
@@ -207,12 +211,16 @@ test.describe('Clear and retain facet selections', () => {
 
 		// Configure search options to retain facet selections
 
-		await searchPage.selectSearchOptionCheckboxConfigurations([
+		await searchPage.searchOptionsConfigurationLink.click();
+
+		await searchPage.selectPortletConfigurationsCheckbox([
 			{
 				label: 'Allow Empty Searches',
 				value: true,
 			},
 		]);
+
+		await searchPage.savePortletConfiguration();
 
 		await page.reload();
 
@@ -241,12 +249,16 @@ test.describe('Clear and retain facet selections', () => {
 
 		// Configure search options to retain facet selections
 
-		await searchPage.selectSearchOptionCheckboxConfigurations([
+		await searchPage.searchOptionsConfigurationLink.click();
+
+		await searchPage.selectPortletConfigurationsCheckbox([
 			{
 				label: 'Retain Facet Selections Across Searches',
 				value: true,
 			},
 		]);
+
+		await searchPage.savePortletConfiguration();
 
 		await page.reload();
 

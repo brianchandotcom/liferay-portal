@@ -55,7 +55,12 @@ export function RadioField({
 				onChange={(value: ReactText) => onChange(value as string)}
 			>
 				{options.map(({label, value}) => (
-					<ClayRadio key={value} label={label} value={value} />
+					<ClayRadio
+						disabled={disabled}
+						key={value}
+						label={label}
+						value={value}
+					/>
 				))}
 			</ClayRadioGroup>
 		</FieldBase>

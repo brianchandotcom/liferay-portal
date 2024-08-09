@@ -7,9 +7,6 @@ package com.liferay.scim.configuration.web.internal.scheduler;
 
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -20,19 +17,10 @@ import org.junit.Test;
  */
 public class ScimNotificationSchedulerJobConfigurationTest {
 
-	public static final int DAY = 1;
-
-	public static final int MONTH = 30;
-
-	public static final int TEN_DAYS = 10;
-
 	@ClassRule
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
-
-	public static final List<Integer> notificationTime = Arrays.asList(
-		MONTH, TEN_DAYS, DAY);
 
 	@Test
 	public void testSendNotificationBecauseIsNoNotificationDayButNotSentNotificationBefore()
@@ -48,7 +36,7 @@ public class ScimNotificationSchedulerJobConfigurationTest {
 
 		boolean notification =
 			scimNotificationSchedulerJobConfiguration.hasToSendNotification(
-				daysToExpire, daysLastNotification, notificationTime);
+				daysToExpire, daysLastNotification);
 
 		Assert.assertFalse(notification);
 	}
@@ -67,7 +55,7 @@ public class ScimNotificationSchedulerJobConfigurationTest {
 
 		boolean notification =
 			scimNotificationSchedulerJobConfiguration.hasToSendNotification(
-				daysToExpire, daysLastNotification, notificationTime);
+				daysToExpire, daysLastNotification);
 
 		Assert.assertTrue(notification);
 	}
@@ -84,7 +72,7 @@ public class ScimNotificationSchedulerJobConfigurationTest {
 
 		boolean notification =
 			scimNotificationSchedulerJobConfiguration.hasToSendNotification(
-				daysToExpire, daysLastNotification, notificationTime);
+				daysToExpire, daysLastNotification);
 
 		Assert.assertFalse(notification);
 	}
@@ -103,7 +91,7 @@ public class ScimNotificationSchedulerJobConfigurationTest {
 
 		boolean notification =
 			scimNotificationSchedulerJobConfiguration.hasToSendNotification(
-				daysToExpire, daysLastNotification, notificationTime);
+				daysToExpire, daysLastNotification);
 
 		Assert.assertFalse(notification);
 	}
@@ -122,7 +110,7 @@ public class ScimNotificationSchedulerJobConfigurationTest {
 
 		boolean notification =
 			scimNotificationSchedulerJobConfiguration.hasToSendNotification(
-				daysToExpire, daysLastNotification, notificationTime);
+				daysToExpire, daysLastNotification);
 
 		Assert.assertTrue(notification);
 	}
@@ -141,7 +129,7 @@ public class ScimNotificationSchedulerJobConfigurationTest {
 
 		boolean notification =
 			scimNotificationSchedulerJobConfiguration.hasToSendNotification(
-				daysToExpire, daysLastNotification, notificationTime);
+				daysToExpire, daysLastNotification);
 
 		Assert.assertTrue(notification);
 	}

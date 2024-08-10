@@ -22,6 +22,20 @@ export class FragmentsPage {
 		);
 	}
 
+	async gotoFragmentSet(name: string) {
+		await this.page
+			.getByRole('menuitem', {
+				exact: true,
+				name,
+			})
+			.click();
+
+		await this.page
+			.locator('.sheet-title')
+			.getByText(name, {exact: true})
+			.waitFor();
+	}
+
 	async clickAction(action: string, title: string) {
 		const actionsPath = '//p[@title="' + title + '"]/../..';
 
@@ -52,11 +66,7 @@ export class FragmentsPage {
 	}
 
 	async createFragment(setName: string, name: string) {
-		await this.page
-			.getByRole('menuitem', {exact: true, name: setName})
-			.click();
-
-		await this.page.locator('.sheet-title').getByText(setName).waitFor();
+		await this.gotoFragmentSet(setName);
 
 		await this.page.getByRole('button', {name: 'Add'}).click();
 

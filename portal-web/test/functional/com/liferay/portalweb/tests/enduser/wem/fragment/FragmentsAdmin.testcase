@@ -452,27 +452,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-89115. Can see contributed fragment collections in fragment administration"
-	@priority = 5
-	@uitest
-	test ViewContributedFragmentCollections {
-		property portal.acceptance = "true";
-
-		task ("View the Button fragment of Basic Components collection") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = ${siteURLKey});
-
-			FragmentsAdminNavigator.gotoCollection(collectionName = "Basic Components");
-
-			FragmentsAdmin.viewEntryPresent(entry = "Button");
-		}
-
-		task ("View the Banner Center of Featured Content collection") {
-			FragmentsAdminNavigator.gotoCollection(collectionName = "Featured Content");
-
-			FragmentsAdmin.viewEntryPresent(entry = "Banner Center");
-		}
-	}
-
 	@description = "This is a test for LPS-180331. The new site should inherit form fragment displayed by default per field type from the global site."
 	@priority = 4
 	test ViewDefaultFormFragmentOfTextFieldAddedInGlobalSiteInheritesInNewSite {

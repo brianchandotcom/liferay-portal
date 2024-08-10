@@ -109,6 +109,35 @@ test(
 );
 
 test(
+	'Can see contributed fragment set in fragment administration',
+	{
+		tag: '@LPS-89115',
+	},
+	async ({fragmentsPage, page, site}) => {
+
+		// Go to fragment administration
+
+		await fragmentsPage.goto(site.friendlyUrlPath);
+
+		// Go to Basic Components fragment set
+
+		await fragmentsPage.gotoFragmentSet('Basic Components');
+
+		await expect(
+			page.getByRole('link').filter({hasText: 'Button'})
+		).toBeVisible();
+
+		// Go to Basic Components fragment set
+
+		await fragmentsPage.gotoFragmentSet('Featured Content');
+
+		await expect(
+			page.getByRole('link').filter({hasText: 'Banner Slider'})
+		).toBeVisible();
+	}
+);
+
+test(
 	'No alert popup when add a fragment set with XSS name',
 	{
 		tag: '@LPS-121200',

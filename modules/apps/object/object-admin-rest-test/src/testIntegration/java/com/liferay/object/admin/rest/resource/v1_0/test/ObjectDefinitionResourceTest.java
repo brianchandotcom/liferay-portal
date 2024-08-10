@@ -60,6 +60,7 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -340,8 +341,30 @@ public class ObjectDefinitionResourceTest
 				}
 			});
 
-		testPostObjectDefinition_addObjectDefinition(
+		ObjectValidationRule systemObjectValidationRule =
+			(ObjectValidationRule)ArrayUtil.getValue(
+				randomModifiableSystemObjectDefinition.
+					getObjectValidationRules(),
+				1);
+
+		systemObjectValidationRule.setObjectValidationRuleSettings(
+			new ObjectValidationRuleSetting[] {
+				new ObjectValidationRuleSetting() {
+					{
+						name =
+							ObjectValidationRuleSettingConstants.
+								NAME_ALLOW_ACTIVE_STATUS_UPDATE;
+						value = "true";
+					}
+				}
+			});
+
+		postObjectDefinition = testPostObjectDefinition_addObjectDefinition(
 			randomModifiableSystemObjectDefinition);
+
+		assertEquals(
+			postObjectDefinition, randomModifiableSystemObjectDefinition);
+		assertValid(postObjectDefinition);
 
 		ListTypeDefinition serviceBuilderlistTypeDefinition =
 			_listTypeDefinitionLocalService.
@@ -602,39 +625,49 @@ public class ObjectDefinitionResourceTest
 					system = false;
 				}
 			};
+		ObjectValidationRule updatedSystemObjectValidationRule =
+			new ObjectValidationRule() {
+				{
+					active = false;
+					engine = ObjectValidationRuleConstants.ENGINE_TYPE_DDM;
+					errorLabel = Collections.singletonMap(
+						"en_US", RandomTestUtil.randomString());
+					externalReferenceCode =
+						systemObjectValidationRule.getExternalReferenceCode();
+					name = Collections.singletonMap(
+						"en_US", RandomTestUtil.randomString());
+					objectDefinitionExternalReferenceCode =
+						randomModifiableSystemObjectDefinition.
+							getExternalReferenceCode();
+					objectValidationRuleSettings =
+						new ObjectValidationRuleSetting[] {
+							new ObjectValidationRuleSetting() {
+								{
+									name =
+										ObjectValidationRuleSettingConstants.
+											NAME_OUTPUT_OBJECT_FIELD_EXTERNAL_REFERENCE_CODE;
+									value = "customObjectFieldERC";
+								}
+							},
+							new ObjectValidationRuleSetting() {
+								{
+									name =
+										ObjectValidationRuleSettingConstants.
+											NAME_ALLOW_ACTIVE_STATUS_UPDATE;
+									value = "true";
+								}
+							}
+						};
+					outputType = OutputType.create("partialValidation");
+					script = "isEmailAddress(systemObjectField)";
+					system = true;
+				}
+			};
 
 		randomModifiableSystemObjectDefinition.setObjectValidationRules(
 			new ObjectValidationRule[] {
 				updatedCustomObjectValidationRule,
-				new ObjectValidationRule() {
-					{
-						active = false;
-						engine = ObjectValidationRuleConstants.ENGINE_TYPE_DDM;
-						errorLabel = Collections.singletonMap(
-							"en_US", RandomTestUtil.randomString());
-						externalReferenceCode =
-							systemObjectValidationRule.
-								getExternalReferenceCode();
-						name = Collections.singletonMap(
-							"en_US", RandomTestUtil.randomString());
-						objectDefinitionExternalReferenceCode =
-							randomModifiableSystemObjectDefinition.
-								getExternalReferenceCode();
-						objectValidationRuleSettings =
-							new ObjectValidationRuleSetting[] {
-								new ObjectValidationRuleSetting() {
-									{
-										name =
-											ObjectValidationRuleSettingConstants.NAME_OUTPUT_OBJECT_FIELD_EXTERNAL_REFERENCE_CODE;
-										value = "customObjectFieldERC";
-									}
-								}
-							};
-						outputType = OutputType.create("partialValidation");
-						script = "isEmailAddress(systemObjectField)";
-						system = true;
-					}
-				}
+				updatedSystemObjectValidationRule
 			});
 
 		String liferayMode = SystemProperties.get("liferay.mode");
@@ -655,11 +688,30 @@ public class ObjectDefinitionResourceTest
 				randomModifiableSystemObjectDefinition.getId());
 
 		_assertObjectValidationRule(
-			"customObjectFieldERC", updatedCustomObjectValidationRule,
+			null, "customObjectFieldERC", updatedCustomObjectValidationRule,
 			(ObjectValidationRule)ArrayUtil.getValue(
 				getObjectDefinition.getObjectValidationRules(), 0));
 		_assertObjectValidationRule(
-			"customObjectFieldERC", systemObjectValidationRule,
+			null, null, systemObjectValidationRule,
+			(ObjectValidationRule)ArrayUtil.getValue(
+				getObjectDefinition.getObjectValidationRules(), 1));
+
+		randomModifiableSystemObjectDefinition.setObjectValidationRules(
+			new ObjectValidationRule[] {updatedSystemObjectValidationRule});
+
+		objectDefinitionResource.putObjectDefinition(
+			randomModifiableSystemObjectDefinition.getId(),
+			randomModifiableSystemObjectDefinition);
+
+		getObjectDefinition = objectDefinitionResource.getObjectDefinition(
+			randomModifiableSystemObjectDefinition.getId());
+
+		_assertObjectValidationRule(
+			null, "customObjectFieldERC", updatedCustomObjectValidationRule,
+			(ObjectValidationRule)ArrayUtil.getValue(
+				getObjectDefinition.getObjectValidationRules(), 0));
+		_assertObjectValidationRule(
+			"true", "customObjectFieldERC", updatedSystemObjectValidationRule,
 			(ObjectValidationRule)ArrayUtil.getValue(
 				getObjectDefinition.getObjectValidationRules(), 1));
 
@@ -1093,9 +1145,11 @@ public class ObjectDefinitionResourceTest
 	}
 
 	private void _assertObjectValidationRule(
-		String expectedObjectFieldExternalReferenceCode,
-		ObjectValidationRule expectedObjectValidationRule,
-		ObjectValidationRule actualObjectValidationRule) {
+			String expectedAllowActiveStatusUpdate,
+			String expectedObjectFieldExternalReferenceCode,
+			ObjectValidationRule expectedObjectValidationRule,
+			ObjectValidationRule actualObjectValidationRule)
+		throws Exception {
 
 		Assert.assertEquals(
 			expectedObjectValidationRule.getActive(),
@@ -1119,39 +1173,42 @@ public class ObjectDefinitionResourceTest
 			expectedObjectValidationRule.getScript(),
 			actualObjectValidationRule.getScript());
 
+		Map<String, Object> objectValidationRuleSettings = new HashMap<>();
+
+		for (ObjectValidationRuleSetting objectValidationRuleSetting :
+				actualObjectValidationRule.getObjectValidationRuleSettings()) {
+
+			objectValidationRuleSettings.put(
+				objectValidationRuleSetting.getName(),
+				objectValidationRuleSetting.getValue());
+		}
+
+		Assert.assertEquals(
+			expectedAllowActiveStatusUpdate,
+			objectValidationRuleSettings.getOrDefault(
+				ObjectValidationRuleSettingConstants.
+					NAME_ALLOW_ACTIVE_STATUS_UPDATE,
+				null));
+
 		if (StringUtil.equals(
 				actualObjectValidationRule.getOutputTypeAsString(),
 				ObjectValidationRuleConstants.OUTPUT_TYPE_FULL_VALIDATION)) {
 
-			Assert.assertTrue(
-				ArrayUtil.isEmpty(
-					actualObjectValidationRule.
-						getObjectValidationRuleSettings()));
+			Assert.assertNull(
+				objectValidationRuleSettings.get(
+					ObjectValidationRuleSettingConstants.
+						NAME_OUTPUT_OBJECT_FIELD_EXTERNAL_REFERENCE_CODE));
 		}
 		else if (StringUtil.equals(
 					actualObjectValidationRule.getOutputTypeAsString(),
 					ObjectValidationRuleConstants.
 						OUTPUT_TYPE_PARTIAL_VALIDATION)) {
 
-			Assert.assertTrue(
-				ArrayUtil.isNotEmpty(
-					actualObjectValidationRule.
-						getObjectValidationRuleSettings()));
-
-			for (ObjectValidationRuleSetting objectValidationRuleSetting :
-					actualObjectValidationRule.
-						getObjectValidationRuleSettings()) {
-
-				if (StringUtil.equals(
-						objectValidationRuleSetting.getName(),
-						ObjectValidationRuleSettingConstants.
-							NAME_OUTPUT_OBJECT_FIELD_EXTERNAL_REFERENCE_CODE)) {
-
-					Assert.assertEquals(
-						expectedObjectFieldExternalReferenceCode,
-						objectValidationRuleSetting.getValue());
-				}
-			}
+			Assert.assertEquals(
+				expectedObjectFieldExternalReferenceCode,
+				objectValidationRuleSettings.get(
+					ObjectValidationRuleSettingConstants.
+						NAME_OUTPUT_OBJECT_FIELD_EXTERNAL_REFERENCE_CODE));
 		}
 	}
 

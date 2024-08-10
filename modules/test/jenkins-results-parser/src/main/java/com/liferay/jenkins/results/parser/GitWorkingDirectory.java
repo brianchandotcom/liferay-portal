@@ -1999,9 +1999,7 @@ public class GitWorkingDirectory {
 
 	public RemoteGitBranch getUpstreamRemoteGitBranch() {
 		return getRemoteGitBranch(
-			getUpstreamBranchName(),
-			JenkinsResultsParserUtil.combine(
-				"git@github.com:liferay/", getGitRepositoryName()));
+			getUpstreamBranchName(), getUpstreamGitRemote());
 	}
 
 	public File getWorkingDirectory() {

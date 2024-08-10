@@ -17,9 +17,9 @@ import {
 	TTextArea,
 } from '../../helpers/CustomFieldTypesHelper';
 import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
+import {ViewAttributesPage} from './ViewAttributesPage';
 
 export class AddCustomFieldPage {
-	readonly addCustomFieldButton: Locator;
 	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly fieldNameField: Locator;
 	readonly hiddenToggle: Locator;
@@ -31,10 +31,6 @@ export class AddCustomFieldPage {
 	readonly visibleWithUpdateToggle: Locator;
 
 	constructor(page: Page) {
-		this.addCustomFieldButton = page.getByRole('link', {
-			name: 'Add Custom Field',
-		});
-
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);
 		this.fieldNameField = page.getByText('Field Name Required');
 		this.hiddenToggle = page.getByLabel('Hidden');
@@ -50,13 +46,11 @@ export class AddCustomFieldPage {
 	}
 
 	async addCustomField(customField: TCustomField) {
-		await this.applicationsMenuPage.goToCustomFields();
+		const viewAttributesPage = new ViewAttributesPage(this.page);
 
-		await this.page
-			.getByRole('link', {exact: true, name: customField.resource})
-			.click();
+		await viewAttributesPage.goto(customField.resource);
 
-		await this.addCustomFieldButton.click();
+		await viewAttributesPage.addCustomFieldButton.click();
 
 		let values;
 

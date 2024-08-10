@@ -27,6 +27,7 @@ import {UsersAndOrganizationsPage} from '../../pages/users-admin-web/UsersAndOrg
 import {getRandomInt} from '../../utils/getRandomInt';
 import getRandomString from '../../utils/getRandomString';
 import {performLogout} from '../../utils/performLogin';
+import {performSpInitiatedSSO} from './utils/samlAuthUtil';
 import {
 	connectSpAndIdp,
 	editIdentityProviderConnection,
@@ -74,48 +75,11 @@ test('Create two virtual instances, one IdP and one SP, connect them, perform SP
 
 	// Perform SP initiated SSO
 
-	const spInstancePage = await browser.newPage({
-		baseURL: DEFAULT_SP_URL,
-	});
-
-	await spInstancePage.goto('/');
-
-	const signInButton = await spInstancePage.getByRole('button', {
-		name: 'Sign In',
-	});
-
-	await signInButton.click();
-
-	// Verify user is redirected to the IdP instance
-
-	await spInstancePage
-		.getByText('Redirecting to your identity provider...')
-		.waitFor({timeout: 30 * 1000});
-
-	// Wait for redirection to complete, otherwise the expect clause will fail
-
-	await spInstancePage
-		.getByLabel('Email Address')
-		.waitFor({timeout: 30 * 1000});
-
-	// Verify user has been successfully redirected
-
-	expect(await spInstancePage.url()).toContain(DEFAULT_IDP_URL);
-
-	// Sign in
-
-	await spInstancePage
-		.getByLabel('Email Address')
-		.fill(userAccount.emailAddress);
-	await spInstancePage.getByLabel('Password').fill('test');
-	await spInstancePage.getByLabel('Remember Me').check();
-	await spInstancePage.getByRole('button', {name: 'Sign In'}).click();
-
-	// Wait for authentication to complete, verify user is redirected back to SP
-
-	await spInstancePage
-		.getByTitle('User Profile Menu')
-		.waitFor({timeout: 30 * 1000});
+	const spInstancePage = await performSpInitiatedSSO(
+		browser,
+		userAccount.emailAddress,
+		DEFAULT_SP_URL
+	);
 
 	expect(await spInstancePage.url()).toContain(DEFAULT_SP_URL);
 
@@ -271,34 +235,13 @@ test('Create two virtual instances, one IdP and one SP, and verify Custom User A
 
 	const userAccount = await createIdpUser(browser, DEFAULT_IDP_NAME);
 
-	// Perform SSO with the new user
+	// Perform Sp initiated SSO with the new user
 
-	let spInstancePage = await browser.newPage({
-		baseURL: DEFAULT_SP_URL,
-	});
-
-	await spInstancePage.goto('/');
-
-	const signInButton = await spInstancePage.getByRole('button', {
-		name: 'Sign In',
-	});
-
-	await signInButton.click();
-
-	await spInstancePage
-		.getByLabel('Email Address')
-		.waitFor({timeout: 30 * 1000});
-
-	await spInstancePage
-		.getByLabel('Email Address')
-		.fill(userAccount.emailAddress);
-	await spInstancePage.getByLabel('Password').fill('test');
-	await spInstancePage.getByLabel('Remember Me').check();
-	await spInstancePage.getByRole('button', {name: 'Sign In'}).click();
-
-	await spInstancePage
-		.getByTitle('User Profile Menu')
-		.waitFor({timeout: 30 * 1000});
+	let spInstancePage = await performSpInitiatedSSO(
+		browser,
+		userAccount.emailAddress,
+		DEFAULT_SP_URL
+	);
 
 	await performLogout(spInstancePage);
 
@@ -455,97 +398,25 @@ test('Create two virtual instances, set localhost and one to IdP and one SP, and
 
 	await createIdpUser(browser, DEFAULT_IDP_NAME, userId);
 
-	// Perform SSO with the new user
+	// Perform SP initiated SSO, using localhost as the IdP
 
-	let spInstancePage = await browser.newPage({
-		baseURL: DEFAULT_SP_URL,
-	});
-
-	await spInstancePage.goto('/');
-
-	const signInButton = await spInstancePage.getByRole('button', {
-		name: 'Sign In',
-	});
-
-	await signInButton.click();
-
-	// Verify user is redirected to the IdP selection page
-
-	await spInstancePage
-		.getByRole('paragraph')
-		.getByText('Please select your identity provider.')
-		.waitFor({timeout: 30 * 1000});
-
-	// Perform SSO using localhost
-
-	await spInstancePage
-		.getByLabel('Identity Provider')
-		.selectOption('localhost');
-
-	await spInstancePage
-		.locator('#content')
-		.getByRole('button', {
-			exact: true,
-			name: 'Sign In',
-		})
-		.click();
-
-	await spInstancePage
-		.getByLabel('Email Address')
-		.waitFor({timeout: 30 * 1000});
-
-	await spInstancePage
-		.getByLabel('Email Address')
-		.fill(userAccount.emailAddress);
-	await spInstancePage.getByLabel('Password').fill('test');
-	await spInstancePage.getByLabel('Remember Me').check();
-	await spInstancePage.getByRole('button', {name: 'Sign In'}).click();
-
-	await spInstancePage
-		.getByTitle('User Profile Menu')
-		.waitFor({timeout: 30 * 1000});
+	let spInstancePage = await performSpInitiatedSSO(
+		browser,
+		userAccount.emailAddress,
+		DEFAULT_SP_URL,
+		'localhost'
+	);
 
 	await performLogout(spInstancePage);
 
-	await expect(await signInButton).toBeVisible();
+	// Perform SP initiated SSO again, this time using www.able.com as the IdP
 
-	await signInButton.click();
-
-	// Verify user is redirected to the IdP selection page
-
-	await spInstancePage
-		.getByRole('paragraph')
-		.getByText('Please select your identity provider.')
-		.waitFor({timeout: 30 * 1000});
-
-	// Perform SSO again, this time using www.able.com
-
-	await spInstancePage
-		.getByLabel('Identity Provider')
-		.selectOption(DEFAULT_IDP_NAME);
-
-	await spInstancePage
-		.locator('#content')
-		.getByRole('button', {
-			exact: true,
-			name: 'Sign In',
-		})
-		.click();
-
-	await spInstancePage
-		.getByLabel('Email Address')
-		.waitFor({timeout: 30 * 1000});
-
-	await spInstancePage
-		.getByLabel('Email Address')
-		.fill(userAccount.emailAddress);
-	await spInstancePage.getByLabel('Password').fill('test');
-	await spInstancePage.getByLabel('Remember Me').check();
-	await spInstancePage.getByRole('button', {name: 'Sign In'}).click();
-
-	await spInstancePage
-		.getByTitle('User Profile Menu')
-		.waitFor({timeout: 30 * 1000});
+	spInstancePage = await performSpInitiatedSSO(
+		browser,
+		userAccount.emailAddress,
+		DEFAULT_SP_URL,
+		DEFAULT_IDP_NAME
+	);
 
 	await performLogout(spInstancePage);
 

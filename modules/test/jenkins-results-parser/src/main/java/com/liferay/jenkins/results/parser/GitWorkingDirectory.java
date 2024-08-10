@@ -2378,22 +2378,15 @@ public class GitWorkingDirectory {
 
 		_gitRepositoryName = gitRepositoryName;
 
-		if (_publicOnlyGitRepositoryNames.contains(_gitRepositoryName)) {
-			setUpstreamGitRemoteToPublicGitRepository();
-		}
-		else {
-			if (_privateOnlyGitRepositoryNames.contains(_gitRepositoryName)) {
-				setUpstreamGitRemoteToPrivateGitRepository();
-			}
-			else {
-				if (upstreamBranchName.equals("master")) {
-					setUpstreamGitRemoteToPublicGitRepository();
-				}
-				else {
-					setUpstreamGitRemoteToPrivateGitRepository();
-				}
-			}
-		}
+		String remoteGitRepositoryName = _getRemoteGitRepositoryName();
+
+		RemoteGitRepository remoteGitRepository =
+			GitRepositoryFactory.getRemoteGitRepository(
+				"github.com", remoteGitRepositoryName,
+				JenkinsResultsParserUtil.getUpstreamUserName(
+					remoteGitRepositoryName, getUpstreamBranchName()));
+
+		addGitRemote(true, "upstream-temp", remoteGitRepository.getRemoteURL());
 
 		_gitRepositoryUsername = loadGitRepositoryUsername();
 	}
@@ -2575,33 +2568,6 @@ public class GitWorkingDirectory {
 		int y = remoteURL.indexOf("/");
 
 		return remoteURL.substring(x, y);
-	}
-
-	protected void setUpstreamGitRemoteToPrivateGitRepository() {
-		GitRemote gitRemote = getUpstreamGitRemote();
-
-		String privateGitRepositoryName = GitUtil.getPrivateRepositoryName(
-			getGitRepositoryName());
-
-		RemoteGitRepository remoteGitRepository =
-			GitRepositoryFactory.getRemoteGitRepository(
-				"github.com", privateGitRepositoryName,
-				gitRemote.getUsername());
-
-		addGitRemote(true, "upstream-temp", remoteGitRepository.getRemoteURL());
-	}
-
-	protected void setUpstreamGitRemoteToPublicGitRepository() {
-		GitRemote gitRemote = getUpstreamGitRemote();
-
-		String publicGitRepositoryName = GitUtil.getPublicRepositoryName(
-			getGitRepositoryName());
-
-		RemoteGitRepository remoteGitRepository =
-			GitRepositoryFactory.getRemoteGitRepository(
-				"github.com", publicGitRepositoryName, gitRemote.getUsername());
-
-		addGitRemote(true, "upstream-temp", remoteGitRepository.getRemoteURL());
 	}
 
 	protected void setWorkingDirectory(String workingDirectoryPath)
@@ -2958,6 +2924,28 @@ public class GitWorkingDirectory {
 		}
 
 		return sb.toString();
+	}
+
+	private String _getRemoteGitRepositoryName() {
+		String gitRepositoryName = getGitRepositoryName();
+
+		if (_publicOnlyGitRepositoryNames.contains(gitRepositoryName)) {
+			return GitUtil.getPublicRepositoryName(gitRepositoryName);
+		}
+
+		if (_privateOnlyGitRepositoryNames.contains(gitRepositoryName)) {
+			return GitUtil.getPrivateRepositoryName(gitRepositoryName);
+		}
+
+		String upstreamBranchName = getUpstreamBranchName();
+
+		if (upstreamBranchName.startsWith("faro-v") ||
+			upstreamBranchName.equals("master")) {
+
+			return GitUtil.getPublicRepositoryName(gitRepositoryName);
+		}
+
+		return GitUtil.getPrivateRepositoryName(gitRepositoryName);
 	}
 
 	private List<LocalGitCommit> _log(

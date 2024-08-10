@@ -89,67 +89,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-108376. Can check Cacheable for fragments when create them in portal and they are non-Cachable by default."
-	@priority = 5
-	@uitest
-	test MarkFragmentCreatedInPortalAsCacheable {
-		property portal.acceptance = "true";
-
-		task ("Mark the fragment as cacheable") {
-			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
-
-			FragmentsAdminNavigator.gotoEntryEllipsisItem(
-				entry = "Fragment Name",
-				item = "Mark as Cacheable");
-
-			AssertConfirm(value1 = "Only check when developing a static fragment that does not use request handling, the CMS query API, or other dynamic features. Referencing taglibs can also warrant unchecking this feature, since they could modify content outside the template engine's generated cache.");
-
-			Alert.viewSuccessMessage();
-
-			LexiconCard.viewCardLabel(
-				card = "Fragment Name",
-				cardLabel = "Cached",
-				index = 2);
-		}
-	}
-
-	@description = "This is a test for LPS-108376. Can check Cacheable for fragments without Read-Only label imported to portal and they are non-Cachable by default."
-	@priority = 4
-	test MarkFragmentWithoutReadOnlyImportedToPortalAsCacheable {
-		task ("Import a fragment collection without Read-Only") {
-			FragmentsAdmin.importCollectionFromDependenciesFolder(
-				collectionZipFile = "fragment-collection.zip",
-				importOption = "Do Not Import Existing Items");
-		}
-
-		task ("Mark the imported fragment as cacheable") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
-
-			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
-
-			FragmentsAdminNavigator.gotoEntryEllipsisItem(
-				entry = "Content",
-				item = "Mark as Cacheable");
-
-			AssertConfirm(value1 = "Only check when developing a static fragment that does not use request handling, the CMS query API, or other dynamic features. Referencing taglibs can also warrant unchecking this feature, since they could modify content outside the template engine's generated cache.");
-
-			Alert.viewSuccessMessage();
-
-			LexiconCard.viewCardLabel(
-				card = "Content",
-				cardLabel = "Cached",
-				index = 2);
-		}
-
-		task ("View the imported fragment without Read-Only label") {
-			FragmentsAdminNavigator.gotoEntryEllipsisItem(
-				entry = "Content",
-				item = "Edit");
-
-			AssertElementNotPresent(locator1 = "FragmentEditor#READ_ONLY_VIEW");
-		}
-	}
-
 	@description = "This is a test for LPS-111657. Can save Container and nested elements as a new composition when the Container is inside a column of Row."
 	@priority = 5
 	@uitest

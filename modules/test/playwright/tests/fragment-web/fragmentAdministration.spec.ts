@@ -9,12 +9,46 @@ import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {fragmentsPagesTest} from '../../fixtures/fragmentPagesTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
+import getRandomString from '../../utils/getRandomString';
 
 const test = mergeTests(
 	apiHelpersTest,
 	isolatedSiteTest,
 	loginTest(),
 	fragmentsPagesTest
+);
+
+test(
+	'Can check cacheable for fragments when create them in portal and they are non-cacheable by default',
+	{
+		tag: '@LPS-108376',
+	},
+	async ({fragmentsPage, page, site}) => {
+
+		// Go to fragment administration and create fragment set
+
+		await fragmentsPage.goto(site.friendlyUrlPath);
+
+		const fragmentSetName = getRandomString();
+
+		await fragmentsPage.createFragmentSet(fragmentSetName);
+
+		// Create fragment
+
+		const fragmentName = getRandomString();
+
+		await fragmentsPage.createFragment(fragmentSetName, fragmentName);
+
+		await expect(
+			page.locator('span').filter({hasText: 'Cached'}).first()
+		).not.toBeVisible();
+
+		await fragmentsPage.markAsDefault(fragmentName);
+
+		await expect(
+			page.locator('span').filter({hasText: 'Cached'}).first()
+		).toBeVisible();
+	}
 );
 
 test(

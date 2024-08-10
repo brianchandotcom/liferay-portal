@@ -55,4 +55,17 @@ export class FragmentsPage {
 
 		await waitForSuccessAlert(this.page);
 	}
+
+	async markAsDefault(title: string) {
+		this.page.on('dialog', (dialog) => dialog.accept());
+
+		const actionsPath = '//p[@title="' + title + '"]/../..';
+
+		await this.page.locator(actionsPath).getByLabel('More actions').click();
+		await this.page
+			.getByRole('menuitem', {name: 'Mark as Default'})
+			.click();
+
+		await waitForSuccessAlert(this.page);
+	}
 }

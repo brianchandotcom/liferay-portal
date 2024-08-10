@@ -891,8 +891,7 @@ public class GitHubDevSyncUtil {
 
 			gitHubDevRemoteURLs.add(
 				JenkinsResultsParserUtil.combine(
-					"git@", gitHubDevNodeHostname, ":",
-					gitWorkingDirectory.getGitRepositoryUsername(), "/",
+					"git@", gitHubDevNodeHostname, ":liferay/",
 					gitWorkingDirectory.getGitRepositoryName(), ".git"));
 		}
 

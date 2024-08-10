@@ -9,7 +9,9 @@ import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.Collections;
@@ -53,6 +55,23 @@ public class ObjectDefinitionTestUtil {
 			value, null, null, LocalizedMapUtil.getLocalizedMap(value), true,
 			ObjectDefinitionConstants.SCOPE_COMPANY,
 			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
+			Collections.emptyList());
+	}
+
+	public static ObjectDefinition addModifiableSystemObjectDefinition()
+		throws Exception {
+
+		String value =
+			com.liferay.object.test.util.ObjectDefinitionTestUtil.
+				getRandomName();
+
+		return ObjectDefinitionLocalServiceUtil.addSystemObjectDefinition(
+			"L_" + StringUtil.toLowerCase(RandomTestUtil.randomString()),
+			TestPropsValues.getUserId(), 0, ObjectDefinition.class.getName(),
+			null, false, false, LocalizedMapUtil.getLocalizedMap(value), true,
+			"Test", null, null, null, null,
+			LocalizedMapUtil.getLocalizedMap(value), true,
+			ObjectDefinitionConstants.SCOPE_COMPANY, null, 1, 0,
 			Collections.emptyList());
 	}
 

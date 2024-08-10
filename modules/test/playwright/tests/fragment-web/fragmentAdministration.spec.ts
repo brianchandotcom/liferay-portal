@@ -19,6 +19,35 @@ const test = mergeTests(
 );
 
 test(
+	'Can add fragment set during copy OOTB fragment when doesnt have fragment set',
+	{
+		tag: ['@LPS-166203', '@LPS-101354', '@LPS-89115'],
+	},
+	async ({fragmentsPage, page, site}) => {
+
+		// Go to fragment administration
+
+		await fragmentsPage.goto(site.friendlyUrlPath);
+
+		// Go to Basic Components
+
+		await fragmentsPage.gotoFragmentSet('Basic Components');
+
+		// Copy Button into Untitled Set
+
+		await fragmentsPage.copyToFragment('Button');
+
+		// Go to Untitled Set
+
+		await fragmentsPage.gotoFragmentSet('Untitled Set');
+
+		await expect(
+			page.getByRole('link').filter({hasText: 'Button (Copy)'})
+		).toBeVisible();
+	}
+);
+
+test(
 	'Can add, delete, copy and rename a fragment via UI',
 	{
 		tag: '@LPS-97184',

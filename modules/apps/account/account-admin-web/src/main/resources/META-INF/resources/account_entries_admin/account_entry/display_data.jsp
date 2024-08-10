@@ -14,6 +14,8 @@ String[] types = GetterUtil.getStringValues(request.getAttribute(AccountWebKeys.
 %>
 
 <clay:sheet-section>
+	<aui:input name="emailAddress" type="hidden" value="<%= accountEntryDisplay.getEmailAddress() %>" />
+
 	<h3 class="sheet-subtitle">
 		<liferay-ui:message key="account-display-data" />
 	</h3>

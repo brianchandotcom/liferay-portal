@@ -1204,23 +1204,16 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 			}
 
 			try {
-				DisplayPageTemplateEntry displayPageTemplateEntry =
-					new DisplayPageTemplateEntry(
-						displayPageTemplate,
-						_getKey(
-							_DISPLAY_PAGE_TEMPLATE_ENTRY_KEY_DEFAULT, entry,
-							displayPageTemplate.getName()),
+				TransactionInvokerUtil.invoke(
+					_transactionConfig,
+					new DisplayPagesImporterCallable(
+						groupId, displayPageTemplate,
+						layoutPageTemplateCollectionId,
+						layoutsImporterResultEntries, layoutsImportStrategy,
 						_objectMapper.readValue(
 							pageDefinitionJSON, PageDefinition.class),
-						_getThumbnail(entry, zipReader), entry);
-
-				Callable<Void> callable = new DisplayPagesImporterCallable(
-					groupId, displayPageTemplateEntry,
-					layoutPageTemplateCollectionId,
-					layoutsImporterResultEntries, layoutsImportStrategy,
-					preserveItemIds, userId);
-
-				TransactionInvokerUtil.invoke(_transactionConfig, callable);
+						preserveItemIds, _getThumbnail(entry, zipReader),
+						userId, entry));
 			}
 			catch (Throwable throwable) {
 				if (_log.isWarnEnabled()) {
@@ -2053,9 +2046,6 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 		return _layoutLocalService.updateLayout(layout);
 	}
 
-	private static final String _DISPLAY_PAGE_TEMPLATE_ENTRY_KEY_DEFAULT =
-		"imported-display-page-template";
-
 	private static final String _MESSAGE_KEY_IGNORED =
 		"x-was-ignored-because-a-x-with-the-same-key-already-exists";
 
@@ -2205,48 +2195,6 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 	@Reference
 	private ZipReaderFactory _zipReaderFactory;
 
-	private static class DisplayPageTemplateEntry {
-
-		public DisplayPageTemplateEntry(
-			DisplayPageTemplate displayPageTemplate, String key,
-			PageDefinition pageDefinition, Thumbnail thumbnail,
-			String zipPath) {
-
-			_displayPageTemplate = displayPageTemplate;
-			_key = key;
-			_pageDefinition = pageDefinition;
-			_thumbnail = thumbnail;
-			_zipPath = zipPath;
-		}
-
-		public DisplayPageTemplate getDisplayPageTemplate() {
-			return _displayPageTemplate;
-		}
-
-		public String getKey() {
-			return _key;
-		}
-
-		public PageDefinition getPageDefinition() {
-			return _pageDefinition;
-		}
-
-		public Thumbnail getThumbnail() {
-			return _thumbnail;
-		}
-
-		public String getZipPath() {
-			return _zipPath;
-		}
-
-		private final DisplayPageTemplate _displayPageTemplate;
-		private final String _key;
-		private final PageDefinition _pageDefinition;
-		private final Thumbnail _thumbnail;
-		private final String _zipPath;
-
-	}
-
 	private static class Thumbnail {
 
 		public byte[] getBytes() {
@@ -2314,27 +2262,22 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 
 		@Override
 		public Void call() throws Exception {
-			DisplayPageTemplate displayPageTemplate =
-				_displayPageTemplateEntry.getDisplayPageTemplate();
-
-			ContentType contentType = displayPageTemplate.getContentType();
+			ContentType contentType = _displayPageTemplate.getContentType();
 
 			LayoutPageTemplateEntry layoutPageTemplateEntry =
 				_processLayoutPageTemplateEntry(
 					_portal.getClassNameId(contentType.getClassName()),
 					_getClassTypeId(
-						contentType.getClassName(), displayPageTemplate),
+						contentType.getClassName(), _displayPageTemplate),
 					_groupId, _layoutPageTemplateCollectionId,
 					_layoutsImporterResultEntries, _layoutsImportStrategy,
-					displayPageTemplate.getName(),
-					_displayPageTemplateEntry.getPageDefinition(),
+					_displayPageTemplate.getName(), _pageDefinition,
 					_preserveItemIds,
 					LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, _userId,
-					_displayPageTemplateEntry.getThumbnail(),
-					_displayPageTemplateEntry.getZipPath());
+					_thumbnail, _zipPath);
 
 			boolean defaultTemplate = GetterUtil.getBoolean(
-				displayPageTemplate.getDefaultTemplate());
+				_displayPageTemplate.getDefaultTemplate());
 
 			if ((layoutPageTemplateEntry != null) && defaultTemplate) {
 				_layoutPageTemplateEntryLocalService.
@@ -2347,19 +2290,23 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 		}
 
 		private DisplayPagesImporterCallable(
-			long groupId, DisplayPageTemplateEntry displayPageTemplateEntry,
+			long groupId, DisplayPageTemplate displayPageTemplate,
 			long layoutPageTemplateCollectionId,
 			List<LayoutsImporterResultEntry> layoutsImporterResultEntries,
 			LayoutsImportStrategy layoutsImportStrategy,
-			boolean preserveItemIds, long userId) {
+			PageDefinition pageDefinition, boolean preserveItemIds,
+			Thumbnail thumbnail, long userId, String zipPath) {
 
 			_groupId = groupId;
-			_displayPageTemplateEntry = displayPageTemplateEntry;
+			_displayPageTemplate = displayPageTemplate;
 			_layoutPageTemplateCollectionId = layoutPageTemplateCollectionId;
 			_layoutsImporterResultEntries = layoutsImporterResultEntries;
 			_layoutsImportStrategy = layoutsImportStrategy;
+			_pageDefinition = pageDefinition;
 			_preserveItemIds = preserveItemIds;
+			_thumbnail = thumbnail;
 			_userId = userId;
+			_zipPath = zipPath;
 		}
 
 		private long _getClassTypeId(
@@ -2404,14 +2351,17 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 			return -1;
 		}
 
-		private final DisplayPageTemplateEntry _displayPageTemplateEntry;
+		private final DisplayPageTemplate _displayPageTemplate;
 		private final long _groupId;
 		private final long _layoutPageTemplateCollectionId;
 		private final List<LayoutsImporterResultEntry>
 			_layoutsImporterResultEntries;
 		private final LayoutsImportStrategy _layoutsImportStrategy;
+		private final PageDefinition _pageDefinition;
 		private final boolean _preserveItemIds;
+		private final Thumbnail _thumbnail;
 		private final long _userId;
+		private final String _zipPath;
 
 	}
 

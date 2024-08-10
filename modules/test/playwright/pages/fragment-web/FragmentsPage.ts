@@ -36,19 +36,29 @@ export class FragmentsPage {
 			.waitFor();
 	}
 
+	async copyFragment(title: string) {
+		await this.clickAction('Make a Copy', title);
+
+		await waitForSuccessAlert(this.page);
+	}
+
+	async copyToFragment(title: string) {
+		await this.clickAction('Copy To', title);
+
+		await this.page.getByText('Add Fragment Set').waitFor();
+		await this.page.getByRole('button', {name: 'Save'}).click();
+
+		await waitForSuccessAlert(
+			this.page,
+			'Success:The fragment was copied successfully.'
+		);
+	}
+
 	async clickAction(action: string, title: string) {
 		const actionsPath = '//p[@title="' + title + '"]/../..';
 
 		await this.page.locator(actionsPath).getByLabel('More actions').click();
 		await this.page.getByRole('menuitem', {name: action}).click();
-
-		await waitForSuccessAlert(this.page);
-	}
-
-	async copyFragment(title: string) {
-		await this.clickAction('Make a Copy', title);
-
-		await waitForSuccessAlert(this.page);
 	}
 
 	async createFragmentSet(name: string) {

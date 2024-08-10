@@ -22,6 +22,21 @@ export class FragmentsPage {
 		);
 	}
 
+	async clickAction(action: string, title: string) {
+		const actionsPath = '//p[@title="' + title + '"]/../..';
+
+		await this.page.locator(actionsPath).getByLabel('More actions').click();
+		await this.page.getByRole('menuitem', {name: action}).click();
+
+		await waitForSuccessAlert(this.page);
+	}
+
+	async copyFragment(title: string) {
+		await this.clickAction('Make a Copy', title);
+
+		await waitForSuccessAlert(this.page);
+	}
+
 	async createFragmentSet(name: string) {
 		await this.page.getByTitle('Add Fragment Set').click();
 
@@ -56,15 +71,28 @@ export class FragmentsPage {
 		await waitForSuccessAlert(this.page);
 	}
 
+	async deleteFragment(title: string) {
+		await this.clickAction('Delete', title);
+
+		await this.page.getByRole('button', {name: 'Delete'}).click();
+
+		await waitForSuccessAlert(this.page);
+	}
+
 	async markAsDefault(title: string) {
 		this.page.on('dialog', (dialog) => dialog.accept());
 
-		const actionsPath = '//p[@title="' + title + '"]/../..';
+		await this.clickAction('Mark as Default', title);
 
-		await this.page.locator(actionsPath).getByLabel('More actions').click();
-		await this.page
-			.getByRole('menuitem', {name: 'Mark as Default'})
-			.click();
+		await waitForSuccessAlert(this.page);
+	}
+
+	async renameFragment(newName: string, oldName: string) {
+		await this.clickAction('Rename', oldName);
+
+		await this.page.getByLabel('Name', {exact: true}).fill(newName);
+
+		await this.page.getByRole('button', {name: 'Save'}).click();
 
 		await waitForSuccessAlert(this.page);
 	}

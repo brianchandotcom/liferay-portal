@@ -19,6 +19,63 @@ const test = mergeTests(
 );
 
 test(
+	'Can add, delete, copy and rename a fragment via UI',
+	{
+		tag: '@LPS-97184',
+	},
+	async ({fragmentsPage, page, site}) => {
+
+		// Go to fragment administration and create fragment set
+
+		await fragmentsPage.goto(site.friendlyUrlPath);
+
+		const fragmentSetName = getRandomString();
+
+		await fragmentsPage.createFragmentSet(fragmentSetName);
+
+		// Create fragment
+
+		const fragmentName = getRandomString();
+
+		await fragmentsPage.createFragment(fragmentSetName, fragmentName);
+
+		await expect(
+			page.getByTitle(fragmentName, {exact: true})
+		).toBeVisible();
+
+		// Copy fragment
+
+		await fragmentsPage.copyFragment(fragmentName);
+
+		await expect(
+			page.getByTitle(`${fragmentName} (Copy)`, {exact: true})
+		).toBeVisible();
+
+		// Delete fragment
+
+		await fragmentsPage.deleteFragment(`${fragmentName} (Copy)`);
+
+		await expect(
+			page.getByTitle(`${fragmentName} (Copy)`, {exact: true})
+		).not.toBeVisible();
+
+		// Rename fragment
+
+		const newFragmentName = getRandomString();
+
+		await fragmentsPage.renameFragment(newFragmentName, fragmentName);
+
+		await expect(
+			page.getByTitle(fragmentName, {exact: true})
+		).not.toBeVisible();
+
+		await expect(
+			page.getByTitle(newFragmentName, {exact: true})
+		).toBeVisible();
+	}
+);
+
+test(
 	'Can check cacheable for fragments when create them in portal and they are non-cacheable by default',
 	{
 		tag: '@LPS-108376',

@@ -208,50 +208,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-97184. The user could add a fragment via UI."
-	@priority = 5
-	@uitest
-	test AddFragment {
-		property environment.acceptance = "true";
-		property portal.acceptance = "true";
-
-		task ("Navigate to fragments admin") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = ${siteURLKey});
-		}
-
-		task ("Add a fragment collection") {
-			FragmentsAdmin.addCollection(collectionName = "Collection Name");
-		}
-
-		task ("Navigate to the fragment collection") {
-			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
-		}
-
-		task ("Add a fragment that uses the Button fragment code") {
-			FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
-
-			FragmentsEditor.typeFileContent(fileName = "fragment_button.html");
-
-			FragmentsEditor.waitForAutoSave();
-
-			FragmentsEditor.typeFileContent(fileName = "fragment_button.css");
-
-			FragmentsEditor.waitForAutoSave();
-
-			FragmentsEditor.typeFileContent(fileName = "fragment_button.js");
-
-			FragmentsEditor.waitForAutoSave();
-		}
-
-		task ("Publish the fragment") {
-			PortletEntry.publish();
-		}
-
-		task ("Assert the fragment appears in Fragments Admin") {
-			FragmentsAdmin.viewEntryPresent(entry = "Fragment Name");
-		}
-	}
-
 	@description = "This is a test for LPS-166203. The site designer could save in new set during copy OOTB fragment when the site has fragment sets."
 	@priority = 5
 	test AddNewFragmentSetWhenCopyContributedFragment {
@@ -331,88 +287,6 @@ definition {
 			MenuBar.viewActive(menuBar = "Fragment Set Name");
 
 			FragmentsAdmin.viewEntryPresent(entry = "Button (Copy)");
-		}
-	}
-
-	@description = "This is a test for LPS-90064 and is a supplementary frontend test to the integration tests in LPS-90307. Fragments can be copied."
-	@priority = 5
-	@uitest
-	test CopyFragment {
-		property portal.acceptance = "true";
-
-		task ("Add a fragment collection") {
-			JSONFragment.addFragmentCollection(
-				groupName = ${randomSiteName},
-				name = "Collection Name");
-		}
-
-		task ("Add a fragment") {
-			JSONFragment.addSection(
-				collectionName = "Collection Name",
-				groupName = ${randomSiteName},
-				name = "Fragment Name");
-		}
-
-		task ("Navigate to the fragment collection") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = ${siteURLKey});
-
-			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
-		}
-
-		task ("Copy the fragment") {
-			FragmentsAdminNavigator.gotoEntryEllipsisItem(
-				entry = "Fragment Name",
-				item = "Make a Copy");
-		}
-
-		task ("Navigate to the fragment collection") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = ${siteURLKey});
-
-			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
-		}
-
-		task ("View the copied fragment") {
-			FragmentsAdmin.viewEntryPresent(entry = "Fragment Name (Copy)");
-		}
-	}
-
-	@description = "Fragments can be deleted."
-	@priority = 5
-	@uitest
-	test DeleteFragment {
-		property portal.acceptance = "true";
-
-		task ("Add a fragment collection") {
-			JSONFragment.addFragmentCollection(
-				groupName = ${randomSiteName},
-				name = "Collection Name");
-		}
-
-		task ("Add a fragment") {
-			JSONFragment.addSection(
-				collectionName = "Collection Name",
-				groupName = ${randomSiteName},
-				name = "Fragment Name");
-		}
-
-		task ("Navigate to the fragment collection") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = ${siteURLKey});
-
-			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
-		}
-
-		task ("Delete the fragment") {
-			FragmentsAdmin.deleteEntry(entry = "Fragment Name");
-		}
-
-		task ("Navigate to the fragment collection") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = ${siteURLKey});
-
-			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
-		}
-
-		task ("Assert the fragment is not present") {
-			FragmentsAdmin.viewEntryNotPresent(entry = "Fragment Name");
 		}
 	}
 
@@ -565,51 +439,6 @@ definition {
 			AssertEditable(
 				key_text = "Propagate Changes",
 				locator1 = "Button#ANY");
-		}
-	}
-
-	@description = "Fragments can be renamed."
-	@priority = 4
-	@uitest
-	test RenameFragment {
-		task ("Add a fragment collection") {
-			JSONFragment.addFragmentCollection(
-				groupName = ${randomSiteName},
-				name = "Collection Name");
-		}
-
-		task ("Add a fragment") {
-			JSONFragment.addSection(
-				collectionName = "Collection Name",
-				fragmentStatus = "Approved",
-				groupName = ${randomSiteName},
-				name = "Fragment Name");
-		}
-
-		task ("Navigate to the fragment collection") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = ${siteURLKey});
-
-			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
-		}
-
-		task ("Rename the fragment") {
-			FragmentsAdminNavigator.gotoEntryEllipsisItem(
-				entry = "Fragment Name",
-				item = "Rename");
-
-			PortletEntry.inputName(name = "Rename Fragment");
-
-			Modal.save();
-		}
-
-		task ("Navigate to the fragment collection") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = ${siteURLKey});
-
-			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
-		}
-
-		task ("Assert the fragment has the new name") {
-			FragmentsAdmin.viewEntryPresent(entry = "Rename Fragment");
 		}
 	}
 

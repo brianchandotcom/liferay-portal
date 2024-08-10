@@ -3431,6 +3431,28 @@ public class JenkinsResultsParserUtil {
 		return subdirectories;
 	}
 
+	public static String getUpstreamUserName(
+		String repositoryName, String upstreamBranchName) {
+
+		if (!repositoryName.startsWith("liferay-portal")) {
+			return _UPSTREAM_USER_NAME_DEFAULT;
+		}
+
+		try {
+			String upstreamUserName = getBuildProperty(
+				"portal.upstream.username", upstreamBranchName);
+
+			if (isNullOrEmpty(upstreamUserName)) {
+				upstreamUserName = _UPSTREAM_USER_NAME_DEFAULT;
+			}
+
+			return upstreamUserName;
+		}
+		catch (IOException ioException) {
+			return _UPSTREAM_USER_NAME_DEFAULT;
+		}
+	}
+
 	public static File getUserHomeDir() {
 		return _userHomeDir;
 	}
@@ -6748,6 +6770,8 @@ public class JenkinsResultsParserUtil {
 	private static final int _SECONDS_RETRY_PERIOD_DEFAULT = 5;
 
 	private static final int _SECONDS_RETRY_PERIOD_MAX = 60 * 30;
+
+	private static final String _UPSTREAM_USER_NAME_DEFAULT = "liferay";
 
 	private static final String _URL_LOAD_BALANCER =
 		"http://cloud-10-0-0-31.lax.liferay.com/osb-jenkins-web/load_balancer";

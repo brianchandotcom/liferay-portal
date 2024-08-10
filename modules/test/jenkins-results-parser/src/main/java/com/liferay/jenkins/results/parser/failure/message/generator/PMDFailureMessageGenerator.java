@@ -5,17 +5,13 @@
 
 package com.liferay.jenkins.results.parser.failure.message.generator;
 
-import com.liferay.jenkins.results.parser.Build;
-
 /**
  * @author Yi-Chen Tsai
  */
 public class PMDFailureMessageGenerator extends BaseFailureMessageGenerator {
 
 	@Override
-	public String getMessage(Build build) {
-		String consoleText = build.getConsoleText();
-
+	public String getMessage(String consoleText) {
 		if (!consoleText.contains(_TOKEN_PMD_VIOLATIONS_WERE_FOUND)) {
 			return null;
 		}

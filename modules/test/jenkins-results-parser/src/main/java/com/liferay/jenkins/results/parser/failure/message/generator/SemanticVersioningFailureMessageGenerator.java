@@ -19,9 +19,7 @@ public class SemanticVersioningFailureMessageGenerator
 	extends BaseFailureMessageGenerator {
 
 	@Override
-	public String getMessage(Build build) {
-		String consoleText = build.getConsoleText();
-
+	public String getMessage(String consoleText) {
 		if (!consoleText.contains(_TOKEN_SEMVER_INCORRECT) ||
 			!consoleText.contains(_TOKEN_SEMVER_PACKAGE)) {
 

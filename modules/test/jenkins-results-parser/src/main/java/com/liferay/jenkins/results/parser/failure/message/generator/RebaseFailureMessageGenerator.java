@@ -16,9 +16,7 @@ import org.dom4j.Element;
 public class RebaseFailureMessageGenerator extends BaseFailureMessageGenerator {
 
 	@Override
-	public String getMessage(Build build) {
-		String consoleText = build.getConsoleText();
-
+	public String getMessage(String consoleText) {
 		if (!consoleText.contains(_TOKEN_COULD_NOT_APPLY) ||
 			!consoleText.contains(_TOKEN_UNABLE_TO_REBASE)) {
 

@@ -34,11 +34,6 @@ public abstract class BaseFailureMessageGenerator
 	}
 
 	@Override
-	public String getMessage(String consoleText) {
-		return null;
-	}
-
-	@Override
 	public Element getMessageElement(Build build) {
 		return getMessageElement(build.getConsoleText());
 	}

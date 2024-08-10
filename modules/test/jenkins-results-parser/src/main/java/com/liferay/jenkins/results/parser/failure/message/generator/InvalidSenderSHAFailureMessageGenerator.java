@@ -17,9 +17,7 @@ public class InvalidSenderSHAFailureMessageGenerator
 	extends BaseFailureMessageGenerator {
 
 	@Override
-	public String getMessage(Build build) {
-		String consoleText = build.getConsoleText();
-
+	public String getMessage(String consoleText) {
 		if (!consoleText.contains(_TOKEN_FATAL_NOT_A_VALID_BRANCH_POINT)) {
 			return null;
 		}

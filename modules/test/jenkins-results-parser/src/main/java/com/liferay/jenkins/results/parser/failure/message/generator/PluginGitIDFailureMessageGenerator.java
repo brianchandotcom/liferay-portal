@@ -7,6 +7,7 @@ package com.liferay.jenkins.results.parser.failure.message.generator;
 
 import com.liferay.jenkins.results.parser.Build;
 import com.liferay.jenkins.results.parser.Dom4JUtil;
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.TopLevelBuild;
 
 import java.util.Map;
@@ -21,13 +22,11 @@ public class PluginGitIDFailureMessageGenerator
 
 	@Override
 	public String getMessage(Build build) {
-		String consoleText = build.getConsoleText();
+		String message = getMessage(build.getConsoleText());
 
-		if (!consoleText.contains("fatal: Could not parse object")) {
+		if (JenkinsResultsParserUtil.isNullOrEmpty(message)) {
 			return null;
 		}
-
-		int end = consoleText.indexOf("merge-test-results:");
 
 		TopLevelBuild topLevelBuild = build.getTopLevelBuild();
 
@@ -38,20 +37,29 @@ public class PluginGitIDFailureMessageGenerator
 		sb.append(" to an existing Git ID from ");
 		sb.append(getPluginsBranchAnchorElement(topLevelBuild));
 		sb.append(".");
-		sb.append(getConsoleTextSnippetByEnd(consoleText, true, end));
+		sb.append(message);
 
 		return sb.toString();
 	}
 
 	@Override
-	public Element getMessageElement(Build build) {
-		String consoleText = build.getConsoleText();
-
+	public String getMessage(String consoleText) {
 		if (!consoleText.contains("fatal: Could not parse object")) {
 			return null;
 		}
 
 		int end = consoleText.indexOf("merge-test-results:");
+
+		return getConsoleTextSnippetByEnd(consoleText, true, end);
+	}
+
+	@Override
+	public Element getMessageElement(Build build) {
+		String message = getMessage(build);
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(message)) {
+			return null;
+		}
 
 		TopLevelBuild topLevelBuild = build.getTopLevelBuild();
 
@@ -63,7 +71,7 @@ public class PluginGitIDFailureMessageGenerator
 			" to an existing Git ID from ",
 			Dom4JUtil.getNewElement(
 				"strong", null, getPluginsBranchAnchorElement(topLevelBuild)),
-			".", getConsoleTextSnippetElementByEnd(consoleText, true, end));
+			".", message);
 	}
 
 	protected Element getPluginsBranchAnchorElement(

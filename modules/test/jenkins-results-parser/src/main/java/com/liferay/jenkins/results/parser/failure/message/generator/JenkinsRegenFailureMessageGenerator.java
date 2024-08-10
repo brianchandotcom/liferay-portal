@@ -5,8 +5,6 @@
 
 package com.liferay.jenkins.results.parser.failure.message.generator;
 
-import com.liferay.jenkins.results.parser.Build;
-
 /**
  * @author Yi-Chen Tsai
  */
@@ -14,9 +12,7 @@ public class JenkinsRegenFailureMessageGenerator
 	extends BaseFailureMessageGenerator {
 
 	@Override
-	public String getMessage(Build build) {
-		String consoleText = build.getConsoleText();
-
+	public String getMessage(String consoleText) {
 		if (!consoleText.contains(_TOKEN_PLEASE_REGENERATE_AND_RESUBMIT)) {
 			return null;
 		}

@@ -200,8 +200,10 @@ public class GitRepositoryFactory {
 
 		RemoteGitRef remoteGitRef = GitUtil.getRemoteGitRef(
 			JenkinsResultsParserUtil.combine(
-				"https://github.com/liferay/", gitRepositoryName, "/tree/",
-				upstreamBranchName));
+				"https://github.com/",
+				JenkinsResultsParserUtil.getUpstreamUserName(
+					repositoryName, upstreamBranchName),
+				"/", gitRepositoryName, "/tree/", upstreamBranchName));
 
 		if (gitRepositoryName.matches("liferay-plugins(-ee)?")) {
 			workspaceGitRepository = new PluginsWorkspaceGitRepository(

@@ -677,10 +677,15 @@ public abstract class BaseWorkspaceGitRepository
 			return _upstreamRemoteGitRef;
 		}
 
+		String name = getName();
+		String upstreamBranchName = getUpstreamBranchName();
+
 		_upstreamRemoteGitRef = GitUtil.getRemoteGitRef(
 			JenkinsResultsParserUtil.combine(
-				"https://github.com/liferay/", getName(), "/tree/",
-				getUpstreamBranchName()));
+				"https://github.com/",
+				JenkinsResultsParserUtil.getUpstreamUserName(
+					name, upstreamBranchName),
+				"/", name, "/tree/", upstreamBranchName));
 
 		return _upstreamRemoteGitRef;
 	}

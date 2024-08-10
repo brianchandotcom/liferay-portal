@@ -615,9 +615,15 @@ public class PullRequest {
 
 	public RemoteGitBranch getUpstreamRemoteGitBranch() {
 		if (_liferayRemoteGitBranch == null) {
+			String gitRepositoryName = getGitRepositoryName();
+
 			_liferayRemoteGitBranch = GitUtil.getRemoteGitBranch(
 				getUpstreamRemoteGitBranchName(), new File("."),
-				"git@github.com:liferay/" + getGitRepositoryName());
+				JenkinsResultsParserUtil.combine(
+					"git@github.com:",
+					JenkinsResultsParserUtil.getUpstreamUserName(
+						gitRepositoryName, getUpstreamRemoteGitBranchName()),
+					"/", gitRepositoryName, ".git"));
 		}
 
 		return _liferayRemoteGitBranch;

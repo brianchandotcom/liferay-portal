@@ -141,8 +141,8 @@ definition {
 		RecycleBin.emptyCP();
 
 		User.logoutPG(
-			nodePort = 9080,
 			password = PropsUtil.get("default.admin.password"),
+			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
 		User.loginPG(
@@ -1077,8 +1077,8 @@ definition {
 		DMDocument.viewAllPG(dmDocumentTitle = "DM Document Title");
 
 		User.logoutPG(
-			nodePort = 9080,
 			password = PropsUtil.get("default.admin.password"),
+			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
 		User.loginPG(
@@ -1207,8 +1207,8 @@ definition {
 		Staging.publishToLive();
 
 		User.logoutPG(
-			nodePort = 9080,
 			password = PropsUtil.get("default.admin.password"),
+			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
 		User.loginPG(
@@ -1313,8 +1313,8 @@ definition {
 		Staging.deactivateStagingCP(siteName = ${siteName});
 
 		User.logoutPG(
-			nodePort = 9080,
 			password = PropsUtil.get("default.admin.password"),
+			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
 		User.loginPG(

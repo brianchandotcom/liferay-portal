@@ -94,7 +94,6 @@ import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryService;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.json.validator.JSONValidatorException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -553,87 +552,6 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 
 		return new PageTemplateCollectionEntry(
 			_PAGE_TEMPLATE_COLLECTION_KEY_DEFAULT, pageTemplateCollection);
-	}
-
-	private List<DisplayPageTemplateEntry> _getDisplayPageTemplateEntries(
-			List<LayoutsImporterResultEntry> layoutsImporterResultEntries,
-			ZipReader zipReader)
-		throws Exception {
-
-		List<DisplayPageTemplateEntry> displayPageTemplateEntries =
-			new ArrayList<>();
-
-		for (String entry : zipReader.getEntries()) {
-			if (!_isDisplayPageTemplateFile(entry)) {
-				continue;
-			}
-
-			String content = zipReader.getEntryAsString(entry);
-
-			DisplayPageTemplate displayPageTemplate = null;
-
-			try {
-				DisplayPageTemplateValidator.validateDisplayPageTemplate(
-					content);
-
-				displayPageTemplate = _objectMapper.readValue(
-					content, DisplayPageTemplate.class);
-			}
-			catch (JSONValidatorException jsonValidatorException) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Invalid display page template for: " + entry,
-						jsonValidatorException);
-				}
-
-				layoutsImporterResultEntries.add(
-					new LayoutsImporterResultEntry(
-						entry, LayoutsImporterResultEntry.Status.INVALID,
-						new LayoutsImporterResultEntry.ErrorMessage(
-							new String[] {entry},
-							"x-could-not-be-imported-because-its-display-" +
-								"page-template-is-invalid")));
-
-				continue;
-			}
-
-			try {
-				String pageDefinitionJSON = _getPageDefinitionJSON(
-					entry, zipReader);
-
-				PageDefinitionValidator.validatePageDefinition(
-					pageDefinitionJSON);
-
-				displayPageTemplateEntries.add(
-					new DisplayPageTemplateEntry(
-						displayPageTemplate,
-						_getKey(
-							_DISPLAY_PAGE_TEMPLATE_ENTRY_KEY_DEFAULT, entry,
-							displayPageTemplate.getName()),
-						_objectMapper.readValue(
-							pageDefinitionJSON, PageDefinition.class),
-						_getThumbnail(entry, zipReader), entry));
-			}
-			catch (Exception exception) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Invalid page definition for: " +
-							displayPageTemplate.getName(),
-						exception);
-				}
-
-				layoutsImporterResultEntries.add(
-					new LayoutsImporterResultEntry(
-						displayPageTemplate.getName(),
-						LayoutsImporterResultEntry.Status.INVALID,
-						new LayoutsImporterResultEntry.ErrorMessage(
-							new String[] {displayPageTemplate.getName()},
-							"x-could-not-be-imported-because-its-page-" +
-								"definition-is-invalid")));
-			}
-		}
-
-		return displayPageTemplateEntries;
 	}
 
 	private long _getFileEntryId(long contentDocumentId) {
@@ -1220,34 +1138,60 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 	}
 
 	private void _processDisplayPageTemplatePageTemplateEntries(
-			long groupId, long layoutPageTemplateCollectionId,
-			List<LayoutsImporterResultEntry> layoutsImporterResultEntries,
-			LayoutsImportStrategy layoutsImportStrategy,
-			boolean preserveItemIds, long userId, ZipReader zipReader)
-		throws Exception {
+		long groupId, long layoutPageTemplateCollectionId,
+		List<LayoutsImporterResultEntry> layoutsImporterResultEntries,
+		LayoutsImportStrategy layoutsImportStrategy, boolean preserveItemIds,
+		long userId, ZipReader zipReader) {
 
-		List<DisplayPageTemplateEntry> displayPageTemplateEntries =
-			_getDisplayPageTemplateEntries(
-				layoutsImporterResultEntries, zipReader);
+		for (String entry : zipReader.getEntries()) {
+			if (!_isDisplayPageTemplateFile(entry)) {
+				continue;
+			}
 
-		for (DisplayPageTemplateEntry displayPageTemplateEntry :
-				displayPageTemplateEntries) {
+			String content = zipReader.getEntryAsString(entry);
 
-			Callable<Void> callable = new DisplayPagesImporterCallable(
-				groupId, displayPageTemplateEntry,
-				layoutPageTemplateCollectionId, layoutsImporterResultEntries,
-				layoutsImportStrategy, preserveItemIds, userId);
+			DisplayPageTemplate displayPageTemplate = null;
 
 			try {
-				TransactionInvokerUtil.invoke(_transactionConfig, callable);
+				DisplayPageTemplateValidator.validateDisplayPageTemplate(
+					content);
+
+				displayPageTemplate = _objectMapper.readValue(
+					content, DisplayPageTemplate.class);
 			}
-			catch (Throwable throwable) {
+			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(throwable, throwable);
+					_log.warn(
+						"Invalid display page template for: " + entry,
+						exception);
 				}
 
-				DisplayPageTemplate displayPageTemplate =
-					displayPageTemplateEntry.getDisplayPageTemplate();
+				layoutsImporterResultEntries.add(
+					new LayoutsImporterResultEntry(
+						entry, LayoutsImporterResultEntry.Status.INVALID,
+						new LayoutsImporterResultEntry.ErrorMessage(
+							new String[] {entry},
+							"x-could-not-be-imported-because-its-display-" +
+								"page-template-is-invalid")));
+
+				continue;
+			}
+
+			String pageDefinitionJSON = null;
+
+			try {
+				pageDefinitionJSON = _getPageDefinitionJSON(entry, zipReader);
+
+				PageDefinitionValidator.validatePageDefinition(
+					pageDefinitionJSON);
+			}
+			catch (Exception exception) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Invalid page definition for: " +
+							displayPageTemplate.getName(),
+						exception);
+				}
 
 				layoutsImporterResultEntries.add(
 					new LayoutsImporterResultEntry(
@@ -1255,6 +1199,39 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 						LayoutsImporterResultEntry.Status.INVALID,
 						new LayoutsImporterResultEntry.ErrorMessage(
 							new String[] {displayPageTemplate.getName()},
+							"x-could-not-be-imported-because-its-page-" +
+								"definition-is-invalid")));
+			}
+
+			try {
+				DisplayPageTemplateEntry displayPageTemplateEntry =
+					new DisplayPageTemplateEntry(
+						displayPageTemplate,
+						_getKey(
+							_DISPLAY_PAGE_TEMPLATE_ENTRY_KEY_DEFAULT, entry,
+							displayPageTemplate.getName()),
+						_objectMapper.readValue(
+							pageDefinitionJSON, PageDefinition.class),
+						_getThumbnail(entry, zipReader), entry);
+
+				Callable<Void> callable = new DisplayPagesImporterCallable(
+					groupId, displayPageTemplateEntry,
+					layoutPageTemplateCollectionId,
+					layoutsImporterResultEntries, layoutsImportStrategy,
+					preserveItemIds, userId);
+
+				TransactionInvokerUtil.invoke(_transactionConfig, callable);
+			}
+			catch (Throwable throwable) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(throwable, throwable);
+				}
+
+				layoutsImporterResultEntries.add(
+					new LayoutsImporterResultEntry(
+						entry, LayoutsImporterResultEntry.Status.INVALID,
+						new LayoutsImporterResultEntry.ErrorMessage(
+							new String[] {entry},
 							"x-could-not-be-imported-because-of-invalid-" +
 								"values-in-its-page-definition")));
 			}

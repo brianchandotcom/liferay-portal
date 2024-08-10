@@ -250,15 +250,6 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public String getBranchName() {
-		if (_branchName.equals("release")) {
-			String upstreamBranchName = getParameterValue(
-				"GITHUB_UPSTREAM_BRANCH_NAME");
-
-			if (!JenkinsResultsParserUtil.isNullOrEmpty(upstreamBranchName)) {
-				_branchName = upstreamBranchName;
-			}
-		}
-
 		return _branchName;
 	}
 

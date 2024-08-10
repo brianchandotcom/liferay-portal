@@ -61,6 +61,17 @@ public class PullRequestPortalTopLevelBuild
 	}
 
 	@Override
+	public String getBranchName() {
+		String branchName = getParameterValue("GITHUB_UPSTREAM_BRANCH_NAME");
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(branchName)) {
+			return branchName;
+		}
+
+		return super.getBranchName();
+	}
+
+	@Override
 	public PortalWorkspace getPortalWorkspace() {
 		Workspace workspace = getWorkspace();
 

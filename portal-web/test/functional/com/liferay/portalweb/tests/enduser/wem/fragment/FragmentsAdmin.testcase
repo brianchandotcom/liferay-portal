@@ -290,35 +290,6 @@ definition {
 		}
 	}
 
-	@description = "Fragment collections can be deleted."
-	@priority = 5
-	@uitest
-	test DeleteFragmentCollection {
-		property portal.acceptance = "true";
-
-		task ("Add a fragment collection") {
-			JSONFragment.addFragmentCollection(
-				groupName = ${randomSiteName},
-				name = "Collection Name");
-		}
-
-		task ("Navigate to the fragments admin") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = ${siteURLKey});
-		}
-
-		task ("Delete the fragment collection") {
-			Collection.deleteCollection(collectionName = "Collection Name");
-		}
-
-		task ("Navigate to fragments admin") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = ${siteURLKey});
-		}
-
-		task ("Assert the fragment collection is not present") {
-			Collection.viewNotPresent(collectionName = "Collection Name");
-		}
-	}
-
 	@description = "This is a test for LPS-177286. Able to enable and disable the propagation of Contributed Fragments on the instance startup."
 	@priority = 4
 	test ManuallyPropagateChanges {

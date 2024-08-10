@@ -108,6 +108,31 @@ test(
 	}
 );
 
+test('Can delete fragment set', async ({fragmentsPage, page, site}) => {
+
+	// Go to fragment administration
+
+	await fragmentsPage.goto(site.friendlyUrlPath);
+
+	// Create fragment set
+
+	const fragmentSetName = getRandomString();
+
+	await fragmentsPage.createFragmentSet(fragmentSetName);
+
+	await expect(
+		page.getByRole('menuitem', {exact: true, name: fragmentSetName})
+	).toBeVisible();
+
+	// Go to Basic Components fragment set
+
+	await fragmentsPage.deleteFragmentSet();
+
+	await expect(
+		page.getByRole('menuitem', {exact: true, name: fragmentSetName})
+	).not.toBeVisible();
+});
+
 test(
 	'Can see contributed fragment set in fragment administration',
 	{

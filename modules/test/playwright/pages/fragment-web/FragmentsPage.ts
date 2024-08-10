@@ -89,6 +89,18 @@ export class FragmentsPage {
 		await waitForSuccessAlert(this.page);
 	}
 
+	async deleteFragmentSet() {
+		await this.page
+			.locator('.sheet-title')
+			.getByLabel('Show Actions')
+			.click();
+		await this.page.getByRole('menuitem', {name: 'Delete'}).click();
+
+		await this.page.getByRole('button', {name: 'Delete'}).click();
+
+		await waitForSuccessAlert(this.page);
+	}
+
 	async markAsDefault(title: string) {
 		this.page.on('dialog', (dialog) => dialog.accept());
 

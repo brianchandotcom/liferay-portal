@@ -138,12 +138,14 @@ export async function performSamlSafeAdminLogin(browser, domain: string) {
 		baseURL: `http://${domain}:8080`,
 	});
 
+	const mailId = domain !== 'localhost' ? `@${domain}.com` : undefined;
+
 	await performLogin(
 		page,
 		'test',
 		'?p_p_id=com_liferay_login_web_portlet_LoginPortlet&' +
 			'p_p_state=maximized',
-		`@${domain}.com`
+		mailId
 	);
 
 	return page;

@@ -309,3 +309,24 @@ test('LPD-32045 All account entry can be seen by admin user', async ({
 		await performLogin(page, 'test');
 	}
 });
+
+
+test('LPD-33636 Email address is not deleted by saving in the UI', async ({
+	accountsPage,
+	apiHelpers,
+	editAccountPage,
+}) => {
+	const account = await apiHelpers.headlessAdminUser.postAccount({
+		emailAddress: getRandomString(),
+	});
+
+	apiHelpers.data.push({id: account.id, type: 'account'});
+
+	await accountsPage.goto();
+	await (await accountsPage.accountsTableRowLink(account.name)).click();
+	await editAccountPage.saveChange();
+
+	const accountResponse = await apiHelpers.headlessAdminUser.getAccountByName(account.name);
+
+	expect(accountResponse.emailAddress).toEqual(account.emailAddress);
+});

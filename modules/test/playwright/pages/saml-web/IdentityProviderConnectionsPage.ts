@@ -65,8 +65,23 @@ export class IdentityProviderConnectionsPage {
 		this.userMembershipsFields = page.getByText('User Memberships');
 	}
 
-	async addIdentityProviderConnection(idpConnection: TIdpConnection) {
+	async addIdentityProviderConnection(
+		idpConnection: TIdpConnection,
+		deleteExistingConnection = true
+	) {
 		await this.goToIdentityProviderConnectionsTab();
+
+		if (deleteExistingConnection) {
+			const row = await this.page.getByRole('row').filter({
+				hasText: idpConnection.idpName,
+			});
+
+			if (await row.isVisible()) {
+				await this._deleteIdentityProviderConnection(
+					idpConnection.idpName
+				);
+			}
+		}
 
 		await this.page
 			.getByRole('button', {name: 'Add Identity Provider'})
@@ -80,19 +95,7 @@ export class IdentityProviderConnectionsPage {
 	async deleteIdentityProviderConnection(name: string) {
 		await this.goToIdentityProviderConnectionsTab();
 
-		this.page.once('dialog', (dialog) => {
-			dialog.accept();
-		});
-
-		const row = await this.page.getByRole('row').filter({hasText: name});
-
-		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: this.page.getByRole('link', {name: 'Delete'}),
-			trigger: row.locator('.dropdown-toggle'),
-		});
-
-		expect(await this.successMessage).toBeVisible();
+		await this._deleteIdentityProviderConnection(name);
 	}
 
 	async editIdentityProviderConnection(idpConnection: TIdpConnection) {
@@ -121,6 +124,22 @@ export class IdentityProviderConnectionsPage {
 		expect(
 			await this.page.getByRole('button', {name: 'Add Identity Provider'})
 		).toBeVisible();
+	}
+
+	async _deleteIdentityProviderConnection(name: string) {
+		this.page.once('dialog', (dialog) => {
+			dialog.accept();
+		});
+
+		const row = await this.page.getByRole('row').filter({hasText: name});
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('link', {name: 'Delete'}),
+			trigger: row.locator('.dropdown-toggle'),
+		});
+
+		expect(await this.successMessage).toBeVisible();
 	}
 
 	private async populateAndSaveIdentityProviderConnectionDetails(

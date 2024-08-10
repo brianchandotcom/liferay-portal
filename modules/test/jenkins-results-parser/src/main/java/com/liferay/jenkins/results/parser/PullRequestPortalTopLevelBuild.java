@@ -92,14 +92,8 @@ public class PullRequestPortalTopLevelBuild
 
 		sb.append("https://github.com/");
 		sb.append(getParameterValue("GITHUB_RECEIVER_USERNAME"));
-		sb.append("/liferay-portal");
-
-		String branchName = getBranchName();
-
-		if (!branchName.equals("master")) {
-			sb.append("-ee");
-		}
-
+		sb.append("/");
+		sb.append(getBaseGitRepositoryName());
 		sb.append("/pull/");
 		sb.append(getParameterValue("GITHUB_PULL_REQUEST_NUMBER"));
 

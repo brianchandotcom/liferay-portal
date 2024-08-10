@@ -3442,15 +3442,15 @@ public class JenkinsResultsParserUtil {
 			String upstreamUserName = getBuildProperty(
 				"portal.upstream.username", upstreamBranchName);
 
-			if (isNullOrEmpty(upstreamUserName)) {
-				upstreamUserName = _UPSTREAM_USER_NAME_DEFAULT;
+			if (!isNullOrEmpty(upstreamUserName)) {
+				return upstreamUserName;
 			}
-
-			return upstreamUserName;
 		}
 		catch (IOException ioException) {
-			return _UPSTREAM_USER_NAME_DEFAULT;
+			System.out.println(ioException.getMessage());
 		}
+
+		return _UPSTREAM_USER_NAME_DEFAULT;
 	}
 
 	public static File getUserHomeDir() {

@@ -51,26 +51,38 @@ export class SamlAdminPage {
 
 			await expect(await this.successMessage).toBeVisible();
 		}
+		else if (enabled === undefined) {
+			enabled = false;
+		}
+
+		let updated = false;
 
 		if (entityId !== undefined) {
 			await this.entityIdField.fill(entityId);
+
+			updated = true;
 		}
 
 		if (samlRole !== undefined) {
 			await this.samlRoleField.selectOption(samlRole);
+
+			updated = true;
 		}
 
-		await this.saveButton.click();
+		if (updated) {
+			await this.saveButton.click();
 
-		await expect(await this.successMessage).toBeVisible();
-
-		// Our existing cert will work if the entityId doesn't change
-
-		if (entityId) {
-			await this.createOrReplaceCertificate();
+			await expect(await this.successMessage).toBeVisible();
 		}
 
 		if (enabled) {
+			if (entityId !== undefined) {
+
+				// Our existing cert will work if the entityId doesn't change
+
+				await this.createOrReplaceCertificate();
+			}
+
 			await this.enabledField.setChecked(enabled);
 
 			await this.saveButton.click();

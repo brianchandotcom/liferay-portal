@@ -25,7 +25,7 @@ public class PortalTopLevelBuild
 	public String getBaseGitRepositoryName() {
 		String branchName = getBranchName();
 
-		if (branchName.equals("master")) {
+		if (branchName.startsWith("faro-v") || branchName.equals("master")) {
 			return "liferay-portal";
 		}
 

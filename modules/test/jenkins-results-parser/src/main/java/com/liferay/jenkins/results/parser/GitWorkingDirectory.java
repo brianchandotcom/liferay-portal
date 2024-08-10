@@ -1948,7 +1948,11 @@ public class GitWorkingDirectory {
 	public GitRemote getUpstreamGitRemote() {
 		Map<String, GitRemote> gitRemotes = getGitRemotes();
 
-		GitRemote gitRemote = gitRemotes.get("upstream");
+		GitRemote gitRemote = gitRemotes.get("upstream-temp");
+
+		if (gitRemote == null) {
+			gitRemote = gitRemotes.get("upstream");
+		}
 
 		if (gitRemote == null) {
 			gitRemote = addGitRemote(

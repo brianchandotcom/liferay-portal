@@ -62,8 +62,23 @@ export class ServiceProviderConnectionsPage {
 		);
 	}
 
-	async addServiceProviderConnection(spConnection: TSpConnection) {
+	async addServiceProviderConnection(
+		spConnection: TSpConnection,
+		deleteExistingConnection = true
+	) {
 		await this.goToServiceProviderConnectionsTab();
+
+		if (deleteExistingConnection) {
+			const row = await this.page.getByRole('row').filter({
+				hasText: spConnection.spName,
+			});
+
+			if (await row.isVisible()) {
+				await this._deleteServiceProviderConnection(
+					spConnection.spName
+				);
+			}
+		}
 
 		await this.page
 			.getByRole('button', {name: 'Add Service Provider'})
@@ -77,19 +92,7 @@ export class ServiceProviderConnectionsPage {
 	async deleteServiceProviderConnection(name: string) {
 		await this.goToServiceProviderConnectionsTab();
 
-		this.page.once('dialog', (dialog) => {
-			dialog.accept();
-		});
-
-		const row = await this.page.getByRole('row').filter({hasText: name});
-
-		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: this.page.getByRole('link', {name: 'Delete'}),
-			trigger: row.locator('.dropdown-toggle'),
-		});
-
-		expect(await this.successMessage).toBeVisible();
+		await this._deleteServiceProviderConnection(name);
 	}
 
 	async editServiceProviderConnection(spConnection: TSpConnection) {
@@ -118,6 +121,22 @@ export class ServiceProviderConnectionsPage {
 		await expect(
 			await this.page.getByRole('button', {name: 'Add Service Provider'})
 		).toBeVisible();
+	}
+
+	private async _deleteServiceProviderConnection(name: string) {
+		this.page.once('dialog', (dialog) => {
+			dialog.accept();
+		});
+
+		const row = await this.page.getByRole('row').filter({hasText: name});
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('link', {name: 'Delete'}),
+			trigger: row.locator('.dropdown-toggle'),
+		});
+
+		expect(await this.successMessage).toBeVisible();
 	}
 
 	private async populateAndSaveServiceProviderConnectionDetails(

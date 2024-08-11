@@ -24,44 +24,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-90063. Images can be uploaded and deleted in the resources folder in a fragment collection."
-	@priority = 4
-	@uitest
-	test AddAndDeleteResource {
-		task ("Add a fragment collection") {
-			JSONFragment.addFragmentCollection(
-				groupName = ${randomSiteName},
-				name = "Collection Name");
-		}
-
-		task ("Navigate to the fragment collection") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = ${siteURLKey});
-
-			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
-		}
-
-		task ("Navigate to the resources tab") {
-			Navigator.gotoNavItem(navItem = "Resources");
-		}
-
-		task ("Add a resource") {
-			FragmentsAdmin.addResource(resourceFile = "Document_1.png");
-		}
-
-		task ("View resource") {
-			FragmentsAdmin.viewEntryPresent(entry = "Document_1");
-		}
-
-		task ("Delete resource") {
-			FragmentsAdmin.deleteResource(entry = "Document_1");
-		}
-
-		task ("View no resource") {
-			FragmentsAdmin.viewEntryNotPresent(entry = "Document_1");
-		}
-	}
-
-	@description = "This is a test for LPS-159235. Add folders to fragment resource and check hints."
+	@description = "This is a test for LPS-90063 and LPS-159235. Add folders to fragment resource and check hints."
 	@priority = 4
 	test AddFoldersToResourceAndCheckHints {
 		task ("When user is in resources tab") {

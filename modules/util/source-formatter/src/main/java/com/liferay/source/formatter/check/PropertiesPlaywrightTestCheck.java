@@ -98,13 +98,18 @@ public class PropertiesPlaywrightTestCheck extends BaseFileCheck {
 				return content;
 			}
 
-			File file = new File(testPropertiesFileNames.get(0));
+			String testPropertiesFileName = testPropertiesFileNames.get(0);
+
+			File file = new File(testPropertiesFileName);
 
 			if (!file.exists()) {
+				int x = testPropertiesFileName.indexOf("/modules/");
+				int y = testPropertiesFileName.lastIndexOf(StringPool.SLASH);
+
 				addMessage(
 					fileName,
-					"Missing test.properties for module '" + moduleName +
-						"' in modules");
+					"Missing test.properties in " +
+						testPropertiesFileName.substring(x + 1, y));
 			}
 		}
 

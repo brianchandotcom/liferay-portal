@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {expect, mergeTests} from '@playwright/test';
+import {Page, expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {fragmentsPagesTest} from '../../fixtures/fragmentPagesTest';
@@ -16,6 +16,35 @@ const test = mergeTests(
 	isolatedSiteTest,
 	loginTest(),
 	fragmentsPagesTest
+);
+
+async function checkBackButtonTitle(page: Page, title: string) {
+	await expect(
+		page.locator('.control-menu-nav-item').getByTitle(title)
+	).toBeVisible();
+}
+
+test(
+	'Back button have correct title in edit fragment',
+	{
+		tag: '@LPS-177682',
+	},
+	async ({fragmentsPage, page, site}) => {
+
+		// Go to fragment administration and create fragment set
+
+		await fragmentsPage.goto(site.friendlyUrlPath);
+
+		const setName = getRandomString();
+
+		await fragmentsPage.createFragmentSet(setName);
+
+		// Create fragment
+
+		await fragmentsPage.createFragment(setName, getRandomString());
+
+		await checkBackButtonTitle(page, 'Go to Fragments');
+	}
 );
 
 test(

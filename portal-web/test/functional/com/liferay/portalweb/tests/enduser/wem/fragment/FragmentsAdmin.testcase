@@ -278,34 +278,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-177682. The tooltip of the back button of fragments entry is Go to Fragments."
-	@priority = 3
-	test ViewBackButtonTooltipInFragmentEditor {
-		task ("Given access to the Fragment editor page") {
-			JSONFragment.addFragmentCollection(
-				groupName = ${randomSiteName},
-				name = "Fragment Set Name");
-
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = ${siteURLKey});
-
-			FragmentsAdminNavigator.gotoCollection(collectionName = "Fragment Set Name");
-
-			FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
-
-			WaitForVisible(locator1 = "FragmentEditor#HTML_EDITOR");
-		}
-
-		task ("When hover over the back button") {
-			MouseOver.javaScriptFocus(locator1 = "Icon#BACK");
-		}
-
-		task ("Then see the tooltip message") {
-			AssertVisible(
-				key_content = "Go to Fragments",
-				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
-		}
-	}
-
 	@description = "This is a test for LPS-177682. The tooltip of the back button of usages is Go to Fragments."
 	@priority = 3
 	test ViewBackButtonTooltipInViewUsages {

@@ -233,7 +233,7 @@ public class DBUpgrader {
 	public static void upgradeModules() {
 		_registerModuleServiceLifecycle("portal.initialized");
 
-		if (isUpgradeClient()) {
+		if (_upgradeClient) {
 			DependencyManagerSyncUtil.sync();
 		}
 
@@ -242,7 +242,9 @@ public class DBUpgrader {
 
 		_registerModuleServiceLifecycle("portlets.initialized");
 
-		if (isUpgradeDatabaseAutoRunEnabled()) {
+		if ((_upgradeClient && isUpgradeDatabaseAutoRunEnabled()) ||
+			StartupHelperUtil.isNewRelease()) {
+
 			IndexUpdaterUtil.updateAllIndexes();
 		}
 	}

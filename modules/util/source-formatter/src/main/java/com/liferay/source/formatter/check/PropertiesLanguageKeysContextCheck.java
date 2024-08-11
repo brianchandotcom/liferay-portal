@@ -104,22 +104,6 @@ public class PropertiesLanguageKeysContextCheck extends BaseFileCheck {
 						"The context '", bracketsContent,
 						"' is invalid in the key '", key, "'"),
 					lineNumber);
-
-				continue;
-			}
-
-			String keyName = matcher.group(1);
-
-			if (properties.containsKey(keyName) &&
-				!allowedSingleWordLanguageKeys.contains(keyName)) {
-
-				addMessage(
-					fileName,
-					StringBundler.concat(
-						"The key '", key, "' should include a word of context ",
-						"at the end, within a [], to indicate specific ",
-						"meaning"),
-					lineNumber);
 			}
 		}
 

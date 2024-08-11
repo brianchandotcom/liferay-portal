@@ -27,12 +27,12 @@ public class PropertiesTestFileCheck extends BaseFileCheck {
 			return content;
 		}
 
-		return _sortTestProperties(
+		return _sortTestCategories(
 			fileName, content, StringPool.BLANK,
 			StringPool.POUND + StringPool.POUND);
 	}
 
-	private String _sortTestProperties(
+	private String _sortTestCategories(
 		String fileName, String content, String indent, String pounds) {
 
 		String indentWithPounds = indent + pounds;
@@ -57,7 +57,7 @@ public class PropertiesTestFileCheck extends BaseFileCheck {
 			int propertiesStartPosition = matcher.start();
 
 			if (pounds.length() == 2) {
-				String newProperties = _sortTestProperties(
+				String newProperties = _sortTestCategories(
 					fileName, properties, indent + StringPool.FOUR_SPACES,
 					StringPool.POUND);
 

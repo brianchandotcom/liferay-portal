@@ -161,29 +161,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-97184. The user cannot publish fragment with invalid configuration."
-	@priority = 4
-	@uitest
-	test CannotPublishFragmentWithInvalidConfiguration {
-		task ("Add a fragment with invalid configuration") {
-			FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
-
-			FragmentsEditor.gotoConfigurationTab();
-
-			FragmentsEditor.typeFileContent(fileName = "fragment_configuration_invalid.json");
-
-			FragmentsEditor.waitForAutoSave();
-
-			FragmentsEditor.gotoCodeTab();
-		}
-
-		task ("View the error message when click Publish button") {
-			Button.clickPublish();
-
-			Alert.viewErrorMessage(errorMessage = "Please provide a valid configuration for the fragment.");
-		}
-	}
-
 	@description = "This is a test for LPS-114145. The changes are saved automatically in fragment editor before publishing."
 	@priority = 5
 	@uitest

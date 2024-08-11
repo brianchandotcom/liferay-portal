@@ -67,6 +67,7 @@ import {config as siteAdminWebConfig} from './tests/site-admin-web/config';
 import {config as siteNavigationAdminWebConfig} from './tests/site-navigation-admin-web/config';
 import {config as stableConfig} from './tests/stable/config';
 import {config as stylebookWebConfig} from './tests/style-book-web/config';
+import {config as templateWebConfig} from './tests/template-web/config';
 import {config as usersAdminWebConfig} from './tests/users-admin-web/config';
 import {config as wikiWebConfig} from './tests/wiki-web/config';
 import {config as customerConfig} from './tests/workspaces/liferay-customer-workspace/config';
@@ -146,6 +147,7 @@ export default defineConfig({
 		siteNavigationAdminWebConfig,
 		stableConfig,
 		stylebookWebConfig,
+		templateWebConfig,
 		usersAdminWebConfig,
 		wikiWebConfig,
 		...setupProjects,

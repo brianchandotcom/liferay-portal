@@ -47,9 +47,11 @@ public class GroupedModelDocumentContributor
 
 		document.addKeyword(Field.SCOPE_GROUP_ID, groupedModel.getGroupId());
 		document.addKeyword(
-			"groupExternalReferenceCode", _getGroupExternalReferenceCode(siteGroupId));
+			"groupExternalReferenceCode",
+			_getGroupExternalReferenceCode(siteGroupId));
 		document.addKeyword(
-			"scopeGroupExternalReferenceCode", _getScopeGroupExternalReferenceCode(groupedModel));
+			"scopeGroupExternalReferenceCode",
+			_getScopeGroupExternalReferenceCode(groupedModel));
 	}
 
 	@Reference
@@ -75,7 +77,9 @@ public class GroupedModelDocumentContributor
 		return groupExternalReferenceCode;
 	}
 
-	private String _getScopeGroupExternalReferenceCode(GroupedModel groupedModel) {
+	private String _getScopeGroupExternalReferenceCode(
+		GroupedModel groupedModel) {
+
 		String scopeGroupExternalReferenceCode = StringPool.BLANK;
 
 		try {

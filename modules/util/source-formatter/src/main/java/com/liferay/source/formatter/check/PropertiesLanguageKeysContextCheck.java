@@ -88,7 +88,7 @@ public class PropertiesLanguageKeysContextCheck extends BaseFileCheck {
 				continue;
 			}
 
-			String bracketsContent = matcher.group(2);
+			String bracketsContent = matcher.group(1);
 
 			if ((bracketsContent.length() == 0) ||
 				((bracketsContent.length() == 1) &&
@@ -152,7 +152,7 @@ public class PropertiesLanguageKeysContextCheck extends BaseFileCheck {
 		"forbiddenContextNames";
 
 	private static final Pattern _languageKeyPattern = Pattern.compile(
-		"([\\s\\S]+)\\[([\\s\\S]*)\\]");
+		"[\\s\\S]+\\[([\\s\\S]*)\\]");
 
 	private List<String> _allowedSingleWordLanguageKeys;
 

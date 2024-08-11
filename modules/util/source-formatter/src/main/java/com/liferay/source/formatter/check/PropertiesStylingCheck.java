@@ -5,15 +5,6 @@
 
 package com.liferay.source.formatter.check;
 
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 /**
  * @author Alan Huang
  * @author Hugo Huijser
@@ -37,96 +28,7 @@ public class PropertiesStylingCheck extends BaseFileCheck {
 		content = content.replaceAll("(?m)^(.*,) +(\\\\)$", "$1$2");
 		content = content.replaceAll(",\\\\(\n\n|\\Z)", "$1");
 
-		if (fileName.endsWith("test.properties")) {
-			return _sortTestProperties(
-				fileName, content, StringPool.BLANK,
-				StringPool.POUND + StringPool.POUND);
-		}
-
 		return content;
-	}
-
-	private String _sortTestProperties(
-		String fileName, String content, String indent, String pounds) {
-
-		String indentWithPounds = indent + pounds;
-
-		CommentComparator comparator = new CommentComparator();
-
-		Pattern pattern = Pattern.compile(
-			StringBundler.concat(
-				"((?<=\\A|\n\n)", indentWithPounds, "\n", indentWithPounds,
-				"( .+)\n", indentWithPounds, "\n\n[\\s\\S]*?)(?=(\n\n",
-				indentWithPounds, "\n|\\Z))"));
-
-		Matcher matcher = pattern.matcher(content);
-
-		String previousProperties = null;
-		String previousPropertiesComment = null;
-		int previousPropertiesStartPosition = -1;
-
-		while (matcher.find()) {
-			String properties = matcher.group(1);
-			String propertiesComment = matcher.group(2);
-			int propertiesStartPosition = matcher.start();
-
-			if (pounds.length() == 2) {
-				String newProperties = _sortTestProperties(
-					fileName, properties, indent + StringPool.FOUR_SPACES,
-					StringPool.POUND);
-
-				if (!newProperties.equals(properties)) {
-					return StringUtil.replaceFirst(
-						content, properties, newProperties,
-						propertiesStartPosition);
-				}
-			}
-
-			if (Validator.isNull(previousProperties)) {
-				previousProperties = properties;
-				previousPropertiesComment = propertiesComment;
-				previousPropertiesStartPosition = propertiesStartPosition;
-
-				continue;
-			}
-
-			int value = comparator.compare(
-				previousPropertiesComment, propertiesComment);
-
-			if (value > 0) {
-				content = StringUtil.replaceFirst(
-					content, properties, previousProperties,
-					propertiesStartPosition);
-				content = StringUtil.replaceFirst(
-					content, previousProperties, properties,
-					previousPropertiesStartPosition);
-
-				return content;
-			}
-
-			previousProperties = properties;
-			previousPropertiesComment = propertiesComment;
-			previousPropertiesStartPosition = propertiesStartPosition;
-		}
-
-		return content;
-	}
-
-	private class CommentComparator extends NaturalOrderStringComparator {
-
-		@Override
-		public int compare(String comment1, String comment2) {
-			if (comment1.equals(" Default")) {
-				return -1;
-			}
-
-			if (comment2.equals(" Default")) {
-				return 1;
-			}
-
-			return super.compare(comment1, comment2);
-		}
-
 	}
 
 }

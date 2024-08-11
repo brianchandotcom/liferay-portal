@@ -77,3 +77,8 @@ fa496bf7fe79fec0d46f9aecbf7e0ead3f829acb^..355274687e89d70aa0c1ec6d171905a4ac2e8
 # Bundle Version 6.0.15
 #
 355274687e89d70aa0c1ec6d171905a4ac2e89a3^..70f4fecae3a7cbe908efe64c23c09fcdf059843c=LPS-188912
+
+#
+# Bundle Version 6.0.16
+#
+70f4fecae3a7cbe908efe64c23c09fcdf059843c^..bdbd21a22a66472c9a896cdd0d7d7b1bc967d096=LRCI-4395

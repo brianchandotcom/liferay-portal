@@ -12,7 +12,6 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalFolderLocalService;
 import com.liferay.journal.test.util.JournalTestUtil;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
@@ -136,12 +135,7 @@ public class BaseModelDocumentContributorTest {
 		CountSearchResponse countSearchResponse = _searchEngineAdapter.execute(
 			countSearchRequest);
 
-		Assert.assertTrue(
-			StringBundler.concat(
-				"Expected to find 1 document containing field ", fieldName,
-				" with value ", externalReferenceCode, ". Instead found ",
-				countSearchResponse.getCount(), "."),
-			countSearchResponse.getCount() == 1);
+		Assert.assertTrue(countSearchResponse.getCount() == 1);
 	}
 
 	protected BlogsEntry blogsEntry;

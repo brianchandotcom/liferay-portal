@@ -21,13 +21,13 @@ public class GroupedModelDocumentContributorTest
 	public void testContributeGroupExternalReferenceCode() throws Exception {
 		testContribute(
 			blogsEntry, group.getExternalReferenceCode(),
-			_GROUP_EXTERNAL_REFERENCE_CODE_FIELD_NAME);
+			"groupExternalReferenceCode");
 		testContribute(
 			journalArticle, group.getExternalReferenceCode(),
-			_GROUP_EXTERNAL_REFERENCE_CODE_FIELD_NAME);
+			"groupExternalReferenceCode");
 		testContribute(
 			journalFolder, group.getExternalReferenceCode(),
-			_GROUP_EXTERNAL_REFERENCE_CODE_FIELD_NAME);
+			"groupExternalReferenceCode");
 	}
 
 	@Test
@@ -36,20 +36,13 @@ public class GroupedModelDocumentContributorTest
 
 		testContribute(
 			blogsEntry, group.getExternalReferenceCode(),
-			_SCOPE_GROUP_EXTERNAL_REFERENCE_CODE_FIELD_NAME);
+			"scopeGroupExternalReferenceCode");
 		testContribute(
 			journalArticle, group.getExternalReferenceCode(),
-			_SCOPE_GROUP_EXTERNAL_REFERENCE_CODE_FIELD_NAME);
+			"scopeGroupExternalReferenceCode");
 		testContribute(
 			journalFolder, group.getExternalReferenceCode(),
-			_SCOPE_GROUP_EXTERNAL_REFERENCE_CODE_FIELD_NAME);
+			"scopeGroupExternalReferenceCode");
 	}
-
-	private static final String _GROUP_EXTERNAL_REFERENCE_CODE_FIELD_NAME =
-		"groupExternalReferenceCode";
-
-	private static final String
-		_SCOPE_GROUP_EXTERNAL_REFERENCE_CODE_FIELD_NAME =
-			"scopeGroupExternalReferenceCode";
 
 }

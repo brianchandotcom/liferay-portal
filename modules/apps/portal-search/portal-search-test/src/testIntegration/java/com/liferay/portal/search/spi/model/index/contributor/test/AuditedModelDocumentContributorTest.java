@@ -21,16 +21,13 @@ public class AuditedModelDocumentContributorTest
 	public void testContribute() throws Exception {
 		testContribute(
 			blogsEntry, user.getExternalReferenceCode(),
-			_USER_EXTERNAL_REFERENCE_CODE_FIELD_NAME);
+			"userExternalReferenceCode");
 		testContribute(
 			journalArticle, user.getExternalReferenceCode(),
-			_USER_EXTERNAL_REFERENCE_CODE_FIELD_NAME);
+			"userExternalReferenceCode");
 		testContribute(
 			journalFolder, user.getExternalReferenceCode(),
-			_USER_EXTERNAL_REFERENCE_CODE_FIELD_NAME);
+			"userExternalReferenceCode");
 	}
-
-	private static final String _USER_EXTERNAL_REFERENCE_CODE_FIELD_NAME =
-		"userExternalReferenceCode";
 
 }

@@ -19,13 +19,10 @@ public class ExternalReferenceCodeModelDocumentContributorTest
 
 	@Test
 	public void testContribute() throws Exception {
-		testContribute(blogsEntry, _EXTERNAL_REFERENCE_CODE_FIELD_NAME);
-		testContribute(journalArticle, _EXTERNAL_REFERENCE_CODE_FIELD_NAME);
-		testContribute(journalFolder, _EXTERNAL_REFERENCE_CODE_FIELD_NAME);
-		testContribute(user, _EXTERNAL_REFERENCE_CODE_FIELD_NAME);
+		testContribute(blogsEntry, "externalReferenceCode");
+		testContribute(journalArticle, "externalReferenceCode");
+		testContribute(journalFolder, "externalReferenceCode");
+		testContribute(user, "externalReferenceCode");
 	}
-
-	private static final String _EXTERNAL_REFERENCE_CODE_FIELD_NAME =
-		"externalReferenceCode";
 
 }

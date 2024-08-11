@@ -14,20 +14,21 @@ export interface ObjectValidationActiveToggleProps {
 }
 
 export function getDisabledValidationActionToggleState(
-	disabeld: boolean,
+	disabled: boolean,
 	disabledGroovyValidation: boolean,
 	objectValidationRuleSettings: ObjectValidationRuleSetting[]
 ) {
-	const allowActiveStatusUpdate =
-		objectValidationRuleSettings.find(
+	if (Liferay.FeatureFlags['LPD-29637']) {
+		const allowActiveStatusUpdate = objectValidationRuleSettings.find(
 			({name}) => name === 'allowActiveStatusUpdate'
 		);
 
-	if (allowActiveStatusUpdate) {
-		return allowActiveStatusUpdate.value === 'false';
+		if (allowActiveStatusUpdate) {
+			return allowActiveStatusUpdate.value === 'false';
+		}
 	}
 
-	return disabeld || disabledGroovyValidation;
+	return disabled || disabledGroovyValidation;
 }
 
 export function ObjectValidationActiveToggle({

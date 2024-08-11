@@ -47,15 +47,15 @@ public class GroupedModelDocumentContributor
 
 		document.addKeyword(Field.SCOPE_GROUP_ID, groupedModel.getGroupId());
 		document.addKeyword(
-			"groupExternalReferenceCode", _getGroupERC(siteGroupId));
+			"groupExternalReferenceCode", _getGroupExternalReferenceCode(siteGroupId));
 		document.addKeyword(
-			"scopeGroupExternalReferenceCode", _getScopeGroupERC(groupedModel));
+			"scopeGroupExternalReferenceCode", _getScopeGroupExternalReferenceCode(groupedModel));
 	}
 
 	@Reference
 	protected GroupLocalService groupLocalService;
 
-	private String _getGroupERC(long siteGroupId) {
+	private String _getGroupExternalReferenceCode(long siteGroupId) {
 		String groupExternalReferenceCode = StringPool.BLANK;
 
 		try {
@@ -66,8 +66,8 @@ public class GroupedModelDocumentContributor
 		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Unable to retrieve group " + siteGroupId +
-						" while indexing document.",
+					"Unable to get group " + siteGroupId +
+						" while indexing document",
 					portalException);
 			}
 		}
@@ -75,7 +75,7 @@ public class GroupedModelDocumentContributor
 		return groupExternalReferenceCode;
 	}
 
-	private String _getScopeGroupERC(GroupedModel groupedModel) {
+	private String _getScopeGroupExternalReferenceCode(GroupedModel groupedModel) {
 		String scopeGroupExternalReferenceCode = StringPool.BLANK;
 
 		try {
@@ -86,8 +86,8 @@ public class GroupedModelDocumentContributor
 		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Unable to retrieve group " + groupedModel.getGroupId() +
-						" while indexing document.",
+					"Unable to get group " + groupedModel.getGroupId() +
+						" while indexing document",
 					portalException);
 			}
 		}

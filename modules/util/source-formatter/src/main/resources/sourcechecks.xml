@@ -1612,6 +1612,10 @@
 			<category name="Bug Prevention" />
 			<description name="Finds usage of legacy properties in `service.properties`." />
 		</check>
+		<check name="PropertiesTestFileCheck">
+			<category name="Styling" />
+			<description name="Checks the order of properties in `test.properties` file." />
+		</check>
 		<check name="PropertiesVerifyPropertiesCheck">
 			<category name="Bug Prevention" />
 			<description name="Finds usage of legacy properties in `portal.properties` or `system.properties`." />

@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Expando Taglib
 Bundle-SymbolicName: com.liferay.expando.taglib
-Bundle-Version: 5.0.35
+Bundle-Version: 5.0.36
 Export-Package: com.liferay.expando.taglib.servlet.taglib
 Provide-Capability:\
 	osgi.extender;\

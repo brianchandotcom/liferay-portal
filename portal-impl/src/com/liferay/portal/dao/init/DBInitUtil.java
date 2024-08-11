@@ -88,7 +88,8 @@ public class DBInitUtil {
 				connection);
 
 			StartupHelperUtil.setNewRelease(
-				currentBuildDate.before(ReleaseInfo.getBuildDate()));
+				(currentBuildDate == null) ? true :
+					currentBuildDate.before(ReleaseInfo.getBuildDate()));
 
 			return true;
 		}

@@ -15,10 +15,12 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.upgrade.PortalUpgradeProcess;
+import com.liferay.portal.util.PropsUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -84,6 +86,9 @@ public class DBUpgraderTest {
 
 		db.runSQL("create index IX_TEST on Lock_ (createDate)");
 
+		Boolean newRelease = ReflectionTestUtil.getAndSetFieldValue(
+			StartupHelperUtil.class, "_newRelease", false);
+
 		String upgradeDatabaseAutoRun = PropsUtil.get(
 			PropsKeys.UPGRADE_DATABASE_AUTO_RUN);
 
@@ -100,11 +105,21 @@ public class DBUpgraderTest {
 
 			DBUpgrader.upgradeModules();
 
+			Assert.assertTrue(dbInspector.hasIndex("Lock_", "IX_TEST"));
+
+			ReflectionTestUtil.setFieldValue(
+				StartupHelperUtil.class, "_newRelease", true);
+
+			DBUpgrader.upgradeModules();
+
 			Assert.assertFalse(dbInspector.hasIndex("Lock_", "IX_TEST"));
 		}
 		finally {
 			PropsUtil.set(
 				PropsKeys.UPGRADE_DATABASE_AUTO_RUN, upgradeDatabaseAutoRun);
+
+			ReflectionTestUtil.setFieldValue(
+				StartupHelperUtil.class, "_newRelease", newRelease);
 		}
 	}
 

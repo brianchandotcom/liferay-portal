@@ -1564,18 +1564,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/wstx.jar</file-name>
-				<version>3.2.8</version>
-				<project-name>Woodstox</project-name>
-				<project-url>http://woodstox.codehaus.org</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/xercesImpl.jar</file-name>
 				<version>2.12.2</version>
 				<project-name>Xerces</project-name>

@@ -316,6 +316,7 @@ public class ${schemaName}SerDes {
 			@Override
 			public ${schemaName} parseToDTO(String json) {
 				Map<String, Object> jsonMap = parseToMap(json);
+
 				Object ${propertyName} = jsonMap.get("${propertyName}");
 
 				if (${propertyName} != null) {

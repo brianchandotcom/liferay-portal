@@ -18,6 +18,7 @@ import {ProcessBuilderPage} from '../pages/portal-workflow-kaleo-designer-web/Pr
 import {SourceViewPage} from '../pages/portal-workflow-kaleo-designer-web/SourceViewPage';
 import {TimerPage} from '../pages/portal-workflow-kaleo-designer-web/TimerPage';
 import {MetricsPage} from '../pages/portal-workflow-metrics-web/MetricsPage';
+import {ProcessMetricsPage} from '../pages/portal-workflow-metrics-web/ProcessMetricsPage';
 import {WorkflowTaskDetailsPage} from '../pages/portal-workflow-task-web/WorkflowTaskDetailsPage';
 import {WorkflowTasksPage} from '../pages/portal-workflow-task-web/WorkflowTasksPage';
 import {WorkflowPage} from '../pages/portal-workflow-web/WorkflowPage';
@@ -33,6 +34,7 @@ const workflowPagesTest = test.extend<{
 	nodePropertiesSidebarPage: NodePropertiesSidebarPage;
 	notificationSectionPage: NotificationSectionPage;
 	processBuilderPage: ProcessBuilderPage;
+	processMetricsPage: ProcessMetricsPage;
 	scriptManagementPage: ScriptManagementPage;
 	sourceViewPage: SourceViewPage;
 	timerPage: TimerPage;
@@ -69,6 +71,9 @@ const workflowPagesTest = test.extend<{
 	},
 	processBuilderPage: async ({page}, use) => {
 		await use(new ProcessBuilderPage(page));
+	},
+	processMetricsPage: async ({page}, use) => {
+		await use(new ProcessMetricsPage(page));
 	},
 	scriptManagementPage: async ({page}, use) => {
 		await use(new ScriptManagementPage(page));

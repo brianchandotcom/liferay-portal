@@ -166,7 +166,7 @@ public class CommerceOrderLocalServiceImpl
 
 		return commerceOrderLocalService.addCommerceOrder(
 			userId, groupId, 0, commerceAccountId, commerceCurrencyId,
-			commerceOrderTypeId, 0, 0, null, 0, 0, 0, 0, 0,
+			commerceOrderTypeId, 0, 0, null, null, 0, 0, 0, 0, 0,
 			CommerceOrderConstants.ORDER_STATUS_OPEN,
 			CommerceOrderPaymentConstants.STATUS_PENDING, null, BigDecimal.ZERO,
 			null, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO,
@@ -181,9 +181,9 @@ public class CommerceOrderLocalServiceImpl
 			long commerceAccountId, long commerceCurrencyId,
 			long commerceOrderTypeId, long commerceShippingMethodId,
 			long shippingAddressId, String commercePaymentMethodKey,
-			int orderDateMonth, int orderDateDay, int orderDateYear,
-			int orderDateHour, int orderDateMinute, int orderStatus,
-			int paymentStatus, String purchaseOrderNumber,
+			String name, int orderDateMonth, int orderDateDay,
+			int orderDateYear, int orderDateHour, int orderDateMinute,
+			int orderStatus, int paymentStatus, String purchaseOrderNumber,
 			BigDecimal shippingAmount, String shippingOptionName,
 			BigDecimal shippingWithTaxAmount, BigDecimal subtotal,
 			BigDecimal subtotalWithTaxAmount, BigDecimal taxAmount,
@@ -267,6 +267,7 @@ public class CommerceOrderLocalServiceImpl
 		commerceOrder.setCommerceShippingMethodId(commerceShippingMethodId);
 		commerceOrder.setShippingAddressId(shippingAddressId);
 		commerceOrder.setCommercePaymentMethodKey(commercePaymentMethodKey);
+		commerceOrder.setName(name);
 		commerceOrder.setPurchaseOrderNumber(purchaseOrderNumber);
 		commerceOrder.setShippingOptionName(shippingOptionName);
 
@@ -319,7 +320,7 @@ public class CommerceOrderLocalServiceImpl
 			long billingAddressId, long commerceAccountId,
 			long commerceCurrencyId, long commerceOrderTypeId,
 			long commerceShippingMethodId, long shippingAddressId,
-			String advanceStatus, String commercePaymentMethodKey,
+			String advanceStatus, String commercePaymentMethodKey, String name,
 			int orderDateMonth, int orderDateDay, int orderDateYear,
 			int orderDateHour, int orderDateMinute, int orderStatus,
 			int paymentStatus, String purchaseOrderNumber,
@@ -347,11 +348,11 @@ public class CommerceOrderLocalServiceImpl
 			commerceOrder = commerceOrderLocalService.updateCommerceOrder(
 				externalReferenceCode, commerceOrder.getCommerceOrderId(),
 				billingAddressId, commerceShippingMethodId, shippingAddressId,
-				advanceStatus, commercePaymentMethodKey, purchaseOrderNumber,
-				shippingAmount, shippingOptionName, shippingWithTaxAmount,
-				subtotal, subtotalWithTaxAmount, taxAmount, total,
-				commerceOrder.getTotalDiscountAmount(), totalWithTaxAmount,
-				commerceContext);
+				advanceStatus, commercePaymentMethodKey, null,
+				purchaseOrderNumber, shippingAmount, shippingOptionName,
+				shippingWithTaxAmount, subtotal, subtotalWithTaxAmount,
+				taxAmount, total, commerceOrder.getTotalDiscountAmount(),
+				totalWithTaxAmount);
 
 			commerceOrder = commerceOrderLocalService.updatePaymentStatus(
 				userId, commerceOrder.getCommerceOrderId(), paymentStatus);
@@ -376,7 +377,7 @@ public class CommerceOrderLocalServiceImpl
 		commerceOrder = commerceOrderLocalService.addCommerceOrder(
 			userId, groupId, billingAddressId, commerceAccountId,
 			commerceCurrencyId, commerceOrderTypeId, commerceShippingMethodId,
-			shippingAddressId, commercePaymentMethodKey, orderDateMonth,
+			shippingAddressId, commercePaymentMethodKey, name, orderDateMonth,
 			orderDateDay, orderDateYear, orderDateHour, orderDateMinute,
 			orderStatus, paymentStatus, purchaseOrderNumber, shippingAmount,
 			shippingOptionName, shippingWithTaxAmount, subtotal,
@@ -412,7 +413,7 @@ public class CommerceOrderLocalServiceImpl
 		return commerceOrderLocalService.addOrUpdateCommerceOrder(
 			externalReferenceCode, userId, groupId, billingAddressId,
 			commerceAccountId, commerceCurrencyId, 0, commerceShippingMethodId,
-			shippingAddressId, advanceStatus, commercePaymentMethodKey,
+			shippingAddressId, advanceStatus, commercePaymentMethodKey, null,
 			orderDateMonth, orderDateDay, orderDateYear, orderDateHour,
 			orderDateMinute, orderStatus, paymentStatus, purchaseOrderNumber,
 			shippingAmount, shippingOptionName, shippingWithTaxAmount, subtotal,
@@ -998,7 +999,8 @@ public class CommerceOrderLocalServiceImpl
 				commerceOrder.getCommerceCurrencyId(),
 				commerceOrder.getCommerceOrderTypeId(),
 				commerceOrder.getCommerceShippingMethodId(), shippingAddressId,
-				commerceOrder.getCommercePaymentMethodKey(), 0, 0, 0, 0, 0,
+				commerceOrder.getCommercePaymentMethodKey(),
+				commerceOrder.getName(), 0, 0, 0, 0, 0,
 				CommerceOrderConstants.ORDER_STATUS_OPEN,
 				CommerceOrderPaymentConstants.STATUS_PENDING, StringPool.BLANK,
 				commerceOrder.getShippingAmount(),
@@ -1202,8 +1204,8 @@ public class CommerceOrderLocalServiceImpl
 			String advanceStatus, String commercePaymentMethodKey,
 			String couponCode, String deliveryCommerceTermEntryDescription,
 			String deliveryCommerceTermEntryName, Date lastPriceUpdateDate,
-			boolean manuallyAdjusted, Date orderDate, int orderStatus,
-			String paymentCommerceTermEntryDescription,
+			boolean manuallyAdjusted, String name, Date orderDate,
+			int orderStatus, String paymentCommerceTermEntryDescription,
 			String paymentCommerceTermEntryName, int paymentStatus,
 			String printedNote, String purchaseOrderNumber,
 			Date requestedDeliveryDate, boolean shippable,
@@ -1280,6 +1282,11 @@ public class CommerceOrderLocalServiceImpl
 			deliveryCommerceTermEntryName);
 		commerceOrder.setLastPriceUpdateDate(lastPriceUpdateDate);
 		commerceOrder.setManuallyAdjusted(manuallyAdjusted);
+
+		if (name != null) {
+			commerceOrder.setName(name);
+		}
+
 		commerceOrder.setOrderDate(orderDate);
 		commerceOrder.setOrderStatus(orderStatus);
 		commerceOrder.setPaymentCommerceTermEntryDescription(
@@ -1561,12 +1568,37 @@ public class CommerceOrderLocalServiceImpl
 			String externalReferenceCode, long commerceOrderId,
 			long billingAddressId, long commerceShippingMethodId,
 			long shippingAddressId, String advanceStatus,
-			String commercePaymentMethodKey, String purchaseOrderNumber,
-			BigDecimal shippingAmount, String shippingOptionName,
-			BigDecimal shippingWithTaxAmount, BigDecimal subtotal,
-			BigDecimal subtotalWithTaxAmount, BigDecimal taxAmount,
-			BigDecimal total, BigDecimal totalDiscountAmount,
-			BigDecimal totalWithTaxAmount, CommerceContext commerceContext)
+			String commercePaymentMethodKey, String name,
+			String purchaseOrderNumber, BigDecimal shippingAmount,
+			String shippingOptionName, BigDecimal subtotal, BigDecimal total)
+		throws PortalException {
+
+		CommerceOrder commerceOrder = commerceOrderPersistence.findByPrimaryKey(
+			commerceOrderId);
+
+		return commerceOrderLocalService.updateCommerceOrder(
+			externalReferenceCode, commerceOrderId, billingAddressId,
+			commerceShippingMethodId, shippingAddressId, advanceStatus,
+			commercePaymentMethodKey, name, purchaseOrderNumber, shippingAmount,
+			shippingOptionName, commerceOrder.getShippingWithTaxAmount(),
+			subtotal, commerceOrder.getSubtotalWithTaxAmount(),
+			commerceOrder.getTaxAmount(), total,
+			commerceOrder.getTotalDiscountAmount(),
+			commerceOrder.getTotalWithTaxAmount());
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public CommerceOrder updateCommerceOrder(
+			String externalReferenceCode, long commerceOrderId,
+			long billingAddressId, long commerceShippingMethodId,
+			long shippingAddressId, String advanceStatus,
+			String commercePaymentMethodKey, String name,
+			String purchaseOrderNumber, BigDecimal shippingAmount,
+			String shippingOptionName, BigDecimal shippingWithTaxAmount,
+			BigDecimal subtotal, BigDecimal subtotalWithTaxAmount,
+			BigDecimal taxAmount, BigDecimal total,
+			BigDecimal totalDiscountAmount, BigDecimal totalWithTaxAmount)
 		throws PortalException {
 
 		if (Validator.isBlank(externalReferenceCode)) {
@@ -1582,6 +1614,11 @@ public class CommerceOrderLocalServiceImpl
 		commerceOrder.setShippingAddressId(shippingAddressId);
 		commerceOrder.setAdvanceStatus(advanceStatus);
 		commerceOrder.setCommercePaymentMethodKey(commercePaymentMethodKey);
+
+		if (name != null) {
+			commerceOrder.setName(name);
+		}
+
 		commerceOrder.setPurchaseOrderNumber(purchaseOrderNumber);
 		commerceOrder.setShippingOptionName(shippingOptionName);
 
@@ -1596,32 +1633,6 @@ public class CommerceOrderLocalServiceImpl
 			subtotalWithTaxAmount, taxAmount, total, totalWithTaxAmount);
 
 		return commerceOrderPersistence.update(commerceOrder);
-	}
-
-	@Indexable(type = IndexableType.REINDEX)
-	@Override
-	public CommerceOrder updateCommerceOrder(
-			String externalReferenceCode, long commerceOrderId,
-			long billingAddressId, long commerceShippingMethodId,
-			long shippingAddressId, String advanceStatus,
-			String commercePaymentMethodKey, String purchaseOrderNumber,
-			BigDecimal shippingAmount, String shippingOptionName,
-			BigDecimal subtotal, BigDecimal total,
-			CommerceContext commerceContext)
-		throws PortalException {
-
-		CommerceOrder commerceOrder = commerceOrderPersistence.findByPrimaryKey(
-			commerceOrderId);
-
-		return commerceOrderLocalService.updateCommerceOrder(
-			externalReferenceCode, commerceOrderId, billingAddressId,
-			commerceShippingMethodId, shippingAddressId, advanceStatus,
-			commercePaymentMethodKey, purchaseOrderNumber, shippingAmount,
-			shippingOptionName, commerceOrder.getShippingWithTaxAmount(),
-			subtotal, commerceOrder.getSubtotalWithTaxAmount(),
-			commerceOrder.getTaxAmount(), total,
-			commerceOrder.getTotalDiscountAmount(),
-			commerceOrder.getTotalWithTaxAmount(), commerceContext);
 	}
 
 	@Override
@@ -2150,9 +2161,9 @@ public class CommerceOrderLocalServiceImpl
 			commerceOrder = commerceOrderLocalService.updateCommerceOrder(
 				externalReferenceCode, commerceOrder.getCommerceOrderId(),
 				billingAddressId, commerceShippingMethodId, shippingAddressId,
-				advanceStatus, commercePaymentMethodKey, purchaseOrderNumber,
-				shippingAmount, shippingOptionName, subtotal, total,
-				commerceContext);
+				advanceStatus, commercePaymentMethodKey, null,
+				purchaseOrderNumber, shippingAmount, shippingOptionName,
+				subtotal, total);
 
 			commerceOrder = commerceOrderLocalService.updatePaymentStatus(
 				userId, commerceOrder.getCommerceOrderId(), paymentStatus);
@@ -2167,10 +2178,10 @@ public class CommerceOrderLocalServiceImpl
 		commerceOrder = commerceOrderLocalService.addCommerceOrder(
 			userId, groupId, billingAddressId, commerceAccountId,
 			commerceCurrencyId, 0, commerceShippingMethodId, shippingAddressId,
-			commercePaymentMethodKey, 0, 0, 0, 0, 0, orderStatus, paymentStatus,
-			purchaseOrderNumber, shippingAmount, shippingOptionName,
-			BigDecimal.ZERO, subtotal, BigDecimal.ZERO, BigDecimal.ZERO, total,
-			BigDecimal.ZERO, serviceContext);
+			commercePaymentMethodKey, null, 0, 0, 0, 0, 0, orderStatus,
+			paymentStatus, purchaseOrderNumber, shippingAmount,
+			shippingOptionName, BigDecimal.ZERO, subtotal, BigDecimal.ZERO,
+			BigDecimal.ZERO, total, BigDecimal.ZERO, serviceContext);
 
 		commerceOrder.setExternalReferenceCode(externalReferenceCode);
 
@@ -2768,10 +2779,10 @@ public class CommerceOrderLocalServiceImpl
 				null, commerceOrder.getCommerceOrderId(), billingAddressId,
 				commerceShippingMethodId, shippingAddressId,
 				commerceOrder.getAdvanceStatus(),
-				commerceOrder.getCommercePaymentMethodKey(),
+				commerceOrder.getCommercePaymentMethodKey(), null,
 				commerceOrder.getPurchaseOrderNumber(), shippingPrice,
 				shippingOptionName, commerceOrder.getSubtotal(),
-				commerceOrder.getTotal(), null);
+				commerceOrder.getTotal());
 		}
 	}
 

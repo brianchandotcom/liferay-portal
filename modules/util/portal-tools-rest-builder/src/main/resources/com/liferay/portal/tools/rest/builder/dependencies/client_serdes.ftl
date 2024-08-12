@@ -53,13 +53,12 @@ public class ${schemaName}SerDes {
 		}
 
 		<#assign
+			dtoParentClassName = freeMarkerTool.getDTOParentClassName(openAPIYAML, schemaName)!
 			enumSchemas = freeMarkerTool.getDTOEnumSchemas(configYAML, openAPIYAML, schema)
 			properties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, schema, allSchemas)
-			dtoParentClassName = freeMarkerTool.getDTOParentClassName(openAPIYAML, schemaName)!
 		/>
 
 		<#if schema.discriminator?has_content>
-
 			<#assign propertyName = schema.discriminator.propertyName />
 
 			${schemaName}.${propertyName?cap_first} ${propertyName} = ${schemaVarName}.get${propertyName?cap_first}();
@@ -68,18 +67,18 @@ public class ${schemaName}SerDes {
 				String ${propertyName}String = ${propertyName}.toString();
 
 				<#list schema.discriminator.mapping as mappingName, mappingSchema>
-
 					if (${propertyName}String.equals("${mappingName}")) {
 						return ${freeMarkerTool.getReferenceName(mappingSchema)}SerDes.toJSON((${freeMarkerTool.getReferenceName(mappingSchema)})${schemaVarName});
-					} else
-				</#list>
-					{
-						throw new IllegalArgumentException(
-							"Unknown ${propertyName} '" + ${propertyName}String + "'");
 					}
-			} else {
-				throw new IllegalArgumentException(
-					"Missing ${propertyName} parameter");
+					else
+				</#list>
+
+				{
+					throw new IllegalArgumentException("Unknown ${propertyName} " + ${propertyName}String);
+				}
+			}
+			else {
+				throw new IllegalArgumentException("Missing ${propertyName} parameter");
 			}
 		<#else>
 			StringBuilder sb = new StringBuilder();
@@ -271,7 +270,6 @@ public class ${schemaName}SerDes {
 			<#else>
 				return new ${schemaName}();
 			</#if>
-
 		}
 
 		@Override
@@ -313,12 +311,10 @@ public class ${schemaName}SerDes {
 		}
 
 		<#if schema.discriminator?has_content>
-
 			<#assign propertyName = schema.discriminator.propertyName />
 
 			@Override
 			public ${schemaName} parseToDTO(String json) {
-
 				Map<String, Object> jsonMap = parseToMap(json);
 				Object ${propertyName} = jsonMap.get("${propertyName}");
 
@@ -326,20 +322,19 @@ public class ${schemaName}SerDes {
 					String ${propertyName}String = ${propertyName}.toString();
 
 					<#list schema.discriminator.mapping as mappingName, mappingSchema>
-
 						if (${propertyName}String.equals("${mappingName}")) {
 							return ${freeMarkerTool.getReferenceName(mappingSchema)}.toDTO(json);
-						} else
-					</#list>
-						{
-							throw new IllegalArgumentException(
-								"Unknown ${propertyName} '" + ${propertyName}String + "'");
 						}
-				} else {
-					throw new IllegalArgumentException(
-						"Missing ${propertyName} parameter");
-				}
+						else
+					</#list>
 
+					{
+						throw new IllegalArgumentException("Unknown ${propertyName} " + ${propertyName}String);
+					}
+				}
+				else {
+					throw new IllegalArgumentException("Missing ${propertyName} parameter");
+				}
 			}
 		</#if>
 

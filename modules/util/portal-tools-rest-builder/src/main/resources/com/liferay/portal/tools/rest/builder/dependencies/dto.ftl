@@ -448,8 +448,9 @@ public <#if schema.discriminator?has_content>abstract</#if> class ${schemaName} 
 	}
 
 	public String toString() {
-
 		StringBundler sb = new StringBundler();
+
+		sb.append("{");
 
 		<#assign
 			toStringEnumSchemas = enumSchemas
@@ -463,8 +464,6 @@ public <#if schema.discriminator?has_content>abstract</#if> class ${schemaName} 
 				toStringProperties = toStringProperties + freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, dtoParentSchema, allSchemas)
 			/>
 		</#if>
-
-		sb.append("{");
 
 		<#list toStringProperties?keys as propertyName>
 			<#assign propertyType = toStringProperties[propertyName] />

@@ -6,6 +6,7 @@
 package com.liferay.paypal;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 
 import java.math.BigDecimal;
 
@@ -505,12 +506,13 @@ public class SetUpPaymentRestController extends BaseRestController {
 				commercePaymentEntryJSONObject.getString("className"),
 				"com.liferay.commerce.model.CommerceOrder")) {
 
-			JSONObject orderJSONObject = get(
-				"Bearer " + jwt.getTokenValue(),
-				StringBundler.concat(
-					"/o/headless-commerce-admin-order/v1.0/orders/",
-					commercePaymentEntryJSONObject.getLong("classPK"),
-					"?nestedFields=orderItems,shippingAddress"));
+			JSONObject orderJSONObject = new JSONObject(
+				get(
+					"Bearer " + jwt.getTokenValue(),
+					StringBundler.concat(
+						"/o/headless-commerce-admin-order/v1.0/orders/",
+						commercePaymentEntryJSONObject.getLong("classPK"),
+						"?nestedFields=orderItems,shippingAddress")));
 
 			purchaseUnitJSONObject.put(
 				"amount",
@@ -592,10 +594,11 @@ public class SetUpPaymentRestController extends BaseRestController {
 
 		for (int i = 0; i < 10; i++) {
 			try {
-				JSONObject orderPaymentJSONObject = get(
-					"Bearer " + jwt.getTokenValue(),
-					"/o/c/b9k3paypaltransactions/by-external-reference-code/" +
-						orderId);
+				JSONObject orderPaymentJSONObject = new JSONObject(
+					get(
+						"Bearer " + jwt.getTokenValue(),
+						"/o/c/b9k3paypaltransactions" +
+							"/by-external-reference-code/" + orderId));
 
 				transactionCode = orderPaymentJSONObject.getString(
 					"transactionCode");
@@ -607,7 +610,7 @@ public class SetUpPaymentRestController extends BaseRestController {
 
 		if (StringUtils.isNotBlank(transactionCode)) {
 			delete(
-				"Bearer " + jwt.getTokenValue(),
+				"Bearer " + jwt.getTokenValue(), StringPool.BLANK,
 				"/o/c/b9k3paypaltransactions/by-external-reference-code/" +
 					orderId);
 		}

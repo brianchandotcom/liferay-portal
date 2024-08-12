@@ -120,10 +120,37 @@ public class SetUpPaymentRestController extends BaseRestController {
 		@AuthenticationPrincipal Jwt jwt,
 		@PathVariable("orderId") long orderId) {
 
+		String transactionCode = null;
+
+		// TODO Use proper retry
+
+		for (int i = 0; i < 10; i++) {
+			try {
+				JSONObject b9k3PayPalTransactionJSONObject = new JSONObject(
+					get(
+						"Bearer " + jwt.getTokenValue(),
+						"/o/c/b9k3paypaltransactions" +
+							"/by-external-reference-code/" + orderId));
+
+				transactionCode = b9k3PayPalTransactionJSONObject.getString(
+					"transactionCode");
+			}
+			catch (Exception exception) {
+				_log.error(ExceptionUtils.getMessage(exception));
+			}
+		}
+
+		if (StringUtils.isNotBlank(transactionCode)) {
+			delete(
+				"Bearer " + jwt.getTokenValue(), StringPool.BLANK,
+				"/o/c/b9k3paypaltransactions/by-external-reference-code/" +
+					orderId);
+		}
+
 		return new ResponseEntity<>(
 			new JSONObject(
 			).put(
-				"id", _getTransactionCode(jwt, orderId)
+				"id", transactionCode
 			).toString(),
 			HttpStatus.OK);
 	}
@@ -186,7 +213,7 @@ public class SetUpPaymentRestController extends BaseRestController {
 					).put(
 						"purchase_units",
 						_getPurchaseUnitJSONArray(
-							jwt, commercePaymentEntryJSONObject,
+							commercePaymentEntryJSONObject, jwt,
 							typeSettingsJSONObject.getString("merchantId"))
 					).toString()
 				).retrieve(
@@ -395,9 +422,8 @@ public class SetUpPaymentRestController extends BaseRestController {
 		Jwt jwt, JSONObject commercePaymentEntryJSONObject,
 		String fundingSource) {
 
-		JSONObject paymentSourceJSONObject = new JSONObject();
-
-		paymentSourceJSONObject.put(
+		return new JSONObject(
+		).put(
 			fundingSource,
 			_getPayPalPaymentSourceJSONObject(
 				commercePaymentEntryJSONObject, fundingSource,
@@ -405,9 +431,8 @@ public class SetUpPaymentRestController extends BaseRestController {
 					jwt, commercePaymentEntryJSONObject.getLong("classPK")
 				).getJSONObject(
 					"shippingAddress"
-				)));
-
-		return paymentSourceJSONObject;
+				))
+		);
 	}
 
 	private JSONObject _getPayPalPaymentSourceJSONObject(
@@ -434,7 +459,7 @@ public class SetUpPaymentRestController extends BaseRestController {
 	}
 
 	private JSONArray _getPurchaseUnitJSONArray(
-		Jwt jwt, JSONObject commercePaymentEntryJSONObject, String merchantId) {
+		JSONObject commercePaymentEntryJSONObject, Jwt jwt, String merchantId) {
 
 		JSONObject purchaseUnitJSONObject = new JSONObject();
 
@@ -511,38 +536,6 @@ public class SetUpPaymentRestController extends BaseRestController {
 				"postal_code", shippingAddressJSONObject.getString("zip")
 			)
 		);
-	}
-
-	private String _getTransactionCode(
-		@AuthenticationPrincipal Jwt jwt,
-		@PathVariable("orderId") long orderId) {
-
-		String transactionCode = null;
-
-		for (int i = 0; i < 10; i++) {
-			try {
-				JSONObject orderPaymentJSONObject = new JSONObject(
-					get(
-						"Bearer " + jwt.getTokenValue(),
-						"/o/c/b9k3paypaltransactions" +
-							"/by-external-reference-code/" + orderId));
-
-				transactionCode = orderPaymentJSONObject.getString(
-					"transactionCode");
-			}
-			catch (Exception exception) {
-				_log.error(ExceptionUtils.getMessage(exception));
-			}
-		}
-
-		if (StringUtils.isNotBlank(transactionCode)) {
-			delete(
-				"Bearer " + jwt.getTokenValue(), StringPool.BLANK,
-				"/o/c/b9k3paypaltransactions/by-external-reference-code/" +
-					orderId);
-		}
-
-		return transactionCode;
 	}
 
 	private static final String[] _FUNDING_SOURCES = {

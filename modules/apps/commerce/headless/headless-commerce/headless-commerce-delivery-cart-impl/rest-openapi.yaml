@@ -164,6 +164,9 @@ components:
                     format: date
                     readOnly: true
                     type: string
+                name:
+                    example: Order Name
+                    type: string
                 notes:
                     items:
                         $ref: "#/components/schemas/CartComment"

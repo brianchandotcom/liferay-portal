@@ -16,6 +16,7 @@ import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.constants.ObjectActionKeys;
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
@@ -528,7 +529,11 @@ public class ObjectEntryDTOConverter
 		fileEntry.setScope(
 			() -> {
 				if (!FeatureFlagManagerUtil.isEnabled(
-						objectDefinition.getCompanyId(), "LPD-24674")) {
+						objectDefinition.getCompanyId(), "LPD-24674") ||
+					((objectEntry.getGroupId() == dlFileEntry.getGroupId()) &&
+					 !Objects.equals(
+						 objectDefinition.getScope(),
+						 ObjectDefinitionConstants.SCOPE_COMPANY))) {
 
 					return null;
 				}

@@ -368,6 +368,14 @@ export const formatBreakdownNameByDataType = (
 	}
 };
 
+function formatName(name = 'undefined') {
+	if (name === '') {
+		return 'undefined';
+	}
+
+	return name;
+}
+
 export const parseBreakdownData = (
 	{breakdownItems}: BreakdownData | BreakdownDataItem,
 	orderedBreakdowns: Breakdown[],
@@ -399,9 +407,9 @@ export const parseBreakdownData = (
 			[`breakdown${level}`]: {
 				...node,
 				name: isLeafCurrentNode
-					? name
+					? formatName(name)
 					: formatBreakdownNameByDataType(
-							name,
+							formatName(name),
 							orderedBreakdowns[level]
 					  ),
 				rowSpan:

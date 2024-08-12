@@ -293,7 +293,7 @@ public class BatchBuild extends BaseParentBuild {
 		BuildDatabase buildDatabase = getBuildDatabase();
 
 		buildDatabase.putProperty(
-			BUILD_URLS_PROPERTIES_KEY, getBatchName(), getBuildURL());
+			BUILD_URLS_PROPERTIES_KEY, getBatchName(), getBuildURL(), false);
 	}
 
 	protected BatchBuild(String url) {

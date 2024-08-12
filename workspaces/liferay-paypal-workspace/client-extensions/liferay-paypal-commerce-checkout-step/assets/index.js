@@ -10,7 +10,7 @@ export default function CommerceCheckoutStep() {
 	const clientId = document.getElementById('payment-client-id').value;
 
 	const payPalSDKScript = document.createElement('script');
-	payPalSDKScript.src = `https://www.paypal.com/sdk/js?client-id=${clientId}&currency=${Liferay.CommerceContext.currency.currencyCode}&components=buttons,googlepay&enable-funding=venmo&disable-funding=blik,sepa`;
+	payPalSDKScript.src = `https://www.paypal.com/sdk/js?client-id=${clientId.substring(3)}&currency=${Liferay.CommerceContext.currency.currencyCode}&components=buttons,googlepay&enable-funding=venmo&disable-funding=blik,sepa`;
 	payPalSDKScript.setAttribute(
 		'data-partner-attribution-id',
 		'Liferay_SP_PPCP_API'

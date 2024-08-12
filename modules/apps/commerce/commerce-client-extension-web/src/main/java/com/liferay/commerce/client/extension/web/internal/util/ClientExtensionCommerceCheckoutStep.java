@@ -236,7 +236,16 @@ public class ClientExtensionCommerceCheckoutStep
 			String clientId = typeSettingsUnicodeProperties.get("clientId");
 
 			if (Validator.isNotNull(clientId)) {
-				httpServletRequest.setAttribute("clientId", clientId);
+				String mode = typeSettingsUnicodeProperties.get("mode");
+
+				if (mode.equals("live")) {
+					httpServletRequest.setAttribute(
+						"clientId", "li_" + clientId);
+				}
+				else {
+					httpServletRequest.setAttribute(
+						"clientId", "sb_" + clientId);
+				}
 			}
 		}
 

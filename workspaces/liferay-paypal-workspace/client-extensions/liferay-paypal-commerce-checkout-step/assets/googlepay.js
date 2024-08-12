@@ -6,8 +6,8 @@
 let google = null;
 let paypal = null;
 
-function addGooglePayButton() {
-	const paymentsClient = getGooglePaymentsClient();
+async function addGooglePayButton() {
+	const paymentsClient = await getGooglePaymentsClient();
 	const button = paymentsClient.createButton({
 		onClick: onGooglePaymentButtonClicked,
 	});
@@ -44,9 +44,21 @@ async function getGooglePaymentDataRequest() {
 	return paymentDataRequest;
 }
 
-function getGooglePaymentsClient() {
+async function getGooglePaymentsClient() {
+	const payPalOAuth = Liferay.OAuth2Client.FromUserAgentApplication(
+		'liferay-paypal-commerce-payment-integration-oauth-application-user-agent'
+	);
+
+	const clientId = document.getElementById('payment-client-id').value;
+
+	const orderData = await payPalOAuth
+		.fetch('/set-up-payment/get-environment/' + clientId)
+		.then((response) => {
+			return response.json();
+		});
+
 	const paymentsClient = new google.payments.api.PaymentsClient({
-		environment: 'TEST',
+		environment: orderData.mode,
 		paymentDataCallbacks: {
 			onPaymentAuthorized,
 		},
@@ -73,7 +85,7 @@ async function getGoogleTransactionInfo(countryCode) {
 
 async function onGooglePaymentButtonClicked() {
 	const paymentDataRequest = await getGooglePaymentDataRequest();
-	const paymentsClient = getGooglePaymentsClient();
+	const paymentsClient = await getGooglePaymentsClient();
 	paymentsClient.loadPaymentData(paymentDataRequest);
 }
 
@@ -81,7 +93,7 @@ export async function onGooglePayLoaded() {
 	google = window.google;
 	paypal = window.paypal;
 
-	const paymentsClient = getGooglePaymentsClient();
+	const paymentsClient = await getGooglePaymentsClient();
 	const {allowedPaymentMethods, apiVersion, apiVersionMinor} =
 		await getGooglePayConfig();
 	paymentsClient

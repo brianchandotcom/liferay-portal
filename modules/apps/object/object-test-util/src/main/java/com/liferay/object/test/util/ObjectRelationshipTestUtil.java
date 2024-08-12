@@ -26,9 +26,19 @@ public class ObjectRelationshipTestUtil {
 			ObjectDefinition objectDefinition2)
 		throws PortalException {
 
+		return addObjectRelationship(
+			objectRelationshipLocalService, objectDefinition1,
+			objectDefinition2, TestPropsValues.getUserId());
+	}
+
+	public static ObjectRelationship addObjectRelationship(
+			ObjectRelationshipLocalService objectRelationshipLocalService,
+			ObjectDefinition objectDefinition1,
+			ObjectDefinition objectDefinition2, long userId)
+		throws PortalException {
+
 		return objectRelationshipLocalService.addObjectRelationship(
-			null, TestPropsValues.getUserId(),
-			objectDefinition1.getObjectDefinitionId(),
+			null, userId, objectDefinition1.getObjectDefinitionId(),
 			objectDefinition2.getObjectDefinitionId(), 0,
 			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),

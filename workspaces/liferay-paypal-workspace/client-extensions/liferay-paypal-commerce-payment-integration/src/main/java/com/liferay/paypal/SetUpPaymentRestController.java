@@ -7,6 +7,7 @@ package com.liferay.paypal;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.math.BigDecimal;
 
@@ -25,6 +26,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,6 +40,95 @@ import org.springframework.web.reactive.function.client.WebClient;
 @RequestMapping("/set-up-payment")
 @RestController
 public class SetUpPaymentRestController extends BaseRestController {
+
+	@GetMapping("get-order/{orderId}/{countryCode}")
+	public ResponseEntity<String> getGoogleOrderInfo(
+		@AuthenticationPrincipal Jwt jwt, @PathVariable("orderId") long orderId,
+		@PathVariable("countryCode") String countryCode) {
+
+		JSONObject orderJSONObject = new JSONObject(
+			Objects.requireNonNull(
+				WebClient.create(
+				).get(
+				).uri(
+					StringBundler.concat(
+						lxcDXPServerProtocol, "://", lxcDXPMainDomain,
+						"/o/headless-commerce-admin-order/v1.0/orders/",
+						orderId, "?nestedFields=orderItems,shippingAddress")
+				).accept(
+					MediaType.APPLICATION_JSON
+				).header(
+					HttpHeaders.AUTHORIZATION, "Bearer " + jwt.getTokenValue()
+				).retrieve(
+				).bodyToMono(
+					String.class
+				).block()));
+
+		JSONObject googleJSONObject = new JSONObject();
+
+		JSONArray displayItemsJSONArray = new JSONArray();
+
+		JSONObject subtotalJSONObject = new JSONObject(
+		).put(
+			"label", "Subtotal"
+		).put(
+			"type", "SUBTOTAL"
+		).put(
+			"price",
+			BigDecimal.valueOf(
+				orderJSONObject.getDouble("subtotalAmount")
+			).toString()
+		);
+		JSONObject taxJSONObject = new JSONObject(
+		).put(
+			"label", "Tax"
+		).put(
+			"type", "TAX"
+		).put(
+			"price",
+			BigDecimal.valueOf(
+				orderJSONObject.getDouble("taxAmount")
+			).toString()
+		);
+
+		displayItemsJSONArray.put(
+			subtotalJSONObject
+		).put(
+			taxJSONObject
+		);
+
+		googleJSONObject.put(
+			"countryCode", countryCode
+		).put(
+			"currencyCode", orderJSONObject.getString("currencyCode")
+		).put(
+			"displayItems", displayItemsJSONArray
+		).put(
+			"totalPrice",
+			BigDecimal.valueOf(
+				orderJSONObject.getDouble("totalAmount")
+			).toString()
+		).put(
+			"totalPriceLabel", "Total"
+		).put(
+			"totalPriceStatus", "FINAL"
+		);
+
+		return new ResponseEntity<>(googleJSONObject.toString(), HttpStatus.OK);
+	}
+
+	@GetMapping("get/{orderId}")
+	public ResponseEntity<String> getPayPalOrderInfo(
+		@AuthenticationPrincipal Jwt jwt,
+		@PathVariable("orderId") long orderId) {
+
+		return new ResponseEntity<>(
+			new JSONObject(
+			).put(
+				"id", _getTransactionCode(jwt, orderId)
+			).toString(),
+			HttpStatus.OK);
+	}
 
 	@PostMapping
 	public ResponseEntity<String> post(
@@ -467,6 +559,37 @@ public class SetUpPaymentRestController extends BaseRestController {
 		shippingJSONObject.put("address", addressJSONObject);
 
 		return shippingJSONObject;
+	}
+
+	private String _getTransactionCode(
+		@AuthenticationPrincipal Jwt jwt,
+		@PathVariable("orderId") long orderId) {
+
+		String transactionCode = null;
+
+		for (int i = 0; i < 10; i++) {
+			try {
+				JSONObject orderPaymentJSONObject = get(
+					"Bearer " + jwt.getTokenValue(),
+					"/o/c/b9k3paypaltransactions/by-external-reference-code/" +
+						orderId);
+
+				transactionCode = orderPaymentJSONObject.getString(
+					"transactionCode");
+			}
+			catch (Exception exception) {
+				_log.error(ExceptionUtils.getMessage(exception));
+			}
+		}
+
+		if (Validator.isNotNull(transactionCode)) {
+			delete(
+				"Bearer " + jwt.getTokenValue(),
+				"/o/c/b9k3paypaltransactions/by-external-reference-code/" +
+					orderId);
+		}
+
+		return transactionCode;
 	}
 
 	private static final String[] _FUNDING_SOURCES = {

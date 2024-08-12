@@ -206,4 +206,56 @@ test.describe('Manage object relationships through Model Builder', () => {
 			})
 		).not.toBeVisible();
 	});
+
+	test('cannot create relationship between the postal address object and objects without an one-to-many relationship with the account object', async ({
+		apiHelpers,
+		modelBuilderPage,
+		page,
+		viewObjectDefinitionsPage,
+	}) => {
+		const objectDefinition1 =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				status: {code: 0},
+			});
+
+		const postalAddress =
+			await apiHelpers.objectAdmin.getObjectDefinitionByExternalReferenceCode(
+				'L_POSTAL_ADDRESS'
+			);
+
+		createdEntities.objectDefinitionIds.push(objectDefinition1.id);
+
+		await viewObjectDefinitionsPage.goto();
+
+		await viewObjectDefinitionsPage.openObjectFolder('Default');
+
+		await viewObjectDefinitionsPage.viewInModelBuilderButton.click();
+
+		await modelBuilderPage.toggleSidebarsButton.click();
+
+		await modelBuilderPage.fitViewButton.click();
+
+		await modelBuilderPage.connectObjectDefinitionsNodeHandles(
+			postalAddress.id,
+			objectDefinition1.id
+		);
+
+		await expect(
+			modelBuilderPage.postalAddressObjectRelationshipWarning
+		).toBeVisible();
+
+		const pagePromise = page.waitForEvent('popup');
+
+		await page.getByRole('link', {name: 'Learn more.'}).click();
+
+		const liferayLearnPage = await pagePromise;
+
+		await liferayLearnPage.waitForLoadState();
+
+		await expect(
+			liferayLearnPage.getByRole('heading', {
+				name: 'Accessing Accounts Data from Custom Object',
+			})
+		).toBeVisible();
+	});
 });

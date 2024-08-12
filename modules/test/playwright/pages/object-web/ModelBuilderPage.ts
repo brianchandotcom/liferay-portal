@@ -39,6 +39,7 @@ export class ModelBuilderPage {
 	readonly openPageViewButton: Locator;
 	readonly otherObjectFolders: Locator;
 	readonly page: Page;
+	readonly postalAddressObjectRelationshipWarning: Locator;
 	readonly rightSidebar: Locator;
 	readonly selectedObjectFolder: Locator;
 	readonly toggleSidebarsButton: Locator;
@@ -131,6 +132,13 @@ export class ModelBuilderPage {
 			.getByRole('region')
 			.filter({has: page.getByTitle('Go to Folder')});
 		this.page = page;
+		this.postalAddressObjectRelationshipWarning = page.locator(
+			'.alert-warning',
+			{
+				hasText:
+					'Postal Address can only have a relationship with the Account object.',
+			}
+		);
 		this.rightSidebar = page
 			.getByRole('tabpanel')
 			.filter({hasNot: this.createNewObjectDefinitionButton});

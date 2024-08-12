@@ -460,6 +460,7 @@ public <#if schema.discriminator?has_content>abstract</#if> class ${schemaName} 
 		<#if dtoParentClassName?has_content>
 			<#assign
 				dtoParentSchema = allSchemas[dtoParentClassName]
+
 				toStringEnumSchemas = toStringEnumSchemas + freeMarkerTool.getDTOEnumSchemas(configYAML, openAPIYAML, dtoParentSchema)
 				toStringProperties = toStringProperties + freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, dtoParentSchema, allSchemas)
 			/>

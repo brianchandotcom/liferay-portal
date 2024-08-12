@@ -29,6 +29,7 @@ public class GitWorkingDirectoryFactory {
 
 		if (gitRepositoryDir == null) {
 			if (gitRepositoryName.equals("liferay-portal") &&
+				!upstreamBranchName.startsWith("faro-v") &&
 				!upstreamBranchName.equals("master")) {
 
 				gitRepositoryName += "-ee";

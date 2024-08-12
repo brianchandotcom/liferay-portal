@@ -6,6 +6,7 @@
 export {default as AssetEntryActionButtonPropsTransformer} from './AssetEntryActionButtonPropsTransformer';
 export {default as AssetEntryActionDropdownPropsTransformer} from './AssetEntryActionDropdownPropsTransformer';
 export {default as AssetEntrySelectionDropdownPropsTransformer} from './AssetEntrySelectionDropdownPropsTransformer';
+export {default as CreateAssetListActionButtonPropsTransformer} from './CreateAssetListActionButtonPropsTransformer';
 export {default as DisplaySettings} from './DisplaySettings';
 export {default as Ordering} from './Ordering';
 export {default as printPageButtonPropsTransformer} from './printPageButtonPropsTransformer';

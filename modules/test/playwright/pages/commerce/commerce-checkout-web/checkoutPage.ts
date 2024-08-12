@@ -25,6 +25,7 @@ export class CheckoutPage {
 	readonly orderSuccessMessage: Locator;
 	readonly page: Page;
 	readonly phoneNumberInput: Locator;
+	readonly previousButton: Locator;
 	readonly regionInput: Locator;
 	readonly shippingAddress: Locator;
 	readonly shippingAddressSelect: Locator;
@@ -72,6 +73,7 @@ export class CheckoutPage {
 		this.phoneNumberInput = page.getByPlaceholder('Phone Number', {
 			exact: true,
 		});
+		this.previousButton = page.getByRole('button', {name: 'Previous'});
 		this.regionInput = page.getByTitle('Region');
 		this.shippingAddress = page.getByTestId('commerceShippingAddress');
 		this.shippingAddressSelect = page.getByText('Choose Shipping Address');

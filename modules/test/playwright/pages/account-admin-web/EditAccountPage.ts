@@ -6,12 +6,17 @@
 import {Locator, Page} from '@playwright/test';
 
 export class EditAccountPage {
+	readonly channelDefaultsLink: Locator;
 	readonly contactLink: Locator;
 	readonly page: Page;
 	readonly rolesLink: Locator;
 	readonly usersLink: Locator;
 
 	constructor(page: Page) {
+		this.channelDefaultsLink = page.getByRole('link', {
+			exact: true,
+			name: 'Channel Defaults',
+		});
 		this.contactLink = page.getByRole('link', {name: 'Contact'});
 		this.page = page;
 		this.rolesLink = page.getByRole('link', {exact: true, name: 'Roles'});

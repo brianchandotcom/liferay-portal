@@ -93,5 +93,6 @@ export class CommerceAdminChannelsPage {
 
 		await this.commerceSiteType.selectOption({label: siteType});
 		await this.headerActionsSaveButton.click();
+		await this.page.waitForTimeout(200);
 	}
 }

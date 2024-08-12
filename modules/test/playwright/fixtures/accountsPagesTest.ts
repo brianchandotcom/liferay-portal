@@ -13,6 +13,7 @@ import {AccountOrganizationsPage} from '../pages/account-admin-web/AccountOrgani
 import {AccountRolesPage} from '../pages/account-admin-web/AccountRolesPage';
 import {AccountUsersPage} from '../pages/account-admin-web/AccountUsersPage';
 import {AccountsPage} from '../pages/account-admin-web/AccountsPage';
+import {EditAccountChannelDefaultsPage} from '../pages/account-admin-web/EditAccountChannelDefaultsPage';
 import {EditAccountContactAddressPage} from '../pages/account-admin-web/EditAccountContactAddressPage';
 import {EditAccountContactInformationPage} from '../pages/account-admin-web/EditAccountContactInformationPage';
 import {EditAccountContactPage} from '../pages/account-admin-web/EditAccountContactPage';
@@ -30,6 +31,7 @@ const accountsPagesTest = test.extend<{
 	accountRolesPage: AccountRolesPage;
 	accountUsersPage: AccountUsersPage;
 	accountsPage: AccountsPage;
+	editAccountChannelDefaultsPage: EditAccountChannelDefaultsPage;
 	editAccountContactAddressPage: EditAccountContactAddressPage;
 	editAccountContactInformationPage: EditAccountContactInformationPage;
 	editAccountContactPage: EditAccountContactPage;
@@ -61,6 +63,9 @@ const accountsPagesTest = test.extend<{
 	},
 	accountsPage: async ({page}, use) => {
 		await use(new AccountsPage(page));
+	},
+	editAccountChannelDefaultsPage: async ({page}, use) => {
+		await use(new EditAccountChannelDefaultsPage(page));
 	},
 	editAccountContactAddressPage: async ({page}, use) => {
 		await use(new EditAccountContactAddressPage(page));

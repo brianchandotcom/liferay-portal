@@ -77,9 +77,9 @@ public class CommerceOrderLocalServiceWrapper
 			long commerceAccountId, long commerceCurrencyId,
 			long commerceOrderTypeId, long commerceShippingMethodId,
 			long shippingAddressId, String commercePaymentMethodKey,
-			int orderDateMonth, int orderDateDay, int orderDateYear,
-			int orderDateHour, int orderDateMinute, int orderStatus,
-			int paymentStatus, String purchaseOrderNumber,
+			String name, int orderDateMonth, int orderDateDay,
+			int orderDateYear, int orderDateHour, int orderDateMinute,
+			int orderStatus, int paymentStatus, String purchaseOrderNumber,
 			java.math.BigDecimal shippingAmount, String shippingOptionName,
 			java.math.BigDecimal shippingWithTaxAmount,
 			java.math.BigDecimal subtotal,
@@ -92,7 +92,7 @@ public class CommerceOrderLocalServiceWrapper
 		return _commerceOrderLocalService.addCommerceOrder(
 			userId, groupId, billingAddressId, commerceAccountId,
 			commerceCurrencyId, commerceOrderTypeId, commerceShippingMethodId,
-			shippingAddressId, commercePaymentMethodKey, orderDateMonth,
+			shippingAddressId, commercePaymentMethodKey, name, orderDateMonth,
 			orderDateDay, orderDateYear, orderDateHour, orderDateMinute,
 			orderStatus, paymentStatus, purchaseOrderNumber, shippingAmount,
 			shippingOptionName, shippingWithTaxAmount, subtotal,
@@ -106,7 +106,7 @@ public class CommerceOrderLocalServiceWrapper
 			long billingAddressId, long commerceAccountId,
 			long commerceCurrencyId, long commerceOrderTypeId,
 			long commerceShippingMethodId, long shippingAddressId,
-			String advanceStatus, String commercePaymentMethodKey,
+			String advanceStatus, String commercePaymentMethodKey, String name,
 			int orderDateMonth, int orderDateDay, int orderDateYear,
 			int orderDateHour, int orderDateMinute, int orderStatus,
 			int paymentStatus, String purchaseOrderNumber,
@@ -124,7 +124,7 @@ public class CommerceOrderLocalServiceWrapper
 			externalReferenceCode, userId, groupId, billingAddressId,
 			commerceAccountId, commerceCurrencyId, commerceOrderTypeId,
 			commerceShippingMethodId, shippingAddressId, advanceStatus,
-			commercePaymentMethodKey, orderDateMonth, orderDateDay,
+			commercePaymentMethodKey, name, orderDateMonth, orderDateDay,
 			orderDateYear, orderDateHour, orderDateMinute, orderStatus,
 			paymentStatus, purchaseOrderNumber, shippingAmount,
 			shippingOptionName, shippingWithTaxAmount, subtotal,
@@ -920,7 +920,7 @@ public class CommerceOrderLocalServiceWrapper
 			String couponCode, String deliveryCommerceTermEntryDescription,
 			String deliveryCommerceTermEntryName,
 			java.util.Date lastPriceUpdateDate, boolean manuallyAdjusted,
-			java.util.Date orderDate, int orderStatus,
+			String name, java.util.Date orderDate, int orderStatus,
 			String paymentCommerceTermEntryDescription,
 			String paymentCommerceTermEntryName, int paymentStatus,
 			String printedNote, String purchaseOrderNumber,
@@ -974,7 +974,7 @@ public class CommerceOrderLocalServiceWrapper
 			paymentCommerceTermEntryId, shippingAddressId, advanceStatus,
 			commercePaymentMethodKey, couponCode,
 			deliveryCommerceTermEntryDescription, deliveryCommerceTermEntryName,
-			lastPriceUpdateDate, manuallyAdjusted, orderDate, orderStatus,
+			lastPriceUpdateDate, manuallyAdjusted, name, orderDate, orderStatus,
 			paymentCommerceTermEntryDescription, paymentCommerceTermEntryName,
 			paymentStatus, printedNote, purchaseOrderNumber,
 			requestedDeliveryDate, shippable, shippingAmount,
@@ -1011,24 +1011,17 @@ public class CommerceOrderLocalServiceWrapper
 			String externalReferenceCode, long commerceOrderId,
 			long billingAddressId, long commerceShippingMethodId,
 			long shippingAddressId, String advanceStatus,
-			String commercePaymentMethodKey, String purchaseOrderNumber,
-			java.math.BigDecimal shippingAmount, String shippingOptionName,
-			java.math.BigDecimal shippingWithTaxAmount,
-			java.math.BigDecimal subtotal,
-			java.math.BigDecimal subtotalWithTaxAmount,
-			java.math.BigDecimal taxAmount, java.math.BigDecimal total,
-			java.math.BigDecimal totalDiscountAmount,
-			java.math.BigDecimal totalWithTaxAmount,
-			com.liferay.commerce.context.CommerceContext commerceContext)
+			String commercePaymentMethodKey, String name,
+			String purchaseOrderNumber, java.math.BigDecimal shippingAmount,
+			String shippingOptionName, java.math.BigDecimal subtotal,
+			java.math.BigDecimal total)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceOrderLocalService.updateCommerceOrder(
 			externalReferenceCode, commerceOrderId, billingAddressId,
 			commerceShippingMethodId, shippingAddressId, advanceStatus,
-			commercePaymentMethodKey, purchaseOrderNumber, shippingAmount,
-			shippingOptionName, shippingWithTaxAmount, subtotal,
-			subtotalWithTaxAmount, taxAmount, total, totalDiscountAmount,
-			totalWithTaxAmount, commerceContext);
+			commercePaymentMethodKey, name, purchaseOrderNumber, shippingAmount,
+			shippingOptionName, subtotal, total);
 	}
 
 	@Override
@@ -1036,17 +1029,24 @@ public class CommerceOrderLocalServiceWrapper
 			String externalReferenceCode, long commerceOrderId,
 			long billingAddressId, long commerceShippingMethodId,
 			long shippingAddressId, String advanceStatus,
-			String commercePaymentMethodKey, String purchaseOrderNumber,
-			java.math.BigDecimal shippingAmount, String shippingOptionName,
-			java.math.BigDecimal subtotal, java.math.BigDecimal total,
-			com.liferay.commerce.context.CommerceContext commerceContext)
+			String commercePaymentMethodKey, String name,
+			String purchaseOrderNumber, java.math.BigDecimal shippingAmount,
+			String shippingOptionName,
+			java.math.BigDecimal shippingWithTaxAmount,
+			java.math.BigDecimal subtotal,
+			java.math.BigDecimal subtotalWithTaxAmount,
+			java.math.BigDecimal taxAmount, java.math.BigDecimal total,
+			java.math.BigDecimal totalDiscountAmount,
+			java.math.BigDecimal totalWithTaxAmount)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceOrderLocalService.updateCommerceOrder(
 			externalReferenceCode, commerceOrderId, billingAddressId,
 			commerceShippingMethodId, shippingAddressId, advanceStatus,
-			commercePaymentMethodKey, purchaseOrderNumber, shippingAmount,
-			shippingOptionName, subtotal, total, commerceContext);
+			commercePaymentMethodKey, name, purchaseOrderNumber, shippingAmount,
+			shippingOptionName, shippingWithTaxAmount, subtotal,
+			subtotalWithTaxAmount, taxAmount, total, totalDiscountAmount,
+			totalWithTaxAmount);
 	}
 
 	@Override

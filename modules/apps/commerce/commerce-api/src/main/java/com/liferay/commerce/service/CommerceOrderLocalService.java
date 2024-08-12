@@ -100,9 +100,9 @@ public interface CommerceOrderLocalService
 			long commerceAccountId, long commerceCurrencyId,
 			long commerceOrderTypeId, long commerceShippingMethodId,
 			long shippingAddressId, String commercePaymentMethodKey,
-			int orderDateMonth, int orderDateDay, int orderDateYear,
-			int orderDateHour, int orderDateMinute, int orderStatus,
-			int paymentStatus, String purchaseOrderNumber,
+			String name, int orderDateMonth, int orderDateDay,
+			int orderDateYear, int orderDateHour, int orderDateMinute,
+			int orderStatus, int paymentStatus, String purchaseOrderNumber,
 			BigDecimal shippingAmount, String shippingOptionName,
 			BigDecimal shippingWithTaxAmount, BigDecimal subtotal,
 			BigDecimal subtotalWithTaxAmount, BigDecimal taxAmount,
@@ -115,7 +115,7 @@ public interface CommerceOrderLocalService
 			long billingAddressId, long commerceAccountId,
 			long commerceCurrencyId, long commerceOrderTypeId,
 			long commerceShippingMethodId, long shippingAddressId,
-			String advanceStatus, String commercePaymentMethodKey,
+			String advanceStatus, String commercePaymentMethodKey, String name,
 			int orderDateMonth, int orderDateDay, int orderDateYear,
 			int orderDateHour, int orderDateMinute, int orderStatus,
 			int paymentStatus, String purchaseOrderNumber,
@@ -596,8 +596,8 @@ public interface CommerceOrderLocalService
 			String advanceStatus, String commercePaymentMethodKey,
 			String couponCode, String deliveryCommerceTermEntryDescription,
 			String deliveryCommerceTermEntryName, Date lastPriceUpdateDate,
-			boolean manuallyAdjusted, Date orderDate, int orderStatus,
-			String paymentCommerceTermEntryDescription,
+			boolean manuallyAdjusted, String name, Date orderDate,
+			int orderStatus, String paymentCommerceTermEntryDescription,
 			String paymentCommerceTermEntryName, int paymentStatus,
 			String printedNote, String purchaseOrderNumber,
 			Date requestedDeliveryDate, boolean shippable,
@@ -643,12 +643,9 @@ public interface CommerceOrderLocalService
 			String externalReferenceCode, long commerceOrderId,
 			long billingAddressId, long commerceShippingMethodId,
 			long shippingAddressId, String advanceStatus,
-			String commercePaymentMethodKey, String purchaseOrderNumber,
-			BigDecimal shippingAmount, String shippingOptionName,
-			BigDecimal shippingWithTaxAmount, BigDecimal subtotal,
-			BigDecimal subtotalWithTaxAmount, BigDecimal taxAmount,
-			BigDecimal total, BigDecimal totalDiscountAmount,
-			BigDecimal totalWithTaxAmount, CommerceContext commerceContext)
+			String commercePaymentMethodKey, String name,
+			String purchaseOrderNumber, BigDecimal shippingAmount,
+			String shippingOptionName, BigDecimal subtotal, BigDecimal total)
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -656,10 +653,12 @@ public interface CommerceOrderLocalService
 			String externalReferenceCode, long commerceOrderId,
 			long billingAddressId, long commerceShippingMethodId,
 			long shippingAddressId, String advanceStatus,
-			String commercePaymentMethodKey, String purchaseOrderNumber,
-			BigDecimal shippingAmount, String shippingOptionName,
-			BigDecimal subtotal, BigDecimal total,
-			CommerceContext commerceContext)
+			String commercePaymentMethodKey, String name,
+			String purchaseOrderNumber, BigDecimal shippingAmount,
+			String shippingOptionName, BigDecimal shippingWithTaxAmount,
+			BigDecimal subtotal, BigDecimal subtotalWithTaxAmount,
+			BigDecimal taxAmount, BigDecimal total,
+			BigDecimal totalDiscountAmount, BigDecimal totalWithTaxAmount)
 		throws PortalException;
 
 	public void updateCommerceOrderAddresses(long addressId)

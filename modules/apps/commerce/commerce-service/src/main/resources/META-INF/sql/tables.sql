@@ -105,6 +105,7 @@ create table CommerceOrder (
 	deliveryCommerceTermEntryName VARCHAR(75) null,
 	lastPriceUpdateDate DATE null,
 	manuallyAdjusted BOOLEAN,
+	name VARCHAR(75) null,
 	orderDate DATE null,
 	orderStatus INTEGER,
 	paymentCTermEntryDescription TEXT null,

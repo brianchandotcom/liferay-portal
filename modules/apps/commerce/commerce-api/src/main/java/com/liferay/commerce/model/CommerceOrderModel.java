@@ -459,6 +459,21 @@ public interface CommerceOrderModel
 	public void setManuallyAdjusted(boolean manuallyAdjusted);
 
 	/**
+	 * Returns the name of this commerce order.
+	 *
+	 * @return the name of this commerce order
+	 */
+	@AutoEscape
+	public String getName();
+
+	/**
+	 * Sets the name of this commerce order.
+	 *
+	 * @param name the name of this commerce order
+	 */
+	public void setName(String name);
+
+	/**
 	 * Returns the order date of this commerce order.
 	 *
 	 * @return the order date of this commerce order

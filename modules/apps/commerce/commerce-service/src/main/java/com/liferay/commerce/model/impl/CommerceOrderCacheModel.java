@@ -70,7 +70,7 @@ public class CommerceOrderCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(155);
+		StringBundler sb = new StringBundler(157);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -122,6 +122,8 @@ public class CommerceOrderCacheModel
 		sb.append(lastPriceUpdateDate);
 		sb.append(", manuallyAdjusted=");
 		sb.append(manuallyAdjusted);
+		sb.append(", name=");
+		sb.append(name);
 		sb.append(", orderDate=");
 		sb.append(orderDate);
 		sb.append(", orderStatus=");
@@ -336,6 +338,13 @@ public class CommerceOrderCacheModel
 
 		commerceOrderImpl.setManuallyAdjusted(manuallyAdjusted);
 
+		if (name == null) {
+			commerceOrderImpl.setName("");
+		}
+		else {
+			commerceOrderImpl.setName(name);
+		}
+
 		if (orderDate == Long.MIN_VALUE) {
 			commerceOrderImpl.setOrderDate(null);
 		}
@@ -530,6 +539,7 @@ public class CommerceOrderCacheModel
 		lastPriceUpdateDate = objectInput.readLong();
 
 		manuallyAdjusted = objectInput.readBoolean();
+		name = objectInput.readUTF();
 		orderDate = objectInput.readLong();
 
 		orderStatus = objectInput.readInt();
@@ -691,6 +701,14 @@ public class CommerceOrderCacheModel
 		objectOutput.writeLong(lastPriceUpdateDate);
 
 		objectOutput.writeBoolean(manuallyAdjusted);
+
+		if (name == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(name);
+		}
+
 		objectOutput.writeLong(orderDate);
 
 		objectOutput.writeInt(orderStatus);
@@ -820,6 +838,7 @@ public class CommerceOrderCacheModel
 	public String deliveryCommerceTermEntryName;
 	public long lastPriceUpdateDate;
 	public boolean manuallyAdjusted;
+	public String name;
 	public long orderDate;
 	public int orderStatus;
 	public String paymentCommerceTermEntryDescription;

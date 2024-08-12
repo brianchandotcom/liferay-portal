@@ -145,6 +145,12 @@ public class OAuth2ServiceUpgradeStepRegistrator
 					"LOWER(applicationName), scopeAliases = ",
 					"LOWER(scopeAliases) where bundleSymbolicName = ",
 					"'com.liferay.object.rest.impl'")));
+
+		registry.register(
+			"4.2.6", "4.2.7",
+			UpgradeProcessFactory.alterColumnType(
+				"OAuth2Application", "externalReferenceCode",
+				"VARCHAR(1000) null"));
 	}
 
 	@Reference

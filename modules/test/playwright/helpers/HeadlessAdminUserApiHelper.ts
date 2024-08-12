@@ -52,16 +52,6 @@ type TServices = {
 	serviceType: string;
 };
 
-type TUserAccount = {
-	alternateName?: string;
-	emailAddress?: string;
-	familyName?: string;
-	givenName?: string;
-	id?: string;
-	name?: string;
-	password?: string;
-};
-
 type TExportBatch = {
 	className?: string;
 	contentType?: string;

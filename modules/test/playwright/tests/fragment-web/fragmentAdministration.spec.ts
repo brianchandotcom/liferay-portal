@@ -97,6 +97,8 @@ test(
 
 		await fragmentsPage.createFragment(fragmentSetName, fragmentName);
 
+		await fragmentsPage.goto(site.friendlyUrlPath);
+
 		await expect(
 			page.getByTitle(fragmentName, {exact: true})
 		).toBeVisible();
@@ -154,11 +156,13 @@ test(
 
 		await fragmentsPage.createFragment(fragmentSetName, fragmentName);
 
+		await fragmentsPage.goto(site.friendlyUrlPath);
+
 		await expect(
 			page.locator('span').filter({hasText: 'Cached'}).first()
 		).not.toBeVisible();
 
-		await fragmentsPage.markAsDefault(fragmentName);
+		await fragmentsPage.markAsCacheable(fragmentName);
 
 		await expect(
 			page.locator('span').filter({hasText: 'Cached'}).first()

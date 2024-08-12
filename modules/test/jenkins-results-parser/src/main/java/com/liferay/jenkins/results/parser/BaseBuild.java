@@ -1575,7 +1575,7 @@ public abstract class BaseBuild implements Build {
 		BuildDatabase buildDatabase = getBuildDatabase();
 
 		buildDatabase.putProperty(
-			BUILD_URLS_PROPERTIES_KEY, getJobVariant(), getBuildURL());
+			BUILD_URLS_PROPERTIES_KEY, getJobVariant(), getBuildURL(), false);
 	}
 
 	@Override

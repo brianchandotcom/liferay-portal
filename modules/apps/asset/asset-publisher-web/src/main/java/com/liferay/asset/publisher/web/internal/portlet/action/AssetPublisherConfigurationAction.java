@@ -378,6 +378,35 @@ public class AssetPublisherConfigurationAction
 		}
 	}
 
+	protected void updateDisplayStyleGroupPreferences(
+			ActionRequest actionRequest, PortletPreferences portletPreferences)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-22837")) {
+			return;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String displayStyleGroupKey = getParameter(
+			actionRequest, "displayStyleGroupKey");
+
+		Group group = groupLocalService.fetchGroup(
+			themeDisplay.getCompanyId(), displayStyleGroupKey);
+
+		if ((group != null) &&
+			(group.getGroupId() != themeDisplay.getScopeGroupId())) {
+
+			setPreference(
+				actionRequest, "displayStyleGroupExternalReferenceCode",
+				group.getExternalReferenceCode());
+		}
+		else {
+			portletPreferences.reset("displayStyleGroupExternalReferenceCode");
+		}
+	}
+
 	@Reference
 	protected AssetHelper assetHelper;
 
@@ -753,6 +782,8 @@ public class AssetPublisherConfigurationAction
 
 			portletPreferences.setValue("displayStyle", "full-content");
 		}
+
+		updateDisplayStyleGroupPreferences(actionRequest, portletPreferences);
 	}
 
 	private void _updateDefaultAssetPublisher(ActionRequest actionRequest)

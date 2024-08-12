@@ -6,6 +6,9 @@
 package com.liferay.object.web.internal.display.context.helper;
 
 import com.liferay.portal.kernel.display.context.helper.BaseRequestHelper;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -16,6 +19,18 @@ public class ObjectRequestHelper extends BaseRequestHelper {
 
 	public ObjectRequestHelper(HttpServletRequest httpServletRequest) {
 		super(httpServletRequest);
+	}
+
+	public Locale getDefaultLocale() {
+		ThemeDisplay themeDisplay = getThemeDisplay();
+
+		Locale locale = themeDisplay.getSiteDefaultLocale();
+
+		if (locale == null) {
+			return super.getLocale();
+		}
+
+		return locale;
 	}
 
 }

@@ -88,6 +88,7 @@ public class ${schemaName}SerDes {
 			<#if dtoParentClassName?has_content>
 				<#assign
 					dtoParentSchema = allSchemas[dtoParentClassName]
+
 					enumSchemas = enumSchemas + freeMarkerTool.getDTOEnumSchemas(configYAML, openAPIYAML, dtoParentSchema)
 					properties = properties + freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, dtoParentSchema, allSchemas)
 				/>

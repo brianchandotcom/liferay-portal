@@ -315,6 +315,7 @@ public class OrderResourceImpl extends BaseOrderResourceImpl {
 				_getCommerceOrderTypeId(order), commerceShippingMethodId,
 				GetterUtil.getLong(order.getShippingAddressId()),
 				order.getAdvanceStatus(), order.getPaymentMethod(),
+				GetterUtil.getString(order.getName()),
 				GetterUtil.getInteger(
 					order.getOrderStatus(),
 					CommerceOrderConstants.ORDER_STATUS_PENDING),
@@ -686,6 +687,7 @@ public class OrderResourceImpl extends BaseOrderResourceImpl {
 			GetterUtil.getString(
 				order.getPaymentMethod(),
 				commerceOrder.getCommercePaymentMethodKey()),
+			GetterUtil.getString(order.getName(), commerceOrder.getName()),
 			GetterUtil.getString(
 				order.getPurchaseOrderNumber(),
 				commerceOrder.getPurchaseOrderNumber()),

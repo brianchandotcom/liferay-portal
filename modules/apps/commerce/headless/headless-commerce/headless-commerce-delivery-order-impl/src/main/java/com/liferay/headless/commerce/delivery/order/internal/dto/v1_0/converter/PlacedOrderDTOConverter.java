@@ -90,6 +90,7 @@ public class PlacedOrderDTOConverter
 				setId(commerceOrder::getCommerceOrderId);
 				setLastPriceUpdateDate(commerceOrder::getLastPriceUpdateDate);
 				setModifiedDate(commerceOrder::getModifiedDate);
+				setName(commerceOrder::getName);
 				setOrderStatusInfo(
 					() -> {
 						String commerceOrderStatusLabel =

@@ -74,7 +74,7 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 			long commerceAccountId, long commerceCurrencyId,
 			long commerceOrderTypeId, long commerceShippingMethodId,
 			long shippingAddressId, String advanceStatus,
-			String commercePaymentMethodKey, int orderDateMonth,
+			String commercePaymentMethodKey, String name, int orderDateMonth,
 			int orderDateDay, int orderDateYear, int orderDateHour,
 			int orderDateMinute, int orderStatus, int paymentStatus,
 			String purchaseOrderNumber, BigDecimal shippingAmount,
@@ -108,7 +108,7 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 			externalReferenceCode, getUserId(), groupId, billingAddressId,
 			commerceAccountId, commerceCurrencyId, commerceOrderTypeId,
 			commerceShippingMethodId, shippingAddressId, advanceStatus,
-			commercePaymentMethodKey, orderDateMonth, orderDateDay,
+			commercePaymentMethodKey, name, orderDateMonth, orderDateDay,
 			orderDateYear, orderDateHour, orderDateMinute, orderStatus,
 			paymentStatus, purchaseOrderNumber, shippingAmount,
 			shippingOptionName, shippingWithTaxAmount, subtotal,
@@ -122,20 +122,20 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 			long commerceAccountId, long commerceCurrencyId,
 			long commerceOrderTypeId, long commerceShippingMethodId,
 			long shippingAddressId, String advanceStatus,
-			String commercePaymentMethodKey, int orderStatus, int paymentStatus,
-			String purchaseOrderNumber, BigDecimal shippingAmount,
-			String shippingOptionName, BigDecimal shippingWithTaxAmount,
-			BigDecimal subtotal, BigDecimal subtotalWithTaxAmount,
-			BigDecimal taxAmount, BigDecimal total,
-			BigDecimal totalWithTaxAmount, CommerceContext commerceContext,
-			ServiceContext serviceContext)
+			String commercePaymentMethodKey, String name, int orderStatus,
+			int paymentStatus, String purchaseOrderNumber,
+			BigDecimal shippingAmount, String shippingOptionName,
+			BigDecimal shippingWithTaxAmount, BigDecimal subtotal,
+			BigDecimal subtotalWithTaxAmount, BigDecimal taxAmount,
+			BigDecimal total, BigDecimal totalWithTaxAmount,
+			CommerceContext commerceContext, ServiceContext serviceContext)
 		throws PortalException {
 
 		return commerceOrderService.addOrUpdateCommerceOrder(
 			externalReferenceCode, groupId, billingAddressId, commerceAccountId,
 			commerceCurrencyId, commerceOrderTypeId, commerceShippingMethodId,
-			shippingAddressId, advanceStatus, commercePaymentMethodKey, 0, 0, 0,
-			0, 0, orderStatus, paymentStatus, purchaseOrderNumber,
+			shippingAddressId, advanceStatus, commercePaymentMethodKey, name, 0,
+			0, 0, 0, 0, orderStatus, paymentStatus, purchaseOrderNumber,
 			shippingAmount, shippingOptionName, shippingWithTaxAmount, subtotal,
 			subtotalWithTaxAmount, taxAmount, total, totalWithTaxAmount,
 			commerceContext, serviceContext);
@@ -687,12 +687,9 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 			String externalReferenceCode, long commerceOrderId,
 			long billingAddressId, long commerceShippingMethodId,
 			long shippingAddressId, String advanceStatus,
-			String commercePaymentMethodKey, String purchaseOrderNumber,
-			BigDecimal shippingAmount, String shippingOptionName,
-			BigDecimal shippingWithTaxAmount, BigDecimal subtotal,
-			BigDecimal subtotalWithTaxAmount, BigDecimal taxAmount,
-			BigDecimal total, BigDecimal totalDiscountAmount,
-			BigDecimal totalWithTaxAmount, CommerceContext commerceContext)
+			String commercePaymentMethodKey, String name,
+			String purchaseOrderNumber, BigDecimal shippingAmount,
+			String shippingOptionName, BigDecimal subtotal, BigDecimal total)
 		throws PortalException {
 
 		_commerceOrderModelResourcePermission.check(
@@ -701,10 +698,8 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 		return commerceOrderLocalService.updateCommerceOrder(
 			externalReferenceCode, commerceOrderId, billingAddressId,
 			commerceShippingMethodId, shippingAddressId, advanceStatus,
-			commercePaymentMethodKey, purchaseOrderNumber, shippingAmount,
-			shippingOptionName, shippingWithTaxAmount, subtotal,
-			subtotalWithTaxAmount, taxAmount, total, totalWithTaxAmount,
-			totalDiscountAmount, commerceContext);
+			commercePaymentMethodKey, name, purchaseOrderNumber, shippingAmount,
+			shippingOptionName, subtotal, total);
 	}
 
 	@Override
@@ -712,10 +707,12 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 			String externalReferenceCode, long commerceOrderId,
 			long billingAddressId, long commerceShippingMethodId,
 			long shippingAddressId, String advanceStatus,
-			String commercePaymentMethodKey, String purchaseOrderNumber,
-			BigDecimal shippingAmount, String shippingOptionName,
-			BigDecimal subtotal, BigDecimal total,
-			CommerceContext commerceContext)
+			String commercePaymentMethodKey, String name,
+			String purchaseOrderNumber, BigDecimal shippingAmount,
+			String shippingOptionName, BigDecimal shippingWithTaxAmount,
+			BigDecimal subtotal, BigDecimal subtotalWithTaxAmount,
+			BigDecimal taxAmount, BigDecimal total,
+			BigDecimal totalDiscountAmount, BigDecimal totalWithTaxAmount)
 		throws PortalException {
 
 		_commerceOrderModelResourcePermission.check(
@@ -724,8 +721,10 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 		return commerceOrderLocalService.updateCommerceOrder(
 			externalReferenceCode, commerceOrderId, billingAddressId,
 			commerceShippingMethodId, shippingAddressId, advanceStatus,
-			commercePaymentMethodKey, purchaseOrderNumber, shippingAmount,
-			shippingOptionName, subtotal, total, commerceContext);
+			commercePaymentMethodKey, name, purchaseOrderNumber, shippingAmount,
+			shippingOptionName, shippingWithTaxAmount, subtotal,
+			subtotalWithTaxAmount, taxAmount, total, totalWithTaxAmount,
+			totalDiscountAmount);
 	}
 
 	@Override

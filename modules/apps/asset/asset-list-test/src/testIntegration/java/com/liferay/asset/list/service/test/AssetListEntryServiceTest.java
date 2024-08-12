@@ -299,6 +299,13 @@ public class AssetListEntryServiceTest {
 			Assert.fail();
 		}
 		catch (PrincipalException.MustHavePermission principalException) {
+			String message = principalException.getMessage();
+
+			Assert.assertTrue(
+				message,
+				message.contains(
+					"User " + user.getUserId() +
+						" must have VIEW permission for"));
 		}
 
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
@@ -310,6 +317,13 @@ public class AssetListEntryServiceTest {
 			Assert.fail();
 		}
 		catch (PrincipalException.MustHavePermission principalException) {
+			String message = principalException.getMessage();
+
+			Assert.assertTrue(
+				message,
+				message.contains(
+					"User " + user.getUserId() +
+						" must have VIEW permission for"));
 		}
 
 		_userLocalService.deleteUser(user);

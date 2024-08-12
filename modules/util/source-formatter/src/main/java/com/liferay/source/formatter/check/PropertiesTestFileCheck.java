@@ -10,6 +10,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.source.formatter.check.comparator.PropertyNameComparator;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -93,10 +94,10 @@ public class PropertiesTestFileCheck extends BaseFileCheck {
 				continue;
 			}
 
-			NaturalOrderStringComparator naturalOrderStringComparator =
-				new NaturalOrderStringComparator();
+			PropertyNameComparator propertyNameComparator =
+				new PropertyNameComparator();
 
-			int compare = naturalOrderStringComparator.compare(
+			int compare = propertyNameComparator.compare(
 				previousPropertyKey, propertyKey);
 
 			if (compare > 0) {

@@ -883,6 +883,59 @@
 			</attribute>
 		</attributes>
 	</component>
+	<component dynamicAttributes="false" name="Link" parentClass="com.liferay.taglib.util.PositionTagSupport" writeJSP="false">
+		<description>Creates a link element.</description>
+		<attributes>
+			<attribute>
+				<description>The crossorigin attribute of the standard link tag.</description>
+				<name>crossOrigin</name>
+				<required>false</required>
+				<rtexprvalue>true</rtexprvalue>
+			</attribute>
+			<attribute>
+				<description>The class attribute of the standard link tag.</description>
+				<name>cssClass</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
+				<description>The href attribute of the standard link tag.</description>
+				<name>href</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
+				<description>The id attribute of the standard link tag.</description>
+				<name>id</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
+				<description>The integrity attribute of the standard link tag.</description>
+				<name>integrity</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
+				<description>The rel attribute of the standard link tag.</description>
+				<name>rel</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
+				<description>The SPA mode (off, permanent, temporary, ...).</description>
+				<name>senna</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
+				<description>The type attribute of the standard link tag.</description>
+				<name>type</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+		</attributes>
+	</component>
 	<component dynamicAttributes="false" name="ModelContext" writeJSP="false">
 		<description>Creates a configurable model context object that can be used as a model for other components.</description>
 		<attributes>

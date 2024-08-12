@@ -61,7 +61,7 @@ public class FreeMarkerTemplateTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@BeforeClass
-	public static void setUpClass() throws Exception {
+	public static void setUpClass() {
 		_freeMarkerManager = new FreeMarkerManager();
 
 		FreeMarkerEngineConfiguration freeMarkerEngineConfiguration =
@@ -73,8 +73,7 @@ public class FreeMarkerTemplateTest {
 			freeMarkerEngineConfiguration);
 
 		_templateResourceCache =
-			_freeMarkerManager.new FreeMarkerTemplateResourceCache(
-				freeMarkerEngineConfiguration) {
+			_freeMarkerManager.new FreeMarkerTemplateResourceCache() {
 
 				@Override
 				public boolean isEnabled() {

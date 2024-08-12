@@ -64,14 +64,11 @@ public class VelocityTemplateTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@BeforeClass
-	public static void setUpClass() throws Exception {
+	public static void setUpClass() {
 		VelocityManager velocityManager = new VelocityManager();
 
 		_templateResourceCache =
-			velocityManager.new VelocityTemplateResourceCache(
-				ConfigurableUtil.createConfigurable(
-					VelocityEngineConfiguration.class,
-					Collections.emptyMap())) {
+			velocityManager.new VelocityTemplateResourceCache() {
 
 				@Override
 				public boolean isEnabled() {
@@ -148,11 +145,6 @@ public class VelocityTemplateTest {
 		extendedProperties.setProperty(
 			VelocityEngine.RESOURCE_MANAGER_CLASS,
 			LiferayResourceManager.class.getName());
-		extendedProperties.setProperty(
-			"liferay." + VelocityEngine.RESOURCE_MANAGER_CLASS +
-				".resourceModificationCheckInterval",
-			velocityEngineConfiguration.resourceModificationCheckInterval() +
-				"");
 		extendedProperties.setProperty(
 			VelocityManager.VelocityTemplateResourceLoader.class.getName(),
 			_templateResourceLoader);

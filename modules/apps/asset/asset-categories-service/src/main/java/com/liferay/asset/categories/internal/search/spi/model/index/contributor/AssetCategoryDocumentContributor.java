@@ -260,9 +260,9 @@ public class AssetCategoryDocumentContributor
 		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Unable to retrieve assetVocabulary " +
+					"Unable to get assetVocabulary " +
 						assetCategory.getVocabularyId() +
-							" while indexing document.",
+							" while indexing document",
 					portalException);
 			}
 		}
@@ -284,8 +284,8 @@ public class AssetCategoryDocumentContributor
 		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Unable to retrieve group " + groupId +
-						" while indexing document.",
+					"Unable to get group " + groupId +
+						" while indexing document",
 					portalException);
 			}
 		}

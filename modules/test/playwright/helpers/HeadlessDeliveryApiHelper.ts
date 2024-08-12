@@ -76,6 +76,12 @@ export class HeadlessDeliveryApiHelper {
 		);
 	}
 
+	async deleteBlog(blogId: number) {
+		return this.apiHelpers.delete(
+			`${this.apiHelpers.baseUrl}${this.basePath}/blog-postings/${blogId}`
+		);
+	}
+
 	async deleteDocument(documentId: string) {
 		return this.apiHelpers.delete(
 			`${this.apiHelpers.baseUrl}${this.basePath}/documents/${documentId}`

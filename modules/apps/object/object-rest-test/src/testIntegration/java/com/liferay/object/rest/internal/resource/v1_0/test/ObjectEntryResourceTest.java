@@ -5882,6 +5882,39 @@ public class ObjectEntryResourceTest {
 			jsonObject.getJSONObject(
 				_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE),
 			scopeJSONObject);
+
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				_OBJECT_FIELD_NAME_1, "value1"
+			).put(
+				_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
+				dlFileEntry.getFileEntryId()
+			).toString(),
+			_getEndpoint(
+				TestPropsValues.getGroupId(), _siteScopedObjectDefinition1),
+			Http.Method.POST);
+
+		_assertAttachmentJSONObject(
+			dlFileEntry, null,
+			jsonObject.getJSONObject(
+				_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE),
+			scopeJSONObject);
+
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				_OBJECT_FIELD_NAME_1, "value1"
+			).put(
+				_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
+				dlFileEntry.getFileEntryId()
+			).toString(),
+			_getEndpoint(_group.getGroupId(), _siteScopedObjectDefinition1),
+			Http.Method.POST);
+
+		_assertAttachmentJSONObject(
+			dlFileEntry, null,
+			jsonObject.getJSONObject(
+				_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE),
+			null);
 	}
 
 	@Test
@@ -11338,11 +11371,16 @@ public class ObjectEntryResourceTest {
 
 		Assert.assertEquals(fileBase64, jsonObject.get("fileBase64"));
 
-		JSONObject curScopeJSONObject = jsonObject.getJSONObject("scope");
+		if (scopeJSONObject == null) {
+			Assert.assertFalse(jsonObject.has("scope"));
+		}
+		else {
+			JSONObject curScopeJSONObject = jsonObject.getJSONObject("scope");
 
-		JSONAssert.assertEquals(
-			scopeJSONObject.toString(), curScopeJSONObject.toString(),
-			JSONCompareMode.LENIENT);
+			JSONAssert.assertEquals(
+				scopeJSONObject.toString(), curScopeJSONObject.toString(),
+				JSONCompareMode.LENIENT);
+		}
 	}
 
 	private void _assertEquals(JSONArray nestedObjectEntriesJSONArray)

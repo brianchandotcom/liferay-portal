@@ -640,8 +640,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for OAUTH2-259 and LPS-156552. Verify that client credential is in the user scope and can be added to an external application. Blocked by LPS-191261."
-	@ignore = "true"
+	@description = "This is a use case for OAUTH2-259 and LPS-156552. Verify that client credential is in the user scope and can be added to an external application."
 	@priority = 5
 	test ClientCredentialsShouldBeConfigurableInUserScope {
 		property custom.properties = "access.control.sanitize.security.exception=false${line.separator}json.service.serialize.throwable=true";

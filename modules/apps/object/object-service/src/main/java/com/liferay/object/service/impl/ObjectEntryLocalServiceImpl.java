@@ -1167,6 +1167,10 @@ public class ObjectEntryLocalServiceImpl
 			),
 			objectEntry.getObjectDefinitionId(), selectExpressions);
 
+		if (ListUtil.isEmpty(rows)) {
+			return Collections.emptyMap();
+		}
+
 		Map<String, Serializable> values = _getValues(
 			objectEntry.getObjectDefinitionId(), rows.get(0),
 			selectExpressions);

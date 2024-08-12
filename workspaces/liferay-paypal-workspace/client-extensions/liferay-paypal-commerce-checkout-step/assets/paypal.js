@@ -30,7 +30,7 @@ export async function onPaypalLoaded() {
 
 				if (resource.ok) {
 					const orderData = await payPalOAuth.fetch(
-						'/set-up-payment/get/' + orderId
+						'/set-up-payment/get-paypal-order/' + orderId
 					);
 
 					if (orderData) {

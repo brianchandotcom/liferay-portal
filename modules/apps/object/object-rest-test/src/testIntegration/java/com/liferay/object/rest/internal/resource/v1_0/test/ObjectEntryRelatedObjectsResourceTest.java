@@ -7,6 +7,7 @@ package com.liferay.object.rest.internal.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.admin.user.dto.v1_0.UserAccount;
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.field.util.ObjectFieldUtil;
@@ -789,6 +790,30 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			null, _getEndpoint(objectRelationship.getName()), Http.Method.GET);
 
 		_assertEquals(_user1, jsonObject.getJSONArray("items"));
+
+		ObjectDefinition siteScopedObjectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				"A" + RandomTestUtil.randomString(),
+				Collections.singletonList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, true, null,
+						RandomTestUtil.randomString(), "able", false)),
+				ObjectDefinitionConstants.SCOPE_SITE,
+				TestPropsValues.getUserId());
+
+		ObjectEntry siteObjectEntry = ObjectEntryTestUtil.addObjectEntry(
+			siteScopedObjectDefinition, "able", RandomTestUtil.randomString());
+
+		objectRelationship = _addObjectRelationship(
+			siteScopedObjectDefinition, _objectDefinition1,
+			siteObjectEntry.getPrimaryKey(), _objectEntry1.getPrimaryKey(),
+			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
+			null, _getEndpoint(objectRelationship.getName()), Http.Method.GET);
+
+		_assertEquals(siteObjectEntry, jsonObject.getJSONArray("items"));
 
 		// One to many relationship
 

@@ -110,12 +110,12 @@ public class ${schemaName}SerDes {
 					propertySchema = freeMarkerTool.getDTOPropertySchema(configYAML, propertyName, schema, allSchemas)!
 				/>
 
-				<#if dtoParentClassName?has_content && !propertySchema?has_content>
-					<#assign propertySchema = freeMarkerTool.getDTOPropertySchema(configYAML, propertyName, dtoParentSchema, allSchemas) />
-				</#if>
-
 				<#if enumSchemas?keys?seq_contains(properties[propertyName])>
 					<#assign capitalizedPropertyName = properties[propertyName] />
+				</#if>
+
+				<#if dtoParentClassName?has_content && !propertySchema?has_content>
+					<#assign propertySchema = freeMarkerTool.getDTOPropertySchema(configYAML, propertyName, dtoParentSchema, allSchemas) />
 				</#if>
 
 				if (${schemaVarName}.get${capitalizedPropertyName}() != null) {
@@ -231,12 +231,12 @@ public class ${schemaName}SerDes {
 				propertySchema = freeMarkerTool.getDTOPropertySchema(configYAML, propertyName, schema, allSchemas)!
 			/>
 
-			<#if dtoParentClassName?has_content && !propertySchema?has_content>
-				<#assign propertySchema = freeMarkerTool.getDTOPropertySchema(configYAML, propertyName, dtoParentSchema, allSchemas) />
-			</#if>
-
 			<#if enumSchemas?keys?seq_contains(properties[propertyName])>
 				<#assign capitalizedPropertyName = properties[propertyName] />
+			</#if>
+
+			<#if dtoParentClassName?has_content && !propertySchema?has_content>
+				<#assign propertySchema = freeMarkerTool.getDTOPropertySchema(configYAML, propertyName, dtoParentSchema, allSchemas) />
 			</#if>
 
 			<#if propertySchema.name??>

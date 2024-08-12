@@ -201,6 +201,7 @@
 		<column name="deliveryCommerceTermEntryName" type="String" />
 		<column name="lastPriceUpdateDate" type="Date" />
 		<column name="manuallyAdjusted" type="boolean" />
+		<column name="name" type="String" />
 		<column name="orderDate" type="Date" />
 		<column name="orderStatus" type="int" />
 		<column db-name="paymentCTermEntryDescription" name="paymentCommerceTermEntryDescription" type="String" />

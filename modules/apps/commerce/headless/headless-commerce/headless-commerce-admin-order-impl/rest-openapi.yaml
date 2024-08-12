@@ -215,6 +215,9 @@ components:
                     type: string
                 billingAddress:
                     $ref: "#/components/schemas/BillingAddress"
+                billingAddressExternalReferenceCode:
+                    example: AAB-34098-789-N
+                    type: string
                 billingAddressId:
                     example: 31130
                     format: int64
@@ -250,6 +253,9 @@ components:
                 deliveryTermDescription:
                     example: Orders delivery terms description
                     readOnly: true
+                    type: string
+                deliveryTermExternalReferenceCode:
+                    example: AAB-34098-789-N
                     type: string
                 deliveryTermId:
                     example: 30130
@@ -318,6 +324,9 @@ components:
                     example: Orders payment terms description
                     readOnly: true
                     type: string
+                paymentTermExternalReferenceCode:
+                    example: AAB-34098-789-N
+                    type: string
                 paymentTermId:
                     example: 30130
                     format: int64
@@ -339,6 +348,9 @@ components:
                     type: string
                 shippingAddress:
                     $ref: "#/components/schemas/ShippingAddress"
+                shippingAddressExternalReferenceCode:
+                    example: AAB-34098-789-N
+                    type: string
                 shippingAddressId:
                     example: 31130
                     format: int64
@@ -5827,10 +5839,14 @@ paths:
                             $ref: "#/components/schemas/Order"
                 required: true
             responses:
-                202:
-                    description:
-                        Async
-                204:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Order"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Order"
                     description:
                         Updated
                 400:
@@ -6712,10 +6728,14 @@ paths:
                             $ref: "#/components/schemas/Order"
                 required: true
             responses:
-                202:
-                    description:
-                        Async
-                204:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Order"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Order"
                     description:
                         Updated
                 400:

@@ -273,7 +273,7 @@ public class BundleSiteInitializerTest {
 		_group = GroupTestUtil.addGroup();
 
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
-			_group.getGroupId(), TestPropsValues.getUserId());
+			_group, TestPropsValues.getUserId());
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
@@ -2301,10 +2301,16 @@ public class BundleSiteInitializerTest {
 
 		Map<String, String> bodyMap = notificationTemplate.getBody();
 
-		Assert.assertEquals(
-			"<p>\n\tThis is a template email for Test Notification Template " +
-				"1.\n</p>",
-			bodyMap.get("en_US"));
+		String en_USMessageString = StringBundler.concat(
+			"<p>\n",
+			"\tThis is a template email for Test Notification Template 1.\n",
+			"\tCompany ID: ", _group.getCompanyId(), "\n",
+			"\tGroup Friendly URL: ", _group.getFriendlyURL(), "\n",
+			"\tGroup ID: ", _serviceContext.getScopeGroupId(), "\n",
+			"\tGroup Key: ", _group.getGroupKey(), "\n", "\tPortal URL: ",
+			_serviceContext.getPortalURL(), "\n", "</p>");
+
+		Assert.assertEquals(en_USMessageString, bodyMap.get("en_US"));
 
 		Assert.assertEquals(
 			"Test Notification Template 1", notificationTemplate.getName());

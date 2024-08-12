@@ -85,7 +85,9 @@ public class FormLayoutStructureItemMapper
 													saveMappingConfiguration,
 													formStyledLayoutStructureItem));
 
-										if (FeatureFlagManagerUtil.isEnabled("LPD-10727")) {
+										if (FeatureFlagManagerUtil.isEnabled(
+												"LPD-10727")) {
+
 											setMultiStep(
 												() ->
 													formStyledLayoutStructureItem.

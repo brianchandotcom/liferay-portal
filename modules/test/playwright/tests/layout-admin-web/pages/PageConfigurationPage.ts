@@ -47,7 +47,7 @@ export class PageConfigurationPage {
 		await this.pagesAdminPage.clickOnAction('Configure', pageTitle);
 
 		await this.page
-			.locator('li', {has: this.page.getByText(section)})
+			.locator('.portlet-body li', {has: this.page.getByText(section)})
 			.click();
 	}
 

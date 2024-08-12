@@ -254,8 +254,8 @@ export class PagesAdminPage {
 			.waitFor();
 	}
 
-	async gotoPagesConfiguration() {
-		await this.goto();
+	async gotoPagesConfiguration(siteUrl?: Site['friendlyUrlPath']) {
+		await this.goto(siteUrl);
 
 		await clickAndExpectToBeVisible({
 			autoClick: true,
@@ -290,8 +290,11 @@ export class PagesAdminPage {
 		await this.page.getByText('Search Results').waitFor();
 	}
 
-	async selectJavaScriptClientExtension(clientExtensionName: string) {
-		await this.gotoPagesConfiguration();
+	async selectJavaScriptClientExtension(
+		clientExtensionName: string,
+		siteUrl?: Site['friendlyUrlPath']
+	) {
+		await this.gotoPagesConfiguration(siteUrl);
 
 		await this.clickOnJavaScriptClientExtensionsTab();
 

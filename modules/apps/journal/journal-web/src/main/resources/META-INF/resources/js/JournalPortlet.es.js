@@ -492,7 +492,8 @@ export default function _JournalPortlet({
 						redirectOnSave: false,
 						showErrors: true,
 					});
-				}
+				},
+				namespace
 			)
 		);
 	}
@@ -516,7 +517,8 @@ function attachFormChangeListener(
 	form,
 	accentChangeEvent,
 	acceptMutationRecord,
-	callback
+	callback,
+	namespace
 ) {
 	const handleChange = debounce(() => {
 		callback();
@@ -525,7 +527,10 @@ function attachFormChangeListener(
 	const mutationObserver = new MutationObserver((mutationRecords) => {
 		const observedMutationRecords = mutationRecords
 			.filter((mutationRecord) => {
-				if (mutationRecord.type === 'attributes') {
+				if (mutationRecord.target.id === `${namespace}formDate`) {
+					return;
+				}
+				else if (mutationRecord.type === 'attributes') {
 					return (
 						mutationRecord.oldValue !== null &&
 						mutationRecord.target.value.trim() !==

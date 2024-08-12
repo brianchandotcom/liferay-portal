@@ -52,86 +52,86 @@ public class NotificationsRestController extends BaseRestController {
 			List<NotificationRequestItem> notificationRequestItems =
 				notificationRequest.getNotificationItems();
 
-			if (!notificationRequestItems.isEmpty()) {
-				NotificationRequestItem notificationRequestItem =
-					notificationRequestItems.get(0);
+			if (notificationRequestItems.isEmpty()) {
+				return new ResponseEntity<>(HttpStatus.ACCEPTED);
+			}
 
-				String externalReferenceCode = _getExternalReferenceCode(
-					notificationRequestItem);
+			NotificationRequestItem notificationRequestItem =
+				notificationRequestItems.get(0);
 
-				JSONObject adyenWebhookJSONObject = get(
+			String externalReferenceCode = _getExternalReferenceCode(
+				notificationRequestItem);
+
+			JSONObject n1a0AdyenWebhookJSONObject = get(
+				_liferayOAuth2AccessTokenManager.getAuthorization(
+					"liferay-adyen-payment-integration-oauth-application-" +
+						"headless-server"),
+				"/o/c/n1a0adyenwebhooks/by-external-reference-code/" +
+					externalReferenceCode);
+
+			if (!_hasAuthentication(
+					headers.get("authorization"), n1a0AdyenWebhookJSONObject)) {
+
+				return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+			}
+
+			HMACValidator hmacValidator = new HMACValidator();
+
+			if (!hmacValidator.validateHMAC(
+					notificationRequestItem,
+					n1a0AdyenWebhookJSONObject.getString("hmacSignature"))) {
+
+				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			}
+
+			String paymentId = null;
+			String errorMessages = null;
+			String paymentStatus = "4";
+
+			if (StringUtils.equalsAny(
+					notificationRequestItem.getEventCode(), "AUTHORISATION",
+					"CAPTURE")) {
+
+				if (notificationRequestItem.isSuccess()) {
+					paymentId = notificationRequestItem.getMerchantReference();
+					paymentStatus = "0";
+				}
+				else {
+					errorMessages = notificationRequestItem.getReason();
+				}
+			}
+			else if (StringUtils.equals(
+						notificationRequestItem.getEventCode(),
+						"CANCELLATION")) {
+
+				if (notificationRequestItem.isSuccess()) {
+					paymentStatus = "8";
+				}
+				else {
+					errorMessages = notificationRequestItem.getReason();
+				}
+			}
+			else if (StringUtils.equals(
+						notificationRequestItem.getEventCode(), "REFUND")) {
+
+				if (notificationRequestItem.isSuccess()) {
+					paymentId = _getPaymentId(notificationRequestItem);
+					paymentStatus = "17";
+				}
+				else {
+					errorMessages = notificationRequestItem.getReason();
+				}
+			}
+
+			if (StringUtils.isNotBlank(paymentId)) {
+				_updatePayment(errorMessages, json, paymentId, paymentStatus);
+
+				delete(
 					_liferayOAuth2AccessTokenManager.getAuthorization(
 						"liferay-adyen-payment-integration-oauth-application-" +
 							"headless-server"),
 					"/o/c/n1a0adyenwebhooks/by-external-reference-code/" +
 						externalReferenceCode);
-
-				if (!_hasAuthentication(
-						headers.get("authorization"), adyenWebhookJSONObject)) {
-
-					return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-				}
-
-				HMACValidator hmacValidator = new HMACValidator();
-
-				if (!hmacValidator.validateHMAC(
-						notificationRequestItem,
-						adyenWebhookJSONObject.getString("hmacSignature"))) {
-
-					return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-				}
-
-				String paymentId = null;
-				String errorMessages = null;
-				String paymentStatus = "4";
-
-				if (StringUtils.equalsAny(
-						notificationRequestItem.getEventCode(), "AUTHORISATION",
-						"CAPTURE")) {
-
-					if (notificationRequestItem.isSuccess()) {
-						paymentId =
-							notificationRequestItem.getMerchantReference();
-						paymentStatus = "0";
-					}
-					else {
-						errorMessages = notificationRequestItem.getReason();
-					}
-				}
-				else if (StringUtils.equals(
-							notificationRequestItem.getEventCode(),
-							"CANCELLATION")) {
-
-					if (notificationRequestItem.isSuccess()) {
-						paymentStatus = "8";
-					}
-					else {
-						errorMessages = notificationRequestItem.getReason();
-					}
-				}
-				else if (StringUtils.equals(
-							notificationRequestItem.getEventCode(), "REFUND")) {
-
-					if (notificationRequestItem.isSuccess()) {
-						paymentId = _getPaymentId(notificationRequestItem);
-						paymentStatus = "17";
-					}
-					else {
-						errorMessages = notificationRequestItem.getReason();
-					}
-				}
-
-				if (StringUtils.isNotBlank(paymentId)) {
-					_updatePayment(
-						errorMessages, json, paymentId, paymentStatus);
-
-					delete(
-						_liferayOAuth2AccessTokenManager.getAuthorization(
-							"liferay-adyen-payment-integration-oauth-" +
-								"application-headless-server"),
-						"/o/c/n1a0adyenwebhooks/by-external-reference-code/" +
-							externalReferenceCode);
-				}
 			}
 		}
 		catch (Exception exception) {
@@ -194,7 +194,7 @@ public class NotificationsRestController extends BaseRestController {
 	}
 
 	private boolean _hasAuthentication(
-		String authorization, JSONObject adyenWebhookJSONObject) {
+		String authorization, JSONObject n1a0AdyenWebhookJSONObject) {
 
 		if (StringUtils.isBlank(authorization) &&
 			!StringUtils.contains(authorization, "Basic")) {
@@ -218,9 +218,9 @@ public class NotificationsRestController extends BaseRestController {
 		String webhookUserName = authorizationParts[0];
 
 		if (webhookPassword.equals(
-				adyenWebhookJSONObject.getString("webhookPassword")) &&
+				n1a0AdyenWebhookJSONObject.getString("webhookPassword")) &&
 			webhookUserName.equals(
-				adyenWebhookJSONObject.getString("webhookUsername"))) {
+				n1a0AdyenWebhookJSONObject.getString("webhookUsername"))) {
 
 			return true;
 		}

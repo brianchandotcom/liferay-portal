@@ -43,41 +43,49 @@ public class NotificationsRestController extends BaseRestController {
 		@RequestHeader Map<String, String> headers, @RequestBody String json) {
 
 		try {
-			JSONObject payPalJSONObject = new JSONObject(json);
+			JSONObject jsonObject = new JSONObject(json);
 
-			if (!payPalJSONObject.isEmpty()) {
-				String errorMessages = null;
-				String eventType = payPalJSONObject.getString("event_type");
-				String paymentStatus;
-
-				if (StringUtils.equals(
-						eventType, "PAYMENT.CAPTURE.COMPLETED")) {
-
-					paymentStatus = "0";
-				}
-				else if (StringUtils.equals(
-							eventType, "PAYMENT.CAPTURE.DENIED")) {
-
-					paymentStatus = "4";
-					errorMessages = payPalJSONObject.getString("summary");
-				}
-				else {
-					return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-				}
-
-				JSONObject payPalResourceJSONObject =
-					payPalJSONObject.getJSONObject("resource");
-
-				String transactionCode = payPalResourceJSONObject.getString(
-					"id");
-
-				if (!_hasAuthentication(headers, json, transactionCode)) {
-					return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-				}
-
-				_updatePayment(
-					errorMessages, json, paymentStatus, transactionCode);
+			if (jsonObject.isEmpty()) {
+				return new ResponseEntity<>(HttpStatus.ACCEPTED);
 			}
+
+			String errorMessages = null;
+			String eventType = jsonObject.getString("event_type");
+			String paymentStatus = null;
+
+			if (StringUtils.equals(eventType, "PAYMENT.CAPTURE.COMPLETED")) {
+				paymentStatus = "0";
+			}
+			else if (StringUtils.equals(eventType, "PAYMENT.CAPTURE.DENIED")) {
+				paymentStatus = "4";
+				errorMessages = jsonObject.getString("summary");
+			}
+			else {
+				return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+			}
+
+			JSONObject resourceJSONObject = jsonObject.getJSONObject(
+				"resource");
+
+			String transactionCode = resourceJSONObject.getString("id");
+
+			JSONObject b9k3PayPalWebhookJSONObject = new JSONObject(
+				get(
+					_liferayOAuth2AccessTokenManager.getAuthorization(
+						"liferay-paypal-commerce-payment-integration-oauth-" +
+							"application-headless-server"),
+					"/o/c/b9k3paypalwebhooks/by-external-reference-code/" +
+						transactionCode));
+
+			if (!_hasAuthentication(
+					b9k3PayPalWebhookJSONObject, headers, json)) {
+
+				return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+			}
+
+			_updatePayment(
+				b9k3PayPalWebhookJSONObject, errorMessages, json, paymentStatus,
+				transactionCode);
 		}
 		catch (Exception exception) {
 			_log.error(ExceptionUtils.getMessage(exception));
@@ -89,17 +97,10 @@ public class NotificationsRestController extends BaseRestController {
 	}
 
 	private boolean _hasAuthentication(
-		Map<String, String> headers, String json, String transactionCode) {
+		JSONObject b9k3PayPalWebhookJSONObject, Map<String, String> headers,
+		String json) {
 
-		JSONObject payPalWebhookJSONObject = new JSONObject(
-			get(
-				_liferayOAuth2AccessTokenManager.getAuthorization(
-					"liferay-paypal-commerce-payment-integration-oauth-" +
-						"application-headless-server"),
-				"/o/c/b9k3paypalwebhooks/by-external-reference-code/" +
-					transactionCode));
-
-		if (payPalWebhookJSONObject == null) {
+		if (b9k3PayPalWebhookJSONObject.isEmpty()) {
 			return false;
 		}
 
@@ -114,7 +115,7 @@ public class NotificationsRestController extends BaseRestController {
 		String transmissionSig =
 			"\"" + headers.get("paypal-transmission-sig") + "\"";
 		String webhookId =
-			"\"" + payPalWebhookJSONObject.getString("webhookId") + "\"";
+			"\"" + b9k3PayPalWebhookJSONObject.getString("webhookId") + "\"";
 
 		sb.append("{\"transmission_id\": ");
 		sb.append(transmissionId);
@@ -133,12 +134,12 @@ public class NotificationsRestController extends BaseRestController {
 		sb.append("}");
 
 		String authorization = getAuthorization(
-			payPalWebhookJSONObject.getString("clientId"),
-			payPalWebhookJSONObject.getString("clientSecret"),
-			payPalWebhookJSONObject.getString("mode"));
+			b9k3PayPalWebhookJSONObject.getString("clientId"),
+			b9k3PayPalWebhookJSONObject.getString("clientSecret"),
+			b9k3PayPalWebhookJSONObject.getString("mode"));
 
 		String verifySignatureResponse = WebClient.create(
-			getPayPalURL(payPalWebhookJSONObject.getString("mode"))
+			getPayPalURL(b9k3PayPalWebhookJSONObject.getString("mode"))
 		).post(
 		).uri(
 			"v1/notifications/verify-webhook-signature"
@@ -170,41 +171,35 @@ public class NotificationsRestController extends BaseRestController {
 	}
 
 	private void _updatePayment(
-		String errorMessages, String json, String paymentStatus,
-		String transactionCode) {
+		JSONObject b9k3PayPalWebhookJSONObject, String errorMessages,
+		String json, String paymentStatus, String transactionCode) {
 
-		JSONObject payPalWebhookJSONObject = new JSONObject(
-			get(
-				_liferayOAuth2AccessTokenManager.getAuthorization(
-					"liferay-paypal-commerce-payment-integration-oauth-" +
-						"application-headless-server"),
-				"/o/c/b9k3paypalwebhooks/by-external-reference-code/" +
-					transactionCode));
-
-		if (payPalWebhookJSONObject != null) {
-			patch(
-				_liferayOAuth2AccessTokenManager.getAuthorization(
-					"liferay-paypal-commerce-payment-integration-oauth-" +
-						"application-headless-server"),
-				new JSONObject(
-				).put(
-					"errorMessages", errorMessages
-				).put(
-					"payload", json
-				).put(
-					"paymentStatus", paymentStatus
-				).toString(),
-				"/o/headless-commerce-admin-payment/v1.0/payments/" +
-					payPalWebhookJSONObject.getLong("paymentEntryId"));
-
-			delete(
-				_liferayOAuth2AccessTokenManager.getAuthorization(
-					"liferay-paypal-commerce-payment-integration-oauth-" +
-						"application-headless-server"),
-				StringPool.BLANK,
-				"/o/c/b9k3paypalwebhooks/by-external-reference-code/" +
-					transactionCode);
+		if (b9k3PayPalWebhookJSONObject.isEmpty()) {
+			return;
 		}
+
+		patch(
+			_liferayOAuth2AccessTokenManager.getAuthorization(
+				"liferay-paypal-commerce-payment-integration-oauth-" +
+					"application-headless-server"),
+			new JSONObject(
+			).put(
+				"errorMessages", errorMessages
+			).put(
+				"payload", json
+			).put(
+				"paymentStatus", paymentStatus
+			).toString(),
+			"/o/headless-commerce-admin-payment/v1.0/payments/" +
+				b9k3PayPalWebhookJSONObject.getLong("paymentEntryId"));
+
+		delete(
+			_liferayOAuth2AccessTokenManager.getAuthorization(
+				"liferay-paypal-commerce-payment-integration-oauth-" +
+					"application-headless-server"),
+			StringPool.BLANK,
+			"/o/c/b9k3paypalwebhooks/by-external-reference-code/" +
+				transactionCode);
 	}
 
 	private static final Log _log = LogFactory.getLog(

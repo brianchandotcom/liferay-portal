@@ -39,3 +39,25 @@ interface WorkflowDefinition {
 	title_i18n: DataObject;
 	version: string;
 }
+
+interface WorkflowTaskDefinition {
+	completed: boolean;
+	description: string;
+	id: number;
+	label: string;
+	name: string;
+	objectReviewed: {
+		assetTitle: string;
+		assetType: string;
+		id: number;
+		resourceType: string;
+	};
+	workflowDefinitionId: number;
+	workflowDefinitionName: string;
+	workflowDefinitionVersion: string;
+	workflowInstanceId: number;
+}
+
+interface WorkflowTaskDefinitions {
+	items: WorkflowTaskDefinition[];
+}

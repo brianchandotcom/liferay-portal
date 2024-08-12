@@ -96,8 +96,26 @@ html#{$cadmin-selector} {
 				left: 100%;
 				position: fixed;
 				transition: transform 0.5s ease;
-				width: $sidebarWidth;
+				width: 100%;
 				z-index: $cadmin-zindex-dropdown - 1;
+
+				// Breakpoint MD
+
+				@media screen and (min-width: 767px) {
+					width: 50%;
+				}
+
+				// Breakpoint LG
+
+				@media screen and (min-width: 1199px) {
+					width: 50%;
+				}
+
+				// Breakpoint XL
+
+				@media screen and (min-width: 1920px) {
+					width: 33.28%;
+				}
 
 				.sidebar-body,
 				.sidebar-header {
@@ -197,7 +215,25 @@ html#{$cadmin-selector} {
 		}
 
 		.sidebar-wrapper {
-			padding-right: $sidebarWidth;
+			padding-right: 100%;
+
+			// Breakpoint MD
+
+			@media screen and (min-width: 767px) {
+				padding-right: 50%;
+			}
+
+			// Breakpoint LG
+
+			@media screen and (min-width: 1199px) {
+				padding-right: 50%;
+			}
+
+			// Breakpoint XL
+
+			@media screen and (min-width: 1920px) {
+				padding-right: 33.28%;
+			}
 		}
 	}
 

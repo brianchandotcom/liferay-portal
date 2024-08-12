@@ -307,10 +307,11 @@ public abstract class BaseDBProcess implements DBProcess {
 	}
 
 	protected Connection getConnection() throws Exception {
-		return (Connection)ProxyUtil.newProxyInstance(
-			ClassLoader.getSystemClassLoader(),
-			new Class<?>[] {Connection.class},
-			new ConnectionThreadProxyInvocationHandler());
+		return SQLStatementLoggingWrapper.getConnectionWrapper(
+			(Connection)ProxyUtil.newProxyInstance(
+				ClassLoader.getSystemClassLoader(),
+				new Class<?>[] {Connection.class},
+				new ConnectionThreadProxyInvocationHandler()));
 	}
 
 	protected String[] getPrimaryKeyColumnNames(

@@ -5,11 +5,11 @@
 
 package com.liferay.portal.kernel.dao.db;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.util.CallableStatementWrapper;
 import com.liferay.portal.kernel.dao.jdbc.util.ConnectionWrapper;
 import com.liferay.portal.kernel.dao.jdbc.util.PreparedStatementWrapper;
 import com.liferay.portal.kernel.dao.jdbc.util.StatementWrapper;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -166,8 +166,13 @@ public class SQLStatementLoggingWrapper {
 
 		@Override
 		public String toString() {
-			return StringBundler.concat(
-				"SQL: ", _sql, ";\tError: ", _errorMessage);
+			String toString = "SQL: " + _sql;
+
+			if (Validator.isBlank(_errorMessage)) {
+				return toString;
+			}
+
+			return toString + ";\tError: " + _errorMessage;
 		}
 
 		private final String _errorMessage;
@@ -185,10 +190,9 @@ public class SQLStatementLoggingWrapper {
 		catch (SQLException sqlException) {
 			String sql = _extractSql(object);
 
-			String message = sqlException.getMessage();
-
-			if ((sql != null) && (message != null)) {
-				_sqlErrorLogs.add(new SQLErrorLogEntry(sql, message));
+			if (sql != null) {
+				_sqlErrorLogs.add(
+					new SQLErrorLogEntry(sql, sqlException.getMessage()));
 			}
 
 			throw sqlException;

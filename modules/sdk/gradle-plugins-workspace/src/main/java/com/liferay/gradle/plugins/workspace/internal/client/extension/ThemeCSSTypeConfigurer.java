@@ -130,7 +130,13 @@ public class ThemeCSSTypeConfigurer implements ClientExtensionConfigurer {
 		BuildThemeTask buildThemeTask = (BuildThemeTask)GradleUtil.getTask(
 			project, ThemeBuilderPlugin.BUILD_THEME_TASK_NAME);
 
-		buildThemeTask.setDiffsDir(project.file("src"));
+		File srcDir = project.file("src");
+
+		if (!srcDir.exists()) {
+			srcDir.mkdirs();
+		}
+
+		buildThemeTask.setDiffsDir(srcDir);
 
 		File packageJsonFile = project.file("package.json");
 

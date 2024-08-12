@@ -33,6 +33,7 @@ import com.liferay.object.rest.dto.v1_0.FileEntry;
 import com.liferay.object.rest.dto.v1_0.Folder;
 import com.liferay.object.rest.dto.v1_0.ListEntry;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
+import com.liferay.object.rest.dto.v1_0.Scope;
 import com.liferay.object.rest.dto.v1_0.Status;
 import com.liferay.object.rest.dto.v1_0.TaxonomyCategoryBrief;
 import com.liferay.object.rest.dto.v1_0.util.CreatorUtil;
@@ -61,6 +62,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -523,6 +525,31 @@ public class ObjectEntryDTOConverter
 				objectDefinition.getExternalReferenceCode(),
 				objectEntry.getExternalReferenceCode(), _portal));
 		fileEntry.setName(dlFileEntry::getFileName);
+		fileEntry.setScope(
+			() -> {
+				if (!FeatureFlagManagerUtil.isEnabled(
+						objectDefinition.getCompanyId(), "LPD-24674")) {
+
+					return null;
+				}
+
+				Scope scope = new Scope();
+
+				Group group = _groupLocalService.getGroup(
+					dlFileEntry.getGroupId());
+
+				scope.setExternalReferenceCode(group::getExternalReferenceCode);
+				scope.setType(
+					() -> {
+						if (group.getType() == GroupConstants.TYPE_DEPOT) {
+							return Scope.Type.ASSET_LIBRARY;
+						}
+
+						return Scope.Type.SITE;
+					});
+
+				return scope;
+			});
 
 		return fileEntry;
 	}

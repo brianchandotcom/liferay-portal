@@ -6,6 +6,7 @@
 package com.liferay.paypal;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
@@ -71,7 +72,7 @@ public class RenderRestController extends BaseRestController {
 			sb.append("&cancel=");
 			sb.append(jsonObject.getBoolean("cancel"));
 			delete(
-				"Bearer " + jwt.getTokenValue(),
+				"Bearer " + jwt.getTokenValue(), StringPool.BLANK,
 				"/o/c/b9k3paypalwebhooks/by-external-reference-code/" +
 					jsonObject.getString("transactionCode"));
 		}
@@ -104,11 +105,12 @@ public class RenderRestController extends BaseRestController {
 	private String _getPaymentEntryId(
 		Jwt jwt, long orderId, String transactionCode) {
 
-		JSONObject paymentsJSONObject = get(
-			"Bearer " + jwt.getTokenValue(),
-			StringBundler.concat(
-				"/o/headless-commerce-admin-payment/v1.0/payments/?filter=",
-				"relatedItemId eq ", orderId));
+		JSONObject paymentsJSONObject = new JSONObject(
+			get(
+				"Bearer " + jwt.getTokenValue(),
+				StringBundler.concat(
+					"/o/headless-commerce-admin-payment/v1.0/payments/?filter=",
+					"relatedItemId eq ", orderId)));
 
 		JSONArray itemsJSONArray = paymentsJSONObject.getJSONArray("items");
 

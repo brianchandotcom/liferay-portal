@@ -88,7 +88,7 @@
 
 <@liferay.silently featureCollectionJSONObject.put("features", featureJSONArray) />
 
-<style type="text/css">
+<style ${nonceAttribute} type="text/css">
 	.asset-entry-abstract {
 		min-width: 400px;
 	}

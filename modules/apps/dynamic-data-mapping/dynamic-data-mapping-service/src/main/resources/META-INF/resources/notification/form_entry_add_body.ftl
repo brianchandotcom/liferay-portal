@@ -1,5 +1,5 @@
 <html>
-	<style type="text/css">
+	<style ${nonceAttribute} type="text/css">
 		body {
 			margin: 0;
 			overflow: visible;

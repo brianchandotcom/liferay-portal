@@ -1127,6 +1127,27 @@ public class DefaultObjectEntryManagerImplTest
 			).put(
 				"name", listTypeEntry.getName(LocaleUtil.US)
 			).build());
+
+		// Relationship
+
+		String newExternalReferenceCode = RandomTestUtil.randomString();
+
+		_defaultObjectEntryManager.addObjectEntry(
+			dtoConverterContext, _objectDefinition2,
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						_objectRelationshipERCObjectFieldName,
+						newExternalReferenceCode
+					).build();
+				}
+			},
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		Assert.assertNotNull(
+			_defaultObjectEntryManager.getObjectEntry(
+				_objectDefinition1.getCompanyId(), _simpleDTOConverterContext,
+				newExternalReferenceCode, _objectDefinition1, null));
 	}
 
 	@Test

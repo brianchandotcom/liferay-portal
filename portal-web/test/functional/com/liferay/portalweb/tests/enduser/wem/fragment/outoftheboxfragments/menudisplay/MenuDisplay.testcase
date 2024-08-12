@@ -89,7 +89,7 @@ definition {
 
 			PageEditor.addFragment(
 				collectionName = "Menu Display",
-				dropTarget = "Header",
+				dropTarget = "Footer",
 				fragmentName = "Menu Display",
 				scope = "Master");
 		}
@@ -145,8 +145,6 @@ definition {
 			PageEditor.editMenuDisplay(
 				panel = "General",
 				sublevels = 1);
-
-			PageEditor.clickManagementBar();
 		}
 
 		task ("Assert only the Test Child Page item is shown in dropdown menu") {

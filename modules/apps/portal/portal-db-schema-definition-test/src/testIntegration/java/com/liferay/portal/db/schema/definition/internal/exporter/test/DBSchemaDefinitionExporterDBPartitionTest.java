@@ -1,0 +1,280 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.portal.db.schema.definition.internal.exporter.test;
+
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.service.ObjectRelationshipLocalServiceUtil;
+import com.liferay.object.test.util.ObjectDefinitionTestUtil;
+import com.liferay.object.test.util.ObjectRelationshipTestUtil;
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.db.schema.definition.internal.test.util.ConfigurationTestUtil;
+import com.liferay.portal.db.schema.definition.internal.test.util.DatabaseTestUtil;
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.db.partition.DBPartition;
+import com.liferay.portal.kernel.instance.PortalInstancePool;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.AssumeTestRule;
+import com.liferay.portal.kernel.test.util.CompanyTestUtil;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.InfrastructureUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+
+import java.io.File;
+
+import javax.sql.DataSource;
+
+import org.apache.felix.cm.PersistenceManager;
+
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.BeforeClass;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+/**
+ * @author Mariano Álvaro Sáiz
+ */
+@RunWith(Arquillian.class)
+public class DBSchemaDefinitionExporterDBPartitionTest
+	extends BaseDBSchemaDefinitionExporterTestCase {
+
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new AssumeTestRule("assume"), new LiferayIntegrationTestRule());
+
+	public static void assume() {
+		Assume.assumeTrue(DBPartition.isPartitionEnabled());
+
+		BaseDBSchemaDefinitionExporterTestCase.assumeDB();
+	}
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		setUpClassDefault();
+
+		_company = CompanyTestUtil.addCompany();
+
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setWithSafeCloseable(
+					_company.getCompanyId())) {
+
+			User adminUser = UserTestUtil.getAdminUser(_company.getCompanyId());
+
+			_objectDBPartitionDefinition1 =
+				ObjectDefinitionTestUtil.addCustomObjectDefinition(
+					ObjectDefinitionTestUtil.getRandomName(),
+					adminUser.getUserId());
+			_objectDBPartitionDefinition2 =
+				ObjectDefinitionTestUtil.addCustomObjectDefinition(
+					ObjectDefinitionTestUtil.getRandomName(),
+					adminUser.getUserId());
+
+			_objectDBPartitionRelationship =
+				ObjectRelationshipTestUtil.addObjectRelationship(
+					ObjectRelationshipLocalServiceUtil.getService(),
+					_objectDBPartitionDefinition1,
+					_objectDBPartitionDefinition2, adminUser.getUserId());
+		}
+	}
+
+	@Test
+	public void testExportImportDBSchemaDefinition() throws Exception {
+		testExportImportDBSchemaDefinition(
+			() -> _companyLocalService.forEachCompanyId(
+				companyId -> {
+					String tablesSQLName = "tables.sql";
+					String indexesSQLName = "indexes.sql";
+
+					if (companyId != PortalInstancePool.getDefaultCompanyId()) {
+						tablesSQLName =
+							companyId + StringPool.UNDERLINE + tablesSQLName;
+						indexesSQLName =
+							companyId + StringPool.UNDERLINE + indexesSQLName;
+					}
+
+					_assertImportDBSchemaDefinition(
+						companyId, new File(folder, tablesSQLName),
+						new File(folder, indexesSQLName));
+				}));
+	}
+
+	@Test
+	public void testExportImportReport() throws Exception {
+		ConfigurationTestUtil.deployConfiguration(
+			configurationAdmin, databaseType, folder.getAbsolutePath(), PID);
+
+		String content = FileUtil.read(
+			new File(folder, "db_schema_definition_export_report.info"));
+
+		Assert.assertTrue(
+			content.contains("Default virtual instance missing tables:\n"));
+		Assert.assertTrue(
+			content.contains(
+				"Virtual instance " + _company.getCompanyId() +
+					" missing tables:\n"));
+		Assert.assertTrue(
+			content.endsWith(
+				"Virtual instance " + _company.getCompanyId() +
+					" missing views:"));
+	}
+
+	@Test
+	public void testExportImportReportWithMissingTable() throws Exception {
+		DB db = DBManagerUtil.getDB();
+
+		try {
+			db.runSQL("create table TestTable (testColumn bigint primary key)");
+			db.runSQL(
+				"create table " +
+					DatabaseTestUtil.getPartitionName(_company.getCompanyId()) +
+						".TestTable2 (testColumn bigint primary key)");
+
+			ConfigurationTestUtil.deployConfiguration(
+				configurationAdmin, databaseType, folder.getAbsolutePath(),
+				PID);
+
+			String content = FileUtil.read(
+				new File(folder, "db_schema_definition_export_report.info"));
+
+			Assert.assertTrue(
+				content.contains(
+					"Default virtual instance missing tables: " +
+						StringUtil.toLowerCase("TestTable")));
+			Assert.assertTrue(
+				content.contains(
+					StringBundler.concat(
+						"Virtual instance ", _company.getCompanyId(),
+						" missing tables: ",
+						StringUtil.toLowerCase("TestTable2"))));
+		}
+		finally {
+			db.runSQL("DROP_TABLE_IF_EXISTS(TestTable)");
+			db.runSQL(
+				"DROP_TABLE_IF_EXISTS(" +
+					DatabaseTestUtil.getPartitionName(_company.getCompanyId()) +
+						".TestTable2)");
+		}
+	}
+
+	@Test
+	public void testExportImportReportWithMissingView() throws Exception {
+		DB db = DBManagerUtil.getDB();
+
+		try {
+			db.runSQL(
+				"create view " +
+					DatabaseTestUtil.getPartitionName(_company.getCompanyId()) +
+						".TestView as select * from Company");
+
+			ConfigurationTestUtil.deployConfiguration(
+				configurationAdmin, databaseType, folder.getAbsolutePath(),
+				PID);
+
+			String content = FileUtil.read(
+				new File(folder, "db_schema_definition_export_report.info"));
+
+			Assert.assertTrue(
+				content.contains(
+					StringBundler.concat(
+						"Virtual instance ", _company.getCompanyId(),
+						" missing views: ",
+						StringUtil.toLowerCase("TestView"))));
+		}
+		finally {
+			db.runSQL(
+				"drop view if exists " +
+					DatabaseTestUtil.getPartitionName(_company.getCompanyId()) +
+						".TestView");
+		}
+	}
+
+	private void _assertImportDBSchemaDefinition(
+			long companyId, File tablesSQLFile, File indexesSQLFile)
+		throws Exception {
+
+		DatabaseTestUtil.createSchema(COPY_DB_SCHEMA_NAME);
+
+		DataSource copyDataSource = null;
+		DataSource dataSource = InfrastructureUtil.getDataSource();
+
+		try {
+			copyDataSource = DatabaseTestUtil.initDataSource(
+				COPY_DB_SCHEMA_NAME);
+
+			if (companyId == PortalInstancePool.getDefaultCompanyId()) {
+				DatabaseTestUtil.importFile(tablesSQLFile, copyDataSource);
+			}
+			else {
+				DatabaseTestUtil.importFileRenamingSchema(
+					tablesSQLFile, InfrastructureUtil.getDataSource(),
+					DatabaseTestUtil.getPartitionName(companyId),
+					COPY_DB_SCHEMA_NAME);
+
+				dataSource = DatabaseTestUtil.initDataSource(
+					DatabaseTestUtil.getPartitionName(companyId));
+			}
+
+			assertTables(dataSource, copyDataSource);
+			Assert.assertEquals(
+				DatabaseTestUtil.getViewNames(dataSource),
+				DatabaseTestUtil.getViewNames(copyDataSource));
+
+			if (companyId == PortalInstancePool.getDefaultCompanyId()) {
+				DatabaseTestUtil.importFile(indexesSQLFile, copyDataSource);
+			}
+			else {
+				DatabaseTestUtil.importFileRenamingSchema(
+					indexesSQLFile, InfrastructureUtil.getDataSource(),
+					DatabaseTestUtil.getPartitionName(companyId),
+					COPY_DB_SCHEMA_NAME);
+			}
+
+			assertIndexes(dataSource, copyDataSource);
+		}
+		finally {
+			DatabaseTestUtil.dropSchema(COPY_DB_SCHEMA_NAME);
+
+			if ((dataSource != null) &&
+				(dataSource != InfrastructureUtil.getDataSource())) {
+
+				DatabaseTestUtil.destroyDataSource(dataSource);
+			}
+
+			if (copyDataSource != null) {
+				DatabaseTestUtil.destroyDataSource(copyDataSource);
+			}
+		}
+	}
+
+	private static Company _company;
+
+	@Inject
+	private static CompanyLocalService _companyLocalService;
+
+	private static ObjectDefinition _objectDBPartitionDefinition1;
+	private static ObjectDefinition _objectDBPartitionDefinition2;
+	private static ObjectRelationship _objectDBPartitionRelationship;
+
+	@Inject
+	private PersistenceManager _persistenceManager;
+
+}

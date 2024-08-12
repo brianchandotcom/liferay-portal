@@ -45,12 +45,13 @@ public class DBPartitionSQLProvider extends BaseSQLProvider {
 
 		super(dbType);
 
-		_dbPartitionName = DBPartitionUtil.getPartitionName(companyId);
-
 		_objectSQLProvider = new ObjectSQLProvider(db, companyId);
+
+		_partitionName = DBPartitionUtil.getPartitionName(companyId);
 
 		if ((_partitionIndexesSQL == null) || (_partitionTablesSQL == null)) {
 			_partitionTablesSQL = _getPartitionTablesSQL();
+
 			_partitionIndexesSQL = _getPartitionIndexesSQL();
 		}
 	}
@@ -62,7 +63,7 @@ public class DBPartitionSQLProvider extends BaseSQLProvider {
 				_partitionIndexesSQL, StringPool.NEW_LINE,
 				_objectSQLProvider.getIndexesSQL()),
 			" on ",
-			StringBundler.concat(" on ", _dbPartitionName, StringPool.PERIOD));
+			StringBundler.concat(" on ", _partitionName, StringPool.PERIOD));
 	}
 
 	@Override
@@ -74,26 +75,25 @@ public class DBPartitionSQLProvider extends BaseSQLProvider {
 		}
 
 		return StringBundler.concat(
-			_getCreatePartitionSQL(), StringPool.NEW_LINE,
+			_getCreatePartitionSQL(),
 			StringUtil.replace(
-				StringBundler.concat(
-					_partitionTablesSQL, StringPool.NEW_LINE,
-					_objectSQLProvider.getTablesSQL()),
+				_partitionTablesSQL + StringPool.NEW_LINE +
+					_objectSQLProvider.getTablesSQL(),
 				"create table ",
 				StringBundler.concat(
-					"create table ", _dbPartitionName, StringPool.PERIOD)),
-			_getViewsSQL(), StringPool.NEW_LINE, rulesSQLSupplier.get());
+					"create table ", _partitionName, StringPool.PERIOD)),
+			_getViewsSQL(), rulesSQLSupplier.get());
 	}
 
 	private String _getCreatePartitionSQL() {
 		if (db.getDBType() == DBType.MYSQL) {
 			return StringBundler.concat(
-				"create schema if not exists ", _dbPartitionName,
+				"create schema if not exists ", _partitionName,
 				" character set utf8;", StringPool.NEW_LINE);
 		}
 
 		return StringBundler.concat(
-			"create schema if not exists ", _dbPartitionName,
+			"create schema if not exists ", _partitionName,
 			StringPool.SEMICOLON, StringPool.NEW_LINE);
 	}
 
@@ -165,14 +165,12 @@ public class DBPartitionSQLProvider extends BaseSQLProvider {
 					}
 				}
 
+				sb.append(StringPool.NEW_LINE);
 				sb.append(createTableSQL);
 				sb.append(StringPool.SEMICOLON);
 				sb.append(StringPool.NEW_LINE);
-				sb.append(StringPool.NEW_LINE);
 			}
 		}
-
-		sb.setIndex(sb.index() - 1);
 
 		return sb.toString();
 	}
@@ -181,18 +179,14 @@ public class DBPartitionSQLProvider extends BaseSQLProvider {
 		StringBundler sb = new StringBundler();
 
 		for (List<String> ruleTableColumn : _rulesTableColumn) {
+			sb.append(StringPool.NEW_LINE);
 			sb.append(
 				PostgreSQLDB.getCreateRulesSQL(
 					StringBundler.concat(
-						_dbPartitionName, StringPool.PERIOD,
+						_partitionName, StringPool.PERIOD,
 						ruleTableColumn.get(0)),
 					ruleTableColumn.get(1)));
 			sb.append(StringPool.NEW_LINE);
-			sb.append(StringPool.NEW_LINE);
-		}
-
-		if (sb.index() > 1) {
-			sb.setIndex(sb.index() - 1);
 		}
 
 		return sb.toString();
@@ -202,16 +196,14 @@ public class DBPartitionSQLProvider extends BaseSQLProvider {
 		StringBundler sb = new StringBundler(_controlTableNames.size());
 
 		for (String controlTableName : _controlTableNames) {
+			sb.append(StringPool.NEW_LINE);
 			sb.append(
 				StringBundler.concat(
-					"create or replace view ", _dbPartitionName,
+					"create or replace view ", _partitionName,
 					StringPool.PERIOD, controlTableName, " as select * from ",
-					controlTableName, StringPool.SEMICOLON,
-					StringPool.NEW_LINE));
+					controlTableName, StringPool.SEMICOLON));
 			sb.append(StringPool.NEW_LINE);
 		}
-
-		sb.setIndex(sb.index() - 1);
 
 		return sb.toString();
 	}
@@ -221,7 +213,7 @@ public class DBPartitionSQLProvider extends BaseSQLProvider {
 	private static String _partitionTablesSQL;
 	private static Set<List<String>> _rulesTableColumn;
 
-	private final String _dbPartitionName;
 	private final ObjectSQLProvider _objectSQLProvider;
+	private final String _partitionName;
 
 }

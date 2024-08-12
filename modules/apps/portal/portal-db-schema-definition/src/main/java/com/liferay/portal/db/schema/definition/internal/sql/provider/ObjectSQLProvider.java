@@ -54,6 +54,10 @@ public class ObjectSQLProvider implements SQLProvider {
 
 	@Override
 	public String getTablesSQL() {
+		if (_tablesSQLSB.index() > 0) {
+			_tablesSQLSB.setIndex(_tablesSQLSB.index() - 1);
+		}
+
 		return _tablesSQLSB.toString();
 	}
 

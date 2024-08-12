@@ -34,6 +34,7 @@ import {ObjectEntryApiHelper} from './ObjectEntryApiHelper';
 import {SearchExperiencesApiHelper} from './SearchExperiencesApiHelper';
 import {JSONWebServicesAnnouncementsEntryApiHelper} from './json-web-services/JSONWebServicesAnnouncementsEntryApiHelper';
 import {JSONWebServicesClassNameApiHelper} from './json-web-services/JSONWebServicesClassNameApiHelper';
+import {JSONWebServicesClientExtensionApiHelper} from './json-web-services/JSONWebServicesClientExtensionApiHelper';
 import {JSONWebServicesCompanyApiHelper} from './json-web-services/JSONWebServicesCompanyApiHelper';
 import {JSONWebServicesDDMApiHelper} from './json-web-services/JSONWebServicesDDMApiHelper';
 import {JSONWebServicesGroupApiHelper} from './json-web-services/JSONWebServicesGroupApiHelper';
@@ -82,6 +83,7 @@ export class ApiHelpers {
 	readonly headlessSite: HeadlessSiteApiHelper;
 	readonly jsonWebServicesAnnouncementsEntryApiHelper: JSONWebServicesAnnouncementsEntryApiHelper;
 	readonly jsonWebServicesClassName: JSONWebServicesClassNameApiHelper;
+	readonly jsonWebServicesClientExtension: JSONWebServicesClientExtensionApiHelper;
 	readonly jsonWebServicesCompany: JSONWebServicesCompanyApiHelper;
 	readonly jsonWebServicesDDM: JSONWebServicesDDMApiHelper;
 	readonly jsonWebServicesGroup: JSONWebServicesGroupApiHelper;
@@ -140,6 +142,8 @@ export class ApiHelpers {
 		this.jsonWebServicesClassName = new JSONWebServicesClassNameApiHelper(
 			this
 		);
+		this.jsonWebServicesClientExtension =
+			new JSONWebServicesClientExtensionApiHelper(this);
 		this.jsonWebServicesCompany = new JSONWebServicesCompanyApiHelper(this);
 		this.jsonWebServicesDDM = new JSONWebServicesDDMApiHelper(this);
 		this.jsonWebServicesGroup = new JSONWebServicesGroupApiHelper(this);

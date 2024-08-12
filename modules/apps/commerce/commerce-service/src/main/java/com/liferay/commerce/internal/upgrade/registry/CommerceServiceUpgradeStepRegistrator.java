@@ -39,6 +39,7 @@ import com.liferay.commerce.model.impl.CPDAvailabilityEstimateModelImpl;
 import com.liferay.commerce.model.impl.CPDefinitionInventoryModelImpl;
 import com.liferay.commerce.model.impl.CommerceAvailabilityEstimateModelImpl;
 import com.liferay.commerce.model.impl.CommerceOrderItemModelImpl;
+import com.liferay.commerce.model.impl.CommerceOrderModelImpl;
 import com.liferay.commerce.model.impl.CommerceShipmentItemModelImpl;
 import com.liferay.commerce.model.impl.CommerceShippingMethodModelImpl;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
@@ -699,6 +700,11 @@ public class CommerceServiceUpgradeStepRegistrator
 				OperationsManagerRoleUpgradeProcess(
 					_companyLocalService, _resourcePermissionLocalService,
 					_roleLocalService));
+
+		registry.register(
+			"11.4.2", "11.5.0",
+			UpgradeProcessFactory.addColumns(
+				CommerceOrderModelImpl.TABLE_NAME, "name VARCHAR(75) null"));
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce upgrade step registrator finished");

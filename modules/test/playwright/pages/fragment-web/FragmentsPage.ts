@@ -39,7 +39,10 @@ export class FragmentsPage {
 	async copyFragment(title: string) {
 		await this.clickAction('Make a Copy', title);
 
-		await waitForSuccessAlert(this.page);
+		await waitForSuccessAlert(
+			this.page,
+			'Success:The fragment was copied successfully.'
+		);
 	}
 
 	async copyToFragment(title: string) {
@@ -111,10 +114,10 @@ export class FragmentsPage {
 		await waitForSuccessAlert(this.page);
 	}
 
-	async markAsDefault(title: string) {
+	async markAsCacheable(title: string) {
 		this.page.on('dialog', (dialog) => dialog.accept());
 
-		await this.clickAction('Mark as Default', title);
+		await this.clickAction('Mark as Cacheable', title);
 
 		await waitForSuccessAlert(this.page);
 	}

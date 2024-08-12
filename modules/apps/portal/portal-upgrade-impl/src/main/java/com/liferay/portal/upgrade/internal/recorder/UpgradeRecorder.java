@@ -74,7 +74,7 @@ public class UpgradeRecorder {
 		return _result;
 	}
 
-	public List<SQLStatementLoggingWrapper.SQLErrorLogEntry> getSqlErrorLogs() {
+	public List<String> getSqlErrorLogs() {
 		return _sqlErrorLogs;
 	}
 
@@ -320,8 +320,7 @@ public class UpgradeRecorder {
 	private static String _result;
 	private static final Map<String, SchemaVersions> _schemaVersionsMap =
 		new ConcurrentHashMap<>();
-	private static List<SQLStatementLoggingWrapper.SQLErrorLogEntry>
-		_sqlErrorLogs;
+	private static List<String> _sqlErrorLogs;
 	private static String _type;
 	private static final Map<String, ArrayList<String>>
 		_upgradeProcessMessages = new ConcurrentHashMap<>();

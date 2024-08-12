@@ -78,7 +78,8 @@ public class CommerceInventoryWarehouseItemLocalServiceTest {
 				HashMapBuilder.put(
 					LocaleUtil.getDefault(), "NOME"
 				).build(),
-				2, true, 0.0, BigDecimal.ONE, _cpInstance.getSku());
+				2, BigDecimal.ZERO, true, 0.0, BigDecimal.ONE,
+				_cpInstance.getSku());
 	}
 
 	@After
@@ -157,7 +158,7 @@ public class CommerceInventoryWarehouseItemLocalServiceTest {
 			HashMapBuilder.put(
 				LocaleUtil.getDefault(), "NAME-1"
 			).build(),
-			2, true, 0.0, BigDecimal.ONE, cpInstance.getSku());
+			2, BigDecimal.ZERO, true, 0.0, BigDecimal.ONE, cpInstance.getSku());
 
 		_cpInstanceUnitOfMeasureLocalService.addCPInstanceUnitOfMeasure(
 			_user.getUserId(), _cpInstance.getCPInstanceId(), true,
@@ -165,7 +166,7 @@ public class CommerceInventoryWarehouseItemLocalServiceTest {
 			HashMapBuilder.put(
 				LocaleUtil.getDefault(), "NAME-2"
 			).build(),
-			2, true, 0.0, BigDecimal.ONE, cpInstance.getSku());
+			2, BigDecimal.ZERO, true, 0.0, BigDecimal.ONE, cpInstance.getSku());
 
 		CommerceInventoryWarehouse commerceInventoryWarehouseActive =
 			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(
@@ -288,7 +289,7 @@ public class CommerceInventoryWarehouseItemLocalServiceTest {
 			HashMapBuilder.put(
 				LocaleUtil.getDefault(), "NAME-1"
 			).build(),
-			2, true, 0.0, BigDecimal.ONE, cpInstance.getSku());
+			2, BigDecimal.ZERO, true, 0.0, BigDecimal.ONE, cpInstance.getSku());
 
 		_cpInstanceUnitOfMeasureLocalService.addCPInstanceUnitOfMeasure(
 			_user.getUserId(), _cpInstance.getCPInstanceId(), true,
@@ -296,7 +297,7 @@ public class CommerceInventoryWarehouseItemLocalServiceTest {
 			HashMapBuilder.put(
 				LocaleUtil.getDefault(), "NAME-2"
 			).build(),
-			2, true, 0.0, BigDecimal.ONE, cpInstance.getSku());
+			2, BigDecimal.ZERO, true, 0.0, BigDecimal.ONE, cpInstance.getSku());
 
 		CommerceInventoryWarehouse commerceInventoryWarehouseActive =
 			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(

@@ -130,6 +130,7 @@ public class SkuUnitOfMeasureResourceImpl
 				GetterUtil.get(
 					skuUnitOfMeasure.getPrecision(),
 					cpInstanceUnitOfMeasure.getPrecision()),
+				BigDecimal.ONE,
 				GetterUtil.get(
 					skuUnitOfMeasure.getPrimary(),
 					cpInstanceUnitOfMeasure.isPrimary()),

@@ -160,7 +160,8 @@ public class CommerceProductTierPriceCalculationTest {
 				HashMapBuilder.put(
 					LocaleUtil.getDefault(), RandomTestUtil.randomString()
 				).build(),
-				2, false, 0.0, BigDecimal.ONE, cpInstance.getSku());
+				2, BigDecimal.ZERO, false, 0.0, BigDecimal.ONE,
+				cpInstance.getSku());
 
 		CommercePriceEntry commercePriceEntry =
 			_commercePriceEntryLocalService.addCommercePriceEntry(
@@ -288,7 +289,8 @@ public class CommerceProductTierPriceCalculationTest {
 				HashMapBuilder.put(
 					LocaleUtil.getDefault(), RandomTestUtil.randomString()
 				).build(),
-				2, false, 0.0, BigDecimal.ONE, cpInstance.getSku());
+				2, BigDecimal.ZERO, false, 0.0, BigDecimal.ONE,
+				cpInstance.getSku());
 
 		CommercePriceEntry commercePriceEntry =
 			_commercePriceEntryLocalService.addCommercePriceEntry(

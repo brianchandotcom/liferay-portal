@@ -333,8 +333,8 @@ public class SkuResourceTest extends BaseSkuResourceTestCase {
 			_user.getUserId(), sku.getId(), active, BigDecimal.ONE,
 			RandomTestUtil.randomString(),
 			RandomTestUtil.randomLocaleStringMap(),
-			RandomTestUtil.randomInt(0, 5), true, RandomTestUtil.nextDouble(),
-			BigDecimal.ONE, sku.getSku());
+			RandomTestUtil.randomInt(0, 5), BigDecimal.ZERO, true,
+			RandomTestUtil.nextDouble(), BigDecimal.ONE, sku.getSku());
 	}
 
 	private void _testGetChannelProductSkuAllowMultiplePriceEntriesInTheSamePriceList()

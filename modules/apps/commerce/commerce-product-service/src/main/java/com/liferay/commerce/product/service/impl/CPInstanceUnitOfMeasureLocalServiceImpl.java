@@ -44,11 +44,11 @@ public class CPInstanceUnitOfMeasureLocalServiceImpl
 
 	@Override
 	public CPInstanceUnitOfMeasure addCPInstanceUnitOfMeasure(
-		long userId, long cpInstanceId, boolean active,
-		BigDecimal incrementalOrderQuantity, String key,
-		Map<Locale, String> nameMap, int precision, BigDecimal pricingQuantity,
-		boolean primary,
-		double priority, BigDecimal rate, String sku)
+			long userId, long cpInstanceId, boolean active,
+			BigDecimal incrementalOrderQuantity, String key,
+			Map<Locale, String> nameMap, int precision,
+			BigDecimal pricingQuantity, boolean primary, double priority,
+			BigDecimal rate, String sku)
 		throws PortalException {
 
 		_validateCPInstanceUnitOfMeasureIncrementalOrderQuantity(
@@ -94,11 +94,11 @@ public class CPInstanceUnitOfMeasureLocalServiceImpl
 
 	@Override
 	public CPInstanceUnitOfMeasure addOrUpdateCPInstanceUnitOfMeasure(
-		long userId, long cpInstanceId, boolean active,
-		BigDecimal incrementalOrderQuantity, String key,
-		Map<Locale, String> nameMap, int precision, BigDecimal pricingQuantity,
-		boolean primary,
-		double priority, BigDecimal rate, String sku)
+			long userId, long cpInstanceId, boolean active,
+			BigDecimal incrementalOrderQuantity, String key,
+			Map<Locale, String> nameMap, int precision,
+			BigDecimal pricingQuantity, boolean primary, double priority,
+			BigDecimal rate, String sku)
 		throws PortalException {
 
 		CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
@@ -109,7 +109,8 @@ public class CPInstanceUnitOfMeasureLocalServiceImpl
 			return cpInstanceUnitOfMeasureLocalService.
 				addCPInstanceUnitOfMeasure(
 					userId, cpInstanceId, active, incrementalOrderQuantity, key,
-					nameMap, precision, pricingQuantity, primary, priority, rate, sku);
+					nameMap, precision, pricingQuantity, primary, priority,
+					rate, sku);
 		}
 
 		return cpInstanceUnitOfMeasureLocalService.
@@ -194,11 +195,11 @@ public class CPInstanceUnitOfMeasureLocalServiceImpl
 
 	@Override
 	public CPInstanceUnitOfMeasure updateCPInstanceUnitOfMeasure(
-		long cpInstanceUnitOfMeasureId, long cpInstanceId, boolean active,
-		BigDecimal incrementalOrderQuantity, String key,
-		Map<Locale, String> nameMap, int precision, BigDecimal pricingQuantity,
-		boolean primary,
-		double priority, BigDecimal rate, String sku)
+			long cpInstanceUnitOfMeasureId, long cpInstanceId, boolean active,
+			BigDecimal incrementalOrderQuantity, String key,
+			Map<Locale, String> nameMap, int precision,
+			BigDecimal pricingQuantity, boolean primary, double priority,
+			BigDecimal rate, String sku)
 		throws PortalException {
 
 		CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =

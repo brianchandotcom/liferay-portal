@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RequestMapping("/cancel")
 @RestController
-public class CancelRestController extends BaseRestController {
+public class CancelRestController extends PayPalBaseRestController {
 
 	@PostMapping
 	public ResponseEntity<String> post(

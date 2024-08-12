@@ -1171,6 +1171,11 @@ public abstract class BaseJob implements Job {
 		try {
 			batchTestClassGroups = parallelExecutor.execute();
 
+			if (parallelExecutor.failedExecution()) {
+				throw new RuntimeException(
+					"Failed to create BatchTestClassGroups");
+			}
+
 			for (List<Callable<BatchTestClassGroup>> testBaseDirCallables :
 					testBaseDirCallablesMap.values()) {
 
@@ -1179,6 +1184,11 @@ public abstract class BaseJob implements Job {
 					"getBatchTestClassGroups2");
 
 				batchTestClassGroups.addAll(parallelExecutor.execute());
+
+				if (parallelExecutor.failedExecution()) {
+					throw new RuntimeException(
+						"Failed to create BatchTestClassGroups");
+				}
 			}
 		}
 		catch (TimeoutException timeoutException) {

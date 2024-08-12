@@ -76,6 +76,16 @@ public class ParallelExecutor<T> {
 		return waitFor(timeoutSeconds);
 	}
 
+	public boolean failedExecution() {
+		if ((_taskRunnable == null) ||
+			(_taskRunnable.getFailedTaskCount() <= 0)) {
+
+			return false;
+		}
+
+		return true;
+	}
+
 	public String getDescription() {
 		return _description;
 	}

@@ -104,7 +104,6 @@ public class PropertiesTestFileCheck extends BaseFileCheck {
 						"Incorrect order of properties: '", propertyKey,
 						"' should come before '", previousPropertyKey, "'"));
 
-				return;
 			}
 
 			previousLine = line;

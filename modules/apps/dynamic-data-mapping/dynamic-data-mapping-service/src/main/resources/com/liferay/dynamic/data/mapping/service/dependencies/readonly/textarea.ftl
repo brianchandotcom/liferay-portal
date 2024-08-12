@@ -1,6 +1,6 @@
 <#include "../init.ftl">
 
-<style type="text/css">
+<style ${nonceAttribute} type="text/css">
 	pre.lfr-ddm-readonly-textarea {
 		font-family: inherit;
 		font-size: inherit;

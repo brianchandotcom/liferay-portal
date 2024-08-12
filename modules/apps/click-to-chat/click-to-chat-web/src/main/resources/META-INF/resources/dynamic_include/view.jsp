@@ -59,14 +59,14 @@
 				}
 			},
 			tidio: '#tidio-chat',
-			zendesk: '#launcher,#webWidget',
+			zendesk_web_widget: '#launcher,#webWidget',
 			zendesk_web_widget_classic: '#launcher,#webWidget',
 		};
 
 		Object.entries(clickToChatProviders).forEach(([key, action]) => {
 			var hideElement = true;
 
-			if (key === '<%= clickToChatChatProviderId %>') {
+			if (key.includes('<%= clickToChatChatProviderId %>')) {
 				hideElement = false;
 			}
 

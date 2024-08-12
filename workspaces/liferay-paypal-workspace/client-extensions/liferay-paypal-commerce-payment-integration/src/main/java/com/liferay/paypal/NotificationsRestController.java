@@ -106,36 +106,39 @@ public class NotificationsRestController extends BaseRestController {
 
 		JSONObject verifyWebhookSignatureResponseJSONObject = new JSONObject(
 			WebClient.create(
-			getPayPalURL(b9k3PayPalWebhookJSONObject.getString("mode"))
-		).post(
-		).uri(
-			"v1/notifications/verify-webhook-signature"
-		).accept(
-			MediaType.APPLICATION_JSON
-		).contentType(
-			MediaType.APPLICATION_JSON
-		).header(
-			HttpHeaders.AUTHORIZATION,
-			"Bearer " + getAuthorization(b9k3PayPalWebhookJSONObject)
-		).bodyValue(
+				getPayPalURL(b9k3PayPalWebhookJSONObject.getString("mode"))
+			).post(
+			).uri(
+				"v1/notifications/verify-webhook-signature"
+			).accept(
+				MediaType.APPLICATION_JSON
+			).contentType(
+				MediaType.APPLICATION_JSON
+			).header(
+				HttpHeaders.AUTHORIZATION,
+				"Bearer " + getAuthorization(b9k3PayPalWebhookJSONObject)
+			).bodyValue(
 
-			// Ugly string format is what PayPal expects
+				// Ugly string format is what PayPal expects
 
-			StringBundler.concat(
-				"{\"transmission_id\": \"",
-				headers.get("paypal-transmission-id"),
-				"\", \"transmission_time\": \"",
-				headers.get("paypal-transmission-time"), "\", \"cert_url\": \"",
-				headers.get("paypal-cert-url"), "\", \"auth_algo\": \"",
-				headers.get("paypal-auth-algo"), "\", \"transmission_sig\": \"",
-				headers.get("paypal-transmission-sig"),
-				"\", \"webhook_id\": \"",
-				b9k3PayPalWebhookJSONObject.getString("webhookId"),
-				"\", \"webhook_event\": ", json, "}")
-		).retrieve(
-		).bodyToMono(
-			String.class
-		).block());
+				StringBundler.concat(
+					"{\"transmission_id\": \"",
+					headers.get("paypal-transmission-id"),
+					"\", \"transmission_time\": \"",
+					headers.get("paypal-transmission-time"),
+					"\", \"cert_url\": \"",
+					headers.get("paypal-cert-url"),
+					"\", \"auth_algo\": \"",
+					headers.get("paypal-auth-algo"),
+					"\", \"transmission_sig\": \"",
+					headers.get("paypal-transmission-sig"),
+					"\", \"webhook_id\": \"",
+					b9k3PayPalWebhookJSONObject.getString("webhookId"),
+					"\", \"webhook_event\": ", json, "}")
+			).retrieve(
+			).bodyToMono(
+				String.class
+			).block());
 
 		if (Objects.equals(
 				verifyWebhookSignatureResponseJSONObject.getString(

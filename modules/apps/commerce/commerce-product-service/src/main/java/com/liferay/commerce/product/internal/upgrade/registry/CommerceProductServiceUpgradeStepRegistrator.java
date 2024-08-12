@@ -484,6 +484,11 @@ public class CommerceProductServiceUpgradeStepRegistrator
 
 			});
 
+		registry.register(
+			"5.18.0", "5.19.0",
+			UpgradeProcessFactory.addColumns(
+				"CPInstanceUOM", "pricingQuantity BIGDECIMAL"));
+
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce product upgrade step registrator finished");
 		}

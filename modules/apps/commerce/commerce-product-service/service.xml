@@ -940,6 +940,7 @@
 		<column name="key" type="String" />
 		<column localized="true" name="name" type="String" />
 		<column name="precision" type="int" />
+		<column name="pricingQuantity" type="BigDecimal" />
 		<column name="primary" type="boolean" />
 		<column name="priority" type="double" />
 		<column name="rate" type="BigDecimal" />

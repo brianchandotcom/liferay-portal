@@ -42,6 +42,7 @@ import {JSONWebServicesDDMApiHelper} from './json-web-services/JSONWebServicesDD
 import {JSONWebServicesGroupApiHelper} from './json-web-services/JSONWebServicesGroupApiHelper';
 import {JSONWebServicesJournalApiHelper} from './json-web-services/JSONWebServicesJournalApiHelper';
 import {JSONWebServicesLayoutApiHelper} from './json-web-services/JSONWebServicesLayoutApiHelper';
+import {JSONWebServicesLayoutPageTemplateEntryApiHelper} from './json-web-services/JSONWebServicesLayoutPageTemplateEntry';
 import {JSONWebServicesLayoutSetPrototypeApiHelper} from './json-web-services/JSONWebServicesLayoutSetPrototypeApiHelper';
 import {JSONWebServicesMBApiHelper} from './json-web-services/JSONWebServicesMBApiHelper';
 import {JSONWebServicesOSBAsahApiHelper} from './json-web-services/JSONWebServicesOSBAsahApiHelper';
@@ -92,6 +93,7 @@ export class ApiHelpers {
 	readonly jsonWebServicesGroup: JSONWebServicesGroupApiHelper;
 	readonly jsonWebServicesJournal: JSONWebServicesJournalApiHelper;
 	readonly jsonWebServicesLayout: JSONWebServicesLayoutApiHelper;
+	readonly jsonWebServicesLayoutPageTemplateEntry: JSONWebServicesLayoutPageTemplateEntryApiHelper;
 	readonly jsonWebServicesLayoutSetPrototype: JSONWebServicesLayoutSetPrototypeApiHelper;
 	readonly jsonWebServicesMBApiHelper: JSONWebServicesMBApiHelper;
 	readonly jsonWebServicesOSBAsah: JSONWebServicesOSBAsahApiHelper;
@@ -155,6 +157,8 @@ export class ApiHelpers {
 		this.jsonWebServicesGroup = new JSONWebServicesGroupApiHelper(this);
 		this.jsonWebServicesJournal = new JSONWebServicesJournalApiHelper(this);
 		this.jsonWebServicesLayout = new JSONWebServicesLayoutApiHelper(this);
+		this.jsonWebServicesLayoutPageTemplateEntry =
+			new JSONWebServicesLayoutPageTemplateEntryApiHelper(this);
 		this.jsonWebServicesLayoutSetPrototype =
 			new JSONWebServicesLayoutSetPrototypeApiHelper(this);
 		this.jsonWebServicesMBApiHelper = new JSONWebServicesMBApiHelper(this);

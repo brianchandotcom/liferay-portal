@@ -63,6 +63,11 @@ type Layout = {
 	uuid: string;
 };
 
+type LayoutPageTemplateEntry = {
+	groupId: string;
+	layoutPageTemplateEntryId: string;
+};
+
 type PageDefinition = {
 	pageElement: PageElement;
 };

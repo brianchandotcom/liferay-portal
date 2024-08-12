@@ -6,42 +6,22 @@
 package com.liferay.portal.db.schema.definition.internal.exporter.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.model.ObjectRelationship;
-import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
-import com.liferay.object.service.ObjectRelationshipLocalServiceUtil;
-import com.liferay.object.test.util.ObjectDefinitionTestUtil;
-import com.liferay.object.test.util.ObjectRelationshipTestUtil;
 import com.liferay.portal.db.schema.definition.internal.test.util.ConfigurationTestUtil;
 import com.liferay.portal.db.schema.definition.internal.test.util.DatabaseTestUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
-import com.liferay.portal.kernel.dao.db.DBType;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.db.partition.DBPartition;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.AssumeTestRule;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.test.log.LogCapture;
-import com.liferay.portal.test.log.LogEntry;
-import com.liferay.portal.test.log.LoggerTestUtil;
-import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.io.File;
 
-import java.nio.file.Files;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.sql.DataSource;
 
-import org.apache.commons.lang3.StringUtils;
-import org.apache.felix.cm.PersistenceManager;
-
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.BeforeClass;
@@ -50,13 +30,12 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.osgi.service.cm.ConfigurationAdmin;
-
 /**
  * @author Mariano Álvaro Sáiz
  */
 @RunWith(Arquillian.class)
-public class DBSchemaDefinitionExporterTest {
+public class DBSchemaDefinitionExporterTest
+	extends BaseDBSchemaDefinitionExporterTestCase {
 
 	@ClassRule
 	@Rule
@@ -65,101 +44,31 @@ public class DBSchemaDefinitionExporterTest {
 			new AssumeTestRule("assume"), new LiferayIntegrationTestRule());
 
 	public static void assume() {
-		DBType dbType = DBManagerUtil.getDBType();
+		Assume.assumeFalse(DBPartition.isPartitionEnabled());
 
-		Assume.assumeTrue(
-			(dbType == DBType.MYSQL) || (dbType == DBType.POSTGRESQL));
+		BaseDBSchemaDefinitionExporterTestCase.assumeDB();
 	}
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		_databaseType = String.valueOf(DBManagerUtil.getDBType());
-		_folder = FileUtil.createTempFolder();
-
-		_objectDefinition1 = ObjectDefinitionTestUtil.addCustomObjectDefinition(
-			ObjectDefinitionTestUtil.getRandomName());
-		_objectDefinition2 = ObjectDefinitionTestUtil.addCustomObjectDefinition(
-			ObjectDefinitionTestUtil.getRandomName());
-
-		_objectRelationship = ObjectRelationshipTestUtil.addObjectRelationship(
-			ObjectRelationshipLocalServiceUtil.getService(), _objectDefinition1,
-			_objectDefinition2);
-	}
-
-	@AfterClass
-	public static void tearDownClass() throws Exception {
-		Files.deleteIfExists(ConfigurationTestUtil.getConfigurationPath(_PID));
-
-		FileUtil.deltree(_folder);
-
-		if (_objectRelationship != null) {
-			ObjectRelationshipLocalServiceUtil.deleteObjectRelationship(
-				_objectRelationship.getObjectRelationshipId());
-		}
-
-		if (_objectDefinition1 != null) {
-			ObjectDefinitionLocalServiceUtil.deleteObjectDefinition(
-				_objectDefinition1.getObjectDefinitionId());
-		}
-
-		if (_objectDefinition2 != null) {
-			ObjectDefinitionLocalServiceUtil.deleteObjectDefinition(
-				_objectDefinition2.getObjectDefinitionId());
-		}
+		BaseDBSchemaDefinitionExporterTestCase.setUpClassDefault();
 	}
 
 	@Test
 	public void testExportImportDBSchemaDefinition() throws Exception {
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"com.liferay.portal.db.schema.definition.internal.exporter." +
-					"DBSchemaDefinitionExporter",
-				LoggerTestUtil.INFO)) {
-
-			ConfigurationTestUtil.deployConfiguration(
-				_configurationAdmin, _databaseType, _folder.getAbsolutePath(),
-				_PID);
-
-			_assertImportDBSchemaDefinition(
-				new File(_folder, "tables.sql"),
-				new File(_folder, "indexes.sql"));
-
-			Assert.assertFalse(
-				Files.exists(ConfigurationTestUtil.getConfigurationPath(_PID)));
-			Assert.assertNull(
-				_configurationAdmin.listConfigurations(
-					"(service.pid=" + _PID + ")"));
-			Assert.assertNull(
-				ReflectionTestUtil.invoke(
-					_persistenceManager, "_getDictionary",
-					new Class<?>[] {String.class}, _PID));
-
-			List<LogEntry> logEntries = logCapture.getLogEntries();
-
-			Assert.assertEquals(logEntries.toString(), 2, logEntries.size());
-
-			List<String> logMessages = new ArrayList<>();
-
-			for (LogEntry entry : logEntries) {
-				logMessages.add(entry.getMessage());
-			}
-
-			Assert.assertEquals(
-				"Start database schema definition export", logMessages.get(0));
-			Assert.assertEquals(
-				"Finished database schema definition export to " +
-					_folder.getAbsolutePath(),
-				logMessages.get(1));
-		}
+		testExportImportDBSchemaDefinition(
+			() -> _assertImportDBSchemaDefinition(
+				new File(folder, "tables.sql"),
+				new File(folder, "indexes.sql")));
 	}
 
 	@Test
 	public void testExportImportReport() throws Exception {
 		ConfigurationTestUtil.deployConfiguration(
-			_configurationAdmin, _databaseType, _folder.getAbsolutePath(),
-			_PID);
+			configurationAdmin, databaseType, folder.getAbsolutePath(), PID);
 
 		String content = FileUtil.read(
-			new File(_folder, "db_schema_definition_export_report.info"));
+			new File(folder, "db_schema_definition_export_report.info"));
 
 		Assert.assertTrue(content.endsWith("Missing tables:"));
 	}
@@ -172,11 +81,11 @@ public class DBSchemaDefinitionExporterTest {
 
 		try {
 			ConfigurationTestUtil.deployConfiguration(
-				_configurationAdmin, _databaseType, _folder.getAbsolutePath(),
-				_PID);
+				configurationAdmin, databaseType, folder.getAbsolutePath(),
+				PID);
 
 			String content = FileUtil.read(
-				new File(_folder, "db_schema_definition_export_report.info"));
+				new File(folder, "db_schema_definition_export_report.info"));
 
 			Assert.assertTrue(
 				content.contains(
@@ -191,81 +100,29 @@ public class DBSchemaDefinitionExporterTest {
 			File tablesSQLFile, File indexesSQLFile)
 		throws Exception {
 
-		DatabaseTestUtil.createSchema(_COPY_DB_SCHEMA_NAME);
+		DatabaseTestUtil.createSchema(COPY_DB_SCHEMA_NAME);
 
 		DataSource copyDataSource = null;
 
 		try {
 			copyDataSource = DatabaseTestUtil.initDataSource(
-				_COPY_DB_SCHEMA_NAME);
+				COPY_DB_SCHEMA_NAME);
 
 			DatabaseTestUtil.importFile(tablesSQLFile, copyDataSource);
 
-			_assertTables(copyDataSource);
+			assertTables(InfrastructureUtil.getDataSource(), copyDataSource);
 
 			DatabaseTestUtil.importFile(indexesSQLFile, copyDataSource);
 
-			_assertIndexes(copyDataSource);
+			assertIndexes(InfrastructureUtil.getDataSource(), copyDataSource);
 		}
 		finally {
-			DatabaseTestUtil.dropSchema(_COPY_DB_SCHEMA_NAME);
+			DatabaseTestUtil.dropSchema(COPY_DB_SCHEMA_NAME);
 
 			if (copyDataSource != null) {
 				DatabaseTestUtil.destroyDataSource(copyDataSource);
 			}
 		}
 	}
-
-	private void _assertIndexes(DataSource copyDataSource) throws Exception {
-		List<String> copyIndexColumnNames =
-			DatabaseTestUtil.getIndexColumnNames(copyDataSource);
-		List<String> indexColumnNames = DatabaseTestUtil.getIndexColumnNames(
-			InfrastructureUtil.getDataSource());
-
-		Assert.assertEquals(
-			StringUtils.difference(
-				copyIndexColumnNames.toString(), indexColumnNames.toString()),
-			indexColumnNames.size(), copyIndexColumnNames.size());
-
-		for (int i = 0; i < indexColumnNames.size(); i++) {
-			Assert.assertEquals(
-				indexColumnNames.get(i), copyIndexColumnNames.get(i));
-		}
-	}
-
-	private void _assertTables(DataSource copyDataSource) throws Exception {
-		List<String> copyTableColumnNames =
-			DatabaseTestUtil.getTableColumnNames(copyDataSource);
-		List<String> tableColumnNames = DatabaseTestUtil.getTableColumnNames(
-			InfrastructureUtil.getDataSource());
-
-		Assert.assertEquals(
-			StringUtils.difference(
-				copyTableColumnNames.toString(), tableColumnNames.toString()),
-			tableColumnNames.size(), copyTableColumnNames.size());
-
-		for (int i = 0; i < tableColumnNames.size(); i++) {
-			Assert.assertEquals(
-				tableColumnNames.get(i), copyTableColumnNames.get(i));
-		}
-	}
-
-	private static final String _COPY_DB_SCHEMA_NAME = "testschema";
-
-	private static final String _PID =
-		"com.liferay.portal.db.schema.definition.internal.configuration." +
-			"DBSchemaDefinitionExporterConfiguration";
-
-	private static String _databaseType;
-	private static File _folder;
-	private static ObjectDefinition _objectDefinition1;
-	private static ObjectDefinition _objectDefinition2;
-	private static ObjectRelationship _objectRelationship;
-
-	@Inject
-	private ConfigurationAdmin _configurationAdmin;
-
-	@Inject
-	private PersistenceManager _persistenceManager;
 
 }

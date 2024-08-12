@@ -71,6 +71,48 @@ public class FormConfig implements Cloneable, Serializable {
 
 	protected Object formSuccessSubmissionResult;
 
+	public Boolean getMultiStep() {
+		return multiStep;
+	}
+
+	public void setMultiStep(Boolean multiStep) {
+		this.multiStep = multiStep;
+	}
+
+	public void setMultiStep(
+		UnsafeSupplier<Boolean, Exception> multiStepUnsafeSupplier) {
+
+		try {
+			multiStep = multiStepUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean multiStep;
+
+	public Integer getNumberOfSteps() {
+		return numberOfSteps;
+	}
+
+	public void setNumberOfSteps(Integer numberOfSteps) {
+		this.numberOfSteps = numberOfSteps;
+	}
+
+	public void setNumberOfSteps(
+		UnsafeSupplier<Integer, Exception> numberOfStepsUnsafeSupplier) {
+
+		try {
+			numberOfSteps = numberOfStepsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Integer numberOfSteps;
+
 	@Override
 	public FormConfig clone() throws CloneNotSupportedException {
 		return (FormConfig)super.clone();

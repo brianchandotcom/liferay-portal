@@ -143,6 +143,94 @@ public class FormConfig implements Serializable {
 	@JsonIgnore
 	private Supplier<Object> _formSuccessSubmissionResultSupplier;
 
+	@Schema(
+		description = "A flag that indicates whether the page form instance is multi step or not."
+	)
+	public Boolean getMultiStep() {
+		if (_multiStepSupplier != null) {
+			multiStep = _multiStepSupplier.get();
+
+			_multiStepSupplier = null;
+		}
+
+		return multiStep;
+	}
+
+	public void setMultiStep(Boolean multiStep) {
+		this.multiStep = multiStep;
+
+		_multiStepSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setMultiStep(
+		UnsafeSupplier<Boolean, Exception> multiStepUnsafeSupplier) {
+
+		_multiStepSupplier = () -> {
+			try {
+				return multiStepUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(
+		description = "A flag that indicates whether the page form instance is multi step or not."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean multiStep;
+
+	@JsonIgnore
+	private Supplier<Boolean> _multiStepSupplier;
+
+	@Schema(description = "The definition for the number of steps of the form.")
+	public Integer getNumberOfSteps() {
+		if (_numberOfStepsSupplier != null) {
+			numberOfSteps = _numberOfStepsSupplier.get();
+
+			_numberOfStepsSupplier = null;
+		}
+
+		return numberOfSteps;
+	}
+
+	public void setNumberOfSteps(Integer numberOfSteps) {
+		this.numberOfSteps = numberOfSteps;
+
+		_numberOfStepsSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setNumberOfSteps(
+		UnsafeSupplier<Integer, Exception> numberOfStepsUnsafeSupplier) {
+
+		_numberOfStepsSupplier = () -> {
+			try {
+				return numberOfStepsUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(
+		description = "The definition for the number of steps of the form."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Integer numberOfSteps;
+
+	@JsonIgnore
+	private Supplier<Integer> _numberOfStepsSupplier;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -215,6 +303,30 @@ public class FormConfig implements Serializable {
 			else {
 				sb.append(formSuccessSubmissionResult);
 			}
+		}
+
+		Boolean multiStep = getMultiStep();
+
+		if (multiStep != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"multiStep\": ");
+
+			sb.append(multiStep);
+		}
+
+		Integer numberOfSteps = getNumberOfSteps();
+
+		if (numberOfSteps != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"numberOfSteps\": ");
+
+			sb.append(numberOfSteps);
 		}
 
 		sb.append("}");

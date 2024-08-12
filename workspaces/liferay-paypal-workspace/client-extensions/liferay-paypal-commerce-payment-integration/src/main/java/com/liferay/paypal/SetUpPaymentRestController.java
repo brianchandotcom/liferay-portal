@@ -42,8 +42,8 @@ import org.springframework.web.reactive.function.client.WebClient;
 @RestController
 public class SetUpPaymentRestController extends BaseRestController {
 
-	@GetMapping("get-environment/{clientId}")
-	public ResponseEntity<String> getGoogleEnvironmentInfo(
+	@GetMapping("get-google-environment/{clientId}")
+	public ResponseEntity<String> getGoogleEnvironment(
 		@AuthenticationPrincipal Jwt jwt,
 		@PathVariable("clientId") String clientId) {
 
@@ -61,8 +61,8 @@ public class SetUpPaymentRestController extends BaseRestController {
 			HttpStatus.OK);
 	}
 
-	@GetMapping("get-order/{orderId}/{countryCode}")
-	public ResponseEntity<String> getGoogleOrderInfo(
+	@GetMapping("get-google-order/{orderId}/{countryCode}")
+	public ResponseEntity<String> getGoogleOrder(
 		@AuthenticationPrincipal Jwt jwt, @PathVariable("orderId") long orderId,
 		@PathVariable("countryCode") String countryCode) {
 
@@ -115,8 +115,8 @@ public class SetUpPaymentRestController extends BaseRestController {
 			HttpStatus.OK);
 	}
 
-	@GetMapping("get/{orderId}")
-	public ResponseEntity<String> getPayPalOrderInfo(
+	@GetMapping("get-paypal-order/{orderId}")
+	public ResponseEntity<String> getPayPalOrder(
 		@AuthenticationPrincipal Jwt jwt,
 		@PathVariable("orderId") long orderId) {
 
@@ -135,84 +135,77 @@ public class SetUpPaymentRestController extends BaseRestController {
 		log(jwt, _log, json);
 
 		String errorMessages = null;
-		String paymentStatus = "4";
 		String payload = null;
+		String paymentStatus = "4";
 		String transactionCode = null;
 
 		try {
 			JSONObject jsonObject = new JSONObject(json);
 
-			JSONObject payPalRequestJSONObject = new JSONObject();
-
 			JSONObject commercePaymentEntryJSONObject =
 				jsonObject.getJSONObject("commercePaymentEntry");
-
 			JSONObject httpServletRequestParameterMapJSONObject =
 				jsonObject.getJSONObject("httpServletRequestParameterMap");
+			JSONObject typeSettingsJSONObject = jsonObject.getJSONObject(
+				"typeSettings");
 
 			JSONArray fundingSourceJSONArray =
 				httpServletRequestParameterMapJSONObject.getJSONArray(
 					"fundingSource");
 
-			JSONObject typeSettingsJSONObject = jsonObject.getJSONObject(
-				"typeSettings");
+			JSONObject ordersResponseJSONObject = new JSONObject(
+				WebClient.create(
+					getPayPalURL(typeSettingsJSONObject.getString("mode"))
+				).post(
+				).uri(
+					"/v2/checkout/orders"
+				).accept(
+					MediaType.APPLICATION_JSON
+				).contentType(
+					MediaType.APPLICATION_JSON
+				).header(
+					HttpHeaders.AUTHORIZATION,
+					"Bearer " + getAuthorization(typeSettingsJSONObject)
+				).header(
+					"PayPal-Partner-Attribution-Id", "Liferay_SP_PPCP_API"
+				).header(
+					"PayPal-Request-Id",
+					commercePaymentEntryJSONObject.getString(
+						"commercePaymentEntryId")
+				).header(
+					"Prefer", "return=representation"
+				).bodyValue(
+					new JSONObject(
+					).put(
+						"intent", "CAPTURE"
+					).put(
+						"payment_source",
+						_getPaymentSourceJSONObject(
+							jwt, commercePaymentEntryJSONObject,
+							String.valueOf(fundingSourceJSONArray.get(0)))
+					).put(
+						"purchase_units",
+						_getPurchaseUnitJSONArray(
+							jwt, commercePaymentEntryJSONObject,
+							typeSettingsJSONObject.getString("merchantId"))
+					).toString()
+				).retrieve(
+				).bodyToMono(
+					String.class
+				).block());
 
-			payPalRequestJSONObject.put(
-				"intent", "CAPTURE"
-			).put(
-				"payment_source",
-				_getPaymentSourceJSONObject(
-					jwt, commercePaymentEntryJSONObject,
-					String.valueOf(fundingSourceJSONArray.get(0)))
-			).put(
-				"purchase_units",
-				_getPurchaseUnitJSONArray(
-					jwt, commercePaymentEntryJSONObject,
-					typeSettingsJSONObject.getString("merchantId"))
-			);
-
-			String createOrderResponse = WebClient.create(
-				getPayPalURL(typeSettingsJSONObject.getString("mode"))
-			).post(
-			).uri(
-				"/v2/checkout/orders"
-			).accept(
-				MediaType.APPLICATION_JSON
-			).contentType(
-				MediaType.APPLICATION_JSON
-			).header(
-				HttpHeaders.AUTHORIZATION,
-				"Bearer " + getAuthorization(typeSettingsJSONObject)
-			).header(
-				"PayPal-Partner-Attribution-Id", "Liferay_SP_PPCP_API"
-			).header(
-				"PayPal-Request-Id",
-				commercePaymentEntryJSONObject.getString(
-					"commercePaymentEntryId")
-			).header(
-				"Prefer", "return=representation"
-			).bodyValue(
-				payPalRequestJSONObject.toString()
-			).retrieve(
-			).bodyToMono(
-				String.class
-			).block();
-
-			JSONObject createOrderResponseJSONObject = new JSONObject(
-				createOrderResponse);
-
-			transactionCode = createOrderResponseJSONObject.getString("id");
+			payload = ordersResponseJSONObject.toString();
 
 			paymentStatus = "18";
-			payload = createOrderResponse;
+
+			transactionCode = ordersResponseJSONObject.getString("id");
 
 			post(
 				"Bearer " + jwt.getTokenValue(),
 				new JSONObject(
 				).put(
 					"externalReferenceCode",
-					String.valueOf(
-						commercePaymentEntryJSONObject.getLong("classPK"))
+					commercePaymentEntryJSONObject.getString("classPK")
 				).put(
 					"transactionCode", transactionCode
 				).toString(),

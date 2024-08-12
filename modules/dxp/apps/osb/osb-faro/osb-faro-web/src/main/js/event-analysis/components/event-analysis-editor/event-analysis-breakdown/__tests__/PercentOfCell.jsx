@@ -93,4 +93,49 @@ describe('PercentOfCell', () => {
 
 		expect(container.querySelectorAll('ul').length).toBe(2);
 	});
+
+	it('display "undefined" value is attribute "name" is empty', () => {
+		const data = {
+			breakdownItems: [
+				{
+					breakdownItems: [
+						{
+							breakdownItems: [
+								{
+									breakdownItems: [],
+									leafNode: true,
+									name: 'All Individuals',
+									value: 1717
+								}
+							],
+							leafNode: false,
+							value: 3367
+						}
+					],
+					leafNode: false,
+					value: 3367
+				}
+			],
+			count: 1,
+			page: 1,
+			value: 5033
+		};
+		const items = parseBreakdownData(data, orderedBreakdowns);
+
+		expect(items).toEqual([
+			{
+				breakdown0: {name: 'undefined', rowSpan: 1, value: 3367},
+				breakdown1: {name: 'undefined', rowSpan: 1, value: 3367},
+				events: [
+					{
+						breakdownItems: [],
+						leafNode: true,
+						name: 'All Individuals',
+						value: 1717
+					}
+				],
+				index: 0
+			}
+		]);
+	});
 });

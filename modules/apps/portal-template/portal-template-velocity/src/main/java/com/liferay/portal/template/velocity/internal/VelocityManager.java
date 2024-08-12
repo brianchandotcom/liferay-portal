@@ -65,12 +65,9 @@ public class VelocityManager extends BaseTemplateManager {
 	public class VelocityTemplateResourceCache
 		extends BaseTemplateResourceCache {
 
-		public VelocityTemplateResourceCache(
-			VelocityEngineConfiguration velocityEngineConfiguration) {
-
+		public VelocityTemplateResourceCache() {
 			init(
-				velocityEngineConfiguration.resourceModificationCheckInterval(),
-				_portalCacheName,
+				Long.MIN_VALUE, _portalCacheName,
 				StringBundler.concat(
 					TemplateResource.class.getName(), StringPool.POUND,
 					TemplateConstants.LANG_TYPE_VM));
@@ -78,14 +75,6 @@ public class VelocityManager extends BaseTemplateManager {
 
 		public void destroy() {
 			super.destroy();
-		}
-
-		public void setModificationCheckInterval(
-			VelocityEngineConfiguration velocityEngineConfiguration) {
-
-			setModificationCheckInterval(
-				velocityEngineConfiguration.
-					resourceModificationCheckInterval());
 		}
 
 		private final String _portalCacheName =
@@ -119,8 +108,7 @@ public class VelocityManager extends BaseTemplateManager {
 		_velocityEngineConfiguration = ConfigurableUtil.createConfigurable(
 			VelocityEngineConfiguration.class, properties);
 
-		_velocityTemplateResourceCache = new VelocityTemplateResourceCache(
-			_velocityEngineConfiguration);
+		_velocityTemplateResourceCache = new VelocityTemplateResourceCache();
 
 		_velocityTemplateResourceLoader = new VelocityTemplateResourceLoader(
 			bundleContext, _velocityTemplateResourceCache);
@@ -165,9 +153,6 @@ public class VelocityManager extends BaseTemplateManager {
 
 		_velocityEngineConfiguration = ConfigurableUtil.createConfigurable(
 			VelocityEngineConfiguration.class, properties);
-
-		_velocityTemplateResourceCache.setModificationCheckInterval(
-			_velocityEngineConfiguration);
 
 		_destroy();
 
@@ -286,15 +271,6 @@ public class VelocityManager extends BaseTemplateManager {
 			extendedProperties.setProperty(
 				VelocityEngine.RESOURCE_MANAGER_CLASS,
 				LiferayResourceManager.class.getName());
-
-			int resourceModificationCheckInterval =
-				_velocityEngineConfiguration.
-					resourceModificationCheckInterval();
-
-			extendedProperties.setProperty(
-				"liferay." + VelocityEngine.RESOURCE_MANAGER_CLASS +
-					".resourceModificationCheckInterval",
-				resourceModificationCheckInterval + "");
 
 			extendedProperties.setProperty(
 				VelocityManager.VelocityTemplateResourceLoader.class.getName(),

@@ -5,9 +5,10 @@
 
 package com.liferay.util.servlet;
 
+import com.liferay.petra.io.OutputStreamWriter;
+import com.liferay.petra.io.unsync.UnsyncPrintWriter;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.servlet.ServletOutputStreamAdapter;
-import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
 
 import java.io.PrintWriter;
 
@@ -52,8 +53,9 @@ public class GenericServletResponse extends HttpServletResponseWrapper {
 
 	@Override
 	public PrintWriter getWriter() {
-		return UnsyncPrintWriterPool.borrow(
-			getOutputStream(), getCharacterEncoding());
+		return new UnsyncPrintWriter(
+			new OutputStreamWriter(
+				getOutputStream(), getCharacterEncoding(), true));
 	}
 
 	@Override

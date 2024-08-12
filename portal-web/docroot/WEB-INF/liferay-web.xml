@@ -294,10 +294,6 @@
 		</init-param>
 	</filter>
 	<filter>
-		<filter-name>UnsyncPrintWriter Pool Filter</filter-name>
-		<filter-class>com.liferay.portal.servlet.filters.unsyncprintwriterpool.UnsyncPrintWriterPoolFilter</filter-class>
-	</filter>
-	<filter>
 		<filter-name>Valid Host Name Filter</filter-name>
 		<filter-class>com.liferay.portal.servlet.filters.validhostname.ValidHostNameFilter</filter-class>
 	</filter>
@@ -368,10 +364,6 @@
 	</filter-mapping>
 	<filter-mapping>
 		<filter-name>Char Buffer Pool Filter</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
-	<filter-mapping>
-		<filter-name>UnsyncPrintWriter Pool Filter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	<filter-mapping>

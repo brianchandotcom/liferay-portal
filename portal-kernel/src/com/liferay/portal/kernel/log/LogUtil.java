@@ -5,8 +5,8 @@
 
 package com.liferay.portal.kernel.log;
 
+import com.liferay.petra.io.unsync.UnsyncPrintWriter;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
-import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
@@ -27,7 +27,7 @@ public class LogUtil {
 			UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter(
 				props.size() + 1);
 
-			props.list(UnsyncPrintWriterPool.borrow(unsyncStringWriter));
+			props.list(new UnsyncPrintWriter(unsyncStringWriter));
 
 			log.debug(unsyncStringWriter.toString());
 		}

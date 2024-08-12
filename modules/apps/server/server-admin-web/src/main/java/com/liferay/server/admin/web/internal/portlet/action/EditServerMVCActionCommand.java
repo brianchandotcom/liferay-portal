@@ -99,7 +99,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.ThreadUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.log4j.Log4JUtil;
 import com.liferay.portal.security.membershippolicy.RoleMembershipPolicyFactoryUtil;
@@ -678,7 +677,7 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 			new UnsyncByteArrayOutputStream();
 
-		UnsyncPrintWriter unsyncPrintWriter = UnsyncPrintWriterPool.borrow(
+		UnsyncPrintWriter unsyncPrintWriter = new UnsyncPrintWriter(
 			unsyncByteArrayOutputStream);
 
 		portletObjects.put("out", unsyncPrintWriter);

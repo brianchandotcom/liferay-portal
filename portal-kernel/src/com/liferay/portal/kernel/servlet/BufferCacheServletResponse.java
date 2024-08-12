@@ -5,6 +5,7 @@
 
 package com.liferay.portal.kernel.servlet;
 
+import com.liferay.petra.io.unsync.UnsyncPrintWriter;
 import com.liferay.petra.nio.CharsetDecoderUtil;
 import com.liferay.petra.nio.CharsetEncoderUtil;
 import com.liferay.petra.string.StringBundler;
@@ -13,7 +14,6 @@ import com.liferay.portal.kernel.io.DummyOutputStream;
 import com.liferay.portal.kernel.io.DummyWriter;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
-import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -264,7 +264,7 @@ public class BufferCacheServletResponse extends MetaInfoCacheServletResponse {
 
 		_unsyncStringWriter = new UnsyncStringWriter();
 
-		_printWriter = UnsyncPrintWriterPool.borrow(_unsyncStringWriter);
+		_printWriter = new UnsyncPrintWriter(_unsyncStringWriter);
 
 		calledGetWriter = true;
 
@@ -331,7 +331,7 @@ public class BufferCacheServletResponse extends MetaInfoCacheServletResponse {
 		_charBuffer = charBuffer;
 
 		if (charBuffer != null) {
-			_printWriter = UnsyncPrintWriterPool.borrow(new DummyWriter());
+			_printWriter = new UnsyncPrintWriter(new DummyWriter());
 
 			calledGetWriter = true;
 		}

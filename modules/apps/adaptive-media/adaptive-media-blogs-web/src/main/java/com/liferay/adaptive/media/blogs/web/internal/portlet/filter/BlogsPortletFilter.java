@@ -7,6 +7,7 @@ package com.liferay.adaptive.media.blogs.web.internal.portlet.filter;
 
 import com.liferay.adaptive.media.content.transformer.ContentTransformerHandler;
 import com.liferay.blogs.constants.BlogsPortletKeys;
+import com.liferay.petra.io.unsync.UnsyncPrintWriter;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.io.WriterOutputStream;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -14,7 +15,6 @@ import com.liferay.portal.kernel.servlet.BufferCacheServletResponse;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -105,7 +105,7 @@ public class BlogsPortletFilter implements RenderFilter {
 					return _printWriter;
 				}
 
-				_printWriter = UnsyncPrintWriterPool.borrow(unsyncStringWriter);
+				_printWriter = new UnsyncPrintWriter(unsyncStringWriter);
 
 				_calledGetWriter = true;
 

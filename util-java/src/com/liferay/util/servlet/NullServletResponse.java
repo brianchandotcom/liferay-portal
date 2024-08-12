@@ -5,7 +5,8 @@
 
 package com.liferay.util.servlet;
 
-import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
+import com.liferay.petra.io.OutputStreamWriter;
+import com.liferay.petra.io.unsync.UnsyncPrintWriter;
 
 import java.io.PrintWriter;
 
@@ -21,8 +22,9 @@ public class NullServletResponse extends HttpServletResponseWrapper {
 	public NullServletResponse(HttpServletResponse httpServletResponse) {
 		super(httpServletResponse);
 
-		_printWriter = UnsyncPrintWriterPool.borrow(
-			_servletOutputStream, getCharacterEncoding());
+		_printWriter = new UnsyncPrintWriter(
+			new OutputStreamWriter(
+				_servletOutputStream, getCharacterEncoding(), true));
 	}
 
 	@Override

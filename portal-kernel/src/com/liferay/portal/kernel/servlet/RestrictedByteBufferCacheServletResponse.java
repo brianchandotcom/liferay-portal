@@ -5,9 +5,10 @@
 
 package com.liferay.portal.kernel.servlet;
 
+import com.liferay.petra.io.OutputStreamWriter;
+import com.liferay.petra.io.unsync.UnsyncPrintWriter;
 import com.liferay.portal.kernel.internal.servlet.RestrictedByteArrayCacheOutputStream;
 import com.liferay.portal.kernel.internal.servlet.RestrictedByteArrayCacheOutputStream.FlushPreAction;
-import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -103,8 +104,10 @@ public class RestrictedByteBufferCacheServletResponse
 				servletResponse.getOutputStream(), _cacheCapacity,
 				new FinishResponseFlushPreAction());
 
-		_printWriter = UnsyncPrintWriterPool.borrow(
-			_restrictedByteArrayCacheOutputStream, getCharacterEncoding());
+		_printWriter = new UnsyncPrintWriter(
+			new OutputStreamWriter(
+				_restrictedByteArrayCacheOutputStream, getCharacterEncoding(),
+				true));
 
 		calledGetWriter = true;
 

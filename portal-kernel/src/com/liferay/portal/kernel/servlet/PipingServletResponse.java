@@ -5,10 +5,11 @@
 
 package com.liferay.portal.kernel.servlet;
 
+import com.liferay.petra.io.OutputStreamWriter;
+import com.liferay.petra.io.unsync.UnsyncPrintWriter;
 import com.liferay.portal.kernel.io.WriterOutputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
 
 import java.io.OutputStream;
 import java.io.PrintWriter;
@@ -69,7 +70,7 @@ public class PipingServletResponse extends HttpServletResponseWrapper {
 			throw new NullPointerException("Writer is null");
 		}
 
-		_printWriter = UnsyncPrintWriterPool.borrow(writer);
+		_printWriter = new UnsyncPrintWriter(writer);
 	}
 
 	@Override
@@ -99,8 +100,9 @@ public class PipingServletResponse extends HttpServletResponseWrapper {
 						"not recommended because it is slow");
 			}
 
-			_printWriter = UnsyncPrintWriterPool.borrow(
-				_servletOutputStream, getCharacterEncoding());
+			_printWriter = new UnsyncPrintWriter(
+				new OutputStreamWriter(
+					_servletOutputStream, getCharacterEncoding(), true));
 		}
 
 		return _printWriter;

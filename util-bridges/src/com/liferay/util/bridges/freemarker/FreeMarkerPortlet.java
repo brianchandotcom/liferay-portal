@@ -5,6 +5,7 @@
 
 package com.liferay.util.bridges.freemarker;
 
+import com.liferay.petra.io.unsync.UnsyncPrintWriter;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
@@ -16,7 +17,6 @@ import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.TemplateResourceLoaderUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -83,8 +83,7 @@ public class FreeMarkerPortlet extends MVCPortlet {
 				if (portletResponse instanceof MimeResponse) {
 					MimeResponse mimeResponse = (MimeResponse)portletResponse;
 
-					writer = UnsyncPrintWriterPool.borrow(
-						mimeResponse.getWriter());
+					writer = new UnsyncPrintWriter(mimeResponse.getWriter());
 				}
 				else {
 					writer = new UnsyncStringWriter();

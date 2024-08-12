@@ -95,6 +95,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -852,6 +853,8 @@ public class ObjectEntryResourceTest {
 
 		_listTypeDefinitionLocalService.deleteListTypeDefinition(
 			_listTypeDefinition);
+
+		_groupLocalService.deleteGroup(_group);
 	}
 
 	@Test
@@ -14058,6 +14061,10 @@ public class ObjectEntryResourceTest {
 	private DLFolderLocalService _dlFolderLocalService;
 
 	private Group _group;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
+
 	private ListTypeDefinition _listTypeDefinition;
 
 	@Inject

@@ -129,6 +129,10 @@ public class ObjectSQLProvider implements SQLProvider {
 			_appendRelationshipTablesSQL(objectDefinition);
 		}
 
+		if (_tablesSQLSB.index() > 0) {
+			_tablesSQLSB.setIndex(_tablesSQLSB.index() - 1);
+		}
+
 		_appendIndexesSQL();
 	}
 

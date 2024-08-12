@@ -260,34 +260,26 @@ public class DBSchemaDefinitionExporter {
 					PortalInstancePool.getDefaultCompanyId(),
 					"Default virtual instance ? tables: ", "TABLE"));
 
-			sb.append(StringPool.NEW_LINE);
-			sb.append(StringPool.NEW_LINE);
-
 			_companyLocalService.forEachCompanyId(
 				companyId -> {
 					if (companyId == PortalInstancePool.getDefaultCompanyId()) {
 						return;
 					}
 
+					sb.append(StringPool.NEW_LINE);
 					sb.append(
 						_getTablesInfo(
 							companyId,
 							StringBundler.concat(
 								"Virtual instance ", companyId, " ? tables: "),
 							"TABLE"));
-					sb.append(StringPool.NEW_LINE);
-					sb.append(StringPool.NEW_LINE);
 					sb.append(
 						_getTablesInfo(
 							companyId,
 							StringBundler.concat(
 								"Virtual instance ", companyId, " ? views: "),
 							"VIEW"));
-					sb.append(StringPool.NEW_LINE);
-					sb.append(StringPool.NEW_LINE);
 				});
-
-			sb.setIndex(sb.index() - 2);
 
 			return sb.toString();
 		}
@@ -311,7 +303,8 @@ public class DBSchemaDefinitionExporter {
 					StringUtil.replace(message, '?', "export") +
 						exportTableNames.size(),
 					StringUtil.replace(message, '?', "missing") +
-						missingTableNames
+						missingTableNames,
+					StringPool.NEW_LINE
 				},
 				StringPool.NEW_LINE);
 		}

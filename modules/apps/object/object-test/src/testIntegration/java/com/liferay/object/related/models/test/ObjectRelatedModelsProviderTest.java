@@ -510,9 +510,7 @@ public class ObjectRelatedModelsProviderTest {
 			_objectDefinitionLocalService.addCustomObjectDefinition(
 				TestPropsValues.getUserId(), 0, false, true, false, false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				com.liferay.object.test.util.ObjectDefinitionTestUtil.
-					getRandomName(),
-				null, null,
+				ObjectDefinitionTestUtil.getRandomName(), null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				true, ObjectDefinitionConstants.SCOPE_SITE,
 				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
@@ -657,7 +655,7 @@ public class ObjectRelatedModelsProviderTest {
 			).build();
 
 		ObjectEntry objectEntry = _addObjectEntry(
-			_objectDefinition2.getObjectDefinitionId(),
+			_objectDefinition2,
 			HashMapBuilder.putAll(
 				expectedLocalizedValues
 			).build());

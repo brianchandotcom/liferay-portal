@@ -27,9 +27,89 @@ public class PropertiesTestFileCheck extends BaseFileCheck {
 			return content;
 		}
 
+		_checkTestPropertiesOrder(fileName, content);
+
 		return _sortTestCategories(
 			fileName, content, StringPool.BLANK,
 			StringPool.POUND + StringPool.POUND);
+	}
+
+	private void _checkTestPropertiesOrder(String fileName, String content) {
+		String commentCategory = null;
+		String commentPrefix = null;
+		String previousLine = null;
+		String previousPropertyKey = null;
+
+		String[] lines = content.split("\n");
+
+		for (String line : lines) {
+			if (line.startsWith("##") || line.startsWith("    #")) {
+				if (commentPrefix == null) {
+					commentCategory = line;
+					commentPrefix = line;
+
+					continue;
+				}
+
+				if (line.startsWith(commentPrefix) && !line.contains("=")) {
+					commentCategory += "\n" + line;
+
+					continue;
+				}
+			}
+
+			if ((commentCategory != null) &&
+				commentCategory.startsWith(commentPrefix + "\n") &&
+				commentCategory.endsWith("\n" + commentPrefix)) {
+
+				commentCategory = null;
+				commentPrefix = null;
+				previousLine = null;
+				previousPropertyKey = null;
+			}
+
+			int x = line.indexOf('=');
+
+			if ((x == -1) ||
+				((previousLine != null) && previousLine.endsWith("\\"))) {
+
+				previousLine = line;
+
+				continue;
+			}
+
+			String propertyKey = StringUtil.trimLeading(line.substring(0, x));
+
+			if (propertyKey.startsWith(StringPool.POUND)) {
+				propertyKey = propertyKey.substring(1);
+			}
+
+			if (Validator.isNull(previousPropertyKey)) {
+				previousLine = line;
+				previousPropertyKey = propertyKey;
+
+				continue;
+			}
+
+			NaturalOrderStringComparator naturalOrderStringComparator =
+				new NaturalOrderStringComparator();
+
+			int compare = naturalOrderStringComparator.compare(
+				previousPropertyKey, propertyKey);
+
+			if (compare > 0) {
+				addMessage(
+					fileName,
+					StringBundler.concat(
+						"Incorrect order of properties: '", propertyKey,
+						"' should come before '", previousPropertyKey, "'"));
+
+				return;
+			}
+
+			previousLine = line;
+			previousPropertyKey = propertyKey;
+		}
 	}
 
 	private String _sortTestCategories(

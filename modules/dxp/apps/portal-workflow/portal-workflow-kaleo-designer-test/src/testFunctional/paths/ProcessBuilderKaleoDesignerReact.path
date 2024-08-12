@@ -78,7 +78,7 @@
 </tr>
 <tr>
 	<td>INFORMATION_DETAILS</td>
-	<td>//div[@class='info-group']//label[contains(text() ,'${key_fieldOption}')]/..//span[contains(text() ,'${key_fieldInformation}')]</td>
+	<td>//div[@class='info-group' or @class='lfr-workflow__details-tab-container']//label[contains(text() ,'${key_fieldOption}')]/..//span[contains(text() ,'${key_fieldInformation}')]</td>
 	<td></td>
 </tr>
 

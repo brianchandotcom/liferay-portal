@@ -45,11 +45,32 @@ export class FragmentsPage {
 		);
 	}
 
-	async copyToFragment(title: string) {
-		await this.clickAction('Copy To', title);
+	async copyFragmentToSet(fragmentName: string, setName: string) {
+		const setExists = await this.page
+			.getByRole('menuitem', {name: setName})
+			.isVisible();
 
-		await this.page.getByText('Add Fragment Set').waitFor();
-		await this.page.getByRole('button', {name: 'Save'}).click();
+		await this.clickAction('Copy To', fragmentName);
+
+		await this.page.locator('.modal-body').waitFor();
+
+		if (await this.page.getByText('Add Fragment Set').isVisible()) {
+			await this.page.getByLabel('Name').fill(setName);
+		}
+		else if (setExists) {
+			await this.page
+				.getByLabel('Fragment Sets')
+				.selectOption({label: setName});
+		}
+		else {
+			await this.page.getByText('Save In New Set').click();
+
+			await this.page.getByLabel('Name').fill(setName);
+		}
+
+		await this.page
+			.getByRole('button', {exact: true, name: 'Save'})
+			.click();
 
 		await waitForSuccessAlert(
 			this.page,

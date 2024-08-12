@@ -62,13 +62,15 @@ test(
 
 		await fragmentsPage.gotoFragmentSet('Basic Components');
 
-		// Copy Button into Untitled Set
+		// Copy Button into new set
 
-		await fragmentsPage.copyToFragment('Button');
+		const setName = getRandomString();
 
-		// Go to Untitled Set
+		await fragmentsPage.copyFragmentToSet('Button', setName);
 
-		await fragmentsPage.gotoFragmentSet('Untitled Set');
+		// Go to set and check fragment was copied
+
+		await fragmentsPage.gotoFragmentSet(setName);
 
 		await expect(
 			page.getByRole('link').filter({hasText: 'Button (Copy)'})

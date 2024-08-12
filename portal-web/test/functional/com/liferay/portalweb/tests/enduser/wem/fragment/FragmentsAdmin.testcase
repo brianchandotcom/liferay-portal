@@ -134,55 +134,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-166203. The site designer could save in new set during copy OOTB fragment when the site has fragment sets."
-	@priority = 5
-	test AddNewFragmentSetWhenCopyContributedFragment {
-		property portal.acceptance = "true";
-
-		task ("Given a site designer has a fragment set") {
-			JSONFragment.addFragmentCollection(
-				groupName = ${randomSiteName},
-				name = "Fragment Set Name");
-
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = ${siteURLKey});
-		}
-
-		task ("When the site designer copies the Button fragment from Basic Components fragment set") {
-			FragmentsAdminNavigator.gotoCollection(collectionName = "Basic Components");
-
-			FragmentsAdminNavigator.gotoEntryEllipsisItem(
-				entry = "Button",
-				item = "Copy To");
-		}
-
-		task ("Then the site designer could add a new fragment set") {
-			AssertTextEquals(
-				locator1 = "Modal#HEADER",
-				value1 = "Select Fragment Set");
-
-			Click(
-				key_text = "Save In New Set",
-				locator1 = "Modal#MODAL_FOOTER_BUTTON");
-
-			AssertTextEquals(
-				locator1 = "Modal#HEADER",
-				value1 = "Add Fragment Set");
-
-			AssertTextEquals(
-				key_text = "Name",
-				locator1 = "TextInput#ANY",
-				value1 = "Untitled Set");
-
-			Modal.save();
-
-			Alert.viewSuccessMessageText(successMessage = "The fragment was copied successfully.");
-
-			MenuBar.viewActive(menuBar = "Untitled Set");
-
-			FragmentsAdmin.viewEntryPresent(entry = "Button (Copy)");
-		}
-	}
-
 	@description = "This is a test for LPS-177286. Able to enable and disable the propagation of Contributed Fragments on the instance startup."
 	@priority = 4
 	test ManuallyPropagateChanges {

@@ -48,32 +48,48 @@ test(
 );
 
 test(
-	'Can add fragment set during copy OOTB fragment when doesnt have fragment set',
+	'Can add fragment set during copy OOTB fragment',
 	{
 		tag: ['@LPS-166203', '@LPS-101354', '@LPS-89115'],
 	},
 	async ({fragmentsPage, page, site}) => {
 
-		// Go to fragment administration
+		// Go to Basic Components fragment set
 
 		await fragmentsPage.goto(site.friendlyUrlPath);
-
-		// Go to Basic Components
-
 		await fragmentsPage.gotoFragmentSet('Basic Components');
 
-		// Copy Button into new set
+		// Copy to new set when there's no sets and check the copy was done
 
-		const setName = getRandomString();
+		const set1 = getRandomString();
 
-		await fragmentsPage.copyFragmentToSet('Button', setName);
-
-		// Go to set and check fragment was copied
-
-		await fragmentsPage.gotoFragmentSet(setName);
+		await fragmentsPage.copyFragmentToSet('Button', set1);
+		await fragmentsPage.gotoFragmentSet(set1);
 
 		await expect(
 			page.getByRole('link').filter({hasText: 'Button (Copy)'})
+		).toBeVisible();
+
+		// Copy to new set when we already have sets and check the copy was done
+
+		const set2 = getRandomString();
+
+		await fragmentsPage.gotoFragmentSet('Basic Components');
+		await fragmentsPage.copyFragmentToSet('Button', set2);
+		await fragmentsPage.gotoFragmentSet(set2);
+
+		await expect(
+			page.getByRole('link').filter({hasText: 'Button (Copy)'})
+		).toBeVisible();
+
+		// Copy to existing set and check the copy was done
+
+		await fragmentsPage.gotoFragmentSet('Basic Components');
+		await fragmentsPage.copyFragmentToSet('Heading', set1);
+		await fragmentsPage.gotoFragmentSet(set1);
+
+		await expect(
+			page.getByRole('link').filter({hasText: 'Heading (Copy)'})
 		).toBeVisible();
 	}
 );

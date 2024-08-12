@@ -26,7 +26,11 @@ public class ProjectUsageDisplay {
 	public ProjectUsageDisplay() {
 	}
 
-	public ProjectUsageDisplay(FaroProject faroProject) throws Exception {
+	public ProjectUsageDisplay(
+			FaroProject faroProject, boolean includeIndividualsCounts,
+			boolean includeMonthlyValues, boolean includePageViewsCounts)
+		throws Exception {
+
 		_corpProjectName = faroProject.getCorpProjectName();
 		_corpProjectUuid = faroProject.getCorpProjectUuid();
 
@@ -48,11 +52,12 @@ public class ProjectUsageDisplay {
 		_individualsCountSinceLastAnniversary = subscriptionJSONObject.getLong(
 			"individualsCountSinceLastAnniversary");
 
-		JSONObject individualsCountsJSONObject =
-			JSONFactoryUtil.createJSONObject(
-				subscriptionJSONObject.getString("individualsCounts"));
-
-		_individualsCounts = individualsCountsJSONObject.toMap();
+		if (includeIndividualsCounts) {
+			_individualsCountsDisplay = new CountsDisplay(
+				includePageViewsCounts,
+				JSONFactoryUtil.createJSONObject(
+					subscriptionJSONObject.getString("individualsCounts")));
+		}
 
 		_lastAnniversaryDateString = dateFormat.format(
 			new Date(subscriptionJSONObject.getLong("lastAnniversaryDate")));
@@ -60,10 +65,12 @@ public class ProjectUsageDisplay {
 		_pageViewsCountSinceLastAnniversary = subscriptionJSONObject.getLong(
 			"pageViewsCountSinceLastAnniversary");
 
-		JSONObject pageViewsCountsJSONObject = JSONFactoryUtil.createJSONObject(
-			subscriptionJSONObject.getString("pageViewsCounts"));
-
-		_pageViewsCounts = pageViewsCountsJSONObject.toMap();
+		if (includePageViewsCounts) {
+			_pageViewsCountsDisplay = new CountsDisplay(
+				includePageViewsCounts,
+				JSONFactoryUtil.createJSONObject(
+					subscriptionJSONObject.getString("pageViewsCounts")));
+		}
 
 		_weDeployKey = faroProject.getWeDeployKey();
 	}
@@ -76,8 +83,8 @@ public class ProjectUsageDisplay {
 		return _corpProjectUuid;
 	}
 
-	public Map<String, Object> getIndividualsCounts() {
-		return _individualsCounts;
+	public CountsDisplay getIndividualsCountsDisplay() {
+		return _individualsCountsDisplay;
 	}
 
 	public long getIndividualsCountSinceLastAnniversary() {
@@ -96,8 +103,8 @@ public class ProjectUsageDisplay {
 		return isOffline();
 	}
 
-	public Map<String, Object> getPageViewsCounts() {
-		return _pageViewsCounts;
+	public CountsDisplay getPageViewsCountsDisplay() {
+		return _pageViewsCountsDisplay;
 	}
 
 	public long getPageViewsCountSinceLastAnniversary() {
@@ -112,14 +119,54 @@ public class ProjectUsageDisplay {
 		return _offline;
 	}
 
+	public static class CountsDisplay {
+
+		public CountsDisplay() {
+		}
+
+		public CountsDisplay(
+			boolean includeMonthlyValues, JSONObject jsonObject) {
+
+			if (includeMonthlyValues) {
+				JSONObject monthlyValuesJSONObject = jsonObject.getJSONObject(
+					"monthlyValues");
+
+				if (monthlyValuesJSONObject != null) {
+					_monthlyValues = monthlyValuesJSONObject.toMap();
+				}
+			}
+
+			_total = jsonObject.getInt("total");
+			_totalSinceLastAnniversary = jsonObject.getInt(
+				"totalSinceLastAnniversary");
+		}
+
+		public Map<String, Object> getMonthlyValues() {
+			return _monthlyValues;
+		}
+
+		public int getTotal() {
+			return _total;
+		}
+
+		public int getTotalSinceLastAnniversary() {
+			return _totalSinceLastAnniversary;
+		}
+
+		private Map<String, Object> _monthlyValues;
+		private int _total;
+		private int _totalSinceLastAnniversary;
+
+	}
+
 	private String _corpProjectName;
 	private String _corpProjectUuid;
-	private Map<String, Object> _individualsCounts;
+	private CountsDisplay _individualsCountsDisplay;
 	private long _individualsCountSinceLastAnniversary;
 	private String _lastAccessDateString;
 	private String _lastAnniversaryDateString;
 	private boolean _offline;
-	private Map<String, Object> _pageViewsCounts;
+	private CountsDisplay _pageViewsCountsDisplay;
 	private long _pageViewsCountSinceLastAnniversary;
 	private String _weDeployKey;
 

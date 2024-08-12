@@ -150,7 +150,7 @@ public abstract class BaseRestController {
 	}
 
 	protected String getWebClientBaseURL() {
-		return _lxcDXPServerProtocol + "://" + _lxcDXPMainDomain;
+		return lxcDXPServerProtocol + "://" + lxcDXPMainDomain;
 	}
 
 	protected void log(Jwt jwt, Log log) {
@@ -235,6 +235,12 @@ public abstract class BaseRestController {
 		).block();
 	}
 
+	@Value("${com.liferay.lxc.dxp.mainDomain}")
+	protected String lxcDXPMainDomain;
+
+	@Value("${com.liferay.lxc.dxp.server.protocol}")
+	protected String lxcDXPServerProtocol;
+
 	private Function<ClientResponse, Mono<String>>
 		_getExchangeToMonoFunction() {
 
@@ -270,11 +276,5 @@ public abstract class BaseRestController {
 			HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE
 		).build();
 	}
-
-	@Value("${com.liferay.lxc.dxp.mainDomain}")
-	private String _lxcDXPMainDomain;
-
-	@Value("${com.liferay.lxc.dxp.server.protocol}")
-	private String _lxcDXPServerProtocol;
 
 }

@@ -176,6 +176,7 @@ public abstract class BasePlacedOrderResourceTestCase {
 		placedOrder.setCouponCode(regex);
 		placedOrder.setCurrencyCode(regex);
 		placedOrder.setExternalReferenceCode(regex);
+		placedOrder.setName(regex);
 		placedOrder.setOrderTypeExternalReferenceCode(regex);
 		placedOrder.setOrderUUID(regex);
 		placedOrder.setPaymentMethod(regex);
@@ -198,6 +199,7 @@ public abstract class BasePlacedOrderResourceTestCase {
 		Assert.assertEquals(regex, placedOrder.getCouponCode());
 		Assert.assertEquals(regex, placedOrder.getCurrencyCode());
 		Assert.assertEquals(regex, placedOrder.getExternalReferenceCode());
+		Assert.assertEquals(regex, placedOrder.getName());
 		Assert.assertEquals(
 			regex, placedOrder.getOrderTypeExternalReferenceCode());
 		Assert.assertEquals(regex, placedOrder.getOrderUUID());
@@ -1090,6 +1092,14 @@ public abstract class BasePlacedOrderResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("name", additionalAssertFieldName)) {
+				if (placedOrder.getName() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("orderStatusInfo", additionalAssertFieldName)) {
 				if (placedOrder.getOrderStatusInfo() == null) {
 					valid = false;
@@ -1562,6 +1572,16 @@ public abstract class BasePlacedOrderResourceTestCase {
 				if (!Objects.deepEquals(
 						placedOrder1.getModifiedDate(),
 						placedOrder2.getModifiedDate())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("name", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						placedOrder1.getName(), placedOrder2.getName())) {
 
 					return false;
 				}
@@ -2310,6 +2330,52 @@ public abstract class BasePlacedOrderResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("name")) {
+			Object object = placedOrder.getName();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("orderStatusInfo")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -2900,6 +2966,7 @@ public abstract class BasePlacedOrderResourceTestCase {
 				id = RandomTestUtil.randomLong();
 				lastPriceUpdateDate = RandomTestUtil.nextDate();
 				modifiedDate = RandomTestUtil.nextDate();
+				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				orderTypeExternalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				orderTypeId = RandomTestUtil.randomLong();

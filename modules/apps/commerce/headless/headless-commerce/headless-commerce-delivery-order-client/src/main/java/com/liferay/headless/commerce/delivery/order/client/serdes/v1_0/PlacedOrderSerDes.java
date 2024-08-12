@@ -230,6 +230,20 @@ public class PlacedOrderSerDes {
 			sb.append("\"");
 		}
 
+		if (placedOrder.getName() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"name\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(placedOrder.getName()));
+
+			sb.append("\"");
+		}
+
 		if (placedOrder.getOrderStatusInfo() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -661,6 +675,13 @@ public class PlacedOrderSerDes {
 				liferayToJSONDateFormat.format(placedOrder.getModifiedDate()));
 		}
 
+		if (placedOrder.getName() == null) {
+			map.put("name", null);
+		}
+		else {
+			map.put("name", String.valueOf(placedOrder.getName()));
+		}
+
 		if (placedOrder.getOrderStatusInfo() == null) {
 			map.put("orderStatusInfo", null);
 		}
@@ -928,6 +949,9 @@ public class PlacedOrderSerDes {
 			else if (Objects.equals(jsonParserFieldName, "modifiedDate")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "name")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "orderStatusInfo")) {
 				return false;
 			}
@@ -1106,6 +1130,11 @@ public class PlacedOrderSerDes {
 				if (jsonParserFieldValue != null) {
 					placedOrder.setModifiedDate(
 						toDate((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "name")) {
+				if (jsonParserFieldValue != null) {
+					placedOrder.setName((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "orderStatusInfo")) {

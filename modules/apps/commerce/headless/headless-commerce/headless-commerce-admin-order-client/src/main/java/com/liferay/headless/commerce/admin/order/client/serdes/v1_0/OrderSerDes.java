@@ -322,6 +322,20 @@ public class OrderSerDes {
 			sb.append("\"");
 		}
 
+		if (order.getName() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"name\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(order.getName()));
+
+			sb.append("\"");
+		}
+
 		if (order.getOrderDate() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -1439,6 +1453,13 @@ public class OrderSerDes {
 				liferayToJSONDateFormat.format(order.getModifiedDate()));
 		}
 
+		if (order.getName() == null) {
+			map.put("name", null);
+		}
+		else {
+			map.put("name", String.valueOf(order.getName()));
+		}
+
 		if (order.getOrderDate() == null) {
 			map.put("orderDate", null);
 		}
@@ -2245,6 +2266,9 @@ public class OrderSerDes {
 			else if (Objects.equals(jsonParserFieldName, "modifiedDate")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "name")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "orderDate")) {
 				return false;
 			}
@@ -2772,6 +2796,11 @@ public class OrderSerDes {
 			else if (Objects.equals(jsonParserFieldName, "modifiedDate")) {
 				if (jsonParserFieldValue != null) {
 					order.setModifiedDate(toDate((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "name")) {
+				if (jsonParserFieldValue != null) {
+					order.setName((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "orderDate")) {

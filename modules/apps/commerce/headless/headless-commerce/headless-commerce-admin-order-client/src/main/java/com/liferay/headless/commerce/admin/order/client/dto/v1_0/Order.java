@@ -501,6 +501,25 @@ public class Order implements Cloneable, Serializable {
 
 	protected Date modifiedDate;
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
+		try {
+			name = nameUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String name;
+
 	public Date getOrderDate() {
 		return orderDate;
 	}

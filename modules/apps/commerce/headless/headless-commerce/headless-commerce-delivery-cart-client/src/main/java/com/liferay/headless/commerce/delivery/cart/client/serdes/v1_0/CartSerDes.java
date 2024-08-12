@@ -265,6 +265,20 @@ public class CartSerDes {
 			sb.append("\"");
 		}
 
+		if (cart.getName() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"name\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(cart.getName()));
+
+			sb.append("\"");
+		}
+
 		if (cart.getNotes() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -667,6 +681,13 @@ public class CartSerDes {
 				liferayToJSONDateFormat.format(cart.getModifiedDate()));
 		}
 
+		if (cart.getName() == null) {
+			map.put("name", null);
+		}
+		else {
+			map.put("name", String.valueOf(cart.getName()));
+		}
+
 		if (cart.getNotes() == null) {
 			map.put("notes", null);
 		}
@@ -899,6 +920,9 @@ public class CartSerDes {
 			else if (Objects.equals(jsonParserFieldName, "modifiedDate")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "name")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "notes")) {
 				return false;
 			}
@@ -1081,6 +1105,11 @@ public class CartSerDes {
 			else if (Objects.equals(jsonParserFieldName, "modifiedDate")) {
 				if (jsonParserFieldValue != null) {
 					cart.setModifiedDate(toDate((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "name")) {
+				if (jsonParserFieldValue != null) {
+					cart.setName((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "notes")) {

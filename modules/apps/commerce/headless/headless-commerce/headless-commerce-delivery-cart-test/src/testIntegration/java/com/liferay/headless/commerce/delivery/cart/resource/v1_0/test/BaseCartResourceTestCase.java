@@ -177,6 +177,7 @@ public abstract class BaseCartResourceTestCase {
 		cart.setCouponCode(regex);
 		cart.setCurrencyCode(regex);
 		cart.setExternalReferenceCode(regex);
+		cart.setName(regex);
 		cart.setOrderTypeExternalReferenceCode(regex);
 		cart.setOrderUUID(regex);
 		cart.setPaymentMethod(regex);
@@ -199,6 +200,7 @@ public abstract class BaseCartResourceTestCase {
 		Assert.assertEquals(regex, cart.getCouponCode());
 		Assert.assertEquals(regex, cart.getCurrencyCode());
 		Assert.assertEquals(regex, cart.getExternalReferenceCode());
+		Assert.assertEquals(regex, cart.getName());
 		Assert.assertEquals(regex, cart.getOrderTypeExternalReferenceCode());
 		Assert.assertEquals(regex, cart.getOrderUUID());
 		Assert.assertEquals(regex, cart.getPaymentMethod());
@@ -1412,6 +1414,14 @@ public abstract class BaseCartResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("name", additionalAssertFieldName)) {
+				if (cart.getName() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("notes", additionalAssertFieldName)) {
 				if (cart.getNotes() == null) {
 					valid = false;
@@ -1869,6 +1879,14 @@ public abstract class BaseCartResourceTestCase {
 				if (!Objects.deepEquals(
 						cart1.getModifiedDate(), cart2.getModifiedDate())) {
 
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("name", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(cart1.getName(), cart2.getName())) {
 					return false;
 				}
 
@@ -2573,6 +2591,52 @@ public abstract class BaseCartResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("name")) {
+			Object object = cart.getName();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("notes")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -3149,6 +3213,7 @@ public abstract class BaseCartResourceTestCase {
 				id = RandomTestUtil.randomLong();
 				lastPriceUpdateDate = RandomTestUtil.nextDate();
 				modifiedDate = RandomTestUtil.nextDate();
+				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				orderTypeExternalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				orderTypeId = RandomTestUtil.randomLong();

@@ -399,11 +399,17 @@ public class UpstreamFailureUtil {
 			portalBranchInformationBuild.getPortalBranchInformation();
 
 		try {
+			String testHistoryRoutineURL = JenkinsResultsParserUtil.getProperty(
+				JenkinsResultsParserUtil.getBuildProperties(),
+				"test.history.routine.url",
+				branchInformation.getUpstreamBranchName());
+
+			if (JenkinsResultsParserUtil.isNullOrEmpty(testHistoryRoutineURL)) {
+				return null;
+			}
+
 			_upstreamTestrayRoutine = TestrayFactory.newTestrayRoutine(
-				JenkinsResultsParserUtil.getProperty(
-					JenkinsResultsParserUtil.getBuildProperties(),
-					"test.history.routine.url",
-					branchInformation.getUpstreamBranchName()));
+				testHistoryRoutineURL);
 
 			return _upstreamTestrayRoutine;
 		}

@@ -833,8 +833,8 @@ public class CPDefinitionOptionValueRelLocalServiceTest {
 		_cpInstanceUnitOfMeasureLocalService.addCPInstanceUnitOfMeasure(
 			_user.getUserId(), cpInstance.getCPInstanceId(), true,
 			BigDecimal.ONE, cpInstanceUnitOfMeasureKey,
-			RandomTestUtil.randomLocaleStringMap(), 1, true, 1, BigDecimal.ONE,
-			cpInstance.getSku());
+			RandomTestUtil.randomLocaleStringMap(), 1, BigDecimal.ZERO, true, 1,
+			BigDecimal.ONE, cpInstance.getSku());
 
 		cpDefinitionOptionValueRel =
 			_cpDefinitionOptionValueRelLocalService.
@@ -897,8 +897,8 @@ public class CPDefinitionOptionValueRelLocalServiceTest {
 		_cpInstanceUnitOfMeasureLocalService.addCPInstanceUnitOfMeasure(
 			_user.getUserId(), cpInstance.getCPInstanceId(), true,
 			BigDecimal.ONE, cpInstanceUnitOfMeasureKey,
-			RandomTestUtil.randomLocaleStringMap(), 1, true, 1, BigDecimal.ONE,
-			cpInstance.getSku());
+			RandomTestUtil.randomLocaleStringMap(), 1, BigDecimal.ZERO, true, 1,
+			BigDecimal.ONE, cpInstance.getSku());
 
 		cpDefinitionOptionValueRel =
 			_cpDefinitionOptionValueRelLocalService.

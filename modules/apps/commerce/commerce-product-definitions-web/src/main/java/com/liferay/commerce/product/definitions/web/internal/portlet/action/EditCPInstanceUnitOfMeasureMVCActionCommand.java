@@ -154,7 +154,8 @@ public class EditCPInstanceUnitOfMeasureMVCActionCommand
 		Map<Locale, String> nameMap = _localization.getLocalizationMap(
 			actionRequest, "name");
 		int precision = ParamUtil.getInteger(actionRequest, "precision");
-		BigDecimal pricingQuantity = _commerceOrderItemQuantityFormatter.parse(actionRequest, "pricingQuantity");
+		BigDecimal pricingQuantity = _commerceOrderItemQuantityFormatter.parse(
+			actionRequest, "pricingQuantity");
 		boolean primary = ParamUtil.getBoolean(actionRequest, "primary");
 		double priority = ParamUtil.getDouble(actionRequest, "priority");
 		BigDecimal rate = _commercePriceFormatter.parse(actionRequest, "rate");
@@ -172,8 +173,8 @@ public class EditCPInstanceUnitOfMeasureMVCActionCommand
 			return _cpInstanceUnitOfMeasureService.
 				updateCPInstanceUnitOfMeasure(
 					cpInstanceUnitOfMeasureId, cpInstanceId, active,
-					incrementalOrderQuantity, key, nameMap, precision, pricingQuantity,
-					primary, priority, rate, sku);
+					incrementalOrderQuantity, key, nameMap, precision,
+					pricingQuantity, primary, priority, rate, sku);
 		}
 
 		_cpInstanceUnitOfMeasureService.addCPInstanceUnitOfMeasure(

@@ -151,7 +151,8 @@ public class CommerceOrderDiscountV2Test {
 				HashMapBuilder.put(
 					LocaleUtil.getDefault(), "NOME"
 				).build(),
-				0, true, 0.0, BigDecimal.ONE, cpInstance.getSku());
+				0, BigDecimal.ZERO, true, 0.0, BigDecimal.ONE,
+				cpInstance.getSku());
 
 		CommercePriceEntry commercePriceEntry =
 			CommercePriceEntryTestUtil.addCommercePriceEntry(

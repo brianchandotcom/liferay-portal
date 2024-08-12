@@ -31,7 +31,7 @@ import org.springframework.web.reactive.function.client.WebClient;
  */
 @RequestMapping("/capture")
 @RestController
-public class CaptureRestController extends BaseRestController {
+public class CaptureRestController extends PayPalBaseRestController {
 
 	@PostMapping
 	public ResponseEntity<String> post(

@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -86,7 +87,7 @@ public class SiteNavigationLanguageDisplayContextTest {
 					_mockHttpServletRequest());
 
 		Assert.assertEquals(
-			GroupConstants.CONTROL_PANEL,
+			GroupConstants.GUEST,
 			siteNavigationLanguageDisplayContext.getDisplayStyleGroupKey());
 	}
 
@@ -131,11 +132,41 @@ public class SiteNavigationLanguageDisplayContextTest {
 		}
 	}
 
+	private Group _getGroup(String groupKey) {
+		Group group = Mockito.mock(Group.class);
+
+		Mockito.when(
+			group.getExternalReferenceCode()
+		).thenReturn(
+			RandomTestUtil.randomString()
+		);
+		Mockito.when(
+			group.getGroupId()
+		).thenReturn(
+			RandomTestUtil.randomLong()
+		);
+		Mockito.when(
+			group.getGroupKey()
+		).thenReturn(
+			groupKey
+		);
+
+		return group;
+	}
+
 	private HttpServletRequest _mockHttpServletRequest() {
 		HttpServletRequest httpServletRequest = Mockito.mock(
 			HttpServletRequest.class);
 
 		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
+
+		Group group = _getGroup(GroupConstants.GUEST);
+
+		Mockito.when(
+			themeDisplay.getScopeGroup()
+		).thenReturn(
+			group
+		);
 
 		Mockito.when(
 			(ThemeDisplay)httpServletRequest.getAttribute(WebKeys.THEME_DISPLAY)

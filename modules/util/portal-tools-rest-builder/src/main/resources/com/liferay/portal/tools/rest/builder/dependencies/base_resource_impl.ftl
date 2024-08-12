@@ -423,7 +423,9 @@ public abstract class Base${schemaName}ResourceImpl
 			<#else>
 				<#assign
 					lastDotIndexOfReturnType = javaMethodSignature.returnType?last_index_of('.')
+
 					returnTypeClassName = javaMethodSignature.returnType?substring(lastDotIndexOfReturnType + 1)
+
 					returnTypeSchema = allSchemas[returnTypeClassName]!
 				/>
 

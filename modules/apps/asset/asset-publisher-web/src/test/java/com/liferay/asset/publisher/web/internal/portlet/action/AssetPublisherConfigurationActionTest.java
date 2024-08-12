@@ -7,12 +7,14 @@ package com.liferay.asset.publisher.web.internal.portlet.action;
 
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portletmvc4spring.test.mock.web.portlet.MockActionRequest;
 
@@ -64,6 +66,135 @@ public class AssetPublisherConfigurationActionTest {
 			portletPreferences);
 
 		Assert.assertTrue(MapUtil.isEmpty(portletPreferencesMap));
+	}
+
+	@FeatureFlags("LPD-22837")
+	@Test
+	public void testUpdateAssetListEntryPreferencesWithFeatureWithDifferentGroup()
+		throws Exception {
+
+		AssetListEntry assetListEntry = _getAssetListEntry();
+
+		Group group = _getGroup(assetListEntry.getGroupId());
+
+		AssetPublisherConfigurationAction assetPublisherConfigurationAction =
+			_getAssetPublisherConfigurationAction(assetListEntry, group);
+
+		Map<String, String[]> portletPreferencesMap = new HashMap<>();
+		PortletPreferences portletPreferences = Mockito.mock(
+			PortletPreferences.class);
+
+		assetPublisherConfigurationAction.updateAssetListEntryPreferences(
+			_getMockActionRequest(
+				assetListEntry.getExternalReferenceCode(),
+				assetListEntry.getAssetListEntryId(),
+				group.getExternalReferenceCode(), portletPreferencesMap,
+				_getThemeDisplay(RandomTestUtil.randomLong())),
+			portletPreferences);
+
+		Mockito.verify(
+			assetPublisherConfigurationAction.assetListEntryLocalService
+		).fetchAssetListEntry(
+			assetListEntry.getAssetListEntryId()
+		);
+		Mockito.verify(
+			assetPublisherConfigurationAction.groupLocalService
+		).getGroup(
+			assetListEntry.getGroupId()
+		);
+
+		Assert.assertArrayEquals(
+			MapUtil.toString(portletPreferencesMap),
+			new String[] {assetListEntry.getExternalReferenceCode()},
+			portletPreferencesMap.get("assetListEntryExternalReferenceCode"));
+		Assert.assertArrayEquals(
+			MapUtil.toString(portletPreferencesMap),
+			new String[] {group.getExternalReferenceCode()},
+			portletPreferencesMap.get(
+				"assetListEntryGroupExternalReferenceCode"));
+	}
+
+	@FeatureFlags("LPD-22837")
+	@Test
+	public void testUpdateAssetListEntryPreferencesWithFeatureWithSameGroup()
+		throws Exception {
+
+		AssetListEntry assetListEntry = _getAssetListEntry();
+
+		Group group = _getGroup(assetListEntry.getGroupId());
+
+		AssetPublisherConfigurationAction assetPublisherConfigurationAction =
+			_getAssetPublisherConfigurationAction(assetListEntry, group);
+
+		Map<String, String[]> portletPreferencesMap = new HashMap<>();
+		PortletPreferences portletPreferences = Mockito.mock(
+			PortletPreferences.class);
+
+		assetPublisherConfigurationAction.updateAssetListEntryPreferences(
+			_getMockActionRequest(
+				assetListEntry.getExternalReferenceCode(),
+				assetListEntry.getAssetListEntryId(),
+				group.getExternalReferenceCode(), portletPreferencesMap,
+				_getThemeDisplay(assetListEntry.getGroupId())),
+			portletPreferences);
+
+		Mockito.verifyNoInteractions(
+			assetPublisherConfigurationAction.groupLocalService);
+		Mockito.verify(
+			portletPreferences
+		).reset(
+			"assetListEntryGroupExternalReferenceCode"
+		);
+
+		Assert.assertArrayEquals(
+			MapUtil.toString(portletPreferencesMap),
+			new String[] {assetListEntry.getExternalReferenceCode()},
+			portletPreferencesMap.get("assetListEntryExternalReferenceCode"));
+		Assert.assertFalse(
+			MapUtil.toString(portletPreferencesMap),
+			portletPreferencesMap.containsKey(
+				"assetListEntryGroupExternalReferenceCode"));
+	}
+
+	@FeatureFlags("LPD-22837")
+	@Test
+	public void testUpdateAssetListEntryPreferencesWithNoSelection()
+		throws Exception {
+
+		AssetPublisherConfigurationAction assetPublisherConfigurationAction =
+			_getAssetPublisherConfigurationAction(null, null);
+
+		Map<String, String[]> portletPreferencesMap = new HashMap<>();
+		PortletPreferences portletPreferences = Mockito.mock(
+			PortletPreferences.class);
+
+		assetPublisherConfigurationAction.updateAssetListEntryPreferences(
+			_getMockActionRequest(
+				StringPool.BLANK, 0, StringPool.BLANK, portletPreferencesMap,
+				_getThemeDisplay(RandomTestUtil.randomLong())),
+			portletPreferences);
+
+		Mockito.verify(
+			assetPublisherConfigurationAction.assetListEntryLocalService
+		).fetchAssetListEntry(
+			0
+		);
+		Mockito.verifyNoInteractions(
+			assetPublisherConfigurationAction.groupLocalService);
+		Mockito.verify(
+			portletPreferences
+		).reset(
+			"assetListEntryExternalReferenceCode"
+		);
+		Mockito.verify(
+			portletPreferences
+		).reset(
+			"assetListEntryGroupExternalReferenceCode"
+		);
+
+		Assert.assertTrue(
+			MapUtil.toString(portletPreferencesMap),
+			MapUtil.isEmpty(portletPreferencesMap));
 	}
 
 	private AssetListEntry _getAssetListEntry() {
@@ -194,6 +325,14 @@ public class AssetPublisherConfigurationActionTest {
 			assetListEntryGroupExternalReferenceCode);
 
 		return mockActionRequest;
+	}
+
+	private ThemeDisplay _getThemeDisplay(long groupId) {
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		themeDisplay.setScopeGroupId(groupId);
+
+		return themeDisplay;
 	}
 
 }

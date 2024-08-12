@@ -176,6 +176,8 @@ public class CommerceOrderPersistenceTest {
 
 		newCommerceOrder.setManuallyAdjusted(RandomTestUtil.randomBoolean());
 
+		newCommerceOrder.setName(RandomTestUtil.randomString());
+
 		newCommerceOrder.setOrderDate(RandomTestUtil.nextDate());
 
 		newCommerceOrder.setOrderStatus(RandomTestUtil.nextInt());
@@ -396,6 +398,8 @@ public class CommerceOrderPersistenceTest {
 		Assert.assertEquals(
 			existingCommerceOrder.isManuallyAdjusted(),
 			newCommerceOrder.isManuallyAdjusted());
+		Assert.assertEquals(
+			existingCommerceOrder.getName(), newCommerceOrder.getName());
 		Assert.assertEquals(
 			Time.getShortTimestamp(existingCommerceOrder.getOrderDate()),
 			Time.getShortTimestamp(newCommerceOrder.getOrderDate()));
@@ -777,11 +781,11 @@ public class CommerceOrderPersistenceTest {
 			true, "shippingAddressId", true, "advanceStatus", true,
 			"commercePaymentMethodKey", true, "couponCode", true,
 			"deliveryCommerceTermEntryName", true, "lastPriceUpdateDate", true,
-			"manuallyAdjusted", true, "orderDate", true, "orderStatus", true,
-			"paymentCommerceTermEntryName", true, "paymentStatus", true,
-			"printedNote", true, "purchaseOrderNumber", true,
-			"requestedDeliveryDate", true, "shippable", true, "shippingAmount",
-			true, "shippingDiscountAmount", true,
+			"manuallyAdjusted", true, "name", true, "orderDate", true,
+			"orderStatus", true, "paymentCommerceTermEntryName", true,
+			"paymentStatus", true, "printedNote", true, "purchaseOrderNumber",
+			true, "requestedDeliveryDate", true, "shippable", true,
+			"shippingAmount", true, "shippingDiscountAmount", true,
 			"shippingDiscountPercentageLevel1", true,
 			"shippingDiscountPercentageLevel2", true,
 			"shippingDiscountPercentageLevel3", true,
@@ -1157,6 +1161,8 @@ public class CommerceOrderPersistenceTest {
 		commerceOrder.setLastPriceUpdateDate(RandomTestUtil.nextDate());
 
 		commerceOrder.setManuallyAdjusted(RandomTestUtil.randomBoolean());
+
+		commerceOrder.setName(RandomTestUtil.randomString());
 
 		commerceOrder.setOrderDate(RandomTestUtil.nextDate());
 

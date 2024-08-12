@@ -104,6 +104,7 @@
 		<field name="deliveryCommerceTermEntryName" type="String" />
 		<field name="lastPriceUpdateDate" type="Date" />
 		<field name="manuallyAdjusted" type="boolean" />
+		<field name="name" type="String" />
 		<field name="orderDate" type="Date" />
 		<field name="orderStatus" type="int" />
 		<field name="paymentCommerceTermEntryDescription" type="String">

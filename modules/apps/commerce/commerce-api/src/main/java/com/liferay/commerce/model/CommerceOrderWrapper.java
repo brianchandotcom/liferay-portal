@@ -69,6 +69,7 @@ public class CommerceOrderWrapper
 			getDeliveryCommerceTermEntryName());
 		attributes.put("lastPriceUpdateDate", getLastPriceUpdateDate());
 		attributes.put("manuallyAdjusted", isManuallyAdjusted());
+		attributes.put("name", getName());
 		attributes.put("orderDate", getOrderDate());
 		attributes.put("orderStatus", getOrderStatus());
 		attributes.put(
@@ -339,6 +340,12 @@ public class CommerceOrderWrapper
 
 		if (manuallyAdjusted != null) {
 			setManuallyAdjusted(manuallyAdjusted);
+		}
+
+		String name = (String)attributes.get("name");
+
+		if (name != null) {
+			setName(name);
 		}
 
 		Date orderDate = (Date)attributes.get("orderDate");
@@ -992,6 +999,16 @@ public class CommerceOrderWrapper
 	@Override
 	public long getMvccVersion() {
 		return model.getMvccVersion();
+	}
+
+	/**
+	 * Returns the name of this commerce order.
+	 *
+	 * @return the name of this commerce order
+	 */
+	@Override
+	public String getName() {
+		return model.getName();
 	}
 
 	/**
@@ -2012,6 +2029,16 @@ public class CommerceOrderWrapper
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		model.setMvccVersion(mvccVersion);
+	}
+
+	/**
+	 * Sets the name of this commerce order.
+	 *
+	 * @param name the name of this commerce order
+	 */
+	@Override
+	public void setName(String name) {
+		model.setName(name);
 	}
 
 	/**

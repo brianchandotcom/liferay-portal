@@ -90,9 +90,9 @@ public class CommerceOrderServiceHttp {
 				long commerceCurrencyId, long commerceOrderTypeId,
 				long commerceShippingMethodId, long shippingAddressId,
 				String advanceStatus, String commercePaymentMethodKey,
-				int orderDateMonth, int orderDateDay, int orderDateYear,
-				int orderDateHour, int orderDateMinute, int orderStatus,
-				int paymentStatus, String purchaseOrderNumber,
+				String name, int orderDateMonth, int orderDateDay,
+				int orderDateYear, int orderDateHour, int orderDateMinute,
+				int orderStatus, int paymentStatus, String purchaseOrderNumber,
 				java.math.BigDecimal shippingAmount, String shippingOptionName,
 				java.math.BigDecimal shippingWithTaxAmount,
 				java.math.BigDecimal subtotal,
@@ -112,7 +112,7 @@ public class CommerceOrderServiceHttp {
 				methodKey, externalReferenceCode, groupId, billingAddressId,
 				commerceAccountId, commerceCurrencyId, commerceOrderTypeId,
 				commerceShippingMethodId, shippingAddressId, advanceStatus,
-				commercePaymentMethodKey, orderDateMonth, orderDateDay,
+				commercePaymentMethodKey, name, orderDateMonth, orderDateDay,
 				orderDateYear, orderDateHour, orderDateMinute, orderStatus,
 				paymentStatus, purchaseOrderNumber, shippingAmount,
 				shippingOptionName, shippingWithTaxAmount, subtotal,
@@ -154,8 +154,9 @@ public class CommerceOrderServiceHttp {
 				long commerceCurrencyId, long commerceOrderTypeId,
 				long commerceShippingMethodId, long shippingAddressId,
 				String advanceStatus, String commercePaymentMethodKey,
-				int orderStatus, int paymentStatus, String purchaseOrderNumber,
-				java.math.BigDecimal shippingAmount, String shippingOptionName,
+				String name, int orderStatus, int paymentStatus,
+				String purchaseOrderNumber, java.math.BigDecimal shippingAmount,
+				String shippingOptionName,
 				java.math.BigDecimal shippingWithTaxAmount,
 				java.math.BigDecimal subtotal,
 				java.math.BigDecimal subtotalWithTaxAmount,
@@ -174,7 +175,7 @@ public class CommerceOrderServiceHttp {
 				methodKey, externalReferenceCode, groupId, billingAddressId,
 				commerceAccountId, commerceCurrencyId, commerceOrderTypeId,
 				commerceShippingMethodId, shippingAddressId, advanceStatus,
-				commercePaymentMethodKey, orderStatus, paymentStatus,
+				commercePaymentMethodKey, name, orderStatus, paymentStatus,
 				purchaseOrderNumber, shippingAmount, shippingOptionName,
 				shippingWithTaxAmount, subtotal, subtotalWithTaxAmount,
 				taxAmount, total, totalWithTaxAmount, commerceContext,
@@ -1844,16 +1845,10 @@ public class CommerceOrderServiceHttp {
 			HttpPrincipal httpPrincipal, String externalReferenceCode,
 			long commerceOrderId, long billingAddressId,
 			long commerceShippingMethodId, long shippingAddressId,
-			String advanceStatus, String commercePaymentMethodKey,
+			String advanceStatus, String commercePaymentMethodKey, String name,
 			String purchaseOrderNumber, java.math.BigDecimal shippingAmount,
-			String shippingOptionName,
-			java.math.BigDecimal shippingWithTaxAmount,
-			java.math.BigDecimal subtotal,
-			java.math.BigDecimal subtotalWithTaxAmount,
-			java.math.BigDecimal taxAmount, java.math.BigDecimal total,
-			java.math.BigDecimal totalDiscountAmount,
-			java.math.BigDecimal totalWithTaxAmount,
-			com.liferay.commerce.context.CommerceContext commerceContext)
+			String shippingOptionName, java.math.BigDecimal subtotal,
+			java.math.BigDecimal total)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -1864,10 +1859,9 @@ public class CommerceOrderServiceHttp {
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, commerceOrderId,
 				billingAddressId, commerceShippingMethodId, shippingAddressId,
-				advanceStatus, commercePaymentMethodKey, purchaseOrderNumber,
-				shippingAmount, shippingOptionName, shippingWithTaxAmount,
-				subtotal, subtotalWithTaxAmount, taxAmount, total,
-				totalDiscountAmount, totalWithTaxAmount, commerceContext);
+				advanceStatus, commercePaymentMethodKey, name,
+				purchaseOrderNumber, shippingAmount, shippingOptionName,
+				subtotal, total);
 
 			Object returnObj = null;
 
@@ -1901,11 +1895,15 @@ public class CommerceOrderServiceHttp {
 			HttpPrincipal httpPrincipal, String externalReferenceCode,
 			long commerceOrderId, long billingAddressId,
 			long commerceShippingMethodId, long shippingAddressId,
-			String advanceStatus, String commercePaymentMethodKey,
+			String advanceStatus, String commercePaymentMethodKey, String name,
 			String purchaseOrderNumber, java.math.BigDecimal shippingAmount,
-			String shippingOptionName, java.math.BigDecimal subtotal,
-			java.math.BigDecimal total,
-			com.liferay.commerce.context.CommerceContext commerceContext)
+			String shippingOptionName,
+			java.math.BigDecimal shippingWithTaxAmount,
+			java.math.BigDecimal subtotal,
+			java.math.BigDecimal subtotalWithTaxAmount,
+			java.math.BigDecimal taxAmount, java.math.BigDecimal total,
+			java.math.BigDecimal totalDiscountAmount,
+			java.math.BigDecimal totalWithTaxAmount)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -1916,9 +1914,10 @@ public class CommerceOrderServiceHttp {
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, commerceOrderId,
 				billingAddressId, commerceShippingMethodId, shippingAddressId,
-				advanceStatus, commercePaymentMethodKey, purchaseOrderNumber,
-				shippingAmount, shippingOptionName, subtotal, total,
-				commerceContext);
+				advanceStatus, commercePaymentMethodKey, name,
+				purchaseOrderNumber, shippingAmount, shippingOptionName,
+				shippingWithTaxAmount, subtotal, subtotalWithTaxAmount,
+				taxAmount, total, totalDiscountAmount, totalWithTaxAmount);
 
 			Object returnObj = null;
 
@@ -2661,11 +2660,12 @@ public class CommerceOrderServiceHttp {
 		new Class[] {
 			String.class, long.class, long.class, long.class, long.class,
 			long.class, long.class, long.class, String.class, String.class,
-			int.class, int.class, int.class, int.class, int.class, int.class,
-			int.class, String.class, java.math.BigDecimal.class, String.class,
+			String.class, int.class, int.class, int.class, int.class, int.class,
+			int.class, int.class, String.class, java.math.BigDecimal.class,
+			String.class, java.math.BigDecimal.class,
 			java.math.BigDecimal.class, java.math.BigDecimal.class,
 			java.math.BigDecimal.class, java.math.BigDecimal.class,
-			java.math.BigDecimal.class, java.math.BigDecimal.class,
+			java.math.BigDecimal.class,
 			com.liferay.commerce.context.CommerceContext.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
@@ -2673,11 +2673,11 @@ public class CommerceOrderServiceHttp {
 		new Class[] {
 			String.class, long.class, long.class, long.class, long.class,
 			long.class, long.class, long.class, String.class, String.class,
-			int.class, int.class, String.class, java.math.BigDecimal.class,
-			String.class, java.math.BigDecimal.class,
+			String.class, int.class, int.class, String.class,
+			java.math.BigDecimal.class, String.class,
 			java.math.BigDecimal.class, java.math.BigDecimal.class,
 			java.math.BigDecimal.class, java.math.BigDecimal.class,
-			java.math.BigDecimal.class,
+			java.math.BigDecimal.class, java.math.BigDecimal.class,
 			com.liferay.commerce.context.CommerceContext.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
@@ -2819,21 +2819,19 @@ public class CommerceOrderServiceHttp {
 	private static final Class<?>[] _updateCommerceOrderParameterTypes42 =
 		new Class[] {
 			String.class, long.class, long.class, long.class, long.class,
-			String.class, String.class, String.class,
+			String.class, String.class, String.class, String.class,
 			java.math.BigDecimal.class, String.class,
-			java.math.BigDecimal.class, java.math.BigDecimal.class,
-			java.math.BigDecimal.class, java.math.BigDecimal.class,
-			java.math.BigDecimal.class, java.math.BigDecimal.class,
-			java.math.BigDecimal.class,
-			com.liferay.commerce.context.CommerceContext.class
+			java.math.BigDecimal.class, java.math.BigDecimal.class
 		};
 	private static final Class<?>[] _updateCommerceOrderParameterTypes43 =
 		new Class[] {
 			String.class, long.class, long.class, long.class, long.class,
-			String.class, String.class, String.class,
+			String.class, String.class, String.class, String.class,
 			java.math.BigDecimal.class, String.class,
 			java.math.BigDecimal.class, java.math.BigDecimal.class,
-			com.liferay.commerce.context.CommerceContext.class
+			java.math.BigDecimal.class, java.math.BigDecimal.class,
+			java.math.BigDecimal.class, java.math.BigDecimal.class,
+			java.math.BigDecimal.class
 		};
 	private static final Class<?>[]
 		_updateCommerceOrderExternalReferenceCodeParameterTypes44 =

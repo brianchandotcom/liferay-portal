@@ -219,7 +219,7 @@ export default function _JournalPortlet({
 
 			availableLocalesInput.value = availableLocales;
 
-			if (autoSaveDraftEnabled) {
+			if (autoSaveDraftEnabled && !redirectOnSave) {
 				Liferay.componentReady(`${namespace}dataEngineLayoutRenderer`)
 					.then((dataEngineLayoutRenderer) => {
 						const dataEngineLayoutRendererRef =

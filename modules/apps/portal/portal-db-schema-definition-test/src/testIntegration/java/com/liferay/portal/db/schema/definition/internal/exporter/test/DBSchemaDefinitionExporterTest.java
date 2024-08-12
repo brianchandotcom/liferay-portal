@@ -77,11 +77,9 @@ public class DBSchemaDefinitionExporterTest {
 		_folder = FileUtil.createTempFolder();
 
 		_objectDefinition1 = ObjectDefinitionTestUtil.addCustomObjectDefinition(
-			ObjectDefinitionTestUtil.getRandomName(),
-			ObjectDefinitionLocalServiceUtil.getService());
+			ObjectDefinitionTestUtil.getRandomName());
 		_objectDefinition2 = ObjectDefinitionTestUtil.addCustomObjectDefinition(
-			ObjectDefinitionTestUtil.getRandomName(),
-			ObjectDefinitionLocalServiceUtil.getService());
+			ObjectDefinitionTestUtil.getRandomName());
 
 		_objectRelationship = ObjectRelationshipTestUtil.addObjectRelationship(
 			ObjectRelationshipLocalServiceUtil.getService(), _objectDefinition1,

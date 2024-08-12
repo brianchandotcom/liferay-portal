@@ -70,7 +70,7 @@ public class DBSchemaDefinitionExporterTest
 		String content = FileUtil.read(
 			new File(folder, "db_schema_definition_export_report.info"));
 
-		Assert.assertTrue(content.endsWith("Missing tables:"));
+		Assert.assertTrue(content.endsWith("Portal missing tables:"));
 	}
 
 	@Test
@@ -89,7 +89,8 @@ public class DBSchemaDefinitionExporterTest
 
 			Assert.assertTrue(
 				content.contains(
-					"Missing tables: " + StringUtil.toLowerCase("TestTable")));
+					"Portal missing tables: " +
+						StringUtil.toLowerCase("TestTable")));
 		}
 		finally {
 			db.runSQL("DROP_TABLE_IF_EXISTS(TestTable)");

@@ -443,27 +443,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		long[] userRoleIds = user.getRoleIds();
 
-		Set<Long> roleIdSet = new HashSet<>();
-
-		String[] defaultRoleNames = PrefsPropsUtil.getStringArray(
-			user.getCompanyId(), PropsKeys.ADMIN_DEFAULT_ROLE_NAMES,
-			StringPool.NEW_LINE, PropsValues.ADMIN_DEFAULT_ROLE_NAMES);
-
-		for (String defaultRoleName : defaultRoleNames) {
-			Role role = _rolePersistence.fetchByC_N(
-				user.getCompanyId(), defaultRoleName);
-
-			if ((role != null) &&
-				(role.getType() == RoleConstants.TYPE_REGULAR) &&
-				!ArrayUtil.contains(userRoleIds, role.getRoleId())) {
-
-				roleIdSet.add(role.getRoleId());
-			}
-		}
-
-		long[] roleIds = ArrayUtil.toArray(roleIdSet.toArray(new Long[0]));
-
-		roleIds = UsersAdminUtil.addRequiredRoles(user, roleIds);
+		long[] roleIds = _collectDefaultAndRequiredRoleId(userId, null);
 
 		if (ArrayUtil.containsAll(userRoleIds, roleIds)) {
 			return false;
@@ -1388,13 +1368,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		// Roles
 
-		if (roleIds != null) {
-			roleIds = UsersAdminUtil.addRequiredRoles(user, roleIds);
-
-			userPersistence.setRoles(userId, roleIds);
-		}
-
-		addDefaultRoles(userId);
+		userPersistence.setRoles(
+			userId, _collectDefaultAndRequiredRoleId(userId, roleIds));
 
 		// User groups
 
@@ -7320,6 +7295,33 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				}
 			}
 		}
+	}
+
+	private long[] _collectDefaultAndRequiredRoleId(long userId, long[] roleIds)
+		throws PortalException {
+
+		User user = userPersistence.findByPrimaryKey(userId);
+
+		Set<Long> roleIdSet = SetUtil.fromArray(roleIds);
+
+		String[] defaultRoleNames = PrefsPropsUtil.getStringArray(
+			user.getCompanyId(), PropsKeys.ADMIN_DEFAULT_ROLE_NAMES,
+			StringPool.NEW_LINE, PropsValues.ADMIN_DEFAULT_ROLE_NAMES);
+
+		for (String defaultRoleName : defaultRoleNames) {
+			Role role = _rolePersistence.fetchByC_N(
+				user.getCompanyId(), defaultRoleName);
+
+			if ((role != null) &&
+				(role.getType() == RoleConstants.TYPE_REGULAR)) {
+
+				roleIdSet.add(role.getRoleId());
+			}
+		}
+
+		roleIds = ArrayUtil.toArray(roleIdSet.toArray(new Long[0]));
+
+		return UsersAdminUtil.addRequiredRoles(user, roleIds);
 	}
 
 	private String _getLocalizedValue(

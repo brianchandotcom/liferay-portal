@@ -622,6 +622,15 @@ public class DefaultObjectEntryManagerImpl
 		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
 			_objectEntryService.getObjectEntry(objectEntryId);
 
+		long groupId = serviceBuilderObjectEntry.getGroupId();
+
+		if (Objects.equals(
+				relatedObjectDefinition.getScope(),
+				ObjectDefinitionConstants.SCOPE_COMPANY)) {
+
+			groupId = 0;
+		}
+
 		return Page.of(
 			HashMapBuilder.put(
 				"get",
@@ -632,21 +641,18 @@ public class DefaultObjectEntryManagerImpl
 					serviceBuilderObjectEntry.getUserId(),
 					_getObjectEntryPermissionName(
 						objectDefinition.getObjectDefinitionId()),
-					serviceBuilderObjectEntry.getGroupId(),
-					dtoConverterContext.getUriInfo())
+					groupId, dtoConverterContext.getUriInfo())
 			).build(),
 			_toObjectEntries(
 				dtoConverterContext,
 				objectRelatedModelsProvider.getRelatedModels(
-					serviceBuilderObjectEntry.getGroupId(),
-					objectRelationship.getObjectRelationshipId(),
+					groupId, objectRelationship.getObjectRelationshipId(),
 					serviceBuilderObjectEntry.getPrimaryKey(), null,
 					_getStartPosition(pagination),
 					_getEndPosition(pagination))),
 			pagination,
 			objectRelatedModelsProvider.getRelatedModelsCount(
-				serviceBuilderObjectEntry.getGroupId(),
-				objectRelationship.getObjectRelationshipId(),
+				groupId, objectRelationship.getObjectRelationshipId(),
 				serviceBuilderObjectEntry.getPrimaryKey(), null));
 	}
 

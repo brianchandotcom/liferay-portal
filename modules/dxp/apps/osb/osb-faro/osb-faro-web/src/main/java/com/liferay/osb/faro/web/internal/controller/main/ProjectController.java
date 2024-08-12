@@ -544,7 +544,13 @@ public class ProjectController extends BaseFaroController {
 	@Path("/usage")
 	@RolesAllowed(RoleConstants.SITE_ADMINISTRATOR)
 	public List<ProjectUsageDisplay> getProjectUsageDisplays(
-		@QueryParam("groupId") Long groupId) {
+		@QueryParam("groupId") Long groupId,
+		@DefaultValue("true") @QueryParam("includeIndividualsCounts") boolean
+			includeIndividualsCounts,
+		@DefaultValue("true") @QueryParam("includeMonthlyValues") boolean
+			includeMonthlyValues,
+		@DefaultValue("true") @QueryParam("includePageViewsCounts") boolean
+			includePageViewsCounts) {
 
 		List<FaroProject> faroProjects = new ArrayList<>();
 
@@ -558,7 +564,10 @@ public class ProjectController extends BaseFaroController {
 		}
 
 		return TransformUtil.transform(
-			faroProjects, faroProject -> new ProjectUsageDisplay(faroProject));
+			faroProjects,
+			faroProject -> new ProjectUsageDisplay(
+				faroProject, includeIndividualsCounts, includeMonthlyValues,
+				includePageViewsCounts));
 	}
 
 	@GET

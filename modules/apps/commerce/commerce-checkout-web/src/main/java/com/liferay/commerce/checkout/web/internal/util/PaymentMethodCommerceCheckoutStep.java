@@ -9,8 +9,6 @@ import com.liferay.commerce.checkout.helper.CommerceCheckoutStepHttpHelper;
 import com.liferay.commerce.checkout.web.internal.display.context.PaymentMethodCheckoutStepDisplayContext;
 import com.liferay.commerce.constants.CommerceCheckoutWebKeys;
 import com.liferay.commerce.constants.CommerceOrderActionKeys;
-import com.liferay.commerce.constants.CommerceWebKeys;
-import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.exception.CommerceOrderPaymentMethodException;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.payment.engine.CommercePaymentEngine;
@@ -143,20 +141,16 @@ public class PaymentMethodCommerceCheckoutStep
 			return;
 		}
 
-		CommerceContext commerceContext =
-			(CommerceContext)actionRequest.getAttribute(
-				CommerceWebKeys.COMMERCE_CONTEXT);
-
 		commerceOrder = _commerceOrderLocalService.updateCommerceOrder(
 			null, commerceOrder.getCommerceOrderId(),
 			commerceOrder.getBillingAddressId(),
 			commerceOrder.getCommerceShippingMethodId(),
 			commerceOrder.getShippingAddressId(),
-			commerceOrder.getAdvanceStatus(), commercePaymentMethodKey,
+			commerceOrder.getAdvanceStatus(), commercePaymentMethodKey, null,
 			commerceOrder.getPurchaseOrderNumber(),
 			commerceOrder.getShippingAmount(),
 			commerceOrder.getShippingOptionName(), commerceOrder.getSubtotal(),
-			commerceOrder.getTotal(), commerceContext);
+			commerceOrder.getTotal());
 
 		commerceOrder = _commerceOrderLocalService.resetTermsAndConditions(
 			commerceOrder.getCommerceOrderId(), false, true);

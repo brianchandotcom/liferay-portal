@@ -227,16 +227,16 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 
 	@Override
 	public CommerceOrder updateCommerceOrder(
-		String externalReferenceCode, long commerceOrderId,
-		long billingAddressId, long commerceShippingMethodId,
-		long shippingAddressId, String advanceStatus,
-		String commercePaymentMethodKey, String name, String purchaseOrderNumber,
-		BigDecimal shippingAmount, String shippingOptionName,
-		BigDecimal shippingWithTaxAmount, BigDecimal subtotal,
-		BigDecimal subtotalWithTaxAmount, BigDecimal taxAmount,
-		BigDecimal total, BigDecimal totalDiscountAmount,
-		BigDecimal totalWithTaxAmount, CommerceContext commerceContext,
-		boolean recalculatePrice)
+			String externalReferenceCode, long commerceOrderId,
+			long billingAddressId, long commerceShippingMethodId,
+			long shippingAddressId, String advanceStatus,
+			String commercePaymentMethodKey, String name,
+			String purchaseOrderNumber, BigDecimal shippingAmount,
+			String shippingOptionName, BigDecimal shippingWithTaxAmount,
+			BigDecimal subtotal, BigDecimal subtotalWithTaxAmount,
+			BigDecimal taxAmount, BigDecimal total,
+			BigDecimal totalDiscountAmount, BigDecimal totalWithTaxAmount,
+			CommerceContext commerceContext, boolean recalculatePrice)
 		throws PortalException {
 
 		try {
@@ -251,8 +251,7 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 							shippingAmount, shippingOptionName,
 							shippingWithTaxAmount, subtotal,
 							subtotalWithTaxAmount, taxAmount, total,
-							totalDiscountAmount, totalWithTaxAmount,
-							commerceContext);
+							totalDiscountAmount, totalWithTaxAmount);
 
 					if (recalculatePrice) {
 						updatedCommerceOrder =

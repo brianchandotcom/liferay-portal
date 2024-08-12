@@ -213,11 +213,10 @@ public class CommerceOrderGenerator {
 			commerceAddress.getCommerceAddressId(), commerceShippingMethodId,
 			commerceAddress.getCommerceAddressId(),
 			commerceOrder.getAdvanceStatus(),
-			commerceOrder.getCommercePaymentMethodKey(),
+			commerceOrder.getCommercePaymentMethodKey(), null,
 			commerceOrder.getPurchaseOrderNumber(),
 			commerceOrder.getShippingAmount(), commerceShippingOptionKey,
-			commerceOrder.getSubtotal(), commerceOrder.getTotal(),
-			commerceContext);
+			commerceOrder.getSubtotal(), commerceOrder.getTotal());
 
 		// Checkout commerce order
 

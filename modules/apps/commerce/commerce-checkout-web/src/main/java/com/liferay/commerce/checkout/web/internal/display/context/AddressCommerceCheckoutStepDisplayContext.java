@@ -174,11 +174,11 @@ public class AddressCommerceCheckoutStepDisplayContext {
 			commerceOrder.getCommerceOrderId(), billingAddressId,
 			commerceOrder.getCommerceShippingMethodId(), shippingAddressId,
 			commerceOrder.getAdvanceStatus(),
-			commerceOrder.getCommercePaymentMethodKey(),
+			commerceOrder.getCommercePaymentMethodKey(), null,
 			commerceOrder.getPurchaseOrderNumber(),
 			commerceOrder.getShippingAmount(),
 			commerceOrder.getShippingOptionName(), commerceOrder.getSubtotal(),
-			commerceOrder.getTotal(), commerceContext);
+			commerceOrder.getTotal());
 	}
 
 	private CommerceAddress _addCommerceAddress(

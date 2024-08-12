@@ -286,7 +286,7 @@ public class ShippingMethodCommerceCheckoutStep
 								getDeliveryCommerceTermEntryDescription(),
 							commerceOrder.getDeliveryCommerceTermEntryName(),
 							commerceOrder.getLastPriceUpdateDate(),
-							commerceOrder.isManuallyAdjusted(),
+							commerceOrder.isManuallyAdjusted(), null,
 							commerceOrder.getOrderDate(),
 							commerceOrder.getOrderStatus(),
 							commerceOrder.

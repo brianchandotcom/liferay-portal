@@ -867,7 +867,7 @@ public class DefaultCommerceCheckoutStepHttpHelper
 						commerceOrder.getDeliveryCommerceTermEntryDescription(),
 						commerceOrder.getDeliveryCommerceTermEntryName(),
 						commerceOrder.getLastPriceUpdateDate(),
-						commerceOrder.isManuallyAdjusted(),
+						commerceOrder.isManuallyAdjusted(), null,
 						commerceOrder.getOrderDate(),
 						commerceOrder.getOrderStatus(),
 						commerceOrder.getPaymentCommerceTermEntryDescription(),

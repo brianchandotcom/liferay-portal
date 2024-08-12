@@ -358,10 +358,6 @@ export default function _JournalPortlet({
 		formElement,
 		{redirectOnSave} = {redirectOnSave: false}
 	) => {
-		if (autoSaveDraftEnabled) {
-			formDateInput.value = Date.now().toString();
-		}
-
 		return fetch(autoSaveDraftURL, {
 			body: new FormData(formElement),
 			method: formElement.method,
@@ -405,8 +401,8 @@ export default function _JournalPortlet({
 							friendlyURL,
 						});
 					}
-
 				}
+				formDateInput.value = data.modifiedDate;
 				lockHolder.lock?.unlock();
 			}).catch((error) => {
 				console.error(error);

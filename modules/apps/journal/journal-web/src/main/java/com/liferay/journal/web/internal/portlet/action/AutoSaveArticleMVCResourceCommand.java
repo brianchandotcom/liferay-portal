@@ -132,6 +132,10 @@ public class AutoSaveArticleMVCResourceCommand extends BaseMVCResourceCommand {
 							article.getDefaultLanguageId()));
 				}
 			).put(
+				"modifiedDate",
+				article.getModifiedDate(
+				).getTime()
+			).put(
 				"success", true
 			).put(
 				"version", String.valueOf(article.getVersion())

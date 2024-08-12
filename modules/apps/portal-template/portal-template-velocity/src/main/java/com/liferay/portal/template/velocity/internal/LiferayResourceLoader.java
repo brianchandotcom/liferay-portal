@@ -10,7 +10,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.TemplateResourceLoader;
-import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -58,11 +57,6 @@ public class LiferayResourceLoader extends ResourceLoader {
 
 	@Override
 	public void init(ExtendedProperties extendedProperties) {
-		int resourceModificationCheckInterval = GetterUtil.getInteger(
-			extendedProperties.get("resourceModificationCheckInterval"), 60);
-
-		setModificationCheckInterval(resourceModificationCheckInterval);
-
 		_templateResourceLoader =
 			(TemplateResourceLoader)extendedProperties.get(
 				VelocityManager.VelocityTemplateResourceLoader.class.getName());

@@ -47,11 +47,6 @@ public interface FreeMarkerEngineConfiguration {
 	public int loopCountThreshold();
 
 	@Meta.AD(
-		deflt = "60000", name = "resource-modification-check", required = false
-	)
-	public int resourceModificationCheck();
-
-	@Meta.AD(
 		deflt = "true", name = "include-navigation-items-in-the-context",
 		required = false
 	)

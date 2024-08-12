@@ -10,10 +10,12 @@ import fillAndClickOutside from '../../utils/fillAndClickOutside';
 import {PORTLET_URLS} from '../../utils/portletUrls';
 import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
 
-export type TLanguageOverride = {
+export type TTranslation = {
 	key: string;
-	languageIds: string[];
-	values: string[];
+	values: {
+		languageId: string;
+		value: string;
+	}[];
 };
 
 export class LanguageOverridePage {
@@ -34,16 +36,18 @@ export class LanguageOverridePage {
 		this.saveButton = page.getByRole('button', {name: 'Save'});
 	}
 
-	async addTranslation({key, languageIds, values}: TLanguageOverride) {
+	async addTranslation({key, values}: TTranslation) {
 		await this.newButton.click();
 
 		await this.page.getByLabel('key required').fill(key);
 
-		for (let i = 0; i < languageIds.length; i++) {
+		for (let i = 0; i < values.length; i++) {
+			const {languageId, value} = values[i];
+
 			await fillAndClickOutside(
 				this.page,
-				this.page.getByLabel(languageIds[i]),
-				values[i],
+				this.page.getByLabel(languageId),
+				value,
 				false
 			);
 		}
@@ -53,15 +57,15 @@ export class LanguageOverridePage {
 		await waitForSuccessAlert(this.page);
 	}
 
-	async addTranslations(languageOverrides: TLanguageOverride[]) {
+	async addTranslations(languageOverrides: TTranslation[]) {
 		for (const languageOverride of languageOverrides) {
 			await this.addTranslation(languageOverride);
 		}
 	}
 
-	async assertTranslationInListView({key, languageIds}: TLanguageOverride) {
-		if (languageIds.length) {
-			const normalizedLanguageIds = languageIds.map((languageId) =>
+	async assertTranslationInListView({key, values}: TTranslation) {
+		if (values.length) {
+			const normalizedLanguageIds = values.map(({languageId}) =>
 				languageId.replace('-', '_')
 			);
 
@@ -78,7 +82,7 @@ export class LanguageOverridePage {
 		}
 	}
 
-	async assertTranslationNotInListView({key}: TLanguageOverride) {
+	async assertTranslationNotInListView({key}: TTranslation) {
 		await expect(this.page.getByRole('link', {name: key})).toBeHidden();
 	}
 

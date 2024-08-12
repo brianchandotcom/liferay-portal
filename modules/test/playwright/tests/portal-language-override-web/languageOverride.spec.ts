@@ -7,7 +7,7 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {languageOverridePageTest} from '../../fixtures/LanguageOverridePageTest';
 import {loginTest} from '../../fixtures/loginTest';
-import {TLanguageOverride as TTranslation} from '../../pages/portal-language-override-web/LanguageOverridePage';
+import {TTranslation} from '../../pages/portal-language-override-web/LanguageOverridePage';
 import getRandomString from '../../utils/getRandomString';
 import {readFileFromZip} from '../../utils/zip';
 
@@ -20,13 +20,29 @@ test('LPD-33373 assert that overriden translations can be exported', async ({
 	const translations: TTranslation[] = [
 		{
 			key: getRandomString(),
-			languageIds: ['en-US', 'es-ES', 'pt-BR'],
-			values: [getRandomString(), getRandomString(), getRandomString()],
+			values: [
+				{
+					languageId: 'en-US',
+					value: getRandomString(),
+				},
+				{
+					languageId: 'es-ES',
+					value: getRandomString(),
+				},
+				{
+					languageId: 'pt-BR',
+					value: getRandomString(),
+				},
+			],
 		},
 		{
 			key: getRandomString(),
-			languageIds: ['en-US'],
-			values: [getRandomString()],
+			values: [
+				{
+					languageId: 'en-US',
+					value: getRandomString(),
+				},
+			],
 		},
 	];
 
@@ -36,8 +52,8 @@ test('LPD-33373 assert that overriden translations can be exported', async ({
 
 	page.on('download', async (download) => {
 		for (const translation of translations) {
-			for (let i = 0; i < translation.languageIds.length; i++) {
-				const languageId = translation.languageIds[i];
+			for (let i = 0; i < translation.values.length; i++) {
+				const {languageId, value} = translation.values[i];
 
 				const fileContent = (await readFileFromZip(
 					`Language_${languageId.replace('-', '_')}.properties`,
@@ -45,9 +61,7 @@ test('LPD-33373 assert that overriden translations can be exported', async ({
 				)) as string;
 
 				expect(
-					fileContent.includes(
-						`${translation.key}=${translation.values[i]}`
-					)
+					fileContent.includes(`${translation.key}=${value}`)
 				).toBeTruthy();
 			}
 		}
@@ -63,13 +77,25 @@ test('LPD-33373 assert that overriden translations can be filtered', async ({
 
 	const translation1 = {
 		key: getRandomString(),
-		languageIds: ['en-US', 'pt-BR'],
-		values: [getRandomString(), getRandomString()],
+		values: [
+			{
+				languageId: 'en-US',
+				value: getRandomString(),
+			},
+			{
+				languageId: 'pt-BR',
+				value: getRandomString(),
+			},
+		],
 	};
-	const translation2 = {
+	const translation2: TTranslation = {
 		key: getRandomString(),
-		languageIds: ['en-US'],
-		values: [getRandomString()],
+		values: [
+			{
+				languageId: 'en-US',
+				value: getRandomString(),
+			},
+		],
 	};
 
 	await languageOverridePage.addTranslation(translation1);
@@ -106,17 +132,24 @@ test('LPD-33373 assert that default and overriden translations show up when no f
 }) => {
 	await languageOverridePage.goto();
 
-	const translation = {
+	const translation: TTranslation = {
 		key: getRandomString(),
-		languageIds: ['en-US', 'pt-BR'],
-		values: [getRandomString(), getRandomString()],
+		values: [
+			{
+				languageId: 'en-US',
+				value: getRandomString(),
+			},
+			{
+				languageId: 'pt-BR',
+				value: getRandomString(),
+			},
+		],
 	};
 
 	await languageOverridePage.addTranslation(translation);
 
 	await languageOverridePage.assertTranslationInListView({
 		key: '0-analytics-cloud-connection',
-		languageIds: [],
 		values: [],
 	});
 

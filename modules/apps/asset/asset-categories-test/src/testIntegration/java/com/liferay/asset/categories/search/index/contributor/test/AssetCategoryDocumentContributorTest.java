@@ -302,12 +302,7 @@ public class AssetCategoryDocumentContributorTest {
 		CountSearchResponse countSearchResponse = _searchEngineAdapter.execute(
 			countSearchRequest);
 
-		Assert.assertTrue(
-			StringBundler.concat(
-				"Expected to find 1 document containing field ", fieldName,
-				" with values ", externalReferenceCodes, ". Instead found ",
-				countSearchResponse.getCount(), "."),
-			countSearchResponse.getCount() == 1);
+		Assert.assertTrue(countSearchResponse.getCount() == 1);
 	}
 
 	private static final int _CATEGORIES_COUNT = 4;

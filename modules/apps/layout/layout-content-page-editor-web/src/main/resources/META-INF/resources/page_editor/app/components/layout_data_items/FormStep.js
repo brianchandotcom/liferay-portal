@@ -22,7 +22,7 @@ const FormStepWithControls = React.forwardRef(({children, item}, ref) => {
 
 	const index = useSelectorCallback(
 		(state) => {
-			return state.layoutData.items[item.parentId].children.indexOf(
+			return state.layoutData.items[item.parentId]?.children.indexOf(
 				item.itemId
 			);
 		},
@@ -30,7 +30,7 @@ const FormStepWithControls = React.forwardRef(({children, item}, ref) => {
 	);
 
 	const formId = useSelectorCallback(
-		(state) => state.layoutData.items[item.parentId].parentId,
+		(state) => state.layoutData.items[item.parentId]?.parentId,
 
 		[item]
 	);

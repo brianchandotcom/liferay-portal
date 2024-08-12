@@ -292,9 +292,21 @@ export class PagesAdminPage {
 
 	async selectJavaScriptClientExtension(
 		clientExtensionName: string,
+		layoutTitle?: string,
 		siteUrl?: Site['friendlyUrlPath']
 	) {
-		await this.gotoPagesConfiguration(siteUrl);
+		if (!layoutTitle) {
+			await this.gotoPagesConfiguration(siteUrl);
+		}
+		else {
+			await this.goto(siteUrl);
+
+			await this.clickOnAction('Configure', layoutTitle);
+
+			await this.page
+				.locator('.portlet-body li', {has: this.page.getByText('Design')})
+				.click();
+		}
 
 		await this.clickOnJavaScriptClientExtensionsTab();
 
@@ -328,7 +340,14 @@ export class PagesAdminPage {
 
 		await this.configurationSaveButton.click();
 
-		await waitForSuccessAlert(this.page);
+		if (!layoutTitle) {
+			await waitForSuccessAlert(this.page);
+		}
+		else {
+			await waitForSuccessAlert(
+				this.page,
+				'Success:The page was updated successfully.');
+		}
 	}
 
 	async selectThemeCSSClientExtension(clientExtensionName: string) {

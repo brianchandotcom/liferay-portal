@@ -53,11 +53,6 @@ public class RefundRestController extends BaseRestController {
 			JSONObject commercePaymentEntryJSONObject =
 				jsonObject.getJSONObject("commercePaymentEntry");
 
-			JSONObject amountJSONObject = new JSONObject(
-			).put(
-				"amount", _getAmountJSONObject(commercePaymentEntryJSONObject)
-			);
-
 			String transactionCodeRefund =
 				commercePaymentEntryJSONObject.getString("transactionCode") +
 					"/refund";
@@ -81,7 +76,11 @@ public class RefundRestController extends BaseRestController {
 			).header(
 				"Prefer", "return=representation"
 			).bodyValue(
-				amountJSONObject.toString()
+				new JSONObject(
+				).put(
+					"amount",
+					_getAmountJSONObject(commercePaymentEntryJSONObject)
+				).toString()
 			).retrieve(
 			).bodyToMono(
 				String.class

@@ -146,6 +146,10 @@ export class PagesAdminPage {
 		await this.page.getByText(webContentBody).isVisible();
 	}
 
+	async clickOnJavaScriptClientExtensionsTab() {
+		await this.javaScriptClientExtensionsTab.click();
+	}
+
 	async clickOnAction(action: string, title: string) {
 		await clickAndExpectToBeVisible({
 			autoClick: true,
@@ -289,7 +293,7 @@ export class PagesAdminPage {
 	async selectJavaScriptClientExtension(clientExtensionName: string) {
 		await this.gotoPagesConfiguration();
 
-		await this.javaScriptClientExtensionsTab.click();
+		await this.clickOnJavaScriptClientExtensionsTab();
 
 		await this.page
 			.getByRole('button', {name: 'Add JavaScript Client Extensions'})

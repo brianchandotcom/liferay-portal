@@ -48,11 +48,11 @@ public class PortalAcceptancePullRequestJob
 					testProperties.getProperty("relevant.engine.enabled"));
 
 				if (relevantEngineEnabled) {
-					System.out.println("Relevant engine is enabled");
-
 					if (batchTestClassGroups != null) {
 						return batchTestClassGroups;
 					}
+
+					System.out.println("Relevant engine is enabled");
 
 					batchTestClassGroups = Collections.synchronizedList(
 						new ArrayList<BatchTestClassGroup>());

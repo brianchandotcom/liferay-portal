@@ -22,7 +22,9 @@ import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -233,6 +235,28 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 		Assert.assertFalse(
 			StringUtil.contains(
 				_getReportContent(), "Table Name", StringPool.BLANK));
+	}
+
+	@Test
+	public void testFailedSQLStatements() throws Exception {
+		_appender.start();
+
+		UpgradeProcess upgradeProcess = UpgradeProcessFactory.runSQL(
+			"update NonExistingTable");
+
+		try {
+			upgradeProcess.upgrade();
+		}
+		catch (UpgradeException upgradeException) {
+		}
+
+		_appender.stop();
+
+		_assertReport("SQL: update NonExistingTable;");
+
+		_assertLogContextContains(
+			"upgrade.report.failed.sql.statements",
+			"SQL: update NonExistingTable;");
 	}
 
 	@Test

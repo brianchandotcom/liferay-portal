@@ -170,6 +170,23 @@ public class DatabaseTestUtil {
 		}
 	}
 
+	public static void importFileRenamingSchema(
+			File file, DataSource targetDataSource, String fromSchemaName,
+			String toSchemaName)
+		throws Exception {
+
+		DB db = DBManagerUtil.getDB(
+			DBManagerUtil.getDBType(), targetDataSource);
+
+		try (Connection connection = targetDataSource.getConnection()) {
+			db.runSQLTemplate(
+				connection,
+				StringUtil.replace(
+					FileUtil.read(file), fromSchemaName, toSchemaName),
+				true);
+		}
+	}
+
 	public static DataSource initDataSource(String schemaName)
 		throws Exception {
 

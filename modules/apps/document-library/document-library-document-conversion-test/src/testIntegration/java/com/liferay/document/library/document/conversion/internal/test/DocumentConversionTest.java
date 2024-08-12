@@ -59,7 +59,8 @@ public class DocumentConversionTest {
 						"internal.configuration.OpenOfficeConfiguration",
 					dictionary);
 			LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				_CLASS_NAME_DOCUMENT_LIBRARY_DOCUMENT_CONVERSION,
+				"com.liferay.document.library.document.conversion.internal." +
+					"DocumentConversionImpl",
 				LoggerTestUtil.ERROR);
 			SafeCloseable safeCloseable1 =
 				PropsValuesTestUtil.swapWithSafeCloseable(
@@ -88,11 +89,6 @@ public class DocumentConversionTest {
 			}
 		}
 	}
-
-	private static final String
-		_CLASS_NAME_DOCUMENT_LIBRARY_DOCUMENT_CONVERSION =
-			"com.liferay.document.library.document.conversion.internal." +
-				"DocumentConversionImpl";
 
 	@Inject
 	private DocumentConversion _documentConversion;

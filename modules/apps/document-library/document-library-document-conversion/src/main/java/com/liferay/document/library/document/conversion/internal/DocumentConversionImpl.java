@@ -320,7 +320,7 @@ public class DocumentConversionImpl implements DocumentConversion {
 					if (_log.isInfoEnabled()) {
 						_log.info(
 							StringBundler.concat(
-								"Conversion from ",
+								"Converted from ",
 								inputDocumentFormat.getName(), " to ",
 								outputDocumentFormat.getName(), " in ",
 								System.currentTimeMillis() - start, " ms"));

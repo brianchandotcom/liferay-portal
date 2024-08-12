@@ -965,6 +965,60 @@
 		<dynamic-attributes>true</dynamic-attributes>
 	</tag>
 	<tag>
+		<description>Creates a link element.</description>
+		<name>link</name>
+		<tag-class>com.liferay.taglib.aui.LinkTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<description>The crossorigin attribute of the standard link tag.</description>
+			<name>crossOrigin</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The class attribute of the standard link tag.</description>
+			<name>cssClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The href attribute of the standard link tag.</description>
+			<name>href</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The id attribute of the standard link tag.</description>
+			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The integrity attribute of the standard link tag.</description>
+			<name>integrity</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The rel attribute of the standard link tag.</description>
+			<name>rel</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The SPA mode (off, permanent, temporary, ...).</description>
+			<name>senna</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The type attribute of the standard link tag.</description>
+			<name>type</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
 		<description>Creates a configurable model context object that can be used as a model for other components.</description>
 		<name>model-context</name>
 		<tag-class>com.liferay.taglib.aui.ModelContextTag</tag-class>

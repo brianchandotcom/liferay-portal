@@ -23,6 +23,7 @@ public class ObjectRelationshipEntityModel implements EntityModel {
 
 	public ObjectRelationshipEntityModel() {
 		_entityFieldsMap = EntityModel.toEntityFieldsMap(
+			new BooleanEntityField("system", locale -> "system"),
 			new DateTimeEntityField(
 				"dateCreated",
 				locale -> Field.getSortableFieldName(Field.CREATE_DATE),
@@ -38,8 +39,7 @@ public class ObjectRelationshipEntityModel implements EntityModel {
 					"localized_label_".concat(
 						LocaleUtil.toLanguageId(locale)))),
 			new StringEntityField(
-				"name", locale -> Field.getSortableFieldName("name")),
-			new BooleanEntityField("system", locale -> "system"));
+				"name", locale -> Field.getSortableFieldName("name")));
 	}
 
 	@Override

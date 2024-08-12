@@ -53,7 +53,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockMultipartHttpServletRequest;
 
 /**
  * @author Eudaldo Alonso
@@ -116,13 +116,19 @@ public class EditLayoutDesignMVCActionCommandTest {
 			fileEntry.getFileEntryId(), masterLayoutPageTemplateEntry.getPlid(),
 			serviceContext);
 
+		MockMultipartHttpServletRequest mockMultipartHttpServletRequest =
+			new MockMultipartHttpServletRequest();
+
+		mockMultipartHttpServletRequest.setContentType(
+			"multipart/form-data;boundary=" + System.currentTimeMillis());
+
 		ReflectionTestUtil.invoke(
 			_mvcActionCommand, "_updateLayout",
 			new Class<?>[] {ActionRequest.class, UploadPortletRequest.class},
 			_getMockActionRequest(draftLayout),
 			UploadTestUtil.createUploadPortletRequest(
 				UploadTestUtil.createUploadServletRequest(
-					new MockHttpServletRequest(), null, null),
+					mockMultipartHttpServletRequest, null, null),
 				null, RandomTestUtil.randomString()));
 
 		Layout updatedDraftLayout = _layoutLocalService.fetchLayout(

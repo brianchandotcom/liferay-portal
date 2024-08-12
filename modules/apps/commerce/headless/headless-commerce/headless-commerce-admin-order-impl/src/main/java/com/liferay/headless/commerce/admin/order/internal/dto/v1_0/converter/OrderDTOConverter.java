@@ -125,6 +125,7 @@ public class OrderDTOConverter implements DTOConverter<CommerceOrder, Order> {
 				setId(commerceOrder::getCommerceOrderId);
 				setLastPriceUpdateDate(commerceOrder::getLastPriceUpdateDate);
 				setModifiedDate(commerceOrder::getModifiedDate);
+				setName(commerceOrder::getName);
 				setOrderDate(commerceOrder::getOrderDate);
 				setOrderStatus(commerceOrder::getOrderStatus);
 				setOrderStatusInfo(

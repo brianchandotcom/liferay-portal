@@ -88,6 +88,7 @@ public class CartDTOConverter implements DTOConverter<CommerceOrder, Cart> {
 				setId(commerceOrder::getCommerceOrderId);
 				setLastPriceUpdateDate(commerceOrder::getLastPriceUpdateDate);
 				setModifiedDate(commerceOrder::getModifiedDate);
+				setName(commerceOrder::getName);
 				setOrderStatusInfo(
 					() -> {
 						String commerceOrderStatusLabel =

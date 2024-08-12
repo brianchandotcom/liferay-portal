@@ -58,22 +58,7 @@ public class OpenSearchSearchEngineInformation
 
 	@Override
 	public String getClientVersionString() {
-		Version version = Version.VERSION;
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(version.major());
-		sb.append(".");
-		sb.append(version.minor());
-
-		if (version.maintenance() != -1) {
-			sb.append(".");
-			sb.append(version.maintenance());
-		}
-
-		sb.append(".LIFERAY_PATCHED");
-
-		return sb.toString();
+		return Version.VERSION.toString();
 	}
 
 	@Override

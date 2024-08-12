@@ -1384,8 +1384,10 @@ public abstract class Base${schemaName}ResourceTestCase {
 					<#list schema.discriminator.mapping as mappingName, mappingSchema>
 						<#assign
 							childSchemaName = freeMarkerTool.getReferenceName(mappingSchema)
+
 							childSchema = allSchemas[childSchemaName]
 							childSchemaVarName = freeMarkerTool.getSchemaVarName(childSchemaName)
+
 							allChildProperties = properties + freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, childSchema, allSchemas)
 						/>
 
@@ -1406,6 +1408,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 										${propertyName} = RandomTestUtil.nextDate();
 									</#if>
 								</#list>
+
 								${discriminatorPropertyName} = ${discriminatorPropertyName?cap_first}.create("${mappingName}");
 							}
 						};
@@ -2598,8 +2601,10 @@ public abstract class Base${schemaName}ResourceTestCase {
 				<#list schema.discriminator.mapping as mappingName, mappingSchema>
 					<#assign
 						childSchema = allSchemas[freeMarkerTool.getReferenceName(mappingSchema)]
+
 						childSchemaProperties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, childSchema, allSchemas)
 					/>
+
 					<#if childSchemaProperties?has_content>
 						<#list childSchemaProperties?keys as propertyName>
 							if (Objects.equals("${propertyName}", additionalAssertFieldName)) {
@@ -2832,8 +2837,10 @@ public abstract class Base${schemaName}ResourceTestCase {
 				<#list schema.discriminator.mapping as mappingName, mappingSchema>
 					<#assign
 						childSchema = allSchemas[freeMarkerTool.getReferenceName(mappingSchema)]
+
 						childSchemaProperties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, childSchema, allSchemas)
 					/>
+
 					<#if childSchemaProperties?has_content>
 						<#list childSchemaProperties?keys as propertyName>
 							if (Objects.equals("${propertyName}", additionalAssertFieldName)) {
@@ -3106,7 +3113,6 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 	<#if javaDataTypeMap?keys?seq_contains(schemaName)>
 		protected ${schemaName} random${schemaName}() throws Exception {
-
 			<#if schema.discriminator?has_content>
 				<#assign discriminatorPropertyName = schema.discriminator.propertyName />
 
@@ -3115,7 +3121,9 @@ public abstract class Base${schemaName}ResourceTestCase {
 				<#list schema.discriminator.mapping as mappingName, mappingSchema>
 					<#assign
 						childSchemaName = freeMarkerTool.getReferenceName(mappingSchema)
+
 						childSchema = allSchemas[childSchemaName]
+
 						allChildProperties = properties + freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, childSchema, allSchemas)
 					/>
 						case ${mappingName?index}:
@@ -3139,12 +3147,11 @@ public abstract class Base${schemaName}ResourceTestCase {
 									${discriminatorPropertyName} = ${discriminatorPropertyName?cap_first}.create("${mappingName}");
 								}
 						};
-
 				</#list>
+
 				}
 
 				return null;
-
 			<#else>
 				return new ${schemaName}() {
 					{

@@ -25,7 +25,9 @@ import java.sql.ResultSet;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -134,6 +136,27 @@ public class DatabaseTestUtil {
 		Collections.sort(tableColumnNames);
 
 		return tableColumnNames;
+	}
+
+	public static Set<String> getViewNames(DataSource dataSource)
+		throws Exception {
+
+		Set<String> viewNames = new HashSet<>();
+
+		try (Connection connection = dataSource.getConnection()) {
+			DatabaseMetaData databaseMetaData = connection.getMetaData();
+
+			try (ResultSet resultSet = databaseMetaData.getTables(
+					connection.getCatalog(), connection.getSchema(), null,
+					new String[] {"VIEW"})) {
+
+				while (resultSet.next()) {
+					viewNames.add(resultSet.getString("TABLE_NAME"));
+				}
+			}
+		}
+
+		return viewNames;
 	}
 
 	public static void importFile(File file, DataSource targetDataSource)

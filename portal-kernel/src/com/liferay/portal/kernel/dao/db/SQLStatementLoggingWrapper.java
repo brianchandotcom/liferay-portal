@@ -9,6 +9,7 @@ import com.liferay.portal.kernel.dao.jdbc.util.CallableStatementWrapper;
 import com.liferay.portal.kernel.dao.jdbc.util.ConnectionWrapper;
 import com.liferay.portal.kernel.dao.jdbc.util.PreparedStatementWrapper;
 import com.liferay.portal.kernel.dao.jdbc.util.StatementWrapper;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.sql.CallableStatement;
@@ -145,39 +146,8 @@ public class SQLStatementLoggingWrapper {
 		};
 	}
 
-	public static List<SQLErrorLogEntry> getSqlErrorLogs() {
-		return new ArrayList<>(_sqlErrorLogs);
-	}
-
-	public static class SQLErrorLogEntry {
-
-		public SQLErrorLogEntry(String sql, String errorMessage) {
-			_sql = sql;
-			_errorMessage = errorMessage;
-		}
-
-		public String getErrorMessage() {
-			return _errorMessage;
-		}
-
-		public String getSql() {
-			return _sql;
-		}
-
-		@Override
-		public String toString() {
-			String toString = "SQL: " + _sql;
-
-			if (Validator.isBlank(_errorMessage)) {
-				return toString;
-			}
-
-			return toString + ";\tError: " + _errorMessage;
-		}
-
-		private final String _errorMessage;
-		private final String _sql;
-
+	public static List<String> getSqlErrorLogs() {
+		return _sqlErrorLogs;
 	}
 
 	private static <T> T _executeWithLogging(
@@ -191,8 +161,16 @@ public class SQLStatementLoggingWrapper {
 			String sql = _extractSql(object);
 
 			if (sql != null) {
-				_sqlErrorLogs.add(
-					new SQLErrorLogEntry(sql, sqlException.getMessage()));
+				String message = sqlException.getMessage();
+
+				if (Validator.isBlank(message)) {
+					_sqlErrorLogs.add("SQL: " + sql);
+				}
+				else {
+					_sqlErrorLogs.add(
+						StringBundler.concat(
+							"SQL: ", sql, ";\tError: ", message));
+				}
 			}
 
 			throw sqlException;
@@ -354,8 +332,7 @@ public class SQLStatementLoggingWrapper {
 		};
 	}
 
-	private static final List<SQLErrorLogEntry> _sqlErrorLogs =
-		new ArrayList<>();
+	private static final List<String> _sqlErrorLogs = new ArrayList<>();
 
 	@FunctionalInterface
 	private interface SqlCallable<R> {

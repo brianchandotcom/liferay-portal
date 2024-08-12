@@ -43,7 +43,7 @@
 			},
 			{
 				"default": "",
-				"name": "payment",
+				"name": "paymentMethodKey",
 				"type": "CETProperty.Type.String"
 			},
 			{

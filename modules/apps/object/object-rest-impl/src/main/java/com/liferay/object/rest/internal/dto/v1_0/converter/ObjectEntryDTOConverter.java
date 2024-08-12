@@ -75,6 +75,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.security.audit.event.generators.constants.EventTypes;
@@ -583,6 +584,35 @@ public class ObjectEntryDTOConverter
 		};
 	}
 
+	private String _getLocalizedValue(
+			DTOConverterContext dtoConverterContext, Long groupId,
+			Map<String, Serializable> objectField_i18n)
+		throws Exception {
+
+		String serializable = GetterUtil.getString(
+			objectField_i18n.get(
+				String.valueOf(dtoConverterContext.getLocale())));
+
+		if (Validator.isNotNull(serializable)) {
+			return serializable;
+		}
+
+		User user = dtoConverterContext.getUser();
+
+		if (user != null) {
+			serializable = GetterUtil.getString(
+				objectField_i18n.get(String.valueOf(user.getLocale())));
+
+			if (Validator.isNotNull(serializable)) {
+				return serializable;
+			}
+		}
+
+		return GetterUtil.getString(
+			objectField_i18n.get(
+				String.valueOf(_portal.getSiteDefaultLocale(groupId))));
+	}
+
 	private Map<String, UnsafeSupplier<Object, Exception>>
 			_getNestedFieldsRelatedProperties(
 				DTOConverterContext dtoConverterContext, long groupId,
@@ -839,12 +869,10 @@ public class ObjectEntryDTOConverter
 				unsafeSuppliers.put(
 					i18nObjectFieldName, () -> objectField_i18n);
 
-				if ((dtoConverterContext.getLocale() != null) &&
-					(objectField_i18n != null)) {
-
-					serializable = GetterUtil.getString(
-						objectField_i18n.get(
-							String.valueOf(dtoConverterContext.getLocale())));
+				if (objectField_i18n != null) {
+					serializable = _getLocalizedValue(
+						dtoConverterContext, objectEntry.getGroupId(),
+						objectField_i18n);
 				}
 			}
 

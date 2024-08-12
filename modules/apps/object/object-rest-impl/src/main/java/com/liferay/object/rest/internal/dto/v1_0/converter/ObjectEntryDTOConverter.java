@@ -464,6 +464,17 @@ public class ObjectEntryDTOConverter
 			return fileEntry;
 		}
 
+		fileEntry.setExternalReferenceCode(
+			() -> {
+				if (!FeatureFlagManagerUtil.isEnabled(
+						objectDefinition.getCompanyId(), "LPD-24674")) {
+
+					return null;
+				}
+
+				return dlFileEntry.getExternalReferenceCode();
+			});
+
 		if (FeatureFlagManagerUtil.isEnabled(
 				objectDefinition.getCompanyId(), "LPS-174455")) {
 

@@ -210,7 +210,6 @@ public class DatabaseTestUtil {
 					StringUtil.merge(
 						new Object[] {
 							tableName, resultSet.getString("NON_UNIQUE"),
-							resultSet.getString("INDEX_NAME"),
 							resultSet.getString("COLUMN_NAME"),
 							resultSet.getShort("ORDINAL_POSITION")
 						}));

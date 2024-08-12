@@ -18,6 +18,7 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.document.library.test.util.DLTestUtil;
 import com.liferay.headless.admin.taxonomy.client.dto.v1_0.TaxonomyCategory;
@@ -141,6 +142,7 @@ import com.liferay.portal.vulcan.fields.NestedFieldsContextThreadLocal;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portlet.documentlibrary.constants.DLConstants;
 
+import java.io.ByteArrayInputStream;
 import java.io.Serializable;
 
 import java.lang.reflect.Method;
@@ -5752,11 +5754,10 @@ public class ObjectEntryResourceTest {
 			).toString(),
 			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
 
-		JSONObject attachmentJSONObject = jsonObject.getJSONObject(
-			_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_SOURCE_1);
-
-		Assert.assertNotNull(attachmentJSONObject.get("externalReferenceCode"));
-		Assert.assertNull(attachmentJSONObject.get("fileBase64"));
+		_assertAttachmentJSONObject(
+			null, null,
+			jsonObject.getJSONObject(
+				_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_SOURCE_1));
 
 		content = RandomTestUtil.randomString();
 
@@ -5776,13 +5777,10 @@ public class ObjectEntryResourceTest {
 				".fileBase64"),
 			Http.Method.POST);
 
-		attachmentJSONObject = jsonObject.getJSONObject(
-			_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_SOURCE_1);
-
-		Assert.assertNotNull(attachmentJSONObject.get("externalReferenceCode"));
-		Assert.assertEquals(
-			Base64.encode(content.getBytes()),
-			attachmentJSONObject.getString("fileBase64"));
+		_assertAttachmentJSONObject(
+			null, Base64.encode(content.getBytes()),
+			jsonObject.getJSONObject(
+				_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_SOURCE_1));
 
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
@@ -5791,11 +5789,10 @@ public class ObjectEntryResourceTest {
 					jsonObject.getString("externalReferenceCode"),
 			Http.Method.GET);
 
-		attachmentJSONObject = jsonObject.getJSONObject(
-			_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_SOURCE_1);
-
-		Assert.assertNotNull(attachmentJSONObject.get("externalReferenceCode"));
-		Assert.assertNull(attachmentJSONObject.get("fileBase64"));
+		_assertAttachmentJSONObject(
+			null, null,
+			jsonObject.getJSONObject(
+				_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_SOURCE_1));
 
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
@@ -5807,13 +5804,55 @@ public class ObjectEntryResourceTest {
 				".fileBase64"),
 			Http.Method.GET);
 
-		attachmentJSONObject = jsonObject.getJSONObject(
-			_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_SOURCE_1);
+		_assertAttachmentJSONObject(
+			null, Base64.encode(content.getBytes()),
+			jsonObject.getJSONObject(
+				_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_SOURCE_1));
 
-		Assert.assertNotNull(attachmentJSONObject.get("externalReferenceCode"));
-		Assert.assertEquals(
-			Base64.encode(content.getBytes()),
-			attachmentJSONObject.getString("fileBase64"));
+		content = RandomTestUtil.randomString();
+
+		DLFileEntry dlFileEntry = _addDLFileEntry(content);
+
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				_OBJECT_FIELD_NAME_1, "value1"
+			).put(
+				_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
+				dlFileEntry.getFileEntryId()
+			).toString(),
+			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
+
+		_assertAttachmentJSONObject(
+			dlFileEntry, null,
+			jsonObject.getJSONObject(
+				_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE));
+
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
+			null,
+			_objectDefinition1.getRESTContextPath() +
+				"/by-external-reference-code/" +
+					jsonObject.getString("externalReferenceCode"),
+			Http.Method.GET);
+
+		_assertAttachmentJSONObject(
+			dlFileEntry, null,
+			jsonObject.getJSONObject(
+				_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE));
+
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
+			null,
+			StringBundler.concat(
+				_objectDefinition1.getRESTContextPath(),
+				"/by-external-reference-code/",
+				jsonObject.getString("externalReferenceCode"), "?nestedFields=",
+				_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
+				".fileBase64"),
+			Http.Method.GET);
+
+		_assertAttachmentJSONObject(
+			null, Base64.encode(content.getBytes()),
+			jsonObject.getJSONObject(
+				_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE));
 	}
 
 	@Test
@@ -11077,6 +11116,21 @@ public class ObjectEntryResourceTest {
 			"siteId");
 	}
 
+	private DLFileEntry _addDLFileEntry(String content) throws Exception {
+		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			TempFileEntryUtil.getTempFileName(
+				RandomTestUtil.randomString() + ".txt"),
+			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString(),
+			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
+			new ByteArrayInputStream(content.getBytes()), 0, null, null, null,
+			ServiceContextTestUtil.getServiceContext());
+
+		return _dlFileEntryLocalService.getFileEntry(
+			fileEntry.getFileEntryId());
+	}
+
 	private void _addModelResourcePermissions(
 			String[] actionIds, String className, long objectEntryId,
 			long userId)
@@ -11233,6 +11287,25 @@ public class ObjectEntryResourceTest {
 		user.setEmailAddressVerified(true);
 
 		return UserLocalServiceUtil.updateUser(user);
+	}
+
+	private void _assertAttachmentJSONObject(
+		DLFileEntry dlFileEntry, String fileBase64, JSONObject jsonObject) {
+
+		if (dlFileEntry != null) {
+			Assert.assertEquals(
+				dlFileEntry.getExternalReferenceCode(),
+				jsonObject.getString("externalReferenceCode"));
+			Assert.assertEquals(
+				dlFileEntry.getFileEntryId(), jsonObject.getLong("id"));
+			Assert.assertEquals(
+				dlFileEntry.getFileName(), jsonObject.getString("name"));
+		}
+		else {
+			Assert.assertNotNull(jsonObject.get("externalReferenceCode"));
+		}
+
+		Assert.assertEquals(fileBase64, jsonObject.get("fileBase64"));
 	}
 
 	private void _assertEquals(JSONArray nestedObjectEntriesJSONArray)
@@ -13977,6 +14050,9 @@ public class ObjectEntryResourceTest {
 
 	@Inject
 	private DLAppLocalService _dlAppLocalService;
+
+	@Inject
+	private DLFileEntryLocalService _dlFileEntryLocalService;
 
 	@Inject
 	private DLFolderLocalService _dlFolderLocalService;

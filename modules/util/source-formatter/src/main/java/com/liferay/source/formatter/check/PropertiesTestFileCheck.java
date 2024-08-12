@@ -43,7 +43,9 @@ public class PropertiesTestFileCheck extends BaseFileCheck {
 		String[] lines = content.split("\n");
 
 		for (String line : lines) {
-			if (line.startsWith("##") || line.startsWith("    #")) {
+			if ((line.startsWith("##") || line.startsWith("    #")) &&
+				!line.contains("=")) {
+
 				if (commentPrefix == null) {
 					commentCategory = line;
 					commentPrefix = line;
@@ -103,7 +105,6 @@ public class PropertiesTestFileCheck extends BaseFileCheck {
 					StringBundler.concat(
 						"Incorrect order of properties: '", propertyKey,
 						"' should come before '", previousPropertyKey, "'"));
-
 			}
 
 			previousLine = line;

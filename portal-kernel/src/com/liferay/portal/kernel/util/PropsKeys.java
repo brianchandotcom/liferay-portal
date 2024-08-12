@@ -2620,6 +2620,9 @@ public interface PropsKeys {
 	public static final String TABLE_MAPPER_CACHELESS_MAPPING_TABLE_NAMES =
 		"table.mapper.cacheless.mapping.table.names";
 
+	public static final String TEMPLATE_ENGINE_CACHE_ENABLED =
+		"template.engine.cache.enabled";
+
 	public static final String
 		TEMPLATE_ENGINE_FREEMARKER_TRANSACTION_READ_ONLY =
 			"template.engine.freemarker.transaction.read.only";

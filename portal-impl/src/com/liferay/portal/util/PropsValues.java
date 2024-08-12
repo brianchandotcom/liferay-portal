@@ -2278,6 +2278,10 @@ public class PropsValues {
 	public static String[] STRIP_MIME_TYPES = PropsUtil.getArray(
 		PropsKeys.STRIP_MIME_TYPES);
 
+	public static final boolean TEMPLATE_ENGINE_CACHE_ENABLED =
+		GetterUtil.getBoolean(
+			PropsUtil.get(PropsKeys.TEMPLATE_ENGINE_CACHE_ENABLED));
+
 	public static final boolean
 		TEMPLATE_ENGINE_FREEMARKER_TRANSACTION_READ_ONLY =
 			GetterUtil.getBoolean(

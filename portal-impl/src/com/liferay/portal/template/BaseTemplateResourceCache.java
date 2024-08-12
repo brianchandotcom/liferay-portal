@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.TemplateResourceCache;
 import com.liferay.portal.kernel.util.ProxyFactory;
+import com.liferay.portal.util.PropsValues;
 
 /**
  * @author Tina Tian
@@ -68,7 +69,9 @@ public abstract class BaseTemplateResourceCache
 
 	@Override
 	public boolean isEnabled() {
-		if (_modificationCheckInterval == 0) {
+		if (!PropsValues.TEMPLATE_ENGINE_CACHE_ENABLED ||
+			(_modificationCheckInterval == 0)) {
+
 			return false;
 		}
 

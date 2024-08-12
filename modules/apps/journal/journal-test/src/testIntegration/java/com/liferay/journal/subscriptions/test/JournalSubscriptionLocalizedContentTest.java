@@ -413,9 +413,7 @@ public class JournalSubscriptionLocalizedContentTest
 
 		themeDisplay.setCompany(
 			_companyLocalService.getCompany(group.getCompanyId()));
-
 		themeDisplay.setLanguageId(group.getDefaultLanguageId());
-
 		themeDisplay.setLayout(layout);
 
 		LayoutSet layoutSet = layout.getLayoutSet();

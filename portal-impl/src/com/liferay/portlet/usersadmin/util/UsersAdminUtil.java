@@ -355,14 +355,16 @@ public class UsersAdminUtil {
 		Role administratorRole = RoleLocalServiceUtil.getRole(
 			user.getCompanyId(), RoleConstants.ADMINISTRATOR);
 
-		long[] administratorUserIds = UserLocalServiceUtil.getRoleUserIds(
-			administratorRole.getRoleId(), UserConstants.TYPE_REGULAR);
+		if (!ArrayUtil.contains(roleIds, administratorRole.getRoleId())) {
+			long[] administratorUserIds = UserLocalServiceUtil.getRoleUserIds(
+				administratorRole.getRoleId(), UserConstants.TYPE_REGULAR);
 
-		if (ArrayUtil.contains(administratorUserIds, user.getUserId()) &&
-			!ArrayUtil.contains(roleIds, administratorRole.getRoleId()) &&
-			(administratorUserIds.length == 1)) {
+			if (ArrayUtil.contains(administratorUserIds, user.getUserId()) &&
+				(administratorUserIds.length == 1)) {
 
-			roleIds = ArrayUtil.append(roleIds, administratorRole.getRoleId());
+				roleIds = ArrayUtil.append(
+					roleIds, administratorRole.getRoleId());
+			}
 		}
 
 		Role userRole = RoleLocalServiceUtil.getRole(

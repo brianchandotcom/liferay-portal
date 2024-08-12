@@ -35,7 +35,10 @@ public interface SiteNavigationLanguagePortletInstanceConfiguration {
 	)
 	public long displayStyleGroupId();
 
-	@Meta.AD(deflt = "0", name = "display-style-group-key", required = false)
+	@Meta.AD(
+		deflt = "0", description = "display-style-group-key-description",
+		name = "display-style-group-key", required = false
+	)
 	public String displayStyleGroupKey();
 
 	@Meta.AD(name = "display-style", required = false)

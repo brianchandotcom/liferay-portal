@@ -52,7 +52,7 @@ async function getGooglePaymentsClient() {
 	const clientId = document.getElementById('payment-client-id').value;
 
 	const orderData = await payPalOAuth
-		.fetch('/set-up-payment/get-environment/' + clientId)
+		.fetch('/set-up-payment/get-google-environment/' + clientId)
 		.then((response) => {
 			return response.json();
 		});
@@ -75,7 +75,9 @@ async function getGoogleTransactionInfo(countryCode) {
 	const orderId = document.getElementById('payment-order-id').value;
 
 	const orderData = await payPalOAuth
-		.fetch('/set-up-payment/get-order/' + orderId + '/' + countryCode)
+		.fetch(
+			'/set-up-payment/get-google-order/' + orderId + '/' + countryCode
+		)
 		.then((response) => {
 			return response.json();
 		});
@@ -143,7 +145,7 @@ async function processPayment(paymentData) {
 
 		if (resource.ok) {
 			const orderData = await payPalOAuth.fetch(
-				'/set-up-payment/get/' + orderId
+				'/set-up-payment/get-paypal-order/' + orderId
 			);
 
 			if (orderData) {

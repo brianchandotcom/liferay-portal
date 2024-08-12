@@ -5,6 +5,8 @@
 
 package com.liferay.paypal;
 
+import com.liferay.client.extension.util.spring.boot.BaseRetryable;
+import com.liferay.client.extension.util.spring.boot.Retryable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 
@@ -122,22 +124,27 @@ public class SetUpPaymentRestController extends BaseRestController {
 
 		String transactionCode = null;
 
-		// TODO Use proper retry
+		try {
+			Retryable<String> retryable = new BaseRetryable<String>() {
 
-		for (int i = 0; i < 10; i++) {
-			try {
-				JSONObject b9k3PayPalTransactionJSONObject = new JSONObject(
-					get(
+				@Override
+				public String execute() {
+					return get(
 						"Bearer " + jwt.getTokenValue(),
-						"/o/c/b9k3paypaltransactions" +
-							"/by-external-reference-code/" + orderId));
+						"/o/c/b9k3paypaltransactions/by-external-reference-" +
+							"code/" + orderId);
+				}
 
-				transactionCode = b9k3PayPalTransactionJSONObject.getString(
-					"transactionCode");
-			}
-			catch (Exception exception) {
-				_log.error(ExceptionUtils.getMessage(exception));
-			}
+			};
+
+			transactionCode = new JSONObject(
+				retryable.executeWithRetries()
+			).getString(
+				"transactionCode"
+			);
+		}
+		catch (Exception exception) {
+			_log.error(ExceptionUtils.getMessage(exception));
 		}
 
 		if (StringUtils.isNotBlank(transactionCode)) {

@@ -1391,10 +1391,9 @@ public abstract class Base${schemaName}ResourceTestCase {
 						<#assign
 							childSchemaName = freeMarkerTool.getReferenceName(mappingSchema)
 
-							childSchema = allSchemas[childSchemaName]
 							childSchemaVarName = freeMarkerTool.getSchemaVarName(childSchemaName)
 
-							allChildProperties = properties + freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, childSchema, allSchemas)
+							allChildProperties = properties + freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, allSchemas[childSchemaName], allSchemas)
 						/>
 
 						${childSchemaName} ${childSchemaVarName} = new ${childSchemaName}() {
@@ -2606,9 +2605,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 			<#if schema.discriminator?has_content>
 				<#list schema.discriminator.mapping as mappingName, mappingSchema>
 					<#assign
-						childSchema = allSchemas[freeMarkerTool.getReferenceName(mappingSchema)]
-
-						childSchemaProperties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, childSchema, allSchemas)
+						childSchemaProperties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, allSchemas[freeMarkerTool.getReferenceName(mappingSchema)], allSchemas)
 					/>
 
 					<#if childSchemaProperties?has_content>
@@ -2842,9 +2839,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 			<#if schema.discriminator?has_content>
 				<#list schema.discriminator.mapping as mappingName, mappingSchema>
 					<#assign
-						childSchema = allSchemas[freeMarkerTool.getReferenceName(mappingSchema)]
-
-						childSchemaProperties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, childSchema, allSchemas)
+						childSchemaProperties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, allSchemas[freeMarkerTool.getReferenceName(mappingSchema)], allSchemas)
 					/>
 
 					<#if childSchemaProperties?has_content>
@@ -3128,9 +3123,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 					<#assign
 						childSchemaName = freeMarkerTool.getReferenceName(mappingSchema)
 
-						childSchema = allSchemas[childSchemaName]
-
-						allChildProperties = properties + freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, childSchema, allSchemas)
+						allChildProperties = properties + freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, allSchemas[childSchemaName], allSchemas)
 					/>
 						case ${mappingName?index}:
 							return new ${childSchemaName}() {
@@ -3158,6 +3151,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 				}
 
 				return null;
+
 			<#else>
 				return new ${schemaName}() {
 					{

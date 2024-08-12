@@ -21,14 +21,14 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class BaseRestController
 	extends com.liferay.client.extension.util.spring.boot.BaseRestController {
 
-	protected String getAuthorization(
-		String clientId, String clientSecret, String mode) {
-
-		String authorization = clientId + ":" + clientSecret;
+	protected String getAuthorization(JSONObject jsonObject) {
+		String authorization =
+			jsonObject.getString("clientId") + ":" +
+				jsonObject.getString("clientSecret");
 
 		JSONObject authorizationRequestJSONObject = new JSONObject(
 			WebClient.create(
-				getPayPalURL(mode)
+				getPayPalURL(jsonObject.getString("mode"))
 			).post(
 			).uri(
 				"/v1/oauth2/token"

@@ -133,11 +133,6 @@ public class NotificationsRestController extends BaseRestController {
 		sb.append(json);
 		sb.append("}");
 
-		String authorization = getAuthorization(
-			b9k3PayPalWebhookJSONObject.getString("clientId"),
-			b9k3PayPalWebhookJSONObject.getString("clientSecret"),
-			b9k3PayPalWebhookJSONObject.getString("mode"));
-
 		String verifySignatureResponse = WebClient.create(
 			getPayPalURL(b9k3PayPalWebhookJSONObject.getString("mode"))
 		).post(
@@ -148,7 +143,8 @@ public class NotificationsRestController extends BaseRestController {
 		).contentType(
 			MediaType.APPLICATION_JSON
 		).header(
-			HttpHeaders.AUTHORIZATION, "Bearer " + authorization
+			HttpHeaders.AUTHORIZATION,
+			"Bearer " + getAuthorization(b9k3PayPalWebhookJSONObject)
 		).bodyValue(
 			sb.toString()
 		).retrieve(

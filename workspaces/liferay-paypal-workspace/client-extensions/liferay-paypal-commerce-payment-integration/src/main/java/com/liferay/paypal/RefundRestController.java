@@ -55,11 +55,6 @@ public class RefundRestController extends BaseRestController {
 			JSONObject typeSettingsJSONObject = jsonObject.getJSONObject(
 				"typeSettings");
 
-			String authorization = getAuthorization(
-				typeSettingsJSONObject.getString("clientId"),
-				typeSettingsJSONObject.getString("clientSecret"),
-				typeSettingsJSONObject.getString("mode"));
-
 			JSONObject refundResponseJSONObject = new JSONObject(
 				WebClient.create(
 					getPayPalURL(typeSettingsJSONObject.getString("mode"))
@@ -73,7 +68,8 @@ public class RefundRestController extends BaseRestController {
 				).contentType(
 					MediaType.APPLICATION_JSON
 				).header(
-					HttpHeaders.AUTHORIZATION, "Bearer " + authorization
+					HttpHeaders.AUTHORIZATION,
+					"Bearer " + getAuthorization(typeSettingsJSONObject)
 				).header(
 					"PayPal-Partner-Attribution-Id", "Liferay_SP_PPCP_API"
 				).header(

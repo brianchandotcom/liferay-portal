@@ -54,11 +54,6 @@ public class CaptureRestController extends BaseRestController {
 			JSONObject typeSettingsJSONObject = jsonObject.getJSONObject(
 				"typeSettings");
 
-			String authorization = getAuthorization(
-				typeSettingsJSONObject.getString("clientId"),
-				typeSettingsJSONObject.getString("clientSecret"),
-				typeSettingsJSONObject.getString("mode"));
-
 			JSONObject captureResponseJSONObject = new JSONObject(
 				WebClient.create(
 					getPayPalURL(typeSettingsJSONObject.getString("mode"))
@@ -72,7 +67,8 @@ public class CaptureRestController extends BaseRestController {
 				).contentType(
 					MediaType.APPLICATION_JSON
 				).header(
-					HttpHeaders.AUTHORIZATION, "Bearer " + authorization
+					HttpHeaders.AUTHORIZATION,
+					"Bearer " + getAuthorization(typeSettingsJSONObject)
 				).header(
 					"PayPal-Partner-Attribution-Id", "Liferay_SP_PPCP_API"
 				).header(

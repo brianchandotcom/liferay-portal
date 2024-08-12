@@ -259,7 +259,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Response patchOrderByExternalReferenceCode(
+	public Order patchOrderByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("order") Order order)
 		throws Exception {
@@ -293,7 +293,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Response patchOrder(
+	public Order patchOrder(
 			@GraphQLName("id") Long id, @GraphQLName("order") Order order)
 		throws Exception {
 

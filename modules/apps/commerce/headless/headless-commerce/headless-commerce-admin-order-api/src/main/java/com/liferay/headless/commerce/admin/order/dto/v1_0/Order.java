@@ -316,6 +316,52 @@ public class Order implements Serializable {
 	@JsonIgnore
 	private Supplier<BillingAddress> _billingAddressSupplier;
 
+	@Schema(example = "AAB-34098-789-N")
+	public String getBillingAddressExternalReferenceCode() {
+		if (_billingAddressExternalReferenceCodeSupplier != null) {
+			billingAddressExternalReferenceCode =
+				_billingAddressExternalReferenceCodeSupplier.get();
+
+			_billingAddressExternalReferenceCodeSupplier = null;
+		}
+
+		return billingAddressExternalReferenceCode;
+	}
+
+	public void setBillingAddressExternalReferenceCode(
+		String billingAddressExternalReferenceCode) {
+
+		this.billingAddressExternalReferenceCode =
+			billingAddressExternalReferenceCode;
+
+		_billingAddressExternalReferenceCodeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setBillingAddressExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			billingAddressExternalReferenceCodeUnsafeSupplier) {
+
+		_billingAddressExternalReferenceCodeSupplier = () -> {
+			try {
+				return billingAddressExternalReferenceCodeUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String billingAddressExternalReferenceCode;
+
+	@JsonIgnore
+	private Supplier<String> _billingAddressExternalReferenceCodeSupplier;
+
 	@DecimalMin("0")
 	@Schema(example = "31130")
 	public Long getBillingAddressId() {
@@ -736,6 +782,52 @@ public class Order implements Serializable {
 
 	@JsonIgnore
 	private Supplier<String> _deliveryTermDescriptionSupplier;
+
+	@Schema(example = "AAB-34098-789-N")
+	public String getDeliveryTermExternalReferenceCode() {
+		if (_deliveryTermExternalReferenceCodeSupplier != null) {
+			deliveryTermExternalReferenceCode =
+				_deliveryTermExternalReferenceCodeSupplier.get();
+
+			_deliveryTermExternalReferenceCodeSupplier = null;
+		}
+
+		return deliveryTermExternalReferenceCode;
+	}
+
+	public void setDeliveryTermExternalReferenceCode(
+		String deliveryTermExternalReferenceCode) {
+
+		this.deliveryTermExternalReferenceCode =
+			deliveryTermExternalReferenceCode;
+
+		_deliveryTermExternalReferenceCodeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setDeliveryTermExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			deliveryTermExternalReferenceCodeUnsafeSupplier) {
+
+		_deliveryTermExternalReferenceCodeSupplier = () -> {
+			try {
+				return deliveryTermExternalReferenceCodeUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String deliveryTermExternalReferenceCode;
+
+	@JsonIgnore
+	private Supplier<String> _deliveryTermExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
 	@Schema(example = "30130")
@@ -1443,6 +1535,52 @@ public class Order implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _paymentTermDescriptionSupplier;
 
+	@Schema(example = "AAB-34098-789-N")
+	public String getPaymentTermExternalReferenceCode() {
+		if (_paymentTermExternalReferenceCodeSupplier != null) {
+			paymentTermExternalReferenceCode =
+				_paymentTermExternalReferenceCodeSupplier.get();
+
+			_paymentTermExternalReferenceCodeSupplier = null;
+		}
+
+		return paymentTermExternalReferenceCode;
+	}
+
+	public void setPaymentTermExternalReferenceCode(
+		String paymentTermExternalReferenceCode) {
+
+		this.paymentTermExternalReferenceCode =
+			paymentTermExternalReferenceCode;
+
+		_paymentTermExternalReferenceCodeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setPaymentTermExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			paymentTermExternalReferenceCodeUnsafeSupplier) {
+
+		_paymentTermExternalReferenceCodeSupplier = () -> {
+			try {
+				return paymentTermExternalReferenceCodeUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String paymentTermExternalReferenceCode;
+
+	@JsonIgnore
+	private Supplier<String> _paymentTermExternalReferenceCodeSupplier;
+
 	@DecimalMin("0")
 	@Schema(example = "30130")
 	public Long getPaymentTermId() {
@@ -1691,6 +1829,52 @@ public class Order implements Serializable {
 
 	@JsonIgnore
 	private Supplier<ShippingAddress> _shippingAddressSupplier;
+
+	@Schema(example = "AAB-34098-789-N")
+	public String getShippingAddressExternalReferenceCode() {
+		if (_shippingAddressExternalReferenceCodeSupplier != null) {
+			shippingAddressExternalReferenceCode =
+				_shippingAddressExternalReferenceCodeSupplier.get();
+
+			_shippingAddressExternalReferenceCodeSupplier = null;
+		}
+
+		return shippingAddressExternalReferenceCode;
+	}
+
+	public void setShippingAddressExternalReferenceCode(
+		String shippingAddressExternalReferenceCode) {
+
+		this.shippingAddressExternalReferenceCode =
+			shippingAddressExternalReferenceCode;
+
+		_shippingAddressExternalReferenceCodeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setShippingAddressExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			shippingAddressExternalReferenceCodeUnsafeSupplier) {
+
+		_shippingAddressExternalReferenceCodeSupplier = () -> {
+			try {
+				return shippingAddressExternalReferenceCodeUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String shippingAddressExternalReferenceCode;
+
+	@JsonIgnore
+	private Supplier<String> _shippingAddressExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
 	@Schema(example = "31130")
@@ -4762,6 +4946,23 @@ public class Order implements Serializable {
 			sb.append(String.valueOf(billingAddress));
 		}
 
+		String billingAddressExternalReferenceCode =
+			getBillingAddressExternalReferenceCode();
+
+		if (billingAddressExternalReferenceCode != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"billingAddressExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(billingAddressExternalReferenceCode));
+
+			sb.append("\"");
+		}
+
 		Long billingAddressId = getBillingAddressId();
 
 		if (billingAddressId != null) {
@@ -4902,6 +5103,23 @@ public class Order implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(deliveryTermDescription));
+
+			sb.append("\"");
+		}
+
+		String deliveryTermExternalReferenceCode =
+			getDeliveryTermExternalReferenceCode();
+
+		if (deliveryTermExternalReferenceCode != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"deliveryTermExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(deliveryTermExternalReferenceCode));
 
 			sb.append("\"");
 		}
@@ -5157,6 +5375,23 @@ public class Order implements Serializable {
 			sb.append("\"");
 		}
 
+		String paymentTermExternalReferenceCode =
+			getPaymentTermExternalReferenceCode();
+
+		if (paymentTermExternalReferenceCode != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"paymentTermExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(paymentTermExternalReferenceCode));
+
+			sb.append("\"");
+		}
+
 		Long paymentTermId = getPaymentTermId();
 
 		if (paymentTermId != null) {
@@ -5243,6 +5478,23 @@ public class Order implements Serializable {
 			sb.append("\"shippingAddress\": ");
 
 			sb.append(String.valueOf(shippingAddress));
+		}
+
+		String shippingAddressExternalReferenceCode =
+			getShippingAddressExternalReferenceCode();
+
+		if (shippingAddressExternalReferenceCode != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"shippingAddressExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(shippingAddressExternalReferenceCode));
+
+			sb.append("\"");
 		}
 
 		Long shippingAddressId = getShippingAddressId();

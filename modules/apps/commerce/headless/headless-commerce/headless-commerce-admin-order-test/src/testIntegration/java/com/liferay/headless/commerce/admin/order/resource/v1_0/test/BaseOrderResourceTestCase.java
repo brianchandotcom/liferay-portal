@@ -176,20 +176,24 @@ public abstract class BaseOrderResourceTestCase {
 
 		order.setAccountExternalReferenceCode(regex);
 		order.setAdvanceStatus(regex);
+		order.setBillingAddressExternalReferenceCode(regex);
 		order.setChannelExternalReferenceCode(regex);
 		order.setCouponCode(regex);
 		order.setCreatorEmailAddress(regex);
 		order.setCurrencyCode(regex);
 		order.setDeliveryTermDescription(regex);
+		order.setDeliveryTermExternalReferenceCode(regex);
 		order.setDeliveryTermName(regex);
 		order.setExternalReferenceCode(regex);
 		order.setName(regex);
 		order.setOrderTypeExternalReferenceCode(regex);
 		order.setPaymentMethod(regex);
 		order.setPaymentTermDescription(regex);
+		order.setPaymentTermExternalReferenceCode(regex);
 		order.setPaymentTermName(regex);
 		order.setPrintedNote(regex);
 		order.setPurchaseOrderNumber(regex);
+		order.setShippingAddressExternalReferenceCode(regex);
 		order.setShippingAmountFormatted(regex);
 		order.setShippingDiscountAmountFormatted(regex);
 		order.setShippingDiscountWithTaxAmountFormatted(regex);
@@ -215,20 +219,27 @@ public abstract class BaseOrderResourceTestCase {
 
 		Assert.assertEquals(regex, order.getAccountExternalReferenceCode());
 		Assert.assertEquals(regex, order.getAdvanceStatus());
+		Assert.assertEquals(
+			regex, order.getBillingAddressExternalReferenceCode());
 		Assert.assertEquals(regex, order.getChannelExternalReferenceCode());
 		Assert.assertEquals(regex, order.getCouponCode());
 		Assert.assertEquals(regex, order.getCreatorEmailAddress());
 		Assert.assertEquals(regex, order.getCurrencyCode());
 		Assert.assertEquals(regex, order.getDeliveryTermDescription());
+		Assert.assertEquals(
+			regex, order.getDeliveryTermExternalReferenceCode());
 		Assert.assertEquals(regex, order.getDeliveryTermName());
 		Assert.assertEquals(regex, order.getExternalReferenceCode());
 		Assert.assertEquals(regex, order.getName());
 		Assert.assertEquals(regex, order.getOrderTypeExternalReferenceCode());
 		Assert.assertEquals(regex, order.getPaymentMethod());
 		Assert.assertEquals(regex, order.getPaymentTermDescription());
+		Assert.assertEquals(regex, order.getPaymentTermExternalReferenceCode());
 		Assert.assertEquals(regex, order.getPaymentTermName());
 		Assert.assertEquals(regex, order.getPrintedNote());
 		Assert.assertEquals(regex, order.getPurchaseOrderNumber());
+		Assert.assertEquals(
+			regex, order.getShippingAddressExternalReferenceCode());
 		Assert.assertEquals(regex, order.getShippingAmountFormatted());
 		Assert.assertEquals(regex, order.getShippingDiscountAmountFormatted());
 		Assert.assertEquals(
@@ -796,7 +807,30 @@ public abstract class BaseOrderResourceTestCase {
 
 	@Test
 	public void testPatchOrderByExternalReferenceCode() throws Exception {
-		Assert.assertTrue(false);
+		Order postOrder = testPatchOrderByExternalReferenceCode_addOrder();
+
+		Order randomPatchOrder = randomPatchOrder();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Order patchOrder = orderResource.patchOrderByExternalReferenceCode(
+			postOrder.getExternalReferenceCode(), randomPatchOrder);
+
+		Order expectedPatchOrder = postOrder.clone();
+
+		BeanTestUtil.copyProperties(randomPatchOrder, expectedPatchOrder);
+
+		Order getOrder = orderResource.getOrderByExternalReferenceCode(
+			patchOrder.getExternalReferenceCode());
+
+		assertEquals(expectedPatchOrder, getOrder);
+		assertValid(getOrder);
+	}
+
+	protected Order testPatchOrderByExternalReferenceCode_addOrder()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -999,7 +1033,27 @@ public abstract class BaseOrderResourceTestCase {
 
 	@Test
 	public void testPatchOrder() throws Exception {
-		Assert.assertTrue(false);
+		Order postOrder = testPatchOrder_addOrder();
+
+		Order randomPatchOrder = randomPatchOrder();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Order patchOrder = orderResource.patchOrder(
+			postOrder.getId(), randomPatchOrder);
+
+		Order expectedPatchOrder = postOrder.clone();
+
+		BeanTestUtil.copyProperties(randomPatchOrder, expectedPatchOrder);
+
+		Order getOrder = orderResource.getOrder(patchOrder.getId());
+
+		assertEquals(expectedPatchOrder, getOrder);
+		assertValid(getOrder);
+	}
+
+	protected Order testPatchOrder_addOrder() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Rule
@@ -1130,6 +1184,17 @@ public abstract class BaseOrderResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"billingAddressExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (order.getBillingAddressExternalReferenceCode() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("billingAddressId", additionalAssertFieldName)) {
 				if (order.getBillingAddressId() == null) {
 					valid = false;
@@ -1211,6 +1276,17 @@ public abstract class BaseOrderResourceTestCase {
 					"deliveryTermDescription", additionalAssertFieldName)) {
 
 				if (order.getDeliveryTermDescription() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"deliveryTermExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (order.getDeliveryTermExternalReferenceCode() == null) {
 					valid = false;
 				}
 
@@ -1356,6 +1432,17 @@ public abstract class BaseOrderResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"paymentTermExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (order.getPaymentTermExternalReferenceCode() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("paymentTermId", additionalAssertFieldName)) {
 				if (order.getPaymentTermId() == null) {
 					valid = false;
@@ -1402,6 +1489,17 @@ public abstract class BaseOrderResourceTestCase {
 
 			if (Objects.equals("shippingAddress", additionalAssertFieldName)) {
 				if (order.getShippingAddress() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"shippingAddressExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (order.getShippingAddressExternalReferenceCode() == null) {
 					valid = false;
 				}
 
@@ -2276,6 +2374,20 @@ public abstract class BaseOrderResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"billingAddressExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						order1.getBillingAddressExternalReferenceCode(),
+						order2.getBillingAddressExternalReferenceCode())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("billingAddressId", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						order1.getBillingAddressId(),
@@ -2381,6 +2493,20 @@ public abstract class BaseOrderResourceTestCase {
 				if (!Objects.deepEquals(
 						order1.getDeliveryTermDescription(),
 						order2.getDeliveryTermDescription())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"deliveryTermExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						order1.getDeliveryTermExternalReferenceCode(),
+						order2.getDeliveryTermExternalReferenceCode())) {
 
 					return false;
 				}
@@ -2573,6 +2699,20 @@ public abstract class BaseOrderResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"paymentTermExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						order1.getPaymentTermExternalReferenceCode(),
+						order2.getPaymentTermExternalReferenceCode())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("paymentTermId", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						order1.getPaymentTermId(), order2.getPaymentTermId())) {
@@ -2634,6 +2774,20 @@ public abstract class BaseOrderResourceTestCase {
 				if (!Objects.deepEquals(
 						order1.getShippingAddress(),
 						order2.getShippingAddress())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"shippingAddressExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						order1.getShippingAddressExternalReferenceCode(),
+						order2.getShippingAddressExternalReferenceCode())) {
 
 					return false;
 				}
@@ -3731,6 +3885,52 @@ public abstract class BaseOrderResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("billingAddressExternalReferenceCode")) {
+			Object object = order.getBillingAddressExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("billingAddressId")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -3968,6 +4168,52 @@ public abstract class BaseOrderResourceTestCase {
 
 		if (entityFieldName.equals("deliveryTermDescription")) {
 			Object object = order.getDeliveryTermDescription();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("deliveryTermExternalReferenceCode")) {
+			Object object = order.getDeliveryTermExternalReferenceCode();
 
 			String value = String.valueOf(object);
 
@@ -4423,6 +4669,52 @@ public abstract class BaseOrderResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("paymentTermExternalReferenceCode")) {
+			Object object = order.getPaymentTermExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("paymentTermId")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -4600,6 +4892,52 @@ public abstract class BaseOrderResourceTestCase {
 		if (entityFieldName.equals("shippingAddress")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("shippingAddressExternalReferenceCode")) {
+			Object object = order.getShippingAddressExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("shippingAddressId")) {
@@ -5668,6 +6006,8 @@ public abstract class BaseOrderResourceTestCase {
 				accountId = RandomTestUtil.randomLong();
 				advanceStatus = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+				billingAddressExternalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				billingAddressId = RandomTestUtil.randomLong();
 				channelExternalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
@@ -5680,6 +6020,8 @@ public abstract class BaseOrderResourceTestCase {
 				currencyCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				deliveryTermDescription = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				deliveryTermExternalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				deliveryTermId = RandomTestUtil.randomLong();
 				deliveryTermName = StringUtil.toLowerCase(
@@ -5700,6 +6042,8 @@ public abstract class BaseOrderResourceTestCase {
 				paymentStatus = RandomTestUtil.randomInt();
 				paymentTermDescription = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+				paymentTermExternalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				paymentTermId = RandomTestUtil.randomLong();
 				paymentTermName = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
@@ -5708,6 +6052,8 @@ public abstract class BaseOrderResourceTestCase {
 				purchaseOrderNumber = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				requestedDeliveryDate = RandomTestUtil.nextDate();
+				shippingAddressExternalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				shippingAddressId = RandomTestUtil.randomLong();
 				shippingAmountFormatted = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());

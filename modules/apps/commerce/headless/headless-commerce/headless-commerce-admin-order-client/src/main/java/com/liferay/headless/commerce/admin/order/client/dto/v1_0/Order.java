@@ -161,6 +161,32 @@ public class Order implements Cloneable, Serializable {
 
 	protected BillingAddress billingAddress;
 
+	public String getBillingAddressExternalReferenceCode() {
+		return billingAddressExternalReferenceCode;
+	}
+
+	public void setBillingAddressExternalReferenceCode(
+		String billingAddressExternalReferenceCode) {
+
+		this.billingAddressExternalReferenceCode =
+			billingAddressExternalReferenceCode;
+	}
+
+	public void setBillingAddressExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			billingAddressExternalReferenceCodeUnsafeSupplier) {
+
+		try {
+			billingAddressExternalReferenceCode =
+				billingAddressExternalReferenceCodeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String billingAddressExternalReferenceCode;
+
 	public Long getBillingAddressId() {
 		return billingAddressId;
 	}
@@ -376,6 +402,32 @@ public class Order implements Cloneable, Serializable {
 	}
 
 	protected String deliveryTermDescription;
+
+	public String getDeliveryTermExternalReferenceCode() {
+		return deliveryTermExternalReferenceCode;
+	}
+
+	public void setDeliveryTermExternalReferenceCode(
+		String deliveryTermExternalReferenceCode) {
+
+		this.deliveryTermExternalReferenceCode =
+			deliveryTermExternalReferenceCode;
+	}
+
+	public void setDeliveryTermExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			deliveryTermExternalReferenceCodeUnsafeSupplier) {
+
+		try {
+			deliveryTermExternalReferenceCode =
+				deliveryTermExternalReferenceCodeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String deliveryTermExternalReferenceCode;
 
 	public Long getDeliveryTermId() {
 		return deliveryTermId;
@@ -735,6 +787,32 @@ public class Order implements Cloneable, Serializable {
 
 	protected String paymentTermDescription;
 
+	public String getPaymentTermExternalReferenceCode() {
+		return paymentTermExternalReferenceCode;
+	}
+
+	public void setPaymentTermExternalReferenceCode(
+		String paymentTermExternalReferenceCode) {
+
+		this.paymentTermExternalReferenceCode =
+			paymentTermExternalReferenceCode;
+	}
+
+	public void setPaymentTermExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			paymentTermExternalReferenceCodeUnsafeSupplier) {
+
+		try {
+			paymentTermExternalReferenceCode =
+				paymentTermExternalReferenceCodeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String paymentTermExternalReferenceCode;
+
 	public Long getPaymentTermId() {
 		return paymentTermId;
 	}
@@ -861,6 +939,32 @@ public class Order implements Cloneable, Serializable {
 	}
 
 	protected ShippingAddress shippingAddress;
+
+	public String getShippingAddressExternalReferenceCode() {
+		return shippingAddressExternalReferenceCode;
+	}
+
+	public void setShippingAddressExternalReferenceCode(
+		String shippingAddressExternalReferenceCode) {
+
+		this.shippingAddressExternalReferenceCode =
+			shippingAddressExternalReferenceCode;
+	}
+
+	public void setShippingAddressExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			shippingAddressExternalReferenceCodeUnsafeSupplier) {
+
+		try {
+			shippingAddressExternalReferenceCode =
+				shippingAddressExternalReferenceCodeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String shippingAddressExternalReferenceCode;
 
 	public Long getShippingAddressId() {
 		return shippingAddressId;

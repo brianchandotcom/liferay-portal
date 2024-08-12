@@ -121,6 +121,20 @@ public class OrderSerDes {
 			sb.append(String.valueOf(order.getBillingAddress()));
 		}
 
+		if (order.getBillingAddressExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"billingAddressExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(order.getBillingAddressExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (order.getBillingAddressId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -241,6 +255,20 @@ public class OrderSerDes {
 			sb.append("\"");
 
 			sb.append(_escape(order.getDeliveryTermDescription()));
+
+			sb.append("\"");
+		}
+
+		if (order.getDeliveryTermExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"deliveryTermExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(order.getDeliveryTermExternalReferenceCode()));
 
 			sb.append("\"");
 		}
@@ -462,6 +490,20 @@ public class OrderSerDes {
 			sb.append("\"");
 		}
 
+		if (order.getPaymentTermExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"paymentTermExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(order.getPaymentTermExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (order.getPaymentTermId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -538,6 +580,20 @@ public class OrderSerDes {
 			sb.append("\"shippingAddress\": ");
 
 			sb.append(String.valueOf(order.getShippingAddress()));
+		}
+
+		if (order.getShippingAddressExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"shippingAddressExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(order.getShippingAddressExternalReferenceCode()));
+
+			sb.append("\"");
 		}
 
 		if (order.getShippingAddressId() != null) {
@@ -1322,6 +1378,15 @@ public class OrderSerDes {
 				"billingAddress", String.valueOf(order.getBillingAddress()));
 		}
 
+		if (order.getBillingAddressExternalReferenceCode() == null) {
+			map.put("billingAddressExternalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"billingAddressExternalReferenceCode",
+				String.valueOf(order.getBillingAddressExternalReferenceCode()));
+		}
+
 		if (order.getBillingAddressId() == null) {
 			map.put("billingAddressId", null);
 		}
@@ -1400,6 +1465,15 @@ public class OrderSerDes {
 			map.put(
 				"deliveryTermDescription",
 				String.valueOf(order.getDeliveryTermDescription()));
+		}
+
+		if (order.getDeliveryTermExternalReferenceCode() == null) {
+			map.put("deliveryTermExternalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"deliveryTermExternalReferenceCode",
+				String.valueOf(order.getDeliveryTermExternalReferenceCode()));
 		}
 
 		if (order.getDeliveryTermId() == null) {
@@ -1539,6 +1613,15 @@ public class OrderSerDes {
 				String.valueOf(order.getPaymentTermDescription()));
 		}
 
+		if (order.getPaymentTermExternalReferenceCode() == null) {
+			map.put("paymentTermExternalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"paymentTermExternalReferenceCode",
+				String.valueOf(order.getPaymentTermExternalReferenceCode()));
+		}
+
 		if (order.getPaymentTermId() == null) {
 			map.put("paymentTermId", null);
 		}
@@ -1586,6 +1669,16 @@ public class OrderSerDes {
 		else {
 			map.put(
 				"shippingAddress", String.valueOf(order.getShippingAddress()));
+		}
+
+		if (order.getShippingAddressExternalReferenceCode() == null) {
+			map.put("shippingAddressExternalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"shippingAddressExternalReferenceCode",
+				String.valueOf(
+					order.getShippingAddressExternalReferenceCode()));
 		}
 
 		if (order.getShippingAddressId() == null) {
@@ -2208,6 +2301,12 @@ public class OrderSerDes {
 			else if (Objects.equals(jsonParserFieldName, "billingAddress")) {
 				return false;
 			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"billingAddressExternalReferenceCode")) {
+
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "billingAddressId")) {
 				return false;
 			}
@@ -2241,6 +2340,12 @@ public class OrderSerDes {
 			}
 			else if (Objects.equals(
 						jsonParserFieldName, "deliveryTermDescription")) {
+
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"deliveryTermExternalReferenceCode")) {
 
 				return false;
 			}
@@ -2304,6 +2409,12 @@ public class OrderSerDes {
 
 				return false;
 			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"paymentTermExternalReferenceCode")) {
+
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "paymentTermId")) {
 				return false;
 			}
@@ -2324,6 +2435,12 @@ public class OrderSerDes {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "shippingAddress")) {
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"shippingAddressExternalReferenceCode")) {
+
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "shippingAddressId")) {
@@ -2700,6 +2817,15 @@ public class OrderSerDes {
 							(String)jsonParserFieldValue));
 				}
 			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"billingAddressExternalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					order.setBillingAddressExternalReferenceCode(
+						(String)jsonParserFieldValue);
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "billingAddressId")) {
 				if (jsonParserFieldValue != null) {
 					order.setBillingAddressId(
@@ -2758,6 +2884,15 @@ public class OrderSerDes {
 
 				if (jsonParserFieldValue != null) {
 					order.setDeliveryTermDescription(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"deliveryTermExternalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					order.setDeliveryTermExternalReferenceCode(
 						(String)jsonParserFieldValue);
 				}
 			}
@@ -2876,6 +3011,15 @@ public class OrderSerDes {
 						(String)jsonParserFieldValue);
 				}
 			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"paymentTermExternalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					order.setPaymentTermExternalReferenceCode(
+						(String)jsonParserFieldValue);
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "paymentTermId")) {
 				if (jsonParserFieldValue != null) {
 					order.setPaymentTermId(
@@ -2912,6 +3056,15 @@ public class OrderSerDes {
 					order.setShippingAddress(
 						ShippingAddressSerDes.toDTO(
 							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"shippingAddressExternalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					order.setShippingAddressExternalReferenceCode(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "shippingAddressId")) {

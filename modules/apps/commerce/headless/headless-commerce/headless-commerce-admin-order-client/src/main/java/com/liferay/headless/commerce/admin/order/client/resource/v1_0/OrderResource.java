@@ -81,7 +81,7 @@ public interface OrderResource {
 			String externalReferenceCode)
 		throws Exception;
 
-	public void patchOrderByExternalReferenceCode(
+	public Order patchOrderByExternalReferenceCode(
 			String externalReferenceCode, Order order)
 		throws Exception;
 
@@ -107,7 +107,7 @@ public interface OrderResource {
 	public HttpInvoker.HttpResponse getOrderHttpResponse(Long id)
 		throws Exception;
 
-	public void patchOrder(Long id, Order order) throws Exception;
+	public Order patchOrder(Long id, Order order) throws Exception;
 
 	public HttpInvoker.HttpResponse patchOrderHttpResponse(Long id, Order order)
 		throws Exception;
@@ -864,7 +864,7 @@ public interface OrderResource {
 			return httpInvoker.invoke();
 		}
 
-		public void patchOrderByExternalReferenceCode(
+		public Order patchOrderByExternalReferenceCode(
 				String externalReferenceCode, Order order)
 			throws Exception {
 
@@ -917,6 +917,17 @@ public interface OrderResource {
 				_logger.fine(
 					"HTTP response status code: " +
 						httpResponse.getStatusCode());
+			}
+
+			try {
+				return OrderSerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
 			}
 		}
 
@@ -1245,7 +1256,7 @@ public interface OrderResource {
 			return httpInvoker.invoke();
 		}
 
-		public void patchOrder(Long id, Order order) throws Exception {
+		public Order patchOrder(Long id, Order order) throws Exception {
 			HttpInvoker.HttpResponse httpResponse = patchOrderHttpResponse(
 				id, order);
 
@@ -1294,6 +1305,17 @@ public interface OrderResource {
 				_logger.fine(
 					"HTTP response status code: " +
 						httpResponse.getStatusCode());
+			}
+
+			try {
+				return OrderSerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
 			}
 		}
 

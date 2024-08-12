@@ -70,7 +70,7 @@ const RichText = ({
 	const [currentValue, setCurrentValue] = useState(
 		convertStringToObject(
 			contents,
-			editingLanguageId ?? locale ?? defaultLocale?.localeId
+			editingLanguageId ?? defaultLocale?.localeId ?? locale
 		)
 	);
 	const [currentInternalValue, setCurrentInternalValue] = useState(
@@ -103,7 +103,7 @@ const RichText = ({
 	}, [currentEditingLocale]);
 
 	useEffect(() => {
-		changeLanguage(editingLanguageId ?? locale ?? defaultLocale?.localeId);
+		changeLanguage(editingLanguageId ?? defaultLocale?.localeId ?? locale);
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [editingLanguageId, locale, predefinedValue]);

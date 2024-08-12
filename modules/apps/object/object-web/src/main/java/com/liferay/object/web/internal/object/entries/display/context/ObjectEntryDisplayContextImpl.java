@@ -841,8 +841,8 @@ public class ObjectEntryDisplayContextImpl
 
 		DDMForm ddmForm = new DDMForm();
 
-		ddmForm.addAvailableLocale(_objectRequestHelper.getLocale());
-		ddmForm.setDefaultLocale(_objectRequestHelper.getLocale());
+		ddmForm.addAvailableLocale(_objectRequestHelper.getDefaultLocale());
+		ddmForm.setDefaultLocale(_objectRequestHelper.getDefaultLocale());
 
 		ObjectDefinition objectDefinition = getObjectDefinition1();
 
@@ -1142,7 +1142,8 @@ public class ObjectEntryDisplayContextImpl
 	private DTOConverterContext _getDTOConverterContext() {
 		return new DefaultDTOConverterContext(
 			false, null, null, _objectRequestHelper.getRequest(), null,
-			_themeDisplay.getLocale(), null, _themeDisplay.getUser());
+			_themeDisplay.getSiteDefaultLocale(), null,
+			_themeDisplay.getUser());
 	}
 
 	private long _getGroupId() {
@@ -1400,7 +1401,7 @@ public class ObjectEntryDisplayContextImpl
 				ddmFormFieldValue.setValue(
 					new UnlocalizedValue(
 						ddmFormFieldPredefinedValue.getString(
-							_objectRequestHelper.getLocale())));
+							_objectRequestHelper.getDefaultLocale())));
 			}
 		}
 		else if (value instanceof ArrayList) {
@@ -1435,7 +1436,7 @@ public class ObjectEntryDisplayContextImpl
 			if (value instanceof Double) {
 				DecimalFormat decimalFormat =
 					NumericDDMFormFieldUtil.getDecimalFormat(
-						_objectRequestHelper.getLocale());
+						_objectRequestHelper.getDefaultLocale());
 
 				value = decimalFormat.format(value);
 			}

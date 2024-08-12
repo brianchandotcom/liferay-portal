@@ -62,9 +62,18 @@ public class ObjectDefinitionTestUtil {
 			List<ObjectField> objectFields)
 		throws Exception {
 
+		return addCustomObjectDefinition(
+			objectFolderId, enableLocalization, name, objectFields,
+			TestPropsValues.getUserId());
+	}
+
+	public static ObjectDefinition addCustomObjectDefinition(
+			long objectFolderId, boolean enableLocalization, String name,
+			List<ObjectField> objectFields, long userId)
+		throws Exception {
+
 		return ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
-			TestPropsValues.getUserId(), objectFolderId, false, true,
-			enableLocalization, false,
+			userId, objectFolderId, false, true, enableLocalization, false,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			name, null, null,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
@@ -75,17 +84,25 @@ public class ObjectDefinitionTestUtil {
 	public static ObjectDefinition addCustomObjectDefinition(String name)
 		throws Exception {
 
+		return addCustomObjectDefinition(name, TestPropsValues.getUserId());
+	}
+
+	public static ObjectDefinition addCustomObjectDefinition(
+			String name, long userId)
+		throws Exception {
+
 		return addCustomObjectDefinition(
 			0, false, name,
 			Arrays.asList(
 				new TextObjectFieldBuilder(
 				).userId(
-					TestPropsValues.getUserId()
+					userId
 				).labelMap(
 					LocalizedMapUtil.getLocalizedMap(StringUtil.randomId())
 				).name(
 					"able"
-				).build()));
+				).build()),
+			userId);
 	}
 
 	public static ObjectDefinition addModifiableSystemObjectDefinition(

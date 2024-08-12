@@ -112,9 +112,15 @@ class LiferayApp extends App {
 
 		this.addSurfaces(new LiferaySurface(body.id));
 
-		document.head.appendChild(
-			buildFragment(`<style type="text/css">${CSS}</style>`)
-		);
+		let styleHTML = `<style`;
+
+		if (Liferay.CSP && Liferay.CSP.nonce) {
+			styleHTML += ` nonce="${Liferay.CSP.nonce}">`;
+		}
+
+		styleHTML += ` type="text/css">${CSS}</style>`;
+
+		document.head.appendChild(buildFragment(styleHTML));
 		body.appendChild(
 			buildFragment('<div class="lfr-spa-loading-bar"></div>')
 		);

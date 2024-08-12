@@ -8,7 +8,8 @@ package com.liferay.paypal;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 
-import org.apache.commons.lang3.StringUtils;
+import java.util.Objects;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -44,24 +45,23 @@ public class RenderRestController extends BaseRestController {
 
 		long orderId = jsonObject.getLong("orderId");
 
-		String cartPaymentURL = WebClient.create(
-			StringBundler.concat(
-				lxcDXPServerProtocol, "://", lxcDXPMainDomain,
-				"/o/headless-commerce-delivery-cart/v1.0/carts/", orderId,
-				"/payment-url")
-		).get(
-		).accept(
-			MediaType.TEXT_PLAIN
-		).header(
-			HttpHeaders.AUTHORIZATION, "Bearer " + jwt.getTokenValue()
-		).retrieve(
-		).bodyToMono(
-			String.class
-		).block();
-
 		StringBuilder sb = new StringBuilder();
 
-		sb.append(cartPaymentURL);
+		sb.append(
+			WebClient.create(
+				StringBundler.concat(
+					lxcDXPServerProtocol, "://", lxcDXPMainDomain,
+					"/o/headless-commerce-delivery-cart/v1.0/carts/", orderId,
+					"/payment-url")
+			).get(
+			).accept(
+				MediaType.TEXT_PLAIN
+			).header(
+				HttpHeaders.AUTHORIZATION, "Bearer " + jwt.getTokenValue()
+			).retrieve(
+			).bodyToMono(
+				String.class
+			).block());
 
 		if (jsonObject.has("callbackURL")) {
 			sb.append("&callbackURL=");
@@ -117,10 +117,10 @@ public class RenderRestController extends BaseRestController {
 		for (int i = 0; i < itemsJSONArray.length(); i++) {
 			JSONObject itemJSONObject = itemsJSONArray.getJSONObject(i);
 
-			String itemTransactionCode = itemJSONObject.getString(
-				"transactionCode");
+			if (Objects.equals(
+					transactionCode,
+					itemJSONObject.getString("transactionCode"))) {
 
-			if (StringUtils.equals(itemTransactionCode, transactionCode)) {
 				return String.valueOf(itemJSONObject.getInt("id"));
 			}
 		}

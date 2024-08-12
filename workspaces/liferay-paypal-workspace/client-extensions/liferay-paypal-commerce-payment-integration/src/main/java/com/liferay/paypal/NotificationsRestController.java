@@ -138,7 +138,7 @@ public class NotificationsRestController extends BaseRestController {
 			payPalWebhookJSONObject.getString("mode"));
 
 		String verifySignatureResponse = WebClient.create(
-			getEnvironmentURL(payPalWebhookJSONObject.getString("mode"))
+			getPayPalURL(payPalWebhookJSONObject.getString("mode"))
 		).post(
 		).uri(
 			"v1/notifications/verify-webhook-signature"

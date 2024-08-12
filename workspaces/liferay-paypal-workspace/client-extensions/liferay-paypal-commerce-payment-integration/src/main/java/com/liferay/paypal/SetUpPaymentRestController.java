@@ -199,7 +199,7 @@ public class SetUpPaymentRestController extends BaseRestController {
 				typeSettingsJSONObject.getString("mode"));
 
 			String createOrderResponse = WebClient.create(
-				getEnvironmentURL(typeSettingsJSONObject.getString("mode"))
+				getPayPalURL(typeSettingsJSONObject.getString("mode"))
 			).post(
 			).uri(
 				"/v2/checkout/orders"

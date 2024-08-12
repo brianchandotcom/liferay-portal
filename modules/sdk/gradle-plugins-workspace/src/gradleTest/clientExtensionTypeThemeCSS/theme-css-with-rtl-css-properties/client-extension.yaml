@@ -3,5 +3,5 @@ theme-css-with-rtl-css-properties:
     clayURL: css/clay.css
     mainRTLURL: css/main_rtl.css
     mainURL: css/main.css
-    name: theme-css-with-rtl-css-properties
+    name: Theme CSS With RTL CSS Properties
     type: themeCSS

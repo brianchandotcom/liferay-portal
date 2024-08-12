@@ -21,10 +21,17 @@ import ManageCollaborators from './ManageCollaborators';
 import Subscribe from './Subscribe';
 import VersionsContent from './VersionsContent';
 
-const TABS = {
+const TABS_1 = {
 	categorization: 1,
 	details: 0,
 	version: 2,
+};
+
+const TABS_2 = {
+	categorization: 2,
+	details: 0,
+	performance: 1,
+	version: 3,
 };
 
 const SidebarPanelInfoView = ({
@@ -49,6 +56,8 @@ const SidebarPanelInfoView = ({
 	viewURLs = [],
 	vocabularies = {},
 }) => {
+	const TABS = Liferay.FeatureFlags['LPD-28830'] ? TABS_2 : TABS_1;
+
 	const [activeTabKeyValue, setActiveTabKeyValue] = useState(TABS.details);
 
 	const [error, setError] = useState(false);
@@ -247,7 +256,7 @@ const SidebarPanelInfoView = ({
 				<div>
 					<ClayTabs.Content activeIndex={activeTabKeyValue} fade>
 						<ClayTabs.TabPane
-							aria-labelledby="tab-1"
+							aria-labelledby={`tab-${TABS.details + 1}`}
 							className="flex-shrink-0"
 						>
 							<DetailsContent
@@ -269,7 +278,7 @@ const SidebarPanelInfoView = ({
 							showTabs &&
 							activeTabKeyValue === TABS.categorization && (
 								<ClayTabs.TabPane
-									aria-labelledby="tab-2"
+									aria-labelledby={`tab-${TABS.categorization + 1}`}
 									className="flex-shrink-0"
 								>
 									<Categorization
@@ -281,7 +290,7 @@ const SidebarPanelInfoView = ({
 
 						{showTabs && activeTabKeyValue === TABS.version && (
 							<ClayTabs.TabPane
-								aria-labelledby="tab-2"
+								aria-labelledby={`tab-${TABS.version + 1}`}
 								className="flex-shrink-0"
 							>
 								<VersionsContent

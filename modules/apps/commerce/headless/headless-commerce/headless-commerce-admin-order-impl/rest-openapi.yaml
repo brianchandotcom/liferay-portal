@@ -276,6 +276,9 @@ components:
                     example: 2017-08-21
                     format: date
                     type: string
+                name:
+                    example: Order Name
+                    type: string
                 orderDate:
                     example: 2017-07-21
                     format: date

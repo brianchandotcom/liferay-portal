@@ -5735,7 +5735,7 @@ public class ObjectEntryResourceTest {
 		}
 	}
 
-	@FeatureFlags("LPS-174455")
+	@FeatureFlags({"LPD-24674", "LPS-174455"})
 	@Test
 	public void testGetObjectEntryWithAttachmentObjectField() throws Exception {
 		String content = RandomTestUtil.randomString();
@@ -5755,6 +5755,7 @@ public class ObjectEntryResourceTest {
 		JSONObject attachmentJSONObject = jsonObject.getJSONObject(
 			_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_SOURCE_1);
 
+		Assert.assertNotNull(attachmentJSONObject.get("externalReferenceCode"));
 		Assert.assertNull(attachmentJSONObject.get("fileBase64"));
 
 		content = RandomTestUtil.randomString();
@@ -5778,6 +5779,7 @@ public class ObjectEntryResourceTest {
 		attachmentJSONObject = jsonObject.getJSONObject(
 			_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_SOURCE_1);
 
+		Assert.assertNotNull(attachmentJSONObject.get("externalReferenceCode"));
 		Assert.assertEquals(
 			Base64.encode(content.getBytes()),
 			attachmentJSONObject.getString("fileBase64"));
@@ -5792,6 +5794,7 @@ public class ObjectEntryResourceTest {
 		attachmentJSONObject = jsonObject.getJSONObject(
 			_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_SOURCE_1);
 
+		Assert.assertNotNull(attachmentJSONObject.get("externalReferenceCode"));
 		Assert.assertNull(attachmentJSONObject.get("fileBase64"));
 
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
@@ -5807,6 +5810,7 @@ public class ObjectEntryResourceTest {
 		attachmentJSONObject = jsonObject.getJSONObject(
 			_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_SOURCE_1);
 
+		Assert.assertNotNull(attachmentJSONObject.get("externalReferenceCode"));
 		Assert.assertEquals(
 			Base64.encode(content.getBytes()),
 			attachmentJSONObject.getString("fileBase64"));

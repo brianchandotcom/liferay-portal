@@ -50,6 +50,9 @@
 					"name": {
 						"type": "string"
 					},
+					"scope": {
+						"$ref": "#/components/schemas/Scope"
+					},
 					"x-class-name": {
 						"default": "com.liferay.object.rest.dto.v1_0.FileEntry",
 						"readOnly": true,
@@ -321,6 +324,30 @@
 					}
 				},
 				"type": "object"
+			},
+			"Scope": {
+				"properties": {
+					"externalReferenceCode": {
+						"type": "string"
+					},
+					"type": {
+						"enum": [
+							"AssetLibrary",
+							"Site"
+						],
+						"type": "string"
+					},
+					"x-class-name": {
+						"default": "com.liferay.object.rest.dto.v1_0.Scope",
+						"readOnly": true,
+						"type": "string"
+					}
+				},
+				"readOnly": true,
+				"type": "object",
+				"xml": {
+					"name": "Scope"
+				}
 			},
 			"SingleElementSchemaName": {
 				"description": "description",

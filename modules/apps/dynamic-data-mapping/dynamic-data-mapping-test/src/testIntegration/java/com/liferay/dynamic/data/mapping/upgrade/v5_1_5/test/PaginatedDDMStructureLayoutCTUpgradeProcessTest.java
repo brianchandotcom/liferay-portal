@@ -6,7 +6,7 @@
 package com.liferay.dynamic.data.mapping.upgrade.v5_1_5.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.dynamic.data.mapping.upgrade.BaseDDMStructureLayoutCTUpgradeProcessTestCase;
+import com.liferay.dynamic.data.mapping.upgrade.v4_3_3.test.WizardDDMStructureLayoutCTUpgradeProcessTest;
 
 import org.junit.runner.RunWith;
 
@@ -15,7 +15,7 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 public class PaginatedDDMStructureLayoutCTUpgradeProcessTest
-	extends BaseDDMStructureLayoutCTUpgradeProcessTestCase {
+	extends WizardDDMStructureLayoutCTUpgradeProcessTest {
 
 	@Override
 	protected String getPaginationMode() {

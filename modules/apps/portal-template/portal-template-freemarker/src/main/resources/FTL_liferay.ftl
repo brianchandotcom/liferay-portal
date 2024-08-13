@@ -66,9 +66,9 @@ LPS-30525.
 	file_name
 >
 	<#if file_name == css_main_file>
-		<link class="lfr-css-file" href="${htmlUtil.escape(portalUtil.getStaticResourceURL(request, file_name))}" id="mainLiferayThemeCSS" rel="stylesheet" type="text/css" />
+		<link ${nonceAttribute} class="lfr-css-file" href="${htmlUtil.escape(portalUtil.getStaticResourceURL(request, file_name))}" id="mainLiferayThemeCSS" rel="stylesheet" type="text/css" />
 	<#else>
-		<link class="lfr-css-file" href="${htmlUtil.escape(portalUtil.getStaticResourceURL(request, file_name))}" rel="stylesheet" type="text/css" />
+		<link ${nonceAttribute} class="lfr-css-file" href="${htmlUtil.escape(portalUtil.getStaticResourceURL(request, file_name))}" rel="stylesheet" type="text/css" />
 	</#if>
 </#macro>
 

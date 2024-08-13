@@ -5,6 +5,8 @@
 
 package com.liferay.headless.commerce.admin.channel.internal.dto.v1_0.converter;
 
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.headless.commerce.admin.channel.dto.v1_0.Channel;
@@ -39,6 +41,18 @@ public class ChannelDTOConverter
 
 		return new Channel() {
 			{
+				setAccountExternalReferenceCode(
+					() -> {
+						AccountEntry accountEntry =
+							_accountEntryLocalService.fetchAccountEntry(
+								commerceChannel.getAccountEntryId());
+
+						if (accountEntry == null) {
+							return null;
+						}
+
+						return accountEntry.getExternalReferenceCode();
+					});
 				setAccountId(commerceChannel::getAccountEntryId);
 				setCurrencyCode(commerceChannel::getCommerceCurrencyCode);
 				setExternalReferenceCode(
@@ -50,6 +64,9 @@ public class ChannelDTOConverter
 			}
 		};
 	}
+
+	@Reference
+	private AccountEntryLocalService _accountEntryLocalService;
 
 	@Reference
 	private CommerceChannelService _commerceChannelService;

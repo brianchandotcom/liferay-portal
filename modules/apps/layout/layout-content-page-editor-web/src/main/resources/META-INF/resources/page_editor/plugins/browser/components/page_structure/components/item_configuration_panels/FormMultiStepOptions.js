@@ -114,7 +114,7 @@ export default function FormMultiStepOptions({item, onValueSelect}) {
 function openWarningModal({onCancel, onContinue}) {
 	openModal({
 		bodyHTML: Liferay.Language.get(
-			'this-action-will-delete-the-stepper-fragment-of-the-form-container.-are-you-sure-you-want-to-continue'
+			'this-action-will-delete-the-stepper-fragment-of-the-form-container'
 		),
 
 		buttons: [

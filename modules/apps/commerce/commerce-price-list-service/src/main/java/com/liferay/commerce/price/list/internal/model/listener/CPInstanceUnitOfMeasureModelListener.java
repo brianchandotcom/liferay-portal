@@ -100,6 +100,7 @@ public class CPInstanceUnitOfMeasureModelListener
 								getIncrementalOrderQuantity(),
 							cpInstanceUnitOfMeasure.getKey())) {
 
+					commercePriceEntry.setPricingQuantity(null);
 					commercePriceEntry.setQuantity(null);
 					commercePriceEntry.setUnitOfMeasureKey(null);
 

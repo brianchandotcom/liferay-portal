@@ -261,6 +261,23 @@ public abstract class DLFileEntryMetadataLocalServiceBaseImpl
 			uuid, companyId, null);
 	}
 
+	@Override
+	public DLFileEntryMetadata fetchDLFileEntryMetadataByExternalReferenceCode(
+		String externalReferenceCode, long companyId) {
+
+		return dlFileEntryMetadataPersistence.fetchByERC_C(
+			externalReferenceCode, companyId);
+	}
+
+	@Override
+	public DLFileEntryMetadata getDLFileEntryMetadataByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return dlFileEntryMetadataPersistence.findByERC_C(
+			externalReferenceCode, companyId);
+	}
+
 	/**
 	 * Returns the document library file entry metadata with the primary key.
 	 *

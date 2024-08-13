@@ -221,6 +221,10 @@ public interface DLFileEntryMetadataLocalService
 	public DLFileEntryMetadata fetchDLFileEntryMetadata(
 		long fileEntryMetadataId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DLFileEntryMetadata fetchDLFileEntryMetadataByExternalReferenceCode(
+		String externalReferenceCode, long companyId);
+
 	/**
 	 * Returns the document library file entry metadata with the matching UUID and company.
 	 *
@@ -251,6 +255,11 @@ public interface DLFileEntryMetadataLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DLFileEntryMetadata getDLFileEntryMetadata(long fileEntryMetadataId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DLFileEntryMetadata getDLFileEntryMetadataByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
 		throws PortalException;
 
 	/**

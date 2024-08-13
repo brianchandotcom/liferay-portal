@@ -80,6 +80,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -11690,7 +11691,15 @@ public class ObjectEntryResourceTest {
 			ObjectDefinition objectDefinition)
 		throws Exception {
 
+		DLFileEntry dlFileEntry = _dlFileEntryLocalService.getDLFileEntry(
+			_testDLFileEntryModelListener.getLastFileEntryId());
+
+		ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
+			_testObjectEntryModelListener.getLastObjectEntryId());
+
 		return JSONUtil.put(
+			"externalReferenceCode", dlFileEntry::getExternalReferenceCode
+		).put(
 			"id", _testDLFileEntryModelListener.getLastFileEntryId()
 		).put(
 			"link",
@@ -11733,10 +11742,6 @@ public class ObjectEntryResourceTest {
 
 				Date modifiedDate = fileVersion.getModifiedDate();
 
-				ObjectEntry objectEntry =
-					_objectEntryLocalService.getObjectEntry(
-						_testObjectEntryModelListener.getLastObjectEntryId());
-
 				link.setHref(
 					StringBundler.concat(
 						"/documents/", repositoryId, "/", folderId, "/",
@@ -11754,6 +11759,34 @@ public class ObjectEntryResourceTest {
 			}
 		).put(
 			"name", fileEntry.getName()
+		).put(
+			"scope",
+			() -> {
+				if (!StringUtil.equals(
+						objectDefinition.getScope(),
+						ObjectDefinitionConstants.SCOPE_COMPANY) &&
+					(dlFileEntry.getGroupId() == objectEntry.getGroupId())) {
+
+					return null;
+				}
+
+				Scope scope = new Scope();
+
+				Group group = _groupLocalService.getGroup(
+					dlFileEntry.getGroupId());
+
+				scope.setExternalReferenceCode(group::getExternalReferenceCode);
+				scope.setType(
+					() -> {
+						if (group.getType() == GroupConstants.TYPE_DEPOT) {
+							return Scope.Type.ASSET_LIBRARY;
+						}
+
+						return Scope.Type.SITE;
+					});
+
+				return JSONFactoryUtil.createJSONObject(scope.toString());
+			}
 		);
 	}
 

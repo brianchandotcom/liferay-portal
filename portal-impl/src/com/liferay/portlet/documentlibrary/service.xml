@@ -136,7 +136,7 @@
 			<finder-column name="custom2ImageId" />
 		</finder>
 	</entity>
-	<entity human-name="document library file entry metadata" local-service="true" name="DLFileEntryMetadata" remote-service="false" uuid="true">
+	<entity external-reference-code="company" human-name="document library file entry metadata" local-service="true" name="DLFileEntryMetadata" remote-service="false" uuid="true">
 
 		<!-- PK fields -->
 

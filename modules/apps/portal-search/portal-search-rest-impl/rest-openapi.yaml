@@ -1,5 +1,32 @@
 components:
     schemas:
+        EmbeddingModel:
+            properties:
+                modelId:
+                    type: string
+        EmbeddingProviderConfiguration:
+            properties:
+                attributes:
+                    type: object
+                embeddingVectorDimensions:
+                    type: integer
+                languageIds:
+                    items:
+                        type: string
+                    type: array
+                modelClassNames:
+                    items:
+                        type: string
+                    type: array
+                providerName:
+                    type: string
+            type: object
+        EmbeddingProviderValidationResult:
+            properties:
+                errorMessage:
+                    type: string
+                expectedDimensions:
+                    type: integer
         FacetConfiguration:
             properties:
                 aggregationName:
@@ -262,6 +289,61 @@ paths:
                                     $ref: "#/components/schemas/SearchResult"
                                 type: array
             tags: ["SearchResult"]
+    /embeddings/embedding-models:
+        get:
+            operationId: getEmbeddingEmbeddingModelsPage
+            parameters:
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: provider
+                  schema:
+                      type: string
+                - in: query
+                  name: search
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/EmbeddingModel"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/EmbeddingModel"
+                                type: array
+            tags: ["EmbeddingModel"]
+    /embeddings/validate-provider-configuration:
+        post:
+            operationId: postEmbeddingValidateProviderConfiguration
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/EmbeddingProviderConfiguration"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/EmbeddingProviderConfiguration"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/EmbeddingProviderValidationResult"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/EmbeddingProviderValidationResult"
+            tags: ["EmbeddingProviderValidationResult"]
     /suggestions:
         post:
             operationId: postSuggestionsPage

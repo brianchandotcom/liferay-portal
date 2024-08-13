@@ -66,7 +66,8 @@ public class AssetVocabularySettingsImportHelper
 	}
 
 	private void _fillClassNameIdsAndClassTypePKs(
-		String[] classNameIdsAndClassTypePKs, boolean required) {
+		String[] classNameIdsAndClassTypePKs, List<Long> classNameIds,
+		List<Long> classTypePKs, List<Boolean> requireds, boolean required) {
 
 		for (String classNameIdAndClassTypePK : classNameIdsAndClassTypePKs) {
 			long oldClassNameId = getClassNameId(classNameIdAndClassTypePK);
@@ -77,15 +78,15 @@ public class AssetVocabularySettingsImportHelper
 
 			long newClassNameId = _getNewClassNameId(oldClassNameId);
 
-			_classNameIds.add(_getNewClassNameId(oldClassNameId));
+			classNameIds.add(_getNewClassNameId(oldClassNameId));
 
 			long oldClassTypePK = getClassTypePK(classNameIdAndClassTypePK);
 
-			_classTypePKs.add(
+			classTypePKs.add(
 				_getNewClassTypePK(
 					oldClassNameId, newClassNameId, oldClassTypePK));
 
-			_requireds.add(required);
+			requireds.add(required);
 		}
 	}
 
@@ -147,27 +148,30 @@ public class AssetVocabularySettingsImportHelper
 	}
 
 	private void _updateSettings() {
-		_fillClassNameIdsAndClassTypePKs(
-			getClassNameIdsAndClassTypePKs(), false);
+		List<Long> classNameIds = new ArrayList<>();
+		List<Long> classTypePKs = new ArrayList<>();
+		List<Boolean> requireds = new ArrayList<>();
 
 		_fillClassNameIdsAndClassTypePKs(
-			getRequiredClassNameIdsAndClassTypePKs(), true);
+			getClassNameIdsAndClassTypePKs(), classNameIds, classTypePKs,
+			requireds, false);
+
+		_fillClassNameIdsAndClassTypePKs(
+			getRequiredClassNameIdsAndClassTypePKs(), classNameIds,
+			classTypePKs, requireds, true);
 
 		setClassNameIdsAndClassTypePKs(
-			ArrayUtil.toLongArray(_classNameIds),
-			ArrayUtil.toLongArray(_classTypePKs),
-			ArrayUtil.toBooleanArray(_requireds));
+			ArrayUtil.toLongArray(classNameIds),
+			ArrayUtil.toLongArray(classTypePKs),
+			ArrayUtil.toBooleanArray(requireds));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssetVocabularySettingsImportHelper.class);
 
-	private final List<Long> _classNameIds = new ArrayList<>();
 	private final ClassNameLocalService _classNameLocalService;
-	private final List<Long> _classTypePKs = new ArrayList<>();
 	private final long[] _groupIds;
 	private final Locale _locale;
-	private final List<Boolean> _requireds = new ArrayList<>();
 	private final JSONObject _settingsMetadataJSONObject;
 
 }

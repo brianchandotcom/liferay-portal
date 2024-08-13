@@ -26,6 +26,7 @@ import java.io.InputStream;
 
 import java.net.URL;
 
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.List;
 
@@ -111,7 +112,7 @@ public class LanguageClientExtensionBundleTrackerCustomizerTest {
 						StringBundler.concat(
 							"Log message \"", message,
 							"\" must match one of the following: ",
-							_EXPECTED_LOG_MESSAGES));
+							Arrays.toString(_EXPECTED_LOG_MESSAGES)));
 				}
 			}
 		}
@@ -155,13 +156,11 @@ public class LanguageClientExtensionBundleTrackerCustomizerTest {
 	}
 
 	private static final String[] _EXPECTED_LOG_MESSAGES = {
-		"Unable to process language file \"Language_pt_BR.properties\". Key " +
-			"must not be null.",
-		"Unable to process language file \"Language_pt_BR.properties\". " +
-			"Value must not be null.",
-		"Unable to process language file \"Language_yy_ZZ.properties\". " +
-			"Language ID \"yy_ZZ\" is not one of the available language IDs: " +
-				"\\[(.*)\\]."
+		"Unable to import \"Language_pt_BR.properties\": Key must not be null",
+		"Unable to import \"Language_pt_BR.properties\": Value must not be " +
+			"null",
+		"Unable to import \"Language_yy_ZZ.properties\": Language ID " +
+			"\"yy_ZZ\" is not one of the available language IDs: \\[(.*)\\]"
 	};
 
 	private Bundle _bundle;

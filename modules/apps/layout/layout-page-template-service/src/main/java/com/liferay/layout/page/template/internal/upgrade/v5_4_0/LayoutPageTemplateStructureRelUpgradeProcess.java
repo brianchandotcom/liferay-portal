@@ -22,12 +22,13 @@ public class LayoutPageTemplateStructureRelUpgradeProcess
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			processConcurrently(
 				StringBundler.concat(
-					"select lPageTemplateStructureRelId, data_ from ",
-					"LayoutPageTemplateStructureRel where data_ like '%",
-					_OLD_CLASS_NAME, "%' "),
+					"select ctCollectionId, lPageTemplateStructureRelId, ",
+					"data_ from LayoutPageTemplateStructureRel where data_ ",
+					"like '%", _OLD_CLASS_NAME, "%' "),
 				"update LayoutPageTemplateStructureRel set data_ = ? where " +
-					"lPageTemplateStructureRelId = ?",
+					"ctCollectionId = ? and lPageTemplateStructureRelId = ?",
 				resultSet -> new Object[] {
+					resultSet.getLong("ctCollectionId"),
 					resultSet.getLong("lPageTemplateStructureRelId"),
 					GetterUtil.getString(resultSet.getString("data_"))
 				},
@@ -35,9 +36,10 @@ public class LayoutPageTemplateStructureRelUpgradeProcess
 					preparedStatement.setString(
 						1,
 						StringUtil.replace(
-							(String)values[1], _OLD_CLASS_NAME,
+							(String)values[2], _OLD_CLASS_NAME,
 							_NEW_CLASS_NAME));
 					preparedStatement.setLong(2, (Long)values[0]);
+					preparedStatement.setLong(3, (Long)values[1]);
 
 					preparedStatement.addBatch();
 				},

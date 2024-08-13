@@ -5,6 +5,8 @@
 
 package com.liferay.wiki.internal.search.spi.model.index.contributor;
 
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -14,6 +16,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlParser;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Localization;
+import com.liferay.portal.search.ml.embedding.text.TextEmbeddingDocumentContributor;
 import com.liferay.portal.search.model.uid.UIDFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 import com.liferay.trash.TrashHelper;
@@ -77,6 +80,12 @@ public class WikiPageModelDocumentContributor
 				content);
 			document.addText(
 				_localization.getLocalizedName(Field.TITLE, languageId), title);
+
+			_textEmbeddingDocumentContributor.contribute(
+				document, languageId, wikiPage,
+				StringBundler.concat(
+					wikiPage.getTitle(), StringPool.PERIOD, StringPool.SPACE,
+					content));
 		}
 
 		document.addNumber(
@@ -97,6 +106,9 @@ public class WikiPageModelDocumentContributor
 
 	@Reference
 	private Localization _localization;
+
+	@Reference
+	private TextEmbeddingDocumentContributor _textEmbeddingDocumentContributor;
 
 	@Reference
 	private TrashHelper _trashHelper;

@@ -1467,6 +1467,57 @@ autoSaveAsDraftTest(
 	}
 );
 
+autoSaveAsDraftTest(
+	'Web Content version, status and ID are shown and updated after auto save',
+	{
+		tag: '@LPD-32874',
+	},
+	async ({journalEditArticlePage, page, site}) => {
+		await journalEditArticlePage.goto({siteUrl: site.friendlyUrlPath});
+
+		const title = getRandomString();
+
+		await journalEditArticlePage.fillTitle(title);
+
+		await expect(
+			journalEditArticlePage.changesSavedIndicator
+		).toBeVisible();
+
+		await expect(page.getByText('1.0')).toBeVisible();
+
+		await expect(page.getByText('Draft', {exact: true})).toBeVisible();
+
+		await expect(page.getByText('ID', {exact: true})).toBeVisible();
+
+		await journalEditArticlePage.publishArticle();
+
+		await page.getByLabel(`Actions for ${title}`).waitFor();
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {
+				exact: true,
+				name: 'Edit',
+			}),
+			trigger: page.getByLabel(`Actions for ${title}`, {
+				exact: true,
+			}),
+		});
+
+		await expect(async () => {
+			await journalEditArticlePage.fillTitle(getRandomString());
+
+			await expect(
+				journalEditArticlePage.changesSavedIndicator
+			).toBeVisible();
+		}).toPass();
+
+		await expect(page.getByText('1.1')).toBeVisible();
+
+		await expect(page.getByText('Draft', {exact: true})).toBeVisible();
+	}
+);
+
 scheduleTest(
 	'Change permission of a web content in edition mode',
 	async ({journalEditArticlePage, journalPage, page, site}) => {

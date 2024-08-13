@@ -20,9 +20,9 @@ import {
 	goToAnalyticsCloudInstanceSettings,
 	syncAllContacts,
 	syncSite,
-} from '../analytics-settings-web/utils/analyticsSettings';
+} from '../analytics-settings-web/utils/analytics-settings';
 import {createChannel} from '../osb-faro-web/utils/channel';
-import {createDataSource} from '../osb-faro-web/utils/dataSource';
+import {createDataSource} from '../osb-faro-web/utils/data-source';
 
 export const test = mergeTests(
 	apiHelpersTest,

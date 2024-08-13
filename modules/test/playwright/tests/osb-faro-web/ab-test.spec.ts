@@ -11,7 +11,7 @@ import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginAnalyticsCloudTest} from '../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../fixtures/loginTest';
 import getRandomString from '../../utils/getRandomString';
-import {syncAnalyticsCloud} from '../analytics-settings-web/utils/analyticsSettings';
+import {syncAnalyticsCloud} from '../analytics-settings-web/utils/analytics-settings';
 import {
 	assertTerminatedABTest,
 	checkEmptyStateOnDXPSide,

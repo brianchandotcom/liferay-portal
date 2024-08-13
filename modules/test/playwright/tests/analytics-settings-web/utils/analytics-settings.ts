@@ -8,7 +8,7 @@ import {Page, expect} from '@playwright/test';
 import {ApiHelpers} from '../../../helpers/ApiHelpers';
 import {liferayConfig} from '../../../liferay.config';
 import {createChannel} from '../../osb-faro-web/utils/channel';
-import {createDataSource} from '../../osb-faro-web/utils/dataSource';
+import {createDataSource} from '../../osb-faro-web/utils/data-source';
 import {acceptsCookiesBanner} from '../../osb-faro-web/utils/portal';
 
 export const PROPERTY_COMMERCE_CHANNEL_COLUMN_INDEX = 1;

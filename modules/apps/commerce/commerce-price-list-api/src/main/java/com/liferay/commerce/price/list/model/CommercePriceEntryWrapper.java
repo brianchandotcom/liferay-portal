@@ -62,6 +62,7 @@ public class CommercePriceEntryWrapper
 		attributes.put("hasTierPrice", isHasTierPrice());
 		attributes.put("price", getPrice());
 		attributes.put("priceOnApplication", isPriceOnApplication());
+		attributes.put("pricingQuantity", getPricingQuantity());
 		attributes.put("promoPrice", getPromoPrice());
 		attributes.put("quantity", getQuantity());
 		attributes.put("unitOfMeasureKey", getUnitOfMeasureKey());
@@ -226,6 +227,13 @@ public class CommercePriceEntryWrapper
 
 		if (priceOnApplication != null) {
 			setPriceOnApplication(priceOnApplication);
+		}
+
+		BigDecimal pricingQuantity = (BigDecimal)attributes.get(
+			"pricingQuantity");
+
+		if (pricingQuantity != null) {
+			setPricingQuantity(pricingQuantity);
 		}
 
 		BigDecimal promoPrice = (BigDecimal)attributes.get("promoPrice");
@@ -515,6 +523,16 @@ public class CommercePriceEntryWrapper
 	@Override
 	public boolean getPriceOnApplication() {
 		return model.getPriceOnApplication();
+	}
+
+	/**
+	 * Returns the pricing quantity of this commerce price entry.
+	 *
+	 * @return the pricing quantity of this commerce price entry
+	 */
+	@Override
+	public BigDecimal getPricingQuantity() {
+		return model.getPricingQuantity();
 	}
 
 	/**
@@ -998,6 +1016,16 @@ public class CommercePriceEntryWrapper
 	@Override
 	public void setPriceOnApplication(boolean priceOnApplication) {
 		model.setPriceOnApplication(priceOnApplication);
+	}
+
+	/**
+	 * Sets the pricing quantity of this commerce price entry.
+	 *
+	 * @param pricingQuantity the pricing quantity of this commerce price entry
+	 */
+	@Override
+	public void setPricingQuantity(BigDecimal pricingQuantity) {
+		model.setPricingQuantity(pricingQuantity);
 	}
 
 	/**

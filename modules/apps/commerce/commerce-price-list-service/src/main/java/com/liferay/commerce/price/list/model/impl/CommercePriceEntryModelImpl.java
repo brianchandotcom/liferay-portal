@@ -81,7 +81,8 @@ public class CommercePriceEntryModelImpl
 		{"discountLevel3", Types.DECIMAL}, {"discountLevel4", Types.DECIMAL},
 		{"displayDate", Types.TIMESTAMP}, {"expirationDate", Types.TIMESTAMP},
 		{"hasTierPrice", Types.BOOLEAN}, {"price", Types.DECIMAL},
-		{"priceOnApplication", Types.BOOLEAN}, {"promoPrice", Types.DECIMAL},
+		{"priceOnApplication", Types.BOOLEAN},
+		{"pricingQuantity", Types.DECIMAL}, {"promoPrice", Types.DECIMAL},
 		{"quantity", Types.DECIMAL}, {"unitOfMeasureKey", Types.VARCHAR},
 		{"lastPublishDate", Types.TIMESTAMP}, {"status", Types.INTEGER},
 		{"statusByUserId", Types.BIGINT}, {"statusByUserName", Types.VARCHAR},
@@ -116,6 +117,7 @@ public class CommercePriceEntryModelImpl
 		TABLE_COLUMNS_MAP.put("hasTierPrice", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("price", Types.DECIMAL);
 		TABLE_COLUMNS_MAP.put("priceOnApplication", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("pricingQuantity", Types.DECIMAL);
 		TABLE_COLUMNS_MAP.put("promoPrice", Types.DECIMAL);
 		TABLE_COLUMNS_MAP.put("quantity", Types.DECIMAL);
 		TABLE_COLUMNS_MAP.put("unitOfMeasureKey", Types.VARCHAR);
@@ -127,7 +129,7 @@ public class CommercePriceEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommercePriceEntry (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,commercePriceEntryId LONG not null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commercePriceListId LONG,CPInstanceUuid VARCHAR(75) null,CProductId LONG,bulkPricing BOOLEAN,discountDiscovery BOOLEAN,discountLevel1 BIGDECIMAL null,discountLevel2 BIGDECIMAL null,discountLevel3 BIGDECIMAL null,discountLevel4 BIGDECIMAL null,displayDate DATE null,expirationDate DATE null,hasTierPrice BOOLEAN,price BIGDECIMAL null,priceOnApplication BOOLEAN,promoPrice BIGDECIMAL null,quantity BIGDECIMAL null,unitOfMeasureKey VARCHAR(75) null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,primary key (commercePriceEntryId, ctCollectionId))";
+		"create table CommercePriceEntry (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,commercePriceEntryId LONG not null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commercePriceListId LONG,CPInstanceUuid VARCHAR(75) null,CProductId LONG,bulkPricing BOOLEAN,discountDiscovery BOOLEAN,discountLevel1 BIGDECIMAL null,discountLevel2 BIGDECIMAL null,discountLevel3 BIGDECIMAL null,discountLevel4 BIGDECIMAL null,displayDate DATE null,expirationDate DATE null,hasTierPrice BOOLEAN,price BIGDECIMAL null,priceOnApplication BOOLEAN,pricingQuantity BIGDECIMAL null,promoPrice BIGDECIMAL null,quantity BIGDECIMAL null,unitOfMeasureKey VARCHAR(75) null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,primary key (commercePriceEntryId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table CommercePriceEntry";
 
@@ -371,6 +373,8 @@ public class CommercePriceEntryModelImpl
 				"priceOnApplication",
 				CommercePriceEntry::getPriceOnApplication);
 			attributeGetterFunctions.put(
+				"pricingQuantity", CommercePriceEntry::getPricingQuantity);
+			attributeGetterFunctions.put(
 				"promoPrice", CommercePriceEntry::getPromoPrice);
 			attributeGetterFunctions.put(
 				"quantity", CommercePriceEntry::getQuantity);
@@ -500,6 +504,10 @@ public class CommercePriceEntryModelImpl
 				"priceOnApplication",
 				(BiConsumer<CommercePriceEntry, Boolean>)
 					CommercePriceEntry::setPriceOnApplication);
+			attributeSetterBiConsumers.put(
+				"pricingQuantity",
+				(BiConsumer<CommercePriceEntry, BigDecimal>)
+					CommercePriceEntry::setPricingQuantity);
 			attributeSetterBiConsumers.put(
 				"promoPrice",
 				(BiConsumer<CommercePriceEntry, BigDecimal>)
@@ -1032,6 +1040,21 @@ public class CommercePriceEntryModelImpl
 
 	@JSON
 	@Override
+	public BigDecimal getPricingQuantity() {
+		return _pricingQuantity;
+	}
+
+	@Override
+	public void setPricingQuantity(BigDecimal pricingQuantity) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_pricingQuantity = pricingQuantity;
+	}
+
+	@JSON
+	@Override
 	public BigDecimal getPromoPrice() {
 		return _promoPrice;
 	}
@@ -1374,6 +1397,7 @@ public class CommercePriceEntryModelImpl
 		commercePriceEntryImpl.setHasTierPrice(isHasTierPrice());
 		commercePriceEntryImpl.setPrice(getPrice());
 		commercePriceEntryImpl.setPriceOnApplication(isPriceOnApplication());
+		commercePriceEntryImpl.setPricingQuantity(getPricingQuantity());
 		commercePriceEntryImpl.setPromoPrice(getPromoPrice());
 		commercePriceEntryImpl.setQuantity(getQuantity());
 		commercePriceEntryImpl.setUnitOfMeasureKey(getUnitOfMeasureKey());
@@ -1441,6 +1465,8 @@ public class CommercePriceEntryModelImpl
 			this.<BigDecimal>getColumnOriginalValue("price"));
 		commercePriceEntryImpl.setPriceOnApplication(
 			this.<Boolean>getColumnOriginalValue("priceOnApplication"));
+		commercePriceEntryImpl.setPricingQuantity(
+			this.<BigDecimal>getColumnOriginalValue("pricingQuantity"));
 		commercePriceEntryImpl.setPromoPrice(
 			this.<BigDecimal>getColumnOriginalValue("promoPrice"));
 		commercePriceEntryImpl.setQuantity(
@@ -1644,6 +1670,8 @@ public class CommercePriceEntryModelImpl
 		commercePriceEntryCacheModel.priceOnApplication =
 			isPriceOnApplication();
 
+		commercePriceEntryCacheModel.pricingQuantity = getPricingQuantity();
+
 		commercePriceEntryCacheModel.promoPrice = getPromoPrice();
 
 		commercePriceEntryCacheModel.quantity = getQuantity();
@@ -1774,6 +1802,7 @@ public class CommercePriceEntryModelImpl
 	private boolean _hasTierPrice;
 	private BigDecimal _price;
 	private boolean _priceOnApplication;
+	private BigDecimal _pricingQuantity;
 	private BigDecimal _promoPrice;
 	private BigDecimal _quantity;
 	private String _unitOfMeasureKey;
@@ -1839,6 +1868,7 @@ public class CommercePriceEntryModelImpl
 		_columnOriginalValues.put("hasTierPrice", _hasTierPrice);
 		_columnOriginalValues.put("price", _price);
 		_columnOriginalValues.put("priceOnApplication", _priceOnApplication);
+		_columnOriginalValues.put("pricingQuantity", _pricingQuantity);
 		_columnOriginalValues.put("promoPrice", _promoPrice);
 		_columnOriginalValues.put("quantity", _quantity);
 		_columnOriginalValues.put("unitOfMeasureKey", _unitOfMeasureKey);
@@ -1918,21 +1948,23 @@ public class CommercePriceEntryModelImpl
 
 		columnBitmasks.put("priceOnApplication", 8388608L);
 
-		columnBitmasks.put("promoPrice", 16777216L);
+		columnBitmasks.put("pricingQuantity", 16777216L);
 
-		columnBitmasks.put("quantity", 33554432L);
+		columnBitmasks.put("promoPrice", 33554432L);
 
-		columnBitmasks.put("unitOfMeasureKey", 67108864L);
+		columnBitmasks.put("quantity", 67108864L);
 
-		columnBitmasks.put("lastPublishDate", 134217728L);
+		columnBitmasks.put("unitOfMeasureKey", 134217728L);
 
-		columnBitmasks.put("status", 268435456L);
+		columnBitmasks.put("lastPublishDate", 268435456L);
 
-		columnBitmasks.put("statusByUserId", 536870912L);
+		columnBitmasks.put("status", 536870912L);
 
-		columnBitmasks.put("statusByUserName", 1073741824L);
+		columnBitmasks.put("statusByUserId", 1073741824L);
 
-		columnBitmasks.put("statusDate", 2147483648L);
+		columnBitmasks.put("statusByUserName", 2147483648L);
+
+		columnBitmasks.put("statusDate", 4294967296L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

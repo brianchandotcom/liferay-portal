@@ -71,7 +71,7 @@ public class CommercePriceEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(65);
+		StringBundler sb = new StringBundler(67);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -121,6 +121,8 @@ public class CommercePriceEntryCacheModel
 		sb.append(price);
 		sb.append(", priceOnApplication=");
 		sb.append(priceOnApplication);
+		sb.append(", pricingQuantity=");
+		sb.append(pricingQuantity);
 		sb.append(", promoPrice=");
 		sb.append(promoPrice);
 		sb.append(", quantity=");
@@ -224,6 +226,7 @@ public class CommercePriceEntryCacheModel
 		commercePriceEntryImpl.setHasTierPrice(hasTierPrice);
 		commercePriceEntryImpl.setPrice(price);
 		commercePriceEntryImpl.setPriceOnApplication(priceOnApplication);
+		commercePriceEntryImpl.setPricingQuantity(pricingQuantity);
 		commercePriceEntryImpl.setPromoPrice(promoPrice);
 		commercePriceEntryImpl.setQuantity(quantity);
 
@@ -302,6 +305,7 @@ public class CommercePriceEntryCacheModel
 		price = (BigDecimal)objectInput.readObject();
 
 		priceOnApplication = objectInput.readBoolean();
+		pricingQuantity = (BigDecimal)objectInput.readObject();
 		promoPrice = (BigDecimal)objectInput.readObject();
 		quantity = (BigDecimal)objectInput.readObject();
 		unitOfMeasureKey = objectInput.readUTF();
@@ -375,6 +379,7 @@ public class CommercePriceEntryCacheModel
 		objectOutput.writeObject(price);
 
 		objectOutput.writeBoolean(priceOnApplication);
+		objectOutput.writeObject(pricingQuantity);
 		objectOutput.writeObject(promoPrice);
 		objectOutput.writeObject(quantity);
 
@@ -425,6 +430,7 @@ public class CommercePriceEntryCacheModel
 	public boolean hasTierPrice;
 	public BigDecimal price;
 	public boolean priceOnApplication;
+	public BigDecimal pricingQuantity;
 	public BigDecimal promoPrice;
 	public BigDecimal quantity;
 	public String unitOfMeasureKey;

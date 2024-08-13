@@ -7193,6 +7193,7 @@ public class CommercePriceEntryPersistenceImpl
 		ctStrictColumnNames.add("hasTierPrice");
 		ctStrictColumnNames.add("price");
 		ctStrictColumnNames.add("priceOnApplication");
+		ctStrictColumnNames.add("pricingQuantity");
 		ctStrictColumnNames.add("promoPrice");
 		ctStrictColumnNames.add("quantity");
 		ctStrictColumnNames.add("unitOfMeasureKey");

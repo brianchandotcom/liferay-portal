@@ -462,6 +462,20 @@ public interface CommercePriceEntryModel
 	public void setPriceOnApplication(boolean priceOnApplication);
 
 	/**
+	 * Returns the pricing quantity of this commerce price entry.
+	 *
+	 * @return the pricing quantity of this commerce price entry
+	 */
+	public BigDecimal getPricingQuantity();
+
+	/**
+	 * Sets the pricing quantity of this commerce price entry.
+	 *
+	 * @param pricingQuantity the pricing quantity of this commerce price entry
+	 */
+	public void setPricingQuantity(BigDecimal pricingQuantity);
+
+	/**
 	 * Returns the promo price of this commerce price entry.
 	 *
 	 * @return the promo price of this commerce price entry

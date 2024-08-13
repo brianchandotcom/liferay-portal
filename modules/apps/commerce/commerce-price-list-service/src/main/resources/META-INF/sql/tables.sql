@@ -40,6 +40,7 @@ create table CommercePriceEntry (
 	hasTierPrice BOOLEAN,
 	price BIGDECIMAL null,
 	priceOnApplication BOOLEAN,
+	pricingQuantity BIGDECIMAL null,
 	promoPrice BIGDECIMAL null,
 	quantity BIGDECIMAL null,
 	unitOfMeasureKey VARCHAR(75) null,

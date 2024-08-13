@@ -26,6 +26,7 @@
 		<field name="hasTierPrice" type="boolean" />
 		<field name="price" type="BigDecimal" />
 		<field name="priceOnApplication" type="boolean" />
+		<field name="pricingQuantity" type="BigDecimal" />
 		<field name="promoPrice" type="BigDecimal" />
 		<field name="quantity" type="BigDecimal" />
 		<field name="unitOfMeasureKey" type="String" />

@@ -389,15 +389,8 @@ public class RenderLayoutStructureTagTest {
 			fragmentEntry.getType(), childrenItemIds.get(0), 0,
 			segmentsExperienceId);
 
-		MockHttpServletResponse mockHttpServletResponse =
-			new MockHttpServletResponse();
-
-		RenderLayoutStructureTag renderLayoutStructureTag =
-			_getRenderLayoutStructureTagDefaultSegmentsExperience(
-				layout, mockHttpServletRequest, mockHttpServletResponse);
-
-		renderLayoutStructureTag.doTag(
-			mockHttpServletRequest, mockHttpServletResponse);
+		MockHttpServletResponse mockHttpServletResponse = _renderLayout(
+			layout, mockHttpServletRequest);
 
 		String content = mockHttpServletResponse.getContentAsString();
 
@@ -643,15 +636,7 @@ public class RenderLayoutStructureTagTest {
 		MockHttpServletRequest mockHttpServletRequest =
 			_getMockHttpServletRequest(layout);
 
-		MockHttpServletResponse mockHttpServletResponse =
-			new MockHttpServletResponse();
-
-		RenderLayoutStructureTag renderLayoutStructureTag =
-			_getRenderLayoutStructureTagDefaultSegmentsExperience(
-				layout, mockHttpServletRequest, mockHttpServletResponse);
-
-		renderLayoutStructureTag.doTag(
-			mockHttpServletRequest, mockHttpServletResponse);
+		_renderLayout(layout, mockHttpServletRequest);
 
 		List<JournalArticle> actualJournalArticles =
 			(List<JournalArticle>)mockHttpServletRequest.getAttribute(
@@ -740,17 +725,8 @@ public class RenderLayoutStructureTagTest {
 						fetchDefaultSegmentsExperienceId(layout.getPlid()),
 					layoutStructure.toString());
 
-			MockHttpServletRequest mockHttpServletRequest =
-				_getMockHttpServletRequest(layout);
-			MockHttpServletResponse mockHttpServletResponse =
-				new MockHttpServletResponse();
-
-			RenderLayoutStructureTag renderLayoutStructureTag =
-				_getRenderLayoutStructureTagDefaultSegmentsExperience(
-					layout, mockHttpServletRequest, mockHttpServletResponse);
-
-			renderLayoutStructureTag.doTag(
-				mockHttpServletRequest, mockHttpServletResponse);
+			MockHttpServletResponse mockHttpServletResponse = _renderLayout(
+				layout, _getMockHttpServletRequest(layout));
 
 			String content = mockHttpServletResponse.getContentAsString();
 
@@ -791,21 +767,12 @@ public class RenderLayoutStructureTagTest {
 			Layout layout = _addDisplayPageWithFormAndGetLayout(
 				infoField1, infoField2);
 
-			MockHttpServletRequest mockHttpServletRequest =
+			MockHttpServletResponse mockHttpServletResponse = _renderLayout(
+				layout,
 				_getMockHttpServletRequest(
 					layout,
 					mockInfoServiceRegistrationHolder.
-						getMockObjectLayoutDisplayPageObjectProvider());
-
-			MockHttpServletResponse mockHttpServletResponse =
-				new MockHttpServletResponse();
-
-			RenderLayoutStructureTag renderLayoutStructureTag =
-				_getRenderLayoutStructureTagDefaultSegmentsExperience(
-					layout, mockHttpServletRequest, mockHttpServletResponse);
-
-			renderLayoutStructureTag.doTag(
-				mockHttpServletRequest, mockHttpServletResponse);
+						getMockObjectLayoutDisplayPageObjectProvider()));
 
 			String content = mockHttpServletResponse.getContentAsString();
 
@@ -851,21 +818,12 @@ public class RenderLayoutStructureTagTest {
 			Layout layout = _addDisplayPageWithFormAndGetLayout(
 				infoField1, infoField2);
 
-			MockHttpServletRequest mockHttpServletRequest =
+			MockHttpServletResponse mockHttpServletResponse = _renderLayout(
+				layout,
 				_getMockHttpServletRequest(
 					layout,
 					mockInfoServiceRegistrationHolder.
-						getMockObjectLayoutDisplayPageObjectProvider());
-
-			MockHttpServletResponse mockHttpServletResponse =
-				new MockHttpServletResponse();
-
-			RenderLayoutStructureTag renderLayoutStructureTag =
-				_getRenderLayoutStructureTagDefaultSegmentsExperience(
-					layout, mockHttpServletRequest, mockHttpServletResponse);
-
-			renderLayoutStructureTag.doTag(
-				mockHttpServletRequest, mockHttpServletResponse);
+						getMockObjectLayoutDisplayPageObjectProvider()));
 
 			String content = mockHttpServletResponse.getContentAsString();
 
@@ -908,15 +866,8 @@ public class RenderLayoutStructureTagTest {
 			SessionErrors.add(
 				mockHttpServletRequest, formItemId, infoFormException);
 
-			MockHttpServletResponse mockHttpServletResponse =
-				new MockHttpServletResponse();
-
-			RenderLayoutStructureTag renderLayoutStructureTag =
-				_getRenderLayoutStructureTagDefaultSegmentsExperience(
-					layout, mockHttpServletRequest, mockHttpServletResponse);
-
-			renderLayoutStructureTag.doTag(
-				mockHttpServletRequest, mockHttpServletResponse);
+			MockHttpServletResponse mockHttpServletResponse = _renderLayout(
+				layout, mockHttpServletRequest);
 
 			Assert.assertFalse(
 				SessionErrors.contains(mockHttpServletRequest, formItemId));
@@ -968,15 +919,8 @@ public class RenderLayoutStructureTagTest {
 				mockHttpServletRequest, infoField.getUniqueId(),
 				infoFormValidationException);
 
-			MockHttpServletResponse mockHttpServletResponse =
-				new MockHttpServletResponse();
-
-			RenderLayoutStructureTag renderLayoutStructureTag =
-				_getRenderLayoutStructureTagDefaultSegmentsExperience(
-					layout, mockHttpServletRequest, mockHttpServletResponse);
-
-			renderLayoutStructureTag.doTag(
-				mockHttpServletRequest, mockHttpServletResponse);
+			MockHttpServletResponse mockHttpServletResponse = _renderLayout(
+				layout, mockHttpServletRequest);
 
 			Assert.assertFalse(
 				SessionErrors.contains(mockHttpServletRequest, formItemId));
@@ -1020,18 +964,8 @@ public class RenderLayoutStructureTagTest {
 				"0", layout, _layoutStructureProvider, infoField,
 				readOnlyInfoField);
 
-			MockHttpServletRequest mockHttpServletRequest =
-				_getMockHttpServletRequest(layout);
-
-			MockHttpServletResponse mockHttpServletResponse =
-				new MockHttpServletResponse();
-
-			RenderLayoutStructureTag renderLayoutStructureTag =
-				_getRenderLayoutStructureTagDefaultSegmentsExperience(
-					layout, mockHttpServletRequest, mockHttpServletResponse);
-
-			renderLayoutStructureTag.doTag(
-				mockHttpServletRequest, mockHttpServletResponse);
+			MockHttpServletResponse mockHttpServletResponse = _renderLayout(
+				layout, _getMockHttpServletRequest(layout));
 
 			String content = mockHttpServletResponse.getContentAsString();
 
@@ -1072,15 +1006,8 @@ public class RenderLayoutStructureTagTest {
 
 			SessionMessages.add(mockHttpServletRequest, formItemId);
 
-			MockHttpServletResponse mockHttpServletResponse =
-				new MockHttpServletResponse();
-
-			RenderLayoutStructureTag renderLayoutStructureTag =
-				_getRenderLayoutStructureTagDefaultSegmentsExperience(
-					layout, mockHttpServletRequest, mockHttpServletResponse);
-
-			renderLayoutStructureTag.doTag(
-				mockHttpServletRequest, mockHttpServletResponse);
+			MockHttpServletResponse mockHttpServletResponse = _renderLayout(
+				layout, mockHttpServletRequest);
 
 			String content = mockHttpServletResponse.getContentAsString();
 
@@ -1497,6 +1424,23 @@ public class RenderLayoutStructureTagTest {
 
 		return StringUtil.read(
 			clazz.getResourceAsStream("dependencies/" + fileName));
+	}
+
+	private MockHttpServletResponse _renderLayout(
+			Layout layout, MockHttpServletRequest mockHttpServletRequest)
+		throws Exception {
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		RenderLayoutStructureTag renderLayoutStructureTag =
+			_getRenderLayoutStructureTagDefaultSegmentsExperience(
+				layout, mockHttpServletRequest, mockHttpServletResponse);
+
+		renderLayoutStructureTag.doTag(
+			mockHttpServletRequest, mockHttpServletResponse);
+
+		return mockHttpServletResponse;
 	}
 
 	private static final int _COUNT_FRAGMENT_ENTRY_LINKS = 5;

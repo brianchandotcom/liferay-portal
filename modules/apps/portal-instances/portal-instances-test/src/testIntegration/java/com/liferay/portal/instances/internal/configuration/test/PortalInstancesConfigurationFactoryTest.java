@@ -116,7 +116,7 @@ public class PortalInstancesConfigurationFactoryTest {
 	}
 
 	@Test
-	public void testCreateCompanyWithoutDefaultAdmin() throws Exception {
+	public void testAddCompanyWithoutDefaultAdmin() throws Exception {
 		ConfigurationTestUtil.saveConfiguration(
 			_configuration,
 			HashMapDictionaryBuilder.<String, Object>put(

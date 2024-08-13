@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portlet.asset.util.AssetVocabularySettingsHelper;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -76,16 +77,15 @@ public class AssetVocabularySettingsImportHelper
 
 			long newClassNameId = _getNewClassNameId(oldClassNameId);
 
-			_classNameIds = ArrayUtil.append(_classNameIds, newClassNameId);
+			_classNameIds.add(_getNewClassNameId(oldClassNameId));
 
 			long oldClassTypePK = getClassTypePK(classNameIdAndClassTypePK);
 
-			_classTypePKs = ArrayUtil.append(
-				_classTypePKs,
+			_classTypePKs.add(
 				_getNewClassTypePK(
 					oldClassNameId, newClassNameId, oldClassTypePK));
 
-			_requireds = ArrayUtil.append(_requireds, required);
+			_requireds.add(required);
 		}
 	}
 
@@ -154,18 +154,20 @@ public class AssetVocabularySettingsImportHelper
 			getRequiredClassNameIdsAndClassTypePKs(), true);
 
 		setClassNameIdsAndClassTypePKs(
-			_classNameIds, _classTypePKs, _requireds);
+			ArrayUtil.toLongArray(_classNameIds),
+			ArrayUtil.toLongArray(_classTypePKs),
+			ArrayUtil.toBooleanArray(_requireds));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssetVocabularySettingsImportHelper.class);
 
-	private long[] _classNameIds = new long[0];
+	private final List<Long> _classNameIds = new ArrayList<>();
 	private final ClassNameLocalService _classNameLocalService;
-	private long[] _classTypePKs = new long[0];
+	private final List<Long> _classTypePKs = new ArrayList<>();
 	private final long[] _groupIds;
 	private final Locale _locale;
-	private boolean[] _requireds = new boolean[0];
+	private final List<Boolean> _requireds = new ArrayList<>();
 	private final JSONObject _settingsMetadataJSONObject;
 
 }

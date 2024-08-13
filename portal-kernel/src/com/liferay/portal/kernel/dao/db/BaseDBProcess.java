@@ -307,7 +307,7 @@ public abstract class BaseDBProcess implements DBProcess {
 	}
 
 	protected Connection getConnection() throws Exception {
-		return SQLStatementLoggingWrapper.getConnectionWrapper(
+		return SQLStatementRecorder.getConnectionWrapper(
 			(Connection)ProxyUtil.newProxyInstance(
 				ClassLoader.getSystemClassLoader(),
 				new Class<?>[] {Connection.class},

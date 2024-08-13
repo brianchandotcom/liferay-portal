@@ -11375,10 +11375,8 @@ public class ObjectEntryResourceTest {
 			Assert.assertFalse(jsonObject.has("scope"));
 		}
 		else {
-			JSONObject curScopeJSONObject = jsonObject.getJSONObject("scope");
-
 			JSONAssert.assertEquals(
-				scopeJSONObject.toString(), curScopeJSONObject.toString(),
+				scopeJSONObject.toString(), jsonObject.getString("scope"),
 				JSONCompareMode.LENIENT);
 		}
 	}

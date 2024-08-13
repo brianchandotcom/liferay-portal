@@ -229,6 +229,14 @@ public class DLFileEntryMetadataLocalServiceUtil {
 		return getService().fetchDLFileEntryMetadata(fileEntryMetadataId);
 	}
 
+	public static DLFileEntryMetadata
+		fetchDLFileEntryMetadataByExternalReferenceCode(
+			String externalReferenceCode, long companyId) {
+
+		return getService().fetchDLFileEntryMetadataByExternalReferenceCode(
+			externalReferenceCode, companyId);
+	}
+
 	/**
 	 * Returns the document library file entry metadata with the matching UUID and company.
 	 *
@@ -275,6 +283,15 @@ public class DLFileEntryMetadataLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getDLFileEntryMetadata(fileEntryMetadataId);
+	}
+
+	public static DLFileEntryMetadata
+			getDLFileEntryMetadataByExternalReferenceCode(
+				String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return getService().getDLFileEntryMetadataByExternalReferenceCode(
+			externalReferenceCode, companyId);
 	}
 
 	/**

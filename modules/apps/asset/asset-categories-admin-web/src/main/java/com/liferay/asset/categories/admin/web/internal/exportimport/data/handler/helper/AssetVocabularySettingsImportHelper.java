@@ -37,22 +37,11 @@ public class AssetVocabularySettingsImportHelper
 		_locale = locale;
 		_settingsMetadataJSONObject = settingsMetadataJSONObject;
 
-		updateSettings();
+		_updateSettings();
 	}
 
 	public String getSettings() {
 		return super.toString();
-	}
-
-	public void updateSettings() {
-		_fillClassNameIdsAndClassTypePKs(
-			getClassNameIdsAndClassTypePKs(), false);
-
-		_fillClassNameIdsAndClassTypePKs(
-			getRequiredClassNameIdsAndClassTypePKs(), true);
-
-		setClassNameIdsAndClassTypePKs(
-			_classNameIds, _classTypePKs, _requireds);
 	}
 
 	private boolean _existClassName(long classNameId) {
@@ -155,6 +144,17 @@ public class AssetVocabularySettingsImportHelper
 		}
 
 		return AssetCategoryConstants.ALL_CLASS_TYPE_PK;
+	}
+
+	private void _updateSettings() {
+		_fillClassNameIdsAndClassTypePKs(
+			getClassNameIdsAndClassTypePKs(), false);
+
+		_fillClassNameIdsAndClassTypePKs(
+			getRequiredClassNameIdsAndClassTypePKs(), true);
+
+		setClassNameIdsAndClassTypePKs(
+			_classNameIds, _classTypePKs, _requireds);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

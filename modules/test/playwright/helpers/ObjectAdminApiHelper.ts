@@ -129,7 +129,7 @@ export class ObjectAdminApiHelper {
 				en_US: objectDefinitionExternalReferenceCode,
 			},
 			name: objectDefinitionExternalReferenceCode,
-			objectFields: objectFields || [
+			objectFields: objectFields ?? [
 				{
 					DBType: 'String',
 					businessType: 'Text',

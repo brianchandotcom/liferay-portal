@@ -15,6 +15,7 @@ export class ModelBuilderPage {
 	readonly deleteObjectDefinitionOption: Locator;
 	readonly deleteObjectRelationshipButton: Locator;
 	readonly deleteTrashButton: Locator;
+	readonly deletionNotAllowed: Locator;
 	readonly diagramArea: Locator;
 	readonly editInPageViewOption: Locator;
 	readonly editObjectFolderDetailsButton: Locator;
@@ -52,7 +53,10 @@ export class ModelBuilderPage {
 		});
 		this.createNewObjectDefinitionButton =
 			page.getByText('Create New Object');
-		this.deleteButton = page.getByTitle('Delete');
+		this.deleteButton = page.getByRole('button', {
+			exact: true,
+			name: 'Delete',
+		});
 		this.deleteObjectDefinitionOption = page.getByRole('menuitem', {
 			name: 'Delete Object',
 		});
@@ -62,6 +66,9 @@ export class ModelBuilderPage {
 		this.deleteTrashButton = page
 			.getByRole('tabpanel')
 			.getByTitle('Delete');
+		this.deletionNotAllowed = page.getByRole('heading', {
+			name: 'Deletion Not Allowed',
+		});
 		this.diagramArea = page.locator('.react-flow');
 		this.editInPageViewOption = page.getByRole('menuitem', {
 			name: 'Edit in page view',

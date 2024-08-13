@@ -62,9 +62,14 @@ const ManagementToolbarResultsBar: React.FC<
 		if (!filter) {
 			entries
 				.filter(({value}) => value)
-				.forEach((entry) => onRemoveFilter(entry.name));
+				.forEach((entry) =>
+					dispatch({
+						payload: entry.name,
+						type: ListViewTypes.SET_REMOVE_FILTER,
+					})
+				);
 		}
-	}, [filter, entries, onRemoveFilter]);
+	}, [filter, entries, dispatch]);
 
 	return (
 		<ClayResultsBar>

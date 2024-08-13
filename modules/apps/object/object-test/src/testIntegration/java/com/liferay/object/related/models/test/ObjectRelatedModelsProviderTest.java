@@ -329,14 +329,32 @@ public class ObjectRelatedModelsProviderTest {
 			_objectEntryLocalService.getValues(objectEntry5.getObjectEntryId());
 
 		Assert.assertEquals(
-			expectedLocalizedValues.get("longTextLocalized_i18n"),
-			actualLocalizedValues.get("longTextLocalized_i18n"));
+			expectedLocalizedValues.get("longText_i18n"),
+			actualLocalizedValues.get("longText_i18n"));
 		Assert.assertEquals(
-			expectedLocalizedValues.get("richTextLocalized_i18n"),
-			actualLocalizedValues.get("richTextLocalized_i18n"));
+			expectedLocalizedValues.get("richText_i18n"),
+			actualLocalizedValues.get("richText_i18n"));
 		Assert.assertEquals(
-			expectedLocalizedValues.get("textLocalized_i18n"),
-			actualLocalizedValues.get("textLocalized_i18n"));
+			expectedLocalizedValues.get("text_i18n"),
+			actualLocalizedValues.get("text_i18n"));
+
+		_objectRelatedModelsProvider.disassociateRelatedModels(
+			TestPropsValues.getUserId(),
+			_objectRelationship.getObjectRelationshipId(),
+			objectEntry1.getObjectEntryId(), objectEntry5.getObjectEntryId());
+
+		actualLocalizedValues = _objectEntryLocalService.getValues(
+			objectEntry5.getObjectEntryId());
+
+		Assert.assertEquals(
+			expectedLocalizedValues.get("longText_i18n"),
+			actualLocalizedValues.get("longText_i18n"));
+		Assert.assertEquals(
+			expectedLocalizedValues.get("richText_i18n"),
+			actualLocalizedValues.get("richText_i18n"));
+		Assert.assertEquals(
+			expectedLocalizedValues.get("text_i18n"),
+			actualLocalizedValues.get("text_i18n"));
 
 		_objectEntryLocalService.deleteObjectEntry(objectEntry5);
 

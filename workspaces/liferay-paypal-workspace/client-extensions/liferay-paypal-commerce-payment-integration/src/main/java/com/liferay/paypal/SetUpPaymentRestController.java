@@ -122,27 +122,20 @@ public class SetUpPaymentRestController extends BaseRestController {
 		@AuthenticationPrincipal Jwt jwt,
 		@PathVariable("orderId") long orderId) {
 
-		String transactionCode = null;
+		UnsafeSupplier<String, RuntimeException> unsafeSupplier =
+			new RetryableUnsafeSupplier<>(
+				(exception, maxRetries, retryCount) -> {
+				},
+				() -> get(
+					"Bearer " + jwt.getTokenValue(),
+					"/o/c/b9k3paypaltransactions/by-external-reference-code/" +
+						orderId));
 
-		try {
-			UnsafeSupplier<String, RuntimeException> unsafeSupplier =
-				new RetryableUnsafeSupplier<>(
-					(exception, maxRetries, retryCount) -> {
-					},
-					() -> get(
-						"Bearer " + jwt.getTokenValue(),
-						"/o/c/b9k3paypaltransactions/by-external-reference-" +
-							"code/" + orderId));
-
-			transactionCode = new JSONObject(
-				unsafeSupplier.get()
-			).getString(
-				"transactionCode"
-			);
-		}
-		catch (Exception exception) {
-			_log.error(ExceptionUtils.getMessage(exception));
-		}
+		String transactionCode = new JSONObject(
+			unsafeSupplier.get()
+		).getString(
+			"transactionCode"
+		);
 
 		if (StringUtils.isNotBlank(transactionCode)) {
 			delete(

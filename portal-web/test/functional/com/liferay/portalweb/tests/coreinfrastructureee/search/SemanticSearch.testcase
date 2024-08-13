@@ -5,7 +5,7 @@ definition {
 	property portal.suite.search.engine = "elasticsearch7";
 	property portal.upstream = "true";
 	property test.run.environment = "EE";
-	property testray.main.component.name = "Search Experiences";
+	property testray.main.component.name = "Web Search";
 
 	setUp {
 		TestCase.setUpPortalInstance();
@@ -32,11 +32,11 @@ definition {
 
 		ServerAdministration.addCategoryLogLevels(
 			categoryLevel = "DEBUG",
-			categoryName = "com.liferay.search.experiences.internal.ml.embedding.text.TextEmbeddingRetrieverImpl");
+			categoryName = "com.liferay.portal.search.internal.ml.embedding.text.TextEmbeddingRetrieverImpl");
 
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
-		FileUtil.write("${liferayHome}/osgi/configs/com.liferay.search.experiences.internal.ml.embedding.text.TextEmbeddingRetrieverImpl.config", "disabledProviders=[\"txtai\",\"huggingFaceInferenceAPI\"]");
+		FileUtil.write("${liferayHome}/osgi/configs/com.liferay.portal.search.internal.ml.embedding.text.TextEmbeddingRetrieverImpl.config", "disabledProviders=[\"txtai\",\"huggingFaceInferenceAPI\"]");
 
 		OSGiConfig.waitForOSGiConfig();
 
@@ -44,7 +44,7 @@ definition {
 
 		WaitForConsoleTextPresent(value1 = "Disabling huggingFaceInferenceAPI");
 
-		SystemSettings.openToConfigInSystemSettings(portletId = "com.liferay.search.experiences.configuration.SemanticSearchConfiguration");
+		SystemSettings.openToConfigInSystemSettings(portletId = "com.liferay.portal.search.configuration.SemanticSearchConfiguration");
 
 		AssertElementNotPresent(
 			key_fieldLabel = "Text Embedding Provider",
@@ -56,7 +56,7 @@ definition {
 			key_value = "Hugging Face Inference API",
 			locator1 = "Select#GENERIC_SELECT_VALUE");
 
-		PortalSettings.openToConfigInInstanceSettings(portletId = "com.liferay.search.experiences.configuration.SemanticSearchConfiguration");
+		PortalSettings.openToConfigInInstanceSettings(portletId = "com.liferay.portal.search.configuration.SemanticSearchConfiguration");
 
 		AssertElementNotPresent(
 			key_fieldLabel = "Text Embedding Provider",
@@ -68,7 +68,7 @@ definition {
 			key_value = "Hugging Face Inference API",
 			locator1 = "Select#GENERIC_SELECT_VALUE");
 
-		OSGiConfig.deleteOSGiConfigFile(osgiConfigFileName = "com.liferay.search.experiences.internal.ml.embedding.text.TextEmbeddingRetrieverImpl.config");
+		OSGiConfig.deleteOSGiConfigFile(osgiConfigFileName = "com.liferay.portal.search.internal.ml.embedding.text.TextEmbeddingRetrieverImpl.config");
 
 		WaitForConsoleTextPresent(value1 = "Enabling txtai");
 
@@ -86,7 +86,7 @@ definition {
 			key_value = "Hugging Face Inference API",
 			locator1 = "Select#GENERIC_SELECT_VALUE");
 
-		SystemSettings.openToConfigInSystemSettings(portletId = "com.liferay.search.experiences.configuration.SemanticSearchConfiguration");
+		SystemSettings.openToConfigInSystemSettings(portletId = "com.liferay.portal.search.configuration.SemanticSearchConfiguration");
 
 		AssertElementPresent(
 			key_fieldLabel = "Text Embedding Provider",
@@ -107,7 +107,7 @@ definition {
 		property test.run.type = "single";
 
 		task ("When System Settings are using default configurations, assert the warning is not present") {
-			SystemSettings.openToConfigInSystemSettings(portletId = "com.liferay.search.experiences.configuration.SemanticSearchConfiguration");
+			SystemSettings.openToConfigInSystemSettings(portletId = "com.liferay.portal.search.configuration.SemanticSearchConfiguration");
 
 			AssertElementNotPresent(
 				key_infoMessage = "Changes to this configuration require a reindex",
@@ -438,7 +438,7 @@ definition {
 	test ViewHuggingFaceSystemSettingsRequiredFieldValidation {
 		property custom.properties = "feature.flag.LPS-122920=true";
 
-		PortalSettings.openToConfigInInstanceSettings(portletId = "com.liferay.search.experiences.configuration.SemanticSearchConfiguration");
+		PortalSettings.openToConfigInInstanceSettings(portletId = "com.liferay.portal.search.configuration.SemanticSearchConfiguration");
 
 		PortletEntry.inputText(
 			fieldLabel = "Access Token",
@@ -519,7 +519,7 @@ definition {
 		property test.run.type = "single";
 
 		task ("Within System Settings, fill out required fields for Hugging Face Inference API and save") {
-			SystemSettings.openToConfigInSystemSettings(portletId = "com.liferay.search.experiences.configuration.SemanticSearchConfiguration");
+			SystemSettings.openToConfigInSystemSettings(portletId = "com.liferay.portal.search.configuration.SemanticSearchConfiguration");
 
 			Check.checkNotVisible(
 				key_settingFieldName = "Text Embeddings Enabled",
@@ -602,7 +602,7 @@ definition {
 		}
 
 		task ("Within Instance Settings, fill out required fields for Hugging Face Inference API and save") {
-			PortalSettings.openToConfigInInstanceSettings(portletId = "com.liferay.search.experiences.configuration.SemanticSearchConfiguration");
+			PortalSettings.openToConfigInInstanceSettings(portletId = "com.liferay.portal.search.configuration.SemanticSearchConfiguration");
 
 			PortletEntry.inputText(
 				fieldLabel = "Access Token",
@@ -648,7 +648,7 @@ definition {
 		}
 
 		task ("Back in System Settings, fill out required fields for Hugging Face Inference API and save") {
-			SystemSettings.openToConfigInSystemSettings(portletId = "com.liferay.search.experiences.configuration.SemanticSearchConfiguration");
+			SystemSettings.openToConfigInSystemSettings(portletId = "com.liferay.portal.search.configuration.SemanticSearchConfiguration");
 
 			Check.checkNotVisible(
 				key_settingFieldName = "Text Embeddings Enabled",
@@ -670,7 +670,7 @@ definition {
 		}
 
 		task ("Back in Instance Settings, assert field values remain unchanged after changes were made to System Settings") {
-			PortalSettings.openToConfigInInstanceSettings(portletId = "com.liferay.search.experiences.configuration.SemanticSearchConfiguration");
+			PortalSettings.openToConfigInInstanceSettings(portletId = "com.liferay.portal.search.configuration.SemanticSearchConfiguration");
 
 			AssertNotChecked.assertNotCheckedNotVisible(
 				key_settingFieldName = "Text Embeddings Enabled",
@@ -711,7 +711,7 @@ definition {
 		property txtai.enabled = "true";
 
 		task ("Assert the warning doesn't appear when connection is successful and changes persist when configuration is saved") {
-			SystemSettings.openToConfigInSystemSettings(portletId = "com.liferay.search.experiences.configuration.SemanticSearchConfiguration");
+			SystemSettings.openToConfigInSystemSettings(portletId = "com.liferay.portal.search.configuration.SemanticSearchConfiguration");
 
 			PortletEntry.inputNumber(
 				fieldLabel = "Max Character Count",
@@ -725,7 +725,7 @@ definition {
 
 			Navigator.openURL();
 
-			SystemSettings.openToConfigInSystemSettings(portletId = "com.liferay.search.experiences.configuration.SemanticSearchConfiguration");
+			SystemSettings.openToConfigInSystemSettings(portletId = "com.liferay.portal.search.configuration.SemanticSearchConfiguration");
 
 			SystemSettings.viewNumberInputText(
 				fieldLabel = "Max Character Count",
@@ -742,7 +742,7 @@ definition {
 
 			Navigator.openURL();
 
-			SystemSettings.openToConfigInSystemSettings(portletId = "com.liferay.search.experiences.configuration.SemanticSearchConfiguration");
+			SystemSettings.openToConfigInSystemSettings(portletId = "com.liferay.portal.search.configuration.SemanticSearchConfiguration");
 
 			AssertElementPresent(
 				key_fieldLabel = "Embedding Vector Dimensions",
@@ -771,7 +771,7 @@ definition {
 		task ("Assert changes are not saved when warning is closed") {
 			Navigator.openURL();
 
-			SystemSettings.openToConfigInSystemSettings(portletId = "com.liferay.search.experiences.configuration.SemanticSearchConfiguration");
+			SystemSettings.openToConfigInSystemSettings(portletId = "com.liferay.portal.search.configuration.SemanticSearchConfiguration");
 
 			AssertElementPresent(
 				key_fieldLabel = "Embedding Vector Dimensions",
@@ -784,7 +784,7 @@ definition {
 	test ViewTxtaiSystemSettingsRequiredFieldValidation {
 		property custom.properties = "feature.flag.LPS-122920=true";
 
-		PortalSettings.openToConfigInInstanceSettings(portletId = "com.liferay.search.experiences.configuration.SemanticSearchConfiguration");
+		PortalSettings.openToConfigInInstanceSettings(portletId = "com.liferay.portal.search.configuration.SemanticSearchConfiguration");
 
 		Select(
 			ariaLabel = "Text Embedding Provider",
@@ -819,7 +819,7 @@ definition {
 		property test.run.type = "single";
 		property txtai.enabled = "true";
 
-		SystemSettings.openToConfigInSystemSettings(portletId = "com.liferay.search.experiences.configuration.SemanticSearchConfiguration");
+		SystemSettings.openToConfigInSystemSettings(portletId = "com.liferay.portal.search.configuration.SemanticSearchConfiguration");
 
 		Button.click(button = "Test Configuration");
 

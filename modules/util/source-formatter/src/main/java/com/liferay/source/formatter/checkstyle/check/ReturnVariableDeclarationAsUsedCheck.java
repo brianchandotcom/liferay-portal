@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * @author Alan Huang
  */
-public class ReturnVariableDeclarationCheck extends BaseCheck {
+public class ReturnVariableDeclarationAsUsedCheck extends BaseCheck {
 
 	@Override
 	public int[] getDefaultTokens() {

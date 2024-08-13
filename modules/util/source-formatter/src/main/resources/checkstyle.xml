@@ -771,7 +771,7 @@
 			<message key="if.statement.inline" value="Use ''{0}(UnsafeSupplier)'' with inlined if-statement" />
 			<message key="set.method.use.instead" value="Use ''{0}(UnsafeSupplier)'' instead" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.check.ReturnVariableDeclarationCheck">
+		<module name="com.liferay.source.formatter.checkstyle.check.ReturnVariableDeclarationAsUsedCheck">
 			<property name="category" value="Miscellaneous" />
 			<property name="description" value="Finds cases where a variable declaration should be moved." />
 			<message key="variable.declaration.move" value="Move the variable declaration for ''{0}'' on line ''{1}''" />

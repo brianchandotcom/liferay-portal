@@ -62,19 +62,20 @@ public class CompanyLocalServiceUtil {
 	 * @param maxUsers the max number of company users (optionally
 	 <code>0</code>)
 	 * @param active whether the company is active
+	 * @param createDefaultAdmin whether to create the default admin user
 	 * @return the company
 	 */
 	public static Company addCompany(
 			Long companyId, String webId, String virtualHostname, String mx,
-			int maxUsers, boolean active, String defaultAdminPassword,
-			String defaultAdminScreenName, String defaultAdminEmailAddress,
-			String defaultAdminFirstName, String defaultAdminMiddleName,
-			String defaultAdminLastName)
+			int maxUsers, boolean active, boolean createDefaultAdmin,
+			String defaultAdminPassword, String defaultAdminScreenName,
+			String defaultAdminEmailAddress, String defaultAdminFirstName,
+			String defaultAdminMiddleName, String defaultAdminLastName)
 		throws PortalException {
 
 		return getService().addCompany(
 			companyId, webId, virtualHostname, mx, maxUsers, active,
-			defaultAdminPassword, defaultAdminScreenName,
+			createDefaultAdmin, defaultAdminPassword, defaultAdminScreenName,
 			defaultAdminEmailAddress, defaultAdminFirstName,
 			defaultAdminMiddleName, defaultAdminLastName);
 	}

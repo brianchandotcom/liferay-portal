@@ -7,9 +7,9 @@ package com.liferay.jethr0.entity.dalo;
 
 import com.liferay.jethr0.entity.Entity;
 import com.liferay.jethr0.entity.factory.EntityFactory;
-import com.liferay.jethr0.util.BaseRetryable;
-import com.liferay.jethr0.util.Retryable;
 import com.liferay.jethr0.util.StringUtil;
+import com.liferay.petra.function.RetryableUnsafeSupplier;
+import com.liferay.petra.function.UnsafeSupplier;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -163,60 +163,58 @@ public abstract class BaseEntityRelationshipDALO
 			_liferayPortalURL, objectDefinitionURLPath, "/", objectEntryId, "/",
 			getObjectRelationshipName(), "/", relatedObjectEntryId);
 
-		Retryable<Void> retryable = new BaseRetryable<Void>() {
+		UnsafeSupplier<Void, RuntimeException> unsafeSupplier =
+			new RetryableUnsafeSupplier<>(
+				() -> {
+					String response;
 
-			@Override
-			public Void execute() {
-				String response;
+					try {
+						response = WebClient.create(
+							objectRelationshipURL
+						).put(
+						).accept(
+							MediaType.APPLICATION_JSON
+						).contentType(
+							MediaType.APPLICATION_JSON
+						).header(
+							"Authorization", getAuthorization()
+						).retrieve(
+						).bodyToMono(
+							String.class
+						).block();
+					}
+					catch (Exception exception) {
+						refresh();
 
-				try {
-					response = WebClient.create(
-						objectRelationshipURL
-					).put(
-					).accept(
-						MediaType.APPLICATION_JSON
-					).contentType(
-						MediaType.APPLICATION_JSON
-					).header(
-						"Authorization", getAuthorization()
-					).retrieve(
-					).bodyToMono(
-						String.class
-					).block();
-				}
-				catch (Exception exception) {
-					refresh();
+						throw new RuntimeException(exception);
+					}
 
-					throw new RuntimeException(exception);
-				}
+					if (response == null) {
+						throw new RuntimeException("No response");
+					}
 
-				if (response == null) {
-					throw new RuntimeException("No response");
-				}
+					new JSONObject(response);
 
-				new JSONObject(response);
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							StringUtil.combine(
+								"Created relationship with ",
+								objectRelationshipURL));
+					}
 
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						StringUtil.combine(
-							"Created relationship with ",
-							objectRelationshipURL));
-				}
+					return null;
+				},
+				(retryCount, maxRetries, exception) -> {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							StringUtil.combine(
+								"Unable to create relationship with ",
+								objectRelationshipURL, ". Retry attempt ",
+								retryCount, " of ", maxRetries));
+					}
+				});
 
-				return null;
-			}
-
-			@Override
-			protected String getRetryMessage(int retryCount) {
-				return StringUtil.combine(
-					"Unable to create relationship with ",
-					objectRelationshipURL, ". Retry attempt ", retryCount,
-					" of ", maxRetries);
-			}
-
-		};
-
-		retryable.executeWithRetries();
+		unsafeSupplier.get();
 	}
 
 	private void _delete(
@@ -227,50 +225,48 @@ public abstract class BaseEntityRelationshipDALO
 			_liferayPortalURL, objectDefinitionURLPath, "/", objectEntryId, "/",
 			getObjectRelationshipName(), "/", relatedObjectEntryId);
 
-		Retryable<Void> retryable = new BaseRetryable<Void>() {
+		UnsafeSupplier<Void, RuntimeException> unsafeSupplier =
+			new RetryableUnsafeSupplier<>(
+				() -> {
+					try {
+						WebClient.create(
+							objectRelationshipURL
+						).delete(
+						).accept(
+							MediaType.APPLICATION_JSON
+						).header(
+							"Authorization", getAuthorization()
+						).retrieve(
+						).bodyToMono(
+							String.class
+						).block();
+					}
+					catch (Exception exception) {
+						refresh();
 
-			@Override
-			public Void execute() {
-				try {
-					WebClient.create(
-						objectRelationshipURL
-					).delete(
-					).accept(
-						MediaType.APPLICATION_JSON
-					).header(
-						"Authorization", getAuthorization()
-					).retrieve(
-					).bodyToMono(
-						String.class
-					).block();
-				}
-				catch (Exception exception) {
-					refresh();
+						throw new RuntimeException(exception);
+					}
 
-					throw new RuntimeException(exception);
-				}
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							StringUtil.combine(
+								"Deleted relationship with ",
+								objectRelationshipURL));
+					}
 
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						StringUtil.combine(
-							"Deleted relationship with ",
-							objectRelationshipURL));
-				}
+					return null;
+				},
+				(retryCount, maxRetries, exception) -> {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							StringUtil.combine(
+								"Unable to delete relationship with ",
+								objectRelationshipURL, ". Retry attempt ",
+								retryCount, " of ", maxRetries));
+					}
+				});
 
-				return null;
-			}
-
-			@Override
-			protected String getRetryMessage(int retryCount) {
-				return StringUtil.combine(
-					"Unable to delete relationship with ",
-					objectRelationshipURL, ". Retry attempt ", retryCount,
-					" of ", maxRetries);
-			}
-
-		};
-
-		retryable.executeWithRetries();
+		unsafeSupplier.get();
 	}
 
 	private Set<JSONObject> _get(
@@ -288,11 +284,9 @@ public abstract class BaseEntityRelationshipDALO
 		while (true) {
 			int finalCurrentPage = currentPage;
 
-			Retryable<Pair<Integer, Set<JSONObject>>> retryable =
-				new BaseRetryable<Pair<Integer, Set<JSONObject>>>() {
-
-					@Override
-					public Pair<Integer, Set<JSONObject>> execute() {
+			UnsafeSupplier<Pair<Integer, Set<JSONObject>>, RuntimeException>
+				unsafeSupplier = new RetryableUnsafeSupplier<>(
+					() -> {
 						String response;
 
 						try {
@@ -325,35 +319,35 @@ public abstract class BaseEntityRelationshipDALO
 						JSONObject responseJSONObject = new JSONObject(
 							response);
 
-						Integer lastPage = responseJSONObject.getInt(
+						Integer localLastPage = responseJSONObject.getInt(
 							"lastPage");
 
 						JSONArray itemsJSONArray =
 							responseJSONObject.getJSONArray("items");
 
-						Set<JSONObject> jsonObjects = new HashSet<>();
+						Set<JSONObject> localJsonObjects = new HashSet<>();
 
 						if (itemsJSONArray != null) {
 							for (int i = 0; i < itemsJSONArray.length(); i++) {
-								jsonObjects.add(
+								localJsonObjects.add(
 									itemsJSONArray.getJSONObject(i));
 							}
 						}
 
-						return new ImmutablePair<>(lastPage, jsonObjects);
-					}
+						return new ImmutablePair<>(
+							localLastPage, localJsonObjects);
+					},
+					(retryCount, maxRetries, exception) -> {
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								StringUtil.combine(
+									"Unable to retrieve object relationships. ",
+									"Retry attempt ", retryCount, " of ",
+									maxRetries));
+						}
+					});
 
-					@Override
-					protected String getRetryMessage(int retryCount) {
-						return StringUtil.combine(
-							"Unable to retrieve object relationships. ",
-							"Retry attempt ", retryCount, " of ", maxRetries);
-					}
-
-				};
-
-			Pair<Integer, Set<JSONObject>> pair =
-				retryable.executeWithRetries();
+			Pair<Integer, Set<JSONObject>> pair = unsafeSupplier.get();
 
 			if (pair == null) {
 				break;

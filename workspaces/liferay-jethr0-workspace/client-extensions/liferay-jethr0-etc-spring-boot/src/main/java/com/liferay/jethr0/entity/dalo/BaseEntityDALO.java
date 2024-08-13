@@ -7,9 +7,9 @@ package com.liferay.jethr0.entity.dalo;
 
 import com.liferay.jethr0.entity.Entity;
 import com.liferay.jethr0.entity.factory.EntityFactory;
-import com.liferay.jethr0.util.BaseRetryable;
-import com.liferay.jethr0.util.Retryable;
 import com.liferay.jethr0.util.StringUtil;
+import com.liferay.petra.function.RetryableUnsafeSupplier;
+import com.liferay.petra.function.UnsafeSupplier;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -129,73 +129,72 @@ public abstract class BaseEntityDALO<T extends Entity>
 	}
 
 	private JSONObject _create(JSONObject requestJSONObject) {
-		Retryable<JSONObject> retryable = new BaseRetryable<JSONObject>() {
+		UnsafeSupplier<JSONObject, RuntimeException> unsafeSupplier =
+			new RetryableUnsafeSupplier<>(
+				() -> {
+					String response;
 
-			@Override
-			public JSONObject execute() {
-				String response;
+					try {
+						response = WebClient.create(
+							StringUtil.combine(
+								_liferayPortalURL, _getEntityURLPath())
+						).post(
+						).accept(
+							MediaType.APPLICATION_JSON
+						).contentType(
+							MediaType.APPLICATION_JSON
+						).header(
+							"Authorization", getAuthorization()
+						).body(
+							BodyInserters.fromValue(
+								requestJSONObject.toString())
+						).retrieve(
+						).bodyToMono(
+							String.class
+						).block();
+					}
+					catch (Exception exception) {
+						refresh();
 
-				try {
-					response = WebClient.create(
-						StringUtil.combine(
-							_liferayPortalURL, _getEntityURLPath())
-					).post(
-					).accept(
-						MediaType.APPLICATION_JSON
-					).contentType(
-						MediaType.APPLICATION_JSON
-					).header(
-						"Authorization", getAuthorization()
-					).body(
-						BodyInserters.fromValue(requestJSONObject.toString())
-					).retrieve(
-					).bodyToMono(
-						String.class
-					).block();
-				}
-				catch (Exception exception) {
-					refresh();
+						throw new RuntimeException(exception);
+					}
 
-					throw new RuntimeException(exception);
-				}
+					if (response == null) {
+						throw new RuntimeException("No response");
+					}
 
-				if (response == null) {
-					throw new RuntimeException("No response");
-				}
+					JSONObject jsonObject = new JSONObject();
 
-				JSONObject jsonObject = new JSONObject();
+					for (String key : requestJSONObject.keySet()) {
+						jsonObject.put(key, requestJSONObject.get(key));
+					}
 
-				for (String key : requestJSONObject.keySet()) {
-					jsonObject.put(key, requestJSONObject.get(key));
-				}
+					JSONObject responseJSONObject = new JSONObject(response);
 
-				JSONObject responseJSONObject = new JSONObject(response);
+					for (String key : responseJSONObject.keySet()) {
+						jsonObject.put(key, responseJSONObject.get(key));
+					}
 
-				for (String key : responseJSONObject.keySet()) {
-					jsonObject.put(key, responseJSONObject.get(key));
-				}
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							StringUtil.combine(
+								"Created ", _getEntityLabel(), " ",
+								jsonObject.getLong("id")));
+					}
 
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						StringUtil.combine(
-							"Created ", _getEntityLabel(), " ",
-							jsonObject.getLong("id")));
-				}
+					return jsonObject;
+				},
+				(retryCount, maxRetries, exception) -> {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							StringUtil.combine(
+								"Unable to create ", _getEntityPluralLabel(),
+								". Retry attempt ", retryCount, " of ",
+								maxRetries, " ", requestJSONObject));
+					}
+				});
 
-				return jsonObject;
-			}
-
-			@Override
-			protected String getRetryMessage(int retryCount) {
-				return StringUtil.combine(
-					"Unable to create ", _getEntityPluralLabel(),
-					". Retry attempt ", retryCount, " of ", maxRetries, " ",
-					requestJSONObject);
-			}
-
-		};
-
-		return retryable.executeWithRetries();
+		return unsafeSupplier.get();
 	}
 
 	private void _delete(long objectEntryId) {
@@ -203,94 +202,94 @@ public abstract class BaseEntityDALO<T extends Entity>
 			return;
 		}
 
-		Retryable<Void> retryable = new BaseRetryable<Void>() {
+		UnsafeSupplier<Void, RuntimeException> unsafeSupplier =
+			new RetryableUnsafeSupplier<>(
+				() -> {
+					try {
+						WebClient.create(
+							StringUtil.combine(
+								_liferayPortalURL,
+								_getEntityURLPath(objectEntryId))
+						).delete(
+						).accept(
+							MediaType.APPLICATION_JSON
+						).header(
+							"Authorization", getAuthorization()
+						).retrieve(
+						).bodyToMono(
+							Void.class
+						).block();
+					}
+					catch (Exception exception) {
+						refresh();
 
-			@Override
-			public Void execute() {
-				try {
-					WebClient.create(
-						StringUtil.combine(
-							_liferayPortalURL, _getEntityURLPath(objectEntryId))
-					).delete(
-					).accept(
-						MediaType.APPLICATION_JSON
-					).header(
-						"Authorization", getAuthorization()
-					).retrieve(
-					).bodyToMono(
-						Void.class
-					).block();
-				}
-				catch (Exception exception) {
-					refresh();
+						throw new RuntimeException(exception);
+					}
 
-					throw new RuntimeException(exception);
-				}
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							StringUtil.combine(
+								"Deleted ", _getEntityLabel(), " ",
+								objectEntryId));
+					}
 
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						StringUtil.combine(
-							"Deleted ", _getEntityLabel(), " ", objectEntryId));
-				}
+					return null;
+				},
+				(retryCount, maxRetries, exception) -> {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							StringUtil.combine(
+								"Unable to delete ", _getEntityLabel(), " ",
+								objectEntryId, ". Retry attempt ",
+								String.valueOf(retryCount), " of ",
+								maxRetries));
+					}
+				});
 
-				return null;
-			}
-
-			@Override
-			protected String getRetryMessage(int retryCount) {
-				return StringUtil.combine(
-					"Unable to delete ", _getEntityLabel(), " ", objectEntryId,
-					". Retry attempt ", String.valueOf(retryCount), " of ",
-					maxRetries);
-			}
-
-		};
-
-		retryable.executeWithRetries();
+		unsafeSupplier.get();
 	}
 
 	private JSONObject _get(long id) {
-		Retryable<JSONObject> retryable = new BaseRetryable<JSONObject>() {
+		UnsafeSupplier<JSONObject, RuntimeException> unsafeSupplier =
+			new RetryableUnsafeSupplier<>(
+				() -> {
+					String response = null;
 
-			@Override
-			public JSONObject execute() {
-				String response = null;
+					try {
+						response = WebClient.create(
+							StringUtil.combine(
+								_liferayPortalURL, _getEntityURLPath(), "/", id)
+						).get(
+						).accept(
+							MediaType.APPLICATION_JSON
+						).header(
+							"Authorization", getAuthorization()
+						).retrieve(
+						).bodyToMono(
+							String.class
+						).block();
+					}
+					catch (Exception exception) {
+						refresh();
 
-				try {
-					response = WebClient.create(
-						StringUtil.combine(
-							_liferayPortalURL, _getEntityURLPath(), "/", id)
-					).get(
-					).accept(
-						MediaType.APPLICATION_JSON
-					).header(
-						"Authorization", getAuthorization()
-					).retrieve(
-					).bodyToMono(
-						String.class
-					).block();
-				}
-				catch (Exception exception) {
-					refresh();
+						throw new RuntimeException(exception);
+					}
 
-					throw new RuntimeException(exception);
-				}
+					if (response == null) {
+						throw new RuntimeException("No response");
+					}
 
-				if (response == null) {
-					throw new RuntimeException("No response");
-				}
-
-				return new JSONObject(response);
-			}
-
-			@Override
-			protected String getRetryMessage(int retryCount) {
-				return StringUtil.combine(
-					"Unable to retrieve ", _getEntityPluralLabel(),
-					". Retry attempt ", retryCount, " of ", maxRetries);
-			}
-
-		};
+					return new JSONObject(response);
+				},
+				(retryCount, maxRetries, exception) -> {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							StringUtil.combine(
+								"Unable to retrieve ", _getEntityPluralLabel(),
+								". Retry attempt ", retryCount, " of ",
+								maxRetries));
+					}
+				});
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
@@ -298,7 +297,7 @@ public abstract class BaseEntityDALO<T extends Entity>
 					"Retrieved ", _getEntityLabel(), " with ID " + id));
 		}
 
-		return retryable.executeWithRetries();
+		return unsafeSupplier.get();
 	}
 
 	private Set<JSONObject> _get(
@@ -312,11 +311,9 @@ public abstract class BaseEntityDALO<T extends Entity>
 		while (true) {
 			int finalCurrentPage = currentPage;
 
-			Retryable<Pair<Integer, Set<JSONObject>>> retryable =
-				new BaseRetryable<Pair<Integer, Set<JSONObject>>>() {
-
-					@Override
-					public Pair<Integer, Set<JSONObject>> execute() {
+			UnsafeSupplier<Pair<Integer, Set<JSONObject>>, RuntimeException>
+				unsafeSupplier = new RetryableUnsafeSupplier<>(
+					() -> {
 						String response;
 
 						try {
@@ -364,12 +361,12 @@ public abstract class BaseEntityDALO<T extends Entity>
 							throw new RuntimeException("No response");
 						}
 
-						Set<JSONObject> jsonObjects = new HashSet<>();
+						Set<JSONObject> localJsonObjects = new HashSet<>();
 
 						JSONObject responseJSONObject = new JSONObject(
 							response);
 
-						Integer lastPage = responseJSONObject.getInt(
+						Integer localLastPage = responseJSONObject.getInt(
 							"lastPage");
 
 						JSONArray itemsJSONArray =
@@ -377,25 +374,25 @@ public abstract class BaseEntityDALO<T extends Entity>
 
 						if (itemsJSONArray != null) {
 							for (int i = 0; i < itemsJSONArray.length(); i++) {
-								jsonObjects.add(
+								localJsonObjects.add(
 									itemsJSONArray.getJSONObject(i));
 							}
 						}
 
-						return new ImmutablePair<>(lastPage, jsonObjects);
-					}
+						return new ImmutablePair<>(
+							localLastPage, localJsonObjects);
+					},
+					(retryCount, maxRetries, exception) -> {
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								StringUtil.combine(
+									"Unable to retrieve ",
+									_getEntityPluralLabel(), ". Retry attempt ",
+									retryCount, " of ", maxRetries));
+						}
+					});
 
-					@Override
-					protected String getRetryMessage(int retryCount) {
-						return StringUtil.combine(
-							"Unable to retrieve ", _getEntityPluralLabel(),
-							". Retry attempt ", retryCount, " of ", maxRetries);
-					}
-
-				};
-
-			Pair<Integer, Set<JSONObject>> pair =
-				retryable.executeWithRetries();
+			Pair<Integer, Set<JSONObject>> pair = unsafeSupplier.get();
 
 			if (pair == null) {
 				break;
@@ -423,16 +420,7 @@ public abstract class BaseEntityDALO<T extends Entity>
 	}
 
 	private Date _getDateFromJSON(JSONObject jsonObject, String dateKey) {
-		Retryable<Date> retryable = new BaseRetryable<Date>() {
-
-			@Override
-			public Date execute() {
-				return StringUtil.toDate(jsonObject.optString(dateKey));
-			}
-
-		};
-
-		return retryable.executeWithRetries();
+		return StringUtil.toDate(jsonObject.optString(dateKey));
 	}
 
 	private String _getEntityLabel() {
@@ -463,75 +451,75 @@ public abstract class BaseEntityDALO<T extends Entity>
 	private JSONObject _update(JSONObject requestJSONObject) {
 		long requestObjectEntryId = requestJSONObject.getLong("id");
 
-		Retryable<JSONObject> retryable = new BaseRetryable<JSONObject>() {
+		UnsafeSupplier<JSONObject, RuntimeException> unsafeSupplier =
+			new RetryableUnsafeSupplier<>(
+				() -> {
+					String response;
 
-			@Override
-			public JSONObject execute() {
-				String response;
+					try {
+						response = WebClient.create(
+							StringUtil.combine(
+								_liferayPortalURL,
+								_getEntityURLPath(requestObjectEntryId))
+						).put(
+						).accept(
+							MediaType.APPLICATION_JSON
+						).contentType(
+							MediaType.APPLICATION_JSON
+						).header(
+							"Authorization", getAuthorization()
+						).body(
+							BodyInserters.fromValue(
+								requestJSONObject.toString())
+						).retrieve(
+						).bodyToMono(
+							String.class
+						).block();
+					}
+					catch (Exception exception) {
+						refresh();
 
-				try {
-					response = WebClient.create(
-						StringUtil.combine(
-							_liferayPortalURL,
-							_getEntityURLPath(requestObjectEntryId))
-					).put(
-					).accept(
-						MediaType.APPLICATION_JSON
-					).contentType(
-						MediaType.APPLICATION_JSON
-					).header(
-						"Authorization", getAuthorization()
-					).body(
-						BodyInserters.fromValue(requestJSONObject.toString())
-					).retrieve(
-					).bodyToMono(
-						String.class
-					).block();
-				}
-				catch (Exception exception) {
-					refresh();
+						throw new RuntimeException(exception);
+					}
 
-					throw new RuntimeException(exception);
-				}
+					if (response == null) {
+						throw new RuntimeException("No response");
+					}
 
-				if (response == null) {
-					throw new RuntimeException("No response");
-				}
+					JSONObject responseJSONObject = new JSONObject(response);
 
-				JSONObject responseJSONObject = new JSONObject(response);
+					long responseObjectEntryId = responseJSONObject.getLong(
+						"id");
 
-				long responseObjectEntryId = responseJSONObject.getLong("id");
+					if (!Objects.equals(
+							responseObjectEntryId, requestObjectEntryId)) {
 
-				if (!Objects.equals(
-						responseObjectEntryId, requestObjectEntryId)) {
+						throw new RuntimeException(
+							StringUtil.combine(
+								"Updated wrong ", _getEntityLabel(), " ",
+								responseObjectEntryId));
+					}
 
-					throw new RuntimeException(
-						StringUtil.combine(
-							"Updated wrong ", _getEntityLabel(), " ",
-							responseObjectEntryId));
-				}
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							StringUtil.combine(
+								"Updated ", _getEntityLabel(), " ",
+								requestObjectEntryId));
+					}
 
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						StringUtil.combine(
-							"Updated ", _getEntityLabel(), " ",
-							requestObjectEntryId));
-				}
+					return responseJSONObject;
+				},
+				(retryCount, maxRetries, exception) -> {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							StringUtil.combine(
+								"Unable to update ", _getEntityLabel(), " ",
+								requestObjectEntryId, ". Retry attempt ",
+								retryCount, " of ", maxRetries));
+					}
+				});
 
-				return responseJSONObject;
-			}
-
-			@Override
-			protected String getRetryMessage(int retryCount) {
-				return StringUtil.combine(
-					"Unable to update ", _getEntityLabel(), " ",
-					requestObjectEntryId, ". Retry attempt ", retryCount,
-					" of ", maxRetries);
-			}
-
-		};
-
-		return retryable.executeWithRetries();
+		return unsafeSupplier.get();
 	}
 
 	private static final Log _log = LogFactory.getLog(BaseDALO.class);

@@ -624,6 +624,11 @@ public class ArrayUtil_IW {
 		return ArrayUtil.toArray(list, accessor);
 	}
 
+	public boolean[] toBooleanArray(
+		java.util.Collection<java.lang.Boolean> collection) {
+		return ArrayUtil.toBooleanArray(collection);
+	}
+
 	public double[] toDoubleArray(
 		java.util.Collection<java.lang.Number> collection) {
 		return ArrayUtil.toDoubleArray(collection);

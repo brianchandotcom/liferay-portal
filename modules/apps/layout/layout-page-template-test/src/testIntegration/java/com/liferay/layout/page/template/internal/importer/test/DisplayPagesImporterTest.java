@@ -20,7 +20,6 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -71,8 +70,6 @@ public class DisplayPagesImporterTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
-
-		_user = TestPropsValues.getUser();
 	}
 
 	@Test
@@ -277,7 +274,7 @@ public class DisplayPagesImporterTest {
 
 		try {
 			layoutsImporterResultEntries = _layoutsImporter.importFile(
-				_user.getUserId(), _group.getGroupId(), 0, file,
+				TestPropsValues.getUserId(), _group.getGroupId(), 0, file,
 				LayoutsImportStrategy.DO_NOT_OVERWRITE, true);
 		}
 		finally {
@@ -332,8 +329,6 @@ public class DisplayPagesImporterTest {
 
 	@Inject
 	private LayoutsImporter _layoutsImporter;
-
-	private User _user;
 
 	@Inject
 	private ZipWriterFactory _zipWriterFactory;

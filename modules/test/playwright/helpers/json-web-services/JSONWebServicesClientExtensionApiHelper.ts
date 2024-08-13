@@ -46,7 +46,9 @@ export class JSONWebServicesClientExtensionApiHelper {
 		);
 	}
 
-	async deleteClientExtension(clientExtensionEntryId: string): Promise<void> {
+	async deleteClientExtension(
+		clientExtensionEntryId: string
+	): Promise<ClientExtension> {
 		const urlSearchParams = new URLSearchParams();
 
 		urlSearchParams.append(

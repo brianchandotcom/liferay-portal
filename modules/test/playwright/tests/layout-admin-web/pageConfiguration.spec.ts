@@ -483,9 +483,12 @@ test.describe('JavaScript Client Extensions', () => {
 
 			// Clean up
 
-			await apiHelpers.jsonWebServicesClientExtension.deleteClientExtension(
-				clientExtension.clientExtensionEntryId
-			);
+			const {clientExtensionEntryId} =
+				await apiHelpers.jsonWebServicesClientExtension.deleteClientExtension(
+					clientExtension.clientExtensionEntryId
+				);
+
+			expect(clientExtensionEntryId).not.toBeNull();
 		}
 	);
 
@@ -549,9 +552,12 @@ test.describe('JavaScript Client Extensions', () => {
 
 			// Clean up
 
-			await apiHelpers.jsonWebServicesClientExtension.deleteClientExtension(
-				clientExtension.clientExtensionEntryId
-			);
+			const {clientExtensionEntryId} =
+				await apiHelpers.jsonWebServicesClientExtension.deleteClientExtension(
+					clientExtension.clientExtensionEntryId
+				);
+
+			expect(clientExtensionEntryId).not.toBeNull();
 		}
 	);
 });

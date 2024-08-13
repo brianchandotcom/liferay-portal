@@ -50,6 +50,10 @@ test.afterEach(async ({apiHelpers}) => {
 });
 
 test.describe('Manage object fields through Model Builder', () => {
+	test.beforeEach(({page}) => {
+		page.setViewportSize({height: 1080, width: 1920});
+	});
+
 	test('can add picklist object field to object definition node', async ({
 		apiHelpers,
 		modelBuilderPage,

@@ -1,0 +1,56 @@
+{
+	"availableLanguageIds": [
+		"en_US"
+	],
+	"defaultLanguageId": "en_US",
+	"fields": [
+		{
+			"dataType": "string",
+			"fieldNamespace": "",
+			"fieldReference": "SingleSelection",
+			"indexType": "keyword",
+			"inline": true,
+			"label": {
+				"en_US": "Single Selection"
+			},
+			"localizable": "[#LOCALIZABLE#]",
+			"name": "SingleSelection90775749",
+			"nativeField": false,
+			"options": [
+				{
+					"label": {
+						"en_US": "Option1"
+					},
+					"reference": "",
+					"value": "Option1"
+				},
+				{
+					"label": {
+						"en_US": "Option2"
+					},
+					"reference": "",
+					"value": "Option2"
+				},
+				{
+					"label": {
+						"en_US": "Option3"
+					},
+					"reference": "",
+					"value": "Option3"
+				}
+			],
+			"predefinedValue": {
+				"en_US": "[]"
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			},
+			"type": "radio",
+			"visibilityExpression": ""
+		}
+	]
+}

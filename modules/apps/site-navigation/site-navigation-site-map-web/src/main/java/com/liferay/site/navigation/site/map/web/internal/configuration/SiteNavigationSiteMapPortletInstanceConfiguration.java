@@ -24,7 +24,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface SiteNavigationSiteMapPortletInstanceConfiguration {
 
 	@Meta.AD(
-		deflt = "0", description = "display-style-group-id-desciption",
+		deflt = "0", description = "display-style-group-id-description",
 		name = "display-style-group-id", required = false
 	)
 	public long displayStyleGroupId();

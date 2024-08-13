@@ -242,6 +242,7 @@
 		<module name="com.liferay.source.formatter.checkstyle.check.ArrayUtilCheck">
 			<property name="category" value="Styling" />
 			<property name="description" value="Checks for utilization of class `ArrayUtil`." />
+			<property name="enabled" value="false" />
 			<message key="array.util.is.empty.use" value="Use ''ArrayUtil.isEmpty({0})'' to simplify code" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.AssertEqualsCheck">

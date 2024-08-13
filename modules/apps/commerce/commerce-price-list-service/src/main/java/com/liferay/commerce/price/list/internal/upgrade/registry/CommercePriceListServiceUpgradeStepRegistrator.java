@@ -155,6 +155,11 @@ public class CommercePriceListServiceUpgradeStepRegistrator
 
 		registry.register("2.8.0", "2.8.1", new DummyUpgradeStep());
 
+		registry.register(
+			"2.8.1", "2.9.0",
+			UpgradeProcessFactory.addColumns(
+				"CommercePriceEntry", "pricingQuantity BIGDECIMAL null"));
+
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce price list upgrade step registrator finished");
 		}

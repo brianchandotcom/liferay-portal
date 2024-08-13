@@ -34,6 +34,7 @@
 		<column name="hasTierPrice" type="boolean" />
 		<column name="price" type="BigDecimal" />
 		<column name="priceOnApplication" type="boolean" />
+		<column name="pricingQuantity" type="BigDecimal" />
 		<column name="promoPrice" type="BigDecimal" />
 		<column name="quantity" type="BigDecimal" />
 		<column name="unitOfMeasureKey" type="String" />

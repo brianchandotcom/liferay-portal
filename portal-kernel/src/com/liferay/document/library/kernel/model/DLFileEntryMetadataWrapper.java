@@ -37,6 +37,7 @@ public class DLFileEntryMetadataWrapper
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("ctCollectionId", getCtCollectionId());
 		attributes.put("uuid", getUuid());
+		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put("fileEntryMetadataId", getFileEntryMetadataId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("DDMStorageId", getDDMStorageId());
@@ -65,6 +66,13 @@ public class DLFileEntryMetadataWrapper
 
 		if (uuid != null) {
 			setUuid(uuid);
+		}
+
+		String externalReferenceCode = (String)attributes.get(
+			"externalReferenceCode");
+
+		if (externalReferenceCode != null) {
+			setExternalReferenceCode(externalReferenceCode);
 		}
 
 		Long fileEntryMetadataId = (Long)attributes.get("fileEntryMetadataId");
@@ -147,6 +155,16 @@ public class DLFileEntryMetadataWrapper
 	@Override
 	public long getDDMStructureId() {
 		return model.getDDMStructureId();
+	}
+
+	/**
+	 * Returns the external reference code of this document library file entry metadata.
+	 *
+	 * @return the external reference code of this document library file entry metadata
+	 */
+	@Override
+	public String getExternalReferenceCode() {
+		return model.getExternalReferenceCode();
 	}
 
 	/**
@@ -259,6 +277,16 @@ public class DLFileEntryMetadataWrapper
 	@Override
 	public void setDDMStructureId(long DDMStructureId) {
 		model.setDDMStructureId(DDMStructureId);
+	}
+
+	/**
+	 * Sets the external reference code of this document library file entry metadata.
+	 *
+	 * @param externalReferenceCode the external reference code of this document library file entry metadata
+	 */
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		model.setExternalReferenceCode(externalReferenceCode);
 	}
 
 	/**

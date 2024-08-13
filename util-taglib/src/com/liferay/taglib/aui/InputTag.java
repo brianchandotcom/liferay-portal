@@ -63,11 +63,10 @@ public class InputTag extends BaseInputTag {
 	}
 
 	public String getBaseType() {
-		Class<?> model = getModel();
-
-		String type = getType();
-
 		String baseType = null;
+
+		Class<?> model = getModel();
+		String type = getType();
 
 		if ((model != null) && Validator.isNull(type)) {
 			baseType = ModelHintsUtil.getType(model.getName(), getField());

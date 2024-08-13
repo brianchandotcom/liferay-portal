@@ -267,5 +267,7 @@ test(
 		});
 
 		await fragmentsPage.goto(site.friendlyUrlPath);
+
+		expect(await apiHelpers.headlessSite.deleteSite(site.id)).toBeOK();
 	}
 );

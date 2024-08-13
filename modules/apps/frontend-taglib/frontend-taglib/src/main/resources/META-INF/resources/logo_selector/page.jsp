@@ -17,7 +17,7 @@ String selectLogoURL = (String)request.getAttribute("liferay-frontend:logo-selec
 %>
 
 <liferay-util:html-top>
-	<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathProxy() + application.getContextPath() + "/css/logo_selector.css") %>" rel="stylesheet" type="text/css" />
+	<aui:link href='<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathProxy() + application.getContextPath() + "/css/logo_selector.css") %>' rel="stylesheet" type="text/css" />
 </liferay-util:html-top>
 
 <div>

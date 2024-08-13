@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
@@ -43,6 +44,7 @@ import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,15 +74,15 @@ public class AssetCategoryDocumentContributorTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		_user = UserTestUtil.addUser(_group.getGroupId());
+		User user = UserTestUtil.addUser(_group.getGroupId());
 
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
-			_group, _user.getUserId());
+			_group, user.getUserId());
 
 		_setUpAssetVocabularyAndCategories();
 
 		_blogsEntry = BlogsTestUtil.addEntryWithWorkflow(
-			_user.getUserId(), RandomTestUtil.randomString(), false,
+			user.getUserId(), RandomTestUtil.randomString(), false,
 			_serviceContext);
 
 		_journalArticle = JournalTestUtil.addArticle(
@@ -147,28 +149,6 @@ public class AssetCategoryDocumentContributorTest {
 			"groupAssetVocabularyCategoryExternalReferenceCodes");
 	}
 
-	private List<Long> _addAssetCategoryIds(
-		List<Long> assetCategoryIdList, List<AssetCategory> assetCategoryList) {
-
-		for (AssetCategory assetCategory : assetCategoryList) {
-			assetCategoryIdList.add(assetCategory.getCategoryId());
-		}
-
-		return assetCategoryIdList;
-	}
-
-	private void _addAssetCategoryIdsToServiceContext() {
-		List<Long> assetCategoryIdList = new ArrayList<>(_CATEGORIES_COUNT);
-
-		assetCategoryIdList = _addAssetCategoryIds(
-			assetCategoryIdList, _internalAssetCategoryList);
-		assetCategoryIdList = _addAssetCategoryIds(
-			assetCategoryIdList, _publicAssetCategoryList);
-
-		_serviceContext.setAssetCategoryIds(
-			ArrayUtil.toLongArray(assetCategoryIdList));
-	}
-
 	private List<String> _getGroupAssetCategoryExpectedExternalReferenceCodes(
 		List<AssetCategory> assetCategories) {
 
@@ -223,12 +203,8 @@ public class AssetCategoryDocumentContributorTest {
 
 		assetVocabulary.setVisibilityType(visibilityType);
 
-		assetVocabulary = _assetVocabularyLocalService.updateAssetVocabulary(
+		return _assetVocabularyLocalService.updateAssetVocabulary(
 			assetVocabulary);
-
-		_assetVocabularyList.add(assetVocabulary);
-
-		return assetVocabulary;
 	}
 
 	private void _setUpAssetVocabularyAndCategories() throws Exception {
@@ -245,12 +221,6 @@ public class AssetCategoryDocumentContributorTest {
 			_internalAssetCategoryList.add(assetCategory);
 		}
 
-		for (int i = 0; i < _internalAssetCategoryList.size(); i++) {
-			_assetCategoryIds[i] = _internalAssetCategoryList.get(
-				i
-			).getCategoryId();
-		}
-
 		AssetVocabulary publicAssetVocabulary = _setUpAssetVocabulary(
 			AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC);
 
@@ -264,7 +234,13 @@ public class AssetCategoryDocumentContributorTest {
 			_publicAssetCategoryList.add(assetCategory);
 		}
 
-		_addAssetCategoryIdsToServiceContext();
+		List<Long> assetCategoryIdList = TransformUtil.transform(
+			ListUtil.concat(
+				_internalAssetCategoryList, _publicAssetCategoryList),
+			assetCategory -> assetCategory.getCategoryId());
+
+		_serviceContext.setAssetCategoryIds(
+			ArrayUtil.toLongArray(assetCategoryIdList));
 	}
 
 	private void _testContribute(
@@ -305,18 +281,11 @@ public class AssetCategoryDocumentContributorTest {
 		Assert.assertTrue(countSearchResponse.getCount() == 1);
 	}
 
-	private static final int _CATEGORIES_COUNT = 4;
-
 	private static final String _DELIMITER =
 		StringPool.AMPERSAND + StringPool.AMPERSAND;
 
-	private final long[] _assetCategoryIds = new long[_CATEGORIES_COUNT];
-
 	@Inject
 	private AssetCategoryLocalService _assetCategoryLocalService;
-
-	private final List<AssetVocabulary> _assetVocabularyList = new ArrayList<>(
-		2);
 
 	@Inject
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
@@ -339,6 +308,5 @@ public class AssetCategoryDocumentContributorTest {
 	private SearchEngineHelper _searchEngineHelper;
 
 	private ServiceContext _serviceContext;
-	private User _user;
 
 }

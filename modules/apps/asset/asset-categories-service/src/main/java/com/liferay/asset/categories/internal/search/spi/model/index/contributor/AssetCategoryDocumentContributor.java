@@ -77,8 +77,7 @@ public class AssetCategoryDocumentContributor
 			assetVocabularyVisibilityTypeMap.get(
 				AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL));
 		_addAssetVocabularyCategoriesFields(
-			document, "assetVocabularyCategoryIds",
-			"groupAssetVocabularyCategoryExternalReferenceCodes",
+			document,
 			assetVocabularyVisibilityTypeMap.get(
 				AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC));
 	}
@@ -165,9 +164,7 @@ public class AssetCategoryDocumentContributor
 	}
 
 	private void _addAssetVocabularyCategoriesFields(
-		Document document, String assetVocabularyCategoryIdsFieldName,
-		String groupAssetVocabularyCategoryERCFieldName,
-		Map<Long, List<AssetCategory>> assetVocabularyMap) {
+		Document document, Map<Long, List<AssetCategory>> assetVocabularyMap) {
 
 		String[] assetVocabularyCategories = {};
 		String[] assetVocabularyCategoryERCs = {};
@@ -197,9 +194,9 @@ public class AssetCategoryDocumentContributor
 		}
 
 		document.addKeyword(
-			assetVocabularyCategoryIdsFieldName, assetVocabularyCategories);
+			"assetVocabularyCategoryIds", assetVocabularyCategories);
 		document.addKeyword(
-			groupAssetVocabularyCategoryERCFieldName,
+			"groupAssetVocabularyCategoryERCFieldName",
 			assetVocabularyCategoryERCs);
 	}
 

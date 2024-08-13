@@ -313,7 +313,9 @@ export class PagesAdminPage {
 			await this.clickOnAction('Configure', layoutTitle);
 
 			await this.page
-				.locator('.portlet-body li', {has: this.page.getByText('Design')})
+				.locator('.portlet-body li', {
+					has: this.page.getByText('Design'),
+				})
 				.click();
 		}
 
@@ -355,7 +357,8 @@ export class PagesAdminPage {
 		else {
 			await waitForSuccessAlert(
 				this.page,
-				'Success:The page was updated successfully.');
+				'Success:The page was updated successfully.'
+			);
 		}
 	}
 

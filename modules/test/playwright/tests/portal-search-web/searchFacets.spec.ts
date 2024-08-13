@@ -32,7 +32,7 @@ test.describe('Category facet configuration for vocabularies', () => {
 		await test.step('Open category facet configurations', async () => {
 			await searchPage.goto();
 
-			await searchPage.searchKeywordInMainContent('test');
+			await searchPage.searchKeywordInNavBar('test');
 
 			await expect(searchPage.searchResultsTotalLabel).toHaveText(
 				/\d+ Results for test/

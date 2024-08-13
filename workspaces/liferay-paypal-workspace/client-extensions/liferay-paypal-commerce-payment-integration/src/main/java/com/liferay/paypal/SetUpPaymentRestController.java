@@ -5,8 +5,8 @@
 
 package com.liferay.paypal;
 
-import com.liferay.client.extension.util.spring.boot.BaseRetryable;
-import com.liferay.client.extension.util.spring.boot.Retryable;
+import com.liferay.petra.function.RetryableUnsafeSupplier;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 
@@ -125,20 +125,17 @@ public class SetUpPaymentRestController extends BaseRestController {
 		String transactionCode = null;
 
 		try {
-			Retryable<String> retryable = new BaseRetryable<String>() {
-
-				@Override
-				public String execute() {
-					return get(
+			UnsafeSupplier<String, RuntimeException> unsafeSupplier =
+				new RetryableUnsafeSupplier<>(
+					() -> get(
 						"Bearer " + jwt.getTokenValue(),
 						"/o/c/b9k3paypaltransactions/by-external-reference-" +
-							"code/" + orderId);
-				}
-
-			};
+							"code/" + orderId),
+					(retryCount, maxRetries, exception) -> {
+					});
 
 			transactionCode = new JSONObject(
-				retryable.executeWithRetries()
+				unsafeSupplier.get()
 			).getString(
 				"transactionCode"
 			);

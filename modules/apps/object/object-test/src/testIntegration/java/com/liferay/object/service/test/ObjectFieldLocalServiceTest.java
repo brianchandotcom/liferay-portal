@@ -1067,7 +1067,7 @@ public class ObjectFieldLocalServiceTest {
 			false, "able", false);
 
 		_assertSystemObjectField(
-			"able", false, false, LocalizedMapUtil.getLocalizedMap("Able"),
+			"able_", false, false, LocalizedMapUtil.getLocalizedMap("Able"),
 			false, systemObjectField);
 		_assertSystemObjectField(
 			"able_", true, true, LocalizedMapUtil.getLocalizedMap("Baker"),

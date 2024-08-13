@@ -27,5 +27,6 @@
 <%@ page import="java.util.Objects" %>
 <%@ page import="java.util.Set" %>
 
-<%@ taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
+<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
 taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>

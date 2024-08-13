@@ -10,7 +10,7 @@
 <liferay-util:html-top
 	outputKey="com.liferay.document.library.video#/embed/generating.jsp"
 >
-	<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathProxy() + application.getContextPath() + "/css/embed.css") %>" rel="stylesheet" type="text/css" />
+	<aui:link href='<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathProxy() + application.getContextPath() + "/css/embed.css") %>' rel="stylesheet" type="text/css" />
 </liferay-util:html-top>
 
 <div class="video-embed-placeholder">

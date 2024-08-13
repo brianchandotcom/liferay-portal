@@ -12,22 +12,20 @@ public class RetryableUnsafeSupplier<T, E extends Throwable>
 	implements UnsafeSupplier<T, E> {
 
 	public RetryableUnsafeSupplier(
-		UnsafeSupplier<T, E> unsafeSupplier, ErrorHandler errorHandler) {
+		ErrorHandler errorHandler, boolean exceptionOnFailure, int maxRetries,
+		long retryInterval, UnsafeSupplier<T, E> unsafeSupplier) {
 
-		this(
-			unsafeSupplier, errorHandler, true, _DEFAULT_MAX_RETRIES,
-			_DEFAULT_RETRY_INTERVAL);
-	}
-
-	public RetryableUnsafeSupplier(
-		UnsafeSupplier<T, E> unsafeSupplier, ErrorHandler errorHandler,
-		boolean exceptionOnFailure, int maxRetries, long retryInterval) {
-
-		_unsafeSupplier = unsafeSupplier;
 		_errorHandler = errorHandler;
 		_exceptionOnFailure = exceptionOnFailure;
 		_maxRetries = maxRetries;
 		_retryInterval = retryInterval;
+		_unsafeSupplier = unsafeSupplier;
+	}
+
+	public RetryableUnsafeSupplier(
+		ErrorHandler errorHandler, UnsafeSupplier<T, E> unsafeSupplier) {
+
+		this(errorHandler, true, _MAX_RETRIES, _RETRY_INTERVAL, unsafeSupplier);
 	}
 
 	@Override
@@ -47,7 +45,7 @@ public class RetryableUnsafeSupplier<T, E extends Throwable>
 
 				previousThrowable = exception;
 
-				_errorHandler.onError(++retryCount, _maxRetries, exception);
+				_errorHandler.onError(exception, _maxRetries, ++retryCount);
 
 				if (retryCount > _maxRetries) {
 					if (_exceptionOnFailure) {
@@ -72,13 +70,13 @@ public class RetryableUnsafeSupplier<T, E extends Throwable>
 	public interface ErrorHandler {
 
 		public void onError(
-			int retryCount, int maxRetries, Exception exception);
+			Exception exception, int maxRetries, int retryCount);
 
 	}
 
-	private static final int _DEFAULT_MAX_RETRIES = 3;
+	private static final int _MAX_RETRIES = 3;
 
-	private static final long _DEFAULT_RETRY_INTERVAL = 1000;
+	private static final long _RETRY_INTERVAL = 1000;
 
 	private final ErrorHandler _errorHandler;
 	private final boolean _exceptionOnFailure;

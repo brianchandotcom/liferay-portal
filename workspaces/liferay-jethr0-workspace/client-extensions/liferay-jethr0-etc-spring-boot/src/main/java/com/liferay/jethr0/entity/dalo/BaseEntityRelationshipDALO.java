@@ -165,6 +165,15 @@ public abstract class BaseEntityRelationshipDALO
 
 		UnsafeSupplier<Void, RuntimeException> unsafeSupplier =
 			new RetryableUnsafeSupplier<>(
+				(exception, maxRetries, retryCount) -> {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							StringUtil.combine(
+								"Unable to create relationship with ",
+								objectRelationshipURL, ". Retry attempt ",
+								retryCount, " of ", maxRetries));
+					}
+				},
 				() -> {
 					String response;
 
@@ -203,15 +212,6 @@ public abstract class BaseEntityRelationshipDALO
 					}
 
 					return null;
-				},
-				(retryCount, maxRetries, exception) -> {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							StringUtil.combine(
-								"Unable to create relationship with ",
-								objectRelationshipURL, ". Retry attempt ",
-								retryCount, " of ", maxRetries));
-					}
 				});
 
 		unsafeSupplier.get();
@@ -227,6 +227,15 @@ public abstract class BaseEntityRelationshipDALO
 
 		UnsafeSupplier<Void, RuntimeException> unsafeSupplier =
 			new RetryableUnsafeSupplier<>(
+				(exception, maxRetries, retryCount) -> {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							StringUtil.combine(
+								"Unable to delete relationship with ",
+								objectRelationshipURL, ". Retry attempt ",
+								retryCount, " of ", maxRetries));
+					}
+				},
 				() -> {
 					try {
 						WebClient.create(
@@ -255,15 +264,6 @@ public abstract class BaseEntityRelationshipDALO
 					}
 
 					return null;
-				},
-				(retryCount, maxRetries, exception) -> {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							StringUtil.combine(
-								"Unable to delete relationship with ",
-								objectRelationshipURL, ". Retry attempt ",
-								retryCount, " of ", maxRetries));
-					}
 				});
 
 		unsafeSupplier.get();
@@ -286,6 +286,15 @@ public abstract class BaseEntityRelationshipDALO
 
 			UnsafeSupplier<Pair<Integer, Set<JSONObject>>, RuntimeException>
 				unsafeSupplier = new RetryableUnsafeSupplier<>(
+					(exception, maxRetries, retryCount) -> {
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								StringUtil.combine(
+									"Unable to retrieve object relationships. ",
+									"Retry attempt ", retryCount, " of ",
+									maxRetries));
+						}
+					},
 					() -> {
 						String response;
 
@@ -336,15 +345,6 @@ public abstract class BaseEntityRelationshipDALO
 
 						return new ImmutablePair<>(
 							localLastPage, localJsonObjects);
-					},
-					(retryCount, maxRetries, exception) -> {
-						if (_log.isWarnEnabled()) {
-							_log.warn(
-								StringUtil.combine(
-									"Unable to retrieve object relationships. ",
-									"Retry attempt ", retryCount, " of ",
-									maxRetries));
-						}
 					});
 
 			Pair<Integer, Set<JSONObject>> pair = unsafeSupplier.get();

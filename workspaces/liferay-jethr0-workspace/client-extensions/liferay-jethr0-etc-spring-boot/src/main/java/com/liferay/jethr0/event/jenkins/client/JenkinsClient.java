@@ -40,6 +40,15 @@ public class JenkinsClient {
 
 		UnsafeSupplier<String, RuntimeException> unsafeSupplier =
 			new RetryableUnsafeSupplier<>(
+				(exception, maxRetries, retryCount) -> {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							StringUtil.combine(
+								"Unable to post to ", jenkinsURL,
+								". Retry attempt ", retryCount, " of ",
+								maxRetries));
+					}
+				},
 				() -> {
 					try {
 						String response = WebClient.create(
@@ -66,15 +75,6 @@ public class JenkinsClient {
 
 						throw new RuntimeException(ioException);
 					}
-				},
-				(retryCount, maxRetries, exception) -> {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							StringUtil.combine(
-								"Unable to post to ", jenkinsURL,
-								". Retry attempt ", retryCount, " of ",
-								maxRetries));
-					}
 				});
 
 		return unsafeSupplier.get();
@@ -85,6 +85,15 @@ public class JenkinsClient {
 
 		UnsafeSupplier<String, RuntimeException> unsafeSupplier =
 			new RetryableUnsafeSupplier<>(
+				(exception, maxRetries, retryCount) -> {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							StringUtil.combine(
+								"Unable to post to ", jenkinsURL,
+								". Retry attempt ", retryCount, " of ",
+								maxRetries));
+					}
+				},
 				() -> {
 					try {
 						String response = WebClient.create(
@@ -115,15 +124,6 @@ public class JenkinsClient {
 
 						throw new RuntimeException(ioException);
 					}
-				},
-				(retryCount, maxRetries, exception) -> {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							StringUtil.combine(
-								"Unable to post to ", jenkinsURL,
-								". Retry attempt ", retryCount, " of ",
-								maxRetries));
-					}
 				});
 
 		return unsafeSupplier.get();
@@ -138,6 +138,15 @@ public class JenkinsClient {
 
 		UnsafeSupplier<String, RuntimeException> unsafeSupplier =
 			new RetryableUnsafeSupplier<>(
+				(exception, maxRetries, retryCount) -> {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							StringUtil.combine(
+								"Unable to post to ", jenkinsURL,
+								". Retry attempt ", retryCount, " of ",
+								maxRetries));
+					}
+				},
 				() -> {
 					try {
 						String response = WebClient.create(
@@ -168,15 +177,6 @@ public class JenkinsClient {
 
 						throw new RuntimeException(ioException);
 					}
-				},
-				(retryCount, maxRetries, exception) -> {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							StringUtil.combine(
-								"Unable to post to ", jenkinsURL,
-								". Retry attempt ", retryCount, " of ",
-								maxRetries));
-					}
 				});
 
 		return unsafeSupplier.get();
@@ -187,6 +187,15 @@ public class JenkinsClient {
 
 		UnsafeSupplier<String, RuntimeException> unsafeSupplier =
 			new RetryableUnsafeSupplier<>(
+				(exception, maxRetries, retryCount) -> {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							StringUtil.combine(
+								"Unable to post to ", remoteJenkinsURL,
+								". Retry attempt ", retryCount, " of ",
+								maxRetries));
+					}
+				},
 				() -> {
 					try {
 						String response = WebClient.create(
@@ -216,15 +225,6 @@ public class JenkinsClient {
 						_refresh();
 
 						throw new RuntimeException(ioException);
-					}
-				},
-				(retryCount, maxRetries, exception) -> {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							StringUtil.combine(
-								"Unable to post to ", remoteJenkinsURL,
-								". Retry attempt ", retryCount, " of ",
-								maxRetries));
 					}
 				});
 

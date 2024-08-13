@@ -131,6 +131,15 @@ public abstract class BaseEntityDALO<T extends Entity>
 	private JSONObject _create(JSONObject requestJSONObject) {
 		UnsafeSupplier<JSONObject, RuntimeException> unsafeSupplier =
 			new RetryableUnsafeSupplier<>(
+				(exception, maxRetries, retryCount) -> {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							StringUtil.combine(
+								"Unable to create ", _getEntityPluralLabel(),
+								". Retry attempt ", retryCount, " of ",
+								maxRetries, " ", requestJSONObject));
+					}
+				},
 				() -> {
 					String response;
 
@@ -183,15 +192,6 @@ public abstract class BaseEntityDALO<T extends Entity>
 					}
 
 					return jsonObject;
-				},
-				(retryCount, maxRetries, exception) -> {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							StringUtil.combine(
-								"Unable to create ", _getEntityPluralLabel(),
-								". Retry attempt ", retryCount, " of ",
-								maxRetries, " ", requestJSONObject));
-					}
 				});
 
 		return unsafeSupplier.get();
@@ -204,6 +204,16 @@ public abstract class BaseEntityDALO<T extends Entity>
 
 		UnsafeSupplier<Void, RuntimeException> unsafeSupplier =
 			new RetryableUnsafeSupplier<>(
+				(exception, maxRetries, retryCount) -> {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							StringUtil.combine(
+								"Unable to delete ", _getEntityLabel(), " ",
+								objectEntryId, ". Retry attempt ",
+								String.valueOf(retryCount), " of ",
+								maxRetries));
+					}
+				},
 				() -> {
 					try {
 						WebClient.create(
@@ -234,16 +244,6 @@ public abstract class BaseEntityDALO<T extends Entity>
 					}
 
 					return null;
-				},
-				(retryCount, maxRetries, exception) -> {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							StringUtil.combine(
-								"Unable to delete ", _getEntityLabel(), " ",
-								objectEntryId, ". Retry attempt ",
-								String.valueOf(retryCount), " of ",
-								maxRetries));
-					}
 				});
 
 		unsafeSupplier.get();
@@ -252,6 +252,15 @@ public abstract class BaseEntityDALO<T extends Entity>
 	private JSONObject _get(long id) {
 		UnsafeSupplier<JSONObject, RuntimeException> unsafeSupplier =
 			new RetryableUnsafeSupplier<>(
+				(exception, maxRetries, retryCount) -> {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							StringUtil.combine(
+								"Unable to retrieve ", _getEntityPluralLabel(),
+								". Retry attempt ", retryCount, " of ",
+								maxRetries));
+					}
+				},
 				() -> {
 					String response = null;
 
@@ -280,15 +289,6 @@ public abstract class BaseEntityDALO<T extends Entity>
 					}
 
 					return new JSONObject(response);
-				},
-				(retryCount, maxRetries, exception) -> {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							StringUtil.combine(
-								"Unable to retrieve ", _getEntityPluralLabel(),
-								". Retry attempt ", retryCount, " of ",
-								maxRetries));
-					}
 				});
 
 		if (_log.isDebugEnabled()) {
@@ -313,6 +313,15 @@ public abstract class BaseEntityDALO<T extends Entity>
 
 			UnsafeSupplier<Pair<Integer, Set<JSONObject>>, RuntimeException>
 				unsafeSupplier = new RetryableUnsafeSupplier<>(
+					(exception, maxRetries, retryCount) -> {
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								StringUtil.combine(
+									"Unable to retrieve ",
+									_getEntityPluralLabel(), ". Retry attempt ",
+									retryCount, " of ", maxRetries));
+						}
+					},
 					() -> {
 						String response;
 
@@ -381,15 +390,6 @@ public abstract class BaseEntityDALO<T extends Entity>
 
 						return new ImmutablePair<>(
 							localLastPage, localJsonObjects);
-					},
-					(retryCount, maxRetries, exception) -> {
-						if (_log.isWarnEnabled()) {
-							_log.warn(
-								StringUtil.combine(
-									"Unable to retrieve ",
-									_getEntityPluralLabel(), ". Retry attempt ",
-									retryCount, " of ", maxRetries));
-						}
 					});
 
 			Pair<Integer, Set<JSONObject>> pair = unsafeSupplier.get();
@@ -453,6 +453,15 @@ public abstract class BaseEntityDALO<T extends Entity>
 
 		UnsafeSupplier<JSONObject, RuntimeException> unsafeSupplier =
 			new RetryableUnsafeSupplier<>(
+				(exception, maxRetries, retryCount) -> {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							StringUtil.combine(
+								"Unable to update ", _getEntityLabel(), " ",
+								requestObjectEntryId, ". Retry attempt ",
+								retryCount, " of ", maxRetries));
+					}
+				},
 				() -> {
 					String response;
 
@@ -508,15 +517,6 @@ public abstract class BaseEntityDALO<T extends Entity>
 					}
 
 					return responseJSONObject;
-				},
-				(retryCount, maxRetries, exception) -> {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							StringUtil.combine(
-								"Unable to update ", _getEntityLabel(), " ",
-								requestObjectEntryId, ". Retry attempt ",
-								retryCount, " of ", maxRetries));
-					}
 				});
 
 		return unsafeSupplier.get();

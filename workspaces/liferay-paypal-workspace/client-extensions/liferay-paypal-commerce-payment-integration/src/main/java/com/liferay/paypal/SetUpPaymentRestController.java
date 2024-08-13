@@ -127,12 +127,12 @@ public class SetUpPaymentRestController extends BaseRestController {
 		try {
 			UnsafeSupplier<String, RuntimeException> unsafeSupplier =
 				new RetryableUnsafeSupplier<>(
+					(exception, maxRetries, retryCount) -> {
+					},
 					() -> get(
 						"Bearer " + jwt.getTokenValue(),
 						"/o/c/b9k3paypaltransactions/by-external-reference-" +
-							"code/" + orderId),
-					(retryCount, maxRetries, exception) -> {
-					});
+							"code/" + orderId));
 
 			transactionCode = new JSONObject(
 				unsafeSupplier.get()

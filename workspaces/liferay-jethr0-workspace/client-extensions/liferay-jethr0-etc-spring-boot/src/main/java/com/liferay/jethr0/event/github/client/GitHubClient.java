@@ -80,6 +80,14 @@ public class GitHubClient {
 
 		UnsafeSupplier<String, RuntimeException> unsafeSupplier =
 			new RetryableUnsafeSupplier<>(
+				(exception, maxRetries, retryCount) -> {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							StringUtil.combine(
+								"Unable to post to ", url, ". Retry attempt ",
+								retryCount, " of ", maxRetries));
+					}
+				},
 				() -> {
 					String response = WebClient.create(
 						gitHubURL
@@ -99,14 +107,6 @@ public class GitHubClient {
 					}
 
 					return response;
-				},
-				(retryCount, maxRetries, exception) -> {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							StringUtil.combine(
-								"Unable to post to ", url, ". Retry attempt ",
-								retryCount, " of ", maxRetries));
-					}
 				});
 
 		return unsafeSupplier.get();
@@ -120,6 +120,14 @@ public class GitHubClient {
 
 		UnsafeSupplier<String, RuntimeException> unsafeSupplier =
 			new RetryableUnsafeSupplier<>(
+				(exception, maxRetries, retryCount) -> {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							StringUtil.combine(
+								"Unable to post to ", url, ". Retry attempt ",
+								retryCount, " of ", maxRetries));
+					}
+				},
 				() -> {
 					String response = WebClient.create(
 						gitHubURL
@@ -142,14 +150,6 @@ public class GitHubClient {
 					}
 
 					return response;
-				},
-				(retryCount, maxRetries, exception) -> {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							StringUtil.combine(
-								"Unable to post to ", url, ". Retry attempt ",
-								retryCount, " of ", maxRetries));
-					}
 				});
 
 		return unsafeSupplier.get();
@@ -163,6 +163,14 @@ public class GitHubClient {
 
 		UnsafeSupplier<String, RuntimeException> unsafeSupplier =
 			new RetryableUnsafeSupplier<>(
+				(exception, maxRetries, retryCount) -> {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							StringUtil.combine(
+								"Unable to post to ", url, ". Retry attempt ",
+								retryCount, " of ", maxRetries));
+					}
+				},
 				() -> {
 					String response = WebClient.create(
 						gitHubURL
@@ -185,14 +193,6 @@ public class GitHubClient {
 					}
 
 					return response;
-				},
-				(retryCount, maxRetries, exception) -> {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							StringUtil.combine(
-								"Unable to post to ", url, ". Retry attempt ",
-								retryCount, " of ", maxRetries));
-					}
 				});
 
 		return unsafeSupplier.get();
@@ -206,6 +206,14 @@ public class GitHubClient {
 
 		UnsafeSupplier<String, RuntimeException> unsafeSupplier =
 			new RetryableUnsafeSupplier<>(
+				(exception, maxRetries, retryCount) -> {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							StringUtil.combine(
+								"Unable to post to ", url, ". Retry attempt ",
+								retryCount, " of ", maxRetries));
+					}
+				},
 				() -> {
 					String response = WebClient.create(
 						gitHubURL
@@ -228,14 +236,6 @@ public class GitHubClient {
 					}
 
 					return response;
-				},
-				(retryCount, maxRetries, exception) -> {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							StringUtil.combine(
-								"Unable to post to ", url, ". Retry attempt ",
-								retryCount, " of ", maxRetries));
-					}
 				});
 
 		return unsafeSupplier.get();

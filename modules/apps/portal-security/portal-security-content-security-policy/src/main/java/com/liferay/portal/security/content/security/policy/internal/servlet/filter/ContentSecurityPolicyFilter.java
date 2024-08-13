@@ -121,11 +121,6 @@ public class ContentSecurityPolicyFilter extends BasePortalFilter {
 		String nonceAttribute = "nonce=\"" + nonce + "\"";
 		String escapedNonceAttribute = "nonce=\\\"" + nonce + "\\\"";
 
-		content = content.replaceAll(
-			"<(?i)link ", "<link " + nonceAttribute + " ");
-		content = content.replaceAll(
-			"<(?i)link>", "<link " + nonceAttribute + "");
-
 		Pattern pattern = Pattern.compile(
 			"\\{.*nonce=\".{" + nonce.length() + "}\".*\\}");
 

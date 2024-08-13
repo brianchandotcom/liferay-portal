@@ -52,6 +52,7 @@ import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SubscriptionSender;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
@@ -317,8 +318,18 @@ public class InviteUsersMVCResourceCommand
 
 			User user = themeDisplay.getUser();
 
-			String fromName = user.getFullName();
-			String fromAddress = user.getEmailAddress();
+			String fromName = ctCollectionEmailConfiguration.emailFromName();
+
+			if (Validator.isNull(fromName)) {
+				fromName = user.getFullName();
+			}
+
+			String fromAddress =
+				ctCollectionEmailConfiguration.emailFromAddress();
+
+			if (Validator.isNull(fromAddress)) {
+				fromAddress = user.getEmailAddress();
+			}
 
 			User receiverUser = _userLocalService.getUser(receiverUserId);
 

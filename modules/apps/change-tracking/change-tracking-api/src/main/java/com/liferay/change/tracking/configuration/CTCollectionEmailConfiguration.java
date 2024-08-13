@@ -24,6 +24,12 @@ import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 )
 public interface CTCollectionEmailConfiguration {
 
+	@Meta.AD(deflt = "", name = "email-from-address", required = false)
+	public String emailFromAddress();
+
+	@Meta.AD(deflt = "", name = "email-from-name", required = false)
+	public String emailFromName();
+
 	@Meta.AD(
 		deflt = "${resource:com/liferay/change/tracking/dependencies/email_change_tracking_collection_invitation_subject.tmpl}",
 		description = "invitation-email-subject-description",

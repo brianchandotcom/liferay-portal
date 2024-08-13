@@ -10,7 +10,6 @@
 </thead>
 
 <tbody>
-
 <tr>
 	<td>GENERATED_DATA_MESSAGE</td>
 	<td>//div[@class='portlet-body' and contains(.,'Generated Cluster Sample Data')]</td>

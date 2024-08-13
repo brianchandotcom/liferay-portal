@@ -35,7 +35,7 @@ ClusterSampleData clusterSampleData = new ClusterSampleData();
 </ul>
 
 <div class="logged-in-session-count">
-	<h4> Logged In Session Count: </h4>
+	<h4>Logged in Session Count:</h4>
 
 	<%
 	int count = 0;
@@ -58,6 +58,7 @@ ClusterSampleData portletSessionClusterSampleData = (ClusterSampleData)portletSe
 
 if (portletSessionClusterSampleData == null) {
 	portletSessionClusterSampleData = clusterSampleData;
+
 	portletSession.setAttribute(ClusterSampleData.class.getName(), clusterSampleData);
 
 	out.println("Generated Cluster Sample Data: ");
@@ -71,13 +72,13 @@ else {
 
 <ul>
 	<li>
-		<b>Stored Data:</b> <p class="stored-data" ><%= portletSessionClusterSampleData.getData() %> </p>
+		<b>Stored Data:</b> <p class="stored-data"><%= portletSessionClusterSampleData.getData() %></p>
 	</li>
 	<li>
 		<b>Stored Timestamp:</b> <%= portletSessionClusterSampleData.getTimestamp() %>
 	</li>
 	<li>
-		<b>Session Id: </b> <p class="session-id"><%= portletSession.getId() %></p>
+		<b>Session ID: </b> <p class="session-id"><%= portletSession.getId() %></p>
 	</li>
 </ul>
 

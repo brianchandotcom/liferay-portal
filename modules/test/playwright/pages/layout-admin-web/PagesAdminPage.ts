@@ -147,6 +147,8 @@ export class PagesAdminPage {
 	}
 
 	async clickOnJavaScriptClientExtensionsTab() {
+		await this.javaScriptClientExtensionsTab.waitFor();
+
 		await this.javaScriptClientExtensionsTab.click();
 	}
 
@@ -258,12 +260,15 @@ export class PagesAdminPage {
 		await this.goto(siteUrl);
 
 		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: this.page.getByRole('menuitem', {name: 'Configuration'}),
+			target: this.page
+				.locator('.dropdown-menu')
+				.getByRole('menuitem', {name: 'Configuration'}),
 			trigger: this.page
 				.locator('.control-menu-nav-item')
-				.getByTitle('Options', {exact: true}),
+				.getByLabel('Options', {exact: true}),
 		});
+
+		await this.page.getByRole('menuitem', {name: 'Configuration'}).click();
 	}
 
 	async gotoSelectGlobalTemplates() {
@@ -392,7 +397,7 @@ export class PagesAdminPage {
 		// Select the pages
 
 		for (const pageName of pageNames) {
-			const pageInput = await this.page.getByLabel(`Select ${pageName}`, {
+			const pageInput = this.page.getByLabel(`Select ${pageName}`, {
 				exact: true,
 			});
 

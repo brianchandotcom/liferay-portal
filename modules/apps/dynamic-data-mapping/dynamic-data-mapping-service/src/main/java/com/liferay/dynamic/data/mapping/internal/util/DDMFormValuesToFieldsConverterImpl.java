@@ -168,8 +168,11 @@ public class DDMFormValuesToFieldsConverterImpl
 		if (MapUtil.isEmpty(value.getValues())) {
 			value = ddmFormField.getPredefinedValue();
 
-			ddmFormFieldAvailableLocales.put(
-				ddmFormField.getName(), value.getAvailableLocales());
+			Set<Locale> availableLocales =
+				ddmFormFieldAvailableLocales.computeIfAbsent(
+					ddmFormField.getName(), key -> new HashSet<>());
+
+			availableLocales.addAll(value.getAvailableLocales());
 		}
 
 		if (!value.isLocalized()) {

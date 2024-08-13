@@ -6,7 +6,7 @@
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import {ClayResultsBar} from '@clayui/management-toolbar';
-import {useContext} from 'react';
+import {useContext, useEffect} from 'react';
 import {useLocation, useNavigate} from 'react-router-dom';
 
 import {ListViewContext, ListViewTypes} from '../../context/ListViewContext';
@@ -21,6 +21,9 @@ const ManagementToolbarResultsBar: React.FC<
 > = ({totalItems}) => {
 	const location = useLocation();
 	const navigate = useNavigate();
+	const searchParams = new URLSearchParams(location.search);
+
+	const filter = searchParams.get('filter');
 
 	const [
 		{
@@ -30,10 +33,6 @@ const ManagementToolbarResultsBar: React.FC<
 	] = useContext(ListViewContext);
 
 	const handleRemoveItemFromFilter = (itemToRemove: string) => {
-		const searchParams = new URLSearchParams(location.search);
-
-		const filter = searchParams.get('filter');
-
 		if (filter) {
 			const filterJSON = JSON.parse(decodeURIComponent(filter));
 
@@ -58,6 +57,14 @@ const ManagementToolbarResultsBar: React.FC<
 		dispatch({payload: filterName, type: ListViewTypes.SET_REMOVE_FILTER});
 		handleRemoveItemFromFilter(filterName);
 	};
+
+	useEffect(() => {
+		if (!filter) {
+			entries
+				.filter(({value}) => value)
+				.forEach((entry) => onRemoveFilter(entry.name));
+		}
+	}, [filter, entries, onRemoveFilter]);
 
 	return (
 		<ClayResultsBar>

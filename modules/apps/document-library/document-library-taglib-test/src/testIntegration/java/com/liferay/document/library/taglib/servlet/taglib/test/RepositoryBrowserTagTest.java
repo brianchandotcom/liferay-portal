@@ -68,14 +68,14 @@ public class RepositoryBrowserTagTest {
 
 		repositoryBrowserTag.setRepositoryId(_group.getGroupId());
 
-		_assertViewableByGuest("false", repositoryBrowserTag);
+		_testViewableByGuest("false", repositoryBrowserTag);
 
 		repositoryBrowserTag.setViewableByGuest(true);
 
-		_assertViewableByGuest("true", repositoryBrowserTag);
+		_testViewableByGuest("true", repositoryBrowserTag);
 	}
 
-	private void _assertViewableByGuest(
+	private void _testViewableByGuest(
 			String expectedViewableByGuestValue,
 			RepositoryBrowserTag repositoryBrowserTag)
 		throws PortalException {

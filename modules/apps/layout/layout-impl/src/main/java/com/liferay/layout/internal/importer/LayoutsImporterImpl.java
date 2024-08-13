@@ -190,13 +190,19 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 			groupId, layoutPageTemplateCollectionId,
 			layoutsImporterResultEntries, layoutsImportStrategy,
 			preserveItemIds, userId, zipReader);
-		_processDisplayPageLayoutPageTemplateCollections(
-			groupId, layoutPageTemplateCollectionId,
-			layoutsImporterResultEntries, layoutsImportStrategy, zipReader);
+
+		Map<String, LayoutPageTemplateCollection>
+			layoutPageTemplateCollectionsMap =
+				_processDisplayPageLayoutPageTemplateCollections(
+					groupId, layoutPageTemplateCollectionId,
+					layoutsImporterResultEntries, layoutsImportStrategy,
+					zipReader);
+
 		_processDisplayPageLayoutPageTemplateEntries(
 			groupId, layoutPageTemplateCollectionId,
-			layoutsImporterResultEntries, layoutsImportStrategy,
-			preserveItemIds, userId, zipReader);
+			layoutPageTemplateCollectionsMap, layoutsImporterResultEntries,
+			layoutsImportStrategy, preserveItemIds, userId, zipReader);
+
 		_processLayoutUtilityPageEntries(
 			groupId, layoutsImporterResultEntries, layoutsImportStrategy,
 			preserveItemIds, userId, zipReader);
@@ -822,6 +828,37 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 		return _PAGE_TEMPLATE_COLLECTION_KEY_DEFAULT;
 	}
 
+	private long _getParentLayoutPageTemplateCollectionId(
+		List<String> entries, String fileName,
+		long layoutPageTemplateCollectionId,
+		Map<String, LayoutPageTemplateCollection>
+			layoutPageTemplateCollectionsMap) {
+
+		if (_isRootFolder(entries, fileName)) {
+			return layoutPageTemplateCollectionId;
+		}
+
+		String[] pathParts = StringUtil.split(fileName, CharPool.SLASH);
+
+		if (pathParts.length <= 2) {
+			return layoutPageTemplateCollectionId;
+		}
+
+		String path = StringUtil.merge(
+			ArrayUtil.subset(pathParts, 0, pathParts.length - 2),
+			StringPool.SLASH);
+
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
+			layoutPageTemplateCollectionsMap.get(path + StringPool.SLASH);
+
+		if (layoutPageTemplateCollection != null) {
+			return layoutPageTemplateCollection.
+				getLayoutPageTemplateCollectionId();
+		}
+
+		return layoutPageTemplateCollectionId;
+	}
+
 	private long _getPreviewFileEntryId(
 			String className, long classPK, long groupId, Thumbnail thumbnail,
 			long userId)
@@ -1385,11 +1422,15 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 
 	private void _processDisplayPageLayoutPageTemplateEntries(
 		long groupId, long layoutPageTemplateCollectionId,
+		Map<String, LayoutPageTemplateCollection>
+			layoutPageTemplateCollectionsMap,
 		List<LayoutsImporterResultEntry> layoutsImporterResultEntries,
 		LayoutsImportStrategy layoutsImportStrategy, boolean preserveItemIds,
 		long userId, ZipReader zipReader) {
 
-		for (String entry : zipReader.getEntries()) {
+		List<String> entries = zipReader.getEntries();
+
+		for (String entry : entries) {
 			if (!_isDisplayPageTemplateFile(entry)) {
 				continue;
 			}
@@ -1454,7 +1495,9 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 					_transactionConfig,
 					new DisplayPagesImporterCallable(
 						groupId, displayPageTemplate,
-						layoutPageTemplateCollectionId,
+						_getParentLayoutPageTemplateCollectionId(
+							entries, entry, layoutPageTemplateCollectionId,
+							layoutPageTemplateCollectionsMap),
 						layoutsImporterResultEntries, layoutsImportStrategy,
 						_objectMapper.readValue(
 							pageDefinitionJSON, PageDefinition.class),

@@ -411,6 +411,32 @@ test.describe('Manage object fields through Model Builder', () => {
 			draftObjectDefinition.id
 		);
 	});
+	
+	test('cannot delete only custom object field of an published object definition', async ({
+		modelBuilderPage,
+		page,
+	}) => {
+		const {objectDefinition} = createdEntities;
+
+		await modelBuilderPage.goto({objectFolderName: 'Default'});
+
+		await modelBuilderPage.leftSidebarItems
+			.filter({hasText: objectDefinition.name})
+			.click();
+
+		await modelBuilderPage.clickShowAllFieldsButton(objectDefinition.name);
+
+		await page.getByText('textField').click();
+
+		await modelBuilderPage.deleteButton.click();
+
+		await expect(page.getByText('Deletion Not Allowed')).toBeVisible();
+		await expect(
+			page.getByText(
+				`The object field "textField" cannot be deleted because it is the only custom object field of the published object definition.`
+			)
+		).toBeVisible();
+	});
 });
 
 test.describe('Manage objectFields through Objects Admin UI', () => {

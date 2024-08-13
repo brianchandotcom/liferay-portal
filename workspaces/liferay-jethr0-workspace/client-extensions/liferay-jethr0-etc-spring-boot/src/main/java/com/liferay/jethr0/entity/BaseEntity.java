@@ -5,9 +5,7 @@
 
 package com.liferay.jethr0.entity;
 
-import com.liferay.jethr0.util.BaseRetryable;
 import com.liferay.jethr0.util.Jethr0ContextUtil;
-import com.liferay.jethr0.util.Retryable;
 import com.liferay.jethr0.util.StringUtil;
 
 import java.net.URL;
@@ -185,16 +183,7 @@ public abstract class BaseEntity implements Entity {
 	}
 
 	private Date _getDateFromJSON(JSONObject jsonObject, String dateKey) {
-		Retryable<Date> retryable = new BaseRetryable<Date>() {
-
-			@Override
-			public Date execute() {
-				return StringUtil.toDate(jsonObject.optString(dateKey));
-			}
-
-		};
-
-		return retryable.executeWithRetries();
+		return StringUtil.toDate(jsonObject.optString(dateKey));
 	}
 
 	private Class<? extends Entity> _getEntityClass(Class<?> entityClass) {

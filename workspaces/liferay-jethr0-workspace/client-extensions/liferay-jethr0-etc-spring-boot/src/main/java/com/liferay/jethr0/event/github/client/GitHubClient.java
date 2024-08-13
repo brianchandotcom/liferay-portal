@@ -5,9 +5,9 @@
 
 package com.liferay.jethr0.event.github.client;
 
-import com.liferay.jethr0.util.BaseRetryable;
-import com.liferay.jethr0.util.Retryable;
 import com.liferay.jethr0.util.StringUtil;
+import com.liferay.petra.function.RetryableUnsafeSupplier;
+import com.liferay.petra.function.UnsafeSupplier;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -78,39 +78,38 @@ public class GitHubClient {
 		String gitHubURL = urlString.replaceAll(
 			"https://api\\.github\\.com", _gitHubProxyURL);
 
-		Retryable<String> retryable = new BaseRetryable<String>() {
+		UnsafeSupplier<String, RuntimeException> unsafeSupplier =
+			new RetryableUnsafeSupplier<>(
+				() -> {
+					String response = WebClient.create(
+						gitHubURL
+					).get(
+					).accept(
+						MediaType.APPLICATION_JSON
+					).header(
+						"Authorization", _getAuthorization()
+					).retrieve(
+					).bodyToMono(
+						String.class
+					).block();
 
-			@Override
-			public String execute() {
-				String response = WebClient.create(
-					gitHubURL
-				).get(
-				).accept(
-					MediaType.APPLICATION_JSON
-				).header(
-					"Authorization", _getAuthorization()
-				).retrieve(
-				).bodyToMono(
-					String.class
-				).block();
+					if (response == null) {
+						throw new RuntimeException(
+							"Unable to get authorization");
+					}
 
-				if (response == null) {
-					throw new RuntimeException("Unable to get authorization");
-				}
+					return response;
+				},
+				(retryCount, maxRetries, exception) -> {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							StringUtil.combine(
+								"Unable to post to ", url, ". Retry attempt ",
+								retryCount, " of ", maxRetries));
+					}
+				});
 
-				return response;
-			}
-
-			@Override
-			protected String getRetryMessage(int retryCount) {
-				return StringUtil.combine(
-					"Unable to post to ", url, ". Retry attempt ", retryCount,
-					" of ", maxRetries);
-			}
-
-		};
-
-		return retryable.executeWithRetries();
+		return unsafeSupplier.get();
 	}
 
 	public String requestPatch(URL url, JSONObject requestJSONObject) {
@@ -119,43 +118,41 @@ public class GitHubClient {
 		String gitHubURL = urlString.replaceAll(
 			"https://api\\.github\\.com", _gitHubProxyURL);
 
-		Retryable<String> retryable = new BaseRetryable<String>() {
+		UnsafeSupplier<String, RuntimeException> unsafeSupplier =
+			new RetryableUnsafeSupplier<>(
+				() -> {
+					String response = WebClient.create(
+						gitHubURL
+					).patch(
+					).accept(
+						MediaType.APPLICATION_JSON
+					).contentType(
+						MediaType.APPLICATION_JSON
+					).header(
+						"Authorization", _getAuthorization()
+					).body(
+						BodyInserters.fromValue(requestJSONObject.toString())
+					).retrieve(
+					).bodyToMono(
+						String.class
+					).block();
 
-			@Override
-			public String execute() {
-				String response = WebClient.create(
-					gitHubURL
-				).patch(
-				).accept(
-					MediaType.APPLICATION_JSON
-				).contentType(
-					MediaType.APPLICATION_JSON
-				).header(
-					"Authorization", _getAuthorization()
-				).body(
-					BodyInserters.fromValue(requestJSONObject.toString())
-				).retrieve(
-				).bodyToMono(
-					String.class
-				).block();
+					if (response == null) {
+						throw new RuntimeException("No response");
+					}
 
-				if (response == null) {
-					throw new RuntimeException("No response");
-				}
+					return response;
+				},
+				(retryCount, maxRetries, exception) -> {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							StringUtil.combine(
+								"Unable to post to ", url, ". Retry attempt ",
+								retryCount, " of ", maxRetries));
+					}
+				});
 
-				return response;
-			}
-
-			@Override
-			protected String getRetryMessage(int retryCount) {
-				return StringUtil.combine(
-					"Unable to post to ", url, ". Retry attempt ", retryCount,
-					" of ", maxRetries);
-			}
-
-		};
-
-		return retryable.executeWithRetries();
+		return unsafeSupplier.get();
 	}
 
 	public String requestPost(URL url, JSONObject requestJSONObject) {
@@ -164,43 +161,41 @@ public class GitHubClient {
 		String gitHubURL = urlString.replaceAll(
 			"https://api\\.github\\.com", _gitHubProxyURL);
 
-		Retryable<String> retryable = new BaseRetryable<String>() {
+		UnsafeSupplier<String, RuntimeException> unsafeSupplier =
+			new RetryableUnsafeSupplier<>(
+				() -> {
+					String response = WebClient.create(
+						gitHubURL
+					).post(
+					).accept(
+						MediaType.APPLICATION_JSON
+					).contentType(
+						MediaType.APPLICATION_JSON
+					).header(
+						"Authorization", _getAuthorization()
+					).body(
+						BodyInserters.fromValue(requestJSONObject.toString())
+					).retrieve(
+					).bodyToMono(
+						String.class
+					).block();
 
-			@Override
-			public String execute() {
-				String response = WebClient.create(
-					gitHubURL
-				).post(
-				).accept(
-					MediaType.APPLICATION_JSON
-				).contentType(
-					MediaType.APPLICATION_JSON
-				).header(
-					"Authorization", _getAuthorization()
-				).body(
-					BodyInserters.fromValue(requestJSONObject.toString())
-				).retrieve(
-				).bodyToMono(
-					String.class
-				).block();
+					if (response == null) {
+						throw new RuntimeException("No response");
+					}
 
-				if (response == null) {
-					throw new RuntimeException("No response");
-				}
+					return response;
+				},
+				(retryCount, maxRetries, exception) -> {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							StringUtil.combine(
+								"Unable to post to ", url, ". Retry attempt ",
+								retryCount, " of ", maxRetries));
+					}
+				});
 
-				return response;
-			}
-
-			@Override
-			protected String getRetryMessage(int retryCount) {
-				return StringUtil.combine(
-					"Unable to post to ", url, ". Retry attempt ", retryCount,
-					" of ", maxRetries);
-			}
-
-		};
-
-		return retryable.executeWithRetries();
+		return unsafeSupplier.get();
 	}
 
 	public String requestPut(URL url, JSONObject requestJSONObject) {
@@ -209,43 +204,41 @@ public class GitHubClient {
 		String gitHubURL = urlString.replaceAll(
 			"https://api\\.github\\.com", _gitHubProxyURL);
 
-		Retryable<String> retryable = new BaseRetryable<String>() {
+		UnsafeSupplier<String, RuntimeException> unsafeSupplier =
+			new RetryableUnsafeSupplier<>(
+				() -> {
+					String response = WebClient.create(
+						gitHubURL
+					).put(
+					).accept(
+						MediaType.APPLICATION_JSON
+					).contentType(
+						MediaType.APPLICATION_JSON
+					).header(
+						"Authorization", _getAuthorization()
+					).body(
+						BodyInserters.fromValue(requestJSONObject.toString())
+					).retrieve(
+					).bodyToMono(
+						String.class
+					).block();
 
-			@Override
-			public String execute() {
-				String response = WebClient.create(
-					gitHubURL
-				).put(
-				).accept(
-					MediaType.APPLICATION_JSON
-				).contentType(
-					MediaType.APPLICATION_JSON
-				).header(
-					"Authorization", _getAuthorization()
-				).body(
-					BodyInserters.fromValue(requestJSONObject.toString())
-				).retrieve(
-				).bodyToMono(
-					String.class
-				).block();
+					if (response == null) {
+						throw new RuntimeException("No response");
+					}
 
-				if (response == null) {
-					throw new RuntimeException("No response");
-				}
+					return response;
+				},
+				(retryCount, maxRetries, exception) -> {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							StringUtil.combine(
+								"Unable to post to ", url, ". Retry attempt ",
+								retryCount, " of ", maxRetries));
+					}
+				});
 
-				return response;
-			}
-
-			@Override
-			protected String getRetryMessage(int retryCount) {
-				return StringUtil.combine(
-					"Unable to post to ", url, ". Retry attempt ", retryCount,
-					" of ", maxRetries);
-			}
-
-		};
-
-		return retryable.executeWithRetries();
+		return unsafeSupplier.get();
 	}
 
 	private String _getAuthorization() {

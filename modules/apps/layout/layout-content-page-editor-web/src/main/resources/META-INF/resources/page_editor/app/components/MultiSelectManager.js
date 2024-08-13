@@ -10,6 +10,7 @@ import {
 	ENTER_KEY_CODE,
 	ESCAPE_KEY_CODE,
 	META_KEY_CODE,
+	SHIFT_KEY_CODE,
 } from '../config/constants/keyboardCodes';
 import {MULTI_SELECT_TYPES} from '../config/constants/multiSelectTypes';
 import {
@@ -18,16 +19,25 @@ import {
 	useMultiSelectIsActivated,
 	useSelectItem,
 } from '../contexts/ControlsContext';
+import {useSelector} from '../contexts/StoreContext';
 import isCtrlOrMeta from '../utils/isCtrlOrMeta';
 
 export default function MultiSelectManager() {
 	const activeItemIds = useActiveItemIds();
 	const activateMultiSelect = useActivateMultiSelect();
 	const keymapRef = useRef(null);
+	const layoutData = useSelector((state) => state.layoutData);
 	const multiSelectIsActivated = useMultiSelectIsActivated();
 	const selectItem = useSelectItem();
 
 	keymapRef.current = {
+		rangeMuliSelect: {
+			action: () => {
+				activateMultiSelect(MULTI_SELECT_TYPES.range);
+			},
+			disableKeyCombination: (event) => event.key === SHIFT_KEY_CODE,
+			keyCombination: (event) => event.shiftKey,
+		},
 		simpleMultiSelect: {
 			action: () => {
 				activateMultiSelect(MULTI_SELECT_TYPES.simple);
@@ -93,6 +103,7 @@ export default function MultiSelectManager() {
 		activateMultiSelect,
 		multiSelectIsActivated,
 		selectItem,
+		layoutData,
 	]);
 
 	return null;

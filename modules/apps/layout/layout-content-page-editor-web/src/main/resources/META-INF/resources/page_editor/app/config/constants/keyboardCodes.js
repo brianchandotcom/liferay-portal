@@ -35,6 +35,8 @@ export const R_KEY_CODE = 'KeyR';
 
 export const S_KEY_CODE = 'KeyS';
 
+export const SHIFT_KEY_CODE = 'Shift';
+
 export const SPACE_KEY_CODE = 'Space';
 
 export const TAB_KEY_CODE = 'Tab';

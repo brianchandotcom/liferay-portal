@@ -1,0 +1,10 @@
+{
+	"contentSubtype": {
+		"subtypeId": 30579,
+		"subtypeKey": "BASIC-WEB-CONTENT"
+	},
+	"contentType": {
+		"className": "com.liferay.journal.model.JournalArticle"
+	},
+	"name": "Basic Web Content Display Page Template Entry"
+}

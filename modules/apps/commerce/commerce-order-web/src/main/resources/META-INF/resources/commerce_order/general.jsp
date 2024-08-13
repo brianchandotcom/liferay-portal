@@ -32,6 +32,41 @@ boolean hasPermission = commerceOrderEditDisplayContext.hasModelPermission(comme
 		>
 			<div class="row vertically-divided">
 				<div class="col-xl-3">
+					<liferay-portlet:renderURL var="editNameURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+						<portlet:param name="mvcRenderCommandName" value="/commerce_order/edit_commerce_order_name" />
+						<portlet:param name="commerceOrderId" value="<%= String.valueOf(commerceOrderEditDisplayContext.getCommerceOrderId()) %>" />
+					</liferay-portlet:renderURL>
+
+					<%
+					String name = commerceOrder.getName();
+					%>
+
+					<commerce-ui:info-box
+						actionContext='<%=
+							HashMapBuilder.<String, Object>put(
+								"namespace", liferayPortletResponse.getNamespace()
+							).put(
+								"refreshOnClose", true
+							).put(
+								"size", "default"
+							).build()
+						%>'
+						actionLabel='<%= hasPermission ? LanguageUtil.get(request, Validator.isNull(name) ? "add" : "edit") : null %>'
+						actionUrl="<%= hasPermission ? editNameURL: null %>"
+						elementClasses="py-3"
+						title='<%= LanguageUtil.get(request, "name") %>'
+					>
+						<c:choose>
+							<c:when test="<%= Validator.isNull(name) %>">
+								<span class="text-muted">
+									<liferay-ui:message key="click-add-to-insert" />
+								</span>
+							</c:when>
+							<c:otherwise>
+								<%= HtmlUtil.escape(name) %>
+							</c:otherwise>
+						</c:choose>
+					</commerce-ui:info-box>
 
 					<%
 					AccountEntry accountEntry = commerceOrder.getAccountEntry();

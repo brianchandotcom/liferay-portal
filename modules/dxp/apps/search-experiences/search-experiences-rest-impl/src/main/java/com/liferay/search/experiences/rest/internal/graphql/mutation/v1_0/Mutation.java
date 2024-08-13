@@ -17,12 +17,9 @@ import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTa
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.search.experiences.rest.dto.v1_0.EmbeddingProviderConfiguration;
-import com.liferay.search.experiences.rest.dto.v1_0.EmbeddingProviderValidationResult;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPElement;
 import com.liferay.search.experiences.rest.dto.v1_0.SearchResponse;
-import com.liferay.search.experiences.rest.resource.v1_0.EmbeddingProviderValidationResultResource;
 import com.liferay.search.experiences.rest.resource.v1_0.FieldMappingInfoResource;
 import com.liferay.search.experiences.rest.resource.v1_0.KeywordQueryContributorResource;
 import com.liferay.search.experiences.rest.resource.v1_0.ModelPrefilterContributorResource;
@@ -52,15 +49,6 @@ import org.osgi.service.component.ComponentServiceObjects;
  */
 @Generated("")
 public class Mutation {
-
-	public static void
-		setEmbeddingProviderValidationResultResourceComponentServiceObjects(
-			ComponentServiceObjects<EmbeddingProviderValidationResultResource>
-				embeddingProviderValidationResultResourceComponentServiceObjects) {
-
-		_embeddingProviderValidationResultResourceComponentServiceObjects =
-			embeddingProviderValidationResultResourceComponentServiceObjects;
-	}
 
 	public static void setFieldMappingInfoResourceComponentServiceObjects(
 		ComponentServiceObjects<FieldMappingInfoResource>
@@ -144,23 +132,6 @@ public class Mutation {
 
 		_searchableAssetNameResourceComponentServiceObjects =
 			searchableAssetNameResourceComponentServiceObjects;
-	}
-
-	@GraphQLField
-	public EmbeddingProviderValidationResult
-			createTextEmbeddingValidateProviderConfiguration(
-				@GraphQLName("embeddingProviderConfiguration")
-					EmbeddingProviderConfiguration
-						embeddingProviderConfiguration)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_embeddingProviderValidationResultResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			embeddingProviderValidationResultResource ->
-				embeddingProviderValidationResultResource.
-					postTextEmbeddingValidateProviderConfiguration(
-						embeddingProviderConfiguration));
 	}
 
 	@GraphQLField
@@ -654,26 +625,6 @@ public class Mutation {
 	}
 
 	private void _populateResourceContext(
-			EmbeddingProviderValidationResultResource
-				embeddingProviderValidationResultResource)
-		throws Exception {
-
-		embeddingProviderValidationResultResource.setContextAcceptLanguage(
-			_acceptLanguage);
-		embeddingProviderValidationResultResource.setContextCompany(_company);
-		embeddingProviderValidationResultResource.setContextHttpServletRequest(
-			_httpServletRequest);
-		embeddingProviderValidationResultResource.setContextHttpServletResponse(
-			_httpServletResponse);
-		embeddingProviderValidationResultResource.setContextUriInfo(_uriInfo);
-		embeddingProviderValidationResultResource.setContextUser(_user);
-		embeddingProviderValidationResultResource.setGroupLocalService(
-			_groupLocalService);
-		embeddingProviderValidationResultResource.setRoleLocalService(
-			_roleLocalService);
-	}
-
-	private void _populateResourceContext(
 			FieldMappingInfoResource fieldMappingInfoResource)
 		throws Exception {
 
@@ -899,9 +850,6 @@ public class Mutation {
 			_vulcanBatchEngineImportTaskResource);
 	}
 
-	private static ComponentServiceObjects
-		<EmbeddingProviderValidationResultResource>
-			_embeddingProviderValidationResultResourceComponentServiceObjects;
 	private static ComponentServiceObjects<FieldMappingInfoResource>
 		_fieldMappingInfoResourceComponentServiceObjects;
 	private static ComponentServiceObjects<KeywordQueryContributorResource>

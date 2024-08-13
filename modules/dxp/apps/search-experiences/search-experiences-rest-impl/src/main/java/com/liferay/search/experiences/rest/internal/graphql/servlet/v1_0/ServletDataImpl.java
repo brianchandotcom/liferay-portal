@@ -9,10 +9,8 @@ import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 import com.liferay.search.experiences.rest.internal.graphql.mutation.v1_0.Mutation;
 import com.liferay.search.experiences.rest.internal.graphql.query.v1_0.Query;
-import com.liferay.search.experiences.rest.internal.resource.v1_0.EmbeddingProviderValidationResultResourceImpl;
 import com.liferay.search.experiences.rest.internal.resource.v1_0.FieldMappingInfoResourceImpl;
 import com.liferay.search.experiences.rest.internal.resource.v1_0.KeywordQueryContributorResourceImpl;
-import com.liferay.search.experiences.rest.internal.resource.v1_0.MLModelResourceImpl;
 import com.liferay.search.experiences.rest.internal.resource.v1_0.ModelPrefilterContributorResourceImpl;
 import com.liferay.search.experiences.rest.internal.resource.v1_0.QueryPrefilterContributorResourceImpl;
 import com.liferay.search.experiences.rest.internal.resource.v1_0.SXPBlueprintResourceImpl;
@@ -22,10 +20,8 @@ import com.liferay.search.experiences.rest.internal.resource.v1_0.SearchIndexRes
 import com.liferay.search.experiences.rest.internal.resource.v1_0.SearchResponseResourceImpl;
 import com.liferay.search.experiences.rest.internal.resource.v1_0.SearchableAssetNameDisplayResourceImpl;
 import com.liferay.search.experiences.rest.internal.resource.v1_0.SearchableAssetNameResourceImpl;
-import com.liferay.search.experiences.rest.resource.v1_0.EmbeddingProviderValidationResultResource;
 import com.liferay.search.experiences.rest.resource.v1_0.FieldMappingInfoResource;
 import com.liferay.search.experiences.rest.resource.v1_0.KeywordQueryContributorResource;
-import com.liferay.search.experiences.rest.resource.v1_0.MLModelResource;
 import com.liferay.search.experiences.rest.resource.v1_0.ModelPrefilterContributorResource;
 import com.liferay.search.experiences.rest.resource.v1_0.QueryPrefilterContributorResource;
 import com.liferay.search.experiences.rest.resource.v1_0.SXPBlueprintResource;
@@ -58,9 +54,6 @@ public class ServletDataImpl implements ServletData {
 
 	@Activate
 	public void activate(BundleContext bundleContext) {
-		Mutation.
-			setEmbeddingProviderValidationResultResourceComponentServiceObjects(
-				_embeddingProviderValidationResultResourceComponentServiceObjects);
 		Mutation.setFieldMappingInfoResourceComponentServiceObjects(
 			_fieldMappingInfoResourceComponentServiceObjects);
 		Mutation.setKeywordQueryContributorResourceComponentServiceObjects(
@@ -87,8 +80,6 @@ public class ServletDataImpl implements ServletData {
 			_fieldMappingInfoResourceComponentServiceObjects);
 		Query.setKeywordQueryContributorResourceComponentServiceObjects(
 			_keywordQueryContributorResourceComponentServiceObjects);
-		Query.setMLModelResourceComponentServiceObjects(
-			_mlModelResourceComponentServiceObjects);
 		Query.setModelPrefilterContributorResourceComponentServiceObjects(
 			_modelPrefilterContributorResourceComponentServiceObjects);
 		Query.setQueryPrefilterContributorResourceComponentServiceObjects(
@@ -142,11 +133,6 @@ public class ServletDataImpl implements ServletData {
 		_resourceMethodObjectValuePairs =
 			new HashMap<String, ObjectValuePair<Class<?>, String>>() {
 				{
-					put(
-						"mutation#createTextEmbeddingValidateProviderConfiguration",
-						new ObjectValuePair<>(
-							EmbeddingProviderValidationResultResourceImpl.class,
-							"postTextEmbeddingValidateProviderConfiguration"));
 					put(
 						"mutation#createFieldMappingInfosPageExportBatch",
 						new ObjectValuePair<>(
@@ -308,11 +294,6 @@ public class ServletDataImpl implements ServletData {
 							KeywordQueryContributorResourceImpl.class,
 							"getKeywordQueryContributorsPage"));
 					put(
-						"query#sentenceTransformerMLModels",
-						new ObjectValuePair<>(
-							MLModelResourceImpl.class,
-							"getSentenceTransformerMLModelsPage"));
-					put(
 						"query#modelPrefilterContributors",
 						new ObjectValuePair<>(
 							ModelPrefilterContributorResourceImpl.class,
@@ -409,10 +390,6 @@ public class ServletDataImpl implements ServletData {
 			};
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<EmbeddingProviderValidationResultResource>
-		_embeddingProviderValidationResultResourceComponentServiceObjects;
-
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<FieldMappingInfoResource>
 		_fieldMappingInfoResourceComponentServiceObjects;
 
@@ -451,10 +428,6 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<SearchableAssetNameResource>
 		_searchableAssetNameResourceComponentServiceObjects;
-
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<MLModelResource>
-		_mlModelResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<SearchableAssetNameDisplayResource>

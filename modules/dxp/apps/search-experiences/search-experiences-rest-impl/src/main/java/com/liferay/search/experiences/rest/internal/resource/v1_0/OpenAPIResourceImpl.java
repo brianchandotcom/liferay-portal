@@ -85,13 +85,9 @@ public class OpenAPIResourceImpl {
 
 	private final Set<Class<?>> _resourceClasses = new HashSet<Class<?>>() {
 		{
-			add(EmbeddingProviderValidationResultResourceImpl.class);
-
 			add(FieldMappingInfoResourceImpl.class);
 
 			add(KeywordQueryContributorResourceImpl.class);
-
-			add(MLModelResourceImpl.class);
 
 			add(ModelPrefilterContributorResourceImpl.class);
 

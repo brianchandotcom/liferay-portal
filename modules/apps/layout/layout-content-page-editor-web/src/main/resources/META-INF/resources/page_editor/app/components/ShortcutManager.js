@@ -279,7 +279,7 @@ export default function ShortcutManager() {
 				!isInteractiveElement(event.target) &&
 				activeLayoutDataItem,
 			isKeyCombination: (event) =>
-				event.shiftKey && event.key === 'Enter',
+				event.shiftKey && event.altKey && event.key === 'Enter',
 		},
 		undo: {
 			action: undo,

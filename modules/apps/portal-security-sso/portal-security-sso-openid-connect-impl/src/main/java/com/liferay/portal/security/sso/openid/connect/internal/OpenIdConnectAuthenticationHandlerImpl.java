@@ -148,10 +148,7 @@ public class OpenIdConnectAuthenticationHandlerImpl
 
 			Map<String, Object> claims = jwtClaimsSet.toJSONObject();
 
-			List<String> emails = jwtClaimsSet.getStringListClaim("emails");
-
-			claims.put("email", emails.get(0));
-
+			claims.put("email", jwtClaimsSet.getStringClaim("email"));
 			claims.put(
 				"family_name", jwtClaimsSet.getStringClaim("family_name"));
 			claims.put("given_name", jwtClaimsSet.getStringClaim("given_name"));

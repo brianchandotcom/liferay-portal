@@ -185,6 +185,8 @@ public class CommercePriceEntryLocalServiceImpl
 		commercePriceEntry.setExpirationDate(expirationDate);
 		commercePriceEntry.setPrice(price);
 		commercePriceEntry.setPriceOnApplication(priceOnApplication);
+		commercePriceEntry.setPricingQuantity(
+			_getPricingQuantity(cpInstanceId, unitOfMeasureKey));
 		commercePriceEntry.setPromoPrice(promoPrice);
 		commercePriceEntry.setQuantity(
 			_getQuantity(cpInstanceId, unitOfMeasureKey));
@@ -729,6 +731,8 @@ public class CommercePriceEntryLocalServiceImpl
 		commercePriceEntry.setExpirationDate(expirationDate);
 		commercePriceEntry.setPrice(price);
 		commercePriceEntry.setPriceOnApplication(priceOnApplication);
+		commercePriceEntry.setPricingQuantity(
+			_getPricingQuantity(cpInstanceId, unitOfMeasureKey));
 		commercePriceEntry.setPromoPrice(promoPrice);
 		commercePriceEntry.setQuantity(
 			_getQuantity(cpInstanceId, unitOfMeasureKey));
@@ -1007,6 +1011,24 @@ public class CommercePriceEntryLocalServiceImpl
 				}
 			)
 		);
+	}
+
+	private BigDecimal _getPricingQuantity(
+		long cpInstanceId, String unitOfMeasureKey) {
+
+		if (Validator.isBlank(unitOfMeasureKey) || (cpInstanceId == 0)) {
+			return null;
+		}
+
+		CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
+			_cpInstanceUnitOfMeasureLocalService.fetchCPInstanceUnitOfMeasure(
+				cpInstanceId, unitOfMeasureKey);
+
+		if (cpInstanceUnitOfMeasure == null) {
+			return null;
+		}
+
+		return cpInstanceUnitOfMeasure.getPricingQuantity();
 	}
 
 	private BigDecimal _getQuantity(

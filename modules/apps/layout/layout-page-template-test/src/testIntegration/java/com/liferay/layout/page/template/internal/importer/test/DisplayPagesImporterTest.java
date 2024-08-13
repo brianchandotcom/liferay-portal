@@ -16,6 +16,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
@@ -103,13 +104,28 @@ public class DisplayPagesImporterTest {
 			"display-page-templates-with-collections");
 
 		Assert.assertEquals(
-			2,
-			_layoutPageTemplateCollectionLocalService.
-				getLayoutPageTemplateCollectionsCount(
+			4,
+			_layoutPageTemplateEntryService.
+				getLayoutPageCollectionsAndLayoutPageTemplateEntriesCount(
 					_group.getGroupId(),
 					LayoutPageTemplateConstants.
 						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 					LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE));
+
+		Assert.assertNotNull(
+			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
+				_group.getGroupId(),
+				LayoutPageTemplateConstants.
+					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+				"Basic Web Content Display Page Template Entry",
+				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE));
+		Assert.assertNotNull(
+			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
+				_group.getGroupId(),
+				LayoutPageTemplateConstants.
+					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+				"Product Display Page Template Entry",
+				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE));
 
 		_assertLayoutPageTemplateCollections(
 			_layoutPageTemplateCollectionLocalService.
@@ -250,22 +266,40 @@ public class DisplayPagesImporterTest {
 		Assert.assertNotNull(layoutPageTemplateCollection);
 
 		Assert.assertEquals(
-			2,
-			_layoutPageTemplateCollectionLocalService.
-				getLayoutPageTemplateCollectionsCount(
+			3,
+			_layoutPageTemplateEntryService.
+				getLayoutPageCollectionsAndLayoutPageTemplateEntriesCount(
 					_group.getGroupId(),
 					layoutPageTemplateCollection.
 						getLayoutPageTemplateCollectionId(),
 					LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE));
 
 		Assert.assertNotNull(
+			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
+				_group.getGroupId(),
+				layoutPageTemplateCollection.
+					getLayoutPageTemplateCollectionId(),
+				"Product Display Page Template Entry",
+				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE));
+
+		LayoutPageTemplateCollection blogsDisplaylayoutPageTemplateCollection =
 			_layoutPageTemplateCollectionLocalService.
 				fetchLayoutPageTemplateCollection(
 					_group.getGroupId(),
 					"Blogs Display Page Template Collection",
 					layoutPageTemplateCollection.
 						getLayoutPageTemplateCollectionId(),
-					LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE));
+					LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE);
+
+		Assert.assertNotNull(blogsDisplaylayoutPageTemplateCollection);
+
+		Assert.assertNotNull(
+			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
+				_group.getGroupId(),
+				blogsDisplaylayoutPageTemplateCollection.
+					getLayoutPageTemplateCollectionId(),
+				"Blogs Display Page Template Entry",
+				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE));
 
 		LayoutPageTemplateCollection
 			webContentDisplaylayoutPageTemplateCollection =
@@ -281,21 +315,42 @@ public class DisplayPagesImporterTest {
 
 		Assert.assertEquals(
 			1,
-			_layoutPageTemplateCollectionLocalService.
-				getLayoutPageTemplateCollectionsCount(
+			_layoutPageTemplateEntryService.
+				getLayoutPageCollectionsAndLayoutPageTemplateEntriesCount(
 					_group.getGroupId(),
 					webContentDisplaylayoutPageTemplateCollection.
 						getLayoutPageTemplateCollectionId(),
 					LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE));
 
+		LayoutPageTemplateCollection
+			basicWebContentDisplaylayoutPageTemplateCollection =
+				_layoutPageTemplateCollectionLocalService.
+					fetchLayoutPageTemplateCollection(
+						_group.getGroupId(),
+						"Basic Web Content Display Page Template Collection",
+						webContentDisplaylayoutPageTemplateCollection.
+							getLayoutPageTemplateCollectionId(),
+						LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE);
+
 		Assert.assertNotNull(
-			_layoutPageTemplateCollectionLocalService.
-				fetchLayoutPageTemplateCollection(
+			basicWebContentDisplaylayoutPageTemplateCollection);
+
+		Assert.assertEquals(
+			1,
+			_layoutPageTemplateEntryService.
+				getLayoutPageCollectionsAndLayoutPageTemplateEntriesCount(
 					_group.getGroupId(),
-					"Basic Web Content Display Page Template Collection",
-					webContentDisplaylayoutPageTemplateCollection.
+					basicWebContentDisplaylayoutPageTemplateCollection.
 						getLayoutPageTemplateCollectionId(),
 					LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE));
+
+		Assert.assertNotNull(
+			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
+				_group.getGroupId(),
+				basicWebContentDisplaylayoutPageTemplateCollection.
+					getLayoutPageTemplateCollectionId(),
+				"Basic Web Content Display Page Template Entry",
+				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE));
 	}
 
 	private File _getFile(String resourcePath) throws Exception {
@@ -412,6 +467,9 @@ public class DisplayPagesImporterTest {
 	@Inject
 	private LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
+
+	@Inject
+	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;
 
 	@Inject
 	private LayoutPageTemplateStructureLocalService

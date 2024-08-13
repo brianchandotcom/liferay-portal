@@ -10,6 +10,7 @@ import com.liferay.client.extension.internal.service.taglib.util.ClientExtension
 import com.liferay.client.extension.model.ClientExtensionEntryRel;
 import com.liferay.client.extension.type.GlobalCSSCET;
 import com.liferay.client.extension.type.manager.CETManager;
+import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProviderUtil;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -55,8 +56,12 @@ public class ClientExtensionTopHeadDynamicInclude implements DynamicInclude {
 				clientExtensionEntryRel.getCompanyId(),
 				clientExtensionEntryRel.getCETExternalReferenceCode());
 
+			printWriter.print("<link");
 			printWriter.print(
-				"<link data-senna-track=\"temporary\" href=\"" +
+				ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
+					httpServletRequest));
+			printWriter.print(
+				" data-senna-track=\"temporary\" href=\"" +
 					globalCSSCET.getURL() +
 						"\" rel=\"stylesheet\" type=\"text/css\" />");
 		}

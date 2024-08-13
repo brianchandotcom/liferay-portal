@@ -1374,7 +1374,9 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 				layoutPageTemplateCollection);
 
 			_processDisplayPageLayoutPageTemplateCollections(
-				groupId, layoutPageTemplateCollectionId,
+				groupId,
+				layoutPageTemplateCollection.
+					getLayoutPageTemplateCollectionId(),
 				layoutPageTemplateCollectionsMap, layoutsImporterResultEntries,
 				layoutsImportStrategy,
 				displayPageLayoutPageTemplateCollectionPath, zipReader);

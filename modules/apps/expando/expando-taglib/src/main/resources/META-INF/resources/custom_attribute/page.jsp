@@ -594,7 +594,7 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 										for (String curDefaultValue : (String[])defaultValue) {
 										%>
 
-											<aui:option label="<%= HtmlUtil.escape(curDefaultValue) %>" selected="<%= (curValue.length > 0) && ArrayUtil.contains(curValue, curDefaultValue) %>" value="<%= HtmlUtil.escape(curDefaultValue) %>" />
+											<aui:option label="<%= HtmlUtil.escape(curDefaultValue) %>" selected="<%= (curValue.length > 0) && ArrayUtil.contains(curValue, HtmlUtil.escape(curDefaultValue)) %>" value="<%= HtmlUtil.escape(curDefaultValue) %>" />
 
 										<%
 										}

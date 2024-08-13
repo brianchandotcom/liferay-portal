@@ -102,12 +102,16 @@ public class NetvibesServlet extends HttpServlet {
 			PropsValues.WIDGET_SERVLET_MAPPING);
 		widgetURL = HtmlUtil.escapeJS(widgetURL);
 
-		StringBundler sb = new StringBundler(28);
+		StringBundler sb = new StringBundler(30);
 
 		sb.append("<!DOCTYPE html>");
 		sb.append("<html>");
 		sb.append("<head>");
-		sb.append("<link href=\"");
+		sb.append("<link");
+		sb.append(
+			ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
+				httpServletRequest));
+		sb.append(" href=\"");
 		sb.append(_NETVIBES_CSS);
 		sb.append("\" rel=\"stylesheet\" type=\"text/css\" ");
 		sb.append("/>");

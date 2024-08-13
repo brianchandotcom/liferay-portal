@@ -7,6 +7,7 @@ package com.liferay.dynamic.data.mapping.web.internal.servlet.taglib;
 
 import com.liferay.dynamic.data.mapping.web.internal.portlet.DDMPortlet;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProviderUtil;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -42,14 +43,18 @@ public class DDMWebTopHeadDynamicInclude extends BaseDynamicInclude {
 
 		PrintWriter printWriter = httpServletResponse.getWriter();
 
-		String content = "<link href=\"".concat(
+		printWriter.print("<link");
+		printWriter.print(
+			ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
+				httpServletRequest));
+		printWriter.print(" href=\"");
+		printWriter.print(
 			_portal.getStaticResourceURL(
 				httpServletRequest,
 				StringBundler.concat(
 					themeDisplay.getCDNBaseURL(), _postfix, "/css/main.css")));
 
-		printWriter.println(
-			content.concat("\" rel=\"stylesheet\" type = \"text/css\" />"));
+		printWriter.println("\" rel=\"stylesheet\" type = \"text/css\" />");
 	}
 
 	@Override

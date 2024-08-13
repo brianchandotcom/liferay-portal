@@ -34,6 +34,7 @@ import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProviderUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
@@ -133,7 +134,8 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 					_layoutSEOLinkManager.getLocalizedLayoutSEOLinks(
 						layout, locale, canonicalURL, availableLocales)) {
 
-				printWriter.println(_addLinkTag(layoutSEOLink));
+				printWriter.println(
+					_addLinkTag(httpServletRequest, layoutSEOLink));
 			}
 
 			LayoutSEOEntry layoutSEOEntry =
@@ -350,11 +352,16 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 		_titleProvider = new TitleProvider(_layoutSEOLinkManager);
 	}
 
-	private String _addLinkTag(LayoutSEOLink layoutSEOLink) {
-		StringBundler sb = new StringBundler(10);
+	private String _addLinkTag(
+		HttpServletRequest httpServletRequest, LayoutSEOLink layoutSEOLink) {
 
-		sb.append("<link data-senna-track=\"temporary\" ");
-		sb.append("href=\"");
+		StringBundler sb = new StringBundler(11);
+
+		sb.append("<link");
+		sb.append(
+			ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
+				httpServletRequest));
+		sb.append(" data-senna-track=\"temporary\" href=\"");
 		sb.append(layoutSEOLink.getHref());
 		sb.append("\" ");
 

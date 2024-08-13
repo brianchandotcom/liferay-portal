@@ -6326,13 +6326,13 @@ public class ObjectEntryResourceTest {
 
 		JSONAssert.assertEquals(
 			JSONUtil.put(
-				_OBJECT_FIELD_NAME_LONG_TEXT, ""
+				_OBJECT_FIELD_NAME_LONG_TEXT, "longTextEng"
 			).put(
-				_OBJECT_FIELD_NAME_RICH_TEXT, ""
+				_OBJECT_FIELD_NAME_RICH_TEXT, "<p>richTextEng</p>"
 			).put(
-				_OBJECT_FIELD_NAME_RICH_TEXT + "RawText", ""
+				_OBJECT_FIELD_NAME_RICH_TEXT + "RawText", "richTextEng"
 			).put(
-				_OBJECT_FIELD_NAME_TEXT, ""
+				_OBJECT_FIELD_NAME_TEXT, "textEng"
 			).toString(),
 			HTTPTestUtil.invokeToJSONObject(
 				null,

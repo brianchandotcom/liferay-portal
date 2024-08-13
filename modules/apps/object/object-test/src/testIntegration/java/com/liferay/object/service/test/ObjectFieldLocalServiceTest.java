@@ -1082,7 +1082,7 @@ public class ObjectFieldLocalServiceTest {
 		ObjectField localizedSystemObjectField = _addOrUpdateSystemObjectField(
 			null, modifiableSystemObjectDefinition.getObjectDefinitionId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), false,
-			false, LocalizedMapUtil.getLocalizedMap("Zebra"), true, "zebra",
+			false, LocalizedMapUtil.getLocalizedMap("Charlie"), true, "charlie",
 			false);
 
 		Assert.assertTrue(localizedSystemObjectField.isLocalized());
@@ -1099,14 +1099,14 @@ public class ObjectFieldLocalServiceTest {
 
 		try {
 			_assertSystemObjectField(
-				"able_", true, true,
-				LocalizedMapUtil.getLocalizedMap("Charlie"), true,
+				"able_", true, true, LocalizedMapUtil.getLocalizedMap("Dog"),
+				true,
 				_addOrUpdateSystemObjectField(
 					systemObjectField.getExternalReferenceCode(),
 					modifiableSystemObjectDefinition.getObjectDefinitionId(),
 					RandomTestUtil.randomString(),
 					RandomTestUtil.randomString(), false, false,
-					LocalizedMapUtil.getLocalizedMap("Charlie"), false, "able",
+					LocalizedMapUtil.getLocalizedMap("Dog"), false, "able",
 					false));
 		}
 		finally {

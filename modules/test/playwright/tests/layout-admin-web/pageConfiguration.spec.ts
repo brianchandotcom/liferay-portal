@@ -31,389 +31,406 @@ const test = mergeTests(
 	pagesPagesTest
 );
 
-test('Checks the accessibility of the General page configuration', async ({
-	page,
-}) => {
-	await page.goto('/');
-
-	await page.getByLabel('Configure Page').click();
-
-	await expect(page).toHaveURL(/edit_layout/);
-
-	await checkAccessibility({
+test.describe('General configuration', () => {
+	test('Checks the accessibility of the General page configuration', async ({
 		page,
-		selectors: ['.input-container[aria-label="General"]'],
-	});
-});
+	}) => {
+		await page.goto('/');
 
-test('Can configure an embedded page', async ({
-	apiHelpers,
-	page,
-	pageConfigurationPage,
-	pagesAdminPage,
-	site,
-}) => {
-	await apiHelpers.jsonWebServicesLayout.addLayout({
-		groupId: site.id,
-		options: {
-			type: 'embedded',
-		},
-		title: 'Embedded',
+		await page.getByLabel('Configure Page').click();
+
+		await expect(page).toHaveURL(/edit_layout/);
+
+		await checkAccessibility({
+			page,
+			selectors: ['.input-container[aria-label="General"]'],
+		});
 	});
 
-	await pagesAdminPage.goto(site.friendlyUrlPath);
+	test('Can edit the page name and layout template via pages administration', async ({
+		apiHelpers,
+		page,
+		pageConfigurationPage,
+		pagesAdminPage,
+		site,
+	}) => {
 
-	await pageConfigurationPage.setInputValueAndSave(
-		page.getByLabel('URL').first(),
-		'Embedded',
-		'General',
-		'https://www.google.com'
-	);
-
-	// Check URL was updated
-
-	await pagesAdminPage.goto(site.friendlyUrlPath);
-
-	await pageConfigurationPage.goToSection('Embedded', 'General');
-
-	await expect(page.getByLabel('URL').first()).toHaveValue(
-		'https://www.google.com'
-	);
-});
-
-test('Can configure a full page application', async ({
-	apiHelpers,
-	page,
-	pageConfigurationPage,
-	pagesAdminPage,
-	site,
-}) => {
-	const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
-		groupId: site.id,
-		options: {
-			type: 'full_page_application',
-		},
-		title: 'Full Page Application',
-	});
-
-	await pagesAdminPage.goto(site.friendlyUrlPath);
-
-	await pageConfigurationPage.goToSection('Full Page Application', 'General');
-
-	await selectAndExpectToHaveValue({
-		optionLabel: 'Wiki',
-		select: page.getByLabel('Full Page Application'),
-	});
-
-	await pageConfigurationPage.save();
-
-	// Go to view mode of page
-
-	await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
-
-	await expect(page.getByRole('heading', {name: 'Wiki'})).toBeVisible();
-});
-
-test('Can not select pages from other sites for Link to a Page', async ({
-	apiHelpers,
-	page,
-	pageConfigurationPage,
-	pageSelectorPage,
-	pagesAdminPage,
-	site,
-}) => {
-
-	// Create a widget page and a link to layout page
-
-	const name = getRandomString();
-
-	await apiHelpers.jsonWebServicesLayout.addLayout({
-		groupId: site.id,
-		title: getRandomString(),
-	});
-
-	await apiHelpers.jsonWebServicesLayout.addLayout({
-		groupId: site.id,
-		options: {
-			type: 'link_to_layout',
-		},
-		title: name,
-	});
-
-	// Try to select linked page and check Sites and Libraries
-	// section is not shown
-
-	await pagesAdminPage.goto(site.friendlyUrlPath);
-
-	await pageConfigurationPage.goToSection(name, 'General');
-
-	await clickAndExpectToBeVisible({
-		target: page.locator('.modal-dialog'),
-		trigger: page
-			.locator('.layout-type')
-			.getByRole('button', {name: 'Select'}),
-	});
-
-	const modal = await pageSelectorPage.getModal();
-	await modal.locator('.treeview').waitFor();
-
-	await expect(modal.getByText('Sites and Libraries')).not.toBeVisible();
-});
-
-test(
-	'Can configure a link to page',
-	{
-		tag: '@LPS-159631',
-	},
-	async ({apiHelpers, page, pageConfigurationPage, pagesAdminPage, site}) => {
-
-		// Create widget page
+		// Create page and go to page configuration
 
 		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+			groupId: site.id,
+			title: 'Test Page Title',
+		});
+
+		await pagesAdminPage.goto(site.friendlyUrlPath);
+
+		await pageConfigurationPage.goToSection('Test Page Title', 'General');
+
+		// Fill name and change layout to 1 column
+
+		await pageConfigurationPage.fillName('Test Page Title Edit');
+
+		await page.getByTitle('1 Column', {exact: true}).click();
+
+		// Check card is selected and save
+
+		const card = page.locator('.card.card-interactive').first();
+
+		await expect(card).toHaveClass(/active/);
+
+		await pageConfigurationPage.save();
+
+		// Go to view mode of page and check layout
+
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
+
+		await expect(
+			page.getByRole('heading', {name: 'Test Page Title Edit'})
+		).toBeVisible();
+
+		await expect(page.locator('#layout-column_column-1')).toBeAttached();
+	});
+
+	test('Can not select pages from other sites for Link to a Page', async ({
+		apiHelpers,
+		page,
+		pageConfigurationPage,
+		pageSelectorPage,
+		pagesAdminPage,
+		site,
+	}) => {
+
+		// Create a widget page and a link to layout page
+
+		const name = getRandomString();
+
+		await apiHelpers.jsonWebServicesLayout.addLayout({
 			groupId: site.id,
 			title: getRandomString(),
 		});
 
-		// Create link to URL page
-
-		const linkToURLTitle = getRandomString();
-
 		await apiHelpers.jsonWebServicesLayout.addLayout({
 			groupId: site.id,
 			options: {
-				type: 'url',
+				type: 'link_to_layout',
 			},
-			title: linkToURLTitle,
+			title: name,
 		});
 
-		// Update URL
+		// Try to select linked page and check Sites and Libraries
+		// section is not shown
+
+		await pagesAdminPage.goto(site.friendlyUrlPath);
+
+		await pageConfigurationPage.goToSection(name, 'General');
+
+		await clickAndExpectToBeVisible({
+			target: page.locator('.modal-dialog'),
+			trigger: page
+				.locator('.layout-type')
+				.getByRole('button', {name: 'Select'}),
+		});
+
+		const modal = await pageSelectorPage.getModal();
+		await modal.locator('.treeview').waitFor();
+
+		await expect(modal.getByText('Sites and Libraries')).not.toBeVisible();
+	});
+});
+
+test.describe('Page types configuration', () => {
+	test('Can configure an embedded page', async ({
+		apiHelpers,
+		page,
+		pageConfigurationPage,
+		pagesAdminPage,
+		site,
+	}) => {
+		await apiHelpers.jsonWebServicesLayout.addLayout({
+			groupId: site.id,
+			options: {
+				type: 'embedded',
+			},
+			title: 'Embedded',
+		});
 
 		await pagesAdminPage.goto(site.friendlyUrlPath);
 
 		await pageConfigurationPage.setInputValueAndSave(
 			page.getByLabel('URL').first(),
-			linkToURLTitle,
+			'Embedded',
 			'General',
 			'https://www.google.com'
 		);
 
-		// Navigate to page
-
-		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
-
-		// Check target is not set
-
-		await expect(
-			page.getByRole('menuitem', {name: linkToURLTitle})
-		).not.toHaveAttribute('target');
-
-		// Update specific target to _blank
+		// Check URL was updated
 
 		await pagesAdminPage.goto(site.friendlyUrlPath);
 
-		await pageConfigurationPage.setInputValueAndSave(
-			page.getByLabel('Target', {exact: true}),
-			linkToURLTitle,
-			'General',
-			'_blank'
+		await pageConfigurationPage.goToSection('Embedded', 'General');
+
+		await expect(page.getByLabel('URL').first()).toHaveValue(
+			'https://www.google.com'
+		);
+	});
+
+	test('Can configure a full page application', async ({
+		apiHelpers,
+		page,
+		pageConfigurationPage,
+		pagesAdminPage,
+		site,
+	}) => {
+		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+			groupId: site.id,
+			options: {
+				type: 'full_page_application',
+			},
+			title: 'Full Page Application',
+		});
+
+		await pagesAdminPage.goto(site.friendlyUrlPath);
+
+		await pageConfigurationPage.goToSection(
+			'Full Page Application',
+			'General'
 		);
 
-		// Navigate to page
-
-		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
-
-		// Check target is set to _blank
-
-		await expect(
-			page.getByRole('menuitem', {name: linkToURLTitle})
-		).toHaveAttribute('target', '_blank');
-
-		// Update target type to new tab
-
-		await pagesAdminPage.goto(site.friendlyUrlPath);
-
-		await pageConfigurationPage.goToSection(linkToURLTitle, 'General');
-
 		await selectAndExpectToHaveValue({
-			optionLabel: 'New Tab',
-			select: page.getByLabel('Target type'),
+			optionLabel: 'Wiki',
+			select: page.getByLabel('Full Page Application'),
 		});
 
 		await pageConfigurationPage.save();
 
-		// Navigate to page
+		// Go to view mode of page
 
 		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
 
-		// Check target is set to _blank
+		await expect(page.getByRole('heading', {name: 'Wiki'})).toBeVisible();
+	});
+
+	test('Can configure a panel page', async ({
+		apiHelpers,
+		page,
+		pageConfigurationPage,
+		pagesAdminPage,
+		site,
+	}) => {
+
+		// Create page and go to General configuration
+
+		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+			groupId: site.id,
+			options: {
+				type: 'panel',
+			},
+			title: 'Panel',
+		});
+
+		await pagesAdminPage.goto(site.friendlyUrlPath);
+
+		await pageConfigurationPage.goToSection('Panel', 'General');
+
+		// Select Collaboration application
+
+		await page
+			.locator('.treeview-link[data-id*="collaboration"]')
+			.getByRole('checkbox')
+			.check();
+
+		await pageConfigurationPage.save();
+
+		// Go to view mode of page
+
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
 
 		await expect(
-			page.getByRole('menuitem', {name: linkToURLTitle})
-		).toHaveAttribute('target', '_blank');
-	}
-);
+			page.getByRole('link', {exact: true, name: 'Blogs'})
+		).toBeVisible();
+	});
 
-test('Can configure a panel page', async ({
-	apiHelpers,
-	page,
-	pageConfigurationPage,
-	pagesAdminPage,
-	site,
-}) => {
-
-	// Create page and go to General configuration
-
-	const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
-		groupId: site.id,
-		options: {
-			type: 'panel',
+	test(
+		'Can configure a link to page',
+		{
+			tag: '@LPS-159631',
 		},
-		title: 'Panel',
-	});
+		async ({
+			apiHelpers,
+			page,
+			pageConfigurationPage,
+			pagesAdminPage,
+			site,
+		}) => {
 
-	await pagesAdminPage.goto(site.friendlyUrlPath);
+			// Create widget page
 
-	await pageConfigurationPage.goToSection('Panel', 'General');
+			const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+				groupId: site.id,
+				title: getRandomString(),
+			});
 
-	// Select Collaboration application
+			// Create link to URL page
 
-	await page
-		.locator('.treeview-link[data-id*="collaboration"]')
-		.getByRole('checkbox')
-		.check();
+			const linkToURLTitle = getRandomString();
 
-	await pageConfigurationPage.save();
+			await apiHelpers.jsonWebServicesLayout.addLayout({
+				groupId: site.id,
+				options: {
+					type: 'url',
+				},
+				title: linkToURLTitle,
+			});
 
-	// Go to view mode of page
+			// Update URL
 
-	await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
+			await pagesAdminPage.goto(site.friendlyUrlPath);
 
-	await expect(
-		page.getByRole('link', {exact: true, name: 'Blogs'})
-	).toBeVisible();
+			await pageConfigurationPage.setInputValueAndSave(
+				page.getByLabel('URL').first(),
+				linkToURLTitle,
+				'General',
+				'https://www.google.com'
+			);
+
+			// Navigate to page
+
+			await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
+
+			// Check target is not set
+
+			await expect(
+				page.getByRole('menuitem', {name: linkToURLTitle})
+			).not.toHaveAttribute('target');
+
+			// Update specific target to _blank
+
+			await pagesAdminPage.goto(site.friendlyUrlPath);
+
+			await pageConfigurationPage.setInputValueAndSave(
+				page.getByLabel('Target', {exact: true}),
+				linkToURLTitle,
+				'General',
+				'_blank'
+			);
+
+			// Navigate to page
+
+			await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
+
+			// Check target is set to _blank
+
+			await expect(
+				page.getByRole('menuitem', {name: linkToURLTitle})
+			).toHaveAttribute('target', '_blank');
+
+			// Update target type to new tab
+
+			await pagesAdminPage.goto(site.friendlyUrlPath);
+
+			await pageConfigurationPage.goToSection(linkToURLTitle, 'General');
+
+			await selectAndExpectToHaveValue({
+				optionLabel: 'New Tab',
+				select: page.getByLabel('Target type'),
+			});
+
+			await pageConfigurationPage.save();
+
+			// Navigate to page
+
+			await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
+
+			// Check target is set to _blank
+
+			await expect(
+				page.getByRole('menuitem', {name: linkToURLTitle})
+			).toHaveAttribute('target', '_blank');
+		}
+	);
 });
 
-test('Can edit the page name and layout template via pages administration', async ({
-	apiHelpers,
-	page,
-	pageConfigurationPage,
-	pagesAdminPage,
-	site,
-}) => {
-
-	// Create page and go to page configuration
-
-	const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
-		groupId: site.id,
-		title: 'Test Page Title',
-	});
-
-	await pagesAdminPage.goto(site.friendlyUrlPath);
-
-	await pageConfigurationPage.goToSection('Test Page Title', 'General');
-
-	// Fill name and change layout to 1 column
-
-	await pageConfigurationPage.fillName('Test Page Title Edit');
-
-	await page.getByTitle('1 Column', {exact: true}).click();
-
-	// Check card is selected and save
-
-	const card = page.locator('.card.card-interactive').first();
-
-	await expect(card).toHaveClass(/active/);
-
-	await pageConfigurationPage.save();
-
-	// Go to view mode of page and check layout
-
-	await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
-
-	await expect(
-		page.getByRole('heading', {name: 'Test Page Title Edit'})
-	).toBeVisible();
-
-	await expect(page.locator('#layout-column_column-1')).toBeAttached();
-});
-
-test(
-	'Asserts the Utility Pages configuration view',
-	{
-		tag: '@LPD-4459',
-	},
-	async ({
+test.describe('SEO configuration', () => {
+	test('Checks page SEO HTML title is not shown in edit mode', async ({
+		apiHelpers,
 		page,
+		pageConfigurationPage,
 		pageEditorPage,
+		pagesAdminPage,
 		site,
-		utilityPageConfigurationPage,
-		utilityPagesPage,
 	}) => {
-		await page.goto('/');
 
-		// The configuration action must be available from the card
-		// The configuration view should only allow setting the htmlTitle and htmlDescription SEO fields
+		// Create page
 
-		await utilityPagesPage.goto(site.friendlyUrlPath);
-		await utilityPageConfigurationPage.setUtilityPageConfiguration(
-			getRandomString(),
-			getRandomString(),
-			'404 Error'
+		const pageName = getRandomString();
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			siteId: site.id,
+			title: pageName,
+		});
+
+		// Change SEO HTML title
+
+		await pagesAdminPage.goto(site.friendlyUrlPath);
+		await pageConfigurationPage.goToSection(pageName, 'SEO');
+
+		const HTMLTitle = getRandomString();
+
+		await pageConfigurationPage.setHTMLTitle(HTMLTitle);
+
+		// Check SEO HTML title is shown in view mode
+
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
+
+		expect(await page.title()).toBe(
+			`${HTMLTitle} - ${site.name} - Liferay DXP`
 		);
 
-		// During editing the "More Page Design Options" link should not be available
+		// Check SEO HTML title is not shown in view mode
 
-		await utilityPagesPage.goto(site.friendlyUrlPath);
-		await utilityPagesPage.goToEdit('404 Error');
-		await pageEditorPage.goToSidebarTab('Page Design Options');
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
-		await expect(page.getByText('Master', {exact: true})).toBeVisible();
-		expect(
-			await page.getByTitle('More Page Design Options').count()
-		).toEqual(0);
-	}
-);
-
-test('Checks page SEO HTML title is not shown in edit mode', async ({
-	apiHelpers,
-	page,
-	pageConfigurationPage,
-	pageEditorPage,
-	pagesAdminPage,
-	site,
-}) => {
-
-	// Create page
-
-	const pageName = getRandomString();
-
-	const layout = await apiHelpers.headlessDelivery.createSitePage({
-		siteId: site.id,
-		title: pageName,
+		expect(await page.title()).toBe(
+			`${pageName} - ${site.name} - Liferay DXP (Editing)`
+		);
 	});
+});
 
-	// Change SEO HTML title
+test.describe('Utility Page', () => {
+	test(
+		'Asserts the Utility Pages configuration view',
+		{
+			tag: '@LPD-4459',
+		},
+		async ({
+			page,
+			pageEditorPage,
+			site,
+			utilityPageConfigurationPage,
+			utilityPagesPage,
+		}) => {
+			await page.goto('/');
 
-	await pagesAdminPage.goto(site.friendlyUrlPath);
-	await pageConfigurationPage.goToSection(pageName, 'SEO');
+			// The configuration action must be available from the card
+			// The configuration view should only allow setting the htmlTitle and htmlDescription SEO fields
 
-	const HTMLTitle = getRandomString();
+			await utilityPagesPage.goto(site.friendlyUrlPath);
+			await utilityPageConfigurationPage.setUtilityPageConfiguration(
+				getRandomString(),
+				getRandomString(),
+				'404 Error'
+			);
 
-	await pageConfigurationPage.setHTMLTitle(HTMLTitle);
+			// During editing the "More Page Design Options" link should not be available
 
-	// Check SEO HTML title is shown in view mode
+			await utilityPagesPage.goto(site.friendlyUrlPath);
+			await utilityPagesPage.goToEdit('404 Error');
+			await pageEditorPage.goToSidebarTab('Page Design Options');
 
-	await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
-
-	expect(await page.title()).toBe(
-		`${HTMLTitle} - ${site.name} - Liferay DXP`
-	);
-
-	// Check SEO HTML title is not shown in view mode
-
-	await pageEditorPage.goto(layout, site.friendlyUrlPath);
-
-	expect(await page.title()).toBe(
-		`${pageName} - ${site.name} - Liferay DXP (Editing)`
+			await expect(page.getByText('Master', {exact: true})).toBeVisible();
+			expect(
+				await page.getByTitle('More Page Design Options').count()
+			).toEqual(0);
+		}
 	);
 });

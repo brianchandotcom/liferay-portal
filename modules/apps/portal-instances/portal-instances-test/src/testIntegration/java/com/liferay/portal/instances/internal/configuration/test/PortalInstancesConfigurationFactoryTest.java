@@ -68,8 +68,8 @@ public class PortalInstancesConfigurationFactoryTest {
 	}
 
 	@Test
-	public void testCreateCompanyWithAllAdminProperties() throws Exception {
-		_testCreateCompany(
+	public void testAddCompanyWithAllAdminProperties() throws Exception {
+		_testAddCompany(
 			HashMapDictionaryBuilder.<String, Object>put(
 				"adminEmailAddress", "testAdminEmailAddress@" + _domain
 			).put(
@@ -90,8 +90,8 @@ public class PortalInstancesConfigurationFactoryTest {
 	}
 
 	@Test
-	public void testCreateCompanyWithDefaultProperties() throws Exception {
-		_testCreateCompany(
+	public void testAddCompanyWithDefaultProperties() throws Exception {
+		_testAddCompany(
 			HashMapDictionaryBuilder.<String, Object>put(
 				"mx", _domain
 			).put(
@@ -100,8 +100,8 @@ public class PortalInstancesConfigurationFactoryTest {
 	}
 
 	@Test
-	public void testCreateCompanyWithPartialAdminProperties() throws Exception {
-		_testCreateCompany(
+	public void testAddCompanyWithPartialAdminProperties() throws Exception {
+		_testAddCompany(
 			HashMapDictionaryBuilder.<String, Object>put(
 				"adminFirstName", "testAdminFirstName"
 			).put(
@@ -115,7 +115,7 @@ public class PortalInstancesConfigurationFactoryTest {
 			).build());
 	}
 
-	private void _testCreateCompany(Dictionary<String, Object> properties)
+	private void _testAddCompany(Dictionary<String, Object> properties)
 		throws Exception {
 
 		ConfigurationTestUtil.saveConfiguration(_configuration, properties);
@@ -133,36 +133,30 @@ public class PortalInstancesConfigurationFactoryTest {
 		_adminUser = _userLocalService.getUserByEmailAddress(
 			_company.getCompanyId(), adminEmailAddress);
 
-		Assert.assertNotNull(_adminUser);
-
 		Assert.assertEquals(
 			StringUtil.toLowerCase(adminEmailAddress),
 			_adminUser.getEmailAddress());
-
+		Assert.assertEquals(
+			GetterUtil.getString(
+				properties.get("adminFirstName"),
+				PropsUtil.get(PropsKeys.DEFAULT_ADMIN_FIRST_NAME)),
+			_adminUser.getFirstName());
+		Assert.assertEquals(
+			GetterUtil.getString(
+				properties.get("adminLastName"),
+				PropsUtil.get(PropsKeys.DEFAULT_ADMIN_LAST_NAME)),
+			_adminUser.getLastName());
+		Assert.assertEquals(
+			GetterUtil.getString(
+				properties.get("adminMiddleName"),
+				PropsUtil.get(PropsKeys.DEFAULT_ADMIN_MIDDLE_NAME)),
+			_adminUser.getMiddleName());
 		Assert.assertEquals(
 			StringUtil.toLowerCase(
 				GetterUtil.getString(
 					properties.get("adminScreenName"),
 					PropsUtil.get(PropsKeys.DEFAULT_ADMIN_SCREEN_NAME))),
 			_adminUser.getScreenName());
-
-		Assert.assertEquals(
-			GetterUtil.getString(
-				properties.get("adminFirstName"),
-				PropsUtil.get(PropsKeys.DEFAULT_ADMIN_FIRST_NAME)),
-			_adminUser.getFirstName());
-
-		Assert.assertEquals(
-			GetterUtil.getString(
-				properties.get("adminMiddleName"),
-				PropsUtil.get(PropsKeys.DEFAULT_ADMIN_MIDDLE_NAME)),
-			_adminUser.getMiddleName());
-
-		Assert.assertEquals(
-			GetterUtil.getString(
-				properties.get("adminLastName"),
-				PropsUtil.get(PropsKeys.DEFAULT_ADMIN_LAST_NAME)),
-			_adminUser.getLastName());
 	}
 
 	@DeleteAfterTestRun

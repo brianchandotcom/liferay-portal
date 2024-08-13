@@ -19,6 +19,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.dynamic.data.mapping.storage.Fields;
+import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -315,6 +316,38 @@ public class DDMFormValuesToFieldsConverterTest extends BaseDDMTestCase {
 	}
 
 	@Test
+	public void testConversionWithRepeatableFieldSet() throws Exception {
+		DDMForm ddmForm = createDDMForm();
+
+		DDMFormField ddmFormField = DDMFormTestUtil.createDDMFormField(
+			"fieldSet", RandomTestUtil.randomString(),
+			DDMFormFieldTypeConstants.FIELDSET, null, false, true, false);
+
+		ddmFormField.addNestedDDMFormField(
+			DDMFormTestUtil.createTextDDMFormField("text", true, false, false));
+
+		ddmForm.addDDMFormField(ddmFormField);
+
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm);
+
+		_addFieldSetDDMFormFieldValue(ddmFormValues, null);
+
+		String value = RandomTestUtil.randomString();
+
+		_addFieldSetDDMFormFieldValue(ddmFormValues, value);
+
+		Fields fields = _ddmFormValuesToFieldsConverter.convert(
+			createStructure(RandomTestUtil.randomString(), ddmForm),
+			ddmFormValues);
+
+		Field field = fields.get("text");
+
+		Assert.assertEquals(
+			createValuesList(null, value), field.getValues(LocaleUtil.US));
+	}
+
+	@Test
 	public void testConversionWithTextField() throws Exception {
 		DDMForm ddmForm = createDDMForm();
 
@@ -542,6 +575,33 @@ public class DDMFormValuesToFieldsConverterTest extends BaseDDMTestCase {
 		Assert.assertEquals(expectedEnValues, field.getValues(LocaleUtil.US));
 		Assert.assertEquals(
 			expectedPtValues, field.getValues(LocaleUtil.BRAZIL));
+	}
+
+	private void _addFieldSetDDMFormFieldValue(
+		DDMFormValues ddmFormValues, String value) {
+
+		DDMFormFieldValue ddmFormFieldValue =
+			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
+				"fieldSet", null);
+
+		DDMFormFieldValue nestedDDMFormFieldValue = new DDMFormFieldValue();
+
+		nestedDDMFormFieldValue.setFieldReference("text");
+		nestedDDMFormFieldValue.setInstanceId(RandomTestUtil.randomString());
+		nestedDDMFormFieldValue.setName("text");
+
+		if (value == null) {
+			nestedDDMFormFieldValue.setValue(new LocalizedValue(LocaleUtil.US));
+		}
+		else {
+			nestedDDMFormFieldValue.setValue(
+				DDMFormValuesTestUtil.createLocalizedValue(
+					value, LocaleUtil.US));
+		}
+
+		ddmFormFieldValue.addNestedDDMFormFieldValue(nestedDDMFormFieldValue);
+
+		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
 	}
 
 	private void _assertBooleanFieldValue(

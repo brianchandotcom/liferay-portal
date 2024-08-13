@@ -109,11 +109,9 @@ public class DisplayPagesImporterTest {
 			LayoutsImporterResultEntry.Status.IGNORED,
 			layoutsImporterResultEntry.getStatus());
 		Assert.assertEquals(
-			String.format(
-				"%s/display-page-templates/%s/display-page-template.json was " +
-					"ignored because a display page template with the same " +
-						"key already exists.",
-				testCaseName, testCaseName),
+			"display-page-templates/display-page-template-one" +
+				"/display-page-template.json was ignored because a display " +
+					"page template with the same key already exists.",
 			layoutsImporterResultEntry.getErrorMessage(
 				LocaleUtil.getSiteDefault()));
 	}

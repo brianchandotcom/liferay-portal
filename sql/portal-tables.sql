@@ -343,6 +343,7 @@ create table DLFileEntryMetadata (
 	mvccVersion LONG default 0 not null,
 	ctCollectionId LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
+	externalReferenceCode VARCHAR(75) null,
 	fileEntryMetadataId LONG not null,
 	companyId LONG,
 	DDMStorageId LONG,

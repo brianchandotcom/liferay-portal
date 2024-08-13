@@ -260,6 +260,15 @@ public class DLFileEntryMetadataLocalServiceWrapper
 			fileEntryMetadataId);
 	}
 
+	@Override
+	public DLFileEntryMetadata fetchDLFileEntryMetadataByExternalReferenceCode(
+		String externalReferenceCode, long companyId) {
+
+		return _dlFileEntryMetadataLocalService.
+			fetchDLFileEntryMetadataByExternalReferenceCode(
+				externalReferenceCode, companyId);
+	}
+
 	/**
 	 * Returns the document library file entry metadata with the matching UUID and company.
 	 *
@@ -311,6 +320,16 @@ public class DLFileEntryMetadataLocalServiceWrapper
 
 		return _dlFileEntryMetadataLocalService.getDLFileEntryMetadata(
 			fileEntryMetadataId);
+	}
+
+	@Override
+	public DLFileEntryMetadata getDLFileEntryMetadataByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _dlFileEntryMetadataLocalService.
+			getDLFileEntryMetadataByExternalReferenceCode(
+				externalReferenceCode, companyId);
 	}
 
 	/**

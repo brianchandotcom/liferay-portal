@@ -11,7 +11,9 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.search.rest.dto.v1_0.EmbeddingModel;
 import com.liferay.portal.search.rest.dto.v1_0.SearchResult;
+import com.liferay.portal.search.rest.resource.v1_0.EmbeddingModelResource;
 import com.liferay.portal.search.rest.resource.v1_0.SearchResultResource;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
@@ -38,12 +40,41 @@ import org.osgi.service.component.ComponentServiceObjects;
 @Generated("")
 public class Query {
 
+	public static void setEmbeddingModelResourceComponentServiceObjects(
+		ComponentServiceObjects<EmbeddingModelResource>
+			embeddingModelResourceComponentServiceObjects) {
+
+		_embeddingModelResourceComponentServiceObjects =
+			embeddingModelResourceComponentServiceObjects;
+	}
+
 	public static void setSearchResultResourceComponentServiceObjects(
 		ComponentServiceObjects<SearchResultResource>
 			searchResultResourceComponentServiceObjects) {
 
 		_searchResultResourceComponentServiceObjects =
 			searchResultResourceComponentServiceObjects;
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {embeddingEmbeddingModels(page: ___, pageSize: ___, provider: ___, search: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public EmbeddingModelPage embeddingEmbeddingModels(
+			@GraphQLName("provider") String provider,
+			@GraphQLName("search") String search,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_embeddingModelResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			embeddingModelResource -> new EmbeddingModelPage(
+				embeddingModelResource.getEmbeddingEmbeddingModelsPage(
+					provider, search, Pagination.of(page, pageSize))));
 	}
 
 	/**
@@ -78,6 +109,39 @@ public class Query {
 					Pagination.of(page, pageSize),
 					_sortsBiFunction.apply(
 						searchResultResource, sortsString))));
+	}
+
+	@GraphQLName("EmbeddingModelPage")
+	public class EmbeddingModelPage {
+
+		public EmbeddingModelPage(Page embeddingModelPage) {
+			actions = embeddingModelPage.getActions();
+
+			items = embeddingModelPage.getItems();
+			lastPage = embeddingModelPage.getLastPage();
+			page = embeddingModelPage.getPage();
+			pageSize = embeddingModelPage.getPageSize();
+			totalCount = embeddingModelPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map<String, String>> actions;
+
+		@GraphQLField
+		protected java.util.Collection<EmbeddingModel> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
 	}
 
 	@GraphQLName("SearchResultPage")
@@ -133,6 +197,22 @@ public class Query {
 	}
 
 	private void _populateResourceContext(
+			EmbeddingModelResource embeddingModelResource)
+		throws Exception {
+
+		embeddingModelResource.setContextAcceptLanguage(_acceptLanguage);
+		embeddingModelResource.setContextCompany(_company);
+		embeddingModelResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		embeddingModelResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		embeddingModelResource.setContextUriInfo(_uriInfo);
+		embeddingModelResource.setContextUser(_user);
+		embeddingModelResource.setGroupLocalService(_groupLocalService);
+		embeddingModelResource.setRoleLocalService(_roleLocalService);
+	}
+
+	private void _populateResourceContext(
 			SearchResultResource searchResultResource)
 		throws Exception {
 
@@ -147,6 +227,8 @@ public class Query {
 		searchResultResource.setRoleLocalService(_roleLocalService);
 	}
 
+	private static ComponentServiceObjects<EmbeddingModelResource>
+		_embeddingModelResourceComponentServiceObjects;
 	private static ComponentServiceObjects<SearchResultResource>
 		_searchResultResourceComponentServiceObjects;
 

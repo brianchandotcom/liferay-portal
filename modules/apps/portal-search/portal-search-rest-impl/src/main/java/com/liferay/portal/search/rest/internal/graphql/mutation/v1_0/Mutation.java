@@ -11,10 +11,13 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.search.rest.dto.v1_0.EmbeddingProviderConfiguration;
+import com.liferay.portal.search.rest.dto.v1_0.EmbeddingProviderValidationResult;
 import com.liferay.portal.search.rest.dto.v1_0.SearchRequestBody;
 import com.liferay.portal.search.rest.dto.v1_0.SearchResult;
 import com.liferay.portal.search.rest.dto.v1_0.SuggestionsContributorConfiguration;
 import com.liferay.portal.search.rest.dto.v1_0.SuggestionsContributorResults;
+import com.liferay.portal.search.rest.resource.v1_0.EmbeddingProviderValidationResultResource;
 import com.liferay.portal.search.rest.resource.v1_0.SearchResultResource;
 import com.liferay.portal.search.rest.resource.v1_0.SuggestionResource;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
@@ -43,6 +46,15 @@ import org.osgi.service.component.ComponentServiceObjects;
 @Generated("")
 public class Mutation {
 
+	public static void
+		setEmbeddingProviderValidationResultResourceComponentServiceObjects(
+			ComponentServiceObjects<EmbeddingProviderValidationResultResource>
+				embeddingProviderValidationResultResourceComponentServiceObjects) {
+
+		_embeddingProviderValidationResultResourceComponentServiceObjects =
+			embeddingProviderValidationResultResourceComponentServiceObjects;
+	}
+
 	public static void setSearchResultResourceComponentServiceObjects(
 		ComponentServiceObjects<SearchResultResource>
 			searchResultResourceComponentServiceObjects) {
@@ -57,6 +69,23 @@ public class Mutation {
 
 		_suggestionResourceComponentServiceObjects =
 			suggestionResourceComponentServiceObjects;
+	}
+
+	@GraphQLField
+	public EmbeddingProviderValidationResult
+			createEmbeddingValidateProviderConfiguration(
+				@GraphQLName("embeddingProviderConfiguration")
+					EmbeddingProviderConfiguration
+						embeddingProviderConfiguration)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_embeddingProviderValidationResultResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			embeddingProviderValidationResultResource ->
+				embeddingProviderValidationResultResource.
+					postEmbeddingValidateProviderConfiguration(
+						embeddingProviderConfiguration));
 	}
 
 	@GraphQLField(
@@ -158,6 +187,26 @@ public class Mutation {
 	}
 
 	private void _populateResourceContext(
+			EmbeddingProviderValidationResultResource
+				embeddingProviderValidationResultResource)
+		throws Exception {
+
+		embeddingProviderValidationResultResource.setContextAcceptLanguage(
+			_acceptLanguage);
+		embeddingProviderValidationResultResource.setContextCompany(_company);
+		embeddingProviderValidationResultResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		embeddingProviderValidationResultResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		embeddingProviderValidationResultResource.setContextUriInfo(_uriInfo);
+		embeddingProviderValidationResultResource.setContextUser(_user);
+		embeddingProviderValidationResultResource.setGroupLocalService(
+			_groupLocalService);
+		embeddingProviderValidationResultResource.setRoleLocalService(
+			_roleLocalService);
+	}
+
+	private void _populateResourceContext(
 			SearchResultResource searchResultResource)
 		throws Exception {
 
@@ -191,6 +240,9 @@ public class Mutation {
 		suggestionResource.setRoleLocalService(_roleLocalService);
 	}
 
+	private static ComponentServiceObjects
+		<EmbeddingProviderValidationResultResource>
+			_embeddingProviderValidationResultResourceComponentServiceObjects;
 	private static ComponentServiceObjects<SearchResultResource>
 		_searchResultResourceComponentServiceObjects;
 	private static ComponentServiceObjects<SuggestionResource>

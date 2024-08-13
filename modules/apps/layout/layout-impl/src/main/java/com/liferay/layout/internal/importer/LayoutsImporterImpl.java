@@ -186,19 +186,19 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 
 		ZipReader zipReader = _zipReaderFactory.getZipReader(file);
 
-		_processMasterLayoutLayoutPageTemplateEntries(
-			groupId, layoutsImporterResultEntries, layoutsImportStrategy,
-			preserveItemIds, userId, zipReader);
-		_processLayoutUtilityPageEntries(
-			groupId, layoutsImporterResultEntries, layoutsImportStrategy,
+		_processBasicLayoutPageTemplateEntries(
+			groupId, layoutPageTemplateCollectionId,
+			layoutsImporterResultEntries, layoutsImportStrategy,
 			preserveItemIds, userId, zipReader);
 		_processDisplayPageLayoutPageTemplateEntries(
 			groupId, layoutPageTemplateCollectionId,
 			layoutsImporterResultEntries, layoutsImportStrategy,
 			preserveItemIds, userId, zipReader);
-		_processBasicLayoutPageTemplateEntries(
-			groupId, layoutPageTemplateCollectionId,
-			layoutsImporterResultEntries, layoutsImportStrategy,
+		_processLayoutUtilityPageEntries(
+			groupId, layoutsImporterResultEntries, layoutsImportStrategy,
+			preserveItemIds, userId, zipReader);
+		_processMasterLayoutLayoutPageTemplateEntries(
+			groupId, layoutsImporterResultEntries, layoutsImportStrategy,
 			preserveItemIds, userId, zipReader);
 
 		return layoutsImporterResultEntries;

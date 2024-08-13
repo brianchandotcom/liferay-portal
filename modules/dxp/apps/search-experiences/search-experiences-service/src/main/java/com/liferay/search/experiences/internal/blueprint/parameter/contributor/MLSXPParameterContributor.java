@@ -11,16 +11,15 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.search.configuration.SemanticSearchConfiguration;
+import com.liferay.portal.search.configuration.SemanticSearchConfigurationProvider;
+import com.liferay.portal.search.ml.embedding.text.TextEmbeddingRetriever;
+import com.liferay.portal.search.rest.dto.v1_0.EmbeddingProviderConfiguration;
 import com.liferay.search.experiences.blueprint.parameter.SXPParameter;
 import com.liferay.search.experiences.blueprint.parameter.contributor.SXPParameterContributor;
 import com.liferay.search.experiences.blueprint.parameter.contributor.SXPParameterContributorDefinition;
-import com.liferay.search.experiences.configuration.SemanticSearchConfiguration;
-import com.liferay.search.experiences.configuration.SemanticSearchConfigurationProvider;
 import com.liferay.search.experiences.internal.blueprint.parameter.DoubleArraySXPParameter;
 import com.liferay.search.experiences.internal.blueprint.parameter.IntegerSXPParameter;
-import com.liferay.search.experiences.internal.web.cache.TextEmbeddingProviderWebCacheItem;
-import com.liferay.search.experiences.ml.embedding.text.TextEmbeddingRetriever;
-import com.liferay.search.experiences.rest.dto.v1_0.EmbeddingProviderConfiguration;
 
 import java.beans.ExceptionListener;
 
@@ -72,12 +71,10 @@ public class MLSXPParameterContributor implements SXPParameterContributor {
 		ExceptionListener exceptionListener, SearchContext searchContext,
 		Set<SXPParameter> sxpParameters) {
 
-		SemanticSearchConfiguration semanticSearchConfiguration =
-			_getSemanticSearchConfiguration(searchContext.getCompanyId());
-
 		EmbeddingProviderConfiguration embeddingProviderConfiguration =
 			_getEmbeddingProviderConfiguration(
-				exceptionListener, semanticSearchConfiguration);
+				exceptionListener,
+				_getSemanticSearchConfiguration(searchContext.getCompanyId()));
 
 		if (embeddingProviderConfiguration == null) {
 			return;
@@ -88,10 +85,9 @@ public class MLSXPParameterContributor implements SXPParameterContributor {
 				"ml.text_embeddings.vector_dimensions", true,
 				embeddingProviderConfiguration.getEmbeddingVectorDimensions()));
 
-		Double[] textEmbedding = TextEmbeddingProviderWebCacheItem.get(
-			exceptionListener, embeddingProviderConfiguration.getProviderName(),
-			semanticSearchConfiguration.textEmbeddingCacheTimeout(),
-			searchContext.getKeywords(), _textEmbeddingRetriever);
+		Double[] textEmbedding = _textEmbeddingRetriever.getTextEmbedding(
+			embeddingProviderConfiguration.getProviderName(),
+			searchContext.getKeywords());
 
 		if (ArrayUtil.isEmpty(textEmbedding)) {
 			return;

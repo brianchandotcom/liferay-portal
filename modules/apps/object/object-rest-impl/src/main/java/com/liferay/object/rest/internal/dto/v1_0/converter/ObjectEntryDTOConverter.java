@@ -468,15 +468,7 @@ public class ObjectEntryDTOConverter
 		}
 
 		fileEntry.setExternalReferenceCode(
-			() -> {
-				if (!FeatureFlagManagerUtil.isEnabled(
-						objectDefinition.getCompanyId(), "LPD-24674")) {
-
-					return null;
-				}
-
-				return dlFileEntry.getExternalReferenceCode();
-			});
+			dlFileEntry::getExternalReferenceCode);
 
 		if (FeatureFlagManagerUtil.isEnabled(
 				objectDefinition.getCompanyId(), "LPS-174455")) {
@@ -528,12 +520,10 @@ public class ObjectEntryDTOConverter
 		fileEntry.setName(dlFileEntry::getFileName);
 		fileEntry.setScope(
 			() -> {
-				if (!FeatureFlagManagerUtil.isEnabled(
-						objectDefinition.getCompanyId(), "LPD-24674") ||
-					((objectEntry.getGroupId() == dlFileEntry.getGroupId()) &&
-					 !Objects.equals(
-						 objectDefinition.getScope(),
-						 ObjectDefinitionConstants.SCOPE_COMPANY))) {
+				if ((objectEntry.getGroupId() == dlFileEntry.getGroupId()) &&
+					!Objects.equals(
+						objectDefinition.getScope(),
+						ObjectDefinitionConstants.SCOPE_COMPANY)) {
 
 					return null;
 				}

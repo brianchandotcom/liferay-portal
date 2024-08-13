@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.kernel.dao.db;
+package com.liferay.portal.kernel.upgrade.recorder;
 
 import com.liferay.portal.kernel.dao.jdbc.util.CallableStatementWrapper;
 import com.liferay.portal.kernel.dao.jdbc.util.ConnectionWrapper;
@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * @author István András Dézsi
  */
-public class SQLStatementRecorder {
+public class UpgradeSQLStatementRecorder {
 
 	public static Connection getConnectionWrapper(Connection connection) {
 		if (!_enabled) {

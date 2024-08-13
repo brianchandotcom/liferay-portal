@@ -724,7 +724,7 @@ public class ObjectDefinitionGraphQLTest {
 			Assert.assertEquals(
 				JSONUtil.putAll(
 					JSONUtil.put(
-						_OBJECT_FIELD_NAME_LONG_TEXT, ""
+						_OBJECT_FIELD_NAME_LONG_TEXT, "longTextEng"
 					).put(
 						_OBJECT_FIELD_NAME_LONG_TEXT + "_i18n",
 						JSONUtil.put(
@@ -733,7 +733,7 @@ public class ObjectDefinitionGraphQLTest {
 							"es_ES", "longTextEsp"
 						)
 					).put(
-						_OBJECT_FIELD_NAME_RICH_TEXT, ""
+						_OBJECT_FIELD_NAME_RICH_TEXT, "<p>richTextEng</p>"
 					).put(
 						_OBJECT_FIELD_NAME_RICH_TEXT + "_i18n",
 						JSONUtil.put(
@@ -742,7 +742,7 @@ public class ObjectDefinitionGraphQLTest {
 							"es_ES", "<p>richTextEsp</p>"
 						)
 					).put(
-						_OBJECT_FIELD_NAME_TEXT, ""
+						_OBJECT_FIELD_NAME_TEXT, "textEng"
 					).put(
 						_OBJECT_FIELD_NAME_TEXT + "_i18n",
 						JSONUtil.put(

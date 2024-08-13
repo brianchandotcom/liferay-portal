@@ -465,7 +465,7 @@ public class UpgradeReport {
 				return longestRunningUpgradeProcesses;
 			}
 		).put(
-			"failed.sql.statements", upgradeRecorder.getSqlErrorLogs()
+			"failed.sql.statements", upgradeRecorder.getFailedSQLStatements()
 		).put(
 			"errors", _getMessagesPrinters(upgradeRecorder.getErrorMessages())
 		).put(

@@ -7,7 +7,7 @@ package com.liferay.portal.upgrade.internal.recorder;
 
 import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.dao.db.SQLStatementLoggingWrapper;
+import com.liferay.portal.kernel.dao.db.SQLStatementRecorder;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.ReleaseManager;
@@ -48,6 +48,10 @@ public class UpgradeRecorder {
 		return _errorMessages;
 	}
 
+	public List<String> getFailedSQLStatements() {
+		return _failedSQLStatements;
+	}
+
 	public String getFinalSchemaVersion(String servletContextName) {
 		SchemaVersions schemaVersions = _schemaVersionsMap.get(
 			servletContextName);
@@ -72,10 +76,6 @@ public class UpgradeRecorder {
 
 	public String getResult() {
 		return _result;
-	}
-
-	public List<String> getSqlErrorLogs() {
-		return _sqlErrorLogs;
 	}
 
 	public String getType() {
@@ -142,11 +142,11 @@ public class UpgradeRecorder {
 		_filter(_errorMessages);
 		_filter(_warningMessages);
 
+		_failedSQLStatements = SQLStatementRecorder.getFailedSQLStatements();
+
 		_result = _calculateResult();
 
 		_type = _calculateType(_result);
-
-		_sqlErrorLogs = SQLStatementLoggingWrapper.getSqlErrorLogs();
 
 		if (PropsValues.UPGRADE_LOG_CONTEXT_ENABLED) {
 			ThreadContext.put("upgrade.type", _type);
@@ -317,10 +317,10 @@ public class UpgradeRecorder {
 
 	private static final Map<String, Map<String, Integer>> _errorMessages =
 		new ConcurrentHashMap<>();
+	private static List<String> _failedSQLStatements;
 	private static String _result;
 	private static final Map<String, SchemaVersions> _schemaVersionsMap =
 		new ConcurrentHashMap<>();
-	private static List<String> _sqlErrorLogs;
 	private static String _type;
 	private static final Map<String, ArrayList<String>>
 		_upgradeProcessMessages = new ConcurrentHashMap<>();

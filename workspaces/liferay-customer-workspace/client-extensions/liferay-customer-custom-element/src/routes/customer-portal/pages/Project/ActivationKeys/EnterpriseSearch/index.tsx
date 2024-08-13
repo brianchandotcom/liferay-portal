@@ -13,7 +13,7 @@ const EnterpriseSearch = () => {
 		<ActivationKeysLayout>
 			<ActivationKeysLayout.Inputs
 				accountKey={project?.accountKey}
-				productKey="enterprise-search"
+				accountSubscriptionGroupName="enterprise-search"
 				productTitle="Enterprise Search"
 				projectName={project?.name}
 				sessionId={sessionId}

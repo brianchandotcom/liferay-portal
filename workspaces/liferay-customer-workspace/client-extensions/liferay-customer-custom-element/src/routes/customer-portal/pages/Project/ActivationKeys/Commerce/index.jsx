@@ -113,7 +113,7 @@ const Commerce = () => {
 			{project.dxpVersion && project.dxpVersion < '7.3' ? (
 				<ActivationKeysLayout.Inputs
 					accountKey={project.accountKey}
-					productKey="commerce"
+					accountSubscriptionGroupName="commerce"
 					productTitle="Commerce"
 					projectName={project?.name}
 					sessionId={sessionId}

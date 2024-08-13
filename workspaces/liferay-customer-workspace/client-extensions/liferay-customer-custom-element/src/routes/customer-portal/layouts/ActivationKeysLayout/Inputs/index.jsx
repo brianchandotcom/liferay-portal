@@ -27,7 +27,7 @@ import {getYearlyTerms} from '../../../utils/getYearlyTerms';
 
 const ActivationKeysInputs = ({
 	accountKey,
-	productKey,
+	accountSubscriptionGroupName,
 	productTitle,
 	projectName,
 	sessionId,
@@ -48,6 +48,10 @@ const ActivationKeysInputs = ({
 		selectedAccountSubscriptionName,
 		setSelectedAccountSubscriptionName,
 	] = useState('');
+	const [
+		selectedAccountSubscriptionERC,
+		setSelectedAccountSubscriptionERC,
+	] = useState('');
 
 	const [orderItemsDates, setAccountOrderItemsDates] = useState([]);
 	const [selectDateInterval, setSelectedDateInterval] = useState();
@@ -59,7 +63,7 @@ const ActivationKeysInputs = ({
 			const {data} = await client.query({
 				query: getAccountSubscriptions,
 				variables: {
-					filter: `accountSubscriptionGroupERC eq '${accountKey}_${productKey}'`,
+					filter: `accountSubscriptionGroupERC eq '${accountKey}_${accountSubscriptionGroupName}'`,
 				},
 			});
 
@@ -67,16 +71,17 @@ const ActivationKeysInputs = ({
 				const items = data.c?.accountSubscriptions?.items;
 				setAccountSubscriptions(data.c?.accountSubscriptions?.items);
 
+				setSelectedAccountSubscriptionERC(items[0].externalReferenceCode);
 				setSelectedAccountSubscriptionName(getKebabCase(items[0].name));
 			}
 		};
 
 		fetchAccountSubscriptions();
-	}, [accountKey, client, productKey]);
+	}, [accountKey, accountSubscriptionGroupName, client]);
 
 	useEffect(() => {
 		const getOrderItems = async () => {
-			const filterAccountSubscriptionERC = `customFields/accountSubscriptionERC eq '${accountKey}_${productKey}_${selectedAccountSubscriptionName.toLowerCase()}'`;
+			const filterAccountSubscriptionERC = `customFields/accountSubscriptionERC eq '${selectedAccountSubscriptionERC}'`;
 
 			const {data} = await client.query({
 				fetchPolicy: 'network-only',
@@ -104,7 +109,7 @@ const ActivationKeysInputs = ({
 		if (selectedAccountSubscriptionName) {
 			getOrderItems();
 		}
-	}, [accountKey, client, productKey, selectedAccountSubscriptionName]);
+	}, [accountKey, accountSubscriptionGroupName, client, selectedAccountSubscriptionName]);
 
 	useEffect(() => {
 		if (selectedAccountSubscriptionName && selectDateInterval) {
@@ -230,11 +235,12 @@ const ActivationKeysInputs = ({
 						/>
 
 						<ClaySelect
-							onChange={(event) =>
+							onChange={(event) => {
+								setSelectedAccountSubscriptionERC(event.target.value);
 								setSelectedAccountSubscriptionName(
-									getKebabCase(event.target.value)
-								)
-							}
+									getKebabCase(event.target.options[event.target.selectedIndex].label)
+								);
+							}}
 						>
 							{accountSubscriptions.map((accountSubscription) => (
 								<ClaySelect.Option
@@ -242,7 +248,7 @@ const ActivationKeysInputs = ({
 										accountSubscription.accountSubscriptionId
 									}
 									label={accountSubscription.name}
-									value={accountSubscription.name}
+									value={accountSubscription.externalReferenceCode}
 								/>
 							))}
 						</ClaySelect>

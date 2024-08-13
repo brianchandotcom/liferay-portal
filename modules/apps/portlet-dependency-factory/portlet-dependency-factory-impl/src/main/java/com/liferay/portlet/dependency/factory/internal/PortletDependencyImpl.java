@@ -90,6 +90,9 @@ public class PortletDependencyImpl implements PortletDependency {
 
 			if (_type == Type.CSS) {
 				sb.append("<link ");
+				sb.append(
+					ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
+						null));
 				sb.append("href=\"");
 				sb.append(_getURL());
 				sb.append("\" type=\"text/css\"></link>");

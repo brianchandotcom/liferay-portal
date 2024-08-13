@@ -774,6 +774,7 @@
 		<module name="com.liferay.source.formatter.checkstyle.check.ReturnVariableDeclarationAsUsedCheck">
 			<property name="category" value="Miscellaneous" />
 			<property name="description" value="Finds cases where a variable declaration should be moved." />
+			<property name="enabled" value="false" />
 			<message key="variable.declaration.move" value="Move the variable declaration for ''{0}'' on line ''{1}''" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.SelfReferenceCheck">

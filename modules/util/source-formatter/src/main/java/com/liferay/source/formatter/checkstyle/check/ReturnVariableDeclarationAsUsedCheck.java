@@ -52,7 +52,7 @@ public class ReturnVariableDeclarationAsUsedCheck extends BaseCheck {
 
 			String methodName = getName(methodDefinitionDetailAST);
 
-			if (!methodName.matches("_?get[A-Z].+")) {
+			if (!methodName.matches("_?(create|fetch|generate|get)[A-Z].+")) {
 				continue;
 			}
 
@@ -73,7 +73,9 @@ public class ReturnVariableDeclarationAsUsedCheck extends BaseCheck {
 			String variableName = returnIdentDetailAST.getText();
 
 			if (!StringUtil.equalsIgnoreCase(
-					methodName.replaceFirst("_?get(.+)", "$1"), variableName)) {
+					methodName.replaceFirst(
+						"_?(create|fetch|generate|get)(.+)", "$2"),
+					variableName)) {
 
 				continue;
 			}

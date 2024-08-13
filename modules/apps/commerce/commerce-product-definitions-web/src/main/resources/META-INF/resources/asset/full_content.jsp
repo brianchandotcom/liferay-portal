@@ -17,7 +17,7 @@ Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(),
 <liferay-util:html-top
 	outputKey="com.liferay.commerce.product.definitions.web#/asset/full_content.jsp"
 >
-	<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathProxy() + application.getContextPath() + "/css/main.css", portlet.getTimestamp()) %>" rel="stylesheet" type="text/css" />
+	<aui:link href='<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathProxy() + application.getContextPath() + "/css/main.css", portlet.getTimestamp()) %>' rel="stylesheet" type="text/css" />
 </liferay-util:html-top>
 
 <div class="portlet-commerce-product-definitions">

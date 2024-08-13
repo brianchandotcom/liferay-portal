@@ -178,6 +178,12 @@
 			<message key="start.character.invalid" value="When appending multiple literal strings, only the first literal string can start with ''{0}''" />
 			<message key="string.combine" value="Combine the literal string ''{0}'' with ''{1}''" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.check.ArrayUtilCheck">
+			<property name="category" value="Styling" />
+			<property name="description" value="Checks for utilization of class `ArrayUtil`." />
+			<property name="enabled" value="false" />
+			<message key="array.util.is.empty.use" value="Use ''ArrayUtil.isEmpty({0})'' to simplify code" />
+		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.CamelCaseNameCheck">
 			<property name="category" value="Naming Conventions" />
 			<property name="description" value="Checks variable names for correct use of `CamelCase`." />

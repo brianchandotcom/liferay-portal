@@ -400,15 +400,15 @@ journalEditArticleDisplayContext.setViewAttributes();
 						</div>
 
 						<div id="<portlet:namespace />content">
-							<clay:panel
-								displayTitle='<%= LanguageUtil.get(request, "fields") %>'
-								displayType="block"
-								expanded="<%= true %>"
+							<liferay-frontend:fieldset
+								collapsed="<%= false %>"
+								collapsible="<%= true %>"
+								label="fields"
 							>
 								<div class="c-px-2 panel-body">
 									<%@ include file="/article_content.jspf" %>
 								</div>
-							</clay:panel>
+							</liferay-frontend:fieldset>
 						</div>
 
 						<div>

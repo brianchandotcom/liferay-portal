@@ -295,7 +295,7 @@ public abstract class BaseEntityRelationshipDALO
 						}
 					},
 					() -> {
-						String response;
+						String response = null;
 
 						try {
 							response = WebClient.create(

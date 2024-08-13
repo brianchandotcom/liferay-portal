@@ -176,15 +176,20 @@ public class ReturnVariableDeclarationAsUsedCheck extends BaseCheck {
 				return;
 			}
 
-			if (StringUtil.equals(names.get(0), "Collections") &&
-				StringUtil.equals(names.get(1), "emptyList")) {
+			if (StringUtil.equals(names.get(0), "Collections")) {
+				String methodName = names.get(1);
 
-				log(
-					returnVariableDefinitionDetailAST,
-					_MSG_MOVE_VARIABLE_DECLARATION, variableName,
-					getStartLineNumber(slistDetailAST.getFirstChild()));
+				if (methodName.equals("emptyList") ||
+					methodName.equals("emptyMap") ||
+					methodName.equals("emptySet")) {
 
-				return;
+					log(
+						returnVariableDefinitionDetailAST,
+						_MSG_MOVE_VARIABLE_DECLARATION, variableName,
+						getStartLineNumber(slistDetailAST.getFirstChild()));
+
+					return;
+				}
 			}
 		}
 

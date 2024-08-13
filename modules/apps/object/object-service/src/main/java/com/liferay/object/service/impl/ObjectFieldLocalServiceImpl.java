@@ -266,6 +266,12 @@ public class ObjectFieldLocalServiceImpl
 
 		if (Validator.isNull(dbColumnName)) {
 			dbColumnName = name;
+
+			if (objectDefinition.isModifiable() &&
+				objectDefinition.isSystem()) {
+
+				dbColumnName += StringPool.UNDERLINE;
+			}
 		}
 
 		if (!objectDefinition.isSystem() ||

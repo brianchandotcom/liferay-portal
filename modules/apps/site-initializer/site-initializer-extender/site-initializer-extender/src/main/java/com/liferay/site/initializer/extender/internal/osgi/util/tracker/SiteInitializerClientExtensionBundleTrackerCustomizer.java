@@ -223,10 +223,9 @@ public class SiteInitializerClientExtensionBundleTrackerCustomizer
 	}
 
 	private boolean _isAlreadyProcessed(Bundle bundle) {
-		String lastModifiedString = String.valueOf(bundle.getLastModified());
-
 		File file = bundle.getDataFile(
 			".liferay-client-extension-site-initializer");
+		String lastModifiedString = String.valueOf(bundle.getLastModified());
 
 		try {
 			if ((file != null) && file.exists() &&

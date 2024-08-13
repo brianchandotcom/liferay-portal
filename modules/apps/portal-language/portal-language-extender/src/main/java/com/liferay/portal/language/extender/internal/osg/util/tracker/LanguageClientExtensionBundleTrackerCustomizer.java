@@ -160,7 +160,6 @@ public class LanguageClientExtensionBundleTrackerCustomizer
 
 	private boolean _isAlreadyProcessed(Bundle bundle) {
 		File file = bundle.getDataFile(".liferay-client-extension-language");
-
 		String lastModifiedString = String.valueOf(bundle.getLastModified());
 
 		try {

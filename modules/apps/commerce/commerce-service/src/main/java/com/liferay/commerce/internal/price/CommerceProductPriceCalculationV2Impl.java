@@ -131,6 +131,10 @@ public class CommerceProductPriceCalculationV2Impl
 			unitCommercePriceEntry, commercePriceListId, quantity,
 			commerceContext);
 
+		CommerceMoney pricingQuantityUnitPriceCommerceMoney =
+			_getPricingQuantityUnitPrice(
+				unitCommercePriceEntry, commercePriceListId, commerceContext);
+
 		boolean priceOnApplication =
 			unitPriceCommerceMoney.isPriceOnApplication();
 
@@ -234,6 +238,8 @@ public class CommerceProductPriceCalculationV2Impl
 
 		commerceProductPriceImpl.setCommercePriceListId(commercePriceListId);
 		commerceProductPriceImpl.setPriceOnApplication(priceOnApplication);
+		commerceProductPriceImpl.setPricingQuantityUnitPrice(
+			pricingQuantityUnitPriceCommerceMoney);
 		commerceProductPriceImpl.setQuantity(quantity);
 		commerceProductPriceImpl.setUnitOfMeasureKey(unitOfMeasureKey);
 		commerceProductPriceImpl.setUnitOfMeasureIncrementalOrderQuantity(
@@ -1128,6 +1134,52 @@ public class CommerceProductPriceCalculationV2Impl
 			discountPercentage.precision(), roundingMode);
 
 		return _ONE_HUNDRED.subtract(discountPercentage, mathContext);
+	}
+
+	private CommerceMoney _getPricingQuantityUnitPrice(
+			CommercePriceEntry commercePriceEntry, long commercePriceListId,
+			CommerceContext commerceContext)
+		throws PortalException {
+
+		if (commercePriceEntry == null) {
+			return commerceMoneyFactory.create(
+				commerceContext.getCommerceCurrency(), BigDecimal.ZERO);
+		}
+
+		BigDecimal pricingQuantity = commercePriceEntry.getPricingQuantity();
+
+		if ((pricingQuantity == null) ||
+			BigDecimalUtil.lte(pricingQuantity, BigDecimal.ZERO)) {
+
+			return commerceMoneyFactory.emptyCommerceMoney();
+		}
+
+		BigDecimal pricingQuantityUnitPrice = pricingQuantity.multiply(
+			commercePriceEntry.getPrice()
+		).divide(
+			commercePriceEntry.getQuantity(), 2, BigDecimal.ROUND_HALF_UP
+		);
+
+		CommercePriceList commercePriceList =
+			_commercePriceListLocalService.getCommercePriceList(
+				commercePriceListId);
+
+		if (!commercePriceList.isNetPrice()) {
+			CPInstance cpInstance =
+				_cpInstanceLocalService.fetchCProductInstance(
+					commercePriceEntry.getCProductId(),
+					commercePriceEntry.getCPInstanceUuid());
+
+			if (cpInstance != null) {
+				pricingQuantityUnitPrice = getConvertedPrice(
+					cpInstance.getCPInstanceId(), pricingQuantityUnitPrice,
+					true, commerceContext);
+			}
+		}
+
+		return _getCommerceMoney(
+			commercePriceEntry.getCommercePriceListId(),
+			commerceContext.getCommerceCurrency(), pricingQuantityUnitPrice);
 	}
 
 	private CommerceMoney _getPromoPrice(

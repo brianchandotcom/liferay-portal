@@ -8,6 +8,8 @@ package com.liferay.commerce.currency.internal.model;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.currency.util.CommercePriceFormatter;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.math.BigDecimal;
@@ -40,6 +42,42 @@ public class CommerceMoneyImpl implements CommerceMoney {
 
 		return _commercePriceFormatter.format(
 			getCommerceCurrency(), price, locale);
+	}
+
+	@Override
+	public String format(
+			Locale locale, BigDecimal pricingQuantity, String unitOfMeasureName)
+		throws PortalException {
+
+		BigDecimal price = getPrice();
+
+		if (price == null) {
+			price = BigDecimal.ZERO;
+		}
+
+		StringBundler sb = new StringBundler(
+			_commercePriceFormatter.format(
+				getCommerceCurrency(), price, locale));
+
+		sb.append(
+			StringPool.SPACE
+		).append(
+			StringPool.SLASH
+		).append(
+			StringPool.SPACE
+		);
+
+		if (pricingQuantity.compareTo(BigDecimal.ONE) != 0) {
+			sb.append(
+				pricingQuantity.stripTrailingZeros()
+			).append(
+				StringPool.SPACE
+			);
+		}
+
+		sb.append(unitOfMeasureName);
+
+		return sb.toString();
 	}
 
 	@Override

@@ -69,6 +69,10 @@ public class CPInstanceUnitOfMeasureTable
 	public final Column<CPInstanceUnitOfMeasureTable, Integer> precision =
 		createColumn(
 			"precision_", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
+	public final Column<CPInstanceUnitOfMeasureTable, BigDecimal>
+		pricingQuantity = createColumn(
+			"pricingQuantity", BigDecimal.class, Types.DECIMAL,
+			Column.FLAG_DEFAULT);
 	public final Column<CPInstanceUnitOfMeasureTable, Boolean> primary =
 		createColumn(
 			"primary_", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);

@@ -318,6 +318,7 @@ create table CPInstanceUOM (
 	key_ VARCHAR(75) null,
 	name STRING null,
 	precision_ INTEGER,
+	pricingQuantity BIGDECIMAL null,
 	primary_ BOOLEAN,
 	priority DOUBLE,
 	rate BIGDECIMAL null,

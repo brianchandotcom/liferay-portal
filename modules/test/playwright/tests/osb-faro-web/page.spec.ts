@@ -12,7 +12,7 @@ import {loginAnalyticsCloudTest} from '../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {liferayConfig} from '../../liferay.config';
 import getRandomString from '../../utils/getRandomString';
-import {syncAnalyticsCloud} from '../analytics-settings-web/utils/analyticsSettings';
+import {syncAnalyticsCloud} from '../analytics-settings-web/utils/analytics-settings';
 import {createChannel, switchChannel} from './utils/channel';
 import {createIndividuals, generateIndividual} from './utils/individuals';
 import {Nanites, runNanites} from './utils/nanites';

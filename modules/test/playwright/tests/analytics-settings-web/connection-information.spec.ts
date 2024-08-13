@@ -19,7 +19,7 @@ import {
 	syncAnalyticsCloud,
 	syncCommerce,
 	syncSite,
-} from './utils/analyticsSettings';
+} from './utils/analytics-settings';
 
 export const test = mergeTests(
 	apiHelpersTest,

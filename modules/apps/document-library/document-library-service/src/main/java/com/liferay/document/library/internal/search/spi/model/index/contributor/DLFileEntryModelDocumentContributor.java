@@ -51,6 +51,7 @@ import com.liferay.portal.kernel.util.TextExtractor;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
+import com.liferay.portal.search.ml.embedding.text.TextEmbeddingDocumentContributor;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.trash.TrashHelper;
@@ -197,6 +198,12 @@ public class DLFileEntryModelDocumentContributor
 
 			if (text != null) {
 				document.addText(fieldName, text);
+
+				_textEmbeddingDocumentContributor.contribute(
+					document, dlFileEntry,
+					StringBundler.concat(
+						dlFileEntry.getTitle(), StringPool.PERIOD,
+						StringPool.SPACE, text));
 			}
 		}
 		catch (IOException | PortalException exception) {
@@ -481,6 +488,9 @@ public class DLFileEntryModelDocumentContributor
 
 	@Reference
 	private RelatedEntryIndexerRegistry _relatedEntryIndexerRegistry;
+
+	@Reference
+	private TextEmbeddingDocumentContributor _textEmbeddingDocumentContributor;
 
 	@Reference
 	private TextExtractor _textExtractor;

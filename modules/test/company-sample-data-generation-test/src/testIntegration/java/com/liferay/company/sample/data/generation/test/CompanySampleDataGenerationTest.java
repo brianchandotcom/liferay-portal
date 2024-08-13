@@ -146,8 +146,8 @@ public class CompanySampleDataGenerationTest {
 			// Add company
 
 			Company company = _companyLocalService.addCompany(
-				null, webId, webId, webId, 0, true, null, null, null, null,
-				null, null);
+				null, webId, webId, webId, 0, true, true, null, null, null,
+				null, null, null);
 
 			PortalInstances.initCompany(company);
 

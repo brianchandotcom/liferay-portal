@@ -69,8 +69,8 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 		}
 
 		return companyLocalService.addCompany(
-			companyId, webId, virtualHost, mx, maxUsers, active, null, null,
-			null, null, null, null);
+			companyId, webId, virtualHost, mx, maxUsers, active, true, null,
+			null, null, null, null, null);
 	}
 
 	/**
@@ -101,7 +101,7 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 		}
 
 		return companyLocalService.addCompany(
-			null, webId, virtualHost, mx, maxUsers, active,
+			null, webId, virtualHost, mx, maxUsers, active, true,
 			defaultAdminPassword, defaultAdminScreenName,
 			defaultAdminEmailAddress, defaultAdminFirstName,
 			defaultAdminMiddleName, defaultAdminLastName);

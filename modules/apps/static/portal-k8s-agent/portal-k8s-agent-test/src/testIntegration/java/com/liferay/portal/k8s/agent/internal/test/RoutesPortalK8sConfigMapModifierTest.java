@@ -92,8 +92,8 @@ public class RoutesPortalK8sConfigMapModifierTest {
 			String webId = "able.com";
 
 			Company company = _companyLocalService.addCompany(
-				null, webId, webId, webId, 0, true, null, null, null, null,
-				null, null);
+				null, webId, webId, webId, 0, true, true, null, null, null,
+				null, null, null);
 
 			_test(
 				company.getCompanyId(), webId, portalK8sConfigMapModifier,

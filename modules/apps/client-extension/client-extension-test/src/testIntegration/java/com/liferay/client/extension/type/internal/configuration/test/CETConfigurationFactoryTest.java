@@ -63,7 +63,7 @@ public class CETConfigurationFactoryTest {
 	public static void setUpClass() throws Exception {
 		Company company = CompanyLocalServiceUtil.addCompany(
 			null, _VIRTUAL_HOSTNAME, _VIRTUAL_HOSTNAME, _VIRTUAL_HOSTNAME, 0,
-			true, null, null, null, null, null, null);
+			true, true, null, null, null, null, null, null);
 
 		_autoCloseables.add(
 			() -> CompanyLocalServiceUtil.deleteCompany(company));

@@ -185,8 +185,8 @@ public class AgentPortalK8sConfigMapModifierTest {
 		String webId = "foo.lxc.com";
 
 		Company company = _companyLocalService.addCompany(
-			null, webId, webId, webId, 0, true, null, null, null, null, null,
-			null);
+			null, webId, webId, webId, 0, true, true, null, null, null, null,
+			null, null);
 
 		ConfigMap configMap = _kubernetesMockClient.configMaps(
 		).withName(

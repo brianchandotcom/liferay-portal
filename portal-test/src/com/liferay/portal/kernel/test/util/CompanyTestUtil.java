@@ -65,8 +65,8 @@ public class CompanyTestUtil {
 		String virtualHostname = name + "." + RandomTestUtil.randomString(3);
 
 		return CompanyLocalServiceUtil.addCompany(
-			null, name, virtualHostname, virtualHostname, 0, true, null, null,
-			null, null, null, null);
+			null, name, virtualHostname, virtualHostname, 0, true, true, null,
+			null, null, null, null, null);
 	}
 
 	public static void resetCompanyLocales(

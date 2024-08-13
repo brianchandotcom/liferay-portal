@@ -153,7 +153,7 @@ public class CompanyLocalServiceDBPartitionTest
 
 			company = companyLocalService.addCompany(
 				RandomTestUtil.randomLong(), "test.com", "test.com", "test.com",
-				0, true, null, null, null, null, null, null);
+				0, true, true, null, null, null, null, null, null);
 
 			Assert.fail();
 		}

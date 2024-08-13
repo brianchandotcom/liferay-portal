@@ -467,11 +467,11 @@ test.describe('JavaScript Client Extensions', () => {
 
 			// Apply JS client extension to page
 
-			await pagesAdminPage.selectJavaScriptClientExtension(
+			await pagesAdminPage.selectJavaScriptClientExtension({
 				clientExtensionName,
 				layoutTitle,
-				site.friendlyUrlPath
-			);
+				siteUrl: site.friendlyUrlPath,
+			});
 
 			// Check JS is attached to the page in view mode
 
@@ -520,10 +520,10 @@ test.describe('JavaScript Client Extensions', () => {
 
 			// Apply JS client extension to all pages
 
-			await pagesAdminPage.selectJavaScriptClientExtension(
+			await pagesAdminPage.selectJavaScriptClientExtension({
 				clientExtensionName,
-				site.friendlyUrlPath
-			);
+				siteUrl: site.friendlyUrlPath,
+			});
 
 			// Create a layout
 

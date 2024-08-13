@@ -290,11 +290,15 @@ export class PagesAdminPage {
 		await this.page.getByText('Search Results').waitFor();
 	}
 
-	async selectJavaScriptClientExtension(
-		clientExtensionName: string,
-		layoutTitle?: string,
-		siteUrl?: Site['friendlyUrlPath']
-	) {
+	async selectJavaScriptClientExtension({
+		clientExtensionName,
+		layoutTitle,
+		siteUrl,
+	}: {
+		clientExtensionName: string;
+		layoutTitle?: string;
+		siteUrl?: Site['friendlyUrlPath'];
+	}) {
 		if (!layoutTitle) {
 			await this.gotoPagesConfiguration(siteUrl);
 		}

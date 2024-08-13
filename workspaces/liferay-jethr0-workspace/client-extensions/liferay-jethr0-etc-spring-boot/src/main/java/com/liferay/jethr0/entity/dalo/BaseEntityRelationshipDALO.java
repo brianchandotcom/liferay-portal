@@ -332,11 +332,9 @@ public abstract class BaseEntityRelationshipDALO
 
 						Set<JSONObject> localJsonObjects = new HashSet<>();
 
-						if (itemsJSONArray != null) {
-							for (int i = 0; i < itemsJSONArray.length(); i++) {
-								localJsonObjects.add(
-									itemsJSONArray.getJSONObject(i));
-							}
+						for (int i = 0; i < itemsJSONArray.length(); i++) {
+							localJsonObjects.add(
+								itemsJSONArray.getJSONObject(i));
 						}
 
 						return new ImmutablePair<>(

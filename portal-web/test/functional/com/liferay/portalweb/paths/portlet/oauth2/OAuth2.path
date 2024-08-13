@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>ADMIN_CLIENT_CREDENTIALS_USER_SELECTED</td>
-	<td>//td[contains(@class,'lfr-screen-name-column')]/a[contains(.,'${key_clientCredentialsUser}')]</td>
+	<td>//tr[contains(@class,'entry entry-selector')]/td[contains(.,'${key_clientCredentialsUser}')]</td>
 	<td></td>
 </tr>
 <tr>

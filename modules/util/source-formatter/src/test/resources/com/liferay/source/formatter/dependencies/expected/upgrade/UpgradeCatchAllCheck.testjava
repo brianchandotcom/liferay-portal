@@ -664,17 +664,6 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 	}
 
 	public void method(
-		long companyId, String webId, String virtualHostname, String mx,
-		int maxUsers, boolean active, String defaultAdminPassword,
-		String defaultAdminScreenName, String defaultAdminEmailAddress,
-		String defaultAdminFirstName, String defaultAdminMiddleName,
-		String defaultAdminLastName) {
-
-		CompanyLocalServiceUtil.addCompany(companyId, webId, virtualHost, mx, maxUsers, active, defaultAdminPassword, defaultAdminScreenName, defaultAdminEmailAddress, defaultAdminFirstName, defaultAdminMiddleName, defaultAdminLastName);
-		_companyLocalService.addCompany(companyId, webId, virtualHost, mx, maxUsers, active, defaultAdminPassword, defaultAdminScreenName, defaultAdminEmailAddress, defaultAdminFirstName, defaultAdminMiddleName, defaultAdminLastName);
-	}
-
-	public void method(
 		long userId, long groupId, long repositoryId, boolean mountPoint,
 		long parentFolderId, String name, String description, boolean hidden,
 		ServiceContext serviceContext) {
@@ -885,6 +874,17 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		AddressServiceUtil.addAddress(null, userId, className, classPK, null, null, street1, street2, street3, city, zip, regionId, countryId, typeId, mailing, primary, null, serviceContext);
 		_addressLocalService.addAddress(null, userId, className, classPK, null, null, street1, street2, street3, city, zip, regionId, countryId, typeId, mailing, primary, null, serviceContext);
 		_addressService.addAddress(null, userId, className, classPK, null, null, street1, street2, street3, city, zip, regionId, countryId, typeId, mailing, primary, null, serviceContext);
+	}
+
+	public void method(
+		long companyId, String webId, String virtualHostname, String mx,
+		int maxUsers, boolean active, String defaultAdminPassword,
+		String defaultAdminScreenName, String defaultAdminEmailAddress,
+		String defaultAdminFirstName, String defaultAdminMiddleName,
+		String defaultAdminLastName) {
+
+		CompanyLocalServiceUtil.addCompany(companyId, webId, virtualHost, mx, maxUsers, active, defaultAdminPassword, defaultAdminScreenName, defaultAdminEmailAddress, defaultAdminFirstName, defaultAdminMiddleName, defaultAdminLastName);
+		_companyLocalService.addCompany(companyId, webId, virtualHost, mx, maxUsers, active, defaultAdminPassword, defaultAdminScreenName, defaultAdminEmailAddress, defaultAdminFirstName, defaultAdminMiddleName, defaultAdminLastName);
 	}
 
 	public void method(long[] segmentsExperienceIds) {

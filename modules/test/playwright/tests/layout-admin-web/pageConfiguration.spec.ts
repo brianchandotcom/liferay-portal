@@ -434,3 +434,124 @@ test.describe('Utility Page', () => {
 		}
 	);
 });
+
+test.describe('JavaScript Client Extensions', () => {
+	test(
+		'Add JS extension to page',
+		{
+			tag: '@LPS-153658',
+		},
+		async ({apiHelpers, page, pagesAdminPage, site}) => {
+
+			// Create a new JS client extension with a script element attribute
+
+			const clientExtensionName = getRandomString();
+
+			const clientExtension =
+				await apiHelpers.jsonWebServicesClientExtension.addClientExtension(
+					{
+						name: clientExtensionName,
+						type: 'globalJS',
+						url: 'https://www.example.com/script.js',
+					}
+				);
+
+			// Create a layout
+
+			const layoutTitle = getRandomString();
+
+			await apiHelpers.jsonWebServicesLayout.addLayout({
+				groupId: site.id,
+				title: layoutTitle,
+			});
+
+			// Apply JS client extension to page
+
+			await pagesAdminPage.selectJavaScriptClientExtension(
+				clientExtensionName,
+				layoutTitle,
+				site.friendlyUrlPath
+			);
+
+			// Check JS is attached to the page in view mode
+
+			await page.goto(`/web${site.friendlyUrlPath}/${layoutTitle}`);
+
+			await expect(
+				page.locator(`script[src="https://www.example.com/script.js"]`)
+			).toBeAttached();
+
+			// Clean up
+
+			await apiHelpers.jsonWebServicesClientExtension.deleteClientExtension(
+				clientExtension.clientExtensionEntryId
+			);
+		}
+	);
+
+	test(
+		'Inherited JS extensions from pages should be read-only mode',
+		{
+			tag: '@LPS-153658',
+		},
+		async ({
+			apiHelpers,
+			page,
+			pageConfigurationPage,
+			pagesAdminPage,
+			site,
+		}) => {
+
+			// Create a new JS client extension with a script element attribute
+
+			const clientExtensionName = getRandomString();
+
+			const clientExtension =
+				await apiHelpers.jsonWebServicesClientExtension.addClientExtension(
+					{
+						name: clientExtensionName,
+						type: 'globalJS',
+						url: 'https://www.example.com/script.js',
+					}
+				);
+
+			// Apply JS client extension to all pages
+
+			await pagesAdminPage.selectJavaScriptClientExtension(
+				clientExtensionName,
+				site.friendlyUrlPath
+			);
+
+			// Create a layout
+
+			const layoutTitle = getRandomString();
+
+			await apiHelpers.jsonWebServicesLayout.addLayout({
+				groupId: site.id,
+				title: layoutTitle,
+			});
+
+			// Check inherited JS client extension is read-only
+
+			await pagesAdminPage.goto(site.friendlyUrlPath);
+
+			await pageConfigurationPage.goToSection(layoutTitle, 'Design');
+
+			await pagesAdminPage.clickOnJavaScriptClientExtensionsTab();
+
+			await expect(
+				page
+					.locator(
+						'.global-js-cets-configuration .table tbody .disabled'
+					)
+					.getByText('From Pages')
+			).toBeVisible();
+
+			// Clean up
+
+			await apiHelpers.jsonWebServicesClientExtension.deleteClientExtension(
+				clientExtension.clientExtensionEntryId
+			);
+		}
+	);
+});

@@ -81,9 +81,9 @@ public class CPInstanceUnitOfMeasureModelImpl
 		{"modifiedDate", Types.TIMESTAMP}, {"CPInstanceId", Types.BIGINT},
 		{"active_", Types.BOOLEAN}, {"incrementalOrderQuantity", Types.DECIMAL},
 		{"key_", Types.VARCHAR}, {"name", Types.VARCHAR},
-		{"precision_", Types.INTEGER}, {"primary_", Types.BOOLEAN},
-		{"priority", Types.DOUBLE}, {"rate", Types.DECIMAL},
-		{"sku", Types.VARCHAR}
+		{"precision_", Types.INTEGER}, {"pricingQuantity", Types.DECIMAL},
+		{"primary_", Types.BOOLEAN}, {"priority", Types.DOUBLE},
+		{"rate", Types.DECIMAL}, {"sku", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -105,6 +105,7 @@ public class CPInstanceUnitOfMeasureModelImpl
 		TABLE_COLUMNS_MAP.put("key_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("precision_", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("pricingQuantity", Types.DECIMAL);
 		TABLE_COLUMNS_MAP.put("primary_", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("priority", Types.DOUBLE);
 		TABLE_COLUMNS_MAP.put("rate", Types.DECIMAL);
@@ -112,7 +113,7 @@ public class CPInstanceUnitOfMeasureModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CPInstanceUOM (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,CPInstanceUOMId LONG not null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPInstanceId LONG,active_ BOOLEAN,incrementalOrderQuantity BIGDECIMAL null,key_ VARCHAR(75) null,name STRING null,precision_ INTEGER,primary_ BOOLEAN,priority DOUBLE,rate BIGDECIMAL null,sku VARCHAR(75) null,primary key (CPInstanceUOMId, ctCollectionId))";
+		"create table CPInstanceUOM (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,CPInstanceUOMId LONG not null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPInstanceId LONG,active_ BOOLEAN,incrementalOrderQuantity BIGDECIMAL null,key_ VARCHAR(75) null,name STRING null,precision_ INTEGER,pricingQuantity BIGDECIMAL null,primary_ BOOLEAN,priority DOUBLE,rate BIGDECIMAL null,sku VARCHAR(75) null,primary key (CPInstanceUOMId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table CPInstanceUOM";
 
@@ -322,6 +323,8 @@ public class CPInstanceUnitOfMeasureModelImpl
 			attributeGetterFunctions.put(
 				"precision", CPInstanceUnitOfMeasure::getPrecision);
 			attributeGetterFunctions.put(
+				"pricingQuantity", CPInstanceUnitOfMeasure::getPricingQuantity);
+			attributeGetterFunctions.put(
 				"primary", CPInstanceUnitOfMeasure::getPrimary);
 			attributeGetterFunctions.put(
 				"priority", CPInstanceUnitOfMeasure::getPriority);
@@ -408,6 +411,10 @@ public class CPInstanceUnitOfMeasureModelImpl
 				"precision",
 				(BiConsumer<CPInstanceUnitOfMeasure, Integer>)
 					CPInstanceUnitOfMeasure::setPrecision);
+			attributeSetterBiConsumers.put(
+				"pricingQuantity",
+				(BiConsumer<CPInstanceUnitOfMeasure, BigDecimal>)
+					CPInstanceUnitOfMeasure::setPricingQuantity);
 			attributeSetterBiConsumers.put(
 				"primary",
 				(BiConsumer<CPInstanceUnitOfMeasure, Boolean>)
@@ -843,6 +850,21 @@ public class CPInstanceUnitOfMeasureModelImpl
 
 	@JSON
 	@Override
+	public BigDecimal getPricingQuantity() {
+		return _pricingQuantity;
+	}
+
+	@Override
+	public void setPricingQuantity(BigDecimal pricingQuantity) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_pricingQuantity = pricingQuantity;
+	}
+
+	@JSON
+	@Override
 	public boolean getPrimary() {
 		return _primary;
 	}
@@ -1078,6 +1100,7 @@ public class CPInstanceUnitOfMeasureModelImpl
 		cpInstanceUnitOfMeasureImpl.setKey(getKey());
 		cpInstanceUnitOfMeasureImpl.setName(getName());
 		cpInstanceUnitOfMeasureImpl.setPrecision(getPrecision());
+		cpInstanceUnitOfMeasureImpl.setPricingQuantity(getPricingQuantity());
 		cpInstanceUnitOfMeasureImpl.setPrimary(isPrimary());
 		cpInstanceUnitOfMeasureImpl.setPriority(getPriority());
 		cpInstanceUnitOfMeasureImpl.setRate(getRate());
@@ -1124,6 +1147,8 @@ public class CPInstanceUnitOfMeasureModelImpl
 			this.<String>getColumnOriginalValue("name"));
 		cpInstanceUnitOfMeasureImpl.setPrecision(
 			this.<Integer>getColumnOriginalValue("precision_"));
+		cpInstanceUnitOfMeasureImpl.setPricingQuantity(
+			this.<BigDecimal>getColumnOriginalValue("pricingQuantity"));
 		cpInstanceUnitOfMeasureImpl.setPrimary(
 			this.<Boolean>getColumnOriginalValue("primary_"));
 		cpInstanceUnitOfMeasureImpl.setPriority(
@@ -1282,6 +1307,9 @@ public class CPInstanceUnitOfMeasureModelImpl
 
 		cpInstanceUnitOfMeasureCacheModel.precision = getPrecision();
 
+		cpInstanceUnitOfMeasureCacheModel.pricingQuantity =
+			getPricingQuantity();
+
 		cpInstanceUnitOfMeasureCacheModel.primary = isPrimary();
 
 		cpInstanceUnitOfMeasureCacheModel.priority = getPriority();
@@ -1376,6 +1404,7 @@ public class CPInstanceUnitOfMeasureModelImpl
 	private String _name;
 	private String _nameCurrentLanguageId;
 	private int _precision;
+	private BigDecimal _pricingQuantity;
 	private boolean _primary;
 	private double _priority;
 	private BigDecimal _rate;
@@ -1428,6 +1457,7 @@ public class CPInstanceUnitOfMeasureModelImpl
 		_columnOriginalValues.put("key_", _key);
 		_columnOriginalValues.put("name", _name);
 		_columnOriginalValues.put("precision_", _precision);
+		_columnOriginalValues.put("pricingQuantity", _pricingQuantity);
 		_columnOriginalValues.put("primary_", _primary);
 		_columnOriginalValues.put("priority", _priority);
 		_columnOriginalValues.put("rate", _rate);
@@ -1490,13 +1520,15 @@ public class CPInstanceUnitOfMeasureModelImpl
 
 		columnBitmasks.put("precision_", 16384L);
 
-		columnBitmasks.put("primary_", 32768L);
+		columnBitmasks.put("pricingQuantity", 32768L);
 
-		columnBitmasks.put("priority", 65536L);
+		columnBitmasks.put("primary_", 65536L);
 
-		columnBitmasks.put("rate", 131072L);
+		columnBitmasks.put("priority", 131072L);
 
-		columnBitmasks.put("sku", 262144L);
+		columnBitmasks.put("rate", 262144L);
+
+		columnBitmasks.put("sku", 524288L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

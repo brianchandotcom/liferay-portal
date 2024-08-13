@@ -57,6 +57,7 @@ public class CPInstanceUnitOfMeasureWrapper
 		attributes.put("key", getKey());
 		attributes.put("name", getName());
 		attributes.put("precision", getPrecision());
+		attributes.put("pricingQuantity", getPricingQuantity());
 		attributes.put("primary", isPrimary());
 		attributes.put("priority", getPriority());
 		attributes.put("rate", getRate());
@@ -157,6 +158,13 @@ public class CPInstanceUnitOfMeasureWrapper
 
 		if (precision != null) {
 			setPrecision(precision);
+		}
+
+		BigDecimal pricingQuantity = (BigDecimal)attributes.get(
+			"pricingQuantity");
+
+		if (pricingQuantity != null) {
+			setPricingQuantity(pricingQuantity);
 		}
 
 		Boolean primary = (Boolean)attributes.get("primary");
@@ -383,6 +391,16 @@ public class CPInstanceUnitOfMeasureWrapper
 	@Override
 	public int getPrecision() {
 		return model.getPrecision();
+	}
+
+	/**
+	 * Returns the pricing quantity of this cp instance unit of measure.
+	 *
+	 * @return the pricing quantity of this cp instance unit of measure
+	 */
+	@Override
+	public BigDecimal getPricingQuantity() {
+		return model.getPricingQuantity();
 	}
 
 	/**
@@ -688,6 +706,16 @@ public class CPInstanceUnitOfMeasureWrapper
 	@Override
 	public void setPrecision(int precision) {
 		model.setPrecision(precision);
+	}
+
+	/**
+	 * Sets the pricing quantity of this cp instance unit of measure.
+	 *
+	 * @param pricingQuantity the pricing quantity of this cp instance unit of measure
+	 */
+	@Override
+	public void setPricingQuantity(BigDecimal pricingQuantity) {
+		model.setPricingQuantity(pricingQuantity);
 	}
 
 	/**

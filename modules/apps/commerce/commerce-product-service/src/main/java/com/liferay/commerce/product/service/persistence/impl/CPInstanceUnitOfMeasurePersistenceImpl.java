@@ -5299,6 +5299,7 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 		ctStrictColumnNames.add("key_");
 		ctStrictColumnNames.add("name");
 		ctStrictColumnNames.add("precision_");
+		ctStrictColumnNames.add("pricingQuantity");
 		ctStrictColumnNames.add("primary_");
 		ctStrictColumnNames.add("priority");
 		ctStrictColumnNames.add("rate");

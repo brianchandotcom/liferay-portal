@@ -71,7 +71,7 @@ public class CPInstanceUnitOfMeasureCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(39);
+		StringBundler sb = new StringBundler(41);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -103,6 +103,8 @@ public class CPInstanceUnitOfMeasureCacheModel
 		sb.append(name);
 		sb.append(", precision=");
 		sb.append(precision);
+		sb.append(", pricingQuantity=");
+		sb.append(pricingQuantity);
 		sb.append(", primary=");
 		sb.append(primary);
 		sb.append(", priority=");
@@ -177,6 +179,7 @@ public class CPInstanceUnitOfMeasureCacheModel
 		}
 
 		cpInstanceUnitOfMeasureImpl.setPrecision(precision);
+		cpInstanceUnitOfMeasureImpl.setPricingQuantity(pricingQuantity);
 		cpInstanceUnitOfMeasureImpl.setPrimary(primary);
 		cpInstanceUnitOfMeasureImpl.setPriority(priority);
 		cpInstanceUnitOfMeasureImpl.setRate(rate);
@@ -219,6 +222,7 @@ public class CPInstanceUnitOfMeasureCacheModel
 		name = objectInput.readUTF();
 
 		precision = objectInput.readInt();
+		pricingQuantity = (BigDecimal)objectInput.readObject();
 
 		primary = objectInput.readBoolean();
 
@@ -276,6 +280,7 @@ public class CPInstanceUnitOfMeasureCacheModel
 		}
 
 		objectOutput.writeInt(precision);
+		objectOutput.writeObject(pricingQuantity);
 
 		objectOutput.writeBoolean(primary);
 
@@ -305,6 +310,7 @@ public class CPInstanceUnitOfMeasureCacheModel
 	public String key;
 	public String name;
 	public int precision;
+	public BigDecimal pricingQuantity;
 	public boolean primary;
 	public double priority;
 	public BigDecimal rate;

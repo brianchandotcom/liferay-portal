@@ -449,6 +449,7 @@
 		<field name="precision" type="int">
 			<validator name="required" />
 		</field>
+		<field name="pricingQuantity" type="BigDecimal" />
 		<field name="primary" type="boolean" />
 		<field name="priority" type="double" />
 		<field name="rate" type="BigDecimal">

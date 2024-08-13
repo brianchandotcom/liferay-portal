@@ -152,6 +152,9 @@ public class CPInstanceUnitOfMeasurePersistenceTest {
 
 		newCPInstanceUnitOfMeasure.setPrecision(RandomTestUtil.nextInt());
 
+		newCPInstanceUnitOfMeasure.setPricingQuantity(
+			new BigDecimal(RandomTestUtil.nextDouble()));
+
 		newCPInstanceUnitOfMeasure.setPrimary(RandomTestUtil.randomBoolean());
 
 		newCPInstanceUnitOfMeasure.setPriority(RandomTestUtil.nextDouble());
@@ -216,6 +219,9 @@ public class CPInstanceUnitOfMeasurePersistenceTest {
 		Assert.assertEquals(
 			existingCPInstanceUnitOfMeasure.getPrecision(),
 			newCPInstanceUnitOfMeasure.getPrecision());
+		Assert.assertEquals(
+			existingCPInstanceUnitOfMeasure.getPricingQuantity(),
+			newCPInstanceUnitOfMeasure.getPricingQuantity());
 		Assert.assertEquals(
 			existingCPInstanceUnitOfMeasure.isPrimary(),
 			newCPInstanceUnitOfMeasure.isPrimary());
@@ -333,8 +339,8 @@ public class CPInstanceUnitOfMeasurePersistenceTest {
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "CPInstanceId", true, "active", true,
 			"incrementalOrderQuantity", true, "key", true, "name", true,
-			"precision", true, "primary", true, "priority", true, "rate", true,
-			"sku", true);
+			"precision", true, "pricingQuantity", true, "primary", true,
+			"priority", true, "rate", true, "sku", true);
 	}
 
 	@Test
@@ -678,6 +684,9 @@ public class CPInstanceUnitOfMeasurePersistenceTest {
 		cpInstanceUnitOfMeasure.setName(RandomTestUtil.randomString());
 
 		cpInstanceUnitOfMeasure.setPrecision(RandomTestUtil.nextInt());
+
+		cpInstanceUnitOfMeasure.setPricingQuantity(
+			new BigDecimal(RandomTestUtil.nextDouble()));
 
 		cpInstanceUnitOfMeasure.setPrimary(RandomTestUtil.randomBoolean());
 

@@ -400,6 +400,20 @@ public interface CPInstanceUnitOfMeasureModel
 	public void setPrecision(int precision);
 
 	/**
+	 * Returns the pricing quantity of this cp instance unit of measure.
+	 *
+	 * @return the pricing quantity of this cp instance unit of measure
+	 */
+	public BigDecimal getPricingQuantity();
+
+	/**
+	 * Sets the pricing quantity of this cp instance unit of measure.
+	 *
+	 * @param pricingQuantity the pricing quantity of this cp instance unit of measure
+	 */
+	public void setPricingQuantity(BigDecimal pricingQuantity);
+
+	/**
 	 * Returns the primary of this cp instance unit of measure.
 	 *
 	 * @return the primary of this cp instance unit of measure

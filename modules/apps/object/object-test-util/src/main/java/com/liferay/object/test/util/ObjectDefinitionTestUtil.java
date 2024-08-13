@@ -89,6 +89,23 @@ public class ObjectDefinitionTestUtil {
 	}
 
 	public static ObjectDefinition addModifiableSystemObjectDefinition(
+			long userId, String dbTableName, boolean enableLocalization,
+			Map<Locale, String> labelMap, String name,
+			String pkObjectFieldDBColumnName, String pkObjectFieldName,
+			Map<Locale, String> pluralLabelMap, String scope,
+			String titleObjectFieldName, int version,
+			List<ObjectField> objectFields)
+		throws Exception {
+
+		return ObjectDefinitionLocalServiceUtil.addSystemObjectDefinition(
+			null, userId, 0, null, dbTableName, false, true, enableLocalization,
+			labelMap, true, name, null, null, pkObjectFieldDBColumnName,
+			pkObjectFieldName, pluralLabelMap, false, scope,
+			titleObjectFieldName, version, WorkflowConstants.STATUS_DRAFT,
+			objectFields);
+	}
+
+	public static ObjectDefinition addModifiableSystemObjectDefinition(
 			long userId, String dbTableName, Map<Locale, String> labelMap,
 			String name, String pkObjectFieldDBColumnName,
 			String pkObjectFieldName, Map<Locale, String> pluralLabelMap,
@@ -96,11 +113,10 @@ public class ObjectDefinitionTestUtil {
 			List<ObjectField> objectFields)
 		throws Exception {
 
-		return ObjectDefinitionLocalServiceUtil.addSystemObjectDefinition(
-			null, userId, 0, null, dbTableName, false, true, labelMap, true,
-			name, null, null, pkObjectFieldDBColumnName, pkObjectFieldName,
-			pluralLabelMap, false, scope, titleObjectFieldName, version,
-			WorkflowConstants.STATUS_DRAFT, objectFields);
+		return addModifiableSystemObjectDefinition(
+			userId, dbTableName, false, labelMap, name,
+			pkObjectFieldDBColumnName, pkObjectFieldName, pluralLabelMap, scope,
+			titleObjectFieldName, version, objectFields);
 	}
 
 	public static ObjectDefinition addUnmodifiableSystemObjectDefinition(
@@ -114,10 +130,10 @@ public class ObjectDefinitionTestUtil {
 
 		return ObjectDefinitionLocalServiceUtil.addSystemObjectDefinition(
 			externalReferenceCode, userId, 0, className, dbTableName, false,
-			true, labelMap, false, name, null, null, pkObjectFieldDBColumnName,
-			pkObjectFieldName, pluralLabelMap, false, scope,
-			titleObjectFieldName, version, WorkflowConstants.STATUS_APPROVED,
-			objectFields);
+			true, false, labelMap, false, name, null, null,
+			pkObjectFieldDBColumnName, pkObjectFieldName, pluralLabelMap, false,
+			scope, titleObjectFieldName, version,
+			WorkflowConstants.STATUS_APPROVED, objectFields);
 	}
 
 	public static String getRandomName() {

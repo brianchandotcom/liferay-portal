@@ -1054,7 +1054,7 @@ public class ObjectFieldLocalServiceTest {
 	public void testAddOrUpdateSystemObjectField() throws Exception {
 		ObjectDefinition modifiableSystemObjectDefinition =
 			ObjectDefinitionTestUtil.addModifiableSystemObjectDefinition(
-				TestPropsValues.getUserId(), null,
+				TestPropsValues.getUserId(), null, true,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				"Test", null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),

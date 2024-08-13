@@ -367,7 +367,7 @@ public class ObjectDefinitionServiceTest {
 
 		return _objectDefinitionService.addSystemObjectDefinition(
 			RandomTestUtil.randomString(), user.getUserId(), objectFolderId,
-			false, true,
+			false, true, false,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			"Test", null, null,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),

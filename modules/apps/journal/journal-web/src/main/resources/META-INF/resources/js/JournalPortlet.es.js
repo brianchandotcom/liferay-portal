@@ -374,37 +374,72 @@ export default function _JournalPortlet({
 				return response.json();
 			})
 			.then((data) => {
-				if (!articleId && data.success) {
-					articleId = data.articleId;
-					document.getElementById(
-						`${namespace}articleId`
-					).value = articleId;
+				if (data.success) {
+					if (!articleId) {
+						articleId = data.articleId;
+						document.getElementById(`${namespace}articleId`).value =
+							articleId;
 
-					Liferay.fire('asyncFormSubmission', {articleId});
+						Liferay.fire('asyncFormSubmission', {articleId});
 
-					const friendlyUrlInputComponent = Liferay.component(
-						`${namespace}friendlyURL`
+						const friendlyUrlInputComponent = Liferay.component(
+							`${namespace}friendlyURL`
+						);
+
+						if (!friendlyUrlInputComponent.getValue()) {
+							const friendlyURL = data.friendlyURL;
+							friendlyUrlInputComponent.updateInputLanguage(
+								friendlyURL,
+								defaultLanguageId
+							);
+							friendlyUrlInputComponent.updateInput(friendlyURL);
+
+							Liferay.fire('journal:update-friendly-url', {
+								friendlyURL,
+							});
+						}
+					}
+
+					const articleIdWrapper = document.getElementById(
+						`${namespace}articleIdWrapper`
+					);
+					const articleVersionInput = document.getElementById(
+						`${namespace}version`
+					);
+					const articleVersionStatusWrapper = document.getElementById(
+						`${namespace}articleVersionStatusWrapper`
+					);
+					const displayedArticleId = document.getElementById(
+						`${namespace}displayedArticleId`
+					);
+					const displayedVersion = document.getElementById(
+						`${namespace}displayedVersion`
+					);
+					const statusDraftLabel = document.getElementById(
+						`${namespace}statusDraftLabel`
+					);
+					const statusLabel = document.getElementById(
+						`${namespace}statusLabel`
 					);
 
-					if (!friendlyUrlInputComponent.getValue()) {
-						const friendlyURL =
-							data.friendlyURL;
-						friendlyUrlInputComponent.updateInputLanguage(
-							friendlyURL,
-							defaultLanguageId
-						);
-						friendlyUrlInputComponent.updateInput(
-							friendlyURL
-						);
-
-						Liferay.fire('journal:update-friendly-url', {
-							friendlyURL,
-						});
+					if (statusLabel) {
+						statusLabel.classList.add('hide');
 					}
+
+					articleVersionStatusWrapper.classList.remove('hide');
+					statusDraftLabel.classList.remove('hide');
+
+					articleVersionInput.value = data.version;
+					displayedVersion.innerHTML = data.version;
+
+					articleIdWrapper.classList.remove('hide');
+					displayedArticleId.innerHTML = articleId;
 				}
+
 				formDateInput.value = data.modifiedDate;
 				lockHolder.lock?.unlock();
-			}).catch((error) => {
+			})
+			.catch((error) => {
 				console.error(error);
 				lockHolder.lock?.unlock(true);
 			});

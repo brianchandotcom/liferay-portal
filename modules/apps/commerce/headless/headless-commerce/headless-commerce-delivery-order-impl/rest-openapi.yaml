@@ -76,6 +76,9 @@ components:
                     format: date
                     readOnly: true
                     type: string
+                name:
+                    example: Order Name
+                    type: string
                 orderStatusInfo:
                     $ref: "#/components/schemas/Status"
                     readOnly: true

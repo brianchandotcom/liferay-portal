@@ -79,7 +79,7 @@ public class LanguageClientExtensionTest {
 
 			Assert.assertEquals("my-english-key", ploEntry.getKey());
 			Assert.assertEquals("en_US", ploEntry.getLanguageId());
-			Assert.assertEquals("My English value", ploEntry.getValue());
+			Assert.assertEquals("My English Value", ploEntry.getValue());
 
 			Assert.assertNull(
 				_ploEntryLocalService.fetchPLOEntry(

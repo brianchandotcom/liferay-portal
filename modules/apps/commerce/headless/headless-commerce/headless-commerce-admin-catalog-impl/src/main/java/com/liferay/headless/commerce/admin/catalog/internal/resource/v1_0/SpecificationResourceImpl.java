@@ -21,8 +21,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -126,7 +126,8 @@ public class SpecificationResourceImpl extends BaseSpecificationResourceImpl {
 		throws Exception {
 
 		CPSpecificationOption cpSpecificationOption = _updateSpecification(
-			id, specification);
+			_cpSpecificationOptionService.getCPSpecificationOption(id),
+			specification);
 
 		return _toSpecification(
 			cpSpecificationOption.getCPSpecificationOptionId());
@@ -165,7 +166,10 @@ public class SpecificationResourceImpl extends BaseSpecificationResourceImpl {
 		if (specificationId != null) {
 			try {
 				CPSpecificationOption cpSpecificationOption =
-					_updateSpecification(specificationId, specification);
+					_updateSpecification(
+						_cpSpecificationOptionService.getCPSpecificationOption(
+							specificationId),
+						specification);
 
 				return _toSpecification(
 					cpSpecificationOption.getCPSpecificationOptionId());
@@ -182,12 +186,48 @@ public class SpecificationResourceImpl extends BaseSpecificationResourceImpl {
 			}
 		}
 
-		String specificationKey = specification.getKey();
+		String specificationExternalReferenceCode =
+			specification.getExternalReferenceCode();
 
-		if (specificationKey != null) {
+		if (Validator.isNotNull(specificationExternalReferenceCode)) {
 			try {
 				CPSpecificationOption cpSpecificationOption =
-					_updateSpecification(specificationKey, specification);
+					_cpSpecificationOptionService.
+						fetchCPSpecificationOptionByExternalReferenceCode(
+							specificationExternalReferenceCode,
+							contextCompany.getCompanyId());
+
+				if (cpSpecificationOption == null) {
+					throw new NoSuchCPSpecificationOptionException();
+				}
+
+				cpSpecificationOption = _updateSpecification(
+					cpSpecificationOption, specification);
+
+				return _toSpecification(
+					cpSpecificationOption.getCPSpecificationOptionId());
+			}
+			catch (NoSuchCPSpecificationOptionException
+						noSuchCPSpecificationOptionException) {
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Unable to find specification with external " +
+							"reference code: " + specificationId,
+						noSuchCPSpecificationOptionException);
+				}
+			}
+		}
+
+		String specificationKey = specification.getKey();
+
+		if (Validator.isNotNull(specificationKey)) {
+			try {
+				CPSpecificationOption cpSpecificationOption =
+					_updateSpecification(
+						_cpSpecificationOptionService.getCPSpecificationOption(
+							contextCompany.getCompanyId(), specificationKey),
+						specification);
 
 				return _toSpecification(
 					cpSpecificationOption.getCPSpecificationOptionId());
@@ -240,22 +280,20 @@ public class SpecificationResourceImpl extends BaseSpecificationResourceImpl {
 	}
 
 	private CPSpecificationOption _updateSpecification(
-			Long id, Specification specification)
+			CPSpecificationOption cpSpecificationOption,
+			Specification specification)
 		throws PortalException {
-
-		CPSpecificationOption cpSpecificationOption =
-			_cpSpecificationOptionService.getCPSpecificationOption(id);
 
 		Map<String, String> descriptionMap = specification.getDescription();
 
-		if ((cpSpecificationOption != null) && (descriptionMap == null)) {
+		if (descriptionMap == null) {
 			descriptionMap = LanguageUtils.getLanguageIdMap(
 				cpSpecificationOption.getDescriptionMap());
 		}
 
 		Map<String, String> titleMap = specification.getTitle();
 
-		if ((cpSpecificationOption != null) && (titleMap == null)) {
+		if (titleMap == null) {
 			titleMap = LanguageUtils.getLanguageIdMap(
 				cpSpecificationOption.getTitleMap());
 		}
@@ -282,52 +320,6 @@ public class SpecificationResourceImpl extends BaseSpecificationResourceImpl {
 				specification.getPriority(),
 				cpSpecificationOption.getPriority()),
 			_serviceContextHelper.getServiceContext());
-	}
-
-	private CPSpecificationOption _updateSpecification(
-			String key, Specification specification)
-		throws PortalException {
-
-		ServiceContext serviceContext =
-			_serviceContextHelper.getServiceContext();
-
-		CPSpecificationOption cpSpecificationOption =
-			_cpSpecificationOptionService.getCPSpecificationOption(
-				serviceContext.getCompanyId(), key);
-
-		Map<String, String> descriptionMap = specification.getDescription();
-
-		if ((cpSpecificationOption != null) && (descriptionMap == null)) {
-			descriptionMap = LanguageUtils.getLanguageIdMap(
-				cpSpecificationOption.getDescriptionMap());
-		}
-
-		Map<String, String> titleMap = specification.getTitle();
-
-		if ((cpSpecificationOption != null) && (titleMap == null)) {
-			titleMap = LanguageUtils.getLanguageIdMap(
-				cpSpecificationOption.getTitleMap());
-		}
-
-		return _cpSpecificationOptionService.updateCPSpecificationOption(
-			GetterUtil.getString(
-				specification.getExternalReferenceCode(),
-				cpSpecificationOption.getExternalReferenceCode()),
-			cpSpecificationOption.getCPSpecificationOptionId(),
-			_getCPOptionCategoryId(specification),
-			GetterUtil.getLong(
-				specification.getListTypeDefinitionId(),
-				cpSpecificationOption.getListTypeDefinitionId()),
-			LanguageUtils.getLocalizedMap(titleMap),
-			LanguageUtils.getLocalizedMap(descriptionMap),
-			GetterUtil.getBoolean(
-				specification.getFacetable(),
-				cpSpecificationOption.isFacetable()),
-			key,
-			GetterUtil.getDouble(
-				specification.getPriority(),
-				cpSpecificationOption.getPriority()),
-			serviceContext);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.language.extender.internal.test;
+package com.liferay.portal.language.extender.internal.osgi.util.tracker.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringBundler;
@@ -45,7 +45,7 @@ import org.osgi.framework.FrameworkUtil;
  * @author Thiago Buarque
  */
 @RunWith(Arquillian.class)
-public class LanguageClientExtensionTest {
+public class LanguageClientExtensionBundleTrackerCustomizerTest {
 
 	@ClassRule
 	@Rule
@@ -54,7 +54,8 @@ public class LanguageClientExtensionTest {
 
 	@Before
 	public void setUp() {
-		_bundle = FrameworkUtil.getBundle(LanguageClientExtensionTest.class);
+		_bundle = FrameworkUtil.getBundle(
+			LanguageClientExtensionBundleTrackerCustomizerTest.class);
 
 		_bundleContext = _bundle.getBundleContext();
 	}
@@ -62,8 +63,7 @@ public class LanguageClientExtensionTest {
 	@Test
 	public void testAddingBundle() throws Exception {
 		Bundle bundle = _bundleContext.installBundle(
-			RandomTestUtil.randomString(),
-			_getBatchBundleInputStream("batch"));
+			RandomTestUtil.randomString(), _getBatchBundleInputStream("batch"));
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.portal.language.extender.internal." +

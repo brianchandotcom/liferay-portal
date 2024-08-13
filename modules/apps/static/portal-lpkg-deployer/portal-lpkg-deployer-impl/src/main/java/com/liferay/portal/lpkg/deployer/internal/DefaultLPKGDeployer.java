@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.lpkg.deployer.LPKGDeployer;
 import com.liferay.portal.lpkg.deployer.LPKGVerifier;
 import com.liferay.portal.lpkg.deployer.LPKGVerifyException;
+import com.liferay.portal.lpkg.deployer.internal.osgi.util.tracker.WABWrapperBundleTrackerCustomizer;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;

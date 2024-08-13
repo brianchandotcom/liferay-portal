@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.site.initializer.extender.internal;
+package com.liferay.site.initializer.extender.internal.osgi.util.tracker;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -68,7 +68,7 @@ import org.osgi.util.tracker.BundleTrackerCustomizer;
  * @author Nilton Vieira
  */
 @Component(service = {})
-public class SiteInitializerClientExtension
+public class SiteInitializerClientExtensionBundleTrackerCustomizer
 	implements BundleTrackerCustomizer<Bundle> {
 
 	@Override

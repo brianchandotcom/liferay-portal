@@ -332,6 +332,7 @@ public class OrderResourceTest extends BaseOrderResourceTestCase {
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
 				modifiedDate = RandomTestUtil.nextDate();
+				name = RandomTestUtil.randomString();
 				paymentMethod = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				printedNote = StringUtil.toLowerCase(

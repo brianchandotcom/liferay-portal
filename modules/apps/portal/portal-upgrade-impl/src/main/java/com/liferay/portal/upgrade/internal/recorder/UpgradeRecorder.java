@@ -49,7 +49,7 @@ public class UpgradeRecorder {
 	}
 
 	public List<String> getFailedSQLStatements() {
-		return _failedSQLStatements;
+		return SQLStatementRecorder.getFailedSQLStatements();
 	}
 
 	public String getFinalSchemaVersion(String servletContextName) {
@@ -136,13 +136,15 @@ public class UpgradeRecorder {
 		_processRelease(
 			(moduleSchemaVersions, schemaVersion) ->
 				moduleSchemaVersions._setInitial(schemaVersion));
+
+		SQLStatementRecorder.start();
 	}
 
 	public void stop() {
+		SQLStatementRecorder.stop();
+
 		_filter(_errorMessages);
 		_filter(_warningMessages);
-
-		_failedSQLStatements = SQLStatementRecorder.getFailedSQLStatements();
 
 		_result = _calculateResult();
 
@@ -317,7 +319,6 @@ public class UpgradeRecorder {
 
 	private static final Map<String, Map<String, Integer>> _errorMessages =
 		new ConcurrentHashMap<>();
-	private static List<String> _failedSQLStatements;
 	private static String _result;
 	private static final Map<String, SchemaVersions> _schemaVersionsMap =
 		new ConcurrentHashMap<>();

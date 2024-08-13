@@ -16,6 +16,7 @@ export {default as ReactSearchBar} from './components/SearchBar';
 export {default as SelectVocabularies} from './components/SelectVocabularies';
 export {default as SortConfigurationOptions} from './components/SortConfigurationOptions';
 export {default as SearchBarConfigurationSuggestions} from './components/search_bar_configuration_suggestions';
+export {default as SemanticSearchConfiguration} from './components/semantic_search_configuration';
 export {default as SystemSettingsFieldList} from './components/SystemSettingsFieldList';
 
 // Utils + shared

@@ -82,15 +82,17 @@ public interface CPInstanceUnitOfMeasureLocalService
 	public CPInstanceUnitOfMeasure addCPInstanceUnitOfMeasure(
 			long userId, long cpInstanceId, boolean active,
 			BigDecimal incrementalOrderQuantity, String key,
-			Map<Locale, String> nameMap, int precision, boolean primary,
-			double priority, BigDecimal rate, String sku)
+			Map<Locale, String> nameMap, int precision,
+			BigDecimal pricingQuantity, boolean primary, double priority,
+			BigDecimal rate, String sku)
 		throws PortalException;
 
 	public CPInstanceUnitOfMeasure addOrUpdateCPInstanceUnitOfMeasure(
 			long userId, long cpInstanceId, boolean active,
 			BigDecimal incrementalOrderQuantity, String key,
-			Map<Locale, String> nameMap, int precision, boolean primary,
-			double priority, BigDecimal rate, String sku)
+			Map<Locale, String> nameMap, int precision,
+			BigDecimal pricingQuantity, boolean primary, double priority,
+			BigDecimal rate, String sku)
 		throws PortalException;
 
 	/**
@@ -363,8 +365,9 @@ public interface CPInstanceUnitOfMeasureLocalService
 	public CPInstanceUnitOfMeasure updateCPInstanceUnitOfMeasure(
 			long cpInstanceUnitOfMeasureId, long cpInstanceId, boolean active,
 			BigDecimal incrementalOrderQuantity, String key,
-			Map<Locale, String> nameMap, int precision, boolean primary,
-			double priority, BigDecimal rate, String sku)
+			Map<Locale, String> nameMap, int precision,
+			BigDecimal pricingQuantity, boolean primary, double priority,
+			BigDecimal rate, String sku)
 		throws PortalException;
 
 	@Override

@@ -166,7 +166,7 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 			null, "sxpBlueprintId", _SXP_BLUEPRINT_OPTIONS_PORTLET_ID,
 			String.valueOf(sxpBlueprintId + 1));
 
-		_runUpgrade("v3_0_0");
+		_runUpgrade("v3_0_0.SXPBlueprintUpgradeProcess");
 
 		_assertSXPBlueprint(StringPool.BLANK, sxpBlueprint.getSXPBlueprintId());
 
@@ -237,7 +237,7 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 		SXPBlueprint sxpBlueprintSomeContributorsEnabled = _addSXPBlueprint(
 			_read("configurationJSONEnableSomeContributors.json"), null, "1.0");
 
-		_runUpgrade("v3_1_2");
+		_runUpgrade("v3_1_2.SXPBlueprintUpgradeProcess");
 
 		String[] wildcardArray = {"*"};
 
@@ -437,21 +437,20 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 	}
 
 	private void _runAllUpgrades() throws Exception {
-		_runUpgrade("v1_3_0");
-		_runUpgrade("v2_0_1");
-		_runUpgrade("v2_0_2");
-		_runUpgrade("v2_0_3");
-		_runUpgrade("v3_0_0");
-		_runUpgrade("v3_1_0");
-		_runUpgrade("v3_1_1");
-		_runUpgrade("v3_1_2");
+		_runUpgrade("v1_3_0.SXPBlueprintAndSXPElementUpgradeProcess");
+		_runUpgrade("v2_0_1.SXPBlueprintUpgradeProcess");
+		_runUpgrade("v2_0_2.SXPBlueprintAndSXPElementUpgradeProcess");
+		_runUpgrade("v2_0_3.SXPElementUpgradeProcess");
+		_runUpgrade("v3_0_0.SXPBlueprintUpgradeProcess");
+		_runUpgrade("v3_1_0.SXPBlueprintAndSXPElementUpgradeProcess");
+		_runUpgrade("v3_1_1.SXPBlueprintAndSXPElementUpgradeProcess");
+		_runUpgrade("v3_1_2.SXPBlueprintUpgradeProcess");
 	}
 
-	private void _runUpgrade(String version) throws Exception {
+	private void _runUpgrade(String name) throws Exception {
 		UpgradeProcess upgradeProcess = UpgradeTestUtil.getUpgradeStep(
 			_upgradeStepRegistrator,
-			"com.liferay.search.experiences.internal.upgrade." + version +
-				".SXPBlueprintUpgradeProcess");
+			"com.liferay.search.experiences.internal.upgrade." + name);
 
 		upgradeProcess.upgrade();
 

@@ -45,7 +45,7 @@ import org.junit.runner.RunWith;
  * @author Paulo Albuquerque
  */
 @RunWith(Arquillian.class)
-public class WizardDDMStructureLayoutCTUpgradeProcessTest
+public class DDMStructureLayoutCTUpgradeProcessTest
 	extends BaseCTUpgradeProcessTestCase {
 
 	@ClassRule

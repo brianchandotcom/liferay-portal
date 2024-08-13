@@ -6,10 +6,8 @@
 import {openToast} from 'frontend-js-web';
 
 import deleteItemAction from '../actions/deleteItem';
-import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../config/constants/freemarkerFragmentEntryProcessor';
 import {ITEM_ACTIVATION_ORIGINS} from '../config/constants/itemActivationOrigins';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
-import selectEditableValue from '../selectors/selectEditableValue';
 import selectFormConfiguration from '../selectors/selectFormConfiguration';
 import FormService from '../services/FormService';
 import LayoutService from '../services/LayoutService';
@@ -220,15 +218,7 @@ function maybeShowAlert(layoutData, itemIds, fragmentEntryLinks) {
 			item.type === LAYOUT_DATA_ITEM_TYPES.fragment &&
 			isRequiredFormInput(item, fragmentEntryLinks, formFields)
 		) {
-			const fieldId = selectEditableValue(
-				{fragmentEntryLinks},
-				item.config.fragmentEntryLinkId,
-				'inputFieldId',
-				FREEMARKER_FRAGMENT_ENTRY_PROCESSOR
-			);
-
 			const {message} = getFormErrorDescription({
-				name: getFieldLabel(fieldId, formFields),
 				type: FORM_ERROR_TYPES.deletedFragment,
 			});
 
@@ -238,10 +228,4 @@ function maybeShowAlert(layoutData, itemIds, fragmentEntryLinks) {
 			});
 		}
 	});
-}
-
-function getFieldLabel(fieldId, formFields) {
-	const flattenedFields = formFields.flatMap((fieldSet) => fieldSet.fields);
-
-	return flattenedFields.find((field) => field.key === fieldId).label;
 }

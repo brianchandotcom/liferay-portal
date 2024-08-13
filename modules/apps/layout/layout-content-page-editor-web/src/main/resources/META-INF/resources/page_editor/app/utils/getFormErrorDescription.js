@@ -19,11 +19,8 @@ export function getFormErrorDescription({name = null, type}) {
 	switch (type) {
 		case FORM_ERROR_TYPES.deletedFragment:
 			return {
-				message: sub(
-					Liferay.Language.get(
-						'the-deleted-fragment-was-marked-as-required'
-					),
-					name
+				message: Liferay.Language.get(
+					'the-deleted-fragment-was-marked-as-required'
 				),
 			};
 

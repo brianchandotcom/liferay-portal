@@ -5,6 +5,8 @@
 
 package com.liferay.layout.taglib.internal.display.context;
 
+import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
+import com.liferay.document.library.util.DLURLHelperUtil;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.entry.processor.helper.FragmentEntryProcessorHelper;
 import com.liferay.fragment.model.FragmentEntryLink;
@@ -57,6 +59,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.Theme;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -569,14 +572,23 @@ public class RenderLayoutStructureDisplayContext {
 				backgroundImageJSONObject.getString("mappedField"));
 		}
 
+		String backgroundImageURL = null;
+
 		if (fileEntryId != 0) {
 			sb.append("--background-image-file-entry-id:");
 			sb.append(fileEntryId);
 			sb.append(StringPool.SEMICOLON);
-		}
 
-		String backgroundImageURL = _getBackgroundImage(
-			backgroundImageJSONObject);
+			FileEntry fileEntry = _dlAppLocalServiceUtil.getFileEntry(
+				fileEntryId);
+
+			backgroundImageURL = _dlURLHelperUtil.getPreviewURL(
+				fileEntry, fileEntry.getFileVersion(), _themeDisplay,
+				StringPool.BLANK, false, false);
+		}
+		else {
+			backgroundImageURL = _getBackgroundImage(backgroundImageJSONObject);
+		}
 
 		if (Validator.isNotNull(backgroundImageURL)) {
 			sb.append("--lfr-background-image-");
@@ -1133,6 +1145,8 @@ public class RenderLayoutStructureDisplayContext {
 	private static final Log _log = LogFactoryUtil.getLog(
 		RenderLayoutStructureDisplayContext.class);
 
+	private DLAppLocalServiceUtil _dlAppLocalServiceUtil;
+	private DLURLHelperUtil _dlURLHelperUtil;
 	private final HttpServletRequest _httpServletRequest;
 	private final LayoutStructure _layoutStructure;
 	private LayoutStructureRulesHelper.LayoutStructureRulesResult

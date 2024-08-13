@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useEffect} from 'react';
+import {useEffect, useRef} from 'react';
 
 import {
 	CONTROL_KEY_CODE,
@@ -11,6 +11,7 @@ import {
 	ESCAPE_KEY_CODE,
 	META_KEY_CODE,
 } from '../config/constants/keyboardCodes';
+import {MULTI_SELECT_TYPES} from '../config/constants/multiSelectTypes';
 import {
 	useActivateMultiSelect,
 	useActiveItemIds,
@@ -22,35 +23,59 @@ import isCtrlOrMeta from '../utils/isCtrlOrMeta';
 export default function MultiSelectManager() {
 	const activeItemIds = useActiveItemIds();
 	const activateMultiSelect = useActivateMultiSelect();
+	const keymapRef = useRef(null);
 	const multiSelectIsActivated = useMultiSelectIsActivated();
 	const selectItem = useSelectItem();
 
-	useEffect(() => {
-		const multiSelection = (event) => {
-			if (isCtrlOrMeta(event) && !multiSelectIsActivated) {
-				activateMultiSelect(true);
-			}
-		};
+	keymapRef.current = {
+		simpleMultiSelect: {
+			action: () => {
+				activateMultiSelect(MULTI_SELECT_TYPES.simple);
+			},
+			disableKeyCombination: (event) =>
+				event.key === CONTROL_KEY_CODE || event.key === META_KEY_CODE,
+			keyCombination: (event) => isCtrlOrMeta(event),
+		},
+	};
 
+	useEffect(() => {
 		const onClick = (event) => {
-			multiSelection(event);
+			const multiSelection = Object.values(keymapRef.current).find(
+				(multiSelection) =>
+					!multiSelectIsActivated &&
+					multiSelection.keyCombination(event)
+			);
+
+			if (multiSelection) {
+				multiSelection.action(event);
+			}
 		};
 
 		const onKeydown = (event) => {
-			if (event.key === ENTER_KEY_CODE) {
-				multiSelection(event);
+			const multiSelection = Object.values(keymapRef.current).find(
+				(multiSelection) =>
+					!multiSelectIsActivated &&
+					multiSelection.keyCombination(event)
+			);
+
+			if (multiSelection && event.key === ENTER_KEY_CODE) {
+				multiSelection.action(event);
 			}
-			else if (event.key === ESCAPE_KEY_CODE && activeItemIds.length) {
+
+			if (event.key === ESCAPE_KEY_CODE && activeItemIds.length) {
 				selectItem(null);
 			}
 		};
 
 		const onKeyup = (event) => {
-			if (
-				multiSelectIsActivated &&
-				(event.key === CONTROL_KEY_CODE || event.key === META_KEY_CODE)
-			) {
-				activateMultiSelect(false);
+			const multiSelection = Object.values(keymapRef.current).find(
+				(multiSelection) =>
+					multiSelectIsActivated &&
+					multiSelection.disableKeyCombination(event)
+			);
+
+			if (multiSelection) {
+				activateMultiSelect(null);
 			}
 		};
 

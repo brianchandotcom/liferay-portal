@@ -1,0 +1,212 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.dynamic.data.mapping.internal.upgrade.v5_5_1.test;
+
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.dynamic.data.lists.model.DDLRecordSet;
+import com.liferay.dynamic.data.mapping.constants.DDMStructureConstants;
+import com.liferay.dynamic.data.mapping.model.DDMFieldAttribute;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.LocalizedValue;
+import com.liferay.dynamic.data.mapping.model.Value;
+import com.liferay.dynamic.data.mapping.service.DDMFieldLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.dynamic.data.mapping.service.persistence.DDMFieldAttributePersistence;
+import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.dynamic.data.mapping.storage.StorageType;
+import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
+import com.liferay.dynamic.data.mapping.util.DDM;
+import com.liferay.portal.kernel.cache.MultiVMPool;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
+import com.liferay.portal.kernel.model.CompanyConstants;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LoggerTestUtil;
+import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.portal.test.rule.TransactionalTestRule;
+import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+import com.liferay.portal.upgrade.test.util.UpgradeTestUtil;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Locale;
+import java.util.Set;
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+/**
+ * @author Alicia García
+ */
+@RunWith(Arquillian.class)
+public class DDMFieldAttributeUpgradeProcessTest {
+
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE,
+			TransactionalTestRule.INSTANCE);
+
+	@Before
+	public void setUp() throws Exception {
+		_group = GroupTestUtil.addGroup();
+
+		_originalCompanyId = CompanyThreadLocal.getCompanyId();
+
+		CompanyThreadLocal.setCompanyId(CompanyConstants.SYSTEM);
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		_ddmFieldLocalService.deleteDDMFormValues(_STORAGE_ID);
+
+		CompanyThreadLocal.setCompanyId(_originalCompanyId);
+	}
+
+	@Test
+	public void testClassUpgradeProcess() throws Exception {
+		_addDDMFormValues();
+
+		List<DDMFieldAttribute> ddmFieldAttributes =
+			_ddmFieldAttributePersistence.findByStorageId(_STORAGE_ID);
+
+		List<String> ddmFieldAttributeNames = new ArrayList<>(
+			ddmFieldAttributes.size());
+
+		for (DDMFieldAttribute ddmFieldAttribute : ddmFieldAttributes) {
+			ddmFieldAttributeNames.add(ddmFieldAttribute.getAttributeName());
+
+			Assert.assertEquals(
+				CompanyConstants.SYSTEM, ddmFieldAttribute.getCompanyId());
+		}
+
+		_runUpgrade();
+
+		for (String ddmFieldAttributeName : ddmFieldAttributeNames) {
+			ddmFieldAttributes = _ddmFieldLocalService.getDDMFieldAttributes(
+				_STORAGE_ID, ddmFieldAttributeName);
+
+			for (DDMFieldAttribute ddmFieldAttribute : ddmFieldAttributes) {
+				Assert.assertEquals(
+					_group.getCompanyId(), ddmFieldAttribute.getCompanyId());
+			}
+		}
+	}
+
+	private void _addDDMFormValues() throws Exception {
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
+			RandomTestUtil.randomString());
+
+		DDMStructure ddmStructure = _ddmStructureLocalService.addStructure(
+			TestPropsValues.getUserId(), _group.getGroupId(), 0,
+			PortalUtil.getClassNameId(DDLRecordSet.class.getName()),
+			"CUSTOM-META-TAGS", RandomTestUtil.randomLocaleStringMap(), null,
+			ddmForm, _ddm.getDefaultDDMFormLayout(ddmForm),
+			StorageType.DEFAULT.toString(), DDMStructureConstants.TYPE_DEFAULT,
+			ServiceContextTestUtil.getServiceContext());
+
+		DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
+
+		ddmFormValues.setDefaultLocale(LocaleUtil.ENGLISH);
+
+		Set<Locale> availableLocales = new LinkedHashSet<>(
+			Arrays.asList(
+				LocaleUtil.CHINA, LocaleUtil.ENGLISH, LocaleUtil.SPAIN));
+
+		ddmFormValues.setAvailableLocales(availableLocales);
+
+		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
+
+		ddmFormFieldValue.setName("field1");
+		ddmFormFieldValue.setInstanceId(StringUtil.randomString(8));
+
+		Value value = new LocalizedValue(LocaleUtil.ENGLISH);
+
+		for (Locale locale : availableLocales) {
+			value.addString(locale, LocaleUtil.toLanguageId(locale) + " value");
+		}
+
+		ddmFormFieldValue.setValue(value);
+
+		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
+
+		_ddmFieldLocalService.updateDDMFormValues(
+			ddmStructure.getStructureId(), _STORAGE_ID, ddmFormValues);
+	}
+
+	private void _runUpgrade() throws Exception {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				_CLASS_NAME, LoggerTestUtil.OFF)) {
+
+			UpgradeProcess upgradeProcess = UpgradeTestUtil.getUpgradeStep(
+				_upgradeStepRegistrator, _CLASS_NAME);
+
+			upgradeProcess.upgrade();
+
+			_entityCache.clearCache();
+			_multiVMPool.clear();
+		}
+	}
+
+	private static final String _CLASS_NAME =
+		"com.liferay.dynamic.data.mapping.internal.upgrade.v5_5_1." +
+			"DDMFieldAttributeUpgradeProcess";
+
+	private static final long _STORAGE_ID = 0;
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.dynamic.data.mapping.internal.upgrade.registry.DDMServiceUpgradeStepRegistrator))"
+	)
+	private static UpgradeStepRegistrator _upgradeStepRegistrator;
+
+	@Inject
+	private DDM _ddm;
+
+	@Inject
+	private DDMFieldAttributePersistence _ddmFieldAttributePersistence;
+
+	@Inject
+	private DDMFieldLocalService _ddmFieldLocalService;
+
+	@Inject
+	private DDMStructureLocalService _ddmStructureLocalService;
+
+	@Inject
+	private EntityCache _entityCache;
+
+	@DeleteAfterTestRun
+	private Group _group;
+
+	@Inject
+	private MultiVMPool _multiVMPool;
+
+	private long _originalCompanyId;
+
+}

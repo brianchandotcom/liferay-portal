@@ -7,4 +7,32 @@
 
 <%@ include file="/init.jsp" %>
 
-<%@ include file="/details.jspf" %>
+<%
+CPDefinitionVirtualSettingDisplayContext cpDefinitionVirtualSettingDisplayContext = (CPDefinitionVirtualSettingDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+
+CPDefinitionVirtualSetting cpDefinitionVirtualSetting = cpDefinitionVirtualSettingDisplayContext.getCPDefinitionVirtualSetting();
+
+String className = CPDefinition.class.getName();
+long classPK = cpDefinitionVirtualSettingDisplayContext.getCPDefinitionId();
+
+if (cpDefinitionVirtualSetting != null) {
+	className = cpDefinitionVirtualSetting.getClassName();
+	classPK = cpDefinitionVirtualSetting.getClassPK();
+}
+%>
+
+<frontend-data-set:classic-display
+	contextParams='<%=
+		HashMapBuilder.<String, String>put(
+			"className", className
+		).put(
+			"classPK", String.valueOf(classPK)
+		).build()
+	%>'
+	creationMenu="<%= cpDefinitionVirtualSettingDisplayContext.getCreationMenu() %>"
+	dataProviderKey="<%= CPDefinitionVirtualSettingFDSNames.VIRTUAL_SETTING_FILES %>"
+	formName="fm"
+	id="<%= CPDefinitionVirtualSettingFDSNames.VIRTUAL_SETTING_FILES %>"
+	itemsPerPage="<%= 10 %>"
+	selectedItemsKey="cpDefinitionVirtualSettingFileId"
+/>

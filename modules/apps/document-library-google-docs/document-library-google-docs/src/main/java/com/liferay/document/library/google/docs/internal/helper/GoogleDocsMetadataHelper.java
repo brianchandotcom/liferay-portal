@@ -188,6 +188,8 @@ public class GoogleDocsMetadataHelper {
 					_dlFileVersion.getCompanyId(), ddmStructureId,
 					ddmFormValues, serviceContext));
 
+			_dlFileEntryMetadata.setExternalReferenceCode(
+				_dlFileEntryMetadata.getUuid());
 			_dlFileEntryMetadata.setDDMStructureId(ddmStructureId);
 			_dlFileEntryMetadata.setFileEntryId(dlFileEntry.getFileEntryId());
 			_dlFileEntryMetadata.setFileVersionId(

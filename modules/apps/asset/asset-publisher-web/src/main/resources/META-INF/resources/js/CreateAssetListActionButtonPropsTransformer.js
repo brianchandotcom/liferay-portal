@@ -16,7 +16,6 @@ export default function propsTransformer({additionalProps, ...props}) {
 				mainFieldName: 'title',
 				mainFieldPlaceholder: Liferay.Language.get('title'),
 				namespace: additionalProps.portletNamespace,
-				spritemap: additionalProps.spritemap,
 			});
 		},
 	};

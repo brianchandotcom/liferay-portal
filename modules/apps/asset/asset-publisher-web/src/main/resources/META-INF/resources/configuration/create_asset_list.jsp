@@ -22,8 +22,6 @@ String portletResource = ParamUtil.getString(request, "portletResource");
 			HashMapBuilder.<String, Object>put(
 				"portletNamespace", PortalUtil.getPortletNamespace(HtmlUtil.escape(portletResource))
 			).put(
-				"spritemap", themeDisplay.getPathThemeSpritemap()
-			).put(
 				"url", addAssetListURL
 			).build()
 		%>'

@@ -11,6 +11,7 @@ import com.liferay.depot.web.internal.constants.DepotPortletKeys;
 import com.liferay.depot.web.internal.util.StagingIndicatorUtil;
 import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProviderUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -328,7 +329,12 @@ public class StagingIndicatorDynamicInclude extends BaseDynamicInclude {
 			httpServletRequest, httpServletResponse,
 			pageContext -> {
 				try {
-					writer.write("<link href=\"");
+					writer.write("<link");
+					writer.write(
+						ContentSecurityPolicyNonceProviderUtil.getNonce(
+							httpServletRequest));
+					writer.write(" href=\"");
+
 					writer.write(
 						_portal.getStaticResourceURL(
 							httpServletRequest,

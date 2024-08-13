@@ -6,6 +6,7 @@
 package com.liferay.product.navigation.product.menu.theme.contributor.internal.servlet.taglib;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProviderUtil;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -48,9 +49,13 @@ public class ProductNavigationProductMenuTopHeadDynamicInclude
 
 		PrintWriter printWriter = httpServletResponse.getWriter();
 
-		StringBundler sb = new StringBundler(3);
+		StringBundler sb = new StringBundler(5);
 
-		sb.append("<link data-senna-track=\"permanent\" href=\"");
+		sb.append("<link");
+		sb.append(
+			ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
+				httpServletRequest));
+		sb.append(" data-senna-track=\"permanent\" href=\"");
 
 		AbsolutePortalURLBuilder absolutePortalURLBuilder =
 			_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(

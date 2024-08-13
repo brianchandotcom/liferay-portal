@@ -10,6 +10,5 @@ export {default as EditBlueprint} from '../sxp_blueprint_admin/js/edit_sxp_bluep
 export {default as EditElement} from '../sxp_blueprint_admin/js/edit_sxp_element/index';
 export {default as ImportSXPBlueprintModal} from '../sxp_blueprint_admin/js/view_sxp_blueprints/ImportSXPBlueprintModal';
 export {default as openInitialSuccessToastHandler} from '../sxp_blueprint_admin/js/utils/openInitialSuccessToastHandler';
-export {default as SemanticSearchConfiguration} from '../semantic_search/js/configuration/index';
 export {default as ViewSXPBlueprintsPropsTransformer} from '../sxp_blueprint_admin/js/view_sxp_blueprints/ViewSXPBlueprintsPropsTransformer';
 export {default as ViewSXPElementsPropsTransformer} from '../sxp_blueprint_admin/js/view_sxp_elements/ViewSXPElementsPropsTransformer';

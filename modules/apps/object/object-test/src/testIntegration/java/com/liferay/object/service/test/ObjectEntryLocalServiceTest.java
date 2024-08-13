@@ -822,118 +822,32 @@ public class ObjectEntryLocalServiceTest {
 					"name", "Peter"
 				).build()));
 
-		_addCustomObjectField(
-			new LongTextObjectFieldBuilder(
-			).labelMap(
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
-			).name(
-				"longTextLocalized"
-			).objectDefinitionId(
-				objectDefinition.getObjectDefinitionId()
-			).localized(
-				true
-			).build());
-		_addCustomObjectField(
-			new RichTextObjectFieldBuilder(
-			).labelMap(
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
-			).name(
-				"richTextLocalized"
-			).objectDefinitionId(
-				objectDefinition.getObjectDefinitionId()
-			).localized(
-				true
-			).build());
-		_addCustomObjectField(
-			new TextObjectFieldBuilder(
-			).labelMap(
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
-			).name(
-				"textLocalized"
-			).objectDefinitionId(
-				objectDefinition.getObjectDefinitionId()
-			).localized(
-				true
-			).objectFieldSettings(
-				Collections.singletonList(
-					new ObjectFieldSettingBuilder(
-					).name(
-						ObjectFieldSettingConstants.NAME_UNIQUE_VALUES
-					).value(
-						Boolean.TRUE.toString()
-					).build())
-			).build());
-
-		String value1 = "en_US " + RandomTestUtil.randomString();
-		String value2 = "pt_BR " + RandomTestUtil.randomString();
-
-		Map<String, Serializable> localizedValues =
-			HashMapBuilder.<String, Serializable>put(
-				"longTextLocalized_i18n",
-				HashMapBuilder.put(
-					"en_US", RandomTestUtil.randomString()
-				).put(
-					"pt_BR", RandomTestUtil.randomString()
-				).build()
-			).put(
-				"richTextLocalized_i18n",
-				HashMapBuilder.put(
-					"en_US", RandomTestUtil.randomString()
-				).put(
-					"pt_BR", RandomTestUtil.randomString()
-				).build()
-			).put(
-				"textLocalized_i18n",
-				HashMapBuilder.put(
-					"en_US", value1
-				).put(
-					"pt_BR", value2
-				).build()
-			).build();
-
-		ObjectEntry objectEntry = _addObjectEntry(
-			group.getGroupId(), objectDefinition.getObjectDefinitionId(),
-			localizedValues);
-
-		Map<String, Serializable> values = objectEntry.getValues();
-
-		Assert.assertEquals(
-			localizedValues.get("longTextLocalized_i18n"),
-			values.get("longTextLocalized_i18n"));
-		Assert.assertEquals(
-			localizedValues.get("richTextLocalized_i18n"),
-			values.get("richTextLocalized_i18n"));
-		Assert.assertEquals(
-			localizedValues.get("textLocalized_i18n"),
-			values.get("textLocalized_i18n"));
-
-		AssertUtils.assertFailure(
-			ObjectEntryValuesException.UniqueValueConstraintViolation.class,
-			StringBundler.concat(
-				"Unique value constraint violation for ",
-				objectDefinition.getLocalizationDBTableName(),
-				".textLocalized_ with value ", value1),
-			() -> _addObjectEntry(
-				group.getGroupId(), finalObjectDefinitionId, localizedValues));
-
-		AssertUtils.assertFailure(
-			ObjectEntryValuesException.UniqueValueConstraintViolation.class,
-			StringBundler.concat(
-				"Unique value constraint violation for ",
-				objectDefinition.getLocalizationDBTableName(),
-				".textLocalized_ with value ", value2),
-			() -> _addObjectEntry(
-				group.getGroupId(), finalObjectDefinitionId,
-				HashMapBuilder.<String, Serializable>put(
-					"textLocalized_i18n",
-					HashMapBuilder.put(
-						"en_US", "en_US " + RandomTestUtil.randomString()
-					).put(
-						"pt_BR", value2
-					).build()
-				).build()));
+		_testAddObjectEntryWithLocalizedValues(objectDefinition, group);
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
+
+		ObjectDefinition modifiableSystemObjectDefinition =
+			ObjectDefinitionTestUtil.addModifiableSystemObjectDefinition(
+				TestPropsValues.getUserId(), null, true,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				"Test", null, null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				ObjectDefinitionConstants.SCOPE_SITE, null, 1,
+				Arrays.asList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING,
+						RandomTestUtil.randomString(), StringUtil.randomId())));
+
+		_objectDefinitionLocalService.publishSystemObjectDefinition(
+			TestPropsValues.getUserId(),
+			modifiableSystemObjectDefinition.getObjectDefinitionId());
+
+		_testAddObjectEntryWithLocalizedValues(
+			modifiableSystemObjectDefinition, group);
+
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			modifiableSystemObjectDefinition.getObjectDefinitionId());
 	}
 
 	@Test
@@ -3795,6 +3709,23 @@ public class ObjectEntryLocalServiceTest {
 			ServiceContextTestUtil.getServiceContext());
 	}
 
+	private void _addSystemObjectField(ObjectField objectField)
+		throws Exception {
+
+		_objectFieldLocalService.addSystemObjectField(
+			objectField.getExternalReferenceCode(), TestPropsValues.getUserId(),
+			objectField.getListTypeDefinitionId(),
+			objectField.getObjectDefinitionId(), objectField.getBusinessType(),
+			null, null, objectField.getDBType(), objectField.isIndexed(),
+			objectField.isIndexedAsKeyword(),
+			objectField.getIndexedLanguageId(), objectField.getLabelMap(),
+			objectField.isLocalized(), objectField.getName(),
+			objectField.getReadOnly(),
+			objectField.getReadOnlyConditionExpression(),
+			objectField.isRequired(), objectField.isState(),
+			objectField.getObjectFieldSettings());
+	}
+
 	private FileEntry _addTempFileEntry(String title) throws Exception {
 		return TempFileEntryUtil.addTempFileEntry(
 			TestPropsValues.getGroupId(), TestPropsValues.getUserId(),
@@ -4113,6 +4044,156 @@ public class ObjectEntryLocalServiceTest {
 
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_APPROVED, objectEntry.getStatus());
+	}
+
+	private void _testAddObjectEntryWithLocalizedValues(
+			ObjectDefinition objectDefinition, Group group)
+		throws Exception {
+
+		if (objectDefinition.isModifiable() && objectDefinition.isSystem()) {
+			_addSystemObjectField(
+				new TextObjectFieldBuilder(
+				).labelMap(
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString())
+				).name(
+					"longTextLocalized1"
+				).objectDefinitionId(
+					objectDefinition.getObjectDefinitionId()
+				).localized(
+					true
+				).system(
+					true
+				).build());
+		}
+
+		_addCustomObjectField(
+			new LongTextObjectFieldBuilder(
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).name(
+				"longTextLocalized2"
+			).objectDefinitionId(
+				objectDefinition.getObjectDefinitionId()
+			).localized(
+				true
+			).build());
+		_addCustomObjectField(
+			new RichTextObjectFieldBuilder(
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).name(
+				"richTextLocalized"
+			).objectDefinitionId(
+				objectDefinition.getObjectDefinitionId()
+			).localized(
+				true
+			).build());
+		_addCustomObjectField(
+			new TextObjectFieldBuilder(
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).name(
+				"textLocalized"
+			).objectDefinitionId(
+				objectDefinition.getObjectDefinitionId()
+			).localized(
+				true
+			).objectFieldSettings(
+				Collections.singletonList(
+					new ObjectFieldSettingBuilder(
+					).name(
+						ObjectFieldSettingConstants.NAME_UNIQUE_VALUES
+					).value(
+						Boolean.TRUE.toString()
+					).build())
+			).build());
+
+		String value1 = "en_US " + RandomTestUtil.randomString();
+		String value2 = "pt_BR " + RandomTestUtil.randomString();
+
+		Map<String, Serializable> localizedValues = new HashMap<>();
+
+		if (objectDefinition.isModifiable() && objectDefinition.isSystem()) {
+			localizedValues.put(
+				"longTextLocalized1_i18n",
+				HashMapBuilder.put(
+					"en_US", RandomTestUtil.randomString()
+				).put(
+					"pt_BR", RandomTestUtil.randomString()
+				).build());
+		}
+
+		localizedValues.put(
+			"longTextLocalized2_i18n",
+			HashMapBuilder.put(
+				"en_US", RandomTestUtil.randomString()
+			).put(
+				"pt_BR", RandomTestUtil.randomString()
+			).build());
+		localizedValues.put(
+			"richTextLocalized_i18n",
+			HashMapBuilder.put(
+				"en_US", RandomTestUtil.randomString()
+			).put(
+				"pt_BR", RandomTestUtil.randomString()
+			).build());
+		localizedValues.put(
+			"textLocalized_i18n",
+			HashMapBuilder.put(
+				"en_US", value1
+			).put(
+				"pt_BR", value2
+			).build());
+
+		ObjectEntry objectEntry = _addObjectEntry(
+			group.getGroupId(), objectDefinition.getObjectDefinitionId(),
+			localizedValues);
+
+		Map<String, Serializable> values = objectEntry.getValues();
+
+		if (objectDefinition.isModifiable() && objectDefinition.isSystem()) {
+			Assert.assertEquals(
+				localizedValues.get("longTextLocalized1_i18n"),
+				values.get("longTextLocalized1_i18n"));
+		}
+
+		Assert.assertEquals(
+			localizedValues.get("longTextLocalized2_i18n"),
+			values.get("longTextLocalized2_i18n"));
+		Assert.assertEquals(
+			localizedValues.get("richTextLocalized_i18n"),
+			values.get("richTextLocalized_i18n"));
+		Assert.assertEquals(
+			localizedValues.get("textLocalized_i18n"),
+			values.get("textLocalized_i18n"));
+
+		AssertUtils.assertFailure(
+			ObjectEntryValuesException.UniqueValueConstraintViolation.class,
+			StringBundler.concat(
+				"Unique value constraint violation for ",
+				objectDefinition.getLocalizationDBTableName(),
+				".textLocalized_ with value ", value1),
+			() -> _addObjectEntry(
+				group.getGroupId(), objectDefinition.getObjectDefinitionId(),
+				localizedValues));
+
+		AssertUtils.assertFailure(
+			ObjectEntryValuesException.UniqueValueConstraintViolation.class,
+			StringBundler.concat(
+				"Unique value constraint violation for ",
+				objectDefinition.getLocalizationDBTableName(),
+				".textLocalized_ with value ", value2),
+			() -> _addObjectEntry(
+				group.getGroupId(), objectDefinition.getObjectDefinitionId(),
+				HashMapBuilder.<String, Serializable>put(
+					"textLocalized_i18n",
+					HashMapBuilder.put(
+						"en_US", "en_US " + RandomTestUtil.randomString()
+					).put(
+						"pt_BR", value2
+					).build()
+				).build()));
 	}
 
 	private void _testScope(long groupId, String scope, boolean expectSuccess)

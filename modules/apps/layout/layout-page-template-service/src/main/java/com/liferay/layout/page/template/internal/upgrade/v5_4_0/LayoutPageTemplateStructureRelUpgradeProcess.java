@@ -7,6 +7,9 @@ package com.liferay.layout.page.template.internal.upgrade.v5_4_0;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LoggingTimer;
+import com.liferay.portal.kernel.util.StringUtil;
 
 /**
  * @author Lourdes Fernández Besada
@@ -16,15 +19,38 @@ public class LayoutPageTemplateStructureRelUpgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		runSQL(
-			StringBundler.concat(
-				"update LayoutPageTemplateStructureRel set data_ = ",
-				"REPLACE(data_, 'com.liferay.object.internal.info.collection.",
-				"provider.",
-				"ObjectEntrySingleFormVariationInfoCollectionProvider', '",
-				"com.liferay.object.web.internal.info.collection.provider.",
-				"ObjectEntrySingleFormVariationInfoCollectionProvider') where ",
-				"data_ is not null and data_ != ''"));
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			processConcurrently(
+				StringBundler.concat(
+					"select lPageTemplateStructureRelId, data_ from ",
+					"LayoutPageTemplateStructureRel where data_ like '%",
+					_OLD_CLASS_NAME, "%' "),
+				"update LayoutPageTemplateStructureRel set data_ = ? where " +
+					"lPageTemplateStructureRelId = ?",
+				resultSet -> new Object[] {
+					resultSet.getLong("lPageTemplateStructureRelId"),
+					GetterUtil.getString(resultSet.getString("data_"))
+				},
+				(values, preparedStatement) -> {
+					preparedStatement.setString(
+						1,
+						StringUtil.replace(
+							(String)values[1], _OLD_CLASS_NAME,
+							_NEW_CLASS_NAME));
+					preparedStatement.setLong(2, (Long)values[0]);
+
+					preparedStatement.addBatch();
+				},
+				"Unable update layout page template structure rel data");
+		}
 	}
+
+	private static final String _NEW_CLASS_NAME =
+		"com.liferay.object.web.internal.info.collection.provider." +
+			"ObjectEntrySingleFormVariationInfoCollectionProvider";
+
+	private static final String _OLD_CLASS_NAME =
+		"com.liferay.object.internal.info.collection.provider." +
+			"ObjectEntrySingleFormVariationInfoCollectionProvider";
 
 }

@@ -80,7 +80,11 @@ function Price({
 						{isUnitPricePriceOnApplication() ? (
 							<>{Liferay.Language.get('price-on-application')}</>
 						) : (
-							<>{activePrice.priceFormatted}</>
+							<>
+								{activePrice.pricingQuantityPriceFormatted
+									? activePrice.pricingQuantityPriceFormatted
+									: activePrice.priceFormatted}
+							</>
 						)}
 					</span>
 

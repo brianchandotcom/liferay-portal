@@ -17,6 +17,8 @@ export function adaptLegacyPriceModel(priceModel) {
 		price,
 		priceFormatted,
 		priceOnApplication,
+		pricingQuantityPrice,
+		pricingQuantityPriceFormatted,
 		promoPrice,
 		promoPriceFormatted,
 	} = priceModel;
@@ -27,6 +29,8 @@ export function adaptLegacyPriceModel(priceModel) {
 		price,
 		priceFormatted: priceFormatted || price,
 		priceOnApplication: priceOnApplication || false,
+		pricingQuantityPrice,
+		pricingQuantityPriceFormatted,
 
 		/**
 		 * The following matches numbers in the

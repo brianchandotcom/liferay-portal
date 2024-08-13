@@ -17,6 +17,7 @@ import {NotificationSectionPage} from '../pages/portal-workflow-kaleo-designer-w
 import {ProcessBuilderPage} from '../pages/portal-workflow-kaleo-designer-web/ProcessBuilderPage';
 import {SourceViewPage} from '../pages/portal-workflow-kaleo-designer-web/SourceViewPage';
 import {TimerPage} from '../pages/portal-workflow-kaleo-designer-web/TimerPage';
+import {AllItemsPage} from '../pages/portal-workflow-metrics-web/AllItemsPage';
 import {MetricsPage} from '../pages/portal-workflow-metrics-web/MetricsPage';
 import {ProcessMetricsPage} from '../pages/portal-workflow-metrics-web/ProcessMetricsPage';
 import {WorkflowTaskDetailsPage} from '../pages/portal-workflow-task-web/WorkflowTaskDetailsPage';
@@ -26,6 +27,7 @@ import {WorkflowPage} from '../pages/portal-workflow-web/WorkflowPage';
 const workflowPagesTest = test.extend<{
 	actionPage: ActionPage;
 	actionReassignmentPage: ActionReassignmentPage;
+	allItemsPage: AllItemsPage;
 	conditionNode: ConditionNode;
 	configurationTabPage: ConfigurationTabPage;
 	definitionInfoPage: DefinitionInfoPage;
@@ -47,6 +49,9 @@ const workflowPagesTest = test.extend<{
 	},
 	actionReassignmentPage: async ({page}, use) => {
 		await use(new ActionReassignmentPage(page));
+	},
+	allItemsPage: async ({page}, use) => {
+		await use(new AllItemsPage(page));
 	},
 	conditionNode: async ({page}, use) => {
 		await use(new ConditionNode(page));

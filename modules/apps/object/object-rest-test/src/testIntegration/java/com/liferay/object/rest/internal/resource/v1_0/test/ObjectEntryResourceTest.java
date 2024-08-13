@@ -11694,71 +11694,67 @@ public class ObjectEntryResourceTest {
 			"id", _testDLFileEntryModelListener.getLastFileEntryId()
 		).put(
 			"link",
-			_getLinkJSONObject(
-				dlFolder, _testDLFileEntryModelListener.getLastFileEntryId(),
-				fileEntry.getName(), fileEntry.getFolder(), objectDefinition)
+			() -> {
+				Link link = new Link();
+
+				FileEntry curFileEntry = _dlAppLocalService.getFileEntry(
+					_testDLFileEntryModelListener.getLastFileEntryId());
+
+				FileVersion fileVersion = curFileEntry.getFileVersion();
+
+				long folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+				long repositoryId = 0;
+
+				if (dlFolder == null) {
+					Folder folder = fileEntry.getFolder();
+
+					if (folder == null) {
+						if (StringUtil.equals(
+								objectDefinition.getScope(),
+								ObjectDefinitionConstants.SCOPE_SITE)) {
+
+							repositoryId = TestPropsValues.getGroupId();
+						}
+						else {
+							Company company = _companyLocalService.getCompany(
+								objectDefinition.getCompanyId());
+
+							repositoryId = company.getGroupId();
+						}
+					}
+					else {
+						repositoryId = folder.getSiteId();
+					}
+				}
+				else {
+					folderId = dlFolder.getFolderId();
+					repositoryId = dlFolder.getRepositoryId();
+				}
+
+				Date modifiedDate = fileVersion.getModifiedDate();
+
+				ObjectEntry objectEntry =
+					_objectEntryLocalService.getObjectEntry(
+						_testObjectEntryModelListener.getLastObjectEntryId());
+
+				link.setHref(
+					StringBundler.concat(
+						"/documents/", repositoryId, "/", folderId, "/",
+						URLCodec.encodeURL(fileEntry.getName()), "/",
+						curFileEntry.getExternalReferenceCode(), "?version=",
+						fileVersion.getVersion(), "&t=", modifiedDate.getTime(),
+						"&download=true&objectDefinitionExternalReferenceCode=",
+						objectDefinition.getExternalReferenceCode(),
+						"&objectEntryExternalReferenceCode=",
+						objectEntry.getExternalReferenceCode()));
+
+				link.setLabel(fileEntry.getName());
+
+				return JSONFactoryUtil.createJSONObject(link.toString());
+			}
 		).put(
 			"name", fileEntry.getName()
 		);
-	}
-
-	private JSONObject _getLinkJSONObject(
-			DLFolder dlFolder, long fileEntryId, String fileName, Folder folder,
-			ObjectDefinition objectDefinition)
-		throws Exception {
-
-		Link link = new Link();
-
-		FileEntry fileEntry = _dlAppLocalService.getFileEntry(fileEntryId);
-
-		FileVersion fileVersion = fileEntry.getFileVersion();
-
-		long folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
-		long repositoryId = 0;
-
-		if (dlFolder == null) {
-			if (folder == null) {
-				if (StringUtil.equals(
-						objectDefinition.getScope(),
-						ObjectDefinitionConstants.SCOPE_SITE)) {
-
-					repositoryId = TestPropsValues.getGroupId();
-				}
-				else {
-					Company company = _companyLocalService.getCompany(
-						objectDefinition.getCompanyId());
-
-					repositoryId = company.getGroupId();
-				}
-			}
-			else {
-				repositoryId = folder.getSiteId();
-			}
-		}
-		else {
-			folderId = dlFolder.getFolderId();
-			repositoryId = dlFolder.getRepositoryId();
-		}
-
-		Date modifiedDate = fileVersion.getModifiedDate();
-
-		ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
-			_testObjectEntryModelListener.getLastObjectEntryId());
-
-		link.setHref(
-			StringBundler.concat(
-				"/documents/", repositoryId, "/", folderId, "/",
-				URLCodec.encodeURL(fileName), "/",
-				fileEntry.getExternalReferenceCode(), "?version=",
-				fileVersion.getVersion(), "&t=", modifiedDate.getTime(),
-				"&download=true&objectDefinitionExternalReferenceCode=",
-				objectDefinition.getExternalReferenceCode(),
-				"&objectEntryExternalReferenceCode=",
-				objectEntry.getExternalReferenceCode()));
-
-		link.setLabel(fileName);
-
-		return JSONFactoryUtil.createJSONObject(link.toString());
 	}
 
 	private NestedFieldsContext _getNestedFieldsContext(String nestedFields) {

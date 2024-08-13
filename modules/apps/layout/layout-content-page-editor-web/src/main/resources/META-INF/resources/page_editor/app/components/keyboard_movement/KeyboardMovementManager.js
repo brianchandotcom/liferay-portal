@@ -17,7 +17,10 @@ import {
 	HOME_KEY_CODE,
 } from '../../config/constants/keyboardCodes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
-import {useSelectItem} from '../../contexts/ControlsContext';
+import {
+	useSelectItem,
+	useSelectMultipleItems,
+} from '../../contexts/ControlsContext';
 import {
 	useDisableKeyboardMovement,
 	useMovementSource,
@@ -61,6 +64,7 @@ export default function KeyboardMovementManager() {
 	const setTarget = useSetMovementTarget();
 	const setText = useSetMovementText();
 	const selectItem = useSelectItem();
+	const selectMultipleItems = useSelectMultipleItems();
 	const dispatch = useDispatch();
 
 	keymapRef.current = {
@@ -110,7 +114,7 @@ export default function KeyboardMovementManager() {
 								portletId: source.portletId,
 								portletItemId: source.portletItemId,
 								position,
-								selectItem,
+								selectItems: selectMultipleItems,
 							});
 						}
 						else {
@@ -119,7 +123,7 @@ export default function KeyboardMovementManager() {
 								groupId: source.groupId,
 								parentItemId: dropItemId,
 								position,
-								selectItem,
+								selectItems: selectMultipleItems,
 								type: source.type,
 							});
 						}
@@ -129,7 +133,7 @@ export default function KeyboardMovementManager() {
 							itemType: source.type,
 							parentItemId: dropItemId,
 							position,
-							selectItem,
+							selectItems: selectMultipleItems,
 						});
 					}
 				}

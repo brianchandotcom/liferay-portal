@@ -6,6 +6,7 @@
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import React from 'react';
 
+import {useSelectMultipleItems} from '../../contexts/ControlsContext';
 import {useSelector} from '../../contexts/StoreContext';
 import UndoHistory from './UndoHistory';
 import useUndoRedoActions from './useUndoRedoActions';
@@ -26,6 +27,7 @@ export default function Undo() {
 	const disabledRedo = useDisabledRedo();
 	const disabledUndo = useDisabledUndo();
 	const {onRedo, onUndo} = useUndoRedoActions();
+	const selectMultipleItems = useSelectMultipleItems();
 
 	return (
 		<>
@@ -35,7 +37,7 @@ export default function Undo() {
 					className="btn-monospaced"
 					disabled={disabledUndo}
 					displayType="secondary"
-					onClick={onUndo}
+					onClick={() => onUndo({selectItems: selectMultipleItems})}
 					size="sm"
 					symbol="undo"
 					title={Liferay.Language.get('undo')}
@@ -46,7 +48,7 @@ export default function Undo() {
 					className="btn-monospaced"
 					disabled={disabledRedo}
 					displayType="secondary"
-					onClick={onRedo}
+					onClick={() => onRedo({selectItems: selectMultipleItems})}
 					size="sm"
 					symbol="redo"
 					title={Liferay.Language.get('redo')}

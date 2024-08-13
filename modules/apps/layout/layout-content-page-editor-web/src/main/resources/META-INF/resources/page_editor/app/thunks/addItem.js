@@ -12,7 +12,7 @@ export default function addItem({
 	itemType,
 	parentItemId,
 	position,
-	selectItem = () => {},
+	selectItems = () => {},
 }) {
 	return (dispatch, getState) => {
 		const {segmentsExperienceId} = getState();
@@ -24,7 +24,7 @@ export default function addItem({
 			position,
 			segmentsExperienceId,
 		}).then(({addedItemId, layoutData}) => {
-			dispatch(addItemAction({itemId: addedItemId, layoutData}));
+			dispatch(addItemAction({itemIds: [addedItemId], layoutData}));
 
 			clearPageContents();
 
@@ -32,7 +32,7 @@ export default function addItem({
 				selectFirstControlsItem({
 					itemId: addedItemId,
 					layoutData,
-					selectItem,
+					selectItems,
 				});
 			}
 		});

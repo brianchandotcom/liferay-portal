@@ -24,15 +24,16 @@ import selectFirstControlsItem from '../utils/selectFirstControlsItem';
 import {clearPageContents} from '../utils/usePageContents';
 import filterSelectedItems from './filterSelectedItems';
 
-export function getPreviousItemId(itemId, layoutData, nextLayoutData) {
-	const {items} = layoutData;
-	const {items: nextItems} = nextLayoutData;
-	const parentId = items[itemId].parentId;
+export function getPreviousItemId(deletedItems, items, nextItems) {
+	const parentId = items[deletedItems[0]].parentId;
 
 	const parent = items[parentId];
 
 	if (nextItems[parentId].children.length) {
-		const index = parent.children.indexOf(itemId);
+		const firstDeletedChild = parent.children.find((childId) =>
+			deletedItems.includes(childId)
+		);
+		const index = parent.children.indexOf(firstDeletedChild);
 
 		return nextItems[parentId].children[index ? index - 1 : index];
 	}
@@ -49,7 +50,7 @@ export function getPreviousItemId(itemId, layoutData, nextLayoutData) {
 	return parentId;
 }
 
-export default function deleteItem({itemIds, selectItem = () => {}}) {
+export default function deleteItem({itemIds, selectItems = () => {}}) {
 	return (dispatch, getState) => {
 		const {fragmentEntryLinks, layoutData, segmentsExperienceId} =
 			getState();
@@ -62,9 +63,9 @@ export default function deleteItem({itemIds, selectItem = () => {}}) {
 			segmentsExperienceId,
 		}).then(async ({portletIds = [], layoutData: nextLayoutData}) => {
 			const nextItemId = getPreviousItemId(
-				itemIds[0],
-				layoutData,
-				nextLayoutData
+				itemIds,
+				layoutData.items,
+				nextLayoutData.items
 			);
 
 			if (!nextItemId) {
@@ -77,7 +78,7 @@ export default function deleteItem({itemIds, selectItem = () => {}}) {
 					itemId: nextItemId,
 					layoutData,
 					origin: ITEM_ACTIVATION_ORIGINS.itemActions,
-					selectItem,
+					selectItems,
 				});
 			}
 

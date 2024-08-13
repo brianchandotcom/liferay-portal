@@ -184,9 +184,13 @@ describe('getPreviousItemId', () => {
 
 		delete nextLayoutData.items.child2;
 
-		expect(getPreviousItemId('child2', layoutData, nextLayoutData)).toBe(
-			'child1'
-		);
+		expect(
+			getPreviousItemId(
+				['child2'],
+				layoutData.items,
+				nextLayoutData.items
+			)
+		).toBe('child1');
 	});
 
 	it('returns the parentId if it does not have siblings', async () => {
@@ -204,9 +208,13 @@ describe('getPreviousItemId', () => {
 
 		delete nextLayoutData.items.child1;
 
-		expect(getPreviousItemId('child1', layoutData, nextLayoutData)).toBe(
-			'container'
-		);
+		expect(
+			getPreviousItemId(
+				['child1'],
+				layoutData.items,
+				nextLayoutData.items
+			)
+		).toBe('container');
 	});
 
 	it('returns null when the item is the last one in the layout', async () => {
@@ -224,9 +232,13 @@ describe('getPreviousItemId', () => {
 
 		delete nextLayoutData.items.container;
 
-		expect(getPreviousItemId('container', layoutData, nextLayoutData)).toBe(
-			null
-		);
+		expect(
+			getPreviousItemId(
+				['container'],
+				layoutData.items,
+				nextLayoutData.items
+			)
+		).toBe(null);
 	});
 
 	it('returns the row id if it is the only element within a column (grid)', async () => {
@@ -244,9 +256,13 @@ describe('getPreviousItemId', () => {
 
 		delete nextLayoutData.items.child4;
 
-		expect(getPreviousItemId('child4', layoutData, nextLayoutData)).toBe(
-			'row'
-		);
+		expect(
+			getPreviousItemId(
+				['child4'],
+				layoutData.items,
+				nextLayoutData.items
+			)
+		).toBe('row');
 	});
 
 	it('returns the collection id if it is the only element within a collection item (display collection)', async () => {
@@ -264,8 +280,12 @@ describe('getPreviousItemId', () => {
 
 		delete nextLayoutData.items.child4;
 
-		expect(getPreviousItemId('child5', layoutData, nextLayoutData)).toBe(
-			'collection'
-		);
+		expect(
+			getPreviousItemId(
+				['child5'],
+				layoutData.items,
+				nextLayoutData.items
+			)
+		).toBe('collection');
 	});
 });

@@ -11,12 +11,12 @@ export default function useUndoRedo() {
 	const dispatch = useDispatch();
 	const store = useSelector((state) => state);
 
-	const onUndo = () => {
-		dispatch(undo({store}));
+	const onUndo = ({selectItems} = {}) => {
+		dispatch(undo({store}, selectItems));
 	};
 
-	const onRedo = () => {
-		dispatch(redo({store}));
+	const onRedo = ({selectItems} = {}) => {
+		dispatch(redo({store}, selectItems));
 	};
 
 	return {onRedo, onUndo};

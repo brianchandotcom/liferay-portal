@@ -13,7 +13,7 @@ export default function addFragment({
 	groupId,
 	parentItemId,
 	position,
-	selectItem = () => {},
+	selectItems = () => {},
 	type,
 }) {
 	return (dispatch, getState) => {
@@ -39,7 +39,7 @@ export default function addFragment({
 			selectFirstControlsItem({
 				itemId,
 				layoutData,
-				selectItem,
+				selectItems,
 			});
 		};
 

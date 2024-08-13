@@ -32,9 +32,7 @@ import {useDispatch, useSelector} from '../contexts/StoreContext';
 import selectCanUpdatePageStructure from '../selectors/selectCanUpdatePageStructure';
 import deleteItem from '../thunks/deleteItem';
 import duplicateItem from '../thunks/duplicateItem';
-import redoThunk from '../thunks/redo';
 import switchSidebarPanel from '../thunks/switchSidebarPanel';
-import undoThunk from '../thunks/undo';
 import canBeDuplicated from '../utils/canBeDuplicated';
 import canBeHidden from '../utils/canBeHidden';
 import canBeRemoved from '../utils/canBeRemoved';
@@ -44,6 +42,7 @@ import isCtrlOrMeta from '../utils/isCtrlOrMeta';
 import updateItemStyle from '../utils/updateItemStyle';
 import SaveFragmentCompositionModal from './SaveFragmentCompositionModal';
 import ShortcutModal from './ShortcutModal';
+import useUndoRedoActions from './undo/useUndoRedoActions';
 
 const isEditableField = (element) =>
 	!!element.closest('.page-editor__editable');
@@ -71,6 +70,7 @@ export default function ShortcutManager() {
 	const activeItemType = useActiveItemType();
 	const dispatch = useDispatch();
 	const canUpdatePageStructure = useSelector(selectCanUpdatePageStructure);
+	const {onRedo, onUndo} = useUndoRedoActions();
 	const [openSaveModal, setOpenSaveModal] = useState(false);
 	const openShortcutModal = useOpenShorcutModal();
 	const selectItem = useSelectItem();
@@ -135,7 +135,7 @@ export default function ShortcutManager() {
 		dispatch(
 			deleteItem({
 				itemIds: activeItemIds,
-				selectItem,
+				selectItems: selectMultipleItems,
 			})
 		);
 	};
@@ -146,10 +146,10 @@ export default function ShortcutManager() {
 
 	const undo = (event) => {
 		if (event.shiftKey) {
-			dispatch(redoThunk({store: state}));
+			onRedo({selectItems: selectMultipleItems});
 		}
 		else {
-			dispatch(undoThunk({store: state}));
+			onUndo({selectItems: selectMultipleItems});
 		}
 	};
 

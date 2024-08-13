@@ -7,6 +7,7 @@ import {ClayButtonWithIcon} from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
 import React from 'react';
 
+import {useSelectMultipleItems} from '../contexts/ControlsContext';
 import {useSelector} from '../contexts/StoreContext';
 import {onDiscardDraft} from './DiscardDraftButton';
 import {useDisabledRedo, useDisabledUndo} from './undo/Undo';
@@ -24,6 +25,7 @@ export default function ToolbarActionsDropdown({discardDraftFormRef}) {
 	const {loadingHistory, onHistoryItemClick} = useOnHistoryItemClick();
 	const {onRedo, onUndo} = useUndoRedoActions();
 	const onToggleSidebars = useOnToggleSidebars();
+	const selectMultipleItems = useSelectMultipleItems();
 	const sidebarHidden = useSelector((state) => state.sidebar.hidden);
 	const undoHistory = useSelector((state) => state.undoHistory);
 
@@ -36,13 +38,15 @@ export default function ToolbarActionsDropdown({discardDraftFormRef}) {
 					{
 						disabled: disabledUndo,
 						label: Liferay.Language.get('undo'),
-						onClick: onUndo,
+						onClick: () =>
+							onUndo({selectItems: selectMultipleItems}),
 						symbolLeft: 'undo',
 					},
 					{
 						disabled: disabledRedo,
 						label: Liferay.Language.get('redo'),
-						onClick: onRedo,
+						onClick: () =>
+							onRedo({selectItems: selectMultipleItems}),
 						symbolLeft: 'redo',
 					},
 					{

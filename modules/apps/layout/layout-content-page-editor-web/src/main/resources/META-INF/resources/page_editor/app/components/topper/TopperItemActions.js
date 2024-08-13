@@ -13,10 +13,7 @@ import React, {useMemo, useState} from 'react';
 import {getLayoutDataItemPropTypes} from '../../../prop_types/index';
 import {FRAGMENT_ENTRY_TYPES} from '../../config/constants/fragmentEntryTypes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
-import {
-	useSelectItem,
-	useSelectMultipleItems,
-} from '../../contexts/ControlsContext';
+import {useSelectMultipleItems} from '../../contexts/ControlsContext';
 import {useDispatch, useSelector} from '../../contexts/StoreContext';
 import deleteItem from '../../thunks/deleteItem';
 import duplicateItem from '../../thunks/duplicateItem';
@@ -36,7 +33,6 @@ export default function TopperItemActions({disabled, item}) {
 	const [active, setActive] = useState(false);
 	const dispatch = useDispatch();
 	const hasRequiredChild = useHasRequiredChild(item.itemId);
-	const selectItem = useSelectItem();
 	const selectMultipleItems = useSelectMultipleItems();
 	const widgets = useSelector((state) => state.widgets);
 
@@ -121,7 +117,7 @@ export default function TopperItemActions({disabled, item}) {
 					dispatch(
 						deleteItem({
 							itemIds: [item.itemId],
-							selectItem,
+							selectItems: selectMultipleItems,
 						})
 					),
 				icon: 'trash',
@@ -138,7 +134,6 @@ export default function TopperItemActions({disabled, item}) {
 		item,
 		layoutData,
 		selectedViewportSize,
-		selectItem,
 		selectMultipleItems,
 		widgets,
 	]);

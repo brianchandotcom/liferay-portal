@@ -8,7 +8,7 @@ import {undoAction} from '../components/undo/undoActions';
 
 let promise = Promise.resolve();
 
-export default function undo({store}) {
+export default function undo({store}, selectItems) {
 	return (dispatch) => {
 		if (!store.undoHistory || !store.undoHistory.length) {
 			return;
@@ -27,7 +27,10 @@ export default function undo({store}) {
 		};
 
 		promise = promise.then(() =>
-			undoAction({action: lastUndo, store})(undoDispatch, () => store)
+			undoAction({action: {...lastUndo, selectItems}, store})(
+				undoDispatch,
+				() => store
+			)
 		);
 	};
 }

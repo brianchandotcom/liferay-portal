@@ -57,13 +57,13 @@ public class CPInstanceUnitOfMeasureLocalServiceWrapper
 			long userId, long cpInstanceId, boolean active,
 			java.math.BigDecimal incrementalOrderQuantity, String key,
 			java.util.Map<java.util.Locale, String> nameMap, int precision,
-			boolean primary, double priority, java.math.BigDecimal rate,
-			String sku)
+			java.math.BigDecimal pricingQuantity, boolean primary,
+			double priority, java.math.BigDecimal rate, String sku)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpInstanceUnitOfMeasureLocalService.addCPInstanceUnitOfMeasure(
 			userId, cpInstanceId, active, incrementalOrderQuantity, key,
-			nameMap, precision, primary, priority, rate, sku);
+			nameMap, precision, pricingQuantity, primary, priority, rate, sku);
 	}
 
 	@Override
@@ -71,14 +71,15 @@ public class CPInstanceUnitOfMeasureLocalServiceWrapper
 			long userId, long cpInstanceId, boolean active,
 			java.math.BigDecimal incrementalOrderQuantity, String key,
 			java.util.Map<java.util.Locale, String> nameMap, int precision,
-			boolean primary, double priority, java.math.BigDecimal rate,
-			String sku)
+			java.math.BigDecimal pricingQuantity, boolean primary,
+			double priority, java.math.BigDecimal rate, String sku)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpInstanceUnitOfMeasureLocalService.
 			addOrUpdateCPInstanceUnitOfMeasure(
 				userId, cpInstanceId, active, incrementalOrderQuantity, key,
-				nameMap, precision, primary, priority, rate, sku);
+				nameMap, precision, pricingQuantity, primary, priority, rate,
+				sku);
 	}
 
 	/**
@@ -495,15 +496,15 @@ public class CPInstanceUnitOfMeasureLocalServiceWrapper
 			long cpInstanceUnitOfMeasureId, long cpInstanceId, boolean active,
 			java.math.BigDecimal incrementalOrderQuantity, String key,
 			java.util.Map<java.util.Locale, String> nameMap, int precision,
-			boolean primary, double priority, java.math.BigDecimal rate,
-			String sku)
+			java.math.BigDecimal pricingQuantity, boolean primary,
+			double priority, java.math.BigDecimal rate, String sku)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpInstanceUnitOfMeasureLocalService.
 			updateCPInstanceUnitOfMeasure(
 				cpInstanceUnitOfMeasureId, cpInstanceId, active,
-				incrementalOrderQuantity, key, nameMap, precision, primary,
-				priority, rate, sku);
+				incrementalOrderQuantity, key, nameMap, precision,
+				pricingQuantity, primary, priority, rate, sku);
 	}
 
 	@Override

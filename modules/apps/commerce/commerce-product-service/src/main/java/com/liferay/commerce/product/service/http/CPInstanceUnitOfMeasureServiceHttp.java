@@ -46,8 +46,8 @@ public class CPInstanceUnitOfMeasureServiceHttp {
 				HttpPrincipal httpPrincipal, long cpInstanceId, boolean active,
 				java.math.BigDecimal incrementalOrderQuantity, String key,
 				java.util.Map<java.util.Locale, String> nameMap, int precision,
-				boolean primary, double priority, java.math.BigDecimal rate,
-				String sku)
+				java.math.BigDecimal pricingQuantity, boolean primary,
+				double priority, java.math.BigDecimal rate, String sku)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -58,7 +58,8 @@ public class CPInstanceUnitOfMeasureServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, cpInstanceId, active, incrementalOrderQuantity, key,
-				nameMap, precision, primary, priority, rate, sku);
+				nameMap, precision, pricingQuantity, primary, priority, rate,
+				sku);
 
 			Object returnObj = null;
 
@@ -94,8 +95,8 @@ public class CPInstanceUnitOfMeasureServiceHttp {
 				HttpPrincipal httpPrincipal, long cpInstanceId, boolean active,
 				java.math.BigDecimal incrementalOrderQuantity, String key,
 				java.util.Map<java.util.Locale, String> nameMap, int precision,
-				boolean primary, double priority, java.math.BigDecimal rate,
-				String sku)
+				java.math.BigDecimal pricingQuantity, boolean primary,
+				double priority, java.math.BigDecimal rate, String sku)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -106,7 +107,8 @@ public class CPInstanceUnitOfMeasureServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, cpInstanceId, active, incrementalOrderQuantity, key,
-				nameMap, precision, primary, priority, rate, sku);
+				nameMap, precision, pricingQuantity, primary, priority, rate,
+				sku);
 
 			Object returnObj = null;
 
@@ -577,8 +579,8 @@ public class CPInstanceUnitOfMeasureServiceHttp {
 				long cpInstanceId, boolean active,
 				java.math.BigDecimal incrementalOrderQuantity, String key,
 				java.util.Map<java.util.Locale, String> nameMap, int precision,
-				boolean primary, double priority, java.math.BigDecimal rate,
-				String sku)
+				java.math.BigDecimal pricingQuantity, boolean primary,
+				double priority, java.math.BigDecimal rate, String sku)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -589,8 +591,8 @@ public class CPInstanceUnitOfMeasureServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, cpInstanceUnitOfMeasureId, cpInstanceId, active,
-				incrementalOrderQuantity, key, nameMap, precision, primary,
-				priority, rate, sku);
+				incrementalOrderQuantity, key, nameMap, precision,
+				pricingQuantity, primary, priority, rate, sku);
 
 			Object returnObj = null;
 
@@ -627,14 +629,16 @@ public class CPInstanceUnitOfMeasureServiceHttp {
 	private static final Class<?>[] _addCPInstanceUnitOfMeasureParameterTypes0 =
 		new Class[] {
 			long.class, boolean.class, java.math.BigDecimal.class, String.class,
-			java.util.Map.class, int.class, boolean.class, double.class,
-			java.math.BigDecimal.class, String.class
+			java.util.Map.class, int.class, java.math.BigDecimal.class,
+			boolean.class, double.class, java.math.BigDecimal.class,
+			String.class
 		};
 	private static final Class<?>[]
 		_addOrUpdateCPInstanceUnitOfMeasureParameterTypes1 = new Class[] {
 			long.class, boolean.class, java.math.BigDecimal.class, String.class,
-			java.util.Map.class, int.class, boolean.class, double.class,
-			java.math.BigDecimal.class, String.class
+			java.util.Map.class, int.class, java.math.BigDecimal.class,
+			boolean.class, double.class, java.math.BigDecimal.class,
+			String.class
 		};
 	private static final Class<?>[]
 		_deleteCPInstanceUnitOfMeasureParameterTypes2 = new Class[] {
@@ -674,8 +678,9 @@ public class CPInstanceUnitOfMeasureServiceHttp {
 	private static final Class<?>[]
 		_updateCPInstanceUnitOfMeasureParameterTypes12 = new Class[] {
 			long.class, long.class, boolean.class, java.math.BigDecimal.class,
-			String.class, java.util.Map.class, int.class, boolean.class,
-			double.class, java.math.BigDecimal.class, String.class
+			String.class, java.util.Map.class, int.class,
+			java.math.BigDecimal.class, boolean.class, double.class,
+			java.math.BigDecimal.class, String.class
 		};
 
 }

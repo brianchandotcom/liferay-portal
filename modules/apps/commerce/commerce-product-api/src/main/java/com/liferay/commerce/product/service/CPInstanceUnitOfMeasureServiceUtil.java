@@ -36,26 +36,26 @@ public class CPInstanceUnitOfMeasureServiceUtil {
 			long cpInstanceId, boolean active,
 			java.math.BigDecimal incrementalOrderQuantity, String key,
 			Map<java.util.Locale, String> nameMap, int precision,
-			boolean primary, double priority, java.math.BigDecimal rate,
-			String sku)
+			java.math.BigDecimal pricingQuantity, boolean primary,
+			double priority, java.math.BigDecimal rate, String sku)
 		throws PortalException {
 
 		return getService().addCPInstanceUnitOfMeasure(
 			cpInstanceId, active, incrementalOrderQuantity, key, nameMap,
-			precision, primary, priority, rate, sku);
+			precision, pricingQuantity, primary, priority, rate, sku);
 	}
 
 	public static CPInstanceUnitOfMeasure addOrUpdateCPInstanceUnitOfMeasure(
 			long cpInstanceId, boolean active,
 			java.math.BigDecimal incrementalOrderQuantity, String key,
 			Map<java.util.Locale, String> nameMap, int precision,
-			boolean primary, double priority, java.math.BigDecimal rate,
-			String sku)
+			java.math.BigDecimal pricingQuantity, boolean primary,
+			double priority, java.math.BigDecimal rate, String sku)
 		throws PortalException {
 
 		return getService().addOrUpdateCPInstanceUnitOfMeasure(
 			cpInstanceId, active, incrementalOrderQuantity, key, nameMap,
-			precision, primary, priority, rate, sku);
+			precision, pricingQuantity, primary, priority, rate, sku);
 	}
 
 	public static CPInstanceUnitOfMeasure deleteCPInstanceUnitOfMeasure(
@@ -145,14 +145,14 @@ public class CPInstanceUnitOfMeasureServiceUtil {
 			long cpInstanceUnitOfMeasureId, long cpInstanceId, boolean active,
 			java.math.BigDecimal incrementalOrderQuantity, String key,
 			Map<java.util.Locale, String> nameMap, int precision,
-			boolean primary, double priority, java.math.BigDecimal rate,
-			String sku)
+			java.math.BigDecimal pricingQuantity, boolean primary,
+			double priority, java.math.BigDecimal rate, String sku)
 		throws PortalException {
 
 		return getService().updateCPInstanceUnitOfMeasure(
 			cpInstanceUnitOfMeasureId, cpInstanceId, active,
-			incrementalOrderQuantity, key, nameMap, precision, primary,
-			priority, rate, sku);
+			incrementalOrderQuantity, key, nameMap, precision, pricingQuantity,
+			primary, priority, rate, sku);
 	}
 
 	public static CPInstanceUnitOfMeasureService getService() {

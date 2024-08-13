@@ -10,6 +10,8 @@ import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.KBFolderLocalService;
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -17,6 +19,7 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.HtmlParser;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.search.ml.embedding.text.TextEmbeddingDocumentContributor;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 
 import java.util.ArrayList;
@@ -59,6 +62,12 @@ public class KBArticleModelDocumentContributor
 			"parentMessageId", kbArticle.getParentResourcePrimKey());
 		document.addKeyword("titleKeyword", kbArticle.getTitle(), true);
 		document.addKeywordSortable("urlTitle", kbArticle.getUrlTitle());
+
+		_textEmbeddingDocumentContributor.contribute(
+			document, kbArticle,
+			StringBundler.concat(
+				kbArticle.getTitle(), StringPool.PERIOD, StringPool.SPACE,
+				kbArticle.getContent()));
 	}
 
 	@Reference
@@ -87,5 +96,8 @@ public class KBArticleModelDocumentContributor
 
 	@Reference
 	private HtmlParser _htmlParser;
+
+	@Reference
+	private TextEmbeddingDocumentContributor _textEmbeddingDocumentContributor;
 
 }

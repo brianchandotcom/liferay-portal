@@ -8,6 +8,7 @@ package com.liferay.frontend.taglib.servlet.taglib;
 import com.liferay.frontend.taglib.internal.util.ServicesProvider;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProviderUtil;
 import com.liferay.portal.kernel.servlet.taglib.util.OutputData;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilder;
@@ -51,7 +52,11 @@ public class StylesheetTag extends AttributesTagSupport {
 
 		StringBundler sb = new StringBundler(3);
 
-		sb.append("<link rel=\"stylesheet\" type=\"text/css\" href=\"");
+		sb.append("<link");
+		sb.append(
+			ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
+				httpServletRequest));
+		sb.append(" rel=\"stylesheet\" type=\"text/css\" href=\"");
 		sb.append(
 			absolutePortalURLBuilder.forBundleStylesheet(
 				bundle, _css

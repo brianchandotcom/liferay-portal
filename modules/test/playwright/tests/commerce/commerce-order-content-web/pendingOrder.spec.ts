@@ -785,9 +785,7 @@ test('LPD-3259 As a buyer with approval workflow, when I click review order in m
 		['demo.unprivileged@liferay.com']
 	);
 	const siteRole =
-		await apiHelpers.headlessAdminUser.getRoleByExternalReferenceCode(
-			'Site Member'
-		);
+		await apiHelpers.headlessAdminUser.getRoleByName('Site Member');
 	await apiHelpers.headlessAdminUser.assignUserToSite(
 		siteRole.id,
 		site.id,

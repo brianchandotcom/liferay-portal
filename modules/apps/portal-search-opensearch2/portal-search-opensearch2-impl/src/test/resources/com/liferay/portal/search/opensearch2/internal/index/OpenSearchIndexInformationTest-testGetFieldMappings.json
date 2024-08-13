@@ -1149,6 +1149,7 @@
 					"template_ja": {
 						"mapping": {
 							"analyzer": "kuromoji",
+							"search_analyzer": "liferay_analyzer_ja",
 							"store": true,
 							"term_vector": "with_positions_offsets",
 							"type": "text"
@@ -1321,6 +1322,7 @@
 					"template_zh": {
 						"mapping": {
 							"analyzer": "smartcn",
+							"search_analyzer": "liferay_analyzer_zh",
 							"store": true,
 							"term_vector": "with_positions_offsets",
 							"type": "text"

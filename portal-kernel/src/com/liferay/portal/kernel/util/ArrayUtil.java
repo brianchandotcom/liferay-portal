@@ -1876,6 +1876,33 @@ public class ArrayUtil {
 		return aArray;
 	}
 
+	public static boolean[] toBooleanArray(Collection<Boolean> collection) {
+		boolean[] newArray = new boolean[collection.size()];
+
+		if (collection instanceof List) {
+			List<Boolean> list = (List<Boolean>)collection;
+
+			for (int i = 0; i < list.size(); i++) {
+				Boolean value = list.get(i);
+
+				newArray[i] = value.booleanValue();
+			}
+		}
+		else {
+			int i = 0;
+
+			Iterator<Boolean> iterator = collection.iterator();
+
+			while (iterator.hasNext()) {
+				Boolean value = iterator.next();
+
+				newArray[i++] = value.booleanValue();
+			}
+		}
+
+		return newArray;
+	}
+
 	public static double[] toDoubleArray(
 		Collection<? extends Number> collection) {
 

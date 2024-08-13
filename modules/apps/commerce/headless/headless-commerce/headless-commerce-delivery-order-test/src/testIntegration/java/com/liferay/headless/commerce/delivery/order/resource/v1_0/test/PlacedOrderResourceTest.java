@@ -115,6 +115,7 @@ public class PlacedOrderResourceTest extends BasePlacedOrderResourceTestCase {
 				id = RandomTestUtil.randomLong();
 				lastPriceUpdateDate = RandomTestUtil.nextDate();
 				modifiedDate = RandomTestUtil.nextDate();
+				name = RandomTestUtil.randomString();
 				orderTypeId = 1L;
 				orderUUID = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
@@ -220,9 +221,10 @@ public class PlacedOrderResourceTest extends BasePlacedOrderResourceTestCase {
 				_commerceCurrency.getCommerceCurrencyId(),
 				placedOrder.getOrderTypeId(), 0,
 				placedOrder.getPlacedOrderShippingAddressId(),
-				placedOrder.getPaymentMethod(), orderDateConfig.getMonth(),
-				orderDateConfig.getDay(), orderDateConfig.getYear(),
-				orderDateConfig.getHour(), orderDateConfig.getMinute(),
+				placedOrder.getPaymentMethod(), placedOrder.getName(),
+				orderDateConfig.getMonth(), orderDateConfig.getDay(),
+				orderDateConfig.getYear(), orderDateConfig.getHour(),
+				orderDateConfig.getMinute(),
 				CommerceOrderConstants.ORDER_STATUS_COMPLETED,
 				placedOrder.getPaymentStatus(),
 				placedOrder.getPurchaseOrderNumber(), BigDecimal.ZERO,

@@ -504,6 +504,11 @@ components:
                 priceOnApplication:
                     readOnly: true
                     type: boolean
+                pricingQuantityPrice:
+                    format: double
+                    type: number
+                pricingQuantityPriceFormatted:
+                    type: string
                 promoPrice:
                     format: double
                     type: number

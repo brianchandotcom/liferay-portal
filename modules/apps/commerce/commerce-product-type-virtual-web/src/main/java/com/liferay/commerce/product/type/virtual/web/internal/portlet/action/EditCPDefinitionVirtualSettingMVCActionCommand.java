@@ -135,9 +135,6 @@ public class EditCPDefinitionVirtualSettingMVCActionCommand
 			ActionRequest actionRequest)
 		throws Exception {
 
-		long cpDefinitionVirtualSettingId = ParamUtil.getLong(
-			actionRequest, "cpDefinitionVirtualSettingId");
-
 		String className = ParamUtil.getString(actionRequest, "className");
 		long classPK = ParamUtil.getLong(actionRequest, "classPK");
 		long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
@@ -165,12 +162,11 @@ public class EditCPDefinitionVirtualSettingMVCActionCommand
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CPDefinitionVirtualSetting.class.getName(), actionRequest);
 
-		CPDefinitionVirtualSetting cpDefinitionVirtualSetting = null;
+		CPDefinitionVirtualSetting cpDefinitionVirtualSetting =
+			_cpDefinitionVirtualSettingService.fetchCPDefinitionVirtualSetting(
+				className, classPK);
 
-		if (cpDefinitionVirtualSettingId <= 0) {
-
-			// Add commerce product definition virtual setting
-
+		if (cpDefinitionVirtualSetting == null) {
 			cpDefinitionVirtualSetting =
 				_cpDefinitionVirtualSettingService.
 					addCPDefinitionVirtualSetting(
@@ -187,16 +183,14 @@ public class EditCPDefinitionVirtualSettingMVCActionCommand
 						deleteCPDefinitionVirtualSetting(className, classPK);
 			}
 			else {
-
-				// Update commerce product definition virtual setting
-
 				cpDefinitionVirtualSetting =
 					_cpDefinitionVirtualSettingService.
 						updateCPDefinitionVirtualSetting(
-							cpDefinitionVirtualSettingId, fileEntryId, url,
-							activationStatus, duration, maxUsages, useSample,
-							sampleFileEntryId, sampleURL, termsOfUseRequired,
-							termsOfUseContentMap,
+							cpDefinitionVirtualSetting.
+								getCPDefinitionVirtualSettingId(),
+							fileEntryId, url, activationStatus, duration,
+							maxUsages, useSample, sampleFileEntryId, sampleURL,
+							termsOfUseRequired, termsOfUseContentMap,
 							termsOfUseJournalArticleResourcePrimKey, override,
 							serviceContext);
 			}

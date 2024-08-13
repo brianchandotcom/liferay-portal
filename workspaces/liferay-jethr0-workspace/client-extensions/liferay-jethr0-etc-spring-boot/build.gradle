@@ -21,7 +21,7 @@ apply plugin: "org.springframework.boot"
 
 dependencies {
 	implementation group: "com.liferay", name: "com.liferay.client.extension.util.spring.boot", version: "latest.release"
-	implementation group: "com.liferay", name: "com.liferay.petra.function", version: "latest.release"
+	implementation group: "com.liferay", name: "com.liferay.petra.function", version: "5.7.1"
 	implementation group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "latest.release"
 	implementation group: "org.apache.commons", name: "commons-lang3", version: "3.12.0"
 	implementation group: "org.json", name: "json", version: "20231013"

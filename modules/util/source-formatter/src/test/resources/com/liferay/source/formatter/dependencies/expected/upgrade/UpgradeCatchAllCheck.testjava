@@ -664,6 +664,17 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 	}
 
 	public void method(
+		Long companyId, String webId, String virtualHostname, String mx,
+		int maxUsers, boolean active, String defaultAdminPassword,
+		String defaultAdminScreenName, String defaultAdminEmailAddress,
+		String defaultAdminFirstName, String defaultAdminMiddleName,
+		String defaultAdminLastName) {
+
+		CompanyLocalServiceUtil.addCompany(companyId, webId, virtualHost, mx, maxUsers, active, defaultAdminPassword, defaultAdminScreenName, defaultAdminEmailAddress, defaultAdminFirstName, defaultAdminMiddleName, defaultAdminLastName);
+		_companyLocalService.addCompany(companyId, webId, virtualHost, mx, maxUsers, active, defaultAdminPassword, defaultAdminScreenName, defaultAdminEmailAddress, defaultAdminFirstName, defaultAdminMiddleName, defaultAdminLastName);
+	}
+
+	public void method(
 		long userId, long groupId, long repositoryId, boolean mountPoint,
 		long parentFolderId, String name, String description, boolean hidden,
 		ServiceContext serviceContext) {

@@ -6,9 +6,12 @@
 package com.liferay.layout.page.template.internal.upgrade.v5_4_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.change.tracking.test.util.BaseCTUpgradeProcessTestCase;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
+import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelLocalService;
 import com.liferay.layout.provider.LayoutStructureProvider;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
@@ -19,7 +22,10 @@ import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -47,7 +53,8 @@ import org.junit.runner.RunWith;
  * @author Lourdes Fernández Besada
  */
 @RunWith(Arquillian.class)
-public class LayoutPageTemplateStructureRelUpgradeProcessTest {
+public class LayoutPageTemplateStructureRelUpgradeProcessTest
+	extends BaseCTUpgradeProcessTestCase {
 
 	@ClassRule
 	@Rule
@@ -111,7 +118,7 @@ public class LayoutPageTemplateStructureRelUpgradeProcessTest {
 		Assert.assertFalse(
 			data, StringUtil.contains(data, expectedKey, StringPool.QUOTE));
 
-		_runUpgrade();
+		runUpgrade();
 
 		data = layoutPageTemplateStructure.getData(_segmentsExperienceId);
 
@@ -121,7 +128,35 @@ public class LayoutPageTemplateStructureRelUpgradeProcessTest {
 			data, StringUtil.contains(data, expectedKey, StringPool.QUOTE));
 	}
 
-	private void _runUpgrade() throws Exception {
+	@Override
+	protected CTModel<?> addCTModel() throws Exception {
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			_layoutPageTemplateStructureLocalService.
+				fetchLayoutPageTemplateStructure(
+					layout.getGroupId(), layout.getPlid());
+
+		long segmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				layout.getPlid());
+
+		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+			"{}", layout, segmentsExperienceId);
+
+		return _layoutPageTemplateStructureRelLocalService.
+			fetchLayoutPageTemplateStructureRel(
+				layoutPageTemplateStructure.getLayoutPageTemplateStructureId(),
+				segmentsExperienceId);
+	}
+
+	@Override
+	protected CTService<?> getCTService() {
+		return _layoutPageTemplateStructureRelLocalService;
+	}
+
+	@Override
+	protected void runUpgrade() throws Exception {
 		UpgradeProcess[] upgradeProcesses = UpgradeTestUtil.getUpgradeSteps(
 			_upgradeStepRegistrator, new Version(5, 4, 0));
 
@@ -131,6 +166,29 @@ public class LayoutPageTemplateStructureRelUpgradeProcessTest {
 
 		_entityCache.clearCache();
 		_multiVMPool.clear();
+	}
+
+	@Override
+	protected CTModel<?> updateCTModel(CTModel<?> ctModel) throws Exception {
+		LayoutPageTemplateStructureRel layoutPageTemplateStructureRel =
+			(LayoutPageTemplateStructureRel)ctModel;
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			_layoutPageTemplateStructureLocalService.
+				getLayoutPageTemplateStructure(
+					layoutPageTemplateStructureRel.
+						getLayoutPageTemplateStructureId());
+
+		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+			"{}",
+			_layoutLocalService.getLayout(
+				layoutPageTemplateStructure.getPlid()),
+			layoutPageTemplateStructureRel.getSegmentsExperienceId());
+
+		return _layoutPageTemplateStructureRelLocalService.
+			getLayoutPageTemplateStructureRel(
+				layoutPageTemplateStructureRel.
+					getLayoutPageTemplateStructureRelId());
 	}
 
 	@Inject(
@@ -147,8 +205,15 @@ public class LayoutPageTemplateStructureRelUpgradeProcessTest {
 	private Layout _layout;
 
 	@Inject
+	private LayoutLocalService _layoutLocalService;
+
+	@Inject
 	private LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
+
+	@Inject
+	private LayoutPageTemplateStructureRelLocalService
+		_layoutPageTemplateStructureRelLocalService;
 
 	@Inject
 	private LayoutStructureProvider _layoutStructureProvider;

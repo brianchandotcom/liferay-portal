@@ -32,7 +32,7 @@ import java.util.Objects;
 /**
  * @author Wade Cao
  */
-public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
+public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
@@ -273,6 +273,6 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		SXPBlueprintUpgradeProcess.class);
+		SXPBlueprintAndSXPElementUpgradeProcess.class);
 
 }

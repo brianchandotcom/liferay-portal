@@ -48,7 +48,7 @@ public class SXPServiceUpgradeStepRegistrator
 		registry.register(
 			"1.2.0", "1.3.0",
 			new com.liferay.search.experiences.internal.upgrade.v1_3_0.
-				SXPBlueprintUpgradeProcess());
+				SXPBlueprintAndSXPElementUpgradeProcess());
 
 		registry.register(
 			"1.3.0", "1.3.1",
@@ -78,12 +78,12 @@ public class SXPServiceUpgradeStepRegistrator
 		registry.register(
 			"2.0.1", "2.0.2",
 			new com.liferay.search.experiences.internal.upgrade.v2_0_2.
-				SXPBlueprintUpgradeProcess());
+				SXPBlueprintAndSXPElementUpgradeProcess());
 
 		registry.register(
 			"2.0.2", "2.0.3",
 			new com.liferay.search.experiences.internal.upgrade.v2_0_3.
-				SXPBlueprintUpgradeProcess());
+				SXPElementUpgradeProcess());
 
 		registry.register(
 			"2.0.3", "3.0.0",
@@ -93,12 +93,12 @@ public class SXPServiceUpgradeStepRegistrator
 		registry.register(
 			"3.0.0", "3.1.0",
 			new com.liferay.search.experiences.internal.upgrade.v3_1_0.
-				SXPBlueprintUpgradeProcess());
+				SXPBlueprintAndSXPElementUpgradeProcess());
 
 		registry.register(
 			"3.1.0", "3.1.1",
 			new com.liferay.search.experiences.internal.upgrade.v3_1_1.
-				SXPBlueprintUpgradeProcess());
+				SXPBlueprintAndSXPElementUpgradeProcess());
 
 		registry.register(
 			"3.1.1", "3.1.2",

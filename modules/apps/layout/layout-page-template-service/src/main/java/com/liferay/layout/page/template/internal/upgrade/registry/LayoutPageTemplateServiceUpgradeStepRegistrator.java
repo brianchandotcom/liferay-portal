@@ -17,7 +17,6 @@ import com.liferay.layout.page.template.internal.upgrade.v3_1_4.ResourcePermissi
 import com.liferay.layout.page.template.internal.upgrade.v3_3_0.LayoutPageTemplateStructureRelUpgradeProcess;
 import com.liferay.layout.page.template.internal.upgrade.v3_4_1.FragmentEntryLinkEditableValuesUpgradeProcess;
 import com.liferay.layout.page.template.internal.upgrade.v5_3_0.LayoutPageTemplateCollectionUpgradeProcess;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
@@ -207,15 +206,8 @@ public class LayoutPageTemplateServiceUpgradeStepRegistrator
 
 		registry.register(
 			"5.3.1", "5.4.0",
-			UpgradeProcessFactory.runSQL(
-				StringBundler.concat(
-					"update LayoutPageTemplateStructureRel set data_ = ",
-					"REPLACE(data_, 'com.liferay.object.internal.info.",
-					"collection.provider.",
-					"ObjectEntrySingleFormVariationInfoCollectionProvider', '",
-					"com.liferay.object.web.internal.info.collection.provider.",
-					"ObjectEntrySingleFormVariationInfoCollectionProvider') ",
-					"where data_ is not null and data_ != ''")));
+			new com.liferay.layout.page.template.internal.upgrade.v5_4_0.
+				LayoutPageTemplateStructureRelUpgradeProcess());
 
 		registry.register(
 			"5.4.0", "5.5.0", new LayoutPageTemplateCollectionUpgradeProcess());

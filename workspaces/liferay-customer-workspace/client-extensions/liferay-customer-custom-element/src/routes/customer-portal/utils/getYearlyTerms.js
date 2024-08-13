@@ -11,7 +11,21 @@ const getYearlyTerms = ({endDate, startDate}) => {
 	const startDateYear = startDate.getFullYear();
 	const yearlyTerms = [];
 
-	if (startDateYear + 1 > endDateYear) {
+	const isExactlyOneYearApart = (startDate, endDate) => {
+		const oneYearLater = new Date(startDate);
+		oneYearLater.setFullYear(startDate.getFullYear() + 1);
+
+		return (
+			endDate.getFullYear() === oneYearLater.getFullYear() &&
+			endDate.getMonth() === oneYearLater.getMonth() &&
+			endDate.getDate() === oneYearLater.getDate()
+		);
+	};
+
+	if (
+		startDateYear + 1 > endDateYear ||
+		isExactlyOneYearApart(startDate, endDate)
+	) {
 		return [{endDate, startDate}];
 	}
 

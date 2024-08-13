@@ -25,6 +25,31 @@ public class Channel implements Cloneable, Serializable {
 		return ChannelSerDes.toDTO(json);
 	}
 
+	public String getAccountExternalReferenceCode() {
+		return accountExternalReferenceCode;
+	}
+
+	public void setAccountExternalReferenceCode(
+		String accountExternalReferenceCode) {
+
+		this.accountExternalReferenceCode = accountExternalReferenceCode;
+	}
+
+	public void setAccountExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			accountExternalReferenceCodeUnsafeSupplier) {
+
+		try {
+			accountExternalReferenceCode =
+				accountExternalReferenceCodeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String accountExternalReferenceCode;
+
 	public Long getAccountId() {
 		return accountId;
 	}

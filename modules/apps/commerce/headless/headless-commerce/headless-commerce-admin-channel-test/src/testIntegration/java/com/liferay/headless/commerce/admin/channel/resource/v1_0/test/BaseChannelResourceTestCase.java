@@ -174,6 +174,7 @@ public abstract class BaseChannelResourceTestCase {
 
 		Channel channel = randomChannel();
 
+		channel.setAccountExternalReferenceCode(regex);
 		channel.setCurrencyCode(regex);
 		channel.setExternalReferenceCode(regex);
 		channel.setName(regex);
@@ -185,6 +186,7 @@ public abstract class BaseChannelResourceTestCase {
 
 		channel = ChannelSerDes.toDTO(json);
 
+		Assert.assertEquals(regex, channel.getAccountExternalReferenceCode());
 		Assert.assertEquals(regex, channel.getCurrencyCode());
 		Assert.assertEquals(regex, channel.getExternalReferenceCode());
 		Assert.assertEquals(regex, channel.getName());
@@ -1292,6 +1294,17 @@ public abstract class BaseChannelResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals(
+					"accountExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (channel.getAccountExternalReferenceCode() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("accountId", additionalAssertFieldName)) {
 				if (channel.getAccountId() == null) {
 					valid = false;
@@ -1457,6 +1470,20 @@ public abstract class BaseChannelResourceTestCase {
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals(
+					"accountExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						channel1.getAccountExternalReferenceCode(),
+						channel2.getAccountExternalReferenceCode())) {
+
+					return false;
+				}
+
+				continue;
+			}
 
 			if (Objects.equals("accountId", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
@@ -1636,6 +1663,52 @@ public abstract class BaseChannelResourceTestCase {
 		sb.append(" ");
 		sb.append(operator);
 		sb.append(" ");
+
+		if (entityFieldName.equals("accountExternalReferenceCode")) {
+			Object object = channel.getAccountExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
 
 		if (entityFieldName.equals("accountId")) {
 			throw new IllegalArgumentException(
@@ -1881,6 +1954,8 @@ public abstract class BaseChannelResourceTestCase {
 	protected Channel randomChannel() throws Exception {
 		return new Channel() {
 			{
+				accountExternalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				accountId = RandomTestUtil.randomLong();
 				currencyCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());

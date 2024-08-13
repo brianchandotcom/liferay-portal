@@ -44,6 +44,20 @@ public class ChannelSerDes {
 
 		sb.append("{");
 
+		if (channel.getAccountExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"accountExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(channel.getAccountExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (channel.getAccountId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -148,6 +162,15 @@ public class ChannelSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
+		if (channel.getAccountExternalReferenceCode() == null) {
+			map.put("accountExternalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"accountExternalReferenceCode",
+				String.valueOf(channel.getAccountExternalReferenceCode()));
+		}
+
 		if (channel.getAccountId() == null) {
 			map.put("accountId", null);
 		}
@@ -216,7 +239,12 @@ public class ChannelSerDes {
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(jsonParserFieldName, "accountId")) {
+			if (Objects.equals(
+					jsonParserFieldName, "accountExternalReferenceCode")) {
+
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "accountId")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "currencyCode")) {
@@ -248,7 +276,15 @@ public class ChannelSerDes {
 			Channel channel, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "accountId")) {
+			if (Objects.equals(
+					jsonParserFieldName, "accountExternalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					channel.setAccountExternalReferenceCode(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "accountId")) {
 				if (jsonParserFieldValue != null) {
 					channel.setAccountId(
 						Long.valueOf((String)jsonParserFieldValue));

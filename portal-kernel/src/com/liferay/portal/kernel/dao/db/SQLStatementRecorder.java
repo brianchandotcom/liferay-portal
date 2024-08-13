@@ -28,6 +28,10 @@ import java.util.List;
 public class SQLStatementRecorder {
 
 	public static Connection getConnectionWrapper(Connection connection) {
+		if (!_enabled) {
+			return connection;
+		}
+
 		return new ConnectionWrapper(connection) {
 
 			@Override
@@ -148,6 +152,16 @@ public class SQLStatementRecorder {
 
 	public static List<String> getFailedSQLStatements() {
 		return _failedSQLStatements;
+	}
+
+	public static void start() {
+		_failedSQLStatements.clear();
+
+		_enabled = true;
+	}
+
+	public static void stop() {
+		_enabled = false;
 	}
 
 	private static <T> T _execute(SqlCallable<T> callable, Object object)
@@ -320,6 +334,7 @@ public class SQLStatementRecorder {
 		};
 	}
 
+	private static boolean _enabled;
 	private static final List<String> _failedSQLStatements = new ArrayList<>();
 
 	@FunctionalInterface

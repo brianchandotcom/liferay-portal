@@ -439,6 +439,7 @@ ReferenceAnnotationCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-p
 ResourceImplCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .java | Performs several checks on `*ResourceImpl` classes (except `Base*ResourceImpl` classes). |
 ResourcePermissionCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .java | Performs several checks on `*ResourcePermission` classes. |
 [ResourcePermissionFactoryCheck](check/resource_permission_factory_check.markdown#resourcepermissionfactorycheck) | [Performance](performance_checks.markdown#performance-checks) | .java | Checks usage of `*ResourcePermissionFactory` classes. |
+ReturnVariableDeclarationAsUsedCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .java | Finds cases where a variable declaration should be moved. |
 SQLEmptyLinesCheck | [Styling](styling_checks.markdown#styling-checks) | .sql | Finds missing and unnecessary empty lines. |
 [SQLLongNamesCheck](check/sql_long_names_check.markdown#sqllongnamescheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .sql | Checks for table and column names that exceed 30 characters. |
 SQLStylingCheck | [Styling](styling_checks.markdown#styling-checks) | .sql | Applies rules to enforce consistency in code style. |

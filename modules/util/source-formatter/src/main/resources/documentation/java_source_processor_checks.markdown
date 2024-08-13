@@ -252,6 +252,7 @@ ReferenceAnnotationCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-p
 ResourceImplCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Performs several checks on `*ResourceImpl` classes (except `Base*ResourceImpl` classes). |
 ResourcePermissionCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Performs several checks on `*ResourcePermission` classes. |
 [ResourcePermissionFactoryCheck](check/resource_permission_factory_check.markdown#resourcepermissionfactorycheck) | [Performance](performance_checks.markdown#performance-checks) | Checks usage of `*ResourcePermissionFactory` classes. |
+ReturnVariableDeclarationAsUsedCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | Finds cases where a variable declaration should be moved. |
 SelfReferenceCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Finds cases of unnecessary reference to its own class. |
 SemiColonCheck | [Styling](styling_checks.markdown#styling-checks) | Finds cases of unnecessary semicolon. |
 [ServiceComponentRuntimeCheck](check/service_component_runtime_check.markdown#servicecomponentruntimecheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Checks `ServiceComponentRuntime` usage in test classes. |

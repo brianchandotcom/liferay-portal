@@ -21,5 +21,6 @@ JavaEmptyLineAfterSuperCallCheck | .java | Finds missing empty line after a `sup
 [JavaUnusedSourceFormatterChecksCheck](check/java_unused_source_formatter_checks_check.markdown#javaunusedsourceformattercheckscheck) | .java | Finds `*Check` classes that are not configured. |
 [MapBuilderCheck](check/builder_check.markdown#buildercheck) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks that `ConcurrentHashMapBuilder`, `HashMapBuilder`, `LinkedHashMapBuilder` or `TreeMapBuilder` is used when possible. |
 [PortletURLBuilderCheck](check/builder_check.markdown#buildercheck) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks that `PortletURLBuilder` is used when possible. |
+ReturnVariableDeclarationAsUsedCheck | .java | Finds cases where a variable declaration should be moved. |
 [UnicodePropertiesBuilderCheck](check/builder_check.markdown#buildercheck) | .java | Checks that `UnicodePropertiesBuilder` is used when possible. |
 XMLLog4jLoggersCheck | .action, .function, .jelly, .jrxml, .macro, .pom, .project, .properties, .svg, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Checks the loggers defined in `*-log4j.xml` file. |

@@ -93,7 +93,23 @@ public class SynonymSearchTest {
 			_companyId, _user.getUserId(),
 			GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
-		_setUpLocales();
+		PortalPreferences portalPreferences =
+			PortletPreferencesFactoryUtil.getPortalPreferences(
+				_user.getUserId(), true);
+
+		_originalPortalPreferencesXML = PortletPreferencesFactoryUtil.toXML(
+			portalPreferences);
+
+		portalPreferences.setValue(
+			"", "locales",
+			"ar_SA,ca_ES,zh_CN,nl_NL,en_US,pt_PT,fi_FI,fr_FR,de_DE,hu_HU," +
+				"it_IT,ja_JP,pt_BR,es_ES,sv_SE");
+
+		PortalPreferencesLocalServiceUtil.updatePreferences(
+			_companyId, PortletKeys.PREFS_OWNER_TYPE_COMPANY,
+			PortletPreferencesFactoryUtil.toXML(portalPreferences));
+
+		LanguageUtil.init();
 
 		_setUpSynonyms();
 
@@ -188,26 +204,6 @@ public class SynonymSearchTest {
 		catch (Exception exception) {
 			throw new RuntimeException(exception);
 		}
-	}
-
-	private static void _setUpLocales() {
-		PortalPreferences portalPreferences =
-			PortletPreferencesFactoryUtil.getPortalPreferences(
-				_user.getUserId(), true);
-
-		_originalPortalPreferencesXML = PortletPreferencesFactoryUtil.toXML(
-			portalPreferences);
-
-		portalPreferences.setValue(
-			"", "locales",
-			"ar_SA,ca_ES,zh_CN,nl_NL,en_US,pt_PT,fi_FI,fr_FR,de_DE,hu_HU," +
-				"it_IT,ja_JP,pt_BR,es_ES,sv_SE");
-
-		PortalPreferencesLocalServiceUtil.updatePreferences(
-			_companyId, PortletKeys.PREFS_OWNER_TYPE_COMPANY,
-			PortletPreferencesFactoryUtil.toXML(portalPreferences));
-
-		LanguageUtil.init();
 	}
 
 	private static Dictionary<String, Object> _setUpSearchEngineProperties()

@@ -20,7 +20,7 @@ name = AUIUtil.getNamespace(liferayPortletRequest, liferayPortletResponse) + nam
 <liferay-util:html-top
 	outputKey="com.liferay.map.openstreetmap#/view.jsp"
 >
-	<link crossorigin="anonymous" href="https://npmcdn.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha384-VzLXTJGPSyTLX6d96AxgkKvE/LRb7ECGyTxuwtpjHnVWVZs2gp5RDjeM/tgBnVdM" rel="stylesheet" />
+	<aui:link crossOrigin="anonymous" href="https://npmcdn.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha384-VzLXTJGPSyTLX6d96AxgkKvE/LRb7ECGyTxuwtpjHnVWVZs2gp5RDjeM/tgBnVdM" rel="stylesheet" />
 
 	<aui:script crossOrigin="anonymous" integrity="sha384-RFZC58YeKApoNsIbBxf4z6JJXmh+geBSgkCQXFyh+4tiFSJmJBt+2FbjxW7Ar16M" src="https://npmcdn.com/leaflet@1.7.1/dist/leaflet.js" type="text/javascript"></aui:script>
 </liferay-util:html-top>

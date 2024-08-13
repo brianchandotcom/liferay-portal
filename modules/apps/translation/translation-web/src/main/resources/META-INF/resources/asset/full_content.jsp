@@ -12,7 +12,7 @@ ViewTranslationDisplayContext viewTranslationDisplayContext = (ViewTranslationDi
 %>
 
 <liferay-util:html-top>
-	<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathProxy() + application.getContextPath() + "/css/main.css") %>" rel="stylesheet" />
+	<aui:link href='<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathProxy() + application.getContextPath() + "/css/main.css") %>' rel="stylesheet" />
 </liferay-util:html-top>
 
 <clay:container-fluid

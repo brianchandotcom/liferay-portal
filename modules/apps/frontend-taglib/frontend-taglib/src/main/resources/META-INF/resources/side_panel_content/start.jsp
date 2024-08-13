@@ -7,7 +7,7 @@
 
 <%@ include file="/side_panel_content/init.jsp" %>
 
-<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathModule() + "/frontend-taglib/side_panel_content/main.css") %>" rel="stylesheet" />
+<aui:link href='<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathModule() + "/frontend-taglib/side_panel_content/main.css") %>' rel="stylesheet" />
 
 <div class="side-panel-iframe">
 	<c:if test="<%= Validator.isNotNull(title) %>">

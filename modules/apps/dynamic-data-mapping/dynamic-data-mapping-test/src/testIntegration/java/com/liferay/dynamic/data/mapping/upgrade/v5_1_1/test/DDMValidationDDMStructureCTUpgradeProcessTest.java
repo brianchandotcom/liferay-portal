@@ -7,14 +7,17 @@ package com.liferay.dynamic.data.mapping.upgrade.v5_1_1.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.change.tracking.test.util.BaseCTUpgradeProcessTestCase;
+import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.io.DDMFormSerializer;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidation;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidationExpression;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
-import com.liferay.dynamic.data.mapping.upgrade.v5_1_1.test.util.DDMValidationUpgradeProcessTestUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormSerializeUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
@@ -64,7 +67,8 @@ public class DDMValidationDDMStructureCTUpgradeProcessTest
 	}
 
 	protected String getClassName() {
-		return DDMValidationUpgradeProcessTestUtil.getClassName();
+		return "com.liferay.dynamic.data.mapping.internal.upgrade.v5_1_1." +
+			"DDMValidationUpgradeProcess";
 	}
 
 	@Override
@@ -73,7 +77,29 @@ public class DDMValidationDDMStructureCTUpgradeProcessTest
 	}
 
 	protected DDMForm getDDMForm() {
-		return DDMValidationUpgradeProcessTestUtil.getDDMForm();
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
+
+		DDMFormField ddmFormField = DDMFormTestUtil.createDDMFormField(
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			DDMFormFieldTypeConstants.DATE, DDMFormFieldTypeConstants.DATE,
+			false, false, false);
+
+		DDMFormFieldValidation ddmFormFieldValidation =
+			new DDMFormFieldValidation();
+
+		ddmFormFieldValidation.setDDMFormFieldValidationExpression(
+			new DDMFormFieldValidationExpression() {
+				{
+					setName("dateRange");
+					setValue("dateRange({parameter} AND {parameter})");
+				}
+			});
+
+		ddmFormField.setDDMFormFieldValidation(ddmFormFieldValidation);
+
+		ddmForm.addDDMFormField(ddmFormField);
+
+		return ddmForm;
 	}
 
 	@Override

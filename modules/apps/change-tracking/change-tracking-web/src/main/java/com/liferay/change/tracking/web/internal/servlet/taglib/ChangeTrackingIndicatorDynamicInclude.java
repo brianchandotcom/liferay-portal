@@ -5,6 +5,9 @@
 
 package com.liferay.change.tracking.web.internal.servlet.taglib;
 
+import com.liferay.application.list.PanelAppRegistry;
+import com.liferay.application.list.constants.PanelCategoryKeys;
+import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.change.tracking.constants.CTActionKeys;
 import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.constants.CTPortletKeys;
@@ -24,6 +27,7 @@ import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -32,6 +36,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
@@ -40,6 +45,7 @@ import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
+import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -68,6 +74,7 @@ import javax.portlet.ResourceURL;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.JspException;
 
 import org.osgi.service.component.annotations.Activate;
@@ -183,6 +190,9 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 				unsupportedApplication = true;
 			}
 
+			boolean showContextChangePopover = _isShowContextChangePopover(
+				portletId, themeDisplay);
+
 			if (ctCollection == null) {
 				writer.write(
 					_language.get(themeDisplay.getLocale(), "production"));
@@ -206,7 +216,8 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 					productionOnlyApplication,
 					_ctSettingsConfigurationHelper.isSandboxEnabled(
 						themeDisplay.getCompanyId()),
-					themeDisplay, unsupportedApplication),
+					showContextChangePopover, themeDisplay,
+					unsupportedApplication),
 				httpServletRequest, writer);
 
 			writer.write("</div>");
@@ -244,8 +255,8 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 	private Map<String, Object> _getReactData(
 			HttpServletRequest httpServletRequest, CTCollection ctCollection,
 			CTPreferences ctPreferences, boolean productionOnlyApplication,
-			boolean sandboxOnlyEnabled, ThemeDisplay themeDisplay,
-			boolean unsupportedApplication)
+			boolean sandboxOnlyEnabled, boolean showContextChangePopover,
+			ThemeDisplay themeDisplay, boolean unsupportedApplication)
 		throws PortalException {
 
 		PortletURL checkoutURL = PortletURLBuilder.create(
@@ -354,6 +365,20 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 						"unsupported-application-message"));
 				data.put("warningLearnLink", null);
 				data.put("warningButton", true);
+			}
+			else if (showContextChangePopover) {
+				data.put("title", ctCollection.getName());
+				data.put(
+					"warningHeader",
+					_language.get(
+						themeDisplay.getLocale(),
+						"keep-working-in-this-publication"));
+				data.put(
+					"warningBody",
+					_language.get(
+						themeDisplay.getLocale(),
+						"you-just-switched-contexts.-do-you-want-to-keep-" +
+							"working-in-this-publication"));
 			}
 			else {
 				data.put("title", ctCollection.getName());
@@ -611,6 +636,48 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 		}
 	}
 
+	private boolean _isShowContextChangePopover(
+		String portletId, ThemeDisplay themeDisplay) {
+
+		Group group = themeDisplay.getScopeGroup();
+
+		if (!CTCollectionThreadLocal.isProductionMode() && group.isSite()) {
+			HttpSession httpSession = PortalSessionThreadLocal.getHttpSession();
+
+			long ctLastGroupId = GetterUtil.getLong(
+				httpSession.getAttribute("ctLastGroupId"));
+
+			if (ctLastGroupId == 0) {
+				ctLastGroupId = group.getGroupId();
+
+				httpSession.setAttribute("ctLastGroupId", ctLastGroupId);
+			}
+
+			if (ctLastGroupId != group.getGroupId()) {
+				httpSession.setAttribute("ctShowPopover", Boolean.TRUE);
+			}
+
+			if (GetterUtil.getBoolean(
+					httpSession.getAttribute("ctShowPopover"))) {
+
+				PanelCategoryHelper panelCategoryHelper =
+					new PanelCategoryHelper(_panelAppRegistry);
+
+				if (Validator.isNotNull(portletId) &&
+					panelCategoryHelper.containsPortlet(
+						portletId, PanelCategoryKeys.SITE_ADMINISTRATION) &&
+					!panelCategoryHelper.containsPortlet(
+						portletId,
+						PanelCategoryKeys.SITE_ADMINISTRATION_PUBLISHING)) {
+
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		ChangeTrackingIndicatorDynamicInclude.class);
 
@@ -639,6 +706,9 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private PanelAppRegistry _panelAppRegistry;
 
 	@Reference
 	private Portal _portal;

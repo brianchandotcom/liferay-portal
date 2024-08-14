@@ -25,6 +25,7 @@ import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.layout.util.structure.LayoutStructureItemUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -184,8 +185,9 @@ public class FormItemManager {
 			_jsonFactory.createJSONArray();
 
 		for (String itemId :
-				ListUtil.copy(
-					formStyledLayoutStructureItem.getChildrenItemIds())) {
+				LayoutStructureItemUtil.getChildrenItemIds(
+					formStyledLayoutStructureItem.getItemId(),
+					layoutStructure)) {
 
 			if (ListUtil.isNotEmpty(removedItemIds) &&
 				!removedItemIds.contains(itemId)) {

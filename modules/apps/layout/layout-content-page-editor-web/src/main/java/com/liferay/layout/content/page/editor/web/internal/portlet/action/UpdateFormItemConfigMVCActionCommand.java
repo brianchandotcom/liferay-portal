@@ -21,6 +21,7 @@ import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.layout.util.structure.LayoutStructureItemUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -82,10 +83,18 @@ public class UpdateFormItemConfigMVCActionCommand
 		Map<String, String> inputFields = new HashMap<>();
 
 		for (String itemId :
-				formStyledLayoutStructureItem.getChildrenItemIds()) {
+				LayoutStructureItemUtil.getChildrenItemIds(
+					formStyledLayoutStructureItem.getItemId(),
+					layoutStructure)) {
 
 			LayoutStructureItem layoutStructureItem =
 				layoutStructure.getLayoutStructureItem(itemId);
+
+			if (!(layoutStructureItem instanceof
+					FragmentStyledLayoutStructureItem)) {
+
+				continue;
+			}
 
 			FragmentStyledLayoutStructureItem
 				fragmentStyledLayoutStructureItem =

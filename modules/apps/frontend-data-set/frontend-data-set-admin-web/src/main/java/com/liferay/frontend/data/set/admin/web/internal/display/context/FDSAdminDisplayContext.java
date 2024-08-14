@@ -15,6 +15,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -207,11 +208,13 @@ public class FDSAdminDisplayContext {
 	public JSONArray getRESTApplicationResolvedSchemasJSONArray() {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		List<FDSAPIURLResolver> resolvers =
-			_fdsAPIURLResolverRegistry.getResolvers();
+		if (FeatureFlagManagerUtil.isEnabled("LPD-25230")) {
+			List<FDSAPIURLResolver> resolvers =
+				_fdsAPIURLResolverRegistry.getResolvers();
 
-		for (FDSAPIURLResolver resolver : resolvers) {
-			jsonArray.put(resolver.getSchema());
+			for (FDSAPIURLResolver resolver : resolvers) {
+				jsonArray.put(resolver.getSchema());
+			}
 		}
 
 		return jsonArray;

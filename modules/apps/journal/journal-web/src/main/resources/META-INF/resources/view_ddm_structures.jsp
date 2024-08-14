@@ -40,9 +40,6 @@ JournalDDMStructuresManagementToolbarDisplayContext journalDDMStructuresManageme
 
 	<liferay-ui:error embed="<%= false %>" key="importDataDefinitionErrorMessage">
 		<c:choose>
-			<c:when test="<%= errorException instanceof DataDefinitionValidationException %>">
-				<liferay-ui:message key="please-enter-a-valid-form-definition" />
-			</c:when>
 			<c:when test="<%= errorException instanceof DataDefinitionValidationException.MustNotDuplicateFieldName %>">
 
 				<%
@@ -73,8 +70,8 @@ JournalDDMStructuresManagementToolbarDisplayContext journalDDMStructuresManageme
 			<c:when test="<%= errorException instanceof DataDefinitionValidationException.MustSetValidName %>">
 				<liferay-ui:message key="please-enter-a-valid-name" />
 			</c:when>
-			<c:when test="<%= errorException instanceof DataLayoutValidationException %>">
-				<liferay-ui:message key="please-enter-a-valid-form-layout" />
+			<c:when test="<%= errorException instanceof DataDefinitionValidationException %>">
+				<liferay-ui:message key="please-enter-a-valid-form-definition" />
 			</c:when>
 			<c:when test="<%= errorException instanceof DataLayoutValidationException.MustNotDuplicateFieldName %>">
 
@@ -83,6 +80,9 @@ JournalDDMStructuresManagementToolbarDisplayContext journalDDMStructuresManageme
 				%>
 
 				<liferay-ui:message arguments="<%= HtmlUtil.escape(StringUtil.merge(mndfn.getDuplicatedFieldNames(), StringPool.COMMA_AND_SPACE)) %>" key="the-definition-field-name-x-was-defined-more-than-once" translateArguments="<%= false %>" />
+			</c:when>
+			<c:when test="<%= errorException instanceof DataLayoutValidationException %>">
+				<liferay-ui:message key="please-enter-a-valid-form-layout" />
 			</c:when>
 			<c:when test="<%= errorException instanceof PrincipalException.MustHavePermission %>">
 				<liferay-ui:message key="you-do-not-have-the-required-permissions" />

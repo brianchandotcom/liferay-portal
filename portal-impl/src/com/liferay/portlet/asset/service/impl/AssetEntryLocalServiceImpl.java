@@ -666,8 +666,17 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		validate(
 			groupId, className, classPK, classTypeId, categoryIds, tagNames);
 
-		AssetEntry entry = assetEntryPersistence.fetchByC_C(
-			classNameId, classPK);
+		AssetEntry entry = null;
+
+		boolean strictAdd = false;
+
+		if (serviceContext != null) {
+			strictAdd = serviceContext.isStrictAdd();
+		}
+
+		if (!strictAdd) {
+			entry = assetEntryPersistence.fetchByC_C(classNameId, classPK);
+		}
 
 		long entryId = 0;
 

@@ -29,3 +29,10 @@ services:
             - 8080:8080
         volumes:
             - ../build/docker/client-extensions:/opt/liferay/osgi/client-extensions
+    mail:
+        container_name: liferay-customer-workspace-mail
+        image: maildev/maildev
+        ports:
+            - 1025:1025
+            - 1080:1080
+        restart: always

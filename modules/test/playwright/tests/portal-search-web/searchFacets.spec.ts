@@ -13,7 +13,7 @@ import getRandomString from '../../utils/getRandomString';
 export const test = mergeTests(loginTest(), searchPageTest, dataApiHelpersTest);
 
 test.describe('Category facet configuration for vocabularies', () => {
-	test('lists 20+ sites available to the user @LPD-33194', async ({
+	test('Lists 20+ sites available to the user @LPD-33194', async ({
 		apiHelpers,
 		searchPage,
 	}) => {
@@ -29,15 +29,19 @@ test.describe('Category facet configuration for vocabularies', () => {
 			}
 		});
 
-		await test.step('Open category facet configurations', async () => {
+		await test.step('Navigate to search page', async () => {
 			await searchPage.goto();
+		});
 
+		await test.step('Search for keyword "Test"', async () => {
 			await searchPage.searchKeywordInNavBar('test');
 
 			await expect(searchPage.searchResultsTotalLabel).toHaveText(
 				/\d+ Results for test/
 			);
+		});
 
+		await test.step('Open category facet configurations', async () => {
 			await searchPage.openSearchPortletConfiguration('Category Facet');
 		});
 
@@ -124,7 +128,7 @@ test.describe('Clear and retain facet selections', () => {
 		await searchPage.savePortletConfiguration();
 	});
 
-	test('clears facet terms after new keyword search @LPD-19994', async ({
+	test('Clears facet terms after new keyword search @LPD-19994', async ({
 		searchPage,
 	}) => {
 
@@ -146,7 +150,7 @@ test.describe('Clear and retain facet selections', () => {
 		);
 	});
 
-	test('retains facet terms if search keyword has not changed @LPD-19994', async ({
+	test('Retains facet terms if search keyword has not changed @LPD-19994', async ({
 		page,
 		searchPage,
 	}) => {
@@ -171,7 +175,7 @@ test.describe('Clear and retain facet selections', () => {
 		await page.reload();
 	});
 
-	test('retains items per page after new keyword search @LPD-19994', async ({
+	test('Retains items per page after new keyword search @LPD-19994', async ({
 		searchPage,
 	}) => {
 
@@ -204,7 +208,7 @@ test.describe('Clear and retain facet selections', () => {
 		);
 	});
 
-	test('clears facet terms if performing an empty search @LPD-19994', async ({
+	test('Clears facet terms if performing an empty search @LPD-19994', async ({
 		page,
 		searchPage,
 	}) => {
@@ -242,7 +246,7 @@ test.describe('Clear and retain facet selections', () => {
 		);
 	});
 
-	test('retains facet terms if configured under search options @LPD-19994', async ({
+	test('Retains facet terms if configured under search options @LPD-19994', async ({
 		page,
 		searchPage,
 	}) => {

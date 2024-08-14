@@ -25,7 +25,7 @@ export const test = mergeTests(
 );
 
 test.describe('Search Bar directs to correct page', () => {
-	test('retains impersonation parameter when suggestions is disabled @LPD-17509', async ({
+	test('Retains impersonation parameter when suggestions is disabled @LPD-17509', async ({
 		apiHelpers,
 		layout,
 		page,

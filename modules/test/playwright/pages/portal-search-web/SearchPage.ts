@@ -6,6 +6,7 @@
 import {FrameLocator, Locator, Page, expect} from '@playwright/test';
 
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
+import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
 
 export class SearchPage {
 	readonly page: Page;
@@ -125,26 +126,22 @@ export class SearchPage {
 
 	async openSearchPortletConfiguration(
 		portletName: string,
-		order: number = 0
+		index: number = 0
 	) {
+		const portletTopper = this.page
+			.locator('.portlet-topper', {hasText: portletName})
+			.nth(index);
+
 		await this.page
 			.locator('.portlet', {
 				hasText: portletName,
 			})
-			.nth(order)
+			.nth(index)
 			.hover();
 
-		await expect(
-			this.page
-				.locator('.portlet-topper', {hasText: portletName})
-				.nth(order)
-		).toBeVisible();
+		await expect(portletTopper).toBeVisible();
 
-		await this.page
-			.locator('.portlet-topper', {hasText: portletName})
-			.nth(order)
-			.getByLabel('Options')
-			.click();
+		await portletTopper.getByLabel('Options').click();
 
 		await this.configurationMenuItem.click();
 
@@ -153,6 +150,11 @@ export class SearchPage {
 
 	async savePortletConfiguration() {
 		await this.modalIFrame.getByRole('button', {name: 'Save'}).click();
+
+		await waitForSuccessAlert(
+			this.modalIFrame,
+			'Success:You have successfully updated the setup.'
+		);
 
 		await this.modalIFrame.getByRole('button', {name: 'Cancel'}).click();
 	}

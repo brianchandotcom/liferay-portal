@@ -271,8 +271,7 @@ public class ObjectEntryModelDocumentContributor
 		document.addKeyword(
 			"objectDefinitionName", objectDefinition.getShortName());
 
-		Map<String, Serializable> values = _objectEntryLocalService.getValues(
-			objectEntry.getObjectEntryId());
+		Map<String, Serializable> values = objectEntry.getValues();
 
 		List<ObjectField> objectFields =
 			_objectFieldLocalService.getObjectFields(

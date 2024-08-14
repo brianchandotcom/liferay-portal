@@ -214,9 +214,9 @@ const useSelectMultipleItems = () => {
 	const activeDispatch = useContext(ActiveDispatchContext);
 
 	return useCallback(
-		(itemIds, {origin = null}) => {
+		(itemIds, {origin = null} = {}) => {
 			activeDispatch({
-				activeItemIds: itemIds,
+				activeItemIds: itemIds || [],
 				origin,
 				type: MULTI_SELECT,
 			});

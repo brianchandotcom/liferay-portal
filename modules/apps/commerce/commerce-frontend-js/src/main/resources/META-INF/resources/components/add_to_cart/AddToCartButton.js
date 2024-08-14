@@ -103,11 +103,9 @@ function AddToCartButton({
 					onError(error);
 				})
 				.finally(() => {
-					if (isMounted()) {
-						setCartAtomState({updating: false});
+					setCartAtomState({updating: false});
 
-						setIsTriggeringCartUpdate(false);
-					}
+					setIsTriggeringCartUpdate(false);
 				});
 		},
 

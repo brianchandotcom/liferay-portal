@@ -160,7 +160,7 @@ public class DefaultObjectEntryManagerImpl
 			_addOrUpdateNestedObjectEntries(
 				dtoConverterContext, objectDefinition, objectEntry,
 				_getObjectRelationships(objectDefinition, objectEntry),
-				serviceBuilderObjectEntry.getPrimaryKey(), scopeKey));
+				serviceBuilderObjectEntry, scopeKey));
 	}
 
 	@Override
@@ -787,8 +787,7 @@ public class DefaultObjectEntryManagerImpl
 			_addOrUpdateNestedObjectEntries(
 				dtoConverterContext, objectDefinition, objectEntry,
 				_getObjectRelationships(objectDefinition, objectEntry),
-				serviceBuilderObjectEntry.getPrimaryKey(),
-				objectEntry.getScopeKey()));
+				serviceBuilderObjectEntry, objectEntry.getScopeKey()));
 	}
 
 	@Override
@@ -821,7 +820,7 @@ public class DefaultObjectEntryManagerImpl
 			_addOrUpdateNestedObjectEntries(
 				dtoConverterContext, objectDefinition, objectEntry,
 				_getObjectRelationships(objectDefinition, objectEntry),
-				serviceBuilderObjectEntry.getPrimaryKey(), scopeKey));
+				serviceBuilderObjectEntry, scopeKey));
 	}
 
 	private Map<String, String> _addAction(
@@ -853,10 +852,17 @@ public class DefaultObjectEntryManagerImpl
 				DTOConverterContext dtoConverterContext,
 				ObjectDefinition objectDefinition, ObjectEntry objectEntry,
 				Map<String, ObjectRelationship> objectRelationships,
-				long primaryKey, String scopeKey)
+				com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry,
+				String scopeKey)
 		throws Exception {
 
+		if (objectRelationships.isEmpty()) {
+			return serviceBuilderObjectEntry;
+		}
+
 		Map<String, Object> properties = objectEntry.getProperties();
+
+		long primaryKey = serviceBuilderObjectEntry.getPrimaryKey();
 
 		for (Map.Entry<String, ObjectRelationship> entry :
 				objectRelationships.entrySet()) {

@@ -67,8 +67,8 @@ public class LanguageClientExtensionBundleTrackerCustomizerTest {
 			RandomTestUtil.randomString(), _getBatchBundleInputStream("batch"));
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"com.liferay.portal.language.extender.internal.osgi.util." +
-					"tracker.LanguageClientExtensionBundleTrackerCustomizer",
+				"com.liferay.portal.language.extender.internal." +
+					"LanguageClientExtension",
 				LoggerTestUtil.ERROR)) {
 
 			bundle.start();
@@ -84,12 +84,13 @@ public class LanguageClientExtensionBundleTrackerCustomizerTest {
 
 			Assert.assertNull(
 				_ploEntryLocalService.fetchPLOEntry(
-					TestPropsValues.getCompanyId(),
-					"file-with-invalid-language-id", "yy_ZZ"));
-			Assert.assertNull(
-				_ploEntryLocalService.fetchPLOEntry(
 					TestPropsValues.getCompanyId(), "my-key-with-empty-value",
 					"pt_BR"));
+
+			Assert.assertNull(
+				_ploEntryLocalService.fetchPLOEntry(
+					TestPropsValues.getCompanyId(),
+					"file-with-invalid-language-id", "yy_ZZ"));
 
 			List<LogEntry> logEntries = logCapture.getLogEntries();
 

@@ -122,6 +122,14 @@ public class DLFileEntryMetadataLocalServiceUtil {
 		getService().deleteFileEntryMetadata(fileEntryId);
 	}
 
+	public static void deleteFileEntryMetadataByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		getService().deleteFileEntryMetadataByExternalReferenceCode(
+			externalReferenceCode, companyId);
+	}
+
 	public static void deleteFileVersionFileEntryMetadata(long fileVersionId)
 		throws PortalException {
 
@@ -417,7 +425,7 @@ public class DLFileEntryMetadataLocalServiceUtil {
 	}
 
 	public static void updateFileEntryMetadata(
-			long companyId,
+			String externalReferenceCode, long companyId,
 			List<com.liferay.dynamic.data.mapping.kernel.DDMStructure>
 				ddmStructures,
 			long fileEntryId, long fileVersionId,
@@ -427,20 +435,21 @@ public class DLFileEntryMetadataLocalServiceUtil {
 		throws PortalException {
 
 		getService().updateFileEntryMetadata(
-			companyId, ddmStructures, fileEntryId, fileVersionId,
-			ddmFormValuesMap, serviceContext);
+			externalReferenceCode, companyId, ddmStructures, fileEntryId,
+			fileVersionId, ddmFormValuesMap, serviceContext);
 	}
 
 	public static void updateFileEntryMetadata(
-			long fileEntryTypeId, long fileEntryId, long fileVersionId,
+			String externalReferenceCode, long fileEntryTypeId,
+			long fileEntryId, long fileVersionId,
 			Map<String, com.liferay.dynamic.data.mapping.kernel.DDMFormValues>
 				ddmFormValuesMap,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		getService().updateFileEntryMetadata(
-			fileEntryTypeId, fileEntryId, fileVersionId, ddmFormValuesMap,
-			serviceContext);
+			externalReferenceCode, fileEntryTypeId, fileEntryId, fileVersionId,
+			ddmFormValuesMap, serviceContext);
 	}
 
 	public static DLFileEntryMetadataLocalService getService() {

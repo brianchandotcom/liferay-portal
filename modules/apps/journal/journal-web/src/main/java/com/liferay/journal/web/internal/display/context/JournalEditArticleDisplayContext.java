@@ -32,6 +32,7 @@ import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
 import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.constants.JournalFolderConstants;
+import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
@@ -104,6 +105,8 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.TimeZone;
 
+import javax.portlet.MimeResponse;
+import javax.portlet.PortletRequest;
 import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
@@ -400,7 +403,9 @@ public class JournalEditArticleDisplayContext {
 		).put(
 			"autoSaveDraftURL",
 			ResourceURLBuilder.createResourceURL(
-				_liferayPortletResponse
+				_liferayPortletResponse.createLiferayPortletURL(
+					JournalPortletKeys.JOURNAL, PortletRequest.RESOURCE_PHASE,
+					MimeResponse.Copy.PUBLIC)
 			).setResourceID(
 				"/journal/auto_save_article"
 			).buildString()

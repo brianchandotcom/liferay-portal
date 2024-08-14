@@ -19,14 +19,12 @@ import {
 	useMultiSelectIsActivated,
 	useSelectItem,
 } from '../contexts/ControlsContext';
-import {useSelector} from '../contexts/StoreContext';
 import isCtrlOrMeta from '../utils/isCtrlOrMeta';
 
 export default function MultiSelectManager() {
 	const activeItemIds = useActiveItemIds();
 	const activateMultiSelect = useActivateMultiSelect();
 	const keymapRef = useRef(null);
-	const layoutData = useSelector((state) => state.layoutData);
 	const multiSelectIsActivated = useMultiSelectIsActivated();
 	const selectItem = useSelectItem();
 
@@ -49,6 +47,10 @@ export default function MultiSelectManager() {
 	};
 
 	useEffect(() => {
+		if (!Liferay.FeatureFlags['LPD-18221']) {
+			return;
+		}
+
 		const onClick = (event) => {
 			const multiSelection = Object.values(keymapRef.current).find(
 				(multiSelection) =>
@@ -103,7 +105,6 @@ export default function MultiSelectManager() {
 		activateMultiSelect,
 		multiSelectIsActivated,
 		selectItem,
-		layoutData,
 	]);
 
 	return null;

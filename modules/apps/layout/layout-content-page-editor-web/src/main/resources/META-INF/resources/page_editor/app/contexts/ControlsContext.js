@@ -7,13 +7,14 @@ import React, {useCallback, useContext, useReducer} from 'react';
 
 import {fromControlsId} from '../components/layout_data_items/Collection';
 import {ITEM_TYPES} from '../config/constants/itemTypes';
+import {MULTI_SELECT_TYPES} from '../config/constants/multiSelectTypes';
 import {useToControlsId} from './CollectionItemContext';
 
 const ACTIVE_INITIAL_STATE = {
 	activationOrigin: null,
 	activeItemIds: [],
 	activeItemType: null,
-	multiSelectIsActive: false,
+	multiSelect: null,
 };
 
 const HOVER_INITIAL_STATE = {
@@ -30,14 +31,21 @@ const ActiveDispatchContext = React.createContext(() => {});
 const HoverStateContext = React.createContext(HOVER_INITIAL_STATE);
 const HoverDispatchContext = React.createContext(() => {});
 
-const getActiveItemIds = (activeItemIds, itemId) =>
-	activeItemIds.includes(itemId)
+/**
+ * This method includes a new item in the active items. If this item is already
+ * belongs to the active items, it is removed.
+ * @param {array} activeItemIds Active item ids.
+ * @param {string} itemId Item id to be included in active items.
+ */
+
+function getActiveItemIds(activeItemIds, itemId) {
+	return activeItemIds.includes(itemId)
 		? activeItemIds.filter((activeItemId) => activeItemId !== itemId)
 		: [...activeItemIds, itemId];
+}
 
 const reducer = (state, action) => {
-	const {activeItemIds, itemId, itemType, multiSelectIsActive, origin, type} =
-		action;
+	const {activeItemIds, itemId, itemType, multiSelect, origin, type} = action;
 	let nextState = state;
 
 	if (type === HOVER_ITEM && itemId !== nextState.hoveredItemId) {
@@ -53,26 +61,33 @@ const reducer = (state, action) => {
 		(Liferay.FeatureFlags['LPD-18221'] ||
 			itemId !== nextState.activeItemIds[0])
 	) {
+		let nextActiveItemIds = [itemId];
+
+		if (!Liferay.FeatureFlags['LPD-18221']) {
+			nextActiveItemIds = itemId ? [itemId] : [];
+		}
+		else if (!itemId) {
+			nextActiveItemIds = [];
+		}
+		else if (state.multiSelect === MULTI_SELECT_TYPES.simple) {
+			nextActiveItemIds = getActiveItemIds(
+				nextState.activeItemIds,
+				itemId
+			);
+		}
+
 		nextState = {
 			...nextState,
 			activationOrigin: origin,
-			activeItemIds: Liferay.FeatureFlags['LPD-18221']
-				? nextState.multiSelectIsActive && itemId
-					? getActiveItemIds(nextState.activeItemIds, itemId)
-					: itemId
-						? [itemId]
-						: []
-				: itemId
-					? [itemId]
-					: [],
+			activeItemIds: nextActiveItemIds,
 			activeItemType: itemType,
 		};
 	}
 	else if (type === MULTI_SELECT) {
 		nextState = {
-			...nextState,
-			activeItemIds: activeItemIds || nextState.activeItemIds,
-			multiSelectIsActive,
+			...state,
+			activeItemIds: activeItemIds || state.activeItemIds,
+			multiSelect,
 		};
 	}
 
@@ -199,9 +214,9 @@ const useActivateMultiSelect = () => {
 	const activeDispatch = useContext(ActiveDispatchContext);
 
 	return useCallback(
-		(multiSelectIsActive = false) => {
+		(multiSelect = null) => {
 			activeDispatch({
-				multiSelectIsActive,
+				multiSelect,
 				type: MULTI_SELECT,
 			});
 		},
@@ -225,7 +240,7 @@ const useSelectMultipleItems = () => {
 };
 
 const useMultiSelectIsActivated = () =>
-	useContext(ActiveStateContext).multiSelectIsActive;
+	useContext(ActiveStateContext).multiSelect;
 
 export {
 	ControlsProvider,

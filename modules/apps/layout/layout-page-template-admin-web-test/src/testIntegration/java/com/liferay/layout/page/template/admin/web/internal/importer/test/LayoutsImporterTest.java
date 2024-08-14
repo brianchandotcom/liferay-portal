@@ -171,7 +171,10 @@ public class LayoutsImporterTest {
 				layoutsImporterResultEntry.getType());
 
 			_assertLayoutPageTemplateEntry(
-				_getLayoutPageTemplateEntryKey(layoutsImporterResultEntry));
+				StringUtil.replace(
+					StringUtil.toLowerCase(
+						layoutsImporterResultEntry.getName()),
+					CharPool.SPACE, CharPool.DASH));
 		}
 	}
 
@@ -214,7 +217,7 @@ public class LayoutsImporterTest {
 			layoutsImporterResultEntries.size());
 
 		_assertLayoutsImporterResultEntry(
-			layoutsImporterResultEntries.get(0),
+			layoutsImporterResultEntries,
 			_layoutPageTemplateStructureLocalService.
 				fetchLayoutPageTemplateStructure(
 					layoutPageTemplateEntry.getGroupId(),
@@ -305,22 +308,9 @@ public class LayoutsImporterTest {
 			ServiceContextThreadLocal.popServiceContext();
 		}
 
-		Assert.assertNotNull(layoutsImporterResultEntries);
-
-		Assert.assertEquals(
-			layoutsImporterResultEntries.toString(), 1,
-			layoutsImporterResultEntries.size());
-
-		LayoutsImporterResultEntry layoutPageTemplateImportEntry =
-			layoutsImporterResultEntries.get(0);
-
-		Assert.assertEquals(
-			LayoutsImporterResultEntry.Status.IMPORTED,
-			layoutPageTemplateImportEntry.getStatus());
-
 		_assertLayoutPageTemplateEntry(
 			fragmentEntry, fragmentEntryLink,
-			_getLayoutPageTemplateEntryKey(layoutPageTemplateImportEntry));
+			_getLayoutPageTemplateEntryKey(layoutsImporterResultEntries));
 	}
 
 	@Test
@@ -378,22 +368,9 @@ public class LayoutsImporterTest {
 			ServiceContextThreadLocal.popServiceContext();
 		}
 
-		Assert.assertNotNull(layoutsImporterResultEntries);
-
-		Assert.assertEquals(
-			layoutsImporterResultEntries.toString(), 1,
-			layoutsImporterResultEntries.size());
-
-		LayoutsImporterResultEntry layoutPageTemplateImportEntry =
-			layoutsImporterResultEntries.get(0);
-
-		Assert.assertEquals(
-			LayoutsImporterResultEntry.Status.IMPORTED,
-			layoutPageTemplateImportEntry.getStatus());
-
 		_assertLayoutPageTemplateEntry(
 			configurationJSONObject, editableValuesJSONObject, curFragmentEntry,
-			_getLayoutPageTemplateEntryKey(layoutPageTemplateImportEntry));
+			_getLayoutPageTemplateEntryKey(layoutsImporterResultEntries));
 	}
 
 	@Test
@@ -1178,28 +1155,10 @@ public class LayoutsImporterTest {
 			List<LayoutsImporterResultEntry> layoutsImporterResultEntries)
 		throws Exception {
 
-		Assert.assertNotNull(layoutsImporterResultEntries);
-
-		Assert.assertEquals(
-			layoutsImporterResultEntries.toString(), 1,
-			layoutsImporterResultEntries.size());
-
-		LayoutsImporterResultEntry layoutPageTemplateImportEntry =
-			layoutsImporterResultEntries.get(0);
-
-		Assert.assertEquals(
-			LayoutsImporterResultEntry.Status.IMPORTED,
-			layoutPageTemplateImportEntry.getStatus());
-
-		String layoutPageTemplateEntryKey = StringUtil.toLowerCase(
-			layoutPageTemplateImportEntry.getName());
-
-		layoutPageTemplateEntryKey = StringUtil.replace(
-			layoutPageTemplateEntryKey, CharPool.SPACE, CharPool.DASH);
-
 		LayoutPageTemplateEntry curLayoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
-				_group2.getGroupId(), layoutPageTemplateEntryKey);
+				_group2.getGroupId(),
+				_getLayoutPageTemplateEntryKey(layoutsImporterResultEntries));
 
 		Assert.assertNotNull(curLayoutPageTemplateEntry);
 
@@ -1207,23 +1166,14 @@ public class LayoutsImporterTest {
 	}
 
 	private void _assertLayoutsImporterResultEntry(
-			LayoutsImporterResultEntry layoutPageTemplateImportEntry,
+			List<LayoutsImporterResultEntry> layoutsImporterResultEntries,
 			LayoutPageTemplateStructure layoutPageTemplateStructure)
 		throws Exception {
 
-		Assert.assertEquals(
-			LayoutsImporterResultEntry.Status.IMPORTED,
-			layoutPageTemplateImportEntry.getStatus());
-
-		String layoutPageTemplateEntryKey = StringUtil.toLowerCase(
-			layoutPageTemplateImportEntry.getName());
-
-		layoutPageTemplateEntryKey = StringUtil.replace(
-			layoutPageTemplateEntryKey, CharPool.SPACE, CharPool.DASH);
-
 		LayoutPageTemplateEntry curLayoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
-				_group2.getGroupId(), layoutPageTemplateEntryKey);
+				_group2.getGroupId(),
+				_getLayoutPageTemplateEntryKey(layoutsImporterResultEntries));
 
 		Assert.assertNotNull(curLayoutPageTemplateEntry);
 
@@ -1338,10 +1288,23 @@ public class LayoutsImporterTest {
 	}
 
 	private String _getLayoutPageTemplateEntryKey(
-		LayoutsImporterResultEntry layoutPageTemplateImportEntry) {
+		List<LayoutsImporterResultEntry> layoutsImporterResultEntries) {
+
+		Assert.assertNotNull(layoutsImporterResultEntries);
+
+		Assert.assertEquals(
+			layoutsImporterResultEntries.toString(), 1,
+			layoutsImporterResultEntries.size());
+
+		LayoutsImporterResultEntry layoutsImporterResultEntry =
+			layoutsImporterResultEntries.get(0);
+
+		Assert.assertEquals(
+			LayoutsImporterResultEntry.Status.IMPORTED,
+			layoutsImporterResultEntry.getStatus());
 
 		return StringUtil.replace(
-			StringUtil.toLowerCase(layoutPageTemplateImportEntry.getName()),
+			StringUtil.toLowerCase(layoutsImporterResultEntry.getName()),
 			CharPool.SPACE, CharPool.DASH);
 	}
 

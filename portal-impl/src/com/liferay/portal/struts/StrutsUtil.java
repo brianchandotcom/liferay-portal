@@ -31,7 +31,8 @@ public class StrutsUtil {
 	public static void forward(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse,
-			ServletContext servletContext, String servletName, String uri)
+			ServletContext servletContext, String servletName,
+			Throwable throwable, String uri)
 		throws ServletException {
 
 		if (_log.isDebugEnabled()) {
@@ -52,6 +53,11 @@ public class StrutsUtil {
 			RequestDispatcher requestDispatcher =
 				DirectRequestDispatcherFactoryUtil.getRequestDispatcher(
 					servletContext, path);
+
+			if (throwable != null) {
+				_setErrorPageAttributes(
+					httpServletRequest, servletName, throwable);
+			}
 
 			try {
 				requestDispatcher.forward(
@@ -85,10 +91,43 @@ public class StrutsUtil {
 					throw servletException2;
 				}
 			}
+			finally {
+				if (throwable != null) {
+					_removeErrorPageAttributes(httpServletRequest, throwable);
+				}
+			}
 		}
 		else if (_log.isWarnEnabled()) {
 			_log.warn(uri + " is already committed");
 		}
+	}
+
+	private static void _removeErrorPageAttributes(
+		HttpServletRequest httpServletRequest, Throwable throwable) {
+
+		if (throwable == httpServletRequest.getAttribute(
+				StrutsUtil.EXCEPTION)) {
+
+			httpServletRequest.removeAttribute(StrutsUtil.EXCEPTION);
+			httpServletRequest.removeAttribute(
+				RequestDispatcher.ERROR_EXCEPTION);
+			httpServletRequest.removeAttribute(
+				RequestDispatcher.ERROR_EXCEPTION_TYPE);
+			httpServletRequest.removeAttribute(RequestDispatcher.ERROR_MESSAGE);
+			httpServletRequest.removeAttribute(
+				RequestDispatcher.ERROR_REQUEST_URI);
+			httpServletRequest.removeAttribute(
+				RequestDispatcher.ERROR_SERVLET_NAME);
+			httpServletRequest.removeAttribute(
+				RequestDispatcher.ERROR_STATUS_CODE);
+		}
+	}
+
+	private static void _setErrorPageAttributes(
+		HttpServletRequest httpServletRequest, String servletName,
+		Throwable throwable) {
+
+		httpServletRequest.setAttribute(StrutsUtil.EXCEPTION, throwable);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(StrutsUtil.class);

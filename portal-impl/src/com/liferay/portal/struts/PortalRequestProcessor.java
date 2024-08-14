@@ -329,7 +329,7 @@ public class PortalRequestProcessor {
 
 		StrutsUtil.forward(
 			httpServletRequest, httpServletResponse, _servletContext,
-			_servletName, uri);
+			_servletName, null, uri);
 	}
 
 	private boolean _isPortletPath(String path) {

@@ -45,16 +45,14 @@ public class FDSAdminDisplayContext {
 
 	public FDSAdminDisplayContext(
 		CETManager cetManager,
-		FDSAPIURLResolverRegistry
-			fdsAPIURLResolverRegistry,
+		FDSAPIURLResolverRegistry fdsAPIURLResolverRegistry,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		RenderRequest renderRequest, RenderResponse renderResponse,
 		ServiceTrackerList<FDSAdminPortlet.CompanyScopedOpenAPIResource>
 			serviceTrackerList) {
 
 		_cetManager = cetManager;
-		_fdsAPIURLResolverRegistry =
-			fdsAPIURLResolverRegistry;
+		_fdsAPIURLResolverRegistry = fdsAPIURLResolverRegistry;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_serviceTrackerList = serviceTrackerList;
@@ -277,9 +275,8 @@ public class FDSAdminDisplayContext {
 	}
 
 	private final CETManager _cetManager;
+	private final FDSAPIURLResolverRegistry _fdsAPIURLResolverRegistry;
 	private final ObjectDefinition _fdsEntryObjectDefinition;
-	private final FDSAPIURLResolverRegistry
-		_fdsAPIURLResolverRegistry;
 	private final ObjectDefinition _fdsViewObjectDefinition;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;

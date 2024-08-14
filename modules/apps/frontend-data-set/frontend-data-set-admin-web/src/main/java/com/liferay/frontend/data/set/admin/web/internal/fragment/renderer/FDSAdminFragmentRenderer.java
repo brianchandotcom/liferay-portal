@@ -1086,14 +1086,13 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 		HttpServletRequest httpServletRequest) {
 
 		if (FeatureFlagManagerUtil.isEnabled("LPD-25230")) {
-			FDSAPIURLResolver
-				FDSAPIURLResolver =
+			FDSAPIURLResolver fdsAPIURLResolver =
 				_fdsAPIURLResolverRegistry.getResolver(
 					restApplication, restSchema);
 
-			if (FDSAPIURLResolver != null) {
+			if (fdsAPIURLResolver != null) {
 				try {
-					return FDSAPIURLResolver.resolve(
+					return fdsAPIURLResolver.resolve(
 						apiURL, httpServletRequest);
 				}
 				catch (PortalException portalException) {
@@ -1114,8 +1113,7 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 	private CETManager _cetManager;
 
 	@Reference
-	private FDSAPIURLResolverRegistry
-		_fdsAPIURLResolverRegistry;
+	private FDSAPIURLResolverRegistry _fdsAPIURLResolverRegistry;
 
 	@Reference
 	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;

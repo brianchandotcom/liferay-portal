@@ -310,6 +310,75 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 
 	@FeatureFlags("LPD-20213")
 	@Test
+	public void testUpdateFormItemConfigMVCActionCommandMappingFormChangingFormType()
+		throws Exception {
+
+		try (ComponentEnablerTemporarySwapper componentEnablerTemporarySwapper =
+				new ComponentEnablerTemporarySwapper(
+					_BUNDLE_SYMBOLIC_NAME, _COMPONENT_CLASS_NAME, true);
+			MockInfoServiceRegistrationHolder
+				mockInfoServiceRegistrationHolder =
+					new MockInfoServiceRegistrationHolder(
+						InfoFieldSet.builder(
+						).infoFieldSetEntries(
+							ListUtil.fromArray(_INFO_FIELDS)
+						).build(),
+						_portal, _editPageInfoItemCapability)) {
+
+			JSONObject addItemJSONObject =
+				ContentLayoutTestUtil.addItemToLayout(
+					"{}", LayoutDataItemTypeConstants.TYPE_FORM, _layout,
+					_layoutStructureProvider, _segmentsExperienceId);
+
+			long classNameId = _portal.getClassNameId(
+				MockObject.class.getName());
+
+			String formItemId = addItemJSONObject.getString("addedItemId");
+
+			List<String> uniqueInfoFieldIds = TransformUtil.transform(
+				ListUtil.fromArray(_INFO_FIELDS), InfoField::getUniqueId);
+
+			ReflectionTestUtil.invoke(
+				_mvcActionCommand, "_updateFormStyledLayoutStructureItemConfig",
+				new Class<?>[] {ActionRequest.class, ActionResponse.class},
+				_getMockLiferayPortletActionRequest(
+					StringUtil.merge(uniqueInfoFieldIds),
+					JSONUtil.put(
+						"classNameId", classNameId
+					).put(
+						"classTypeId", "0"
+					).toString(),
+					formItemId, _layout),
+				new MockLiferayPortletActionResponse());
+
+			JSONObject updateFormJSONObject = ReflectionTestUtil.invoke(
+				_mvcActionCommand, "_updateFormStyledLayoutStructureItemConfig",
+				new Class<?>[] {ActionRequest.class, ActionResponse.class},
+				_getMockLiferayPortletActionRequest(
+					null,
+					JSONUtil.put(
+						"classNameId", classNameId
+					).put(
+						"classTypeId", "0"
+					).put(
+						"isMultiStep", true
+					).put(
+						"numberOfSteps", 2
+					).toString(),
+					formItemId, _layout),
+				new MockLiferayPortletActionResponse());
+
+			JSONArray removedLayoutStructureItemsJSONArray =
+				updateFormJSONObject.getJSONArray(
+					"removedFragmentEntryLinkIds");
+
+			Assert.assertEquals(
+				0, removedLayoutStructureItemsJSONArray.length());
+		}
+	}
+
+	@FeatureFlags("LPD-20213")
+	@Test
 	public void testUpdateFormItemConfigMVCActionCommandMappingFormDeletingInfoFields()
 		throws Exception {
 

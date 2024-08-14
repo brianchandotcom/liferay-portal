@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.language.extender.internal.osgi.util.tracker;
+package com.liferay.portal.language.extender.internal;
 
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -53,7 +53,7 @@ import org.osgi.util.tracker.BundleTrackerCustomizer;
  * @author Thiago Buarque
  */
 @Component(service = {})
-public class LanguageClientExtensionBundleTrackerCustomizer
+public class LanguageClientExtension
 	implements BundleTrackerCustomizer<Bundle> {
 
 	@Override
@@ -184,7 +184,7 @@ public class LanguageClientExtensionBundleTrackerCustomizer
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		LanguageClientExtensionBundleTrackerCustomizer.class);
+		LanguageClientExtension.class);
 
 	private BundleTracker<?> _bundleTracker;
 

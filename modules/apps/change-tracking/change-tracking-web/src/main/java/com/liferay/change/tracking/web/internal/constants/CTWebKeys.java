@@ -23,7 +23,11 @@ public interface CTWebKeys {
 
 	public static final String CT_ENTRY_DIFF_DISPLAY = "CT_ENTRY_DIFF_DISPLAY";
 
+	public static final String CT_LAST_GROUP_ID = "CT_LAST_GROUP_ID";
+
 	public static final String CT_REMOTE = "CT_REMOTE";
+
+	public static final String CT_SHOW_POPOVER = "CT_SHOW_POPOVER";
 
 	public static final String DEFAULT_CT_COLLECTION_TEMPLATE =
 		"DEFAULT_CT_COLLECTION_TEMPLATE";

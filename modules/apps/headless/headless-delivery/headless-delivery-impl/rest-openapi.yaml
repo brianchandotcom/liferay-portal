@@ -1700,6 +1700,89 @@ components:
             required:
                 - name
             type: object
+        DocumentMetadataSet:
+            description:
+                Represents a Document Metadata Set.
+            properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    # @review
+                    description:
+                        Block of actions allowed by the user making the request.
+                    readOnly: true
+                    type: object
+                assetLibraryKey:
+                    # @review
+                    description:
+                        The key of the asset library to which the Document Metadata Set is scoped.
+                    readOnly: true
+                    type: string
+                availableLanguages:
+                    # @review
+                    description:
+                        The list of languages the navigation menu item has a translation for.
+                    items:
+                        type: string
+                    readOnly: true
+                    type: array
+                dataDefinitionFields:
+                    description:
+                        The list of fields that store the structured content's information.
+                    items:
+                        $ref: "../../../data-engine/data-engine-rest-impl/rest-openapi.yaml#DataDefinitionField"
+                    readOnly: true
+                    type: array
+                dateCreated:
+                    description:
+                        The Document Metadata Set's creation date.
+                    format: date-time
+                    readOnly: true
+                    type: string
+                dateModified:
+                    description:
+                        The last time a field of the Document Metadata Set changed.
+                    format: date-time
+                    readOnly: true
+                    type: string
+                description:
+                    description:
+                        The Document Metadata Set's description.
+                    type: string
+                description_i18n:
+                    additionalProperties:
+                        type: string
+                    # @review
+                    description:
+                        The localized Document Metadata Set descriptions.
+                    type: object
+                id:
+                    description:
+                        The ID of the Document Metadata Set.
+                    format: int64
+                    readOnly: true
+                    type: integer
+                name:
+                    # @review
+                    description:
+                        The Document Metadata Set's name.
+                    type: string
+                name_i18n:
+                    additionalProperties:
+                        type: string
+                    # @review
+                    description:
+                        the localized Document Metadata Set's names.
+                    type: object
+                siteId:
+                    description:
+                        The ID of the site to which this Document Metadata Set is scoped.
+                    format: int64
+                    readOnly: true
+                    type: integer
+            type: object
         DocumentShortcut:
             description:
                 Represents a document shortcut.

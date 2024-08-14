@@ -176,6 +176,7 @@ public abstract class BaseProductOptionResourceTestCase {
 		productOption.setFieldType(regex);
 		productOption.setInfoItemServiceKey(regex);
 		productOption.setKey(regex);
+		productOption.setOptionExternalReferenceCode(regex);
 		productOption.setPriceType(regex);
 		productOption.setTypeSettings(regex);
 
@@ -188,6 +189,8 @@ public abstract class BaseProductOptionResourceTestCase {
 		Assert.assertEquals(regex, productOption.getFieldType());
 		Assert.assertEquals(regex, productOption.getInfoItemServiceKey());
 		Assert.assertEquals(regex, productOption.getKey());
+		Assert.assertEquals(
+			regex, productOption.getOptionExternalReferenceCode());
 		Assert.assertEquals(regex, productOption.getPriceType());
 		Assert.assertEquals(regex, productOption.getTypeSettings());
 	}
@@ -1296,6 +1299,16 @@ public abstract class BaseProductOptionResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"optionExternalReferenceCode", additionalAssertFieldName)) {
+
+				if (productOption.getOptionExternalReferenceCode() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("optionId", additionalAssertFieldName)) {
 				if (productOption.getOptionId() == null) {
 					valid = false;
@@ -1578,6 +1591,19 @@ public abstract class BaseProductOptionResourceTestCase {
 				if (!equals(
 						(Map)productOption1.getName(),
 						(Map)productOption2.getName())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"optionExternalReferenceCode", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						productOption1.getOptionExternalReferenceCode(),
+						productOption2.getOptionExternalReferenceCode())) {
 
 					return false;
 				}
@@ -1944,6 +1970,52 @@ public abstract class BaseProductOptionResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("optionExternalReferenceCode")) {
+			Object object = productOption.getOptionExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("optionId")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -2116,6 +2188,8 @@ public abstract class BaseProductOptionResourceTestCase {
 				infoItemServiceKey = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				key = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				optionExternalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				optionId = RandomTestUtil.randomLong();
 				priceType = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());

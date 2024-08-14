@@ -197,6 +197,28 @@ public class AssetPublisherConfigurationActionTest {
 			MapUtil.isEmpty(portletPreferencesMap));
 	}
 
+	@Test
+	public void testUpdateDisplayStyleGroupPreferences() throws Exception {
+		AssetPublisherConfigurationAction assetPublisherConfigurationAction =
+			_getAssetPublisherConfigurationAction(null, null);
+
+		Map<String, String[]> portletPreferencesMap = new HashMap<>();
+		PortletPreferences portletPreferences = Mockito.mock(
+			PortletPreferences.class);
+
+		assetPublisherConfigurationAction.updateDisplayStyleGroupPreferences(
+			_getMockActionRequest(
+				StringPool.BLANK, 0, StringPool.BLANK, portletPreferencesMap,
+				_getThemeDisplay(RandomTestUtil.randomLong())),
+			portletPreferences);
+
+		Mockito.verifyNoInteractions(
+			assetPublisherConfigurationAction.groupLocalService,
+			portletPreferences);
+
+		Assert.assertTrue(MapUtil.isEmpty(portletPreferencesMap));
+	}
+
 	private AssetListEntry _getAssetListEntry() {
 		AssetListEntry assetListEntry = Mockito.mock(AssetListEntry.class);
 

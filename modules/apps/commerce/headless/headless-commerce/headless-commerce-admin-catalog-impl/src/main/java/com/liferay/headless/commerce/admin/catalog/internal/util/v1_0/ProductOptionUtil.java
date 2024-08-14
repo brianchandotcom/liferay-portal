@@ -5,6 +5,7 @@
 
 package com.liferay.headless.commerce.admin.catalog.internal.util.v1_0;
 
+import com.liferay.commerce.product.exception.NoSuchCPOptionException;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
@@ -31,8 +32,21 @@ public class ProductOptionUtil {
 			long cpDefinitionId, ServiceContext serviceContext)
 		throws PortalException {
 
-		CPOption cpOption = cpOptionService.getCPOption(
-			productOption.getOptionId());
+		CPOption cpOption;
+		long optionId = GetterUtil.getLong(productOption.getOptionId());
+
+		if (optionId > 0) {
+			cpOption = cpOptionService.getCPOption(optionId);
+		}
+		else {
+			cpOption = cpOptionService.fetchByExternalReferenceCode(
+				productOption.getOptionExternalReferenceCode(),
+				serviceContext.getCompanyId());
+
+			if (cpOption == null) {
+				throw new NoSuchCPOptionException();
+			}
+		}
 
 		CPDefinitionOptionRel cpDefinitionOptionRel =
 			cpDefinitionOptionRelService.fetchCPDefinitionOptionRel(

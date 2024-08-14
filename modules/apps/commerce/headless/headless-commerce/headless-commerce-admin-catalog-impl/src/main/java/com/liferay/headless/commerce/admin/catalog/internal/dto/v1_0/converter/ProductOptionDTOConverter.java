@@ -51,6 +51,9 @@ public class ProductOptionDTOConverter
 			_cpDefinitionOptionRelService.getCPDefinitionOptionRel(
 				(Long)dtoConverterContext.getId());
 
+		CPOption cpOption = _cpOptionLocalService.fetchCPOption(
+			cpDefinitionOptionRel.getCPOptionId());
+
 		return new ProductOption() {
 			{
 				setCustomFields(
@@ -70,11 +73,16 @@ public class ProductOptionDTOConverter
 				setName(
 					() -> LanguageUtils.getLanguageIdMap(
 						cpDefinitionOptionRel.getNameMap()));
+				setOptionExternalReferenceCode(
+					() -> {
+						if (cpOption == null) {
+							return null;
+						}
+
+						return cpOption.getExternalReferenceCode();
+					});
 				setOptionId(
 					() -> {
-						CPOption cpOption = _cpOptionLocalService.fetchCPOption(
-							cpDefinitionOptionRel.getCPOptionId());
-
 						if (cpOption == null) {
 							return null;
 						}

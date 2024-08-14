@@ -8,6 +8,7 @@ package com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0;
 import com.liferay.commerce.product.exception.NoSuchCPDefinitionException;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
+import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelService;
 import com.liferay.commerce.product.service.CPDefinitionService;
@@ -176,7 +177,8 @@ public class ProductOptionResourceImpl extends BaseProductOptionResourceImpl {
 
 		_cpDefinitionOptionRelService.updateCPDefinitionOptionRel(
 			cpDefinitionOptionRel.getCPDefinitionOptionRelId(),
-			productOption.getOptionId(), LanguageUtils.getLocalizedMap(nameMap),
+			_getOptionId(cpDefinitionOptionRel.getCPOptionId(), productOption),
+			LanguageUtils.getLocalizedMap(nameMap),
 			LanguageUtils.getLocalizedMap(descriptionMap),
 			GetterUtil.get(
 				productOption.getFieldType(),
@@ -310,6 +312,26 @@ public class ProductOptionResourceImpl extends BaseProductOptionResourceImpl {
 				QueryUtil.ALL_POS),
 			cpDefinitionOptionRel -> _toProductOption(
 				cpDefinitionOptionRel.getCPDefinitionOptionRelId()));
+	}
+
+	private long _getOptionId(long defaultOptionId, ProductOption productOption)
+		throws Exception {
+
+		long optionId = productOption.getOptionId();
+
+		if (optionId > 0) {
+			return optionId;
+		}
+
+		CPOption cpOption = _cpOptionService.fetchByExternalReferenceCode(
+			productOption.getOptionExternalReferenceCode(),
+			contextCompany.getCompanyId());
+
+		if (cpOption != null) {
+			return cpOption.getCPOptionId();
+		}
+
+		return defaultOptionId;
 	}
 
 	private ProductOption _toProductOption(Long cpDefinitionOptionRelId)

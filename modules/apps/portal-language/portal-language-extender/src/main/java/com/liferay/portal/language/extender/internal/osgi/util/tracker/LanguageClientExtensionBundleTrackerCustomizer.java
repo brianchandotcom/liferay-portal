@@ -16,7 +16,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -26,14 +25,18 @@ import com.liferay.portal.language.override.service.PLOEntryLocalService;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 import java.net.URL;
 import java.net.URLConnection;
+
+import java.nio.charset.StandardCharsets;
 
 import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Properties;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -78,10 +81,6 @@ public class LanguageClientExtensionBundleTrackerCustomizer
 				Company company = _companyLocalService.getCompanyByWebId(
 					PropsUtil.get(PropsKeys.COMPANY_DEFAULT_WEB_ID));
 
-				User user = _userLocalService.getUserByScreenName(
-					company.getCompanyId(),
-					PropsUtil.get(PropsKeys.DEFAULT_ADMIN_SCREEN_NAME));
-
 				String languageId = StringUtil.removeSubstring(
 					fileName, "Language_");
 
@@ -90,13 +89,25 @@ public class LanguageClientExtensionBundleTrackerCustomizer
 
 				URLConnection urlConnection = url.openConnection();
 
+				Properties properties = new Properties();
+
+				properties.load(
+					new InputStreamReader(
+						urlConnection.getInputStream(),
+						StandardCharsets.UTF_8));
+
+				User user = _userLocalService.getUserByScreenName(
+					company.getCompanyId(),
+					PropsUtil.get(PropsKeys.DEFAULT_ADMIN_SCREEN_NAME));
+
 				_ploEntryLocalService.importPLOEntries(
 					company.getCompanyId(), user.getUserId(), languageId,
-					PropertiesUtil.load(
-						urlConnection.getInputStream(), "UTF-8"));
+					properties);
 
 				if (_log.isInfoEnabled()) {
-					_log.info("Imported \"" + fileName + "\" successfully");
+					_log.info(
+						"Processed language file \"" + fileName +
+							"\" successfully");
 				}
 			}
 			catch (PLOEntryImportException.InvalidTranslations
@@ -107,12 +118,14 @@ public class LanguageClientExtensionBundleTrackerCustomizer
 
 					_log.error(
 						StringBundler.concat(
-							"Unable to import \"", fileName, "\": ",
-							throwable.getMessage()));
+							"Unable to process language file \"", fileName,
+							"\". ", throwable.getMessage(), StringPool.PERIOD));
 				}
 			}
 			catch (IOException | PortalException exception) {
-				_log.error("Unable to import \"" + fileName + "\"", exception);
+				_log.error(
+					"Unable to process language file \"" + fileName + "\"",
+					exception);
 			}
 		}
 

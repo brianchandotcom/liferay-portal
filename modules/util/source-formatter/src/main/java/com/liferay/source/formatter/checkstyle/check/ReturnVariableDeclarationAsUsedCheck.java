@@ -104,9 +104,6 @@ public class ReturnVariableDeclarationAsUsedCheck extends BaseCheck {
 		DetailAST returnVariableDefinitionDetailAST, DetailAST slistDetailAST,
 		String variableName) {
 
-		List<DetailAST> exprDetailASTList = getAllChildTokens(
-			slistDetailAST, false, TokenTypes.EXPR);
-
 		if (_containsMethodCalls(
 				slistDetailAST,
 				returnVariableDefinitionDetailAST.getLineNo()) ||
@@ -114,7 +111,7 @@ public class ReturnVariableDeclarationAsUsedCheck extends BaseCheck {
 				slistDetailAST,
 				returnVariableDefinitionDetailAST.getLineNo()) ||
 			_containsUnusedVariableNames(
-				exprDetailASTList, slistDetailAST,
+				slistDetailAST,
 				returnVariableDefinitionDetailAST.getLineNo())) {
 
 			return;
@@ -287,23 +284,25 @@ public class ReturnVariableDeclarationAsUsedCheck extends BaseCheck {
 	}
 
 	private boolean _containsUnusedVariableNames(
-		List<DetailAST> exprDetailASTList, DetailAST slistDetailAST,
-		int lineNumber) {
+		DetailAST slistDetailAST, int lineNumber) {
 
-		List<DetailAST> assignDetailASTList = ListUtil.filter(
-			exprDetailASTList,
-			exprDetailAST -> {
-				if (exprDetailAST.getLineNo() > lineNumber) {
+		List<DetailAST> assignDetailASTList = getAllChildTokens(
+			slistDetailAST, true, TokenTypes.ASSIGN);
+
+		assignDetailASTList = ListUtil.filter(
+			assignDetailASTList,
+			assignDetailAST -> {
+				if (assignDetailAST.getLineNo() > lineNumber) {
 					return false;
 				}
 
-				DetailAST firstChildDetailAST = exprDetailAST.getFirstChild();
+				DetailAST parentDetailAST = assignDetailAST.getParent();
 
-				if (firstChildDetailAST.getType() != TokenTypes.ASSIGN) {
-					return false;
+				if (parentDetailAST.getType() == TokenTypes.EXPR) {
+					return true;
 				}
 
-				return true;
+				return false;
 			});
 
 		if (assignDetailASTList.isEmpty()) {
@@ -315,9 +314,7 @@ public class ReturnVariableDeclarationAsUsedCheck extends BaseCheck {
 
 		outerLoop:
 		for (DetailAST assignDetailAST : assignDetailASTList) {
-			DetailAST firstChildDetailAST = assignDetailAST.getFirstChild();
-
-			DetailAST nameDetailAST = firstChildDetailAST.getFirstChild();
+			DetailAST nameDetailAST = assignDetailAST.getFirstChild();
 
 			if (nameDetailAST.getType() != TokenTypes.IDENT) {
 				continue;

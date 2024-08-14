@@ -44,6 +44,14 @@ const adminUserDataSetConfig = {
 	restSchema: 'Role',
 };
 
+const cartDataSetConfig = {
+	erc: getRandomString(),
+	label: getRandomString(),
+	restApplication: '/headless-commerce-delivery-cart/v1.0',
+	restEndpoint: '/v1.0/channels/{channelId}/account/{accountId}/carts',
+	restSchema: 'Cart',
+};
+
 const structuredContentDataSetConfig = {
 	erc: getRandomString(),
 	label: getRandomString(),

@@ -13,7 +13,9 @@ import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.settings.ModifiableSettings;
 import com.liferay.portal.kernel.settings.Settings;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.site.navigation.constants.SiteNavigationMenuPortletKeys;
@@ -90,7 +92,7 @@ public class SiteNavigationMenuConfigurationAction
 			modifiableSettings.reset("rootMenuItemId");
 		}
 
-		_updateDisplayStyleGroupPreferences(modifiableSettings);
+		_updateDisplayStyleGroupPreferences(modifiableSettings, portletRequest);
 		_updateSiteNavigationMenuPreferences(modifiableSettings);
 		_updateRootMenuItemPreferences(modifiableSettings);
 	}
@@ -107,17 +109,27 @@ public class SiteNavigationMenuConfigurationAction
 	}
 
 	private void _updateDisplayStyleGroupPreferences(
-		ModifiableSettings modifiableSettings) {
+		ModifiableSettings modifiableSettings, PortletRequest portletRequest) {
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPD-23048")) {
 			return;
 		}
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		String displayStyleGroupKey = modifiableSettings.getValue(
 			"displayStyleGroupKey", null);
 
-		modifiableSettings.setValue(
-			"displayStyleGroupExternalReferenceCode", displayStyleGroupKey);
+		if (Validator.isNotNull(displayStyleGroupKey) &&
+			!Objects.equals(
+				themeDisplay.getScopeGroup(
+				).getGroupKey(),
+				displayStyleGroupKey)) {
+
+			modifiableSettings.setValue(
+				"displayStyleGroupExternalReferenceCode", displayStyleGroupKey);
+		}
 
 		modifiableSettings.reset("displayStyleGroupId");
 		modifiableSettings.reset("displayStyleGroupKey");

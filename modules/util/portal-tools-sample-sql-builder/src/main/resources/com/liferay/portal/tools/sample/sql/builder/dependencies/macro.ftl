@@ -289,10 +289,10 @@
 	${dataFactory.toInsertSQL(dataFactory.newContactModel(_userModel))}
 
 	<#list _roleIds as roleId>
-		${dataFactory.toInsertSQL("Users_Roles", 0, roleId, _userModel.userId)}
+		${dataFactory.toInsertSQL("Users_Roles", _userModel.companyId, roleId, _userModel.userId)}
 	</#list>
 
 	<#list _groupIds as groupId>
-		${dataFactory.toInsertSQL("Users_Groups", 0, groupId, _userModel.userId)}
+		${dataFactory.toInsertSQL("Users_Groups", _userModel.companyId, groupId, _userModel.userId)}
 	</#list>
 </#macro>

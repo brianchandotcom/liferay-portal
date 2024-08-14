@@ -340,12 +340,14 @@ public class ObjectEntryLocalServiceImpl
 			ObjectEntryThreadLocal.setSkipObjectValidationRules(false);
 		}
 
-		updateAsset(
-			serviceContext.getUserId(), objectEntry,
-			serviceContext.getAssetCategoryIds(),
-			serviceContext.getAssetTagNames(),
-			serviceContext.getAssetLinkEntryIds(),
-			serviceContext.getAssetPriority());
+		if (workflowAction != WorkflowConstants.ACTION_PUBLISH) {
+			_updateAsset(
+				serviceContext.getUserId(), objectEntry,
+				serviceContext.getAssetCategoryIds(),
+				serviceContext.getAssetTagNames(),
+				serviceContext.getAssetLinkEntryIds(),
+				serviceContext.getAssetPriority(), serviceContext);
+		}
 
 		_startWorkflowInstance(userId, objectEntry, serviceContext);
 
@@ -1486,39 +1488,9 @@ public class ObjectEntryLocalServiceImpl
 			String[] assetTagNames, long[] assetLinkEntryIds, Double priority)
 		throws PortalException {
 
-		ObjectDefinition objectDefinition =
-			_objectDefinitionPersistence.findByPrimaryKey(
-				objectEntry.getObjectDefinitionId());
-
-		if (!objectDefinition.isEnableCategorization()) {
-			assetCategoryIds = null;
-			assetTagNames = null;
-		}
-
-		String title = StringPool.BLANK;
-
-		try {
-			title = objectEntry.getTitleValue();
-		}
-		catch (PortalException portalException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(portalException);
-			}
-		}
-
-		AssetEntry assetEntry = _assetEntryLocalService.updateEntry(
-			userId, objectEntry.getNonzeroGroupId(),
-			objectEntry.getCreateDate(), objectEntry.getModifiedDate(),
-			objectDefinition.getClassName(), objectEntry.getObjectEntryId(),
-			objectEntry.getUuid(), 0, assetCategoryIds, assetTagNames, true,
-			objectEntry.isApproved(), null, null, null, null,
-			ContentTypes.TEXT_PLAIN, title,
-			String.valueOf(objectEntry.getObjectEntryId()), null, null, null, 0,
-			0, priority);
-
-		_assetLinkLocalService.updateLinks(
-			userId, assetEntry.getEntryId(), assetLinkEntryIds,
-			AssetLinkConstants.TYPE_RELATED);
+		_updateAsset(
+			userId, objectEntry, assetCategoryIds, assetTagNames,
+			assetLinkEntryIds, priority, null);
 	}
 
 	@Override
@@ -1588,12 +1560,12 @@ public class ObjectEntryLocalServiceImpl
 			ObjectEntryThreadLocal.setSkipObjectValidationRules(false);
 		}
 
-		updateAsset(
+		_updateAsset(
 			serviceContext.getUserId(), objectEntry,
 			serviceContext.getAssetCategoryIds(),
 			serviceContext.getAssetTagNames(),
 			serviceContext.getAssetLinkEntryIds(),
-			serviceContext.getAssetPriority());
+			serviceContext.getAssetPriority(), serviceContext);
 
 		_startWorkflowInstance(userId, objectEntry, serviceContext);
 
@@ -1646,13 +1618,23 @@ public class ObjectEntryLocalServiceImpl
 			objectEntry = objectEntryPersistence.update(objectEntry);
 		}
 
-		ObjectDefinition objectDefinition =
-			_objectDefinitionPersistence.fetchByPrimaryKey(
-				objectEntry.getObjectDefinitionId());
+		if (serviceContext.isStrictAdd()) {
+			_updateAsset(
+				serviceContext.getUserId(), objectEntry,
+				serviceContext.getAssetCategoryIds(),
+				serviceContext.getAssetTagNames(),
+				serviceContext.getAssetLinkEntryIds(),
+				serviceContext.getAssetPriority(), serviceContext);
+		}
+		else {
+			ObjectDefinition objectDefinition =
+				_objectDefinitionPersistence.fetchByPrimaryKey(
+					objectEntry.getObjectDefinitionId());
 
-		_assetEntryLocalService.updateEntry(
-			objectDefinition.getClassName(), objectEntry.getObjectEntryId(),
-			null, null, true, objectEntry.isApproved());
+			_assetEntryLocalService.updateEntry(
+				objectDefinition.getClassName(), objectEntry.getObjectEntryId(),
+				null, null, true, objectEntry.isApproved());
+		}
 
 		_reindex(objectEntry);
 
@@ -4170,6 +4152,47 @@ public class ObjectEntryLocalServiceImpl
 		return StringUtil.replace(
 			value, value.charAt(NumberUtil.getDecimalSeparatorIndex(value)),
 			'.');
+	}
+
+	private void _updateAsset(
+			long userId, ObjectEntry objectEntry, long[] assetCategoryIds,
+			String[] assetTagNames, long[] assetLinkEntryIds, Double priority,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.findByPrimaryKey(
+				objectEntry.getObjectDefinitionId());
+
+		if (!objectDefinition.isEnableCategorization()) {
+			assetCategoryIds = null;
+			assetTagNames = null;
+		}
+
+		String title = StringPool.BLANK;
+
+		try {
+			title = objectEntry.getTitleValue();
+		}
+		catch (PortalException portalException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(portalException);
+			}
+		}
+
+		AssetEntry assetEntry = _assetEntryLocalService.updateEntry(
+			userId, objectEntry.getNonzeroGroupId(),
+			objectEntry.getCreateDate(), objectEntry.getModifiedDate(),
+			objectDefinition.getClassName(), objectEntry.getObjectEntryId(),
+			objectEntry.getUuid(), 0, assetCategoryIds, assetTagNames, true,
+			objectEntry.isApproved(), null, null, null, null,
+			ContentTypes.TEXT_PLAIN, title,
+			String.valueOf(objectEntry.getObjectEntryId()), null, null, null, 0,
+			0, priority, serviceContext);
+
+		_assetLinkLocalService.updateLinks(
+			userId, assetEntry.getEntryId(), assetLinkEntryIds,
+			AssetLinkConstants.TYPE_RELATED);
 	}
 
 	private void _updateTable(

@@ -142,8 +142,7 @@ public class VelocityTemplateTest {
 			VelocityEngine.VM_LIBRARY,
 			StringUtil.merge(velocityEngineConfiguration.velocimacroLibrary()));
 		extendedProperties.setProperty(
-			VelocityEngine.VM_LIBRARY_AUTORELOAD,
-			Boolean.TRUE.toString());
+			VelocityEngine.VM_LIBRARY_AUTORELOAD, Boolean.TRUE.toString());
 		extendedProperties.setProperty(
 			VelocityEngine.VM_PERM_ALLOW_INLINE_REPLACE_GLOBAL,
 			Boolean.TRUE.toString());
@@ -401,9 +400,9 @@ public class VelocityTemplateTest {
 	private static ServiceRegistration<TemplateResourceParser>
 		_templateResourceParserServiceRegistration;
 
-	private TemplateContextHelper _templateContextHelper =
+	private final TemplateContextHelper _templateContextHelper =
 		new MockTemplateContextHelper();
-	private VelocityEngine _velocityEngine = new VelocityEngine();
+	private final VelocityEngine _velocityEngine = new VelocityEngine();
 
 	private static class MockTemplateContextHelper
 		extends TemplateContextHelper {

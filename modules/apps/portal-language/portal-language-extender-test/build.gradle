@@ -1,7 +1,0 @@
-dependencies {
-	testIntegrationImplementation group: "org.osgi", name: "osgi.core", version: "6.0.0"
-	testIntegrationImplementation project(":apps:portal-language:portal-language-extender")
-	testIntegrationImplementation project(":apps:portal-language:portal-language-override-api")
-	testIntegrationImplementation project(":core:osgi-service-tracker-collections")
-	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
-}

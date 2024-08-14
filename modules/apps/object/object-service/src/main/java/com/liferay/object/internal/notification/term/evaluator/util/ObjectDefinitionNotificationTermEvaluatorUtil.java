@@ -33,10 +33,15 @@ public class ObjectDefinitionNotificationTermEvaluatorUtil {
 			SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
 				"yyyy-MM-dd");
 
-			if (value instanceof Timestamp) {
-				Timestamp timestamp = (Timestamp)value;
+			if (value instanceof Date) {
+				if (value instanceof Timestamp) {
+					Timestamp timestamp = (Timestamp)value;
 
-				return simpleDateFormat.format(new Date(timestamp.getTime()));
+					return simpleDateFormat.format(
+						new Date(timestamp.getTime()));
+				}
+
+				return simpleDateFormat.format((Date)value);
 			}
 
 			Timestamp timestamp = new Timestamp((Long)value);

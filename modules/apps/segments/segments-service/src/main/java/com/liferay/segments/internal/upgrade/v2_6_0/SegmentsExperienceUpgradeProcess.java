@@ -24,14 +24,15 @@ public class SegmentsExperienceUpgradeProcess extends UpgradeProcess {
 	}
 
 	private void _updateSegmentsExperience(
-		long segmentsExperienceId, int priority) {
+		long ctCollectionId, long segmentsExperienceId, int priority) {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"update SegmentsExperience set priority = ? where " +
-					"segmentsExperienceId = ?")) {
+					"ctCollectionId = ? and segmentsExperienceId = ?")) {
 
 			preparedStatement.setInt(1, priority + 1);
-			preparedStatement.setLong(2, segmentsExperienceId);
+			preparedStatement.setLong(2, ctCollectionId);
+			preparedStatement.setLong(3, segmentsExperienceId);
 
 			preparedStatement.executeUpdate();
 		}
@@ -44,7 +45,7 @@ public class SegmentsExperienceUpgradeProcess extends UpgradeProcess {
 
 	private void _updateSegmentsExperiencePriorities() throws Exception {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select segmentsExperienceId, priority from " +
+				"select ctCollectionId, segmentsExperienceId, priority from " +
 					"SegmentsExperience where priority >= 0 and " +
 						"segmentsExperienceKey != ? order by priority desc")) {
 
@@ -53,11 +54,10 @@ public class SegmentsExperienceUpgradeProcess extends UpgradeProcess {
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				while (resultSet.next()) {
-					long segmentsExperienceId = resultSet.getLong(
-						"segmentsExperienceId");
-					int priority = resultSet.getInt("priority");
-
-					_updateSegmentsExperience(segmentsExperienceId, priority);
+					_updateSegmentsExperience(
+						resultSet.getLong("ctCollectionId"),
+						resultSet.getLong("segmentsExperienceId"),
+						resultSet.getInt("priority"));
 				}
 			}
 		}

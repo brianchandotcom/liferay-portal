@@ -158,6 +158,7 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -307,10 +308,15 @@ public class ObjectEntryLocalServiceImpl
 		objectEntry.setStatusByUserId(user.getUserId());
 		objectEntry.setStatusDate(serviceContext.getModifiedDate(null));
 
-		_resourceLocalService.addResources(
+		ServiceContext resourcePermissionServiceContext = new ServiceContext();
+
+		resourcePermissionServiceContext.setIndexingEnabled(false);
+
+		_resourcePermissionLocalService.addResourcePermissions(
 			objectEntry.getCompanyId(), objectEntry.getGroupId(),
 			objectEntry.getUserId(), objectDefinition.getClassName(),
-			objectEntry.getPrimaryKey(), false, false, false);
+			String.valueOf(objectEntry.getPrimaryKey()), false,
+			resourcePermissionServiceContext);
 
 		try {
 			if (workflowAction == WorkflowConstants.ACTION_SAVE_DRAFT) {
@@ -5062,6 +5068,9 @@ public class ObjectEntryLocalServiceImpl
 
 	@Reference
 	private ResourceLocalService _resourceLocalService;
+
+	@Reference
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
 
 	@Reference
 	private RoleLocalService _roleLocalService;

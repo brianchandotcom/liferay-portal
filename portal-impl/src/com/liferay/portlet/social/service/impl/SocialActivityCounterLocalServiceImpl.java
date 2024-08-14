@@ -412,27 +412,6 @@ public class SocialActivityCounterLocalServiceImpl
 	public void disableActivityCounters(long classNameId, long classPK)
 		throws PortalException {
 
-		disableActivityCounters(PortalUtil.getClassName(classNameId), classPK);
-	}
-
-	/**
-	 * Disables all the counters of an asset identified by the class name and
-	 * class primary key.
-	 *
-	 * <p>
-	 * This method is used by the recycle bin to disable all counters of assets
-	 * put into the recycle bin. It adjusts the owner's contribution score.
-	 * </p>
-	 *
-	 * @param className the asset's class name
-	 * @param classPK the primary key of the asset
-	 */
-	@Override
-	public void disableActivityCounters(String className, long classPK)
-		throws PortalException {
-
-		long classNameId = _classNameLocalService.getClassNameId(className);
-
 		AssetEntry assetEntry = _assetEntryPersistence.fetchByC_C(
 			classNameId, classPK);
 
@@ -457,6 +436,26 @@ public class SocialActivityCounterLocalServiceImpl
 	}
 
 	/**
+	 * Disables all the counters of an asset identified by the class name and
+	 * class primary key.
+	 *
+	 * <p>
+	 * This method is used by the recycle bin to disable all counters of assets
+	 * put into the recycle bin. It adjusts the owner's contribution score.
+	 * </p>
+	 *
+	 * @param className the asset's class name
+	 * @param classPK the primary key of the asset
+	 */
+	@Override
+	public void disableActivityCounters(String className, long classPK)
+		throws PortalException {
+
+		disableActivityCounters(
+			_classNameLocalService.getClassNameId(className), classPK);
+	}
+
+	/**
 	 * Enables all activity counters of an asset identified by the class name ID
 	 * and class primary key.
 	 *
@@ -471,27 +470,6 @@ public class SocialActivityCounterLocalServiceImpl
 	@Override
 	public void enableActivityCounters(long classNameId, long classPK)
 		throws PortalException {
-
-		enableActivityCounters(PortalUtil.getClassName(classNameId), classPK);
-	}
-
-	/**
-	 * Enables all the counters of an asset identified by the class name and
-	 * class primary key.
-	 *
-	 * <p>
-	 * This method is used by the recycle bin to enable all counters of assets
-	 * restored from the recycle bin. It adjusts the owner's contribution score.
-	 * </p>
-	 *
-	 * @param className the asset's class name
-	 * @param classPK the primary key of the asset
-	 */
-	@Override
-	public void enableActivityCounters(String className, long classPK)
-		throws PortalException {
-
-		long classNameId = _classNameLocalService.getClassNameId(className);
 
 		AssetEntry assetEntry = _assetEntryPersistence.fetchByC_C(
 			classNameId, classPK);
@@ -514,6 +492,26 @@ public class SocialActivityCounterLocalServiceImpl
 		}
 
 		clearFinderCache();
+	}
+
+	/**
+	 * Enables all the counters of an asset identified by the class name and
+	 * class primary key.
+	 *
+	 * <p>
+	 * This method is used by the recycle bin to enable all counters of assets
+	 * restored from the recycle bin. It adjusts the owner's contribution score.
+	 * </p>
+	 *
+	 * @param className the asset's class name
+	 * @param classPK the primary key of the asset
+	 */
+	@Override
+	public void enableActivityCounters(String className, long classPK)
+		throws PortalException {
+
+		enableActivityCounters(
+			_classNameLocalService.getClassNameId(className), classPK);
 	}
 
 	/**

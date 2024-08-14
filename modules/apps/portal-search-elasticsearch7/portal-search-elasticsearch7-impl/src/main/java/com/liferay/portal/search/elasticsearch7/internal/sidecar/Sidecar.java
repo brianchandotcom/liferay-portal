@@ -371,7 +371,7 @@ public class Sidecar {
 		arguments.add("-Dfile.encoding=UTF-8");
 		arguments.add("-Djava.io.tmpdir=" + _sidecarTempDirPath);
 
-		if (JavaDetector.isJDK21()) {
+		if (JavaDetector.isJDK21() || JavaDetector.isJDK17()) {
 			arguments.add("-Djava.security.manager=allow");
 		}
 

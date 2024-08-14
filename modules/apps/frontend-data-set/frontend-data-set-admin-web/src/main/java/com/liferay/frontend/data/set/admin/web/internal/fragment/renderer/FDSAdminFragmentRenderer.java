@@ -1085,20 +1085,22 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 		String apiURL, String restApplication, String restSchema,
 		HttpServletRequest httpServletRequest) {
 
-		FDSAPIURLResolver
-			FDSAPIURLResolver =
+		if (FeatureFlagManagerUtil.isEnabled("LPD-25230")) {
+			FDSAPIURLResolver
+				FDSAPIURLResolver =
 				_fdsAPIURLResolverRegistry.getResolver(
 					restApplication, restSchema);
 
-		if (FDSAPIURLResolver != null) {
-			try {
-				return FDSAPIURLResolver.resolve(
-					apiURL, httpServletRequest);
-			}
-			catch (PortalException portalException) {
-				_log.error(portalException);
+			if (FDSAPIURLResolver != null) {
+				try {
+					return FDSAPIURLResolver.resolve(
+						apiURL, httpServletRequest);
+				}
+				catch (PortalException portalException) {
+					_log.error(portalException);
 
-				return apiURL;
+					return apiURL;
+				}
 			}
 		}
 

@@ -12,10 +12,8 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuil
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.search.BooleanClauseOccur;
-import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
-import com.liferay.portal.kernel.search.filter.RangeTermFilter;
+import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -72,31 +70,19 @@ public class FileResolutionContentDashboardItemFilter
 			return null;
 		}
 
-		BooleanFilter booleanFilter = new BooleanFilter();
+		TermsFilter termsFilter = new TermsFilter("resolution");
 
 		if (ListUtil.isEmpty(parameterValues)) {
-			return booleanFilter;
+			return termsFilter;
 		}
 
 		Resolution resolution = Resolution.parse(parameterValues.get(0));
 
 		if (resolution != null) {
-			booleanFilter.add(
-				new RangeTermFilter(
-					"imageLength_sortable", true, true,
-					String.valueOf(resolution.getStartLengthValue()),
-					String.valueOf(resolution.getEndLengthValue())),
-				BooleanClauseOccur.MUST);
-
-			booleanFilter.add(
-				new RangeTermFilter(
-					"imageWidth_sortable", true, true,
-					String.valueOf(resolution.getStartWidthValue()),
-					String.valueOf(resolution.getEndWidthValue())),
-				BooleanClauseOccur.MUST);
+			termsFilter.addValue(resolution.getType());
 		}
 
-		return booleanFilter;
+		return termsFilter;
 	}
 
 	@Override

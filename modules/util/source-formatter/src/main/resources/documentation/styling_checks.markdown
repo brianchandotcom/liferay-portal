@@ -5,6 +5,7 @@ Check | File Extensions | Description
 [AnnotationUseStyleCheck](https://checkstyle.sourceforge.io/checks/annotation/annotationusestyle.html) | .java | Checks the style of elements in annotations. |
 AppendCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks instances where literal Strings are appended. |
 [ArrayTypeStyleCheck](https://checkstyle.sourceforge.io/checks/misc/arraytypestyle.html) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks the style of array type definitions. |
+ArrayUtilCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks for utilization of class `ArrayUtil`. |
 [AssertEqualsCheck](check/assert_equals_check.markdown#assertequalscheck) | .java | Checks that additional information is provided when calling `Assert.assertEquals`. |
 [AvoidNestedBlocksCheck](https://checkstyle.sourceforge.io/checks/blocks/avoidnestedblocks.html) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds nested blocks (blocks that are used freely in the code). |
 BNDCapabilityCheck | .bnd | Sorts and applies logic to fix line breaks to property values for `Provide-Capability` and `Require-Capability`. |

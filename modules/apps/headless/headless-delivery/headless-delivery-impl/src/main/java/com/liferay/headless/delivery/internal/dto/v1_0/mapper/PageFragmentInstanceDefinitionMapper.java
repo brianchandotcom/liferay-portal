@@ -14,6 +14,7 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
+import com.liferay.fragment.util.configuration.FragmentConfigurationField;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.headless.delivery.dto.v1_0.ActionExecutionResult;
 import com.liferay.headless.delivery.dto.v1_0.ClassPKReference;
@@ -62,6 +63,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -239,9 +241,34 @@ public class PageFragmentInstanceDefinitionMapper {
 
 			JSONObject jsonObject = configJSONObject;
 
+			List<String> excludedFragmentConfigurationFieldNames =
+				new ArrayList<>();
+
+			for (FragmentConfigurationField fragmentConfigurationField :
+					_fragmentEntryConfigurationParser.
+						getFragmentConfigurationFields(
+							fragmentEntryLink.getConfiguration())) {
+
+				if (ArrayUtil.contains(
+						_EXCLUDED_FRAGMENT_CONFIGURATION_FIELD_TYPES,
+						fragmentConfigurationField.getType())) {
+
+					excludedFragmentConfigurationFieldNames.add(
+						fragmentConfigurationField.getName());
+				}
+			}
+
 			return new HashMap<String, Object>() {
 				{
 					for (String key : jsonObject.keySet()) {
+						if (excludedFragmentConfigurationFieldNames.contains(
+								key)) {
+
+							put(key, jsonObject.get(key));
+
+							continue;
+						}
+
 						Object value =
 							_fragmentEntryConfigurationParser.getFieldValue(
 								fragmentEntryLink.getConfiguration(),
@@ -1233,6 +1260,9 @@ public class PageFragmentInstanceDefinitionMapper {
 			}
 		};
 	}
+
+	private static final String[] _EXCLUDED_FRAGMENT_CONFIGURATION_FIELD_TYPES =
+		{"itemSelector", "url"};
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PageFragmentInstanceDefinitionMapper.class);

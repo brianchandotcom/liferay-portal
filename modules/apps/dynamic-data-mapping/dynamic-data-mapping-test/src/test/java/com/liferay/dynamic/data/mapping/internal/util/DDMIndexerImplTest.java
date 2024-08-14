@@ -7,6 +7,7 @@ package com.liferay.dynamic.data.mapping.internal.util;
 
 import com.liferay.dynamic.data.mapping.configuration.DDMIndexerConfiguration;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesRegistry;
+import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.internal.io.DDMFormJSONDeserializer;
 import com.liferay.dynamic.data.mapping.internal.io.DDMFormJSONSerializer;
 import com.liferay.dynamic.data.mapping.internal.test.util.DDMFixture;
@@ -24,6 +25,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
+import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -34,7 +36,7 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.HtmlParser;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -209,6 +211,7 @@ public class DDMIndexerImplTest {
 	public void testFormWithRepeatableField() {
 		_testFormWithRepeatableField("keyword");
 		_testFormWithRepeatableField("text");
+		_testFormWithRepeatableRichTextField();
 	}
 
 	@Test
@@ -388,6 +391,17 @@ public class DDMIndexerImplTest {
 		return simpleDateFormat.format(new Date());
 	}
 
+	private void _setUpHtmlParser() {
+		Mockito.when(
+			_htmlParser.extractText("<h1>test</h1>")
+		).thenReturn(
+			"test"
+		);
+
+		ReflectionTestUtil.setFieldValue(
+			_ddmIndexer, "_htmlParser", _htmlParser);
+	}
+
 	private void _setUpPortalUtil() {
 		PortalUtil portalUtil = new PortalUtil();
 
@@ -433,36 +447,24 @@ public class DDMIndexerImplTest {
 	private void _testFormWithRepeatableField(String indexType) {
 		Document document = _createDocument();
 
-		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
-			SetUtil.fromArray(LocaleUtil.US), LocaleUtil.US);
-
-		DDMFormField ddmFormField = _createDDMFormField();
-
-		ddmFormField.setIndexType(indexType);
-		ddmFormField.setRepeatable(true);
-
-		ddmForm.addDDMFormField(ddmFormField);
-
-		List<LocalizedValue> localizedValues = ListUtil.fromArray(
-			new LocalizedValue() {
-				{
-					addString(LocaleUtil.US, "able");
-				}
-			},
-			new LocalizedValue() {
-				{
-					addString(LocaleUtil.US, "baker");
-				}
-			});
+		DDMForm ddmForm = DDMStructureTestUtil.getSampleDDMForm(
+			_FIELD_NAME, "string", indexType, true,
+			DDMFormFieldTypeConstants.TEXT,
+			new Locale[] {LocaleUtil.getSiteDefault()},
+			LocaleUtil.getSiteDefault());
 
 		_ddmIndexer.addAttributes(
 			document, _createDDMStructure(ddmForm),
 			_createDDMFormValues(
 				ddmForm,
 				DDMFormValuesTestUtil.createDDMFormFieldValue(
-					_FIELD_NAME, localizedValues.get(0)),
+					_FIELD_NAME,
+					DDMFormValuesTestUtil.createLocalizedValue(
+						"able", LocaleUtil.US)),
 				DDMFormValuesTestUtil.createDDMFormFieldValue(
-					_FIELD_NAME, localizedValues.get(1))));
+					_FIELD_NAME,
+					DDMFormValuesTestUtil.createLocalizedValue(
+						"baker", LocaleUtil.US))));
 
 		indexType = StringUtil.upperCaseFirstLetter(indexType);
 
@@ -475,6 +477,42 @@ public class DDMIndexerImplTest {
 			StringPool.BLANK);
 	}
 
+	private void _testFormWithRepeatableRichTextField() {
+		Document document = _createDocument();
+
+		_ddmIndexer = _createDDMIndexer(true);
+
+		DDMForm ddmForm = DDMStructureTestUtil.getSampleDDMForm(
+			_FIELD_NAME, "string", "text", true,
+			DDMFormFieldTypeConstants.RICH_TEXT,
+			new Locale[] {LocaleUtil.getSiteDefault()},
+			LocaleUtil.getSiteDefault());
+
+		List<DDMFormField> ddmFormFieldList = ddmForm.getDDMFormFields();
+
+		DDMFormField ddmFormField = ddmFormFieldList.get(0);
+
+		DDMStructure ddmStructure = _createDDMStructure(ddmForm);
+
+		_setUpHtmlParser();
+
+		_ddmIndexer.addAttributes(
+			document, ddmStructure,
+			_createDDMFormValues(
+				ddmForm,
+				DDMFormValuesTestUtil.createDDMFormFieldValue(
+					_FIELD_NAME,
+					DDMFormValuesTestUtil.createLocalizedValue(
+						"<h1>test</h1>", LocaleUtil.US))));
+
+		Assert.assertEquals(
+			"test",
+			document.get(
+				StringBundler.concat(
+					"ddm__text__", ddmStructure.getStructureId(), "__",
+					ddmFormField.getName(), "_en_US")));
+	}
+
 	private static final String _FIELD_NAME = RandomTestUtil.randomString();
 
 	private static final DDMFormDeserializer _ddmFormDeserializer =
@@ -483,6 +521,8 @@ public class DDMIndexerImplTest {
 		_ddmFormDeserializerServiceRegistration;
 	private static final MockedStatic<FrameworkUtil>
 		_frameworkUtilMockedStatic = Mockito.mockStatic(FrameworkUtil.class);
+	private static final HtmlParser _htmlParser = Mockito.mock(
+		HtmlParser.class);
 
 	private final DDMFixture _ddmFixture = new DDMFixture();
 	private final DDMFormJSONSerializer _ddmFormJSONSerializer =

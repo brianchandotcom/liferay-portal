@@ -72,7 +72,7 @@ export default {
 		onNetworkStatus,
 		segmentsExperienceId,
 	}: {
-		fields: string[];
+		fields: string[] | undefined;
 		itemConfig: FormLayoutDataItem['config'];
 		itemId: string;
 		onNetworkStatus: OnNetworkStatus;
@@ -87,7 +87,7 @@ export default {
 			config.updateFormItemConfigURL,
 			{
 				body: {
-					fields,
+					...(fields && {fields}),
 					itemConfig: JSON.stringify(itemConfig),
 					itemId,
 					segmentsExperienceId,

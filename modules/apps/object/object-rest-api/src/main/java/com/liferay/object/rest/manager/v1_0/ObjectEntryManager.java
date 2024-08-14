@@ -7,6 +7,7 @@ package com.liferay.object.rest.manager.v1_0;
 
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
+import com.liferay.object.rest.manager.v1_0.util.ObjectEntryManagerUtil;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
@@ -14,7 +15,6 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.Locale;
-import java.util.Map;
 
 /**
  * @author Gabriel Albuquerque
@@ -56,44 +56,12 @@ public interface ObjectEntryManager {
 			ObjectEntry objectEntry, String scopeKey)
 		throws Exception {
 
-		ObjectEntry existingObjectEntry = getObjectEntry(
-			companyId, dtoConverterContext, externalReferenceCode,
-			objectDefinition, scopeKey);
-
-		if (objectEntry.getDateCreated() != null) {
-			existingObjectEntry.setDateCreated(objectEntry.getDateCreated());
-		}
-
-		if (objectEntry.getDateModified() != null) {
-			existingObjectEntry.setDateModified(objectEntry.getDateModified());
-		}
-
-		if (objectEntry.getExternalReferenceCode() != null) {
-			existingObjectEntry.setExternalReferenceCode(
-				objectEntry.getExternalReferenceCode());
-		}
-
-		if (objectEntry.getKeywords() != null) {
-			existingObjectEntry.setKeywords(objectEntry.getKeywords());
-		}
-
-		if (objectEntry.getProperties() != null) {
-			Map<String, Object> properties =
-				existingObjectEntry.getProperties();
-
-			properties.putAll(objectEntry.getProperties());
-
-			existingObjectEntry.setProperties(properties);
-		}
-
-		if (objectEntry.getStatus() != null) {
-			existingObjectEntry.setStatus(objectEntry.getStatus());
-		}
-
-		if (objectEntry.getTaxonomyCategoryIds() != null) {
-			existingObjectEntry.setTaxonomyCategoryIds(
-				objectEntry.getTaxonomyCategoryIds());
-		}
+		ObjectEntry existingObjectEntry =
+			ObjectEntryManagerUtil.partialUpdateObjectEntry(
+				getObjectEntry(
+					companyId, dtoConverterContext, externalReferenceCode,
+					objectDefinition, scopeKey),
+				objectDefinition.getObjectDefinitionId(), objectEntry);
 
 		return updateObjectEntry(
 			companyId, dtoConverterContext, externalReferenceCode,

@@ -28,7 +28,6 @@ page import="com.liferay.portal.kernel.security.auth.FullNameField" %><%@
 page import="com.liferay.portal.kernel.service.ListTypeServiceUtil" %><%@
 page import="com.liferay.portal.kernel.util.CamelCaseUtil" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
-page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.LocaleUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portlet.usersadmin.util.UsersAdminUtil" %>

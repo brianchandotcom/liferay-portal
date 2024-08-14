@@ -23,9 +23,6 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class StrutsUtil {
 
-	public static final String EXCEPTION =
-		StrutsUtil.class.getName() + "_EXCEPTION";
-
 	public static final String TEXT_HTML_DIR = "/html";
 
 	public static void forward(

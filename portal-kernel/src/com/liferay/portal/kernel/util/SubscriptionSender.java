@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
+import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ResourceAction;
@@ -41,6 +42,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionUtil;
+import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourceActionLocalServiceUtil;
@@ -523,7 +525,15 @@ public class SubscriptionSender implements Serializable {
 	}
 
 	public void setNotificationClassNameId(long notificationClassNameId) {
-		_notificationClassNameId = notificationClassNameId;
+		ClassName className = ClassNameLocalServiceUtil.fetchByClassNameId(
+			notificationClassNameId);
+
+		if ((notificationClassNameId <= 0) || (className == null)) {
+			_notificationClassName = String.valueOf(notificationClassNameId);
+		}
+		else {
+			_notificationClassName = className.getClassName();
+		}
 	}
 
 	/**
@@ -939,7 +949,7 @@ public class SubscriptionSender implements Serializable {
 
 	protected void sendEmailNotification(User user) throws Exception {
 		if (UserNotificationManagerUtil.isDeliver(
-				user.getUserId(), portletId, _notificationClassNameId,
+				user.getUserId(), portletId, _getNotificationClassNameId(),
 				_notificationType,
 				UserNotificationDeliveryConstants.TYPE_EMAIL)) {
 
@@ -999,7 +1009,7 @@ public class SubscriptionSender implements Serializable {
 		populateNotificationEventJSONObject(notificationEventJSONObject);
 
 		if (UserNotificationManagerUtil.isDeliver(
-				user.getUserId(), portletId, _notificationClassNameId,
+				user.getUserId(), portletId, _getNotificationClassNameId(),
 				_notificationType,
 				UserNotificationDeliveryConstants.TYPE_PUSH)) {
 
@@ -1010,7 +1020,7 @@ public class SubscriptionSender implements Serializable {
 		}
 
 		if (UserNotificationManagerUtil.isDeliver(
-				user.getUserId(), portletId, _notificationClassNameId,
+				user.getUserId(), portletId, _getNotificationClassNameId(),
 				_notificationType,
 				UserNotificationDeliveryConstants.TYPE_WEBSITE)) {
 
@@ -1141,6 +1151,17 @@ public class SubscriptionSender implements Serializable {
 			defaultValue);
 	}
 
+	private long _getNotificationClassNameId() {
+		if ((_notificationClassName != null) &&
+			!Validator.isNumber(_notificationClassName)) {
+
+			return ClassNameLocalServiceUtil.getClassNameId(
+				_notificationClassName);
+		}
+
+		return GetterUtil.getLong(_notificationClassName);
+	}
+
 	private String _getPortletName(Locale locale) {
 		if (Validator.isNull(portletId)) {
 			return StringPool.BLANK;
@@ -1209,7 +1230,7 @@ public class SubscriptionSender implements Serializable {
 		new HashMap<>();
 	private Object[] _mailIdIds;
 	private String _mailIdPopPortletPrefix;
-	private long _notificationClassNameId;
+	private String _notificationClassName;
 	private int _notificationType;
 	private final List<Tuple> _persistedSubscribersTuples = new ArrayList<>();
 	private final List<ObjectValuePair<String, String>>

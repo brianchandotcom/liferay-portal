@@ -16,7 +16,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 /**
  * @author Carolina Barbosa
  */
-public class DDMFormFieldUpgradeProcessTestUtil {
+public class DDMStructureCTUpgradeProcessTestUtil {
 
 	public static String getClassName() {
 		return "com.liferay.dynamic.data.mapping.internal.upgrade.v3_8_1." +

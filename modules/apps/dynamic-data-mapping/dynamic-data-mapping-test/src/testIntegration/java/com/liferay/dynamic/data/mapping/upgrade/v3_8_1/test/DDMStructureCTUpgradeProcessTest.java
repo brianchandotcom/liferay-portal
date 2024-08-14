@@ -7,8 +7,7 @@ package com.liferay.dynamic.data.mapping.upgrade.v3_8_1.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
-import com.liferay.dynamic.data.mapping.upgrade.v3_8_1.test.util.DDMFormFieldUpgradeProcessTestUtil;
-import com.liferay.dynamic.data.mapping.upgrade.v5_1_1.test.DDMStructureCTUpgradeProcessTest;
+import com.liferay.dynamic.data.mapping.upgrade.v3_8_1.test.util.DDMStructureCTUpgradeProcessTestUtil;
 
 import org.junit.runner.RunWith;
 
@@ -16,17 +15,18 @@ import org.junit.runner.RunWith;
  * @author Carolina Barbosa
  */
 @RunWith(Arquillian.class)
-public class DDMFormFieldDDMStructureCTUpgradeProcessTest
-	extends DDMStructureCTUpgradeProcessTest {
+public class DDMStructureCTUpgradeProcessTest
+	extends com.liferay.dynamic.data.mapping.upgrade.v5_1_1.test.
+				DDMStructureCTUpgradeProcessTest {
 
 	@Override
 	protected String getClassName() {
-		return DDMFormFieldUpgradeProcessTestUtil.getClassName();
+		return DDMStructureCTUpgradeProcessTestUtil.getClassName();
 	}
 
 	@Override
 	protected DDMForm getDDMForm() {
-		return DDMFormFieldUpgradeProcessTestUtil.getDDMForm();
+		return DDMStructureCTUpgradeProcessTestUtil.getDDMForm();
 	}
 
 }

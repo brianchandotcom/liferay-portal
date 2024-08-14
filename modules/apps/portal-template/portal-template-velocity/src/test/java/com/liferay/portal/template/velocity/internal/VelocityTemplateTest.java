@@ -110,6 +110,17 @@ public class VelocityTemplateTest {
 		ExtendedProperties extendedProperties = new FastExtendedProperties();
 
 		extendedProperties.setProperty(
+			RuntimeConstants.INTROSPECTOR_RESTRICT_CLASSES,
+			StringUtil.merge(
+				_filterRestrictedClasses(
+					velocityEngineConfiguration.restrictedClasses())));
+		extendedProperties.setProperty(
+			RuntimeConstants.INTROSPECTOR_RESTRICT_PACKAGES,
+			StringUtil.merge(velocityEngineConfiguration.restrictedPackages()));
+		extendedProperties.setProperty(
+			RuntimeConstants.UBERSPECT_CLASSNAME,
+			LiferaySecureUberspector.class.getName());
+		extendedProperties.setProperty(
 			VelocityEngine.DIRECTIVE_IF_TOSTRING_NULLCHECK,
 			String.valueOf(
 				velocityEngineConfiguration.directiveIfToStringNullCheck()));
@@ -117,40 +128,16 @@ public class VelocityTemplateTest {
 			VelocityEngine.EVENTHANDLER_METHODEXCEPTION,
 			LiferayMethodExceptionEventHandler.class.getName());
 		extendedProperties.setProperty(
-			RuntimeConstants.INTROSPECTOR_RESTRICT_CLASSES,
-			StringUtil.merge(
-				_filterRestrictedClasses(
-					velocityEngineConfiguration.restrictedClasses())));
-		extendedProperties.setProperty(
-			"liferay." + RuntimeConstants.INTROSPECTOR_RESTRICT_CLASSES +
-				".methods",
-			velocityEngineConfiguration.restrictedMethods());
-		extendedProperties.setProperty(
-			RuntimeConstants.INTROSPECTOR_RESTRICT_PACKAGES,
-			StringUtil.merge(velocityEngineConfiguration.restrictedPackages()));
-		extendedProperties.setProperty(
 			VelocityEngine.RESOURCE_LOADER, "liferay");
-		extendedProperties.setProperty(
-			"liferay." + VelocityEngine.RESOURCE_LOADER + ".cache",
-			Boolean.FALSE.toString());
-		extendedProperties.setProperty(
-			"liferay." + VelocityEngine.RESOURCE_LOADER + ".class",
-			LiferayResourceLoader.class.getName());
 		extendedProperties.setProperty(
 			VelocityEngine.RESOURCE_MANAGER_CLASS,
 			LiferayResourceManager.class.getName());
-		extendedProperties.setProperty(
-			VelocityManager.VelocityTemplateResourceLoader.class.getName(),
-			_templateResourceLoader);
 		extendedProperties.setProperty(
 			VelocityEngine.RUNTIME_LOG_LOGSYSTEM_CLASS,
 			velocityEngineConfiguration.logger());
 		extendedProperties.setProperty(
 			VelocityEngine.RUNTIME_LOG_LOGSYSTEM + ".log4j.category",
 			velocityEngineConfiguration.loggerCategory());
-		extendedProperties.setProperty(
-			RuntimeConstants.UBERSPECT_CLASSNAME,
-			LiferaySecureUberspector.class.getName());
 		extendedProperties.setProperty(
 			VelocityEngine.VM_LIBRARY,
 			StringUtil.merge(velocityEngineConfiguration.velocimacroLibrary()));
@@ -160,6 +147,19 @@ public class VelocityTemplateTest {
 		extendedProperties.setProperty(
 			VelocityEngine.VM_PERM_ALLOW_INLINE_REPLACE_GLOBAL,
 			Boolean.TRUE.toString());
+		extendedProperties.setProperty(
+			VelocityManager.VelocityTemplateResourceLoader.class.getName(),
+			_templateResourceLoader);
+		extendedProperties.setProperty(
+			"liferay." + RuntimeConstants.INTROSPECTOR_RESTRICT_CLASSES +
+				".methods",
+			velocityEngineConfiguration.restrictedMethods());
+		extendedProperties.setProperty(
+			"liferay." + VelocityEngine.RESOURCE_LOADER + ".cache",
+			Boolean.FALSE.toString());
+		extendedProperties.setProperty(
+			"liferay." + VelocityEngine.RESOURCE_LOADER + ".class",
+			LiferayResourceLoader.class.getName());
 
 		_velocityEngine.setExtendedProperties(extendedProperties);
 

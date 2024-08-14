@@ -31,7 +31,7 @@ public class StrutsUtil {
 	public static void forward(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse,
-			ServletContext servletContext, String uri)
+			ServletContext servletContext, String servletName, String uri)
 		throws ServletException {
 
 		if (_log.isDebugEnabled()) {

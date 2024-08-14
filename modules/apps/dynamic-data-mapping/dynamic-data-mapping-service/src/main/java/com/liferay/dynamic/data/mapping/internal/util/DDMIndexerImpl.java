@@ -682,6 +682,16 @@ public class DDMIndexerImpl implements DDMIndexer {
 					document.addDate(name.concat("_date"), dateValues);
 				}
 			}
+			else if (type.equals(DDMFormFieldTypeConstants.RICH_TEXT)) {
+				List<String> richTextValues = new ArrayList<>(
+					valuesString.length);
+
+				for (String valueString : valuesString) {
+					richTextValues.add(_htmlParser.extractText(valueString));
+				}
+
+				valuesString = richTextValues.toArray(new String[0]);
+			}
 
 			if (indexType.equals("keyword")) {
 				document.addKeywordSortable(name, valuesString);

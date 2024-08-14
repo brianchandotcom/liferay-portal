@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -38,6 +37,25 @@ import java.util.Map;
  */
 public class CalendarBookingTestUtil {
 
+	public static CalendarBooking addAllDayCalendarBooking(String timeZoneId)
+		throws Exception {
+
+		Group group = GroupTestUtil.addGroup();
+
+		User user = UserTestUtil.addUser(group.getGroupId());
+
+		user.setTimeZoneId(timeZoneId);
+
+		user = UserLocalServiceUtil.updateUser(user);
+
+		return addAllDayCalendarBooking(
+			user, CalendarTestUtil.addCalendar(group),
+			getCalendarTimeInMillis(1, 0, 0),
+			getCalendarTimeInMillis(1, 23, 59),
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), user.getUserId()));
+	}
+
 	public static CalendarBooking addAllDayCalendarBooking(
 			User user, Calendar calendar, long startTime, long endTime,
 			ServiceContext serviceContext)
@@ -47,32 +65,6 @@ public class CalendarBookingTestUtil {
 			user, calendar, new long[0], RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(), startTime, endTime, true,
 			null, 0, null, 0, null, serviceContext);
-	}
-
-	public static CalendarBooking addAllDayCalendarBooking(
-			UserLocalService userLocalService, String timeZoneId)
-		throws Exception {
-
-		Group group = GroupTestUtil.addGroup();
-
-		User user = UserTestUtil.addUser(group.getGroupId());
-
-		user.setTimeZoneId(timeZoneId);
-
-		user = userLocalService.updateUser(user);
-
-		java.util.Calendar startTimeCalendar = CalendarFactoryUtil.getCalendar(
-			2022, java.util.Calendar.JANUARY, 1, 0, 0);
-
-		java.util.Calendar endTimeCalendar = CalendarFactoryUtil.getCalendar(
-			2022, java.util.Calendar.JANUARY, 1, 23, 59);
-
-		return addAllDayCalendarBooking(
-			user, CalendarTestUtil.addCalendar(group),
-			startTimeCalendar.getTimeInMillis(),
-			endTimeCalendar.getTimeInMillis(),
-			ServiceContextTestUtil.getServiceContext(
-				group.getGroupId(), user.getUserId()));
 	}
 
 	public static CalendarBooking addCalendarBooking(
@@ -445,6 +437,13 @@ public class CalendarBookingTestUtil {
 		return serviceContext;
 	}
 
+	public static long getCalendarTimeInMillis(int day, int hour, int minute) {
+		java.util.Calendar calendar = CalendarFactoryUtil.getCalendar(
+			2022, java.util.Calendar.JANUARY, day, hour, minute);
+
+		return calendar.getTimeInMillis();
+	}
+
 	public static CalendarBooking getChildCalendarBooking(
 		CalendarBooking calendarBooking) {
 
@@ -463,11 +462,6 @@ public class CalendarBookingTestUtil {
 		}
 
 		return childCalendarBooking;
-	}
-
-	public static String getUpgradeStepClassName(String schemaVersion) {
-		return "com.liferay.calendar.internal.upgrade." + schemaVersion +
-			".CalendarBookingUpgradeProcess";
 	}
 
 	public static CalendarBooking updateCalendarBooking(

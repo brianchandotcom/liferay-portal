@@ -12,18 +12,14 @@ import com.liferay.calendar.test.util.CalendarBookingTestUtil;
 import com.liferay.calendar.test.util.CalendarUpgradeTestUtil;
 import com.liferay.change.tracking.test.util.BaseCTUpgradeProcessTestCase;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-
-import java.util.Calendar;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -45,8 +41,10 @@ public class CalendarBookingCTUpgradeProcessTest
 
 	@Override
 	protected CTModel<?> addCTModel() throws Exception {
-		return CalendarBookingTestUtil.addAllDayCalendarBooking(
-			_userLocalService, "Europe/Paris");
+		_calendarBooking = CalendarBookingTestUtil.addAllDayCalendarBooking(
+			"Europe/Paris");
+
+		return _calendarBooking;
 	}
 
 	@Override
@@ -58,29 +56,23 @@ public class CalendarBookingCTUpgradeProcessTest
 	protected void runUpgrade() throws Exception {
 		UpgradeProcess upgradeProcess = CalendarUpgradeTestUtil.getUpgradeStep(
 			_upgradeStepRegistrator,
-			CalendarBookingTestUtil.getUpgradeStepClassName("v4_2_1"));
+			"com.liferay.calendar.internal.upgrade.v4_2_1." +
+				"CalendarBookingUpgradeProcess");
 
 		upgradeProcess.upgrade();
 	}
 
 	@Override
 	protected CTModel<?> updateCTModel(CTModel<?> ctModel) {
-		_calendarBooking = (CalendarBooking)ctModel;
+		CalendarBooking calendarBooking = (CalendarBooking)ctModel;
 
-		Calendar startTimeCalendar = CalendarFactoryUtil.getCalendar(
-			2022, Calendar.JANUARY, 1, 23, 0);
+		calendarBooking.setStartTime(
+			CalendarBookingTestUtil.getCalendarTimeInMillis(1, 23, 0));
+		calendarBooking.setEndTime(
+			CalendarBookingTestUtil.getCalendarTimeInMillis(2, 22, 59));
 
-		_calendarBooking.setStartTime(startTimeCalendar.getTimeInMillis());
-
-		Calendar endTimeCalendar = CalendarFactoryUtil.getCalendar(
-			2022, Calendar.JANUARY, 2, 22, 59);
-
-		_calendarBooking.setEndTime(endTimeCalendar.getTimeInMillis());
-
-		_calendarBooking = _calendarBookingLocalService.updateCalendarBooking(
-			_calendarBooking);
-
-		return _calendarBooking;
+		return _calendarBookingLocalService.updateCalendarBooking(
+			calendarBooking);
 	}
 
 	@DeleteAfterTestRun
@@ -93,8 +85,5 @@ public class CalendarBookingCTUpgradeProcessTest
 		filter = "component.name=com.liferay.calendar.internal.upgrade.registry.CalendarServiceUpgradeStepRegistrator"
 	)
 	private UpgradeStepRegistrator _upgradeStepRegistrator;
-
-	@Inject
-	private UserLocalService _userLocalService;
 
 }

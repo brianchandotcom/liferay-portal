@@ -157,10 +157,7 @@ public class LayoutsImporterTest {
 				layoutsImporterResultEntry.getType());
 
 			_assertLayoutPageTemplateEntry(
-				StringUtil.replace(
-					StringUtil.toLowerCase(
-						layoutsImporterResultEntry.getName()),
-					CharPool.SPACE, CharPool.DASH));
+				_getLayoutPageTemplateEntryKey(layoutsImporterResultEntry));
 		}
 	}
 
@@ -330,9 +327,7 @@ public class LayoutsImporterTest {
 
 		_assertLayoutPageTemplateEntry(
 			configurationJSONObject, editableValuesJSONObject, curFragmentEntry,
-			StringUtil.replace(
-				StringUtil.toLowerCase(layoutPageTemplateImportEntry.getName()),
-				CharPool.SPACE, CharPool.DASH));
+			_getLayoutPageTemplateEntryKey(layoutPageTemplateImportEntry));
 	}
 
 	@Test
@@ -1131,6 +1126,14 @@ public class LayoutsImporterTest {
 		}
 
 		return zipWriter.getFile();
+	}
+
+	private String _getLayoutPageTemplateEntryKey(
+		LayoutsImporterResultEntry layoutPageTemplateImportEntry) {
+
+		return StringUtil.replace(
+			StringUtil.toLowerCase(layoutPageTemplateImportEntry.getName()),
+			CharPool.SPACE, CharPool.DASH);
 	}
 
 	private LayoutStructureItem _getMainChildLayoutStructureItem(

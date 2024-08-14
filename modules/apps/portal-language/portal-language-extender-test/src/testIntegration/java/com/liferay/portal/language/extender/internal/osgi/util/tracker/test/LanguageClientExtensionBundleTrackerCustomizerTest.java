@@ -27,6 +27,7 @@ import java.io.InputStream;
 import java.net.URL;
 
 import java.util.Arrays;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.List;
 
@@ -63,7 +64,7 @@ public class LanguageClientExtensionBundleTrackerCustomizerTest {
 	@Test
 	public void testAddingBundle() throws Exception {
 		Bundle bundle = _bundleContext.installBundle(
-			RandomTestUtil.randomString(), _toInputStream("batch"));
+			RandomTestUtil.randomString(), _getBatchBundleInputStream("batch"));
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.portal.language.extender.internal.osgi.util." +
@@ -95,11 +96,11 @@ public class LanguageClientExtensionBundleTrackerCustomizerTest {
 			Assert.assertEquals(logEntries.toString(), 3, logEntries.size());
 
 			for (LogEntry logEntry : logEntries) {
-				boolean matches = false;
-
 				String message = logEntry.getMessage();
 
-				for (String expectedMessage : _EXPECTED_LOG_MESSAGES) {
+				boolean matches = false;
+
+				for (String expectedMessage : _expectedLogMessages) {
 					if (message.matches(expectedMessage)) {
 						matches = true;
 
@@ -112,7 +113,7 @@ public class LanguageClientExtensionBundleTrackerCustomizerTest {
 						StringBundler.concat(
 							"Log message \"", message,
 							"\" must match one of the following: ",
-							Arrays.toString(_EXPECTED_LOG_MESSAGES)));
+							_expectedLogMessages));
 				}
 			}
 		}
@@ -121,14 +122,16 @@ public class LanguageClientExtensionBundleTrackerCustomizerTest {
 		}
 	}
 
-	private InputStream _toInputStream(String dirName) throws Exception {
-		ZipWriter zipWriter = _zipWriterFactory.getZipWriter();
+	private InputStream _getBatchBundleInputStream(String batchName)
+		throws Exception {
 
 		String basePath = StringBundler.concat(
-			"com/liferay/portal/language/extender/internal/osgi/util/tracker",
-			"/test/dependencies/", dirName, StringPool.SLASH);
+			"com/liferay/portal/language/extender/internal/test/dependencies/",
+			batchName, StringPool.SLASH);
 
 		Enumeration<URL> enumeration = _bundle.findEntries(basePath, "*", true);
+
+		ZipWriter zipWriter = _zipWriterFactory.getZipWriter();
 
 		if (enumeration != null) {
 			while (enumeration.hasMoreElements()) {
@@ -155,16 +158,16 @@ public class LanguageClientExtensionBundleTrackerCustomizerTest {
 		return new FileInputStream(zipWriter.getFile());
 	}
 
-	private static final String[] _EXPECTED_LOG_MESSAGES = {
-		"Unable to import \"Language_pt_BR.properties\": Key must not be null",
-		"Unable to import \"Language_pt_BR.properties\": Value must not be " +
-			"null",
-		"Unable to import \"Language_yy_ZZ.properties\": Language ID " +
-			"\"yy_ZZ\" is not one of the available language IDs: \\[(.*)\\]"
-	};
-
 	private Bundle _bundle;
 	private BundleContext _bundleContext;
+	private final List<String> _expectedLogMessages = Arrays.asList(
+		"Unable to process language file \"Language_pt_BR.properties\". " +
+			"Value must not be null.",
+		"Unable to process language file \"Language_pt_BR.properties\". Key " +
+			"must not be null.",
+		"Unable to process language file \"Language_yy_ZZ.properties\". " +
+			"Language ID \"yy_ZZ\" is not one of the available language IDs: " +
+				"\\[(.*)\\].");
 
 	@Inject
 	private PLOEntryLocalService _ploEntryLocalService;

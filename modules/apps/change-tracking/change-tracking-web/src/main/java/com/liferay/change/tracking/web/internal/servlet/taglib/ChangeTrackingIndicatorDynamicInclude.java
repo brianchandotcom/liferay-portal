@@ -642,7 +642,10 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 
 		Group group = themeDisplay.getScopeGroup();
 
-		if (!CTCollectionThreadLocal.isProductionMode() && group.isSite()) {
+		if (!CTCollectionThreadLocal.isProductionMode() && group.isSite() &&
+			FeatureFlagManagerUtil.isEnabled(
+				themeDisplay.getCompanyId(), "LPD-20131")) {
+
 			HttpSession httpSession = PortalSessionThreadLocal.getHttpSession();
 
 			long ctLastGroupId = GetterUtil.getLong(

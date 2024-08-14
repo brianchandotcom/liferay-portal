@@ -156,9 +156,11 @@ public class CPAttachmentFileEntryLocalServiceTest {
 			null, null, RandomTestUtil.nextDate(), _serviceContext);
 
 		Calendar displayDate = Calendar.getInstance();
-		Calendar expirationDate = Calendar.getInstance();
 
 		displayDate.setTime(RandomTestUtil.nextDate());
+
+		Calendar expirationDate = Calendar.getInstance();
+
 		expirationDate.setTime(RandomTestUtil.nextDate());
 
 		return _cpAttachmentFileEntryLocalService.addCPAttachmentFileEntry(

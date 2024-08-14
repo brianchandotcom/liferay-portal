@@ -42,7 +42,7 @@ import org.junit.runner.RunWith;
  * @author Paulo Albuquerque
  */
 @RunWith(Arquillian.class)
-public class DDMValidationDDMStructureCTUpgradeProcessTest
+public class DDMStructureCTUpgradeProcessTest
 	extends BaseCTUpgradeProcessTestCase {
 
 	@ClassRule

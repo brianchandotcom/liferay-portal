@@ -19,8 +19,8 @@ import org.junit.runner.RunWith;
  * @author Paulo Albuquerque
  */
 @RunWith(Arquillian.class)
-public class DDMValidationDDMStructureVersionCTUpgradeProcessTest
-	extends DDMValidationDDMStructureCTUpgradeProcessTest {
+public class DDMStructureVersionDDMStructureCTUpgradeProcessTest
+	extends DDMStructureCTUpgradeProcessTest {
 
 	@Override
 	protected CTModel<?> addCTModel() throws Exception {

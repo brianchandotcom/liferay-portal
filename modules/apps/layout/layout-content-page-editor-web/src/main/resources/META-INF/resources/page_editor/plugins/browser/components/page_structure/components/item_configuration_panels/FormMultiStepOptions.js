@@ -4,6 +4,7 @@
  */
 
 import {useControlledState} from '@liferay/layout-js-components-web';
+import classNames from 'classnames';
 import {openModal} from 'frontend-js-web';
 import React from 'react';
 
@@ -36,7 +37,9 @@ export default function FormMultiStepOptions({item, onValueSelect}) {
 	return (
 		<>
 			<SelectField
-				className="mb-2"
+				className={classNames('mb-2', {
+					'mt-3': Liferay.FeatureFlags['LPD-20213'],
+				})}
 				field={{
 					label: Liferay.Language.get('form-type'),
 					name: 'formType',

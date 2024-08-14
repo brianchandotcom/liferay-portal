@@ -106,9 +106,8 @@ public class StrutsUtil {
 		HttpServletRequest httpServletRequest, Throwable throwable) {
 
 		if (throwable == httpServletRequest.getAttribute(
-				StrutsUtil.EXCEPTION)) {
+				RequestDispatcher.ERROR_EXCEPTION)) {
 
-			httpServletRequest.removeAttribute(StrutsUtil.EXCEPTION);
 			httpServletRequest.removeAttribute(
 				RequestDispatcher.ERROR_EXCEPTION);
 			httpServletRequest.removeAttribute(
@@ -127,7 +126,8 @@ public class StrutsUtil {
 		HttpServletRequest httpServletRequest, String servletName,
 		Throwable throwable) {
 
-		httpServletRequest.setAttribute(StrutsUtil.EXCEPTION, throwable);
+		httpServletRequest.setAttribute(
+			RequestDispatcher.ERROR_EXCEPTION, throwable);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(StrutsUtil.class);

@@ -1619,12 +1619,21 @@ public class ObjectEntryLocalServiceImpl
 		}
 
 		if (serviceContext.isStrictAdd()) {
-			_updateAsset(
-				serviceContext.getUserId(), objectEntry,
-				serviceContext.getAssetCategoryIds(),
-				serviceContext.getAssetTagNames(),
-				serviceContext.getAssetLinkEntryIds(),
-				serviceContext.getAssetPriority(), serviceContext);
+			boolean indexingEnabled = serviceContext.isIndexingEnabled();
+
+			serviceContext.setIndexingEnabled(false);
+
+			try {
+				_updateAsset(
+					serviceContext.getUserId(), objectEntry,
+					serviceContext.getAssetCategoryIds(),
+					serviceContext.getAssetTagNames(),
+					serviceContext.getAssetLinkEntryIds(),
+					serviceContext.getAssetPriority(), serviceContext);
+			}
+			finally {
+				serviceContext.setIndexingEnabled(indexingEnabled);
+			}
 		}
 		else {
 			ObjectDefinition objectDefinition =

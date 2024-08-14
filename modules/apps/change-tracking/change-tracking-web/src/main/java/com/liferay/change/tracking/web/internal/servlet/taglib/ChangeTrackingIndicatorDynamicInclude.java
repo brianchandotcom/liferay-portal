@@ -22,6 +22,7 @@ import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.CTDisplayRendererRegistry;
 import com.liferay.change.tracking.web.internal.configuration.CTConfiguration;
 import com.liferay.change.tracking.web.internal.configuration.helper.CTSettingsConfigurationHelper;
+import com.liferay.change.tracking.web.internal.constants.CTWebKeys;
 import com.liferay.change.tracking.web.internal.security.permission.resource.CTPermission;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -645,20 +646,22 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 			HttpSession httpSession = PortalSessionThreadLocal.getHttpSession();
 
 			long ctLastGroupId = GetterUtil.getLong(
-				httpSession.getAttribute("ctLastGroupId"));
+				httpSession.getAttribute(CTWebKeys.CT_LAST_GROUP_ID));
 
 			if (ctLastGroupId == 0) {
 				ctLastGroupId = group.getGroupId();
 
-				httpSession.setAttribute("ctLastGroupId", ctLastGroupId);
+				httpSession.setAttribute(
+					CTWebKeys.CT_LAST_GROUP_ID, ctLastGroupId);
 			}
 
 			if (ctLastGroupId != group.getGroupId()) {
-				httpSession.setAttribute("ctShowPopover", Boolean.TRUE);
+				httpSession.setAttribute(
+					CTWebKeys.CT_SHOW_POPOVER, Boolean.TRUE);
 			}
 
 			if (GetterUtil.getBoolean(
-					httpSession.getAttribute("ctShowPopover"))) {
+					httpSession.getAttribute(CTWebKeys.CT_SHOW_POPOVER))) {
 
 				PanelCategoryHelper panelCategoryHelper =
 					new PanelCategoryHelper(_panelAppRegistry);

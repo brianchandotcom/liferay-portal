@@ -246,7 +246,7 @@ public class AssetPublisherConfigurationAction
 							AssetPublisherSelectionStyleConstants.
 								TYPE_ASSET_LIST)) {
 
-					_updateAssetListEntryPreferences(
+					updateAssetListEntryPreferences(
 						actionRequest, portletPreferences);
 				}
 
@@ -334,6 +334,48 @@ public class AssetPublisherConfigurationAction
 	protected String getDefaultSelectionStyle() {
 		return AssetPublisherSelectionStyleConfigurationUtil.
 			defaultSelectionStyle();
+	}
+
+	protected void updateAssetListEntryPreferences(
+			ActionRequest actionRequest, PortletPreferences portletPreferences)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-22837")) {
+			return;
+		}
+
+		AssetListEntry assetListEntry =
+			assetListEntryLocalService.fetchAssetListEntry(
+				GetterUtil.getLong(
+					getParameter(actionRequest, "assetListEntryId")));
+
+		if (assetListEntry == null) {
+			portletPreferences.reset("assetListEntryExternalReferenceCode");
+			portletPreferences.reset(
+				"assetListEntryGroupExternalReferenceCode");
+
+			return;
+		}
+
+		setPreference(
+			actionRequest, "assetListEntryExternalReferenceCode",
+			assetListEntry.getExternalReferenceCode());
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (assetListEntry.getGroupId() == themeDisplay.getScopeGroupId()) {
+			portletPreferences.reset(
+				"assetListEntryGroupExternalReferenceCode");
+		}
+		else {
+			Group group = groupLocalService.getGroup(
+				assetListEntry.getGroupId());
+
+			setPreference(
+				actionRequest, "assetListEntryGroupExternalReferenceCode",
+				group.getExternalReferenceCode());
+		}
 	}
 
 	@Reference
@@ -710,48 +752,6 @@ public class AssetPublisherConfigurationAction
 			displayStyle.equals("view-count-details")) {
 
 			portletPreferences.setValue("displayStyle", "full-content");
-		}
-	}
-
-	private void _updateAssetListEntryPreferences(
-			ActionRequest actionRequest, PortletPreferences portletPreferences)
-		throws Exception {
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-22837")) {
-			return;
-		}
-
-		AssetListEntry assetListEntry =
-			assetListEntryLocalService.fetchAssetListEntry(
-				GetterUtil.getLong(
-					getParameter(actionRequest, "assetListEntryId")));
-
-		if (assetListEntry == null) {
-			portletPreferences.reset("assetListEntryExternalReferenceCode");
-			portletPreferences.reset(
-				"assetListEntryGroupExternalReferenceCode");
-
-			return;
-		}
-
-		setPreference(
-			actionRequest, "assetListEntryExternalReferenceCode",
-			assetListEntry.getExternalReferenceCode());
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		if (assetListEntry.getGroupId() == themeDisplay.getScopeGroupId()) {
-			portletPreferences.reset(
-				"assetListEntryGroupExternalReferenceCode");
-		}
-		else {
-			Group group = groupLocalService.getGroup(
-				assetListEntry.getGroupId());
-
-			setPreference(
-				actionRequest, "assetListEntryGroupExternalReferenceCode",
-				group.getExternalReferenceCode());
 		}
 	}
 

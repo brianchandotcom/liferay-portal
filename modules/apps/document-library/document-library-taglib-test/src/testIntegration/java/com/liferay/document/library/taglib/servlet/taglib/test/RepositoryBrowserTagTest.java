@@ -75,6 +75,53 @@ public class RepositoryBrowserTagTest {
 		_testViewableByGuest("true", repositoryBrowserTag);
 	}
 
+	private MockHttpServletRequest _getMockHttpServletRequest()
+		throws PortalException {
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		String portletName = RandomTestUtil.randomString();
+
+		String attributeName = StringBundler.concat(
+			portletName, StringPool.DASH, WebKeys.CURRENT_PORTLET_URL);
+
+		MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
+			new MockLiferayPortletRenderRequest() {
+
+				@Override
+				public String getPortletName() {
+					return portletName;
+				}
+
+			};
+
+		mockLiferayPortletRenderRequest.setAttribute(
+			attributeName, new MockLiferayPortletURL());
+
+		mockHttpServletRequest.setAttribute(
+			JavaConstants.JAVAX_PORTLET_REQUEST,
+			mockLiferayPortletRenderRequest);
+
+		mockHttpServletRequest.setAttribute(
+			JavaConstants.JAVAX_PORTLET_RESPONSE,
+			new MockLiferayPortletActionResponse());
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, _getThemeDisplay());
+
+		return mockHttpServletRequest;
+	}
+
+	private ThemeDisplay _getThemeDisplay() throws PortalException {
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		themeDisplay.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
+		themeDisplay.setScopeGroupId(_group.getGroupId());
+
+		return themeDisplay;
+	}
+
 	private void _testViewableByGuest(
 			String expectedViewableByGuestValue,
 			RepositoryBrowserTag repositoryBrowserTag)
@@ -129,53 +176,6 @@ public class RepositoryBrowserTagTest {
 		Assert.assertEquals(
 			expectedViewableByGuestValue,
 			repositoryBrowserComponentContext.get("viewableByGuest"));
-	}
-
-	private MockHttpServletRequest _getMockHttpServletRequest()
-		throws PortalException {
-
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
-
-		String portletName = RandomTestUtil.randomString();
-
-		String attributeName = StringBundler.concat(
-			portletName, StringPool.DASH, WebKeys.CURRENT_PORTLET_URL);
-
-		MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
-			new MockLiferayPortletRenderRequest() {
-
-				@Override
-				public String getPortletName() {
-					return portletName;
-				}
-
-			};
-
-		mockLiferayPortletRenderRequest.setAttribute(
-			attributeName, new MockLiferayPortletURL());
-
-		mockHttpServletRequest.setAttribute(
-			JavaConstants.JAVAX_PORTLET_REQUEST,
-			mockLiferayPortletRenderRequest);
-
-		mockHttpServletRequest.setAttribute(
-			JavaConstants.JAVAX_PORTLET_RESPONSE,
-			new MockLiferayPortletActionResponse());
-		mockHttpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, _getThemeDisplay());
-
-		return mockHttpServletRequest;
-	}
-
-	private ThemeDisplay _getThemeDisplay() throws PortalException {
-		ThemeDisplay themeDisplay = new ThemeDisplay();
-
-		themeDisplay.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
-		themeDisplay.setScopeGroupId(_group.getGroupId());
-
-		return themeDisplay;
 	}
 
 	@DeleteAfterTestRun

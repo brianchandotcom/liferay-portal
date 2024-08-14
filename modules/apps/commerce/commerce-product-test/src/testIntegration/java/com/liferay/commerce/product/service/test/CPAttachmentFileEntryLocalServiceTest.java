@@ -116,11 +116,13 @@ public class CPAttachmentFileEntryLocalServiceTest {
 		CPAttachmentFileEntry cpAttachmentFileEntry = _addCPAttachmentFileEntry(
 			cpDefinition1);
 
-		Calendar displayDate = Calendar.getInstance();
-		Calendar expirationDate = Calendar.getInstance();
+		Calendar displayDateCalendar = Calendar.getInstance();
 
-		displayDate.setTime(RandomTestUtil.nextDate());
-		expirationDate.setTime(RandomTestUtil.nextDate());
+		displayDateCalendar.setTime(RandomTestUtil.nextDate());
+
+		Calendar expirationDateCalendar = Calendar.getInstance();
+
+		expirationDateCalendar.setTime(RandomTestUtil.nextDate());
 
 		_cpAttachmentFileEntryLocalService.addOrUpdateCPAttachmentFileEntry(
 			cpAttachmentFileEntry.getExternalReferenceCode(), _user.getUserId(),
@@ -128,15 +130,16 @@ public class CPAttachmentFileEntryLocalServiceTest {
 			_classNameLocalService.getClassNameId(CPDefinition.class),
 			cpDefinition2.getCPDefinitionId(), 0,
 			cpAttachmentFileEntry.getFileEntryId(), false, null,
-			displayDate.get(Calendar.MONTH),
-			displayDate.get(Calendar.DAY_OF_MONTH),
-			displayDate.get(Calendar.YEAR), displayDate.get(Calendar.HOUR),
-			displayDate.get(Calendar.MINUTE),
-			expirationDate.get(Calendar.MONTH),
-			expirationDate.get(Calendar.DAY_OF_MONTH),
-			expirationDate.get(Calendar.YEAR),
-			expirationDate.get(Calendar.HOUR),
-			expirationDate.get(Calendar.MINUTE), true, true,
+			displayDateCalendar.get(Calendar.MONTH),
+			displayDateCalendar.get(Calendar.DAY_OF_MONTH),
+			displayDateCalendar.get(Calendar.YEAR),
+			displayDateCalendar.get(Calendar.HOUR),
+			displayDateCalendar.get(Calendar.MINUTE),
+			expirationDateCalendar.get(Calendar.MONTH),
+			expirationDateCalendar.get(Calendar.DAY_OF_MONTH),
+			expirationDateCalendar.get(Calendar.YEAR),
+			expirationDateCalendar.get(Calendar.HOUR),
+			expirationDateCalendar.get(Calendar.MINUTE), true, true,
 			RandomTestUtil.randomLocaleStringMap(), null,
 			RandomTestUtil.nextDouble(),
 			CPAttachmentFileEntryConstants.TYPE_OTHER, _serviceContext);
@@ -155,28 +158,29 @@ public class CPAttachmentFileEntryLocalServiceTest {
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
 			null, null, RandomTestUtil.nextDate(), _serviceContext);
 
-		Calendar displayDate = Calendar.getInstance();
+		Calendar displayDateCalendar = Calendar.getInstance();
 
-		displayDate.setTime(RandomTestUtil.nextDate());
+		displayDateCalendar.setTime(RandomTestUtil.nextDate());
 
-		Calendar expirationDate = Calendar.getInstance();
+		Calendar expirationDateCalendar = Calendar.getInstance();
 
-		expirationDate.setTime(RandomTestUtil.nextDate());
+		expirationDateCalendar.setTime(RandomTestUtil.nextDate());
 
 		return _cpAttachmentFileEntryLocalService.addCPAttachmentFileEntry(
 			RandomTestUtil.randomString(), _user.getUserId(),
 			_company.getGroupId(),
 			_classNameLocalService.getClassNameId(CPDefinition.class),
 			cpDefinition.getCPDefinitionId(), fileEntry.getFileEntryId(), false,
-			null, displayDate.get(Calendar.MONTH),
-			displayDate.get(Calendar.DAY_OF_MONTH),
-			displayDate.get(Calendar.YEAR), displayDate.get(Calendar.HOUR),
-			displayDate.get(Calendar.MINUTE),
-			expirationDate.get(Calendar.MONTH),
-			expirationDate.get(Calendar.DAY_OF_MONTH),
-			expirationDate.get(Calendar.YEAR),
-			expirationDate.get(Calendar.HOUR),
-			expirationDate.get(Calendar.MINUTE), true, true,
+			null, displayDateCalendar.get(Calendar.MONTH),
+			displayDateCalendar.get(Calendar.DAY_OF_MONTH),
+			displayDateCalendar.get(Calendar.YEAR),
+			displayDateCalendar.get(Calendar.HOUR),
+			displayDateCalendar.get(Calendar.MINUTE),
+			expirationDateCalendar.get(Calendar.MONTH),
+			expirationDateCalendar.get(Calendar.DAY_OF_MONTH),
+			expirationDateCalendar.get(Calendar.YEAR),
+			expirationDateCalendar.get(Calendar.HOUR),
+			expirationDateCalendar.get(Calendar.MINUTE), true, true,
 			RandomTestUtil.randomLocaleStringMap(), null,
 			RandomTestUtil.nextDouble(),
 			CPAttachmentFileEntryConstants.TYPE_OTHER, _serviceContext);

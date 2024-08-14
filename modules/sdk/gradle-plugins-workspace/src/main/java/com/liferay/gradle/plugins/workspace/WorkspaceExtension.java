@@ -405,6 +405,10 @@ public class WorkspaceExtension {
 		_targetPlatformVersion = targetPlatformVersion;
 	}
 
+	public void setVirtualInstanceId(Object virtualInstanceId) {
+		_virtualInstanceId = virtualInstanceId;
+	}
+
 	private Object _getProperty(Object object, String keySuffix) {
 		return GradleUtil.getProperty(
 			object, WorkspacePlugin.PROPERTY_PREFIX + keySuffix);
@@ -481,6 +485,6 @@ public class WorkspaceExtension {
 		new LinkedHashSet<>();
 	private final Plugin<Project> _rootProjectConfigurator;
 	private Object _targetPlatformVersion;
-	private final Object _virtualInstanceId;
+	private Object _virtualInstanceId;
 
 }

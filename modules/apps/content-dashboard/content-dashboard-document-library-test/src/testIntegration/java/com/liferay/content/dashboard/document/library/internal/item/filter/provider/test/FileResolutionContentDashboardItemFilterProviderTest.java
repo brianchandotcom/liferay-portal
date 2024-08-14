@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -84,14 +85,23 @@ public class FileResolutionContentDashboardItemFilterProviderTest {
 			"dependencies/medium_image.jpg");
 		FileEntry smallResolutionFileEntry = _addDLFileEntry(
 			"dependencies/small_image.jpg");
+		FileEntry smallMediumResolutionFileEntry = _addDLFileEntry(
+			"dependencies/small_medium_image.jpg");
 
 		List<Document> documents = _getDocuments(_getMockHttpServletRequest());
 
-		Assert.assertEquals(documents.toString(), 3, documents.size());
+		Assert.assertEquals(documents.toString(), 4, documents.size());
 
-		_assertGetDocuments(largeResolutionFileEntry, "large");
-		_assertGetDocuments(mediumResolutionFileEntry, "medium");
-		_assertGetDocuments(smallResolutionFileEntry, "small");
+		_assertGetDocuments(
+			new long[] {largeResolutionFileEntry.getFileEntryId()}, "large");
+		_assertGetDocuments(
+			new long[] {
+				mediumResolutionFileEntry.getFileEntryId(),
+				smallMediumResolutionFileEntry.getFileEntryId()
+			},
+			"medium");
+		_assertGetDocuments(
+			new long[] {smallResolutionFileEntry.getFileEntryId()}, "small");
 	}
 
 	private FileEntry _addDLFileEntry(String fileName) throws Exception {
@@ -108,21 +118,24 @@ public class FileResolutionContentDashboardItemFilterProviderTest {
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 	}
 
-	private void _assertGetDocuments(FileEntry fileEntry, String resolution)
+	private void _assertGetDocuments(long[] fileEntryIds, String resolution)
 		throws Exception {
 
 		List<Document> documents = _getDocuments(
 			_getMockHttpServletRequest(resolution));
 
-		Assert.assertEquals(documents.toString(), 1, documents.size());
-
-		Document document = documents.get(0);
-
 		Assert.assertEquals(
-			DLFileEntry.class.getName(), document.get(Field.ENTRY_CLASS_NAME));
-		Assert.assertEquals(
-			String.valueOf(fileEntry.getFileEntryId()),
-			document.get(Field.ENTRY_CLASS_PK));
+			documents.toString(), fileEntryIds.length, documents.size());
+
+		for (Document document : documents) {
+			Assert.assertEquals(
+				DLFileEntry.class.getName(),
+				document.get(Field.ENTRY_CLASS_NAME));
+			Assert.assertTrue(
+				ArrayUtil.contains(
+					fileEntryIds,
+					Long.valueOf(document.get(Field.ENTRY_CLASS_PK))));
+		}
 	}
 
 	private List<Document> _getDocuments(HttpServletRequest httpServletRequest)

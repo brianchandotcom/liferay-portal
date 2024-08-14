@@ -82,10 +82,12 @@ public class PortalRequestProcessor {
 		"javax.servlet.include.servlet_path";
 
 	public PortalRequestProcessor(
-		ModuleConfig moduleConfig, ServletContext servletContext) {
+		ModuleConfig moduleConfig, ServletContext servletContext,
+		String servletName) {
 
 		_moduleConfig = moduleConfig;
 		_servletContext = servletContext;
+		_servletName = servletName;
 
 		_definitions = (Map<String, Definition>)servletContext.getAttribute(
 			TilesUtil.DEFINITIONS);
@@ -326,7 +328,8 @@ public class PortalRequestProcessor {
 		}
 
 		StrutsUtil.forward(
-			httpServletRequest, httpServletResponse, _servletContext, uri);
+			httpServletRequest, httpServletResponse, _servletContext,
+			_servletName, uri);
 	}
 
 	private boolean _isPortletPath(String path) {
@@ -868,6 +871,7 @@ public class PortalRequestProcessor {
 	private final ModuleConfig _moduleConfig;
 	private final Set<String> _publicPaths = new HashSet<>();
 	private final ServletContext _servletContext;
+	private final String _servletName;
 	private final Set<String> _trackerIgnorePaths;
 
 }

@@ -167,17 +167,17 @@ public class SaveScimConfigurationMVCActionCommand
 			Indexer<UserGroup> userGroupIndexer =
 				IndexerRegistryUtil.nullSafeGetIndexer(UserGroup.class);
 
-			ActionableDynamicQuery query =
+			ActionableDynamicQuery actionableDynamicQuery =
 				_expandoValueLocalService.getActionableDynamicQuery();
 
-			query.setAddCriteriaMethod(
+			actionableDynamicQuery.setAddCriteriaMethod(
 				dynamicQuery -> {
 					Property dataProperty = PropertyFactoryUtil.forName("data");
 
 					dynamicQuery.add(dataProperty.eq(scimClientId));
 				});
 
-			query.setPerformActionMethod(
+			actionableDynamicQuery.setPerformActionMethod(
 				(ExpandoValue expandoValue) -> {
 					_expandoRowLocalService.deleteRow(
 						expandoValue.getTableId(), expandoValue.getClassPK());
@@ -197,7 +197,7 @@ public class SaveScimConfigurationMVCActionCommand
 					}
 				});
 
-			query.performActions();
+			actionableDynamicQuery.performActions();
 		}
 		else if (Objects.equals(cmd, "revoke")) {
 			OAuth2Application oAuth2Application =

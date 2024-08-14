@@ -27,6 +27,9 @@ module.exports = {
 					'@liferay/amd-loader': {
 						'/': '*',
 					},
+					'@liferay/analytics-reports-js-components-web': {
+						'/': '*',
+					},
 					'@liferay/asset-categories-item-selector-web': {
 						'/': '*',
 					},
@@ -371,6 +374,7 @@ module.exports = {
 			'@liferay/accessibility-menu-web': [],
 			'@liferay/accessibility-settings-state-web': [],
 			'@liferay/address-web': [],
+			'@liferay/analytics-reports-js-components-web': [],
 			'@liferay/content-dashboard-web': [],
 			'@liferay/cookies-banner-web': [],
 			'@liferay/document-library-preview-css': [],

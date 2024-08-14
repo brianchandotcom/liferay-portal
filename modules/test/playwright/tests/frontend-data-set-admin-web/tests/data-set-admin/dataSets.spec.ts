@@ -16,6 +16,7 @@ export const test = mergeTests(
 	dataSetManagerApiHelpersTest,
 	dataSetsPageTest,
 	featureFlagsTest({
+		'LPD-25230': true,
 		'LPS-164563': true,
 	}),
 	loginTest(),
@@ -29,6 +30,13 @@ const blogPostsDataSetConfig = {
 	restApplication: '/headless-delivery/v1.0',
 	restEndpoint: '/v1.0/sites/{siteId}/blog-postings',
 	restSchema: 'BlogPosting',
+};
+
+const cartDataSetConfig = {
+	name: 'Carts',
+	restApplication: '/headless-commerce-delivery-cart/v1.0',
+	restEndpoint: '/v1.0/channels/{channelId}/account/{accountId}/carts',
+	restSchema: 'Cart',
 };
 
 const catalogsDataSetConfig = {
@@ -199,6 +207,26 @@ test('Create parameterized data set via UI', async ({dataSetsPage, page}) => {
 		await dataSetsPage.deleteDataSet(blogPostsDataSetConfig.name);
 	});
 });
+
+test(
+	'Create parameterized data set with resolved parameters via UI',
+	{tag: '@LPD-25230'},
+	async ({dataSetsPage, page}) => {
+		await test.step('Create Data Set', async () => {
+			await dataSetsPage.goto();
+			await dataSetsPage.createDataSet(cartDataSetConfig);
+		});
+
+		await assertTableColumnLabels(page);
+
+		await assertTableCellContent({dataSetConfig: cartDataSetConfig, page});
+
+		await assertTableActionLabels(page);
+
+		await test.step('Delete Data Set', async () => {
+			await dataSetsPage.deleteDataSet(cartDataSetConfig.name);
+		});
+})
 
 test('Create data set via API', async ({
 	dataSetManagerApiHelpers,

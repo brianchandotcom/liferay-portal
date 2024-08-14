@@ -412,15 +412,19 @@ public class SocialActivityCounterLocalServiceImpl
 	public void disableActivityCounters(long classNameId, long classPK)
 		throws PortalException {
 
+		List<SocialActivityCounter> activityCounters =
+			socialActivityCounterPersistence.findByC_C(classNameId, classPK);
+
+		if (activityCounters.isEmpty()) {
+			return;
+		}
+
 		AssetEntry assetEntry = _assetEntryPersistence.fetchByC_C(
 			classNameId, classPK);
 
 		if (assetEntry == null) {
 			return;
 		}
-
-		List<SocialActivityCounter> activityCounters =
-			socialActivityCounterPersistence.findByC_C(classNameId, classPK);
 
 		adjustUserContribution(assetEntry, false);
 
@@ -471,15 +475,19 @@ public class SocialActivityCounterLocalServiceImpl
 	public void enableActivityCounters(long classNameId, long classPK)
 		throws PortalException {
 
+		List<SocialActivityCounter> activityCounters =
+			socialActivityCounterPersistence.findByC_C(classNameId, classPK);
+
+		if (activityCounters.isEmpty()) {
+			return;
+		}
+
 		AssetEntry assetEntry = _assetEntryPersistence.fetchByC_C(
 			classNameId, classPK);
 
 		if (assetEntry == null) {
 			return;
 		}
-
-		List<SocialActivityCounter> activityCounters =
-			socialActivityCounterPersistence.findByC_C(classNameId, classPK);
 
 		adjustUserContribution(assetEntry, true);
 

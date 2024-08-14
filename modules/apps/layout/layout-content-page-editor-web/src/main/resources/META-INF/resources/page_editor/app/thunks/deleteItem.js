@@ -72,6 +72,8 @@ export default function deleteItem({itemIds, selectItems = () => {}}) {
 				document
 					.querySelector('button[data-panel-id="browser"]')
 					.focus();
+
+				selectItems(null);
 			}
 			else {
 				selectFirstControlsItem({

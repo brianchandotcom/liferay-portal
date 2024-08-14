@@ -6,12 +6,18 @@
 import '@testing-library/jest-dom/extend-expect';
 import {Node} from 'react-flow-renderer';
 
-import {checkPostalAddressUnsupportedObjectRelationship} from '../../components/ModelBuilder/utils';
+import {
+	checkPostalAddressUnsupportedObjectRelationship,
+	getUnsupportedObjectRelationshipErrorMessage,
+} from '../../components/ModelBuilder/utils';
 
 interface BuildObjectDefinitionNodeMockProps {
+	linkedObjectDefinition?: boolean;
+	modifiable?: boolean;
 	objectDefinitionExternalReferenceCode: string;
 	objectDefinitionName: string;
 	objectRelationships?: ObjectRelationship[];
+	storageType?: string;
 }
 
 const objectRelationshipMock = {
@@ -37,9 +43,12 @@ const objectRelationshipMock = {
 } as ObjectRelationship;
 
 function buildObjectDefinitionNodeMock({
+	linkedObjectDefinition,
+	modifiable,
 	objectDefinitionExternalReferenceCode,
 	objectDefinitionName,
 	objectRelationships,
+	storageType,
 }: BuildObjectDefinitionNodeMockProps): Node<ObjectDefinitionNodeData> {
 	return {
 		data: {
@@ -67,8 +76,8 @@ function buildObjectDefinitionNodeMock({
 			label: {
 				en_US: '',
 			},
-			linkedObjectDefinition: false,
-			modifiable: true,
+			linkedObjectDefinition: linkedObjectDefinition ?? false,
+			modifiable: modifiable ?? true,
 			name: objectDefinitionName,
 			objectActions: [],
 			objectFields: [],
@@ -92,6 +101,7 @@ function buildObjectDefinitionNodeMock({
 				label: 'approved',
 				label_i18n: 'Approved',
 			},
+			storageType: storageType ?? 'default',
 			system: true,
 			titleObjectFieldId: 1233,
 			titleObjectFieldName: 'name',
@@ -207,5 +217,103 @@ describe('checkPostalAddressUnsupportedObjectRelationship function', () => {
 			);
 
 		expect(unsupportedObjectRelationship).toBe(false);
+	});
+});
+
+describe('getUnsupportedObjectRelationshipErrorMessage function', () => {
+	it('returns errorMessage when source and target object definition nodes are unmodifiable', () => {
+		const unmodifiableObjectDefinition = buildObjectDefinitionNodeMock({
+			modifiable: false,
+			objectDefinitionExternalReferenceCode: 'customObjectDefinitionERC',
+			objectDefinitionName: 'customObject',
+		});
+
+		const unmodifiableObjectDefinition2 = buildObjectDefinitionNodeMock({
+			modifiable: false,
+			objectDefinitionExternalReferenceCode: 'customObjectDefinitionERC2',
+			objectDefinitionName: 'customObject2',
+		});
+
+		const errorMessage = getUnsupportedObjectRelationshipErrorMessage(
+			[unmodifiableObjectDefinition, unmodifiableObjectDefinition2],
+			unmodifiableObjectDefinition,
+			unmodifiableObjectDefinition2
+		);
+
+		expect(errorMessage).toMatchObject({
+			errorMessage: 'unmodifiable-system-objects-cannot-be-related',
+		});
+	});
+
+	it('returns errorMessage when the source node is a linked object definition', () => {
+		const linkedObjectDefinition = buildObjectDefinitionNodeMock({
+			linkedObjectDefinition: true,
+			objectDefinitionExternalReferenceCode: 'customObjectDefinitionERC',
+			objectDefinitionName: 'customObject',
+		});
+
+		const customObjectDefinition2 = buildObjectDefinitionNodeMock({
+			objectDefinitionExternalReferenceCode: 'customObjectDefinitionERC2',
+			objectDefinitionName: 'customObject2',
+		});
+
+		const errorMessage = getUnsupportedObjectRelationshipErrorMessage(
+			[linkedObjectDefinition, customObjectDefinition2],
+			linkedObjectDefinition,
+			customObjectDefinition2
+		);
+
+		expect(errorMessage).toMatchObject({
+			errorMessage:
+				'adding-relationships-directly-to-linked-objects-is-not-allowed',
+		});
+	});
+
+	it('returns errorMessage when source and target object definition nodes have Salesforce storageType', () => {
+		const salesforceObjectDefinition = buildObjectDefinitionNodeMock({
+			objectDefinitionExternalReferenceCode: 'customObjectDefinitionERC',
+			objectDefinitionName: 'customObject',
+			storageType: 'salesforce',
+		});
+
+		const salesforceObjectDefinition2 = buildObjectDefinitionNodeMock({
+			objectDefinitionExternalReferenceCode: 'customObjectDefinitionERC2',
+			objectDefinitionName: 'customObject2',
+			storageType: 'salesforce',
+		});
+
+		const errorMessage = getUnsupportedObjectRelationshipErrorMessage(
+			[salesforceObjectDefinition, salesforceObjectDefinition2],
+			salesforceObjectDefinition,
+			salesforceObjectDefinition2
+		);
+
+		expect(errorMessage).toMatchObject({
+			errorMessage: 'salesforce-objects-do-not-support-relationships',
+		});
+	});
+
+	it('returns errorMessage when there is an unsupported postal address object relationship', () => {
+		const customObjectDefinition = buildObjectDefinitionNodeMock({
+			objectDefinitionExternalReferenceCode: 'customObjectDefinitionERC',
+			objectDefinitionName: 'customObject',
+		});
+
+		const postalAddressObjectDefinition = buildObjectDefinitionNodeMock({
+			objectDefinitionExternalReferenceCode: 'L_POSTAL_ADDRESS',
+			objectDefinitionName: 'Address',
+		});
+
+		const errorMessage = getUnsupportedObjectRelationshipErrorMessage(
+			[customObjectDefinition, postalAddressObjectDefinition],
+			customObjectDefinition,
+			postalAddressObjectDefinition
+		);
+
+		expect(errorMessage).toMatchObject({
+			errorMessage:
+				'postal-address-can-only-have-a-relationship-with-the-account-object',
+			learnMessage: 'accessing-accounts-data-from-custom-objects',
+		});
 	});
 });

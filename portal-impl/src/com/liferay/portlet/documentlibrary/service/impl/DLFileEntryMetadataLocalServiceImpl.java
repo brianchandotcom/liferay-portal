@@ -5,6 +5,7 @@
 
 package com.liferay.portlet.documentlibrary.service.impl;
 
+import com.liferay.document.library.kernel.exception.DuplicateDLFileEntryMetadataExternalReferenceCodeException;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
@@ -12,14 +13,17 @@ import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructureLinkManagerUtil;
 import com.liferay.dynamic.data.mapping.kernel.StorageEngineManagerUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.documentlibrary.service.base.DLFileEntryMetadataLocalServiceBaseImpl;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Alexander Chow
@@ -132,7 +136,8 @@ public class DLFileEntryMetadataLocalServiceImpl
 
 	@Override
 	public void updateFileEntryMetadata(
-			long companyId, List<DDMStructure> ddmStructures, long fileEntryId,
+			String externalReferenceCode, long companyId,
+			List<DDMStructure> ddmStructures, long fileEntryId,
 			long fileVersionId, Map<String, DDMFormValues> ddmFormValuesMap,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -143,15 +148,16 @@ public class DLFileEntryMetadataLocalServiceImpl
 
 			if (ddmFormValues != null) {
 				updateFileEntryMetadata(
-					companyId, ddmStructure, fileEntryId, fileVersionId,
-					ddmFormValues, serviceContext);
+					externalReferenceCode, companyId, ddmStructure, fileEntryId,
+					fileVersionId, ddmFormValues, serviceContext);
 			}
 		}
 	}
 
 	@Override
 	public void updateFileEntryMetadata(
-			long fileEntryTypeId, long fileEntryId, long fileVersionId,
+			String externalReferenceCode, long fileEntryTypeId,
+			long fileEntryId, long fileVersionId,
 			Map<String, DDMFormValues> ddmFormValuesMap,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -160,14 +166,15 @@ public class DLFileEntryMetadataLocalServiceImpl
 			_dlFileEntryTypeLocalService.getFileEntryType(fileEntryTypeId);
 
 		updateFileEntryMetadata(
-			fileEntryType.getCompanyId(), fileEntryType.getDDMStructures(),
-			fileEntryId, fileVersionId, ddmFormValuesMap, serviceContext);
+			externalReferenceCode, fileEntryType.getCompanyId(),
+			fileEntryType.getDDMStructures(), fileEntryId, fileVersionId,
+			ddmFormValuesMap, serviceContext);
 	}
 
 	protected void updateFileEntryMetadata(
-			long companyId, DDMStructure ddmStructure, long fileEntryId,
-			long fileVersionId, DDMFormValues ddmFormValues,
-			ServiceContext serviceContext)
+			String externalReferenceCode, long companyId,
+			DDMStructure ddmStructure, long fileEntryId, long fileVersionId,
+			DDMFormValues ddmFormValues, ServiceContext serviceContext)
 		throws PortalException {
 
 		DLFileEntryMetadata fileEntryMetadata =
@@ -175,11 +182,23 @@ public class DLFileEntryMetadataLocalServiceImpl
 				ddmStructure.getStructureId(), fileVersionId);
 
 		if (fileEntryMetadata != null) {
+			if (!Objects.equals(
+					fileEntryMetadata.getExternalReferenceCode(),
+					externalReferenceCode)) {
+
+				fileEntryMetadata.setExternalReferenceCode(
+					externalReferenceCode);
+
+				fileEntryMetadata = dlFileEntryMetadataPersistence.update(
+					fileEntryMetadata);
+			}
+
 			StorageEngineManagerUtil.update(
 				fileEntryMetadata.getDDMStorageId(), ddmFormValues,
 				serviceContext);
 		}
 		else {
+			_validateExternalReferenceCode(externalReferenceCode, companyId);
 
 			// File entry metadata
 
@@ -188,6 +207,7 @@ public class DLFileEntryMetadataLocalServiceImpl
 			fileEntryMetadata = dlFileEntryMetadataPersistence.create(
 				fileEntryMetadataId);
 
+			fileEntryMetadata.setExternalReferenceCode(externalReferenceCode);
 			fileEntryMetadata.setDDMStorageId(
 				StorageEngineManagerUtil.create(
 					companyId, ddmStructure.getStructureId(), ddmFormValues,
@@ -206,6 +226,25 @@ public class DLFileEntryMetadataLocalServiceImpl
 					DLFileEntryMetadata.class),
 				fileEntryMetadata.getFileEntryMetadataId(),
 				ddmStructure.getStructureId());
+		}
+	}
+
+	private void _validateExternalReferenceCode(
+		String externalReferenceCode, long companyId) {
+
+		if (Validator.isNull(externalReferenceCode)) {
+			return;
+		}
+
+		DLFileEntryMetadata dlFileEntryMetadata =
+			dlFileEntryMetadataPersistence.fetchByERC_C(
+				externalReferenceCode, companyId);
+
+		if (dlFileEntryMetadata != null) {
+			throw new DuplicateDLFileEntryMetadataExternalReferenceCodeException(
+				StringBundler.concat(
+					"Duplicate file entry metadata external reference code ",
+					externalReferenceCode, " in company ", companyId));
 		}
 	}
 

@@ -212,12 +212,12 @@ public class AssetCategoryVocabularyVisibilitySearchTest {
 
 	private void _assertSearch(
 			String keyword, String assetCategoryIdsFieldName,
-			String assetVocabularyIdsFieldName,
-			List<Long> expectedAssetCategoryIds,
 			String assetCategoryTitlesFieldName,
+			String assetVocabularyIdsFieldName,
+			String groupAssetCategoryExternalReferenceCodeFieldName,
+			List<Long> expectedAssetCategoryIds,
 			List<String> expectedAssetCategoryTitles,
 			List<Long> expectedAssetVocabularyIds,
-			String groupAssetCategoryExternalReferenceCodeFieldName,
 			List<String> expectedGroupAssetCategoryExternalReferenceCodes)
 		throws Exception {
 
@@ -259,11 +259,11 @@ public class AssetCategoryVocabularyVisibilitySearchTest {
 
 		_assertSearch(
 			keyword, Field.ASSET_INTERNAL_CATEGORY_IDS,
-			Field.ASSET_INTERNAL_VOCABULARY_IDS, assetCategoryIds,
 			Field.getLocalizedName(
 				LocaleUtil.US, Field.ASSET_INTERNAL_CATEGORY_TITLES),
-			assetCategoryTitles, assetVocabularyIds,
+			Field.ASSET_INTERNAL_VOCABULARY_IDS,
 			"groupAssetInternalCategoryExternalReferenceCodes",
+			assetCategoryIds, assetCategoryTitles, assetVocabularyIds,
 			groupAssetCategoryExternalReferenceCodes);
 	}
 
@@ -274,11 +274,11 @@ public class AssetCategoryVocabularyVisibilitySearchTest {
 		throws Exception {
 
 		_assertSearch(
-			keyword, Field.ASSET_CATEGORY_IDS, Field.ASSET_VOCABULARY_IDS,
-			assetCategoryIds,
+			keyword, Field.ASSET_CATEGORY_IDS,
 			Field.getLocalizedName(LocaleUtil.US, Field.ASSET_CATEGORY_TITLES),
+			Field.ASSET_VOCABULARY_IDS,
+			"groupAssetCategoryExternalReferenceCodes", assetCategoryIds,
 			assetCategoryTitles, assetVocabularyIds,
-			"groupAssetCategoryExternalReferenceCodes",
 			groupAssetCategoryExternalReferenceCodes);
 	}
 

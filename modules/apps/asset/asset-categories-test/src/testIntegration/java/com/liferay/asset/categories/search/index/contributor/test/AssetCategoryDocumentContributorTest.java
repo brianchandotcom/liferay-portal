@@ -105,13 +105,13 @@ public class AssetCategoryDocumentContributorTest {
 		_testContribute(
 			_blogsEntry,
 			_getGroupAssetCategoryExpectedExternalReferenceCodes(
-				_publicAssetCategoryList),
+				_publicAssetCategories),
 			"groupAssetCategoryExternalReferenceCodes");
 
 		_testContribute(
 			_journalArticle,
 			_getGroupAssetCategoryExpectedExternalReferenceCodes(
-				_publicAssetCategoryList),
+				_publicAssetCategories),
 			"groupAssetCategoryExternalReferenceCodes");
 	}
 
@@ -122,13 +122,13 @@ public class AssetCategoryDocumentContributorTest {
 		_testContribute(
 			_blogsEntry,
 			_getGroupAssetCategoryExpectedExternalReferenceCodes(
-				_internalAssetCategoryList),
+				_internalAssetCategories),
 			"groupAssetInternalCategoryExternalReferenceCodes");
 
 		_testContribute(
 			_journalArticle,
 			_getGroupAssetCategoryExpectedExternalReferenceCodes(
-				_internalAssetCategoryList),
+				_internalAssetCategories),
 			"groupAssetInternalCategoryExternalReferenceCodes");
 	}
 
@@ -139,37 +139,37 @@ public class AssetCategoryDocumentContributorTest {
 		_testContribute(
 			_blogsEntry,
 			_getGroupAssetVocabularyCategoryExternalReferenceCodes(
-				_publicAssetCategoryList),
+				_publicAssetCategories),
 			"groupAssetVocabularyCategoryExternalReferenceCodes");
 
 		_testContribute(
 			_journalArticle,
 			_getGroupAssetVocabularyCategoryExternalReferenceCodes(
-				_publicAssetCategoryList),
+				_publicAssetCategories),
 			"groupAssetVocabularyCategoryExternalReferenceCodes");
 	}
 
 	private List<String> _getGroupAssetCategoryExpectedExternalReferenceCodes(
 		List<AssetCategory> assetCategories) {
 
-		List<String> assetCategoryExternalReferenceCodeList = new ArrayList<>(
+		List<String> assetCategoryExternalReferenceCodes = new ArrayList<>(
 			assetCategories.size());
 
 		for (AssetCategory assetCategory : assetCategories) {
-			assetCategoryExternalReferenceCodeList.add(
+			assetCategoryExternalReferenceCodes.add(
 				StringBundler.concat(
 					_group.getExternalReferenceCode(), _DELIMITER,
 					assetCategory.getExternalReferenceCode()));
 		}
 
-		return assetCategoryExternalReferenceCodeList;
+		return assetCategoryExternalReferenceCodes;
 	}
 
 	private List<String> _getGroupAssetVocabularyCategoryExternalReferenceCodes(
 			List<AssetCategory> assetCategories)
 		throws Exception {
 
-		List<String> assetCategoryExternalReferenceCodeList = new ArrayList<>(
+		List<String> assetCategoryExternalReferenceCodes = new ArrayList<>(
 			assetCategories.size());
 
 		for (AssetCategory assetCategory : assetCategories) {
@@ -177,14 +177,14 @@ public class AssetCategoryDocumentContributorTest {
 				_assetVocabularyLocalService.getAssetVocabulary(
 					assetCategory.getVocabularyId());
 
-			assetCategoryExternalReferenceCodeList.add(
+			assetCategoryExternalReferenceCodes.add(
 				StringBundler.concat(
 					_group.getExternalReferenceCode(), _DELIMITER,
 					assetVocabulary.getExternalReferenceCode(), _DELIMITER,
 					assetCategory.getExternalReferenceCode()));
 		}
 
-		return assetCategoryExternalReferenceCodeList;
+		return assetCategoryExternalReferenceCodes;
 	}
 
 	private boolean _isSearchEngineSolr() {
@@ -218,7 +218,7 @@ public class AssetCategoryDocumentContributorTest {
 					RandomTestUtil.randomString(),
 					internalAssetVocabulary.getVocabularyId(), _serviceContext);
 
-			_internalAssetCategoryList.add(assetCategory);
+			_internalAssetCategories.add(assetCategory);
 		}
 
 		AssetVocabulary publicAssetVocabulary = _setUpAssetVocabulary(
@@ -231,16 +231,15 @@ public class AssetCategoryDocumentContributorTest {
 					RandomTestUtil.randomString(),
 					publicAssetVocabulary.getVocabularyId(), _serviceContext);
 
-			_publicAssetCategoryList.add(assetCategory);
+			_publicAssetCategories.add(assetCategory);
 		}
 
-		List<Long> assetCategoryIdList = TransformUtil.transform(
-			ListUtil.concat(
-				_internalAssetCategoryList, _publicAssetCategoryList),
+		List<Long> assetCategoryIds = TransformUtil.transform(
+			ListUtil.concat(_internalAssetCategories, _publicAssetCategories),
 			assetCategory -> assetCategory.getCategoryId());
 
 		_serviceContext.setAssetCategoryIds(
-			ArrayUtil.toLongArray(assetCategoryIdList));
+			ArrayUtil.toLongArray(assetCategoryIds));
 	}
 
 	private void _testContribute(
@@ -292,11 +291,11 @@ public class AssetCategoryDocumentContributorTest {
 
 	private BlogsEntry _blogsEntry;
 	private Group _group;
-	private final List<AssetCategory> _internalAssetCategoryList =
+	private final List<AssetCategory> _internalAssetCategories =
 		new ArrayList<>(2);
 	private JournalArticle _journalArticle;
-	private final List<AssetCategory> _publicAssetCategoryList =
-		new ArrayList<>(2);
+	private final List<AssetCategory> _publicAssetCategories = new ArrayList<>(
+		2);
 
 	@Inject
 	private Queries _queries;

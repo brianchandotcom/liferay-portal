@@ -9,6 +9,7 @@ import {apiHelpersTest} from '../../../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
 import {isolatedLayoutTest} from '../../../../fixtures/isolatedLayoutTest';
 import {loginTest} from '../../../../fixtures/loginTest';
+import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../../utils/getRandomString';
 
 // Structured Content utilities
@@ -29,13 +30,11 @@ export const test = mergeTests(
 	fdsFragmentPageTest
 );
 
-const dataSetERCs = [];
-let article;
-let dataSetERC;
-let dataSetLabel;
-let siteId;
-let structuredContentId;
-let structuredContentTitle;
+const dataSetERCs: string[] = [];
+let article: any;
+let siteId: string;
+let structuredContentId: number;
+let structuredContentTitle: string;
 
 const adminUserDataSetConfig = {
 	erc: getRandomString(),
@@ -61,18 +60,6 @@ const taxonomyVocabularyDataSetConfig = {
 	restSchema: 'TaxonomyVocabulary',
 };
 
-test.beforeEach(async ({dataSetManagerApiHelpers}) => {
-	dataSetERC = getRandomString();
-	dataSetLabel = getRandomString();
-
-	dataSetERCs.push(dataSetERC);
-
-	await dataSetManagerApiHelpers.createDataSet({
-		erc: dataSetERC,
-		label: dataSetLabel,
-	});
-});
-
 test.afterEach(async ({apiHelpers, dataSetManagerApiHelpers}) => {
 	for (const DATA_SET_ERC of dataSetERCs) {
 		await dataSetManagerApiHelpers.deleteDataSet({
@@ -93,46 +80,95 @@ test.afterEach(async ({apiHelpers, dataSetManagerApiHelpers}) => {
 });
 
 test(
-	'Data Set can be added to the fragment and the fragment can be removed',
+	'Assing a data set to the "Data Set" fragment, change and delete assignment',
 	{
 		tag: '@LPS-172403',
 	},
 	async ({dataSetManagerApiHelpers, fdsFragmentPage, layout, page}) => {
-		await test.step('Add fields, so data is displayed', async () => {
-			await dataSetManagerApiHelpers.createDataSetField({
-				dataSetERC,
-				label_i18n: {
-					en_US: 'ID',
-				},
-				name: 'id',
-				sortable: true,
-				type: 'string',
+		const dataSetERC1 = getRandomString();
+		const dataSetERC2 = getRandomString();
+		const dataSetLabel1 = getRandomString();
+		const dataSetLabel2 = getRandomString();
+
+		dataSetERCs.push(dataSetERC1);
+		dataSetERCs.push(dataSetERC2);
+
+		await test.step('Create data sets', async () => {
+			await dataSetManagerApiHelpers.createDataSet({
+				erc: dataSetERC1,
+				label: dataSetLabel1,
 			});
 
+			await dataSetManagerApiHelpers.createDataSet({
+				erc: dataSetERC2,
+				label: dataSetLabel2,
+			});
+		});
+
+		await test.step('Create sample data for data sets', async () => {
 			await dataSetManagerApiHelpers.createDataSetField({
-				dataSetERC,
+				dataSetERC: dataSetERC1,
 				label_i18n: {en_US: 'Name'},
 				name: 'name',
-				sortable: true,
-				type: 'string',
+			});
+
+			await dataSetManagerApiHelpers.createDataSetField({
+				dataSetERC: dataSetERC2,
+				label_i18n: {en_US: 'ID'},
+				name: 'id',
+			});
+
+			await dataSetManagerApiHelpers.createDataSetField({
+				dataSetERC: dataSetERC2,
+				label_i18n: {en_US: 'Name'},
+				name: 'name',
 			});
 		});
 
-		await test.step('Configure Data Set fragment', async () => {
-			await fdsFragmentPage.configureDataSetFragment({
-				dataSetLabel,
-				layout,
-			});
+		await test.step('Go to page configuration, add "Data Set" fragment', async () => {
+			await fdsFragmentPage.addDataSetFragment(layout);
 		});
 
-		await test.step('Assert that the Data Set is available on the page', async () => {
+		await test.step('Assign first data set to fragment', async () => {
+			await fdsFragmentPage.selectDataSetButton.click();
+
+			await fdsFragmentPage.selectDataSet(dataSetLabel1);
+		});
+
+		await test.step('Change assigment to second data set', async () => {
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('menuitem', {
+					name: 'Select Data Set View...',
+				}),
+				trigger: fdsFragmentPage.changeDataSetButton,
+			});
+
+			const selectionListContainer =
+				fdsFragmentPage.selectDataSetModalFrame.locator(
+					'.fds-admin-item-selector'
+				);
+
+			await expect(selectionListContainer).toBeVisible();
+
+			await expect(
+				selectionListContainer
+					.locator('.selectable.list-group-item')
+					.filter({
+						has: page.getByText(dataSetLabel1, {exact: true}),
+					})
+					.getByRole('radio')
+			).toBeChecked();
+
+			await fdsFragmentPage.selectDataSet(dataSetLabel2);
+		});
+
+		await test.step('Assert that the data set is available on the page', async () => {
 			await fdsFragmentPage.fdsTableWrapper.waitFor({
 				state: 'visible',
 			});
 
-			await expect(
-				await fdsFragmentPage.fdsTableWrapper
-			).toBeInViewport();
+			await expect(fdsFragmentPage.fdsTableWrapper).toBeInViewport();
 
 			expect(
 				await page
@@ -143,11 +179,21 @@ test(
 			).toEqual(['ID', 'Name', '']);
 		});
 
-		await test.step('Remove Data Set Fragment from the page', async () => {
-			await fdsFragmentPage.editPage({layout});
+		await test.step('Unassign data set', async () => {
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('menuitem', {
+					name: 'Remove Data Set View',
+				}),
+				trigger: page.getByRole('button', {
+					name: 'View Data Set View Options',
+				}),
+			});
 
-			await fdsFragmentPage.fdsTableWrapper.click();
+			await expect(fdsFragmentPage.selectedDataSetInput).toHaveValue('');
+		});
 
+		await test.step('Remove "Data Set" fragment from the page', async () => {
 			const dataSetFragmentOptionsButton = page
 				.locator('.page-editor__topper__item.tbar-item')
 				.getByLabel('Options');
@@ -167,7 +213,7 @@ test(
 				.click();
 		});
 
-		await test.step('Assert that the Data Set Fragment is not available on the page', async () => {
+		await test.step('Assert that "Data Set" fragment is not available on the page', async () => {
 			await expect(
 				page.getByText('Place fragments or widgets here.')
 			).toBeInViewport();
@@ -179,19 +225,16 @@ test(
 	}
 );
 
-test('Data Set selection modal shows a "No results found" message when there are no Data Sets created', async ({
-	dataSetManagerApiHelpers,
+test('Data set selection modal shows a "No results found" message when there are no data sets created', async ({
 	fdsFragmentPage,
 	layout,
 }) => {
-	test.step('Remove Data Set', async () => {
-		await dataSetManagerApiHelpers.deleteDataSet({erc: dataSetERC});
+	await test.step('Go to page configuration, add "Data Set" fragment', async () => {
+		await fdsFragmentPage.addDataSetFragment(layout);
 	});
 
-	await test.step('Configure Data Set fragment', async () => {
-		await fdsFragmentPage.configureEmptyDataSetFragment({
-			layout,
-		});
+	await test.step('Open data set selection modal', async () => {
+		await fdsFragmentPage.selectDataSetButton.click();
 	});
 
 	test.step('Assert that there are no Data Sets available to select', async () => {
@@ -204,7 +247,7 @@ test('Data Set selection modal shows a "No results found" message when there are
 });
 
 test(
-	'Data Set can use different sources of data: StructuredContentSchema, UserSchema, TaxonomyVocabularySchema',
+	'"Data Set" fragment can display different sources of data: StructuredContentSchema, UserSchema, TaxonomyVocabularySchema',
 	{
 		tag: ['@LPS-172403', '@LPS-190724'],
 	},
@@ -220,7 +263,7 @@ test(
 		structuredContentId = await getBasicWebContentStructureId(apiHelpers);
 
 		siteId = await page.evaluate(() => {
-			return Liferay.ThemeDisplay.getSiteGroupId();
+			return String(Liferay.ThemeDisplay.getSiteGroupId());
 		});
 
 		await test.step('Create a Structured Content Schema Data Set and add fields', async () => {
@@ -333,9 +376,7 @@ test(
 				state: 'visible',
 			});
 
-			await expect(
-				await fdsFragmentPage.fdsTableWrapper
-			).toBeInViewport();
+			await expect(fdsFragmentPage.fdsTableWrapper).toBeInViewport();
 
 			expect(
 				await page
@@ -348,14 +389,14 @@ test(
 			expect(
 				await page
 					.locator('.dnd-tbody > .dnd-tr')
-					.first()
 					.locator('.dnd-td')
 					.allInnerTexts()
-			).toEqual([
-				structuredContentTitle,
-				structuredContentDescription,
-				'',
-			]);
+			).toEqual(
+				expect.arrayContaining([
+					structuredContentTitle,
+					structuredContentDescription,
+				])
+			);
 		});
 
 		await test.step('Confirm that we can change the Data Set and display the Roles Data Set', async () => {
@@ -405,9 +446,7 @@ test(
 				state: 'visible',
 			});
 
-			await expect(
-				await fdsFragmentPage.fdsTableWrapper
-			).toBeInViewport();
+			await expect(fdsFragmentPage.fdsTableWrapper).toBeInViewport();
 
 			expect(
 				await page

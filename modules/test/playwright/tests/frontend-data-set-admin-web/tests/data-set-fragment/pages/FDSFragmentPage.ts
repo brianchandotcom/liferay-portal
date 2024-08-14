@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Locator, Page, expect} from '@playwright/test';
+import {FrameLocator, Locator, Page, expect} from '@playwright/test';
 
 import {ApiHelpers} from '../../../../../helpers/ApiHelpers';
 import {DEFAULT_LABEL} from '../../../utils/constants';
@@ -11,6 +11,7 @@ import {VisualizationMode} from '../../../utils/types';
 
 export class FDSFragmentPage {
 	readonly apiHelpers: ApiHelpers;
+	readonly changeDataSetButton: Locator;
 	readonly creationMenuButton: Locator;
 	readonly editPageButton: Locator;
 	readonly emptyStateTitle: Locator;
@@ -29,9 +30,15 @@ export class FDSFragmentPage {
 	readonly loadingIndicator: Locator;
 	readonly page: Page;
 	readonly publishPageButton: Locator;
+	readonly selectDataSetModalFrame: FrameLocator;
+	readonly selectDataSetButton: Locator;
+	readonly selectedDataSetInput: Locator;
 
 	constructor(page: Page) {
 		this.apiHelpers = new ApiHelpers(page);
+		this.changeDataSetButton = page.getByRole('button', {
+			name: 'Change Data Set View',
+		});
 		this.creationMenuButton = page.getByRole('button', {name: 'New'});
 		this.emptyStateTitle = page.getByText('No Results Found');
 		this.fdsActiveViewSelector = page.getByLabel('Show View Options');
@@ -63,10 +70,41 @@ export class FDSFragmentPage {
 		this.publishPageButton = page.getByRole('button', {
 			name: 'Publish',
 		});
+		this.selectDataSetModalFrame = page.frameLocator(
+			'iframe[title="Select"]'
+		);
+		this.selectDataSetButton = page.getByRole('button', {
+			name: 'Select Data Set View',
+		});
+		this.selectedDataSetInput = page
+			.getByLabel('Configuration Panel')
+			.getByLabel('Data Set View', {exact: true});
 	}
 
 	async goto() {
 		await this.page.goto('/');
+	}
+
+	async selectDataSet(label: string) {
+		await this.page.getByRole('dialog').isVisible();
+
+		await this.page.getByRole('heading', {name: 'Select'}).isVisible();
+
+		await this.selectDataSetModalFrame
+			.locator('.fds-admin-item-selector')
+			.waitFor({state: 'visible'});
+
+		await this.selectDataSetModalFrame
+			.locator('li')
+			.filter({hasText: label})
+			.first()
+			.click();
+
+		await this.selectDataSetModalFrame
+			.getByRole('button', {name: 'Save'})
+			.click();
+
+		await expect(this.selectedDataSetInput).toHaveValue(label);
 	}
 
 	async selectFilter(filterLabel) {
@@ -105,30 +143,11 @@ export class FDSFragmentPage {
 		dataSetLabel?: string;
 		layout: Layout;
 	}) {
-		await this.setupPageAndFragment(layout);
+		await this.addDataSetFragment(layout);
 
-		await this.page
-			.frameLocator('iframe[title="Select"]')
-			.locator('.fds-admin-item-selector')
-			.waitFor({state: 'visible'});
+		await this.selectDataSetButton.click();
 
-		await this.page
-			.frameLocator('iframe[title="Select"]')
-			.locator('li')
-			.filter({hasText: dataSetLabel})
-			.first()
-			.click();
-
-		await this.page
-			.frameLocator('iframe[title="Select"]')
-			.getByRole('button', {name: 'Save'})
-			.click();
-
-		const selectedDataSetViewInput = this.page
-			.getByLabel('Configuration Panel')
-			.getByLabel('Data Set View', {exact: true});
-
-		await expect(selectedDataSetViewInput).toHaveValue(dataSetLabel);
+		await this.selectDataSet(dataSetLabel);
 
 		await this.publishPage();
 
@@ -140,10 +159,9 @@ export class FDSFragmentPage {
 	}
 
 	async configureEmptyDataSetFragment({layout}: {layout: Layout}) {
-		await this.setupPageAndFragment(layout);
+		await this.addDataSetFragment(layout);
 
-		await this.page
-			.frameLocator('iframe[title="Select"]')
+		await this.selectDataSetModalFrame
 			.locator('.c-empty-state-title')
 			.waitFor({state: 'visible'});
 	}
@@ -166,7 +184,7 @@ export class FDSFragmentPage {
 		await this.fragmentWidgetSearchInput.fill(itemName);
 	}
 
-	async setupPageAndFragment(layout: Layout) {
+	async addDataSetFragment(layout: Layout) {
 		await this.editPage({layout});
 
 		await this.searchFragmentOrWidget('Data Set');
@@ -187,13 +205,5 @@ export class FDSFragmentPage {
 		await expect(fragmentSelectionArea).toBeVisible();
 
 		await fragmentSelectionArea.click();
-
-		await this.page
-			.getByRole('button', {name: 'Select Data Set View'})
-			.click();
-
-		await this.page.getByRole('dialog').isVisible();
-
-		await this.page.getByRole('heading', {name: 'Select'}).isVisible();
 	}
 }

@@ -51,9 +51,7 @@ public class CalendarBookingUpgradeProcessTest {
 	}
 
 	@Test
-	public void testUpgradeAllDayCalendarBookingStartAndEndTime()
-		throws Exception {
-
+	public void testUpgrade() throws Exception {
 		CalendarBooking calendarBooking =
 			CalendarBookingTestUtil.addAllDayCalendarBooking("Europe/Paris");
 

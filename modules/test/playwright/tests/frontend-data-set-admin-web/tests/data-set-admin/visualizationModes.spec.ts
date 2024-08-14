@@ -271,7 +271,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 			await visualizationModesPage.selectTab('Table');
 
 			await expect(
-				visualizationModesPage.page.getByPlaceholder('Search')
+				visualizationModesPage.tableVisualizationModeContainer
 			).toBeVisible();
 		});
 
@@ -387,7 +387,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 			await visualizationModesPage.selectTab('Table');
 
 			await expect(
-				visualizationModesPage.page.getByPlaceholder('Search')
+				visualizationModesPage.tableVisualizationModeContainer
 			).toBeVisible();
 		});
 
@@ -511,7 +511,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 			await visualizationModesPage.selectTab('Table');
 
 			await expect(
-				visualizationModesPage.page.getByPlaceholder('Search')
+				visualizationModesPage.tableVisualizationModeContainer
 			).toBeVisible();
 		});
 
@@ -599,7 +599,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 			await visualizationModesPage.selectTab('Table');
 
 			await expect(
-				visualizationModesPage.page.getByPlaceholder('Search')
+				visualizationModesPage.tableVisualizationModeContainer
 			).toBeVisible();
 		});
 
@@ -719,7 +719,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 			await visualizationModesPage.selectTab('Table');
 
 			await expect(
-				visualizationModesPage.page.getByPlaceholder('Search')
+				visualizationModesPage.tableVisualizationModeContainer
 			).toBeVisible();
 		});
 
@@ -902,7 +902,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 				await visualizationModesPage.selectTab('Table');
 
 				await expect(
-					visualizationModesPage.page.getByPlaceholder('Search')
+					visualizationModesPage.tableVisualizationModeContainer
 				).toBeVisible();
 			});
 
@@ -1135,7 +1135,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 			await visualizationModesPage.selectTab('Table');
 
 			await expect(
-				visualizationModesPage.page.getByPlaceholder('Search')
+				visualizationModesPage.tableVisualizationModeContainer
 			).toBeVisible();
 		});
 

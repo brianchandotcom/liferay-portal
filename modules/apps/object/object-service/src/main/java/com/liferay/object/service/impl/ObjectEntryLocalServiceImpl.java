@@ -4190,9 +4190,11 @@ public class ObjectEntryLocalServiceImpl
 			String.valueOf(objectEntry.getObjectEntryId()), null, null, null, 0,
 			0, priority, serviceContext);
 
-		_assetLinkLocalService.updateLinks(
-			userId, assetEntry.getEntryId(), assetLinkEntryIds,
-			AssetLinkConstants.TYPE_RELATED);
+		if (assetLinkEntryIds != null) {
+			_assetLinkLocalService.updateLinks(
+				userId, assetEntry.getEntryId(), assetLinkEntryIds,
+				AssetLinkConstants.TYPE_RELATED);
+		}
 	}
 
 	private void _updateTable(

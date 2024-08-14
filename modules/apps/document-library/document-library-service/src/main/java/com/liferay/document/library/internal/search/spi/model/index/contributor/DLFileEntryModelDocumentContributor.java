@@ -266,9 +266,19 @@ public class DLFileEntryModelDocumentContributor
 						aspectRatio = "wide";
 					}
 
+					String resolution = "large";
+
+					if ((tiffImageLength <= 300) && (tiffImageWidth <= 400)) {
+						resolution = "small";
+					}
+					else if ((tiffImageLength <= 768) &&
+							 (tiffImageWidth <= 1024)) {
+
+						resolution = "medium";
+					}
+
 					document.addText("aspectRatio", aspectRatio);
-					document.addNumber("imageLength", tiffImageLength);
-					document.addNumber("imageWidth", tiffImageWidth);
+					document.addText("resolution", resolution);
 				}
 			}
 			catch (Exception exception) {

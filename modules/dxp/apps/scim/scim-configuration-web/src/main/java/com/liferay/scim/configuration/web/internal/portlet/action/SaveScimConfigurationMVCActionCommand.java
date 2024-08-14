@@ -6,7 +6,9 @@
 package com.liferay.scim.configuration.web.internal.portlet.action;
 
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
+import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.ExpandoValue;
+import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.oauth.client.LocalOAuthClient;
@@ -172,6 +174,27 @@ public class SaveScimConfigurationMVCActionCommand
 
 			actionableDynamicQuery.setAddCriteriaMethod(
 				dynamicQuery -> {
+					ExpandoColumn userScimClientExpandoColumn =
+						_expandoColumnLocalService.getColumn(
+							themeDisplay.getCompanyId(), User.class.getName(),
+							"CUSTOM_FIELDS", "scimClientId");
+
+					ExpandoColumn userGroupsScimClientExpandoColumn =
+						_expandoColumnLocalService.getColumn(
+							themeDisplay.getCompanyId(),
+							UserGroup.class.getName(), "CUSTOM_FIELDS",
+							"scimClientId");
+
+					Property columnProperty = PropertyFactoryUtil.forName(
+						"columnId");
+
+					dynamicQuery.add(
+						columnProperty.in(
+							new long[] {
+								userScimClientExpandoColumn.getColumnId(),
+								userGroupsScimClientExpandoColumn.getColumnId()
+							}));
+
 					Property dataProperty = PropertyFactoryUtil.forName("data");
 
 					dynamicQuery.add(dataProperty.eq(scimClientId));
@@ -256,6 +279,9 @@ public class SaveScimConfigurationMVCActionCommand
 
 	@Reference
 	private ConfigurationAdmin _configurationAdmin;
+
+	@Reference
+	private ExpandoColumnLocalService _expandoColumnLocalService;
 
 	@Reference
 	private ExpandoRowLocalService _expandoRowLocalService;

@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -13,7 +13,6 @@ import com.liferay.calendar.test.util.CalendarUpgradeTestUtil;
 import com.liferay.calendar.test.util.UpgradeDatabaseTestHelper;
 import com.liferay.calendar.util.JCalendarUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -33,7 +32,7 @@ import org.junit.runner.RunWith;
  * @author István András Dézsi
  */
 @RunWith(Arquillian.class)
-public class UpgradeCalendarBookingTest {
+public class CalendarBookingUpgradeProcessTest {
 
 	@ClassRule
 	@Rule
@@ -44,9 +43,6 @@ public class UpgradeCalendarBookingTest {
 	public void setUp() throws Exception {
 		_upgradeDatabaseTestHelper =
 			CalendarUpgradeTestUtil.getUpgradeDatabaseTestHelper();
-		_upgradeProcess = CalendarUpgradeTestUtil.getUpgradeStep(
-			_upgradeStepRegistrator,
-			CalendarBookingTestUtil.getUpgradeStepClassName("v4_2_1"));
 	}
 
 	@After
@@ -59,38 +55,39 @@ public class UpgradeCalendarBookingTest {
 		throws Exception {
 
 		CalendarBooking calendarBooking =
-			CalendarBookingTestUtil.addAllDayCalendarBooking(
-				_userLocalService, "Europe/Paris");
+			CalendarBookingTestUtil.addAllDayCalendarBooking("Europe/Paris");
 
 		Calendar expectedStartTimeJCalendar = JCalendarUtil.getJCalendar(
 			calendarBooking.getStartTime());
-
 		Calendar expectedEndTimeJCalendar = JCalendarUtil.getJCalendar(
 			calendarBooking.getEndTime());
 
-		_upgradeProcess.upgrade();
+		UpgradeProcess upgradeProcess = CalendarUpgradeTestUtil.getUpgradeStep(
+			_upgradeStepRegistrator,
+			"com.liferay.calendar.internal.upgrade.v4_2_1." +
+				"CalendarBookingUpgradeProcess");
+
+		upgradeProcess.upgrade();
 
 		EntityCacheUtil.clearCache();
 
 		calendarBooking = _calendarBookingLocalService.getCalendarBooking(
 			calendarBooking.getCalendarBookingId());
 
-		Calendar actualStartTimeJCalendar = JCalendarUtil.getJCalendar(
-			calendarBooking.getStartTime());
-
-		assertSameTime(expectedStartTimeJCalendar, actualStartTimeJCalendar);
-
-		Calendar actualEndTimeJCalendar = JCalendarUtil.getJCalendar(
-			calendarBooking.getEndTime());
-
-		assertSameTime(expectedEndTimeJCalendar, actualEndTimeJCalendar);
+		_assertJCalendar(
+			expectedStartTimeJCalendar,
+			JCalendarUtil.getJCalendar(calendarBooking.getStartTime()));
+		_assertJCalendar(
+			expectedEndTimeJCalendar,
+			JCalendarUtil.getJCalendar(calendarBooking.getEndTime()));
 	}
 
-	protected void assertSameTime(
+	private void _assertJCalendar(
 		Calendar expectedJCalendar, Calendar actualJCalendar) {
 
-		Assert.assertNotNull(expectedJCalendar);
-		Assert.assertNotNull(actualJCalendar);
+		Assert.assertEquals(
+			expectedJCalendar.get(Calendar.DATE),
+			actualJCalendar.get(Calendar.DATE));
 		Assert.assertEquals(
 			expectedJCalendar.get(Calendar.HOUR),
 			actualJCalendar.get(Calendar.HOUR));
@@ -103,14 +100,10 @@ public class UpgradeCalendarBookingTest {
 	private CalendarBookingLocalService _calendarBookingLocalService;
 
 	private UpgradeDatabaseTestHelper _upgradeDatabaseTestHelper;
-	private UpgradeProcess _upgradeProcess;
 
 	@Inject(
 		filter = "component.name=com.liferay.calendar.internal.upgrade.registry.CalendarServiceUpgradeStepRegistrator"
 	)
 	private UpgradeStepRegistrator _upgradeStepRegistrator;
-
-	@Inject
-	private UserLocalService _userLocalService;
 
 }

@@ -7,6 +7,7 @@ import {Page, expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
+import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {pageViewModePagesTest} from '../../fixtures/pageViewModePagesTest';
@@ -16,7 +17,6 @@ import {serverAdministrationPageTest} from '../../fixtures/serverAdministrationP
 import {systemSettingsPageTest} from '../../fixtures/systemSettingsPageTest';
 import {uiElementsPageTest} from '../../fixtures/uiElementsTest';
 import {webContentDisplayPageTest} from '../../fixtures/webContentDisplayPageTest';
-import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {ApiHelpers} from '../../helpers/ApiHelpers';
 import {LayoutSetPrototype} from '../../helpers/json-web-services/JSONWebServicesLayoutSetPrototypeApiHelper';
 import {WebContentDisplayPage} from '../../pages/journal-content-web/WebContentDisplayPage';
@@ -26,14 +26,14 @@ import {PageEditorPage} from '../../pages/layout-content-page-editor-web/PageEdi
 import {ApplicationsMenuPage} from '../../pages/product-navigation-applications-menu/ApplicationsMenuPage';
 import {ProductMenuPage} from '../../pages/product-navigation-control-menu-web/ProductMenuPage';
 import {UIElementsPage} from '../../pages/uielements/UIElementsPage';
+import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../utils/getRandomString';
+import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
 import {journalPagesTest} from '../journal-web/fixtures/journalPagesTest';
 import {JournalPage} from '../journal-web/pages/JournalPage';
 import {pagesPagesTest} from '../layout-admin-web/fixtures/pagesPagesTest';
 import {layoutSetPrototypePageTest} from './fixtures/layoutSetPrototypePageTest';
 import {LayoutSetPrototypePage} from './pages/LayoutSetPrototypePage';
-import {clickAndExpectToBeVisible} from "../../utils/clickAndExpectToBeVisible";
-import {waitForSuccessAlert} from "../../utils/waitForSuccessAlert";
 
 export const test = mergeTests(
 	applicationsMenuPageTest,
@@ -64,9 +64,9 @@ test('LPD-21445', async ({
 	journalPage,
 	layoutSetPrototypePage,
 	page,
+	pageEditorPage,
 	pagesAdminPage,
 	productMenuPage,
-	pageEditorPage,
 	sitesPage,
 	systemSettingsPage,
 	uiElementsPage,
@@ -82,7 +82,6 @@ test('LPD-21445', async ({
 	let site2Id: string | undefined;
 
 	try {
-
 		await systemSettingsPage.disablePrivatePages();
 
 		await applicationsMenuPage.goToGlobalSite();
@@ -97,11 +96,11 @@ test('LPD-21445', async ({
 			applicationsMenuPage,
 			layoutSetPrototypePage,
 			page,
+			pageEditorPage,
 			pagesAdminPage,
 			productMenuPage,
 			templateName: siteTemplateName,
 			uiElementsPage,
-			pageEditorPage,
 		});
 
 		await applicationsMenuPage.goToSites();
@@ -128,8 +127,9 @@ test('LPD-21445', async ({
 		await uiElementsPage.clickNewButton();
 		if (!pagesAdminPage.addTemplatePageButton.isVisible) {
 			await uiElementsPage.clickNewButton();
-			await pagesAdminPage.addTemplatePageButton.waitFor(
-				{state: 'visible'});
+			await pagesAdminPage.addTemplatePageButton.waitFor({
+				state: 'visible',
+			});
 		}
 		await pagesAdminPage.addTemplatePageButton.click();
 		await pagesAdminPage.addWidgetPage(secondPageNameOnSiteTemplate);
@@ -140,14 +140,16 @@ test('LPD-21445', async ({
 
 		await page.waitForTimeout(2000);
 
-		const layoutsCountOnSite1 = await apiHelpers.jsonWebServicesLayout.getLayoutsCount(
-			Number(site1Id), true);
+		const layoutsCountOnSite1 =
+			await apiHelpers.jsonWebServicesLayout.getLayoutsCount(
+				Number(site1Id),
+				true
+			);
 
 		await expect(layoutsCountOnSite1).toBe(2);
-
-	} finally {
-
-		await deleteSites(apiHelpers,site1Id, site2Id);
+	}
+	finally {
+		await deleteSites(apiHelpers, site1Id, site2Id);
 
 		const layoutSetPrototypes: LayoutSetPrototype[] =
 			await apiHelpers.jsonWebServicesLayoutSetPrototype.getLayoutSetPrototypes();
@@ -155,20 +157,24 @@ test('LPD-21445', async ({
 			layoutSetPrototypes,
 			siteTemplateName
 		);
-		await deleteLayoutSetPrototype(apiHelpers, layoutSetPrototype.layoutSetPrototypeId.toString())
+		await deleteLayoutSetPrototype(
+			apiHelpers,
+			layoutSetPrototype.layoutSetPrototypeId.toString()
+		);
 
 		await applicationsMenuPage.goToGlobalSite();
 		await productMenuPage.checkIfAdecuateProductMenu('Global');
 		await productMenuPage.openProductMenuIfClosed();
 		await productMenuPage.goToWebContent();
-		const checkbox = page.getByTestId('row').first().locator('input[type="checkbox"]');
+		const checkbox = page
+			.getByTestId('row')
+			.first()
+			.locator('input[type="checkbox"]');
 		await checkbox.check();
 
 		const deleteButton = page.getByRole('button', {name: 'Delete'});
 		await deleteButton.click();
-
 	}
-
 });
 
 test('Can switch template with web content on widget page.', async ({
@@ -476,10 +482,7 @@ async function deleteSiteAndLayoutSetPrototypes(
 	}
 }
 
-async function deleteSites(
-	apiHelpers: ApiHelpers,
-	...siteIds: string[]
-) {
+async function deleteSites(apiHelpers: ApiHelpers, ...siteIds: string[]) {
 	for (const siteId of siteIds) {
 		let response = await apiHelpers.headlessSite.deleteSite(siteId);
 		if (!response.ok()) {
@@ -491,7 +494,7 @@ async function deleteSites(
 
 async function deleteLayoutSetPrototype(
 	apiHelpers: ApiHelpers,
-	layoutSetPrototypeId: string,
+	layoutSetPrototypeId: string
 ) {
 	await apiHelpers.jsonWebServicesLayoutSetPrototype.deleteLayoutSetPrototypes(
 		layoutSetPrototypeId
@@ -527,22 +530,21 @@ async function createSiteTemplateWithContentPageAndAssetPublisher({
 	applicationsMenuPage,
 	layoutSetPrototypePage,
 	page,
+	pageEditorPage,
 	pagesAdminPage,
 	productMenuPage,
 	templateName,
 	uiElementsPage,
-	pageEditorPage,
 }: {
 	applicationsMenuPage: ApplicationsMenuPage;
 	layoutSetPrototypePage: LayoutSetPrototypePage;
 	page: Page;
+	pageEditorPage: PageEditorPage;
 	pagesAdminPage: PagesAdminPage;
 	productMenuPage: ProductMenuPage;
 	templateName: string;
 	uiElementsPage: UIElementsPage;
-	pageEditorPage: PageEditorPage;
 }): Promise<void> {
-
 	await applicationsMenuPage.goToSiteTemplates();
 	await layoutSetPrototypePage.addSiteTemplate(templateName);
 	await applicationsMenuPage.goToSiteTemplates();
@@ -601,15 +603,19 @@ async function createSiteTemplateWithContentPageAndAssetPublisher({
 	}
 
 	const scopeSection = configurationModal.locator('#scopeContent');
-	if (await scopeSection.isHidden()){
+	if (await scopeSection.isHidden()) {
 		await configurationModal.getByRole('link', {name: 'Scope'}).click();
 	}
 	await scopeSection.waitFor();
 
-	const selectButton = scopeSection.locator('button.dropdown-toggle', { hasText: 'Select' });
+	const selectButton = scopeSection.locator('button.dropdown-toggle', {
+		hasText: 'Select',
+	});
 	await selectButton.click();
 
-	const globalOption = configurationModal.getByRole('menuitem', {name: 'Global'})
+	const globalOption = configurationModal.getByRole('menuitem', {
+		name: 'Global',
+	});
 	await globalOption.click();
 
 	await waitForSuccessAlert(
@@ -617,7 +623,9 @@ async function createSiteTemplateWithContentPageAndAssetPublisher({
 		'Success:You have successfully updated the setup.'
 	);
 
-	const currentSiteDeleteButton = scopeSection.getByRole('row', { name: /^Current Site/ }).getByLabel('Delete');
+	const currentSiteDeleteButton = scopeSection
+		.getByRole('row', {name: /^Current Site/})
+		.getByLabel('Delete');
 	await currentSiteDeleteButton.click();
 
 	await waitForSuccessAlert(
@@ -625,16 +633,25 @@ async function createSiteTemplateWithContentPageAndAssetPublisher({
 		'Success:You have successfully updated the setup.'
 	);
 
-	const assetEntriesSection = configurationModal.locator('#assetEntriesContent');
-	if (await assetEntriesSection.isHidden()){
-		await configurationModal.getByRole('link', {name: 'Asset Entries'}).click();
+	const assetEntriesSection = configurationModal.locator(
+		'#assetEntriesContent'
+	);
+	if (await assetEntriesSection.isHidden()) {
+		await configurationModal
+			.getByRole('link', {name: 'Asset Entries'})
+			.click();
 	}
 	await assetEntriesSection.waitFor();
 
-	const selectAssetEntriesButton = assetEntriesSection.locator('button.dropdown-toggle', { hasText: 'Select' });
+	const selectAssetEntriesButton = assetEntriesSection.locator(
+		'button.dropdown-toggle',
+		{hasText: 'Select'}
+	);
 	await selectAssetEntriesButton.click();
 
-	const basicWebContentOption = configurationModal.getByRole('menuitem', { name: 'Basic Web Content' });
+	const basicWebContentOption = configurationModal.getByRole('menuitem', {
+		name: 'Basic Web Content',
+	});
 	await basicWebContentOption.click();
 
 	const selectWebContentModal = await configurationModal.frameLocator(
@@ -643,7 +660,10 @@ async function createSiteTemplateWithContentPageAndAssetPublisher({
 
 	await selectWebContentModal.locator('#main-content').waitFor();
 
-	const checkbox = selectWebContentModal.getByTestId('row').first().locator('input[type="checkbox"]');
+	const checkbox = selectWebContentModal
+		.getByTestId('row')
+		.first()
+		.locator('input[type="checkbox"]');
 	await checkbox.check();
 
 	const addButton = configurationModal.getByRole('button', {name: 'Add'});
@@ -664,7 +684,6 @@ async function createSiteTemplateWithContentPageAndAssetPublisher({
 	await page.getByLabel('close', {exact: true}).click();
 
 	await pageEditorPage.publishPage();
-
 }
 
 async function createSiteTemplateWithWebContentOnWidgetPage({

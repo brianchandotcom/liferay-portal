@@ -125,12 +125,18 @@ export class JSONWebServicesLayoutApiHelper {
 		);
 	}
 
-	async getLayoutsCount(groupId: number, privateLayout: boolean): Promise<void> {
+	async getLayoutsCount(
+		groupId: number,
+		privateLayout: boolean
+	): Promise<void> {
 		const urlSearchParams = new URLSearchParams();
 
 		// @ts-ignore
+
 		urlSearchParams.append('groupId', groupId);
+
 		// @ts-ignore
+
 		urlSearchParams.append('privateLayout', privateLayout);
 
 		return this.apiHelpers.post(

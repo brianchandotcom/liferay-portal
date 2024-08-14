@@ -216,7 +216,7 @@ public class LayoutsImporterTest {
 			layoutsImporterResultEntries.toString(), 1,
 			layoutsImporterResultEntries.size());
 
-		_assertLayoutsImporterResultEntry(
+		_assertLayoutsImporterResultEntries(
 			layoutsImporterResultEntries,
 			_layoutPageTemplateStructureLocalService.
 				fetchLayoutPageTemplateStructure(
@@ -1165,7 +1165,7 @@ public class LayoutsImporterTest {
 		_assertFragmentEntryLink(fragmentEntry, curLayoutPageTemplateEntry);
 	}
 
-	private void _assertLayoutsImporterResultEntry(
+	private void _assertLayoutsImporterResultEntries(
 			List<LayoutsImporterResultEntry> layoutsImporterResultEntries,
 			LayoutPageTemplateStructure layoutPageTemplateStructure)
 		throws Exception {

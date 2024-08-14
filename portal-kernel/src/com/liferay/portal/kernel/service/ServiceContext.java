@@ -127,6 +127,7 @@ public class ServiceContext implements Cloneable, Serializable {
 		serviceContext.setRequest(getRequest());
 		serviceContext.setScopeGroupId(getScopeGroupId());
 		serviceContext.setSignedIn(isSignedIn());
+		serviceContext.setStrictAdd(isStrictAdd());
 
 		if (_userDisplayURL != null) {
 			serviceContext.setUserDisplayURL(_userDisplayURL);
@@ -906,6 +907,10 @@ public class ServiceContext implements Cloneable, Serializable {
 		return _signedIn;
 	}
 
+	public boolean isStrictAdd() {
+		return _strictAdd;
+	}
+
 	/**
 	 * Merges all of the specified service context's non-<code>null</code>
 	 * attributes, attributes greater than <code>0</code>, and fields (except
@@ -1463,6 +1468,10 @@ public class ServiceContext implements Cloneable, Serializable {
 		_signedIn = signedIn;
 	}
 
+	public void setStrictAdd(boolean strictAdd) {
+		_strictAdd = strictAdd;
+	}
+
 	public void setTimeZone(TimeZone timeZone) {
 		_timeZone = timeZone;
 	}
@@ -1567,6 +1576,7 @@ public class ServiceContext implements Cloneable, Serializable {
 	private String _remoteHost;
 	private long _scopeGroupId;
 	private boolean _signedIn;
+	private boolean _strictAdd;
 	private TimeZone _timeZone;
 	private String _userDisplayURL;
 	private long _userId;

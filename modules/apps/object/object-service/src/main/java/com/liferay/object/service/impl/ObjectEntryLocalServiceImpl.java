@@ -311,6 +311,7 @@ public class ObjectEntryLocalServiceImpl
 		ServiceContext resourcePermissionServiceContext = new ServiceContext();
 
 		resourcePermissionServiceContext.setIndexingEnabled(false);
+		resourcePermissionServiceContext.setStrictAdd(true);
 
 		_resourcePermissionLocalService.addResourcePermissions(
 			objectEntry.getCompanyId(), objectEntry.getGroupId(),

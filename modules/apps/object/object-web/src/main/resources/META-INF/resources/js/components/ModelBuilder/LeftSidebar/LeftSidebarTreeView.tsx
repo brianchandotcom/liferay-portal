@@ -343,11 +343,6 @@ export default function LeftSidebarTreeView({
 																	'move-folder',
 															},
 														]}
-														menuElementAttrs={{
-															style: {
-																zIndex: 1036,
-															},
-														}}
 														trigger={
 															<ClayButton
 																aria-label={Liferay.Language.get(
@@ -414,11 +409,6 @@ export default function LeftSidebarTreeView({
 
 												<ClayDropDownWithItems
 													items={kebabOptions}
-													menuElementAttrs={{
-														style: {
-															zIndex: 1036,
-														},
-													}}
 													trigger={
 														<ClayButton
 															aria-label={Liferay.Language.get(

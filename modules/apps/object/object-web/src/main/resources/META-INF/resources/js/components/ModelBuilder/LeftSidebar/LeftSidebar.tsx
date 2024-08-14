@@ -95,6 +95,7 @@ export default function LeftSidebar() {
 
 	return (
 		<CustomVerticalBar
+			className="lfr-objects__model-builder-custom-vertical-bar"
 			defaultActive="objectsModelBuilderLeftSidebar"
 			panelWidth={300}
 			position="left"

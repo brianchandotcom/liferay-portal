@@ -61,6 +61,7 @@ export function RightSideBarRoot({children}: IRightSidebarRoot) {
 		<>
 			{!loading && (
 				<CustomVerticalBar
+					className="lfr-objects__model-builder-custom-vertical-bar"
 					defaultActive="objectsModelBuilderRightSidebar"
 					panelWidth={verticalBarWidth}
 					position="right"

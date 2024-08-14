@@ -71,11 +71,6 @@ export default function ObjectDefinitionNodeHeader({
 
 					<ClayDropDownWithItems
 						items={dropDownItems}
-						menuElementAttrs={{
-							style: {
-								zIndex: 1034,
-							},
-						}}
 						trigger={
 							<ClayButtonWithIcon
 								aria-label={Liferay.Language.get(

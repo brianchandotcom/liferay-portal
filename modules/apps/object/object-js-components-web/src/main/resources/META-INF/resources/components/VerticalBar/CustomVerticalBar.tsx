@@ -4,12 +4,13 @@
  */
 
 import {VerticalBar} from '@clayui/core';
+import classNames from 'classnames';
 import React, {ReactNode} from 'react';
 
 import './CustomVerticalBar.scss';
-
 interface CustomVerticalBarProps {
 	children: ReactNode;
+	className?: string;
 	defaultActive: string;
 	panelWidth?: number;
 	panelWidthMax?: number;
@@ -24,6 +25,7 @@ interface CustomVerticalBarProps {
 
 export function CustomVerticalBar({
 	children,
+	className,
 	defaultActive,
 	panelWidth = 1000,
 	panelWidthMax = 1200,
@@ -35,11 +37,12 @@ export function CustomVerticalBar({
 }: CustomVerticalBarProps) {
 	return (
 		<VerticalBar
-			className={
+			className={classNames(
+				className,
 				triggerSideBarAnimation
 					? `lfr__objects-custom-vertical-bar--${position}-open`
 					: `lfr__objects-custom-vertical-bar--${position}-closed`
-			}
+			)}
 			defaultActive={defaultActive}
 			defaultPanelWidth={panelWidth}
 			panelWidthMax={panelWidthMax}

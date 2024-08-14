@@ -203,7 +203,6 @@ export async function setupSamlInstances(
 	await connectSpAndIdp(
 		browser,
 		idpInstanceName,
-		page,
 		spInstanceName,
 		idpEntityId,
 		spEntityId

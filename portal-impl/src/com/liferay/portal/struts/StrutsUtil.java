@@ -29,9 +29,9 @@ public class StrutsUtil {
 	public static final String TEXT_HTML_DIR = "/html";
 
 	public static void forward(
-			String uri, ServletContext servletContext,
 			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
+			HttpServletResponse httpServletResponse,
+			ServletContext servletContext, String uri)
 		throws ServletException {
 
 		if (_log.isDebugEnabled()) {

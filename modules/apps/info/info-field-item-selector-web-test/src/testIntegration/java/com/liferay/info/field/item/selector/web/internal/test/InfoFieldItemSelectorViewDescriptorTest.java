@@ -14,9 +14,12 @@ import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewDescriptor;
+import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.provider.LayoutStructureProvider;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
@@ -185,6 +188,52 @@ public class InfoFieldItemSelectorViewDescriptorTest {
 			itemSelectorViewDescriptor.getSearchContainer();
 
 		Assert.assertEquals(1, searchContainer.getTotal());
+	}
+
+	@Test
+	public void testGetSearchContainerWithMultiStepFormType() throws Exception {
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		Layout draftLayout = _layout.fetchDraftLayout();
+
+		long defaultSegmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				_layout.getPlid());
+
+		LayoutStructure layoutStructure = new LayoutStructure();
+
+		LayoutStructureItem rootLayoutStructureItem =
+			layoutStructure.addRootLayoutStructureItem();
+
+		LayoutStructureItem formStyledLayoutStructureItem =
+			layoutStructure.addFormStyledLayoutStructureItem(
+				rootLayoutStructureItem.getItemId(), 0);
+
+		LayoutStructureItem formStepContainerStyledLayoutStructureItem =
+			layoutStructure.addFormStepContainerStyledLayoutStructureItem(
+				formStyledLayoutStructureItem.getItemId(), 0);
+
+		layoutStructure.addFormStepLayoutStructureItem(
+			formStepContainerStyledLayoutStructureItem.getItemId(), 0);
+		layoutStructure.addFormStepLayoutStructureItem(
+			formStepContainerStyledLayoutStructureItem.getItemId(), 0);
+
+		_layoutPageTemplateStructureLocalService.
+			updateLayoutPageTemplateStructureData(
+				_group.getGroupId(), draftLayout.getPlid(),
+				defaultSegmentsExperienceId, layoutStructure.toString());
+
+		mockHttpServletRequest.setParameter(
+			"formItemId", formStyledLayoutStructureItem.getItemId());
+
+		ItemSelectorViewDescriptor<Object> itemSelectorViewDescriptor =
+			_getItemSelectorViewDescriptor(mockHttpServletRequest);
+
+		SearchContainer<Object> searchContainer =
+			itemSelectorViewDescriptor.getSearchContainer();
+
+		Assert.assertEquals(3, searchContainer.getTotal());
 	}
 
 	@FeatureFlags("LPD-20213")
@@ -360,6 +409,10 @@ public class InfoFieldItemSelectorViewDescriptorTest {
 	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	private Layout _layout;
+
+	@Inject
+	private LayoutPageTemplateStructureLocalService
+		_layoutPageTemplateStructureLocalService;
 
 	@Inject
 	private LayoutStructureProvider _layoutStructureProvider;

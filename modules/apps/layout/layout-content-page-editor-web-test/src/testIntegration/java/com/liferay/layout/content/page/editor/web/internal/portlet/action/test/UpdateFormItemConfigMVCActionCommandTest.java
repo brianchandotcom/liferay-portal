@@ -355,7 +355,6 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 				_mvcActionCommand, "_updateFormStyledLayoutStructureItemConfig",
 				new Class<?>[] {ActionRequest.class, ActionResponse.class},
 				_getMockLiferayPortletActionRequest(
-					null,
 					JSONUtil.put(
 						"classNameId", classNameId
 					).put(
@@ -1077,16 +1076,13 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 	}
 
 	private MockLiferayPortletActionRequest _getMockLiferayPortletActionRequest(
-			String uniqueInfoFieldIds, String itemConfig, String formItemId,
-			Layout layout)
+			String itemConfig, String formItemId, Layout layout)
 		throws Exception {
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			ContentLayoutTestUtil.getMockLiferayPortletActionRequest(
 				_company, _group, layout);
 
-		mockLiferayPortletActionRequest.addParameter(
-			"fields", uniqueInfoFieldIds);
 		mockLiferayPortletActionRequest.addParameter("itemConfig", itemConfig);
 		mockLiferayPortletActionRequest.addParameter("itemId", formItemId);
 		mockLiferayPortletActionRequest.addParameter(
@@ -1095,6 +1091,20 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 		mockLiferayPortletActionRequest.setAttribute(
 			PortletServlet.PORTLET_SERVLET_REQUEST,
 			_serviceContext.getRequest());
+
+		return mockLiferayPortletActionRequest;
+	}
+
+	private MockLiferayPortletActionRequest _getMockLiferayPortletActionRequest(
+			String uniqueInfoFieldIds, String itemConfig, String formItemId,
+			Layout layout)
+		throws Exception {
+
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			_getMockLiferayPortletActionRequest(itemConfig, formItemId, layout);
+
+		mockLiferayPortletActionRequest.addParameter(
+			"fields", uniqueInfoFieldIds);
 
 		return mockLiferayPortletActionRequest;
 	}

@@ -6522,6 +6522,46 @@ paths:
                                     $ref: "#/components/schemas/DocumentFolder"
                                 type: array
             tags: ["DocumentFolder"]
+    "/asset-libraries/{assetLibraryId}/document-metadata-sets":
+        get:
+            operationId: getAssetLibraryDocumentMetadataSetsPage
+            parameters:
+                - in: path
+                  name: assetLibraryId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/DocumentMetadataSet"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/DocumentMetadataSet"
+                                type: array
+            tags: ["DocumentMetadataSet"]
     "/asset-libraries/{assetLibraryId}/document-shortcuts":
         get:
             operationId: getAssetLibraryDocumentShortcutsPage
@@ -8721,6 +8761,40 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/DocumentFolder"
             tags: ["DocumentFolder"]
+    "/document-metadata-sets/{documentMetadataSetId}":
+        get:
+            description:
+                Retrieves the document metadata set.
+            operationId: getDocumentMetadataSet
+            parameters:
+                - in: path
+                  name: documentMetadataSetId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: nestedFields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/DocumentMetadataSet"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/DocumentMetadataSet"
+            tags: ["DocumentMetadataSet"]
     "/document-shortcuts/{documentShortcutId}":
         delete:
             description:
@@ -12869,6 +12943,46 @@ paths:
                                     $ref: "#/components/schemas/DocumentFolder"
                                 type: array
             tags: ["DocumentFolder"]
+    "/sites/{siteId}/document-metadata-sets":
+        get:
+            operationId: getSiteDocumentMetadataSetsPage
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/DocumentMetadataSet"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/DocumentMetadataSet"
+                                type: array
+            tags: ["DocumentMetadataSet"]
     "/sites/{siteId}/document-shortcuts":
         get:
             operationId: getSiteDocumentShortcutsPage

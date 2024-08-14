@@ -52,9 +52,6 @@ public class UpdateDocumentIndexWriterImpl
 
 		IndexWriter indexWriter = searchEngine.getIndexWriter();
 
-		searchPermissionDocumentContributor.addPermissionFields(
-			companyId, document);
-
 		SearchContext searchContext = new SearchContext();
 
 		searchContext.setCompanyId(companyId);

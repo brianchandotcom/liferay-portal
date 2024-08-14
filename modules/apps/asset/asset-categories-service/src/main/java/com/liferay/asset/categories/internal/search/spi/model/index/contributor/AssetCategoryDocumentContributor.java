@@ -167,7 +167,7 @@ public class AssetCategoryDocumentContributor
 		Document document, Map<Long, List<AssetCategory>> assetVocabularyMap) {
 
 		String[] assetVocabularyCategories = {};
-		String[] assetVocabularyCategoryERCs = {};
+		String[] assetVocabularyCategoryExternalReferenceCodes = {};
 
 		if (MapUtil.isNotEmpty(assetVocabularyMap)) {
 			for (Map.Entry<Long, List<AssetCategory>> entry :
@@ -182,22 +182,23 @@ public class AssetCategoryDocumentContributor
 								assetCategory.getCategoryId(),
 						String.class));
 
-				assetVocabularyCategoryERCs = ArrayUtil.append(
-					assetVocabularyCategoryERCs,
-					TransformUtil.transformToArray(
-						entry.getValue(),
-						assetCategory ->
-							_getGroupAssetVocabularyCategoryExternalReferenceCode(
-								assetCategory),
-						String.class));
+				assetVocabularyCategoryExternalReferenceCodes =
+					ArrayUtil.append(
+						assetVocabularyCategoryExternalReferenceCodes,
+						TransformUtil.transformToArray(
+							entry.getValue(),
+							assetCategory ->
+								_getGroupAssetVocabularyCategoryExternalReferenceCode(
+									assetCategory),
+							String.class));
 			}
 		}
 
 		document.addKeyword(
 			"assetVocabularyCategoryIds", assetVocabularyCategories);
 		document.addKeyword(
-			"groupAssetVocabularyCategoryERCFieldName",
-			assetVocabularyCategoryERCs);
+			"groupAssetVocabularyCategoryExternalReferenceCodes",
+			assetVocabularyCategoryExternalReferenceCodes);
 	}
 
 	private Map<Integer, Map<Long, List<AssetCategory>>>

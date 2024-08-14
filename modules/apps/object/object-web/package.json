@@ -32,7 +32,8 @@
 			"<rootDir>/jest-setup.config.js"
 		],
 		"testMatch": [
-			"<rootDir>/src/main/resources/META-INF/resources/js/tests/**/*.spec.tsx"
+			"<rootDir>/src/main/resources/META-INF/resources/js/tests/**/*.spec.tsx",
+			"<rootDir>/src/main/resources/META-INF/resources/js/tests/**/*.spec.ts"
 		]
 	},
 	"main": "js/index.ts",

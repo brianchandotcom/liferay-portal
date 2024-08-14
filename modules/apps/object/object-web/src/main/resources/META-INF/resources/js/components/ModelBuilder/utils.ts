@@ -5,7 +5,7 @@
 
 import {ArrowHeadType, Node, Position, XYPosition} from 'react-flow-renderer';
 
-function checkPostalAddressUnsupportedObjectRelationship(
+export function checkPostalAddressUnsupportedObjectRelationship(
 	nodes: Node<ObjectDefinitionNodeData>[],
 	sourceNode: Node<ObjectDefinitionNodeData>,
 	targetNode: Node<ObjectDefinitionNodeData>

@@ -35,11 +35,31 @@ const FDSAdminItemSelector = ({
 	classNameId,
 	namespace,
 }: {
-	className: String;
-	classNameId: String;
-	namespace: String;
+	className: string;
+	classNameId: string;
+	namespace: string;
 }) => {
-	const [selectedItem, setSelectedItem] = useState<ISelectedItem>();
+	const getSelectedData = () => {
+		const dataset = (window.frameElement as HTMLElement)?.dataset;
+
+		const externalReferenceCode = dataset.selecteditemsercs;
+		const id = dataset.selecteditemsids;
+		const label = dataset.selecteditemslabels;
+
+		if (!externalReferenceCode || !id || !label) {
+			return null;
+		}
+
+		return {
+			externalReferenceCode,
+			id,
+			label,
+		};
+	};
+
+	const [selectedItem, setSelectedItem] = useState<ISelectedItem | null>(
+		getSelectedData()
+	);
 
 	return (
 		<div className="fds-admin-item-selector">
@@ -60,7 +80,8 @@ const FDSAdminItemSelector = ({
 							label: selectedItems[0].label,
 						});
 					}}
-					selectedItemsKey="id"
+					selectedItems={[selectedItem?.externalReferenceCode]}
+					selectedItemsKey="externalReferenceCode"
 					selectionType="single"
 					views={views}
 				/>

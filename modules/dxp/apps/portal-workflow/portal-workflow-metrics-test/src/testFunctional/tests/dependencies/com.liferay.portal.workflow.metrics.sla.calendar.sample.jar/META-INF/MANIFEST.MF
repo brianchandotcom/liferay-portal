@@ -58,3 +58,4 @@ Require-Capability: osgi.extender;filter:="(&(osgi.extender=osgi.compo
 Service-Component: OSGI-INF/com.liferay.portal.workflow.metrics.sla.ca
  lendar.sample.SampleWorkflowMetricsSLACalendar.xml
 Tool: Bnd-4.3.0.201909301554
+

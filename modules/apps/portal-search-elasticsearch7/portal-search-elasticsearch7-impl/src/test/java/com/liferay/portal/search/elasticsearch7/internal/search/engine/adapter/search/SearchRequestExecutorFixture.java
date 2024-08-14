@@ -351,14 +351,15 @@ public class SearchRequestExecutorFixture {
 				elasticsearchClientResolver, commonSearchSourceBuilderAssembler,
 				statsTranslator));
 
-		SearchSearchResponseAssembler searchSearchResponseAssembler =
-			_createSearchSearchResponseAssembler(
-				statsRequestBuilderFactory, statsTranslator);
 		SearchSearchRequestAssembler searchSearchRequestAssembler =
 			_createSearchSearchRequestAssembler(
 				elasticsearchQueryTranslator, elasticsearchSortFieldTranslator,
 				commonSearchSourceBuilderAssembler, statsRequestBuilderFactory,
 				statsTranslator);
+
+		SearchSearchResponseAssembler searchSearchResponseAssembler =
+			_createSearchSearchResponseAssembler(
+				statsRequestBuilderFactory, statsTranslator);
 
 		ReflectionTestUtil.setFieldValue(
 			searchRequestExecutor, "_multisearchSearchRequestExecutor",

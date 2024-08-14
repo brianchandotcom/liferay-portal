@@ -11,6 +11,8 @@ import com.liferay.asset.kernel.exception.DuplicateQueryRuleException;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.list.asset.entry.provider.AssetListAssetEntryProvider;
+import com.liferay.asset.list.model.AssetListEntry;
+import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.asset.list.service.AssetListEntrySegmentsEntryRelLocalService;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.constants.AssetPublisherWebKeys;
@@ -32,6 +34,7 @@ import com.liferay.item.selector.ItemSelector;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
@@ -238,6 +241,13 @@ public class AssetPublisherConfigurationAction
 
 					_updateQueryLogic(actionRequest, portletPreferences);
 				}
+				else if (selectionStyle.equals(
+							AssetPublisherSelectionStyleConstants.
+								TYPE_ASSET_LIST)) {
+
+					_updateAssetListEntryPreferences(
+						actionRequest, portletPreferences);
+				}
 
 				_updateDefaultAssetPublisher(actionRequest);
 
@@ -330,6 +340,9 @@ public class AssetPublisherConfigurationAction
 
 	@Reference
 	protected AssetListAssetEntryProvider assetListAssetEntryProvider;
+
+	@Reference
+	protected AssetListEntryLocalService assetListEntryLocalService;
 
 	@Reference
 	protected AssetListEntrySegmentsEntryRelLocalService
@@ -697,6 +710,38 @@ public class AssetPublisherConfigurationAction
 
 			portletPreferences.setValue("displayStyle", "full-content");
 		}
+	}
+
+	private void _updateAssetListEntryPreferences(
+			ActionRequest actionRequest, PortletPreferences portletPreferences)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-22837")) {
+			return;
+		}
+
+		AssetListEntry assetListEntry =
+			assetListEntryLocalService.fetchAssetListEntry(
+				GetterUtil.getLong(
+					getParameter(actionRequest, "assetListEntryId")));
+
+		if (assetListEntry == null) {
+			portletPreferences.reset("assetListEntryExternalReferenceCode");
+			portletPreferences.reset(
+				"assetListEntryGroupExternalReferenceCode");
+
+			return;
+		}
+
+		setPreference(
+			actionRequest, "assetListEntryExternalReferenceCode",
+			assetListEntry.getExternalReferenceCode());
+
+		Group group = groupLocalService.getGroup(assetListEntry.getGroupId());
+
+		setPreference(
+			actionRequest, "assetListEntryGroupExternalReferenceCode",
+			group.getExternalReferenceCode());
 	}
 
 	private void _updateDefaultAssetPublisher(ActionRequest actionRequest)

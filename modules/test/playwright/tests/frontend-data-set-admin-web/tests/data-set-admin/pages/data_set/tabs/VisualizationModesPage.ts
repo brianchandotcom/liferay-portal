@@ -175,7 +175,7 @@ export class VisualizationModesPage {
 			.waitFor();
 	}
 
-	async searchAndSelecteField(path: string) {
+	async searchAndSelectField(path: string) {
 		const fieldSearch = await this.page
 			.getByRole('dialog', {name: 'Select Field'})
 			.getByPlaceholder('Search');

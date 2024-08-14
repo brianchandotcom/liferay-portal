@@ -518,19 +518,19 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 		await test.step('Add scalar array field', async () => {
 			await visualizationModesPage.openAddFieldsModal();
 
-			await visualizationModesPage.searchAndSelecteField(
+			await visualizationModesPage.searchAndSelectField(
 				SAMPLE_SCALAR_ARRAY_FIELD
 			);
-			await visualizationModesPage.searchAndSelecteField(
+			await visualizationModesPage.searchAndSelectField(
 				SAMPLE_COMPLEX_ARRAY_FIELD
 			);
-			await visualizationModesPage.searchAndSelecteField(
+			await visualizationModesPage.searchAndSelectField(
 				SAMPLE_COMPLEX_ARRAY_CHILD_FIELD
 			);
-			await visualizationModesPage.searchAndSelecteField(
+			await visualizationModesPage.searchAndSelectField(
 				SAMPLE_COMPLEX_OBJECT_CHILD_FIELD
 			);
-			await visualizationModesPage.searchAndSelecteField(
+			await visualizationModesPage.searchAndSelectField(
 				SAMPLE_FULL_COMPLEX_FIELD
 			);
 

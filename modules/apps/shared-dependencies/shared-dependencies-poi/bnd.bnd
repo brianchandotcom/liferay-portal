@@ -18,7 +18,6 @@ Import-Package:\
 	!net.sf.saxon.*,\
 	\
 	!org.apache.batik.*,\
-	!org.apache.commons.collections4.*,\
 	!org.apache.jcp.xml.dsig.internal.dom,\
 	!org.apache.maven.*,\
 	!org.apache.tools.ant.*,\

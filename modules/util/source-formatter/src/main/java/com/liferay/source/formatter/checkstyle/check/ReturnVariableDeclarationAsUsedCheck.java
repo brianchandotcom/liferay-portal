@@ -108,7 +108,7 @@ public class ReturnVariableDeclarationAsUsedCheck extends BaseCheck {
 			slistDetailAST, false, TokenTypes.EXPR);
 
 		if (_containsMethodCalls(
-				exprDetailASTList,
+				slistDetailAST,
 				returnVariableDefinitionDetailAST.getLineNo()) ||
 			_containsSynchronizedBlocks(
 				slistDetailAST,
@@ -219,22 +219,31 @@ public class ReturnVariableDeclarationAsUsedCheck extends BaseCheck {
 	}
 
 	private boolean _containsMethodCalls(
-		List<DetailAST> exprDetailASTList, int lineNumber) {
+		DetailAST slistDetailAST, int lineNumber) {
 
-		List<DetailAST> methodCallDetailASTList = ListUtil.filter(
-			exprDetailASTList,
-			exprDetailAST -> {
-				if (exprDetailAST.getLineNo() > lineNumber) {
+		List<DetailAST> methodCallDetailASTList = getAllChildTokens(
+			slistDetailAST, true, TokenTypes.METHOD_CALL);
+
+		methodCallDetailASTList = ListUtil.filter(
+			methodCallDetailASTList,
+			methodCallDetailAST -> {
+				if (methodCallDetailAST.getLineNo() > lineNumber) {
 					return false;
 				}
 
-				DetailAST firstChildDetailAST = exprDetailAST.getFirstChild();
+				DetailAST parentDetailAST = methodCallDetailAST.getParent();
 
-				if (firstChildDetailAST.getType() != TokenTypes.METHOD_CALL) {
+				if (parentDetailAST.getType() != TokenTypes.EXPR) {
 					return false;
 				}
 
-				String variableName = getVariableName(firstChildDetailAST);
+				parentDetailAST = parentDetailAST.getParent();
+
+				if (parentDetailAST.getType() != TokenTypes.SLIST) {
+					return false;
+				}
+
+				String variableName = getVariableName(methodCallDetailAST);
 
 				if (variableName == null) {
 					return true;
@@ -245,7 +254,7 @@ public class ReturnVariableDeclarationAsUsedCheck extends BaseCheck {
 				}
 
 				DetailAST typeDetailAST = getVariableTypeDetailAST(
-					firstChildDetailAST, variableName, false);
+					methodCallDetailAST, variableName, false);
 
 				if (typeDetailAST == null) {
 					return true;

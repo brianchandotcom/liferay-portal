@@ -69,8 +69,16 @@ public class StrutsUtil {
 				}
 			}
 			catch (ServletException servletException1) {
-				httpServletRequest.setAttribute(
-					EXCEPTION, servletException1.getRootCause());
+				if (throwable == null) {
+					throwable = servletException1.getRootCause();
+
+					if (throwable == null) {
+						throwable = servletException1;
+					}
+				}
+
+				_setErrorPageAttributes(
+					httpServletRequest, servletName, throwable);
 
 				String errorPath = TEXT_HTML_DIR + "/common/error.jsp";
 

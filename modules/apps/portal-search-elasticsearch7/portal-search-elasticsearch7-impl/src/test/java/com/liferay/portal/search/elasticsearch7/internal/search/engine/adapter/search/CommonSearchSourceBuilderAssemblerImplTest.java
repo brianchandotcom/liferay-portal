@@ -565,6 +565,16 @@ public class CommonSearchSourceBuilderAssemblerImplTest {
 	protected static CommonSearchSourceBuilderAssembler
 		createCommonSearchSourceBuilderAssembler(Queries queries) {
 
+		CommonSearchSourceBuilderAssembler commonSearchSourceBuilderAssembler =
+			new CommonSearchSourceBuilderAssemblerImpl();
+
+		ReflectionTestUtil.setFieldValue(
+			commonSearchSourceBuilderAssembler, "_complexQueryBuilderFactory",
+			createComplexQueryBuilderFactory(queries));
+		ReflectionTestUtil.setFieldValue(
+			commonSearchSourceBuilderAssembler, "_facetTranslator",
+			new DefaultFacetTranslator());
+
 		com.liferay.portal.search.elasticsearch7.internal.legacy.query.
 			ElasticsearchQueryTranslatorFixture
 				legacyElasticsearchQueryTranslatorFixture =
@@ -576,38 +586,28 @@ public class CommonSearchSourceBuilderAssemblerImplTest {
 				legacyElasticsearchQueryTranslatorFixture.
 					getElasticsearchQueryTranslator();
 
-		ElasticsearchQueryTranslatorFixture
-			elasticsearchQueryTranslatorFixture =
-				new ElasticsearchQueryTranslatorFixture();
-
 		ElasticsearchFilterTranslatorFixture
 			elasticsearchFilterTranslatorFixture =
 				new ElasticsearchFilterTranslatorFixture(
 					legacyElasticsearchQueryTranslator);
 
-		ElasticsearchQueryTranslator elasticsearchQueryTranslator =
-			elasticsearchQueryTranslatorFixture.
-				getElasticsearchQueryTranslator();
-
-		CommonSearchSourceBuilderAssembler commonSearchSourceBuilderAssembler =
-			new CommonSearchSourceBuilderAssemblerImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			commonSearchSourceBuilderAssembler, "_complexQueryBuilderFactory",
-			createComplexQueryBuilderFactory(queries));
-		ReflectionTestUtil.setFieldValue(
-			commonSearchSourceBuilderAssembler, "_facetTranslator",
-			new DefaultFacetTranslator());
 		ReflectionTestUtil.setFieldValue(
 			commonSearchSourceBuilderAssembler, "_filterTranslator",
 			elasticsearchFilterTranslatorFixture.
 				getElasticsearchFilterTranslator());
+
 		ReflectionTestUtil.setFieldValue(
 			commonSearchSourceBuilderAssembler, "_legacyQueryTranslator",
 			legacyElasticsearchQueryTranslator);
+
+		ElasticsearchQueryTranslatorFixture
+			elasticsearchQueryTranslatorFixture =
+				new ElasticsearchQueryTranslatorFixture();
+
 		ReflectionTestUtil.setFieldValue(
 			commonSearchSourceBuilderAssembler, "_queryTranslator",
-			elasticsearchQueryTranslator);
+			elasticsearchQueryTranslatorFixture.
+				getElasticsearchQueryTranslator());
 
 		return commonSearchSourceBuilderAssembler;
 	}

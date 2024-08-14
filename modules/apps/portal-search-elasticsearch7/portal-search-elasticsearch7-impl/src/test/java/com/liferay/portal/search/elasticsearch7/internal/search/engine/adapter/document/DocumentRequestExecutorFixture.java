@@ -131,19 +131,20 @@ public class DocumentRequestExecutorFixture {
 		ElasticsearchClientResolver elasticsearchClientResolver,
 		ElasticsearchDocumentFactory elasticsearchDocumentFactory) {
 
+		DocumentRequestExecutor documentRequestExecutor =
+			new ElasticsearchDocumentRequestExecutor();
+
 		ElasticsearchBulkableDocumentRequestTranslator
 			elasticsearchBulkableDocumentRequestTranslator =
 				_createBulkableDocumentRequestTranslator(
 					elasticsearchDocumentFactory);
-
-		DocumentRequestExecutor documentRequestExecutor =
-			new ElasticsearchDocumentRequestExecutor();
 
 		ReflectionTestUtil.setFieldValue(
 			documentRequestExecutor, "_bulkDocumentRequestExecutor",
 			_createBulkDocumentRequestExecutor(
 				elasticsearchClientResolver,
 				elasticsearchBulkableDocumentRequestTranslator));
+
 		ReflectionTestUtil.setFieldValue(
 			documentRequestExecutor, "_deleteByQueryDocumentRequestExecutor",
 			_createDeleteByQueryDocumentRequestExecutor(

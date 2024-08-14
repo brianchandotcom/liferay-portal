@@ -16,9 +16,6 @@ function saveStepIdInSession(stepId) {
 }
 
 function setActiveStep(step) {
-	if (step.classList.contains('active')) {
-		return;
-	}
 
 	// Deactivate current active step if it exists
 
@@ -54,9 +51,13 @@ function main() {
 	const steps = fragmentElement.querySelectorAll('li');
 
 	for (const step of steps) {
-		step.querySelector('button').addEventListener('click', () =>
-			setActiveStep(step)
-		);
+		step.querySelector('button').addEventListener('click', () => {
+			if (step.classList.contains('active')) {
+				return;
+			}
+
+			setActiveStep(step);
+		});
 	}
 }
 

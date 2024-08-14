@@ -383,7 +383,7 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 	private void _configureTaskBuildService(BuildServiceTask buildServiceTask) {
 		JavaVersion javaVersion = buildServiceTask.getJavaVersion();
 
-		if (javaVersion.isJava11()) {
+		if (javaVersion.compareTo(JavaVersion.VERSION_11) >= 0) {
 			buildServiceTask.jvmArgs(
 				"--add-opens", "java.base/java.lang=ALL-UNNAMED");
 			buildServiceTask.jvmArgs(

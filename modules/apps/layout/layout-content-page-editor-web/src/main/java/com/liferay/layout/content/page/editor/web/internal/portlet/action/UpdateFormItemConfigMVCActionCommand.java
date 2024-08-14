@@ -215,7 +215,11 @@ public class UpdateFormItemConfigMVCActionCommand
 			}
 		}
 		else {
-			if (FeatureFlagManagerUtil.isEnabled("LPD-20213") &&
+			Map<String, String[]> parameterMap =
+				actionRequest.getParameterMap();
+
+			if (parameterMap.containsKey("fields") &&
+				FeatureFlagManagerUtil.isEnabled("LPD-20213") &&
 				(formStyledLayoutStructureItem.getClassNameId() > 0)) {
 
 				List<String> newUniqueInfoFieldIds = new ArrayList<>();

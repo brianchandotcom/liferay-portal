@@ -25,15 +25,15 @@
 	componentId="UserNameFields"
 	context='<%=
 		HashMapBuilder.<String, Object>put(
-			"baseURL", HtmlUtil.escapeJS(themeDisplay.getURLCurrent())
+			"baseURL", themeDisplay.getURLCurrent()
 		).put(
-			"formNode", liferayPortletResponse.getNamespace() + "fm"
+			"formNode", "#" + liferayPortletResponse.getNamespace() + "fm"
 		).put(
 			"languageIdSelectNode", "#" + liferayPortletResponse.getNamespace() + "languageId"
 		).put(
 			"portletNamespace", liferayPortletResponse.getNamespace()
 		).put(
-			"userNameFieldsNode", liferayPortletResponse.getNamespace() + "userNameFields"
+			"userNameFieldsNode", "#" + liferayPortletResponse.getNamespace() + "userNameFields"
 		).build()
 	%>'
 	module="{UserNameFields} from users-admin-web"

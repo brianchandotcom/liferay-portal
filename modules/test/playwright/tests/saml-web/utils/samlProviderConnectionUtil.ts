@@ -54,7 +54,6 @@ async function addServiceProviderConnection(page, spConnection: TSpConnection) {
 export async function connectSpAndIdp(
 	browser,
 	idpName: string,
-	page,
 	spName: string,
 	idpEntityId = idpName,
 	spEntityId = spName

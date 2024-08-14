@@ -57,7 +57,7 @@ const reducer = (state, action) => {
 			...nextState,
 			activationOrigin: origin,
 			activeItemIds: Liferay.FeatureFlags['LPD-18221']
-				? nextState.multiSelectIsActive
+				? nextState.multiSelectIsActive && itemId
 					? getActiveItemIds(nextState.activeItemIds, itemId)
 					: itemId
 						? [itemId]

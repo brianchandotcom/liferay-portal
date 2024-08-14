@@ -164,6 +164,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.BigDecimalUtil;
@@ -258,6 +259,15 @@ public class ObjectEntryLocalServiceImpl
 			long userId, long groupId, long objectDefinitionId,
 			Map<String, Serializable> values, ServiceContext serviceContext)
 		throws PortalException {
+
+		serviceContext.setStrictAdd(true);
+
+		TransactionCommitCallbackUtil.registerCallback(
+			() -> {
+				serviceContext.setStrictAdd(false);
+
+				return null;
+			});
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);

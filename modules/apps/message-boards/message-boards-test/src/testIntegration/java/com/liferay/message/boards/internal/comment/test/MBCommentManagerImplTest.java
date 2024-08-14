@@ -218,7 +218,9 @@ public class MBCommentManagerImplTest {
 		_addComment(_parentCommentId);
 	}
 
-	private Function<String, ServiceContext> _createServiceContextFunction() {
+	private Function<String, ServiceContext> _createServiceContextFunction()
+		throws Exception {
+
 		return new IdentityServiceContextFunction(
 			ServiceContextTestUtil.getServiceContext(
 				_group, _user.getUserId()));

@@ -747,7 +747,7 @@ public class CommerceAccountLocalServiceTest {
 		return externalReferenceCodes;
 	}
 
-	private ServiceContext _getServiceContext() {
+	private ServiceContext _getServiceContext() throws Exception {
 		return ServiceContextTestUtil.getServiceContext(
 			_user.getCompanyId(), _user.getGroupId(), _user.getUserId());
 	}

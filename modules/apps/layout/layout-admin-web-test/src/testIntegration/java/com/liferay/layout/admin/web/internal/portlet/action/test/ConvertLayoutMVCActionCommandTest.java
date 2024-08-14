@@ -248,7 +248,9 @@ public class ConvertLayoutMVCActionCommandTest {
 		return mockLiferayPortletActionRequest;
 	}
 
-	private ServiceContext _getServiceContext(Group group, long userId) {
+	private ServiceContext _getServiceContext(Group group, long userId)
+		throws Exception {
+
 		HttpServletRequest httpServletRequest = new MockHttpServletRequest();
 
 		httpServletRequest.setAttribute(

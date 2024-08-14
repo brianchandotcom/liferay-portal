@@ -226,7 +226,9 @@ public class
 			LanguageUtil.get(_serviceContext.getLocale(), "copy"));
 	}
 
-	private ServiceContext _getServiceContext(Group group, long userId) {
+	private ServiceContext _getServiceContext(Group group, long userId)
+		throws Exception {
+
 		HttpServletRequest httpServletRequest = new MockHttpServletRequest();
 
 		httpServletRequest.setAttribute(

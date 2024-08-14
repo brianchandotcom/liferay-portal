@@ -373,6 +373,27 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 
 			Assert.assertEquals(
 				0, removedLayoutStructureItemsJSONArray.length());
+
+			updateFormJSONObject = ReflectionTestUtil.invoke(
+				_mvcActionCommand, "_updateFormStyledLayoutStructureItemConfig",
+				new Class<?>[] {ActionRequest.class, ActionResponse.class},
+				_getMockLiferayPortletActionRequest(
+					JSONUtil.put(
+						"classNameId", classNameId
+					).put(
+						"classTypeId", "0"
+					).put(
+						"isMultiStep", false
+					).toString(),
+					formItemId, _layout),
+				new MockLiferayPortletActionResponse());
+
+			removedLayoutStructureItemsJSONArray =
+				updateFormJSONObject.getJSONArray(
+					"removedFragmentEntryLinkIds");
+
+			Assert.assertEquals(
+				0, removedLayoutStructureItemsJSONArray.length());
 		}
 	}
 

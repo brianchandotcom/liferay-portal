@@ -738,11 +738,21 @@ public class AssetPublisherConfigurationAction
 			actionRequest, "assetListEntryExternalReferenceCode",
 			assetListEntry.getExternalReferenceCode());
 
-		Group group = groupLocalService.getGroup(assetListEntry.getGroupId());
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
-		setPreference(
-			actionRequest, "assetListEntryGroupExternalReferenceCode",
-			group.getExternalReferenceCode());
+		if (assetListEntry.getGroupId() == themeDisplay.getScopeGroupId()) {
+			portletPreferences.reset(
+				"assetListEntryGroupExternalReferenceCode");
+		}
+		else {
+			Group group = groupLocalService.getGroup(
+				assetListEntry.getGroupId());
+
+			setPreference(
+				actionRequest, "assetListEntryGroupExternalReferenceCode",
+				group.getExternalReferenceCode());
+		}
 	}
 
 	private void _updateDefaultAssetPublisher(ActionRequest actionRequest)

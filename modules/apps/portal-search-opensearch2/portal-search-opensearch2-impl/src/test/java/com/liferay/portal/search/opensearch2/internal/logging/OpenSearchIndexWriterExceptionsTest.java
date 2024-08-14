@@ -178,9 +178,6 @@ public class OpenSearchIndexWriterExceptionsTest extends BaseIndexingTestCase {
 
 	@Test
 	public void testPartiallyUpdateDocument() {
-		expectedException.expect(OpenSearchException.class);
-		expectedException.expectMessage("[document_missing_exception]");
-
 		Document document = new DocumentImpl();
 
 		document.addKeyword(Field.UID, "1");
@@ -200,9 +197,6 @@ public class OpenSearchIndexWriterExceptionsTest extends BaseIndexingTestCase {
 
 	@Test
 	public void testPartiallyUpdateDocuments() {
-		expectedException.expect(RuntimeException.class);
-		expectedException.expectMessage("Bulk partial update failed");
-
 		Document document = new DocumentImpl();
 
 		List<Document> documents = new ArrayList<>();

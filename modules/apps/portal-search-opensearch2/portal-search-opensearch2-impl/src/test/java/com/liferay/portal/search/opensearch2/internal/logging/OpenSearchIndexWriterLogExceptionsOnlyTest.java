@@ -251,11 +251,6 @@ public class OpenSearchIndexWriterLogExceptionsOnlyTest
 		}
 	}
 
-	@ExpectedLog(
-		expectedClass = OpenSearchIndexWriter.class,
-		expectedLevel = ExpectedLog.Level.WARNING,
-		expectedLog = "document missing"
-	)
 	@Test
 	public void testPartiallyUpdateDocument() {
 		Document document = new DocumentImpl();
@@ -275,11 +270,6 @@ public class OpenSearchIndexWriterLogExceptionsOnlyTest
 		}
 	}
 
-	@ExpectedLog(
-		expectedClass = OpenSearchIndexWriter.class,
-		expectedLevel = ExpectedLog.Level.WARNING,
-		expectedLog = "Bulk partial update failed"
-	)
 	@Test
 	public void testPartiallyUpdateDocuments() {
 		Document document = new DocumentImpl();

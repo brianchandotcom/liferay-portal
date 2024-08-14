@@ -64,7 +64,7 @@ public class LanguageClientExtensionTest {
 	public void testAddingBundle() throws Exception {
 		Bundle bundle = _bundleContext.installBundle(
 			RandomTestUtil.randomString(),
-			_getBatchBundleInputStream("batch"));
+			_getBatchBundleInputStream("batchTest"));
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.portal.language.extender.internal." +

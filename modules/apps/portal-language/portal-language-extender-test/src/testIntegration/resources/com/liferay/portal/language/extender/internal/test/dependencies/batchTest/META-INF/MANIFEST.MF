@@ -1,6 +1,6 @@
 Manifest-Version: 2
 Bundle-ManifestVersion: 2
-Bundle-SymbolicName: batch
+Bundle-SymbolicName: batchTest
 Bundle-Version: 1.0.0
-Liferay-Client-Extension-Batch: batch
+Liferay-Client-Extension-Batch: batchTest
 Created-By: 11.0.17 (Ubuntu)

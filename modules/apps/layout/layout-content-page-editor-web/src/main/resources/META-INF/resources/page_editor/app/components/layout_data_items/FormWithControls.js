@@ -6,25 +6,18 @@
 import ClayAlert from '@clayui/alert';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import classNames from 'classnames';
-import React, {useCallback} from 'react';
+import React from 'react';
 
 import FormMappingOptions from '../../../plugins/browser/components/page_structure/components/item_configuration_panels/FormMappingOptions';
-import {
-	useItemLocalConfig,
-	useUpdateItemLocalConfig,
-} from '../../contexts/LocalConfigContext';
-import {
-	useDispatch,
-	useSelector,
-	useSelectorCallback,
-} from '../../contexts/StoreContext';
+import {useItemLocalConfig} from '../../contexts/LocalConfigContext';
+import {useSelector, useSelectorCallback} from '../../contexts/StoreContext';
 import selectLanguageId from '../../selectors/selectLanguageId';
-import updateFormItemConfig from '../../thunks/updateFormItemConfig';
 import {formIsMapped} from '../../utils/formIsMapped';
 import {formIsRestricted} from '../../utils/formIsRestricted';
 import {formIsUnavailable} from '../../utils/formIsUnavailable';
 import {getEditableLocalizedValue} from '../../utils/getEditableLocalizedValue';
 import isItemEmpty from '../../utils/isItemEmpty';
+import {useSaveFormConfig} from '../../utils/useSaveFormConfig';
 import ContainerWithControls from './ContainerWithControls';
 
 const FormWithControls = React.forwardRef(({children, item, ...rest}, ref) => {
@@ -106,33 +99,7 @@ function Form({children, item}) {
 }
 
 function FormEmptyState({isMapped, item}) {
-	const dispatch = useDispatch();
-	const updateItemLocalConfig = useUpdateItemLocalConfig();
-
-	const onValueSelect = useCallback(
-		(nextConfig, fields) => {
-			const isMapping = Boolean(nextConfig.classNameId);
-
-			if (isMapping) {
-				updateItemLocalConfig(item.itemId, {
-					loading: true,
-				});
-			}
-
-			dispatch(
-				updateFormItemConfig({
-					fields,
-					itemConfig: nextConfig,
-					itemId: item.itemId,
-				})
-			).then(() =>
-				updateItemLocalConfig(item.itemId, {
-					loading: false,
-				})
-			);
-		},
-		[dispatch, item.itemId, updateItemLocalConfig]
-	);
+	const saveFormConfig = useSaveFormConfig(item);
 
 	const localConfig = useItemLocalConfig(item.itemId);
 
@@ -169,7 +136,7 @@ function FormEmptyState({isMapped, item}) {
 				<FormMappingOptions
 					hideLabel={true}
 					item={item}
-					onValueSelect={onValueSelect}
+					onValueSelect={saveFormConfig}
 				/>
 			</div>
 		</div>

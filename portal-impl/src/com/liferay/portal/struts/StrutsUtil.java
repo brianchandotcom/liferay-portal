@@ -128,6 +128,18 @@ public class StrutsUtil {
 
 		httpServletRequest.setAttribute(
 			RequestDispatcher.ERROR_EXCEPTION, throwable);
+		httpServletRequest.setAttribute(
+			RequestDispatcher.ERROR_EXCEPTION_TYPE, throwable.getClass());
+		httpServletRequest.setAttribute(
+			RequestDispatcher.ERROR_MESSAGE, throwable.getMessage());
+		httpServletRequest.setAttribute(
+			RequestDispatcher.ERROR_REQUEST_URI,
+			httpServletRequest.getRequestURI());
+		httpServletRequest.setAttribute(
+			RequestDispatcher.ERROR_SERVLET_NAME, servletName);
+		httpServletRequest.setAttribute(
+			RequestDispatcher.ERROR_STATUS_CODE,
+			Integer.valueOf(HttpServletResponse.SC_INTERNAL_SERVER_ERROR));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(StrutsUtil.class);

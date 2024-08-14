@@ -346,13 +346,21 @@ public class ResourcePermissionLocalServiceImpl
 			return;
 		}
 
-		List<ResourcePermission> resourcePermissions =
-			resourcePermissionPersistence.findByC_N_S_P(
-				companyId, name, ResourceConstants.SCOPE_INDIVIDUAL, primKey);
+		if (serviceContext.isStrictAdd()) {
+			_addResourcePermissions(
+				companyId, groupId, userId, name, primKey,
+				Collections.emptyList(), portletActions, serviceContext);
+		}
+		else {
+			List<ResourcePermission> resourcePermissions =
+				resourcePermissionPersistence.findByC_N_S_P(
+					companyId, name, ResourceConstants.SCOPE_INDIVIDUAL,
+					primKey);
 
-		_addResourcePermissions(
-			companyId, groupId, userId, name, primKey, resourcePermissions,
-			portletActions, serviceContext);
+			_addResourcePermissions(
+				companyId, groupId, userId, name, primKey, resourcePermissions,
+				portletActions, serviceContext);
+		}
 	}
 
 	@Override

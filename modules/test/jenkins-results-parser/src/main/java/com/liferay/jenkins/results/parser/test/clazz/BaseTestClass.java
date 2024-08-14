@@ -14,8 +14,6 @@ import com.liferay.jenkins.results.parser.test.clazz.group.BatchTestClassGroup;
 import java.io.File;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 
@@ -132,12 +130,7 @@ public abstract class BaseTestClass implements TestClass {
 
 	@Override
 	public List<TestClassMethod> getTestClassMethods() {
-		List<TestClassMethod> testClassMethods = new ArrayList<>(
-			new HashSet<>(_testClassMethods));
-
-		Collections.sort(testClassMethods);
-
-		return testClassMethods;
+		return _testClassMethods;
 	}
 
 	@Override
@@ -161,9 +154,9 @@ public abstract class BaseTestClass implements TestClass {
 
 	@Override
 	public int hashCode() {
-		File testClassFile = getTestClassFile();
+		JSONObject jsonObject = getJSONObject();
 
-		return testClassFile.hashCode();
+		return jsonObject.hashCode();
 	}
 
 	@Override

@@ -5,40 +5,12 @@
 
 package com.liferay.jenkins.results.parser.test.clazz;
 
-import java.util.Objects;
-
 import org.json.JSONObject;
 
 /**
  * @author Michael Hashimoto
  */
-public class TestClassMethod implements Comparable<TestClassMethod> {
-
-	@Override
-	public int compareTo(TestClassMethod testClassMethod) {
-		if (testClassMethod == null) {
-			throw new NullPointerException("Test class is null");
-		}
-
-		return _name.compareTo(testClassMethod.getName());
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof TestClassMethod)) {
-			return false;
-		}
-
-		if (Objects.equals(hashCode(), object.hashCode())) {
-			return true;
-		}
-
-		return false;
-	}
+public class TestClassMethod {
 
 	public JSONObject getJSONObject() {
 		return _jsonObject;
@@ -50,13 +22,6 @@ public class TestClassMethod implements Comparable<TestClassMethod> {
 
 	public TestClass getTestClass() {
 		return _testClass;
-	}
-
-	@Override
-	public int hashCode() {
-		String name = getName();
-
-		return name.hashCode();
 	}
 
 	public boolean isIgnored() {

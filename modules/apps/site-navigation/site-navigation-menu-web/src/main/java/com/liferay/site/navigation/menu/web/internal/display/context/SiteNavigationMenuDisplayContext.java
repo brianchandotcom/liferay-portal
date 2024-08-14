@@ -13,11 +13,13 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -31,6 +33,8 @@ import com.liferay.site.navigation.item.selector.criterion.SiteNavigationMenuIte
 import com.liferay.site.navigation.menu.web.internal.configuration.SiteNavigationMenuPortletInstanceConfiguration;
 import com.liferay.site.navigation.menu.web.internal.constants.SiteNavigationMenuWebKeys;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
+import com.liferay.site.navigation.model.SiteNavigationMenuItem;
+import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalServiceUtil;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalServiceUtil;
 import com.liferay.site.navigation.taglib.servlet.taglib.NavigationMenuMode;
 
@@ -136,6 +140,29 @@ public class SiteNavigationMenuDisplayContext {
 			return _displayStyleGroupId;
 		}
 
+		if (FeatureFlagManagerUtil.isEnabled("LPD-23048")) {
+			String displayStyleGroupExternalReferenceCode =
+				_siteNavigationMenuPortletInstanceConfiguration.
+					displayStyleGroupExternalReferenceCode();
+
+			if (Validator.isNull(displayStyleGroupExternalReferenceCode)) {
+				return _themeDisplay.getScopeGroupId();
+			}
+
+			Group group =
+				GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
+					displayStyleGroupExternalReferenceCode,
+					_themeDisplay.getCompanyId());
+
+			if (group != null) {
+				_displayStyleGroupId = group.getGroupId();
+
+				return _displayStyleGroupId;
+			}
+
+			return 0;
+		}
+
 		_displayStyleGroupId = ParamUtil.getLong(
 			_httpServletRequest, "displayStyleGroupId",
 			_siteNavigationMenuPortletInstanceConfiguration.
@@ -194,6 +221,28 @@ public class SiteNavigationMenuDisplayContext {
 
 	public String getRootMenuItemId() {
 		if (_rootMenuItemId != null) {
+			return _rootMenuItemId;
+		}
+
+		if (FeatureFlagManagerUtil.isEnabled("LPD-23048")) {
+			String rootMenuItemExternalReferenceCode = ParamUtil.getString(
+				_httpServletRequest, "rootMenuItemExternalReferenceCode",
+				_siteNavigationMenuPortletInstanceConfiguration.
+					rootMenuItemExternalReferenceCode());
+
+			SiteNavigationMenuItem siteNavigationMenuItem =
+				SiteNavigationMenuItemLocalServiceUtil.
+					fetchSiteNavigationMenuItemByExternalReferenceCode(
+						rootMenuItemExternalReferenceCode,
+						_themeDisplay.getScopeGroupId());
+
+			if (siteNavigationMenuItem == null) {
+				return "0";
+			}
+
+			_rootMenuItemId = String.valueOf(
+				siteNavigationMenuItem.getSiteNavigationMenuItemId());
+
 			return _rootMenuItemId;
 		}
 
@@ -332,6 +381,23 @@ public class SiteNavigationMenuDisplayContext {
 			return _siteNavigationMenu;
 		}
 
+		if (FeatureFlagManagerUtil.isEnabled("LPD-23048")) {
+			String siteNavigationMenuExternalReferenceCode =
+				ParamUtil.getString(
+					_httpServletRequest,
+					"siteNavigationMenuExternalReferenceCode",
+					_siteNavigationMenuPortletInstanceConfiguration.
+						siteNavigationMenuExternalReferenceCode());
+
+			_siteNavigationMenu =
+				SiteNavigationMenuLocalServiceUtil.
+					fetchSiteNavigationMenuByExternalReferenceCode(
+						siteNavigationMenuExternalReferenceCode,
+						_themeDisplay.getScopeGroupId());
+
+			return _siteNavigationMenu;
+		}
+
 		_siteNavigationMenu =
 			SiteNavigationMenuLocalServiceUtil.fetchSiteNavigationMenu(
 				getSiteNavigationMenuId());
@@ -347,6 +413,19 @@ public class SiteNavigationMenuDisplayContext {
 
 	public long getSiteNavigationMenuId() {
 		if (_siteNavigationMenuId != null) {
+			return _siteNavigationMenuId;
+		}
+
+		if (FeatureFlagManagerUtil.isEnabled("LPD-23048")) {
+			SiteNavigationMenu siteNavigationMenu = getSiteNavigationMenu();
+
+			if (siteNavigationMenu == null) {
+				return 0;
+			}
+
+			_siteNavigationMenuId =
+				siteNavigationMenu.getSiteNavigationMenuId();
+
 			return _siteNavigationMenuId;
 		}
 
@@ -460,9 +539,7 @@ public class SiteNavigationMenuDisplayContext {
 	}
 
 	public boolean isSiteNavigationMenuSelected() {
-		long siteNavigationMenuId =
-			_siteNavigationMenuPortletInstanceConfiguration.
-				siteNavigationMenuId();
+		long siteNavigationMenuId = getSiteNavigationMenuId();
 		String siteNavigationMenuName =
 			_siteNavigationMenuPortletInstanceConfiguration.
 				siteNavigationMenuName();

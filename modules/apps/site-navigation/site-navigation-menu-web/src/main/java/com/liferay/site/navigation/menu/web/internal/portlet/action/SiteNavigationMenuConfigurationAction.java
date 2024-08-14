@@ -8,14 +8,21 @@ package com.liferay.site.navigation.menu.web.internal.portlet.action;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.settings.ModifiableSettings;
 import com.liferay.portal.kernel.settings.Settings;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.site.navigation.constants.SiteNavigationMenuPortletKeys;
 import com.liferay.site.navigation.menu.web.internal.constants.SiteNavigationMenuWebKeys;
+import com.liferay.site.navigation.model.SiteNavigationMenu;
+import com.liferay.site.navigation.model.SiteNavigationMenuItem;
+import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
+import com.liferay.site.navigation.service.SiteNavigationMenuItemService;
+import com.liferay.site.navigation.service.SiteNavigationMenuService;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 
 import java.io.IOException;
@@ -82,6 +89,10 @@ public class SiteNavigationMenuConfigurationAction
 		if (!Objects.equals(rootMenuItemType, "select")) {
 			modifiableSettings.reset("rootMenuItemId");
 		}
+
+		_updateDisplayStyleGroupPreferences(modifiableSettings);
+		_updateSiteNavigationMenuPreferences(modifiableSettings);
+		_updateRootMenuItemPreferences(modifiableSettings);
 	}
 
 	@Override
@@ -95,6 +106,79 @@ public class SiteNavigationMenuConfigurationAction
 		super.doDispatch(renderRequest, renderResponse);
 	}
 
+	private void _updateDisplayStyleGroupPreferences(
+		ModifiableSettings modifiableSettings) {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-23048")) {
+			return;
+		}
+
+		String displayStyleGroupKey = modifiableSettings.getValue(
+			"displayStyleGroupKey", null);
+
+		modifiableSettings.setValue(
+			"displayStyleGroupExternalReferenceCode", displayStyleGroupKey);
+
+		modifiableSettings.reset("displayStyleGroupId");
+		modifiableSettings.reset("displayStyleGroupKey");
+	}
+
+	private void _updateRootMenuItemPreferences(
+			ModifiableSettings modifiableSettings)
+		throws PortalException {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-23048")) {
+			return;
+		}
+
+		long rootMenuItemId = GetterUtil.getLong(
+			modifiableSettings.getValue("rootMenuItemId", null));
+
+		if (rootMenuItemId == 0) {
+			return;
+		}
+
+		SiteNavigationMenuItem siteNavigationMenuItem =
+			_siteNavigationMenuItemLocalService.fetchSiteNavigationMenuItem(
+				rootMenuItemId);
+
+		if (siteNavigationMenuItem != null) {
+			modifiableSettings.setValue(
+				"rootMenuItemExternalReferenceCode",
+				siteNavigationMenuItem.getExternalReferenceCode());
+		}
+
+		modifiableSettings.reset("rootMenuItemId");
+	}
+
+	private void _updateSiteNavigationMenuPreferences(
+			ModifiableSettings modifiableSettings)
+		throws PortalException {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-23048")) {
+			return;
+		}
+
+		long siteNavigationMenuId = GetterUtil.getLong(
+			modifiableSettings.getValue("siteNavigationMenuId", null));
+
+		if (siteNavigationMenuId == 0) {
+			return;
+		}
+
+		SiteNavigationMenu siteNavigationMenu =
+			_siteNavigationMenuService.fetchSiteNavigationMenu(
+				siteNavigationMenuId);
+
+		if (siteNavigationMenu != null) {
+			modifiableSettings.setValue(
+				"siteNavigationMenuExternalReferenceCode",
+				siteNavigationMenu.getExternalReferenceCode());
+		}
+
+		modifiableSettings.reset("siteNavigationMenuId");
+	}
+
 	@Reference
 	private ItemSelector _itemSelector;
 
@@ -102,7 +186,14 @@ public class SiteNavigationMenuConfigurationAction
 	private PortletDisplayTemplate _portletDisplayTemplate;
 
 	@Reference
+	private SiteNavigationMenuItemLocalService
+		_siteNavigationMenuItemLocalService;
+
+	@Reference
 	private SiteNavigationMenuItemTypeRegistry
 		_siteNavigationMenuItemTypeRegistry;
+
+	@Reference
+	private SiteNavigationMenuService _siteNavigationMenuService;
 
 }

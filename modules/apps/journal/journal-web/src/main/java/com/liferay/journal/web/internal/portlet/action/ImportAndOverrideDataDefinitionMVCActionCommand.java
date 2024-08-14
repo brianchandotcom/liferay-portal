@@ -81,7 +81,7 @@ public class ImportAndOverrideDataDefinitionMVCActionCommand
 			_log.error(exception);
 
 			SessionErrors.add(
-				actionRequest, "importDataDefinitionErrorMessage");
+				actionRequest, "importDataDefinitionErrorMessage", exception);
 
 			hideDefaultErrorMessage(actionRequest);
 		}

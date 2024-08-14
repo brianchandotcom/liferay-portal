@@ -118,7 +118,7 @@ public class DLFileEntryMetadataTableReferenceDefinitionTest
 		DLFileVersion dlFileVersion = _dlFileEntry.getFileVersion();
 
 		_dlFileEntryMetadataLocalService.updateFileEntryMetadata(
-			_dlFileEntryType.getFileEntryTypeId(),
+			null, _dlFileEntryType.getFileEntryTypeId(),
 			_dlFileEntry.getFileEntryId(), dlFileVersion.getFileVersionId(),
 			_createDDMFormValuesMap(),
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));

@@ -2359,8 +2359,8 @@ public class DLFileEntryLocalServiceImpl
 
 		if ((fileEntryTypeId > 0) && (ddmFormValuesMap != null)) {
 			_dlFileEntryMetadataLocalService.updateFileEntryMetadata(
-				fileEntryTypeId, dlFileEntry.getFileEntryId(), fileVersionId,
-				ddmFormValuesMap, serviceContext);
+				null, fileEntryTypeId, dlFileEntry.getFileEntryId(),
+				fileVersionId, ddmFormValuesMap, serviceContext);
 		}
 
 		return dlFileVersion;
@@ -2746,8 +2746,8 @@ public class DLFileEntryLocalServiceImpl
 
 		if (!ddmFormValuesMap.isEmpty()) {
 			_dlFileEntryMetadataLocalService.updateFileEntryMetadata(
-				companyId, ddmStructures, fileEntryId, targetFileVersionId,
-				ddmFormValuesMap, serviceContext);
+				null, companyId, ddmStructures, fileEntryId,
+				targetFileVersionId, ddmFormValuesMap, serviceContext);
 		}
 	}
 
@@ -3949,7 +3949,7 @@ public class DLFileEntryLocalServiceImpl
 
 		if ((fileEntryTypeId > 0) && (ddmFormValuesMap != null)) {
 			_dlFileEntryMetadataLocalService.updateFileEntryMetadata(
-				fileEntryTypeId, dlFileVersion.getFileEntryId(),
+				null, fileEntryTypeId, dlFileVersion.getFileEntryId(),
 				dlFileVersion.getFileVersionId(), ddmFormValuesMap,
 				serviceContext);
 		}

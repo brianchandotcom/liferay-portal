@@ -57,6 +57,20 @@ export default function getLiferayLanguageGetPlugin(
 
 						key = key.slice(1, key.length - 1);
 
+						if (
+							key.includes('"') ||
+							key.includes("'") ||
+							key.includes('`') ||
+							key.includes('\n')
+						) {
+							console.warn(`
+⚠️ Liferay.Language.get key contains invalid characters, it will be ignored and won't show up at runtime: ${key}
+     in file: ${args.path}
+
+`);
+							continue;
+						}
+
 						languageJSON.keys.push(key);
 					}
 

@@ -970,8 +970,6 @@ definition {
 			ClickNoError(locator1 = "PageEditor#EXPERIENCE_DELETE_BUTTON");
 
 			Confirm.dismissAlert();
-
-			Alert.viewSuccessMessage();
 		}
 
 		task ("Assert that experience is not deleted") {
@@ -979,7 +977,7 @@ definition {
 				key_experienceName = "NewAnyoneExperience",
 				locator1 = "PageEditor#EXPERIENCE_SELECT_ITEM");
 
-			Click(locator1 = "PageEditor#EXPERIENCE_LABEL");
+			Click(locator1 = "PageEditor#EXPERIENCE_SELECTOR");
 		}
 
 		task ("Assert that the ABTest draft keeps appearing") {

@@ -5,6 +5,7 @@
 
 package com.liferay.account.service.persistence.impl;
 
+import com.liferay.account.exception.DuplicateAccountRoleExternalReferenceCodeException;
 import com.liferay.account.exception.NoSuchRoleException;
 import com.liferay.account.model.AccountRole;
 import com.liferay.account.model.AccountRoleTable;
@@ -24,18 +25,25 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.sanitizer.Sanitizer;
+import com.liferay.portal.kernel.sanitizer.SanitizerException;
+import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
@@ -44,6 +52,7 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.sql.DataSource;
@@ -3934,6 +3943,260 @@ public class AccountRolePersistenceImpl
 	private static final String _FINDER_COLUMN_C_A_ACCOUNTENTRYID_7 =
 		"accountRole.accountEntryId IN (";
 
+	private FinderPath _finderPathFetchByERC_C;
+	private FinderPath _finderPathCountByERC_C;
+
+	/**
+	 * Returns the account role where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchRoleException</code> if it could not be found.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the matching account role
+	 * @throws NoSuchRoleException if a matching account role could not be found
+	 */
+	@Override
+	public AccountRole findByERC_C(String externalReferenceCode, long companyId)
+		throws NoSuchRoleException {
+
+		AccountRole accountRole = fetchByERC_C(
+			externalReferenceCode, companyId);
+
+		if (accountRole == null) {
+			StringBundler sb = new StringBundler(6);
+
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			sb.append("externalReferenceCode=");
+			sb.append(externalReferenceCode);
+
+			sb.append(", companyId=");
+			sb.append(companyId);
+
+			sb.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(sb.toString());
+			}
+
+			throw new NoSuchRoleException(sb.toString());
+		}
+
+		return accountRole;
+	}
+
+	/**
+	 * Returns the account role where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the matching account role, or <code>null</code> if a matching account role could not be found
+	 */
+	@Override
+	public AccountRole fetchByERC_C(
+		String externalReferenceCode, long companyId) {
+
+		return fetchByERC_C(externalReferenceCode, companyId, true);
+	}
+
+	/**
+	 * Returns the account role where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching account role, or <code>null</code> if a matching account role could not be found
+	 */
+	@Override
+	public AccountRole fetchByERC_C(
+		String externalReferenceCode, long companyId, boolean useFinderCache) {
+
+		externalReferenceCode = Objects.toString(externalReferenceCode, "");
+
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {externalReferenceCode, companyId};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = finderCache.getResult(
+				_finderPathFetchByERC_C, finderArgs, this);
+		}
+
+		if (result instanceof AccountRole) {
+			AccountRole accountRole = (AccountRole)result;
+
+			if (!Objects.equals(
+					externalReferenceCode,
+					accountRole.getExternalReferenceCode()) ||
+				(companyId != accountRole.getCompanyId())) {
+
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(_SQL_SELECT_ACCOUNTROLE_WHERE);
+
+			boolean bindExternalReferenceCode = false;
+
+			if (externalReferenceCode.isEmpty()) {
+				sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_3);
+			}
+			else {
+				bindExternalReferenceCode = true;
+
+				sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_2);
+			}
+
+			sb.append(_FINDER_COLUMN_ERC_C_COMPANYID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindExternalReferenceCode) {
+					queryPos.add(externalReferenceCode);
+				}
+
+				queryPos.add(companyId);
+
+				List<AccountRole> list = query.list();
+
+				if (list.isEmpty()) {
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByERC_C, finderArgs, list);
+					}
+				}
+				else {
+					AccountRole accountRole = list.get(0);
+
+					result = accountRole;
+
+					cacheResult(accountRole);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (AccountRole)result;
+		}
+	}
+
+	/**
+	 * Removes the account role where externalReferenceCode = &#63; and companyId = &#63; from the database.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the account role that was removed
+	 */
+	@Override
+	public AccountRole removeByERC_C(
+			String externalReferenceCode, long companyId)
+		throws NoSuchRoleException {
+
+		AccountRole accountRole = findByERC_C(externalReferenceCode, companyId);
+
+		return remove(accountRole);
+	}
+
+	/**
+	 * Returns the number of account roles where externalReferenceCode = &#63; and companyId = &#63;.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the number of matching account roles
+	 */
+	@Override
+	public int countByERC_C(String externalReferenceCode, long companyId) {
+		externalReferenceCode = Objects.toString(externalReferenceCode, "");
+
+		FinderPath finderPath = _finderPathCountByERC_C;
+
+		Object[] finderArgs = new Object[] {externalReferenceCode, companyId};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_ACCOUNTROLE_WHERE);
+
+			boolean bindExternalReferenceCode = false;
+
+			if (externalReferenceCode.isEmpty()) {
+				sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_3);
+			}
+			else {
+				bindExternalReferenceCode = true;
+
+				sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_2);
+			}
+
+			sb.append(_FINDER_COLUMN_ERC_C_COMPANYID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindExternalReferenceCode) {
+					queryPos.add(externalReferenceCode);
+				}
+
+				queryPos.add(companyId);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_2 =
+		"accountRole.externalReferenceCode = ? AND ";
+
+	private static final String _FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_3 =
+		"(accountRole.externalReferenceCode IS NULL OR accountRole.externalReferenceCode = '') AND ";
+
+	private static final String _FINDER_COLUMN_ERC_C_COMPANYID_2 =
+		"accountRole.companyId = ?";
+
 	public AccountRolePersistenceImpl() {
 		setModelClass(AccountRole.class);
 
@@ -3955,6 +4218,14 @@ public class AccountRolePersistenceImpl
 
 		finderCache.putResult(
 			_finderPathFetchByRoleId, new Object[] {accountRole.getRoleId()},
+			accountRole);
+
+		finderCache.putResult(
+			_finderPathFetchByERC_C,
+			new Object[] {
+				accountRole.getExternalReferenceCode(),
+				accountRole.getCompanyId()
+			},
 			accountRole);
 	}
 
@@ -4034,6 +4305,15 @@ public class AccountRolePersistenceImpl
 		finderCache.putResult(_finderPathCountByRoleId, args, Long.valueOf(1));
 		finderCache.putResult(
 			_finderPathFetchByRoleId, args, accountRoleModelImpl);
+
+		args = new Object[] {
+			accountRoleModelImpl.getExternalReferenceCode(),
+			accountRoleModelImpl.getCompanyId()
+		};
+
+		finderCache.putResult(_finderPathCountByERC_C, args, Long.valueOf(1));
+		finderCache.putResult(
+			_finderPathFetchByERC_C, args, accountRoleModelImpl);
 	}
 
 	/**
@@ -4159,6 +4439,69 @@ public class AccountRolePersistenceImpl
 
 		AccountRoleModelImpl accountRoleModelImpl =
 			(AccountRoleModelImpl)accountRole;
+
+		if (Validator.isNull(accountRole.getExternalReferenceCode())) {
+			accountRole.setExternalReferenceCode(
+				String.valueOf(accountRole.getPrimaryKey()));
+		}
+		else {
+			if (!Objects.equals(
+					accountRoleModelImpl.getColumnOriginalValue(
+						"externalReferenceCode"),
+					accountRole.getExternalReferenceCode())) {
+
+				long userId = GetterUtil.getLong(
+					PrincipalThreadLocal.getName());
+
+				if (userId > 0) {
+					long companyId = accountRole.getCompanyId();
+
+					long groupId = 0;
+
+					long classPK = 0;
+
+					if (!isNew) {
+						classPK = accountRole.getPrimaryKey();
+					}
+
+					try {
+						accountRole.setExternalReferenceCode(
+							SanitizerUtil.sanitize(
+								companyId, groupId, userId,
+								AccountRole.class.getName(), classPK,
+								ContentTypes.TEXT_HTML, Sanitizer.MODE_ALL,
+								accountRole.getExternalReferenceCode(), null));
+					}
+					catch (SanitizerException sanitizerException) {
+						throw new SystemException(sanitizerException);
+					}
+				}
+			}
+
+			AccountRole ercAccountRole = fetchByERC_C(
+				accountRole.getExternalReferenceCode(),
+				accountRole.getCompanyId());
+
+			if (isNew) {
+				if (ercAccountRole != null) {
+					throw new DuplicateAccountRoleExternalReferenceCodeException(
+						"Duplicate account role with external reference code " +
+							accountRole.getExternalReferenceCode() +
+								" and company " + accountRole.getCompanyId());
+				}
+			}
+			else {
+				if ((ercAccountRole != null) &&
+					(accountRole.getAccountRoleId() !=
+						ercAccountRole.getAccountRoleId())) {
+
+					throw new DuplicateAccountRoleExternalReferenceCodeException(
+						"Duplicate account role with external reference code " +
+							accountRole.getExternalReferenceCode() +
+								" and company " + accountRole.getCompanyId());
+				}
+			}
+		}
 
 		Session session = null;
 
@@ -4535,6 +4878,16 @@ public class AccountRolePersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_A",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"companyId", "accountEntryId"}, false);
+
+		_finderPathFetchByERC_C = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"externalReferenceCode", "companyId"}, true);
+
+		_finderPathCountByERC_C = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByERC_C",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"externalReferenceCode", "companyId"}, false);
 
 		AccountRoleUtil.setPersistence(this);
 	}

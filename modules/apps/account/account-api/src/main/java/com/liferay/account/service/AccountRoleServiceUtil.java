@@ -32,13 +32,14 @@ public class AccountRoleServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.account.service.impl.AccountRoleServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static AccountRole addAccountRole(
-			long accountEntryId, String name,
+			String externalReferenceCode, long accountEntryId, String name,
 			Map<java.util.Locale, String> titleMap,
 			Map<java.util.Locale, String> descriptionMap)
 		throws PortalException {
 
 		return getService().addAccountRole(
-			accountEntryId, name, titleMap, descriptionMap);
+			externalReferenceCode, accountEntryId, name, titleMap,
+			descriptionMap);
 	}
 
 	public static void associateUser(

@@ -59,9 +59,9 @@ public class AccountRoleModelImpl
 	public static final String TABLE_NAME = "AccountRole";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"accountRoleId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"accountEntryId", Types.BIGINT},
-		{"roleId", Types.BIGINT}
+		{"mvccVersion", Types.BIGINT}, {"externalReferenceCode", Types.VARCHAR},
+		{"accountRoleId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"accountEntryId", Types.BIGINT}, {"roleId", Types.BIGINT}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -69,6 +69,7 @@ public class AccountRoleModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("accountRoleId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("accountEntryId", Types.BIGINT);
@@ -76,7 +77,7 @@ public class AccountRoleModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table AccountRole (mvccVersion LONG default 0 not null,accountRoleId LONG not null primary key,companyId LONG,accountEntryId LONG,roleId LONG)";
+		"create table AccountRole (mvccVersion LONG default 0 not null,externalReferenceCode VARCHAR(75) null,accountRoleId LONG not null primary key,companyId LONG,accountEntryId LONG,roleId LONG)";
 
 	public static final String TABLE_SQL_DROP = "drop table AccountRole";
 
@@ -111,14 +112,20 @@ public class AccountRoleModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long ROLEID_COLUMN_BITMASK = 4L;
+	public static final long EXTERNALREFERENCECODE_COLUMN_BITMASK = 4L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long ROLEID_COLUMN_BITMASK = 8L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long ACCOUNTROLEID_COLUMN_BITMASK = 8L;
+	public static final long ACCOUNTROLEID_COLUMN_BITMASK = 16L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -232,6 +239,8 @@ public class AccountRoleModelImpl
 			attributeGetterFunctions.put(
 				"mvccVersion", AccountRole::getMvccVersion);
 			attributeGetterFunctions.put(
+				"externalReferenceCode", AccountRole::getExternalReferenceCode);
+			attributeGetterFunctions.put(
 				"accountRoleId", AccountRole::getAccountRoleId);
 			attributeGetterFunctions.put(
 				"companyId", AccountRole::getCompanyId);
@@ -257,6 +266,10 @@ public class AccountRoleModelImpl
 			attributeSetterBiConsumers.put(
 				"mvccVersion",
 				(BiConsumer<AccountRole, Long>)AccountRole::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"externalReferenceCode",
+				(BiConsumer<AccountRole, String>)
+					AccountRole::setExternalReferenceCode);
 			attributeSetterBiConsumers.put(
 				"accountRoleId",
 				(BiConsumer<AccountRole, Long>)AccountRole::setAccountRoleId);
@@ -289,6 +302,35 @@ public class AccountRoleModelImpl
 		}
 
 		_mvccVersion = mvccVersion;
+	}
+
+	@JSON
+	@Override
+	public String getExternalReferenceCode() {
+		if (_externalReferenceCode == null) {
+			return "";
+		}
+		else {
+			return _externalReferenceCode;
+		}
+	}
+
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_externalReferenceCode = externalReferenceCode;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalExternalReferenceCode() {
+		return getColumnOriginalValue("externalReferenceCode");
 	}
 
 	@JSON
@@ -437,6 +479,7 @@ public class AccountRoleModelImpl
 		AccountRoleImpl accountRoleImpl = new AccountRoleImpl();
 
 		accountRoleImpl.setMvccVersion(getMvccVersion());
+		accountRoleImpl.setExternalReferenceCode(getExternalReferenceCode());
 		accountRoleImpl.setAccountRoleId(getAccountRoleId());
 		accountRoleImpl.setCompanyId(getCompanyId());
 		accountRoleImpl.setAccountEntryId(getAccountEntryId());
@@ -453,6 +496,8 @@ public class AccountRoleModelImpl
 
 		accountRoleImpl.setMvccVersion(
 			this.<Long>getColumnOriginalValue("mvccVersion"));
+		accountRoleImpl.setExternalReferenceCode(
+			this.<String>getColumnOriginalValue("externalReferenceCode"));
 		accountRoleImpl.setAccountRoleId(
 			this.<Long>getColumnOriginalValue("accountRoleId"));
 		accountRoleImpl.setCompanyId(
@@ -538,6 +583,18 @@ public class AccountRoleModelImpl
 
 		accountRoleCacheModel.mvccVersion = getMvccVersion();
 
+		accountRoleCacheModel.externalReferenceCode =
+			getExternalReferenceCode();
+
+		String externalReferenceCode =
+			accountRoleCacheModel.externalReferenceCode;
+
+		if ((externalReferenceCode != null) &&
+			(externalReferenceCode.length() == 0)) {
+
+			accountRoleCacheModel.externalReferenceCode = null;
+		}
+
 		accountRoleCacheModel.accountRoleId = getAccountRoleId();
 
 		accountRoleCacheModel.companyId = getCompanyId();
@@ -608,6 +665,7 @@ public class AccountRoleModelImpl
 	}
 
 	private long _mvccVersion;
+	private String _externalReferenceCode;
 	private long _accountRoleId;
 	private long _companyId;
 	private long _accountEntryId;
@@ -642,6 +700,8 @@ public class AccountRoleModelImpl
 		_columnOriginalValues = new HashMap<String, Object>();
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
+		_columnOriginalValues.put(
+			"externalReferenceCode", _externalReferenceCode);
 		_columnOriginalValues.put("accountRoleId", _accountRoleId);
 		_columnOriginalValues.put("companyId", _companyId);
 		_columnOriginalValues.put("accountEntryId", _accountEntryId);
@@ -661,13 +721,15 @@ public class AccountRoleModelImpl
 
 		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("accountRoleId", 2L);
+		columnBitmasks.put("externalReferenceCode", 2L);
 
-		columnBitmasks.put("companyId", 4L);
+		columnBitmasks.put("accountRoleId", 4L);
 
-		columnBitmasks.put("accountEntryId", 8L);
+		columnBitmasks.put("companyId", 8L);
 
-		columnBitmasks.put("roleId", 16L);
+		columnBitmasks.put("accountEntryId", 16L);
+
+		columnBitmasks.put("roleId", 32L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

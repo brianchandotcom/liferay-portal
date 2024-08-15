@@ -237,6 +237,23 @@ public abstract class AccountRoleLocalServiceBaseImpl
 		return accountRolePersistence.fetchByPrimaryKey(accountRoleId);
 	}
 
+	@Override
+	public AccountRole fetchAccountRoleByExternalReferenceCode(
+		String externalReferenceCode, long companyId) {
+
+		return accountRolePersistence.fetchByERC_C(
+			externalReferenceCode, companyId);
+	}
+
+	@Override
+	public AccountRole getAccountRoleByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return accountRolePersistence.findByERC_C(
+			externalReferenceCode, companyId);
+	}
+
 	/**
 	 * Returns the account role with the primary key.
 	 *

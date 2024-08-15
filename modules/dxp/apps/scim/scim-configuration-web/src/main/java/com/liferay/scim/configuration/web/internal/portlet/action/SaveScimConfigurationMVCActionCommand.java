@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
@@ -185,15 +186,26 @@ public class SaveScimConfigurationMVCActionCommand
 							UserGroup.class.getName(), "CUSTOM_FIELDS",
 							"scimClientId");
 
-					Property columnProperty = PropertyFactoryUtil.forName(
-						"columnId");
+					long[] columnIds = {};
 
-					dynamicQuery.add(
-						columnProperty.in(
-							new long[] {
-								userScimClientExpandoColumn.getColumnId(),
-								userGroupsScimClientExpandoColumn.getColumnId()
-							}));
+					if (userScimClientExpandoColumn != null) {
+						columnIds = ArrayUtil.append(
+							columnIds,
+							userScimClientExpandoColumn.getColumnId());
+					}
+
+					if (userGroupsScimClientExpandoColumn != null) {
+						columnIds = ArrayUtil.append(
+							columnIds,
+							userGroupsScimClientExpandoColumn.getColumnId());
+					}
+
+					if (columnIds.length > 0) {
+						Property columnProperty = PropertyFactoryUtil.forName(
+							"columnId");
+
+						dynamicQuery.add(columnProperty.in(columnIds));
+					}
 
 					Property dataProperty = PropertyFactoryUtil.forName("data");
 

@@ -140,37 +140,7 @@ public class SiteNavigationMenuDisplayContext {
 			return _displayStyleGroupId;
 		}
 
-		if (FeatureFlagManagerUtil.isEnabled("LPD-23048")) {
-			String displayStyleGroupExternalReferenceCode =
-				_siteNavigationMenuPortletInstanceConfiguration.
-					displayStyleGroupExternalReferenceCode();
-
-			if (Validator.isNull(displayStyleGroupExternalReferenceCode)) {
-				return _themeDisplay.getScopeGroupId();
-			}
-
-			Group group =
-				GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
-					displayStyleGroupExternalReferenceCode,
-					_themeDisplay.getCompanyId());
-
-			if (group != null) {
-				_displayStyleGroupId = group.getGroupId();
-
-				return _displayStyleGroupId;
-			}
-
-			return 0;
-		}
-
-		_displayStyleGroupId = ParamUtil.getLong(
-			_httpServletRequest, "displayStyleGroupId",
-			_siteNavigationMenuPortletInstanceConfiguration.
-				displayStyleGroupId());
-
-		if (_displayStyleGroupId <= 0) {
-			_displayStyleGroupId = _themeDisplay.getSiteGroupId();
-		}
+		_displayStyleGroupId = _getDisplayStyleGroupId();
 
 		return _displayStyleGroupId;
 	}
@@ -416,42 +386,7 @@ public class SiteNavigationMenuDisplayContext {
 			return _siteNavigationMenuId;
 		}
 
-		if (FeatureFlagManagerUtil.isEnabled("LPD-23048")) {
-			SiteNavigationMenu siteNavigationMenu = getSiteNavigationMenu();
-
-			if (siteNavigationMenu == null) {
-				return 0;
-			}
-
-			_siteNavigationMenuId =
-				siteNavigationMenu.getSiteNavigationMenuId();
-
-			return _siteNavigationMenuId;
-		}
-
-		long siteNavigationMenuId = ParamUtil.getLong(
-			_httpServletRequest, "siteNavigationMenuId",
-			_siteNavigationMenuPortletInstanceConfiguration.
-				siteNavigationMenuId());
-
-		if (siteNavigationMenuId > 0) {
-			_siteNavigationMenuId = siteNavigationMenuId;
-		}
-		else {
-			SiteNavigationMenu siteNavigationMenu =
-				SiteNavigationMenuLocalServiceUtil.
-					fetchSiteNavigationMenuByName(
-						_themeDisplay.getScopeGroupId(),
-						_getSiteNavigationMenuName());
-
-			if (siteNavigationMenu != null) {
-				_siteNavigationMenuId =
-					siteNavigationMenu.getSiteNavigationMenuId();
-			}
-			else {
-				_siteNavigationMenuId = 0L;
-			}
-		}
+		_siteNavigationMenuId = _getSiteNavigationMenuId();
 
 		return _siteNavigationMenuId;
 	}
@@ -581,6 +516,70 @@ public class SiteNavigationMenuDisplayContext {
 		}
 
 		return SiteNavigationConstants.TYPE_PRIMARY;
+	}
+
+	private long _getDisplayStyleGroupId() {
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-23048")) {
+			long displayStyleGroupId = ParamUtil.getLong(
+				_httpServletRequest, "displayStyleGroupId",
+				_siteNavigationMenuPortletInstanceConfiguration.
+					displayStyleGroupId());
+
+			if (displayStyleGroupId > 0) {
+				return displayStyleGroupId;
+			}
+
+			return _themeDisplay.getSiteGroupId();
+		}
+
+		String displayStyleGroupExternalReferenceCode =
+			_siteNavigationMenuPortletInstanceConfiguration.
+				displayStyleGroupExternalReferenceCode();
+
+		if (Validator.isNull(displayStyleGroupExternalReferenceCode)) {
+			return _themeDisplay.getScopeGroupId();
+		}
+
+		Group group = GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
+			displayStyleGroupExternalReferenceCode,
+			_themeDisplay.getCompanyId());
+
+		if (group != null) {
+			return group.getGroupId();
+		}
+
+		return 0;
+	}
+
+	private long _getSiteNavigationMenuId() {
+		if (FeatureFlagManagerUtil.isEnabled("LPD-23048")) {
+			SiteNavigationMenu siteNavigationMenu = getSiteNavigationMenu();
+
+			if (siteNavigationMenu == null) {
+				return 0;
+			}
+
+			return siteNavigationMenu.getSiteNavigationMenuId();
+		}
+
+		long siteNavigationMenuId = ParamUtil.getLong(
+			_httpServletRequest, "siteNavigationMenuId",
+			_siteNavigationMenuPortletInstanceConfiguration.
+				siteNavigationMenuId());
+
+		if (siteNavigationMenuId > 0) {
+			return siteNavigationMenuId;
+		}
+
+		SiteNavigationMenu siteNavigationMenu =
+			SiteNavigationMenuLocalServiceUtil.fetchSiteNavigationMenuByName(
+				_themeDisplay.getScopeGroupId(), _getSiteNavigationMenuName());
+
+		if (siteNavigationMenu != null) {
+			return siteNavigationMenu.getSiteNavigationMenuId();
+		}
+
+		return 0;
 	}
 
 	private String _getSiteNavigationMenuName() {

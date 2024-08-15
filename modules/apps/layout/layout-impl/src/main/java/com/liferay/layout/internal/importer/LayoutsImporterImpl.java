@@ -877,7 +877,7 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 				ServiceContextThreadLocal.getServiceContext());
 		}
 
-		String imageFileName = classPK + "_preview." + thumbnail.getExtension();
+		String imageFileName = classPK + "_preview" + thumbnail.getExtension();
 
 		FileEntry fileEntry = _portletFileRepository.fetchPortletFileEntry(
 			groupId, repository.getDlFolderId(), imageFileName);

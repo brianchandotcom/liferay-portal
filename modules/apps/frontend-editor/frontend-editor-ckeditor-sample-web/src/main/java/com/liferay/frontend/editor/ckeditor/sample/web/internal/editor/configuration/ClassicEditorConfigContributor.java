@@ -37,12 +37,16 @@ public class ClassicEditorConfigContributor
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
 		jsonObject.put(
+			"extraPlugins", "maximize, stylescombo"
+		).put(
 			"toolbar_liferay",
 			JSONUtil.putAll(
 				toJSONArray("['Undo', 'Redo']"),
 				toJSONArray("['Styles', 'Bold', 'Italic', 'Underline']"),
 				toJSONArray("['NumberedList', 'BulletedList']"),
-				toJSONArray("['Link', Unlink]"), toJSONArray("['Table']")));
+				toJSONArray("['Maximize']"), toJSONArray("['Link', Unlink]"),
+				toJSONArray("['Table']"))
+		);
 	}
 
 }

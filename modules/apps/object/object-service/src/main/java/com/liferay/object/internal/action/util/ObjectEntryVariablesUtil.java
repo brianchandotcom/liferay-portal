@@ -163,7 +163,7 @@ public class ObjectEntryVariablesUtil {
 
 			String defaultValue =
 				ObjectFieldSettingUtil.getDefaultValueAsString(
-					null, objectField.getObjectFieldId(),
+					null, objectField,
 					ObjectFieldSettingLocalServiceUtil.getService(), null);
 
 			if (Validator.isNotNull(defaultValue) &&

@@ -1341,7 +1341,7 @@ public class ObjectEntryDisplayContextImpl
 				existingValues.put(
 					objectField1.getName(),
 					ObjectFieldSettingUtil.getDefaultValueAsString(
-						null, objectField.getObjectFieldId(),
+						null, objectField,
 						ObjectFieldSettingLocalServiceUtil.getService(), null));
 			}
 		}

@@ -25,10 +25,10 @@ public class CTProcessEntityModel implements EntityModel {
 				"datePublished",
 				locale -> Field.getSortableFieldName(Field.CREATE_DATE),
 				locale -> Field.CREATE_DATE),
+			new IntegerEntityField("status", locale -> Field.STATUS),
 			new StringEntityField("description", locale -> Field.DESCRIPTION),
 			new StringEntityField("name", locale -> Field.NAME),
-			new StringEntityField("ownerName", locale -> Field.USER_NAME),
-			new IntegerEntityField("status", locale -> Field.STATUS));
+			new StringEntityField("ownerName", locale -> Field.USER_NAME));
 	}
 
 	@Override

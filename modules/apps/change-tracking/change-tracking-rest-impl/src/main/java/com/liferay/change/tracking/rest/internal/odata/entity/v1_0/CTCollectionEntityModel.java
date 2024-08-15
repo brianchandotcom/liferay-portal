@@ -33,10 +33,10 @@ public class CTCollectionEntityModel implements EntityModel {
 				"dateScheduled",
 				locale -> Field.getSortableFieldName("scheduledDate"),
 				locale -> "scheduledDate"),
+			new IntegerEntityField("status", locale -> Field.STATUS),
 			new StringEntityField("description", locale -> Field.DESCRIPTION),
 			new StringEntityField("name", locale -> Field.NAME),
-			new StringEntityField("ownerName", locale -> Field.USER_NAME),
-			new IntegerEntityField("status", locale -> Field.STATUS));
+			new StringEntityField("ownerName", locale -> Field.USER_NAME));
 	}
 
 	@Override

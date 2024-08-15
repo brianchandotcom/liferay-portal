@@ -32,6 +32,11 @@ public class CTEntryEntityModel implements EntityModel {
 				"dateModified",
 				locale -> Field.getSortableFieldName(Field.MODIFIED_DATE),
 				locale -> Field.MODIFIED_DATE),
+			new EntityField(
+				"status", EntityField.Type.INTEGER,
+				locale -> Field.getSortableFieldName(
+					"statusLabel_".concat(LocaleUtil.toLanguageId(locale))),
+				locale -> "status", String::valueOf),
 			new IdEntityField(
 				"modelClassNameId", locale -> "modelClassNameId",
 				String::valueOf),
@@ -39,11 +44,6 @@ public class CTEntryEntityModel implements EntityModel {
 				"ownerId", locale -> Field.USER_ID, String::valueOf),
 			new IdEntityField(
 				"siteId", locale -> Field.GROUP_ID, String::valueOf),
-			new EntityField(
-				"status", EntityField.Type.INTEGER,
-				locale -> Field.getSortableFieldName(
-					"statusLabel_".concat(LocaleUtil.toLanguageId(locale))),
-				locale -> "status", String::valueOf),
 			new StringEntityField(
 				"changeType",
 				locale -> Field.getSortableFieldName(

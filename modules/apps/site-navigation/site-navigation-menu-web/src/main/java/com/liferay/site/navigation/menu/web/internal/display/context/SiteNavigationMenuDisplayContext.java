@@ -207,7 +207,7 @@ public class SiteNavigationMenuDisplayContext {
 						_themeDisplay.getScopeGroupId());
 
 			if (siteNavigationMenuItem == null) {
-				return "0";
+				return StringPool.BLANK;
 			}
 
 			_rootMenuItemId = String.valueOf(

@@ -30,7 +30,6 @@ public class ListTypeEntryEntityModel implements EntityModel {
 				locale -> Field.getSortableFieldName(Field.MODIFIED_DATE),
 				locale -> Field.MODIFIED_DATE),
 			new IntegerEntityField("userId", locale -> Field.USER_ID),
-			new StringEntityField("key", locale -> "key"),
 			new StringEntityField(
 				Field.NAME,
 				locale -> Field.getSortableFieldName(
@@ -40,7 +39,8 @@ public class ListTypeEntryEntityModel implements EntityModel {
 						Field.getLocalizedName(locale, "localized_name"));
 
 					return sortableFieldName.concat(".keyword_lowercase");
-				}));
+				}),
+			new StringEntityField("key", locale -> "key"));
 	}
 
 	@Override

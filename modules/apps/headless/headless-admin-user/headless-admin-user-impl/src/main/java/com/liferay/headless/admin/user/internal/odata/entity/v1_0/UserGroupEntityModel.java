@@ -22,11 +22,11 @@ public class UserGroupEntityModel implements EntityModel {
 		_entityFieldsMap = EntityModel.toEntityFieldsMap(
 			new IdEntityField(
 				"companyId", locale -> Field.COMPANY_ID, String::valueOf),
+			new IdEntityField(
+				"userGroupId", locale -> Field.USER_GROUP_ID, String::valueOf),
 			new StringEntityField("description", locale -> Field.DESCRIPTION),
 			new StringEntityField(
-				"name", locale -> Field.getSortableFieldName(Field.NAME)),
-			new IdEntityField(
-				"userGroupId", locale -> Field.USER_GROUP_ID, String::valueOf));
+				"name", locale -> Field.getSortableFieldName(Field.NAME)));
 	}
 
 	@Override

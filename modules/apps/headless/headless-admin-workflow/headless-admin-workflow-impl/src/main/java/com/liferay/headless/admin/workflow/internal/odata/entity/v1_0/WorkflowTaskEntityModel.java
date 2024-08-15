@@ -30,9 +30,9 @@ public class WorkflowTaskEntityModel implements EntityModel {
 				locale -> "dateCreated"),
 			new DateTimeEntityField(
 				"dateDue", locale -> "dateDue", locale -> "dateDue"),
-			new StringEntityField("name", locale -> "name"),
 			new IntegerEntityField(
-				"workflowInstanceId", locale -> "workflowInstanceId"));
+				"workflowInstanceId", locale -> "workflowInstanceId"),
+			new StringEntityField("name", locale -> "name"));
 	}
 
 	@Override

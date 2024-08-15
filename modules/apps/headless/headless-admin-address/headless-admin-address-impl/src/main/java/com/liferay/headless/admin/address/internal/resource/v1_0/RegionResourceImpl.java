@@ -188,8 +188,8 @@ public class RegionResourceImpl extends BaseRegionResourceImpl {
 
 	private static final EntityModel _entityModel =
 		() -> EntityModel.toEntityFieldsMap(
-			new StringEntityField("name", locale -> "name"),
-			new DoubleEntityField("position", locale -> "position"));
+			new DoubleEntityField("position", locale -> "position"),
+			new StringEntityField("name", locale -> "name"));
 
 	@Reference
 	private CountryService _countryService;

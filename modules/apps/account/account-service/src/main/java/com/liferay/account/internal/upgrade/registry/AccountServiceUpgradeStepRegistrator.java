@@ -188,6 +188,17 @@ public class AccountServiceUpgradeStepRegistrator
 					"delete from ListType where type_ = '",
 					AccountListTypeConstants.ACCOUNT_ENTRY_PHONE,
 					"' and name = 'tool-free'")));
+
+		registry.register(
+			"2.10.4", "2.11.0",
+			new BaseExternalReferenceCodeUpgradeProcess() {
+
+				@Override
+				protected String[][] getTableAndPrimaryKeyColumnNames() {
+					return new String[][] {{"AccountRole", "accountRoleId"}};
+				}
+
+			});
 	}
 
 	@Reference

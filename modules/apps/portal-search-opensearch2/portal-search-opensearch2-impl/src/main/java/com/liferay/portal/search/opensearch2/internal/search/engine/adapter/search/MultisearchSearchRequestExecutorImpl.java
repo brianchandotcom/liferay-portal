@@ -86,11 +86,11 @@ public class MultisearchSearchRequestExecutorImpl
 		MsearchResponse<JsonData> msearchResponse,
 		List<SearchRequestHolder> searchRequestHolders) {
 
-		List<MultiSearchResponseItem<JsonData>> multiSearchResponseItems =
-			msearchResponse.responses();
-
 		MultisearchSearchResponse multisearchSearchResponse =
 			new MultisearchSearchResponse();
+
+		List<MultiSearchResponseItem<JsonData>> multiSearchResponseItems =
+			msearchResponse.responses();
 
 		for (int i = 0; i < multiSearchResponseItems.size(); i++) {
 			MultiSearchResponseItem<JsonData> multiSearchResponseItem =

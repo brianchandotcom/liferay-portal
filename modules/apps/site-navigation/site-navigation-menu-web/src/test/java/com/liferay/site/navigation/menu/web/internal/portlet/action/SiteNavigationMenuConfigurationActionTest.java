@@ -6,7 +6,6 @@
 package com.liferay.site.navigation.menu.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -50,14 +49,22 @@ public class SiteNavigationMenuConfigurationActionTest {
 	public void setUp() {
 		_siteNavigationMenuConfigurationAction =
 			new SiteNavigationMenuConfigurationAction();
+
 		_modifiableSettings = _getModifiableSettings();
+
+		_modifiableSettings.setValue(
+			"displayStyleGroupId", _DISPLAY_STYLE_GROUP_ID);
+		_modifiableSettings.setValue(
+			"displayStyleGroupKey", _DISPLAY_STYLE_GROUP_KEY);
+		_modifiableSettings.setValue("rootMenuItemId", _ROOT_MENU_ITEM_ID);
+		_modifiableSettings.setValue("rootMenuItemType", "select");
+		_modifiableSettings.setValue(
+			"siteNavigationMenuId", _SITE_NAVIGATION_MENU_ITEM_ID);
 	}
 
 	@Test
 	public void testUpdateDisplayStyleGroupPreferencesWithFeatureFlagDisabled()
 		throws Exception {
-		_modifiableSettings.setValue("displayStyleGroupId", "1234");
-		_modifiableSettings.setValue("displayStyleGroupKey", "groupKey");
 
 		_siteNavigationMenuConfigurationAction.groupLocalService =
 			_getGroupLocalService(null);
@@ -68,9 +75,10 @@ public class SiteNavigationMenuConfigurationActionTest {
 				_getPortletRequest(RandomTestUtil.randomLong()));
 
 		Assert.assertEquals(
-			"1234", _modifiableSettings.getValue("displayStyleGroupId", null));
+			_DISPLAY_STYLE_GROUP_ID,
+			_modifiableSettings.getValue("displayStyleGroupId", null));
 		Assert.assertEquals(
-			"groupKey",
+			_DISPLAY_STYLE_GROUP_KEY,
 			_modifiableSettings.getValue("displayStyleGroupKey", null));
 		Assert.assertNull(
 			_modifiableSettings.getValue(
@@ -81,8 +89,6 @@ public class SiteNavigationMenuConfigurationActionTest {
 	@Test
 	public void testUpdateDisplayStyleGroupPreferencesWithFeatureFlagEnabledDifferentScope()
 		throws Exception {
-		_modifiableSettings.setValue("displayStyleGroupId", "1234");
-		_modifiableSettings.setValue("displayStyleGroupKey", "groupKey");
 
 		Group group = _getGroup(RandomTestUtil.randomLong());
 
@@ -95,9 +101,10 @@ public class SiteNavigationMenuConfigurationActionTest {
 				_getPortletRequest(RandomTestUtil.randomLong()));
 
 		Assert.assertEquals(
-			"1234", _modifiableSettings.getValue("displayStyleGroupId", null));
+			_DISPLAY_STYLE_GROUP_ID,
+			_modifiableSettings.getValue("displayStyleGroupId", null));
 		Assert.assertEquals(
-			"groupKey",
+			_DISPLAY_STYLE_GROUP_KEY,
 			_modifiableSettings.getValue("displayStyleGroupKey", null));
 		Assert.assertEquals(
 			group.getExternalReferenceCode(),
@@ -110,9 +117,6 @@ public class SiteNavigationMenuConfigurationActionTest {
 	public void testUpdateDisplayStyleGroupPreferencesWithFeatureFlagEnabledSameScope()
 		throws Exception {
 
-		_modifiableSettings.setValue("displayStyleGroupId", "1234");
-		_modifiableSettings.setValue("displayStyleGroupKey", "groupKey");
-
 		Group group = _getGroup(RandomTestUtil.randomLong());
 
 		_siteNavigationMenuConfigurationAction.groupLocalService =
@@ -123,9 +127,10 @@ public class SiteNavigationMenuConfigurationActionTest {
 				_modifiableSettings, _getPortletRequest(group.getGroupId()));
 
 		Assert.assertEquals(
-			"1234", _modifiableSettings.getValue("displayStyleGroupId", null));
+			_DISPLAY_STYLE_GROUP_ID,
+			_modifiableSettings.getValue("displayStyleGroupId", null));
 		Assert.assertEquals(
-			"groupKey",
+			_DISPLAY_STYLE_GROUP_KEY,
 			_modifiableSettings.getValue("displayStyleGroupKey", null));
 		Assert.assertNull(
 			_modifiableSettings.getValue(
@@ -136,18 +141,17 @@ public class SiteNavigationMenuConfigurationActionTest {
 	public void testUpdateRootMenuItemPreferencesWithFeatureFlagDisabled()
 		throws PortalException {
 
-		_modifiableSettings.setValue("rootMenuItemId", "1234");
-		_modifiableSettings.setValue("rootMenuItemType", "select");
-
 		_siteNavigationMenuConfigurationAction.
 			siteNavigationMenuItemLocalService =
-				_getSiteNavigationMenuItemLocalService("itemERC");
+				_getSiteNavigationMenuItemLocalService(
+					RandomTestUtil.randomString());
 
 		_siteNavigationMenuConfigurationAction.updateRootMenuItemPreferences(
 			_modifiableSettings);
 
 		Assert.assertEquals(
-			"1234", _modifiableSettings.getValue("rootMenuItemId", null));
+			_ROOT_MENU_ITEM_ID,
+			_modifiableSettings.getValue("rootMenuItemId", null));
 		Assert.assertNull(
 			_modifiableSettings.getValue(
 				"rootMenuItemExternalReferenceCode", null));
@@ -158,21 +162,22 @@ public class SiteNavigationMenuConfigurationActionTest {
 	public void testUpdateRootMenuItemPreferencesWithFeatureFlagEnabled()
 		throws Exception {
 
-		_modifiableSettings.setValue("rootMenuItemId", "1234");
-		_modifiableSettings.setValue("rootMenuItemType", "select");
-
+		String rootMenuItemExternalReferenceCode =
+			RandomTestUtil.randomString();
 
 		_siteNavigationMenuConfigurationAction.
 			siteNavigationMenuItemLocalService =
-				_getSiteNavigationMenuItemLocalService("itemERC");
+				_getSiteNavigationMenuItemLocalService(
+					rootMenuItemExternalReferenceCode);
 
 		_siteNavigationMenuConfigurationAction.updateRootMenuItemPreferences(
 			_modifiableSettings);
 
 		Assert.assertEquals(
-			"1234", _modifiableSettings.getValue("rootMenuItemId", null));
+			_ROOT_MENU_ITEM_ID,
+			_modifiableSettings.getValue("rootMenuItemId", null));
 		Assert.assertEquals(
-			"itemERC",
+			rootMenuItemExternalReferenceCode,
 			_modifiableSettings.getValue(
 				"rootMenuItemExternalReferenceCode", null));
 	}
@@ -181,16 +186,15 @@ public class SiteNavigationMenuConfigurationActionTest {
 	public void testUpdateSiteNavigationMenuPreferencesWithFeatureFlagDisabled()
 		throws PortalException {
 
-		_modifiableSettings.setValue("siteNavigationMenuId", "1234");
-
 		_siteNavigationMenuConfigurationAction.siteNavigationMenuService =
-			_getSiteNavigationMenuService("menuERC");
+			_getSiteNavigationMenuService(RandomTestUtil.randomString());
 
 		_siteNavigationMenuConfigurationAction.
 			updateSiteNavigationMenuPreferences(_modifiableSettings);
 
 		Assert.assertEquals(
-			"1234", _modifiableSettings.getValue("siteNavigationMenuId", null));
+			_SITE_NAVIGATION_MENU_ITEM_ID,
+			_modifiableSettings.getValue("siteNavigationMenuId", null));
 		Assert.assertNull(
 			_modifiableSettings.getValue(
 				"siteNavigationMenuExternalReferenceCode", null));
@@ -201,18 +205,21 @@ public class SiteNavigationMenuConfigurationActionTest {
 	public void testUpdateSiteNavigationMenuPreferencesWithFeatureFlagEnabled()
 		throws PortalException {
 
-		_modifiableSettings.setValue("siteNavigationMenuId", "1234");
+		String siteNavigationMenuExternalReferenceCode =
+			RandomTestUtil.randomString();
 
 		_siteNavigationMenuConfigurationAction.siteNavigationMenuService =
-			_getSiteNavigationMenuService("menuERC");
+			_getSiteNavigationMenuService(
+				siteNavigationMenuExternalReferenceCode);
 
 		_siteNavigationMenuConfigurationAction.
 			updateSiteNavigationMenuPreferences(_modifiableSettings);
 
 		Assert.assertEquals(
-			"1234", _modifiableSettings.getValue("siteNavigationMenuId", null));
+			_SITE_NAVIGATION_MENU_ITEM_ID,
+			_modifiableSettings.getValue("siteNavigationMenuId", null));
 		Assert.assertEquals(
-			"menuERC",
+			siteNavigationMenuExternalReferenceCode,
 			_modifiableSettings.getValue(
 				"siteNavigationMenuExternalReferenceCode", null));
 	}
@@ -233,7 +240,7 @@ public class SiteNavigationMenuConfigurationActionTest {
 		Mockito.when(
 			group.getGroupKey()
 		).thenReturn(
-			"groupKey"
+			_DISPLAY_STYLE_GROUP_KEY
 		);
 
 		return group;
@@ -385,6 +392,18 @@ public class SiteNavigationMenuConfigurationActionTest {
 
 		return siteNavigationMenuService;
 	}
+
+	private static final String _DISPLAY_STYLE_GROUP_ID = String.valueOf(
+		RandomTestUtil.randomLong());
+
+	private static final String _DISPLAY_STYLE_GROUP_KEY =
+		RandomTestUtil.randomString();
+
+	private static final String _ROOT_MENU_ITEM_ID = String.valueOf(
+		RandomTestUtil.randomLong());
+
+	private static final String _SITE_NAVIGATION_MENU_ITEM_ID = String.valueOf(
+		RandomTestUtil.randomLong());
 
 	private ModifiableSettings _modifiableSettings;
 	private Map<String, String> _portletPropertiesMap;

@@ -84,13 +84,6 @@ public class SiteNavigationMenuConfigurationAction
 
 		modifiableSettings.reset("included-layouts");
 
-		String rootMenuItemType = modifiableSettings.getValue(
-			"rootMenuItemType", StringPool.BLANK);
-
-		if (!Objects.equals(rootMenuItemType, "select")) {
-			modifiableSettings.reset("rootMenuItemId");
-		}
-
 		updateDisplayStyleGroupPreferences(modifiableSettings, portletRequest);
 		updateSiteNavigationMenuPreferences(modifiableSettings);
 		updateRootMenuItemPreferences(modifiableSettings);
@@ -138,14 +131,19 @@ public class SiteNavigationMenuConfigurationAction
 			ModifiableSettings modifiableSettings)
 		throws PortalException {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-23048")) {
-			return;
-		}
-
 		long rootMenuItemId = GetterUtil.getLong(
 			modifiableSettings.getValue("rootMenuItemId", null));
+		String rootMenuItemType = modifiableSettings.getValue(
+			"rootMenuItemType", StringPool.BLANK);
 
-		if (rootMenuItemId == 0) {
+		if ((rootMenuItemId == 0) ||
+			!Objects.equals(rootMenuItemType, "select")) {
+
+			modifiableSettings.reset("rootMenuItemExternalReferenceCode");
+			modifiableSettings.reset("rootMenuItemId");
+		}
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-23048")) {
 			return;
 		}
 
@@ -157,9 +155,11 @@ public class SiteNavigationMenuConfigurationAction
 			modifiableSettings.setValue(
 				"rootMenuItemExternalReferenceCode",
 				siteNavigationMenuItem.getExternalReferenceCode());
+
+			return;
 		}
 
-		modifiableSettings.reset("rootMenuItemId");
+		modifiableSettings.reset("rootMenuItemExternalReferenceCode");
 	}
 
 	protected void updateSiteNavigationMenuPreferences(

@@ -28,8 +28,6 @@ test('smoke: test SCIM configuration options', async ({page}) => {
 
 	await scimConfigurationPage.goTo();
 
-	await page.waitForTimeout(1000);
-
 	await scimConfigurationPage.configureSCIM('email', 'test');
 
 	await scimConfigurationPage.generateToken();
@@ -46,8 +44,6 @@ test('LPD-23255 AC1 TC1: Reset SCIM Client provisioning data button is present',
 
 	await scimConfigurationPage.goTo();
 
-	await page.waitForTimeout(1000);
-
 	await scimConfigurationPage.configureSCIM('email', 'Test SCIM Client');
 
 	await scimConfigurationPage.resetClientData();
@@ -59,8 +55,6 @@ test('LPD-23255 AC2 TC2: Reset SCIM Client provisioning data button description 
 	const scimConfigurationPage = new SCIMConfigurationPage(page);
 
 	await scimConfigurationPage.goTo();
-
-	await page.waitForTimeout(1000);
 
 	await scimConfigurationPage.configureSCIM('email', 'Test SCIM Client');
 
@@ -78,13 +72,9 @@ test('LPD-23255 AC3 TC3: Verify that clicking the “Reset SCIM Client provision
 
 	await scimConfigurationPage.goTo();
 
-	await page.waitForTimeout(1000);
-
 	await scimConfigurationPage.configureSCIM('email', 'Test SCIM Client');
 
 	await scimConfigurationPage.resetClientData();
-
-	await page.waitForTimeout(2000);
 
 	await expect(scimConfigurationPage.accessTokenField).toBeEmpty();
 
@@ -99,7 +89,6 @@ test('LPD-23255 AC3 TC4: Verify that clicking the “Reset SCIM Client provision
 	const scimConfigurationPage = new SCIMConfigurationPage(page);
 
 	await scimConfigurationPage.goTo();
-	await page.waitForTimeout(1000);
 
 	await scimConfigurationPage.configureSCIM('email', 'Test SCIM Client');
 
@@ -125,7 +114,6 @@ test('LPD-23255 AC3 TC4: Verify that clicking the “Reset SCIM Client provision
 	expect(await scimOAuthClientRow).toBeVisible();
 
 	await scimConfigurationPage.goTo();
-	await page.waitForTimeout(1000);
 
 	await scimConfigurationPage.resetClientData();
 
@@ -144,8 +132,6 @@ test('LPD-23255 AC3 TC5: Verify that clicking the “Reset SCIM Client provision
 	const scimConfigurationPage = new SCIMConfigurationPage(page);
 
 	await scimConfigurationPage.goTo();
-
-	await page.waitForTimeout(1000);
 
 	await scimConfigurationPage.configureSCIM('email', 'Test SCIM Client');
 
@@ -176,7 +162,6 @@ test('LPD-23255 AC3 TC5: Verify that clicking the “Reset SCIM Client provision
 	expect(response).toContain('"totalResults":1');
 
 	await scimConfigurationPage.resetClientData();
-	await page.waitForTimeout(2000);
 
 	const emptyResponse = await (await apiHelper.scim.getUsers()).text();
 
@@ -189,8 +174,6 @@ test('LPD-23255 AC3 TC6: Verify that clicking the “Reset SCIM Client provision
 	const scimConfigurationPage = new SCIMConfigurationPage(page);
 
 	await scimConfigurationPage.goTo();
-
-	await page.waitForTimeout(1000);
 
 	await scimConfigurationPage.configureSCIM('email', 'Test SCIM Client');
 
@@ -209,7 +192,6 @@ test('LPD-23255 AC3 TC6: Verify that clicking the “Reset SCIM Client provision
 	expect(response).toContain('"totalResults":1');
 
 	await scimConfigurationPage.resetClientData();
-	await page.waitForTimeout(1000);
 
 	const emptyResponse = await (await apiHelper.scim.getGroups()).text();
 
@@ -223,12 +205,9 @@ test('LPD-23255 AC4 TC7: Verify that Name field is disabled when SCIM is configu
 
 	await scimConfigurationPage.goTo();
 
-	await page.waitForTimeout(1000);
-
 	expect(scimConfigurationPage.oAuth2ApplicationNameField).toBeEditable();
 
 	await scimConfigurationPage.configureSCIM('email', 'Test SCIM Client');
-	await page.waitForTimeout(1000);
 
 	expect(scimConfigurationPage.oAuth2ApplicationNameField).not.toBeEditable();
 
@@ -242,14 +221,11 @@ test('LPD-23255 AC5 TC8: Verify that the Name field is enabled when scim client 
 
 	await scimConfigurationPage.goTo();
 
-	await page.waitForTimeout(1000);
-
 	await scimConfigurationPage.configureSCIM('email', 'Test SCIM Client');
 
 	expect(scimConfigurationPage.oAuth2ApplicationNameField).not.toBeEditable();
 
 	await scimConfigurationPage.resetClientData();
-	await page.waitForTimeout(1000);
 
 	expect(scimConfigurationPage.oAuth2ApplicationNameField).toBeEditable();
 });

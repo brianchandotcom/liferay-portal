@@ -18,6 +18,7 @@ export class ProductDetailsPage {
 	readonly closeEditFrame: Locator;
 	readonly createNewSpecificationProduct: Locator;
 	readonly createNewValueSpecificationProduct: Locator;
+	readonly diagramPin: (pinSequence: string) => Promise<Locator>;
 	readonly downloadAttachmentLink: Locator;
 	readonly downloadSampleField: (
 		downloadSampleText: string
@@ -51,6 +52,7 @@ export class ProductDetailsPage {
 	readonly optionSelector: (optionName: string) => Promise<Locator>;
 	readonly page: Page;
 	readonly pageTitle: Locator;
+	readonly pinAddToCartButton: Locator;
 	readonly priceContainer: Locator;
 	readonly priceField: (
 		price: string,
@@ -101,6 +103,11 @@ export class ProductDetailsPage {
 		this.createNewValueSpecificationProduct = this.addSpecificationFrame
 			.getByRole('textbox')
 			.nth(1);
+		this.diagramPin = async (pinSequence: string) => {
+			return page
+				.locator("[class='pin-node-text']")
+				.filter({hasText: pinSequence});
+		};
 		this.downloadAttachmentLink = page.getByRole('link', {
 			exact: true,
 			name: 'Download',
@@ -161,6 +168,9 @@ export class ProductDetailsPage {
 			return page.getByLabel(optionName);
 		};
 		this.page = page;
+		this.pinAddToCartButton = page
+			.locator("[class='diagram-tooltip']")
+			.getByRole('button');
 		this.priceContainer = page.locator('div.price-container');
 		this.priceField = async (price: string, container = this.page) => {
 			return container.getByText(price);

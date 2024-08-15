@@ -730,3 +730,100 @@ test('LPD-33075 Verify buyers can view the SKU of a product on the product card 
 		await productPublisherPage.productSku(product.skus[0].sku)
 	).toBeVisible();
 });
+
+test('LPD-3424 Can click AddToButton button multiple times on Diagram Product Display Page', async ({
+	apiHelpers,
+	applicationsMenuPage,
+	commerceAdminProductDetailsDiagramPage,
+	commerceAdminProductDetailsPage,
+	commerceAdminProductPage,
+	commerceLayoutsPage,
+	page,
+	productDetailsPage,
+}) => {
+	const site = await apiHelpers.headlessSite.createSite({
+		name: 'ProductDetailsSite',
+	});
+
+	apiHelpers.data.push({id: site.id, type: 'site'});
+
+	const account1 = await apiHelpers.headlessAdminUser.postAccount({
+		name: 'Account1',
+		type: 'person',
+	});
+
+	await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+		account1.id,
+		['test@liferay.com']
+	);
+
+	apiHelpers.data.push({id: account1.id, type: 'account'});
+
+	await apiHelpers.headlessCommerceAdminChannel.postChannel({
+		name: getRandomString(),
+		siteGroupId: site.id,
+	});
+
+	const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog({
+		name: 'ProductDetailsSite',
+	});
+
+	const product1 = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+		catalogId: catalog.id,
+		name: {en_US: 'Product1'},
+	});
+
+	const productDiagram =
+		await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+			catalogId: catalog.id,
+			name: {en_US: 'Diagram'},
+			productType: 'diagram',
+		});
+
+	await commerceAdminProductPage.gotoProduct(productDiagram.name['en_US']);
+	await commerceAdminProductDetailsPage.goToProductDiagram();
+	await commerceAdminProductDetailsDiagramPage.goToDragAndDropImages();
+
+	await page
+		.frameLocator('iframe[title="Select File"]')
+		.getByRole('link', {name: 'Provided by Liferay'})
+		.click();
+	await page
+		.frameLocator('iframe[title="Select File"]')
+		.locator(
+			'[id="_com_liferay_item_selector_web_portlet_ItemSelectorPortlet_repositoryEntriesSearchContainer_1"] img'
+		)
+		.click();
+
+	const pin = await apiHelpers.headlessCommerceAdminCatalog.postPin(
+		productDiagram.productId,
+		{
+			mappedProduct: {
+				productId: product1.productId,
+				quantity: 1,
+				sequence: 'pinitem',
+				sku: product1.skus[0].sku,
+				skuId: product1.skus[0].id,
+			},
+			positionX: 50,
+			positionY: 50,
+			sequence: 'pinitem',
+		}
+	);
+
+	await applicationsMenuPage.goToSite(site.name);
+
+	await commerceLayoutsPage.goToPages(false);
+	await commerceLayoutsPage.createWidgetPage('View product Sku');
+
+	await page.goto(`/web/${site.name}`);
+
+	await productDetailsPage.addProductDetailsWidget();
+	await page.goto(`/web/${site.name}/p/diagram`);
+	await (await productDetailsPage.diagramPin(pin.sequence)).click();
+	await productDetailsPage.pinAddToCartButton.click();
+	await expect(productDetailsPage.pinAddToCartButton).toHaveClass(/is-added/);
+	await expect(productDetailsPage.pinAddToCartButton).not.toHaveClass(
+		/not-allowed/
+	);
+});

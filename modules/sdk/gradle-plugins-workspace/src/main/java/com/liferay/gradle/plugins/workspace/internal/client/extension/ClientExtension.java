@@ -60,9 +60,9 @@ public class ClientExtension {
 			_logger.warn(
 				StringUtil.concat(
 					"The deprecated property ",
-					"dxp.lxc.liferay.com.virtualInstanceId is set in ",
-					"client-extension.yaml. Please set the ",
-					"liferay.virtual.instance.id Gradle property instead."));
+					"\"dxp.lxc.liferay.com.virtualInstanceId\" is set in ",
+					"client-extension.yaml. Set the Gradle property ",
+					"\"liferay.virtual.instance.id\" instead."));
 		}
 	}
 
@@ -88,10 +88,10 @@ public class ClientExtension {
 				if (_logger.isWarnEnabled()) {
 					String message = String.format(
 						StringUtil.concat(
-							"The client extension ",
-							"dxp.lxc.liferay.com.virtualInstanceId value ",
-							"%s differs from the provided Gradle property ",
-							"liferay.virtual.instance.id value %s. The ",
+							"The client extension property value ",
+							"\"dxp.lxc.liferay.com.virtualInstanceId\" ",
+							"%s differs from the Gradle property ",
+							"\"liferay.virtual.instance.id\" value %s. The ",
 							"Gradle property will be used."),
 						StringUtil.quote(this.virtualInstanceId),
 						StringUtil.quote(virtualInstanceId));
@@ -109,14 +109,16 @@ public class ClientExtension {
 
 		Map<String, Object> configMap = new HashMap<>();
 
+		configMap.put(":configurator:policy", "force");
+
 		String pathSuffix = StringUtil.suffixIfNotBlank(
 			projectName, virtualInstanceId);
 
-		configMap.put(":configurator:policy", "force");
 		configMap.put(
 			"baseURL",
 			typeSettings.getOrDefault(
 				"baseURL", "${portalURL}/o/" + pathSuffix));
+
 		configMap.put("buildTimestamp", System.currentTimeMillis());
 		configMap.put("description", description);
 		configMap.put(

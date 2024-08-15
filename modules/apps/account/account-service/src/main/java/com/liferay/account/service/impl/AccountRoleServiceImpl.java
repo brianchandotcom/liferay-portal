@@ -43,8 +43,8 @@ public class AccountRoleServiceImpl extends AccountRoleServiceBaseImpl {
 
 	@Override
 	public AccountRole addAccountRole(
-			long accountEntryId, String name, Map<Locale, String> titleMap,
-			Map<Locale, String> descriptionMap)
+			String externalReferenceCode, long accountEntryId, String name,
+			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap)
 		throws PortalException {
 
 		PermissionChecker permissionChecker = getPermissionChecker();
@@ -59,8 +59,8 @@ public class AccountRoleServiceImpl extends AccountRoleServiceBaseImpl {
 		}
 
 		return accountRoleLocalService.addAccountRole(
-			permissionChecker.getUserId(), accountEntryId, name, titleMap,
-			descriptionMap);
+			externalReferenceCode, permissionChecker.getUserId(),
+			accountEntryId, name, titleMap, descriptionMap);
 	}
 
 	@Override

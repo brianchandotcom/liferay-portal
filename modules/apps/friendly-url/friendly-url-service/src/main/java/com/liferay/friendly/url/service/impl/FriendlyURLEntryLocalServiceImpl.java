@@ -11,6 +11,7 @@ import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.friendly.url.exception.DuplicateFriendlyURLEntryException;
 import com.liferay.friendly.url.exception.FriendlyURLCategoryException;
 import com.liferay.friendly.url.exception.FriendlyURLLengthException;
+import com.liferay.friendly.url.exception.FriendlyURLLocalizationUrlTitleException;
 import com.liferay.friendly.url.exception.NoSuchFriendlyURLEntryLocalizationException;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
@@ -635,6 +636,11 @@ public class FriendlyURLEntryLocalServiceImpl
 			long groupId, long classNameId, long classPK, String languageId,
 			String urlTitle)
 		throws PortalException {
+
+		if (urlTitle.endsWith(StringPool.SLASH)) {
+			throw new FriendlyURLLocalizationUrlTitleException.
+				MustNotHaveTrailingSlash();
+		}
 
 		int maxLength = ModelHintsUtil.getMaxLength(
 			FriendlyURLEntryLocalization.class.getName(), "urlTitle");

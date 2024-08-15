@@ -100,5 +100,6 @@
 		<exception>DuplicateFriendlyURLEntry</exception>
 		<exception>FriendlyURLCategory</exception>
 		<exception>FriendlyURLLength</exception>
+		<exception>FriendlyURLLocalizationUrlTitle</exception>
 	</exceptions>
 </service-builder>

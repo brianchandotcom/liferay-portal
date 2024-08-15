@@ -549,8 +549,12 @@ public class EmailNotificationType extends BaseNotificationType {
 				getPersistedModelLocalService(
 					notificationContext.getClassName());
 
+		HttpServletRequest httpServletRequest =
+			ObjectActionThreadLocal.getHttpServletRequest();
+
 		ServiceContextThreadLocal.pushServiceContext(
-			_getServiceContext(group, notificationContext.getUserId()));
+			_getServiceContext(
+				group, httpServletRequest, notificationContext.getUserId()));
 
 		try {
 			InfoItemFieldValues infoItemFieldValues =
@@ -578,9 +582,6 @@ public class EmailNotificationType extends BaseNotificationType {
 				template.put(infoField.getUniqueId(), templateNode);
 			}
 
-			HttpServletRequest httpServletRequest =
-				ObjectActionThreadLocal.getHttpServletRequest();
-
 			if (httpServletRequest != null) {
 				template.put(
 					"portalURL", portal.getPortalURL(httpServletRequest));
@@ -595,7 +596,9 @@ public class EmailNotificationType extends BaseNotificationType {
 		return stringWriter.toString();
 	}
 
-	private ServiceContext _getServiceContext(Group group, long userId) {
+	private ServiceContext _getServiceContext(
+		Group group, HttpServletRequest httpServletRequest, long userId) {
+
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
@@ -608,6 +611,7 @@ public class EmailNotificationType extends BaseNotificationType {
 		serviceContext.setCompanyId(group.getCompanyId());
 		serviceContext.setLanguageId(
 			_language.getLanguageId(siteDefaultLocale));
+		serviceContext.setRequest(httpServletRequest);
 		serviceContext.setScopeGroupId(group.getGroupId());
 		serviceContext.setUserId(userId);
 

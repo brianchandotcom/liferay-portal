@@ -1,124 +1,148 @@
 @import 'atlas-variables';
 
-.asset-icon .lexicon-icon {
-	height: 32px;
-	width: 32px;
-}
+.portlet-workflow-tasks {
+	.asset-icon .lexicon-icon {
+		height: 32px;
+		width: 32px;
+	}
 
-.asset-title {
-	font-weight: bold;
-}
+	.asset-title {
+		font-weight: bold;
+	}
 
-.asset-type,
-.author,
-.due-date,
-.task-name {
-	margin-right: 20px;
-}
+	.asset-type,
+	.author,
+	.due-date,
+	.task-name {
+		margin-right: 20px;
+	}
 
-.container-view {
-	.card {
-		.panel-body {
-			img {
-				max-width: 100%;
+	.container-view {
+		.card {
+			.panel-body {
+				img {
+					max-width: 100%;
+				}
 			}
 		}
 	}
-}
 
-.lfr-asset-column-details {
-	.asset-metadata {
-		background-color: #efefef;
-		border-top: 1px solid #ddd;
-		margin: 2em 0 0;
-		padding: 0.5em;
+	.lfr-asset-column-details {
+		.asset-metadata {
+			background-color: #efefef;
+			border-top: 1px solid #ddd;
+			margin: 2em 0 0;
+			padding: 0.5em;
 
-		span {
-			display: inline-block;
+			span {
+				display: inline-block;
+			}
+		}
+
+		.lfr-asset-actions {
+			float: right;
+			position: absolute;
+			right: 10px;
+			z-index: 1;
+		}
+
+		.lfr-asset-title .lfr-asset-actions img {
+			margin-left: 5px;
+		}
+
+		.metadata-author {
+			font-weight: bold;
+			margin-right: 10px;
+
+			img,
+			svg {
+				vertical-align: baseline;
+			}
+		}
+
+		.metadata-entry {
+			color: #999;
+		}
+
+		.task-activity {
+			padding: 5px 5px 5px 25px;
+		}
+
+		.task-activity-date {
+			font-weight: bold;
+		}
+
+		.task-content-actions {
+			float: right;
+
+			.btn-secondary {
+				padding: 0;
+			}
+		}
+
+		.task-content-author {
+			padding-top: 1em;
+		}
+
+		.task-panel-container .lfr-panel-content {
+			padding: 0.7em;
 		}
 	}
 
-	.lfr-asset-actions {
-		float: right;
-		position: absolute;
-		right: 10px;
-		z-index: 1;
-	}
-
-	.lfr-asset-title .lfr-asset-actions img {
-		margin-left: 5px;
-	}
-
-	.metadata-author {
-		font-weight: bold;
-		margin-right: 10px;
-
-		img,
-		svg {
-			vertical-align: baseline;
+	.lfr-floating-container {
+		.field {
+			input,
+			img {
+				vertical-align: top;
+			}
 		}
 	}
 
-	.metadata-entry {
-		color: #999;
+	.lfr-nav.nav-tabs.nav-bar-workflow {
+		margin-bottom: 0;
 	}
 
-	.task-activity {
-		padding: 5px 5px 5px 25px;
-	}
+	.modal-footer {
+		.task-action-button {
+			&:not(:first-child) {
+				margin-left: 0.5rem;
+			}
 
-	.task-activity-date {
-		font-weight: bold;
-	}
-
-	.task-content-actions {
-		float: right;
-
-		.btn-secondary {
-			padding: 0;
+			&:not(:last-child) {
+				margin-right: 0.5rem;
+			}
 		}
 	}
 
-	.task-content-author {
-		padding-top: 1em;
+	.navigation-bar-light {
+		padding-top: 2.5rem;
 	}
 
-	.task-panel-container .lfr-panel-content {
-		padding: 0.7em;
+	.portal-popup.task-dialog {
+		background-color: transparent;
 	}
-}
 
-.lfr-floating-container {
-	.field {
-		input,
-		img {
-			vertical-align: top;
+	.task-action {
+		height: 100%;
+
+		> form {
+			display: flex;
+			flex-direction: column;
+			height: 100%;
 		}
 	}
-}
 
-.lfr-nav.nav-tabs.nav-bar-workflow {
-	margin-bottom: 0;
-}
-
-.modal-footer {
-	.task-action-button {
-		&:not(:first-child) {
-			margin-left: 0.5rem;
-		}
-
-		&:not(:last-child) {
-			margin-right: 0.5rem;
-		}
+	.task-action-content {
+		flex-grow: 1;
 	}
-}
 
-.navigation-bar-light {
-	padding-top: 2.5rem;
-}
-
-.portal-popup.task-dialog {
-	background-color: transparent;
+	.task-action-loading {
+		align-items: center;
+		display: flex;
+		flex-direction: column;
+		height: 100%;
+		justify-content: center;
+	}
 }
 
 .portlet-users-admin {
@@ -360,26 +384,4 @@
 			float: left;
 		}
 	}
-}
-
-.task-action {
-	height: 100%;
-
-	> form {
-		display: flex;
-		flex-direction: column;
-		height: 100%;
-	}
-}
-
-.task-action-content {
-	flex-grow: 1;
-}
-
-.task-action-loading {
-	align-items: center;
-	display: flex;
-	flex-direction: column;
-	height: 100%;
-	justify-content: center;
 }

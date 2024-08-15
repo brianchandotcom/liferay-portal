@@ -380,25 +380,27 @@ public class CommerceAccountRoleHelperImpl
 					_objectDefinitionLocalService.fetchObjectDefinition(
 						role.getCompanyId(), objectDefinitionName);
 
-				if (objectDefinition != null) {
-					companyResourceActionIds.put(
-						"com.liferay.object#" +
-							objectDefinition.getObjectDefinitionId(),
-						new String[] {ObjectActionKeys.ADD_OBJECT_ENTRY});
-					companyResourceActionIds.put(
-						"com.liferay.object.model.ObjectDefinition#" +
-							objectDefinition.getObjectDefinitionId(),
-						new String[] {
-							ActionKeys.DELETE, ActionKeys.PERMISSIONS,
-							ActionKeys.UPDATE, ActionKeys.VIEW
-						});
-					companyResourceActionIds.put(
-						StringBundler.concat(
-							"com_liferay_object_web_internal_object_",
-							"definitions_portlet_ObjectDefinitionsPortlet_",
-							objectDefinition.getObjectDefinitionId()),
-						new String[] {ActionKeys.VIEW});
+				if (objectDefinition == null) {
+					continue;
 				}
+
+				companyResourceActionIds.put(
+					"com.liferay.object#" +
+						objectDefinition.getObjectDefinitionId(),
+					new String[] {ObjectActionKeys.ADD_OBJECT_ENTRY});
+				companyResourceActionIds.put(
+					"com.liferay.object.model.ObjectDefinition#" +
+						objectDefinition.getObjectDefinitionId(),
+					new String[] {
+						ActionKeys.DELETE, ActionKeys.PERMISSIONS,
+						ActionKeys.UPDATE, ActionKeys.VIEW
+					});
+				companyResourceActionIds.put(
+					StringBundler.concat(
+						"com_liferay_object_web_internal_object_",
+						"definitions_portlet_ObjectDefinitionsPortlet_",
+						objectDefinition.getObjectDefinitionId()),
+					new String[] {ActionKeys.VIEW});
 			}
 		}
 		else if (name.equals(RoleConstants.USER)) {
@@ -409,32 +411,35 @@ public class CommerceAccountRoleHelperImpl
 					_objectDefinitionLocalService.fetchObjectDefinition(
 						role.getCompanyId(), objectDefinitionName);
 
-				if (objectDefinition != null) {
-					companyResourceActionIds.put(
-						"com.liferay.object#" +
-							objectDefinition.getObjectDefinitionId(),
-						new String[] {ObjectActionKeys.ADD_OBJECT_ENTRY});
+				if (objectDefinition == null) {
+					continue;
 				}
+
+				companyResourceActionIds.put(
+					"com.liferay.object#" +
+						objectDefinition.getObjectDefinitionId(),
+					new String[] {ObjectActionKeys.ADD_OBJECT_ENTRY});
 			}
 
-			for (String listTypeDefinitionExternalReferenceCode :
+			for (String externalReferenceCode :
 					_RETURNS_MANAGER_LIST_TYPE_DEFINITION_EXTERNAL_REFERENCE_CODES) {
 
 				ListTypeDefinition listTypeDefinition =
 					_listTypeDefinitionLocalService.
 						fetchListTypeDefinitionByExternalReferenceCode(
-							listTypeDefinitionExternalReferenceCode,
-							role.getCompanyId());
+							externalReferenceCode, role.getCompanyId());
 
-				if (listTypeDefinition != null) {
-					_resourcePermissionLocalService.setResourcePermissions(
-						serviceContext.getCompanyId(),
-						listTypeDefinition.getModelClassName(),
-						ResourceConstants.SCOPE_INDIVIDUAL,
-						String.valueOf(
-							listTypeDefinition.getListTypeDefinitionId()),
-						role.getRoleId(), new String[] {ActionKeys.VIEW});
+				if (listTypeDefinition == null) {
+					continue;
 				}
+
+				_resourcePermissionLocalService.setResourcePermissions(
+					serviceContext.getCompanyId(),
+					listTypeDefinition.getModelClassName(),
+					ResourceConstants.SCOPE_INDIVIDUAL,
+					String.valueOf(
+						listTypeDefinition.getListTypeDefinitionId()),
+					role.getRoleId(), new String[] {ActionKeys.VIEW});
 			}
 		}
 

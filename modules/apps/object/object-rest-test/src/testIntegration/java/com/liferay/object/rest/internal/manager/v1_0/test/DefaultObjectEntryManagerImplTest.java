@@ -3438,19 +3438,40 @@ public class DefaultObjectEntryManagerImplTest
 				"richTextObjectFieldName", "<i>richTextObjectFieldNameValue</i>"
 			).build();
 
+		ObjectEntry parentObjectEntry1 = _addObjectEntry(
+			_objectDefinition1,
+			HashMapBuilder.<String, Object>put(
+				"textObjectFieldName", RandomTestUtil.randomString()
+			).build());
+		ObjectEntry parentObjectEntry2 = _addObjectEntry(
+			_objectDefinition1,
+			HashMapBuilder.<String, Object>put(
+				"textObjectFieldName", RandomTestUtil.randomString()
+			).build());
+
 		assertEquals(
 			_defaultObjectEntryManager.partialUpdateObjectEntry(
 				_simpleDTOConverterContext, _objectDefinition2,
 				objectEntry.getId(),
 				new ObjectEntry() {
 					{
-						properties = objectEntryProperties;
+						properties = HashMapBuilder.<String, Object>putAll(
+							objectEntryProperties
+						).put(
+							_objectRelationshipFieldName,
+							parentObjectEntry1.getId()
+						).build();
 					}
 				}),
 			new ObjectEntry() {
 				{
 					properties = HashMapBuilder.<String, Object>putAll(
 						objectEntryProperties
+					).put(
+						_objectRelationshipERCObjectFieldName,
+						parentObjectEntry1.getExternalReferenceCode()
+					).put(
+						_objectRelationshipFieldName, parentObjectEntry1.getId()
 					).put(
 						"textObjectFieldName", "textObjectFieldValue"
 					).build();
@@ -3463,6 +3484,9 @@ public class DefaultObjectEntryManagerImplTest
 				new ObjectEntry() {
 					{
 						properties = HashMapBuilder.<String, Object>put(
+							_objectRelationshipERCObjectFieldName,
+							parentObjectEntry2.getExternalReferenceCode()
+						).put(
 							"dateObjectFieldName", () -> null
 						).put(
 							"dateTimeObjectFieldName", () -> null
@@ -3474,9 +3498,107 @@ public class DefaultObjectEntryManagerImplTest
 					properties = HashMapBuilder.<String, Object>putAll(
 						objectEntryProperties
 					).put(
+						_objectRelationshipERCObjectFieldName,
+						parentObjectEntry2.getExternalReferenceCode()
+					).put(
+						_objectRelationshipFieldName, parentObjectEntry2.getId()
+					).put(
 						"dateObjectFieldName", () -> null
 					).put(
 						"dateTimeObjectFieldName", () -> null
+					).build();
+				}
+			});
+		assertEquals(
+			_defaultObjectEntryManager.partialUpdateObjectEntry(
+				_simpleDTOConverterContext, _objectDefinition2,
+				objectEntry.getId(),
+				new ObjectEntry() {
+					{
+						properties = HashMapBuilder.<String, Object>put(
+							_objectRelationshipERCObjectFieldName,
+							parentObjectEntry1.getExternalReferenceCode()
+						).put(
+							_objectRelationshipFieldName,
+							parentObjectEntry2.getId()
+						).build();
+					}
+				}),
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>putAll(
+						objectEntryProperties
+					).put(
+						_objectRelationshipERCObjectFieldName,
+						parentObjectEntry1.getExternalReferenceCode()
+					).put(
+						_objectRelationshipFieldName, parentObjectEntry1.getId()
+					).build();
+				}
+			});
+		assertEquals(
+			_defaultObjectEntryManager.partialUpdateObjectEntry(
+				_simpleDTOConverterContext, _objectDefinition2,
+				objectEntry.getId(),
+				new ObjectEntry() {
+					{
+						properties = HashMapBuilder.<String, Object>put(
+							_objectRelationshipERCObjectFieldName,
+							parentObjectEntry2.getExternalReferenceCode()
+						).put(
+							_objectRelationshipFieldName,
+							RandomTestUtil.randomLong()
+						).build();
+					}
+				}),
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>putAll(
+						objectEntryProperties
+					).put(
+						_objectRelationshipERCObjectFieldName,
+						parentObjectEntry2.getExternalReferenceCode()
+					).put(
+						_objectRelationshipFieldName, parentObjectEntry2.getId()
+					).build();
+				}
+			});
+
+		String newExternalReferenceCode = RandomTestUtil.randomString();
+
+		assertEquals(
+			_defaultObjectEntryManager.partialUpdateObjectEntry(
+				_simpleDTOConverterContext, _objectDefinition2,
+				objectEntry.getId(),
+				new ObjectEntry() {
+					{
+						properties = HashMapBuilder.<String, Object>put(
+							_objectRelationshipERCObjectFieldName,
+							newExternalReferenceCode
+						).put(
+							_objectRelationshipFieldName,
+							parentObjectEntry1.getId()
+						).build();
+					}
+				}),
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>putAll(
+						objectEntryProperties
+					).put(
+						_objectRelationshipERCObjectFieldName,
+						newExternalReferenceCode
+					).put(
+						_objectRelationshipFieldName,
+						() -> {
+							ObjectEntry objectEntry =
+								_defaultObjectEntryManager.getObjectEntry(
+									companyId, dtoConverterContext,
+									newExternalReferenceCode,
+									_objectDefinition1, null);
+
+							return objectEntry.getId();
+						}
 					).build();
 				}
 			});

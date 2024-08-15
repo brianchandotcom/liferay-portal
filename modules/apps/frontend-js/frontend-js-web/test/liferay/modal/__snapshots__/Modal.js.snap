@@ -36,6 +36,7 @@ exports[`Modal renders markup based on given configuration 1`] = `
             <h1
               class="modal-title"
               id="clay-modal-label-1"
+              tabindex="-1"
             >
               My Modal
               <span

@@ -77,6 +77,7 @@ export class MarketplaceHelper {
 		}
 		catch (error) {
 			console.error('Error when trying to create account', error);
+
 			throw error;
 		}
 	}

@@ -32,7 +32,7 @@ export class CustomerDashboardPage {
 				);
 	}
 
-	async goto(siteUrl?: Site['friendlyUrlPath']) {
+	async goto(siteUrl?: string) {
 		await this.page.goto(`/web${siteUrl}/customer-dashboard`, {
 			waitUntil: 'networkidle',
 		});

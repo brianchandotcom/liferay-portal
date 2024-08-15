@@ -11,22 +11,22 @@ export class CustomerDashboardAppDetailsPage extends CustomerDashboardPage {
 	readonly catalogTitle: (catalogName: string) => Locator;
 	readonly detailTab: Locator;
 	readonly downloadTab: Locator;
-	readonly summaryTab;
-	readonly productTitle: (productName: string) => Locator;
 	readonly page: Page;
+	readonly productTitle: (productName: string) => Locator;
+	readonly summaryTab;
 
 	constructor(page: Page) {
 		super(page);
+
 		this.catalogTitle = (catalogName: string) =>
 			page.getByText(catalogName);
 		this.detailTab = page.getByRole('link', {name: 'Details'});
 		this.downloadTab = page.getByRole('link', {name: 'Download'});
+		this.page = page;
 		this.productTitle = (productName: string) =>
 			page.getByRole('heading', {
 				name: productName,
 			});
 		this.summaryTab = page.getByRole('heading', {name: 'Summary'});
-
-		this.page = page;
 	}
 }

@@ -5,16 +5,16 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
-import {getRandomInt} from '../../../../utils/getRandomInt';
-import {marketplaceHelper} from '../fixtures/marketplaceHelper';
-import {marketplacePagesTest} from '../fixtures/marketplacePages';
-import {marketplaceSiteFixture} from '../fixtures/marketplaceSite';
+import {clickAndExpectToBeVisible} from '../../../../../utils/clickAndExpectToBeVisible';
+import {getRandomInt} from '../../../../../utils/getRandomInt';
+import {marketplaceHelper} from '../../fixtures/marketplaceHelper';
+import {marketplacePagesTest} from '../../fixtures/marketplacePages';
+import {marketplaceSiteFixture} from '../../fixtures/marketplaceSite';
 import {
 	MARKETPLACE_CHANNEL,
 	ORDER_ITEMS,
 	PRODUCT_WORKFLOW_STATUS_CODE,
-} from '../utils/constants';
+} from '../../utils/constants';
 
 export const test = mergeTests(
 	marketplaceSiteFixture,

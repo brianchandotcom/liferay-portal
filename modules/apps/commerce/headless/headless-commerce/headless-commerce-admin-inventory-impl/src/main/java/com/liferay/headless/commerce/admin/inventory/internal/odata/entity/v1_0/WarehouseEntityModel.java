@@ -21,11 +21,11 @@ public class WarehouseEntityModel implements EntityModel {
 	public WarehouseEntityModel() {
 		_entityFieldsMap = EntityModel.toEntityFieldsMap(
 			new BooleanEntityField("active", locale -> "active"),
+			new DoubleEntityField("latitude", locale -> "latitude"),
+			new DoubleEntityField("longitude", locale -> "longitude"),
 			new StringEntityField("city", locale -> "city"),
 			new StringEntityField(
 				"countryISOCode", locale -> "countryTwoLettersISOCode"),
-			new DoubleEntityField("latitude", locale -> "latitude"),
-			new DoubleEntityField("longitude", locale -> "longitude"),
 			new StringEntityField("name", locale -> "name"),
 			new StringEntityField("regionISOCode", locale -> "regionCode"),
 			new StringEntityField("street1", locale -> "street1"));

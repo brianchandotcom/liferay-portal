@@ -186,8 +186,9 @@ public class RoleModelListenerTest {
 		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry();
 
 		AccountRole accountRole = _accountRoleLocalService.addAccountRole(
-			TestPropsValues.getUserId(), accountEntry.getAccountEntryId(),
-			RandomTestUtil.randomString(), null, null);
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			accountEntry.getAccountEntryId(), RandomTestUtil.randomString(),
+			null, null);
 
 		try {
 			_roleLocalService.deleteRole(accountRole.getRoleId());
@@ -207,6 +208,36 @@ public class RoleModelListenerTest {
 
 			throw modelListenerException;
 		}
+	}
+
+	@Test
+	public void testUpdateRoleExternalReferenceCode() throws Exception {
+		Role role = _roleLocalService.addRole(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			AccountRole.class.getName(),
+			AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
+			RandomTestUtil.randomString(),
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(), RoleConstants.TYPE_ACCOUNT,
+			null, null);
+
+		AccountRole accountRole =
+			_accountRoleLocalService.fetchAccountRoleByRoleId(role.getRoleId());
+
+		Assert.assertEquals(
+			accountRole.getExternalReferenceCode(),
+			role.getExternalReferenceCode());
+
+		role.setExternalReferenceCode(RandomTestUtil.randomString());
+
+		Role updateRole = _roleLocalService.updateRole(role);
+
+		accountRole = _accountRoleLocalService.fetchAccountRoleByRoleId(
+			role.getRoleId());
+
+		Assert.assertEquals(
+			accountRole.getExternalReferenceCode(),
+			updateRole.getExternalReferenceCode());
 	}
 
 	private static Company _company;

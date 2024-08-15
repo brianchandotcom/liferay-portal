@@ -11,6 +11,7 @@ import com.liferay.account.model.AccountRole;
 import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.RequiredRoleException;
@@ -56,6 +57,7 @@ public class RoleModelListener extends BaseModelListener<Role> {
 		accountRole = _accountRoleLocalService.createAccountRole(
 			_counterLocalService.increment());
 
+		accountRole.setExternalReferenceCode(role.getExternalReferenceCode());
 		accountRole.setCompanyId(role.getCompanyId());
 		accountRole.setAccountEntryId(
 			AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT);
@@ -95,6 +97,29 @@ public class RoleModelListener extends BaseModelListener<Role> {
 				throw new ModelListenerException(portalException);
 			}
 		}
+	}
+
+	@Override
+	public void onAfterUpdate(Role originalRole, Role role)
+		throws ModelListenerException {
+
+		if (StringUtil.equalsIgnoreCase(
+				originalRole.getExternalReferenceCode(),
+				role.getExternalReferenceCode())) {
+
+			return;
+		}
+
+		AccountRole accountRole =
+			_accountRoleLocalService.fetchAccountRoleByRoleId(role.getRoleId());
+
+		if (accountRole == null) {
+			return;
+		}
+
+		accountRole.setExternalReferenceCode(role.getExternalReferenceCode());
+
+		_accountRoleLocalService.updateAccountRole(accountRole);
 	}
 
 	@Override

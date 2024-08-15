@@ -467,9 +467,7 @@ definition {
 			pageName = "Language Selector Page",
 			siteName = "Guest");
 
-		Click(
-			key_language = "català (espanya, valencia)",
-			locator1 = "Language#LONG_TEXT_LINK");
+		Click(locator1 = "//a[contains(@class, 'long-text') and @lang='ca-ES-VALENCIA']");
 
 		AssertLocation(value1 = "${portalURL}/ca-ES-VALENCIA/web/guest/language-selector-page");
 
@@ -477,7 +475,7 @@ definition {
 			locator1 = "UserBar#USER_SIGN_IN",
 			value1 = "Accedeix");
 
-		Click(locator1 = "//a[contains(@class, 'long-text') and contains(., 'српски (србија, latin)')]");
+		Click(locator1 = "//a[contains(@class, 'long-text') and @lang='sr-RS-latin']");
 
 		AssertLocation(value1 = "${portalURL}/sr-RS-latin/web/guest/language-selector-page");
 

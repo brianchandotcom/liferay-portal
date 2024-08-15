@@ -62,10 +62,18 @@ export class SCIMConfigurationPage {
 
 	async generateToken() {
 		await this.page.getByLabel('Generate Access Token').click();
+
+		await expect(this.successMessage).toBeVisible();
+
+		await this.page.waitForTimeout(500);
 	}
 
 	async goTo() {
 		await this.instanceSettingsPage.goToInstanceSetting('SCIM', 'SCIM');
+
+		await this.oAuth2ApplicationNameField.waitFor();
+
+		await this.page.waitForTimeout(500);
 	}
 
 	async resetClientData(assertVisible = true) {
@@ -73,6 +81,10 @@ export class SCIMConfigurationPage {
 			await expect(this.resetButton).toBeVisible();
 
 			await this.resetButton.click();
+
+			await expect(this.successMessage).toBeVisible();
+
+			await this.page.waitForTimeout(500);
 		}
 	}
 
@@ -82,5 +94,9 @@ export class SCIMConfigurationPage {
 		await expect(revokeAllButton).toBeVisible();
 
 		await revokeAllButton.click();
+
+		await expect(this.successMessage).toBeVisible();
+
+		await this.page.waitForTimeout(500);
 	}
 }

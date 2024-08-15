@@ -2082,7 +2082,7 @@ public class ObjectEntryLocalServiceImpl
 			}
 
 			String value = ObjectFieldSettingUtil.getDefaultValueAsString(
-				_ddmExpressionFactory, objectField.getObjectFieldId(),
+				_ddmExpressionFactory, objectField,
 				_objectFieldSettingLocalService, (Map)values);
 
 			if (value != null) {

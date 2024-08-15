@@ -31,22 +31,24 @@ import java.util.Objects;
 public class ObjectFieldSettingUtil {
 
 	public static String getDefaultValueAsString(
-		DDMExpressionFactory ddmExpressionFactory, long objectFieldId,
+		DDMExpressionFactory ddmExpressionFactory, ObjectField objectField,
 		ObjectFieldSettingLocalService objectFieldSettingLocalService,
 		Map<String, Object> values) {
 
-		ObjectFieldSetting defaultValueObjectFieldSetting =
-			objectFieldSettingLocalService.fetchObjectFieldSetting(
-				objectFieldId, ObjectFieldSettingConstants.NAME_DEFAULT_VALUE);
+		List<ObjectFieldSetting> objectFieldSettings =
+			objectField.getObjectFieldSettings();
+
+		ObjectFieldSetting defaultValueObjectFieldSetting = _findByName(
+			objectFieldSettings,
+			ObjectFieldSettingConstants.NAME_DEFAULT_VALUE);
 
 		if (defaultValueObjectFieldSetting == null) {
 			return null;
 		}
 
-		ObjectFieldSetting defaultValueTypeObjectFieldSetting =
-			objectFieldSettingLocalService.fetchObjectFieldSetting(
-				objectFieldId,
-				ObjectFieldSettingConstants.NAME_DEFAULT_VALUE_TYPE);
+		ObjectFieldSetting defaultValueTypeObjectFieldSetting = _findByName(
+			objectFieldSettings,
+			ObjectFieldSettingConstants.NAME_DEFAULT_VALUE_TYPE);
 
 		if ((defaultValueTypeObjectFieldSetting == null) ||
 			StringUtil.equals(
@@ -123,6 +125,18 @@ public class ObjectFieldSettingUtil {
 			getValue(
 				ObjectFieldSettingConstants.NAME_UNIQUE_VALUES,
 				objectFieldSetting));
+	}
+
+	private static ObjectFieldSetting _findByName(
+		List<ObjectFieldSetting> objectFieldSettings, String name) {
+
+		for (ObjectFieldSetting objectFieldSetting : objectFieldSettings) {
+			if (Objects.equals(objectFieldSetting.getName(), name)) {
+				return objectFieldSetting;
+			}
+		}
+
+		return null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

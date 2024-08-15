@@ -10,6 +10,7 @@ import com.liferay.dispatch.internal.helper.DispatchTriggerHelper;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.service.DispatchTriggerLocalService;
 import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
+import com.liferay.portal.kernel.cluster.ClusterMasterTokenTransitionListener;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
@@ -23,6 +24,7 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -84,6 +86,39 @@ public class DispatchConfiguratorTest {
 			_singleNodePersistedDispatchTrigger.getDispatchTaskClusterMode()
 		).thenReturn(
 			DispatchTaskClusterMode.SINGLE_NODE_PERSISTED.getMode()
+		);
+	}
+
+	@Test
+	public void testNoClusterNoListener() throws Exception {
+		Mockito.when(
+			_clusterMasterExecutor.isEnabled()
+		).thenReturn(
+			false
+		);
+
+		Mockito.when(
+			_clusterMasterExecutor.isMaster()
+		).thenReturn(
+			false
+		);
+
+		_dispatchConfigurator.activate(_bundleContext);
+
+		Mockito.reset(_dispatchTriggerHelper);
+
+		Mockito.verify(
+			_clusterMasterExecutor, Mockito.never()
+		).addClusterMasterTokenTransitionListener(
+			Mockito.any()
+		);
+
+		_dispatchConfigurator.deactivate();
+
+		Mockito.verify(
+			_clusterMasterExecutor, Mockito.never()
+		).removeClusterMasterTokenTransitionListener(
+			Mockito.any()
 		);
 	}
 
@@ -342,6 +377,154 @@ public class DispatchConfiguratorTest {
 		).deleteSchedulerJob(
 			Mockito.same(_singleNodePersistedDispatchTrigger),
 			Mockito.eq(StorageType.PERSISTED)
+		);
+	}
+
+	@Test
+	public void testOnMasterTokenAcquired() throws Exception {
+		Mockito.when(
+			_clusterMasterExecutor.isEnabled()
+		).thenReturn(
+			true
+		);
+
+		Mockito.when(
+			_clusterMasterExecutor.isMaster()
+		).thenReturn(
+			false
+		);
+
+		ArgumentCaptor<ClusterMasterTokenTransitionListener> argumentCaptor =
+			ArgumentCaptor.forClass(ClusterMasterTokenTransitionListener.class);
+
+		_dispatchConfigurator.activate(_bundleContext);
+
+		Mockito.reset(_dispatchTriggerHelper);
+
+		Mockito.verify(
+			_clusterMasterExecutor
+		).addClusterMasterTokenTransitionListener(
+			argumentCaptor.capture()
+		);
+
+		Mockito.when(
+			_clusterMasterExecutor.isMaster()
+		).thenReturn(
+			true
+		);
+
+		ClusterMasterTokenTransitionListener
+			clusterMasterTokenTransitionListener = argumentCaptor.getValue();
+
+		clusterMasterTokenTransitionListener.masterTokenAcquired();
+
+		Mockito.verify(
+			_dispatchTriggerLocalService, Mockito.times(2)
+		).getDispatchTriggers(
+			Mockito.eq(true)
+		);
+
+		Mockito.verify(
+			_dispatchTriggerHelper
+		).addSchedulerJob(
+			Mockito.same(_allNodesDispatchTrigger),
+			Mockito.eq(StorageType.MEMORY), Mockito.any()
+		);
+
+		Mockito.verify(
+			_dispatchTriggerHelper, Mockito.never()
+		).addSchedulerJob(
+			Mockito.same(_notApplicableDispatchTrigger),
+			Mockito.eq(StorageType.MEMORY), Mockito.any()
+		);
+
+		Mockito.verify(
+			_dispatchTriggerHelper
+		).addSchedulerJob(
+			Mockito.same(_singleNodeMemoryClusteredDispatchTrigger),
+			Mockito.eq(StorageType.MEMORY_CLUSTERED), Mockito.any()
+		);
+
+		Mockito.verify(
+			_dispatchTriggerHelper
+		).addSchedulerJob(
+			Mockito.same(_singleNodePersistedDispatchTrigger),
+			Mockito.eq(StorageType.PERSISTED), Mockito.any()
+		);
+
+		_dispatchConfigurator.deactivate();
+
+		Mockito.verify(
+			_clusterMasterExecutor
+		).removeClusterMasterTokenTransitionListener(
+			Mockito.same(clusterMasterTokenTransitionListener)
+		);
+	}
+
+	@Test
+	public void testOnMasterTokenReleased() throws Exception {
+		Mockito.when(
+			_clusterMasterExecutor.isEnabled()
+		).thenReturn(
+			true
+		);
+
+		Mockito.when(
+			_clusterMasterExecutor.isMaster()
+		).thenReturn(
+			true
+		);
+
+		ArgumentCaptor<ClusterMasterTokenTransitionListener> argumentCaptor =
+			ArgumentCaptor.forClass(ClusterMasterTokenTransitionListener.class);
+
+		_dispatchConfigurator.activate(_bundleContext);
+
+		Mockito.reset(_dispatchTriggerHelper);
+
+		Mockito.verify(
+			_clusterMasterExecutor
+		).addClusterMasterTokenTransitionListener(
+			argumentCaptor.capture()
+		);
+
+		Mockito.when(
+			_clusterMasterExecutor.isMaster()
+		).thenReturn(
+			false
+		);
+
+		ClusterMasterTokenTransitionListener
+			clusterMasterTokenTransitionListener = argumentCaptor.getValue();
+
+		clusterMasterTokenTransitionListener.masterTokenReleased();
+
+		Mockito.verify(
+			_dispatchTriggerLocalService, Mockito.times(2)
+		).getDispatchTriggers(
+			Mockito.eq(true)
+		);
+
+		Mockito.verify(
+			_dispatchTriggerHelper
+		).deleteSchedulerJob(
+			Mockito.same(_allNodesDispatchTrigger),
+			Mockito.eq(StorageType.MEMORY)
+		);
+
+		Mockito.verify(
+			_dispatchTriggerHelper, Mockito.never()
+		).deleteSchedulerJob(
+			Mockito.same(_notApplicableDispatchTrigger),
+			Mockito.eq(StorageType.MEMORY)
+		);
+
+		_dispatchConfigurator.deactivate();
+
+		Mockito.verify(
+			_clusterMasterExecutor
+		).removeClusterMasterTokenTransitionListener(
+			Mockito.same(clusterMasterTokenTransitionListener)
 		);
 	}
 

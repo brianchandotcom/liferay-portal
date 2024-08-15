@@ -175,8 +175,6 @@ public class ObjectEntryDisplayContextImpl
 
 	@Override
 	public String getBackURL() throws PortalException {
-		ObjectEntry objectEntry = _getObjectEntry();
-
 		String redirect = ParamUtil.getString(
 			_objectRequestHelper.getRequest(), "redirect");
 
@@ -190,20 +188,22 @@ public class ObjectEntryDisplayContextImpl
 			backURL = String.valueOf(liferayPortletResponse.createRenderURL());
 		}
 
+		ObjectDefinition objectDefinition = getObjectDefinition1();
+
+		if (!objectDefinition.isDefaultStorageType() ||
+			!objectDefinition.isRootDescendantNode()) {
+
+			return backURL;
+		}
+
+		ObjectEntry objectEntry = _getObjectEntry();
+
 		if (objectEntry == null) {
 			return backURL;
 		}
 
 		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
 			_objectEntryLocalService.getObjectEntry(objectEntry.getId());
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.getObjectDefinition(
-				serviceBuilderObjectEntry.getObjectDefinitionId());
-
-		if (!objectDefinition.isRootDescendantNode()) {
-			return backURL;
-		}
 
 		Tree tree = _treeFactory.createObjectEntryTree(
 			serviceBuilderObjectEntry.getRootObjectEntryId());

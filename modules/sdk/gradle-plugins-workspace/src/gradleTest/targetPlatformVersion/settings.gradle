@@ -1,6 +1,6 @@
 buildscript {
 	dependencies {
-		classpath fileTree(dir: pluginClasspathDir, include: "*.jar")
+		classpath fileTree(dir: pluginClasspathDir, exclude: "org.osgi.core-5.0.0.jar", include: "*.jar")
 	}
 }
 

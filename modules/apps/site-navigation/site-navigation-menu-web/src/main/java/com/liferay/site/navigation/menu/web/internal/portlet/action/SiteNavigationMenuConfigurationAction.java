@@ -174,6 +174,8 @@ public class SiteNavigationMenuConfigurationAction
 			modifiableSettings.getValue("siteNavigationMenuId", null));
 
 		if (siteNavigationMenuId == 0) {
+			modifiableSettings.reset("siteNavigationMenuExternalReferenceCode");
+
 			return;
 		}
 
@@ -185,9 +187,11 @@ public class SiteNavigationMenuConfigurationAction
 			modifiableSettings.setValue(
 				"siteNavigationMenuExternalReferenceCode",
 				siteNavigationMenu.getExternalReferenceCode());
+
+			return;
 		}
 
-		modifiableSettings.reset("siteNavigationMenuId");
+		modifiableSettings.reset("siteNavigationMenuExternalReferenceCode");
 	}
 
 	@Reference

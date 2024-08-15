@@ -5,6 +5,7 @@
 
 package com.liferay.portal.security.password.encryptor.internal;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PwdEncryptorException;
 import com.liferay.portal.kernel.io.BigEndianCodec;
 import com.liferay.portal.kernel.security.SecureRandomUtil;
@@ -146,9 +147,10 @@ public class PBKDF2PasswordEncryptor implements PasswordEncryptor {
 				return;
 			}
 
-			String digest = algorithm.substring(indexOf);
+			String[] digestNameParts = StringUtil.split(
+				algorithm.substring(indexOf), StringPool.FORWARD_SLASH);
 
-			_digest = DigestFactory.getDigest(digest.split("/")[0]);
+			_digest = DigestFactory.getDigest(digestNameParts[0]);
 		}
 
 		public Digest getDigest() {

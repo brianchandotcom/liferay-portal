@@ -4,7 +4,6 @@
  */
 
 import {Locator, Page} from '@playwright/test';
-import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
 
 export class EditAccountPage {
 	readonly channelDefaultsLink: Locator;
@@ -24,10 +23,5 @@ export class EditAccountPage {
 		this.rolesLink = page.getByRole('link', {exact: true, name: 'Roles'});
 		this.saveButton = page.getByRole('button', {name: 'Save'});
 		this.usersLink = page.getByRole('link', {exact: true, name: 'Users'});
-	}
-
-	async saveChange() {
-		await this.saveButton.click();
-		await waitForSuccessAlert(this.page);
 	}
 }

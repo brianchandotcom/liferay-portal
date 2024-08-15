@@ -7,7 +7,6 @@ import {getRandomInt} from '../utils/getRandomInt';
 import {ApiHelpers, DataApiHelpers} from './ApiHelpers';
 
 type TAccount = {
-	emailAddress?: string;
 	externalReferenceCode?: string;
 	id?: number;
 	name?: string;
@@ -252,6 +251,20 @@ export class HeadlessAdminUserApiHelper {
 		return this.apiHelpers.get(
 			`${this.apiHelpers.baseUrl}${this.basePath}/user-accounts/by-email-address/${emailAddress}`
 		);
+	}
+
+	async patchAccount(accountId: number, account?: TAccount) {
+		return this.apiHelpers.patch(
+			`${this.apiHelpers.baseUrl}${this.basePath}/accounts`,
+			{
+				data: {
+					name: {
+						en_US: account.name,
+					},
+					...(account || {}),
+				}
+			}
+		)
 	}
 
 	async postAccount(account?: TAccount): Promise<TAccount> {

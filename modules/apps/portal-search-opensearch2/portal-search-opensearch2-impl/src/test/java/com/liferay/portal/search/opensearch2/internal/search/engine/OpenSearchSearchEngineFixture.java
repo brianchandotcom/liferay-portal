@@ -230,17 +230,18 @@ public class OpenSearchSearchEngineFixture implements SearchEngineFixture {
 		IndexNameBuilder indexNameBuilder,
 		OpenSearchConfigurationWrapper openSearchConfigurationWrapper) {
 
+		OpenSearchSearchEngine openSearchSearchEngine =
+			new OpenSearchSearchEngine();
+
 		_indexHelper = _createIndexHelper(
 			indexNameBuilder, openSearchConfigurationWrapper);
 
 		_companyIndexFactory = _createCompanyIndexFactory(
 			_indexHelper, openSearchConfigurationWrapper);
 
-		OpenSearchSearchEngine openSearchSearchEngine =
-			new OpenSearchSearchEngine();
-
 		ReflectionTestUtil.setFieldValue(
 			openSearchSearchEngine, "_indexFactory", _companyIndexFactory);
+
 		ReflectionTestUtil.setFieldValue(
 			openSearchSearchEngine, "_indexNameBuilder", indexNameBuilder);
 		ReflectionTestUtil.setFieldValue(

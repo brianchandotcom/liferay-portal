@@ -114,6 +114,23 @@ public class SearchRequestExecutorFixture {
 			OpenSearchQueryTranslator openSearchQueryTranslator,
 			StatsTranslator statsTranslator) {
 
+		CommonSearchRequestBuilderAssembler
+			commonSearchRequestBuilderAssembler =
+				new CommonSearchRequestBuilderAssemblerImpl();
+
+		OpenSearchAggregationTranslatorFixture
+			openSearchAggregationTranslatorFixture =
+				new OpenSearchAggregationTranslatorFixture();
+
+		ReflectionTestUtil.setFieldValue(
+			commonSearchRequestBuilderAssembler, "_aggregationTranslator",
+			openSearchAggregationTranslatorFixture.
+				getOpenSearchAggregationTranslator());
+
+		ReflectionTestUtil.setFieldValue(
+			commonSearchRequestBuilderAssembler, "_complexQueryBuilderFactory",
+			complexQueryBuilderFactory);
+
 		com.liferay.portal.search.opensearch2.internal.legacy.query.
 			OpenSearchQueryTranslatorFixture
 				legacyOpenSearchQueryTranslatorFixture =
@@ -125,44 +142,33 @@ public class SearchRequestExecutorFixture {
 				legacyOpenSearchQueryTranslatorFixture.
 					getOpenSearchQueryTranslator();
 
-		OpenSearchAggregationTranslatorFixture
-			openSearchAggregationTranslatorFixture =
-				new OpenSearchAggregationTranslatorFixture();
+		ReflectionTestUtil.setFieldValue(
+			commonSearchRequestBuilderAssembler, "_facetTranslator",
+			_createFacetTranslator(
+				facetProcessor, legacyOpenSearchQueryTranslator));
 
 		OpenSearchFilterTranslatorFixture openSearchFilterTranslatorFixture =
 			new OpenSearchFilterTranslatorFixture(
 				legacyOpenSearchQueryTranslator);
 
+		ReflectionTestUtil.setFieldValue(
+			commonSearchRequestBuilderAssembler, "_filterTranslator",
+			openSearchFilterTranslatorFixture.getOpenSearchFilterTranslator());
+
+		ReflectionTestUtil.setFieldValue(
+			commonSearchRequestBuilderAssembler, "_legacyQueryTranslator",
+			legacyOpenSearchQueryTranslator);
+
 		OpenSearchPipelineAggregationTranslatorFixture
 			openSearchPipelineAggregationTranslatorFixture =
 				new OpenSearchPipelineAggregationTranslatorFixture();
 
-		CommonSearchRequestBuilderAssembler
-			commonSearchRequestBuilderAssembler =
-				new CommonSearchRequestBuilderAssemblerImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			commonSearchRequestBuilderAssembler, "_aggregationTranslator",
-			openSearchAggregationTranslatorFixture.
-				getOpenSearchAggregationTranslator());
-		ReflectionTestUtil.setFieldValue(
-			commonSearchRequestBuilderAssembler, "_complexQueryBuilderFactory",
-			complexQueryBuilderFactory);
-		ReflectionTestUtil.setFieldValue(
-			commonSearchRequestBuilderAssembler, "_facetTranslator",
-			_createFacetTranslator(
-				facetProcessor, legacyOpenSearchQueryTranslator));
-		ReflectionTestUtil.setFieldValue(
-			commonSearchRequestBuilderAssembler, "_filterTranslator",
-			openSearchFilterTranslatorFixture.getOpenSearchFilterTranslator());
-		ReflectionTestUtil.setFieldValue(
-			commonSearchRequestBuilderAssembler, "_legacyQueryTranslator",
-			legacyOpenSearchQueryTranslator);
 		ReflectionTestUtil.setFieldValue(
 			commonSearchRequestBuilderAssembler,
 			"_pipelineAggregationTranslator",
 			openSearchPipelineAggregationTranslatorFixture.
 				getOpenSearchPipelineAggregationTranslator());
+
 		ReflectionTestUtil.setFieldValue(
 			commonSearchRequestBuilderAssembler, "_queryTranslator",
 			openSearchQueryTranslator);
@@ -257,14 +263,14 @@ public class SearchRequestExecutorFixture {
 		OpenSearchConnectionManager openSearchConnectionManager,
 		StatsTranslator statsTranslator) {
 
+		CountSearchRequestExecutor countSearchRequestExecutor =
+			new CountSearchRequestExecutorImpl();
+
 		CommonSearchResponseAssembler commonSearchResponseAssembler =
 			new CommonSearchResponseAssemblerImpl();
 
 		ReflectionTestUtil.setFieldValue(
 			commonSearchResponseAssembler, "_statsTranslator", statsTranslator);
-
-		CountSearchRequestExecutor countSearchRequestExecutor =
-			new CountSearchRequestExecutorImpl();
 
 		ReflectionTestUtil.setFieldValue(
 			countSearchRequestExecutor, "_commonSearchRequestBuilderAssembler",
@@ -324,11 +330,25 @@ public class SearchRequestExecutorFixture {
 		StatsRequestBuilderFactory statsRequestBuilderFactory,
 		StatsTranslator statsTranslator) {
 
+		SearchRequestExecutor searchRequestExecutor =
+			new OpenSearchSearchRequestExecutor();
+
+		ReflectionTestUtil.setFieldValue(
+			searchRequestExecutor, "_closePointInTimeRequestExecutor",
+			_createClosePointInTimeRequestExecutor(
+				openSearchConnectionManager));
+
 		CommonSearchRequestBuilderAssembler
 			commonSearchRequestBuilderAssembler =
 				createCommonSearchRequestBuilderAssembler(
 					complexQueryBuilderFactory, facetProcessor,
 					openSearchQueryTranslator, statsTranslator);
+
+		ReflectionTestUtil.setFieldValue(
+			searchRequestExecutor, "_countSearchRequestExecutor",
+			_createCountSearchRequestExecutor(
+				commonSearchRequestBuilderAssembler,
+				openSearchConnectionManager, statsTranslator));
 
 		SearchSearchRequestAssembler searchSearchRequestAssembler =
 			_createSearchSearchRequestAssembler(
@@ -340,23 +360,12 @@ public class SearchRequestExecutorFixture {
 			_createSearchSearchResponseAssembler(
 				statsRequestBuilderFactory, statsTranslator);
 
-		SearchRequestExecutor searchRequestExecutor =
-			new OpenSearchSearchRequestExecutor();
-
-		ReflectionTestUtil.setFieldValue(
-			searchRequestExecutor, "_closePointInTimeRequestExecutor",
-			_createClosePointInTimeRequestExecutor(
-				openSearchConnectionManager));
-		ReflectionTestUtil.setFieldValue(
-			searchRequestExecutor, "_countSearchRequestExecutor",
-			_createCountSearchRequestExecutor(
-				commonSearchRequestBuilderAssembler,
-				openSearchConnectionManager, statsTranslator));
 		ReflectionTestUtil.setFieldValue(
 			searchRequestExecutor, "_multisearchSearchRequestExecutor",
 			_createMultisearchSearchRequestExecutor(
 				openSearchConnectionManager, searchSearchRequestAssembler,
 				searchSearchResponseAssembler));
+
 		ReflectionTestUtil.setFieldValue(
 			searchRequestExecutor, "_openPointInTimeRequestExecutor",
 			_createOpenPointInTimeRequestExecutor(openSearchConnectionManager));
@@ -379,15 +388,14 @@ public class SearchRequestExecutorFixture {
 		StatsRequestBuilderFactory statsRequestBuilderFactory,
 		StatsTranslator statsTranslator) {
 
-		GroupByTranslator groupByTranslator = new GroupByTranslatorImpl();
+		SearchSearchRequestAssembler searchSearchRequestAssembler =
+			new SearchSearchRequestAssemblerImpl();
 
+		GroupByTranslator groupByTranslator = new GroupByTranslatorImpl();
 		SortTranslator sortTranslator = new SortTranslatorImpl();
 
 		ReflectionTestUtil.setFieldValue(
 			groupByTranslator, "_sortTranslator", sortTranslator);
-
-		SearchSearchRequestAssembler searchSearchRequestAssembler =
-			new SearchSearchRequestAssemblerImpl();
 
 		ReflectionTestUtil.setFieldValue(
 			searchSearchRequestAssembler,
@@ -444,6 +452,9 @@ public class SearchRequestExecutorFixture {
 		StatsRequestBuilderFactory statsRequestBuilderFactory,
 		StatsTranslator statsTranslator) {
 
+		SearchSearchResponseAssembler searchSearchResponseAssembler =
+			new SearchSearchResponseAssemblerImpl();
+
 		CommonSearchResponseAssembler commonSearchResponseAssembler =
 			new CommonSearchResponseAssemblerImpl();
 
@@ -467,9 +478,6 @@ public class SearchRequestExecutorFixture {
 			new StatsResultsTranslatorImpl());
 		ReflectionTestUtil.setFieldValue(
 			searchResponseTranslator, "_statsTranslator", statsTranslator);
-
-		SearchSearchResponseAssembler searchSearchResponseAssembler =
-			new SearchSearchResponseAssemblerImpl();
 
 		ReflectionTestUtil.setFieldValue(
 			searchSearchResponseAssembler, "_aggregationResults",
@@ -502,16 +510,17 @@ public class SearchRequestExecutorFixture {
 	private SuggestSearchRequestExecutor _createSuggestSearchRequestExecutor(
 		OpenSearchConnectionManager openSearchConnectionManager) {
 
-		OpenSearchSuggesterTranslatorFixture
-			openSearchSuggesterTranslatorFixture =
-				new OpenSearchSuggesterTranslatorFixture();
-
 		SuggestSearchRequestExecutor suggestSearchRequestExecutor =
 			new SuggestSearchRequestExecutorImpl();
 
 		ReflectionTestUtil.setFieldValue(
 			suggestSearchRequestExecutor, "_openSearchConnectionManager",
 			openSearchConnectionManager);
+
+		OpenSearchSuggesterTranslatorFixture
+			openSearchSuggesterTranslatorFixture =
+				new OpenSearchSuggesterTranslatorFixture();
+
 		ReflectionTestUtil.setFieldValue(
 			suggestSearchRequestExecutor, "_suggesterTranslator",
 			openSearchSuggesterTranslatorFixture.

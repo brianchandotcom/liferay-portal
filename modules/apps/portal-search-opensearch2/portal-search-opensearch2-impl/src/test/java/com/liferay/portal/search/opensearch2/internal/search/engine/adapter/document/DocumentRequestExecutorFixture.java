@@ -83,26 +83,28 @@ public class DocumentRequestExecutorFixture {
 		_createDeleteByQueryDocumentRequestExecutor(
 			OpenSearchConnectionManager openSearchConnectionManager) {
 
+		DeleteByQueryDocumentRequestExecutor
+			deleteByQueryDocumentRequestExecutor =
+				new DeleteByQueryDocumentRequestExecutorImpl();
+
 		com.liferay.portal.search.opensearch2.internal.legacy.query.
 			OpenSearchQueryTranslatorFixture
 				legacyOpenSearchQueryTranslatorFixture =
 					new com.liferay.portal.search.opensearch2.internal.legacy.
 						query.OpenSearchQueryTranslatorFixture();
 
-		OpenSearchQueryTranslatorFixture openSearchQueryTranslatorFixture =
-			new OpenSearchQueryTranslatorFixture();
-
-		DeleteByQueryDocumentRequestExecutor
-			deleteByQueryDocumentRequestExecutor =
-				new DeleteByQueryDocumentRequestExecutorImpl();
-
 		ReflectionTestUtil.setFieldValue(
 			deleteByQueryDocumentRequestExecutor, "_legacyQueryTranslator",
 			legacyOpenSearchQueryTranslatorFixture.
 				getOpenSearchQueryTranslator());
+
 		ReflectionTestUtil.setFieldValue(
 			deleteByQueryDocumentRequestExecutor,
 			"_openSearchConnectionManager", openSearchConnectionManager);
+
+		OpenSearchQueryTranslatorFixture openSearchQueryTranslatorFixture =
+			new OpenSearchQueryTranslatorFixture();
+
 		ReflectionTestUtil.setFieldValue(
 			deleteByQueryDocumentRequestExecutor, "_queryTranslator",
 			openSearchQueryTranslatorFixture.getOpenSearchQueryTranslator());
@@ -133,27 +135,29 @@ public class DocumentRequestExecutorFixture {
 		OpenSearchConnectionManager openSearchConnectionManager,
 		OpenSearchDocumentFactory openSearchDocumentFactory) {
 
+		DocumentRequestExecutor documentRequestExecutor =
+			new OpenSearchDocumentRequestExecutor();
+
 		OpenSearchBulkableDocumentRequestTranslator
 			openSearchBulkableDocumentRequestTranslator =
 				_createBulkableDocumentRequestTranslator(
 					openSearchDocumentFactory);
-
-		OpenSearchDocumentRequestTranslator
-			openSearchDocumentRequestTranslator =
-				_createOpenSearchDocumentRequestTranslator();
-
-		DocumentRequestExecutor documentRequestExecutor =
-			new OpenSearchDocumentRequestExecutor();
 
 		ReflectionTestUtil.setFieldValue(
 			documentRequestExecutor, "_bulkDocumentRequestExecutor",
 			_createBulkDocumentRequestExecutor(
 				openSearchBulkableDocumentRequestTranslator,
 				openSearchConnectionManager));
+
 		ReflectionTestUtil.setFieldValue(
 			documentRequestExecutor, "_deleteByQueryDocumentRequestExecutor",
 			_createDeleteByQueryDocumentRequestExecutor(
 				openSearchConnectionManager));
+
+		OpenSearchDocumentRequestTranslator
+			openSearchDocumentRequestTranslator =
+				_createOpenSearchDocumentRequestTranslator();
+
 		ReflectionTestUtil.setFieldValue(
 			documentRequestExecutor, "_deleteDocumentRequestExecutor",
 			_createDeleteDocumentRequestExecutor(
@@ -169,6 +173,7 @@ public class DocumentRequestExecutorFixture {
 			_createIndexDocumentRequestExecutor(
 				openSearchConnectionManager,
 				openSearchDocumentRequestTranslator));
+
 		ReflectionTestUtil.setFieldValue(
 			documentRequestExecutor, "_updateByQueryDocumentRequestExecutor",
 			_createUpdateByQueryDocumentRequestExecutor(
@@ -245,29 +250,32 @@ public class DocumentRequestExecutorFixture {
 		_createUpdateByQueryDocumentRequestExecutor(
 			OpenSearchConnectionManager openSearchConnectionManager) {
 
+		UpdateByQueryDocumentRequestExecutor
+			updateByQueryDocumentRequestExecutor =
+				new UpdateByQueryDocumentRequestExecutorImpl();
+
 		com.liferay.portal.search.opensearch2.internal.legacy.query.
 			OpenSearchQueryTranslatorFixture
 				lecacyOpenSearchQueryTranslatorFixture =
 					new com.liferay.portal.search.opensearch2.internal.legacy.
 						query.OpenSearchQueryTranslatorFixture();
 
-		OpenSearchQueryTranslatorFixture openSearchQueryTranslatorFixture =
-			new OpenSearchQueryTranslatorFixture();
-
-		UpdateByQueryDocumentRequestExecutor
-			updateByQueryDocumentRequestExecutor =
-				new UpdateByQueryDocumentRequestExecutorImpl();
-
 		ReflectionTestUtil.setFieldValue(
 			updateByQueryDocumentRequestExecutor, "_legacyQueryTranslator",
 			lecacyOpenSearchQueryTranslatorFixture.
 				getOpenSearchQueryTranslator());
+
 		ReflectionTestUtil.setFieldValue(
 			updateByQueryDocumentRequestExecutor,
 			"_openSearchConnectionManager", openSearchConnectionManager);
+
+		OpenSearchQueryTranslatorFixture openSearchQueryTranslatorFixture =
+			new OpenSearchQueryTranslatorFixture();
+
 		ReflectionTestUtil.setFieldValue(
 			updateByQueryDocumentRequestExecutor, "_queryTranslator",
 			openSearchQueryTranslatorFixture.getOpenSearchQueryTranslator());
+
 		ReflectionTestUtil.setFieldValue(
 			updateByQueryDocumentRequestExecutor, "_scripts",
 			new ScriptsImpl());

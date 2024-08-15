@@ -8,6 +8,7 @@ package com.liferay.source.formatter.check;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.source.formatter.check.util.SourceUtil;
 
 /**
  * @author Hugo Huijser
@@ -19,7 +20,8 @@ public class SQLStylingCheck extends BaseFileCheck {
 		String fileName, String absolutePath, String content) {
 
 		for (String line : StringUtil.splitLines(content)) {
-			String strippedQuotesLine = stripQuotes(line, CharPool.APOSTROPHE);
+			String strippedQuotesLine = SourceUtil.stripQuotes(
+				line, CharPool.APOSTROPHE);
 
 			if (strippedQuotesLine.contains(StringPool.QUOTE)) {
 				String newLine = StringUtil.replace(

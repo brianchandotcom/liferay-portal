@@ -8,6 +8,7 @@ package com.liferay.source.formatter.check;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.source.formatter.check.util.SourceUtil;
 
 /**
  * @author Hugo Huijser
@@ -19,7 +20,7 @@ public abstract class BaseLineBreakCheck extends BaseFileCheck {
 
 		String trimmedLine = StringUtil.trimLeading(line);
 
-		String strippedQuotesLine = stripQuotes(trimmedLine);
+		String strippedQuotesLine = SourceUtil.stripQuotes(trimmedLine);
 
 		int strippedQuotesLineOpenParenthesisCount = StringUtil.count(
 			strippedQuotesLine, CharPool.OPEN_PARENTHESIS);

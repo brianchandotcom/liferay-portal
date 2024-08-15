@@ -41,7 +41,7 @@ public abstract class BaseTagAttributesCheck extends BaseFileCheck {
 				continue;
 			}
 
-			String s = stripQuotes(matcher.group(3));
+			String s = SourceUtil.stripQuotes(matcher.group(3));
 
 			if (s.contains(">")) {
 				continue;

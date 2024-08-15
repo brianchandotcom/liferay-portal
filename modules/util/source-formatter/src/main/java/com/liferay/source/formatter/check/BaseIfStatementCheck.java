@@ -9,6 +9,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.source.formatter.check.util.SourceUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -22,7 +23,7 @@ public abstract class BaseIfStatementCheck extends BaseFileCheck {
 		String ifClause, String fileName, int lineNumber,
 		boolean checkMissingParentheses) {
 
-		ifClause = stripQuotes(ifClause);
+		ifClause = SourceUtil.stripQuotes(ifClause);
 
 		if (ifClause.matches(
 				"[^()]*\\((\\(?\\w+ instanceof \\w+\\)?( \\|\\| )?)+" +

@@ -10,6 +10,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ToolsUtil;
+import com.liferay.source.formatter.check.util.SourceUtil;
 import com.liferay.source.formatter.parser.JavaTerm;
 
 import java.util.regex.Matcher;
@@ -164,7 +165,7 @@ public class JavaBooleanStatementCheck extends BaseJavaTermCheck {
 	}
 
 	private String _stripQuotesAndMethodParameters(String s) {
-		s = stripQuotes(s);
+		s = SourceUtil.stripQuotes(s);
 
 		outerLoop:
 		while (true) {

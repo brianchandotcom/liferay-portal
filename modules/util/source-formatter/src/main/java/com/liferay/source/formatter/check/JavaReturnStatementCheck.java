@@ -8,6 +8,7 @@ package com.liferay.source.formatter.check;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ToolsUtil;
+import com.liferay.source.formatter.check.util.SourceUtil;
 import com.liferay.source.formatter.parser.JavaSignature;
 import com.liferay.source.formatter.parser.JavaTerm;
 
@@ -93,7 +94,8 @@ public class JavaReturnStatementCheck extends BaseJavaTermCheck {
 				continue;
 			}
 
-			String strippedReturnStatement = stripQuotes(returnStatement);
+			String strippedReturnStatement = SourceUtil.stripQuotes(
+				returnStatement);
 
 			if (strippedReturnStatement.contains("|") ||
 				strippedReturnStatement.contains("&") ||

@@ -10,6 +10,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.source.formatter.check.util.SourceUtil;
 
 import java.io.IOException;
 
@@ -67,7 +68,7 @@ public class JSPIndentationCheck extends BaseFileCheck {
 
 		text = _stripJavaSource(text);
 
-		text = stripQuotes(text);
+		text = SourceUtil.stripQuotes(text);
 
 		int level = 0;
 

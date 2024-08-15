@@ -391,17 +391,6 @@ public class DDMIndexerImplTest {
 		return simpleDateFormat.format(new Date());
 	}
 
-	private void _setUpHtmlParser() {
-		Mockito.when(
-			_htmlParser.extractText("<h1>test</h1>")
-		).thenReturn(
-			"test"
-		);
-
-		ReflectionTestUtil.setFieldValue(
-			_ddmIndexer, "_htmlParser", _htmlParser);
-	}
-
 	private void _setUpPortalUtil() {
 		PortalUtil portalUtil = new PortalUtil();
 
@@ -449,9 +438,8 @@ public class DDMIndexerImplTest {
 
 		DDMForm ddmForm = DDMStructureTestUtil.getSampleDDMForm(
 			_FIELD_NAME, "string", indexType, true,
-			DDMFormFieldTypeConstants.TEXT,
-			new Locale[] {LocaleUtil.getSiteDefault()},
-			LocaleUtil.getSiteDefault());
+			DDMFormFieldTypeConstants.TEXT, new Locale[] {LocaleUtil.US},
+			LocaleUtil.US);
 
 		_ddmIndexer.addAttributes(
 			document, _createDDMStructure(ddmForm),
@@ -478,25 +466,28 @@ public class DDMIndexerImplTest {
 	}
 
 	private void _testFormWithRepeatableRichTextField() {
-		Document document = _createDocument();
+		DDMIndexer ddmIndexer = _createDDMIndexer(true);
 
-		_ddmIndexer = _createDDMIndexer(true);
+		HtmlParser htmlParser = Mockito.mock(HtmlParser.class);
+
+		Mockito.when(
+			htmlParser.extractText("<h1>test</h1>")
+		).thenReturn(
+			"test"
+		);
+
+		ReflectionTestUtil.setFieldValue(ddmIndexer, "_htmlParser", htmlParser);
+
+		Document document = _createDocument();
 
 		DDMForm ddmForm = DDMStructureTestUtil.getSampleDDMForm(
 			_FIELD_NAME, "string", "text", true,
-			DDMFormFieldTypeConstants.RICH_TEXT,
-			new Locale[] {LocaleUtil.getSiteDefault()},
-			LocaleUtil.getSiteDefault());
-
-		List<DDMFormField> ddmFormFieldList = ddmForm.getDDMFormFields();
-
-		DDMFormField ddmFormField = ddmFormFieldList.get(0);
+			DDMFormFieldTypeConstants.RICH_TEXT, new Locale[] {LocaleUtil.US},
+			LocaleUtil.US);
 
 		DDMStructure ddmStructure = _createDDMStructure(ddmForm);
 
-		_setUpHtmlParser();
-
-		_ddmIndexer.addAttributes(
+		ddmIndexer.addAttributes(
 			document, ddmStructure,
 			_createDDMFormValues(
 				ddmForm,
@@ -510,7 +501,7 @@ public class DDMIndexerImplTest {
 			document.get(
 				StringBundler.concat(
 					"ddm__text__", ddmStructure.getStructureId(), "__",
-					ddmFormField.getName(), "_en_US")));
+					_FIELD_NAME, "_en_US")));
 	}
 
 	private static final String _FIELD_NAME = RandomTestUtil.randomString();
@@ -521,8 +512,6 @@ public class DDMIndexerImplTest {
 		_ddmFormDeserializerServiceRegistration;
 	private static final MockedStatic<FrameworkUtil>
 		_frameworkUtilMockedStatic = Mockito.mockStatic(FrameworkUtil.class);
-	private static final HtmlParser _htmlParser = Mockito.mock(
-		HtmlParser.class);
 
 	private final DDMFixture _ddmFixture = new DDMFixture();
 	private final DDMFormJSONSerializer _ddmFormJSONSerializer =

@@ -78,7 +78,7 @@ public class ObjectFieldDTOConverter
 					() ->
 						com.liferay.object.field.setting.util.
 							ObjectFieldSettingUtil.getDefaultValueAsString(
-								null, objectField.getObjectFieldId(),
+								null, objectField,
 								_objectFieldSettingLocalService, null));
 				setExternalReferenceCode(objectField::getExternalReferenceCode);
 				setId(objectField::getObjectFieldId);

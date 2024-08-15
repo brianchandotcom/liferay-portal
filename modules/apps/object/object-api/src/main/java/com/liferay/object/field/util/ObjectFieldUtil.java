@@ -252,7 +252,7 @@ public class ObjectFieldUtil {
 				existingValues.put(
 					objectField.getName(),
 					ObjectFieldSettingUtil.getDefaultValueAsString(
-						null, objectField.getObjectFieldId(),
+						null, objectField,
 						ObjectFieldSettingLocalServiceUtil.getService(), null));
 			}
 

@@ -21,15 +21,15 @@ public class AccountEntryAnalyticsDXPEntityEntityModel implements EntityModel {
 
 	public AccountEntryAnalyticsDXPEntityEntityModel() {
 		_entityFieldsMap = EntityModel.toEntityFieldsMap(
-			new StringEntityField(
-				"accountGroupIds", locale -> "accountGroupIds"),
 			new DateTimeEntityField(
 				"modifiedDate",
 				locale -> Field.getSortableFieldName(Field.MODIFIED_DATE),
 				locale -> Field.MODIFIED_DATE),
 			new IntegerEntityField(
 				Field.getSortableFieldName(Field.MODIFIED_DATE),
-				locale -> Field.getSortableFieldName(Field.MODIFIED_DATE)));
+				locale -> Field.getSortableFieldName(Field.MODIFIED_DATE)),
+			new StringEntityField(
+				"accountGroupIds", locale -> "accountGroupIds"));
 	}
 
 	@Override

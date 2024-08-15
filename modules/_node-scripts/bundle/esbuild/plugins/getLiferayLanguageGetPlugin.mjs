@@ -37,7 +37,7 @@ export default function getLiferayLanguageGetPlugin(
 					let contents = await fs.readFile(args.path, 'utf-8');
 
 					for (const match of contents.matchAll(REGEXP)) {
-						let key = match[1].trim();
+						const key = match[1].trim();
 
 						if (
 							(!key.startsWith('"') &&
@@ -55,19 +55,16 @@ export default function getLiferayLanguageGetPlugin(
 							continue;
 						}
 
-						key = key.slice(1, key.length - 1);
+						try {
 
-						if (
-							key.includes('"') ||
-							key.includes("'") ||
-							key.includes('`') ||
-							key.includes('\n')
-						) {
+							// eslint-disable-next-line no-eval
+							eval(`let str = ${key};`);
+						}
+						catch (error) {
 							console.warn(`
-⚠️ Liferay.Language.get key contains invalid characters, it will be ignored and won't show up at runtime: ${key}
+⚠️ Liferay.Language.get key is not a valid JavaScript string constant, it will be ignored and won't show up at runtime: ${key}
      in file: ${args.path}
-
-`);
+						`);
 							continue;
 						}
 

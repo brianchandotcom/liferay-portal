@@ -1,0 +1,80 @@
+{
+	"pageElement": {
+		"id": "fa715f2f-45ed-40eb-daa2-49e36efa925c",
+		"pageElements": [
+			{
+				"definition": {
+					"fragment": {
+						"key": "BASIC_COMPONENT-heading"
+					},
+					"fragmentConfig": {
+						"headingLevel": "h1"
+					},
+					"fragmentFields": [
+						{
+							"id": "element-text",
+							"value": {
+								"fragmentLink": {
+								},
+								"text": {
+									"value_i18n": {
+										"en_US": "Modified text"
+									}
+								}
+							}
+						}
+					],
+					"indexed": true
+				},
+				"id": "107f0d1a-5c6a-189a-4dc7-88d029ac8e3f",
+				"type": "Fragment"
+			},
+			{
+				"definition": {
+					"fragment": {
+						"key": "BASIC_COMPONENT-html"
+					},
+					"fragmentConfig": {
+					},
+					"fragmentFields": [
+						{
+							"id": "element-html",
+							"value": {
+								"html": {
+									"value_i18n": {
+										"en_US": "<div class=\"fragment-static-text\">\n\t<div class=\"static-text\">This is a static text.</div>\n</div>"
+									}
+								}
+							}
+						}
+					],
+					"indexed": true
+				},
+				"id": "14afd36c-1847-ede0-e735-13929ac12410",
+				"type": "Fragment"
+			},
+			{
+				"definition": {
+					"fragmentSettings": {
+						"unallowedFragments": [
+						]
+					}
+				},
+				"id": "ed05b61f-bb22-74b3-fcbb-4ed87121b994",
+				"type": "DropZone"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"colorSchemeName": "01",
+		"themeName": "Classic",
+		"themeSettings": {
+			"lfr-theme:regular:show-footer": "false",
+			"lfr-theme:regular:show-header": "false",
+			"lfr-theme:regular:show-header-search": "false",
+			"lfr-theme:regular:wrap-widget-page-content": "false"
+		}
+	},
+	"version": 1.1
+}

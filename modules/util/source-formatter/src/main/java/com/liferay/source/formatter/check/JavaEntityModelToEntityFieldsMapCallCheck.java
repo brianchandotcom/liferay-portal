@@ -23,9 +23,6 @@ public class JavaEntityModelToEntityFieldsMapCallCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		EntityFieldComparator entityFieldComparator =
-			new EntityFieldComparator();
-
 		int x = -1;
 
 		while (true) {
@@ -47,6 +44,9 @@ public class JavaEntityModelToEntityFieldsMapCallCheck extends BaseFileCheck {
 			}
 
 			for (int i = 1; i < parameterList.size(); i++) {
+				EntityFieldComparator entityFieldComparator =
+					new EntityFieldComparator();
+
 				String parameter = parameterList.get(i);
 				String previousParameter = parameterList.get(i - 1);
 
@@ -104,6 +104,14 @@ public class JavaEntityModelToEntityFieldsMapCallCheck extends BaseFileCheck {
 
 			if (parameterList1.isEmpty() || parameterList2.isEmpty()) {
 				return 0;
+			}
+
+			if (entityFieldClassName1.equals("CollectionEntityField")) {
+				EntityFieldComparator entityFieldComparator =
+					new EntityFieldComparator();
+
+				return entityFieldComparator.compare(
+					parameterList1.get(0), parameterList2.get(0));
 			}
 
 			String entityFieldName1 = StringUtil.unquote(parameterList1.get(0));

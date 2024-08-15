@@ -21,16 +21,16 @@ public class InstanceEntityModel implements EntityModel {
 
 	public InstanceEntityModel() {
 		_entityFieldsMap = EntityModel.toEntityFieldsMap(
-			new StringEntityField(
-				"assetType",
-				locale -> Field.getSortableFieldName(
-					"assetType_".concat(LocaleUtil.toLanguageId(locale)))),
-			new StringEntityField("assigneeName", locale -> "assigneeName"),
 			new DateTimeEntityField(
 				"dateCreated", locale -> "createDate", locale -> "createDate"),
 			new DateTimeEntityField(
 				"dateOverdue", locale -> "overdueDate",
 				locale -> "overdueDate"),
+			new StringEntityField(
+				"assetType",
+				locale -> Field.getSortableFieldName(
+					"assetType_".concat(LocaleUtil.toLanguageId(locale)))),
+			new StringEntityField("assigneeName", locale -> "assigneeName"),
 			new StringEntityField("userName", locale -> "userName"));
 	}
 

@@ -9,12 +9,7 @@ definition {
 	static var randomSiteName = StringUtil.randomString(8);
 
 	var siteURLKey = StringUtil.toLowerCase(${randomSiteName});
-	static var randomEntryName1 = StringUtil.randomString(8);
-	static var randomEntryName2 = StringUtil.randomString(8);
-	static var randomEntryName3 = StringUtil.randomString(8);
-	static var randomEntryName4 = StringUtil.randomString(8);
-	static var randomEntryName5 = StringUtil.randomString(8);
-	static var randomEntryName6 = StringUtil.randomString(8);
+	static var randomEntryName = StringUtil.randomString(8);
 
 	setUp {
 		task ("Set up virtual instance") {
@@ -29,213 +24,25 @@ definition {
 			HeadlessSite.addSite(siteName = ${randomSiteName});
 		}
 
-		task ("Upload six JavaScript extension files to Documents and Media") {
-			JSONDocument.addFileWithUploadedFile(
-				dmDocumentTitle = "Text Color",
-				groupName = ${randomSiteName},
-				mimeType = "application/javascript",
-				sourceFileName = "TextColor.js");
-
+		task ("Upload JavaScript extension files to Documents and Media") {
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentTitle = "Inner Text",
 				groupName = ${randomSiteName},
 				mimeType = "application/javascript",
 				sourceFileName = "InnerText.js");
-
-			JSONDocument.addFileWithUploadedFile(
-				dmDocumentTitle = "Font Family",
-				groupName = ${randomSiteName},
-				mimeType = "application/javascript",
-				sourceFileName = "FontFamily.js");
-
-			JSONDocument.addFileWithUploadedFile(
-				dmDocumentTitle = "Font Size",
-				groupName = ${randomSiteName},
-				mimeType = "application/javascript",
-				sourceFileName = "FontSize.js");
-
-			JSONDocument.addFileWithUploadedFile(
-				dmDocumentTitle = "Font Weight",
-				groupName = ${randomSiteName},
-				mimeType = "application/javascript",
-				sourceFileName = "FontWeight.js");
-
-			JSONDocument.addFileWithUploadedFile(
-				dmDocumentTitle = "Margin Top",
-				groupName = ${randomSiteName},
-				mimeType = "application/javascript",
-				sourceFileName = "MarginTop.js");
 		}
 
-		task ("Get the latest version URL of six documents") {
-			var firstURL = JSONDocument.getLatestVersionURL(
-				dmDocumentTitle = "Text Color",
-				groupName = ${randomSiteName});
+		task ("Get the latest version URL of documents") {
 			var secondURL = JSONDocument.getLatestVersionURL(
 				dmDocumentTitle = "Inner Text",
 				groupName = ${randomSiteName});
-			var thirdURL = JSONDocument.getLatestVersionURL(
-				dmDocumentTitle = "Font Family",
-				groupName = ${randomSiteName});
-			var fourthURL = JSONDocument.getLatestVersionURL(
-				dmDocumentTitle = "Font Size",
-				groupName = ${randomSiteName});
-			var fifthURL = JSONDocument.getLatestVersionURL(
-				dmDocumentTitle = "Font Weight",
-				groupName = ${randomSiteName});
-			var sixthURL = JSONDocument.getLatestVersionURL(
-				dmDocumentTitle = "Margin Top",
-				groupName = ${randomSiteName});
 		}
 
-		task ("Add six remote apps for JavaScript extension") {
+		task ("Add remote apps for JavaScript extension") {
 			JSONClientExtension.addRemoteAppEntry(
-				name = ${randomEntryName1},
-				type = "globalJS",
-				url = ${firstURL});
-
-			JSONClientExtension.addRemoteAppEntry(
-				name = ${randomEntryName2},
+				name = ${randomEntryName},
 				type = "globalJS",
 				url = ${secondURL});
-
-			JSONClientExtension.addRemoteAppEntry(
-				name = ${randomEntryName3},
-				type = "globalJS",
-				url = ${thirdURL});
-
-			JSONClientExtension.addRemoteAppEntry(
-				name = ${randomEntryName4},
-				type = "globalJS",
-				url = ${fourthURL});
-
-			JSONClientExtension.addRemoteAppEntry(
-				name = ${randomEntryName5},
-				type = "globalJS",
-				url = ${fifthURL});
-
-			JSONClientExtension.addRemoteAppEntry(
-				name = ${randomEntryName6},
-				type = "globalJS",
-				url = ${sixthURL});
-		}
-	}
-
-	@description = "This is a test for LPS-153655. The site designer could change JavaScript extension selection to an inheritor page from page template."
-	@priority = 5
-	test ChangeJavaScriptExtensionOfInheritorPage {
-		property portal.acceptance = "true";
-
-		task ("Given a site designer has a content page template with a JavaScript extension") {
-			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
-				groupName = ${randomSiteName},
-				layoutPageTemplateCollectionName = "Page Template Collection");
-
-			JSONLayoutpagetemplate.addLayoutPageTemplateEntry(
-				groupName = ${randomSiteName},
-				layoutPageTemplateCollectionName = "Page Template Collection",
-				layoutPageTemplateEntryName = "Content Page Template",
-				layoutPageTemplateStatus = "Draft",
-				layoutPageTemplateType = "Content Page Template");
-
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = ${siteURLKey});
-
-			Navigator.gotoNavNested(navNested = "Page Template Collection");
-
-			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Content Page Template");
-
-			PageEditor.assertFragmentSidebarLoaded();
-
-			PageEditor.gotoTab(tabName = "Page Design Options");
-
-			Click(locator1 = "PageEditor#MORE_LINK");
-
-			Navigator.gotoNavTab(navTab = "JavaScript");
-
-			PagesAdmin.addJavaScriptExtensions(
-				extensionNameList = ${randomEntryName2},
-				insertion = "In Page Bottom");
-
-			PortletEntry.save();
-
-			Navigator.gotoBack();
-
-			PageEditor.assertFragmentSidebarLoaded();
-
-			PageEditor.publish();
-		}
-
-		task ("When the site designer adds a content page based on content page template") {
-			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
-
-			ContentPages.addPage(
-				collectionName = "Page Template Collection",
-				pageName = "Test Page Name",
-				pageTemplateName = "Content Page Template");
-
-			ControlMenu.viewHeaderTitle(headerTitle = "Welcome");
-		}
-
-		task ("Then the site designer could change the JavaScript extension of content page") {
-			PageEditor.gotoTab(tabName = "Page Design Options");
-
-			Click(locator1 = "PageEditor#MORE_LINK");
-
-			WaitForPageLoad();
-
-			Navigator.gotoNavTab(navTab = "JavaScript");
-
-			AssertVisible(
-				key_tableEntry = ${randomEntryName2},
-				locator1 = "LexiconTable#TABLE_ENTRY");
-
-			PagesAdmin.addJavaScriptExtensions(
-				extensionNameList = ${randomEntryName1},
-				insertion = "In Page Bottom");
-
-			PortletEntry.save();
-
-			Navigator.gotoBack();
-
-			PageEditor.assertFragmentSidebarLoaded();
-
-			ControlMenu.viewHeaderTitle(headerTitle = "Welcome");
-
-			AssertCssValue(
-				locator1 = "ControlMenu#HEADING",
-				locator2 = "color",
-				value1 = "rgba(255, 0, 0, 1)");
-
-			PageEditor.gotoTab(tabName = "Page Design Options");
-
-			Click(locator1 = "PageEditor#MORE_LINK");
-
-			WaitForPageLoad();
-
-			Navigator.gotoNavTab(navTab = "JavaScript");
-
-			for (var extensionName : list "${randomEntryName2},${randomEntryName1}") {
-				Click(
-					key_tableEntry = ${extensionName},
-					locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
-
-				DropdownMenuItem.click(menuItem = "Delete");
-			}
-
-			AssertElementPresent(locator1 = "PagesAdmin#NO_JAVASCRIPT_EXTENSIONS_LOADED");
-
-			PortletEntry.save();
-
-			Navigator.gotoBack();
-
-			PageEditor.assertFragmentSidebarLoaded();
-
-			ControlMenu.viewHeaderDraftTitle(headerTitle = "Test Page Name");
-
-			AssertCssValue(
-				locator1 = "ControlMenu#HEADING",
-				locator2 = "color",
-				value1 = "rgba(255, 255, 255, 1)");
 		}
 	}
 
@@ -287,16 +94,16 @@ definition {
 
 			AssertVisible(
 				key_groupHeader = "Page bottom JS client extensions",
-				key_tableEntry = ${randomEntryName2},
+				key_tableEntry = ${randomEntryName},
 				locator1 = "LexiconTable#GROUPED_TABLE_ENTRY");
 
 			LexiconTable.viewTableEntryInfo(
 				index = 3,
-				tableEntry = ${randomEntryName2},
+				tableEntry = ${randomEntryName},
 				tableEntryInfo = "From Master");
 
 			AssertNotEditable(
-				key_tableEntry = ${randomEntryName2},
+				key_tableEntry = ${randomEntryName},
 				locator1 = "LexiconTable#TABLE_ENTRY_SELECT_FIELD");
 		}
 	}

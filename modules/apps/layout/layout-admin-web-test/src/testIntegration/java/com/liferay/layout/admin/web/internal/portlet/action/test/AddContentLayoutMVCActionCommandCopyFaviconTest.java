@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -93,6 +94,7 @@ public class AddContentLayoutMVCActionCommandCopyFaviconTest {
 	}
 
 	@Test
+	@TestInfo("LPS-153654")
 	public void testAddContentLayoutCopyFavicon() throws Exception {
 		_mvcActionCommand.processAction(
 			_getMockLiferayPortletActionRequest(),

@@ -486,6 +486,10 @@
 			<category name="Styling" />
 			<description name="Finds missing and unnecessary empty lines." />
 		</check>
+		<check name="JavaEntityModelToEntityFieldsMapCallCheck">
+			<category name="Styling" />
+			<description name="Sorts parameters in EntityModel.toEntityFieldsMap call." />
+		</check>
 		<check name="JavaExceptionCheck">
 			<category name="Naming Conventions" />
 			<description name="Checks that variable names of exceptions in `catch` statements follow naming conventions." />

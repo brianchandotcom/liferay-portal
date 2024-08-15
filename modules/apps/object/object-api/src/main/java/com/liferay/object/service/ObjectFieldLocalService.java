@@ -366,6 +366,10 @@ public interface ObjectFieldLocalService
 	public List<ObjectField> getObjectFields(
 		long objectDefinitionId, String dbTableName);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ObjectField> getObjectFieldsByBusinessType(
+		long objectDefinitionId, String businessType);
+
 	/**
 	 * Returns the number of object fields.
 	 *

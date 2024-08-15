@@ -292,6 +292,15 @@ public class ObjectFieldPersistenceTest {
 	}
 
 	@Test
+	public void testCountByODI_BT() throws Exception {
+		_persistence.countByODI_BT(RandomTestUtil.nextLong(), "");
+
+		_persistence.countByODI_BT(0L, "null");
+
+		_persistence.countByODI_BT(0L, (String)null);
+	}
+
+	@Test
 	public void testCountByODI_DTN() throws Exception {
 		_persistence.countByODI_DTN(RandomTestUtil.nextLong(), "");
 

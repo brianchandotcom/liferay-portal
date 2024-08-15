@@ -1272,6 +1272,21 @@ definition {
 				fragmentName = "Heading",
 				id = "element-text",
 				text = "New text");
+
+			Button.clickPublish();
+		}
+
+		task ("Select the variant view") {
+			Click(
+				key_variantName = "Variant name",
+				locator1 = "ABTest#VARIANT_TITLE");
+		}
+
+		task ("Assert the modifications are shown when the variant is selected") {
+			ContentPages.viewFragmentText(
+				fragmentName = "Heading",
+				id = "element-text",
+				text = "New text");
 		}
 	}
 
@@ -1613,6 +1628,10 @@ definition {
 
 			Alert.viewSuccessMessage();
 		}
+
+		task ("Assert the changes have been applied") {
+			LexiconEntry.viewEntryName(rowEntry = "SegmentForABTest 2");
+		}
 	}
 
 	@description = "LPS-99225: Validate if the admin cannot rename a segment in an experience with an A/B test in running status"
@@ -1650,8 +1669,10 @@ definition {
 			Segmentation.fillTitle(titleField = "SegmentForABTest 2");
 
 			Button.clickSave();
+		}
 
-			Alert.viewSuccessMessage();
+		task ("Assert the changes have not applied") {
+			LexiconEntry.viewNoEntry(rowEntry = "SegmentForABTest 2");
 		}
 	}
 
@@ -1694,6 +1715,10 @@ definition {
 			Button.clickSave();
 
 			Alert.viewSuccessMessage();
+		}
+
+		task ("Assert the changes have been applied") {
+			LexiconEntry.viewEntryName(rowEntry = "SegmentForABTest 2");
 		}
 	}
 

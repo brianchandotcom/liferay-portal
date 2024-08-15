@@ -33,7 +33,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -50,21 +49,6 @@ public class SiteNavigationMenuDisplayContextTest {
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
-
-	@BeforeClass
-	public static void setUpClass() {
-		_configurationProviderUtilMockedStatic = Mockito.mockStatic(
-			ConfigurationProviderUtil.class);
-
-		_groupLocalServiceUtilMockedStatic = Mockito.mockStatic(
-			GroupLocalServiceUtil.class);
-
-		_siteNavigationMenuItemLocalServiceUtilMockedStatic =
-			Mockito.mockStatic(SiteNavigationMenuItemLocalServiceUtil.class);
-
-		_siteNavigationMenuLocalServiceUtilMockedStatic = Mockito.mockStatic(
-			SiteNavigationMenuLocalServiceUtil.class);
-	}
 
 	@AfterClass
 	public static void tearDownClass() {
@@ -486,14 +470,18 @@ public class SiteNavigationMenuDisplayContextTest {
 
 	private static final long _GROUP_ID = RandomTestUtil.randomLong();
 
-	private static MockedStatic<ConfigurationProviderUtil>
-		_configurationProviderUtilMockedStatic;
-	private static MockedStatic<GroupLocalServiceUtil>
-		_groupLocalServiceUtilMockedStatic;
-	private static MockedStatic<SiteNavigationMenuItemLocalServiceUtil>
-		_siteNavigationMenuItemLocalServiceUtilMockedStatic;
-	private static MockedStatic<SiteNavigationMenuLocalServiceUtil>
-		_siteNavigationMenuLocalServiceUtilMockedStatic;
+	private static final MockedStatic<ConfigurationProviderUtil>
+		_configurationProviderUtilMockedStatic = Mockito.mockStatic(
+			ConfigurationProviderUtil.class);
+	private static final MockedStatic<GroupLocalServiceUtil>
+		_groupLocalServiceUtilMockedStatic = Mockito.mockStatic(
+			GroupLocalServiceUtil.class);
+	private static final MockedStatic<SiteNavigationMenuItemLocalServiceUtil>
+		_siteNavigationMenuItemLocalServiceUtilMockedStatic =
+			Mockito.mockStatic(SiteNavigationMenuItemLocalServiceUtil.class);
+	private static final MockedStatic<SiteNavigationMenuLocalServiceUtil>
+		_siteNavigationMenuLocalServiceUtilMockedStatic = Mockito.mockStatic(
+			SiteNavigationMenuLocalServiceUtil.class);
 
 	private final Group _group = Mockito.mock(Group.class);
 	private final HttpServletRequest _httpServletRequest = Mockito.mock(

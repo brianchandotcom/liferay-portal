@@ -1188,6 +1188,198 @@ public class ObjectFieldUtil {
 	}
 
 	/**
+	 * Returns all the object fields where objectDefinitionId = &#63; and businessType = &#63;.
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param businessType the business type
+	 * @return the matching object fields
+	 */
+	public static List<ObjectField> findByODI_BT(
+		long objectDefinitionId, String businessType) {
+
+		return getPersistence().findByODI_BT(objectDefinitionId, businessType);
+	}
+
+	/**
+	 * Returns a range of all the object fields where objectDefinitionId = &#63; and businessType = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
+	 * </p>
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param businessType the business type
+	 * @param start the lower bound of the range of object fields
+	 * @param end the upper bound of the range of object fields (not inclusive)
+	 * @return the range of matching object fields
+	 */
+	public static List<ObjectField> findByODI_BT(
+		long objectDefinitionId, String businessType, int start, int end) {
+
+		return getPersistence().findByODI_BT(
+			objectDefinitionId, businessType, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the object fields where objectDefinitionId = &#63; and businessType = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
+	 * </p>
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param businessType the business type
+	 * @param start the lower bound of the range of object fields
+	 * @param end the upper bound of the range of object fields (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching object fields
+	 */
+	public static List<ObjectField> findByODI_BT(
+		long objectDefinitionId, String businessType, int start, int end,
+		OrderByComparator<ObjectField> orderByComparator) {
+
+		return getPersistence().findByODI_BT(
+			objectDefinitionId, businessType, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the object fields where objectDefinitionId = &#63; and businessType = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
+	 * </p>
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param businessType the business type
+	 * @param start the lower bound of the range of object fields
+	 * @param end the upper bound of the range of object fields (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching object fields
+	 */
+	public static List<ObjectField> findByODI_BT(
+		long objectDefinitionId, String businessType, int start, int end,
+		OrderByComparator<ObjectField> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByODI_BT(
+			objectDefinitionId, businessType, start, end, orderByComparator,
+			useFinderCache);
+	}
+
+	/**
+	 * Returns the first object field in the ordered set where objectDefinitionId = &#63; and businessType = &#63;.
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param businessType the business type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching object field
+	 * @throws NoSuchObjectFieldException if a matching object field could not be found
+	 */
+	public static ObjectField findByODI_BT_First(
+			long objectDefinitionId, String businessType,
+			OrderByComparator<ObjectField> orderByComparator)
+		throws com.liferay.object.exception.NoSuchObjectFieldException {
+
+		return getPersistence().findByODI_BT_First(
+			objectDefinitionId, businessType, orderByComparator);
+	}
+
+	/**
+	 * Returns the first object field in the ordered set where objectDefinitionId = &#63; and businessType = &#63;.
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param businessType the business type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching object field, or <code>null</code> if a matching object field could not be found
+	 */
+	public static ObjectField fetchByODI_BT_First(
+		long objectDefinitionId, String businessType,
+		OrderByComparator<ObjectField> orderByComparator) {
+
+		return getPersistence().fetchByODI_BT_First(
+			objectDefinitionId, businessType, orderByComparator);
+	}
+
+	/**
+	 * Returns the last object field in the ordered set where objectDefinitionId = &#63; and businessType = &#63;.
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param businessType the business type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching object field
+	 * @throws NoSuchObjectFieldException if a matching object field could not be found
+	 */
+	public static ObjectField findByODI_BT_Last(
+			long objectDefinitionId, String businessType,
+			OrderByComparator<ObjectField> orderByComparator)
+		throws com.liferay.object.exception.NoSuchObjectFieldException {
+
+		return getPersistence().findByODI_BT_Last(
+			objectDefinitionId, businessType, orderByComparator);
+	}
+
+	/**
+	 * Returns the last object field in the ordered set where objectDefinitionId = &#63; and businessType = &#63;.
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param businessType the business type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching object field, or <code>null</code> if a matching object field could not be found
+	 */
+	public static ObjectField fetchByODI_BT_Last(
+		long objectDefinitionId, String businessType,
+		OrderByComparator<ObjectField> orderByComparator) {
+
+		return getPersistence().fetchByODI_BT_Last(
+			objectDefinitionId, businessType, orderByComparator);
+	}
+
+	/**
+	 * Returns the object fields before and after the current object field in the ordered set where objectDefinitionId = &#63; and businessType = &#63;.
+	 *
+	 * @param objectFieldId the primary key of the current object field
+	 * @param objectDefinitionId the object definition ID
+	 * @param businessType the business type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next object field
+	 * @throws NoSuchObjectFieldException if a object field with the primary key could not be found
+	 */
+	public static ObjectField[] findByODI_BT_PrevAndNext(
+			long objectFieldId, long objectDefinitionId, String businessType,
+			OrderByComparator<ObjectField> orderByComparator)
+		throws com.liferay.object.exception.NoSuchObjectFieldException {
+
+		return getPersistence().findByODI_BT_PrevAndNext(
+			objectFieldId, objectDefinitionId, businessType, orderByComparator);
+	}
+
+	/**
+	 * Removes all the object fields where objectDefinitionId = &#63; and businessType = &#63; from the database.
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param businessType the business type
+	 */
+	public static void removeByODI_BT(
+		long objectDefinitionId, String businessType) {
+
+		getPersistence().removeByODI_BT(objectDefinitionId, businessType);
+	}
+
+	/**
+	 * Returns the number of object fields where objectDefinitionId = &#63; and businessType = &#63;.
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param businessType the business type
+	 * @return the number of matching object fields
+	 */
+	public static int countByODI_BT(
+		long objectDefinitionId, String businessType) {
+
+		return getPersistence().countByODI_BT(objectDefinitionId, businessType);
+	}
+
+	/**
 	 * Returns all the object fields where objectDefinitionId = &#63; and dbTableName = &#63;.
 	 *
 	 * @param objectDefinitionId the object definition ID

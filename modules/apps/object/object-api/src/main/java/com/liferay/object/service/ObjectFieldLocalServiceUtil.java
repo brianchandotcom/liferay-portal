@@ -457,6 +457,13 @@ public class ObjectFieldLocalServiceUtil {
 		return getService().getObjectFields(objectDefinitionId, dbTableName);
 	}
 
+	public static List<ObjectField> getObjectFieldsByBusinessType(
+		long objectDefinitionId, String businessType) {
+
+		return getService().getObjectFieldsByBusinessType(
+			objectDefinitionId, businessType);
+	}
+
 	/**
 	 * Returns the number of object fields.
 	 *

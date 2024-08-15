@@ -15,6 +15,7 @@ import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.friendly.url.exception.DuplicateFriendlyURLEntryException;
 import com.liferay.friendly.url.exception.FriendlyURLCategoryException;
 import com.liferay.friendly.url.exception.FriendlyURLLengthException;
+import com.liferay.friendly.url.exception.FriendlyURLLocalizationUrlTitleException;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
@@ -488,6 +489,16 @@ public class FriendlyURLEntryLocalServiceTest {
 
 		_friendlyURLEntryLocalService.validate(
 			_group.getGroupId(), classNameId, urlTitle);
+	}
+
+	@Test(
+		expected = FriendlyURLLocalizationUrlTitleException.MustNotHaveTrailingSlash.class
+	)
+	public void testValidateUrlTitleWithInvalidSlash() throws Exception {
+		_friendlyURLEntryLocalService.validate(
+			_group.getGroupId(),
+			_classNameLocalService.getClassNameId(User.class),
+			TestPropsValues.getUserId(), "test/");
 	}
 
 	@Test

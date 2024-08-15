@@ -354,12 +354,15 @@ public class JavaSourceUtil extends SourceUtil {
 				continue;
 			}
 
-			String linePart = StringUtil.removeSubstring(
-				parameters.substring(0, x), "->");
+			String linePart = StringUtil.replace(
+				parameters.substring(0, x), "->", _LAMBDA_SYMBOL_PLACEHOLDER);
 
 			if ((ToolsUtil.getLevel(linePart, "(", ")") == 0) &&
 				(ToolsUtil.getLevel(linePart, "<", ">") == 0) &&
 				(ToolsUtil.getLevel(linePart, "{", "}") == 0)) {
+
+				linePart = StringUtil.replace(
+					linePart, _LAMBDA_SYMBOL_PLACEHOLDER, "->");
 
 				parametersList.add(StringUtil.trim(linePart));
 
@@ -474,6 +477,9 @@ public class JavaSourceUtil extends SourceUtil {
 		"UnsupportedOperationException", "VerifyError", "VirtualMachineError",
 		"Void"
 	};
+
+	private static final String _LAMBDA_SYMBOL_PLACEHOLDER =
+		"LAMBDA_SYMBOL_PLACEHOLDER";
 
 	private static final Log _log = LogFactoryUtil.getLog(JavaSourceUtil.class);
 

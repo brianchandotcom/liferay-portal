@@ -311,6 +311,10 @@
 			<finder-column name="listTypeDefinitionId" />
 			<finder-column name="state" />
 		</finder>
+		<finder name="ODI_BT" return-type="Collection">
+			<finder-column name="objectDefinitionId" />
+			<finder-column name="businessType" />
+		</finder>
 		<finder name="ODI_DTN" return-type="Collection">
 			<finder-column name="objectDefinitionId" />
 			<finder-column name="dbTableName" />

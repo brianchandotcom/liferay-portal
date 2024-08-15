@@ -169,16 +169,17 @@ public class SiteNavigationMenuDisplayContextTest {
 	public void testGetDisplayStyleGroupIdFeatureFlagDisabled()
 		throws ConfigurationException {
 
-		_setUpGroupLocalServiceUtil(1234L);
+		_setUpGroupLocalServiceUtil(_GROUP_ID);
 
 		SiteNavigationMenuDisplayContext siteNavigationMenuDisplayContext =
 			new SiteNavigationMenuDisplayContext(_httpServletRequest);
 
 		_setUpSiteNavigationMenuPortletInstanceConfigurationDisplayStyleGroup(
-			5678L);
+			_DISPLAY_STYLE_GROUP_ID);
 
 		Assert.assertEquals(
-			5678L, siteNavigationMenuDisplayContext.getDisplayStyleGroupId());
+			_DISPLAY_STYLE_GROUP_ID,
+			siteNavigationMenuDisplayContext.getDisplayStyleGroupId());
 	}
 
 	@FeatureFlags("LPD-23048")
@@ -186,32 +187,34 @@ public class SiteNavigationMenuDisplayContextTest {
 	public void testGetDisplayStyleGroupIdFeatureFlagEnabled()
 		throws ConfigurationException {
 
-		_setUpGroupLocalServiceUtil(1234L);
+		_setUpGroupLocalServiceUtil(_GROUP_ID);
 
 		SiteNavigationMenuDisplayContext siteNavigationMenuDisplayContext =
 			new SiteNavigationMenuDisplayContext(_httpServletRequest);
 
 		_setUpSiteNavigationMenuPortletInstanceConfigurationDisplayStyleGroup(
-			5678L);
+			_DISPLAY_STYLE_GROUP_ID);
 
 		Assert.assertEquals(
-			1234L, siteNavigationMenuDisplayContext.getDisplayStyleGroupId());
+			_GROUP_ID,
+			siteNavigationMenuDisplayContext.getDisplayStyleGroupId());
 	}
 
 	@Test
 	public void testGetRootMenuItemIdFeatureFlagDisabled()
 		throws ConfigurationException {
 
-		_setUpSiteNavigationMenuItemLocalServiceUtil(1234L);
+		_setUpSiteNavigationMenuItemLocalServiceUtil(_GROUP_ID);
 
 		SiteNavigationMenuDisplayContext siteNavigationMenuDisplayContext =
 			new SiteNavigationMenuDisplayContext(_httpServletRequest);
 
 		_setUpSiteNavigationMenuPortletInstanceConfigurationRootMenuItem(
-			"5678");
+			String.valueOf(_DISPLAY_STYLE_GROUP_ID));
 
 		Assert.assertEquals(
-			"5678", siteNavigationMenuDisplayContext.getRootMenuItemId());
+			String.valueOf(_DISPLAY_STYLE_GROUP_ID),
+			siteNavigationMenuDisplayContext.getRootMenuItemId());
 	}
 
 	@FeatureFlags("LPD-23048")
@@ -219,32 +222,34 @@ public class SiteNavigationMenuDisplayContextTest {
 	public void testGetRootMenuItemIdFeatureFlagEnabled()
 		throws ConfigurationException {
 
-		_setUpSiteNavigationMenuItemLocalServiceUtil(1234L);
+		_setUpSiteNavigationMenuItemLocalServiceUtil(_GROUP_ID);
 
 		SiteNavigationMenuDisplayContext siteNavigationMenuDisplayContext =
 			new SiteNavigationMenuDisplayContext(_httpServletRequest);
 
 		_setUpSiteNavigationMenuPortletInstanceConfigurationRootMenuItem(
-			"5678");
+			String.valueOf(_DISPLAY_STYLE_GROUP_ID));
 
 		Assert.assertEquals(
-			"1234", siteNavigationMenuDisplayContext.getRootMenuItemId());
+			String.valueOf(_GROUP_ID),
+			siteNavigationMenuDisplayContext.getRootMenuItemId());
 	}
 
 	@Test
 	public void testGetSiteNavigationMenuIdFeatureFlagDisabled()
 		throws ConfigurationException {
 
-		_setUpSiteNavigationMenuLocalServiceUtil(1234L);
+		_setUpSiteNavigationMenuLocalServiceUtil(_GROUP_ID);
 
 		SiteNavigationMenuDisplayContext siteNavigationMenuDisplayContext =
 			new SiteNavigationMenuDisplayContext(_httpServletRequest);
 
 		_setUpSiteNavigationMenuPortletInstanceConfigurationSiteNavigationMenu(
-			5678L);
+			_DISPLAY_STYLE_GROUP_ID);
 
 		Assert.assertEquals(
-			5678L, siteNavigationMenuDisplayContext.getSiteNavigationMenuId());
+			_DISPLAY_STYLE_GROUP_ID,
+			siteNavigationMenuDisplayContext.getSiteNavigationMenuId());
 	}
 
 	@FeatureFlags("LPD-23048")
@@ -252,16 +257,17 @@ public class SiteNavigationMenuDisplayContextTest {
 	public void testGetSiteNavigationMenuIdFeatureFlagEnabled()
 		throws ConfigurationException {
 
-		_setUpSiteNavigationMenuLocalServiceUtil(1234L);
+		_setUpSiteNavigationMenuLocalServiceUtil(_GROUP_ID);
 
 		SiteNavigationMenuDisplayContext siteNavigationMenuDisplayContext =
 			new SiteNavigationMenuDisplayContext(_httpServletRequest);
 
 		_setUpSiteNavigationMenuPortletInstanceConfigurationSiteNavigationMenu(
-			5678L);
+			_DISPLAY_STYLE_GROUP_ID);
 
 		Assert.assertEquals(
-			1234L, siteNavigationMenuDisplayContext.getSiteNavigationMenuId());
+			_GROUP_ID,
+			siteNavigationMenuDisplayContext.getSiteNavigationMenuId());
 	}
 
 	private void _setUpConfigurationProviderUtil() {
@@ -474,6 +480,11 @@ public class SiteNavigationMenuDisplayContextTest {
 			_layout
 		);
 	}
+
+	private static final long _DISPLAY_STYLE_GROUP_ID =
+		RandomTestUtil.randomLong();
+
+	private static final long _GROUP_ID = RandomTestUtil.randomLong();
 
 	private static MockedStatic<ConfigurationProviderUtil>
 		_configurationProviderUtilMockedStatic;

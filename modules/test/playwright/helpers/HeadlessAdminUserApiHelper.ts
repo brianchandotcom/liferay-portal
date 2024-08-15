@@ -160,6 +160,15 @@ export class HeadlessAdminUserApiHelper {
 		);
 	}
 
+	async deleteUserFromAccountByEmailAddress(
+		accountId: number,
+		emailAddress: string
+	) {
+		return this.apiHelpers.delete(
+			`${this.apiHelpers.baseUrl}${this.basePath}/accounts/${accountId}/user-accounts/by-email-address/${emailAddress}`
+		);
+	}
+
 	async deleteUserGroup(userGroupId: number) {
 		return this.apiHelpers.delete(
 			`${this.apiHelpers.baseUrl}${this.basePath}/user-groups/${userGroupId}`
@@ -181,6 +190,12 @@ export class HeadlessAdminUserApiHelper {
 	) {
 		return this.apiHelpers.delete(
 			`${this.apiHelpers.baseUrl}${this.basePath}/roles/${roleId}/association/user-account/${userAccountId}`
+		);
+	}
+
+	async getAccountByExternalReferenceCode(externalReferenceCode: string) {
+		return this.apiHelpers.get(
+			`${this.apiHelpers.baseUrl}${this.basePath}/accounts/by-external-reference-code/${externalReferenceCode}`
 		);
 	}
 

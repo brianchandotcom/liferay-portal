@@ -39,9 +39,9 @@ definition {
 	}
 
 	@description = "LPS-101341: Validate if the user has one experience with the AB test in a Running status, the experiences dropdown menu shows the AB test icon and one help hint"
-	@priority = 5
+	@priority = 4
 	test ABTestIconInExperience {
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 
 		task ("Create an experience and add on content page") {
 			ContentPages.gotoPageEditor();
@@ -508,7 +508,6 @@ definition {
 	}
 
 	@description = "LPS-97195: Validate if the variant for A/B Test that was added on Liferay portal is visible in the Analytics Cloud"
-	@ignore = "true"
 	@priority = 5
 	test CheckVariantAddedInAC {
 		task ("Create AB test and create variant") {
@@ -601,7 +600,6 @@ definition {
 	}
 
 	@description = "LPS-137274 Validate if the user can create an A/B Test by Bounce rate"
-	@ignore = "true"
 	@priority = 5
 	@uitest
 	test CreateABTestByBounceRate {
@@ -621,7 +619,6 @@ definition {
 	}
 
 	@description = "LPS-119475 Validate if the user can create an A/B Test by Click"
-	@ignore = "true"
 	@priority = 5
 	@uitest
 	test CreateABTestByClick {
@@ -770,7 +767,7 @@ definition {
 	}
 
 	@description = "LPS-104203: Validate if in the AB Test, when the user delete the clickable element that was set, the warning alert appears"
-	@priority = 4
+	@priority = 3
 	test DeleteClickableElementWarning {
 		task ("Edit the Content page to add a button fragment") {
 			ContentPages.gotoPageEditor();
@@ -930,8 +927,6 @@ definition {
 	@description = "LPS-101341: Validate if an alert appears when the user tries to delete an experience with an AB Test in a draft mode, the user should be able to cancel the deletion of the experience"
 	@priority = 3
 	test DeletExperienceWithDraftABTestCancel {
-		property portal.upstream = "quarantine";
-
 		task ("Create an experience and add on content page") {
 			ContentPages.gotoPageEditor();
 
@@ -1051,10 +1046,9 @@ definition {
 	}
 
 	@description = "LPS-101341: Validate if when the user will edit some Experience with an AB Test in a Terminated status, the system not will show any information about AB Test"
-	@ignore = "true"
 	@priority = 4
 	test EditExperienceAfterTerminatedABTest {
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 
 		task ("Create an experience and add on content page") {
 			ContentPages.gotoPageEditor();
@@ -1114,7 +1108,7 @@ definition {
 	@description = "LPS-103334: Validate if the AB Test is in the status draft, the experience about the AB Test is active is in Edition Mode"
 	@priority = 5
 	test EditExperienceWithDraftABTest {
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 
 		task ("Create an experience and add on content page") {
 			ContentPages.gotoPageEditor();
@@ -1465,7 +1459,7 @@ definition {
 	@description = "LPS-103334: Validate if the AB Test is in the status running, the experience about the AB Test is active is in Non-Edition Mode"
 	@priority = 5
 	test NotPossibleToEditExperienceWithRunningABTest {
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 
 		task ("Create an experience and add on content page") {
 			ContentPages.gotoPageEditor();
@@ -1555,7 +1549,7 @@ definition {
 	@description = "LPS-99225: Validate if the admin cannot reassign a segment in an experience with an A/B test in running status"
 	@priority = 4
 	test ReassignSegmentABTestRunning {
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 
 		task ("Create a segment and an Experience using the segment created") {
 			ContentPages.gotoPageEditor();
@@ -1636,7 +1630,9 @@ definition {
 
 	@description = "LPS-99225: Validate if the admin cannot rename a segment in an experience with an A/B test in running status"
 	@priority = 3
-	test RenameSegmentABTestRunning {
+	test CanNotRenameSegmentABTestRunning {
+		property portal.upstream = "quarantine";
+
 		task ("Create a segment and an Experience using the segment created") {
 			ContentPages.gotoPageEditor();
 
@@ -1809,7 +1805,7 @@ definition {
 	@description = "LPS-97882: Validate if each A/B Test is related for one experience, if the user changes between the site pages, the context about the A/B Test changes too"
 	@priority = 3
 	test SwitchSitePage {
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 
 		task ("Create content page") {
 			JSONLayout.addPublicLayout(

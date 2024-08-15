@@ -3699,6 +3699,13 @@ public class DataFactory {
 		return ddmTemplateVersionModelImpl;
 	}
 
+	public UserModel newDefaultServiceAccountUserModel() {
+		return newUserModel(
+			_counter.get(), "default-service-account",
+			"default-service-account", "default-service-account",
+			UserConstants.TYPE_DEFAULT_SERVICE_ACCOUNT);
+	}
+
 	public DLFileEntryMetadataModel newDLFileEntryMetadataModel(
 		long ddmStorageLinkId, long ddmStructureId,
 		DLFileVersionModel dlFileVersionModel) {

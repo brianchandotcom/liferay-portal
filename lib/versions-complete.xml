@@ -5,26 +5,13 @@
 	<version>
 		<libraries>
 			<library>
-				<file-name>com.liferay.adaptive.media.image.impl.jar!metadata-extractor.jar</file-name>
-				<version>2.19.0</version>
-				<project-name>metadata-extractor</project-name>
-				<project-url>https://drewnoakes.com/code/exif/</project-url>
+				<file-name>com.liferay.adaptive.media.image.impl.jar!com.drew.metadata.jar</file-name>
+				<version>2.19.0.LIFERAY-PATCHED-1</version>
+				<project-name>com.drew.metadata</project-name>
 				<licenses>
 					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.batch.engine.service.jar!commons-collections4.jar</file-name>
-				<version>4.4</version>
-				<project-name>Apache Commons Collections</project-name>
-				<project-url>https://commons.apache.org/proper/commons-collections/</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License, Version 2.0</license-name>
-						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+						<license-name>LGPL 2.1</license-name>
+						<license-url>http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -3712,18 +3699,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.portal.template.velocity.jar!commons-collections.jar</file-name>
-				<version>3.2.2</version>
-				<project-name>Apache Commons Collections</project-name>
-				<project-url>http://commons.apache.org/collections/</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>com.liferay.portal.template.velocity.jar!org.apache.velocity.jar</file-name>
 				<version>1.6.4.LIFERAY-PATCHED-3</version>
 				<project-name>org.apache.velocity</project-name>
@@ -3766,6 +3741,17 @@
 					<license>
 						<license-name>Apache License, Version 2.0</license-name>
 						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.tika.jar!com.drew.metadata.jar</file-name>
+				<version>2.19.0.LIFERAY-PATCHED-1</version>
+				<project-name>com.drew.metadata</project-name>
+				<licenses>
+					<license>
+						<license-name>LGPL 2.1</license-name>
+						<license-url>http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -3850,18 +3836,6 @@
 					<license>
 						<license-name>Mozilla Public License 1.1 (MPL 1.1)</license-name>
 						<license-url>http://www.mozilla.org/MPL/MPL-1.1.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.portal.tika.jar!metadata-extractor.jar</file-name>
-				<version>2.19.0</version>
-				<project-name>metadata-extractor</project-name>
-				<project-url>https://drewnoakes.com/code/exif/</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -4621,6 +4595,18 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>com.liferay.shared.dependencies.apache.commons.jar!commons-collections.jar</file-name>
+				<version>3.2.2</version>
+				<project-name>Apache Commons Collections</project-name>
+				<project-url>http://commons.apache.org/collections/</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>com.liferay.shared.dependencies.apache.commons.jar!commons-collections4.jar</file-name>
 				<version>4.4</version>
 				<project-name>Apache Commons Collections</project-name>
@@ -5243,18 +5229,6 @@
 				<version>2.0.24</version>
 				<project-name>Apache PDFBox</project-name>
 				<project-url>http://pdfbox.apache.org</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License, Version 2.0</license-name>
-						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.shared.dependencies.poi.jar!commons-collections4.jar</file-name>
-				<version>4.4</version>
-				<project-name>Apache Commons Collections</project-name>
-				<project-url>https://commons.apache.org/proper/commons-collections/</project-url>
 				<licenses>
 					<license>
 						<license-name>Apache License, Version 2.0</license-name>

@@ -10,6 +10,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.search.internal.buffer.BufferOverflowThreadLocal;
 import com.liferay.portal.search.internal.buffer.IndexerRequest;
@@ -76,7 +77,9 @@ public class IndexerRequestBufferExecutorUtil {
 			indexerRequestBuffer.remove(indexerRequest);
 		}
 
-		if (!BufferOverflowThreadLocal.isOverflowMode()) {
+		if (!BufferOverflowThreadLocal.isOverflowMode() &&
+			!SearchContext.isBatchMode()) {
+
 			IndexWriterHelper indexWriterHelper =
 				_indexWriterHelperSnapshot.get();
 

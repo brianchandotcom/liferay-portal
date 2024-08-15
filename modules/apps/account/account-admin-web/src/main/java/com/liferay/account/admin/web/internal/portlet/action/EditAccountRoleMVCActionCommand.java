@@ -98,7 +98,7 @@ public class EditAccountRoleMVCActionCommand extends BaseMVCActionCommand {
 		_roleLocalService.validateName(name);
 
 		return _accountRoleService.addAccountRole(
-			accountEntryId, name, titleMap, descriptionMap);
+			null, accountEntryId, name, titleMap, descriptionMap);
 	}
 
 	private void _updateAccountRole(ActionRequest actionRequest)

@@ -132,7 +132,8 @@ public class CommerceAccountRoleUpgradeProcess extends UpgradeProcess {
 		Role role = _roleLocalService.getRole(roleId);
 
 		AccountRole accountRole = _accountRoleLocalService.addAccountRole(
-			role.getUserId(), AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT,
+			null, role.getUserId(),
+			AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT,
 			role.getName() + "_Account", role.getTitleMap(),
 			role.getDescriptionMap());
 

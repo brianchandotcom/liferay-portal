@@ -75,7 +75,8 @@ public class AccountRoleServiceTest {
 			_user.getUserId());
 
 		_accountRoleService.addAccountRole(
-			_accountEntry.getAccountEntryId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), _accountEntry.getAccountEntryId(),
+			RandomTestUtil.randomString(),
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap());
 	}
@@ -83,7 +84,8 @@ public class AccountRoleServiceTest {
 	@Test(expected = PrincipalException.class)
 	public void testAddAccountRoleWithoutPermission() throws Exception {
 		_accountRoleService.addAccountRole(
-			_accountEntry.getAccountEntryId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), _accountEntry.getAccountEntryId(),
+			RandomTestUtil.randomString(),
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap());
 	}
@@ -214,8 +216,8 @@ public class AccountRoleServiceTest {
 
 	private AccountRole _addAccountRole(long accountEntryId) throws Exception {
 		return _accountRoleLocalService.addAccountRole(
-			TestPropsValues.getUserId(), accountEntryId,
-			RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			accountEntryId, RandomTestUtil.randomString(),
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap());
 	}

@@ -79,8 +79,8 @@ public class AccountGroupSearchPermissionFilterContributorTest {
 		_assertSearch(user);
 
 		AccountRole accountRole = _accountRoleLocalService.addAccountRole(
-			TestPropsValues.getUserId(), accountEntry.getAccountEntryId(),
-			RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			accountEntry.getAccountEntryId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap());
 

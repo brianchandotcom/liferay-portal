@@ -105,7 +105,8 @@ public class AccountRoleAssigneesRoleLocalServiceWrapperTest {
 		throws Exception {
 
 		return _accountRoleLocalService.addAccountRole(
-			TestPropsValues.getUserId(), accountEntryId, name, null, null);
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			accountEntryId, name, null, null);
 	}
 
 	@Inject

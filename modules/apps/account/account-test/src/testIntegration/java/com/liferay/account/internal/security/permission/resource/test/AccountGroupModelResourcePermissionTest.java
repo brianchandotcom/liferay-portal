@@ -71,8 +71,8 @@ public class AccountGroupModelResourcePermissionTest {
 		_assertDoesNotContain(user, accountGroup2, ActionKeys.VIEW);
 
 		AccountRole accountRole = _accountRoleLocalService.addAccountRole(
-			TestPropsValues.getUserId(), accountEntry.getAccountEntryId(),
-			RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			accountEntry.getAccountEntryId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap());
 

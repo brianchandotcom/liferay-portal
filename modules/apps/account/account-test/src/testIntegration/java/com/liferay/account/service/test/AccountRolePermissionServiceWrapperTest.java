@@ -45,8 +45,8 @@ public class AccountRolePermissionServiceWrapperTest {
 		_accountEntry = AccountEntryTestUtil.addAccountEntry();
 
 		_accountRole = _accountRoleLocalService.addAccountRole(
-			TestPropsValues.getUserId(), _accountEntry.getAccountEntryId(),
-			RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			_accountEntry.getAccountEntryId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap());
 

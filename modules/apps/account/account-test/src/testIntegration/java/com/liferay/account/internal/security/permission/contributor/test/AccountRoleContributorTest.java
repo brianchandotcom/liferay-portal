@@ -93,8 +93,9 @@ public class AccountRoleContributorTest {
 			AccountEntryArgs.withUsers(user));
 
 		AccountRole accountRole = _accountRoleLocalService.addAccountRole(
-			TestPropsValues.getUserId(), accountEntry1.getAccountEntryId(),
-			RandomTestUtil.randomString(), null, null);
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			accountEntry1.getAccountEntryId(), RandomTestUtil.randomString(),
+			null, null);
 
 		Group group = GroupTestUtil.addGroup();
 

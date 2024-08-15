@@ -54,8 +54,9 @@ public class AccountUserRetrieverWhenSearchingAccountRoleUsersTest {
 		_accountEntry2 = AccountEntryTestUtil.addAccountEntry();
 
 		_accountRole = _accountRoleLocalService.addAccountRole(
-			TestPropsValues.getUserId(), _accountEntry1.getAccountEntryId(),
-			RandomTestUtil.randomString(), null, null);
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			_accountEntry1.getAccountEntryId(), RandomTestUtil.randomString(),
+			null, null);
 	}
 
 	@Test

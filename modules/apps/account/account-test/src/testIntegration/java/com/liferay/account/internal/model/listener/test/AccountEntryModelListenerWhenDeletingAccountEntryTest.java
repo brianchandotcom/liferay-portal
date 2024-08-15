@@ -125,8 +125,9 @@ public class AccountEntryModelListenerWhenDeletingAccountEntryTest {
 	@Test
 	public void testAccountRoleDeleted() throws Exception {
 		AccountRole accountRole = _accountRoleLocalService.addAccountRole(
-			TestPropsValues.getUserId(), _accountEntry.getAccountEntryId(),
-			RandomTestUtil.randomString(), null, null);
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			_accountEntry.getAccountEntryId(), RandomTestUtil.randomString(),
+			null, null);
 
 		Assert.assertEquals(
 			_accountEntry.getAccountEntryId(), accountRole.getAccountEntryId());

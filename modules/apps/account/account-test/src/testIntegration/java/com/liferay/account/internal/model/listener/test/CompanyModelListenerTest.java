@@ -51,8 +51,9 @@ public class CompanyModelListenerTest {
 			AccountEntryArgs.withOwner(guestUser));
 
 		AccountRole accountRole = _accountRoleLocalService.addAccountRole(
-			guestUser.getUserId(), accountEntry.getAccountEntryId(),
-			RandomTestUtil.randomString(), null, null);
+			RandomTestUtil.randomString(), guestUser.getUserId(),
+			accountEntry.getAccountEntryId(), RandomTestUtil.randomString(),
+			null, null);
 
 		_companyLocalService.deleteCompany(company);
 

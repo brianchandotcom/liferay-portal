@@ -316,8 +316,9 @@ public class AccountEntryUserRelLocalServiceTest {
 		throws Exception {
 
 		AccountRole accountRole = _accountRoleLocalService.addAccountRole(
-			TestPropsValues.getUserId(), _accountEntry.getAccountEntryId(),
-			RandomTestUtil.randomString(), null, null);
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			_accountEntry.getAccountEntryId(), RandomTestUtil.randomString(),
+			null, null);
 
 		User user = UserTestUtil.addUser(
 			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(), null,
@@ -346,8 +347,9 @@ public class AccountEntryUserRelLocalServiceTest {
 		throws Exception {
 
 		AccountRole accountRole = _accountRoleLocalService.addAccountRole(
-			TestPropsValues.getUserId(), _accountEntry.getAccountEntryId(),
-			RandomTestUtil.randomString(), null, null);
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			_accountEntry.getAccountEntryId(), RandomTestUtil.randomString(),
+			null, null);
 
 		Assert.assertNull(
 			_userLocalService.fetchUserByEmailAddress(

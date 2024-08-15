@@ -3639,7 +3639,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				if (jsonObject.getInt("type") == RoleConstants.TYPE_ACCOUNT) {
 					com.liferay.account.model.AccountRole accountRole =
 						_accountRoleLocalService.addAccountRole(
-							serviceContext.getUserId(),
+							null, serviceContext.getUserId(),
 							AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
 							jsonObject.getString("name"),
 							SiteInitializerUtil.toMap(

@@ -203,7 +203,7 @@ public class AccountRoleResourceImpl extends BaseAccountRoleResourceImpl {
 
 		return _toAccountRole(
 			_accountRoleLocalService.addAccountRole(
-				contextUser.getUserId(), accountId, accountRole.getName(),
+				null, contextUser.getUserId(), accountId, accountRole.getName(),
 				Collections.singletonMap(
 					contextAcceptLanguage.getPreferredLocale(),
 					accountRole.getDisplayName()),

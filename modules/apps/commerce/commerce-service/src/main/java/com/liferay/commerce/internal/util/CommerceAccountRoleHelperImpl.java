@@ -100,7 +100,7 @@ public class CommerceAccountRoleHelperImpl
 
 		if (role == null) {
 			AccountRole accountRole = _accountRoleLocalService.addAccountRole(
-				serviceContext.getUserId(),
+				null, serviceContext.getUserId(),
 				AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT, name,
 				Collections.singletonMap(serviceContext.getLocale(), name),
 				Collections.emptyMap());

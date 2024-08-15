@@ -78,8 +78,9 @@ public class AccountEntryUserRelServiceTest {
 		throws Exception {
 
 		AccountRole accountRole = _accountRoleLocalService.addAccountRole(
-			TestPropsValues.getUserId(), _accountEntry.getAccountEntryId(),
-			RandomTestUtil.randomString(), null, null);
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			_accountEntry.getAccountEntryId(), RandomTestUtil.randomString(),
+			null, null);
 
 		_accountEntryUserRelLocalService.addAccountEntryUserRel(
 			_accountEntry.getAccountEntryId(), _user.getUserId());

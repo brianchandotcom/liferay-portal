@@ -58,8 +58,9 @@ public class AccountRoleModelResourcePermissionTest {
 		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry();
 
 		AccountRole ownedAccountRole = _accountRoleLocalService.addAccountRole(
-			TestPropsValues.getUserId(), accountEntry.getAccountEntryId(),
-			RandomTestUtil.randomString(), null, null);
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			accountEntry.getAccountEntryId(), RandomTestUtil.randomString(),
+			null, null);
 
 		_testPermissions(Assert::assertTrue, accountEntry, ownedAccountRole);
 
@@ -74,7 +75,7 @@ public class AccountRoleModelResourcePermissionTest {
 		}
 
 		AccountRole sharedAccountRole = _accountRoleLocalService.addAccountRole(
-			TestPropsValues.getUserId(),
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 			AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
 			RandomTestUtil.randomString(), null, null);
 
@@ -94,13 +95,15 @@ public class AccountRoleModelResourcePermissionTest {
 		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry();
 
 		AccountRole accountRole = _accountRoleLocalService.addAccountRole(
-			TestPropsValues.getUserId(), accountEntry.getAccountEntryId(),
-			RandomTestUtil.randomString(), null, null);
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			accountEntry.getAccountEntryId(), RandomTestUtil.randomString(),
+			null, null);
 
 		AccountRole permissionAccountRole =
 			_accountRoleLocalService.addAccountRole(
-				TestPropsValues.getUserId(), accountEntry.getAccountEntryId(),
-				RandomTestUtil.randomString(), null, null);
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				accountEntry.getAccountEntryId(), RandomTestUtil.randomString(),
+				null, null);
 
 		RoleTestUtil.addResourcePermission(
 			permissionAccountRole.getRole(), AccountEntry.class.getName(),
@@ -127,13 +130,15 @@ public class AccountRoleModelResourcePermissionTest {
 		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry();
 
 		AccountRole accountRole = _accountRoleLocalService.addAccountRole(
-			TestPropsValues.getUserId(), accountEntry.getAccountEntryId(),
-			RandomTestUtil.randomString(), null, null);
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			accountEntry.getAccountEntryId(), RandomTestUtil.randomString(),
+			null, null);
 
 		AccountRole permissionAccountRole =
 			_accountRoleLocalService.addAccountRole(
-				TestPropsValues.getUserId(), accountEntry.getAccountEntryId(),
-				RandomTestUtil.randomString(), null, null);
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				accountEntry.getAccountEntryId(), RandomTestUtil.randomString(),
+				null, null);
 
 		RoleTestUtil.addResourcePermission(
 			permissionAccountRole.getRole(), AccountEntry.class.getName(),
@@ -191,8 +196,9 @@ public class AccountRoleModelResourcePermissionTest {
 
 		AccountRole permissionAccountRole =
 			_accountRoleLocalService.addAccountRole(
-				TestPropsValues.getUserId(), accountEntry.getAccountEntryId(),
-				RandomTestUtil.randomString(), null, null);
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				accountEntry.getAccountEntryId(), RandomTestUtil.randomString(),
+				null, null);
 
 		_addResourcePermission(
 			permissionAccountRole.getRole(), AccountRole.class.getName(),

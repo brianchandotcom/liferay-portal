@@ -200,8 +200,8 @@ public class GetEmailNotificationRolesMVCResourceCommandTest {
 			ServiceContextTestUtil.getServiceContext());
 
 		AccountRole accountRole = _accountRoleLocalService.addAccountRole(
-			user.getUserId(), accountEntry.getAccountEntryId(),
-			RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), user.getUserId(),
+			accountEntry.getAccountEntryId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap());
 

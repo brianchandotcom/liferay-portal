@@ -373,7 +373,7 @@ public class AccountRoleLocalServiceTest {
 		String keyword = RandomTestUtil.randomString();
 
 		AccountRole accountRole = _accountRoleLocalService.addAccountRole(
-			TestPropsValues.getUserId(),
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 			AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
 			RandomTestUtil.randomString(), null,
 			Collections.singletonMap(LocaleUtil.getDefault(), keyword));
@@ -396,7 +396,7 @@ public class AccountRoleLocalServiceTest {
 		String keyword = RandomTestUtil.randomString();
 
 		AccountRole accountRole = _accountRoleLocalService.addAccountRole(
-			TestPropsValues.getUserId(),
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 			AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
 			RandomTestUtil.randomString(),
 			Collections.singletonMap(LocaleUtil.getDefault(), keyword), null);
@@ -421,14 +421,14 @@ public class AccountRoleLocalServiceTest {
 		String keyword = RandomTestUtil.randomString();
 
 		AccountRole accountRoleA = _accountRoleLocalService.addAccountRole(
-			TestPropsValues.getUserId(),
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 			AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT, keyword, null, null);
 
 		User adminUserB = UserTestUtil.getAdminUser(_company.getCompanyId());
 
 		AccountRole accountRoleB = _accountRoleLocalService.addAccountRole(
-			adminUserB.getUserId(), AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
-			keyword, null, null);
+			RandomTestUtil.randomString(), adminUserB.getUserId(),
+			AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT, keyword, null, null);
 
 		for (AccountRole accountRole :
 				new AccountRole[] {accountRoleA, accountRoleB}) {
@@ -491,11 +491,13 @@ public class AccountRoleLocalServiceTest {
 	@Test
 	public void testSearchAccountRolesWithParams() throws Exception {
 		AccountRole accountRole1 = _accountRoleLocalService.addAccountRole(
-			TestPropsValues.getUserId(), _accountEntry1.getAccountEntryId(),
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			_accountEntry1.getAccountEntryId(),
 			RandomTestUtil.randomString() + " " + RandomTestUtil.randomString(),
 			null, null);
 		AccountRole accountRole2 = _accountRoleLocalService.addAccountRole(
-			TestPropsValues.getUserId(), _accountEntry1.getAccountEntryId(),
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			_accountEntry1.getAccountEntryId(),
 			RandomTestUtil.randomString() + " " + RandomTestUtil.randomString(),
 			null, null);
 
@@ -512,7 +514,8 @@ public class AccountRoleLocalServiceTest {
 		throws Exception {
 
 		return _accountRoleLocalService.addAccountRole(
-			TestPropsValues.getUserId(), accountEntryId, name, null, null);
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			accountEntryId, name, null, null);
 	}
 
 	private void _assertHasPermission(

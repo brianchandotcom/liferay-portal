@@ -255,8 +255,9 @@ public class AccountUserRetrieverTest {
 		}
 
 		AccountRole accountRole = _accountRoleLocalService.addAccountRole(
-			TestPropsValues.getUserId(), _accountEntry.getAccountEntryId(),
-			RandomTestUtil.randomString(), null, null);
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			_accountEntry.getAccountEntryId(), RandomTestUtil.randomString(),
+			null, null);
 
 		_resourcePermissionLocalService.addResourcePermission(
 			TestPropsValues.getCompanyId(), AccountEntry.class.getName(),

@@ -945,8 +945,8 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 
 	private AccountRole _addAccountRole(long accountEntryId) throws Exception {
 		return _accountRoleLocalService.addAccountRole(
-			TestPropsValues.getUserId(), accountEntryId,
-			RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			accountEntryId, RandomTestUtil.randomString(),
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap());
 	}

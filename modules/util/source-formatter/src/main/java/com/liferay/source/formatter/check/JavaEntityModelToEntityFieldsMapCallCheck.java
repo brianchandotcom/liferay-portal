@@ -7,6 +7,7 @@ package com.liferay.source.formatter.check;
 
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ToolsUtil;
+import com.liferay.source.formatter.check.comparator.ParameterNameComparator;
 import com.liferay.source.formatter.check.util.JavaSourceUtil;
 
 import java.util.Comparator;
@@ -114,10 +115,11 @@ public class JavaEntityModelToEntityFieldsMapCallCheck extends BaseFileCheck {
 					parameterList1.get(0), parameterList2.get(0));
 			}
 
-			String entityFieldName1 = StringUtil.unquote(parameterList1.get(0));
-			String entityFieldName2 = StringUtil.unquote(parameterList2.get(0));
+			ParameterNameComparator parameterNameComparator =
+				new ParameterNameComparator();
 
-			return entityFieldName1.compareTo(entityFieldName2);
+			return parameterNameComparator.compare(
+				parameterList1.get(0), parameterList2.get(0));
 		}
 
 	}

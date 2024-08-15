@@ -26,6 +26,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -232,6 +233,26 @@ public class MasterLayoutsImporterTest {
 		Assert.assertArrayEquals(
 			new String[] {"Master Page One", "Master Page Two"},
 			actualLayoutPageTemplateEntryNames.toArray(new String[0]));
+	}
+
+	@Test
+	@TestInfo("LPS-102207")
+	public void testImportMastersLayoutsWithInvalidValue() throws Exception {
+		List<LayoutsImporterResultEntry> layoutsImporterResultEntries =
+			_getLayoutsImporterResultEntries("master-page-invalid-value");
+
+		Assert.assertEquals(
+			layoutsImporterResultEntries.toString(), 1,
+			layoutsImporterResultEntries.size());
+
+		LayoutsImporterResultEntry layoutsImporterResultEntry =
+			layoutsImporterResultEntries.get(0);
+
+		Assert.assertEquals(
+			"Custom Master Page Template could not be imported because its " +
+				"page definition is invalid.",
+			layoutsImporterResultEntry.getErrorMessage(
+				LocaleUtil.getSiteDefault()));
 	}
 
 	private void _addZipWriterEntry(ZipWriter zipWriter, URL url)

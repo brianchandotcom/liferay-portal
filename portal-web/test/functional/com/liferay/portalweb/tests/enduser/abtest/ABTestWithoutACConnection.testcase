@@ -37,14 +37,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-101055: Validate if the A/B test Icon appears in the Liferay DXP bundle"
-	@priority = 3
-	test CheckABTestIconDXP {
-		task ("Assert 'AB Test' icon is present") {
-			AssertElementPresent(locator1 = "ABTest#AB_TEST_BUTTON");
-		}
-	}
-
 	@description = "LPS-132406: Given the AB Testing Panel When the users leave the page because the session expires or s/he does log out Then they find the panel closed"
 	@priority = 3
 	test CheckABTestingClosedAfterLogout {
@@ -64,7 +56,7 @@ definition {
 	}
 
 	@description = "LPS-101055: Validate if the A/B test panel is hidden when the user clicks the Hide A/B Test Panel button"
-	@priority = 4
+	@priority = 2
 	test CheckHiddenABTestPanel {
 		task ("Click on the A/B Test icon and click on 'Hide A/B Test Panel'") {
 			ABTest.openABTestPanel();
@@ -76,18 +68,6 @@ definition {
 
 		task ("Assert 'AB Test' icon is not present") {
 			AssertElementNotPresent(locator1 = "ABTest#AB_TEST_BUTTON");
-		}
-	}
-
-	@description = "LPS-101055: Validate if the Hide A/B Test Panel button is displayed when AC is not connected"
-	@priority = 3
-	test HideABTestPanel {
-		task ("Click on the A/B Test icon and Assert hide AB Test icon is present") {
-			ABTest.openABTestPanel();
-
-			AssertVisible(
-				key_textValue = "Do not show me this again",
-				locator1 = "Sidebar#LINK");
 		}
 	}
 

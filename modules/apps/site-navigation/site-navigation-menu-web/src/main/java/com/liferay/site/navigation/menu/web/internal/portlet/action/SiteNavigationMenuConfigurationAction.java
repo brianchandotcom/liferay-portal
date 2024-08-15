@@ -9,13 +9,14 @@ import com.liferay.item.selector.ItemSelector;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.settings.ModifiableSettings;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.site.navigation.constants.SiteNavigationMenuPortletKeys;
@@ -113,18 +114,19 @@ public class SiteNavigationMenuConfigurationAction
 		String displayStyleGroupKey = modifiableSettings.getValue(
 			"displayStyleGroupKey", null);
 
-		if (Validator.isNotNull(displayStyleGroupKey) &&
-			!Objects.equals(
-				themeDisplay.getScopeGroup(
-				).getGroupKey(),
-				displayStyleGroupKey)) {
+		Group group = groupLocalService.fetchGroup(
+			themeDisplay.getCompanyId(), displayStyleGroupKey);
+
+		if ((group != null) &&
+			(group.getGroupId() != themeDisplay.getScopeGroupId())) {
 
 			modifiableSettings.setValue(
-				"displayStyleGroupExternalReferenceCode", displayStyleGroupKey);
+				"displayStyleGroupExternalReferenceCode",
+				group.getExternalReferenceCode());
 		}
-
-		modifiableSettings.reset("displayStyleGroupId");
-		modifiableSettings.reset("displayStyleGroupKey");
+		else {
+			modifiableSettings.reset("displayStyleGroupExternalReferenceCode");
+		}
 	}
 
 	protected void updateRootMenuItemPreferences(
@@ -193,6 +195,9 @@ public class SiteNavigationMenuConfigurationAction
 
 		modifiableSettings.reset("siteNavigationMenuExternalReferenceCode");
 	}
+
+	@Reference
+	protected GroupLocalService groupLocalService;
 
 	@Reference
 	protected SiteNavigationMenuItemLocalService

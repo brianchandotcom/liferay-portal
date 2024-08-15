@@ -20,4 +20,5 @@ create index IX_E31F0762 on AccountGroupRel (classNameId, classPK);
 
 create index IX_3A47CDD on AccountRole (accountEntryId);
 create index IX_6BCBD313 on AccountRole (companyId, accountEntryId);
+create unique index IX_88B680FE on AccountRole (companyId, externalReferenceCode[$COLUMN_LENGTH:75$]);
 create index IX_714A358E on AccountRole (roleId);

@@ -23,6 +23,10 @@ public class AccountRoleTable extends BaseTable<AccountRoleTable> {
 
 	public final Column<AccountRoleTable, Long> mvccVersion = createColumn(
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<AccountRoleTable, String> externalReferenceCode =
+		createColumn(
+			"externalReferenceCode", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<AccountRoleTable, Long> accountRoleId = createColumn(
 		"accountRoleId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<AccountRoleTable, Long> companyId = createColumn(

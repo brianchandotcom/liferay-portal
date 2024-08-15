@@ -84,6 +84,7 @@
 	</model>
 	<model name="com.liferay.account.model.AccountRole">
 		<field name="mvccVersion" type="long" />
+		<field name="externalReferenceCode" type="String" />
 		<field name="accountRoleId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="accountEntryId" type="long" />

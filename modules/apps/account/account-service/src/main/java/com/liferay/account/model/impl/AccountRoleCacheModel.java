@@ -66,10 +66,12 @@ public class AccountRoleCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", externalReferenceCode=");
+		sb.append(externalReferenceCode);
 		sb.append(", accountRoleId=");
 		sb.append(accountRoleId);
 		sb.append(", companyId=");
@@ -88,6 +90,14 @@ public class AccountRoleCacheModel
 		AccountRoleImpl accountRoleImpl = new AccountRoleImpl();
 
 		accountRoleImpl.setMvccVersion(mvccVersion);
+
+		if (externalReferenceCode == null) {
+			accountRoleImpl.setExternalReferenceCode("");
+		}
+		else {
+			accountRoleImpl.setExternalReferenceCode(externalReferenceCode);
+		}
+
 		accountRoleImpl.setAccountRoleId(accountRoleId);
 		accountRoleImpl.setCompanyId(companyId);
 		accountRoleImpl.setAccountEntryId(accountEntryId);
@@ -101,6 +111,7 @@ public class AccountRoleCacheModel
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
+		externalReferenceCode = objectInput.readUTF();
 
 		accountRoleId = objectInput.readLong();
 
@@ -115,6 +126,13 @@ public class AccountRoleCacheModel
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
 
+		if (externalReferenceCode == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(externalReferenceCode);
+		}
+
 		objectOutput.writeLong(accountRoleId);
 
 		objectOutput.writeLong(companyId);
@@ -125,6 +143,7 @@ public class AccountRoleCacheModel
 	}
 
 	public long mvccVersion;
+	public String externalReferenceCode;
 	public long accountRoleId;
 	public long companyId;
 	public long accountEntryId;

@@ -42,7 +42,8 @@ import com.liferay.portal.kernel.util.MethodKey;
 public class AccountRoleServiceHttp {
 
 	public static com.liferay.account.model.AccountRole addAccountRole(
-			HttpPrincipal httpPrincipal, long accountEntryId, String name,
+			HttpPrincipal httpPrincipal, String externalReferenceCode,
+			long accountEntryId, String name,
 			java.util.Map<java.util.Locale, String> titleMap,
 			java.util.Map<java.util.Locale, String> descriptionMap)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -53,7 +54,8 @@ public class AccountRoleServiceHttp {
 				_addAccountRoleParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, accountEntryId, name, titleMap, descriptionMap);
+				methodKey, externalReferenceCode, accountEntryId, name,
+				titleMap, descriptionMap);
 
 			Object returnObj = null;
 
@@ -404,7 +406,8 @@ public class AccountRoleServiceHttp {
 
 	private static final Class<?>[] _addAccountRoleParameterTypes0 =
 		new Class[] {
-			long.class, String.class, java.util.Map.class, java.util.Map.class
+			String.class, long.class, String.class, java.util.Map.class,
+			java.util.Map.class
 		};
 	private static final Class<?>[] _associateUserParameterTypes1 =
 		new Class[] {long.class, long.class, long.class};

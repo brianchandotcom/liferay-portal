@@ -74,6 +74,7 @@ create table AccountGroupRel (
 
 create table AccountRole (
 	mvccVersion LONG default 0 not null,
+	externalReferenceCode VARCHAR(75) null,
 	accountRoleId LONG not null primary key,
 	companyId LONG,
 	accountEntryId LONG,

@@ -53,13 +53,14 @@ public class AccountRoleLocalServiceUtil {
 	}
 
 	public static AccountRole addAccountRole(
-			long userId, long accountEntryId, String name,
-			Map<java.util.Locale, String> titleMap,
+			String externalReferenceCode, long userId, long accountEntryId,
+			String name, Map<java.util.Locale, String> titleMap,
 			Map<java.util.Locale, String> descriptionMap)
 		throws PortalException {
 
 		return getService().addAccountRole(
-			userId, accountEntryId, name, titleMap, descriptionMap);
+			externalReferenceCode, userId, accountEntryId, name, titleMap,
+			descriptionMap);
 	}
 
 	public static void associateUser(
@@ -235,6 +236,13 @@ public class AccountRoleLocalServiceUtil {
 		return getService().fetchAccountRole(accountRoleId);
 	}
 
+	public static AccountRole fetchAccountRoleByExternalReferenceCode(
+		String externalReferenceCode, long companyId) {
+
+		return getService().fetchAccountRoleByExternalReferenceCode(
+			externalReferenceCode, companyId);
+	}
+
 	public static AccountRole fetchAccountRoleByRoleId(long roleId) {
 		return getService().fetchAccountRoleByRoleId(roleId);
 	}
@@ -250,6 +258,14 @@ public class AccountRoleLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getAccountRole(accountRoleId);
+	}
+
+	public static AccountRole getAccountRoleByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return getService().getAccountRoleByExternalReferenceCode(
+			externalReferenceCode, companyId);
 	}
 
 	public static AccountRole getAccountRoleByRoleId(long roleId)

@@ -263,6 +263,10 @@
 	z-index: 100 !important;
 }
 
+.cke_combopanel.lfr-maximized {
+	z-index: 10000 !important;
+}
+
 .cke_panel_block {
 	.cke_panel_grouptitle {
 		font-size: 20px;

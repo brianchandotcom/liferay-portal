@@ -84,7 +84,7 @@ test('LPD-23255 AC3 TC3: Verify that clicking the “Reset SCIM Client provision
 
 	await scimConfigurationPage.resetClientData();
 
-	await page.waitForTimeout(1000);
+	await page.waitForTimeout(2000);
 
 	await expect(scimConfigurationPage.accessTokenField).toBeEmpty();
 
@@ -176,7 +176,7 @@ test('LPD-23255 AC3 TC5: Verify that clicking the “Reset SCIM Client provision
 	expect(response).toContain('"totalResults":1');
 
 	await scimConfigurationPage.resetClientData();
-	await page.waitForTimeout(1000);
+	await page.waitForTimeout(2000);
 
 	const emptyResponse = await (await apiHelper.scim.getUsers()).text();
 

@@ -6,9 +6,6 @@
 package com.liferay.portal.search.internal.spi.model.index.contributor;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupedModel;
@@ -58,48 +55,25 @@ public class GroupedModelDocumentContributor
 	protected GroupLocalService groupLocalService;
 
 	private String _getGroupExternalReferenceCode(long siteGroupId) {
-		String groupExternalReferenceCode = StringPool.BLANK;
+		Group group = groupLocalService.fetchGroup(siteGroupId);
 
-		try {
-			Group group = groupLocalService.getGroup(siteGroupId);
-
-			groupExternalReferenceCode = group.getExternalReferenceCode();
-		}
-		catch (PortalException portalException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to get group " + siteGroupId +
-						" while indexing document",
-					portalException);
-			}
+		if (group == null) {
+			return StringPool.BLANK;
 		}
 
-		return groupExternalReferenceCode;
+		return group.getExternalReferenceCode();
 	}
 
 	private String _getScopeGroupExternalReferenceCode(
 		GroupedModel groupedModel) {
 
-		String scopeGroupExternalReferenceCode = StringPool.BLANK;
+		Group group = groupLocalService.fetchGroup(groupedModel.getGroupId());
 
-		try {
-			Group group = groupLocalService.getGroup(groupedModel.getGroupId());
-
-			scopeGroupExternalReferenceCode = group.getExternalReferenceCode();
-		}
-		catch (PortalException portalException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to get group " + groupedModel.getGroupId() +
-						" while indexing document",
-					portalException);
-			}
+		if (group == null) {
+			return StringPool.BLANK;
 		}
 
-		return scopeGroupExternalReferenceCode;
+		return group.getExternalReferenceCode();
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		GroupedModelDocumentContributor.class);
 
 }

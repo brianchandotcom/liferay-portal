@@ -5,6 +5,7 @@
 
 package com.liferay.portal.kernel.test.util;
 
+import com.liferay.portal.kernel.db.partition.DBPartition;
 import com.liferay.portal.kernel.exception.LoggedExceptionInInitializerError;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
@@ -19,6 +20,9 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
+
+import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Brian Wing Shun Chan
@@ -54,12 +58,26 @@ public class TestPropsValues {
 		String companyWebId = TestPropsUtil.get("company.web.id");
 
 		try {
-			if (Validator.isNull(companyWebId)) {
+			if (DBPartition.isPartitionEnabled()){
+				List<Company> companies = CompanyLocalServiceUtil.getCompanies();
+				if (companies.size() > 1){
+					for (Company company : companies){
+						if(Objects.equals(company.getWebId(), companyWebId)){
+							continue;
+						}
+						companyWebId = company.getWebId();
+					}
+				}
+				else{
+					throw new PortalException("DB partition is not enabled");
+				}
+			}
+			else if (Validator.isNull(companyWebId)) {
 				companyWebId = GetterUtil.getString(
 					PropsUtil.get(PropsKeys.COMPANY_DEFAULT_WEB_ID));
-
-				TestPropsUtil.set("company.web.id", companyWebId);
 			}
+
+			TestPropsUtil.set("company.web.id", companyWebId);
 		}
 		catch (Exception exception) {
 			throw new LoggedExceptionInInitializerError(exception);

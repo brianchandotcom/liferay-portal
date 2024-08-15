@@ -62,12 +62,17 @@ public class AccountRoleLocalServiceImpl
 
 	@Override
 	public AccountRole addAccountRole(
-			long userId, long accountEntryId, String name,
-			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap)
+			String externalReferenceCode, long userId, long accountEntryId,
+			String name, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap)
 		throws PortalException {
 
+		if (Validator.isBlank(externalReferenceCode)) {
+			externalReferenceCode = null;
+		}
+
 		Role role = _roleLocalService.addRole(
-			null, userId, AccountRole.class.getName(),
+			externalReferenceCode, userId, AccountRole.class.getName(),
 			AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT, name, titleMap,
 			descriptionMap, RoleConstants.TYPE_ACCOUNT, null, null);
 
@@ -81,6 +86,7 @@ public class AccountRoleLocalServiceImpl
 
 		accountRole = createAccountRole(counterLocalService.increment());
 
+		accountRole.setExternalReferenceCode(role.getExternalReferenceCode());
 		accountRole.setCompanyId(role.getCompanyId());
 		accountRole.setAccountEntryId(accountEntryId);
 		accountRole.setRoleId(role.getRoleId());

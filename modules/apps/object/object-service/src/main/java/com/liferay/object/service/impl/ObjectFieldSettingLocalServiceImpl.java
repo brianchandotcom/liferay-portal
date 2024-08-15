@@ -10,9 +10,9 @@ import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.model.impl.ObjectFieldSettingImpl;
-import com.liferay.object.service.ObjectFilterLocalService;
 import com.liferay.object.service.base.ObjectFieldSettingLocalServiceBaseImpl;
 import com.liferay.object.service.persistence.ObjectFieldPersistence;
+import com.liferay.object.service.persistence.ObjectFilterPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
@@ -69,7 +69,7 @@ public class ObjectFieldSettingLocalServiceImpl
 		if (objectField.compareBusinessType(
 				ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION)) {
 
-			_objectFilterLocalService.deleteObjectFieldObjectFilter(
+			_objectFilterPersistence.removeByObjectFieldId(
 				objectField.getObjectFieldId());
 		}
 	}
@@ -105,8 +105,7 @@ public class ObjectFieldSettingLocalServiceImpl
 
 		objectFieldSetting.setName(ObjectFieldSettingConstants.NAME_FILTERS);
 		objectFieldSetting.setObjectFilters(
-			_objectFilterLocalService.getObjectFieldObjectFilter(
-				objectFieldId));
+			_objectFilterPersistence.findByObjectFieldId(objectFieldId));
 
 		objectFieldSettings = new ArrayList<>(objectFieldSettings);
 
@@ -133,7 +132,7 @@ public class ObjectFieldSettingLocalServiceImpl
 	private ObjectFieldPersistence _objectFieldPersistence;
 
 	@Reference
-	private ObjectFilterLocalService _objectFilterLocalService;
+	private ObjectFilterPersistence _objectFilterPersistence;
 
 	@Reference
 	private UserLocalService _userLocalService;

@@ -21,13 +21,13 @@ public class ProductChannelEntityModel implements EntityModel {
 
 	public ProductChannelEntityModel() {
 		_entityFieldsMap = EntityModel.toEntityFieldsMap(
-			new IdEntityField(
-				Field.ENTRY_CLASS_PK, locale -> Field.ENTRY_CLASS_PK,
-				String::valueOf),
 			new DateTimeEntityField(
 				"modified",
 				locale -> Field.getSortableFieldName(Field.MODIFIED_DATE),
 				locale -> Field.MODIFIED_DATE),
+			new IdEntityField(
+				Field.ENTRY_CLASS_PK, locale -> Field.ENTRY_CLASS_PK,
+				String::valueOf),
 			new IntegerEntityField(
 				Field.getSortableFieldName(Field.MODIFIED_DATE),
 				locale -> Field.getSortableFieldName(Field.MODIFIED_DATE)));

@@ -21,15 +21,15 @@ public class OrderEntityModel implements EntityModel {
 
 	public OrderEntityModel() {
 		_entityFieldsMap = EntityModel.toEntityFieldsMap(
-			new StringEntityField(
-				"commerceChannelId", locale -> "commerceChannelId"),
 			new DateTimeEntityField(
 				"modified",
 				locale -> Field.getSortableFieldName(Field.MODIFIED_DATE),
 				locale -> Field.MODIFIED_DATE),
 			new IntegerEntityField(
 				Field.getSortableFieldName(Field.MODIFIED_DATE),
-				locale -> Field.getSortableFieldName(Field.MODIFIED_DATE)));
+				locale -> Field.getSortableFieldName(Field.MODIFIED_DATE)),
+			new StringEntityField(
+				"commerceChannelId", locale -> "commerceChannelId"));
 	}
 
 	@Override

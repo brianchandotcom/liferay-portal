@@ -34,6 +34,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
 import java.util.TreeMap;
@@ -882,6 +883,10 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 					"Row length does not match headers length");
 			}
 
+			if (_csvReportRows.contains(csvReportRow)) {
+				return;
+			}
+
 			_csvReportRows.add(csvReportRow);
 		}
 
@@ -912,6 +917,28 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 				for (String string : strings) {
 					add(string);
 				}
+			}
+
+			@Override
+			public boolean equals(Object object) {
+				if (this == object) {
+					return true;
+				}
+
+				if (!(object instanceof Row) ||
+					!Objects.equals(toString(), object.toString())) {
+
+					return false;
+				}
+
+				return true;
+			}
+
+			@Override
+			public int hashCode() {
+				String string = toString();
+
+				return string.hashCode();
 			}
 
 			@Override

@@ -100,7 +100,7 @@ public class LayoutStructureTest {
 		LayoutStructure layoutStructure = LayoutStructure.of(_readLayoutData());
 
 		layoutStructure.updateFormStyledLayoutStructureItemFormType(
-			"formId", "multi-step", 3);
+			"formId", "multistep", 3);
 
 		FormStyledLayoutStructureItem formStyledLayoutStructureItem =
 			(FormStyledLayoutStructureItem)
@@ -138,7 +138,7 @@ public class LayoutStructureTest {
 		LayoutStructure layoutStructure = LayoutStructure.of(_readLayoutData());
 
 		layoutStructure.updateFormStyledLayoutStructureItemFormType(
-			"formId", "multi-step", 3);
+			"formId", "multistep", 3);
 
 		layoutStructure.updateFormStyledLayoutStructureItemFormType(
 			"formId", "simple", 3);

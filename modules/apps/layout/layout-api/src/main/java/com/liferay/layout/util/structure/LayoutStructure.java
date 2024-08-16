@@ -800,7 +800,7 @@ public class LayoutStructure {
 			formStepContainerStyledLayoutStructureItem =
 				_findFormStepContainerLayoutStructureItem(childrenItemIds);
 
-		if (Objects.equals(formType, "multi-step")) {
+		if (Objects.equals(formType, "multistep")) {
 			if (formStepContainerStyledLayoutStructureItem != null) {
 				List<String> formStepContainerChildrenItemIds =
 					formStepContainerStyledLayoutStructureItem.

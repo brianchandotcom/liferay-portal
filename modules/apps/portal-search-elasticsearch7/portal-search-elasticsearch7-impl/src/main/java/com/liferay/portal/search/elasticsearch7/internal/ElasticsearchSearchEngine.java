@@ -168,7 +168,7 @@ public class ElasticsearchSearchEngine
 			_elasticsearchConnectionManager.getRestHighLevelClient();
 
 		boolean created = _indexFactory.initializeIndex(
-			restHighLevelClient.indices(), companyId);
+			companyId, restHighLevelClient.indices());
 
 		_indexFactory.registerCompanyId(companyId);
 
@@ -230,7 +230,7 @@ public class ElasticsearchSearchEngine
 			RestHighLevelClient restHighLevelClient =
 				_elasticsearchConnectionManager.getRestHighLevelClient();
 
-			_indexFactory.deleteIndex(restHighLevelClient.indices(), companyId);
+			_indexFactory.deleteIndex(companyId, restHighLevelClient.indices());
 
 			_indexFactory.unregisterCompanyId(companyId);
 		}
@@ -448,7 +448,8 @@ public class ElasticsearchSearchEngine
 	private Collection<Long> _getIndexedCompanyIds() {
 		Collection<Long> companyIds = new ArrayList<>();
 
-		String firstIndexName = _indexNameBuilder.getIndexName(0);
+		String firstIndexName = _indexNameBuilder.getIndexName(
+			CompanyConstants.SYSTEM);
 
 		String prefix = firstIndexName.substring(
 			0, firstIndexName.length() - 1);

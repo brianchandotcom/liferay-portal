@@ -8,14 +8,14 @@ package com.liferay.portal.search.elasticsearch7.internal.index.constants;
 /**
  * @author André de Oliveira
  */
-public class LiferayTypeMappingsConstants {
+public class IndexMappingsConstants {
+
+	public static final String INDEX_MAPPINGS_FILE_NAME =
+		"/META-INF/mappings/index-mappings.json";
+
+	public static final String LEGACY_LIFERAY_DOCUMENT_TYPE =
+		"LiferayDocumentType";
 
 	public static final String LIFERAY_DOCUMENT_TYPE = "_doc";
-
-	public static final String LIFERAY_DOCUMENT_TYPE_MAPPING_FILE_NAME =
-		"/META-INF/mappings/liferay-type-mappings.json";
-
-	public static final String LIFERAY_LEGACY_DOCUMENT_TYPE =
-		"LiferayDocumentType";
 
 }

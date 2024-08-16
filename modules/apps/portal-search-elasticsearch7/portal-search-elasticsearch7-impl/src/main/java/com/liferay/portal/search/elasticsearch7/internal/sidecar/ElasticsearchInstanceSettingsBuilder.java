@@ -10,7 +10,7 @@ import com.liferay.portal.kernel.util.JavaDetector;
 import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch7.internal.configuration.ElasticsearchConfigurationWrapper;
-import com.liferay.portal.search.elasticsearch7.internal.settings.SettingsBuilder;
+import com.liferay.portal.search.elasticsearch7.internal.settings.SettingsHelperImpl;
 import com.liferay.portal.search.elasticsearch7.internal.sidecar.constants.SidecarConstants;
 import com.liferay.portal.search.elasticsearch7.internal.util.ResourceUtil;
 
@@ -34,7 +34,7 @@ public class ElasticsearchInstanceSettingsBuilder {
 	public Settings build() {
 		load();
 
-		return _settingsBuilder.build();
+		return _settingsHelperImpl.build();
 	}
 
 	public ElasticsearchInstanceSettingsBuilder clusterInitialMasterNodes(
@@ -134,11 +134,11 @@ public class ElasticsearchInstanceSettingsBuilder {
 	}
 
 	protected void put(String key, boolean value) {
-		_settingsBuilder.put(key, value);
+		_settingsHelperImpl.put(key, value);
 	}
 
 	protected void put(String key, String value) {
-		_settingsBuilder.put(key, value);
+		_settingsHelperImpl.put(key, value);
 	}
 
 	private void _configureClustering() {
@@ -173,7 +173,7 @@ public class ElasticsearchInstanceSettingsBuilder {
 			"http.cors.allow-origin",
 			_elasticsearchConfigurationWrapper.httpCORSAllowOrigin());
 
-		_settingsBuilder.loadFromSource(
+		_settingsHelperImpl.loadFromSource(
 			_elasticsearchConfigurationWrapper.httpCORSConfigurations());
 	}
 
@@ -244,7 +244,7 @@ public class ElasticsearchInstanceSettingsBuilder {
 	}
 
 	private void _loadAdditionalConfigurations() {
-		_settingsBuilder.loadFromSource(
+		_settingsHelperImpl.loadFromSource(
 			_elasticsearchConfigurationWrapper.additionalConfigurations());
 	}
 
@@ -253,7 +253,7 @@ public class ElasticsearchInstanceSettingsBuilder {
 			getClass(),
 			SidecarConstants.ELASTICSEARCH_OPTIONAL_DEFAULTS_FILE_NAME);
 
-		_settingsBuilder.loadFromSource(defaultConfigurations);
+		_settingsHelperImpl.loadFromSource(defaultConfigurations);
 
 		put("action.auto_create_index", false);
 		put(
@@ -299,7 +299,7 @@ public class ElasticsearchInstanceSettingsBuilder {
 	private HttpPortRange _httpPortRange;
 	private String _networkHost;
 	private String _nodeName;
-	private final SettingsBuilder _settingsBuilder = new SettingsBuilder(
-		Settings.builder());
+	private final SettingsHelperImpl _settingsHelperImpl =
+		new SettingsHelperImpl(Settings.builder());
 
 }

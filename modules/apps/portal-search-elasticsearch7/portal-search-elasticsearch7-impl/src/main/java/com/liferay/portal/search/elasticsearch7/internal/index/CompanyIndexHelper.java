@@ -20,21 +20,24 @@ import com.liferay.portal.search.elasticsearch7.internal.configuration.Elasticse
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchConnectionManager;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchConnectionNotInitializedException;
 import com.liferay.portal.search.elasticsearch7.internal.helper.SearchLogHelperUtil;
+import com.liferay.portal.search.elasticsearch7.internal.index.constants.IndexSettingsConstants;
 import com.liferay.portal.search.elasticsearch7.internal.index.util.IndexFactoryCompanyIdRegistryUtil;
-import com.liferay.portal.search.elasticsearch7.internal.settings.SettingsBuilder;
+import com.liferay.portal.search.elasticsearch7.internal.settings.SettingsHelperImpl;
 import com.liferay.portal.search.elasticsearch7.internal.util.ResourceUtil;
 import com.liferay.portal.search.index.IndexNameBuilder;
-import com.liferay.portal.search.spi.index.configuration.contributor.IndexConfigurationContributor;
+import com.liferay.portal.search.spi.index.configuration.contributor.CompanyIndexConfigurationContributor;
 import com.liferay.portal.search.spi.index.listener.CompanyIndexListener;
 
 import java.io.IOException;
 
 import org.elasticsearch.action.ActionResponse;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
+import org.elasticsearch.action.admin.indices.open.OpenIndexRequest;
 import org.elasticsearch.action.admin.indices.settings.put.UpdateSettingsRequest;
 import org.elasticsearch.client.IndicesClient;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.client.indices.CloseIndexRequest;
 import org.elasticsearch.client.indices.CreateIndexRequest;
 import org.elasticsearch.client.indices.GetIndexRequest;
 import org.elasticsearch.common.settings.Settings;
@@ -49,20 +52,22 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Joao Victor Alves
  */
-@Component(service = CompanyIndexFactoryHelper.class)
-public class CompanyIndexFactoryHelper {
+@Component(service = CompanyIndexHelper.class)
+public class CompanyIndexHelper {
 
-	public void createIndex(String indexName, IndicesClient indicesClient) {
+	public void createIndex(
+		long companyId, String indexName, IndicesClient indicesClient) {
+
 		CreateIndexRequest createIndexRequest = new CreateIndexRequest(
 			indexName);
 
-		LiferayDocumentTypeFactory liferayDocumentTypeFactory =
-			new LiferayDocumentTypeFactory(
-				indexName, indicesClient, _jsonFactory);
+		_setSettings(companyId, createIndexRequest);
 
-		_setSettings(createIndexRequest, liferayDocumentTypeFactory);
+		MappingsHelperImpl mappingsHelperImpl = new MappingsHelperImpl(
+			indexName, indicesClient, _jsonFactory,
+			_elasticsearchConfigurationWrapper.overrideTypeMappings());
 
-		_setMappings(createIndexRequest, liferayDocumentTypeFactory);
+		mappingsHelperImpl.setDefaultOrOverrideMappings(createIndexRequest);
 
 		try {
 			ActionResponse actionResponse = indicesClient.create(
@@ -74,13 +79,13 @@ public class CompanyIndexFactoryHelper {
 			throw new RuntimeException(ioException);
 		}
 
-		_updateLiferayDocumentType(liferayDocumentTypeFactory);
+		_putNondefaultMappings(companyId, mappingsHelperImpl);
 
 		_executeCompanyIndexListenersAfterCreate(indexName);
 	}
 
 	public void deleteIndex(
-		String indexName, IndicesClient indicesClient, long companyId,
+		long companyId, String indexName, IndicesClient indicesClient,
 		boolean resetBothIndexNames) {
 
 		_executeCompanyIndexListenersBeforeDelete(indexName);
@@ -113,7 +118,7 @@ public class CompanyIndexFactoryHelper {
 		return _indexNameBuilder.getIndexName(companyId);
 	}
 
-	public boolean hasIndex(IndicesClient indicesClient, String indexName) {
+	public boolean hasIndex(String indexName, IndicesClient indicesClient) {
 		GetIndexRequest getIndexRequest = new GetIndexRequest(indexName);
 
 		try {
@@ -125,47 +130,62 @@ public class CompanyIndexFactoryHelper {
 		}
 	}
 
+	public void updateIndex(
+		long companyId, String indexName, IndicesClient indicesClient) {
+
+		_updateSettings(companyId, indexName, indicesClient);
+
+		MappingsHelperImpl mappingsHelperImpl = new MappingsHelperImpl(
+			indexName, indicesClient, _jsonFactory,
+			_elasticsearchConfigurationWrapper.overrideTypeMappings());
+
+		mappingsHelperImpl.putDefaultOrOverrideMappings();
+
+		_putNondefaultMappings(companyId, mappingsHelperImpl);
+	}
+
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_companyIndexListenerServiceTrackerList =
 			ServiceTrackerListFactory.open(
 				bundleContext, CompanyIndexListener.class);
 
-		_indexConfigurationContributorServiceTrackerList =
+		_companyIndexConfigurationContributorServiceTrackerList =
 			ServiceTrackerListFactory.open(
-				bundleContext, IndexConfigurationContributor.class, null,
+				bundleContext, CompanyIndexConfigurationContributor.class, null,
 				new EagerServiceTrackerCustomizer
-					<IndexConfigurationContributor,
-					 IndexConfigurationContributor>() {
+					<CompanyIndexConfigurationContributor,
+					 CompanyIndexConfigurationContributor>() {
 
 					@Override
-					public IndexConfigurationContributor addingService(
-						ServiceReference<IndexConfigurationContributor>
+					public CompanyIndexConfigurationContributor addingService(
+						ServiceReference<CompanyIndexConfigurationContributor>
 							serviceReference) {
 
-						IndexConfigurationContributor
-							indexConfigurationContributor =
+						CompanyIndexConfigurationContributor
+							companyIndexConfigurationContributor =
 								bundleContext.getService(serviceReference);
 
-						_processContributions(indexConfigurationContributor);
+						_processCompanyIndexConfigurationContributor(
+							companyIndexConfigurationContributor);
 
-						return indexConfigurationContributor;
+						return companyIndexConfigurationContributor;
 					}
 
 					@Override
 					public void modifiedService(
-						ServiceReference<IndexConfigurationContributor>
+						ServiceReference<CompanyIndexConfigurationContributor>
 							serviceReference,
-						IndexConfigurationContributor
-							indexConfigurationContributor) {
+						CompanyIndexConfigurationContributor
+							companyIndexConfigurationContributor) {
 					}
 
 					@Override
 					public void removedService(
-						ServiceReference<IndexConfigurationContributor>
+						ServiceReference<CompanyIndexConfigurationContributor>
 							serviceReference,
-						IndexConfigurationContributor
-							indexConfigurationContributor) {
+						CompanyIndexConfigurationContributor
+							companyIndexConfigurationContributor) {
 
 						bundleContext.ungetService(serviceReference);
 					}
@@ -179,8 +199,8 @@ public class CompanyIndexFactoryHelper {
 			_companyIndexListenerServiceTrackerList.close();
 		}
 
-		if (_indexConfigurationContributorServiceTrackerList != null) {
-			_indexConfigurationContributorServiceTrackerList.close();
+		if (_companyIndexConfigurationContributorServiceTrackerList != null) {
+			_companyIndexConfigurationContributorServiceTrackerList.close();
 		}
 	}
 
@@ -232,82 +252,77 @@ public class CompanyIndexFactoryHelper {
 		}
 	}
 
-	private void _loadAdditionalIndexConfigurations(
-		SettingsBuilder settingsBuilder) {
+	private void _loadAdditionalSettings(
+		long companyId, SettingsHelperImpl settingsHelperImpl,
+		boolean includeStaticProperties) {
 
-		settingsBuilder.loadFromSource(
-			_elasticsearchConfigurationWrapper.additionalIndexConfigurations());
-	}
+		_loadContributedSettings(companyId, settingsHelperImpl);
 
-	private void _loadDefaultIndexSettings(
-		LiferayDocumentTypeFactory liferayDocumentTypeFactory,
-		SettingsBuilder settingsBuilder) {
+		_loadConfigurationSettings(settingsHelperImpl, includeStaticProperties);
 
-		liferayDocumentTypeFactory.loadDefaultAnalyzers(settingsBuilder);
+		if (Validator.isNotNull(
+				settingsHelperImpl.get("index.number_of_replicas"))) {
 
-		String defaultIndexSettings = ResourceUtil.getResourceAsString(
-			getClass(), "/META-INF/settings/index-settings-defaults.json");
-
-		settingsBuilder.loadFromSource(defaultIndexSettings);
-	}
-
-	private void _loadIndexConfigurationContributors(
-		SettingsBuilder settingsBuilder) {
-
-		for (IndexConfigurationContributor indexConfigurationContributor :
-				_indexConfigurationContributorServiceTrackerList) {
-
-			indexConfigurationContributor.contributeSettings(
-				settingsBuilder::put);
+			settingsHelperImpl.put("index.auto_expand_replicas", false);
 		}
 	}
 
-	private void _loadIndexConfigurations(SettingsBuilder settingsBuilder) {
-		settingsBuilder.put(
-			"index.number_of_replicas",
-			_elasticsearchConfigurationWrapper.indexNumberOfReplicas());
-		settingsBuilder.put(
-			"index.number_of_shards",
-			_elasticsearchConfigurationWrapper.indexNumberOfShards());
-		settingsBuilder.put(
+	private void _loadConfigurationSettings(
+		SettingsHelperImpl settingsHelperImpl,
+		boolean includeStaticProperties) {
+
+		settingsHelperImpl.put(
 			"index.max_result_window",
 			String.valueOf(
 				_elasticsearchConfigurationWrapper.indexMaxResultWindow()));
+		settingsHelperImpl.put(
+			"index.number_of_replicas",
+			_elasticsearchConfigurationWrapper.indexNumberOfReplicas());
+
+		if (includeStaticProperties) {
+			settingsHelperImpl.put(
+				"index.number_of_shards",
+				_elasticsearchConfigurationWrapper.indexNumberOfShards());
+		}
+
+		settingsHelperImpl.loadFromSource(
+			_elasticsearchConfigurationWrapper.additionalIndexConfigurations());
 	}
 
-	private void _loadTestModeIndexSettings(SettingsBuilder settingsBuilder) {
+	private void _loadContributedSettings(
+		long companyId, SettingsHelperImpl settingsHelperImpl) {
+
+		for (CompanyIndexConfigurationContributor
+				companyIndexConfigurationContributor :
+					_companyIndexConfigurationContributorServiceTrackerList) {
+
+			companyIndexConfigurationContributor.contributeSettings(
+				companyId, settingsHelperImpl);
+		}
+	}
+
+	private void _loadDefaultSettings(SettingsHelperImpl settingsHelperImpl) {
+		settingsHelperImpl.loadFromSource(
+			ResourceUtil.getResourceAsString(
+				getClass(), IndexSettingsConstants.INDEX_SETTINGS_FILE_NAME));
+	}
+
+	private void _loadTestModeSettings(SettingsHelperImpl settingsHelperImpl) {
 		if (!PortalRunMode.isTestMode()) {
 			return;
 		}
 
-		settingsBuilder.put("index.refresh_interval", "1ms");
-		settingsBuilder.put("index.search.slowlog.threshold.fetch.warn", "-1");
-		settingsBuilder.put("index.search.slowlog.threshold.query.warn", "-1");
-		settingsBuilder.put("index.translog.sync_interval", "100ms");
+		settingsHelperImpl.put("index.refresh_interval", "1ms");
+		settingsHelperImpl.put(
+			"index.search.slowlog.threshold.fetch.warn", "-1");
+		settingsHelperImpl.put(
+			"index.search.slowlog.threshold.query.warn", "-1");
+		settingsHelperImpl.put("index.translog.sync_interval", "100ms");
 	}
 
-	private void _processContributions(
-		IndexConfigurationContributor indexConfigurationContributor) {
-
-		boolean contributeMappings = Validator.isNull(
-			_elasticsearchConfigurationWrapper.overrideTypeMappings());
-
-		SettingsBuilder settingsBuilder = new SettingsBuilder(
-			Settings.builder());
-
-		indexConfigurationContributor.contributeSettings(settingsBuilder::put);
-
-		Settings settings = settingsBuilder.build();
-
-		if (!contributeMappings && settings.isEmpty()) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"No mappings or settings to contribute from " +
-						indexConfigurationContributor);
-			}
-
-			return;
-		}
+	private void _processCompanyIndexConfigurationContributor(
+		CompanyIndexConfigurationContributor
+			companyIndexConfigurationContributor) {
 
 		RestHighLevelClient restHighLevelClient = null;
 
@@ -329,6 +344,14 @@ public class CompanyIndexFactoryHelper {
 			companyId -> {
 				String indexName = getIndexName(companyId);
 
+				SettingsHelperImpl settingsHelperImpl = new SettingsHelperImpl(
+					Settings.builder());
+
+				companyIndexConfigurationContributor.contributeSettings(
+					companyId, settingsHelperImpl);
+
+				Settings settings = settingsHelperImpl.build();
+
 				if (!settings.isEmpty()) {
 					UpdateSettingsRequest updateSettingsRequest =
 						new UpdateSettingsRequest(indexName);
@@ -336,89 +359,62 @@ public class CompanyIndexFactoryHelper {
 					updateSettingsRequest.settings(settings);
 
 					try {
+						indicesClient.close(
+							new CloseIndexRequest(indexName),
+							RequestOptions.DEFAULT);
+
 						indicesClient.putSettings(
 							updateSettingsRequest, RequestOptions.DEFAULT);
+
+						indicesClient.open(
+							new OpenIndexRequest(indexName),
+							RequestOptions.DEFAULT);
 					}
 					catch (Exception exception) {
 						_log.error(
 							StringBundler.concat(
 								"Unable to put settings for index ", indexName,
 								" with contributor ",
-								indexConfigurationContributor),
+								companyIndexConfigurationContributor),
 							exception);
 					}
 				}
 
-				if (contributeMappings) {
-					indexConfigurationContributor.contributeMappings(
-						new LiferayDocumentTypeFactory(
-							indexName, indicesClient, _jsonFactory));
-				}
+				companyIndexConfigurationContributor.contributeMappings(
+					companyId,
+					new MappingsHelperImpl(
+						indexName, indicesClient, _jsonFactory,
+						_elasticsearchConfigurationWrapper.
+							overrideTypeMappings()));
 			},
 			IndexFactoryCompanyIdRegistryUtil.getCompanyIds());
 	}
 
-	private void _putAdditionalTypeMappings(
-		LiferayDocumentTypeFactory liferayDocumentTypeFactory) {
-
+	private void _putAdditionalMappings(MappingsHelperImpl mappingsHelperImpl) {
 		if (Validator.isNull(
 				_elasticsearchConfigurationWrapper.additionalTypeMappings())) {
 
 			return;
 		}
 
-		liferayDocumentTypeFactory.putTypeMappings(
+		mappingsHelperImpl.putMappings(
 			_elasticsearchConfigurationWrapper.additionalTypeMappings());
 	}
 
-	private void _putContributedTypeMappings(
-		LiferayDocumentTypeFactory liferayDocumentTypeFactory) {
+	private void _putContributedMappings(
+		long companyId, MappingsHelperImpl mappingsHelperImpl) {
 
-		for (IndexConfigurationContributor indexConfigurationContributor :
-				_indexConfigurationContributorServiceTrackerList) {
+		for (CompanyIndexConfigurationContributor
+				companyIndexConfigurationContributor :
+					_companyIndexConfigurationContributorServiceTrackerList) {
 
-			indexConfigurationContributor.contributeMappings(
-				liferayDocumentTypeFactory);
+			companyIndexConfigurationContributor.contributeMappings(
+				companyId, mappingsHelperImpl);
 		}
 	}
 
-	private void _setMappings(
-		CreateIndexRequest createIndexRequest,
-		LiferayDocumentTypeFactory liferayDocumentTypeFactory) {
-
-		liferayDocumentTypeFactory.setMappings(
-			createIndexRequest,
-			_elasticsearchConfigurationWrapper.overrideTypeMappings());
-	}
-
-	private void _setSettings(
-		CreateIndexRequest createIndexRequest,
-		LiferayDocumentTypeFactory liferayDocumentTypeFactory) {
-
-		SettingsBuilder settingsBuilder = new SettingsBuilder(
-			Settings.builder());
-
-		_loadDefaultIndexSettings(liferayDocumentTypeFactory, settingsBuilder);
-
-		_loadTestModeIndexSettings(settingsBuilder);
-
-		_loadIndexConfigurations(settingsBuilder);
-
-		_loadAdditionalIndexConfigurations(settingsBuilder);
-
-		_loadIndexConfigurationContributors(settingsBuilder);
-
-		if (Validator.isNotNull(
-				settingsBuilder.get("index.number_of_replicas"))) {
-
-			settingsBuilder.put("index.auto_expand_replicas", false);
-		}
-
-		createIndexRequest.settings(settingsBuilder.getBuilder());
-	}
-
-	private void _updateLiferayDocumentType(
-		LiferayDocumentTypeFactory liferayDocumentTypeFactory) {
+	private void _putNondefaultMappings(
+		long companyId, MappingsHelperImpl mappingsHelperImpl) {
 
 		if (Validator.isNotNull(
 				_elasticsearchConfigurationWrapper.overrideTypeMappings())) {
@@ -426,16 +422,62 @@ public class CompanyIndexFactoryHelper {
 			return;
 		}
 
-		_putAdditionalTypeMappings(liferayDocumentTypeFactory);
+		_putContributedMappings(companyId, mappingsHelperImpl);
 
-		_putContributedTypeMappings(liferayDocumentTypeFactory);
+		_putAdditionalMappings(mappingsHelperImpl);
+	}
 
-		liferayDocumentTypeFactory.putDefaultTypeMappingTemplate();
+	private void _setSettings(
+		long companyId, CreateIndexRequest createIndexRequest) {
+
+		SettingsHelperImpl settingsHelperImpl = new SettingsHelperImpl(
+			Settings.builder());
+
+		_loadDefaultSettings(settingsHelperImpl);
+
+		_loadTestModeSettings(settingsHelperImpl);
+
+		_loadAdditionalSettings(companyId, settingsHelperImpl, true);
+
+		createIndexRequest.settings(settingsHelperImpl.getBuilder());
+	}
+
+	private void _updateSettings(
+		long companyId, String indexName, IndicesClient indicesClient) {
+
+		UpdateSettingsRequest updateSettingsRequest = new UpdateSettingsRequest(
+			indexName);
+
+		SettingsHelperImpl settingsHelperImpl = new SettingsHelperImpl(
+			Settings.builder());
+
+		_loadDefaultSettings(settingsHelperImpl);
+
+		_loadAdditionalSettings(companyId, settingsHelperImpl, false);
+
+		updateSettingsRequest.settings(settingsHelperImpl.getBuilder());
+
+		try {
+			indicesClient.close(
+				new CloseIndexRequest(indexName), RequestOptions.DEFAULT);
+
+			indicesClient.putSettings(
+				updateSettingsRequest, RequestOptions.DEFAULT);
+
+			indicesClient.open(
+				new OpenIndexRequest(indexName), RequestOptions.DEFAULT);
+		}
+		catch (Exception exception) {
+			_log.error(
+				"Unable to put settings for index " + indexName, exception);
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		CompanyIndexFactoryHelper.class);
+		CompanyIndexHelper.class);
 
+	private ServiceTrackerList<CompanyIndexConfigurationContributor>
+		_companyIndexConfigurationContributorServiceTrackerList;
 	private ServiceTrackerList<CompanyIndexListener>
 		_companyIndexListenerServiceTrackerList;
 
@@ -448,9 +490,6 @@ public class CompanyIndexFactoryHelper {
 
 	@Reference
 	private ElasticsearchConnectionManager _elasticsearchConnectionManager;
-
-	private ServiceTrackerList<IndexConfigurationContributor>
-		_indexConfigurationContributorServiceTrackerList;
 
 	@Reference
 	private IndexNameBuilder _indexNameBuilder;

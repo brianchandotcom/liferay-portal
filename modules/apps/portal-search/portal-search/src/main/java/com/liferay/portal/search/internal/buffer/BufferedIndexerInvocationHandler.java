@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.search.Bufferable;
 import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.StrictObjectReindexThreadLocal;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.search.configuration.IndexerRegistryConfiguration;
@@ -87,7 +88,16 @@ public class BufferedIndexerInvocationHandler implements InvocationHandler {
 		}
 
 		if (args[0] instanceof ClassedModel) {
-			if (Objects.equals(method.getName(), "reindex")) {
+			if (StrictObjectReindexThreadLocal.isStrictObjectReindex()) {
+				MethodKey methodKey = new MethodKey(
+					Indexer.class, method.getName(), Object.class);
+
+				IndexerRequest indexerRequest = new IndexerRequest(
+					methodKey.getMethod(), (ClassedModel)args[0], _indexer);
+
+				_bufferRequest(indexerRequest, indexerRequestBuffer);
+			}
+			else if (Objects.equals(method.getName(), "reindex")) {
 				MethodKey methodKey = new MethodKey(
 					Indexer.class, method.getName(), String.class, Long.TYPE);
 

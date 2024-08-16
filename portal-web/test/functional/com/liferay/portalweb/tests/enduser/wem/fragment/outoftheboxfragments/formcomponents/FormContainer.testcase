@@ -64,6 +64,8 @@ definition {
 		}
 
 		task ("When the page creator tries to add a Heading fragment into Form Container") {
+			PageEditor.gotoTab(tabName = "Fragments and Widgets");
+
 			DragAndDrop.javaScriptDragAndDropToObject(
 				index = 1,
 				key_collectionName = "Basic Components",

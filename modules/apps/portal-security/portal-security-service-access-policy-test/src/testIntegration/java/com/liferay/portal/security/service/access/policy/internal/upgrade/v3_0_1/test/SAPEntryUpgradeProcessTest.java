@@ -8,6 +8,12 @@ package com.liferay.portal.security.service.access.policy.internal.upgrade.v3_0_
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -59,11 +65,21 @@ public class SAPEntryUpgradeProcessTest {
 
 		_runUpgrade();
 
-		Assert.assertNotNull(
-			_sapEntryLocalService.fetchSAPEntry(
-				company.getCompanyId(),
-				_sapConfiguration.
-					systemRESTClientTemplateObjectSAPEntryName()));
+		sapEntry = _sapEntryLocalService.fetchSAPEntry(
+			company.getCompanyId(),
+			_sapConfiguration.systemRESTClientTemplateObjectSAPEntryName());
+
+		Assert.assertNotNull(sapEntry);
+
+		Role guestRole = RoleLocalServiceUtil.getRole(
+			company.getCompanyId(), RoleConstants.GUEST);
+
+		Assert.assertTrue(
+			_resourcePermissionLocalService.hasResourcePermission(
+				company.getCompanyId(), SAPEntry.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(sapEntry.getSapEntryId()), guestRole.getRoleId(),
+				ActionKeys.VIEW));
 	}
 
 	private void _runUpgrade() throws Exception {
@@ -85,6 +101,9 @@ public class SAPEntryUpgradeProcessTest {
 		filter = "(&(component.name=com.liferay.portal.security.service.access.policy.internal.upgrade.registry.SAPServiceUpgradeStepRegistrator))"
 	)
 	private static UpgradeStepRegistrator _upgradeStepRegistrator;
+
+	@Inject
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
 
 	private volatile SAPConfiguration _sapConfiguration =
 		ConfigurableUtil.createConfigurable(

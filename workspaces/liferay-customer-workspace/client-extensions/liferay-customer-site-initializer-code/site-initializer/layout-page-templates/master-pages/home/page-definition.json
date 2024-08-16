@@ -645,6 +645,12 @@
 	},
 	"settings": {
 		"colorSchemeName": "01",
+		"globalCSSClientExtensions": [
+			{
+				"externalReferenceCode": "LXC:liferay-customer-global-css",
+				"name": "Liferay Customer Global CSS"
+			}
+		],
 		"styleBook": {
 			"key": "customer-portal",
 			"name": "Customer Portal"

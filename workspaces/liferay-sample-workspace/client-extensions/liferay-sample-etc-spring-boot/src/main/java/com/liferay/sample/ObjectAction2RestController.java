@@ -6,6 +6,10 @@
 package com.liferay.sample;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.client.extension.util.spring.boot.BaseRestController;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import org.json.JSONObject;
 

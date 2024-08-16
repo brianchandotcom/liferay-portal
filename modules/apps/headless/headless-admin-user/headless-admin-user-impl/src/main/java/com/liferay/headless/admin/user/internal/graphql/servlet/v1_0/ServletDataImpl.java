@@ -321,6 +321,16 @@ public class ServletDataImpl implements ServletData {
 							AccountGroupResourceImpl.class,
 							"postAccountAccountGroupsPageExportBatch"));
 					put(
+						"mutation#deleteAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByExternalReferenceCode",
+						new ObjectValuePair<>(
+							AccountRoleResourceImpl.class,
+							"deleteAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByExternalReferenceCode"));
+					put(
+						"mutation#createAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByExternalReferenceCode",
+						new ObjectValuePair<>(
+							AccountRoleResourceImpl.class,
+							"postAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByExternalReferenceCode"));
+					put(
 						"mutation#deleteAccountByExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCode",
 						new ObjectValuePair<>(
 							AccountRoleResourceImpl.class,
@@ -335,6 +345,16 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							AccountRoleResourceImpl.class,
 							"postAccountAccountRoleByExternalReferenceCode"));
+					put(
+						"mutation#deleteAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByEmailAddress",
+						new ObjectValuePair<>(
+							AccountRoleResourceImpl.class,
+							"deleteAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByEmailAddress"));
+					put(
+						"mutation#createAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByEmailAddress",
+						new ObjectValuePair<>(
+							AccountRoleResourceImpl.class,
+							"postAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByEmailAddress"));
 					put(
 						"mutation#deleteAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress",
 						new ObjectValuePair<>(

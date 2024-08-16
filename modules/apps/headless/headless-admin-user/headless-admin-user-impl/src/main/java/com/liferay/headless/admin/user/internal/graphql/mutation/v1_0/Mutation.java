@@ -690,6 +690,58 @@ public class Mutation {
 		description = "Unassigns account users by external reference code from the account role"
 	)
 	public boolean
+			deleteAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByExternalReferenceCode(
+				@GraphQLName("accountExternalReferenceCode") String
+					accountExternalReferenceCode,
+				@GraphQLName("accountRoleExternalReferenceCode") String
+					accountRoleExternalReferenceCode,
+				@GraphQLName("externalReferenceCode") String
+					externalReferenceCode)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_accountRoleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			accountRoleResource ->
+				accountRoleResource.
+					deleteAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByExternalReferenceCode(
+						accountExternalReferenceCode,
+						accountRoleExternalReferenceCode,
+						externalReferenceCode));
+
+		return true;
+	}
+
+	@GraphQLField(
+		description = "Assigns account users by external reference code to the account role"
+	)
+	public boolean
+			createAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByExternalReferenceCode(
+				@GraphQLName("accountExternalReferenceCode") String
+					accountExternalReferenceCode,
+				@GraphQLName("accountRoleExternalReferenceCode") String
+					accountRoleExternalReferenceCode,
+				@GraphQLName("externalReferenceCode") String
+					externalReferenceCode)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_accountRoleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			accountRoleResource ->
+				accountRoleResource.
+					postAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByExternalReferenceCode(
+						accountExternalReferenceCode,
+						accountRoleExternalReferenceCode,
+						externalReferenceCode));
+
+		return true;
+	}
+
+	@GraphQLField(
+		description = "Unassigns account users by external reference code from the account role"
+	)
+	public boolean
 			deleteAccountByExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCode(
 				@GraphQLName("accountExternalReferenceCode") String
 					accountExternalReferenceCode,
@@ -747,6 +799,54 @@ public class Mutation {
 				accountRoleResource.
 					postAccountAccountRoleByExternalReferenceCode(
 						externalReferenceCode, accountRole));
+	}
+
+	@GraphQLField(
+		description = "Unassigns account users by email address from the account role"
+	)
+	public boolean
+			deleteAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByEmailAddress(
+				@GraphQLName("externalReferenceCode") String
+					externalReferenceCode,
+				@GraphQLName("accountRoleExternalReferenceCode") String
+					accountRoleExternalReferenceCode,
+				@GraphQLName("emailAddress") String emailAddress)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_accountRoleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			accountRoleResource ->
+				accountRoleResource.
+					deleteAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByEmailAddress(
+						externalReferenceCode, accountRoleExternalReferenceCode,
+						emailAddress));
+
+		return true;
+	}
+
+	@GraphQLField(
+		description = "Assigns account users by email address to the account role"
+	)
+	public boolean
+			createAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByEmailAddress(
+				@GraphQLName("externalReferenceCode") String
+					externalReferenceCode,
+				@GraphQLName("accountRoleExternalReferenceCode") String
+					accountRoleExternalReferenceCode,
+				@GraphQLName("emailAddress") String emailAddress)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_accountRoleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			accountRoleResource ->
+				accountRoleResource.
+					postAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByEmailAddress(
+						externalReferenceCode, accountRoleExternalReferenceCode,
+						emailAddress));
+
+		return true;
 	}
 
 	@GraphQLField(

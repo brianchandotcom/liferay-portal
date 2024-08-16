@@ -49,6 +49,20 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface AccountRoleResource {
 
 	public void
+			deleteAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByExternalReferenceCode(
+				String accountExternalReferenceCode,
+				String accountRoleExternalReferenceCode,
+				String externalReferenceCode)
+		throws Exception;
+
+	public void
+			postAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByExternalReferenceCode(
+				String accountExternalReferenceCode,
+				String accountRoleExternalReferenceCode,
+				String externalReferenceCode)
+		throws Exception;
+
+	public void
 			deleteAccountByExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCode(
 				String accountExternalReferenceCode, Long accountRoleId,
 				String externalReferenceCode)
@@ -73,6 +87,18 @@ public interface AccountRoleResource {
 
 	public AccountRole postAccountAccountRoleByExternalReferenceCode(
 			String externalReferenceCode, AccountRole accountRole)
+		throws Exception;
+
+	public void
+			deleteAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByEmailAddress(
+				String externalReferenceCode,
+				String accountRoleExternalReferenceCode, String emailAddress)
+		throws Exception;
+
+	public void
+			postAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByEmailAddress(
+				String externalReferenceCode,
+				String accountRoleExternalReferenceCode, String emailAddress)
 		throws Exception;
 
 	public void

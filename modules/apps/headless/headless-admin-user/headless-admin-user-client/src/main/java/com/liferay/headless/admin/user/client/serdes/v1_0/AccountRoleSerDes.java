@@ -84,6 +84,20 @@ public class AccountRoleSerDes {
 			sb.append("\"");
 		}
 
+		if (accountRole.getExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(accountRole.getExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (accountRole.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -160,6 +174,15 @@ public class AccountRoleSerDes {
 				"displayName", String.valueOf(accountRole.getDisplayName()));
 		}
 
+		if (accountRole.getExternalReferenceCode() == null) {
+			map.put("externalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"externalReferenceCode",
+				String.valueOf(accountRole.getExternalReferenceCode()));
+		}
+
 		if (accountRole.getId() == null) {
 			map.put("id", null);
 		}
@@ -208,6 +231,11 @@ public class AccountRoleSerDes {
 			else if (Objects.equals(jsonParserFieldName, "displayName")) {
 				return false;
 			}
+			else if (Objects.equals(
+						jsonParserFieldName, "externalReferenceCode")) {
+
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
 				return false;
 			}
@@ -240,6 +268,14 @@ public class AccountRoleSerDes {
 			else if (Objects.equals(jsonParserFieldName, "displayName")) {
 				if (jsonParserFieldValue != null) {
 					accountRole.setDisplayName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "externalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					accountRole.setExternalReferenceCode(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {

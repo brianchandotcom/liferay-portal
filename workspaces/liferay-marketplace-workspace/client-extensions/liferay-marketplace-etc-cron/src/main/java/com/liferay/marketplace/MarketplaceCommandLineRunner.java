@@ -39,6 +39,10 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class MarketplaceCommandLineRunner implements CommandLineRunner {
 
 	public void run(String... args) throws Exception {
+		if (_log.isInfoEnabled()) {
+			_log.info("Start processing Marketplace CronJob");
+		}
+
 		_processInProgressTrials();
 
 		_processOnHoldTrials();
@@ -183,12 +187,20 @@ public class MarketplaceCommandLineRunner implements CommandLineRunner {
 		Page<Order> page = _getOrdersPage(_ORDER_STATUS_ON_HOLD);
 
 		if (page.getTotalCount() == 0) {
+			if (_log.isInfoEnabled()) {
+				_log.info("No Trials on hold to process");
+			}
+
 			return;
 		}
 
 		JSONObject availabilityJSONObject = _getAvailabilityJSONObject();
 
 		if (!availabilityJSONObject.getBoolean("active")) {
+			if (_log.isInfoEnabled()) {
+				_log.info("No Trials seats to process");
+			}
+
 			return;
 		}
 
@@ -196,6 +208,10 @@ public class MarketplaceCommandLineRunner implements CommandLineRunner {
 
 		for (Order order : page.getItems()) {
 			if (available == 0) {
+				if (_log.isInfoEnabled()) {
+					_log.info("Trials seats limit reached");
+				}
+
 				break;
 			}
 

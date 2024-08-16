@@ -5,10 +5,8 @@
 
 package com.liferay.blogs.web.internal.portlet.action;
 
-import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.blogs.constants.BlogsPortletKeys;
 import com.liferay.blogs.web.internal.display.context.BlogsViewEntriesDisplayContext;
-import com.liferay.blogs.web.internal.display.context.BlogsViewEntryContentDisplayContext;
 import com.liferay.blogs.web.internal.display.context.BlogsViewImagesDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -47,13 +45,6 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		if (Objects.equals(
 				_getPortletId(renderRequest), BlogsPortletKeys.BLOGS)) {
 
-			renderRequest.setAttribute(
-				BlogsViewEntryContentDisplayContext.class.getName(),
-				new BlogsViewEntryContentDisplayContext(
-					_assetDisplayPageFriendlyURLProvider,
-					_portal.getLiferayPortletRequest(renderRequest),
-					_portal.getLiferayPortletResponse(renderResponse)));
-
 			return "/blogs/view.jsp";
 		}
 
@@ -78,10 +69,6 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 		return portletDisplay.getPortletName();
 	}
-
-	@Reference
-	private AssetDisplayPageFriendlyURLProvider
-		_assetDisplayPageFriendlyURLProvider;
 
 	@Reference
 	private HtmlParser _htmlParser;

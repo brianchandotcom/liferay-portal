@@ -251,17 +251,31 @@ test.describe('Page Contents Panel', () => {
 
 		await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
-		// Go to Page Contents panel and edit inline text
+		// Go to Page Contents panel
 
 		await pageEditorPage.goToSidebarTab('Page Content');
 
-		await page.getByLabel('Edit Text Heading Example').click();
+		// Hover the content and check that the fragment is hovered
+
+		const content = page.getByLabel('Edit Text Heading Example');
+
+		await content.hover();
+
+		const headingFragment = page.locator('.component-heading');
+
+		await expect(headingFragment).toHaveClass(
+			/page-editor__editable--content-hovered/
+		);
+
+		// Edit inline text
+
+		await content.click();
 
 		const editable = pageEditorPage.getEditable(headingId, 'element-text');
 
 		await editable.locator('.cke_editable_inline').waitFor();
 
-		// Clear current content and fill with new one
+		// Clear current content text and fill with new one
 
 		await page.keyboard.press('Control+KeyA');
 		await page.keyboard.press('Backspace');

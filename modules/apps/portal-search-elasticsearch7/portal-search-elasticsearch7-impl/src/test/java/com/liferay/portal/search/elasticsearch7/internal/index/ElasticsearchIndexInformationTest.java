@@ -71,6 +71,7 @@ public class ElasticsearchIndexInformationTest {
 
 	@After
 	public void tearDown() {
+		_companyIndexFactoryFixture.deleteIndices();
 		_companyIndexFactoryFixture.tearDown();
 	}
 

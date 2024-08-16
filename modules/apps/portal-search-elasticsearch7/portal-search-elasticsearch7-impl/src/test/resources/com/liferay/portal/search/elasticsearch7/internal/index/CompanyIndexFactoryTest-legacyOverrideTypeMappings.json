@@ -1,0 +1,21 @@
+{
+	"LiferayDocumentType": {
+		"dynamic_templates": [
+			{
+				"template_double": {
+					"mapping": {
+						"store": true,
+						"type": "integer"
+					},
+					"match": "*_double"
+				}
+			}
+		],
+		"properties": {
+			"subtitle": {
+				"store": true,
+				"type": "keyword"
+			}
+		}
+	}
+}

@@ -9,6 +9,7 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.search.SearchEngine;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration;
@@ -19,7 +20,7 @@ import com.liferay.portal.search.elasticsearch7.internal.connection.Elasticsearc
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchConnectionFixture;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchConnectionManager;
 import com.liferay.portal.search.elasticsearch7.internal.index.CompanyIndexFactory;
-import com.liferay.portal.search.elasticsearch7.internal.index.CompanyIndexFactoryHelper;
+import com.liferay.portal.search.elasticsearch7.internal.index.CompanyIndexHelper;
 import com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.ElasticsearchEngineAdapterFixture;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.index.IndexNameBuilder;
@@ -103,11 +104,11 @@ public class ElasticsearchSearchEngineFixture implements SearchEngineFixture {
 			_companyIndexFactory = null;
 		}
 
-		if (_companyIndexFactoryHelper != null) {
+		if (_companyIndexHelper != null) {
 			ReflectionTestUtil.invoke(
-				_companyIndexFactoryHelper, "deactivate", new Class<?>[0]);
+				_companyIndexHelper, "deactivate", new Class<?>[0]);
 
-			_companyIndexFactoryHelper = null;
+			_companyIndexHelper = null;
 		}
 
 		if (_frameworkUtilMockedStatic != null) {
@@ -123,33 +124,33 @@ public class ElasticsearchSearchEngineFixture implements SearchEngineFixture {
 
 		_companyIndexFactory = new CompanyIndexFactory();
 
-		_companyIndexFactoryHelper = new CompanyIndexFactoryHelper();
+		_companyIndexHelper = new CompanyIndexHelper();
 
 		ReflectionTestUtil.setFieldValue(
-			_companyIndexFactoryHelper, "_elasticsearchConfigurationWrapper",
+			_companyIndexHelper, "_elasticsearchConfigurationWrapper",
 			elasticsearchConfigurationWrapper);
 		ReflectionTestUtil.setFieldValue(
-			_companyIndexFactoryHelper, "_indexNameBuilder", indexNameBuilder);
+			_companyIndexHelper, "_indexNameBuilder", indexNameBuilder);
 		ReflectionTestUtil.setFieldValue(
-			_companyIndexFactoryHelper, "_jsonFactory", new JSONFactoryImpl());
+			_companyIndexHelper, "_jsonFactory", new JSONFactoryImpl());
 
 		ReflectionTestUtil.invoke(
-			_companyIndexFactoryHelper, "activate",
+			_companyIndexHelper, "activate",
 			new Class<?>[] {BundleContext.class},
 			SystemBundleUtil.getBundleContext());
 
 		ReflectionTestUtil.setFieldValue(
-			_companyIndexFactory, "_companyIndexFactoryHelper",
-			_companyIndexFactoryHelper);
+			_companyIndexFactory, "_companyIndexHelper", _companyIndexHelper);
 
+		ReflectionTestUtil.setFieldValue(
+			_companyIndexFactory, "_companyLocalService",
+			Mockito.mock(CompanyLocalService.class));
 		ReflectionTestUtil.setFieldValue(
 			_companyIndexFactory, "_elasticsearchConfigurationWrapper",
 			elasticsearchConfigurationWrapper);
 
 		ReflectionTestUtil.invoke(
-			_companyIndexFactory, "activate",
-			new Class<?>[] {BundleContext.class},
-			SystemBundleUtil.getBundleContext());
+			_companyIndexFactory, "activate", new Class<?>[0]);
 
 		return _companyIndexFactory;
 	}
@@ -275,7 +276,7 @@ public class ElasticsearchSearchEngineFixture implements SearchEngineFixture {
 	}
 
 	private CompanyIndexFactory _companyIndexFactory;
-	private CompanyIndexFactoryHelper _companyIndexFactoryHelper;
+	private CompanyIndexHelper _companyIndexHelper;
 	private final ElasticsearchConnectionFixture
 		_elasticsearchConnectionFixture;
 	private ElasticsearchConnectionManager _elasticsearchConnectionManager;

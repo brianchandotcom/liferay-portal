@@ -40,7 +40,7 @@ public class SingleFieldFixture {
 			_restHighLevelClient, _field, _createQueryBuilder(text), expected);
 	}
 
-	public void indexDocument(String value) {
+	public void indexDocument(Object value) {
 		IndexRequest indexRequest = Requests.indexRequest(_index);
 
 		indexRequest.source(_field, value);

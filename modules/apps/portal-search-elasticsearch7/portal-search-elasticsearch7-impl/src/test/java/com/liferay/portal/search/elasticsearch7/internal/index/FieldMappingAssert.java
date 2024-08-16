@@ -92,6 +92,10 @@ public class FieldMappingAssert {
 	private static String _getFieldMappingMetadataValue(
 		FieldMappingMetadata fieldMappingMetadata, String field, String key) {
 
+		if (fieldMappingMetadata == null) {
+			return null;
+		}
+
 		Map<String, Object> mappings = fieldMappingMetadata.sourceAsMap();
 
 		Map<String, Object> mapping = (Map<String, Object>)mappings.get(field);

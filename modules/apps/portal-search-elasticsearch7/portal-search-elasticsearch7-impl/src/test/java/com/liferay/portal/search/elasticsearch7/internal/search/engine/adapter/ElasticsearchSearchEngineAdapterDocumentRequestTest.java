@@ -17,7 +17,7 @@ import com.liferay.portal.search.elasticsearch7.internal.connection.Elasticsearc
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.elasticsearch7.internal.document.DefaultElasticsearchDocumentFactory;
 import com.liferay.portal.search.elasticsearch7.internal.document.ElasticsearchDocumentFactory;
-import com.liferay.portal.search.elasticsearch7.internal.index.constants.LiferayTypeMappingsConstants;
+import com.liferay.portal.search.elasticsearch7.internal.index.constants.IndexMappingsConstants;
 import com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.document.DocumentRequestExecutorFixture;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentItemResponse;
@@ -118,7 +118,7 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 			_INDEX_NAME, document1);
 
 		indexDocumentRequest1.setType(
-			LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE);
+			IndexMappingsConstants.LIFERAY_DOCUMENT_TYPE);
 
 		BulkDocumentRequest bulkDocumentRequest1 = new BulkDocumentRequest();
 
@@ -133,7 +133,7 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 			_INDEX_NAME, document2);
 
 		indexDocumentRequest2.setType(
-			LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE);
+			IndexMappingsConstants.LIFERAY_DOCUMENT_TYPE);
 
 		bulkDocumentRequest1.addBulkableDocumentRequest(indexDocumentRequest2);
 
@@ -163,7 +163,7 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 			_INDEX_NAME, "1");
 
 		deleteDocumentRequest.setType(
-			LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE);
+			IndexMappingsConstants.LIFERAY_DOCUMENT_TYPE);
 
 		BulkDocumentRequest bulkDocumentRequest2 = new BulkDocumentRequest();
 
@@ -178,7 +178,7 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 			_INDEX_NAME, "2", document2Update);
 
 		updateDocumentRequest.setType(
-			LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE);
+			IndexMappingsConstants.LIFERAY_DOCUMENT_TYPE);
 
 		bulkDocumentRequest2.addBulkableDocumentRequest(updateDocumentRequest);
 
@@ -227,7 +227,7 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 			_INDEX_NAME, document1);
 
 		indexDocumentRequest1.setType(
-			LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE);
+			IndexMappingsConstants.LIFERAY_DOCUMENT_TYPE);
 
 		BulkDocumentRequest bulkDocumentRequest1 = new BulkDocumentRequest();
 
@@ -241,7 +241,7 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 			_INDEX_NAME, document2);
 
 		indexDocumentRequest2.setType(
-			LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE);
+			IndexMappingsConstants.LIFERAY_DOCUMENT_TYPE);
 
 		bulkDocumentRequest1.addBulkableDocumentRequest(indexDocumentRequest2);
 
@@ -273,7 +273,7 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 			_INDEX_NAME, bulkDocumentItemResponse1.getId());
 
 		deleteDocumentRequest.setType(
-			LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE);
+			IndexMappingsConstants.LIFERAY_DOCUMENT_TYPE);
 
 		BulkDocumentRequest bulkDocumentRequest2 = new BulkDocumentRequest();
 
@@ -289,7 +289,7 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 			_INDEX_NAME, bulkDocumentItemResponse2.getId(), document2Update);
 
 		updateDocumentRequest.setType(
-			LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE);
+			IndexMappingsConstants.LIFERAY_DOCUMENT_TYPE);
 
 		bulkDocumentRequest2.addBulkableDocumentRequest(updateDocumentRequest);
 
@@ -370,7 +370,7 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 			_INDEX_NAME, id);
 
 		deleteDocumentRequest.setType(
-			LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE);
+			IndexMappingsConstants.LIFERAY_DOCUMENT_TYPE);
 
 		DeleteDocumentResponse deleteDocumentResponse =
 			_searchEngineAdapter.execute(deleteDocumentRequest);
@@ -678,7 +678,7 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 		indexRequest.id(id);
 		indexRequest.setRefreshPolicy(WriteRequest.RefreshPolicy.IMMEDIATE);
 		indexRequest.source(documentSource, XContentType.JSON);
-		indexRequest.type(LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE);
+		indexRequest.type(IndexMappingsConstants.LIFERAY_DOCUMENT_TYPE);
 
 		try {
 			_restHighLevelClient.index(indexRequest, RequestOptions.DEFAULT);
@@ -695,7 +695,7 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 			_INDEX_NAME, uid, document);
 
 		indexDocumentRequest.setType(
-			LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE);
+			IndexMappingsConstants.LIFERAY_DOCUMENT_TYPE);
 
 		return _searchEngineAdapter.execute(indexDocumentRequest);
 	}
@@ -707,7 +707,7 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 			_INDEX_NAME, uid, document);
 
 		updateDocumentRequest.setType(
-			LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE);
+			IndexMappingsConstants.LIFERAY_DOCUMENT_TYPE);
 
 		return _searchEngineAdapter.execute(updateDocumentRequest);
 	}
@@ -720,7 +720,7 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 
 		updateDocumentRequest.setScriptedUpsert(scriptedUpsert);
 		updateDocumentRequest.setType(
-			LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE);
+			IndexMappingsConstants.LIFERAY_DOCUMENT_TYPE);
 
 		return _searchEngineAdapter.execute(updateDocumentRequest);
 	}

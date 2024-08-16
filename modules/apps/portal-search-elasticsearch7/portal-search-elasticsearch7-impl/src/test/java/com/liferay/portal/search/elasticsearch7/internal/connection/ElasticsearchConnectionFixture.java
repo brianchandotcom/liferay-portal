@@ -7,6 +7,7 @@ package com.liferay.portal.search.elasticsearch7.internal.connection;
 
 import com.liferay.petra.process.local.LocalProcessExecutor;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.JavaDetector;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -21,13 +22,21 @@ import com.liferay.portal.search.elasticsearch7.internal.sidecar.Sidecar;
 import com.liferay.portal.search.elasticsearch7.internal.sidecar.SidecarManager;
 import com.liferay.portal.util.PropsImpl;
 
+import java.io.IOException;
+
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import java.util.Collections;
 import java.util.Map;
 
+import org.elasticsearch.action.ingest.PutPipelineRequest;
+import org.elasticsearch.client.IngestClient;
+import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.common.bytes.BytesArray;
+import org.elasticsearch.xcontent.XContentType;
 
 import org.mockito.Mockito;
 
@@ -92,6 +101,8 @@ public class ElasticsearchConnectionFixture
 		createElasticsearchConnection();
 
 		_elasticsearchConnection.connect();
+
+		_putTimestampPipeline(getRestHighLevelClient());
 	}
 
 	public void destroyNode() {
@@ -221,6 +232,39 @@ public class ElasticsearchConnectionFixture
 
 	private void _deleteTmpDir() {
 		PathUtil.deleteDir(_workPath);
+	}
+
+	private void _putTimestampPipeline(
+		RestHighLevelClient restHighLevelClient) {
+
+		IngestClient ingestClient = restHighLevelClient.ingest();
+
+		String source = JSONUtil.put(
+			"description", "Adds timestamp to documents"
+		).put(
+			"processors",
+			JSONUtil.put(
+				JSONUtil.put(
+					"set",
+					JSONUtil.put(
+						"field", "_source.timestamp"
+					).put(
+						"value", "{{{_ingest.timestamp}}}"
+					)))
+		).toString();
+
+		PutPipelineRequest putPipelineRequest = new PutPipelineRequest(
+			"timestamp",
+			new BytesArray(source.getBytes(StandardCharsets.UTF_8)),
+			XContentType.JSON);
+
+		try {
+			ingestClient.putPipeline(
+				putPipelineRequest, RequestOptions.DEFAULT);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
 	}
 
 	private static final Path _TMP_PATH = Paths.get("tmp");

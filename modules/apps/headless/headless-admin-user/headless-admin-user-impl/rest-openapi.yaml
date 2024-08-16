@@ -232,6 +232,10 @@ components:
                     type: string
                 displayName:
                     type: string
+                externalReferenceCode:
+                    description:
+                        The optional external key of this account role.
+                    type: string
                 id:
                     format: int64
                     readOnly: true
@@ -1323,7 +1327,7 @@ components:
 info:
     description:
         "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
-        'com.liferay.headless.admin.user.client', and version '4.0.65'."
+        'com.liferay.headless.admin.user.client', and version '4.0.66'."
     license:
         name: "Apache 2.0"
         url: "http://www.apache.org/licenses/LICENSE-2.0.html"
@@ -1838,6 +1842,59 @@ paths:
                                     $ref: "#/components/schemas/AccountGroup"
                                 type: array
             tags: ["AccountGroup"]
+    "/accounts/by-external-reference-code/{accountExternalReferenceCode}/account-roles/by-external-reference-code/{accountRoleExternalReferenceCode}/user-accounts/by-external-reference-code/{externalReferenceCode}":
+        delete:
+            description:
+                Unassigns account users by external reference code from the account role
+            operationId: deleteAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: accountExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: accountRoleExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["AccountRole"]
+        post:
+            description:
+                Assigns account users by external reference code to the account role
+            operationId: postAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: accountExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: accountRoleExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["AccountRole"]
     "/accounts/by-external-reference-code/{accountExternalReferenceCode}/account-roles/{accountRoleId}/user-accounts/by-external-reference-code/{externalReferenceCode}":
         delete:
             # @review
@@ -2174,6 +2231,59 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/AccountRole"
                     # @review
+            tags: ["AccountRole"]
+    "/accounts/by-external-reference-code/{externalReferenceCode}/account-roles/by-external-reference-code/{accountRoleExternalReferenceCode}/user-accounts/by-email-address/{emailAddress}":
+        delete:
+            description:
+                Unassigns account users by email address from the account role
+            operationId: deleteAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByEmailAddress
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: accountRoleExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: emailAddress
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["AccountRole"]
+        post:
+            description:
+                Assigns account users by email address to the account role
+            operationId: postAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByEmailAddress
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: accountRoleExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: emailAddress
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
             tags: ["AccountRole"]
     "/accounts/by-external-reference-code/{externalReferenceCode}/account-roles/{accountRoleId}/user-accounts/by-email-address/{emailAddress}":
         delete:

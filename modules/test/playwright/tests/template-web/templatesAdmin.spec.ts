@@ -9,6 +9,7 @@ import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {templatesPageTest} from '../../fixtures/templatesPageTest';
 import getRandomString from '../../utils/getRandomString';
+import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
 
 const test = mergeTests(isolatedSiteTest, loginTest(), templatesPageTest);
 
@@ -57,5 +58,67 @@ test(
 				name: `${informationTemplateName} (Copy)`,
 			})
 		).not.toBeVisible();
+	}
+);
+
+test(
+	'Edit an information template',
+	{
+		tag: '@LPS-124478',
+	},
+	async ({page, site, templatesPage}) => {
+
+		// Go to templates administration
+
+		await templatesPage.goto(site.friendlyUrlPath);
+
+		// Create information template
+
+		const informationTemplateName = getRandomString();
+
+		await templatesPage.createInformationTemplate({
+			itemSubtype: 'Basic Web Content',
+			itemType: 'Web Content Article',
+			name: informationTemplateName,
+		});
+
+		// Add title and description to script
+
+		await page.getByRole('button', {name: 'Title'}).click();
+		await page.getByRole('button', {name: 'Description'}).click();
+
+		// Check properties tab
+
+		await page.getByLabel('Properties').click();
+
+		await expect(
+			page.getByText('Web Content Article', {exact: true})
+		).toBeVisible();
+		await expect(
+			page.locator('p').filter({hasText: 'Basic Web Content'})
+		).toBeVisible();
+		await expect(page.getByLabel('Template Key')).toBeVisible();
+		await expect(page.getByLabel('URL', {exact: true})).toBeVisible();
+		await expect(
+			page.getByLabel('WebDAV URL', {exact: true})
+		).toBeVisible();
+
+		// Save information template
+
+		await page.getByRole('button', {exact: true, name: 'Save'}).click();
+		await waitForSuccessAlert(page);
+
+		// Edit
+
+		await page
+			.getByRole('link', {exact: true, name: informationTemplateName})
+			.click();
+
+		await expect(page.locator('.ddm_template_editor__App')).toContainText(
+			'${JournalArticle_title.getData()}'
+		);
+		await expect(page.locator('.ddm_template_editor__App')).toContainText(
+			'${JournalArticle_description.getData()}'
+		);
 	}
 );

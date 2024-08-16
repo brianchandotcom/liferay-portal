@@ -853,7 +853,7 @@ definition {
 		task ("Assert can not add a Paragraph fragment to outside of drop zone") {
 			WaitForPageLoad();
 
-			Navigator.gotoNavTab(navTab = "Fragments");
+			PageEditor.gotoTab(tabName = "Fragments and Widgets");
 
 			PageEditor.expandFragmentCollection(collectionName = "Basic Components");
 

@@ -153,6 +153,7 @@ PropertiesLongLinesCheck | .eslintignore, .prettierignore or .properties | Finds
 PropertiesMultiLineValuesOrderCheck | .eslintignore, .prettierignore or .properties | Verifies that property with multiple values is not on a single line. |
 PropertiesSQLStylingCheck | .eslintignore, .prettierignore or .properties | Applies rules to enforce consistency in code style. |
 PropertiesStylingCheck | .eslintignore, .prettierignore or .properties | Applies rules to enforce consistency in code style. |
+PropertiesTestFileCheck | .eslintignore, .prettierignore or .properties | Checks the order of properties in `test.properties` file. |
 PropertiesWhitespaceCheck | .eslintignore, .prettierignore or .properties | Finds missing and unnecessary whitespace in `.properties` files. |
 PythonClassesAndMethodsOrderCheck | .py | Checks the order of classes and methods. |
 PythonImportsCheck | .py | Sorts and groups imports in `.py` files. |

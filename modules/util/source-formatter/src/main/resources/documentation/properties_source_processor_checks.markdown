@@ -28,6 +28,7 @@ PropertiesServiceKeysCheck | [Bug Prevention](bug_prevention_checks.markdown#bug
 PropertiesSourceFormatterContentCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Performs several checks on `source-formatter.properties` file. |
 PropertiesSourceFormatterFileCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Performs several checks on `source-formatter.properties` file. |
 PropertiesStylingCheck | [Styling](styling_checks.markdown#styling-checks) | Applies rules to enforce consistency in code style. |
+PropertiesTestFileCheck | [Styling](styling_checks.markdown#styling-checks) | Checks the order of properties in `test.properties` file. |
 [PropertiesUpgradeLiferayPluginPackageFileCheck](check/properties_upgrade_liferay_plugin_package_file_check.markdown#propertiesupgradeliferaypluginpackagefilecheck) | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Performs several upgrade checks in `liferay-plugin-package.properties` file. |
 PropertiesUpgradeLiferayPluginPackageLiferayVersionsCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Validates and upgrades the version in `liferay-plugin-package.properties` file. |
 PropertiesVerifyPropertiesCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Finds usage of legacy properties in `portal.properties` or `system.properties`. |

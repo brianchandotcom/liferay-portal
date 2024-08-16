@@ -37,3 +37,31 @@ test.describe('Data Set Manager with Feature Flag Enabled', () => {
 		});
 	});
 });
+
+export const disabledTest = mergeTests(
+	dataSetsPageTest,
+	featureFlagsTest({
+		'LPS-164563': false,
+	}),
+	loginTest()
+);
+
+disabledTest.describe('Data Set Manager with Feature Flag Disabled', () => {
+	disabledTest(
+		'Confirm Data Set is not present if FF is not enabled @LPS-188590',
+		async ({dataSetsPage, page}) => {
+			await test.step('Open application menu and go to control panel tab', async () => {
+				await dataSetsPage.applicationsMenuPage.goToControlPanel();
+			});
+
+			await test.step('Check that "Data Sets" is not displayed as a menu item', async () => {
+				await expect(
+					page.getByRole('menuitem', {
+						exact: true,
+						name: 'Data Sets',
+					})
+				).toBeHidden();
+			});
+		}
+	);
+});

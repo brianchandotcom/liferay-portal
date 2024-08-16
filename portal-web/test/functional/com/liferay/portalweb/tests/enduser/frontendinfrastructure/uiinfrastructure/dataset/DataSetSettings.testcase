@@ -402,23 +402,4 @@ definition {
 		}
 	}
 
-	@description = "LPS-188590 Confirm Data Set is not present if FF is not enabled"
-	@priority = 5
-	test DataSetNotDisplayedInObject {
-		property portal.acceptance = "true";
-
-		task ("When acess Control panel inside Portlet Menu") {
-			ApplicationsMenuHelper.openApplicationsMenu();
-
-			ApplicationsMenu.gotoPanel(panel = "Control Panel");
-		}
-
-		task ("Then the option Data Set is not visible above OBJECT") {
-			AssertElementNotPresent(
-				key_category = "Object",
-				key_portlet = "Data Sets",
-				locator1 = "ApplicationsMenu#PORTLET");
-		}
-	}
-
 }

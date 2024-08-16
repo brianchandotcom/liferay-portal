@@ -93,9 +93,9 @@ function deploy_client_extensions {
 
 				echo "Please replace \"${client_extension_name}\" in ${client_extensions_list_file} with one of the following:"
 
-				for each in ${client_extension_dir}
+				for dir in ${client_extension_dir}
 				do
-					echo "${each/${_PORTAL_PROJECT_DIR}\/workspaces\/}"
+					echo "${dir/${_PORTAL_PROJECT_DIR}\/workspaces\/}"
 				done
 
 				client_extension_dir=$(echo ${client_extension_dir} | awk '{print $1}')
@@ -160,9 +160,9 @@ function deploy_osgi_modules {
 
 				echo "Please replace \"${osgi_module_name}\" in ${osgi_modules_list_file} with one of the following:"
 
-				for each in ${osgi_module_dir}
+				for dir in ${osgi_module_dir}
 				do
-					echo "${each/${_PORTAL_PROJECT_DIR}\/modules\/}"
+					echo "${dir/${_PORTAL_PROJECT_DIR}\/modules\/}"
 				done
 
 				osgi_module_dir=$(echo ${osgi_module_dir} | awk '{print $1}')

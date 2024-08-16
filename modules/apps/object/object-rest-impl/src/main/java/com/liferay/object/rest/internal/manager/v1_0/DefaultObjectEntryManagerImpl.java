@@ -72,6 +72,9 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ResourceActionLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Base64;
@@ -99,6 +102,7 @@ import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedFieldsSupplier;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.permission.ModelPermissionsUtil;
 import com.liferay.portal.vulcan.util.ActionUtil;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
@@ -144,7 +148,14 @@ public class DefaultObjectEntryManagerImpl
 
 		ServiceContext serviceContext = ServiceContextUtil.createServiceContext(
 			dtoConverterContext.getLocale(), objectEntry,
-			dtoConverterContext.getUserId());
+			dtoConverterContext.getUserId(),
+			ModelPermissionsUtil.toModelPermissions(
+				objectDefinition.getCompanyId(), objectEntry.getPermissions(),
+				GetterUtil.getLong(objectEntry.getId()),
+				_getObjectEntryPermissionName(
+					objectDefinition.getObjectDefinitionId()),
+				_resourceActionLocalService, _resourcePermissionLocalService,
+				_roleLocalService));
 
 		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
 			_objectEntryService.addObjectEntry(
@@ -772,7 +783,7 @@ public class DefaultObjectEntryManagerImpl
 
 		ServiceContext serviceContext = ServiceContextUtil.createServiceContext(
 			dtoConverterContext.getLocale(), objectEntry,
-			dtoConverterContext.getUserId());
+			dtoConverterContext.getUserId(), null);
 
 		serviceBuilderObjectEntry = _objectEntryService.updateObjectEntry(
 			objectEntryId,
@@ -802,7 +813,7 @@ public class DefaultObjectEntryManagerImpl
 
 		ServiceContext serviceContext = ServiceContextUtil.createServiceContext(
 			dtoConverterContext.getLocale(), objectEntry,
-			dtoConverterContext.getUserId());
+			dtoConverterContext.getUserId(), null);
 
 		serviceContext.setCompanyId(companyId);
 
@@ -1806,6 +1817,15 @@ public class DefaultObjectEntryManagerImpl
 
 	@Reference
 	private Queries _queries;
+
+	@Reference
+	private ResourceActionLocalService _resourceActionLocalService;
+
+	@Reference
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Reference
+	private RoleLocalService _roleLocalService;
 
 	@Reference
 	private SearchRequestBuilderFactory _searchRequestBuilderFactory;

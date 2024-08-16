@@ -9,6 +9,7 @@ import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.dto.v1_0.Status;
 import com.liferay.object.service.ObjectEntryLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -22,12 +23,14 @@ import java.util.Locale;
 public class ServiceContextUtil {
 
 	public static ServiceContext createServiceContext(
-		Locale locale, ObjectEntry objectEntry, long userId) {
+		Locale locale, ObjectEntry objectEntry, long userId,
+		ModelPermissions modelPermissions) {
 
 		ServiceContext serviceContext = createServiceContext(
 			objectEntry, userId);
 
 		serviceContext.setLanguageId(LocaleUtil.toLanguageId(locale));
+		serviceContext.setModelPermissions(modelPermissions);
 
 		return serviceContext;
 	}

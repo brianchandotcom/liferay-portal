@@ -6,7 +6,11 @@
 package com.liferay.journal.web.internal.layout.display.page.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.friendly.url.configuration.FriendlyURLSeparatorCompanyConfiguration;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
@@ -67,6 +71,40 @@ public class JournalArticleLayoutDisplayPageProviderTest {
 	@After
 	public void tearDown() throws Exception {
 		ServiceContextThreadLocal.popServiceContext();
+	}
+
+	@Test
+	public void testGetLayoutDisplayPageObjectProviderJournalArticleWithExpiredArticleVersionInfoItemReference()
+		throws Exception {
+
+		JournalArticle originalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		JournalTestUtil.updateArticle(originalArticle);
+
+		JournalTestUtil.expireArticle(
+			originalArticle.getGroupId(), originalArticle,
+			originalArticle.getVersion());
+
+		AssetRendererFactory<?> assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(
+				JournalArticle.class);
+
+		AssetEntry assetEntry = assetRendererFactory.getAssetEntry(
+			JournalArticle.class.getName(),
+			originalArticle.getResourcePrimKey());
+
+		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+			new ClassPKInfoItemIdentifier(assetEntry.getClassPK());
+
+		classPKInfoItemIdentifier.setVersion(
+			String.valueOf(originalArticle.getVersion()));
+
+		Assert.assertNull(
+			_layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
+				new InfoItemReference(
+					assetEntry.getClassName(), classPKInfoItemIdentifier)));
 	}
 
 	@Test

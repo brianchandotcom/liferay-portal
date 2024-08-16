@@ -229,8 +229,7 @@ public class ObjectEntryEntityModel implements EntityModel {
 
 		for (ObjectField objectField : objectFields) {
 			if (objectField.isSystem() &&
-				!(objectDefinition.isModifiable() &&
-				  objectDefinition.isSystem())) {
+				!objectDefinition.isModifiableSystemObject()) {
 
 				continue;
 			}

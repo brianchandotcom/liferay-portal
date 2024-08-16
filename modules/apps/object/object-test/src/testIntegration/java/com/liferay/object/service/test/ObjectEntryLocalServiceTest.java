@@ -4050,7 +4050,7 @@ public class ObjectEntryLocalServiceTest {
 			ObjectDefinition objectDefinition, Group group)
 		throws Exception {
 
-		if (objectDefinition.isModifiable() && objectDefinition.isSystem()) {
+		if (objectDefinition.isModifiableSystemObject()) {
 			_addSystemObjectField(
 				new TextObjectFieldBuilder(
 				).labelMap(
@@ -4114,7 +4114,7 @@ public class ObjectEntryLocalServiceTest {
 
 		Map<String, Serializable> localizedValues = new HashMap<>();
 
-		if (objectDefinition.isModifiable() && objectDefinition.isSystem()) {
+		if (objectDefinition.isModifiableSystemObject()) {
 			localizedValues.put(
 				"longTextLocalized1_i18n",
 				HashMapBuilder.put(
@@ -4152,7 +4152,7 @@ public class ObjectEntryLocalServiceTest {
 
 		Map<String, Serializable> values = objectEntry.getValues();
 
-		if (objectDefinition.isModifiable() && objectDefinition.isSystem()) {
+		if (objectDefinition.isModifiableSystemObject()) {
 			Assert.assertEquals(
 				localizedValues.get("longTextLocalized1_i18n"),
 				values.get("longTextLocalized1_i18n"));

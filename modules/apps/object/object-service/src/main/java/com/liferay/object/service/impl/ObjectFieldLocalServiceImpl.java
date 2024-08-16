@@ -255,7 +255,7 @@ public class ObjectFieldLocalServiceImpl
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
 
-		if (objectDefinition.isModifiable() && objectDefinition.isSystem() &&
+		if (objectDefinition.isModifiableSystemObject() &&
 			!ObjectDefinitionUtil.isInvokerBundleAllowed()) {
 
 			throw new ObjectFieldSystemException(
@@ -267,9 +267,7 @@ public class ObjectFieldLocalServiceImpl
 		if (Validator.isNull(dbColumnName)) {
 			dbColumnName = name;
 
-			if (objectDefinition.isModifiable() &&
-				objectDefinition.isSystem()) {
-
+			if (objectDefinition.isModifiableSystemObject()) {
 				dbColumnName += StringPool.UNDERLINE;
 			}
 		}

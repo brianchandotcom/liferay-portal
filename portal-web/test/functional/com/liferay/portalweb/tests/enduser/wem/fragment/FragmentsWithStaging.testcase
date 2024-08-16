@@ -84,8 +84,6 @@ definition {
 	@description = "This is a test for LPS-167932. Fragments inside dropzones will be kept by data-lfr-drop-zone-id when new drop zone is added."
 	@priority = 3
 	test PersistFragmentsInPreviousDropZoneAfterAddingNewOne {
-		property custom.properties = "feature.flag.LPS-167932=true";
-
 		task ("Given a page designer has a fragment with dropzones on page") {
 			JSONFragment.addFragmentCollection(
 				groupKey = "Test Site Name-staging",

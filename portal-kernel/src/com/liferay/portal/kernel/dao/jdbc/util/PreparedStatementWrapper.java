@@ -78,8 +78,8 @@ public class PreparedStatementWrapper
 	}
 
 	@Override
-	public void setArray(int parameterIndex, Array x) throws SQLException {
-		_preparedStatement.setArray(parameterIndex, x);
+	public void setArray(int parameterIndex, Array array) throws SQLException {
+		_preparedStatement.setArray(parameterIndex, array);
 	}
 
 	@Override
@@ -106,10 +106,10 @@ public class PreparedStatementWrapper
 	}
 
 	@Override
-	public void setBigDecimal(int parameterIndex, BigDecimal x)
+	public void setBigDecimal(int parameterIndex, BigDecimal bigDecimal)
 		throws SQLException {
 
-		_preparedStatement.setBigDecimal(parameterIndex, x);
+		_preparedStatement.setBigDecimal(parameterIndex, bigDecimal);
 	}
 
 	@Override
@@ -136,8 +136,8 @@ public class PreparedStatementWrapper
 	}
 
 	@Override
-	public void setBlob(int parameterIndex, Blob x) throws SQLException {
-		_preparedStatement.setBlob(parameterIndex, x);
+	public void setBlob(int parameterIndex, Blob blob) throws SQLException {
+		_preparedStatement.setBlob(parameterIndex, blob);
 	}
 
 	@Override
@@ -156,18 +156,24 @@ public class PreparedStatementWrapper
 	}
 
 	@Override
-	public void setBoolean(int parameterIndex, boolean x) throws SQLException {
-		_preparedStatement.setBoolean(parameterIndex, x);
+	public void setBoolean(int parameterIndex, boolean booleanValue)
+		throws SQLException {
+
+		_preparedStatement.setBoolean(parameterIndex, booleanValue);
 	}
 
 	@Override
-	public void setByte(int parameterIndex, byte x) throws SQLException {
-		_preparedStatement.setByte(parameterIndex, x);
+	public void setByte(int parameterIndex, byte byteValue)
+		throws SQLException {
+
+		_preparedStatement.setByte(parameterIndex, byteValue);
 	}
 
 	@Override
-	public void setBytes(int parameterIndex, byte[] x) throws SQLException {
-		_preparedStatement.setBytes(parameterIndex, x);
+	public void setBytes(int parameterIndex, byte[] byteArray)
+		throws SQLException {
+
+		_preparedStatement.setBytes(parameterIndex, byteArray);
 	}
 
 	@Override
@@ -194,8 +200,8 @@ public class PreparedStatementWrapper
 	}
 
 	@Override
-	public void setClob(int parameterIndex, Clob x) throws SQLException {
-		_preparedStatement.setClob(parameterIndex, x);
+	public void setClob(int parameterIndex, Clob clob) throws SQLException {
+		_preparedStatement.setClob(parameterIndex, clob);
 	}
 
 	@Override
@@ -211,35 +217,41 @@ public class PreparedStatementWrapper
 	}
 
 	@Override
-	public void setDate(int parameterIndex, Date x) throws SQLException {
-		_preparedStatement.setDate(parameterIndex, x);
+	public void setDate(int parameterIndex, Date date) throws SQLException {
+		_preparedStatement.setDate(parameterIndex, date);
 	}
 
 	@Override
-	public void setDate(int parameterIndex, Date x, Calendar cal)
+	public void setDate(int parameterIndex, Date date, Calendar cal)
 		throws SQLException {
 
-		_preparedStatement.setDate(parameterIndex, x, cal);
+		_preparedStatement.setDate(parameterIndex, date, cal);
 	}
 
 	@Override
-	public void setDouble(int parameterIndex, double x) throws SQLException {
-		_preparedStatement.setDouble(parameterIndex, x);
+	public void setDouble(int parameterIndex, double doubleValue)
+		throws SQLException {
+
+		_preparedStatement.setDouble(parameterIndex, doubleValue);
 	}
 
 	@Override
-	public void setFloat(int parameterIndex, float x) throws SQLException {
-		_preparedStatement.setFloat(parameterIndex, x);
+	public void setFloat(int parameterIndex, float floatValue)
+		throws SQLException {
+
+		_preparedStatement.setFloat(parameterIndex, floatValue);
 	}
 
 	@Override
-	public void setInt(int parameterIndex, int x) throws SQLException {
-		_preparedStatement.setInt(parameterIndex, x);
+	public void setInt(int parameterIndex, int intValue) throws SQLException {
+		_preparedStatement.setInt(parameterIndex, intValue);
 	}
 
 	@Override
-	public void setLong(int parameterIndex, long x) throws SQLException {
-		_preparedStatement.setLong(parameterIndex, x);
+	public void setLong(int parameterIndex, long longValue)
+		throws SQLException {
+
+		_preparedStatement.setLong(parameterIndex, longValue);
 	}
 
 	@Override
@@ -296,39 +308,44 @@ public class PreparedStatementWrapper
 	}
 
 	@Override
-	public void setObject(int parameterIndex, Object x) throws SQLException {
-		_preparedStatement.setObject(parameterIndex, x);
+	public void setObject(int parameterIndex, Object object)
+		throws SQLException {
+
+		_preparedStatement.setObject(parameterIndex, object);
 	}
 
 	@Override
-	public void setObject(int parameterIndex, Object x, int targetSqlType)
+	public void setObject(int parameterIndex, Object object, int targetSqlType)
 		throws SQLException {
 
-		_preparedStatement.setObject(parameterIndex, x, targetSqlType);
+		_preparedStatement.setObject(parameterIndex, object, targetSqlType);
 	}
 
 	@Override
 	public void setObject(
-			int parameterIndex, Object x, int targetSqlType, int scaleOrLength)
+			int parameterIndex, Object object, int targetSqlType,
+			int scaleOrLength)
 		throws SQLException {
 
 		_preparedStatement.setObject(
-			parameterIndex, x, targetSqlType, scaleOrLength);
+			parameterIndex, object, targetSqlType, scaleOrLength);
 	}
 
 	@Override
-	public void setRef(int parameterIndex, Ref x) throws SQLException {
-		_preparedStatement.setRef(parameterIndex, x);
+	public void setRef(int parameterIndex, Ref ref) throws SQLException {
+		_preparedStatement.setRef(parameterIndex, ref);
 	}
 
 	@Override
-	public void setRowId(int parameterIndex, RowId x) throws SQLException {
-		_preparedStatement.setRowId(parameterIndex, x);
+	public void setRowId(int parameterIndex, RowId rowId) throws SQLException {
+		_preparedStatement.setRowId(parameterIndex, rowId);
 	}
 
 	@Override
-	public void setShort(int parameterIndex, short x) throws SQLException {
-		_preparedStatement.setShort(parameterIndex, x);
+	public void setShort(int parameterIndex, short shortValue)
+		throws SQLException {
+
+		_preparedStatement.setShort(parameterIndex, shortValue);
 	}
 
 	@Override
@@ -339,34 +356,37 @@ public class PreparedStatementWrapper
 	}
 
 	@Override
-	public void setString(int parameterIndex, String x) throws SQLException {
-		_preparedStatement.setString(parameterIndex, x);
-	}
-
-	@Override
-	public void setTime(int parameterIndex, Time x) throws SQLException {
-		_preparedStatement.setTime(parameterIndex, x);
-	}
-
-	@Override
-	public void setTime(int parameterIndex, Time x, Calendar cal)
+	public void setString(int parameterIndex, String stringValue)
 		throws SQLException {
 
-		_preparedStatement.setTime(parameterIndex, x, cal);
+		_preparedStatement.setString(parameterIndex, stringValue);
 	}
 
 	@Override
-	public void setTimestamp(int parameterIndex, Timestamp x)
-		throws SQLException {
-
-		_preparedStatement.setTimestamp(parameterIndex, x);
+	public void setTime(int parameterIndex, Time time) throws SQLException {
+		_preparedStatement.setTime(parameterIndex, time);
 	}
 
 	@Override
-	public void setTimestamp(int parameterIndex, Timestamp x, Calendar cal)
+	public void setTime(int parameterIndex, Time time, Calendar cal)
 		throws SQLException {
 
-		_preparedStatement.setTimestamp(parameterIndex, x, cal);
+		_preparedStatement.setTime(parameterIndex, time, cal);
+	}
+
+	@Override
+	public void setTimestamp(int parameterIndex, Timestamp timestamp)
+		throws SQLException {
+
+		_preparedStatement.setTimestamp(parameterIndex, timestamp);
+	}
+
+	@Override
+	public void setTimestamp(
+			int parameterIndex, Timestamp timestamp, Calendar cal)
+		throws SQLException {
+
+		_preparedStatement.setTimestamp(parameterIndex, timestamp, cal);
 	}
 
 	@Override
@@ -379,8 +399,8 @@ public class PreparedStatementWrapper
 	}
 
 	@Override
-	public void setURL(int parameterIndex, URL x) throws SQLException {
-		_preparedStatement.setURL(parameterIndex, x);
+	public void setURL(int parameterIndex, URL url) throws SQLException {
+		_preparedStatement.setURL(parameterIndex, url);
 	}
 
 	@Override

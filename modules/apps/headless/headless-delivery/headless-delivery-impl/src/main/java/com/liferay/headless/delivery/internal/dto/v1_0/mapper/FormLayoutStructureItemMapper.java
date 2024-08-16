@@ -238,9 +238,9 @@ public class FormLayoutStructureItemMapper
 		FormStyledLayoutStructureItem formStyledLayoutStructureItem) {
 
 		if (Objects.equals(
-				formStyledLayoutStructureItem.getFormType(), "multi-step")) {
+				formStyledLayoutStructureItem.getFormType(), "multistep")) {
 
-			return FormConfig.FormType.MULTI_STEP;
+			return FormConfig.FormType.MULTISTEP;
 		}
 
 		return FormConfig.FormType.SIMPLE;

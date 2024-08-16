@@ -360,7 +360,7 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 					).put(
 						"classTypeId", "0"
 					).put(
-						"formType", "multi-step"
+						"formType", "multistep"
 					).put(
 						"numberOfSteps", 2
 					).toString(),

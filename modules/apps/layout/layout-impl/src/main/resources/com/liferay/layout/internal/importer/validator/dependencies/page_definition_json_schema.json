@@ -1648,7 +1648,7 @@
 				"formType": {
 					"enum": [
 						"simple",
-						"multi-step"
+						"multistep"
 					],
 					"title": "The multi step Schema",
 					"type": "string"

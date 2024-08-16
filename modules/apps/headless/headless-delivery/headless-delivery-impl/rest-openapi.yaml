@@ -3809,7 +3809,7 @@ components:
                             # @review
                             description:
                                 A flag that indicates whether the page form instance is multi step or not.
-                            enum: [simple, multi-step]
+                            enum: [simple, multistep]
                             type: string
                         numberOfSteps:
                             # @review

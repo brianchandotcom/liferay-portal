@@ -36,10 +36,10 @@ import org.opensearch.client.opensearch.indices.update_aliases.Action;
 public class AliasesFactory {
 
 	public AliasesFactory(
-		IndexHelper indexHelper,
+		CompanyIndexHelper companyIndexHelper,
 		OpenSearchIndicesClient openSearchIndicesClient) {
 
-		_indexHelper = indexHelper;
+		_companyIndexHelper = companyIndexHelper;
 		_openSearchIndicesClient = openSearchIndicesClient;
 	}
 
@@ -124,7 +124,8 @@ public class AliasesFactory {
 			baseIndexName, openSearchIndicesClient);
 
 		if (removeIndexNames.isEmpty() &&
-			_indexHelper.hasIndex(baseIndexName, openSearchIndicesClient)) {
+			_companyIndexHelper.hasIndex(
+				baseIndexName, openSearchIndicesClient)) {
 
 			removeIndexNames.add(baseIndexName);
 		}
@@ -143,7 +144,7 @@ public class AliasesFactory {
 
 	private static final Log _log = LogFactoryUtil.getLog(AliasesFactory.class);
 
-	private final IndexHelper _indexHelper;
+	private final CompanyIndexHelper _companyIndexHelper;
 	private final OpenSearchIndicesClient _openSearchIndicesClient;
 
 }

@@ -12,10 +12,10 @@ import org.opensearch.client.opensearch.indices.OpenSearchIndicesClient;
  */
 public interface IndexFactory {
 
-	public boolean createIndices(
+	public boolean deleteIndex(
 		long companyId, OpenSearchIndicesClient openSearchIndicesClient);
 
-	public boolean deleteIndices(
+	public boolean initializeIndex(
 		long companyId, OpenSearchIndicesClient openSearchIndicesClient);
 
 	public void registerCompanyId(long companyId);

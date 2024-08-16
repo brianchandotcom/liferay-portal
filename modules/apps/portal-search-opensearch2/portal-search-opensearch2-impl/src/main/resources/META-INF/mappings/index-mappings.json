@@ -1479,6 +1479,16 @@
 				},
 				"path_match": "text_embedding_1024*"
 			}
+		},
+		{
+			"template_": {
+				"mapping": {
+					"store": true,
+					"type": "text"
+				},
+				"match": "*",
+				"match_mapping_type": "string"
+			}
 		}
 	],
 	"properties": {

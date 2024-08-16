@@ -8,12 +8,12 @@ package com.liferay.portal.search.opensearch2.internal.index.constants;
 /**
  * @author André de Oliveira
  */
-public class MappingsConstants {
+public class IndexMappingsConstants {
 
-	public static final String LIFERAY_LEGACY_DOCUMENT_TYPE =
+	public static final String INDEX_MAPPINGS_FILE_NAME =
+		"/META-INF/mappings/index-mappings.json";
+
+	public static final String LEGACY_LIFERAY_DOCUMENT_TYPE =
 		"LiferayDocumentType";
-
-	public static final String LIFERAY_MAPPING_FILE_NAME =
-		"/META-INF/mappings/liferay-mappings.json";
 
 }

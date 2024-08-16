@@ -263,23 +263,23 @@ definition {
 	test VideoURLIsSavedWhenUsingNonDefaultLanguage {
 		var portalURL = PropsUtil.get("portal.url");
 
-		Navigator.openSpecificURL(url = "${portalURL}/ja");
+		Navigator.openSpecificURL(url = "${portalURL}/es");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		VideoShortcut.addCP(
-			localizedDocumentTypeName = "外部動画のショートカット",
-			localizedPublish = "保存",
-			localizedVideoURL = "動画URL",
+			localizedDocumentTypeName = "Acceso directo de vídeo externo",
+			localizedPublish = "Publicar",
+			localizedVideoURL = "URL del vídeo",
 			videoShortcutTitle = "DM Title",
 			videoURL = "https://www.facebook.com/Cristiano/videos/1710977485745946");
 
 		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "編集",
+			menuItem = "Editar",
 			rowEntry = "DM Title");
 
 		AssertTextEquals(
-			key_text = "動画URL",
+			key_text = "URL del vídeo",
 			locator1 = "TextInput#ANY",
 			value1 = "https://www.facebook.com/Cristiano/videos/1710977485745946");
 	}

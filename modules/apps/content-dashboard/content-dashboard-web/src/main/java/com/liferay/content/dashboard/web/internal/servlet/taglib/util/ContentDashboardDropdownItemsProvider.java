@@ -76,6 +76,20 @@ public class ContentDashboardDropdownItemsProvider {
 						).put(
 							"classPK", classPK
 						).put(
+							"contentPerformanceDataFetchURL",
+							ResourceURLBuilder.createResourceURL(
+								_liferayPortletResponse
+							).setBackURL(
+								_portal.getCurrentURL(_liferayPortletRequest)
+							).setParameter(
+								"className", infoItemReference.getClassName()
+							).setParameter(
+								"classPK", classPK
+							).setResourceID(
+								"/content_dashboard" +
+									"/get_content_performance_info"
+							).buildString()
+						).put(
 							"fetchURL",
 							ResourceURLBuilder.createResourceURL(
 								_liferayPortletResponse

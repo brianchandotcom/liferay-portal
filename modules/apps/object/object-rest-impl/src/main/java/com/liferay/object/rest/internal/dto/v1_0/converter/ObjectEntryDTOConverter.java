@@ -221,7 +221,13 @@ public class ObjectEntryDTOConverter
 							AssetTag.NAME_ACCESSOR);
 					});
 				setPermissions(
-					() -> _toPermissions(objectDefinition, objectEntry));
+					() -> {
+						if (!FeatureFlagManagerUtil.isEnabled("LPD-28799")) {
+							return null;
+						}
+
+						return _toPermissions(objectDefinition, objectEntry);
+					});
 				setProperties(
 					() -> _toProperties(
 						dtoConverterContext, objectDefinition, objectEntry));

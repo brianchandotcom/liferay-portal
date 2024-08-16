@@ -191,7 +191,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 /**
  * @author Luis Miguel Barcos
  */
-@FeatureFlags("LPS-164801")
+@FeatureFlags({"LPD-28799", "LPS-164801"})
 @RunWith(Arquillian.class)
 public class ObjectEntryResourceTest {
 
@@ -4660,8 +4660,25 @@ public class ObjectEntryResourceTest {
 
 		_objectEntry1 = ObjectEntryTestUtil.addObjectEntry(
 			_objectDefinition1, _OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1);
+
+		Role role1 = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		_resourcePermissionLocalService.setResourcePermissions(
+			TestPropsValues.getCompanyId(), _objectDefinition1.getClassName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(_objectEntry1.getPrimaryKey()), role1.getRoleId(),
+			new String[] {ActionKeys.DELETE, ActionKeys.PERMISSIONS});
+
 		_objectEntry2 = ObjectEntryTestUtil.addObjectEntry(
 			_objectDefinition2, _OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2);
+
+		Role role2 = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		_resourcePermissionLocalService.setResourcePermissions(
+			TestPropsValues.getCompanyId(), _objectDefinition2.getClassName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(_objectEntry2.getPrimaryKey()), role2.getRoleId(),
+			new String[] {ActionKeys.UPDATE, ActionKeys.VIEW});
 
 		_objectRelationship2 = _addObjectRelationshipAndRelateObjectEntries(
 			_objectDefinition1, _objectDefinition2,
@@ -4708,6 +4725,31 @@ public class ObjectEntryResourceTest {
 				{_OBJECT_FIELD_NAME_2, String.valueOf(_OBJECT_FIELD_VALUE_2)},
 				{_OBJECT_FIELD_NAME_1, String.valueOf(_OBJECT_FIELD_VALUE_1)},
 				{_OBJECT_FIELD_NAME_2, String.valueOf(_OBJECT_FIELD_VALUE_2)}
+			},
+			Type.MANY_TO_MANY);
+
+		// Many to many relationship with permissions
+
+		_testGetNestedFieldDetailsInRelationships(
+			_objectRelationship2.getName(), 3, _objectRelationship2.getName(),
+			_objectDefinition1,
+			new String[][] {
+				{_OBJECT_FIELD_NAME_1, String.valueOf(_OBJECT_FIELD_VALUE_1)},
+				{_OBJECT_FIELD_NAME_2, String.valueOf(_OBJECT_FIELD_VALUE_2)},
+				{_OBJECT_FIELD_NAME_1, String.valueOf(_OBJECT_FIELD_VALUE_1)},
+				{_OBJECT_FIELD_NAME_2, String.valueOf(_OBJECT_FIELD_VALUE_2)}
+			},
+			new JSONArray[] {
+				_getPermissionsJSONArray(
+					new String[] {ActionKeys.DELETE, ActionKeys.PERMISSIONS},
+					role1),
+				_getPermissionsJSONArray(
+					new String[] {ActionKeys.UPDATE, ActionKeys.VIEW}, role2),
+				_getPermissionsJSONArray(
+					new String[] {ActionKeys.DELETE, ActionKeys.PERMISSIONS},
+					role1),
+				_getPermissionsJSONArray(
+					new String[] {ActionKeys.UPDATE, ActionKeys.VIEW}, role2)
 			},
 			Type.MANY_TO_MANY);
 
@@ -4781,6 +4823,24 @@ public class ObjectEntryResourceTest {
 			},
 			Type.MANY_TO_ONE);
 
+		// Many to one relationship with permissions
+
+		_testGetNestedFieldDetailsInRelationships(
+			relationshipFieldNameNestedFieldName, null, relationshipFieldName,
+			_objectDefinition2,
+			new String[][] {
+				{_OBJECT_FIELD_NAME_2, String.valueOf(_OBJECT_FIELD_VALUE_2)},
+				{_OBJECT_FIELD_NAME_1, String.valueOf(_OBJECT_FIELD_VALUE_1)}
+			},
+			new JSONArray[] {
+				_getPermissionsJSONArray(
+					new String[] {ActionKeys.UPDATE, ActionKeys.VIEW}, role2),
+				_getPermissionsJSONArray(
+					new String[] {ActionKeys.DELETE, ActionKeys.PERMISSIONS},
+					role1)
+			},
+			Type.MANY_TO_ONE);
+
 		// One to many relationship
 
 		_objectRelationship1 = _addObjectRelationshipAndRelateObjectEntries(
@@ -4830,6 +4890,31 @@ public class ObjectEntryResourceTest {
 				{_OBJECT_FIELD_NAME_2, String.valueOf(_OBJECT_FIELD_VALUE_2)}
 			},
 			Type.ONE_TO_MANY);
+
+		// One to many relationship with permissions
+
+		_testGetNestedFieldDetailsInRelationships(
+			_objectRelationship1.getName(), 3, _objectRelationship1.getName(),
+			_objectDefinition1,
+			new String[][] {
+				{_OBJECT_FIELD_NAME_1, String.valueOf(_OBJECT_FIELD_VALUE_1)},
+				{_OBJECT_FIELD_NAME_2, String.valueOf(_OBJECT_FIELD_VALUE_2)},
+				{_OBJECT_FIELD_NAME_1, String.valueOf(_OBJECT_FIELD_VALUE_1)},
+				{_OBJECT_FIELD_NAME_2, String.valueOf(_OBJECT_FIELD_VALUE_2)}
+			},
+			new JSONArray[] {
+				_getPermissionsJSONArray(
+					new String[] {ActionKeys.DELETE, ActionKeys.PERMISSIONS},
+					role1),
+				_getPermissionsJSONArray(
+					new String[] {ActionKeys.UPDATE, ActionKeys.VIEW}, role2),
+				_getPermissionsJSONArray(
+					new String[] {ActionKeys.DELETE, ActionKeys.PERMISSIONS},
+					role1),
+				_getPermissionsJSONArray(
+					new String[] {ActionKeys.UPDATE, ActionKeys.VIEW}, role2)
+			},
+			Type.ONE_TO_MANY);
 	}
 
 	@Test
@@ -4842,10 +4927,29 @@ public class ObjectEntryResourceTest {
 
 		_objectEntry1 = ObjectEntryTestUtil.addObjectEntry(
 			_objectDefinition1, _OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1);
+
+		Role role1 = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		_resourcePermissionLocalService.setResourcePermissions(
+			TestPropsValues.getCompanyId(), _objectDefinition1.getClassName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(_objectEntry1.getPrimaryKey()), role1.getRoleId(),
+			new String[] {ActionKeys.DELETE, ActionKeys.PERMISSIONS});
+
 		_objectEntry2 = ObjectEntryTestUtil.addObjectEntry(
 			_objectDefinition2, _OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2);
+
 		_objectEntry3 = ObjectEntryTestUtil.addObjectEntry(
 			_objectDefinition3, _OBJECT_FIELD_NAME_3, _OBJECT_FIELD_VALUE_3);
+
+		Role role2 = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		_resourcePermissionLocalService.setResourcePermissions(
+			TestPropsValues.getCompanyId(), _objectDefinition3.getClassName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(_objectEntry3.getPrimaryKey()), role2.getRoleId(),
+			new String[] {ActionKeys.UPDATE, ActionKeys.VIEW});
+
 		_objectEntry4 = ObjectEntryTestUtil.addObjectEntry(
 			_objectDefinition4, _OBJECT_FIELD_NAME_4, _OBJECT_FIELD_VALUE_4);
 
@@ -4930,7 +5034,6 @@ public class ObjectEntryResourceTest {
 				{_OBJECT_FIELD_NAME_2, String.valueOf(_OBJECT_FIELD_VALUE_2)}
 			},
 			Type.MANY_TO_MANY);
-
 		_testGetNestedFieldDetailsInRelationships(
 			_objectRelationship4.getName(), 3, _objectRelationship4.getName(),
 			_objectDefinition3,
@@ -4941,7 +5044,6 @@ public class ObjectEntryResourceTest {
 				{_OBJECT_FIELD_NAME_2, String.valueOf(_OBJECT_FIELD_VALUE_2)}
 			},
 			Type.MANY_TO_MANY);
-
 		_testGetNestedFieldDetailsInRelationships(
 			_objectRelationship4.getName(), 5, _objectRelationship4.getName(),
 			_objectDefinition3,
@@ -4954,7 +5056,6 @@ public class ObjectEntryResourceTest {
 				{_OBJECT_FIELD_NAME_2, String.valueOf(_OBJECT_FIELD_VALUE_2)}
 			},
 			Type.MANY_TO_MANY);
-
 		_testGetNestedFieldDetailsInRelationships(
 			_objectRelationship4.getName(), 6, _objectRelationship4.getName(),
 			_objectDefinition3,
@@ -4968,6 +5069,27 @@ public class ObjectEntryResourceTest {
 			},
 			Type.MANY_TO_MANY);
 
+		// Without fields, many to many relationship with permissions
+
+		_testGetNestedFieldDetailsInRelationships(
+			_objectRelationship4.getName(), 3, _objectRelationship4.getName(),
+			_objectDefinition3,
+			new String[][] {
+				{_OBJECT_FIELD_NAME_3, String.valueOf(_OBJECT_FIELD_VALUE_3)},
+				{_OBJECT_FIELD_NAME_2, String.valueOf(_OBJECT_FIELD_VALUE_2)},
+				{_OBJECT_FIELD_NAME_3, String.valueOf(_OBJECT_FIELD_VALUE_3)},
+				{_OBJECT_FIELD_NAME_2, String.valueOf(_OBJECT_FIELD_VALUE_2)}
+			},
+			new JSONArray[] {
+				_getPermissionsJSONArray(
+					new String[] {ActionKeys.UPDATE, ActionKeys.VIEW}, role2),
+				null,
+				_getPermissionsJSONArray(
+					new String[] {ActionKeys.UPDATE, ActionKeys.VIEW}, role2),
+				null
+			},
+			Type.MANY_TO_MANY);
+
 		// Without fields, one to many relationship
 
 		_testGetNestedFieldDetailsInRelationships(
@@ -4978,6 +5100,23 @@ public class ObjectEntryResourceTest {
 				{_OBJECT_FIELD_NAME_2, String.valueOf(_OBJECT_FIELD_VALUE_2)}
 			},
 			Type.ONE_TO_MANY);
+
+		// Without fields, one to many relationship with permissions
+
+		_testGetNestedFieldDetailsInRelationships(
+			_objectRelationship1.getName(), null,
+			_objectRelationship1.getName(), _objectDefinition1,
+			new String[][] {
+				{_OBJECT_FIELD_NAME_1, String.valueOf(_OBJECT_FIELD_VALUE_1)},
+				{_OBJECT_FIELD_NAME_2, String.valueOf(_OBJECT_FIELD_VALUE_2)}
+			},
+			new JSONArray[] {
+				_getPermissionsJSONArray(
+					new String[] {ActionKeys.DELETE, ActionKeys.PERMISSIONS},
+					role1),
+				null
+			},
+			Type.MANY_TO_MANY);
 	}
 
 	@Test
@@ -11539,7 +11678,7 @@ public class ObjectEntryResourceTest {
 	private void _assertNestedFieldsInRelationships(
 		int currentDepth, int depth, JSONObject jsonObject,
 		String nestedFieldName, String[][] objectFieldNamesAndObjectFieldValues,
-		Type type) {
+		JSONArray[] permissions, Type type) {
 
 		if (objectFieldNamesAndObjectFieldValues[currentDepth][0] == null) {
 			Assert.assertNull(jsonObject);
@@ -11549,6 +11688,16 @@ public class ObjectEntryResourceTest {
 				objectFieldNamesAndObjectFieldValues[currentDepth][1],
 				jsonObject.getString(
 					objectFieldNamesAndObjectFieldValues[currentDepth][0]));
+		}
+
+		if ((permissions == null) || (permissions[currentDepth] == null)) {
+			Assert.assertNull(jsonObject.getJSONArray("permissions"));
+		}
+		else {
+			JSONAssert.assertEquals(
+				String.valueOf(permissions[currentDepth]),
+				String.valueOf(jsonObject.getJSONArray("permissions")),
+				JSONCompareMode.LENIENT);
 		}
 
 		if ((currentDepth == depth) ||
@@ -11566,7 +11715,7 @@ public class ObjectEntryResourceTest {
 		_assertNestedFieldsInRelationships(
 			currentDepth + 1, depth,
 			_getRelatedJSONObject(jsonObject, nestedFieldName, type),
-			nestedFieldName, objectFieldNamesAndObjectFieldValues,
+			nestedFieldName, objectFieldNamesAndObjectFieldValues, permissions,
 			_getReverseType(type));
 	}
 
@@ -11799,6 +11948,29 @@ public class ObjectEntryResourceTest {
 			null, null);
 	}
 
+	private JSONObject _getObjectEntryJSONObject(
+			Integer nestedFieldDepth, String nestedFieldName,
+			ObjectDefinition objectDefinition)
+		throws Exception {
+
+		String endpoint = StringBundler.concat(
+			objectDefinition.getRESTContextPath(), "?nestedFields=",
+			nestedFieldName);
+
+		if (nestedFieldDepth != null) {
+			endpoint += "&nestedFieldsDepth=" + nestedFieldDepth;
+		}
+
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			null, endpoint, Http.Method.GET);
+
+		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
+
+		Assert.assertEquals(1, itemsJSONArray.length());
+
+		return itemsJSONArray.getJSONObject(0);
+	}
+
 	private ObjectEntryResource _getObjectEntryResource(
 			ObjectDefinition objectDefinition, User user)
 		throws Exception {
@@ -11851,6 +12023,25 @@ public class ObjectEntryResourceTest {
 
 			return objectEntryResource;
 		}
+	}
+
+	private JSONArray _getPermissionsJSONArray(String[] actionIds, Role role)
+		throws Exception {
+
+		return JSONUtil.putAll(
+			JSONUtil.put(
+				"actionIds",
+				JSONUtil.putAll(
+					ActionKeys.DELETE, ActionKeys.PERMISSIONS,
+					ActionKeys.UPDATE, ActionKeys.VIEW)
+			).put(
+				"roleName", RoleConstants.OWNER
+			),
+			JSONUtil.put(
+				"actionIds", actionIds
+			).put(
+				"roleName", role.getName()
+			));
 	}
 
 	private JSONObject _getRelatedJSONObject(
@@ -11967,29 +12158,31 @@ public class ObjectEntryResourceTest {
 	private void _testGetNestedFieldDetailsInRelationships(
 			String expectedFieldName, Integer nestedFieldDepth,
 			String nestedFieldName, ObjectDefinition objectDefinition,
+			String[][] objectFieldNamesAndObjectFieldValues,
+			JSONArray[] permissions, Type type)
+		throws Exception {
+
+		_assertNestedFieldsInRelationships(
+			0, GetterUtil.getInteger(nestedFieldDepth, 1),
+			_getObjectEntryJSONObject(
+				nestedFieldDepth, nestedFieldName + ",permissions",
+				objectDefinition),
+			expectedFieldName, objectFieldNamesAndObjectFieldValues,
+			permissions, type);
+	}
+
+	private void _testGetNestedFieldDetailsInRelationships(
+			String expectedFieldName, Integer nestedFieldDepth,
+			String nestedFieldName, ObjectDefinition objectDefinition,
 			String[][] objectFieldNamesAndObjectFieldValues, Type type)
 		throws Exception {
 
-		String endpoint = StringBundler.concat(
-			objectDefinition.getRESTContextPath(), "?nestedFields=",
-			nestedFieldName);
-
-		if (nestedFieldDepth != null) {
-			endpoint += "&nestedFieldsDepth=" + nestedFieldDepth;
-		}
-
-		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
-			null, endpoint, Http.Method.GET);
-
-		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
-
-		Assert.assertEquals(1, itemsJSONArray.length());
-
-		JSONObject itemJSONObject = itemsJSONArray.getJSONObject(0);
-
 		_assertNestedFieldsInRelationships(
-			0, GetterUtil.getInteger(nestedFieldDepth, 1), itemJSONObject,
-			expectedFieldName, objectFieldNamesAndObjectFieldValues, type);
+			0, GetterUtil.getInteger(nestedFieldDepth, 1),
+			_getObjectEntryJSONObject(
+				nestedFieldDepth, nestedFieldName, objectDefinition),
+			expectedFieldName, objectFieldNamesAndObjectFieldValues, null,
+			type);
 	}
 
 	private void _testGetObjectEntryWithObjectActions(

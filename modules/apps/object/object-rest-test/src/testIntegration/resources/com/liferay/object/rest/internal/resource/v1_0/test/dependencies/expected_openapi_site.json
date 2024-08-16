@@ -217,6 +217,12 @@
 						},
 						"type": "array"
 					},
+					"permissions": {
+						"items": {
+							"$ref": "#/components/schemas/Permission"
+						},
+						"type": "array"
+					},
 					"scopeKey": {
 						"readOnly": true,
 						"type": "string"

@@ -18,7 +18,7 @@ import java.util.Map;
  */
 public class Individual {
 
-	public long getActivitiesCount() {
+	public Long getActivitiesCount() {
 		return _activitiesCount;
 	}
 
@@ -157,7 +157,7 @@ public class Individual {
 
 	}
 
-	private long _activitiesCount;
+	private Long _activitiesCount;
 	private Map<String, List<Field>> _custom = new HashMap<>();
 	private List<DataSourceIndividualPK> _dataSourceIndividualPKs =
 		new ArrayList<>();

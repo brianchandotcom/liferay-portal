@@ -117,7 +117,7 @@ public class IndividualDisplay implements FaroEntityDisplay {
 		"email", "familyName", "givenName", "image", "jobTitle", "worksFor");
 
 	private List<String> _accountNames;
-	private long _activitiesCount;
+	private Long _activitiesCount;
 	private List<Individual.DataSourceIndividualPK> _dataSourceIndividualPKs;
 	private Date _dateCreated;
 	private Date _firstActivityDate;

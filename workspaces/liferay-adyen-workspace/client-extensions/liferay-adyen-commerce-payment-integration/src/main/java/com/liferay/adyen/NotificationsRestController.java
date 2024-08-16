@@ -66,8 +66,8 @@ public class NotificationsRestController extends BaseRestController {
 			JSONObject n1a0AdyenWebhookJSONObject = new JSONObject(
 				get(
 					_liferayOAuth2AccessTokenManager.getAuthorization(
-						"liferay-adyen-payment-integration-oauth-application-" +
-							"headless-server"),
+						"liferay-adyen-commerce-payment-integration-oauth-" +
+							"application-headless-server"),
 					"/o/c/n1a0adyenwebhooks/by-external-reference-code/" +
 						externalReferenceCode));
 

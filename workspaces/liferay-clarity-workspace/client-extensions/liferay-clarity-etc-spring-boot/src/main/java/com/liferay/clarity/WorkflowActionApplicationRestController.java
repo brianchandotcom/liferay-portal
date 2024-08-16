@@ -5,6 +5,8 @@
 
 package com.liferay.clarity;
 
+import com.liferay.client.extension.util.spring.boot.BaseRestController;
+
 import java.util.Objects;
 
 import org.apache.commons.logging.Log;
@@ -12,9 +14,7 @@ import org.apache.commons.logging.LogFactory;
 
 import org.json.JSONObject;
 
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -22,10 +22,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.web.reactive.function.client.WebClientResponseException;
-
-import reactor.core.publisher.Mono;
 
 /**
  * @author Raymond Augé
@@ -44,48 +40,16 @@ public class WorkflowActionApplicationRestController
 
 		log(jwt, _log, json);
 
-		WebClient.Builder builder = WebClient.builder();
-
-		WebClient webClient = builder.baseUrl(
-			lxcDXPServerProtocol + "://" + lxcDXPMainDomain
-		).defaultHeader(
-			HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE
-		).defaultHeader(
-			HttpHeaders.AUTHORIZATION, "Bearer " + jwt.getTokenValue()
-		).defaultHeader(
-			HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE
-		).build();
-
 		JSONObject jsonObject = new JSONObject(json);
 
-		webClient.post(
-		).uri(
-			jsonObject.getString("transitionURL")
-		).bodyValue(
-			"{\"transitionName\": \"" + _getTransitionName(jsonObject) + "\"}"
-		).exchangeToMono(
-			clientResponse -> {
-				HttpStatus httpStatus = clientResponse.statusCode();
+		String response = post(
+			"Bearer " + jwt.getTokenValue(),
+			"{\"transitionName\": \"" + _getTransitionName(jsonObject) + "\"}",
+			jsonObject.getString("transitionURL"));
 
-				if (httpStatus.is2xxSuccessful()) {
-					return clientResponse.bodyToMono(String.class);
-				}
-				else if (httpStatus.is4xxClientError()) {
-					return Mono.just(httpStatus.getReasonPhrase());
-				}
-
-				Mono<WebClientResponseException> mono =
-					clientResponse.createException();
-
-				return mono.flatMap(Mono::error);
-			}
-		).doOnNext(
-			output -> {
-				if (_log.isInfoEnabled()) {
-					_log.info("Output: " + output);
-				}
-			}
-		).subscribe();
+		if (_log.isInfoEnabled()) {
+			_log.info("Output: " + response);
+		}
 
 		return new ResponseEntity<>(json, HttpStatus.OK);
 	}

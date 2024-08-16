@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.util.PropsValues;
@@ -72,7 +73,8 @@ public class ScimClientOAuth2ApplicationConfigurationFactory {
 							properties);
 
 				_oAuth2Application = _getOrAddOAuth2Application(
-					companyId, scimClientOAuth2ApplicationConfiguration);
+					companyId, scimClientOAuth2ApplicationConfiguration,
+					GetterUtil.getLong(properties.get("userId")));
 
 				_serviceRegistration = bundleContext.registerService(
 					BearerTokenProvider.class,
@@ -111,10 +113,9 @@ public class ScimClientOAuth2ApplicationConfigurationFactory {
 	private OAuth2Application _getOrAddOAuth2Application(
 			long companyId,
 			ScimClientOAuth2ApplicationConfiguration
-				scimClientOAuth2ApplicationConfiguration)
+				scimClientOAuth2ApplicationConfiguration,
+			long userId)
 		throws Exception {
-
-		User user = _userLocalService.getGuestUser(companyId);
 
 		User clientCredentialUser = _userLocalService.getUserByScreenName(
 			companyId, PropsValues.DEFAULT_ADMIN_SCREEN_NAME);
@@ -127,6 +128,8 @@ public class ScimClientOAuth2ApplicationConfigurationFactory {
 				companyId, clientId);
 
 		if (oAuth2Application == null) {
+			User user = _userLocalService.getUser(userId);
+
 			oAuth2Application =
 				_oAuth2ApplicationLocalService.addOAuth2Application(
 					companyId, user.getUserId(), user.getScreenName(),

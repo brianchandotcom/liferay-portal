@@ -647,6 +647,8 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 			}
 
 			data.put("timelineIconClass", "change-tracking-timeline-icon");
+			data.put("timelineClassNameId", classNameId);
+			data.put("timelineClassPK", classPK);
 			data.put("timelineIconName", "time");
 			data.put(
 				"timelineItemsURL",
@@ -654,6 +656,18 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 					_portal.getPortalURL(themeDisplay),
 					"/o/change-tracking-rest/v1.0/ct-collections/history?",
 					"classNameId=", classNameId, "&classPK=", classPK));
+			data.put(
+				"timelineEditURL",
+				PortletURLBuilder.create(
+					_portal.getControlPanelPortletURL(
+						httpServletRequest, themeDisplay.getScopeGroup(),
+						CTPortletKeys.PUBLICATIONS, 0, 0,
+						PortletRequest.ACTION_PHASE)
+				).setActionName(
+					"/change_tracking/checkout_ct_collection"
+				).setRedirect(
+					_portal.getCurrentURL(httpServletRequest)
+				).buildString());
 
 			CTDisplayRenderer<?> ctDisplayRenderer =
 				_ctDisplayRendererRegistry.getCTDisplayRenderer(classNameId);

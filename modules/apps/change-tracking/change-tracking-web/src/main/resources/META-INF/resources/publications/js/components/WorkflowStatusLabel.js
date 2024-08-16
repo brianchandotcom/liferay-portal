@@ -9,6 +9,7 @@ import React from 'react';
 export const WORKFLOW_STATUS_APPROVED = 0;
 export const WORKFLOW_STATUS_DENIED = 4;
 export const WORKFLOW_STATUS_DRAFT = 2;
+export const WORKFLOW_STATUS_EXPIRED = 3;
 export const WORKFLOW_STATUS_IN_TRASH = 8;
 export const WORKFLOW_STATUS_PENDING = 1;
 

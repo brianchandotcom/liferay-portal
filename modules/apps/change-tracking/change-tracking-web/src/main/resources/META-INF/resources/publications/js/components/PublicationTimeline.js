@@ -3,60 +3,28 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {ClayButtonWithIcon} from '@clayui/button';
+import ClayDropDown, {Align} from '@clayui/drop-down';
 import ClayLayout from '@clayui/layout';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayPanel from '@clayui/panel';
-import {createPortletURL, fetch, getPortletId} from 'frontend-js-web';
+import {fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import TimelineDropdownMenu from './TimelineDropdownMenu';
-import {
-	WORKFLOW_STATUS_APPROVED,
-	WORKFLOW_STATUS_DRAFT,
-	WORKFLOW_STATUS_PENDING,
-	WorkflowStatusLabel,
-} from './WorkflowStatusLabel';
+import {WorkflowStatusLabel} from './WorkflowStatusLabel';
 
-const PublicationTimeline = ({namespace, timelineItemsURL}) => {
+const PublicationTimeline = ({
+	namespace,
+	navigate,
+	spritemap,
+	timelineClassNameId,
+	timelineClassPK,
+	timelineEditURL,
+	timelineItemsURL,
+}) => {
 	const [timelineItems, setTimelineItems] = useState([]);
 	const [loading, setLoading] = useState(true);
-
-	const createMVCRenderCommandURL = (
-		ctCollectionId,
-		mvcRenderCommandName,
-		additionalParams = {}
-	) => {
-		return createPortletURL(
-			themeDisplay.getLayoutRelativeControlPanelURL(),
-			{
-				ctCollectionId,
-				mvcRenderCommandName,
-				p_p_id: getPortletId(namespace),
-				...additionalParams,
-			}
-		).toString();
-	};
-
-	const getEditURL = (ctCollectionId) => {
-		return createMVCRenderCommandURL(
-			ctCollectionId,
-			'/change_tracking/edit_ct_collection'
-		);
-	};
-
-	const getRevertURL = (ctCollectionId) => {
-		return createMVCRenderCommandURL(
-			ctCollectionId,
-			'/change_tracking/undo_ct_collection',
-			{revert: true}
-		);
-	};
-	const getReviewURL = (ctCollectionId) => {
-		return createMVCRenderCommandURL(
-			ctCollectionId,
-			'/change_tracking/view_changes'
-		);
-	};
 
 	useEffect(() => {
 		if (!timelineItemsURL) {
@@ -116,43 +84,36 @@ const PublicationTimeline = ({namespace, timelineItemsURL}) => {
 								</ClayLayout.ContentCol>
 
 								<ClayLayout.ContentCol>
-									{timelineItem.actions ? (
-										<TimelineDropdownMenu
-											deleteURL={
-												timelineItem.status.code ===
-													WORKFLOW_STATUS_DRAFT &&
-												!!timelineItem.actions.delete
-													? timelineItem.actions
-															.delete.href
-													: undefined
+									{timelineItem.actions.get ? (
+										<ClayDropDown
+											alignmentPosition={Align.BottomLeft}
+											renderMenuOnClick
+											spritemap={spritemap}
+											trigger={
+												<ClayButtonWithIcon
+													aria-label="timeline-actions"
+													displayType="unstyled"
+													size="sm"
+													spritemap={spritemap}
+													symbol="ellipsis-v"
+												/>
 											}
-											editURL={
-												timelineItem.status.code ===
-													WORKFLOW_STATUS_DRAFT &&
-												!!timelineItem.actions.update
-													? getEditURL(
-															timelineItem.id
-														)
-													: undefined
-											}
-											revertURL={
-												timelineItem.status.code ===
-												WORKFLOW_STATUS_APPROVED
-													? getRevertURL(
-															timelineItem.id
-														)
-													: undefined
-											}
-											reviewURL={
-												timelineItem.status.code !==
-													WORKFLOW_STATUS_PENDING &&
-												!!timelineItem.actions.get
-													? getReviewURL(
-															timelineItem.id
-														)
-													: undefined
-											}
-										/>
+										>
+											<TimelineDropdownMenu
+												namespace={namespace}
+												navigate={navigate}
+												timelineClassNameId={
+													timelineClassNameId
+												}
+												timelineClassPK={
+													timelineClassPK
+												}
+												timelineEditURL={
+													timelineEditURL
+												}
+												timelineItem={timelineItem}
+											/>
+										</ClayDropDown>
 									) : null}
 								</ClayLayout.ContentCol>
 							</ClayLayout.ContentRow>

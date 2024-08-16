@@ -39,6 +39,9 @@ export default function ChangeTrackingIndicator({
 	reviewDropdownItem,
 	saveDisplayPreferenceURL,
 	spritemap,
+	timelineClassNameId,
+	timelineClassPK,
+	timelineEditURL,
 	timelineIconClass,
 	timelineIconName,
 	timelineItemsURL,
@@ -304,6 +307,7 @@ export default function ChangeTrackingIndicator({
 								items={dropdownItems}
 								trigger={
 									<ClayButtonWithIcon
+										aria-label="actions"
 										displayType="unstyled"
 										small
 										spritemap={spritemap}
@@ -555,6 +559,7 @@ export default function ChangeTrackingIndicator({
 					trigger={
 						<ClayButton
 							aria-controls="publication-timeline-dropdown"
+							aria-label="timeline-button"
 							className="change-tracking-timeline-button"
 						>
 							<ClayIcon
@@ -566,6 +571,11 @@ export default function ChangeTrackingIndicator({
 				>
 					<PublicationTimeline
 						namespace={namespace}
+						navigate={navigate}
+						spritemap={spritemap}
+						timelineClassNameId={timelineClassNameId}
+						timelineClassPK={timelineClassPK}
+						timelineEditURL={timelineEditURL}
 						timelineItemsURL={timelineItemsURL}
 					/>
 				</ClayDropDown>

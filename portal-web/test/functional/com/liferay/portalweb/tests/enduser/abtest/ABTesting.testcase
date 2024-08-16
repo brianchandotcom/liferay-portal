@@ -1305,6 +1305,12 @@ definition {
 			ABTest.createVariant(variantName = "Variant name");
 		}
 
+		task ("Select the variant view") {
+			Click(
+				key_variantName = "Variant name",
+				locator1 = "ABTest#VARIANT_TITLE");
+		}
+
 		task ("Open editor with upper pencil icon") {
 			ContentPages.gotoPageEditor();
 
@@ -1313,7 +1319,7 @@ definition {
 				id = "element-text",
 				text = "New text");
 
-			Button.clickPublish();
+			ABTest.saveVariant();
 		}
 
 		task ("Select the variant view") {
@@ -1324,7 +1330,7 @@ definition {
 
 		task ("Assert the modifications are shown when the variant is selected") {
 			ContentPages.viewFragmentText(
-				fragmentName = "Heading",
+				fragmentName = "heading",
 				id = "element-text",
 				text = "New text");
 		}

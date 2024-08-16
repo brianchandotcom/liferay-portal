@@ -99,6 +99,7 @@ import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.lang.CentralizedThreadLocal;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
@@ -148,6 +149,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.StrictObjectReindexThreadLocal;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -3907,8 +3909,11 @@ public class ObjectEntryLocalServiceImpl
 		Indexer<ObjectEntry> indexer = IndexerRegistryUtil.getIndexer(
 			objectDefinition.getClassName());
 
-		indexer.reindex(
-			objectDefinition.getClassName(), objectEntry.getObjectEntryId());
+		try (SafeCloseable safeCloseable =
+				StrictObjectReindexThreadLocal.setStrictObjectReindex(true)) {
+
+			indexer.reindex(objectEntry);
+		}
 	}
 
 	private void _setColumn(

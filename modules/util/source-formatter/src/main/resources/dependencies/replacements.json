@@ -2277,9 +2277,8 @@
 			"CompanyLocalService",
 			"CompanyLocalServiceUtil"
 		],
-		"from": "addCompany(long companyId, String webId, String virtualHostname, String mx, int maxUsers, boolean active, String defaultAdminPassword, String defaultAdminScreenName, String defaultAdminEmailAddress, String defaultAdminFirstName, String defaultAdminMiddleName, String defaultAdminLastName)",
+		"from": "addCompany(long paramName, String paramName, String paramName, String paramName, int paramName, boolean paramName, String paramName, String paramName, String paramName, String paramName, String paramName, String paramName)",
 		"issueKey": "LPD-28759",
-		"skipParametersValidation": true,
 		"to": "addCompany(param#0#, param#1#, param#2#, param#3#, param#4#, param#5#, true, param#6#, param#7#, param#8#, param#9#, param#10#, param#11#)"
 	},
 	{

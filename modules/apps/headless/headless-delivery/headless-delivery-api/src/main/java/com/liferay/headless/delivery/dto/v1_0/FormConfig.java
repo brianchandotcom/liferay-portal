@@ -364,7 +364,7 @@ public class FormConfig implements Serializable {
 	@GraphQLName("FormType")
 	public static enum FormType {
 
-		SIMPLE("simple"), MULTI_STEP("multi-step");
+		SIMPLE("simple"), MULTISTEP("multistep");
 
 		@JsonCreator
 		public static FormType create(String value) {

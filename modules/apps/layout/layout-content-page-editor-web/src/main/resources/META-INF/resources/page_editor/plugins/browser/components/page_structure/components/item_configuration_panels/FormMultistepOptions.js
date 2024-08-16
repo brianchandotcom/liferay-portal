@@ -21,14 +21,12 @@ const FORM_TYPE_OPTIONS = [
 	{label: Liferay.Language.get('multi-step'), value: 'multi-step'},
 ];
 
-export default function FormMultiStepOptions({item, onValueSelect}) {
+export default function FormMultistepOptions({item, onValueSelect}) {
 	const localConfig = useItemLocalConfig(item.itemId);
 
 	const updateItemLocalConfig = useUpdateItemLocalConfig();
 
-	const [isMultiStep, setIsMultiStep] = useControlledState(
-		item.config.isMultiStep
-	);
+	const [formType, setFormType] = useControlledState(item.config.formType);
 
 	const [numberOfSteps, setNumberOfSteps] = useControlledState(
 		item.config.numberOfSteps
@@ -48,34 +46,32 @@ export default function FormMultiStepOptions({item, onValueSelect}) {
 					},
 				}}
 				onValueSelect={(_name, formType) => {
-					const multiStep = formType === 'multi-step';
+					setFormType(formType);
 
-					setIsMultiStep(multiStep);
-
-					if (multiStep) {
+					if (formType === 'multi-step') {
 						onValueSelect({
-							isMultiStep: true,
+							formType,
 							numberOfSteps: 2,
 						});
 					}
 					else {
 						openWarningModal({
 							onCancel: () => {
-								setIsMultiStep(true);
+								setFormType('multi-step');
 							},
 							onContinue: () => {
 								onValueSelect({
-									isMultiStep: false,
+									formType: 'simple',
 									numberOfSteps: 1,
 								});
 							},
 						});
 					}
 				}}
-				value={isMultiStep ? 'multi-step' : 'simple'}
+				value={formType}
 			/>
 
-			{isMultiStep ? (
+			{formType === 'multi-step' ? (
 				<TextField
 					field={{
 						label: Liferay.Language.get('number-of-steps'),
@@ -97,7 +93,7 @@ export default function FormMultiStepOptions({item, onValueSelect}) {
 				/>
 			) : null}
 
-			{isMultiStep ? (
+			{formType === 'multi-step' ? (
 				<CheckboxField
 					field={{
 						label: Liferay.Language.get(

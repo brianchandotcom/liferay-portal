@@ -96,11 +96,11 @@ public class LayoutStructureTest {
 	}
 
 	@Test
-	public void testChangeFormTypeMultiStep() throws IOException {
+	public void testChangeFormType() throws IOException {
 		LayoutStructure layoutStructure = LayoutStructure.of(_readLayoutData());
 
-		layoutStructure.updateFormStyledLayoutStructureItemMultiStep(
-			"formId", true, 3);
+		layoutStructure.updateFormStyledLayoutStructureItemFormType(
+			"formId", "multi-step", 3);
 
 		FormStyledLayoutStructureItem formStyledLayoutStructureItem =
 			(FormStyledLayoutStructureItem)
@@ -134,14 +134,14 @@ public class LayoutStructureTest {
 	}
 
 	@Test
-	public void testChangeFormTypeNoMultiStep() throws IOException {
+	public void testChangeFormTypeToSimple() throws IOException {
 		LayoutStructure layoutStructure = LayoutStructure.of(_readLayoutData());
 
-		layoutStructure.updateFormStyledLayoutStructureItemMultiStep(
-			"formId", true, 3);
+		layoutStructure.updateFormStyledLayoutStructureItemFormType(
+			"formId", "multi-step", 3);
 
-		layoutStructure.updateFormStyledLayoutStructureItemMultiStep(
-			"formId", false, 3);
+		layoutStructure.updateFormStyledLayoutStructureItemFormType(
+			"formId", "simple", 3);
 
 		FormStyledLayoutStructureItem formStyledLayoutStructureItem =
 			(FormStyledLayoutStructureItem)

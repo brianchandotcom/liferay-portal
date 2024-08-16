@@ -34,7 +34,7 @@
 			"config": {
 				"cssClasses": [
 				],
-				"isMultiStep": false,
+				"formType": "simple",
 				"landscapeMobile": {
 					"styles": {
 					}

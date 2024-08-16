@@ -175,23 +175,7 @@ public class InfoFieldItemSelectorViewDescriptorTest {
 	}
 
 	@Test
-	public void testGetSearchContainerWithKeywords() throws Exception {
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
-
-		mockHttpServletRequest.setParameter("keywords", "myRichText");
-
-		ItemSelectorViewDescriptor<Object> itemSelectorViewDescriptor =
-			_getItemSelectorViewDescriptor(mockHttpServletRequest);
-
-		SearchContainer<Object> searchContainer =
-			itemSelectorViewDescriptor.getSearchContainer();
-
-		Assert.assertEquals(1, searchContainer.getTotal());
-	}
-
-	@Test
-	public void testGetSearchContainerWithMultiStepFormType() throws Exception {
+	public void testGetSearchContainerWithFormTypeMultistep() throws Exception {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
@@ -234,6 +218,22 @@ public class InfoFieldItemSelectorViewDescriptorTest {
 			itemSelectorViewDescriptor.getSearchContainer();
 
 		Assert.assertEquals(3, searchContainer.getTotal());
+	}
+
+	@Test
+	public void testGetSearchContainerWithKeywords() throws Exception {
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setParameter("keywords", "myRichText");
+
+		ItemSelectorViewDescriptor<Object> itemSelectorViewDescriptor =
+			_getItemSelectorViewDescriptor(mockHttpServletRequest);
+
+		SearchContainer<Object> searchContainer =
+			itemSelectorViewDescriptor.getSearchContainer();
+
+		Assert.assertEquals(1, searchContainer.getTotal());
 	}
 
 	@FeatureFlags("LPD-20213")

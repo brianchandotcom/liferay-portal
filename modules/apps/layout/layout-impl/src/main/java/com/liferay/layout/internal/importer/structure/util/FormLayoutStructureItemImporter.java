@@ -116,9 +116,9 @@ public class FormLayoutStructureItemImporter
 					FormStyledLayoutStructureItem.FORM_CONFIG_OTHER_ITEM_TYPE);
 			}
 
-			if (sourceMap.containsKey("multiStep")) {
-				formStyledLayoutStructureItem.setMultiStep(
-					GetterUtil.getBoolean(sourceMap.get("multiStep")));
+			if (sourceMap.containsKey("formType")) {
+				formStyledLayoutStructureItem.setFormType(
+					(String)sourceMap.get("formType"));
 			}
 
 			if (sourceMap.containsKey("numberOfSteps")) {

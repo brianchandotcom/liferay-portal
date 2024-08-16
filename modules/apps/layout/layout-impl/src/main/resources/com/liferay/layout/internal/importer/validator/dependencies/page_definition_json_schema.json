@@ -1645,6 +1645,14 @@
 					"title": "The formConfig Schema",
 					"type": "object"
 				},
+				"formType": {
+					"enum": [
+						"simple",
+						"multi-step"
+					],
+					"title": "The multi step Schema",
+					"type": "string"
+				},
 				"fragmentStyle": {
 					"$ref": "#/definitions/FragmentStyle"
 				},
@@ -1715,10 +1723,6 @@
 					},
 					"title": "The layout Schema",
 					"type": "object"
-				},
-				"multiStep": {
-					"title": "The multi step Schema",
-					"type": "boolean"
 				},
 				"name": {
 					"title": "The name Schema",

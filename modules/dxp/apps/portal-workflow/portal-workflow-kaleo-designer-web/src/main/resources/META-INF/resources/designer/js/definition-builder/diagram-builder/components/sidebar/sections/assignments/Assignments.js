@@ -62,10 +62,9 @@ const Assignments = (props) => {
 		retrieveAccountRoles(accountEntryId)
 			.then((response) => response.json())
 			.then(({items}) => {
-				const accountRoleItems = items.map(({displayName, name}) => {
+				const accountRoleItems = items.map(({name}) => {
 					return {
-						roleKey: name,
-						roleName: displayName,
+						roleName: name,
 						roleType: 'Account',
 					};
 				});
@@ -80,7 +79,6 @@ const Assignments = (props) => {
 				sectionsData.push({
 					autoCreate: assignments?.autoCreate?.[i],
 					identifier: `${Date.now()}-${i}`,
-					roleKey: assignments.roleKey[i],
 					roleName: assignments.roleName?.[i],
 					roleType: assignments.roleType[i],
 				});

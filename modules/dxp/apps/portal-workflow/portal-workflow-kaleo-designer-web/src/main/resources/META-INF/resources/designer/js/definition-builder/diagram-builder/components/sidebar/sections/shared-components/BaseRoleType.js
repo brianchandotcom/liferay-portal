@@ -21,7 +21,6 @@ const BaseRoleType = ({
 	inputLabel,
 	networkStatus,
 	resource,
-	roleKey,
 	roleName,
 	roleType = '',
 	sectionsLength,
@@ -34,9 +33,7 @@ const BaseRoleType = ({
 	const [filterRoleType, setFilterRoleType] = useState(true);
 	const [roleNameDropdownActive, setRoleNameDropdownActive] = useState(false);
 	const [roleTypeDropdownActive, setRoleTypeDropdownActive] = useState(false);
-	const [selectedRoleName, setSelectedRoleName] = useState(
-		roleName || roleKey
-	);
+	const [selectedRoleName, setSelectedRoleName] = useState(roleName);
 	const [selectedRoleType, setSelectedRoleType] = useState(
 		titleCase(roleType)
 	);
@@ -66,18 +63,17 @@ const BaseRoleType = ({
 
 	useEffect(() => {
 		setChecked(stringToBoolean(autoCreate));
-		setSelectedRoleName(roleName || roleKey);
+		setSelectedRoleName(roleName);
 		setSelectedRoleType(titleCase(roleType));
 
 		roleNameItemUpdate({
 			autoCreate,
-			roleKey,
 			roleName,
 			roleType: roleType.toLowerCase(),
 		});
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [autoCreate, roleKey, roleName, roleType]);
+	}, [autoCreate, roleName, roleType]);
 
 	const deleteSection = () => {
 		setSections((prevSections) => {
@@ -102,7 +98,6 @@ const BaseRoleType = ({
 			}
 
 			roles[roleType].push({
-				roleKey: item.externalReferenceCode,
 				roleName: item.name,
 				roleType,
 			});
@@ -261,9 +256,6 @@ const BaseRoleType = ({
 							if (selectedRoleName !== '') {
 								roleNameItemUpdate({
 									autoCreate: checked,
-									roleKey: filteredRoleNames().find(
-										(item) => item.roleName === roleName
-									).roleKey,
 									roleName,
 									roleType: selectedRoleType.toLowerCase(),
 								});
@@ -300,7 +292,6 @@ const BaseRoleType = ({
 										onMouseDown={() =>
 											roleNameItemUpdate({
 												autoCreate: checked,
-												roleKey: item.roleKey,
 												roleName: item.roleName,
 												roleType:
 													item.roleType.toLowerCase(),

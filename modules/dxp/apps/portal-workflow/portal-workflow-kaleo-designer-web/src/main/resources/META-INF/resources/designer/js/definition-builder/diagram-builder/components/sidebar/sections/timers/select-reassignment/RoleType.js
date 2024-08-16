@@ -34,16 +34,15 @@ const RoleType = ({subSectionIdentifier, subSectionsLength, ...otherProps}) => {
 		},
 	});
 
-	const {autoCreate, roleKey, roleName, roleType} = otherProps?.restProps;
+	const {autoCreate, roleName, roleType} = otherProps?.restProps;
 
 	useEffect(() => {
 		retrieveAccountRoles(accountEntryId)
 			.then((response) => response.json())
 			.then(({items}) => {
-				const accountRoleItems = items.map(({displayName, name}) => {
+				const accountRoleItems = items.map(({name}) => {
 					return {
-						roleKey: name,
-						roleName: displayName,
+						roleName: name,
 						roleType: 'Account',
 					};
 				});
@@ -65,7 +64,6 @@ const RoleType = ({subSectionIdentifier, subSectionsLength, ...otherProps}) => {
 				inputLabel={Liferay.Language.get('role-type')}
 				networkStatus={networkStatus}
 				resource={resource}
-				roleKey={roleKey}
 				roleName={roleName}
 				roleType={roleType}
 				sectionsLength={subSectionsLength}

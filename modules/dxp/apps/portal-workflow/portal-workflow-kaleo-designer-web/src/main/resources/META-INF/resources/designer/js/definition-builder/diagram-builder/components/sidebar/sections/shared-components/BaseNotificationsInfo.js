@@ -185,10 +185,9 @@ const BaseNotificationsInfo = ({
 		retrieveAccountRoles(accountEntryId)
 			.then((response) => response.json())
 			.then(({items}) => {
-				const accountRoleItems = items.map(({displayName, name}) => {
+				const accountRoleItems = items.map(({name}) => {
 					return {
-						roleKey: name,
-						roleName: displayName,
+						roleName: name,
 						roleType: 'Account',
 					};
 				});

@@ -20,7 +20,6 @@ const RoleType = (props) => {
 				assignments: {
 					assignmentType: ['roleType'],
 					autoCreate: values.map(({autoCreate}) => autoCreate),
-					roleKey: values.map(({roleKey}) => roleKey),
 					roleName: values.map(({roleName}) => roleName),
 					roleType: values.map(({roleType}) => roleType),
 				},

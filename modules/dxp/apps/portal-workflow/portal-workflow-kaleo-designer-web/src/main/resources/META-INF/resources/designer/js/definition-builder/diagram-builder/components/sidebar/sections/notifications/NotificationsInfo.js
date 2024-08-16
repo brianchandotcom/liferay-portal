@@ -179,7 +179,6 @@ const NotificationsInfo = ({
 				...newRecipients[notificationIndex][0],
 				assignmentType: ['roleType'],
 				autoCreate: values.map(({autoCreate}) => autoCreate),
-				roleKey: values.map(({roleKey}) => roleKey),
 				roleName: values.map(({roleName}) => roleName),
 				roleType: values.map(({roleType}) => roleType),
 			};
@@ -433,7 +432,6 @@ const NotificationsInfo = ({
 				sectionsData.push({
 					autoCreate: recipients?.autoCreate?.[i],
 					identifier: `${Date.now()}-${i}`,
-					roleKey: recipients?.roleKey[i],
 					roleName: recipients?.roleName?.[i],
 					roleType: recipients?.roleType?.[i],
 				});

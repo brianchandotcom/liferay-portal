@@ -59,22 +59,20 @@ const populateNotificationsData = (
 									accountRoles.items
 								);
 
-								const roleKey =
+								const roleName =
 									element?.data?.notifications?.recipients[
 										index
-									]?.[0]?.roleKey;
+									]?.[0]?.roleName;
 
-								if (!roleKey) {
+								if (!roleName) {
 									return;
 								}
 
 								const roleNames = [];
 
-								roleKey.forEach((key) => {
+								roleName.forEach((name) => {
 									const role = items.find(
-										(item) =>
-											item.externalReferenceCode ===
-												key || item.displayName === key
+										(item) => item.name === name
 									);
 
 									if (
@@ -199,26 +197,24 @@ const populateNotificationsData = (
 									accountRoles.items
 								);
 
-								let roleKey =
+								let roleName =
 									element?.data?.taskTimers
 										?.timerNotifications[0]?.recipients[
 										index
-									]?.[0]?.roleKey;
+									]?.[0]?.roleName;
 
-								if (!roleKey) {
+								if (!roleName) {
 									return;
 								}
 
-								if (!Array.isArray(roleKey)) {
-									roleKey = [roleKey];
+								if (!Array.isArray(roleName)) {
+									roleName = [roleName];
 								}
 								const roleNames = [];
 
-								roleKey.forEach((key) => {
+								roleName.forEach((name) => {
 									const role = items.find(
-										(item) =>
-											item.externalReferenceCode ===
-												key || item.displayName === key
+										(item) => item.name === name
 									);
 
 									if (

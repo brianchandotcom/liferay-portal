@@ -116,10 +116,6 @@ const Timers = ({setContentName, setErrors}) => {
 								filteredTimerActions[0].sectionData.map(
 									({autoCreate}) => autoCreate
 								);
-							reassignments.roleKey =
-								filteredTimerActions[0].sectionData.map(
-									({roleKey}) => roleKey
-								);
 							reassignments.roleName =
 								filteredTimerActions[0].sectionData.map(
 									({roleName}) => roleName
@@ -271,18 +267,17 @@ const Timers = ({setContentName, setErrors}) => {
 				}
 				else if (
 					section.assignmentType === 'roleType' &&
-					data.some((entry) => entry[0] === 'roleKey')
+					data.some((entry) => entry[0] === 'roleName')
 				) {
 					section.sectionData = data
-						.find((entry) => entry[0] === 'roleKey')[1]
-						.map((roleKey, index) => ({
+						.find((entry) => entry[0] === 'roleName')[1]
+						.map((index) => ({
 							autoCreate: filterSectionDataProperty(
 								data,
 								index,
 								'autoCreate'
 							),
 							identifier: `${Date.now()}-${index}`,
-							roleKey,
 							roleName: filterSectionDataProperty(
 								data,
 								index,

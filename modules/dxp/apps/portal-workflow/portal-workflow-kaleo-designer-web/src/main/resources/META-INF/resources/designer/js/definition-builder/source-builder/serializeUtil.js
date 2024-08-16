@@ -207,14 +207,14 @@ function appendXMLAssignments(
 			const xmlRole = XMLUtil.createObj('role');
 
 			dataAssignments.roleType.forEach((item, index) => {
-				const roleKey = dataAssignments.roleKey[index];
+				const roleName = dataAssignments.roleName[index];
 				const roleType = dataAssignments.roleType[index];
 
-				if (roleKey) {
+				if (roleName) {
 					buffer.push(
 						xmlRole.open,
 						createTagWithEscapedContent('roleType', roleType),
-						createTagWithEscapedContent('name', roleKey)
+						createTagWithEscapedContent('name', roleName)
 					);
 
 					let autoCreate = dataAssignments.autoCreate?.[index];

@@ -135,7 +135,6 @@ const ActionTypeNotification = ({
 				recipients: {
 					assignmentType: ['roleType'],
 					autoCreate: values.map(({autoCreate}) => autoCreate),
-					roleKey: values.map(({roleKey}) => roleKey),
 					roleName: values.map(({roleName}) => roleName),
 					roleType: values.map(({roleType}) => roleType),
 				},
@@ -255,12 +254,11 @@ const ActionTypeNotification = ({
 		const recipients = actionData?.recipients;
 
 		if (recipients && recipientType === 'roleType') {
-			if (Array.isArray(recipients.roleKey)) {
-				for (let i = 0; i < recipients.roleKey.length; i++) {
+			if (Array.isArray(recipients.roleName)) {
+				for (let i = 0; i < recipients.roleName.length; i++) {
 					sectionsData.push({
 						autoCreate: recipients.autoCreate?.[i],
 						identifier: `${Date.now()}-${i}`,
-						roleKey: recipients.roleKey[i],
 						roleName: recipients.roleName?.[i],
 						roleType: recipients.roleType[i],
 					});
@@ -270,7 +268,6 @@ const ActionTypeNotification = ({
 				sectionsData.push({
 					autoCreate: recipients.autoCreate,
 					identifier: `${Date.now()}-0`,
-					roleKey: recipients.roleKey,
 					roleName: recipients.roleName?.[0],
 					roleType: recipients.roleType,
 				});

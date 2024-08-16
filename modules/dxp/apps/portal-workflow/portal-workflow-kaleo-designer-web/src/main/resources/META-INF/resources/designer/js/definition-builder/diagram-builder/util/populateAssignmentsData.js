@@ -106,11 +106,9 @@ const populateAssignmentsData = (
 					([roles, accountRoles]) => {
 						const items = roles.items.concat(accountRoles.items);
 
-						taskNode.data.assignments.roleKey.forEach((key) => {
+						taskNode.data.assignments.roleName.forEach((name) => {
 							const role = items.find(
-								(item) =>
-									item.externalReferenceCode === key ||
-									item.displayName === key
+								(item) => item.name === name
 							);
 
 							if (!taskNode.data.assignments.roleName) {

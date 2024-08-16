@@ -28,7 +28,7 @@ export function parseActions(node) {
 export function parseAssignments(node) {
 	const assignments = {};
 	const autoCreateValues = [];
-	const roleKeys = [];
+	const roleNames = [];
 	const roleTypes = [];
 	const users = [];
 	const typeUser = Object.keys(node.assignments[0])[0];
@@ -47,7 +47,7 @@ export function parseAssignments(node) {
 		else if (itemKeys.includes('role-type')) {
 			assignments.assignmentType = ['roleType'];
 			autoCreateValues.push(item['auto-create']);
-			roleKeys.push(item.name);
+			roleNames.push(item.name);
 			roleTypes.push(item['role-type']);
 		}
 		else if (itemKeys.includes('script')) {
@@ -86,7 +86,7 @@ export function parseAssignments(node) {
 
 	if (assignments.assignmentType[0] === 'roleType') {
 		assignments.autoCreate = autoCreateValues[0];
-		assignments.roleKey = roleKeys[0];
+		assignments.roleName = roleNames[0];
 		assignments.roleType = roleTypes[0];
 	}
 
@@ -107,14 +107,14 @@ export function parseReassignments(node) {
 				assignments.assignmentType = ['roleType'];
 
 				assignments.autoCreate = [];
-				assignments.roleKey = [];
+				assignments.roleName = [];
 				assignments.roleType = [];
 
 				for (let index = 0; index < item['roles']?.length; index++) {
 					assignments.autoCreate.push(
 						item['roles'][index]?.['role']?.['auto-create']
 					);
-					assignments.roleKey.push(
+					assignments.roleName.push(
 						item['roles'][index]?.['role']?.['name']
 					);
 					assignments.roleType.push(
@@ -357,7 +357,7 @@ export function parseNotifications(node) {
 			const autoCreate =
 				item['auto-create'] ||
 				item['recipients'][0]['roles']['auto-create'];
-			const roleKey =
+			const roleName =
 				item['role-name'] || item['recipients'][0]['roles']['name'];
 			const roleType =
 				item['role-type'] ||
@@ -368,7 +368,7 @@ export function parseNotifications(node) {
 					assignmentType: ['roleType'],
 					autoCreate,
 					receptionType: [receptionType],
-					roleKey,
+					roleName,
 					roleType,
 				});
 			}
@@ -376,7 +376,7 @@ export function parseNotifications(node) {
 				notifications.recipients[index].push({
 					assignmentType: ['roleType'],
 					autoCreate,
-					roleKey,
+					roleName,
 					roleType,
 				});
 			}

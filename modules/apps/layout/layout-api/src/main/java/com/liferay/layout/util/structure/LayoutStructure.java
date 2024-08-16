@@ -781,8 +781,8 @@ public class LayoutStructure {
 		_deletedLayoutStructureItems.remove(itemId);
 	}
 
-	public void updateFormStyledLayoutStructureItemMultiStep(
-		String itemId, boolean multiStep, int numberOfSteps) {
+	public void updateFormStyledLayoutStructureItemFormType(
+		String itemId, String formType, int numberOfSteps) {
 
 		FormStyledLayoutStructureItem formStyledLayoutStructureItem =
 			(FormStyledLayoutStructureItem)_layoutStructureItems.get(itemId);
@@ -790,7 +790,9 @@ public class LayoutStructure {
 		List<String> childrenItemIds =
 			formStyledLayoutStructureItem.getChildrenItemIds();
 
-		if (ListUtil.isEmpty(childrenItemIds) && !multiStep) {
+		if (ListUtil.isEmpty(childrenItemIds) &&
+			Objects.equals(formType, "simple")) {
+
 			return;
 		}
 
@@ -798,7 +800,7 @@ public class LayoutStructure {
 			formStepContainerStyledLayoutStructureItem =
 				_findFormStepContainerLayoutStructureItem(childrenItemIds);
 
-		if (multiStep) {
+		if (Objects.equals(formType, "multi-step")) {
 			if (formStepContainerStyledLayoutStructureItem != null) {
 				List<String> formStepContainerChildrenItemIds =
 					formStepContainerStyledLayoutStructureItem.

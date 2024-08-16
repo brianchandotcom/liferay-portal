@@ -360,7 +360,7 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 					).put(
 						"classTypeId", "0"
 					).put(
-						"isMultiStep", true
+						"formType", "multi-step"
 					).put(
 						"numberOfSteps", 2
 					).toString(),
@@ -383,7 +383,7 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 					).put(
 						"classTypeId", "0"
 					).put(
-						"isMultiStep", false
+						"formType", "simple"
 					).toString(),
 					formItemId, _layout),
 				new MockLiferayPortletActionResponse());

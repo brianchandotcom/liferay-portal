@@ -88,10 +88,9 @@ public class FormLayoutStructureItemMapper
 										if (FeatureFlagManagerUtil.isEnabled(
 												"LPD-10727")) {
 
-											setMultiStep(
-												() ->
-													formStyledLayoutStructureItem.
-														isMultiStep());
+											setFormType(
+												() -> _toFormType(
+													formStyledLayoutStructureItem));
 											setNumberOfSteps(
 												() ->
 													formStyledLayoutStructureItem.
@@ -233,6 +232,18 @@ public class FormLayoutStructureItemMapper
 		}
 
 		return null;
+	}
+
+	private FormConfig.FormType _toFormType(
+		FormStyledLayoutStructureItem formStyledLayoutStructureItem) {
+
+		if (Objects.equals(
+				formStyledLayoutStructureItem.getFormType(), "multi-step")) {
+
+			return FormConfig.FormType.MULTI_STEP;
+		}
+
+		return FormConfig.FormType.SIMPLE;
 	}
 
 	private FragmentInlineValue _toFragmentInlineValue(JSONObject jsonObject) {

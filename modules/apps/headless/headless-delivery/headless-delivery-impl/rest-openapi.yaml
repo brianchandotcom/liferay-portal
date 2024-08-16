@@ -3805,11 +3805,12 @@ components:
                                 - $ref: "#/components/schemas/SitePageFormSubmissionResult"
                                 - $ref: "#/components/schemas/URLFormSubmissionResult"
                             type: object
-                        multiStep:
+                        formType:
                             # @review
                             description:
                                 A flag that indicates whether the page form instance is multi step or not.
-                            type: boolean
+                            enum: [simple, multi-step]
+                            type: string
                         numberOfSteps:
                             # @review
                             description:

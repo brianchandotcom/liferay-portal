@@ -91,6 +91,11 @@ definition {
 		}
 
 		task ("Create an experience for each segment in the Content Page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Experience Content Page",
+				type = "content");
+
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Experience Content Page",
 				siteName = "Test Site Name");

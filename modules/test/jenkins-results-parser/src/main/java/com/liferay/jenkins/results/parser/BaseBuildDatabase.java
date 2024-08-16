@@ -261,13 +261,15 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 	public void putProperties(
 		String key, Properties properties, boolean writeFile) {
 
-		JSONObject propertiesJSONObject = _jsonObject.getJSONObject(
-			"properties");
+		synchronized (_buildDatabaseFile) {
+			JSONObject propertiesJSONObject = _jsonObject.getJSONObject(
+				"properties");
 
-		propertiesJSONObject.put(key, _toJSONArray(properties));
+			propertiesJSONObject.put(key, _toJSONArray(properties));
 
-		if (writeFile) {
-			_writeJSONObjectFile();
+			if (writeFile) {
+				_writeJSONObjectFile();
+			}
 		}
 	}
 

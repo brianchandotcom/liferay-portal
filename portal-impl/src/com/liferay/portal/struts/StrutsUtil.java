@@ -65,12 +65,17 @@ public class StrutsUtil {
 					_log.warn(ioException);
 				}
 			}
-			catch (ServletException servletException1) {
+			catch (RuntimeException | ServletException exception) {
 				if (throwable == null) {
-					throwable = servletException1.getRootCause();
+					if (exception instanceof ServletException) {
+						ServletException servletException =
+							(ServletException)exception;
+
+						throwable = servletException.getRootCause();
+					}
 
 					if (throwable == null) {
-						throwable = servletException1;
+						throwable = exception;
 					}
 				}
 
@@ -92,8 +97,8 @@ public class StrutsUtil {
 						_log.warn(ioException);
 					}
 				}
-				catch (ServletException servletException2) {
-					throw servletException2;
+				catch (ServletException servletException) {
+					throw servletException;
 				}
 			}
 			finally {

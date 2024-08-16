@@ -301,6 +301,8 @@ ContentDashboardAdminDisplayContext contentDashboardAdminDisplayContext = (Conte
 						<clay:dropdown-actions
 							additionalProps='<%=
 								HashMapBuilder.<String, Object>put(
+									"contentPerformanceDataFetchURL", contentDashboardAdminDisplayContext.getContentPerformanceDataFetchURL(contentDashboardItem.getInfoItemReference())
+								).put(
 									"currentRowId", rowId
 								).put(
 									"namespace", liferayPortletResponse.getNamespace()

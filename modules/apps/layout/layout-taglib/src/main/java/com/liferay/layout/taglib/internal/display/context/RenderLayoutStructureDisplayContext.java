@@ -579,10 +579,10 @@ public class RenderLayoutStructureDisplayContext {
 			sb.append(fileEntryId);
 			sb.append(StringPool.SEMICOLON);
 
-			FileEntry fileEntry = _dlAppLocalServiceUtil.getFileEntry(
+			FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
 				fileEntryId);
 
-			backgroundImageURL = _dlURLHelperUtil.getPreviewURL(
+			backgroundImageURL = DLURLHelperUtil.getPreviewURL(
 				fileEntry, fileEntry.getFileVersion(), _themeDisplay,
 				StringPool.BLANK, false, false);
 		}
@@ -1145,8 +1145,6 @@ public class RenderLayoutStructureDisplayContext {
 	private static final Log _log = LogFactoryUtil.getLog(
 		RenderLayoutStructureDisplayContext.class);
 
-	private DLAppLocalServiceUtil _dlAppLocalServiceUtil;
-	private DLURLHelperUtil _dlURLHelperUtil;
 	private final HttpServletRequest _httpServletRequest;
 	private final LayoutStructure _layoutStructure;
 	private LayoutStructureRulesHelper.LayoutStructureRulesResult

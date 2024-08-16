@@ -5345,24 +5345,6 @@ return	Array.from(getWebElement("(//div[@data-name='${fragmentName}'])[${index}]
 	}
 
 	@summary = "Default summary"
-	macro viewCannotAddFragmentToOutsideOfDropZone(fragmentName = null, collectionName = null) {
-		WaitForPageLoad();
-
-		Navigator.gotoNavTab(navTab = "Fragments");
-
-		PageEditor.expandFragmentCollection(collectionName = ${collectionName});
-
-		DragAndDrop(
-			key_collectionName = ${collectionName},
-			key_fragmentName = ${fragmentName},
-			locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
-			locator2 = "PageEditor#OUTSIDE_OF_DROP_ZONE",
-			value1 = "");
-
-		PageEditor.viewFragmentNotPresent(fragmentName = ${fragmentName});
-	}
-
-	@summary = "Default summary"
 	macro viewCollectionDisplayStyle(layout = null, alignItems = null, flexWrap = null, columnCount = null, position = null, spaceBetweenColumns = null, justifyContent = null) {
 		if (!(isSet(rowNumber))) {
 			var rowNumer = 1;

@@ -23,6 +23,7 @@ import com.liferay.info.field.InfoField;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFormProvider;
+import com.liferay.layout.exporter.LayoutsExporter;
 import com.liferay.layout.importer.LayoutsImportStrategy;
 import com.liferay.layout.importer.LayoutsImporter;
 import com.liferay.layout.importer.LayoutsImporterResultEntry;
@@ -62,13 +63,11 @@ import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Repository;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -189,11 +188,9 @@ public class LayoutsImporterTest {
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_addLayoutPageTemplateEntry(html, key, name);
 
-		File file = ReflectionTestUtil.invoke(
-			_mvcResourceCommand, "getFile", new Class<?>[] {long[].class},
-			new long[] {
-				layoutPageTemplateEntry.getLayoutPageTemplateEntryId()
-			});
+		File file = _layoutsExporter.exportLayoutPageTemplateEntries(
+			new long[] {layoutPageTemplateEntry.getLayoutPageTemplateEntryId()},
+			LayoutPageTemplateEntryTypeConstants.BASIC);
 
 		_addFragmentEntry(html, key, name, _serviceContext2);
 
@@ -240,11 +237,9 @@ public class LayoutsImporterTest {
 
 		_addFragmentEntryLink(fragmentEntry, layoutPageTemplateEntry);
 
-		File file = ReflectionTestUtil.invoke(
-			_mvcResourceCommand, "getFile", new Class<?>[] {long[].class},
-			new long[] {
-				layoutPageTemplateEntry.getLayoutPageTemplateEntryId()
-			});
+		File file = _layoutsExporter.exportLayoutPageTemplateEntries(
+			new long[] {layoutPageTemplateEntry.getLayoutPageTemplateEntryId()},
+			LayoutPageTemplateEntryTypeConstants.BASIC);
 
 		ServiceContextThreadLocal.pushServiceContext(_serviceContext2);
 
@@ -289,11 +284,9 @@ public class LayoutsImporterTest {
 				fragmentEntryLink.getFragmentEntryId()),
 			_serviceContext2);
 
-		File file = ReflectionTestUtil.invoke(
-			_mvcResourceCommand, "getFile", new Class<?>[] {long[].class},
-			new long[] {
-				layoutPageTemplateEntry.getLayoutPageTemplateEntryId()
-			});
+		File file = _layoutsExporter.exportLayoutPageTemplateEntries(
+			new long[] {layoutPageTemplateEntry.getLayoutPageTemplateEntryId()},
+			LayoutPageTemplateEntryTypeConstants.BASIC);
 
 		List<LayoutsImporterResultEntry> layoutsImporterResultEntries = null;
 
@@ -346,11 +339,9 @@ public class LayoutsImporterTest {
 			_addLayoutPageTemplateEntry(
 				editableValuesJSONObject.toString(), fragmentEntry);
 
-		File file = ReflectionTestUtil.invoke(
-			_mvcResourceCommand, "getFile", new Class<?>[] {long[].class},
-			new long[] {
-				layoutPageTemplateEntry.getLayoutPageTemplateEntryId()
-			});
+		File file = _layoutsExporter.exportLayoutPageTemplateEntries(
+			new long[] {layoutPageTemplateEntry.getLayoutPageTemplateEntryId()},
+			LayoutPageTemplateEntryTypeConstants.BASIC);
 
 		FragmentEntry curFragmentEntry = _addFragmentEntry(
 			fragmentEntry, _serviceContext2);
@@ -1572,15 +1563,13 @@ public class LayoutsImporterTest {
 		_layoutPageTemplateStructureLocalService;
 
 	@Inject
+	private LayoutsExporter _layoutsExporter;
+
+	@Inject
 	private LayoutsImporter _layoutsImporter;
 
 	@Inject
 	private LayoutStructureProvider _layoutStructureProvider;
-
-	@Inject(
-		filter = "mvc.command.name=/layout_page_template_admin/export_layout_page_template_entries"
-	)
-	private MVCResourceCommand _mvcResourceCommand;
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

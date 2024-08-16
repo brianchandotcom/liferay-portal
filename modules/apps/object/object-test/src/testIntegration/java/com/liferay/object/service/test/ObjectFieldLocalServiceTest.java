@@ -1087,6 +1087,10 @@ public class ObjectFieldLocalServiceTest {
 
 		Assert.assertTrue(localizedSystemObjectField.isLocalized());
 
+		_objectDefinitionLocalService.publishSystemObjectDefinition(
+			TestPropsValues.getUserId(),
+			modifiableSystemObjectDefinition.getObjectDefinitionId());
+
 		// Requests from forbidden bundles can only update the label
 
 		String liferayMode = SystemProperties.get("liferay.mode");
@@ -1110,7 +1114,7 @@ public class ObjectFieldLocalServiceTest {
 		}
 
 		_objectDefinitionLocalService.deleteObjectDefinition(
-			modifiableSystemObjectDefinition);
+			modifiableSystemObjectDefinition.getObjectDefinitionId());
 	}
 
 	@Test

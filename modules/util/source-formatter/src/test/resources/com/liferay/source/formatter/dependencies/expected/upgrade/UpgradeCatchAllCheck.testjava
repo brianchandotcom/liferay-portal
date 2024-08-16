@@ -1003,8 +1003,8 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		String defaultAdminFirstName, String defaultAdminMiddleName,
 		String defaultAdminLastName) {
 
-		CompanyLocalServiceUtil.addCompany(companyId, webId, virtualHost, mx, maxUsers, active, defaultAdminPassword, defaultAdminScreenName, defaultAdminEmailAddress, defaultAdminFirstName, defaultAdminMiddleName, defaultAdminLastName);
-		_companyLocalService.addCompany(companyId, webId, virtualHost, mx, maxUsers, active, defaultAdminPassword, defaultAdminScreenName, defaultAdminEmailAddress, defaultAdminFirstName, defaultAdminMiddleName, defaultAdminLastName);
+		CompanyLocalServiceUtil.addCompany(companyId, webId, virtualHostname, mx, maxUsers, active, defaultAdminPassword, defaultAdminScreenName, defaultAdminEmailAddress, defaultAdminFirstName, defaultAdminMiddleName, defaultAdminLastName);
+		_companyLocalService.addCompany(companyId, webId, virtualHostname, mx, maxUsers, active, defaultAdminPassword, defaultAdminScreenName, defaultAdminEmailAddress, defaultAdminFirstName, defaultAdminMiddleName, defaultAdminLastName);
 	}
 
 	public void method(long[] segmentsExperienceIds) {

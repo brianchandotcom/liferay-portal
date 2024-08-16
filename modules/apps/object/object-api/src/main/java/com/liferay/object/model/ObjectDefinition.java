@@ -76,6 +76,8 @@ public interface ObjectDefinition
 
 	public boolean isLinkedToObjectFolder(long objectFolderId);
 
+	public boolean isModifiableSystemObject();
+
 	public boolean isNodeCandidate();
 
 	public boolean isRootDescendantNode();

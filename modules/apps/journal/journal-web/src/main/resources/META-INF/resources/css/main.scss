@@ -245,6 +245,25 @@ $productMenuWidth: 320px;
 			}
 		}
 
+		.edit-article-panel {
+			border-color: $gray-400;
+
+			.sheet-subtitle {
+				border-width: 0;
+				font-size: 1.25rem;
+				padding: 1.25rem;
+				padding-bottom: 0;
+				text-transform: none;
+
+				.lexicon-icon {
+					font-size: 1.25rem;
+					margin-top: 1rem;
+					position: relative;
+					right: 0.5rem;
+				}
+			}
+		}
+
 		.sidebar-body {
 			.collapse-icon {
 				border-bottom: 1px solid $light;

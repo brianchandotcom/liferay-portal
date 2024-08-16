@@ -403,6 +403,7 @@ journalEditArticleDisplayContext.setViewAttributes();
 							<liferay-frontend:fieldset
 								collapsed="<%= false %>"
 								collapsible="<%= true %>"
+								cssClass="edit-article-panel"
 								label="fields"
 							>
 								<div class="c-px-2 panel-body">

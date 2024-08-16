@@ -154,7 +154,7 @@ public class FormConfig implements Cloneable, Serializable {
 
 	public static enum FormType {
 
-		SIMPLE("simple"), MULTI_STEP("multi-step");
+		SIMPLE("simple"), MULTISTEP("multistep");
 
 		public static FormType create(String value) {
 			for (FormType formType : values()) {

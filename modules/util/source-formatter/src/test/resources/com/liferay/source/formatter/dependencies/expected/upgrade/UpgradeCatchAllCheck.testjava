@@ -1158,6 +1158,9 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 	private CommercePriceListLocalService _commercePriceListLocalService;
 
 	@Reference
+	private CompanyLocalService _companyLocalService;
+
+	@Reference
 	private CountryService _countryService;
 
 	@Reference

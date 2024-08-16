@@ -25,7 +25,6 @@ import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -50,6 +49,12 @@ import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+
+import javax.portlet.Portlet;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -179,16 +184,24 @@ public class BlogsViewEntryContentDisplayContextTest {
 			serviceContext);
 	}
 
-	private MockHttpServletRequest _getMockHttpServletRequest()
+	private MockLiferayPortletRenderRequest
+			_getMockLiferayPortletRenderRequest()
 		throws Exception {
 
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
+		MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
+			new TestMockLiferayPortletRenderRequest(
+				new MockHttpServletRequest());
 
-		mockHttpServletRequest.setAttribute(
+		mockLiferayPortletRenderRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, _getThemeDisplay());
 
-		return mockHttpServletRequest;
+		ReflectionTestUtil.invoke(
+			_portlet, "doDispatch",
+			new Class<?>[] {RenderRequest.class, RenderResponse.class},
+			mockLiferayPortletRenderRequest,
+			new TestMockLiferayPortletRenderResponse());
+
+		return mockLiferayPortletRenderRequest;
 	}
 
 	private ThemeDisplay _getThemeDisplay() throws Exception {
@@ -213,11 +226,7 @@ public class BlogsViewEntryContentDisplayContextTest {
 
 	private String _getViewEntryURL(BlogsEntry entry) throws Exception {
 		MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
-			new MockLiferayPortletRenderRequest(_getMockHttpServletRequest());
-
-		_mvcRenderCommand.render(
-			mockLiferayPortletRenderRequest,
-			new MockLiferayPortletRenderResponse());
+			_getMockLiferayPortletRenderRequest();
 
 		Object blogsViewEntryContentDisplayContext =
 			mockLiferayPortletRenderRequest.getAttribute(
@@ -299,8 +308,38 @@ public class BlogsViewEntryContentDisplayContextTest {
 		_layoutPageTemplateEntryLocalService;
 
 	@Inject(
-		filter = "component.name=com.liferay.blogs.web.internal.portlet.action.ViewMVCRenderCommand"
+		filter = "component.name=com.liferay.blogs.web.internal.portlet.BlogsPortlet"
 	)
-	private MVCRenderCommand _mvcRenderCommand;
+	private Portlet _portlet;
+
+	private static class TestMockLiferayPortletRenderRequest
+		extends MockLiferayPortletRenderRequest {
+
+		public TestMockLiferayPortletRenderRequest(
+			HttpServletRequest httpServletRequest) {
+
+			_httpServletRequest = httpServletRequest;
+		}
+
+		@Override
+		public void setAttribute(String name, Object value) {
+			super.setAttribute(name, value);
+
+			_httpServletRequest.setAttribute(name, value);
+		}
+
+		private final HttpServletRequest _httpServletRequest;
+
+	}
+
+	private static class TestMockLiferayPortletRenderResponse
+		extends MockLiferayPortletRenderResponse {
+
+		@Override
+		public String getNamespace() {
+			return BlogsPortletKeys.BLOGS;
+		}
+
+	}
 
 }

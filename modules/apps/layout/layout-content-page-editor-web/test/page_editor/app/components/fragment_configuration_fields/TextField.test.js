@@ -129,6 +129,29 @@ describe('TextField', () => {
 		expect(getByText('you-have-entered-invalid-data')).toBeInTheDocument();
 	});
 
+	it('shows the error message defined in the type options when validation type url and value is not valid', () => {
+		const errorMessage = 'Please enter a valid URL with 22-35 characters';
+
+		const {getByLabelText, getByText, queryByText} = renderTextField({
+			validation: {
+				errorMessage,
+				maxLength: 35,
+				minLength: 22,
+				type: 'url',
+			},
+		});
+
+		const input = getByLabelText(INPUT_NAME);
+
+		userEvent.type(input, 'h');
+
+		expect(getByText(errorMessage)).toBeInTheDocument();
+
+		userEvent.type(input, 'https://giannisantetokounmpo.liferay.com');
+
+		expect(queryByText(errorMessage)).not.toBeInTheDocument();
+	});
+
 	it('calls the onValueSelect callback when the input changes', () => {
 		const onValueSelect = jest.fn();
 		const {getByLabelText} = renderTextField({}, onValueSelect);

@@ -14,5 +14,5 @@
 	"kind": "CronJob",
 	"memory": 512,
 	"scale": 1,
-	"schedule": "* */8 * * *"
+	"schedule": "0 */6 * * *"
 }

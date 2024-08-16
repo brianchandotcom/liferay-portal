@@ -11,6 +11,7 @@ export const fetchCount = ({
 	channelId: string;
 	fromDate?: string;
 	groupId: string;
+	individualId?: string;
 	rangeKey?: string;
 	toDate?: string;
 	type: CSVType;

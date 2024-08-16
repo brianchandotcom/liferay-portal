@@ -243,6 +243,12 @@
 						},
 						"type": "array"
 					},
+					"permissions": {
+						"items": {
+							"$ref": "#/components/schemas/Permission"
+						},
+						"type": "array"
+					},
 					"relationship1": {
 						"description": "Information about the relationship relationship1 can be embedded with \"nestedFields\".",
 						"items": {
@@ -394,6 +400,12 @@
 							"$ref": "#/components/schemas/ListEntry"
 						},
 						"readOnly": false,
+						"type": "array"
+					},
+					"permissions": {
+						"items": {
+							"$ref": "#/components/schemas/Permission"
+						},
 						"type": "array"
 					},
 					"r_relationship2_c_object1ERC": {

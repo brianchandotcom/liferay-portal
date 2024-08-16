@@ -206,6 +206,12 @@
 						"readOnly": true,
 						"type": "integer"
 					},
+					"permissions": {
+						"items": {
+							"$ref": "#/components/schemas/Permission"
+						},
+						"type": "array"
+					},
 					"scopeKey": {
 						"readOnly": true,
 						"type": "string"

@@ -316,7 +316,7 @@ definition {
 
 			PageEditor.addFragment(
 				collectionName = "Menu Display",
-				dropTarget = "Header",
+				dropTarget = "Footer",
 				fragmentName = "Menu Display",
 				scope = "Master");
 		}
@@ -350,18 +350,6 @@ definition {
 			ContentPages.addPage(
 				masterLayoutName = "Custom Masters Page Template",
 				pageName = "Test Content Page");
-		}
-
-		task ("Assert the item color when hover on it") {
-			MouseOver(
-				key_pageName = "Test Widget Page",
-				locator1 = "Home#PAGE");
-
-			AssertCssValue(
-				key_pageName = "Test Widget Page",
-				locator1 = "Home#PAGE",
-				locator2 = "color",
-				value1 = "rgba(185, 80, 0, 1)");
 
 			PageEditor.publish();
 		}

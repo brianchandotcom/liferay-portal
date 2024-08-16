@@ -66,9 +66,6 @@ public class JavaEntityModelToEntityFieldsMapCallCheck extends BaseFileCheck {
 		}
 	}
 
-	private static final Pattern _newEntityFieldPattern = Pattern.compile(
-		"new (\\w+EntityField)\\(");
-
 	private class NewEntityFieldComparator implements Comparator<String> {
 
 		@Override
@@ -121,6 +118,9 @@ public class JavaEntityModelToEntityFieldsMapCallCheck extends BaseFileCheck {
 			return parameterNameComparator.compare(
 				parameterList1.get(0), parameterList2.get(0));
 		}
+
+		private final Pattern _newEntityFieldPattern = Pattern.compile(
+			"new (\\w+EntityField)\\(");
 
 	}
 

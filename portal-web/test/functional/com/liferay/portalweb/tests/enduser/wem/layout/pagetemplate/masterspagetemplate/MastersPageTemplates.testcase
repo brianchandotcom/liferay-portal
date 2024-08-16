@@ -851,9 +851,20 @@ definition {
 		}
 
 		task ("Assert can not add a Paragraph fragment to outside of drop zone") {
-			PageEditor.viewCannotAddFragmentToOutsideOfDropZone(
-				collectionName = "Basic Components",
-				fragmentName = "Paragraph");
+			WaitForPageLoad();
+
+			Navigator.gotoNavTab(navTab = "Fragments");
+
+			PageEditor.expandFragmentCollection(collectionName = "Basic Components");
+
+			DragAndDrop(
+				key_collectionName = "Basic Components",
+				key_fragmentName = "Paragraph",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
+				locator2 = "PageEditor#OUTSIDE_OF_DROP_ZONE",
+				value1 = "");
+
+			PageEditor.viewFragmentNotPresent(fragmentName = "Paragraph");
 		}
 	}
 

@@ -290,13 +290,13 @@
 				{
 					"active": true,
 					"engine": "javaDelegate#CommerceReturn#permission",
-					"engineLabel": "Commerce Return Check Permission",
+					"engineLabel": "Commerce Return Permission",
 					"errorLabel": {
 						"en_US": "You do not have permission to edit this item."
 					},
 					"externalReferenceCode": "COMMERCE_RETURN_PERMISSION",
 					"name": {
-						"en_US": "Check Permission"
+						"en_US": "Permission"
 					},
 					"objectDefinitionExternalReferenceCode": "L_COMMERCE_RETURN",
 					"outputType": "fullValidation",

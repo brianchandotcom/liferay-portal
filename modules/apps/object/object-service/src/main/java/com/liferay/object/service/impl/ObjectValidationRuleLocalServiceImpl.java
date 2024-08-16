@@ -769,18 +769,18 @@ public class ObjectValidationRuleLocalServiceImpl
 
 			if (!allowedObjectValidationRuleSettingNames.contains(
 					objectValidationRuleSetting.getName()) ||
+				((objectDefinition.isUnmodifiableSystemObject() ||
+				  !objectDefinition.isSystem() || !system) &&
+				 objectValidationRuleSetting.compareName(
+					 ObjectValidationRuleSettingConstants.
+						 NAME_ALLOW_ACTIVE_STATUS_UPDATE)) ||
 				(objectValidationRuleSetting.compareName(
 					ObjectValidationRuleSettingConstants.
 						NAME_OUTPUT_OBJECT_FIELD_ID) &&
 				 !StringUtil.equals(
 					 outputType,
 					 ObjectValidationRuleConstants.
-						 OUTPUT_TYPE_PARTIAL_VALIDATION)) ||
-				((objectDefinition.isUnmodifiableSystemObject() ||
-				  !objectDefinition.isSystem() || !system) &&
-				 objectValidationRuleSetting.compareName(
-					 ObjectValidationRuleSettingConstants.
-						 NAME_ALLOW_ACTIVE_STATUS_UPDATE))) {
+						 OUTPUT_TYPE_PARTIAL_VALIDATION))) {
 
 				throw new ObjectValidationRuleSettingNameException.
 					NotAllowedName(objectValidationRuleSetting.getName());

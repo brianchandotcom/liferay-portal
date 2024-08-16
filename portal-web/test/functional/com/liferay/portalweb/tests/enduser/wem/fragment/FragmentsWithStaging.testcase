@@ -122,6 +122,8 @@ definition {
 				collectionName = "Fragment Set Name",
 				fragmentName = "Fragment Name");
 
+			PageEditor.gotoTab(tabName = "Fragments and Widgets");
+
 			DragAndDrop.javaScriptDragAndDropToObject(
 				key_collectionName = "Basic Components",
 				key_fragmentName = "Button",

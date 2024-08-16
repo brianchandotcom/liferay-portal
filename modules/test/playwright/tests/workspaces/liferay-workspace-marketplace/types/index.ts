@@ -39,6 +39,7 @@ export type PublishProductPayload = {
 	support: {
 		publisherWebsiteUrl?: string;
 		supportEmail?: string;
+		supportPhone: string;
 	};
 	tags: string[];
 	version: {

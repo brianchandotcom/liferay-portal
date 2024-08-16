@@ -58,6 +58,7 @@ export const products = {
 		support: {
 			publisherWebsiteUrl: 'www.liferay.com',
 			supportEmail: 'test@liferay.com',
+			supportPhone: '+00 00 000000000',
 		},
 		tags: ['Client Extension Type'],
 		version: {
@@ -102,6 +103,7 @@ export const products = {
 		support: {
 			publisherWebsiteUrl: 'www.liferay.com',
 			supportEmail: 'test@liferay.com',
+			supportPhone: '+00 00 000000000',
 		},
 		tags: ['Client Extension Type'],
 		version: {

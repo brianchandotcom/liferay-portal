@@ -29,6 +29,7 @@ export class PublisherAppPage {
 		support: {
 			publisherWebsiteUrl: Locator;
 			supportEmail: Locator;
+			supportPhone: Locator;
 		};
 		version: {
 			notes: Locator;
@@ -72,6 +73,7 @@ export class PublisherAppPage {
 				supportEmail: page.getByPlaceholder(
 					'Enter Support Email Address'
 				),
+				supportPhone: page.getByPlaceholder('Enter Support Phone'),
 			},
 			version: {
 				notes: page.getByPlaceholder('Enter app description'),
@@ -294,6 +296,9 @@ export class PublisherAppPage {
 			);
 			await this.form.support.supportEmail.fill(
 				this.publishProductPayload.support.supportEmail
+			);
+			await this.form.support.supportPhone.fill(
+				this.publishProductPayload.support.supportPhone
 			);
 			await this.continue();
 		}

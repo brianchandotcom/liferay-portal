@@ -66,6 +66,8 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.PermissionService;
+import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.File;
@@ -88,6 +90,8 @@ import com.liferay.portal.vulcan.extension.ExtensionProviderRegistry;
 import com.liferay.portal.vulcan.extension.util.ExtensionUtil;
 import com.liferay.portal.vulcan.fields.NestedFieldsSupplier;
 import com.liferay.portal.vulcan.jaxrs.extension.ExtendedEntity;
+import com.liferay.portal.vulcan.permission.Permission;
+import com.liferay.portal.vulcan.permission.PermissionUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.io.Serializable;
@@ -96,6 +100,7 @@ import java.sql.Timestamp;
 
 import java.text.SimpleDateFormat;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -215,6 +220,8 @@ public class ObjectEntryDTOConverter
 								objectEntry.getObjectEntryId()),
 							AssetTag.NAME_ACCESSOR);
 					});
+				setPermissions(
+					() -> _toPermissions(objectDefinition, objectEntry));
 				setProperties(
 					() -> _toProperties(
 						dtoConverterContext, objectDefinition, objectEntry));
@@ -835,6 +842,30 @@ public class ObjectEntryDTOConverter
 		return ExtendedEntity.extend(dto, nestedFieldsRelatedProperties, null);
 	}
 
+	private Permission[] _toPermissions(
+			ObjectDefinition objectDefinition,
+			com.liferay.object.model.ObjectEntry objectEntry)
+		throws Exception {
+
+		return NestedFieldsSupplier.supply(
+			"permissions",
+			nestedFieldNames -> {
+				_permissionService.checkPermission(
+					objectEntry.getGroupId(), objectDefinition.getClassName(),
+					objectEntry.getObjectEntryId());
+
+				Collection<Permission> permissions =
+					PermissionUtil.getPermissions(
+						objectDefinition.getCompanyId(),
+						_resourceActionLocalService.getResourceActions(
+							objectDefinition.getClassName()),
+						objectEntry.getObjectEntryId(),
+						objectDefinition.getClassName(), null);
+
+				return permissions.toArray(new Permission[0]);
+			});
+	}
+
 	private Map<String, Object> _toProperties(
 			DTOConverterContext dtoConverterContext,
 			ObjectDefinition objectDefinition,
@@ -1057,7 +1088,13 @@ public class ObjectEntryDTOConverter
 	private ObjectScopeProviderRegistry _objectScopeProviderRegistry;
 
 	@Reference
+	private PermissionService _permissionService;
+
+	@Reference
 	private Portal _portal;
+
+	@Reference
+	private ResourceActionLocalService _resourceActionLocalService;
 
 	@Reference
 	private SystemObjectDefinitionManagerRegistry

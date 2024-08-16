@@ -193,7 +193,7 @@ public class DispatchConfigurator {
 
 		@Override
 		protected void doMasterTokenReleased() throws Exception {
-			_deleteScheduledJobs();
+			_addScheduledJobs();
 		}
 
 	}

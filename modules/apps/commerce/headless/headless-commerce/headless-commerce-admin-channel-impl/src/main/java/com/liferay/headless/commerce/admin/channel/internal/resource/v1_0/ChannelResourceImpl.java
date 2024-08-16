@@ -148,7 +148,7 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 			_commerceChannelService.updateCommerceChannel(
 				channelId,
 				_getAccountEntryId(
-					channel, commerceChannel.getAccountEntryId()),
+					commerceChannel.getAccountEntryId(), channel),
 				commerceChannel.getSiteGroupId(),
 				GetterUtil.getString(
 					channel.getName(), commerceChannel.getName()),
@@ -181,7 +181,7 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 			_commerceChannelService.updateCommerceChannel(
 				commerceChannel.getCommerceChannelId(),
 				_getAccountEntryId(
-					channel, commerceChannel.getAccountEntryId()),
+					commerceChannel.getAccountEntryId(), channel),
 				commerceChannel.getSiteGroupId(),
 				GetterUtil.getString(
 					channel.getName(), commerceChannel.getName()),
@@ -201,7 +201,7 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 			_commerceChannelService.addCommerceChannel(
 				channel.getExternalReferenceCode(),
 				_getAccountEntryId(
-					channel, AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT),
+					AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT, channel),
 				GetterUtil.get(channel.getSiteGroupId(), 0), channel.getName(),
 				channel.getType(), null, channel.getCurrencyCode(),
 				_serviceContextHelper.getServiceContext(contextUser)));
@@ -222,7 +222,7 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 			_commerceChannelService.updateCommerceChannel(
 				channelId,
 				_getAccountEntryId(
-					channel, AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT),
+					AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT, channel),
 				channel.getSiteGroupId(), channel.getName(), channel.getType(),
 				null, channel.getCurrencyCode(), null, false));
 	}
@@ -236,13 +236,13 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 			_commerceChannelService.addOrUpdateCommerceChannel(
 				externalReferenceCode,
 				_getAccountEntryId(
-					channel, AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT),
+					AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT, channel),
 				channel.getSiteGroupId(), channel.getName(), channel.getType(),
 				null, channel.getCurrencyCode(),
 				_serviceContextHelper.getServiceContext()));
 	}
 
-	private long _getAccountEntryId(Channel channel, long defaultAccountEntryId)
+	private long _getAccountEntryId(long defaultAccountEntryId, Channel channel)
 		throws Exception {
 
 		long accountEntryId = GetterUtil.getLong(channel.getAccountId());

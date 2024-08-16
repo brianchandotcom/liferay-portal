@@ -141,10 +141,11 @@ public class ObjectFieldLocalServiceImpl
 
 		return _addObjectField(
 			externalReferenceCode, userId, listTypeDefinitionId,
-			objectDefinitionId, businessType, name + StringPool.UNDERLINE, null,
-			dbType, indexed, indexedAsKeyword, indexedLanguageId, labelMap,
-			localized, name, readOnly, readOnlyConditionExpression, required,
-			state, false, objectFieldSettings);
+			objectDefinitionId, businessType,
+			_getDBColumnName(objectDefinitionId, name, false), null, dbType,
+			indexed, indexedAsKeyword, indexedLanguageId, labelMap, localized,
+			name, readOnly, readOnlyConditionExpression, required, state, false,
+			objectFieldSettings);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -265,11 +266,8 @@ public class ObjectFieldLocalServiceImpl
 		name = StringUtil.trim(name);
 
 		if (Validator.isNull(dbColumnName)) {
-			dbColumnName = name;
-
-			if (objectDefinition.isModifiableSystemObject()) {
-				dbColumnName += StringPool.UNDERLINE;
-			}
+			dbColumnName = _getDBColumnName(
+				objectDefinition.getObjectDefinitionId(), name, true);
 		}
 
 		if (!objectDefinition.isSystem() ||
@@ -1192,6 +1190,20 @@ public class ObjectFieldLocalServiceImpl
 		return objectField;
 	}
 
+	private String _getDBColumnName(
+			long objectDefinitionId, String name, boolean system)
+		throws PortalException {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
+
+		if (objectDefinition.isUnmodifiableSystemObject() && system) {
+			return name;
+		}
+
+		return name + StringPool.UNDERLINE;
+	}
+
 	private String _getIndexedLanguageId(
 		String businessType, String dbType, boolean indexed,
 		boolean indexedAsKeyword, String indexedLanguageId) {
@@ -1421,7 +1433,10 @@ public class ObjectFieldLocalServiceImpl
 		if (!businessType.equals(
 				ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP)) {
 
-			newObjectField.setDBColumnName(name + StringPool.UNDERLINE);
+			newObjectField.setDBColumnName(
+				_getDBColumnName(
+					objectDefinition.getObjectDefinitionId(), name,
+					newObjectField.isSystem()));
 		}
 
 		newObjectField.setLocalized(localized);

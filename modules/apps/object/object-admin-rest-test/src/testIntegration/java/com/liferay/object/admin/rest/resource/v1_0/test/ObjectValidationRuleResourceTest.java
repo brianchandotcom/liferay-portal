@@ -145,10 +145,10 @@ public class ObjectValidationRuleResourceTest
 			Collections.singletonMap("en_US", RandomTestUtil.randomString()));
 		objectValidationRule.setObjectDefinitionId(
 			_objectDefinition.getObjectDefinitionId());
-		objectValidationRule.setScript("isEmailAddress(able)");
-		objectValidationRule.setSystem(false);
 		objectValidationRule.setOutputType(
 			ObjectValidationRule.OutputType.FULL_VALIDATION);
+		objectValidationRule.setScript("isEmailAddress(able)");
+		objectValidationRule.setSystem(false);
 
 		return objectValidationRule;
 	}

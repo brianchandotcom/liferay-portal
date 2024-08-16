@@ -5,9 +5,12 @@
 
 package com.liferay.headless.delivery.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
@@ -143,32 +146,45 @@ public class FormConfig implements Serializable {
 	@JsonIgnore
 	private Supplier<Object> _formSuccessSubmissionResultSupplier;
 
+	@JsonGetter("formType")
 	@Schema(
 		description = "A flag that indicates whether the page form instance is multi step or not."
 	)
-	public Boolean getMultiStep() {
-		if (_multiStepSupplier != null) {
-			multiStep = _multiStepSupplier.get();
+	@Valid
+	public FormType getFormType() {
+		if (_formTypeSupplier != null) {
+			formType = _formTypeSupplier.get();
 
-			_multiStepSupplier = null;
+			_formTypeSupplier = null;
 		}
 
-		return multiStep;
-	}
-
-	public void setMultiStep(Boolean multiStep) {
-		this.multiStep = multiStep;
-
-		_multiStepSupplier = null;
+		return formType;
 	}
 
 	@JsonIgnore
-	public void setMultiStep(
-		UnsafeSupplier<Boolean, Exception> multiStepUnsafeSupplier) {
+	public String getFormTypeAsString() {
+		FormType formType = getFormType();
 
-		_multiStepSupplier = () -> {
+		if (formType == null) {
+			return null;
+		}
+
+		return formType.toString();
+	}
+
+	public void setFormType(FormType formType) {
+		this.formType = formType;
+
+		_formTypeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setFormType(
+		UnsafeSupplier<FormType, Exception> formTypeUnsafeSupplier) {
+
+		_formTypeSupplier = () -> {
 			try {
-				return multiStepUnsafeSupplier.get();
+				return formTypeUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -183,10 +199,10 @@ public class FormConfig implements Serializable {
 		description = "A flag that indicates whether the page form instance is multi step or not."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Boolean multiStep;
+	protected FormType formType;
 
 	@JsonIgnore
-	private Supplier<Boolean> _multiStepSupplier;
+	private Supplier<FormType> _formTypeSupplier;
 
 	@Schema(description = "The definition for the number of steps of the form.")
 	public Integer getNumberOfSteps() {
@@ -305,16 +321,20 @@ public class FormConfig implements Serializable {
 			}
 		}
 
-		Boolean multiStep = getMultiStep();
+		FormType formType = getFormType();
 
-		if (multiStep != null) {
+		if (formType != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"multiStep\": ");
+			sb.append("\"formType\": ");
 
-			sb.append(multiStep);
+			sb.append("\"");
+
+			sb.append(formType);
+
+			sb.append("\"");
 		}
 
 		Integer numberOfSteps = getNumberOfSteps();
@@ -340,6 +360,44 @@ public class FormConfig implements Serializable {
 		name = "x-class-name"
 	)
 	public String xClassName;
+
+	@GraphQLName("FormType")
+	public static enum FormType {
+
+		SIMPLE("simple"), MULTI_STEP("multi-step");
+
+		@JsonCreator
+		public static FormType create(String value) {
+			if ((value == null) || value.equals("")) {
+				return null;
+			}
+
+			for (FormType formType : values()) {
+				if (Objects.equals(formType.getValue(), value)) {
+					return formType;
+				}
+			}
+
+			throw new IllegalArgumentException("Invalid enum value: " + value);
+		}
+
+		@JsonValue
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private FormType(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
 
 	private static String _escape(Object object) {
 		return StringUtil.replace(

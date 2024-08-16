@@ -78,14 +78,18 @@ public class FormConfigSerDes {
 			}
 		}
 
-		if (formConfig.getMultiStep() != null) {
+		if (formConfig.getFormType() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"multiStep\": ");
+			sb.append("\"formType\": ");
 
-			sb.append(formConfig.getMultiStep());
+			sb.append("\"");
+
+			sb.append(formConfig.getFormType());
+
+			sb.append("\"");
 		}
 
 		if (formConfig.getNumberOfSteps() != null) {
@@ -133,11 +137,11 @@ public class FormConfigSerDes {
 				String.valueOf(formConfig.getFormSuccessSubmissionResult()));
 		}
 
-		if (formConfig.getMultiStep() == null) {
-			map.put("multiStep", null);
+		if (formConfig.getFormType() == null) {
+			map.put("formType", null);
 		}
 		else {
-			map.put("multiStep", String.valueOf(formConfig.getMultiStep()));
+			map.put("formType", String.valueOf(formConfig.getFormType()));
 		}
 
 		if (formConfig.getNumberOfSteps() == null) {
@@ -174,7 +178,7 @@ public class FormConfigSerDes {
 
 				return false;
 			}
-			else if (Objects.equals(jsonParserFieldName, "multiStep")) {
+			else if (Objects.equals(jsonParserFieldName, "formType")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "numberOfSteps")) {
@@ -202,9 +206,11 @@ public class FormConfigSerDes {
 						(Object)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "multiStep")) {
+			else if (Objects.equals(jsonParserFieldName, "formType")) {
 				if (jsonParserFieldValue != null) {
-					formConfig.setMultiStep((Boolean)jsonParserFieldValue);
+					formConfig.setFormType(
+						FormConfig.FormType.create(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "numberOfSteps")) {

@@ -71,26 +71,34 @@ public class FormConfig implements Cloneable, Serializable {
 
 	protected Object formSuccessSubmissionResult;
 
-	public Boolean getMultiStep() {
-		return multiStep;
+	public FormType getFormType() {
+		return formType;
 	}
 
-	public void setMultiStep(Boolean multiStep) {
-		this.multiStep = multiStep;
+	public String getFormTypeAsString() {
+		if (formType == null) {
+			return null;
+		}
+
+		return formType.toString();
 	}
 
-	public void setMultiStep(
-		UnsafeSupplier<Boolean, Exception> multiStepUnsafeSupplier) {
+	public void setFormType(FormType formType) {
+		this.formType = formType;
+	}
+
+	public void setFormType(
+		UnsafeSupplier<FormType, Exception> formTypeUnsafeSupplier) {
 
 		try {
-			multiStep = multiStepUnsafeSupplier.get();
+			formType = formTypeUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Boolean multiStep;
+	protected FormType formType;
 
 	public Integer getNumberOfSteps() {
 		return numberOfSteps;
@@ -142,6 +150,39 @@ public class FormConfig implements Cloneable, Serializable {
 
 	public String toString() {
 		return FormConfigSerDes.toJSON(this);
+	}
+
+	public static enum FormType {
+
+		SIMPLE("simple"), MULTI_STEP("multi-step");
+
+		public static FormType create(String value) {
+			for (FormType formType : values()) {
+				if (Objects.equals(formType.getValue(), value) ||
+					Objects.equals(formType.name(), value)) {
+
+					return formType;
+				}
+			}
+
+			return null;
+		}
+
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private FormType(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
 	}
 
 }

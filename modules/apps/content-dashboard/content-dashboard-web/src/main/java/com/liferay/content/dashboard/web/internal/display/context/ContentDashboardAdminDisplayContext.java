@@ -301,6 +301,32 @@ public class ContentDashboardAdminDisplayContext {
 		return _contentDashboardItemSubtypePayloads;
 	}
 
+	public String getContentPerformanceDataFetchURL(
+		InfoItemReference infoItemReference) {
+
+		InfoItemIdentifier infoItemIdentifier =
+			infoItemReference.getInfoItemIdentifier();
+
+		if (!(infoItemIdentifier instanceof ClassPKInfoItemIdentifier)) {
+			return null;
+		}
+
+		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+			(ClassPKInfoItemIdentifier)infoItemIdentifier;
+
+		return ResourceURLBuilder.createResourceURL(
+			_liferayPortletResponse
+		).setBackURL(
+			_portal.getCurrentURL(_liferayPortletRequest)
+		).setParameter(
+			"className", infoItemReference.getClassName()
+		).setParameter(
+			"classPK", String.valueOf(classPKInfoItemIdentifier.getClassPK())
+		).setResourceID(
+			"/content_dashboard/get_content_performance_info"
+		).buildString();
+	}
+
 	public Map<String, Object> getData() {
 		if (_data != null) {
 			return _data;

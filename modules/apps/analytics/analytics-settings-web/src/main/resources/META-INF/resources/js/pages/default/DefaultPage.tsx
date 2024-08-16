@@ -5,7 +5,7 @@
 
 import ClayLayout from '@clayui/layout';
 import {ClayVerticalNav} from '@clayui/nav';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {IPages} from '../../utils/types';
 import AttributesPage from './AttributesPage';
@@ -48,7 +48,19 @@ const PAGES: IPages<IGenericPageProps, EPages>[] = [
 ];
 
 const DefaultPage: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
-	const [activePage, setactivePage] = useState(EPages.WorkspaceConnection);
+	const [activePage, setActivePage] = useState(EPages.WorkspaceConnection);
+
+	// Set current page based on URL currentPage param
+
+	useEffect(() => {
+		const queryString = window.location.search;
+		const urlParams = new URLSearchParams(queryString);
+		const currentPage = urlParams.get('currentPage');
+
+		if (currentPage) {
+			setActivePage(currentPage as EPages);
+		}
+	}, []);
 
 	return (
 		<ClayLayout.ContainerFluid>
@@ -59,7 +71,7 @@ const DefaultPage: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 							return {
 								active: activePage === key,
 								label,
-								onClick: () => setactivePage(key),
+								onClick: () => setActivePage(key),
 							};
 						})}
 						large={false}

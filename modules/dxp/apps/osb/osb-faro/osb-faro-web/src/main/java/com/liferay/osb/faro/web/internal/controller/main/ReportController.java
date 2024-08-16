@@ -63,6 +63,7 @@ public class ReportController extends BaseFaroController {
 			@QueryParam("channelId") String channelId,
 			@QueryParam("fromDate") String fromDateString,
 			@PathParam("groupId") long groupId,
+			@QueryParam("individualId") String individualId,
 			@DefaultValue(StringPool.BLANK) @QueryParam("orderByFields")
 				FaroParam<List<OrderByField>> orderByFieldsFaroParam,
 			@QueryParam("query") String query,
@@ -72,7 +73,7 @@ public class ReportController extends BaseFaroController {
 		throws Exception {
 
 		Object result = _buildQueryParameters(
-			assetId, assetType, channelId, fromDateString,
+			assetId, assetType, channelId, fromDateString, individualId,
 			orderByFieldsFaroParam, query, rangeKey, toDateString, type);
 
 		Map<String, List<String>> queryParameters;
@@ -140,6 +141,7 @@ public class ReportController extends BaseFaroController {
 			@QueryParam("channelId") String channelId,
 			@QueryParam("fromDate") String fromDateString,
 			@PathParam("groupId") long groupId,
+			@QueryParam("individualId") String individualId,
 			@QueryParam("query") String query,
 			@QueryParam("rangeKey") String rangeKey,
 			@QueryParam("toDate") String toDateString,
@@ -147,8 +149,8 @@ public class ReportController extends BaseFaroController {
 		throws Exception {
 
 		Object result = _buildQueryParameters(
-			assetId, assetType, channelId, fromDateString, null, query,
-			rangeKey, toDateString, type);
+			assetId, assetType, channelId, fromDateString, individualId, null,
+			query, rangeKey, toDateString, type);
 
 		if (!(result instanceof Map<?, ?>)) {
 			return result;
@@ -165,7 +167,7 @@ public class ReportController extends BaseFaroController {
 
 	private Object _buildQueryParameters(
 		String assetId, String assetType, String channelId,
-		String fromDateString,
+		String fromDateString, String individualId,
 		FaroParam<List<OrderByField>> orderByFieldsFaroParam, String query,
 		String rangeKey, String toDateString, String type) {
 
@@ -263,6 +265,12 @@ public class ReportController extends BaseFaroController {
 			else {
 				hashMapWrapper = hashMapWrapper.put(
 					"rangeKey", Collections.singletonList(rangeKey));
+
+				if (Validator.isNotNull(individualId)) {
+					hashMapWrapper = hashMapWrapper.put(
+						"individualId",
+						Collections.singletonList(individualId));
+				}
 			}
 		}
 

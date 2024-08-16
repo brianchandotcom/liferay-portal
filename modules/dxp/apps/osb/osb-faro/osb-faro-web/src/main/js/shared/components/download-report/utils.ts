@@ -23,10 +23,12 @@ export enum CSVType {
 export function useDownloadCSV({
 	assetId,
 	assetType,
+	individualId,
 	type
 }: {
 	assetId?: string;
 	assetType?: string;
+	individualId?: string;
 	type: CSVType;
 }) {
 	const {channelId, groupId, title} = useParams();
@@ -59,6 +61,10 @@ export function useDownloadCSV({
 
 		if (assetType) {
 			url += `&assetType=${assetType}`;
+		}
+
+		if (individualId) {
+			url += `&individualId=${individualId}`;
 		}
 
 		if (field && sortOrder) {

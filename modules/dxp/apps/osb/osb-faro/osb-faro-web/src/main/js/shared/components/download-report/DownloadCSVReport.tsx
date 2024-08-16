@@ -17,6 +17,7 @@ export interface IDownloadReport {
 	assetId?: string;
 	assetType?: string;
 	disabled: boolean;
+	individualId?: string;
 	type: CSVType;
 	typeLang: string;
 }
@@ -25,11 +26,17 @@ const DownloadCSVReport: React.FC<IDownloadReport> = ({
 	assetId,
 	assetType,
 	disabled,
+	individualId,
 	type,
 	typeLang
 }) => {
 	const dispatch = useDispatch();
-	const generateURL = useDownloadCSV({assetId, assetType, type});
+	const generateURL = useDownloadCSV({
+		assetId,
+		assetType,
+		individualId,
+		type
+	});
 	const {observer, onOpenChange, open} = useModal();
 	const rangeSelectors = useUnsafeQueryRangeSelectors();
 	const {channelId, groupId} = useParams();
@@ -94,6 +101,7 @@ const DownloadCSVReport: React.FC<IDownloadReport> = ({
 								channelId,
 								fromDate,
 								groupId,
+								individualId,
 								rangeKey,
 								toDate,
 								type

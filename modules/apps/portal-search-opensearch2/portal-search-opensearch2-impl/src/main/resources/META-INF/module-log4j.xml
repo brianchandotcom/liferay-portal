@@ -3,5 +3,7 @@
 <Configuration strict="true">
 	<Loggers>
 		<Logger level="ERROR" name="com.liferay.portal.search.opensearch2" />
+		<Logger level="WARN" name="com.liferay.portal.search.opensearch2.internal.index.CompanyIndexHelper" />
+		<Logger level="WARN" name="com.liferay.portal.search.opensearch2.internal.index.MappingsHelperImpl" />
 	</Loggers>
 </Configuration>

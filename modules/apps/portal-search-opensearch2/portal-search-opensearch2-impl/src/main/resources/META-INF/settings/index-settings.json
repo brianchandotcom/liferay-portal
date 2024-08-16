@@ -478,7 +478,6 @@
 				"limit": "1500"
 			}
 		},
-		"max_ngram_diff": 9,
-		"number_of_shards": 1
+		"max_ngram_diff": 9
 	}
 }

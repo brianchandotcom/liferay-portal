@@ -757,7 +757,7 @@ definition {
 
 			MenuItem.clickNoError(menuItem = "Delete");
 
-			Confirm.dismissAlert();
+			Button.clickCancel();
 		}
 
 		task ("Assert that the ABTest draft keeps appearing") {

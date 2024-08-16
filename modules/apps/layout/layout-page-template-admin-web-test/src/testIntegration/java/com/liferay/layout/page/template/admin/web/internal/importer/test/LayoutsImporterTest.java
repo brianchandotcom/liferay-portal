@@ -288,18 +288,10 @@ public class LayoutsImporterTest {
 			new long[] {layoutPageTemplateEntry.getLayoutPageTemplateEntryId()},
 			LayoutPageTemplateEntryTypeConstants.BASIC);
 
-		List<LayoutsImporterResultEntry> layoutsImporterResultEntries = null;
-
-		ServiceContextThreadLocal.pushServiceContext(_serviceContext2);
-
-		try {
-			layoutsImporterResultEntries = _layoutsImporter.importFile(
+		List<LayoutsImporterResultEntry> layoutsImporterResultEntries =
+			_layoutsImporter.importFile(
 				TestPropsValues.getUserId(), _group2.getGroupId(), 0, file,
 				LayoutsImportStrategy.DO_NOT_OVERWRITE, true);
-		}
-		finally {
-			ServiceContextThreadLocal.popServiceContext();
-		}
 
 		_assertLayoutPageTemplateEntry(
 			fragmentEntry, fragmentEntryLink,
@@ -346,18 +338,10 @@ public class LayoutsImporterTest {
 		FragmentEntry curFragmentEntry = _addFragmentEntry(
 			fragmentEntry, _serviceContext2);
 
-		List<LayoutsImporterResultEntry> layoutsImporterResultEntries = null;
-
-		ServiceContextThreadLocal.pushServiceContext(_serviceContext2);
-
-		try {
-			layoutsImporterResultEntries = _layoutsImporter.importFile(
+		List<LayoutsImporterResultEntry> layoutsImporterResultEntries =
+			_layoutsImporter.importFile(
 				TestPropsValues.getUserId(), _group2.getGroupId(), 0, file,
 				LayoutsImportStrategy.DO_NOT_OVERWRITE, true);
-		}
-		finally {
-			ServiceContextThreadLocal.popServiceContext();
-		}
 
 		_assertLayoutPageTemplateEntry(
 			configurationJSONObject, editableValuesJSONObject, curFragmentEntry,

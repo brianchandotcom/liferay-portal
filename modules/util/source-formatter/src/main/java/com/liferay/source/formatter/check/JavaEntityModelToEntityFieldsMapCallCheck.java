@@ -57,10 +57,9 @@ public class JavaEntityModelToEntityFieldsMapCallCheck extends BaseFileCheck {
 				if (compare > 0) {
 					content = StringUtil.replaceFirst(
 						content, parameter, previousParameter, x);
-					content = StringUtil.replaceFirst(
-						content, previousParameter, parameter, x);
 
-					return content;
+					return StringUtil.replaceFirst(
+						content, previousParameter, parameter, x);
 				}
 			}
 		}

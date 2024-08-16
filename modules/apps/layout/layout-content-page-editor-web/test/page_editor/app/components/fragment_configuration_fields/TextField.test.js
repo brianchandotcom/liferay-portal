@@ -129,6 +129,29 @@ describe('TextField', () => {
 		expect(getByText('you-have-entered-invalid-data')).toBeInTheDocument();
 	});
 
+	it('shows the error message defined in the type options when validation type email and value is not valid', () => {
+		const errorMessage = 'Please enter a valid URL with 14-30 characters';
+
+		const {getByLabelText, getByText, queryByText} = renderTextField({
+			validation: {
+				errorMessage,
+				maxLength: 30,
+				minLength: 14,
+				type: 'email',
+			},
+		});
+
+		const input = getByLabelText(INPUT_NAME);
+
+		userEvent.type(input, 't');
+
+		expect(getByText(errorMessage)).toBeInTheDocument();
+
+		userEvent.type(input, 'giannis.antetokounmpo@liferay.com');
+
+		expect(queryByText(errorMessage)).not.toBeInTheDocument();
+	});
+
 	it('shows the error message defined in the type options when validation type url and value is not valid', () => {
 		const errorMessage = 'Please enter a valid URL with 22-35 characters';
 

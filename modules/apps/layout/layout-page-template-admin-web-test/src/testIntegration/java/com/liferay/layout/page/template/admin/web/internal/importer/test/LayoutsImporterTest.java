@@ -153,8 +153,6 @@ public class LayoutsImporterTest {
 			ServiceContextThreadLocal.popServiceContext();
 		}
 
-		Assert.assertNotNull(layoutsImporterResultEntries);
-
 		Assert.assertEquals(
 			layoutsImporterResultEntries.toString(), 3,
 			layoutsImporterResultEntries.size());
@@ -206,8 +204,6 @@ public class LayoutsImporterTest {
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
 		}
-
-		Assert.assertNotNull(layoutsImporterResultEntries);
 
 		Assert.assertEquals(
 			layoutsImporterResultEntries.toString(), 1,
@@ -966,8 +962,6 @@ public class LayoutsImporterTest {
 			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
 				_group2.getGroupId(), layoutPageTemplateEntryKey);
 
-		Assert.assertNotNull(layoutPageTemplateEntry);
-
 		List<FragmentEntryLink> fragmentEntryLinks =
 			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
 				layoutPageTemplateEntry.getGroupId(),
@@ -1000,8 +994,6 @@ public class LayoutsImporterTest {
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
 				_group2.getGroupId(), layoutPageTemplateEntryKey);
-
-		Assert.assertNotNull(layoutPageTemplateEntry);
 
 		List<FragmentEntryLink> fragmentEntryLinks =
 			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
@@ -1135,8 +1127,6 @@ public class LayoutsImporterTest {
 				_group2.getGroupId(),
 				_getLayoutPageTemplateEntryKey(layoutsImporterResultEntries));
 
-		Assert.assertNotNull(curLayoutPageTemplateEntry);
-
 		_assertFragmentEntryLink(fragmentEntry, curLayoutPageTemplateEntry);
 	}
 
@@ -1149,8 +1139,6 @@ public class LayoutsImporterTest {
 			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
 				_group2.getGroupId(),
 				_getLayoutPageTemplateEntryKey(layoutsImporterResultEntries));
-
-		Assert.assertNotNull(curLayoutPageTemplateEntry);
 
 		LayoutPageTemplateStructure curLayoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
@@ -1264,8 +1252,6 @@ public class LayoutsImporterTest {
 
 	private String _getLayoutPageTemplateEntryKey(
 		List<LayoutsImporterResultEntry> layoutsImporterResultEntries) {
-
-		Assert.assertNotNull(layoutsImporterResultEntries);
 
 		Assert.assertEquals(
 			layoutsImporterResultEntries.toString(), 1,

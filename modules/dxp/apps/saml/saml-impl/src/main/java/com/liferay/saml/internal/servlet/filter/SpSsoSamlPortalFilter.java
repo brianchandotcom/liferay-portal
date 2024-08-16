@@ -61,17 +61,6 @@ public class SpSsoSamlPortalFilter extends BaseSamlPortalFilter {
 	}
 
 	@Override
-	public boolean isFilterEnabled() {
-		if (_samlProviderConfigurationHelper.isEnabled() &&
-			_samlProviderConfigurationHelper.isRoleSp()) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
 	public boolean isFilterEnabled(
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {

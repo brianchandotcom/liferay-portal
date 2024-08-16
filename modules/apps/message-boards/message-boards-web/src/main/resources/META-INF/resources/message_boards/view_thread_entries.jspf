@@ -175,7 +175,7 @@
 				<div>
 					<%= threadAnswersCount %>
 
-					<liferay-ui:message key='<%= (threadAnswersCount == 1) ? "answer" : "answers" %>' />
+					<liferay-ui:message key='<%= (threadAnswersCount == 1) ? "answer[noun]" : "answers" %>' />
 				</div>
 			</c:if>
 

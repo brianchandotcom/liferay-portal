@@ -107,13 +107,12 @@ public class ObjectValidationRuleLocalServiceImpl
 			system);
 
 		User user = _userLocalService.getUser(userId);
-
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
 
 		_validate(
-			externalReferenceCode, 0, user.getCompanyId(), active, engine,
-			nameMap, outputType, script, system, objectDefinition,
+			externalReferenceCode, 0, user.getCompanyId(), objectDefinition,
+			active, engine, nameMap, outputType, script, system,
 			objectValidationRuleSettings);
 
 		ObjectValidationRule objectValidationRule =
@@ -339,9 +338,9 @@ public class ObjectValidationRuleLocalServiceImpl
 		_validate(
 			externalReferenceCode,
 			objectValidationRule.getObjectValidationRuleId(),
-			objectValidationRule.getCompanyId(), active, engine, nameMap,
-			outputType, script, objectValidationRule.isSystem(),
-			objectDefinition, objectValidationRuleSettings);
+			objectValidationRule.getCompanyId(), objectDefinition, active,
+			engine, nameMap, outputType, script,
+			objectValidationRule.isSystem(), objectValidationRuleSettings);
 
 		ObjectValidationRuleSetting objectValidationRuleSetting =
 			_objectValidationRuleSettingPersistence.fetchByOVRI_N_V(
@@ -629,9 +628,9 @@ public class ObjectValidationRuleLocalServiceImpl
 
 	private void _validate(
 			String externalReferenceCode, long objectValidationRuleId,
-			long companyId, boolean active, String engine,
-			Map<Locale, String> nameMap, String outputType, String script,
-			boolean system, ObjectDefinition objectDefinition,
+			long companyId, ObjectDefinition objectDefinition, boolean active,
+			String engine, Map<Locale, String> nameMap, String outputType,
+			String script, boolean system,
 			List<ObjectValidationRuleSetting> objectValidationRuleSettings)
 		throws PortalException {
 

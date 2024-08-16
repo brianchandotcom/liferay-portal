@@ -84,11 +84,11 @@ public class CompanyIdIndexNameBuilderTest extends BaseOpenSearchTestCase {
 			_companyIndexFactory = null;
 		}
 
-		if (_indexHelper != null) {
+		if (_companyIndexHelper != null) {
 			ReflectionTestUtil.invoke(
-				_indexHelper, "deactivate", new Class<?>[0]);
+				_companyIndexHelper, "deactivate", new Class<?>[0]);
 
-			_indexHelper = null;
+			_companyIndexHelper = null;
 		}
 	}
 
@@ -157,25 +157,26 @@ public class CompanyIdIndexNameBuilderTest extends BaseOpenSearchTestCase {
 		OpenSearchConfigurationWrapper openSearchConfigurationWrapper =
 			_createOpenSearchConfigurationWrapper();
 
-		_indexHelper = new IndexHelperImpl();
+		_companyIndexHelper = new CompanyIndexHelper();
 
 		ReflectionTestUtil.setFieldValue(
-			_indexHelper, "_companyLocalService",
+			_companyIndexHelper, "_companyLocalService",
 			Mockito.mock(CompanyLocalService.class));
 		ReflectionTestUtil.setFieldValue(
-			_indexHelper, "_indexNameBuilder",
+			_companyIndexHelper, "_indexNameBuilder",
 			_createIndexNameBuilder(indexNamePrefix));
 		ReflectionTestUtil.setFieldValue(
-			_indexHelper, "_jsonFactory", new JSONFactoryImpl());
+			_companyIndexHelper, "_jsonFactory", new JSONFactoryImpl());
 		ReflectionTestUtil.setFieldValue(
-			_indexHelper, "_openSearchConfigurationWrapper",
+			_companyIndexHelper, "_openSearchConfigurationWrapper",
 			openSearchConfigurationWrapper);
 		ReflectionTestUtil.setFieldValue(
-			_indexHelper, "_openSearchConnectionManager",
+			_companyIndexHelper, "_openSearchConnectionManager",
 			openSearchConnectionManager);
 
 		ReflectionTestUtil.invoke(
-			_indexHelper, "activate", new Class<?>[] {BundleContext.class},
+			_companyIndexHelper, "activate",
+			new Class<?>[] {BundleContext.class},
 			SystemBundleUtil.getBundleContext());
 
 		_companyIndexFactory = new CompanyIndexFactory();
@@ -184,7 +185,7 @@ public class CompanyIdIndexNameBuilderTest extends BaseOpenSearchTestCase {
 			_companyIndexFactory, "_companyLocalService",
 			Mockito.mock(CompanyLocalService.class));
 		ReflectionTestUtil.setFieldValue(
-			_companyIndexFactory, "_indexHelper", _indexHelper);
+			_companyIndexFactory, "_companyIndexHelper", _companyIndexHelper);
 		ReflectionTestUtil.setFieldValue(
 			_companyIndexFactory, "_openSearchConfigurationWrapper",
 			openSearchConfigurationWrapper);
@@ -198,7 +199,7 @@ public class CompanyIdIndexNameBuilderTest extends BaseOpenSearchTestCase {
 		OpenSearchClient openSearchClient =
 			openSearchConnectionManager.getOpenSearchClient();
 
-		_companyIndexFactory.createIndices(
+		_companyIndexFactory.initializeIndex(
 			companyId, openSearchClient.indices());
 	}
 
@@ -272,6 +273,6 @@ public class CompanyIdIndexNameBuilderTest extends BaseOpenSearchTestCase {
 		_frameworkUtilMockedStatic = Mockito.mockStatic(FrameworkUtil.class);
 
 	private CompanyIndexFactory _companyIndexFactory;
-	private IndexHelper _indexHelper;
+	private CompanyIndexHelper _companyIndexHelper;
 
 }

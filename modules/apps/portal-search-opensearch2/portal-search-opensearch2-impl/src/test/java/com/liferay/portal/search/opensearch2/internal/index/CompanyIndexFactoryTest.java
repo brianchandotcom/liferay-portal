@@ -5,14 +5,12 @@
 
 package com.liferay.portal.search.opensearch2.internal.index;
 
-import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.opensearch2.internal.BaseOpenSearchTestCase;
 import com.liferay.portal.search.opensearch2.internal.OpenSearchTestRule;
 import com.liferay.portal.search.opensearch2.internal.configuration.OpenSearchConfigurationWrapper;
@@ -21,13 +19,12 @@ import com.liferay.portal.search.opensearch2.internal.connection.IndexName;
 import com.liferay.portal.search.opensearch2.internal.document.SingleFieldFixture;
 import com.liferay.portal.search.opensearch2.internal.query.QueryFactories;
 import com.liferay.portal.search.opensearch2.internal.util.ResourceUtil;
-import com.liferay.portal.search.spi.index.configuration.contributor.IndexConfigurationContributor;
-import com.liferay.portal.search.spi.index.configuration.contributor.helper.IndexSettingsHelper;
-import com.liferay.portal.search.spi.index.configuration.contributor.helper.TypeMappingsHelper;
+import com.liferay.portal.search.spi.index.configuration.contributor.CompanyIndexConfigurationContributor;
+import com.liferay.portal.search.spi.index.configuration.contributor.helper.MappingsHelper;
+import com.liferay.portal.search.spi.index.configuration.contributor.helper.SettingsHelper;
 import com.liferay.portal.search.spi.index.listener.CompanyIndexListener;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-
-import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +36,6 @@ import org.hamcrest.CoreMatchers;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -47,25 +43,20 @@ import org.junit.rules.TestName;
 
 import org.mockito.Mockito;
 
-import org.opensearch.client.json.JsonData;
 import org.opensearch.client.opensearch.OpenSearchClient;
+import org.opensearch.client.opensearch._types.mapping.DynamicTemplate;
 import org.opensearch.client.opensearch._types.mapping.Property;
 import org.opensearch.client.opensearch._types.mapping.TypeMapping;
-import org.opensearch.client.opensearch.indices.ExistsRequest;
 import org.opensearch.client.opensearch.indices.GetIndexResponse;
+import org.opensearch.client.opensearch.indices.GetMappingRequest;
+import org.opensearch.client.opensearch.indices.GetMappingResponse;
 import org.opensearch.client.opensearch.indices.IndexSettings;
 import org.opensearch.client.opensearch.indices.IndexState;
 import org.opensearch.client.opensearch.indices.OpenSearchIndicesClient;
-import org.opensearch.client.opensearch.ingest.OpenSearchIngestClient;
-import org.opensearch.client.opensearch.ingest.Processor;
-import org.opensearch.client.opensearch.ingest.PutPipelineRequest;
-import org.opensearch.client.opensearch.ingest.SetProcessor;
-import org.opensearch.client.transport.endpoints.BooleanResponse;
+import org.opensearch.client.opensearch.indices.get_mapping.IndexMappingRecord;
 
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
-import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author André de Oliveira
@@ -74,18 +65,13 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 public class CompanyIndexFactoryTest extends BaseOpenSearchTestCase {
 
 	@ClassRule
+	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
 	@ClassRule
 	public static OpenSearchTestRule openSearchTestRule =
 		OpenSearchTestRule.INSTANCE;
-
-	@BeforeClass
-	public static void setUpClass() throws Exception {
-		_putTimestampPipeline(
-			openSearchConnectionManager.getOpenSearchClient());
-	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -95,12 +81,13 @@ public class CompanyIndexFactoryTest extends BaseOpenSearchTestCase {
 		_companyIndexFactory =
 			_companyIndexFactoryFixture.getCompanyIndexFactory();
 
-		IndexHelper indexHelper = _companyIndexFactoryFixture.getIndexHelper();
+		CompanyIndexHelper companyIndexHelper =
+			_companyIndexFactoryFixture.getCompanyIndexHelper();
 
 		Mockito.reset(_openSearchConfigurationWrapper);
 
 		ReflectionTestUtil.setFieldValue(
-			indexHelper, "_openSearchConfigurationWrapper",
+			companyIndexHelper, "_openSearchConfigurationWrapper",
 			_openSearchConfigurationWrapper);
 
 		ReflectionTestUtil.setFieldValue(
@@ -122,6 +109,8 @@ public class CompanyIndexFactoryTest extends BaseOpenSearchTestCase {
 
 	@After
 	public void tearDown() {
+		deleteIndex();
+
 		_companyIndexFactoryFixture.tearDown();
 
 		if (_serviceRegistrations.isEmpty()) {
@@ -142,20 +131,12 @@ public class CompanyIndexFactoryTest extends BaseOpenSearchTestCase {
 		Mockito.when(
 			_openSearchConfigurationWrapper.additionalIndexConfigurations()
 		).thenReturn(
-			JSONUtil.put(
-				"index",
-				JSONUtil.put(
-					"number_of_replicas", 1
-				).put(
-					"number_of_shards", 2
-				)
-			).toString()
+			"index.number_of_replicas: 1\nindex.number_of_shards: 2"
 		);
-		createIndices();
+
+		initializeIndex();
 
 		_assertIndexSettings(1, 2);
-
-		deleteIndices();
 	}
 
 	@Test
@@ -163,10 +144,57 @@ public class CompanyIndexFactoryTest extends BaseOpenSearchTestCase {
 		Mockito.when(
 			_openSearchConfigurationWrapper.additionalTypeMappings()
 		).thenReturn(
-			loadAdditionalTypeMappings()
+			_getAdditionalTypeMappings()
 		);
 
+		initializeIndex();
+
 		_assertAdditionalTypeMappings();
+	}
+
+	@Test
+	public void testAdditionalTypeMappingsCantOverrideContributedMappings()
+		throws Exception {
+
+		_serviceRegistrations.add(
+			_bundleContext.registerService(
+				CompanyIndexConfigurationContributor.class,
+				new CompanyIndexConfigurationContributor() {
+
+					@Override
+					public void contributeMappings(
+						long companyId, MappingsHelper mappingsHelper) {
+
+						mappingsHelper.putMappings(
+							JSONUtil.put(
+								"properties",
+								JSONUtil.put(
+									"additionalKeyword",
+									JSONUtil.put(
+										"store", true
+									).put(
+										"type", "text"
+									))
+							).toString());
+					}
+
+					@Override
+					public void contributeSettings(
+						long companyId, SettingsHelper settingsHelper) {
+					}
+
+				},
+				null));
+
+		Mockito.when(
+			_openSearchConfigurationWrapper.additionalTypeMappings()
+		).thenReturn(
+			_getAdditionalTypeMappings()
+		);
+
+		initializeIndex();
+
+		assertType("additionalKeyword", "text");
 	}
 
 	@Test
@@ -176,84 +204,68 @@ public class CompanyIndexFactoryTest extends BaseOpenSearchTestCase {
 		Mockito.when(
 			_openSearchConfigurationWrapper.additionalTypeMappings()
 		).thenReturn(
-			_loadAdditionalTypeMappingsWithLegacyRootType()
+			_getLegacyAdditionalTypeMappings()
 		);
+
+		initializeIndex();
 
 		_assertAdditionalTypeMappings();
 	}
 
 	@Test
-	public void testAddMultipleIndexConfigurationContributors()
+	public void testAddMultipleCompanyIndexConfigurationContributors()
 		throws Exception {
 
 		_serviceRegistrations.add(
 			_bundleContext.registerService(
-				IndexConfigurationContributor.class,
-				new TestIndexConfigurationContributor(), null));
+				CompanyIndexConfigurationContributor.class,
+				new TestCompanyIndexConfigurationContributor(), null));
 
 		_serviceRegistrations.add(
 			_bundleContext.registerService(
-				IndexConfigurationContributor.class,
-				new TestIndexConfigurationContributor(), null));
+				CompanyIndexConfigurationContributor.class,
+				new TestCompanyIndexConfigurationContributor(), null));
 	}
 
 	@Test
-	public void testCompanyIndexListeners() throws Exception {
-		ReflectionTestUtil.setFieldValue(
-			_companyIndexFactoryFixture, "_indexName", "other");
+	public void testCatchAllTemplateIsAlwaysLast() throws Exception {
+		Mockito.when(
+			_openSearchConfigurationWrapper.additionalTypeMappings()
+		).thenReturn(
+			_getAdditionalTypeMappings()
+		);
 
-		ReflectionTestUtil.setFieldValue(
-			_companyIndexFactoryFixture.getIndexHelper(),
-			"_companyIndexListenerServiceTrackerList",
-			ServiceTrackerListFactory.open(
-				_bundleContext, CompanyIndexListener.class, null,
-				new ServiceTrackerCustomizer
-					<CompanyIndexListener, CompanyIndexListener>() {
+		initializeIndex();
 
-					@Override
-					public CompanyIndexListener addingService(
-						ServiceReference<CompanyIndexListener>
-							serviceReference) {
+		_indexOneDocument("match_additional_mapping");
+		_indexOneDocument("match_catch_all");
 
-						return null;
-					}
+		assertType("match_additional_mapping", "keyword");
+		assertType("match_catch_all", "text");
+	}
 
-					@Override
-					public void modifiedService(
-						ServiceReference<CompanyIndexListener> serviceReference,
-						CompanyIndexListener companyIndexListener) {
-					}
+	@Test
+	public void testCompanyIndexListener() throws Exception {
+		CompanyIndexListener companyIndexListener = Mockito.mock(
+			CompanyIndexListener.class);
 
-					@Override
-					public void removedService(
-						ServiceReference<CompanyIndexListener> serviceReference,
-						CompanyIndexListener companyIndexListener) {
-					}
+		addCompanyIndexListener(companyIndexListener);
 
-				}));
+		initializeIndex();
 
-		addCompanyIndexListener(
-			new CompanyIndexListener() {
+		Mockito.verify(
+			companyIndexListener, Mockito.times(1)
+		).onAfterCreate(
+			Mockito.anyString()
+		);
 
-				@Override
-				public void onAfterCreate(String indexName) {
-					_companyIndexFactoryFixture.createIndices();
-				}
+		deleteIndex();
 
-				@Override
-				public void onBeforeDelete(String indexName) {
-					_companyIndexFactoryFixture.deleteIndices();
-				}
-
-			});
-
-		createIndices();
-
-		_assertHasIndex(_companyIndexFactoryFixture.getIndexName());
-
-		deleteIndices();
-
-		_assertNoIndex(_companyIndexFactoryFixture.getIndexName());
+		Mockito.verify(
+			companyIndexListener, Mockito.times(1)
+		).onBeforeDelete(
+			Mockito.anyString()
+		);
 	}
 
 	@Test
@@ -273,8 +285,128 @@ public class CompanyIndexFactoryTest extends BaseOpenSearchTestCase {
 
 			});
 
-		createIndices();
-		deleteIndices();
+		initializeIndex();
+	}
+
+	@Test
+	public void testConfigurationSettingsOverrideContributedSettings()
+		throws Exception {
+
+		_serviceRegistrations.add(
+			_bundleContext.registerService(
+				CompanyIndexConfigurationContributor.class,
+				new CompanyIndexConfigurationContributor() {
+
+					@Override
+					public void contributeMappings(
+						long companyId, MappingsHelper mappingsHelper) {
+					}
+
+					@Override
+					public void contributeSettings(
+						long companyId, SettingsHelper settingsHelper) {
+
+						settingsHelper.put("index.number_of_replicas", "3");
+						settingsHelper.put("index.number_of_shards", "4");
+					}
+
+				},
+				null));
+
+		Mockito.when(
+			_openSearchConfigurationWrapper.additionalIndexConfigurations()
+		).thenReturn(
+			"index.number_of_replicas: 1\nindex.number_of_shards: 2"
+		);
+
+		initializeIndex();
+
+		_assertIndexSettings(1, 2);
+	}
+
+	@Test
+	public void testContributeMappings() throws Exception {
+		_serviceRegistrations.add(
+			_bundleContext.registerService(
+				CompanyIndexConfigurationContributor.class,
+				new CompanyIndexConfigurationContributor() {
+
+					@Override
+					public void contributeMappings(
+						long companyId, MappingsHelper mappingsHelper) {
+
+						mappingsHelper.putMappings(
+							_getAdditionalTypeMappings());
+					}
+
+					@Override
+					public void contributeSettings(
+						long companyId, SettingsHelper settingsHelper) {
+					}
+
+				},
+				null));
+
+		initializeIndex();
+
+		_assertAdditionalTypeMappings();
+	}
+
+	@Test
+	public void testContributeMappingsCantOverrideDefaultMappings()
+		throws Exception {
+
+		_serviceRegistrations.add(
+			_bundleContext.registerService(
+				CompanyIndexConfigurationContributor.class,
+				new CompanyIndexConfigurationContributor() {
+
+					@Override
+					public void contributeMappings(
+						long companyId, MappingsHelper mappingsHelper) {
+
+						mappingsHelper.putMappings(_getOverrideTypeMappings());
+					}
+
+					@Override
+					public void contributeSettings(
+						long companyId, SettingsHelper settingsHelper) {
+					}
+
+				},
+				null));
+
+		initializeIndex();
+
+		_assertDefaultLiferayFields();
+	}
+
+	@Test
+	public void testContributeSettings() throws Exception {
+		_serviceRegistrations.add(
+			_bundleContext.registerService(
+				CompanyIndexConfigurationContributor.class,
+				new CompanyIndexConfigurationContributor() {
+
+					@Override
+					public void contributeMappings(
+						long companyId, MappingsHelper mappingsHelper) {
+					}
+
+					@Override
+					public void contributeSettings(
+						long companyId, SettingsHelper settingsHelper) {
+
+						settingsHelper.put("index.number_of_replicas", "2");
+						settingsHelper.put("index.number_of_shards", "3");
+					}
+
+				},
+				null));
+
+		initializeIndex();
+
+		_assertIndexSettings(2, 3);
 	}
 
 	@Test
@@ -303,140 +435,26 @@ public class CompanyIndexFactoryTest extends BaseOpenSearchTestCase {
 			StringPool.SPACE
 		);
 
-		createIndices();
-		deleteIndices();
+		initializeIndex();
 	}
 
 	@Test
 	public void testCreateIndicesWithEmptyConfiguration() throws Exception {
-		createIndices();
-		deleteIndices();
+		initializeIndex();
 	}
 
 	@Test
 	public void testDefaultIndexSettings() throws Exception {
-		createIndices();
+		initializeIndex();
 
 		_assertIndexSettings(0, 1);
-
-		deleteIndices();
 	}
 
 	@Test
 	public void testDefaultIndices() throws Exception {
-		createIndices();
+		initializeIndex();
 
 		_assertMappings(Field.COMPANY_ID, Field.ENTRY_CLASS_NAME);
-
-		deleteIndices();
-	}
-
-	@Test
-	public void testExecuteCompanyIndexListenerOnBeforeDelete()
-		throws Exception {
-
-		CompanyIndexListener companyIndexListener = Mockito.mock(
-			CompanyIndexListener.class);
-
-		addCompanyIndexListener(companyIndexListener);
-
-		createIndices();
-
-		deleteIndices();
-
-		Mockito.verify(
-			companyIndexListener, Mockito.times(1)
-		).onBeforeDelete(
-			Mockito.anyString()
-		);
-	}
-
-	@Test
-	public void testIndexConfigurationContributor() throws Exception {
-		_serviceRegistrations.add(
-			_bundleContext.registerService(
-				IndexConfigurationContributor.class,
-				new IndexConfigurationContributor() {
-
-					@Override
-					public void contributeMappings(
-						TypeMappingsHelper typeMappingsHelper) {
-					}
-
-					@Override
-					public void contributeSettings(
-						IndexSettingsHelper indexSettingsHelper) {
-
-						indexSettingsHelper.put(
-							"index.number_of_replicas", "2");
-						indexSettingsHelper.put("index.number_of_shards", "3");
-					}
-
-				},
-				null));
-
-		Mockito.when(
-			_openSearchConfigurationWrapper.additionalIndexConfigurations()
-		).thenReturn(
-			JSONUtil.put(
-				"index",
-				JSONUtil.put(
-					"number_of_replicas", 0
-				).put(
-					"number_of_shards", 0
-				)
-			).toString()
-		);
-
-		createIndices();
-
-		_assertIndexSettings(2, 3);
-
-		deleteIndices();
-	}
-
-	@Test
-	public void testIndexConfigurationContributorTypeMappings()
-		throws Exception {
-
-		String mappings = loadAdditionalTypeMappings();
-
-		_serviceRegistrations.add(
-			_bundleContext.registerService(
-				IndexConfigurationContributor.class,
-				new IndexConfigurationContributor() {
-
-					@Override
-					public void contributeMappings(
-						TypeMappingsHelper typeMappingsHelper) {
-
-						typeMappingsHelper.putTypeMappings(
-							_replaceAnalyzer("brazilian", mappings));
-					}
-
-					@Override
-					public void contributeSettings(
-						IndexSettingsHelper indexSettingsHelper) {
-					}
-
-				},
-				null));
-
-		Mockito.when(
-			_openSearchConfigurationWrapper.additionalTypeMappings()
-		).thenReturn(
-			_replaceAnalyzer("portuguese", mappings)
-		);
-
-		createIndices();
-
-		String field = RandomTestUtil.randomString() + "_ja";
-
-		_indexOneDocument(field);
-
-		assertAnalyzer("brazilian", field);
-
-		deleteIndices();
 	}
 
 	@Test
@@ -444,132 +462,192 @@ public class CompanyIndexFactoryTest extends BaseOpenSearchTestCase {
 		Mockito.when(
 			_openSearchConfigurationWrapper.indexNumberOfReplicas()
 		).thenReturn(
-			"0"
+			"1"
 		);
 
 		Mockito.when(
 			_openSearchConfigurationWrapper.indexNumberOfShards()
 		).thenReturn(
-			"3"
+			"2"
 		);
 
-		createIndices();
+		initializeIndex();
 
-		_assertIndexSettings(0, 3);
-
-		deleteIndices();
+		_assertIndexSettings(1, 2);
 	}
 
+	@FeatureFlags("LPD-7822")
 	@Test
-	public void testOptionalDefaultTemplateIsAlwaysAfterContributedTemplates()
-		throws Exception {
+	public void testInitializeIndexAfterIndexExists() throws Exception {
+		initializeIndex();
+
+		_assertIndexSettings(0, 1);
+
+		assertNoMapping("additionalKeyword");
+
+		Mockito.when(
+			_openSearchConfigurationWrapper.indexNumberOfReplicas()
+		).thenReturn(
+			"1"
+		);
 
 		Mockito.when(
 			_openSearchConfigurationWrapper.additionalTypeMappings()
 		).thenReturn(
-			loadAdditionalTypeMappings()
+			_getAdditionalTypeMappings()
 		);
 
-		createIndices();
+		initializeIndex();
 
-		_indexOneDocument("match_additional_mapping");
-		_indexOneDocument("match_catch_all");
+		_assertIndexSettings(1, 1);
 
-		assertType("match_additional_mapping", "keyword");
-		assertType("match_catch_all", "text");
-
-		deleteIndices();
+		assertType("additionalKeyword", "keyword");
 	}
 
 	@Test
-	public void testOverrideLegacyTypeMappings() throws Exception {
-		Mockito.when(
-			_openSearchConfigurationWrapper.additionalIndexConfigurations()
-		).thenReturn(
-			_loadAdditionalAnalyzers()
-		);
-
+	public void testLegacyOverrideTypeMappings() throws Exception {
 		Mockito.when(
 			_openSearchConfigurationWrapper.overrideTypeMappings()
 		).thenReturn(
-			_loadOverrideLegacyTypeMappings()
+			_getLegacyOverrideTypeMappings()
 		);
 
-		createIndices();
+		initializeIndex();
 
-		String field1 = "title";
+		String field1 = RandomTestUtil.randomString() + "_double";
 
-		_indexOneDocument(field1);
+		_indexOneDocument(field1, RandomTestUtil.randomInt());
 
-		assertAnalyzer("kuromoji_liferay_custom", field1);
+		assertType(field1, "integer");
 
-		String field2 = "description";
+		assertType(Field.SUBTITLE, "keyword");
+
+		String field2 = "title_en";
 
 		_indexOneDocument(field2);
 
-		_assertNoAnalyzer(field2);
-
-		deleteIndices();
+		assertNoAnalyzer(field2);
 	}
 
 	@Test
 	public void testOverrideTypeMappings() throws Exception {
 		Mockito.when(
-			_openSearchConfigurationWrapper.additionalIndexConfigurations()
-		).thenReturn(
-			_loadAdditionalAnalyzers()
-		);
-
-		Mockito.when(
 			_openSearchConfigurationWrapper.overrideTypeMappings()
 		).thenReturn(
-			_loadOverrideTypeMappings()
+			_getOverrideTypeMappings()
 		);
 
-		createIndices();
+		initializeIndex();
 
-		String field1 = "title";
+		String field1 = RandomTestUtil.randomString() + "_double";
 
-		_indexOneDocument(field1);
+		_indexOneDocument(field1, RandomTestUtil.randomInt());
 
-		assertAnalyzer("kuromoji_liferay_custom", field1);
+		assertType(field1, "integer");
 
-		String field2 = "description";
+		assertType(Field.SUBTITLE, "keyword");
+
+		String field2 = "title_en";
 
 		_indexOneDocument(field2);
 
-		_assertNoAnalyzer(field2);
-
-		deleteIndices();
+		assertNoAnalyzer(field2);
 	}
 
 	@Test
-	public void testOverrideTypeMappingsHonorDefaultIndices() throws Exception {
+	public void testOverrideTypeMappingsDoesNotInterfereWithIndexSettings()
+		throws Exception {
+
 		Mockito.when(
 			_openSearchConfigurationWrapper.additionalIndexConfigurations()
 		).thenReturn(
-			_loadAdditionalAnalyzers()
+			"index.number_of_replicas: 1\nindex.number_of_shards: 2"
 		);
 
 		Mockito.when(
 			_openSearchConfigurationWrapper.overrideTypeMappings()
 		).thenReturn(
-			_loadOverrideTypeMappings()
+			_getOverrideTypeMappings()
 		);
 
-		createIndices();
+		initializeIndex();
 
-		_assertMappings(Field.TITLE);
-
-		deleteIndices();
+		_assertIndexSettings(1, 2);
+		_assertMappings(Field.SUBTITLE);
 	}
 
 	@Test
-	public void testRemoveIndexConfigurationContributor() {
-		ServiceRegistration<IndexConfigurationContributor> serviceRegistration =
+	public void testOverrideTypeMappingsPreventsAdditionalTypeMapings()
+		throws Exception {
+
+		Mockito.when(
+			_openSearchConfigurationWrapper.additionalTypeMappings()
+		).thenReturn(
+			_getAdditionalTypeMappings()
+		);
+
+		Mockito.when(
+			_openSearchConfigurationWrapper.overrideTypeMappings()
+		).thenReturn(
+			_getOverrideTypeMappings()
+		);
+
+		initializeIndex();
+
+		assertNoMapping("additionalKeyword");
+		assertType(Field.SUBTITLE, "keyword");
+	}
+
+	@Test
+	public void testOverrideTypeMappingsPreventsContributedMapings()
+		throws Exception {
+
+		_serviceRegistrations.add(
 			_bundleContext.registerService(
-				IndexConfigurationContributor.class,
-				new TestIndexConfigurationContributor(), null);
+				CompanyIndexConfigurationContributor.class,
+				new CompanyIndexConfigurationContributor() {
+
+					@Override
+					public void contributeMappings(
+						long companyId, MappingsHelper mappingsHelper) {
+
+						mappingsHelper.putMappings(
+							JSONUtil.put(
+								"contributedKeyword",
+								JSONUtil.put(
+									"store", true
+								).put(
+									"type", "keyword"
+								)
+							).toString());
+					}
+
+					@Override
+					public void contributeSettings(
+						long companyId, SettingsHelper settingsHelper) {
+					}
+
+				},
+				null));
+
+		Mockito.when(
+			_openSearchConfigurationWrapper.overrideTypeMappings()
+		).thenReturn(
+			_getOverrideTypeMappings()
+		);
+
+		initializeIndex();
+
+		assertNoMapping("contributedKeyword");
+		assertType(Field.SUBTITLE, "keyword");
+	}
+
+	@Test
+	public void testRemoveCompanyIndexConfigurationContributor() {
+		ServiceRegistration<CompanyIndexConfigurationContributor>
+			serviceRegistration = _bundleContext.registerService(
+				CompanyIndexConfigurationContributor.class,
+				new TestCompanyIndexConfigurationContributor(), null);
 
 		serviceRegistration.unregister();
 	}
@@ -596,6 +674,14 @@ public class CompanyIndexFactoryTest extends BaseOpenSearchTestCase {
 			openSearchClient.indices());
 	}
 
+	protected void assertNoAnalyzer(String field) throws Exception {
+		assertAnalyzer(null, field);
+	}
+
+	protected void assertNoMapping(String field) throws Exception {
+		assertType(field, null);
+	}
+
 	protected void assertType(String field, String type) throws Exception {
 		OpenSearchClient openSearchClient =
 			openSearchConnectionManager.getOpenSearchClient();
@@ -605,140 +691,93 @@ public class CompanyIndexFactoryTest extends BaseOpenSearchTestCase {
 			openSearchClient.indices());
 	}
 
-	protected void createIndices() throws Exception {
+	protected void deleteIndex() {
 		OpenSearchClient openSearchClient =
 			openSearchConnectionManager.getOpenSearchClient();
 
 		OpenSearchIndicesClient openSearchIndicesClient =
 			openSearchClient.indices();
 
-		_companyIndexFactory.createIndices(
+		_companyIndexFactory.deleteIndex(
 			RandomTestUtil.randomLong(), openSearchIndicesClient);
 	}
 
-	protected void deleteIndices() {
+	protected void initializeIndex() throws Exception {
 		OpenSearchClient openSearchClient =
 			openSearchConnectionManager.getOpenSearchClient();
 
 		OpenSearchIndicesClient openSearchIndicesClient =
 			openSearchClient.indices();
 
-		_companyIndexFactory.deleteIndices(
+		_companyIndexFactory.initializeIndex(
 			RandomTestUtil.randomLong(), openSearchIndicesClient);
 	}
 
-	protected boolean hasIndex(String indexName) {
-		OpenSearchClient openSearchClient =
-			openSearchConnectionManager.getOpenSearchClient();
-
-		OpenSearchIndicesClient openSearchIndicesClient =
-			openSearchClient.indices();
-
-		try {
-			BooleanResponse booleanResponse = openSearchIndicesClient.exists(
-				ExistsRequest.of(
-					existRequest -> existRequest.index(indexName)));
-
-			return booleanResponse.value();
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
-	}
-
-	protected String loadAdditionalTypeMappings() {
-		try {
-			return ResourceUtil.getResourceAsString(
-				getClass(),
-				"CompanyIndexFactoryTest-additionalTypeMappings.json");
-		}
-		catch (Exception exception) {
-			throw new RuntimeException(exception);
-		}
-	}
-
-	protected static class TestIndexConfigurationContributor
-		implements IndexConfigurationContributor {
+	protected static class TestCompanyIndexConfigurationContributor
+		implements CompanyIndexConfigurationContributor {
 
 		@Override
-		public void contributeMappings(TypeMappingsHelper typeMappingsHelper) {
+		public void contributeMappings(
+			long companyId, MappingsHelper mappingsHelper) {
 		}
 
 		@Override
 		public void contributeSettings(
-			IndexSettingsHelper indexSettingsHelper) {
+			long companyId, SettingsHelper settingsHelper) {
 		}
 
 	}
 
-	private static void _putTimestampPipeline(OpenSearchClient openSearchClient)
-		throws Exception {
-
-		Processor.Builder processorBuilder = new Processor.Builder();
-
-		processorBuilder.set(
-			SetProcessor.of(
-				setProcessor -> setProcessor.field(
-					"_source.timestamp"
-				).value(
-					JsonData.of("{{{_ingest.timestamp}}}")
-				)));
-
-		PutPipelineRequest.Builder putPipelineRequestBuilder =
-			new PutPipelineRequest.Builder();
-
-		putPipelineRequestBuilder.id("timestamp");
-		putPipelineRequestBuilder.description("Adds timestamp to documents");
-		putPipelineRequestBuilder.processors(processorBuilder.build());
-
-		OpenSearchIngestClient ingestClient = openSearchClient.ingest();
-
-		ingestClient.putPipeline(putPipelineRequestBuilder.build());
-	}
-
 	private void _assertAdditionalTypeMappings() throws Exception {
-		Mockito.when(
-			_openSearchConfigurationWrapper.additionalIndexConfigurations()
-		).thenReturn(
-			_loadAdditionalAnalyzers()
-		);
+		OpenSearchClient openSearchClient =
+			openSearchConnectionManager.getOpenSearchClient();
 
-		createIndices();
+		OpenSearchIndicesClient openSearchIndicesClient =
+			openSearchClient.indices();
 
-		String contributedKeywordFieldName = "orderStatus";
+		GetMappingResponse getMappingResponse =
+			openSearchIndicesClient.getMapping(
+				GetMappingRequest.of(
+					getMappingRequest -> getMappingRequest.index(
+						_companyIndexFactoryFixture.getIndexName())));
 
-		assertType(contributedKeywordFieldName, "keyword");
+		Map<String, IndexMappingRecord> result = getMappingResponse.result();
 
-		String contributedTextFieldName = "productDescription";
+		IndexMappingRecord indexMappingRecord = result.get(
+			_companyIndexFactoryFixture.getIndexName());
 
-		assertType(contributedTextFieldName, "text");
+		TypeMapping typeMapping = indexMappingRecord.mappings();
 
-		String liferayKeywordFieldName = "status";
+		List<Map<String, DynamicTemplate>> dynamicTemplatesList =
+			typeMapping.dynamicTemplates();
 
-		assertType(liferayKeywordFieldName, "keyword");
+		Map<String, DynamicTemplate> dynamicTemplateMap =
+			dynamicTemplatesList.get(0);
 
-		String liferayTextFieldName = "subtitle";
+		DynamicTemplate dynamicTemplate = dynamicTemplateMap.get(
+			"template_additional_mapping");
 
-		assertType(liferayTextFieldName, "text");
+		Assert.assertEquals("*_additional_mapping", dynamicTemplate.match());
 
-		String intactFieldName = RandomTestUtil.randomString() + "_en";
+		Property property = dynamicTemplate.mapping();
 
-		_indexOneDocument(intactFieldName);
+		Assert.assertTrue(property.isKeyword());
 
-		assertAnalyzer("english", intactFieldName);
+		assertType("additionalKeyword", "keyword");
+		assertType("additionalText", "text");
 
-		String replacedFieldName = RandomTestUtil.randomString() + "_ja";
-
-		_indexOneDocument(replacedFieldName);
-
-		assertAnalyzer("kuromoji_liferay_custom", replacedFieldName);
-
-		deleteIndices();
+		_assertDefaultLiferayFields();
 	}
 
-	private void _assertHasIndex(String indexName) {
-		Assert.assertTrue(
-			"Index " + indexName + " does not exist", hasIndex(indexName));
+	private void _assertDefaultLiferayFields() throws Exception {
+		assertType(Field.STATUS, "keyword");
+		assertType(Field.SUBTITLE, "text");
+
+		String field = RandomTestUtil.randomString() + "_double";
+
+		_indexOneDocument(field, RandomTestUtil.randomDouble());
+
+		assertType(field, "double");
 	}
 
 	private void _assertIndexSettings(
@@ -771,13 +810,15 @@ public class CompanyIndexFactoryTest extends BaseOpenSearchTestCase {
 		Assert.assertThat(keySet, CoreMatchers.hasItems(fieldNames));
 	}
 
-	private void _assertNoAnalyzer(String field) throws Exception {
-		assertAnalyzer(null, field);
-	}
-
-	private void _assertNoIndex(String indexName) {
-		Assert.assertFalse(
-			"Index " + indexName + " exists", hasIndex(indexName));
+	private String _getAdditionalTypeMappings() {
+		try {
+			return ResourceUtil.getResourceAsString(
+				getClass(),
+				"CompanyIndexFactoryTest-additionalTypeMappings.json");
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
+		}
 	}
 
 	private IndexSettings _getIndexSettings() {
@@ -790,47 +831,47 @@ public class CompanyIndexFactoryTest extends BaseOpenSearchTestCase {
 		return indexState.settings();
 	}
 
-	private void _indexOneDocument(String field) {
-		_indexOneDocument(field, RandomTestUtil.randomString());
-	}
-
-	private void _indexOneDocument(String field, String value) {
-		_singleFieldFixture.setField(field);
-
-		_singleFieldFixture.indexDocument(value);
-	}
-
-	private String _loadAdditionalAnalyzers() throws Exception {
-		return ResourceUtil.getResourceAsString(
-			getClass(), "CompanyIndexFactoryTest-additionalAnalyzers.json");
-	}
-
-	private String _loadAdditionalTypeMappingsWithLegacyRootType() {
+	private String _getLegacyAdditionalTypeMappings() {
 		try {
 			return ResourceUtil.getResourceAsString(
 				getClass(),
-				"CompanyIndexFactoryTest-additionalTypeMappings-with-legacy-" +
-					"root-type.json");
+				"CompanyIndexFactoryTest-legacyAdditionalTypeMappings.json");
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(exception);
 		}
 	}
 
-	private String _loadOverrideLegacyTypeMappings() throws Exception {
-		return ResourceUtil.getResourceAsString(
-			getClass(),
-			"CompanyIndexFactoryTest-overrideLegacyTypeMappings.json");
+	private String _getLegacyOverrideTypeMappings() {
+		try {
+			return ResourceUtil.getResourceAsString(
+				getClass(),
+				"CompanyIndexFactoryTest-legacyOverrideTypeMappings.json");
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
+		}
 	}
 
-	private String _loadOverrideTypeMappings() throws Exception {
-		return ResourceUtil.getResourceAsString(
-			getClass(), "CompanyIndexFactoryTest-overrideTypeMappings.json");
+	private String _getOverrideTypeMappings() {
+		try {
+			return ResourceUtil.getResourceAsString(
+				getClass(),
+				"CompanyIndexFactoryTest-overrideTypeMappings.json");
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
+		}
 	}
 
-	private String _replaceAnalyzer(String analyzer, String mappings) {
-		return StringUtil.replace(
-			mappings, "kuromoji_liferay_custom", analyzer);
+	private void _indexOneDocument(String field) {
+		_indexOneDocument(field, RandomTestUtil.randomString());
+	}
+
+	private void _indexOneDocument(String field, Object value) {
+		_singleFieldFixture.setField(field);
+
+		_singleFieldFixture.indexDocument(value);
 	}
 
 	private static final BundleContext _bundleContext =

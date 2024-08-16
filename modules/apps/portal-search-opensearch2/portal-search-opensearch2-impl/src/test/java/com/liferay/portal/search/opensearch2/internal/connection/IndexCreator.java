@@ -7,15 +7,24 @@ package com.liferay.portal.search.opensearch2.internal.connection;
 
 import com.liferay.portal.search.opensearch2.internal.connection.helper.IndexCreationHelper;
 import com.liferay.portal.search.opensearch2.internal.connection.helper.LiferayIndexCreationHelper;
+import com.liferay.portal.search.opensearch2.internal.settings.SettingsHelperImpl;
 
+import jakarta.json.spi.JsonProvider;
+
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+
+import java.nio.charset.StandardCharsets;
 
 import org.mockito.Mockito;
 
+import org.opensearch.client.json.JsonpMapper;
 import org.opensearch.client.opensearch.OpenSearchClient;
 import org.opensearch.client.opensearch.indices.CreateIndexRequest;
 import org.opensearch.client.opensearch.indices.DeleteIndexRequest;
 import org.opensearch.client.opensearch.indices.ExistsRequest;
+import org.opensearch.client.opensearch.indices.IndexSettings;
 import org.opensearch.client.opensearch.indices.OpenSearchIndicesClient;
 import org.opensearch.client.transport.endpoints.BooleanResponse;
 
@@ -39,7 +48,32 @@ public class IndexCreator {
 		IndexCreationHelper indexCreationHelper = _getIndexCreationHelper();
 
 		indexCreationHelper.contribute(builder);
-		indexCreationHelper.contributeIndexSettings(builder);
+
+		SettingsHelperImpl settingsHelperImpl = new SettingsHelperImpl();
+
+		settingsHelperImpl.put("index.number_of_replicas", "0");
+		settingsHelperImpl.put("index.number_of_shards", "1");
+
+		indexCreationHelper.contributeIndexSettings(settingsHelperImpl);
+
+		JsonpMapper jsonpMapper = _openSearchConnectionManager.getJsonpMapper(
+			null);
+
+		JsonProvider jsonProvider = jsonpMapper.jsonProvider();
+
+		String settings = String.valueOf(
+			settingsHelperImpl.getSettingsJSONObject());
+
+		try (InputStream inputStream = new ByteArrayInputStream(
+				settings.getBytes(StandardCharsets.UTF_8))) {
+
+			builder.settings(
+				IndexSettings._DESERIALIZER.deserialize(
+					jsonProvider.createParser(inputStream), jsonpMapper));
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
 
 		try {
 			openSearchIndicesClient.create(builder.build());
@@ -123,11 +157,13 @@ public class IndexCreator {
 
 			@Override
 			public void contributeIndexSettings(
-				CreateIndexRequest.Builder builder) {
+				SettingsHelperImpl settingsHelperImpl) {
 
-				_indexCreationHelper.contributeIndexSettings(builder);
+				_indexCreationHelper.contributeIndexSettings(
+					settingsHelperImpl);
 
-				liferayIndexCreationHelper.contributeIndexSettings(builder);
+				liferayIndexCreationHelper.contributeIndexSettings(
+					settingsHelperImpl);
 			}
 
 			@Override

@@ -209,7 +209,7 @@
 	},
 	"colorBrandSecondary": {
 		"cssVariableMapping": "color-brand-secondary",
-		"value": "#ffc124"
+		"value": "#0053F0"
 	},
 	"colorBrandSecondaryDarken1": {
 		"cssVariableMapping": "color-brand-secondary-darken-1",

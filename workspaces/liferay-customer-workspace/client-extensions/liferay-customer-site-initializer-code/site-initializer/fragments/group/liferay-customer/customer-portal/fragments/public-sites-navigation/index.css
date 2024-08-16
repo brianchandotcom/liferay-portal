@@ -24,7 +24,7 @@ nav.public-sites-navigation {
 	position: fixed;
 	top: 0;
 	width: 100%;
-	z-index: 3;
+	z-index: 101;
 }
 
 nav.public-sites-navigation .utility-nav {
@@ -1116,7 +1116,7 @@ nav.public-sites-navigation .nav-items-wrapper .adt-nav-item .adt-submenu {
 .adt-nav-item .adt-submenu-item-image {
 	border-radius: var(--border-radius-xs);
 	height: 2rem;
-	margin: 0.6rem 1rem 0 0.25rem;
+	margin: 0.6rem 1rem 0rem 0.25rem;
 	width: 2rem;
 }
 

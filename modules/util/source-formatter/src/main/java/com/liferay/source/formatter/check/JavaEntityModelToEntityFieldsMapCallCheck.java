@@ -45,13 +45,13 @@ public class JavaEntityModelToEntityFieldsMapCallCheck extends BaseFileCheck {
 			}
 
 			for (int i = 1; i < parameterList.size(); i++) {
-				EntityFieldComparator entityFieldComparator =
-					new EntityFieldComparator();
+				NewEntityFieldComparator newEntityFieldComparator =
+					new NewEntityFieldComparator();
 
 				String parameter = parameterList.get(i);
 				String previousParameter = parameterList.get(i - 1);
 
-				int compare = entityFieldComparator.compare(
+				int compare = newEntityFieldComparator.compare(
 					previousParameter, parameter);
 
 				if (compare > 0) {
@@ -69,20 +69,20 @@ public class JavaEntityModelToEntityFieldsMapCallCheck extends BaseFileCheck {
 	private static final Pattern _newEntityFieldPattern = Pattern.compile(
 		"new (\\w+EntityField)\\(");
 
-	private class EntityFieldComparator implements Comparator<String> {
+	private class NewEntityFieldComparator implements Comparator<String> {
 
 		@Override
-		public int compare(String entityField1, String entityField2) {
+		public int compare(String newEntityField1, String newEntityField2) {
 			String entityFieldClassName1 = null;
 			String entityFieldClassName2 = null;
 
-			Matcher matcher = _newEntityFieldPattern.matcher(entityField1);
+			Matcher matcher = _newEntityFieldPattern.matcher(newEntityField1);
 
 			if (matcher.find()) {
 				entityFieldClassName1 = matcher.group(1);
 			}
 
-			matcher = _newEntityFieldPattern.matcher(entityField2);
+			matcher = _newEntityFieldPattern.matcher(newEntityField2);
 
 			if (matcher.find()) {
 				entityFieldClassName2 = matcher.group(1);
@@ -91,7 +91,7 @@ public class JavaEntityModelToEntityFieldsMapCallCheck extends BaseFileCheck {
 			if ((entityFieldClassName1 == null) ||
 				(entityFieldClassName2 == null)) {
 
-				return entityField1.compareTo(entityField2);
+				return newEntityField1.compareTo(newEntityField2);
 			}
 
 			if (!entityFieldClassName1.equals(entityFieldClassName2)) {
@@ -99,19 +99,19 @@ public class JavaEntityModelToEntityFieldsMapCallCheck extends BaseFileCheck {
 			}
 
 			List<String> parameterList1 = JavaSourceUtil.getParameterList(
-				entityField1);
+				newEntityField1);
 			List<String> parameterList2 = JavaSourceUtil.getParameterList(
-				entityField2);
+				newEntityField2);
 
 			if (parameterList1.isEmpty() || parameterList2.isEmpty()) {
 				return 0;
 			}
 
 			if (entityFieldClassName1.equals("CollectionEntityField")) {
-				EntityFieldComparator entityFieldComparator =
-					new EntityFieldComparator();
+				NewEntityFieldComparator newEntityFieldComparator =
+					new NewEntityFieldComparator();
 
-				return entityFieldComparator.compare(
+				return newEntityFieldComparator.compare(
 					parameterList1.get(0), parameterList2.get(0));
 			}
 

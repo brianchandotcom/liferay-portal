@@ -811,11 +811,16 @@ public class JournalArticleActionDropdownItemsProvider {
 		if (AssetDisplayPageUtil.hasAssetDisplayPage(
 				_themeDisplay.getScopeGroupId(), assetEntry)) {
 
+			ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+				new ClassPKInfoItemIdentifier(assetEntry.getClassPK());
+
+			classPKInfoItemIdentifier.setVersion(
+				String.valueOf(_article.getVersion()));
+
 			String previewURL =
 				_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
 					new InfoItemReference(
-						assetEntry.getClassName(),
-						new ClassPKInfoItemIdentifier(assetEntry.getClassPK())),
+						assetEntry.getClassName(), classPKInfoItemIdentifier),
 					_themeDisplay);
 
 			previewURL = HttpComponentsUtil.addParameter(

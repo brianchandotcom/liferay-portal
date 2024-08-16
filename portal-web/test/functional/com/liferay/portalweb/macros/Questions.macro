@@ -502,7 +502,7 @@ definition {
 				locator1 = "Questions#MODAL_ITEM_BUTTON");
 
 			AssertElementPresent(
-				key_emptyInfo = "The topic is not found.",
+				key_emptyInfo = "This topic is empty.",
 				locator1 = "Questions#EMPTY_STATE_MESSAGE");
 		}
 		else {

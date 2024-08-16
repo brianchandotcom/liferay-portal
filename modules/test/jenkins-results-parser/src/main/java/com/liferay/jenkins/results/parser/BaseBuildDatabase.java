@@ -281,7 +281,7 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 	}
 
 	@Override
-	public void putProperty(
+	public synchronized void putProperty(
 		String key, String propertyName, String propertyValue,
 		boolean writeFile) {
 

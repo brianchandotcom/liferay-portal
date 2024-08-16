@@ -98,14 +98,13 @@ public class DLFileEntryMetadataLocalServiceTest {
 
 		ServiceContext serviceContext = _getServiceContext(_group, user);
 
-		DLFileEntryType dlFileEntryType =
-			_dlFileEntryTypeLocalService.addFileEntryType(
-				null, TestPropsValues.getUserId(), _group.getGroupId(),
-				_ddmStructure.getStructureId(), null,
-				Collections.singletonMap(LocaleUtil.US, "New File Entry Type"),
-				Collections.singletonMap(LocaleUtil.US, "New File Entry Type"),
-				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_SCOPE_DEFAULT,
-				serviceContext);
+		_dlFileEntryType = _dlFileEntryTypeLocalService.addFileEntryType(
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
+			_ddmStructure.getStructureId(), null,
+			Collections.singletonMap(LocaleUtil.US, "New File Entry Type"),
+			Collections.singletonMap(LocaleUtil.US, "New File Entry Type"),
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_SCOPE_DEFAULT,
+			serviceContext);
 
 		Map<String, DDMFormValues> ddmFormValuesMap = setUpDDMFormValuesMap(
 			_ddmStructure.getStructureKey(), user.getLocale());
@@ -115,10 +114,36 @@ public class DLFileEntryMetadataLocalServiceTest {
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), null, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), null, null,
-			dlFileEntryType.getFileEntryTypeId(), ddmFormValuesMap, null,
+			_dlFileEntryType.getFileEntryTypeId(), ddmFormValuesMap, null,
 			new ByteArrayInputStream(TestDataConstants.TEST_BYTE_ARRAY),
 			TestDataConstants.TEST_BYTE_ARRAY.length, null, null, null,
 			serviceContext);
+	}
+
+	@Test
+	public void testDeleteFileEntryMetadataByExternalReferenceCode()
+		throws Exception {
+
+		DLFileVersion dlFileVersion = _dlFileEntry.getFileVersion();
+
+		DLFileEntryMetadata dlFileEntryMetadata =
+			_dlFileEntryMetadataLocalService.fetchFileEntryMetadata(
+				_ddmStructure.getStructureId(),
+				dlFileVersion.getFileVersionId());
+
+		Assert.assertNotNull(dlFileEntryMetadata);
+
+		_dlFileEntryMetadataLocalService.
+			deleteFileEntryMetadataByExternalReferenceCode(
+				dlFileEntryMetadata.getExternalReferenceCode(),
+				_group.getCompanyId());
+
+		dlFileEntryMetadata =
+			_dlFileEntryMetadataLocalService.fetchFileEntryMetadata(
+				_ddmStructure.getStructureId(),
+				dlFileVersion.getFileVersionId());
+
+		Assert.assertNull(dlFileEntryMetadata);
 	}
 
 	@Test
@@ -253,6 +278,33 @@ public class DLFileEntryMetadataLocalServiceTest {
 		}
 	}
 
+	@Test
+	public void testUpdateFileEntryMetadataWithExternalReferenceCode()
+		throws Exception {
+
+		User user = TestPropsValues.getUser();
+
+		DLFileVersion dlFileVersion = _dlFileEntry.getFileVersion();
+
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		_dlFileEntryMetadataLocalService.updateFileEntryMetadata(
+			externalReferenceCode, _dlFileEntryType.getFileEntryTypeId(),
+			_dlFileEntry.getFileEntryId(), dlFileVersion.getFileVersionId(),
+			setUpDDMFormValuesMap(
+				_ddmStructure.getStructureKey(), user.getLocale()),
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		DLFileEntryMetadata dlFileEntryMetadata =
+			_dlFileEntryMetadataLocalService.getFileEntryMetadata(
+				_ddmStructure.getStructureId(),
+				dlFileVersion.getFileVersionId());
+
+		Assert.assertEquals(
+			externalReferenceCode,
+			dlFileEntryMetadata.getExternalReferenceCode());
+	}
+
 	protected Map<String, DDMFormValues> setUpDDMFormValuesMap(
 		String ddmStructureKey, Locale currentLocale) {
 
@@ -324,6 +376,7 @@ public class DLFileEntryMetadataLocalServiceTest {
 
 	private DDMStructure _ddmStructure;
 	private DLFileEntry _dlFileEntry;
+	private DLFileEntryType _dlFileEntryType;
 
 	@DeleteAfterTestRun
 	private Group _group;

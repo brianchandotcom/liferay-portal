@@ -1091,66 +1091,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-101341: Validate if when the user will edit some Experience with an AB Test in a Terminated status, the system not will show any information about AB Test"
-	@priority = 4
-	test EditExperienceAfterTerminatedABTest {
-		property portal.acceptance = "true";
-
-		task ("Create an experience and add on content page") {
-			ContentPages.gotoPageEditor();
-
-			PageEditor.addExperience(
-				experienceName = "NewAnyoneExperience",
-				segmentName = "Anyone");
-
-			Button.clickPublish();
-		}
-
-		task ("Select the new experience") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
-
-			ABTest.openABTestPanel();
-
-			ContentPages.changeExperience(experienceName = "NewAnyoneExperience");
-		}
-
-		task ("Create AB test with a variant, run and terminate test") {
-			ABTest.createABTest(
-				goal = "Bounce Rate",
-				testTitle = "AB test title");
-
-			ABTest.createVariant(variantName = "Variant name");
-
-			ABTest.runTest();
-
-			ABTest.terminateTest();
-		}
-
-		task ("Go to edit the content page.") {
-			ContentPages.gotoPageEditor();
-		}
-
-		task ("Assert the experiences dropdown menu the AB test icon is not present and change experience") {
-			PageEditor.openExperienceMenu();
-
-			AssertElementNotPresent(locator1 = "ABTest#AB_TEST_BUTTON");
-
-			Click(locator1 = "PageEditor#EXPERIENCE_LABEL");
-
-			PageEditor.changeExperience(newExperience = "NewAnyoneExperience");
-		}
-
-		task ("Add some fragment to the experience and publish page") {
-			PageEditor.addFragment(
-				collectionName = "Basic Components",
-				fragmentName = "Button");
-
-			Button.clickPublish();
-
-			Alert.viewSuccessMessage();
-		}
-	}
-
 	@description = "LPS-103334: Validate if the AB Test is in the status draft, the experience about the AB Test is active is in Edition Mode"
 	@priority = 5
 	test EditExperienceWithDraftABTest {
@@ -1505,6 +1445,54 @@ definition {
 				key_portletTitle = "Content Page",
 				locator1 = "Home#SITE_ADMINISTRATION_PORTLET_TITLE",
 				value1 = "Content Page");
+		}
+	}
+
+	@description = "LPS-101341: Validate if when the user will edit some Experience with an AB Test in a Terminated status, the experience about the AB Test is active is in Non-Edition Mode"
+	@priority = 4
+	test NotPossibleToEditExperienceAfterTerminatedABTest {
+		property portal.acceptance = "true";
+
+		task ("Create an experience and add on content page") {
+			ContentPages.gotoPageEditor();
+
+			PageEditor.addExperience(
+				experienceName = "NewAnyoneExperience",
+				segmentName = "Anyone");
+
+			Button.clickPublish();
+		}
+
+		task ("Select the new experience") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			ABTest.openABTestPanel();
+
+			ContentPages.changeExperience(experienceName = "NewAnyoneExperience");
+		}
+
+		task ("Create AB test with a variant, run and terminate test") {
+			ABTest.createABTest(
+				goal = "Bounce Rate",
+				testTitle = "AB test title");
+
+			ABTest.createVariant(variantName = "Variant name");
+
+			ABTest.runTest();
+
+			ABTest.terminateTest();
+		}
+
+		task ("Go to edit the content page.") {
+			ContentPages.gotoPageEditor();
+		}
+
+		task ("Assert the experience cannot be edited") {
+			PageEditor.openExperienceMenu();
+
+			AssertElementNotPresent(locator1 = "PageEditor#EXPERIENCE_EDIT_BUTTON");
+
+			AssertElementPresent(locator1 = "ABTest#AB_TEST_BUTTON");
 		}
 	}
 

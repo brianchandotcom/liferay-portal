@@ -90,6 +90,10 @@ public class FieldMappingAssert {
 
 		FieldMapping fieldMapping = fieldMappings.get(field);
 
+		if (fieldMapping == null) {
+			return null;
+		}
+
 		Map<String, Property> properties = fieldMapping.mapping();
 
 		Property property = properties.get(field);

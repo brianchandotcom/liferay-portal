@@ -1,0 +1,26 @@
+{
+	"LiferayDocumentType": {
+		"dynamic_templates": [
+			{
+				"template_additional_mapping": {
+					"mapping": {
+						"store": true,
+						"type": "keyword"
+					},
+					"match": "*_additional_mapping",
+					"match_mapping_type": "string"
+				}
+			}
+		],
+		"properties": {
+			"additionalKeyword": {
+				"store": true,
+				"type": "keyword"
+			},
+			"additionalText": {
+				"store": true,
+				"type": "text"
+			}
+		}
+	}
+}

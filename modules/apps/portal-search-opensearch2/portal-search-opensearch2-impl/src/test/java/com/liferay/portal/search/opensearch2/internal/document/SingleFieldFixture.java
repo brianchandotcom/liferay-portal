@@ -40,7 +40,7 @@ public class SingleFieldFixture {
 			_openSearchClient, _field, _createQuery(text), expected);
 	}
 
-	public void indexDocument(String value) {
+	public void indexDocument(Object value) {
 		IndexRequest.Builder<JsonData> indexRequestBuilder =
 			new IndexRequest.Builder<>();
 

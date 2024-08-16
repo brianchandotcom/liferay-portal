@@ -1,10 +1,19 @@
 {
+	"dynamic_templates": [
+		{
+			"template_double": {
+				"mapping": {
+					"store": true,
+					"type": "integer"
+				},
+				"match": "*_double"
+			}
+		}
+	],
 	"properties": {
-		"title": {
-			"analyzer": "kuromoji_liferay_custom",
+		"subtitle": {
 			"store": true,
-			"term_vector": "with_positions_offsets",
-			"type": "text"
+			"type": "keyword"
 		}
 	}
 }

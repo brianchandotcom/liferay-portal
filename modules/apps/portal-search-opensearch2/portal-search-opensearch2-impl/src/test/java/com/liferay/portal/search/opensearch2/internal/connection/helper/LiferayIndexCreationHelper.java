@@ -6,28 +6,14 @@
 package com.liferay.portal.search.opensearch2.internal.connection.helper;
 
 import com.liferay.portal.json.JSONFactoryImpl;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.search.opensearch2.internal.configuration.OpenSearchConfigurationWrapper;
-import com.liferay.portal.search.opensearch2.internal.configuration.OpenSearchConfigurationWrapperImpl;
 import com.liferay.portal.search.opensearch2.internal.connection.OpenSearchConnectionManager;
-import com.liferay.portal.search.opensearch2.internal.index.MappingsFactory;
-import com.liferay.portal.search.opensearch2.internal.index.SettingsFactory;
+import com.liferay.portal.search.opensearch2.internal.index.MappingsHelperImpl;
+import com.liferay.portal.search.opensearch2.internal.index.constants.IndexSettingsConstants;
+import com.liferay.portal.search.opensearch2.internal.settings.SettingsHelperImpl;
+import com.liferay.portal.search.opensearch2.internal.util.ResourceUtil;
 
-import jakarta.json.spi.JsonProvider;
-
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-
-import java.nio.charset.StandardCharsets;
-
-import org.mockito.Mockito;
-
-import org.opensearch.client.json.JsonpMapper;
 import org.opensearch.client.opensearch.OpenSearchClient;
-import org.opensearch.client.opensearch._types.mapping.TypeMapping;
 import org.opensearch.client.opensearch.indices.CreateIndexRequest;
-import org.opensearch.client.opensearch.indices.IndexSettings;
 
 /**
  * @author André de Oliveira
@@ -43,75 +29,27 @@ public class LiferayIndexCreationHelper implements IndexCreationHelper {
 
 	@Override
 	public void contribute(CreateIndexRequest.Builder builder) {
-		JsonpMapper jsonpMapper = _openSearchConnectionManager.getJsonpMapper(
-			null);
+		OpenSearchClient openSearchClient =
+			_openSearchConnectionManager.getOpenSearchClient();
 
-		JsonProvider jsonProvider = jsonpMapper.jsonProvider();
+		MappingsHelperImpl mappingsHelperImpl = new MappingsHelperImpl(
+			null, new JSONFactoryImpl(), openSearchClient.indices(), null);
 
-		MappingsFactory mappingsFactory = _getMappingsFactory(null);
-
-		String mappings = String.valueOf(
-			mappingsFactory.getMappingsJSONObject());
-
-		try (InputStream inputStream = new ByteArrayInputStream(
-				mappings.getBytes(StandardCharsets.UTF_8))) {
-
-			builder.mappings(
-				TypeMapping._DESERIALIZER.deserialize(
-					jsonProvider.createParser(inputStream), jsonpMapper));
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
+		mappingsHelperImpl.setDefaultOrOverrideMappings(
+			builder, _openSearchConnectionManager.getJsonpMapper(null));
 	}
 
 	@Override
-	public void contributeIndexSettings(CreateIndexRequest.Builder builder) {
-		JsonpMapper jsonpMapper = _openSearchConnectionManager.getJsonpMapper(
-			null);
-
-		JsonProvider jsonProvider = jsonpMapper.jsonProvider();
-
-		SettingsFactory settingsFactory = new SettingsFactory(
-			new JSONFactoryImpl(), _openSearchConfigurationWrapper);
-
-		JSONObject settingsJSONObject = settingsFactory.getSettingsJSONObject();
-
-		settingsJSONObject.put("max_result_window", 10000);
-
-		String settings = String.valueOf(settingsJSONObject);
-
-		try (InputStream inputStream = new ByteArrayInputStream(
-				settings.getBytes(StandardCharsets.UTF_8))) {
-
-			builder.settings(
-				IndexSettings._DESERIALIZER.deserialize(
-					jsonProvider.createParser(inputStream), jsonpMapper));
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
+	public void contributeIndexSettings(SettingsHelperImpl settingsHelperImpl) {
+		settingsHelperImpl.loadFromSource(
+			ResourceUtil.getResourceAsString(
+				getClass(), IndexSettingsConstants.INDEX_SETTINGS_FILE_NAME));
 	}
 
 	@Override
 	public void whenIndexCreated(String indexName) {
-		MappingsFactory mappingsFactory = _getMappingsFactory(indexName);
-
-		mappingsFactory.addOptionalDefaultMappings();
 	}
 
-	private MappingsFactory _getMappingsFactory(String indexName) {
-		OpenSearchClient openSearchClient =
-			_openSearchConnectionManager.getOpenSearchClient();
-
-		return new MappingsFactory(
-			indexName, new JSONFactoryImpl(), openSearchClient.indices(),
-			_openSearchConfigurationWrapper);
-	}
-
-	private final OpenSearchConfigurationWrapper
-		_openSearchConfigurationWrapper = Mockito.mock(
-			OpenSearchConfigurationWrapperImpl.class);
 	private final OpenSearchConnectionManager _openSearchConnectionManager;
 
 }

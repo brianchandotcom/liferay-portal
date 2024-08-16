@@ -291,17 +291,11 @@ public class AssetCategoryVocabularyVisibilitySearchTest {
 	private List<String>
 		_getExpectedGroupAssetCategoryExternalReferenceCodes() {
 
-		List<String> assetCategoryExternalReferenceCodes = new ArrayList<>(
-			_assetCategories.size());
-
-		for (AssetCategory assetCategory : _assetCategories) {
-			assetCategoryExternalReferenceCodes.add(
-				StringBundler.concat(
-					_group.getExternalReferenceCode(), _DELIMITER,
-					assetCategory.getExternalReferenceCode()));
-		}
-
-		return assetCategoryExternalReferenceCodes;
+		return TransformUtil.transform(
+			_assetCategories,
+			assetCategory -> StringBundler.concat(
+				_group.getExternalReferenceCode(), _DELIMITER,
+				assetCategory.getExternalReferenceCode()));
 	}
 
 	private static final String _DELIMITER =

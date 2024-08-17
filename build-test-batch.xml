@@ -2673,7 +2673,7 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 
 							parameters.put("test.class.name", testClassName);
 
-							AntUtil.callTarget(baseDir, "build-common.xml", "generate-backend-batch-junit-report-modules", parameters);
+							AntUtil.callMacrodef(project, "generate-backend-batch-junit-report-modules", parameters);
 						}
 
 						public static String getTestClassNameForTestResults(String testClass){

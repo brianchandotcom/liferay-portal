@@ -692,6 +692,20 @@ information.
 		</sequential>
 	</macrodef>
 
+	<macrodef name="generate-backend-batch-junit-report-modules">
+		<attribute name="test.class.name" />
+
+		<sequential>
+			<generate-backend-batch-junit-report
+				junit.failure.count="1"
+				junit.failure.message.element="&lt;failure message=&quot;Failed to run test on CI&quot; /&gt;"
+				test.class.name="@{test.class.name}"
+				test.command.name="testRun"
+				test.results.dir="modules/test-results"
+			/>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="generate-pom-info">
 		<sequential>
 			<property name="artifact.name" value="${ant.project.name}" />
@@ -2221,16 +2235,6 @@ rerun your task.
 			<arg value="javadoc.output.file.prefix=${output.file.prefix}" />
 			<arg value="javadoc.update=${update}" />
 		</java>
-	</target>
-
-	<target name="generate-backend-batch-junit-report-modules">
-		<generate-backend-batch-junit-report
-			junit.failure.count="1"
-			junit.failure.message.element="&lt;failure message=&quot;Failed to run test on CI&quot; /&gt;"
-			test.class.name="${test.class.name}"
-			test.command.name="testRun"
-			test.results.dir="modules/test-results"
-		/>
 	</target>
 
 	<target name="generate-code-coverage-report">

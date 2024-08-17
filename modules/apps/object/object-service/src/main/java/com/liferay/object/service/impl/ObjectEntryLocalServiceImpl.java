@@ -340,9 +340,7 @@ public class ObjectEntryLocalServiceImpl
 			finally {
 				ObjectEntryThreadLocal.setSkipObjectValidationRules(false);
 			}
-		}
 
-		if (workflowAction != WorkflowConstants.ACTION_PUBLISH) {
 			_updateAsset(
 				serviceContext.getUserId(), objectEntry,
 				serviceContext.getAssetCategoryIds(),

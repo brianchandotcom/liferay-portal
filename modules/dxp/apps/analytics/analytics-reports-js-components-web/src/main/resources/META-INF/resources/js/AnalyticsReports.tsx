@@ -5,8 +5,22 @@
 
 import React from 'react';
 
-const AnalyticsReports = () => {
-	return <div>hello, world!</div>;
+import AppSetup from './components/AppSetup';
+
+interface AnalyticsReports {
+	contentPerformanceDataFetchURL: string;
+}
+
+const AnalyticsReports: React.FC<AnalyticsReports> = ({
+	contentPerformanceDataFetchURL,
+}) => {
+	return (
+		<AppSetup
+			contentPerformanceDataFetchURL={contentPerformanceDataFetchURL}
+		>
+			<div>Hello, world!</div>
+		</AppSetup>
+	);
 };
 
 export default AnalyticsReports;

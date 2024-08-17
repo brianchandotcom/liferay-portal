@@ -1,8 +1,14 @@
 {
 	"dependencies": {
+		"@clayui/alert": "3.111.0",
+		"@clayui/button": "3.116.0",
+		"@clayui/empty-state": "3.116.0",
+		"@clayui/link": "3.111.0",
+		"@clayui/loading-indicator": "3.111.0",
+		"frontend-js-web": "*",
 		"react": "16.12.0"
 	},
-	"main": "js/index.js",
+	"main": "js/index.ts",
 	"name": "@liferay/analytics-reports-js-components-web",
 	"private": true,
 	"scripts": {

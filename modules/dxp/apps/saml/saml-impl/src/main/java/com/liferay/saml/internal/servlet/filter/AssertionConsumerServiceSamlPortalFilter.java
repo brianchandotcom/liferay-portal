@@ -36,11 +36,6 @@ public class AssertionConsumerServiceSamlPortalFilter
 	extends BaseSamlPortalFilter {
 
 	@Override
-	public boolean isFilterEnabled() {
-		return _samlProviderConfigurationHelper.isEnabled();
-	}
-
-	@Override
 	public boolean isFilterEnabled(
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {

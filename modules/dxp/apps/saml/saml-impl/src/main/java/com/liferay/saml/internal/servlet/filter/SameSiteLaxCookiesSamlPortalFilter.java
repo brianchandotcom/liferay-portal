@@ -47,15 +47,6 @@ import org.osgi.service.component.annotations.Reference;
 public class SameSiteLaxCookiesSamlPortalFilter extends BaseSamlPortalFilter {
 
 	@Override
-	public boolean isFilterEnabled() {
-		if (_samlProviderConfigurationHelper.isEnabled()) {
-			return _enabled;
-		}
-
-		return false;
-	}
-
-	@Override
 	public boolean isFilterEnabled(
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {

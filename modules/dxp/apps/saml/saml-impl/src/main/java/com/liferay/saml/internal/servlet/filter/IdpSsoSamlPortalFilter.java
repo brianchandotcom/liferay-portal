@@ -39,17 +39,6 @@ import org.osgi.service.component.annotations.Reference;
 public class IdpSsoSamlPortalFilter extends BaseSamlPortalFilter {
 
 	@Override
-	public boolean isFilterEnabled() {
-		if (_samlProviderConfigurationHelper.isEnabled() &&
-			_samlProviderConfigurationHelper.isRoleIdp()) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
 	public boolean isFilterEnabled(
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {

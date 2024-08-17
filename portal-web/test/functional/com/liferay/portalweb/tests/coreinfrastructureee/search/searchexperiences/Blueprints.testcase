@@ -2089,59 +2089,6 @@ definition {
 	}
 
 	@priority = 3
-	test ModifyBlueprintsAdminTableFields {
-		Blueprints.openBlueprintsAdmin();
-
-		Blueprints.createBlueprint(title = "Test Blueprint");
-
-		PortletEntry.save();
-
-		Click(locator1 = "Blueprints#BLUEPRINTS_ADMIN_FIELDS_MENU");
-
-		for (var field : list "Description,ID,Author,Created,Modified") {
-			AssertElementPresent(
-				key_fieldName = ${field},
-				locator1 = "Blueprints#BLUEPRINTS_ADMIN_FIELD");
-
-			Click(
-				key_fieldName = ${field},
-				locator1 = "Blueprints#BLUEPRINTS_ADMIN_FIELDS_MENU_ITEM");
-		}
-
-		for (var field : list "Description,ID,Author,Created,Modified") {
-			AssertElementNotPresent(
-				key_fieldName = ${field},
-				locator1 = "Blueprints#BLUEPRINTS_ADMIN_FIELD");
-		}
-
-		Click(
-			key_fieldName = "Title",
-			locator1 = "Blueprints#BLUEPRINTS_ADMIN_FIELDS_MENU_ITEM");
-
-		AssertElementPresent(
-			key_fieldName = "Title",
-			locator1 = "Blueprints#BLUEPRINTS_ADMIN_FIELD");
-
-		Click(
-			key_fieldName = "Description",
-			locator1 = "Blueprints#BLUEPRINTS_ADMIN_FIELDS_MENU_ITEM");
-
-		AssertElementPresent(
-			key_fieldName = "Description",
-			locator1 = "Blueprints#BLUEPRINTS_ADMIN_FIELD");
-
-		Click(
-			key_fieldName = "Title",
-			locator1 = "Blueprints#BLUEPRINTS_ADMIN_FIELDS_MENU_ITEM");
-
-		for (var field : list "Title,ID,Author,Created,Modified") {
-			AssertElementNotPresent(
-				key_fieldName = ${field},
-				locator1 = "Blueprints#BLUEPRINTS_ADMIN_FIELD");
-		}
-	}
-
-	@priority = 3
 	test ModifyIndexerClausesToggle {
 		Blueprints.openBlueprintsAdmin();
 

@@ -98,6 +98,22 @@ public class ObjectEntryWorkflowHandler
 			userId, classPK, status, serviceContext);
 	}
 
+	@Override
+	public ObjectEntry updateStatus(
+			ObjectEntry objectEntry, int status,
+			Map<String, Serializable> workflowContext)
+		throws PortalException {
+
+		long userId = GetterUtil.getLong(
+			(String)workflowContext.get(WorkflowConstants.CONTEXT_USER_ID));
+
+		ServiceContext serviceContext = (ServiceContext)workflowContext.get(
+			"serviceContext");
+
+		return _objectEntryLocalService.updateStatus(
+			userId, objectEntry, status, serviceContext);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectEntryWorkflowHandler.class);
 

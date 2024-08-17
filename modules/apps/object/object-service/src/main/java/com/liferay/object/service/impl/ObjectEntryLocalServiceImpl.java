@@ -331,15 +331,15 @@ public class ObjectEntryLocalServiceImpl
 			String.valueOf(objectEntry.getPrimaryKey()), false,
 			resourcePermissionServiceContext);
 
-		try {
-			if (workflowAction == WorkflowConstants.ACTION_SAVE_DRAFT) {
+		if (workflowAction == WorkflowConstants.ACTION_SAVE_DRAFT) {
+			try {
 				ObjectEntryThreadLocal.setSkipObjectValidationRules(true);
-			}
 
-			objectEntry = objectEntryPersistence.update(objectEntry);
-		}
-		finally {
-			ObjectEntryThreadLocal.setSkipObjectValidationRules(false);
+				objectEntry = objectEntryPersistence.update(objectEntry);
+			}
+			finally {
+				ObjectEntryThreadLocal.setSkipObjectValidationRules(false);
+			}
 		}
 
 		if (workflowAction != WorkflowConstants.ACTION_PUBLISH) {
@@ -351,7 +351,7 @@ public class ObjectEntryLocalServiceImpl
 				serviceContext.getAssetPriority(), serviceContext);
 		}
 
-		_startWorkflowInstance(userId, objectEntry, serviceContext);
+		_startWorkflowInstance(userId, objectEntry, serviceContext, false);
 
 		boolean clearObjectEntryIdsMap =
 			ObjectActionThreadLocal.isClearObjectEntryIdsMap();
@@ -1569,7 +1569,7 @@ public class ObjectEntryLocalServiceImpl
 			serviceContext.getAssetLinkEntryIds(),
 			serviceContext.getAssetPriority(), serviceContext);
 
-		_startWorkflowInstance(userId, objectEntry, serviceContext);
+		_startWorkflowInstance(userId, objectEntry, serviceContext, true);
 
 		_deleteFileEntries(
 			objectEntry.getValues(), objectEntry.getObjectDefinitionId(),
@@ -4140,7 +4140,8 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	private void _startWorkflowInstance(
-			long userId, ObjectEntry objectEntry, ServiceContext serviceContext)
+			long userId, ObjectEntry objectEntry, ServiceContext serviceContext,
+			boolean skipModelListener)
 		throws PortalException {
 
 		ObjectDefinition objectDefinition =
@@ -4150,7 +4151,7 @@ public class ObjectEntryLocalServiceImpl
 		boolean workflowEnabled = WorkflowThreadLocal.isEnabled();
 
 		try {
-			_skipModelListeners.set(true);
+			_skipModelListeners.set(skipModelListener);
 
 			WorkflowThreadLocal.setEnabled(true);
 

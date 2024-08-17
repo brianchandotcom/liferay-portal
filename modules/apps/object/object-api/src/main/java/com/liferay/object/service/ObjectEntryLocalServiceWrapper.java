@@ -750,6 +750,17 @@ public class ObjectEntryLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.object.model.ObjectEntry updateStatus(
+			long userId, com.liferay.object.model.ObjectEntry objectEntry,
+			int status,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectEntryLocalService.updateStatus(
+			userId, objectEntry, status, serviceContext);
+	}
+
+	@Override
 	public BasePersistence<?> getBasePersistence() {
 		return _objectEntryLocalService.getBasePersistence();
 	}

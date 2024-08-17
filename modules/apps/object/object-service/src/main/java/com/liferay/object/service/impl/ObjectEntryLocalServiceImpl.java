@@ -1590,8 +1590,16 @@ public class ObjectEntryLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		ObjectEntry objectEntry = objectEntryPersistence.findByPrimaryKey(
-			objectEntryId);
+		return updateStatus(
+			userId, objectEntryPersistence.findByPrimaryKey(objectEntryId),
+			status, serviceContext);
+	}
+
+	@Override
+	public ObjectEntry updateStatus(
+			long userId, ObjectEntry objectEntry, int status,
+			ServiceContext serviceContext)
+		throws PortalException {
 
 		if (objectEntry.getStatus() == status) {
 			return objectEntry;

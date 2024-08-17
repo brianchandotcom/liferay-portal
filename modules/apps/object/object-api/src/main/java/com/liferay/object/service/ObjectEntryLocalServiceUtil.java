@@ -652,6 +652,15 @@ public class ObjectEntryLocalServiceUtil {
 			userId, objectEntryId, status, serviceContext);
 	}
 
+	public static ObjectEntry updateStatus(
+			long userId, ObjectEntry objectEntry, int status,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().updateStatus(
+			userId, objectEntry, status, serviceContext);
+	}
+
 	public static ObjectEntryLocalService getService() {
 		return _serviceSnapshot.get();
 	}

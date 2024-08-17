@@ -16,6 +16,7 @@ import {OPEN_PANEL_VALUE} from '../utils/constants';
 import ActionsComponentPropsTransformer from './ActionsComponentPropsTransformer';
 
 const handlePanelStateFromSession = ({
+	contentPerformanceDataFetchURL,
 	currentRowId,
 	namespace,
 	panelState,
@@ -23,6 +24,7 @@ const handlePanelStateFromSession = ({
 	selectedItemRowId,
 	singlePageApplicationEnabled,
 }: {
+	contentPerformanceDataFetchURL: string;
 	currentRowId: string;
 	namespace: string;
 	panelState: string;
@@ -50,6 +52,7 @@ const handlePanelStateFromSession = ({
 
 	ActionsComponentPropsTransformer.showSidebar({
 		View: SidebarPanelInfoView,
+		contentPerformanceDataFetchURL,
 		fetchURL: selectedItemFetchURL,
 		portletNamespace: namespace,
 		singlePageApplicationEnabled,

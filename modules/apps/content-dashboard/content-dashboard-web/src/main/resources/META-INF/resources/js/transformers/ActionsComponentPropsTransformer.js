@@ -42,6 +42,7 @@ const selectRow = (portletNamespace, rowId) => {
 
 const showSidebar = ({
 	View,
+	contentPerformanceDataFetchURL,
 	fetchURL,
 	portletNamespace,
 	singlePageApplicationEnabled,
@@ -58,6 +59,7 @@ const showSidebar = ({
 		render(
 			SidebarPanel,
 			{
+				contentPerformanceDataFetchURL,
 				fetchURL,
 				onClose: () => {
 					Liferay.component(id).close();
@@ -74,12 +76,16 @@ const showSidebar = ({
 		);
 	}
 	else {
-		sidebarPanel.open(fetchURL, View);
+		sidebarPanel.open(
+			{contentPerformanceDataFetchURL, url: fetchURL},
+			View
+		);
 	}
 };
 
 const actions = {
 	showInfo({
+		contentPerformanceDataFetchURL,
 		fetchURL,
 		panelState,
 		portletNamespace,
@@ -100,6 +106,7 @@ const actions = {
 
 		showSidebar({
 			View: SidebarPanelInfoView,
+			contentPerformanceDataFetchURL,
 			fetchURL,
 			portletNamespace,
 			singlePageApplicationEnabled,
@@ -142,6 +149,8 @@ export default function propsTransformer({
 						event.preventDefault();
 
 						actions[action]({
+							contentPerformanceDataFetchURL:
+								item.data.contentPerformanceDataFetchURL,
 							fetchURL: item.data.fetchURL,
 							panelState,
 							portletNamespace,

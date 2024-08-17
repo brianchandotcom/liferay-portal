@@ -97,6 +97,8 @@ const dataReducer = (state, action) => {
 const SidebarPanel = React.forwardRef(
 	(
 		{
+			contentPerformanceDataFetchURL:
+				initialContentPerformanceDataFetchURL,
 			fetchURL: initialFetchUrl,
 			onClose,
 			singlePageApplicationEnabled,
@@ -104,6 +106,10 @@ const SidebarPanel = React.forwardRef(
 		},
 		ref
 	) => {
+		const [
+			contentPerformanceDataFetchURL,
+			setContentPerformanceDataFetchURL,
+		] = useState(initialContentPerformanceDataFetchURL);
 		const [fetchURL, setFetchURL] = useState(initialFetchUrl);
 		const CurrentViewRef = useRef(View);
 
@@ -185,10 +191,14 @@ const SidebarPanel = React.forwardRef(
 
 		useImperativeHandle(ref, () => ({
 			close: () => safeDispatch({type: 'CLOSE_SIDEBAR'}),
-			open: (url, View) => {
+			open: ({contentPerformanceDataFetchURL, url}, View) => {
 				CurrentViewRef.current = View;
 
 				safeDispatch({loading: url !== fetchURL, type: 'OPEN_SIDEBAR'});
+
+				setContentPerformanceDataFetchURL(
+					contentPerformanceDataFetchURL
+				);
 
 				setFetchURL(url);
 			},
@@ -216,6 +226,9 @@ const SidebarPanel = React.forwardRef(
 					state?.data && (
 						<CurrentViewRef.current
 							{...state.data}
+							contentPerformanceDataFetchURL={
+								contentPerformanceDataFetchURL
+							}
 							singlePageApplicationEnabled={
 								singlePageApplicationEnabled
 							}

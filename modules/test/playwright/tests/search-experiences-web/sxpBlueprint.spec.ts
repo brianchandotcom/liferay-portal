@@ -16,6 +16,93 @@ export const test = mergeTests(
 	searchExperiencesPagesTest
 );
 
+test.describe('Blueprint table fields can toggle visibility', () => {
+	const tableFieldsList = [
+		'Description',
+		'ID',
+		'Author',
+		'Created',
+		'Modified',
+	];
+
+	test.beforeEach(async ({apiHelpers}) => {
+		await test.step('Create blueprint with API', async () => {
+			await apiHelpers.searchExperiences.createSXPBlueprint();
+		});
+	});
+
+	test.afterEach(async ({page, sxpBlueprintsAndElementsViewPage}) => {
+		await test.step('Select all blueprint table fields to view', async () => {
+			for (const tableField of tableFieldsList) {
+				const tableFieldMenuItem = page.getByRole('menuitem', {
+					name: tableField,
+				});
+
+				if (!(await tableFieldMenuItem.isVisible())) {
+					await sxpBlueprintsAndElementsViewPage.blueprintElementTableOpenFieldsMenuButton.click();
+				}
+
+				if (
+					!(await tableFieldMenuItem
+						.locator('.lexicon-icon-check')
+						.isVisible())
+				) {
+					await tableFieldMenuItem.click();
+				}
+
+				await expect(
+					sxpBlueprintsAndElementsViewPage.blueprintElementTableHeading
+				).toContainText(tableField);
+			}
+		});
+	});
+
+	test('Deselect blueprint table fields from view', async ({
+		page,
+		sxpBlueprintsAndElementsViewPage,
+	}) => {
+		await test.step('Navigate to created blueprint', async () => {
+			await sxpBlueprintsAndElementsViewPage.goto();
+		});
+
+		await test.step('Assert blueprint table fields are available', async () => {
+			for (const tableField of tableFieldsList) {
+				await expect(
+					sxpBlueprintsAndElementsViewPage.blueprintElementTable.getByText(
+						tableField
+					)
+				).toBeVisible();
+			}
+		});
+
+		await test.step('Toggle off blueprint table fields', async () => {
+			for (const tableField of tableFieldsList) {
+				const tableFieldMenuItem = page.getByRole('menuitem', {
+					name: tableField,
+				});
+
+				if (!(await tableFieldMenuItem.isVisible())) {
+					await sxpBlueprintsAndElementsViewPage.blueprintElementTableOpenFieldsMenuButton.click();
+				}
+
+				await tableFieldMenuItem.click();
+
+				await expect(
+					tableFieldMenuItem.locator('.lexicon-icon-check')
+				).not.toBeVisible();
+			}
+		});
+
+		await test.step('Assert blueprint table fields are not available', async () => {
+			for (const tableField of tableFieldsList) {
+				await expect(
+					sxpBlueprintsAndElementsViewPage.blueprintElementTableHeading
+				).not.toContainText(tableField);
+			}
+		});
+	});
+});
+
 test.describe('Created blueprint has accurate clause contributors', () => {
 	let sxpBlueprintId: string;
 

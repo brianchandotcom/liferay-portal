@@ -13,6 +13,8 @@ export class SXPBlueprintsAndElementsViewPage {
 	readonly page: Page;
 	readonly blueprintElementSearchBar: Locator;
 	readonly blueprintElementTable: Locator;
+	readonly blueprintElementTableHeading: Locator;
+	readonly blueprintElementTableOpenFieldsMenuButton: Locator;
 	readonly blueprintsTab: Locator;
 	readonly elementsTab: Locator;
 	readonly addBlueprintButton: Locator;
@@ -28,6 +30,13 @@ export class SXPBlueprintsAndElementsViewPage {
 		this.blueprintElementSearchBar = page.getByPlaceholder('Search');
 		this.blueprintsTab = page.getByRole('link', {name: 'Blueprints'});
 		this.elementsTab = page.getByRole('link', {name: 'Elements'});
+
+		// Blueprint/Element Table
+
+		this.blueprintElementTableHeading =
+			this.blueprintElementTable.locator('.dnd-thead');
+		this.blueprintElementTableOpenFieldsMenuButton =
+			this.blueprintElementTable.getByLabel('Open Fields Menu');
 
 		this.page = page;
 	}
@@ -46,7 +55,7 @@ export class SXPBlueprintsAndElementsViewPage {
 		await this.elementsTab.click();
 	}
 
-	// Table Actions
+	// Blueprint/Element Table Actions
 
 	async createBlueprint(title: string, description?: string) {
 		await this.addBlueprintButton.click();

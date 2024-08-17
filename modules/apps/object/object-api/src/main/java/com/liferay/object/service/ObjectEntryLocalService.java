@@ -494,4 +494,9 @@ public interface ObjectEntryLocalService
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public ObjectEntry updateStatus(
+			long userId, ObjectEntry objectEntry, int status,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 }

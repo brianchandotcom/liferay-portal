@@ -220,26 +220,6 @@ public class ObjectValidationRuleLocalServiceTest {
 				ObjectValidationRuleSettingConstants.
 					NAME_ALLOW_ACTIVE_STATUS_UPDATE),
 			() -> _addObjectValidationRule(
-				_modifiableSystemObjectDefinition.getObjectDefinitionId(),
-				ObjectValidationRuleConstants.ENGINE_TYPE_DDM, errorLabelMap,
-				StringPool.BLANK, nameLabelMap,
-				ObjectValidationRuleConstants.OUTPUT_TYPE_FULL_VALIDATION,
-				_VALID_DDM_SCRIPT, false,
-				Collections.singletonList(
-					new ObjectValidationRuleSettingBuilder(
-					).name(
-						ObjectValidationRuleSettingConstants.
-							NAME_ALLOW_ACTIVE_STATUS_UPDATE
-					).value(
-						"true"
-					).build())));
-		AssertUtils.assertFailure(
-			ObjectValidationRuleSettingNameException.NotAllowedName.class,
-			String.format(
-				"The object validation rule setting \"%s\" is not allowed",
-				ObjectValidationRuleSettingConstants.
-					NAME_ALLOW_ACTIVE_STATUS_UPDATE),
-			() -> _addObjectValidationRule(
 				ObjectValidationRuleConstants.ENGINE_TYPE_DDM, errorLabelMap,
 				StringPool.BLANK, nameLabelMap,
 				ObjectValidationRuleConstants.OUTPUT_TYPE_FULL_VALIDATION,
@@ -369,28 +349,6 @@ public class ObjectValidationRuleLocalServiceTest {
 
 		String objectValidationRuleSettingValue = RandomTestUtil.randomString();
 
-		AssertUtils.assertFailure(
-			ObjectValidationRuleSettingValueException.InvalidValue.class,
-			String.format(
-				"The value \"%s\" of the object validation rule setting " +
-					"\"%s\" is invalid",
-				objectValidationRuleSettingValue,
-				ObjectValidationRuleSettingConstants.
-					NAME_ALLOW_ACTIVE_STATUS_UPDATE),
-			() -> _addObjectValidationRule(
-				_modifiableSystemObjectDefinition.getObjectDefinitionId(),
-				ObjectValidationRuleConstants.ENGINE_TYPE_DDM, errorLabelMap,
-				StringPool.BLANK, nameLabelMap,
-				ObjectValidationRuleConstants.OUTPUT_TYPE_FULL_VALIDATION,
-				_VALID_DDM_SCRIPT, true,
-				Collections.singletonList(
-					new ObjectValidationRuleSettingBuilder(
-					).name(
-						ObjectValidationRuleSettingConstants.
-							NAME_ALLOW_ACTIVE_STATUS_UPDATE
-					).value(
-						objectValidationRuleSettingValue
-					).build())));
 		AssertUtils.assertFailure(
 			ObjectValidationRuleSettingValueException.InvalidValue.class,
 			String.format(
@@ -594,30 +552,66 @@ public class ObjectValidationRuleLocalServiceTest {
 	}
 
 	@Test
+	public void testAddSystemObjectValidationRule() {
+		Map<Locale, String> errorLabelMap = LocalizedMapUtil.getLocalizedMap(
+			RandomTestUtil.randomString());
+		Map<Locale, String> nameLabelMap = LocalizedMapUtil.getLocalizedMap(
+			RandomTestUtil.randomString());
+
+		AssertUtils.assertFailure(
+			ObjectValidationRuleSettingNameException.NotAllowedName.class,
+			String.format(
+				"The object validation rule setting \"%s\" is not allowed",
+				ObjectValidationRuleSettingConstants.
+					NAME_ALLOW_ACTIVE_STATUS_UPDATE),
+			() -> _addObjectValidationRule(
+				_modifiableSystemObjectDefinition.getObjectDefinitionId(),
+				ObjectValidationRuleConstants.ENGINE_TYPE_DDM, errorLabelMap,
+				StringPool.BLANK, nameLabelMap,
+				ObjectValidationRuleConstants.OUTPUT_TYPE_FULL_VALIDATION,
+				_VALID_DDM_SCRIPT, false,
+				Collections.singletonList(
+					new ObjectValidationRuleSettingBuilder(
+					).name(
+						ObjectValidationRuleSettingConstants.
+							NAME_ALLOW_ACTIVE_STATUS_UPDATE
+					).value(
+						"true"
+					).build())));
+
+		String objectValidationRuleSettingValue = RandomTestUtil.randomString();
+
+		AssertUtils.assertFailure(
+			ObjectValidationRuleSettingValueException.InvalidValue.class,
+			String.format(
+				"The value \"%s\" of the object validation rule setting " +
+					"\"%s\" is invalid",
+				objectValidationRuleSettingValue,
+				ObjectValidationRuleSettingConstants.
+					NAME_ALLOW_ACTIVE_STATUS_UPDATE),
+			() -> _addObjectValidationRule(
+				_modifiableSystemObjectDefinition.getObjectDefinitionId(),
+				ObjectValidationRuleConstants.ENGINE_TYPE_DDM, errorLabelMap,
+				StringPool.BLANK, nameLabelMap,
+				ObjectValidationRuleConstants.OUTPUT_TYPE_FULL_VALIDATION,
+				_VALID_DDM_SCRIPT, true,
+				Collections.singletonList(
+					new ObjectValidationRuleSettingBuilder(
+					).name(
+						ObjectValidationRuleSettingConstants.
+							NAME_ALLOW_ACTIVE_STATUS_UPDATE
+					).value(
+						objectValidationRuleSettingValue
+					).build())));
+	}
+
+	@Test
 	public void testDeleteObjectValidationRule() throws Exception {
 		ObjectValidationRule objectValidationRule = _addObjectValidationRule(
 			ObjectValidationRuleConstants.ENGINE_TYPE_DDM, _VALID_DDM_SCRIPT);
 
 		_testDeleteObjectValidationRule(
 			objectValidationRule.getObjectValidationRuleId());
-
-		ObjectValidationRule systemObjectValidationRule =
-			_addObjectValidationRule(
-				ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				StringPool.BLANK,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				ObjectValidationRuleConstants.OUTPUT_TYPE_FULL_VALIDATION,
-				_VALID_DDM_SCRIPT, true, Collections.emptyList());
-
-		AssertUtils.assertFailure(
-			ObjectValidationRuleSystemException.class, false,
-			"Only allowed bundles can delete system object validation rules",
-			() -> _objectValidationRuleLocalService.deleteObjectValidationRule(
-				systemObjectValidationRule.getObjectValidationRuleId()));
-
-		_testDeleteObjectValidationRule(
-			systemObjectValidationRule.getObjectValidationRuleId());
 
 		ObjectField textObjectField1 =
 			_objectFieldLocalService.fetchObjectField(
@@ -689,6 +683,27 @@ public class ObjectValidationRuleLocalServiceTest {
 
 		_testDeleteObjectValidationRule(
 			objectValidationRule.getObjectValidationRuleId());
+	}
+
+	@Test
+	public void testDeleteSystemObjectValidationRule() throws Exception {
+		ObjectValidationRule systemObjectValidationRule =
+			_addObjectValidationRule(
+				ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				StringPool.BLANK,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				ObjectValidationRuleConstants.OUTPUT_TYPE_FULL_VALIDATION,
+				_VALID_DDM_SCRIPT, true, Collections.emptyList());
+
+		AssertUtils.assertFailure(
+			ObjectValidationRuleSystemException.class, false,
+			"Only allowed bundles can delete system object validation rules",
+			() -> _objectValidationRuleLocalService.deleteObjectValidationRule(
+				systemObjectValidationRule.getObjectValidationRuleId()));
+
+		_testDeleteObjectValidationRule(
+			systemObjectValidationRule.getObjectValidationRuleId());
 	}
 
 	@Test
@@ -875,7 +890,10 @@ public class ObjectValidationRuleLocalServiceTest {
 				objectValidationRule.getOutputType(),
 				objectValidationRule.getScript(),
 				objectValidationRule.getObjectValidationRuleSettings()));
+	}
 
+	@Test
+	public void testUpdateSystemObjectValidationRule() throws Exception {
 		ObjectValidationRule systemObjectValidationRule =
 			_addObjectValidationRule(
 				_modifiableSystemObjectDefinition.getObjectDefinitionId(),

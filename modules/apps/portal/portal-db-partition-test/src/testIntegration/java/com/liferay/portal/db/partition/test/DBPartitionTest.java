@@ -675,22 +675,19 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 					return;
 				}
 
-				try (Connection connection = dataSource.getConnection()) {
-					try (LogCapture logCapture =
-							LoggerTestUtil.configureLog4JLogger(
-								"com.liferay.portal.dao.db.BaseDB",
-								LoggerTestUtil.INFO)) {
+				try (Connection connection = dataSource.getConnection();
+					LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+						"com.liferay.portal.dao.db.BaseDB",
+						LoggerTestUtil.INFO)) {
 
-						db.updateIndexes(
-							connection, "Company",
-							"create index IX_38EFE3FD on Company (logoId);",
-							true);
+					db.updateIndexes(
+						connection, "Company",
+						"create index IX_38EFE3FD on Company (logoId);", true);
 
-						List<LogEntry> logEntries = logCapture.getLogEntries();
+					List<LogEntry> logEntries = logCapture.getLogEntries();
 
-						Assert.assertEquals(
-							logEntries.toString(), 0L, logEntries.size());
-					}
+					Assert.assertEquals(
+						logEntries.toString(), 0L, logEntries.size());
 				}
 			});
 	}

@@ -5,19 +5,24 @@
 
 package com.liferay.portal.search.internal.buffer.util;
 
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.concurrent.SystemExecutorServiceUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.search.internal.buffer.BufferOverflowThreadLocal;
 import com.liferay.portal.search.internal.buffer.IndexerRequest;
 import com.liferay.portal.search.internal.buffer.IndexerRequestBuffer;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.concurrent.ExecutorService;
 
 /**
  * @author Michael C. Han
@@ -30,6 +35,44 @@ public class IndexerRequestBufferExecutorUtil {
 
 	public static void execute(
 		IndexerRequestBuffer indexerRequestBuffer, int numRequests) {
+
+		if (SearchContext.isBatchMode()) {
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
+
+			if (serviceContext != null) {
+				serviceContext = (ServiceContext)serviceContext.clone();
+			}
+
+			ServiceContext finalServiceContext = serviceContext;
+
+			ExecutorService executorService =
+				SystemExecutorServiceUtil.getExecutorService();
+
+			SearchContext.registerBatchModeSyncFuture(
+				executorService.submit(
+					() -> {
+						ServiceContextThreadLocal.pushServiceContext(
+							finalServiceContext);
+
+						try (SafeCloseable safeCloseable =
+								SearchContext.openBatchMode(false)) {
+
+							_execute(indexerRequestBuffer, numRequests, false);
+						}
+						finally {
+							ServiceContextThreadLocal.popServiceContext();
+						}
+					}));
+		}
+		else {
+			_execute(indexerRequestBuffer, numRequests, true);
+		}
+	}
+
+	private static void _execute(
+		IndexerRequestBuffer indexerRequestBuffer, int numRequests,
+		boolean commit) {
 
 		Collection<IndexerRequest> completedIndexerRequests = new ArrayList<>();
 
@@ -77,9 +120,7 @@ public class IndexerRequestBufferExecutorUtil {
 			indexerRequestBuffer.remove(indexerRequest);
 		}
 
-		if (!BufferOverflowThreadLocal.isOverflowMode() &&
-			!SearchContext.isBatchMode()) {
-
+		if (!BufferOverflowThreadLocal.isOverflowMode() && commit) {
 			IndexWriterHelper indexWriterHelper =
 				_indexWriterHelperSnapshot.get();
 

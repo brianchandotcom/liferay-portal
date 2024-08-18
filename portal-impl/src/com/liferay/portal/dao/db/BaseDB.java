@@ -1618,7 +1618,7 @@ public abstract class BaseDB implements DB {
 		Connection connection, String tableName) {
 
 		if (!DBPartition.isPartitionEnabled() ||
-			(CompanyThreadLocal.getCompanyId() ==
+			(CompanyThreadLocal.getNonsystemCompanyId() ==
 				PortalInstancePool.getDefaultCompanyId())) {
 
 			return false;

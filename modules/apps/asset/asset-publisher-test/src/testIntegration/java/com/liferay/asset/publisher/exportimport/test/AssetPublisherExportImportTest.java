@@ -384,7 +384,7 @@ public class AssetPublisherExportImportTest
 		serviceContext.setAssetTagNames(new String[] {assetTag.getName()});
 
 		List<AssetEntry> expectedAssetEntries = addAssetEntries(
-			group, 2, new ArrayList<AssetEntry>(), serviceContext);
+			group, 2, new ArrayList<>(), serviceContext);
 
 		testDynamicExportImport(
 			HashMapBuilder.put(
@@ -412,7 +412,7 @@ public class AssetPublisherExportImportTest
 			new long[] {assetCategory1.getCategoryId()});
 
 		List<AssetEntry> expectedAssetEntries = addAssetEntries(
-			group, 1, new ArrayList<AssetEntry>(), serviceContext);
+			group, 1, new ArrayList<>(), serviceContext);
 
 		AssetCategory assetCategory2 = AssetTestUtil.addCategory(
 			group.getGroupId(), assetVocabulary.getVocabularyId());
@@ -499,7 +499,7 @@ public class AssetPublisherExportImportTest
 					String.valueOf(_portal.getClassNameId(DLFileEntry.class))
 				}
 			).build(),
-			new ArrayList<AssetEntry>(), true);
+			new ArrayList<>(), true);
 	}
 
 	@Test
@@ -584,11 +584,10 @@ public class AssetPublisherExportImportTest
 	@Test
 	public void testDynamicExportImportWithNoFiltering() throws Exception {
 		List<AssetEntry> expectedAssetEntries = addAssetEntries(
-			group, 2, new ArrayList<AssetEntry>(),
+			group, 2, new ArrayList<>(),
 			ServiceContextTestUtil.getServiceContext());
 
-		testDynamicExportImport(
-			new HashMap<String, String[]>(), expectedAssetEntries, false);
+		testDynamicExportImport(new HashMap<>(), expectedAssetEntries, false);
 	}
 
 	@Test
@@ -1190,7 +1189,7 @@ public class AssetPublisherExportImportTest
 			// Creating entries to validate filtering
 
 			addAssetEntries(
-				group, 2, new ArrayList<AssetEntry>(),
+				group, 2, new ArrayList<>(),
 				ServiceContextTestUtil.getServiceContext());
 		}
 

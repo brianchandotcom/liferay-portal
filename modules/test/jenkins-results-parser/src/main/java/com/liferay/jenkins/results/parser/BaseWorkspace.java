@@ -256,7 +256,7 @@ public abstract class BaseWorkspace implements Workspace {
 		_workspaceGitRepositories = new HashMap<>();
 
 		for (final String workspaceRepositoryDirName :
-				workspaceRepositoryDirNames.split(",")) {
+				workspaceRepositoryDirNames.split("\\s*,\\s*")) {
 
 			try {
 				_workspaceGitRepositories.put(

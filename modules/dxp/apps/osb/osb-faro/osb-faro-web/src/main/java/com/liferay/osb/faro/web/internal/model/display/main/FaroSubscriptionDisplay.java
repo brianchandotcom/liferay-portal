@@ -445,9 +445,11 @@ public class FaroSubscriptionDisplay {
 			return jsonObject.toString();
 		}
 
+		long totalSinceLastAnniversary = jsonObject.getLong(
+			"totalSinceLastAnniversary", 0L);
+
 		jsonObject.put(
-			"totalSinceLastAnniversary",
-			jsonObject.getLong("totalSinceLastAnniversary", 0L) + count);
+			"totalSinceLastAnniversary", totalSinceLastAnniversary + count);
 
 		JSONObject monthlyValuesJSONObject = jsonObject.getJSONObject(
 			"monthlyValues");
@@ -475,6 +477,9 @@ public class FaroSubscriptionDisplay {
 				countSinceLastAnniversary =
 					previousMonthlyValueJSONObject.getLong(
 						"countSinceLastAnniversary");
+			}
+			else {
+				countSinceLastAnniversary = totalSinceLastAnniversary;
 			}
 
 			monthlyValueJSONObject = JSONUtil.put(

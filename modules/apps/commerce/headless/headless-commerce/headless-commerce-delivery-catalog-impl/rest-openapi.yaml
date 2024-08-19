@@ -1127,6 +1127,13 @@ components:
                 priceFormatted:
                     readOnly: true
                     type: string
+                pricingQuantityPrice:
+                    format: double
+                    readOnly: true
+                    type: number
+                pricingQuantityPriceFormatted:
+                    readOnly: true
+                    type: string
                 quantity:
                     example: 202.1
                     format: bigdecimal

@@ -172,6 +172,22 @@ Format dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(DateFormat.MEDIUM,
 				/>
 			</c:if>
 
+			<c:if test="<%= layoutPageTemplateCollection != null %>">
+				<div class="mb-4">
+					<p class="font-weight-semi-bold mb-0 text-3">
+						<liferay-ui:message key="location" />
+					</p>
+
+					<p class="sidebar-dd text-secondary">
+						<clay:icon
+							symbol="folder"
+						/>
+
+						<%= StringUtil.merge(displayPageTemplateInfoPanelDisplayContext.getLayoutPageTemplateCollectionPath(), " > ") %>
+					</p>
+				</div>
+			</c:if>
+
 			<div class="mb-4">
 				<p class="font-weight-semi-bold mb-1 text-3">
 					<liferay-ui:message key="number-of-items" />
@@ -191,20 +207,6 @@ Format dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(DateFormat.MEDIUM,
 			</div>
 
 			<c:if test="<%= layoutPageTemplateCollection != null %>">
-				<div class="mb-4">
-					<p class="font-weight-semi-bold mb-0 text-3">
-						<liferay-ui:message key="location" />
-					</p>
-
-					<p class="sidebar-dd text-secondary">
-						<clay:icon
-							symbol="folder"
-						/>
-
-						<%= StringUtil.merge(displayPageTemplateInfoPanelDisplayContext.getLayoutPageTemplateCollectionPath(), " > ") %>
-					</p>
-				</div>
-
 				<div class="mb-4">
 					<p class="font-weight-semi-bold mb-0 text-3">
 						<liferay-ui:message key="created" />

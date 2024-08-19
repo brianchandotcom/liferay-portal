@@ -44,7 +44,7 @@ public class SkuUnitOfMeasureUtil {
 				skuUnitOfMeasure.getKey(),
 				LanguageUtils.getLocalizedMap(skuUnitOfMeasure.getName()),
 				GetterUtil.getInteger(skuUnitOfMeasure.getPrecision()),
-				BigDecimal.ONE,
+				skuUnitOfMeasure.getPricingQuantity(),
 				GetterUtil.get(
 					skuUnitOfMeasure.getPrimary(),
 					_isDefaultPrimary(

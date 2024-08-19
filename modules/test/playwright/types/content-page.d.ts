@@ -79,6 +79,7 @@ type PageElement = {
 		fragmentConfig?: Record<string, any>;
 		fragmentDropZoneId?: string;
 		fragmentFields?: FragmentField[];
+		fragmentStyle?: Record<string, string>;
 		gutters?: boolean;
 		layout?: {};
 		listStyle?: string;

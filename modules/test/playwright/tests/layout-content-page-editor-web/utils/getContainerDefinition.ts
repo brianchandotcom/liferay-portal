@@ -6,6 +6,7 @@
 import getRandomString from '../../../utils/getRandomString';
 
 type Props = {
+	fragmentStyle?: Record<string, string>;
 	id?: string;
 	pageElements?: PageElement[];
 };
@@ -13,9 +14,11 @@ type Props = {
 export default function getContainerDefinition({
 	id = getRandomString(),
 	pageElements = [],
+	fragmentStyle,
 }: Props): PageElement {
 	return {
 		definition: {
+			fragmentStyle,
 			layout: {},
 		},
 		id,

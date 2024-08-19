@@ -543,7 +543,7 @@ const DataSets = ({
 	editDataSetURL: string;
 	namespace: string;
 	permissionsURL: string;
-	resolvedRESTSchemas: Array<string>,
+	resolvedRESTSchemas: Array<string>;
 	restApplications: Array<string>;
 }) => {
 	const creationMenu = {

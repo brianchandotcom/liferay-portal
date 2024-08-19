@@ -56,7 +56,7 @@ public class ObjectActionMDFClaimStatusManagementRestController
 			}
 			else {
 				String response = get(
-					getAuthorization(),
+					_getAuthorization(),
 					_uriBuilderFactory.builder(
 					).path(
 						"/o/c/mdfrequests/by-external-reference-code/" +
@@ -77,12 +77,6 @@ public class ObjectActionMDFClaimStatusManagementRestController
 		return new ResponseEntity<>(json, HttpStatus.OK);
 	}
 
-	protected String getAuthorization() {
-		return _liferayOAuth2AccessTokenManager.getAuthorization(
-			"liferay-partner-etc-spring-boot-oauth-application-headless-" +
-				"server");
-	}
-
 	private void _completeMDFRequestStatus(
 		String mdfRequestExternalReferenceCode) {
 
@@ -99,9 +93,15 @@ public class ObjectActionMDFClaimStatusManagementRestController
 		jsonObject.put("mdfRequestStatus", mdfRequestStatusJSONObject);
 
 		patch(
-			getAuthorization(), jsonObject.toString(),
+			_getAuthorization(), jsonObject.toString(),
 			"/o/c/mdfrequests/by-external-reference-code/" +
 				mdfRequestExternalReferenceCode);
+	}
+
+	private String _getAuthorization() {
+		return _liferayOAuth2AccessTokenManager.getAuthorization(
+			"liferay-partner-etc-spring-boot-oauth-application-headless-" +
+				"server");
 	}
 
 	@Autowired

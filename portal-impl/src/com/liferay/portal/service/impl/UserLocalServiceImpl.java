@@ -7093,21 +7093,23 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			String lastName, Locale locale)
 		throws PortalException {
 
-		FullNameDefinition fullNameDefinition =
-			FullNameDefinitionFactory.getInstance(locale);
+		if (Validator.isNull(firstName)) {
+			throw new ContactNameException.MustHaveFirstName();
+		}
 
 		int firstNameMaxLength = ModelHintsUtil.getMaxLength(
 			User.class.getName(), "firstName");
 
-		if (Validator.isNull(firstName)) {
-			throw new ContactNameException.MustHaveFirstName();
-		}
-		else if (firstName.length() > firstNameMaxLength) {
+		if (firstName.length() > firstNameMaxLength) {
 			throw new ContactNameException.MustNotExceedMaximumLength(
 				firstNameMaxLength);
 		}
-		else if (Validator.isNull(middleName) &&
-				 fullNameDefinition.isFieldRequired("middle-name")) {
+
+		FullNameDefinition fullNameDefinition =
+			FullNameDefinitionFactory.getInstance(locale);
+
+		if (Validator.isNull(middleName) &&
+			fullNameDefinition.isFieldRequired("middle-name")) {
 
 			throw new ContactNameException.MustHaveMiddleName();
 		}

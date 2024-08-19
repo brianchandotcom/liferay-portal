@@ -763,7 +763,7 @@ definition {
 				userLastName = "userln",
 				userScreenName = "usersn");
 
-			JSONRole.addRegularRole(roleTitle = "Regular Role");
+			JSONRole.addRegularRole(roleKey = "Regular Role");
 
 			var objectId = JSONObject.getObjectId(objectName = "CustomObject");
 
@@ -892,7 +892,7 @@ definition {
 				userLastName = "userln",
 				userScreenName = "usersn");
 
-			JSONRole.addRegularRole(roleTitle = "Regular Role");
+			JSONRole.addRegularRole(roleKey = "Regular Role");
 
 			var objectId = JSONObject.getObjectId(objectName = "CustomObject");
 

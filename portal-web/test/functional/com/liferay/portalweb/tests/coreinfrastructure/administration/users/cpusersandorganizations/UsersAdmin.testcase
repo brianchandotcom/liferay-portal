@@ -1893,7 +1893,7 @@ definition {
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
-		JSONRole.addRegularRole(roleTitle = "Impersonating Role Name");
+		JSONRole.addRegularRole(roleKey = "Impersonating Role Name");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW_CONTROL_PANEL",

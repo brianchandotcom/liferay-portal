@@ -26,7 +26,7 @@ definition {
 	@description = "LPS-135390 - Verify it is possible to view and access the Picklist portlet with the Access in Control Panel permission"
 	@priority = 4
 	test CanAccessPicklistWithAccessPermission {
-		JSONRole.addRegularRole(roleTitle = "Regular Role");
+		JSONRole.addRegularRole(roleKey = "Regular Role");
 
 		for (var resourceAction : list "ACCESS_IN_CONTROL_PANEL,VIEW") {
 			Permissions.definePermissionViaJSONAPI(
@@ -68,7 +68,7 @@ definition {
 	@description = "LPS-135390 - Verify it is possible to add a Picklist with the Add permission"
 	@priority = 4
 	test CanAddPicklistWithAddPermission {
-		JSONRole.addRegularRole(roleTitle = "Regular Role");
+		JSONRole.addRegularRole(roleKey = "Regular Role");
 
 		for (var resourceAction : list "ACCESS_IN_CONTROL_PANEL,VIEW") {
 			Permissions.definePermissionViaJSONAPI(
@@ -495,7 +495,7 @@ definition {
 	test CannotAddPicklistWithoutAddPermission {
 		property portal.acceptance = "true";
 
-		JSONRole.addRegularRole(roleTitle = "Regular Role");
+		JSONRole.addRegularRole(roleKey = "Regular Role");
 
 		for (var resourceAction : list "ACCESS_IN_CONTROL_PANEL,VIEW") {
 			Permissions.definePermissionViaJSONAPI(
@@ -623,7 +623,7 @@ definition {
 
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
 
-		JSONRole.addRegularRole(roleTitle = "Regular Role");
+		JSONRole.addRegularRole(roleKey = "Regular Role");
 
 		var objectId = JSONObject.getObjectId(objectName = "CustomObject");
 
@@ -730,7 +730,7 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		JSONRole.addRegularRole(roleTitle = "Regular Role");
+		JSONRole.addRegularRole(roleKey = "Regular Role");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "ACCESS_IN_CONTROL_PANEL",
@@ -886,7 +886,7 @@ definition {
 
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
 
-		JSONRole.addRegularRole(roleTitle = "Regular Role");
+		JSONRole.addRegularRole(roleKey = "Regular Role");
 
 		var objectId = JSONObject.getObjectId(objectName = "CustomObject");
 
@@ -965,7 +965,7 @@ definition {
 
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
 
-		JSONRole.addRegularRole(roleTitle = "Regular Role");
+		JSONRole.addRegularRole(roleKey = "Regular Role");
 
 		var objectId = JSONObject.getObjectId(objectName = "CustomObject");
 
@@ -1332,7 +1332,7 @@ definition {
 
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
 
-		JSONRole.addRegularRole(roleTitle = "Regular Role");
+		JSONRole.addRegularRole(roleKey = "Regular Role");
 
 		var objectId = JSONObject.getObjectId(objectName = "CustomObject");
 
@@ -1391,7 +1391,7 @@ definition {
 	test CannotViewPicklistWithoutViewPermission {
 		Picklist.addPicklistViaAPI(picklistName = "Picklist Test");
 
-		JSONRole.addRegularRole(roleTitle = "Regular Role");
+		JSONRole.addRegularRole(roleKey = "Regular Role");
 
 		for (var resourceAction : list "ACCESS_IN_CONTROL_PANEL,VIEW") {
 			Permissions.definePermissionViaJSONAPI(
@@ -1968,7 +1968,7 @@ definition {
 	@description = "LPS-140342 - Verify it is possible view and edit its own Picklist with only the Add Picklist permission"
 	@priority = 4
 	test CanViewAndEditPicklistWithAddPicklistPermission {
-		JSONRole.addRegularRole(roleTitle = "Regular Role");
+		JSONRole.addRegularRole(roleKey = "Regular Role");
 
 		for (var resourceAction : list "ACCESS_IN_CONTROL_PANEL,VIEW") {
 			Permissions.definePermissionViaJSONAPI(
@@ -2093,7 +2093,7 @@ definition {
 	test CanViewPicklistWithViewPermission {
 		Picklist.addPicklistViaAPI(picklistName = "Picklist Test");
 
-		JSONRole.addRegularRole(roleTitle = "Regular Role");
+		JSONRole.addRegularRole(roleKey = "Regular Role");
 
 		for (var resourceAction : list "ACCESS_IN_CONTROL_PANEL,VIEW") {
 			Permissions.definePermissionViaJSONAPI(

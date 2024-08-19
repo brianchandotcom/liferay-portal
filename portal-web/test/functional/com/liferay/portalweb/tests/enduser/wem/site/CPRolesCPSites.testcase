@@ -54,7 +54,7 @@ definition {
 		}
 
 		task ("Add a new regular role") {
-			JSONRole.addRegularRole(roleTitle = ${randomRoleKey});
+			JSONRole.addRegularRole(roleKey = ${randomRoleKey});
 		}
 	}
 

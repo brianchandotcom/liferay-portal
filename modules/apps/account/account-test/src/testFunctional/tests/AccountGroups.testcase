@@ -44,7 +44,7 @@ definition {
 			}
 
 			task ("And A new Regular role with Update permission exists") {
-				JSONRole.addRegularRole(roleTitle = "Only Update Permission");
+				JSONRole.addRegularRole(roleKey = "Only Update Permission");
 
 				Permissions.definePermissionViaJSONAPI(
 					resourceAction = "VIEW_CONTROL_PANEL",
@@ -107,7 +107,7 @@ definition {
 				userEmailAddress = "userea1@liferay.com");
 
 			task ("And A new Regular role with Access in Control Panel permission exists") {
-				JSONRole.addRegularRole(roleTitle = "View AG Reg Role");
+				JSONRole.addRegularRole(roleKey = "View AG Reg Role");
 
 				Permissions.definePermissionViaJSONAPI(
 					resourceAction = "VIEW_CONTROL_PANEL",
@@ -160,7 +160,7 @@ definition {
 				accountGroupName = "AG Name with Accounts");
 
 			task ("And A new Regular role with assign account permission exists") {
-				JSONRole.addRegularRole(roleTitle = "Assign Account Reg Role");
+				JSONRole.addRegularRole(roleKey = "Assign Account Reg Role");
 
 				Permissions.definePermissionViaJSONAPI(
 					resourceAction = "VIEW_CONTROL_PANEL",
@@ -658,7 +658,7 @@ definition {
 				accountGroupName = "AG Name with Accounts");
 
 			task ("And A new Regular role with assign account permission") {
-				JSONRole.addRegularRole(roleTitle = "Assign Account Reg Role");
+				JSONRole.addRegularRole(roleKey = "Assign Account Reg Role");
 
 				Permissions.definePermissionViaJSONAPI(
 					resourceAction = "VIEW_CONTROL_PANEL",
@@ -734,7 +734,7 @@ definition {
 				accountGroupName = "AG Name with Accounts");
 
 			task ("And A new Regular role with view account permission exists") {
-				JSONRole.addRegularRole(roleTitle = "View Account Reg Role");
+				JSONRole.addRegularRole(roleKey = "View Account Reg Role");
 
 				Permissions.definePermissionViaJSONAPI(
 					resourceAction = "VIEW_CONTROL_PANEL",
@@ -805,7 +805,7 @@ definition {
 				requireReset = "false",
 				userEmailAddress = "userea@liferay.com");
 
-			JSONRole.addRegularRole(roleTitle = "Update and View Account Groups");
+			JSONRole.addRegularRole(roleKey = "Update and View Account Groups");
 
 			JSONRole.assignRoleToUser(
 				roleTitle = "Update and View Account Groups",

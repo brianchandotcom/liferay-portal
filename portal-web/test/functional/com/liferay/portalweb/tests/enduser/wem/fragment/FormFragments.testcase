@@ -474,7 +474,7 @@ definition {
 				groupName = "Test Site Name",
 				userEmailAddress = "userea@liferay.com");
 
-			JSONRole.addRegularRole(roleTitle = "Regular Role Name");
+			JSONRole.addRegularRole(roleKey = "Regular Role Name");
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "UPDATE",

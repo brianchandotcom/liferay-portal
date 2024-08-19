@@ -473,7 +473,7 @@ definition {
 	@description = "LPS-151765 - Verify if is possible a Custom User to view the System Object Account, if it to have permission"
 	@priority = 4
 	test CanUserViewSystemAccountWhenAllowed {
-		JSONRole.addRegularRole(roleTitle = "Regular Role");
+		JSONRole.addRegularRole(roleKey = "Regular Role");
 
 		for (var resourceAction : list "ACCESS_IN_CONTROL_PANEL,VIEW") {
 			Permissions.definePermissionViaJSONAPI(

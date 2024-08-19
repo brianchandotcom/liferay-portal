@@ -111,7 +111,7 @@ definition {
 
 		task ("And given a user exists in that instance with permission to create other users") {
 			JSONRole.addRegularRole(
-				roleTitle = "Test Role",
+				roleKey = "Test Role",
 				specificURL = "http://www.able.com:8080");
 
 			Permissions.definePermissionsViaJSONAPI(

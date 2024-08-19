@@ -569,7 +569,7 @@ definition {
 				userLastName = "userln1",
 				userScreenName = "usersn1");
 
-			JSONRole.addRegularRole(roleTitle = "Edit User Role");
+			JSONRole.addRegularRole(roleKey = "Edit User Role");
 
 			for (var resourceActionIndex : list "UPDATE,VIEW") {
 				Permissions.definePermissionViaJSONAPI(

@@ -131,7 +131,7 @@ definition {
 		}
 
 		task ("And given the first user is assigned to a new regular role with permissions to update and view users") {
-			JSONRole.addRegularRole(roleTitle = "New Regular Role");
+			JSONRole.addRegularRole(roleKey = "New Regular Role");
 
 			JSONRole.assignRoleToUser(
 				roleTitle = "New Regular Role",
@@ -190,7 +190,7 @@ definition {
 				userLastName = "userln",
 				userScreenName = "usersn");
 
-			JSONRole.addRegularRole(roleTitle = "New Regular Role");
+			JSONRole.addRegularRole(roleKey = "New Regular Role");
 
 			JSONRole.assignRoleToUser(
 				roleTitle = "New Regular Role",

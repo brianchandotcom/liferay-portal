@@ -188,7 +188,7 @@ definition {
 			requireReset = "false",
 			userEmailAddress = ${userEmailAddress});
 
-		JSONRole.addRegularRole(roleTitle = ${roleTitle});
+		JSONRole.addRegularRole(roleKey = ${roleTitle});
 
 		JSONRole.assignRoleToUser(
 			roleTitle = ${roleTitle},
@@ -253,7 +253,7 @@ definition {
 			userEmailAddress = ${userEmailAddress},
 			userScreenName = ${userScreenName});
 
-		JSONRole.addRegularRole(roleTitle = ${roleTitle});
+		JSONRole.addRegularRole(roleKey = ${roleTitle});
 
 		JSONRole.assignRoleToUser(
 			roleTitle = ${roleTitle},

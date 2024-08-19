@@ -1251,7 +1251,7 @@ definition {
 		}
 
 		task ("When the user creates a regular role and navigates to the role permissions") {
-			JSONRole.addRegularRole(roleTitle = "Regular Role");
+			JSONRole.addRegularRole(roleKey = "Regular Role");
 
 			Role.openRolesAdmin();
 
@@ -1949,7 +1949,7 @@ definition {
 		}
 
 		task ("When the user is given permission to trigger a standalone action") {
-			JSONRole.addRegularRole(roleTitle = "Regular Role");
+			JSONRole.addRegularRole(roleKey = "Regular Role");
 
 			Role.openRolesAdmin();
 

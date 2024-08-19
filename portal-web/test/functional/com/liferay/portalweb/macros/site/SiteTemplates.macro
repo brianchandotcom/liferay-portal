@@ -504,7 +504,7 @@ definition {
 				roleTitle = "Access Site");
 		}
 		else {
-			JSONRole.addRegularRole(roleTitle = "Access Site");
+			JSONRole.addRegularRole(roleKey = "Access Site");
 		}
 
 		Permissions.definePermissionViaJSONAPI(
@@ -536,7 +536,7 @@ definition {
 
 	@summary = "Default summary"
 	macro grantUserAccessToSiteTemplates(userEmailAddress = null) {
-		JSONRole.addRegularRole(roleTitle = "Access Site Templates");
+		JSONRole.addRegularRole(roleKey = "Access Site Templates");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "ACCESS_IN_CONTROL_PANEL",

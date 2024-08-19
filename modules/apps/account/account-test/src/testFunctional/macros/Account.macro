@@ -1063,7 +1063,7 @@ definition {
 
 	@summary = "Default summary"
 	macro grantUserAccessToAccountAdmin(userEmailAddress = null) {
-		JSONRole.addRegularRole(roleTitle = "Access Account Permission");
+		JSONRole.addRegularRole(roleKey = "Access Account Permission");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "ACCESS_IN_CONTROL_PANEL",
@@ -1238,7 +1238,7 @@ definition {
 
 	@summary = "Default summary"
 	macro setAddAccountEntryPermissions(roleTitle = null, userEmailAddress = null) {
-		JSONRole.addRegularRole(roleTitle = ${roleTitle});
+		JSONRole.addRegularRole(roleKey = ${roleTitle});
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "ADD_ACCOUNT_ENTRY",

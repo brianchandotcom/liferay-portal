@@ -7,7 +7,7 @@ definition {
 
 		JSONRole.addOrganizationRole(roleTitle = "organization role");
 
-		JSONRole.addRegularRole(roleTitle = "regular role");
+		JSONRole.addRegularRole(roleKey = "regular role");
 
 		JSONRole.addSiteRole(roleTitle = "site role");
 

@@ -51,7 +51,7 @@ definition {
 		var randomRoleKey = StringUtil.randomString(8);
 
 		task ("Given the site administrator enables the Show Control Menu by Role") {
-			JSONRole.addRegularRole(roleTitle = ${randomRoleKey});
+			JSONRole.addRegularRole(roleKey = ${randomRoleKey});
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "VIEW_SITE_ADMINISTRATION",
@@ -223,7 +223,7 @@ definition {
 		var randomRoleKey = StringUtil.randomString(8);
 
 		task ("Given the site administrator enables the Show Control Menu by Role") {
-			JSONRole.addRegularRole(roleTitle = ${randomRoleKey});
+			JSONRole.addRegularRole(roleKey = ${randomRoleKey});
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "ACCESS_IN_CONTROL_PANEL",

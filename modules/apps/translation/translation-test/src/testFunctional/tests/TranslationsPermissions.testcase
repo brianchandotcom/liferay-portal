@@ -111,7 +111,7 @@ definition {
 			requireReset = "false",
 			userEmailAddress = "userea@liferay.com");
 
-		JSONRole.addRegularRole(roleTitle = "Regrole Name");
+		JSONRole.addRegularRole(roleKey = "Regrole Name");
 
 		JSONRole.assignRoleToUser(
 			roleTitle = "Regrole Name",

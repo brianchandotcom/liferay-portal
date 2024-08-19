@@ -75,7 +75,7 @@ definition {
 		}
 
 		task ("And creates a new Regular role, assigning AccountMgr1 to the role") {
-			JSONRole.addRegularRole(roleTitle = "AccountRole1 Role Manager");
+			JSONRole.addRegularRole(roleKey = "AccountRole1 Role Manager");
 
 			JSONRole.assignRoleToUser(
 				roleTitle = "AccountRole1 Role Manager",

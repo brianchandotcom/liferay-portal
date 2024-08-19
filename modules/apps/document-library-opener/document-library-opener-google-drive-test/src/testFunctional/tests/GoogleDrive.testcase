@@ -862,7 +862,7 @@ definition {
 			requireReset = "false",
 			userEmailAddress = "userea@liferay.com");
 
-		JSONRole.addRegularRole(roleTitle = "Regular Role");
+		JSONRole.addRegularRole(roleKey = "Regular Role");
 
 		JSONRole.assignRoleToUser(
 			roleTitle = "Regular Role",

@@ -48,7 +48,7 @@ definition {
 			requireReset = "false",
 			userEmailAddress = "userea@liferay.com");
 
-		JSONRole.addRegularRole(roleTitle = "Depot Regrole Name");
+		JSONRole.addRegularRole(roleKey = "Depot Regrole Name");
 
 		JSONRole.assignRoleToUser(
 			roleTitle = "Depot Regrole Name",

@@ -524,7 +524,7 @@ definition {
 			requireReset = "false",
 			userEmailAddress = "userea@liferay.com");
 
-		JSONRole.addRegularRole(roleTitle = "KaleoRegRole Name");
+		JSONRole.addRegularRole(roleKey = "KaleoRegRole Name");
 
 		JSONRole.assignRoleToUser(
 			roleTitle = "KaleoRegRole Name",
@@ -1051,7 +1051,7 @@ definition {
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
-		JSONRole.addRegularRole(roleTitle = "KaleoRegRole Name");
+		JSONRole.addRegularRole(roleKey = "KaleoRegRole Name");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "ACCESS_IN_CONTROL_PANEL",
@@ -1201,7 +1201,7 @@ definition {
 			requireReset = "false",
 			userEmailAddress = "userea@liferay.com");
 
-		JSONRole.addRegularRole(roleTitle = "KaleoRegRole Name");
+		JSONRole.addRegularRole(roleKey = "KaleoRegRole Name");
 
 		JSONRole.assignRoleToUser(
 			roleTitle = "KaleoRegRole Name",

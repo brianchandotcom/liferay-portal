@@ -182,6 +182,9 @@ public class CategoryFacetSearchContributorImpl
 						assetCategory.getVocabularyId() + StringPool.DASH +
 							assetCategory.getCategoryId());
 				}
+				else {
+					selections.add(String.valueOf(selectedCategoryId));
+				}
 			}
 
 			return ArrayUtil.toStringArray(selections);

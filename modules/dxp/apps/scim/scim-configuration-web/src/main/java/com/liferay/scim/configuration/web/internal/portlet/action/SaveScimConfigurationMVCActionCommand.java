@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
@@ -48,6 +47,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.scim.configuration.web.internal.constants.ScimWebKeys;
 import com.liferay.scim.rest.util.ScimClientUtil;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Dictionary;
 import java.util.List;
@@ -164,43 +164,36 @@ public class SaveScimConfigurationMVCActionCommand
 			_oAuth2ApplicationLocalService.deleteOAuth2Application(
 				oAuth2Application);
 
-			Indexer<User> userIndexer = IndexerRegistryUtil.nullSafeGetIndexer(
-				User.class);
-
 			Indexer<UserGroup> userGroupIndexer =
 				IndexerRegistryUtil.nullSafeGetIndexer(UserGroup.class);
+			Indexer<User> userIndexer = IndexerRegistryUtil.nullSafeGetIndexer(
+				User.class);
 
 			ActionableDynamicQuery actionableDynamicQuery =
 				_expandoValueLocalService.getActionableDynamicQuery();
 
 			actionableDynamicQuery.setAddCriteriaMethod(
 				dynamicQuery -> {
-					ExpandoColumn userScimClientExpandoColumn =
+					List<Long> columnIds = new ArrayList<>();
+
+					ExpandoColumn expandoColumn =
 						_expandoColumnLocalService.getColumn(
 							themeDisplay.getCompanyId(), User.class.getName(),
 							"CUSTOM_FIELDS", "scimClientId");
 
-					ExpandoColumn userGroupsScimClientExpandoColumn =
-						_expandoColumnLocalService.getColumn(
-							themeDisplay.getCompanyId(),
-							UserGroup.class.getName(), "CUSTOM_FIELDS",
-							"scimClientId");
-
-					long[] columnIds = {};
-
-					if (userScimClientExpandoColumn != null) {
-						columnIds = ArrayUtil.append(
-							columnIds,
-							userScimClientExpandoColumn.getColumnId());
+					if (expandoColumn != null) {
+						columnIds.add(expandoColumn.getColumnId());
 					}
 
-					if (userGroupsScimClientExpandoColumn != null) {
-						columnIds = ArrayUtil.append(
-							columnIds,
-							userGroupsScimClientExpandoColumn.getColumnId());
+					expandoColumn = _expandoColumnLocalService.getColumn(
+						themeDisplay.getCompanyId(), UserGroup.class.getName(),
+						"CUSTOM_FIELDS", "scimClientId");
+
+					if (expandoColumn != null) {
+						columnIds.add(expandoColumn.getColumnId());
 					}
 
-					if (columnIds.length > 0) {
+					if (!columnIds.isEmpty()) {
 						Property columnProperty = PropertyFactoryUtil.forName(
 							"columnId");
 
@@ -211,7 +204,6 @@ public class SaveScimConfigurationMVCActionCommand
 
 					dynamicQuery.add(dataProperty.eq(scimClientId));
 				});
-
 			actionableDynamicQuery.setPerformActionMethod(
 				(ExpandoValue expandoValue) -> {
 					_expandoRowLocalService.deleteRow(

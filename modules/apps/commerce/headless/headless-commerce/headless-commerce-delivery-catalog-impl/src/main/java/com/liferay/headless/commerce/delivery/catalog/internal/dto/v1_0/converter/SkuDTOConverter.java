@@ -506,13 +506,12 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 	}
 
 	private CommerceMoney _getPricingQuantityUnitPriceCommerceMoney(
-			CommercePriceEntry commercePriceEntry,
-			CommerceContext commerceContext)
-		throws PortalException {
+		CommerceCurrency commerceCurrency,
+		CommercePriceEntry commercePriceEntry) {
 
 		if (commercePriceEntry == null) {
 			return _commerceMoneyFactory.create(
-				commerceContext.getCommerceCurrency(), BigDecimal.ZERO);
+				commerceCurrency, BigDecimal.ZERO);
 		}
 
 		BigDecimal pricingQuantity = commercePriceEntry.getPricingQuantity();
@@ -526,11 +525,46 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 		BigDecimal pricingQuantityUnitPrice = pricingQuantity.multiply(
 			commercePriceEntry.getPrice()
 		).divide(
-			commercePriceEntry.getQuantity(), 2, BigDecimal.ROUND_HALF_UP
+			commercePriceEntry.getQuantity(),
+			commerceCurrency.getMaxFractionDigits(),
+			RoundingMode.valueOf(commerceCurrency.getRoundingMode())
 		);
 
 		return _commerceMoneyFactory.create(
-			commerceContext.getCommerceCurrency(), pricingQuantityUnitPrice);
+			commerceCurrency, pricingQuantityUnitPrice);
+	}
+
+	private CommerceMoney _getPricingQuantityUnitPriceCommerceMoney(
+			CommerceCurrency commerceCurrency,
+			CommerceTierPriceEntry commerceTierPriceEntry)
+		throws PortalException {
+
+		if (commerceTierPriceEntry == null) {
+			return _commerceMoneyFactory.create(
+				commerceCurrency, BigDecimal.ZERO);
+		}
+
+		CommercePriceEntry commercePriceEntry =
+			commerceTierPriceEntry.getCommercePriceEntry();
+
+		BigDecimal pricingQuantity = commercePriceEntry.getPricingQuantity();
+
+		if ((pricingQuantity == null) ||
+			BigDecimalUtil.lte(pricingQuantity, BigDecimal.ZERO)) {
+
+			return _commerceMoneyFactory.emptyCommerceMoney();
+		}
+
+		BigDecimal pricingQuantityUnitPrice = pricingQuantity.multiply(
+			commerceTierPriceEntry.getPrice()
+		).divide(
+			commercePriceEntry.getQuantity(),
+			commerceCurrency.getMaxFractionDigits(),
+			RoundingMode.valueOf(commerceCurrency.getRoundingMode())
+		);
+
+		return _commerceMoneyFactory.create(
+			commerceCurrency, pricingQuantityUnitPrice);
 	}
 
 	private SkuOption[] _getSkuOptions(
@@ -706,7 +740,7 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 
 						CommerceMoney pricingQuantityUnitPriceCommerceMoney =
 							_getPricingQuantityUnitPriceCommerceMoney(
-								commercePriceEntry, commerceContext);
+								commerceCurrency, commercePriceEntry);
 
 						return new Price() {
 							{
@@ -807,12 +841,17 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 	}
 
 	private TierPrice _toTierPrice(
-		CommerceCurrency commerceCurrency,
-		CommerceTierPriceEntry commerceTierPriceEntry,
-		CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure, Locale locale) {
+			CommerceCurrency commerceCurrency,
+			CommerceTierPriceEntry commerceTierPriceEntry,
+			CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure, Locale locale)
+		throws PortalException {
 
 		BigDecimal commerceTierPriceEntryPrice =
 			commerceTierPriceEntry.getPrice();
+
+		CommerceMoney pricingQuantityUnitPriceCommerceMoney =
+			_getPricingQuantityUnitPriceCommerceMoney(
+				commerceCurrency, commerceTierPriceEntry);
 
 		return new TierPrice() {
 			{
@@ -821,6 +860,43 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 				setPriceFormatted(
 					() -> _commercePriceFormatter.format(
 						commerceCurrency, commerceTierPriceEntryPrice, locale));
+				setPricingQuantityPrice(
+					() -> {
+						if (pricingQuantityUnitPriceCommerceMoney == null) {
+							return null;
+						}
+
+						BigDecimal pricingQuantityUnitPrice =
+							pricingQuantityUnitPriceCommerceMoney.getPrice();
+
+						if (pricingQuantityUnitPrice == null) {
+							return null;
+						}
+
+						return pricingQuantityUnitPrice.doubleValue();
+					});
+				setPricingQuantityPriceFormatted(
+					() -> {
+						if ((pricingQuantityUnitPriceCommerceMoney == null) ||
+							(cpInstanceUnitOfMeasure == null)) {
+
+							return null;
+						}
+
+						BigDecimal pricingQuantity = BigDecimalUtil.get(
+							cpInstanceUnitOfMeasure.getPricingQuantity(),
+							BigDecimal.ZERO);
+
+						if (BigDecimalUtil.lte(
+								pricingQuantity, BigDecimal.ZERO)) {
+
+							return null;
+						}
+
+						return pricingQuantityUnitPriceCommerceMoney.format(
+							locale, pricingQuantity,
+							cpInstanceUnitOfMeasure.getName(locale));
+					});
 				setQuantity(
 					() -> _commerceQuantityFormatter.format(
 						cpInstanceUnitOfMeasure,

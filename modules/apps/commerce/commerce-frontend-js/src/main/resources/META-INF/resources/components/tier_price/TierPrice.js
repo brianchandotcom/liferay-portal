@@ -73,7 +73,10 @@ function TierPrice({
 				cols.push({
 					classes: 'price-col text-weight-semi-bold',
 					key: 'pricingQuantity',
-					label: Liferay.Language.get('pricing-quantity'),
+					label:
+						Liferay.Language.get('price') +
+						' / ' +
+						Liferay.Language.get('quantity'),
 				});
 			}
 
@@ -94,7 +97,13 @@ function TierPrice({
 					key: unitOfMeasure.key,
 					price: unitOfMeasure.price?.priceFormatted || '',
 					pricingQuantity:
-						unitOfMeasure.price?.pricingQuantityPriceFormatted,
+						unitOfMeasure.price?.pricingQuantityPriceFormatted ||
+						unitOfMeasure.price?.priceFormatted +
+							' / ' +
+							(unitOfMeasure.incrementalOrderQuantity !== 1
+								? unitOfMeasure.incrementalOrderQuantity + ' '
+								: '') +
+							unitOfMeasure.name,
 					quantity: unitOfMeasure.incrementalOrderQuantity,
 					unit: unitOfMeasure.name,
 				});
@@ -106,7 +115,15 @@ function TierPrice({
 						classes: '',
 						key: unitOfMeasure.key,
 						price: tierPrice.priceFormatted,
-						pricingQuantity: '',
+						pricingQuantity:
+							tierPrice.pricingQuantityPriceFormatted ||
+							tierPrice.priceFormatted +
+								' / ' +
+								(unitOfMeasure.incrementalOrderQuantity !== 1
+									? unitOfMeasure.incrementalOrderQuantity +
+										' '
+									: '') +
+								unitOfMeasure.name,
 						quantity: tierPrice.quantity,
 						unit: unitOfMeasure.name,
 					});

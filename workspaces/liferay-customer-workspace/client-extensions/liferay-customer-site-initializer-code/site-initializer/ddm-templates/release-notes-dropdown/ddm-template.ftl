@@ -4,7 +4,7 @@
 />
 
 <#if quarterlyReleaseVocabularyId?has_content>
-	<#assign releaseCategories = (restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/${quarterlyReleaseVocabularyId}/taxonomy-categories?pageSize=4&sort=dateCreated:desc").items)! />
+	<#assign releaseCategories = (restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/${quarterlyReleaseVocabularyId}/taxonomy-categories?pageSize=4&sort=name:desc").items)! />
 </#if>
 
 <style>

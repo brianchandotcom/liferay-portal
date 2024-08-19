@@ -30,7 +30,7 @@ const handleRedirect = async (classnameId) => {
 
 	if (vocabulary) {
 		const taxonomyCategoriesResponse = await fetchRequest(
-			`/o/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/${vocabulary.id}/taxonomy-categories?pageSize=4&sort=dateCreated:desc`
+			`/o/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/${vocabulary.id}/taxonomy-categories?pageSize=4&sort=name:desc`
 		);
 
 		if (taxonomyCategoriesResponse) {

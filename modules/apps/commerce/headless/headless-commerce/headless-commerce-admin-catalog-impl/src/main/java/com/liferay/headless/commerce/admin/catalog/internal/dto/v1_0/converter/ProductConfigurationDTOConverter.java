@@ -108,6 +108,14 @@ public class ProductConfigurationDTOConverter
 						return cpDefinitionInventory.
 							getCPDefinitionInventoryEngine();
 					});
+				setLowStockAction(
+					() -> {
+						if (cpDefinitionInventory == null) {
+							return null;
+						}
+
+						return cpDefinitionInventory.getLowStockActivity();
+					});
 				setMaxOrderQuantity(
 					() -> {
 						if (cpDefinitionInventory == null) {
@@ -125,6 +133,15 @@ public class ProductConfigurationDTOConverter
 
 						return BigDecimalUtil.stripTrailingZeros(
 							cpDefinitionInventory.getMinOrderQuantity());
+					});
+				setMinStockQuantity(
+					() -> {
+						if (cpDefinitionInventory == null) {
+							return null;
+						}
+
+						return BigDecimalUtil.stripTrailingZeros(
+							cpDefinitionInventory.getMinStockQuantity());
 					});
 				setMultipleOrderQuantity(
 					() -> {

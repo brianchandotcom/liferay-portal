@@ -425,7 +425,7 @@
 																},
 																"text": {
 																	"value_i18n": {
-																		"en_US": "{\"title\":\"evp_photo1.jpg\", \"url\":\"/documents/d/[$GROUP_KEY$]/evp_photo1-jpg?download=true\"}"
+																		"en_US": "{\"title\": \"evp_photo1.jpg\", \"url\": \"/documents/d/[$GROUP_KEY$]/evp_photo1-jpg?download=true\"}"
 																	}
 																}
 															}
@@ -444,7 +444,7 @@
 																},
 																"text": {
 																	"value_i18n": {
-																		"en_US": "{\"title\":\"evp_photo2.jpg\", \"url\":\"/documents/d/[$GROUP_KEY$]/evp_photo2-jpg?download=true\"}"
+																		"en_US": "{\"title\": \"evp_photo2.jpg\", \"url\": \"/documents/d/[$GROUP_KEY$]/evp_photo2-jpg?download=true\"}"
 																	}
 																}
 															}
@@ -463,7 +463,7 @@
 																},
 																"text": {
 																	"value_i18n": {
-																		"en_US": "{\"title\":\"evp_photo3.jpg\", \"url\":\"/documents/d/[$GROUP_KEY$]/evp_photo3-jpg?download=true\"}"
+																		"en_US": "{\"title\": \"evp_photo3.jpg\", \"url\": \"/documents/d/[$GROUP_KEY$]/evp_photo3-jpg?download=true\"}"
 																	}
 																}
 															}
@@ -1828,7 +1828,7 @@
 																		},
 																		"text": {
 																			"value_i18n": {
-																				"en_US": "{\"title\":\"step_4.svg\", \"url\":\"/documents/d/[$GROUP_KEY$]/step_4-svg?download=true\"}"
+																				"en_US": "{\"title\": \"step_4.svg\", \"url\": \"/documents/d/[$GROUP_KEY$]/step_4-svg?download=true\"}"
 																			}
 																		}
 																	}
@@ -1900,7 +1900,7 @@
 																		},
 																		"text": {
 																			"value_i18n": {
-																				"en_US": "{\"title\":\"step_5.svg\", \"url\":\"/documents/d/[$GROUP_KEY$]/step_5-svg?download=true\"}"
+																				"en_US": "{\"title\": \"step_5.svg\", \"url\": \"/documents/d/[$GROUP_KEY$]/step_5-svg?download=true\"}"
 																			}
 																		}
 																	}
@@ -1924,7 +1924,7 @@
 																		},
 																		"text": {
 																			"value_i18n": {
-																				"en_US": "{\"title\":\"step_2.svg\", \"url\":\"/documents/d/[$GROUP_KEY$]/step_2-svg?download=true\"}"
+																				"en_US": "{\"title\": \"step_2.svg\", \"url\": \"/documents/d/[$GROUP_KEY$]/step_2-svg?download=true\"}"
 																			}
 																		}
 																	}
@@ -1972,7 +1972,7 @@
 																		},
 																		"text": {
 																			"value_i18n": {
-																				"en_US": "{\"title\":\"step_1.svg\", \"url\":\"/documents/d/[$GROUP_KEY$]/step_1-svg?download=true\"}"
+																				"en_US": "{\"title\": \"step_1.svg\", \"url\": \"/documents/d/[$GROUP_KEY$]/step_1-svg?download=true\"}"
 																			}
 																		}
 																	}
@@ -2044,7 +2044,7 @@
 																		},
 																		"text": {
 																			"value_i18n": {
-																				"en_US": "{\"title\":\"step_3.svg\", \"url\":\"/documents/d/[$GROUP_KEY$]/step_3-svg?download=true\"}"
+																				"en_US": "{\"title\": \"step_3.svg\", \"url\": \"/documents/d/[$GROUP_KEY$]/step_3-svg?download=true\"}"
 																			}
 																		}
 																	}

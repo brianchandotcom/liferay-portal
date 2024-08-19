@@ -775,7 +775,7 @@
 												"displayStyle": "stacked",
 												"hoveredItemColor": "",
 												"selectedItemColor": "",
-												"source": "{\"siteNavigationMenuId\":\"57205\",\"parentSiteNavigationMenuItemId\":\"0\",\"privateLayout\":\"false\",\"title\":\"Mobile Menu\",\"type\":\"class com.liferay.site.navigation.item.selector.SiteNavigationMenuItemSelectorReturnType\"}",
+												"source": "{\"parentSiteNavigationMenuItemId\": \"0\", \"privateLayout\": \"false\", \"siteNavigationMenuId\": \"57205\", \"title\": \"Mobile Menu\", \"type\": \"class com.liferay.site.navigation.item.selector.SiteNavigationMenuItemSelectorReturnType\"}",
 												"sublevels": "-1"
 											},
 											"fragmentFields": [

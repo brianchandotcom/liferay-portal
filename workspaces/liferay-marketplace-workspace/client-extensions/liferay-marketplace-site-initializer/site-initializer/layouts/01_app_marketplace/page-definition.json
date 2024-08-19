@@ -407,7 +407,7 @@
 															"scopeParameterName": "scope",
 															"searchScope": "everything",
 															"showStagedResults": "false",
-															"suggestionsContributorConfigurations": "{\"contributorName\":\"basic\",\"displayGroupName\":\"suggestions\",\"size\":5}",
+															"suggestionsContributorConfigurations": "{\"contributorName\": \"basic\", \"displayGroupName\": \"suggestions\", \"size\": 5}",
 															"suggestionsDisplayThreshold": "2",
 															"suggestionsEnabled": "false",
 															"useAdvancedSearchSyntax": "false"
@@ -790,7 +790,7 @@
 															"widgetInstance": {
 																"widgetConfig": {
 																	"displayStyle": "default",
-																	"fields": "[{\"field\":\"displayDate-\",\"label\":\"display-date\"}]"
+																	"fields": "[{\"field\": \"displayDate-\", \"label\": \"display-date\"}]"
 																},
 																"widgetName": "com_liferay_portal_search_web_internal_sort_portlet_SortPortlet"
 															}

@@ -209,7 +209,7 @@
 													"scopeParameterName": "scope",
 													"searchScope": "this-site",
 													"showStagedResults": "false",
-													"suggestionsContributorConfigurations": "{\"contributorName\":\"basic\",\"displayGroupName\":\"suggestions\",\"size\":5}",
+													"suggestionsContributorConfigurations": "{\"contributorName\": \"basic\", \"displayGroupName\": \"suggestions\", \"size\": 5}",
 													"suggestionsDisplayThreshold": "2",
 													"suggestionsEnabled": "false",
 													"useAdvancedSearchSyntax": "false"

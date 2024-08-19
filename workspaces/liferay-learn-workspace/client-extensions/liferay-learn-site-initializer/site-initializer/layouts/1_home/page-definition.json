@@ -123,7 +123,7 @@
 											"scopeParameterName": "scope",
 											"searchScope": "this-site",
 											"showStagedResults": "false",
-											"suggestionsContributorConfigurations": "{\"attributes\": {\"characterThreshold\": \"\", \"fields\": [], \"includeAssetSearchSummary\":true,\"includeAssetURL\":true,\"sxpBlueprintExternalReferenceCode\":\"LIFERAY_LEARN\"},\"contributorName\":\"sxpBlueprint\",\"displayGroupName\":\"suggestions\",\"size\":\"5\"}",
+											"suggestionsContributorConfigurations": "{\"attributes\": {\"characterThreshold\": \"\", \"fields\": [], \"includeAssetSearchSummary\": true, \"includeAssetURL\": true, \"sxpBlueprintExternalReferenceCode\": \"LIFERAY_LEARN\"}, \"contributorName\": \"sxpBlueprint\", \"displayGroupName\": \"suggestions\", \"size\": \"5\"}",
 											"suggestionsDisplayThreshold": "2",
 											"suggestionsEnabled": "true",
 											"useAdvancedSearchSyntax": "false"

@@ -234,7 +234,7 @@
 											"widgetInstance": {
 												"widgetConfig": {
 													"displayStyle": "default",
-													"fields": "[{\"field\":\"\",\"label\":\"relevance\"},{\"field\":\"title+\",\"label\":\"Alphabetical (A-Z)\"},{\"field\":\"title-\",\"label\":\"Alphabetical (Z-A)\"},{\"field\":\"publishedDate-\",\"label\":\"published-date\"}]"
+													"fields": "[{\"field\": \"\", \"label\": \"relevance\"}, {\"field\": \"title+\", \"label\": \"Alphabetical (A-Z)\"}, {\"field\": \"title-\", \"label\": \"Alphabetical (Z-A)\"}, {\"field\": \"publishedDate-\", \"label\": \"published-date\"}]"
 												},
 												"widgetName": "com_liferay_portal_search_web_internal_sort_portlet_SortPortlet"
 											}

@@ -80,6 +80,7 @@ public class SkuUnitOfMeasureDTOConverter
 					() -> LanguageUtils.getLanguageIdMap(
 						cpInstanceUnitOfMeasure.getNameMap()));
 				setPrecision(cpInstanceUnitOfMeasure::getPrecision);
+				setPricingQuantity(cpInstanceUnitOfMeasure::getPricingQuantity);
 				setPrimary(cpInstanceUnitOfMeasure::isPrimary);
 				setPriority(cpInstanceUnitOfMeasure::getPriority);
 				setPromoPrice(

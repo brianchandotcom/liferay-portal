@@ -428,6 +428,7 @@ async function createSiteTemplateWithWebContentOnWidgetPage({
 	await productMenuPage.goToWebContent();
 	await journalPage.goToCreateArticle();
 	await journalPage.fillArticleData(webContentName, text);
+	await journalPage.backspaceOnTitle();
 	await journalPage.publishArticle();
 
 	await productMenuPage.goToPages();
@@ -488,6 +489,7 @@ async function createSiteTemplateWithWebContentOnContentPage({
 	await productMenuPage.goToWebContent();
 	await journalPage.goToCreateArticle();
 	await journalPage.fillArticleData(webContentName, text);
+	await journalPage.backspaceOnTitle();
 	await journalPage.publishArticle();
 
 	await productMenuPage.goToPages();
@@ -540,6 +542,7 @@ async function createSiteTemplateWithWebContentOnHomePage({
 	await productMenuPage.goToWebContent();
 	await journalPage.goToCreateArticle();
 	await journalPage.fillArticleData(webContentName, text);
+	await journalPage.backspaceOnTitle();
 	await journalPage.publishArticle();
 
 	await productMenuPage.goToPages();

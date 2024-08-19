@@ -47,6 +47,11 @@ export class JournalPage {
 			.locator('.html-editor');
 	}
 
+	async backspaceOnTitle() {
+		await this.articleTitleInput.click();
+		await this.articleTitleInput.press('Backspace');
+	}
+
 	async goto(siteUrl?: Site['friendlyUrlPath']) {
 		await this.page.goto(
 			`/group${siteUrl || '/guest'}${PORTLET_URLS.journal}`

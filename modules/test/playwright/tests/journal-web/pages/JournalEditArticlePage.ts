@@ -114,6 +114,14 @@ export class JournalEditArticlePage {
 		);
 	}
 
+	async createAndPublishBasicArticle(title?: string) {
+		const articleTitle = title || getRandomString();
+
+		await this.fillTitle(articleTitle);
+
+		await this.publishArticle();
+	}
+
 	async publishArticle() {
 		await clickAndExpectToBeVisible({
 			autoClick: true,

@@ -93,6 +93,14 @@ const translationTest = mergeTests(
 	})
 );
 
+const translationAndAutosaveTest = mergeTests(
+	translationTest,
+	featureFlagsTest({
+		'LPD-11228': true,
+		'LPD-15596': true,
+	})
+);
+
 const privateContentIconTest = mergeTests(baseTest);
 
 autoSaveAsDraftTest(
@@ -1736,5 +1744,27 @@ scheduleTest(
 			articleDate,
 			{workflow: true}
 		);
+	}
+);
+
+translationAndAutosaveTest(
+	'Web Content is published when Feature Flags LPS-114700, LPD-11228 and LPD-15596 are active',
+	{
+		tag: '@LPD-33570',
+	},
+	async ({journalEditArticlePage, page, site}) => {
+		await journalEditArticlePage.goto({siteUrl: site.friendlyUrlPath});
+
+		const articleTitle = 'Web Content Title';
+
+		journalEditArticlePage.createAndPublishBasicArticle(articleTitle);
+
+		await expect(page.getByTitle(articleTitle)).toBeVisible();
+
+		await expect(
+			page.locator(
+				'[id="_com_liferay_journal_web_portlet_JournalPortlet_articles_1"] span.label-item'
+			)
+		).toHaveText('Approved');
 	}
 );

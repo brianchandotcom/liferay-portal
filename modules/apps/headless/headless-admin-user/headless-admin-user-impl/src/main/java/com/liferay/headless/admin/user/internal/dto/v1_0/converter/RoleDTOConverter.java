@@ -76,7 +76,7 @@ public class RoleDTOConverter
 						role.getDescriptionMap()));
 				setExternalReferenceCode(role::getExternalReferenceCode);
 				setId(role::getRoleId);
-				setName(() -> role.getTitle(dtoConverterContext.getLocale()));
+				setName(role::getName);
 				setName_i18n(
 					() -> LocalizedMapUtil.getI18nMap(role.getTitleMap()));
 				setRolePermissions(

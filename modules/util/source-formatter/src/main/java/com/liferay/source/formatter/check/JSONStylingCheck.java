@@ -59,7 +59,11 @@ public class JSONStylingCheck extends BaseFileCheck {
 			return content;
 		}
 
-		content = _formatEscapedJSON(content);
+		if (!absolutePath.contains("/test/") &&
+			!absolutePath.contains("/testIntegration/")) {
+
+			content = _formatEscapedJSON(content);
+		}
 
 		return _formatQuotedJSON(content, "#cdata-value");
 	}

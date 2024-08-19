@@ -57,6 +57,8 @@ public class DisplayPageManagementToolbarDisplayContext
 			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
 			displayPageDisplayContext.getDisplayPagesSearchContainer());
 
+		_displayPageDisplayContext = displayPageDisplayContext;
+
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
@@ -290,7 +292,8 @@ public class DisplayPageManagementToolbarDisplayContext
 
 	@Override
 	public String getSearchContainerId() {
-		return "displayPages";
+		return "displayPages" +
+			_displayPageDisplayContext.getLayoutPageTemplateCollectionId();
 	}
 
 	@Override
@@ -384,6 +387,7 @@ public class DisplayPageManagementToolbarDisplayContext
 				layoutPageTemplateCollectionTreeNodeItemSelectorCriterion));
 	}
 
+	private final DisplayPageDisplayContext _displayPageDisplayContext;
 	private final ThemeDisplay _themeDisplay;
 
 }

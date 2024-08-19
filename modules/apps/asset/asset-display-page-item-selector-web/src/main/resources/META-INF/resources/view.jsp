@@ -21,7 +21,6 @@ AssetDisplayPagesItemSelectorCustomViewDisplayContext assetDisplayPagesItemSelec
 	/>
 
 	<liferay-ui:search-container
-		id="displayPages"
 		searchContainer="<%= assetDisplayPagesItemSelectorCustomViewDisplayContext.getAssetDisplayPageSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row

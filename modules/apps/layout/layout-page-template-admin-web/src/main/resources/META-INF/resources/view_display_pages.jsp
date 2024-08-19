@@ -39,7 +39,7 @@ DisplayPageManagementToolbarDisplayContext displayPageManagementToolbarDisplayCo
 
 		<liferay-frontend:sidebar-panel
 			resourceURL="<%= sidebarPanelURL %>"
-			searchContainerId="displayPages"
+			searchContainerId="<%= displayPageManagementToolbarDisplayContext.getSearchContainerId() %>"
 			title='<%= LanguageUtil.get(request, "info-panel") %>'
 		>
 			<liferay-util:include page="/info_panel.jsp" servletContext="<%= application %>" />
@@ -68,7 +68,6 @@ DisplayPageManagementToolbarDisplayContext displayPageManagementToolbarDisplayCo
 		</c:if>
 
 		<liferay-ui:search-container
-			id="displayPages"
 			searchContainer="<%= displayPageDisplayContext.getDisplayPagesSearchContainer() %>"
 		>
 			<liferay-ui:search-container-row

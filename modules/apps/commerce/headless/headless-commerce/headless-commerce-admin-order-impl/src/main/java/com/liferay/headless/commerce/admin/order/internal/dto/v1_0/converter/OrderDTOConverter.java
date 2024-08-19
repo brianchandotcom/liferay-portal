@@ -132,12 +132,6 @@ public class OrderDTOConverter implements DTOConverter<CommerceOrder, Order> {
 					commerceOrder::getDeliveryCommerceTermEntryDescription);
 				setDeliveryTermExternalReferenceCode(
 					() -> {
-						if (commerceOrder.getDeliveryCommerceTermEntryId() ==
-								0) {
-
-							return null;
-						}
-
 						CommerceTermEntry commerceTermEntry =
 							_commerceTermEntryLocalService.
 								fetchCommerceTermEntry(
@@ -190,12 +184,6 @@ public class OrderDTOConverter implements DTOConverter<CommerceOrder, Order> {
 					commerceOrder::getPaymentCommerceTermEntryDescription);
 				setPaymentTermExternalReferenceCode(
 					() -> {
-						if (commerceOrder.getPaymentCommerceTermEntryId() ==
-								0) {
-
-							return null;
-						}
-
 						CommerceTermEntry commerceTermEntry =
 							_commerceTermEntryLocalService.
 								fetchCommerceTermEntry(

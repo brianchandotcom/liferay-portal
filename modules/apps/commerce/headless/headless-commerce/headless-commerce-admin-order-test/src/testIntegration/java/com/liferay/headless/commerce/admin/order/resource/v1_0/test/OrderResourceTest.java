@@ -525,31 +525,30 @@ public class OrderResourceTest extends BaseOrderResourceTestCase {
 
 		assertEquals(expectedPatchOrder, getOrder);
 		assertValid(getOrder);
-
 		Assert.assertEquals(
 			randomAddress.getAddressId(),
-			GetterUtil.getLong(patchOrder.getBillingAddressId()));
+			GetterUtil.getLong(getOrder.getBillingAddressId()));
 		Assert.assertEquals(
 			randomAddress.getExternalReferenceCode(),
-			patchOrder.getBillingAddressExternalReferenceCode());
+			getOrder.getBillingAddressExternalReferenceCode());
 		Assert.assertEquals(
 			_commerceTermEntry.getCommerceTermEntryId(),
-			GetterUtil.getLong(patchOrder.getDeliveryTermId()));
+			GetterUtil.getLong(getOrder.getDeliveryTermId()));
 		Assert.assertEquals(
 			_commerceTermEntry.getExternalReferenceCode(),
-			patchOrder.getDeliveryTermExternalReferenceCode());
+			getOrder.getDeliveryTermExternalReferenceCode());
 		Assert.assertEquals(
 			_commerceTermEntry.getCommerceTermEntryId(),
-			GetterUtil.getLong(patchOrder.getPaymentTermId()));
+			GetterUtil.getLong(getOrder.getPaymentTermId()));
 		Assert.assertEquals(
 			_commerceTermEntry.getExternalReferenceCode(),
-			patchOrder.getPaymentTermExternalReferenceCode());
+			getOrder.getPaymentTermExternalReferenceCode());
 		Assert.assertEquals(
 			randomAddress.getAddressId(),
-			GetterUtil.getLong(patchOrder.getShippingAddressId()));
+			GetterUtil.getLong(getOrder.getShippingAddressId()));
 		Assert.assertEquals(
 			randomAddress.getExternalReferenceCode(),
-			patchOrder.getShippingAddressExternalReferenceCode());
+			getOrder.getShippingAddressExternalReferenceCode());
 	}
 
 	private void _testPatchOrderWithAddressAndTermExternalReferenceCode()
@@ -594,33 +593,30 @@ public class OrderResourceTest extends BaseOrderResourceTestCase {
 
 		assertEquals(expectedPatchOrder, getOrder);
 		assertValid(getOrder);
-
-		// What should I assert here?
-
 		Assert.assertEquals(
 			randomAddress.getAddressId(),
-			GetterUtil.getLong(patchOrder.getBillingAddressId()));
+			GetterUtil.getLong(getOrder.getBillingAddressId()));
 		Assert.assertEquals(
 			randomAddress.getExternalReferenceCode(),
-			patchOrder.getBillingAddressExternalReferenceCode());
+			getOrder.getBillingAddressExternalReferenceCode());
 		Assert.assertEquals(
 			_commerceTermEntry.getCommerceTermEntryId(),
-			GetterUtil.getLong(patchOrder.getDeliveryTermId()));
+			GetterUtil.getLong(getOrder.getDeliveryTermId()));
 		Assert.assertEquals(
 			_commerceTermEntry.getExternalReferenceCode(),
-			patchOrder.getDeliveryTermExternalReferenceCode());
+			getOrder.getDeliveryTermExternalReferenceCode());
 		Assert.assertEquals(
 			_commerceTermEntry.getCommerceTermEntryId(),
-			GetterUtil.getLong(patchOrder.getPaymentTermId()));
+			GetterUtil.getLong(getOrder.getPaymentTermId()));
 		Assert.assertEquals(
 			_commerceTermEntry.getExternalReferenceCode(),
-			patchOrder.getPaymentTermExternalReferenceCode());
+			getOrder.getPaymentTermExternalReferenceCode());
 		Assert.assertEquals(
 			randomAddress.getAddressId(),
-			GetterUtil.getLong(patchOrder.getShippingAddressId()));
+			GetterUtil.getLong(getOrder.getShippingAddressId()));
 		Assert.assertEquals(
 			randomAddress.getExternalReferenceCode(),
-			patchOrder.getShippingAddressExternalReferenceCode());
+			getOrder.getShippingAddressExternalReferenceCode());
 	}
 
 	private void _testPostOrderWithAddressAndTermExternalReferenceCode()
@@ -637,9 +633,9 @@ public class OrderResourceTest extends BaseOrderResourceTestCase {
 		randomOrder.setPaymentTermExternalReferenceCode(
 			_commerceTermEntry.getExternalReferenceCode());
 		randomOrder.setPaymentTermId(0L);
-		randomOrder.setShippingAddressId(0L);
 		randomOrder.setShippingAddressExternalReferenceCode(
 			_orderAddress.getExternalReferenceCode());
+		randomOrder.setShippingAddressId(0L);
 
 		Order postOrder = testPostOrder_addOrder(randomOrder);
 

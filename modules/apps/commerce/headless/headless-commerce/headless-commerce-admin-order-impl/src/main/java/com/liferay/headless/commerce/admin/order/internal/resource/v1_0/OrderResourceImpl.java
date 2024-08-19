@@ -276,15 +276,17 @@ public class OrderResourceImpl extends BaseOrderResourceImpl {
 			_commerceChannelLocalService.getCommerceChannel(
 				order.getChannelId());
 
-		long commerceShippingMethodId = 0;
+		long billingAddressId = GetterUtil.getLong(order.getBillingAddressId());
 
-		CommerceShippingMethod commerceShippingMethod =
-			_commerceShippingMethodService.fetchCommerceShippingMethod(
-				commerceChannel.getGroupId(), order.getShippingMethod());
+		if (billingAddressId == 0) {
+			CommerceAddress commerceAddress =
+				_commerceAddressService.fetchByExternalReferenceCode(
+					order.getBillingAddressExternalReferenceCode(),
+					contextCompany.getCompanyId());
 
-		if (commerceShippingMethod != null) {
-			commerceShippingMethodId =
-				commerceShippingMethod.getCommerceShippingMethodId();
+			if (commerceAddress != null) {
+				billingAddressId = commerceAddress.getCommerceAddressId();
+			}
 		}
 
 		AccountEntry accountEntry = null;
@@ -311,20 +313,15 @@ public class OrderResourceImpl extends BaseOrderResourceImpl {
 			_commerceCurrencyService.getCommerceCurrency(
 				commerceChannel.getCompanyId(), order.getCurrencyCode());
 
-		ServiceContext serviceContext = _serviceContextHelper.getServiceContext(
-			commerceChannel.getGroupId());
+		long commerceShippingMethodId = 0;
 
-		long billingAddressId = GetterUtil.getLong(order.getBillingAddressId());
+		CommerceShippingMethod commerceShippingMethod =
+			_commerceShippingMethodService.fetchCommerceShippingMethod(
+				commerceChannel.getGroupId(), order.getShippingMethod());
 
-		if (billingAddressId == 0) {
-			CommerceAddress commerceAddress =
-				_commerceAddressService.fetchByExternalReferenceCode(
-					order.getBillingAddressExternalReferenceCode(),
-					contextCompany.getCompanyId());
-
-			if (commerceAddress != null) {
-				billingAddressId = commerceAddress.getCommerceAddressId();
-			}
+		if (commerceShippingMethod != null) {
+			commerceShippingMethodId =
+				commerceShippingMethod.getCommerceShippingMethodId();
 		}
 
 		long shippingAddressId = GetterUtil.getLong(
@@ -341,16 +338,17 @@ public class OrderResourceImpl extends BaseOrderResourceImpl {
 			}
 		}
 
+		ServiceContext serviceContext = _serviceContextHelper.getServiceContext(
+			commerceChannel.getGroupId());
+
 		CommerceOrder commerceOrder =
 			_commerceOrderService.addOrUpdateCommerceOrder(
 				order.getExternalReferenceCode(), commerceChannel.getGroupId(),
-				billingAddressId,
-				accountEntry.getAccountEntryId(),
+				billingAddressId, accountEntry.getAccountEntryId(),
 				commerceCurrency.getCommerceCurrencyId(),
 				_getCommerceOrderTypeId(order), commerceShippingMethodId,
-				shippingAddressId,
-				order.getAdvanceStatus(), order.getPaymentMethod(),
-				GetterUtil.getString(order.getName()),
+				shippingAddressId, order.getAdvanceStatus(),
+				order.getPaymentMethod(), GetterUtil.getString(order.getName()),
 				GetterUtil.getInteger(
 					order.getOrderStatus(),
 					CommerceOrderConstants.ORDER_STATUS_PENDING),
@@ -717,19 +715,7 @@ public class OrderResourceImpl extends BaseOrderResourceImpl {
 	private CommerceOrder _updateOrder(CommerceOrder commerceOrder, Order order)
 		throws Exception {
 
-		long commerceShippingMethodId =
-			commerceOrder.getCommerceShippingMethodId();
-
-		CommerceShippingMethod commerceShippingMethod =
-			_commerceShippingMethodService.fetchCommerceShippingMethod(
-				commerceOrder.getGroupId(), order.getShippingMethod());
-
-		if (commerceShippingMethod != null) {
-			commerceShippingMethodId =
-				commerceShippingMethod.getCommerceShippingMethodId();
-		}
-
-		long billingAddressId = order.getBillingAddressId();
+		long billingAddressId = GetterUtil.getLong(order.getBillingAddressId());
 
 		if (billingAddressId == 0) {
 			CommerceAddress commerceAddress =
@@ -745,7 +731,20 @@ public class OrderResourceImpl extends BaseOrderResourceImpl {
 			}
 		}
 
-		long shippingAddressId = order.getShippingAddressId();
+		long commerceShippingMethodId =
+			commerceOrder.getCommerceShippingMethodId();
+
+		CommerceShippingMethod commerceShippingMethod =
+			_commerceShippingMethodService.fetchCommerceShippingMethod(
+				commerceOrder.getGroupId(), order.getShippingMethod());
+
+		if (commerceShippingMethod != null) {
+			commerceShippingMethodId =
+				commerceShippingMethod.getCommerceShippingMethodId();
+		}
+
+		long shippingAddressId = GetterUtil.getLong(
+			order.getShippingAddressId());
 
 		if (shippingAddressId == 0) {
 			CommerceAddress commerceAddress =
@@ -765,10 +764,8 @@ public class OrderResourceImpl extends BaseOrderResourceImpl {
 			GetterUtil.getString(
 				order.getExternalReferenceCode(),
 				commerceOrder.getExternalReferenceCode()),
-			commerceOrder.getCommerceOrderId(),
-			billingAddressId,
-			commerceShippingMethodId,
-			shippingAddressId,
+			commerceOrder.getCommerceOrderId(), billingAddressId,
+			commerceShippingMethodId, shippingAddressId,
 			GetterUtil.getString(
 				order.getAdvanceStatus(), commerceOrder.getAdvanceStatus()),
 			GetterUtil.getString(

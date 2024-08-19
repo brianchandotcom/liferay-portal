@@ -6823,8 +6823,7 @@ public class JournalArticleLocalServiceImpl
 		_populateSubscriptionSender(
 			article,
 			JournalUtil.getJournalControlPanelLink(
-				article.getFolderId(), article.getGroupId(),
-				serviceContext.getLiferayPortletResponse()),
+				article.getFolderId(), article.getGroupId(), null),
 			action, fromAddress,
 			journalGroupServiceConfiguration.emailFromName(),
 			journalGroupServiceConfiguration, serviceContext,
@@ -6836,7 +6835,7 @@ public class JournalArticleLocalServiceImpl
 		subscriptionSender.setLocalizedContextAttribute(
 			"[$ARTICLE_CONTENT$]",
 			new EscapableLocalizableFunction(
-				locale -> _getArticleContent(article, locale, serviceContext)));
+				locale -> _getArticleContent(article, locale), false));
 		subscriptionSender.setLocalizedContextAttribute(
 			"[$ARTICLE_STATUS$]",
 			new EscapableLocalizableFunction(
@@ -7600,24 +7599,13 @@ public class JournalArticleLocalServiceImpl
 		return ddmFormValues;
 	}
 
-	private String _getArticleContent(
-		JournalArticle article, Locale locale, ServiceContext serviceContext) {
-
+	private String _getArticleContent(JournalArticle article, Locale locale) {
 		String articleContent = StringPool.BLANK;
 
 		try {
-			PortletRequestModel portletRequestModel = null;
-
-			if (!ExportImportThreadLocal.isImportInProcess()) {
-				portletRequestModel = new PortletRequestModel(
-					serviceContext.getLiferayPortletRequest(),
-					serviceContext.getLiferayPortletResponse());
-			}
-
 			JournalArticleDisplay articleDisplay = getArticleDisplay(
 				article, article.getDDMTemplateKey(), Constants.VIEW,
-				LocaleUtil.toLanguageId(locale), 1, portletRequestModel,
-				serviceContext.getThemeDisplay());
+				LocaleUtil.toLanguageId(locale), 1, null, null);
 
 			articleContent = articleDisplay.getContent();
 		}
@@ -7630,29 +7618,15 @@ public class JournalArticleLocalServiceImpl
 		return articleContent;
 	}
 
-	private String _getArticleDiffs(
-		JournalArticle article, Locale locale, ServiceContext serviceContext) {
-
+	private String _getArticleDiffs(JournalArticle article, Locale locale) {
 		JournalArticle previousApprovedArticle =
 			journalArticleLocalService.getPreviousApprovedArticle(article);
 
 		try {
-			PortletRequestModel portletRequestModel = null;
-
-			if (!ExportImportThreadLocal.isImportInProcess() &&
-				(serviceContext.getLiferayPortletRequest() != null) &&
-				(serviceContext.getLiferayPortletResponse() != null)) {
-
-				portletRequestModel = new PortletRequestModel(
-					serviceContext.getLiferayPortletRequest(),
-					serviceContext.getLiferayPortletResponse());
-			}
-
 			String articleDiffs = _journalHelper.diffHtml(
 				article.getGroupId(), article.getArticleId(),
 				previousApprovedArticle.getVersion(), article.getVersion(),
-				LocaleUtil.toLanguageId(locale), portletRequestModel,
-				serviceContext.getThemeDisplay());
+				LocaleUtil.toLanguageId(locale), null, null);
 
 			return _diffHtml.replaceStyles(articleDiffs);
 		}
@@ -8078,7 +8052,7 @@ public class JournalArticleLocalServiceImpl
 		subscriptionSender.setLocalizedContextAttribute(
 			"[$ARTICLE_DIFFS$]",
 			new EscapableLocalizableFunction(
-				locale -> _getArticleDiffs(article, locale, serviceContext)));
+				locale -> _getArticleDiffs(article, locale), false));
 		subscriptionSender.setLocalizedContextAttribute(
 			"[$ARTICLE_TITLE$]",
 			new EscapableLocalizableFunction(

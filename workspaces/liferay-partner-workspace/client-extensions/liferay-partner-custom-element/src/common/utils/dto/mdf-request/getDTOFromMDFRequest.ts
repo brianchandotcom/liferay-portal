@@ -43,7 +43,7 @@ export function getDTOFromMDFRequest(
 		minDateActivity: mdfRequest.minDateActivity,
 		overallCampaignDescription: mdfRequest.overallCampaignDescription,
 		overallCampaignName: mdfRequest.overallCampaignName,
-		partnerCountry: mdfRequest.partnerCountry,
+		partnerCountries: mdfRequest.partnerCountries,
 		r_accToMDFReqs_accountEntryERC:
 			mdfRequest.company?.externalReferenceCode,
 		r_accToMDFReqs_accountEntryId: mdfRequest.company?.id,

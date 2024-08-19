@@ -28,7 +28,7 @@ export default interface MDFRequest extends Partial<LiferayObject> {
 	minDateActivity?: string;
 	overallCampaignDescription: string;
 	overallCampaignName: string;
-	partnerCountry: LiferayPicklist;
+	partnerCountries: LiferayPicklist[];
 	r_usrToMDFReqs_userId?: number;
 	submitDate?: string;
 	submitted?: boolean;

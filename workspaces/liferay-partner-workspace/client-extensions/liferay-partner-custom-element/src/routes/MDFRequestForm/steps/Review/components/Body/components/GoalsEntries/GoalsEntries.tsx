@@ -34,7 +34,9 @@ const GoalsEntries = ({mdfRequest}: IProps) => (
 				},
 				{
 					title: 'Country',
-					value: mdfRequest.partnerCountry?.name,
+					value: mdfRequest.partnerCountries
+						.map((country) => country.name)
+						.join(', '),
 				},
 			]}
 			tableLayoutAuto

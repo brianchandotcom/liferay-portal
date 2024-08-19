@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useEffect, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 
 import AccountEntry from '../interfaces/accountEntry';
 import Currency from '../interfaces/currency';
@@ -17,7 +17,7 @@ import isObjectEmpty from '../utils/isObjectEmpty';
 
 export default function useCompanyOptions(
 	handleSelected: (
-		partnerCountry: LiferayPicklist,
+		partnerCountries: LiferayPicklist[],
 		company: LiferayAccountBrief,
 		currency: LiferayPicklist,
 		currencyExchangeRate: number,
@@ -28,7 +28,7 @@ export default function useCompanyOptions(
 	currentCurrency?: LiferayPicklist,
 	currentCurrencyExchangeRate?: number,
 	countryOptions?: React.OptionHTMLAttributes<HTMLOptionElement>[],
-	currentCountry?: LiferayPicklist,
+	currentCountry?: LiferayPicklist[],
 	currentCompany?: LiferayAccountBrief
 ) {
 	const [selectedAccountBrief, setSelectedAccountBrief] = useState<
@@ -52,12 +52,34 @@ export default function useCompanyOptions(
 			`/o/${LiferayAPIs.OBJECT}/partnerlevels/by-external-reference-code/${account.r_prtLvlToAcc_c_partnerLevelERC}`
 	);
 
-	const countryPicklist =
-		account &&
-		countryOptions &&
-		countryOptions.find(
-			(options) => options.value === account.partnerCountry
-		);
+	const formatPartnerCountries = useCallback(
+		(
+			company?: AccountEntry,
+			countriesList?: React.OptionHTMLAttributes<HTMLOptionElement>[]
+		) => {
+			if (!isObjectEmpty(company) && !!countriesList?.length) {
+				const splitCountries = company?.partnerCountries?.split(', ');
+
+				const countryItems =
+					splitCountries?.map((country) =>
+						countriesList.find(
+							(options) => options.value === country
+						)
+					) || [];
+
+				return countryItems.map(
+					(country) =>
+						({
+							key: country?.value,
+							name: country?.label,
+						}) as LiferayPicklist
+				);
+			}
+
+			return [];
+		},
+		[]
+	);
 
 	const currencyPicklist =
 		account &&
@@ -86,11 +108,7 @@ export default function useCompanyOptions(
 			handleSelected(
 				currentCountry
 					? currentCountry
-					: (countryPicklist && {
-							key: countryPicklist.value as string,
-							name: countryPicklist.label as string,
-						}) ||
-							{},
+					: formatPartnerCountries(account, countryOptions),
 				selectedAccountBrief,
 				currentCurrency && !isObjectEmpty(currentCurrency)
 					? currentCurrency
@@ -107,14 +125,16 @@ export default function useCompanyOptions(
 				partnerLevel?.claimPercent || 0.5
 			);
 		}
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [
 		account?.externalReferenceCode,
-		countryPicklist,
 		currencyPicklist,
 		currentCountry,
 		currentCurrency,
 		currentCurrencyExchangeRate,
 		datedConversionRate,
+		formatPartnerCountries,
 		handleSelected,
 		partnerLevel?.claimPercent,
 		selectedAccountBrief,

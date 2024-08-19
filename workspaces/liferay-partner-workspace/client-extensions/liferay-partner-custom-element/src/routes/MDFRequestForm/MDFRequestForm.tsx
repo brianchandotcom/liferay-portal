@@ -47,7 +47,7 @@ const initialFormValues: MDFRequest = {
 	minDateActivity: '',
 	overallCampaignDescription: '',
 	overallCampaignName: '',
-	partnerCountry: {},
+	partnerCountries: [],
 	submitted: false,
 	targetAudienceRoles: [],
 	targetMarkets: [],

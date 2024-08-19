@@ -13,7 +13,7 @@ export default interface AccountEntry extends Partial<LiferayObject> {
 	marketingPlan: boolean;
 	name: string;
 	newProjectExistingBusiness: number;
-	partnerCountry: string;
+	partnerCountries: string;
 	r_prtLvlToAcc_c_partnerLevelERC: string;
 	solutionDeliveryCertification: boolean;
 	targetArr: number;

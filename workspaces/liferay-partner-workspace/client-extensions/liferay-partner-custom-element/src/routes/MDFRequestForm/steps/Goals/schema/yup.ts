@@ -40,12 +40,15 @@ const goalsSchema = object({
 		.trim()
 		.max(80, 'You have exceeded the 80 characters limit')
 		.required('Required'),
-	partnerCountry: object({
-		key: string(),
-		name: string(),
-	})
+	partnerCountries: array()
+		.of(
+			object({
+				key: string(),
+				name: string(),
+			})
+		)
 		.default(undefined)
-		.test('is-empty', 'Required', (value) => !isObjectEmpty(value)),
+		.min(1, 'Required'),
 	targetAudienceRoles: array().min(1, 'Required'),
 	targetMarkets: array()
 		.min(1, 'Required')

@@ -99,7 +99,8 @@ test('LPD-23255 AC3 TC4: Verify that clicking the “Reset SCIM Client provision
 
 	const apiHelper = new ApiHelpers(page);
 
-	const authorizedResponse = await apiHelper.scim.getUsers(accessToken);
+	const authorizedResponse =
+		await apiHelper.scim.getUsersWithOAuth(accessToken);
 	expect(authorizedResponse.status()).toBe(200);
 
 	const applicationsMenuPage = new ApplicationsMenuPage(page);
@@ -117,7 +118,8 @@ test('LPD-23255 AC3 TC4: Verify that clicking the “Reset SCIM Client provision
 
 	await scimConfigurationPage.resetClientData();
 
-	const unauthorizedResponse = await apiHelper.scim.getUsers(accessToken);
+	const unauthorizedResponse =
+		await apiHelper.scim.getUsersWithOAuth(accessToken);
 	expect(unauthorizedResponse.status()).toBe(401);
 
 	await applicationsMenuPage.goToOauth2Administration();
@@ -228,4 +230,82 @@ test('LPD-23255 AC5 TC8: Verify that the Name field is enabled when scim client 
 	await scimConfigurationPage.resetClientData();
 
 	expect(scimConfigurationPage.oAuth2ApplicationNameField).toBeEditable();
+});
+
+test('LPD-33284 verify that post and get users requests work with oauth token', async ({
+	page,
+}) => {
+	const scimConfigurationPage = new SCIMConfigurationPage(page);
+
+	await scimConfigurationPage.goTo();
+
+	await scimConfigurationPage.configureSCIM('email', 'Test SCIM Client');
+
+	await scimConfigurationPage.generateToken();
+
+	const accessToken =
+		await scimConfigurationPage.accessTokenField.inputValue();
+
+	const randomNumber = getRandomInt();
+
+	const newUser = {
+		active: true,
+		emails: [
+			{
+				primary: true,
+				type: 'default',
+				value: `able${randomNumber}@liferay.com`,
+			},
+		],
+		name: {
+			familyName: `Baker ${randomNumber}`,
+			givenName: `Able ${randomNumber}`,
+		},
+		userName: `able${randomNumber}.baker`,
+	};
+
+	const apiHelper = new ApiHelpers(page);
+
+	await apiHelper.scim.postUserWithOAuth(newUser, accessToken);
+
+	const response = await (
+		await apiHelper.scim.getUsersWithOAuth(accessToken)
+	).text();
+
+	expect(response).toContain('"totalResults":1');
+
+	await scimConfigurationPage.resetClientData();
+});
+
+test('LPD-33284 verify that post and get groups requests work with oauth token', async ({
+	page,
+}) => {
+	const scimConfigurationPage = new SCIMConfigurationPage(page);
+
+	await scimConfigurationPage.goTo();
+
+	await scimConfigurationPage.configureSCIM('email', 'Test SCIM Client');
+
+	await scimConfigurationPage.generateToken();
+
+	const accessToken =
+		await scimConfigurationPage.accessTokenField.inputValue();
+
+	const randomNumber = getRandomInt();
+
+	const newGroup = {
+		displayName: `Foo${randomNumber}`,
+	};
+
+	const apiHelper = new ApiHelpers(page);
+
+	await apiHelper.scim.postGroupWithOAuth(newGroup, accessToken);
+
+	const response = await (
+		await apiHelper.scim.getGroupsWithOAuth(accessToken)
+	).text();
+
+	expect(response).toContain('"totalResults":1');
+
+	await scimConfigurationPage.resetClientData();
 });

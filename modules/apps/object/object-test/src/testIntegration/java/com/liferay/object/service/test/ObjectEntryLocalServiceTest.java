@@ -4177,7 +4177,6 @@ public class ObjectEntryLocalServiceTest {
 			() -> _addObjectEntry(
 				group.getGroupId(), objectDefinition.getObjectDefinitionId(),
 				localizedValues));
-
 		AssertUtils.assertFailure(
 			ObjectEntryValuesException.UniqueValueConstraintViolation.class,
 			StringBundler.concat(

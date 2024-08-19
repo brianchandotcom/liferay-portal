@@ -74,15 +74,15 @@ public class SiteNavigationMenuConfigurationActionTest {
 				_modifiableSettings,
 				_getPortletRequest(RandomTestUtil.randomLong()));
 
+		Assert.assertNull(
+			_modifiableSettings.getValue(
+				"displayStyleGroupExternalReferenceCode", null));
 		Assert.assertEquals(
 			_DISPLAY_STYLE_GROUP_ID,
 			_modifiableSettings.getValue("displayStyleGroupId", null));
 		Assert.assertEquals(
 			_DISPLAY_STYLE_GROUP_KEY,
 			_modifiableSettings.getValue("displayStyleGroupKey", null));
-		Assert.assertNull(
-			_modifiableSettings.getValue(
-				"displayStyleGroupExternalReferenceCode", null));
 	}
 
 	@FeatureFlags("LPD-23048")
@@ -101,15 +101,15 @@ public class SiteNavigationMenuConfigurationActionTest {
 				_getPortletRequest(RandomTestUtil.randomLong()));
 
 		Assert.assertEquals(
+			group.getExternalReferenceCode(),
+			_modifiableSettings.getValue(
+				"displayStyleGroupExternalReferenceCode", null));
+		Assert.assertEquals(
 			_DISPLAY_STYLE_GROUP_ID,
 			_modifiableSettings.getValue("displayStyleGroupId", null));
 		Assert.assertEquals(
 			_DISPLAY_STYLE_GROUP_KEY,
 			_modifiableSettings.getValue("displayStyleGroupKey", null));
-		Assert.assertEquals(
-			group.getExternalReferenceCode(),
-			_modifiableSettings.getValue(
-				"displayStyleGroupExternalReferenceCode", null));
 	}
 
 	@FeatureFlags("LPD-23048")
@@ -126,15 +126,15 @@ public class SiteNavigationMenuConfigurationActionTest {
 			updateDisplayStyleGroupPreferences(
 				_modifiableSettings, _getPortletRequest(group.getGroupId()));
 
+		Assert.assertNull(
+			_modifiableSettings.getValue(
+				"displayStyleGroupExternalReferenceCode", null));
 		Assert.assertEquals(
 			_DISPLAY_STYLE_GROUP_ID,
 			_modifiableSettings.getValue("displayStyleGroupId", null));
 		Assert.assertEquals(
 			_DISPLAY_STYLE_GROUP_KEY,
 			_modifiableSettings.getValue("displayStyleGroupKey", null));
-		Assert.assertNull(
-			_modifiableSettings.getValue(
-				"displayStyleGroupExternalReferenceCode", null));
 	}
 
 	@Test
@@ -149,12 +149,12 @@ public class SiteNavigationMenuConfigurationActionTest {
 		_siteNavigationMenuConfigurationAction.updateRootMenuItemPreferences(
 			_modifiableSettings);
 
-		Assert.assertEquals(
-			_ROOT_MENU_ITEM_ID,
-			_modifiableSettings.getValue("rootMenuItemId", null));
 		Assert.assertNull(
 			_modifiableSettings.getValue(
 				"rootMenuItemExternalReferenceCode", null));
+		Assert.assertEquals(
+			_ROOT_MENU_ITEM_ID,
+			_modifiableSettings.getValue("rootMenuItemId", null));
 	}
 
 	@FeatureFlags("LPD-23048")
@@ -174,12 +174,12 @@ public class SiteNavigationMenuConfigurationActionTest {
 			_modifiableSettings);
 
 		Assert.assertEquals(
-			_ROOT_MENU_ITEM_ID,
-			_modifiableSettings.getValue("rootMenuItemId", null));
-		Assert.assertEquals(
 			rootMenuItemExternalReferenceCode,
 			_modifiableSettings.getValue(
 				"rootMenuItemExternalReferenceCode", null));
+		Assert.assertEquals(
+			_ROOT_MENU_ITEM_ID,
+			_modifiableSettings.getValue("rootMenuItemId", null));
 	}
 
 	@Test
@@ -192,12 +192,12 @@ public class SiteNavigationMenuConfigurationActionTest {
 		_siteNavigationMenuConfigurationAction.
 			updateSiteNavigationMenuPreferences(_modifiableSettings);
 
-		Assert.assertEquals(
-			_SITE_NAVIGATION_MENU_ITEM_ID,
-			_modifiableSettings.getValue("siteNavigationMenuId", null));
 		Assert.assertNull(
 			_modifiableSettings.getValue(
 				"siteNavigationMenuExternalReferenceCode", null));
+		Assert.assertEquals(
+			_SITE_NAVIGATION_MENU_ITEM_ID,
+			_modifiableSettings.getValue("siteNavigationMenuId", null));
 	}
 
 	@FeatureFlags("LPD-23048")
@@ -216,12 +216,12 @@ public class SiteNavigationMenuConfigurationActionTest {
 			updateSiteNavigationMenuPreferences(_modifiableSettings);
 
 		Assert.assertEquals(
-			_SITE_NAVIGATION_MENU_ITEM_ID,
-			_modifiableSettings.getValue("siteNavigationMenuId", null));
-		Assert.assertEquals(
 			siteNavigationMenuExternalReferenceCode,
 			_modifiableSettings.getValue(
 				"siteNavigationMenuExternalReferenceCode", null));
+		Assert.assertEquals(
+			_SITE_NAVIGATION_MENU_ITEM_ID,
+			_modifiableSettings.getValue("siteNavigationMenuId", null));
 	}
 
 	private Group _getGroup(long groupId) {

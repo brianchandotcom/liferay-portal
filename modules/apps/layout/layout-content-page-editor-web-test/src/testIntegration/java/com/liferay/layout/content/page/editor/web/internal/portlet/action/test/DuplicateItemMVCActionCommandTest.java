@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -59,8 +60,6 @@ import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -188,7 +187,9 @@ public class DuplicateItemMVCActionCommandTest {
 			"_addDuplicateFragmentEntryLinkToLayoutDataJSONObject",
 			new Class<?>[] {ActionRequest.class, ActionResponse.class},
 			_getMockLiferayPortletActionRequest(
-				dropZoneFragmentStyledLayoutStructureItem.getItemId(),
+				new String[] {
+					dropZoneFragmentStyledLayoutStructureItem.getItemId()
+				},
 				segmentsExperienceId),
 			new MockLiferayPortletActionResponse());
 
@@ -238,6 +239,66 @@ public class DuplicateItemMVCActionCommandTest {
 				duplicatedHeadingFragmentStyledLayoutStructureItem.
 					getFragmentEntryLinkId()),
 			headingFragmentEntryLink);
+	}
+
+	@Test
+	public void testDuplicateMultipleItems() throws Exception {
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			_layoutPageTemplateStructureLocalService.
+				fetchLayoutPageTemplateStructure(
+					_layout.getGroupId(), _layout.getPlid());
+
+		long segmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				_layout.getPlid());
+
+		LayoutStructure layoutStructure = LayoutStructure.of(
+			layoutPageTemplateStructure.getData(segmentsExperienceId));
+
+		LayoutStructureItem rowStyledLayoutStructureItem1 =
+			layoutStructure.addRowStyledLayoutStructureItem(
+				layoutStructure.getMainItemId(), 0, 1);
+
+		LayoutStructureItem rowStyledLayoutStructureItem2 =
+			layoutStructure.addRowStyledLayoutStructureItem(
+				layoutStructure.getMainItemId(), 0, 1);
+
+		_layoutPageTemplateStructureLocalService.
+			updateLayoutPageTemplateStructureData(
+				_layout.getGroupId(), _layout.getPlid(),
+				layoutStructure.toString());
+
+		JSONObject jsonObject = ReflectionTestUtil.invoke(
+			_mvcActionCommand, "doTransactionalCommand",
+			new Class<?>[] {ActionRequest.class, ActionResponse.class},
+			_getMockLiferayPortletActionRequest(
+				new String[] {
+					rowStyledLayoutStructureItem1.getItemId(),
+					rowStyledLayoutStructureItem2.getItemId()
+				},
+				segmentsExperienceId),
+			new MockLiferayPortletActionResponse());
+
+		List<String> duplicatedItemIds = (List<String>)jsonObject.get(
+			"duplicatedItemIds");
+
+		Assert.assertEquals(
+			duplicatedItemIds.toString(), 2, duplicatedItemIds.size());
+
+		JSONObject layoutDataJSONObject = jsonObject.getJSONObject(
+			"layoutData");
+
+		layoutStructure = LayoutStructure.of(layoutDataJSONObject.toString());
+
+		LayoutStructureItem mainLayoutStructureItem =
+			layoutStructure.getLayoutStructureItem(
+				layoutStructure.getMainItemId());
+
+		List<String> childrenItemIds =
+			mainLayoutStructureItem.getChildrenItemIds();
+
+		Assert.assertEquals(
+			childrenItemIds.toString(), 4, childrenItemIds.size());
 	}
 
 	private FragmentEntryLink _addFragmentEntryLink(
@@ -357,29 +418,36 @@ public class DuplicateItemMVCActionCommandTest {
 	}
 
 	private MockLiferayPortletActionRequest _getMockLiferayPortletActionRequest(
-			String itemId, long segmentExperienceId)
+			String[] itemIds, long segmentExperienceId)
 		throws Exception {
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
-			ContentLayoutTestUtil.getMockLiferayPortletActionRequest(
-				_company, _group, _layout);
+			new MockLiferayPortletActionRequest();
 
-		mockLiferayPortletActionRequest.addParameter("itemId", itemId);
+		mockLiferayPortletActionRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, _getThemeDisplay());
+
+		mockLiferayPortletActionRequest.addParameter("itemIds", itemIds);
 		mockLiferayPortletActionRequest.addParameter(
 			"segmentsExperienceId", String.valueOf(segmentExperienceId));
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)mockLiferayPortletActionRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
-			mockLiferayPortletActionRequest);
-
-		themeDisplay.setRequest(httpServletRequest);
-
-		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
-
 		return mockLiferayPortletActionRequest;
+	}
+
+	private ThemeDisplay _getThemeDisplay() throws Exception {
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		themeDisplay.setCompany(_company);
+		themeDisplay.setLayout(_layout);
+		themeDisplay.setLayoutSet(_layout.getLayoutSet());
+		themeDisplay.setPermissionChecker(
+			PermissionThreadLocal.getPermissionChecker());
+		themeDisplay.setPlid(_layout.getPlid());
+		themeDisplay.setScopeGroupId(_group.getGroupId());
+		themeDisplay.setSiteGroupId(_group.getGroupId());
+		themeDisplay.setUser(TestPropsValues.getUser());
+
+		return themeDisplay;
 	}
 
 	private Company _company;

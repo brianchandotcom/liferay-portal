@@ -46,15 +46,14 @@ public class ObjectActionRequestStatusRestController
 		long evpOrganizationId = propertiesJSONObject.getLong(
 			"r_organization_c_evpOrganizationId");
 
-		String response = get(
-			jwt.toString(),
-			_uriBuilderFactory.builder(
-			).path(
-				"/o/c/evporganizations/" + evpOrganizationId
-			).build(
-			).toString());
-
-		JSONObject evpOrganizationJSONObject = new JSONObject(response);
+		JSONObject evpOrganizationJSONObject = new JSONObject(
+			get(
+				jwt.toString(),
+				_uriBuilderFactory.builder(
+				).path(
+					"/o/c/evporganizations/" + evpOrganizationId
+				).build(
+				).toString()));
 
 		String organizationStatus = evpOrganizationJSONObject.getJSONObject(
 			"organizationStatus"

@@ -55,16 +55,15 @@ public class ObjectActionMDFClaimStatusManagementRestController
 				_completeMDFRequestStatus(mdfRequestExternalReferenceCode);
 			}
 			else {
-				String response = get(
-					_getAuthorization(),
-					_uriBuilderFactory.builder(
-					).path(
-						"/o/c/mdfrequests/by-external-reference-code/" +
-							mdfRequestExternalReferenceCode
-					).build(
-					).toString());
-
-				JSONObject responseJSONObject = new JSONObject(response);
+				JSONObject responseJSONObject = new JSONObject(
+					get(
+						_getAuthorization(),
+						_uriBuilderFactory.builder(
+						).path(
+							"/o/c/mdfrequests/by-external-reference-code/" +
+								mdfRequestExternalReferenceCode
+						).build(
+						).toString()));
 
 				if (responseJSONObject.getDouble("totalPaidAmount") >=
 						responseJSONObject.getDouble("totalMDFRequestAmount")) {

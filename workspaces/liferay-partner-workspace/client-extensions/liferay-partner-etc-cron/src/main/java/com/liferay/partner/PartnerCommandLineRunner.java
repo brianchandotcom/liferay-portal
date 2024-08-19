@@ -35,23 +35,22 @@ public class PartnerCommandLineRunner
 	public void run(String... args) throws Exception {
 		ZonedDateTime zonedDateTime = ZonedDateTime.now();
 
-		String response = get(
-			_getAuthorization(),
-			_uriBuilderFactory.builder(
-			).path(
-				"/o/c/activities"
-			).queryParam(
-				"filter",
-				"activityStatus eq 'active' and endDate lt " +
-					_toString(zonedDateTime.minusDays(_EXPIRATION_DAYS))
-			).queryParam(
-				"page", "1"
-			).queryParam(
-				"pageSize", "-1"
-			).build(
-			).toString());
-
-		JSONObject responseJSONObject = new JSONObject(response);
+		JSONObject responseJSONObject = new JSONObject(
+			get(
+				_getAuthorization(),
+				_uriBuilderFactory.builder(
+				).path(
+					"/o/c/activities"
+				).queryParam(
+					"filter",
+					"activityStatus eq 'active' and endDate lt " +
+						_toString(zonedDateTime.minusDays(_EXPIRATION_DAYS))
+				).queryParam(
+					"page", "1"
+				).queryParam(
+					"pageSize", "-1"
+				).build(
+				).toString()));
 
 		if (responseJSONObject.getInt("totalCount") > 0) {
 			JSONArray itemsJSONArray = responseJSONObject.getJSONArray("items");
@@ -86,28 +85,28 @@ public class PartnerCommandLineRunner
 			}
 		}
 
-		response = get(
-			_getAuthorization(),
-			_uriBuilderFactory.builder(
-			).path(
-				"/o/c/activities"
-			).queryParam(
-				"filter",
-				StringBundler.concat(
-					"submitted eq true and activityStatus eq 'active' and ",
-					"endDate le ",
-					_toString(zonedDateTime.minusDays(_EXPIRATION_DAYS - 15)),
-					" and mdfReqToActs/mdfRequestStatus eq 'approved'")
-			).queryParam(
-				"nestedFields", "actToMDFClmActs"
-			).queryParam(
-				"page", "1"
-			).queryParam(
-				"pageSize", "-1"
-			).build(
-			).toString());
-
-		responseJSONObject = new JSONObject(response);
+		responseJSONObject = new JSONObject(
+			get(
+				_getAuthorization(),
+				_uriBuilderFactory.builder(
+				).path(
+					"/o/c/activities"
+				).queryParam(
+					"filter",
+					StringBundler.concat(
+						"submitted eq true and activityStatus eq 'active' and ",
+						"endDate le ",
+						_toString(
+							zonedDateTime.minusDays(_EXPIRATION_DAYS - 15)),
+						" and mdfReqToActs/mdfRequestStatus eq 'approved'")
+				).queryParam(
+					"nestedFields", "actToMDFClmActs"
+				).queryParam(
+					"page", "1"
+				).queryParam(
+					"pageSize", "-1"
+				).build(
+				).toString()));
 
 		if (responseJSONObject.getInt("totalCount") > 0) {
 			JSONArray itemsJSONArray = responseJSONObject.getJSONArray("items");
@@ -147,15 +146,14 @@ public class PartnerCommandLineRunner
 								mdfClaimActivityJSONObject.getLong(
 									"r_mdfClmToMDFClmActs_c_mdfClaimId");
 
-							response = get(
-								_getAuthorization(),
-								_uriBuilderFactory.builder(
-								).path(
-									"/o/c/mdfclaims/" + mdfClaimId
-								).build(
-								).toString());
-
-							responseJSONObject = new JSONObject(response);
+							responseJSONObject = new JSONObject(
+								get(
+									_getAuthorization(),
+									_uriBuilderFactory.builder(
+									).path(
+										"/o/c/mdfclaims/" + mdfClaimId
+									).build(
+									).toString()));
 
 							JSONObject mdfClaimStatusJSONObject =
 								responseJSONObject.getJSONObject(

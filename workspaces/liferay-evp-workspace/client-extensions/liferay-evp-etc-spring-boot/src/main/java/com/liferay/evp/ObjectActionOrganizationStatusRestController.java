@@ -41,20 +41,20 @@ public class ObjectActionOrganizationStatusRestController
 		JSONObject objectEntryDTOEVPOrganizationJSONObject =
 			jsonObject.getJSONObject("objectEntryDTOEVPOrganization");
 
-		String response = get(
-			jwt.toString(),
-			_uriBuilderFactory.builder(
-			).path(
-				"/o/c/evprequests"
-			).queryParam(
-				"filter",
-				StringBundler.concat(
-					"r_organization_c_evpOrganizationId eq '",
-					objectEntryDTOEVPOrganizationJSONObject.getLong("id"), "'")
-			).build(
-			).toString());
-
-		JSONObject responseJSONObject = new JSONObject(response);
+		JSONObject responseJSONObject = new JSONObject(
+			get(
+				jwt.toString(),
+				_uriBuilderFactory.builder(
+				).path(
+					"/o/c/evprequests"
+				).queryParam(
+					"filter",
+					StringBundler.concat(
+						"r_organization_c_evpOrganizationId eq '",
+						objectEntryDTOEVPOrganizationJSONObject.getLong("id"),
+						"'")
+				).build(
+				).toString()));
 
 		if (responseJSONObject.getInt("totalCount") == 0) {
 			return new ResponseEntity<>(json, HttpStatus.OK);

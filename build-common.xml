@@ -2336,11 +2336,19 @@ rerun your task.
 			<antelope:replace regex="\:" replacement="." />
 		</antelope:stringutil>
 
-		<lstopwatch action="start" name="test.execution.duration${test.task.name}" />
+		<trycatch property="exception.message">
+			<try>
+				<lstopwatch action="start" name="test.execution.duration${test.task.name}" />
 
-		<gradle-execute dir="${dir}" gradlejvmargs="${gradle.jvm.args}" task="${test.task}" test.name="${test.name}" />
-
-		<lstopwatch action="total" name="test.execution.duration${test.task.name}" />
+				<gradle-execute dir="${dir}" gradlejvmargs="${gradle.jvm.args}" task="${test.task}" test.name="${test.name}" />
+			</try>
+			<catch>
+				<fail>${exception.message}</fail>
+			</catch>
+			<finally>
+				<lstopwatch action="total" name="test.execution.duration${test.task.name}" />
+			</finally>
+		</trycatch>
 	</target>
 
 	<target name="print-properties">

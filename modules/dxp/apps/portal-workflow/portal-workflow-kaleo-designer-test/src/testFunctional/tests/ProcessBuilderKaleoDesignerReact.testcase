@@ -4845,7 +4845,7 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		task ("Given a regular role with multi-byte characters in the title") {
+		task ("Given a regular role with multi-byte characters in the name") {
 			JSONRole.addRegularRole(
 				roleKey = "テスト",
 				roleTitle = "test");
@@ -4873,7 +4873,7 @@ definition {
 				key_direction = "right");
 		}
 
-		task ("When publishing workflow definition with node task assigned to regular role with multibyte characters in title") {
+		task ("When publishing workflow definition with node task assigned to regular role with multibyte characters in name") {
 			ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "task");
 
 			ProcessBuilderKaleoDesignerReact.viewAndFillAssignments(

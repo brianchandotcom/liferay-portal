@@ -156,16 +156,7 @@ public class AssetCategoriesSearchFacetDisplayContextBuilder
 
 	public void setParameterValues(String... parameterValues) {
 		_selectedCategoryIds = TransformUtil.transformToList(
-			parameterValues,
-			parameterValue -> {
-				long categoryId = GetterUtil.getLong(parameterValue);
-
-				if (categoryId <= 0) {
-					return null;
-				}
-
-				return categoryId;
-			});
+			parameterValues, GetterUtil::getLong);
 	}
 
 	public void setPortal(Portal portal) {

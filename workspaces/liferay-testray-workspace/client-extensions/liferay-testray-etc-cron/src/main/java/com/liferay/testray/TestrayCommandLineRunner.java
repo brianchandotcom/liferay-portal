@@ -23,6 +23,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.DefaultUriBuilderFactory;
+import org.springframework.web.util.UriBuilderFactory;
 
 /**
  * @author Nilton Vieira
@@ -32,9 +33,10 @@ public class TestrayCommandLineRunner
 	extends BaseRestController implements CommandLineRunner {
 
 	public void archiveTestrayBuilds() throws Exception {
-		String response = get(
+		JSONArray jsonArray = new JSONObject(
+			get(
 			_getAuthorization(),
-			_defaultUriBuilderFactory.builder(
+			_uriBuilderFactory.builder(
 			).path(
 				"/o/c/builds"
 			).queryParam(
@@ -45,10 +47,7 @@ public class TestrayCommandLineRunner
 			).queryParam(
 				"pageSize", "-1"
 			).build(
-			).toString());
-
-		JSONArray jsonArray = new JSONObject(
-			response
+			).toString())
 		).getJSONArray(
 			"items"
 		);
@@ -71,9 +70,10 @@ public class TestrayCommandLineRunner
 	}
 
 	public void deleteTestrayBuilds() throws Exception {
-		String response = get(
+		JSONArray jsonArray = new JSONObject(
+			get(
 			_getAuthorization(),
-			_defaultUriBuilderFactory.builder(
+			_uriBuilderFactory.builder(
 			).path(
 				"/o/c/builds"
 			).queryParam(
@@ -85,10 +85,7 @@ public class TestrayCommandLineRunner
 			).queryParam(
 				"pageSize", "-1"
 			).build(
-			).toString());
-
-		JSONArray jsonArray = new JSONObject(
-			response
+			).toString())
 		).getJSONArray(
 			"items"
 		);
@@ -120,7 +117,7 @@ public class TestrayCommandLineRunner
 	).truncatedTo(
 		ChronoUnit.SECONDS
 	);
-	private final DefaultUriBuilderFactory _defaultUriBuilderFactory =
+	private final UriBuilderFactory _uriBuilderFactory =
 		new DefaultUriBuilderFactory();
 
 	@Autowired

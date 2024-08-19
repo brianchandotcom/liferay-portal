@@ -5,11 +5,11 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {styleBookPageTest} from '../../fixtures/StyleBookPageTest';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {styleBookPageTest} from '../../fixtures/styleBookPageTest';
 import getRandomString from '../../utils/getRandomString';
 
 const test = mergeTests(

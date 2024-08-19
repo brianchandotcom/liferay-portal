@@ -43,8 +43,11 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.Serializable;
 
@@ -99,6 +102,27 @@ public class BatchEngineImportTaskExecutorImpl
 			batchEngineImportTask.getCompanyId(),
 			CTCollectionThreadLocal.getCTCollectionId());
 
+		File tempContentFile;
+
+		try (InputStream inputStream =
+				_batchEngineImportTaskLocalService.openContentInputStream(
+					batchEngineImportTask.getBatchEngineImportTaskId())) {
+
+			tempContentFile = FileUtil.createTempFile(inputStream);
+		}
+		catch (Throwable throwable) {
+			_log.error(
+				"Unable to save batch engine import task content as temp file" +
+					batchEngineImportTask,
+				throwable);
+
+			_updateBatchEngineImportTask(
+				BatchEngineTaskExecuteStatus.FAILED, batchEngineImportTask,
+				throwable.toString());
+
+			return;
+		}
+
 		try (SafeCloseable safeCloseable2 = SearchContext.openBatchMode()) {
 			batchEngineImportTask.setExecuteStatus(
 				BatchEngineTaskExecuteStatus.STARTED.toString());
@@ -109,10 +133,12 @@ public class BatchEngineImportTaskExecutorImpl
 					BatchEngineTaskContentType.valueOf(
 						batchEngineImportTask.getContentType()));
 
-			batchEngineImportTask.setTotalItemsCount(
-				batchEngineTaskProgress.getTotalItemsCount(
-					_batchEngineImportTaskLocalService.openContentInputStream(
-						batchEngineImportTask.getBatchEngineImportTaskId())));
+			try (InputStream inputStream = new FileInputStream(
+					tempContentFile)) {
+
+				batchEngineImportTask.setTotalItemsCount(
+					batchEngineTaskProgress.getTotalItemsCount(inputStream));
+			}
 
 			_batchEngineImportTaskLocalService.updateBatchEngineImportTask(
 				batchEngineImportTask);
@@ -120,7 +146,8 @@ public class BatchEngineImportTaskExecutorImpl
 			BatchEngineTaskExecutorUtil.execute(
 				checkPermissions,
 				() -> _importItems(
-					batchEngineImportTask, batchEngineTaskItemDelegate),
+					batchEngineImportTask, tempContentFile,
+					batchEngineTaskItemDelegate),
 				_userLocalService.getUser(batchEngineImportTask.getUserId()));
 
 			_updateBatchEngineImportTask(
@@ -138,6 +165,7 @@ public class BatchEngineImportTaskExecutorImpl
 				throwable.toString());
 		}
 		finally {
+			tempContentFile.delete();
 
 			// LPS-167011 Because of call to _updateBatchEngineImportTask when
 			// catching a Throwable
@@ -291,19 +319,17 @@ public class BatchEngineImportTaskExecutorImpl
 	}
 
 	private void _importItems(
-			BatchEngineImportTask batchEngineImportTask,
+			BatchEngineImportTask batchEngineImportTask, File contentFile,
 			BatchEngineTaskItemDelegate<?> batchEngineTaskItemDelegate)
 		throws Throwable {
 
 		Map<String, Serializable> parameters = _getParameters(
 			batchEngineImportTask);
 
-		try (BatchEngineImportTaskItemReader batchEngineImportTaskItemReader =
+		try (InputStream inputStream = new FileInputStream(contentFile);
+			BatchEngineImportTaskItemReader batchEngineImportTaskItemReader =
 				_getBatchEngineImportTaskItemReader(
-					batchEngineImportTask,
-					_batchEngineImportTaskLocalService.openContentInputStream(
-						batchEngineImportTask.getBatchEngineImportTaskId()),
-					parameters)) {
+					batchEngineImportTask, inputStream, parameters)) {
 
 			BatchEngineTaskItemDelegateExecutor
 				batchEngineTaskItemDelegateExecutor =

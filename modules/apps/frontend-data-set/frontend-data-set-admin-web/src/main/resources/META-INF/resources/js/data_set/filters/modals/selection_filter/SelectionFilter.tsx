@@ -488,7 +488,7 @@ function Body({
 										selectedRESTEndpoint
 									) {
 										setSource(
-											`/o${selectedRESTApplication.replace('v1.0/', '')}${selectedRESTEndpoint}`
+											`/o${selectedRESTApplication.replace('v1.0', '')}${selectedRESTEndpoint}`
 										);
 									}
 

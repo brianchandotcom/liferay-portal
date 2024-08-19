@@ -283,9 +283,7 @@ public class ObjectEntryLocalServiceImpl
 
 		User user = _userLocalService.getUser(userId);
 
-		_fillDefaultValue(
-			_objectFieldLocalService.getObjectFields(objectDefinitionId),
-			values);
+		_fillDefaultValue(objectDefinitionId, values);
 
 		_contributeValues(groupId, objectDefinition, userId, values);
 
@@ -2082,12 +2080,20 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	private void _fillDefaultValue(
-		List<ObjectField> objectFields, Map<String, Serializable> values) {
+		long objectDefinitionId, Map<String, Serializable> values) {
 
-		for (ObjectField objectField : objectFields) {
+		for (ObjectField objectField :
+				_objectFieldPersistence.findByObjectDefinitionId(
+					objectDefinitionId)) {
+
 			if (values.get(objectField.getName()) != null) {
 				continue;
 			}
+
+			objectField.setObjectFieldSettings(
+				_objectFieldSettingLocalService.
+					getObjectFieldObjectFieldSettings(
+						objectField.getObjectFieldId()));
 
 			String value = ObjectFieldSettingUtil.getDefaultValueAsString(
 				_ddmExpressionFactory, objectField,

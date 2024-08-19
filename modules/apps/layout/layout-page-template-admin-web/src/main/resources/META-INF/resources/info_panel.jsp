@@ -189,7 +189,7 @@ Format dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(DateFormat.MEDIUM,
 			</c:if>
 
 			<div class="mb-4">
-				<p class="font-weight-semi-bold mb-1 text-3">
+				<p class="font-weight-semi-bold mb-0 text-3">
 					<liferay-ui:message key="number-of-items" />
 				</p>
 

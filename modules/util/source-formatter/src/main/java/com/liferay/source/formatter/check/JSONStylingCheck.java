@@ -55,6 +55,12 @@ public class JSONStylingCheck extends BaseFileCheck {
 			return content;
 		}
 
+		if (fileName.endsWith("/package.json")) {
+			return content;
+		}
+
+		content = _formatEscapedJSON(content);
+
 		return _formatQuotedJSON(content, "#cdata-value");
 	}
 
@@ -143,6 +149,79 @@ public class JSONStylingCheck extends BaseFileCheck {
 		sb.append("\n");
 		sb.append(indent);
 		sb.append(StringPool.CLOSE_BRACKET);
+
+		return sb.toString();
+	}
+
+	private String _formatEscapedJSON(String content) {
+		String[] lines = content.split("\n");
+
+		StringBundler sb = new StringBundler(lines.length * 2);
+
+		for (String line : lines) {
+			if (Validator.isNull(line)) {
+				continue;
+			}
+
+			int x = line.indexOf("\": \"{\\\"");
+
+			if (x == -1) {
+				sb.append(line);
+				sb.append("\n");
+
+				continue;
+			}
+
+			String s = "";
+
+			if (line.endsWith("}\"")) {
+				s = line.substring(x + 4, line.length() - 1);
+			}
+			else if (line.endsWith("}\",")) {
+				s = line.substring(x + 4, line.length() - 2);
+			}
+			else {
+				sb.append(line);
+				sb.append("\n");
+
+				continue;
+			}
+
+			s = s.replaceAll("\\\\\"", "\"");
+
+			try {
+				s = JSONUtil.toString(new JSONObjectImpl(s));
+			}
+			catch (JSONException jsonException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(jsonException);
+				}
+
+				sb.append(line);
+				sb.append("\n");
+
+				continue;
+			}
+
+			s = s.replaceAll("\t*", "");
+			s = s.replaceAll(",\n", ", ");
+
+			s = s.replaceAll("\n", "");
+			s = s.replaceAll("\"", "\\\\\"");
+
+			String newLine = line.substring(0, x + 4) + s + "\"";
+
+			if (line.endsWith(",")) {
+				newLine = newLine + ",";
+			}
+
+			sb.append(newLine);
+			sb.append("\n");
+		}
+
+		if (sb.index() > 0) {
+			sb.setIndex(sb.index() - 1);
+		}
 
 		return sb.toString();
 	}

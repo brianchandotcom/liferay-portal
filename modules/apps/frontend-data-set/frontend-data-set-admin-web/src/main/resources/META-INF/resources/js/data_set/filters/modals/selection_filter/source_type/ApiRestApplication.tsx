@@ -52,7 +52,7 @@ interface IApiRestApplicationModalContentProps {
 	}) => void;
 	preselectedValueInput: string;
 	requiredRESTApplicationValidationError: boolean;
-	resolvedRESTSchemas: string[],
+	resolvedRESTSchemas: string[];
 	restApplications: string[];
 	restEndpointValidationError: boolean;
 	restSchemaValidationError: boolean;
@@ -164,7 +164,7 @@ function ApiRestApplication({
 
 	const getRESTSchemas = async (
 		restApplication: string,
-		resolvedRESTSchemas: string[],
+		resolvedRESTSchemas: string[]
 	) => {
 		if (!restApplication) {
 			return;

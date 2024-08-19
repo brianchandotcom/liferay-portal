@@ -129,16 +129,55 @@ export class DisplayPageTemplatesPage {
 		await waitForSuccessAlert(this.page);
 	}
 
+	async createFolder(name: string) {
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('menuitem', {name: 'Folder'}),
+			trigger: this.newButton,
+		});
+
+		await this.page.locator('.modal-body').waitFor();
+
+		await this.page.getByLabel('Name').fill(name);
+
+		await this.page.getByRole('button', {name: 'Create'}).click();
+
+		await waitForSuccessAlert(this.page);
+	}
+
 	async createTemplate({
 		contentSubtype,
 		contentType,
+		folderName,
 		name,
 	}: {
 		contentSubtype?: string;
 		contentType: string;
+		folderName?: string;
 		name: string;
 	}) {
-		await this.newButton.click();
+		if (folderName) {
+			await this.page.getByRole('link', {name: folderName}).click();
+
+			await this.page.getByText(folderName, {exact: true}).waitFor();
+
+			await clickAndExpectToBeVisible({
+				autoClick: false,
+				target: this.page.getByRole('menuitem', {
+					name: 'Display Page Template',
+				}),
+				trigger: this.newButton,
+			});
+
+			await this.page
+				.getByRole('menuitem', {
+					name: 'Display Page Template',
+				})
+				.click();
+		}
+		else {
+			await this.newButton.click();
+		}
 
 		await this.page.getByRole('button', {name: 'Blank'}).click();
 		await this.page.getByLabel('Name', {exact: true}).fill(name);

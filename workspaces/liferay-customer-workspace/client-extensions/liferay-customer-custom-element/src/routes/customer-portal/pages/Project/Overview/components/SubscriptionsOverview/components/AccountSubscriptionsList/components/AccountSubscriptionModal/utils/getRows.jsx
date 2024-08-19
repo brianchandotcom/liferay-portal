@@ -12,6 +12,7 @@ import {
 	SLA_STATUS_TYPES,
 } from '../../../../../../../../../../../../common/utils/constants';
 import getDateCustomFormat from '../../../../../../../../../../../../common/utils/getDateCustomFormat';
+import {getSubscriptionStatus} from '~/routes/customer-portal/utils/getSubscriptionStatus'
 
 export default function getRows(orderItems) {
 	return orderItems?.map(({options, quantity, reducedCustomFields}) => {
@@ -43,9 +44,7 @@ export default function getRows(orderItems) {
 			'subscription-term-status': reducedCustomFields?.status && (
 				<StatusTag
 					currentStatus={
-						SLA_STATUS_TYPES[
-							reducedCustomFields?.status.toLowerCase()
-						]
+						getSubscriptionStatus(new Date(options?.startDate), new Date(options?.endDate))
 					}
 				/>
 			),

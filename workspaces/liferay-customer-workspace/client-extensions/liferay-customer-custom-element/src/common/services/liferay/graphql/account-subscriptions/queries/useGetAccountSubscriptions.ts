@@ -27,7 +27,6 @@ const GET_ACCOUNT_SUBSCRIPTIONS = gql`
 					name
 					quantity
 					startDate
-					subscriptionStatus
 					productKey
 				}
 			}

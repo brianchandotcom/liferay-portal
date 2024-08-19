@@ -20,12 +20,14 @@ import {
 	FORMAT_DATE_TYPES,
 	SLA_STATUS_TYPES,
 } from '../../../../../../../../../../../common/utils/constants';
+import {getSubscriptionStatus} from '../../../../../../../../../utils/getSubscriptionStatus'
 import {
 	PRODUCT_DISPLAY_EXCEPTION,
 	PRODUCT_DISPLAY_EXCEPTION_INSTANCE_SIZE,
 	SUBSCRIPTION_TYPES,
 } from '../../../../../../../../../../../common/utils/constants/subscriptionCardsCount';
 import getDateCustomFormat from '../../../../../../../../../../../common/utils/getDateCustomFormat';
+import useOrderItems from '../AccountSubscriptionModal/hooks/useOrderItems';
 
 const AccountSubscriptionCard = ({
 	IsPortalOrDXP,
@@ -50,13 +52,28 @@ const AccountSubscriptionCard = ({
 		[accountSubscriptionUsageData]
 	);
 
+	const [
+		{activePage, setActivePage},
+		itemsPerPage,
+		{data},
+	] = useOrderItems(accountSubscription.externalReferenceCode);
+
+	let quantity = 0;
+
+    const now = new Date();
+
+    data?.orderItems?.items?.map((item) => {
+        if (now > new Date(item.options?.startDate) && now < new Date(item.options?.endDate)) {
+            quantity += item.quantity;
+        }
+    });
 	const DisplayOnCard = {
 		Blank: null,
 		Purchased: (
 			<>
-				{accountSubscription?.quantity && (
+				{quantity && (
 					<span className="align-items-center d-flex justify-content-start m-0">
-						{accountSubscription?.quantity}
+						{quantity}
 					</span>
 				)}
 			</>
@@ -65,10 +82,10 @@ const AccountSubscriptionCard = ({
 			<span className="d-flex justify-content-start m-0">
 				{currentConsumption !== undefined
 					? `${currentConsumption} ${i18n.translate('of')} ${
-							accountSubscription?.quantity
+							quantity
 					  }`
 					: `0 ${i18n.translate('of')} ${
-							accountSubscription?.quantity
+							quantity
 					  }`}
 			</span>
 		),
@@ -209,9 +226,7 @@ const AccountSubscriptionCard = ({
 						<div className="cp-account-subscription-card-icon-info ml-auto">
 							<StatusTag
 								currentStatus={
-									SLA_STATUS_TYPES[
-										accountSubscription?.subscriptionStatus?.toLowerCase()
-									]
+									getSubscriptionStatus(new Date(accountSubscription.startDate), new Date(accountSubscription.endDate))
 								}
 							/>
 						</div>

@@ -153,7 +153,19 @@ public class DuplicateItemMVCActionCommand
 
 		long segmentsExperienceId = ParamUtil.getLong(
 			actionRequest, "segmentsExperienceId");
-		String[] itemIds = ParamUtil.getStringValues(actionRequest, "itemIds");
+
+		String[] itemIds = null;
+
+		String itemId = ParamUtil.getString(actionRequest, "itemId");
+
+		if (Validator.isNotNull(itemId)) {
+			itemIds = new String[] {itemId};
+		}
+		else {
+			itemIds = ParamUtil.getStringValues(actionRequest, "itemIds");
+		}
+
+		String[] finalItemIds = itemIds;
 
 		Map<Long, Long> duplicatedFragmentEntryLinkIdsMap = new HashMap<>();
 		List<String> duplicatedLayoutStructureItemIds = new ArrayList<>();
@@ -164,7 +176,7 @@ public class DuplicateItemMVCActionCommand
 			layoutStructure -> {
 				List<LayoutStructureItem> duplicatedLayoutStructureItems =
 					layoutStructure.duplicateLayoutStructureItem(
-						Arrays.asList(itemIds));
+						Arrays.asList(finalItemIds));
 
 				for (LayoutStructureItem duplicatedLayoutStructureItem :
 						duplicatedLayoutStructureItems) {

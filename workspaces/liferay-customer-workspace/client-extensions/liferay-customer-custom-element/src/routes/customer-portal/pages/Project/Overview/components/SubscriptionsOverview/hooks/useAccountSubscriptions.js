@@ -6,32 +6,43 @@
 import {useEffect, useState} from 'react';
 
 import {useLazyGetAccountSubscriptions} from '../../../../../../../../common/services/liferay/graphql/account-subscriptions';
+import {SUBSCRIPTIONS_STATUS} from '../../../../../../utils/constants';
+
+export const getCurrentDate = new Date().toISOString().slice(0, 10);
 
 export default function useAccountSubscriptions(
 	accountSubcriptionGroup,
 	accountSubscriptionGroupsLoading
 ) {
 	const [lastSubscriptionStatus, setLastSubscriptionStatus] =
-		useState('Active');
+		useState([SUBSCRIPTIONS_STATUS.active]);
 
 	const [handleGetAccountSubscriptions, {called, data, loading}] =
 		useLazyGetAccountSubscriptions();
 
-	const getSubscriptionStatusFilter = (subscriptionStatus) => {
-		if (subscriptionStatus) {
-			return ` and subscriptionStatus in ('${subscriptionStatus}')`;
+	const getSubscriptionStatusFilter = (subscriptionStatuses) => {
+	    const filters = [];
+
+		if (subscriptionStatuses.includes(SUBSCRIPTIONS_STATUS.active)) {
+			filters.push(`(endDate gt ${getCurrentDate} and startDate lt ${getCurrentDate})`);
 		}
 
-		return '';
+		if (subscriptionStatuses.includes(SUBSCRIPTIONS_STATUS.expired)) {
+            filters.push(`endDate lt ${getCurrentDate}`);
+        }
+
+        if (subscriptionStatuses.includes(SUBSCRIPTIONS_STATUS.future)) {
+            filters.push(`startDate gt ${getCurrentDate}`);
+        }
+
+		return filters.join(' or ');
 	};
 
 	useEffect(() => {
 		if (accountSubcriptionGroup) {
 			handleGetAccountSubscriptions({
 				variables: {
-					filter: `accountSubscriptionGroupERC eq '${
-						accountSubcriptionGroup.externalReferenceCode
-					}'${getSubscriptionStatusFilter(lastSubscriptionStatus)}`,
+					filter: `accountSubscriptionGroupERC eq '${accountSubcriptionGroup.externalReferenceCode}' and (${getSubscriptionStatusFilter(lastSubscriptionStatus)})`,
 				},
 			});
 		}

@@ -342,7 +342,6 @@ export const getAccountSubscriptions = gql`
 					name
 					quantity
 					startDate
-					subscriptionStatus
 				}
 				totalCount
 			}

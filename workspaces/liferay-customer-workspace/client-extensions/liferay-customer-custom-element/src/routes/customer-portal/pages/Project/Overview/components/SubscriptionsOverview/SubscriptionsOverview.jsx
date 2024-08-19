@@ -44,7 +44,7 @@ const SubscriptionsOverview = ({koroneikiAccount, loading}) => {
 
 	const handleDropdownOnClick = (selectedStatus) =>
 		setLastSubscriptionStatus(
-			selectedStatus ? selectedStatus.join("', '") : undefined
+			selectedStatus
 		);
 
 	const subscriptionsGroupSelected =

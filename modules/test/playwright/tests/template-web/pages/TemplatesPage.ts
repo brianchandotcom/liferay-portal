@@ -11,12 +11,14 @@ import {PORTLET_URLS} from '../../../utils/portletUrls';
 import {waitForSuccessAlert} from '../../../utils/waitForSuccessAlert';
 
 export class TemplatesPage {
-	readonly newButton: Locator;
 	readonly page: Page;
 
+	readonly newButton: Locator;
+
 	constructor(page: Page) {
-		this.newButton = page.getByRole('button', {name: 'Add'});
 		this.page = page;
+
+		this.newButton = page.getByRole('button', {name: 'Add'});
 	}
 
 	async goto(siteUrl?: Site['friendlyUrlPath']) {

@@ -94,11 +94,14 @@ test(
 		await expect(
 			page.getByText('Web Content Article', {exact: true})
 		).toBeVisible();
+
 		await expect(
 			page.locator('p').filter({hasText: 'Basic Web Content'})
 		).toBeVisible();
+
 		await expect(page.getByLabel('Template Key')).toBeVisible();
 		await expect(page.getByLabel('URL', {exact: true})).toBeVisible();
+
 		await expect(
 			page.getByLabel('WebDAV URL', {exact: true})
 		).toBeVisible();

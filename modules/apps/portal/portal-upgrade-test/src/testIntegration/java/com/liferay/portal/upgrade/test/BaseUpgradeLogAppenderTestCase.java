@@ -255,8 +255,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 		_assertReport("SQL: update NonexistingTable;");
 
 		_assertLogContextContains(
-			"upgrade.report.failed.sqls",
-			"SQL: update NonexistingTable;");
+			"upgrade.report.failed.sqls", "SQL: update NonexistingTable;");
 	}
 
 	@Test

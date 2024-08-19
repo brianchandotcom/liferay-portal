@@ -506,11 +506,11 @@ public class LayoutStructure {
 		return layoutStructureRule;
 	}
 
-	public List<LayoutStructureItem> duplicateLayoutStructureItem(
+	public Map<String, List<LayoutStructureItem>> duplicateLayoutStructureItem(
 		List<String> itemIds) {
 
-		List<LayoutStructureItem> duplicatedLayoutStructureItems =
-			new ArrayList<>();
+		Map<String, List<LayoutStructureItem>>
+			duplicatedLayoutStructureItemsMap = new HashMap<>();
 
 		for (String itemId : itemIds) {
 			LayoutStructureItem layoutStructureItem = _layoutStructureItems.get(
@@ -525,12 +525,23 @@ public class LayoutStructure {
 
 			int position = childrenItemIds.indexOf(itemId) + 1;
 
-			duplicatedLayoutStructureItems.addAll(
+			List<LayoutStructureItem> duplicatedLayoutStructureItems =
 				_duplicateLayoutStructureItem(
-					itemId, layoutStructureItem.getParentItemId(), position));
+					itemId, layoutStructureItem.getParentItemId(), position);
+
+			if (ListUtil.isEmpty(duplicatedLayoutStructureItems)) {
+				continue;
+			}
+
+			LayoutStructureItem duplicatedLayoutStructure =
+				duplicatedLayoutStructureItems.get(0);
+
+			duplicatedLayoutStructureItemsMap.put(
+				duplicatedLayoutStructure.getItemId(),
+				duplicatedLayoutStructureItems);
 		}
 
-		return duplicatedLayoutStructureItems;
+		return duplicatedLayoutStructureItemsMap;
 	}
 
 	@Override

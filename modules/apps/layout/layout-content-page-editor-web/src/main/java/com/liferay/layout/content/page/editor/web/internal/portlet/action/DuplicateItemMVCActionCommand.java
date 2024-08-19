@@ -174,41 +174,45 @@ public class DuplicateItemMVCActionCommand
 			themeDisplay.getScopeGroupId(), segmentsExperienceId,
 			themeDisplay.getPlid(),
 			layoutStructure -> {
-				List<LayoutStructureItem> duplicatedLayoutStructureItems =
-					layoutStructure.duplicateLayoutStructureItem(
-						Arrays.asList(finalItemIds));
+				Map<String, List<LayoutStructureItem>>
+					duplicatedLayoutStructureItemsMap =
+						layoutStructure.duplicateLayoutStructureItem(
+							Arrays.asList(finalItemIds));
 
-				for (LayoutStructureItem duplicatedLayoutStructureItem :
-						duplicatedLayoutStructureItems) {
+				for (Map.Entry<String, List<LayoutStructureItem>> entry :
+						duplicatedLayoutStructureItemsMap.entrySet()) {
 
-					duplicatedLayoutStructureItemIds.add(
-						duplicatedLayoutStructureItem.getItemId());
+					duplicatedLayoutStructureItemIds.add(entry.getKey());
 
-					if (!(duplicatedLayoutStructureItem instanceof
-							FragmentStyledLayoutStructureItem)) {
+					for (LayoutStructureItem duplicatedLayoutStructureItem :
+							entry.getValue()) {
 
-						continue;
+						if (!(duplicatedLayoutStructureItem instanceof
+								FragmentStyledLayoutStructureItem)) {
+
+							continue;
+						}
+
+						FragmentStyledLayoutStructureItem
+							fragmentStyledLayoutStructureItem =
+								(FragmentStyledLayoutStructureItem)
+									duplicatedLayoutStructureItem;
+
+						long originalFragmentEntryLinkId =
+							fragmentStyledLayoutStructureItem.
+								getFragmentEntryLinkId();
+
+						long fragmentEntryLinkId = _duplicateFragmentEntryLink(
+							actionRequest, originalFragmentEntryLinkId);
+
+						layoutStructure.updateItemConfig(
+							JSONUtil.put(
+								"fragmentEntryLinkId", fragmentEntryLinkId),
+							duplicatedLayoutStructureItem.getItemId());
+
+						duplicatedFragmentEntryLinkIdsMap.put(
+							fragmentEntryLinkId, originalFragmentEntryLinkId);
 					}
-
-					FragmentStyledLayoutStructureItem
-						fragmentStyledLayoutStructureItem =
-							(FragmentStyledLayoutStructureItem)
-								duplicatedLayoutStructureItem;
-
-					long originalFragmentEntryLinkId =
-						fragmentStyledLayoutStructureItem.
-							getFragmentEntryLinkId();
-
-					long fragmentEntryLinkId = _duplicateFragmentEntryLink(
-						actionRequest, originalFragmentEntryLinkId);
-
-					layoutStructure.updateItemConfig(
-						JSONUtil.put(
-							"fragmentEntryLinkId", fragmentEntryLinkId),
-						duplicatedLayoutStructureItem.getItemId());
-
-					duplicatedFragmentEntryLinkIdsMap.put(
-						fragmentEntryLinkId, originalFragmentEntryLinkId);
 				}
 			});
 
@@ -249,7 +253,7 @@ public class DuplicateItemMVCActionCommand
 			"duplicatedItemIds",
 			() -> {
 				if (!duplicatedLayoutStructureItemIds.isEmpty()) {
-					return duplicatedLayoutStructureItemIds;
+					return JSONUtil.putAll(duplicatedLayoutStructureItemIds);
 				}
 
 				return null;

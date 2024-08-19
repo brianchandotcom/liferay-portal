@@ -35,19 +35,19 @@ public class TestrayCommandLineRunner
 	public void archiveTestrayBuilds() throws Exception {
 		JSONArray jsonArray = new JSONObject(
 			get(
-			_getAuthorization(),
-			_uriBuilderFactory.builder(
-			).path(
-				"/o/c/builds"
-			).queryParam(
-				"filter",
-				"archived eq false and promoted eq false and (not (" +
-					"buildToTasks/id ne '0')) and dateCreated lt " +
-						_currentDateTime.minusDays(_maxDaysOpened)
-			).queryParam(
-				"pageSize", "-1"
-			).build(
-			).toString())
+				_getAuthorization(),
+				_uriBuilderFactory.builder(
+				).path(
+					"/o/c/builds"
+				).queryParam(
+					"filter",
+					"archived eq false and promoted eq false and (not (" +
+						"buildToTasks/id ne '0')) and dateCreated lt " +
+							_currentDateTime.minusDays(_maxDaysOpened)
+				).queryParam(
+					"pageSize", "-1"
+				).build(
+				).toString())
 		).getJSONArray(
 			"items"
 		);
@@ -72,20 +72,20 @@ public class TestrayCommandLineRunner
 	public void deleteTestrayBuilds() throws Exception {
 		JSONArray jsonArray = new JSONObject(
 			get(
-			_getAuthorization(),
-			_uriBuilderFactory.builder(
-			).path(
-				"/o/c/builds"
-			).queryParam(
-				"fields", "id"
-			).queryParam(
-				"filter",
-				"archived eq true and dateArchived lt " +
-					_currentDateTime.minusDays(_maxDaysArchived)
-			).queryParam(
-				"pageSize", "-1"
-			).build(
-			).toString())
+				_getAuthorization(),
+				_uriBuilderFactory.builder(
+				).path(
+					"/o/c/builds"
+				).queryParam(
+					"fields", "id"
+				).queryParam(
+					"filter",
+					"archived eq true and dateArchived lt " +
+						_currentDateTime.minusDays(_maxDaysArchived)
+				).queryParam(
+					"pageSize", "-1"
+				).build(
+				).toString())
 		).getJSONArray(
 			"items"
 		);
@@ -117,8 +117,6 @@ public class TestrayCommandLineRunner
 	).truncatedTo(
 		ChronoUnit.SECONDS
 	);
-	private final UriBuilderFactory _uriBuilderFactory =
-		new DefaultUriBuilderFactory();
 
 	@Autowired
 	private LiferayOAuth2AccessTokenManager _liferayOAuth2AccessTokenManager;
@@ -131,5 +129,8 @@ public class TestrayCommandLineRunner
 
 	@Value("${liferay.testray.etc.cron.max.days.opened}")
 	private Long _maxDaysOpened;
+
+	private final UriBuilderFactory _uriBuilderFactory =
+		new DefaultUriBuilderFactory();
 
 }

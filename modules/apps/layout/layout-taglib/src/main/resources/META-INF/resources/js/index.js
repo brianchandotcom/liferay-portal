@@ -4,6 +4,7 @@
  */
 
 export {default as ViewUsages} from './layout_classed_model_usages_view/ViewUsages';
+export {default as FormStepHandler} from './render_layout_structure/FormStepHandler';
 export {default as InfoItemActionHandler} from './render_layout_structure/InfoItemActionHandler';
 export {default as NumericCollectionPaginationPropsTransformer} from './render_layout_structure/NumericCollectionPaginationPropsTransformer';
 export {default as SimpleCollectionPagination} from './render_layout_structure/SimpleCollectionPagination';

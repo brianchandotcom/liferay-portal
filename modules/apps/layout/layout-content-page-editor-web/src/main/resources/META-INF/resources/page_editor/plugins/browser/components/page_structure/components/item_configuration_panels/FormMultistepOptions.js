@@ -78,7 +78,7 @@ export default function FormMultistepOptions({item, onValueSelect}) {
 						typeOptions: {
 							validation: {
 								errorMessage: Liferay.Language.get(
-									'minimum-number-of-steps-is-2'
+									'at-least-two-steps-are-required'
 								),
 								min: 2,
 								type: 'number',

@@ -6,6 +6,7 @@
 package com.liferay.portal.monitoring.internal.servlet.filter;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -15,10 +16,7 @@ import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.monitoring.DataSampleFactory;
 import com.liferay.portal.kernel.monitoring.DataSampleThreadLocal;
-import com.liferay.portal.kernel.monitoring.PortalMonitoringControl;
-import com.liferay.portal.kernel.monitoring.PortletMonitoringControl;
 import com.liferay.portal.kernel.monitoring.RequestStatus;
-import com.liferay.portal.kernel.monitoring.ServiceMonitoringControl;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.servlet.BaseFilter;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
@@ -26,10 +24,12 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.monitoring.internal.configuration.MonitoringConfiguration;
 import com.liferay.portal.monitoring.internal.statistics.portal.PortalRequestDataSample;
 
 import java.io.IOException;
 
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.servlet.Filter;
@@ -38,7 +38,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -46,6 +48,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Michael C. Han
  */
 @Component(
+	configurationPid = "com.liferay.portal.monitoring.internal.configuration.MonitoringConfiguration",
 	enabled = false,
 	property = {
 		"after-filter=Absolute Redirects Filter", "dispatcher=FORWARD",
@@ -57,23 +60,19 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class MonitoringFilter extends BaseFilter {
 
-	@Override
-	public boolean isFilterEnabled() {
-		if (!super.isFilterEnabled()) {
-			return false;
-		}
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_monitoringConfiguration = ConfigurableUtil.createConfigurable(
+			MonitoringConfiguration.class, properties);
 
-		if (!_portalMonitoringControl.isMonitorPortalRequest() &&
-			!_portletMonitoringControl.isMonitorPortletActionRequest() &&
-			!_portletMonitoringControl.isMonitorPortletEventRequest() &&
-			!_portletMonitoringControl.isMonitorPortletRenderRequest() &&
-			!_portletMonitoringControl.isMonitorPortletResourceRequest() &&
-			!_serviceMonitoringControl.isMonitorServiceRequest()) {
-
-			return false;
-		}
-
-		return true;
+		setFilterEnabled(
+			_monitoringConfiguration.monitorPortalRequest() ||
+			_monitoringConfiguration.monitorPortletActionRequest() ||
+			_monitoringConfiguration.monitorPortletEventRequest() ||
+			_monitoringConfiguration.monitorPortletRenderRequest() ||
+			_monitoringConfiguration.monitorPortletResourceRequest() ||
+			_monitoringConfiguration.monitorServiceRequest());
 	}
 
 	@Override
@@ -91,7 +90,7 @@ public class MonitoringFilter extends BaseFilter {
 
 		_incrementProcessFilterCount();
 
-		if (_portalMonitoringControl.isMonitorPortalRequest()) {
+		if (_monitoringConfiguration.monitorPortalRequest()) {
 			portalRequestDataSample =
 				(PortalRequestDataSample)
 					_dataSampleFactory.createPortalRequestDataSample(
@@ -218,16 +217,9 @@ public class MonitoringFilter extends BaseFilter {
 	@Reference
 	private MessageBus _messageBus;
 
+	private volatile MonitoringConfiguration _monitoringConfiguration;
+
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private PortalMonitoringControl _portalMonitoringControl;
-
-	@Reference
-	private PortletMonitoringControl _portletMonitoringControl;
-
-	@Reference
-	private ServiceMonitoringControl _serviceMonitoringControl;
 
 }

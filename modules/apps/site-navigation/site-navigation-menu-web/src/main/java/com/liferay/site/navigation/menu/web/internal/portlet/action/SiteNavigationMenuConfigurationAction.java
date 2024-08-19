@@ -85,9 +85,9 @@ public class SiteNavigationMenuConfigurationAction
 
 		modifiableSettings.reset("included-layouts");
 
-		updateDisplayStyleGroupPreferences(modifiableSettings, portletRequest);
-		updateRootMenuItemPreferences(modifiableSettings);
-		updateSiteNavigationMenuPreferences(modifiableSettings);
+		_updateDisplayStyleGroupPreferences(modifiableSettings, portletRequest);
+		_updateRootMenuItemPreferences(modifiableSettings);
+		_updateSiteNavigationMenuPreferences(modifiableSettings);
 	}
 
 	@Override
@@ -101,7 +101,7 @@ public class SiteNavigationMenuConfigurationAction
 		super.doDispatch(renderRequest, renderResponse);
 	}
 
-	protected void updateDisplayStyleGroupPreferences(
+	private void _updateDisplayStyleGroupPreferences(
 		ModifiableSettings modifiableSettings, PortletRequest portletRequest) {
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPD-23048")) {
@@ -129,7 +129,7 @@ public class SiteNavigationMenuConfigurationAction
 		}
 	}
 
-	protected void updateRootMenuItemPreferences(
+	private void _updateRootMenuItemPreferences(
 			ModifiableSettings modifiableSettings)
 		throws PortalException {
 
@@ -164,7 +164,7 @@ public class SiteNavigationMenuConfigurationAction
 		modifiableSettings.reset("rootMenuItemExternalReferenceCode");
 	}
 
-	protected void updateSiteNavigationMenuPreferences(
+	private void _updateSiteNavigationMenuPreferences(
 			ModifiableSettings modifiableSettings)
 		throws PortalException {
 

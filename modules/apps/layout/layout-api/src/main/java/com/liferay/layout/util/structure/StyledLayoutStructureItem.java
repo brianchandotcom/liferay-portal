@@ -5,6 +5,8 @@
 
 package com.liferay.layout.util.structure;
 
+import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
+import com.liferay.document.library.util.DLURLHelperUtil;
 import com.liferay.layout.responsive.ViewportSize;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringPool;
@@ -13,6 +15,10 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -210,6 +216,54 @@ public abstract class StyledLayoutStructureItem extends LayoutStructureItem {
 	protected Map<String, JSONObject> viewportStyleJSONObjects =
 		new HashMap<>();
 
+	private JSONObject _getBackgroundImageStyleValueJSONObject(
+		Object styleValue) {
+
+		if (styleValue == null) {
+			return null;
+		}
+
+		JSONObject styleValueJSONObject = (JSONObject)styleValue;
+
+		long fileEntryId = styleValueJSONObject.getLong("fileEntryId");
+
+		if (fileEntryId <= 0) {
+			return styleValueJSONObject;
+		}
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if (serviceContext == null) {
+			return styleValueJSONObject;
+		}
+
+		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+
+		if (themeDisplay == null) {
+			return styleValueJSONObject;
+		}
+
+		try {
+			FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
+				fileEntryId);
+
+			styleValueJSONObject.put(
+				"url",
+				DLURLHelperUtil.getPreviewURL(
+					fileEntry, fileEntry.getFileVersion(), themeDisplay,
+					StringPool.BLANK, false, false));
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to get file entry  " + fileEntryId, exception);
+			}
+		}
+
+		return styleValueJSONObject;
+	}
+
 	private void _updateCustomCSSViewports(
 		JSONObject itemConfigJSONObject, ViewportSize viewportSize) {
 
@@ -244,6 +298,11 @@ public abstract class StyledLayoutStructureItem extends LayoutStructureItem {
 					currentJSONObject.remove(styleName);
 				}
 				else {
+					if (Objects.equals(styleName, "backgroundImage")) {
+						styleValue = _getBackgroundImageStyleValueJSONObject(
+							styleValue);
+					}
+
 					currentJSONObject.put(styleName, styleValue);
 				}
 			}

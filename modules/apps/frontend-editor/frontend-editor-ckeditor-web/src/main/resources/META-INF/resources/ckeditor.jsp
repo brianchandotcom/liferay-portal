@@ -344,7 +344,7 @@ name = HtmlUtil.escapeJS(name);
 			if (iframe) {
 				iframe.attr(
 					'aria-labelledby',
-					'<%= namespace %>Aria ' +
+					'<%= HtmlUtil.escapeAttribute(namespace) %>Aria ' +
 						iframe._node.attributes['aria-describedby'].value
 				);
 			}

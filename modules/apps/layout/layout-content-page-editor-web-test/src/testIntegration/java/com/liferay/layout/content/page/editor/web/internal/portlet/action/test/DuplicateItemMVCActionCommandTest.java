@@ -192,7 +192,10 @@ public class DuplicateItemMVCActionCommandTest {
 				segmentsExperienceId),
 			new MockLiferayPortletActionResponse());
 
-		String duplicatedItemId = jsonObject.getString("duplicatedItemId");
+		List<String> duplicatedItemIds = (List<String>)jsonObject.get(
+			"duplicatedItemIds");
+
+		String duplicatedItemId = duplicatedItemIds.get(0);
 
 		Assert.assertNotNull(duplicatedItemId);
 

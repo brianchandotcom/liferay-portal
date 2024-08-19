@@ -7,9 +7,9 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
-import {templatesPageTest} from '../../fixtures/templatesPageTest';
 import getRandomString from '../../utils/getRandomString';
 import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
+import {templatesPageTest} from './fixtures/templatesPageTest';
 
 const test = mergeTests(isolatedSiteTest, loginTest(), templatesPageTest);
 

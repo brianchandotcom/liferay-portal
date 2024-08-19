@@ -5,10 +5,10 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
-import fillAndClickOutside from '../../utils/fillAndClickOutside';
-import {PORTLET_URLS} from '../../utils/portletUrls';
-import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
+import fillAndClickOutside from '../../../utils/fillAndClickOutside';
+import {PORTLET_URLS} from '../../../utils/portletUrls';
+import {waitForSuccessAlert} from '../../../utils/waitForSuccessAlert';
 
 export class TemplatesPage {
 	readonly newButton: Locator;

@@ -5,7 +5,7 @@
 
 import {test} from '@playwright/test';
 
-import {TemplatesPage} from '../pages/template-web/TemplatesPage';
+import {TemplatesPage} from '../pages/TemplatesPage';
 
 const templatesPageTest = test.extend<{
 	templatesPage: TemplatesPage;

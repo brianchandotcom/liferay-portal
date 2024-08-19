@@ -917,20 +917,20 @@ public class CallableStatementWrapper
 	}
 
 	@Override
-	public void setObject(int parameterIndex, Object object, int targetSqlType)
+	public void setObject(int parameterIndex, Object object, int targetSQLType)
 		throws SQLException {
 
-		_callableStatement.setObject(parameterIndex, object, targetSqlType);
+		_callableStatement.setObject(parameterIndex, object, targetSQLType);
 	}
 
 	@Override
 	public void setObject(
-			int parameterIndex, Object object, int targetSqlType,
+			int parameterIndex, Object object, int targetSQLType,
 			int scaleOrLength)
 		throws SQLException {
 
 		_callableStatement.setObject(
-			parameterIndex, object, targetSqlType, scaleOrLength);
+			parameterIndex, object, targetSQLType, scaleOrLength);
 	}
 
 	@Override
@@ -942,19 +942,19 @@ public class CallableStatementWrapper
 
 	@Override
 	public void setObject(
-			String parameterName, Object object, int targetSqlType)
+			String parameterName, Object object, int targetSQLType)
 		throws SQLException {
 
-		_callableStatement.setObject(parameterName, object, targetSqlType);
+		_callableStatement.setObject(parameterName, object, targetSQLType);
 	}
 
 	@Override
 	public void setObject(
-			String parameterName, Object object, int targetSqlType, int scale)
+			String parameterName, Object object, int targetSQLType, int scale)
 		throws SQLException {
 
 		_callableStatement.setObject(
-			parameterName, object, targetSqlType, scale);
+			parameterName, object, targetSQLType, scale);
 	}
 
 	@Override

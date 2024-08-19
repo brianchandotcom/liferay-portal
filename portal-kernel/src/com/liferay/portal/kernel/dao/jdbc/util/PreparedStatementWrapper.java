@@ -315,20 +315,20 @@ public class PreparedStatementWrapper
 	}
 
 	@Override
-	public void setObject(int parameterIndex, Object object, int targetSqlType)
+	public void setObject(int parameterIndex, Object object, int targetSQLType)
 		throws SQLException {
 
-		_preparedStatement.setObject(parameterIndex, object, targetSqlType);
+		_preparedStatement.setObject(parameterIndex, object, targetSQLType);
 	}
 
 	@Override
 	public void setObject(
-			int parameterIndex, Object object, int targetSqlType,
+			int parameterIndex, Object object, int targetSQLType,
 			int scaleOrLength)
 		throws SQLException {
 
 		_preparedStatement.setObject(
-			parameterIndex, object, targetSqlType, scaleOrLength);
+			parameterIndex, object, targetSQLType, scaleOrLength);
 	}
 
 	@Override

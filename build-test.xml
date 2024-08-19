@@ -2897,7 +2897,7 @@ server.detector.server.id=wildfly</echo>
 					<equals arg1="${database.type}" arg2="mysql" />
 				</or>
 				<then>
-					<property name="database.url.upgrade" value="${database.url}&amp;rewriteBatchedStatements=true" />
+					<property name="database.url.upgrade" value="${database.url}&amp;rewriteBatchedStatements=true&amp;cachePrepStmts=true&amp;prepStmtCacheSize=1000&amp;prepStmtCacheSqlLimit=2048" />
 				</then>
 				<elseif>
 					<equals arg1="${database.type}" arg2="postgresql" />
@@ -12504,7 +12504,7 @@ portal.proxy.path=/${portal.proxy.path}</echo>
 						<replace
 							file="portal-impl/src/portal-ext.properties"
 							token="${database.url}"
-							value="${database.url}&amp;rewriteBatchedStatements=true"
+							value="${database.url}&amp;rewriteBatchedStatements=true&amp;cachePrepStmts=true&amp;prepStmtCacheSize=1000&amp;prepStmtCacheSqlLimit=2048"
 						/>
 					</then>
 					<elseif>

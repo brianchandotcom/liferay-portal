@@ -37,8 +37,8 @@ definition {
 		Variables.assertDefined(parameterList = ${roleTitle});
 
 		var descriptionMap = JSONRoleSetter.setDescriptionMap(description = ${roleDescription});
-		var name = JSONRoleSetter.setName(name = ${roleTitle});
-		var titleMap = JSONRoleSetter.setTitleMap(title = ${roleKey});
+		var name = JSONRoleSetter.setName(name = ${roleKey});
+		var titleMap = JSONRoleSetter.setTitleMap(title = ${roleTitle});
 		var type = JSONRoleSetter.setType(roleType = "regular");
 
 		JSONRoleAPI._addRole(

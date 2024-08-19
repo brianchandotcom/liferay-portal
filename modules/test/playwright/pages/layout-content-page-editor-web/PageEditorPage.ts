@@ -226,10 +226,10 @@ export class PageEditorPage {
 
 				if (inputType === 'checkbox') {
 					if (value as boolean) {
-						field.check();
+						await field.check();
 					}
 					else {
-						field.uncheck();
+						await field.uncheck();
 					}
 
 					return;

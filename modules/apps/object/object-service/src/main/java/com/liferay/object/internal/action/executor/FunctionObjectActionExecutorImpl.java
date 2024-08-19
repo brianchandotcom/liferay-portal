@@ -17,6 +17,7 @@ import com.liferay.portal.catapult.PortalCatapult;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -47,13 +48,19 @@ public class FunctionObjectActionExecutorImpl
 			JSONObject payloadJSONObject, long userId)
 		throws Exception {
 
-		_portalCatapult.launch(
-			_companyId, Http.Method.POST,
-			_functionObjectActionExecutorImplConfiguration.
-				oAuth2ApplicationExternalReferenceCode(),
-			payloadJSONObject,
-			_functionObjectActionExecutorImplConfiguration.resourcePath(),
-			userId);
+		TransactionCommitCallbackUtil.registerCallback(
+			() -> {
+				_portalCatapult.launch(
+					_companyId, Http.Method.POST,
+					_functionObjectActionExecutorImplConfiguration.
+						oAuth2ApplicationExternalReferenceCode(),
+					payloadJSONObject,
+					_functionObjectActionExecutorImplConfiguration.
+						resourcePath(),
+					userId);
+
+				return null;
+			});
 	}
 
 	@Override

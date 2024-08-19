@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -349,14 +348,11 @@ public class JournalSubscriptionLocalizedContentTest
 			journalArticle = _journalArticleLocalService.getLatestArticle(
 				journalArticle.getResourcePrimKey());
 
-			journalArticleDiffs = HtmlUtil.escape(
-				_diffHtml.replaceStyles(
-					_journalHelper.diffHtml(
-						journalArticle.getGroupId(),
-						journalArticle.getArticleId(),
-						previousJournalArticleVersion,
-						journalArticle.getVersion(), user.getLanguageId(), null,
-						themeDisplay)));
+			journalArticleDiffs = _diffHtml.replaceStyles(
+				_journalHelper.diffHtml(
+					journalArticle.getGroupId(), journalArticle.getArticleId(),
+					previousJournalArticleVersion, journalArticle.getVersion(),
+					user.getLanguageId(), null, themeDisplay));
 		}
 
 		JournalArticleDisplay journalArticleDisplay =

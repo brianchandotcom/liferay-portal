@@ -132,6 +132,16 @@ public class SkuUnitOfMeasureSerDes {
 			sb.append(skuUnitOfMeasure.getPrecision());
 		}
 
+		if (skuUnitOfMeasure.getPricingQuantity() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"pricingQuantity\": ");
+
+			sb.append(skuUnitOfMeasure.getPricingQuantity());
+		}
+
 		if (skuUnitOfMeasure.getPrimary() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -275,6 +285,15 @@ public class SkuUnitOfMeasureSerDes {
 				"precision", String.valueOf(skuUnitOfMeasure.getPrecision()));
 		}
 
+		if (skuUnitOfMeasure.getPricingQuantity() == null) {
+			map.put("pricingQuantity", null);
+		}
+		else {
+			map.put(
+				"pricingQuantity",
+				String.valueOf(skuUnitOfMeasure.getPricingQuantity()));
+		}
+
 		if (skuUnitOfMeasure.getPrimary() == null) {
 			map.put("primary", null);
 		}
@@ -362,6 +381,9 @@ public class SkuUnitOfMeasureSerDes {
 			else if (Objects.equals(jsonParserFieldName, "precision")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "pricingQuantity")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "primary")) {
 				return false;
 			}
@@ -435,6 +457,12 @@ public class SkuUnitOfMeasureSerDes {
 				if (jsonParserFieldValue != null) {
 					skuUnitOfMeasure.setPrecision(
 						Integer.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "pricingQuantity")) {
+				if (jsonParserFieldValue != null) {
+					skuUnitOfMeasure.setPricingQuantity(
+						new BigDecimal((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "primary")) {

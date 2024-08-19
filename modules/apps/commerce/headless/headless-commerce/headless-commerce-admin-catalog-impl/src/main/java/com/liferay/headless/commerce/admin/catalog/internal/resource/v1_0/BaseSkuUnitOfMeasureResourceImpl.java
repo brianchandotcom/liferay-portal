@@ -178,7 +178,7 @@ public abstract class BaseSkuUnitOfMeasureResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/sku-unit-of-measures/{id}' -d $'{"active": ___, "basePrice": ___, "incrementalOrderQuantity": ___, "key": ___, "name": ___, "precision": ___, "primary": ___, "priority": ___, "promoPrice": ___, "rate": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/sku-unit-of-measures/{id}' -d $'{"active": ___, "basePrice": ___, "incrementalOrderQuantity": ___, "key": ___, "name": ___, "precision": ___, "pricingQuantity": ___, "primary": ___, "priority": ___, "promoPrice": ___, "rate": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -255,7 +255,7 @@ public abstract class BaseSkuUnitOfMeasureResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/skus/by-externalReferenceCode/{externalReferenceCode}/sku-unit-of-measures' -d $'{"active": ___, "basePrice": ___, "incrementalOrderQuantity": ___, "key": ___, "name": ___, "precision": ___, "primary": ___, "priority": ___, "promoPrice": ___, "rate": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/skus/by-externalReferenceCode/{externalReferenceCode}/sku-unit-of-measures' -d $'{"active": ___, "basePrice": ___, "incrementalOrderQuantity": ___, "key": ___, "name": ___, "precision": ___, "pricingQuantity": ___, "primary": ___, "priority": ___, "promoPrice": ___, "rate": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -331,7 +331,7 @@ public abstract class BaseSkuUnitOfMeasureResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/skus/{id}/sku-unit-of-measures' -d $'{"active": ___, "basePrice": ___, "incrementalOrderQuantity": ___, "key": ___, "name": ___, "precision": ___, "primary": ___, "priority": ___, "promoPrice": ___, "rate": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/skus/{id}/sku-unit-of-measures' -d $'{"active": ___, "basePrice": ___, "incrementalOrderQuantity": ___, "key": ___, "name": ___, "precision": ___, "pricingQuantity": ___, "primary": ___, "priority": ___, "promoPrice": ___, "rate": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {

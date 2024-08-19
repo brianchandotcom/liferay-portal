@@ -197,6 +197,27 @@ public class SkuUnitOfMeasure implements Cloneable, Serializable {
 
 	protected Integer precision;
 
+	public BigDecimal getPricingQuantity() {
+		return pricingQuantity;
+	}
+
+	public void setPricingQuantity(BigDecimal pricingQuantity) {
+		this.pricingQuantity = pricingQuantity;
+	}
+
+	public void setPricingQuantity(
+		UnsafeSupplier<BigDecimal, Exception> pricingQuantityUnsafeSupplier) {
+
+		try {
+			pricingQuantity = pricingQuantityUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected BigDecimal pricingQuantity;
+
 	public Boolean getPrimary() {
 		return primary;
 	}

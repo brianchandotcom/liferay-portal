@@ -1035,6 +1035,14 @@ public abstract class BaseSkuUnitOfMeasureResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("pricingQuantity", additionalAssertFieldName)) {
+				if (skuUnitOfMeasure.getPricingQuantity() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("primary", additionalAssertFieldName)) {
 				if (skuUnitOfMeasure.getPrimary() == null) {
 					valid = false;
@@ -1286,6 +1294,17 @@ public abstract class BaseSkuUnitOfMeasureResourceTestCase {
 				if (!Objects.deepEquals(
 						skuUnitOfMeasure1.getPrecision(),
 						skuUnitOfMeasure2.getPrecision())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("pricingQuantity", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						skuUnitOfMeasure1.getPricingQuantity(),
+						skuUnitOfMeasure2.getPricingQuantity())) {
 
 					return false;
 				}
@@ -1547,6 +1566,11 @@ public abstract class BaseSkuUnitOfMeasureResourceTestCase {
 			sb.append(String.valueOf(skuUnitOfMeasure.getPrecision()));
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("pricingQuantity")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("primary")) {

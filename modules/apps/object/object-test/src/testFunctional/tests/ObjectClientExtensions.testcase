@@ -250,4 +250,57 @@ definition {
 		}
 	}
 
+	@description = "LPD-34312 - Verify that an object action using a client extension can update unmodifiable system object definition field"
+	@priority = 5
+	test CanTriggerActionWithUnmodifiableSystemObjectDefinition {
+		task ("Given Liferay Sample Etc Spring Boot is deployed into the current virtual instance") {
+			var clientExtensionSamples = "liferay-sample-etc-spring-boot";
+
+			for (var clientExtension : list ${clientExtensionSamples}) {
+				AntCommands.runCommand("build-test-liferay-sample-workspace.xml", "deploy-workspace-client-extension -Dvirtual.instance.id=${companyWebId} -Dworkspace.client.extension.name=${clientExtension}");
+			}
+
+			AntCommands.runCommand("build-test-liferay-sample-workspace.xml", "start-liferay-sample-etc-spring-boot -Dvirtual.instance.id=${companyWebId}");
+		}
+
+		task ("and Given the User unmodifiable system object definition") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectSystemObject(label = "User");
+		}
+
+		task ("and Given an object action using a client extension") {
+			ObjectAdmin.goToActionsTab();
+
+			ObjectAdmin.addObjectActionViaUI(
+				actionLabel = "Custom Action",
+				actionName = "customAction",
+				active = "true",
+				thenAction = "object-action-executor[function#liferay-sample-etc-spring-boot-object-action-2]",
+				whenAction = "On After Add");
+		}
+
+		task ("When a new user is added") {
+			User.openUsersAdmin();
+
+			User.addCP(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Then the user screen name is updated") {
+			User.openUsersAdmin();
+
+			User.viewCP(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "userfn");
+		}
+	}
+
 }

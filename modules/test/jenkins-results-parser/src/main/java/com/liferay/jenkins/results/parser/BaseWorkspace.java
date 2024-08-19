@@ -258,10 +258,15 @@ public abstract class BaseWorkspace implements Workspace {
 		for (final String workspaceRepositoryDirName :
 				workspaceRepositoryDirNames.split(",")) {
 
-			_workspaceGitRepositories.put(
-				workspaceRepositoryDirName,
-				buildDatabase.getWorkspaceGitRepository(
-					workspaceRepositoryDirName));
+			try {
+				_workspaceGitRepositories.put(
+					workspaceRepositoryDirName,
+					buildDatabase.getWorkspaceGitRepository(
+						workspaceRepositoryDirName));
+			}
+			catch (Exception exception) {
+				exception.printStackTrace();
+			}
 		}
 	}
 

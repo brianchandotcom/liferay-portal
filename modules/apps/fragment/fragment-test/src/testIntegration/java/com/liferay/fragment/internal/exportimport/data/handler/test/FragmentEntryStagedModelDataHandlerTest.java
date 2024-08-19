@@ -129,12 +129,7 @@ public class FragmentEntryStagedModelDataHandlerTest
 		stagedModel = _fragmentEntryLocalService.updateFragmentEntry(
 			fragmentEntry.getFragmentEntryId(), fileEntry.getFileEntryId());
 
-		try {
-			exportImportStagedModel(stagedModel);
-		}
-		finally {
-			ExportImportThreadLocal.setPortletImportInProcess(false);
-		}
+		_exportImportStagedModel(stagedModel);
 
 		StagedModel importedStagedModel = getStagedModel(
 			stagedModel.getUuid(), liveGroup);
@@ -156,12 +151,7 @@ public class FragmentEntryStagedModelDataHandlerTest
 		stagedModel = _fragmentEntryLocalService.updateFragmentEntry(
 			fragmentEntry.getFragmentEntryId(), 0);
 
-		try {
-			exportImportStagedModel(stagedModel);
-		}
-		finally {
-			ExportImportThreadLocal.setPortletImportInProcess(false);
-		}
+		_exportImportStagedModel(stagedModel);
 
 		importedStagedModel = getStagedModel(stagedModel.getUuid(), liveGroup);
 
@@ -221,12 +211,7 @@ public class FragmentEntryStagedModelDataHandlerTest
 			fragmentEntry.getPreviewFileEntryId(), false,
 			fragmentEntry.getTypeOptions(), WorkflowConstants.STATUS_APPROVED);
 
-		try {
-			exportImportStagedModel(stagedModel);
-		}
-		finally {
-			ExportImportThreadLocal.setPortletImportInProcess(false);
-		}
+		_exportImportStagedModel(stagedModel);
 
 		StagedModel importedStagedModel = getStagedModel(
 			stagedModel.getUuid(), liveGroup);
@@ -312,15 +297,7 @@ public class FragmentEntryStagedModelDataHandlerTest
 			"<h1> Drop Zone 1 </h1>", dropZoneId1 + "HeadingContent",
 			"<h1> Drop Zone 2 </h1>", dropZoneId2 + "HeadingContent");
 
-		ExportImportThreadLocal.setPortletImportInProcess(true);
-
-		try {
-			exportImportStagedModel(fragmentEntry);
-			exportImportStagedModel(_layout);
-		}
-		finally {
-			ExportImportThreadLocal.setPortletImportInProcess(false);
-		}
+		_exportImportStagedModel(fragmentEntry, _layout);
 
 		Layout liveLayout = _layoutLocalService.fetchLayout(
 			_layout.getUuid(), liveGroup.getGroupId(),
@@ -360,15 +337,7 @@ public class FragmentEntryStagedModelDataHandlerTest
 			"<h1> Added Drop Zone </h1>", "<h1> Drop Zone 2 </h1>",
 			dropZoneId2 + "HeadingContent");
 
-		ExportImportThreadLocal.setPortletImportInProcess(true);
-
-		try {
-			exportImportStagedModel(fragmentEntry);
-			exportImportStagedModel(_layout);
-		}
-		finally {
-			ExportImportThreadLocal.setPortletImportInProcess(false);
-		}
+		_exportImportStagedModel(fragmentEntry, _layout);
 
 		_assertHTML(
 			_getFragmentEntryLinkRenderHTML(
@@ -505,6 +474,21 @@ public class FragmentEntryStagedModelDataHandlerTest
 				StringUtil.contains(content, string, StringPool.BLANK));
 
 			content = content.substring(content.indexOf(string));
+		}
+	}
+
+	private void _exportImportStagedModel(StagedModel... stagedModels)
+		throws Exception {
+
+		ExportImportThreadLocal.setPortletImportInProcess(true);
+
+		try {
+			for (StagedModel stagedModel : stagedModels) {
+				exportImportStagedModel(stagedModel);
+			}
+		}
+		finally {
+			ExportImportThreadLocal.setPortletImportInProcess(false);
 		}
 	}
 

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.DefaultUriBuilderFactory;
+import org.springframework.web.util.UriBuilderFactory;
 
 /**
  * @author Wellington Barbosa
@@ -34,7 +35,7 @@ public class AnalyticsRestController extends BaseRestController {
 
 		return get(
 			"Bearer " + _analyticsAuthToken,
-			_defaultUriBuilderFactory.builder(
+			_uriBuilderFactory.builder(
 			).path(
 				"/api/reports/pages"
 			).queryParam(
@@ -64,7 +65,7 @@ public class AnalyticsRestController extends BaseRestController {
 	@Value("${liferay.marketplace.analytics.auth.url}")
 	private String _analyticsAuthUrl;
 
-	private final DefaultUriBuilderFactory _defaultUriBuilderFactory =
+	private final UriBuilderFactory _uriBuilderFactory =
 		new DefaultUriBuilderFactory();
 
 }

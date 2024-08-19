@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.DefaultUriBuilderFactory;
+import org.springframework.web.util.UriBuilderFactory;
 
 /**
  * @author Keven Leone
@@ -43,7 +44,7 @@ public class ConsoleRestController extends BaseRestController {
 
 		return get(
 			"Bearer " + _consoleService.getAccessToken(),
-			_defaultUriBuilderFactory.builder(
+			_uriBuilderFactory.builder(
 			).path(
 				"/admin/user-projects-plan-usage"
 			).queryParam(
@@ -63,7 +64,7 @@ public class ConsoleRestController extends BaseRestController {
 	@Autowired
 	private ConsoleService _consoleService;
 
-	private final DefaultUriBuilderFactory _defaultUriBuilderFactory =
+	private final UriBuilderFactory _uriBuilderFactory =
 		new DefaultUriBuilderFactory();
 
 }

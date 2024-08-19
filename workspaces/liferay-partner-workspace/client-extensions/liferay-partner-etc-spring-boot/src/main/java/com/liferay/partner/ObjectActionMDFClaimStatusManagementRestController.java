@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.DefaultUriBuilderFactory;
+import org.springframework.web.util.UriBuilderFactory;
 
 /**
  * @author Elias Santos
@@ -56,7 +57,7 @@ public class ObjectActionMDFClaimStatusManagementRestController
 			else {
 				String response = get(
 					getAuthorization(),
-					_defaultUriBuilderFactory.builder(
+					_uriBuilderFactory.builder(
 					).path(
 						"/o/c/mdfrequests/by-external-reference-code/" +
 							mdfRequestExternalReferenceCode
@@ -103,10 +104,10 @@ public class ObjectActionMDFClaimStatusManagementRestController
 				mdfRequestExternalReferenceCode);
 	}
 
-	private final DefaultUriBuilderFactory _defaultUriBuilderFactory =
-		new DefaultUriBuilderFactory();
-
 	@Autowired
 	private LiferayOAuth2AccessTokenManager _liferayOAuth2AccessTokenManager;
+
+	private final UriBuilderFactory _uriBuilderFactory =
+		new DefaultUriBuilderFactory();
 
 }

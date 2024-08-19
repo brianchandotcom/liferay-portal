@@ -28,6 +28,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.DefaultUriBuilderFactory;
+import org.springframework.web.util.UriBuilderFactory;
 
 /**
  * @author Amos Fong
@@ -85,7 +86,7 @@ public class CustomerCommandLineRunner
 		JSONObject jsonObject = new JSONObject(
 			get(
 				_getAuthorization(),
-				_defaultUriBuilderFactory.builder(
+				_uriBuilderFactory.builder(
 				).path(
 					"/o/c/ticketattachments"
 				).queryParam(
@@ -120,7 +121,7 @@ public class CustomerCommandLineRunner
 	private static final Log _log = LogFactory.getLog(
 		CustomerCommandLineRunner.class);
 
-	private final DefaultUriBuilderFactory _defaultUriBuilderFactory =
+	private final UriBuilderFactory _uriBuilderFactory =
 		new DefaultUriBuilderFactory();
 
 	@Value("${liferay.customer.etc.spring.boot.client.extension.url}")

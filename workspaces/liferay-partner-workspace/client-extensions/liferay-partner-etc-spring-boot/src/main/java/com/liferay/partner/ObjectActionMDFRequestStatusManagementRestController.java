@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.DefaultUriBuilderFactory;
+import org.springframework.web.util.UriBuilderFactory;
 
 /**
  * @author Felipe França
@@ -90,7 +91,7 @@ public class ObjectActionMDFRequestStatusManagementRestController
 
 		String response = get(
 			getAuthorization(),
-			_defaultUriBuilderFactory.builder(
+			_uriBuilderFactory.builder(
 			).path(
 				"/o/c/activities"
 			).queryParam(
@@ -134,10 +135,10 @@ public class ObjectActionMDFRequestStatusManagementRestController
 				"server");
 	}
 
-	private final DefaultUriBuilderFactory _defaultUriBuilderFactory =
-		new DefaultUriBuilderFactory();
-
 	@Autowired
 	private LiferayOAuth2AccessTokenManager _liferayOAuth2AccessTokenManager;
+
+	private final UriBuilderFactory _uriBuilderFactory =
+		new DefaultUriBuilderFactory();
 
 }

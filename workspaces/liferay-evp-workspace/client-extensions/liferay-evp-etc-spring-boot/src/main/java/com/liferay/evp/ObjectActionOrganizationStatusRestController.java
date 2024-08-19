@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.DefaultUriBuilderFactory;
+import org.springframework.web.util.UriBuilderFactory;
 
 /**
  * @author Elvison Victor
@@ -42,7 +43,7 @@ public class ObjectActionOrganizationStatusRestController
 
 		String response = get(
 			jwt.toString(),
-			_defaultUriBuilderFactory.builder(
+			_uriBuilderFactory.builder(
 			).path(
 				"/o/c/evprequests"
 			).queryParam(
@@ -111,7 +112,7 @@ public class ObjectActionOrganizationStatusRestController
 
 		put(
 			jwt.toString(), itemsJSONArray.toString(),
-			_defaultUriBuilderFactory.builder(
+			_uriBuilderFactory.builder(
 			).path(
 				"/o/c/evprequests/batch"
 			).build(
@@ -120,7 +121,7 @@ public class ObjectActionOrganizationStatusRestController
 		return new ResponseEntity<>(json, HttpStatus.OK);
 	}
 
-	private final DefaultUriBuilderFactory _defaultUriBuilderFactory =
+	private final UriBuilderFactory _uriBuilderFactory =
 		new DefaultUriBuilderFactory();
 
 }

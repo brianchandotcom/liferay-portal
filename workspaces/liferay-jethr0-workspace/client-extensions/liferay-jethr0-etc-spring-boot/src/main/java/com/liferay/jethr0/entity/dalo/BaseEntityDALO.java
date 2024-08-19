@@ -27,6 +27,7 @@ import org.json.JSONObject;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.util.DefaultUriBuilderFactory;
 import org.springframework.web.util.UriBuilder;
+import org.springframework.web.util.UriBuilderFactory;
 
 /**
  * @author Michael Hashimoto
@@ -291,7 +292,7 @@ public abstract class BaseEntityDALO<T extends Entity>
 
 						try {
 							UriBuilder uriBuilder =
-								_defaultUriBuilderFactory.builder();
+								_uriBuilderFactory.builder();
 
 							uriBuilder.path(
 								_getEntityURLPath()
@@ -465,7 +466,7 @@ public abstract class BaseEntityDALO<T extends Entity>
 
 	private static final Log _log = LogFactory.getLog(BaseDALO.class);
 
-	private final DefaultUriBuilderFactory _defaultUriBuilderFactory =
+	private final UriBuilderFactory _uriBuilderFactory =
 		new DefaultUriBuilderFactory();
 
 }

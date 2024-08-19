@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.DefaultUriBuilderFactory;
+import org.springframework.web.util.UriBuilderFactory;
 
 /**
  * @author Jair Medeiros
@@ -36,7 +37,7 @@ public class PartnerCommandLineRunner
 
 		String response = get(
 			_getAuthorization(),
-			_defaultUriBuilderFactory.builder(
+			_uriBuilderFactory.builder(
 			).path(
 				"/o/c/activities"
 			).queryParam(
@@ -87,7 +88,7 @@ public class PartnerCommandLineRunner
 
 		response = get(
 			_getAuthorization(),
-			_defaultUriBuilderFactory.builder(
+			_uriBuilderFactory.builder(
 			).path(
 				"/o/c/activities"
 			).queryParam(
@@ -148,7 +149,7 @@ public class PartnerCommandLineRunner
 
 							response = get(
 								_getAuthorization(),
-								_defaultUriBuilderFactory.builder(
+								_uriBuilderFactory.builder(
 								).path(
 									"/o/c/mdfclaims/" + mdfClaimId
 								).build(
@@ -262,10 +263,10 @@ public class PartnerCommandLineRunner
 	private static final Log _log = LogFactory.getLog(
 		PartnerCommandLineRunner.class);
 
-	private final DefaultUriBuilderFactory _defaultUriBuilderFactory =
-		new DefaultUriBuilderFactory();
-
 	@Autowired
 	private LiferayOAuth2AccessTokenManager _liferayOAuth2AccessTokenManager;
+
+	private final UriBuilderFactory _uriBuilderFactory =
+		new DefaultUriBuilderFactory();
 
 }

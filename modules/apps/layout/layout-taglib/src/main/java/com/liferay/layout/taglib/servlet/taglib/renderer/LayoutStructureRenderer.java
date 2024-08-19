@@ -900,6 +900,15 @@ public class LayoutStructureRenderer {
 		}
 
 		jspWriter.write("</div>");
+
+		_renderComponent(
+			"FormStepComponent" +
+				formStepContainerStyledLayoutStructureItem.getItemId(),
+			HashMapBuilder.<String, Object>put(
+				"formId",
+				formStepContainerStyledLayoutStructureItem.getParentItemId()
+			).build(),
+			"{FormStepHandler} from layout-taglib");
 	}
 
 	private void _renderFormStyledLayoutStructureItem(

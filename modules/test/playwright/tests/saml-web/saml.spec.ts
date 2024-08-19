@@ -469,6 +469,8 @@ test('Create two virtual instances, set localhost and one to IdP and one SP, and
 		page
 	);
 
+	await serviceProviderConnectionsPage.goTo();
+
 	await serviceProviderConnectionsPage.deleteServiceProviderConnection(
 		DEFAULT_SP_NAME
 	);

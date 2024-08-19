@@ -28,6 +28,8 @@ export async function addIdentityProviderConnection(
 		page
 	);
 
+	await identityProviderConnectionsPage.goTo();
+
 	await identityProviderConnectionsPage.addIdentityProviderConnection(
 		idpConnection
 	);
@@ -43,6 +45,8 @@ async function addServiceProviderConnection(page, spConnection: TSpConnection) {
 	const serviceProviderConnectionsPage = new ServiceProviderConnectionsPage(
 		page
 	);
+
+	await serviceProviderConnectionsPage.goTo();
 
 	await serviceProviderConnectionsPage.addServiceProviderConnection(
 		spConnection
@@ -107,6 +111,8 @@ export async function editIdentityProviderConnection(
 		page
 	);
 
+	await identityProviderConnectionsPage.goTo();
+
 	await identityProviderConnectionsPage.editIdentityProviderConnection(
 		idpConnection
 	);
@@ -127,6 +133,8 @@ export async function editServiceProviderConnection(
 	const serviceProviderConnectionsPage = new ServiceProviderConnectionsPage(
 		page
 	);
+
+	await serviceProviderConnectionsPage.goTo();
 
 	await serviceProviderConnectionsPage.editServiceProviderConnection(
 		spConnection

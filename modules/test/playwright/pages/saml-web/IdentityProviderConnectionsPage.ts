@@ -73,8 +73,6 @@ export class IdentityProviderConnectionsPage {
 		idpConnection: TIdpConnection,
 		deleteExistingConnection = true
 	) {
-		await this.goToIdentityProviderConnectionsTab();
-
 		if (deleteExistingConnection) {
 			const row = await this.page.getByRole('row').filter({
 				hasText: idpConnection.idpName,
@@ -97,14 +95,10 @@ export class IdentityProviderConnectionsPage {
 	}
 
 	async deleteIdentityProviderConnection(name: string) {
-		await this.goToIdentityProviderConnectionsTab();
-
 		await this._deleteIdentityProviderConnection(name);
 	}
 
 	async deleteIdentityProviderConnections() {
-		await this.goToIdentityProviderConnectionsTab();
-
 		this.page.on('dialog', (dialog) => {
 			dialog.accept();
 		});
@@ -131,8 +125,6 @@ export class IdentityProviderConnectionsPage {
 	}
 
 	async editIdentityProviderConnection(idpConnection: TIdpConnection) {
-		await this.goToIdentityProviderConnectionsTab();
-
 		const row = await this.page.getByRole('row').filter({
 			hasText: idpConnection.idpName,
 		});
@@ -148,7 +140,7 @@ export class IdentityProviderConnectionsPage {
 		);
 	}
 
-	async goToIdentityProviderConnectionsTab() {
+	async goTo() {
 		await this.applicationsMenuPage.goToSamlAdmin();
 		await this.page
 			.getByRole('tab', {name: 'Identity Provider Connections'})
@@ -171,7 +163,7 @@ export class IdentityProviderConnectionsPage {
 			trigger: row.locator('.dropdown-toggle'),
 		});
 
-		expect(await this.successMessage).toBeVisible();
+		await expect(await this.successMessage).toBeVisible();
 	}
 
 	private async populateAndSaveIdentityProviderConnectionDetails(

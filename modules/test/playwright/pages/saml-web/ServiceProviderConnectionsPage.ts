@@ -70,8 +70,6 @@ export class ServiceProviderConnectionsPage {
 		spConnection: TSpConnection,
 		deleteExistingConnection = true
 	) {
-		await this.goToServiceProviderConnectionsTab();
-
 		if (deleteExistingConnection) {
 			const row = await this.page.getByRole('row').filter({
 				hasText: spConnection.spName,
@@ -94,8 +92,6 @@ export class ServiceProviderConnectionsPage {
 	}
 
 	async deleteServiceProviderConnection(name: string) {
-		await this.goToServiceProviderConnectionsTab();
-
 		await this._deleteServiceProviderConnection(name);
 	}
 
@@ -105,8 +101,6 @@ export class ServiceProviderConnectionsPage {
 		});
 
 		await this.page.waitForTimeout(1000);
-
-		await this.goToServiceProviderConnectionsTab();
 
 		const row = await this.serviceProviderConnectionsTable
 			.getByRole('row')
@@ -128,8 +122,6 @@ export class ServiceProviderConnectionsPage {
 	}
 
 	async editServiceProviderConnection(spConnection: TSpConnection) {
-		await this.goToServiceProviderConnectionsTab();
-
 		const row = await this.page.getByRole('row').filter({
 			hasText: spConnection.spName,
 		});
@@ -145,7 +137,7 @@ export class ServiceProviderConnectionsPage {
 		);
 	}
 
-	async goToServiceProviderConnectionsTab() {
+	async goTo() {
 		await this.applicationsMenuPage.goToSamlAdmin();
 		await this.page
 			.getByRole('tab', {name: 'Service Provider Connections'})
@@ -168,7 +160,7 @@ export class ServiceProviderConnectionsPage {
 			trigger: row.locator('.dropdown-toggle'),
 		});
 
-		expect(await this.successMessage).toBeVisible();
+		await expect(await this.successMessage).toBeVisible();
 	}
 
 	private async populateAndSaveServiceProviderConnectionDetails(

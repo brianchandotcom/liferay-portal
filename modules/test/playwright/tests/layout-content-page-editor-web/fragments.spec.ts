@@ -167,6 +167,71 @@ test.describe('Content Display Fragment', () => {
 });
 
 test.describe('Dropdown Fragment', () => {
+	test('Check the functionality of the Dropdown fragment', async ({
+		apiHelpers,
+		page,
+		pageEditorPage,
+		site,
+	}) => {
+
+		// Create content page with a Dropdown fragment
+
+		const dropdownId = getRandomString();
+
+		const dropdownDefinition = getFragmentDefinition({
+			id: dropdownId,
+			key: 'BASIC_COMPONENT-dropdown',
+		});
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([dropdownDefinition]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		const dropdownButton = page.locator('.dropdown-fragment button');
+		const dropdownMenu = page.locator('.dropdown-fragment-menu');
+
+		// Check that the dropdown menu opens when hovering over the fragment
+
+		await pageEditorPage.selectFragment(dropdownId);
+
+		await pageEditorPage.changeFragmentConfiguration({
+			fieldLabel: 'Display on Hover',
+			fragmentId: dropdownId,
+			tab: 'General',
+			value: true,
+		});
+
+		await dropdownButton.hover();
+
+		await expect(dropdownButton).toHaveAttribute('aria-expanded', 'true');
+		await expect(dropdownMenu).toBeVisible();
+
+		await page.locator('#banner.page-editor__disabled-area').hover();
+
+		await expect(dropdownButton).toHaveAttribute('aria-expanded', 'false');
+		await expect(dropdownMenu).not.toBeVisible();
+
+		// Check that the dropdown menu always keeps open in edit mode
+
+		await pageEditorPage.changeFragmentConfiguration({
+			fieldLabel: 'Keep Panel Open in Edit Mode',
+			fragmentId: dropdownId,
+			tab: 'General',
+			value: true,
+		});
+
+		await pageEditorPage.publishPage();
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		await expect(dropdownButton).toHaveAttribute('aria-expanded', 'true');
+		await expect(dropdownMenu).toBeVisible();
+	});
+
 	test('Check dropdown menu is displayed correctly in all resolutions', async ({
 		apiHelpers,
 		page,

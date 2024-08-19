@@ -1650,7 +1650,7 @@
 						"simple",
 						"multistep"
 					],
-					"title": "The multi step Schema",
+					"title": "The multistep Schema",
 					"type": "string"
 				},
 				"fragmentStyle": {

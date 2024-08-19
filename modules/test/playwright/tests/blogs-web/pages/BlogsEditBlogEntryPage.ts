@@ -43,10 +43,46 @@ export class BlogsEditBlogEntryPage {
 		await this.blogsPage.goToCreateBlogEntry();
 	}
 
+	private async editBlogEntryAddCategories({
+		categories,
+		vocabularyName,
+	}: editBlogEntryAddfriendlyUrlType) {
+		const fieldset = await this.page.locator(
+			'#_com_liferay_blogs_web_portlet_BlogsAdminPortlet_categorization'
+		);
+
+		if (await fieldset.locator('.panel-body').isHidden()) {
+			await fieldset
+				.getByRole('button', {name: 'Categorization'})
+				.click();
+		}
+
+		await fieldset.getByLabel(`Select ${vocabularyName}`).click();
+
+		const categoriesSelectorIframe = await this.page.frameLocator(
+			`iframe[title="Select ${vocabularyName}"]`
+		);
+
+		for (const {name} of categories) {
+			await categoriesSelectorIframe
+				.locator('.treeview-item')
+				.filter({hasText: name})
+				.getByRole('checkbox')
+				.check();
+		}
+
+		await this.page.getByRole('button', {name: 'Done'}).click();
+	}
+
 	private async editBlogEntryAddfriendlyUrl({
 		categories,
 		vocabularyName,
 	}: editBlogEntryAddfriendlyUrlType) {
+		await this.editBlogEntryAddCategories({
+			categories,
+			vocabularyName,
+		});
+
 		const fieldset = await this.page.locator(
 			'#_com_liferay_blogs_web_portlet_BlogsAdminPortlet_friendly-url'
 		);
@@ -56,22 +92,12 @@ export class BlogsEditBlogEntryPage {
 		}
 
 		await fieldset.getByText('Use a Customized URL').click();
-		await fieldset.getByRole('button', {name: 'Select'}).click();
-
-		const categoriesSelectorIframe = await this.page.frameLocator(
-			'iframe[title="Filter by Categories"]'
-		);
-
-		await categoriesSelectorIframe.getByText(vocabularyName).click();
-
-		for (const {name} of categories) {
-			await categoriesSelectorIframe.getByText(name).click();
-		}
 
 		await this.page
-			.getByLabel('Filter by Categories')
-			.getByRole('button', {name: 'Select'})
-			.click();
+			.getByLabel('Available')
+			.selectOption(categories.map(({name}) => ({label: name})));
+
+		await this.page.getByLabel('Transfer Item Left to Right').click();
 	}
 
 	async editBlogEntry({

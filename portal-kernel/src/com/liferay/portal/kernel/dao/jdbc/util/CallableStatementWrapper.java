@@ -1087,8 +1087,8 @@ public class CallableStatementWrapper
 	}
 
 	@Override
-	public void setURL(String parameterName, URL val) throws SQLException {
-		_callableStatement.setURL(parameterName, val);
+	public void setURL(String parameterName, URL url) throws SQLException {
+		_callableStatement.setURL(parameterName, url);
 	}
 
 	@Override

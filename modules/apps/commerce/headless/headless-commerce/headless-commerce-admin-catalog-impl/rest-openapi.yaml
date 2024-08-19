@@ -2049,6 +2049,11 @@ components:
                 precision:
                     example: 3
                     type: integer
+                pricingQuantity:
+                    example: 1.5
+                    format: bigdecimal
+                    minimum: 0
+                    type: number
                 primary:
                     example: true
                     type: boolean

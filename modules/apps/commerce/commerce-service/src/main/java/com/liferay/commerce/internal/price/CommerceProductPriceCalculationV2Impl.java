@@ -1154,10 +1154,15 @@ public class CommerceProductPriceCalculationV2Impl
 			return commerceMoneyFactory.emptyCommerceMoney();
 		}
 
+		CommerceCurrency commerceCurrency =
+			commerceContext.getCommerceCurrency();
+
 		BigDecimal pricingQuantityUnitPrice = pricingQuantity.multiply(
 			commercePriceEntry.getPrice()
 		).divide(
-			commercePriceEntry.getQuantity(), 2, BigDecimal.ROUND_HALF_UP
+			commercePriceEntry.getQuantity(),
+			commerceCurrency.getMaxFractionDigits(),
+			RoundingMode.valueOf(commerceCurrency.getRoundingMode())
 		);
 
 		CommercePriceList commercePriceList =

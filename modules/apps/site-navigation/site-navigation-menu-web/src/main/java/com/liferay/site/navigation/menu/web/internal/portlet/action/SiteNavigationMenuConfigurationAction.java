@@ -86,8 +86,8 @@ public class SiteNavigationMenuConfigurationAction
 		modifiableSettings.reset("included-layouts");
 
 		updateDisplayStyleGroupPreferences(modifiableSettings, portletRequest);
-		updateSiteNavigationMenuPreferences(modifiableSettings);
 		updateRootMenuItemPreferences(modifiableSettings);
+		updateSiteNavigationMenuPreferences(modifiableSettings);
 	}
 
 	@Override

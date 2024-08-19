@@ -161,7 +161,9 @@ public class CallableStatementWrapper
 	}
 
 	@Override
-	public Date getDate(int parameterIndex, Calendar calendar) throws SQLException {
+	public Date getDate(int parameterIndex, Calendar calendar)
+		throws SQLException {
+
 		return _callableStatement.getDate(parameterIndex, calendar);
 	}
 
@@ -353,7 +355,9 @@ public class CallableStatementWrapper
 	}
 
 	@Override
-	public Time getTime(int parameterIndex, Calendar calendar) throws SQLException {
+	public Time getTime(int parameterIndex, Calendar calendar)
+		throws SQLException {
+
 		return _callableStatement.getTime(parameterIndex, calendar);
 	}
 
@@ -630,9 +634,7 @@ public class CallableStatementWrapper
 	}
 
 	@Override
-	public void setBytes(int parameterIndex, byte[] bytes)
-		throws SQLException {
-
+	public void setBytes(int parameterIndex, byte[] bytes) throws SQLException {
 		_callableStatement.setBytes(parameterIndex, bytes);
 	}
 

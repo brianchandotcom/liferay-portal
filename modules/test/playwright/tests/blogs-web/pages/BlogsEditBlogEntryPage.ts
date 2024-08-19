@@ -65,8 +65,7 @@ export class BlogsEditBlogEntryPage {
 
 		for (const {name} of categories) {
 			await categoriesSelectorIframe
-				.locator('.treeview-item')
-				.filter({hasText: name})
+				.locator('.treeview-item', {hasText: name})
 				.getByRole('checkbox')
 				.check();
 		}

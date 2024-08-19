@@ -250,14 +250,7 @@ public class DuplicateItemMVCActionCommand
 				duplicatedFragmentEntryLinkIdsMap.keySet(),
 				segmentsExperienceId, themeDisplay)
 		).put(
-			"duplicatedItemIds",
-			() -> {
-				if (!duplicatedLayoutStructureItemIds.isEmpty()) {
-					return JSONUtil.putAll(duplicatedLayoutStructureItemIds);
-				}
-
-				return null;
-			}
+			"duplicatedItemIds", duplicatedLayoutStructureItemIds
 		).put(
 			"layoutData", layoutDataJSONObject
 		).put(

@@ -14,7 +14,9 @@ export default function isRemovable(
 	if (
 		item.type === LAYOUT_DATA_ITEM_TYPES.dropZone ||
 		item.type === LAYOUT_DATA_ITEM_TYPES.column ||
-		item.type === LAYOUT_DATA_ITEM_TYPES.collectionItem
+		item.type === LAYOUT_DATA_ITEM_TYPES.collectionItem ||
+		item.type === LAYOUT_DATA_ITEM_TYPES.formStep ||
+		item.type === LAYOUT_DATA_ITEM_TYPES.formStepContainer
 	) {
 		return false;
 	}

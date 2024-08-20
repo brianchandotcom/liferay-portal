@@ -645,21 +645,23 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 			httpSession.setAttribute(CTWebKeys.CT_SHOW_POPOVER, Boolean.TRUE);
 		}
 
-		if (GetterUtil.getBoolean(
+		if (!GetterUtil.getBoolean(
 				httpSession.getAttribute(CTWebKeys.CT_SHOW_POPOVER))) {
 
-			PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(
-				_panelAppRegistry);
+			return false;
+		}
 
-			if (Validator.isNotNull(portletId) &&
-				panelCategoryHelper.containsPortlet(
-					portletId, PanelCategoryKeys.SITE_ADMINISTRATION) &&
-				!panelCategoryHelper.containsPortlet(
-					portletId,
-					PanelCategoryKeys.SITE_ADMINISTRATION_PUBLISHING)) {
+		PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(
+			_panelAppRegistry);
 
-				return true;
-			}
+		if (Validator.isNotNull(portletId) &&
+			panelCategoryHelper.containsPortlet(
+				portletId, PanelCategoryKeys.SITE_ADMINISTRATION) &&
+			!panelCategoryHelper.containsPortlet(
+				portletId,
+				PanelCategoryKeys.SITE_ADMINISTRATION_PUBLISHING)) {
+
+			return true;
 		}
 
 		return false;

@@ -58,12 +58,12 @@ public class TestrayRunComparisonResourceImpl
 			Long testrayRunId1, Long testrayRunId2, Filter filter)
 		throws Exception {
 
+		TestrayRunComparison testrayRunComparison = new TestrayRunComparison();
+
 		List<TestrayCaseResultComparison> testrayCaseResultComparisons =
 			_getTestrayCaseResultComparisons(
 				ParamUtil.getString(contextHttpServletRequest, "filter"), null,
 				null, null, null, null, null, testrayRunId1, testrayRunId2);
-
-		TestrayRunComparison testrayRunComparison = new TestrayRunComparison();
 
 		testrayRunComparison.setResults(
 			ListUtil.fromArray(
@@ -291,14 +291,14 @@ public class TestrayRunComparisonResourceImpl
 		Map<String, Serializable> testrayCaseResultMap2,
 		Map<String, Map<String, Serializable>> testrayComponentsMap) {
 
+		TestrayCaseResultComparison testrayCaseResultComparison =
+			new TestrayCaseResultComparison();
+
 		Map<String, Serializable> map = testrayCaseResultMap1;
 
 		if (testrayCaseResultMap1 == null) {
 			map = testrayCaseResultMap2;
 		}
-
-		TestrayCaseResultComparison testrayCaseResultComparison =
-			new TestrayCaseResultComparison();
 
 		testrayCaseResultComparison.setStatus1("DIDNOTRUN");
 		testrayCaseResultComparison.setStatus2("DIDNOTRUN");

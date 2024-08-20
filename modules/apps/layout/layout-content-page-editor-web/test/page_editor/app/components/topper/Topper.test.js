@@ -10,6 +10,8 @@ import React from 'react';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 
+import {FormStep} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/components/layout_data_items/FormStep';
+import {FormStepContainer} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/components/layout_data_items/FormStepContainer';
 import Row from '../../../../../src/main/resources/META-INF/resources/page_editor/app/components/layout_data_items/Row';
 import Topper from '../../../../../src/main/resources/META-INF/resources/page_editor/app/components/topper/Topper';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/layoutDataItemTypes';
@@ -33,6 +35,11 @@ jest.mock(
 		};
 	}
 );
+
+jest.mock('frontend-js-web', () => ({
+	...jest.requireActual('frontend-js-web'),
+	sub: jest.fn((langKey, arg) => langKey.replace('x', arg)),
+}));
 
 const LAYOUT_DATA = {
 	items: {
@@ -185,6 +192,65 @@ describe('Topper', () => {
 			userEvent.click(screen.getByLabelText('comments'));
 
 			expect(selectItem).not.toBeCalled();
+		});
+	});
+
+	describe('Form Step components', () => {
+		it('renders step name correctly', () => {
+			const layoutData = {
+				items: {
+					formStep1: {
+						children: [],
+						itemId: 'formStep1',
+						parentId: 'formStepContainer',
+						type: LAYOUT_DATA_ITEM_TYPES.formStep,
+					},
+
+					formStep2: {
+						children: [],
+						itemId: 'formStep2',
+						parentId: 'formStepContainer',
+						type: LAYOUT_DATA_ITEM_TYPES.formStep,
+					},
+
+					formStepContainer: {
+						children: ['formStep1', 'formStep2'],
+						itemId: 'formStepContainer',
+						parentId: null,
+						type: LAYOUT_DATA_ITEM_TYPES.formStepContainer,
+					},
+				},
+			};
+
+			renderTopper({
+				Component: FormStep,
+				itemId: 'formStep2',
+				layoutData,
+			});
+
+			expect(screen.getByText('step-2')).toBeInTheDocument();
+		});
+
+		it('does not render actions in the form step container', () => {
+			const layoutData = {
+				items: {
+					formStepContainer: {
+						children: [],
+						config: {},
+						itemId: 'formStepContainer',
+						parentId: null,
+						type: LAYOUT_DATA_ITEM_TYPES.formStepContainer,
+					},
+				},
+			};
+
+			renderTopper({
+				Component: FormStepContainer,
+				itemId: 'formStepContainer',
+				layoutData,
+			});
+
+			expect(screen.queryByText('options')).not.toBeInTheDocument();
 		});
 	});
 });

@@ -214,8 +214,8 @@ public class AssetPublisherDisplayContext {
 
 		try {
 			_assetListEntry = AssetPublisherUtil.getAssetListEntry(
-				_themeDisplay.getCompanyId(), _themeDisplay.getScopeGroupId(),
-				_portletPreferences);
+				true, _themeDisplay.getCompanyId(),
+				_themeDisplay.getScopeGroupId(), _portletPreferences);
 		}
 		catch (PrincipalException principalException) {
 			if (_log.isDebugEnabled()) {

@@ -320,7 +320,7 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 			WebKeys.THEME_DISPLAY);
 
 		AssetListEntry assetListEntry = AssetPublisherUtil.getAssetListEntry(
-			themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
+			true, themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
 			portletPreferences);
 
 		if (assetListEntry != null) {

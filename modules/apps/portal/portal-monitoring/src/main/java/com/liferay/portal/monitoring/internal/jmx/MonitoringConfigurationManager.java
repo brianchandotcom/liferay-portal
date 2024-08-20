@@ -136,10 +136,6 @@ public class MonitoringConfigurationManager
 		_monitoringControl.setLevel(namespace, level);
 	}
 
-	@Override
-	public void setMonitorServiceRequest(boolean monitorServiceRequest) {
-	}
-
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {

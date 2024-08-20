@@ -66,17 +66,24 @@ public class ServiceMonitoringControlImpl implements ServiceMonitoringControl {
 	}
 
 	@Override
-	public boolean isMonitorServiceRequest() {
-		return _monitorServiceRequest;
-	}
-
-	@Override
 	public void setInclusiveMode(boolean inclusiveMode) {
 		_inclusiveMode = inclusiveMode;
 	}
 
-	@Override
-	public void setMonitorServiceRequest(boolean monitorServiceRequest) {
+	@Activate
+	@Modified
+	protected void activate(
+		BundleContext bundleContext, Map<String, String> properties) {
+
+		_bundleContext = bundleContext;
+
+		MonitoringConfiguration monitoringConfiguration =
+			ConfigurableUtil.createConfigurable(
+				MonitoringConfiguration.class, properties);
+
+		boolean monitorServiceRequest =
+			monitoringConfiguration.monitorServiceRequest();
+
 		if (monitorServiceRequest == _monitorServiceRequest) {
 			return;
 		}
@@ -101,21 +108,6 @@ public class ServiceMonitoringControlImpl implements ServiceMonitoringControl {
 		}
 	}
 
-	@Activate
-	@Modified
-	protected void activate(
-		BundleContext bundleContext, Map<String, String> properties) {
-
-		_bundleContext = bundleContext;
-
-		MonitoringConfiguration monitoringConfiguration =
-			ConfigurableUtil.createConfigurable(
-				MonitoringConfiguration.class, properties);
-
-		setMonitorServiceRequest(
-			monitoringConfiguration.monitorServiceRequest());
-	}
-
 	@Deactivate
 	protected synchronized void deactivate() {
 		if (_serviceRegistration != null) {
@@ -132,6 +124,7 @@ public class ServiceMonitoringControlImpl implements ServiceMonitoringControl {
 	private volatile boolean _monitorServiceRequest;
 	private final Set<String> _serviceClasses = new HashSet<>();
 	private final Set<MethodSignature> _serviceClassMethods = new HashSet<>();
-	private ServiceRegistration<ChainableMethodAdvice> _serviceRegistration;
+	private volatile ServiceRegistration<ChainableMethodAdvice>
+		_serviceRegistration;
 
 }

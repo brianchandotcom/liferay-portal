@@ -23,10 +23,6 @@ public interface ServiceMonitoringControl {
 
 	public boolean isInclusiveMode();
 
-	public boolean isMonitorServiceRequest();
-
 	public void setInclusiveMode(boolean inclusiveMode);
-
-	public void setMonitorServiceRequest(boolean monitorServiceRequest);
 
 }

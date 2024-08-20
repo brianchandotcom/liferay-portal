@@ -317,21 +317,9 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 			boolean deleteMissingAssetEntries, boolean checkPermission)
 		throws Exception {
 
-		String selectionStyle = GetterUtil.getString(
-			portletPreferences.getValue("selectionStyle", null),
-			AssetPublisherSelectionStyleConfigurationUtil.
-				defaultSelectionStyle());
+		AssetListEntry assetListEntry = _getAssetListEntry(portletPreferences);
 
-		long assetListEntryId = GetterUtil.getLong(
-			portletPreferences.getValue("assetListEntryId", null));
-
-		AssetListEntry assetListEntry =
-			_assetListEntryService.fetchAssetListEntry(assetListEntryId);
-
-		if (selectionStyle.equals(
-				AssetPublisherSelectionStyleConstants.TYPE_ASSET_LIST) &&
-			(assetListEntry != null)) {
-
+		if (assetListEntry != null) {
 			long[] segmentsEntryIds = _getSegmentsEntryIds(portletRequest);
 
 			String acClientUserId = GetterUtil.getString(
@@ -1186,6 +1174,26 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 		searchContainer.setResultsAndTotal(searchContainer::getResults, total);
 
 		return assetEntryResults;
+	}
+
+	private AssetListEntry _getAssetListEntry(
+			PortletPreferences portletPreferences)
+		throws Exception {
+
+		String selectionStyle = GetterUtil.getString(
+			portletPreferences.getValue("selectionStyle", null),
+			AssetPublisherSelectionStyleConfigurationUtil.
+				defaultSelectionStyle());
+
+		if (!selectionStyle.equals(
+				AssetPublisherSelectionStyleConstants.TYPE_ASSET_LIST)) {
+
+			return null;
+		}
+
+		return _assetListEntryService.fetchAssetListEntry(
+			GetterUtil.getLong(
+				portletPreferences.getValue("assetListEntryId", null)));
 	}
 
 	private long[] _getSegmentsEntryIds(PortletRequest portletRequest) {

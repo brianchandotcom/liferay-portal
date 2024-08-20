@@ -5,6 +5,7 @@
 
 import {Locator, Page} from '@playwright/test';
 
+import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {PORTLET_URLS} from '../../utils/portletUrls';
 import {PageEditorPage} from '../layout-content-page-editor-web/PageEditorPage';
 
@@ -25,6 +26,20 @@ export class MasterPagesPage {
 		await this.page.goto(
 			`/group${siteUrl || '/guest'}${PORTLET_URLS.masterPages}`
 		);
+	}
+
+	async gotoConfiguration(name: string) {
+		await this.page.getByRole('link', {exact: true, name}).click();
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('menuitem', {
+				name: 'Configure',
+			}),
+			trigger: this.page
+				.locator('.control-menu-nav-item')
+				.getByLabel('Options', {exact: true}),
+		});
 	}
 
 	async createNewMaster(name: string) {
@@ -49,6 +64,15 @@ export class MasterPagesPage {
 
 	async openMasterActionsMenu(name: string) {
 		await this.getMasterCard(name).getByLabel('More actions').click();
+	}
+
+	async publishMaster(name: string) {
+		await this.page.getByLabel(name, {exact: true}).click();
+		await this.page.getByLabel('Publish').click();
+
+		await this.page
+			.getByRole('heading', {name: 'Page Templates'})
+			.waitFor();
 	}
 
 	getMasterCard(name: string) {

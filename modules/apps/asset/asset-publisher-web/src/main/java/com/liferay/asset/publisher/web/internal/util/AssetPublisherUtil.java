@@ -98,6 +98,33 @@ public class AssetPublisherUtil {
 		return 0;
 	}
 
+	public static long getDisplayStyleGroupId(
+		long companyId, long groupId, PortletPreferences portletPreferences) {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-22837")) {
+			return GetterUtil.getLong(
+				portletPreferences.getValue("displayStyleGroupId", null),
+				groupId);
+		}
+
+		String displayStyleGroupExternalReferenceCode =
+			portletPreferences.getValue(
+				"displayStyleGroupExternalReferenceCode", null);
+
+		if (Validator.isNull(displayStyleGroupExternalReferenceCode)) {
+			return groupId;
+		}
+
+		Group group = GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
+			displayStyleGroupExternalReferenceCode, companyId);
+
+		if (group != null) {
+			return group.getGroupId();
+		}
+
+		return 0;
+	}
+
 	private static AssetListEntry _fetchAssetListEntry(
 			boolean checkPermissions, long assetEntryListId)
 		throws PortalException {

@@ -806,9 +806,9 @@ public class AssetPublisherDisplayContext {
 			return _displayStyleGroupId;
 		}
 
-		_displayStyleGroupId = GetterUtil.getLong(
-			_portletPreferences.getValue("displayStyleGroupId", null),
-			_themeDisplay.getScopeGroupId());
+		_displayStyleGroupId = AssetPublisherUtil.getDisplayStyleGroupId(
+			_themeDisplay.getCompanyId(), _themeDisplay.getScopeGroupId(),
+			_portletPreferences);
 
 		return _displayStyleGroupId;
 	}

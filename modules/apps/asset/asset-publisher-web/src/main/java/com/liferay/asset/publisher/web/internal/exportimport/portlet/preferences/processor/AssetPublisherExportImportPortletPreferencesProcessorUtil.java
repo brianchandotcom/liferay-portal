@@ -6,11 +6,11 @@
 package com.liferay.asset.publisher.web.internal.exportimport.portlet.preferences.processor;
 
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.publisher.web.internal.util.AssetPublisherUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 
 import javax.portlet.PortletPreferences;
 
@@ -44,7 +44,7 @@ public class AssetPublisherExportImportPortletPreferencesProcessorUtil {
 	}
 
 	public static long getDisplayStyleGroupId(
-		PortletPreferences portletPreferences) {
+		long companyId, PortletPreferences portletPreferences) {
 
 		try {
 			TemplateHandler templateHandler =
@@ -52,8 +52,8 @@ public class AssetPublisherExportImportPortletPreferencesProcessorUtil {
 					AssetEntry.class.getName());
 
 			if (templateHandler != null) {
-				return GetterUtil.getLong(
-					portletPreferences.getValue("displayStyleGroupId", null));
+				return AssetPublisherUtil.getDisplayStyleGroupId(
+					companyId, 0, portletPreferences);
 			}
 		}
 		catch (Exception exception) {

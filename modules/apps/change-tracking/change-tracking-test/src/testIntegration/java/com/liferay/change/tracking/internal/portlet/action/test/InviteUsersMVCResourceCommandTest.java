@@ -94,8 +94,11 @@ public class InviteUsersMVCResourceCommandTest {
 
 		Assert.assertTrue(
 			mailMessageBody.contains(
-				"You have been invited to work on a publication. For further " +
-					"information, please visit " + url));
+				StringBundler.concat(
+					"You have been invited to work on a publication. For ",
+					"further information, please visit:<br /><br />\n<a href=",
+					"\"", url, "\">", _ctCollection.getName(), "</a><br />",
+					"<br />")));
 	}
 
 	@FeatureFlags("LPD-11212")

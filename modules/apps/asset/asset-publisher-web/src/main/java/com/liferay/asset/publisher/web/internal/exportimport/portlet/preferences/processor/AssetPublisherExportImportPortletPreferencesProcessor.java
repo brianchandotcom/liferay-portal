@@ -23,6 +23,7 @@ import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebC
 import com.liferay.asset.publisher.web.internal.constants.AssetPublisherSelectionStyleConstants;
 import com.liferay.asset.publisher.web.internal.display.context.AssetPublisherDisplayContext;
 import com.liferay.asset.publisher.web.internal.helper.AssetPublisherWebHelper;
+import com.liferay.asset.publisher.web.internal.util.AssetPublisherUtil;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
@@ -48,6 +49,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -1081,13 +1083,14 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 						DDMStructure.class.getName());
 				}
 			}
-			else if (name.equals("assetListEntryId")) {
-				long assetListEntryId = GetterUtil.getLong(
-					portletPreferences.getValue("assetListEntryId", null));
+			else if (name.equals("assetListEntryExternalReferenceCode") ||
+					 name.equals("assetListEntryId")) {
 
 				AssetListEntry assetListEntry =
-					assetListEntryLocalService.fetchAssetListEntry(
-						assetListEntryId);
+					AssetPublisherUtil.getAssetListEntry(
+						false, portletDataContext.getCompanyId(),
+						portletDataContext.getScopeGroupId(),
+						portletPreferences);
 
 				if (assetListEntry != null) {
 					StagedModelDataHandlerUtil.exportReferenceStagedModel(

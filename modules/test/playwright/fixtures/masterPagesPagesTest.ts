@@ -7,7 +7,7 @@
 
 import {test} from '@playwright/test';
 
-import {MasterPagesPage} from '../pages/MasterPagesPage';
+import {MasterPagesPage} from '../pages/layout-page-template-admin-web/MasterPagesPage';
 
 const masterPagesPagesTest = test.extend<{
 	masterPagesPage: MasterPagesPage;

@@ -5,8 +5,8 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import {PageEditorPage} from '../../../pages/layout-content-page-editor-web/PageEditorPage';
-import {PORTLET_URLS} from '../../../utils/portletUrls';
+import {PORTLET_URLS} from '../../utils/portletUrls';
+import {PageEditorPage} from '../layout-content-page-editor-web/PageEditorPage';
 
 export class MasterPagesPage {
 	readonly page: Page;

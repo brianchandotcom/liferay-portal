@@ -99,11 +99,19 @@ async function createSamlVirtualInstance(
 
 	await virtualInstancesPage.addNewVirtualInstance(name);
 
+	await configureVirtualInstanceForSaml(browser, entityId, samlRole);
+}
+
+export async function configureVirtualInstanceForSaml(
+	browser,
+	entityId: string,
+	samlRole: string
+) {
 	const defaultBaseUrl = liferayConfig.environment.baseUrl;
 
-	liferayConfig.environment.baseUrl = `http://${name}:8080`;
+	liferayConfig.environment.baseUrl = `http://${entityId}:8080`;
 
-	const newPage = await performSamlSafeAdminLogin(browser, name);
+	const newPage = await performSamlSafeAdminLogin(browser, entityId);
 
 	const samlAdminPage = new SamlAdminPage(newPage);
 

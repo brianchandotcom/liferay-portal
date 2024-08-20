@@ -61,6 +61,8 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 
 		_sendNotifications("delete", objectEntry);
 
+		_removeCommerceReturnItemDiscussion(objectEntry);
+
 		_updateCommerceReturn(objectEntry);
 	}
 
@@ -74,6 +76,29 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 		_sendNotifications("update", objectEntry);
 
 		_updateCommerceReturn(originalObjectEntry);
+	}
+
+	private void _removeCommerceReturnItemDiscussion(ObjectEntry objectEntry) {
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				objectEntry.getObjectDefinitionId());
+
+		if (!StringUtil.equals(
+				objectDefinition.getName(), "CommerceReturnItem")) {
+
+			return;
+		}
+
+		try {
+			_commentManager.deleteDiscussion(
+				objectDefinition.getClassName(),
+				objectEntry.getObjectEntryId());
+		}
+		catch (PortalException portalException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(portalException);
+			}
+		}
 	}
 
 	private void _sendNotifications(String action, ObjectEntry objectEntry) {

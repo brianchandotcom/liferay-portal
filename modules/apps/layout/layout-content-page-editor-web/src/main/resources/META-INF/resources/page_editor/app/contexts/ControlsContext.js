@@ -9,12 +9,14 @@ import {fromControlsId} from '../components/layout_data_items/Collection';
 import {ITEM_TYPES} from '../config/constants/itemTypes';
 import {MULTI_SELECT_TYPES} from '../config/constants/multiSelectTypes';
 import {useToControlsId} from './CollectionItemContext';
+import {useSelectorRef} from './StoreContext';
 
 const ACTIVE_INITIAL_STATE = {
 	activationOrigin: null,
 	activeItemIds: [],
 	activeItemType: null,
 	multiSelect: null,
+	rangeLimitIds: [],
 };
 
 const HOVER_INITIAL_STATE = {
@@ -34,6 +36,7 @@ const HoverDispatchContext = React.createContext(() => {});
 /**
  * This method includes a new item in the active items. If this item is already
  * belongs to the active items, it is removed.
+ *
  * @param {array} activeItemIds Active item ids.
  * @param {string} itemId Item id to be included in active items.
  */
@@ -44,8 +47,66 @@ function getActiveItemIds(activeItemIds, itemId) {
 		: [...activeItemIds, itemId];
 }
 
+/**
+ * This method gets all elements within a selection range
+ *
+ * First it looks for the item at the start of the range and enable a flag to mark
+ * all the elements iterated as included until the end of the range is found.
+ *
+ * @param {array} items Items to analyze if they are within the range.
+ * @param {object} layoutDataItems Layout data items.
+ * @param {array} rangeLimitIds This array contains the beginning and end of the range.
+ */
+
+export function getItemsWithinRange({itemIds, layoutDataItems, rangeLimitIds}) {
+	let activateSelection = false;
+	const selectedItems = [];
+
+	const findItemsWithinRange = ({
+		itemIds,
+		layoutDataItems,
+		rangeLimitIds,
+	}) => {
+		for (const childId of itemIds) {
+			const isLimitId =
+				rangeLimitIds.start === childId ||
+				rangeLimitIds.end === childId;
+
+			if (isLimitId) {
+				activateSelection = !activateSelection;
+			}
+
+			if (isLimitId || activateSelection) {
+				selectedItems.push(childId);
+			}
+
+			findItemsWithinRange({
+				itemIds: layoutDataItems[childId].children,
+				layoutDataItems,
+				rangeLimitIds,
+			});
+		}
+	};
+
+	findItemsWithinRange({
+		itemIds,
+		layoutDataItems,
+		rangeLimitIds,
+	});
+
+	return selectedItems;
+}
+
 const reducer = (state, action) => {
-	const {activeItemIds, itemId, itemType, multiSelect, origin, type} = action;
+	const {
+		activeItemIds,
+		itemId,
+		itemType,
+		layoutData,
+		multiSelect,
+		origin,
+		type,
+	} = action;
 	let nextState = state;
 
 	if (type === HOVER_ITEM && itemId !== nextState.hoveredItemId) {
@@ -61,6 +122,7 @@ const reducer = (state, action) => {
 		(Liferay.FeatureFlags['LPD-18221'] ||
 			itemId !== nextState.activeItemIds[0])
 	) {
+		let rangeLimitIds = {};
 		let nextActiveItemIds = [itemId];
 
 		if (!Liferay.FeatureFlags['LPD-18221']) {
@@ -75,18 +137,61 @@ const reducer = (state, action) => {
 				itemId
 			);
 		}
+		else if (state.multiSelect === MULTI_SELECT_TYPES.range) {
+			let initialActiveItemIds = state.activeItemIds;
+
+			// The last active item id is taken when the first item in the
+			// range is selected.
+
+			let startLimitId = [...state.activeItemIds].pop();
+
+			if (state.rangeLimitIds.end) {
+
+				// If a range selection has just been made, and another range
+				// selection is made immediately after, the first item id of
+				// the range is kept and the activeItemIds from the last range
+				// selection are removed.
+
+				startLimitId = state.rangeLimitIds.start;
+
+				initialActiveItemIds = state.activeItemIds.slice(
+					0,
+					Math.min(
+						state.activeItemIds.indexOf(startLimitId),
+						state.activeItemIds.indexOf(state.rangeLimitIds.end)
+					)
+				);
+			}
+
+			rangeLimitIds = {end: itemId, start: startLimitId};
+
+			const root =
+				state.layoutData.items[state.layoutData.rootItems.main];
+
+			nextActiveItemIds = getItemsWithinRange({
+				itemIds: root.children,
+				layoutDataItems: state.layoutData.items,
+				rangeLimitIds,
+			});
+
+			nextActiveItemIds = [
+				...new Set([...initialActiveItemIds, ...nextActiveItemIds]),
+			];
+		}
 
 		nextState = {
 			...nextState,
 			activationOrigin: origin,
 			activeItemIds: nextActiveItemIds,
 			activeItemType: itemType,
+			rangeLimitIds,
 		};
 	}
 	else if (type === MULTI_SELECT) {
 		nextState = {
 			...state,
 			activeItemIds: activeItemIds || state.activeItemIds,
+			layoutData,
 			multiSelect,
 		};
 	}
@@ -212,14 +317,18 @@ const useSelectItem = () => {
 
 const useActivateMultiSelect = () => {
 	const activeDispatch = useContext(ActiveDispatchContext);
+	const layoutDataRef = useSelectorRef((state) => state.layoutData);
 
 	return useCallback(
 		(multiSelect = null) => {
 			activeDispatch({
+				layoutData: layoutDataRef.current,
 				multiSelect,
 				type: MULTI_SELECT,
 			});
 		},
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[activeDispatch]
 	);
 };

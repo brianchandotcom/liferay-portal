@@ -6,14 +6,12 @@
 package com.liferay.portal.db.schema.definition.internal.exporter.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.portal.db.schema.definition.internal.test.util.ConfigurationTestUtil;
 import com.liferay.portal.db.schema.definition.internal.test.util.DatabaseTestUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.db.partition.DBPartition;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.AssumeTestRule;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -64,13 +62,8 @@ public class DBSchemaDefinitionExporterTest
 
 	@Test
 	public void testExportImportReport() throws Exception {
-		ConfigurationTestUtil.deployConfiguration(
-			configurationAdmin, databaseType, folder.getAbsolutePath(), PID);
-
-		String content = FileUtil.read(
-			new File(folder, "db_schema_definition_export_report.info"));
-
-		Assert.assertTrue(content.endsWith("Portal missing tables:"));
+		Assert.assertTrue(
+			getReportContent().endsWith("Portal missing tables:"));
 	}
 
 	@Test
@@ -80,15 +73,8 @@ public class DBSchemaDefinitionExporterTest
 		db.runSQL("create table TestTable (testColumn bigint primary key)");
 
 		try {
-			ConfigurationTestUtil.deployConfiguration(
-				configurationAdmin, databaseType, folder.getAbsolutePath(),
-				PID);
-
-			String content = FileUtil.read(
-				new File(folder, "db_schema_definition_export_report.info"));
-
 			Assert.assertTrue(
-				content.contains(
+				getReportContent().contains(
 					"Portal missing tables: " +
 						StringUtil.toLowerCase("TestTable")));
 		}

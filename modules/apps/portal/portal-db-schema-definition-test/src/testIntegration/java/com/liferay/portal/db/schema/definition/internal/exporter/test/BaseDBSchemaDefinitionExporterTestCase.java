@@ -129,6 +129,14 @@ public abstract class BaseDBSchemaDefinitionExporterTestCase {
 		}
 	}
 
+	protected String getReportContent() throws Exception {
+		ConfigurationTestUtil.deployConfiguration(
+			configurationAdmin, databaseType, folder.getAbsolutePath(), PID);
+
+		return FileUtil.read(
+			new File(folder, "db_schema_definition_export_report.info"));
+	}
+
 	protected void testExportImportDBSchemaDefinition(
 			UnsafeRunnable<Exception> runnable)
 		throws Exception {

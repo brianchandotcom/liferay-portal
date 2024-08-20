@@ -403,11 +403,11 @@ public class GitUtil {
 	protected static Set<String> getDirNames(
 		String baseDirName, Iterable<String> fileNames, String markerFileName) {
 
+		Set<String> dirNames = new HashSet<>();
+
 		File baseDir = new File(baseDirName);
 
 		Path baseDirPath = baseDir.toPath();
-
-		Set<String> dirNames = new HashSet<>();
 
 		for (String fileName : fileNames) {
 			File file = new File(baseDir, fileName);

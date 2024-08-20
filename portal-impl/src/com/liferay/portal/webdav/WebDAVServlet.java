@@ -165,14 +165,14 @@ public class WebDAVServlet extends HttpServlet {
 	}
 
 	protected WebDAVStorage getStorage(HttpServletRequest httpServletRequest) {
+		WebDAVStorage storage = null;
+
 		String pathInfo = WebDAVUtil.stripManualCheckInRequiredPath(
 			httpServletRequest.getPathInfo());
 
 		pathInfo = WebDAVUtil.stripOfficeExtension(pathInfo);
 
 		String[] pathArray = WebDAVUtil.getPathArray(pathInfo, true);
-
-		WebDAVStorage storage = null;
 
 		if (pathArray.length == 0) {
 			storage = (WebDAVStorage)InstancePool.get(

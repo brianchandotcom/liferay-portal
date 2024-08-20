@@ -964,9 +964,9 @@ public class RoleFinderImpl extends RoleFinderBaseImpl implements RoleFinder {
 	private Predicate _getKeywordsPredicate(
 		Expression<String> expression, String[] keywords) {
 
-		expression = DSLFunctionFactoryUtil.lower(expression);
-
 		Predicate keywordsPredicate = null;
+
+		expression = DSLFunctionFactoryUtil.lower(expression);
 
 		for (String keyword : keywords) {
 			if (keyword == null) {

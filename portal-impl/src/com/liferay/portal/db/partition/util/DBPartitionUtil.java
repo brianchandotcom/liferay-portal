@@ -826,9 +826,9 @@ public class DBPartitionUtil {
 			Connection connection, String tableName)
 		throws SQLException {
 
-		DBInspector dbInspector = new DBInspector(connection);
-
 		List<String> columnNames = new ArrayList<>();
+
+		DBInspector dbInspector = new DBInspector(connection);
 
 		try (ResultSet resultSet = dbInspector.getColumnsResultSet(tableName)) {
 			while (resultSet.next()) {

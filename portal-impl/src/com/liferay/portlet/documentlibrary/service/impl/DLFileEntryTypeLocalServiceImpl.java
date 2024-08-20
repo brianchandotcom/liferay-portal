@@ -710,14 +710,12 @@ public class DLFileEntryTypeLocalServiceImpl
 	protected Set<Long> getExistingDDMStructureLinkStructureIds(
 		long fileEntryTypeId) {
 
-		long classNameId = _classNameLocalService.getClassNameId(
-			DLFileEntryType.class);
-
 		Set<Long> existingDDMStructureLinkStructureIds = new HashSet<>();
 
 		List<DDMStructureLink> structureLinks =
 			DDMStructureLinkManagerUtil.getStructureLinks(
-				classNameId, fileEntryTypeId);
+				_classNameLocalService.getClassNameId(DLFileEntryType.class),
+				fileEntryTypeId);
 
 		for (DDMStructureLink structureLink : structureLinks) {
 			existingDDMStructureLinkStructureIds.add(

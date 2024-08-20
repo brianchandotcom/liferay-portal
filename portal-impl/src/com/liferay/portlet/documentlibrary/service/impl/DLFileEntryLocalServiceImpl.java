@@ -1474,6 +1474,8 @@ public class DLFileEntryLocalServiceImpl
 	public Map<Long, Long> getFileEntryTypeIds(
 		long companyId, long[] groupIds, String treePath) {
 
+		Map<Long, Long> fileEntryTypeIds = new HashMap<>();
+
 		List<Object[]> results = dslQuery(
 			DSLQueryFactoryUtil.select(
 				DLFileEntryTable.INSTANCE.fileEntryId,
@@ -1506,8 +1508,6 @@ public class DLFileEntryLocalServiceImpl
 						treePath.concat(StringPool.PERCENT))
 				)
 			));
-
-		Map<Long, Long> fileEntryTypeIds = new HashMap<>();
 
 		for (Object[] result : results) {
 			fileEntryTypeIds.put((Long)result[0], (Long)result[1]);

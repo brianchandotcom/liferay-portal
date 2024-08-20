@@ -17,6 +17,7 @@ import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Assert;
@@ -35,6 +36,29 @@ public class GroupByTest extends BaseGroupByTestCase {
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
+
+	@Override
+	@Test
+	public void testFieldNamesDefault() throws Exception {
+		indexDuplicates("one", 1);
+
+		assertSearch(
+			indexingTestHelper -> {
+				indexingTestHelper.define(
+					searchContext -> searchContext.setGroupBy(
+						new GroupBy(GROUP_FIELD)));
+
+				indexingTestHelper.search();
+
+				indexingTestHelper.verify(
+					hits -> assertGroupedHitsFieldNames(
+						"one",
+						Arrays.asList(
+							"companyId", "entryClassName", "entryClassPK",
+							"groupId", SORT_FIELD, "uid", "userName"),
+						hits, indexingTestHelper));
+			});
+	}
 
 	@Test
 	public void testGroupByDocsSizeDefault() throws Exception {

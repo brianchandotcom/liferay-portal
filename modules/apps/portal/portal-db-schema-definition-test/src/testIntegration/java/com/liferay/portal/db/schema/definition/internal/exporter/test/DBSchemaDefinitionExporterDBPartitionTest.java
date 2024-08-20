@@ -99,20 +99,20 @@ public class DBSchemaDefinitionExporterDBPartitionTest
 		testExportImportDBSchemaDefinition(
 			() -> _companyLocalService.forEachCompanyId(
 				companyId -> {
-					String tablesSQLName = "tables.sql";
 					String indexesSQLName = "indexes.sql";
+					String tablesSQLName = "tables.sql";
 
 					if (companyId != PortalInstancePool.getDefaultCompanyId()) {
-						tablesSQLName =
-							companyId + StringPool.UNDERLINE + tablesSQLName;
 						indexesSQLName =
 							companyId + StringPool.UNDERLINE + indexesSQLName;
+						tablesSQLName =
+							companyId + StringPool.UNDERLINE + tablesSQLName;
 					}
 
-					DatabaseTestUtil.createSchema(COPY_DB_SCHEMA_NAME);
-
-					File tablesSQLFile = new File(folder, tablesSQLName);
 					File indexesSQLFile = new File(folder, indexesSQLName);
+					File tablesSQLFile = new File(folder, tablesSQLName);
+
+					DatabaseTestUtil.createSchema(COPY_DB_SCHEMA_NAME);
 
 					DataSource copyDataSource = null;
 					DataSource dataSource = InfrastructureUtil.getDataSource();

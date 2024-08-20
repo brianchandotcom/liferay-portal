@@ -403,10 +403,10 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 	@Reference
 	protected AssetCategoryLocalService assetCategoryLocalService;
 
-	@Reference(target = "(name=AssetPublisherExportCapability)")
+	@Reference(target = "(name=CommonPortletDisplayTemplateExportCapability)")
 	protected Capability assetExportCapability;
 
-	@Reference(target = "(name=AssetPublisherImportCapability)")
+	@Reference(target = "(name=CommonPortletDisplayTemplateImportCapability)")
 	protected Capability assetImportCapability;
 
 	@Reference

@@ -295,7 +295,8 @@ public class TestrayManagerImpl implements TestrayManager {
 			String testrayBuildDate, long testrayBuildId,
 			TestrayCache testrayCache, long testrayCaseId,
 			Map<String, Serializable> testrayCasePropertiesMap,
-			long testrayComponentId, long testrayRunId, long userId)
+			long testrayComponentId, long testrayRunId, long testrayTeamId,
+			long userId)
 		throws Exception {
 
 		String objectEntryIdsKey = StringBundler.concat(
@@ -349,6 +350,8 @@ public class TestrayManagerImpl implements TestrayManager {
 				"r_componentToCaseResult_c_componentId", testrayComponentId
 			).put(
 				"r_runToCaseResult_c_runId", testrayRunId
+			).put(
+				"r_teamToCaseResult_c_teamId", testrayTeamId
 			).put(
 				"startDate", Timestamp.valueOf(testrayBuildDate)
 			).put(
@@ -519,7 +522,7 @@ public class TestrayManagerImpl implements TestrayManager {
 		_addOrUpdateTestrayCaseResult(
 			serviceContext, testcaseNode, testrayBuildDate, testrayBuildId,
 			testrayCache, testrayCaseId, testrayCasePropertiesMap,
-			testrayComponentId, testrayRunId, userId);
+			testrayComponentId, testrayRunId, testrayTeamId, userId);
 	}
 
 	private void _addTestrayCases(

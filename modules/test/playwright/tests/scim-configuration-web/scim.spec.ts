@@ -76,7 +76,7 @@ test('LPD-23255 AC3 TC3: Verify that clicking the “Reset SCIM Client provision
 
 	await scimConfigurationPage.resetClientData();
 
-	await expect(scimConfigurationPage.accessTokenField).toBeEmpty();
+	await expect(scimConfigurationPage.accessTokenField).toBeHidden();
 
 	await expect(scimConfigurationPage.oAuth2ApplicationNameField).toBeEmpty();
 

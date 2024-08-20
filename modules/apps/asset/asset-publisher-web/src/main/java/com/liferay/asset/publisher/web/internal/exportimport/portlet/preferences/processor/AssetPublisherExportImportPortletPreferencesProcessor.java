@@ -1096,6 +1096,10 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 					StagedModelDataHandlerUtil.exportReferenceStagedModel(
 						portletDataContext, portletId, assetListEntry);
 				}
+
+				if (FeatureFlagManagerUtil.isEnabled("LPD-22837")) {
+					portletPreferences.reset("assetListEntryId");
+				}
 			}
 			else if (name.equals("assetVocabularyId")) {
 				long assetVocabularyId = GetterUtil.getLong(value);
@@ -1333,7 +1337,9 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 					portletDataContext, portletPreferences, name,
 					companyGroup.getGroupId(), portletDataContext.getPlid());
 			}
-			else if (name.equals("assetListEntryId")) {
+			else if (name.equals("assetListEntryId") &&
+					 !FeatureFlagManagerUtil.isEnabled("LPD-22837")) {
+
 				updateImportPortletPreferencesClassPKs(
 					portletDataContext, portletPreferences, name,
 					AssetListEntry.class, companyGroup.getGroupId());

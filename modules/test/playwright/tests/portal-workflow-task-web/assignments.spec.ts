@@ -192,7 +192,7 @@ test('send user back to my workflow tasks page after assign another user to revi
 
 	await workflowTaskDetailsPage.selectAssignee(user.id.toString());
 
-	await workflowTaskDetailsPage.doneAssigneeButton.click();
+	await workflowTaskDetailsPage.assigneeDoneButton.click();
 
 	await expect(workflowTasksPage.assignedToMyRolesLink).toBeVisible();
 });
@@ -325,4 +325,62 @@ test('logged user must be able to see workflow task at least from a read-only pe
 	await expect(workflowTaskDetailsPage.reviewActionMenu).toBeHidden();
 
 	await performUserSwitch(page, defaultUser.alternateName);
+});
+
+test('approve or reject modal appear even after doing a comment on the comments section', async ({
+	blogsEditBlogEntryPage,
+	blogsPage,
+	configurationTabPage,
+	page,
+	workflowTaskDetailsPage,
+	workflowTasksPage,
+}) => {
+	await configurationTabPage.goTo();
+
+	workflowDefinitionName = 'Single Approver';
+
+	assetType = 'Blogs Entry';
+
+	await configurationTabPage.assignWorkflowToAssetType(
+		workflowDefinitionName,
+		assetType
+	);
+
+	await blogsPage.goto();
+
+	await blogsPage.goToCreateBlogEntry();
+
+	blogTitle = 'Blog Title' + getRandomInt();
+
+	await blogsEditBlogEntryPage.editBlogEntry({
+		content: 'Blog content.',
+		submitToWorkflow: true,
+		title: blogTitle,
+	});
+
+	await workflowTasksPage.goToAssignedToMyRoles();
+
+	await workflowTasksPage.assignToMe(blogTitle);
+
+	await workflowTaskDetailsPage.selectAsset(blogTitle);
+
+	await page.waitForLoadState('networkidle');
+
+	await workflowTaskDetailsPage.addComment('This is a comment');
+
+	await page.waitForLoadState('networkidle');
+
+	await workflowTaskDetailsPage.reviewActionMenu.click();
+
+	await workflowTaskDetailsPage.approveMenuItem.click();
+
+	await expect(page.getByRole('heading', {name: 'Approve'})).toBeVisible();
+
+	await workflowTaskDetailsPage.cancelButton.click();
+
+	await workflowTaskDetailsPage.reviewActionMenu.click();
+
+	await workflowTaskDetailsPage.rejectMenuItem.click();
+
+	await expect(page.getByRole('heading', {name: 'Reject'})).toBeVisible();
 });

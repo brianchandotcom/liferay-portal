@@ -28,7 +28,7 @@ public class DBSchemaImporter {
 			HelpFormatter helpFormatter = new HelpFormatter();
 
 			helpFormatter.printHelp(
-				"Liferay Portal Tools DB Schema Importer", options);
+				"Liferay Portal Tools Database Schema Importer", options);
 
 			System.exit(_LIFERAY_COMMON_EXIT_CODE_HELP);
 		}
@@ -37,6 +37,8 @@ public class DBSchemaImporter {
 
 		try {
 			CommandLine commandLine = commandLineParser.parse(options, args);
+
+			// Usage of parameters
 
 			_getDataSource(
 				commandLine.getOptionValue("source-jdbc-url"),
@@ -71,8 +73,8 @@ public class DBSchemaImporter {
 
 		hikariConfig.setDriverClassName(driverClassName);
 		hikariConfig.setJdbcUrl(jdbcURL);
-		hikariConfig.setUsername(userName);
 		hikariConfig.setPassword(password);
+		hikariConfig.setUsername(userName);
 
 		hikariConfig.setConnectionTimeout(30000);
 		hikariConfig.setIdleTimeout(600000);

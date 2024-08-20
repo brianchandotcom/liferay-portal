@@ -22,12 +22,12 @@ public abstract class BaseRoutineLiferayEventHandler extends BaseEventHandler {
 	}
 
 	protected JSONObject getRoutineJSONObject() {
+		JSONObject routineJSONObject = new JSONObject();
+
 		JSONObject messageJSONObject = getMessageJSONObject();
 
 		JSONObject objectEntryDTORoutineJSONObject =
 			messageJSONObject.getJSONObject("objectEntryDTORoutine");
-
-		JSONObject routineJSONObject = new JSONObject();
 
 		routineJSONObject.put(
 			"dateCreated",

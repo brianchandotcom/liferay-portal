@@ -22,12 +22,12 @@ public abstract class BaseJobLiferayEventHandler extends BaseEventHandler {
 	}
 
 	protected JSONObject getJobJSONObject() {
+		JSONObject jobJSONObject = new JSONObject();
+
 		JSONObject messageJSONObject = getMessageJSONObject();
 
 		JSONObject objectEntryDTOJobJSONObject =
 			messageJSONObject.getJSONObject("objectEntryDTOJob");
-
-		JSONObject jobJSONObject = new JSONObject();
 
 		jobJSONObject.put(
 			"dateCreated",

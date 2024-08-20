@@ -176,7 +176,7 @@ public abstract class BaseOpenGitHubPullRequestEventHandler
 	protected Set<String> getTestOptions()
 		throws InvalidJSONException, IOException {
 
-		GitHubPullRequest gitHubPullRequest = getGitHubPullRequest();
+		Set<String> testOptions = new HashSet<>();
 
 		Set<String> ciTestAutoRecipients = new HashSet<>();
 
@@ -196,10 +196,10 @@ public abstract class BaseOpenGitHubPullRequestEventHandler
 				ciTestAutoRecipients, senderCITestAutoRecipients.split(","));
 		}
 
+		GitHubPullRequest gitHubPullRequest = getGitHubPullRequest();
+
 		GitHubUser receiverGitHubUser =
 			gitHubPullRequest.getReceiverGitHubUser();
-
-		Set<String> testOptions = new HashSet<>();
 
 		for (String ciTestAutoRecipient : ciTestAutoRecipients) {
 			Matcher matcher = _ciTestAutoRecipientPattern.matcher(

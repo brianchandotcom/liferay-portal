@@ -66,6 +66,7 @@ type Layout = {
 type LayoutPageTemplateEntry = {
 	groupId: string;
 	layoutPageTemplateEntryId: string;
+	plid: string;
 };
 
 type PageDefinition = {

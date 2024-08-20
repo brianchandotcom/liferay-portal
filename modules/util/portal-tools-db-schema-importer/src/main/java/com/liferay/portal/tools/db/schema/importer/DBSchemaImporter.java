@@ -40,13 +40,13 @@ public class DBSchemaImporter {
 
 			_getDataSource(
 				commandLine.getOptionValue("source-jdbc-url"),
-				commandLine.getOptionValue("source-user"),
-				commandLine.getOptionValue("source-password"));
+				commandLine.getOptionValue("source-password"),
+				commandLine.getOptionValue("source-user"));
 
 			_getDataSource(
 				commandLine.getOptionValue("target-jdbc-url"),
-				commandLine.getOptionValue("target-user"),
-				commandLine.getOptionValue("target-password"));
+				commandLine.getOptionValue("target-password"),
+				commandLine.getOptionValue("target-user"));
 
 			System.exit(_LIFERAY_COMMON_EXIT_CODE_OK);
 		}
@@ -56,7 +56,7 @@ public class DBSchemaImporter {
 	}
 
 	private static DataSource _getDataSource(
-			String jdbcURL, String userName, String password)
+			String jdbcURL, String password, String userName)
 		throws Exception {
 
 		String driverClassName = _MYSQL_DRIVER;
@@ -89,14 +89,14 @@ public class DBSchemaImporter {
 
 		options.addOption(null, "help", false, "Print help message.");
 		options.addRequiredOption(
-			null, "source-jdbc-url", true, "Set the source database JDBC URL.");
+			null, "source-jdbc-url", true, "Set the source JDBC URL.");
 		options.addRequiredOption(
 			null, "source-password", true,
 			"Set the source database user password.");
 		options.addRequiredOption(
 			null, "source-user", true, "Set the source database user.");
 		options.addRequiredOption(
-			null, "target-jdbc-url", true, "Set the target database JDBC URL.");
+			null, "target-jdbc-url", true, "Set the target JDBC URL.");
 		options.addRequiredOption(
 			null, "target-password", true,
 			"Set the target database user password.");

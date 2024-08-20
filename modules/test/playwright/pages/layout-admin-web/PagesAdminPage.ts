@@ -75,6 +75,42 @@ export class PagesAdminPage {
 		);
 	}
 
+	async addCSSClientExtension(clientExtensionName: string) {
+		await this.page
+			.locator('.portlet-body li', {
+				has: this.page.getByText('Design'),
+			})
+			.click();
+
+		await this.page
+			.getByRole('button', {name: 'Add CSS Client Extensions'})
+			.click();
+
+		const iframe = this.page.frameLocator('#selectGlobalCSSCETs_iframe_');
+
+		// Wait for "Select Items" checkbox label to be visible which occurs when JavaScript hydration is complete.
+
+		await iframe.getByText('Select Items').waitFor({state: 'visible'});
+
+		await iframe.getByLabel(clientExtensionName).check();
+
+		const addButton = this.page.getByRole('button', {
+			exact: true,
+			name: 'Add',
+		});
+
+		const clientExtensionEntry = this.page.getByRole('cell', {
+			name: clientExtensionName,
+		});
+
+		await clickAndExpectToBeVisible({
+			target: clientExtensionEntry,
+			trigger: addButton,
+		});
+
+		await this.configurationSaveButton.click();
+	}
+
 	async addJavaScriptClientExtension(clientExtensionName: string) {
 		await this.page
 			.locator('.portlet-body li', {
@@ -335,14 +371,16 @@ export class PagesAdminPage {
 		await this.page.getByText('Search Results').waitFor();
 	}
 
-	async selectJavaScriptClientExtension({
+	async selectClientExtension({
 		clientExtensionName,
 		layoutTitle,
 		siteUrl,
+		type,
 	}: {
 		clientExtensionName: string;
 		layoutTitle?: string;
 		siteUrl?: Site['friendlyUrlPath'];
+		type?: string;
 	}) {
 		if (!layoutTitle) {
 			await this.gotoPagesConfiguration(siteUrl);
@@ -353,7 +391,12 @@ export class PagesAdminPage {
 			await this.clickOnAction('Configure', layoutTitle);
 		}
 
-		await this.addJavaScriptClientExtension(clientExtensionName);
+		if (type && type === 'globalCSS') {
+			await this.addCSSClientExtension(clientExtensionName);
+		}
+		else {
+			await this.addJavaScriptClientExtension(clientExtensionName);
+		}
 
 		if (!layoutTitle) {
 			await waitForSuccessAlert(this.page);

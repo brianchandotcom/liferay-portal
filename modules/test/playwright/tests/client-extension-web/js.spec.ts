@@ -99,7 +99,7 @@ test('Create a new JS client extension with a script element attribute', async (
 
 	// Apply JS client extension to all pages.
 
-	await pagesAdminPage.selectJavaScriptClientExtension({clientExtensionName});
+	await pagesAdminPage.selectClientExtension({clientExtensionName});
 
 	await page.goto('/');
 
@@ -205,7 +205,7 @@ const testJSClientExtensionWithAttributes = async ({
 
 	// Apply the JS client extension and assert its attributes
 
-	await pagesAdminPage.selectJavaScriptClientExtension({clientExtensionName});
+	await pagesAdminPage.selectClientExtension({clientExtensionName});
 
 	await pagesAdminPage.javaScriptClientExtensionsTab.click();
 

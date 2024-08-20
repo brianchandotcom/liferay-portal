@@ -469,7 +469,7 @@ test.describe('JavaScript Client Extensions', () => {
 
 			// Apply JS client extension to page
 
-			await pagesAdminPage.selectJavaScriptClientExtension({
+			await pagesAdminPage.selectClientExtension({
 				clientExtensionName,
 				layoutTitle,
 				siteUrl: site.friendlyUrlPath,
@@ -615,7 +615,7 @@ test.describe('JavaScript Client Extensions', () => {
 
 			// Apply JS client extension to all pages
 
-			await pagesAdminPage.selectJavaScriptClientExtension({
+			await pagesAdminPage.selectClientExtension({
 				clientExtensionName,
 				siteUrl: site.friendlyUrlPath,
 			});

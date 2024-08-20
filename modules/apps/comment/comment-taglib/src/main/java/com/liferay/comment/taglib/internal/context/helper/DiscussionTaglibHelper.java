@@ -118,6 +118,16 @@ public class DiscussionTaglibHelper {
 		return _ratingsEnabled;
 	}
 
+	public boolean isRefreshPageOnReply() {
+		if (_refreshPageOnReply == null) {
+			_refreshPageOnReply = GetterUtil.getBoolean(
+				_httpServletRequest.getAttribute(
+					"liferay-comment:discussion:refreshPageOnReply"));
+		}
+
+		return _refreshPageOnReply;
+	}
+
 	private static final String _CLASS_NAME =
 		"com.liferay.message.boards.model.MBDiscussion";
 
@@ -131,6 +141,7 @@ public class DiscussionTaglibHelper {
 	private String _paginationURL;
 	private Boolean _ratingsEnabled;
 	private String _redirect;
+	private Boolean _refreshPageOnReply;
 	private Long _userId;
 
 }

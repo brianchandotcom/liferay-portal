@@ -34,6 +34,7 @@ export default function Comments({
 	portletDisplayId,
 	randomNamespace,
 	ratingsEnabled,
+	refreshPageOnReply,
 	subscriptionClassName,
 	userId,
 }) {
@@ -384,7 +385,7 @@ export default function Comments({
 			});
 		}
 		else {
-			sendMessage(form);
+			sendMessage(form, refreshPageOnReply);
 
 			editorInstance.dispose();
 		}

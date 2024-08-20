@@ -59,6 +59,10 @@ public class DiscussionTag extends IncludeTag {
 		return _ratingsEnabled;
 	}
 
+	public boolean isRefreshPageOnReply() {
+		return _refreshPageOnReply;
+	}
+
 	public void setAssetEntryVisible(boolean assetEntryVisible) {
 		_assetEntryVisible = assetEntryVisible;
 	}
@@ -102,6 +106,10 @@ public class DiscussionTag extends IncludeTag {
 		_redirect = redirect;
 	}
 
+	public void setRefreshPageOnReply(boolean refreshPageOnReply) {
+		_refreshPageOnReply = refreshPageOnReply;
+	}
+
 	public void setUserId(long userId) {
 		_userId = userId;
 	}
@@ -119,6 +127,7 @@ public class DiscussionTag extends IncludeTag {
 		_hideControls = false;
 		_ratingsEnabled = true;
 		_redirect = null;
+		_refreshPageOnReply = false;
 		_userId = 0;
 	}
 
@@ -215,6 +224,9 @@ public class DiscussionTag extends IncludeTag {
 		httpServletRequest.setAttribute(
 			"liferay-comment:discussion:redirect", _redirect);
 		httpServletRequest.setAttribute(
+			"liferay-comment:discussion:refreshPageOnReply",
+			_refreshPageOnReply);
+		httpServletRequest.setAttribute(
 			"liferay-comment:discussion:userId", String.valueOf(_userId));
 	}
 
@@ -234,6 +246,7 @@ public class DiscussionTag extends IncludeTag {
 	private boolean _hideControls;
 	private boolean _ratingsEnabled = true;
 	private String _redirect;
+	private boolean _refreshPageOnReply;
 	private long _userId;
 
 }

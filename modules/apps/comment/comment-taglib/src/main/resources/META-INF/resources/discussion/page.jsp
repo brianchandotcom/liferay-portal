@@ -289,6 +289,8 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 				).put(
 					"ratingsEnabled", discussionTaglibHelper.isRatingsEnabled()
 				).put(
+					"refreshPageOnReply", discussionTaglibHelper.isRefreshPageOnReply()
+				).put(
 					"subscriptionClassName", discussionTaglibHelper.getSubscriptionClassName()
 				).put(
 					"userId", discussionTaglibHelper.getUserId()

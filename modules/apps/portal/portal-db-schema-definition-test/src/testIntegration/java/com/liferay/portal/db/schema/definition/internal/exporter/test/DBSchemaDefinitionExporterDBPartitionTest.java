@@ -110,9 +110,70 @@ public class DBSchemaDefinitionExporterDBPartitionTest
 							companyId + StringPool.UNDERLINE + indexesSQLName;
 					}
 
-					_assertImportDBSchemaDefinition(
-						companyId, new File(folder, tablesSQLName),
-						new File(folder, indexesSQLName));
+					DatabaseTestUtil.createSchema(COPY_DB_SCHEMA_NAME);
+
+					File tablesSQLFile = new File(folder, tablesSQLName);
+					File indexesSQLFile = new File(folder, indexesSQLName);
+
+					DataSource copyDataSource = null;
+					DataSource dataSource = InfrastructureUtil.getDataSource();
+
+					try {
+						copyDataSource = DatabaseTestUtil.initDataSource(
+							COPY_DB_SCHEMA_NAME);
+
+						if (companyId ==
+								PortalInstancePool.getDefaultCompanyId()) {
+
+							DatabaseTestUtil.importFile(
+								tablesSQLFile, copyDataSource);
+						}
+						else {
+							DatabaseTestUtil.importFileRenamingSchema(
+								tablesSQLFile,
+								InfrastructureUtil.getDataSource(),
+								DBPartitionUtil.getPartitionName(companyId),
+								COPY_DB_SCHEMA_NAME);
+
+							dataSource = DatabaseTestUtil.initDataSource(
+								DBPartitionUtil.getPartitionName(companyId));
+						}
+
+						assertTables(dataSource, copyDataSource);
+						Assert.assertEquals(
+							DatabaseTestUtil.getViewNames(dataSource),
+							DatabaseTestUtil.getViewNames(copyDataSource));
+
+						if (companyId ==
+								PortalInstancePool.getDefaultCompanyId()) {
+
+							DatabaseTestUtil.importFile(
+								indexesSQLFile, copyDataSource);
+						}
+						else {
+							DatabaseTestUtil.importFileRenamingSchema(
+								indexesSQLFile,
+								InfrastructureUtil.getDataSource(),
+								DBPartitionUtil.getPartitionName(companyId),
+								COPY_DB_SCHEMA_NAME);
+						}
+
+						assertIndexes(dataSource, copyDataSource);
+					}
+					finally {
+						DatabaseTestUtil.dropSchema(COPY_DB_SCHEMA_NAME);
+
+						if ((dataSource != null) &&
+							(dataSource !=
+								InfrastructureUtil.getDataSource())) {
+
+							DatabaseTestUtil.destroyDataSource(dataSource);
+						}
+
+						if (copyDataSource != null) {
+							DatabaseTestUtil.destroyDataSource(copyDataSource);
+						}
+					}
 				}));
 	}
 
@@ -188,64 +249,6 @@ public class DBSchemaDefinitionExporterDBPartitionTest
 				"drop view if exists " +
 					DBPartitionUtil.getPartitionName(_company.getCompanyId()) +
 						".TestView");
-		}
-	}
-
-	private void _assertImportDBSchemaDefinition(
-			long companyId, File tablesSQLFile, File indexesSQLFile)
-		throws Exception {
-
-		DatabaseTestUtil.createSchema(COPY_DB_SCHEMA_NAME);
-
-		DataSource copyDataSource = null;
-		DataSource dataSource = InfrastructureUtil.getDataSource();
-
-		try {
-			copyDataSource = DatabaseTestUtil.initDataSource(
-				COPY_DB_SCHEMA_NAME);
-
-			if (companyId == PortalInstancePool.getDefaultCompanyId()) {
-				DatabaseTestUtil.importFile(tablesSQLFile, copyDataSource);
-			}
-			else {
-				DatabaseTestUtil.importFileRenamingSchema(
-					tablesSQLFile, InfrastructureUtil.getDataSource(),
-					DBPartitionUtil.getPartitionName(companyId),
-					COPY_DB_SCHEMA_NAME);
-
-				dataSource = DatabaseTestUtil.initDataSource(
-					DBPartitionUtil.getPartitionName(companyId));
-			}
-
-			assertTables(dataSource, copyDataSource);
-			Assert.assertEquals(
-				DatabaseTestUtil.getViewNames(dataSource),
-				DatabaseTestUtil.getViewNames(copyDataSource));
-
-			if (companyId == PortalInstancePool.getDefaultCompanyId()) {
-				DatabaseTestUtil.importFile(indexesSQLFile, copyDataSource);
-			}
-			else {
-				DatabaseTestUtil.importFileRenamingSchema(
-					indexesSQLFile, InfrastructureUtil.getDataSource(),
-					DBPartitionUtil.getPartitionName(companyId),
-					COPY_DB_SCHEMA_NAME);
-			}
-
-			assertIndexes(dataSource, copyDataSource);
-		}
-		finally {
-			DatabaseTestUtil.dropSchema(COPY_DB_SCHEMA_NAME);
-
-			if ((dataSource != null) &&
-				(dataSource != InfrastructureUtil.getDataSource())) {
-
-				DatabaseTestUtil.destroyDataSource(dataSource);
-			}
-
-			if (copyDataSource != null) {
-				DatabaseTestUtil.destroyDataSource(copyDataSource);
-			}
 		}
 	}
 

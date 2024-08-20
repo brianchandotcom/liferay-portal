@@ -55,9 +55,35 @@ public class DBSchemaDefinitionExporterTest
 	@Test
 	public void testExportImportDBSchemaDefinition() throws Exception {
 		testExportImportDBSchemaDefinition(
-			() -> _assertImportDBSchemaDefinition(
-				new File(folder, "tables.sql"),
-				new File(folder, "indexes.sql")));
+			() -> {
+				DatabaseTestUtil.createSchema(COPY_DB_SCHEMA_NAME);
+
+				DataSource copyDataSource = null;
+
+				try {
+					copyDataSource = DatabaseTestUtil.initDataSource(
+						COPY_DB_SCHEMA_NAME);
+
+					DatabaseTestUtil.importFile(
+						new File(folder, "tables.sql"), copyDataSource);
+
+					assertTables(
+						InfrastructureUtil.getDataSource(), copyDataSource);
+
+					DatabaseTestUtil.importFile(
+						new File(folder, "indexes.sql"), copyDataSource);
+
+					assertIndexes(
+						InfrastructureUtil.getDataSource(), copyDataSource);
+				}
+				finally {
+					DatabaseTestUtil.dropSchema(COPY_DB_SCHEMA_NAME);
+
+					if (copyDataSource != null) {
+						DatabaseTestUtil.destroyDataSource(copyDataSource);
+					}
+				}
+			});
 	}
 
 	@Test
@@ -80,35 +106,6 @@ public class DBSchemaDefinitionExporterTest
 		}
 		finally {
 			db.runSQL("DROP_TABLE_IF_EXISTS(TestTable)");
-		}
-	}
-
-	private void _assertImportDBSchemaDefinition(
-			File tablesSQLFile, File indexesSQLFile)
-		throws Exception {
-
-		DatabaseTestUtil.createSchema(COPY_DB_SCHEMA_NAME);
-
-		DataSource copyDataSource = null;
-
-		try {
-			copyDataSource = DatabaseTestUtil.initDataSource(
-				COPY_DB_SCHEMA_NAME);
-
-			DatabaseTestUtil.importFile(tablesSQLFile, copyDataSource);
-
-			assertTables(InfrastructureUtil.getDataSource(), copyDataSource);
-
-			DatabaseTestUtil.importFile(indexesSQLFile, copyDataSource);
-
-			assertIndexes(InfrastructureUtil.getDataSource(), copyDataSource);
-		}
-		finally {
-			DatabaseTestUtil.dropSchema(COPY_DB_SCHEMA_NAME);
-
-			if (copyDataSource != null) {
-				DatabaseTestUtil.destroyDataSource(copyDataSource);
-			}
 		}
 	}
 

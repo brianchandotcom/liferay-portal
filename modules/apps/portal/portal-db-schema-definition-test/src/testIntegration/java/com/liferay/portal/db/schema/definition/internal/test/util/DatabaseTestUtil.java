@@ -156,28 +156,17 @@ public class DatabaseTestUtil {
 	public static void importFile(File file, DataSource targetDataSource)
 		throws Exception {
 
-		DB db = DBManagerUtil.getDB(
-			DBManagerUtil.getDBType(), targetDataSource);
-
-		try (Connection connection = targetDataSource.getConnection()) {
-			db.runSQLTemplate(connection, FileUtil.read(file), true);
-		}
+		importSQL(FileUtil.read(file), targetDataSource);
 	}
 
-	public static void importFileRenamingSchema(
-			File file, DataSource targetDataSource, String fromSchemaName,
-			String toSchemaName)
+	public static void importSQL(String sql, DataSource targetDataSource)
 		throws Exception {
 
-		DB db = DBManagerUtil.getDB(
-			DBManagerUtil.getDBType(), targetDataSource);
-
 		try (Connection connection = targetDataSource.getConnection()) {
-			db.runSQLTemplate(
-				connection,
-				StringUtil.replace(
-					FileUtil.read(file), fromSchemaName, toSchemaName),
-				true);
+			DB db = DBManagerUtil.getDB(
+				DBManagerUtil.getDBType(), targetDataSource);
+
+			db.runSQLTemplate(connection, sql, true);
 		}
 	}
 

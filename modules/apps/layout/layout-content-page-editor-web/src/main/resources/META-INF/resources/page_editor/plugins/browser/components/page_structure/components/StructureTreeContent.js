@@ -742,14 +742,18 @@ function visit(
 		isMasterItem: !isMasterPage && itemInMasterLayout,
 		itemType: ITEM_TYPES.layoutDataItem,
 		mapped: fragmentIsMapped(item, fragmentEntryLinks),
-		name: selectLayoutDataItemLabel({fragmentEntryLinks}, item),
+		name: selectLayoutDataItemLabel({fragmentEntryLinks, layoutData}, item),
 		nameInfo: getNameInfo(item),
 		onHoverNode,
 		parentItemId: item.parentId,
 		removable: !itemInMasterLayout && isRemovable(item, layoutData),
-		tooltipTitle: selectLayoutDataItemLabel({fragmentEntryLinks}, item, {
-			useCustomName: false,
-		}),
+		tooltipTitle: selectLayoutDataItemLabel(
+			{fragmentEntryLinks, layoutData},
+			item,
+			{
+				useCustomName: false,
+			}
+		),
 		type: item.type,
 	};
 }

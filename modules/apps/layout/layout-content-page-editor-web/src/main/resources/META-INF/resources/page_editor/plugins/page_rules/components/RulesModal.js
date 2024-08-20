@@ -66,7 +66,7 @@ export default function RulesModal({editingRule, onCloseModal}) {
 			) {
 				items.push({
 					label: selectLayoutDataItemLabel(
-						{fragmentEntryLinks},
+						{fragmentEntryLinks, layoutData},
 						item
 					),
 					value: item.itemId,

@@ -56,5 +56,8 @@ export function getItemNameFromAction({action, state}) {
 		return null;
 	}
 
-	return selectLayoutDataItemLabel({fragmentEntryLinks}, item);
+	return selectLayoutDataItemLabel(
+		{fragmentEntryLinks, layoutData: state.layoutData},
+		item
+	);
 }

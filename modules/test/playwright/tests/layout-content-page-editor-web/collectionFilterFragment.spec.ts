@@ -611,6 +611,12 @@ test('Reset collection filter using applied filters', async ({
 
 	await page.getByLabel(ANIMALS_COLLECTION_NAME).check();
 
+	// Check Include Clear Filters Option
+
+	await page
+		.getByLabel('Include Clear Filters Option', {exact: true})
+		.check();
+
 	await pageEditorPage.publishPage();
 
 	// Go to view mode of the created page
@@ -651,6 +657,30 @@ test('Reset collection filter using applied filters', async ({
 	// Remove filter
 
 	await page.getByLabel('Remove Filter', {exact: true}).click();
+
+	await expect(
+		page.getByText('Animal 01 - Dogs and Cats categories')
+	).toBeVisible();
+
+	await expect(page.getByText('Animal 02 - Dogs category')).toBeVisible();
+
+	// Select category filter: Cats
+
+	await selectFilter(page, ['cats']);
+
+	await expect(
+		page.getByText('Animal 01 - Dogs and Cats categories')
+	).toBeVisible();
+
+	await expect(page.getByText('Animal 02 - Dogs category')).not.toBeVisible();
+
+	await expect(
+		page.locator("//div[contains(@id,'filterList')]")
+	).toContainText('Cats');
+
+	// Clear filter
+
+	await page.getByRole('button', {name: 'Clear Filters'}).click();
 
 	await expect(
 		page.getByText('Animal 01 - Dogs and Cats categories')

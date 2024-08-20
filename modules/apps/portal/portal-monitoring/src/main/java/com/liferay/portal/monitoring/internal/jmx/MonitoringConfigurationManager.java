@@ -137,39 +137,6 @@ public class MonitoringConfigurationManager
 	}
 
 	@Override
-	public void setMonitorPortalRequest(boolean monitorPortalRequest) {
-	}
-
-	@Override
-	public void setMonitorPortletActionRequest(
-		boolean monitorPortletActionRequest) {
-	}
-
-	@Override
-	public void setMonitorPortletEventRequest(
-		boolean monitorPortletEventRequest) {
-	}
-
-	@Override
-	public void setMonitorPortletHeaderRequest(
-		boolean monitoringPortletHeaderRequest) {
-	}
-
-	@Override
-	public void setMonitorPortletRenderRequest(
-		boolean monitorPortletRenderRequest) {
-	}
-
-	@Override
-	public void setMonitorPortletRequests(boolean monitorPortletRequests) {
-	}
-
-	@Override
-	public void setMonitorPortletResourceRequest(
-		boolean monitorPortletResourceRequest) {
-	}
-
-	@Override
 	public void setMonitorServiceRequest(boolean monitorServiceRequest) {
 		_serviceMonitoringControl.setMonitorServiceRequest(
 			monitorServiceRequest);

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -102,6 +103,7 @@ public class GetLayoutsStrutsActionTest {
 	}
 
 	@Test
+	@TestInfo("LPS-106110")
 	public void testGetLayoutsStrutsActionWithPagination() throws Exception {
 		Map<Long, List<Long>> layoutIdsMap = _getLayoutIdsMap(
 			_COUNT_ROOT_LAYOUTS, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);

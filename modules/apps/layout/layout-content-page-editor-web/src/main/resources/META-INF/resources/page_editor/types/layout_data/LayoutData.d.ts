@@ -10,6 +10,8 @@ import {ColumnLayoutDataItem} from './ColumnLayoutDataItem';
 import {ContainerLayoutDataItem} from './ContainerLayoutDataItem';
 import {DropZoneLayoutDataItem} from './DropZoneLayoutDataItem';
 import {FormLayoutDataItem} from './FormLayoutDataItem';
+import {FormStepContainerDataItem} from './FormStepContainerLayoutDataItem';
+import {FormStepLayoutDataItem} from './FormStepLayoutDataItem';
 import {FragmentDropZoneLayoutDataItem} from './FragmentDropZoneLayoutDataItem';
 import {FragmentLayoutDataItem} from './FragmentLayoutDataItem';
 import {RootLayoutDataItem} from './RootLayoutDataItem';
@@ -29,6 +31,8 @@ export type LayoutDataItem =
 	| ContainerLayoutDataItem
 	| DropZoneLayoutDataItem
 	| FormLayoutDataItem
+	| FormStepLayoutDataItem
+	| FormStepContainerDataItem
 	| FragmentDropZoneLayoutDataItem
 	| FragmentLayoutDataItem
 	| RootLayoutDataItem

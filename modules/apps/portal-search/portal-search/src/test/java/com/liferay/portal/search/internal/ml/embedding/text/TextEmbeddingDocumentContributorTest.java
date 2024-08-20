@@ -200,11 +200,13 @@ public class TextEmbeddingDocumentContributorTest {
 		).thenReturn(
 			RandomTestUtil.randomLong()
 		);
+
 		Mockito.doReturn(
 			BlogsEntry.class
 		).when(
 			blogsEntry
 		).getModelClass();
+
 		Mockito.when(
 			blogsEntry.getStatus()
 		).thenReturn(

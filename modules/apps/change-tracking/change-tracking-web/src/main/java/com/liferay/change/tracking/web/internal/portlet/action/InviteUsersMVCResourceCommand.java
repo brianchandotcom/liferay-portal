@@ -336,6 +336,9 @@ public class InviteUsersMVCResourceCommand
 			String toName = receiverUser.getFullName();
 			String toAddress = receiverUser.getEmailAddress();
 
+			CTCollection ctCollection =
+				_ctCollectionLocalService.getCTCollection(ctCollectionId);
+
 			ServiceContext serviceContext =
 				ServiceContextThreadLocal.getServiceContext();
 
@@ -358,7 +361,7 @@ public class InviteUsersMVCResourceCommand
 			subscriptionSender.setContextAttributes(
 				"[$FROM_ADDRESS$]", fromAddress, "[$FROM_NAME$]", fromName,
 				"[$PORTAL_URL$]", themeDisplay.getPortalURL(), "[$TO_NAME$]",
-				toName);
+				toName, "[$PUBLICATION_NAME$]", ctCollection.getName());
 			subscriptionSender.setFrom(fromAddress, fromName);
 			subscriptionSender.setHtmlFormat(true);
 			subscriptionSender.setLocalizedBodyMap(

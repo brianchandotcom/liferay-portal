@@ -21,6 +21,7 @@ const STATE = {
 	activeItemType: null,
 	hoveredItemId: null,
 	hoveredItemType: null,
+	rangeLimitIds: {},
 };
 
 describe('Reducer', () => {
@@ -297,18 +298,18 @@ describe('Reducer', () => {
 
 	describe('Multiselect action', () => {
 		it('activates multiselect', async () => {
-			const state = {...STATE, multiSelectIsActive: false};
+			const state = {...STATE, multiSelect: null};
 			const action = {
 				...ACTION,
 				...{
-					multiSelectIsActive: true,
+					multiSelect: 'simple',
 					type: MULTI_SELECT,
 				},
 			};
 
 			expect(reducer(state, action)).toEqual({
 				...state,
-				multiSelectIsActive: true,
+				multiSelect: 'simple',
 			});
 		});
 

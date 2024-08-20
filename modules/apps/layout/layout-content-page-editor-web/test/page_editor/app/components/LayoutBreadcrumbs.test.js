@@ -21,11 +21,7 @@ const AutoSelect = ({itemId}) => {
 	return null;
 };
 
-const renderComponent = ({
-	multiSelectIsActive,
-	activeItemId,
-	activeItemIds = [],
-}) => {
+const renderComponent = ({multiSelect, activeItemId, activeItemIds = []}) => {
 	return render(
 		<StoreMother.Component
 			getState={() => ({
@@ -101,7 +97,7 @@ const renderComponent = ({
 			<ControlsProvider
 				activeInitialState={{
 					activeItemIds,
-					multiSelectIsActive,
+					multiSelect,
 				}}
 			>
 				<AutoSelect itemId={activeItemId} />
@@ -163,7 +159,7 @@ describe('LayoutBreadcrumbs', () => {
 		renderComponent({
 			activeItemId: 'item-4',
 			activeItemIds: ['item-1'],
-			multiSelectIsActive: true,
+			multiSelect: 'simple',
 		});
 
 		expect(screen.queryByText('Item 1')).not.toBeInTheDocument();

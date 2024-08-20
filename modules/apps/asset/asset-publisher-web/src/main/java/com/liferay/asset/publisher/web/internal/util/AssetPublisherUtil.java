@@ -12,6 +12,8 @@ import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherSele
 import com.liferay.asset.publisher.web.internal.constants.AssetPublisherSelectionStyleConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -76,6 +78,26 @@ public class AssetPublisherUtil {
 			group.getGroupId());
 	}
 
+	public static long getAssetListEntryId(
+		long companyId, long groupId, PortletPreferences portletPreferences) {
+
+		try {
+			AssetListEntry assetListEntry = getAssetListEntry(
+				false, companyId, groupId, portletPreferences);
+
+			if (assetListEntry != null) {
+				return assetListEntry.getAssetListEntryId();
+			}
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+		}
+
+		return 0;
+	}
+
 	private static AssetListEntry _fetchAssetListEntry(
 			boolean checkPermissions, long assetEntryListId)
 		throws PortalException {
@@ -104,5 +126,8 @@ public class AssetPublisherUtil {
 			fetchAssetListEntryByExternalReferenceCode(
 				externalReferenceCode, groupId);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AssetPublisherUtil.class);
 
 }

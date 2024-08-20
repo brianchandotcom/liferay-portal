@@ -11,7 +11,6 @@ import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.kernel.util.NotifiedAssetEntryThreadLocal;
 import com.liferay.asset.list.asset.entry.provider.AssetListAssetEntryProvider;
 import com.liferay.asset.list.model.AssetListEntry;
-import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.asset.list.service.AssetListEntrySegmentsEntryRelLocalService;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.util.AssetPublisherHelper;
@@ -19,6 +18,7 @@ import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherSele
 import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfiguration;
 import com.liferay.asset.publisher.web.internal.constants.AssetPublisherSelectionStyleConstants;
 import com.liferay.asset.publisher.web.internal.helper.AssetPublisherWebHelper;
+import com.liferay.asset.publisher.web.internal.util.AssetPublisherUtil;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.info.pagination.InfoPage;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -249,7 +249,7 @@ public class AssetEntriesCheckerHelper {
 				AssetPublisherSelectionStyleConstants.TYPE_ASSET_LIST)) {
 
 			return _getAssetListEntrySelectedAssetEntries(
-				portletPreferences, layout.getGroupId());
+				layout.getCompanyId(), layout.getGroupId(), portletPreferences);
 		}
 		else if (Objects.equals(
 					selectionStyle,
@@ -263,21 +263,14 @@ public class AssetEntriesCheckerHelper {
 	}
 
 	private List<AssetEntry> _getAssetListEntrySelectedAssetEntries(
-		PortletPreferences portletPreferences, long groupId) {
-
-		long assetListEntryId = GetterUtil.getLong(
-			portletPreferences.getValue("assetListEntryId", null));
-
-		if (assetListEntryId <= 0) {
-			return Collections.emptyList();
-		}
+		long companyId, long groupId, PortletPreferences portletPreferences) {
 
 		List<AssetEntry> assetEntries = new ArrayList<>();
 
 		try {
 			AssetListEntry assetListEntry =
-				_assetListEntryLocalService.fetchAssetListEntry(
-					assetListEntryId);
+				AssetPublisherUtil.getAssetListEntry(
+					false, companyId, groupId, portletPreferences);
 
 			if (assetListEntry == null) {
 				return Collections.emptyList();
@@ -293,8 +286,8 @@ public class AssetEntriesCheckerHelper {
 						TransformUtil.transform(
 							_assetListEntrySegmentsEntryRelLocalService.
 								getAssetListEntrySegmentsEntryRels(
-									assetListEntryId, QueryUtil.ALL_POS,
-									QueryUtil.ALL_POS),
+									assetListEntry.getAssetListEntryId(),
+									QueryUtil.ALL_POS, QueryUtil.ALL_POS),
 							assetListEntrySegmentsEntryRel ->
 								assetListEntrySegmentsEntryRel.
 									getSegmentsEntryId()));
@@ -304,7 +297,7 @@ public class AssetEntriesCheckerHelper {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						"Unable to get segments entry IDs for asset list " +
-							"entry " + assetListEntryId);
+							"entry " + assetListEntry.getAssetListEntryId());
 				}
 
 				if (_log.isDebugEnabled()) {
@@ -557,9 +550,6 @@ public class AssetEntriesCheckerHelper {
 
 	@Reference
 	private AssetListAssetEntryProvider _assetListAssetEntryProvider;
-
-	@Reference
-	private AssetListEntryLocalService _assetListEntryLocalService;
 
 	@Reference
 	private AssetListEntrySegmentsEntryRelLocalService

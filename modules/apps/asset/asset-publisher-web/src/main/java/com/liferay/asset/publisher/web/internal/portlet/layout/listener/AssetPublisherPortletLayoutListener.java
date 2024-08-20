@@ -14,6 +14,7 @@ import com.liferay.asset.publisher.util.AssetPublisherHelper;
 import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherSelectionStyleConfigurationUtil;
 import com.liferay.asset.publisher.web.internal.constants.AssetPublisherSelectionStyleConstants;
 import com.liferay.asset.publisher.web.internal.helper.AssetPublisherWebHelper;
+import com.liferay.asset.publisher.web.internal.util.AssetPublisherUtil;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.journal.service.JournalArticleLocalService;
@@ -33,7 +34,6 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -111,8 +111,12 @@ public class AssetPublisherPortletLayoutListener
 			AssetPublisherSelectionStyleConfigurationUtil.
 				defaultSelectionStyle());
 
-		long assetListEntryId = GetterUtil.getLong(
-			portletPreferences.getValue("assetListEntryId", null));
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		long assetListEntryId = AssetPublisherUtil.getAssetListEntryId(
+			serviceContext.getCompanyId(), serviceContext.getScopeGroupId(),
+			portletPreferences);
 
 		String infoListProviderKey = portletPreferences.getValue(
 			"infoListProviderKey", StringPool.BLANK);

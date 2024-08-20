@@ -35,6 +35,7 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -317,7 +318,8 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 			boolean deleteMissingAssetEntries, boolean checkPermission)
 		throws Exception {
 
-		AssetListEntry assetListEntry = _getAssetListEntry(portletPreferences);
+		AssetListEntry assetListEntry = _getAssetListEntry(
+			portletPreferences, portletRequest);
 
 		if (assetListEntry != null) {
 			long[] segmentsEntryIds = _getSegmentsEntryIds(portletRequest);
@@ -1177,7 +1179,8 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 	}
 
 	private AssetListEntry _getAssetListEntry(
-			PortletPreferences portletPreferences)
+			PortletPreferences portletPreferences,
+			PortletRequest portletRequest)
 		throws Exception {
 
 		String selectionStyle = GetterUtil.getString(
@@ -1191,9 +1194,45 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 			return null;
 		}
 
-		return _assetListEntryService.fetchAssetListEntry(
-			GetterUtil.getLong(
-				portletPreferences.getValue("assetListEntryId", null)));
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-22837")) {
+			return _assetListEntryService.fetchAssetListEntry(
+				GetterUtil.getLong(
+					portletPreferences.getValue("assetListEntryId", null)));
+		}
+
+		String assetListEntryExternalReferenceCode = GetterUtil.getString(
+			portletPreferences.getValue(
+				"assetListEntryExternalReferenceCode", null));
+
+		if (Validator.isNull(assetListEntryExternalReferenceCode)) {
+			return null;
+		}
+
+		String assetListEntryGroupExternalReferenceCode = GetterUtil.getString(
+			portletPreferences.getValue(
+				"assetListEntryGroupExternalReferenceCode", null));
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (Validator.isNull(assetListEntryGroupExternalReferenceCode)) {
+			return _assetListEntryService.
+				fetchAssetListEntryByExternalReferenceCode(
+					assetListEntryExternalReferenceCode,
+					themeDisplay.getScopeGroupId());
+		}
+
+		Group group = _groupLocalService.fetchGroupByExternalReferenceCode(
+			assetListEntryGroupExternalReferenceCode,
+			themeDisplay.getCompanyId());
+
+		if (group == null) {
+			return null;
+		}
+
+		return _assetListEntryService.
+			fetchAssetListEntryByExternalReferenceCode(
+				assetListEntryExternalReferenceCode, group.getGroupId());
 	}
 
 	private long[] _getSegmentsEntryIds(PortletRequest portletRequest) {

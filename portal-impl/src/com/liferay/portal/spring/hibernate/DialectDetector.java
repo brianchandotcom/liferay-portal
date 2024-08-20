@@ -39,13 +39,14 @@ import org.hibernate.engine.jdbc.dialect.spi.DialectResolver;
 public class DialectDetector {
 
 	public static Dialect getDialect(DataSource dataSource) {
+		Dialect dialect = null;
+
 		DBInfo dbInfo = DBInfoUtil.getDBInfo(dataSource);
 
 		int dbMajorVersion = dbInfo.getMajorVersion();
 		int dbMinorVersion = dbInfo.getMinorVersion();
 		String dbName = dbInfo.getName();
 
-		Dialect dialect = null;
 		String dialectKey = null;
 
 		try {

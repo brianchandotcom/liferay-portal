@@ -180,13 +180,13 @@ public class UpgradeGroup extends UpgradeProcess {
 	}
 
 	private Map<Long, String[]> _getCompanyLanguageIds() throws Exception {
+		Map<Long, String[]> companyLanguageIds = new HashMap<>();
+
 		PreparedStatement preparedStatement = connection.prepareStatement(
 			"select ownerId, preferences from PortalPreferences where " +
 				"ownerType = " + PortletKeys.PREFS_OWNER_TYPE_COMPANY);
 
 		ResultSet resultSet = preparedStatement.executeQuery();
-
-		Map<Long, String[]> companyLanguageIds = new HashMap<>();
 
 		while (resultSet.next()) {
 			long ownerId = resultSet.getLong("ownerId");

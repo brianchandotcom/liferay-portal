@@ -953,6 +953,8 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 	protected List<LinkedHashMap<String, Object>> getParamsList(
 		LinkedHashMap<String, Object> params) {
 
+		List<LinkedHashMap<String, Object>> paramsList = new ArrayList<>();
+
 		if (params == null) {
 			params = _emptyLinkedHashMap;
 		}
@@ -1192,8 +1194,6 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 				params3.put("groupsUserGroups", groupIds);
 			}
 		}
-
-		List<LinkedHashMap<String, Object>> paramsList = new ArrayList<>();
 
 		paramsList.add(params1);
 

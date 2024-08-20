@@ -207,9 +207,9 @@ public class IndexUpdaterUtil {
 	}
 
 	private static Map<String, String> _getIndexesSQLMap(String indexesSQL) {
-		String[] indexesSQLArray = StringUtil.split(indexesSQL, "\n\n");
-
 		Map<String, String> indexesSQLMap = new LinkedHashMap<>();
+
+		String[] indexesSQLArray = StringUtil.split(indexesSQL, "\n\n");
 
 		for (String element : indexesSQLArray) {
 			String tableName = element.substring(

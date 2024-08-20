@@ -89,9 +89,9 @@ public class PortletPreferencesFactoryImpl
 	implements PortletPreferencesFactory {
 
 	public static Map<String, Preference> createPreferencesMap(String xml) {
-		XMLEventReader xmlEventReader = null;
-
 		Map<String, Preference> preferencesMap = new HashMap<>();
+
+		XMLEventReader xmlEventReader = null;
 
 		try {
 			XMLInputFactory xmlInputFactory =

@@ -1102,7 +1102,7 @@ definition {
 			AssertTextEquals.assertPartialText(
 				itemName = "Content Page Template With Invalid Value",
 				locator1 = "Message#ERROR_IMPORT_SUBTEXT",
-				value1 = "page-template.json could not be imported because its page definition is invalid.");
+				value1 = "Content Page Template With Invalid Value could not be imported because its page definition is invalid.");
 
 			Button.clickDone();
 

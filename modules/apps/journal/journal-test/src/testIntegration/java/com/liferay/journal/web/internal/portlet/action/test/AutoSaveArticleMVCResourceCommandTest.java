@@ -104,7 +104,7 @@ public class AutoSaveArticleMVCResourceCommandTest {
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_DRAFT, journalArticle.getStatus());
 
-		Assert.assertEquals("1", jsonObject.getString("version"));
+		Assert.assertEquals("1.0", jsonObject.getString("version"));
 
 		jsonObject = _serveResource(
 			_getMockLiferayResourceRequest(
@@ -127,7 +127,7 @@ public class AutoSaveArticleMVCResourceCommandTest {
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_DRAFT, journalArticle.getStatus());
 
-		Assert.assertEquals("1", jsonObject.getString("version"));
+		Assert.assertEquals("1.0", jsonObject.getString("version"));
 	}
 
 	@Test
@@ -229,7 +229,7 @@ public class AutoSaveArticleMVCResourceCommandTest {
 				"friendlyURL_" + locale.toString(), entry.getValue());
 		}
 
-		mockLiferayResourceRequest.setParameter("version", "1");
+		mockLiferayResourceRequest.setParameter("version", "1.0");
 
 		return mockLiferayResourceRequest;
 	}

@@ -76,8 +76,9 @@ test('LPD-28956 Verify the configuration fields are displayed', async ({
 		'[$PORTAL_URL$]: You Have Been Invited to Work on a Publication';
 	const body =
 		'Dear [$TO_NAME$],<br /><br /> You have been invited to work on a publication. ' +
-		'For further information, please visit [$PORTAL_PUBLICATION_REVIEW_CHANGES_URL$].' +
-		'<br /><br /> Sincerely,<br /> [$FROM_NAME$]<br /> [$FROM_ADDRESS$]<br /> [$PORTAL_URL$]<br />';
+		'For further information, please visit:<br /><br /> <a href="' +
+		'[$PORTAL_PUBLICATION_REVIEW_CHANGES_URL$]">[$PUBLICATION_NAME$]</a><br />' +
+		'<br /> Sincerely,<br /> [$FROM_NAME$]<br /> [$FROM_ADDRESS$]<br /> [$PORTAL_URL$]<br />';
 
 	await expect(page.getByText(subject)).toBeVisible();
 

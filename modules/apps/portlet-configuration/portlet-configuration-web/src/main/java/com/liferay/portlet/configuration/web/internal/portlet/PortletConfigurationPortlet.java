@@ -555,7 +555,9 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 
 		PermissionPropagator permissionPropagator = null;
 
-		if (PropsValues.PERMISSIONS_PROPAGATION_ENABLED) {
+		if (PropsValues.PERMISSIONS_PROPAGATION_ENABLED &&
+			Validator.isNotNull(portletResource)) {
+
 			Portlet portlet = _portletLocalService.getPortletById(
 				themeDisplay.getCompanyId(), portletResource);
 

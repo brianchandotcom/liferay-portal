@@ -3,10 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ClayButtonWithIcon} from '@clayui/button';
+import {ClayButton, ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown, {Align} from '@clayui/drop-down';
 import ClayLayout from '@clayui/layout';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
+import ClayModal, {useModal} from '@clayui/modal';
 import ClayPanel from '@clayui/panel';
 import {createPortletURL, fetch, getPortletId} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
@@ -28,6 +29,7 @@ const PublicationTimeline = ({
 	timelineEditURL,
 	timelineItemsURL,
 }) => {
+	const MAX_DROPDOWN_ITEMS_SHOWN = 6;
 	const [timelineItems, setTimelineItems] = useState([]);
 	const [loading, setLoading] = useState(true);
 
@@ -61,6 +63,7 @@ const PublicationTimeline = ({
 			{revert: true}
 		);
 	};
+
 	const getReviewURL = (ctCollectionId) => {
 		return createMVCRenderCommandURL(
 			ctCollectionId,
@@ -92,41 +95,50 @@ const PublicationTimeline = ({
 	}
 	if (timelineItems && !!timelineItems.length) {
 		return (
-			<div className="publication-timeline">
-				{timelineItems.map((timelineItem) => (
+			<>
+				<div className="publication-timeline">
 					<ClayPanel
-						key={timelineItem.id}
 						style={{
 							borderBottomColor: '#e7e7ed',
 							marginBottom: 0,
 						}}
 					>
 						<ClayPanel.Body>
-							<ClayLayout.ContentRow>
-								<ClayLayout.ContentCol expand>
-									<div>
-										<span style={{paddingRight: '10px'}}>
-											{timelineItem.name}
-										</span>
+							{timelineItems
+								.slice(0, MAX_DROPDOWN_ITEMS_SHOWN)
+								.map((timelineItem) => (
+									<ClayLayout.ContentRow
+										key={timelineItem.id}
+										style={{marginBottom: '8px'}}
+									>
+										<ClayLayout.ContentCol expand>
+											<div>
+												<span
+													style={{
+														paddingRight: '10px',
+													}}
+												>
+													{timelineItem.name}
+												</span>
 
-										<WorkflowStatusLabel
-											workflowStatus={
-												timelineItem.status.code
-											}
-										/>
-									</div>
+												<WorkflowStatusLabel
+													workflowStatus={
+														timelineItem.status.code
+													}
+												/>
+											</div>
 
-									<div className="text-secondary">
-										{timelineItem.description}
-									</div>
+											<div className="text-secondary">
+												{timelineItem.description}
+											</div>
 
-									<div className="text-secondary">
-										{timelineItem.statusMessage}
-									</div>
-								</ClayLayout.ContentCol>
+											<div className="text-secondary">
+												{timelineItem.statusMessage}
+											</div>
+										</ClayLayout.ContentCol>
 
-								<ClayLayout.ContentCol>
-									{Liferay.FeatureFlags['LPD-20556'] ? (
+										<ClayLayout.ContentCol>
+											{Liferay.FeatureFlags['LPD-20556'] ? (
 										<>
 											{timelineItem.actions.get ? (
 												<ClayDropDown
@@ -216,12 +228,36 @@ const PublicationTimeline = ({
 											) : null}
 										</>
 									)}
-								</ClayLayout.ContentCol>
-							</ClayLayout.ContentRow>
+										</ClayLayout.ContentCol>
+									</ClayLayout.ContentRow>
+								))}
+
+							{timelineItems.length > MAX_DROPDOWN_ITEMS_SHOWN ? (
+								<ClayLayout.SheetFooter
+									className="align-items-center"
+									style={{
+										marginBottom: '0px',
+										marginTop: '0px',
+									}}
+								>
+									<ClayButton
+										aria-label={Liferay.Language.get(
+											'view-more'
+										)}
+										className="btn-block"
+										displayType="secondary"
+										onClick={() => {
+											setShowModal(true);
+										}}
+									>
+										{Liferay.Language.get('view-more')}
+									</ClayButton>
+								</ClayLayout.SheetFooter>
+							) : null}
 						</ClayPanel.Body>
 					</ClayPanel>
-				))}
-			</div>
+				</div>
+			</>
 		);
 	}
 

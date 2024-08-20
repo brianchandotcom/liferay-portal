@@ -46,7 +46,7 @@ describe('MultiSelectManager', () => {
 		Liferay.FeatureFlags['LPD-18221'] = false;
 	});
 
-	it('activates multiselect when pressing ctrl + click', () => {
+	it('activates simple multiselect when pressing ctrl + click', () => {
 		renderComponent();
 
 		document.body.dispatchEvent(
@@ -57,10 +57,10 @@ describe('MultiSelectManager', () => {
 
 		const activateMultiSelect = useActivateMultiSelect();
 
-		expect(activateMultiSelect).toBeCalledWith(true);
+		expect(activateMultiSelect).toBeCalledWith('simple');
 	});
 
-	it('activates multiselect when pressing ctrl + "Enter"', () => {
+	it('activates simple multiselect when pressing ctrl + "Enter"', () => {
 		renderComponent();
 
 		document.body.dispatchEvent(
@@ -72,10 +72,10 @@ describe('MultiSelectManager', () => {
 
 		const activateMultiSelect = useActivateMultiSelect();
 
-		expect(activateMultiSelect).toBeCalledWith(true);
+		expect(activateMultiSelect).toBeCalledWith('simple');
 	});
 
-	it('disable multiselect when the ctrl key is released', () => {
+	it('disable simple multiselect when the ctrl key is released', () => {
 		useMultiSelectIsActivated.mockImplementation(() => true);
 
 		renderComponent();
@@ -88,7 +88,7 @@ describe('MultiSelectManager', () => {
 
 		const activateMultiSelect = useActivateMultiSelect();
 
-		expect(activateMultiSelect).toBeCalledWith(false);
+		expect(activateMultiSelect).toBeCalledWith(null);
 	});
 
 	it('deselects items when escape is pressed', () => {

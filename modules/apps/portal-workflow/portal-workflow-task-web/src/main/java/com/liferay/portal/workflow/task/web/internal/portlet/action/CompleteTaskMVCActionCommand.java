@@ -21,7 +21,10 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.ServiceContextContributor;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.workflow.WorkflowHandler;
+import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManagerUtil;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
@@ -36,7 +39,6 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletResponse;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -87,19 +89,20 @@ public class CompleteTaskMVCActionCommand
 			ServiceContext serviceContext = (ServiceContext)workflowContext.get(
 				WorkflowConstants.CONTEXT_SERVICE_CONTEXT);
 
-			HttpServletRequest httpServletRequest = _getHttpServletRequest(
-				actionRequest, actionResponse);
+			serviceContext.setRequest(
+				_getHttpServletRequest(actionRequest, actionResponse));
 
-			serviceContext.setAttribute(
-				"serverName", httpServletRequest.getServerName());
-			serviceContext.setAttribute(
-				"serverPort", httpServletRequest.getServerPort());
+			WorkflowHandler<?> workflowHandler =
+				WorkflowHandlerRegistryUtil.getWorkflowHandler(
+					(String)workflowContext.get(
+						WorkflowConstants.CONTEXT_ENTRY_CLASS_NAME));
 
-			HttpSession httpSession = httpServletRequest.getSession();
+			if (workflowHandler instanceof ServiceContextContributor) {
+				ServiceContextContributor serviceContextContributor =
+					(ServiceContextContributor)workflowHandler;
 
-			serviceContext.setAttribute("sessionId", httpSession.getId());
-
-			serviceContext.setRequest(httpServletRequest);
+				serviceContextContributor.contribute(serviceContext);
+			}
 
 			workflowContext.put(
 				WorkflowConstants.CONTEXT_USER_ID,

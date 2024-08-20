@@ -118,12 +118,12 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 
 	@Override
 	public List<Capability> getExportCapabilities() {
-		return ListUtil.fromArray(assetExportCapability);
+		return ListUtil.fromArray(exportCapability);
 	}
 
 	@Override
 	public List<Capability> getImportCapabilities() {
-		return ListUtil.fromArray(assetImportCapability);
+		return ListUtil.fromArray(importCapability);
 	}
 
 	@Override
@@ -403,12 +403,6 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 	@Reference
 	protected AssetCategoryLocalService assetCategoryLocalService;
 
-	@Reference(target = "(name=CommonPortletDisplayTemplateExportCapability)")
-	protected Capability assetExportCapability;
-
-	@Reference(target = "(name=CommonPortletDisplayTemplateImportCapability)")
-	protected Capability assetImportCapability;
-
 	@Reference
 	protected AssetListEntryLocalService assetListEntryLocalService;
 
@@ -433,8 +427,14 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 	@Reference
 	protected DLFileEntryTypeLocalService dlFileEntryTypeLocalService;
 
+	@Reference(target = "(name=CommonPortletDisplayTemplateExportCapability)")
+	protected Capability exportCapability;
+
 	@Reference
 	protected GroupLocalService groupLocalService;
+
+	@Reference(target = "(name=CommonPortletDisplayTemplateImportCapability)")
+	protected Capability importCapability;
 
 	@Reference
 	protected LayoutLocalService layoutLocalService;

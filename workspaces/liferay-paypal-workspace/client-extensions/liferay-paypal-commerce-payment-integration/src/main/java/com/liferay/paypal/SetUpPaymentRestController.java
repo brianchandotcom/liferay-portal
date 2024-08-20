@@ -384,7 +384,9 @@ public class SetUpPaymentRestController extends BaseRestController {
 						languageId
 					)
 				).put(
-					"quantity", quantity.stripTrailingZeros()
+					"quantity",
+					quantity.stripTrailingZeros(
+					).toPlainString()
 				).put(
 					"sku", orderItemJSONObject.getString("sku")
 				).put(

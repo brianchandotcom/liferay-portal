@@ -541,7 +541,8 @@ public class PayPalCommercePaymentIntegration
 					).name(
 						commerceOrderItem.getName(locale)
 					).quantity(
-						String.valueOf(quantity.stripTrailingZeros())
+						quantity.stripTrailingZeros(
+						).toPlainString()
 					).sku(
 						commerceOrderItem.getSku()
 					).unitAmount(

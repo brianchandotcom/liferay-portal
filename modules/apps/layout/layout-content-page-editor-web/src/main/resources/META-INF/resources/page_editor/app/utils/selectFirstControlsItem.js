@@ -18,5 +18,7 @@ export default function selectFirstControlsItem({
 		layoutData,
 	});
 
-	selectItems([controlsId], {origin});
+	selectItems(Liferay.FeatureFlags['LPD-18221'] ? [controlsId] : controlsId, {
+		origin,
+	});
 }

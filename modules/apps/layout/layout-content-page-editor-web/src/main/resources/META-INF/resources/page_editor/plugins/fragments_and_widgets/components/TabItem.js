@@ -44,6 +44,7 @@ export default function TabItem({displayStyle, item, onRemoveHighlighted}) {
 	const dispatch = useDispatch();
 	const [disabled, setDisabled] = useState(item.disabled);
 	const setMovementSource = useSetMovementSource();
+	const selectItem = useSelectItem();
 	const selectMultipleItems = useSelectMultipleItems();
 
 	const onMovementSource = (event) => {
@@ -117,7 +118,9 @@ export default function TabItem({displayStyle, item, onRemoveHighlighted}) {
 					itemType: item.type,
 					parentItemId: parentId,
 					position,
-					selectItems: selectMultipleItems,
+					selectItems: Liferay.FeatureFlags['LPD-18221']
+						? selectMultipleItems
+						: selectItem,
 				})
 			)
 				.then(() => {

@@ -129,6 +129,10 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 	const setText = useSetMovementText();
 	const widgets = useSelector((state) => state.widgets);
 
+	const selectItems = Liferay.FeatureFlags['LPD-18221']
+		? selectMultipleItems
+		: selectItem;
+
 	const {fragmentEntryLinks, layoutData, selectedViewportSize} = useSelector(
 		(state) => state
 	);
@@ -206,7 +210,7 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 					dispatch(
 						duplicateItem({
 							itemIds: [item.id],
-							selectItems: selectMultipleItems,
+							selectItems,
 						})
 					);
 
@@ -236,7 +240,7 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 					dispatch(
 						deleteItem({
 							itemIds: [item.id],
-							selectItems: selectMultipleItems,
+							selectItems,
 						})
 					);
 
@@ -262,7 +266,7 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 		setOpenSaveModal,
 		setText,
 		isHidden,
-		selectMultipleItems,
+		selectItems,
 	]);
 
 	return (

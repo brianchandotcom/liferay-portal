@@ -81,6 +81,10 @@ export default function ShortcutManager() {
 	const sidebarHidden = state.sidebar.hidden;
 	const {widgets} = state;
 
+	const selectItems = Liferay.FeatureFlags['LPD-18221']
+		? selectMultipleItems
+		: selectItem;
+
 	const {fragmentEntryLinks, layoutData} = state;
 
 	const [activeItemId] = activeItemIds;
@@ -103,7 +107,7 @@ export default function ShortcutManager() {
 		dispatch(
 			duplicateItem({
 				itemIds: activeItemIds,
-				selectItems: selectMultipleItems,
+				selectItems,
 			})
 		);
 	};
@@ -129,7 +133,7 @@ export default function ShortcutManager() {
 		dispatch(
 			deleteItem({
 				itemIds: activeItemIds,
-				selectItems: selectMultipleItems,
+				selectItems,
 			})
 		);
 	};
@@ -140,10 +144,10 @@ export default function ShortcutManager() {
 
 	const undo = (event) => {
 		if (event.shiftKey) {
-			onRedo({selectItems: selectMultipleItems});
+			onRedo({selectItems});
 		}
 		else {
-			onUndo({selectItems: selectMultipleItems});
+			onUndo({selectItems});
 		}
 	};
 

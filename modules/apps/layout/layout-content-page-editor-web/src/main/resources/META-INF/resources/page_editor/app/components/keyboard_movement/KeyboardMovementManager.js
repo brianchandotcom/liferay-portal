@@ -67,6 +67,10 @@ export default function KeyboardMovementManager() {
 	const selectMultipleItems = useSelectMultipleItems();
 	const dispatch = useDispatch();
 
+	const selectItems = Liferay.FeatureFlags['LPD-18221']
+		? selectMultipleItems
+		: selectItem;
+
 	keymapRef.current = {
 		disableMovement: {
 			action: () => {
@@ -114,7 +118,7 @@ export default function KeyboardMovementManager() {
 								portletId: source.portletId,
 								portletItemId: source.portletItemId,
 								position,
-								selectItems: selectMultipleItems,
+								selectItems,
 							});
 						}
 						else {
@@ -123,7 +127,7 @@ export default function KeyboardMovementManager() {
 								groupId: source.groupId,
 								parentItemId: dropItemId,
 								position,
-								selectItems: selectMultipleItems,
+								selectItems,
 								type: source.type,
 							});
 						}
@@ -133,7 +137,7 @@ export default function KeyboardMovementManager() {
 							itemType: source.type,
 							parentItemId: dropItemId,
 							position,
-							selectItems: selectMultipleItems,
+							selectItems,
 						});
 					}
 				}

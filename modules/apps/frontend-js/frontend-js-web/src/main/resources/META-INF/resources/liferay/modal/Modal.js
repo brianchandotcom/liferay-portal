@@ -509,6 +509,42 @@ const openSelectionModal = ({
 		}
 	};
 
+	const iframeProps = {};
+
+	if (selectedData) {
+		const ercs = [];
+		const ids = [];
+		const labels = [];
+
+		selectedData.forEach((item) => {
+			const {externalReferenceCode, id, label} = item;
+
+			if (externalReferenceCode) {
+				ercs.push(externalReferenceCode);
+			}
+
+			if (id) {
+				ids.push(id);
+			}
+
+			if (label) {
+				labels.push(label);
+			}
+		});
+
+		if (ercs.length) {
+			iframeProps['data-selecteditemsercs'] = ercs.join(',');
+		}
+
+		if (ids.length) {
+			iframeProps['data-selecteditemsids'] = ids.join(',');
+		}
+
+		if (labels.length) {
+			iframeProps['data-selecteditemslabels'] = labels.join(',');
+		}
+	}
+
 	openModal({
 		buttons: multiple
 			? [
@@ -527,6 +563,7 @@ const openSelectionModal = ({
 		height,
 		id: id || selectEventName,
 		iframeBodyCssClass,
+		iframeProps,
 		onClose: () => {
 			eventHandlers.forEach((eventHandler) => {
 				eventHandler.detach();

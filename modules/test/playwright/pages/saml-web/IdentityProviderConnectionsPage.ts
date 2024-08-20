@@ -25,6 +25,7 @@ export class IdentityProviderConnectionsPage {
 	readonly enabledField: Locator;
 	readonly entityIdField: Locator;
 	readonly forceAuthnToggle: Locator;
+	readonly identityProviderConnectionsTable: Locator;
 	readonly keepAliveUrlField: Locator;
 	readonly metadataUrlField: Locator;
 	readonly nameField: Locator;
@@ -45,6 +46,9 @@ export class IdentityProviderConnectionsPage {
 		this.forceAuthnToggle = page.getByText('Force Authn', {
 			exact: true,
 		});
+		this.identityProviderConnectionsTable = page.locator(
+			'#_com_liferay_saml_web_internal_portlet_SamlAdminPortlet_samlSpIdpConnectionsSearchContainer'
+		);
 		this.keepAliveUrlField = page
 			.getByRole('group', {name: 'Keep Alive'})
 			.getByRole('textbox');
@@ -96,6 +100,34 @@ export class IdentityProviderConnectionsPage {
 		await this.goToIdentityProviderConnectionsTab();
 
 		await this._deleteIdentityProviderConnection(name);
+	}
+
+	async deleteIdentityProviderConnections() {
+		await this.goToIdentityProviderConnectionsTab();
+
+		this.page.on('dialog', (dialog) => {
+			dialog.accept();
+		});
+
+		await this.page.waitForTimeout(1000);
+
+		const row = await this.identityProviderConnectionsTable
+			.getByRole('row')
+			.last();
+
+		while (await row.isVisible()) {
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: this.page.getByRole('link', {name: 'Delete'}),
+				trigger: row.locator('.dropdown-toggle'),
+			});
+
+			await expect(await this.successMessage).toBeVisible();
+
+			// Prevent the above expect from passing due to previous success
+
+			await this.page.getByLabel('Close').click();
+		}
 	}
 
 	async editIdentityProviderConnection(idpConnection: TIdpConnection) {

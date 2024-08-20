@@ -1309,6 +1309,13 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 					portletDataContext, portletPreferences, name,
 					DDMStructure.class, companyGroup.getGroupId());
 			}
+			else if (name.equals("assetListEntryId") &&
+					 !FeatureFlagManagerUtil.isEnabled("LPD-22837")) {
+
+				updateImportPortletPreferencesClassPKs(
+					portletDataContext, portletPreferences, name,
+					AssetListEntry.class, companyGroup.getGroupId());
+			}
 			else if (name.equals("assetVocabularyId")) {
 				updateImportPortletPreferencesClassPKs(
 					portletDataContext, portletPreferences, name,
@@ -1336,13 +1343,6 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 				_updateImportScopeIds(
 					portletDataContext, portletPreferences, name,
 					companyGroup.getGroupId(), portletDataContext.getPlid());
-			}
-			else if (name.equals("assetListEntryId") &&
-					 !FeatureFlagManagerUtil.isEnabled("LPD-22837")) {
-
-				updateImportPortletPreferencesClassPKs(
-					portletDataContext, portletPreferences, name,
-					AssetListEntry.class, companyGroup.getGroupId());
 			}
 		}
 

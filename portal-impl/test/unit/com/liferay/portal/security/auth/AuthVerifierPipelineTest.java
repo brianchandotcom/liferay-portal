@@ -191,14 +191,14 @@ public class AuthVerifierPipelineTest {
 			AuthVerifier.class.getClassLoader(),
 			new Class<?>[] {AuthVerifier.class},
 			(proxy, method, args) -> {
-				if (Objects.equals(method.getName(), "verify")) {
-					return authVerifierResult;
-				}
-				else if (Objects.equals(method.getName(), "equals")) {
+				if (Objects.equals(method.getName(), "equals")) {
 					return proxy.hashCode() == args[0].hashCode();
 				}
 				else if (Objects.equals(method.getName(), "hashCode")) {
 					return identifier;
+				}
+				else if (Objects.equals(method.getName(), "verify")) {
+					return authVerifierResult;
 				}
 
 				return null;

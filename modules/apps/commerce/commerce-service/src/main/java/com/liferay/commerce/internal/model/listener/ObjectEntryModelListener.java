@@ -12,12 +12,19 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -42,6 +49,8 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 		super.onAfterCreate(objectEntry);
 
 		_sendNotifications("create", objectEntry);
+
+		_updateCommerceReturnItemResourcePermissions(objectEntry);
 	}
 
 	@Override
@@ -127,8 +136,50 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 		}
 	}
 
+	private void _updateCommerceReturnItemResourcePermissions(
+		ObjectEntry objectEntry) {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				objectEntry.getObjectDefinitionId());
+
+		if (!StringUtil.equals(
+				objectDefinition.getName(), "CommerceReturnItem")) {
+
+			return;
+		}
+
+		Role role = _roleLocalService.fetchRole(
+			objectEntry.getCompanyId(), RoleConstants.OWNER);
+
+		if (role == null) {
+			return;
+		}
+
+		try {
+			_resourcePermissionLocalService.removeResourcePermission(
+				objectEntry.getCompanyId(), objectDefinition.getClassName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(objectEntry.getObjectEntryId()),
+				role.getRoleId(), ActionKeys.DELETE_DISCUSSION);
+			_resourcePermissionLocalService.removeResourcePermission(
+				objectEntry.getCompanyId(), objectDefinition.getClassName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(objectEntry.getObjectEntryId()),
+				role.getRoleId(), ActionKeys.UPDATE_DISCUSSION);
+		}
+		catch (PortalException portalException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(portalException);
+			}
+		}
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectEntryModelListener.class);
+
+	@Reference
+	private CommentManager _commentManager;
 
 	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;
@@ -141,5 +192,11 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;
+
+	@Reference
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Reference
+	private RoleLocalService _roleLocalService;
 
 }

@@ -170,14 +170,16 @@ test('LPD-21633 Returns widget to show return and refunds', async ({
 	await returnDetailsPage.returnActionsButton.click();
 
 	await expect(
-		returnDetailsPage.returnActionsButtonViewRefunds
+		returnDetailsPage.returnActionsViewRefundsButton
 	).toBeVisible();
 
-	await returnDetailsPage.returnActionsButtonViewRefunds.click();
+	await returnDetailsPage.returnActionsViewRefundsButton.click();
 
-	await expect(returnDetailsPage.refundsTitle).toBeVisible();
+	await expect(returnDetailsPage.viewRefundsTitle).toBeVisible();
 	await expect(
-		returnDetailsPage.viewRefunds.getByText('Showing 1 to 1 of 1 entries.')
+		returnDetailsPage.viewRefundsFrame.getByText(
+			'Showing 1 to 1 of 1 entries.'
+		)
 	).toBeVisible();
 });
 
@@ -643,4 +645,165 @@ test('LPD-32519 Warning message before submitting a return should not be shown o
 			'Warning:Please review the details of the returning items before submitting the request.'
 		)
 	).not.toBeVisible();
+});
+
+test('LPD-32524 Returns widget to show comments for return items', async ({
+	apiHelpers,
+	applicationsMenuPage,
+	commerceLayoutsPage,
+	page,
+	returnDetailsPage,
+	returnsPage,
+}) => {
+	const site = await apiHelpers.headlessSite.createSite({
+		name: getRandomString(),
+	});
+
+	apiHelpers.data.push({id: site.id, type: 'site'});
+
+	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
+		name: getRandomString(),
+		siteGroupId: site.id,
+	});
+
+	const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
+	const product = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+		catalogId: catalog.id,
+		productType: 'virtual',
+	});
+	const productSkus = await apiHelpers.headlessCommerceAdminCatalog
+		.getProduct(product.productId)
+		.then((product) => {
+			return product.skus;
+		});
+
+	const sku = productSkus[0];
+
+	const account = await apiHelpers.headlessAdminUser.postAccount({
+		name: getRandomString(),
+		type: 'person',
+	});
+
+	apiHelpers.data.push({id: account.id, type: 'account'});
+
+	await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+		account.id,
+		['test@liferay.com']
+	);
+
+	const address = await apiHelpers.headlessCommerceAdminAccount.postAddress(
+		account.id,
+		{phoneNumber: '1234567890', regionISOCode: 'AL'}
+	);
+
+	const order = await apiHelpers.headlessCommerceAdminOrder.postOrder({
+		accountId: account.id,
+		billingAddressId: address.id,
+		channelId: channel.id,
+		orderItems: [
+			{
+				decimalQuantity: 10,
+				quantity: 2,
+				skuId: sku.id,
+			},
+		],
+		shippingAddressId: address.id,
+	});
+
+	const payment =
+		await apiHelpers.headlessCommerceAdminPaymentApiHelper.postPayment({
+			amount: 10,
+			relatedItemId: order.id,
+		});
+
+	await apiHelpers.headlessCommerceAdminPaymentApiHelper.patchPayment(
+		{
+			paymentStatus: 0,
+			relatedItemId: payment.relatedItemId,
+		},
+		payment.id
+	);
+
+	await apiHelpers.headlessCommerceAdminOrder.patchOrder(order.id, {
+		orderStatus: ORDER_WORKFLOW_STATUS_CODE.PROCESSING,
+	});
+
+	await apiHelpers.headlessCommerceAdminOrder.patchOrder(order.id, {
+		orderStatus: ORDER_WORKFLOW_STATUS_CODE.COMPLETED,
+	});
+
+	const orderItem = order.orderItems[0];
+
+	const commerceReturn =
+		await apiHelpers.headlessCommerceReturn.postCommerceReturn({
+			channelId: channel.id,
+			commerceReturnToCommerceReturnItems: [
+				{
+					amount: 10,
+					authorized: 1,
+					quantity: 1,
+					r_accountToCommerceReturnItems_accountEntryId: account.id,
+					r_commerceOrderItemToCommerceReturnItems_commerceOrderItemId:
+						orderItem.id,
+					r_commerceOrderToCommerceReturns_commerceOrderId: order.id,
+					received: 1,
+					returnItemStatus: {
+						key: 'toBeProccessed',
+					},
+					returnReason: {
+						key: 'changeOfMind',
+					},
+					returnResolutionMethod: {
+						key: 'refund',
+					},
+				},
+			],
+			r_accountToCommerceReturns_accountEntryId: account.id,
+			r_commerceOrderToCommerceReturns_commerceOrderId: order.id,
+			returnStatus: {
+				key: 'processing',
+			},
+		});
+
+	await apiHelpers.headlessCommerceAdminPaymentApiHelper.postPayment({
+		amount: 10,
+		relatedItemId: payment.id,
+		relatedItemName:
+			'com.liferay.commerce.payment.model.CommercePaymentEntry',
+		type: 1,
+	});
+
+	await applicationsMenuPage.goToSite(site.name);
+
+	await commerceLayoutsPage.goToPages(false);
+	await commerceLayoutsPage.createWidgetPage('Returns Page');
+
+	await page.goto(`/web/${site.name}`);
+
+	await returnsPage.addReturnsWidget();
+
+	await (
+		await returnsPage.tableRowLink({
+			colIndex: 0,
+			rowValue: commerceReturn.id,
+		})
+	).click();
+
+	await returnDetailsPage.returnActionsButton.click();
+
+	await expect(
+		returnDetailsPage.returnActionsViewDetailsButton
+	).toBeVisible();
+
+	await returnDetailsPage.returnActionsViewDetailsButton.click();
+
+	await expect(returnDetailsPage.viewDetailsTitle).toBeVisible();
+
+	await returnDetailsPage.viewDetailsCommentInput.fill('This is a comment.');
+	await returnDetailsPage.viewDetailsSubmitButton.click();
+
+	await expect(
+		returnDetailsPage.viewDetailsFrame.getByText('This is a comment.')
+	).toBeVisible();
+	await expect(returnDetailsPage.viewDetailsCommentInput).toBeVisible();
 });

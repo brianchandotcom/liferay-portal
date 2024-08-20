@@ -10,13 +10,18 @@ import {CommerceLayoutsPage} from '../commerceLayoutsPage';
 
 export class ReturnDetailsPage extends CommerceDNDTablePage {
 	readonly layoutsPage: CommerceLayoutsPage;
-	readonly returnActionsButton: Locator;
-	readonly returnActionsButtonViewRefunds: Locator;
 	readonly page: Page;
+	readonly returnActionsButton: Locator;
+	readonly returnActionsViewDetailsButton: Locator;
+	readonly returnActionsViewRefundsButton: Locator;
 	readonly submitReturnRequestButton: Locator;
-	readonly viewRefunds: FrameLocator;
-	readonly refundsTitle: Locator;
 	readonly submitReturnRequestLink: Locator;
+	readonly viewDetailsFrame: FrameLocator;
+	readonly viewDetailsCommentInput: Locator;
+	readonly viewDetailsSubmitButton: Locator;
+	readonly viewDetailsTitle: Locator;
+	readonly viewRefundsFrame: FrameLocator;
+	readonly viewRefundsTitle: Locator;
 
 	constructor(page: Page) {
 		super(
@@ -25,18 +30,30 @@ export class ReturnDetailsPage extends CommerceDNDTablePage {
 		);
 
 		this.layoutsPage = new CommerceLayoutsPage(page);
+		this.page = page;
 		this.returnActionsButton = page.getByRole('button', {
 			name: 'Actions',
 		});
-		this.returnActionsButtonViewRefunds = page.getByRole('menuitem', {
+		this.returnActionsViewDetailsButton = page.getByRole('menuitem', {
+			name: 'View Details',
+		});
+		this.returnActionsViewRefundsButton = page.getByRole('menuitem', {
 			name: 'View Refunds',
 		});
-		this.page = page;
 		this.submitReturnRequestButton = page.getByRole('link', {
 			name: 'Submit Return Request',
 		});
-		this.viewRefunds = page.frameLocator('iframe').nth(1);
-		this.refundsTitle = this.viewRefunds.getByRole('heading', {
+		this.viewDetailsFrame = page.frameLocator('iframe');
+		this.viewDetailsCommentInput = this.viewDetailsFrame.getByPlaceholder(
+			'Type your comment here.'
+		);
+		this.viewDetailsSubmitButton = this.viewDetailsFrame.getByRole(
+			'button',
+			{name: 'Save'}
+		);
+		this.viewDetailsTitle = this.viewDetailsFrame.getByText('Details');
+		this.viewRefundsFrame = page.frameLocator('iframe').nth(1);
+		this.viewRefundsTitle = this.viewRefundsFrame.getByRole('heading', {
 			name: 'Refunds',
 		});
 		this.submitReturnRequestLink = page.getByRole('link', {

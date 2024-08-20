@@ -5,7 +5,6 @@
 
 package com.liferay.site.navigation.menu.web.internal.portlet.action;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -48,9 +47,6 @@ public class SiteNavigationMenuConfigurationActionTest {
 
 	@Before
 	public void setUp() {
-		_siteNavigationMenuConfigurationAction =
-			new SiteNavigationMenuConfigurationAction();
-
 		_setUpSettings();
 	}
 
@@ -58,8 +54,7 @@ public class SiteNavigationMenuConfigurationActionTest {
 	public void testUpdateDisplayStyleGroupPreferencesWithFeatureFlagDisabled()
 		throws Exception {
 
-		_siteNavigationMenuConfigurationAction.groupLocalService =
-			_getGroupLocalService(null);
+		_setUpSiteNavigationMenuConfigurationAction(null, null, null);
 
 		_siteNavigationMenuConfigurationAction.postProcess(
 			_COMPANY_ID, _getPortletRequest(RandomTestUtil.randomLong()),
@@ -83,8 +78,7 @@ public class SiteNavigationMenuConfigurationActionTest {
 
 		Group group = _getGroup(RandomTestUtil.randomLong());
 
-		_siteNavigationMenuConfigurationAction.groupLocalService =
-			_getGroupLocalService(group);
+		_setUpSiteNavigationMenuConfigurationAction(group, null, null);
 
 		_siteNavigationMenuConfigurationAction.postProcess(
 			_COMPANY_ID, _getPortletRequest(RandomTestUtil.randomLong()),
@@ -109,8 +103,7 @@ public class SiteNavigationMenuConfigurationActionTest {
 
 		Group group = _getGroup(RandomTestUtil.randomLong());
 
-		_siteNavigationMenuConfigurationAction.groupLocalService =
-			_getGroupLocalService(group);
+		_setUpSiteNavigationMenuConfigurationAction(group, null, null);
 
 		_siteNavigationMenuConfigurationAction.postProcess(
 			_COMPANY_ID, _getPortletRequest(group.getGroupId()), _settings);
@@ -128,12 +121,10 @@ public class SiteNavigationMenuConfigurationActionTest {
 
 	@Test
 	public void testUpdateRootMenuItemPreferencesWithFeatureFlagDisabled()
-		throws PortalException {
+		throws Exception {
 
-		_siteNavigationMenuConfigurationAction.
-			siteNavigationMenuItemLocalService =
-				_getSiteNavigationMenuItemLocalService(
-					RandomTestUtil.randomString());
+		_setUpSiteNavigationMenuConfigurationAction(
+			null, null, RandomTestUtil.randomString());
 
 		_siteNavigationMenuConfigurationAction.postProcess(
 			_COMPANY_ID, _getPortletRequest(RandomTestUtil.randomLong()),
@@ -155,10 +146,8 @@ public class SiteNavigationMenuConfigurationActionTest {
 		String rootMenuItemExternalReferenceCode =
 			RandomTestUtil.randomString();
 
-		_siteNavigationMenuConfigurationAction.
-			siteNavigationMenuItemLocalService =
-				_getSiteNavigationMenuItemLocalService(
-					rootMenuItemExternalReferenceCode);
+		_setUpSiteNavigationMenuConfigurationAction(
+			null, null, rootMenuItemExternalReferenceCode);
 
 		_siteNavigationMenuConfigurationAction.postProcess(
 			_COMPANY_ID, _getPortletRequest(RandomTestUtil.randomLong()),
@@ -175,10 +164,10 @@ public class SiteNavigationMenuConfigurationActionTest {
 
 	@Test
 	public void testUpdateSiteNavigationMenuPreferencesWithFeatureFlagDisabled()
-		throws PortalException {
+		throws Exception {
 
-		_siteNavigationMenuConfigurationAction.siteNavigationMenuService =
-			_getSiteNavigationMenuService(RandomTestUtil.randomString());
+		_setUpSiteNavigationMenuConfigurationAction(
+			null, RandomTestUtil.randomString(), null);
 
 		_siteNavigationMenuConfigurationAction.postProcess(
 			_COMPANY_ID, _getPortletRequest(RandomTestUtil.randomLong()),
@@ -195,14 +184,13 @@ public class SiteNavigationMenuConfigurationActionTest {
 	@FeatureFlags("LPD-23048")
 	@Test
 	public void testUpdateSiteNavigationMenuPreferencesWithFeatureFlagEnabled()
-		throws PortalException {
+		throws Exception {
 
 		String siteNavigationMenuExternalReferenceCode =
 			RandomTestUtil.randomString();
 
-		_siteNavigationMenuConfigurationAction.siteNavigationMenuService =
-			_getSiteNavigationMenuService(
-				siteNavigationMenuExternalReferenceCode);
+		_setUpSiteNavigationMenuConfigurationAction(
+			null, siteNavigationMenuExternalReferenceCode, null);
 
 		_siteNavigationMenuConfigurationAction.postProcess(
 			_COMPANY_ID, _getPortletRequest(RandomTestUtil.randomLong()),
@@ -301,9 +289,8 @@ public class SiteNavigationMenuConfigurationActionTest {
 	}
 
 	private SiteNavigationMenuItemLocalService
-			_getSiteNavigationMenuItemLocalService(
-				String siteNavigationMenuItemExternalReferenceCode)
-		throws PortalException {
+		_getSiteNavigationMenuItemLocalService(
+			String siteNavigationMenuItemExternalReferenceCode) {
 
 		SiteNavigationMenuItemLocalService siteNavigationMenuItemLocalService =
 			Mockito.mock(SiteNavigationMenuItemLocalService.class);
@@ -329,7 +316,7 @@ public class SiteNavigationMenuConfigurationActionTest {
 
 	private SiteNavigationMenuService _getSiteNavigationMenuService(
 			String siteNavigationMenuExternalReferenceCode)
-		throws PortalException {
+		throws Exception {
 
 		SiteNavigationMenuService siteNavigationMenuService = Mockito.mock(
 			SiteNavigationMenuService.class);
@@ -407,6 +394,25 @@ public class SiteNavigationMenuConfigurationActionTest {
 		).thenReturn(
 			_modifiableSettings
 		);
+	}
+
+	private void _setUpSiteNavigationMenuConfigurationAction(
+			Group group, String siteNavigationMenuExternalReferenceCode,
+			String siteNavigationMenuItemExternalReferenceCode)
+		throws Exception {
+
+		_siteNavigationMenuConfigurationAction =
+			new SiteNavigationMenuConfigurationAction();
+
+		_siteNavigationMenuConfigurationAction.groupLocalService =
+			_getGroupLocalService(group);
+		_siteNavigationMenuConfigurationAction.siteNavigationMenuService =
+			_getSiteNavigationMenuService(
+				siteNavigationMenuExternalReferenceCode);
+		_siteNavigationMenuConfigurationAction.
+			siteNavigationMenuItemLocalService =
+				_getSiteNavigationMenuItemLocalService(
+					siteNavigationMenuItemExternalReferenceCode);
 	}
 
 	private static final long _COMPANY_ID = RandomTestUtil.randomLong();

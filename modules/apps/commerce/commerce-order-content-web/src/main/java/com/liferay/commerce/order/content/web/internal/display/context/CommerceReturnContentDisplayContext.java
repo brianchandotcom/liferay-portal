@@ -26,20 +26,29 @@ import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.util.CommerceQuantityFormatter;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeDefinitionService;
 import com.liferay.list.type.service.ListTypeEntryService;
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.comment.CommentManagerUtil;
+import com.liferay.portal.kernel.comment.Discussion;
+import com.liferay.portal.kernel.comment.DiscussionComment;
+import com.liferay.portal.kernel.comment.DiscussionPermission;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Region;
@@ -47,8 +56,13 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.ServiceContextFunction;
+import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -68,6 +82,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import javax.portlet.PortletRequest;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -83,9 +99,11 @@ public class CommerceReturnContentDisplayContext {
 		CommercePaymentMethodGroupRelLocalService
 			commercePaymentMethodGroupRelLocalService,
 		CommercePriceFormatter commercePriceFormatter,
-		CommerceQuantityFormatter commerceQuantityFormatter, Language language,
+		CommerceQuantityFormatter commerceQuantityFormatter,
+		DiscussionPermission discussionPermission, Language language,
 		ListTypeDefinitionService listTypeDefinitionService,
 		ListTypeEntryService listTypeEntryService,
+		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectEntryLocalService objectEntryLocalService,
 		ObjectRelationshipLocalService objectRelationshipLocalService,
 		HttpServletRequest httpServletRequest) {
@@ -97,9 +115,11 @@ public class CommerceReturnContentDisplayContext {
 			commercePaymentMethodGroupRelLocalService;
 		_commercePriceFormatter = commercePriceFormatter;
 		_commerceQuantityFormatter = commerceQuantityFormatter;
+		_discussionPermission = discussionPermission;
 		_language = language;
 		_listTypeDefinitionService = listTypeDefinitionService;
 		_listTypeEntryService = listTypeEntryService;
+		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectEntryLocalService = objectEntryLocalService;
 		_objectRelationshipLocalService = objectRelationshipLocalService;
 
@@ -236,6 +256,76 @@ public class CommerceReturnContentDisplayContext {
 		return _commerceReturnItem;
 	}
 
+	public String getCommerceReturnItemClassName() throws PortalException {
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				_cpRequestHelper.getCompanyId(), "CommerceReturnItem");
+
+		return objectDefinition.getClassName();
+	}
+
+	public DropdownItemList getCommerceReturnItemCommentDropdownItemList(
+			DiscussionComment discussionComment)
+		throws PortalException {
+
+		HttpServletRequest httpServletRequest = _cpRequestHelper.getRequest();
+
+		ThemeDisplay themeDisplay = _cpRequestHelper.getThemeDisplay();
+
+		return DropdownItemListBuilder.add(
+			() -> hasCommentPermission(
+				discussionComment, ActionKeys.UPDATE_DISCUSSION),
+			dropdownItem -> {
+				dropdownItem.setHref(
+					PortletURLBuilder.create(
+						PortletProviderUtil.getPortletURL(
+							httpServletRequest, CommerceReturn.class.getName(),
+							PortletProvider.Action.EDIT)
+					).setMVCRenderCommandName(
+						"/commerce_return_content" +
+							"/edit_commerce_return_item_comment"
+					).setParameter(
+						"commentId", discussionComment.getCommentId()
+					).setParameter(
+						"commerceReturnId", getCommerceReturnId()
+					).setParameter(
+						"commerceReturnItemId", discussionComment.getClassPK()
+					).setWindowState(
+						LiferayWindowState.POP_UP
+					).buildRenderURL());
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "edit"));
+			}
+		).add(
+			() -> hasCommentPermission(
+				discussionComment, ActionKeys.DELETE_DISCUSSION),
+			dropdownItem -> {
+				PortletDisplay portletDisplay =
+					_cpRequestHelper.getPortletDisplay();
+
+				dropdownItem.setHref(
+					PortletURLBuilder.create(
+						PortletURLFactoryUtil.create(
+							_cpRequestHelper.getRequest(),
+							portletDisplay.getId(), themeDisplay.getPlid(),
+							PortletRequest.ACTION_PHASE)
+					).setActionName(
+						"/commerce_return_content" +
+							"/edit_commerce_return_item_comment"
+					).setCMD(
+						Constants.DELETE
+					).setRedirect(
+						themeDisplay.getURLCurrent()
+					).setParameter(
+						"commentId", discussionComment.getCommentId()
+					).buildActionURL());
+
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "delete"));
+			}
+		).build();
+	}
+
 	public CreationMenu getCommerceReturnItemCreationMenu() {
 		CreationMenu creationMenu = new CreationMenu();
 
@@ -364,6 +454,28 @@ public class CommerceReturnContentDisplayContext {
 			_cpRequestHelper.getRequest(), "commerceReturnItemId");
 
 		return _commerceReturnItemId;
+	}
+
+	public List<DiscussionComment> getDiscussionComments()
+		throws PortalException {
+
+		if (!CommentManagerUtil.hasDiscussion(
+				getCommerceReturnItemClassName(), getCommerceReturnItemId())) {
+
+			return Collections.emptyList();
+		}
+
+		ThemeDisplay themeDisplay = _cpRequestHelper.getThemeDisplay();
+
+		Discussion discussion = CommentManagerUtil.getDiscussion(
+			themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),
+			getCommerceReturnItemClassName(), getCommerceReturnItemId(),
+			new ServiceContextFunction(_cpRequestHelper.getRequest()));
+
+		DiscussionComment discussionComment =
+			discussion.getRootDiscussionComment();
+
+		return discussionComment.getDescendantComments();
 	}
 
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems()
@@ -613,6 +725,21 @@ public class CommerceReturnContentDisplayContext {
 			false);
 	}
 
+	public boolean hasCommentPermission(
+			DiscussionComment discussionComment, String actionId)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay = _cpRequestHelper.getThemeDisplay();
+
+		if (themeDisplay.getUserId() == discussionComment.getUserId()) {
+			return true;
+		}
+
+		return _discussionPermission.hasPermission(
+			themeDisplay.getPermissionChecker(),
+			discussionComment.getCommentId(), actionId);
+	}
+
 	private String _getCommerceOrderItemIds() throws PortalException {
 		CommerceReturn commerceReturn = getCommerceReturn();
 
@@ -682,9 +809,11 @@ public class CommerceReturnContentDisplayContext {
 	private CommerceReturnItem _commerceReturnItem;
 	private long _commerceReturnItemId;
 	private final CPRequestHelper _cpRequestHelper;
+	private final DiscussionPermission _discussionPermission;
 	private final Language _language;
 	private final ListTypeDefinitionService _listTypeDefinitionService;
 	private final ListTypeEntryService _listTypeEntryService;
+	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final ObjectEntryLocalService _objectEntryLocalService;
 	private final ObjectRelationshipLocalService
 		_objectRelationshipLocalService;

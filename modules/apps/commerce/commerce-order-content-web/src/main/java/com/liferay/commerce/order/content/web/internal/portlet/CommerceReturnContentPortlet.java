@@ -15,8 +15,10 @@ import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.util.CommerceQuantityFormatter;
 import com.liferay.list.type.service.ListTypeDefinitionService;
 import com.liferay.list.type.service.ListTypeEntryService;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.portal.kernel.comment.DiscussionPermission;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -78,8 +80,10 @@ public class CommerceReturnContentPortlet extends MVCPortlet {
 							_commerceOrderItemService, _commerceOrderService,
 							_commercePaymentMethodGroupRelLocalService,
 							_commercePriceFormatter, _commerceQuantityFormatter,
-							_language, _listTypeDefinitionService,
-							_listTypeEntryService, _objectEntryLocalService,
+							_discussionPermission, _language,
+							_listTypeDefinitionService, _listTypeEntryService,
+							_objectDefinitionLocalService,
+							_objectEntryLocalService,
 							_objectRelationshipLocalService,
 							_portal.getHttpServletRequest(renderRequest));
 
@@ -115,6 +119,9 @@ public class CommerceReturnContentPortlet extends MVCPortlet {
 	private CommerceQuantityFormatter _commerceQuantityFormatter;
 
 	@Reference
+	private DiscussionPermission _discussionPermission;
+
+	@Reference
 	private Language _language;
 
 	@Reference
@@ -122,6 +129,9 @@ public class CommerceReturnContentPortlet extends MVCPortlet {
 
 	@Reference
 	private ListTypeEntryService _listTypeEntryService;
+
+	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;

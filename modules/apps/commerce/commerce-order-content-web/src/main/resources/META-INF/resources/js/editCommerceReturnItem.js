@@ -16,6 +16,7 @@ export default function ({
 	commerceReturnItemId,
 	dataSetId,
 	namespace,
+	readOnly,
 }) {
 	renderAutocomplete('autocomplete', 'autocomplete-root', {
 		apiUrl: autocompleteAPIURL,
@@ -26,6 +27,7 @@ export default function ({
 		inputName: `${namespace}returnReason`,
 		itemsKey: 'key',
 		itemsLabel: 'name',
+		readOnly,
 	});
 
 	const CommerceReturnItemResource = CommerceServiceProvider.ReturnItemAPI();
@@ -43,27 +45,99 @@ export default function ({
 			returnReason,
 		};
 
-		return CommerceReturnItemResource.updateItemById(
-			commerceReturnItemId,
-			returnItemData
-		)
-			.then(() => {
-				Liferay.fire('fds-display-updated', {id: dataSetId});
-
+		function updateReturnItem(response) {
+			if (!response) {
 				openToast({
 					message: Liferay.Language.get(
-						'your-request-completed-successfully'
+						'an-unexpected-error-occurred'
 					),
-					type: 'success',
-				});
-			})
-			.catch((error) => {
-				openToast({
-					message:
-						error.message ||
-						Liferay.Language.get('an-unexpected-error-occurred'),
 					type: 'danger',
 				});
-			});
+
+				return;
+			}
+
+			return CommerceReturnItemResource.updateItemById(
+				commerceReturnItemId,
+				returnItemData
+			)
+				.then(() => {
+					window.location.reload();
+
+					Liferay.fire('fds-display-updated', {id: dataSetId});
+
+					openToast({
+						message: Liferay.Language.get(
+							'your-request-completed-successfully'
+						),
+						type: 'success',
+					});
+				})
+				.catch((error) => {
+					openToast({
+						message:
+							error.message ||
+							Liferay.Language.get(
+								'an-unexpected-error-occurred'
+							),
+						type: 'danger',
+					});
+
+					if (response > 0) {
+						Liferay.Service(
+							'/comment.commentmanagerjsonws/delete-comment',
+							{
+								commentId: response,
+							}
+						);
+					}
+				});
+		}
+
+		const content = form.querySelector(`#${namespace}content`).value;
+
+		if (content) {
+			const className = form.querySelector(
+				`#${namespace}className`
+			).value;
+			const classPK = form.querySelector(`#${namespace}classPK`).value;
+
+			Liferay.Service(
+				'/comment.commentmanagerjsonws/add-comment',
+				{
+					body: content,
+					className,
+					classPK,
+					groupId: themeDisplay.getScopeGroupId(),
+				},
+				updateReturnItem
+			);
+		}
+		else {
+			return CommerceReturnItemResource.updateItemById(
+				commerceReturnItemId,
+				returnItemData
+			)
+				.then(() => {
+					Liferay.fire('fds-display-updated', {id: dataSetId});
+
+					openToast({
+						message: Liferay.Language.get(
+							'your-request-completed-successfully'
+						),
+						type: 'success',
+					});
+				})
+				.catch((error) => {
+					openToast({
+						message:
+							error.message ||
+							Liferay.Language.get(
+								'an-unexpected-error-occurred'
+							),
+						type: 'danger',
+					});
+				});
+		}
 	});
 }

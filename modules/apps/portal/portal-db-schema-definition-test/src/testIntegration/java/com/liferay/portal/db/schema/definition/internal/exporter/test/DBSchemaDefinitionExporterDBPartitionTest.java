@@ -65,7 +65,7 @@ public class DBSchemaDefinitionExporterDBPartitionTest
 	public static void assume() {
 		Assume.assumeTrue(DBPartition.isPartitionEnabled());
 
-		BaseDBSchemaDefinitionExporterTestCase.assumeDB();
+		assumeDB();
 	}
 
 	@BeforeClass

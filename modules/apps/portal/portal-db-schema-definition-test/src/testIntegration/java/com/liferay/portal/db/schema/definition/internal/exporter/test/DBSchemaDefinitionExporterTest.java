@@ -46,12 +46,12 @@ public class DBSchemaDefinitionExporterTest
 	public static void assume() {
 		Assume.assumeFalse(DBPartition.isPartitionEnabled());
 
-		BaseDBSchemaDefinitionExporterTestCase.assumeDB();
+		assumeDB();
 	}
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		BaseDBSchemaDefinitionExporterTestCase.setUpClassDefault();
+		setUpClassDefault();
 	}
 
 	@Test

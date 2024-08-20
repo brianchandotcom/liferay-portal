@@ -24,6 +24,7 @@ import PublicationsSearchContainer from './PublicationsSearchContainer';
 
 export default function ChangeTrackingIndicator({
 	checkoutDropdownItem,
+	contextChangeButtons,
 	createDropdownItem,
 	getConflictInfoURL,
 	getSelectPublicationsURL,
@@ -49,6 +50,7 @@ export default function ChangeTrackingIndicator({
 	const COLUMN_NAME = 'name';
 
 	const [ascending, setAscending] = useState(orderByAscending === 'true');
+	const [closeWarning, setCloseWarning] = useState(false);
 	const [column, setColumn] = useState(
 		orderByColumn === COLUMN_NAME ? COLUMN_NAME : COLUMN_MODIFIED_DATE
 	);
@@ -427,7 +429,7 @@ export default function ChangeTrackingIndicator({
 				}
 				onShowChange={setShowWarning}
 				show={showWarning}
-				size="lg"
+				style={{maxWidth: contextChangeButtons ? '711px' : '421px'}}
 				trigger={renderTrigger}
 			>
 				<ClayLayout.ContainerFluid>
@@ -442,6 +444,47 @@ export default function ChangeTrackingIndicator({
 					</ClayLayout.Row>
 
 					<ClayLayout.Row>
+						{contextChangeButtons && (
+							<>
+								<ClayLayout.Col>
+									<ClayButton
+										displayType="secondary"
+										onClick={() => {
+											setCloseWarning(true);
+										}}
+										size="sm"
+										style={{
+											whiteSpace: 'nowrap',
+											width: 'auto',
+										}}
+									>
+										{Liferay.Language.get(
+											'stay-in-current-publication'
+										)}
+									</ClayButton>
+								</ClayLayout.Col>
+
+								<ClayLayout.Col>
+									<ClayButton
+										displayType="secondary"
+										onClick={() => {
+											setShowModal(true);
+											setCloseWarning(true);
+										}}
+										size="sm"
+										style={{
+											whiteSpace: 'nowrap',
+											width: 'auto',
+										}}
+									>
+										{Liferay.Language.get(
+											'select-a-publication'
+										)}
+									</ClayButton>
+								</ClayLayout.Col>
+							</>
+						)}
+
 						<ClayLayout.Col>
 							{warningButton && checkoutDropdownItem && (
 								<ClayButton
@@ -470,7 +513,7 @@ export default function ChangeTrackingIndicator({
 											});
 										}
 									}}
-									size="xs"
+									size={contextChangeButtons ? 'sm' : 'xs'}
 								>
 									{Liferay.Language.get('work-on-production')}
 								</ClayButton>
@@ -540,7 +583,9 @@ export default function ChangeTrackingIndicator({
 				</ClayLayout.ContentCol>
 
 				<ClayLayout.ContentCol>
-					{showWarning ? renderWarning() : renderDropdown()}
+					{showWarning && !closeWarning
+						? renderWarning()
+						: renderDropdown()}
 				</ClayLayout.ContentCol>
 
 				<ClayLayout.ContentCol>

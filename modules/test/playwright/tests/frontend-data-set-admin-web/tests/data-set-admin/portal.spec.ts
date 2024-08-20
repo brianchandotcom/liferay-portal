@@ -36,6 +36,28 @@ test.describe('Data Set Manager with Feature Flag Enabled', () => {
 			).toBeVisible();
 		});
 	});
+
+	test('Confirm that Cell Renderer is displayed in Client Extensions, when FF is enabled @LPS-188590', async ({
+		dataSetsPage,
+		page,
+	}) => {
+		await test.step('Navigate to Client Extensions page', async () => {
+			await dataSetsPage.applicationsMenuPage.goToClientExtensions();
+		});
+
+		await test.step('Open add menu', async () => {
+			await page.getByRole('button', {name: 'New'}).first().click();
+		});
+
+		await test.step('Check that Cell Renderer is displayed', async () => {
+			await expect(
+				page.getByRole('menuitem', {
+					exact: true,
+					name: 'Add Frontend Data Set Cell Renderer',
+				})
+			).toBeVisible();
+		});
+	});
 });
 
 export const disabledTest = mergeTests(
@@ -59,6 +81,28 @@ disabledTest.describe('Data Set Manager with Feature Flag Disabled', () => {
 					page.getByRole('menuitem', {
 						exact: true,
 						name: 'Data Sets',
+					})
+				).toBeHidden();
+			});
+		}
+	);
+
+	disabledTest(
+		'Confirm that Cell Renderer is not displayed in Client Extensions, when FF is disabled @LPS-188590',
+		async ({dataSetsPage, page}) => {
+			await test.step('Navigate to Client Extensions page', async () => {
+				await dataSetsPage.applicationsMenuPage.goToClientExtensions();
+			});
+
+			await test.step('Open add menu', async () => {
+				await page.getByRole('button', {name: 'New'}).first().click();
+			});
+
+			await test.step('Check that Cell Renderer is displayed', async () => {
+				await expect(
+					page.getByRole('menuitem', {
+						exact: true,
+						name: 'Add Frontend Data Set Cell Renderer',
 					})
 				).toBeHidden();
 			});

@@ -40,12 +40,10 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
-import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -149,6 +147,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 
 import javax.portlet.PortletRequest;
@@ -2375,46 +2374,41 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	}
 
 	private String _getDiffsURL(
-			WikiPage page, WikiPage previousVersionPage,
-			ServiceContext serviceContext)
-		throws PortalException {
+		WikiPage page, WikiPage previousVersionPage,
+		ServiceContext serviceContext) {
 
 		if (previousVersionPage == null) {
 			return StringPool.BLANK;
 		}
 
-		HttpServletRequest httpServletRequest = serviceContext.getRequest();
+		String baseDiffsURL = (String)serviceContext.getAttribute(
+			"baseDiffsURL");
 
-		if (httpServletRequest == null) {
+		if (baseDiffsURL == null) {
 			return StringPool.BLANK;
 		}
 
-		PortletURL portletURL = null;
+		StringBundler sb = new StringBundler(6);
 
-		long plid = serviceContext.getPlid();
+		sb.append(baseDiffsURL);
 
-		if (plid == LayoutConstants.DEFAULT_PLID) {
-			portletURL = _portal.getControlPanelPortletURL(
-				httpServletRequest, WikiPortletKeys.WIKI_ADMIN,
-				PortletRequest.RENDER_PHASE);
-		}
-		else {
-			portletURL = _portletURLFactory.create(
-				httpServletRequest, WikiPortletKeys.WIKI, plid,
-				PortletRequest.RENDER_PHASE);
-		}
+		BiConsumer<String, String> biConsumer = (name, value) -> {
+			sb.append(serviceContext.getPortletId());
+			sb.append(StringPool.UNDERLINE);
+			sb.append(URLCodec.encodeURL(name));
+			sb.append(StringPool.EQUAL);
+			sb.append(URLCodec.encodeURL(value));
+		};
 
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/wiki/compare_versions");
-		portletURL.setParameter("nodeId", String.valueOf(page.getNodeId()));
-		portletURL.setParameter("title", page.getTitle());
-		portletURL.setParameter(
-			"sourceVersion", String.valueOf(previousVersionPage.getVersion()));
-		portletURL.setParameter(
-			"targetVersion", String.valueOf(page.getVersion()));
-		portletURL.setParameter("type", "html");
+		biConsumer.accept("&mvcRenderCommandName", "/wiki/compare_versions");
+		biConsumer.accept("&nodeId", String.valueOf(page.getNodeId()));
+		biConsumer.accept(
+			"&sourceVersion", String.valueOf(previousVersionPage.getVersion()));
+		biConsumer.accept("&targetVersion", String.valueOf(page.getVersion()));
+		biConsumer.accept("&title", page.getTitle());
+		biConsumer.accept("&type", "html");
 
-		return portletURL.toString();
+		return sb.toString();
 	}
 
 	private Map<String, Boolean> _getOutgoingLinks(WikiPage page)
@@ -3530,9 +3524,6 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 	@Reference
 	private PortletFileRepository _portletFileRepository;
-
-	@Reference
-	private PortletURLFactory _portletURLFactory;
 
 	@Reference
 	private RatingsStatsLocalService _ratingsStatsLocalService;

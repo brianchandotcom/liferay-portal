@@ -169,7 +169,8 @@ public class DTOOpenAPIParser {
 	private static String _getPropertyName(
 		Schema propertySchema, String propertySchemaName) {
 
-		String name = CamelCaseUtil.toCamelCase(propertySchemaName);
+		String name = StringUtil.removeSubstring(
+			CamelCaseUtil.toCamelCase(propertySchemaName), ":");
 
 		if (StringUtil.equalsIgnoreCase(propertySchema.getType(), "object") &&
 			(propertySchema.getItems() != null)) {

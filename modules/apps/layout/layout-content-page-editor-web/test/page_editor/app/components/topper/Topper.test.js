@@ -34,25 +34,28 @@ jest.mock(
 	}
 );
 
-const renderTopper = ({
-	hasUpdatePermissions = true,
-	lockedExperience = false,
-	rowConfig = {styles: {}},
-	activeItemIds = [],
-	isActive = true,
-	type = LAYOUT_DATA_ITEM_TYPES.row,
-} = {}) => {
-	const row = {
-		children: [],
-		config: rowConfig,
-		itemId: 'row',
-		parentId: null,
-		type,
-	};
+const LAYOUT_DATA = {
+	items: {
+		itemId: {
+			children: [],
+			config: {styles: {}},
+			itemId: 'itemId',
+			parentId: null,
+			type: LAYOUT_DATA_ITEM_TYPES.row,
+		},
+	},
+};
 
-	const layoutData = {
-		items: {row},
-	};
+const renderTopper = ({
+	Component = Row,
+	activeItemIds = [],
+	hasUpdatePermissions = true,
+	isActive = true,
+	itemId = 'itemId',
+	layoutData = LAYOUT_DATA,
+	lockedExperience = false,
+} = {}) => {
+	const item = layoutData.items[itemId];
 
 	return render(
 		<DndProvider backend={HTML5Backend}>
@@ -70,10 +73,10 @@ const renderTopper = ({
 				>
 					<Topper
 						isActive={isActive}
-						item={row}
+						item={item}
 						layoutData={layoutData}
 					>
-						<Row item={row} layoutData={layoutData}></Row>
+						<Component item={item} layoutData={layoutData} />
 					</Topper>
 				</StoreAPIContextProvider>
 			</ControlsProvider>
@@ -105,7 +108,19 @@ describe('Topper', () => {
 	});
 
 	it('renders custom name of the fragment', () => {
-		const {baseElement} = renderTopper({rowConfig: {name: 'customName'}});
+		const layoutData = {
+			items: {
+				itemId: {
+					children: [],
+					config: {name: 'customName'},
+					itemId: 'itemId',
+					parentId: null,
+					type: LAYOUT_DATA_ITEM_TYPES.row,
+				},
+			},
+		};
+
+		const {baseElement} = renderTopper({layoutData});
 
 		expect(
 			baseElement.querySelector('[data-name="customName"]')
@@ -123,10 +138,23 @@ describe('Topper', () => {
 	});
 
 	describe('Ensures that selectItem() is not called when the topper buttons are clicked', () => {
+		const layoutData = {
+			items: {
+				fragment: {
+					children: [],
+					config: {name: 'customName'},
+					itemId: 'fragment',
+					parentId: null,
+					type: LAYOUT_DATA_ITEM_TYPES.fragment,
+				},
+			},
+		};
+
 		const params = {
 			activeItemIds: ['item-1'],
 			isActive: true,
-			type: 'fragment',
+			itemId: 'fragment',
+			layoutData,
 		};
 
 		it('clicks on options dropdown', () => {

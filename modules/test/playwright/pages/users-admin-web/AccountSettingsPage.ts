@@ -10,6 +10,7 @@ export class AccountSettingsPage {
 	readonly page: Page;
 	readonly rolesMenuItem: Locator;
 	readonly saveButton: Locator;
+	readonly userDisplayData: Locator;
 	readonly userPersonalMenuButton: Locator;
 	readonly languageSelect: Locator;
 
@@ -24,6 +25,7 @@ export class AccountSettingsPage {
 		this.saveButton = page.getByRole('button', {
 			name: 'Save',
 		});
+		this.userDisplayData = page.getByText('User Display Data');
 		this.userPersonalMenuButton = page.getByTestId('userPersonalMenu');
 		this.languageSelect = page.getByLabel('Language');
 	}

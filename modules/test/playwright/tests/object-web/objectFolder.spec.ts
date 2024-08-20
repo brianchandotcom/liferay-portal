@@ -5,12 +5,18 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {accountSettingsPagesTest} from '../../fixtures/accountSettingsPagesTest';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {objectPagesTest} from '../../fixtures/objectPagesTest';
 import {getRandomInt} from '../../utils/getRandomInt';
 
-export const test = mergeTests(apiHelpersTest, loginTest(), objectPagesTest);
+export const test = mergeTests(
+	accountSettingsPagesTest,
+	apiHelpersTest,
+	loginTest(),
+	objectPagesTest
+);
 
 test.describe('manage object definitions through model builder', () => {
 	test('navigate between object folders on model builder page', async ({
@@ -90,6 +96,22 @@ test.describe('manage object definitions through model builder', () => {
 		// Clean up
 
 		await apiHelpers.objectAdmin.deleteObjectFolder(objectFolder.id);
+	});
+
+	test('can navigate from Model Builder to Account Settings', async ({
+		accountSettingsPage,
+		modelBuilderPage,
+		page,
+	}) => {
+		await modelBuilderPage.goto({objectFolderName: 'Default'});
+
+		await modelBuilderPage.toggleSidebarsButton.click();
+
+		await page.getByTitle('User Profile Menu').click();
+
+		await accountSettingsPage.accountSettingsMenuItem.click();
+
+		await expect(accountSettingsPage.userDisplayData).toBeVisible();
 	});
 });
 

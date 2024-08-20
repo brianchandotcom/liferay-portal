@@ -38,8 +38,6 @@ public class DBSchemaImporter {
 		try {
 			CommandLine commandLine = commandLineParser.parse(options, args);
 
-			// Usage of parameters
-
 			_getDataSource(
 				commandLine.getOptionValue("source-jdbc-url"),
 				commandLine.getOptionValue("source-user"),

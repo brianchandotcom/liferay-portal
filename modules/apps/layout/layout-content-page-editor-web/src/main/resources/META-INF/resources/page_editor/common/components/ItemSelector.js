@@ -62,6 +62,7 @@ export default function ItemSelector({
 			eventName: eventName || `${config.portletNamespace}selectInfoItem`,
 			itemSelectorURL: itemSelectorURL || config.infoItemSelectorURL,
 			modalProps,
+			selectedItem,
 			transformValueCallback,
 		});
 	}, [
@@ -70,6 +71,7 @@ export default function ItemSelector({
 		modalProps,
 		onItemSelect,
 		onBeforeItemSelect,
+		selectedItem,
 		transformValueCallback,
 	]);
 

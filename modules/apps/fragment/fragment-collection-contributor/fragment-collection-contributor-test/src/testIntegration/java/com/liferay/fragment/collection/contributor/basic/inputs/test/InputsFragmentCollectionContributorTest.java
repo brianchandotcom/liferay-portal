@@ -7,7 +7,6 @@ package com.liferay.fragment.collection.contributor.basic.inputs.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
-import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -31,72 +30,20 @@ public class InputsFragmentCollectionContributorTest {
 
 	@Test
 	public void testInputFragmentsAvailable() {
-		FragmentEntry fragmentEntry =
-			_fragmentCollectionContributorRegistry.getFragmentEntry(
-				"INPUTS-captcha");
-
-		Assert.assertNotNull(fragmentEntry);
-
-		fragmentEntry = _fragmentCollectionContributorRegistry.getFragmentEntry(
-			"INPUTS-checkbox");
-
-		Assert.assertNotNull(fragmentEntry);
-
-		fragmentEntry = _fragmentCollectionContributorRegistry.getFragmentEntry(
-			"INPUTS-date-input");
-
-		Assert.assertNotNull(fragmentEntry);
-
-		fragmentEntry = _fragmentCollectionContributorRegistry.getFragmentEntry(
-			"INPUTS-date-time-input");
-
-		Assert.assertNotNull(fragmentEntry);
-
-		fragmentEntry = _fragmentCollectionContributorRegistry.getFragmentEntry(
-			"INPUTS-file-upload");
-
-		Assert.assertNotNull(fragmentEntry);
-
-		fragmentEntry = _fragmentCollectionContributorRegistry.getFragmentEntry(
-			"INPUTS-multiselect-list");
-
-		Assert.assertNotNull(fragmentEntry);
-
-		fragmentEntry = _fragmentCollectionContributorRegistry.getFragmentEntry(
-			"INPUTS-numeric-input");
-
-		Assert.assertNotNull(fragmentEntry);
-
-		fragmentEntry = _fragmentCollectionContributorRegistry.getFragmentEntry(
-			"INPUTS-rich-text-input");
-
-		Assert.assertNotNull(fragmentEntry);
-
-		fragmentEntry = _fragmentCollectionContributorRegistry.getFragmentEntry(
-			"INPUTS-select-from-list");
-
-		Assert.assertNotNull(fragmentEntry);
-
-		fragmentEntry = _fragmentCollectionContributorRegistry.getFragmentEntry(
-			"INPUTS-stepper");
-
-		Assert.assertNotNull(fragmentEntry);
-
-		fragmentEntry = _fragmentCollectionContributorRegistry.getFragmentEntry(
-			"INPUTS-submit-button");
-
-		Assert.assertNotNull(fragmentEntry);
-
-		fragmentEntry = _fragmentCollectionContributorRegistry.getFragmentEntry(
-			"INPUTS-text-input");
-
-		Assert.assertNotNull(fragmentEntry);
-
-		fragmentEntry = _fragmentCollectionContributorRegistry.getFragmentEntry(
-			"INPUTS-textarea");
-
-		Assert.assertNotNull(fragmentEntry);
+		for (String fragmentEntryKey : _FRAGMENT_ENTRY_KEYS) {
+			Assert.assertNotNull(
+				_fragmentCollectionContributorRegistry.getFragmentEntry(
+					fragmentEntryKey));
+		}
 	}
+
+	private static final String[] _FRAGMENT_ENTRY_KEYS = {
+		"INPUTS-captcha", "INPUTS-checkbox", "INPUTS-date-input",
+		"INPUTS-date-time-input", "INPUTS-file-upload",
+		"INPUTS-multiselect-list", "INPUTS-numeric-input",
+		"INPUTS-rich-text-input", "INPUTS-select-from-list", "INPUTS-stepper",
+		"INPUTS-submit-button", "INPUTS-text-input", "INPUTS-textarea"
+	};
 
 	@Inject
 	private FragmentCollectionContributorRegistry

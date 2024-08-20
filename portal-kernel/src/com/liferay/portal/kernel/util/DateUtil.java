@@ -95,6 +95,8 @@ public class DateUtil {
 	public static int getDaysBetween(
 		Date date1, Date date2, TimeZone timeZone) {
 
+		int daysBetween = 0;
+
 		if (date1.after(date2)) {
 			Date tempDate = date1;
 
@@ -127,8 +129,6 @@ public class DateUtil {
 		endCal.setTime(date2);
 
 		endCal.add(Calendar.MILLISECOND, offsetDate2);
-
-		int daysBetween = 0;
 
 		while (CalendarUtil.beforeByDay(startCal.getTime(), endCal.getTime())) {
 			startCal.add(Calendar.DAY_OF_MONTH, 1);

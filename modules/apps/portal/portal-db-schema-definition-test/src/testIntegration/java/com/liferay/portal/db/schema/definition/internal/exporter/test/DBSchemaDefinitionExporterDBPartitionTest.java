@@ -14,6 +14,7 @@ import com.liferay.object.test.util.ObjectRelationshipTestUtil;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.db.partition.util.DBPartitionUtil;
 import com.liferay.portal.db.schema.definition.internal.test.util.ConfigurationTestUtil;
 import com.liferay.portal.db.schema.definition.internal.test.util.DatabaseTestUtil;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -145,7 +146,7 @@ public class DBSchemaDefinitionExporterDBPartitionTest
 			db.runSQL("create table TestTable (testColumn bigint primary key)");
 			db.runSQL(
 				"create table " +
-					DatabaseTestUtil.getPartitionName(_company.getCompanyId()) +
+					DBPartitionUtil.getPartitionName(_company.getCompanyId()) +
 						".TestTable2 (testColumn bigint primary key)");
 
 			ConfigurationTestUtil.deployConfiguration(
@@ -170,7 +171,7 @@ public class DBSchemaDefinitionExporterDBPartitionTest
 			db.runSQL("DROP_TABLE_IF_EXISTS(TestTable)");
 			db.runSQL(
 				"DROP_TABLE_IF_EXISTS(" +
-					DatabaseTestUtil.getPartitionName(_company.getCompanyId()) +
+					DBPartitionUtil.getPartitionName(_company.getCompanyId()) +
 						".TestTable2)");
 		}
 	}
@@ -182,7 +183,7 @@ public class DBSchemaDefinitionExporterDBPartitionTest
 		try {
 			db.runSQL(
 				"create view " +
-					DatabaseTestUtil.getPartitionName(_company.getCompanyId()) +
+					DBPartitionUtil.getPartitionName(_company.getCompanyId()) +
 						".TestView as select * from Company");
 
 			ConfigurationTestUtil.deployConfiguration(
@@ -202,7 +203,7 @@ public class DBSchemaDefinitionExporterDBPartitionTest
 		finally {
 			db.runSQL(
 				"drop view if exists " +
-					DatabaseTestUtil.getPartitionName(_company.getCompanyId()) +
+					DBPartitionUtil.getPartitionName(_company.getCompanyId()) +
 						".TestView");
 		}
 	}
@@ -226,11 +227,11 @@ public class DBSchemaDefinitionExporterDBPartitionTest
 			else {
 				DatabaseTestUtil.importFileRenamingSchema(
 					tablesSQLFile, InfrastructureUtil.getDataSource(),
-					DatabaseTestUtil.getPartitionName(companyId),
+					DBPartitionUtil.getPartitionName(companyId),
 					COPY_DB_SCHEMA_NAME);
 
 				dataSource = DatabaseTestUtil.initDataSource(
-					DatabaseTestUtil.getPartitionName(companyId));
+					DBPartitionUtil.getPartitionName(companyId));
 			}
 
 			assertTables(dataSource, copyDataSource);
@@ -244,7 +245,7 @@ public class DBSchemaDefinitionExporterDBPartitionTest
 			else {
 				DatabaseTestUtil.importFileRenamingSchema(
 					indexesSQLFile, InfrastructureUtil.getDataSource(),
-					DatabaseTestUtil.getPartitionName(companyId),
+					DBPartitionUtil.getPartitionName(companyId),
 					COPY_DB_SCHEMA_NAME);
 			}
 

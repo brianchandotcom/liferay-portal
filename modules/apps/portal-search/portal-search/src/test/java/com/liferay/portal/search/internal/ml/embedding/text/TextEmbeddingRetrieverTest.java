@@ -7,6 +7,7 @@ package com.liferay.portal.search.internal.ml.embedding.text;
 
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.search.configuration.SemanticSearchConfiguration;
@@ -166,7 +167,7 @@ public class TextEmbeddingRetrieverTest {
 	@Test
 	public void testGetTextEmbedding() {
 		Double[] textEmbedding = _textEmbeddingRetrieverImpl.getTextEmbedding(
-			"testProvider", "testText");
+			"testProvider", RandomTestUtil.randomString());
 
 		Assert.assertNotNull(textEmbedding);
 		Assert.assertArrayEquals(new Double[] {1.0, 2.0, 3.0}, textEmbedding);
@@ -190,7 +191,7 @@ public class TextEmbeddingRetrieverTest {
 	@Test
 	public void testGetTextEmbeddingWithProviderNotFound() {
 		Double[] textEmbedding = _textEmbeddingRetrieverImpl.getTextEmbedding(
-			"notFoundProvider", "testText");
+			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 
 		Assert.assertNotNull(textEmbedding);
 		Assert.assertEquals(

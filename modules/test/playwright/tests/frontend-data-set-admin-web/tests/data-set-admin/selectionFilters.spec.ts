@@ -9,18 +9,18 @@ import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../../fixtures/loginTest';
 import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../../utils/getRandomString';
-import getRandomKeyString from '../../../../utils/getRandomKeyString';
 import {dataSetManagerApiHelpersTest} from '../../fixtures/dataSetManagerApiHelpersTest';
 import {picklistApiHelpersTest} from '../../fixtures/picklistApiHelpersTest';
 import {dataSetManagerSetupTest} from './fixtures/dataSetManagerSetupTest';
 import {filtersPageTest} from './fixtures/filtersPageTest';
+import {v4 as uuidv4} from 'uuid';
 
 const SELECTION_API_HEADLESS_FILTER_NAME = 'Selection API Headless filter';
 const SELECTION_PICKLIST_FILTER_NAME = 'Selection Picklist filter';
 const SELECTION_PICKLIST_NO_PRESELECTED_VALUES_FILTER_NAME =
 	'Selection Picklist filter without preselected values';
-const PICKLIST_VALUE_KEY_1 = getRandomKeyString();
-const PICKLIST_VALUE_NAME_1 = getRandomString();
+const PICKLIST_VALUE_KEY = uuidv4().replaceAll('-', '');
+const PICKLIST_VALUE_NAME = getRandomString();
 
 export const test = mergeTests(
 	dataSetManagerApiHelpersTest,
@@ -53,9 +53,9 @@ test.beforeEach(
 		});
 
 		await picklistApiHelpers.editPicklist({
-			key: PICKLIST_VALUE_KEY_1,
+			key: PICKLIST_VALUE_KEY,
 			name: picklistName,
-			value: PICKLIST_VALUE_NAME_1,
+			value: PICKLIST_VALUE_NAME,
 		});
 
 		await test.step('Navigate to the Filters tab', async () => {
@@ -91,49 +91,27 @@ test.describe('Filters in Data Set Manager', () => {
 			await filtersPage.cancelAddFilterModal();
 		});
 
-		await filtersPage.saveAddFilterModal();
+		await test.step('Create a selection filter from picklist source', async () => {
+			await filtersPage.createSelectionFilterPicklist({
+				filterBy: 'externalReferenceCode',
+				filterMode: 'Include',
+				name: SELECTION_PICKLIST_FILTER_NAME,
+				preselectedValues: [PICKLIST_VALUE_NAME],
+				selectionType: 'Single',
+				source: picklistName,
+				sourceType: 'Object Picklist',
+			});
 
-		await expect(page.getByText('This field is required.')).toHaveCount(3);
-
-		await filtersPage.cancelAddFilterModal();
-	});
-
-	await test.step('Create a selection filter from picklist source', async () => {
-		await filtersPage.createSelectionFilterPicklist({
-			filterBy: 'externalReferenceCode',
-			filterMode: 'Include',
-			name: SELECTION_PICKLIST_FILTER_NAME,
-			preselectedValues: [PICKLIST_VALUE_NAME],
-			selectionType: 'Single',
-			source: picklistName,
-			sourceType: 'Object Picklist',
+			await filtersPage.saveAddFilterModal();
 		});
-
-		await filtersPage.saveAddFilterModal();
-	});
 
 	await test.step('Check that the selection filter is in the list', async () => {
 		await expect(
 			page.getByRole('cell', {
 				exact: true,
 				name: SELECTION_PICKLIST_FILTER_NAME,
-				preselectedValues: [PICKLIST_VALUE_NAME_1],
-				selectionType: 'Single',
-				source: picklistName,
-				sourceType: 'Object Picklist',
-			});
-
-	await test.step('Create a selection filter from picklist source without preselected values', async () => {
-		await filtersPage.createSelectionFilterPicklist({
-			filterBy: 'name',
-			name: SELECTION_PICKLIST_NO_PRESELECTED_VALUES_FILTER_NAME,
-			preselectedValues: [],
-			selectionType: 'Single',
-			source: picklistName,
-			sourceType: 'Object Picklist',
-		});
-
-		await filtersPage.saveAddFilterModal();
+			})
+		).toBeVisible();
 	});
 
 		await test.step('Create a selection filter from picklist source without preselected values', async () => {
@@ -287,13 +265,13 @@ test.describe('Filters in Data Set Manager', () => {
 		const preselectedValuesMultiSelect = page.locator(
 			'.form-control.form-control-tag-group.input-group'
 		);
-
+		
 		await test.step('Create a selection filter', async () => {
 			await filtersPage.createSelectionFilterPicklist({
 				filterBy: 'externalReferenceCode',
 				filterMode: 'Include',
 				name: 'Selection Filter',
-				preselectedValues: [PICKLIST_VALUE_NAME_1],
+				preselectedValues: [PICKLIST_VALUE_NAME],
 				selectionType: 'Single',
 				source: picklistName,
 				sourceType: 'Object Picklist',

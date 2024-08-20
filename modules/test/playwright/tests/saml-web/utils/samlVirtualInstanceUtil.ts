@@ -74,8 +74,6 @@ export async function createIdpUser(
 
 	const idpApiHelpers = new ApiHelpers(idpVirtualInstancePage);
 
-	liferayConfig.environment.baseUrl = defaultBaseUrl;
-
 	// Create user in IdP instance
 
 	const userAccount = await idpApiHelpers.headlessAdminUser.postUserAccount(

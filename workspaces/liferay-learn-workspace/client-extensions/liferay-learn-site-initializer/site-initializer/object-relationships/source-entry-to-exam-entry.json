@@ -1,7 +1,7 @@
 {
 	"deletionType": "cascade",
 	"label": {
-		"en_US": "Source Entry to Exam Entry"
+		"en_US": "Exam Entry"
 	},
 	"name": "sourceEntryToExamEntry",
 	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:SourceEntry$]",

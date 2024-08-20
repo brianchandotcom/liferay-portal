@@ -1,7 +1,7 @@
 {
 	"deletionType": "cascade",
 	"label": {
-		"en_US": "Person Entry to Exam Result"
+		"en_US": "Exam Result"
 	},
 	"name": "personEntryToExamResult",
 	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:PersonEntry$]",

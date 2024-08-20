@@ -14,6 +14,7 @@ import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisibl
 import {getRandomInt} from '../../../utils/getRandomInt';
 import performLogin, {performLogout} from '../../../utils/performLogin';
 import {waitForSuccessAlert} from '../../../utils/waitForSuccessAlert';
+import {deleteAfterTestProviderConnections} from '../saml.spec';
 import {connectSpAndIdp} from './samlProviderConnectionUtil';
 
 export const DEFAULT_IDP_NAME = 'www.able.com';
@@ -107,6 +108,8 @@ export async function configureVirtualInstanceForSaml(
 	entityId: string,
 	samlRole: string
 ) {
+	deleteAfterTestProviderConnections.push(entityId);
+
 	const defaultBaseUrl = liferayConfig.environment.baseUrl;
 
 	liferayConfig.environment.baseUrl = `http://${entityId}:8080`;

@@ -19,14 +19,17 @@ import {
 } from '../../helpers/SamlProviderConnectionHelper';
 import {liferayConfig} from '../../liferay.config';
 import {ViewAttributesPage} from '../../pages/expando-web/ViewAttributesPage';
-import {AttributeMapping} from '../../pages/saml-web/IdentityProviderConnectionsPage';
+import {
+	AttributeMapping,
+	IdentityProviderConnectionsPage,
+} from '../../pages/saml-web/IdentityProviderConnectionsPage';
 import {SamlAdminPage} from '../../pages/saml-web/SamlAdminPage';
 import {ServiceProviderConnectionsPage} from '../../pages/saml-web/ServiceProviderConnectionsPage';
 import {EditUserPage} from '../../pages/users-admin-web/EditUserPage';
 import {UsersAndOrganizationsPage} from '../../pages/users-admin-web/UsersAndOrganizationsPage';
 import {getRandomInt} from '../../utils/getRandomInt';
 import getRandomString from '../../utils/getRandomString';
-import {performLogout} from '../../utils/performLogin';
+import performLogin, {performLogout} from '../../utils/performLogin';
 import {performSpInitiatedSSO} from './utils/samlAuthUtil';
 import {
 	connectSpAndIdp,
@@ -38,6 +41,7 @@ import {
 	DEFAULT_IDP_URL,
 	DEFAULT_SP_NAME,
 	DEFAULT_SP_URL,
+	configureVirtualInstanceForSaml,
 	createCustomField,
 	createIdpUser,
 	deleteVirtualInstance,
@@ -54,20 +58,115 @@ export const test = mergeTests(
 	virtualInstancesPagesTest
 );
 
-test('Create two virtual instances, one IdP and one SP, connect them, perform SP initiated SSO, perform SP initiated SLO', async ({
-	browser,
-	page,
-}) => {
+const deleteAfterTestCustomFields: string[] = [];
+export const deleteAfterTestProviderConnections: string[] = [];
+const deleteAfterTestUserIds: string[] = [];
 
-	// Set the Keystore Manager Target to Doc Lib, so we can store multiple
-	// certificates in one instance
+test.afterAll(async ({browser}) => {
+
+	// Remove virtual instances
+
+	const newPage = await browser.newPage();
+
+	await performLogin(newPage, 'test');
+
+	await deleteVirtualInstance(DEFAULT_IDP_NAME, newPage);
+
+	await deleteVirtualInstance(DEFAULT_SP_NAME, newPage);
+
+	// Reset saml keystore
+
+	await resetSamlKeystoreManagerTarget(newPage);
+
+	// Remove localhost SAML users
+
+	const apiHelpers = new ApiHelpers(newPage);
+
+	for (const userId of deleteAfterTestUserIds) {
+		await apiHelpers.headlessAdminUser.deleteUserAccount(Number(userId));
+	}
+
+	// Remove localhost Custom Fields
+
+	const viewAttributePage = new ViewAttributesPage(newPage);
+
+	for (const customFieldName of deleteAfterTestCustomFields) {
+		await viewAttributePage.deleteCustomField(customFieldName, 'User');
+	}
+});
+
+test.afterEach(async ({browser}) => {
+	const defaultBaseUrl = liferayConfig.environment.baseUrl;
+
+	for (const instanceName of deleteAfterTestProviderConnections) {
+		liferayConfig.environment.baseUrl = `http://${instanceName}:8080`;
+
+		// Reset general tab
+
+		const newPage = await performSamlSafeAdminLogin(browser, instanceName);
+
+		const samlAdminPage = new SamlAdminPage(newPage);
+
+		await samlAdminPage.configureSAML(false);
+
+		// Delete all connections
+
+		if ((await samlAdminPage.samlRoleField.inputValue()) === 'idp') {
+			const serviceProviderConnectionsPage =
+				new ServiceProviderConnectionsPage(samlAdminPage.page);
+
+			await serviceProviderConnectionsPage.goTo();
+
+			await serviceProviderConnectionsPage.deleteServiceProviderConnections();
+		}
+		else {
+			const identityProviderConnectionsPage =
+				new IdentityProviderConnectionsPage(samlAdminPage.page);
+
+			await identityProviderConnectionsPage.goTo();
+
+			await identityProviderConnectionsPage.deleteIdentityProviderConnections();
+		}
+	}
+	deleteAfterTestProviderConnections.length = 0;
+
+	liferayConfig.environment.baseUrl = defaultBaseUrl;
+});
+
+test.beforeAll(async ({browser}) => {
+
+	// Set saml keystore
+
+	const newPage = await browser.newPage();
+
+	await performLogin(newPage, 'test');
 
 	await updateSamlKeystoreManagerTarget(
-		page,
+		newPage,
 		'Document Library Keystore Manager'
 	);
 
-	await setupSamlInstances(browser, page);
+	// Create virtual instances
+
+	await setupSamlInstances(browser, newPage);
+});
+
+test('Create two virtual instances, one IdP and one SP, connect them, perform SP initiated SSO, perform SP initiated SLO', async ({
+	browser,
+}) => {
+	await configureVirtualInstanceForSaml(
+		browser,
+		DEFAULT_IDP_NAME,
+		'Identity Provider'
+	);
+
+	await configureVirtualInstanceForSaml(
+		browser,
+		DEFAULT_SP_NAME,
+		'Service Provider'
+	);
+
+	await connectSpAndIdp(browser, DEFAULT_IDP_NAME, DEFAULT_SP_NAME);
 
 	// Create a user with identical credentials on each instance
 
@@ -106,14 +205,6 @@ test('Create two virtual instances, one IdP and one SP, connect them, perform SP
 	await spInstancePage
 		.getByRole('button', {name: 'Sign In'})
 		.waitFor({timeout: 30 * 1000});
-
-	// Lastly, delete both virtual instances and reset the keystore target
-
-	await deleteVirtualInstance(DEFAULT_IDP_NAME, page);
-
-	await deleteVirtualInstance(DEFAULT_SP_NAME, page);
-
-	await resetSamlKeystoreManagerTarget(page);
 });
 
 test('Create, edit, and delete a new virtual instance', async ({
@@ -157,20 +248,22 @@ test('Create, edit, and delete a new virtual instance', async ({
 test('Create two virtual instances, one IdP and one SP, and verify Custom User Attributes', async ({
 	browser,
 	editUserPage,
-	page,
 	searchAdminPage,
 	usersAndOrganizationsPage,
 }) => {
-
-	// Set the Keystore Manager Target to Doc Lib, so we can store multiple
-	// certificates in one instance
-
-	await updateSamlKeystoreManagerTarget(
-		page,
-		'Document Library Keystore Manager'
+	await configureVirtualInstanceForSaml(
+		browser,
+		DEFAULT_IDP_NAME,
+		'Identity Provider'
 	);
 
-	await setupSamlInstances(browser, page);
+	await configureVirtualInstanceForSaml(
+		browser,
+		DEFAULT_SP_NAME,
+		'Service Provider'
+	);
+
+	await connectSpAndIdp(browser, DEFAULT_IDP_NAME, DEFAULT_SP_NAME);
 
 	// Create identical Custom Fields for both instances, except starting value
 
@@ -280,39 +373,35 @@ test('Create two virtual instances, one IdP and one SP, and verify Custom User A
 	);
 
 	liferayConfig.environment.baseUrl = defaultBaseUrl;
-
-	// Lastly, delete both virtual instances and reset the keystore target
-
-	await deleteVirtualInstance(DEFAULT_IDP_NAME, page);
-
-	await deleteVirtualInstance(DEFAULT_SP_NAME, page);
-
-	await resetSamlKeystoreManagerTarget(page);
 });
 
 test('Create two virtual instances, set localhost and one to IdP and one SP, and verify Custom User Attributes', async ({
 	browser,
 	editUserPage,
-	page,
 	searchAdminPage,
 	usersAndOrganizationsPage,
 }) => {
-
-	// Set the Keystore Manager Target to Doc Lib, so we can store multiple
-	// certificates in one instance
-
-	await updateSamlKeystoreManagerTarget(
-		page,
-		'Document Library Keystore Manager'
+	await configureVirtualInstanceForSaml(
+		browser,
+		DEFAULT_IDP_NAME,
+		'Identity Provider'
 	);
 
-	await setupSamlInstances(browser, page);
+	await configureVirtualInstanceForSaml(
+		browser,
+		'localhost',
+		'Identity Provider'
+	);
 
-	const samlAdminPage = new SamlAdminPage(page);
-
-	await samlAdminPage.configureSAML(true, 'localhost', 'Identity Provider');
+	await configureVirtualInstanceForSaml(
+		browser,
+		DEFAULT_SP_NAME,
+		'Service Provider'
+	);
 
 	await connectSpAndIdp(browser, 'localhost', DEFAULT_SP_NAME);
+
+	await connectSpAndIdp(browser, DEFAULT_IDP_NAME, DEFAULT_SP_NAME);
 
 	// Create identical Custom Fields for all instances, except starting value
 
@@ -334,6 +423,8 @@ test('Create two virtual instances, set localhost and one to IdP and one SP, and
 	fieldValues.startingValue = 'localhostStartingValue';
 
 	customField.fieldValues = fieldValues;
+
+	deleteAfterTestCustomFields.push(customFieldName);
 
 	await createCustomField(browser, customField, 'localhost');
 
@@ -396,6 +487,8 @@ test('Create two virtual instances, set localhost and one to IdP and one SP, and
 
 	const userAccount = await createIdpUser(browser, 'localhost', userId);
 
+	deleteAfterTestUserIds.push(userAccount.id);
+
 	await createIdpUser(browser, DEFAULT_IDP_NAME, userId);
 
 	// Perform SP initiated SSO, using localhost as the IdP
@@ -456,37 +549,4 @@ test('Create two virtual instances, set localhost and one to IdP and one SP, and
 	);
 
 	liferayConfig.environment.baseUrl = defaultBaseUrl;
-
-	// Delete both virtual instances and SAML config, reset keystore target
-
-	await deleteVirtualInstance(DEFAULT_IDP_NAME, page);
-
-	await deleteVirtualInstance(DEFAULT_SP_NAME, page);
-
-	await samlAdminPage.configureSAML(false);
-
-	const serviceProviderConnectionsPage = new ServiceProviderConnectionsPage(
-		page
-	);
-
-	await serviceProviderConnectionsPage.goTo();
-
-	await serviceProviderConnectionsPage.deleteServiceProviderConnection(
-		DEFAULT_SP_NAME
-	);
-
-	const apiHelpers = new ApiHelpers(page);
-
-	await apiHelpers.headlessAdminUser.deleteUserAccount(
-		Number(userAccount.id)
-	);
-
-	const viewAttributePage = new ViewAttributesPage(page);
-
-	await viewAttributePage.deleteCustomField(
-		customFieldName,
-		customField.resource
-	);
-
-	await resetSamlKeystoreManagerTarget(page);
 });

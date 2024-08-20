@@ -59,7 +59,7 @@ public class TestrayTestFlowResourceImpl
 			String testrayTeamIds, String testrayUserId, Pagination pagination)
 		throws Exception {
 
-		StringBundler sb = new StringBundler(65);
+		StringBundler sb = new StringBundler(69);
 
 		sb.append("select * from ( select count( ");
 		sb.append("cr.r_subtaskToCaseResults_c_subtaskId) as ");
@@ -68,9 +68,11 @@ public class TestrayTestFlowResourceImpl
 		sb.append("userId, null as lastName, null as middleName, null as ");
 		sb.append("uuid_, null as portraitId, ta.c_taskId_ from ");
 		sb.append("O_[%COMPANY_ID%]_CaseResult cr, ");
+		sb.append("O_[%COMPANY_ID%]_CaseResult_x crx, ");
 		sb.append("O_[%COMPANY_ID%]_Component c, O_[%COMPANY_ID%]_Team t, ");
 		sb.append("O_[%COMPANY_ID%]_Task ta, O_[%COMPANY_ID%]_Subtask s  ");
-		sb.append("where cr.r_componentToCaseResult_c_componentId = ");
+		sb.append("where crx.c_caseResultId_ = cr.c_caseResultId_ and ");
+		sb.append("cr.r_componentToCaseResult_c_componentId = ");
 		sb.append("c.c_componentId_ and c.r_teamToComponents_c_teamId = ");
 		sb.append("t.c_teamId_ and cr.r_subtaskToCaseResults_c_subtaskId = ");
 		sb.append("s.c_subtaskId_ and s.dueStatus_ <> 'merged' and ");
@@ -135,9 +137,11 @@ public class TestrayTestFlowResourceImpl
 		sb.append("u.userId, u.lastName, u.middleName, u.uuid_, ");
 		sb.append("u.portraitId, ta.c_taskId_ from ");
 		sb.append("O_[%COMPANY_ID%]_CaseResult cr, ");
+		sb.append("O_[%COMPANY_ID%]_CaseResult_x crx, ");
 		sb.append("O_[%COMPANY_ID%]_Component c, O_[%COMPANY_ID%]_Team t, ");
 		sb.append("O_[%COMPANY_ID%]_Task ta, O_[%COMPANY_ID%]_Subtask s, ");
-		sb.append("User_ u where cr.r_componentToCaseResult_c_componentId = ");
+		sb.append("User_ u where crx.c_caseResultId_ = cr.c_caseResultId_ ");
+		sb.append("and cr.r_componentToCaseResult_c_componentId = ");
 		sb.append("c.c_componentId_ and c.r_teamToComponents_c_teamId = ");
 		sb.append("t.c_teamId_ and cr.r_subtaskToCaseResults_c_subtaskId = ");
 		sb.append("s.c_subtaskId_ and s.dueStatus_ <> 'merged' and ");

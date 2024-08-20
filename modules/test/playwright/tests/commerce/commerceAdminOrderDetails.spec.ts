@@ -217,7 +217,7 @@ test('COMMERCE-11888. As a supplier user, I can edit the order details, payments
 }) => {
 	test.setTimeout(180000);
 
-	const {site} = await miniumSetUp(apiHelpers);
+	const {channel} = await miniumSetUp(apiHelpers);
 
 	const accountBusiness = await apiHelpers.headlessAdminUser.postAccount({
 		name: 'Account Business',
@@ -259,14 +259,9 @@ test('COMMERCE-11888. As a supplier user, I can edit the order details, payments
 		'demo.unprivileged@liferay.com'
 	);
 
-	const channels =
-		await apiHelpers.headlessCommerceAdminChannel.getChannelsPage(
-			`${site.name} Portal`
-		);
-
 	await apiHelpers.headlessCommerceAdminChannel.patchChannelWithAccountId(
 		accountSupplier.id,
-		channels.items[0]
+		channel
 	);
 
 	const deliveryTerm1 = await apiHelpers.headlessCommerceAdminOrder.postTerms(
@@ -297,9 +292,7 @@ test('COMMERCE-11888. As a supplier user, I can edit the order details, payments
 
 	await commerceAdminChannelsPage.goto();
 	await (
-		await commerceAdminChannelsPage.channelsTableRowLink(
-			channels.items[0].name
-		)
+		await commerceAdminChannelsPage.channelsTableRowLink(channel.name)
 	).click();
 	await commerceAdminChannelDetailsPage.activateChannelConfiguration(
 		'Money Order',
@@ -371,7 +364,7 @@ test('COMMERCE-11888. As a supplier user, I can edit the order details, payments
 	const order = await apiHelpers.headlessCommerceAdminOrder.postOrder({
 		accountId: accountBusiness.id,
 		billingAddressId: address.id,
-		channelId: channels.items[0].id,
+		channelId: channel.id,
 		orderItems: [
 			{
 				quantity: 2,
@@ -379,7 +372,7 @@ test('COMMERCE-11888. As a supplier user, I can edit the order details, payments
 			},
 		],
 		orderStatus: '1',
-		paymentMethod: 'paypal',
+		paymentMethod: 'paypal-integration',
 		paymentStatus: '0',
 		shippingAddressId: address.id,
 	});

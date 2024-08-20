@@ -3,8 +3,8 @@
 	"label": {
 		"en_US": "Exam Type"
 	},
-	"name": "sourceEntryToExamType",
-	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:SourceEntry$]",
+	"name": "dataSyncToExamType",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:DataSync$]",
 	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:ExamType$]",
 	"type": "oneToMany"
 }

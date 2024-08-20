@@ -3,8 +3,8 @@
 	"label": {
 		"en_US": "Person Entry"
 	},
-	"name": "sourceEntryToPersonEntry",
-	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:SourceEntry$]",
+	"name": "dataSyncToPersonEntry",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:DataSync$]",
 	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:PersonEntry$]",
 	"type": "oneToMany"
 }

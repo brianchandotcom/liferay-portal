@@ -15,7 +15,6 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.db.partition.util.DBPartitionUtil;
-import com.liferay.portal.db.schema.definition.internal.test.util.ConfigurationTestUtil;
 import com.liferay.portal.db.schema.definition.internal.test.util.DatabaseTestUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -29,7 +28,6 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.AssumeTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -120,20 +118,17 @@ public class DBSchemaDefinitionExporterDBPartitionTest
 
 	@Test
 	public void testExportImportReport() throws Exception {
-		ConfigurationTestUtil.deployConfiguration(
-			configurationAdmin, databaseType, folder.getAbsolutePath(), PID);
-
-		String content = FileUtil.read(
-			new File(folder, "db_schema_definition_export_report.info"));
+		String reportContent = getReportContent();
 
 		Assert.assertTrue(
-			content.contains("Default virtual instance missing tables:\n"));
+			reportContent.contains(
+				"Default virtual instance missing tables:\n"));
 		Assert.assertTrue(
-			content.contains(
+			reportContent.contains(
 				"Virtual instance " + _company.getCompanyId() +
 					" missing tables:\n"));
 		Assert.assertTrue(
-			content.endsWith(
+			reportContent.endsWith(
 				"Virtual instance " + _company.getCompanyId() +
 					" missing views:"));
 	}
@@ -149,19 +144,14 @@ public class DBSchemaDefinitionExporterDBPartitionTest
 					DBPartitionUtil.getPartitionName(_company.getCompanyId()) +
 						".TestTable2 (testColumn bigint primary key)");
 
-			ConfigurationTestUtil.deployConfiguration(
-				configurationAdmin, databaseType, folder.getAbsolutePath(),
-				PID);
-
-			String content = FileUtil.read(
-				new File(folder, "db_schema_definition_export_report.info"));
+			String reportContent = getReportContent();
 
 			Assert.assertTrue(
-				content.contains(
+				reportContent.contains(
 					"Default virtual instance missing tables: " +
 						StringUtil.toLowerCase("TestTable")));
 			Assert.assertTrue(
-				content.contains(
+				reportContent.contains(
 					StringBundler.concat(
 						"Virtual instance ", _company.getCompanyId(),
 						" missing tables: ",
@@ -186,15 +176,8 @@ public class DBSchemaDefinitionExporterDBPartitionTest
 					DBPartitionUtil.getPartitionName(_company.getCompanyId()) +
 						".TestView as select * from Company");
 
-			ConfigurationTestUtil.deployConfiguration(
-				configurationAdmin, databaseType, folder.getAbsolutePath(),
-				PID);
-
-			String content = FileUtil.read(
-				new File(folder, "db_schema_definition_export_report.info"));
-
 			Assert.assertTrue(
-				content.contains(
+				getReportContent().contains(
 					StringBundler.concat(
 						"Virtual instance ", _company.getCompanyId(),
 						" missing views: ",

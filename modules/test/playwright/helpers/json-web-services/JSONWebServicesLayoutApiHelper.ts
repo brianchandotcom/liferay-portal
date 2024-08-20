@@ -7,6 +7,7 @@ import {expect} from '@playwright/test';
 
 import {liferayConfig} from '../../liferay.config';
 import {ApiHelpers} from '../ApiHelpers';
+import getRandomString from "../../utils/getRandomString";
 
 export class JSONWebServicesLayoutApiHelper {
 	readonly apiHelpers: ApiHelpers;
@@ -34,6 +35,7 @@ export class JSONWebServicesLayoutApiHelper {
 	async addLayout({
 		externalReferenceCode = '',
 		groupId,
+		masterLayoutPlid = '0',
 		options = {type: 'portlet'},
 		parentLayoutId = '0',
 		title,
@@ -41,6 +43,7 @@ export class JSONWebServicesLayoutApiHelper {
 		externalReferenceCode?: string;
 		groupId: string;
 		options?: {publish?: boolean; type: string};
+		masterLayoutPlid?: string;
 		parentLayoutId?: string;
 		title: string;
 	}): Promise<Layout> {
@@ -58,12 +61,20 @@ export class JSONWebServicesLayoutApiHelper {
 		urlSearchParams.append('groupId', groupId);
 		urlSearchParams.append('privateLayout', 'false');
 		urlSearchParams.append('parentLayoutId', parentLayoutId);
-		urlSearchParams.append('name', name);
-		urlSearchParams.append('title', title);
-		urlSearchParams.append('description', '');
+		urlSearchParams.append('localeNamesMap', JSON.stringify({en_US: name}));
+		urlSearchParams.append(
+			'localeTitlesMap', JSON.stringify({en_US: title}));
+		urlSearchParams.append(
+			'descriptionMap', JSON.stringify({en_US: getRandomString()}));
+		urlSearchParams.append('keywordsMap', JSON.stringify({en_US: ''}));
+		urlSearchParams.append('robotsMap', JSON.stringify({en_US: ''}));
 		urlSearchParams.append('type', options.type);
+		urlSearchParams.append('typeSettings', '');
 		urlSearchParams.append('hidden', 'false');
-		urlSearchParams.append('friendlyURL', `/${title}`);
+		urlSearchParams.append(
+			'friendlyURLMap', JSON.stringify({en_US: `/${title}`}));
+		urlSearchParams.append('masterLayoutPlid', masterLayoutPlid);
+		urlSearchParams.append('serviceContext', JSON.stringify({}));
 
 		const layout = await this.apiHelpers.post(
 			`${liferayConfig.environment.baseUrl}${this.basePath}/add-layout`,

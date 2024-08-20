@@ -1705,6 +1705,9 @@ public class JournalArticleLocalServiceTest {
 				_group.getCompanyId(), _group.getGroupId(),
 				nonownerPermissionChecker.getUserId());
 
+			serviceContext.setAddGroupPermissions(false);
+			serviceContext.setAddGuestPermissions(false);
+
 			Double originalArticleVersion = journalArticle.getVersion();
 
 			journalArticle = _journalArticleLocalService.updateArticle(

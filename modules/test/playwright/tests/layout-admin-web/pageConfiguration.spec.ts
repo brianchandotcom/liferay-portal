@@ -437,6 +437,226 @@ test.describe('Utility Page', () => {
 	);
 });
 
+test.describe('CSS Client Extensions', () => {
+	test(
+		'Add CSS extension to page',
+		{
+			tag: '@LPS-153656',
+		},
+		async ({apiHelpers, page, pagesAdminPage, site}) => {
+
+			// Create a new CSS client extension with a script element attribute
+
+			const clientExtensionName = getRandomString();
+
+			const clientExtension =
+				await apiHelpers.jsonWebServicesClientExtension.addClientExtension(
+					{
+						name: clientExtensionName,
+						type: 'globalCSS',
+						url: 'https://www.example.com/style.css',
+					}
+				);
+
+			// Create a layout
+
+			const layoutTitle = getRandomString();
+
+			await apiHelpers.jsonWebServicesLayout.addLayout({
+				groupId: site.id,
+				title: layoutTitle,
+			});
+
+			// Apply CSS client extension to page
+
+			await pagesAdminPage.selectClientExtension({
+				clientExtensionName,
+				layoutTitle,
+				siteUrl: site.friendlyUrlPath,
+				type: 'globalCSS',
+			});
+
+			// Check CSS is attached to the page in view mode
+
+			await page.goto(`/web${site.friendlyUrlPath}/${layoutTitle}`);
+
+			const link = await page.evaluate(() =>
+				document.querySelector(
+					'link[href="https://www.example.com/style.css"]'
+				)
+			);
+
+			expect(link).not.toBeNull();
+
+			// Clean up
+
+			const {clientExtensionEntryId} =
+				await apiHelpers.jsonWebServicesClientExtension.deleteClientExtension(
+					clientExtension.clientExtensionEntryId
+				);
+
+			expect(clientExtensionEntryId).not.toBeNull();
+		}
+	);
+
+	test(
+		'Inherited CSS extensions from master pages should be read-only mode',
+		{
+			tag: '@LPS-153656',
+		},
+		async ({
+			apiHelpers,
+			masterPagesPage,
+			page,
+			pageConfigurationPage,
+			pagesAdminPage,
+			site,
+		}) => {
+
+			// Create a new CSS client extension with a script element attribute
+
+			const clientExtensionName = getRandomString();
+
+			const clientExtension =
+				await apiHelpers.jsonWebServicesClientExtension.addClientExtension(
+					{
+						name: clientExtensionName,
+						type: 'globalCSS',
+						url: 'https://www.example.com/style.css',
+					}
+				);
+
+			// Add master page
+
+			const layoutPageTemplateEntryName = getRandomString();
+
+			const masterPage =
+				await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.addLayoutPageTemplateEntry(
+					{
+						groupId: site.id,
+						name: layoutPageTemplateEntryName,
+						type: '3',
+					}
+				);
+
+			// Apply CSS client extension to master page
+
+			await masterPagesPage.goto(site.friendlyUrlPath);
+			await masterPagesPage.gotoConfiguration(
+				layoutPageTemplateEntryName
+			);
+
+			await pagesAdminPage.addCSSClientExtension(clientExtensionName);
+
+			// Publish master page
+
+			await masterPagesPage.goto(site.friendlyUrlPath);
+			await masterPagesPage.publishMaster(layoutPageTemplateEntryName);
+
+			// Create a layout
+
+			const layoutTitle = getRandomString();
+
+			await apiHelpers.jsonWebServicesLayout.addLayout({
+				groupId: site.id,
+				masterLayoutPlid: masterPage.plid,
+				title: layoutTitle,
+			});
+
+			// Check inherited CSS client extension is read-only
+
+			await pagesAdminPage.goto(site.friendlyUrlPath);
+
+			await pageConfigurationPage.goToSection(layoutTitle, 'Design');
+
+			await expect(
+				page
+					.locator(
+						'.global-css-cets-configuration .table tbody .disabled'
+					)
+					.getByText('From Master')
+			).toBeVisible();
+
+			// Clean up
+
+			const {clientExtensionEntryId} =
+				await apiHelpers.jsonWebServicesClientExtension.deleteClientExtension(
+					clientExtension.clientExtensionEntryId
+				);
+
+			expect(clientExtensionEntryId).not.toBeNull();
+		}
+	);
+
+	test(
+		'Inherited CSS extensions from pages should be read-only mode',
+		{
+			tag: '@LPS-153658',
+		},
+		async ({
+			apiHelpers,
+			page,
+			pageConfigurationPage,
+			pagesAdminPage,
+			site,
+		}) => {
+
+			// Create a new CSS client extension with a style element attribute
+
+			const clientExtensionName = getRandomString();
+
+			const clientExtension =
+				await apiHelpers.jsonWebServicesClientExtension.addClientExtension(
+					{
+						name: clientExtensionName,
+						type: 'globalCSS',
+						url: 'https://www.example.com/style.css',
+					}
+				);
+
+			// Apply CSS client extension to all pages
+
+			await pagesAdminPage.selectClientExtension({
+				clientExtensionName,
+				siteUrl: site.friendlyUrlPath,
+				type: 'globalCSS',
+			});
+
+			// Create a layout
+
+			const layoutTitle = getRandomString();
+
+			await apiHelpers.jsonWebServicesLayout.addLayout({
+				groupId: site.id,
+				title: layoutTitle,
+			});
+
+			// Check inherited CSS client extension is read-only
+
+			await pagesAdminPage.goto(site.friendlyUrlPath);
+
+			await pageConfigurationPage.goToSection(layoutTitle, 'Design');
+
+			await expect(
+				page
+					.locator(
+						'.global-css-cets-configuration .table tbody .disabled'
+					)
+					.getByText('From Pages')
+			).toBeVisible();
+
+			// Clean up
+
+			const {clientExtensionEntryId} =
+				await apiHelpers.jsonWebServicesClientExtension.deleteClientExtension(
+					clientExtension.clientExtensionEntryId
+				);
+
+			expect(clientExtensionEntryId).not.toBeNull();
+		}
+	);
+});
+
 test.describe('JavaScript Client Extensions', () => {
 	test(
 		'Add JS extension to page',

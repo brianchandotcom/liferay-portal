@@ -20,6 +20,7 @@ import com.liferay.info.pagination.InfoPage;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
@@ -32,6 +33,7 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -304,6 +306,12 @@ public class AssetPublisherHelperTest {
 			_group1.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			ContentLayoutTestUtil.getMockLiferayPortletActionRequest(
+				_companyLocalService.getCompany(TestPropsValues.getCompanyId()),
+				_group1,
+				LayoutTestUtil.addTypePortletLayout(_group1.getGroupId()));
+
 		PortletPreferences portletPreferences = new MockPortletPreferences();
 
 		portletPreferences.setValue("selectionStyle", "manual");
@@ -328,7 +336,7 @@ public class AssetPublisherHelperTest {
 			AssetPublisherTestUtil.getAssetEntryXml(assetEntry2));
 
 		InfoPage<AssetEntry> infoPage = _assetPublisherHelper.getInfoPage(
-			null, portletPreferences,
+			mockLiferayPortletActionRequest, portletPreferences,
 			PermissionThreadLocal.getPermissionChecker(),
 			new long[] {_group1.getGroupId()}, null, null, false, false, 0, 2);
 
@@ -348,7 +356,7 @@ public class AssetPublisherHelperTest {
 			AssetPublisherTestUtil.getAssetEntryXml(assetEntry3));
 
 		infoPage = _assetPublisherHelper.getInfoPage(
-			null, portletPreferences,
+			mockLiferayPortletActionRequest, portletPreferences,
 			PermissionThreadLocal.getPermissionChecker(),
 			new long[] {_group1.getGroupId()}, null, null, false, false,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS);

@@ -17,10 +17,14 @@ import com.liferay.asset.publisher.util.AssetPublisherHelper;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.layout.test.util.ContentLayoutTestUtil;
+import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -31,7 +35,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portletmvc4spring.test.mock.web.portlet.MockPortletPreferences;
-import com.liferay.portletmvc4spring.test.mock.web.portlet.MockPortletRequest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,7 +92,7 @@ public class AssetPublisherServiceTest {
 		Assert.assertEquals(
 			_assetEntries,
 			_assetPublisherHelper.getAssetEntries(
-				new MockPortletRequest(), portletPreferences,
+				_getMockLiferayPortletActionRequest(), portletPreferences,
 				_permissionChecker, new long[] {_group.getGroupId()}, false,
 				false));
 	}
@@ -107,12 +110,15 @@ public class AssetPublisherServiceTest {
 		List<AssetEntry> expectedAssetEntries = addAssetEntries(
 			allAssetCategoryIds, _NO_ASSET_TAG_NAMES, 2, true);
 
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			_getMockLiferayPortletActionRequest();
+
 		PortletPreferences portletPreferences =
 			getAssetPublisherPortletPreferences();
 
 		List<AssetEntry> assetEntries = _assetPublisherHelper.getAssetEntries(
-			new MockPortletRequest(), portletPreferences, _permissionChecker,
-			new long[] {_group.getGroupId()}, false, false);
+			mockLiferayPortletActionRequest, portletPreferences,
+			_permissionChecker, new long[] {_group.getGroupId()}, false, false);
 
 		Assert.assertEquals(
 			assetEntries.toString(),
@@ -121,7 +127,7 @@ public class AssetPublisherServiceTest {
 
 		List<AssetEntry> filteredAssetEntries =
 			_assetPublisherHelper.getAssetEntries(
-				new MockPortletRequest(), portletPreferences,
+				_getMockLiferayPortletActionRequest(), portletPreferences,
 				_permissionChecker, new long[] {_group.getGroupId()},
 				allAssetCategoryIds, _NO_ASSET_TAG_NAMES, false, false);
 
@@ -144,12 +150,15 @@ public class AssetPublisherServiceTest {
 		List<AssetEntry> expectedAssetEntries = addAssetEntries(
 			allCategoyIds, allAssetTagNames, 2, true);
 
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			_getMockLiferayPortletActionRequest();
+
 		PortletPreferences portletPreferences =
 			getAssetPublisherPortletPreferences();
 
 		List<AssetEntry> assetEntries = _assetPublisherHelper.getAssetEntries(
-			new MockPortletRequest(), portletPreferences, _permissionChecker,
-			new long[] {_group.getGroupId()}, false, false);
+			mockLiferayPortletActionRequest, portletPreferences,
+			_permissionChecker, new long[] {_group.getGroupId()}, false, false);
 
 		Assert.assertEquals(
 			assetEntries.toString(),
@@ -158,7 +167,7 @@ public class AssetPublisherServiceTest {
 
 		List<AssetEntry> filteredAssetEntries =
 			_assetPublisherHelper.getAssetEntries(
-				new MockPortletRequest(), portletPreferences,
+				mockLiferayPortletActionRequest, portletPreferences,
 				_permissionChecker, new long[] {_group.getGroupId()},
 				allCategoyIds, allAssetTagNames, false, false);
 
@@ -172,12 +181,15 @@ public class AssetPublisherServiceTest {
 		List<AssetEntry> expectedAssetEntries = addAssetEntries(
 			_NO_ASSET_CATEGORY_IDS, allAssetTagNames, 2, true);
 
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			_getMockLiferayPortletActionRequest();
+
 		PortletPreferences portletPreferences =
 			getAssetPublisherPortletPreferences();
 
 		List<AssetEntry> assetEntries = _assetPublisherHelper.getAssetEntries(
-			new MockPortletRequest(), portletPreferences, _permissionChecker,
-			new long[] {_group.getGroupId()}, false, false);
+			mockLiferayPortletActionRequest, portletPreferences,
+			_permissionChecker, new long[] {_group.getGroupId()}, false, false);
 
 		Assert.assertEquals(
 			assetEntries.toString(),
@@ -186,7 +198,7 @@ public class AssetPublisherServiceTest {
 
 		List<AssetEntry> filteredAssetEntries =
 			_assetPublisherHelper.getAssetEntries(
-				new MockPortletRequest(), portletPreferences,
+				mockLiferayPortletActionRequest, portletPreferences,
 				_permissionChecker, new long[] {_group.getGroupId()},
 				_NO_ASSET_CATEGORY_IDS, allAssetTagNames, false, false);
 
@@ -265,6 +277,15 @@ public class AssetPublisherServiceTest {
 		return portletPreferences;
 	}
 
+	private MockLiferayPortletActionRequest
+			_getMockLiferayPortletActionRequest()
+		throws Exception {
+
+		return ContentLayoutTestUtil.getMockLiferayPortletActionRequest(
+			_companyLocalService.getCompany(TestPropsValues.getCompanyId()),
+			_group, LayoutTestUtil.addTypePortletLayout(_group.getGroupId()));
+	}
+
 	private static final String[] _ASSET_CATEGORY_NAMES = {
 		"Athletic", "Barcelona", "RealMadrid", "Sevilla", "Sporting"
 	};
@@ -283,6 +304,9 @@ public class AssetPublisherServiceTest {
 
 	@Inject
 	private AssetPublisherHelper _assetPublisherHelper;
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;

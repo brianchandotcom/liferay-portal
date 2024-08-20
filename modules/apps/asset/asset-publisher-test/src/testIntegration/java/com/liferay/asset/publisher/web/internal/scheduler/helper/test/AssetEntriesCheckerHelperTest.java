@@ -300,9 +300,6 @@ public class AssetEntriesCheckerHelperTest {
 			_assetEntriesCheckerHelper, "_assetListAssetEntryProvider",
 			_assetListAssetEntryProvider);
 		ReflectionTestUtil.setFieldValue(
-			_assetEntriesCheckerHelper, "_assetListEntryLocalService",
-			_assetListEntryLocalService);
-		ReflectionTestUtil.setFieldValue(
 			_assetEntriesCheckerHelper,
 			"_assetListEntrySegmentsEntryRelLocalService",
 			_assetListEntrySegmentsEntryRelLocalService);

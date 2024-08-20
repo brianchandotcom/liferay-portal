@@ -101,6 +101,16 @@ public class SiteNavigationMenuConfigurationAction
 		super.doDispatch(renderRequest, renderResponse);
 	}
 
+	@Reference
+	protected GroupLocalService groupLocalService;
+
+	@Reference
+	protected SiteNavigationMenuItemLocalService
+		siteNavigationMenuItemLocalService;
+
+	@Reference
+	protected SiteNavigationMenuService siteNavigationMenuService;
+
 	private void _updateDisplayStyleGroupPreferences(
 		ModifiableSettings modifiableSettings, PortletRequest portletRequest) {
 
@@ -195,16 +205,6 @@ public class SiteNavigationMenuConfigurationAction
 
 		modifiableSettings.reset("siteNavigationMenuExternalReferenceCode");
 	}
-
-	@Reference
-	protected GroupLocalService groupLocalService;
-
-	@Reference
-	protected SiteNavigationMenuItemLocalService
-		siteNavigationMenuItemLocalService;
-
-	@Reference
-	protected SiteNavigationMenuService siteNavigationMenuService;
 
 	@Reference
 	private ItemSelector _itemSelector;

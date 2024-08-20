@@ -776,6 +776,11 @@ public class AssetPublisherExportImportTest
 			TemplateConstants.LANG_TYPE_FTL, RandomTestUtil.randomString(),
 			_portal.getSiteDefaultLocale(group));
 
+		Assert.assertNotNull(
+			_ddmTemplateLocalService.getTemplate(
+				importedGroup.getGroupId(), classNameId,
+				ddmTemplate.getTemplateKey()));
+
 		PortletPreferences portletPreferences = getImportedPortletPreferences(
 			HashMapBuilder.put(
 				"displayStyle",
@@ -784,11 +789,6 @@ public class AssetPublisherExportImportTest
 						ddmTemplate.getTemplateKey()
 				}
 			).build());
-
-		Assert.assertNotNull(
-			_ddmTemplateLocalService.getTemplate(
-				importedGroup.getGroupId(), classNameId,
-				ddmTemplate.getTemplateKey()));
 
 		Assert.assertEquals(
 			PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +

@@ -135,6 +135,10 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 				_mapGlobalJSScriptElementAttributesToJSONString(
 					clientExtension);
 			}
+			else if (Objects.equals(type, "language")) {
+				pluginPackageProperties.put(
+					"Liferay-Client-Extension-Language", "content/");
+			}
 			else if (Objects.equals(type, "siteInitializer")) {
 				pluginPackageProperties.put(
 					"Liferay-Client-Extension-Site-Initializer",

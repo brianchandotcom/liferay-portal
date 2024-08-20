@@ -278,6 +278,14 @@
 					],
 					"description": "Description for jsImportMapsEntry"
 				},
+				"language": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/propertySets/properties/batchJob"
+						}
+					],
+					"description": "Description for language"
+				},
 				"notificationType": {
 					"allOf": [
 						{
@@ -514,6 +522,14 @@
 					}
 				},
 				{
+					"$ref": "#/definitions/types/properties/language",
+					"properties": {
+						"type": {
+							"const": "language"
+						}
+					}
+				},
+				{
 					"$ref": "#/definitions/types/properties/notificationType",
 					"properties": {
 						"type": {
@@ -629,6 +645,7 @@
 						"iframe",
 						"instanceSettings",
 						"jsImportMapsEntry",
+						"language",
 						"notificationType",
 						"oAuthApplicationHeadlessServer",
 						"oAuthApplicationUserAgent",

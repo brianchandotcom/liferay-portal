@@ -7558,6 +7558,64 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
+	public void testPostCustomObjectEntryWithPermissions() throws Exception {
+		Assert.assertEquals(
+			400,
+			HTTPTestUtil.invokeToHttpCode(
+				JSONUtil.put(
+					_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
+				).put(
+					"permissions",
+					JSONUtil.put(
+						"actionIds",
+						JSONUtil.putAll(
+							ActionKeys.DELETE, ActionKeys.PERMISSIONS,
+							ActionKeys.UPDATE, ActionKeys.VIEW)
+					).put(
+						"roleName", RandomTestUtil.randomString()
+					)
+				).toString(),
+				_objectDefinition1.getRESTContextPath(), Http.Method.POST));
+
+		_testPostCustomObjectEntryWithNestedPermissions(
+			JSONUtil.putAll(_getOwnerPermissionsJSONObject()),
+			JSONUtil.put(_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()));
+		_testPostCustomObjectEntryWithNestedPermissions(
+			JSONUtil.putAll(_getOwnerPermissionsJSONObject()),
+			JSONUtil.put(
+				_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
+			).put(
+				"permissions", JSONFactoryUtil.createJSONArray()
+			));
+
+		Role role1 = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+		Role role2 = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		_testPostCustomObjectEntryWithNestedPermissions(
+			JSONUtil.putAll(
+				_getOwnerPermissionsJSONObject(),
+				_getPermissionsJSONObject(
+					new String[] {ActionKeys.DELETE, ActionKeys.PERMISSIONS},
+					role1),
+				_getPermissionsJSONObject(
+					new String[] {ActionKeys.UPDATE, ActionKeys.VIEW}, role2)),
+			JSONUtil.put(
+				_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
+			).put(
+				"permissions",
+				JSONUtil.putAll(
+					_getPermissionsJSONObject(
+						new String[] {ActionKeys.UPDATE, ActionKeys.VIEW},
+						role2),
+					_getPermissionsJSONObject(
+						new String[] {
+							ActionKeys.DELETE, ActionKeys.PERMISSIONS
+						},
+						role1))
+			));
+	}
+
+	@Test
 	public void testPostObjectEntryWithKeywordsAndTaxonomyCategoryIdsWhenCategorizationDisabled()
 		throws Exception {
 
@@ -12026,23 +12084,33 @@ public class ObjectEntryResourceTest {
 		}
 	}
 
+	private JSONObject _getOwnerPermissionsJSONObject() {
+		return JSONUtil.put(
+			"actionIds",
+			JSONUtil.putAll(
+				ActionKeys.DELETE, ActionKeys.PERMISSIONS, ActionKeys.UPDATE,
+				ActionKeys.VIEW)
+		).put(
+			"roleName", RoleConstants.OWNER
+		);
+	}
+
 	private JSONArray _getPermissionsJSONArray(String[] actionIds, Role role)
 		throws Exception {
 
 		return JSONUtil.putAll(
-			JSONUtil.put(
-				"actionIds",
-				JSONUtil.putAll(
-					ActionKeys.DELETE, ActionKeys.PERMISSIONS,
-					ActionKeys.UPDATE, ActionKeys.VIEW)
-			).put(
-				"roleName", RoleConstants.OWNER
-			),
-			JSONUtil.put(
-				"actionIds", actionIds
-			).put(
-				"roleName", role.getName()
-			));
+			_getOwnerPermissionsJSONObject(),
+			_getPermissionsJSONObject(actionIds, role));
+	}
+
+	private JSONObject _getPermissionsJSONObject(
+		String[] actionIds, Role role) {
+
+		return JSONUtil.put(
+			"actionIds", actionIds
+		).put(
+			"roleName", role.getName()
+		);
 	}
 
 	private JSONObject _getRelatedJSONObject(
@@ -13221,6 +13289,28 @@ public class ObjectEntryResourceTest {
 			Http.Method.POST);
 
 		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
+	}
+
+	private void _testPostCustomObjectEntryWithNestedPermissions(
+			JSONArray expectedPermissionsJSONArray,
+			JSONObject objectEntryJSONObject)
+		throws Exception {
+
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			objectEntryJSONObject.toString(),
+			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
+
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
+			null,
+			StringBundler.concat(
+				_objectDefinition1.getRESTContextPath(), StringPool.SLASH,
+				jsonObject.getString("id"), "?nestedFields=permissions"),
+			Http.Method.GET);
+
+		JSONAssert.assertEquals(
+			String.valueOf(expectedPermissionsJSONArray),
+			String.valueOf(jsonObject.getJSONArray("permissions")),
+			JSONCompareMode.LENIENT);
 	}
 
 	private void _testPutCustomObjectEntryUnlinkNestedCustomObjectEntries(

@@ -108,10 +108,10 @@ const BuildOverview: React.FC<BuildOverviewProps> = ({testrayBuild}) => {
 					</dl>
 
 					<dl className="ml-3">
-						<dd>{i18n.sub('x-minutes', '0')}</dd>
+						<dd>{issues?.length}</dd>
 
 						<dd className="tr-small-heading">
-							{i18n.sub('time-x-total-issues', '0')}
+							{i18n.translate('total-issues')}
 						</dd>
 					</dl>
 				</div>

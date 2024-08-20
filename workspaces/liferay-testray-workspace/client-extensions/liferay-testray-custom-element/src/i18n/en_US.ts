@@ -436,10 +436,10 @@ export default {
 		'This subtask has been merged wihth {0}.',
 	'this-user-does-not-have-authentication-with-jira':
 		'This user does not have authentication with jira',
-	'time-x-total-issues': 'Time {0} Total Issues',
 	'total': 'Total',
 	'total-completed': 'Total Completed',
 	'total-estimated-time': 'Total Estimated Time',
+	'total-issues': 'Total Issues',
 	'total-test-cases': 'Total test cases',
 	'true': 'True',
 	'type': 'Type',

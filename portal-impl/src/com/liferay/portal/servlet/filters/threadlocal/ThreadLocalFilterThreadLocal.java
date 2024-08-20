@@ -6,6 +6,7 @@
 package com.liferay.portal.servlet.filters.threadlocal;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
+import com.liferay.petra.lang.SafeCloseable;
 
 /**
  * @author Tina Tian
@@ -20,7 +21,11 @@ public class ThreadLocalFilterThreadLocal {
 		_filterInvoked.set(true);
 	}
 
-	private static final ThreadLocal<Boolean> _filterInvoked =
+	public static SafeCloseable setFilterInvoked(boolean filterInvoked) {
+		return _filterInvoked.setWithSafeCloseable(filterInvoked);
+	}
+
+	private static final CentralizedThreadLocal<Boolean> _filterInvoked =
 		new CentralizedThreadLocal<>(
 			ThreadLocalFilterThreadLocal.class + "._filterInvoked",
 			() -> Boolean.FALSE);

@@ -15,6 +15,7 @@ import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.list.type.service.ListTypeDefinitionService;
 import com.liferay.list.type.service.ListTypeEntryService;
 import com.liferay.object.exception.NoSuchObjectEntryException;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.portal.kernel.language.Language;
@@ -56,8 +57,9 @@ public class EditCommerceReturnNoteMVCRenderCommand
 					_commerceOrderItemLocalService, _commerceOrderLocalService,
 					_commercePaymentEntryService, _commercePriceFormatter,
 					_language, _listTypeDefinitionService,
-					_listTypeEntryService, _objectEntryLocalService,
-					_objectRelationshipLocalService, renderRequest);
+					_listTypeEntryService, _objectDefinitionLocalService,
+					_objectEntryLocalService, _objectRelationshipLocalService,
+					renderRequest);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -104,6 +106,9 @@ public class EditCommerceReturnNoteMVCRenderCommand
 
 	@Reference
 	private ListTypeEntryService _listTypeEntryService;
+
+	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;

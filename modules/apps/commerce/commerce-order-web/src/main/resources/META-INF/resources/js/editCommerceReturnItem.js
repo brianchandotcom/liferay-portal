@@ -50,27 +50,96 @@ export default function ({
 			returnResolutionMethod,
 		};
 
-		return CommerceReturnItemResource.updateItemById(
-			commerceReturnItemId,
-			returnItemData
-		)
-			.then(() => {
-				window.top.Liferay.fire('return-item-updated');
+		const className = form.querySelector(`#${namespace}className`).value;
+		const classPK = form.querySelector(`#${namespace}classPK`).value;
+		const content = form.querySelector(`#${namespace}content`).value;
 
+		function updateReturnItem(response) {
+			if (!response) {
 				openToast({
 					message: Liferay.Language.get(
-						'your-request-completed-successfully'
+						'an-unexpected-error-occurred'
 					),
-					type: 'success',
-				});
-			})
-			.catch((error) => {
-				openToast({
-					message:
-						error.message ||
-						Liferay.Language.get('an-unexpected-error-occurred'),
 					type: 'danger',
 				});
-			});
+
+				return;
+			}
+
+			return CommerceReturnItemResource.updateItemById(
+				commerceReturnItemId,
+				returnItemData
+			)
+				.then(() => {
+					window.location.reload();
+
+					window.top.Liferay.fire('return-item-updated');
+
+					openToast({
+						message: Liferay.Language.get(
+							'your-request-completed-successfully'
+						),
+						type: 'success',
+					});
+				})
+				.catch((error) => {
+					openToast({
+						message:
+							error.message ||
+							Liferay.Language.get(
+								'an-unexpected-error-occurred'
+							),
+						type: 'danger',
+					});
+
+					if (response > 0) {
+						Liferay.Service(
+							'/comment.commentmanagerjsonws/delete-comment',
+							{
+								commentId: response,
+							}
+						);
+					}
+				});
+		}
+
+		if (content) {
+			Liferay.Service(
+				'/comment.commentmanagerjsonws/add-comment',
+				{
+					body: content,
+					className,
+					classPK,
+					groupId: themeDisplay.getScopeGroupId(),
+				},
+				updateReturnItem
+			);
+		}
+		else {
+			CommerceReturnItemResource.updateItemById(
+				commerceReturnItemId,
+				returnItemData
+			)
+				.then(() => {
+					window.top.Liferay.fire('return-item-updated');
+
+					openToast({
+						message: Liferay.Language.get(
+							'your-request-completed-successfully'
+						),
+						type: 'success',
+					});
+				})
+				.catch((error) => {
+					openToast({
+						message:
+							error.message ||
+							Liferay.Language.get(
+								'an-unexpected-error-occurred'
+							),
+						type: 'danger',
+					});
+				});
+		}
 	});
 }

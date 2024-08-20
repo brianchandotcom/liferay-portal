@@ -87,13 +87,15 @@ public class ContentFieldUtil {
 						ddmFormFieldValue.getValue()));
 				setContentFieldValue_i18n(
 					() -> {
-						if (!dtoConverterContext.isAcceptAllLanguages()) {
+						Value value = ddmFormFieldValue.getValue();
+
+						if (!dtoConverterContext.isAcceptAllLanguages() ||
+							(value == null)) {
+
 							return null;
 						}
 
 						Map<String, ContentFieldValue> map = new HashMap<>();
-
-						Value value = ddmFormFieldValue.getValue();
 
 						Locale defaultLocale = value.getDefaultLocale();
 

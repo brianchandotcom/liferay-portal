@@ -188,6 +188,105 @@ public class AssetPublisherUtilTest {
 			assetListEntry, false, null);
 	}
 
+	@FeatureFlags("LPD-22837")
+	@Test
+	public void testGetDisplayStyleGroupIdWithDisplayStyleGroupExternalReferenceCode() {
+		Group group = _getGroup();
+
+		_groupLocalServiceUtilMockedStatic.when(
+			() -> GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
+				group.getExternalReferenceCode(), _COMPANY_ID)
+		).thenReturn(
+			group
+		);
+
+		Assert.assertEquals(
+			group.getGroupId(),
+			AssetPublisherUtil.getDisplayStyleGroupId(
+				_COMPANY_ID, _GROUP_ID,
+				_getMockPortletPreferences(
+					HashMapBuilder.put(
+						"displayStyleGroupExternalReferenceCode",
+						group.getExternalReferenceCode()
+					).put(
+						"displayStyleGroupId",
+						String.valueOf(RandomTestUtil.randomLong())
+					).build())));
+
+		_groupLocalServiceUtilMockedStatic.verify(
+			() -> GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
+				group.getExternalReferenceCode(), _COMPANY_ID));
+	}
+
+	@Test
+	public void testGetDisplayStyleGroupIdWithFeatureFlagDisabled() {
+		long groupId = RandomTestUtil.randomLong();
+
+		Assert.assertEquals(
+			groupId,
+			AssetPublisherUtil.getDisplayStyleGroupId(
+				_COMPANY_ID, _GROUP_ID,
+				_getMockPortletPreferences(
+					HashMapBuilder.put(
+						"displayStyleGroupExternalReferenceCode",
+						RandomTestUtil.randomString()
+					).put(
+						"displayStyleGroupId", String.valueOf(groupId)
+					).build())));
+
+		Assert.assertEquals(
+			_GROUP_ID,
+			AssetPublisherUtil.getDisplayStyleGroupId(
+				_COMPANY_ID, _GROUP_ID,
+				_getMockPortletPreferences(
+					HashMapBuilder.put(
+						"displayStyleGroupExternalReferenceCode",
+						RandomTestUtil.randomString()
+					).build())));
+
+		_groupLocalServiceUtilMockedStatic.verifyNoInteractions();
+	}
+
+	@FeatureFlags("LPD-22837")
+	@Test
+	public void testGetDisplayStyleGroupIdWithMissingDisplayStyleGroupExternalReferenceCode() {
+		String displayStyleGroupExternalReferenceCode =
+			RandomTestUtil.randomString();
+
+		Assert.assertEquals(
+			0,
+			AssetPublisherUtil.getDisplayStyleGroupId(
+				_COMPANY_ID, _GROUP_ID,
+				_getMockPortletPreferences(
+					HashMapBuilder.put(
+						"displayStyleGroupExternalReferenceCode",
+						displayStyleGroupExternalReferenceCode
+					).put(
+						"displayStyleGroupId",
+						String.valueOf(RandomTestUtil.randomLong())
+					).build())));
+
+		_groupLocalServiceUtilMockedStatic.verify(
+			() -> GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
+				displayStyleGroupExternalReferenceCode, _COMPANY_ID));
+	}
+
+	@FeatureFlags("LPD-22837")
+	@Test
+	public void testGetDisplayStyleGroupIdWithoutDisplayStyleGroupExternalReferenceCode() {
+		Assert.assertEquals(
+			_GROUP_ID,
+			AssetPublisherUtil.getDisplayStyleGroupId(
+				_COMPANY_ID, _GROUP_ID,
+				_getMockPortletPreferences(
+					HashMapBuilder.put(
+						"displayStyleGroupId",
+						String.valueOf(RandomTestUtil.randomLong())
+					).build())));
+
+		_groupLocalServiceUtilMockedStatic.verifyNoInteractions();
+	}
+
 	private void _assertGetAssetListEntry(
 			AssetListEntry assetListEntry, boolean checkPermissions,
 			Map<String, String> portletPreferencesMap)

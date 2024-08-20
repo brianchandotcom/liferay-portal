@@ -46,49 +46,104 @@ describe('MultiSelectManager', () => {
 		Liferay.FeatureFlags['LPD-18221'] = false;
 	});
 
-	it('activates simple multiselect when pressing ctrl + click', () => {
-		renderComponent();
+	describe('Simple multiselect', () => {
+		it('activates simple multiselect when pressing ctrl + click', () => {
+			renderComponent();
 
-		document.body.dispatchEvent(
-			new MouseEvent('click', {
-				ctrlKey: true,
-			})
-		);
+			document.body.dispatchEvent(
+				new MouseEvent('click', {
+					ctrlKey: true,
+				})
+			);
 
-		const activateMultiSelect = useActivateMultiSelect();
+			const activateMultiSelect = useActivateMultiSelect();
 
-		expect(activateMultiSelect).toBeCalledWith('simple');
+			expect(activateMultiSelect).toBeCalledWith('simple');
+		});
+
+		it('activates simple multiselect when pressing ctrl + "Enter"', () => {
+			renderComponent();
+
+			document.body.dispatchEvent(
+				new KeyboardEvent('keydown', {
+					ctrlKey: true,
+					key: 'Enter',
+				})
+			);
+
+			const activateMultiSelect = useActivateMultiSelect();
+
+			expect(activateMultiSelect).toBeCalledWith('simple');
+		});
+
+		it('disable simple multiselect when the ctrl key is released', () => {
+			useMultiSelectIsActivated.mockImplementation(() => true);
+
+			renderComponent();
+
+			document.body.dispatchEvent(
+				new KeyboardEvent('keyup', {
+					key: 'Control',
+				})
+			);
+
+			const activateMultiSelect = useActivateMultiSelect();
+
+			expect(activateMultiSelect).toBeCalledWith(null);
+
+			useMultiSelectIsActivated.mockImplementation(() => false);
+		});
 	});
 
-	it('activates simple multiselect when pressing ctrl + "Enter"', () => {
-		renderComponent();
+	describe('Range multiselect', () => {
+		it('activates range multiselect when pressing shift + click', () => {
+			renderComponent();
 
-		document.body.dispatchEvent(
-			new KeyboardEvent('keydown', {
-				ctrlKey: true,
-				key: 'Enter',
-			})
-		);
+			document.body.dispatchEvent(
+				new MouseEvent('click', {
+					ctrlKey: false,
+					shiftKey: true,
+				})
+			);
 
-		const activateMultiSelect = useActivateMultiSelect();
+			const activateMultiSelect = useActivateMultiSelect();
 
-		expect(activateMultiSelect).toBeCalledWith('simple');
-	});
+			expect(activateMultiSelect).toBeCalledWith('range');
+		});
 
-	it('disable simple multiselect when the ctrl key is released', () => {
-		useMultiSelectIsActivated.mockImplementation(() => true);
+		it('activates range multiselect when pressing shift + "Enter"', () => {
+			renderComponent();
 
-		renderComponent();
+			document.body.dispatchEvent(
+				new KeyboardEvent('keydown', {
+					ctrlKey: false,
+					key: 'Enter',
+					shiftKey: true,
+				})
+			);
 
-		document.body.dispatchEvent(
-			new KeyboardEvent('keyup', {
-				key: 'Control',
-			})
-		);
+			const activateMultiSelect = useActivateMultiSelect();
 
-		const activateMultiSelect = useActivateMultiSelect();
+			expect(activateMultiSelect).toBeCalledWith('range');
+		});
 
-		expect(activateMultiSelect).toBeCalledWith(null);
+		it('disable range multiselect when the shift key is released', () => {
+			useMultiSelectIsActivated.mockImplementation(() => true);
+
+			renderComponent();
+
+			document.body.dispatchEvent(
+				new KeyboardEvent('keyup', {
+					key: 'Shift',
+				})
+			);
+
+			const activateMultiSelect = useActivateMultiSelect();
+
+			expect(activateMultiSelect).toBeCalledWith(null);
+
+			useMultiSelectIsActivated.mockImplementation(() => false);
+		});
 	});
 
 	it('deselects items when escape is pressed', () => {

@@ -326,9 +326,9 @@ public class InputEditorTag extends BaseValidatorTagSupport {
 	}
 
 	protected String getCssClasses() {
-		HttpServletRequest httpServletRequest = getRequest();
-
 		String cssClasses = "portlet ";
+
+		HttpServletRequest httpServletRequest = getRequest();
 
 		Portlet portlet = (Portlet)httpServletRequest.getAttribute(
 			WebKeys.RENDER_PORTLET);

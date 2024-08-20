@@ -521,3 +521,144 @@ test('Filters the collection content by keywords using two filters', async ({
 
 	await apiHelpers.jsonWebServicesLayout.deleteLayout(layout.id);
 });
+
+test('Reset collection filter using applied filters', async ({
+	apiHelpers,
+	collectionsPage,
+	page,
+	pageEditorPage,
+	pageManagementSite,
+}) => {
+
+	// Create a definition for a Collection Filter
+
+	const collectionFilterId = getRandomString();
+
+	const collectionFilterDefinition = getFragmentDefinition({
+		id: collectionFilterId,
+		key: 'com.liferay.fragment.renderer.collection.filter.internal.CollectionFilterFragmentRenderer',
+	});
+
+	// Create a definition for a Collection Applied Filter
+
+	const collectionAppliedFilterId = getRandomString();
+
+	const collectionAppliedFilterDefinition = getFragmentDefinition({
+		id: collectionAppliedFilterId,
+		key: 'com.liferay.fragment.renderer.collection.filter.internal.CollectionAppliedFiltersFragmentRenderer',
+	});
+
+	// Create definition for a collection mapped to Animals collection
+
+	const animalsClassPK = await collectionsPage.getCollectionClassPK(
+		ANIMALS_COLLECTION_NAME,
+		pageManagementSite.friendlyUrlPath
+	);
+
+	const animalsCollection = getCollectionItemDefinition(getRandomString(), [
+		getFragmentDefinition({
+			fragmentFields: FRAGMENT_FIELDS,
+			id: getRandomString(),
+			key: 'BASIC_COMPONENT-heading',
+		}),
+	]);
+
+	const collectionDefinition = getCollectionDefinition({
+		classPK: animalsClassPK,
+		id: getRandomString(),
+		pageElements: [animalsCollection],
+	});
+
+	// Create a content page and go to edit mode
+
+	const layout = await apiHelpers.headlessDelivery.createSitePage({
+		pageDefinition: getPageDefinition([
+			collectionAppliedFilterDefinition,
+			collectionFilterDefinition,
+			collectionDefinition,
+		]),
+		siteId: pageManagementSite.id,
+		title: getRandomString(),
+	});
+
+	await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
+
+	// Go to edit mode of the created page and select the Collection Filter fragment
+
+	await pageEditorPage.selectFragment(collectionFilterId);
+
+	// Set Filter configuration for categories
+
+	await configureFilter(page, 'category');
+
+	// Check the option to show the label with the selected vocabulary
+
+	await page.getByLabel('Show Label').check();
+
+	// Go to edit mode of the created page and select the Collection Applied Filter fragment
+
+	await expect(page.getByText('No Active Filters')).toBeVisible();
+
+	await pageEditorPage.selectFragment(collectionAppliedFilterId);
+
+	await expect(
+		page.getByText(
+			'You will see this fragment on the page only after applying a filter.'
+		)
+	).toBeVisible();
+
+	await page.getByLabel('Select', {exact: true}).click();
+
+	await page.getByLabel(ANIMALS_COLLECTION_NAME).check();
+
+	await pageEditorPage.publishPage();
+
+	// Go to view mode of the created page
+
+	await page.goto(
+		`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+	);
+
+	// Both should be visible initially
+
+	await expect(
+		page.getByText('Animal 01 - Dogs and Cats categories')
+	).toBeVisible();
+	await expect(page.getByText('Animal 02 - Dogs category')).toBeVisible();
+
+	await expect(
+		page.getByText(ANIMALS_COLLECTION_NAME, {exact: true})
+	).toBeVisible();
+
+	await expect(
+		page.locator("//div[contains(@id,'filterList')]")
+	).not.toBeVisible();
+
+	// Select category filter: Cats
+
+	await selectFilter(page, ['cats']);
+
+	await expect(
+		page.getByText('Animal 01 - Dogs and Cats categories')
+	).toBeVisible();
+
+	await expect(page.getByText('Animal 02 - Dogs category')).not.toBeVisible();
+
+	await expect(
+		page.locator("//div[contains(@id,'filterList')]")
+	).toContainText('Cats');
+
+	// Remove filter
+
+	await page.getByLabel('Remove Filter', {exact: true}).click();
+
+	await expect(
+		page.getByText('Animal 01 - Dogs and Cats categories')
+	).toBeVisible();
+
+	await expect(page.getByText('Animal 02 - Dogs category')).toBeVisible();
+
+	// Clean up
+
+	await apiHelpers.jsonWebServicesLayout.deleteLayout(layout.id);
+});

@@ -55,6 +55,7 @@ import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.servlet.filters.threadlocal.ThreadLocalFilterThreadLocal;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portlet.RenderRequestFactory;
 import com.liferay.portlet.RenderResponseFactory;
@@ -62,6 +63,7 @@ import com.liferay.site.initializer.SiteInitializer;
 import com.liferay.site.initializer.SiteInitializerRegistry;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletMode;
@@ -120,7 +122,7 @@ public class PortalInstancesLocalServiceImpl
 		ServiceContext currentThreadServiceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		try (SafeCloseable safeCloseable =
+		try (SafeCloseable safeCloseable1 =
 				CompanyThreadLocal.setInitializingPortalInstance(true)) {
 
 			Role role = _roleLocalService.fetchRole(
@@ -152,6 +154,23 @@ public class PortalInstancesLocalServiceImpl
 				group.getGroupId(), true, new ServiceContext());
 
 			siteInitializer.initialize(group.getGroupId());
+
+			if (Objects.equals(
+					_BLANK_SITE_INITIALIZER_KEY, siteInitializerKey)) {
+
+				SiteInitializer welcomeSiteInitializer =
+					_siteInitializerRegistry.getSiteInitializer(
+						_WELCOME_SITE_INITIALIZER_KEY);
+
+				if (welcomeSiteInitializer != null) {
+					try (SafeCloseable safeCloseable2 =
+							ThreadLocalFilterThreadLocal.setFilterInvoked(
+								false)) {
+
+						welcomeSiteInitializer.initialize(group.getGroupId());
+					}
+				}
+			}
 		}
 		finally {
 			PermissionThreadLocal.setPermissionChecker(
@@ -299,6 +318,12 @@ public class PortalInstancesLocalServiceImpl
 
 		return serviceContext;
 	}
+
+	private static final String _BLANK_SITE_INITIALIZER_KEY =
+		"blank-site-initializer";
+
+	private static final String _WELCOME_SITE_INITIALIZER_KEY =
+		"com.liferay.site.initializer.welcome";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortalInstancesLocalServiceImpl.class);

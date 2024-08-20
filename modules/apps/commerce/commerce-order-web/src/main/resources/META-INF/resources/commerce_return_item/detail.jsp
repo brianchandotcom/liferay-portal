@@ -13,6 +13,8 @@ CommerceReturnEditDisplayContext commerceReturnEditDisplayContext = (CommerceRet
 CommerceOrderItem commerceOrderItem = commerceReturnEditDisplayContext.getCommerceReturnItemCommerceOrderItem();
 CommerceReturn commerceReturn = commerceReturnEditDisplayContext.getCommerceReturn();
 CommerceReturnItem commerceReturnItem = commerceReturnEditDisplayContext.getCommerceReturnItem();
+
+Format dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>
 
 <aui:form name="commerceReturnItemsFm" onSubmit="event.preventDefault();">
@@ -88,15 +90,101 @@ CommerceReturnItem commerceReturnItem = commerceReturnEditDisplayContext.getComm
 		title='<%= LanguageUtil.get(request, "comments") %>'
 	>
 		<div id="<portlet:namespace />commerceReturnItemComments">
-			<liferay-comment:discussion
-				className="<%= ObjectEntry.class.getName() %>"
-				classPK="<%= commerceReturnItem.getId() %>"
-				formName="commerceReturnItemsFm"
-				hideControls="<%= true %>"
-				ratingsEnabled="<%= false %>"
-				redirect="<%= currentURL %>"
-				userId="<%= themeDisplay.getUserId() %>"
-			/>
+
+			<%
+			for (DiscussionComment discussionComment : commerceReturnEditDisplayContext.getDiscussionComments()) {
+			%>
+
+				<article class="card-tab-group lfr-discussion">
+					<div class="border-bottom m-0 panel">
+						<div class="panel-body px-0 py-4">
+							<div class="row">
+								<div class="col-auto">
+									<liferay-user:user-portrait
+										size="lg"
+										userId="<%= discussionComment.getUserId() %>"
+									/>
+								</div>
+
+								<div class="col">
+									<header class="lfr-discussion-message-author">
+
+										<%
+										User discussionCommentUser = discussionComment.getUser();
+
+										String label = HtmlUtil.escape(discussionComment.getUserName());
+
+										if (discussionCommentUser.getUserId() == themeDisplay.getUserId()) {
+											label = StringBundler.concat(label, StringPool.SPACE, StringPool.OPEN_PARENTHESIS, LanguageUtil.get(request, "you"), StringPool.CLOSE_PARENTHESIS);
+										}
+										%>
+
+										<clay:link
+											cssClass="author-link"
+											href="<%= ((discussionCommentUser != null) && discussionCommentUser.isActive()) ? discussionCommentUser.getDisplayURL(themeDisplay) : null %>"
+											label="<%= label %>"
+										/>
+									</header>
+
+									<div class="lfr-discussion-message-body">
+										<%= HtmlUtil.escape(discussionComment.getBody()) %>
+									</div>
+								</div>
+
+								<div class="align-items-center col-auto d-flex">
+									<span class="small">
+
+										<%
+										Date discussionCommentCreateDate = discussionComment.getCreateDate();
+										%>
+
+										<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - discussionCommentCreateDate.getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+
+										<c:if test="<%= discussionCommentCreateDate.before(discussionComment.getModifiedDate()) %>">
+											<strong onmouseover="Liferay.Portal.ToolTip.show(this, '<%= HtmlUtil.escapeJS(dateTimeFormat.format(discussionComment.getModifiedDate())) %>');">
+												- <liferay-ui:message key="edited" />
+											</strong>
+										</c:if>
+									</span>
+								</div>
+
+								<div class="align-items-center col-auto d-flex">
+									<clay:dropdown-actions
+										aria-label='<%= LanguageUtil.get(request, "edit-comment") %>'
+										dropdownItems="<%= commerceReturnEditDisplayContext.getCommerceReturnItemCommentDropdownItemList(discussionComment) %>"
+									/>
+								</div>
+							</div>
+						</div>
+					</div>
+				</article>
+
+			<%
+			}
+			%>
+
+			<article class="card-tab-group lfr-discussion">
+				<div class="panel-body px-0 py-4">
+					<div class="row">
+						<div class="col-auto">
+							<div class="lfr-discussion-details">
+								<liferay-user:user-portrait
+									size="lg"
+									user="<%= user %>"
+								/>
+							</div>
+						</div>
+
+						<div class="col">
+							<div class="lfr-discussion-body">
+								<aui:input label="" name="content" placeholder="type-your-comment-here" type="textarea" />
+								<aui:input name="className" type="hidden" value="<%= commerceReturnEditDisplayContext.getCommerceReturnItemClassName() %>" />
+								<aui:input name="classPK" type="hidden" value="<%= commerceReturnItem.getId() %>" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</article>
 		</div>
 	</commerce-ui:panel>
 

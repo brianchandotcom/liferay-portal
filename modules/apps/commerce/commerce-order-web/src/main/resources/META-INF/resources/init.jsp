@@ -11,7 +11,6 @@
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
 taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
-taglib uri="http://liferay.com/tld/comment" prefix="liferay-comment" %><%@
 taglib uri="http://liferay.com/tld/commerce-ui" prefix="commerce-ui" %><%@
 taglib uri="http://liferay.com/tld/expando" prefix="liferay-expando" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
@@ -63,6 +62,7 @@ page import="com.liferay.commerce.order.web.internal.display.context.CommerceOrd
 page import="com.liferay.commerce.order.web.internal.display.context.CommerceOrderTypeDisplayContext" %><%@
 page import="com.liferay.commerce.order.web.internal.display.context.CommerceOrderTypeQualifiersDisplayContext" %><%@
 page import="com.liferay.commerce.order.web.internal.display.context.CommerceReturnEditDisplayContext" %><%@
+page import="com.liferay.commerce.order.web.internal.display.context.CommerceReturnItemCommentEditDisplayContext" %><%@
 page import="com.liferay.commerce.order.web.internal.display.context.CommerceReturnListDisplayContext" %><%@
 page import="com.liferay.commerce.order.web.internal.security.permission.resource.CommerceOrderPermission" %><%@
 page import="com.liferay.commerce.product.model.CPMeasurementUnit" %><%@
@@ -73,6 +73,9 @@ page import="com.liferay.object.model.ObjectEntry" %><%@
 page import="com.liferay.petra.string.StringBundler" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
+page import="com.liferay.portal.kernel.comment.Comment" %><%@
+page import="com.liferay.portal.kernel.comment.DiscussionComment" %><%@
+page import="com.liferay.portal.kernel.comment.DuplicateCommentException" %><%@
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.User" %><%@

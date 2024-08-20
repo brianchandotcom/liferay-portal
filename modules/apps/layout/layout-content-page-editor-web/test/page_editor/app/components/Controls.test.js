@@ -3,7 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {reducer} from '../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ControlsContext';
+import {LAYOUT_DATA_ITEM_TYPES} from '../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/layoutDataItemTypes';
+import {
+	getItemsWithinRange,
+	reducer,
+} from '../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ControlsContext';
 
 import '@testing-library/jest-dom/extend-expect';
 
@@ -22,6 +26,68 @@ const STATE = {
 	hoveredItemId: null,
 	hoveredItemType: null,
 	rangeLimitIds: {},
+};
+
+const LAYOUT_DATA = {
+	items: {
+		container01: {
+			children: ['fragment01', 'fragment02'],
+			itemId: 'container01',
+			parentId: 'root',
+			type: LAYOUT_DATA_ITEM_TYPES.container,
+		},
+		container02: {
+			children: ['container03', 'fragment03', 'fragment04'],
+			itemId: 'container02',
+			parentId: 'root',
+			type: LAYOUT_DATA_ITEM_TYPES.container,
+		},
+		container03: {
+			children: ['fragment05'],
+			itemId: 'container03',
+			parentId: 'container02',
+			type: LAYOUT_DATA_ITEM_TYPES.container,
+		},
+		fragment01: {
+			children: [],
+			itemId: 'fragment01',
+			parentId: 'container01',
+			type: LAYOUT_DATA_ITEM_TYPES.fragment,
+		},
+		fragment02: {
+			children: [],
+			itemId: 'fragment02',
+			parentId: 'container01',
+			type: LAYOUT_DATA_ITEM_TYPES.fragment,
+		},
+		fragment03: {
+			children: [],
+			itemId: 'fragment03',
+			parentId: 'container02',
+			type: LAYOUT_DATA_ITEM_TYPES.fragment,
+		},
+		fragment04: {
+			children: [],
+			itemId: 'fragment04',
+			parentId: 'container02',
+			type: LAYOUT_DATA_ITEM_TYPES.fragment,
+		},
+		fragment05: {
+			children: [],
+			itemId: 'fragment05',
+			parentId: 'container03',
+			type: LAYOUT_DATA_ITEM_TYPES.fragment,
+		},
+		root: {
+			children: ['container01', 'container02'],
+			itemId: 'root',
+			parentId: '',
+			type: LAYOUT_DATA_ITEM_TYPES.root,
+		},
+	},
+	rootItems: {
+		main: 'root',
+	},
 };
 
 describe('Reducer', () => {
@@ -297,7 +363,7 @@ describe('Reducer', () => {
 	});
 
 	describe('Multiselect action', () => {
-		it('activates multiselect', async () => {
+		it('activates multiselect', () => {
 			const state = {...STATE, multiSelect: null};
 			const action = {
 				...ACTION,
@@ -313,7 +379,7 @@ describe('Reducer', () => {
 			});
 		});
 
-		it('selects multiple fragments', async () => {
+		it('selects multiple fragments', () => {
 			const state = {...STATE, activeItemIds: []};
 			const action = {
 				...ACTION,
@@ -325,6 +391,42 @@ describe('Reducer', () => {
 				...state,
 				activeItemIds: ['item-1', 'item-2'],
 			});
+		});
+	});
+
+	describe('getItemsWithinRange', () => {
+		it('select range from top to bottom ', () => {
+			expect(
+				getItemsWithinRange({
+					itemIds: LAYOUT_DATA.items.root.children,
+					layoutDataItems: LAYOUT_DATA.items,
+					rangeLimitIds: {end: 'fragment04', start: 'fragment02'},
+				})
+			).toEqual([
+				'fragment02',
+				'container02',
+				'container03',
+				'fragment05',
+				'fragment03',
+				'fragment04',
+			]);
+		});
+
+		it('select range from bottom to top ', () => {
+			expect(
+				getItemsWithinRange({
+					itemIds: LAYOUT_DATA.items.root.children,
+					layoutDataItems: LAYOUT_DATA.items,
+					rangeLimitIds: {end: 'fragment01', start: 'fragment03'},
+				})
+			).toEqual([
+				'fragment01',
+				'fragment02',
+				'container02',
+				'container03',
+				'fragment05',
+				'fragment03',
+			]);
 		});
 	});
 });

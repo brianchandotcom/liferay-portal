@@ -5,11 +5,14 @@
 
 package com.liferay.portal.monitoring.internal.portlet;
 
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.monitoring.DataSampleFactory;
-import com.liferay.portal.kernel.monitoring.PortletMonitoringControl;
 import com.liferay.portal.kernel.portlet.InvokerFilterContainer;
 import com.liferay.portal.kernel.portlet.InvokerPortlet;
 import com.liferay.portal.kernel.portlet.InvokerPortletFactory;
+import com.liferay.portal.monitoring.internal.configuration.MonitoringConfiguration;
+
+import java.util.Map;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletConfig;
@@ -17,7 +20,9 @@ import javax.portlet.PortletContext;
 import javax.portlet.PortletException;
 
 import org.osgi.framework.Constants;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -26,6 +31,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Neil Griffin
  */
 @Component(
+	configurationPid = "com.liferay.portal.monitoring.internal.configuration.MonitoringConfiguration",
 	enabled = false, property = Constants.SERVICE_RANKING + ":Integer=100",
 	service = InvokerPortletFactory.class
 )
@@ -47,7 +53,7 @@ public class MonitoringInvokerPortletFactoryImpl
 			headerPortlet);
 
 		return new MonitoringInvokerPortlet(
-			invokerPortlet, _dataSampleFactory, _portletMonitoringControl);
+			invokerPortlet, _dataSampleFactory, _monitoringConfiguration);
 	}
 
 	@Override
@@ -61,7 +67,14 @@ public class MonitoringInvokerPortletFactoryImpl
 			portletModel, portlet, portletContext, invokerFilterContainer);
 
 		return new MonitoringInvokerPortlet(
-			invokerPortlet, _dataSampleFactory, _portletMonitoringControl);
+			invokerPortlet, _dataSampleFactory, _monitoringConfiguration);
+	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_monitoringConfiguration = ConfigurableUtil.createConfigurable(
+			MonitoringConfiguration.class, properties);
 	}
 
 	@Reference
@@ -70,7 +83,6 @@ public class MonitoringInvokerPortletFactoryImpl
 	@Reference(target = "(" + Constants.SERVICE_RANKING + "=1)")
 	private InvokerPortletFactory _invokerPortletFactory;
 
-	@Reference
-	private PortletMonitoringControl _portletMonitoringControl;
+	private volatile MonitoringConfiguration _monitoringConfiguration;
 
 }

@@ -7,7 +7,6 @@ package com.liferay.portal.db.schema.definition.internal.exporter.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectRelationshipLocalServiceUtil;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.test.util.ObjectRelationshipTestUtil;
@@ -87,11 +86,10 @@ public class DBSchemaDefinitionExporterDBPartitionTest
 					ObjectDefinitionTestUtil.getRandomName(),
 					adminUser.getUserId());
 
-			_objectDBPartitionRelationship =
-				ObjectRelationshipTestUtil.addObjectRelationship(
-					ObjectRelationshipLocalServiceUtil.getService(),
-					_objectDBPartitionDefinition1,
-					_objectDBPartitionDefinition2, adminUser.getUserId());
+			ObjectRelationshipTestUtil.addObjectRelationship(
+				ObjectRelationshipLocalServiceUtil.getService(),
+				_objectDBPartitionDefinition1, _objectDBPartitionDefinition2,
+				adminUser.getUserId());
 		}
 	}
 
@@ -259,7 +257,6 @@ public class DBSchemaDefinitionExporterDBPartitionTest
 
 	private static ObjectDefinition _objectDBPartitionDefinition1;
 	private static ObjectDefinition _objectDBPartitionDefinition2;
-	private static ObjectRelationship _objectDBPartitionRelationship;
 
 	@Inject
 	private PersistenceManager _persistenceManager;

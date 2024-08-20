@@ -12,6 +12,7 @@ jest.mock('frontend-js-web');
 const openModal = ({
 	callback = () => {},
 	destroyedCallback = null,
+	selectedItem,
 	transformValueCallback = (item) => item,
 }) => {
 	openItemSelector({
@@ -19,6 +20,7 @@ const openModal = ({
 		destroyedCallback,
 		eventName: '',
 		itemSelectorURL: '',
+		selectedItem,
 		transformValueCallback,
 	});
 
@@ -107,5 +109,40 @@ describe('openItemSelector', () => {
 		onSelect({'item-1': {name: 'Item 1'}});
 
 		expect(callback).toHaveBeenCalledWith({name: 'Item 1'});
+	});
+
+	it('passes selected item information to the selection modal', () => {
+		const selectedItem = {
+			classPK: '12345',
+			externalReferenceCode: 'abcd-efgh',
+			title: 'My Item',
+		};
+
+		openModal({
+			selectedItem,
+		});
+
+		expect(openSelectionModal).toHaveBeenCalledWith(
+			expect.objectContaining({
+				selectedData: [
+					{
+						externalReferenceCode:
+							selectedItem.externalReferenceCode,
+						id: selectedItem.classPK,
+						label: selectedItem.title,
+					},
+				],
+			})
+		);
+	});
+
+	it('omits selectedData prop if no items are selected', () => {
+		openModal({});
+
+		expect(openSelectionModal).toHaveBeenCalledWith(
+			expect.not.objectContaining({
+				selectedData: expect.anything(),
+			})
+		);
 	});
 });

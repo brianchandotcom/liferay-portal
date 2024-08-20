@@ -246,7 +246,10 @@ export default function EditObjectFolder({
 	}, [selectedObjectFolder.objectFolderItems?.length]);
 
 	Liferay.on('beforeNavigate', (event) => {
-		if (event.path.includes('objectFolderName')) {
+		const URLparams = new URL(event.path).searchParams;
+		const objectFolderNameURLParam = URLparams.get('objectFolderName');
+
+		if (objectFolderNameURLParam) {
 			updatePreviousURLParam({
 				paramType: 'objectFolderName',
 				paramURL: viewObjectDefinitionsURL,

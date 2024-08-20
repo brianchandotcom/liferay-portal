@@ -115,3 +115,32 @@ html#{$cadmin-selector} .cadmin {
 		margin-bottom: 12px;
 	}
 }
+
+.entity-history-modal {
+	.fds {
+		.data-set .table-style-default {
+			border-width: 1px !important;
+		}
+
+		.dnd-td,
+		.dnd-th {
+			border-width: 0 0 1px !important;
+		}
+
+		.dnd-thead {
+			.dnd-tr .dnd-th .btn {
+				color: #6b6c7e;
+			}
+		}
+
+		.dnd-tbody {
+			.dnd-tr:nth-child(2n + 1):not(:hover):not(.selected) {
+				background-color: unset !important;
+			}
+
+			.dnd-tr .dnd-td:first-child {
+				font-weight: 600;
+			}
+		}
+	}
+}

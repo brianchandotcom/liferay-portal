@@ -9,6 +9,7 @@ import ClayLayout from '@clayui/layout';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayModal, {useModal} from '@clayui/modal';
 import ClayPanel from '@clayui/panel';
+import {FrontendDataSet} from '@liferay/frontend-data-set-web';
 import {createPortletURL, fetch, getPortletId} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
@@ -32,6 +33,12 @@ const PublicationTimeline = ({
 	const MAX_DROPDOWN_ITEMS_SHOWN = 6;
 	const [timelineItems, setTimelineItems] = useState([]);
 	const [loading, setLoading] = useState(true);
+	const [showModal, setShowModal] = useState(false);
+
+	/* eslint-disable no-unused-vars */
+	const {observer, onClose} = useModal({
+		onClose: () => setShowModal(false),
+	});
 
 	const createMVCRenderCommandURL = (
 		ctCollectionId,
@@ -71,6 +78,106 @@ const PublicationTimeline = ({
 		);
 	};
 
+	const renderModal = () => {
+		if (!showModal) {
+			return '';
+		}
+
+		return (
+			<ClayModal
+				className="entity-history-modal"
+				observer={observer}
+				size="full-screen"
+				spritemap={spritemap}
+			>
+				<ClayModal.Header>
+					<div className="autofit-row">
+						{Liferay.Language.get('view-all-history')}
+					</div>
+				</ClayModal.Header>
+
+				<ClayModal.Body
+					style={{borderTop: 0, marginTop: 0, paddingTop: 0}}
+				>
+					<FrontendDataSet
+						creationMenu={null}
+						id="PublicationTimelineEntityHistoryTable"
+						items={timelineItems}
+						itemsPerPage={10}
+						namespace={namespace}
+						selectedItemsKey="id"
+						showManagementBar={false}
+						showPagination={true}
+						showSearch={false}
+						views={[
+							{
+								contentRenderer: 'table',
+								label: 'Table',
+								name: 'table',
+								schema: {
+									fields: [
+										{
+											actionId: 'view',
+											contentRenderer: 'actionLink',
+											fieldName: 'name',
+											label: Liferay.Language.get(
+												'publication'
+											),
+											sortable: true,
+										},
+										{
+											contentRenderer: 'status',
+											fieldName: 'status',
+											label: Liferay.Language.get(
+												'status'
+											),
+											sortable: true,
+										},
+										{
+											fieldName: 'user',
+											label: Liferay.Language.get('user'),
+											sortable: true,
+										},
+										{
+											fieldName: 'changed',
+											label: Liferay.Language.get(
+												'changed'
+											),
+											sortable: true,
+										},
+										{
+											contentRenderer: 'dateTime',
+											fieldName: 'lastModified',
+											label: Liferay.Language.get(
+												'last-modified'
+											),
+											sortable: true,
+										},
+									],
+								},
+								thumbnail: 'table',
+							},
+						]}
+					/>
+				</ClayModal.Body>
+
+				<ClayModal.Footer
+					last={
+						<ClayButton
+							aria-label={Liferay.Language.get('done')}
+							displayType="primary"
+							onClick={() => {
+								onClose();
+							}}
+						>
+							{Liferay.Language.get('done')}
+						</ClayButton>
+					}
+				/>
+			</ClayModal>
+		);
+	};
+
 	useEffect(() => {
 		if (!timelineItemsURL) {
 			return;
@@ -96,6 +203,8 @@ const PublicationTimeline = ({
 	if (timelineItems && !!timelineItems.length) {
 		return (
 			<>
+				{renderModal()}
+
 				<div className="publication-timeline">
 					<ClayPanel
 						style={{

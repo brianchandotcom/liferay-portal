@@ -28,7 +28,10 @@ import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
+import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationParameterMapFactoryUtil;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactoryUtil;
 import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants;
@@ -66,6 +69,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -87,6 +91,7 @@ import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.PortletPreferencesImpl;
+import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.portletmvc4spring.test.mock.web.portlet.MockPortletRequest;
 
 import java.io.Serializable;
@@ -756,6 +761,85 @@ public class AssetPublisherExportImportTest
 		Assert.assertNull(
 			portletPreferences.getValue(
 				"assetListEntryGroupExternalReferenceCode", null));
+	}
+
+	@FeatureFlags("LPD-22837")
+	@Test
+	public void testExportImportDisplayStyleFromDifferentGroupWithFeatureFlagEnabled()
+		throws Exception {
+
+		long classNameId = _portal.getClassNameId(AssetEntry.class.getName());
+
+		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
+			group.getGroupId(), classNameId, 0,
+			_portal.getClassNameId(PortletDisplayTemplate.class.getName()),
+			TemplateConstants.LANG_TYPE_FTL, RandomTestUtil.randomString(),
+			_portal.getSiteDefaultLocale(group));
+
+		PortletPreferences portletPreferences = getImportedPortletPreferences(
+			HashMapBuilder.put(
+				"displayStyle",
+				new String[] {
+					PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
+						ddmTemplate.getTemplateKey()
+				}
+			).build());
+
+		Assert.assertNotNull(
+			_ddmTemplateLocalService.getTemplate(
+				importedGroup.getGroupId(), classNameId,
+				ddmTemplate.getTemplateKey()));
+
+		Assert.assertEquals(
+			PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
+				ddmTemplate.getTemplateKey(),
+			portletPreferences.getValue("displayStyle", null));
+		Assert.assertNull(
+			portletPreferences.getValue(
+				"displayStyleGroupExternalReferenceCode", null));
+	}
+
+	@FeatureFlags("LPD-22837")
+	@Test
+	public void testExportImportDisplayStyleFromGlobalScopeWithFeatureFlagEnabled()
+		throws Exception {
+
+		Group companyGroup = _groupLocalService.getCompanyGroup(
+			TestPropsValues.getCompanyId());
+
+		long classNameId = _portal.getClassNameId(AssetEntry.class.getName());
+
+		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
+			companyGroup.getGroupId(), classNameId, 0,
+			_portal.getClassNameId(PortletDisplayTemplate.class.getName()),
+			TemplateConstants.LANG_TYPE_FTL, RandomTestUtil.randomString(),
+			_portal.getSiteDefaultLocale(companyGroup));
+
+		PortletPreferences portletPreferences = getImportedPortletPreferences(
+			HashMapBuilder.put(
+				"displayStyle",
+				new String[] {
+					PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
+						ddmTemplate.getTemplateKey()
+				}
+			).put(
+				"displayStyleGroupExternalReferenceCode",
+				new String[] {companyGroup.getExternalReferenceCode()}
+			).build());
+
+		Assert.assertNull(
+			_ddmTemplateLocalService.fetchTemplate(
+				importedGroup.getGroupId(), classNameId,
+				ddmTemplate.getTemplateKey()));
+
+		Assert.assertEquals(
+			PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
+				ddmTemplate.getTemplateKey(),
+			portletPreferences.getValue("displayStyle", null));
+		Assert.assertEquals(
+			companyGroup.getExternalReferenceCode(),
+			portletPreferences.getValue(
+				"displayStyleGroupExternalReferenceCode", null));
 	}
 
 	@Test
@@ -1597,6 +1681,9 @@ public class AssetPublisherExportImportTest
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
+
+	@Inject
+	private DDMTemplateLocalService _ddmTemplateLocalService;
 
 	@Inject
 	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;

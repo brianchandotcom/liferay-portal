@@ -44,6 +44,9 @@ public class HasGooglePlacesAPIKeyFunctionTest {
 	private HasGooglePlacesAPIKeyFunction _createHasGooglePlacesAPIKeyFunction(
 		Supplier<String> getGooglePlacesAPIKeySupplier) {
 
+		HasGooglePlacesAPIKeyFunction hasGooglePlacesAPIKeyFunction =
+			new HasGooglePlacesAPIKeyFunction();
+
 		DefaultDDMExpressionParameterAccessor ddmExpressionParameterAccessor =
 			new DefaultDDMExpressionParameterAccessor();
 
@@ -51,9 +54,6 @@ public class HasGooglePlacesAPIKeyFunctionTest {
 			ddmExpressionParameterAccessor.setGetGooglePlacesAPIKeySupplier(
 				getGooglePlacesAPIKeySupplier);
 		}
-
-		HasGooglePlacesAPIKeyFunction hasGooglePlacesAPIKeyFunction =
-			new HasGooglePlacesAPIKeyFunction();
 
 		hasGooglePlacesAPIKeyFunction.setDDMExpressionParameterAccessor(
 			ddmExpressionParameterAccessor);

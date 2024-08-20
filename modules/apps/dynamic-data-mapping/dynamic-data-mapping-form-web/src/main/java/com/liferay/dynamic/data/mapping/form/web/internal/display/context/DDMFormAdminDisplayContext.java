@@ -1299,9 +1299,6 @@ public class DDMFormAdminDisplayContext {
 	protected DDMFormRenderingContext createDDMFormRenderingContext(
 		PageContext pageContext, RenderRequest renderRequest) {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		DDMFormRenderingContext ddmFormRenderingContext =
 			new DDMFormRenderingContext();
 
@@ -1311,7 +1308,12 @@ public class DDMFormAdminDisplayContext {
 			PipingServletResponseFactory.createPipingServletResponse(
 				pageContext));
 		ddmFormRenderingContext.setContainerId("settingsDDMForm");
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		ddmFormRenderingContext.setLocale(themeDisplay.getLocale());
+
 		ddmFormRenderingContext.setPortletNamespace(
 			renderResponse.getNamespace());
 

@@ -82,23 +82,17 @@ public class RenderStructureFieldMVCResourceCommand
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		String mode = ParamUtil.getString(httpServletRequest, "mode");
-		String namespace = ParamUtil.getString(httpServletRequest, "namespace");
-		String portletId = ParamUtil.getString(httpServletRequest, "portletId");
-		String portletNamespace = ParamUtil.getString(
-			httpServletRequest, "portletNamespace");
-		boolean readOnly = ParamUtil.getBoolean(httpServletRequest, "readOnly");
-
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
 			new DDMFormFieldRenderingContext();
+
+		String portletId = ParamUtil.getString(httpServletRequest, "portletId");
 
 		if (Validator.isNotNull(portletId)) {
 			httpServletRequest.setAttribute(WebKeys.PORTLET_ID, portletId);
 		}
+
+		String portletNamespace = ParamUtil.getString(
+			httpServletRequest, "portletNamespace");
 
 		httpServletRequest.setAttribute(
 			"aui:form:portletNamespace", portletNamespace);
@@ -107,11 +101,20 @@ public class RenderStructureFieldMVCResourceCommand
 			_portal.getOriginalServletRequest(httpServletRequest));
 		ddmFormFieldRenderingContext.setHttpServletResponse(
 			httpServletResponse);
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
 		ddmFormFieldRenderingContext.setLocale(themeDisplay.getLocale());
-		ddmFormFieldRenderingContext.setMode(mode);
-		ddmFormFieldRenderingContext.setNamespace(namespace);
+
+		ddmFormFieldRenderingContext.setMode(
+			ParamUtil.getString(httpServletRequest, "mode"));
+		ddmFormFieldRenderingContext.setNamespace(
+			ParamUtil.getString(httpServletRequest, "namespace"));
 		ddmFormFieldRenderingContext.setPortletNamespace(portletNamespace);
-		ddmFormFieldRenderingContext.setReadOnly(readOnly);
+		ddmFormFieldRenderingContext.setReadOnly(
+			ParamUtil.getBoolean(httpServletRequest, "readOnly"));
 
 		return ddmFormFieldRenderingContext;
 	}

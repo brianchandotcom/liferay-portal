@@ -356,13 +356,13 @@ public abstract class BaseDDMTestCase {
 	}
 
 	protected DDMStructure createStructure(String name, String definition) {
+		DDMStructure structure = new DDMStructureImpl();
+
 		ReflectionTestUtil.setFieldValue(
 			_ddmFormDeserializer, "_ddmFormFieldTypeServicesRegistry",
 			getMockedDDMFormFieldTypeServicesRegistry());
 		ReflectionTestUtil.setFieldValue(
 			_ddmFormDeserializer, "_jsonFactory", jsonFactory);
-
-		DDMStructure structure = new DDMStructureImpl();
 
 		structure.setStructureId(RandomTestUtil.randomLong());
 		structure.setName(name);

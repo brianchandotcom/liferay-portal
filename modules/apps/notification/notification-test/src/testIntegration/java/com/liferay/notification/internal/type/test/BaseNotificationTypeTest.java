@@ -5,6 +5,7 @@
 
 package com.liferay.notification.internal.type.test;
 
+import com.liferay.info.type.KeyLocalizedLabelPair;
 import com.liferay.list.type.entry.util.ListTypeEntryUtil;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.model.ListTypeEntry;
@@ -652,6 +653,24 @@ public class BaseNotificationTypeTest {
 
 	protected String parseTermValueToString(Object termValue) {
 		if (termValue instanceof List) {
+			List<?> list = (List<?>)termValue;
+
+			if (list.isEmpty()) {
+				return StringPool.BLANK;
+			}
+
+			if (list.get(0) instanceof KeyLocalizedLabelPair) {
+				List<KeyLocalizedLabelPair> listTypeEntries =
+					(List<KeyLocalizedLabelPair>)termValue;
+
+				return StringUtil.merge(
+					TransformUtil.transform(
+						listTypeEntries,
+						keyLocalizedLabelPair -> keyLocalizedLabelPair.getLabel(
+							LocaleUtil.US)),
+					StringPool.COMMA);
+			}
+
 			List<ListEntry> listTypeEntries = (List<ListEntry>)termValue;
 
 			return StringUtil.merge(

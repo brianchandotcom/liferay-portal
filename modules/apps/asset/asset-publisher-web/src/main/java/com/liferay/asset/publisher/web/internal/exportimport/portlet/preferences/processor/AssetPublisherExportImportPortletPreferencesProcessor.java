@@ -15,7 +15,6 @@ import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.list.model.AssetListEntry;
-import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.util.AssetPublisherHelper;
 import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherSelectionStyleConfigurationUtil;
@@ -402,9 +401,6 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 
 	@Reference
 	protected AssetCategoryLocalService assetCategoryLocalService;
-
-	@Reference
-	protected AssetListEntryLocalService assetListEntryLocalService;
 
 	@Reference
 	protected AssetPublisherHelper assetPublisherHelper;

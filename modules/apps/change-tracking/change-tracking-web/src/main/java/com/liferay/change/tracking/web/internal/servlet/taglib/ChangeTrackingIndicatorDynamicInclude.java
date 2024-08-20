@@ -5,9 +5,6 @@
 
 package com.liferay.change.tracking.web.internal.servlet.taglib;
 
-import com.liferay.application.list.PanelAppRegistry;
-import com.liferay.application.list.constants.PanelCategoryKeys;
-import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.change.tracking.constants.CTActionKeys;
 import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.constants.CTPortletKeys;
@@ -195,8 +192,7 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 						ctConfiguration.productionOnlyApplication(), portletId),
 					_ctSettingsConfigurationHelper.isSandboxEnabled(
 						themeDisplay.getCompanyId()),
-					_isShowContextChangePopover(portletId, themeDisplay),
-					themeDisplay,
+					_isShowContextChangePopover(themeDisplay), themeDisplay,
 					Validator.isNotNull(portletId) &&
 					ArrayUtil.contains(
 						ctConfiguration.unsupportedApplication(), portletId)),
@@ -361,6 +357,8 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 						themeDisplay.getLocale(),
 						"you-just-switched-contexts.-do-you-want-to-keep-" +
 							"working-in-this-publication"));
+				data.put("contextChangeButtons", true);
+				data.put("warningButton", true);
 			}
 			else {
 				data.put("title", ctCollection.getName());
@@ -618,9 +616,7 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 		}
 	}
 
-	private boolean _isShowContextChangePopover(
-		String portletId, ThemeDisplay themeDisplay) {
-
+	private boolean _isShowContextChangePopover(ThemeDisplay themeDisplay) {
 		Group group = themeDisplay.getScopeGroup();
 
 		if (CTCollectionThreadLocal.isProductionMode() || !group.isSite() ||
@@ -642,23 +638,8 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 		}
 
 		if (ctLastGroupId != group.getGroupId()) {
-			httpSession.setAttribute(CTWebKeys.CT_SHOW_POPOVER, Boolean.TRUE);
-		}
-
-		if (!GetterUtil.getBoolean(
-				httpSession.getAttribute(CTWebKeys.CT_SHOW_POPOVER))) {
-
-			return false;
-		}
-
-		PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(
-			_panelAppRegistry);
-
-		if (Validator.isNotNull(portletId) &&
-			panelCategoryHelper.containsPortlet(
-				portletId, PanelCategoryKeys.SITE_ADMINISTRATION) &&
-			!panelCategoryHelper.containsPortlet(
-				portletId, PanelCategoryKeys.SITE_ADMINISTRATION_PUBLISHING)) {
+			httpSession.setAttribute(
+				CTWebKeys.CT_LAST_GROUP_ID, group.getGroupId());
 
 			return true;
 		}
@@ -694,9 +675,6 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 
 	@Reference
 	private Language _language;
-
-	@Reference
-	private PanelAppRegistry _panelAppRegistry;
 
 	@Reference
 	private Portal _portal;

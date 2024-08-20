@@ -75,18 +75,20 @@ public class ShipmentItemResourceTest extends BaseShipmentItemResourceTestCase {
 
 		BigDecimal price = BigDecimal.valueOf(RandomTestUtil.randomDouble());
 
-		_cpInstance = CPTestUtil.addCPInstanceWithRandomSku(
+		CPInstance cpInstance = CPTestUtil.addCPInstanceWithRandomSku(
 			testGroup.getGroupId(), price);
 
-		_cpInstance = CPInstanceLocalServiceUtil.updateCPInstance(_cpInstance);
+		cpInstance = CPInstanceLocalServiceUtil.updateCPInstance(cpInstance);
 
-		_commerceInventoryWarehouse1 = _addCommerceInventoryWarehouse();
-		_commerceInventoryWarehouse2 = _addCommerceInventoryWarehouse();
+		_commerceInventoryWarehouse1 = _addCommerceInventoryWarehouse(
+			cpInstance.getSku());
+		_commerceInventoryWarehouse2 = _addCommerceInventoryWarehouse(
+			cpInstance.getSku());
 
 		_commerceOrder = CommerceTestUtil.createCommerceOrderForShipping(
 			_user.getUserId(), _commerceChannel.getGroupId(),
 			_commerceCurrency.getCommerceCurrencyId(),
-			_cpInstance.getCPInstanceId(), amount, BigDecimal.valueOf(5), 3);
+			cpInstance.getCPInstanceId(), amount, BigDecimal.valueOf(5), 3);
 
 		_commerceOrderItems.addAll(_commerceOrder.getCommerceOrderItems());
 
@@ -298,7 +300,8 @@ public class ShipmentItemResourceTest extends BaseShipmentItemResourceTestCase {
 		return shipmentItem;
 	}
 
-	private CommerceInventoryWarehouse _addCommerceInventoryWarehouse()
+	private CommerceInventoryWarehouse _addCommerceInventoryWarehouse(
+			String sku)
 		throws Exception {
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
@@ -311,7 +314,7 @@ public class ShipmentItemResourceTest extends BaseShipmentItemResourceTestCase {
 
 		CommerceInventoryTestUtil.addCommerceInventoryWarehouseItem(
 			_user.getUserId(), commerceInventoryWarehouse,
-			BigDecimal.valueOf(100), _cpInstance.getSku(), StringPool.BLANK);
+			BigDecimal.valueOf(100), sku, StringPool.BLANK);
 
 		return commerceInventoryWarehouse;
 	}
@@ -460,8 +463,9 @@ public class ShipmentItemResourceTest extends BaseShipmentItemResourceTestCase {
 				RandomTestUtil.randomString(),
 				_commerceShipment.getCommerceShipmentId(),
 				commerceOrderItem.getCommerceOrderItemId(),
-				_addCommerceInventoryWarehouse().
-					getCommerceInventoryWarehouseId(),
+				_addCommerceInventoryWarehouse(
+					commerceOrderItem.getSku()
+				).getCommerceInventoryWarehouseId(),
 				BigDecimal.valueOf(5), null, true, _serviceContext);
 
 		commerceShipmentItem.setExternalReferenceCode(
@@ -541,9 +545,6 @@ public class ShipmentItemResourceTest extends BaseShipmentItemResourceTestCase {
 	@DeleteAfterTestRun
 	private final List<CommerceShipmentItem> _commerceShipmentItems =
 		new ArrayList<>();
-
-	@DeleteAfterTestRun
-	private CPInstance _cpInstance;
 
 	private ServiceContext _serviceContext;
 	private User _user;

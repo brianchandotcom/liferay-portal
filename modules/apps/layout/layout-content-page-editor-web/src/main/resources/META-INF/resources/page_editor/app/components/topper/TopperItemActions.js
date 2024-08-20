@@ -60,6 +60,7 @@ export default function TopperItemActions({disabled, item}) {
 
 		if (
 			item.type !== LAYOUT_DATA_ITEM_TYPES.dropZone &&
+			item.type !== LAYOUT_DATA_ITEM_TYPES.formStepContainer &&
 			!hasDropZoneChild(item, layoutData) &&
 			!isInputFragment
 		) {

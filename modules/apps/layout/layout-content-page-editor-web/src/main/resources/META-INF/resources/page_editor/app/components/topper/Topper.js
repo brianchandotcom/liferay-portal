@@ -123,7 +123,10 @@ function TopperContent({
 			? item.children.includes(dropContainerId)
 			: isDropContainer) && isDroppable;
 
-	const canBeDragged = canUpdatePageStructure && !editableProcessorUniqueId;
+	const canBeDragged =
+		canUpdatePageStructure &&
+		!editableProcessorUniqueId &&
+		item.type !== LAYOUT_DATA_ITEM_TYPES.formStepContainer;
 
 	const name = useSelectorCallback(
 		(state) => selectLayoutDataItemLabel(state, item),

@@ -90,11 +90,7 @@ function LayoutBreadcrumbsContent() {
 function useBreadcrumbItems() {
 	const activeItemIds = useActiveItemIds();
 
-	let activeItemId = activeItemIds;
-
-	if (Liferay.FeatureFlags['LPD-18221']) {
-		[activeItemId] = activeItemIds;
-	}
+	const [activeItemId] = activeItemIds;
 
 	const activeItemType = useActiveItemType();
 	const globalContext = useGlobalContext();

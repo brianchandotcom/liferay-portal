@@ -43,11 +43,9 @@ export function useSetCollectionActiveItemContext(itemId) {
 	);
 
 	const activeItemIdsIsEditable = () =>
-		Liferay.FeatureFlags['LPD-18221']
-			? activeItemIds.some((itemId) =>
-					itemId?.startsWith(item.config.fragmentEntryLinkId)
-				)
-			: activeItemIds?.startsWith(item.config.fragmentEntryLinkId);
+		activeItemIds.some((itemId) =>
+			itemId?.startsWith(item.config.fragmentEntryLinkId)
+		);
 
 	if (
 		isActive(itemId) ||

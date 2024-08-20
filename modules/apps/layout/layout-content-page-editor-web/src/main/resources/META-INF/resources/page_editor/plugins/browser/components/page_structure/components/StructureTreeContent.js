@@ -199,9 +199,7 @@ export default function StructureTreeContent({expandedKeys, setExpandedKeys}) {
 		const hoveredItemId = useHoveredItemId();
 		const isMultiSelect =
 			Liferay.FeatureFlags['LPD-18221'] && activeItemIds.length > 1;
-		const isSelected = Liferay.FeatureFlags['LPD-18221']
-			? fromControlsId(activeItemIds).includes(item.id)
-			: item.id === fromControlsId(activeItemIds);
+		const isSelected = fromControlsId(activeItemIds).includes(item.id);
 		const isHovered = item.id === fromControlsId(hoveredItemId);
 		const canUpdatePageStructure = useSelector(
 			selectCanUpdatePageStructure
@@ -606,9 +604,7 @@ function visit(
 					activable:
 						canUpdateEditables &&
 						canActivateEditable(selectedViewportSize, type),
-					active: Liferay.FeatureFlags['LPD-18221']
-						? activeItemIds.includes(childId)
-						: childId === activeItemIds,
+					active: activeItemIds.includes(childId),
 					children: [],
 					draggable: false,
 					hidden: false,
@@ -731,9 +727,7 @@ function visit(
 			item.type !== LAYOUT_DATA_ITEM_TYPES.collectionItem &&
 			item.type !== LAYOUT_DATA_ITEM_TYPES.fragmentDropZone &&
 			canUpdateItemConfiguration,
-		active: Liferay.FeatureFlags['LPD-18221']
-			? activeItemIds.includes(item.itemId)
-			: item.itemId === activeItemIds,
+		active: activeItemIds.includes(item.itemId),
 		children,
 		config: layoutDataRef?.current?.items[item.itemId]?.config,
 		draggable: true,

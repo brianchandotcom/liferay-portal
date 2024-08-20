@@ -12,7 +12,6 @@ import {sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useMemo, useRef} from 'react';
 
-import {fromControlsId} from '../../../../../app/components/layout_data_items/Collection';
 import {ITEM_ACTIVATION_ORIGINS} from '../../../../../app/config/constants/itemActivationOrigins';
 import {ITEM_TYPES} from '../../../../../app/config/constants/itemTypes';
 import {
@@ -79,9 +78,7 @@ export default function StructureTreeNode({node}) {
 	const activationOrigin = useActivationOrigin();
 	const activeItemIds = useActiveItemIds();
 	const dispatch = useDispatch();
-	const isSelected = Liferay.FeatureFlags['LPD-18221']
-		? activeItemIds.includes(node.id)
-		: node.id === fromControlsId(activeItemIds);
+	const isSelected = activeItemIds.includes(node.id);
 
 	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
 	const layoutData = useSelector((state) => state.layoutData);

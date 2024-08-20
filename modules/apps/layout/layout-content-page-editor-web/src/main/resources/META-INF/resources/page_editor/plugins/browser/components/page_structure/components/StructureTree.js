@@ -59,43 +59,31 @@ export default function StructureTree() {
 	);
 
 	useEffect(() => {
-		let expandedKeys = [];
+		if (!activeItemIds.length) {
+			return;
+		}
 
-		if (Liferay.FeatureFlags['LPD-18221'] && activeItemIds.length) {
-			if (deepEqual(previousActiveItemIds || [], activeItemIds)) {
+		const expandedKeys = [];
+
+		if (deepEqual(previousActiveItemIds || [], activeItemIds)) {
+			return;
+		}
+
+		let layoutDataActiveItem = null;
+
+		activeItemIds.forEach((itemId) => {
+			if (layoutData.items[itemId]) {
+				layoutDataActiveItem = layoutData.items[itemId];
+			}
+
+			if (!layoutDataActiveItem) {
 				return;
 			}
 
-			let layoutDataActiveItem = null;
-
-			activeItemIds.forEach((itemId) => {
-				if (layoutData.items[itemId]) {
-					layoutDataActiveItem = layoutData.items[itemId];
-				}
-
-				if (!layoutDataActiveItem) {
-					return;
-				}
-
-				expandedKeys.push(
-					...getAncestorsIds(layoutDataActiveItem, layoutData)
-				);
-			});
-		}
-		else {
-			if (activeItemIds) {
-				const layoutDataActiveItem = layoutData.items[activeItemIds];
-
-				if (!layoutDataActiveItem) {
-					return;
-				}
-
-				expandedKeys = getAncestorsIds(
-					layoutDataActiveItem,
-					layoutData
-				);
-			}
-		}
+			expandedKeys.push(
+				...getAncestorsIds(layoutDataActiveItem, layoutData)
+			);
+		});
 
 		setExpandedKeys((previousExpanedKeys) => {
 			return [...new Set([...previousExpanedKeys, ...expandedKeys])];

@@ -74,10 +74,7 @@ export function fromControlsId(controlsItemId) {
 	if (!controlsItemId) {
 		return null;
 	}
-	else if (
-		Liferay.FeatureFlags['LPD-18221'] &&
-		Array.isArray(controlsItemId)
-	) {
+	else if (Array.isArray(controlsItemId)) {
 		return controlsItemId.map(getItemIdFromControlsId);
 	}
 	else {

@@ -26,11 +26,8 @@ const SaveFragmentCompositionModal = ({itemId, onCloseModal}) => {
 	const dispatch = useDispatch();
 
 	const activeItemIds = useActiveItemIds();
-	let activeItemId = activeItemIds;
 
-	if (Liferay.FeatureFlags['LPD-18221']) {
-		[activeItemId] = activeItemIds;
-	}
+	const [activeItemId] = activeItemIds;
 
 	const isMounted = useIsMounted();
 

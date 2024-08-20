@@ -11,7 +11,7 @@ import {useToControlsId} from './CollectionItemContext';
 
 const ACTIVE_INITIAL_STATE = {
 	activationOrigin: null,
-	activeItemIds: Liferay.FeatureFlags['LPD-18221'] ? [] : null,
+	activeItemIds: [],
 	activeItemType: null,
 	multiSelectIsActive: false,
 };
@@ -51,7 +51,7 @@ const reducer = (state, action) => {
 	else if (
 		type === SELECT_ITEM &&
 		(Liferay.FeatureFlags['LPD-18221'] ||
-			itemId !== nextState.activeItemIds)
+			itemId !== nextState.activeItemIds[0])
 	) {
 		nextState = {
 			...nextState,
@@ -62,7 +62,9 @@ const reducer = (state, action) => {
 					: itemId
 						? [itemId]
 						: []
-				: itemId,
+				: itemId
+					? [itemId]
+					: [],
 			activeItemType: itemType,
 		};
 	}
@@ -156,10 +158,7 @@ const useIsActive = () => {
 	const toControlsId = useToControlsId();
 
 	return useCallback(
-		(itemId) =>
-			Liferay.FeatureFlags['LPD-18221']
-				? activeItemIds.includes(toControlsId(itemId))
-				: activeItemIds === toControlsId(itemId),
+		(itemId) => activeItemIds.includes(toControlsId(itemId)),
 		[activeItemIds, toControlsId]
 	);
 };

@@ -21,15 +21,7 @@ export default function CommentsSidebar() {
 		return <MultiSelectMessage />;
 	}
 	else {
-		return (
-			<CommentsSidebarContent
-				activeItemId={
-					Liferay.FeatureFlags['LPD-18221']
-						? activeItemIds[0]
-						: activeItemIds
-				}
-			/>
-		);
+		return <CommentsSidebarContent activeItemId={activeItemIds[0]} />;
 	}
 }
 

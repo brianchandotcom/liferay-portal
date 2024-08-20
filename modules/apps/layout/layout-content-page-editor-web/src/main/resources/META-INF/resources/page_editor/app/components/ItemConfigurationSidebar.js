@@ -22,11 +22,7 @@ export default function ItemConfigurationSidebar() {
 	const activeItemType = useActiveItemType();
 	const dispatch = useDispatch();
 
-	let activeItemId = activeItemIds;
-
-	if (Liferay.FeatureFlags['LPD-18221']) {
-		[activeItemId] = activeItemIds;
-	}
+	const [activeItemId] = activeItemIds;
 
 	const itemConfigurationOpen = useSelector(selectItemConfigurationOpen);
 

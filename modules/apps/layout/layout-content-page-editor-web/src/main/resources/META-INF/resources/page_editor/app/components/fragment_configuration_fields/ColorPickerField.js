@@ -24,11 +24,7 @@ import {ColorPaletteField} from './ColorPaletteField';
 export function ColorPickerField({field, isCustomStyle, onValueSelect, value}) {
 	const activeItemIds = useActiveItemIds();
 
-	let activeItemId = activeItemIds;
-
-	if (Liferay.FeatureFlags['LPD-18221']) {
-		[activeItemId] = activeItemIds;
-	}
+	const [activeItemId] = activeItemIds;
 
 	const canDetachTokenValues = useSelector(selectCanDetachTokenValues);
 	const [computedValue, setComputedValue] = useState(null);

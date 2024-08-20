@@ -83,14 +83,8 @@ export default function ShortcutManager() {
 
 	const {fragmentEntryLinks, layoutData} = state;
 
-	let activeItemId = activeItemIds;
-	let multiSelection = false;
-
-	if (Liferay.FeatureFlags['LPD-18221']) {
-		multiSelection = activeItemIds.length > 1;
-
-		[activeItemId] = activeItemIds;
-	}
+	const [activeItemId] = activeItemIds;
+	const multiSelection = activeItemIds.length > 1;
 
 	const activeLayoutDataItem =
 		activeItemType === ITEM_TYPES.layoutDataItem

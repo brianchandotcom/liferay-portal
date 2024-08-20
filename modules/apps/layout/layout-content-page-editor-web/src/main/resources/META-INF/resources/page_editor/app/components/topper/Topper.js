@@ -102,9 +102,7 @@ function TopperContent({
 	const editableProcessorUniqueId = useEditableProcessorUniqueId();
 	const hoverItem = useHoverItem();
 	const {isOverTarget, targetPosition, targetRef} = useDropTarget(item);
-	const isMultiSelect = Liferay.FeatureFlags['LPD-18221']
-		? activeItemIds.length > 1
-		: false;
+	const isMultiSelect = activeItemIds.length > 1;
 	const {itemId: keyboardMovementTargetId} = useMovementTarget();
 	const keyboardMovementPosition = useMovementTargetPosition();
 	const selectItem = useSelectItem();

@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.AssumeTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -127,11 +128,12 @@ public class DBSchemaDefinitionExporterDBPartitionTest
 								tablesSQLFile, copyDataSource);
 						}
 						else {
-							DatabaseTestUtil.importFileRenamingSchema(
-								tablesSQLFile,
-								InfrastructureUtil.getDataSource(),
-								DBPartitionUtil.getPartitionName(companyId),
-								COPY_DB_SCHEMA_NAME);
+							DatabaseTestUtil.importSQL(
+								StringUtil.replace(
+									FileUtil.read(tablesSQLFile),
+									DBPartitionUtil.getPartitionName(companyId),
+									COPY_DB_SCHEMA_NAME),
+								InfrastructureUtil.getDataSource());
 
 							dataSource = DatabaseTestUtil.initDataSource(
 								DBPartitionUtil.getPartitionName(companyId));
@@ -149,11 +151,12 @@ public class DBSchemaDefinitionExporterDBPartitionTest
 								indexesSQLFile, copyDataSource);
 						}
 						else {
-							DatabaseTestUtil.importFileRenamingSchema(
-								indexesSQLFile,
-								InfrastructureUtil.getDataSource(),
-								DBPartitionUtil.getPartitionName(companyId),
-								COPY_DB_SCHEMA_NAME);
+							DatabaseTestUtil.importSQL(
+								StringUtil.replace(
+									FileUtil.read(indexesSQLFile),
+									DBPartitionUtil.getPartitionName(companyId),
+									COPY_DB_SCHEMA_NAME),
+								InfrastructureUtil.getDataSource());
 						}
 
 						assertIndexes(dataSource, copyDataSource);

@@ -14,10 +14,16 @@ import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.commerce.constants.CommerceOrderPaymentConstants;
+import com.liferay.commerce.currency.model.CommerceCurrency;
+import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
+import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.engine.CommerceOrderEngine;
 import com.liferay.commerce.payment.engine.CommerceSubscriptionEngine;
+import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.service.CommerceSubscriptionEntryLocalService;
+import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.info.field.InfoField;
@@ -64,6 +70,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
@@ -317,6 +324,58 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 
 		_assertNotificationQueueEntryTermValues(
 			Collections.singletonList(listEntry.getName()), StringPool.COMMA);
+	}
+
+	@Test
+	public void testFreeMarkerNotificationWithCommerceOrder() throws Exception {
+		CommerceCurrency commerceCurrency =
+			CommerceCurrencyTestUtil.addCommerceCurrency(
+				TestPropsValues.getCompanyId());
+
+		CommerceChannel commerceChannel = CommerceTestUtil.addCommerceChannel(
+			TestPropsValues.getGroupId(), commerceCurrency.getCode());
+
+		CommerceOrder commerceOrder = CommerceTestUtil.addB2CCommerceOrder(
+			TestPropsValues.getUserId(), commerceChannel.getGroupId(),
+			commerceCurrency);
+
+		commerceOrder = CommerceTestUtil.addCheckoutDetailsToCommerceOrder(
+			commerceOrder, TestPropsValues.getUserId(), true, true);
+
+		ObjectDefinition commerceOrderObjectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
+				TestPropsValues.getCompanyId(), CommerceOrder.class.getName());
+
+		Map<String, Object> termValuesMap = _createFreeMarkerTermValuesMap(
+			commerceOrderObjectDefinition, commerceOrder,
+			_getTermNames(
+				commerceOrderObjectDefinition.getObjectDefinitionId(),
+				SetUtil.fromArray(
+					"Basic Information", "Workflow Status Information")));
+
+		String body =
+			StringUtil.merge(termValuesMap.keySet(), StringPool.POUND) +
+				StringPool.POUND;
+
+		ObjectAction objectAction = _addNotificationTemplateObjectAction(
+			body, DestinationNames.COMMERCE_PAYMENT_STATUS,
+			commerceOrderObjectDefinition);
+
+		_commerceOrderLocalService.updatePaymentStatus(
+			TestPropsValues.getUserId(), commerceOrder.getCommerceOrderId(),
+			CommerceOrderPaymentConstants.STATUS_PENDING);
+
+		_assertNotificationQueueEntryTermValues(
+			new ArrayList<>(termValuesMap.values()), StringPool.POUND);
+
+		_objectActionLocalService.deleteObjectAction(objectAction);
+
+		_commerceOrderLocalService.deleteCommerceOrder(
+			commerceOrder.getCommerceOrderId());
+
+		_accountEntryLocalService.deleteAccountEntry(
+			_accountEntryLocalService.fetchPersonAccountEntry(
+				TestPropsValues.getUserId()));
 	}
 
 	@Test

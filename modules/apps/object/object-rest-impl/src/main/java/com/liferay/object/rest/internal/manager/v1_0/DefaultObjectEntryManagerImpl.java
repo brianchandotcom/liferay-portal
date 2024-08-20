@@ -77,6 +77,7 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -146,16 +147,21 @@ public class DefaultObjectEntryManagerImpl
 
 		validateReadOnlyObjectFields(null, objectDefinition, objectEntry);
 
-		ServiceContext serviceContext = ServiceContextUtil.createServiceContext(
-			dtoConverterContext.getLocale(), objectEntry,
-			dtoConverterContext.getUserId(),
-			ModelPermissionsUtil.toModelPermissions(
+		ModelPermissions modelPermissions = null;
+
+		if (FeatureFlagManagerUtil.isEnabled("LPD-28799")) {
+			modelPermissions = ModelPermissionsUtil.toModelPermissions(
 				objectDefinition.getCompanyId(), objectEntry.getPermissions(),
 				GetterUtil.getLong(objectEntry.getId()),
 				_getObjectEntryPermissionName(
 					objectDefinition.getObjectDefinitionId()),
 				_resourceActionLocalService, _resourcePermissionLocalService,
-				_roleLocalService));
+				_roleLocalService);
+		}
+
+		ServiceContext serviceContext = ServiceContextUtil.createServiceContext(
+			dtoConverterContext.getLocale(), objectEntry,
+			dtoConverterContext.getUserId(), modelPermissions);
 
 		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
 			_objectEntryService.addObjectEntry(

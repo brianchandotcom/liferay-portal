@@ -12,8 +12,6 @@ import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.DataSourceFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsValues;
 
@@ -90,10 +88,6 @@ public class DatabaseTestUtil {
 		Collections.sort(indexColumnNames);
 
 		return indexColumnNames;
-	}
-
-	public static String getPartitionName(long companyId) {
-		return _DATABASE_PARTITION_SCHEMA_NAME_PREFIX + companyId;
 	}
 
 	public static String getSchemaURL(String schemaName) {
@@ -247,10 +241,5 @@ public class DatabaseTestUtil {
 
 		return jdbcURL + "&currentSchema=" + schemaName;
 	}
-
-	private static final String _DATABASE_PARTITION_SCHEMA_NAME_PREFIX =
-		GetterUtil.get(
-			PropsUtil.get("database.partition.schema.name.prefix"),
-			"lpartition_");
 
 }

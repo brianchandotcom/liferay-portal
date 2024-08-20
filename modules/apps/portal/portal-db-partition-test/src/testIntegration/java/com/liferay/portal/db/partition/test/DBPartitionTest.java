@@ -684,10 +684,10 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 
 					List<LogEntry> logEntries = logCapture.getLogEntries();
 
-					long expectedLogEntriesCount = 0L;
+					long expectedLogEntriesCount = 0;
 
 					if (companyId == PortalInstancePool.getDefaultCompanyId()) {
-						expectedLogEntriesCount = 1L;
+						expectedLogEntriesCount = 1;
 					}
 
 					Assert.assertEquals(

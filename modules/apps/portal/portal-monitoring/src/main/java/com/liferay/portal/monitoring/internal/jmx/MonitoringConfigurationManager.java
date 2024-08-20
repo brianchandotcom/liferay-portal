@@ -121,7 +121,7 @@ public class MonitoringConfigurationManager
 
 	@Override
 	public boolean isMonitorServiceRequest() {
-		return _serviceMonitoringControl.isMonitorServiceRequest();
+		return _monitoringConfiguration.monitorServiceRequest();
 	}
 
 	@Override
@@ -138,8 +138,6 @@ public class MonitoringConfigurationManager
 
 	@Override
 	public void setMonitorServiceRequest(boolean monitorServiceRequest) {
-		_serviceMonitoringControl.setMonitorServiceRequest(
-			monitorServiceRequest);
 	}
 
 	@Activate
@@ -147,9 +145,6 @@ public class MonitoringConfigurationManager
 	protected void activate(Map<String, Object> properties) {
 		_monitoringConfiguration = ConfigurableUtil.createConfigurable(
 			MonitoringConfiguration.class, properties);
-
-		setMonitorServiceRequest(
-			_monitoringConfiguration.monitorServiceRequest());
 	}
 
 	private volatile MonitoringConfiguration _monitoringConfiguration;

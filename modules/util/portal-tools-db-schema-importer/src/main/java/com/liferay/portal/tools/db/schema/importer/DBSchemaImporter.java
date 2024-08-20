@@ -87,23 +87,23 @@ public class DBSchemaImporter {
 	private static Options _getOptions() {
 		Options options = new Options();
 
+		options.addOption(null, "help", false, "Print help message.");
+		options.addRequiredOption(
+			null, "path", true, "Set the path to the source SQL files.");
 		options.addRequiredOption(
 			null, "source-jdbc-url", true, "Set the source database JDBC URL.");
-		options.addRequiredOption(
-			null, "source-user", true, "Set the source database user.");
 		options.addRequiredOption(
 			null, "source-password", true,
 			"Set the source database user password.");
 		options.addRequiredOption(
-			null, "target-jdbc-url", true, "Set the target database JDBC URL.");
+			null, "source-user", true, "Set the source database user.");
 		options.addRequiredOption(
-			null, "target-user", true, "Set the target database user.");
+			null, "target-jdbc-url", true, "Set the target database JDBC URL.");
 		options.addRequiredOption(
 			null, "target-password", true,
 			"Set the target database user password.");
 		options.addRequiredOption(
-			null, "path", true, "Set the path with source SQL files.");
-		options.addOption(null, "help", false, "Print help message.");
+			null, "target-user", true, "Set the target database user.");
 
 		return options;
 	}

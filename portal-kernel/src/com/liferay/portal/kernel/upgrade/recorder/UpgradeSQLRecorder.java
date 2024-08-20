@@ -65,8 +65,7 @@ public class UpgradeSQLRecorder {
 			public CallableStatement prepareCall(String sql)
 				throws SQLException {
 
-				return (CallableStatement)_wrap(
-					super.prepareCall(sql));
+				return (CallableStatement)_wrap(super.prepareCall(sql));
 			}
 
 			@Override
@@ -95,8 +94,7 @@ public class UpgradeSQLRecorder {
 			public PreparedStatement prepareStatement(String sql)
 				throws SQLException {
 
-				return (PreparedStatement)_wrap(
-					super.prepareStatement(sql));
+				return (PreparedStatement)_wrap(super.prepareStatement(sql));
 			}
 
 			@Override

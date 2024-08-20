@@ -5,14 +5,17 @@
 
 package com.liferay.portal.monitoring.internal.statistics.service;
 
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.aop.ChainableMethodAdvice;
 import com.liferay.portal.kernel.monitoring.DataSampleFactory;
 import com.liferay.portal.kernel.monitoring.MethodSignature;
 import com.liferay.portal.kernel.monitoring.ServiceMonitoringControl;
 import com.liferay.portal.monitoring.internal.aop.ServiceMonitorAdvice;
+import com.liferay.portal.monitoring.internal.configuration.MonitoringConfiguration;
 
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import org.osgi.framework.BundleContext;
@@ -20,12 +23,16 @@ import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Preston Crary
  */
-@Component(service = ServiceMonitoringControl.class)
+@Component(
+	configurationPid = "com.liferay.portal.monitoring.internal.configuration.MonitoringConfiguration",
+	service = ServiceMonitoringControl.class
+)
 public class ServiceMonitoringControlImpl implements ServiceMonitoringControl {
 
 	@Override
@@ -95,8 +102,18 @@ public class ServiceMonitoringControlImpl implements ServiceMonitoringControl {
 	}
 
 	@Activate
-	protected void activate(BundleContext bundleContext) {
+	@Modified
+	protected void activate(
+		BundleContext bundleContext, Map<String, String> properties) {
+
 		_bundleContext = bundleContext;
+
+		MonitoringConfiguration monitoringConfiguration =
+			ConfigurableUtil.createConfigurable(
+				MonitoringConfiguration.class, properties);
+
+		setMonitorServiceRequest(
+			monitoringConfiguration.monitorServiceRequest());
 	}
 
 	@Deactivate
@@ -106,7 +123,7 @@ public class ServiceMonitoringControlImpl implements ServiceMonitoringControl {
 		}
 	}
 
-	private BundleContext _bundleContext;
+	private volatile BundleContext _bundleContext;
 
 	@Reference
 	private DataSampleFactory _dataSampleFactory;

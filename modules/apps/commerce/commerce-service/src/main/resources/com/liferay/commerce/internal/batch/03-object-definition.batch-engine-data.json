@@ -15,6 +15,7 @@
 		{
 			"accountEntryRestricted": true,
 			"accountEntryRestrictedObjectFieldName": "r_accountToCommerceReturnItems_accountEntryId",
+			"enableComments": true,
 			"externalReferenceCode": "L_COMMERCE_RETURN_ITEM",
 			"label": {
 				"en_US": "Commerce Return Item"

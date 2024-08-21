@@ -1132,22 +1132,24 @@ public class DefaultObjectEntryManagerImplTest
 
 		String newExternalReferenceCode = RandomTestUtil.randomString();
 
-		_defaultObjectEntryManager.addObjectEntry(
-			dtoConverterContext, _objectDefinition2,
-			new ObjectEntry() {
-				{
-					properties = HashMapBuilder.<String, Object>put(
-						_objectRelationshipERCObjectFieldName,
-						newExternalReferenceCode
-					).build();
-				}
-			},
-			ObjectDefinitionConstants.SCOPE_COMPANY);
-
-		Assert.assertNotNull(
-			_defaultObjectEntryManager.getObjectEntry(
-				_objectDefinition1.getCompanyId(), _simpleDTOConverterContext,
-				newExternalReferenceCode, _objectDefinition1, null));
+		AssertUtils.assertFailure(
+			NoSuchObjectEntryException.class,
+			StringBundler.concat(
+				"No ObjectEntry exists with the key ",
+				"{externalReferenceCode=", newExternalReferenceCode,
+				", companyId=", companyId, ", objectDefinitionId=",
+				_objectDefinition1.getObjectDefinitionId(), "}"),
+			() -> _defaultObjectEntryManager.addObjectEntry(
+				dtoConverterContext, _objectDefinition2,
+				new ObjectEntry() {
+					{
+						properties = HashMapBuilder.<String, Object>put(
+							_objectRelationshipERCObjectFieldName,
+							newExternalReferenceCode
+						).build();
+					}
+				},
+				ObjectDefinitionConstants.SCOPE_COMPANY));
 	}
 
 	@Test
@@ -3561,45 +3563,6 @@ public class DefaultObjectEntryManagerImplTest
 						parentObjectEntry2.getExternalReferenceCode()
 					).put(
 						_objectRelationshipFieldName, parentObjectEntry2.getId()
-					).build();
-				}
-			});
-
-		String newExternalReferenceCode = RandomTestUtil.randomString();
-
-		assertEquals(
-			_defaultObjectEntryManager.partialUpdateObjectEntry(
-				_simpleDTOConverterContext, _objectDefinition2,
-				objectEntry.getId(),
-				new ObjectEntry() {
-					{
-						properties = HashMapBuilder.<String, Object>put(
-							_objectRelationshipERCObjectFieldName,
-							newExternalReferenceCode
-						).put(
-							_objectRelationshipFieldName,
-							parentObjectEntry1.getId()
-						).build();
-					}
-				}),
-			new ObjectEntry() {
-				{
-					properties = HashMapBuilder.<String, Object>putAll(
-						objectEntryProperties
-					).put(
-						_objectRelationshipERCObjectFieldName,
-						newExternalReferenceCode
-					).put(
-						_objectRelationshipFieldName,
-						() -> {
-							ObjectEntry objectEntry =
-								_defaultObjectEntryManager.getObjectEntry(
-									companyId, dtoConverterContext,
-									newExternalReferenceCode,
-									_objectDefinition1, null);
-
-							return objectEntry.getId();
-						}
 					).build();
 				}
 			});

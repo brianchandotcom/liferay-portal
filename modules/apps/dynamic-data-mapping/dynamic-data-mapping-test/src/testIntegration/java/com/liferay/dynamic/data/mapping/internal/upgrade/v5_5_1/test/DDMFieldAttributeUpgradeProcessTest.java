@@ -87,29 +87,11 @@ public class DDMFieldAttributeUpgradeProcessTest {
 	public void testClassUpgradeProcess() throws Exception {
 		_addDDMFormValues();
 
-		List<DDMFieldAttribute> ddmFieldAttributes;
-
-		for (String ddmFieldAttributeName : _ddmFieldAttributeNames) {
-			ddmFieldAttributes = _ddmFieldLocalService.getDDMFieldAttributes(
-				_STORAGE_ID, ddmFieldAttributeName);
-
-			for (DDMFieldAttribute ddmFieldAttribute : ddmFieldAttributes) {
-				Assert.assertEquals(
-					CompanyConstants.SYSTEM, ddmFieldAttribute.getCompanyId());
-			}
-		}
+		_assertCompanyId(CompanyConstants.SYSTEM);
 
 		_runUpgrade();
 
-		for (String ddmFieldAttributeName : _ddmFieldAttributeNames) {
-			ddmFieldAttributes = _ddmFieldLocalService.getDDMFieldAttributes(
-				_STORAGE_ID, ddmFieldAttributeName);
-
-			for (DDMFieldAttribute ddmFieldAttribute : ddmFieldAttributes) {
-				Assert.assertEquals(
-					_group.getCompanyId(), ddmFieldAttribute.getCompanyId());
-			}
-		}
+		_assertCompanyId(_group.getCompanyId());
 	}
 
 	private void _addDDMFormValues() throws Exception {
@@ -151,6 +133,20 @@ public class DDMFieldAttributeUpgradeProcessTest {
 
 		_ddmFieldLocalService.updateDDMFormValues(
 			ddmStructure.getStructureId(), _STORAGE_ID, ddmFormValues);
+	}
+
+	private void _assertCompanyId(long companyId) {
+		List<DDMFieldAttribute> ddmFieldAttributes;
+
+		for (String ddmFieldAttributeName : _ddmFieldAttributeNames) {
+			ddmFieldAttributes = _ddmFieldLocalService.getDDMFieldAttributes(
+				_STORAGE_ID, ddmFieldAttributeName);
+
+			for (DDMFieldAttribute ddmFieldAttribute : ddmFieldAttributes) {
+				Assert.assertEquals(
+					companyId, ddmFieldAttribute.getCompanyId());
+			}
+		}
 	}
 
 	private void _runUpgrade() throws Exception {

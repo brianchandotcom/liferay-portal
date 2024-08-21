@@ -504,7 +504,7 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 			commerceOrder.getCommerceOrderId(),
 			_getCommerceContext(httpServletRequest));
 
-		if (!themeDisplay.isSignedIn()) {
+		if ((themeDisplay != null) && !themeDisplay.isSignedIn()) {
 			_setGuestCommerceOrder(commerceOrder, themeDisplay);
 
 			return;

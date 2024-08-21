@@ -507,16 +507,16 @@ public class DispatchConfiguratorTest {
 
 		Mockito.verify(
 			_dispatchTriggerHelper
-		).deleteSchedulerJob(
+		).addSchedulerJob(
 			Mockito.same(_allNodesDispatchTrigger),
-			Mockito.eq(StorageType.MEMORY)
+			Mockito.eq(StorageType.MEMORY), Mockito.any()
 		);
 
 		Mockito.verify(
 			_dispatchTriggerHelper, Mockito.never()
-		).deleteSchedulerJob(
+		).addSchedulerJob(
 			Mockito.same(_notApplicableDispatchTrigger),
-			Mockito.eq(StorageType.MEMORY)
+			Mockito.eq(StorageType.MEMORY), Mockito.any()
 		);
 
 		_dispatchConfigurator.deactivate();

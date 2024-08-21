@@ -32,10 +32,15 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.scim.rest.client.dto.v1_0.MultiValuedAttribute;
 import com.liferay.scim.rest.client.dto.v1_0.Name;
 import com.liferay.scim.rest.client.dto.v1_0.User;
+import com.liferay.scim.rest.client.dto.v1_0.UserSchemaExtension;
 import com.liferay.scim.rest.client.http.HttpInvoker;
 import com.liferay.scim.rest.resource.v1_0.test.util.ScimTestUtil;
 
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
+
+import org.apache.commons.lang.time.DateUtils;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -243,7 +248,8 @@ public class UserResourceTest extends BaseUserResourceTestCase {
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {
-			"emails", "externalId", "name", "title", "userName"
+			"emails", "externalId", "name", "title", "userName",
+			"urn_ietf_params_scim_schemas_extension_liferay_2_0_User"
 		};
 	}
 
@@ -272,7 +278,18 @@ public class UserResourceTest extends BaseUserResourceTestCase {
 				}
 			});
 		user.setSchemas(
-			new String[] {"urn:ietf:params:scim:schemas:core:2.0:User"});
+			new String[] {
+				"urn:ietf:params:scim:schemas:core:2.0:User",
+				"urn:ietf:params:scim:schemas:extension:liferay:2.0:User"
+			});
+
+		user.setUrn_ietf_params_scim_schemas_extension_liferay_2_0_User(
+			new UserSchemaExtension() {
+				{
+					birthday = DateUtils.truncate(new Date(), Calendar.DATE);
+					male = true;
+				}
+			});
 
 		return user;
 	}

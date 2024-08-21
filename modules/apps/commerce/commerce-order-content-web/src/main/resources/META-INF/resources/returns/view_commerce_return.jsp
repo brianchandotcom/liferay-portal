@@ -26,8 +26,6 @@ portletDisplay.setURLBack(String.valueOf(renderResponse.createRenderURL()));
 	actions="<%= commerceReturnContentDisplayContext.getHeaderActionModels() %>"
 	additionalStatusLabel="<%= commerceReturn.getReturnStatus() %>"
 	additionalStatusLabelStyle="<%= CommerceReturnConstants.getReturnStatusLabelStyle(commerceReturn.getReturnStatus()) %>"
-	bean="<%= (commerceReturn == null) ? null : commerceReturn.getObjectEntry() %>"
-	beanIdLabel='<%= (commerceReturn == null) ? null : "id" %>'
 	externalReferenceCode="<%= (commerceReturn == null) ? StringPool.BLANK : commerceReturn.getExternalReferenceCode() %>"
 	model="<%= ObjectEntry.class %>"
 	title="<%= (commerceReturn == null) ? StringPool.BLANK : String.valueOf(commerceReturn.getId()) %>"

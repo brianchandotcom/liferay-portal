@@ -1079,7 +1079,7 @@ jdbc.default.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 				<matches pattern="-jdk[0-9]+$" string="${test.batch.name}" />
 			</condition>
 
-			<property name="java.jdk.bundle.type" value="oracle" />
+			<property name="java.jdk.bundle.type" value="none" />
 		</sequential>
 	</macrodef>
 
@@ -1102,14 +1102,14 @@ jdbc.default.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 				select="\1"
 			/>
 
-			<property name="java.jdk.bundle.version" value="${ant.java.version}" />
+			<property name="java.jdk.bundle.version" value="none" />
 		</sequential>
 	</macrodef>
 
 	<macrodef name="get-java-jdk-home">
 		<attribute default="${java.jdk.architecture}" name="architecture" />
-		<attribute default="oracle" name="type" />
-		<attribute default="${ant.java.version}" name="version" />
+		<attribute default="none" name="type" />
+		<attribute default="none" name="version" />
 
 		<sequential>
 			<var name="java.jdk.home" unset="true" />
@@ -1120,7 +1120,31 @@ jdbc.default.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 					<property name="java.jdk.home" value="${local.java.jdk.home}" />
 				</then>
 				<else>
-					<propertycopy from="java.jdk.home[@{version}][@{architecture}][@{type}]" property="java.jdk.home" silent="true" />
+					<if>
+						<and>
+							<equals arg1="@{type}" arg2="none" />
+							<equals arg1="@{version}" arg2="none" />
+						</and>
+						<then>
+							<propertycopy from="java.jdk.default.runtime" property="java.jdk.home" silent="true" />
+						</then>
+						<elseif>
+							<equals arg1="@{type}" arg2="none" />
+							<then>
+								<propertycopy from="java.jdk[@{version}]" property="java.jdk.home.property.name" silent="true" />
+								<propertycopy from="${java.jdk.home.property.name}" property="java.jdk.home" silent="true" />
+							</then>
+						</elseif>
+						<elseif>
+							<equals arg1="@{version}" arg2="none" />
+							<then>
+								<propertycopy from="java.jdk.default.runtime" property="java.jdk.home" silent="true" />
+							</then>
+						</elseif>
+						<else>
+							<propertycopy from="java.jdk.home[@{version}][@{architecture}][@{type}]" property="java.jdk.home" silent="true" />
+						</else>
+					</if>
 
 					<property name="java.jdk.home" value="${java.home}" />
 

@@ -11,6 +11,7 @@ import {collapseSection} from '../../utils/collapseSection';
 import dragAndDropElement from '../../utils/dragAndDropElement';
 import {expandSection} from '../../utils/expandSection';
 import fillAndClickOutside from '../../utils/fillAndClickOutside';
+import {hoverAndExpectToBeVisible} from '../../utils/hoverAndExpectToBeVisible';
 import {selectElement} from '../../utils/selectElement';
 import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
 import {SegmentEditorPage} from '../segments-web/SegmentEditorPage';
@@ -314,6 +315,50 @@ export class PageEditorPage {
 			.click();
 		await this.page.getByLabel(fieldName).selectOption(option);
 		await this.page.getByRole('button', {name: 'Save'}).click();
+	}
+
+	async clickPageContentContentAction(
+		action: string,
+		name: string,
+		subMenuAction?: string
+	) {
+		await this.goToSidebarTab('Page Content');
+
+		const panel = this.page.getByLabel('Page Content Panel', {
+			exact: true,
+		});
+
+		await panel.waitFor();
+
+		const content = panel.locator(
+			'.page-editor__page-contents__page-content',
+			{
+				hasText: name,
+			}
+		);
+
+		await content.hover();
+
+		if (subMenuAction) {
+			await clickAndExpectToBeVisible({
+				autoClick: false,
+				target: this.page.getByRole('menuitem', {name: action}),
+				trigger: content.getByTitle('Open Actions Menu'),
+			});
+
+			await hoverAndExpectToBeVisible({
+				autoClick: true,
+				target: this.page.getByRole('menuitem', {name: subMenuAction}),
+				trigger: this.page.getByRole('menuitem', {name: action}),
+			});
+		}
+		else {
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: this.page.getByRole('menuitem', {name: action}),
+				trigger: content.getByTitle('Open Actions Menu'),
+			});
+		}
 	}
 
 	async closeExperienceSelector() {

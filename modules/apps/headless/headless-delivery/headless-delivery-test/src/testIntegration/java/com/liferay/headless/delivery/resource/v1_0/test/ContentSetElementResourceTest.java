@@ -182,6 +182,15 @@ public class ContentSetElementResourceTest
 	}
 
 	@Override
+	protected ContentSetElement
+			testGetSiteContentSetProviderByKeyContentSetElementsPage_addContentSetElement(
+				Long siteId, String key, ContentSetElement contentSetElement)
+		throws Exception {
+
+		return _toContentSetElement(_addBlogsEntry());
+	}
+
+	@Override
 	protected String
 		testGetSiteContentSetProviderByKeyContentSetElementsPage_getKey() {
 

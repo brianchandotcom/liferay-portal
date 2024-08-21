@@ -83,6 +83,7 @@ interface IPropsAddFDSFilterModalContent {
 	filterType?: EFilterType;
 	namespace: string;
 	onSave: (newFilter: IFilter) => void;
+	resolvedRESTSchemas: string[];
 	restApplications: string[];
 }
 
@@ -96,6 +97,7 @@ function AddFDSFilterModalContent({
 	filterType,
 	namespace,
 	onSave,
+	resolvedRESTSchemas,
 	restApplications,
 }: IPropsAddFDSFilterModalContent) {
 	const {Component, displayType, fdsViewRelationshipId} =
@@ -153,6 +155,7 @@ function AddFDSFilterModalContent({
 				filter={filter}
 				namespace={namespace}
 				onSave={(formData: any) => saveFDSFilter(formData)}
+				resolvedRESTSchemas={resolvedRESTSchemas}
 				restApplications={restApplications}
 			/>
 		</>
@@ -164,6 +167,7 @@ function Filters({
 	fdsFilterClientExtensions,
 	fieldTreeItems: fields,
 	namespace,
+	resolvedRESTSchemas,
 	restApplications,
 }: IDataSetSectionProps) {
 	const [filters, setFilters] = useState<IFilter[]>([]);
@@ -307,6 +311,7 @@ function Filters({
 							}
 							setFilters([...filters, newfilter]);
 						}}
+						resolvedRESTSchemas={resolvedRESTSchemas}
 						restApplications={restApplications}
 					/>
 				),
@@ -349,6 +354,7 @@ function Filters({
 
 						setFilters(newFilters);
 					}}
+					resolvedRESTSchemas={resolvedRESTSchemas}
 					restApplications={restApplications}
 				/>
 			),

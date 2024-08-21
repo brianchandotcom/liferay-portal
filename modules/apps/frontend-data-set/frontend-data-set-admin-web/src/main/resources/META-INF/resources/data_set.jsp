@@ -30,6 +30,8 @@ renderResponse.setTitle(ParamUtil.getString(request, "dataSetLabel"));
 		).put(
 			"namespace", liferayPortletResponse.getNamespace()
 		).put(
+			"resolvedRESTSchemas", fdsAdminDisplayContext.getRESTApplicationResolvedSchemasJSONArray()
+		).put(
 			"restApplications", fdsAdminDisplayContext.getRESTApplicationsJSONArray()
 		).put(
 			"saveFDSFieldsURL", fdsAdminDisplayContext.getSaveFDSFieldsURL()

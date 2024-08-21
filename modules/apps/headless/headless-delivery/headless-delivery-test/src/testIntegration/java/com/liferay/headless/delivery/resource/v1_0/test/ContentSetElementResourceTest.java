@@ -6,20 +6,34 @@
 package com.liferay.headless.delivery.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryLocalServiceUtil;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.headless.delivery.client.dto.v1_0.ContentSetElement;
+import com.liferay.info.collection.provider.CollectionQuery;
+import com.liferay.info.collection.provider.InfoCollectionProvider;
+import com.liferay.info.pagination.InfoPage;
+import com.liferay.info.pagination.Pagination;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.test.rule.SearchTestRule;
 import com.liferay.portal.test.rule.FeatureFlags;
+import com.liferay.portal.test.rule.Inject;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Locale;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -219,8 +233,52 @@ public class ContentSetElementResourceTest
 		};
 	}
 
+	@Inject
+	private AssetEntryLocalService _assetEntryLocalService;
+
 	private AssetListEntry _assetListEntry;
 	private AssetListEntry _depotAssetListEntry;
 	private ServiceContext _serviceContext;
+
+	private class TestAssetEntryInfoCollectionProvider
+		implements InfoCollectionProvider<AssetEntry> {
+
+		@Override
+		public InfoPage<AssetEntry> getCollectionInfoPage(
+			CollectionQuery collectionQuery) {
+
+			AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
+
+			assetEntryQuery.setClassName(BlogsEntry.class.getName());
+
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
+
+			assetEntryQuery.setGroupIds(
+				new long[] {serviceContext.getScopeGroupId()});
+
+			List<AssetEntry> assetEntries = _assetEntryLocalService.getEntries(
+				assetEntryQuery);
+
+			if (assetEntries == null) {
+				assetEntries = Collections.emptyList();
+			}
+
+			Pagination pagination = collectionQuery.getPagination();
+
+			return InfoPage.of(
+				assetEntries.subList(
+					pagination.getStart(),
+					Math.min(assetEntries.size(), pagination.getEnd())),
+				Pagination.of(pagination.getEnd(), pagination.getStart()),
+				assetEntries.size());
+		}
+
+		@Override
+		public String getLabel(Locale locale) {
+			return StringPool.BLANK;
+		}
+
+	}
 
 }

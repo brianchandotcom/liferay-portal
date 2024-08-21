@@ -54,7 +54,8 @@ export class JournalPage {
 	}
 
 	async fillArticleData(title: string, content: string) {
-		await this.articleTitleInput.fill(title);
+		await this.articleTitleInput.click();
+		await this.page.keyboard.type(title);
 
 		await this.articleContentTextBox.click();
 

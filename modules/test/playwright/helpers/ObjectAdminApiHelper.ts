@@ -49,7 +49,7 @@ export class ObjectAdminApiHelper {
 
 	async getObjectDefinitionByExternalReferenceCode(
 		externalReferenceCode: string
-	) {
+	): Promise<ObjectDefinition> {
 		return this.apiHelpers.get(
 			`${this.apiHelpers.baseUrl}${this.basePath}/object-definitions/by-external-reference-code/${externalReferenceCode}`
 		);

@@ -58,6 +58,27 @@ test.describe('Data Set Manager with Feature Flag Enabled', () => {
 			).toBeVisible();
 		});
 	});
+
+	test('Confirm Data Set fragment is displayed if FF is enabled @LPS-188590', async ({
+		page,
+	}) => {
+		await test.step('Go to home edit page', async () => {
+			await page.goto(`/web/guest/home?p_l_mode=edit`);
+		});
+
+		await test.step('Check that "Data Set" is not displayed as a fragment', async () => {
+			await page
+				.getByLabel('Search Fragments and Widgets')
+				.fill('Data Set');
+
+			await expect(
+				page.getByRole('menuitem', {
+					exact: true,
+					name: 'Data Set Add Data Set Mark Data Set as Favorite',
+				})
+			).toBeVisible();
+		});
+	});
 });
 
 export const disabledTest = mergeTests(
@@ -103,6 +124,28 @@ disabledTest.describe('Data Set Manager with Feature Flag Disabled', () => {
 					page.getByRole('menuitem', {
 						exact: true,
 						name: 'Add Frontend Data Set Cell Renderer',
+					})
+				).toBeHidden();
+			});
+		}
+	);
+
+	disabledTest(
+		'Confirm Data Set fragment is not displayed if FF is disabled @LPS-188590',
+		async ({page}) => {
+			await test.step('Go to home edit page', async () => {
+				await page.goto(`/web/guest/home?p_l_mode=edit`);
+			});
+
+			await test.step('Check that "Data Set" is not displayed as a fragment', async () => {
+				await page
+					.getByLabel('Search Fragments and Widgets')
+					.fill('Data Set');
+
+				await expect(
+					page.getByRole('menuitem', {
+						exact: true,
+						name: 'Data Set Add Data Set Mark Data Set as Favorite',
 					})
 				).toBeHidden();
 			});

@@ -14,6 +14,13 @@ public interface FragmentEntryLinkListener {
 
 	public void onAddFragmentEntryLink(FragmentEntryLink fragmentEntryLink);
 
+	public default void onCopyFragmentEntryLink(
+		FragmentEntryLink fragmentEntryLink,
+		FragmentEntryLink originalFragmentEntryLink) {
+
+		onAddFragmentEntryLink(fragmentEntryLink);
+	}
+
 	public void onDeleteFragmentEntryLink(FragmentEntryLink fragmentEntryLink);
 
 	public default void onDuplicateFragmentEntryLink(

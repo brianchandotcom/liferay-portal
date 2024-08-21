@@ -570,12 +570,10 @@ test.describe('CSS Client Extensions', () => {
 			await pageConfigurationPage.goToSection(layoutTitle, 'Design');
 
 			await expect(
-				page
-					.locator(
-						'.global-css-cets-configuration .table tbody .disabled'
-					)
-					.getByText('From Master')
-			).toBeVisible();
+				page.locator('.global-css-cets-configuration tr', {
+					has: page.getByText('From Master'),
+				})
+			).toHaveClass(/disabled/);
 
 			// Clean up
 
@@ -633,12 +631,10 @@ test.describe('CSS Client Extensions', () => {
 			await pageConfigurationPage.goToSection(layoutTitle, 'Design');
 
 			await expect(
-				page
-					.locator(
-						'.global-css-cets-configuration .table tbody .disabled'
-					)
-					.getByText('From Pages')
-			).toBeVisible();
+				page.locator('.global-css-cets-configuration tr', {
+					has: page.getByText('From Pages'),
+				})
+			).toHaveClass(/disabled/);
 
 			// Clean up
 
@@ -774,12 +770,10 @@ test.describe('JavaScript Client Extensions', () => {
 			await pagesAdminPage.clickOnJavaScriptClientExtensionsTab();
 
 			await expect(
-				page
-					.locator(
-						'.global-js-cets-configuration .table tbody .disabled'
-					)
-					.getByText('From Master')
-			).toBeVisible();
+				page.locator('.global-js-cets-configuration tr', {
+					has: page.getByText('From Master'),
+				})
+			).toHaveClass(/disabled/);
 
 			// Clean up
 
@@ -838,12 +832,10 @@ test.describe('JavaScript Client Extensions', () => {
 			await pagesAdminPage.clickOnJavaScriptClientExtensionsTab();
 
 			await expect(
-				page
-					.locator(
-						'.global-js-cets-configuration .table tbody .disabled'
-					)
-					.getByText('From Pages')
-			).toBeVisible();
+				page.locator('.global-js-cets-configuration tr', {
+					has: page.getByText('From Pages'),
+				})
+			).toHaveClass(/disabled/);
 
 			// Clean up
 

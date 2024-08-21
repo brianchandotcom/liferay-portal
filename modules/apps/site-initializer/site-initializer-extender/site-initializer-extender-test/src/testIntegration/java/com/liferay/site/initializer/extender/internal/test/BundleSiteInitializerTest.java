@@ -3586,21 +3586,41 @@ public class BundleSiteInitializerTest {
 			_segmentsEntryLocalService.fetchSegmentsEntry(
 				_group.getGroupId(), "TEST-SEGMENTS-ENTRY-1");
 
+		Role role1 = _roleLocalService.fetchRole(
+			_group.getCompanyId(), "Test Role 1");
+
 		Assert.assertNotNull(segmentsEntry1);
 		Assert.assertTrue(segmentsEntry1.isActive());
 		Assert.assertEquals(
 			"Test Segments Entry 1",
 			segmentsEntry1.getName(LocaleUtil.getSiteDefault()));
+		Assert.assertEquals(
+			StringBundler.concat(
+				"{\"criteria\":{\"user\":{\"conjunction\":\"and\",\"",
+				"filterString\":\"(roleIds eq '", role1.getRoleId(), "')\",\"",
+				"typeValue\":\"model\"}},\"filterStrings\":{\"model\":\"(",
+				"roleIds eq '", role1.getRoleId(), "')\"}}"),
+			segmentsEntry1.getCriteria());
 
 		SegmentsEntry segmentsEntry2 =
 			_segmentsEntryLocalService.fetchSegmentsEntry(
 				_group.getGroupId(), "TEST-SEGMENTS-ENTRY-2");
+
+		Role role2 = _roleLocalService.fetchRole(
+			_group.getCompanyId(), "Test Role 2");
 
 		Assert.assertNotNull(segmentsEntry2);
 		Assert.assertFalse(segmentsEntry2.isActive());
 		Assert.assertEquals(
 			"Test Segments Entry 2",
 			segmentsEntry2.getName(LocaleUtil.getSiteDefault()));
+		Assert.assertEquals(
+			StringBundler.concat(
+				"{\"criteria\":{\"user\":{\"conjunction\":\"and\",\"",
+				"filterString\":\"(roleIds eq '", role2.getRoleId(), "')\",\"",
+				"typeValue\":\"model\"}},\"filterStrings\":{\"model\":\"(",
+				"roleIds eq '", role2.getRoleId(), "')\"}}"),
+			segmentsEntry2.getCriteria());
 
 		Layout layout = _layoutLocalService.fetchLayoutByFriendlyURL(
 			_group.getGroupId(), false, "/test-public-layout");

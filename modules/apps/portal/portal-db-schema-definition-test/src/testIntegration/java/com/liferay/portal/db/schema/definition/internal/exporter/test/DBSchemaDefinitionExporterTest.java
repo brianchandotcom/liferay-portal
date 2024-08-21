@@ -42,14 +42,14 @@ public class DBSchemaDefinitionExporterTest
 			new AssumeTestRule("assume"), new LiferayIntegrationTestRule());
 
 	public static void assume() {
-		Assume.assumeFalse(DBPartition.isPartitionEnabled());
-
 		assumeDB();
+
+		Assume.assumeFalse(DBPartition.isPartitionEnabled());
 	}
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		setUpClassDefault();
+		setUpClassBaseDBSchemaDefinitionExporterTestCase();
 	}
 
 	@Test

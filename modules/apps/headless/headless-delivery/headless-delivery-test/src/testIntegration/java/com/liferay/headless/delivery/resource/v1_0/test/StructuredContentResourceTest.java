@@ -1214,6 +1214,11 @@ public class StructuredContentResourceTest
 			},
 			new ContentField() {
 				{
+					name = "Fieldset";
+				}
+			},
+			new ContentField() {
+				{
 					contentFieldValue = new ContentFieldValue() {
 						{
 							data = String.valueOf(RandomTestUtil.randomInt());

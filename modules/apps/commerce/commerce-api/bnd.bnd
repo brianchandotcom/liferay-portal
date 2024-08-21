@@ -34,5 +34,6 @@ Export-Package:\
 	com.liferay.commerce.stock.activity,\
 	com.liferay.commerce.subscription,\
 	com.liferay.commerce.tax,\
+	com.liferay.commerce.url,\
 	com.liferay.commerce.util,\
 	com.liferay.commerce.util.comparator

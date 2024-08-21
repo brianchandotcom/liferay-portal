@@ -171,13 +171,13 @@ export class JournalEditArticlePage {
 	}
 
 	async fillTitle(title: string) {
+		await this.propertiesTab.waitFor();
+
 		await fillAndClickOutside(this.page, this.titleInput, title);
 	}
 
 	async editAndPublishExistingBasicArticle(title: string) {
 		await this.editArticle(title);
-
-		await this.propertiesTab.waitFor();
 
 		await this.fillTitle(title);
 

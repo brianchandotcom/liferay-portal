@@ -144,8 +144,7 @@ export default function UndoRedo({
 		updateMetadataFields(nextStep, newStep);
 	};
 
-	const handleRedo = () => {
-		const newStep = step + 1;
+	const handleRedo = (newStep) => {
 		const nextStep = history[newStep];
 
 		if (nextStep.selectedLanguageId !== selectedLanguageId) {
@@ -439,7 +438,7 @@ export default function UndoRedo({
 				displayType="secondary"
 				onClick={() => {
 					Liferay.fire('journal:redo');
-					handleRedo();
+					handleRedo(step + 1);
 				}}
 				size="sm"
 				symbol="redo"

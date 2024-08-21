@@ -124,7 +124,10 @@ export class IdentityProviderConnectionsPage {
 		}
 	}
 
-	async editIdentityProviderConnection(idpConnection: TIdpConnection) {
+	async editIdentityProviderConnection(
+		idpConnection: TIdpConnection,
+		expectedMessage?: string
+	) {
 		const row = await this.page.getByRole('row').filter({
 			hasText: idpConnection.idpName,
 		});
@@ -136,7 +139,8 @@ export class IdentityProviderConnectionsPage {
 		});
 
 		await this.populateAndSaveIdentityProviderConnectionDetails(
-			idpConnection
+			idpConnection,
+			expectedMessage
 		);
 	}
 
@@ -167,7 +171,8 @@ export class IdentityProviderConnectionsPage {
 	}
 
 	private async populateAndSaveIdentityProviderConnectionDetails(
-		idpConnection: TIdpConnection
+		idpConnection: TIdpConnection,
+		expectedMessage?: string
 	) {
 		await this.nameField.fill(idpConnection.idpName);
 
@@ -234,6 +239,13 @@ export class IdentityProviderConnectionsPage {
 
 		await this.saveButton.click();
 
-		expect(await this.successMessage).toBeVisible();
+		if (expectedMessage !== undefined) {
+			await expect(
+				await this.page.getByText(expectedMessage)
+			).toBeVisible();
+		}
+		else {
+			await expect(await this.successMessage).toBeVisible();
+		}
 	}
 }

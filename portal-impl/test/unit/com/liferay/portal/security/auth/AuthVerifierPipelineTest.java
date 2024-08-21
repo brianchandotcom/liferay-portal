@@ -55,8 +55,6 @@ public class AuthVerifierPipelineTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_setUpAuthVerifiers();
-		_setUpAuthVerifiersConfiguration();
 		_setUpAuthVerifierRegistry();
 		_setUpPortalUtil();
 		_setUpUserLocalServiceUtil();
@@ -227,26 +225,6 @@ public class AuthVerifierPipelineTest {
 		);
 	}
 
-	private void _setUpAuthVerifiers() {
-		_authVerifier1 = _createAuthVerifier(AuthVerifierResult.State.SUCCESS, 1);
-		_authVerifier2 = _createAuthVerifier(
-			AuthVerifierResult.State.UNSUCCESSFUL, 2);
-	}
-
-	private void _setUpAuthVerifiersConfiguration() {
-		_authVerifierConfiguration1 = new AuthVerifierConfiguration() {
-			{
-				setAuthVerifierClassName("classname1");
-			}
-		};
-
-		_authVerifierConfiguration2 = new AuthVerifierConfiguration() {
-			{
-				setAuthVerifierClassName("classname2");
-			}
-		};
-	}
-
 	private void _setUpPortalUtil() {
 		PortalUtil portalUtil = new PortalUtil();
 
@@ -311,10 +289,22 @@ public class AuthVerifierPipelineTest {
 
 	private static final String _BASE_URL = "/TestAuthVerifier";
 
-	private AuthVerifier _authVerifier1;
-	private AuthVerifier _authVerifier2;
-	private AuthVerifierConfiguration _authVerifierConfiguration1;
-	private AuthVerifierConfiguration _authVerifierConfiguration2;
+	private final AuthVerifier _authVerifier1 = _createAuthVerifier(
+		AuthVerifierResult.State.SUCCESS, 1);
+	private final AuthVerifier _authVerifier2 = _createAuthVerifier(
+		AuthVerifierResult.State.UNSUCCESSFUL, 2);
+	private final AuthVerifierConfiguration _authVerifierConfiguration1 =
+		new AuthVerifierConfiguration() {
+			{
+				setAuthVerifierClassName("classname1");
+			}
+		};
+	private final AuthVerifierConfiguration _authVerifierConfiguration2 =
+		new AuthVerifierConfiguration() {
+			{
+				setAuthVerifierClassName("classname2");
+			}
+		};
 	private final MockedStatic<AuthVerifierRegistry>
 		_authVerifierRegistryMockedStatic = Mockito.mockStatic(
 			AuthVerifierRegistry.class);

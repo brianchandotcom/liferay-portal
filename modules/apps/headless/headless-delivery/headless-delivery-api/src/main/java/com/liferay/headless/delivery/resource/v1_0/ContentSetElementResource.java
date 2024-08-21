@@ -63,6 +63,11 @@ public interface ContentSetElementResource {
 			Long contentSetId, Pagination pagination)
 		throws Exception;
 
+	public Page<ContentSetElement>
+			getSiteContentSetProviderByKeyContentSetElementsPage(
+				Long siteId, String key, Pagination pagination)
+		throws Exception;
+
 	public Page<ContentSetElement> getSiteContentSetByKeyContentSetElementsPage(
 			Long siteId, String key, Pagination pagination)
 		throws Exception;

@@ -1842,6 +1842,11 @@ public class ServletDataImpl implements ServletData {
 							ContentSetElementResourceImpl.class,
 							"getContentSetContentSetElementsPage"));
 					put(
+						"query#contentSetProviderByKeyContentSetElements",
+						new ObjectValuePair<>(
+							ContentSetElementResourceImpl.class,
+							"getSiteContentSetProviderByKeyContentSetElementsPage"));
+					put(
 						"query#contentSetByKeyContentSetElements",
 						new ObjectValuePair<>(
 							ContentSetElementResourceImpl.class,

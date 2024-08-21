@@ -181,6 +181,13 @@ public class ContentSetElementResourceTest
 		return _assetListEntry.getUuid();
 	}
 
+	@Override
+	protected String
+		testGetSiteContentSetProviderByKeyContentSetElementsPage_getKey() {
+
+		return TestAssetEntryInfoCollectionProvider.class.getName();
+	}
+
 	private BlogsEntry _addBlogsEntry() throws Exception {
 		return BlogsEntryLocalServiceUtil.addEntry(
 			TestPropsValues.getUserId(), RandomTestUtil.randomString(),

@@ -126,7 +126,9 @@ export class AddCustomFieldPage {
 
 		await this._populateCommonFields(customField);
 
-		await this._populateUniqueFields(values);
+		if (values !== undefined) {
+			await this._populateUniqueFields(values);
+		}
 
 		await this.saveButton.click();
 		await expect(await this.successMessage).toBeVisible();

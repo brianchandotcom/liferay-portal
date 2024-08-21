@@ -238,8 +238,10 @@ public class DBSchemaDefinitionExporterDBPartitionTest
 					DBPartitionUtil.getPartitionName(_company.getCompanyId()) +
 						".TestView as select * from Company");
 
+			String reportContent = getReportContent();
+
 			Assert.assertTrue(
-				getReportContent().contains(
+				reportContent.contains(
 					StringBundler.concat(
 						"Virtual instance ", _company.getCompanyId(),
 						" missing views: ",

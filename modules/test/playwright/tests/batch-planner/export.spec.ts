@@ -325,12 +325,17 @@ test('can export as JSON with all field types mapped', async ({
 				name: 'Test Test',
 			},
 			customAttachment: {
+				externalReferenceCode: expect.any(String),
 				id: expect.any(Number),
 				link: {
 					href: expect.any(String),
 					label: expect.any(String),
 				},
 				name: expect.any(String),
+				scope: {
+					externalReferenceCode: expect.any(String),
+					type: expect.any(String),
+				},
 			},
 			customBoolean: true,
 			customLongText: 'This is a custom LongText field',

@@ -104,6 +104,8 @@ public class ContentSetElementResourceImpl
 				Long siteId, String key, Pagination pagination)
 		throws Exception {
 
+		_initThemeDisplay(siteId);
+
 		InfoCollectionProvider<?> infoCollectionProvider =
 			_infoItemServiceRegistry.getInfoItemService(
 				InfoCollectionProvider.class, key);

@@ -348,7 +348,7 @@ export class PageEditorPage {
 
 			await hoverAndExpectToBeVisible({
 				autoClick: true,
-				target: this.page.getByRole('menuitem', {name: subMenuAction}),
+				target: this.page.locator(`[data-label="${subMenuAction}"]`),
 				trigger: this.page.getByRole('menuitem', {name: action}),
 			});
 		}

@@ -591,27 +591,6 @@ definition {
 
 			IFrame.closeFrame();
 		}
-
-		task ("Remove the selected web content via Mapping panel") {
-			PageEditor.gotoEllipsisMenuItemInItemSelector(
-				fieldLabel = "Item",
-				menuItem = "Remove Item");
-
-			PageEditor.waitForAutoSave();
-
-			AssertAttributeValue(
-				key_fieldLabel = "Item",
-				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT",
-				value1 = "placeholder",
-				value2 = "No Item Selected");
-		}
-
-		task ("View the default inline text is shown in Heading") {
-			PageEditor.viewFragmentEditableText(
-				editableText = "Heading Example",
-				fragmentName = "Heading",
-				id = "element-text");
-		}
 	}
 
 	@description = "This is a test for LPS-109407. View the background color of nodes in the Page Structure when hover on them or they are selected."

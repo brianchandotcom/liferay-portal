@@ -6,6 +6,7 @@
 package com.liferay.headless.commerce.admin.shipment.internal.resource.v1_0;
 
 import com.liferay.commerce.constants.CommerceShipmentConstants;
+import com.liferay.commerce.exception.NoSuchOrderException;
 import com.liferay.commerce.exception.NoSuchShipmentException;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseService;
 import com.liferay.commerce.model.CommerceOrder;
@@ -175,8 +176,25 @@ public class ShipmentResourceImpl extends BaseShipmentResourceImpl {
 
 	@Override
 	public Shipment postShipment(Shipment shipment) throws Exception {
-		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
-			shipment.getOrderId());
+		CommerceOrder commerceOrder;
+
+		long orderId = GetterUtil.getLong(shipment.getOrderId());
+
+		if (orderId > 0) {
+			commerceOrder = _commerceOrderService.getCommerceOrder(
+				shipment.getOrderId());
+		}
+		else {
+			commerceOrder = _commerceOrderService.fetchByExternalReferenceCode(
+				shipment.getOrderExternalReferenceCode(),
+				contextCompany.getCompanyId());
+
+			if (commerceOrder == null) {
+				throw new NoSuchOrderException(
+					"Unable to find order with external reference code " +
+						shipment.getOrderExternalReferenceCode());
+			}
+		}
 
 		CommerceShipment commerceShipment =
 			_commerceShipmentService.addCommerceShipment(

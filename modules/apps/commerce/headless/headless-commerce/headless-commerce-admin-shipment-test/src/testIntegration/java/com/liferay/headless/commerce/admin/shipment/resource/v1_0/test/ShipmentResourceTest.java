@@ -8,12 +8,17 @@ package com.liferay.headless.commerce.admin.shipment.resource.v1_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
+import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceShipment;
 import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.commerce.service.CommerceShipmentLocalServiceUtil;
 import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.headless.commerce.admin.shipment.client.dto.v1_0.Shipment;
+import com.liferay.headless.commerce.admin.shipment.client.dto.v1_0.ShippingAddress;
+import com.liferay.portal.kernel.model.Country;
+import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
@@ -25,6 +30,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
+import com.liferay.portal.test.rule.Inject;
 
 import java.math.BigDecimal;
 
@@ -32,6 +38,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -88,6 +95,14 @@ public class ShipmentResourceTest extends BaseShipmentResourceTestCase {
 	@Override
 	@Test
 	public void testPatchShipmentByExternalReferenceCode() throws Exception {
+	}
+
+	@Override
+	@Test
+	public void testPostShipment() throws Exception {
+		super.testPostShipment();
+
+		_testPostShipmentWithMoreExternalReferenceCodes();
 	}
 
 	@Override
@@ -259,6 +274,69 @@ public class ShipmentResourceTest extends BaseShipmentResourceTestCase {
 		return _toShipment(_commerceShipment);
 	}
 
+	private ShippingAddress _randomShippingAddress() throws Exception {
+		CommerceAddress commerceAddress = _commerceOrder.getShippingAddress();
+
+		Country country = commerceAddress.getCountry();
+		Region region = commerceAddress.getRegion();
+
+		return new ShippingAddress() {
+			{
+				city = RandomTestUtil.randomString();
+				countryISOCode = country.getA2();
+				description = RandomTestUtil.randomString();
+				externalReferenceCode = RandomTestUtil.randomString();
+				latitude = RandomTestUtil.randomDouble();
+				longitude = RandomTestUtil.randomDouble();
+				name = RandomTestUtil.randomString();
+				phoneNumber = RandomTestUtil.randomString();
+				regionISOCode = region.getRegionCode();
+				street1 = RandomTestUtil.randomString();
+				street2 = RandomTestUtil.randomString();
+				street3 = RandomTestUtil.randomString();
+				zip = RandomTestUtil.randomString();
+			}
+		};
+	}
+
+	private void _testPostShipmentWithMoreExternalReferenceCodes()
+		throws Exception {
+
+		Shipment randomShipment = randomShipment();
+
+		randomShipment.setOrderExternalReferenceCode(
+			_commerceOrder.getExternalReferenceCode());
+		randomShipment.setOrderId(0L);
+
+		ShippingAddress randomShippingAddress = _randomShippingAddress();
+
+		randomShippingAddress.setExternalReferenceCode(
+			RandomTestUtil.randomString());
+		randomShippingAddress.setId(0L);
+
+		randomShipment.setShippingAddress(randomShippingAddress);
+
+		randomShipment.setShippingAddressId(0L);
+
+		Shipment postShipment = shipmentResource.postShipment(randomShipment);
+
+		Assert.assertEquals(
+			randomShipment.getAccountId(), postShipment.getAccountId());
+		Assert.assertEquals(
+			randomShipment.getShippingMethodId(),
+			postShipment.getShippingMethodId());
+
+		ShippingAddress postShippingAddress = postShipment.getShippingAddress();
+
+		ShippingAddress getShippingAddress = _toShippingAddress(
+			_commerceAddressService.getCommerceAddress(
+				postShippingAddress.getId()));
+
+		Assert.assertEquals(
+			randomShippingAddress.getExternalReferenceCode(),
+			getShippingAddress.getExternalReferenceCode());
+	}
+
 	private Shipment _toShipment(CommerceShipment commerceShipment)
 		throws Exception {
 
@@ -282,6 +360,36 @@ public class ShipmentResourceTest extends BaseShipmentResourceTestCase {
 			}
 		};
 	}
+
+	private ShippingAddress _toShippingAddress(CommerceAddress commerceAddress)
+		throws Exception {
+
+		Country country = commerceAddress.getCountry();
+		Region region = commerceAddress.getRegion();
+
+		return new ShippingAddress() {
+			{
+				city = commerceAddress.getCity();
+				countryISOCode = country.getA2();
+				description = commerceAddress.getDescription();
+				externalReferenceCode =
+					commerceAddress.getExternalReferenceCode();
+				id = commerceAddress.getCommerceAddressId();
+				latitude = commerceAddress.getLatitude();
+				longitude = commerceAddress.getLongitude();
+				name = commerceAddress.getName();
+				phoneNumber = commerceAddress.getPhoneNumber();
+				regionISOCode = region.getRegionCode();
+				street1 = commerceAddress.getStreet1();
+				street2 = commerceAddress.getStreet2();
+				street3 = commerceAddress.getStreet3();
+				zip = commerceAddress.getZip();
+			}
+		};
+	}
+
+	@Inject
+	private CommerceAddressService _commerceAddressService;
 
 	@DeleteAfterTestRun
 	private CommerceChannel _commerceChannel;

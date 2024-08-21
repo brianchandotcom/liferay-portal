@@ -123,8 +123,8 @@ public class CommerceShipmentLocalServiceImpl
 			CommerceShipmentConstants.SHIPMENT_STATUS_PROCESSING);
 
 		CommerceAddress commerceAddress = _updateCommerceShipmentAddress(
-			commerceShipment, name, description, street1, street2, street3,
-			city, zip, regionId, countryId, phoneNumber, null);
+			null, commerceShipment, name, description, street1, street2,
+			street3, city, zip, regionId, countryId, phoneNumber, null);
 
 		commerceShipment.setCommerceAddressId(
 			commerceAddress.getCommerceAddressId());
@@ -433,39 +433,22 @@ public class CommerceShipmentLocalServiceImpl
 		return indexer.searchCount(searchContext);
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 * #updateAddress(long, String, String, String, String, String, String,
-	 * String, long, long, String, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public CommerceShipment updateAddress(
-			long commerceShipmentId, String name, String description,
-			String street1, String street2, String street3, String city,
-			String zip, long regionId, long countryId, String phoneNumber)
-		throws PortalException {
-
-		return commerceShipmentLocalService.updateAddress(
-			commerceShipmentId, name, description, street1, street2, street3,
-			city, zip, regionId, countryId, phoneNumber, null);
-	}
-
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceShipment updateAddress(
-			long commerceShipmentId, String name, String description,
-			String street1, String street2, String street3, String city,
-			String zip, long regionId, long countryId, String phoneNumber,
-			ServiceContext serviceContext)
+			String externalReferenceCode, long commerceShipmentId, String name,
+			String description, String street1, String street2, String street3,
+			String city, String zip, long regionId, long countryId,
+			String phoneNumber, ServiceContext serviceContext)
 		throws PortalException {
 
 		CommerceShipment commerceShipment =
 			commerceShipmentPersistence.findByPrimaryKey(commerceShipmentId);
 
 		CommerceAddress commerceAddress = _updateCommerceShipmentAddress(
-			commerceShipment, name, description, street1, street2, street3,
-			city, zip, regionId, countryId, phoneNumber, serviceContext);
+			externalReferenceCode, commerceShipment, name, description, street1,
+			street2, street3, city, zip, regionId, countryId, phoneNumber,
+			serviceContext);
 
 		commerceShipment.setCommerceAddressId(
 			commerceAddress.getCommerceAddressId());
@@ -580,8 +563,9 @@ public class CommerceShipmentLocalServiceImpl
 		}
 
 		CommerceAddress commerceAddress = _updateCommerceShipmentAddress(
-			commerceShipment, name, description, street1, street2, street3,
-			city, zip, regionId, countryId, phoneNumber, serviceContext);
+			null, commerceShipment, name, description, street1, street2,
+			street3, city, zip, regionId, countryId, phoneNumber,
+			serviceContext);
 
 		commerceShipment.setCommerceAddressId(
 			commerceAddress.getCommerceAddressId());
@@ -856,10 +840,10 @@ public class CommerceShipmentLocalServiceImpl
 	}
 
 	private CommerceAddress _updateCommerceShipmentAddress(
-			CommerceShipment commerceShipment, String name, String description,
-			String street1, String street2, String street3, String city,
-			String zip, long regionId, long countryId, String phoneNumber,
-			ServiceContext serviceContext)
+			String externalReferenceCode, CommerceShipment commerceShipment,
+			String name, String description, String street1, String street2,
+			String street3, String city, String zip, long regionId,
+			long countryId, String phoneNumber, ServiceContext serviceContext)
 		throws PortalException {
 
 		CommerceAddress commerceAddress =
@@ -880,7 +864,7 @@ public class CommerceShipmentLocalServiceImpl
 		}
 
 		return _commerceAddressLocalService.addCommerceAddress(
-			commerceShipment.getModelClassName(),
+			externalReferenceCode, commerceShipment.getModelClassName(),
 			commerceShipment.getCommerceShipmentId(), name, description,
 			street1, street2, street3, city, zip, regionId, countryId,
 			phoneNumber,

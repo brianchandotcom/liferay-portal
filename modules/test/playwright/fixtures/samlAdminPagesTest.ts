@@ -6,16 +6,21 @@
 import {test} from '@playwright/test';
 
 import {IdentityProviderConnectionsPage} from '../pages/saml-web/IdentityProviderConnectionsPage';
+import {IdentityProviderPage} from '../pages/saml-web/IdentityProviderPage';
 import {SamlAdminPage} from '../pages/saml-web/SamlAdminPage';
 import {ServiceProviderConnectionsPage} from '../pages/saml-web/ServiceProviderConnectionsPage';
 
 const samlAdminPagesTest = test.extend<{
 	identityProviderConnectionsPage: IdentityProviderConnectionsPage;
+	identityProviderPage: IdentityProviderPage;
 	samlAdminPage: SamlAdminPage;
 	serviceProviderConnectionsPage: ServiceProviderConnectionsPage;
 }>({
 	identityProviderConnectionsPage: async ({page}, use) => {
 		await use(new IdentityProviderConnectionsPage(page));
+	},
+	identityProviderPage: async ({page}, use) => {
+		await use(new IdentityProviderPage(page));
 	},
 	samlAdminPage: async ({page}, use) => {
 		await use(new SamlAdminPage(page));

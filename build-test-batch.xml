@@ -3210,14 +3210,35 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 					<prepare-test-environment />
 				</then>
 				<elseif>
-					<or>
+					<and>
 						<equals arg1="${test.batch.full.setup}" arg2="true" />
 						<isset property="env.JENKINS_HOME" />
-					</or>
+					</and>
 					<then>
 						<prepare-test-build />
 					</then>
 				</elseif>
+				<else>
+					<for list="${test.batch.names.standalone}" param="test.batch.name">
+						<sequential>
+							<if>
+								<contains string="${env.JOB_VARIANT}" substring="@{test.batch.name}" />
+								<then>
+									<property name="skip.portal.dist" value="true" />
+								</then>
+							</if>
+						</sequential>
+					</for>
+
+					<if>
+						<not>
+							<isset property="skip.portal.dist" />
+						</not>
+						<then>
+							<fail message="The portal environment is not available" />
+						</then>
+					</if>
+				</else>
 			</if>
 		</sequential>
 	</macrodef>

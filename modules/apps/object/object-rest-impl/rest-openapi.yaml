@@ -28,7 +28,6 @@ components:
         FileEntry:
             properties:
                 externalReferenceCode:
-                    readOnly: true
                     type: string
                 fileBase64:
                     # @review

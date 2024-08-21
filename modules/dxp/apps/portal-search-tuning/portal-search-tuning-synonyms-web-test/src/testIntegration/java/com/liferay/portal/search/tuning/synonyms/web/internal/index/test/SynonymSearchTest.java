@@ -3,14 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.search.tuning.synonyms.web.test;
+package com.liferay.portal.search.tuning.synonyms.web.internal.index.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -20,8 +17,6 @@ import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.SearchEngine;
-import com.liferay.portal.kernel.search.SearchEngineHelperUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.PortalPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -32,8 +27,6 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HashMapDictionary;
-import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
@@ -47,14 +40,10 @@ import com.liferay.portal.search.test.util.DocumentsAssert;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.io.IOException;
-import java.io.InputStream;
-
-import java.util.Dictionary;
+import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 
 import javax.portlet.ActionRequest;
 
@@ -64,9 +53,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.osgi.service.cm.Configuration;
-import org.osgi.service.cm.ConfigurationAdmin;
 
 /**
  * @author Tibor Lipusz
@@ -111,15 +97,15 @@ public class SynonymSearchTest {
 
 		LanguageUtil.init();
 
-		_setUpSynonyms();
-
-		_waitForConfigurationsToApply();
+		_addSynonymSets();
 
 		_addJournalArticles();
 	}
 
 	@AfterClass
 	public static void tearDownClass() {
+		_deleteSynonymSets();
+
 		PrincipalThreadLocal.setName(_originalName);
 
 		PortalPreferencesLocalServiceUtil.updatePreferences(
@@ -129,8 +115,10 @@ public class SynonymSearchTest {
 
 	@Test
 	public void testSearchOnLocalesWithDefaultSynonymFilters() {
-		for (Map.Entry<Locale, String[]> entry : _synonymsMap.entrySet()) {
-			_assertSearch(entry.getValue()[0], entry.getKey());
+		for (Map.Entry<Locale, String> entry : _synonymsMap.entrySet()) {
+			String[] parts = StringUtil.split(entry.getValue());
+
+			_assertSearch(parts[0], entry.getKey());
 		}
 	}
 
@@ -146,121 +134,49 @@ public class SynonymSearchTest {
 	}
 
 	private static void _addJournalArticles() throws Exception {
-		for (Map.Entry<Locale, String[]> entry : _synonymsMap.entrySet()) {
+		for (Map.Entry<Locale, String> entry : _synonymsMap.entrySet()) {
+			String[] parts = StringUtil.split(entry.getValue());
+
 			_addJournalArticle(
 				HashMapBuilder.put(
-					entry.getKey(), entry.getValue()[0]
+					entry.getKey(), parts[0]
 				).build());
 			_addJournalArticle(
 				HashMapBuilder.put(
-					entry.getKey(), entry.getValue()[1]
+					entry.getKey(), parts[1]
 				).build());
 		}
 	}
 
-	private static void _addSynonymSet(String synonymSet) {
+	private static void _addSynonymSets() {
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			new MockLiferayPortletActionRequest();
 
 		mockLiferayPortletActionRequest.setAttribute(
 			WebKeys.COMPANY_ID, _companyId);
-		mockLiferayPortletActionRequest.addParameter("synonymSet", synonymSet);
+
+		Collection<String> values = _synonymsMap.values();
 
 		ReflectionTestUtil.invoke(
-			_mvcActionCommand, "updateSynonymSet",
+			_editMVCActionCommand, "updateSynonymSets",
+			new Class<?>[] {ActionRequest.class, String[].class},
+			mockLiferayPortletActionRequest, values.toArray(new String[0]));
+	}
+
+	private static void _deleteSynonymSets() {
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			new MockLiferayPortletActionRequest();
+
+		mockLiferayPortletActionRequest.setAttribute(
+			WebKeys.COMPANY_ID, _companyId);
+
+		mockLiferayPortletActionRequest.addParameter(
+			"deleteAllSynonymSets", "true");
+
+		ReflectionTestUtil.invoke(
+			_deleteMVCActionCommand, "deleteSynonymSets",
 			new Class<?>[] {ActionRequest.class},
 			mockLiferayPortletActionRequest);
-	}
-
-	private static String _getResourceAsString(
-		Class<?> clazz, String resourceName) {
-
-		try (InputStream inputStream = clazz.getResourceAsStream(
-				resourceName)) {
-
-			return StringUtil.read(inputStream);
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(
-				"Unable to load resource: " + resourceName, ioException);
-		}
-	}
-
-	private static String _getSearchEngineConfigurationPid() {
-		SearchEngine searchEngine = SearchEngineHelperUtil.getSearchEngine();
-
-		if (Objects.equals(searchEngine.getVendor(), "OpenSearch")) {
-			return _CONFIGURATION_PID_OPENSEARCH_2;
-		}
-
-		return _CONFIGURATION_PID_ELASTICSEARCH;
-	}
-
-	private static String _loadOverrideTypeMappings() {
-		try {
-			return _getResourceAsString(
-				SynonymSearchTest.class,
-				"dependencies/" + SynonymSearchTest.class.getSimpleName() +
-					"-overrideTypeMappings.json");
-		}
-		catch (Exception exception) {
-			throw new RuntimeException(exception);
-		}
-	}
-
-	private static Dictionary<String, Object> _setUpSearchEngineProperties()
-		throws Exception {
-
-		Configuration configuration = _configurationAdmin.getConfiguration(
-			_getSearchEngineConfigurationPid(), StringPool.QUESTION);
-
-		Dictionary<String, Object> properties = configuration.getProperties();
-
-		if (properties == null) {
-			properties = new HashMapDictionary<>();
-		}
-
-		properties.put("overrideTypeMappings", _loadOverrideTypeMappings());
-
-		return properties;
-	}
-
-	private static void _setUpSynonyms() throws Exception {
-		try (ConfigurationTemporarySwapper
-				elasticSearchConfigurationTemporarySwapper =
-					new ConfigurationTemporarySwapper(
-							_getSearchEngineConfigurationPid(),
-						_setUpSearchEngineProperties());
-
-			 ConfigurationTemporarySwapper synonymConfigurationTemporarySwapper =
-				new ConfigurationTemporarySwapper(
-					_CONFIGURATION_PID_SYNONYMS,
-					_setUpSynonymsProperties())) {
-
-			for (String[] words : _synonymsMap.values()) {
-				_addSynonymSet(String.join(",", words));
-			}
-		}
-	}
-
-	private static Dictionary<String, Object> _setUpSynonymsProperties() {
-		return HashMapDictionaryBuilder.<String, Object>put(
-			"filterNames",
-			new String[] {
-				"liferay_filter_synonym_ar", "liferay_filter_synonym_ca",
-				"liferay_filter_synonym_de", "liferay_filter_synonym_en",
-				"liferay_filter_synonym_es", "liferay_filter_synonym_fi",
-				"liferay_filter_synonym_fr", "liferay_filter_synonym_hu",
-				"liferay_filter_synonym_it", "liferay_filter_synonym_ja",
-				"liferay_filter_synonym_nl", "liferay_filter_synonym_pt_BR",
-				"liferay_filter_synonym_pt_PT", "liferay_filter_synonym_sv",
-				"liferay_filter_synonym_zh"
-			}
-		).build();
-	}
-
-	private static void _waitForConfigurationsToApply() throws Exception {
-		Thread.sleep(60000);
 	}
 
 	private void _assertSearch(String keyword, Locale locale) {
@@ -292,72 +208,58 @@ public class SynonymSearchTest {
 
 	private static final Locale _CATALAN_LOCALE = new Locale("ca", "ES");
 
-	private static final String _CONFIGURATION_PID_ELASTICSEARCH =
-		"com.liferay.portal.search.elasticsearch7.configuration." +
-			"ElasticsearchConfiguration";
-
-	private static final String _CONFIGURATION_PID_OPENSEARCH_2 =
-		"com.liferay.portal.search.opensearch2.configuration." +
-			"OpenSearchConfiguration";
-
-	private static final String _CONFIGURATION_PID_SYNONYMS =
-		"com.liferay.portal.search.tuning.synonyms.web.internal." +
-			"configuration.SynonymsConfiguration";
-
 	private static final Locale _FINNISH_LOCALE = new Locale("fi", "FI");
 
 	private static final Locale _SWEDISH_LOCALE = new Locale("sv", "SE");
 
 	private static Long _companyId;
 
-	@Inject
-	private static ConfigurationAdmin _configurationAdmin;
-
-	private static Group _group;
-
-	@Inject
-	private static Language _language;
+	@Inject(
+		filter = "mvc.command.name=/synonyms/delete_synonym_sets",
+		type = MVCActionCommand.class
+	)
+	private static MVCActionCommand _deleteMVCActionCommand;
 
 	@Inject(
 		filter = "mvc.command.name=/synonyms/edit_synonym_sets",
 		type = MVCActionCommand.class
 	)
-	private static MVCActionCommand _mvcActionCommand;
+	private static MVCActionCommand _editMVCActionCommand;
 
+	private static Group _group;
 	private static String _originalName;
 	private static String _originalPortalPreferencesXML;
-	private static final Map<Locale, String[]> _synonymsMap =
-		HashMapBuilder.put(
-			_ARABIC_LOCALE, new String[] {"فعال", "منتج"}
-		).put(
-			_CATALAN_LOCALE, new String[] {"feliç", "satisfet"}
-		).put(
-			_FINNISH_LOCALE, new String[] {"tehokas", "tuottava"}
-		).put(
-			_SWEDISH_LOCALE, new String[] {"lycklig", "nöjd"}
-		).put(
-			LocaleUtil.BRAZIL, new String[] {"feliz", "alegre"}
-		).put(
-			LocaleUtil.CHINA, new String[] {"有效的", "富有成效的"}
-		).put(
-			LocaleUtil.FRANCE, new String[] {"maison", "logement"}
-		).put(
-			LocaleUtil.GERMANY, new String[] {"glücklich", "heiter"}
-		).put(
-			LocaleUtil.HUNGARY, new String[] {"hatékony", "produktív"}
-		).put(
-			LocaleUtil.ITALY, new String[] {"contento", "soddisfatto"}
-		).put(
-			LocaleUtil.JAPAN, new String[] {"効果的", "生産的な"}
-		).put(
-			LocaleUtil.NETHERLANDS, new String[] {"effectief", "productief"}
-		).put(
-			LocaleUtil.PORTUGAL, new String[] {"carro", "automovel"}
-		).put(
-			LocaleUtil.SPAIN, new String[] {"efectivo", "productivo"}
-		).put(
-			LocaleUtil.US, new String[] {"dxp", "portal"}
-		).build();
+	private static final Map<Locale, String> _synonymsMap = HashMapBuilder.put(
+		_ARABIC_LOCALE, "فعال,منتج"
+	).put(
+		_CATALAN_LOCALE, "feliç,satisfet"
+	).put(
+		_FINNISH_LOCALE, "tehokas,tuottava"
+	).put(
+		_SWEDISH_LOCALE, "lycklig,nöjd"
+	).put(
+		LocaleUtil.BRAZIL, "feliz,alegre"
+	).put(
+		LocaleUtil.CHINA, "有效的,富有成效的"
+	).put(
+		LocaleUtil.FRANCE, "maison,logement"
+	).put(
+		LocaleUtil.GERMANY, "glücklich,heiter"
+	).put(
+		LocaleUtil.HUNGARY, "hatékony,produktív"
+	).put(
+		LocaleUtil.ITALY, "contento,soddisfatto"
+	).put(
+		LocaleUtil.JAPAN, "効果的,生産的な"
+	).put(
+		LocaleUtil.NETHERLANDS, "effectief,productief"
+	).put(
+		LocaleUtil.PORTUGAL, "carro,automovel"
+	).put(
+		LocaleUtil.SPAIN, "efectivo,productivo"
+	).put(
+		LocaleUtil.US, "dxp,portal"
+	).build();
 	private static User _user;
 
 	@Inject

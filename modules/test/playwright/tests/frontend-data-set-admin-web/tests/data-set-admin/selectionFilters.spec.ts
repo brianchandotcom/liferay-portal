@@ -259,13 +259,7 @@ test.describe('Filters in Data Set Manager', () => {
 	test('Preselected filter values are checked in the multiSelect', async ({
 		filtersPage,
 		page,
-		picklistApiHelpers,
 	}) => {
-		const picklist = await picklistApiHelpers.getPicklist(picklistName);
-		const preselectedValuesMultiSelect = page.locator(
-			'.form-control.form-control-tag-group.input-group'
-		);
-		
 		await test.step('Create a selection filter', async () => {
 			await filtersPage.createSelectionFilterPicklist({
 				filterBy: 'externalReferenceCode',
@@ -311,11 +305,13 @@ test.describe('Filters in Data Set Manager', () => {
 		});
 
 		await test.step('Check that the preselected value is checked', async () => {
-			await expect(preselectedValuesMultiSelect).toBeVisible();
+			await page.getByLabel(
+				'Preselected Values'
+			).click();
 
-			await expect(preselectedValuesMultiSelect).toContainText(
-				picklist.listTypeEntries[0].name
-			);
+			await expect(
+				page.getByLabel(PICKLIST_VALUE_NAME, { exact: true })
+			).toBeChecked();
 		});
 	});
 });

@@ -204,6 +204,9 @@ public class EditableValuesLayoutMappingExportImportContentProcessor
 			layoutNewPrimaryKeys.getOrDefault(plid, 0L));
 
 		if (layout == null) {
+			layoutJSONObject.remove("groupId");
+			layoutJSONObject.remove("layoutId");
+
 			return;
 		}
 

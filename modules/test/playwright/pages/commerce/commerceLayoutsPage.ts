@@ -22,6 +22,7 @@ export class CommerceLayoutsPage {
 	readonly closeProductMenuButton: Locator;
 	readonly configureMenuItem: Locator;
 	readonly createPageMenuItem: Locator;
+	readonly defaultDisplayPageTemplateIcon: Locator;
 	readonly defineCustomThemeCheckbox: Locator;
 	readonly deleteLayoutModal: Locator;
 	readonly deletePageButton: Locator;
@@ -29,6 +30,7 @@ export class CommerceLayoutsPage {
 	readonly designLink: Locator;
 	readonly displayPageTemplateLink: (name: string) => Locator;
 	readonly displayPageTemplatesLink: Locator;
+	readonly markAsDefaultMenuItem: Locator;
 	readonly moreActionsButton: Locator;
 	readonly openProductMenuButton: Locator;
 	readonly page: Page;
@@ -94,6 +96,10 @@ export class CommerceLayoutsPage {
 				exact: true,
 				name: 'Page',
 			});
+		this.defaultDisplayPageTemplateIcon = page
+			.getByTestId('row')
+			.locator('use')
+			.nth(1);
 		this.defineCustomThemeCheckbox = page.getByLabel(
 			'Define a custom theme for this page.'
 		);
@@ -113,6 +119,10 @@ export class CommerceLayoutsPage {
 		this.displayPageTemplatesLink = page.getByRole('link', {
 			exact: true,
 			name: 'Display Page Templates',
+		});
+		this.markAsDefaultMenuItem = page.getByRole('menuitem', {
+			exact: true,
+			name: 'Mark as Default',
 		});
 		this.moreActionsButton = page.getByLabel('More actions');
 		this.openProductMenuButton = page.getByRole('tab', {

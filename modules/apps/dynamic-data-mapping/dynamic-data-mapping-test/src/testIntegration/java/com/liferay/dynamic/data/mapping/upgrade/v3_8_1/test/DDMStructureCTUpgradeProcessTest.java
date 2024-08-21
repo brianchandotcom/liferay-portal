@@ -20,13 +20,13 @@ public class DDMStructureCTUpgradeProcessTest
 				DDMStructureCTUpgradeProcessTest {
 
 	@Override
-	protected String getClassName() {
-		return DDMStructureCTUpgradeProcessTestUtil.getClassName();
+	protected DDMForm getDDMForm() {
+		return DDMStructureCTUpgradeProcessTestUtil.getDDMForm();
 	}
 
 	@Override
-	protected DDMForm getDDMForm() {
-		return DDMStructureCTUpgradeProcessTestUtil.getDDMForm();
+	protected String getUpgradeStepClassName() {
+		return DDMStructureCTUpgradeProcessTestUtil.getUpgradeStepClassName();
 	}
 
 }

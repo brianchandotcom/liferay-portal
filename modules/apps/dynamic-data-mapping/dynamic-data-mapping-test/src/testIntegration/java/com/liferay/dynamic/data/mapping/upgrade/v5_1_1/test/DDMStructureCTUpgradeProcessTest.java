@@ -60,15 +60,14 @@ public class DDMStructureCTUpgradeProcessTest
 	@Override
 	protected CTModel<?> addCTModel() throws Exception {
 		_ddmStructure = DDMStructureTestUtil.addStructure(
-			_group.getGroupId(), DDMFormInstance.class.getName(),
+			_group.getGroupId(), getClassName(),
 			DDMFormTestUtil.createDDMForm(RandomTestUtil.randomString()));
 
 		return _ddmStructure;
 	}
 
 	protected String getClassName() {
-		return "com.liferay.dynamic.data.mapping.internal.upgrade.v5_1_1." +
-			"DDMValidationUpgradeProcess";
+		return DDMFormInstance.class.getName();
 	}
 
 	@Override
@@ -102,10 +101,15 @@ public class DDMStructureCTUpgradeProcessTest
 		return ddmForm;
 	}
 
+	protected String getUpgradeStepClassName() {
+		return "com.liferay.dynamic.data.mapping.internal.upgrade.v5_1_1." +
+			"DDMValidationUpgradeProcess";
+	}
+
 	@Override
 	protected void runUpgrade() throws Exception {
 		UpgradeProcess upgradeProcess = UpgradeTestUtil.getUpgradeStep(
-			_upgradeStepRegistrator, getClassName());
+			_upgradeStepRegistrator, getUpgradeStepClassName());
 
 		upgradeProcess.upgrade();
 	}

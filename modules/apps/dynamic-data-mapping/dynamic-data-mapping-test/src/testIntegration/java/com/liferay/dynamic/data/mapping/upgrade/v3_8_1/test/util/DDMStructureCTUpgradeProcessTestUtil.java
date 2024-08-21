@@ -18,11 +18,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
  */
 public class DDMStructureCTUpgradeProcessTestUtil {
 
-	public static String getClassName() {
-		return "com.liferay.dynamic.data.mapping.internal.upgrade.v3_8_1." +
-			"DDMFormFieldUpgradeProcess";
-	}
-
 	public static DDMForm getDDMForm() {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
 
@@ -37,6 +32,11 @@ public class DDMStructureCTUpgradeProcessTestUtil {
 		ddmForm.addDDMFormField(ddmFormField);
 
 		return ddmForm;
+	}
+
+	public static String getUpgradeStepClassName() {
+		return "com.liferay.dynamic.data.mapping.internal.upgrade.v3_8_1." +
+			"DDMFormFieldUpgradeProcess";
 	}
 
 }

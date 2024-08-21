@@ -4,6 +4,7 @@
 	<sql id="com.liferay.portal.kernel.security.permission.InlineSQLHelper.findByResourcePermission">
 		<![CDATA[
 			SELECT
+				[$OPTIMIZER_HINT$]
 				DISTINCT ResourcePermission.primKeyId
 			FROM
 				ResourcePermission

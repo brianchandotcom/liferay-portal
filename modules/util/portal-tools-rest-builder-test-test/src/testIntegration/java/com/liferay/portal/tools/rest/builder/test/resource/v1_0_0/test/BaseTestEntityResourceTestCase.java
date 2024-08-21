@@ -57,6 +57,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -255,6 +256,7 @@ public abstract class BaseTestEntityResourceTestCase {
 				self = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				property1 = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+
 				type = Type.create("ChildTestEntity1");
 			}
 		};
@@ -276,6 +278,7 @@ public abstract class BaseTestEntityResourceTestCase {
 				self = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				property2 = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+
 				type = Type.create("ChildTestEntity2");
 			}
 		};
@@ -295,6 +298,7 @@ public abstract class BaseTestEntityResourceTestCase {
 					RandomTestUtil.randomString());
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				self = StringUtil.toLowerCase(RandomTestUtil.randomString());
+
 				type = Type.create("ChildTestEntity3");
 			}
 		};
@@ -1164,67 +1168,51 @@ public abstract class BaseTestEntityResourceTestCase {
 	}
 
 	protected TestEntity randomTestEntity() throws Exception {
-		switch (RandomTestUtil.randomInt(0, 2)) {
-			case 0:
-				return new ChildTestEntity1() {
-					{
-						dateCreated = RandomTestUtil.nextDate();
-						dateModified = RandomTestUtil.nextDate();
-						description = StringUtil.toLowerCase(
-							RandomTestUtil.randomString());
-						documentId = RandomTestUtil.randomLong();
-						jsonProperty = StringUtil.toLowerCase(
-							RandomTestUtil.randomString());
-						name = StringUtil.toLowerCase(
-							RandomTestUtil.randomString());
-						self = StringUtil.toLowerCase(
-							RandomTestUtil.randomString());
-						property1 = StringUtil.toLowerCase(
-							RandomTestUtil.randomString());
-						type = Type.create("ChildTestEntity1");
-					}
-				};
+		List<Supplier<TestEntity>> suppliers = Arrays.asList(
+			() -> {
+				ChildTestEntity1 testEntity = new ChildTestEntity1();
+				testEntity.setProperty1(
+					StringUtil.toLowerCase(RandomTestUtil.randomString()));
+				testEntity.setType(TestEntity.Type.create("ChildTestEntity1"));
+				setCommonAttributes(testEntity);
 
-			case 1:
-				return new ChildTestEntity2() {
-					{
-						dateCreated = RandomTestUtil.nextDate();
-						dateModified = RandomTestUtil.nextDate();
-						description = StringUtil.toLowerCase(
-							RandomTestUtil.randomString());
-						documentId = RandomTestUtil.randomLong();
-						jsonProperty = StringUtil.toLowerCase(
-							RandomTestUtil.randomString());
-						name = StringUtil.toLowerCase(
-							RandomTestUtil.randomString());
-						self = StringUtil.toLowerCase(
-							RandomTestUtil.randomString());
-						property2 = StringUtil.toLowerCase(
-							RandomTestUtil.randomString());
-						type = Type.create("ChildTestEntity2");
-					}
-				};
+				return testEntity;
+			},
+			() -> {
+				ChildTestEntity2 testEntity = new ChildTestEntity2();
+				testEntity.setProperty2(
+					StringUtil.toLowerCase(RandomTestUtil.randomString()));
+				testEntity.setType(TestEntity.Type.create("ChildTestEntity2"));
+				setCommonAttributes(testEntity);
 
-			case 2:
-				return new ChildTestEntity3() {
-					{
-						dateCreated = RandomTestUtil.nextDate();
-						dateModified = RandomTestUtil.nextDate();
-						description = StringUtil.toLowerCase(
-							RandomTestUtil.randomString());
-						documentId = RandomTestUtil.randomLong();
-						jsonProperty = StringUtil.toLowerCase(
-							RandomTestUtil.randomString());
-						name = StringUtil.toLowerCase(
-							RandomTestUtil.randomString());
-						self = StringUtil.toLowerCase(
-							RandomTestUtil.randomString());
-						type = Type.create("ChildTestEntity3");
-					}
-				};
-		}
+				return testEntity;
+			},
+			() -> {
+				ChildTestEntity3 testEntity = new ChildTestEntity3();
+				testEntity.setType(TestEntity.Type.create("ChildTestEntity3"));
+				setCommonAttributes(testEntity);
 
-		return null;
+				return testEntity;
+			});
+
+		Supplier<TestEntity> supplier = suppliers.get(
+			RandomTestUtil.randomInt(0, suppliers.size() - 1));
+
+		return supplier.get();
+	}
+
+	private <T extends TestEntity> void setCommonAttributes(T testEntity) {
+		testEntity.setDateCreated(RandomTestUtil.nextDate());
+		testEntity.setDateModified(RandomTestUtil.nextDate());
+		testEntity.setDescription(
+			StringUtil.toLowerCase(RandomTestUtil.randomString()));
+		testEntity.setDocumentId(RandomTestUtil.randomLong());
+		testEntity.setJsonProperty(
+			StringUtil.toLowerCase(RandomTestUtil.randomString()));
+		testEntity.setName(
+			StringUtil.toLowerCase(RandomTestUtil.randomString()));
+		testEntity.setSelf(
+			StringUtil.toLowerCase(RandomTestUtil.randomString()));
 	}
 
 	protected TestEntity randomIrrelevantTestEntity() throws Exception {

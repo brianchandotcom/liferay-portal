@@ -228,19 +228,19 @@ public class ShipmentItemResourceImpl extends BaseShipmentItemResourceImpl {
 			String externalReferenceCode, ShipmentItem shipmentItem)
 		throws Exception {
 
-		CommerceShipmentItem commerceShipmentItem =
-			_commerceShipmentItemService.
-				fetchCommerceShipmentItemByExternalReferenceCode(
+		CommerceShipment commerceShipment =
+			_commerceShipmentService.
+				fetchCommerceShipmentByExternalReferenceCode(
 					contextCompany.getCompanyId(), externalReferenceCode);
 
-		if (commerceShipmentItem == null) {
-			throw new NoSuchShipmentItemException(
-				"Unable to find shipment item with external reference code " +
+		if (commerceShipment == null) {
+			throw new NoSuchShipmentException(
+				"Unable to find shipment with external reference code " +
 					externalReferenceCode);
 		}
 
 		return postShipmentItem(
-			commerceShipmentItem.getCommerceShipmentId(), shipmentItem);
+			commerceShipment.getCommerceShipmentId(), shipmentItem);
 	}
 
 	@Override

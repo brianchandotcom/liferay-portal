@@ -298,6 +298,11 @@ components:
                           description:
                               The user's title, such as "Vice President".
                           type: string
+                      urn:ietf:params:scim:schemas:extension:liferay:2.0:User:
+                          $ref: "#/components/schemas/UserSchemaExtension"
+                          description:
+                              The components of the Liferay's User Schema Extension.
+                          type: UserSchemaExtension
                       userName:
                           description:
                               A service provider's unique identifier for the user, typically used by the user to
@@ -314,6 +319,16 @@ components:
                               $ref: "#/components/schemas/MultiValuedAttribute"
                           type: array
                   type: object
+        UserSchemaExtension:
+            description:
+                Liferay's User Schema Extension.
+            properties:
+                birthday:
+                    format: date
+                    type: string
+                male:
+                    type: boolean
+            type: object
 info:
     description:
         "Liferay SCIM endpoints. A Java client JAR is available for use with the group ID 'com.liferay', artifact ID

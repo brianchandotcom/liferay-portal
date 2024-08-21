@@ -244,8 +244,8 @@ public class MappingsHelperImpl implements MappingsHelper {
 					StringBundler.concat(
 						"The attempted mappings update for index ", _indexName,
 						" is not compatiable with its current mappings. ",
-						"Please recreate the index, or modify the attempted ",
-						"updates"),
+						"Please recreate the index or modify the attempted ",
+						"updates."),
 					exception);
 			}
 		}

@@ -20,6 +20,7 @@ dependencies {
 	testIntegrationImplementation project(":apps:fragment:fragment-api")
 	testIntegrationImplementation project(":apps:headless:headless-delivery:headless-delivery-api")
 	testIntegrationImplementation project(":apps:headless:headless-delivery:headless-delivery-client")
+	testIntegrationImplementation project(":apps:info:info-api")
 	testIntegrationImplementation project(":apps:journal:journal-api")
 	testIntegrationImplementation project(":apps:journal:journal-test-util")
 	testIntegrationImplementation project(":apps:knowledge-base:knowledge-base-api")

@@ -12,7 +12,7 @@ import {PAGE_MANAGEMENT_SITE_ERC} from './constants';
 
 export const test = mergeTests(backendPageTest);
 
-test('Setup: Create site with required data for Web Experience tests', async ({
+test('Setup: Create site with required data for Page Management tests', async ({
 	backendPage,
 }) => {
 	const apiHelpers = new ApiHelpers(backendPage);
@@ -20,7 +20,7 @@ test('Setup: Create site with required data for Web Experience tests', async ({
 	const site = await apiHelpers.headlessSite.createSiteFromZip(
 		{
 			externalReferenceCode: PAGE_MANAGEMENT_SITE_ERC,
-			name: 'Web Experience Site',
+			name: 'Page Management Site',
 		},
 		resolve(__dirname, 'site-initializer')
 	);

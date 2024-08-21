@@ -15,7 +15,7 @@ import {
 
 export const test = mergeTests(backendPageTest);
 
-test('Teardown: Delete site and data for Web Experience tests', async ({
+test('Teardown: Delete site and data for Page Management tests', async ({
 	backendPage,
 }) => {
 	const apiHelpers = new ApiHelpers(backendPage);

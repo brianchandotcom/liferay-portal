@@ -31,7 +31,7 @@ const pageManagementSiteTest = test.extend<{
 			}
 			catch {
 				throw new Error(
-					`Web Experience site could not be fetched, make sure this project has page-management-site-setup as dependency`
+					`Page Management site could not be fetched, make sure this project has page-management-site-setup as dependency`
 				);
 			}
 			finally {

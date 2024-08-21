@@ -1,7 +1,9 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
+
+import {JSXElementConstructor} from 'react';
 
 type LocalizedValue<T> = Liferay.Language.LocalizedValue<T>;
 
@@ -91,6 +93,19 @@ export interface IFilter extends IOrderable {
 	source?: string;
 	sourceType?: ESelectionFilterSourceType;
 	type: string;
+}
+
+export interface IFilterTypeProps {
+	Component: {
+		Body: JSXElementConstructor<any>;
+		Header: JSXElementConstructor<any>;
+	};
+	availableFieldsFilter: (field: IField) => boolean;
+	displayType: string;
+	fdsViewRelationship: string;
+	fdsViewRelationshipId: string;
+	label: string;
+	url: string;
 }
 
 export interface IClientExtensionFilter extends IFilter {

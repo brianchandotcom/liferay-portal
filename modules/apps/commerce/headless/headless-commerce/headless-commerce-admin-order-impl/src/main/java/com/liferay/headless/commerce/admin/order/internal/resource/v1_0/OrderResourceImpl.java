@@ -413,7 +413,7 @@ public class OrderResourceImpl extends BaseOrderResourceImpl {
 					order.getPrintedNote(), commerceOrder.getPrintedNote()));
 		}
 
-		// Terms and Conditions
+		// Terms and conditions
 
 		long deliveryTermId = GetterUtil.getLong(order.getDeliveryTermId());
 

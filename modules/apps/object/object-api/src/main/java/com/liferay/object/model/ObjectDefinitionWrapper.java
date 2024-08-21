@@ -1032,8 +1032,8 @@ public class ObjectDefinitionWrapper
 	}
 
 	@Override
-	public boolean isModifiableAndSystem() {
-		return model.isModifiableAndSystem();
+	public boolean isModifiableSystemObject() {
+		return model.isModifiableSystemObject();
 	}
 
 	@Override

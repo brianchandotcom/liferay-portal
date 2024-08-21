@@ -256,7 +256,7 @@ public class ObjectFieldLocalServiceImpl
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
 
-		if (objectDefinition.isModifiableAndSystem() &&
+		if (objectDefinition.isModifiableSystemObject() &&
 			!ObjectDefinitionUtil.isInvokerBundleAllowed()) {
 
 			throw new ObjectFieldSystemException(

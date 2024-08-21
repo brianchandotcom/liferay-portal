@@ -568,7 +568,7 @@ public class ObjectDefinitionResourceImpl
 				_objectValidationRuleLocalService.getObjectValidationRules(
 					objectDefinitionId));
 
-		if (serviceBuilderObjectDefinition.isModifiableAndSystem() &&
+		if (serviceBuilderObjectDefinition.isModifiableSystemObject() &&
 			ObjectDefinitionUtil.isInvokerBundleAllowed()) {
 
 			objectActions.removeIf(

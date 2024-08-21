@@ -50,7 +50,7 @@ public class ObjectEntryInfoPermissionProvider
 
 	@Override
 	public boolean hasViewPermission(PermissionChecker permissionChecker) {
-		if (_objectDefinition.isModifiableAndSystem()) {
+		if (_objectDefinition.isModifiableSystemObject()) {
 			return false;
 		}
 

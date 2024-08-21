@@ -178,7 +178,7 @@ public class AuthVerifierPipelineTest {
 	}
 
 	private AuthVerifier _createAuthVerifier(
-		AuthVerifierResult.State state, int identifier) {
+		AuthVerifierResult.State state, int hashCode) {
 
 		AuthVerifierResult authVerifierResult = new AuthVerifierResult();
 
@@ -193,7 +193,7 @@ public class AuthVerifierPipelineTest {
 					return proxy.hashCode() == args[0].hashCode();
 				}
 				else if (Objects.equals(method.getName(), "hashCode")) {
-					return identifier;
+					return hashCode;
 				}
 				else if (Objects.equals(method.getName(), "verify")) {
 					return authVerifierResult;

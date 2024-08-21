@@ -42,6 +42,14 @@ export class ModelBuilderPage {
 	readonly page: Page;
 	readonly postalAddressObjectRelationshipWarning: Locator;
 	readonly rightSidebar: Locator;
+	readonly rightSidebarObjectDefinitionActivateObject: Locator;
+	readonly rightSidebarObjectDefinitionEntryTitleField: Locator;
+	readonly rightSidebarObjectDefinitionLabel: Locator;
+	readonly rightSidebarObjectDefinitionLabelLocalizationButton: Locator;
+	readonly rightSidebarObjectDefinitionPanelLink: Locator;
+	readonly rightSidebarObjectDefinitionPluralLabel: Locator;
+	readonly rightSidebarObjectDefinitionPluralLabelLocalizationButton: Locator;
+	readonly rightSidebarObjectDefinitionScope: Locator;
 	readonly selectedObjectFolder: Locator;
 	readonly toggleSidebarsButton: Locator;
 	readonly viewObjectDefinitionsPage: ViewObjectDefinitionsPage;
@@ -149,6 +157,25 @@ export class ModelBuilderPage {
 		this.rightSidebar = page
 			.getByRole('tabpanel')
 			.filter({hasNot: this.createNewObjectDefinitionButton});
+		this.rightSidebarObjectDefinitionActivateObject =
+			page.getByLabel('Activate Object');
+		this.rightSidebarObjectDefinitionEntryTitleField =
+			page.getByLabel('Entry Title Field');
+		this.rightSidebarObjectDefinitionLabel = page.getByLabel(
+			'LabelMandatory',
+			{exact: true}
+		);
+		this.rightSidebarObjectDefinitionLabelLocalizationButton = page
+			.getByTitle('Open Localizations')
+			.first();
+		this.rightSidebarObjectDefinitionPanelLink =
+			page.getByLabel('Panel Link');
+		this.rightSidebarObjectDefinitionPluralLabel =
+			page.getByLabel('Plural Label');
+		this.rightSidebarObjectDefinitionPluralLabelLocalizationButton = page
+			.getByTitle('Open Localizations')
+			.last();
+		this.rightSidebarObjectDefinitionScope = page.getByLabel('Scope');
 		this.selectedObjectFolder = page
 			.getByRole('tabpanel')
 			.getByRole('treeitem')

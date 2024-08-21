@@ -102,6 +102,11 @@ public class ContentSetElementResourceTest
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
 	@Override
+	protected String[] getAdditionalAssertFieldNames() {
+		return new String[] {"id", "title"};
+	}
+
+	@Override
 	protected ContentSetElement
 			testGetAssetLibraryContentSetByKeyContentSetElementsPage_addContentSetElement(
 				Long assetLibraryId, String key,

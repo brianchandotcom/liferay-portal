@@ -61,14 +61,14 @@ public class DBSchemaDefinitionExporterDBPartitionTest
 			new AssumeTestRule("assume"), new LiferayIntegrationTestRule());
 
 	public static void assume() {
-		Assume.assumeTrue(DBPartition.isPartitionEnabled());
-
 		assumeDB();
+
+		Assume.assumeTrue(DBPartition.isPartitionEnabled());
 	}
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		setUpClassDefault();
+		setUpClassBaseDBSchemaDefinitionExporterTestCase();
 
 		_company = CompanyTestUtil.addCompany();
 

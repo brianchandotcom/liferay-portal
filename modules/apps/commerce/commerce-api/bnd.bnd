@@ -10,6 +10,7 @@ Export-Package:\
 	com.liferay.commerce.country,\
 	com.liferay.commerce.discount,\
 	com.liferay.commerce.exception,\
+	com.liferay.commerce.friendly.url,\
 	com.liferay.commerce.health.status,\
 	com.liferay.commerce.helper,\
 	com.liferay.commerce.inventory,\

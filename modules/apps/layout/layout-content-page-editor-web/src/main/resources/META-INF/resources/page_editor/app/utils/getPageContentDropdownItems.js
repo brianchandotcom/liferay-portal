@@ -56,7 +56,10 @@ export function getPageContentDropdownItems(pageContent, label = '') {
 		});
 
 		dropdownItems.push({
-			items: addItems,
+			items: addItems.map((addItem) => ({
+				...addItem,
+				'data-label': addItem.label,
+			})),
 			label: Liferay.Language.get('add-items'),
 			symbolLeft: 'plus',
 			type: 'contextual',

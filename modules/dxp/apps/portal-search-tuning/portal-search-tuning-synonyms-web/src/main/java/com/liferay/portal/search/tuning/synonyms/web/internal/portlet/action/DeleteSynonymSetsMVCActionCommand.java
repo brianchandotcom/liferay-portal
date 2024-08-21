@@ -10,6 +10,7 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
@@ -55,23 +56,49 @@ public class DeleteSynonymSetsMVCActionCommand extends BaseMVCActionCommand {
 		modified(properties);
 	}
 
-	@Override
-	protected void doProcessAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
+	protected void deleteSynonymSets(ActionRequest actionRequest)
+		throws PortalException {
 
 		long companyId = _portal.getCompanyId(actionRequest);
 
 		SynonymSetIndexName synonymSetIndexName =
 			_synonymSetIndexNameBuilder.getSynonymSetIndexName(companyId);
 
-		removeSynonymSets(
-			synonymSetIndexName,
-			getDeletedSynonymSets(actionRequest, synonymSetIndexName));
+		List<SynonymSet> synonymSets = getDeletedSynonymSets(
+			actionRequest, synonymSetIndexName);
+
+		if (ListUtil.isEmpty(synonymSets)) {
+			if (!ParamUtil.getBoolean(actionRequest, "deleteAllSynonymSets")) {
+				return;
+			}
+
+			synonymSets = _synonymSetIndexReader.search(synonymSetIndexName);
+		}
+
+		deleteSynonymSets(synonymSetIndexName, synonymSets);
 
 		_indexToFilterSynchronizer.copyToFilter(
 			synonymSetIndexName, _indexNameBuilder.getIndexName(companyId),
 			true);
+	}
+
+	protected void deleteSynonymSets(
+			SynonymSetIndexName synonymSetIndexName,
+			List<SynonymSet> synonymSets)
+		throws PortalException {
+
+		for (SynonymSet synonymSet : synonymSets) {
+			_synonymSetStorageAdapter.delete(
+				synonymSetIndexName, synonymSet.getSynonymSetDocumentId());
+		}
+	}
+
+	@Override
+	protected void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		deleteSynonymSets(actionRequest);
 
 		sendRedirect(actionRequest, actionResponse);
 	}
@@ -93,17 +120,6 @@ public class DeleteSynonymSetsMVCActionCommand extends BaseMVCActionCommand {
 		_indexToFilterSynchronizer = new IndexToFilterSynchronizer(
 			synonymsConfiguration.filterNames(), _searchEngineAdapter,
 			_synonymSetIndexReader);
-	}
-
-	protected void removeSynonymSets(
-			SynonymSetIndexName synonymSetIndexName,
-			List<SynonymSet> synonymSets)
-		throws PortalException {
-
-		for (SynonymSet synonymSet : synonymSets) {
-			_synonymSetStorageAdapter.delete(
-				synonymSetIndexName, synonymSet.getSynonymSetDocumentId());
-		}
 	}
 
 	@Reference

@@ -24,6 +24,11 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
 
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
+
 /**
  * @author Javier Gamarra
  */
@@ -147,6 +152,20 @@ public class ContentSetElementResourceTest
 		serviceContext.setUserId(TestPropsValues.getUserId());
 
 		return serviceContext;
+	}
+
+	private ServiceRegistration<InfoCollectionProvider<?>>
+		_registerInfoCollectionProviderService() {
+
+		Bundle bundle = FrameworkUtil.getBundle(
+			ContentSetElementResourceTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		return bundleContext.registerService(
+			(Class<InfoCollectionProvider<?>>)
+				(Class<?>)InfoCollectionProvider.class,
+			new TestAssetEntryInfoCollectionProvider(), null);
 	}
 
 	private ContentSetElement _toContentSetElement(BlogsEntry blogsEntry) {

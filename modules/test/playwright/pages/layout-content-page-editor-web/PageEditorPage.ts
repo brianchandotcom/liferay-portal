@@ -847,14 +847,12 @@ export class PageEditorPage {
 		}
 		else {
 			const hasRecentItems = await this.page
-				.getByRole('presentation', {
-					name: 'Recent',
-				})
+				.getByRole('menuitem', {name: 'Select Item...'})
 				.isVisible();
 
 			if (hasRecentItems) {
 				await this.page
-					.getByRole('menuitem', {name: 'Select item'})
+					.getByRole('menuitem', {name: 'Select Item...'})
 					.click();
 			}
 

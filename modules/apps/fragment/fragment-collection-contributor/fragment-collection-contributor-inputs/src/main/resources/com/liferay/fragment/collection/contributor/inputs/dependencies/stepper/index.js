@@ -36,6 +36,11 @@ function setActiveStep(index) {
 	if (layoutMode === 'edit') {
 		saveActiveIndexInSession(index);
 	}
+
+	Liferay.fire('formFragment:changeStep', {
+		emitter: fragmentElement,
+		step: index,
+	});
 }
 
 function main() {

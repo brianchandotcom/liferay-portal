@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ContactConstants;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
-import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -29,6 +28,9 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.scim.rest.internal.model.ScimUser;
 
 import java.io.File;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 import java.util.Calendar;
 import java.util.Collections;
@@ -104,7 +106,7 @@ public class ScimUtil {
 			PrefsPropsUtil.getBoolean(
 				companyId, PropsKeys.USERS_SCREEN_NAME_ALWAYS_AUTOGENERATE));
 		scimUser.setAutoPassword(user.getPassword() == null);
-		scimUser.setBirthday(_getBirthday(locale, user));
+		scimUser.setBirthday(_getBirthday(user));
 		scimUser.setCompanyId(companyId);
 		scimUser.setEmailAddress(_getEmailAddress(user));
 		scimUser.setExternalReferenceCode(user.getExternalId());
@@ -337,9 +339,7 @@ public class ScimUtil {
 				"birthday",
 				_createSimpleAttribute(
 					attributeSchema.getSubAttributeSchema("birthday"),
-					DateUtil.getDate(
-						scimUser.getBirthday(), "yyyy-MM-dd",
-						scimUser.getLocale()))
+					_dateFormat.format(scimUser.getBirthday()))
 			).put(
 				"male",
 				_createSimpleAttribute(
@@ -370,7 +370,7 @@ public class ScimUtil {
 		return birthdayCalendar.getTime();
 	}
 
-	private static Date _getBirthday(Locale locale, User user) {
+	private static Date _getBirthday(User user) {
 		try {
 			ComplexAttribute complexAttribute =
 				(ComplexAttribute)user.getAttribute(
@@ -387,8 +387,7 @@ public class ScimUtil {
 				return _getBirthday();
 			}
 
-			return DateUtil.parseDate(
-				"yyyy-MM-dd", simpleAttribute.getStringValue(), locale);
+			return _dateFormat.parse(simpleAttribute.getStringValue());
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -487,5 +486,7 @@ public class ScimUtil {
 
 	private static final DCLSingleton<AttributeSchema>
 		_attributeSchemaDCLSingleton = new DCLSingleton<>();
+	private static final DateFormat _dateFormat = new SimpleDateFormat(
+		"yyyy-MM-dd'T'HH:mm:ssXX");
 
 }

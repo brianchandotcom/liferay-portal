@@ -1162,7 +1162,7 @@ public class SubscriptionSender implements Serializable {
 				_notificationClassName);
 		}
 
-		return 0L;
+		return 0;
 	}
 
 	private String _getPortletName(Locale locale) {

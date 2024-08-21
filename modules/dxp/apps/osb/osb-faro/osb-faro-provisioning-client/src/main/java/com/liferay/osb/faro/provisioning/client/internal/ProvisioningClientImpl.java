@@ -344,7 +344,12 @@ public class ProvisioningClientImpl implements ProvisioningClient {
 		String productName = ProductConstants.getProductName(productEntryId);
 
 		if (productName != null) {
-			return StringUtil.removeSubstring(productName, "Liferay ");
+			if (!productName.startsWith("Liferay SaaS")) {
+				productName = StringUtil.removeSubstring(
+					productName, "Liferay ");
+			}
+
+			return productName;
 		}
 
 		return null;

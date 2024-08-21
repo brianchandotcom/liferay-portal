@@ -58,7 +58,8 @@ public class EditSynonymSetsMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		updateSynonymSet(actionRequest);
+		updateSynonymSets(
+			actionRequest, ParamUtil.getString(actionRequest, "synonymSet"));
 
 		sendRedirect(actionRequest, actionResponse);
 	}
@@ -87,24 +88,6 @@ public class EditSynonymSetsMVCActionCommand extends BaseMVCActionCommand {
 			_synonymSetIndexReader);
 	}
 
-	protected void updateSynonymSet(ActionRequest actionRequest)
-		throws PortalException {
-
-		long companyId = portal.getCompanyId(actionRequest);
-
-		SynonymSetIndexName synonymSetIndexName =
-			_synonymSetIndexNameBuilder.getSynonymSetIndexName(companyId);
-
-		updateSynonymSetIndex(
-			synonymSetIndexName,
-			ParamUtil.getString(actionRequest, "synonymSet"),
-			getSynonymSet(synonymSetIndexName, actionRequest));
-
-		_indexToFilterSynchronizer.copyToFilter(
-			synonymSetIndexName, _indexNameBuilder.getIndexName(companyId),
-			false);
-	}
-
 	protected void updateSynonymSetIndex(
 			SynonymSetIndexName synonymSetIndexName, String synonyms,
 			SynonymSet synonymSet)
@@ -126,6 +109,27 @@ public class EditSynonymSetsMVCActionCommand extends BaseMVCActionCommand {
 			_synonymSetStorageAdapter.update(
 				synonymSetIndexName, synonymSetBuilder.build());
 		}
+	}
+
+	protected void updateSynonymSets(
+			ActionRequest actionRequest, String... synonymSets)
+		throws PortalException {
+
+		long companyId = portal.getCompanyId(actionRequest);
+
+		SynonymSetIndexName synonymSetIndexName =
+			_synonymSetIndexNameBuilder.getSynonymSetIndexName(companyId);
+
+		SynonymSet synonymSet = getSynonymSet(
+			synonymSetIndexName, actionRequest);
+
+		for (String synonyms : synonymSets) {
+			updateSynonymSetIndex(synonymSetIndexName, synonyms, synonymSet);
+		}
+
+		_indexToFilterSynchronizer.copyToFilter(
+			synonymSetIndexName, _indexNameBuilder.getIndexName(companyId),
+			false);
 	}
 
 	@Reference

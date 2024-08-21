@@ -39,6 +39,9 @@ public class CommerceConstants {
 	public static final String SERVICE_NAME_COMMERCE_ACCOUNT =
 		"com.liferay.commerce.account";
 
+	public static final String SERVICE_NAME_COMMERCE_FRIENDLY_URL =
+		"com.liferay.commerce.friendly.url";
+
 	public static final String SERVICE_NAME_COMMERCE_ORDER =
 		"com.liferay.commerce.order";
 

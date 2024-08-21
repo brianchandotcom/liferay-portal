@@ -3780,6 +3780,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 			return;
 		}
 
+		json = _replace(json, stringUtilReplaceValues);
+
 		JSONArray jsonArray = _jsonFactory.createJSONArray(json);
 
 		for (int i = 0; i < jsonArray.length(); i++) {

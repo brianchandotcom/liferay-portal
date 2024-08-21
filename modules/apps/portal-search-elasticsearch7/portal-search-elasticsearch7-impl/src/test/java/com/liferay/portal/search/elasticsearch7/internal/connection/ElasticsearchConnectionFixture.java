@@ -254,8 +254,7 @@ public class ElasticsearchConnectionFixture
 		).toString();
 
 		PutPipelineRequest putPipelineRequest = new PutPipelineRequest(
-			"timestamp",
-			new BytesArray(json.getBytes(StandardCharsets.UTF_8)),
+			"timestamp", new BytesArray(json.getBytes(StandardCharsets.UTF_8)),
 			XContentType.JSON);
 
 		try {

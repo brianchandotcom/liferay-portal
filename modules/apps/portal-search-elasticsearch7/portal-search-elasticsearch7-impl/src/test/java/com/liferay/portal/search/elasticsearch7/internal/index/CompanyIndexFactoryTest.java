@@ -830,6 +830,23 @@ public class CompanyIndexFactoryTest {
 		}
 	}
 
+	private GetMappingsResponse _getGetMappingsResponse(
+		GetMappingsRequest getMappingsRequest) {
+
+		RestHighLevelClient restHighLevelClient =
+			_elasticsearchFixture.getRestHighLevelClient();
+
+		IndicesClient indicesClient = restHighLevelClient.indices();
+
+		try {
+			return indicesClient.getMapping(
+				getMappingsRequest, RequestOptions.DEFAULT);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
+
 	private Settings _getIndexSettings() {
 		String name = _companyIndexFactoryFixture.getIndexName();
 
@@ -860,23 +877,6 @@ public class CompanyIndexFactoryTest {
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(exception);
-		}
-	}
-
-	private GetMappingsResponse _getGetMappingsResponse(
-		GetMappingsRequest getMappingsRequest) {
-
-		RestHighLevelClient restHighLevelClient =
-			_elasticsearchFixture.getRestHighLevelClient();
-
-		IndicesClient indicesClient = restHighLevelClient.indices();
-
-		try {
-			return indicesClient.getMapping(
-				getMappingsRequest, RequestOptions.DEFAULT);
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
 		}
 	}
 

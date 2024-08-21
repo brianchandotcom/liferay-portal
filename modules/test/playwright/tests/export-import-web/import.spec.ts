@@ -7,17 +7,23 @@ import {expect, mergeTests} from '@playwright/test';
 import * as path from 'path';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
+import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
+import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {documentLibraryPagesTest} from '../../fixtures/documentLibraryPages.fixtures';
 import {loginTest} from '../../fixtures/loginTest';
 import {productMenuPageTest} from '../../fixtures/productMenuPageTest';
 import getRandomString from '../../utils/getRandomString';
 import {exportImportPagesTest} from './fixtures/exportImportPagesTest';
+import {stagingPageTest} from './fixtures/stagingPageTest';
 
 export const test = mergeTests(
 	apiHelpersTest,
+	applicationsMenuPageTest,
+	dataApiHelpersTest,
 	documentLibraryPagesTest,
 	productMenuPageTest,
 	exportImportPagesTest,
+	stagingPageTest,
 	loginTest()
 );
 
@@ -74,4 +80,37 @@ test('can import a lar file selecting some items to import', async ({
 			.locator('../../..')
 			.getByText('Successful')
 	).toBeVisible();
+});
+
+test('staged and live versions of a site are equal', async ({
+	apiHelpers,
+	applicationsMenuPage,
+	stagingPage,
+}) => {
+
+	const site = await apiHelpers.headlessSite.createSite({
+		name: getRandomString(),
+		templateKey: "com.liferay.site.initializer.masterclass",
+		templateType: "site-initializer"
+	});
+
+	expect(site.name).toBeDefined();
+
+	apiHelpers.data.push({id: site.id, type: 'site'});
+
+	await applicationsMenuPage.goToSite(site.name);
+	
+	await stagingPage.goToStaging();
+
+	await stagingPage.enableDefaultLocalStaging();
+
+	await expect(stagingPage.page.getByText('Initial Publish Process')).toHaveCount(2);
+
+	for await (const processResult of await stagingPage.page
+		.getByTestId('processResult')
+		.all())  {
+		await expect(processResult.getByText('Successful')).toBeVisible({
+			timeout: 60 * 1000,
+		});
+	}
 });

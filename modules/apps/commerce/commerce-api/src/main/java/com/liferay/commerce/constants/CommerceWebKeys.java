@@ -20,6 +20,8 @@ public class CommerceWebKeys {
 	public static final String COMMERCE_ORDER_ERROR_MESSAGES =
 		"COMMERCE_ORDER_ERROR_MESSAGES";
 
+	public static final String COMMERCE_ORDER_ID = "COMMERCE_ORDER_ID";
+
 	public static final String COMMERCE_ORDER_IMPORTER_ITEM =
 		"COMMERCE_ORDER_IMPORTER_ITEM";
 

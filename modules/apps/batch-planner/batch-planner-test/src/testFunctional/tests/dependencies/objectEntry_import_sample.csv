@@ -1,2 +1,2 @@
-keywords,externalReferenceCode,taxonomyCategoryIds,name
-array,string,array,string
+keywords,externalReferenceCode,permissions,taxonomyCategoryIds,name
+array,string,array,array,string

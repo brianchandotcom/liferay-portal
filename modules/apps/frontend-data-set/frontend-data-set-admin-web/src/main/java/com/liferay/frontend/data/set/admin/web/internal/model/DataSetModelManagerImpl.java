@@ -13,8 +13,10 @@ import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
+import com.liferay.object.model.ObjectFolder;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.service.ObjectFolderLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -153,12 +155,13 @@ public class DataSetModelManagerImpl implements DataSetModelManager {
 
 	private void _createFDSActionObjectDefintion(
 			ObjectDefinition fdsViewObjectDefinition, Locale locale,
-			long userId)
+			long userId, long objectFolderId)
 		throws Exception {
 
 		ObjectDefinition fdsActionObjectDefinition =
 			_objectDefinitionLocalService.addSystemObjectDefinition(
-				"FDSAction", userId, 0, "FDSAction", null, false, true, false,
+				"FDSAction", userId, objectFolderId, "FDSAction", null, false,
+				true, false,
 				LocalizedMapUtil.getLocalizedMap("Data Set Action"), true,
 				"FDSAction", null, null, null, null,
 				LocalizedMapUtil.getLocalizedMap("Data Set Actions"), false,
@@ -236,13 +239,13 @@ public class DataSetModelManagerImpl implements DataSetModelManager {
 
 	private void _createFDSCardsSectionObjectDefinition(
 			ObjectDefinition fdsViewObjectDefinition, Locale locale,
-			long userId)
+			long userId, long objectFolderId)
 		throws Exception {
 
 		ObjectDefinition fdsCardsSectionObjectDefinition =
 			_objectDefinitionLocalService.addSystemObjectDefinition(
-				"FDSCardsSection", userId, 0, "FDSCardsSection", null, false,
-				true, false,
+				"FDSCardsSection", userId, objectFolderId, "FDSCardsSection",
+				null, false, true, false,
 				LocalizedMapUtil.getLocalizedMap("Data Set Cards Section"),
 				true, "FDSCardsSection", null, null, null, null,
 				LocalizedMapUtil.getLocalizedMap("Data Set Cards Sections"),
@@ -277,12 +280,12 @@ public class DataSetModelManagerImpl implements DataSetModelManager {
 
 	private void _createFDSClientExtensionFilterObjectDefintion(
 			ObjectDefinition fdsViewObjectDefinition, Locale locale,
-			long userId)
+			long userId, long objectFolderId)
 		throws Exception {
 
 		ObjectDefinition fdsClientExtensionFilterObjectDefinition =
 			_objectDefinitionLocalService.addSystemObjectDefinition(
-				"FDSClientExtensionFilter", userId, 0,
+				"FDSClientExtensionFilter", userId, objectFolderId,
 				"FDSClientExtensionFilter", null, false, true, false,
 				LocalizedMapUtil.getLocalizedMap(
 					"Data Set Client Extension Filter"),
@@ -325,14 +328,15 @@ public class DataSetModelManagerImpl implements DataSetModelManager {
 
 	private void _createFDSDateFilterObjectDefinition(
 			ObjectDefinition fdsViewObjectDefinition, Locale locale,
-			long userId)
+			long userId, long objectFolderId)
 		throws Exception {
 
 		ObjectDefinition fdsDateFilterObjectDefinition =
 			_objectDefinitionLocalService.addSystemObjectDefinition(
-				"FDSDateFilter", userId, 0, "FDSDateFilter", null, false, true,
-				false, LocalizedMapUtil.getLocalizedMap("Data Set Date Filter"),
-				true, "FDSDateFilter", null, null, null, null,
+				"FDSDateFilter", userId, objectFolderId, "FDSDateFilter", null,
+				false, true, false,
+				LocalizedMapUtil.getLocalizedMap("Data Set Date Filter"), true,
+				"FDSDateFilter", null, null, null, null,
 				LocalizedMapUtil.getLocalizedMap("Data Set Date Filters"),
 				false, ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,
 				WorkflowConstants.STATUS_DRAFT,
@@ -374,13 +378,13 @@ public class DataSetModelManagerImpl implements DataSetModelManager {
 
 	private void _createFDSDynamicFilterObjectDefintion(
 			ObjectDefinition fdsViewObjectDefinition, Locale locale,
-			long userId)
+			long userId, long objectFolderId)
 		throws Exception {
 
 		ObjectDefinition fdsDynamicFilterObjectDefinition =
 			_objectDefinitionLocalService.addSystemObjectDefinition(
-				"FDSDynamicFilter", userId, 0, "FDSDynamicFilter", null, false,
-				true, false,
+				"FDSDynamicFilter", userId, objectFolderId, "FDSDynamicFilter",
+				null, false, true, false,
 				LocalizedMapUtil.getLocalizedMap("Data Set Selection Filter"),
 				true, "FDSDynamicFilter", null, null, null, null,
 				LocalizedMapUtil.getLocalizedMap("Data Set Selection Filters"),
@@ -568,14 +572,14 @@ public class DataSetModelManagerImpl implements DataSetModelManager {
 	}
 
 	private ObjectDefinition _createFDSEntryObjectDefinition(
-			Locale locale, long userId)
+			Locale locale, long userId, long objectFolderId)
 		throws Exception {
 
 		ObjectDefinition fdsEntryObjectDefinition =
 			_objectDefinitionLocalService.addSystemObjectDefinition(
-				"FDSEntry", userId, 0, "FDSEntry", null, false, true, false,
-				LocalizedMapUtil.getLocalizedMap("Data Set"), true, "FDSEntry",
-				null, null, null, null,
+				"FDSEntry", userId, objectFolderId, "FDSEntry", null, false,
+				true, false, LocalizedMapUtil.getLocalizedMap("Data Set"), true,
+				"FDSEntry", null, null, null, null,
 				LocalizedMapUtil.getLocalizedMap("Data Sets"), false,
 				ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,
 				WorkflowConstants.STATUS_DRAFT,
@@ -608,12 +612,13 @@ public class DataSetModelManagerImpl implements DataSetModelManager {
 
 	private void _createFDSFieldObjectDefinition(
 			ObjectDefinition fdsViewObjectDefinition, Locale locale,
-			long userId)
+			long userId, long objectFolderId)
 		throws Exception {
 
 		ObjectDefinition fdsFieldObjectDefinition =
 			_objectDefinitionLocalService.addSystemObjectDefinition(
-				"FDSField", userId, 0, "FDSField", null, false, true, false,
+				"FDSField", userId, objectFolderId, "FDSField", null, false,
+				true, false,
 				LocalizedMapUtil.getLocalizedMap("Data Set Table Section"),
 				true, "FDSField", null, null, null, null,
 				LocalizedMapUtil.getLocalizedMap("Data Set Table Sections"),
@@ -662,13 +667,13 @@ public class DataSetModelManagerImpl implements DataSetModelManager {
 
 	private void _createFDSListSectionObjectDefinition(
 			ObjectDefinition fdsViewObjectDefinition, Locale locale,
-			long userId)
+			long userId, long objectFolderId)
 		throws Exception {
 
 		ObjectDefinition fdsListSectionObjectDefinition =
 			_objectDefinitionLocalService.addSystemObjectDefinition(
-				"FDSListSection", userId, 0, "FDSListSection", null, false,
-				true, false,
+				"FDSListSection", userId, objectFolderId, "FDSListSection",
+				null, false, true, false,
 				LocalizedMapUtil.getLocalizedMap("Data Set List Section"), true,
 				"FDSListSection", null, null, null, null,
 				LocalizedMapUtil.getLocalizedMap("Data Set List Sections"),
@@ -703,7 +708,7 @@ public class DataSetModelManagerImpl implements DataSetModelManager {
 
 	private void _createFDSSortObjectDefinition(
 			ObjectDefinition fdsViewObjectDefinition, Locale locale,
-			long userId)
+			long userId, long objectFolderId)
 		throws Exception {
 
 		List<ObjectField> objectFields = Arrays.asList(
@@ -722,8 +727,8 @@ public class DataSetModelManagerImpl implements DataSetModelManager {
 
 		ObjectDefinition fdsSortObjectDefinition =
 			_objectDefinitionLocalService.addSystemObjectDefinition(
-				"FDSSort", userId, 0, "FDSSort", null, false, true, false,
-				LocalizedMapUtil.getLocalizedMap("Data Set Sort"), true,
+				"FDSSort", userId, objectFolderId, "FDSSort", null, false, true,
+				false, LocalizedMapUtil.getLocalizedMap("Data Set Sort"), true,
 				"FDSSort", "300", null, null, null,
 				LocalizedMapUtil.getLocalizedMap("Data Set Sorts"), false,
 				ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,
@@ -748,14 +753,14 @@ public class DataSetModelManagerImpl implements DataSetModelManager {
 	}
 
 	private ObjectDefinition _createFDSViewObjectDefinition(
-			Locale locale, long userId)
+			Locale locale, long userId, long objectFolderId)
 		throws Exception {
 
 		ObjectDefinition fdsViewObjectDefinition =
 			_objectDefinitionLocalService.addSystemObjectDefinition(
-				"FDSView", userId, 0, "FDSView", null, false, true, false,
-				LocalizedMapUtil.getLocalizedMap("Data Set"), true, "FDSView",
-				null, null, null, null,
+				"FDSView", userId, objectFolderId, "FDSView", null, false, true,
+				false, LocalizedMapUtil.getLocalizedMap("Data Set"), true,
+				"FDSView", null, null, null, null,
 				LocalizedMapUtil.getLocalizedMap("Data Sets"), false,
 				ObjectDefinitionConstants.SCOPE_COMPANY, "label", 1,
 				WorkflowConstants.STATUS_DRAFT,
@@ -833,13 +838,13 @@ public class DataSetModelManagerImpl implements DataSetModelManager {
 
 	private ObjectDefinition _createFDSViewObjectDefinition(
 			ObjectDefinition fdsEntryObjectDefinition, Locale locale,
-			long userId)
+			long userId, long objectFolderId)
 		throws Exception {
 
 		ObjectDefinition fdsViewObjectDefinition =
 			_objectDefinitionLocalService.addSystemObjectDefinition(
-				"FDSView", userId, 0, "FDSView", null, false, true, false,
-				LocalizedMapUtil.getLocalizedMap("Data Set View"), true,
+				"FDSView", userId, objectFolderId, "FDSView", null, false, true,
+				false, LocalizedMapUtil.getLocalizedMap("Data Set View"), true,
 				"FDSView", null, null, null, null,
 				LocalizedMapUtil.getLocalizedMap("Data Set Views"), false,
 				ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,
@@ -931,9 +936,16 @@ public class DataSetModelManagerImpl implements DataSetModelManager {
 			return;
 		}
 
+		ObjectFolder dataSetObjectFolder =
+			_objectFolderLocalService.addObjectFolder(
+				"DATA_SET_FOLDER", userId,
+				LocalizedMapUtil.getLocalizedMap("DataSet"), "DataSet");
+
+		long objectFolderId = dataSetObjectFolder.getObjectFolderId();
+
 		if (FeatureFlagManagerUtil.isEnabled("LPD-15729")) {
 			fdsViewObjectDefinition = _createFDSViewObjectDefinition(
-				locale, userId);
+				locale, userId, objectFolderId);
 		}
 		else {
 			ObjectDefinition fdsEntryObjectDefinition =
@@ -945,27 +957,28 @@ public class DataSetModelManagerImpl implements DataSetModelManager {
 			}
 
 			fdsEntryObjectDefinition = _createFDSEntryObjectDefinition(
-				locale, userId);
+				locale, userId, objectFolderId);
 
 			fdsViewObjectDefinition = _createFDSViewObjectDefinition(
-				fdsEntryObjectDefinition, locale, userId);
+				fdsEntryObjectDefinition, locale, userId, objectFolderId);
 		}
 
 		_createFDSActionObjectDefintion(
-			fdsViewObjectDefinition, locale, userId);
+			fdsViewObjectDefinition, locale, userId, objectFolderId);
 		_createFDSCardsSectionObjectDefinition(
-			fdsViewObjectDefinition, locale, userId);
+			fdsViewObjectDefinition, locale, userId, objectFolderId);
 		_createFDSClientExtensionFilterObjectDefintion(
-			fdsViewObjectDefinition, locale, userId);
+			fdsViewObjectDefinition, locale, userId, objectFolderId);
 		_createFDSDateFilterObjectDefinition(
-			fdsViewObjectDefinition, locale, userId);
+			fdsViewObjectDefinition, locale, userId, objectFolderId);
 		_createFDSDynamicFilterObjectDefintion(
-			fdsViewObjectDefinition, locale, userId);
+			fdsViewObjectDefinition, locale, userId, objectFolderId);
 		_createFDSFieldObjectDefinition(
-			fdsViewObjectDefinition, locale, userId);
+			fdsViewObjectDefinition, locale, userId, objectFolderId);
 		_createFDSListSectionObjectDefinition(
-			fdsViewObjectDefinition, locale, userId);
-		_createFDSSortObjectDefinition(fdsViewObjectDefinition, locale, userId);
+			fdsViewObjectDefinition, locale, userId, objectFolderId);
+		_createFDSSortObjectDefinition(
+			fdsViewObjectDefinition, locale, userId, objectFolderId);
 
 		_checkedCompanies.add(companyId);
 	}
@@ -987,6 +1000,9 @@ public class DataSetModelManagerImpl implements DataSetModelManager {
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;
+
+	@Reference
+	private ObjectFolderLocalService _objectFolderLocalService;
 
 	@Reference
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;

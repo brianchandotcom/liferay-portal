@@ -19,9 +19,11 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.test.rule.SearchTestRule;
+import com.liferay.portal.test.rule.FeatureFlags;
 
 import org.junit.Before;
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.osgi.framework.Bundle;
@@ -51,6 +53,35 @@ public class ContentSetElementResourceTest
 			null, TestPropsValues.getUserId(), testDepotEntry.getGroupId(),
 			RandomTestUtil.randomString(),
 			AssetListEntryTypeConstants.TYPE_DYNAMIC, _serviceContext);
+	}
+
+	@FeatureFlags("LPD-32867")
+	@Override
+	@Test
+	public void testGetSiteContentSetProviderByKeyContentSetElementsPage()
+		throws Exception {
+
+		ServiceRegistration<InfoCollectionProvider<?>> serviceRegistration =
+			_registerInfoCollectionProviderService();
+
+		super.testGetSiteContentSetProviderByKeyContentSetElementsPage();
+
+		serviceRegistration.unregister();
+	}
+
+	@FeatureFlags("LPD-32867")
+	@Override
+	@Test
+	public void testGetSiteContentSetProviderByKeyContentSetElementsPageWithPagination()
+		throws Exception {
+
+		ServiceRegistration<InfoCollectionProvider<?>> serviceRegistration =
+			_registerInfoCollectionProviderService();
+
+		super.
+			testGetSiteContentSetProviderByKeyContentSetElementsPageWithPagination();
+
+		serviceRegistration.unregister();
 	}
 
 	@Rule

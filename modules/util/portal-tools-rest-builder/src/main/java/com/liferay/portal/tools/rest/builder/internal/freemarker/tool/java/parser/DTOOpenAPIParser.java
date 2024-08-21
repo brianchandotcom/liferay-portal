@@ -5,6 +5,7 @@
 
 package com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser.util.OpenAPIParserUtil;
@@ -169,8 +170,10 @@ public class DTOOpenAPIParser {
 	private static String _getPropertyName(
 		Schema propertySchema, String propertySchemaName) {
 
-		String name = StringUtil.removeSubstring(
-			CamelCaseUtil.toCamelCase(propertySchemaName), ":");
+		String name = StringUtil.replace(
+			CamelCaseUtil.toCamelCase(propertySchemaName),
+			new char[] {CharPool.COLON, CharPool.PERIOD},
+			new char[] {CharPool.UNDERLINE, CharPool.UNDERLINE});
 
 		if (StringUtil.equalsIgnoreCase(propertySchema.getType(), "object") &&
 			(propertySchema.getItems() != null)) {

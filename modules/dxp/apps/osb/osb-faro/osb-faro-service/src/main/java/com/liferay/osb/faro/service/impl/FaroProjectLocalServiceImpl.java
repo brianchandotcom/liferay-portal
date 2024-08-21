@@ -352,11 +352,17 @@ public class FaroProjectLocalServiceImpl
 			JSONObject oldSubscriptionJSONObject =
 				_jsonFactory.createJSONObject(faroProject.getSubscription());
 
+			String oldSubscriptionName = oldSubscriptionJSONObject.getString(
+				"name");
+
+			oldSubscriptionName = oldSubscriptionName.replace(
+				"LXC ", "Liferay SaaS ");
+
 			JSONObject newSubscriptionJSONObject =
 				_jsonFactory.createJSONObject(subscription);
 
 			if (!Objects.equals(
-					oldSubscriptionJSONObject.get("name"),
+					oldSubscriptionName,
 					newSubscriptionJSONObject.get("name"))) {
 
 				faroProject.setSubscriptionModifiedTime(currentTimeMillis);

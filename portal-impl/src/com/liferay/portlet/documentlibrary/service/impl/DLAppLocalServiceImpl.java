@@ -666,7 +666,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 */
 	@Override
 	public FileEntry getFileEntryByExternalReferenceCode(
-			long groupId, String externalReferenceCode)
+			String externalReferenceCode, long groupId)
 		throws PortalException {
 
 		LocalRepository localRepository = getLocalRepository(groupId);

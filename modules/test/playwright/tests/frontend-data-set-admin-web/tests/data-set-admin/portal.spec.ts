@@ -37,6 +37,25 @@ test.describe('Data Set Manager with Feature Flag Enabled', () => {
 		});
 	});
 
+	test('Confirm that in the application menu, "Data Set" is in the "Object" category @LPS-188590', async ({
+		dataSetsPage,
+		page,
+	}) => {
+		await test.step('Open the application menu and go to the Control Panel tab', async () => {
+			await dataSetsPage.applicationsMenuPage.goToControlPanel();
+		});
+
+		await test.step('Check that "Data Sets" is in the "Object" category', async () => {
+			const objectHeading = page.locator('h2#control_panel\\.object');
+
+			const objectListItems = objectHeading.locator('+ ul li');
+
+			expect(
+				(await objectListItems.allInnerTexts()).includes('Data Sets')
+			).toBeTruthy();
+		});
+	});
+
 	test('Confirm that Cell Renderer is displayed in Client Extensions, when FF is enabled @LPS-188590', async ({
 		dataSetsPage,
 		page,

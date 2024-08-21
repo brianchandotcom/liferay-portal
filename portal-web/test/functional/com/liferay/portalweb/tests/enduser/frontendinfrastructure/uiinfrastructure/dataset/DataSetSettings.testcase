@@ -20,45 +20,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-188590 Confirm that the Data Set is present in OBJECTS, when FF is enabled"
-	@priority = 5
-	test CanAssertDataSetIsEnabled {
-		property portal.acceptance = "true";
-
-		task ("Given the Instance Settings Admin page") {
-			PortalSettings.openInstanceSettingsAdmin();
-		}
-
-		task ("And the user accesses the Feature Flag option") {
-			PortalSettings.gotoConfiguration(
-				configurationCategory = "Feature Flags",
-				configurationName = "Beta",
-				configurationScope = "Virtual Instance Scope");
-		}
-
-		task ("And enabled the Dataset management Feature Flag") {
-			Check.checkToggleSwitch(
-				locator1 = "FeatureFlag#TOGGLE_ROW",
-				title_row = "Data Set Manager",
-				toggle_state = "Disabled");
-		}
-
-		task ("When go to Control panel inside Portlet Menu") {
-			Navigator.openURL();
-
-			ApplicationsMenuHelper.openApplicationsMenu();
-
-			ApplicationsMenu.gotoPanel(panel = "Control Panel");
-		}
-
-		task ("Then the option Data Set is visible above OBJECT") {
-			AssertElementPresent(
-				key_category = "Object",
-				key_portlet = "Data Sets",
-				locator1 = "ApplicationsMenu#PORTLET");
-		}
-	}
-
 	@description = "LPS-188590 Confirm that Data Set Fragment can be enabled and disabled in Client Extension"
 	@priority = 3
 	test ConfirmEnableAndDisabledFFDataSetClientExtension {

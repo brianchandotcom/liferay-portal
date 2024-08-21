@@ -739,7 +739,7 @@ public class CompanyIndexFactoryTest {
 
 		getMappingsRequest.indices(_companyIndexFactoryFixture.getIndexName());
 
-		GetMappingsResponse getMappingsResponse = _getMappingsResponse(
+		GetMappingsResponse getMappingsResponse = _getGetMappingsResponse(
 			getMappingsRequest);
 
 		ImmutableOpenMap<String, ImmutableOpenMap<String, MappingMetadata>>
@@ -863,7 +863,7 @@ public class CompanyIndexFactoryTest {
 		}
 	}
 
-	private GetMappingsResponse _getMappingsResponse(
+	private GetMappingsResponse _getGetMappingsResponse(
 		GetMappingsRequest getMappingsRequest) {
 
 		RestHighLevelClient restHighLevelClient =

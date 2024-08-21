@@ -97,6 +97,10 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+<#if schema.discriminator?has_content>
+	import java.util.function.Supplier;
+</#if>
+
 import javax.annotation.Generated;
 
 import javax.ws.rs.core.MultivaluedHashMap;
@@ -3111,40 +3115,67 @@ public abstract class Base${schemaName}ResourceTestCase {
 			<#if schema.discriminator?has_content>
 				<#assign discriminatorPropertyName = schema.discriminator.propertyName />
 
-				switch(RandomTestUtil.randomInt(0,${schema.discriminator.mapping?size - 1})) {
+				List<Supplier<${schemaName}>> constructors = Arrays.asList(
 
 				<#list schema.discriminator.mapping as mappingName, mappingSchema>
 					<#assign
 						childSchemaName = freeMarkerTool.getReferenceName(mappingSchema)
 
-						allChildProperties = properties + freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, allSchemas[childSchemaName], allSchemas)
+						childProperties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, childSchemaName, allSchemas)
 					/>
-						case ${mappingName?index}:
-							return new ${childSchemaName}() {
-								{
-									<#list allChildProperties?keys as propertyName>
-										<#if stringUtil.equals(propertyName, "siteId")>
-											${propertyName} = testGroup.getGroupId();
-										<#elseif stringUtil.equals(allChildProperties[propertyName], "Integer")>
-											${propertyName} = RandomTestUtil.randomInt();
-										<#elseif propertyName?contains("email") && stringUtil.equals(allChildProperties[propertyName], "String")>
-											${propertyName} = StringUtil.toLowerCase(RandomTestUtil.randomString()) + "@liferay.com";
-										<#elseif stringUtil.equals(allChildProperties[propertyName], "String")>
-											${propertyName} = StringUtil.toLowerCase(RandomTestUtil.randomString());
-										<#elseif randomDataTypes?seq_contains(allChildProperties[propertyName])>
-											${propertyName} = RandomTestUtil.random${allChildProperties[propertyName]}();
-										<#elseif stringUtil.equals(allChildProperties[propertyName], "Date")>
-											${propertyName} = RandomTestUtil.nextDate();
-										</#if>
-									</#list>
-									${discriminatorPropertyName} = ${discriminatorPropertyName?cap_first}.create("${mappingName}");
-								}
-						};
+
+						() -> {
+							${childSchemaName} ${schemaVarName} = new ${childSchemaName}();
+							<#list childProperties?keys as propertyName>
+								<#if stringUtil.equals(propertyName, "siteId")>
+									${schemaVarName}.setGroupId(testGroup.getGroupId());
+								<#elseif stringUtil.equals(childProperties[propertyName], "Integer")>
+									${schemaVarName}.set${propertyName?cap_first}(RandomTestUtil.randomInt());
+								<#elseif propertyName?contains("email") && stringUtil.equals(childProperties[propertyName], "String")>
+									${schemaVarName}.set${propertyName?cap_first}(StringUtil.toLowerCase(RandomTestUtil.randomString()) + "@liferay.com");
+								<#elseif stringUtil.equals(childProperties[propertyName], "String")>
+									${schemaVarName}.set${propertyName?cap_first}(StringUtil.toLowerCase(RandomTestUtil.randomString()));
+								<#elseif randomDataTypes?seq_contains(childProperties[propertyName])>
+									${schemaVarName}.set${propertyName?cap_first}(RandomTestUtil.random${childProperties[propertyName]}());
+								<#elseif stringUtil.equals(childProperties[propertyName], "Date")>
+									${schemaVarName}.set${propertyName?cap_first}(RandomTestUtil.nextDate());
+								</#if>
+							</#list>
+							${schemaVarName}.set${discriminatorPropertyName?cap_first}(${schemaName}.${discriminatorPropertyName?cap_first}.create("${mappingName}"));
+							setCommonAttributes(${schemaVarName});
+
+							return ${schemaVarName};
+						}
+
+						<#if mappingName?has_next>
+							,
+
+						</#if>
+
 				</#list>
 
+					);
+
+					return constructors.get(RandomTestUtil.randomInt(0, constructors.size() - 1)).get();
 				}
 
-				return null;
+				private <T extends ${schemaName}> void setCommonAttributes(T ${schemaVarName}) {
+					<#list properties?keys as propertyName>
+						<#if stringUtil.equals(propertyName, "siteId")>
+							${schemaVarName}.setGroupId(testGroup.getGroupId());
+						<#elseif stringUtil.equals(properties[propertyName], "Integer")>
+							${schemaVarName}.set${propertyName?cap_first}(RandomTestUtil.randomInt());
+						<#elseif propertyName?contains("email") && stringUtil.equals(properties[propertyName], "String")>
+							${schemaVarName}.set${propertyName?cap_first}(StringUtil.toLowerCase(RandomTestUtil.randomString()) + "@liferay.com");
+						<#elseif stringUtil.equals(properties[propertyName], "String")>
+							${schemaVarName}.set${propertyName?cap_first}(StringUtil.toLowerCase(RandomTestUtil.randomString()));
+						<#elseif randomDataTypes?seq_contains(properties[propertyName])>
+							${schemaVarName}.set${propertyName?cap_first}(RandomTestUtil.random${properties[propertyName]}());
+						<#elseif stringUtil.equals(properties[propertyName], "Date")>
+							${schemaVarName}.set${propertyName?cap_first}(RandomTestUtil.nextDate());
+						</#if>
+					</#list>
+				}
 
 			<#else>
 				return new ${schemaName}() {
@@ -3166,9 +3197,9 @@ public abstract class Base${schemaName}ResourceTestCase {
 						</#list>
 					}
 				};
+			}
 
 			</#if>
-		}
 
 		protected ${schemaName} randomIrrelevant${schemaName}() throws Exception {
 			${schemaName} randomIrrelevant${schemaName} = random${schemaName}();

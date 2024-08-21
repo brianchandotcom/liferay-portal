@@ -13,8 +13,6 @@ CommerceReturnEditDisplayContext commerceReturnEditDisplayContext = (CommerceRet
 CommerceOrderItem commerceOrderItem = commerceReturnEditDisplayContext.getCommerceReturnItemCommerceOrderItem();
 CommerceReturn commerceReturn = commerceReturnEditDisplayContext.getCommerceReturn();
 CommerceReturnItem commerceReturnItem = commerceReturnEditDisplayContext.getCommerceReturnItem();
-
-Format dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>
 
 <aui:form name="commerceReturnItemsFm" onSubmit="event.preventDefault();">
@@ -141,7 +139,12 @@ Format dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 										<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - discussionCommentCreateDate.getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
 
 										<c:if test="<%= discussionCommentCreateDate.before(discussionComment.getModifiedDate()) %>">
-											<strong onmouseover="Liferay.Portal.ToolTip.show(this, '<%= HtmlUtil.escapeJS(dateTimeFormat.format(discussionComment.getModifiedDate())) %>');">
+
+											<%
+											Format format = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
+											%>
+
+											<strong onmouseover="Liferay.Portal.ToolTip.show(this, '<%= HtmlUtil.escapeJS(format.format(discussionComment.getModifiedDate())) %>');">
 												- <liferay-ui:message key="edited" />
 											</strong>
 										</c:if>

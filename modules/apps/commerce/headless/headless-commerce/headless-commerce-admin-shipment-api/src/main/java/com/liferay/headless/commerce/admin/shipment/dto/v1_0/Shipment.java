@@ -427,6 +427,51 @@ public class Shipment implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _modifiedDateSupplier;
 
+	@Schema(example = "AB-34098-789-N")
+	public String getOrderExternalReferenceCode() {
+		if (_orderExternalReferenceCodeSupplier != null) {
+			orderExternalReferenceCode =
+				_orderExternalReferenceCodeSupplier.get();
+
+			_orderExternalReferenceCodeSupplier = null;
+		}
+
+		return orderExternalReferenceCode;
+	}
+
+	public void setOrderExternalReferenceCode(
+		String orderExternalReferenceCode) {
+
+		this.orderExternalReferenceCode = orderExternalReferenceCode;
+
+		_orderExternalReferenceCodeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setOrderExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			orderExternalReferenceCodeUnsafeSupplier) {
+
+		_orderExternalReferenceCodeSupplier = () -> {
+			try {
+				return orderExternalReferenceCodeUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String orderExternalReferenceCode;
+
+	@JsonIgnore
+	private Supplier<String> _orderExternalReferenceCodeSupplier;
+
 	@DecimalMin("0")
 	@Schema(example = "30130")
 	public Long getOrderId() {
@@ -1049,6 +1094,22 @@ public class Shipment implements Serializable {
 			sb.append("\"");
 
 			sb.append(liferayToJSONDateFormat.format(modifiedDate));
+
+			sb.append("\"");
+		}
+
+		String orderExternalReferenceCode = getOrderExternalReferenceCode();
+
+		if (orderExternalReferenceCode != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"orderExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(orderExternalReferenceCode));
 
 			sb.append("\"");
 		}

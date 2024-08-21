@@ -174,6 +174,20 @@ public class ShipmentSerDes {
 			sb.append("\"");
 		}
 
+		if (shipment.getOrderExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"orderExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(shipment.getOrderExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (shipment.getOrderId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -407,6 +421,15 @@ public class ShipmentSerDes {
 				liferayToJSONDateFormat.format(shipment.getModifiedDate()));
 		}
 
+		if (shipment.getOrderExternalReferenceCode() == null) {
+			map.put("orderExternalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"orderExternalReferenceCode",
+				String.valueOf(shipment.getOrderExternalReferenceCode()));
+		}
+
 		if (shipment.getOrderId() == null) {
 			map.put("orderId", null);
 		}
@@ -542,6 +565,11 @@ public class ShipmentSerDes {
 			else if (Objects.equals(jsonParserFieldName, "modifiedDate")) {
 				return false;
 			}
+			else if (Objects.equals(
+						jsonParserFieldName, "orderExternalReferenceCode")) {
+
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "orderId")) {
 				return false;
 			}
@@ -648,6 +676,14 @@ public class ShipmentSerDes {
 				if (jsonParserFieldValue != null) {
 					shipment.setModifiedDate(
 						toDate((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "orderExternalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					shipment.setOrderExternalReferenceCode(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "orderId")) {

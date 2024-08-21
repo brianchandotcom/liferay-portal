@@ -517,33 +517,18 @@ public class CommerceShipmentLocalServiceUtil {
 		return getService().searchCommerceShipmentsCount(searchContext);
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #updateAddress(long, String, String, String, String, String, String,
-	 String, long, long, String, ServiceContext)}
-	 */
-	@Deprecated
 	public static CommerceShipment updateAddress(
-			long commerceShipmentId, String name, String description,
-			String street1, String street2, String street3, String city,
-			String zip, long regionId, long countryId, String phoneNumber)
-		throws PortalException {
-
-		return getService().updateAddress(
-			commerceShipmentId, name, description, street1, street2, street3,
-			city, zip, regionId, countryId, phoneNumber);
-	}
-
-	public static CommerceShipment updateAddress(
-			long commerceShipmentId, String name, String description,
-			String street1, String street2, String street3, String city,
-			String zip, long regionId, long countryId, String phoneNumber,
+			String externalReferenceCode, long commerceShipmentId, String name,
+			String description, String street1, String street2, String street3,
+			String city, String zip, long regionId, long countryId,
+			String phoneNumber,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().updateAddress(
-			commerceShipmentId, name, description, street1, street2, street3,
-			city, zip, regionId, countryId, phoneNumber, serviceContext);
+			externalReferenceCode, commerceShipmentId, name, description,
+			street1, street2, street3, city, zip, regionId, countryId,
+			phoneNumber, serviceContext);
 	}
 
 	public static CommerceShipment updateCarrierDetails(

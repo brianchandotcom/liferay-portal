@@ -524,6 +524,14 @@ public class SubscriptionSender implements Serializable {
 		_mailIdIds = ids;
 	}
 
+	public void setNotificationClassName(String notificationClassName) {
+		_notificationClassName = notificationClassName;
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #setNotificationClassName(String)}
+	 */
+	@Deprecated
 	public void setNotificationClassNameId(long notificationClassNameId) {
 		ClassName className = ClassNameLocalServiceUtil.fetchByClassNameId(
 			notificationClassNameId);

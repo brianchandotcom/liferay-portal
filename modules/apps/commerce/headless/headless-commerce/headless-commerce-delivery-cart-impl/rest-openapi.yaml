@@ -122,6 +122,9 @@ components:
                     type: string
                 billingAddress:
                     $ref: "#/components/schemas/Address"
+                billingAddressExternalReferenceCode:
+                    example: AAB-34098-789-N
+                    type: string
                 billingAddressId:
                     format: int64
                     type: integer
@@ -204,6 +207,9 @@ components:
                     type: string
                 shippingAddress:
                     $ref: "#/components/schemas/Address"
+                shippingAddressExternalReferenceCode:
+                    example: AAB-34098-789-N
+                    type: string
                 shippingAddressId:
                     format: int64
                     type: integer

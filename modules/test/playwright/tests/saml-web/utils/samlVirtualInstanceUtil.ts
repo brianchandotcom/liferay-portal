@@ -60,27 +60,27 @@ export async function createIdentityProviderVirtualInstance(
 	);
 }
 
-export async function createIdpUser(
+export async function createUser(
 	browser,
-	idpInstanceName = DEFAULT_IDP_NAME,
+	instanceName: string,
 	userId = getRandomInt()
 ) {
 	const defaultBaseUrl = liferayConfig.environment.baseUrl;
 
-	liferayConfig.environment.baseUrl = `http://${idpInstanceName}:8080`;
+	liferayConfig.environment.baseUrl = `http://${instanceName}:8080`;
 
-	// Create new page and apiHelper implementation for IdP virtual instance
+	// Create new page and apiHelper implementation for the given instance
 
-	const idpVirtualInstancePage = await performSamlSafeLogin(
+	const virtualInstancePage = await performSamlSafeLogin(
 		browser,
-		idpInstanceName
+		instanceName
 	);
 
-	const idpApiHelpers = new ApiHelpers(idpVirtualInstancePage);
+	const apiHelpers = new ApiHelpers(virtualInstancePage);
 
-	// Create user in IdP instance
+	// Create user in given instance
 
-	const userAccount = await idpApiHelpers.headlessAdminUser.postUserAccount(
+	const userAccount = await apiHelpers.headlessAdminUser.postUserAccount(
 		undefined,
 		userId
 	);
@@ -93,7 +93,7 @@ export async function createIdpUser(
 		surname: userAccount.familyName,
 	};
 
-	await performLogout(idpVirtualInstancePage);
+	await performLogout(virtualInstancePage);
 
 	liferayConfig.environment.baseUrl = defaultBaseUrl;
 

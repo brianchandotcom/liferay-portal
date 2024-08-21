@@ -43,7 +43,7 @@ import {
 	DEFAULT_SP_URL,
 	configureVirtualInstanceForSaml,
 	createCustomField,
-	createIdpUser,
+	createUser,
 	deleteVirtualInstance,
 	performSamlSafeLogin,
 	resetSamlKeystoreManagerTarget,
@@ -170,7 +170,7 @@ test('Create two virtual instances, one IdP and one SP, connect them, perform SP
 
 	// Create a user with identical credentials on each instance
 
-	const userAccount = await createIdpUser(browser, DEFAULT_IDP_NAME);
+	const userAccount = await createUser(browser, DEFAULT_IDP_NAME);
 
 	// Perform SP initiated SSO
 
@@ -326,7 +326,7 @@ test('Create two virtual instances, one IdP and one SP, and verify Custom User A
 
 	// Create a user on the IdP instance
 
-	const userAccount = await createIdpUser(browser, DEFAULT_IDP_NAME);
+	const userAccount = await createUser(browser, DEFAULT_IDP_NAME);
 
 	// Perform Sp initiated SSO with the new user
 
@@ -485,11 +485,11 @@ test('Create two virtual instances, set localhost and one to IdP and one SP, and
 
 	const userId = getRandomInt();
 
-	const userAccount = await createIdpUser(browser, 'localhost', userId);
+	const userAccount = await createUser(browser, 'localhost', userId);
 
 	deleteAfterTestUserIds.push(userAccount.id);
 
-	await createIdpUser(browser, DEFAULT_IDP_NAME, userId);
+	await createUser(browser, DEFAULT_IDP_NAME, userId);
 
 	// Perform SP initiated SSO, using localhost as the IdP
 

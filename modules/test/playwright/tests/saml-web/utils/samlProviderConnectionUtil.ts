@@ -99,7 +99,8 @@ export async function connectSpAndIdp(
 
 export async function editIdentityProviderConnection(
 	browser,
-	idpConnection: TIdpConnection
+	idpConnection: TIdpConnection,
+	expectedMessage?: string
 ) {
 	const defaultBaseUrl = liferayConfig.environment.baseUrl;
 
@@ -114,7 +115,8 @@ export async function editIdentityProviderConnection(
 	await identityProviderConnectionsPage.goTo();
 
 	await identityProviderConnectionsPage.editIdentityProviderConnection(
-		idpConnection
+		idpConnection,
+		expectedMessage
 	);
 
 	liferayConfig.environment.baseUrl = defaultBaseUrl;

@@ -1452,7 +1452,7 @@ public class DLFileEntryLocalServiceImpl
 
 	@Override
 	public DLFileEntry getFileEntryByExternalReferenceCode(
-			long groupId, String externalReferenceCode)
+			String externalReferenceCode, long groupId)
 		throws PortalException {
 
 		return dlFileEntryPersistence.findByERC_G(

@@ -1355,7 +1355,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public FileEntry getFileEntryByExternalReferenceCode(
-			long groupId, String externalReferenceCode)
+			String externalReferenceCode, long groupId)
 		throws PortalException {
 
 		Repository repository = getRepository(groupId);

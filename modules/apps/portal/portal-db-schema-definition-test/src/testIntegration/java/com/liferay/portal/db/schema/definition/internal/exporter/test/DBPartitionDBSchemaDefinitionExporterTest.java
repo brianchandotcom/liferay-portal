@@ -51,7 +51,7 @@ import org.junit.runner.RunWith;
  * @author Mariano Álvaro Sáiz
  */
 @RunWith(Arquillian.class)
-public class DBSchemaDefinitionExporterDBPartitionTest
+public class DBPartitionDBSchemaDefinitionExporterTest
 	extends BaseDBSchemaDefinitionExporterTestCase {
 
 	@ClassRule

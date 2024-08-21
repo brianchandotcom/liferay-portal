@@ -179,7 +179,7 @@ public class AuthVerifierPipelineTest {
 		Assert.assertSame(expectedState, authVerifierResult.getState());
 	}
 
-	private AuthVerifier _newAuthVerifier(
+	private AuthVerifier _createAuthVerifier(
 		AuthVerifierResult.State state, int identifier) {
 
 		AuthVerifierResult authVerifierResult = new AuthVerifierResult();
@@ -228,8 +228,8 @@ public class AuthVerifierPipelineTest {
 	}
 
 	private void _setUpAuthVerifiers() {
-		_authVerifier1 = _newAuthVerifier(AuthVerifierResult.State.SUCCESS, 1);
-		_authVerifier2 = _newAuthVerifier(
+		_authVerifier1 = _createAuthVerifier(AuthVerifierResult.State.SUCCESS, 1);
+		_authVerifier2 = _createAuthVerifier(
 			AuthVerifierResult.State.UNSUCCESSFUL, 2);
 	}
 

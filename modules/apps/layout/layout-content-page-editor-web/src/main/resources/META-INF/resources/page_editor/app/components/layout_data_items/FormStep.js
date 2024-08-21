@@ -4,12 +4,13 @@
  */
 
 import classNames from 'classnames';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {getLayoutDataItemPropTypes} from '../../../prop_types/index';
 import {useItemLocalConfig} from '../../contexts/LocalConfigContext';
 import {useSelectorCallback} from '../../contexts/StoreContext';
 import getLayoutDataItemTopperUniqueClassName from '../../utils/getLayoutDataItemTopperUniqueClassName';
+import getLayoutDataItemUniqueClassName from '../../utils/getLayoutDataItemUniqueClassName';
 import isItemEmpty from '../../utils/isItemEmpty';
 import TopperEmpty from '../topper/TopperEmpty';
 
@@ -37,6 +38,30 @@ const FormStepWithControls = React.forwardRef(({children, item}, ref) => {
 
 	const localConfig = useItemLocalConfig(formId);
 
+	const [visible, setVisible] = useState(index === 0);
+
+	useEffect(() => {
+		const onStepChange = ({emitter, step}) => {
+			const form = document.querySelector(
+				`.${getLayoutDataItemUniqueClassName(formId)}`
+			);
+
+			// Return if the emitter is not in this form
+
+			if (!form.contains(emitter)) {
+				return;
+			}
+
+			// Change step visibility
+
+			setVisible(step === index);
+		};
+
+		Liferay.on('formFragment:changeStep', onStepChange);
+
+		return () => Liferay.detach('formFragment:changeStep', onStepChange);
+	}, [formId, index, setVisible]);
+
 	return (
 		<TopperEmpty
 			className={getLayoutDataItemTopperUniqueClassName(item.itemId)}
@@ -44,7 +69,7 @@ const FormStepWithControls = React.forwardRef(({children, item}, ref) => {
 		>
 			<FormStep
 				className={classNames('page-editor__form-step', {
-					'd-none': index !== 0 && !localConfig.displayAllSteps,
+					'd-none': !visible && !localConfig.displayAllSteps,
 				})}
 				ref={ref}
 			>

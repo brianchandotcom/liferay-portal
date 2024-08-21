@@ -10,6 +10,7 @@ import com.liferay.blogs.internal.upgrade.v1_1_2.BlogsImagesUpgradeProcess;
 import com.liferay.blogs.internal.upgrade.v2_0_0.util.BlogsEntryTable;
 import com.liferay.blogs.internal.upgrade.v2_0_0.util.BlogsStatsUserTable;
 import com.liferay.blogs.internal.upgrade.v2_2_0.BlogsEntryExternalReferenceCodeUpgradeProcess;
+import com.liferay.blogs.internal.upgrade.v3_1_1.BlogsFriendlyURLFormatUpgradeProcess;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.comment.upgrade.DiscussionSubscriptionClassNameUpgradeProcess;
 import com.liferay.document.library.kernel.store.Store;
@@ -109,6 +110,11 @@ public class BlogsServiceUpgradeStepRegistrator
 
 		registry.register(
 			"3.0.0", "3.1.0", new CTModelUpgradeProcess("BlogsEntry"));
+
+		registry.register(
+			"3.1.0", "3.1.1",
+			new BlogsFriendlyURLFormatUpgradeProcess(
+				_classNameLocalService, _friendlyURLEntryLocalService));
 	}
 
 	private UnsafeBiFunction<String, Connection, Boolean, Exception>

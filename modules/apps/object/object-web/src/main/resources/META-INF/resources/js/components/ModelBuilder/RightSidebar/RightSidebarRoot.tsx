@@ -8,6 +8,7 @@ import React, {ReactNode, useEffect, useState} from 'react';
 
 import './RightSidebarRoot.scss';
 import {useObjectFolderContext} from '../ModelBuilderContext/objectFolderContext';
+import {getRightSidebarWidth} from './rightSidebarUtil';
 
 interface IRightSidebarRoot {
 	children: ReactNode;
@@ -34,23 +35,9 @@ export function RightSideBarRoot({children}: IRightSidebarRoot) {
 	};
 
 	useEffect(() => {
-		if (selectedObjectField) {
-			if (selectedObjectField.businessType === 'Aggregation') {
-				setNewVerticalBarWidthValue(950);
+		const newRightSidebarWidth = getRightSidebarWidth(selectedObjectField);
 
-				return;
-			}
-
-			if (selectedObjectField.businessType === 'Picklist') {
-				setNewVerticalBarWidthValue(500);
-
-				return;
-			}
-
-			setNewVerticalBarWidthValue(320);
-
-			return;
-		}
+		setNewVerticalBarWidthValue(newRightSidebarWidth);
 	}, [
 		selectedObjectDefinitionNode,
 		selectedObjectField,

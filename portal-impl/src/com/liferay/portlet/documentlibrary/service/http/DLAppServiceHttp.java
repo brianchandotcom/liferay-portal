@@ -1817,8 +1817,8 @@ public class DLAppServiceHttp {
 
 	public static com.liferay.portal.kernel.repository.model.FileEntry
 			getFileEntryByExternalReferenceCode(
-				HttpPrincipal httpPrincipal, long groupId,
-				String externalReferenceCode)
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -1827,7 +1827,7 @@ public class DLAppServiceHttp {
 				_getFileEntryByExternalReferenceCodeParameterTypes42);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, externalReferenceCode);
+				methodKey, externalReferenceCode, groupId);
 
 			Object returnObj = null;
 
@@ -4967,7 +4967,7 @@ public class DLAppServiceHttp {
 		new Class[] {long.class, long.class, String.class};
 	private static final Class<?>[]
 		_getFileEntryByExternalReferenceCodeParameterTypes42 = new Class[] {
-			long.class, String.class
+			String.class, long.class
 		};
 	private static final Class<?>[] _getFileEntryByFileNameParameterTypes43 =
 		new Class[] {long.class, long.class, String.class};

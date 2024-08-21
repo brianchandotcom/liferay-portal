@@ -1277,8 +1277,8 @@ public class DLFileEntryServiceHttp {
 
 	public static com.liferay.document.library.kernel.model.DLFileEntry
 			getFileEntryByExternalReferenceCode(
-				HttpPrincipal httpPrincipal, long groupId,
-				String externalReferenceCode)
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -1288,7 +1288,7 @@ public class DLFileEntryServiceHttp {
 				_getFileEntryByExternalReferenceCodeParameterTypes30);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, externalReferenceCode);
+				methodKey, externalReferenceCode, groupId);
 
 			Object returnObj = null;
 
@@ -2317,7 +2317,7 @@ public class DLFileEntryServiceHttp {
 		new Class[] {long.class, long.class, String.class};
 	private static final Class<?>[]
 		_getFileEntryByExternalReferenceCodeParameterTypes30 = new Class[] {
-			long.class, String.class
+			String.class, long.class
 		};
 	private static final Class<?>[] _getFileEntryByFileNameParameterTypes31 =
 		new Class[] {long.class, long.class, String.class};

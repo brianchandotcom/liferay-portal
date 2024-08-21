@@ -397,7 +397,7 @@ public interface DLAppLocalService extends BaseLocalService {
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public FileEntry getFileEntryByExternalReferenceCode(
-			long groupId, String externalReferenceCode)
+			String externalReferenceCode, long groupId)
 		throws PortalException;
 
 	/**

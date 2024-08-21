@@ -573,8 +573,7 @@ public class BlogsEditEntryDisplayContext {
 			assetCategoryIdsList.removeAll(
 				ListUtil.fromArray(_getCurrentFriendlyURLAssetCategoryIds()));
 
-			_assetCategoryIds = ArrayUtil.toArray(
-				assetCategoryIdsList.toArray(new Long[0]));
+			_assetCategoryIds = ArrayUtil.toLongArray(assetCategoryIdsList);
 		}
 
 		return _assetCategoryIds;

@@ -82,21 +82,8 @@ public class AuthVerifierPipelineTest {
 			contextPath, includeURLs, legacyRequestURI, expectedState);
 		_assertAuthVerifierResult(
 			contextPath, includeURLs, regularRequestURI, expectedState);
-	}
 
-	@Test
-	public void testVerifyRequestConsidersAuthVerifiersOrder()
-		throws PortalException {
-
-		String contextPath = "";
-		String includeURLs = StringBundler.concat(
-			_BASE_URL, "/regular/*,", _BASE_URL, "/legacy*");
-
-		String legacyRequestURI = contextPath + _BASE_URL + "/legacy/Hello";
-		String regularRequestURI = contextPath + _BASE_URL + "/regular/Hello";
-
-		AuthVerifierResult.State expectedState =
-			AuthVerifierResult.State.UNSUCCESSFUL;
+		expectedState =AuthVerifierResult.State.UNSUCCESSFUL;
 
 		Mockito.when(
 			AuthVerifierRegistry.getAuthVerifiers()

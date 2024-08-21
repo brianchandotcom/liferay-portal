@@ -5,16 +5,6 @@
 	"name": "ExamResult",
 	"objectFields": [
 		{
-			"DBType": "String",
-			"indexed": false,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "External Key"
-			},
-			"name": "externalKey",
-			"required": false
-		},
-		{
 			"DBType": "Date",
 			"indexed": false,
 			"indexedAsKeyword": false,
@@ -42,16 +32,6 @@
 				"en_US": "Grade"
 			},
 			"name": "grade",
-			"required": false
-		},
-		{
-			"DBType": "Boolean",
-			"indexed": false,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "lcpa"
-			},
-			"name": "lcpa",
 			"required": false
 		},
 		{

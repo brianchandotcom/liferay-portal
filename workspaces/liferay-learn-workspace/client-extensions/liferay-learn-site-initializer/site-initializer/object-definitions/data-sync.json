@@ -5,16 +5,6 @@
 	"name": "DataSync",
 	"objectFields": [
 		{
-			"DBType": "Date",
-			"indexed": false,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Sync Date"
-			},
-			"name": "syncDate",
-			"required": false
-		},
-		{
 			"DBType": "String",
 			"indexed": false,
 			"indexedAsKeyword": false,

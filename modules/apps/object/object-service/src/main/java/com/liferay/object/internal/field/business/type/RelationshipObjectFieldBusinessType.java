@@ -9,7 +9,6 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.dynamic.data.mapping.form.field.type.constants.ObjectDDMFormFieldTypeConstants;
-import com.liferay.object.exception.NoSuchObjectEntryException;
 import com.liferay.object.exception.ObjectEntryValuesException;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
@@ -24,8 +23,6 @@ import com.liferay.object.system.SystemObjectDefinitionManager;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -116,23 +113,11 @@ public class RelationshipObjectFieldBusinessType
 					externalReferenceCode, objectDefinition, 0L);
 			}
 
-			try {
-				ObjectEntry objectEntry =
-					_objectEntryLocalService.getObjectEntry(
-						externalReferenceCode,
-						objectDefinition.getObjectDefinitionId());
+			ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
+				externalReferenceCode,
+				objectDefinition.getObjectDefinitionId());
 
-				return objectEntry.getObjectEntryId();
-			}
-			catch (NoSuchObjectEntryException noSuchObjectEntryException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(noSuchObjectEntryException);
-				}
-
-				throw new NoSuchObjectEntryException(
-					externalReferenceCode,
-					objectDefinition.getObjectDefinitionId());
-			}
+			return objectEntry.getObjectEntryId();
 		}
 
 		if (!values.containsKey(objectField.getName())) {
@@ -200,9 +185,6 @@ public class RelationshipObjectFieldBusinessType
 
 		return baseModel.getPrimaryKeyObj();
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		RelationshipObjectFieldBusinessType.class);
 
 	@Reference
 	private Language _language;

@@ -33,15 +33,14 @@ public class JSONStylingCheck extends BaseFileCheck {
 		}
 
 		try {
+			if (content.endsWith("\n") && fileName.endsWith("/package.json")) {
+				return JSONUtil.toString(new JSONObjectImpl(content)) + "\n";
+			}
+
 			if (StringUtil.startsWith(
 					StringUtil.trim(content), StringPool.OPEN_BRACKET)) {
 
 				content = JSONUtil.toString(new JSONArrayImpl(content));
-			}
-			else if (content.endsWith("\n") &&
-					 fileName.endsWith("/package.json")) {
-
-				content = JSONUtil.toString(new JSONObjectImpl(content)) + "\n";
 			}
 			else {
 				content = JSONUtil.toString(new JSONObjectImpl(content));
@@ -52,10 +51,6 @@ public class JSONStylingCheck extends BaseFileCheck {
 				_log.debug(jsonException);
 			}
 
-			return content;
-		}
-
-		if (fileName.endsWith("/package.json")) {
 			return content;
 		}
 

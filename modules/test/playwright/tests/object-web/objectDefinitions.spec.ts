@@ -17,6 +17,7 @@ import {getRandomInt} from '../../utils/getRandomInt';
 import getRandomString from '../../utils/getRandomString';
 import getFragmentDefinition from '../layout-content-page-editor-web/utils/getFragmentDefinition';
 import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
+import {createObjectField} from './utils/mockObjectFields';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -32,6 +33,7 @@ export const test = mergeTests(
 );
 
 let objectDefinitions: ObjectDefinition[] = [];
+let objectFolders: ObjectFolder[] = [];
 
 test.afterEach(async ({apiHelpers}) => {
 	if (objectDefinitions.length) {
@@ -42,6 +44,14 @@ test.afterEach(async ({apiHelpers}) => {
 		}
 
 		objectDefinitions = [];
+	}
+
+	if (objectFolders.length) {
+		for (const objectFolder of objectFolders) {
+			await apiHelpers.objectAdmin.deleteObjectFolder(objectFolder.id);
+		}
+
+		objectFolders = [];
 	}
 });
 
@@ -370,57 +380,129 @@ test.describe('Manage object definitions through Model Builder', () => {
 	test('see object definition details', async ({
 		apiHelpers,
 		modelBuilderPage,
+		page,
 	}) => {
-		const objectDefinition =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFolderExternalReferenceCode: 'default',
-				status: {code: 0},
-			});
+		const objectFolder =
+			await apiHelpers.objectAdmin.postRandomObjectFolder();
 
-		objectDefinitions.push(objectDefinition);
+		objectFolders.push(objectFolder);
 
-		await modelBuilderPage.goto({objectFolderName: 'Default'});
+		const department = await apiHelpers.objectAdmin.postObjectDefinition({
+			active: true,
+			label: {
+				en_US: 'Department',
+				pt_BR: 'Departamento',
+			},
+			name: 'Department',
+			objectFields: [
+				createObjectField('text', {
+					label: 'Name',
+					name: 'name',
+				}),
+			],
+			objectFolderExternalReferenceCode:
+				objectFolder.externalReferenceCode,
+			panelCategoryKey: 'control_panel.object',
+			pluralLabel: {
+				en_US: 'Departments',
+				pt_BR: 'Departamentos',
+			},
+			scope: 'company',
+			status: {code: 0},
+			titleObjectFieldName: 'id',
+		});
 
-		await expect(
-			modelBuilderPage.leftSidebarItems.filter({
-				hasText: objectDefinition.name,
-			})
-		).toBeVisible();
+		objectDefinitions.push(department);
 
-		await modelBuilderPage.leftSidebarItems
-			.filter({hasText: objectDefinition.name})
-			.click();
+		const employee = await apiHelpers.objectAdmin.postObjectDefinition({
+			active: false,
+			label: {
+				en_US: 'Employee',
+				pt_BR: 'Funcionario',
+			},
+			name: 'Employee',
+			objectFolderExternalReferenceCode:
+				objectFolder.externalReferenceCode,
+			panelCategoryKey: 'site_administration.design',
+			pluralLabel: {
+				en_US: 'Employees',
+				pt_BR: 'Funcionarios',
+			},
+			scope: 'site',
+			status: {code: 1},
+			titleObjectFieldName: 'name',
+		});
 
-		await expect(
-			modelBuilderPage.objectDefinitionNodes.filter({
-				hasText: objectDefinition.name,
-			})
-		).toBeVisible();
+		objectDefinitions.push(employee);
 
-		await expect(
-			modelBuilderPage.rightSidebar.getByTitle(
-				objectDefinition.name + ' Details'
-			)
-		).toBeVisible();
+		await modelBuilderPage.goto({objectFolderName: objectFolder.name});
 
-		const details = [
-			'Label',
-			'Plural Label',
-			'Table Name',
-			'Activate Object',
-			'Entry Title Field',
-			'Scope',
-			'Panel Link',
-		];
-
-		for (let i = 0; i < details.length; i++) {
-			const detail = details[i];
+		for (const objectDefinition of [department, employee]) {
+			await modelBuilderPage.leftSidebarItems
+				.filter({hasText: objectDefinition.label['en_US']})
+				.click();
 
 			await expect(
-				modelBuilderPage.rightSidebar
-					.filter({hasText: detail})
-					.filter({hasText: objectDefinition.name})
+				modelBuilderPage.rightSidebar.getByTitle(
+					`${objectDefinition.label['en_US']} Details`
+				)
 			).toBeVisible();
+
+			// Object Data Container
+
+			await expect(
+				modelBuilderPage.rightSidebarObjectDefinitionLabel
+			).toHaveValue(objectDefinition.label['en_US']);
+
+			await modelBuilderPage.rightSidebarObjectDefinitionLabelLocalizationButton.click();
+
+			await page
+				.getByRole('menuitem', {name: 'pt_BR Translated'})
+				.click();
+
+			await expect(
+				modelBuilderPage.rightSidebarObjectDefinitionLabel
+			).toHaveValue(objectDefinition.label['pt_BR']);
+
+			await page.keyboard.press('Escape');
+
+			await expect(
+				modelBuilderPage.rightSidebarObjectDefinitionPluralLabel
+			).toHaveValue(objectDefinition.pluralLabel['pt_BR']);
+
+			await modelBuilderPage.rightSidebarObjectDefinitionPluralLabelLocalizationButton.click();
+
+			await page.getByRole('menuitem', {name: 'en_US Default'}).click();
+
+			await expect(
+				modelBuilderPage.rightSidebarObjectDefinitionPluralLabel
+			).toHaveValue(objectDefinition.pluralLabel['en_US']);
+
+			await page.keyboard.press('Escape');
+
+			await expect(
+				modelBuilderPage.rightSidebarObjectDefinitionActivateObject
+			).toBeChecked({checked: objectDefinition.active});
+
+			// Entry Display Container
+
+			await expect(
+				modelBuilderPage.rightSidebarObjectDefinitionEntryTitleField
+			).toHaveText(objectDefinition.titleObjectFieldName, {
+				ignoreCase: true,
+			});
+
+			// Scope Container
+
+			await expect(
+				modelBuilderPage.rightSidebarObjectDefinitionScope
+			).toHaveText(objectDefinition.scope, {ignoreCase: true});
+
+			const [_, panelLink] = objectDefinition.panelCategoryKey.split('.');
+
+			await expect(
+				modelBuilderPage.rightSidebarObjectDefinitionPanelLink
+			).toHaveText(panelLink, {ignoreCase: true});
 		}
 	});
 

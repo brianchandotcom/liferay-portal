@@ -12,7 +12,6 @@ CommerceReturnContentDisplayContext commerceReturnContentDisplayContext = (Comme
 
 CommerceReturnItem commerceReturnItem = commerceReturnContentDisplayContext.getCommerceReturnItem();
 
-Format dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 boolean disabled = ParamUtil.getBoolean(request, "disabled");
 %>
 
@@ -92,7 +91,12 @@ boolean disabled = ParamUtil.getBoolean(request, "disabled");
 											<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - discussionCommentCreateDate.getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
 
 											<c:if test="<%= discussionCommentCreateDate.before(discussionComment.getModifiedDate()) %>">
-												<strong onmouseover="Liferay.Portal.ToolTip.show(this, '<%= HtmlUtil.escapeJS(dateTimeFormat.format(discussionComment.getModifiedDate())) %>');">
+
+												<%
+												Format format = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
+												%>
+
+												<strong onmouseover="Liferay.Portal.ToolTip.show(this, '<%= HtmlUtil.escapeJS(format.format(discussionComment.getModifiedDate())) %>');">
 													- <liferay-ui:message key="edited" />
 												</strong>
 											</c:if>
@@ -129,9 +133,10 @@ boolean disabled = ParamUtil.getBoolean(request, "disabled");
 
 								<div class="col">
 									<div class="lfr-discussion-body">
-										<aui:input label="" name="content" placeholder="type-your-comment-here" type="textarea" />
 										<aui:input name="className" type="hidden" value="<%= commerceReturnContentDisplayContext.getCommerceReturnItemClassName() %>" />
 										<aui:input name="classPK" type="hidden" value="<%= commerceReturnItem.getId() %>" />
+
+										<aui:input label="" name="content" placeholder="type-your-comment-here" type="textarea" />
 									</div>
 								</div>
 							</div>

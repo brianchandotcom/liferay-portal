@@ -180,9 +180,10 @@ CommerceReturnItem commerceReturnItem = commerceReturnEditDisplayContext.getComm
 
 						<div class="col">
 							<div class="lfr-discussion-body">
-								<aui:input label="" name="content" placeholder="type-your-comment-here" type="textarea" />
 								<aui:input name="className" type="hidden" value="<%= commerceReturnEditDisplayContext.getCommerceReturnItemClassName() %>" />
 								<aui:input name="classPK" type="hidden" value="<%= commerceReturnItem.getId() %>" />
+
+								<aui:input label="" name="content" placeholder="type-your-comment-here" type="textarea" />
 							</div>
 						</div>
 					</div>

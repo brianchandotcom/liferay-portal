@@ -427,6 +427,10 @@ public class StructuredContentResourceTest
 		_testGetStructuredContentAssetLibrary();
 		_testGetStructuredContentWithAllTypesOfContentFields(false);
 		_testGetStructuredContentWithAllTypesOfContentFields(true);
+		_testGetStructuredContentWithAllTypesOfContentFieldsAndAcceptAllLanguagesHeader(
+			false);
+		_testGetStructuredContentWithAllTypesOfContentFieldsAndAcceptAllLanguagesHeader(
+			true);
 		_testGetStructuredContentWithDateExpired();
 		_testGetStructuredContentWithDateExpiredNeverExpire();
 		_testGetStructuredContentWithDifferentFolder();
@@ -1770,6 +1774,28 @@ public class StructuredContentResourceTest
 
 		StructuredContent getStructuredContent =
 			structuredContentResource.getStructuredContent(
+				postStructuredContent.getId());
+
+		assertEquals(postStructuredContent, getStructuredContent);
+		assertValid(getStructuredContent);
+	}
+
+	private void
+			_testGetStructuredContentWithAllTypesOfContentFieldsAndAcceptAllLanguagesHeader(
+				boolean localizable)
+		throws Exception {
+
+		StructuredContentResource acceptAllLanguagesStructuredContentResource =
+			_buildStructureContentResource(LocaleUtil.getDefault());
+
+		StructuredContent postStructuredContent =
+			acceptAllLanguagesStructuredContentResource.
+				postSiteStructuredContent(
+					testGroup.getGroupId(),
+					_randomCompleteStructuredContent(localizable));
+
+		StructuredContent getStructuredContent =
+			acceptAllLanguagesStructuredContentResource.getStructuredContent(
 				postStructuredContent.getId());
 
 		assertEquals(postStructuredContent, getStructuredContent);

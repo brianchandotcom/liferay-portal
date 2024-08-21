@@ -158,14 +158,13 @@ export async function deleteVirtualInstance(name: string, page) {
 export async function performSamlSafeLogin(
 	browser,
 	domain: string,
+	mailId = domain !== 'localhost' ? `@${domain}.com` : undefined,
 	rememberMe = true,
 	screenName = 'test'
 ) {
 	const page = await browser.newPage({
 		baseURL: `http://${domain}:8080`,
 	});
-
-	const mailId = domain !== 'localhost' ? `@${domain}.com` : undefined;
 
 	await performLogin(
 		page,

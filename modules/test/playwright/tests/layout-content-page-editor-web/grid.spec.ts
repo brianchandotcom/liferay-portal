@@ -74,11 +74,9 @@ test('Grid background image can be customized', async ({
 
 	// Check correct image is used for background
 
-	expect(
-		await pageEditorPage
-			.getFragment(gridId)
-			.evaluate((element) => getComputedStyle(element).background)
-	).toEqual(expect.stringContaining('liferay_logo-png'));
+	await page
+		.locator('.lfr-layout-structure-item-row[style*="liferay_logo-png"]')
+		.waitFor();
 });
 
 test('Grid content is also duplicated', async ({

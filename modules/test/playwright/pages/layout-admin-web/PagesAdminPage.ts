@@ -400,12 +400,12 @@ export class PagesAdminPage {
 		// Select the pages
 
 		for (const pageName of pageNames) {
-			const pageInput = this.page.getByLabel(`Select ${pageName}`, {
+			const checkbox = this.page.getByLabel(`Select ${pageName}`, {
 				exact: true,
 			});
 
-			await pageInput.setChecked(true, {trial: true});
-			await pageInput.setChecked(true, {timeout: 1000});
+			await checkbox.waitFor();
+			await checkbox.check();
 		}
 
 		// Open the permissions modal

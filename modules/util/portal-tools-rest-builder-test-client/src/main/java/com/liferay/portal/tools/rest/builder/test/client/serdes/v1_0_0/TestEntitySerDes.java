@@ -65,7 +65,7 @@ public class TestEntitySerDes {
 			}
 			else {
 				throw new IllegalArgumentException(
-					"Unknown type '" + typeString + "'");
+					"Unknown type " + typeString);
 			}
 		}
 		else {
@@ -222,6 +222,7 @@ public class TestEntitySerDes {
 		@Override
 		public TestEntity parseToDTO(String json) {
 			Map<String, Object> jsonMap = parseToMap(json);
+
 			Object type = jsonMap.get("type");
 
 			if (type != null) {
@@ -238,7 +239,7 @@ public class TestEntitySerDes {
 				}
 				else {
 					throw new IllegalArgumentException(
-						"Unknown type '" + typeString + "'");
+						"Unknown type " + typeString);
 				}
 			}
 			else {

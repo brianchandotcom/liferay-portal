@@ -301,6 +301,146 @@ module.exports = {
 					pageViewsLimit: 5000000,
 					price: 250
 				},
+				['Liferay SaaS - Business Plan']: {
+					baseSubscriptionPlan: null,
+					individualsLimit: 10000,
+					name: 'Liferay SaaS - Business Plan',
+					pageViewsLimit: 5000000,
+					price: 7500
+				},
+				['Liferay SaaS - CSP - Custom User Tier']: {
+					baseSubscriptionPlan: null,
+					individualsLimit: 0,
+					name: 'Liferay SaaS - CSP - Custom User Tier',
+					pageViewsLimit: 5000000,
+					price: 250
+				},
+				['Liferay SaaS - CSP - Custom User Tier - Extra User']: {
+					baseSubscriptionPlan: null,
+					individualsLimit: 0,
+					name: 'Liferay SaaS - CSP - Custom User Tier - Extra User',
+					pageViewsLimit: 5000000,
+					price: 250
+				},
+				['Liferay SaaS - CSP - Up to 100 Users']: {
+					baseSubscriptionPlan: null,
+					individualsLimit: 0,
+					name: 'Liferay SaaS - CSP - Up to 100 Users',
+					pageViewsLimit: 5000000,
+					price: 250
+				},
+				['Liferay SaaS - CSP - Up to 100 Users - Extra User']: {
+					baseSubscriptionPlan: 'Liferay SaaS - CSP - Up to 100 Users',
+					individualsLimit: 0,
+					name: 'Liferay SaaS - CSP - Up to 100 Users - Extra User',
+					pageViewsLimit: 5000000,
+					price: 250
+				},
+				['Liferay SaaS - CSP - Up to 10K Users']: {
+					baseSubscriptionPlan: null,
+					individualsLimit: 0,
+					name: 'Liferay SaaS - CSP - Up to 10K Users',
+					pageViewsLimit: 5000000,
+					price: 250
+				},
+				['Liferay SaaS - CSP - Up to 10K Users - Extra User']: {
+					baseSubscriptionPlan: 'Liferay SaaS - CSP - Up to 10K Users',
+					individualsLimit: 0,
+					name: 'Liferay SaaS - CSP - Up to 10K Users - Extra User',
+					pageViewsLimit: 5000000,
+					price: 250
+				},
+				['Liferay SaaS - CSP - Up to 1K Users']: {
+					baseSubscriptionPlan: null,
+					individualsLimit: 0,
+					name: 'Liferay SaaS - CSP - Up to 1K Users',
+					pageViewsLimit: 5000000,
+					price: 250
+				},
+				['Liferay SaaS - CSP - Up to 1K Users - Extra User']: {
+					baseSubscriptionPlan: 'Liferay SaaS - CSP - Up to 1K Users',
+					individualsLimit: 0,
+					name: 'Liferay SaaS - CSP - Up to 1K Users - Extra User',
+					pageViewsLimit: 5000000,
+					price: 250
+				},
+				['Liferay SaaS - CSP - Up to 20K Users']: {
+					baseSubscriptionPlan: null,
+					individualsLimit: 0,
+					name: 'Liferay SaaS - CSP - Up to 20K Users',
+					pageViewsLimit: 5000000,
+					price: 250
+				},
+				['Liferay SaaS - CSP - Up to 20K Users - Extra User']: {
+					baseSubscriptionPlan: 'Liferay SaaS - CSP - Up to 20K Users',
+					individualsLimit: 0,
+					name: 'Liferay SaaS - CSP - Up to 20K Users - Extra User',
+					pageViewsLimit: 5000000,
+					price: 250
+				},
+				['Liferay SaaS - CSP - Up to 500 Users']: {
+					baseSubscriptionPlan: null,
+					individualsLimit: 0,
+					name: 'Liferay SaaS - CSP - Up to 500 Users',
+					pageViewsLimit: 5000000,
+					price: 250
+				},
+				['Liferay SaaS - CSP - Up to 500 Users - Extra User']: {
+					baseSubscriptionPlan: 'Liferay SaaS - CSP - Up to 500 Users',
+					individualsLimit: 0,
+					name: 'Liferay SaaS - CSP - Up to 500 Users - Extra User',
+					pageViewsLimit: 5000000,
+					price: 250
+				},
+				['Liferay SaaS - CSP - Up to 5K Users']: {
+					baseSubscriptionPlan: null,
+					individualsLimit: 0,
+					name: 'Liferay SaaS - CSP - Up to 5K Users',
+					pageViewsLimit: 5000000,
+					price: 250
+				},
+				['Liferay SaaS - CSP - Up to 5K Users - Extra User']: {
+					baseSubscriptionPlan: 'Liferay SaaS - CSP - Up to 5K Users',
+					individualsLimit: 0,
+					name: 'Liferay SaaS - CSP - Up to 5K Users - Extra User',
+					pageViewsLimit: 5000000,
+					price: 250
+				},
+				['Liferay SaaS - Enterprise Plan']: {
+					baseSubscriptionPlan: null,
+					individualsLimit: 100000,
+					name: 'Liferay SaaS - Enterprise Plan',
+					pageViewsLimit: 60000000,
+					price: 20000
+				},
+				['Liferay SaaS - Pro Plan']: {
+					baseSubscriptionPlan: null,
+					individualsLimit: 1000,
+					name: 'Liferay SaaS - Pro Plan',
+					pageViewsLimit: 300000,
+					price: 0
+				},
+				['Liferay SaaS Subscription - Engage Site']: {
+					baseSubscriptionPlan: null,
+					individualsLimit: 0,
+					name: 'Liferay SaaS Subscription - Engage Site',
+					pageViewsLimit: 5000000,
+					price: 250
+				},
+				['Liferay SaaS Subscription - Support Site']: {
+					baseSubscriptionPlan: null,
+					individualsLimit: 0,
+					name: 'Liferay SaaS Subscription - Support Site',
+					pageViewsLimit: 5000000,
+					price: 250
+				},
+				['Liferay SaaS Subscription - Transact Site']: {
+					baseSubscriptionPlan: null,
+					individualsLimit: 0,
+					name: 'Liferay SaaS Subscription - Transact Site',
+					pageViewsLimit: 5000000,
+					price: 250
+				},
 				['LXC - Business Plan']: {
 					baseSubscriptionPlan: null,
 					individualsLimit: 10000,

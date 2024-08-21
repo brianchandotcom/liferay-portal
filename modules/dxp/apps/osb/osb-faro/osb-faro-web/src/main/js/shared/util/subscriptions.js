@@ -15,6 +15,34 @@ export const PLAN_TYPES = {
 	['Liferay Analytics Cloud Enterprise']: 'enterprise',
 	['Liferay Analytics Cloud Enterprise Contacts']: INDIVIDUALS,
 	['Liferay Analytics Cloud Enterprise Tracked Pages']: PAGEVIEWS,
+	['Liferay SaaS - Business Plan']: 'lxcBusiness',
+	['Liferay SaaS - CSP - Custom User Tier']: 'lxcCspCustomUserTier',
+	['Liferay SaaS - CSP - Custom User Tier - Extra User']:
+		'lxcCspCustomUserTierExtraUser',
+	['Liferay SaaS - CSP - Up to 100 Users']: 'lxcCspUpTo100Users',
+	['Liferay SaaS - CSP - Up to 100 Users - Extra User']:
+		'lxcCspUpTo100UsersExtraUser',
+	['Liferay SaaS - CSP - Up to 10K Users']: 'lxcCspUpTo10kUsers',
+	['Liferay SaaS - CSP - Up to 10K Users - Extra User']:
+		'lxcCspUpTo10kUsersExtraUser',
+	['Liferay SaaS - CSP - Up to 1K Users']: 'lxcCspUpTo1kUsers',
+	['Liferay SaaS - CSP - Up to 1K Users - Extra User']:
+		'lxcCspUpTo1kUsersExtraUser',
+	['Liferay SaaS - CSP - Up to 20K Users']: 'lxcCspUpTo20kUsers',
+	['Liferay SaaS - CSP - Up to 20K Users - Extra User']:
+		'lxcCspUpTo20kUsersExtraUser',
+	['Liferay SaaS - CSP - Up to 500 Users']: 'lxcCspUpTo500Users',
+	['Liferay SaaS - CSP - Up to 500 Users - Extra User']:
+		'lxcCspUpTo500UsersExtraUser',
+	['Liferay SaaS - CSP - Up to 5K Users']: 'lxcCspUpTo5kUsers',
+	['Liferay SaaS - CSP - Up to 5K Users - Extra User']:
+		'lxcCspUpTo5kUsersExtraUser',
+	['Liferay SaaS - Enterprise Plan']: 'lxcEnterprise',
+	['Liferay SaaS - Pro Plan']: 'lxcPro',
+	['Liferay SaaS Subscription - Engage Site']: 'lxcSubscriptionEngageSite',
+	['Liferay SaaS Subscription - Support Site']: 'lxcSubscriptionSupportSite',
+	['Liferay SaaS Subscription - Transact Site']:
+		'lxcSubscriptionTransactSite',
 	['LXC - Business Plan']: 'lxcBusiness',
 	['LXC - CSP - Custom User Tier']: 'lxcCspCustomUserTier',
 	['LXC - CSP - Custom User Tier - Extra User']:

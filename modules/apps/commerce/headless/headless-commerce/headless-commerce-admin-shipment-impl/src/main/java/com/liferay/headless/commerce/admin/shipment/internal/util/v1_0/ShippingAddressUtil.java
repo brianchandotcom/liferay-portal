@@ -41,6 +41,7 @@ public class ShippingAddressUtil {
 			shippingAddress.getCountryISOCode());
 
 		return commerceShipmentService.updateAddress(
+			shippingAddress.getExternalReferenceCode(),
 			commerceShipment.getCommerceShipmentId(),
 			GetterUtil.get(
 				shippingAddress.getName(),

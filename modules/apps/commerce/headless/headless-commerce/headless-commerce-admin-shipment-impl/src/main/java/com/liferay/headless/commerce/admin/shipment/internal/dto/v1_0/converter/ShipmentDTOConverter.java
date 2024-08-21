@@ -6,15 +6,18 @@
 package com.liferay.headless.commerce.admin.shipment.internal.dto.v1_0.converter;
 
 import com.liferay.commerce.constants.CommerceShipmentConstants;
+import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceShipment;
 import com.liferay.commerce.service.CommerceShipmentService;
 import com.liferay.headless.commerce.admin.shipment.dto.v1_0.Shipment;
+import com.liferay.headless.commerce.admin.shipment.dto.v1_0.ShippingAddress;
 import com.liferay.headless.commerce.admin.shipment.dto.v1_0.Status;
 import com.liferay.headless.commerce.admin.shipment.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -61,6 +64,11 @@ public class ShipmentDTOConverter
 					commerceShipment::getExternalReferenceCode);
 				setId(commerceShipment::getCommerceShipmentId);
 				setModifiedDate(commerceShipment::getModifiedDate);
+				setShippingAddress(
+					() -> _shippingAddressDTOConverter.toDTO(
+						new DefaultDTOConverterContext(
+							commerceShipment.getCommerceAddressId(),
+							dtoConverterContext.getLocale())));
 				setShippingAddressId(commerceShipment::getCommerceAddressId);
 				setShippingDate(commerceShipment::getShippingDate);
 				setShippingMethodId(
@@ -96,5 +104,11 @@ public class ShipmentDTOConverter
 
 	@Reference
 	private Language _language;
+
+	@Reference(
+		target = "(component.name=com.liferay.headless.commerce.admin.shipment.internal.dto.v1_0.converter.ShippingAddressDTOConverter)"
+	)
+	private DTOConverter<CommerceAddress, ShippingAddress>
+		_shippingAddressDTOConverter;
 
 }

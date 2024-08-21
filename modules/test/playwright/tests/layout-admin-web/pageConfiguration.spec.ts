@@ -33,6 +33,15 @@ const test = mergeTests(
 	pagesPagesTest
 );
 
+const deleteClientExtension = async (apiHelpers, clientExtension) => {
+	const {clientExtensionEntryId} =
+		await apiHelpers.jsonWebServicesClientExtension.deleteClientExtension(
+			clientExtension.clientExtensionEntryId
+		);
+
+	expect(clientExtensionEntryId).not.toBeNull();
+};
+
 test.describe('General configuration', () => {
 	test('Checks the accessibility of the General page configuration', async ({
 		page,
@@ -486,12 +495,7 @@ test.describe('CSS Client Extensions', () => {
 
 			// Clean up
 
-			const {clientExtensionEntryId} =
-				await apiHelpers.jsonWebServicesClientExtension.deleteClientExtension(
-					clientExtension.clientExtensionEntryId
-				);
-
-			expect(clientExtensionEntryId).not.toBeNull();
+			await deleteClientExtension(apiHelpers, clientExtension);
 		}
 	);
 
@@ -575,12 +579,7 @@ test.describe('CSS Client Extensions', () => {
 
 			// Clean up
 
-			const {clientExtensionEntryId} =
-				await apiHelpers.jsonWebServicesClientExtension.deleteClientExtension(
-					clientExtension.clientExtensionEntryId
-				);
-
-			expect(clientExtensionEntryId).not.toBeNull();
+			await deleteClientExtension(apiHelpers, clientExtension);
 		}
 	);
 
@@ -643,12 +642,7 @@ test.describe('CSS Client Extensions', () => {
 
 			// Clean up
 
-			const {clientExtensionEntryId} =
-				await apiHelpers.jsonWebServicesClientExtension.deleteClientExtension(
-					clientExtension.clientExtensionEntryId
-				);
-
-			expect(clientExtensionEntryId).not.toBeNull();
+			await deleteClientExtension(apiHelpers, clientExtension);
 		}
 	);
 });
@@ -701,12 +695,7 @@ test.describe('JavaScript Client Extensions', () => {
 
 			// Clean up
 
-			const {clientExtensionEntryId} =
-				await apiHelpers.jsonWebServicesClientExtension.deleteClientExtension(
-					clientExtension.clientExtensionEntryId
-				);
-
-			expect(clientExtensionEntryId).not.toBeNull();
+			await deleteClientExtension(apiHelpers, clientExtension);
 		}
 	);
 
@@ -794,12 +783,7 @@ test.describe('JavaScript Client Extensions', () => {
 
 			// Clean up
 
-			const {clientExtensionEntryId} =
-				await apiHelpers.jsonWebServicesClientExtension.deleteClientExtension(
-					clientExtension.clientExtensionEntryId
-				);
-
-			expect(clientExtensionEntryId).not.toBeNull();
+			await deleteClientExtension(apiHelpers, clientExtension);
 		}
 	);
 
@@ -863,12 +847,7 @@ test.describe('JavaScript Client Extensions', () => {
 
 			// Clean up
 
-			const {clientExtensionEntryId} =
-				await apiHelpers.jsonWebServicesClientExtension.deleteClientExtension(
-					clientExtension.clientExtensionEntryId
-				);
-
-			expect(clientExtensionEntryId).not.toBeNull();
+			await deleteClientExtension(apiHelpers, clientExtension);
 		}
 	);
 });

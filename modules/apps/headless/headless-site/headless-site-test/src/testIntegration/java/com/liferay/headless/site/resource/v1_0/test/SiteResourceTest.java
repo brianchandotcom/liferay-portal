@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.site.client.dto.v1_0.Site;
 import com.liferay.headless.site.client.problem.Problem;
 import com.liferay.headless.site.client.resource.v1_0.SiteResource;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
@@ -130,6 +131,13 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 		}
 	}
 
+	@Test
+	public void testGetSiteByExternalReferenceCode() throws Exception {
+		super.testGetSiteByExternalReferenceCode();
+
+		_testGetSiteByExternalReferenceCodeWithDollar();
+	}
+
 	@Ignore
 	@Override
 	@Test
@@ -228,6 +236,20 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 
 		return siteResource.putSiteByExternalReferenceCode(
 			RandomTestUtil.randomString(), randomSite(), getMultipartFiles());
+	}
+
+	private void _testGetSiteByExternalReferenceCodeWithDollar()
+		throws Exception {
+
+		Site postSite = siteResource.putSiteByExternalReferenceCode(
+			RandomTestUtil.randomString() + StringPool.DOLLAR, randomSite(),
+			getMultipartFiles());
+
+		Site getSite = siteResource.getSiteByExternalReferenceCode(
+			postSite.getExternalReferenceCode());
+
+		assertEquals(postSite, getSite);
+		assertValid(getSite);
 	}
 
 	private Site _testPostSite_addSite(Site site) throws Exception {

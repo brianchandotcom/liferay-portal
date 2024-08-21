@@ -480,13 +480,9 @@ test.describe('CSS Client Extensions', () => {
 
 			await page.goto(`/web${site.friendlyUrlPath}/${layoutTitle}`);
 
-			const link = await page.evaluate(() =>
-				document.querySelector(
-					'link[href="https://www.example.com/style.css"]'
-				)
-			);
-
-			expect(link).not.toBeNull();
+			await expect(
+				page.locator('link[href="https://www.example.com/style.css"]')
+			).toBeAttached();
 
 			// Clean up
 

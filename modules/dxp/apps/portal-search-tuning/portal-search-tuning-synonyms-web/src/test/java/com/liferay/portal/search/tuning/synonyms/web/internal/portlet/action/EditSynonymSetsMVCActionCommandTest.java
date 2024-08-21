@@ -96,17 +96,6 @@ public class EditSynonymSetsMVCActionCommandTest
 	}
 
 	@Test
-	public void testUpdateSynonymSet() throws Exception {
-		_editSynonymSetsMVCActionCommand.updateSynonymSet(_actionRequest);
-
-		Mockito.verify(
-			_indexToFilterSynchronizer, Mockito.times(1)
-		).copyToFilter(
-			Mockito.any(), Mockito.nullable(String.class), Mockito.anyBoolean()
-		);
-	}
-
-	@Test
 	public void testUpdateSynonymSetIndex() throws PortalException {
 		_editSynonymSetsMVCActionCommand.updateSynonymSetIndex(
 			Mockito.mock(SynonymSetIndexName.class), "car,automobile", null);
@@ -132,6 +121,17 @@ public class EditSynonymSetsMVCActionCommandTest
 			synonymSetStorageAdapter, Mockito.times(1)
 		).update(
 			Mockito.any(), Mockito.any()
+		);
+	}
+
+	@Test
+	public void testUpdateSynonymSets() throws Exception {
+		_editSynonymSetsMVCActionCommand.updateSynonymSets(_actionRequest);
+
+		Mockito.verify(
+			_indexToFilterSynchronizer, Mockito.times(1)
+		).copyToFilter(
+			Mockito.any(), Mockito.nullable(String.class), Mockito.anyBoolean()
 		);
 	}
 

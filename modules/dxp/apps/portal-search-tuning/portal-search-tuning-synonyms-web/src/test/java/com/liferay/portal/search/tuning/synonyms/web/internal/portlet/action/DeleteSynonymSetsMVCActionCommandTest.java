@@ -65,6 +65,32 @@ public class DeleteSynonymSetsMVCActionCommandTest
 	}
 
 	@Test
+	public void testDeleteSynonymSets() throws Exception {
+		SynonymSet.SynonymSetBuilder synonymSetBuilder =
+			new SynonymSet.SynonymSetBuilder();
+
+		_deleteSynonymSetsMVCActionCommand.deleteSynonymSets(
+			Mockito.mock(SynonymSetIndexName.class),
+			Arrays.asList(
+				synonymSetBuilder.synonyms(
+					"car,atumobile"
+				).synonymSetDocumentId(
+					"id-1"
+				).build(),
+				synonymSetBuilder.synonyms(
+					"clever,smart"
+				).synonymSetDocumentId(
+					"id-2"
+				).build()));
+
+		Mockito.verify(
+			synonymSetStorageAdapter, Mockito.times(2)
+		).delete(
+			Mockito.any(), Mockito.anyString()
+		);
+	}
+
+	@Test
 	public void testDoProcessAction() throws Exception {
 		setUpHttpServletRequestParameterValues(
 			_httpServletRequest, "rowIds", new String[] {"id"});
@@ -103,32 +129,6 @@ public class DeleteSynonymSetsMVCActionCommandTest
 				Assert.assertEquals("car,automobile", synonymSet.getSynonyms());
 				Assert.assertEquals("id", synonymSet.getSynonymSetDocumentId());
 			});
-	}
-
-	@Test
-	public void testRemoveSynonymSets() throws Exception {
-		SynonymSet.SynonymSetBuilder synonymSetBuilder =
-			new SynonymSet.SynonymSetBuilder();
-
-		_deleteSynonymSetsMVCActionCommand.removeSynonymSets(
-			Mockito.mock(SynonymSetIndexName.class),
-			Arrays.asList(
-				synonymSetBuilder.synonyms(
-					"car,atumobile"
-				).synonymSetDocumentId(
-					"id-1"
-				).build(),
-				synonymSetBuilder.synonyms(
-					"clever,smart"
-				).synonymSetDocumentId(
-					"id-2"
-				).build()));
-
-		Mockito.verify(
-			synonymSetStorageAdapter, Mockito.times(2)
-		).delete(
-			Mockito.any(), Mockito.anyString()
-		);
 	}
 
 	private final ActionRequest _actionRequest = Mockito.mock(

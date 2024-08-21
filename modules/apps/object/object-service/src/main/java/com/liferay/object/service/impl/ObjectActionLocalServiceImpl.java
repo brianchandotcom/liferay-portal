@@ -756,7 +756,7 @@ public class ObjectActionLocalServiceImpl
 					ObjectActionExecutorConstants.KEY_ADD_OBJECT_ENTRY) &&
 				 (!objectDefinition.isActive() ||
 				  !objectDefinition.isApproved()) &&
-				 !objectDefinition.isModifiableSystemObject())) {
+				 !objectDefinition.isModifiableAndSystem())) {
 
 				errorMessageKeys.put("objectDefinitionId", "invalid");
 			}

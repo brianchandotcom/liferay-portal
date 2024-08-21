@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -126,8 +127,9 @@ public class APIEndpointRelevantObjectEntryModelListener
 		try {
 			Map<String, Serializable> values = objectEntry.getValues();
 
-			long apiApplicationId = (long)values.get(
-				"r_apiApplicationToAPIEndpoints_c_apiApplicationId");
+			long apiApplicationId = GetterUtil.getLong(
+				values.get(
+					"r_apiApplicationToAPIEndpoints_c_apiApplicationId"));
 
 			if (!_validationHelper.isValidObjectEntry(
 					"L_API_APPLICATION", apiApplicationId)) {
@@ -138,8 +140,8 @@ public class APIEndpointRelevantObjectEntryModelListener
 					"an-api-endpoint-must-be-related-to-an-api-application");
 			}
 
-			long responseAPISchemaId = (long)values.get(
-				"r_responseAPISchemaToAPIEndpoints_c_apiSchemaId");
+			long responseAPISchemaId = GetterUtil.getLong(
+				values.get("r_responseAPISchemaToAPIEndpoints_c_apiSchemaId"));
 
 			APIApplication.Endpoint.Scope scope =
 				APIApplication.Endpoint.Scope.parse(
@@ -150,8 +152,8 @@ public class APIEndpointRelevantObjectEntryModelListener
 					apiApplicationId, responseAPISchemaId, scope);
 			}
 
-			long requestAPISchemaId = (long)values.get(
-				"r_requestAPISchemaToAPIEndpoints_c_apiSchemaId");
+			long requestAPISchemaId = GetterUtil.getLong(
+				values.get("r_requestAPISchemaToAPIEndpoints_c_apiSchemaId"));
 
 			if (requestAPISchemaId != 0) {
 				_validateAPISchema(apiApplicationId, requestAPISchemaId, scope);

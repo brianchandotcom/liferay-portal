@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.security.auth.verifier.AuthVerifier;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifierConfiguration;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifierResult;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -28,7 +27,6 @@ import com.liferay.portal.spring.context.PortalContextLoaderListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -73,10 +71,6 @@ public class AuthVerifierPipeline {
 		_authVerifierConfigurations = new ArrayList<>(
 			authVerifierConfigurations);
 
-		ListUtil.sort(
-			_authVerifierConfigurations,
-			new AuthVerifierConfigurationComparator());
-
 		_contextPath = contextPath;
 
 		_buildURLPatternMapper();
@@ -114,10 +108,6 @@ public class AuthVerifierPipeline {
 		AuthVerifierConfiguration authVerifierConfiguration) {
 
 		_authVerifierConfigurations.add(authVerifierConfiguration);
-
-		ListUtil.sort(
-			_authVerifierConfigurations,
-			new AuthVerifierConfigurationComparator());
 
 		_buildURLPatternMapper();
 	}
@@ -221,32 +211,6 @@ public class AuthVerifierPipeline {
 		_excludeURLPatternMapper;
 	private volatile URLPatternMapper<List<AuthVerifierConfiguration>>
 		_includeURLPatternMapper;
-
-	private static class AuthVerifierConfigurationComparator
-		implements Comparator<AuthVerifierConfiguration> {
-
-		@Override
-		public int compare(
-			AuthVerifierConfiguration authVerifierConfiguration1,
-			AuthVerifierConfiguration authVerifierConfiguration2) {
-
-			AuthVerifier authVerifier1 = AuthVerifierRegistry.getAuthVerifier(
-				authVerifierConfiguration1.getAuthVerifierClassName());
-			AuthVerifier authVerifier2 = AuthVerifierRegistry.getAuthVerifier(
-				authVerifierConfiguration2.getAuthVerifierClassName());
-
-			if ((authVerifier1 == null) || (authVerifier2 == null)) {
-				return -1;
-			}
-
-			return _sortedAuthVerifiers.indexOf(authVerifier1) -
-				_sortedAuthVerifiers.indexOf(authVerifier2);
-		}
-
-		private final List<AuthVerifier> _sortedAuthVerifiers =
-			AuthVerifierRegistry.getAuthVerifiersByPriority();
-
-	}
 
 	private static class AuthVerifierConfigurationConsumer
 		implements Consumer<List<AuthVerifierConfiguration>> {

@@ -10,8 +10,7 @@ import {commercePagesTest} from '../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
-import getRandomString from '../../../utils/getRandomString';
-import {ORDER_WORKFLOW_STATUS_CODE} from '../../workspaces/liferay-workspace-marketplace/utils/constants';
+import {commerceReturnSetUp} from '../utils/commerce';
 
 export const test = mergeTests(
 	applicationsMenuPageTest,
@@ -31,120 +30,11 @@ test('LPD-21633 Returns widget to show return and refunds', async ({
 	returnDetailsPage,
 	returnsPage,
 }) => {
-	const site = await apiHelpers.headlessSite.createSite({
-		name: getRandomString(),
-	});
-
-	apiHelpers.data.push({id: site.id, type: 'site'});
-
-	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
-		name: getRandomString(),
-		siteGroupId: site.id,
-	});
-
-	const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
-
-	const product = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
-		catalogId: catalog.id,
-		productType: 'virtual',
-	});
-
-	const productSkus = await apiHelpers.headlessCommerceAdminCatalog
-		.getProduct(product.productId)
-		.then((product) => {
-			return product.skus;
-		});
-
-	const sku = productSkus[0];
-
-	const account = await apiHelpers.headlessAdminUser.postAccount({
-		name: getRandomString(),
-		type: 'person',
-	});
-
-	apiHelpers.data.push({id: account.id, type: 'account'});
-
-	await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
-		account.id,
-		['test@liferay.com']
-	);
-
-	const address = await apiHelpers.headlessCommerceAdminAccount.postAddress(
-		account.id,
-		{phoneNumber: '1234567890', regionISOCode: 'AL'}
-	);
-
-	const order = await apiHelpers.headlessCommerceAdminOrder.postOrder({
-		accountId: account.id,
-		billingAddressId: address.id,
-		channelId: channel.id,
-		orderItems: [
-			{
-				decimalQuantity: 10,
-				quantity: 2,
-				skuId: sku.id,
-			},
-		],
-		shippingAddressId: address.id,
-	});
-
-	const payment =
-		await apiHelpers.headlessCommerceAdminPaymentApiHelper.postPayment({
-			amount: 10,
-			relatedItemId: order.id,
-		});
-
-	await apiHelpers.headlessCommerceAdminPaymentApiHelper.patchPayment(
-		{
-			paymentStatus: 0,
-			relatedItemId: payment.relatedItemId,
-		},
-		payment.id
-	);
-
-	await apiHelpers.headlessCommerceAdminOrder.patchOrder(order.id, {
-		orderStatus: ORDER_WORKFLOW_STATUS_CODE.PROCESSING,
-	});
-
-	await apiHelpers.headlessCommerceAdminOrder.patchOrder(order.id, {
-		orderStatus: ORDER_WORKFLOW_STATUS_CODE.COMPLETED,
-	});
-
-	const orderItem = order.orderItems[0];
-
-	const commerceReturn =
-		await apiHelpers.headlessCommerceReturn.postCommerceReturn({
-			channelId: channel.id,
-			commerceReturnToCommerceReturnItems: [
-				{
-					amount: 10,
-					authorized: 1,
-					quantity: 1,
-					r_accountToCommerceReturnItems_accountEntryId: account.id,
-					r_commerceOrderItemToCommerceReturnItems_commerceOrderItemId:
-						orderItem.id,
-					r_commerceOrderToCommerceReturns_commerceOrderId: order.id,
-					received: 1,
-					returnItemStatus: {
-						key: 'toBeProccessed',
-					},
-					returnReason: {
-						key: 'changeOfMind',
-					},
-					returnResolutionMethod: {
-						key: 'refund',
-					},
-				},
-			],
-			r_accountToCommerceReturns_accountEntryId: account.id,
-			r_commerceOrderToCommerceReturns_commerceOrderId: order.id,
-			returnStatus: {
-				key: 'processing',
-			},
-		});
+	const {commerceReturn, payment, site} =
+		await commerceReturnSetUp(apiHelpers);
 
 	await apiHelpers.headlessCommerceAdminPaymentApiHelper.postPayment({
-		amount: 10,
+		amount: payment.amount,
 		relatedItemId: payment.id,
 		relatedItemName:
 			'com.liferay.commerce.payment.model.CommercePaymentEntry',
@@ -191,125 +81,7 @@ test('LPD-32515 Returns widget displays amount fields with correct currency patt
 	returnDetailsPage,
 	returnsPage,
 }) => {
-	const site = await apiHelpers.headlessSite.createSite({
-		name: getRandomString(),
-	});
-
-	apiHelpers.data.push({id: site.id, type: 'site'});
-
-	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
-		name: getRandomString(),
-		siteGroupId: site.id,
-	});
-
-	const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
-
-	const product = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
-		catalogId: catalog.id,
-		productType: 'virtual',
-	});
-
-	const productSkus = await apiHelpers.headlessCommerceAdminCatalog
-		.getProduct(product.productId)
-		.then((product) => {
-			return product.skus;
-		});
-
-	const sku = productSkus[0];
-
-	const account = await apiHelpers.headlessAdminUser.postAccount({
-		name: getRandomString(),
-		type: 'person',
-	});
-
-	apiHelpers.data.push({id: account.id, type: 'account'});
-
-	await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
-		account.id,
-		['test@liferay.com']
-	);
-
-	const address = await apiHelpers.headlessCommerceAdminAccount.postAddress(
-		account.id,
-		{phoneNumber: '1234567890', regionISOCode: 'AL'}
-	);
-
-	const order = await apiHelpers.headlessCommerceAdminOrder.postOrder({
-		accountId: account.id,
-		billingAddressId: address.id,
-		channelId: channel.id,
-		orderItems: [
-			{
-				decimalQuantity: 10,
-				quantity: 2,
-				skuId: sku.id,
-			},
-		],
-		shippingAddressId: address.id,
-	});
-
-	const payment =
-		await apiHelpers.headlessCommerceAdminPaymentApiHelper.postPayment({
-			amount: 10,
-			relatedItemId: order.id,
-		});
-
-	await apiHelpers.headlessCommerceAdminPaymentApiHelper.patchPayment(
-		{
-			paymentStatus: 0,
-			relatedItemId: payment.relatedItemId,
-		},
-		payment.id
-	);
-
-	await apiHelpers.headlessCommerceAdminOrder.patchOrder(order.id, {
-		orderStatus: ORDER_WORKFLOW_STATUS_CODE.PROCESSING,
-	});
-
-	await apiHelpers.headlessCommerceAdminOrder.patchOrder(order.id, {
-		orderStatus: ORDER_WORKFLOW_STATUS_CODE.COMPLETED,
-	});
-
-	const orderItem = order.orderItems[0];
-
-	const commerceReturn =
-		await apiHelpers.headlessCommerceReturn.postCommerceReturn({
-			channelId: channel.id,
-			commerceReturnToCommerceReturnItems: [
-				{
-					amount: 10,
-					authorized: 1,
-					quantity: 1,
-					r_accountToCommerceReturnItems_accountEntryId: account.id,
-					r_commerceOrderItemToCommerceReturnItems_commerceOrderItemId:
-						orderItem.id,
-					r_commerceOrderToCommerceReturns_commerceOrderId: order.id,
-					received: 1,
-					returnItemStatus: {
-						key: 'toBeProccessed',
-					},
-					returnReason: {
-						key: 'changeOfMind',
-					},
-					returnResolutionMethod: {
-						key: 'refund',
-					},
-				},
-			],
-			r_accountToCommerceReturns_accountEntryId: account.id,
-			r_commerceOrderToCommerceReturns_commerceOrderId: order.id,
-			returnStatus: {
-				key: 'processing',
-			},
-		});
-
-	await apiHelpers.headlessCommerceAdminPaymentApiHelper.postPayment({
-		amount: 10,
-		relatedItemId: payment.id,
-		relatedItemName:
-			'com.liferay.commerce.payment.model.CommercePaymentEntry',
-		type: 1,
-	});
+	const {commerceReturn, site, sku} = await commerceReturnSetUp(apiHelpers);
 
 	await applicationsMenuPage.goToSite(site.name);
 
@@ -350,114 +122,14 @@ test('LPD-32522 Returns widget displays status field on return items table when 
 	returnDetailsPage,
 	returnsPage,
 }) => {
-	const site = await apiHelpers.headlessSite.createSite({
-		name: getRandomString(),
-	});
-
-	apiHelpers.data.push({id: site.id, type: 'site'});
-
-	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
-		name: getRandomString(),
-		siteGroupId: site.id,
-	});
-
-	const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
-
-	const product = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
-		catalogId: catalog.id,
-		productType: 'virtual',
-	});
-
-	const productSkus = await apiHelpers.headlessCommerceAdminCatalog
-		.getProduct(product.productId)
-		.then((product) => {
-			return product.skus;
-		});
-
-	const sku = productSkus[0];
-
-	const account = await apiHelpers.headlessAdminUser.postAccount({
-		name: getRandomString(),
-		type: 'person',
-	});
-
-	apiHelpers.data.push({id: account.id, type: 'account'});
-
-	await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
-		account.id,
-		['test@liferay.com']
+	const {commerceReturn, site} = await commerceReturnSetUp(
+		apiHelpers,
+		0,
+		0,
+		0,
+		1,
+		'draft'
 	);
-
-	const address = await apiHelpers.headlessCommerceAdminAccount.postAddress(
-		account.id,
-		{phoneNumber: '1234567890', regionISOCode: 'AL'}
-	);
-
-	const order = await apiHelpers.headlessCommerceAdminOrder.postOrder({
-		accountId: account.id,
-		billingAddressId: address.id,
-		channelId: channel.id,
-		orderItems: [
-			{
-				decimalQuantity: 10,
-				quantity: 2,
-				skuId: sku.id,
-			},
-		],
-		shippingAddressId: address.id,
-	});
-
-	const payment =
-		await apiHelpers.headlessCommerceAdminPaymentApiHelper.postPayment({
-			amount: 10,
-			relatedItemId: order.id,
-		});
-
-	await apiHelpers.headlessCommerceAdminPaymentApiHelper.patchPayment(
-		{
-			paymentStatus: 0,
-			relatedItemId: payment.relatedItemId,
-		},
-		payment.id
-	);
-
-	await apiHelpers.headlessCommerceAdminOrder.patchOrder(order.id, {
-		orderStatus: ORDER_WORKFLOW_STATUS_CODE.PROCESSING,
-	});
-
-	await apiHelpers.headlessCommerceAdminOrder.patchOrder(order.id, {
-		orderStatus: ORDER_WORKFLOW_STATUS_CODE.COMPLETED,
-	});
-
-	const orderItem = order.orderItems[0];
-
-	const commerceReturn =
-		await apiHelpers.headlessCommerceReturn.postCommerceReturn({
-			channelId: channel.id,
-			commerceReturnToCommerceReturnItems: [
-				{
-					amount: 0,
-					authorized: 0,
-					quantity: 1,
-					r_accountToCommerceReturnItems_accountEntryId: account.id,
-					r_commerceOrderItemToCommerceReturnItems_commerceOrderItemId:
-						orderItem.id,
-					r_commerceOrderToCommerceReturns_commerceOrderId: order.id,
-					received: 0,
-					returnReason: {
-						key: 'changeOfMind',
-					},
-					returnResolutionMethod: {
-						key: 'refund',
-					},
-				},
-			],
-			r_accountToCommerceReturns_accountEntryId: account.id,
-			r_commerceOrderToCommerceReturns_commerceOrderId: order.id,
-			returnStatus: {
-				key: 'draft',
-			},
-		});
 
 	await applicationsMenuPage.goToSite(site.name);
 
@@ -496,123 +168,14 @@ test('LPD-32519 Warning message before submitting a return should not be shown o
 	returnDetailsPage,
 	returnsPage,
 }) => {
-	const site = await apiHelpers.headlessSite.createSite({
-		name: getRandomString(),
-	});
-
-	apiHelpers.data.push({id: site.id, type: 'site'});
-
-	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
-		name: getRandomString(),
-		siteGroupId: site.id,
-	});
-
-	const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
-	const product = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
-		catalogId: catalog.id,
-		productType: 'virtual',
-	});
-	const productSkus = await apiHelpers.headlessCommerceAdminCatalog
-		.getProduct(product.productId)
-		.then((product) => {
-			return product.skus;
-		});
-
-	const sku = productSkus[0];
-
-	const account = await apiHelpers.headlessAdminUser.postAccount({
-		name: getRandomString(),
-		type: 'person',
-	});
-
-	apiHelpers.data.push({id: account.id, type: 'account'});
-
-	await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
-		account.id,
-		['test@liferay.com']
+	const {commerceReturn, site} = await commerceReturnSetUp(
+		apiHelpers,
+		10,
+		1,
+		1,
+		1,
+		'draft'
 	);
-
-	const address = await apiHelpers.headlessCommerceAdminAccount.postAddress(
-		account.id,
-		{phoneNumber: '1234567890', regionISOCode: 'AL'}
-	);
-
-	const order = await apiHelpers.headlessCommerceAdminOrder.postOrder({
-		accountId: account.id,
-		billingAddressId: address.id,
-		channelId: channel.id,
-		orderItems: [
-			{
-				decimalQuantity: 10,
-				quantity: 2,
-				skuId: sku.id,
-			},
-		],
-		shippingAddressId: address.id,
-	});
-
-	const payment =
-		await apiHelpers.headlessCommerceAdminPaymentApiHelper.postPayment({
-			amount: 10,
-			relatedItemId: order.id,
-		});
-
-	await apiHelpers.headlessCommerceAdminPaymentApiHelper.patchPayment(
-		{
-			paymentStatus: 0,
-			relatedItemId: payment.relatedItemId,
-		},
-		payment.id
-	);
-
-	await apiHelpers.headlessCommerceAdminOrder.patchOrder(order.id, {
-		orderStatus: ORDER_WORKFLOW_STATUS_CODE.PROCESSING,
-	});
-
-	await apiHelpers.headlessCommerceAdminOrder.patchOrder(order.id, {
-		orderStatus: ORDER_WORKFLOW_STATUS_CODE.COMPLETED,
-	});
-
-	const orderItem = order.orderItems[0];
-
-	const commerceReturn =
-		await apiHelpers.headlessCommerceReturn.postCommerceReturn({
-			channelId: channel.id,
-			commerceReturnToCommerceReturnItems: [
-				{
-					amount: 10,
-					authorized: 1,
-					quantity: 1,
-					r_accountToCommerceReturnItems_accountEntryId: account.id,
-					r_commerceOrderItemToCommerceReturnItems_commerceOrderItemId:
-						orderItem.id,
-					r_commerceOrderToCommerceReturns_commerceOrderId: order.id,
-					received: 1,
-					returnItemStatus: {
-						key: 'toBeProcessed',
-					},
-					returnReason: {
-						key: 'changeOfMind',
-					},
-					returnResolutionMethod: {
-						key: 'refund',
-					},
-				},
-			],
-			r_accountToCommerceReturns_accountEntryId: account.id,
-			r_commerceOrderToCommerceReturns_commerceOrderId: order.id,
-			returnStatus: {
-				key: 'draft',
-			},
-		});
-
-	await apiHelpers.headlessCommerceAdminPaymentApiHelper.postPayment({
-		amount: 10,
-		relatedItemId: payment.id,
-		relatedItemName:
-			'com.liferay.commerce.payment.model.CommercePaymentEntry',
-		type: 1,
-	});
 
 	await applicationsMenuPage.goToSite(site.name);
 
@@ -647,6 +210,74 @@ test('LPD-32519 Warning message before submitting a return should not be shown o
 	).not.toBeVisible();
 });
 
+test('LPD-32514 Return external reference code can not be edited in returns widget', async ({
+	apiHelpers,
+	applicationsMenuPage,
+	commerceLayoutsPage,
+	page,
+	returnDetailsPage,
+	returnsPage,
+}) => {
+	const {commerceReturn, site} = await commerceReturnSetUp(apiHelpers);
+
+	await applicationsMenuPage.goToSite(site.name);
+
+	await commerceLayoutsPage.goToPages(false);
+	await commerceLayoutsPage.createWidgetPage('Returns Page');
+
+	await page.goto(`/web/${site.name}`);
+
+	await returnsPage.addReturnsWidget();
+
+	await (
+		await returnsPage.tableRowLink({
+			colIndex: 0,
+			rowValue: commerceReturn.id,
+		})
+	).click();
+
+	await expect(
+		returnDetailsPage.page.locator('#erc-edit-modal-opener')
+	).toBeHidden();
+});
+
+test('LPD-32521 Returns widget details page will only show returns status', async ({
+	apiHelpers,
+	applicationsMenuPage,
+	commerceLayoutsPage,
+	page,
+	returnDetailsPage,
+	returnsPage,
+}) => {
+	const {commerceReturn, site} = await commerceReturnSetUp(apiHelpers);
+
+	await applicationsMenuPage.goToSite(site.name);
+
+	await commerceLayoutsPage.goToPages(false);
+	await commerceLayoutsPage.createWidgetPage('Returns Page');
+
+	await page.goto(`/web/${site.name}`);
+
+	await returnsPage.addReturnsWidget();
+
+	await (
+		await returnsPage.tableRowLink({
+			colIndex: 0,
+			rowValue: commerceReturn.id,
+		})
+	).click();
+
+	await expect(
+		returnDetailsPage.page.getByText(
+			commerceReturn.id + ' APPROVED PROCESSING'
+		)
+	).toBeHidden();
+
+	await expect(
+		returnDetailsPage.page.getByText(commerceReturn.id + ' PROCESSING')
+	).toBeVisible();
+});
+
 test('LPD-32524 Returns widget to show comments for return items', async ({
 	apiHelpers,
 	applicationsMenuPage,
@@ -655,123 +286,7 @@ test('LPD-32524 Returns widget to show comments for return items', async ({
 	returnDetailsPage,
 	returnsPage,
 }) => {
-	const site = await apiHelpers.headlessSite.createSite({
-		name: getRandomString(),
-	});
-
-	apiHelpers.data.push({id: site.id, type: 'site'});
-
-	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
-		name: getRandomString(),
-		siteGroupId: site.id,
-	});
-
-	const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
-	const product = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
-		catalogId: catalog.id,
-		productType: 'virtual',
-	});
-	const productSkus = await apiHelpers.headlessCommerceAdminCatalog
-		.getProduct(product.productId)
-		.then((product) => {
-			return product.skus;
-		});
-
-	const sku = productSkus[0];
-
-	const account = await apiHelpers.headlessAdminUser.postAccount({
-		name: getRandomString(),
-		type: 'person',
-	});
-
-	apiHelpers.data.push({id: account.id, type: 'account'});
-
-	await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
-		account.id,
-		['test@liferay.com']
-	);
-
-	const address = await apiHelpers.headlessCommerceAdminAccount.postAddress(
-		account.id,
-		{phoneNumber: '1234567890', regionISOCode: 'AL'}
-	);
-
-	const order = await apiHelpers.headlessCommerceAdminOrder.postOrder({
-		accountId: account.id,
-		billingAddressId: address.id,
-		channelId: channel.id,
-		orderItems: [
-			{
-				decimalQuantity: 10,
-				quantity: 2,
-				skuId: sku.id,
-			},
-		],
-		shippingAddressId: address.id,
-	});
-
-	const payment =
-		await apiHelpers.headlessCommerceAdminPaymentApiHelper.postPayment({
-			amount: 10,
-			relatedItemId: order.id,
-		});
-
-	await apiHelpers.headlessCommerceAdminPaymentApiHelper.patchPayment(
-		{
-			paymentStatus: 0,
-			relatedItemId: payment.relatedItemId,
-		},
-		payment.id
-	);
-
-	await apiHelpers.headlessCommerceAdminOrder.patchOrder(order.id, {
-		orderStatus: ORDER_WORKFLOW_STATUS_CODE.PROCESSING,
-	});
-
-	await apiHelpers.headlessCommerceAdminOrder.patchOrder(order.id, {
-		orderStatus: ORDER_WORKFLOW_STATUS_CODE.COMPLETED,
-	});
-
-	const orderItem = order.orderItems[0];
-
-	const commerceReturn =
-		await apiHelpers.headlessCommerceReturn.postCommerceReturn({
-			channelId: channel.id,
-			commerceReturnToCommerceReturnItems: [
-				{
-					amount: 10,
-					authorized: 1,
-					quantity: 1,
-					r_accountToCommerceReturnItems_accountEntryId: account.id,
-					r_commerceOrderItemToCommerceReturnItems_commerceOrderItemId:
-						orderItem.id,
-					r_commerceOrderToCommerceReturns_commerceOrderId: order.id,
-					received: 1,
-					returnItemStatus: {
-						key: 'toBeProccessed',
-					},
-					returnReason: {
-						key: 'changeOfMind',
-					},
-					returnResolutionMethod: {
-						key: 'refund',
-					},
-				},
-			],
-			r_accountToCommerceReturns_accountEntryId: account.id,
-			r_commerceOrderToCommerceReturns_commerceOrderId: order.id,
-			returnStatus: {
-				key: 'processing',
-			},
-		});
-
-	await apiHelpers.headlessCommerceAdminPaymentApiHelper.postPayment({
-		amount: 10,
-		relatedItemId: payment.id,
-		relatedItemName:
-			'com.liferay.commerce.payment.model.CommercePaymentEntry',
-		type: 1,
-	});
+	const {commerceReturn, site} = await commerceReturnSetUp(apiHelpers);
 
 	await applicationsMenuPage.goToSite(site.name);
 
@@ -806,4 +321,37 @@ test('LPD-32524 Returns widget to show comments for return items', async ({
 		returnDetailsPage.viewDetailsFrame.getByText('This is a comment.')
 	).toBeVisible();
 	await expect(returnDetailsPage.viewDetailsCommentInput).toBeVisible();
+});
+
+test('LPD-32523 Returns widget to show received quantity label localized', async ({
+	apiHelpers,
+	applicationsMenuPage,
+	commerceLayoutsPage,
+	page,
+	returnDetailsPage,
+	returnsPage,
+}) => {
+	const {commerceReturn, site} = await commerceReturnSetUp(apiHelpers);
+
+	await applicationsMenuPage.goToSite(site.name);
+
+	await commerceLayoutsPage.goToPages(false);
+	await commerceLayoutsPage.createWidgetPage('Returns Page');
+
+	await page.goto(`/web/${site.name}`);
+
+	await returnsPage.addReturnsWidget();
+
+	await (
+		await returnsPage.tableRowLink({
+			colIndex: 0,
+			rowValue: commerceReturn.id,
+		})
+	).click();
+
+	await expect(await returnDetailsPage.table).toBeVisible();
+
+	await expect(
+		await returnDetailsPage.table.getByText('Received Quantity')
+	).toBeVisible();
 });

@@ -19,16 +19,6 @@
 			"indexed": false,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "External Key"
-			},
-			"name": "externalKey",
-			"required": false
-		},
-		{
-			"DBType": "String",
-			"indexed": false,
-			"indexedAsKeyword": false,
-			"label": {
 				"en_US": "First Name"
 			},
 			"name": "firstName",
@@ -93,7 +83,7 @@
 			},
 			"name": "postalCode",
 			"required": false
-		}	
+		}
 	],
 	"pluralLabel": {
 		"en_US": "Person Entries"

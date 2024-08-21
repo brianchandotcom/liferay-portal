@@ -12,7 +12,10 @@ import {VirtualInstancesPage} from '../../../pages/portal-instances-web/VirtualI
 import {SamlAdminPage} from '../../../pages/saml-web/SamlAdminPage';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import {getRandomInt} from '../../../utils/getRandomInt';
-import performLogin, {performLogout} from '../../../utils/performLogin';
+import performLogin, {
+	performLogout,
+	userData,
+} from '../../../utils/performLogin';
 import {waitForSuccessAlert} from '../../../utils/waitForSuccessAlert';
 import {deleteAfterTestProviderConnections} from '../saml.spec';
 import {connectSpAndIdp} from './samlProviderConnectionUtil';
@@ -31,7 +34,7 @@ export async function createCustomField(
 
 	liferayConfig.environment.baseUrl = `http://${instanceName}:8080`;
 
-	const page = await performSamlSafeAdminLogin(browser, instanceName);
+	const page = await performSamlSafeLogin(browser, instanceName);
 
 	const addCustomFieldPage = new AddCustomFieldPage(page);
 
@@ -68,7 +71,7 @@ export async function createIdpUser(
 
 	// Create new page and apiHelper implementation for IdP virtual instance
 
-	const idpVirtualInstancePage = await performSamlSafeAdminLogin(
+	const idpVirtualInstancePage = await performSamlSafeLogin(
 		browser,
 		idpInstanceName
 	);
@@ -81,6 +84,14 @@ export async function createIdpUser(
 		undefined,
 		userId
 	);
+
+	// Add user info to userData const so we can authenticate via performLogin
+
+	userData[userAccount.alternateName] = {
+		name: userAccount.givenName,
+		password: 'test',
+		surname: userAccount.familyName,
+	};
 
 	await performLogout(idpVirtualInstancePage);
 
@@ -114,7 +125,7 @@ export async function configureVirtualInstanceForSaml(
 
 	liferayConfig.environment.baseUrl = `http://${entityId}:8080`;
 
-	const newPage = await performSamlSafeAdminLogin(browser, entityId);
+	const newPage = await performSamlSafeLogin(browser, entityId);
 
 	const samlAdminPage = new SamlAdminPage(newPage);
 
@@ -144,10 +155,11 @@ export async function deleteVirtualInstance(name: string, page) {
 	await virtualInstancesPage.deleteVirtualInstance(name);
 }
 
-export async function performSamlSafeAdminLogin(
+export async function performSamlSafeLogin(
 	browser,
 	domain: string,
-	rememberMe = true
+	rememberMe = true,
+	screenName = 'test'
 ) {
 	const page = await browser.newPage({
 		baseURL: `http://${domain}:8080`,
@@ -157,7 +169,7 @@ export async function performSamlSafeAdminLogin(
 
 	await performLogin(
 		page,
-		'test',
+		screenName,
 		'?p_p_id=com_liferay_login_web_portlet_LoginPortlet&' +
 			'p_p_state=maximized',
 		mailId,

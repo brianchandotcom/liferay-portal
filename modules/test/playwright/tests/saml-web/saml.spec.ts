@@ -45,7 +45,7 @@ import {
 	createCustomField,
 	createIdpUser,
 	deleteVirtualInstance,
-	performSamlSafeAdminLogin,
+	performSamlSafeLogin,
 	resetSamlKeystoreManagerTarget,
 	setupSamlInstances,
 	updateSamlKeystoreManagerTarget,
@@ -103,7 +103,7 @@ test.afterEach(async ({browser}) => {
 
 		// Reset general tab
 
-		const newPage = await performSamlSafeAdminLogin(browser, instanceName);
+		const newPage = await performSamlSafeLogin(browser, instanceName);
 
 		const samlAdminPage = new SamlAdminPage(newPage);
 
@@ -352,7 +352,7 @@ test('Create two virtual instances, one IdP and one SP, and verify Custom User A
 
 	liferayConfig.environment.baseUrl = DEFAULT_SP_URL;
 
-	spInstancePage = await performSamlSafeAdminLogin(browser, DEFAULT_SP_NAME);
+	spInstancePage = await performSamlSafeLogin(browser, DEFAULT_SP_NAME);
 
 	usersAndOrganizationsPage = await new UsersAndOrganizationsPage(
 		spInstancePage
@@ -527,7 +527,7 @@ test('Create two virtual instances, set localhost and one to IdP and one SP, and
 
 	liferayConfig.environment.baseUrl = DEFAULT_SP_URL;
 
-	spInstancePage = await performSamlSafeAdminLogin(browser, DEFAULT_SP_NAME);
+	spInstancePage = await performSamlSafeLogin(browser, DEFAULT_SP_NAME);
 
 	usersAndOrganizationsPage = await new UsersAndOrganizationsPage(
 		spInstancePage

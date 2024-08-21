@@ -88,7 +88,7 @@ const configureFilter = async (page: Page, option: 'category' | 'keywords') => {
 	}
 };
 
-const selectFilter = async (page, categories) => {
+const selectFilter = async (page: Page, categories: string[]) => {
 	await page.getByRole('button', {name: 'Select'}).click();
 
 	for (const category of categories) {

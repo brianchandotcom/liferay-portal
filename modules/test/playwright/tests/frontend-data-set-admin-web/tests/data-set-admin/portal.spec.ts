@@ -83,6 +83,7 @@ test.describe('Data Set Manager with Feature Flag Enabled', () => {
 
 export const disabledTest = mergeTests(
 	dataSetsPageTest,
+	featureFlagPagesTest,
 	featureFlagsTest({
 		'LPS-164563': false,
 	}),
@@ -149,6 +150,69 @@ disabledTest.describe('Data Set Manager with Feature Flag Disabled', () => {
 					})
 				).toBeHidden();
 			});
+		}
+	);
+
+	disabledTest(
+		'Confirm that the Data Set fragment can be displayed when the FF is enabled through the UI @LPS-188590',
+		async ({featureFlagsInstanceSettingsPage, page}) => {
+			try {
+				await test.step('Navigate to Feature Flag page', async () => {
+					await featureFlagsInstanceSettingsPage.goto('Beta');
+				});
+
+				await test.step('Enable the Data Set Manager feature flag', async () => {
+					await featureFlagsInstanceSettingsPage.updateFeatureFlag(
+						'LPS-164563',
+						true
+					);
+
+					const featureFlagToggle =
+						await featureFlagsInstanceSettingsPage.getFeatureFlagToggle(
+							'LPS-164563'
+						);
+
+					await expect(featureFlagToggle).toBeChecked();
+				});
+
+				await test.step('Go to home edit page', async () => {
+					await page.goto(`/web/guest/home?p_l_mode=edit`);
+				});
+
+				await test.step('Check that "Data Set" is not displayed as a fragment', async () => {
+					await page
+						.getByLabel('Search Fragments and Widgets')
+						.fill('Data Set');
+
+					await expect(
+						page.getByRole('menuitem', {
+							exact: true,
+							name: 'Data Set Add Data Set Mark Data Set as Favorite',
+						})
+					).toBeVisible();
+				});
+			}
+			finally {
+				await test.step('Navigate to Feature Flag page', async () => {
+					await featureFlagsInstanceSettingsPage.goto('Beta');
+				});
+
+				await test.step('Enable the Data Set Manager feature flag', async () => {
+					await featureFlagsInstanceSettingsPage.updateFeatureFlag(
+						'LPS-164563',
+						false
+					);
+
+					const featureFlagToggle =
+						await featureFlagsInstanceSettingsPage.getFeatureFlagToggle(
+							'LPS-164563'
+						);
+
+					await expect(featureFlagToggle).toBeChecked({
+						checked: false,
+					});
+				});
+			}
 		}
 	);
 });

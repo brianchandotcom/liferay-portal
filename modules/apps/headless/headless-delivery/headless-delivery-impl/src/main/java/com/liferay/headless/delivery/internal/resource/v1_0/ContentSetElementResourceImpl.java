@@ -17,6 +17,9 @@ import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.pagination.InfoPage;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.events.ServicePreAction;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -152,6 +155,27 @@ public class ContentSetElementResourceImpl
 		return Page.of(
 			transform(infoPage.getPageItems(), this::_toContentSetElement),
 			pagination, infoPage.getTotalCount());
+	}
+
+	private void _initThemeDisplay(Long siteId) throws Exception {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)contextHttpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		if (themeDisplay != null) {
+			return;
+		}
+
+		ServicePreAction servicePreAction = new ServicePreAction();
+
+		servicePreAction.servicePre(
+			contextHttpServletRequest, contextHttpServletResponse, false);
+
+		themeDisplay = (ThemeDisplay)contextHttpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		themeDisplay.setScopeGroupId(siteId);
+		themeDisplay.setSiteGroupId(siteId);
 	}
 
 	private ContentSetElement _toContentSetElement(AssetEntry assetEntry) {

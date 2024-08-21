@@ -68,6 +68,7 @@ export interface IDataSetSectionProps {
 	namespace: string;
 	onActiveSectionChange: (section: number) => void;
 	onDataSetUpdate: (data: FDSViewType) => void;
+	resolvedRESTSchemas: string[];
 	restApplications: string[];
 	saveFDSFieldsURL: string;
 	saveFDSSortURL: string;
@@ -81,6 +82,7 @@ const DataSet = ({
 	fdsFilterClientExtensions,
 	fdsViewId,
 	namespace,
+	resolvedRESTSchemas = [],
 	restApplications,
 	saveFDSFieldsURL,
 	saveFDSSortURL,
@@ -92,6 +94,7 @@ const DataSet = ({
 	fdsFilterClientExtensions: IClientExtensionRenderer[];
 	fdsViewId: string;
 	namespace: string;
+	resolvedRESTSchemas: string[];
 	restApplications: string[];
 	saveFDSFieldsURL: string;
 	saveFDSSortURL: string;
@@ -175,6 +178,7 @@ const DataSet = ({
 						onDataSetUpdate={(updatedDataSet) => {
 							setDataSet({...dataSet, ...updatedDataSet});
 						}}
+						resolvedRESTSchemas={resolvedRESTSchemas}
 						restApplications={restApplications}
 						saveFDSFieldsURL={saveFDSFieldsURL}
 						saveFDSSortURL={saveFDSSortURL}

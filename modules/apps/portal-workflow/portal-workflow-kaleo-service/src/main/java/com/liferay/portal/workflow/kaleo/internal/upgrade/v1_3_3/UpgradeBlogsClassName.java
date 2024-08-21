@@ -5,7 +5,7 @@
 
 package com.liferay.portal.workflow.kaleo.internal.upgrade.v1_3_3;
 
-import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.upgrade.util.Table;
 import com.liferay.portal.workflow.kaleo.internal.upgrade.v1_3_0.BaseUpgradeClassNames;
@@ -14,12 +14,18 @@ import com.liferay.portal.workflow.kaleo.runtime.util.WorkflowContextUtil;
 import java.io.Serializable;
 
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * @author Leonardo Barros
  */
 public class UpgradeBlogsClassName extends BaseUpgradeClassNames {
+
+	@Override
+	protected String getWhereClause() {
+		return SQLTransformer.transform(
+			" where workflowContext LIKE " +
+				"'%com.liferay.blogs.kernel.model.BlogsEntry%'");
+	}
 
 	@Override
 	protected void updateClassName(String tableName, String columnName) {
@@ -39,19 +45,10 @@ public class UpgradeBlogsClassName extends BaseUpgradeClassNames {
 		Map<String, Serializable> workflowContext = WorkflowContextUtil.convert(
 			workflowContextJSON);
 
-		String entryClassName = GetterUtil.getString(
-			workflowContext.get("entryClassName"));
+		workflowContext.put(
+			"entryClassName", "com.liferay.blogs.model.BlogsEntry");
 
-		if (Objects.equals(
-				entryClassName, "com.liferay.blogs.kernel.model.BlogsEntry")) {
-
-			workflowContext.put(
-				"entryClassName", "com.liferay.blogs.model.BlogsEntry");
-
-			return workflowContext;
-		}
-
-		return null;
+		return workflowContext;
 	}
 
 }

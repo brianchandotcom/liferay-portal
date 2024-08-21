@@ -43,6 +43,8 @@ public abstract class BaseUpgradeClassNames extends UpgradeProcess {
 			"KaleoTimerInstanceToken", "kaleoTimerInstanceTokenId");
 	}
 
+	protected abstract String getWhereClause();
+
 	protected abstract void updateClassName(
 		String tableName, String columnName);
 
@@ -74,7 +76,7 @@ public abstract class BaseUpgradeClassNames extends UpgradeProcess {
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
 					"select ", primaryKeyName, ", workflowContext from ",
-					tableName, " where workflowContext is not null"));
+					tableName, getWhereClause()));
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {

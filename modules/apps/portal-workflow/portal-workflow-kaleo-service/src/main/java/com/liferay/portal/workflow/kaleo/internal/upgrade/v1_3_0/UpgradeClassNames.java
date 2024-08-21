@@ -20,6 +20,11 @@ import java.util.Map;
 public class UpgradeClassNames extends BaseUpgradeClassNames {
 
 	@Override
+	protected String getWhereClause() {
+		return " where workflowContext is not null";
+	}
+
+	@Override
 	protected void updateClassName(String tableName, String columnName) {
 		try (LoggingTimer loggingTimer = new LoggingTimer(tableName)) {
 			Table table = new Table(tableName);

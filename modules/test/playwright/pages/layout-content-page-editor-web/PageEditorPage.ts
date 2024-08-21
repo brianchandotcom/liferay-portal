@@ -728,6 +728,26 @@ export class PageEditorPage {
 		await this.page.getByLabel(spacingType, {exact: true}).click();
 	}
 
+	async goToWidgetConfiguration(
+		layout: Layout,
+		site: Site,
+		widgetId: string
+	) {
+		await this.goto(layout, site.friendlyUrlPath);
+
+		const topper = this.getTopper(widgetId);
+
+		await topper.hover();
+
+		await expect(topper.locator('.portlet-options')).toBeVisible();
+
+		await topper.locator('.portlet-options').click();
+
+		await this.page
+			.getByRole('menuitem', {exact: true, name: 'Configuration'})
+			.click();
+	}
+
 	async publishPage() {
 		const isMaster = await this.isMaster();
 

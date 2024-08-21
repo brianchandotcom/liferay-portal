@@ -320,10 +320,10 @@ public class OrderResourceTest extends BaseOrderResourceTestCase {
 	public void testPostOrder() throws Exception {
 		super.testPostOrder();
 
+		_testPostOrderWithAddressAndTermExternalReferenceCode();
 		_testPostOrderWithOrderItems(
 			CommerceOrderConstants.ORDER_STATUS_COMPLETED);
 		_testPostOrderWithOrderItems(CommerceOrderConstants.ORDER_STATUS_OPEN);
-		_testPostOrderWithAddressAndTermExternalReferenceCode();
 	}
 
 	@Override

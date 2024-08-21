@@ -296,6 +296,125 @@ describe('Reducer', () => {
 				hoveredItemId: 'item-1',
 			});
 		});
+
+		describe('Simple selection', () => {
+			it('selects multiple items', () => {
+				Liferay.FeatureFlags['LPD-18221'] = true;
+
+				const action = {
+					...ACTION,
+					itemId: 'fragment01',
+					type: SELECT_ITEM,
+				};
+				const state = {
+					...STATE,
+					activeItemIds: ['fragment04', 'fragment02'],
+					multiSelect: 'simple',
+				};
+
+				expect(reducer(state, action)).toEqual(
+					expect.objectContaining({
+						activeItemIds: [
+							'fragment04',
+							'fragment02',
+							'fragment01',
+						],
+					})
+				);
+
+				Liferay.FeatureFlags['LPD-18221'] = false;
+			});
+
+			it('deselects an item if it is already selected', () => {
+				Liferay.FeatureFlags['LPD-18221'] = true;
+
+				const action = {
+					...ACTION,
+					itemId: 'fragment02',
+					type: SELECT_ITEM,
+				};
+				const state = {
+					...STATE,
+					activeItemIds: ['fragment04', 'fragment02'],
+					multiSelect: 'simple',
+				};
+
+				expect(reducer(state, action)).toEqual(
+					expect.objectContaining({
+						activeItemIds: ['fragment04'],
+					})
+				);
+
+				Liferay.FeatureFlags['LPD-18221'] = false;
+			});
+		});
+
+		describe('Range selection', () => {
+			it('selects in range when only one range limit is selected and there are more items selected', () => {
+				Liferay.FeatureFlags['LPD-18221'] = true;
+
+				const action = {
+					...ACTION,
+					itemId: 'fragment01',
+					type: SELECT_ITEM,
+				};
+				const state = {
+					...STATE,
+					activeItemIds: ['fragment03', 'fragment04', 'fragment02'],
+					layoutData: LAYOUT_DATA,
+					multiSelect: 'range',
+					rangeLimitIds: {start: 'fragment02'},
+				};
+
+				expect(reducer(state, action)).toEqual(
+					expect.objectContaining({
+						activeItemIds: [
+							'fragment03',
+							'fragment04',
+							'fragment02',
+							'fragment01',
+						],
+					})
+				);
+
+				Liferay.FeatureFlags['LPD-18221'] = false;
+			});
+
+			it('selects in range when 2 range limits are selected and there are more items selected', () => {
+				Liferay.FeatureFlags['LPD-18221'] = true;
+
+				const action = {
+					...ACTION,
+					itemId: 'container02',
+					type: SELECT_ITEM,
+				};
+				const state = {
+					...STATE,
+					activeItemIds: [
+						'fragment03',
+						'fragment04',
+						'fragment02',
+						'fragment01',
+					],
+					layoutData: LAYOUT_DATA,
+					multiSelect: 'range',
+					rangeLimitIds: {end: 'fragment01', start: 'fragment02'},
+				};
+
+				expect(reducer(state, action)).toEqual(
+					expect.objectContaining({
+						activeItemIds: [
+							'fragment03',
+							'fragment04',
+							'fragment02',
+							'container02',
+						],
+					})
+				);
+
+				Liferay.FeatureFlags['LPD-18221'] = false;
+			});
+		});
 	});
 
 	describe('Deselect action', () => {

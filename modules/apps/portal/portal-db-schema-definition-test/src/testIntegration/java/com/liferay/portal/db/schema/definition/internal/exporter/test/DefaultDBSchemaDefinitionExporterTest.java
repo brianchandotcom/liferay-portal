@@ -32,7 +32,7 @@ import org.junit.runner.RunWith;
  * @author Mariano Álvaro Sáiz
  */
 @RunWith(Arquillian.class)
-public class DBSchemaDefinitionExporterTest
+public class DefaultDBSchemaDefinitionExporterTest
 	extends BaseDBSchemaDefinitionExporterTestCase {
 
 	@ClassRule

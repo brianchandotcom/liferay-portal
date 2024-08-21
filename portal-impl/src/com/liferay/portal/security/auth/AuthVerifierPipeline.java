@@ -239,12 +239,12 @@ public class AuthVerifierPipeline {
 				return -1;
 			}
 
-			return _authVerifiers.indexOf(authVerifier1) -
-				_authVerifiers.indexOf(authVerifier2);
+			return _sortedAuthVerifiers.indexOf(authVerifier1) -
+				_sortedAuthVerifiers.indexOf(authVerifier2);
 		}
 
-		private final List<AuthVerifier> _authVerifiers =
-			AuthVerifierRegistry.getAuthVerifiers();
+		private final List<AuthVerifier> _sortedAuthVerifiers =
+			AuthVerifierRegistry.getAuthVerifiersByPriority();
 
 	}
 

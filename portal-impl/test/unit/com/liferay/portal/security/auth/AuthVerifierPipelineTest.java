@@ -101,7 +101,7 @@ public class AuthVerifierPipelineTest {
 			AuthVerifierResult.State.UNSUCCESSFUL;
 
 		Mockito.when(
-			AuthVerifierRegistry.getAuthVerifiers()
+			AuthVerifierRegistry.getAuthVerifiersByPriority()
 		).thenReturn(
 			ListUtil.fromArray(_authVerifier2, _authVerifier1)
 		);
@@ -221,7 +221,7 @@ public class AuthVerifierPipelineTest {
 		);
 
 		Mockito.when(
-			AuthVerifierRegistry.getAuthVerifiers()
+			AuthVerifierRegistry.getAuthVerifiersByPriority()
 		).thenReturn(
 			ListUtil.fromArray(_authVerifier1, _authVerifier2)
 		);

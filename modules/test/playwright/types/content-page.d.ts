@@ -41,6 +41,8 @@ type FormConfig = {
 		className: string;
 		classType: number;
 	};
+	formType: 'multistep' | 'simple';
+	numberOfSteps: number;
 };
 
 type Layout = {
@@ -105,6 +107,8 @@ type PageElement = {
 		| 'Column'
 		| 'DropZone'
 		| 'Form'
+		| 'FormStep'
+		| 'FormStepContainer'
 		| 'Fragment'
 		| 'FragmentDropZone'
 		| 'Root'

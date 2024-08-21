@@ -3,16 +3,22 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import getRandomString from '../../../utils/getRandomString';
+
+type Step = PageElement[];
+
 type Props = {
 	id: string;
 	objectDefinitionId?: string;
 	pageElements?: PageElement[];
+	steps?: Step[];
 };
 
 export default function getFormContainerDefinition({
 	id,
 	objectDefinitionId,
-	pageElements,
+	pageElements = [],
+	steps = [],
 }: Props): PageElement {
 	if (!objectDefinitionId) {
 		return {
@@ -22,6 +28,12 @@ export default function getFormContainerDefinition({
 		};
 	}
 
+	const children = pageElements;
+
+	if (steps.length) {
+		children.push(getStepContainerDefinition(steps));
+	}
+
 	return {
 		definition: {
 			formConfig: {
@@ -29,10 +41,30 @@ export default function getFormContainerDefinition({
 					className: `com.liferay.object.model.ObjectDefinition#${objectDefinitionId}`,
 					classType: 0,
 				},
+				formType: steps.length ? 'multistep' : 'simple',
+				numberOfSteps: steps.length,
 			},
 		},
 		id,
-		pageElements,
+		pageElements: children,
 		type: 'Form',
+	};
+}
+
+function getStepContainerDefinition(steps: Step[]): PageElement {
+	return {
+		definition: {},
+		id: getRandomString(),
+		pageElements: steps.map(getStepDefinition),
+		type: 'FormStepContainer',
+	};
+}
+
+function getStepDefinition(step: Step): PageElement {
+	return {
+		definition: {},
+		id: getRandomString(),
+		pageElements: step,
+		type: 'FormStep',
 	};
 }

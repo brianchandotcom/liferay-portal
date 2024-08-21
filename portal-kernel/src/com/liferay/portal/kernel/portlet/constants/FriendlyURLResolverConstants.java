@@ -18,6 +18,8 @@ public class FriendlyURLResolverConstants {
 
 	public static final String URL_SEPARATOR_CALENDAR_BOOKING = "/h/";
 
+	public static final String URL_SEPARATOR_COMMERCE_ORDER = "/order/";
+
 	public static final String URL_SEPARATOR_CUSTOM_ASSET = "/e/";
 
 	public static final String URL_SEPARATOR_FILE_ENTRY = "/d/";

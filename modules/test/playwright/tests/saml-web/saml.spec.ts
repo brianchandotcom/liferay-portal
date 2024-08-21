@@ -550,3 +550,64 @@ test('Create two virtual instances, set localhost and one to IdP and one SP, and
 
 	liferayConfig.environment.baseUrl = defaultBaseUrl;
 });
+
+test('SAML connection cannot be saved if a custom field value is used more than once', async ({
+	browser,
+}) => {
+	await configureVirtualInstanceForSaml(
+		browser,
+		DEFAULT_IDP_NAME,
+		'Identity Provider'
+	);
+
+	await configureVirtualInstanceForSaml(
+		browser,
+		DEFAULT_SP_NAME,
+		'Service Provider'
+	);
+
+	await connectSpAndIdp(browser, DEFAULT_IDP_NAME, DEFAULT_SP_NAME);
+
+	const customFieldName = 'CustomField' + getRandomInt();
+
+	const customField: TCustomField = {
+		fieldName: customFieldName,
+		fieldType: 'inputField',
+		resource: 'User',
+	};
+
+	await createCustomField(browser, customField, DEFAULT_IDP_NAME);
+
+	await createCustomField(browser, customField, DEFAULT_SP_NAME);
+
+	// Edit IdP Connection to include duplicate Custom Field attribute mappings
+
+	const attributeMappings: AttributeMapping[] = [
+		{
+			attributeMappingType: 'User Custom Fields',
+			samlAttribute: customFieldName,
+			userFieldExpression: customFieldName,
+		},
+		{
+			attributeMappingType: 'User Custom Fields',
+			samlAttribute: customFieldName,
+			userFieldExpression: customFieldName,
+		},
+	];
+
+	const idpConnection: TIdpConnection = {
+		attributeMappings,
+		entityId: DEFAULT_IDP_NAME,
+		idpDomain: `http://${DEFAULT_IDP_NAME}:8080`,
+		idpName: DEFAULT_IDP_NAME,
+		spName: DEFAULT_SP_NAME,
+		...DEFAULT_IDP_CONNECTION_VALUES,
+	};
+
+	// IdP connection should display the following error message
+
+	const errorMessage =
+		'User Custom Fields: Each user field can only be mapped to one SAML attribute.';
+
+	await editIdentityProviderConnection(browser, idpConnection, errorMessage);
+});

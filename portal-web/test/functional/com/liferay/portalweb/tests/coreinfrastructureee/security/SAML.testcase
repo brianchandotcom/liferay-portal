@@ -2571,57 +2571,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-128600 TC-4. SAML connection cannot be saved if a custom field value is used more than once."
-	@priority = 4
-	test CustomFieldUsedMultipleTimesCannotBeSavedInSAML {
-		property app.server.bundles.size = "0";
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		task ("Given: User adds new custom fields") {
-			CustomFields.openCustomFieldAdmin();
-
-			CustomFields.addCP(
-				customFieldName = "inputfield",
-				customFieldType = "Input Field",
-				customInputDataType = "Text",
-				nameLocalization = "false",
-				resourceName = "User");
-		}
-
-		task ("And: Enable SP role") {
-			SAML.goToSAMLAdmin();
-
-			SAMLRole.configure(
-				samlEntityId = "samlsp",
-				samlRoleType = "Service Provider");
-		}
-
-		task ("When: User tries to establish IdP connection with 1 custom field used two times") {
-			SAML.goToSAMLAdmin();
-
-			SAMLNavigation.gotoIdentityProviderConnections();
-
-			SAMLPortlet.addIdentityProviderConnection(
-				idpAttributeMapping = "UUID,UUID,lastName,lastName",
-				idpCustomFieldAttributeMapping = "inputfield,inputfield",
-				idpCustomFieldAttributeMappingText = "attribute1,attribute2",
-				idpEntityId = "samlidp",
-				idpKeepAliveURL = "http://localhost:8080/c/portal/saml/keep_alive",
-				idpNameId = "samlidp",
-				idpURL = "http://localhost:8080",
-				spURL = "http://www.able.com:8080",
-				userEmailAddress = "test@www.able.com",
-				userResolution = "dynamic");
-		}
-
-		task ("Then: The save fails and the correct error message appears") {
-			AssertTextEquals.assertPartialText(
-				locator1 = "Message#ERROR_DISMISSIBLE",
-				value1 = "User Custom Fields: Each user field can only be mapped to one SAML attribute.");
-		}
-	}
-
 	@description = "This is a use case for LPS-105170 TC-8: Verifying that deleting a User will sync with the SP site - Using virtual instances."
 	@priority = 4
 	test DeleteUserAfterSAMLSetupAndVerify {

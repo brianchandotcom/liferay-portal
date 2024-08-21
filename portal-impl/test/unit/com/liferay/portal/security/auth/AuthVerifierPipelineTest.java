@@ -83,7 +83,7 @@ public class AuthVerifierPipelineTest {
 		_assertAuthVerifierResult(
 			contextPath, includeURLs, regularRequestURI, expectedState);
 
-		expectedState =AuthVerifierResult.State.UNSUCCESSFUL;
+		expectedState = AuthVerifierResult.State.UNSUCCESSFUL;
 
 		Mockito.when(
 			AuthVerifierRegistry.getAuthVerifiers()

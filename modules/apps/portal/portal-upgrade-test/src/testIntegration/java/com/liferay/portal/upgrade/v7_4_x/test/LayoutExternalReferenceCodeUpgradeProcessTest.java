@@ -17,7 +17,7 @@ import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.test.util.BaseExternalReferenceCodeUpgradeProcessTestCase;
-import com.liferay.portal.upgrade.v7_4_x.UpgradeLayoutExternalReferenceCode;
+import com.liferay.portal.upgrade.v7_4_x.LayoutExternalReferenceCodeUpgradeProcess;
 
 import org.junit.runner.RunWith;
 
@@ -60,8 +60,8 @@ public class LayoutExternalReferenceCodeUpgradeProcessTest
 	}
 
 	@Override
-	protected UpgradeLayoutExternalReferenceCode getUpgradeProcess() {
-		return new UpgradeLayoutExternalReferenceCode();
+	protected LayoutExternalReferenceCodeUpgradeProcess getUpgradeProcess() {
+		return new LayoutExternalReferenceCodeUpgradeProcess();
 	}
 
 	@Override

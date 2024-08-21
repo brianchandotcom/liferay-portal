@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.test.util.BaseExternalReferenceCodeUpgradeProcessTestCase;
-import com.liferay.portal.upgrade.v7_4_x.UpgradeRoleExternalReferenceCode;
+import com.liferay.portal.upgrade.v7_4_x.RoleExternalReferenceCodeUpgradeProcess;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -34,7 +34,7 @@ import org.junit.runner.RunWith;
  * @author Stefano Motta
  */
 @RunWith(Arquillian.class)
-public class UpgradeRoleExternalReferenceCodeTest
+public class RoleExternalReferenceCodeUpgradeProcessTest
 	extends BaseExternalReferenceCodeUpgradeProcessTestCase {
 
 	@Override
@@ -86,8 +86,8 @@ public class UpgradeRoleExternalReferenceCodeTest
 	}
 
 	@Override
-	protected UpgradeRoleExternalReferenceCode getUpgradeProcess() {
-		return new UpgradeRoleExternalReferenceCode();
+	protected RoleExternalReferenceCodeUpgradeProcess getUpgradeProcess() {
+		return new RoleExternalReferenceCodeUpgradeProcess();
 	}
 
 	@Override

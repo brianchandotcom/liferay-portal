@@ -8,14 +8,14 @@ package com.liferay.portal.upgrade.v7_4_x;
 import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess;
 
 /**
- * @author Rubén Pulido
+ * @author Balázs Sáfrány-Kovalik
  */
-public class UpgradeLayoutExternalReferenceCode
+public class DLFileShortcutExternalReferenceCodeUpgradeProcess
 	extends BaseExternalReferenceCodeUpgradeProcess {
 
 	@Override
 	protected String[][] getTableAndPrimaryKeyColumnNames() {
-		return new String[][] {{"Layout", "plid"}};
+		return new String[][] {{"DLFileShortcut", "fileShortcutId"}};
 	}
 
 }

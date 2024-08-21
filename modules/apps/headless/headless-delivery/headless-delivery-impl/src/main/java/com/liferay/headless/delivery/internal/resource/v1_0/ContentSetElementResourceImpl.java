@@ -7,10 +7,14 @@ package com.liferay.headless.delivery.internal.resource.v1_0;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.list.asset.entry.provider.AssetListAssetEntryProvider;
+import com.liferay.asset.list.exception.NoSuchEntryException;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryService;
 import com.liferay.headless.delivery.dto.v1_0.ContentSetElement;
 import com.liferay.headless.delivery.resource.v1_0.ContentSetElementResource;
+import com.liferay.info.collection.provider.CollectionQuery;
+import com.liferay.info.collection.provider.InfoCollectionProvider;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.pagination.InfoPage;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -22,7 +26,9 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.segments.context.RequestContextMapper;
 import com.liferay.segments.provider.SegmentsEntryProviderRegistry;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -87,6 +93,43 @@ public class ContentSetElementResourceImpl
 				uuid, siteId);
 
 		return _getContentSetContentSetElementsPage(assetListEntry, pagination);
+	}
+
+	@Override
+	public Page<ContentSetElement>
+			getSiteContentSetProviderByKeyContentSetElementsPage(
+				Long siteId, String key, Pagination pagination)
+		throws Exception {
+
+		InfoCollectionProvider<?> infoCollectionProvider =
+			_infoItemServiceRegistry.getInfoItemService(
+				InfoCollectionProvider.class, key);
+
+		if (infoCollectionProvider == null) {
+			throw new NoSuchEntryException();
+		}
+
+		if (!infoCollectionProvider.isAvailable() ||
+			!Objects.equals(
+				AssetEntry.class.getName(),
+				infoCollectionProvider.getCollectionItemClassName())) {
+
+			return Page.of(Collections.emptyList());
+		}
+
+		CollectionQuery collectionQuery = new CollectionQuery();
+
+		collectionQuery.setPagination(
+			com.liferay.info.pagination.Pagination.of(
+				pagination.getEndPosition(), pagination.getStartPosition()));
+
+		InfoPage<AssetEntry> infoPage =
+			(InfoPage<AssetEntry>)infoCollectionProvider.getCollectionInfoPage(
+				collectionQuery);
+
+		return Page.of(
+			transform(infoPage.getPageItems(), this::_toContentSetElement),
+			pagination, infoPage.getTotalCount());
 	}
 
 	private Page<ContentSetElement> _getContentSetContentSetElementsPage(
@@ -160,6 +203,9 @@ public class ContentSetElementResourceImpl
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
+
+	@Reference
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
 	private RequestContextMapper _requestContextMapper;

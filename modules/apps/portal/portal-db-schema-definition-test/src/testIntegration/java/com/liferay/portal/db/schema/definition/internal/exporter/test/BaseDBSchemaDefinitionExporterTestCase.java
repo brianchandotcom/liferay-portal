@@ -75,7 +75,9 @@ public abstract class BaseDBSchemaDefinitionExporterTestCase {
 			(dbType == DBType.MYSQL) || (dbType == DBType.POSTGRESQL));
 	}
 
-	protected static void setUpClassDefault() throws Exception {
+	protected static void setUpClassBaseDBSchemaDefinitionExporterTestCase()
+		throws Exception {
+
 		databaseType = String.valueOf(DBManagerUtil.getDBType());
 		folder = FileUtil.createTempFolder();
 

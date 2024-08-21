@@ -636,9 +636,7 @@ test('Reset collection filter using applied filters', async ({
 		page.getByText(ANIMALS_COLLECTION_NAME, {exact: true})
 	).toBeVisible();
 
-	await expect(
-		page.locator("//div[contains(@id,'filterList')]")
-	).not.toBeVisible();
+	await expect(page.locator('div[id*="filterList"]')).not.toBeVisible();
 
 	// Select category filter: Cats
 
@@ -650,9 +648,7 @@ test('Reset collection filter using applied filters', async ({
 
 	await expect(page.getByText('Animal 02 - Dogs category')).not.toBeVisible();
 
-	await expect(
-		page.locator("//div[contains(@id,'filterList')]")
-	).toContainText('Cats');
+	await expect(page.locator('div[id*="filterList"]')).toContainText('Cats');
 
 	// Remove filter
 
@@ -674,9 +670,7 @@ test('Reset collection filter using applied filters', async ({
 
 	await expect(page.getByText('Animal 02 - Dogs category')).not.toBeVisible();
 
-	await expect(
-		page.locator("//div[contains(@id,'filterList')]")
-	).toContainText('Cats');
+	await expect(page.locator('div[id*="filterList"]')).toContainText('Cats');
 
 	// Clear filter
 

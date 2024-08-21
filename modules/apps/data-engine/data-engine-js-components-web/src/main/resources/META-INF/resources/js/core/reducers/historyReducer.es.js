@@ -39,6 +39,16 @@ export default function historyReducer(state, action) {
 					edited: true,
 				},
 			};
+		case EVENT_TYPES.HISTORY.GOTO:
+			setTimeout(() => Liferay.fire('ddm:restoreState'), 100);
+
+			return {
+				...state.history.steps[action.step],
+				history: {
+					...state.history,
+					currentStep: action.step,
+				},
+			};
 		case EVENT_TYPES.HISTORY.NEXT:
 			setTimeout(() => Liferay.fire('ddm:restoreState'), 100);
 

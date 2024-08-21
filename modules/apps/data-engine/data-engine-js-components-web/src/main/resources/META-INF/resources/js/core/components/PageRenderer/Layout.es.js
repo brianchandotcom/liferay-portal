@@ -35,6 +35,9 @@ export function Layout({components, editable, itemPath, rows, viewMode}) {
 	}, [defaultLanguageId, dispatch]);
 
 	useEffect(() => {
+		const goToHandler = ({step}) => {
+			dispatch({step, type: EVENT_TYPES.HISTORY.GOTO});
+		};
 		const handleStoreState = () => {
 			dispatch({type: EVENT_TYPES.HISTORY.ADD});
 		};
@@ -45,11 +48,13 @@ export function Layout({components, editable, itemPath, rows, viewMode}) {
 			dispatch({type: EVENT_TYPES.HISTORY.NEXT});
 		};
 
+		Liferay.on('journal:goto', goToHandler);
 		Liferay.on('journal:undo', undoHandler);
 		Liferay.on('journal:redo', redoHandler);
 		Liferay.on('journal:storeState', handleStoreState);
 
 		return () => {
+			Liferay.detach('journal:goto', goToHandler);
 			Liferay.detach('journal:undo', undoHandler);
 			Liferay.detach('journal:redo', redoHandler);
 			Liferay.detach('journal:storeState', handleStoreState);

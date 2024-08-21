@@ -477,6 +477,11 @@ export default function UndoRedo({
 											else {
 												handleRedo(index);
 											}
+
+											Liferay.fire('journal:goto', {
+												step: index,
+											});
+
 											setActive(false);
 										}}
 										symbolRight={

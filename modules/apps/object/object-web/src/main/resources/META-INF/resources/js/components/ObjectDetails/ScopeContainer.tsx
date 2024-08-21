@@ -91,6 +91,7 @@ export function ScopeContainer({
 					isLinkedObjectDefinition
 				}
 				error={errors.titleObjectFieldId}
+				id="lfr-objects__object-scope-container-scope"
 				items={SCOPE_OPTIONS}
 				label={Liferay.Language.get('scope')}
 				onSelectionChange={(value) => {
@@ -121,7 +122,7 @@ export function ScopeContainer({
 					isLinkedObjectDefinition
 				}
 				error={errors.titleObjectFieldId}
-				id="objectDetailsScopeContainer"
+				id="lfr-objects__object-scope-container-panel-link"
 				items={values.scope === 'company' ? companies : sites}
 				label={Liferay.Language.get('panel-link')}
 				onSelectionChange={(value) => {

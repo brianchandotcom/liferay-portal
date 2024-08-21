@@ -66,6 +66,7 @@ export function EntryDisplayContainer({
 			className={className}
 			disabled={isLinkedObjectDefinition}
 			error={errors.titleObjectFieldId}
+			id="lfr-objects__object-display-container-entry-title-field"
 			items={titleFieldOptions}
 			label={Liferay.Language.get('entry-title-field')}
 			onSelectionChange={(itemKey) => {

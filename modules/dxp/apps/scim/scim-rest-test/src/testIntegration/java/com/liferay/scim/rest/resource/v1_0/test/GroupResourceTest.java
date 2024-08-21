@@ -73,6 +73,8 @@ public class GroupResourceTest extends BaseGroupResourceTestCase {
 				"matcherField", "email"
 			).put(
 				"oAuth2ApplicationName", "scim-client-test"
+			).put(
+				"userId", TestPropsValues.getUserId()
 			).build());
 
 		UserResource.Builder builder = UserResource.builder();

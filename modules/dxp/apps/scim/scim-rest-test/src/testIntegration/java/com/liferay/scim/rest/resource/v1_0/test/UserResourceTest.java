@@ -72,6 +72,8 @@ public class UserResourceTest extends BaseUserResourceTestCase {
 				"matcherField", "email"
 			).put(
 				"oAuth2ApplicationName", "scim-client-test"
+			).put(
+				"userId", TestPropsValues.getUserId()
 			).build());
 	}
 

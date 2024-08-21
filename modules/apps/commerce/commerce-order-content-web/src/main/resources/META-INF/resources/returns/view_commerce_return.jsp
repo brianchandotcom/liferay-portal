@@ -22,12 +22,6 @@ portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(String.valueOf(renderResponse.createRenderURL()));
 %>
 
-<liferay-portlet:renderURL var="editCommerceReturnExternalReferenceCodeURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-	<portlet:param name="mvcRenderCommandName" value="/commerce_return_content/edit_commerce_return_external_reference_code" />
-	<portlet:param name="redirect" value="<%= currentURL %>" />
-	<portlet:param name="commerceReturnId" value="<%= String.valueOf(commerceReturnContentDisplayContext.getCommerceReturnId()) %>" />
-</liferay-portlet:renderURL>
-
 <commerce-ui:header
 	actions="<%= commerceReturnContentDisplayContext.getHeaderActionModels() %>"
 	additionalStatusLabel="<%= commerceReturn.getReturnStatus() %>"
@@ -35,7 +29,6 @@ portletDisplay.setURLBack(String.valueOf(renderResponse.createRenderURL()));
 	bean="<%= (commerceReturn == null) ? null : commerceReturn.getObjectEntry() %>"
 	beanIdLabel='<%= (commerceReturn == null) ? null : "id" %>'
 	externalReferenceCode="<%= (commerceReturn == null) ? StringPool.BLANK : commerceReturn.getExternalReferenceCode() %>"
-	externalReferenceCodeEditUrl="<%= (commerceReturn == null) ? null : editCommerceReturnExternalReferenceCodeURL %>"
 	model="<%= ObjectEntry.class %>"
 	title="<%= (commerceReturn == null) ? StringPool.BLANK : String.valueOf(commerceReturn.getId()) %>"
 />

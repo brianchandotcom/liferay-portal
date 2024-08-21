@@ -18,6 +18,8 @@ import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.pagination.InfoPage;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.events.ServicePreAction;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -105,6 +107,11 @@ public class ContentSetElementResourceImpl
 		throws Exception {
 
 		_initThemeDisplay(siteId);
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		serviceContext.setScopeGroupId(siteId);
 
 		InfoCollectionProvider<?> infoCollectionProvider =
 			_infoItemServiceRegistry.getInfoItemService(

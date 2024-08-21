@@ -20,7 +20,7 @@ export const test = mergeTests(
 );
 
 test.describe('Data Set Manager with Feature Flag Enabled', () => {
-	test('Confirm the description in the FF Data Set @LPS-188590', async ({
+	test('Confirm the description in the Feature Flag page @LPS-188590', async ({
 		featureFlagsInstanceSettingsPage,
 		page,
 	}) => {
@@ -37,7 +37,7 @@ test.describe('Data Set Manager with Feature Flag Enabled', () => {
 		});
 	});
 
-	test('Confirm that in the application menu, "Data Set" is in the "Object" category @LPS-188590', async ({
+	test('Confirm in the application menu, "Data Set" is in the "Object" category @LPS-188590', async ({
 		dataSetsPage,
 		page,
 	}) => {
@@ -56,7 +56,7 @@ test.describe('Data Set Manager with Feature Flag Enabled', () => {
 		});
 	});
 
-	test('Confirm that Cell Renderer is displayed in Client Extensions, when FF is enabled @LPS-188590', async ({
+	test('Confirm in Client Extensions, Frontend Data Set Cell Renderer is displayed @LPS-188590', async ({
 		dataSetsPage,
 		page,
 	}) => {
@@ -68,7 +68,7 @@ test.describe('Data Set Manager with Feature Flag Enabled', () => {
 			await page.getByRole('button', {name: 'New'}).first().click();
 		});
 
-		await test.step('Check that Cell Renderer is displayed', async () => {
+		await test.step('Check that Frontend Data Set Cell Renderer is displayed', async () => {
 			await expect(
 				page.getByRole('menuitem', {
 					exact: true,
@@ -78,7 +78,7 @@ test.describe('Data Set Manager with Feature Flag Enabled', () => {
 		});
 	});
 
-	test('Confirm Data Set fragment is displayed if FF is enabled @LPS-188590', async ({
+	test('Confirm Data Set fragment is displayed @LPS-188590', async ({
 		page,
 	}) => {
 		await test.step('Go to home edit page', async () => {
@@ -111,7 +111,7 @@ export const disabledTest = mergeTests(
 
 disabledTest.describe('Data Set Manager with Feature Flag Disabled', () => {
 	disabledTest(
-		'Confirm Data Set is not present if FF is not enabled @LPS-188590',
+		'Confirm in the application menu, Data Set is not displayed @LPS-188590',
 		async ({dataSetsPage, page}) => {
 			await test.step('Open application menu and go to control panel tab', async () => {
 				await dataSetsPage.applicationsMenuPage.goToControlPanel();
@@ -129,7 +129,7 @@ disabledTest.describe('Data Set Manager with Feature Flag Disabled', () => {
 	);
 
 	disabledTest(
-		'Confirm that Cell Renderer is not displayed in Client Extensions, when FF is disabled @LPS-188590',
+		'Confirm in Client Extensions, Frontend Data Set Cell Renderer is not displayed @LPS-188590',
 		async ({dataSetsPage, page}) => {
 			await test.step('Navigate to Client Extensions page', async () => {
 				await dataSetsPage.applicationsMenuPage.goToClientExtensions();
@@ -139,7 +139,7 @@ disabledTest.describe('Data Set Manager with Feature Flag Disabled', () => {
 				await page.getByRole('button', {name: 'New'}).first().click();
 			});
 
-			await test.step('Check that Cell Renderer is displayed', async () => {
+			await test.step('Check that Frontend Data Set Cell Renderer is not displayed', async () => {
 				await expect(
 					page.getByRole('menuitem', {
 						exact: true,
@@ -151,7 +151,7 @@ disabledTest.describe('Data Set Manager with Feature Flag Disabled', () => {
 	);
 
 	disabledTest(
-		'Confirm Data Set fragment is not displayed if FF is disabled @LPS-188590',
+		'Confirm Data Set fragment is not displayed @LPS-188590',
 		async ({page}) => {
 			await test.step('Go to home edit page', async () => {
 				await page.goto(`/web/guest/home?p_l_mode=edit`);
@@ -173,7 +173,7 @@ disabledTest.describe('Data Set Manager with Feature Flag Disabled', () => {
 	);
 
 	disabledTest(
-		'Confirm that the Data Set fragment can be displayed when the FF is enabled through the UI @LPS-188590',
+		'Confirm that the Data Set fragment is displayed when the Feature Flag is enabled through the UI @LPS-188590',
 		async ({featureFlagsInstanceSettingsPage, page}) => {
 			try {
 				await test.step('Navigate to Feature Flag page', async () => {

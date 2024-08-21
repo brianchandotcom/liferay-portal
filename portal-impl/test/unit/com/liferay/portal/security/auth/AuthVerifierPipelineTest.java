@@ -9,13 +9,14 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.security.auth.AccessControlContext;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifier;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifierConfiguration;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifierResult;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.PropsValuesTestUtil;
-import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -24,6 +25,7 @@ import com.liferay.portal.security.auth.registry.AuthVerifierRegistry;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.util.PortalImpl;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.Properties;
@@ -40,6 +42,9 @@ import org.junit.Test;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
+
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockServletContext;
 
@@ -55,8 +60,8 @@ public class AuthVerifierPipelineTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_setUpAuthVerifiers();
-		_setUpAuthVerifiersConfiguration();
+		_setUpAuthVerifier();
+		_setUpAuthVerifierConfiguration();
 		_setUpAuthVerifierRegistry();
 		_setUpPortalUtil();
 		_setUpUserLocalServiceUtil();
@@ -153,72 +158,39 @@ public class AuthVerifierPipelineTest {
 		Assert.assertSame(expectedState, authVerifierResult.getState());
 	}
 
-	private AuthVerifier _newAuthVerifier(
-		AuthVerifierResult.State state, int identifier) {
-
+	private void _setUpAuthVerifier() {
 		AuthVerifierResult authVerifierResult = new AuthVerifierResult();
 
 		authVerifierResult.setSettings(new HashMap<>());
-		authVerifierResult.setState(state);
+		authVerifierResult.setState(AuthVerifierResult.State.SUCCESS);
 
-		return (AuthVerifier)ProxyUtil.newProxyInstance(
+		_authVerifier = (AuthVerifier)ProxyUtil.newProxyInstance(
 			AuthVerifier.class.getClassLoader(),
 			new Class<?>[] {AuthVerifier.class},
 			(proxy, method, args) -> {
 				if (Objects.equals(method.getName(), "verify")) {
 					return authVerifierResult;
 				}
-				else if (Objects.equals(method.getName(), "equals")) {
-					return proxy.hashCode() == args[0].hashCode();
-				}
-				else if (Objects.equals(method.getName(), "hashCode")) {
-					return identifier;
-				}
 
 				return null;
 			});
 	}
 
+	private void _setUpAuthVerifierConfiguration() {
+		_authVerifierConfiguration = new AuthVerifierConfiguration();
+
+		Class<? extends AuthVerifier> clazz = _authVerifier.getClass();
+
+		_authVerifierConfiguration.setAuthVerifierClassName(clazz.getName());
+	}
+
 	private void _setUpAuthVerifierRegistry() {
 		Mockito.when(
 			AuthVerifierRegistry.getAuthVerifier(
-				_authVerifierConfiguration1.getAuthVerifierClassName())
+				_authVerifierConfiguration.getAuthVerifierClassName())
 		).thenReturn(
-			_authVerifier1
+			_authVerifier
 		);
-
-		Mockito.when(
-			AuthVerifierRegistry.getAuthVerifier(
-				_authVerifierConfiguration2.getAuthVerifierClassName())
-		).thenReturn(
-			_authVerifier2
-		);
-
-		Mockito.when(
-			AuthVerifierRegistry.getAuthVerifiersByPriority()
-		).thenReturn(
-			ListUtil.fromArray(_authVerifier1, _authVerifier2)
-		);
-	}
-
-	private void _setUpAuthVerifiers() {
-		_authVerifier1 = _newAuthVerifier(AuthVerifierResult.State.SUCCESS, 1);
-		_authVerifier2 = _newAuthVerifier(
-			AuthVerifierResult.State.UNSUCCESSFUL, 2);
-	}
-
-	private void _setUpAuthVerifiersConfiguration() {
-		_authVerifierConfiguration1 = new AuthVerifierConfiguration() {
-			{
-				setAuthVerifierClassName("classname1");
-			}
-		};
-
-		_authVerifierConfiguration2 = new AuthVerifierConfiguration() {
-			{
-				setAuthVerifierClassName("classname2");
-			}
-		};
 	}
 
 	private void _setUpPortalUtil() {
@@ -259,36 +231,46 @@ public class AuthVerifierPipelineTest {
 			String contextPath, String includeURLs, String requestURI)
 		throws PortalException {
 
-		Properties properties = new Properties();
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 
-		properties.put("urls.includes", includeURLs);
+		ServiceRegistration<AuthVerifier> serviceRegistration =
+			bundleContext.registerService(
+				AuthVerifier.class, _authVerifier,
+				MapUtil.singletonDictionary("urls.includes", includeURLs));
 
-		_authVerifierConfiguration1.setProperties(properties);
-		_authVerifierConfiguration2.setProperties(properties);
+		try {
+			Properties properties = new Properties();
 
-		AuthVerifierPipeline authVerifierPipeline = new AuthVerifierPipeline(
-			ListUtil.fromArray(
-				_authVerifierConfiguration1, _authVerifierConfiguration2),
-			contextPath);
+			properties.put("urls.includes", includeURLs);
 
-		AccessControlContext accessControlContext = new AccessControlContext();
+			_authVerifierConfiguration.setProperties(properties);
 
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest(new MockServletContext());
+			AuthVerifierPipeline authVerifierPipeline =
+				new AuthVerifierPipeline(
+					Collections.singletonList(_authVerifierConfiguration),
+					contextPath);
 
-		mockHttpServletRequest.setRequestURI(requestURI);
+			AccessControlContext accessControlContext =
+				new AccessControlContext();
 
-		accessControlContext.setRequest(mockHttpServletRequest);
+			MockHttpServletRequest mockHttpServletRequest =
+				new MockHttpServletRequest(new MockServletContext());
 
-		return authVerifierPipeline.verifyRequest(accessControlContext);
+			mockHttpServletRequest.setRequestURI(requestURI);
+
+			accessControlContext.setRequest(mockHttpServletRequest);
+
+			return authVerifierPipeline.verifyRequest(accessControlContext);
+		}
+		finally {
+			serviceRegistration.unregister();
+		}
 	}
 
 	private static final String _BASE_URL = "/TestAuthVerifier";
 
-	private AuthVerifier _authVerifier1;
-	private AuthVerifier _authVerifier2;
-	private AuthVerifierConfiguration _authVerifierConfiguration1;
-	private AuthVerifierConfiguration _authVerifierConfiguration2;
+	private AuthVerifier _authVerifier;
+	private AuthVerifierConfiguration _authVerifierConfiguration;
 	private final MockedStatic<AuthVerifierRegistry>
 		_authVerifierRegistryMockedStatic = Mockito.mockStatic(
 			AuthVerifierRegistry.class);

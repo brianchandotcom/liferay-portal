@@ -479,8 +479,9 @@ public <#if schema.discriminator?has_content>abstract</#if> class ${schemaName} 
 		<#list toStringProperties?keys as propertyName>
 			<#assign
 				capitalizedPropertyName = propertyName?cap_first
-				propertySchema = freeMarkerTool.getDTOPropertySchema(configYAML, propertyName, schema, allSchemas)!
 				propertyType = toStringProperties[propertyName]
+
+				propertySchema = freeMarkerTool.getDTOPropertySchema(configYAML, propertyName, schema, allSchemas)!
 			/>
 
 			<#if dtoParentClassName?has_content && !propertySchema?has_content>

@@ -96,7 +96,7 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 			externalReferenceCode, fileEntry.getExternalReferenceCode());
 
 		fileEntry = dlAppService.getFileEntryByExternalReferenceCode(
-			group.getGroupId(), externalReferenceCode);
+			externalReferenceCode, group.getGroupId());
 
 		Assert.assertEquals(
 			externalReferenceCode, fileEntry.getExternalReferenceCode());
@@ -118,7 +118,7 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 			externalReferenceCode, fileEntry.getExternalReferenceCode());
 
 		fileEntry = dlAppService.getFileEntryByExternalReferenceCode(
-			group.getGroupId(), externalReferenceCode);
+			externalReferenceCode, group.getGroupId());
 
 		Assert.assertEquals(
 			externalReferenceCode, fileEntry.getExternalReferenceCode());

@@ -127,7 +127,7 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 		throws Exception {
 
 		FileEntry fileEntry = _dlAppService.getFileEntryByExternalReferenceCode(
-			assetLibraryId, externalReferenceCode);
+			externalReferenceCode, assetLibraryId);
 
 		_dlAppService.deleteFileEntry(fileEntry.getFileEntryId());
 	}
@@ -150,7 +150,7 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 		throws Exception {
 
 		FileEntry fileEntry = _dlAppService.getFileEntryByExternalReferenceCode(
-			siteId, externalReferenceCode);
+			externalReferenceCode, siteId);
 
 		_dlAppService.deleteFileEntry(fileEntry.getFileEntryId());
 	}
@@ -162,7 +162,7 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 
 		return _toDocument(
 			_dlAppService.getFileEntryByExternalReferenceCode(
-				assetLibraryId, externalReferenceCode));
+				externalReferenceCode, assetLibraryId));
 	}
 
 	@Override
@@ -301,7 +301,7 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 
 		return _toDocument(
 			_dlAppService.getFileEntryByExternalReferenceCode(
-				siteId, externalReferenceCode));
+				externalReferenceCode, siteId));
 	}
 
 	@Override

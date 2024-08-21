@@ -472,7 +472,7 @@ public class LiferayRepository
 
 		DLFileEntry dlFileEntry =
 			dlFileEntryService.getFileEntryByExternalReferenceCode(
-				getGroupId(), externalReferenceCode);
+				externalReferenceCode, getGroupId());
 
 		return new LiferayFileEntry(dlFileEntry);
 	}

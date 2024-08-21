@@ -870,7 +870,7 @@ public class DLFileEntryLocalServiceImpl
 		throws PortalException {
 
 		DLFileEntry dlFileEntry = getFileEntryByExternalReferenceCode(
-			groupId, externalReferenceCode);
+			externalReferenceCode, groupId);
 
 		return dlFileEntryLocalService.deleteFileEntry(dlFileEntry);
 	}

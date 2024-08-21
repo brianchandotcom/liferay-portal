@@ -113,7 +113,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 
 		DLFileEntry dlFileEntry =
 			_dlFileEntryService.getFileEntryByExternalReferenceCode(
-				siteId, documentExternalReferenceCode);
+				documentExternalReferenceCode, siteId);
 
 		com.liferay.portal.kernel.comment.Comment comment = _getComment(
 			externalReferenceCode, siteId, DLFileEntry.class.getName(),
@@ -314,7 +314,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 
 		DLFileEntry dlFileEntry =
 			_dlFileEntryService.getFileEntryByExternalReferenceCode(
-				siteId, documentExternalReferenceCode);
+				documentExternalReferenceCode, siteId);
 
 		com.liferay.portal.kernel.comment.Comment comment = _getComment(
 			externalReferenceCode, siteId, DLFileEntry.class.getName(),
@@ -523,7 +523,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 
 		DLFileEntry dlFileEntry =
 			_dlFileEntryService.getFileEntryByExternalReferenceCode(
-				siteId, documentExternalReferenceCode);
+				documentExternalReferenceCode, siteId);
 
 		com.liferay.portal.kernel.comment.Comment existingComment =
 			_fetchComment(

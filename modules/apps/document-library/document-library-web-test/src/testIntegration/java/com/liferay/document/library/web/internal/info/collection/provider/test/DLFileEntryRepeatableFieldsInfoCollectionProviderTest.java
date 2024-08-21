@@ -203,7 +203,7 @@ public class DLFileEntryRepeatableFieldsInfoCollectionProviderTest {
 			new LiferayFileVersion(dlFileVersion), serviceContext);
 
 		return _dlAppLocalService.getFileEntryByExternalReferenceCode(
-			_group.getGroupId(), dlFileEntry.getExternalReferenceCode());
+			dlFileEntry.getExternalReferenceCode(), _group.getGroupId());
 	}
 
 	private void _assertInfoItemFieldValue(

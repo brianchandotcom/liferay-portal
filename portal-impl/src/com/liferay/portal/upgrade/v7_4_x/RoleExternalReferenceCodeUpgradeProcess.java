@@ -10,7 +10,7 @@ import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess
 /**
  * @author Stefano Motta
  */
-public class UpgradeRoleExternalReferenceCode
+public class RoleExternalReferenceCodeUpgradeProcess
 	extends BaseExternalReferenceCodeUpgradeProcess {
 
 	@Override

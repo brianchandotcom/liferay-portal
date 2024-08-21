@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.test.util.BaseExternalReferenceCodeUpgradeProcessTestCase;
-import com.liferay.portal.upgrade.v7_4_x.UpgradeDLFileShortcutExternalReferenceCode;
+import com.liferay.portal.upgrade.v7_4_x.DLFileShortcutExternalReferenceCodeUpgradeProcess;
 
 import org.junit.runner.RunWith;
 
@@ -28,7 +28,7 @@ import org.junit.runner.RunWith;
  * @author Balázs Sáfrány-Kovalik
  */
 @RunWith(Arquillian.class)
-public class UpgradeDLFileShortcutExternalReferenceCodeTest
+public class DLFileShortcutExternalReferenceCodeUpgradeProcessTest
 	extends BaseExternalReferenceCodeUpgradeProcessTestCase {
 
 	@Override
@@ -72,8 +72,10 @@ public class UpgradeDLFileShortcutExternalReferenceCodeTest
 	}
 
 	@Override
-	protected UpgradeDLFileShortcutExternalReferenceCode getUpgradeProcess() {
-		return new UpgradeDLFileShortcutExternalReferenceCode();
+	protected DLFileShortcutExternalReferenceCodeUpgradeProcess
+		getUpgradeProcess() {
+
+		return new DLFileShortcutExternalReferenceCodeUpgradeProcess();
 	}
 
 	@Override

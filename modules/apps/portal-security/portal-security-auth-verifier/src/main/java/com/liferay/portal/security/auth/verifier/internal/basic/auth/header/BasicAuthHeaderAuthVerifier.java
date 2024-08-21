@@ -28,9 +28,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Tomas Polesovsky
  */
-@Component(
-	property = "service.ranking:Integer=100", service = AuthVerifier.class
-)
+@Component(service = AuthVerifier.class)
 public class BasicAuthHeaderAuthVerifier implements AuthVerifier {
 
 	@Override

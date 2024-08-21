@@ -26,9 +26,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Tomas Polesovsky
  * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
  */
-@Component(
-	property = "service.ranking:Integer=90", service = AuthVerifier.class
-)
+@Component(service = AuthVerifier.class)
 @Deprecated
 public class DigestAuthenticationAuthVerifier implements AuthVerifier {
 

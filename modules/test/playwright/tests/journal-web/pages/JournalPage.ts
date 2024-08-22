@@ -47,6 +47,10 @@ export class JournalPage {
 			.locator('.html-editor');
 	}
 
+	async clickArticleTitleInput() {
+		await this.articleTitleInput.click();
+	}
+
 	async goto(siteUrl?: Site['friendlyUrlPath']) {
 		await this.page.goto(
 			`/group${siteUrl || '/guest'}${PORTLET_URLS.journal}`
@@ -54,7 +58,6 @@ export class JournalPage {
 	}
 
 	async fillArticleData(title: string, content: string) {
-		await this.articleTitleInput.click();
 		await this.page.keyboard.type(title);
 
 		await this.articleContentTextBox.click();

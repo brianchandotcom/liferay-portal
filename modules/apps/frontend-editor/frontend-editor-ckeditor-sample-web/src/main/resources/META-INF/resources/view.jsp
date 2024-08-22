@@ -13,6 +13,12 @@ CKEditorSampleDisplayContext ckEditorSampleDisplayContext = (CKEditorSampleDispl
 List<TabsItem> tabsItems = ckEditorSampleDisplayContext.getTabsItems();
 %>
 
+<portlet:renderURL var="viewXSSURL">
+	<portlet:param name="mvcPath" value="/view_xss.jsp" />
+</portlet:renderURL>
+
+<a href="<%= viewXSSURL %>">Go to XSS View</a>
+
 <clay:tabs
 	tabsItems="<%= tabsItems %>"
 >

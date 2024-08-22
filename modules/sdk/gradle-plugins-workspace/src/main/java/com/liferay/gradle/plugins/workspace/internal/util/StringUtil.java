@@ -5,8 +5,13 @@
 
 package com.liferay.gradle.plugins.workspace.internal.util;
 
+import com.liferay.petra.string.CharPool;
+
 import java.io.IOException;
 import java.io.InputStream;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -86,6 +91,24 @@ public class StringUtil {
 	public static boolean isBlank(String s) {
 		if ((s == null) || s.isEmpty()) {
 			return true;
+		}
+
+		return false;
+	}
+
+	public static boolean isUrl(String url) {
+		if (!isBlank(url)) {
+			if (url.indexOf(CharPool.COLON) == -1) {
+				return false;
+			}
+
+			try {
+				new URL(url);
+
+				return true;
+			}
+			catch (MalformedURLException malformedURLException) {
+			}
 		}
 
 		return false;

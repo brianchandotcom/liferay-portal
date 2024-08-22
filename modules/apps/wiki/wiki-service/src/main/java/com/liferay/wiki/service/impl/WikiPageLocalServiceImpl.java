@@ -147,7 +147,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 
 import javax.portlet.PortletRequest;
@@ -2392,21 +2391,19 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		sb.append(baseDiffsURL);
 
-		BiConsumer<String, String> biConsumer = (name, value) -> {
-			sb.append(serviceContext.getPortletId());
-			sb.append(StringPool.UNDERLINE);
-			sb.append(URLCodec.encodeURL(name));
-			sb.append(StringPool.EQUAL);
-			sb.append(URLCodec.encodeURL(value));
-		};
-
-		biConsumer.accept("&mvcRenderCommandName", "/wiki/compare_versions");
-		biConsumer.accept("&nodeId", String.valueOf(page.getNodeId()));
-		biConsumer.accept(
-			"&sourceVersion", String.valueOf(previousVersionPage.getVersion()));
-		biConsumer.accept("&targetVersion", String.valueOf(page.getVersion()));
-		biConsumer.accept("&title", page.getTitle());
-		biConsumer.accept("&type", "html");
+		_setParameter(
+			"&mvcRenderCommandName", sb, serviceContext,
+			"/wiki/compare_versions");
+		_setParameter(
+			"&nodeId", sb, serviceContext, String.valueOf(page.getNodeId()));
+		_setParameter(
+			"&sourceVersion", sb, serviceContext,
+			String.valueOf(previousVersionPage.getVersion()));
+		_setParameter(
+			"&targetVersion", sb, serviceContext,
+			String.valueOf(page.getVersion()));
+		_setParameter("&title", sb, serviceContext, page.getTitle());
+		_setParameter("&type", sb, serviceContext, "html");
 
 		return sb.toString();
 	}
@@ -3291,6 +3288,17 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			serviceContext.getAssetPriority());
 
 		return page;
+	}
+
+	private void _setParameter(
+		String name, StringBundler sb, ServiceContext serviceContext,
+		String value) {
+
+		sb.append(serviceContext.getPortletId());
+		sb.append(StringPool.UNDERLINE);
+		sb.append(URLCodec.encodeURL(name));
+		sb.append(StringPool.EQUAL);
+		sb.append(URLCodec.encodeURL(value));
 	}
 
 	private WikiPage _startWorkflowInstance(

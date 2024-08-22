@@ -5,13 +5,11 @@
 
 package com.liferay.portlet.display.template.internal.exportimport.portlet.preferences.processor;
 
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import javax.portlet.PortletPreferences;
@@ -45,11 +43,6 @@ public class ExportImportPortletPreferencesProcessorUtil {
 		try {
 			if (Validator.isNull(portlet.getTemplateHandlerInstance())) {
 				return 0;
-			}
-
-			if (!FeatureFlagManagerUtil.isEnabled("LPD-22837")) {
-				return GetterUtil.getLong(
-					portletPreferences.getValue("displayStyleGroupId", null));
 			}
 
 			String displayStyleGroupExternalReferenceCode =

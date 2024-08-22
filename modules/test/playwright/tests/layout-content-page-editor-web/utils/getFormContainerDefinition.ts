@@ -9,7 +9,7 @@ type Step = PageElement[];
 
 type Props = {
 	id: string;
-	objectDefinitionId?: string;
+	objectDefinitionId?: number;
 	pageElements?: PageElement[];
 	steps?: Step[];
 };

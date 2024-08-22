@@ -158,7 +158,7 @@ public class SynonymSearchTest {
 		Collection<String> values = _synonymsMap.values();
 
 		ReflectionTestUtil.invoke(
-			_editMVCActionCommand, "updateSynonymSets",
+			_editSynonymSetsMVCActionCommand, "updateSynonymSets",
 			new Class<?>[] {ActionRequest.class, String[].class},
 			mockLiferayPortletActionRequest, values.toArray(new String[0]));
 	}
@@ -173,7 +173,7 @@ public class SynonymSearchTest {
 			WebKeys.COMPANY_ID, _companyId);
 
 		ReflectionTestUtil.invoke(
-			_deleteMVCActionCommand, "deleteSynonymSets",
+			_deleteSynonymSetsMVCActionCommand, "deleteSynonymSets",
 			new Class<?>[] {ActionRequest.class},
 			mockLiferayPortletActionRequest);
 	}
@@ -217,13 +217,13 @@ public class SynonymSearchTest {
 		filter = "mvc.command.name=/synonyms/delete_synonym_sets",
 		type = MVCActionCommand.class
 	)
-	private static MVCActionCommand _deleteMVCActionCommand;
+	private static MVCActionCommand _deleteSynonymSetsMVCActionCommand;
 
 	@Inject(
 		filter = "mvc.command.name=/synonyms/edit_synonym_sets",
 		type = MVCActionCommand.class
 	)
-	private static MVCActionCommand _editMVCActionCommand;
+	private static MVCActionCommand _editSynonymSetsMVCActionCommand;
 
 	private static Group _group;
 	private static String _originalName;

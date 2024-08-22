@@ -35,6 +35,30 @@ public abstract class BasePortalTestBatch<T extends PortalBatchBuildData>
 		buildParameters.put(
 			"test.batch.name", portalBatchBuildData.getBatchName());
 
+		AntUtil.callTarget(
+			getPrimaryPortalWorkspaceDirectory(), "build-test-batch.xml",
+			portalBatchBuildData.getBatchName(), buildParameters,
+			getEnvironmentVariables(), getAntLibDir());
+	}
+
+	protected File getAntLibDir() {
+		File antLibDir = new File(System.getenv("WORKSPACE"), "lib");
+
+		if (antLibDir.exists()) {
+			return antLibDir;
+		}
+
+		return null;
+	}
+
+	@Override
+	protected T getBatchBuildData() {
+		return super.getBatchBuildData();
+	}
+
+	protected Map<String, String> getEnvironmentVariables() {
+		PortalBatchBuildData portalBatchBuildData = getBatchBuildData();
+
 		Map<String, String> environmentVariables = new HashMap<>();
 
 		environmentVariables.put(
@@ -54,25 +78,7 @@ public abstract class BasePortalTestBatch<T extends PortalBatchBuildData>
 
 		environmentVariables.putAll(portalBatchBuildData.getBuildParameters());
 
-		AntUtil.callTarget(
-			getPrimaryPortalWorkspaceDirectory(), "build-test-batch.xml",
-			portalBatchBuildData.getBatchName(), buildParameters,
-			environmentVariables, getAntLibDir());
-	}
-
-	protected File getAntLibDir() {
-		File antLibDir = new File(System.getenv("WORKSPACE"), "lib");
-
-		if (antLibDir.exists()) {
-			return antLibDir;
-		}
-
-		return null;
-	}
-
-	@Override
-	protected T getBatchBuildData() {
-		return super.getBatchBuildData();
+		return environmentVariables;
 	}
 
 	protected File getPrimaryPortalWorkspaceDirectory() {

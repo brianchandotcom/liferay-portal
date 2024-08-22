@@ -488,10 +488,33 @@ public class ObjectEntryDTOConverter
 				objectDefinition.getCompanyId(), "LPS-174455")) {
 
 			fileEntry.setFileBase64(
-				() -> (String)NestedFieldsSupplier.supply(
-					objectFieldName + ".fileBase64",
-					fieldName -> Base64.encode(
-						_file.getBytes(dlFileEntry.getContentStream()))));
+				() -> {
+					String fileSource = String.valueOf(
+						ObjectFieldSettingUtil.getValue(
+							ObjectFieldSettingConstants.NAME_FILE_SOURCE,
+							objectField.getObjectFieldSettings()));
+
+					if (fileSource.equals(
+							ObjectFieldSettingConstants.VALUE_USER_COMPUTER)) {
+
+						boolean showFilesInDocumentsAndMedia =
+							GetterUtil.getBoolean(
+								ObjectFieldSettingUtil.getValue(
+									ObjectFieldSettingConstants.
+										NAME_SHOW_FILES_IN_DOCS_AND_MEDIA,
+									objectField.getObjectFieldSettings()));
+
+						if (!showFilesInDocumentsAndMedia) {
+							return Base64.encode(
+								_file.getBytes(dlFileEntry.getContentStream()));
+						}
+					}
+
+					return NestedFieldsSupplier.supply(
+						objectFieldName + ".fileBase64",
+						fieldName -> Base64.encode(
+							_file.getBytes(dlFileEntry.getContentStream())));
+				});
 			fileEntry.setFolder(
 				() -> (Folder)NestedFieldsSupplier.supply(
 					objectFieldName + ".folder",

@@ -111,6 +111,32 @@ public class Cart implements Cloneable, Serializable {
 
 	protected Address billingAddress;
 
+	public String getBillingAddressExternalReferenceCode() {
+		return billingAddressExternalReferenceCode;
+	}
+
+	public void setBillingAddressExternalReferenceCode(
+		String billingAddressExternalReferenceCode) {
+
+		this.billingAddressExternalReferenceCode =
+			billingAddressExternalReferenceCode;
+	}
+
+	public void setBillingAddressExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			billingAddressExternalReferenceCodeUnsafeSupplier) {
+
+		try {
+			billingAddressExternalReferenceCode =
+				billingAddressExternalReferenceCodeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String billingAddressExternalReferenceCode;
+
 	public Long getBillingAddressId() {
 		return billingAddressId;
 	}
@@ -656,6 +682,32 @@ public class Cart implements Cloneable, Serializable {
 	}
 
 	protected Address shippingAddress;
+
+	public String getShippingAddressExternalReferenceCode() {
+		return shippingAddressExternalReferenceCode;
+	}
+
+	public void setShippingAddressExternalReferenceCode(
+		String shippingAddressExternalReferenceCode) {
+
+		this.shippingAddressExternalReferenceCode =
+			shippingAddressExternalReferenceCode;
+	}
+
+	public void setShippingAddressExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			shippingAddressExternalReferenceCodeUnsafeSupplier) {
+
+		try {
+			shippingAddressExternalReferenceCode =
+				shippingAddressExternalReferenceCodeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String shippingAddressExternalReferenceCode;
 
 	public Long getShippingAddressId() {
 		return shippingAddressId;

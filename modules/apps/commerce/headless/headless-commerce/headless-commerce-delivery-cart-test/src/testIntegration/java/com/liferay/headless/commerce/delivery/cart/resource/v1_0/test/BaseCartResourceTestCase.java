@@ -165,6 +165,7 @@ public abstract class BaseCartResourceTestCase {
 
 		cart.setAccount(regex);
 		cart.setAuthor(regex);
+		cart.setBillingAddressExternalReferenceCode(regex);
 		cart.setCouponCode(regex);
 		cart.setCurrencyCode(regex);
 		cart.setExternalReferenceCode(regex);
@@ -176,6 +177,7 @@ public abstract class BaseCartResourceTestCase {
 		cart.setPaymentStatusLabel(regex);
 		cart.setPrintedNote(regex);
 		cart.setPurchaseOrderNumber(regex);
+		cart.setShippingAddressExternalReferenceCode(regex);
 		cart.setShippingMethod(regex);
 		cart.setShippingOption(regex);
 		cart.setStatus(regex);
@@ -188,6 +190,8 @@ public abstract class BaseCartResourceTestCase {
 
 		Assert.assertEquals(regex, cart.getAccount());
 		Assert.assertEquals(regex, cart.getAuthor());
+		Assert.assertEquals(
+			regex, cart.getBillingAddressExternalReferenceCode());
 		Assert.assertEquals(regex, cart.getCouponCode());
 		Assert.assertEquals(regex, cart.getCurrencyCode());
 		Assert.assertEquals(regex, cart.getExternalReferenceCode());
@@ -199,6 +203,8 @@ public abstract class BaseCartResourceTestCase {
 		Assert.assertEquals(regex, cart.getPaymentStatusLabel());
 		Assert.assertEquals(regex, cart.getPrintedNote());
 		Assert.assertEquals(regex, cart.getPurchaseOrderNumber());
+		Assert.assertEquals(
+			regex, cart.getShippingAddressExternalReferenceCode());
 		Assert.assertEquals(regex, cart.getShippingMethod());
 		Assert.assertEquals(regex, cart.getShippingOption());
 		Assert.assertEquals(regex, cart.getStatus());
@@ -1313,6 +1319,17 @@ public abstract class BaseCartResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"billingAddressExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (cart.getBillingAddressExternalReferenceCode() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("billingAddressId", additionalAssertFieldName)) {
 				if (cart.getBillingAddressId() == null) {
 					valid = false;
@@ -1522,6 +1539,17 @@ public abstract class BaseCartResourceTestCase {
 
 			if (Objects.equals("shippingAddress", additionalAssertFieldName)) {
 				if (cart.getShippingAddress() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"shippingAddressExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (cart.getShippingAddressExternalReferenceCode() == null) {
 					valid = false;
 				}
 
@@ -1743,6 +1771,20 @@ public abstract class BaseCartResourceTestCase {
 			if (Objects.equals("billingAddress", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						cart1.getBillingAddress(), cart2.getBillingAddress())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"billingAddressExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						cart1.getBillingAddressExternalReferenceCode(),
+						cart2.getBillingAddressExternalReferenceCode())) {
 
 					return false;
 				}
@@ -2023,6 +2065,20 @@ public abstract class BaseCartResourceTestCase {
 				if (!Objects.deepEquals(
 						cart1.getShippingAddress(),
 						cart2.getShippingAddress())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"shippingAddressExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						cart1.getShippingAddressExternalReferenceCode(),
+						cart2.getShippingAddressExternalReferenceCode())) {
 
 					return false;
 				}
@@ -2319,6 +2375,52 @@ public abstract class BaseCartResourceTestCase {
 		if (entityFieldName.equals("billingAddress")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("billingAddressExternalReferenceCode")) {
+			Object object = cart.getBillingAddressExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("billingAddressId")) {
@@ -2981,6 +3083,52 @@ public abstract class BaseCartResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("shippingAddressExternalReferenceCode")) {
+			Object object = cart.getShippingAddressExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("shippingAddressId")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -3192,6 +3340,8 @@ public abstract class BaseCartResourceTestCase {
 				account = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				accountId = RandomTestUtil.randomLong();
 				author = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				billingAddressExternalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				billingAddressId = RandomTestUtil.randomLong();
 				channelId = RandomTestUtil.randomLong();
 				couponCode = StringUtil.toLowerCase(
@@ -3220,6 +3370,8 @@ public abstract class BaseCartResourceTestCase {
 				printedNote = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				purchaseOrderNumber = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				shippingAddressExternalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				shippingAddressId = RandomTestUtil.randomLong();
 				shippingMethod = StringUtil.toLowerCase(

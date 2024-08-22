@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -455,6 +456,58 @@ public class LayoutStructure {
 		rowStyledLayoutStructureItem.setNumberOfColumns(numberOfColumns);
 
 		return rowStyledLayoutStructureItem;
+	}
+
+	public Map<String, List<LayoutStructureItem>> copyLayoutStructureItems(
+		List<String> parentItemIds, List<String> itemIds) {
+
+		Map<String, List<LayoutStructureItem>> copiedLayoutStructureItemsMap =
+			new HashMap<>();
+
+		for (String parentItemId : parentItemIds) {
+			for (String itemId : itemIds) {
+				int position = 0;
+				String finalParentItemId = parentItemId;
+
+				LayoutStructureItem layoutStructureItem =
+					_layoutStructureItems.get(parentItemId);
+
+				Set<String> containerTypes = new HashSet<>(
+					Arrays.asList("container", "collection", "form"));
+
+				if (!containerTypes.contains(
+						layoutStructureItem.getItemType())) {
+
+					LayoutStructureItem parentLayoutStructureItem =
+						_layoutStructureItems.get(
+							layoutStructureItem.getParentItemId());
+
+					List<String> childrenItemIds =
+						parentLayoutStructureItem.getChildrenItemIds();
+
+					position = childrenItemIds.indexOf(parentItemId) + 1;
+
+					finalParentItemId = layoutStructureItem.getParentItemId();
+				}
+
+				List<LayoutStructureItem> copiedLayoutStructureItems =
+					_duplicateLayoutStructureItem(
+						itemId, finalParentItemId, position);
+
+				if (ListUtil.isEmpty(copiedLayoutStructureItems)) {
+					continue;
+				}
+
+				LayoutStructureItem copiedLayoutStructure =
+					copiedLayoutStructureItems.get(0);
+
+				copiedLayoutStructureItemsMap.put(
+					copiedLayoutStructure.getItemId(),
+					copiedLayoutStructureItems);
+			}
+		}
+
+		return copiedLayoutStructureItemsMap;
 	}
 
 	public List<LayoutStructureItem> deleteLayoutStructureItem(String itemId) {

@@ -4,6 +4,7 @@
  */
 
 import {expect, mergeTests} from '@playwright/test';
+import { getComparator } from 'playwright-core/lib/utils';
 import * as path from 'path';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
@@ -15,6 +16,7 @@ import {productMenuPageTest} from '../../fixtures/productMenuPageTest';
 import getRandomString from '../../utils/getRandomString';
 import {exportImportPagesTest} from './fixtures/exportImportPagesTest';
 import {stagingPageTest} from './fixtures/stagingPageTest';
+import { getTempDir } from '../../utils/temp';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -85,6 +87,7 @@ test('can import a lar file selecting some items to import', async ({
 test('staged and live versions of a site are equal', async ({
 	apiHelpers,
 	applicationsMenuPage,
+	page,
 	stagingPage,
 }) => {
 
@@ -104,13 +107,50 @@ test('staged and live versions of a site are equal', async ({
 
 	await stagingPage.enableDefaultLocalStaging();
 
-	await expect(stagingPage.page.getByText('Initial Publish Process')).toHaveCount(2);
+	await expect(page.getByText('Initial Publish Process')).toHaveCount(2);
 
-	for await (const processResult of await stagingPage.page
+	for await (const processResult of await page
 		.getByTestId('processResult')
 		.all())  {
 		await expect(processResult.getByText('Successful')).toBeVisible({
 			timeout: 60 * 1000,
 		});
 	}
+
+	await page.getByLabel('Product Menu', { exact: true }).getByRole('link', { name: 'Live' }).click();
+
+	await expect(
+		page.getByTestId('productMenuSiteAdministrationPanelCategory').getByText('Live')
+	).toBeVisible();
+
+	const liveImage = await page.screenshot({
+		path: getTempDir() + './screenshots/liveImage.png',		
+		mask: [
+			await page.locator('.control-menu-container').first(),
+			await page.locator('.sidenav-menu').first()
+		],
+		maskColor: '#FFFFFF',
+		omitBackground: true,
+		fullPage: true
+	});
+
+	await page.getByLabel('Product Menu', { exact: true }).getByRole('link', { name: 'Staging' }).click();
+
+	await expect(
+		page.getByTestId('productMenuSiteAdministrationPanelCategory').getByText('Staging')
+	).toBeVisible();
+
+	const stagingImage = await page.screenshot({
+		path: getTempDir() + './screenshots/stagingImage.png',
+		mask: [
+			await page.locator('.control-menu-container').first(),
+			await page.locator('.sidenav-menu').first()
+		],
+		maskColor: '#FFFFFF',
+		omitBackground: true,
+		fullPage: true
+	});
+
+	const comparator = getComparator('image/png');+
+	expect(comparator(stagingImage, liveImage, {maxDiffPixels: 12000})).toBeNull();
 });

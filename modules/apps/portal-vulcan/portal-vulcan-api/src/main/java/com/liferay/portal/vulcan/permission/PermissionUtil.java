@@ -88,6 +88,9 @@ public class PermissionUtil {
 				String.valueOf(resourceId), false, true, true);
 		}
 
+		List<String> actionIds = TransformUtil.transform(
+			resourceActions, ResourceAction::getActionId);
+
 		Set<Role> roles = new HashSet<>();
 
 		Set<ResourcePermission> resourcePermissions = new HashSet<>();
@@ -121,9 +124,6 @@ public class PermissionUtil {
 						resourcePermission.getRoleId()));
 			}
 		}
-
-		List<String> actionIds = TransformUtil.transform(
-			resourceActions, ResourceAction::getActionId);
 
 		for (Role role : roles) {
 			Set<String> actionsIdsSet = new HashSet<>();

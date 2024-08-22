@@ -5,7 +5,6 @@
 
 import ClayAlert from '@clayui/alert';
 import {TreeView as ClayTreeView} from '@clayui/core';
-import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 
@@ -306,10 +305,6 @@ export default function StructureTreeContent({expandedKeys, setExpandedKeys}) {
 					displayType="light"
 					expandDoubleClick={false}
 					expandedKeys={new Set(expandedKeys)}
-					expanderIcons={{
-						close: <ClayIcon symbol="hr" />,
-						open: <ClayIcon symbol="plus" />,
-					}}
 					items={nodes}
 					onExpandedChange={(expandedNodes) => {
 						setExpandedKeys(Array.from(expandedNodes));

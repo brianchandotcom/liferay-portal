@@ -11678,7 +11678,7 @@ public class ObjectEntryResourceTest {
 	private void _assertNestedFieldsInRelationships(
 		int currentDepth, int depth, JSONObject jsonObject,
 		String nestedFieldName, String[][] objectFieldNamesAndObjectFieldValues,
-		JSONArray[] permissions, Type type) {
+		JSONArray[] permissionsJSONArrays, Type type) {
 
 		if (objectFieldNamesAndObjectFieldValues[currentDepth][0] == null) {
 			Assert.assertNull(jsonObject);
@@ -11690,12 +11690,14 @@ public class ObjectEntryResourceTest {
 					objectFieldNamesAndObjectFieldValues[currentDepth][0]));
 		}
 
-		if ((permissions == null) || (permissions[currentDepth] == null)) {
+		if ((permissionsJSONArrays == null) ||
+			(permissionsJSONArrays[currentDepth] == null)) {
+
 			Assert.assertNull(jsonObject.getJSONArray("permissions"));
 		}
 		else {
 			JSONAssert.assertEquals(
-				String.valueOf(permissions[currentDepth]),
+				String.valueOf(permissionsJSONArrays[currentDepth]),
 				String.valueOf(jsonObject.getJSONArray("permissions")),
 				JSONCompareMode.LENIENT);
 		}
@@ -11715,8 +11717,8 @@ public class ObjectEntryResourceTest {
 		_assertNestedFieldsInRelationships(
 			currentDepth + 1, depth,
 			_getRelatedJSONObject(jsonObject, nestedFieldName, type),
-			nestedFieldName, objectFieldNamesAndObjectFieldValues, permissions,
-			_getReverseType(type));
+			nestedFieldName, objectFieldNamesAndObjectFieldValues,
+			permissionsJSONArrays, _getReverseType(type));
 	}
 
 	private void _assertObjectEntryField(

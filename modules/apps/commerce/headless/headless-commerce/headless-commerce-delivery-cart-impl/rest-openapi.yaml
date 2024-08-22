@@ -302,11 +302,22 @@ components:
                     example: "12341234"
                     readOnly: true
                     type: string
+                replacedSkuExternalReferenceCode:
+                    example: AB-34098-789-N
+                    type: string
                 replacedSkuId:
                     format: int64
                     type: integer
                 settings:
                     $ref: "#/components/schemas/Settings"
+                shippingAddress:
+                    $ref: "#/components/schemas/Address"
+                shippingAddressExternalReferenceCode:
+                    example: AB-34098-789-N
+                    type: string
+                shippingAddressId:
+                    format: int64
+                    type: integer
                 sku:
                     readOnly: true
                     type: string

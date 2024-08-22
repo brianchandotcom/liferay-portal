@@ -11,6 +11,7 @@ import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.asset.list.asset.entry.provider.AssetListAssetEntryProvider;
 import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
 import com.liferay.asset.list.model.AssetListEntry;
@@ -1242,6 +1243,27 @@ public class AssetListAssetEntryProviderTest {
 	public void testGetManualAssetEntriesMatchingAllAssetCategories()
 		throws Exception {
 
+		Company company = _companyLocalService.getCompany(
+			TestPropsValues.getCompanyId());
+
+		Group companyGroup = company.getGroup();
+
+		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
+			companyGroup.getGroupId());
+
+		try {
+			_assertGetManualAssetEntriesMatchingAllAssetCategories(
+				assetVocabulary);
+		}
+		finally {
+			_assetVocabularyLocalService.deleteVocabulary(assetVocabulary);
+		}
+	}
+
+	@Test
+	public void testGetManualAssetEntriesMatchingAllAssetCategoriesInGlobalSite()
+		throws Exception {
+
 		_assertGetManualAssetEntriesMatchingAllAssetCategories(
 			AssetTestUtil.addVocabulary(_group.getGroupId()));
 	}
@@ -1932,6 +1954,9 @@ public class AssetListAssetEntryProviderTest {
 	@Inject
 	private AssetListEntrySegmentsEntryRelLocalService
 		_assetListEntrySegmentsEntryRelLocalService;
+
+	@Inject
+	private AssetVocabularyLocalService _assetVocabularyLocalService;
 
 	@Inject
 	private BlogsEntryLocalService _blogsEntryLocalService;

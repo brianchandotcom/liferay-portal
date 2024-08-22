@@ -52,9 +52,12 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Properties;
+import java.util.TreeMap;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.naming.Context;
@@ -229,21 +232,24 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 		for (Map.Entry<Object, Object> entry : properties.entrySet()) {
 			String key = (String)entry.getKey();
 
-			if (StringUtil.equalsIgnoreCase(key, "url")) {
-				key = "jdbcUrl";
-			}
-
 			// Ignore Liferay property
 
 			if (isPropertyLiferay(key)) {
 				continue;
 			}
 
+			String value = (String)entry.getValue();
+
+			if (StringUtil.equalsIgnoreCase(key, "url")) {
+				key = "jdbcUrl";
+
+				value = _adjustMySQLJDBCURL(value);
+			}
+
 			// Set HikariCP property
 
 			try {
-				BeanUtil.pojo.setProperty(
-					hikariDataSource, key, (String)entry.getValue());
+				BeanUtil.pojo.setProperty(hikariDataSource, key, value);
 			}
 			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
@@ -328,6 +334,90 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 				throw classNotFoundException;
 			}
 		}
+	}
+
+	private String _adjustMySQLJDBCURL(String url) {
+		boolean ismySQL = false;
+
+		for (String mysqlJDBCURLPrefix : _MYSQL_JDBC_URL_PREFIXES) {
+			if (url.startsWith(mysqlJDBCURLPrefix)) {
+				ismySQL = true;
+
+				break;
+			}
+		}
+
+		if (!ismySQL) {
+			return url;
+		}
+
+		Map<String, String> existingParameters = new TreeMap<>();
+
+		int index = url.indexOf(CharPool.QUESTION);
+
+		if (index != -1) {
+			String parametersQueryString = url.substring(index + 1);
+
+			for (String parameterString :
+					StringUtil.split(
+						parametersQueryString, CharPool.AMPERSAND)) {
+
+				String[] keyValuePair = StringUtil.split(
+					parameterString, CharPool.EQUAL);
+
+				if (keyValuePair.length == 2) {
+					existingParameters.put(keyValuePair[0], keyValuePair[1]);
+				}
+			}
+		}
+
+		for (String[] defaultMySQLJDBCParameter :
+				_DEFAULT_MYSQL_JDBC_PARAMETERS) {
+
+			if (existingParameters.containsKey(defaultMySQLJDBCParameter[0])) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Skipped " +
+							Arrays.toString(defaultMySQLJDBCParameter));
+				}
+			}
+			else {
+				existingParameters.put(
+					defaultMySQLJDBCParameter[0], defaultMySQLJDBCParameter[1]);
+			}
+		}
+
+		StringBundler sb = new StringBundler(
+			(existingParameters.size() * 4) + 2);
+
+		if (index == -1) {
+			sb.append(url);
+			sb.append(CharPool.QUESTION);
+		}
+		else {
+			sb.append(url.substring(0, index + 1));
+		}
+
+		for (Map.Entry<String, String> entry : existingParameters.entrySet()) {
+			sb.append(entry.getKey());
+			sb.append(CharPool.EQUAL);
+			sb.append(entry.getValue());
+			sb.append(CharPool.AMPERSAND);
+		}
+
+		if (!existingParameters.isEmpty()) {
+			sb.setIndex(sb.index() - 1);
+		}
+
+		String newURL = sb.toString();
+
+		if (!Objects.equals(url, newURL) && _log.isInfoEnabled()) {
+			_log.info(
+				StringBundler.concat(
+					"Rewrite jdbc url from: ", url, " to ", newURL));
+		}
+
+		return newURL;
 	}
 
 	private void _populateIBMCipherSuites(Class<?> clazz) {
@@ -430,6 +520,20 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 					"use a data source instead");
 		}
 	}
+
+	private static final String[][] _DEFAULT_MYSQL_JDBC_PARAMETERS = {
+		{"cachePrepStmts", "true"}, {"characterEncoding", "UTF-8"},
+		{"dontTrackOpenResources", "true"},
+		{"holdResultsOpenOverStatementClose", "true"},
+		{"prepStmtCacheSize", "1000"}, {"prepStmtCacheSqlLimit", "2048"},
+		{"rewriteBatchedStatements", "true"}, {"serverTimezone", "GMT"},
+		{"useFastDateParsing", "false"}, {"useLocalSessionState", "true"},
+		{"useLocalTransactionState", "true"}, {"useUnicode", "true"}
+	};
+
+	private static final String[] _MYSQL_JDBC_URL_PREFIXES = {
+		"jdbc:mariadb://", "jdbc:mysql://"
+	};
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DataSourceFactoryImpl.class);

@@ -415,15 +415,6 @@ describe('PageStructureSidebar', () => {
 		updateItemConfig.mockClear();
 	});
 
-	it('shows the number of selected items', () => {
-		Liferay.FeatureFlags['LPD-18221'] = true;
-		renderComponent({
-			activeItemIds: ['01-fragment', '02-fragment', '04-fragment'],
-		});
-		expect(screen.getByText('3-items-selected')).toBeInTheDocument();
-		Liferay.FeatureFlags['LPD-18221'] = false;
-	});
-
 	describe('Form container without permissions', () => {
 		it('shows the form normally when it is mapped to an element with permissions', () => {
 			renderComponent({

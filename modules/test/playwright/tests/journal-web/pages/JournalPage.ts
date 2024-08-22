@@ -53,14 +53,25 @@ export class JournalPage {
 		);
 	}
 
-	async fillArticleData(title: string, content: string) {
-		await this.articleTitleInput.fill(title);
-
+	async fillArticleContent(content: string) {
 		await this.articleContentTextBox.click();
 
 		await this.page.keyboard.press('Control+KeyA');
 		await this.page.keyboard.press('Backspace');
 		await this.page.keyboard.type(content);
+	}
+
+	async fillArticleData(title: string, content: string) {
+		await this.articleTitleInput.fill(title);
+
+		await this.fillArticleContent(content);
+	}
+
+	async fillArticleDataSiteTemplate(title: string, content: string) {
+		await this.articleTitleInput.click();
+		await this.page.keyboard.type(title);
+
+		await this.fillArticleContent(content);
 	}
 
 	async goToCreateArticle(structureName?: string) {

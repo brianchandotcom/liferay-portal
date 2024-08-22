@@ -427,7 +427,7 @@ async function createSiteTemplateWithWebContentOnWidgetPage({
 	await productMenuPage.openProductMenuIfClosed();
 	await productMenuPage.goToWebContent();
 	await journalPage.goToCreateArticle();
-	await journalPage.fillArticleData(webContentName, text);
+	await journalPage.fillArticleDataSiteTemplate(webContentName, text);
 	await journalPage.publishArticle();
 
 	await productMenuPage.goToPages();
@@ -487,7 +487,7 @@ async function createSiteTemplateWithWebContentOnContentPage({
 	await productMenuPage.openProductMenuIfClosed();
 	await productMenuPage.goToWebContent();
 	await journalPage.goToCreateArticle();
-	await journalPage.fillArticleData(webContentName, text);
+	await journalPage.fillArticleDataSiteTemplate(webContentName, text);
 	await journalPage.publishArticle();
 
 	await productMenuPage.goToPages();
@@ -539,7 +539,7 @@ async function createSiteTemplateWithWebContentOnHomePage({
 	await productMenuPage.openProductMenuIfClosed();
 	await productMenuPage.goToWebContent();
 	await journalPage.goToCreateArticle();
-	await journalPage.fillArticleData(webContentName, text);
+	await journalPage.fillArticleDataSiteTemplate(webContentName, text);
 	await journalPage.publishArticle();
 
 	await productMenuPage.goToPages();

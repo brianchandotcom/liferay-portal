@@ -176,7 +176,9 @@ const NewAppBuild = () => {
 									disabled={card.disabled}
 									icon={card.icon}
 									key={index}
-									onChange={() => console.log('a')}
+									onChange={
+										//To do
+										() => {}}
 									selected={'upload' === card.value}
 									title={card.title}
 									tooltip={card.tooltip}

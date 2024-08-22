@@ -580,6 +580,8 @@ definition {
 
 		PageEditor.removeFragment(fragmentName = "Title");
 
+		PageEditor.gotoTab(tabName = "Comments");
+
 		PageEditor.viewComment();
 
 		ContentPagesNavigator.openEditContentPage(

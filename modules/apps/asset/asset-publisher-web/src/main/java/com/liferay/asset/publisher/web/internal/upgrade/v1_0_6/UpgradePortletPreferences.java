@@ -52,6 +52,12 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 			String portletId, PortletPreferences portletPreferences)
 		throws Exception {
 
+		if (!portletId.startsWith(AssetPublisherPortletKeys.ASSET_PUBLISHER) &&
+			!portletId.startsWith(AssetPublisherPortletKeys.RECENT_CONTENT)) {
+
+			return;
+		}
+
 		String selectionStyle = GetterUtil.getString(
 			portletPreferences.getValue("selectionStyle", null),
 			_defaultSelectionStyle);

@@ -63,6 +63,11 @@ public class TestClassGroupFactory {
 				(PluginsGulpBatchTestClassGroup)batchTestClassGroup);
 		}
 
+		if (batchTestClassGroup instanceof SemVerModulesBatchTestClassGroup) {
+			return new SemVerModulesAxisTestClassGroup(
+				(SemVerModulesBatchTestClassGroup)batchTestClassGroup);
+		}
+
 		return new AxisTestClassGroup(batchTestClassGroup);
 	}
 
@@ -94,6 +99,11 @@ public class TestClassGroupFactory {
 
 		if (batchTestClassGroup instanceof PluginsGulpBatchTestClassGroup) {
 			return new PluginsGulpAxisTestClassGroup(
+				jsonObject, segmentTestClassGroup);
+		}
+
+		if (batchTestClassGroup instanceof SemVerModulesBatchTestClassGroup) {
+			return new SemVerModulesAxisTestClassGroup(
 				jsonObject, segmentTestClassGroup);
 		}
 
@@ -180,6 +190,18 @@ public class TestClassGroupFactory {
 			return new JUnitSegmentTestClassGroup(batchTestClassGroup);
 		}
 		else if (batchTestClassGroup instanceof ModulesBatchTestClassGroup) {
+			if (batchTestClassGroup instanceof
+					SemVerModulesBatchTestClassGroup) {
+
+				if (jsonObject != null) {
+					return new SemVerModulesSegmentTestClassGroup(
+						batchTestClassGroup, jsonObject);
+				}
+
+				return new SemVerModulesSegmentTestClassGroup(
+					batchTestClassGroup);
+			}
+
 			if (batchTestClassGroup instanceof
 					ServiceBuilderModulesBatchTestClassGroup) {
 

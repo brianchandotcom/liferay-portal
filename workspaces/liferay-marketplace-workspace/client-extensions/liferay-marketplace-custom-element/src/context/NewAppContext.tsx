@@ -32,10 +32,7 @@ export enum NewAppTypes {
 
 type NewAppPayload = {
 	[NewAppTypes.SET_BUILD]: Partial<{
-		appType: {
-			id: number;
-			value: string;
-		};
+		cloudCompatible?: boolean;
 		compatibleOffering: any[];
 		liferayPackages: {
 			version: string;
@@ -65,10 +62,7 @@ type NewAppPayload = {
 export type NewAppInitialState = {
 	_product?: Product;
 	build: {
-		appType: {
-			id: number;
-			value: string;
-		};
+		cloudCompatible?: boolean;
 		compatibleOffering: string[];
 		liferayPackages: {
 			version: string;
@@ -104,10 +98,6 @@ export type NewAppInitialState = {
 
 const newAppInitialState: NewAppInitialState = {
 	build: {
-		appType: {
-			id: 0,
-			value: '',
-		},
 		compatibleOffering: [],
 		liferayPackages: [],
 		resourceRequirements: {

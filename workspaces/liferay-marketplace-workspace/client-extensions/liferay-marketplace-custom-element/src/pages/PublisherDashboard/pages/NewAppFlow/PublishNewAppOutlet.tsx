@@ -4,11 +4,9 @@
  */
 
 import ClayButton from '@clayui/button';
-import {Link, Outlet} from 'react-router-dom';
-
-import 'react-quill/dist/quill.snow.css';
 import {useModal} from '@clayui/modal';
 import {useMemo} from 'react';
+import {Link, Outlet} from 'react-router-dom';
 
 import AppToolbar from '../../../../components/AppToolBar/AppToolBar';
 import Modal from '../../../../components/Modal';
@@ -26,7 +24,7 @@ const PublishNewAppOutlet = () => {
 	usePublishSolutionHeader();
 
 	const {data: account} = useAccount();
-	const [context, dispatch] = useNewAppContext();
+	const [context] = useNewAppContext();
 
 	const {
 		activeIndex,
@@ -116,11 +114,7 @@ const PublishNewAppOutlet = () => {
 						<ClayButton
 							disabled={isDisabled}
 							displayType="primary"
-							onClick={ () => {
-
-
-								onClickContinue();
-							}}
+							onClick={onClickContinue}
 						>
 							{isLastStep ? 'Submit App' : 'Continue'}
 						</ClayButton>
@@ -131,9 +125,7 @@ const PublishNewAppOutlet = () => {
 			<Modal
 				last={
 					<>
-						<ClayButton
-							displayType="secondary"
-						>
+						<ClayButton displayType="secondary">
 							{i18n.translate('save-as-a-draft-exit')}
 						</ClayButton>
 

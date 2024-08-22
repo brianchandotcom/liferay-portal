@@ -24,7 +24,7 @@ import {BUILD_UPLOAD_OPTIONS, COMPATIBLE_OFFERING_CARDS} from '../constants';
 const NewAppBuild = () => {
 	const [
 		{
-			build: {appType, compatibleOffering, liferayPackages},
+			build: {cloudCompatible, compatibleOffering, liferayPackages},
 		},
 		dispatch,
 	] = useNewAppContext();
@@ -32,9 +32,10 @@ const NewAppBuild = () => {
 	const [selectedCheckboxValue, setSelectedCheckboxValue] = useState<
 		string[]
 	>([]);
-	const [isProcessing, setIsProcessing] = useState(false);
+	const [isProcessing, _setIsProcessing] = useState(false);
 	const [visibleSelectVersionModal, setVisibleSelectVersionModal] =
 		useState(false);
+	const [selectedRadio, setSelectedRadio] = useState<string>('')
 
 	const handleSelectCheckbox = useCallback(
 		(offeringType: string) => {
@@ -112,24 +113,23 @@ const NewAppBuild = () => {
 						icon={card.icon}
 						key={index}
 						onChange={() =>
+							{
+								setSelectedRadio(card.value)
 							dispatch({
 								payload: {
-									appType: {
-										id: appType.id,
-										value: card.value,
-									},
+									cloudCompatible: card.value === ProductType.CLOUD ? true : false
 								},
 								type: NewAppTypes.SET_BUILD,
 							})
-						}
-						selected={appType.value === card.value}
+						}}
+						selected={card.value === selectedRadio}
 						title={card.title}
 						tooltip={card.tooltip}
 					/>
 				))}
 			</div>
 
-			{appType.value && (
+			{typeof cloudCompatible !== 'undefined' && (
 				<div className="mt-6">
 					<h5>{i18n.translate('compatible-offering')}</h5>
 					<hr />
@@ -139,7 +139,7 @@ const NewAppBuild = () => {
 							handleSelectCheckbox={handleSelectCheckbox}
 							offeringTypes={
 								offeringTypesDescription[
-									appType.value as ProductType
+									cloudCompatible ? ProductType.CLOUD : ProductType.DXP
 								] as unknown as OfferingType[]
 							}
 							selectedValue={compatibleOffering}
@@ -148,7 +148,7 @@ const NewAppBuild = () => {
 				</div>
 			)}
 
-			{appType.value === ProductType.CLOUD && (
+			{cloudCompatible && (
 				<div className="mt-6">
 					<h5>{i18n.translate('resource-requirements')}</h5>
 					<hr />
@@ -159,7 +159,7 @@ const NewAppBuild = () => {
 				</div>
 			)}
 
-			{appType.value && (
+			{typeof cloudCompatible !== 'undefined' && (
 				<>
 					<div className="mt-6">
 						<h5>{i18n.translate('app-build')}</h5>
@@ -167,9 +167,9 @@ const NewAppBuild = () => {
 
 						<div className="d-flex flex-column form-radio-card">
 							{BUILD_UPLOAD_OPTIONS[
-								appType.value === ProductType.CLOUD
-									? 'cloud'
-									: 'dxp'
+								cloudCompatible
+									? ProductType.CLOUD
+									: ProductType.DXP
 							].map((card, index) => (
 								<RadioCard
 									description={card.description}

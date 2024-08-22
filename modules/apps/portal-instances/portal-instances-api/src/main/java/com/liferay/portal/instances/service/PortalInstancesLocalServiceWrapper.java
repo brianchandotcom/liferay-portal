@@ -49,15 +49,6 @@ public class PortalInstancesLocalServiceWrapper
 	}
 
 	@Override
-	public void initializePortalInstance(
-			long companyId, String siteInitializerKey)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		_portalInstancesLocalService.initializePortalInstance(
-			companyId, siteInitializerKey);
-	}
-
-	@Override
 	public void synchronizePortalInstances() {
 		_portalInstancesLocalService.synchronizePortalInstances();
 	}

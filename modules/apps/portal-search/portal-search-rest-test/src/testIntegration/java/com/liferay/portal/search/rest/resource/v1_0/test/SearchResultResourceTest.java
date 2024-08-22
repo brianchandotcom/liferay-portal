@@ -946,7 +946,7 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 
 		rangesJSONArray.put(
 			JSONUtil.put(
-				"label", "1"
+				"label", range
 			).put(
 				"range", range
 			));
@@ -968,7 +968,7 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 		JSONArray termJSONArray = (JSONArray)searchFacets.get("date-range");
 
 		Assert.assertEquals(
-			"1",
+			range,
 			_jsonFactory.createJSONObject(
 				termJSONArray.getString(0)
 			).getString(

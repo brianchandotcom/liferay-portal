@@ -87,7 +87,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.test.rule.SearchTestRule;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.PortletPreferencesImpl;
@@ -597,7 +596,6 @@ public class AssetPublisherExportImportTest
 	public void testExportImportAssetLinks() throws Exception {
 	}
 
-	@FeatureFlags("LPD-22837")
 	@Test
 	public void testExportImportAssetListEntryWithDifferentScope()
 		throws Exception {
@@ -642,48 +640,6 @@ public class AssetPublisherExportImportTest
 	}
 
 	@Test
-	public void testExportImportAssetListEntryWithFeatureFlagDisabled()
-		throws Exception {
-
-		StagingLocalServiceUtil.enableLocalStaging(
-			TestPropsValues.getUserId(), group, false, false,
-			new ServiceContext());
-
-		Group stagingGroup = group.getStagingGroup();
-
-		Layout stagingLayout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
-			layout.getUuid(), stagingGroup.getGroupId(),
-			layout.isPrivateLayout());
-
-		AssetListEntry stagingAssetListEntry = _addAssetListEntry(group);
-
-		String portletId = LayoutTestUtil.addPortletToLayout(
-			stagingLayout, AssetPublisherPortletKeys.ASSET_PUBLISHER,
-			_getPreferenceMap(
-				RandomTestUtil.randomString(),
-				stagingAssetListEntry.getAssetListEntryId(),
-				RandomTestUtil.randomString()));
-
-		_publishLayouts(stagingGroup);
-
-		AssetListEntry assetListEntry =
-			_assetListEntryService.getAssetListEntryByUuidAndGroupId(
-				stagingAssetListEntry.getUuid(), group.getGroupId());
-
-		PortletPreferences portletPreferences =
-			_portletPreferencesLocalService.fetchPreferences(
-				_portletPreferencesFactory.getPortletPreferencesIds(
-					layout.getCompanyId(), layout.getGroupId(), 0,
-					layout.getPlid(), portletId));
-
-		Assert.assertEquals(
-			assetListEntry.getAssetListEntryId(),
-			GetterUtil.getLong(
-				portletPreferences.getValue("assetListEntryId", null)));
-	}
-
-	@FeatureFlags("LPD-22837")
-	@Test
 	public void testExportImportAssetListEntryWithNoSelection()
 		throws Exception {
 
@@ -719,7 +675,6 @@ public class AssetPublisherExportImportTest
 				"assetListEntryGroupExternalReferenceCode", null));
 	}
 
-	@FeatureFlags("LPD-22837")
 	@Test
 	public void testExportImportAssetListEntryWithSameScope() throws Exception {
 		StagingLocalServiceUtil.enableLocalStaging(
@@ -763,9 +718,9 @@ public class AssetPublisherExportImportTest
 				"assetListEntryGroupExternalReferenceCode", null));
 	}
 
-	@FeatureFlags("LPD-22837")
+	@Override
 	@Test
-	public void testExportImportDisplayStyleFromDifferentGroupWithFeatureFlagEnabled()
+	public void testExportImportDisplayStyleFromDifferentGroup()
 		throws Exception {
 
 		long classNameId = _portal.getClassNameId(AssetEntry.class.getName());
@@ -798,11 +753,9 @@ public class AssetPublisherExportImportTest
 				"displayStyleGroupExternalReferenceCode", null));
 	}
 
-	@FeatureFlags("LPD-22837")
+	@Override
 	@Test
-	public void testExportImportDisplayStyleFromGlobalScopeWithFeatureFlagEnabled()
-		throws Exception {
-
+	public void testExportImportDisplayStyleFromGlobalScope() throws Exception {
 		Group companyGroup = _groupLocalService.getCompanyGroup(
 			TestPropsValues.getCompanyId());
 

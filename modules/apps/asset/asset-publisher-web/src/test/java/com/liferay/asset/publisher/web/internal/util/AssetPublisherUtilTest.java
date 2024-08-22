@@ -16,7 +16,6 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.upgrade.MockPortletPreferences;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Collections;
@@ -63,7 +62,6 @@ public class AssetPublisherUtilTest {
 		);
 	}
 
-	@FeatureFlags("LPD-22837")
 	@Test
 	public void testGetAssetListEntryWithDifferentScope()
 		throws PortalException {
@@ -98,39 +96,6 @@ public class AssetPublisherUtilTest {
 	}
 
 	@Test
-	public void testGetAssetListEntryWithFeatureFlagDisabled()
-		throws PortalException {
-
-		AssetListEntry assetListEntry = _getAssetListEntry();
-
-		_setUpFetchAssetListEntry(assetListEntry, true);
-
-		_assertGetAssetListEntry(null, Collections.emptyMap());
-		_assertGetAssetListEntry(
-			null, _getPortletPreferencesMap(RandomTestUtil.randomLong()));
-
-		Map<String, String> portletPreferencesMap = _getPortletPreferencesMap(
-			assetListEntry.getAssetListEntryId());
-
-		_assertGetAssetListEntry(null, false, portletPreferencesMap);
-		_assertGetAssetListEntry(assetListEntry, true, portletPreferencesMap);
-
-		_setUpFetchAssetListEntry(assetListEntry, false);
-
-		_assertGetAssetListEntry(assetListEntry, false, portletPreferencesMap);
-		_assertGetAssetListEntry(null, true, portletPreferencesMap);
-
-		_assetPublisherSelectionStyleConfigurationUtilMockedStatic.when(
-			AssetPublisherSelectionStyleConfigurationUtil::defaultSelectionStyle
-		).thenReturn(
-			AssetPublisherSelectionStyleConstants.TYPE_DYNAMIC
-		);
-
-		_assertGetAssetListEntry(null, portletPreferencesMap);
-	}
-
-	@FeatureFlags("LPD-22837")
-	@Test
 	public void testGetAssetListEntryWithNoAssetTypeSelection()
 		throws PortalException {
 
@@ -152,7 +117,6 @@ public class AssetPublisherUtilTest {
 				assetListEntry.getAssetListEntryId(), null));
 	}
 
-	@FeatureFlags("LPD-22837")
 	@Test
 	public void testGetAssetListEntryWithNoSelection() throws PortalException {
 		_setUpFetchAssetListEntry(_getAssetListEntry(), true);
@@ -162,7 +126,6 @@ public class AssetPublisherUtilTest {
 			null, _getPortletPreferencesMap(RandomTestUtil.randomLong()));
 	}
 
-	@FeatureFlags("LPD-22837")
 	@Test
 	public void testGetAssetListEntryWithSameScope() throws PortalException {
 		AssetListEntry assetListEntry = _getAssetListEntry();
@@ -188,7 +151,6 @@ public class AssetPublisherUtilTest {
 			assetListEntry, false, null);
 	}
 
-	@FeatureFlags("LPD-22837")
 	@Test
 	public void testGetDisplayStyleGroupIdWithDisplayStyleGroupExternalReferenceCode() {
 		Group group = _getGroup();
@@ -219,36 +181,6 @@ public class AssetPublisherUtilTest {
 	}
 
 	@Test
-	public void testGetDisplayStyleGroupIdWithFeatureFlagDisabled() {
-		long groupId = RandomTestUtil.randomLong();
-
-		Assert.assertEquals(
-			groupId,
-			AssetPublisherUtil.getDisplayStyleGroupId(
-				_COMPANY_ID, _GROUP_ID,
-				_getMockPortletPreferences(
-					HashMapBuilder.put(
-						"displayStyleGroupExternalReferenceCode",
-						RandomTestUtil.randomString()
-					).put(
-						"displayStyleGroupId", String.valueOf(groupId)
-					).build())));
-
-		Assert.assertEquals(
-			_GROUP_ID,
-			AssetPublisherUtil.getDisplayStyleGroupId(
-				_COMPANY_ID, _GROUP_ID,
-				_getMockPortletPreferences(
-					HashMapBuilder.put(
-						"displayStyleGroupExternalReferenceCode",
-						RandomTestUtil.randomString()
-					).build())));
-
-		_groupLocalServiceUtilMockedStatic.verifyNoInteractions();
-	}
-
-	@FeatureFlags("LPD-22837")
-	@Test
 	public void testGetDisplayStyleGroupIdWithMissingDisplayStyleGroupExternalReferenceCode() {
 		String displayStyleGroupExternalReferenceCode =
 			RandomTestUtil.randomString();
@@ -271,7 +203,6 @@ public class AssetPublisherUtilTest {
 				displayStyleGroupExternalReferenceCode, _COMPANY_ID));
 	}
 
-	@FeatureFlags("LPD-22837")
 	@Test
 	public void testGetDisplayStyleGroupIdWithoutDisplayStyleGroupExternalReferenceCode() {
 		Assert.assertEquals(

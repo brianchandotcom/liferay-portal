@@ -34,7 +34,6 @@ import com.liferay.item.selector.ItemSelector;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
@@ -340,10 +339,6 @@ public class AssetPublisherConfigurationAction
 			ActionRequest actionRequest, PortletPreferences portletPreferences)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-22837")) {
-			return;
-		}
-
 		AssetListEntry assetListEntry =
 			assetListEntryLocalService.fetchAssetListEntry(
 				GetterUtil.getLong(
@@ -381,10 +376,6 @@ public class AssetPublisherConfigurationAction
 	protected void updateDisplayStyleGroupPreferences(
 			ActionRequest actionRequest, PortletPreferences portletPreferences)
 		throws Exception {
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-22837")) {
-			return;
-		}
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);

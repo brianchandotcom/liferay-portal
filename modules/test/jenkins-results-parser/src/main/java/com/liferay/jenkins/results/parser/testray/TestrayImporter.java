@@ -47,6 +47,7 @@ import com.liferay.jenkins.results.parser.test.clazz.group.FunctionalAxisTestCla
 import com.liferay.jenkins.results.parser.test.clazz.group.JSUnitAxisTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.JUnitAxisTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.PlaywrightAxisTestClassGroup;
+import com.liferay.jenkins.results.parser.test.clazz.group.SemVerModulesAxisTestClassGroup;
 
 import java.io.File;
 import java.io.IOException;
@@ -1042,7 +1043,9 @@ public class TestrayImporter {
 							axisTestClassGroup instanceof
 								JUnitAxisTestClassGroup ||
 							axisTestClassGroup instanceof
-								PlaywrightAxisTestClassGroup) {
+								PlaywrightAxisTestClassGroup ||
+							axisTestClassGroup instanceof
+								SemVerModulesAxisTestClassGroup) {
 
 							PortalLogBatchBuildTestrayCaseResult
 								portalLogBatchBuildTestrayCaseResult =

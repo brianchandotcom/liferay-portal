@@ -16,6 +16,7 @@ import com.liferay.jenkins.results.parser.test.clazz.group.FunctionalAxisTestCla
 import com.liferay.jenkins.results.parser.test.clazz.group.JSUnitAxisTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.JUnitAxisTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.PlaywrightAxisTestClassGroup;
+import com.liferay.jenkins.results.parser.test.clazz.group.SemVerModulesAxisTestClassGroup;
 
 import java.io.File;
 import java.io.IOException;
@@ -185,6 +186,11 @@ public class TestrayFactory {
 				return new JSUnitBatchBuildTestrayCaseResult(
 					testrayBuild, topLevelBuild, axisTestClassGroup,
 					testClassMethod);
+			}
+
+			if (axisTestClassGroup instanceof SemVerModulesAxisTestClassGroup) {
+				return new SemVerModulesBatchBuildTestrayCaseResult(
+					testrayBuild, topLevelBuild, axisTestClassGroup, testClass);
 			}
 			else if (axisTestClassGroup instanceof JUnitAxisTestClassGroup) {
 				return new JUnitBatchBuildTestrayCaseResult(

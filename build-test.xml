@@ -2897,7 +2897,7 @@ server.detector.server.id=wildfly</echo>
 					<equals arg1="${database.type}" arg2="mysql" />
 				</or>
 				<then>
-					<property name="database.url.upgrade" value="${database.url}&amp;rewriteBatchedStatements=true&amp;cachePrepStmts=true&amp;prepStmtCacheSize=1000&amp;prepStmtCacheSqlLimit=2048" />
+					<property name="database.url.upgrade" value="${database.url}" />
 				</then>
 				<elseif>
 					<equals arg1="${database.type}" arg2="postgresql" />

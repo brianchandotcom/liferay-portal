@@ -936,11 +936,13 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 		JSONArray rangesJSONArray = _jsonFactory.createJSONArray();
 
 		String range = StringBundler.concat(
+			StringPool.OPEN_BRACKET,
 			DateFormatUtils.format(
 				Date.from(
 					startOfDayLocalDateTime.toInstant(ZoneOffset.ofHours(0))),
 				"yyyyMMddHHmmss"),
-			" TO ", DateFormatUtils.format(new Date(), "yyyyMMddHHmmss"));
+			" TO ", DateFormatUtils.format(new Date(), "yyyyMMddHHmmss"),
+			StringPool.CLOSE_BRACKET);
 
 		rangesJSONArray.put(
 			JSONUtil.put(

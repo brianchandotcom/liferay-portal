@@ -66,3 +66,34 @@ export async function performSpInitiatedSSO(
 
 	return newPage;
 }
+
+export async function performIdpInitiatedSSO(
+	browser,
+	emailAddress: string,
+	idpDomain: string,
+	spDomain: string,
+	spName: string
+): Promise<Page> {
+	const newPage = await browser.newPage({
+		baseURL: idpDomain,
+	});
+
+	await newPage.goto(
+		`${idpDomain}/c/portal/saml/sso?entityId=${spName}&RelayState=${spDomain}`
+	);
+
+	await newPage.getByLabel('Email Address').waitFor({timeout: 30 * 1000});
+
+	// Authenticate on IdP instance
+
+	await newPage.waitForTimeout(1000);
+	await newPage.getByLabel('Email Address').fill(emailAddress);
+	await newPage.getByLabel('Password').fill('test');
+	await newPage.getByRole('button', {name: 'Sign In'}).click();
+
+	// Wait for authentication and redirection to complete
+
+	await newPage.getByTitle('User Profile Menu').waitFor({timeout: 30 * 1000});
+
+	return newPage;
+}

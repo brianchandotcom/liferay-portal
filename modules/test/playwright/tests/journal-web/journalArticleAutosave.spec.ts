@@ -26,7 +26,7 @@ const expect = baseExpect.extend({
 	}),
 });
 
-const autoSaveAsDraftTest = mergeTests(
+const autoSaveTest = mergeTests(
 	apiHelpersTest,
 	applicationsMenuPageTest,
 	featureFlagsTest({
@@ -38,7 +38,7 @@ const autoSaveAsDraftTest = mergeTests(
 	loginTest(),
 );
 
-autoSaveAsDraftTest(
+autoSaveTest(
 	'LPD-26854: LockIndicator should have an errorState',
 	async ({apiHelpers, journalEditArticlePage, page, site}) => {
 		const localizableFieldName = 'Text56789';
@@ -71,7 +71,7 @@ autoSaveAsDraftTest(
 	}
 );
 
-autoSaveAsDraftTest(
+autoSaveTest(
 	'LPD-26856: Web content should be saved as darft after changing the title and the content',
 	async ({apiHelpers, journalEditArticlePage, page, site}) => {
 		const localizableFieldName = 'Text56789';
@@ -126,7 +126,7 @@ autoSaveAsDraftTest(
 		);
 	}
 );
-autoSaveAsDraftTest(
+autoSaveTest(
 	'LPD-31072: Translation is removed when using Undo and restored when using Redo',
 	async ({journalEditArticlePage, page, site}) => {
 		await journalEditArticlePage.goto({siteUrl: site.friendlyUrlPath});
@@ -176,7 +176,7 @@ autoSaveAsDraftTest(
 		});
 	}
 );
-autoSaveAsDraftTest(
+autoSaveTest(
 	'LPD-26863: Undo/Redo buttons work with metadata fields',
 	async ({journalEditArticlePage, site}) => {
 		const title = getRandomString();
@@ -207,7 +207,7 @@ autoSaveAsDraftTest(
 	}
 );
 
-autoSaveAsDraftTest(
+autoSaveTest(
 	'LPD-26863: Undo/Redo buttons work with content field',
 	async ({apiHelpers, journalEditArticlePage, page, site}) => {
 		const localizableFieldName = 'Text56789';
@@ -260,7 +260,7 @@ autoSaveAsDraftTest(
 	}
 );
 
-autoSaveAsDraftTest(
+autoSaveTest(
 	'Create a web content selecting permissions in the modal',
 	{
 		tag: '@LPD-32949',
@@ -314,7 +314,7 @@ autoSaveAsDraftTest(
 	}
 );
 
-autoSaveAsDraftTest(
+autoSaveTest(
 	'Web Content version, status and ID are shown and updated after auto save',
 	{
 		tag: '@LPD-32874',

@@ -509,15 +509,16 @@ public class FragmentEntryStagedModelDataHandlerTest
 			Company company, Group group, Layout layout)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = ContentLayoutTestUtil.getThemeDisplay(
-			company, group, layout);
-
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
+		mockHttpServletRequest.setAttribute(WebKeys.LAYOUT, layout);
+
+		ThemeDisplay themeDisplay = ContentLayoutTestUtil.getThemeDisplay(
+			company, group, layout);
+
 		themeDisplay.setRequest(mockHttpServletRequest);
 
-		mockHttpServletRequest.setAttribute(WebKeys.LAYOUT, layout);
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);
 

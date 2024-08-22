@@ -532,8 +532,9 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 	public Account putAccount(Long accountId, Account account)
 		throws Exception {
 
-		_accountEntryService.updateExternalReferenceCode(
-			accountId, account.getExternalReferenceCode());
+		AccountEntry accountEntry =
+			_accountEntryService.updateExternalReferenceCode(
+				accountId, account.getExternalReferenceCode());
 
 		_accountEntryOrganizationRelLocalService.
 			setAccountEntryOrganizationRels(
@@ -542,16 +543,12 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 		_accountEntryUserRelLocalService.setAccountEntryUserRels(
 			accountId, _getAccountUserAccountIds(account));
 
-		AccountEntry originalAccountEntry =
-			_accountEntryService.fetchAccountEntry(accountId);
-
-		AccountEntry accountEntry = _accountEntryService.updateAccountEntry(
+		accountEntry = _accountEntryService.updateAccountEntry(
 			accountId, _getParentAccountId(account), account.getName(),
 			account.getDescription(), _isDeleteLogo(account, null),
-			_getDomains(account), originalAccountEntry.getEmailAddress(),
-			_getLogoBytes(account, originalAccountEntry, false),
-			account.getTaxId(), _getStatus(account),
-			_createServiceContext(account));
+			_getDomains(account), accountEntry.getEmailAddress(),
+			_getLogoBytes(account, accountEntry, false), account.getTaxId(),
+			_getStatus(account), _createServiceContext(account));
 
 		UsersAdminUtil.updateAddresses(
 			AccountEntry.class.getName(), accountEntry.getAccountEntryId(),

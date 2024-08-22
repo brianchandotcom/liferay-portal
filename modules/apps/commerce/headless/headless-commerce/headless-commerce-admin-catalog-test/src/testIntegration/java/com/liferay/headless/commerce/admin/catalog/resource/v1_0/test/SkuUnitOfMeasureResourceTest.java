@@ -38,7 +38,7 @@ public class SkuUnitOfMeasureResourceTest
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {
 			"active", "incrementalOrderQuantity", "name", "precision",
-			"priority", "rate"
+			"pricingQuantity", "priority", "rate"
 		};
 	}
 
@@ -54,6 +54,8 @@ public class SkuUnitOfMeasureResourceTest
 				name = LanguageUtils.getLanguageIdMap(
 					RandomTestUtil.randomLocaleStringMap());
 				precision = 0;
+				pricingQuantity = BigDecimal.valueOf(
+					RandomTestUtil.randomInt(1, 10));
 				primary = RandomTestUtil.randomBoolean();
 				priority = RandomTestUtil.randomDouble();
 				promoPrice = BigDecimal.valueOf(RandomTestUtil.nextDouble());

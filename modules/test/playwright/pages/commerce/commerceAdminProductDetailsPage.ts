@@ -10,6 +10,7 @@ export class CommerceAdminProductDetailsPage {
 	readonly productDiagramTab: Locator;
 	readonly productOptionsTab: Locator;
 	readonly productRelationsTab: Locator;
+	readonly productSkusTab: Locator;
 
 	constructor(page: Page) {
 		this.page = page;
@@ -21,6 +22,9 @@ export class CommerceAdminProductDetailsPage {
 		});
 		this.productRelationsTab = page.getByRole('link', {
 			name: 'Product Relations',
+		});
+		this.productSkusTab = page.getByRole('link', {
+			name: 'Skus',
 		});
 	}
 
@@ -34,5 +38,9 @@ export class CommerceAdminProductDetailsPage {
 
 	async goToProductRelations() {
 		await this.productRelationsTab.click();
+	}
+
+	async goToProductSkus() {
+		await this.productSkusTab.click();
 	}
 }

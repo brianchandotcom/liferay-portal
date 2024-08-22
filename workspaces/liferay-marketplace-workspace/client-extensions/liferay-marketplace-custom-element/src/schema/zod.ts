@@ -58,6 +58,15 @@ const zodSchema = {
 			.string()
 			.min(1, {message: 'Please enter a phone number to continue.'}),
 	}),
+	appPublishing: {
+		profile: z.object({
+			categories: z.array(z.any()).nonempty(),
+			description: z.string().min(3),
+			name: z.string().min(3),
+			tags: z.array(z.any()).nonempty(),
+		}),
+		termsAndConditions: z.boolean().refine((data) => data === true),
+	},
 	becomePublisherForm: z.object({
 		emailAddress: z.string().email('Please fill in valid email'),
 		extension: z.string().optional(),

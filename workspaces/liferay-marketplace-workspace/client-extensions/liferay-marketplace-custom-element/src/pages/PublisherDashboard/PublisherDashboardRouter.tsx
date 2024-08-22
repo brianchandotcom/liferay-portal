@@ -33,6 +33,9 @@ import {
 	Submit,
 } from './pages/Solutions/NewSolutionFlow/pages';
 import SolutionsDetails from './pages/Solutions/Solution';
+import NewAppContextProvider from '../../context/NewAppContext';
+import PublishNewAppOutlet from './pages/NewAppFlow/PublishNewAppOutlet';
+import { NewAppBuild, NewAppProfile } from './pages/NewAppFlow/pages';
 
 const PublisherDashboardRouter = () => {
 	const {accountId} = Liferay.CommerceContext.account || {};
@@ -93,6 +96,32 @@ const PublisherDashboardRouter = () => {
 
 					<Route path="solutions">
 						<Route element={<Solutions />} index />
+					</Route>
+				</Route>
+
+				<Route path="newapp">
+					<Route
+						element={
+							<NewAppContextProvider
+								catalogId={catalogId as number}
+							>
+								<Outlet />
+							</NewAppContextProvider>
+						}
+						path=":productId?"
+					>
+					
+						<Route
+							element={<PublishNewAppOutlet />}
+							path="publisher"
+						>
+							<Route element={<Create />} path="" />
+						
+							<Route element={<NewAppProfile />} path="profile" />
+
+							<Route element={<NewAppBuild />} path="build" />
+							
+						</Route>
 					</Route>
 				</Route>
 

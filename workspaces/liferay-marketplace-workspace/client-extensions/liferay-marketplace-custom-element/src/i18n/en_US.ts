@@ -20,6 +20,10 @@ export default {
 	'additional-apps-requested': 'Additional Apps Requested',
 	'address': 'Address',
 	'all-orders': 'All Orders',
+	'all-progress-and-information-related-to-the-creation-of-the-app-will-be-lost-do-you-still-want-to-exit':
+		'All progress and information related to the creation of the app will be lost, Do you still want to exit?',
+	'all-progress-and-information-related-to-the-creation-of-the-app-will-be-lost-unless-you-save-the-app-as-a-draft-do-you-still-want-to-exit':
+		'All progress and information related to the creation of the app will be lost unless you save the app as a draft, Do you still want to exit?',
 	'all-progress-and-information-related-to-the-creation-of-the-solution-will-be-lost-do-you-still-want-to-exit':
 		'All progress and information related to the creation of the solution will be lost, Do you still want to exit?',
 	'all-progress-and-information-related-to-the-creation-of-the-solution-will-be-lost-unless-you-save-the-solution-as-a-draft-do-you-still-want-to-exit':
@@ -33,6 +37,7 @@ export default {
 	'an-unexpected-error-occurred': 'An unexpected error ocurred',
 	'and': 'and',
 	'app-build': 'App Build',
+	'app-x-submitted': 'App <b>{0}</b> submitted',
 	'app-name': 'App Name',
 	'app-type': 'App Type',
 	'apply-to-your-use-of-this-service-the-name-on-your-liferay-account-will-be-used-in-this-liferay-marketplace-publisher-profile-it-may-appear-where-you-contribute-and-be-changed-at-any-time':

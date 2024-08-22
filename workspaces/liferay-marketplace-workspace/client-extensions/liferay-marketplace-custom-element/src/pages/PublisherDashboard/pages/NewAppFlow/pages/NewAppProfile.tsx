@@ -6,52 +6,37 @@
 import ClayMultiSelect from '@clayui/multi-select';
 import {filesize} from 'filesize';
 import {useState} from 'react';
-
-import {UploadedFile} from '../../../../../../components/FileList/FileList';
-import Form from '../../../../../../components/MarketplaceForm';
-import UploadLogo from '../../../../../../components/UploadLogo/UploadLogo';
-import {
-	SolutionTypes,
-	useSolutionContext,
-} from '../../../../../../context/SolutionContext';
-import {ProductVocabulary} from '../../../../../../enums/ProductVocabulary';
-import i18n from '../../../../../../i18n';
-import {getIconSpriteMap} from '../../../../../../liferay/constants';
-import {getRandomID} from '../../../../../../utils/string';
+import i18n from '../../../../../i18n';
+import { NewAppTypes, useNewAppContext } from '../../../../../context/NewAppContext';
+import { ProductVocabulary } from '../../../../../enums/ProductVocabulary';
+import { UploadedFile } from '../../../../../components/FileList/FileList';
+import { getRandomID } from '../../../../../utils/string';
+import UploadLogo from '../../../../../components/UploadLogo/UploadLogo';
+import Form from '../../../../../components/MarketplaceForm';
+import { getIconSpriteMap } from '../../../../../liferay/constants';
 
 const tooltipInfo = {
-	categories: i18n.translate(
-		'choose-the-marketplace-category-that-most-accurately-describes-what-your-solution-does-users-looking-for-specific-types-of-solutions-will-often-browse-categories-by-searching-on-a-specific-category-name-in-the-main-marketplace-home-page-having-your-solution-listed-under-the-appropriate-category-will-help-them-find-your-solution'
-	),
-	description: i18n.translate(
-		'you-can-put-anything-you-want-here-but-a-good-guideline-is-no-more-than-4-5-paragraphs-this-field-does-not-allow-any-markup-tags-its-just-text-please-do-not-use-misleading-names-information-or-icons-descriptions-should-be-as-concise-as-possible-ensure-your-icons-images-descriptions-and-tags-are-free-of-profanity-or-other-offensive-material'
-	),
-	name: i18n.translate(
-		'customers-of-the-marketplace-will-see-this-as-the-name-of-the-solution-please-use-a-title-of-no-longer-than-50-characters-titles-longer-than-18-characters-may-be-truncated-the-solution-title-may-contain-the-word-liferay-to-describe-its-use-or-intent-as-long-as-the-name-does-not-imply-official-certification-or-validation-from-liferay-inc-an-example-of-permissible-names-would-be-exchange-connector-for-liferay-or-integration-connector-kit-for-liferay-while-liferay-mail-solution-or-liferay-management-console-would-not-be-permitted-without-explicit-approval-please-refer-to-our-trademark-policy'
-	),
-	tags: i18n.translate(
-		'tags-help-to-describe-your-solution-in-the-marketplace-select-the-tags-most-relevant-to-your-solution-they-can-be-changed-if-needed'
-	),
+	categories: 'tootip',
+	description:'tootip',
+	name: 'tootip',
+	tags: 'tootip',
 };
 
-const Profile = () => {
+const NewAppProfile = () => {
 	const [
 		{
 			profile: {categories, description, file, name, tags},
 			references: {vocabulariesAndCategories},
-		},
+		},	
 		dispatch,
-	] = useSolutionContext();
-
-	console.log('vocabulariesAndCategories', vocabulariesAndCategories)
-
+	] = useNewAppContext();
 
 	const defaultSourceItems = {
 		categories:
-			vocabulariesAndCategories[ProductVocabulary.SOLUTION_CATEGORY]
+			vocabulariesAndCategories[ProductVocabulary.APP_CATEGORY]
 				?.categories ?? [],
 		tags:
-			vocabulariesAndCategories[ProductVocabulary.SOLUTION_TAGS]
+			vocabulariesAndCategories[ProductVocabulary.APP_TAGS]
 				?.categories ?? [],
 	};
 
@@ -63,7 +48,7 @@ const Profile = () => {
 	const onChange = (event: any) => {
 		dispatch({
 			payload: {[event.target.name]: event.target.value},
-			type: SolutionTypes.SET_PROFILE,
+			type: NewAppTypes.SET_PROFILE,
 		});
 	};
 
@@ -92,7 +77,7 @@ const Profile = () => {
 		if (file?.id) {
 			dispatch({
 				payload: file.id,
-				type: SolutionTypes.SET_DELETE_IMAGE,
+				type: NewAppTypes.SET_DELETE_IMAGE,
 			});
 		}
 
@@ -100,21 +85,21 @@ const Profile = () => {
 			payload: {
 				file: newUploadedFile,
 			},
-			type: SolutionTypes.SET_PROFILE,
+			type: NewAppTypes.SET_PROFILE,
 		});
 	};
 
 	const handleDelete = async (id: string) => {
 		dispatch({
 			payload: id,
-			type: SolutionTypes.SET_DELETE_IMAGE,
+			type: NewAppTypes.SET_DELETE_IMAGE,
 		});
 
 		dispatch({
 			payload: {
 				file: undefined,
 			},
-			type: SolutionTypes.SET_PROFILE,
+			type: NewAppTypes.SET_PROFILE,
 		});
 	};
 
@@ -130,8 +115,8 @@ const Profile = () => {
 		);
 
 	return (
-		<div className="mb-4 solutions-form-profile">
-			<h3>{i18n.translate('solutions-info')}</h3>
+		<div className="mb-4 new-app-form-profile">
+			<h5>App Info</h5>
 			<hr />
 
 			<div className="align-items-center d-flex mt-5">
@@ -156,7 +141,7 @@ const Profile = () => {
 					maxLength={50}
 					name="name"
 					onChange={onChange}
-					placeholder="Enter solution name"
+					placeholder="Enter app name"
 					type="text"
 					value={name}
 				/>
@@ -177,7 +162,7 @@ const Profile = () => {
 					maxLength={150}
 					name="description"
 					onChange={onChange}
-					placeholder="Enter solution description"
+					placeholder="Enter app description"
 					type="textarea"
 					value={description}
 				/>
@@ -262,4 +247,4 @@ const Profile = () => {
 	);
 };
 
-export default Profile;
+export default NewAppProfile;

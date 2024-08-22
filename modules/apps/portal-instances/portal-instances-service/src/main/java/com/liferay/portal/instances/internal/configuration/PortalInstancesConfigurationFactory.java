@@ -17,6 +17,8 @@ import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.util.PortalInstances;
+import com.liferay.site.initializer.extender.SiteInitializerThreadLocal;
 
 import java.util.Map;
 
@@ -61,6 +63,9 @@ public class PortalInstancesConfigurationFactory {
 		}
 
 		if (company == null) {
+			SiteInitializerThreadLocal.setKey(
+				portalInstancesConfiguration.siteInitializerKey());
+
 			company = _companyLocalService.addCompany(
 				null, webId, virtualHostname, mx, maxUsers, active,
 				portalInstancesConfiguration.addDefaultAdminUser(),
@@ -75,9 +80,7 @@ public class PortalInstancesConfigurationFactory {
 					CompanyThreadLocal.setWithSafeCloseable(
 						company.getCompanyId())) {
 
-				_portalInstancesLocalService.initializePortalInstance(
-					company.getCompanyId(),
-					portalInstancesConfiguration.siteInitializerKey());
+				PortalInstances.initCompany(company, true);
 			}
 		}
 		else {

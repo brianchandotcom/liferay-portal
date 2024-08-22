@@ -1,6 +1,6 @@
 @import 'cadmin-variables';
 
-$treeNodeNameMappedColor: #954cff;
+$treeNodeNameMappedColor: #8633ff;
 
 html#{$cadmin-selector} {
 	.cadmin {
@@ -48,7 +48,6 @@ html#{$cadmin-selector} {
 
 				.page-editor__page-structure__tree-node__actions-button,
 				.page-editor__page-structure__tree-node__visibility-button {
-					color: $cadmin-secondary;
 					visibility: hidden;
 
 					&--visible {

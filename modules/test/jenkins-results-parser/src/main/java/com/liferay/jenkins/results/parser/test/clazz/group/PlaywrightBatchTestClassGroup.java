@@ -42,6 +42,22 @@ import org.json.JSONObject;
 public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 
 	public void addDefaultProjectJobProperty(String batchName) {
+		if (isRootCauseAnalysis()) {
+			String portalBatchTestSelector = System.getenv(
+				"PORTAL_BATCH_TEST_SELECTOR");
+
+			if (JenkinsResultsParserUtil.isNullOrEmpty(
+					portalBatchTestSelector)) {
+
+				portalBatchTestSelector = getBuildStartProperty(
+					"PORTAL_BATCH_TEST_SELECTOR");
+			}
+
+			_addProjectNames(portalBatchTestSelector);
+
+			return;
+		}
+
 		JobProperty jobProperty = getJobProperty(
 			PLAYWRIGHT_TEST_PROJECT_PROPERTY_NAME, testSuiteName, batchName);
 

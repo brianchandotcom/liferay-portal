@@ -61,23 +61,20 @@ public class SynonymsConfigurationUpgradeProcess extends UpgradeProcess {
 							new UnsyncByteArrayInputStream(
 								dictionaryString.getBytes(StringPool.UTF8)));
 
-					String[] filterNameValues = (String[])dictionary.get(
-						"filterNames");
+					Set<String> currentFilterName = new HashSet<>(
+						Arrays.asList((String[])dictionary.get("filterNames")));
 
-					Set<String> oldValues = new HashSet<>(
-						Arrays.asList(filterNameValues));
+					currentFilterName.addAll(
+						new HashSet<>(Arrays.asList(_FILTER_NAMES)));
 
-					Set<String> newValues = new HashSet<>(
-						Arrays.asList(_FILTER_NAMES));
+					List<String> updatedFilterName = new ArrayList<>(
+						currentFilterName);
 
-					oldValues.addAll(newValues);
-
-					List<String> strings = new ArrayList<>(oldValues);
-
-					Collections.sort(strings);
+					Collections.sort(updatedFilterName);
 
 					dictionary.put(
-						"filterNames", strings.toArray(new String[0]));
+						"filterNames",
+						updatedFilterName.toArray(new String[0]));
 
 					Configuration configuration =
 						_configurationAdmin.getConfiguration(_PID, "?");

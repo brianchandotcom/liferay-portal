@@ -50,11 +50,14 @@ public class SynonymsConfigurationUpgradeProcessTest {
 			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Test
-	public void testUpgradeConfigurationWithFile() throws Exception {
+	public void testUpgradeSynonymsConfiguration() throws Exception {
 		try {
 			_addConfiguration(_PID);
 
-			_runUpgrade();
+			UpgradeProcess upgradeProcess = UpgradeTestUtil.getUpgradeStep(
+				_upgradeStepRegistrator, _UPGRADE_VERSION);
+
+			upgradeProcess.upgrade();
 
 			_assertConfiguration(_PID);
 		}
@@ -119,13 +122,6 @@ public class SynonymsConfigurationUpgradeProcessTest {
 		db.runSQL(
 			"delete from Configuration_ where configurationId like '" +
 				serviceFactoryPid + "%'");
-	}
-
-	private void _runUpgrade() throws Exception {
-		UpgradeProcess upgradeProcess = UpgradeTestUtil.getUpgradeStep(
-			_upgradeStepRegistrator, _UPGRADE_VERSION);
-
-		upgradeProcess.upgrade();
 	}
 
 	private static final String[] _EXPECTED_FILTER_NAMES = {

@@ -22,6 +22,7 @@ export class ActionPage {
 		await this.nameInput.fill(name);
 		await this.selectActionType.selectOption(typeOption);
 		await this.scriptInput.fill(script);
+		await this.scriptInput.blur();
 	}
 
 	async getTypeSelectOption(optionValue: string) {

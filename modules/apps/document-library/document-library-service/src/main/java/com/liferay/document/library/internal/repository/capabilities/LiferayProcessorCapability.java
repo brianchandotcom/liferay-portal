@@ -103,22 +103,10 @@ public class LiferayProcessorCapability
 		TransactionCommitCallbackUtil.registerCallback(
 			() -> {
 				DLProcessorHelperUtil.trigger(
-					_wrap(fileEntry), _wrap(fileVersion), true);
+					fileEntry, _wrap(fileVersion), true);
 
 				return null;
 			});
-	}
-
-	private FileEntry _wrap(FileEntry fileEntry) {
-		if (fileEntry == null) {
-			return null;
-		}
-
-		if (ContentTypes.IMAGE_PNG.equals(fileEntry.getMimeType())) {
-			return new SafeFileEntry(fileEntry);
-		}
-
-		return fileEntry;
 	}
 
 	private FileVersion _wrap(FileVersion fileVersion) {

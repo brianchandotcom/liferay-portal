@@ -39,7 +39,10 @@ const autoSaveTest = mergeTests(
 );
 
 autoSaveTest(
-	'LPD-26854: LockIndicator should have an errorState',
+	'LockIndicator should have an errorState',
+	{
+		tag: '@LPD-26854',
+	},
 	async ({apiHelpers, journalEditArticlePage, page, site}) => {
 		const localizableFieldName = 'Text56789';
 		const structureName = 'Structure 2';
@@ -72,7 +75,10 @@ autoSaveTest(
 );
 
 autoSaveTest(
-	'LPD-26856: Web content should be saved as darft after changing the title and the content',
+	'Web content should be saved as draft after changing the title and the content',
+	{
+		tag: '@LPD-26856',
+	},
 	async ({apiHelpers, journalEditArticlePage, page, site}) => {
 		const localizableFieldName = 'Text56789';
 		const structureName = 'Structure 2';
@@ -127,7 +133,10 @@ autoSaveTest(
 	}
 );
 autoSaveTest(
-	'LPD-31072: Translation is removed when using Undo and restored when using Redo',
+	'Translation is removed when using Undo and restored when using Redo',
+	{
+		tag: '@LPD-31072',
+	},
 	async ({journalEditArticlePage, page, site}) => {
 		await journalEditArticlePage.goto({siteUrl: site.friendlyUrlPath});
 
@@ -177,7 +186,10 @@ autoSaveTest(
 	}
 );
 autoSaveTest(
-	'LPD-26863: Undo/Redo buttons work with metadata fields',
+	'Undo/Redo buttons work with metadata fields',
+	{
+		tag: '@LPD-26863',
+	},
 	async ({journalEditArticlePage, site}) => {
 		const title = getRandomString();
 
@@ -208,7 +220,10 @@ autoSaveTest(
 );
 
 autoSaveTest(
-	'LPD-26863: Undo/Redo buttons work with content field',
+	'Undo/Redo buttons work with content field',
+	{
+		tag: '@LPD-26863',
+	},
 	async ({apiHelpers, journalEditArticlePage, page, site}) => {
 		const localizableFieldName = 'Text56789';
 		const structureName = 'Structure undo/redo';

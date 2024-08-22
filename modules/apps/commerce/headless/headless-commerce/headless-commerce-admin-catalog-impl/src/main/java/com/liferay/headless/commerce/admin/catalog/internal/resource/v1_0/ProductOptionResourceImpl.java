@@ -12,6 +12,7 @@ import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelService;
 import com.liferay.commerce.product.service.CPDefinitionService;
+import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.commerce.product.service.CPOptionService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductOption;
@@ -215,7 +216,8 @@ public class ProductOptionResourceImpl extends BaseProductOptionResourceImpl {
 		if (productOptionValues != null) {
 			for (ProductOptionValue productOptionValue : productOptionValues) {
 				ProductOptionValueUtil.addOrUpdateCPDefinitionOptionValueRel(
-					_cpDefinitionOptionValueRelService, productOptionValue,
+					_cpDefinitionOptionValueRelService, _cpInstanceService,
+					productOptionValue,
 					cpDefinitionOptionRel.getCPDefinitionOptionRelId(),
 					_serviceContextHelper.getServiceContext(
 						cpDefinitionOptionRel.getGroupId()));
@@ -299,7 +301,7 @@ public class ProductOptionResourceImpl extends BaseProductOptionResourceImpl {
 					ProductOptionValueUtil.
 						addOrUpdateCPDefinitionOptionValueRel(
 							_cpDefinitionOptionValueRelService,
-							productOptionValue,
+							_cpInstanceService, productOptionValue,
 							cpDefinitionOptionRel.getCPDefinitionOptionRelId(),
 							serviceContext);
 				}
@@ -352,6 +354,9 @@ public class ProductOptionResourceImpl extends BaseProductOptionResourceImpl {
 
 	@Reference
 	private CPDefinitionService _cpDefinitionService;
+
+	@Reference
+	private CPInstanceService _cpInstanceService;
 
 	@Reference
 	private CPOptionService _cpOptionService;

@@ -104,9 +104,20 @@ public class ProductOptionValueResourceImpl
 
 		long cpInstanceId = 0;
 
-		CPInstance cpInstance = _cpInstanceService.fetchCProductInstance(
-			cpDefinitionOptionValueRel.getCProductId(),
-			cpDefinitionOptionValueRel.getCPInstanceUuid());
+		CPInstance cpInstance = _cpInstanceService.fetchByExternalReferenceCode(
+			productOptionValue.getSkuExternalReferenceCode(),
+			contextCompany.getCompanyId());
+
+		if (cpInstance == null) {
+			cpInstance = _cpInstanceService.fetchCPInstance(
+				GetterUtil.getLong(productOptionValue.getSkuId()));
+		}
+
+		if (cpInstance == null) {
+			_cpInstanceService.fetchCProductInstance(
+				cpDefinitionOptionValueRel.getCProductId(),
+				cpDefinitionOptionValueRel.getCPInstanceUuid());
+		}
 
 		if (cpInstance != null) {
 			cpInstanceId = cpInstance.getCPInstanceId();
@@ -121,7 +132,7 @@ public class ProductOptionValueResourceImpl
 
 		return _toProductOptionValue(
 			_cpDefinitionOptionValueRelService.updateCPDefinitionOptionValueRel(
-				id, GetterUtil.get(productOptionValue.getSkuId(), cpInstanceId),
+				id, cpInstanceId,
 				GetterUtil.get(
 					productOptionValue.getKey(),
 					cpDefinitionOptionValueRel.getKey()),
@@ -163,7 +174,8 @@ public class ProductOptionValueResourceImpl
 
 		return _toProductOptionValue(
 			ProductOptionValueUtil.addOrUpdateCPDefinitionOptionValueRel(
-				_cpDefinitionOptionValueRelService, productOptionValue,
+				_cpDefinitionOptionValueRelService, _cpInstanceService,
+				productOptionValue,
 				cpDefinitionOptionRel.getCPDefinitionOptionRelId(),
 				_serviceContextHelper.getServiceContext(
 					cpDefinitionOptionRel.getGroupId())));

@@ -1048,7 +1048,7 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 						ProductOptionValueUtil.
 							addOrUpdateCPDefinitionOptionValueRel(
 								_cpDefinitionOptionValueRelService,
-								productOptionValue,
+								_cpInstanceService, productOptionValue,
 								cpDefinitionOptionRel.
 									getCPDefinitionOptionRelId(),
 								serviceContext);

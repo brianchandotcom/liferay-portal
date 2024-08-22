@@ -91,6 +91,14 @@ public class CommerceAccountGroupItemSelectorViewDisplayContext {
 			params.put("accountEntryIds", new long[] {accountEntryId});
 		}
 
+		long permissionUserId = ParamUtil.getLong(
+			_commerceAccountItemSelectorRequestHelper.getRenderRequest(),
+			"permissionUserId");
+
+		if (permissionUserId > 0) {
+			params.put("permissionUserId", permissionUserId);
+		}
+
 		BaseModelSearchResult<AccountGroup> baseModelSearchResult =
 			_accountGroupLocalService.searchAccountGroups(
 				_commerceAccountItemSelectorRequestHelper.getCompanyId(),

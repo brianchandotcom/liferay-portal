@@ -11,7 +11,6 @@ import com.liferay.asset.list.service.AssetListEntryServiceUtil;
 import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherSelectionStyleConfigurationUtil;
 import com.liferay.asset.publisher.web.internal.constants.AssetPublisherSelectionStyleConstants;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -40,13 +39,6 @@ public class AssetPublisherUtil {
 				AssetPublisherSelectionStyleConstants.TYPE_ASSET_LIST)) {
 
 			return null;
-		}
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-22837")) {
-			return _fetchAssetListEntry(
-				checkPermissions,
-				GetterUtil.getLong(
-					portletPreferences.getValue("assetListEntryId", null)));
 		}
 
 		String assetListEntryExternalReferenceCode = GetterUtil.getString(
@@ -101,12 +93,6 @@ public class AssetPublisherUtil {
 	public static long getDisplayStyleGroupId(
 		long companyId, long groupId, PortletPreferences portletPreferences) {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-22837")) {
-			return GetterUtil.getLong(
-				portletPreferences.getValue("displayStyleGroupId", null),
-				groupId);
-		}
-
 		String displayStyleGroupExternalReferenceCode =
 			portletPreferences.getValue(
 				"displayStyleGroupExternalReferenceCode", null);
@@ -123,19 +109,6 @@ public class AssetPublisherUtil {
 		}
 
 		return 0;
-	}
-
-	private static AssetListEntry _fetchAssetListEntry(
-			boolean checkPermissions, long assetEntryListId)
-		throws PortalException {
-
-		if (checkPermissions) {
-			return AssetListEntryServiceUtil.fetchAssetListEntry(
-				assetEntryListId);
-		}
-
-		return AssetListEntryLocalServiceUtil.fetchAssetListEntry(
-			assetEntryListId);
 	}
 
 	private static AssetListEntry _fetchAssetListEntryByExternalReferenceCode(

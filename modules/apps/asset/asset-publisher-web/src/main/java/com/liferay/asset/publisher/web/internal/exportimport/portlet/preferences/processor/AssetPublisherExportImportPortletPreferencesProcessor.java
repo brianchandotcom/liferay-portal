@@ -48,7 +48,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -1079,9 +1078,7 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 						DDMStructure.class.getName());
 				}
 			}
-			else if (name.equals("assetListEntryExternalReferenceCode") ||
-					 name.equals("assetListEntryId")) {
-
+			else if (name.equals("assetListEntryExternalReferenceCode")) {
 				AssetListEntry assetListEntry =
 					AssetPublisherUtil.getAssetListEntry(
 						false, portletDataContext.getCompanyId(),
@@ -1093,9 +1090,7 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 						portletDataContext, portletId, assetListEntry);
 				}
 
-				if (FeatureFlagManagerUtil.isEnabled("LPD-22837")) {
-					portletPreferences.reset("assetListEntryId");
-				}
+				portletPreferences.reset("assetListEntryId");
 			}
 			else if (name.equals("assetVocabularyId")) {
 				long assetVocabularyId = GetterUtil.getLong(value);
@@ -1304,13 +1299,6 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 				updateImportPortletPreferencesClassPKs(
 					portletDataContext, portletPreferences, name,
 					DDMStructure.class, companyGroup.getGroupId());
-			}
-			else if (name.equals("assetListEntryId") &&
-					 !FeatureFlagManagerUtil.isEnabled("LPD-22837")) {
-
-				updateImportPortletPreferencesClassPKs(
-					portletDataContext, portletPreferences, name,
-					AssetListEntry.class, companyGroup.getGroupId());
 			}
 			else if (name.equals("assetVocabularyId")) {
 				updateImportPortletPreferencesClassPKs(

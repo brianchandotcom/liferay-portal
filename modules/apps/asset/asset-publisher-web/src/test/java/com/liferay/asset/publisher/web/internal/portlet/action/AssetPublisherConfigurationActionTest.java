@@ -15,7 +15,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portletmvc4spring.test.mock.web.portlet.MockActionRequest;
 
@@ -41,36 +40,6 @@ public class AssetPublisherConfigurationActionTest {
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
-	@Test
-	public void testUpdateAssetListEntryPreferences() throws Exception {
-		AssetListEntry assetListEntry = _getAssetListEntry();
-
-		Group group = _getGroup(assetListEntry.getGroupId());
-
-		AssetPublisherConfigurationAction assetPublisherConfigurationAction =
-			_getAssetPublisherConfigurationAction(assetListEntry, group);
-
-		Map<String, String[]> portletPreferencesMap = new HashMap<>();
-		PortletPreferences portletPreferences = Mockito.mock(
-			PortletPreferences.class);
-
-		assetPublisherConfigurationAction.updateAssetListEntryPreferences(
-			_getMockActionRequest(
-				assetListEntry.getExternalReferenceCode(),
-				assetListEntry.getAssetListEntryId(),
-				group.getExternalReferenceCode(), StringPool.BLANK,
-				portletPreferencesMap, null),
-			portletPreferences);
-
-		Mockito.verifyNoInteractions(
-			assetPublisherConfigurationAction.assetListEntryLocalService,
-			assetPublisherConfigurationAction.groupLocalService,
-			portletPreferences);
-
-		Assert.assertTrue(MapUtil.isEmpty(portletPreferencesMap));
-	}
-
-	@FeatureFlags("LPD-22837")
 	@Test
 	public void testUpdateAssetListEntryPreferencesWithFeatureWithDifferentGroup()
 		throws Exception {
@@ -117,7 +86,6 @@ public class AssetPublisherConfigurationActionTest {
 				"assetListEntryGroupExternalReferenceCode"));
 	}
 
-	@FeatureFlags("LPD-22837")
 	@Test
 	public void testUpdateAssetListEntryPreferencesWithFeatureWithSameGroup()
 		throws Exception {
@@ -160,7 +128,6 @@ public class AssetPublisherConfigurationActionTest {
 				"assetListEntryGroupExternalReferenceCode"));
 	}
 
-	@FeatureFlags("LPD-22837")
 	@Test
 	public void testUpdateAssetListEntryPreferencesWithNoSelection()
 		throws Exception {
@@ -203,30 +170,6 @@ public class AssetPublisherConfigurationActionTest {
 	}
 
 	@Test
-	public void testUpdateDisplayStyleGroupPreferences() throws Exception {
-		AssetPublisherConfigurationAction assetPublisherConfigurationAction =
-			_getAssetPublisherConfigurationAction(null, null);
-
-		Map<String, String[]> portletPreferencesMap = new HashMap<>();
-		PortletPreferences portletPreferences = Mockito.mock(
-			PortletPreferences.class);
-
-		assetPublisherConfigurationAction.updateDisplayStyleGroupPreferences(
-			_getMockActionRequest(
-				StringPool.BLANK, 0, StringPool.BLANK,
-				RandomTestUtil.randomString(), portletPreferencesMap,
-				_getThemeDisplay(RandomTestUtil.randomLong())),
-			portletPreferences);
-
-		Mockito.verifyNoInteractions(
-			assetPublisherConfigurationAction.groupLocalService,
-			portletPreferences);
-
-		Assert.assertTrue(MapUtil.isEmpty(portletPreferencesMap));
-	}
-
-	@FeatureFlags("LPD-22837")
-	@Test
 	public void testUpdateDisplayStyleGroupPreferencesWithDifferentGroup()
 		throws Exception {
 
@@ -259,7 +202,6 @@ public class AssetPublisherConfigurationActionTest {
 				"displayStyleGroupExternalReferenceCode"));
 	}
 
-	@FeatureFlags("LPD-22837")
 	@Test
 	public void testUpdateDisplayStyleGroupPreferencesWithNoSelection()
 		throws Exception {
@@ -290,7 +232,6 @@ public class AssetPublisherConfigurationActionTest {
 		);
 	}
 
-	@FeatureFlags("LPD-22837")
 	@Test
 	public void testUpdateDisplayStyleGroupPreferencesWithSameGroup()
 		throws Exception {

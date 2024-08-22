@@ -167,11 +167,10 @@ public class SynonymSearchTest {
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			new MockLiferayPortletActionRequest();
 
-		mockLiferayPortletActionRequest.setAttribute(
-			WebKeys.COMPANY_ID, _companyId);
-
 		mockLiferayPortletActionRequest.addParameter(
 			"deleteAllSynonymSets", "true");
+		mockLiferayPortletActionRequest.setAttribute(
+			WebKeys.COMPANY_ID, _companyId);
 
 		ReflectionTestUtil.invoke(
 			_deleteMVCActionCommand, "deleteSynonymSets",

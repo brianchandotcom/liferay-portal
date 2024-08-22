@@ -9,11 +9,15 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationParameterMapFactoryUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
+import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
+import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
@@ -23,12 +27,15 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -38,6 +45,7 @@ import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -47,7 +55,7 @@ import org.junit.runner.RunWith;
  * @author Javier Moral
  */
 @RunWith(Arquillian.class)
-public class EditableValuesLayoutMappingExportImportContentProcessorTest {
+public class EditableValuesExportImportContentProcessorTest {
 
 	@ClassRule
 	@Rule
@@ -55,6 +63,27 @@ public class EditableValuesLayoutMappingExportImportContentProcessorTest {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		_configuration = JSONUtil.put(
+			"fieldSets",
+			JSONUtil.put(
+				JSONUtil.put(
+					"fields",
+					JSONUtil.put(
+						JSONUtil.put(
+							"label", "My URL"
+						).put(
+							"name", "myURL"
+						).put(
+							"type", "url"
+						))
+				).put(
+					"label", "Configuration"
+				))
+		).toString();
+	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -78,7 +107,10 @@ public class EditableValuesLayoutMappingExportImportContentProcessorTest {
 		FragmentEntryLink stagingFragmentEntryLink =
 			_setUpFragmentEntryLinkWithLinkMappedToLayout(layout);
 
-		_assertFragmentEntryLink(stagingFragmentEntryLink, layout);
+		_assertEquals(
+			_getEditableFragmentEntryProcessorLayoutJSONObject(
+				stagingFragmentEntryLink),
+			layout);
 
 		ContentLayoutTestUtil.publishLayout(_draftLayout, _layout);
 
@@ -92,7 +124,10 @@ public class EditableValuesLayoutMappingExportImportContentProcessorTest {
 			layout.getUuid(), _liveGroup.getGroupId(),
 			layout.isPrivateLayout());
 
-		_assertFragmentEntryLink(liveFragmentEntryLink, liveLayout);
+		_assertEquals(
+			_getEditableFragmentEntryProcessorLayoutJSONObject(
+				liveFragmentEntryLink),
+			liveLayout);
 	}
 
 	@Test
@@ -103,7 +138,10 @@ public class EditableValuesLayoutMappingExportImportContentProcessorTest {
 		FragmentEntryLink stagingFragmentEntryLink =
 			_setUpFragmentEntryLinkWithLinkMappedToLayout(layout);
 
-		_assertFragmentEntryLink(stagingFragmentEntryLink, layout);
+		_assertEquals(
+			_getEditableFragmentEntryProcessorLayoutJSONObject(
+				stagingFragmentEntryLink),
+			layout);
 
 		_layoutLocalService.deleteLayout(layout.getPlid());
 
@@ -115,28 +153,110 @@ public class EditableValuesLayoutMappingExportImportContentProcessorTest {
 			_fragmentEntryLinkLocalService.getFragmentEntryLinkByUuidAndGroupId(
 				stagingFragmentEntryLink.getUuid(), _liveGroup.getGroupId());
 
-		JSONObject layoutJSONObject = _getLayoutJSONObject(
-			liveFragmentEntryLink);
-
-		Assert.assertNotEquals(
-			layout.getGroupId(), layoutJSONObject.getLong("groupId"));
-		Assert.assertNotEquals(
-			layout.getLayoutId(), layoutJSONObject.getLong("layoutId"));
+		_assertNotEquals(
+			_getEditableFragmentEntryProcessorLayoutJSONObject(
+				liveFragmentEntryLink),
+			layout);
 	}
 
-	private void _assertFragmentEntryLink(
-			FragmentEntryLink fragmentEntryLink, Layout layout)
+	@Test
+	@TestInfo("LPD-34189")
+	public void testURLEditableValues() throws Exception {
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_stagingGroup);
+
+		FragmentEntryLink stagingFragmentEntryLink =
+			_setUpFragmentEntryLinkWithUrlMappedToLayout(layout);
+
+		_assertEquals(
+			_getFreeMarkerFragmentEntryProcessorLayoutJSONObject(
+				stagingFragmentEntryLink),
+			layout);
+
+		ContentLayoutTestUtil.publishLayout(_draftLayout, _layout);
+
+		_publishLayouts();
+
+		FragmentEntryLink liveFragmentEntryLink =
+			_fragmentEntryLinkLocalService.getFragmentEntryLinkByUuidAndGroupId(
+				stagingFragmentEntryLink.getUuid(), _liveGroup.getGroupId());
+
+		Layout liveLayout = _layoutLocalService.getLayoutByUuidAndGroupId(
+			layout.getUuid(), _liveGroup.getGroupId(),
+			layout.isPrivateLayout());
+
+		_assertEquals(
+			_getFreeMarkerFragmentEntryProcessorLayoutJSONObject(
+				liveFragmentEntryLink),
+			liveLayout);
+	}
+
+	@Test
+	@TestInfo("LPD-34189")
+	public void testURLEditableValuesWithDeletedLayout() throws Exception {
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_stagingGroup);
+
+		FragmentEntryLink stagingFragmentEntryLink =
+			_setUpFragmentEntryLinkWithUrlMappedToLayout(layout);
+
+		_assertEquals(
+			_getFreeMarkerFragmentEntryProcessorLayoutJSONObject(
+				stagingFragmentEntryLink),
+			layout);
+
+		_layoutLocalService.deleteLayout(layout.getPlid());
+
+		ContentLayoutTestUtil.publishLayout(_draftLayout, _layout);
+
+		_publishLayouts();
+
+		FragmentEntryLink liveFragmentEntryLink =
+			_fragmentEntryLinkLocalService.getFragmentEntryLinkByUuidAndGroupId(
+				stagingFragmentEntryLink.getUuid(), _liveGroup.getGroupId());
+
+		_assertNotEquals(
+			_getFreeMarkerFragmentEntryProcessorLayoutJSONObject(
+				liveFragmentEntryLink),
+			layout);
+	}
+
+	private FragmentEntry _addFragmentEntry() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_stagingGroup, TestPropsValues.getUserId());
+
+		FragmentCollection fragmentCollection =
+			_fragmentCollectionLocalService.addFragmentCollection(
+				null, TestPropsValues.getUserId(),
+				serviceContext.getScopeGroupId(), RandomTestUtil.randomString(),
+				StringPool.BLANK, serviceContext);
+
+		return _fragmentEntryLocalService.addFragmentEntry(
+			null, TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
+			fragmentCollection.getFragmentCollectionId(), null,
+			RandomTestUtil.randomString(), StringPool.BLANK,
+			"Original HTML Fragment" + _HTML, StringPool.BLANK, false,
+			_configuration, null, 0, false, FragmentConstants.TYPE_COMPONENT,
+			null, WorkflowConstants.STATUS_APPROVED, serviceContext);
+	}
+
+	private void _assertEquals(JSONObject layoutJSONObject, Layout layout)
 		throws Exception {
 
-		JSONObject layoutJSONObject = _getLayoutJSONObject(fragmentEntryLink);
-
 		Assert.assertEquals(
 			layout.getGroupId(), layoutJSONObject.getLong("groupId"));
 		Assert.assertEquals(
 			layout.getLayoutId(), layoutJSONObject.getLong("layoutId"));
 	}
 
-	private JSONObject _getLayoutJSONObject(FragmentEntryLink fragmentEntryLink)
+	private void _assertNotEquals(JSONObject layoutJSONObject, Layout layout) {
+		Assert.assertNotEquals(
+			layout.getGroupId(), layoutJSONObject.getLong("groupId"));
+		Assert.assertNotEquals(
+			layout.getLayoutId(), layoutJSONObject.getLong("layoutId"));
+	}
+
+	private JSONObject _getEditableFragmentEntryProcessorLayoutJSONObject(
+			FragmentEntryLink fragmentEntryLink)
 		throws Exception {
 
 		JSONObject configurationValuesJSONObject =
@@ -148,18 +268,31 @@ public class EditableValuesLayoutMappingExportImportContentProcessorTest {
 				FragmentEntryProcessorConstants.
 					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR);
 
-		Assert.assertNotNull(editableValuesJSONObject);
-
 		JSONObject textJSONObject = editableValuesJSONObject.getJSONObject(
 			"element-text");
 
-		Assert.assertNotNull(textJSONObject);
-
 		JSONObject configJSONObject = textJSONObject.getJSONObject("config");
 
-		Assert.assertNotNull(configJSONObject);
-
 		return configJSONObject.getJSONObject("layout");
+	}
+
+	private JSONObject _getFreeMarkerFragmentEntryProcessorLayoutJSONObject(
+			FragmentEntryLink fragmentEntryLink)
+		throws Exception {
+
+		JSONObject configurationValuesJSONObject =
+			_jsonFactory.createJSONObject(
+				fragmentEntryLink.getEditableValues());
+
+		JSONObject freemarkerJSONObject =
+			configurationValuesJSONObject.getJSONObject(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
+
+		JSONObject myUrlJSONObject = freemarkerJSONObject.getJSONObject(
+			"myURL");
+
+		return myUrlJSONObject.getJSONObject("layout");
 	}
 
 	private void _publishLayouts() throws Exception {
@@ -236,6 +369,60 @@ public class EditableValuesLayoutMappingExportImportContentProcessorTest {
 		return fragmentEntryLink;
 	}
 
+	private FragmentEntryLink _setUpFragmentEntryLinkWithUrlMappedToLayout(
+			Layout layout)
+		throws Exception {
+
+		FragmentEntry fragmentEntry = _addFragmentEntry();
+
+		long segmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				_draftLayout.getPlid());
+
+		JSONObject layoutJSONObject = JSONUtil.put(
+			FragmentEntryProcessorConstants.
+				KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+			JSONUtil.put(
+				"myURL",
+				JSONUtil.put(
+					"layout",
+					JSONUtil.put(
+						"groupId", layout.getGroupId()
+					).put(
+						"layoutId", layout.getLayoutId()
+					).put(
+						"layoutUuid", layout.getUuid()
+					).put(
+						"privateLayout", layout.isPrivateLayout()
+					).put(
+						"title", layout.getTitle()
+					))));
+
+		FragmentEntryLink draftLayoutFragmentEntryLink =
+			_fragmentEntryLinkLocalService.addFragmentEntryLink(
+				null, TestPropsValues.getUserId(), _draftLayout.getGroupId(), 0,
+				fragmentEntry.getFragmentEntryId(), segmentsExperienceId,
+				_draftLayout.getPlid(), fragmentEntry.getCss(),
+				fragmentEntry.getHtml(), fragmentEntry.getJs(),
+				fragmentEntry.getConfiguration(), layoutJSONObject.toString(),
+				StringPool.BLANK, 0, fragmentEntry.getFragmentEntryKey(),
+				fragmentEntry.getType(),
+				ServiceContextTestUtil.getServiceContext(
+					_liveGroup.getGroupId(), TestPropsValues.getUserId()));
+
+		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+			draftLayoutFragmentEntryLink, _draftLayout, null, 0,
+			segmentsExperienceId);
+
+		return draftLayoutFragmentEntryLink;
+	}
+
+	private static final String _HTML =
+		"<div class=\"fragment_1\"><a href=${configuration.myURL}>Click this " +
+			"link!</a></div>";
+
+	private static String _configuration;
+
 	private Layout _draftLayout;
 
 	@Inject
@@ -243,7 +430,13 @@ public class EditableValuesLayoutMappingExportImportContentProcessorTest {
 		_fragmentCollectionContributorRegistry;
 
 	@Inject
+	private FragmentCollectionLocalService _fragmentCollectionLocalService;
+
+	@Inject
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
+	@Inject
+	private FragmentEntryLocalService _fragmentEntryLocalService;
 
 	@Inject
 	private JSONFactory _jsonFactory;

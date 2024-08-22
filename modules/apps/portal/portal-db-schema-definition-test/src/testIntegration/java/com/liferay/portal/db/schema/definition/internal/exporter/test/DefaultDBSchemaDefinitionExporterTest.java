@@ -88,8 +88,9 @@ public class DefaultDBSchemaDefinitionExporterTest
 
 	@Test
 	public void testExportImportReport() throws Exception {
-		Assert.assertTrue(
-			getReportContent().endsWith("Portal missing tables:"));
+		String reportContent = getReportContent();
+
+		Assert.assertTrue(reportContent.endsWith("Portal missing tables:"));
 	}
 
 	@Test
@@ -99,8 +100,10 @@ public class DefaultDBSchemaDefinitionExporterTest
 		db.runSQL("create table TestTable (testColumn bigint primary key)");
 
 		try {
+			String reportContent = getReportContent();
+
 			Assert.assertTrue(
-				getReportContent().contains(
+				reportContent.contains(
 					"Portal missing tables: " +
 						StringUtil.toLowerCase("TestTable")));
 		}

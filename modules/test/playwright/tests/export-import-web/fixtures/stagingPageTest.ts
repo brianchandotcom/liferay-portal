@@ -12,7 +12,7 @@ const stagingPageTest = test.extend<{
 }>({
 	stagingPage: async ({page}, use) => {
 		await use(new StagingPage(page));
-	},	
+	},
 });
 
 export {stagingPageTest};

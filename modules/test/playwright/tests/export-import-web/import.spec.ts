@@ -87,11 +87,10 @@ test('staged and live versions of a site are equal', async ({
 	applicationsMenuPage,
 	stagingPage,
 }) => {
-
 	const site = await apiHelpers.headlessSite.createSite({
 		name: getRandomString(),
-		templateKey: "com.liferay.site.initializer.masterclass",
-		templateType: "site-initializer"
+		templateKey: 'com.liferay.site.initializer.masterclass',
+		templateType: 'site-initializer',
 	});
 
 	expect(site.name).toBeDefined();
@@ -99,7 +98,7 @@ test('staged and live versions of a site are equal', async ({
 	apiHelpers.data.push({id: site.id, type: 'site'});
 
 	await applicationsMenuPage.goToSite(site.name);
-	
+
 	await stagingPage.goToStaging();
 
 	await stagingPage.enableDefaultLocalStaging();

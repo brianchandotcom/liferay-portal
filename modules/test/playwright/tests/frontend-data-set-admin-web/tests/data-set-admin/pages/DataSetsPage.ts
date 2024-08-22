@@ -105,8 +105,6 @@ export class DataSetsPage {
 
 		await this.newDataSetModal.saveButton.click();
 
-		await this.newDataSetModal.saveButton.isEnabled();
-
 		await this.newDataSetModal.heading.isHidden();
 	}
 

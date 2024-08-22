@@ -3127,7 +3127,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 					<#assign
 						childSchemaName = freeMarkerTool.getReferenceName(mappingSchema)
 
-						childProperties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, allSchemas[childSchemaName], allSchemas)
+						childProperties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, childSchemaName, allSchemas)
 					/>
 
 						() -> {
@@ -3135,15 +3135,15 @@ public abstract class Base${schemaName}ResourceTestCase {
 							<#list childProperties?keys as propertyName>
 								<#if stringUtil.equals(propertyName, "siteId")>
 									${schemaVarName}.setGroupId(testGroup.getGroupId());
-								<#elseif stringUtil.equals(allChildProperties[propertyName], "Integer")>
+								<#elseif stringUtil.equals(childProperties[propertyName], "Integer")>
 									${schemaVarName}.set${propertyName?cap_first}(RandomTestUtil.randomInt());
-								<#elseif propertyName?contains("email") && stringUtil.equals(allChildProperties[propertyName], "String")>
+								<#elseif propertyName?contains("email") && stringUtil.equals(childProperties[propertyName], "String")>
 									${schemaVarName}.set${propertyName?cap_first}(StringUtil.toLowerCase(RandomTestUtil.randomString()) + "@liferay.com");
-								<#elseif stringUtil.equals(allChildProperties[propertyName], "String")>
+								<#elseif stringUtil.equals(childProperties[propertyName], "String")>
 									${schemaVarName}.set${propertyName?cap_first}(StringUtil.toLowerCase(RandomTestUtil.randomString()));
-								<#elseif randomDataTypes?seq_contains(allChildProperties[propertyName])>
-									${schemaVarName}.set${propertyName?cap_first}(RandomTestUtil.random${allChildProperties[propertyName]}());
-								<#elseif stringUtil.equals(allChildProperties[propertyName], "Date")>
+								<#elseif randomDataTypes?seq_contains(childProperties[propertyName])>
+									${schemaVarName}.set${propertyName?cap_first}(RandomTestUtil.random${childProperties[propertyName]}());
+								<#elseif stringUtil.equals(childProperties[propertyName], "Date")>
 									${schemaVarName}.set${propertyName?cap_first}(RandomTestUtil.nextDate());
 								</#if>
 							</#list>
@@ -3169,15 +3169,15 @@ public abstract class Base${schemaName}ResourceTestCase {
 					<#list properties?keys as propertyName>
 						<#if stringUtil.equals(propertyName, "siteId")>
 							${schemaVarName}.setGroupId(testGroup.getGroupId());
-						<#elseif stringUtil.equals(allChildProperties[propertyName], "Integer")>
+						<#elseif stringUtil.equals(properties[propertyName], "Integer")>
 							${schemaVarName}.set${propertyName?cap_first}(RandomTestUtil.randomInt());
-						<#elseif propertyName?contains("email") && stringUtil.equals(allChildProperties[propertyName], "String")>
+						<#elseif propertyName?contains("email") && stringUtil.equals(properties[propertyName], "String")>
 							${schemaVarName}.set${propertyName?cap_first}(StringUtil.toLowerCase(RandomTestUtil.randomString()) + "@liferay.com");
-						<#elseif stringUtil.equals(allChildProperties[propertyName], "String")>
+						<#elseif stringUtil.equals(properties[propertyName], "String")>
 							${schemaVarName}.set${propertyName?cap_first}(StringUtil.toLowerCase(RandomTestUtil.randomString()));
-						<#elseif randomDataTypes?seq_contains(allChildProperties[propertyName])>
-							${schemaVarName}.set${propertyName?cap_first}(RandomTestUtil.random${allChildProperties[propertyName]}());
-						<#elseif stringUtil.equals(allChildProperties[propertyName], "Date")>
+						<#elseif randomDataTypes?seq_contains(properties[propertyName])>
+							${schemaVarName}.set${propertyName?cap_first}(RandomTestUtil.random${properties[propertyName]}());
+						<#elseif stringUtil.equals(properties[propertyName], "Date")>
 							${schemaVarName}.set${propertyName?cap_first}(RandomTestUtil.nextDate());
 						</#if>
 					</#list>

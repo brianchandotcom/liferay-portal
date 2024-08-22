@@ -24,6 +24,7 @@ import {downloadActivationLicenseKey} from '../../utils/downloadActivationLicens
 import {hasAdminUserAccount} from '../../utils/hasAdminUserAccount';
 import RenewButton from '../Renew';
 import TableKeyDetails from '../TableKeyDetails';
+import {hasAdminOrPartnerManager} from '../../utils/hasAdminOrPartnerManager';
 
 const openToast = (title, message, {type = 'success'} = {}) =>
 	Liferay.Util.openToast({
@@ -53,6 +54,11 @@ const ModalKeyDetails = ({
 	const [hasErrorSubscription, setHasErrorSubscription] = useState(false);
 
 	const {data: myAccount} = useGetMyUserAccount();
+
+	const isAdminOrPartnerManager = hasAdminOrPartnerManager(
+		project,
+		myAccount?.myUserAccount
+	);
 	const isAdminUserAccount = hasAdminUserAccount(myAccount);
 
 	const handleAlertStatus = (hasSuccessfullyDownloadedKeys) => {
@@ -187,7 +193,7 @@ const ModalKeyDetails = ({
 						{i18n.translate('close')}
 					</Button>
 
-					{isAdminUserAccount && !keyIsPermanent && (
+					{(isAdminOrPartnerManager || isAdminUserAccount) && !keyIsPermanent && (
 						<RenewButton
 							className="ml-2"
 							currentActivationKeyModal={currentActivationKey}

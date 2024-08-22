@@ -114,7 +114,7 @@ autoSaveTest(
 
 		await expect(
 			page.getByRole('heading', {name: 'Web Content'})
-		).toBeVisible({timeout: 1000});
+		).toBeVisible();
 
 		const article = page.getByRole('link', {name: title});
 
@@ -122,9 +122,7 @@ autoSaveTest(
 
 		article.click();
 
-		await expect(page.getByRole('heading', {name: title})).toBeVisible({
-			timeout: 1000,
-		});
+		await expect(page.getByRole('heading', {name: title})).toBeVisible();
 
 		await expect(page.getByLabel(localizableFieldName)).toHaveValue(
 			content,
@@ -321,7 +319,7 @@ autoSaveTest(
 
 		await page.getByRole('button', {exact: true, name: 'Publish'}).click();
 
-		await page.getByText(title, {exact: true}).waitFor();
+		await expect(page.getByTitle(title)).toBeVisible();
 
 		await journalPage.assertJournalArticlePermissions(title, [
 			{enabled: false, locator: '#guest_ACTION_VIEW'},

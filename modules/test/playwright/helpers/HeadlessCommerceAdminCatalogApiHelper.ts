@@ -133,6 +133,7 @@ type TSkuUnitOfMeasure = {
 		[key: string]: string;
 	};
 	precision?: number;
+	pricingQuantity?: number;
 	primary?: boolean;
 	priority?: number;
 	rate?: number;

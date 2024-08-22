@@ -6,4 +6,7 @@
 export const config = {
 	name: 'portal-workflow-kaleo-designer-web',
 	testDir: 'tests/portal-workflow-kaleo-designer-web',
+	use: {
+		viewport: {height: 1080, width: 1920},
+	},
 };

@@ -71,7 +71,7 @@ public class TestrayTestFlowResourceImpl
 		sb.append("O_[%COMPANY_ID%]_CaseResult_x crx, ");
 		sb.append("O_[%COMPANY_ID%]_Component c, O_[%COMPANY_ID%]_Team t, ");
 		sb.append("O_[%COMPANY_ID%]_Task ta, O_[%COMPANY_ID%]_Subtask s  ");
-		sb.append("where crx.c_caseResultId_ = cr.c_caseResultId_ and ");
+		sb.append("where cr.c_caseResultId_ = crx.c_caseResultId_ and ");
 		sb.append("cr.r_componentToCaseResult_c_componentId = ");
 		sb.append("c.c_componentId_ and c.r_teamToComponents_c_teamId = ");
 		sb.append("t.c_teamId_ and cr.r_subtaskToCaseResults_c_subtaskId = ");

@@ -418,9 +418,13 @@ public class OrderItemResourceTest extends BaseOrderItemResourceTestCase {
 				printedNote = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				quantity = BigDecimal.valueOf(RandomTestUtil.randomInt(1, 100));
+				replacedSkuExternalReferenceCode =
+					RandomTestUtil.randomString();
 				requestedDeliveryDate = RandomTestUtil.nextDate();
 				shippedQuantity = BigDecimal.valueOf(
 					RandomTestUtil.randomInt());
+				shippingAddressExternalReferenceCode =
+					RandomTestUtil.randomString();
 				shippingAddressId = RandomTestUtil.randomLong();
 				sku = cpInstance.getSku();
 				skuExternalReferenceCode =

@@ -443,8 +443,12 @@ public class OrderResourceTest extends BaseOrderResourceTestCase {
 				printedNote = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				quantity = BigDecimal.valueOf(RandomTestUtil.randomInt());
+				replacedSkuExternalReferenceCode =
+					RandomTestUtil.randomString();
 				shippedQuantity = BigDecimal.valueOf(
 					RandomTestUtil.randomInt());
+				shippingAddressExternalReferenceCode =
+					RandomTestUtil.randomString();
 				shippingAddressId = _orderAddress.getAddressId();
 				skuId = cpInstance.getCPInstanceId();
 				subscription = RandomTestUtil.randomBoolean();

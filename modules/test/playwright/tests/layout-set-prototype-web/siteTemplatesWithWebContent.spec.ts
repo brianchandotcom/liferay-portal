@@ -58,124 +58,135 @@ const webContentName2: string = getRandomString();
 const webContentText1: string = getRandomString();
 const webContentText2: string = getRandomString();
 
-test('LPD-21445', async ({
-	apiHelpers,
-	applicationsMenuPage,
-	journalPage,
-	layoutSetPrototypePage,
-	page,
-	pageEditorPage,
-	pagesAdminPage,
-	productMenuPage,
-	sitesPage,
-	systemSettingsPage,
-	uiElementsPage,
-}) => {
-	const siteTemplateName: string = getRandomString();
-	const siteName1: string = getRandomString();
-	const siteName2: string = getRandomString();
-	const webContentName: string = getRandomString();
-	const text: string = getRandomString();
-	const secondPageNameOnSiteTemplate = getRandomString();
+test(
+	'Editing global web contents does not trigger site template propagation',
+	{tag: '@LPD-21445'},
+	async ({
+		apiHelpers,
+		applicationsMenuPage,
+		journalPage,
+		layoutSetPrototypePage,
+		page,
+		pageEditorPage,
+		pagesAdminPage,
+		productMenuPage,
+		sitesPage,
+		systemSettingsPage,
+		uiElementsPage,
+	}) => {
+		const siteTemplateName: string = getRandomString();
+		const siteName1: string = getRandomString();
+		const siteName2: string = getRandomString();
+		const webContentName: string = getRandomString();
+		const text: string = getRandomString();
+		const secondPageNameOnSiteTemplate = getRandomString();
 
-	let site1Id: string | undefined;
-	let site2Id: string | undefined;
+		let site1Id: string | undefined;
+		let site2Id: string | undefined;
 
-	try {
-		await systemSettingsPage.disablePrivatePages();
+		try {
+			await systemSettingsPage.disablePrivatePages();
 
-		await applicationsMenuPage.goToGlobalSite();
-		await productMenuPage.checkIfAdecuateProductMenu('Global');
-		await productMenuPage.openProductMenuIfClosed();
-		await productMenuPage.goToWebContent();
-		await journalPage.goToCreateArticle();
-		await journalPage.fillArticleData(webContentName, text);
-		await journalPage.publishArticle();
+			await applicationsMenuPage.goToGlobalSite();
+			await productMenuPage.checkIfAdecuateProductMenu('Global');
+			await productMenuPage.openProductMenuIfClosed();
+			await productMenuPage.goToWebContent();
+			await journalPage.goToCreateArticle();
+			await journalPage.fillArticleData(webContentName, text);
+			await journalPage.publishArticle();
 
-		await createSiteTemplateWithContentPageAndAssetPublisher({
-			applicationsMenuPage,
-			layoutSetPrototypePage,
-			page,
-			pageEditorPage,
-			pagesAdminPage,
-			productMenuPage,
-			templateName: siteTemplateName,
-			uiElementsPage,
-		});
-
-		await applicationsMenuPage.goToSites();
-		site1Id = await sitesPage.createSiteFromTemplate(
-			siteTemplateName,
-			siteName1
-		);
-
-		await applicationsMenuPage.goToSites();
-		site2Id = await sitesPage.createSiteFromTemplate(
-			siteTemplateName,
-			siteName2
-		);
-
-		await applicationsMenuPage.goToSiteTemplates();
-		const siteTemplateUrl =
-			await layoutSetPrototypePage.getSiteTemplateUrl(siteTemplateName);
-		await page.goto(siteTemplateUrl);
-
-		await productMenuPage.checkIfAdecuateProductMenu(siteTemplateName);
-		await productMenuPage.openProductMenuIfClosed();
-
-		await productMenuPage.goToPages();
-		await uiElementsPage.clickNewButton();
-		if (!pagesAdminPage.addTemplatePageButton.isVisible) {
-			await uiElementsPage.clickNewButton();
-			await pagesAdminPage.addTemplatePageButton.waitFor({
-				state: 'visible',
+			await createSiteTemplateWithContentPageAndAssetPublisher({
+				applicationsMenuPage,
+				layoutSetPrototypePage,
+				page,
+				pageEditorPage,
+				pagesAdminPage,
+				productMenuPage,
+				templateName: siteTemplateName,
+				uiElementsPage,
 			});
-		}
-		await pagesAdminPage.addTemplatePageButton.click();
-		await pagesAdminPage.addWidgetPage(secondPageNameOnSiteTemplate);
 
-		await journalPage.goto('/global');
-
-		await page.getByTestId('row').first().locator('a').click();
-
-		await page.waitForTimeout(2000);
-
-		const layoutsCountOnSite1 =
-			await apiHelpers.jsonWebServicesLayout.getLayoutsCount(
-				Number(site1Id),
-				true
+			await applicationsMenuPage.goToSites();
+			site1Id = await sitesPage.createSiteFromTemplate(
+				siteTemplateName,
+				siteName1
 			);
 
-		await expect(layoutsCountOnSite1).toBe(2);
+			await applicationsMenuPage.goToSites();
+			site2Id = await sitesPage.createSiteFromTemplate(
+				siteTemplateName,
+				siteName2
+			);
+
+			await applicationsMenuPage.goToSiteTemplates();
+			const siteTemplateUrl =
+				await layoutSetPrototypePage.getSiteTemplateUrl(
+					siteTemplateName
+				);
+			await page.goto(siteTemplateUrl);
+
+			await productMenuPage.checkIfAdecuateProductMenu(siteTemplateName);
+			await productMenuPage.openProductMenuIfClosed();
+
+			await productMenuPage.goToPages();
+			await page
+				.locator('.control-menu-level-1-heading')
+				.filter({hasText: 'Pages'})
+				.waitFor();
+
+			await pagesAdminPage.addWidgetPage({
+				addButtonLabel: 'Add Site Template Page',
+				name: secondPageNameOnSiteTemplate,
+			});
+
+			await journalPage.goto('/global');
+
+			await page.getByTestId('row').first().locator('a').click();
+
+			await page.waitForTimeout(2000);
+
+			const layoutsCountOnSite1 =
+				await apiHelpers.jsonWebServicesLayout.getLayoutsCount(
+					Number(site1Id),
+					true
+				);
+
+			await expect(layoutsCountOnSite1).toBe(2);
+		}
+		finally {
+			if (site1Id || site2Id) {
+				await deleteSites(apiHelpers, site1Id, site2Id);
+			}
+
+			const layoutSetPrototypes: LayoutSetPrototype[] =
+				await apiHelpers.jsonWebServicesLayoutSetPrototype.getLayoutSetPrototypes();
+			const layoutSetPrototype = await getLayoutTemplateByName(
+				layoutSetPrototypes,
+				siteTemplateName
+			);
+
+			if (layoutSetPrototypes) {
+				await deleteLayoutSetPrototype(
+					apiHelpers,
+					layoutSetPrototype.layoutSetPrototypeId.toString()
+				);
+			}
+
+			await applicationsMenuPage.goToGlobalSite();
+			await productMenuPage.checkIfAdecuateProductMenu('Global');
+			await productMenuPage.openProductMenuIfClosed();
+			await productMenuPage.goToWebContent();
+			const checkbox = page
+				.getByTestId('row')
+				.first()
+				.locator('input[type="checkbox"]');
+			await checkbox.check();
+
+			const deleteButton = page.getByRole('button', {name: 'Delete'});
+			await deleteButton.click();
+		}
 	}
-	finally {
-		await deleteSites(apiHelpers, site1Id, site2Id);
-
-		const layoutSetPrototypes: LayoutSetPrototype[] =
-			await apiHelpers.jsonWebServicesLayoutSetPrototype.getLayoutSetPrototypes();
-		const layoutSetPrototype = await getLayoutTemplateByName(
-			layoutSetPrototypes,
-			siteTemplateName
-		);
-		await deleteLayoutSetPrototype(
-			apiHelpers,
-			layoutSetPrototype.layoutSetPrototypeId.toString()
-		);
-
-		await applicationsMenuPage.goToGlobalSite();
-		await productMenuPage.checkIfAdecuateProductMenu('Global');
-		await productMenuPage.openProductMenuIfClosed();
-		await productMenuPage.goToWebContent();
-		const checkbox = page
-			.getByTestId('row')
-			.first()
-			.locator('input[type="checkbox"]');
-		await checkbox.check();
-
-		const deleteButton = page.getByRole('button', {name: 'Delete'});
-		await deleteButton.click();
-	}
-});
+);
 
 test('Can switch template with web content on widget page.', async ({
 	apiHelpers,
@@ -557,12 +568,22 @@ async function createSiteTemplateWithContentPageAndAssetPublisher({
 
 	await productMenuPage.goToPages();
 	await uiElementsPage.clickNewButton();
-	if (!pagesAdminPage.addTemplatePageButton.isVisible) {
+	if (!layoutSetPrototypePage.addTemplatePageButton.isVisible) {
 		await uiElementsPage.clickNewButton();
-		await pagesAdminPage.addTemplatePageButton.waitFor({state: 'visible'});
+		await layoutSetPrototypePage.addTemplatePageButton.waitFor({
+			state: 'visible',
+		});
 	}
-	await pagesAdminPage.addTemplatePageButton.click();
-	await pagesAdminPage.addContentPage(templateName);
+	await layoutSetPrototypePage.addTemplatePageButton.click();
+	await page
+		.locator('.control-menu-level-1-heading')
+		.filter({hasText: 'Pages'})
+		.waitFor();
+
+	await pagesAdminPage.addWidgetPage({
+		addButtonLabel: 'Add Site Template Page',
+		name: templateName,
+	});
 	await pageEditorPage.addWidget('Content Management', 'Asset Publisher');
 
 	const widgetId = await pageEditorPage.getFragmentId('Asset Publisher');

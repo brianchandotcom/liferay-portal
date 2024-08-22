@@ -1474,6 +1474,9 @@ components:
                     format: bigdecimal
                     minimum: 0
                     type: number
+                skuExternalReferenceCode:
+                    example: SKU0111
+                    type: string
                 skuId:
                     example: 30129
                     format: int64

@@ -17,7 +17,6 @@ import Loading from '../components/Loading';
 import {PRODUCT_TAGS} from '../enums/Product';
 import {ProductVocabulary} from '../enums/ProductVocabulary';
 import {useGetVocabulariesAndCategories} from '../hooks/data/useGetVocabulariesAndCategories';
-import HeadlessCommerceAdminCatalogImpl from '../services/rest/HeadlessCommerceAdminCatalog';
 
 export enum NewAppTypes {
 	SET_BUILD = 'SET_BUILD',
@@ -274,16 +273,7 @@ export default function NewAppContextProvider({
 			return;
 		}
 
-		HeadlessCommerceAdminCatalogImpl.getProduct(
-			productId as string,
-			new URLSearchParams({
-				nestedFields: 'attachments,images,productSpecifications',
-			})
-		)
-			.then((response) =>
-				dispatch({payload: response, type: NewAppTypes.SET_CONTEXT})
-			)
-			.catch(console.error);
+		// TO DO - GET PRODUCT
 	}, [productId]);
 
 	if (isLoading) {

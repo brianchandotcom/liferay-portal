@@ -7,7 +7,7 @@ import {useLocation, useNavigate, useParams} from 'react-router-dom';
 
 import {APP_FLOW_ITEMS} from '../pages/NewAppFlow/constants';
 
-const usePublishAppNavigation = () => {
+const usePublishNewAppNavigation = () => {
 	const location = useLocation();
 	const navigate = useNavigate();
 	const {id} = useParams();
@@ -51,4 +51,4 @@ const usePublishAppNavigation = () => {
 	};
 };
 
-export default usePublishAppNavigation;
+export default usePublishNewAppNavigation;

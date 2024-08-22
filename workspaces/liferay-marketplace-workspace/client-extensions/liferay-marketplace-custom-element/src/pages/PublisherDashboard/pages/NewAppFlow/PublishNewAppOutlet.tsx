@@ -16,12 +16,11 @@ import {useNewAppContext} from '../../../../context/NewAppContext';
 import {PRODUCT_WORKFLOW_STATUS_CODE} from '../../../../enums/Product';
 import {useAccount} from '../../../../hooks/data/useAccounts';
 import i18n from '../../../../i18n';
-import usePublishAppNavigation from '../../hooks/usePublishAppNavigation';
-import usePublishAppSubmission from '../../hooks/usePublishAppSubmission';
 import usePublishSolutionHeader from '../../hooks/usePublishSolutionHeader';
 import PublishNav from '../Solutions/components/PublishNav';
 
 import './PublishNewAppOutlet.scss';
+import usePublishNewAppNavigation from '../../hooks/usePublishAppNavigation';
 
 const PublishNewAppOutlet = () => {
 	usePublishSolutionHeader();
@@ -37,9 +36,7 @@ const PublishNewAppOutlet = () => {
 		onClickPrevious,
 		onExit,
 		publishAppSteps,
-	} = usePublishAppNavigation();
-
-	const {onSave, onSaveAsDraft} = usePublishAppSubmission(context, dispatch);
+	} = usePublishNewAppNavigation();
 
 	const {observer, onOpenChange, open} = useModal();
 	const onExitModal = useModal();
@@ -89,10 +86,6 @@ const PublishNewAppOutlet = () => {
 				}}
 				saveAsDraftProps={{
 					disabled: isDisabled,
-					onClick: onSaveAsDraft,
-				}}
-				submitProps={{
-					onClick: onSave,
 				}}
 			/>
 
@@ -123,10 +116,8 @@ const PublishNewAppOutlet = () => {
 						<ClayButton
 							disabled={isDisabled}
 							displayType="primary"
-							onClick={async () => {
-								if (isLastStep) {
-									return onSave().then(onExit);
-								}
+							onClick={ () => {
+
 
 								onClickContinue();
 							}}
@@ -142,7 +133,6 @@ const PublishNewAppOutlet = () => {
 					<>
 						<ClayButton
 							displayType="secondary"
-							onClick={() => onSaveAsDraft().then(onExit)}
 						>
 							{i18n.translate('save-as-a-draft-exit')}
 						</ClayButton>

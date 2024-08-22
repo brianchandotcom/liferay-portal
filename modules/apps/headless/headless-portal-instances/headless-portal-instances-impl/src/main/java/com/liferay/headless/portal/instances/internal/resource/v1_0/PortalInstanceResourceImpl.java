@@ -23,8 +23,10 @@ import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.EmailAddressValidatorFactory;
+import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.site.initializer.extender.SiteInitializerThreadLocal;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -115,6 +117,9 @@ public class PortalInstanceResourceImpl extends BasePortalInstanceResourceImpl {
 			companyId = 0L;
 		}
 
+		SiteInitializerThreadLocal.setKey(
+			portalInstance.getSiteInitializerKey());
+
 		Company company = _companyService.addCompany(
 			companyId, portalInstance.getPortalInstanceId(),
 			portalInstance.getVirtualHost(), portalInstance.getDomain(), 0,
@@ -155,8 +160,7 @@ public class PortalInstanceResourceImpl extends BasePortalInstanceResourceImpl {
 				CompanyThreadLocal.setWithSafeCloseable(
 					company.getCompanyId())) {
 
-			_portalInstancesLocalService.initializePortalInstance(
-				company.getCompanyId(), portalInstance.getSiteInitializerKey());
+			PortalInstances.initCompany(company, true);
 		}
 
 		_portalInstancesLocalService.synchronizePortalInstances();

@@ -210,21 +210,19 @@ public class JournalViewMoreMenuItemsDisplayContext {
 	private OrderByComparator<DDMStructure> _getOrderByComparator() {
 		boolean orderByAsc = false;
 
-		OrderByComparator<DDMStructure> orderByComparator = null;
-
 		if (Objects.equals(getOrderByType(), "asc")) {
 			orderByAsc = true;
 		}
 
 		if (_orderByCol.equals("modified-date")) {
-			orderByComparator = new StructureModifiedDateComparator(orderByAsc);
+			return new StructureModifiedDateComparator(orderByAsc);
 		}
 		else if (_orderByCol.equals("name")) {
-			orderByComparator = new StructureNameComparator(
+			return new StructureNameComparator(
 				orderByAsc, _themeDisplay.getLocale());
 		}
 
-		return orderByComparator;
+		return null;
 	}
 
 	private SearchContainer<DDMStructure> _ddmStructuresSearchContainer;

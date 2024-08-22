@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayBreadcrumb from '@clayui/breadcrumb';
 import ClayLayout from '@clayui/layout';
-import ClayModal from '@clayui/modal';
 import {IClientExtensionRenderer} from '@liferay/frontend-data-set-web';
 import {fetch, openModal, sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
@@ -32,11 +32,16 @@ import DateRangeFilterModalContent from './components/DateRangeFilter';
 import SelectionFilterModalContent from './components/selection_filter/SelectionFilter';
 
 import '../../../css/Filters.scss';
-import FilterList from './components/FilterList';
 import {IDataSet} from '../../DataSets';
 import {FDSViewType} from '../../FDSViews';
 import sortItems from '../../utils/sortItems';
-import ClayBreadcrumb from '@clayui/breadcrumb';
+import FilterList from './components/FilterList';
+
+const FILTER_MODE = {
+	CREATION: 'filter-creation',
+	EDITION: 'filter-edition',
+	LIST: 'filter-list',
+};
 
 const FILTER_TYPES: Record<EFilterType, IFilterTypeProps> = {
 	[EFilterType.CLIENT_EXTENSION]: {
@@ -75,9 +80,9 @@ const FILTER_TYPES: Record<EFilterType, IFilterTypeProps> = {
 
 type FilterCollection = Array<IFilter>;
 
-interface IPropsAddFDSFilterModalContent {
-	closeModal: Function;
+interface IPropsFilterFormComponent {
 	dataSet: IDataSet | FDSViewType;
+	dismiss: Function;
 	fdsFilterClientExtensions?: IClientExtensionRenderer[];
 	fieldNames?: string[];
 	fields: IField[];
@@ -88,9 +93,9 @@ interface IPropsAddFDSFilterModalContent {
 	restApplications: string[];
 }
 
-function AddFDSFilterModalContent({
-	closeModal,
+function FilterFormComponent({
 	dataSet,
+	dismiss,
 	fdsFilterClientExtensions = [],
 	fieldNames,
 	fields,
@@ -99,7 +104,7 @@ function AddFDSFilterModalContent({
 	namespace,
 	onSave,
 	restApplications,
-}: IPropsAddFDSFilterModalContent) {
+}: IPropsFilterFormComponent) {
 	const {Component, displayType, fdsViewRelationshipId} =
 		FILTER_TYPES[filterType as EFilterType];
 
@@ -135,20 +140,24 @@ function AddFDSFilterModalContent({
 
 		onSave({...responseJSON, displayType, filterType});
 
-		closeModal();
+		dismiss();
 	};
 
 	return (
 		<>
-			<ClayModal.Header>
-				{filter &&
-					sub(Liferay.Language.get('edit-x-filter'), [filter.label])}
+			<ClayLayout.SheetHeader className="mb-4">
+				<h2>
+					{filter &&
+						sub(Liferay.Language.get('edit-x-filter'), [
+							filter.label,
+						])}
 
-				{!filter && <Component.Header />}
-			</ClayModal.Header>
+					{!filter && <Component.Header />}
+				</h2>
+			</ClayLayout.SheetHeader>
 
 			<Component.Body
-				closeModal={closeModal}
+				dismiss={dismiss}
 				fdsFilterClientExtensions={fdsFilterClientExtensions}
 				fieldNames={fieldNames}
 				fields={fields}
@@ -168,7 +177,12 @@ function FiltersNew({
 	namespace,
 	restApplications,
 }: IDataSetSectionProps) {
+	const [activeFilter, setActiveFilter] = useState<IFilter | null>(null);
+	const [activeFilterType, setActiveFilterType] =
+		useState<EFilterType | null>(null);
+	const [activeMode, setActiveMode] = useState(FILTER_MODE.LIST);
 	const [filters, setFilters] = useState<IFilter[]>([]);
+	const [availableFields, setAvailableFields] = useState(fields);
 	useEffect(() => {
 		const getFilters = async () => {
 			const response = await fetch(
@@ -267,9 +281,35 @@ function FiltersNew({
 		}
 	};
 
+	const noFilterClientExtensionsAvailableModal = () => {
+		openModal({
+			bodyHTML: Liferay.Language.get(
+				'no-frontend-data-set-filter-client-extensions-are-available.-add-a-client-extension-first-in-order-to-create-a-filter'
+			),
+			buttons: [
+				{
+					displayType: 'primary',
+					label: Liferay.Language.get('close'),
+					onClick: ({processClose}: {processClose: Function}) => {
+						processClose();
+					},
+				},
+			],
+			size: 'lg',
+			status: 'info',
+			title: Liferay.Language.get(
+				'no-frontend-data-set-filter-client-extensions-available'
+			),
+		});
+	};
+
 	const onCreationButtonClick = (filterType: EFilterType) => {
-		const availableFields = fields.filter((item) =>
-			FILTER_TYPES[filterType as EFilterType].availableFieldsFilter(item)
+		setAvailableFields(() =>
+			fields.filter((item) =>
+				FILTER_TYPES[filterType as EFilterType].availableFieldsFilter(
+					item
+				)
+			)
 		);
 
 		if (!availableFields.length) {
@@ -291,72 +331,30 @@ function FiltersNew({
 				title: Liferay.Language.get('no-fields-available'),
 			});
 		}
+		else if (
+			filterType === EFilterType.CLIENT_EXTENSION &&
+			!fdsFilterClientExtensions.length
+		) {
+			noFilterClientExtensionsAvailableModal();
+		}
 		else {
-			openModal({
-				className: 'overflow-auto',
-				contentComponent: ({closeModal}: {closeModal: Function}) => (
-					<AddFDSFilterModalContent
-						closeModal={closeModal}
-						dataSet={dataSet}
-						fdsFilterClientExtensions={fdsFilterClientExtensions}
-						fieldNames={filters.map((filter) => filter.fieldName)}
-						fields={availableFields}
-						filterType={filterType}
-						namespace={namespace}
-						onSave={(newfilter) => {
-							if (newfilter.label === undefined) {
-								newfilter.label = '';
-							}
-							setFilters([...filters, newfilter]);
-						}}
-						restApplications={restApplications}
-					/>
-				),
-				disableAutoClose: true,
-				size: 'lg',
-			});
+			setActiveFilterType(filterType);
+			setActiveMode(FILTER_MODE.CREATION);
 		}
 	};
 
-	const onEdit = ({item}: {item: IFilter}) =>
-		openModal({
-			className: 'overflow-auto',
-			contentComponent: ({closeModal}: {closeModal: Function}) => (
-				<AddFDSFilterModalContent
-					closeModal={closeModal}
-					dataSet={dataSet}
-					fdsFilterClientExtensions={fdsFilterClientExtensions}
-					fieldNames={filters.map((filter) => filter.fieldName)}
-					fields={fields}
-					filter={item}
-					filterType={item.filterType}
-					namespace={namespace}
-					onSave={(newfilter) => {
-						const newFilters = filters.map((item) => {
-							if (item.id === newfilter.id) {
-								if (
-									item.filterType === EFilterType.DATE_RANGE
-								) {
-									(newfilter as IDateFilter).from =
-										(newfilter as IDateFilter).from || '';
-									(newfilter as IDateFilter).to =
-										(newfilter as IDateFilter).to || '';
-								}
-
-								return {...item, ...newfilter};
-							}
-
-							return item;
-						});
-
-						setFilters(newFilters);
-					}}
-					restApplications={restApplications}
-				/>
-			),
-			disableAutoClose: true,
-			size: 'lg',
-		});
+	const onEdit = ({item}: {item: IFilter}) => {
+		if (
+			item.filterType === EFilterType.CLIENT_EXTENSION &&
+			!fdsFilterClientExtensions.length
+		) {
+			noFilterClientExtensionsAvailableModal();
+		}
+		else {
+			setActiveMode(FILTER_MODE.EDITION);
+			setActiveFilter(item);
+		}
+	};
 
 	const onDelete = async ({item}: {item: IFilter}) => {
 		openModal({
@@ -406,18 +404,92 @@ function FiltersNew({
 
 	return (
 		<ClayLayout.ContainerFluid>
+			<ClayBreadcrumb className="my-2" items={[]} />
 
-			<ClayBreadcrumb className='my-2' items={[]} />
+			{activeMode === FILTER_MODE.CREATION && (
+				<ClayLayout.Sheet className="mt-3" size="lg">
+					{activeFilterType && (
+						<FilterFormComponent
+							dataSet={dataSet}
+							dismiss={() => setActiveMode(FILTER_MODE.LIST)}
+							fdsFilterClientExtensions={
+								fdsFilterClientExtensions
+							}
+							fieldNames={filters.map(
+								(filter) => filter.fieldName
+							)}
+							fields={availableFields}
+							filterType={activeFilterType}
+							namespace={namespace}
+							onSave={(newfilter) => {
+								if (newfilter.label === undefined) {
+									newfilter.label = '';
+								}
+								setFilters([...filters, newfilter]);
+							}}
+							restApplications={restApplications}
+						/>
+					)}
+				</ClayLayout.Sheet>
+			)}
 
-			<FilterList
-				createFilter={onCreationButtonClick}
-				filterTypes={FILTER_TYPES}
-				filters={filters}
-				deleteFilter={onDelete}
-				editFilter={onEdit}
-				updateFiltersOrder={updateFDSFiltersOrder}
-			/>
+			{activeMode === FILTER_MODE.EDITION && (
+				<ClayLayout.Sheet className="mt-3" size="lg">
+					{activeFilter && (
+						<FilterFormComponent
+							dataSet={dataSet}
+							dismiss={() => setActiveMode(FILTER_MODE.LIST)}
+							fdsFilterClientExtensions={
+								fdsFilterClientExtensions
+							}
+							fieldNames={filters.map(
+								(filter) => filter.fieldName
+							)}
+							fields={fields}
+							filter={activeFilter}
+							filterType={activeFilter.filterType}
+							namespace={namespace}
+							onSave={(newfilter) => {
+								const newFilters = filters.map((item) => {
+									if (item.id === newfilter.id) {
+										if (
+											item.filterType ===
+											EFilterType.DATE_RANGE
+										) {
+											(newfilter as IDateFilter).from =
+												(newfilter as IDateFilter)
+													.from || '';
+											(newfilter as IDateFilter).to =
+												(newfilter as IDateFilter).to ||
+												'';
+										}
 
+										return {...item, ...newfilter};
+									}
+
+									return item;
+								});
+
+								setFilters(newFilters);
+							}}
+							restApplications={restApplications}
+						/>
+					)}
+				</ClayLayout.Sheet>
+			)}
+
+			{activeMode === FILTER_MODE.LIST && (
+				<ClayLayout.ContainerFluid className="bg-white mb-4 p-0 rounded-sm">
+					<FilterList
+						createFilter={onCreationButtonClick}
+						deleteFilter={onDelete}
+						editFilter={onEdit}
+						filterTypes={FILTER_TYPES}
+						filters={filters}
+						updateFiltersOrder={updateFDSFiltersOrder}
+					/>
+				</ClayLayout.ContainerFluid>
+			)}
 		</ClayLayout.ContainerFluid>
 	);
 }

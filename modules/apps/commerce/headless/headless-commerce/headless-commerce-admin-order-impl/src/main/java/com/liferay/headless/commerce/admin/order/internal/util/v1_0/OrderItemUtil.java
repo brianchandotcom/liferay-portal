@@ -281,7 +281,7 @@ public class OrderItemUtil {
 			if (replacedSku != null) {
 				replacedSkuId = replacedSku.getCPInstanceId();
 			}
-			else {
+			else if (commerceOrderItem != null) {
 				replacedSkuId = commerceOrderItem.getReplacedCPInstanceId();
 			}
 		}
@@ -345,7 +345,7 @@ public class OrderItemUtil {
 			if (commerceAddress != null) {
 				shippingAddressId = commerceAddress.getCommerceAddressId();
 			}
-			else {
+			else if (commerceOrderItem != null) {
 				shippingAddressId = commerceOrderItem.getShippingAddressId();
 			}
 		}

@@ -613,6 +613,32 @@ public class ProjectController extends BaseFaroController {
 		}
 	}
 
+	@DELETE
+	@Path("/{groupId}/usage/reset")
+	@RolesAllowed(RoleConstants.SITE_ADMINISTRATOR)
+	public void resetProjectUsageDisplays(@PathParam("groupId") Long groupId)
+		throws Exception {
+
+		FaroProject faroProject =
+			_faroProjectLocalService.fetchFaroProjectByGroupId(groupId);
+
+		FaroSubscriptionDisplay faroSubscriptionDisplay = JSONUtil.readValue(
+			faroProject.getSubscription(), FaroSubscriptionDisplay.class);
+
+		faroSubscriptionDisplay.setIndividualsCounts(null);
+		faroSubscriptionDisplay.setPageViewsCounts(null);
+
+		faroProject.setSubscription(
+			JSONUtil.writeValueAsString(faroSubscriptionDisplay));
+
+		faroSubscriptionDisplay.setUsageCounts(
+			cerebroEngineClient, contactsEngineClient, new Date(), faroProject);
+
+		_faroProjectLocalService.updateSubscription(
+			faroProject.getFaroProjectId(),
+			JSONUtil.writeValueAsString(faroSubscriptionDisplay));
+	}
+
 	@Path("/{groupId}/send-created-workspace-email")
 	@POST
 	@RolesAllowed(StringPool.BLANK)

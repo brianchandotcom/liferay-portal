@@ -220,6 +220,14 @@ public class FaroSubscriptionDisplay {
 			_pageViewsCountSinceLastAnniversary, _pageViewsLimit);
 	}
 
+	public void setIndividualsCounts(String individualsCounts) {
+		_individualsCounts = individualsCounts;
+	}
+
+	public void setPageViewsCounts(String pageViewsCounts) {
+		_pageViewsCounts = pageViewsCounts;
+	}
+
 	public void setUsageCounts(
 			CerebroEngineClient cerebroEngineClient,
 			ContactsEngineClient contactsEngineClient, Date date,

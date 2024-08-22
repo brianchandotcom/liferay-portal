@@ -30,6 +30,8 @@ public class SemVerModulesBatchBuildTestrayCaseResult
 		AxisTestClassGroup axisTestClassGroup, TestClass testClass) {
 
 		super(testrayBuild, topLevelBuild, axisTestClassGroup);
+
+		_semVerModulesTestClass = (SemVerModulesTestClass)testClass;
 	}
 
 	@Override

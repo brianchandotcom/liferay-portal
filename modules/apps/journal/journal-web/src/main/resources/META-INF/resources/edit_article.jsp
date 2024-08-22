@@ -145,21 +145,6 @@ journalEditArticleDisplayContext.setViewAttributes();
 					<div class="c-gap-3 form-group-sm journal-article-button-row mb-0 tbar-section text-right">
 						<c:choose>
 							<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPD-11228") %>'>
-								<div>
-									<react:component
-										module="{UndoRedo} from journal-web"
-										props='<%=
-											HashMapBuilder.<String, Object>put(
-												"initialDefaultLanguageId", journalEditArticleDisplayContext.getDefaultArticleLanguageId()
-											).put(
-												"initialFields", journalEditArticleDisplayContext.getFieldMap()
-											).put(
-												"languageId", journalEditArticleDisplayContext.getSelectedLanguageId()
-											).build()
-										%>'
-									/>
-								</div>
-
 								<div class="align-items-center d-none mx-3 small text-danger" id="<portlet:namespace />lockErrorIndicator">
 									<liferay-ui:message key="alert-helper-error" />
 
@@ -181,6 +166,20 @@ journalEditArticleDisplayContext.setViewAttributes();
 									<clay:icon
 										cssClass="ml-2"
 										symbol="check-circle"
+									/>
+								</div>
+								<div>
+									<react:component
+										module="{UndoRedo} from journal-web"
+										props='<%=
+											HashMapBuilder.<String, Object>put(
+												"initialDefaultLanguageId", journalEditArticleDisplayContext.getDefaultArticleLanguageId()
+											).put(
+												"initialFields", journalEditArticleDisplayContext.getFieldMap()
+											).put(
+												"languageId", journalEditArticleDisplayContext.getSelectedLanguageId()
+											).build()
+										%>'
 									/>
 								</div>
 							</c:when>

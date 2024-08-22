@@ -447,6 +447,14 @@ public class AccountRoleResourceTest extends BaseAccountRoleResourceTestCase {
 
 	@Override
 	@Test
+	public void testPostAccountAccountRole() throws Exception {
+		super.testPostAccountAccountRole();
+
+		_testPostAccountAccountRoleWithExternalReferenceCode();
+	}
+
+	@Override
+	@Test
 	public void testPostAccountAccountRoleUserAccountAssociation()
 		throws Exception {
 
@@ -1113,6 +1121,24 @@ public class AccountRoleResourceTest extends BaseAccountRoleResourceTestCase {
 				urlType = "personal";
 			}
 		};
+	}
+
+	private void _testPostAccountAccountRoleWithExternalReferenceCode()
+		throws Exception {
+
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		AccountRole randomAccountRole = randomAccountRole();
+
+		randomAccountRole.setExternalReferenceCode(externalReferenceCode);
+
+		AccountRole postAccountRole = testPostAccountAccountRole_addAccountRole(
+			randomAccountRole);
+
+		assertEquals(randomAccountRole, postAccountRole);
+		assertValid(postAccountRole);
+		Assert.assertEquals(
+			externalReferenceCode, postAccountRole.getExternalReferenceCode());
 	}
 
 	private Account _account;

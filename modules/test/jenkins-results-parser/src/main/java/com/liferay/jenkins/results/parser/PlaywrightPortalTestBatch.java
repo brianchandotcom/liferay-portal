@@ -95,7 +95,8 @@ public class PlaywrightPortalTestBatch
 		sb.append(portalBatchBuildData.getTopLevelMasterHostname());
 		sb.append(".liferay.com/userContent/");
 		sb.append(portalBatchBuildData.getUserContentRelativePath());
-		sb.append("playwright-reports/index.html\">Playwright Report</a>");
+		sb.append(portalBatchBuildData.getRunID());
+		sb.append("/playwright-reports/index.html\">Playwright Report</a>");
 
 		sb.append("<ul>");
 

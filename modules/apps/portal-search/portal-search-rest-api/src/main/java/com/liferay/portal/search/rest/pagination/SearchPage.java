@@ -88,6 +88,10 @@ public class SearchPage<T> extends Page<T> {
 	}
 
 	private String _toString(Map<String, Object> map) {
+		if (map == null) {
+			return "{}";
+		}
+
 		StringBundler sb = new StringBundler("{");
 
 		Set<Map.Entry<String, Object>> entries = map.entrySet();

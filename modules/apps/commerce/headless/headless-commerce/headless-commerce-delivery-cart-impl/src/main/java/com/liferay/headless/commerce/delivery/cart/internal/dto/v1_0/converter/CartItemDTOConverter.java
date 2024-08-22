@@ -10,6 +10,7 @@ import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.model.CPDefinitionInventory;
+import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.price.CommerceOrderItemPrice;
@@ -21,6 +22,7 @@ import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CPInstanceUnitOfMeasureLocalService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
+import com.liferay.commerce.service.CommerceAddressLocalService;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.util.CommerceQuantityFormatter;
 import com.liferay.expando.kernel.model.ExpandoBridge;
@@ -113,9 +115,16 @@ public class CartItemDTOConverter
 						commerceOrderItem.getQuantity(),
 						commerceOrderItem.getUnitOfMeasureKey()));
 				setReplacedSku(commerceOrderItem::getReplacedSku);
+				setReplacedSkuExternalReferenceCode(
+					() -> _getReplacedSkuExternalReferenceCode(
+						commerceOrderItem.getReplacedCPInstanceId()));
 				setReplacedSkuId(commerceOrderItem::getReplacedCPInstanceId);
 				setSettings(
 					() -> _getSettings(commerceOrderItem.getCPInstanceId()));
+				setShippingAddressExternalReferenceCode(
+					() -> _getShippingAddressExternalReferenceCode(
+						commerceOrderItem.getShippingAddressId()));
+				setShippingAddressId(commerceOrderItem::getShippingAddressId);
 				setSku(commerceOrderItem::getSku);
 				setSkuId(commerceOrderItem::getCPInstanceId);
 				setSkuUnitOfMeasure(
@@ -296,6 +305,19 @@ public class CartItemDTOConverter
 		return price;
 	}
 
+	private String _getReplacedSkuExternalReferenceCode(
+		long replacedCPInstanceId) {
+
+		CPInstance cpInstance = _cpInstanceLocalService.fetchCPInstance(
+			replacedCPInstanceId);
+
+		if (cpInstance == null) {
+			return null;
+		}
+
+		return cpInstance.getExternalReferenceCode();
+	}
+
 	private Settings _getSettings(long cpInstanceId) {
 		Settings settings = new Settings();
 
@@ -357,6 +379,23 @@ public class CartItemDTOConverter
 
 		return settings;
 	}
+
+	private String _getShippingAddressExternalReferenceCode(
+		long shippingAddressId) {
+
+		CommerceAddress commerceAddress =
+			_commerceAddressLocalService.fetchCommerceAddress(
+				shippingAddressId);
+
+		if (commerceAddress == null) {
+			return null;
+		}
+
+		return commerceAddress.getExternalReferenceCode();
+	}
+
+	@Reference
+	private CommerceAddressLocalService _commerceAddressLocalService;
 
 	@Reference
 	private CommerceOrderItemService _commerceOrderItemService;

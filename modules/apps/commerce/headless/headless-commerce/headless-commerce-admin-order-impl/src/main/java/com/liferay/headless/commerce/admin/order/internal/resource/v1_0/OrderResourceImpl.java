@@ -667,7 +667,7 @@ public class OrderResourceImpl extends BaseOrderResourceImpl {
 				CommerceOrderItem commerceOrderItem =
 					OrderItemUtil.addOrUpdateCommerceOrderItem(
 						_cpInstanceService, _cpInstanceUnitOfMeasureService,
-						_commerceOrderItemService,
+						_commerceAddressService, _commerceOrderItemService,
 						_commerceOrderModelResourcePermission, orderItem,
 						commerceOrder,
 						_commerceContextFactory.create(

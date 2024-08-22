@@ -12,6 +12,7 @@ import com.liferay.commerce.exception.NoSuchOrderItemException;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.product.service.CPInstanceService;
+import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
@@ -391,7 +392,8 @@ public class OrderItemResourceImpl extends BaseOrderItemResourceImpl {
 
 		if (commerceOrderItem == null) {
 			commerceOrderItem = OrderItemUtil.addCommerceOrderItem(
-				_cpInstanceService, _commerceOrderItemService,
+				_cpInstanceService, _commerceAddressService,
+				_commerceOrderItemService,
 				_commerceOrderModelResourcePermission, orderItem, commerceOrder,
 				_commerceContextFactory.create(
 					contextCompany.getCompanyId(), commerceOrder.getGroupId(),
@@ -504,7 +506,8 @@ public class OrderItemResourceImpl extends BaseOrderItemResourceImpl {
 
 		CommerceOrderItem commerceOrderItem =
 			OrderItemUtil.addCommerceOrderItem(
-				_cpInstanceService, _commerceOrderItemService,
+				_cpInstanceService, _commerceAddressService,
+				_commerceOrderItemService,
 				_commerceOrderModelResourcePermission, orderItem, commerceOrder,
 				_commerceContextFactory.create(
 					contextCompany.getCompanyId(), commerceOrder.getGroupId(),
@@ -728,6 +731,9 @@ public class OrderItemResourceImpl extends BaseOrderItemResourceImpl {
 
 		return _toOrderItem(commerceOrderItem.getCommerceOrderItemId());
 	}
+
+	@Reference
+	private CommerceAddressService _commerceAddressService;
 
 	@Reference
 	private CommerceContextFactory _commerceContextFactory;

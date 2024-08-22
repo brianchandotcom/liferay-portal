@@ -6,16 +6,19 @@
 package com.liferay.headless.commerce.admin.order.internal.dto.v1_0.converter;
 
 import com.liferay.commerce.media.CommerceMediaResolver;
+import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPInstanceUnitOfMeasure;
 import com.liferay.commerce.product.model.CPMeasurementUnit;
+import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CPInstanceUnitOfMeasureLocalService;
 import com.liferay.commerce.product.service.CPMeasurementUnitService;
 import com.liferay.commerce.product.type.virtual.order.model.CommerceVirtualOrderItem;
 import com.liferay.commerce.product.type.virtual.order.model.CommerceVirtualOrderItemFileEntry;
 import com.liferay.commerce.product.type.virtual.order.service.CommerceVirtualOrderItemService;
+import com.liferay.commerce.service.CommerceAddressLocalService;
 import com.liferay.commerce.service.CommerceOrderItemLocalService;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.util.CommerceOrderItemQuantityFormatter;
@@ -139,6 +142,9 @@ public class OrderItemDTOConverter
 						cpInstanceUnitOfMeasure,
 						commerceOrderItem.getQuantity()));
 				setReplacedSku(commerceOrderItem::getReplacedSku);
+				setReplacedSkuExternalReferenceCode(
+					() -> _getReplacedSkuExternalReferenceCode(
+						commerceOrderItem.getReplacedCPInstanceId()));
 				setReplacedSkuId(commerceOrderItem::getReplacedCPInstanceId);
 				setRequestedDeliveryDate(
 					commerceOrderItem::getRequestedDeliveryDate);
@@ -146,6 +152,9 @@ public class OrderItemDTOConverter
 					() -> _commerceQuantityFormatter.format(
 						cpInstanceUnitOfMeasure,
 						commerceOrderItem.getShippedQuantity()));
+				setShippingAddressExternalReferenceCode(
+					() -> _getShippingAddressExternalReferenceCode(
+						commerceOrderItem.getShippingAddressId()));
 				setShippingAddressId(commerceOrderItem::getShippingAddressId);
 				setSku(commerceOrderItem::getSku);
 				setSkuExternalReferenceCode(
@@ -269,6 +278,33 @@ public class OrderItemDTOConverter
 		return commerceOrderItem;
 	}
 
+	private String _getReplacedSkuExternalReferenceCode(
+		long replacedCPInstanceId) {
+
+		CPInstance cpInstance = _cpInstanceLocalService.fetchCPInstance(
+			replacedCPInstanceId);
+
+		if (cpInstance == null) {
+			return null;
+		}
+
+		return cpInstance.getExternalReferenceCode();
+	}
+
+	private String _getShippingAddressExternalReferenceCode(
+		long shippingAddressId) {
+
+		CommerceAddress commerceAddress =
+			_commerceAddressLocalService.fetchCommerceAddress(
+				shippingAddressId);
+
+		if (commerceAddress == null) {
+			return null;
+		}
+
+		return commerceAddress.getExternalReferenceCode();
+	}
+
 	private String _getSkuExternalReferenceCode(CPInstance cpInstance) {
 		if (cpInstance == null) {
 			return StringPool.BLANK;
@@ -332,6 +368,9 @@ public class OrderItemDTOConverter
 		OrderItemDTOConverter.class);
 
 	@Reference
+	private CommerceAddressLocalService _commerceAddressLocalService;
+
+	@Reference
 	private CommerceMediaResolver _commerceMediaResolver;
 
 	@Reference
@@ -349,6 +388,9 @@ public class OrderItemDTOConverter
 
 	@Reference
 	private CommerceVirtualOrderItemService _commerceVirtualOrderItemService;
+
+	@Reference
+	private CPInstanceLocalService _cpInstanceLocalService;
 
 	@Reference
 	private CPInstanceUnitOfMeasureLocalService

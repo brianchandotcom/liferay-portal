@@ -9,8 +9,12 @@ import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.context.CommerceContextFactory;
 import com.liferay.commerce.exception.NoSuchOrderException;
 import com.liferay.commerce.exception.NoSuchOrderItemException;
+import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
+import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.service.CPInstanceService;
+import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
@@ -225,27 +229,9 @@ public class CartItemResourceImpl extends BaseCartItemResourceImpl {
 					externalReferenceCode);
 		}
 
-		SkuUnitOfMeasure skuUnitOfMeasure = cartItem.getSkuUnitOfMeasure();
-		String skuUnitOfMeasureKey = StringPool.BLANK;
-
-		if (skuUnitOfMeasure != null) {
-			skuUnitOfMeasureKey = skuUnitOfMeasure.getKey();
-		}
-
 		return _toCartItem(
 			commerceOrder.getCommerceAccountId(),
-			_commerceOrderItemService.addOrUpdateCommerceOrderItem(
-				commerceOrder.getCommerceOrderId(), cartItem.getSkuId(),
-				cartItem.getOptions(),
-				BigDecimal.valueOf(GetterUtil.get(cartItem.getQuantity(), 1)),
-				GetterUtil.getLong(cartItem.getReplacedSkuId()),
-				BigDecimal.ZERO, skuUnitOfMeasureKey,
-				_commerceContextFactory.create(
-					contextCompany.getCompanyId(), commerceOrder.getGroupId(),
-					contextUser.getUserId(), commerceOrder.getCommerceOrderId(),
-					commerceOrder.getCommerceAccountId()),
-				_serviceContextHelper.getServiceContext(
-					commerceOrder.getGroupId())));
+			_updateCartItem(cartItem, commerceOrder));
 	}
 
 	@Override
@@ -255,27 +241,9 @@ public class CartItemResourceImpl extends BaseCartItemResourceImpl {
 		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
 			cartId);
 
-		SkuUnitOfMeasure skuUnitOfMeasure = cartItem.getSkuUnitOfMeasure();
-		String skuUnitOfMeasureKey = StringPool.BLANK;
-
-		if (skuUnitOfMeasure != null) {
-			skuUnitOfMeasureKey = skuUnitOfMeasure.getKey();
-		}
-
 		return _toCartItem(
 			commerceOrder.getCommerceAccountId(),
-			_commerceOrderItemService.addOrUpdateCommerceOrderItem(
-				commerceOrder.getCommerceOrderId(), cartItem.getSkuId(),
-				cartItem.getOptions(),
-				BigDecimal.valueOf(GetterUtil.get(cartItem.getQuantity(), 1)),
-				GetterUtil.getLong(cartItem.getReplacedSkuId()),
-				BigDecimal.ZERO, skuUnitOfMeasureKey,
-				_commerceContextFactory.create(
-					contextCompany.getCompanyId(), commerceOrder.getGroupId(),
-					contextUser.getUserId(), cartId,
-					commerceOrder.getCommerceAccountId()),
-				_serviceContextHelper.getServiceContext(
-					commerceOrder.getGroupId())));
+			_updateCartItem(cartItem, commerceOrder));
 	}
 
 	@Override
@@ -366,6 +334,69 @@ public class CartItemResourceImpl extends BaseCartItemResourceImpl {
 				contextAcceptLanguage.getPreferredLocale()));
 	}
 
+	private CommerceOrderItem _updateCartItem(
+			CartItem cartItem, CommerceOrder commerceOrder)
+		throws Exception {
+
+		SkuUnitOfMeasure skuUnitOfMeasure = cartItem.getSkuUnitOfMeasure();
+		String skuUnitOfMeasureKey = StringPool.BLANK;
+
+		if (skuUnitOfMeasure != null) {
+			skuUnitOfMeasureKey = skuUnitOfMeasure.getKey();
+		}
+
+		long replacedSkuId = GetterUtil.getLong(cartItem.getReplacedSkuId());
+
+		if (replacedSkuId == 0) {
+			CPInstance replacedSku =
+				_cpInstanceService.fetchByExternalReferenceCode(
+					cartItem.getReplacedSkuExternalReferenceCode(),
+					contextCompany.getCompanyId());
+
+			if (replacedSku != null) {
+				replacedSkuId = replacedSku.getCPInstanceId();
+			}
+		}
+
+		CommerceOrderItem commerceOrderItem =
+			_commerceOrderItemService.addOrUpdateCommerceOrderItem(
+				commerceOrder.getCommerceOrderId(), cartItem.getSkuId(),
+				cartItem.getOptions(),
+				BigDecimal.valueOf(GetterUtil.get(cartItem.getQuantity(), 1)),
+				replacedSkuId, BigDecimal.ZERO, skuUnitOfMeasureKey,
+				_commerceContextFactory.create(
+					contextCompany.getCompanyId(), commerceOrder.getGroupId(),
+					contextUser.getUserId(), commerceOrder.getCommerceOrderId(),
+					commerceOrder.getCommerceAccountId()),
+				_serviceContextHelper.getServiceContext(
+					commerceOrder.getGroupId()));
+
+		long shippingAddressId = GetterUtil.getLong(
+			cartItem.getShippingAddressId());
+
+		if (shippingAddressId == 0) {
+			CommerceAddress commerceAddress =
+				_commerceAddressService.fetchByExternalReferenceCode(
+					cartItem.getShippingAddressExternalReferenceCode(),
+					contextCompany.getCompanyId());
+
+			if (commerceAddress != null) {
+				shippingAddressId = commerceAddress.getCommerceAddressId();
+			}
+			else {
+				shippingAddressId = commerceOrderItem.getShippingAddressId();
+			}
+		}
+
+		return _commerceOrderItemService.updateCommerceOrderItemInfo(
+			commerceOrderItem.getCommerceOrderItemId(), shippingAddressId,
+			commerceOrderItem.getDeliveryGroup(),
+			commerceOrderItem.getPrintedNote());
+	}
+
+	@Reference
+	private CommerceAddressService _commerceAddressService;
+
 	@Reference
 	private CommerceContextFactory _commerceContextFactory;
 
@@ -374,6 +405,9 @@ public class CartItemResourceImpl extends BaseCartItemResourceImpl {
 
 	@Reference
 	private CommerceOrderService _commerceOrderService;
+
+	@Reference
+	private CPInstanceService _cpInstanceService;
 
 	@Reference(target = DTOConverterConstants.CART_ITEM_DTO_CONVERTER)
 	private DTOConverter<CommerceOrderItem, CartItem> _orderItemDTOConverter;

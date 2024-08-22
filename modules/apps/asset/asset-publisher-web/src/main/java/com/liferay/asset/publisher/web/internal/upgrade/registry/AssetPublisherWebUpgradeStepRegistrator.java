@@ -5,10 +5,12 @@
 
 package com.liferay.asset.publisher.web.internal.upgrade.registry;
 
+import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.asset.publisher.web.internal.upgrade.v1_0_0.UpgradePortletId;
 import com.liferay.asset.publisher.web.internal.upgrade.v1_0_0.UpgradePortletPreferences;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.xml.SAXReader;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
@@ -56,7 +58,19 @@ public class AssetPublisherWebUpgradeStepRegistrator
 			"1.0.4", "1.0.5",
 			new com.liferay.asset.publisher.web.internal.upgrade.v1_0_5.
 				UpgradePortletPreferences());
+
+		registry.register(
+			"1.0.5", "1.0.6",
+			new com.liferay.asset.publisher.web.internal.upgrade.v1_0_6.
+				UpgradePortletPreferences(
+					_assetListEntryLocalService, _configurationProvider));
 	}
+
+	@Reference
+	private AssetListEntryLocalService _assetListEntryLocalService;
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private DDMStructureLinkLocalService _ddmStructureLinkLocalService;

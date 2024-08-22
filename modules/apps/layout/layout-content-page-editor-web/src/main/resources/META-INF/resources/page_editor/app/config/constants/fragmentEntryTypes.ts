@@ -6,6 +6,7 @@
 export const FRAGMENT_ENTRY_TYPES = {
 	composition: 'composition',
 	input: 'input',
+	stepper: 'stepper',
 } as const;
 
 export type FragmentEntryType =

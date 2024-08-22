@@ -54,7 +54,7 @@ public class ProjectUsageDisplay {
 
 		if (includeIndividualsCounts) {
 			_individualsCountsDisplay = new CountsDisplay(
-				includePageViewsCounts,
+				includeMonthlyValues,
 				JSONFactoryUtil.createJSONObject(
 					subscriptionJSONObject.getString("individualsCounts")));
 		}
@@ -67,7 +67,7 @@ public class ProjectUsageDisplay {
 
 		if (includePageViewsCounts) {
 			_pageViewsCountsDisplay = new CountsDisplay(
-				includePageViewsCounts,
+				includeMonthlyValues,
 				JSONFactoryUtil.createJSONObject(
 					subscriptionJSONObject.getString("pageViewsCounts")));
 		}

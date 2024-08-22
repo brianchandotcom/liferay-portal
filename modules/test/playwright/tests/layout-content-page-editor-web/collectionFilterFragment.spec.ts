@@ -101,114 +101,125 @@ const selectFilter = async (page: Page, categories: string[]) => {
 	await page.waitForURL(/(.)filter_category(.)/);
 };
 
-test('Filters a web content collection by single and multiple categories', async ({
-	apiHelpers,
-	collectionsPage,
-	page,
-	pageEditorPage,
-	pageManagementSite,
-}) => {
+test(
+	'Filters a web content collection by single and multiple categories',
+	{
+		tag: '@LPS-124226',
+	},
+	async ({
+		apiHelpers,
+		collectionsPage,
+		page,
+		pageEditorPage,
+		pageManagementSite,
+	}) => {
 
-	// Create a definition for a Collection Filter
+		// Create a definition for a Collection Filter
 
-	const collectionFilterId = getRandomString();
+		const collectionFilterId = getRandomString();
 
-	const collectionFilterDefinition = getFragmentDefinition({
-		id: collectionFilterId,
-		key: 'com.liferay.fragment.renderer.collection.filter.internal.CollectionFilterFragmentRenderer',
-	});
+		const collectionFilterDefinition = getFragmentDefinition({
+			id: collectionFilterId,
+			key: 'com.liferay.fragment.renderer.collection.filter.internal.CollectionFilterFragmentRenderer',
+		});
 
-	// Create definition for a collection mapped to Animals collection
+		// Create definition for a collection mapped to Animals collection
 
-	const animalsClassPK = await collectionsPage.getCollectionClassPK(
-		ANIMALS_COLLECTION_NAME,
-		pageManagementSite.friendlyUrlPath
-	);
+		const animalsClassPK = await collectionsPage.getCollectionClassPK(
+			ANIMALS_COLLECTION_NAME,
+			pageManagementSite.friendlyUrlPath
+		);
 
-	const animalsCollection = getCollectionItemDefinition(getRandomString(), [
-		getFragmentDefinition({
-			fragmentFields: FRAGMENT_FIELDS,
+		const animalsCollection = getCollectionItemDefinition(
+			getRandomString(),
+			[
+				getFragmentDefinition({
+					fragmentFields: FRAGMENT_FIELDS,
+					id: getRandomString(),
+					key: 'BASIC_COMPONENT-heading',
+				}),
+			]
+		);
+
+		const collectionDefinition = getCollectionDefinition({
+			classPK: animalsClassPK,
 			id: getRandomString(),
-			key: 'BASIC_COMPONENT-heading',
-		}),
-	]);
+			pageElements: [animalsCollection],
+		});
 
-	const collectionDefinition = getCollectionDefinition({
-		classPK: animalsClassPK,
-		id: getRandomString(),
-		pageElements: [animalsCollection],
-	});
+		// Create a content page and go to edit mode
 
-	// Create a content page and go to edit mode
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([
+				collectionFilterDefinition,
+				collectionDefinition,
+			]),
+			siteId: pageManagementSite.id,
+			title: getRandomString(),
+		});
 
-	const layout = await apiHelpers.headlessDelivery.createSitePage({
-		pageDefinition: getPageDefinition([
-			collectionFilterDefinition,
-			collectionDefinition,
-		]),
-		siteId: pageManagementSite.id,
-		title: getRandomString(),
-	});
+		await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
 
-	await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
+		// Go to edit mode of the created page and select the Collection Filter fragment
 
-	// Go to edit mode of the created page and select the Collection Filter fragment
+		await pageEditorPage.selectFragment(collectionFilterId);
 
-	await pageEditorPage.selectFragment(collectionFilterId);
+		// Set Filter configuration for categories
 
-	// Set Filter configuration for categories
+		await configureFilter(page, 'category');
 
-	await configureFilter(page, 'category');
+		// Check the option to show the label with the selected vocabulary
 
-	// Check the option to show the label with the selected vocabulary
+		await page.getByLabel('Show Label').check();
 
-	await page.getByLabel('Show Label').check();
+		await pageEditorPage.publishPage();
 
-	await pageEditorPage.publishPage();
+		// Go to view mode of the created page
 
-	// Go to view mode of the created page
+		await page.goto(
+			`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+		);
 
-	await page.goto(
-		`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
-	);
+		// Both should be visible initially
 
-	// Both should be visible initially
+		await expect(
+			page.getByText('Animal 01 - Dogs and Cats categories')
+		).toBeVisible();
+		await expect(page.getByText('Animal 02 - Dogs category')).toBeVisible();
 
-	await expect(
-		page.getByText('Animal 01 - Dogs and Cats categories')
-	).toBeVisible();
-	await expect(page.getByText('Animal 02 - Dogs category')).toBeVisible();
+		await expect(
+			page.getByText(ANIMALS_COLLECTION_NAME, {exact: true})
+		).toBeVisible();
 
-	await expect(
-		page.getByText(ANIMALS_COLLECTION_NAME, {exact: true})
-	).toBeVisible();
+		// Select category filter: Cats
 
-	// Select category filter: Cats
+		await selectFilter(page, ['cats']);
 
-	await selectFilter(page, ['cats']);
+		await expect(
+			page.getByText('Animal 01 - Dogs and Cats categories')
+		).toBeVisible();
 
-	await expect(
-		page.getByText('Animal 01 - Dogs and Cats categories')
-	).toBeVisible();
+		await expect(
+			page.getByText('Animal 02 - Dogs category')
+		).not.toBeVisible();
 
-	await expect(page.getByText('Animal 02 - Dogs category')).not.toBeVisible();
+		// Select category filter: Cats and Dogs
 
-	// Select category filter: Cats and Dogs
+		await page.goto(
+			`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+		);
 
-	await page.goto(
-		`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
-	);
+		await selectFilter(page, ['dogs', 'cats']);
 
-	await selectFilter(page, ['dogs', 'cats']);
+		await expect(
+			page.getByText('Animal 01 - Dogs and Cats categories')
+		).toBeVisible();
 
-	await expect(
-		page.getByText('Animal 01 - Dogs and Cats categories')
-	).toBeVisible();
+		await expect(page.getByText('Animal 02 - Dogs category')).toBeVisible();
 
-	await expect(page.getByText('Animal 02 - Dogs category')).toBeVisible();
-
-	await apiHelpers.jsonWebServicesLayout.deleteLayout(layout.id);
-});
+		await apiHelpers.jsonWebServicesLayout.deleteLayout(layout.id);
+	}
+);
 
 testWithIsolatedSite(
 	'Filters a web content collection by single and multiple tags',
@@ -406,121 +417,134 @@ test('Enables search field in dropdown list of Collection Filter', async ({
 	await apiHelpers.jsonWebServicesLayout.deleteLayout(layout.id);
 });
 
-test('Filters the collection content by keywords using two filters', async ({
-	apiHelpers,
-	collectionsPage,
-	page,
-	pageEditorPage,
-	pageManagementSite,
-}) => {
+test(
+	'Filters the collection content by keywords using two filters',
+	{
+		tag: '@LPS-131947',
+	},
+	async ({
+		apiHelpers,
+		collectionsPage,
+		page,
+		pageEditorPage,
+		pageManagementSite,
+	}) => {
 
-	// Create a definition for a Collection Filter
+		// Create a definition for a Collection Filter
 
-	const firstCollectionFilterId = getRandomString();
-	const secondCollectionFilterId = getRandomString();
+		const firstCollectionFilterId = getRandomString();
+		const secondCollectionFilterId = getRandomString();
 
-	const firstCollectionFilterDefinition = getFragmentDefinition({
-		id: firstCollectionFilterId,
-		key: 'com.liferay.fragment.renderer.collection.filter.internal.CollectionFilterFragmentRenderer',
-	});
+		const firstCollectionFilterDefinition = getFragmentDefinition({
+			id: firstCollectionFilterId,
+			key: 'com.liferay.fragment.renderer.collection.filter.internal.CollectionFilterFragmentRenderer',
+		});
 
-	const secondFilterDefinition = getFragmentDefinition({
-		id: secondCollectionFilterId,
-		key: 'com.liferay.fragment.renderer.collection.filter.internal.CollectionFilterFragmentRenderer',
-	});
+		const secondFilterDefinition = getFragmentDefinition({
+			id: secondCollectionFilterId,
+			key: 'com.liferay.fragment.renderer.collection.filter.internal.CollectionFilterFragmentRenderer',
+		});
 
-	// Create definition for a collection mapped to Animals collection
+		// Create definition for a collection mapped to Animals collection
 
-	const animalsClassPK = await collectionsPage.getCollectionClassPK(
-		ANIMALS_COLLECTION_NAME,
-		pageManagementSite.friendlyUrlPath
-	);
+		const animalsClassPK = await collectionsPage.getCollectionClassPK(
+			ANIMALS_COLLECTION_NAME,
+			pageManagementSite.friendlyUrlPath
+		);
 
-	const animalsCollection = getCollectionItemDefinition(getRandomString(), [
-		getFragmentDefinition({
-			fragmentFields: FRAGMENT_FIELDS,
+		const animalsCollection = getCollectionItemDefinition(
+			getRandomString(),
+			[
+				getFragmentDefinition({
+					fragmentFields: FRAGMENT_FIELDS,
+					id: getRandomString(),
+					key: 'BASIC_COMPONENT-heading',
+				}),
+			]
+		);
+
+		const collectionDefinition = getCollectionDefinition({
+			classPK: animalsClassPK,
 			id: getRandomString(),
-			key: 'BASIC_COMPONENT-heading',
-		}),
-	]);
+			pageElements: [animalsCollection],
+		});
 
-	const collectionDefinition = getCollectionDefinition({
-		classPK: animalsClassPK,
-		id: getRandomString(),
-		pageElements: [animalsCollection],
-	});
+		// Create a content page and go to edit mode
 
-	// Create a content page and go to edit mode
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([
+				firstCollectionFilterDefinition,
+				secondFilterDefinition,
+				collectionDefinition,
+			]),
+			siteId: pageManagementSite.id,
+			title: getRandomString(),
+		});
 
-	const layout = await apiHelpers.headlessDelivery.createSitePage({
-		pageDefinition: getPageDefinition([
-			firstCollectionFilterDefinition,
-			secondFilterDefinition,
-			collectionDefinition,
-		]),
-		siteId: pageManagementSite.id,
-		title: getRandomString(),
-	});
+		// Go to edit mode
 
-	// Go to edit mode
+		await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
 
-	await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
+		// Configure the first filter by keywords
 
-	// Configure the first filter by keywords
+		await pageEditorPage.selectFragment(firstCollectionFilterId);
 
-	await pageEditorPage.selectFragment(firstCollectionFilterId);
+		await configureFilter(page, 'keywords');
+		await pageEditorPage.waitForChangesSaved();
 
-	await configureFilter(page, 'keywords');
-	await pageEditorPage.waitForChangesSaved();
+		// Configure the second filter by keywords
 
-	// Configure the second filter by keywords
+		await pageEditorPage.selectFragment(secondCollectionFilterId);
 
-	await pageEditorPage.selectFragment(secondCollectionFilterId);
+		await configureFilter(page, 'keywords');
+		await pageEditorPage.waitForChangesSaved();
 
-	await configureFilter(page, 'keywords');
-	await pageEditorPage.waitForChangesSaved();
+		// Publish the page
 
-	// Publish the page
+		await pageEditorPage.publishPage();
 
-	await pageEditorPage.publishPage();
+		await page.goto(
+			`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+		);
 
-	await page.goto(
-		`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
-	);
+		// Filter by keywords
 
-	// Filter by keywords
+		const firstFilter = page
+			.getByPlaceholder('Search', {exact: true})
+			.first();
 
-	const firstFilter = page.getByPlaceholder('Search', {exact: true}).first();
+		await firstFilter.fill('category categories');
+		await firstFilter.press('Enter');
 
-	await firstFilter.fill('category categories');
-	await firstFilter.press('Enter');
+		await expect(
+			page.getByText('Animal 01 - Dogs and Cats categories')
+		).toBeVisible();
+		await expect(page.getByText('Animal 02 - Dogs category')).toBeVisible();
 
-	await expect(
-		page.getByText('Animal 01 - Dogs and Cats categories')
-	).toBeVisible();
-	await expect(page.getByText('Animal 02 - Dogs category')).toBeVisible();
+		const secondFilter = page
+			.getByPlaceholder('Search', {exact: true})
+			.nth(1);
 
-	const secondFilter = page.getByPlaceholder('Search', {exact: true}).nth(1);
+		await secondFilter.fill('Animal');
+		await secondFilter.press('Enter');
 
-	await secondFilter.fill('Animal');
-	await secondFilter.press('Enter');
+		await expect(
+			page.getByText('Animal 01 - Dogs and Cats categories')
+		).toBeVisible();
+		await expect(page.getByText('Animal 02 - Dogs category')).toBeVisible();
 
-	await expect(
-		page.getByText('Animal 01 - Dogs and Cats categories')
-	).toBeVisible();
-	await expect(page.getByText('Animal 02 - Dogs category')).toBeVisible();
+		await page.goto(
+			`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+		);
 
-	await page.goto(
-		`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
-	);
+		await firstFilter.fill('rabbit');
+		await firstFilter.press('Enter');
 
-	await firstFilter.fill('rabbit');
-	await firstFilter.press('Enter');
+		await expect(page.getByText('No Results Found')).toBeVisible();
 
-	await expect(page.getByText('No Results Found')).toBeVisible();
-
-	await apiHelpers.jsonWebServicesLayout.deleteLayout(layout.id);
-});
+		await apiHelpers.jsonWebServicesLayout.deleteLayout(layout.id);
+	}
+);
 
 test('Reset collection filter using applied filters', async ({
 	apiHelpers,

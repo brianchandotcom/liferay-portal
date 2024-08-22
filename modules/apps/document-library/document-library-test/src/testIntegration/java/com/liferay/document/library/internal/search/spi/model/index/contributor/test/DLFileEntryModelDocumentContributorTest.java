@@ -235,11 +235,17 @@ public class DLFileEntryModelDocumentContributorTest {
 	public void testFileEntryMetadataAttributes() throws Exception {
 		_testFileEntryMetadataAttributesBasicFileEntry();
 		_testFileEntryMetadataAttributesImageFileEntry(
-			"square", 225, 225, "dependencies/225x225.jpeg");
+			"square", 225, 225, "dependencies/225x225.jpeg",
+			ContentTypes.IMAGE_JPEG);
 		_testFileEntryMetadataAttributesImageFileEntry(
-			"tall", 275, 183, "dependencies/183x275.jpeg");
+			"tall", 275, 183, "dependencies/183x275.jpeg",
+			ContentTypes.IMAGE_JPEG);
 		_testFileEntryMetadataAttributesImageFileEntry(
-			"wide", 182, 277, "dependencies/277x182.jpeg");
+			"wide", 182, 277, "dependencies/277x182.jpeg",
+			ContentTypes.IMAGE_JPEG);
+		_testFileEntryMetadataAttributesImageFileEntry(
+			"wide", 612, 693, "dependencies/693x612.png",
+			ContentTypes.IMAGE_PNG);
 	}
 
 	@Test
@@ -425,11 +431,11 @@ public class DLFileEntryModelDocumentContributorTest {
 
 	private void _testFileEntryMetadataAttributesImageFileEntry(
 			String expectedAspectRatio, long expectedImageLength,
-			long expectedImageWidth, String fileName)
+			long expectedImageWidth, String fileName, String mimeType)
 		throws Exception {
 
 		DLFileEntry dlFileEntry = _addDLFileEntry(
-			ContentTypes.IMAGE_PNG, _file.getBytes(getClass(), fileName));
+			mimeType, _file.getBytes(getClass(), fileName));
 
 		FileEntry fileEntry = new LiferayFileEntry(dlFileEntry);
 

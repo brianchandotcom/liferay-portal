@@ -119,7 +119,7 @@ public class CommerceOrderInfoItemFieldValuesProvider
 					commerceOrder.getCompanyId()));
 			commerceOrderInfoFieldValues.add(
 				new InfoFieldValue<>(
-					CommerceOrderInfoItemFields.companyIdInfoField,
+					CommerceOrderInfoItemFields.completedOrderStatusInfoField,
 					_isOrderStatus(
 						commerceOrder,
 						CommerceOrderConstants.ORDER_STATUS_COMPLETED)));
@@ -137,10 +137,6 @@ public class CommerceOrderInfoItemFieldValuesProvider
 					_isOrderStatus(
 						commerceOrder,
 						CommerceOrderConstants.ORDER_STATUS_DECLINED)));
-			commerceOrderInfoFieldValues.add(
-				new InfoFieldValue<>(
-					CommerceOrderInfoItemFields.defaultLanguageIdInfoField,
-					commerceCurrency.getDefaultLanguageId()));
 			commerceOrderInfoFieldValues.add(
 				new InfoFieldValue<>(
 					CommerceOrderInfoItemFields.defaultLanguageIdInfoField,
@@ -166,7 +162,7 @@ public class CommerceOrderInfoItemFieldValuesProvider
 					commerceOrder.isDenied()));
 			commerceOrderInfoFieldValues.add(
 				new InfoFieldValue<>(
-					CommerceOrderInfoItemFields.declinedOrderStatusInfoField,
+					CommerceOrderInfoItemFields.disputedOrderStatusInfoField,
 					_isOrderStatus(
 						commerceOrder,
 						CommerceOrderConstants.ORDER_STATUS_DISPUTED)));
@@ -276,7 +272,7 @@ public class CommerceOrderInfoItemFieldValuesProvider
 					commerceOrder.isIncomplete()));
 			commerceOrderInfoFieldValues.add(
 				new InfoFieldValue<>(
-					CommerceOrderInfoItemFields.declinedOrderStatusInfoField,
+					CommerceOrderInfoItemFields.inProgressOrderStatusInfoField,
 					_isOrderStatus(
 						commerceOrder,
 						CommerceOrderConstants.ORDER_STATUS_IN_PROGRESS)));
@@ -593,7 +589,7 @@ public class CommerceOrderInfoItemFieldValuesProvider
 			commerceOrderInfoFieldValues.add(
 				new InfoFieldValue<>(
 					CommerceOrderInfoItemFields.
-						totalDiscountPercentageLevel1InfoField,
+						totalDiscountPercentageLevel2InfoField,
 					commerceOrder.getTotalDiscountPercentageLevel2()));
 			commerceOrderInfoFieldValues.add(
 				new InfoFieldValue<>(
@@ -628,6 +624,10 @@ public class CommerceOrderInfoItemFieldValuesProvider
 					CommerceOrderInfoItemFields.
 						totalDiscountWithTaxAmountInfoField,
 					commerceOrder.getTotalDiscountWithTaxAmount()));
+			commerceOrderInfoFieldValues.add(
+				new InfoFieldValue<>(
+					CommerceOrderInfoItemFields.totalWithTaxAmountInfoField,
+					commerceOrder.getTotalWithTaxAmount()));
 			commerceOrderInfoFieldValues.add(
 				new InfoFieldValue<>(
 					CommerceOrderInfoItemFields.transactionIdInfoField,

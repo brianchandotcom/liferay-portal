@@ -35,8 +35,8 @@ type NewAppPayload = {
 		cloudCompatible?: boolean;
 		compatibleOffering: any[];
 		liferayPackages: {
-			version: string;
 			file: any[];
+			version: string;
 		}[];
 		resourceRequirements: {
 			cpu?: string;
@@ -65,8 +65,8 @@ export type NewAppInitialState = {
 		cloudCompatible?: boolean;
 		compatibleOffering: string[];
 		liferayPackages: {
-			version: string;
 			file: any[];
+			version: string;
 		}[];
 		resourceRequirements: {
 			cpu?: string;
@@ -264,6 +264,7 @@ export default function NewAppContextProvider({
 		}
 
 		// TO DO - GET PRODUCT
+
 	}, [productId]);
 
 	if (isLoading) {

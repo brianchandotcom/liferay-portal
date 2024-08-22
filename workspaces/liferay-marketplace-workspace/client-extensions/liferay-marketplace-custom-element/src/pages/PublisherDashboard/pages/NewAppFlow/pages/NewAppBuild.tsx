@@ -32,10 +32,10 @@ const NewAppBuild = () => {
 	const [selectedCheckboxValue, setSelectedCheckboxValue] = useState<
 		string[]
 	>([]);
-	const [isProcessing, _setIsProcessing] = useState(false);
+	const [isProcessing] = useState(false);
 	const [visibleSelectVersionModal, setVisibleSelectVersionModal] =
 		useState(false);
-	const [selectedRadio, setSelectedRadio] = useState<string>('')
+	const [selectedRadio, setSelectedRadio] = useState<string>('');
 
 	const handleSelectCheckbox = useCallback(
 		(offeringType: string) => {
@@ -112,15 +112,17 @@ const NewAppBuild = () => {
 						description={card.description}
 						icon={card.icon}
 						key={index}
-						onChange={() =>
-							{
-								setSelectedRadio(card.value)
+						onChange={() => {
+							setSelectedRadio(card.value);
 							dispatch({
 								payload: {
-									cloudCompatible: card.value === ProductType.CLOUD ? true : false
+									cloudCompatible:
+										card.value === ProductType.CLOUD
+											? true
+											: false,
 								},
 								type: NewAppTypes.SET_BUILD,
-							})
+							});
 						}}
 						selected={card.value === selectedRadio}
 						title={card.title}
@@ -139,7 +141,9 @@ const NewAppBuild = () => {
 							handleSelectCheckbox={handleSelectCheckbox}
 							offeringTypes={
 								offeringTypesDescription[
-									cloudCompatible ? ProductType.CLOUD : ProductType.DXP
+									cloudCompatible
+										? ProductType.CLOUD
+										: ProductType.DXP
 								] as unknown as OfferingType[]
 							}
 							selectedValue={compatibleOffering}
@@ -177,8 +181,11 @@ const NewAppBuild = () => {
 									icon={card.icon}
 									key={index}
 									onChange={
-										//To do
-										() => {}}
+
+										// To do
+
+										() => {}
+									}
 									selected={'upload' === card.value}
 									title={card.title}
 									tooltip={card.tooltip}

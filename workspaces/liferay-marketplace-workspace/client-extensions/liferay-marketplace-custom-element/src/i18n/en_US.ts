@@ -37,9 +37,9 @@ export default {
 	'an-unexpected-error-occurred': 'An unexpected error ocurred',
 	'and': 'and',
 	'app-build': 'App Build',
-	'app-x-submitted': 'App <b>{0}</b> submitted',
 	'app-name': 'App Name',
 	'app-type': 'App Type',
+	'app-x-submitted': 'App <b>{0}</b> submitted',
 	'apply-to-your-use-of-this-service-the-name-on-your-liferay-account-will-be-used-in-this-liferay-marketplace-publisher-profile-it-may-appear-where-you-contribute-and-be-changed-at-any-time':
 		'apply to your use of this service. The name on your Liferay account will be used in this Liferay Marketplace Publisher Profile. It may appear where you contribute and be changed at any time',
 	'approve': 'Approve',

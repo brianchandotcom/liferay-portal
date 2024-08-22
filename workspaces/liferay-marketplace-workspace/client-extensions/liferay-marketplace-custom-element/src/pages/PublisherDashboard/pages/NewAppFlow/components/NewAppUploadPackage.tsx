@@ -37,7 +37,7 @@ export function NewAppUploadAppPackagesComponent({
 }: NewAppUploadAppPackagesComponentProps) {
 	const [
 		{
-			build: {appType, liferayPackages},
+			build: {cloudCompatible, liferayPackages},
 		},
 		dispatch,
 	] = useNewAppContext();
@@ -62,7 +62,7 @@ export function NewAppUploadAppPackagesComponent({
 		dispatch({
 			payload: {
 				liferayPackages: [
-					{version: versionName as string, file: newUploadedPackages},
+					{file: newUploadedPackages, version: versionName as string},
 				],
 			},
 			type: NewAppTypes.SET_BUILD,
@@ -75,12 +75,14 @@ export function NewAppUploadAppPackagesComponent({
 				<DropzoneUpload
 					acceptFileTypes={
 						acceptFileTypes[
-							appType.value as keyof typeof acceptFileTypes
+							cloudCompatible
+								? ProductType.CLOUD
+								: ProductType.DXP
 						]
 					}
 					buttonText={i18n.translate('select-a-file')}
 					description={
-						appType.value === ProductType.CLOUD
+						cloudCompatible
 							? i18n.translate(
 									'only-zip-files-are-allowed-max-file-size-is-500-mb'
 								)

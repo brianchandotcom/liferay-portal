@@ -35,6 +35,8 @@ public class ProductOptionValueDTOConverter
 			CPDefinitionOptionValueRel cpDefinitionOptionValueRel)
 		throws Exception {
 
+		CPInstance cpInstance = cpDefinitionOptionValueRel.fetchCPInstance();
+
 		return new ProductOptionValue() {
 			{
 				setDeltaPrice(cpDefinitionOptionValueRel::getPrice);
@@ -48,11 +50,16 @@ public class ProductOptionValueDTOConverter
 				setPreselected(cpDefinitionOptionValueRel::isPreselected);
 				setPriority(cpDefinitionOptionValueRel::getPriority);
 				setQuantity(cpDefinitionOptionValueRel::getQuantity);
+				setSkuExternalReferenceCode(
+					() -> {
+						if (cpInstance == null) {
+							return null;
+						}
+
+						return cpInstance.getExternalReferenceCode();
+					});
 				setSkuId(
 					() -> {
-						CPInstance cpInstance =
-							cpDefinitionOptionValueRel.fetchCPInstance();
-
 						if (cpInstance == null) {
 							return null;
 						}

@@ -8,6 +8,7 @@ package com.liferay.headless.commerce.admin.catalog.internal.util.v1_0;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelService;
+import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductOptionValue;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.petra.string.StringPool;
@@ -29,6 +30,7 @@ public class ProductOptionValueUtil {
 			addOrUpdateCPDefinitionOptionValueRel(
 				CPDefinitionOptionValueRelService
 					cpDefinitionOptionValueRelService,
+				CPInstanceService cpInstanceService,
 				ProductOptionValue productOptionValue,
 				long cpDefinitionOptionRelId, ServiceContext serviceContext)
 		throws PortalException {
@@ -37,13 +39,20 @@ public class ProductOptionValueUtil {
 			cpDefinitionOptionValueRelService.fetchCPDefinitionOptionValueRel(
 				cpDefinitionOptionRelId, productOptionValue.getKey());
 
-		CPInstance cpInstance = null;
+		long cpInstanceId = 0;
 
-		if (cpDefinitionOptionValueRel != null) {
-			cpInstance = cpDefinitionOptionValueRel.fetchCPInstance();
+		CPInstance cpInstance = cpInstanceService.fetchByExternalReferenceCode(
+			productOptionValue.getSkuExternalReferenceCode(),
+			serviceContext.getCompanyId());
+
+		if (cpInstance == null) {
+			cpInstance = cpInstanceService.fetchCPInstance(
+				GetterUtil.getLong(productOptionValue.getSkuId()));
 		}
 
-		long cpInstanceId = 0;
+		if ((cpInstance == null) && (cpDefinitionOptionValueRel != null)) {
+			cpInstance = cpDefinitionOptionValueRel.fetchCPInstance();
+		}
 
 		if (cpInstance != null) {
 			cpInstanceId = cpInstance.getCPInstanceId();
@@ -59,8 +68,7 @@ public class ProductOptionValueUtil {
 		if (cpDefinitionOptionValueRel == null) {
 			cpDefinitionOptionValueRel =
 				cpDefinitionOptionValueRelService.addCPDefinitionOptionValueRel(
-					cpDefinitionOptionRelId,
-					GetterUtil.get(productOptionValue.getSkuId(), 0),
+					cpDefinitionOptionRelId, cpInstanceId,
 					productOptionValue.getKey(),
 					LanguageUtils.getLocalizedMap(nameMap),
 					GetterUtil.get(productOptionValue.getPreselected(), false),
@@ -80,8 +88,7 @@ public class ProductOptionValueUtil {
 					updateCPDefinitionOptionValueRel(
 						cpDefinitionOptionValueRel.
 							getCPDefinitionOptionValueRelId(),
-						GetterUtil.get(
-							productOptionValue.getSkuId(), cpInstanceId),
+						cpInstanceId,
 						GetterUtil.get(
 							productOptionValue.getKey(),
 							cpDefinitionOptionValueRel.getKey()),

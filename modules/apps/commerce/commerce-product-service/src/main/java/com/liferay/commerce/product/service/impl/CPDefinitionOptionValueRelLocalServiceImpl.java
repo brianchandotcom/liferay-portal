@@ -199,6 +199,10 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 			_validateLinkableCPInstance(cpInstance);
 		}
 
+		_validateLinkedCPDefinitionOptionValueRel(cpDefinitionOptionValueRel);
+		_validatePriceableCPDefinitionOptionValue(
+			cpDefinitionOptionValueRel, cpDefinitionOptionRel.getPriceType());
+
 		cpDefinitionOptionValueRel =
 			cpDefinitionOptionValueRelPersistence.update(
 				cpDefinitionOptionValueRel);

@@ -253,20 +253,6 @@ export class HeadlessAdminUserApiHelper {
 		);
 	}
 
-	async patchAccount(accountId: number, account?: TAccount) {
-		return this.apiHelpers.patch(
-			`${this.apiHelpers.baseUrl}${this.basePath}/accounts`,
-			{
-				data: {
-					name: {
-						en_US: account.name,
-					},
-					...(account || {}),
-				},
-			}
-		);
-	}
-
 	async postAccount(account?: TAccount): Promise<TAccount> {
 		return this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/accounts`,

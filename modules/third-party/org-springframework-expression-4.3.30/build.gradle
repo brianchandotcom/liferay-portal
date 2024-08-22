@@ -18,10 +18,15 @@ patch {
 		autoClean = false
 	}
 
+	fileNames "org/springframework/expression/EvaluationContext.java"
 	fileNames "org/springframework/expression/spel/SpelMessage.java"
+	fileNames "org/springframework/expression/spel/ast/Assign.java"
 	fileNames "org/springframework/expression/spel/ast/ConstructorReference.java"
+	fileNames "org/springframework/expression/spel/ast/OpDec.java"
+	fileNames "org/springframework/expression/spel/ast/OpInc.java"
 	fileNames "org/springframework/expression/spel/ast/OpPlus.java"
 	fileNames "org/springframework/expression/spel/standard/InternalSpelExpressionParser.java"
+	fileNames "org/springframework/expression/spel/support/SimpleEvaluationContext.java"
 
 	originalLibModuleName = "spring-expression"
 }

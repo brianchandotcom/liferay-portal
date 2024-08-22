@@ -18,6 +18,7 @@ import {config as commerceConfig} from './tests/commerce/config';
 import {config as configurationAdminWebConfig} from './tests/configuration-admin-web/config';
 import {config as contentDashboardWebConfig} from './tests/content-dashboard-web/config';
 import {config as cookiesBannerWebConfig} from './tests/cookies-banner-web/config';
+import {config as depotWebConfig} from './tests/depot-web/config';
 import {config as dispatchWebConfig} from './tests/dispatch-web/config';
 import {config as documentLibraryWebConfig} from './tests/document-library-web/config';
 import {config as dynamicDataMappingFormWebConfig} from './tests/dynamic-data-mapping-form-web/config';
@@ -90,6 +91,7 @@ export default defineConfig({
 		accountAdminWebConfig,
 		analyticsSettingsWebConfig,
 		analyticsWebConfig,
+		depotWebConfig,
 		announcementsWebConfig,
 		batchPlannerConfig,
 		blogsWebConfig,

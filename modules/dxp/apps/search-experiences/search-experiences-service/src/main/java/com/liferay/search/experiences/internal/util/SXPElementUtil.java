@@ -95,17 +95,17 @@ public class SXPElementUtil {
 	private static List<SXPElement> _createSXPElements() {
 		List<SXPElement> sxpElements = new ArrayList<>();
 
-		Bundle bundle = FrameworkUtil.getBundle(CompanyModelListener.class);
-
 		Package pkg = CompanyModelListener.class.getPackage();
 
 		String path = StringUtil.replace(
 			pkg.getName(), CharPool.PERIOD, CharPool.SLASH);
 
-		Enumeration<URL> enumeration = bundle.findEntries(
-			path.concat("/dependencies"), "*.json", false);
-
 		try {
+			Bundle bundle = FrameworkUtil.getBundle(CompanyModelListener.class);
+
+			Enumeration<URL> enumeration = bundle.findEntries(
+				path.concat("/dependencies"), "*.json", false);
+
 			while (enumeration.hasMoreElements()) {
 				sxpElements.add(
 					com.liferay.search.experiences.rest.dto.v1_0.util.

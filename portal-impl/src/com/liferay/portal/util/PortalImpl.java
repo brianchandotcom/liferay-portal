@@ -4369,15 +4369,6 @@ public class PortalImpl implements Portal {
 
 								scopeGroupId = stagingGroup.getGroupId();
 							}
-							else if (layout.isTypeContent()) {
-								Layout draftLayout = _getDraftLayout(
-									liveGroupLayout.getPlid());
-
-								if (draftLayout != null) {
-									scopeGroupId = _getScopeGroupId(
-										themeDisplay, draftLayout, portletId);
-								}
-							}
 							else {
 								scopeGroupId = liveGroup.getGroupId();
 							}

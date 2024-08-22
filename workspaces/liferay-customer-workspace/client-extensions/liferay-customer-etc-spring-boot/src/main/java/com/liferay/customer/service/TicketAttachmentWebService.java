@@ -179,8 +179,12 @@ public class TicketAttachmentWebService {
 
 		sb.append("/o/c/ticketattachments?filter=fileName eq '");
 		sb.append(fileName);
-		sb.append("' and md5Checksum eq '");
-		sb.append(md5Checksum);
+
+		if (!md5Checksum.equals("")) {
+			sb.append("' and md5Checksum eq '");
+			sb.append(md5Checksum);
+		}
+
 		sb.append("' and zendeskTicketId eq ");
 		sb.append(zendeskTicketId);
 

@@ -90,7 +90,7 @@ public class TicketAttachmentsInitiateUploadRestController
 				responseJSONObject.toString(), HttpStatus.OK);
 		}
 		catch (Exception exception) {
-			_log.error(exception);
+			_log.error(exception, exception);
 
 			return new ResponseEntity(
 				exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);

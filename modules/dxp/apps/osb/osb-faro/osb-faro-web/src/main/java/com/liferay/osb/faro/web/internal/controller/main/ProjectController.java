@@ -1141,8 +1141,8 @@ public class ProjectController extends BaseFaroController {
 
 		String oldSubscriptionName = subscriptionJSONObject.getString("name");
 
-		oldSubscriptionName = oldSubscriptionName.replace(
-			"LXC ", "Liferay SaaS ");
+		oldSubscriptionName = StringUtil.replace(
+			oldSubscriptionName, "LXC ", "Liferay SaaS ");
 
 		if (!Objects.equals(oldSubscriptionName, subscriptionName)) {
 			return true;

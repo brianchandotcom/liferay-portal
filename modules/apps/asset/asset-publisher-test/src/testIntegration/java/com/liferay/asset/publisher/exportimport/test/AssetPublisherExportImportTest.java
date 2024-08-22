@@ -716,82 +716,6 @@ public class AssetPublisherExportImportTest
 				"assetListEntryGroupExternalReferenceCode", null));
 	}
 
-	@Override
-	@Test
-	public void testExportImportDisplayStyleFromDifferentGroup()
-		throws Exception {
-
-		long classNameId = _portal.getClassNameId(AssetEntry.class.getName());
-
-		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
-			group.getGroupId(), classNameId, 0,
-			_portal.getClassNameId(PortletDisplayTemplate.class.getName()),
-			TemplateConstants.LANG_TYPE_FTL, RandomTestUtil.randomString(),
-			_portal.getSiteDefaultLocale(group));
-
-		PortletPreferences portletPreferences = getImportedPortletPreferences(
-			HashMapBuilder.put(
-				"displayStyle",
-				new String[] {
-					PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
-						ddmTemplate.getTemplateKey()
-				}
-			).build());
-
-		Assert.assertNotNull(
-			_ddmTemplateLocalService.getTemplate(
-				importedGroup.getGroupId(), classNameId,
-				ddmTemplate.getTemplateKey()));
-		Assert.assertEquals(
-			PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
-				ddmTemplate.getTemplateKey(),
-			portletPreferences.getValue("displayStyle", null));
-		Assert.assertNull(
-			portletPreferences.getValue(
-				"displayStyleGroupExternalReferenceCode", null));
-	}
-
-	@Override
-	@Test
-	public void testExportImportDisplayStyleFromGlobalScope() throws Exception {
-		Group companyGroup = _groupLocalService.getCompanyGroup(
-			TestPropsValues.getCompanyId());
-
-		long classNameId = _portal.getClassNameId(AssetEntry.class.getName());
-
-		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
-			companyGroup.getGroupId(), classNameId, 0,
-			_portal.getClassNameId(PortletDisplayTemplate.class.getName()),
-			TemplateConstants.LANG_TYPE_FTL, RandomTestUtil.randomString(),
-			_portal.getSiteDefaultLocale(companyGroup));
-
-		PortletPreferences portletPreferences = getImportedPortletPreferences(
-			HashMapBuilder.put(
-				"displayStyle",
-				new String[] {
-					PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
-						ddmTemplate.getTemplateKey()
-				}
-			).put(
-				"displayStyleGroupExternalReferenceCode",
-				new String[] {companyGroup.getExternalReferenceCode()}
-			).build());
-
-		Assert.assertNull(
-			_ddmTemplateLocalService.fetchTemplate(
-				importedGroup.getGroupId(), classNameId,
-				ddmTemplate.getTemplateKey()));
-
-		Assert.assertEquals(
-			PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
-				ddmTemplate.getTemplateKey(),
-			portletPreferences.getValue("displayStyle", null));
-		Assert.assertEquals(
-			companyGroup.getExternalReferenceCode(),
-			portletPreferences.getValue(
-				"displayStyleGroupExternalReferenceCode", null));
-	}
-
 	@Test
 	public void testExportImportLayoutScopedAssetEntries() throws Exception {
 		Group layoutGroup = GroupTestUtil.addGroup(
@@ -1481,6 +1405,79 @@ public class AssetPublisherExportImportTest
 				_permissionChecker, selectedGroupIds, false, false);
 
 		assertAssetEntries(assetEntries, actualAssetEntries);
+	}
+
+	@Override
+	protected void testExportImportDisplayStyle(
+			long displayStyleGroupId, String scopeType)
+		throws Exception {
+
+		Group displayStyleGroup = _groupLocalService.getGroup(
+			displayStyleGroupId);
+
+		long classNameId = _portal.getClassNameId(AssetEntry.class.getName());
+
+		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
+			displayStyleGroup.getGroupId(), classNameId, 0,
+			_portal.getClassNameId(PortletDisplayTemplate.class.getName()),
+			TemplateConstants.LANG_TYPE_FTL, RandomTestUtil.randomString(),
+			_portal.getSiteDefaultLocale(displayStyleGroup));
+
+		PortletPreferences portletPreferences = getImportedPortletPreferences(
+			HashMapBuilder.put(
+				"displayStyle",
+				new String[] {
+					PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
+						ddmTemplate.getTemplateKey()
+				}
+			).put(
+				"displayStyleGroupExternalReferenceCode",
+				() -> {
+					if (displayStyleGroup.getGroupId() == layout.getGroupId()) {
+						return null;
+					}
+
+					return new String[] {
+						displayStyleGroup.getExternalReferenceCode()
+					};
+				}
+			).put(
+				"lfrScopeLayoutUuid",
+				() -> {
+					if (scopeType.equals("layout")) {
+						return new String[] {layout.getUuid()};
+					}
+
+					return null;
+				}
+			).put(
+				"lfrScopeType", new String[] {scopeType}
+			).build());
+
+		Assert.assertEquals(
+			PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
+				ddmTemplate.getTemplateKey(),
+			portletPreferences.getValue("displayStyle", null));
+
+		DDMTemplate importedDDMTemplate =
+			_ddmTemplateLocalService.fetchTemplate(
+				layout.getGroupId(), classNameId, ddmTemplate.getTemplateKey());
+
+		String importedDisplayStyleGroupExternalReferenceCode =
+			portletPreferences.getValue(
+				"displayStyleGroupExternalReferenceCode", null);
+
+		if (displayStyleGroup.getGroupId() != layout.getGroupId()) {
+			Assert.assertNull(importedDDMTemplate);
+
+			Assert.assertEquals(
+				displayStyleGroup.getExternalReferenceCode(),
+				importedDisplayStyleGroupExternalReferenceCode);
+		}
+		else {
+			Assert.assertNotNull(importedDDMTemplate);
+			Assert.assertNull(importedDisplayStyleGroupExternalReferenceCode);
+		}
 	}
 
 	protected void testSortByAssetVocabulary(boolean globalVocabulary)

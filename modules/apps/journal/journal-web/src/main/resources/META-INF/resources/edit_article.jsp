@@ -145,7 +145,7 @@ journalEditArticleDisplayContext.setViewAttributes();
 					<div class="c-gap-3 form-group-sm journal-article-button-row mb-0 tbar-section text-right">
 						<c:choose>
 							<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPD-11228") %>'>
-								<div class="align-items-center d-none mx-3 small text-danger" id="<portlet:namespace />lockErrorIndicator">
+								<div class="align-items-center d-none small text-danger" id="<portlet:namespace />lockErrorIndicator">
 									<liferay-ui:message key="alert-helper-error" />
 
 									<clay:icon
@@ -154,20 +154,21 @@ journalEditArticleDisplayContext.setViewAttributes();
 									/>
 								</div>
 
-								<div class="align-items-center d-none mx-3 small" id="<portlet:namespace />savingChangesIndicator">
+								<div class="align-items-center d-none small" id="<portlet:namespace />savingChangesIndicator">
 									<liferay-ui:message key="saving" />
 
 									<span aria-hidden="true" class="d-inline-block loading-animation loading-animation-sm ml-2 my-0"></span>
 								</div>
 
-								<div class="align-items-center d-none mx-3 small text-success" id="<portlet:namespace />changesSavedIndicator">
+								<div class="align-items-center d-none small text-success" id="<portlet:namespace />changesSavedIndicator">
 									<liferay-ui:message key="saved" />
 
 									<clay:icon
-										cssClass="ml-2"
+										cssClass="ml-2 mt-0"
 										symbol="check-circle"
 									/>
 								</div>
+
 								<div>
 									<react:component
 										module="{UndoRedo} from journal-web"

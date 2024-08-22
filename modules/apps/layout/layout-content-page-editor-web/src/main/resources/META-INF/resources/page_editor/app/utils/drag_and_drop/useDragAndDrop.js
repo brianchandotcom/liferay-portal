@@ -337,45 +337,44 @@ export function DragAndDropContextProvider({children}) {
 }
 
 function computeDrop({dispatch, layoutDataRef, onDragEnd, state}) {
-	if (!state.droppable) {
+	const {dropItem, dropTargetItem, droppable, targetPositionWithoutMiddle} =
+		state;
+
+	if (!droppable) {
 		let message = '';
 
-		if (state.dropTargetItem.type === LAYOUT_DATA_ITEM_TYPES.dropZone) {
+		if (dropTargetItem.type === LAYOUT_DATA_ITEM_TYPES.dropZone) {
 			message = Liferay.Language.get(
 				'fragments-and-widgets-cannot-be-placed-inside-this-area'
 			);
 		}
-		else if (
-			state.dropTargetItem.type === LAYOUT_DATA_ITEM_TYPES.collection
-		) {
+		else if (dropTargetItem.type === LAYOUT_DATA_ITEM_TYPES.collection) {
 			message = Liferay.Language.get(
 				'fragments-cannot-be-placed-inside-an-unmapped-collection-display-fragment'
 			);
 		}
 		else if (
-			state.dropTargetItem.type === LAYOUT_DATA_ITEM_TYPES.form &&
+			dropTargetItem.type === LAYOUT_DATA_ITEM_TYPES.form &&
 			!formIsMapped(state.dropTargetItem)
 		) {
 			message = Liferay.Language.get(
 				'fragments-cannot-be-placed-inside-an-unmapped-form-container'
 			);
 		}
-		else if (
-			state.dropItem.fragmentEntryType === FRAGMENT_ENTRY_TYPES.input
-		) {
+		else if (dropItem.fragmentEntryType === FRAGMENT_ENTRY_TYPES.input) {
 			message = Liferay.Language.get(
 				'form-components-can-only-be-placed-inside-a-mapped-form-container'
 			);
 		}
 		else if (
-			state.dropItem.isWidget &&
-			hasFormParent(state.dropItem, layoutDataRef.current)
+			dropItem.isWidget &&
+			hasFormParent(dropItem, layoutDataRef.current)
 		) {
 			message = Liferay.Language.get(
 				'widgets-cannot-be-placed-inside-a-form-container'
 			);
 		}
-		else if (state.dropItem.parentId !== state.dropTargetItem.itemId) {
+		else if (dropItem.parentId !== dropTargetItem.itemId) {
 			message = Liferay.Language.get('an-unexpected-error-occurred');
 		}
 
@@ -391,13 +390,13 @@ function computeDrop({dispatch, layoutDataRef, onDragEnd, state}) {
 		return;
 	}
 
-	if (state.dropItem && state.dropTargetItem) {
+	if (dropItem && dropTargetItem) {
 		const {dropItemId, position} = getDropData({
 			isElevation: state.elevate,
 			layoutDataRef,
-			sourceItemId: state.dropItem.itemId,
-			targetItemId: state.dropTargetItem.itemId,
-			targetPosition: state.targetPositionWithoutMiddle,
+			sourceItemId: dropItem.itemId,
+			targetItemId: dropTargetItem.itemId,
+			targetPosition: targetPositionWithoutMiddle,
 		});
 
 		onDragEnd(dropItemId, position);

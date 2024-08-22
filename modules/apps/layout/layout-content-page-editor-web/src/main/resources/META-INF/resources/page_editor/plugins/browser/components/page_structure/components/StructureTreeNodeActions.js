@@ -14,7 +14,6 @@ import {flushSync} from 'react-dom';
 
 import SaveFragmentCompositionModal from '../../../../../app/components/SaveFragmentCompositionModal';
 import hasDropZoneChild from '../../../../../app/components/layout_data_items/hasDropZoneChild';
-import {FRAGMENT_ENTRY_TYPES} from '../../../../../app/config/constants/fragmentEntryTypes';
 import {ITEM_ACTIVATION_ORIGINS} from '../../../../../app/config/constants/itemActivationOrigins';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../app/config/constants/layoutDataItemTypes';
 import {
@@ -37,6 +36,7 @@ import {
 	FORM_ERROR_TYPES,
 	getFormErrorDescription,
 } from '../../../../../app/utils/getFormErrorDescription';
+import isInputFragment from '../../../../../app/utils/isInputFragment';
 import updateItemStyle from '../../../../../app/utils/updateItemStyle';
 import useHasRequiredChild from '../../../../../app/utils/useHasRequiredChild';
 
@@ -137,11 +137,6 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 		(state) => state
 	);
 
-	const isInputFragment =
-		item.type === LAYOUT_DATA_ITEM_TYPES.fragment &&
-		fragmentEntryLinks[item.config.fragmentEntryLinkId]
-			.fragmentEntryType === FRAGMENT_ENTRY_TYPES.input;
-
 	const isHidden = item.config.styles.display === 'none';
 
 	const dropdownItems = useMemo(() => {
@@ -150,7 +145,7 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 		if (
 			item.type !== LAYOUT_DATA_ITEM_TYPES.dropZone &&
 			!hasDropZoneChild(item, layoutData) &&
-			!isInputFragment
+			!isInputFragment(item, fragmentEntryLinks)
 		) {
 			items.push({
 				action: () => {
@@ -256,7 +251,6 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 		dispatch,
 		fragmentEntryLinks,
 		hasRequiredChild,
-		isInputFragment,
 		item,
 		layoutData,
 		selectedViewportSize,

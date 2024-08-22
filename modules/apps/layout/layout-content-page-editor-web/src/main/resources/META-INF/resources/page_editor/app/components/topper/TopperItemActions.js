@@ -11,7 +11,6 @@ import PropTypes from 'prop-types';
 import React, {useMemo, useState} from 'react';
 
 import {getLayoutDataItemPropTypes} from '../../../prop_types/index';
-import {FRAGMENT_ENTRY_TYPES} from '../../config/constants/fragmentEntryTypes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import {
 	useSelectItem,
@@ -28,6 +27,7 @@ import {
 	getFormErrorDescription,
 } from '../../utils/getFormErrorDescription';
 import hideFragment from '../../utils/hideFragment';
+import isInputFragment from '../../utils/isInputFragment';
 import useHasRequiredChild from '../../utils/useHasRequiredChild';
 import SaveFragmentCompositionModal from '../SaveFragmentCompositionModal';
 import hasDropZoneChild from '../layout_data_items/hasDropZoneChild';
@@ -50,11 +50,6 @@ export default function TopperItemActions({disabled, item}) {
 
 	const [openSaveModal, setOpenSaveModal] = useState(false);
 
-	const isInputFragment =
-		item.type === LAYOUT_DATA_ITEM_TYPES.fragment &&
-		fragmentEntryLinks[item.config.fragmentEntryLinkId]
-			?.fragmentEntryType === FRAGMENT_ENTRY_TYPES.input;
-
 	const dropdownItems = useMemo(() => {
 		const items = [];
 
@@ -62,7 +57,7 @@ export default function TopperItemActions({disabled, item}) {
 			item.type !== LAYOUT_DATA_ITEM_TYPES.dropZone &&
 			item.type !== LAYOUT_DATA_ITEM_TYPES.formStepContainer &&
 			!hasDropZoneChild(item, layoutData) &&
-			!isInputFragment
+			!isInputFragment(item, fragmentEntryLinks)
 		) {
 			items.push({
 				action: () => {
@@ -139,7 +134,6 @@ export default function TopperItemActions({disabled, item}) {
 		dispatch,
 		fragmentEntryLinks,
 		hasRequiredChild,
-		isInputFragment,
 		item,
 		layoutData,
 		selectedViewportSize,

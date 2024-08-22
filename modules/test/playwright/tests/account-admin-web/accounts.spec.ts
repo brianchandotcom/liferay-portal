@@ -329,15 +329,13 @@ test('LPD-33636 Email address is not deleted by saving in the UI', async ({
 
 	await applicationsMenuPage.goToServerAdministration();
 
-	const emailAddress = getRandomString();
+	const emailAddress = getRandomString() + '@liferay.com';
 
 	const script = `
-	import com.liferay.account.service.*; 
+	import com.liferay.account.service.*;
 	import com.liferay.account.model.*;
-    long accountEntryId = "${account.id}";
-    String email = ${emailAddress};
-	AccountEntry account = AccountEntryLocalServiceUtil.fetchAccountEntry(accountEntryId);
-	account.setEmailAddress(email);
+	AccountEntry account = AccountEntryLocalServiceUtil.fetchAccountEntry(${account.id});
+	account.setEmailAddress("${emailAddress}");
 	AccountEntryLocalServiceUtil.updateAccountEntry(account);
     `;
 
@@ -348,9 +346,16 @@ test('LPD-33636 Email address is not deleted by saving in the UI', async ({
 	await editAccountPage.saveButton.click();
 	await waitForSuccessAlert(page);
 
-	const accountResponse = await apiHelpers.headlessAdminUser.getAccountByName(
-		account.name
-	);
+	await applicationsMenuPage.goToServerAdministration();
+	
+	const fetchScript = `
+	import com.liferay.account.service.*; 
+	import com.liferay.account.model.*;
+	AccountEntry account = AccountEntryLocalServiceUtil.fetchAccountEntry(${account.id});
+	out.println(account)
+	`;
 
-	expect(accountResponse.emailAddress).toEqual(emailAddress);
+	await serverAdministrationPage.executeScript(fetchScript);
+	await expect(page.getByText('"emailAddress": "' + emailAddress)).toBeVisible();
+
 });

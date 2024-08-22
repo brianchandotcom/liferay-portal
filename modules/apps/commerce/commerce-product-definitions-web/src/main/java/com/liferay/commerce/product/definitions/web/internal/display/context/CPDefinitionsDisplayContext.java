@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.kernel.settings.SystemSettingsLocator;
@@ -118,19 +119,6 @@ public class CPDefinitionsDisplayContext
 				requestBackedPortletURLFactory, "accountGroupSelectItem",
 				commerceAccountGroupItemSelectorCriterion)
 		).setParameter(
-			"accountEntryId",
-			() -> {
-				long accountEntryId = 0;
-
-				CommerceCatalog commerceCatalog = getCommerceCatalog();
-
-				if (commerceCatalog != null) {
-					accountEntryId = commerceCatalog.getAccountEntryId();
-				}
-
-				return accountEntryId;
-			}
-		).setParameter(
 			"checkedCommerceAccountGroupIds",
 			StringUtil.merge(
 				TransformUtil.transformToLongArray(
@@ -138,6 +126,14 @@ public class CPDefinitionsDisplayContext
 						CPDefinition.class.getName(), getCPDefinitionId(),
 						QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
 					AccountGroupRel::getAccountGroupId))
+		).setParameter(
+			"permissionUserId",
+			() -> {
+				PermissionChecker permissionChecker =
+					cpRequestHelper.getPermissionChecker();
+
+				return permissionChecker.getUserId();
+			}
 		).buildString();
 	}
 

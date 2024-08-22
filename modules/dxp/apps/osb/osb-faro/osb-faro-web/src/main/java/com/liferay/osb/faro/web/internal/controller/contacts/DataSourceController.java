@@ -694,6 +694,8 @@ public class DataSourceController extends BaseFaroController {
 			@QueryParam("count") int count)
 		throws Exception {
 
+		List<FieldValuesDisplay> fieldValuesDisplays = new ArrayList<>();
+
 		List<DataSourceField> dataSourceFields = null;
 
 		FaroProject faroProject =
@@ -732,8 +734,6 @@ public class DataSourceController extends BaseFaroController {
 			dataSourceFields = contactsEngineClient.getDataSourceFields(
 				faroProject, id, context, count);
 		}
-
-		List<FieldValuesDisplay> fieldValuesDisplays = new ArrayList<>();
 
 		for (DataSourceField dataSourceField : dataSourceFields) {
 			if (Validator.isNull(fieldName) ||

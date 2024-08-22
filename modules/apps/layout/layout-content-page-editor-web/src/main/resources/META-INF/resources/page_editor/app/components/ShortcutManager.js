@@ -87,12 +87,11 @@ export default function ShortcutManager() {
 
 	const {fragmentEntryLinks, layoutData} = state;
 
-	const [activeItemId] = activeItemIds;
 	const multiSelection = activeItemIds.length > 1;
 
 	const activeLayoutDataItem =
 		activeItemType === ITEM_TYPES.layoutDataItem
-			? layoutData.items[activeItemId]
+			? layoutData.items[activeItemIds[0]]
 			: null;
 
 	const masterLayoutData = useSelector(
@@ -119,7 +118,8 @@ export default function ShortcutManager() {
 			selectedViewportSize,
 			styleName: 'display',
 			styleValue:
-				layoutData.items[activeItemId].config.styles.display === 'none'
+				layoutData.items[activeItemIds[0]].config.styles.display ===
+				'none'
 					? 'block'
 					: 'none',
 		});
@@ -192,13 +192,17 @@ export default function ShortcutManager() {
 			action: duplicate,
 			canBeExecuted: () =>
 				canUpdatePageStructure &&
-				!!layoutData.items[activeItemId] &&
-				canBeDuplicated(
-					fragmentEntryLinks,
-					layoutData.items[activeItemId],
-					layoutData,
-					widgets
+				activeItemIds.every(
+					(activeItemId) =>
+						!!layoutData.items[activeItemId] &&
+						canBeDuplicated(
+							fragmentEntryLinks,
+							layoutData.items[activeItemId],
+							layoutData,
+							widgets
+						)
 				),
+
 			isKeyCombination: (event) =>
 				isCtrlOrMeta(event) && event.code === D_KEY_CODE,
 		},
@@ -206,14 +210,18 @@ export default function ShortcutManager() {
 			action: hideShow,
 			canBeExecuted: () =>
 				canUpdatePageStructure &&
-				!!layoutData.items[activeItemId] &&
-				canBeHidden({
-					fragmentEntryLinks,
-					item: layoutData.items[activeItemId],
-					layoutData,
-					masterLayoutData,
-					selectedViewportSize,
-				}),
+				activeItemIds.every(
+					(activeItemId) =>
+						!!layoutData.items[activeItemId] &&
+						canBeHidden({
+							fragmentEntryLinks,
+							item: layoutData.items[activeItemId],
+							layoutData,
+							masterLayoutData,
+							selectedViewportSize,
+						})
+				),
+
 			isKeyCombination: (event) =>
 				isCtrlOrMeta(event) &&
 				event.altKey &&
@@ -243,20 +251,26 @@ export default function ShortcutManager() {
 			action: remove,
 			canBeExecuted: (event) =>
 				canUpdatePageStructure &&
-				!!layoutData.items[activeItemId] &&
-				canBeRemoved(layoutData.items[activeItemId], layoutData) &&
-				!isInteractiveElement(event.target),
+				activeItemIds.every(
+					(activeItemId) =>
+						!!layoutData.items[activeItemId] &&
+						canBeRemoved(
+							layoutData.items[activeItemId],
+							layoutData
+						) &&
+						!isInteractiveElement(event.target)
+				),
 			isKeyCombination: (event) => event.code === BACKSPACE_KEY_CODE,
 		},
 		rename: {
 			action: () => {
-				setEditedNodeId(activeItemId);
+				setEditedNodeId(activeItemIds[0]);
 			},
 			canBeExecuted: () =>
 				!multiSelection &&
 				canUpdatePageStructure &&
-				!!layoutData.items[activeItemId] &&
-				canBeRenamed(layoutData.items[activeItemId]),
+				!!layoutData.items[activeItemIds[0]] &&
+				canBeRenamed(layoutData.items[activeItemIds[0]]),
 			isKeyCombination: (event) =>
 				isCtrlOrMeta(event) &&
 				event.altKey &&
@@ -267,8 +281,8 @@ export default function ShortcutManager() {
 			canBeExecuted: () =>
 				!multiSelection &&
 				canUpdatePageStructure &&
-				!!layoutData.items[activeItemId] &&
-				canBeSaved(layoutData.items[activeItemId], layoutData),
+				!!layoutData.items[activeItemIds[0]] &&
+				canBeSaved(layoutData.items[activeItemIds[0]], layoutData),
 			isKeyCombination: (event) =>
 				isCtrlOrMeta(event) && event.code === S_KEY_CODE,
 		},

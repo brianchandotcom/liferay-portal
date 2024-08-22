@@ -18,6 +18,16 @@ type CollectionViewport = {
 	id: 'landscapeMobile' | 'portraitMobile' | 'tablet';
 };
 
+type FragmentCollection = {
+	fragmentCollectionId: string;
+	groupId: string;
+};
+
+type FragmentEntry = {
+	fragmentEntryId: string;
+	groupId: string;
+};
+
 type FragmentField = {
 	id?: string;
 	value?: {

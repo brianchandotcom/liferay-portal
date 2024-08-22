@@ -39,6 +39,8 @@ import {JSONWebServicesClassNameApiHelper} from './json-web-services/JSONWebServ
 import {JSONWebServicesClientExtensionApiHelper} from './json-web-services/JSONWebServicesClientExtensionApiHelper';
 import {JSONWebServicesCompanyApiHelper} from './json-web-services/JSONWebServicesCompanyApiHelper';
 import {JSONWebServicesDDMApiHelper} from './json-web-services/JSONWebServicesDDMApiHelper';
+import {JSONWebServicesFragmentCollectionApiHelper} from './json-web-services/JSONWebServicesFragmentCollectionApiHelper';
+import {JSONWebServicesFragmentEntryApiHelper} from './json-web-services/JSONWebServicesFragmentEntryApiHelper';
 import {JSONWebServicesGroupApiHelper} from './json-web-services/JSONWebServicesGroupApiHelper';
 import {JSONWebServicesJournalApiHelper} from './json-web-services/JSONWebServicesJournalApiHelper';
 import {JSONWebServicesLayoutApiHelper} from './json-web-services/JSONWebServicesLayoutApiHelper';
@@ -90,6 +92,8 @@ export class ApiHelpers {
 	readonly jsonWebServicesClientExtension: JSONWebServicesClientExtensionApiHelper;
 	readonly jsonWebServicesCompany: JSONWebServicesCompanyApiHelper;
 	readonly jsonWebServicesDDM: JSONWebServicesDDMApiHelper;
+	readonly jsonWebServicesFragmentEntry: JSONWebServicesFragmentEntryApiHelper;
+	readonly jsonWebServicesFragmentCollection: JSONWebServicesFragmentCollectionApiHelper;
 	readonly jsonWebServicesGroup: JSONWebServicesGroupApiHelper;
 	readonly jsonWebServicesJournal: JSONWebServicesJournalApiHelper;
 	readonly jsonWebServicesLayout: JSONWebServicesLayoutApiHelper;
@@ -154,6 +158,10 @@ export class ApiHelpers {
 			new JSONWebServicesClientExtensionApiHelper(this);
 		this.jsonWebServicesCompany = new JSONWebServicesCompanyApiHelper(this);
 		this.jsonWebServicesDDM = new JSONWebServicesDDMApiHelper(this);
+		this.jsonWebServicesFragmentEntry =
+			new JSONWebServicesFragmentEntryApiHelper(this);
+		this.jsonWebServicesFragmentCollection =
+			new JSONWebServicesFragmentCollectionApiHelper(this);
 		this.jsonWebServicesGroup = new JSONWebServicesGroupApiHelper(this);
 		this.jsonWebServicesJournal = new JSONWebServicesJournalApiHelper(this);
 		this.jsonWebServicesLayout = new JSONWebServicesLayoutApiHelper(this);

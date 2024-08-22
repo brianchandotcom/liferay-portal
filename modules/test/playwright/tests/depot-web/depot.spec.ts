@@ -43,11 +43,24 @@ test(
 
 		const depotTagName = getRandomString();
 
-		const depotTag =
-			await apiHelpers.headlessAdminTaxonomy.postAssetLibraryKeyword({
-				depotEntryId: depot.depotEntryId,
-				name: depotTagName,
-			});
+		await apiHelpers.headlessAdminTaxonomy.postAssetLibraryKeyword({
+			depotEntryId: depot.depotEntryId,
+			name: depotTagName,
+		});
+
+		const anotherDepotName = getRandomString();
+
+		const anotherDepot =
+			await apiHelpers.jsonWebServicesDepot.addDepotEntry(
+				anotherDepotName
+			);
+
+		const anotherDepotTagName = getRandomString();
+
+		await apiHelpers.headlessAdminTaxonomy.postAssetLibraryKeyword({
+			depotEntryId: anotherDepot.depotEntryId,
+			name: anotherDepotTagName,
+		});
 
 		await documentLibraryEditFilePage.goto(
 			`/asset-library-${depot.depotEntryId}`
@@ -72,6 +85,10 @@ test(
 		).toBeVisible();
 
 		await expect(
+			modalTag.locator(`tr:has-text('${anotherDepotTagName}')`)
+		).toBeHidden();
+
+		await expect(
 			modalTag.locator(`tr:has-text('${globalTagName}')`)
 		).toBeVisible();
 
@@ -83,6 +100,10 @@ test(
 
 		await apiHelpers.jsonWebServicesDepot.deleteDepotEntry(
 			depot.depotEntryId
+		);
+
+		await apiHelpers.jsonWebServicesDepot.deleteDepotEntry(
+			anotherDepot.depotEntryId
 		);
 	}
 );

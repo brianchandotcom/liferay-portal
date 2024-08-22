@@ -321,11 +321,11 @@ test('LPD-33636 Email address is not deleted by saving in the UI', async ({
 	applicationsMenuPage,
 	editAccountPage,
 	page,
-	serverAdministrationPage
-}) => {	
-	let account = await apiHelpers.headlessAdminUser.postAccount();
+	serverAdministrationPage,
+}) => {
+	const account = await apiHelpers.headlessAdminUser.postAccount();
 
-	apiHelpers.data.push({id: account.id, type: 'account'}); 
+	apiHelpers.data.push({id: account.id, type: 'account'});
 
 	await applicationsMenuPage.goToServerAdministration();
 
@@ -347,7 +347,7 @@ test('LPD-33636 Email address is not deleted by saving in the UI', async ({
 	await waitForSuccessAlert(page);
 
 	await applicationsMenuPage.goToServerAdministration();
-	
+
 	const fetchScript = `
 	import com.liferay.account.service.*; 
 	import com.liferay.account.model.*;
@@ -356,6 +356,7 @@ test('LPD-33636 Email address is not deleted by saving in the UI', async ({
 	`;
 
 	await serverAdministrationPage.executeScript(fetchScript);
-	await expect(page.getByText('"emailAddress": "' + emailAddress)).toBeVisible();
-
+	await expect(
+		page.getByText('"emailAddress": "' + emailAddress)
+	).toBeVisible();
 });

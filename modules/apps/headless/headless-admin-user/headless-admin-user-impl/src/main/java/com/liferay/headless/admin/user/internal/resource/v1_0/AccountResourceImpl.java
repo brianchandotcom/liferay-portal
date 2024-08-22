@@ -542,15 +542,14 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 		_accountEntryUserRelLocalService.setAccountEntryUserRels(
 			accountId, _getAccountUserAccountIds(account));
 
-		AccountEntry originalAccountEntry = 
+		AccountEntry originalAccountEntry =
 			_accountEntryService.fetchAccountEntry(accountId);
 
 		AccountEntry accountEntry = _accountEntryService.updateAccountEntry(
 			accountId, _getParentAccountId(account), account.getName(),
 			account.getDescription(), _isDeleteLogo(account, null),
 			_getDomains(account), originalAccountEntry.getEmailAddress(),
-			_getLogoBytes(
-				account, originalAccountEntry, false),
+			_getLogoBytes(account, originalAccountEntry, false),
 			account.getTaxId(), _getStatus(account),
 			_createServiceContext(account));
 
@@ -674,7 +673,7 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 
 		PostalAddress[] postalAddresses = account.getPostalAddresses();
 
-		if ((postalAddresses == null) || (postalAddresses.length == 0)) {
+		if (ArrayUtil.isEmpty(postalAddresses)) {
 			return;
 		}
 

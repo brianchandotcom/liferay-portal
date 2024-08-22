@@ -9,6 +9,9 @@ dependencies {
 	compileInclude group: "org.postgresql", name: "postgresql", version: "42.4.4"
 	compileInclude group: "org.slf4j", name: "slf4j-api", version: "1.7.26"
 	compileInclude group: "org.slf4j", name: "slf4j-simple", version: "1.7.10"
+
+	compileOnly group: "com.liferay", name: "com.liferay.petra.string", version: "5.3.0"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 }
 
 deploy {

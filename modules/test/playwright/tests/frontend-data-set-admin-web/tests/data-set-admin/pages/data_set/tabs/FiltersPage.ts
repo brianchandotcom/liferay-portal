@@ -66,7 +66,7 @@ export class FiltersPage {
 	readonly page: Page;
 	readonly searchInput: Locator;
 	readonly searchButton: Locator;
-	
+
 	constructor(page: Page) {
 		this.dataSetPage = new DataSetPage(page);
 		this.filterTable = page.getByRole('table');
@@ -322,7 +322,8 @@ export class FiltersPage {
 
 		if (preselectedValues.length) {
 			await this.page
-				.getByRole('option', {name: preselectedValues[0]}).waitFor();
+				.getByRole('option', {name: preselectedValues[0]})
+				.waitFor();
 
 			await this.page
 				.getByRole('option', {name: preselectedValues[0]})
@@ -333,7 +334,7 @@ export class FiltersPage {
 				.filter({hasText: filterMode})
 				.click();
 		}
-		
+
 		await this.page.getByText(selectionType).click();
 	}
 

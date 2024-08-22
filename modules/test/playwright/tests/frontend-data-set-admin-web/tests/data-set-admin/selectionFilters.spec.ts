@@ -4,6 +4,7 @@
  */
 
 import {expect, mergeTests} from '@playwright/test';
+import {v4 as uuidv4} from 'uuid';
 
 import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../../fixtures/loginTest';
@@ -13,7 +14,6 @@ import {dataSetManagerApiHelpersTest} from '../../fixtures/dataSetManagerApiHelp
 import {picklistApiHelpersTest} from '../../fixtures/picklistApiHelpersTest';
 import {dataSetManagerSetupTest} from './fixtures/dataSetManagerSetupTest';
 import {filtersPageTest} from './fixtures/filtersPageTest';
-import {v4 as uuidv4} from 'uuid';
 
 const SELECTION_API_HEADLESS_FILTER_NAME = 'Selection API Headless filter';
 const SELECTION_PICKLIST_FILTER_NAME = 'Selection Picklist filter';
@@ -105,14 +105,14 @@ test.describe('Filters in Data Set Manager', () => {
 			await filtersPage.saveAddFilterModal();
 		});
 
-	await test.step('Check that the selection filter is in the list', async () => {
-		await expect(
-			page.getByRole('cell', {
-				exact: true,
-				name: SELECTION_PICKLIST_FILTER_NAME,
-			})
-		).toBeVisible();
-	});
+		await test.step('Check that the selection filter is in the list', async () => {
+			await expect(
+				page.getByRole('cell', {
+					exact: true,
+					name: SELECTION_PICKLIST_FILTER_NAME,
+				})
+			).toBeVisible();
+		});
 
 		await test.step('Create a selection filter from picklist source without preselected values', async () => {
 			await filtersPage.createSelectionFilterPicklist({
@@ -138,7 +138,9 @@ test.describe('Filters in Data Set Manager', () => {
 
 		await test.step('Can search for a filter', async () => {
 			await filtersPage.searchInput.click();
-			await filtersPage.searchInput.fill(SELECTION_PICKLIST_NO_PRESELECTED_VALUES_FILTER_NAME);
+			await filtersPage.searchInput.fill(
+				SELECTION_PICKLIST_NO_PRESELECTED_VALUES_FILTER_NAME
+			);
 
 			await filtersPage.searchButton.click();
 
@@ -147,8 +149,7 @@ test.describe('Filters in Data Set Manager', () => {
 					exact: true,
 					name: SELECTION_PICKLIST_FILTER_NAME,
 				})
-			).not
-			.toBeVisible();
+			).not.toBeVisible();
 
 			await expect(
 				page.getByRole('cell', {
@@ -177,7 +178,9 @@ test.describe('Filters in Data Set Manager', () => {
 
 			await deleteButton.click();
 
-			const cancelDeleteButton = page.getByRole('button', {name: 'Cancel'});
+			const cancelDeleteButton = page.getByRole('button', {
+				name: 'Cancel',
+			});
 
 			await cancelDeleteButton.waitFor();
 
@@ -207,7 +210,9 @@ test.describe('Filters in Data Set Manager', () => {
 
 			await deleteButton.click();
 
-			const confirmDeleteButton = page.getByRole('button', {name: 'Delete'});
+			const confirmDeleteButton = page.getByRole('button', {
+				name: 'Delete',
+			});
 
 			await confirmDeleteButton.waitFor();
 
@@ -305,12 +310,10 @@ test.describe('Filters in Data Set Manager', () => {
 		});
 
 		await test.step('Check that the preselected value is checked', async () => {
-			await page.getByLabel(
-				'Preselected Values'
-			).click();
+			await page.getByLabel('Preselected Values').click();
 
 			await expect(
-				page.getByLabel(PICKLIST_VALUE_NAME, { exact: true })
+				page.getByLabel(PICKLIST_VALUE_NAME, {exact: true})
 			).toBeChecked();
 		});
 	});

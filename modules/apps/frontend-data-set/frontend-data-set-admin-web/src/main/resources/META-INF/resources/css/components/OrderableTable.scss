@@ -54,6 +54,10 @@ html#{$cadmin-selector} .cadmin {
 				margin: 0;
 			}
 		}
+
+		&.fds-admin-filter-list {
+			margin-top: 0;
+		}
 	}
 
 	.tab-pane .orderable-table-sheet {

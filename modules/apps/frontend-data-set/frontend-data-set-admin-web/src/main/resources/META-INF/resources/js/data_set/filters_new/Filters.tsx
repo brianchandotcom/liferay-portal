@@ -402,12 +402,53 @@ function FiltersNew({
 		});
 	};
 
+	const getBreadcrumbItems = () => {
+		const breadcrumbItems: React.ComponentProps<
+			typeof ClayBreadcrumb
+		>['items'] = [
+			{
+				active: activeMode === FILTER_MODE.LIST ? true : false,
+				label: Liferay.Language.get('filters'),
+				onClick: () => {
+					setActiveMode(FILTER_MODE.LIST);
+				},
+			},
+		];
+
+		if (activeMode === FILTER_MODE.CREATION) {
+			let label = '';
+			if (activeFilterType === EFilterType.CLIENT_EXTENSION) {
+				label = Liferay.Language.get('new-client-extension-filter');
+			}
+			if (activeFilterType === EFilterType.DATE_RANGE) {
+				label = Liferay.Language.get('new-date-range-filter');
+			}
+			if (activeFilterType === EFilterType.SELECTION) {
+				label = Liferay.Language.get('new-selection-filter');
+			}
+
+			breadcrumbItems.push({
+				active: true,
+				label,
+			});
+		}
+
+		if (activeMode === FILTER_MODE.EDITION) {
+			breadcrumbItems.push({
+				active: true,
+				label: activeFilter!.label,
+			});
+		}
+
+		return breadcrumbItems;
+	};
+
 	return (
 		<ClayLayout.ContainerFluid>
-			<ClayBreadcrumb className="my-2" items={[]} />
+			<ClayBreadcrumb className="my-2" items={getBreadcrumbItems()} />
 
 			{activeMode === FILTER_MODE.CREATION && (
-				<ClayLayout.Sheet className="mt-3" size="lg">
+				<ClayLayout.Sheet>
 					{activeFilterType && (
 						<FilterFormComponent
 							dataSet={dataSet}
@@ -434,7 +475,7 @@ function FiltersNew({
 			)}
 
 			{activeMode === FILTER_MODE.EDITION && (
-				<ClayLayout.Sheet className="mt-3" size="lg">
+				<ClayLayout.Sheet>
 					{activeFilter && (
 						<FilterFormComponent
 							dataSet={dataSet}

@@ -37,6 +37,7 @@ const FilterList = ({
 					onClick: deleteFilter,
 				},
 			]}
+			className="fds-admin-filter-list"
 			creationMenuItems={Object.keys(filterTypes).map((type) => ({
 				label: filterTypes[type as EFilterType].label,
 				onClick: () => createFilter(type as EFilterType),

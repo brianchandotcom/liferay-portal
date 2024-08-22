@@ -44,9 +44,9 @@ const getHighPriorityContacts = async (filter) => {
 	return response.json();
 };
 
-const getTicketAttachments = async (search) => {
+const getTicketAttachments = async (filter) => {
 	return fetcher(
-		`${HEADLESS_BASE_URL}${`c/ticketattachments/?search=${search}`}`,
+		`${HEADLESS_BASE_URL}${`c/ticketattachments?filter=${filter}`}`,
 		{
 			headers: {
 				'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
@@ -58,22 +58,4 @@ const getTicketAttachments = async (search) => {
 	);
 };
 
-const deleteTicketAttachment = async (ticketAttachmentId) => {
-	return fetcher(
-		`${HEADLESS_BASE_URL}${`c/ticketattachments/${ticketAttachmentId}`}`,
-		{
-			headers: {
-				'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
-				'Cache-Control': 'max-age=30, stale-while-revalidate=30',
-				'x-csrf-token': Liferay.authToken,
-			},
-			method: 'DELETE',
-		}
-	);
-};
-export {
-	getHighPriorityContacts,
-	getTicketAttachments,
-	fetchHeadless,
-	deleteTicketAttachment,
-};
+export {getHighPriorityContacts, getTicketAttachments, fetchHeadless};

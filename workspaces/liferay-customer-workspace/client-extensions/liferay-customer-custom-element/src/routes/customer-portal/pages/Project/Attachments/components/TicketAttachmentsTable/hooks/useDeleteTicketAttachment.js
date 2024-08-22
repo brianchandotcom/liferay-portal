@@ -4,7 +4,6 @@
  */
 
 import {useState} from 'react';
-import {deleteTicketAttachment} from '~/common/services/liferay/api';
 
 export default function useDelete() {
 	const [isDeleting, setIsDeleting] = useState(false);
@@ -12,9 +11,15 @@ export default function useDelete() {
 	const onDelete = async (ticketAttachmentId) => {
 		setIsDeleting(true);
 
-		await deleteTicketAttachment(ticketAttachmentId).finally(() => {
-			setIsDeleting(false);
-		});
+		await Liferay.OAuth2Client.FromUserAgentApplication(
+			'liferay-customer-etc-spring-boot-oauth-application-user-agent'
+		)
+			.fetch('/ticket-attachments/' + ticketAttachmentId, {
+				method: 'DELETE',
+			})
+			.finally(() => {
+				setIsDeleting(false);
+			});
 	};
 
 	return {isDeleting, onDelete};

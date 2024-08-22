@@ -17,6 +17,7 @@ import useDelete from './hooks/useDeleteTicketAttachment';
 import useDownload from './hooks/useDownloadTicketAttachment';
 import usePagination from './hooks/usePaginationTicketAttachments';
 import useSort from './hooks/useSortTicketAttachments';
+import getAttachmentDownloadUrl from './utils/getAttachmentDownloadUrl';
 import getAttachmentFormattedDateTime from './utils/getAttachmentFormattedDateTime';
 import {getColumns} from './utils/getColumns';
 
@@ -48,24 +49,27 @@ const TicketAttachmentsTable = ({
 	useEffect(() => {
 		const fetchTicketAttachments = async () => {
 			const ticketAttachmentsResponse = await getTicketAttachments(
-				koroneikiAccount?.accountKey
+				`accountKey eq '${koroneikiAccount?.accountKey}' and status/any(s:s eq 0)`
 			);
 
 			const ticketAttachments = ticketAttachmentsResponse.items.map(
-				(ticketAttachment) => ({
-					accountKey: ticketAttachment.accountKey,
-					creatorId: loggedUserAccount?.id,
-					creatorName: ticketAttachment.creator.name,
-					dateCreated: ticketAttachment.dateCreated,
-					fileName: ticketAttachment.fileName,
-					fileSize: ticketAttachment.fileSize,
-					storageBucket: ticketAttachment.storageBucket,
-					ticketAttachmentId: ticketAttachment.id,
-					zendeskTicketId: ticketAttachment.zendeskTicketId,
-				})
+				async (ticketAttachment) => {
+					return {
+						accountKey: ticketAttachment.accountKey,
+						creatorId: ticketAttachment.creator.id,
+						creatorName: ticketAttachment.creator.name,
+						dateCreated: ticketAttachment.dateCreated,
+						downloadUrl: await getAttachmentDownloadUrl(ticketAttachment.id),
+						fileName: ticketAttachment.fileName,
+						fileSize: ticketAttachment.fileSize,
+						storageBucket: ticketAttachment.storageBucket,
+						ticketAttachmentId: ticketAttachment.id,
+						zendeskTicketId: ticketAttachment.zendeskTicketId,
+					};
+				}
 			);
 
-			setTicketAttachments(ticketAttachments);
+			setTicketAttachments(await Promise.all(ticketAttachments));
 		};
 		fetchTicketAttachments();
 	}, [
@@ -138,7 +142,7 @@ const TicketAttachmentsTable = ({
 								fileName: (
 									<a
 										className="m-0 text-truncate"
-										href={ticketAttachment?.storageBucket}
+										href={ticketAttachment?.downloadUrl}
 									>
 										{ticketAttachment?.fileName}
 									</a>
@@ -173,8 +177,7 @@ const TicketAttachmentsTable = ({
 											ticketAttachment?.zendeskTicketId
 										)}
 									>
-										{'#' +
-											ticketAttachment?.zendeskTicketId}
+										{'#' + ticketAttachment?.zendeskTicketId}
 									</a>
 								),
 							})

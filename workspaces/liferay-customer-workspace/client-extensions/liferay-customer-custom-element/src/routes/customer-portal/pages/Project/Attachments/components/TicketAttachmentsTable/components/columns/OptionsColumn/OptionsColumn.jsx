@@ -22,7 +22,7 @@ const OptionsColumn = ({
 			icon: <ClayIcon symbol="download" />,
 			label: i18n.translate('download'),
 			onClick: () => {
-				onDownload(ticketAttachment?.storageBucket);
+				onDownload(ticketAttachment?.downloadUrl);
 			},
 		},
 		{

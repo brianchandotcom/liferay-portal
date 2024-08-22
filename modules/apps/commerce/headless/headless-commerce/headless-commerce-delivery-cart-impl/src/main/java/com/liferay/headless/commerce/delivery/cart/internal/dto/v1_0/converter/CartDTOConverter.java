@@ -10,6 +10,7 @@ import com.liferay.commerce.constants.CommerceOrderPaymentConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.currency.util.CommercePriceFormatter;
+import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderType;
 import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel;
@@ -73,6 +74,17 @@ public class CartDTOConverter implements DTOConverter<CommerceOrder, Cart> {
 				setAccount(commerceOrder::getCommerceAccountName);
 				setAccountId(commerceOrder::getCommerceAccountId);
 				setAuthor(commerceOrder::getUserName);
+				setBillingAddressExternalReferenceCode(
+					() -> {
+						CommerceAddress billingAddress =
+							commerceOrder.getBillingAddress();
+
+						if (billingAddress == null) {
+							return null;
+						}
+
+						return billingAddress.getExternalReferenceCode();
+					});
 				setBillingAddressId(commerceOrder::getBillingAddressId);
 				setCouponCode(commerceOrder::getCouponCode);
 				setCreateDate(commerceOrder::getCreateDate);
@@ -154,6 +166,17 @@ public class CartDTOConverter implements DTOConverter<CommerceOrder, Cart> {
 								commerceOrder.getPaymentStatus()));
 				setPrintedNote(commerceOrder::getPrintedNote);
 				setPurchaseOrderNumber(commerceOrder::getPurchaseOrderNumber);
+				setShippingAddressExternalReferenceCode(
+					() -> {
+						CommerceAddress shippingAddress =
+							commerceOrder.getShippingAddress();
+
+						if (shippingAddress == null) {
+							return null;
+						}
+
+						return shippingAddress.getExternalReferenceCode();
+					});
 				setShippingAddressId(commerceOrder::getShippingAddressId);
 				setStatus(
 					() -> WorkflowConstants.getStatusLabel(

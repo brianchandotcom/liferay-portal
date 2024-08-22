@@ -958,16 +958,42 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 			contextUser.getUserId(), commerceOrder.getCommerceOrderId(),
 			commerceOrder.getCommerceAccountId());
 
+		long billingAddressId = GetterUtil.getLong(cart.getBillingAddressId());
+
+		if (billingAddressId == 0) {
+			CommerceAddress commerceAddress =
+				_commerceAddressService.fetchByExternalReferenceCode(
+					cart.getBillingAddressExternalReferenceCode(),
+					contextCompany.getCompanyId());
+
+			if (commerceAddress == null) {
+				billingAddressId = commerceOrder.getBillingAddressId();
+			}
+			else {
+				billingAddressId = commerceAddress.getCommerceAddressId();
+			}
+		}
+
+		long shippingAddressId = cart.getShippingAddressId();
+
+		if (shippingAddressId == 0) {
+			CommerceAddress commerceAddress =
+				_commerceAddressService.fetchByExternalReferenceCode(
+					cart.getShippingAddressExternalReferenceCode(),
+					contextCompany.getCompanyId());
+
+			if (commerceAddress == null) {
+				shippingAddressId = commerceOrder.getShippingAddressId();
+			}
+			else {
+				shippingAddressId = commerceAddress.getCommerceAddressId();
+			}
+		}
+
 		_commerceOrderEngine.updateCommerceOrder(
 			commerceOrder.getExternalReferenceCode(),
-			commerceOrder.getCommerceOrderId(),
-			GetterUtil.get(
-				cart.getBillingAddressId(),
-				commerceOrder.getBillingAddressId()),
-			commerceShippingMethodId,
-			GetterUtil.get(
-				cart.getShippingAddressId(),
-				commerceOrder.getShippingAddressId()),
+			commerceOrder.getCommerceOrderId(), billingAddressId,
+			commerceShippingMethodId, shippingAddressId,
 			commerceOrder.getAdvanceStatus(),
 			GetterUtil.get(
 				cart.getPaymentMethod(),

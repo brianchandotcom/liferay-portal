@@ -22,6 +22,11 @@ interface patchTaxonomyCategoryProps {
 	name: string;
 }
 
+interface postAssetLibraryKeywordProps {
+	depotEntryId: string;
+	name: string;
+}
+
 interface postSiteKeywordProps {
 	name: string;
 	siteId: string;
@@ -128,6 +133,23 @@ export class HeadlessAdminTaxonomyApiHelper {
 	}: postSiteKeywordProps): Promise<{id: number}> {
 		return this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/sites/${siteId}/keywords`,
+			{data: {name}}
+		);
+	}
+
+	/**
+	 * It allows creating a tag inside an asset library
+	 *
+	 * @param name the name of the tag
+	 * @param assetLibraryId the id of the asset library in which the tag will be created
+	 */
+
+	async postAssetLibraryKeyword({
+		depotEntryId,
+		name,
+	}: postAssetLibraryKeywordProps): Promise<{id: number}> {
+		return this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}${this.basePath}/asset-libraries/${depotEntryId}/keywords`,
 			{data: {name}}
 		);
 	}

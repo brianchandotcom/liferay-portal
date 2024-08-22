@@ -38,7 +38,11 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 	@Override
 	protected String[] getPortletIds() {
 		return new String[] {
-			AssetPublisherPortletKeys.ASSET_PUBLISHER + "_INSTANCE_%"
+			AssetPublisherPortletKeys.ASSET_PUBLISHER + "_INSTANCE_%",
+			AssetPublisherPortletKeys.HIGHEST_RATED_ASSETS + "_INSTANCE_%",
+			AssetPublisherPortletKeys.MOST_VIEWED_ASSETS + "_INSTANCE_%",
+			AssetPublisherPortletKeys.RECENT_CONTENT + "_INSTANCE_%",
+			AssetPublisherPortletKeys.RELATED_ASSETS + "_INSTANCE_%"
 		};
 	}
 

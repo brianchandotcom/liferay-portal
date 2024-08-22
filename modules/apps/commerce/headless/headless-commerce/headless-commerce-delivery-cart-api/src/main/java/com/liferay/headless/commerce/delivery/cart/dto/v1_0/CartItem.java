@@ -632,6 +632,52 @@ public class CartItem implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _replacedSkuSupplier;
 
+	@Schema(example = "AB-34098-789-N")
+	public String getReplacedSkuExternalReferenceCode() {
+		if (_replacedSkuExternalReferenceCodeSupplier != null) {
+			replacedSkuExternalReferenceCode =
+				_replacedSkuExternalReferenceCodeSupplier.get();
+
+			_replacedSkuExternalReferenceCodeSupplier = null;
+		}
+
+		return replacedSkuExternalReferenceCode;
+	}
+
+	public void setReplacedSkuExternalReferenceCode(
+		String replacedSkuExternalReferenceCode) {
+
+		this.replacedSkuExternalReferenceCode =
+			replacedSkuExternalReferenceCode;
+
+		_replacedSkuExternalReferenceCodeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setReplacedSkuExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			replacedSkuExternalReferenceCodeUnsafeSupplier) {
+
+		_replacedSkuExternalReferenceCodeSupplier = () -> {
+			try {
+				return replacedSkuExternalReferenceCodeUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String replacedSkuExternalReferenceCode;
+
+	@JsonIgnore
+	private Supplier<String> _replacedSkuExternalReferenceCodeSupplier;
+
 	@Schema
 	public Long getReplacedSkuId() {
 		if (_replacedSkuIdSupplier != null) {
@@ -714,6 +760,135 @@ public class CartItem implements Serializable {
 
 	@JsonIgnore
 	private Supplier<Settings> _settingsSupplier;
+
+	@Schema
+	@Valid
+	public Address getShippingAddress() {
+		if (_shippingAddressSupplier != null) {
+			shippingAddress = _shippingAddressSupplier.get();
+
+			_shippingAddressSupplier = null;
+		}
+
+		return shippingAddress;
+	}
+
+	public void setShippingAddress(Address shippingAddress) {
+		this.shippingAddress = shippingAddress;
+
+		_shippingAddressSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setShippingAddress(
+		UnsafeSupplier<Address, Exception> shippingAddressUnsafeSupplier) {
+
+		_shippingAddressSupplier = () -> {
+			try {
+				return shippingAddressUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Address shippingAddress;
+
+	@JsonIgnore
+	private Supplier<Address> _shippingAddressSupplier;
+
+	@Schema(example = "AB-34098-789-N")
+	public String getShippingAddressExternalReferenceCode() {
+		if (_shippingAddressExternalReferenceCodeSupplier != null) {
+			shippingAddressExternalReferenceCode =
+				_shippingAddressExternalReferenceCodeSupplier.get();
+
+			_shippingAddressExternalReferenceCodeSupplier = null;
+		}
+
+		return shippingAddressExternalReferenceCode;
+	}
+
+	public void setShippingAddressExternalReferenceCode(
+		String shippingAddressExternalReferenceCode) {
+
+		this.shippingAddressExternalReferenceCode =
+			shippingAddressExternalReferenceCode;
+
+		_shippingAddressExternalReferenceCodeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setShippingAddressExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			shippingAddressExternalReferenceCodeUnsafeSupplier) {
+
+		_shippingAddressExternalReferenceCodeSupplier = () -> {
+			try {
+				return shippingAddressExternalReferenceCodeUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String shippingAddressExternalReferenceCode;
+
+	@JsonIgnore
+	private Supplier<String> _shippingAddressExternalReferenceCodeSupplier;
+
+	@Schema
+	public Long getShippingAddressId() {
+		if (_shippingAddressIdSupplier != null) {
+			shippingAddressId = _shippingAddressIdSupplier.get();
+
+			_shippingAddressIdSupplier = null;
+		}
+
+		return shippingAddressId;
+	}
+
+	public void setShippingAddressId(Long shippingAddressId) {
+		this.shippingAddressId = shippingAddressId;
+
+		_shippingAddressIdSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setShippingAddressId(
+		UnsafeSupplier<Long, Exception> shippingAddressIdUnsafeSupplier) {
+
+		_shippingAddressIdSupplier = () -> {
+			try {
+				return shippingAddressIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long shippingAddressId;
+
+	@JsonIgnore
+	private Supplier<Long> _shippingAddressIdSupplier;
 
 	@Schema
 	public String getSku() {
@@ -1199,6 +1374,23 @@ public class CartItem implements Serializable {
 			sb.append("\"");
 		}
 
+		String replacedSkuExternalReferenceCode =
+			getReplacedSkuExternalReferenceCode();
+
+		if (replacedSkuExternalReferenceCode != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"replacedSkuExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(replacedSkuExternalReferenceCode));
+
+			sb.append("\"");
+		}
+
 		Long replacedSkuId = getReplacedSkuId();
 
 		if (replacedSkuId != null) {
@@ -1221,6 +1413,47 @@ public class CartItem implements Serializable {
 			sb.append("\"settings\": ");
 
 			sb.append(String.valueOf(settings));
+		}
+
+		Address shippingAddress = getShippingAddress();
+
+		if (shippingAddress != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"shippingAddress\": ");
+
+			sb.append(String.valueOf(shippingAddress));
+		}
+
+		String shippingAddressExternalReferenceCode =
+			getShippingAddressExternalReferenceCode();
+
+		if (shippingAddressExternalReferenceCode != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"shippingAddressExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(shippingAddressExternalReferenceCode));
+
+			sb.append("\"");
+		}
+
+		Long shippingAddressId = getShippingAddressId();
+
+		if (shippingAddressId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"shippingAddressId\": ");
+
+			sb.append(shippingAddressId);
 		}
 
 		String sku = getSku();

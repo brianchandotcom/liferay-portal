@@ -1009,7 +1009,6 @@ public class DownstreamBuild extends BaseBuild {
 		new CompileFailureMessageGenerator(),
 		new IntegrationTestTimeoutFailureMessageGenerator(),
 		new JSUnitTestFailureMessageGenerator(),
-		new LocalGitMirrorFailureMessageGenerator(),
 		new PMDFailureMessageGenerator(),
 		new PlaywrightCompilationFailureMessageGenerator(),
 		new PluginGitIDFailureMessageGenerator(),
@@ -1019,6 +1018,7 @@ public class DownstreamBuild extends BaseBuild {
 		new StartupFailureMessageGenerator(),
 		//
 		new GradleTaskFailureMessageGenerator(),
+		new LocalGitMirrorFailureMessageGenerator(),
 		//
 		new CIFailureMessageGenerator(),
 		new GenericFailureMessageGenerator()

@@ -57,6 +57,7 @@ public class OpenSearchIndexInformationTest extends BaseOpenSearchTestCase {
 	@After
 	public void tearDown() {
 		_companyIndexFactoryFixture.deleteIndices();
+
 		_companyIndexFactoryFixture.tearDown();
 	}
 

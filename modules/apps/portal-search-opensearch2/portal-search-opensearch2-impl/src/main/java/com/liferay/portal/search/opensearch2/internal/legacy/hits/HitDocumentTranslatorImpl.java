@@ -76,6 +76,11 @@ public class HitDocumentTranslatorImpl implements HitDocumentTranslator {
 
 			return new Field(fieldName, new String[] {jsonObject.toString()});
 		}
+		else if (valueType == JsonValue.ValueType.STRING) {
+			JsonString jsonString = (JsonString)jsonValue;
+
+			return new Field(fieldName, jsonString.getString());
+		}
 
 		return new Field(fieldName, jsonValue.toString());
 	}

@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.ServiceContextContributor;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
@@ -97,12 +96,7 @@ public class CompleteTaskMVCActionCommand
 					(String)workflowContext.get(
 						WorkflowConstants.CONTEXT_ENTRY_CLASS_NAME));
 
-			if (workflowHandler instanceof ServiceContextContributor) {
-				ServiceContextContributor serviceContextContributor =
-					(ServiceContextContributor)workflowHandler;
-
-				serviceContextContributor.contribute(serviceContext);
-			}
+			workflowHandler.contributeServiceContext(serviceContext);
 
 			workflowContext.put(
 				WorkflowConstants.CONTEXT_USER_ID,

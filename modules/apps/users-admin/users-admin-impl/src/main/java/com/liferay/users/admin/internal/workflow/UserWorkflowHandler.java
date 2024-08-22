@@ -13,7 +13,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.BaseWorkflowHandler;
-import com.liferay.portal.kernel.workflow.ServiceContextContributor;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 
@@ -35,11 +34,10 @@ import org.osgi.service.component.annotations.Reference;
 	property = "model.class.name=com.liferay.portal.kernel.model.User",
 	service = WorkflowHandler.class
 )
-public class UserWorkflowHandler
-	extends BaseWorkflowHandler<User> implements ServiceContextContributor {
+public class UserWorkflowHandler extends BaseWorkflowHandler<User> {
 
 	@Override
-	public void contribute(ServiceContext serviceContext) {
+	public void contributeServiceContext(ServiceContext serviceContext) {
 		HttpServletRequest httpServletRequest = serviceContext.getRequest();
 
 		serviceContext.setAttribute(

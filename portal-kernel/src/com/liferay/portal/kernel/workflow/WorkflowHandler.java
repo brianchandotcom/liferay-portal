@@ -36,6 +36,10 @@ import javax.servlet.http.HttpServletResponse;
  */
 public interface WorkflowHandler<T> {
 
+	public default void contributeServiceContext(
+		ServiceContext serviceContext) {
+	}
+
 	public AssetRenderer<T> getAssetRenderer(long classPK)
 		throws PortalException;
 

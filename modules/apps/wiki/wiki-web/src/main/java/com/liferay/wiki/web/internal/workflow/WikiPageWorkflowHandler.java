@@ -13,7 +13,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.BaseWorkflowHandler;
-import com.liferay.portal.kernel.workflow.ServiceContextContributor;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.wiki.constants.WikiPortletKeys;
@@ -41,11 +40,10 @@ import org.osgi.service.component.annotations.Reference;
 	property = "model.class.name=com.liferay.wiki.model.WikiPage",
 	service = WorkflowHandler.class
 )
-public class WikiPageWorkflowHandler
-	extends BaseWorkflowHandler<WikiPage> implements ServiceContextContributor {
+public class WikiPageWorkflowHandler extends BaseWorkflowHandler<WikiPage> {
 
 	@Override
-	public void contribute(ServiceContext serviceContext) {
+	public void contributeServiceContext(ServiceContext serviceContext) {
 		HttpServletRequest httpServletRequest = serviceContext.getRequest();
 
 		PortletURL portletURL = null;

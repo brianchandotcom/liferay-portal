@@ -229,8 +229,8 @@ public class AssetEntriesCheckerHelperTest {
 		}
 
 		portletPreferences.setValue(
-			"assetListEntryId",
-			String.valueOf(assetListEntry.getAssetListEntryId()));
+			"assetListEntryExternalReferenceCode",
+			assetListEntry.getExternalReferenceCode());
 		portletPreferences.setValue("selectionStyle", "asset-list");
 
 		portletPreferences.store();

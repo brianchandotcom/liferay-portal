@@ -616,7 +616,6 @@ public class AssetPublisherExportImportTest
 			stagingLayout, AssetPublisherPortletKeys.ASSET_PUBLISHER,
 			_getPreferenceMap(
 				assetListEntry.getExternalReferenceCode(),
-				RandomTestUtil.randomLong(),
 				importedGroup.getExternalReferenceCode()));
 
 		_publishLayouts(stagingGroup);
@@ -655,7 +654,7 @@ public class AssetPublisherExportImportTest
 
 		String portletId = LayoutTestUtil.addPortletToLayout(
 			stagingLayout, AssetPublisherPortletKeys.ASSET_PUBLISHER,
-			_getPreferenceMap(null, 0, null));
+			_getPreferenceMap(null, null));
 
 		_publishLayouts(stagingGroup);
 
@@ -692,8 +691,7 @@ public class AssetPublisherExportImportTest
 		String portletId = LayoutTestUtil.addPortletToLayout(
 			stagingLayout, AssetPublisherPortletKeys.ASSET_PUBLISHER,
 			_getPreferenceMap(
-				stagingAssetListEntry.getExternalReferenceCode(),
-				RandomTestUtil.randomLong(), null));
+				stagingAssetListEntry.getExternalReferenceCode(), null));
 
 		_publishLayouts(stagingGroup);
 
@@ -1557,7 +1555,7 @@ public class AssetPublisherExportImportTest
 	}
 
 	private Map<String, String[]> _getPreferenceMap(
-		String assetListEntryExternalReferenceCode, long assetListEntryId,
+		String assetListEntryExternalReferenceCode,
 		String assetListEntryGroupExternalReferenceCode) {
 
 		return HashMapBuilder.put(
@@ -1579,15 +1577,6 @@ public class AssetPublisherExportImportTest
 				}
 
 				return new String[] {assetListEntryGroupExternalReferenceCode};
-			}
-		).put(
-			"assetListEntryId",
-			() -> {
-				if (assetListEntryId == 0) {
-					return null;
-				}
-
-				return new String[] {String.valueOf(assetListEntryId)};
 			}
 		).put(
 			"selectionStyle", new String[] {"asset-list"}

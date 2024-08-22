@@ -237,11 +237,15 @@ test('Data set selection modal shows a "No results found" message when there are
 		await fdsFragmentPage.selectDataSetButton.click();
 	});
 
-	test.step('Assert that there are no Data Sets available to select', async () => {
+	await test.step('Assert that there are no Data Sets available to select', async () => {
+		await fdsFragmentPage.selectDataSetModalFrame
+			.locator('.fds-admin-item-selector')
+			.waitFor({state: 'visible'});
+
 		await expect(
-			fdsFragmentPage.page
-				.frameLocator('iframe[title="Select"]')
-				.locator('.c-empty-state-title')
+			fdsFragmentPage.selectDataSetModalFrame.locator(
+				'.c-empty-state-title'
+			)
 		).toContainText('No Results Found');
 	});
 });

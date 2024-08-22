@@ -44,6 +44,10 @@ public class TestBatchFactory {
 				testBatch = new ModulesPortalTestBatch(
 					portalBatchBuildData, workspace);
 			}
+			else if (batchName.startsWith("playwright-js-")) {
+				return new PlaywrightPortalTestBatch(
+					portalBatchBuildData, workspace);
+			}
 			else {
 				testBatch = new DefaultPortalTestBatch(
 					portalBatchBuildData, workspace);

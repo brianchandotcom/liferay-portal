@@ -6,6 +6,7 @@
 import {Dispatch} from 'react';
 import {useLocation, useNavigate, useParams} from 'react-router-dom';
 
+import {NewAppInitialState, NewAppTypes} from '../../../context/NewAppContext';
 import {
 	PRODUCT_TAGS,
 	PRODUCT_WORKFLOW_STATUS_CODE,
@@ -15,7 +16,6 @@ import i18n from '../../../i18n';
 import {Liferay} from '../../../liferay/liferay';
 import headlessCommerceAdminCatalogImpl from '../../../services/rest/HeadlessCommerceAdminCatalog';
 import {base64ToText, fileToBase64} from '../../../utils/file';
-import { NewAppInitialState, NewAppTypes } from '../../../context/NewAppContext';
 
 type ProductConfig = {
 	isDraft: boolean;
@@ -34,7 +34,7 @@ const usePublishAppSubmission = (
 			_product,
 			catalogId,
 			profile: {categories, description, file, name, tags},
-            references: {vocabulariesAndCategories},	
+			references: {vocabulariesAndCategories},
 		} = context;
 
 		const productTypeCategories = (
@@ -130,7 +130,6 @@ const usePublishAppSubmission = (
 
 		try {
 			product = await syncProfile(config);
-
 		}
 		catch (error) {
 			console.error(error);

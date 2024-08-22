@@ -43,8 +43,7 @@ const Profile = () => {
 		dispatch,
 	] = useSolutionContext();
 
-	console.log('vocabulariesAndCategories', vocabulariesAndCategories)
-
+	console.log('vocabulariesAndCategories', vocabulariesAndCategories);
 
 	const defaultSourceItems = {
 		categories:

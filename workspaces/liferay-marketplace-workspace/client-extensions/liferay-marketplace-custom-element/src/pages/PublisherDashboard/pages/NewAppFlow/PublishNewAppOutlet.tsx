@@ -9,16 +9,17 @@ import {Link, Outlet} from 'react-router-dom';
 import 'react-quill/dist/quill.snow.css';
 import {useModal} from '@clayui/modal';
 import {useMemo} from 'react';
-import { PRODUCT_WORKFLOW_STATUS_CODE } from '../../../../enums/Product';
-import { useAccount } from '../../../../hooks/data/useAccounts';
-import usePublishSolutionHeader from '../../hooks/usePublishSolutionHeader';
-import { useNewAppContext } from '../../../../context/NewAppContext';
+
 import AppToolbar from '../../../../components/AppToolBar/AppToolBar';
-import PublishNav from '../Solutions/components/PublishNav';
-import i18n from '../../../../i18n';
 import Modal from '../../../../components/Modal';
+import {useNewAppContext} from '../../../../context/NewAppContext';
+import {PRODUCT_WORKFLOW_STATUS_CODE} from '../../../../enums/Product';
+import {useAccount} from '../../../../hooks/data/useAccounts';
+import i18n from '../../../../i18n';
 import usePublishAppNavigation from '../../hooks/usePublishAppNavigation';
 import usePublishAppSubmission from '../../hooks/usePublishAppSubmission';
+import usePublishSolutionHeader from '../../hooks/usePublishSolutionHeader';
+import PublishNav from '../Solutions/components/PublishNav';
 
 import './PublishNewAppOutlet.scss';
 
@@ -38,10 +39,7 @@ const PublishNewAppOutlet = () => {
 		publishAppSteps,
 	} = usePublishAppNavigation();
 
-	const {onSave, onSaveAsDraft} = usePublishAppSubmission(
-		context,
-		dispatch
-	);
+	const {onSave, onSaveAsDraft} = usePublishAppSubmission(context, dispatch);
 
 	const {observer, onOpenChange, open} = useModal();
 	const onExitModal = useModal();
@@ -101,10 +99,7 @@ const PublishNewAppOutlet = () => {
 			<hr />
 
 			<div className="d-flex justify-content-center mt-8">
-				<PublishNav
-					activeIndex={activeIndex}
-					items={publishAppSteps}
-				/>
+				<PublishNav activeIndex={activeIndex} items={publishAppSteps} />
 
 				<div className="ml-8 new-app-body-container">
 					<h1 className="header-title mb-4">{activeRoute.title}</h1>
@@ -136,8 +131,7 @@ const PublishNewAppOutlet = () => {
 								onClickContinue();
 							}}
 						>
-								{isLastStep ? 'Submit App' : 'Continue'}
-							
+							{isLastStep ? 'Submit App' : 'Continue'}
 						</ClayButton>
 					</div>
 				</div>

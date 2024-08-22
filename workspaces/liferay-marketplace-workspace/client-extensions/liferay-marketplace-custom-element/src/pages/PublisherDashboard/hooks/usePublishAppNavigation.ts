@@ -4,8 +4,8 @@
  */
 
 import {useLocation, useNavigate, useParams} from 'react-router-dom';
-import { APP_FLOW_ITEMS } from '../pages/NewAppFlow/constants';
 
+import {APP_FLOW_ITEMS} from '../pages/NewAppFlow/constants';
 
 const usePublishAppNavigation = () => {
 	const location = useLocation();
@@ -14,16 +14,12 @@ const usePublishAppNavigation = () => {
 
 	const [, ..._publishAppSteps] = APP_FLOW_ITEMS;
 
-	const publishAppSteps = id
-		? _publishAppSteps
-		: APP_FLOW_ITEMS;
+	const publishAppSteps = id ? _publishAppSteps : APP_FLOW_ITEMS;
 
 	const paths = location.pathname.split('/');
 	const lastPath = paths.at(-1);
 
-	let activeIndex = publishAppSteps.findIndex(
-		({path}) => path === lastPath
-	);
+	let activeIndex = publishAppSteps.findIndex(({path}) => path === lastPath);
 
 	const isLastStep = activeIndex + 1 === publishAppSteps.length;
 
@@ -31,8 +27,7 @@ const usePublishAppNavigation = () => {
 		activeIndex = 0;
 	}
 
-	const activeRoute =
-    publishAppSteps[activeIndex] || publishAppSteps[0];
+	const activeRoute = publishAppSteps[activeIndex] || publishAppSteps[0];
 
 	const onClickPrevious = () => {
 		navigate(publishAppSteps[activeIndex - 1].path);

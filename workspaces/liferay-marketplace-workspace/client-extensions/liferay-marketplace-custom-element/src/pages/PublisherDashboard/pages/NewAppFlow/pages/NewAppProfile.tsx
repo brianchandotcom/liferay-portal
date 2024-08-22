@@ -6,18 +6,22 @@
 import ClayMultiSelect from '@clayui/multi-select';
 import {filesize} from 'filesize';
 import {useState} from 'react';
-import i18n from '../../../../../i18n';
-import { NewAppTypes, useNewAppContext } from '../../../../../context/NewAppContext';
-import { ProductVocabulary } from '../../../../../enums/ProductVocabulary';
-import { UploadedFile } from '../../../../../components/FileList/FileList';
-import { getRandomID } from '../../../../../utils/string';
-import UploadLogo from '../../../../../components/UploadLogo/UploadLogo';
+
+import {UploadedFile} from '../../../../../components/FileList/FileList';
 import Form from '../../../../../components/MarketplaceForm';
-import { getIconSpriteMap } from '../../../../../liferay/constants';
+import UploadLogo from '../../../../../components/UploadLogo/UploadLogo';
+import {
+	NewAppTypes,
+	useNewAppContext,
+} from '../../../../../context/NewAppContext';
+import {ProductVocabulary} from '../../../../../enums/ProductVocabulary';
+import i18n from '../../../../../i18n';
+import {getIconSpriteMap} from '../../../../../liferay/constants';
+import {getRandomID} from '../../../../../utils/string';
 
 const tooltipInfo = {
 	categories: 'tootip',
-	description:'tootip',
+	description: 'tootip',
 	name: 'tootip',
 	tags: 'tootip',
 };
@@ -27,7 +31,7 @@ const NewAppProfile = () => {
 		{
 			profile: {categories, description, file, name, tags},
 			references: {vocabulariesAndCategories},
-		},	
+		},
 		dispatch,
 	] = useNewAppContext();
 
@@ -36,8 +40,8 @@ const NewAppProfile = () => {
 			vocabulariesAndCategories[ProductVocabulary.APP_CATEGORY]
 				?.categories ?? [],
 		tags:
-			vocabulariesAndCategories[ProductVocabulary.APP_TAGS]
-				?.categories ?? [],
+			vocabulariesAndCategories[ProductVocabulary.APP_TAGS]?.categories ??
+			[],
 	};
 
 	const [multiSelectText, setMultiSelectText] = useState({

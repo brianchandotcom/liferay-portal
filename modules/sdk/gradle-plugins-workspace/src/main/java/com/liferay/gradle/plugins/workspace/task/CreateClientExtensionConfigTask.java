@@ -50,8 +50,6 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.apache.commons.lang3.StringUtils;
-
 import org.gradle.api.DefaultTask;
 import org.gradle.api.GradleException;
 import org.gradle.api.Project;
@@ -406,7 +404,9 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 			if (currentValue instanceof String) {
 				String currentValueString = (String)currentValue;
 
-				if (StringUtils.containsIgnoreCase(entry.getKey(), "url") &&
+				String key = StringUtil.toLowerCase(entry.getKey());
+
+				if (key.contains("url") &&
 					_isWildcardValue(currentValueString)) {
 
 					entry.setValue(
@@ -621,7 +621,7 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 	}
 
 	private boolean _isWildcardValue(String value) {
-		if (value.contains(StringUtil.STAR)) {
+		if (value.contains(StringUtil.STAR) && !StringUtil.isUrl(value)) {
 			return true;
 		}
 

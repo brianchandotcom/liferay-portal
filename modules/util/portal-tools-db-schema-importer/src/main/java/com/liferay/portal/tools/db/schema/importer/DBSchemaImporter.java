@@ -15,6 +15,7 @@ import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
 
 /**
  * @author Mariano Álvaro Sáiz
@@ -25,32 +26,50 @@ public class DBSchemaImporter {
 		Options options = _getOptions();
 
 		if ((args.length != 0) && args[0].equals("--help")) {
-			HelpFormatter helpFormatter = new HelpFormatter();
-
-			helpFormatter.printHelp(
-				"Liferay Portal Tools Database Schema Importer", options);
+			new HelpFormatter(
+			).printHelp(
+				"Liferay Portal Tools Database Schema Importer", options
+			);
 
 			System.exit(_LIFERAY_COMMON_EXIT_CODE_HELP);
 		}
 
 		CommandLineParser commandLineParser = new DefaultParser();
 
+		CommandLine commandLine = null;
+
 		try {
-			CommandLine commandLine = commandLineParser.parse(options, args);
+			commandLine = commandLineParser.parse(options, args);
+		}
+		catch (ParseException parseException) {
+			System.err.println(parseException.getMessage());
 
-			_getDataSource(
-				commandLine.getOptionValue("source-jdbc-url"),
-				commandLine.getOptionValue("source-password"),
-				commandLine.getOptionValue("source-user"));
+			new HelpFormatter(
+			).printHelp(
+				"Liferay Portal Tools Database Schema Importer", options
+			);
 
-			_getDataSource(
-				commandLine.getOptionValue("target-jdbc-url"),
-				commandLine.getOptionValue("target-password"),
-				commandLine.getOptionValue("target-user"));
+			System.exit(_LIFERAY_COMMON_EXIT_CODE_HELP);
+		}
+
+		try {
+			new DBSchemaImporterHelper(
+				commandLine.getOptionValue("path"),
+				_getDataSource(
+					commandLine.getOptionValue("source-jdbc-url"),
+					commandLine.getOptionValue("source-password"),
+					commandLine.getOptionValue("source-user")),
+				_getDataSource(
+					commandLine.getOptionValue("target-jdbc-url"),
+					commandLine.getOptionValue("target-password"),
+					commandLine.getOptionValue("target-user"))
+			).importDB();
 
 			System.exit(_LIFERAY_COMMON_EXIT_CODE_OK);
 		}
 		catch (Exception exception) {
+			exception.printStackTrace(System.err);
+
 			System.exit(_LIFERAY_COMMON_EXIT_CODE_BAD);
 		}
 	}
@@ -102,6 +121,8 @@ public class DBSchemaImporter {
 			"Set the target database user password.");
 		options.addRequiredOption(
 			null, "target-user", true, "Set the target database user.");
+		options.addRequiredOption(
+			null, "path", true, "Set the path with source SQL files.");
 
 		return options;
 	}

@@ -15,6 +15,7 @@ import com.liferay.analytics.reports.web.internal.info.item.provider.util.Analyt
 import com.liferay.analytics.reports.web.internal.model.TimeRange;
 import com.liferay.analytics.reports.web.internal.model.TimeSpan;
 import com.liferay.analytics.reports.web.internal.util.AnalyticsReportsUtil;
+import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
@@ -47,7 +48,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -180,8 +180,13 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 				layout.getCompanyId(), layout.getGroupId())
 		).put(
 			"url",
-			() -> PrefsPropsUtil.getString(
-				layout.getCompanyId(), "liferayAnalyticsURL")
+			() -> {
+				AnalyticsConfiguration analyticsConfiguration =
+					_analyticsSettingsManager.getAnalyticsConfiguration(
+						layout.getCompanyId());
+
+				return analyticsConfiguration.liferayAnalyticsURL();
+			}
 		);
 	}
 

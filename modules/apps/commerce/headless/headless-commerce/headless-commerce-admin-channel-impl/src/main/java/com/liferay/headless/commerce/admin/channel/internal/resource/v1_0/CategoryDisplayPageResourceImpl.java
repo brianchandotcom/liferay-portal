@@ -5,19 +5,23 @@
 
 package com.liferay.headless.commerce.admin.channel.internal.resource.v1_0;
 
+import com.liferay.account.exception.NoSuchGroupException;
+import com.liferay.asset.kernel.exception.NoSuchCategoryException;
 import com.liferay.asset.kernel.model.AssetCategory;
-import com.liferay.commerce.product.exception.NoSuchCPDisplayLayoutException;
+import com.liferay.asset.kernel.service.AssetCategoryService;
 import com.liferay.commerce.product.model.CPDisplayLayout;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CPDisplayLayoutService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.headless.commerce.admin.channel.dto.v1_0.CategoryDisplayPage;
 import com.liferay.headless.commerce.admin.channel.resource.v1_0.CategoryDisplayPageResource;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
@@ -125,18 +129,40 @@ public class CategoryDisplayPageResourceImpl
 		throws Exception {
 
 		CPDisplayLayout cpDisplayLayout =
-			_cpDisplayLayoutService.fetchCPDisplayLayout(id);
+			_cpDisplayLayoutService.getCPDisplayLayout(id);
 
-		if (cpDisplayLayout == null) {
-			throw new NoSuchCPDisplayLayoutException();
+		long categoryId = GetterUtil.getLong(
+			categoryDisplayPage.getCategoryId());
+
+		if (categoryId == 0) {
+			String categoryExternalReferenceCode = GetterUtil.getString(
+				categoryDisplayPage.getCategoryExternalReferenceCode());
+
+			if (Validator.isNotNull(categoryExternalReferenceCode)) {
+				Group group = _groupService.fetchGroupByExternalReferenceCode(
+					categoryDisplayPage.getGroupExternalReferenceCode(),
+					contextCompany.getCompanyId());
+
+				if (group == null) {
+					throw new NoSuchGroupException();
+				}
+
+				AssetCategory assetCategory =
+					_assetCategoryService.fetchCategoryByExternalReferenceCode(
+						categoryExternalReferenceCode, group.getGroupId());
+
+				if (assetCategory != null) {
+					categoryId = assetCategory.getCategoryId();
+				}
+			}
+
+			if (categoryId == 0) {
+				categoryId = cpDisplayLayout.getClassPK();
+			}
 		}
 
 		_cpDisplayLayoutService.updateCPDisplayLayout(
-			id,
-			GetterUtil.getLong(
-				categoryDisplayPage.getCategoryId(),
-				cpDisplayLayout.getClassPK()),
-			cpDisplayLayout.getLayoutPageTemplateEntryUuid(),
+			id, categoryId, cpDisplayLayout.getLayoutPageTemplateEntryUuid(),
 			GetterUtil.getString(
 				categoryDisplayPage.getPageUuid(),
 				cpDisplayLayout.getLayoutUuid()));
@@ -165,14 +191,37 @@ public class CategoryDisplayPageResourceImpl
 			Long id, CategoryDisplayPage categoryDisplayPage)
 		throws Exception {
 
+		long categoryId = GetterUtil.getLong(
+			categoryDisplayPage.getCategoryId());
+
+		if (categoryId == 0) {
+			Group group = _groupService.fetchGroupByExternalReferenceCode(
+				categoryDisplayPage.getGroupExternalReferenceCode(),
+				contextCompany.getCompanyId());
+
+			if (group == null) {
+				throw new NoSuchGroupException();
+			}
+
+			AssetCategory assetCategory =
+				_assetCategoryService.fetchCategoryByExternalReferenceCode(
+					categoryDisplayPage.getCategoryExternalReferenceCode(),
+					group.getGroupId());
+
+			if (assetCategory == null) {
+				throw new NoSuchCategoryException();
+			}
+
+			categoryId = assetCategory.getCategoryId();
+		}
+
 		CommerceChannel commerceChannel =
 			_commerceChannelLocalService.getCommerceChannel(id);
 
 		CPDisplayLayout cpDisplayLayout =
 			_cpDisplayLayoutService.addCPDisplayLayout(
 				commerceChannel.getSiteGroupId(), AssetCategory.class,
-				categoryDisplayPage.getCategoryId(), null,
-				categoryDisplayPage.getPageUuid());
+				categoryId, null, categoryDisplayPage.getPageUuid());
 
 		return _toCategoryDisplayPage(cpDisplayLayout.getCPDisplayLayoutId());
 	}
@@ -223,6 +272,9 @@ public class CategoryDisplayPageResourceImpl
 	private ModelResourcePermission<AssetCategory>
 		_assetCategoryModelResourcePermission;
 
+	@Reference
+	private AssetCategoryService _assetCategoryService;
+
 	@Reference(
 		target = "(component.name=com.liferay.headless.commerce.admin.channel.internal.dto.v1_0.converter.CategoryDisplayPageDTOConverter)"
 	)
@@ -237,5 +289,8 @@ public class CategoryDisplayPageResourceImpl
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
+
+	@Reference
+	private GroupService _groupService;
 
 }

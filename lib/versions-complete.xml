@@ -1696,7 +1696,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.mail.outlook.auth.connector.provider.jar!msal4j.jar</file-name>
-				<version>1.13.8</version>
+				<version>1.16.2</version>
 				<project-name>msal4j</project-name>
 				<project-url>https://github.com/AzureAD/microsoft-authentication-library-for-java</project-url>
 				<licenses>
@@ -4013,6 +4013,77 @@
 					<license>
 						<license-name>BSD-2-Clause</license-name>
 						<license-url>https://jdbc.postgresql.org/about/license.html</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.tools.db.schema.importer.jar!HikariCP.jar</file-name>
+				<version>4.0.3</version>
+				<project-name>HikariCP</project-name>
+				<project-url>https://github.com/brettwooldridge/HikariCP</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.tools.db.schema.importer.jar!commons-cli.jar</file-name>
+				<version>1.4</version>
+				<project-name>Apache Commons CLI</project-name>
+				<project-url>http://commons.apache.org/proper/commons-cli/</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.tools.db.schema.importer.jar!mysql-connector-j.jar</file-name>
+				<version>8.3.0</version>
+				<project-name>Oracle Corporation's JDBC and XDevAPI Driver for MySQL</project-name>
+				<project-url>http://dev.mysql.com/doc/connector-j/en/</project-url>
+				<licenses>
+					<license>
+						<license-name>The GNU General Public License, v2 with Universal FOSS Exception, v1.0</license-name>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.tools.db.schema.importer.jar!postgresql.jar</file-name>
+				<version>42.4.4</version>
+				<project-name>PostgreSQL JDBC Driver</project-name>
+				<project-url>https://jdbc.postgresql.org/</project-url>
+				<licenses>
+					<license>
+						<license-name>BSD-2-Clause</license-name>
+						<license-url>https://jdbc.postgresql.org/about/license.html</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.tools.db.schema.importer.jar!slf4j-api.jar</file-name>
+				<version>1.7.26</version>
+				<project-name>SLF4J API Module</project-name>
+				<project-url>http://www.slf4j.org</project-url>
+				<licenses>
+					<license>
+						<license-name>MIT License</license-name>
+						<license-url>http://www.opensource.org/licenses/mit-license.php</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.tools.db.schema.importer.jar!slf4j-simple.jar</file-name>
+				<version>1.7.10</version>
+				<project-name>SLF4J Simple Binding</project-name>
+				<project-url>http://www.slf4j.org</project-url>
+				<licenses>
+					<license>
+						<license-name>MIT License</license-name>
+						<license-url>http://www.opensource.org/licenses/mit-license.php</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -7011,7 +7082,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/spring-expression.jar</file-name>
-				<version>5.3.33</version>
+				<version>5.3.39</version>
 				<project-name>Spring</project-name>
 				<project-url>http://www.springframework.org</project-url>
 				<licenses>
@@ -7063,7 +7134,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/spring-web.jar</file-name>
-				<version>5.3.34</version>
+				<version>5.3.39</version>
 				<project-name>Spring</project-name>
 				<project-url>http://www.springframework.org</project-url>
 				<licenses>

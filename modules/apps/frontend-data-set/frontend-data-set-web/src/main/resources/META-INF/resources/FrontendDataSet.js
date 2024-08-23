@@ -646,11 +646,13 @@ const FrontendDataSet = ({
 	function executeAsyncItemAction({
 		errorMessage,
 		method = 'GET',
+		requestBody,
 		setActionItemLoading,
 		successMessage,
 		url,
 	}) {
 		return fetch(url, {
+			body: requestBody ? requestBody : '{}',
 			headers: {
 				'Accept': 'application/json',
 				'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),

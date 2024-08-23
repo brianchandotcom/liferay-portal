@@ -216,6 +216,11 @@ public class FDSAdminPortlet extends MVCPortlet {
 						"permissionKey", false),
 					ObjectFieldUtil.createObjectField(
 						ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT,
+						ObjectFieldConstants.DB_TYPE_CLOB, true, false, null,
+						_language.get(locale, "request-body"), "requestBody",
+						false),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT,
 						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
 						_language.get(locale, "url"), "url", false)));
 

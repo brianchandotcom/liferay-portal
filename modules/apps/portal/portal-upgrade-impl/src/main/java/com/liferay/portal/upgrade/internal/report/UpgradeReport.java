@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.upgrade.ReleaseManager;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.EnvPropertiesUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
@@ -32,10 +34,13 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.upgrade.PortalUpgradeProcess;
 import com.liferay.portal.upgrade.internal.recorder.UpgradeRecorder;
+import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 import java.nio.file.Files;
 
@@ -54,9 +59,12 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Dictionary;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.TimeZone;
+import java.util.TreeMap;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.felix.cm.PersistenceManager;
@@ -295,6 +303,106 @@ public class UpgradeReport {
 				).put(
 					"rootDir", (_rootDir != null) ? _rootDir : "Undefined"
 				).build();
+			}
+		).put(
+			"properties.set.by.user",
+			() -> {
+				Map<String, Map<String, Object>> propertiesMap =
+					new LinkedHashMap<>();
+
+				String[] includeAndOverrideFiles = PropsUtil.getArray(
+					"include-and-override");
+
+				if (includeAndOverrideFiles != null) {
+					for (String filePath : includeAndOverrideFiles) {
+						File file = new File(filePath);
+
+						if (!file.exists()) {
+							continue;
+						}
+
+						Properties properties = new Properties();
+
+						try (InputStream inputStream = new FileInputStream(
+								file)) {
+
+							properties.load(inputStream);
+						}
+						catch (IOException ioException) {
+							if (_log.isWarnEnabled()) {
+								_log.warn(
+									"Failed to load properties from file: " +
+										filePath,
+									ioException);
+							}
+
+							continue;
+						}
+
+						Map<String, Object> filteredProperties =
+							new TreeMap<>();
+
+						for (Map.Entry<Object, Object> entry :
+								properties.entrySet()) {
+
+							String key = String.valueOf(entry.getKey());
+							Object value;
+
+							if (ArrayUtil.contains(
+									PropsValues.ADMIN_OBFUSCATED_PROPERTIES,
+									key)) {
+
+								value = StringPool.EIGHT_STARS;
+							}
+							else {
+								value = entry.getValue();
+							}
+
+							filteredProperties.put(key, value);
+						}
+
+						propertiesMap.put(filePath, filteredProperties);
+					}
+				}
+
+				String envPrefix = "LIFERAY_";
+
+				Map<String, String> env = System.getenv();
+
+				Map<String, Object> filteredProperties = new TreeMap<>();
+
+				for (Map.Entry<String, String> entry : env.entrySet()) {
+					String key = entry.getKey();
+
+					if (!key.startsWith(envPrefix)) {
+						continue;
+					}
+
+					String newKey = EnvPropertiesUtil.decode(
+						StringUtil.toLowerCase(
+							key.substring(envPrefix.length())));
+
+					Object value;
+
+					if (ArrayUtil.contains(
+							PropsValues.ADMIN_OBFUSCATED_PROPERTIES, newKey)) {
+
+						value = StringPool.EIGHT_STARS;
+					}
+					else {
+						value = entry.getValue();
+					}
+
+					filteredProperties.put(newKey, value);
+				}
+
+				if (!filteredProperties.isEmpty()) {
+					propertiesMap.put(
+						"Properties set with environment variables",
+						filteredProperties);
+				}
+
+				return new PropertiesPrinter(propertiesMap);
 			}
 		).put(
 			"document.library.storage.size",
@@ -826,6 +934,59 @@ public class UpgradeReport {
 			private final int _occurrences;
 
 		}
+
+	}
+
+	private class PropertiesPrinter {
+
+		public PropertiesPrinter(
+			Map<String, Map<String, Object>> propertiesMap) {
+
+			_propertiesMap = propertiesMap;
+		}
+
+		@Override
+		public String toString() {
+			StringBundler sb = new StringBundler();
+
+			sb.append(StringPool.NEW_LINE);
+			sb.append(StringPool.NEW_LINE);
+
+			for (Map.Entry<String, Map<String, Object>> sourceEntry :
+					_propertiesMap.entrySet()) {
+
+				String source = sourceEntry.getKey();
+
+				Map<String, Object> properties = sourceEntry.getValue();
+
+				sb.append(source);
+
+				sb.append(StringPool.NEW_LINE);
+
+				sb.append(
+					ListUtil.toString(
+						Collections.nCopies(source.length(), StringPool.MINUS),
+						StringPool.NULL, StringPool.BLANK));
+
+				sb.append(StringPool.NEW_LINE);
+
+				for (Map.Entry<String, Object> propertyEntry :
+						properties.entrySet()) {
+
+					sb.append(propertyEntry.getKey());
+					sb.append(StringPool.COLON);
+					sb.append(StringPool.SPACE);
+					sb.append(propertyEntry.getValue());
+					sb.append(StringPool.NEW_LINE);
+				}
+
+				sb.append(StringPool.NEW_LINE);
+			}
+
+			return sb.toString();
+		}
+
+		private final Map<String, Map<String, Object>> _propertiesMap;
 
 	}
 

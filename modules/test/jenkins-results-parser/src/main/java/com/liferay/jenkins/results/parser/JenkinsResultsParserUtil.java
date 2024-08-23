@@ -5855,6 +5855,10 @@ public class JenkinsResultsParserUtil {
 		}
 
 		private String _getMaskedString(String string) {
+			if (string == null) {
+				return null;
+			}
+
 			if (string.length() <= 10) {
 				return "*****";
 			}

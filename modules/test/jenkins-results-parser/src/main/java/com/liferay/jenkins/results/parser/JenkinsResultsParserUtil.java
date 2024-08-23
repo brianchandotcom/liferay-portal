@@ -5834,6 +5834,17 @@ public class JenkinsResultsParserUtil {
 			_clientId = clientId;
 			_clientSecret = clientSecret;
 			_tokenURL = tokenURL;
+
+			if (isCINode() || isJenkinsMaster()) {
+				return;
+			}
+
+			System.out.println(
+				JenkinsResultsParserUtil.combine(
+					"Configuring Client Credentials:\n* Client ID: ",
+					_getMaskedString(_clientId), "\n* Client Secret: ",
+					_getMaskedString(_clientSecret), "\n* Token URL: ",
+					String.valueOf(_tokenURL)));
 		}
 
 		@Override
@@ -5841,6 +5852,14 @@ public class JenkinsResultsParserUtil {
 			_refreshToken();
 
 			return _tokenType + " " + _token;
+		}
+
+		private String _getMaskedString(String string) {
+			if (string.length() <= 10) {
+				return "*****";
+			}
+
+			return string.substring(0, 10) + "...";
 		}
 
 		private void _refreshToken() {

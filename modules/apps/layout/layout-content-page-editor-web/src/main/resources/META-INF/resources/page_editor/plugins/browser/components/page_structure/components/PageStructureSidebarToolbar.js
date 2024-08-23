@@ -34,31 +34,34 @@ export default function PageStructureSidebarToolbar({activeItemIds}) {
 	const selectItems = useSelectMultipleItems();
 	const widgets = useSelector((state) => state.widgets);
 
-	const itemsCanBeDeleted = activeItemIds.every((activeItemId) =>
-		canBeRemoved(layoutData.items[activeItemId], layoutData)
-	);
-
-	const itemsCanBeDuplicated = activeItemIds.every((activeItemId) =>
-		canBeDuplicated(
-			fragmentEntryLinks,
-			layoutData.items[activeItemId],
-			layoutData,
-			widgets
-		)
-	);
-
-	const itemsCanBeUpdated = activeItemIds.every((activeItemId) => {
-		const item = layoutData.items[activeItemId];
-
-		return (
-			item.type !== LAYOUT_DATA_ITEM_TYPES.dropZone &&
-			!hasDropZoneChild(item, layoutData) &&
-			!isInputFragment(item, fragmentEntryLinks)
+	const itemsCanBeDeleted = () =>
+		activeItemIds.every((activeItemId) =>
+			canBeRemoved(layoutData.items[activeItemId], layoutData)
 		);
-	});
+
+	const itemsCanBeDuplicated = () =>
+		activeItemIds.every((activeItemId) =>
+			canBeDuplicated(
+				fragmentEntryLinks,
+				layoutData.items[activeItemId],
+				layoutData,
+				widgets
+			)
+		);
+
+	const itemsCanBeUpdated = () =>
+		activeItemIds.every((activeItemId) => {
+			const item = layoutData.items[activeItemId];
+
+			return (
+				item.type !== LAYOUT_DATA_ITEM_TYPES.dropZone &&
+				!hasDropZoneChild(item, layoutData) &&
+				!isInputFragment(item, fragmentEntryLinks)
+			);
+		});
 
 	const firstActiveItemIsHidden =
-		layoutData.items[activeItemIds[0]].config.styles.display === 'none';
+		layoutData.items[activeItemIds[0]]?.config?.styles?.display === 'none';
 
 	const dropdownItems = [
 		{
@@ -69,7 +72,7 @@ export default function PageStructureSidebarToolbar({activeItemIds}) {
 				Liferay.Language.get('fragments')
 			),
 			onClick: () => {
-				if (itemsCanBeUpdated) {
+				if (itemsCanBeUpdated()) {
 					updateItemStyle({
 						dispatch,
 						itemIds: activeItemIds,
@@ -87,7 +90,7 @@ export default function PageStructureSidebarToolbar({activeItemIds}) {
 		{
 			label: Liferay.Language.get('duplicate'),
 			onClick: () => {
-				if (itemsCanBeDuplicated) {
+				if (itemsCanBeDuplicated()) {
 					dispatch(
 						duplicateItem({
 							itemIds: activeItemIds,
@@ -101,7 +104,7 @@ export default function PageStructureSidebarToolbar({activeItemIds}) {
 		{
 			label: Liferay.Language.get('delete'),
 			onClick: () => {
-				if (itemsCanBeDeleted) {
+				if (itemsCanBeDeleted()) {
 					dispatch(
 						deleteItem({
 							itemIds: activeItemIds,

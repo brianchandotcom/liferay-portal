@@ -97,6 +97,20 @@ export default function TopperItemActions({disabled, item}) {
 			});
 		}
 
+		if (Liferay.FeatureFlags['LPD-18221']) {
+			items.push({
+				action: () => {},
+				icon: 'cut',
+				label: Liferay.Language.get('cut'),
+			});
+
+			items.push({
+				action: () => {},
+				icon: 'copy',
+				label: Liferay.Language.get('copy'),
+			});
+		}
+
 		if (canBeDuplicated(fragmentEntryLinks, item, layoutData, widgets)) {
 			items.push({
 				action: () =>
@@ -108,6 +122,20 @@ export default function TopperItemActions({disabled, item}) {
 					),
 				icon: 'copy',
 				label: Liferay.Language.get('duplicate'),
+			});
+
+			if (!Liferay.FeatureFlags['LPD-18221']) {
+				items.push({
+					type: 'separator',
+				});
+			}
+		}
+
+		if (Liferay.FeatureFlags['LPD-18221']) {
+			items.push({
+				action: () => {},
+				icon: 'paste',
+				label: Liferay.Language.get('paste'),
 			});
 
 			items.push({

@@ -210,6 +210,24 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 			});
 		}
 
+		if (Liferay.FeatureFlags['LPD-18221']) {
+			items.push({
+				action: () => {
+					setText(Liferay.Language.get('item-was-cut'));
+				},
+				icon: 'cut',
+				label: Liferay.Language.get('cut'),
+			});
+
+			items.push({
+				action: () => {
+					setText(Liferay.Language.get('item-copied'));
+				},
+				icon: 'copy',
+				label: Liferay.Language.get('copy'),
+			});
+		}
+
 		if (canBeDuplicated(fragmentEntryLinks, item, layoutData, widgets)) {
 			items.push({
 				action: () => {
@@ -224,6 +242,16 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 				},
 				icon: 'copy',
 				label: Liferay.Language.get('duplicate'),
+			});
+		}
+
+		if (Liferay.FeatureFlags['LPD-18221']) {
+			items.push({
+				action: () => {
+					setText(Liferay.Language.get('item-pasted'));
+				},
+				icon: 'paste',
+				label: Liferay.Language.get('paste'),
 			});
 		}
 

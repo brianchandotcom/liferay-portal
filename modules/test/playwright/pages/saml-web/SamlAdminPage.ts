@@ -33,7 +33,7 @@ export class SamlAdminPage {
 		entityId?: string,
 		samlRole?: string
 	) {
-		await this.applicationsMenuPage.goToSamlAdmin();
+		await this.applicationsMenuPage.goToSamlAdmin(false);
 
 		// We must disable SAML before making configuration changes
 

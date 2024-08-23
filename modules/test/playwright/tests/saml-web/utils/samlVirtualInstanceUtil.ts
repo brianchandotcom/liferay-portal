@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {Page} from '@playwright/test';
+
 import {ApiHelpers} from '../../../helpers/ApiHelpers';
 import {TCustomField} from '../../../helpers/CustomFieldTypesHelper';
 import {liferayConfig} from '../../../liferay.config';
@@ -12,10 +14,7 @@ import {VirtualInstancesPage} from '../../../pages/portal-instances-web/VirtualI
 import {SamlAdminPage} from '../../../pages/saml-web/SamlAdminPage';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import {getRandomInt} from '../../../utils/getRandomInt';
-import performLogin, {
-	performLogout,
-	userData,
-} from '../../../utils/performLogin';
+import performLogin, {userData} from '../../../utils/performLogin';
 import {waitForSuccessAlert} from '../../../utils/waitForSuccessAlert';
 import {deleteAfterTestProviderConnections} from '../saml.spec';
 import {connectSpAndIdp} from './samlProviderConnectionUtil';
@@ -26,23 +25,12 @@ export const DEFAULT_SP_NAME = 'www.baker.com';
 export const DEFAULT_SP_URL = `http://${DEFAULT_SP_NAME}:8080`;
 
 export async function createCustomField(
-	browser,
-	customField: TCustomField,
-	instanceName: string
+	adminPage: Page,
+	customField: TCustomField
 ) {
-	const defaultBaseUrl = liferayConfig.environment.baseUrl;
-
-	liferayConfig.environment.baseUrl = `http://${instanceName}:8080`;
-
-	const page = await performSamlSafeLogin(browser, instanceName);
-
-	const addCustomFieldPage = new AddCustomFieldPage(page);
+	const addCustomFieldPage = new AddCustomFieldPage(adminPage);
 
 	await addCustomFieldPage.addCustomField(customField);
-
-	await performLogout(page);
-
-	liferayConfig.environment.baseUrl = defaultBaseUrl;
 }
 
 export async function createIdentityProviderVirtualInstance(
@@ -50,8 +38,8 @@ export async function createIdentityProviderVirtualInstance(
 	page,
 	name = DEFAULT_IDP_NAME,
 	entityId = name
-) {
-	await createSamlVirtualInstance(
+): Promise<Page> {
+	return await createSamlVirtualInstance(
 		browser,
 		entityId,
 		name,
@@ -61,7 +49,7 @@ export async function createIdentityProviderVirtualInstance(
 }
 
 export async function createUser(
-	browser,
+	adminPage: Page,
 	instanceName: string,
 	userId = getRandomInt()
 ) {
@@ -69,14 +57,9 @@ export async function createUser(
 
 	liferayConfig.environment.baseUrl = `http://${instanceName}:8080`;
 
-	// Create new page and apiHelper implementation for the given instance
+	// Create apiHelper implementation for the given instance
 
-	const virtualInstancePage = await performSamlSafeLogin(
-		browser,
-		instanceName
-	);
-
-	const apiHelpers = new ApiHelpers(virtualInstancePage);
+	const apiHelpers = new ApiHelpers(adminPage);
 
 	// Create user in given instance
 
@@ -93,8 +76,6 @@ export async function createUser(
 		surname: userAccount.familyName,
 	};
 
-	await performLogout(virtualInstancePage);
-
 	liferayConfig.environment.baseUrl = defaultBaseUrl;
 
 	return userAccount;
@@ -106,19 +87,19 @@ async function createSamlVirtualInstance(
 	name: string,
 	page,
 	samlRole: string
-) {
+): Promise<Page> {
 	const virtualInstancesPage = new VirtualInstancesPage(page);
 
 	await virtualInstancesPage.addNewVirtualInstance(name);
 
-	await configureVirtualInstanceForSaml(browser, entityId, samlRole);
+	return await configureVirtualInstanceForSaml(browser, entityId, samlRole);
 }
 
 export async function configureVirtualInstanceForSaml(
 	browser,
 	entityId: string,
 	samlRole: string
-) {
+): Promise<Page> {
 	deleteAfterTestProviderConnections.push(entityId);
 
 	const defaultBaseUrl = liferayConfig.environment.baseUrl;
@@ -132,6 +113,8 @@ export async function configureVirtualInstanceForSaml(
 	await samlAdminPage.configureSAML(true, entityId, samlRole);
 
 	liferayConfig.environment.baseUrl = defaultBaseUrl;
+
+	return newPage;
 }
 
 export async function createServiceProviderVirtualInstance(
@@ -139,8 +122,8 @@ export async function createServiceProviderVirtualInstance(
 	entityId: string,
 	name: string,
 	page
-) {
-	await createSamlVirtualInstance(
+): Promise<Page> {
+	return await createSamlVirtualInstance(
 		browser,
 		entityId,
 		name,
@@ -237,7 +220,10 @@ export async function setupSamlInstances(
 	spInstanceName = DEFAULT_SP_NAME,
 	spEntityId = spInstanceName
 ) {
-	await createIdentityProviderVirtualInstance(
+
+	// Create new idp virtual instance
+
+	const idpAdminPage = await createIdentityProviderVirtualInstance(
 		browser,
 		page,
 		idpInstanceName,
@@ -246,7 +232,7 @@ export async function setupSamlInstances(
 
 	// Create new sp virtual instance
 
-	await createServiceProviderVirtualInstance(
+	const spAdminPage = await createServiceProviderVirtualInstance(
 		browser,
 		spEntityId,
 		spInstanceName,
@@ -256,8 +242,9 @@ export async function setupSamlInstances(
 	// Add a new connection for each provider, of the opposite provider
 
 	await connectSpAndIdp(
-		browser,
+		idpAdminPage,
 		idpInstanceName,
+		spAdminPage,
 		spInstanceName,
 		idpEntityId,
 		spEntityId

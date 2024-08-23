@@ -38,8 +38,8 @@ export class IdentityProviderPage {
 		);
 	}
 
-	async goTo() {
-		await this.applicationsMenuPage.goToSamlAdmin();
+	async goTo(forceReload = false) {
+		await this.applicationsMenuPage.goToSamlAdmin(forceReload);
 		await this.page.getByRole('tab', {name: 'Identity Provider'}).click();
 
 		await this.signMetadata.waitFor();

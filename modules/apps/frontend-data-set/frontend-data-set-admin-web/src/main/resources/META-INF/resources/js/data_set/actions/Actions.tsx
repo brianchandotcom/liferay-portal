@@ -68,6 +68,7 @@ interface IAction extends IOrderable {
 	method?: string;
 	modalSize?: string;
 	permissionKey: string;
+	requestBody?: string;
 	successMessage?: string;
 	successMessage_i18n?: {
 		[key: string]: string;

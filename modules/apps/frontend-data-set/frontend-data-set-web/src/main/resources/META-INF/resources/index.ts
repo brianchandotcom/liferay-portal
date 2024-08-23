@@ -121,6 +121,7 @@ export interface IItemActionsData {
 	id?: string | number;
 	method?: 'delete' | 'get' | 'patch' | 'post';
 	permissionKey?: string;
+	requestBody?: string;
 	size?: 'sm' | 'lg' | 'full-screen';
 	status?: string;
 	successMessage?: string;

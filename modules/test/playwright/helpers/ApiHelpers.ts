@@ -40,6 +40,7 @@ import {JSONWebServicesClientExtensionApiHelper} from './json-web-services/JSONW
 import {JSONWebServicesCompanyApiHelper} from './json-web-services/JSONWebServicesCompanyApiHelper';
 import {JSONWebServicesDDMApiHelper} from './json-web-services/JSONWebServicesDDMApiHelper';
 import {JSONWebServicesDepotApiHelper} from './json-web-services/JSONWebServicesDepotApiHelper';
+import {JSONWebServicesDepotGroupRelApiHelper} from './json-web-services/JSONWebServicesDepotGroupRelApiHelper';
 import {JSONWebServicesFragmentCollectionApiHelper} from './json-web-services/JSONWebServicesFragmentCollectionApiHelper';
 import {JSONWebServicesFragmentEntryApiHelper} from './json-web-services/JSONWebServicesFragmentEntryApiHelper';
 import {JSONWebServicesGroupApiHelper} from './json-web-services/JSONWebServicesGroupApiHelper';
@@ -93,8 +94,9 @@ export class ApiHelpers {
 	readonly jsonWebServicesClientExtension: JSONWebServicesClientExtensionApiHelper;
 	readonly jsonWebServicesCompany: JSONWebServicesCompanyApiHelper;
 	readonly jsonWebServicesDDM: JSONWebServicesDDMApiHelper;
-    readonly jsonWebServicesDepot: JSONWebServicesDepotApiHelper;
-    readonly jsonWebServicesFragmentEntry: JSONWebServicesFragmentEntryApiHelper;
+	readonly jsonWebServicesDepot: JSONWebServicesDepotApiHelper;
+	readonly jsonWebServicesDepotGroupRel: JSONWebServicesDepotGroupRelApiHelper;
+	readonly jsonWebServicesFragmentEntry: JSONWebServicesFragmentEntryApiHelper;
 	readonly jsonWebServicesFragmentCollection: JSONWebServicesFragmentCollectionApiHelper;
 	readonly jsonWebServicesGroup: JSONWebServicesGroupApiHelper;
 	readonly jsonWebServicesJournal: JSONWebServicesJournalApiHelper;
@@ -161,6 +163,8 @@ export class ApiHelpers {
 		this.jsonWebServicesCompany = new JSONWebServicesCompanyApiHelper(this);
 		this.jsonWebServicesDDM = new JSONWebServicesDDMApiHelper(this);
 		this.jsonWebServicesDepot = new JSONWebServicesDepotApiHelper(this);
+		this.jsonWebServicesDepotGroupRel =
+			new JSONWebServicesDepotGroupRelApiHelper(this);
 		this.jsonWebServicesFragmentEntry =
 			new JSONWebServicesFragmentEntryApiHelper(this);
 		this.jsonWebServicesFragmentCollection =

@@ -605,6 +605,7 @@ const MoveButton = ({
 
 function computeHover({
 	dispatch,
+	fragmentEntryLinksRef,
 	layoutDataRef,
 	monitor,
 	siblingItem = null,
@@ -674,7 +675,12 @@ function computeHover({
 		return dispatch({
 			dropItem: sourceItem,
 			dropTargetItem: targetItem,
-			droppable: checkAllowedChild(sourceItem, targetItem, layoutDataRef),
+			droppable: checkAllowedChild(
+				sourceItem,
+				targetItem,
+				layoutDataRef,
+				fragmentEntryLinksRef
+			),
 			elevate: null,
 			targetPositionWithMiddle,
 			targetPositionWithoutMiddle,
@@ -690,7 +696,12 @@ function computeHover({
 		return dispatch({
 			dropItem: sourceItem,
 			dropTargetItem: siblingItem,
-			droppable: checkAllowedChild(sourceItem, targetItem, layoutDataRef),
+			droppable: checkAllowedChild(
+				sourceItem,
+				targetItem,
+				layoutDataRef,
+				fragmentEntryLinksRef
+			),
 			elevate: true,
 			targetPositionWithMiddle,
 			targetPositionWithoutMiddle,
@@ -739,6 +750,7 @@ function computeHover({
 		if (elevatedTargetItem && elevatedTargetItem !== targetItem) {
 			return computeHover({
 				dispatch,
+				fragmentEntryLinksRef,
 				layoutDataRef,
 				monitor,
 				siblingItem,

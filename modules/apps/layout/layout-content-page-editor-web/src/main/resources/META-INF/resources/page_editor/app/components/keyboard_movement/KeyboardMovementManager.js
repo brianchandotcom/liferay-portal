@@ -187,7 +187,7 @@ export default function KeyboardMovementManager() {
 				const nextTarget = getNextTarget(
 					source,
 					target,
-					fragmentEntryLinksRef.current,
+					fragmentEntryLinksRef,
 					layoutDataRef,
 					DIRECTIONS.down
 				);
@@ -348,7 +348,12 @@ export function getInitialTarget(source, layoutDataRef, fragmentEntryLinksRef) {
 	if (actionType === ACTION_TYPES.add) {
 		const root = layoutData.items[layoutData.rootItems.main];
 
-		const canDropInRoot = checkAllowedChild(source, root, layoutDataRef);
+		const canDropInRoot = checkAllowedChild(
+			source,
+			root,
+			layoutDataRef,
+			fragmentEntryLinksRef
+		);
 
 		// Check root children to see if someone is targetable
 
@@ -385,7 +390,7 @@ export function getInitialTarget(source, layoutDataRef, fragmentEntryLinksRef) {
 					return getNextTarget(
 						source,
 						target,
-						fragmentEntryLinks,
+						fragmentEntryLinksRef,
 						layoutDataRef,
 						DIRECTIONS.up
 					);
@@ -417,10 +422,11 @@ export function getInitialTarget(source, layoutDataRef, fragmentEntryLinksRef) {
 function getNextTarget(
 	source,
 	target,
-	fragmentEntryLinks,
+	fragmentEntryLinksRef,
 	layoutDataRef,
 	direction
 ) {
+	const fragmentEntryLinks = fragmentEntryLinksRef.current;
 	const layoutData = layoutDataRef.current;
 
 	const checkValidTarget = (nextTarget) => {
@@ -442,7 +448,7 @@ function getNextTarget(
 			return getNextTarget(
 				source,
 				nextTarget,
-				fragmentEntryLinks,
+				fragmentEntryLinksRef,
 				layoutDataRef,
 				direction
 			);
@@ -455,11 +461,18 @@ function getNextTarget(
 		}
 
 		if (nextTarget.position === TARGET_POSITIONS.BOTTOM) {
-			if (!checkAllowedChild(source, nextTargetParent, layoutDataRef)) {
+			if (
+				!checkAllowedChild(
+					source,
+					nextTargetParent,
+					layoutDataRef,
+					fragmentEntryLinksRef
+				)
+			) {
 				return getNextTarget(
 					source,
 					nextTarget,
-					fragmentEntryLinks,
+					fragmentEntryLinksRef,
 					layoutDataRef,
 					direction
 				);
@@ -469,12 +482,17 @@ function getNextTarget(
 		if (nextTarget.position === TARGET_POSITIONS.TOP) {
 			if (
 				nextTargetParent.children[0] !== nextTarget.itemId ||
-				!checkAllowedChild(source, nextTargetParent, layoutDataRef)
+				!checkAllowedChild(
+					source,
+					nextTargetParent,
+					layoutDataRef,
+					fragmentEntryLinksRef
+				)
 			) {
 				return getNextTarget(
 					source,
 					nextTarget,
-					fragmentEntryLinks,
+					fragmentEntryLinksRef,
 					layoutDataRef,
 					direction
 				);
@@ -484,12 +502,17 @@ function getNextTarget(
 		if (nextTarget.position === TARGET_POSITIONS.MIDDLE) {
 			if (
 				hasChildren(nextTargetItem, layoutData) ||
-				!checkAllowedChild(source, nextTargetItem, layoutDataRef)
+				!checkAllowedChild(
+					source,
+					nextTargetItem,
+					layoutDataRef,
+					fragmentEntryLinksRef
+				)
 			) {
 				return getNextTarget(
 					source,
 					nextTarget,
-					fragmentEntryLinks,
+					fragmentEntryLinksRef,
 					layoutDataRef,
 					direction
 				);

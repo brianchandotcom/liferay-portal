@@ -23,6 +23,7 @@ const ORIENTATION_BORDER_SIZE = 80;
 
 export default function defaultComputeHover({
 	dispatch,
+	fragmentEntryLinksRef,
 	layoutDataRef,
 	monitor,
 	siblingItem = null,
@@ -99,7 +100,12 @@ export default function defaultComputeHover({
 		return dispatch({
 			dropItem: sourceItem,
 			dropTargetItem: targetItem,
-			droppable: checkAllowedChild(sourceItem, targetItem, layoutDataRef),
+			droppable: checkAllowedChild(
+				sourceItem,
+				targetItem,
+				layoutDataRef,
+				fragmentEntryLinksRef
+			),
 			elevate: null,
 			targetPositionWithMiddle,
 			targetPositionWithoutMiddle,
@@ -123,7 +129,12 @@ export default function defaultComputeHover({
 		return dispatch({
 			dropItem: sourceItem,
 			dropTargetItem: siblingItem,
-			droppable: checkAllowedChild(sourceItem, targetItem, layoutDataRef),
+			droppable: checkAllowedChild(
+				sourceItem,
+				targetItem,
+				layoutDataRef,
+				fragmentEntryLinksRef
+			),
 			elevate: true,
 			targetPositionWithMiddle,
 			targetPositionWithoutMiddle,
@@ -200,6 +211,7 @@ export default function defaultComputeHover({
 		if (elevatedTargetItem && elevatedTargetItem !== targetItem) {
 			return defaultComputeHover({
 				dispatch,
+				fragmentEntryLinksRef,
 				layoutDataRef,
 				monitor,
 				siblingItem,

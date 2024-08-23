@@ -89,7 +89,12 @@ const LAYOUT_DATA_CHECK_ALLOWED_CHILDREN = {
  * @param {{current: object}} layoutDataRef
  * @return {boolean}
  */
-export default function checkAllowedChild(child, parent, layoutDataRef) {
+export default function checkAllowedChild(
+	child,
+	parent,
+	layoutDataRef,
+	fragmentEntryLinksRef
+) {
 	if (isUnmappedCollection(parent) || isUnmappedForm(parent)) {
 		return false;
 	}

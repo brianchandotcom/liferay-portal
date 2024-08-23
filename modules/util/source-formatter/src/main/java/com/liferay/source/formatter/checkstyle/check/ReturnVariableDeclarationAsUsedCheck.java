@@ -86,12 +86,43 @@ public class ReturnVariableDeclarationAsUsedCheck extends BaseCheck {
 
 			if ((returnVariableDefinitionDetailAST == null) ||
 				(returnVariableDefinitionDetailAST.getType() ==
-					TokenTypes.PARAMETER_DEF) ||
-				equals(
-					slistDetailAST.getFirstChild(),
-					returnVariableDefinitionDetailAST)) {
+					TokenTypes.PARAMETER_DEF)) {
 
 				continue;
+			}
+
+			DetailAST firstChildDetailAST = slistDetailAST.getFirstChild();
+
+			if (equals(
+					firstChildDetailAST, returnVariableDefinitionDetailAST)) {
+
+				DetailAST nextSiblingDetailAST =
+					firstChildDetailAST.getNextSibling();
+
+				if ((nextSiblingDetailAST == null) ||
+					(nextSiblingDetailAST.getType() != TokenTypes.SEMI)) {
+
+					return;
+				}
+
+				nextSiblingDetailAST = nextSiblingDetailAST.getNextSibling();
+
+				if (nextSiblingDetailAST == null) {
+					return;
+				}
+
+				int startLineNumber = getStartLineNumber(nextSiblingDetailAST);
+
+				int endLineNumber = getEndLineNumber(firstChildDetailAST);
+
+				if ((endLineNumber + 1) == startLineNumber) {
+					log(
+						startLineNumber,
+						_MSG_MISSING_EMPTY_LINE_AFTER_VARIABLE_DEFINITION,
+						startLineNumber);
+				}
+
+				return;
 			}
 
 			_checkMoveVariableDeclaration(
@@ -369,6 +400,10 @@ public class ReturnVariableDeclarationAsUsedCheck extends BaseCheck {
 
 		return firstChildDetailAST;
 	}
+
+	private static final String
+		_MSG_MISSING_EMPTY_LINE_AFTER_VARIABLE_DEFINITION =
+			"empty.line.missing.after.variable.definition";
 
 	private static final String _MSG_MOVE_VARIABLE_DECLARATION =
 		"variable.declaration.move";

@@ -30,6 +30,24 @@ export async function connectToAnalyticsCloud(page: Page) {
 	await page.getByRole('button', {name: 'Connect'}).click();
 }
 
+export async function connectToAnalyticsCloudWithNoSiteSynced(page: Page) {
+	await createDataSource(page);
+
+	await goToAnalyticsCloudInstanceSettings(page);
+
+	await acceptsCookiesBanner(page);
+
+	await disconnectFromAnalyticsCloud(page);
+
+	await connectToAnalyticsCloud(page);
+
+	await goNextStep(page);
+
+	await goNextStep(page);
+
+	await page.getByRole('button', {name: 'Finish'}).click();
+}
+
 export async function disconnectFromAnalyticsCloud(page: Page) {
 	const disconnectButton = page.getByRole('button', {name: 'Disconnect'});
 

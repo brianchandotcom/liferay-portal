@@ -61,6 +61,7 @@ import {config as rolesAdminWebConfig} from './tests/roles-admin-web/config';
 import {config as samlWebConfig} from './tests/saml-web/config';
 import {config as scimConfiguraitonWebConfig} from './tests/scim-configuration-web/config';
 import {config as searchExperiencesWebConfig} from './tests/search-experiences-web/config';
+import {config as segmentExperimentWebConfig} from './tests/segment-experiment-web/config';
 import {
 	pageManagementSiteSetup,
 	pageManagementSiteTeardown,
@@ -147,6 +148,7 @@ export default defineConfig({
 		samlWebConfig,
 		scimConfiguraitonWebConfig,
 		searchExperiencesWebConfig,
+		segmentExperimentWebConfig,
 		siteAdminWebConfig,
 		siteNavigationAdminWebConfig,
 		stableConfig,

@@ -394,6 +394,104 @@ test.describe('Multistep', {tag: '@LPD-10727'}, () => {
 		await expect(heading).not.toBeVisible();
 	});
 
+	test('Can change step with the form button fragment', async ({
+		apiHelpers,
+		page,
+		pageEditorPage,
+		pageManagementSite,
+	}) => {
+
+		// Get the id of Lemon object from the site initializer
+
+		const {id: objectDefinitionId} =
+			await apiHelpers.objectAdmin.getObjectDefinitionByExternalReferenceCode(
+				LEMON_OBJECT_ERC
+			);
+
+		// Create a form with two steps and two form buttons
+
+		const headingDefinition = getFragmentDefinition({
+			id: getRandomString(),
+			key: 'BASIC_COMPONENT-heading',
+		});
+
+		const formButtonNext = getFragmentDefinition({
+			fragmentConfig: {
+				type: 'next',
+			},
+			id: getRandomString(),
+			key: 'INPUTS-submit-button',
+		});
+
+		const buttonDefinition = getFragmentDefinition({
+			id: getRandomString(),
+			key: 'BASIC_COMPONENT-button',
+		});
+
+		const formButtonPrevious = getFragmentDefinition({
+			fragmentConfig: {
+				type: 'previous',
+			},
+			id: getRandomString(),
+			key: 'INPUTS-submit-button',
+		});
+
+		const submitButton = getFragmentDefinition({
+			id: getRandomString(),
+			key: 'INPUTS-submit-button',
+		});
+
+		const formDefinition = getFormContainerDefinition({
+			id: getRandomString(),
+			objectDefinitionId,
+			steps: [
+				[headingDefinition, formButtonNext, submitButton],
+				[buttonDefinition, formButtonPrevious],
+			],
+		});
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([formDefinition]),
+			siteId: pageManagementSite.id,
+			title: getRandomString(),
+		});
+
+		// Go to edit mode and publish the page
+
+		await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
+
+		await pageEditorPage.publishPage();
+
+		// Go to view mode of page
+
+		await page.goto(
+			`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+		);
+
+		// Check step change works properly
+
+		const button = page.locator(
+			'.lfr-layout-structure-item-basic-component-button'
+		);
+
+		const heading = page.locator(
+			'.lfr-layout-structure-item-basic-component-heading'
+		);
+
+		await expect(button).not.toBeVisible();
+		await expect(heading).toBeVisible();
+
+		await page.getByText('Next', {exact: true}).click();
+
+		await expect(button).toBeVisible();
+		await expect(heading).not.toBeVisible();
+
+		await page.getByText('Previous').click();
+
+		await expect(button).not.toBeVisible();
+		await expect(heading).toBeVisible();
+	});
+
 	test('Step change affects only desired form', async ({
 		apiHelpers,
 		page,

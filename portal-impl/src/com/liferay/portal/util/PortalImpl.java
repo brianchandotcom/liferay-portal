@@ -4347,13 +4347,8 @@ public class PortalImpl implements Portal {
 								themeDisplay, layout, portletId);
 						}
 						else if (scopeType.equals("layout")) {
-							if (layout.isTypeContent()) {
-								scopeGroupId = _getScopeGroupId(
-									themeDisplay, liveGroupLayout, portletId);
-							}
-							else {
-								scopeGroupId = liveGroup.getGroupId();
-							}
+							scopeGroupId = _getScopeGroupId(
+								themeDisplay, liveGroupLayout, portletId);
 						}
 						else {
 							if (checkStagingGroup &&

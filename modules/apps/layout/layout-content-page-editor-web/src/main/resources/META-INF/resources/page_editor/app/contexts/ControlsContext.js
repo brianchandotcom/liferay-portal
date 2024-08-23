@@ -7,6 +7,7 @@ import React, {useCallback, useContext, useReducer} from 'react';
 
 import {fromControlsId} from '../components/layout_data_items/Collection';
 import {ITEM_TYPES} from '../config/constants/itemTypes';
+import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import {MULTI_SELECT_TYPES} from '../config/constants/multiSelectTypes';
 import {useToControlsId} from './CollectionItemContext';
 import {useSelectorRef} from './StoreContext';
@@ -68,6 +69,8 @@ export function getItemsWithinRange({itemIds, layoutDataItems, rangeLimitIds}) {
 		rangeLimitIds,
 	}) => {
 		for (const childId of itemIds) {
+			const item = layoutDataItems[childId];
+
 			const isLimitId =
 				rangeLimitIds.start === childId ||
 				rangeLimitIds.end === childId;
@@ -76,12 +79,18 @@ export function getItemsWithinRange({itemIds, layoutDataItems, rangeLimitIds}) {
 				activateSelection = !activateSelection;
 			}
 
-			if (isLimitId || activateSelection) {
+			if (
+				(isLimitId || activateSelection) &&
+				item.type !== LAYOUT_DATA_ITEM_TYPES.formStep &&
+				item.type !== LAYOUT_DATA_ITEM_TYPES.column &&
+				item.type !== LAYOUT_DATA_ITEM_TYPES.collectionItem &&
+				item.type !== LAYOUT_DATA_ITEM_TYPES.fragmentDropZone
+			) {
 				selectedItems.push(childId);
 			}
 
 			findItemsWithinRange({
-				itemIds: layoutDataItems[childId].children,
+				itemIds: item.children,
 				layoutDataItems,
 				rangeLimitIds,
 			});

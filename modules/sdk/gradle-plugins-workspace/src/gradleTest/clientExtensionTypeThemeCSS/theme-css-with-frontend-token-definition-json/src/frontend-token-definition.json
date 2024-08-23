@@ -5,7 +5,7 @@
 				{
 					"frontendTokens": [
 						{
-							"defaultValue": "#0b5fff",
+							"defaultValue": "calc(3 / 4 * 100%)",
 							"editorType": "ColorPicker",
 							"label": "brand-color-1",
 							"mappings": [

@@ -35,6 +35,19 @@ public class StringUtilTest {
 	}
 
 	@Test
+	public void testIsURL() {
+		Assert.assertFalse(StringUtil.isUrl("http://example.com:-80"));
+		Assert.assertFalse(StringUtil.isUrl("https://example.com:port"));
+
+		Assert.assertTrue(StringUtil.isUrl("http://localhost:3000"));
+		Assert.assertTrue(
+			StringUtil.isUrl("https://en.wikipedia.org/wiki/Baseball"));
+		Assert.assertTrue(StringUtil.isUrl("https://www.example.com"));
+		Assert.assertTrue(
+			StringUtil.isUrl("https://www.example.com/something-*-else"));
+	}
+
+	@Test
 	public void testSuffix() {
 		Assert.assertEquals("foo", StringUtil.suffixIfNotBlank("foo", ""));
 		Assert.assertEquals(

@@ -147,21 +147,8 @@ public class DefaultObjectEntryManagerImpl
 
 		validateReadOnlyObjectFields(null, objectDefinition, objectEntry);
 
-		ModelPermissions modelPermissions = null;
-
-		if (FeatureFlagManagerUtil.isEnabled("LPD-28799")) {
-			modelPermissions = ModelPermissionsUtil.toModelPermissions(
-				objectDefinition.getCompanyId(), objectEntry.getPermissions(),
-				GetterUtil.getLong(objectEntry.getId()),
-				_getObjectEntryPermissionName(
-					objectDefinition.getObjectDefinitionId()),
-				_resourceActionLocalService, _resourcePermissionLocalService,
-				_roleLocalService);
-		}
-
-		ServiceContext serviceContext = ServiceContextUtil.createServiceContext(
-			dtoConverterContext.getLocale(), objectEntry,
-			dtoConverterContext.getUserId(), modelPermissions);
+		ServiceContext serviceContext = _createServiceContext(
+			dtoConverterContext, objectDefinition, objectEntry);
 
 		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
 			_objectEntryService.addObjectEntry(
@@ -787,9 +774,8 @@ public class DefaultObjectEntryManagerImpl
 			serviceBuilderObjectEntry.getExternalReferenceCode(),
 			objectDefinition, objectEntry);
 
-		ServiceContext serviceContext = ServiceContextUtil.createServiceContext(
-			dtoConverterContext.getLocale(), objectEntry,
-			dtoConverterContext.getUserId(), null);
+		ServiceContext serviceContext = _createServiceContext(
+			dtoConverterContext, objectDefinition, objectEntry);
 
 		serviceBuilderObjectEntry = _objectEntryService.updateObjectEntry(
 			objectEntryId,
@@ -817,9 +803,8 @@ public class DefaultObjectEntryManagerImpl
 		validateReadOnlyObjectFields(
 			externalReferenceCode, objectDefinition, objectEntry);
 
-		ServiceContext serviceContext = ServiceContextUtil.createServiceContext(
-			dtoConverterContext.getLocale(), objectEntry,
-			dtoConverterContext.getUserId(), null);
+		ServiceContext serviceContext = _createServiceContext(
+			dtoConverterContext, objectDefinition, objectEntry);
 
 		serviceContext.setCompanyId(companyId);
 
@@ -1023,6 +1008,26 @@ public class DefaultObjectEntryManagerImpl
 
 			throw new NoSuchObjectEntryException();
 		}
+	}
+
+	private ServiceContext _createServiceContext(
+			DTOConverterContext dtoConverterContext,
+			ObjectDefinition objectDefinition, ObjectEntry objectEntry)
+		throws Exception {
+
+		ModelPermissions modelPermissions = null;
+
+		if (FeatureFlagManagerUtil.isEnabled("LPD-28799")) {
+			modelPermissions = ModelPermissionsUtil.toModelPermissions(
+				objectDefinition.getCompanyId(), objectEntry.getPermissions(),
+				GetterUtil.getLong(objectEntry.getId()),
+				objectDefinition.getClassName(), _resourceActionLocalService,
+				_resourcePermissionLocalService, _roleLocalService);
+		}
+
+		return ServiceContextUtil.createServiceContext(
+			dtoConverterContext.getLocale(), modelPermissions, objectEntry,
+			dtoConverterContext.getUserId());
 	}
 
 	private byte[] _decode(String fileBase64) {

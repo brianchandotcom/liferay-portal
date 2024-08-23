@@ -23,8 +23,8 @@ import java.util.Locale;
 public class ServiceContextUtil {
 
 	public static ServiceContext createServiceContext(
-		Locale locale, ObjectEntry objectEntry, long userId,
-		ModelPermissions modelPermissions) {
+		Locale locale, ModelPermissions modelPermissions,
+		ObjectEntry objectEntry, long userId) {
 
 		ServiceContext serviceContext = createServiceContext(
 			objectEntry, userId);

@@ -1,5 +1,9 @@
+import com.liferay.gradle.plugins.patcher.PatchTask
+apply plugin: "com.liferay.patcher"
+
 task jarManifest
 task jarPatched(type: Zip)
+task patch(type: PatchTask)
 
 dependencies {
 	compileOnly group: "org.springframework", name: "spring-web", transitive: false, version: "4.3.30.RELEASE"
@@ -34,4 +38,19 @@ jarPatched {
 	mustRunAfter compileJava
 	mustRunAfter generatePomFileForMavenPublication
 	mustRunAfter processResources
+}
+
+jarSources {
+	mustRunAfter patch
+}
+
+patch {
+	ext {
+		autoClean = false
+	}
+
+	fileNames "org/springframework/http/HttpHeaders.java"
+	fileNames "org/springframework/web/context/request/ServletWebRequest.java"
+
+	originalLibModuleName = "spring-web"
 }

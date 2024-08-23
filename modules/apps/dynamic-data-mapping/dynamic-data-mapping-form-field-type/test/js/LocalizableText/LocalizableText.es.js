@@ -4,6 +4,8 @@
  */
 
 import {act, cleanup, fireEvent, render} from '@testing-library/react';
+
+import '@testing-library/jest-dom/extend-expect';
 import {PageProvider} from 'data-engine-js-components-web';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -145,6 +147,25 @@ describe('Field LocalizableText', () => {
 		});
 
 		expect(container).toMatchSnapshot();
+	});
+
+	it('has aria-label when the displayStyle is multiline', () => {
+		const {getByRole} = render(
+			<LocalizableTextWithProvider
+				{...defaultLocalizableTextConfig}
+				displayStyle="multiline"
+				label="label"
+				value={{
+					ca_ES: 'Teste ES',
+					en_US: 'Test EUA',
+					pt_BR: 'Teste BR',
+				}}
+			/>
+		);
+
+		const textarea = getByRole('textbox');
+
+		expect(textarea).toHaveAttribute('aria-label', 'label');
 	});
 
 	it('has a placeholder', () => {

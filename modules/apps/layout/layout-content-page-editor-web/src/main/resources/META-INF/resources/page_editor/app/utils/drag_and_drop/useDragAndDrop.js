@@ -26,9 +26,12 @@ import {
 } from '../../contexts/CollectionItemContext';
 import {useSelectItem} from '../../contexts/ControlsContext';
 import {useSelectorRef} from '../../contexts/StoreContext';
+import {isMultistepForm} from '../../utils/isMultistepForm';
+import {openFormConversionModal} from '../../utils/openFormConversionModal';
 import {formIsMapped} from '../formIsMapped';
 import {hasFormParent} from '../hasFormParent';
 import {DRAG_DROP_TARGET_TYPE} from './constants/dragDropTargetType';
+import {TARGET_POSITIONS} from './constants/targetPositions';
 import defaultComputeHover from './defaultComputeHover';
 import getDropData from './getDropData';
 
@@ -337,8 +340,13 @@ export function DragAndDropContextProvider({children}) {
 }
 
 function computeDrop({dispatch, layoutDataRef, onDragEnd, state}) {
-	const {dropItem, dropTargetItem, droppable, targetPositionWithoutMiddle} =
-		state;
+	const {
+		dropItem,
+		dropTargetItem,
+		droppable,
+		targetPositionWithMiddle,
+		targetPositionWithoutMiddle,
+	} = state;
 
 	if (!droppable) {
 		let message = '';
@@ -399,7 +407,21 @@ function computeDrop({dispatch, layoutDataRef, onDragEnd, state}) {
 			targetPosition: targetPositionWithoutMiddle,
 		});
 
-		onDragEnd(dropItemId, position);
+		const targetItem = layoutDataRef.current.items[dropTargetItem.itemId];
+
+		if (
+			dropItem.fragmentEntryType === FRAGMENT_ENTRY_TYPES.stepper &&
+			dropTargetItem.type === LAYOUT_DATA_ITEM_TYPES.form &&
+			targetPositionWithMiddle === TARGET_POSITIONS.MIDDLE &&
+			!isMultistepForm(targetItem)
+		) {
+			openFormConversionModal({
+				onContinue: () => onDragEnd(dropItemId, position),
+			});
+		}
+		else {
+			onDragEnd(dropItemId, position);
+		}
 	}
 
 	dispatch(initialDragDrop.state);

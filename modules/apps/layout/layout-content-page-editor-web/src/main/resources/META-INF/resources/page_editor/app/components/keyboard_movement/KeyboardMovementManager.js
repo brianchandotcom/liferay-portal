@@ -38,7 +38,9 @@ import checkAllowedChild from '../../utils/drag_and_drop/checkAllowedChild';
 import {TARGET_POSITIONS} from '../../utils/drag_and_drop/constants/targetPositions';
 import getDropData from '../../utils/drag_and_drop/getDropData';
 import itemIsAncestor from '../../utils/drag_and_drop/itemIsAncestor';
+import {isMultistepForm} from '../../utils/isMultistepForm';
 import {isUnmappedCollection} from '../../utils/isUnmappedCollection';
+import {openFormConversionModal} from '../../utils/openFormConversionModal';
 
 const DIRECTIONS = {
 	down: 'down',
@@ -142,23 +144,41 @@ export default function KeyboardMovementManager() {
 					}
 				}
 
-				dispatch(thunk);
+				const executeAction = () => {
+					dispatch(thunk);
 
-				setText(
-					sub(Liferay.Language.get('x-placed-on-x-of-x'), [
-						source.name,
-						target.position,
-						target.name,
-					])
-				);
+					setText(
+						sub(Liferay.Language.get('x-placed-on-x-of-x'), [
+							source.name,
+							target.position,
+							target.name,
+						])
+					);
+
+					if (actionType === ACTION_TYPES.move) {
+						selectItem(source.itemId);
+					}
+				};
+
+				const targetItem = layoutDataRef.current.items[target.itemId];
+
+				if (
+					source.fragmentEntryType === FRAGMENT_ENTRY_TYPES.stepper &&
+					target.position === TARGET_POSITIONS.MIDDLE &&
+					targetItem.type === LAYOUT_DATA_ITEM_TYPES.form &&
+					isMultistepForm(targetItem)
+				) {
+					openFormConversionModal({
+						onContinue: () => executeAction(),
+					});
+				}
+				else {
+					executeAction();
+				}
 
 				setTimeout(() => setText(null), 1000);
 
 				disableMovement();
-
-				if (actionType === ACTION_TYPES.move) {
-					selectItem(source.itemId);
-				}
 			},
 			keyCode: ENTER_KEY_CODE,
 		},

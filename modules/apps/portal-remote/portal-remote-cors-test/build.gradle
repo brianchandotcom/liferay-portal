@@ -1,7 +1,7 @@
 dependencies {
 	testIntegrationImplementation group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testIntegrationImplementation group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.1"
-	testIntegrationImplementation group: "org.apache.cxf", name: "cxf-rt-rs-client", version: "3.4.10"
+	testIntegrationImplementation group: "org.apache.cxf", name: "cxf-rt-rs-client", version: "3.5.9"
 	testIntegrationImplementation group: "org.osgi", name: "org.osgi.service.cm", version: "1.6.0"
 	testIntegrationImplementation group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	testIntegrationImplementation project(":apps:portal-remote:portal-remote-cors-api")

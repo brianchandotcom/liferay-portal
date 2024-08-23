@@ -19,7 +19,7 @@ function saveActiveIndexInSession(index) {
 	);
 }
 
-function setActiveStep(index) {
+function setActiveStep(index, {sendEvent = true} = {}) {
 
 	// Deactivate current active step if it exists
 
@@ -37,10 +37,12 @@ function setActiveStep(index) {
 		saveActiveIndexInSession(index);
 	}
 
-	Liferay.fire('formFragment:changeStep', {
-		emitter: fragmentElement,
-		step: index,
-	});
+	if (sendEvent) {
+		Liferay.fire('formFragment:changeStep', {
+			emitter: fragmentElement,
+			step: index,
+		});
+	}
 }
 
 function main() {
@@ -60,6 +62,30 @@ function main() {
 			setActiveStep(index);
 		});
 	}
+
+	Liferay.on('formFragment:changeStep', (event) => {
+		if (!event.emitter || event.emitter === fragmentElement) {
+			return;
+		}
+
+		const form = event.emitter.closest('.lfr-layout-structure-item-form');
+
+		if (!form || !form.contains(fragmentElement)) {
+			return;
+		}
+
+		const activeIndex = Array.from(steps).findIndex((step) =>
+			step.classList.contains('active')
+		);
+
+		if (event.step === 'next' && activeIndex <= steps.length - 2) {
+			setActiveStep(activeIndex + 1, {sendEvent: false});
+		}
+
+		if (event.step === 'previous' && activeIndex !== 0) {
+			setActiveStep(activeIndex - 1, {sendEvent: false});
+		}
+	});
 }
 
 main();

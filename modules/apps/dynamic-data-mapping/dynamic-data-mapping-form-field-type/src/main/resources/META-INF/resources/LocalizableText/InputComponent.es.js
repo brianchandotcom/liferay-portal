@@ -11,6 +11,7 @@ const InputComponent = ({
 	displayStyle,
 	fieldName,
 	inputValue,
+	label,
 	name,
 	onFieldBlurred,
 	onFieldChanged,
@@ -22,6 +23,7 @@ const InputComponent = ({
 		return (
 			<ClayInput.GroupItem>
 				<textarea
+					aria-label={label}
 					className="ddm-field-text form-control"
 					dir={dir}
 					disabled={readOnly}

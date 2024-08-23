@@ -216,6 +216,7 @@ public class AssetCategoryDocumentContributor
 
 		Map<Integer, Map<Long, List<AssetCategory>>>
 			assetVocabularyVisibilityTypeMap = new HashMap<>();
+
 		Map<Long, Integer> assetVocabularyMap = new HashMap<>();
 
 		for (AssetCategory assetCategory : assetCategories) {

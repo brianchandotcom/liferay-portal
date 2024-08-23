@@ -317,6 +317,7 @@ public class JournalEditDDMTemplateDisplayContext {
 	public JSONArray getTemplateVariableGroupJSONArray() throws Exception {
 		JSONArray templateVariableGroupJSONArray =
 			JSONFactoryUtil.createJSONArray();
+
 		ResourceBundle resourceBundle = getTemplateHandlerResourceBundle();
 
 		for (TemplateVariableGroup templateVariableGroup :

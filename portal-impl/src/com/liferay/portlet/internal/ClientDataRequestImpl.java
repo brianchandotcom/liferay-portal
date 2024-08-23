@@ -104,6 +104,7 @@ public abstract class ClientDataRequestImpl
 		HttpServletRequest httpServletRequest, String portletNamespace) {
 
 		Map<String, String[]> portletParameterMap = new LinkedHashMap<>();
+
 		Map<String, String[]> parameterMap = getParameterMap();
 		Map<String, String[]> servletRequestParameterMap =
 			httpServletRequest.getParameterMap();

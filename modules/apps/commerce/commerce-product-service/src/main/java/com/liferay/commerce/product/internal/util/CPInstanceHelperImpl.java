@@ -858,6 +858,7 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 
 	private long _getTopId(Map<Long, Integer> idIdHits) {
 		long topId = 0;
+
 		int topIdHits = 0;
 
 		for (Map.Entry<Long, Integer> idIdHitsEntry : idIdHits.entrySet()) {

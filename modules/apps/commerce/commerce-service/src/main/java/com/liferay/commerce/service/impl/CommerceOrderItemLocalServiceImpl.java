@@ -870,12 +870,12 @@ public class CommerceOrderItemLocalServiceImpl
 					"Child commerce order item does not match any JSON item");
 			}
 
-			BigDecimal childCommerceOrderItemQuantity =
-				childCommerceOrderItem.getQuantity();
-
 			BigDecimal currentQuantity = quantity.multiply(
-				childCommerceOrderItemQuantity.divide(
-					commerceOrderItem.getQuantity(), RoundingMode.HALF_UP));
+				commerceOptionValue.getQuantity());
+
+			currentQuantity = currentQuantity.divide(
+				commerceOrderItem.getUnitOfMeasureIncrementalOrderQuantity(),
+				RoundingMode.HALF_UP);
 
 			if (!_isStaticPriceType(commerceOptionValue.getPriceType())) {
 				_updateCommerceOrderItem(
@@ -944,12 +944,12 @@ public class CommerceOrderItemLocalServiceImpl
 					"Child commerce order item does not match any JSON item");
 			}
 
-			BigDecimal childCommerceOrderItemQuantity =
-				childCommerceOrderItem.getQuantity();
-
 			BigDecimal currentQuantity = quantity.multiply(
-				childCommerceOrderItemQuantity.divide(
-					commerceOrderItem.getQuantity(), RoundingMode.HALF_UP));
+				commerceOptionValue.getQuantity());
+
+			currentQuantity = currentQuantity.divide(
+				commerceOrderItem.getUnitOfMeasureIncrementalOrderQuantity(),
+				RoundingMode.HALF_UP);
 
 			_updateCommerceOrderItem(
 				userId, childCommerceOrderItem.getCommerceOrderItemId(),

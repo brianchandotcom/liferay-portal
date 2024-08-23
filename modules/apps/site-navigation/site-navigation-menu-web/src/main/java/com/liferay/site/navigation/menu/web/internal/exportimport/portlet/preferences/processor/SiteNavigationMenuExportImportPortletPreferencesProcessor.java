@@ -13,12 +13,15 @@ import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.exportimport.portlet.preferences.processor.Capability;
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessor;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.service.PortletPreferenceValueLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.xml.Element;
 import com.liferay.site.navigation.constants.SiteNavigationConstants;
 import com.liferay.site.navigation.constants.SiteNavigationMenuPortletKeys;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
@@ -45,12 +48,20 @@ public class SiteNavigationMenuExportImportPortletPreferencesProcessor
 
 	@Override
 	public List<Capability> getExportCapabilities() {
-		return ListUtil.fromArray(_exportCapability);
+		if (FeatureFlagManagerUtil.isEnabled("LPD-23048")) {
+			return ListUtil.fromArray(_exportCapability);
+		}
+
+		return ListUtil.fromArray(_legacyExportCapability);
 	}
 
 	@Override
 	public List<Capability> getImportCapabilities() {
-		return ListUtil.fromArray(_importCapability);
+		if (FeatureFlagManagerUtil.isEnabled("LPD-23048")) {
+			return ListUtil.fromArray(_importCapability);
+		}
+
+		return ListUtil.fromArray(_legacyImportCapability);
 	}
 
 	@Override
@@ -75,6 +86,93 @@ public class SiteNavigationMenuExportImportPortletPreferencesProcessor
 			throw new PortletDataException(
 				"Unable to export portlet permissions", portalException);
 		}
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-23048")) {
+			return _processExportPortletPreferencesBySiteNavigationId(
+				portletDataContext, portletPreferences);
+		}
+
+		String siteNavigationMenuExternalReferenceCode =
+			portletPreferences.getValue(
+				"siteNavigationMenuExternalReferenceCode", null);
+
+		if (Validator.isNotNull(siteNavigationMenuExternalReferenceCode)) {
+			SiteNavigationMenu siteNavigationMenu =
+				_siteNavigationMenuLocalService.
+					fetchSiteNavigationMenuByExternalReferenceCode(
+						siteNavigationMenuExternalReferenceCode,
+						portletDataContext.getScopeGroupId());
+
+			if (siteNavigationMenu != null) {
+				StagedModelDataHandlerUtil.exportReferenceStagedModel(
+					portletDataContext, portletDataContext.getPortletId(),
+					siteNavigationMenu);
+			}
+		}
+
+		return portletPreferences;
+	}
+
+	@Override
+	public PortletPreferences processImportPortletPreferences(
+			PortletDataContext portletDataContext,
+			PortletPreferences portletPreferences)
+		throws PortletDataException {
+
+		try {
+			portletDataContext.importPortletPermissions(
+				SiteNavigationConstants.RESOURCE_NAME);
+		}
+		catch (PortalException portalException) {
+			throw new PortletDataException(
+				"Unable to import portlet permissions", portalException);
+		}
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-23048")) {
+			return _processImportPortletPreferencesBySiteNavigationId(
+				portletDataContext, portletPreferences);
+		}
+
+		_importSiteNavigationMenuReference(portletDataContext);
+
+		return portletPreferences;
+	}
+
+	private void _importSiteNavigationMenuReference(
+			PortletDataContext portletDataContext)
+		throws PortletDataException {
+
+		Element importDataRootElement =
+			portletDataContext.getImportDataRootElement();
+
+		Element referencesElement = importDataRootElement.element("references");
+
+		if (referencesElement == null) {
+			return;
+		}
+
+		List<Element> referenceElements = referencesElement.elements();
+
+		for (Element referenceElement : referenceElements) {
+			String className = referenceElement.attributeValue("class-name");
+
+			if (!className.equals(SiteNavigationMenu.class.getName())) {
+				continue;
+			}
+
+			long classPK = GetterUtil.getLong(
+				referenceElement.attributeValue("class-pk"));
+
+			StagedModelDataHandlerUtil.importReferenceStagedModel(
+				portletDataContext, className, Long.valueOf(classPK));
+		}
+	}
+
+	private PortletPreferences
+			_processExportPortletPreferencesBySiteNavigationId(
+				PortletDataContext portletDataContext,
+				PortletPreferences portletPreferences)
+		throws PortletDataException {
 
 		long siteNavigationMenuId = GetterUtil.getLong(
 			portletPreferences.getValue("siteNavigationMenuId", null));
@@ -104,20 +202,11 @@ public class SiteNavigationMenuExportImportPortletPreferencesProcessor
 		return portletPreferences;
 	}
 
-	@Override
-	public PortletPreferences processImportPortletPreferences(
-			PortletDataContext portletDataContext,
-			PortletPreferences portletPreferences)
+	private PortletPreferences
+			_processImportPortletPreferencesBySiteNavigationId(
+				PortletDataContext portletDataContext,
+				PortletPreferences portletPreferences)
 		throws PortletDataException {
-
-		try {
-			portletDataContext.importPortletPermissions(
-				SiteNavigationConstants.RESOURCE_NAME);
-		}
-		catch (PortalException portalException) {
-			throw new PortletDataException(
-				"Unable to import portlet permissions", portalException);
-		}
 
 		if (!MapUtil.getBoolean(
 				portletDataContext.getParameterMap(),
@@ -215,11 +304,17 @@ public class SiteNavigationMenuExportImportPortletPreferencesProcessor
 		return portletPreferences;
 	}
 
-	@Reference(target = "(name=PortletDisplayTemplateExporter)")
+	@Reference(target = "(name=CommonPortletDisplayTemplateExportCapability)")
 	private Capability _exportCapability;
 
-	@Reference(target = "(name=PortletDisplayTemplateImporter)")
+	@Reference(target = "(name=CommonPortletDisplayTemplateImportCapability)")
 	private Capability _importCapability;
+
+	@Reference(target = "(name=PortletDisplayTemplateExporter)")
+	private Capability _legacyExportCapability;
+
+	@Reference(target = "(name=PortletDisplayTemplateImporter)")
+	private Capability _legacyImportCapability;
 
 	@Reference(unbind = "-")
 	private PortletPreferencesLocalService _portletPreferencesLocalService;

@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -40,9 +41,14 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.upgrade.PortalUpgradeProcess;
+import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.Writer;
+
+import java.lang.reflect.Field;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -50,6 +56,7 @@ import java.sql.PreparedStatement;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -70,6 +77,7 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 
 /**
  * @author Sam Ziemer
@@ -541,6 +549,70 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 	}
 
 	@Test
+	public void testPropertiesSetByUserWithEnvVariable() throws Exception {
+		_setEnv(
+			"LIFERAY_MY_PERIOD_ENVIRONMENT_PERIOD_PROPERTY",
+			"my-environment-property-value");
+
+		_appender.start();
+
+		_appender.stop();
+
+		_assertReport("Properties set with environment variables");
+		_assertReport("my.environment.property: my-environment-property-value");
+
+		_assertLogContextContains(
+			"upgrade.report.properties.set.by.user",
+			"Properties set with environment variables");
+
+		_assertLogContextContains(
+			"upgrade.report.properties.set.by.user",
+			"my.environment.property: my-environment-property-value");
+	}
+
+	@Test
+	public void testPropertiesSetByUserWithFile() throws Exception {
+		File propertiesFile = temporaryFolder.newFile("test.properties");
+
+		String[] originalIncludeAndOverride = PropsUtil.getArray(
+			"include-and-override");
+
+		String[] includeAndOverride = ArrayUtil.append(
+			originalIncludeAndOverride, propertiesFile.getAbsolutePath());
+
+		PropsUtil.set(
+			"include-and-override", StringUtil.merge(includeAndOverride));
+
+		Properties properties = new Properties();
+
+		properties.setProperty("my.property", "my-property-value");
+
+		try (Writer writer = new FileWriter(propertiesFile)) {
+			properties.store(writer, null);
+
+			_appender.start();
+
+			_appender.stop();
+
+			_assertReport(propertiesFile.getAbsolutePath());
+			_assertReport("my.property: my-property-value");
+
+			_assertLogContextContains(
+				"upgrade.report.properties.set.by.user",
+				propertiesFile.getAbsolutePath());
+
+			_assertLogContextContains(
+				"upgrade.report.properties.set.by.user",
+				"my.property: my-property-value");
+		}
+		finally {
+			PropsUtil.set(
+				"include-and-override",
+				StringUtil.merge(originalIncludeAndOverride));
+		}
+	}
+
+	@Test
 	public void testRenameUpgradeReport() throws Exception {
 		_appender.start();
 
@@ -641,6 +713,9 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 				originalUpgradeReportDir);
 		}
 	}
+
+	@Rule
+	public final TemporaryFolder temporaryFolder = new TemporaryFolder();
 
 	protected static void setUpClass(boolean upgradeClient) throws Exception {
 		_db = DBManagerUtil.getDB();
@@ -795,6 +870,21 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 		Assert.assertTrue(reportsDir.exists());
 
 		return new File(reportsDir, fileName);
+	}
+
+	private void _setEnv(String key, String value) throws Exception {
+		Map<String, String> env = System.getenv();
+
+		Class<?> clazz = env.getClass();
+
+		Field field = clazz.getDeclaredField("m");
+
+		field.setAccessible(true);
+
+		@SuppressWarnings("unchecked")
+		Map<String, String> writableEnv = (Map<String, String>)field.get(env);
+
+		writableEnv.put(key, value);
 	}
 
 	private SafeCloseable _setUpgradeReportDLStorageSizeTimeout(long timeout) {

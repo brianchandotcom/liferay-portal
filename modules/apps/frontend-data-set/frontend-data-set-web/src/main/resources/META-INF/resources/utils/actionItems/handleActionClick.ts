@@ -48,6 +48,7 @@ const handleActionClick = ({
 		confirmationMessage,
 		disableHeader,
 		errorMessage,
+		requestBody,
 		size,
 		status,
 		successMessage,
@@ -92,6 +93,7 @@ const handleActionClick = ({
 			executeAsyncItemAction({
 				errorMessage,
 				method: method ?? data?.method,
+				requestBody,
 				setActionItemLoading: setLoading,
 				successMessage,
 				url,

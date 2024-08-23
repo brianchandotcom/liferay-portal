@@ -795,6 +795,8 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 					).put(
 						"permissionKey", properties.get("permissionKey")
 					).put(
+						"requestBody", properties.get("requestBody")
+					).put(
 						"size", properties.get("modalSize")
 					).put(
 						"status", properties.get("confirmationMessageType")

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionConversionFilter;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -29,8 +30,10 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.adapter.util.ModelAdapterUtil;
 import com.liferay.portal.security.permission.converter.PermissionConverter;
@@ -141,9 +144,9 @@ public class RoleStagedModelDataHandler
 			serviceContext.setUuid(role.getUuid());
 
 			importedRole = _roleLocalService.addRole(
-				null, userId, null, 0, role.getName(), role.getTitleMap(),
-				role.getDescriptionMap(), role.getType(), role.getSubtype(),
-				serviceContext);
+				role.getExternalReferenceCode(), userId, null, 0,
+				role.getName(), role.getTitleMap(), role.getDescriptionMap(),
+				role.getType(), role.getSubtype(), serviceContext);
 		}
 		else {
 			importedRole = _roleLocalService.updateRole(
@@ -181,11 +184,45 @@ public class RoleStagedModelDataHandler
 
 		for (Element groupElement : groupElements) {
 			String uuid = groupElement.attributeValue("uuid");
-			long companyId = GetterUtil.getLong(
-				groupElement.attributeValue("company-id"));
 
 			Group group = _groupLocalService.fetchGroupByUuidAndCompanyId(
-				uuid, companyId);
+				uuid, portletDataContext.getCompanyId());
+
+			String className = groupElement.attributeValue(
+				"attached-class-name");
+
+			if ((group == null) && Validator.isNotNull(className) &&
+				className.equals(UserGroup.class.getName())) {
+
+				Group exportedGroup =
+					_groupLocalService.fetchGroupByUuidAndCompanyId(
+						uuid,
+						GetterUtil.getLong(
+							groupElement.attributeValue("company-id")));
+
+				if (exportedGroup == null) {
+					continue;
+				}
+
+				UserGroup exportedUserGroup =
+					_userGroupLocalService.getUserGroup(
+						exportedGroup.getClassPK());
+
+				if (exportedUserGroup == null) {
+					continue;
+				}
+
+				UserGroup importedUserGroup =
+					_userGroupLocalService.fetchUserGroupByUuidAndCompanyId(
+						exportedUserGroup.getUuid(),
+						portletDataContext.getCompanyId());
+
+				if (importedUserGroup == null) {
+					continue;
+				}
+
+				group = importedUserGroup.getGroup();
+			}
 
 			if (group != null) {
 				_groupLocalService.addRoleGroup(
@@ -309,5 +346,8 @@ public class RoleStagedModelDataHandler
 
 	@Reference
 	private RoleLocalService _roleLocalService;
+
+	@Reference
+	private UserGroupLocalService _userGroupLocalService;
 
 }

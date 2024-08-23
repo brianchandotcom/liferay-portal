@@ -40,6 +40,10 @@ export const initialDragDrop = {
 
 	dispatch: null,
 
+	fragmentEntryLinksRef: {
+		current: {},
+	},
+
 	layoutDataRef: {
 		current: {
 			items: [],
@@ -233,8 +237,9 @@ export function useDropTarget(_targetItem, computeHover = defaultComputeHover) {
 	const toControlsId = useToControlsId();
 	const parentToControlsId = useParentToControlsId();
 
-	const {dispatch, layoutDataRef, state, targetRefs} =
+	const {dispatch, fragmentEntryLinksRef, layoutDataRef, state, targetRefs} =
 		useContext(DragAndDropContext);
+
 	const targetRef = useRef(null);
 
 	const targetItem = useMemo(
@@ -261,6 +266,7 @@ export function useDropTarget(_targetItem, computeHover = defaultComputeHover) {
 			}
 			computeHover({
 				dispatch,
+				fragmentEntryLinksRef,
 				layoutDataRef,
 				monitor,
 				sourceItem: source,
@@ -318,18 +324,31 @@ export function DragAndDropContextProvider({children}) {
 		return throttle(reducerDispatch, 100);
 	}, [reducerDispatch]);
 
+	const fragmentEntryLinksRef = useSelectorRef(
+		(state) => state.fragmentEntryLinks
+	);
+
 	const layoutDataRef = useSelectorRef((state) => state.layoutData);
 
 	const dragAndDropContext = useMemo(
 		() => ({
 			canDrag,
 			dispatch,
+			fragmentEntryLinksRef,
 			layoutDataRef,
 			setCanDrag,
 			state,
 			targetRefs,
 		}),
-		[canDrag, dispatch, layoutDataRef, state, targetRefs, setCanDrag]
+		[
+			canDrag,
+			dispatch,
+			fragmentEntryLinksRef,
+			layoutDataRef,
+			state,
+			targetRefs,
+			setCanDrag,
+		]
 	);
 
 	return (

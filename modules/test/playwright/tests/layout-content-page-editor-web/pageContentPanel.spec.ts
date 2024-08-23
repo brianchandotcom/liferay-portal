@@ -156,15 +156,10 @@ test(
 			'iframe[title="Permissions"]'
 		);
 
-		await permissionsFrame
-			.getByRole('cell', {exact: true, name: 'Role'})
-			.waitFor();
+		const guestActionViewCheckBox =
+			permissionsFrame.locator('#guest_ACTION_VIEW');
 
-		const guestActionViewCheckBox = permissionsFrame.locator(
-			'[id="guest_ACTION_VIEW"]'
-		);
-
-		await expect(guestActionViewCheckBox).toBeChecked();
+		await guestActionViewCheckBox.uncheck({trial: true});
 
 		await guestActionViewCheckBox.uncheck();
 

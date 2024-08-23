@@ -324,26 +324,11 @@ export class PageEditorPage {
 	) {
 		await this.goToSidebarTab('Page Content');
 
-		const panel = this.page.getByLabel('Page Content Panel', {
-			exact: true,
-		});
-
-		await panel.waitFor();
-
-		const content = panel.locator(
-			'.page-editor__page-contents__page-content',
-			{
-				hasText: name,
-			}
-		);
-
-		await content.hover();
-
 		if (subMenuAction) {
 			await clickAndExpectToBeVisible({
 				autoClick: false,
 				target: this.page.getByRole('menuitem', {name: action}),
-				trigger: content.getByTitle('Open Actions Menu'),
+				trigger: this.page.getByTitle('Open Actions Menu'),
 			});
 
 			await hoverAndExpectToBeVisible({
@@ -356,7 +341,7 @@ export class PageEditorPage {
 			await clickAndExpectToBeVisible({
 				autoClick: true,
 				target: this.page.getByRole('menuitem', {name: action}),
-				trigger: content.getByTitle('Open Actions Menu'),
+				trigger: this.page.getByTitle('Open Actions Menu'),
 			});
 		}
 	}

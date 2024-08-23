@@ -175,10 +175,6 @@ test(
 		await waitForSuccessAlert(permissionsFrame);
 
 		await expect(guestActionViewCheckBox).not.toBeChecked();
-
-		// Clean up
-
-		await apiHelpers.jsonWebServicesLayout.deleteLayout(layout.id);
 	}
 );
 
@@ -273,8 +269,6 @@ test(
 
 		// Map the heading fragment to the created web content
 
-		await pageEditorPage.selectFragment(headingId);
-
 		await pageEditorPage.selectEditable(headingId, 'element-text');
 
 		await pageEditorPage.setMappingConfiguration({
@@ -293,8 +287,6 @@ test(
 		const panel = page.getByLabel('Page Content Panel', {
 			exact: true,
 		});
-
-		await panel.waitFor();
 
 		await expect(
 			panel.getByText(ANIMALS_COLLECTION_NAME, {exact: true})
@@ -326,8 +318,6 @@ test(
 
 		await pageEditorPage.goToSidebarTab('Page Content');
 
-		await panel.waitFor();
-
 		await expect(
 			panel.getByText(ANIMALS_COLLECTION_NAME, {exact: true})
 		).not.toBeVisible();
@@ -345,9 +335,5 @@ test(
 		await expect(
 			panel.getByText('There is no content on this page.')
 		).toBeVisible();
-
-		// Clean up
-
-		await apiHelpers.jsonWebServicesLayout.deleteLayout(layout.id);
 	}
 );

@@ -11,7 +11,6 @@ import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
-import com.liferay.portal.kernel.change.tracking.sql.CTSQLModeThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
@@ -194,25 +193,14 @@ public class SearchEngineInitializer implements Runnable {
 
 						@Override
 						public Void call() throws Exception {
-							CTSQLModeThreadLocal.CTSQLMode ctSQLMode =
-								CTSQLModeThreadLocal.getCTSQLMode();
-
 							try (SafeCloseable safeCloseable =
 									BackgroundTaskThreadLocal.
 										setBackgroundTaskIdWithSafeCloseable(
 											backgroundTaskId)) {
 
-								CTSQLModeThreadLocal.
-									setCTSQLModeWithSafeCloseable(
-										CTSQLModeThreadLocal.CTSQLMode.CT_ALL);
-
 								reindex(indexer);
 
 								return null;
-							}
-							finally {
-								CTSQLModeThreadLocal.
-									setCTSQLModeWithSafeCloseable(ctSQLMode);
 							}
 						}
 

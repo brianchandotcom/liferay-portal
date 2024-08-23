@@ -13,7 +13,7 @@ export default function PageStructureSidebar() {
 	const activeItemIds = useActiveItemIds();
 
 	return (
-		<div className="overflow-auto page-editor__page-structure">
+		<div className="page-editor__page-structure">
 			{Liferay.FeatureFlags['LPD-18221'] && activeItemIds.length > 1 ? (
 				<PageStructureSidebarToolbar activeItemIds={activeItemIds} />
 			) : null}

@@ -167,6 +167,8 @@ public abstract class BaseCategoryDisplayPageResourceTestCase {
 
 		CategoryDisplayPage categoryDisplayPage = randomCategoryDisplayPage();
 
+		categoryDisplayPage.setCategoryExternalReferenceCode(regex);
+		categoryDisplayPage.setGroupExternalReferenceCode(regex);
 		categoryDisplayPage.setPageUuid(regex);
 
 		String json = CategoryDisplayPageSerDes.toJSON(categoryDisplayPage);
@@ -175,6 +177,10 @@ public abstract class BaseCategoryDisplayPageResourceTestCase {
 
 		categoryDisplayPage = CategoryDisplayPageSerDes.toDTO(json);
 
+		Assert.assertEquals(
+			regex, categoryDisplayPage.getCategoryExternalReferenceCode());
+		Assert.assertEquals(
+			regex, categoryDisplayPage.getGroupExternalReferenceCode());
 		Assert.assertEquals(regex, categoryDisplayPage.getPageUuid());
 	}
 
@@ -1563,8 +1569,33 @@ public abstract class BaseCategoryDisplayPageResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"categoryExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (categoryDisplayPage.getCategoryExternalReferenceCode() ==
+						null) {
+
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("categoryId", additionalAssertFieldName)) {
 				if (categoryDisplayPage.getCategoryId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"groupExternalReferenceCode", additionalAssertFieldName)) {
+
+				if (categoryDisplayPage.getGroupExternalReferenceCode() ==
+						null) {
+
 					valid = false;
 				}
 
@@ -1711,10 +1742,38 @@ public abstract class BaseCategoryDisplayPageResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"categoryExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						categoryDisplayPage1.getCategoryExternalReferenceCode(),
+						categoryDisplayPage2.
+							getCategoryExternalReferenceCode())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("categoryId", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						categoryDisplayPage1.getCategoryId(),
 						categoryDisplayPage2.getCategoryId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"groupExternalReferenceCode", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						categoryDisplayPage1.getGroupExternalReferenceCode(),
+						categoryDisplayPage2.getGroupExternalReferenceCode())) {
 
 					return false;
 				}
@@ -1857,9 +1916,102 @@ public abstract class BaseCategoryDisplayPageResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("categoryExternalReferenceCode")) {
+			Object object =
+				categoryDisplayPage.getCategoryExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("categoryId")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("groupExternalReferenceCode")) {
+			Object object = categoryDisplayPage.getGroupExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("id")) {
@@ -1958,7 +2110,11 @@ public abstract class BaseCategoryDisplayPageResourceTestCase {
 	protected CategoryDisplayPage randomCategoryDisplayPage() throws Exception {
 		return new CategoryDisplayPage() {
 			{
+				categoryExternalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				categoryId = RandomTestUtil.randomLong();
+				groupExternalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
 				pageUuid = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());

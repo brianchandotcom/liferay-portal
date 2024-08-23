@@ -56,6 +56,22 @@ public class CategoryDisplayPageSerDes {
 			sb.append(_toJSON(categoryDisplayPage.getActions()));
 		}
 
+		if (categoryDisplayPage.getCategoryExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"categoryExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				_escape(
+					categoryDisplayPage.getCategoryExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (categoryDisplayPage.getCategoryId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -64,6 +80,21 @@ public class CategoryDisplayPageSerDes {
 			sb.append("\"categoryId\": ");
 
 			sb.append(categoryDisplayPage.getCategoryId());
+		}
+
+		if (categoryDisplayPage.getGroupExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"groupExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				_escape(categoryDisplayPage.getGroupExternalReferenceCode()));
+
+			sb.append("\"");
 		}
 
 		if (categoryDisplayPage.getId() != null) {
@@ -119,6 +150,16 @@ public class CategoryDisplayPageSerDes {
 				"actions", String.valueOf(categoryDisplayPage.getActions()));
 		}
 
+		if (categoryDisplayPage.getCategoryExternalReferenceCode() == null) {
+			map.put("categoryExternalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"categoryExternalReferenceCode",
+				String.valueOf(
+					categoryDisplayPage.getCategoryExternalReferenceCode()));
+		}
+
 		if (categoryDisplayPage.getCategoryId() == null) {
 			map.put("categoryId", null);
 		}
@@ -126,6 +167,16 @@ public class CategoryDisplayPageSerDes {
 			map.put(
 				"categoryId",
 				String.valueOf(categoryDisplayPage.getCategoryId()));
+		}
+
+		if (categoryDisplayPage.getGroupExternalReferenceCode() == null) {
+			map.put("groupExternalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"groupExternalReferenceCode",
+				String.valueOf(
+					categoryDisplayPage.getGroupExternalReferenceCode()));
 		}
 
 		if (categoryDisplayPage.getId() == null) {
@@ -164,7 +215,17 @@ public class CategoryDisplayPageSerDes {
 			if (Objects.equals(jsonParserFieldName, "actions")) {
 				return true;
 			}
+			else if (Objects.equals(
+						jsonParserFieldName, "categoryExternalReferenceCode")) {
+
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "categoryId")) {
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "groupExternalReferenceCode")) {
+
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
@@ -188,10 +249,26 @@ public class CategoryDisplayPageSerDes {
 						(Map<String, Map<String, String>>)jsonParserFieldValue);
 				}
 			}
+			else if (Objects.equals(
+						jsonParserFieldName, "categoryExternalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					categoryDisplayPage.setCategoryExternalReferenceCode(
+						(String)jsonParserFieldValue);
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "categoryId")) {
 				if (jsonParserFieldValue != null) {
 					categoryDisplayPage.setCategoryId(
 						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "groupExternalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					categoryDisplayPage.setGroupExternalReferenceCode(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {

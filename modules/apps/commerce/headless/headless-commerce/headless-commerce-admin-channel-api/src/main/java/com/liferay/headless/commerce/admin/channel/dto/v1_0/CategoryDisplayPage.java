@@ -95,6 +95,51 @@ public class CategoryDisplayPage implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
+	@Schema(example = "DAB-34098-789-N")
+	public String getCategoryExternalReferenceCode() {
+		if (_categoryExternalReferenceCodeSupplier != null) {
+			categoryExternalReferenceCode =
+				_categoryExternalReferenceCodeSupplier.get();
+
+			_categoryExternalReferenceCodeSupplier = null;
+		}
+
+		return categoryExternalReferenceCode;
+	}
+
+	public void setCategoryExternalReferenceCode(
+		String categoryExternalReferenceCode) {
+
+		this.categoryExternalReferenceCode = categoryExternalReferenceCode;
+
+		_categoryExternalReferenceCodeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setCategoryExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			categoryExternalReferenceCodeUnsafeSupplier) {
+
+		_categoryExternalReferenceCodeSupplier = () -> {
+			try {
+				return categoryExternalReferenceCodeUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String categoryExternalReferenceCode;
+
+	@JsonIgnore
+	private Supplier<String> _categoryExternalReferenceCodeSupplier;
+
 	@DecimalMin("0")
 	@Schema(example = "30130")
 	public Long getCategoryId() {
@@ -136,6 +181,51 @@ public class CategoryDisplayPage implements Serializable {
 
 	@JsonIgnore
 	private Supplier<Long> _categoryIdSupplier;
+
+	@Schema(example = "DAB-34098-789-N")
+	public String getGroupExternalReferenceCode() {
+		if (_groupExternalReferenceCodeSupplier != null) {
+			groupExternalReferenceCode =
+				_groupExternalReferenceCodeSupplier.get();
+
+			_groupExternalReferenceCodeSupplier = null;
+		}
+
+		return groupExternalReferenceCode;
+	}
+
+	public void setGroupExternalReferenceCode(
+		String groupExternalReferenceCode) {
+
+		this.groupExternalReferenceCode = groupExternalReferenceCode;
+
+		_groupExternalReferenceCodeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setGroupExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			groupExternalReferenceCodeUnsafeSupplier) {
+
+		_groupExternalReferenceCodeSupplier = () -> {
+			try {
+				return groupExternalReferenceCodeUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String groupExternalReferenceCode;
+
+	@JsonIgnore
+	private Supplier<String> _groupExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
 	@Schema(example = "30130")
@@ -257,6 +347,23 @@ public class CategoryDisplayPage implements Serializable {
 			sb.append(_toJSON(actions));
 		}
 
+		String categoryExternalReferenceCode =
+			getCategoryExternalReferenceCode();
+
+		if (categoryExternalReferenceCode != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"categoryExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(categoryExternalReferenceCode));
+
+			sb.append("\"");
+		}
+
 		Long categoryId = getCategoryId();
 
 		if (categoryId != null) {
@@ -267,6 +374,22 @@ public class CategoryDisplayPage implements Serializable {
 			sb.append("\"categoryId\": ");
 
 			sb.append(categoryId);
+		}
+
+		String groupExternalReferenceCode = getGroupExternalReferenceCode();
+
+		if (groupExternalReferenceCode != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"groupExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(groupExternalReferenceCode));
+
+			sb.append("\"");
 		}
 
 		Long id = getId();

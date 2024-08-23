@@ -48,6 +48,31 @@ public class CategoryDisplayPage implements Cloneable, Serializable {
 
 	protected Map<String, Map<String, String>> actions;
 
+	public String getCategoryExternalReferenceCode() {
+		return categoryExternalReferenceCode;
+	}
+
+	public void setCategoryExternalReferenceCode(
+		String categoryExternalReferenceCode) {
+
+		this.categoryExternalReferenceCode = categoryExternalReferenceCode;
+	}
+
+	public void setCategoryExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			categoryExternalReferenceCodeUnsafeSupplier) {
+
+		try {
+			categoryExternalReferenceCode =
+				categoryExternalReferenceCodeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String categoryExternalReferenceCode;
+
 	public Long getCategoryId() {
 		return categoryId;
 	}
@@ -68,6 +93,31 @@ public class CategoryDisplayPage implements Cloneable, Serializable {
 	}
 
 	protected Long categoryId;
+
+	public String getGroupExternalReferenceCode() {
+		return groupExternalReferenceCode;
+	}
+
+	public void setGroupExternalReferenceCode(
+		String groupExternalReferenceCode) {
+
+		this.groupExternalReferenceCode = groupExternalReferenceCode;
+	}
+
+	public void setGroupExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			groupExternalReferenceCodeUnsafeSupplier) {
+
+		try {
+			groupExternalReferenceCode =
+				groupExternalReferenceCodeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String groupExternalReferenceCode;
 
 	public Long getId() {
 		return id;

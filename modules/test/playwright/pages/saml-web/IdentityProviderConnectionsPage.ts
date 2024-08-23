@@ -144,8 +144,8 @@ export class IdentityProviderConnectionsPage {
 		);
 	}
 
-	async goTo() {
-		await this.applicationsMenuPage.goToSamlAdmin();
+	async goTo(forceReload = false) {
+		await this.applicationsMenuPage.goToSamlAdmin(forceReload);
 		await this.page
 			.getByRole('tab', {name: 'Identity Provider Connections'})
 			.click();

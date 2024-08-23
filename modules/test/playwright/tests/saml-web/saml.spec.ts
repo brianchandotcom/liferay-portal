@@ -154,23 +154,28 @@ test.beforeAll(async ({browser}) => {
 test('Create two virtual instances, one IdP and one SP, connect them, perform SP initiated SSO, perform SP initiated SLO', async ({
 	browser,
 }) => {
-	await configureVirtualInstanceForSaml(
+	const idpAdminPage = await configureVirtualInstanceForSaml(
 		browser,
 		DEFAULT_IDP_NAME,
 		'Identity Provider'
 	);
 
-	await configureVirtualInstanceForSaml(
+	const spAdminPage = await configureVirtualInstanceForSaml(
 		browser,
 		DEFAULT_SP_NAME,
 		'Service Provider'
 	);
 
-	await connectSpAndIdp(browser, DEFAULT_IDP_NAME, DEFAULT_SP_NAME);
+	await connectSpAndIdp(
+		idpAdminPage,
+		DEFAULT_IDP_NAME,
+		spAdminPage,
+		DEFAULT_SP_NAME
+	);
 
 	// Create a user with identical credentials on each instance
 
-	const userAccount = await createUser(browser, DEFAULT_IDP_NAME);
+	const userAccount = await createUser(idpAdminPage, DEFAULT_IDP_NAME);
 
 	// Perform SP initiated SSO
 
@@ -251,19 +256,24 @@ test('Create two virtual instances, one IdP and one SP, and verify Custom User A
 	searchAdminPage,
 	usersAndOrganizationsPage,
 }) => {
-	await configureVirtualInstanceForSaml(
+	const idpAdminPage = await configureVirtualInstanceForSaml(
 		browser,
 		DEFAULT_IDP_NAME,
 		'Identity Provider'
 	);
 
-	await configureVirtualInstanceForSaml(
+	const spAdminPage = await configureVirtualInstanceForSaml(
 		browser,
 		DEFAULT_SP_NAME,
 		'Service Provider'
 	);
 
-	await connectSpAndIdp(browser, DEFAULT_IDP_NAME, DEFAULT_SP_NAME);
+	await connectSpAndIdp(
+		idpAdminPage,
+		DEFAULT_IDP_NAME,
+		spAdminPage,
+		DEFAULT_SP_NAME
+	);
 
 	// Create identical Custom Fields for both instances, except starting value
 
@@ -280,13 +290,13 @@ test('Create two virtual instances, one IdP and one SP, and verify Custom User A
 		resource: 'User',
 	};
 
-	await createCustomField(browser, customField, DEFAULT_IDP_NAME);
+	await createCustomField(idpAdminPage, customField);
 
 	fieldValues.startingValue = 'spStartingValue';
 
 	customField.fieldValues = fieldValues;
 
-	await createCustomField(browser, customField, DEFAULT_SP_NAME);
+	await createCustomField(spAdminPage, customField);
 
 	// Edit IdP Connection to include User Custom Field attribute mapping
 
@@ -307,7 +317,7 @@ test('Create two virtual instances, one IdP and one SP, and verify Custom User A
 		...DEFAULT_IDP_CONNECTION_VALUES,
 	};
 
-	await editIdentityProviderConnection(browser, idpConnection);
+	await editIdentityProviderConnection(spAdminPage, idpConnection);
 
 	// Edit SP Connection to include User Custom Field attribute
 
@@ -322,11 +332,11 @@ test('Create two virtual instances, one IdP and one SP, and verify Custom User A
 	spConnection.attributes =
 		spConnection.attributes + `\nexpando:${customFieldName}`;
 
-	await editServiceProviderConnection(browser, spConnection);
+	await editServiceProviderConnection(idpAdminPage, spConnection);
 
 	// Create a user on the IdP instance
 
-	const userAccount = await createUser(browser, DEFAULT_IDP_NAME);
+	const userAccount = await createUser(idpAdminPage, DEFAULT_IDP_NAME);
 
 	// Perform Sp initiated SSO with the new user
 
@@ -381,27 +391,37 @@ test('Create two virtual instances, set localhost and one to IdP and one SP, and
 	searchAdminPage,
 	usersAndOrganizationsPage,
 }) => {
-	await configureVirtualInstanceForSaml(
+	const idpAdminPage = await configureVirtualInstanceForSaml(
 		browser,
 		DEFAULT_IDP_NAME,
 		'Identity Provider'
 	);
 
-	await configureVirtualInstanceForSaml(
+	const localhostIdpAdminPage = await configureVirtualInstanceForSaml(
 		browser,
 		'localhost',
 		'Identity Provider'
 	);
 
-	await configureVirtualInstanceForSaml(
+	const spAdminPage = await configureVirtualInstanceForSaml(
 		browser,
 		DEFAULT_SP_NAME,
 		'Service Provider'
 	);
 
-	await connectSpAndIdp(browser, 'localhost', DEFAULT_SP_NAME);
+	await connectSpAndIdp(
+		idpAdminPage,
+		DEFAULT_IDP_NAME,
+		spAdminPage,
+		DEFAULT_SP_NAME
+	);
 
-	await connectSpAndIdp(browser, DEFAULT_IDP_NAME, DEFAULT_SP_NAME);
+	await connectSpAndIdp(
+		localhostIdpAdminPage,
+		'localhost',
+		spAdminPage,
+		DEFAULT_SP_NAME
+	);
 
 	// Create identical Custom Fields for all instances, except starting value
 
@@ -418,7 +438,7 @@ test('Create two virtual instances, set localhost and one to IdP and one SP, and
 		resource: 'User',
 	};
 
-	await createCustomField(browser, customField, DEFAULT_IDP_NAME);
+	await createCustomField(idpAdminPage, customField);
 
 	fieldValues.startingValue = 'localhostStartingValue';
 
@@ -426,13 +446,13 @@ test('Create two virtual instances, set localhost and one to IdP and one SP, and
 
 	deleteAfterTestCustomFields.push(customFieldName);
 
-	await createCustomField(browser, customField, 'localhost');
+	await createCustomField(localhostIdpAdminPage, customField);
 
 	fieldValues.startingValue = 'bakerStartingValue';
 
 	customField.fieldValues = fieldValues;
 
-	await createCustomField(browser, customField, DEFAULT_SP_NAME);
+	await createCustomField(spAdminPage, customField);
 
 	// Edit IdP Connections to include User Custom Field attribute mapping
 
@@ -453,7 +473,7 @@ test('Create two virtual instances, set localhost and one to IdP and one SP, and
 		...DEFAULT_IDP_CONNECTION_VALUES,
 	};
 
-	await editIdentityProviderConnection(browser, idpConnection);
+	await editIdentityProviderConnection(spAdminPage, idpConnection);
 
 	idpConnection = {
 		attributeMappings,
@@ -464,7 +484,7 @@ test('Create two virtual instances, set localhost and one to IdP and one SP, and
 		...DEFAULT_IDP_CONNECTION_VALUES,
 	};
 
-	await editIdentityProviderConnection(browser, idpConnection);
+	await editIdentityProviderConnection(spAdminPage, idpConnection);
 
 	// Edit SP Connection to include User Custom Field attribute
 
@@ -479,17 +499,21 @@ test('Create two virtual instances, set localhost and one to IdP and one SP, and
 	spConnection.attributes =
 		spConnection.attributes + `\nexpando:${customFieldName}`;
 
-	await editServiceProviderConnection(browser, spConnection);
+	await editServiceProviderConnection(idpAdminPage, spConnection);
 
 	// Create a user on the IdP instances
 
 	const userId = getRandomInt();
 
-	const userAccount = await createUser(browser, 'localhost', userId);
+	const userAccount = await createUser(
+		localhostIdpAdminPage,
+		'localhost',
+		userId
+	);
 
 	deleteAfterTestUserIds.push(userAccount.id);
 
-	await createUser(browser, DEFAULT_IDP_NAME, userId);
+	await createUser(idpAdminPage, DEFAULT_IDP_NAME, userId);
 
 	// Perform SP initiated SSO, using localhost as the IdP
 
@@ -554,19 +578,24 @@ test('Create two virtual instances, set localhost and one to IdP and one SP, and
 test('SAML connection cannot be saved if a custom field value is used more than once', async ({
 	browser,
 }) => {
-	await configureVirtualInstanceForSaml(
+	const idpAdminPage = await configureVirtualInstanceForSaml(
 		browser,
 		DEFAULT_IDP_NAME,
 		'Identity Provider'
 	);
 
-	await configureVirtualInstanceForSaml(
+	const spAdminPage = await configureVirtualInstanceForSaml(
 		browser,
 		DEFAULT_SP_NAME,
 		'Service Provider'
 	);
 
-	await connectSpAndIdp(browser, DEFAULT_IDP_NAME, DEFAULT_SP_NAME);
+	await connectSpAndIdp(
+		idpAdminPage,
+		DEFAULT_IDP_NAME,
+		spAdminPage,
+		DEFAULT_SP_NAME
+	);
 
 	const customFieldName = 'CustomField' + getRandomInt();
 
@@ -576,9 +605,9 @@ test('SAML connection cannot be saved if a custom field value is used more than 
 		resource: 'User',
 	};
 
-	await createCustomField(browser, customField, DEFAULT_IDP_NAME);
+	await createCustomField(idpAdminPage, customField);
 
-	await createCustomField(browser, customField, DEFAULT_SP_NAME);
+	await createCustomField(spAdminPage, customField);
 
 	// Edit IdP Connection to include duplicate Custom Field attribute mappings
 
@@ -609,5 +638,9 @@ test('SAML connection cannot be saved if a custom field value is used more than 
 	const errorMessage =
 		'User Custom Fields: Each user field can only be mapped to one SAML attribute.';
 
-	await editIdentityProviderConnection(browser, idpConnection, errorMessage);
+	await editIdentityProviderConnection(
+		spAdminPage,
+		idpConnection,
+		errorMessage
+	);
 });

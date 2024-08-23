@@ -41,8 +41,8 @@ export class ViewAttributesPage {
 		);
 	}
 
-	async goto(resource: string) {
-		await this.applicationsMenuPage.goToCustomFields();
+	async goto(resource: string, forceReload = false) {
+		await this.applicationsMenuPage.goToCustomFields(forceReload);
 
 		await this.page
 			.getByRole('link', {exact: true, name: resource})

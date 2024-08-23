@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.segments.asah.connector.internal.client.AsahFaroBackendClient;
 import com.liferay.segments.asah.connector.internal.client.AsahFaroBackendClientImpl;
 import com.liferay.segments.asah.connector.internal.client.model.Experiment;
@@ -355,9 +354,7 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 				_analyticsSettingsManager.isSiteIdSynced(
 					group.getCompanyId(), _getLiveGroupId(group.getGroupId()))
 			).put(
-				"url",
-				PrefsPropsUtil.getString(
-					group.getCompanyId(), "liferayAnalyticsURL")
+				"url", analyticsConfiguration.liferayAnalyticsURL()
 			)
 		).put(
 			"hideSegmentsExperimentPanelURL",

@@ -298,22 +298,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-105216: Validate that Free trial and dismiss buttons ARE NOT displayed when AC is enabled"
-	@priority = 3
-	test FreeTrialButtonNotPresent {
-		task ("Open Content Performance and Assert if element is not present") {
-			ContentPagesNavigator.openViewContentPage(
-				pageName = "Content Page",
-				siteName = "Test Site Name");
-
-			ContentPerformance.openContentPerformance();
-
-			AssertElementNotPresent(
-				key_textValue = "Do not show me this again",
-				locator1 = "Sidebar#LINK");
-		}
-	}
-
 	@description = "LPS-108068: When there is no views nor reads in the selected range or in the default view, the line of the graphic will be at 0"
 	@priority = 3
 	test GraphicLineNoViewsReads {

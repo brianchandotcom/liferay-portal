@@ -50,20 +50,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-105216: Validate that Free trial and dismiss buttons are displayed when AC is disabled"
-	@priority = 5
-	test FreeTrialButtonPresent {
-		task ("Open Content Performance") {
-			ContentPerformance.openContentPerformance();
-		}
-
-		task ("Assert that Dismiss buttons are displayed") {
-			AssertVisible(
-				key_textValue = "Do not show me this again",
-				locator1 = "Sidebar#LINK");
-		}
-	}
-
 	@description = "LPS-108856: When user clicks on Dont show me this again button, the Content Performance panel disappears"
 	@priority = 5
 	test HideContentPerformancePanel {

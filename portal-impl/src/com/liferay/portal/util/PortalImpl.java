@@ -4347,13 +4347,8 @@ public class PortalImpl implements Portal {
 						}
 						else if (scopeType.equals("layout")) {
 							if (layout.isTypeContent()) {
-								Layout draftLayout = _getDraftLayout(
-									liveGroupLayout.getPlid());
-
-								if (draftLayout != null) {
-									scopeGroupId = _getScopeGroupId(
-										themeDisplay, draftLayout, portletId);
-								}
+								scopeGroupId = _getScopeGroupId(
+									themeDisplay, liveGroupLayout, portletId);
 							}
 							else {
 								scopeGroupId = liveGroup.getGroupId();
@@ -7479,22 +7474,6 @@ public class PortalImpl implements Portal {
 		}
 
 		return _LOCALHOST;
-	}
-
-	private Layout _getDraftLayout(long plid) throws PortalException {
-		Layout originalLayout = LayoutLocalServiceUtil.getLayout(plid);
-
-		if (originalLayout.isDraftLayout()) {
-			return originalLayout;
-		}
-
-		Layout draftLayout = LayoutLocalServiceUtil.fetchDraftLayout(plid);
-
-		if (draftLayout == null) {
-			draftLayout = LayoutLocalServiceUtil.fetchDraftLayout(plid);
-		}
-
-		return draftLayout;
 	}
 
 	private String _getGroupFriendlyURL(

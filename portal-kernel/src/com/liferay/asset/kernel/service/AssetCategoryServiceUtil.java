@@ -82,6 +82,14 @@ public class AssetCategoryServiceUtil {
 		return getService().fetchCategory(categoryId);
 	}
 
+	public static AssetCategory fetchCategoryByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return getService().fetchCategoryByExternalReferenceCode(
+			externalReferenceCode, groupId);
+	}
+
 	public static AssetCategory getAssetCategoryByExternalReferenceCode(
 			long groupId, String externalReferenceCode)
 		throws PortalException {

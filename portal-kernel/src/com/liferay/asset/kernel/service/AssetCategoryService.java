@@ -77,6 +77,11 @@ public interface AssetCategoryService extends BaseService {
 	public AssetCategory fetchCategory(long categoryId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public AssetCategory fetchCategoryByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AssetCategory getAssetCategoryByExternalReferenceCode(
 			long groupId, String externalReferenceCode)
 		throws PortalException;

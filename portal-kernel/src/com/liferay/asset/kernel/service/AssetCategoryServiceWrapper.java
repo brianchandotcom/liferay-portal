@@ -88,6 +88,15 @@ public class AssetCategoryServiceWrapper
 	}
 
 	@Override
+	public AssetCategory fetchCategoryByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _assetCategoryService.fetchCategoryByExternalReferenceCode(
+			externalReferenceCode, groupId);
+	}
+
+	@Override
 	public AssetCategory getAssetCategoryByExternalReferenceCode(
 			long groupId, String externalReferenceCode)
 		throws com.liferay.portal.kernel.exception.PortalException {

@@ -161,6 +161,7 @@ definition {
 	@priority = 5
 	test CanConfigurePageFriendlyURLAfterUpgradeFrom701015 {
 		property data.archive.type = "data-archive-page-friendly-url";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "7.0.10.15";
 
 		PagesAdmin.openToConfigurePublicPage(

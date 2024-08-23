@@ -4346,16 +4346,15 @@ public class ObjectEntryLocalServiceImpl
 			int workflowAction)
 		throws PortalException {
 
+		List<String> columnNames = new ArrayList<>();
+		int count = 0;
+		ObjectEntry objectEntry = fetchObjectEntry(objectEntryId);
+
 		StringBundler sb = new StringBundler();
 
 		sb.append("update ");
 		sb.append(dynamicObjectDefinitionTable.getName());
 		sb.append(" set ");
-
-		List<String> columnNames = new ArrayList<>();
-
-		int count = 0;
-		ObjectEntry objectEntry = fetchObjectEntry(objectEntryId);
 
 		List<ObjectField> objectFields =
 			dynamicObjectDefinitionTable.getObjectFields();

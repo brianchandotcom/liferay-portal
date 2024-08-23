@@ -11,6 +11,7 @@ import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.account.service.AccountGroupLocalService;
 import com.liferay.account.service.AccountGroupRelLocalService;
 import com.liferay.account.service.AccountRoleLocalService;
+import com.liferay.commerce.internal.upgrade.v11_5_1.SupplierRoleUpgradeProcess;
 import com.liferay.commerce.internal.upgrade.v1_2_0.CommerceSubscriptionUpgradeProcess;
 import com.liferay.commerce.internal.upgrade.v2_0_0.CommercePaymentMethodUpgradeProcess;
 import com.liferay.commerce.internal.upgrade.v2_1_0.CPDAvailabilityEstimateUpgradeProcess;
@@ -705,6 +706,12 @@ public class CommerceServiceUpgradeStepRegistrator
 			"11.4.2", "11.5.0",
 			UpgradeProcessFactory.addColumns(
 				CommerceOrderModelImpl.TABLE_NAME, "name VARCHAR(75) null"));
+
+		registry.register(
+			"11.5.0", "11.5.1",
+			new SupplierRoleUpgradeProcess(
+				_companyLocalService, _resourcePermissionLocalService,
+				_roleLocalService));
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce upgrade step registrator finished");

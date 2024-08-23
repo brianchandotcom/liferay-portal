@@ -81,6 +81,15 @@
 		<async-supported>true</async-supported>
 	</servlet>
 	<servlet>
+		<servlet-name>Favicon Servlet</servlet-name>
+		<servlet-class>com.liferay.portal.servlet.ServletAdapter</servlet-class>
+		<init-param>
+			<param-name>filter</param-name>
+			<param-value>(osgi.http.whiteboard.servlet.name=com.liferay.frontend.theme.favicon.servlet.internal.FaviconServlet)</param-value>
+		</init-param>
+		<async-supported>true</async-supported>
+	</servlet>
+	<servlet>
 		<servlet-name>Friendly URL Servlet - Private Group</servlet-name>
 		<servlet-class>com.liferay.portal.servlet.ServletAdapter</servlet-class>
 		<init-param>
@@ -218,6 +227,10 @@
 	<servlet-mapping>
 		<servlet-name>Combo Servlet</servlet-name>
 		<url-pattern>/combo/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Favicon Servlet</servlet-name>
+		<url-pattern>/favicon.ico</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>Friendly URL Servlet - Private Group</servlet-name>

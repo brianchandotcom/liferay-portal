@@ -19,10 +19,6 @@
 		<to type="redirect">%{context-path}/webdav$1</to>
 	</rule>
 	<rule>
-		<from>^/favicon.ico$</from>
-		<to type="redirect">/o/favicon/</to>
-	</rule>
-	<rule>
 		<from>^/o/portal-search-rest/(.*)</from>
 		<to type="forward">%{context-path}/o/search/$1</to>
 	</rule>

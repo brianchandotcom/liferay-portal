@@ -64,8 +64,8 @@ export class FiltersPage {
 	private readonly newFilterModal: NewFilterModal;
 	private readonly newSelectionFilterModal: NewSelectionFilterModal;
 	readonly page: Page;
-	readonly searchInput: Locator;
 	readonly searchButton: Locator;
+	readonly searchInput: Locator;
 
 	constructor(page: Page) {
 		this.dataSetPage = new DataSetPage(page);
@@ -149,13 +149,7 @@ export class FiltersPage {
 		this.searchInput = page.getByPlaceholder('Search');
 	}
 
-	async goto({dataSetLabel}: {dataSetLabel: string}) {
-		await this.dataSetPage.goto({
-			dataSetLabel,
-		});
 
-		await this.dataSetPage.selectTab('Filters');
-	}
 
 	async assertFiltersTableRowCount(rowCount: number) {
 		await expect(
@@ -345,6 +339,14 @@ export class FiltersPage {
 			.filter({
 				has: this.page.getByText(text, {exact: true}).first(),
 			});
+	}
+
+	async goto({dataSetLabel}: {dataSetLabel: string}) {
+		await this.dataSetPage.goto({
+			dataSetLabel,
+		});
+
+		await this.dataSetPage.selectTab('Filters');
 	}
 
 	async openNewFilterModal({

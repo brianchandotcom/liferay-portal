@@ -24,12 +24,12 @@ const PICKLIST_VALUE_NAME = getRandomString();
 
 export const test = mergeTests(
 	dataSetManagerApiHelpersTest,
+	dataSetManagerSetupTest,
 	featureFlagsTest({
 		'LPS-178052': true,
 	}),
 	filtersPageTest,
 	loginTest(),
-	dataSetManagerSetupTest,
 	picklistApiHelpersTest
 );
 

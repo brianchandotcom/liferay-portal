@@ -30,6 +30,7 @@ import {isMultistepForm} from '../../utils/isMultistepForm';
 import {openFormConversionModal} from '../../utils/openFormConversionModal';
 import {formIsMapped} from '../formIsMapped';
 import {getFormParent} from '../getFormParent';
+import {getStepperChild} from '../getStepperChild';
 import {DRAG_DROP_TARGET_TYPE} from './constants/dragDropTargetType';
 import {TARGET_POSITIONS} from './constants/targetPositions';
 import defaultComputeHover from './defaultComputeHover';
@@ -135,7 +136,7 @@ export function NotDraggableArea({children}) {
 }
 
 export function useDragItem(sourceItem, onDragEnd, onBegin = () => {}) {
-	const {canDrag, dispatch, layoutDataRef, state} =
+	const {canDrag, dispatch, fragmentEntryLinksRef, layoutDataRef, state} =
 		useContext(DragAndDropContext);
 	const sourceRef = useRef(null);
 
@@ -163,6 +164,7 @@ export function useDragItem(sourceItem, onDragEnd, onBegin = () => {}) {
 		end() {
 			computeDrop({
 				dispatch,
+				fragmentEntryLinksRef,
 				layoutDataRef,
 				onDragEnd,
 				state,
@@ -358,7 +360,13 @@ export function DragAndDropContextProvider({children}) {
 	);
 }
 
-function computeDrop({dispatch, layoutDataRef, onDragEnd, state}) {
+function computeDrop({
+	dispatch,
+	fragmentEntryLinksRef,
+	layoutDataRef,
+	onDragEnd,
+	state,
+}) {
 	const {
 		dropItem,
 		dropTargetItem,
@@ -392,6 +400,23 @@ function computeDrop({dispatch, layoutDataRef, onDragEnd, state}) {
 			message = Liferay.Language.get(
 				'form-components-can-only-be-placed-inside-a-mapped-form-container'
 			);
+		}
+		else if (
+			dropItem.fragmentEntryType === FRAGMENT_ENTRY_TYPES.stepper
+		) {
+			const form = layoutDataRef.current.items[dropTargetItem.itemId];
+
+			const existingStepper = getStepperChild(
+				form,
+				layoutDataRef.current,
+				fragmentEntryLinksRef.current
+			);
+
+			message = existingStepper
+				? Liferay.Language.get('forms-can-only-contain-one-stepper')
+				: Liferay.Language.get(
+						'form-components-can-only-be-placed-inside-a-mapped-form-container'
+					);
 		}
 		else if (
 			dropItem.isWidget &&

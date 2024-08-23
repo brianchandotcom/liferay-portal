@@ -5,6 +5,7 @@
 
 import {FRAGMENT_ENTRY_TYPES} from '../../config/constants/fragmentEntryTypes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
+import {getStepperChild} from '../../utils/getStepperChild';
 import {formIsMapped} from '../formIsMapped';
 import {getFormParent} from '../getFormParent';
 import {isMultistepForm} from '../isMultistepForm';
@@ -111,6 +112,22 @@ export default function checkAllowedChild(
 				isMultistepForm(form) &&
 				parent.type !== LAYOUT_DATA_ITEM_TYPES.formStep
 			) {
+				return false;
+			}
+		}
+
+		if (child.fragmentEntryType === FRAGMENT_ENTRY_TYPES.stepper) {
+			if (parent.type !== LAYOUT_DATA_ITEM_TYPES.form) {
+				return false;
+			}
+
+			const existingStepper = getStepperChild(
+				parent,
+				layoutDataRef.current,
+				fragmentEntryLinksRef.current
+			);
+
+			if (existingStepper && existingStepper.itemId !== child.itemId) {
 				return false;
 			}
 		}

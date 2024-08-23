@@ -30,6 +30,18 @@ const STATE = {
 
 const LAYOUT_DATA = {
 	items: {
+		collectionItem: {
+			children: [],
+			itemId: 'collectionItem',
+			parentId: 'column',
+			type: LAYOUT_DATA_ITEM_TYPES.collectionItem,
+		},
+		column: {
+			children: ['fragment05', 'formStep', 'dropZone', 'collectionItem'],
+			itemId: 'column',
+			parentId: 'grid',
+			type: LAYOUT_DATA_ITEM_TYPES.column,
+		},
 		container01: {
 			children: ['fragment01', 'fragment02'],
 			itemId: 'container01',
@@ -43,10 +55,23 @@ const LAYOUT_DATA = {
 			type: LAYOUT_DATA_ITEM_TYPES.container,
 		},
 		container03: {
-			children: ['fragment05'],
+			children: ['grid'],
 			itemId: 'container03',
 			parentId: 'container02',
 			type: LAYOUT_DATA_ITEM_TYPES.container,
+		},
+		dropZone: {
+			children: [],
+			itemId: 'dropZone',
+			parentId: 'column',
+			type: LAYOUT_DATA_ITEM_TYPES.fragmentDropZone,
+		},
+
+		formStep: {
+			children: [],
+			itemId: 'formStep',
+			parentId: 'column',
+			type: LAYOUT_DATA_ITEM_TYPES.formStep,
 		},
 		fragment01: {
 			children: [],
@@ -75,8 +100,14 @@ const LAYOUT_DATA = {
 		fragment05: {
 			children: [],
 			itemId: 'fragment05',
-			parentId: 'container03',
+			parentId: 'column',
 			type: LAYOUT_DATA_ITEM_TYPES.fragment,
+		},
+		grid: {
+			children: ['column'],
+			itemId: 'grid',
+			parentId: 'container03',
+			type: LAYOUT_DATA_ITEM_TYPES.row,
 		},
 		root: {
 			children: ['container01', 'container02'],
@@ -514,7 +545,7 @@ describe('Reducer', () => {
 	});
 
 	describe('getItemsWithinRange', () => {
-		it('select range from top to bottom ', () => {
+		it('select range from top to bottom avoiding non-selectable elements', () => {
 			expect(
 				getItemsWithinRange({
 					itemIds: LAYOUT_DATA.items.root.children,
@@ -525,13 +556,14 @@ describe('Reducer', () => {
 				'fragment02',
 				'container02',
 				'container03',
+				'grid',
 				'fragment05',
 				'fragment03',
 				'fragment04',
 			]);
 		});
 
-		it('select range from bottom to top ', () => {
+		it('select range from bottom to top avoiding non-selectable elements', () => {
 			expect(
 				getItemsWithinRange({
 					itemIds: LAYOUT_DATA.items.root.children,
@@ -543,6 +575,7 @@ describe('Reducer', () => {
 				'fragment02',
 				'container02',
 				'container03',
+				'grid',
 				'fragment05',
 				'fragment03',
 			]);

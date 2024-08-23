@@ -24,7 +24,7 @@ test(
 	{tag: '@LPD-1628'},
 	async ({apiHelpers, documentLibraryEditFilePage, page}) => {
 
-		// Create one tag on Global
+		// Create one tag on Global and on the site
 
 		const globalSiteId = await getGlobalSiteId(apiHelpers);
 
@@ -36,10 +36,26 @@ test(
 				siteId: globalSiteId,
 			});
 
+		const siteId = await page.evaluate(() => {
+			return String(Liferay.ThemeDisplay.getSiteGroupId());
+		});
+
+		const siteTagName = getRandomString();
+
+		const siteTag = await apiHelpers.headlessAdminTaxonomy.postSiteKeyword({
+			name: siteTagName,
+			siteId,
+		});
+
 		const depotName = getRandomString();
 
 		const depot =
 			await apiHelpers.jsonWebServicesDepot.addDepotEntry(depotName);
+
+		await apiHelpers.jsonWebServicesDepotGroupRel.addDepotEntryGroupRel(
+			depot.depotEntryId,
+			siteId
+		);
 
 		const depotTagName = getRandomString();
 
@@ -85,25 +101,33 @@ test(
 		).toBeVisible();
 
 		await expect(
+			modalTag.locator(`tr:has-text('${globalTagName}')`)
+		).toBeVisible();
+
+		await expect(
 			modalTag.locator(`tr:has-text('${anotherDepotTagName}')`)
 		).toBeHidden();
 
 		await expect(
-			modalTag.locator(`tr:has-text('${globalTagName}')`)
-		).toBeVisible();
+			modalTag.locator(`tr:has-text('${siteTagName}')`)
+		).toBeHidden();
 
-		// Remove the tag created on Global
+		// Remove the tag created on Global and site
 
 		await apiHelpers.headlessAdminTaxonomy.deleteKeyword({
 			id: globalTag.id,
 		});
 
-		await apiHelpers.jsonWebServicesDepot.deleteDepotEntry(
-			depot.depotEntryId
-		);
+		await apiHelpers.headlessAdminTaxonomy.deleteKeyword({
+			id: siteTag.id,
+		});
 
 		await apiHelpers.jsonWebServicesDepot.deleteDepotEntry(
 			anotherDepot.depotEntryId
+		);
+
+		await apiHelpers.jsonWebServicesDepot.deleteDepotEntry(
+			depot.depotEntryId
 		);
 	}
 );

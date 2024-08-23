@@ -103,7 +103,7 @@ function Select({
 
 	useEffect(() => {
 		const selectedOption = options.find(
-			(option) => option.value === selectedItem?.[0]
+			(option) => option.value === selectedItem
 		);
 
 		if (selectedOption) {

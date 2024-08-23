@@ -355,6 +355,14 @@ public class CTCollectionLocalServiceUtil {
 			companyId, status, start, end, orderByComparator);
 	}
 
+	public static List<CTCollection> getCTCollections(
+		long companyId, int[] statuses, int start, int end,
+		OrderByComparator<CTCollection> orderByComparator) {
+
+		return getService().getCTCollections(
+			companyId, statuses, start, end, orderByComparator);
+	}
+
 	/**
 	 * Returns the number of ct collections.
 	 *

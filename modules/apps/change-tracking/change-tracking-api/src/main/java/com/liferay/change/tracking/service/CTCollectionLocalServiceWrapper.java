@@ -409,6 +409,18 @@ public class CTCollectionLocalServiceWrapper
 			companyId, status, start, end, orderByComparator);
 	}
 
+	@Override
+	public java.util.List<com.liferay.change.tracking.model.CTCollection>
+		getCTCollections(
+			long companyId, int[] statuses, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.change.tracking.model.CTCollection>
+					orderByComparator) {
+
+		return _ctCollectionLocalService.getCTCollections(
+			companyId, statuses, start, end, orderByComparator);
+	}
+
 	/**
 	 * Returns the number of ct collections.
 	 *

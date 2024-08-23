@@ -2256,7 +2256,7 @@ public abstract class BaseBuild implements Build {
 			if (status.equals("missing")) {
 				sb.append(" is missing ");
 				sb.append(getJobURL());
-				sb.append(".");
+				sb.append("/.");
 
 				return sb.toString();
 			}
@@ -2264,7 +2264,7 @@ public abstract class BaseBuild implements Build {
 			if (status.equals("queued")) {
 				sb.append(" is queued at ");
 				sb.append(getJobURL());
-				sb.append(".");
+				sb.append("/.");
 
 				return sb.toString();
 			}
@@ -2310,7 +2310,7 @@ public abstract class BaseBuild implements Build {
 
 				sb.append(" invoked at ");
 				sb.append(jobURL);
-				sb.append(".");
+				sb.append("/.");
 
 				return sb.toString();
 			}

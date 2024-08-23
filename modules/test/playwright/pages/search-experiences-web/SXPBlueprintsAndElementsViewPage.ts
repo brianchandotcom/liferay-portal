@@ -21,9 +21,9 @@ export class SXPBlueprintsAndElementsViewPage {
 	readonly addBlueprintElementModal: Locator;
 
 	constructor(page: Page) {
-		this.addBlueprintButton = page.getByRole('button', {
-			name: 'New Search Blueprint',
-		});
+		this.addBlueprintButton = page
+			.getByTestId('management-toolbar')
+			.getByLabel('New Search Blueprint');
 		this.addBlueprintElementModal = page.locator('.modal-dialog');
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);
 		this.blueprintElementTable = page.locator('.dnd-table');

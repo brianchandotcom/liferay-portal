@@ -4422,6 +4422,8 @@ public class ObjectEntryLocalServiceImpl
 
 		columnNames.add(primaryKeyColumn.getName());
 
+		Map<String, Serializable> insertedValues = new HashMap<>();
+
 		sb.append(" where ");
 		sb.append(primaryKeyColumn.getName());
 		sb.append(" = ?");
@@ -4434,8 +4436,6 @@ public class ObjectEntryLocalServiceImpl
 
 		Connection connection = _currentConnection.getConnection(
 			objectEntryPersistence.getDataSource());
-
-		Map<String, Serializable> insertedValues = new HashMap<>();
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				sql)) {

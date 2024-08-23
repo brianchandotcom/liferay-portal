@@ -3,19 +3,11 @@
 
 <urlrewrite>
 	<rule>
-		<from>^/(.{1,1000}/)?blog/blogs/rss(.{0,1000})</from>
-		<to type="permanent-redirect">%{context-path}/html/common/referer_jsp.jsp?referer=${escape:/$1blog/-/blogs/rss$2}</to>
-	</rule>
-	<rule>
 		<from>^/api/webdav(.{0,2000})</from>
 		<to type="redirect">%{context-path}/webdav$1</to>
 	</rule>
 	<rule>
 		<from>^/o/portal-search-rest/(.*)</from>
 		<to type="forward">%{context-path}/o/search/$1</to>
-	</rule>
-	<rule>
-		<from>^/web/guest/community/forums/message_boards(.{0,2000})$</from>
-		<to type="permanent-redirect">%{context-path}/web/guest/community/forums/-/message_boards$1</to>
 	</rule>
 </urlrewrite>

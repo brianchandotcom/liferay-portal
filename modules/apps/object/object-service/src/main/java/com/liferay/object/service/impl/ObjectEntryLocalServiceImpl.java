@@ -3536,12 +3536,12 @@ public class ObjectEntryLocalServiceImpl
 					objectField.getName());
 			}
 
-			sb.append(", ");
-			sb.append(objectField.getDBColumnName());
-
 			columnNames.add(objectField.getDBColumnName());
 
 			count++;
+
+			sb.append(", ");
+			sb.append(objectField.getDBColumnName());
 		}
 
 		sb.append(") values (?");
@@ -3689,12 +3689,12 @@ public class ObjectEntryLocalServiceImpl
 					dynamicObjectDefinitionTable);
 			}
 
-			sb.append(", ");
-			sb.append(objectField.getDBColumnName());
-
 			columnNames.add(objectField.getDBColumnName());
 
 			count++;
+
+			sb.append(", ");
+			sb.append(objectField.getDBColumnName());
 		}
 
 		sb.append(") values (?");
@@ -4396,16 +4396,16 @@ public class ObjectEntryLocalServiceImpl
 					dynamicObjectDefinitionTable, objectEntryId);
 			}
 
-			if (count > 0) {
+			columnNames.add(objectField.getDBColumnName());
+
+			count++;
+
+			if (count > 1) {
 				sb.append(", ");
 			}
 
 			sb.append(objectField.getDBColumnName());
 			sb.append(" = ?");
-
-			columnNames.add(objectField.getDBColumnName());
-
-			count++;
 		}
 
 		if (count == 0) {

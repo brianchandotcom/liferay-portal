@@ -88,6 +88,16 @@ export default function PageStructureSidebarToolbar({activeItemIds}) {
 			type: 'divider',
 		},
 		{
+			label: Liferay.Language.get('cut'),
+			onClick: () => {},
+			symbolLeft: 'cut',
+		},
+		{
+			label: Liferay.Language.get('copy'),
+			onClick: () => {},
+			symbolLeft: 'copy',
+		},
+		{
 			label: Liferay.Language.get('duplicate'),
 			onClick: () => {
 				if (itemsCanBeDuplicated()) {
@@ -100,6 +110,11 @@ export default function PageStructureSidebarToolbar({activeItemIds}) {
 				}
 			},
 			symbolLeft: 'copy',
+		},
+		{
+			label: Liferay.Language.get('paste'),
+			onClick: () => {},
+			symbolLeft: 'paste',
 		},
 		{
 			label: Liferay.Language.get('delete'),

@@ -14,6 +14,8 @@ import getRandomString from '../../utils/getRandomString';
 import {blogsPagesTest} from './fixtures/blogsPagesTest';
 import {blogsCategorizedFriendlyUrlSetup} from './utils/blogsCategorizedFriendlyUrlSetup';
 
+const PREFIX_FRIENDLY_URL = '/-/blogs/';
+
 const test = mergeTests(
 	apiHelpersTest,
 	isolatedSiteTest,
@@ -111,7 +113,7 @@ test(
 		await test.step('Check input addon categories preview', async () => {
 			await expect(
 				page.getByText(
-					`/-/blogs/${friendlyUrlCategories
+					`${PREFIX_FRIENDLY_URL}${friendlyUrlCategories
 						.map(({name}) => name)
 						.join('/')}/`
 				)
@@ -315,5 +317,77 @@ test(
 				.map((category) => category.name_i18n['ES-es'])
 				.join('/')}/${title}`
 		);
+	}
+);
+
+test(
+	'Reorder categories in the friendly URL',
+	{
+		tag: '@LPD-26659',
+	},
+	async ({
+		apiHelpers,
+		blogsEditBlogEntryPage,
+		displayPageTemplatesPage,
+		page,
+		pageEditorPage,
+		site,
+	}) => {
+		const vocabularyName = getRandomString();
+		const friendlyUrlCategories = [
+			{name: 'category-1'},
+			{name: 'category-2'},
+			{name: 'category-3'},
+		];
+
+		await blogsCategorizedFriendlyUrlSetup({
+			apiHelpers,
+			displayPageTemplatesPage,
+			friendlyUrlCategories,
+			page,
+			pageEditorPage,
+			site,
+			vocabularyName,
+		});
+
+		await blogsEditBlogEntryPage.goto(site.friendlyUrlPath);
+
+		const title = getRandomString();
+
+		await blogsEditBlogEntryPage.editBlogEntry({
+			content: getRandomString(),
+			friendlyUrl: {
+				categories: friendlyUrlCategories,
+				vocabularyName,
+			},
+			publish: false,
+			title,
+		});
+
+		await page.getByLabel('Current').selectOption('category-1');
+		await page.getByLabel('Reorder Down').click();
+		await page.getByLabel('Reorder Down').click();
+
+		const expectedCategoriesPartialURL = 'category-2/category-3/category-1';
+
+		await test.step('Check categories order in the input addon categories preview', async () => {
+			await expect(
+				page.getByText(
+					`${PREFIX_FRIENDLY_URL}${expectedCategoriesPartialURL}`
+				)
+			).toBeVisible();
+		});
+
+		await test.step('Check categories order in friendly URL', async () => {
+			await blogsEditBlogEntryPage.publishBlogEntry();
+
+			const response = await page.goto(
+				`/web${site.friendlyUrlPath}/b/${title}`
+			);
+
+			await expect(response.url()).toContain(
+				`/web${site.friendlyUrlPath}/b/${expectedCategoriesPartialURL}/${title}`
+			);
+		});
 	}
 );

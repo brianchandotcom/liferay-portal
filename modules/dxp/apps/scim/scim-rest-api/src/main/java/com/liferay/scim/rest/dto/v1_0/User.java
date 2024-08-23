@@ -1022,6 +1022,71 @@ public class User implements Serializable {
 	private Supplier<String> _titleSupplier;
 
 	@Schema(
+		description = "The components of the Liferay's User Schema Extension."
+	)
+	@Valid
+	public UserSchemaExtension
+		getUrn_ietf_params_scim_schemas_extension_liferay_2_0_User() {
+
+		if (_urn_ietf_params_scim_schemas_extension_liferay_2_0_UserSupplier !=
+				null) {
+
+			urn_ietf_params_scim_schemas_extension_liferay_2_0_User =
+				_urn_ietf_params_scim_schemas_extension_liferay_2_0_UserSupplier.
+					get();
+
+			_urn_ietf_params_scim_schemas_extension_liferay_2_0_UserSupplier =
+				null;
+		}
+
+		return urn_ietf_params_scim_schemas_extension_liferay_2_0_User;
+	}
+
+	public void setUrn_ietf_params_scim_schemas_extension_liferay_2_0_User(
+		UserSchemaExtension
+			urn_ietf_params_scim_schemas_extension_liferay_2_0_User) {
+
+		this.urn_ietf_params_scim_schemas_extension_liferay_2_0_User =
+			urn_ietf_params_scim_schemas_extension_liferay_2_0_User;
+
+		_urn_ietf_params_scim_schemas_extension_liferay_2_0_UserSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setUrn_ietf_params_scim_schemas_extension_liferay_2_0_User(
+		UnsafeSupplier<UserSchemaExtension, Exception>
+			urn_ietf_params_scim_schemas_extension_liferay_2_0_UserUnsafeSupplier) {
+
+		_urn_ietf_params_scim_schemas_extension_liferay_2_0_UserSupplier =
+			() -> {
+				try {
+					return urn_ietf_params_scim_schemas_extension_liferay_2_0_UserUnsafeSupplier.
+						get();
+				}
+				catch (RuntimeException runtimeException) {
+					throw runtimeException;
+				}
+				catch (Exception exception) {
+					throw new RuntimeException(exception);
+				}
+			};
+	}
+
+	@GraphQLField(
+		description = "The components of the Liferay's User Schema Extension."
+	)
+	@JsonProperty(
+		access = JsonProperty.Access.READ_WRITE,
+		value = "urn:ietf:params:scim:schemas:extension:liferay:2.0:User"
+	)
+	protected UserSchemaExtension
+		urn_ietf_params_scim_schemas_extension_liferay_2_0_User;
+
+	@JsonIgnore
+	private Supplier<UserSchemaExtension>
+		_urn_ietf_params_scim_schemas_extension_liferay_2_0_UserSupplier;
+
+	@Schema(
 		description = "A service provider's unique identifier for the user, typically used by the user to directly authenticate to the service provider."
 	)
 	public String getUserName() {
@@ -1585,6 +1650,23 @@ public class User implements Serializable {
 			sb.append(_escape(title));
 
 			sb.append("\"");
+		}
+
+		UserSchemaExtension
+			urn_ietf_params_scim_schemas_extension_liferay_2_0_User =
+				getUrn_ietf_params_scim_schemas_extension_liferay_2_0_User();
+
+		if (urn_ietf_params_scim_schemas_extension_liferay_2_0_User != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append(
+				"\"urn:ietf:params:scim:schemas:extension:liferay:2.0:User\": ");
+
+			sb.append(
+				String.valueOf(
+					urn_ietf_params_scim_schemas_extension_liferay_2_0_User));
 		}
 
 		String userName = getUserName();

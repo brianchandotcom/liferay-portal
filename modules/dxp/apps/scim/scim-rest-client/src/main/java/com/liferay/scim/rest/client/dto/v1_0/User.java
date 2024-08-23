@@ -486,6 +486,37 @@ public class User implements Cloneable, Serializable {
 
 	protected String title;
 
+	public UserSchemaExtension
+		getUrn_ietf_params_scim_schemas_extension_liferay_2_0_User() {
+
+		return urn_ietf_params_scim_schemas_extension_liferay_2_0_User;
+	}
+
+	public void setUrn_ietf_params_scim_schemas_extension_liferay_2_0_User(
+		UserSchemaExtension
+			urn_ietf_params_scim_schemas_extension_liferay_2_0_User) {
+
+		this.urn_ietf_params_scim_schemas_extension_liferay_2_0_User =
+			urn_ietf_params_scim_schemas_extension_liferay_2_0_User;
+	}
+
+	public void setUrn_ietf_params_scim_schemas_extension_liferay_2_0_User(
+		UnsafeSupplier<UserSchemaExtension, Exception>
+			urn_ietf_params_scim_schemas_extension_liferay_2_0_UserUnsafeSupplier) {
+
+		try {
+			urn_ietf_params_scim_schemas_extension_liferay_2_0_User =
+				urn_ietf_params_scim_schemas_extension_liferay_2_0_UserUnsafeSupplier.
+					get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected UserSchemaExtension
+		urn_ietf_params_scim_schemas_extension_liferay_2_0_User;
+
 	public String getUserName() {
 		return userName;
 	}

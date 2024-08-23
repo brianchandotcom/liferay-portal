@@ -484,6 +484,20 @@ public abstract class BaseUserResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"urn_ietf_params_scim_schemas_extension_liferay_2_0_User",
+					additionalAssertFieldName)) {
+
+				if (user.
+						getUrn_ietf_params_scim_schemas_extension_liferay_2_0_User() ==
+							null) {
+
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("userName", additionalAssertFieldName)) {
 				if (user.getUserName() == null) {
 					valid = false;
@@ -817,6 +831,22 @@ public abstract class BaseUserResourceTestCase {
 
 			if (Objects.equals("title", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(user1.getTitle(), user2.getTitle())) {
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"urn_ietf_params_scim_schemas_extension_liferay_2_0_User",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						user1.
+							getUrn_ietf_params_scim_schemas_extension_liferay_2_0_User(),
+						user2.
+							getUrn_ietf_params_scim_schemas_extension_liferay_2_0_User())) {
+
 					return false;
 				}
 
@@ -1479,6 +1509,13 @@ public abstract class BaseUserResourceTestCase {
 			}
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals(
+				"urn_ietf_params_scim_schemas_extension_liferay_2_0_User")) {
+
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("userName")) {

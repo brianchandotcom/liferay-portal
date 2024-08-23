@@ -278,6 +278,11 @@ public class CommerceAccountRoleHelperImpl
 					"VIEW_COMMERCE_ORDERS", "VIEW_OPEN_COMMERCE_ORDERS"
 				});
 		}
+		else if (name.equals(AccountRoleConstants.ROLE_NAME_ACCOUNT_SUPPLIER)) {
+			groupResourceActionIds.put(
+				AccountEntry.class.getName(),
+				new String[] {AccountActionKeys.VIEW_ACCOUNT_GROUPS});
+		}
 		else if (name.equals(AccountRoleConstants.ROLE_NAME_SUPPLIER)) {
 			for (String portletId : _SUPPLIER_CONTROL_PANEL_PORTLET_IDS) {
 				companyResourceActionIds.put(

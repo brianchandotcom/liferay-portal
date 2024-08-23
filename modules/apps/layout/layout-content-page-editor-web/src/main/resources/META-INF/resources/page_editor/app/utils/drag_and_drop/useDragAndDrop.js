@@ -29,7 +29,7 @@ import {useSelectorRef} from '../../contexts/StoreContext';
 import {isMultistepForm} from '../../utils/isMultistepForm';
 import {openFormConversionModal} from '../../utils/openFormConversionModal';
 import {formIsMapped} from '../formIsMapped';
-import {hasFormParent} from '../hasFormParent';
+import {getFormParent} from '../getFormParent';
 import {DRAG_DROP_TARGET_TYPE} from './constants/dragDropTargetType';
 import {TARGET_POSITIONS} from './constants/targetPositions';
 import defaultComputeHover from './defaultComputeHover';
@@ -376,7 +376,7 @@ function computeDrop({dispatch, layoutDataRef, onDragEnd, state}) {
 		}
 		else if (
 			dropItem.isWidget &&
-			hasFormParent(dropItem, layoutDataRef.current)
+			getFormParent(dropItem, layoutDataRef.current)
 		) {
 			message = Liferay.Language.get(
 				'widgets-cannot-be-placed-inside-a-form-container'

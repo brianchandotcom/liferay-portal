@@ -5,16 +5,16 @@
 
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 
-export function hasFormParent(item, layoutData) {
+export function getFormParent(item, layoutData) {
 	if (item.type === LAYOUT_DATA_ITEM_TYPES.form) {
-		return true;
+		return item;
 	}
 
 	const parent = layoutData?.items?.[item.parentId];
 
 	if (!parent) {
-		return false;
+		return null;
 	}
 
-	return hasFormParent(parent, layoutData);
+	return getFormParent(parent, layoutData);
 }

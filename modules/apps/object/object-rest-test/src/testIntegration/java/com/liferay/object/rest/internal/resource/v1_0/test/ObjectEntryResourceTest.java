@@ -74,6 +74,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -7558,64 +7559,6 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
-	public void testPostCustomObjectEntryWithPermissions() throws Exception {
-		Assert.assertEquals(
-			400,
-			HTTPTestUtil.invokeToHttpCode(
-				JSONUtil.put(
-					_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
-				).put(
-					"permissions",
-					JSONUtil.put(
-						"actionIds",
-						JSONUtil.putAll(
-							ActionKeys.DELETE, ActionKeys.PERMISSIONS,
-							ActionKeys.UPDATE, ActionKeys.VIEW)
-					).put(
-						"roleName", RandomTestUtil.randomString()
-					)
-				).toString(),
-				_objectDefinition1.getRESTContextPath(), Http.Method.POST));
-
-		_testPostCustomObjectEntryWithNestedPermissions(
-			JSONUtil.putAll(_getOwnerPermissionsJSONObject()),
-			JSONUtil.put(_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()));
-		_testPostCustomObjectEntryWithNestedPermissions(
-			JSONUtil.putAll(_getOwnerPermissionsJSONObject()),
-			JSONUtil.put(
-				_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
-			).put(
-				"permissions", JSONFactoryUtil.createJSONArray()
-			));
-
-		Role role1 = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
-		Role role2 = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
-
-		_testPostCustomObjectEntryWithNestedPermissions(
-			JSONUtil.putAll(
-				_getOwnerPermissionsJSONObject(),
-				_getPermissionsJSONObject(
-					new String[] {ActionKeys.DELETE, ActionKeys.PERMISSIONS},
-					role1),
-				_getPermissionsJSONObject(
-					new String[] {ActionKeys.UPDATE, ActionKeys.VIEW}, role2)),
-			JSONUtil.put(
-				_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
-			).put(
-				"permissions",
-				JSONUtil.putAll(
-					_getPermissionsJSONObject(
-						new String[] {ActionKeys.UPDATE, ActionKeys.VIEW},
-						role2),
-					_getPermissionsJSONObject(
-						new String[] {
-							ActionKeys.DELETE, ActionKeys.PERMISSIONS
-						},
-						role1))
-			));
-	}
-
-	@Test
 	public void testPostObjectEntryWithKeywordsAndTaxonomyCategoryIdsWhenCategorizationDisabled()
 		throws Exception {
 
@@ -7668,6 +7611,128 @@ public class ObjectEntryResourceTest {
 				_objectDefinitionLocalService.updateObjectDefinition(
 					_objectDefinition1);
 		}
+	}
+
+	@Test
+	public void testPostPutCustomObjectEntryWithPermissions() throws Exception {
+
+		// Invalid permissions
+
+		JSONArray invalidPermissionsJSONArray = JSONUtil.putAll(
+			_getPermissionsJSONObject(
+				new String[] {ActionKeys.DELETE},
+				RandomTestUtil.randomString()));
+
+		JSONObject jsonObject = _postCustomObjectEntryWithPermissions(
+			invalidPermissionsJSONArray);
+
+		Assert.assertEquals("NOT_FOUND", jsonObject.getString("status"));
+
+		jsonObject =
+			_putByExternalReferenceCodeCustomObjectEntryWithPermissions(
+				_postCustomObjectEntryWithPermissions(null),
+				invalidPermissionsJSONArray);
+
+		Assert.assertEquals("NOT_FOUND", jsonObject.getString("status"));
+
+		jsonObject = _putCustomObjectEntryWithPermissions(
+			_postCustomObjectEntryWithPermissions(null),
+			invalidPermissionsJSONArray);
+
+		Assert.assertEquals("NOT_FOUND", jsonObject.getString("status"));
+
+		// No permissions in the body request
+
+		JSONObject objectEntryJSONObject =
+			_postCustomObjectEntryWithPermissions(null);
+
+		_assertCustomObjectEntryWithPermissions(
+			JSONUtil.putAll(_getOwnerPermissionsJSONObject()),
+			objectEntryJSONObject);
+		_assertCustomObjectEntryWithPermissions(
+			JSONUtil.putAll(_getOwnerPermissionsJSONObject()),
+			_putByExternalReferenceCodeCustomObjectEntryWithPermissions(
+				objectEntryJSONObject, null));
+		_assertCustomObjectEntryWithPermissions(
+			JSONUtil.putAll(_getOwnerPermissionsJSONObject()),
+			_putCustomObjectEntryWithPermissions(objectEntryJSONObject, null));
+
+		// Permissions with different roles
+
+		Role role1 = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		_resourcePermissionLocalService.addResourcePermission(
+			TestPropsValues.getCompanyId(), _objectDefinition1.getClassName(),
+			ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(TestPropsValues.getCompanyId()), role1.getRoleId(),
+			ActionKeys.DELETE);
+
+		Role role2 = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		objectEntryJSONObject = _postCustomObjectEntryWithPermissions(
+			JSONUtil.putAll(
+				_getPermissionsJSONObject(
+					new String[] {ActionKeys.PERMISSIONS}, role1.getName()),
+				_getPermissionsJSONObject(
+					new String[] {ActionKeys.UPDATE, ActionKeys.VIEW},
+					role2.getName())));
+
+		_assertCustomObjectEntryWithPermissions(
+			JSONUtil.putAll(
+				_getPermissionsJSONObject(
+					new String[] {ActionKeys.DELETE, ActionKeys.PERMISSIONS},
+					role1.getName()),
+				_getPermissionsJSONObject(
+					new String[] {ActionKeys.UPDATE, ActionKeys.VIEW},
+					role2.getName())),
+			objectEntryJSONObject);
+
+		Role role3 = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		_assertCustomObjectEntryWithPermissions(
+			JSONUtil.putAll(
+				_getPermissionsJSONObject(
+					new String[] {ActionKeys.DELETE, ActionKeys.UPDATE},
+					role1.getName()),
+				_getPermissionsJSONObject(
+					new String[] {ActionKeys.DELETE}, role3.getName())),
+			_putByExternalReferenceCodeCustomObjectEntryWithPermissions(
+				objectEntryJSONObject,
+				JSONUtil.putAll(
+					_getPermissionsJSONObject(
+						new String[] {ActionKeys.UPDATE}, role1.getName()),
+					_getPermissionsJSONObject(
+						new String[] {ActionKeys.DELETE}, role3.getName()))));
+		_assertCustomObjectEntryWithPermissions(
+			JSONUtil.putAll(
+				_getPermissionsJSONObject(
+					new String[] {ActionKeys.DELETE}, role1.getName()),
+				_getPermissionsJSONObject(
+					new String[] {ActionKeys.VIEW}, role3.getName())),
+			_putCustomObjectEntryWithPermissions(
+				objectEntryJSONObject,
+				JSONUtil.putAll(
+					_getPermissionsJSONObject(
+						new String[] {ActionKeys.VIEW}, role3.getName()))));
+
+		// Permissions with empty list
+
+		JSONArray companyPermissionsJSONArray = JSONUtil.putAll(
+			_getPermissionsJSONObject(
+				new String[] {ActionKeys.DELETE}, role1.getName()));
+
+		_assertCustomObjectEntryWithPermissions(
+			companyPermissionsJSONArray,
+			_postCustomObjectEntryWithPermissions(
+				_jsonFactory.createJSONArray()));
+		_assertCustomObjectEntryWithPermissions(
+			companyPermissionsJSONArray,
+			_putByExternalReferenceCodeCustomObjectEntryWithPermissions(
+				objectEntryJSONObject, _jsonFactory.createJSONArray()));
+		_assertCustomObjectEntryWithPermissions(
+			companyPermissionsJSONArray,
+			_putCustomObjectEntryWithPermissions(
+				objectEntryJSONObject, _jsonFactory.createJSONArray()));
 	}
 
 	@Test
@@ -11578,6 +11643,17 @@ public class ObjectEntryResourceTest {
 		}
 	}
 
+	private void _assertCustomObjectEntryWithPermissions(
+			JSONArray expectedPermissionsJSONArray,
+			JSONObject objectEntryJSONObject)
+		throws Exception {
+
+		JSONAssert.assertEquals(
+			String.valueOf(expectedPermissionsJSONArray),
+			String.valueOf(objectEntryJSONObject.getJSONArray("permissions")),
+			JSONCompareMode.LENIENT);
+	}
+
 	private void _assertEquals(JSONArray nestedObjectEntriesJSONArray)
 		throws Exception {
 
@@ -12100,16 +12176,16 @@ public class ObjectEntryResourceTest {
 
 		return JSONUtil.putAll(
 			_getOwnerPermissionsJSONObject(),
-			_getPermissionsJSONObject(actionIds, role));
+			_getPermissionsJSONObject(actionIds, role.getName()));
 	}
 
 	private JSONObject _getPermissionsJSONObject(
-		String[] actionIds, Role role) {
+		String[] actionIds, String roleName) {
 
 		return JSONUtil.put(
 			"actionIds", actionIds
 		).put(
-			"roleName", role.getName()
+			"roleName", roleName
 		);
 	}
 
@@ -12146,6 +12222,21 @@ public class ObjectEntryResourceTest {
 		return Type.MANY_TO_MANY;
 	}
 
+	private JSONObject _postCustomObjectEntryWithPermissions(
+			JSONArray permissionsJSONArray)
+		throws Exception {
+
+		return HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
+			).put(
+				"permissions", permissionsJSONArray
+			).toString(),
+			_objectDefinition1.getRESTContextPath() +
+				"?nestedFields=permissions",
+			Http.Method.POST);
+	}
+
 	private void _postObjectEntryWithKeywords(String... keywords)
 		throws Exception {
 
@@ -12171,6 +12262,43 @@ public class ObjectEntryResourceTest {
 					taxonomyCategories, TaxonomyCategory::getId, String.class)
 			).toString(),
 			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
+	}
+
+	private JSONObject
+			_putByExternalReferenceCodeCustomObjectEntryWithPermissions(
+				JSONObject objectEntryJSONObject,
+				JSONArray permissionsJSONArray)
+		throws Exception {
+
+		return HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
+			).put(
+				"permissions", permissionsJSONArray
+			).toString(),
+			StringBundler.concat(
+				_objectDefinition1.getRESTContextPath(),
+				"/by-external-reference-code/",
+				objectEntryJSONObject.getLong("externalReferenceCode"),
+				"?nestedFields=permissions"),
+			Http.Method.PUT);
+	}
+
+	private JSONObject _putCustomObjectEntryWithPermissions(
+			JSONObject objectEntryJSONObject, JSONArray permissionsJSONArray)
+		throws Exception {
+
+		return HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
+			).put(
+				"permissions", permissionsJSONArray
+			).toString(),
+			StringBundler.concat(
+				_objectDefinition1.getRESTContextPath(), StringPool.SLASH,
+				objectEntryJSONObject.getLong("id"),
+				"?nestedFields=permissions"),
+			Http.Method.PUT);
 	}
 
 	private void _registerUnsafeSupplierInvocations(
@@ -13291,28 +13419,6 @@ public class ObjectEntryResourceTest {
 		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
 	}
 
-	private void _testPostCustomObjectEntryWithNestedPermissions(
-			JSONArray expectedPermissionsJSONArray,
-			JSONObject objectEntryJSONObject)
-		throws Exception {
-
-		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
-			objectEntryJSONObject.toString(),
-			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
-
-		jsonObject = HTTPTestUtil.invokeToJSONObject(
-			null,
-			StringBundler.concat(
-				_objectDefinition1.getRESTContextPath(), StringPool.SLASH,
-				jsonObject.getString("id"), "?nestedFields=permissions"),
-			Http.Method.GET);
-
-		JSONAssert.assertEquals(
-			String.valueOf(expectedPermissionsJSONArray),
-			String.valueOf(jsonObject.getJSONArray("permissions")),
-			JSONCompareMode.LENIENT);
-	}
-
 	private void _testPutCustomObjectEntryUnlinkNestedCustomObjectEntries(
 			boolean manyToOne)
 		throws Exception {
@@ -14162,6 +14268,9 @@ public class ObjectEntryResourceTest {
 
 	@Inject
 	private GroupLocalService _groupLocalService;
+
+	@Inject
+	private JSONFactory _jsonFactory;
 
 	private ListTypeDefinition _listTypeDefinition;
 

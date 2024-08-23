@@ -238,6 +238,30 @@ public class PortalWorkspaceGitRepository extends BaseWorkspaceGitRepository {
 				"test.company.default.locale", companyDefaultLocale);
 		}
 
+		Properties buildProperties;
+
+		try {
+			buildProperties = JenkinsResultsParserUtil.getBuildProperties();
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+
+		String latestBundleVersion = JenkinsResultsParserUtil.getProperty(
+			buildProperties, "portal.latest.bundle.version",
+			getUpstreamBranchName());
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(latestBundleVersion)) {
+			testProperties.put(
+				"test.released.release.bundle.version", latestBundleVersion);
+
+			testProperties.put(
+				"test.released.test.portal.bundle.zip.url",
+				JenkinsResultsParserUtil.getProperty(
+					buildProperties, "portal.bundle.tomcat",
+					latestBundleVersion));
+		}
+
 		return testProperties;
 	}
 

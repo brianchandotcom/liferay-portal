@@ -133,6 +133,7 @@ export default function PageStructureSidebarToolbar({activeItemIds}) {
 								Liferay.Language.get('actions-for-x'),
 								Liferay.Language.get('selected-items')
 							)}
+							className="text-secondary"
 							displayType="unstyled"
 							size="sm"
 							symbol="ellipsis-v"

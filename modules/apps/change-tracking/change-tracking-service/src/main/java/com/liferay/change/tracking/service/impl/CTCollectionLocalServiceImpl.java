@@ -613,6 +613,20 @@ public class CTCollectionLocalServiceImpl
 	}
 
 	@Override
+	public List<CTCollection> getCTCollections(
+		long companyId, int[] statuses, int start, int end,
+		OrderByComparator<CTCollection> orderByComparator) {
+
+		if (ArrayUtil.contains(statuses, WorkflowConstants.STATUS_ANY)) {
+			return ctCollectionPersistence.findByCompanyId(
+				companyId, start, end, orderByComparator);
+		}
+
+		return ctCollectionPersistence.findByC_S(
+			companyId, statuses, start, end, orderByComparator);
+	}
+
+	@Override
 	public List<CTMappingTableInfo> getCTMappingTableInfos(
 		long ctCollectionId) {
 

@@ -8,8 +8,6 @@ definition {
 
 		if (IsElementNotPresent(key_fragmentName = ${fragmentName}, locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENT_SECTION_NAME")) {
 			PageEditor.clickConfigurableField(fragmentName = ${fragmentName});
-
-			PageEditor.gotoTab(tabName = "Browser");
 		}
 
 		AssertElementPresent(

@@ -20,17 +20,36 @@ export default function FormStepHandler({formId}) {
 
 		// Hide current active step
 
-		for (const formStep of steps) {
+		let currentStep = 0;
+
+		for (const [index, formStep] of Array.from(steps).entries()) {
 			if (!formStep.classList.contains('d-none')) {
 				formStep.classList.add('d-none');
 
+				currentStep = index;
 				break;
 			}
 		}
 
 		// Show new active step
 
-		steps[step].classList.remove('d-none');
+		let index = currentStep;
+
+		if (step === 'next') {
+			if (currentStep <= steps.length - 2) {
+				index += 1;
+			}
+		}
+		else if (step === 'previous') {
+			if (currentStep !== 0) {
+				index -= 1;
+			}
+		}
+		else {
+			index = step;
+		}
+
+		steps[index].classList.remove('d-none');
 	};
 
 	Liferay.on('formFragment:changeStep', onStepChange);

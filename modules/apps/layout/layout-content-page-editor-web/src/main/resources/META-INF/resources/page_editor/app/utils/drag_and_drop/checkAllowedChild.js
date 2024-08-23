@@ -7,6 +7,7 @@ import {FRAGMENT_ENTRY_TYPES} from '../../config/constants/fragmentEntryTypes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import {formIsMapped} from '../formIsMapped';
 import {getFormParent} from '../getFormParent';
+import {isMultistepForm} from '../isMultistepForm';
 import {isUnmappedCollection} from '../isUnmappedCollection';
 
 const LAYOUT_DATA_CHECK_ALLOWED_CHILDREN = {
@@ -94,11 +95,19 @@ export default function checkAllowedChild(child, parent, layoutDataRef) {
 	}
 
 	if (child.type === LAYOUT_DATA_ITEM_TYPES.fragment) {
-		if (
-			child.fragmentEntryType === FRAGMENT_ENTRY_TYPES.input &&
-			!getFormParent(parent, layoutDataRef.current)
-		) {
-			return false;
+		if (child.fragmentEntryType === FRAGMENT_ENTRY_TYPES.input) {
+			const form = getFormParent(parent, layoutDataRef.current);
+
+			if (!form) {
+				return false;
+			}
+
+			if (
+				isMultistepForm(form) &&
+				parent.type !== LAYOUT_DATA_ITEM_TYPES.formStep
+			) {
+				return false;
+			}
 		}
 
 		if (parent.type === LAYOUT_DATA_ITEM_TYPES.form && child.isWidget) {

@@ -1711,6 +1711,10 @@ definition {
 				category = "Site Builder",
 				portlet = "Pages");
 
+			Alert.viewSuccessMessage();
+
+			WaitForElementNotPresent(locator1 = "Message#SUCCESS_DISMISSIBLE");
+
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "View",
 				pageName = "Home");
@@ -1725,6 +1729,10 @@ definition {
 				siteName = "Site Name",
 				siteTemplateName = "Site Template Name",
 				siteTemplateTab = "Custom Site Templates");
+
+			Alert.viewSuccessMessage();
+
+			WaitForElementNotPresent(locator1 = "Message#SUCCESS_DISMISSIBLE");
 		}
 
 		task ("Then: The javascript will be inherited from the site template") {

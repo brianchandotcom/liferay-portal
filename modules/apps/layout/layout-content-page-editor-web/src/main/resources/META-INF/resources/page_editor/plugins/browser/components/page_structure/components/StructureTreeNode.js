@@ -330,8 +330,6 @@ function StructureTreeNodeContent({
 				'drag-over-top':
 					isValidDrop && dropTargetPosition === TARGET_POSITIONS.TOP,
 				'dragged': isDraggingSource,
-				'font-weight-semi-bold':
-					node.activable && node.itemType !== ITEM_TYPES.editable,
 			})}
 			ref={targetRef}
 		>

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {expect, mergeTests} from '@playwright/test';
+import {Page, expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
@@ -949,6 +949,11 @@ test.describe('Slider Fragment', () => {
 });
 
 test.describe('Tabs Fragment', () => {
+	const getTab = (tabName: string, page: Page) =>
+		page.locator('.nav-item button', {
+			has: page.getByText(tabName),
+		});
+
 	test('Checks that the Tabs fragment works correctly and has the correct semantics in small resolution', async ({
 		apiHelpers,
 		page,
@@ -1021,6 +1026,80 @@ test.describe('Tabs Fragment', () => {
 		// Check accessibility
 
 		await checkAccessibility({page, selectors: ['.component-tabs']});
+	});
+
+	test('Check the Persist Selected Tab configuration', async ({
+		apiHelpers,
+		page,
+		pageEditorPage,
+		site,
+	}) => {
+
+		// Create page with a Tabs fragment
+
+		const tabsId = getRandomString();
+
+		const tabsDefinition = getFragmentDefinition({
+			fragmentConfig: {
+				numberOfTabs: 2,
+			},
+			fragmentFields: [
+				{
+					id: 'title1',
+					value: {},
+				},
+				{
+					id: 'title2',
+					value: {},
+				},
+			],
+			id: tabsId,
+			key: 'BASIC_COMPONENT-tabs',
+		});
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([tabsDefinition]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		const firstTab = getTab('Tab 1', page);
+
+		const secondTab = getTab('Tab 2', page);
+
+		// Check that the first tab is activated
+
+		await expect(firstTab).toHaveAttribute('aria-selected', 'true');
+		await expect(secondTab).toHaveAttribute('aria-selected', 'false');
+
+		// Select the second tab and refresh the page to check if the selection persists
+
+		await secondTab.press(ENTER_KEY);
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		await expect(firstTab).toHaveAttribute('aria-selected', 'false');
+		await expect(secondTab).toHaveAttribute('aria-selected', 'true');
+
+		// Change the configuration so that the selection does not persist
+
+		await pageEditorPage.selectFragment(tabsId);
+
+		await pageEditorPage.changeFragmentConfiguration({
+			fieldLabel: 'Persist Selected Tab',
+			fragmentId: tabsId,
+			tab: 'General',
+			value: false,
+		});
+
+		// Refresh the page and check that the selection does not persist
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		await expect(secondTab).toHaveAttribute('aria-selected', 'false');
+		await expect(firstTab).toHaveAttribute('aria-selected', 'true');
 	});
 });
 

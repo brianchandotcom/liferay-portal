@@ -34,6 +34,7 @@ import org.springframework.util.Assert;
  * @author Andy Clement
  * @author Juergen Hoeller
  * @author Giovanni Dall'Oglio Risso
+ * @author Sam Brannen
  * @since 3.2
  */
 public class OpDec extends Operator {
@@ -50,6 +51,10 @@ public class OpDec extends Operator {
 
 	@Override
 	public TypedValue getValueInternal(ExpressionState state) throws EvaluationException {
+		if (!state.getEvaluationContext().isAssignmentEnabled()) {
+			throw new SpelEvaluationException(getStartPosition(), SpelMessage.OPERAND_NOT_DECREMENTABLE, toStringAST());
+		}
+
 		SpelNodeImpl operand = getLeftOperand();
 
 		// The operand is going to be read and then assigned to, we don't want to evaluate it twice.
@@ -142,3 +147,4 @@ public class OpDec extends Operator {
 	}
 
 }
+/* @generated */

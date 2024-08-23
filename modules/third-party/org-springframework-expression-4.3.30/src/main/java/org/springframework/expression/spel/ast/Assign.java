@@ -19,6 +19,8 @@ package org.springframework.expression.spel.ast;
 import org.springframework.expression.EvaluationException;
 import org.springframework.expression.TypedValue;
 import org.springframework.expression.spel.ExpressionState;
+import org.springframework.expression.spel.SpelEvaluationException;
+import org.springframework.expression.spel.SpelMessage;
 
 /**
  * Represents assignment. An alternative to calling {@code setValue}
@@ -38,6 +40,9 @@ public class Assign extends SpelNodeImpl {
 
 	@Override
 	public TypedValue getValueInternal(ExpressionState state) throws EvaluationException {
+		if (!state.getEvaluationContext().isAssignmentEnabled()) {
+			throw new SpelEvaluationException(getStartPosition(), SpelMessage.NOT_ASSIGNABLE, toStringAST());
+		}
 		TypedValue newValue = this.children[1].getValueInternal(state);
 		getChild(0).setValue(state, newValue.getValue());
 		return newValue;
@@ -49,3 +54,4 @@ public class Assign extends SpelNodeImpl {
 	}
 
 }
+/* @generated */

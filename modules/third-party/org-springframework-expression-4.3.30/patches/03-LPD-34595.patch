@@ -1,0 +1,294 @@
+diff --git a/org/springframework/expression/EvaluationContext.java b/org/springframework/expression/EvaluationContext.java
+index 9fa598b6b331f..e91461205713c 100644
+--- a/org/springframework/expression/EvaluationContext.java
++++ b/org/springframework/expression/EvaluationContext.java
+@@ -95,4 +95,19 @@ public interface EvaluationContext {
+ 	 */
+ 	Object lookupVariable(String name);
+ 
++	/**
++	 * Determine if assignment is enabled within expressions evaluated by this evaluation
++	 * context.
++	 * <p>If this method returns {@code false}, the assignment ({@code =}), increment
++	 * ({@code ++}), and decrement ({@code --}) operators are disabled.
++	 * <p>By default, this method returns {@code true}. Concrete implementations may override
++	 * this <em>default</em> method to disable assignment.
++	 * @return {@code true} if assignment is enabled; {@code false} otherwise
++	 * @since 5.3.38
++	 */
++	default boolean isAssignmentEnabled() {
++		return true;
++	}
++
+ }
++/* @generated */
+\ No newline at end of file
+diff --git a/org/springframework/expression/spel/ast/Assign.java b/org/springframework/expression/spel/ast/Assign.java
+index 4822d4c129d20..59442cf0257bf 100644
+--- a/org/springframework/expression/spel/ast/Assign.java
++++ b/org/springframework/expression/spel/ast/Assign.java
+@@ -19,6 +19,8 @@ package org.springframework.expression.spel.ast;
+ import org.springframework.expression.EvaluationException;
+ import org.springframework.expression.TypedValue;
+ import org.springframework.expression.spel.ExpressionState;
++import org.springframework.expression.spel.SpelEvaluationException;
++import org.springframework.expression.spel.SpelMessage;
+ 
+ /**
+  * Represents assignment. An alternative to calling {@code setValue}
+@@ -38,6 +40,9 @@ public class Assign extends SpelNodeImpl {
+ 
+ 	@Override
+ 	public TypedValue getValueInternal(ExpressionState state) throws EvaluationException {
++		if (!state.getEvaluationContext().isAssignmentEnabled()) {
++			throw new SpelEvaluationException(getStartPosition(), SpelMessage.NOT_ASSIGNABLE, toStringAST());
++		}
+ 		TypedValue newValue = this.children[1].getValueInternal(state);
+ 		getChild(0).setValue(state, newValue.getValue());
+ 		return newValue;
+@@ -49,3 +54,4 @@ public class Assign extends SpelNodeImpl {
+ 	}
+ 
+ }
++/* @generated */
+\ No newline at end of file
+diff --git a/org/springframework/expression/spel/ast/OpDec.java b/org/springframework/expression/spel/ast/OpDec.java
+index 73478c166872b..46efb34968b6f 100644
+--- a/org/springframework/expression/spel/ast/OpDec.java
++++ b/org/springframework/expression/spel/ast/OpDec.java
+@@ -34,6 +34,7 @@ import org.springframework.util.Assert;
+  * @author Andy Clement
+  * @author Juergen Hoeller
+  * @author Giovanni Dall'Oglio Risso
++ * @author Sam Brannen
+  * @since 3.2
+  */
+ public class OpDec extends Operator {
+@@ -50,6 +51,10 @@ public class OpDec extends Operator {
+ 
+ 	@Override
+ 	public TypedValue getValueInternal(ExpressionState state) throws EvaluationException {
++		if (!state.getEvaluationContext().isAssignmentEnabled()) {
++			throw new SpelEvaluationException(getStartPosition(), SpelMessage.OPERAND_NOT_DECREMENTABLE, toStringAST());
++		}
++
+ 		SpelNodeImpl operand = getLeftOperand();
+ 
+ 		// The operand is going to be read and then assigned to, we don't want to evaluate it twice.
+@@ -142,3 +147,4 @@ public class OpDec extends Operator {
+ 	}
+ 
+ }
++/* @generated */
+\ No newline at end of file
+diff --git a/org/springframework/expression/spel/ast/OpInc.java b/org/springframework/expression/spel/ast/OpInc.java
+index 03acf8ccea748..b76c1760c8611 100644
+--- a/org/springframework/expression/spel/ast/OpInc.java
++++ b/org/springframework/expression/spel/ast/OpInc.java
+@@ -34,6 +34,7 @@ import org.springframework.util.Assert;
+  * @author Andy Clement
+  * @author Juergen Hoeller
+  * @author Giovanni Dall'Oglio Risso
++ * @author Sam Brannen
+  * @since 3.2
+  */
+ public class OpInc extends Operator {
+@@ -50,6 +51,10 @@ public class OpInc extends Operator {
+ 
+ 	@Override
+ 	public TypedValue getValueInternal(ExpressionState state) throws EvaluationException {
++		if (!state.getEvaluationContext().isAssignmentEnabled()) {
++			throw new SpelEvaluationException(getStartPosition(), SpelMessage.OPERAND_NOT_INCREMENTABLE, toStringAST());
++		}
++
+ 		SpelNodeImpl operand = getLeftOperand();
+ 		ValueRef valueRef = operand.getValueRef(state);
+ 
+@@ -104,7 +109,7 @@ public class OpInc extends Operator {
+ 			}
+ 		}
+ 
+-		// set the name value
++		// set the new value
+ 		try {
+ 			valueRef.setValue(newValue.getValue());
+ 		}
+@@ -137,3 +142,4 @@ public class OpInc extends Operator {
+ 	}
+ 
+ }
++/* @generated */
+\ No newline at end of file
+diff --git a/org/springframework/expression/spel/support/SimpleEvaluationContext.java b/org/springframework/expression/spel/support/SimpleEvaluationContext.java
+index 1bfd5246a1efd..0ec1e1e3353c6 100644
+--- a/org/springframework/expression/spel/support/SimpleEvaluationContext.java
++++ b/org/springframework/expression/spel/support/SimpleEvaluationContext.java
+@@ -50,25 +50,25 @@ import org.springframework.expression.spel.SpelMessage;
+  * SpEL language syntax, e.g. excluding references to Java types, constructors,
+  * and bean references.
+  *
+- * <p>When creating a {@code SimpleEvaluationContext} you need to choose the
+- * level of support that you need for property access in SpEL expressions:
++ * <p>When creating a {@code SimpleEvaluationContext} you need to choose the level of
++ * support that you need for data binding in SpEL expressions:
+  * <ul>
+- * <li>A custom {@code PropertyAccessor} (typically not reflection-based),
+- * potentially combined with a {@link DataBindingPropertyAccessor}</li>
+- * <li>Data binding properties for read-only access</li>
+- * <li>Data binding properties for read and write</li>
++ * <li>Data binding for read-only access</li>
++ * <li>Data binding for read and write access</li>
++ * <li>A custom {@code PropertyAccessor} (typically not reflection-based), potentially
++ * combined with a {@link DataBindingPropertyAccessor}</li>
+  * </ul>
+  *
+- * <p>Conveniently, {@link SimpleEvaluationContext#forReadOnlyDataBinding()}
+- * enables read access to properties via {@link DataBindingPropertyAccessor};
+- * same for {@link SimpleEvaluationContext#forReadWriteDataBinding()} when
+- * write access is needed as well. Alternatively, configure custom accessors
+- * via {@link SimpleEvaluationContext#forPropertyAccessors}, and potentially
+- * activate method resolution and/or a type converter through the builder.
++ * <p>Conveniently, {@link SimpleEvaluationContext#forReadOnlyDataBinding()} enables
++ * read-only access to properties via {@link DataBindingPropertyAccessor}. Similarly,
++ * {@link SimpleEvaluationContext#forReadWriteDataBinding()} enables read and write access
++ * to properties. Alternatively, configure custom accessors via
++ * {@link SimpleEvaluationContext#forPropertyAccessors} and potentially activate method
++ * resolution and/or a type converter through the builder.
+  *
+  * <p>Note that {@code SimpleEvaluationContext} is typically not configured
+  * with a default root object. Instead it is meant to be created once and
+- * used repeatedly through {@code getValue} calls on a pre-compiled
++ * used repeatedly through {@code getValue} calls on a predefined
+  * {@link org.springframework.expression.Expression} with both an
+  * {@code EvaluationContext} and a root object as arguments:
+  * {@link org.springframework.expression.Expression#getValue(EvaluationContext, Object)}.
+@@ -82,6 +82,7 @@ import org.springframework.expression.spel.SpelMessage;
+  * @see #forPropertyAccessors
+  * @see #forReadOnlyDataBinding()
+  * @see #forReadWriteDataBinding()
++ * @see #forPropertyAccessors
+  * @see StandardEvaluationContext
+  * @see StandardTypeConverter
+  * @see DataBindingPropertyAccessor
+@@ -110,14 +111,16 @@ public class SimpleEvaluationContext implements EvaluationContext {
+ 
+ 	private final Map<String, Object> variables = new HashMap<String, Object>();
+ 
++	private final boolean assignmentEnabled;
+ 
+ 	private SimpleEvaluationContext(List<PropertyAccessor> accessors, List<MethodResolver> resolvers,
+-			TypeConverter converter, TypedValue rootObject) {
++			TypeConverter converter, TypedValue rootObject, boolean assignmentEnabled) {
+ 
+ 		this.propertyAccessors = accessors;
+ 		this.methodResolvers = resolvers;
+ 		this.typeConverter = (converter != null ? converter : new StandardTypeConverter());
+ 		this.rootObject = (rootObject != null ? rootObject : TypedValue.NULL);
++		this.assignmentEnabled = assignmentEnabled;
+ 	}
+ 
+ 
+@@ -212,15 +215,33 @@ public class SimpleEvaluationContext implements EvaluationContext {
+ 		return this.variables.get(name);
+ 	}
+ 
++	/**
++	 * Determine if assignment is enabled within expressions evaluated by this evaluation
++	 * context.
++	 * <p>If this method returns {@code false}, the assignment ({@code =}), increment
++	 * ({@code ++}), and decrement ({@code --}) operators are disabled.
++	 * @return {@code true} if assignment is enabled; {@code false} otherwise
++	 * @since 5.3.38
++	 * @see #forPropertyAccessors(PropertyAccessor...)
++	 * @see #forReadOnlyDataBinding()
++	 * @see #forReadWriteDataBinding()
++	 */
++	@Override
++	public boolean isAssignmentEnabled() {
++		return this.assignmentEnabled;
++	}
+ 
+ 	/**
+ 	 * Create a {@code SimpleEvaluationContext} for the specified {@link PropertyAccessor}
+ 	 * delegates: typically a custom {@code PropertyAccessor} specific to a use case
+ 	 * (e.g. attribute resolution in a custom data structure), potentially combined with
+ 	 * a {@link DataBindingPropertyAccessor} if property dereferences are needed as well.
++	 * <p>Assignment is enabled within expressions evaluated by the context created via
++	 * this factory method.
+ 	 * @param accessors the accessor delegates to use
+ 	 * @see DataBindingPropertyAccessor#forReadOnlyAccess()
+ 	 * @see DataBindingPropertyAccessor#forReadWriteAccess()
++	 * @see #isAssignmentEnabled()
+ 	 */
+ 	public static Builder forPropertyAccessors(PropertyAccessor... accessors) {
+ 		for (PropertyAccessor accessor : accessors) {
+@@ -229,34 +250,40 @@ public class SimpleEvaluationContext implements EvaluationContext {
+ 						"ReflectivePropertyAccessor. Consider using DataBindingPropertyAccessor or a custom subclass.");
+ 			}
+ 		}
+-		return new Builder(accessors);
++		return new Builder(true, accessors);
+ 	}
+ 
+ 	/**
+ 	 * Create a {@code SimpleEvaluationContext} for read-only access to
+ 	 * public properties via {@link DataBindingPropertyAccessor}.
++	 * <p>Assignment is disabled within expressions evaluated by the context created via
++	 * this factory method.
+ 	 * @see DataBindingPropertyAccessor#forReadOnlyAccess()
+ 	 * @see #forPropertyAccessors
++	 * @see #isAssignmentEnabled()
+ 	 */
+ 	public static Builder forReadOnlyDataBinding() {
+-		return new Builder(DataBindingPropertyAccessor.forReadOnlyAccess());
++		return new Builder(false, DataBindingPropertyAccessor.forReadOnlyAccess());
+ 	}
+ 
+ 	/**
+ 	 * Create a {@code SimpleEvaluationContext} for read-write access to
+ 	 * public properties via {@link DataBindingPropertyAccessor}.
++	 * <p>Assignment is enabled within expressions evaluated by the context created via
++	 * this factory method.
+ 	 * @see DataBindingPropertyAccessor#forReadWriteAccess()
+ 	 * @see #forPropertyAccessors
++	 * @see #isAssignmentEnabled()
+ 	 */
+ 	public static Builder forReadWriteDataBinding() {
+-		return new Builder(DataBindingPropertyAccessor.forReadWriteAccess());
++		return new Builder(true, DataBindingPropertyAccessor.forReadWriteAccess());
+ 	}
+ 
+ 
+ 	/**
+ 	 * Builder for {@code SimpleEvaluationContext}.
+ 	 */
+-	public static class Builder {
++	public static final class Builder {
+ 
+ 		private final List<PropertyAccessor> accessors;
+ 
+@@ -266,7 +293,10 @@ public class SimpleEvaluationContext implements EvaluationContext {
+ 
+ 		private TypedValue rootObject;
+ 
+-		public Builder(PropertyAccessor... accessors) {
++		private final boolean assignmentEnabled;
++
++		private Builder(boolean assignmentEnabled, PropertyAccessor... accessors) {
++			this.assignmentEnabled = assignmentEnabled;
+ 			this.accessors = Arrays.asList(accessors);
+ 		}
+ 
+@@ -349,8 +379,10 @@ public class SimpleEvaluationContext implements EvaluationContext {
+ 		}
+ 
+ 		public SimpleEvaluationContext build() {
+-			return new SimpleEvaluationContext(this.accessors, this.resolvers, this.typeConverter, this.rootObject);
++			return new SimpleEvaluationContext(this.accessors, this.resolvers, this.typeConverter, this.rootObject,
++				this.assignmentEnabled);
+ 		}
+ 	}
+ 
+ }
++/* @generated */
+\ No newline at end of file

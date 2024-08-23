@@ -16,9 +16,9 @@ import {
 	FORM_ERROR_TYPES,
 	getFormErrorDescription,
 } from '../utils/getFormErrorDescription';
+import {getFormParent} from '../utils/getFormParent';
 import getFragmentEntryLinkIdsFromItemId from '../utils/getFragmentEntryLinkIdsFromItemId';
 import getPortletId from '../utils/getPortletId';
-import {hasFormParent} from '../utils/hasFormParent';
 import {isRequiredFormInput} from '../utils/isRequiredFormInput';
 import selectFirstControlsItem from '../utils/selectFirstControlsItem';
 import {clearPageContents} from '../utils/usePageContents';
@@ -188,7 +188,7 @@ async function isRequiredFormField(layoutData, itemId, fragmentEntryLinks) {
 	if (
 		!item ||
 		item.type !== LAYOUT_DATA_ITEM_TYPES.fragment ||
-		!hasFormParent(item, layoutData)
+		!getFormParent(item, layoutData)
 	) {
 		return false;
 	}

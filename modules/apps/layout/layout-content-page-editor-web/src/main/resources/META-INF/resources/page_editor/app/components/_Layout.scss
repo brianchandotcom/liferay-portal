@@ -113,6 +113,11 @@ html#{$cadmin-selector} {
 			}
 		}
 
+		&__form-step {
+			border: 1px solid $cadmin-primary-l2;
+			height: 100%;
+		}
+
 		&__row.align-bottom,
 		&__row.align-middle {
 			.page-editor__col .page-editor__col__border {

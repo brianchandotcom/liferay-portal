@@ -7,10 +7,6 @@
 		<to type="permanent-redirect">%{context-path}/html/common/referer_jsp.jsp?referer=${escape:/$1blog/-/blogs/rss$2}</to>
 	</rule>
 	<rule>
-		<from>^/(.{1,1000}/)?tunnel-web(.{0,1000})</from>
-		<to type="permanent-redirect">%{context-path}/html/common/referer_jsp.jsp?referer=${escape:/$1api$2}</to>
-	</rule>
-	<rule>
 		<from>^/api/webdav(.{0,2000})</from>
 		<to type="redirect">%{context-path}/webdav$1</to>
 	</rule>

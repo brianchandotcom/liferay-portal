@@ -7,6 +7,7 @@ import {FrameLocator, Locator, Page} from '@playwright/test';
 
 import {clickAndExpectToBeHidden} from '../../utils/clickAndExpectToBeHidden';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
+import fillAndClickOutside from '../../utils/fillAndClickOutside';
 import {PORTLET_URLS} from '../../utils/portletUrls';
 import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
 import {PageEditorPage} from '../layout-content-page-editor-web/PageEditorPage';
@@ -37,7 +38,9 @@ export class PagesAdminPage {
 			exact: true,
 			name: 'Page',
 		});
-		this.addPageIFrame = page.frameLocator('iframe[title="Add Page"]');
+		this.addPageIFrame = page.frameLocator(
+			'iframe[id="addLayoutDialog_iframe_"]'
+		);
 		this.addButton = this.addPageIFrame.getByRole('button', {name: 'Add'});
 		this.blankTypeButton = page.getByRole('button', {name: 'Blank'});
 		this.configurationSaveButton = page.getByRole('button', {
@@ -173,12 +176,11 @@ export class PagesAdminPage {
 		await loadingAnimation.waitFor();
 		await loadingAnimation.waitFor({state: 'hidden'});
 
-		const modalFrame = this.page.frameLocator('iframe[title="Add Page"]');
-		const inputName = modalFrame.getByPlaceholder('Add Page Name');
+		await fillAndClickOutside(this.page, this.pageTitleBox, name);
 
-		await inputName.fill(name);
-
-		await modalFrame.getByRole('button', {name: 'Add'}).click();
+		await this.addButton.waitFor({state: 'attached'});
+		await this.addButton.hover();
+		await this.addButton.click();
 
 		await waitForSuccessAlert(this.page, successMessage);
 	}

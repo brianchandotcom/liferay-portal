@@ -35,6 +35,7 @@ import {ObjectEntryApiHelper} from './ObjectEntryApiHelper';
 import {SCIMApiHelper} from './SCIMApiHelper';
 import {SearchExperiencesApiHelper} from './SearchExperiencesApiHelper';
 import {JSONWebServicesAnnouncementsEntryApiHelper} from './json-web-services/JSONWebServicesAnnouncementsEntryApiHelper';
+import {JSONWebServicesAssetListEntryApiHelper} from './json-web-services/JSONWebServicesAssetListEntryApiHelper';
 import {JSONWebServicesClassNameApiHelper} from './json-web-services/JSONWebServicesClassNameApiHelper';
 import {JSONWebServicesClientExtensionApiHelper} from './json-web-services/JSONWebServicesClientExtensionApiHelper';
 import {JSONWebServicesCompanyApiHelper} from './json-web-services/JSONWebServicesCompanyApiHelper';
@@ -90,6 +91,7 @@ export class ApiHelpers {
 	readonly headlessDelivery: HeadlessDeliveryApiHelper;
 	readonly headlessSite: HeadlessSiteApiHelper;
 	readonly jsonWebServicesAnnouncementsEntryApiHelper: JSONWebServicesAnnouncementsEntryApiHelper;
+	readonly jsonWebServicesAssetListEntry: JSONWebServicesAssetListEntryApiHelper;
 	readonly jsonWebServicesClassName: JSONWebServicesClassNameApiHelper;
 	readonly jsonWebServicesClientExtension: JSONWebServicesClientExtensionApiHelper;
 	readonly jsonWebServicesCompany: JSONWebServicesCompanyApiHelper;
@@ -155,6 +157,8 @@ export class ApiHelpers {
 		this.headlessSite = new HeadlessSiteApiHelper(this);
 		this.jsonWebServicesAnnouncementsEntryApiHelper =
 			new JSONWebServicesAnnouncementsEntryApiHelper(this);
+		this.jsonWebServicesAssetListEntry =
+			new JSONWebServicesAssetListEntryApiHelper(this);
 		this.jsonWebServicesClassName = new JSONWebServicesClassNameApiHelper(
 			this
 		);

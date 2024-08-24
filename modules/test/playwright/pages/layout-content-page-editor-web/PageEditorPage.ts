@@ -721,6 +721,20 @@ export class PageEditorPage {
 		await this.page.getByText('Select Experience').waitFor();
 	}
 
+	async openMappingSelector() {
+		await this.selectItemMappingButton.click();
+
+		const hasRecentItems = await this.page
+			.getByRole('menuitem', {name: 'Select Item...'})
+			.isVisible();
+
+		if (hasRecentItems) {
+			await this.page
+				.getByRole('menuitem', {name: 'Select Item...'})
+				.click();
+		}
+	}
+
 	async openSpacingSelector(fragmentId: string, spacingType: SpacingType) {
 		await this.selectFragment(fragmentId);
 		await this.goToConfigurationTab('Styles');

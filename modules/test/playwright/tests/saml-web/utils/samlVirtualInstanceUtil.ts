@@ -35,7 +35,7 @@ export async function createCustomField(
 
 export async function createIdentityProviderVirtualInstance(
 	browser,
-	page,
+	page: Page,
 	name = DEFAULT_IDP_NAME,
 	entityId = name
 ): Promise<Page> {
@@ -85,7 +85,7 @@ async function createSamlVirtualInstance(
 	browser,
 	entityId: string,
 	name: string,
-	page,
+	page: Page,
 	samlRole: string
 ): Promise<Page> {
 	const virtualInstancesPage = new VirtualInstancesPage(page);
@@ -132,7 +132,7 @@ export async function createServiceProviderVirtualInstance(
 	);
 }
 
-export async function deleteVirtualInstance(name: string, page) {
+export async function deleteVirtualInstance(name: string, page: Page) {
 	const virtualInstancesPage = new VirtualInstancesPage(page);
 
 	await virtualInstancesPage.deleteVirtualInstance(name);
@@ -189,7 +189,7 @@ export async function resetSamlConfiguration(page: Page) {
 	}
 }
 
-export async function resetSamlKeystoreManagerTarget(page) {
+export async function resetSamlKeystoreManagerTarget(page: Page) {
 	const systemSettingsPage = new SystemSettingsPage(page);
 
 	await systemSettingsPage.goToSystemSetting(
@@ -214,7 +214,7 @@ export async function resetSamlKeystoreManagerTarget(page) {
 
 export async function setupSamlInstances(
 	browser,
-	page,
+	page: Page,
 	idpInstanceName = DEFAULT_IDP_NAME,
 	idpEntityId = idpInstanceName,
 	spInstanceName = DEFAULT_SP_NAME,
@@ -278,7 +278,10 @@ export async function updateRuntimeMetadataRefreshInterval(
 	await waitForSuccessAlert(systemSettingsPage.page);
 }
 
-export async function updateSamlKeystoreManagerTarget(page, target: string) {
+export async function updateSamlKeystoreManagerTarget(
+	page: Page,
+	target: string
+) {
 	const systemSettingsPage = new SystemSettingsPage(page);
 
 	await systemSettingsPage.goToSystemSetting(

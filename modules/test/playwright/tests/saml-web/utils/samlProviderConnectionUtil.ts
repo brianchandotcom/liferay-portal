@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {Page} from '@playwright/test';
+
 import {
 	DEFAULT_IDP_CONNECTION_VALUES,
 	DEFAULT_SP_CONNECTION_VALUES,
@@ -29,7 +31,10 @@ export async function addIdentityProviderConnection(
 	);
 }
 
-async function addServiceProviderConnection(page, spConnection: TSpConnection) {
+async function addServiceProviderConnection(
+	page: Page,
+	spConnection: TSpConnection
+) {
 	const serviceProviderConnectionsPage = new ServiceProviderConnectionsPage(
 		page
 	);

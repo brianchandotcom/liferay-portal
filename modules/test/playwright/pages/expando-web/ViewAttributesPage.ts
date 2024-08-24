@@ -67,5 +67,6 @@ export class ViewAttributesPage {
 		});
 
 		await expect(await this.successMessage).toBeVisible();
+		await this.page.getByLabel('Close').click();
 	}
 }

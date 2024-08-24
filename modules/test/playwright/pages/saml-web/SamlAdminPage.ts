@@ -50,6 +50,8 @@ export class SamlAdminPage {
 			await this.saveButton.click();
 
 			await expect(await this.successMessage).toBeVisible();
+
+			await this.page.getByLabel('Close').click();
 		}
 		else if (enabled === undefined) {
 			enabled = false;
@@ -73,6 +75,8 @@ export class SamlAdminPage {
 			await this.saveButton.click();
 
 			await expect(await this.successMessage).toBeVisible();
+
+			await this.page.getByLabel('Close').click();
 		}
 
 		if (enabled) {
@@ -88,6 +92,8 @@ export class SamlAdminPage {
 			await this.saveButton.click();
 
 			await expect(await this.successMessage).toBeVisible();
+
+			await this.page.getByLabel('Close').click();
 		}
 	}
 

@@ -85,6 +85,7 @@ export class VirtualInstancesPage {
 			await expect(await this.successMessage).toBeVisible({
 				timeout: 180 * 1000,
 			});
+			await this.page.getByLabel('Close').click();
 		}
 	}
 

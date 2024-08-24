@@ -63,6 +63,7 @@ export class EditVirtualInstancePage {
 
 		await this.saveButton.click();
 		await expect(await this.successMessage).toBeVisible();
+		await this.page.getByLabel('Close').click();
 	}
 
 	async goto(webId: string) {

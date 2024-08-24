@@ -153,6 +153,36 @@ export class PagesAdminPage {
 			.waitFor({state: 'visible'});
 	}
 
+	async addPage({
+		name,
+		successMessage,
+		template,
+	}: {
+		name: string;
+		successMessage: string;
+		template?: string;
+	}) {
+		await this.page
+			.locator('.card-page-item')
+			.filter({hasText: template || 'Blank'})
+			.click();
+
+		const loadingAnimation = this.page.locator(
+			'.modal-body-iframe .loading-animation'
+		);
+		await loadingAnimation.waitFor();
+		await loadingAnimation.waitFor({state: 'hidden'});
+
+		const modalFrame = this.page.frameLocator('iframe[title="Add Page"]');
+		const inputName = modalFrame.getByPlaceholder('Add Page Name');
+
+		await inputName.fill(name);
+
+		await modalFrame.getByRole('button', {name: 'Add'}).click();
+
+		await waitForSuccessAlert(this.page, successMessage);
+	}
+
 	async addWidgetPage(pageName: string) {
 		await this.widgetPageButton.waitFor({state: 'visible'});
 		await this.widgetPageButton.click();
@@ -229,28 +259,11 @@ export class PagesAdminPage {
 
 		// Select template and fill name
 
-		await this.page
-			.locator('.card-page-item')
-			.filter({hasText: template || 'Blank'})
-			.click();
-
-		const loadingAnimation = this.page.locator(
-			'.modal-body-iframe .loading-animation'
-		);
-		await loadingAnimation.waitFor();
-		await loadingAnimation.waitFor({state: 'hidden'});
-
-		const modalFrame = this.page.frameLocator('iframe[title="Add Page"]');
-		const inputName = modalFrame.getByPlaceholder('Add Page Name');
-
-		await inputName.fill(name);
-
-		await modalFrame.getByRole('button', {name: 'Add'}).click();
-
-		await waitForSuccessAlert(
-			this.page,
-			'Success:The page was created successfully.'
-		);
+		await this.addPage({
+			name,
+			successMessage: 'Success:The page was created successfully.',
+			template,
+		});
 
 		// Publish is draft param is false
 

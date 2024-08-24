@@ -5,11 +5,9 @@
 
 import {FrameLocator, Locator, Page} from '@playwright/test';
 
-import {liferayConfig} from '../../liferay.config';
 import {clickAndExpectToBeHidden} from '../../utils/clickAndExpectToBeHidden';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {PORTLET_URLS} from '../../utils/portletUrls';
-import {reloadUntilVisible} from '../../utils/reloadUntilVisible';
 import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
 import {PageEditorPage} from '../layout-content-page-editor-web/PageEditorPage';
 import {UIElementsPage} from '../uielements/UIElementsPage';
@@ -20,10 +18,8 @@ export class PagesAdminPage {
 	readonly addButton: Locator;
 	readonly addPageButton: Locator;
 	readonly addPageIFrame: FrameLocator;
-	readonly addTemplatePageButton: Locator;
 	readonly blankTypeButton: Locator;
 	readonly configurationSaveButton: Locator;
-	readonly homePageLink: Locator;
 	readonly javaScriptClientExtensionsTab: Locator;
 	readonly newButton: Locator;
 	readonly oneColumnButton: Locator;
@@ -43,15 +39,11 @@ export class PagesAdminPage {
 		});
 		this.addPageIFrame = page.frameLocator('iframe[title="Add Page"]');
 		this.addButton = this.addPageIFrame.getByRole('button', {name: 'Add'});
-		this.addTemplatePageButton = page.getByRole('menuitem', {
-			name: 'Add Site Template Page',
-		});
 		this.blankTypeButton = page.getByRole('button', {name: 'Blank'});
 		this.configurationSaveButton = page.getByRole('button', {
 			exact: true,
 			name: 'Save',
 		});
-		this.homePageLink = page.getByLabel('Home', {exact: true});
 		this.javaScriptClientExtensionsTab = page.getByRole('tab', {
 			name: 'JavaScript',
 		});
@@ -179,47 +171,6 @@ export class PagesAdminPage {
 		await this.page
 			.getByText('Success:The page was updated successfully.')
 			.waitFor({state: 'visible'});
-	}
-
-	async checkIfWebContentAddedToHome(
-		siteName: string,
-		webContentBody: string
-	) {
-		await this.page.goto(
-			liferayConfig.environment.baseUrl + `/group/${siteName}`
-		);
-		const myLocator = this.page.getByRole('link', {
-			name: `Go to ${siteName}`,
-		});
-		await reloadUntilVisible({
-			myLocator,
-			page: this.page,
-		});
-		await this.page
-			.getByText(webContentBody)
-			.waitFor({state: 'visible', timeout: 3000});
-		await this.page.getByText(webContentBody).isVisible();
-	}
-
-	async checkIfWebContentAdded(
-		siteName: string,
-		webContentName: string,
-		webContentBody: string
-	) {
-		await this.page.goto(
-			liferayConfig.environment.baseUrl + `/group/${siteName}`
-		);
-		const myLocator = this.page.getByText(webContentName);
-		await reloadUntilVisible({
-			myLocator,
-			page: this.page,
-		});
-		await this.page
-			.getByRole('menuitem', {name: webContentName})
-			.waitFor({state: 'visible'});
-		await this.page.getByRole('menuitem', {name: webContentName}).click();
-		await this.page.getByText(webContentBody).waitFor({state: 'visible'});
-		await this.page.getByText(webContentBody).isVisible();
 	}
 
 	async clickOnJavaScriptClientExtensionsTab() {

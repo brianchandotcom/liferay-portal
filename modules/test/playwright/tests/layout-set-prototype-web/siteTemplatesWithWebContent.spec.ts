@@ -134,7 +134,7 @@ test('Can switch template with web content on widget page.', async ({
 
 	await applicationsMenuPage.goToSites();
 
-	await pagesAdminPage.checkIfWebContentAdded(
+	await layoutSetPrototypePage.checkIfWebContentAdded(
 		siteName,
 		widgetTemplateName2,
 		webContentText2
@@ -218,7 +218,7 @@ test('Can switch template with web content on content page.', async ({
 		siteName
 	);
 	await applicationsMenuPage.goToSites();
-	await pagesAdminPage.checkIfWebContentAdded(
+	await layoutSetPrototypePage.checkIfWebContentAdded(
 		siteName,
 		contentTemplateName1,
 		webContentText1
@@ -234,7 +234,7 @@ test('Can switch template with web content on content page.', async ({
     `;
 	await serverAdministrationPage.executeScript(script);
 
-	await pagesAdminPage.checkIfWebContentAdded(
+	await layoutSetPrototypePage.checkIfWebContentAdded(
 		siteName,
 		contentTemplateName2,
 		webContentText2
@@ -257,7 +257,6 @@ test('Can switch template with web content on home page.', async ({
 	layoutSetPrototypePage,
 	page,
 	pageEditorPage,
-	pagesAdminPage,
 	productMenuPage,
 	serverAdministrationPage,
 	sitesPage,
@@ -277,7 +276,6 @@ test('Can switch template with web content on home page.', async ({
 		layoutSetPrototypePage,
 		page,
 		pageEditorPage,
-		pagesAdminPage,
 		productMenuPage,
 		templateName: contentTemplateName1,
 		text: `${webContentText1} `,
@@ -292,7 +290,6 @@ test('Can switch template with web content on home page.', async ({
 		layoutSetPrototypePage,
 		page,
 		pageEditorPage,
-		pagesAdminPage,
 		productMenuPage,
 		templateName: contentTemplateName2,
 		text: `${webContentText2} `,
@@ -318,7 +315,7 @@ test('Can switch template with web content on home page.', async ({
 		siteName
 	);
 	await applicationsMenuPage.goToSites();
-	await pagesAdminPage.checkIfWebContentAddedToHome(
+	await layoutSetPrototypePage.checkIfWebContentAddedToHome(
 		siteName,
 		webContentText1
 	);
@@ -333,7 +330,7 @@ test('Can switch template with web content on home page.', async ({
     `;
 	await serverAdministrationPage.executeScript(script);
 
-	await pagesAdminPage.checkIfWebContentAddedToHome(
+	await layoutSetPrototypePage.checkIfWebContentAddedToHome(
 		siteName,
 		webContentText1
 	);
@@ -432,11 +429,13 @@ async function createSiteTemplateWithWebContentOnWidgetPage({
 
 	await productMenuPage.goToPages();
 	await uiElementsPage.clickNewButton();
-	if (!pagesAdminPage.addTemplatePageButton.isVisible) {
+	if (!layoutSetPrototypePage.addTemplatePageButton.isVisible) {
 		await uiElementsPage.clickNewButton();
-		await pagesAdminPage.addTemplatePageButton.waitFor({state: 'visible'});
+		await layoutSetPrototypePage.addTemplatePageButton.waitFor({
+			state: 'visible',
+		});
 	}
-	await pagesAdminPage.addTemplatePageButton.click();
+	await layoutSetPrototypePage.addTemplatePageButton.click();
 	await pagesAdminPage.addWidgetPage(templateName);
 
 	await productMenuPage.clickSpecificPage(templateName);
@@ -492,8 +491,10 @@ async function createSiteTemplateWithWebContentOnContentPage({
 
 	await productMenuPage.goToPages();
 	await uiElementsPage.clickNewButton();
-	await pagesAdminPage.addTemplatePageButton.waitFor({state: 'visible'});
-	await pagesAdminPage.addTemplatePageButton.click();
+	await layoutSetPrototypePage.addTemplatePageButton.waitFor({
+		state: 'visible',
+	});
+	await layoutSetPrototypePage.addTemplatePageButton.click();
 	await pagesAdminPage.addContentPage(templateName);
 
 	await pageEditorPage.addWidget('Content Management', 'Web Content Display');
@@ -507,7 +508,6 @@ async function createSiteTemplateWithWebContentOnHomePage({
 	layoutSetPrototypePage,
 	page,
 	pageEditorPage,
-	pagesAdminPage,
 	productMenuPage,
 	templateName,
 	text,
@@ -520,7 +520,6 @@ async function createSiteTemplateWithWebContentOnHomePage({
 	layoutSetPrototypePage: LayoutSetPrototypePage;
 	page: Page;
 	pageEditorPage: PageEditorPage;
-	pagesAdminPage: PagesAdminPage;
 	productMenuPage: ProductMenuPage;
 	templateName: string;
 	text: string;
@@ -543,7 +542,7 @@ async function createSiteTemplateWithWebContentOnHomePage({
 	await journalPage.publishArticle();
 
 	await productMenuPage.goToPages();
-	await pagesAdminPage.homePageLink.click();
+	await layoutSetPrototypePage.homePageLink.click();
 	await pageEditorPage.addWidget('Content Management', 'Web Content Display');
 	await webContentDisplayPage.addWebContentWithDisplay();
 	await uiElementsPage.publishButton.click();

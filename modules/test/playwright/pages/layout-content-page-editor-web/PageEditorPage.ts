@@ -843,10 +843,14 @@ export class PageEditorPage {
 
 			const iframe = this.page.frameLocator('iframe[title="Select"]');
 
-			await clickAndExpectToBeVisible({
-				target: iframe.locator('.sheet-title').getByText(entity),
-				trigger: iframe.getByRole('menuitem', {name: entity}),
-			});
+			const hasMenuBar = await iframe.getByRole('menubar').isVisible();
+
+			if (hasMenuBar) {
+				await clickAndExpectToBeVisible({
+					target: iframe.locator('.sheet-title').getByText(entity),
+					trigger: iframe.getByRole('menuitem', {name: entity}),
+				});
+			}
 
 			if (folder) {
 				await clickAndExpectToBeVisible({
@@ -857,12 +861,35 @@ export class PageEditorPage {
 				});
 			}
 
-			await clickAndExpectToBeHidden({
-				target: iframe.locator('.sheet-title').getByText(entity),
-				trigger: entryLocator
-					? entryLocator
-					: iframe.getByRole('paragraph').filter({hasText: entry}),
-			});
+			if (hasMenuBar) {
+				await clickAndExpectToBeHidden({
+					target: iframe.locator('.sheet-title').getByText(entity),
+					trigger: entryLocator
+						? entryLocator
+						: iframe
+								.getByRole('paragraph')
+								.filter({hasText: entry}),
+				});
+			}
+			else {
+				if (entryLocator) {
+					await expect(entryLocator).toBeVisible();
+				}
+				else {
+					await expect(
+						iframe.getByRole('paragraph').filter({hasText: entry})
+					).toBeVisible();
+				}
+
+				await clickAndExpectToBeHidden({
+					target: iframe.locator('.sheet-title .lfr-item-viewer'),
+					trigger: entryLocator
+						? entryLocator
+						: iframe
+								.getByRole('paragraph')
+								.filter({hasText: entry}),
+				});
+			}
 		}
 
 		await expect(

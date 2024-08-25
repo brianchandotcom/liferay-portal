@@ -97,6 +97,23 @@ public class WelcomeSiteInitializerTest {
 	}
 
 	@Test
+	@TestInfo("LPS-177408")
+	public void test() throws Exception {
+		SiteInitializer siteInitializer =
+			_siteInitializerRegistry.getSiteInitializer(
+				"com.liferay.site.initializer.welcome");
+
+		siteInitializer.initialize(_group.getGroupId());
+
+		Assert.assertNotNull(
+			_layoutUtilityPageEntryLocalService.
+				fetchDefaultLayoutUtilityPageEntry(
+					_group.getGroupId(),
+					LayoutUtilityPageEntryConstants.
+						TYPE_SC_INTERNAL_SERVER_ERROR));
+	}
+
+	@Test
 	@TestInfo("LPS-188909")
 	public void testCannotViewPortalVersionInfoOnHomePage() throws Exception {
 		SiteInitializer siteInitializer =

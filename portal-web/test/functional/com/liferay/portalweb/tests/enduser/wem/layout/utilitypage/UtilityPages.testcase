@@ -685,31 +685,4 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-177408. The page designer should see the default 500 error utility page in new site based on Welcome"
-	@priority = 4
-	test ViewDefault500ErrorUtilityPageInWelcomeSite {
-		var siteName = StringUtil.randomString(8);
-
-		var siteURLKey = StringUtil.toLowerCase(${siteName});
-
-		task ("Given a page designer has a site based on Welcome") {
-			HeadlessSite.addSite(
-				siteName = ${siteName},
-				templateName = "Welcome",
-				templateType = "Site Initializer");
-		}
-
-		task ("When the page designers navigates to the Utility Pages tab") {
-			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
-
-			Navigator.gotoNavTab(navTab = "Utility Pages");
-		}
-
-		task ("Then the page designer can view the default 500 error utility page") {
-			LexiconCard.viewCardLabel(
-				card = 500,
-				cardLabel = "Provided By Liferay");
-		}
-	}
-
 }

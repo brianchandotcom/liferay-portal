@@ -368,8 +368,9 @@ public class PortletLocalServiceUtil {
 		return getService().getPortletByStrutsPath(companyId, strutsPath);
 	}
 
-	public static com.liferay.portal.kernel.model.PortletFriendlyURLMapperMatch
-		getPortletFriendlyURLMapperMatch(String url) {
+	public static
+		com.liferay.portal.kernel.portlet.PortletFriendlyURLMapperMatch
+			getPortletFriendlyURLMapperMatch(String url) {
 
 		return getService().getPortletFriendlyURLMapperMatch(url);
 	}

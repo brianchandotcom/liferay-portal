@@ -440,7 +440,7 @@ public class PortletLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.PortletFriendlyURLMapperMatch
+	public com.liferay.portal.kernel.portlet.PortletFriendlyURLMapperMatch
 		getPortletFriendlyURLMapperMatch(String url) {
 
 		return _portletLocalService.getPortletFriendlyURLMapperMatch(url);

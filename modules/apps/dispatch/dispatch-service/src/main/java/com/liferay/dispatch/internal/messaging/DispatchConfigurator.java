@@ -40,11 +40,6 @@ public class DispatchConfigurator {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		DestinationConfiguration destinationConfiguration =
-			new DestinationConfiguration(
-				DestinationConfiguration.DESTINATION_TYPE_PARALLEL,
-				DispatchConstants.EXECUTOR_DESTINATION_NAME);
-
 		if (_clusterMasterExecutor.isEnabled()) {
 			_dispatchClusterMasterTokenTransitionListener =
 				new DispatchClusterMasterTokenTransitionListener();
@@ -52,6 +47,11 @@ public class DispatchConfigurator {
 			_clusterMasterExecutor.addClusterMasterTokenTransitionListener(
 				_dispatchClusterMasterTokenTransitionListener);
 		}
+
+		DestinationConfiguration destinationConfiguration =
+			new DestinationConfiguration(
+				DestinationConfiguration.DESTINATION_TYPE_PARALLEL,
+				DispatchConstants.EXECUTOR_DESTINATION_NAME);
 
 		destinationConfiguration.setMaximumQueueSize(_MAXIMUM_QUEUE_SIZE);
 

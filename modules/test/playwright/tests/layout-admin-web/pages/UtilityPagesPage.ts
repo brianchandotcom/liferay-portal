@@ -7,7 +7,6 @@ import {Locator, Page, expect} from '@playwright/test';
 
 import {PageEditorPage} from '../../../pages/layout-content-page-editor-web/PageEditorPage';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
-import fillAndClickOutside from '../../../utils/fillAndClickOutside';
 import {PORTLET_URLS} from '../../../utils/portletUrls';
 import {waitForSuccessAlert} from '../../../utils/waitForSuccessAlert';
 
@@ -52,15 +51,12 @@ export class UtilityPagesPage {
 		// Select master and fill name
 
 		await this.page
-			.locator('.card-page-item')
-			.filter({hasText: 'Blank'})
+			.locator('.card-page-item .lfr-tooltip-scope', {
+				has: this.page.getByText('Blank'),
+			})
 			.click();
 
-		await fillAndClickOutside(
-			this.page,
-			this.page.getByPlaceholder('Name'),
-			name
-		);
+		await this.page.getByLabel('Name', {exact: true}).fill(name);
 
 		await this.page.getByRole('button', {name: 'Save'}).click();
 

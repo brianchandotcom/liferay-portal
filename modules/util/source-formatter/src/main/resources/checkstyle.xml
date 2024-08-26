@@ -284,7 +284,7 @@
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.ClassNameIdCheck">
 			<property name="category" value="Bug Prevention" />
-			<property name="description" value="Avoid caching non-company scoped classNameIds." />
+			<property name="description" value="Avoid caching noncompany scoped class name IDs." />
 			<property name="enabled" value="false" />
 			<message key="variable.name.avoid" value="Avoid using variable name ''{0}'', see LPD-29718" />
 		</module>

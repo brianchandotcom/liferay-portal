@@ -5,6 +5,7 @@
 
 package com.liferay.content.dashboard.document.library.internal.search.spi.model.index.contributor;
 
+import com.liferay.content.dashboard.document.library.internal.constants.ContentDashboardConstants;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileVersion;
@@ -99,22 +100,40 @@ public class DLFileEntryModelDocumentContributor
 					continue;
 				}
 
-				String aspectRatio = "square";
+				String aspectRatio =
+					ContentDashboardConstants.AspectRatio.SQUARE.toString();
 
 				if (tiffImageLength > tiffImageWidth) {
-					aspectRatio = "tall";
+					aspectRatio =
+						ContentDashboardConstants.AspectRatio.TALL.toString();
 				}
 				else if (tiffImageLength < tiffImageWidth) {
-					aspectRatio = "wide";
+					aspectRatio =
+						ContentDashboardConstants.AspectRatio.WIDE.toString();
 				}
 
-				String resolution = "large";
+				String resolution =
+					ContentDashboardConstants.Resolution.LARGE.toString();
 
-				if ((tiffImageLength <= 300) && (tiffImageWidth <= 400)) {
-					resolution = "small";
+				if ((tiffImageLength <=
+						ContentDashboardConstants.Resolution.SMALL.
+							getEndLengthValue()) &&
+					(tiffImageWidth <=
+						ContentDashboardConstants.Resolution.SMALL.
+							getEndWidthValue())) {
+
+					resolution =
+						ContentDashboardConstants.Resolution.SMALL.toString();
 				}
-				else if ((tiffImageLength <= 768) && (tiffImageWidth <= 1024)) {
-					resolution = "medium";
+				else if ((tiffImageLength <=
+							ContentDashboardConstants.Resolution.MEDIUM.
+								getEndLengthValue()) &&
+						 (tiffImageWidth <=
+							 ContentDashboardConstants.Resolution.MEDIUM.
+								 getEndWidthValue())) {
+
+					resolution =
+						ContentDashboardConstants.Resolution.MEDIUM.toString();
 				}
 
 				document.addText("aspectRatio", aspectRatio);

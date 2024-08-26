@@ -5,6 +5,7 @@
 
 package com.liferay.content.dashboard.document.library.internal.item.filter;
 
+import com.liferay.content.dashboard.document.library.internal.constants.AspectRatio;
 import com.liferay.content.dashboard.item.filter.ContentDashboardItemFilter;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemBuilder;
@@ -160,36 +161,5 @@ public class FileAspectRatioContentDashboardItemFilter
 	private final HttpServletRequest _httpServletRequest;
 	private final Language _language;
 	private final Portal _portal;
-
-	private enum AspectRatio {
-
-		SQUARE("square"), TALL("tall"), WIDE("wide");
-
-		public static AspectRatio parse(String type) {
-			for (AspectRatio aspectRatio : values()) {
-				if (Objects.equals(aspectRatio.getType(), type)) {
-					return aspectRatio;
-				}
-			}
-
-			return null;
-		}
-
-		public String getType() {
-			return _type;
-		}
-
-		@Override
-		public String toString() {
-			return _type;
-		}
-
-		private AspectRatio(String type) {
-			_type = type;
-		}
-
-		private final String _type;
-
-	}
 
 }

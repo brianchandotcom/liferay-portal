@@ -5,6 +5,7 @@
 
 package com.liferay.content.dashboard.document.library.internal.item.filter;
 
+import com.liferay.content.dashboard.document.library.internal.constants.Resolution;
 import com.liferay.content.dashboard.item.filter.ContentDashboardItemFilter;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemBuilder;
@@ -150,8 +151,8 @@ public class FileResolutionContentDashboardItemFilter
 						_httpServletRequest, "from-x",
 						new Object[] {
 							_getResolutionLabel(
-								resolution._startLengthValue,
-								resolution._startWidthValue)
+								resolution.getStartLengthValue(),
+								resolution.getStartWidthValue())
 						})));
 		}
 		else if (resolution == Resolution.MEDIUM) {
@@ -161,11 +162,11 @@ public class FileResolutionContentDashboardItemFilter
 						_httpServletRequest, "from-x-to-x",
 						new Object[] {
 							_getResolutionLabel(
-								resolution._startLengthValue,
-								resolution._startWidthValue),
+								resolution.getStartLengthValue(),
+								resolution.getStartWidthValue()),
 							_getResolutionLabel(
-								resolution._endLengthValue,
-								resolution._endWidthValue)
+								resolution.getEndLengthValue(),
+								resolution.getEndWidthValue())
 						})));
 		}
 		else if (resolution == Resolution.SMALL) {
@@ -175,8 +176,8 @@ public class FileResolutionContentDashboardItemFilter
 						_httpServletRequest, "up-to-x",
 						new Object[] {
 							_getResolutionLabel(
-								resolution._endLengthValue,
-								resolution._endWidthValue)
+								resolution.getEndLengthValue(),
+								resolution.getEndWidthValue())
 						})));
 		}
 
@@ -222,64 +223,5 @@ public class FileResolutionContentDashboardItemFilter
 	private final HttpServletRequest _httpServletRequest;
 	private final Language _language;
 	private final Portal _portal;
-
-	private enum Resolution {
-
-		LARGE(Long.MAX_VALUE, Long.MAX_VALUE, 769, 1025, "large"),
-		MEDIUM(768, 1024, 301, 401, "medium"), SMALL(300, 400, 0, 0, "small");
-
-		public static Resolution parse(String type) {
-			for (Resolution resolution : values()) {
-				if (Objects.equals(resolution.getType(), type)) {
-					return resolution;
-				}
-			}
-
-			return null;
-		}
-
-		public long getEndLengthValue() {
-			return _endLengthValue;
-		}
-
-		public long getEndWidthValue() {
-			return _endWidthValue;
-		}
-
-		public long getStartLengthValue() {
-			return _startLengthValue;
-		}
-
-		public long getStartWidthValue() {
-			return _startWidthValue;
-		}
-
-		public String getType() {
-			return _type;
-		}
-
-		@Override
-		public String toString() {
-			return _type;
-		}
-
-		private Resolution(
-			long endLengthValue, long endWidthValue, long startLengthValue,
-			long startWidthValue, String type) {
-
-			_endLengthValue = endLengthValue;
-			_endWidthValue = endWidthValue;
-			_startLengthValue = startLengthValue;
-			_startWidthValue = startWidthValue;
-			_type = type;
-		}
-
-		private final long _endLengthValue;
-		private final long _endWidthValue;
-		private final long _startLengthValue;
-		private final long _startWidthValue;
-		private final String _type;
-
-	}
 
 }

@@ -1,0 +1,10 @@
+{
+	"deletionType": "cascade",
+	"label": {
+		"en_US": "Candidate"
+	},
+	"name": "candidateToCertificate",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:Candidate$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:Certificate$]",
+	"type": "oneToMany"
+}

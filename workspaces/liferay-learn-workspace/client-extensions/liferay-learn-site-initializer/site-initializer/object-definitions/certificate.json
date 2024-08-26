@@ -1,8 +1,8 @@
 {
 	"label": {
-		"en_US": "Certificate Entry"
+		"en_US": "Certificate"
 	},
-	"name": "CertificateEntry",
+	"name": "Certificate",
 	"objectFields": [
 		{
 			"DBType": "Date",
@@ -26,7 +26,7 @@
 		}
 	],
 	"pluralLabel": {
-		"en_US": "Certificate Entries"
+		"en_US": "Certificates"
 	},
 	"scope": "site"
 }

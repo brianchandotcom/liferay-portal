@@ -1,5 +1,43 @@
 # Liferay Ant BND Change Log
 
+## 3.2.12 - 2024-06-14
+
+### Commits
+- [LPD-28218] Sort alphabetically (31a5f7b303)
+- [LPS-133987] . See
+https://docs.oracle.com/cd/E19316-01/819-3669/bnajs/index.html (a1ac4d7ffc)
+- [LPD-26915] Adds proper testray.main.component.name (5dbfe7c9bd)
+
+## 3.2.11 - 2024-04-10
+
+### Commits
+- [LPD-15162] Pin version (f636f23295)
+- [LPD-15162] Fix JspAnalyzerPlugin ordering (d2430618cc)
+- [LPD-15162] Upgrade bnd (a7dbf5877a)
+- [LPS-121479] Fix test failure (bf177ad867)
+- [LPS-121479] Upgrade lodash dependency version to avoid vulnerability
+(40e8c0d462)
+
+### Dependencies
+- [LPD-15162] Update the aQute.libg dependency to version 6.4.0.
+- [LPD-15162] Update the biz.aQute.bnd dependency to version 6.4.0.
+
+## 3.2.10 - 2023-08-04
+
+### Commits
+- [LPS-181508] Move to workspace (c295b2db72)
+- [LPS-181508] Use biz.aQute.bnd.gradle (f58467dfac)
+- [LPS-181508] Update bnd (8e6ef78937)
+- [LPS-181508] Auto SF (runtime) (5e7a1385d1)
+
+### Dependencies
+- [LPS-181508] Update the biz.aQute.bnd dependency to version 5.3.0.
+- [LPS-181508] Update the biz.aQute.bnd.gradle dependency to version 5.3.0.
+- [LPS-181508] Update the asm dependency to version 5.1.
+- [LPS-181508] Update the aQute.libg dependency to version 5.3.0.
+- [LPS-181508] Update the biz.aQute.bnd dependency to version 5.3.0.
+- [LPS-181508] Update the biz.aQute.bnd dependency to version 4.3.0.
+
 ## 3.2.9 - 2022-05-14
 
 ### Commits
@@ -817,6 +855,9 @@ when baseline.jar.report.level=persist (78c3140369)
 ### Commits
 - [LPS-50049] Revert "LPS-50049 Refactor SDK module" (3a17353b1b)
 
+[LPD-15162]: https://issues.liferay.com/browse/LPD-15162
+[LPD-26915]: https://issues.liferay.com/browse/LPD-26915
+[LPD-28218]: https://issues.liferay.com/browse/LPD-28218
 [LPS-50049]: https://issues.liferay.com/browse/LPS-50049
 [LPS-51081]: https://issues.liferay.com/browse/LPS-51081
 [LPS-52032]: https://issues.liferay.com/browse/LPS-52032
@@ -911,11 +952,13 @@ when baseline.jar.report.level=persist (78c3140369)
 [LPS-115364]: https://issues.liferay.com/browse/LPS-115364
 [LPS-116282]: https://issues.liferay.com/browse/LPS-116282
 [LPS-119446]: https://issues.liferay.com/browse/LPS-119446
+[LPS-121479]: https://issues.liferay.com/browse/LPS-121479
 [LPS-129842]: https://issues.liferay.com/browse/LPS-129842
 [LPS-133987]: https://issues.liferay.com/browse/LPS-133987
 [LPS-137126]: https://issues.liferay.com/browse/LPS-137126
 [LPS-140947]: https://issues.liferay.com/browse/LPS-140947
 [LPS-150378]: https://issues.liferay.com/browse/LPS-150378
 [LPS-152789]: https://issues.liferay.com/browse/LPS-152789
+[LPS-181508]: https://issues.liferay.com/browse/LPS-181508
 [LRQA-25824]: https://issues.liferay.com/browse/LRQA-25824
 [LRQA-28693]: https://issues.liferay.com/browse/LRQA-28693

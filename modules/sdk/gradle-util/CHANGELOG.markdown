@@ -1,5 +1,17 @@
 # Liferay Gradle Utilities Change Log
 
+## 1.0.49 - 2024-03-15
+
+### Commits
+- [LPD-15162] Provider (e0abca338d)
+
+## 1.0.48 - 2023-08-04
+
+### Commits
+- [LPS-181508] Update plugins Gradle version (60571c128e)
+- [LPS-181508] Hash (e9b541d149)
+- [LPS-150857] Update plugins Gradle version (4c389b37ce)
+
 ## 1.0.47 - 2022-07-15
 
 ### Commits
@@ -328,6 +340,7 @@ up-to-date check (59fd9e696c)
 ### Commits
 - [LPS-51081] Move configuration into task (e4d681d6eb)
 
+[LPD-15162]: https://issues.liferay.com/browse/LPD-15162
 [LPS-51081]: https://issues.liferay.com/browse/LPS-51081
 [LPS-51801]: https://issues.liferay.com/browse/LPS-51801
 [LPS-55187]: https://issues.liferay.com/browse/LPS-55187
@@ -371,4 +384,6 @@ up-to-date check (59fd9e696c)
 [LPS-115020]: https://issues.liferay.com/browse/LPS-115020
 [LPS-130505]: https://issues.liferay.com/browse/LPS-130505
 [LPS-143280]: https://issues.liferay.com/browse/LPS-143280
+[LPS-150857]: https://issues.liferay.com/browse/LPS-150857
+[LPS-181508]: https://issues.liferay.com/browse/LPS-181508
 [LRCI-2670]: https://issues.liferay.com/browse/LRCI-2670

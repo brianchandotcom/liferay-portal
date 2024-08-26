@@ -1,5 +1,31 @@
 # Liferay Gradle Plugins Upgrade Table Builder Change Log
 
+## 3.0.5 - 2023-09-13
+
+### Commits
+- [LPS-195620] update test error (fc4dc7ee2e)
+
+## 3.0.4 - 2023-08-04
+
+### Commits
+- [LPS-181508] Main class (12d3e99aa9)
+- [LPS-181508] Update plugins Gradle version (60571c128e)
+- [LPS-181508] Annotations (beddb5d22a)
+- [LPS-181508] Versions (0362751ca7)
+- [LPS-181508] Copy (f6124575e5)
+- [LPS-181508] Auto SF (runtime) (5e7a1385d1)
+- [LPS-181508] Runtime (203d66906c)
+- [LPS-188912] Use (c) instead of © (386f659d1d)
+- [LPS-188912] Manually fix copyrights (27a1a210cb)
+- [LPS-150857] Update plugins Gradle version (4c389b37ce)
+- [LPS-147885] Source formatting (61204f61c0)
+- [LPS-147885] Fix test (824fcb3210)
+
+### Dependencies
+- [LPS-181508] Update the com.liferay.gradle.util dependency to version 1.0.48.
+- [LPS-181508] Update the com.liferay.gradle.util dependency to version 1.0.47.
+- [LPS-51081] Update the com.liferay.gradle.util dependency to version 1.0.47.
+
 ## 3.0.3 - 2022-03-12
 
 ### Commits
@@ -13,7 +39,6 @@
 ### Dependencies
 - [LPS-147885] Update the com.liferay.portal.tools.upgrade.table.builder
 dependency to version 1.0.11.
-- [LPS-134196] Update the com.liferay.gradle.util dependency to version 1.0.46.
 - [LPS-134196] Update the com.liferay.portal.tools.upgrade.table.builder
 dependency to version 1.0.10.
 - [LRCI-2670] Update the com.liferay.gradle.util dependency to version 1.0.46.
@@ -292,4 +317,8 @@ version 2.4.
 [LPS-134196]: https://issues.liferay.com/browse/LPS-134196
 [LPS-143280]: https://issues.liferay.com/browse/LPS-143280
 [LPS-147885]: https://issues.liferay.com/browse/LPS-147885
+[LPS-150857]: https://issues.liferay.com/browse/LPS-150857
+[LPS-181508]: https://issues.liferay.com/browse/LPS-181508
+[LPS-188912]: https://issues.liferay.com/browse/LPS-188912
+[LPS-195620]: https://issues.liferay.com/browse/LPS-195620
 [LRCI-2670]: https://issues.liferay.com/browse/LRCI-2670

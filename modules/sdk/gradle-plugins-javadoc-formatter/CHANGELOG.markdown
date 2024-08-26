@@ -1,5 +1,55 @@
 # Liferay Gradle Plugins Javadoc Formatter Change Log
 
+## 2.0.1 - 2023-09-23
+
+### Commits
+- [LPS-195564] gradle-plugins-javadoc-formatter: fixes failure in
+gradle-plugins-maven-plugin-builder test (fee6dbb91d)
+
+### Dependencies
+- [LPS-195564] Update the com.liferay.javadoc.formatter dependency to version
+1.0.37.
+
+## 2.0.0 - 2023-08-04
+
+### Dependencies
+- [LPS-181508] Update the com.liferay.gradle.util dependency to version 1.0.48.
+
+## 1.0.35 - 2023-08-04
+
+### Commits
+- [LPS-181508] Main class (12d3e99aa9)
+- [LPS-181508] Update README.markdown (c9f00ca654)
+- [LPS-181508] Update plugins Gradle version (60571c128e)
+- [LPS-181508] Annotations (beddb5d22a)
+- [LPS-181508] Versions (0362751ca7)
+- [LPS-181508] Copy (f6124575e5)
+- [LPS-181508] Auto SF (runtime) (5e7a1385d1)
+- [LPS-181508] Runtime (203d66906c)
+- [LPS-181508] Runtime (7b88c6ea99)
+- [LPS-181508] Configurations (bae26650fd)
+- [LPS-181508] Apply java-library (d3c0c00f02)
+- [LPS-188912] Use (c) instead of © (386f659d1d)
+- [LPS-188912] Manually fix copyrights (27a1a210cb)
+
+### Dependencies
+- [LPS-181508] Update the com.liferay.gradle.util dependency to version 1.0.47.
+
+## 1.0.34 - 2023-06-21
+
+### Commits
+- [LPS-150857] Update README.markdown (77ff7e244f)
+- [LPS-150857] Update plugins Gradle version (4c389b37ce)
+- [LPS-130505] Revert "LPS-130505 SF, no need to call methods" (d4477c5996)
+- [LPS-130505] SF, no need to call methods (54557cd107)
+
+### Dependencies
+- [LPS-135912] Update the com.liferay.javadoc.formatter dependency to version
+1.0.37.
+- [LPS-51081] Update the com.liferay.gradle.util dependency to version 1.0.47.
+- [LRCI-2670] Update the com.liferay.gradle.util dependency to version 1.0.46.
+- [LPS-143280] Update the com.liferay.gradle.util dependency to version 1.0.45.
+
 ## 1.0.33 - 2020-11-02
 
 ### Commits
@@ -440,3 +490,11 @@ version 2.4.
 [LPS-111896]: https://issues.liferay.com/browse/LPS-111896
 [LPS-113624]: https://issues.liferay.com/browse/LPS-113624
 [LPS-115020]: https://issues.liferay.com/browse/LPS-115020
+[LPS-130505]: https://issues.liferay.com/browse/LPS-130505
+[LPS-135912]: https://issues.liferay.com/browse/LPS-135912
+[LPS-143280]: https://issues.liferay.com/browse/LPS-143280
+[LPS-150857]: https://issues.liferay.com/browse/LPS-150857
+[LPS-181508]: https://issues.liferay.com/browse/LPS-181508
+[LPS-188912]: https://issues.liferay.com/browse/LPS-188912
+[LPS-195564]: https://issues.liferay.com/browse/LPS-195564
+[LRCI-2670]: https://issues.liferay.com/browse/LRCI-2670

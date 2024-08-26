@@ -1,5 +1,32 @@
 # Liferay Ant Mirrors Get Change Log
 
+## 1.2.14 - 2023-11-03
+
+### Commits
+- [LRCI-3837] Don't print any stack traces (32b2f2e7ca)
+- [LRCI-3837] Add error for using defaut URL when source URL fails out to the
+verbose tag of mirrors-get (3bd096fa23)
+
+## 1.2.13 - 2023-08-10
+
+### Commits
+- [LRCI-3720] Fix typo (d703b969f7)
+
+## 1.2.12 - 2023-08-10
+
+### Commits
+- [LRCI-3720] Good enough (fac6562444)
+- [LRCI-3720] Wordsmith (fd7c7e17cf)
+- [LRCI-3720] The opposite for system output (01d3be439a)
+- [LRCI-3720] Exceptions are generally phrases (2e33007d30)
+- [LRCI-3720] Rename (0b50182aa4)
+- [LRCI-3720] Make all protected methods private (1c938e589c)
+- [LRCI-3720] Make methods private (ee074a4553)
+- [LRCI-3720] Simplify (Use exit codes) (23ebb747a6)
+- [LRCI-3720] Don't fail if unable to validate (077a1a581e)
+- [LRCI-3720] Validate 7z files (3aeb26fd5f)
+- [LPS-191498] Updating mysql connector to 8.0.32 (1f9f0c450e)
+
 ## 1.2.11 - 2022-11-24
 
 ### Commits
@@ -163,9 +190,12 @@ verification (95fbf498b6)
 [LPS-137126]: https://issues.liferay.com/browse/LPS-137126
 [LPS-157036]: https://issues.liferay.com/browse/LPS-157036
 [LPS-168681]: https://issues.liferay.com/browse/LPS-168681
+[LPS-191498]: https://issues.liferay.com/browse/LPS-191498
 [LRCI-901]: https://issues.liferay.com/browse/LRCI-901
 [LRCI-941]: https://issues.liferay.com/browse/LRCI-941
 [LRCI-1523]: https://issues.liferay.com/browse/LRCI-1523
+[LRCI-3720]: https://issues.liferay.com/browse/LRCI-3720
+[LRCI-3837]: https://issues.liferay.com/browse/LRCI-3837
 [LRQA-28693]: https://issues.liferay.com/browse/LRQA-28693
 [LRQA-29376]: https://issues.liferay.com/browse/LRQA-29376
 [LRQA-29640]: https://issues.liferay.com/browse/LRQA-29640

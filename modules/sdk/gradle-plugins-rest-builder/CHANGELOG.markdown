@@ -1,5 +1,344 @@
 # Liferay Gradle Plugins REST Builder Change Log
 
+## 1.1.236 - 2024-08-25
+
+### Dependencies
+- [LPD-30217] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.358.
+
+## 1.1.235 - 2024-08-02
+
+### Dependencies
+- [LPD-31794] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.357.
+
+## 1.1.234 - 2024-07-03
+
+### Dependencies
+- [LPD-17027] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.356.
+
+## 1.1.233 - 2024-06-13
+
+### Dependencies
+- [LPD-28316] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.355.
+
+## 1.1.232 - 2024-05-29
+
+### Dependencies
+- [LPD-25627] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.354.
+
+## 1.1.231 - 2024-05-27
+
+### Dependencies
+- [LPD-26187] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.353.
+
+## 1.1.230 - 2024-05-27
+
+### Dependencies
+- [LPD-23771] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.352.
+
+## 1.1.229 - 2024-05-22
+
+### Dependencies
+- [LPD-24966] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.351.
+
+## 1.1.228 - 2024-05-21
+
+### Dependencies
+- [LPD-24966] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.350.
+
+## 1.1.227 - 2024-05-09
+
+### Dependencies
+- [LPD-24753] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.349.
+
+## 1.1.226 - 2024-05-06
+
+### Dependencies
+- [LPD-18193] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.348.
+
+## 1.1.225 - 2024-04-29
+
+### Dependencies
+- [LPD-24237] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.347.
+
+## 1.1.224 - 2024-04-18
+
+### Commits
+- [LPD-15162] Pin version (f636f23295)
+
+### Dependencies
+- [LPD-23385] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.346.
+
+## 1.1.223 - 2024-04-05
+
+### Dependencies
+- [LPD-21972] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.345.
+
+## 1.1.222 - 2024-04-03
+
+### Commits
+- [LPD-15162] Fix tests (939fd44678)
+- [LPD-15162] Move tests (f23b048eff)
+- [LPD-15162] Update README.markdown (5e6c766cd3)
+- [LPD-15162] Update plugins Gradle version (7757c65773)
+
+### Dependencies
+- [LPD-21241] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.344.
+- [LPD-15162] Update the com.liferay.gradle.util dependency to version 1.0.49.
+
+## 1.1.221 - 2024-03-13
+
+### Dependencies
+- [LPD-19939] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.343.
+
+## 1.1.220 - 2024-03-07
+
+### Dependencies
+- [LPD-19799] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.342.
+
+## 1.1.219 - 2024-03-01
+
+### Dependencies
+- [LPD-19182] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.341.
+
+## 1.1.218 - 2024-02-12
+
+### Dependencies
+- [LPD-1517] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.340.
+
+## 1.1.217 - 2024-01-29
+
+### Dependencies
+- [LPD-15637] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.339.
+
+## 1.1.216 - 2024-01-25
+
+### Dependencies
+- [LPD-15360] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.338.
+
+## 1.1.215 - 2024-01-24
+
+### Dependencies
+- [LPD-15360] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.337.
+
+## 1.1.214 - 2024-01-25
+
+### Dependencies
+- [LPD-15311] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.336.
+
+## 1.1.213 - 2024-01-17
+
+### Dependencies
+- [LPS-204572] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.335.
+
+## 1.1.212 - 2023-12-28
+
+### Dependencies
+- [LPS-203406] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.334.
+
+## 1.1.211 - 2023-12-21
+
+### Dependencies
+- [LPS-203406] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.333.
+
+## 1.1.210 - 2023-12-14
+
+### Dependencies
+- [LPS-203868] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.332.
+
+## 1.1.209 - 2023-12-13
+
+### Dependencies
+- [LPS-203868] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.331.
+
+## 1.1.208 - 2023-12-13
+
+### Dependencies
+- [LPS-203423] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.330.
+
+## 1.1.207 - 2023-11-09
+
+### Dependencies
+- [LPS-201308] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.329.
+
+## 1.1.206 - 2023-11-07
+
+### Dependencies
+- [LPS-153494] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.328.
+
+## 1.1.205 - 2023-11-07
+
+### Dependencies
+- [LPS-200919] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.327.
+
+## 1.1.204 - 2023-10-31
+
+### Dependencies
+- [LPS-197353] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.326.
+
+## 1.1.203 - 2023-10-27
+
+### Dependencies
+- [LPS-163167] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.325.
+
+## 1.1.202 - 2023-10-25
+
+### Dependencies
+- [LPS-199908] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.324.
+
+## 1.1.201 - 2023-10-23
+
+### Dependencies
+- [LPS-199231] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.323.
+
+## 1.1.200 - 2023-10-18
+
+### Dependencies
+- [LPS-199075] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.322.
+
+## 1.1.199 - 2023-10-17
+
+### Dependencies
+- [LPS-199286] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.321.
+
+## 1.1.198 - 2023-10-11
+
+### Dependencies
+- [LPS-196283] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.320.
+
+## 1.1.197 - 2023-09-29
+
+### Dependencies
+- [LPS-197582] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.319.
+
+## 1.1.196 - 2023-09-14
+
+### Dependencies
+- [LPS-174906] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.318.
+
+## 1.1.195 - 2023-09-06
+
+### Dependencies
+- [COMMERCE-11747] Update the com.liferay.portal.tools.rest.builder dependency
+to version 1.0.317.
+
+## 1.1.194 - 2023-08-30
+
+### Dependencies
+- [LPS-193510] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.316.
+
+## 1.1.193 - 2023-08-04
+
+### Commits
+- [LPS-181508] Main class (12d3e99aa9)
+- [LPS-181508] Update README.markdown (c9f00ca654)
+- [LPS-181508] Update plugins Gradle version (60571c128e)
+- [LPS-181508] Versions (0362751ca7)
+- [LPS-181508] Copy (f6124575e5)
+- [LPS-181508] Auto SF (runtime) (5e7a1385d1)
+- [LPS-181508] Runtime (203d66906c)
+- [LPS-181508] Runtime (7b88c6ea99)
+- [LPS-181508] Apply java-library (d3c0c00f02)
+
+### Dependencies
+- [LPS-181508] Update the com.liferay.gradle.util dependency to version 1.0.48.
+- [LPS-181508] Update the com.liferay.gradle.util dependency to version 1.0.47.
+
+## 1.1.192 - 2023-07-21
+
+### Dependencies
+- [LPS-188912] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.315.
+
+## 1.1.191 - 2023-07-17
+
+### Dependencies
+- [LPS-189587] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.314.
+
+## 1.1.190 - 2023-07-13
+
+### Dependencies
+- [LPS-184046] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.313.
+
+## 1.1.189 - 2023-07-13
+
+### Dependencies
+- [LPS-157425] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.312.
+
+## 1.1.188 - 2023-07-13
+
+### Dependencies
+- [LPS-157425] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.311.
+
+## 1.1.187 - 2023-06-24
+
+### Dependencies
+- [LPS-188390] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.310.
+
+## 1.1.186 - 2023-06-19
+
+### Dependencies
+- [LPS-185701] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.309.
+
+## 1.1.185 - 2023-06-19
+
+### Dependencies
+- [LPS-163942] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.308.
+
+## 1.1.184 - 2023-05-30
+
+### Dependencies
+- [LPS-183728] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.307.
+
 ## 1.1.183 - 2023-05-04
 
 ### Dependencies
@@ -1944,6 +2283,29 @@ version 1.0.1.
 [COMMERCE-7217]: https://issues.liferay.com/browse/COMMERCE-7217
 [COMMERCE-7574]: https://issues.liferay.com/browse/COMMERCE-7574
 [COMMERCE-10419]: https://issues.liferay.com/browse/COMMERCE-10419
+[COMMERCE-11747]: https://issues.liferay.com/browse/COMMERCE-11747
+[LPD-1517]: https://issues.liferay.com/browse/LPD-1517
+[LPD-15162]: https://issues.liferay.com/browse/LPD-15162
+[LPD-15311]: https://issues.liferay.com/browse/LPD-15311
+[LPD-15360]: https://issues.liferay.com/browse/LPD-15360
+[LPD-15637]: https://issues.liferay.com/browse/LPD-15637
+[LPD-17027]: https://issues.liferay.com/browse/LPD-17027
+[LPD-18193]: https://issues.liferay.com/browse/LPD-18193
+[LPD-19182]: https://issues.liferay.com/browse/LPD-19182
+[LPD-19799]: https://issues.liferay.com/browse/LPD-19799
+[LPD-19939]: https://issues.liferay.com/browse/LPD-19939
+[LPD-21241]: https://issues.liferay.com/browse/LPD-21241
+[LPD-21972]: https://issues.liferay.com/browse/LPD-21972
+[LPD-23385]: https://issues.liferay.com/browse/LPD-23385
+[LPD-23771]: https://issues.liferay.com/browse/LPD-23771
+[LPD-24237]: https://issues.liferay.com/browse/LPD-24237
+[LPD-24753]: https://issues.liferay.com/browse/LPD-24753
+[LPD-24966]: https://issues.liferay.com/browse/LPD-24966
+[LPD-25627]: https://issues.liferay.com/browse/LPD-25627
+[LPD-26187]: https://issues.liferay.com/browse/LPD-26187
+[LPD-28316]: https://issues.liferay.com/browse/LPD-28316
+[LPD-30217]: https://issues.liferay.com/browse/LPD-30217
+[LPD-31794]: https://issues.liferay.com/browse/LPD-31794
 [LPS-51081]: https://issues.liferay.com/browse/LPS-51081
 [LPS-82091]: https://issues.liferay.com/browse/LPS-82091
 [LPS-84119]: https://issues.liferay.com/browse/LPS-84119
@@ -2145,16 +2507,20 @@ version 1.0.1.
 [LPS-150857]: https://issues.liferay.com/browse/LPS-150857
 [LPS-152608]: https://issues.liferay.com/browse/LPS-152608
 [LPS-152875]: https://issues.liferay.com/browse/LPS-152875
+[LPS-153494]: https://issues.liferay.com/browse/LPS-153494
 [LPS-155148]: https://issues.liferay.com/browse/LPS-155148
 [LPS-155699]: https://issues.liferay.com/browse/LPS-155699
 [LPS-155870]: https://issues.liferay.com/browse/LPS-155870
 [LPS-156262]: https://issues.liferay.com/browse/LPS-156262
+[LPS-157425]: https://issues.liferay.com/browse/LPS-157425
 [LPS-158214]: https://issues.liferay.com/browse/LPS-158214
 [LPS-158259]: https://issues.liferay.com/browse/LPS-158259
 [LPS-159037]: https://issues.liferay.com/browse/LPS-159037
 [LPS-159847]: https://issues.liferay.com/browse/LPS-159847
+[LPS-163167]: https://issues.liferay.com/browse/LPS-163167
 [LPS-163284]: https://issues.liferay.com/browse/LPS-163284
 [LPS-163446]: https://issues.liferay.com/browse/LPS-163446
+[LPS-163942]: https://issues.liferay.com/browse/LPS-163942
 [LPS-164112]: https://issues.liferay.com/browse/LPS-164112
 [LPS-164967]: https://issues.liferay.com/browse/LPS-164967
 [LPS-165373]: https://issues.liferay.com/browse/LPS-165373
@@ -2168,6 +2534,7 @@ version 1.0.1.
 [LPS-172794]: https://issues.liferay.com/browse/LPS-172794
 [LPS-173173]: https://issues.liferay.com/browse/LPS-173173
 [LPS-173450]: https://issues.liferay.com/browse/LPS-173450
+[LPS-174906]: https://issues.liferay.com/browse/LPS-174906
 [LPS-175515]: https://issues.liferay.com/browse/LPS-175515
 [LPS-175559]: https://issues.liferay.com/browse/LPS-175559
 [LPS-175904]: https://issues.liferay.com/browse/LPS-175904
@@ -2185,11 +2552,32 @@ version 1.0.1.
 [LPS-179806]: https://issues.liferay.com/browse/LPS-179806
 [LPS-180045]: https://issues.liferay.com/browse/LPS-180045
 [LPS-180576]: https://issues.liferay.com/browse/LPS-180576
+[LPS-181508]: https://issues.liferay.com/browse/LPS-181508
 [LPS-181929]: https://issues.liferay.com/browse/LPS-181929
 [LPS-182093]: https://issues.liferay.com/browse/LPS-182093
 [LPS-182351]: https://issues.liferay.com/browse/LPS-182351
 [LPS-182365]: https://issues.liferay.com/browse/LPS-182365
 [LPS-182705]: https://issues.liferay.com/browse/LPS-182705
 [LPS-183309]: https://issues.liferay.com/browse/LPS-183309
+[LPS-183728]: https://issues.liferay.com/browse/LPS-183728
+[LPS-184046]: https://issues.liferay.com/browse/LPS-184046
+[LPS-185701]: https://issues.liferay.com/browse/LPS-185701
+[LPS-188390]: https://issues.liferay.com/browse/LPS-188390
+[LPS-188912]: https://issues.liferay.com/browse/LPS-188912
+[LPS-189587]: https://issues.liferay.com/browse/LPS-189587
+[LPS-193510]: https://issues.liferay.com/browse/LPS-193510
+[LPS-196283]: https://issues.liferay.com/browse/LPS-196283
+[LPS-197353]: https://issues.liferay.com/browse/LPS-197353
+[LPS-197582]: https://issues.liferay.com/browse/LPS-197582
+[LPS-199075]: https://issues.liferay.com/browse/LPS-199075
+[LPS-199231]: https://issues.liferay.com/browse/LPS-199231
+[LPS-199286]: https://issues.liferay.com/browse/LPS-199286
+[LPS-199908]: https://issues.liferay.com/browse/LPS-199908
+[LPS-200919]: https://issues.liferay.com/browse/LPS-200919
+[LPS-201308]: https://issues.liferay.com/browse/LPS-201308
+[LPS-203406]: https://issues.liferay.com/browse/LPS-203406
+[LPS-203423]: https://issues.liferay.com/browse/LPS-203423
+[LPS-203868]: https://issues.liferay.com/browse/LPS-203868
+[LPS-204572]: https://issues.liferay.com/browse/LPS-204572
 [LRCI-2670]: https://issues.liferay.com/browse/LRCI-2670
 [LRDOCS-6650]: https://issues.liferay.com/browse/LRDOCS-6650

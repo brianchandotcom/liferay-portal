@@ -1,5 +1,48 @@
 # Liferay Gradle Plugins Baseline Change Log
 
+## 7.0.3 - 2024-04-10
+
+### Commits
+- [LPD-15162] Pin version (f636f23295)
+- [LPD-15162] Tests (867ec6e683)
+- [LPD-15162] Upgrade bnd (a7dbf5877a)
+- [LPD-15162] Move tests (f23b048eff)
+- [LPD-15162] Update README.markdown (5e6c766cd3)
+- [LPD-15162] Update plugins Gradle version (7757c65773)
+
+### Dependencies
+- [LPD-15162] Update the com.liferay.ant.bnd dependency to version 3.2.11.
+
+## 7.0.2 - 2024-03-15
+
+### Commits
+- [LPD-15162] Baseline (e363a46216)
+
+### Dependencies
+- [LPD-15162] Update the com.liferay.gradle.util dependency to version 1.0.49.
+
+## 7.0.1 - 2023-08-04
+
+### Commits
+- [LPS-181508] Update README.markdown (c9f00ca654)
+- [LPS-181508] Update plugins Gradle version (60571c128e)
+- [LPS-181508] Annotations (beddb5d22a)
+- [LPS-181508] Fix baseline (9b10c2495d)
+- [LPS-181508] Update bnd (8e6ef78937)
+- [LPS-181508] Versions (0362751ca7)
+- [LPS-181508] Copy (f6124575e5)
+- [LPS-181508] Runtime (47c8bf722f)
+- [LPS-181508] Auto SF (runtime) (5e7a1385d1)
+- [LPS-181508] Runtime (203d66906c)
+- [LPS-181508] Runtime (7b88c6ea99)
+- [LPS-181508] Apply java-library (d3c0c00f02)
+
+### Dependencies
+- [LPS-181508] Update the com.liferay.ant.bnd dependency to version 3.2.10.
+- [LPS-181508] Update the com.liferay.gradle.util dependency to version 1.0.48.
+- [LPS-181508] Update the com.liferay.ant.bnd dependency to version 3.2.9.
+- [LPS-181508] Update the com.liferay.gradle.util dependency to version 1.0.47.
+
 ## 6.0.8 - 2023-02-14
 
 ### Commits
@@ -579,6 +622,7 @@ extend `BaselineTask`. If `true`, the baseline check will fail if the
 - [LPS-69259] Test plugins with Gradle 3.2.1 (72873ed836)
 - [LPS-66762] Edit Gradle Baseline plugin README (04de22ed5e)
 
+[LPD-15162]: https://issues.liferay.com/browse/LPD-15162
 [LPS-0]: https://issues.liferay.com/browse/LPS-0
 [LPS-51081]: https://issues.liferay.com/browse/LPS-51081
 [LPS-64098]: https://issues.liferay.com/browse/LPS-64098
@@ -660,5 +704,6 @@ extend `BaselineTask`. If `true`, the baseline check will fail if the
 [LPS-150378]: https://issues.liferay.com/browse/LPS-150378
 [LPS-150857]: https://issues.liferay.com/browse/LPS-150857
 [LPS-152789]: https://issues.liferay.com/browse/LPS-152789
+[LPS-181508]: https://issues.liferay.com/browse/LPS-181508
 [LRCI-2670]: https://issues.liferay.com/browse/LRCI-2670
 [LRQA-39761]: https://issues.liferay.com/browse/LRQA-39761

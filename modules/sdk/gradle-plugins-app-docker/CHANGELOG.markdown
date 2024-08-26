@@ -1,5 +1,48 @@
 # Liferay Gradle Plugins App Docker Change Log
 
+## 1.0.14 - 2024-03-15
+
+### Commits
+- [LPD-15162] Docker (df3cab42c5)
+- [LPS-196455] gradle-plugins-app-docker: suppress deprecation failures for now
+(55dc053058)
+
+### Dependencies
+- [LPD-15162] Update the com.liferay.gradle.util dependency to version 1.0.49.
+
+## 1.0.13 - 2023-08-04
+
+### Commits
+- [LPS-181508] Update README.markdown (c9f00ca654)
+- [LPS-181508] Update plugins Gradle version (60571c128e)
+- [LPS-181508] Update gradle-docker-plugin (59bd7244a9)
+- [LPS-181508] Versions (0362751ca7)
+- [LPS-181508] Copy (f6124575e5)
+- [LPS-181508] Publishing (8f6e3d809c)
+- [LPS-181508] Auto SF (runtime) (5e7a1385d1)
+- [LPS-181508] Runtime (203d66906c)
+- [LPS-181508] Runtime (7b88c6ea99)
+- [LPS-150857] Update README.markdown (77ff7e244f)
+- [LPS-150857] Update plugins Gradle version (4c389b37ce)
+- [LPS-150378] SF, inline (0c9a20c07e)
+- [LPS-105380] Remove final from parameters (a4e6ca0985)
+- [LPS-105380] Remove final from variables (5a4e0b26b4)
+- [LPS-105380] Revert "LPS-105380 Remove final from variables" (cdda76fc8e)
+- [LPS-105380] Revert "LPS-105380 Remove final from parameters" (b2f9eed2c2)
+- [LPS-105380] Remove final from parameters (f615ff77ff)
+- [LPS-105380] Remove final from variables (ffe6186e71)
+- [LPS-130505] Revert "LPS-130505 SF, no need to call methods" (e2ecb543ee)
+- [LPS-130505] SF, no need to call methods (fd9b92bc08)
+
+### Dependencies
+- [LPS-181508] Update the com.liferay.gradle.util dependency to version 1.0.48.
+- [LPS-181508] Update the gradle-docker-plugin dependency to version 6.7.0.
+- [LPS-181508] Update the gradle-docker-plugin dependency to version 3.6.2.
+- [LPS-181508] Update the com.liferay.gradle.util dependency to version 1.0.47.
+- [LPS-51081] Update the com.liferay.gradle.util dependency to version 1.0.47.
+- [LRCI-2670] Update the com.liferay.gradle.util dependency to version 1.0.46.
+- [LPS-143280] Update the com.liferay.gradle.util dependency to version 1.0.45.
+
 ## 1.0.12 - 2020-11-02
 
 ### Commits
@@ -133,6 +176,8 @@ building the app's Docker image.
 ### Description
 - [LPS-74785] Avoid failing the build in the case of a Git error.
 
+[LPD-15162]: https://issues.liferay.com/browse/LPD-15162
+[LPS-51081]: https://issues.liferay.com/browse/LPS-51081
 [LPS-66709]: https://issues.liferay.com/browse/LPS-66709
 [LPS-71117]: https://issues.liferay.com/browse/LPS-71117
 [LPS-73584]: https://issues.liferay.com/browse/LPS-73584
@@ -162,3 +207,10 @@ building the app's Docker image.
 [LPS-111896]: https://issues.liferay.com/browse/LPS-111896
 [LPS-113624]: https://issues.liferay.com/browse/LPS-113624
 [LPS-115020]: https://issues.liferay.com/browse/LPS-115020
+[LPS-130505]: https://issues.liferay.com/browse/LPS-130505
+[LPS-143280]: https://issues.liferay.com/browse/LPS-143280
+[LPS-150378]: https://issues.liferay.com/browse/LPS-150378
+[LPS-150857]: https://issues.liferay.com/browse/LPS-150857
+[LPS-181508]: https://issues.liferay.com/browse/LPS-181508
+[LPS-196455]: https://issues.liferay.com/browse/LPS-196455
+[LRCI-2670]: https://issues.liferay.com/browse/LRCI-2670

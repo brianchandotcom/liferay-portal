@@ -1,5 +1,39 @@
 # Liferay Gradle Plugins Alloy Taglib Change Log
 
+## 2.0.6 - 2023-08-04
+
+### Commits
+- [LPS-181508] Main class (12d3e99aa9)
+- [LPS-181508] Update plugins Gradle version (60571c128e)
+- [LPS-181508] Annotations (beddb5d22a)
+- [LPS-181508] Versions (0362751ca7)
+- [LPS-181508] Copy (f6124575e5)
+- [LPS-181508] Auto SF (runtime) (5e7a1385d1)
+- [LPS-181508] Runtime (203d66906c)
+- [LPS-181508] Apply java-library (d3c0c00f02)
+- [LPS-172438] auto sf, upgrade xstream to 1.4.20 (e4bc407433)
+- [LPS-149258] auto sf, upgrading tika-core and tike-parsers to 1.28.5
+(54f34e5034)
+- [LPS-150857] Update plugins Gradle version (4c389b37ce)
+- [LPS-157934] - auto sf, update commons-io to version 2.11.0 (660416293f)
+- [LPS-147089] - auto sf, update xerces to 2.12.2 (3ea6081b30)
+- [LPS-138338] - auto SF, update xstream version to 1.4.19 for the rest
+(5ad0be7ad1)
+- [LPS-136907] Bump Xerces version saperately (35f8279192)
+- [LPS-136907] Revert "LPS-136907 Bump Xerces version saperately" (abbe71b424)
+- [LPS-136907] Bump Xerces version saperately (745ef90333)
+- [LPS-134486] Update xstream to 1.4.17 (15a8134cfd)
+- [LPS-129336] Update xstream to 1.4.16 (eab1e8a600)
+- [LPS-125387] Update xstream to 1.4.15 (add0f4f67e)
+- [LPS-123870] Update xStream to 1.4.14 (85cb6d3444)
+
+### Dependencies
+- [LPS-181508] Update the com.liferay.gradle.util dependency to version 1.0.48.
+- [LPS-181508] Update the com.liferay.gradle.util dependency to version 1.0.47.
+- [LPS-51081] Update the com.liferay.gradle.util dependency to version 1.0.47.
+- [LRCI-2670] Update the com.liferay.gradle.util dependency to version 1.0.46.
+- [LPS-143280] Update the com.liferay.gradle.util dependency to version 1.0.45.
+
 ## 2.0.5 - 2020-11-02
 
 ### Commits
@@ -177,3 +211,17 @@ in gradle-util * Replace gradle osgi plugin dependency by local OsgiHelper
 [LPS-111896]: https://issues.liferay.com/browse/LPS-111896
 [LPS-113624]: https://issues.liferay.com/browse/LPS-113624
 [LPS-115020]: https://issues.liferay.com/browse/LPS-115020
+[LPS-123870]: https://issues.liferay.com/browse/LPS-123870
+[LPS-125387]: https://issues.liferay.com/browse/LPS-125387
+[LPS-129336]: https://issues.liferay.com/browse/LPS-129336
+[LPS-134486]: https://issues.liferay.com/browse/LPS-134486
+[LPS-136907]: https://issues.liferay.com/browse/LPS-136907
+[LPS-138338]: https://issues.liferay.com/browse/LPS-138338
+[LPS-143280]: https://issues.liferay.com/browse/LPS-143280
+[LPS-147089]: https://issues.liferay.com/browse/LPS-147089
+[LPS-149258]: https://issues.liferay.com/browse/LPS-149258
+[LPS-150857]: https://issues.liferay.com/browse/LPS-150857
+[LPS-157934]: https://issues.liferay.com/browse/LPS-157934
+[LPS-172438]: https://issues.liferay.com/browse/LPS-172438
+[LPS-181508]: https://issues.liferay.com/browse/LPS-181508
+[LRCI-2670]: https://issues.liferay.com/browse/LRCI-2670

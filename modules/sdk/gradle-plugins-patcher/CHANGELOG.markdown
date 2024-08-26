@@ -1,5 +1,33 @@
 # Liferay Gradle Plugins Patcher Change Log
 
+## 1.0.23 - 2024-06-19
+
+### Commits
+- [LPD-26910] [LPD-28396] Patcher (188150667f)
+- [LPD-15162] Pin version (f636f23295)
+- [LPD-15162] Move tests (f23b048eff)
+- [LPD-15162] Update plugins Gradle version (7757c65773)
+
+### Dependencies
+- [LPD-15162] Update the com.liferay.gradle.util dependency to version 1.0.49.
+
+## 1.0.22 - 2023-08-04
+
+### Commits
+- [LPS-181508] Update plugins Gradle version (60571c128e)
+- [LPS-181508] Annotations (beddb5d22a)
+- [LPS-181508] Runtime (5e62c88861)
+- [LPS-181508] Versions (0362751ca7)
+- [LPS-181508] Copy (f6124575e5)
+- [LPS-181508] Auto SF (runtime) (5e7a1385d1)
+- [LPS-181508] Runtime (203d66906c)
+- [LPS-181508] Configurations (bae26650fd)
+- [LPS-181508] Apply java-library (d3c0c00f02)
+
+### Dependencies
+- [LPS-181508] Update the com.liferay.gradle.util dependency to version 1.0.48.
+- [LPS-181508] Update the com.liferay.gradle.util dependency to version 1.0.47.
+
 ## 1.0.21 - 2022-09-05
 
 ### Commits
@@ -245,6 +273,9 @@ version 2.4.
 - [LPS-51081] Better sample (e3b96fab6c)
 - [LPS-51081] Force Unix line endings to avoid patch errors (2456719303)
 
+[LPD-15162]: https://issues.liferay.com/browse/LPD-15162
+[LPD-26910]: https://issues.liferay.com/browse/LPD-26910
+[LPD-28396]: https://issues.liferay.com/browse/LPD-28396
 [LPS-51081]: https://issues.liferay.com/browse/LPS-51081
 [LPS-51801]: https://issues.liferay.com/browse/LPS-51801
 [LPS-58467]: https://issues.liferay.com/browse/LPS-58467
@@ -296,5 +327,6 @@ version 2.4.
 [LPS-143280]: https://issues.liferay.com/browse/LPS-143280
 [LPS-150857]: https://issues.liferay.com/browse/LPS-150857
 [LPS-159094]: https://issues.liferay.com/browse/LPS-159094
+[LPS-181508]: https://issues.liferay.com/browse/LPS-181508
 [LRCI-2670]: https://issues.liferay.com/browse/LRCI-2670
 [LRQA-19302]: https://issues.liferay.com/browse/LRQA-19302

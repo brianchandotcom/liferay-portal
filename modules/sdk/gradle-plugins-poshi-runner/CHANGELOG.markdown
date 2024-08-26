@@ -1,5 +1,172 @@
 # Liferay Gradle Plugins Poshi Runner Change Log
 
+## 4.0.18 - 2024-06-28
+
+### Commits
+- [POSHI-700] Use com.liferay.poshi.runner:1.0.491 (8cb4cee3bb)
+- [POSHI-700] Use JUnit Platform (JUnit 5) for runPoshi task (7a0a9bf455)
+- [LPD-15162] Pin version (f636f23295)
+
+## 4.0.17 - 2024-03-27
+
+### Commits
+- [POSHI-699] Update default poshi runner version (081f3c10c4)
+- [LPD-15162] Update plugins Gradle version (7757c65773)
+
+## 4.0.16 - 2024-03-15
+
+### Commits
+- [LPD-15162] Poshi (80fa54c70f)
+
+### Dependencies
+- [LPD-15162] Update the com.liferay.gradle.util dependency to version 1.0.49.
+
+## 4.0.15 - 2024-02-20
+
+### Commits
+- [POSHI-695] Update ChromeDriver's base URL for downloads (b498e8acad)
+
+## 4.0.14 - 2024-01-26
+
+### Commits
+- [POSHI-691] Update default poshi runner version (d696e76960)
+
+## 4.0.13 - 2024-01-22
+
+### Commits
+- [POSHI-689] Update default poshi runner version (0f95883c03)
+
+## 4.0.12 - 2024-01-18
+
+### Commits
+- [POSHI-688] Update default poshi runner version (5d6426dc27)
+
+## 4.0.11 - 2023-12-12
+
+### Commits
+- [POSHI-686] Update default poshi runner version (530da836ce)
+
+## 4.0.10 - 2023-11-21
+
+### Commits
+- [LPS-87890] Human readability (643875e61e)
+- [LPS-87890] Revert "LPS-87890 drop hours, minutes, and seconds" (9cfb56d62f)
+
+## 4.0.9 - 2023-10-30
+
+### Commits
+- [POSHI-659] Update default poshi runner version (36e14289eb)
+
+## 4.0.8 - 2023-10-26
+
+### Commits
+- [POSHI-657] Update default poshi runner version (1ef7d05c0d)
+
+## 4.0.7 - 2023-10-10
+
+### Commits
+- [LPS-181508] Add task uploadPoshiRunnerResources (31b1ba279d)
+
+## 4.0.6 - 2023-10-03
+
+### Commits
+- [POSHI-649] Update default poshi runner version (b06ed6b09a)
+
+## 4.0.5 - 2023-09-20
+
+### Commits
+- [POSHI-645] Update default poshi runner version (3819f61c2b)
+
+## 4.0.4 - 2023-08-30
+
+### Commits
+- [POSHI-637] Update default poshi runner version (31a71c1ee3)
+
+## 4.0.3 - 2023-08-24
+
+### Commits
+- [POSHI-614] Sort (a2f4213487)
+- [POSHI-614] Add task to generate Poshi reports (4f306ed0bf)
+
+## 4.0.2 - 2023-08-21
+
+### Commits
+- [POSHI-607] Modify path to follow current logic (063894d698)
+
+## 4.0.1 - 2023-08-14
+
+### Commits
+- [POSHI-607] Add pattern to grab chrome major version (81d596aea1)
+
+## 4.0.0 - 2023-08-13
+
+### Commits
+- [POSHI-610] Update default poshi runner version (1120fd65b5)
+- [POSHI-607] call the var 'String json' or inline it (08c0c368bd)
+- [POSHI-607] Distinguish the legacy chromedriver url download (9749572d9a)
+- [POSHI-607] Add json-path dependency (836a813311)
+- [POSHI-607] Add logic to build URL for version 115 up (3615652281)
+
+### Dependencies
+- [POSHI-607] Update the json-path dependency to version 2.1.0.
+
+## 3.0.77 - 2023-08-07
+
+### Commits
+- [LPS-181508] Poshi publishing (17d8e37073)
+
+## 3.0.76 - 2023-08-04
+
+### Commits
+- [LPS-181508] Main class (12d3e99aa9)
+- [LPS-181508] Update plugins Gradle version (60571c128e)
+- [LPS-181508] Publishing (8f6e3d809c)
+- [LPS-181508] Auto SF (runtime) (5e7a1385d1)
+
+### Dependencies
+- [LPS-181508] Update the com.liferay.gradle.util dependency to version 1.0.48.
+- [LPS-181508] Update the com.liferay.gradle.util dependency to version 1.0.47.
+
+## 3.0.75 - 2023-08-01
+
+### Commits
+- [POSHI-604] Update default poshi runner version (7baa39b01b)
+
+## 3.0.74 - 2023-07-24
+
+### Commits
+- [POSHI-599] Update default poshi runner version (35b16c3981)
+
+## 3.0.73 - 2023-07-10
+
+### Commits
+- [POSHI-587] Update default poshi runner version (22c1ef1168)
+
+## 3.0.72 - 2023-07-03
+
+### Commits
+- [POSHI-579] Use com.liferay.poshi.runner:1.0.440 as default version
+(45ed3ded03)
+
+## 3.0.71 - 2023-06-29
+
+### Commits
+- [POSHI-570] Update default poshi runner version (9ce8128e69)
+
+## 3.0.70 - 2023-06-21
+
+### Commits
+- [POSHI-513] Buy space (c31bac9863)
+- [POSHI-513] Replace to follow standard practice (bdb274930d)
+- [POSHI-513] Add check for local binary (a9f08ffbf8)
+- [POSHI-513] Add condition to check for remote driver (4d766a6df5)
+- [POSHI-513] Add check to see if RemoteWebDriver is used (c2c6cde160)
+
+## 3.0.69 - 2023-05-31
+
+### Commits
+- [POSHI-543] Update default poshi runner version (8c5d2308b2)
+
 ## 3.0.68 - 2023-05-03
 
 ### Commits
@@ -832,6 +999,7 @@ up-to-date check (59fd9e696c)
 - [LPS-55220] Misuse? See sdk (2a3e197eec)
 - [LPS-55220] Use conf mapping instead of transitive attribute (42bfd15e29)
 
+[LPD-15162]: https://issues.liferay.com/browse/LPD-15162
 [LPS-51081]: https://issues.liferay.com/browse/LPS-51081
 [LPS-51801]: https://issues.liferay.com/browse/LPS-51801
 [LPS-55187]: https://issues.liferay.com/browse/LPS-55187
@@ -882,6 +1050,7 @@ up-to-date check (59fd9e696c)
 [LPS-143280]: https://issues.liferay.com/browse/LPS-143280
 [LPS-150857]: https://issues.liferay.com/browse/LPS-150857
 [LPS-153959]: https://issues.liferay.com/browse/LPS-153959
+[LPS-181508]: https://issues.liferay.com/browse/LPS-181508
 [LRCI-65]: https://issues.liferay.com/browse/LRCI-65
 [LRCI-264]: https://issues.liferay.com/browse/LRCI-264
 [LRCI-350]: https://issues.liferay.com/browse/LRCI-350
@@ -964,5 +1133,27 @@ up-to-date check (59fd9e696c)
 [POSHI-486]: https://issues.liferay.com/browse/POSHI-486
 [POSHI-503]: https://issues.liferay.com/browse/POSHI-503
 [POSHI-508]: https://issues.liferay.com/browse/POSHI-508
+[POSHI-513]: https://issues.liferay.com/browse/POSHI-513
 [POSHI-517]: https://issues.liferay.com/browse/POSHI-517
 [POSHI-528]: https://issues.liferay.com/browse/POSHI-528
+[POSHI-543]: https://issues.liferay.com/browse/POSHI-543
+[POSHI-570]: https://issues.liferay.com/browse/POSHI-570
+[POSHI-579]: https://issues.liferay.com/browse/POSHI-579
+[POSHI-587]: https://issues.liferay.com/browse/POSHI-587
+[POSHI-599]: https://issues.liferay.com/browse/POSHI-599
+[POSHI-604]: https://issues.liferay.com/browse/POSHI-604
+[POSHI-607]: https://issues.liferay.com/browse/POSHI-607
+[POSHI-610]: https://issues.liferay.com/browse/POSHI-610
+[POSHI-614]: https://issues.liferay.com/browse/POSHI-614
+[POSHI-637]: https://issues.liferay.com/browse/POSHI-637
+[POSHI-645]: https://issues.liferay.com/browse/POSHI-645
+[POSHI-649]: https://issues.liferay.com/browse/POSHI-649
+[POSHI-657]: https://issues.liferay.com/browse/POSHI-657
+[POSHI-659]: https://issues.liferay.com/browse/POSHI-659
+[POSHI-686]: https://issues.liferay.com/browse/POSHI-686
+[POSHI-688]: https://issues.liferay.com/browse/POSHI-688
+[POSHI-689]: https://issues.liferay.com/browse/POSHI-689
+[POSHI-691]: https://issues.liferay.com/browse/POSHI-691
+[POSHI-695]: https://issues.liferay.com/browse/POSHI-695
+[POSHI-699]: https://issues.liferay.com/browse/POSHI-699
+[POSHI-700]: https://issues.liferay.com/browse/POSHI-700

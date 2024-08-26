@@ -1,5 +1,33 @@
 # Liferay Gradle Plugins Change Log Builder Change Log
 
+## 1.1.7 - 2023-08-21
+
+### Commits
+- [LPS-181508] Fix buildChangeLog (eccb940525)
+
+## 1.1.6 - 2023-08-04
+
+### Commits
+- [LPS-181508] Update README.markdown (c9f00ca654)
+- [LPS-181508] Update plugins Gradle version (60571c128e)
+- [LPS-181508] Annotations (beddb5d22a)
+- [LPS-181508] Auto SF (runtime) (5e7a1385d1)
+- [LPS-181508] Apply java-library (d3c0c00f02)
+- [LPS-150857] Update README.markdown (77ff7e244f)
+- [LPS-150857] Update plugins Gradle version (4c389b37ce)
+- [LPS-105380] Make methods private (abb226917a)
+- [LPS-130505] Revert "LPS-130505 SF, no need to call methods" (e2ecb543ee)
+- [LPS-130505] SF, no need to call methods (fd9b92bc08)
+
+### Dependencies
+- [LPS-181508] Update the com.liferay.gradle.util dependency to version 1.0.48.
+- [LPS-181508] Update the com.liferay.gradle.util dependency to version 1.0.47.
+- [LPS-181508] Update the org.eclipse.jgit dependency to version
+4.1.1.201511131810-r.
+- [LPS-51081] Update the com.liferay.gradle.util dependency to version 1.0.47.
+- [LRCI-2670] Update the com.liferay.gradle.util dependency to version 1.0.46.
+- [LPS-143280] Update the com.liferay.gradle.util dependency to version 1.0.45.
+
 ## 1.1.5 - 2020-11-02
 
 ### Commits
@@ -152,6 +180,7 @@ repositories.
 - [LPS-61088] Remove classes and resources dir from Include-Resource
 (1b0e1275bc)
 
+[LPS-51081]: https://issues.liferay.com/browse/LPS-51081
 [LPS-61088]: https://issues.liferay.com/browse/LPS-61088
 [LPS-61099]: https://issues.liferay.com/browse/LPS-61099
 [LPS-61720]: https://issues.liferay.com/browse/LPS-61720
@@ -186,6 +215,7 @@ repositories.
 [LPS-88645]: https://issues.liferay.com/browse/LPS-88645
 [LPS-96247]: https://issues.liferay.com/browse/LPS-96247
 [LPS-100515]: https://issues.liferay.com/browse/LPS-100515
+[LPS-105380]: https://issues.liferay.com/browse/LPS-105380
 [LPS-106149]: https://issues.liferay.com/browse/LPS-106149
 [LPS-110283]: https://issues.liferay.com/browse/LPS-110283
 [LPS-110422]: https://issues.liferay.com/browse/LPS-110422
@@ -193,4 +223,9 @@ repositories.
 [LPS-111896]: https://issues.liferay.com/browse/LPS-111896
 [LPS-113624]: https://issues.liferay.com/browse/LPS-113624
 [LPS-115020]: https://issues.liferay.com/browse/LPS-115020
+[LPS-130505]: https://issues.liferay.com/browse/LPS-130505
+[LPS-143280]: https://issues.liferay.com/browse/LPS-143280
+[LPS-150857]: https://issues.liferay.com/browse/LPS-150857
+[LPS-181508]: https://issues.liferay.com/browse/LPS-181508
+[LRCI-2670]: https://issues.liferay.com/browse/LRCI-2670
 [LRDOCS-4129]: https://issues.liferay.com/browse/LRDOCS-4129

@@ -1,5 +1,29 @@
 # Liferay Gradle Plugins Dependency Checker Change Log
 
+## 1.0.6 - 2023-08-04
+
+### Commits
+- [LPS-181508] Update README.markdown (c9f00ca654)
+- [LPS-181508] Update plugins Gradle version (60571c128e)
+- [LPS-181508] Versions (0362751ca7)
+- [LPS-181508] Copy (f6124575e5)
+- [LPS-181508] Auto SF (runtime) (5e7a1385d1)
+- [LPS-181508] Runtime (203d66906c)
+- [LPS-150857] Update README.markdown (77ff7e244f)
+- [LPS-150857] Update plugins Gradle version (4c389b37ce)
+- [LPS-130505] Revert "LPS-130505 SF, no need to call methods" (d4477c5996)
+- [LPS-130505] SF, no need to call methods (54557cd107)
+- [LPS-105380] Add line breaks (bd1787840d)
+- [LPS-105380] Sort calls (5bee59f272)
+
+### Dependencies
+- [LPS-181508] Update the com.liferay.gradle.util dependency to version 1.0.48.
+- [LPS-181508] Update the com.liferay.gradle.util dependency to version 1.0.47.
+- [LPS-181508] Update the expiringmap dependency to version 0.5.7.
+- [LPS-51081] Update the com.liferay.gradle.util dependency to version 1.0.47.
+- [LRCI-2670] Update the com.liferay.gradle.util dependency to version 1.0.46.
+- [LPS-143280] Update the com.liferay.gradle.util dependency to version 1.0.45.
+
 ## 1.0.5 - 2020-11-02
 
 ### Commits
@@ -89,6 +113,7 @@ is doing, so throwing *Exception is not adding value (216100ecdd)
 ### Description
 - [LPS-75910] Fix Maven Central query URL.
 
+[LPS-51081]: https://issues.liferay.com/browse/LPS-51081
 [LPS-66709]: https://issues.liferay.com/browse/LPS-66709
 [LPS-69847]: https://issues.liferay.com/browse/LPS-69847
 [LPS-70060]: https://issues.liferay.com/browse/LPS-70060
@@ -116,3 +141,8 @@ is doing, so throwing *Exception is not adding value (216100ecdd)
 [LPS-111896]: https://issues.liferay.com/browse/LPS-111896
 [LPS-113624]: https://issues.liferay.com/browse/LPS-113624
 [LPS-115020]: https://issues.liferay.com/browse/LPS-115020
+[LPS-130505]: https://issues.liferay.com/browse/LPS-130505
+[LPS-143280]: https://issues.liferay.com/browse/LPS-143280
+[LPS-150857]: https://issues.liferay.com/browse/LPS-150857
+[LPS-181508]: https://issues.liferay.com/browse/LPS-181508
+[LRCI-2670]: https://issues.liferay.com/browse/LRCI-2670

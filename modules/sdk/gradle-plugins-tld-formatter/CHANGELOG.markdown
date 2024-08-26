@@ -1,5 +1,21 @@
 # Liferay Gradle Plugins TLD Formatter Change Log
 
+## 1.0.15 - 2023-08-04
+
+### Commits
+- [LPS-181508] Main class (12d3e99aa9)
+- [LPS-181508] Update README.markdown (c9f00ca654)
+- [LPS-181508] Update plugins Gradle version (60571c128e)
+- [LPS-181508] Annotations (beddb5d22a)
+- [LPS-181508] Versions (0362751ca7)
+- [LPS-181508] Copy (f6124575e5)
+- [LPS-181508] Auto SF (runtime) (5e7a1385d1)
+- [LPS-181508] Runtime (203d66906c)
+
+### Dependencies
+- [LPS-181508] Update the com.liferay.gradle.util dependency to version 1.0.48.
+- [LPS-181508] Update the com.liferay.gradle.util dependency to version 1.0.47.
+
 ## 1.0.12 - 2023-02-05
 
 ### Commits
@@ -225,4 +241,5 @@ version 2.4.
 [LPS-130505]: https://issues.liferay.com/browse/LPS-130505
 [LPS-143280]: https://issues.liferay.com/browse/LPS-143280
 [LPS-150857]: https://issues.liferay.com/browse/LPS-150857
+[LPS-181508]: https://issues.liferay.com/browse/LPS-181508
 [LRCI-2670]: https://issues.liferay.com/browse/LRCI-2670

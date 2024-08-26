@@ -1,5 +1,61 @@
 # Liferay Gradle Plugins Node Change Log
 
+## 8.0.7 - 2024-06-14
+
+### Commits
+- [LPD-28512] gradle-plugins-node: check for null in case this is run outside of
+the liferay-portal repo (8b91734359)
+
+## 8.0.5 - 2024-05-24
+
+### Commits
+- [LPD-24865] Input (_node-scripts version) (4a0a556cf9)
+
+## 8.0.4 - 2024-05-10
+
+### Commits
+- [LPD-23882] Update node plugin to detect new build (87bb92c35d)
+
+## 8.0.3 - 2024-04-26
+
+### Commits
+- [LPD-22341] Update configuration for ES Module (c5b3bb7f8a)
+- [LPD-15162] Pin version (f636f23295)
+- [LPD-15162] Move tests (f23b048eff)
+- [LPD-15162] Update README.markdown (5e6c766cd3)
+- [LPD-15162] Update plugins Gradle version (7757c65773)
+
+### Dependencies
+- [LPD-15162] Update the com.liferay.gradle.util dependency to version 1.0.49.
+
+## 8.0.2 - 2023-08-09
+
+### Commits
+- [LPS-181508] Fix packageRunBuild (a9d1dd96c9)
+
+## 8.0.1 - 2023-08-04
+
+### Commits
+- [LPS-181508] Node publishing (b894947b6b)
+- [LPS-181508] Update README.markdown (c9f00ca654)
+- [LPS-181508] Update plugins Gradle version (60571c128e)
+- [LPS-181508] Implicit dependencies (node) (2c17d61979)
+- [LPS-181508] Annotations (beddb5d22a)
+- [LPS-181508] Hash (dc3228a8f7)
+- [LPS-181508] Versions (0362751ca7)
+- [LPS-181508] Fix tests (05eb9088d3)
+- [LPS-181508] Copy (f6124575e5)
+- [LPS-181508] Auto SF (runtime) (5e7a1385d1)
+- [LPS-181508] Runtime (203d66906c)
+- [LPS-181508] Runtime (7b88c6ea99)
+- [LPS-181508] Apply java-library (d3c0c00f02)
+- [LPS-150857] Update README.markdown (77ff7e244f)
+- [LPS-150857] Update plugins Gradle version (4c389b37ce)
+
+### Dependencies
+- [LPS-181508] Update the com.liferay.gradle.util dependency to version 1.0.48.
+- [LPS-181508] Update the com.liferay.gradle.util dependency to version 1.0.47.
+
 ## 8.0.0 - 2022-07-15
 
 ### Dependencies
@@ -1284,6 +1340,11 @@ symbolic links in it will be lost (0a1438b324)
 ### Dependencies
 - [LPS-58467] Update the com.liferay.gradle.util dependency to version 1.0.19.
 
+[LPD-15162]: https://issues.liferay.com/browse/LPD-15162
+[LPD-22341]: https://issues.liferay.com/browse/LPD-22341
+[LPD-23882]: https://issues.liferay.com/browse/LPD-23882
+[LPD-24865]: https://issues.liferay.com/browse/LPD-24865
+[LPD-28512]: https://issues.liferay.com/browse/LPD-28512
 [LPS-0]: https://issues.liferay.com/browse/LPS-0
 [LPS-51081]: https://issues.liferay.com/browse/LPS-51081
 [LPS-58260]: https://issues.liferay.com/browse/LPS-58260
@@ -1405,6 +1466,8 @@ symbolic links in it will be lost (0a1438b324)
 [LPS-148304]: https://issues.liferay.com/browse/LPS-148304
 [LPS-149634]: https://issues.liferay.com/browse/LPS-149634
 [LPS-150378]: https://issues.liferay.com/browse/LPS-150378
+[LPS-150857]: https://issues.liferay.com/browse/LPS-150857
+[LPS-181508]: https://issues.liferay.com/browse/LPS-181508
 [LRCI-2670]: https://issues.liferay.com/browse/LRCI-2670
 [LRDOCS-3663]: https://issues.liferay.com/browse/LRDOCS-3663
 [LRDOCS-4129]: https://issues.liferay.com/browse/LRDOCS-4129

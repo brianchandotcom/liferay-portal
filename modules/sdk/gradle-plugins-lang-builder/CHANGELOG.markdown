@@ -1,5 +1,41 @@
 # Liferay Gradle Plugins Lang Builder Change Log
 
+## 3.0.36 - 2023-12-01
+
+### Dependencies
+- [LPS-196488] Update the com.liferay.lang.builder dependency to version 1.0.51.
+
+## 3.0.35 - 2023-08-07
+
+### Commits
+- [LPS-181508] Fix buildLang tasks (acb7680f7b)
+
+## 3.0.34 - 2023-08-04
+
+### Commits
+- [LPS-181508] Main class (12d3e99aa9)
+- [LPS-181508] Update README.markdown (c9f00ca654)
+- [LPS-181508] Update plugins Gradle version (60571c128e)
+- [LPS-181508] Annotations (beddb5d22a)
+- [LPS-181508] Versions (0362751ca7)
+- [LPS-181508] Copy (f6124575e5)
+- [LPS-181508] Auto SF (runtime) (5e7a1385d1)
+- [LPS-181508] Runtime (203d66906c)
+- [LPS-181508] Runtime (7b88c6ea99)
+- [LPS-181508] Apply java-library (d3c0c00f02)
+
+### Dependencies
+- [LPS-181508] Update the com.liferay.gradle.util dependency to version 1.0.48.
+- [LPS-181508] Update the com.liferay.gradle.util dependency to version 1.0.47.
+
+## 3.0.33 - 2023-06-21
+
+### Commits
+- [LPS-181413] Update links in README file (585c4977cc)
+
+### Dependencies
+- [LPS-135912] Update the com.liferay.lang.builder dependency to version 1.0.50.
+
 ## 3.0.32 - 2023-03-28
 
 ### Dependencies
@@ -618,6 +654,7 @@ version 2.4.
 [LPS-122599]: https://issues.liferay.com/browse/LPS-122599
 [LPS-130464]: https://issues.liferay.com/browse/LPS-130464
 [LPS-130505]: https://issues.liferay.com/browse/LPS-130505
+[LPS-135912]: https://issues.liferay.com/browse/LPS-135912
 [LPS-138487]: https://issues.liferay.com/browse/LPS-138487
 [LPS-143280]: https://issues.liferay.com/browse/LPS-143280
 [LPS-143566]: https://issues.liferay.com/browse/LPS-143566
@@ -625,5 +662,8 @@ version 2.4.
 [LPS-158690]: https://issues.liferay.com/browse/LPS-158690
 [LPS-168821]: https://issues.liferay.com/browse/LPS-168821
 [LPS-178134]: https://issues.liferay.com/browse/LPS-178134
+[LPS-181413]: https://issues.liferay.com/browse/LPS-181413
+[LPS-181508]: https://issues.liferay.com/browse/LPS-181508
+[LPS-196488]: https://issues.liferay.com/browse/LPS-196488
 [LRCI-2670]: https://issues.liferay.com/browse/LRCI-2670
 [LRDOCS-4319]: https://issues.liferay.com/browse/LRDOCS-4319

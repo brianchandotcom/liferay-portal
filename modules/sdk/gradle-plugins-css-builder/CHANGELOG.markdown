@@ -1,5 +1,51 @@
 # Liferay Gradle Plugins CSS Builder Change Log
 
+## 5.0.13 - 2024-05-24
+
+### Commits
+- [LPD-15162] Pin version (f636f23295)
+- [LPD-15162] Move tests (f23b048eff)
+- [LPD-15162] Update README.markdown (5e6c766cd3)
+- [LPD-15162] Update plugins Gradle version (7757c65773)
+
+### Dependencies
+- [LPD-15162] Update the com.liferay.gradle.util dependency to version 1.0.49.
+
+## 5.0.12 - 2023-12-08
+
+### Dependencies
+- [LPS-196998] Update the com.liferay.css.builder dependency to version 3.1.5.
+
+## 5.0.11 - 2023-11-06
+
+### Dependencies
+- [LPS-198875] Update the com.liferay.css.builder dependency to version 3.1.4.
+
+## 5.0.9 - 2023-08-16
+
+### Dependencies
+- [] Update the com.liferay.css.builder dependency to version 3.1.3.
+
+## 5.0.8 - 2023-08-04
+
+### Commits
+- [LPS-181508] Main class (12d3e99aa9)
+- [LPS-181508] Update README.markdown (c9f00ca654)
+- [LPS-181508] Update plugins Gradle version (60571c128e)
+- [LPS-181508] Annotations (beddb5d22a)
+- [LPS-181508] Versions (0362751ca7)
+- [LPS-181508] Fix tests (05eb9088d3)
+- [LPS-181508] Copy (f6124575e5)
+- [LPS-181508] Auto SF (runtime) (5e7a1385d1)
+- [LPS-181508] Runtime (203d66906c)
+- [LPS-181508] Runtime (7b88c6ea99)
+- [LPS-181508] Apply java-library (d3c0c00f02)
+- [LPS-181413] Update links in README file (585c4977cc)
+
+### Dependencies
+- [LPS-181508] Update the com.liferay.gradle.util dependency to version 1.0.48.
+- [LPS-181508] Update the com.liferay.gradle.util dependency to version 1.0.47.
+
 ## 5.0.7 - 2023-02-14
 
 ### Dependencies
@@ -565,6 +611,7 @@ version 2.4.
 - [LPS-51081] Update the org.gradle.gradle-plugins dependency to version 2.4.
 - [LPS-51081] Update the groovy-all dependency to version 2.3.10.
 
+[LPD-15162]: https://issues.liferay.com/browse/LPD-15162
 [LPS-51038]: https://issues.liferay.com/browse/LPS-51038
 [LPS-51081]: https://issues.liferay.com/browse/LPS-51081
 [LPS-51801]: https://issues.liferay.com/browse/LPS-51801
@@ -663,6 +710,10 @@ version 2.4.
 [LPS-150857]: https://issues.liferay.com/browse/LPS-150857
 [LPS-170036]: https://issues.liferay.com/browse/LPS-170036
 [LPS-173738]: https://issues.liferay.com/browse/LPS-173738
+[LPS-181413]: https://issues.liferay.com/browse/LPS-181413
+[LPS-181508]: https://issues.liferay.com/browse/LPS-181508
+[LPS-196998]: https://issues.liferay.com/browse/LPS-196998
+[LPS-198875]: https://issues.liferay.com/browse/LPS-198875
 [LRCI-2670]: https://issues.liferay.com/browse/LRCI-2670
 [LRDOCS-3956]: https://issues.liferay.com/browse/LRDOCS-3956
 [LRDOCS-4319]: https://issues.liferay.com/browse/LRDOCS-4319

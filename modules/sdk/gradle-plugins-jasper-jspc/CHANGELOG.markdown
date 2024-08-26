@@ -1,5 +1,48 @@
 # Liferay Gradle Plugins Jasper JSPC Change Log
 
+## 2.0.16 - 2024-06-19
+
+### Commits
+- [LPD-26910] [LPD-28726] Annotation runtime classpath normalization
+(8c4dc15f48)
+- [LPD-15162] Pin version (f636f23295)
+- [LPD-15162] Move tests (f23b048eff)
+- [LPD-15162] Update README.markdown (5e6c766cd3)
+- [LPD-15162] Update plugins Gradle version (7757c65773)
+
+## 2.0.15 - 2024-03-15
+
+### Commits
+- [LPD-15162] JspC (15c45b8b76)
+
+### Dependencies
+- [LPD-15162] Update the com.liferay.gradle.util dependency to version 1.0.49.
+
+## 2.0.14 - 2023-08-04
+
+### Commits
+- [LPS-181508] Update README.markdown (c9f00ca654)
+- [LPS-181508] Update plugins Gradle version (60571c128e)
+- [LPS-181508] Annotations (beddb5d22a)
+- [LPS-181508] Versions (0362751ca7)
+- [LPS-181508] Copy (f6124575e5)
+- [LPS-181508] Manual (c689a849e6)
+- [LPS-181508] Auto SF (runtime) (5e7a1385d1)
+- [LPS-181508] Runtime (203d66906c)
+- [LPS-181508] Apply java-library (d3c0c00f02)
+- [LPS-150857] Update README.markdown (77ff7e244f)
+- [LPS-150857] Update plugins Gradle version (4c389b37ce)
+- [LPS-105380] Remove final from variables (5a4e0b26b4)
+- [LPS-105380] Revert "LPS-105380 Remove final from variables" (cdda76fc8e)
+- [LPS-105380] Remove final from variables (ffe6186e71)
+
+### Dependencies
+- [LPS-181508] Update the com.liferay.gradle.util dependency to version 1.0.48.
+- [LPS-181508] Update the com.liferay.gradle.util dependency to version 1.0.47.
+- [LPS-51081] Update the com.liferay.gradle.util dependency to version 1.0.47.
+- [LRCI-2670] Update the com.liferay.gradle.util dependency to version 1.0.46.
+- [LPS-143280] Update the com.liferay.gradle.util dependency to version 1.0.45.
+
 ## 2.0.13 - 2021-06-21
 
 ### Commits
@@ -281,6 +324,9 @@ are closures, they will be evaluated while running the tasks (b6cddc02e0)
 - [LPS-51081] Skip the JSP compilation if there are no JSP files in the project
 (7bc515dd8d)
 
+[LPD-15162]: https://issues.liferay.com/browse/LPD-15162
+[LPD-26910]: https://issues.liferay.com/browse/LPD-26910
+[LPD-28726]: https://issues.liferay.com/browse/LPD-28726
 [LPS-51081]: https://issues.liferay.com/browse/LPS-51081
 [LPS-58467]: https://issues.liferay.com/browse/LPS-58467
 [LPS-59564]: https://issues.liferay.com/browse/LPS-59564
@@ -336,4 +382,8 @@ are closures, they will be evaluated while running the tasks (b6cddc02e0)
 [LPS-129870]: https://issues.liferay.com/browse/LPS-129870
 [LPS-130505]: https://issues.liferay.com/browse/LPS-130505
 [LPS-134306]: https://issues.liferay.com/browse/LPS-134306
+[LPS-143280]: https://issues.liferay.com/browse/LPS-143280
+[LPS-150857]: https://issues.liferay.com/browse/LPS-150857
+[LPS-181508]: https://issues.liferay.com/browse/LPS-181508
+[LRCI-2670]: https://issues.liferay.com/browse/LRCI-2670
 [LRDOCS-4129]: https://issues.liferay.com/browse/LRDOCS-4129

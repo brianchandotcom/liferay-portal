@@ -1,5 +1,27 @@
 # Liferay Gradle Plugins Deployment Helper Change Log
 
+## 1.0.8 - 2023-08-04
+
+### Commits
+- [LPS-181508] Main class (12d3e99aa9)
+- [LPS-181508] Update README.markdown (c9f00ca654)
+- [LPS-181508] Update plugins Gradle version (60571c128e)
+- [LPS-181508] Annotations (beddb5d22a)
+- [LPS-181508] Versions (0362751ca7)
+- [LPS-181508] Copy (f6124575e5)
+- [LPS-181508] Auto SF (runtime) (5e7a1385d1)
+- [LPS-181508] Runtime (203d66906c)
+- [LPS-150857] Update README.markdown (77ff7e244f)
+- [LPS-150857] Update plugins Gradle version (4c389b37ce)
+- [LRCI-2671] Add gradle-plugins-jenkins-result-parser (ef4d838846)
+
+### Dependencies
+- [LPS-181508] Update the com.liferay.gradle.util dependency to version 1.0.48.
+- [LPS-181508] Update the com.liferay.gradle.util dependency to version 1.0.47.
+- [LPS-51081] Update the com.liferay.gradle.util dependency to version 1.0.47.
+- [LRCI-2670] Update the com.liferay.gradle.util dependency to version 1.0.46.
+- [LPS-143280] Update the com.liferay.gradle.util dependency to version 1.0.45.
+
 ## 1.0.7 - 2020-11-02
 
 ### Commits
@@ -113,6 +135,7 @@
 - [LPS-57123] Update Gradle plugin up-to-date check (79756db97c)
 - [LPS-59564] Update directory layout for "sdk" modules (ea19635556)
 
+[LPS-51081]: https://issues.liferay.com/browse/LPS-51081
 [LPS-57123]: https://issues.liferay.com/browse/LPS-57123
 [LPS-59564]: https://issues.liferay.com/browse/LPS-59564
 [LPS-61088]: https://issues.liferay.com/browse/LPS-61088
@@ -148,3 +171,8 @@
 [LPS-111896]: https://issues.liferay.com/browse/LPS-111896
 [LPS-113624]: https://issues.liferay.com/browse/LPS-113624
 [LPS-115020]: https://issues.liferay.com/browse/LPS-115020
+[LPS-143280]: https://issues.liferay.com/browse/LPS-143280
+[LPS-150857]: https://issues.liferay.com/browse/LPS-150857
+[LPS-181508]: https://issues.liferay.com/browse/LPS-181508
+[LRCI-2670]: https://issues.liferay.com/browse/LRCI-2670
+[LRCI-2671]: https://issues.liferay.com/browse/LRCI-2671

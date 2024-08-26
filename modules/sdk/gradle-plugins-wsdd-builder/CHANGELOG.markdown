@@ -1,5 +1,34 @@
 # Liferay Gradle Plugins WSDD Builder Change Log
 
+## 1.0.23 - 2023-08-04
+
+### Commits
+- [LPS-181508] Main class (12d3e99aa9)
+- [LPS-181508] Update README.markdown (c9f00ca654)
+- [LPS-181508] Update plugins Gradle version (60571c128e)
+- [LPS-181508] Annotations (beddb5d22a)
+- [LPS-181508] Versions (0362751ca7)
+- [LPS-181508] Copy (f6124575e5)
+- [LPS-181508] Auto SF (runtime) (5e7a1385d1)
+- [LPS-181508] Runtime (203d66906c)
+- [LPS-181508] Runtime (7b88c6ea99)
+- [LPS-181508] Apply java-library (d3c0c00f02)
+- [LPS-189793] Regen (51a8958576)
+- [LPS-189793] Set version (61d0bdbd18)
+
+### Dependencies
+- [LPS-181508] Update the com.liferay.gradle.util dependency to version 1.0.48.
+- [LPS-181508] Update the com.liferay.gradle.util dependency to version 1.0.47.
+
+## 1.0.22 - 2023-06-21
+
+### Commits
+- [LPS-181413] Update links in README file (585c4977cc)
+
+### Dependencies
+- [LPS-135912] Update the com.liferay.portal.tools.wsdd.builder dependency to
+version 1.0.16.
+
 ## 1.0.21 - 2023-04-02
 
 ### Dependencies
@@ -346,11 +375,15 @@ resolution (5343a0699e)
 [LPS-113624]: https://issues.liferay.com/browse/LPS-113624
 [LPS-115020]: https://issues.liferay.com/browse/LPS-115020
 [LPS-133200]: https://issues.liferay.com/browse/LPS-133200
+[LPS-135912]: https://issues.liferay.com/browse/LPS-135912
 [LPS-136872]: https://issues.liferay.com/browse/LPS-136872
 [LPS-142696]: https://issues.liferay.com/browse/LPS-142696
 [LPS-143280]: https://issues.liferay.com/browse/LPS-143280
 [LPS-150857]: https://issues.liferay.com/browse/LPS-150857
 [LPS-151447]: https://issues.liferay.com/browse/LPS-151447
 [LPS-172713]: https://issues.liferay.com/browse/LPS-172713
+[LPS-181413]: https://issues.liferay.com/browse/LPS-181413
+[LPS-181508]: https://issues.liferay.com/browse/LPS-181508
+[LPS-189793]: https://issues.liferay.com/browse/LPS-189793
 [LRCI-2670]: https://issues.liferay.com/browse/LRCI-2670
 [LRDOCS-4319]: https://issues.liferay.com/browse/LRDOCS-4319

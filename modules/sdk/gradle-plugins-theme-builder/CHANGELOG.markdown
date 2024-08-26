@@ -1,5 +1,53 @@
 # Liferay Gradle Plugins Theme Builder Change Log
 
+## 2.0.27 - 2024-05-24
+
+### Commits
+- [LPD-15162] Pin version (f636f23295)
+- [LPD-15162] Move tests (f23b048eff)
+- [LPD-15162] Update README.markdown (5e6c766cd3)
+- [LPD-15162] Update plugins Gradle version (7757c65773)
+
+### Dependencies
+- [LPD-24865] Update the com.liferay.gradle.plugins.css.builder dependency to
+version 5.0.14.
+
+## 2.0.26 - 2023-12-08
+
+### Dependencies
+- [LPS-196998] Update the com.liferay.gradle.plugins.css.builder dependency to
+version 5.0.12.
+- [LPS-198875] Update the com.liferay.gradle.plugins.css.builder dependency to
+version 5.0.11.
+
+## 2.0.25 - 2023-08-17
+
+### Commits
+- [LPS-181508] liferay-portal: updateFileVersions (c87bf45b60)
+
+### Dependencies
+- [LPS-181508] Update the com.liferay.gradle.plugins.css.builder dependency to
+version 5.0.10.
+- [] Update the com.liferay.gradle.plugins.css.builder dependency to version
+5.0.9.
+
+## 2.0.24 - 2023-08-04
+
+### Commits
+- [LPS-181508] Main class (12d3e99aa9)
+- [LPS-181508] Update README.markdown (c9f00ca654)
+- [LPS-181508] Update plugins Gradle version (60571c128e)
+- [LPS-181508] Versions (0362751ca7)
+- [LPS-181508] Copy (f6124575e5)
+- [LPS-181508] Auto SF (runtime) (5e7a1385d1)
+- [LPS-181508] Runtime (203d66906c)
+
+### Dependencies
+- [LPS-181508] Update the com.liferay.gradle.plugins.css.builder dependency to
+version 5.0.8.
+- [LPS-181508] Update the com.liferay.gradle.plugins.css.builder dependency to
+version 5.0.7.
+
 ## 2.0.23 - 2023-02-14
 
 ### Dependencies
@@ -266,6 +314,8 @@ the WAR file.
 aren't mixed in with source files (fb7f330f69)
 - [LPS-66396] Edit gradle-plugins-theme-builder README (0ec11c2c12)
 
+[LPD-15162]: https://issues.liferay.com/browse/LPD-15162
+[LPD-24865]: https://issues.liferay.com/browse/LPD-24865
 [LPS-66396]: https://issues.liferay.com/browse/LPS-66396
 [LPS-66709]: https://issues.liferay.com/browse/LPS-66709
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573
@@ -317,4 +367,7 @@ aren't mixed in with source files (fb7f330f69)
 [LPS-150857]: https://issues.liferay.com/browse/LPS-150857
 [LPS-167074]: https://issues.liferay.com/browse/LPS-167074
 [LPS-173738]: https://issues.liferay.com/browse/LPS-173738
+[LPS-181508]: https://issues.liferay.com/browse/LPS-181508
+[LPS-196998]: https://issues.liferay.com/browse/LPS-196998
+[LPS-198875]: https://issues.liferay.com/browse/LPS-198875
 [LRDOCS-4129]: https://issues.liferay.com/browse/LRDOCS-4129

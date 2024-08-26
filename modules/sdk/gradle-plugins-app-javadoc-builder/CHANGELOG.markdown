@@ -1,5 +1,33 @@
 # Liferay Gradle Plugins App Javadoc Builder Change Log
 
+## 1.2.6 - 2024-03-15
+
+### Commits
+- [LPD-15162] Provider (e0abca338d)
+
+### Dependencies
+- [LPD-15162] Update the com.liferay.gradle.util dependency to version 1.0.49.
+
+## 1.2.5 - 2023-08-04
+
+### Commits
+- [LPS-181508] Update README.markdown (c9f00ca654)
+- [LPS-181508] Update plugins Gradle version (60571c128e)
+- [LPS-181508] Versions (0362751ca7)
+- [LPS-181508] Copy (f6124575e5)
+- [LPS-181508] Auto SF (runtime) (5e7a1385d1)
+- [LPS-181508] Runtime (203d66906c)
+- [LPS-181508] Runtime (7b88c6ea99)
+- [LPS-150857] Update README.markdown (77ff7e244f)
+- [LPS-150857] Update plugins Gradle version (4c389b37ce)
+
+### Dependencies
+- [LPS-181508] Update the com.liferay.gradle.util dependency to version 1.0.48.
+- [LPS-181508] Update the com.liferay.gradle.util dependency to version 1.0.47.
+- [LPS-51081] Update the com.liferay.gradle.util dependency to version 1.0.47.
+- [LRCI-2670] Update the com.liferay.gradle.util dependency to version 1.0.46.
+- [LPS-143280] Update the com.liferay.gradle.util dependency to version 1.0.45.
+
 ## 1.2.4 - 2020-11-02
 
 ### Commits
@@ -128,6 +156,8 @@ test (864be6a959)
 - [LRDOCS-2841] Avoid crashing if subproject "javadoc" is not a Javadoc task
 (5416a3c23b)
 
+[LPD-15162]: https://issues.liferay.com/browse/LPD-15162
+[LPS-51081]: https://issues.liferay.com/browse/LPS-51081
 [LPS-66709]: https://issues.liferay.com/browse/LPS-66709
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573
 [LPS-67658]: https://issues.liferay.com/browse/LPS-67658
@@ -157,4 +187,8 @@ test (864be6a959)
 [LPS-111896]: https://issues.liferay.com/browse/LPS-111896
 [LPS-113624]: https://issues.liferay.com/browse/LPS-113624
 [LPS-115020]: https://issues.liferay.com/browse/LPS-115020
+[LPS-143280]: https://issues.liferay.com/browse/LPS-143280
+[LPS-150857]: https://issues.liferay.com/browse/LPS-150857
+[LPS-181508]: https://issues.liferay.com/browse/LPS-181508
+[LRCI-2670]: https://issues.liferay.com/browse/LRCI-2670
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841

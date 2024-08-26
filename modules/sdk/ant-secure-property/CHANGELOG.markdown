@@ -1,0 +1,1 @@
+# Liferay Ant Secure Property Change Log

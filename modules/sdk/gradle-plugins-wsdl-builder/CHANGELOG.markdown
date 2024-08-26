@@ -1,5 +1,42 @@
 # Liferay Gradle Plugins WSDL Builder Change Log
 
+## 3.0.4 - 2024-03-15
+
+### Commits
+- [LPD-15162] Provider (e0abca338d)
+- [LPD-15162] DirectoryProperty (e7f6b0848b)
+- [LPD-15162] Inputs (d2add70ba9)
+
+### Dependencies
+- [LPD-15162] Update the com.liferay.gradle.util dependency to version 1.0.49.
+
+## 3.0.3 - 2023-08-04
+
+### Commits
+- [LPS-181508] Main class (12d3e99aa9)
+- [LPS-181508] Update README.markdown (c9f00ca654)
+- [LPS-181508] Update plugins Gradle version (60571c128e)
+- [LPS-181508] Versions (0362751ca7)
+- [LPS-181508] Copy (f6124575e5)
+- [LPS-181508] Auto SF (runtime) (5e7a1385d1)
+- [LPS-181508] Runtime (203d66906c)
+- [LPS-181508] Configurations (bae26650fd)
+- [LPS-181508] Apply java-library (d3c0c00f02)
+- [LPS-150857] Update README.markdown (77ff7e244f)
+- [LPS-150857] Update plugins Gradle version (4c389b37ce)
+- [LPS-150378] SF, inline (fa2af49346)
+- [LPS-150378] SF, inline (15a4ebdc1f)
+- [LPS-130505] Revert "LPS-130505 SF, no need to call methods" (a8fc61bb0e)
+- [LPS-130505] SF, no need to call methods (877d6175a9)
+- [LPS-129668] Update javax.mail from 1.6.2 to 1.6.6 (ff2f27075d)
+
+### Dependencies
+- [LPS-181508] Update the com.liferay.gradle.util dependency to version 1.0.48.
+- [LPS-181508] Update the com.liferay.gradle.util dependency to version 1.0.47.
+- [LPS-51081] Update the com.liferay.gradle.util dependency to version 1.0.47.
+- [LRCI-2670] Update the com.liferay.gradle.util dependency to version 1.0.46.
+- [LPS-143280] Update the com.liferay.gradle.util dependency to version 1.0.45.
+
 ## 3.0.2 - 2020-11-02
 
 ### Commits
@@ -243,6 +280,7 @@ version 2.4.
 - [LPS-51081] Increment to prepeare for next versions (71f784ba94)
 - [LPS-51081] Use com.liferay.gradle.util 1.0.1 release (86c44a6095)
 
+[LPD-15162]: https://issues.liferay.com/browse/LPD-15162
 [LPS-51081]: https://issues.liferay.com/browse/LPS-51081
 [LPS-51801]: https://issues.liferay.com/browse/LPS-51801
 [LPS-55187]: https://issues.liferay.com/browse/LPS-55187
@@ -293,4 +331,11 @@ version 2.4.
 [LPS-113624]: https://issues.liferay.com/browse/LPS-113624
 [LPS-114513]: https://issues.liferay.com/browse/LPS-114513
 [LPS-115020]: https://issues.liferay.com/browse/LPS-115020
+[LPS-129668]: https://issues.liferay.com/browse/LPS-129668
+[LPS-130505]: https://issues.liferay.com/browse/LPS-130505
+[LPS-143280]: https://issues.liferay.com/browse/LPS-143280
+[LPS-150378]: https://issues.liferay.com/browse/LPS-150378
+[LPS-150857]: https://issues.liferay.com/browse/LPS-150857
+[LPS-181508]: https://issues.liferay.com/browse/LPS-181508
+[LRCI-2670]: https://issues.liferay.com/browse/LRCI-2670
 [LRDOCS-4319]: https://issues.liferay.com/browse/LRDOCS-4319

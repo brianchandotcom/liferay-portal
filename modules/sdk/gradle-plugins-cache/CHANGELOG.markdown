@@ -1,5 +1,30 @@
 # Liferay Gradle Plugins Cache Change Log
 
+## 1.0.19 - 2023-08-04
+
+### Commits
+- [LPS-181508] Update plugins Gradle version (60571c128e)
+- [LPS-181508] Annotations (beddb5d22a)
+- [LPS-181508] Hash (dc3228a8f7)
+- [LPS-181508] Auto SF (runtime) (5e7a1385d1)
+- [LPS-181508] Runtime (7b88c6ea99)
+- [LPS-150857] Update plugins Gradle version (4c389b37ce)
+- [LPS-51081] Runtime (c408e952e3)
+- [LPS-105380] Merge consecutive if-statements (1ec70acda6)
+- [LPS-105380] Increase performance by moving variable declaration after throw
+statement (444d3bb171)
+- [LPS-130505] Revert "LPS-130505 SF, no need to call methods" (e2ecb543ee)
+- [LPS-130505] SF, no need to call methods (fd9b92bc08)
+- [LPS-105380] Add line breaks (bd1787840d)
+- [LPS-105380] Sort calls (5bee59f272)
+
+### Dependencies
+- [LPS-181508] Update the com.liferay.gradle.util dependency to version 1.0.48.
+- [LPS-181508] Update the com.liferay.gradle.util dependency to version 1.0.47.
+- [LPS-51081] Update the com.liferay.gradle.util dependency to version 1.0.47.
+- [LRCI-2670] Update the com.liferay.gradle.util dependency to version 1.0.46.
+- [LPS-143280] Update the com.liferay.gradle.util dependency to version 1.0.45.
+
 ## 1.0.18 - 2020-11-02
 
 ### Commits
@@ -185,6 +210,7 @@
 ### Dependencies
 - [LPS-58587] Update the com.liferay.gradle.util dependency to version 1.0.21.
 
+[LPS-51081]: https://issues.liferay.com/browse/LPS-51081
 [LPS-58587]: https://issues.liferay.com/browse/LPS-58587
 [LPS-59564]: https://issues.liferay.com/browse/LPS-59564
 [LPS-59672]: https://issues.liferay.com/browse/LPS-59672
@@ -227,3 +253,8 @@
 [LPS-111896]: https://issues.liferay.com/browse/LPS-111896
 [LPS-113624]: https://issues.liferay.com/browse/LPS-113624
 [LPS-115020]: https://issues.liferay.com/browse/LPS-115020
+[LPS-130505]: https://issues.liferay.com/browse/LPS-130505
+[LPS-143280]: https://issues.liferay.com/browse/LPS-143280
+[LPS-150857]: https://issues.liferay.com/browse/LPS-150857
+[LPS-181508]: https://issues.liferay.com/browse/LPS-181508
+[LRCI-2670]: https://issues.liferay.com/browse/LRCI-2670

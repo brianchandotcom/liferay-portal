@@ -1,5 +1,36 @@
 # Liferay Gradle Plugins Maven Plugin Builder Change Log
 
+## 2.0.2 - 2023-08-14
+
+### Commits
+- [LPS-181508] Fix writeMavenSettings (ff17b14b9a)
+
+## 2.0.1 - 2023-08-04
+
+### Commits
+- [LPS-181508] Main class (12d3e99aa9)
+- [LPS-181508] Update README.markdown (c9f00ca654)
+- [LPS-181508] Update plugins Gradle version (60571c128e)
+- [LPS-181508] Annotations (beddb5d22a)
+- [LPS-181508] Versions (0362751ca7)
+- [LPS-181508] Copy (f6124575e5)
+- [LPS-181508] Publishing (8f6e3d809c)
+- [LPS-181508] Auto SF (runtime) (5e7a1385d1)
+- [LPS-181508] Runtime (203d66906c)
+- [LPS-181508] Resolvable (0b41c85fc5)
+- [LPS-181508] Configurations (bae26650fd)
+- [LPS-181508] Apply java-library (d3c0c00f02)
+- [LPS-150857] Update README.markdown (77ff7e244f)
+- [LPS-150857] Update plugins Gradle version (4c389b37ce)
+
+### Dependencies
+- [LPS-181508] Update the com.liferay.gradle.util dependency to version 1.0.48.
+- [LPS-181508] Update the com\.liferay\.gradle\.plugins\.maven\.plugin\.builder
+dependency to version (\d.+)"/, "../../../portal-web/build-test.gradle.
+- [LPS-181508] Update the com.liferay.gradle.util dependency to version 1.0.47.
+- [LPS-181508] Update the qdox dependency to version 1.12.1.
+- [LPS-181508] Update the dom4j dependency to version 2.1.3.
+
 ## 2.0.0 - 2022-07-15
 
 ### Dependencies
@@ -463,4 +494,6 @@ version 2.4.
 [LPS-115020]: https://issues.liferay.com/browse/LPS-115020
 [LPS-130505]: https://issues.liferay.com/browse/LPS-130505
 [LPS-143280]: https://issues.liferay.com/browse/LPS-143280
+[LPS-150857]: https://issues.liferay.com/browse/LPS-150857
+[LPS-181508]: https://issues.liferay.com/browse/LPS-181508
 [LRCI-2670]: https://issues.liferay.com/browse/LRCI-2670

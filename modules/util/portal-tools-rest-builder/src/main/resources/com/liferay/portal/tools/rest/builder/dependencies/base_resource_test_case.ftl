@@ -193,6 +193,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 				{
 					configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 					configure(SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
+					enable(SerializationFeature.INDENT_OUTPUT);
 					setDateFormat(new ISO8601DateFormat());
 					setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
 					setSerializationInclusion(JsonInclude.Include.NON_NULL);

@@ -15,6 +15,7 @@
 			"required": false
 		}
 	],
+	"objectFolderExternalReferenceCode": "LEARNCERTIFICATE",
 	"pluralLabel": {
 		"en_US": "Data Syncs"
 	},

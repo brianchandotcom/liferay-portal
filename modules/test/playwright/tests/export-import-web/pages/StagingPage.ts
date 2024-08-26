@@ -38,7 +38,7 @@ export class StagingPage {
 	async enableDefaultLocalStaging() {
 		await this.localStagingCheckbox.check();
 
-		await this.page.once('dialog', async (dialog) => {
+		this.page.once('dialog', async (dialog) => {
 			expect(dialog.message()).toContain(
 				'Are you sure you want to activate local staging for'
 			);
@@ -80,8 +80,8 @@ export class StagingPage {
 		return await this.page.screenshot({
 			fullPage: true,			
 			mask: [
-				await this.page.locator('.control-menu-container').first(),
-				await this.page.locator('.sidenav-menu').first(),
+				this.page.locator('.control-menu-container').first(),
+				this.page.locator('.sidenav-menu').first(),
 			],
 			maskColor: '#FFFFFF',
 			omitBackground: true,

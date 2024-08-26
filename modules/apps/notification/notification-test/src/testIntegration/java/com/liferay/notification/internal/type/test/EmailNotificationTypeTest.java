@@ -346,7 +346,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
 				TestPropsValues.getCompanyId(), CommerceOrder.class.getName());
 
-		Map<String, Object> termValuesMap = _createFreeMarkerTermValuesMap(
+		Map<String, Object> termValues = _getFreeMarkerTermValues(
 			commerceOrderObjectDefinition, commerceOrder,
 			_getTermNames(
 				commerceOrderObjectDefinition.getObjectDefinitionId(),
@@ -354,7 +354,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 					"Basic Information", "Workflow Status Information")));
 
 		String body =
-			StringUtil.merge(termValuesMap.keySet(), StringPool.POUND) +
+			StringUtil.merge(termValues.keySet(), StringPool.POUND) +
 				StringPool.POUND;
 
 		ObjectAction objectAction = _addNotificationTemplateObjectAction(
@@ -366,7 +366,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			CommerceOrderPaymentConstants.STATUS_PENDING);
 
 		_assertNotificationQueueEntryTermValues(
-			new ArrayList<>(termValuesMap.values()), StringPool.POUND);
+			new ArrayList<>(termValues.values()), StringPool.POUND);
 
 		_objectActionLocalService.deleteObjectAction(objectAction);
 
@@ -1236,7 +1236,23 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			notificationQueueEntry);
 	}
 
-	private Map<String, Object> _createFreeMarkerTermValuesMap(
+	private Folder _getFolder(NotificationQueueEntry notificationQueueEntry)
+		throws Exception {
+
+		Group group = _groupLocalService.getCompanyGroup(
+			notificationQueueEntry.getCompanyId());
+
+		Repository repository = _portletFileRepository.getPortletRepository(
+			group.getGroupId(), NotificationPortletKeys.NOTIFICATION_TEMPLATES);
+
+		return _portletFileRepository.getPortletFolder(
+			repository.getRepositoryId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			String.valueOf(
+				notificationQueueEntry.getNotificationQueueEntryId()));
+	}
+
+	private Map<String, Object> _getFreeMarkerTermValues(
 			ObjectDefinition objectDefinition, PersistedModel persistedModel,
 			Set<String> termNames)
 		throws Exception {
@@ -1303,24 +1319,8 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 		return termValues;
 	}
 
-	private Folder _getFolder(NotificationQueueEntry notificationQueueEntry)
-		throws Exception {
-
-		Group group = _groupLocalService.getCompanyGroup(
-			notificationQueueEntry.getCompanyId());
-
-		Repository repository = _portletFileRepository.getPortletRepository(
-			group.getGroupId(), NotificationPortletKeys.NOTIFICATION_TEMPLATES);
-
-		return _portletFileRepository.getPortletFolder(
-			repository.getRepositoryId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			String.valueOf(
-				notificationQueueEntry.getNotificationQueueEntryId()));
-	}
-
 	private Set<String> _getTermNames(
-			long objectDefinitionId, Set<String> selectedTermCategories)
+			long objectDefinitionId, Set<String> termCategories)
 		throws Exception {
 
 		Set<String> termNames = new HashSet<>();
@@ -1341,28 +1341,30 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			(ByteArrayOutputStream)
 				mockLiferayResourceResponse.getPortletOutputStream();
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
+		JSONArray ftlTermCategoriesJSONArray = JSONFactoryUtil.createJSONArray(
 			byteArrayOutputStream.toString());
 
-		for (int i = 0; i < jsonArray.length(); i++) {
-			JSONObject jsonObject = jsonArray.getJSONObject(i);
+		for (int i = 0; i < ftlTermCategoriesJSONArray.length(); i++) {
+			JSONObject ftlTermCategoryJSONObject =
+				ftlTermCategoriesJSONArray.getJSONObject(i);
 
-			if (!selectedTermCategories.contains(
-					jsonObject.getString("label"))) {
+			if (!termCategories.contains(
+					ftlTermCategoryJSONObject.getString("label"))) {
 
 				continue;
 			}
 
-			JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
+			JSONArray itemsJSONArray = ftlTermCategoryJSONObject.getJSONArray(
+				"items");
 
 			for (int j = 0; j < itemsJSONArray.length(); j++) {
-				JSONObject termJSONObject = itemsJSONArray.getJSONObject(j);
+				JSONObject itemJSONObject = itemsJSONArray.getJSONObject(j);
 
-				if (termJSONObject == null) {
+				if (itemJSONObject == null) {
 					continue;
 				}
 
-				termNames.add(termJSONObject.getString("content"));
+				termNames.add(itemJSONObject.getString("content"));
 			}
 		}
 

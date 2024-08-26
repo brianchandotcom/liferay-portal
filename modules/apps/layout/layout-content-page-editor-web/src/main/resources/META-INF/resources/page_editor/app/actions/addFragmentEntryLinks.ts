@@ -37,6 +37,7 @@ export interface FragmentEntryLink<
 			[key in ConfigurationFieldId]: EditableValue;
 		};
 	};
+	fieldTypes: string[];
 	fragmentEntryId: string;
 	fragmentEntryKey: string;
 	fragmentEntryLinkId: string;

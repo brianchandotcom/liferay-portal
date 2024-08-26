@@ -10,6 +10,7 @@ import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {fragmentsPagesTest} from '../../fixtures/fragmentPagesTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {masterPagesPagesTest} from '../../fixtures/masterPagesPagesTest';
 import {objectPagesTest} from '../../fixtures/objectPagesTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {pageManagementSiteTest} from '../../fixtures/pageManagementSiteTest';
@@ -17,6 +18,7 @@ import {PageEditorPage} from '../../pages/layout-content-page-editor-web/PageEdi
 import {checkAccessibility} from '../../utils/checkAccessibility';
 import {clickAndExpectToBeHidden} from '../../utils/clickAndExpectToBeHidden';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
+import dragAndDropElement from '../../utils/dragAndDropElement';
 import getGlobalSiteId from '../../utils/getGlobalSiteId';
 import getRandomString from '../../utils/getRandomString';
 import {PORTLET_URLS} from '../../utils/portletUrls';
@@ -46,6 +48,7 @@ const test = mergeTests(
 	isolatedSiteTest,
 	journalPagesTest,
 	loginTest(),
+	masterPagesPagesTest,
 	objectPagesTest,
 	pageEditorPagesTest,
 	pageManagementSiteTest
@@ -1100,6 +1103,77 @@ test.describe('Tabs Fragment', () => {
 
 		await expect(secondTab).toHaveAttribute('aria-selected', 'false');
 		await expect(firstTab).toHaveAttribute('aria-selected', 'true');
+	});
+
+	test('Check that tabs have their corresponding content on a master page', async ({
+		apiHelpers,
+		masterPagesPage,
+		page,
+		pageEditorPage,
+		site,
+	}) => {
+
+		// Create a master page and add a Tabs fragment
+
+		const masterPageName = getRandomString();
+
+		await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.addLayoutPageTemplateEntry(
+			{
+				groupId: site.id,
+				name: masterPageName,
+				type: '3',
+			}
+		);
+
+		await masterPagesPage.goto(site.friendlyUrlPath);
+
+		await masterPagesPage.editMaster(masterPageName);
+
+		await pageEditorPage.addFragment('Basic Components', 'Tabs');
+
+		// Add the main drop zone on the first tab and a Heading fragment in the second tab
+
+		const tabDropZone = page
+			.getByText('Place fragments or widgets here.')
+			.first();
+
+		await dragAndDropElement({
+			dragTarget: page.locator('[data-name="Drop Zone"]'),
+			dropTarget: tabDropZone,
+			page,
+		});
+
+		await pageEditorPage.addFragment('Basic Components', 'Heading');
+
+		const secondTab = getTab('Tab 2', page);
+
+		await secondTab.press('Enter');
+
+		await tabDropZone.waitFor();
+
+		await dragAndDropElement({
+			dragTarget: page.locator('[data-name="Heading"]'),
+			dropTarget: page
+				.getByText('Place fragments or widgets here.')
+				.first(),
+			page,
+		});
+
+		// Check that each tab has the corresponding content
+
+		const firstTab = getTab('Tab 1', page);
+
+		await firstTab.press('Enter');
+
+		await expect(
+			page.getByText(
+				'Fragments and widgets for pages based on this master will be placed here.'
+			)
+		).toBeVisible();
+
+		await secondTab.press('Enter');
+
+		await expect(page.getByText('Heading Example')).toBeVisible();
 	});
 });
 

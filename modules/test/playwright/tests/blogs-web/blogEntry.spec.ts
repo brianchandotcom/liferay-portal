@@ -391,3 +391,75 @@ test(
 		});
 	}
 );
+
+test(
+	'Only blogs entry categories in the friendly URL',
+	{
+		tag: '@LPD-26659',
+	},
+	async ({
+		apiHelpers,
+		blogsEditBlogEntryPage,
+		displayPageTemplatesPage,
+		page,
+		pageEditorPage,
+		site,
+	}) => {
+		const vocabularyName = getRandomString();
+		const friendlyUrlCategories = [
+			{name: 'category-1'},
+			{name: 'category-2'},
+			{name: 'category-3'},
+		];
+
+		await blogsCategorizedFriendlyUrlSetup({
+			apiHelpers,
+			displayPageTemplatesPage,
+			friendlyUrlCategories,
+			page,
+			pageEditorPage,
+			site,
+			vocabularyName,
+		});
+
+		await blogsEditBlogEntryPage.goto(site.friendlyUrlPath);
+
+		const title = getRandomString();
+
+		await blogsEditBlogEntryPage.editBlogEntry({
+			content: getRandomString(),
+			friendlyUrl: {
+				categories: friendlyUrlCategories,
+				vocabularyName,
+			},
+			publish: false,
+			title,
+		});
+
+		await page.getByLabel('Remove category-1').click();
+		await page.getByLabel('Current').selectOption('category-2');
+		await page.getByLabel('Reorder Down').click();
+
+		const expectedCategoriesPartialURL = 'category-3/category-2';
+
+		await test.step('Check categories in the input addon categories preview', async () => {
+			await expect(
+				page.getByText(
+					`${PREFIX_FRIENDLY_URL}${expectedCategoriesPartialURL}`
+				)
+			).toBeVisible();
+		});
+
+		await test.step('Check categories in friendly URL', async () => {
+			await blogsEditBlogEntryPage.publishBlogEntry();
+
+			const response = await page.goto(
+				`/web${site.friendlyUrlPath}/b/${title}`
+			);
+
+			await expect(response.url()).toContain(
+				`/web${site.friendlyUrlPath}/b/${expectedCategoriesPartialURL}/${title}`
+			);
+		});
+	}
+);

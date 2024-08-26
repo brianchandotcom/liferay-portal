@@ -8,9 +8,6 @@ package com.liferay.dynamic.data.mapping.upgrade.v3_9_1.test.util;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
-
-import java.util.List;
 
 /**
  * @author Igor Costa
@@ -18,19 +15,14 @@ import java.util.List;
 public class DDMStructureCTUpgradeProcessTestUtil {
 
 	public static DDMForm getDDMForm() {
-		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
-			RandomTestUtil.randomString());
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
 
-		List<DDMFormField> ddmFormFields = ddmForm.getDDMFormFields();
+		DDMFormField ddmFormField = DDMFormTestUtil.createDDMFormField(
+			"text", "Text", "text", "string", false, false, false);
 
-		ddmFormFields.forEach(
-			ddmFormField -> {
-				if (ddmFormField.getFieldReference() != null) {
-					ddmFormField.setFieldReference(null);
-				}
-			});
+		ddmFormField.setFieldReference(null);
 
-		ddmForm.setDDMFormFields(ddmFormFields);
+		ddmForm.addDDMFormField(ddmFormField);
 
 		return ddmForm;
 	}

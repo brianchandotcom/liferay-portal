@@ -109,10 +109,9 @@ public class DDMStructureUpgradeProcess extends UpgradeProcess {
 
 	private void _upgradeDDMStructure() throws Exception {
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
-				StringBundler.concat(
-					"select ctCollectionId, structureId, definition from ",
-					"DDMStructure where classNameId = ? or classNameId = ? ",
-					"order by createDate"));
+				"select ctCollectionId, structureId, definition from " +
+					"DDMStructure where classNameId = ? or classNameId = ? " +
+						"order by createDate");
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
@@ -151,9 +150,7 @@ public class DDMStructureUpgradeProcess extends UpgradeProcess {
 					"DDMStructureVersion.ctCollectionId, ",
 					"DDMStructureVersion.structureVersionId, ",
 					"DDMStructureVersion.definition from DDMStructureVersion ",
-					"inner join DDMStructure on DDMStructure.ctCollectionId = ",
-					"DDMStructureVersion.structureId and ",
-					"DDMStructure.structureId = ",
+					"inner join DDMStructure on DDMStructure.structureId = ",
 					"DDMStructureVersion.structureId where ",
 					"DDMStructure.classNameId = ? or DDMStructure.classNameId ",
 					"= ?"));

@@ -106,17 +106,12 @@ public class DDMStructureUpgradeProcess extends UpgradeProcess {
 
 			try (ResultSet resultSet = preparedStatement1.executeQuery()) {
 				while (resultSet.next()) {
-					String definition = resultSet.getString("definition");
-
-					preparedStatement2.setString(1, definition);
-
-					long ctCollectionId = resultSet.getLong("ctCollectionId");
-
-					preparedStatement2.setLong(2, ctCollectionId);
-
-					long structureId = resultSet.getLong("structureId");
-
-					preparedStatement2.setLong(3, structureId);
+					preparedStatement2.setString(
+						1, resultSet.getString("definition"));
+					preparedStatement2.setLong(
+						2, resultSet.getLong("ctCollectionId"));
+					preparedStatement2.setLong(
+						3, resultSet.getLong("structureId"));
 
 					preparedStatement2.addBatch();
 				}
@@ -148,16 +143,14 @@ public class DDMStructureUpgradeProcess extends UpgradeProcess {
 
 			try (ResultSet resultSet = preparedStatement1.executeQuery()) {
 				while (resultSet.next()) {
-					long ctCollectionId = resultSet.getLong("ctCollectionId");
-					long structureVersionId = resultSet.getLong(
-						"structureVersionId");
-
 					preparedStatement2.setString(
 						1,
 						_upgradeDDMStructureVersionDefinition(
 							resultSet.getString("definition")));
-					preparedStatement2.setLong(2, ctCollectionId);
-					preparedStatement2.setLong(3, structureVersionId);
+					preparedStatement2.setLong(
+						2, resultSet.getLong("ctCollectionId"));
+					preparedStatement2.setLong(
+						3, resultSet.getLong("structureVersionId"));
 
 					preparedStatement2.addBatch();
 				}

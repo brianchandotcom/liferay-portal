@@ -3156,7 +3156,9 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 					);
 
-					return suppliers.get(RandomTestUtil.randomInt(0, suppliers.size() - 1)).get();
+					Supplier<${schemaName}> supplier = suppliers.get(RandomTestUtil.randomInt(0, suppliers.size() - 1));
+
+					return supplier.get();
 				}
 
 				private <T extends ${schemaName}> void setCommonAttributes(T ${schemaVarName}) {

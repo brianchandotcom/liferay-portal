@@ -27,9 +27,9 @@ import {
 	ISelectionFilter,
 } from '../../utils/types';
 import {IDataSetSectionProps} from '../DataSet';
-import ClientExtensionFilterModalContent from './components/ClientExtensionFilter';
-import DateRangeFilterModalContent from './components/DateRangeFilter';
-import SelectionFilterModalContent from './components/selection_filter/SelectionFilter';
+import ClientExtensionFilterFormContent from './components/ClientExtensionFilter';
+import DateRangeFilterFormContent from './components/DateRangeFilter';
+import SelectionFilterFormContent from './components/selection_filter/SelectionFilter';
 
 import '../../../css/Filters.scss';
 import {IDataSet} from '../../DataSets';
@@ -45,7 +45,7 @@ const FILTER_MODE = {
 
 const FILTER_TYPES: Record<EFilterType, IFilterTypeProps> = {
 	[EFilterType.CLIENT_EXTENSION]: {
-		Component: ClientExtensionFilterModalContent,
+		Component: ClientExtensionFilterFormContent,
 		availableFieldsFilter: (item: IField) => !!item,
 		displayType: Liferay.Language.get('client-extension-filter'),
 		fdsViewRelationship:
@@ -56,7 +56,7 @@ const FILTER_TYPES: Record<EFilterType, IFilterTypeProps> = {
 		url: API_URL.CLIENT_EXTENSION_FILTERS,
 	},
 	[EFilterType.DATE_RANGE]: {
-		Component: DateRangeFilterModalContent,
+		Component: DateRangeFilterFormContent,
 		availableFieldsFilter: (item: IField) =>
 			item.format === EFieldFormat.DATE ||
 			item.format === EFieldFormat.DATE_TIME,
@@ -67,7 +67,7 @@ const FILTER_TYPES: Record<EFilterType, IFilterTypeProps> = {
 		url: API_URL.DATE_FILTERS,
 	},
 	[EFilterType.SELECTION]: {
-		Component: SelectionFilterModalContent,
+		Component: SelectionFilterFormContent,
 		availableFieldsFilter: (item: IField) =>
 			item.type === EFieldType.STRING && !item.format,
 		displayType: Liferay.Language.get('dynamic-filter'),

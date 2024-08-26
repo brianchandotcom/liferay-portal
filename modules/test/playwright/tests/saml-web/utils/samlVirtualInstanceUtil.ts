@@ -249,6 +249,9 @@ export async function setupSamlInstances(
 		idpEntityId,
 		spEntityId
 	);
+
+	await idpAdminPage.close();
+	await spAdminPage.close();
 }
 
 export async function updateRuntimeMetadataRefreshInterval(

@@ -149,6 +149,8 @@ test.afterEach(async ({browser}) => {
 
 			await configureServiceProvider(newPage);
 		}
+
+		await newPage.close();
 	}
 	deleteAfterTestProviderConnections.length = 0;
 
@@ -176,6 +178,8 @@ test.beforeAll(async ({browser}) => {
 	// Create virtual instances
 
 	await setupSamlInstances(browser, newPage);
+
+	await newPage.close();
 });
 
 test('Create two virtual instances, one IdP and one SP, connect them, perform SP initiated SSO, perform SP initiated SLO', async ({

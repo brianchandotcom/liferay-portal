@@ -464,32 +464,32 @@ public class LayoutStructure {
 			new HashMap<>();
 
 		for (String parentItemId : parentItemIds) {
+			int position = 0;
+			String finalParentItemId = parentItemId;
+
+			LayoutStructureItem layoutStructureItem = _layoutStructureItems.get(
+				parentItemId);
+
+			if (!(layoutStructureItem instanceof
+					ContainerStyledLayoutStructureItem) &&
+				!(layoutStructureItem instanceof
+					CollectionStyledLayoutStructureItem) &&
+				!(layoutStructureItem instanceof
+					FormStyledLayoutStructureItem)) {
+
+				LayoutStructureItem parentLayoutStructureItem =
+					_layoutStructureItems.get(
+						layoutStructureItem.getParentItemId());
+
+				List<String> childrenItemIds =
+					parentLayoutStructureItem.getChildrenItemIds();
+
+				position = childrenItemIds.indexOf(parentItemId) + 1;
+
+				finalParentItemId = layoutStructureItem.getParentItemId();
+			}
+
 			for (String itemId : itemIds) {
-				int position = 0;
-				String finalParentItemId = parentItemId;
-
-				LayoutStructureItem layoutStructureItem =
-					_layoutStructureItems.get(parentItemId);
-
-				if (!(layoutStructureItem instanceof
-						ContainerStyledLayoutStructureItem) &&
-					!(layoutStructureItem instanceof
-						CollectionStyledLayoutStructureItem) &&
-					!(layoutStructureItem instanceof
-						FormStyledLayoutStructureItem)) {
-
-					LayoutStructureItem parentLayoutStructureItem =
-						_layoutStructureItems.get(
-							layoutStructureItem.getParentItemId());
-
-					List<String> childrenItemIds =
-						parentLayoutStructureItem.getChildrenItemIds();
-
-					position = childrenItemIds.indexOf(parentItemId) + 1;
-
-					finalParentItemId = layoutStructureItem.getParentItemId();
-				}
-
 				List<LayoutStructureItem> copiedLayoutStructureItems =
 					_duplicateLayoutStructureItem(
 						itemId, finalParentItemId, position);

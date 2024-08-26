@@ -7,6 +7,7 @@ package com.liferay.portal.search.tuning.synonyms.web.internal.upgrade.v1_0_1;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
+import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -21,19 +22,10 @@ import java.util.List;
 
 import org.apache.felix.cm.file.ConfigurationHandler;
 
-import org.osgi.service.cm.Configuration;
-import org.osgi.service.cm.ConfigurationAdmin;
-
 /**
  * @author Felipe Lorenz
  */
 public class SynonymsConfigurationUpgradeProcess extends UpgradeProcess {
-
-	public SynonymsConfigurationUpgradeProcess(
-		ConfigurationAdmin configurationAdmin) {
-
-		_configurationAdmin = configurationAdmin;
-	}
 
 	@Override
 	protected void doUpgrade() throws Exception {
@@ -41,12 +33,15 @@ public class SynonymsConfigurationUpgradeProcess extends UpgradeProcess {
 			return;
 		}
 
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select * from Configuration_ where configurationId = ?")) {
+		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
+				"select * from Configuration_ where configurationId = ?");
+			PreparedStatement preparedStatement2 = connection.prepareStatement(
+				"update Configuration_ set dictionary = ? where " +
+					"configurationId = ?")) {
 
-			preparedStatement.setString(1, _CONFIGURATION_ID);
+			preparedStatement1.setString(1, _CONFIGURATION_ID);
 
-			ResultSet resultSet = preparedStatement.executeQuery();
+			ResultSet resultSet = preparedStatement1.executeQuery();
 
 			resultSet.next();
 
@@ -71,12 +66,23 @@ public class SynonymsConfigurationUpgradeProcess extends UpgradeProcess {
 			dictionary.put(
 				"filterNames", synonymFilterNames.toArray(new String[0]));
 
-			Configuration configuration = _configurationAdmin.getConfiguration(
-				_CONFIGURATION_ID, "?");
+			UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
+				new UnsyncByteArrayOutputStream();
 
-			configuration.update(dictionary);
+			ConfigurationHandler.write(unsyncByteArrayOutputStream, dictionary);
+
+			preparedStatement2.setString(
+				1, unsyncByteArrayOutputStream.toString());
+
+			preparedStatement2.setString(2, _CONFIGURATION_ID);
+
+			preparedStatement2.executeUpdate();
 		}
 	}
+
+	private static final String _CONFIGURATION_ID =
+		"com.liferay.portal.search.tuning.synonyms.web.internal." +
+			"configuration.SynonymsConfiguration";
 
 	private static final String[] _FILTER_NAMES = {
 		"liferay_filter_synonym_ar", "liferay_filter_synonym_ca",
@@ -87,11 +93,5 @@ public class SynonymsConfigurationUpgradeProcess extends UpgradeProcess {
 		"liferay_filter_synonym_pt_PT", "liferay_filter_synonym_sv",
 		"liferay_filter_synonym_zh"
 	};
-
-	private static final String _CONFIGURATION_ID =
-		"com.liferay.portal.search.tuning.synonyms.web.internal." +
-			"configuration.SynonymsConfiguration";
-
-	private final ConfigurationAdmin _configurationAdmin;
 
 }

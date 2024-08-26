@@ -384,6 +384,97 @@ public class Attachment implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
+	@Schema(example = "AB-34098-789-N")
+	public String getFileEntryExternalReferenceCode() {
+		if (_fileEntryExternalReferenceCodeSupplier != null) {
+			fileEntryExternalReferenceCode =
+				_fileEntryExternalReferenceCodeSupplier.get();
+
+			_fileEntryExternalReferenceCodeSupplier = null;
+		}
+
+		return fileEntryExternalReferenceCode;
+	}
+
+	public void setFileEntryExternalReferenceCode(
+		String fileEntryExternalReferenceCode) {
+
+		this.fileEntryExternalReferenceCode = fileEntryExternalReferenceCode;
+
+		_fileEntryExternalReferenceCodeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setFileEntryExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			fileEntryExternalReferenceCodeUnsafeSupplier) {
+
+		_fileEntryExternalReferenceCodeSupplier = () -> {
+			try {
+				return fileEntryExternalReferenceCodeUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String fileEntryExternalReferenceCode;
+
+	@JsonIgnore
+	private Supplier<String> _fileEntryExternalReferenceCodeSupplier;
+
+	@Schema(example = "AB-34098-789-N")
+	public String getFileEntryGroupExternalReferenceCode() {
+		if (_fileEntryGroupExternalReferenceCodeSupplier != null) {
+			fileEntryGroupExternalReferenceCode =
+				_fileEntryGroupExternalReferenceCodeSupplier.get();
+
+			_fileEntryGroupExternalReferenceCodeSupplier = null;
+		}
+
+		return fileEntryGroupExternalReferenceCode;
+	}
+
+	public void setFileEntryGroupExternalReferenceCode(
+		String fileEntryGroupExternalReferenceCode) {
+
+		this.fileEntryGroupExternalReferenceCode =
+			fileEntryGroupExternalReferenceCode;
+
+		_fileEntryGroupExternalReferenceCodeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setFileEntryGroupExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			fileEntryGroupExternalReferenceCodeUnsafeSupplier) {
+
+		_fileEntryGroupExternalReferenceCodeSupplier = () -> {
+			try {
+				return fileEntryGroupExternalReferenceCodeUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String fileEntryGroupExternalReferenceCode;
+
+	@JsonIgnore
+	private Supplier<String> _fileEntryGroupExternalReferenceCodeSupplier;
+
 	@DecimalMin("0")
 	@Schema(example = "30130")
 	public Long getFileEntryId() {
@@ -950,6 +1041,40 @@ public class Attachment implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(externalReferenceCode));
+
+			sb.append("\"");
+		}
+
+		String fileEntryExternalReferenceCode =
+			getFileEntryExternalReferenceCode();
+
+		if (fileEntryExternalReferenceCode != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"fileEntryExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(fileEntryExternalReferenceCode));
+
+			sb.append("\"");
+		}
+
+		String fileEntryGroupExternalReferenceCode =
+			getFileEntryGroupExternalReferenceCode();
+
+		if (fileEntryGroupExternalReferenceCode != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"fileEntryGroupExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(fileEntryGroupExternalReferenceCode));
 
 			sb.append("\"");
 		}

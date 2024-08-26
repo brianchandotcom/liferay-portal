@@ -15,6 +15,7 @@ export interface AttributeMapping {
 		| 'User Custom Fields'
 		| 'User Memberships';
 	samlAttribute: string;
+	useToMatchUsers?: boolean;
 	userFieldExpression: string;
 }
 
@@ -188,31 +189,6 @@ export class IdentityProviderConnectionsPage {
 	) {
 		await this.nameField.fill(idpConnection.idpName);
 
-		if (idpConnection.attributeMappings) {
-			for (const attributeMapping of idpConnection.attributeMappings) {
-				const attributeMappingLocator = this.page.getByText(
-					`${attributeMapping.attributeMappingType} Undo`
-				);
-
-				// Always add a new row so we don't overwrite existing entries
-
-				await attributeMappingLocator
-					.getByRole('button', {name: 'Add'})
-					.last()
-					.click();
-
-				await attributeMappingLocator
-					.getByText('SAML Attribute')
-					.last()
-					.fill(attributeMapping.samlAttribute);
-
-				await attributeMappingLocator
-					.getByText('User Field Expression')
-					.last()
-					.selectOption(attributeMapping.userFieldExpression);
-			}
-		}
-
 		if (idpConnection.clockSkew) {
 			await this.clockSkewField.fill(idpConnection.clockSkew);
 		}
@@ -247,6 +223,52 @@ export class IdentityProviderConnectionsPage {
 			await this.unknownUsersAreStrangersToggle.setChecked(
 				idpConnection.unknownUsersAreStrangers
 			);
+		}
+
+		if (idpConnection.userResolution !== undefined) {
+			if (idpConnection.userResolution === 'attribute') {
+				await this.page
+					.getByText('Match Using a Specific SAML')
+					.setChecked(true);
+			}
+			else if (idpConnection.userResolution === 'dynamic') {
+				await this.page
+					.getByText('Match a User Field Chosen')
+					.setChecked(true);
+			}
+			else {
+				await this.page.getByText('No Matching').setChecked(true);
+			}
+		}
+
+		if (idpConnection.attributeMappings) {
+			for (const attributeMapping of idpConnection.attributeMappings) {
+				const attributeMappingLocator = this.page.getByText(
+					`${attributeMapping.attributeMappingType} Undo`
+				);
+
+				// Always add a new row so we don't overwrite existing entries
+
+				await attributeMappingLocator
+					.getByRole('button', {name: 'Add'})
+					.last()
+					.click();
+
+				await attributeMappingLocator
+					.getByText('SAML Attribute')
+					.last()
+					.fill(attributeMapping.samlAttribute);
+
+				await attributeMappingLocator
+					.getByText('User Field Expression')
+					.last()
+					.selectOption(attributeMapping.userFieldExpression);
+
+				await attributeMappingLocator
+					.getByText('Use to Match Users')
+					.last()
+					.setChecked(attributeMapping.useToMatchUsers === true);
+			}
 		}
 
 		await this.saveButton.click();

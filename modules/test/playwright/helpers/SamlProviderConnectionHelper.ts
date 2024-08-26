@@ -29,6 +29,7 @@ export type TIdpConnection = {
 	nameIdentifierFormat?: string;
 	spName: string;
 	unknownUsersAreStrangers?: boolean;
+	userResolution?: 'attribute' | 'dynamic' | 'none';
 };
 
 export type TSpConnection = {

@@ -112,6 +112,7 @@ export default function PageStructureSidebarToolbar({activeItemIds}) {
 			symbolLeft: 'copy',
 		},
 		{
+			disabled: true,
 			label: Liferay.Language.get('paste'),
 			onClick: () => {},
 			symbolLeft: 'paste',

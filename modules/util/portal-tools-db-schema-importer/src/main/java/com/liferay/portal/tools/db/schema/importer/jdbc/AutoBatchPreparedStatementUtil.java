@@ -47,6 +47,7 @@ public class AutoBatchPreparedStatementUtil {
 
 	public static void stop() throws Exception {
 		_executorService.shutdownNow();
+
 		_executorService.awaitTermination(10, TimeUnit.SECONDS);
 	}
 

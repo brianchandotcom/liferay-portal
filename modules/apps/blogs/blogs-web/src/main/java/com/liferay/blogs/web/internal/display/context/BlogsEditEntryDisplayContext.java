@@ -603,7 +603,11 @@ public class BlogsEditEntryDisplayContext {
 				_friendlyURLAssetCategoryIds = new long[0];
 			}
 			else {
-				_friendlyURLAssetCategoryIds = assetEntry.getCategoryIds();
+				_friendlyURLAssetCategoryIds = ListUtil.toLongArray(
+					AssetCategoryLocalServiceUtil.
+						getEntryCategoriesByCategoryId(
+							assetEntry.getEntryId(), false),
+					AssetCategory.CATEGORY_ID_ACCESSOR);
 			}
 		}
 

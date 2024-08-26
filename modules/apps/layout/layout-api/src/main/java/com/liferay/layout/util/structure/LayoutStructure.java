@@ -465,7 +465,6 @@ public class LayoutStructure {
 
 		for (String parentItemId : parentItemIds) {
 			int position = 0;
-			String finalParentItemId = parentItemId;
 
 			LayoutStructureItem layoutStructureItem = _layoutStructureItems.get(
 				parentItemId);
@@ -479,13 +478,13 @@ public class LayoutStructure {
 
 				position = -1;
 
-				finalParentItemId = layoutStructureItem.getParentItemId();
+				parentItemId = layoutStructureItem.getParentItemId();
 			}
 
 			for (String itemId : itemIds) {
 				List<LayoutStructureItem> copiedLayoutStructureItems =
 					_duplicateLayoutStructureItem(
-						itemId, finalParentItemId, position);
+						itemId, parentItemId, position);
 
 				if (ListUtil.isEmpty(copiedLayoutStructureItems)) {
 					continue;

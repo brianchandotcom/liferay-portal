@@ -25,9 +25,9 @@ public class UpgradeMessageBoardsClassName extends BaseUpgradeClassNames {
 	@Override
 	protected String getWhereClause() {
 		return StringBundler.concat(
-			" where workflowContext LIKE ",
+			" where workflowContext like ",
 			"'%com.liferay.message.boards.kernel.model.MBDiscussion%' or ",
-			"workflowContext LIKE ",
+			"workflowContext like ",
 			"'%com.liferay.message.boards.kernel.model.MBMessage%'");
 	}
 

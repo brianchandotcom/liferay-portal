@@ -9,10 +9,14 @@ import com.liferay.commerce.product.exception.NoSuchChannelException;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.wish.list.model.CommerceWishList;
+import com.liferay.commerce.wish.list.service.CommerceWishListItemService;
 import com.liferay.commerce.wish.list.service.CommerceWishListService;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.WishList;
+import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.WishListItem;
+import com.liferay.headless.commerce.delivery.catalog.resource.v1_0.WishListItemResource;
 import com.liferay.headless.commerce.delivery.catalog.resource.v1_0.WishListResource;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
@@ -83,20 +87,32 @@ public class WishListResourceImpl extends BaseWishListResourceImpl {
 	}
 
 	@Override
-	public WishList patchWishList(Long wishListId, WishList wishList)
+	public WishList patchWishList(
+			Long wishListId, Long accountId, WishList wishList)
 		throws Exception {
 
 		CommerceWishList commerceWishList =
 			_commerceWishListService.getCommerceWishList(wishListId);
 
-		return _toWishList(
-			_commerceWishListService.updateCommerceWishList(
-				wishListId,
-				GetterUtil.getString(
-					wishList.getName(), commerceWishList.getName()),
-				GetterUtil.getBoolean(
-					wishList.getDefaultWishList(),
-					commerceWishList.isDefaultWishList())));
+		commerceWishList = _commerceWishListService.updateCommerceWishList(
+			wishListId,
+			GetterUtil.getString(
+				wishList.getName(), commerceWishList.getName()),
+			GetterUtil.getBoolean(
+				wishList.getDefaultWishList(),
+				commerceWishList.isDefaultWishList()));
+
+		WishListItem[] wishListItems = wishList.getWishListItems();
+
+		if (!ArrayUtil.isEmpty(wishListItems)) {
+			_commerceWishListItemService.deleteCommerceWishListItems(
+				commerceWishList.getCommerceWishListId());
+
+			_addOrUpdateWishListItems(
+				commerceWishList, accountId, wishListItems);
+		}
+
+		return _toWishList(commerceWishList);
 	}
 
 	@Override
@@ -121,12 +137,42 @@ public class WishListResourceImpl extends BaseWishListResourceImpl {
 		CommerceChannel commerceChannel =
 			_commerceChannelLocalService.getCommerceChannel(channelId);
 
-		return _toWishList(
+		CommerceWishList commerceWishList =
 			_commerceWishListService.addCommerceWishList(
 				GetterUtil.getString(wishList.getName()),
 				GetterUtil.getBoolean(wishList.getDefaultWishList()),
 				_serviceContextHelper.getServiceContext(
-					commerceChannel.getSiteGroupId())));
+					commerceChannel.getSiteGroupId()));
+
+		_addOrUpdateWishListItems(
+			commerceWishList, accountId, wishList.getWishListItems());
+
+		return _toWishList(commerceWishList);
+	}
+
+	private void _addOrUpdateWishListItems(
+			CommerceWishList commerceWishList, Long accountId,
+			WishListItem[] wishListItems)
+		throws Exception {
+
+		if (ArrayUtil.isEmpty(wishListItems)) {
+			return;
+		}
+
+		_wishListItemResource.setContextAcceptLanguage(contextAcceptLanguage);
+		_wishListItemResource.setContextCompany(contextCompany);
+		_wishListItemResource.setContextHttpServletRequest(
+			contextHttpServletRequest);
+		_wishListItemResource.setContextHttpServletResponse(
+			contextHttpServletResponse);
+		_wishListItemResource.setContextUriInfo(contextUriInfo);
+		_wishListItemResource.setContextUser(contextUser);
+
+		for (WishListItem wishListItem : wishListItems) {
+			_wishListItemResource.postWishlistWishListWishListItem(
+				commerceWishList.getCommerceWishListId(), accountId,
+				wishListItem);
+		}
 	}
 
 	private WishList _toWishList(CommerceWishList commerceWishList)
@@ -143,6 +189,9 @@ public class WishListResourceImpl extends BaseWishListResourceImpl {
 	private CommerceChannelLocalService _commerceChannelLocalService;
 
 	@Reference
+	private CommerceWishListItemService _commerceWishListItemService;
+
+	@Reference
 	private CommerceWishListService _commerceWishListService;
 
 	@Reference
@@ -155,5 +204,8 @@ public class WishListResourceImpl extends BaseWishListResourceImpl {
 		target = "(component.name=com.liferay.headless.commerce.delivery.catalog.internal.dto.v1_0.converter.WishListDTOConverter)"
 	)
 	private DTOConverter<CommerceWishList, WishList> _wishListDTOConverter;
+
+	@Reference
+	private WishListItemResource _wishListItemResource;
 
 }

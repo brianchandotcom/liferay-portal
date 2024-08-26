@@ -72,6 +72,16 @@ public class CommerceWishListItemServiceImpl
 			commerceWishListItem);
 	}
 
+	public void deleteCommerceWishListItems(long commerceWishListId)
+		throws PortalException {
+
+		_commerceWishListModelResourcePermission.check(
+			getPermissionChecker(), commerceWishListId, ActionKeys.UPDATE);
+
+		commerceWishListItemLocalService.deleteCommerceWishListItems(
+			commerceWishListId);
+	}
+
 	@Override
 	public CommerceWishListItem getCommerceWishListItem(
 			long commerceWishListItemId)

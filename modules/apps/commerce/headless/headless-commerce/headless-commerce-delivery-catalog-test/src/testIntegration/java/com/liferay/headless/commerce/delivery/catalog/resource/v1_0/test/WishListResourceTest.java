@@ -9,16 +9,28 @@ import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalServiceUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.headless.commerce.delivery.catalog.client.dto.v1_0.WishList;
+import com.liferay.headless.commerce.delivery.catalog.client.dto.v1_0.WishListItem;
+import com.liferay.headless.commerce.delivery.catalog.client.resource.v1_0.WishListResource;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.test.rule.Inject;
 
+import java.math.BigDecimal;
+
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -58,7 +70,7 @@ public class WishListResourceTest extends BaseWishListResourceTestCase {
 		WishList randomPatchWishList = randomPatchWishList();
 
 		wishListResource.patchWishList(
-			postWishList.getId(), randomPatchWishList);
+			postWishList.getId(), null, randomPatchWishList);
 
 		WishList expectedPatchWishList = postWishList.clone();
 
@@ -69,6 +81,8 @@ public class WishListResourceTest extends BaseWishListResourceTestCase {
 
 		assertEquals(expectedPatchWishList, getWishList);
 		assertValid(getWishList);
+
+		_testPatchWishListWithWishListItems(postWishList);
 	}
 
 	@Override
@@ -83,6 +97,22 @@ public class WishListResourceTest extends BaseWishListResourceTestCase {
 				defaultWishList = false;
 				id = RandomTestUtil.randomLong();
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
+			}
+		};
+	}
+
+	protected WishListItem randomWishListItem() throws Exception {
+		CPInstance cpInstance = CPTestUtil.addCPInstanceWithRandomSku(
+			testGroup.getGroupId(), BigDecimal.ONE);
+
+		CPDefinition cpDefinition = cpInstance.getCPDefinition();
+
+		CProduct commerceProduct = cpDefinition.getCProduct();
+
+		return new WishListItem() {
+			{
+				productId = commerceProduct.getCProductId();
+				skuId = cpInstance.getCPInstanceId();
 			}
 		};
 	}
@@ -159,6 +189,35 @@ public class WishListResourceTest extends BaseWishListResourceTestCase {
 			_accountEntry.getAccountEntryId(), wishList);
 	}
 
+	private void _testPatchWishListWithWishListItems(WishList wishList)
+		throws Exception {
+
+		User omniAdminUser = UserTestUtil.addOmniadminUser();
+
+		String password = RandomTestUtil.randomString();
+
+		_userLocalService.updatePassword(
+			omniAdminUser.getUserId(), password, password, false, true);
+
+		WishListResource wishListResource = WishListResource.builder(
+		).authentication(
+			omniAdminUser.getEmailAddress(), password
+		).locale(
+			LocaleUtil.getDefault()
+		).parameters(
+			"nestedFields", "wishListItems"
+		).build();
+
+		wishList.setWishListItems(new WishListItem[] {randomWishListItem()});
+
+		WishList patchWishList = wishListResource.patchWishList(
+			wishList.getId(), _accountEntry.getAccountEntryId(), wishList);
+
+		WishListItem[] wishListItems = patchWishList.getWishListItems();
+
+		Assert.assertTrue(wishListItems.length == 1);
+	}
+
 	@DeleteAfterTestRun
 	private AccountEntry _accountEntry;
 
@@ -167,5 +226,8 @@ public class WishListResourceTest extends BaseWishListResourceTestCase {
 
 	@DeleteAfterTestRun
 	private User _user;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

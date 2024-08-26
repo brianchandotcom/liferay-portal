@@ -7,8 +7,8 @@ import {Locator, Page, expect} from '@playwright/test';
 import {getComparator} from 'playwright-core/lib/utils';
 
 import {ProductMenuPage} from '../../../pages/product-navigation-control-menu-web/ProductMenuPage';
-import {getTempDir} from '../../../utils/temp';
 import getRandomString from '../../../utils/getRandomString';
+import {getTempDir} from '../../../utils/temp';
 
 export class StagingPage {
 	readonly localStagingCheckbox: Locator;
@@ -30,7 +30,7 @@ export class StagingPage {
 			comparator(
 				await this.getCurrentPageScreenshot('Live'),
 				await this.getCurrentPageScreenshot('Staging'),
-				{ maxDiffPixelRatio: 0.05 }
+				{maxDiffPixelRatio: 0.05}
 			)
 		).toBeNull();
 	}
@@ -78,14 +78,14 @@ export class StagingPage {
 		).toBeVisible();
 
 		return await this.page.screenshot({
-			path: getTempDir() + '/' + getRandomString() + '.png',
+			fullPage: true,			
 			mask: [
 				await this.page.locator('.control-menu-container').first(),
 				await this.page.locator('.sidenav-menu').first(),
 			],
 			maskColor: '#FFFFFF',
 			omitBackground: true,
-			fullPage: true
+			path: getTempDir() + '/' + getRandomString() + '.png',
 		});
 	}
 }

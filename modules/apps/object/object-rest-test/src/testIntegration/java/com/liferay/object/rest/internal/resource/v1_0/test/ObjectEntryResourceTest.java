@@ -147,6 +147,7 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portlet.documentlibrary.constants.DLConstants;
 
 import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.io.Serializable;
 
 import java.lang.reflect.Method;
@@ -6006,7 +6007,8 @@ public class ObjectEntryResourceTest {
 
 		content = RandomTestUtil.randomString();
 
-		DLFileEntry dlFileEntry = _addDLFileEntry(content);
+		DLFileEntry dlFileEntry = _addDLFileEntry(
+			content, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
@@ -11560,10 +11562,11 @@ public class ObjectEntryResourceTest {
 			"siteId");
 	}
 
-	private DLFileEntry _addDLFileEntry(String content) throws Exception {
+	private DLFileEntry _addDLFileEntry(String content, long folderId)
+		throws Exception {
+
 		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
-			null, TestPropsValues.getUserId(), _group.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			null, TestPropsValues.getUserId(), _group.getGroupId(), folderId,
 			TempFileEntryUtil.getTempFileName(
 				RandomTestUtil.randomString() + ".txt"),
 			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString(),
@@ -13486,6 +13489,147 @@ public class ObjectEntryResourceTest {
 			},
 			testFileEntry, null, objectDefinition,
 			_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_SOURCE_2);
+
+		// File with an existing ERC
+
+		String fileContent = RandomTestUtil.randomString();
+
+		com.liferay.portal.kernel.repository.model.Folder folder =
+			_dlAppLocalService.addFolder(
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				ServiceContextTestUtil.getServiceContext());
+
+		DLFileEntry existingFile = _addDLFileEntry(
+			fileContent, folder.getFolderId());
+
+		testFileEntry = _toFileEntry(
+			Base64::encode, fileContent, existingFile.getFileName(), null,
+			TestPropsValues.getGroupId());
+
+		testFileEntry.setExternalReferenceCode(
+			existingFile.getExternalReferenceCode());
+
+		String externalReferenceCode1 = existingFile.getExternalReferenceCode();
+
+		_testPostCustomObjectEntryWithAttachmentField(
+			fileEntry -> JSONUtil.put(
+				_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
+				() -> {
+					JSONObject jsonObject = _getFileEntryJSONObject(
+						null, fileEntry, objectDefinition);
+
+					jsonObject.put(
+						"externalReferenceCode", externalReferenceCode1);
+
+					return jsonObject;
+				}),
+			testFileEntry, null, objectDefinition,
+			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE);
+
+		fileContent = RandomTestUtil.randomString();
+
+		existingFile = _addDLFileEntry(
+			fileContent, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		testFileEntry = _toFileEntry(
+			Base64::encode, fileContent, existingFile.getFileName(), null,
+			TestPropsValues.getGroupId());
+
+		testFileEntry.setExternalReferenceCode(
+			existingFile.getExternalReferenceCode());
+
+		String externalReferenceCode2 = existingFile.getExternalReferenceCode();
+
+		_testPostCustomObjectEntryWithAttachmentField(
+			fileEntry -> JSONUtil.put(
+				_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_SOURCE_1,
+				() -> {
+					JSONObject jsonObject = _getFileEntryJSONObject(
+						_getDLFolder(objectDefinition, true), fileEntry,
+						objectDefinition);
+
+					jsonObject.put(
+						"externalReferenceCode", externalReferenceCode2);
+
+					return jsonObject;
+				}),
+			testFileEntry, null, objectDefinition,
+			_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_SOURCE_1);
+
+		// File with a nonexistent ERC (empty shell must be created)
+
+		testFileEntry = _toFileEntry(
+			content -> null, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString() + ".txt", null, null);
+
+		testFileEntry.setExternalReferenceCode(RandomTestUtil.randomString());
+
+		String externalReferenceCode3 =
+			testFileEntry.getExternalReferenceCode();
+
+		_testPostCustomObjectEntryWithAttachmentField(
+			fileEntry -> JSONUtil.put(
+				_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
+				() -> {
+					JSONObject jsonObject = _getFileEntryJSONObject(
+						null, fileEntry, objectDefinition);
+
+					jsonObject.put(
+						"externalReferenceCode", externalReferenceCode3);
+
+					return jsonObject;
+				}),
+			testFileEntry, null, objectDefinition,
+			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE);
+
+		FileEntry createdFileEntry = _dlAppLocalService.getFileEntry(
+			_testDLFileEntryModelListener.getLastFileEntryId());
+
+		Assert.assertEquals(
+			externalReferenceCode3,
+			createdFileEntry.getExternalReferenceCode());
+
+		InputStream inputStream = createdFileEntry.getContentStream();
+
+		Assert.assertEquals(-1, inputStream.read());
+
+		testFileEntry = _toFileEntry(
+			content -> null, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString() + ".txt", null, null);
+
+		testFileEntry.setExternalReferenceCode(RandomTestUtil.randomString());
+
+		String externalReferenceCode4 =
+			testFileEntry.getExternalReferenceCode();
+
+		_testPostCustomObjectEntryWithAttachmentField(
+			fileEntry -> JSONUtil.put(
+				_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_SOURCE_1,
+				() -> {
+					JSONObject jsonObject = _getFileEntryJSONObject(
+						_getDLFolder(objectDefinition, true), fileEntry,
+						objectDefinition);
+
+					jsonObject.put(
+						"externalReferenceCode", externalReferenceCode4);
+
+					return jsonObject;
+				}),
+			testFileEntry, null, objectDefinition,
+			_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_SOURCE_1);
+
+		createdFileEntry = _dlAppLocalService.getFileEntry(
+			_testDLFileEntryModelListener.getLastFileEntryId());
+
+		Assert.assertEquals(
+			externalReferenceCode4,
+			createdFileEntry.getExternalReferenceCode());
+
+		inputStream = createdFileEntry.getContentStream();
+
+		Assert.assertEquals(-1, inputStream.read());
 	}
 
 	private void _testPostCustomObjectEntryWithAttachmentField(

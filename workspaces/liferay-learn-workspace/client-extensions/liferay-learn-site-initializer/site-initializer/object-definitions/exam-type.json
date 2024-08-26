@@ -12,7 +12,17 @@
 				"en_US": "Name"
 			},
 			"name": "name",
-			"required": false
+			"required": true
+		},
+		{
+			"DBType": "String",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Product Code"
+			},
+			"name": "productCode",
+			"required": true
 		}
 	],
 	"pluralLabel": {

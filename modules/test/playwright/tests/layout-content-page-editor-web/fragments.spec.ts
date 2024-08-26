@@ -7,6 +7,7 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
+import {fragmentsPagesTest} from '../../fixtures/fragmentPagesTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {objectPagesTest} from '../../fixtures/objectPagesTest';
@@ -41,6 +42,7 @@ const test = mergeTests(
 	featureFlagsTest({
 		'LPS-178052': true,
 	}),
+	fragmentsPagesTest,
 	isolatedSiteTest,
 	journalPagesTest,
 	loginTest(),
@@ -211,15 +213,23 @@ test.describe('Content Display Fragment', () => {
 		{
 			tag: ['@LPS-97182', '@LPS-100545', '@LPS-101249'],
 		},
-		async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
+		async ({
+			apiHelpers,
+			fragmentsPage,
+			page,
+			pageEditorPage,
+			pageManagementSite,
+		}) => {
 
 			// Create a fragment with itemSelector configuration for file entries
+
+			const fragmentCollectionName = getRandomString();
 
 			const fragmentCollection =
 				await apiHelpers.jsonWebServicesFragmentCollection.addFragmentCollection(
 					{
 						groupId: pageManagementSite.id,
-						name: getRandomString(),
+						name: fragmentCollectionName,
 					}
 				);
 
@@ -294,6 +304,16 @@ test.describe('Content Display Fragment', () => {
 					.locator('.content-display-fragment')
 					.getByText('poodle.jpg')
 			).toBeVisible();
+
+			// Remove the page
+
+			await apiHelpers.jsonWebServicesLayout.deleteLayout(layout.id);
+
+			// Remove fragment set
+
+			await fragmentsPage.goto(pageManagementSite.friendlyUrlPath);
+
+			await fragmentsPage.deleteFragmentSet(fragmentCollectionName);
 		}
 	);
 
@@ -302,7 +322,13 @@ test.describe('Content Display Fragment', () => {
 		{
 			tag: ['@LPS-97182', '@LPS-100545', '@LPS-101249'],
 		},
-		async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
+		async ({
+			apiHelpers,
+			fragmentsPage,
+			page,
+			pageEditorPage,
+			pageManagementSite,
+		}) => {
 
 			// Create animal web content
 
@@ -314,12 +340,13 @@ test.describe('Content Display Fragment', () => {
 				ANIMAL_DDM_STRUCTURE_KEY
 			);
 
-			await apiHelpers.jsonWebServicesJournal.addWebContent({
-				ddmStructureId: animalWebContentStructureId,
-				ddmTemplateKey: ANIMAL_DDM_TEMPLATE_KEY,
-				groupId: pageManagementSite.id,
-				titleMap: {en_US: animalWebContentTitle},
-			});
+			const {articleId: animalWebContentId} =
+				await apiHelpers.jsonWebServicesJournal.addWebContent({
+					ddmStructureId: animalWebContentStructureId,
+					ddmTemplateKey: ANIMAL_DDM_TEMPLATE_KEY,
+					groupId: pageManagementSite.id,
+					titleMap: {en_US: animalWebContentTitle},
+				});
 
 			// Create basic web content
 
@@ -328,19 +355,22 @@ test.describe('Content Display Fragment', () => {
 			const basicWebContentStructureId =
 				await getBasicWebContentStructureId(apiHelpers);
 
-			await apiHelpers.jsonWebServicesJournal.addWebContent({
-				ddmStructureId: basicWebContentStructureId,
-				groupId: pageManagementSite.id,
-				titleMap: {en_US: basicWebContentTitle},
-			});
+			const {articleId: basicWebContentId} =
+				await apiHelpers.jsonWebServicesJournal.addWebContent({
+					ddmStructureId: basicWebContentStructureId,
+					groupId: pageManagementSite.id,
+					titleMap: {en_US: basicWebContentTitle},
+				});
 
 			// Create a fragment with itemSelector configuration for animals
+
+			const fragmentCollectionName = getRandomString();
 
 			const fragmentCollection =
 				await apiHelpers.jsonWebServicesFragmentCollection.addFragmentCollection(
 					{
 						groupId: pageManagementSite.id,
-						name: getRandomString(),
+						name: fragmentCollectionName,
 					}
 				);
 
@@ -430,6 +460,32 @@ test.describe('Content Display Fragment', () => {
 			await expect(page.locator('.content-display-fragment')).toHaveText(
 				animalWebContentTitle
 			);
+
+			// Remove web contents
+
+			expect(
+				await apiHelpers.jsonWebServicesJournal.moveArticleToTrash(
+					pageManagementSite.id,
+					animalWebContentId
+				)
+			).toHaveProperty('articleId');
+
+			expect(
+				await apiHelpers.jsonWebServicesJournal.moveArticleToTrash(
+					pageManagementSite.id,
+					basicWebContentId
+				)
+			).toHaveProperty('articleId');
+
+			// Remove the page
+
+			await apiHelpers.jsonWebServicesLayout.deleteLayout(layout.id);
+
+			// Remove fragment set
+
+			await fragmentsPage.goto(pageManagementSite.friendlyUrlPath);
+
+			await fragmentsPage.deleteFragmentSet(fragmentCollectionName);
 		}
 	);
 });

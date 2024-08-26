@@ -3,5 +3,10 @@
 	"fragmentEntryKey": "stepper",
 	"icon": "breadcrumb",
 	"name": "stepper",
-	"type": "component"
+	"type": "input",
+	"typeOptions": {
+		"fieldTypes": [
+			"stepper"
+		]
+	}
 }

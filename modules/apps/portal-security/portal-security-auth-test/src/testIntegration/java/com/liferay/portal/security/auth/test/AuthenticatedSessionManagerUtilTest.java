@@ -13,7 +13,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.RememberMeToken;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.RememberMeTokenLocalService;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.randomizerbumpers.NumericStringRandomizerBumper;
 import com.liferay.portal.kernel.test.randomizerbumpers.UniqueStringRandomizerBumper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -179,8 +178,5 @@ public class AuthenticatedSessionManagerUtilTest {
 
 	@DeleteAfterTestRun
 	private User _user;
-
-	@Inject
-	private UserLocalService _userLocalService;
 
 }

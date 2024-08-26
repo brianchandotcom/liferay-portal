@@ -123,11 +123,14 @@ export class FragmentsPage {
 		await waitForSuccessAlert(this.page);
 	}
 
-	async deleteFragmentSet() {
+	async deleteFragmentSet(setName: string) {
+		await this.gotoFragmentSet(setName);
+
 		await this.page
 			.locator('.sheet-title')
 			.getByLabel('Show Actions')
 			.click();
+
 		await this.page.getByRole('menuitem', {name: 'Delete'}).click();
 
 		await this.page.getByRole('button', {name: 'Delete'}).click();

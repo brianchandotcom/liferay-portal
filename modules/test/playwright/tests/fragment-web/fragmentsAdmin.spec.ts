@@ -206,7 +206,7 @@ test('Can delete fragment set', async ({fragmentsPage, page, site}) => {
 
 	// Go to Basic Components fragment set
 
-	await fragmentsPage.deleteFragmentSet();
+	await fragmentsPage.deleteFragmentSet(fragmentSetName);
 
 	await expect(
 		page.getByRole('menuitem', {exact: true, name: fragmentSetName})

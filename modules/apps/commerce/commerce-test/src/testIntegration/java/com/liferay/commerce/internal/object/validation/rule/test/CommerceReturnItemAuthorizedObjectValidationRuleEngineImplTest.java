@@ -49,6 +49,10 @@ public class CommerceReturnItemAuthorizedObjectValidationRuleEngineImplTest
 						"authorized", 2
 					).put(
 						"quantity", 1
+					).put(
+						"r_commerceOrderItemToCommerceReturnItems_" +
+							"commerceOrderItemId",
+						commerceOrderItem.getCommerceOrderItemId()
 					).build()
 				).build()
 			).build(),
@@ -66,6 +70,10 @@ public class CommerceReturnItemAuthorizedObjectValidationRuleEngineImplTest
 						"authorized", 0
 					).put(
 						"quantity", 1
+					).put(
+						"r_commerceOrderItemToCommerceReturnItems_" +
+							"commerceOrderItemId",
+						commerceOrderItem.getCommerceOrderItemId()
 					).build()
 				).build()
 			).build(),

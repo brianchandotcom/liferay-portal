@@ -48,6 +48,10 @@ public class CommerceReturnItemReceivedObjectValidationRuleEngineImplTest
 					HashMapBuilder.<String, Object>put(
 						"authorized", 0
 					).put(
+						"r_commerceOrderItemToCommerceReturnItems_" +
+							"commerceOrderItemId",
+						commerceOrderItem.getCommerceOrderItemId()
+					).put(
 						"received", 2
 					).build()
 				).build()
@@ -64,6 +68,10 @@ public class CommerceReturnItemReceivedObjectValidationRuleEngineImplTest
 					"properties",
 					HashMapBuilder.<String, Object>put(
 						"authorized", 1
+					).put(
+						"r_commerceOrderItemToCommerceReturnItems_" +
+							"commerceOrderItemId",
+						commerceOrderItem.getCommerceOrderItemId()
 					).put(
 						"received", 1
 					).build()

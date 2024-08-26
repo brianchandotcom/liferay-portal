@@ -53,8 +53,8 @@
 					"type": "Boolean"
 				},
 				{
-					"DBType": "Long",
-					"businessType": "LongInteger",
+					"DBType": "BigDecimal",
+					"businessType": "PrecisionDecimal",
 					"externalReferenceCode": "AUTHORIZED",
 					"indexed": true,
 					"indexedAsKeyword": false,
@@ -65,7 +65,7 @@
 					"required": false,
 					"state": false,
 					"system": true,
-					"type": "Long"
+					"type": "BigDecimal"
 				},
 				{
 					"DBType": "String",
@@ -113,8 +113,8 @@
 					"type": "BigDecimal"
 				},
 				{
-					"DBType": "Long",
-					"businessType": "LongInteger",
+					"DBType": "BigDecimal",
+					"businessType": "PrecisionDecimal",
 					"externalReferenceCode": "RECEIVED",
 					"indexed": true,
 					"indexedAsKeyword": false,
@@ -125,7 +125,7 @@
 					"required": false,
 					"state": false,
 					"system": true,
-					"type": "Long"
+					"type": "BigDecimal"
 				},
 				{
 					"DBType": "String",

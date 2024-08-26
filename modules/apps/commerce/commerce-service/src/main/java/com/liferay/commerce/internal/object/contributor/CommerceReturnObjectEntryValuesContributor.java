@@ -143,7 +143,7 @@ public class CommerceReturnObjectEntryValuesContributor
 
 			for (ObjectEntry objectEntry :
 					returnItemStatusObjectEntriesMap.getOrDefault(
-						"processedReturnItems", Collections.emptyList())) {
+						"toBeProcessedReturnItems", Collections.emptyList())) {
 
 				Map<String, Serializable> objectEntryValues =
 					objectEntry.getValues();

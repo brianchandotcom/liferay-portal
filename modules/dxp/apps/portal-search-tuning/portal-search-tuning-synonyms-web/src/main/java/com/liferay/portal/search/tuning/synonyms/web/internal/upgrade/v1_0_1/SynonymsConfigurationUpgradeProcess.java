@@ -17,9 +17,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Dictionary;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.apache.felix.cm.file.ConfigurationHandler;
 
@@ -48,40 +46,35 @@ public class SynonymsConfigurationUpgradeProcess extends UpgradeProcess {
 
 			preparedStatement.setString(1, _PID);
 
-			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				while (resultSet.next()) {
-					String dictionaryString = resultSet.getString("dictionary");
+			ResultSet resultSet = preparedStatement.executeQuery();
 
-					if (Validator.isNull(dictionaryString)) {
-						continue;
-					}
+			resultSet.next();
 
-					Dictionary<String, Object> dictionary =
-						ConfigurationHandler.read(
-							new UnsyncByteArrayInputStream(
-								dictionaryString.getBytes(StringPool.UTF8)));
+			String dictionaryString = resultSet.getString("dictionary");
 
-					Set<String> currentFilterName = new HashSet<>(
-						Arrays.asList((String[])dictionary.get("filterNames")));
-
-					currentFilterName.addAll(
-						new HashSet<>(Arrays.asList(_FILTER_NAMES)));
-
-					List<String> updatedFilterName = new ArrayList<>(
-						currentFilterName);
-
-					Collections.sort(updatedFilterName);
-
-					dictionary.put(
-						"filterNames",
-						updatedFilterName.toArray(new String[0]));
-
-					Configuration configuration =
-						_configurationAdmin.getConfiguration(_PID, "?");
-
-					configuration.update(dictionary);
-				}
+			if (Validator.isNull(dictionaryString)) {
+				return;
 			}
+
+			Dictionary<String, Object> dictionary = ConfigurationHandler.read(
+				new UnsyncByteArrayInputStream(
+					dictionaryString.getBytes(StringPool.UTF8)));
+
+			List<String> synonymFilterNames = new ArrayList<>(
+				Arrays.asList((String[])dictionary.get("filterNames")));
+
+			synonymFilterNames.addAll(
+				new ArrayList<>(Arrays.asList(_FILTER_NAMES)));
+
+			Collections.sort(synonymFilterNames);
+
+			dictionary.put(
+				"filterNames", synonymFilterNames.toArray(new String[0]));
+
+			Configuration configuration = _configurationAdmin.getConfiguration(
+				_PID, "?");
+
+			configuration.update(dictionary);
 		}
 	}
 

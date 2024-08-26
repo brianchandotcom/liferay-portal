@@ -82,12 +82,12 @@ public class EditableValuesExportImportContentProcessorTest {
 	public void testLinkedLayoutMapping() throws Exception {
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_stagingGroup);
 
-		FragmentEntryLink stagingFragmentEntryLink =
-			_setUpFragmentEntryLinkWithLinkMappedToLayout(layout);
+		FragmentEntryLink fragmentEntryLink =
+			_addLinkMappedToLayoutFragmentEntryLink(layout);
 
 		_assertLayoutJSONObject(
 			_getEditableFragmentEntryProcessorLayoutJSONObject(
-				stagingFragmentEntryLink),
+				fragmentEntryLink),
 			layout);
 
 		_publishLayouts();
@@ -96,8 +96,7 @@ public class EditableValuesExportImportContentProcessorTest {
 			_getEditableFragmentEntryProcessorLayoutJSONObject(
 				_fragmentEntryLinkLocalService.
 					getFragmentEntryLinkByUuidAndGroupId(
-						stagingFragmentEntryLink.getUuid(),
-						_liveGroup.getGroupId())),
+						fragmentEntryLink.getUuid(), _liveGroup.getGroupId())),
 			_layoutLocalService.getLayoutByUuidAndGroupId(
 				layout.getUuid(), _liveGroup.getGroupId(),
 				layout.isPrivateLayout()));
@@ -108,12 +107,12 @@ public class EditableValuesExportImportContentProcessorTest {
 	public void testLinkedLayoutMappingWithDeletedLayout() throws Exception {
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_stagingGroup);
 
-		FragmentEntryLink stagingFragmentEntryLink =
-			_setUpFragmentEntryLinkWithLinkMappedToLayout(layout);
+		FragmentEntryLink fragmentEntryLink =
+			_addLinkMappedToLayoutFragmentEntryLink(layout);
 
 		_assertLayoutJSONObject(
 			_getEditableFragmentEntryProcessorLayoutJSONObject(
-				stagingFragmentEntryLink),
+				fragmentEntryLink),
 			layout);
 
 		_layoutLocalService.deleteLayout(layout.getPlid());
@@ -124,8 +123,7 @@ public class EditableValuesExportImportContentProcessorTest {
 			_getEditableFragmentEntryProcessorLayoutJSONObject(
 				_fragmentEntryLinkLocalService.
 					getFragmentEntryLinkByUuidAndGroupId(
-						stagingFragmentEntryLink.getUuid(),
-						_liveGroup.getGroupId())));
+						fragmentEntryLink.getUuid(), _liveGroup.getGroupId())));
 	}
 
 	@Test
@@ -133,12 +131,12 @@ public class EditableValuesExportImportContentProcessorTest {
 	public void testURLEditableValues() throws Exception {
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_stagingGroup);
 
-		FragmentEntryLink stagingFragmentEntryLink =
-			_setUpFragmentEntryLinkWithUrlMappedToLayout(layout);
+		FragmentEntryLink fragmentEntryLink =
+			_addUrlMappedToLayoutFragmentEntryLink(layout);
 
 		_assertLayoutJSONObject(
 			_getFreeMarkerFragmentEntryProcessorLayoutJSONObject(
-				stagingFragmentEntryLink),
+				fragmentEntryLink),
 			layout);
 
 		_publishLayouts();
@@ -147,8 +145,7 @@ public class EditableValuesExportImportContentProcessorTest {
 			_getFreeMarkerFragmentEntryProcessorLayoutJSONObject(
 				_fragmentEntryLinkLocalService.
 					getFragmentEntryLinkByUuidAndGroupId(
-						stagingFragmentEntryLink.getUuid(),
-						_liveGroup.getGroupId())),
+						fragmentEntryLink.getUuid(), _liveGroup.getGroupId())),
 			_layoutLocalService.getLayoutByUuidAndGroupId(
 				layout.getUuid(), _liveGroup.getGroupId(),
 				layout.isPrivateLayout()));
@@ -159,12 +156,12 @@ public class EditableValuesExportImportContentProcessorTest {
 	public void testURLEditableValuesWithDeletedLayout() throws Exception {
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_stagingGroup);
 
-		FragmentEntryLink stagingFragmentEntryLink =
-			_setUpFragmentEntryLinkWithUrlMappedToLayout(layout);
+		FragmentEntryLink fragmentEntryLink =
+			_addUrlMappedToLayoutFragmentEntryLink(layout);
 
 		_assertLayoutJSONObject(
 			_getFreeMarkerFragmentEntryProcessorLayoutJSONObject(
-				stagingFragmentEntryLink),
+				fragmentEntryLink),
 			layout);
 
 		_layoutLocalService.deleteLayout(layout.getPlid());
@@ -175,8 +172,7 @@ public class EditableValuesExportImportContentProcessorTest {
 			_getFreeMarkerFragmentEntryProcessorLayoutJSONObject(
 				_fragmentEntryLinkLocalService.
 					getFragmentEntryLinkByUuidAndGroupId(
-						stagingFragmentEntryLink.getUuid(),
-						_liveGroup.getGroupId())));
+						fragmentEntryLink.getUuid(), _liveGroup.getGroupId())));
 	}
 
 	private FragmentEntry _addFragmentEntry() throws Exception {
@@ -216,6 +212,118 @@ public class EditableValuesExportImportContentProcessorTest {
 			).toString(),
 			null, 0, false, FragmentConstants.TYPE_COMPONENT, null,
 			WorkflowConstants.STATUS_APPROVED, serviceContext);
+	}
+
+	private FragmentEntryLink _addLinkMappedToLayoutFragmentEntryLink(
+			Layout layout)
+		throws Exception {
+
+		FragmentEntry fragmentEntry =
+			_fragmentCollectionContributorRegistry.getFragmentEntry(
+				"BASIC_COMPONENT-heading");
+
+		long segmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				_draftLayout.getPlid());
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.addFragmentEntryLink(
+				null, TestPropsValues.getUserId(), _draftLayout.getGroupId(), 0,
+				fragmentEntry.getFragmentEntryId(), segmentsExperienceId,
+				_draftLayout.getPlid(), fragmentEntry.getCss(),
+				fragmentEntry.getHtml(), fragmentEntry.getJs(),
+				fragmentEntry.getConfiguration(),
+				JSONUtil.put(
+					FragmentEntryProcessorConstants.
+						KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+					JSONUtil.put(
+						"element-text",
+						JSONUtil.put(
+							"config",
+							JSONUtil.put(
+								"layout",
+								JSONUtil.put(
+									"groupId", layout.getGroupId()
+								).put(
+									"layoutId", layout.getLayoutId()
+								).put(
+									"layoutUuid", layout.getUuid()
+								).put(
+									"privateLayout", layout.isPrivateLayout()
+								).put(
+									"title", layout.getTitle()
+								)
+							).put(
+								"mapperType", "link"
+							)
+						).put(
+							"defaultValue", "Heading Example"
+						))
+				).toString(),
+				StringPool.BLANK, 0, fragmentEntry.getFragmentEntryKey(),
+				fragmentEntry.getType(),
+				ServiceContextTestUtil.getServiceContext(
+					_stagingGroup.getGroupId(), TestPropsValues.getUserId()));
+
+		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+			fragmentEntryLink, _draftLayout, null, 0, segmentsExperienceId);
+
+		ContentLayoutTestUtil.publishLayout(_draftLayout, _layout);
+
+		return _fragmentEntryLinkLocalService.getFragmentEntryLink(
+			_stagingGroup.getGroupId(),
+			fragmentEntryLink.getFragmentEntryLinkId(), _layout.getPlid());
+	}
+
+	private FragmentEntryLink _addUrlMappedToLayoutFragmentEntryLink(
+			Layout layout)
+		throws Exception {
+
+		FragmentEntry fragmentEntry = _addFragmentEntry();
+
+		long segmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				_draftLayout.getPlid());
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.addFragmentEntryLink(
+				null, TestPropsValues.getUserId(), _draftLayout.getGroupId(), 0,
+				fragmentEntry.getFragmentEntryId(), segmentsExperienceId,
+				_draftLayout.getPlid(), fragmentEntry.getCss(),
+				fragmentEntry.getHtml(), fragmentEntry.getJs(),
+				fragmentEntry.getConfiguration(),
+				JSONUtil.put(
+					FragmentEntryProcessorConstants.
+						KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+					JSONUtil.put(
+						"myURL",
+						JSONUtil.put(
+							"layout",
+							JSONUtil.put(
+								"groupId", layout.getGroupId()
+							).put(
+								"layoutId", layout.getLayoutId()
+							).put(
+								"layoutUuid", layout.getUuid()
+							).put(
+								"privateLayout", layout.isPrivateLayout()
+							).put(
+								"title", layout.getTitle()
+							)))
+				).toString(),
+				StringPool.BLANK, 0, fragmentEntry.getFragmentEntryKey(),
+				fragmentEntry.getType(),
+				ServiceContextTestUtil.getServiceContext(
+					_stagingGroup.getGroupId(), TestPropsValues.getUserId()));
+
+		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+			fragmentEntryLink, _draftLayout, null, 0, segmentsExperienceId);
+
+		ContentLayoutTestUtil.publishLayout(_draftLayout, _layout);
+
+		return _fragmentEntryLinkLocalService.getFragmentEntryLink(
+			_stagingGroup.getGroupId(),
+			fragmentEntryLink.getFragmentEntryLinkId(), _layout.getPlid());
 	}
 
 	private void _assertDeletedLayoutJSONObject(JSONObject layoutJSONObject) {
@@ -284,118 +392,6 @@ public class EditableValuesExportImportContentProcessorTest {
 		StagingUtil.publishLayouts(
 			TestPropsValues.getUserId(), _stagingGroup.getGroupId(),
 			_liveGroup.getGroupId(), false, parameterMap);
-	}
-
-	private FragmentEntryLink _setUpFragmentEntryLinkWithLinkMappedToLayout(
-			Layout layout)
-		throws Exception {
-
-		FragmentEntry fragmentEntry =
-			_fragmentCollectionContributorRegistry.getFragmentEntry(
-				"BASIC_COMPONENT-heading");
-
-		long segmentsExperienceId =
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				_draftLayout.getPlid());
-
-		FragmentEntryLink fragmentEntryLink =
-			_fragmentEntryLinkLocalService.addFragmentEntryLink(
-				null, TestPropsValues.getUserId(), _draftLayout.getGroupId(), 0,
-				fragmentEntry.getFragmentEntryId(), segmentsExperienceId,
-				_draftLayout.getPlid(), fragmentEntry.getCss(),
-				fragmentEntry.getHtml(), fragmentEntry.getJs(),
-				fragmentEntry.getConfiguration(),
-				JSONUtil.put(
-					FragmentEntryProcessorConstants.
-						KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
-					JSONUtil.put(
-						"element-text",
-						JSONUtil.put(
-							"config",
-							JSONUtil.put(
-								"layout",
-								JSONUtil.put(
-									"groupId", layout.getGroupId()
-								).put(
-									"layoutId", layout.getLayoutId()
-								).put(
-									"layoutUuid", layout.getUuid()
-								).put(
-									"privateLayout", layout.isPrivateLayout()
-								).put(
-									"title", layout.getTitle()
-								)
-							).put(
-								"mapperType", "link"
-							)
-						).put(
-							"defaultValue", "Heading Example"
-						))
-				).toString(),
-				StringPool.BLANK, 0, fragmentEntry.getFragmentEntryKey(),
-				fragmentEntry.getType(),
-				ServiceContextTestUtil.getServiceContext(
-					_stagingGroup.getGroupId(), TestPropsValues.getUserId()));
-
-		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
-			fragmentEntryLink, _draftLayout, null, 0, segmentsExperienceId);
-
-		ContentLayoutTestUtil.publishLayout(_draftLayout, _layout);
-
-		return _fragmentEntryLinkLocalService.getFragmentEntryLink(
-			_stagingGroup.getGroupId(),
-			fragmentEntryLink.getFragmentEntryLinkId(), _layout.getPlid());
-	}
-
-	private FragmentEntryLink _setUpFragmentEntryLinkWithUrlMappedToLayout(
-			Layout layout)
-		throws Exception {
-
-		FragmentEntry fragmentEntry = _addFragmentEntry();
-
-		long segmentsExperienceId =
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				_draftLayout.getPlid());
-
-		FragmentEntryLink fragmentEntryLink =
-			_fragmentEntryLinkLocalService.addFragmentEntryLink(
-				null, TestPropsValues.getUserId(), _draftLayout.getGroupId(), 0,
-				fragmentEntry.getFragmentEntryId(), segmentsExperienceId,
-				_draftLayout.getPlid(), fragmentEntry.getCss(),
-				fragmentEntry.getHtml(), fragmentEntry.getJs(),
-				fragmentEntry.getConfiguration(),
-				JSONUtil.put(
-					FragmentEntryProcessorConstants.
-						KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
-					JSONUtil.put(
-						"myURL",
-						JSONUtil.put(
-							"layout",
-							JSONUtil.put(
-								"groupId", layout.getGroupId()
-							).put(
-								"layoutId", layout.getLayoutId()
-							).put(
-								"layoutUuid", layout.getUuid()
-							).put(
-								"privateLayout", layout.isPrivateLayout()
-							).put(
-								"title", layout.getTitle()
-							)))
-				).toString(),
-				StringPool.BLANK, 0, fragmentEntry.getFragmentEntryKey(),
-				fragmentEntry.getType(),
-				ServiceContextTestUtil.getServiceContext(
-					_stagingGroup.getGroupId(), TestPropsValues.getUserId()));
-
-		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
-			fragmentEntryLink, _draftLayout, null, 0, segmentsExperienceId);
-
-		ContentLayoutTestUtil.publishLayout(_draftLayout, _layout);
-
-		return _fragmentEntryLinkLocalService.getFragmentEntryLink(
-			_stagingGroup.getGroupId(),
-			fragmentEntryLink.getFragmentEntryLinkId(), _layout.getPlid());
 	}
 
 	private Layout _draftLayout;

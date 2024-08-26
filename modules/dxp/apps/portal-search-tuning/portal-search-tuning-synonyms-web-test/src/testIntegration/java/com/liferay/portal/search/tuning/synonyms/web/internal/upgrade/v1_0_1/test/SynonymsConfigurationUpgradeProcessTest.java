@@ -120,8 +120,8 @@ public class SynonymsConfigurationUpgradeProcessTest {
 		DB db = DBManagerUtil.getDB();
 
 		db.runSQL(
-			"delete from Configuration_ where configurationId like '" +
-			_CONFIGURATION_ID + "%'");
+			"delete from Configuration_ where configurationId ='" +
+				_CONFIGURATION_ID + "'");
 	}
 
 	private static final String[] _EXPECTED_FILTER_NAMES = {

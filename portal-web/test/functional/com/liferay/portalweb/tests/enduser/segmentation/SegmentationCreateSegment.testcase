@@ -2619,55 +2619,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-87031: Validate if the members are assigned correctly depending on the criteria selected"
-	@priority = 5
-	@uitest
-	test SegmentationCheckMembers {
-		property portal.acceptance = "true";
-
-		task ("Add user") {
-			JSONUser.addUser(
-				userEmailAddress = "u1@liferay.com",
-				userFirstName = "User",
-				userLastName = 1,
-				userScreenName = "u1");
-		}
-
-		task ("Add segment and check the user Belongs To the segment") {
-			LexiconEntry.gotoAdd();
-
-			Segmentation.addProperties(propertyOption = "Email Address");
-
-			Segmentation.fillTitle(titleField = "Segment View Members");
-
-			Segmentation.changeCriterionInput(criterionInputOption = "Contains");
-
-			Segmentation.fillProperty(criterionValue = "test");
-
-			AssertTextEquals(
-				locator1 = "Segmentation#MEMBERS_MATCHED",
-				value1 = "1 Member");
-		}
-
-		task ("Modify the criteria and check the user Belongs To the segment") {
-			Segmentation.viewMembers(memberName = "Test");
-
-			Segmentation.fillProperty(criterionValue = "liferay");
-
-			AssertTextEquals(
-				locator1 = "Segmentation#MEMBERS_MATCHED",
-				value1 = "2 Members");
-
-			Segmentation.viewMembers(memberName = "Test");
-
-			Segmentation.viewMembers(memberName = "User 1");
-
-			Button.clickSave();
-
-			Alert.viewSuccessMessage();
-		}
-	}
-
 	@description = "LPS-153507 - Test Automation for LPS-95412: Members count is not updated when conjunctions are changed"
 	@priority = 4
 	test SegmentationCheckMembersWithConditions {

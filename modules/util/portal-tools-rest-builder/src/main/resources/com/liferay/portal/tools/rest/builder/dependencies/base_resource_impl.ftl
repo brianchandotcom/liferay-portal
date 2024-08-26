@@ -421,13 +421,7 @@ public abstract class Base${schemaName}ResourceImpl
 					, existing${schemaName}
 				);
 			<#else>
-				<#assign
-					lastDotIndexOfReturnType = javaMethodSignature.returnType?last_index_of('.')
-
-					returnTypeClassName = javaMethodSignature.returnType?substring(lastDotIndexOfReturnType + 1)
-
-					returnTypeSchema = allSchemas[returnTypeClassName]!
-				/>
+				<#assign returnTypeSchema = allSchemas[javaMethodSignature.returnType?substring(javaMethodSignature.returnType?last_index_of('.') + 1)]! />
 
 				<#if returnTypeSchema.discriminator?has_content>
 			   		return null;

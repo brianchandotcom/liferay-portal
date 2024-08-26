@@ -76,40 +76,40 @@ test.describe('Client Extension Filters in Data Set Manager', () => {
 
 			await menuItem.click();
 
-			await filtersPage.saveAddFilterModal();
+			await filtersPage.saveAddFilterForm();
 
 			await expect(page.getByText('This field is required.')).toHaveCount(
 				3
 			);
 
-			await filtersPage.newClientExtensionFilterModal.nameInput.click();
-			await filtersPage.newClientExtensionFilterModal.nameInput.fill(
+			await filtersPage.newClientExtensionFilterForm.nameInput.click();
+			await filtersPage.newClientExtensionFilterForm.nameInput.fill(
 				filterLabel
 			);
-			await filtersPage.saveAddFilterModal();
+			await filtersPage.saveAddFilterForm();
 
 			await expect(page.getByText('This field is required.')).toHaveCount(
 				2
 			);
 
-			await filtersPage.newClientExtensionFilterModal.filterBySelect.click();
+			await filtersPage.newClientExtensionFilterForm.filterBySelect.click();
 			await page.getByRole('option', {name: DATE_FIELD_NAME}).click();
-			await filtersPage.saveAddFilterModal();
+			await filtersPage.saveAddFilterForm();
 
 			await expect(page.getByText('This field is required.')).toHaveCount(
 				1
 			);
 
-			await filtersPage.newClientExtensionFilterModal.clientExtensionDropdown.click();
+			await filtersPage.newClientExtensionFilterForm.clientExtensionDropdown.click();
 			await page.getByRole('option', {name: clientExtensionName}).click();
 
-			await filtersPage.saveAddFilterModal();
+			await filtersPage.saveAddFilterForm();
 
 			await expect(page.getByText('This field is required.')).toHaveCount(
 				0
 			);
 
-			await filtersPage.cancelAddFilterModal();
+			await filtersPage.cancelAddFilterForm();
 		});
 	});
 
@@ -126,7 +126,7 @@ test.describe('Client Extension Filters in Data Set Manager', () => {
 				name: filterLabel,
 			});
 
-			await filtersPage.saveAddFilterModal();
+			await filtersPage.saveAddFilterForm();
 		});
 
 		await test.step('Check that the client extension filter is in the list', async () => {
@@ -138,24 +138,14 @@ test.describe('Client Extension Filters in Data Set Manager', () => {
 			).toBeVisible();
 		});
 
-		await test.step('Fill a client extension filter modal and close without saving', async () => {
+		await test.step('Fill a client extension filter form and cancel the creation', async () => {
 			await filtersPage.createClientExtensionFilter({
 				clientExtension: clientExtensionName,
 				filterBy: NAME_FIELD_NAME,
 				name: filterLabel,
 			});
 
-			await filtersPage.closeAddFilterModal();
-		});
-
-		await test.step('Fill a client extension filter modal and cancel the creation', async () => {
-			await filtersPage.createClientExtensionFilter({
-				clientExtension: clientExtensionName,
-				filterBy: NAME_FIELD_NAME,
-				name: filterLabel,
-			});
-
-			await filtersPage.cancelAddFilterModal();
+			await filtersPage.cancelAddFilterForm();
 		});
 
 		await test.step('Check that only one client extension filter is in the list', async () => {

@@ -13,7 +13,7 @@ import {
 } from '../../../../../utils/types';
 import {DataSetPage} from '../DataSetPage';
 
-interface NewFilterModal {
+interface NewFilterForm {
 	cancelButton: Locator;
 	closeButton: Locator;
 	filterByDropdown: Locator;
@@ -24,12 +24,12 @@ interface NewFilterModal {
 	saveButton: Locator;
 }
 
-interface NewClientExtensionFilterModal extends NewFilterModal {
+interface NewClientExtensionFilterForm extends NewFilterForm {
 	clientExtensionDropdown: Locator;
 	noClientExtensionsAvailableAlert: Locator;
 }
 
-interface NewSelectionFilterModal extends NewFilterModal {
+interface NewSelectionFilterForm extends NewFilterForm {
 	filterModeRadioButtons: Locator;
 	itemKey: Locator;
 	itemLabel: Locator;
@@ -45,7 +45,7 @@ interface NewSelectionFilterModal extends NewFilterModal {
 	sourceTypeDropdown: Locator;
 }
 
-interface NewDateRangeFilterModal extends NewFilterModal {
+interface NewDateRangeFilterForm extends NewFilterForm {
 	datePicker: Locator;
 	fromDatePickerTrigger: Locator;
 	fromInput: Locator;
@@ -58,11 +58,11 @@ export class FiltersPage {
 
 	private readonly filterTable: Locator;
 
-	readonly newClientExtensionFilterModal: NewClientExtensionFilterModal;
-	readonly newDateRangeFilterModal: NewDateRangeFilterModal;
+	readonly newClientExtensionFilterForm: NewClientExtensionFilterForm;
+	readonly newDateRangeFilterForm: NewDateRangeFilterForm;
 	readonly newFilterButton: Locator;
-	private readonly newFilterModal: NewFilterModal;
-	private readonly newSelectionFilterModal: NewSelectionFilterModal;
+	private readonly newFilterForm: NewFilterForm;
+	private readonly newSelectionFilterForm: NewSelectionFilterForm;
 	readonly page: Page;
 	readonly searchButton: Locator;
 	readonly searchInput: Locator;
@@ -73,7 +73,7 @@ export class FiltersPage {
 		this.newFilterButton = page
 			.getByRole('button', {name: 'New Filter'})
 			.and(page.getByTitle('New Filter'));
-		this.newFilterModal = {
+		this.newFilterForm = {
 			cancelButton: page.getByRole('button', {name: 'Cancel'}),
 			closeButton: page.getByRole('button', {
 				exact: true,
@@ -86,8 +86,8 @@ export class FiltersPage {
 			nameInput: page.getByPlaceholder('Add a name'),
 			saveButton: page.getByRole('button', {name: 'Save'}),
 		};
-		this.newClientExtensionFilterModal = {
-			...this.newFilterModal,
+		this.newClientExtensionFilterForm = {
+			...this.newFilterForm,
 			clientExtensionDropdown: page
 				.locator('label')
 				.filter({hasText: 'Client ExtensionRequired'}),
@@ -100,8 +100,8 @@ export class FiltersPage {
 				})
 				.first(),
 		};
-		this.newDateRangeFilterModal = {
-			...this.newFilterModal,
+		this.newDateRangeFilterForm = {
+			...this.newFilterForm,
 			datePicker: page.getByRole('dialog', {name: 'Choose date'}),
 			fromDatePickerTrigger: page
 				.locator('div')
@@ -120,8 +120,8 @@ export class FiltersPage {
 				.filter({hasText: /^To$/})
 				.getByPlaceholder('YYYY-MM-DD'),
 		};
-		this.newSelectionFilterModal = {
-			...this.newFilterModal,
+		this.newSelectionFilterForm = {
+			...this.newFilterForm,
 			filterModeRadioButtons: page.getByText('Filter ModeIncludeExclude'),
 			itemKey: page.locator('.fds-filter-item-key'),
 			itemLabel: page.locator('.fds-filter-item-label'),
@@ -156,7 +156,7 @@ export class FiltersPage {
 	}
 
 	async assertValidationError(text: string) {
-		const visualFeedback = this.newFilterModal.formFeedback
+		const visualFeedback = this.newFilterForm.formFeedback
 			.filter({has: this.page.locator('.form-feedback-indicator')})
 			.first();
 
@@ -165,12 +165,12 @@ export class FiltersPage {
 		await expect(visualFeedback).toContainText(text);
 	}
 
-	async cancelAddFilterModal() {
-		await this.newFilterModal.cancelButton.click();
+	async cancelAddFilterForm() {
+		await this.newFilterForm.cancelButton.click();
 	}
 
-	async closeAddFilterModal() {
-		await this.newFilterModal.closeButton.click();
+	async closeAddFilterForm() {
+		await this.newFilterForm.closeButton.click();
 	}
 
 	async createClientExtensionFilter({
@@ -178,27 +178,27 @@ export class FiltersPage {
 		filterBy,
 		name,
 	}: IClientExtensionFilter) {
-		await this.openNewFilterModal({
+		await this.openNewFilterForm({
 			dropdownItemLabel: 'Client Extension',
 		});
 
-		await this.newClientExtensionFilterModal.nameInput.click();
-		await this.newClientExtensionFilterModal.nameInput.fill(name);
-		await this.newClientExtensionFilterModal.filterBySelect.click();
+		await this.newClientExtensionFilterForm.nameInput.click();
+		await this.newClientExtensionFilterForm.nameInput.fill(name);
+		await this.newClientExtensionFilterForm.filterBySelect.click();
 		await this.page.getByRole('option', {name: filterBy}).click();
-		await this.newClientExtensionFilterModal.clientExtensionDropdown.click();
+		await this.newClientExtensionFilterForm.clientExtensionDropdown.click();
 		await this.page.getByRole('option', {name: clientExtension}).click();
 	}
 
 	async createDateRangeFilter({filterBy, from, name, to}: IDateRangeFilter) {
-		await this.openNewFilterModal({
+		await this.openNewFilterForm({
 			dropdownItemLabel: 'Date Range',
 		});
 
-		await this.newDateRangeFilterModal.nameInput.click();
-		await this.newDateRangeFilterModal.nameInput.fill(name);
+		await this.newDateRangeFilterForm.nameInput.click();
+		await this.newDateRangeFilterForm.nameInput.fill(name);
 
-		await this.newDateRangeFilterModal.filterBySelect.click();
+		await this.newDateRangeFilterForm.filterBySelect.click();
 
 		const dateFilterOption = this.page.getByRole('option', {
 			name: filterBy,
@@ -207,11 +207,11 @@ export class FiltersPage {
 		await dateFilterOption.click();
 
 		if (from) {
-			await this.newDateRangeFilterModal.fromInput.fill(from);
+			await this.newDateRangeFilterForm.fromInput.fill(from);
 		}
 
 		if (to) {
-			await this.newDateRangeFilterModal.toInput.fill(to);
+			await this.newDateRangeFilterForm.toInput.fill(to);
 		}
 	}
 
@@ -228,55 +228,55 @@ export class FiltersPage {
 		selectionType,
 		sourceType,
 	}: ISelectionFilterApiHeadless) {
-		await this.openNewFilterModal({
+		await this.openNewFilterForm({
 			dropdownItemLabel: 'Selection',
 		});
 
-		await this.newSelectionFilterModal.nameInput.click();
-		await this.newSelectionFilterModal.nameInput.fill(name);
+		await this.newSelectionFilterForm.nameInput.click();
+		await this.newSelectionFilterForm.nameInput.fill(name);
 
-		await this.newSelectionFilterModal.filterBySelect.click();
+		await this.newSelectionFilterForm.filterBySelect.click();
 		await this.page.getByRole('option', {name: filterBy}).click();
 
-		await this.newSelectionFilterModal.sourceTypeDropdown.selectOption(
+		await this.newSelectionFilterForm.sourceTypeDropdown.selectOption(
 			sourceType
 		);
 
-		await this.newSelectionFilterModal.restApplicationField.click();
-		await this.newSelectionFilterModal.restApplicationOptions.waitFor();
-		await this.newSelectionFilterModal.restApplicationOptions
+		await this.newSelectionFilterForm.restApplicationField.click();
+		await this.newSelectionFilterForm.restApplicationOptions.waitFor();
+		await this.newSelectionFilterForm.restApplicationOptions
 			.getByRole('option', {name: restApplication})
 			.click();
 
-		await this.newSelectionFilterModal.restSchemaField.waitFor();
-		await this.newSelectionFilterModal.restSchemaField.click();
+		await this.newSelectionFilterForm.restSchemaField.waitFor();
+		await this.newSelectionFilterForm.restSchemaField.click();
 
-		await this.newSelectionFilterModal.restSchemaOptions
+		await this.newSelectionFilterForm.restSchemaOptions
 			.getByRole('option', {exact: true, name: restSchema})
 			.click();
-		await this.newSelectionFilterModal.restSchemaField.click();
+		await this.newSelectionFilterForm.restSchemaField.click();
 
-		await this.newSelectionFilterModal.restEndpointField.waitFor();
-		await this.newSelectionFilterModal.restEndpointField.click();
+		await this.newSelectionFilterForm.restEndpointField.waitFor();
+		await this.newSelectionFilterForm.restEndpointField.click();
 
-		await this.newSelectionFilterModal.restEndpointOptions
+		await this.newSelectionFilterForm.restEndpointOptions
 			.getByRole('option', {exact: true, name: restEndpoint})
 			.click();
-		await this.newSelectionFilterModal.restEndpointField.click();
+		await this.newSelectionFilterForm.restEndpointField.click();
 
-		await this.newSelectionFilterModal.itemKey.click();
+		await this.newSelectionFilterForm.itemKey.click();
 		await this.page
 			.getByRole('option', {exact: true, name: itemKey})
 			.click();
-		await this.newSelectionFilterModal.itemKey.click();
+		await this.newSelectionFilterForm.itemKey.click();
 
-		await this.newSelectionFilterModal.itemLabel.click();
+		await this.newSelectionFilterForm.itemLabel.click();
 		await this.page
 			.getByRole('option', {exact: true, name: itemLabel})
 			.click();
-		await this.newSelectionFilterModal.itemLabel.click();
+		await this.newSelectionFilterForm.itemLabel.click();
 
-		await this.newSelectionFilterModal.preselectedValuesMultiSelect.click();
+		await this.newSelectionFilterForm.preselectedValuesMultiSelect.click();
 		await this.page
 			.getByRole('option', {name: preselectedValues[0]})
 			.click();
@@ -294,23 +294,21 @@ export class FiltersPage {
 		source,
 		sourceType,
 	}: ISelectionFilterPicklist) {
-		await this.openNewFilterModal({
+		await this.openNewFilterForm({
 			dropdownItemLabel: 'Selection',
 		});
 
-		await this.newSelectionFilterModal.nameInput.click();
-		await this.newSelectionFilterModal.nameInput.fill(name);
-		await this.newSelectionFilterModal.filterBySelect.click();
+		await this.newSelectionFilterForm.nameInput.click();
+		await this.newSelectionFilterForm.nameInput.fill(name);
+		await this.newSelectionFilterForm.filterBySelect.click();
 		await this.page.getByRole('option', {name: filterBy}).click();
-		await this.newSelectionFilterModal.sourceTypeDropdown.click();
-		await this.newSelectionFilterModal.sourceTypeDropdown.selectOption(
+		await this.newSelectionFilterForm.sourceTypeDropdown.click();
+		await this.newSelectionFilterForm.sourceTypeDropdown.selectOption(
 			sourceType
 		);
-		await this.newSelectionFilterModal.picklistDropdown.click();
-		await this.newSelectionFilterModal.picklistDropdown.selectOption(
-			source
-		);
-		await this.newSelectionFilterModal.preselectedValuesMultiSelect.click();
+		await this.newSelectionFilterForm.picklistDropdown.click();
+		await this.newSelectionFilterForm.picklistDropdown.selectOption(source);
+		await this.newSelectionFilterForm.preselectedValuesMultiSelect.click();
 
 		if (preselectedValues.length) {
 			await this.page
@@ -347,7 +345,7 @@ export class FiltersPage {
 		await this.dataSetPage.selectTab('Filters');
 	}
 
-	async openNewFilterModal({
+	async openNewFilterForm({
 		dropdownItemLabel,
 		expectSaveHidden = false,
 	}: {
@@ -367,14 +365,14 @@ export class FiltersPage {
 		await menuItem.click();
 
 		if (expectSaveHidden) {
-			await expect(this.newFilterModal.saveButton).toBeHidden();
+			await expect(this.newFilterForm.saveButton).toBeHidden();
 		}
 		else {
-			await expect(this.newFilterModal.saveButton).toBeVisible();
+			await expect(this.newFilterForm.saveButton).toBeVisible();
 		}
 	}
 
-	async saveAddFilterModal() {
-		await this.newFilterModal.saveButton.click();
+	async saveAddFilterForm() {
+		await this.newFilterForm.saveButton.click();
 	}
 }

@@ -22,6 +22,8 @@ export const test = mergeTests(
 	loginTest()
 );
 
+const dataSetERCs = [];
+
 test.describe('Date range filter creation, edition and cancel', () => {
 	let dataSetERC: string;
 	let dataSetLabel: string;
@@ -31,7 +33,7 @@ test.describe('Date range filter creation, edition and cancel', () => {
 	test.beforeEach(async ({dataSetManagerApiHelpers, filtersPage}) => {
 		dataSetERC = getRandomString();
 		dataSetLabel = getRandomString();
-
+		dataSetERCs.push(dataSetERC);
 		await test.step('Create a data set', async () => {
 			await dataSetManagerApiHelpers.createDataSet({
 				erc: dataSetERC,
@@ -47,14 +49,23 @@ test.describe('Date range filter creation, edition and cancel', () => {
 	});
 
 	test.afterEach(async ({dataSetManagerApiHelpers}) => {
-		await dataSetManagerApiHelpers.deleteDataSet({erc: dataSetERC});
+
+		// await dataSetManagerApiHelpers.deleteDataSet({erc: dataSetERC});
+
+		for (const DATA_SET_ERC of dataSetERCs) {
+			await dataSetManagerApiHelpers.deleteDataSet({
+				erc: DATA_SET_ERC,
+			});
+		}
+
+		dataSetERCs.length = 0;
 	});
 
 	test('When creating a new filter in DSM, date-time field is available for selection @LPD-10754', async ({
 		filtersPage,
 	}) => {
-		await test.step('Open add date range filter modal', async () => {
-			await filtersPage.openNewFilterModal({
+		await test.step('Open add date range filter form', async () => {
+			await filtersPage.openNewFilterForm({
 				dropdownItemLabel: 'Date Range',
 			});
 		});
@@ -64,33 +75,33 @@ test.describe('Date range filter creation, edition and cancel', () => {
 		});
 
 		await test.step('Check if date-time filter is available', async () => {
-			await filtersPage.newDateRangeFilterModal.filterBySelect.click();
+			await filtersPage.newDateRangeFilterForm.filterBySelect.click();
 
 			await expect(dateFilterOption).toBeVisible();
 		});
 
-		await test.step('Check date-time filter modal contains from and to fields @LPS-181281', async () => {
+		await test.step('Check date-time filter form contains from and to fields @LPS-181281', async () => {
 			await dateFilterOption.click();
 
 			await expect(
-				filtersPage.newDateRangeFilterModal.fromInput
+				filtersPage.newDateRangeFilterForm.fromInput
 			).toBeVisible();
 
 			await expect(
-				filtersPage.newDateRangeFilterModal.toInput
+				filtersPage.newDateRangeFilterForm.toInput
 			).toBeVisible();
 
-			await filtersPage.newDateRangeFilterModal.fromDatePickerTrigger.click();
+			await filtersPage.newDateRangeFilterForm.fromDatePickerTrigger.click();
 
 			await expect(
-				filtersPage.newDateRangeFilterModal.datePicker
+				filtersPage.newDateRangeFilterForm.datePicker
 			).toBeVisible();
 
 			await filtersPage.page.keyboard.press('Escape');
 		});
 
 		await test.step('Cancel date range filter, check no filters are created @LPS-181281', async () => {
-			await filtersPage.cancelAddFilterModal();
+			await filtersPage.cancelAddFilterForm();
 
 			await filtersPage.assertFiltersTableRowCount(0);
 		});
@@ -108,7 +119,7 @@ test.describe('Date range filter creation, edition and cancel', () => {
 				name: filterName,
 			});
 
-			await filtersPage.saveAddFilterModal();
+			await filtersPage.saveAddFilterForm();
 		});
 
 		await test.step('Assert filter is saved', async () => {
@@ -136,7 +147,7 @@ test.describe('Date range filter creation, edition and cancel', () => {
 
 			await editButton.click();
 
-			const nameInput = filtersPage.newDateRangeFilterModal.nameInput;
+			const nameInput = filtersPage.newDateRangeFilterForm.nameInput;
 
 			await expect(nameInput).toBeInViewport();
 
@@ -144,7 +155,7 @@ test.describe('Date range filter creation, edition and cancel', () => {
 
 			await nameInput.fill(filterNewName);
 
-			await filtersPage.cancelAddFilterModal();
+			await filtersPage.cancelAddFilterForm();
 
 			await filtersPage
 				.getRowByText(filterName)
@@ -157,7 +168,7 @@ test.describe('Date range filter creation, edition and cancel', () => {
 
 			await expect(nameInput).toHaveValue(filterName);
 
-			await filtersPage.cancelAddFilterModal();
+			await filtersPage.cancelAddFilterForm();
 
 			await filtersPage.assertFiltersTableRowCount(1);
 		});
@@ -176,7 +187,7 @@ test.describe('Date range filter creation, edition and cancel', () => {
 
 			await editButton.click();
 
-			const nameInput = filtersPage.newDateRangeFilterModal.nameInput;
+			const nameInput = filtersPage.newDateRangeFilterForm.nameInput;
 
 			await expect(nameInput).toBeInViewport();
 
@@ -184,7 +195,7 @@ test.describe('Date range filter creation, edition and cancel', () => {
 
 			await nameInput.fill(filterNewName);
 
-			await filtersPage.saveAddFilterModal();
+			await filtersPage.saveAddFilterForm();
 		});
 
 		await test.step('Assert filter with new name is saved @LPS-183056', async () => {
@@ -213,12 +224,12 @@ test.describe('Date range filter creation, edition and cancel', () => {
 			await editButton.click();
 
 			const filterBySelect =
-				filtersPage.newDateRangeFilterModal.filterBySelect;
+				filtersPage.newDateRangeFilterForm.filterBySelect;
 
 			await filterBySelect.click();
 
 			const filterByDropdown =
-				filtersPage.newDateRangeFilterModal.filterByDropdown;
+				filtersPage.newDateRangeFilterForm.filterByDropdown;
 
 			await expect(filterByDropdown).toBeVisible();
 
@@ -234,25 +245,23 @@ test.describe('Date range filter creation, edition and cancel', () => {
 		});
 
 		await test.step('Assert date range correctness @LPS-183056', async () => {
-			await filtersPage.newDateRangeFilterModal.fromInput.fill(
+			await filtersPage.newDateRangeFilterForm.fromInput.fill(
 				'2001-12-10'
 			);
 
-			await filtersPage.newDateRangeFilterModal.toInput.fill(
-				'2001-12-09'
-			);
+			await filtersPage.newDateRangeFilterForm.toInput.fill('2001-12-09');
 
 			await filtersPage.assertValidationError('Date range is invalid');
 
-			await filtersPage.cancelAddFilterModal();
+			await filtersPage.cancelAddFilterForm();
 		});
 
 		await test.step('Check a filter can not be created on an already used field @LPS-190851', async () => {
-			await filtersPage.openNewFilterModal({
+			await filtersPage.openNewFilterForm({
 				dropdownItemLabel: 'Date Range',
 			});
 
-			await filtersPage.newDateRangeFilterModal.filterBySelect.click();
+			await filtersPage.newDateRangeFilterForm.filterBySelect.click();
 
 			const dateFilterOption = filtersPage.page.getByRole('option', {
 				name: DATE_FIELD_NAME,
@@ -267,49 +276,47 @@ test.describe('Date range filter creation, edition and cancel', () => {
 			);
 		});
 	});
-});
 
-test('No date filters can be created if schema has no date fields', async ({
-	dataSetManagerApiHelpers,
-	filtersPage,
-}) => {
-	const dataSetERC = getRandomString();
-	const dataSetLabel = 'No date dataset';
+	test('No date filters can be created if schema has no date fields', async ({
+		dataSetManagerApiHelpers,
+		filtersPage,
+	}) => {
+		const dataSetERC = getRandomString();
+		const dataSetLabel = 'No date dataset';
 
-	await test.step('Create Data Set with no date fields', async () => {
-		await dataSetManagerApiHelpers.createDataSet({
-			erc: dataSetERC,
-			label: dataSetLabel,
-			restApplication: '/headless-delivery/v1.0',
-			restEndpoint: '/v1.0/sites/{siteId}/blog-posting-images',
-			restSchema: 'BlogPostingImage',
+		dataSetERCs.push(dataSetERC);
+
+		await test.step('Create Data Set with no date fields', async () => {
+			await dataSetManagerApiHelpers.createDataSet({
+				erc: dataSetERC,
+				label: dataSetLabel,
+				restApplication: '/headless-delivery/v1.0',
+				restEndpoint: '/v1.0/sites/{siteId}/blog-posting-images',
+				restSchema: 'BlogPostingImage',
+			});
 		});
-	});
 
-	await test.step('Navigate to Filters section', async () => {
-		await filtersPage.goto({
-			dataSetLabel,
+		await test.step('Navigate to Filters section', async () => {
+			await filtersPage.goto({
+				dataSetLabel,
+			});
 		});
-	});
 
-	await test.step('Create a date range filter', async () => {
-		await filtersPage.openNewFilterModal({
-			dropdownItemLabel: 'Date Range',
-			expectSaveHidden: true,
+		await test.step('Create a date range filter', async () => {
+			await filtersPage.openNewFilterForm({
+				dropdownItemLabel: 'Date Range',
+				expectSaveHidden: true,
+			});
 		});
-	});
 
-	await test.step('Create a date range filter', async () => {
-		await expect(
-			filtersPage.newDateRangeFilterModal.modalBody
-		).toContainText(
-			'There are no fields compatible with this type of filter.'
-		);
+		await test.step('Create a date range filter', async () => {
+			await expect(
+				filtersPage.newDateRangeFilterForm.modalBody
+			).toContainText(
+				'There are no fields compatible with this type of filter.'
+			);
 
-		await filtersPage.newDateRangeFilterModal.closeButton.click();
-
-		await dataSetManagerApiHelpers.deleteDataSet({
-			erc: dataSetERC,
+			await filtersPage.closeAddFilterForm();
 		});
 	});
 });

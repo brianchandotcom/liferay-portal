@@ -30,7 +30,6 @@ export function DefinitionInfo() {
 		definitionInfo,
 		setWorkflowDefinitionVersions,
 		timeZoneId,
-		version,
 		workflowDefinitionVersions,
 	} = useContext(DefinitionBuilderContext);
 
@@ -60,7 +59,6 @@ export function DefinitionInfo() {
 								setWorkflowDefinitionVersions
 							}
 							timeZoneId={timeZoneId}
-							version={Number(version)}
 							workflowDefinitionVersions={
 								workflowDefinitionVersions
 							}

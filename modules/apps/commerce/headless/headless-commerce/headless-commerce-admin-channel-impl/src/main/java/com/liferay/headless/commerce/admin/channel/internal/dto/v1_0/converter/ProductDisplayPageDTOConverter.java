@@ -5,8 +5,12 @@
 
 package com.liferay.headless.commerce.admin.channel.internal.dto.v1_0.converter;
 
+import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDisplayLayout;
+import com.liferay.commerce.product.model.CProduct;
+import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPDisplayLayoutLocalService;
+import com.liferay.commerce.product.service.CProductLocalService;
 import com.liferay.headless.commerce.admin.channel.dto.v1_0.ProductDisplayPage;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
@@ -44,12 +48,37 @@ public class ProductDisplayPageDTOConverter
 				setPageTemplateUuid(
 					cpDisplayLayout::getLayoutPageTemplateEntryUuid);
 				setPageUuid(cpDisplayLayout::getLayoutUuid);
+				setProductExternalReferenceCode(
+					() -> {
+						CPDefinition cpDefinition =
+							_cpDefinitionLocalService.fetchCPDefinition(
+								cpDisplayLayout.getClassPK());
+
+						if (cpDefinition == null) {
+							return null;
+						}
+
+						CProduct cProduct = _cProductLocalService.fetchCProduct(
+							cpDefinition.getCProductId());
+
+						if (cProduct == null) {
+							return null;
+						}
+
+						return cProduct.getExternalReferenceCode();
+					});
 				setProductId(cpDisplayLayout::getClassPK);
 			}
 		};
 	}
 
 	@Reference
+	private CPDefinitionLocalService _cpDefinitionLocalService;
+
+	@Reference
 	private CPDisplayLayoutLocalService _cpDisplayLayoutLocalService;
+
+	@Reference
+	private CProductLocalService _cProductLocalService;
 
 }

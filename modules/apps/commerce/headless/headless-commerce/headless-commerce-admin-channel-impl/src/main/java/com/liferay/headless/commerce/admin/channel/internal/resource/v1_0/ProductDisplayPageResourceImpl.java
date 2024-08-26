@@ -5,10 +5,12 @@
 
 package com.liferay.headless.commerce.admin.channel.internal.resource.v1_0;
 
+import com.liferay.commerce.product.exception.NoSuchCPDefinitionException;
 import com.liferay.commerce.product.exception.NoSuchCPDisplayLayoutException;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDisplayLayout;
 import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.service.CPDisplayLayoutService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.headless.commerce.admin.channel.dto.v1_0.ProductDisplayPage;
@@ -129,12 +131,25 @@ public class ProductDisplayPageResourceImpl
 			throw new NoSuchCPDisplayLayoutException();
 		}
 
+		long productId = GetterUtil.getLong(productDisplayPage.getProductId());
+
+		if (productId == 0) {
+			CPDefinition cpDefinition =
+				_cpDefinitionService.
+					fetchCPDefinitionByCProductExternalReferenceCode(
+						productDisplayPage.getProductExternalReferenceCode(),
+						contextCompany.getCompanyId());
+
+			if (cpDefinition == null) {
+				productId = cpDisplayLayout.getClassPK();
+			}
+			else {
+				productId = cpDefinition.getCPDefinitionId();
+			}
+		}
+
 		_cpDisplayLayoutService.updateCPDisplayLayout(
-			id,
-			GetterUtil.getLong(
-				productDisplayPage.getProductId(),
-				cpDisplayLayout.getClassPK()),
-			cpDisplayLayout.getLayoutPageTemplateEntryUuid(),
+			id, productId, cpDisplayLayout.getLayoutPageTemplateEntryUuid(),
 			GetterUtil.getString(
 				productDisplayPage.getPageUuid(),
 				cpDisplayLayout.getLayoutUuid()));
@@ -163,13 +178,28 @@ public class ProductDisplayPageResourceImpl
 			Long id, ProductDisplayPage productDisplayPage)
 		throws Exception {
 
+		long productId = GetterUtil.getLong(productDisplayPage.getProductId());
+
+		if (productId == 0) {
+			CPDefinition cpDefinition =
+				_cpDefinitionService.
+					fetchCPDefinitionByCProductExternalReferenceCode(
+						productDisplayPage.getProductExternalReferenceCode(),
+						contextCompany.getCompanyId());
+
+			if (cpDefinition == null) {
+				throw new NoSuchCPDefinitionException();
+			}
+
+			productId = cpDefinition.getCPDefinitionId();
+		}
+
 		CommerceChannel commerceChannel =
 			_commerceChannelLocalService.getCommerceChannel(id);
 
 		CPDisplayLayout cpDisplayLayout =
 			_cpDisplayLayoutService.addCPDisplayLayout(
-				commerceChannel.getSiteGroupId(), CPDefinition.class,
-				productDisplayPage.getProductId(),
+				commerceChannel.getSiteGroupId(), CPDefinition.class, productId,
 				productDisplayPage.getPageTemplateUuid(),
 				productDisplayPage.getPageUuid());
 
@@ -223,6 +253,9 @@ public class ProductDisplayPageResourceImpl
 	)
 	private ModelResourcePermission<CPDefinition>
 		_cpDefinitionModelResourcePermission;
+
+	@Reference
+	private CPDefinitionService _cpDefinitionService;
 
 	@Reference
 	private CPDisplayLayoutService _cpDisplayLayoutService;

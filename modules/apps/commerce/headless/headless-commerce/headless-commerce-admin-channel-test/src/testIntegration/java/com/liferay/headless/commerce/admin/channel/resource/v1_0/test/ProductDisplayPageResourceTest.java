@@ -10,9 +10,12 @@ import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDisplayLayout;
+import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPDisplayLayoutLocalService;
+import com.liferay.commerce.product.service.CProductLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.test.util.CommerceTestUtil;
@@ -24,12 +27,15 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.test.rule.Inject;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -55,6 +61,32 @@ public class ProductDisplayPageResourceTest
 		_commerceCatalog = CommerceTestUtil.addCommerceCatalog(
 			testCompany.getCompanyId(), testCompany.getGroupId(),
 			_user.getUserId(), _commerceCurrency.getCode());
+	}
+
+	@Override
+	@Test
+	public void testPatchProductDisplayPage() throws Exception {
+		super.testPatchProductDisplayPage();
+
+		_testPatchProductDisplayPageWithProductExternalReferenceCode();
+	}
+
+	@Override
+	@Test
+	public void testPostChannelByExternalReferenceCodeProductDisplayPage()
+		throws Exception {
+
+		super.testPostChannelByExternalReferenceCodeProductDisplayPage();
+
+		_testPostChannelByExternalReferenceCodeProductDisplayPageWithProductExternalReferenceCode();
+	}
+
+	@Override
+	@Test
+	public void testPostChannelIdProductDisplayPage() throws Exception {
+		super.testPostChannelIdProductDisplayPage();
+
+		_testPostChannelIdProductDisplayPageWithProductExternalReferenceCode();
 	}
 
 	@Override
@@ -226,6 +258,121 @@ public class ProductDisplayPageResourceTest
 			commerceChannel, productDisplayPage);
 	}
 
+	private void _testPatchProductDisplayPageWithProductExternalReferenceCode()
+		throws Exception {
+
+		ProductDisplayPage postProductDisplayPage =
+			testPatchProductDisplayPage_addProductDisplayPage();
+
+		ProductDisplayPage randomPatchProductDisplayPage =
+			randomPatchProductDisplayPage();
+
+		long randomPatchProductDisplayPageProductId =
+			randomPatchProductDisplayPage.getProductId();
+
+		CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(
+			randomPatchProductDisplayPageProductId);
+
+		CProduct cProduct = _cProductLocalService.getCProduct(
+			cpDefinition.getCProductId());
+
+		randomPatchProductDisplayPage.setProductExternalReferenceCode(
+			cProduct.getExternalReferenceCode());
+
+		randomPatchProductDisplayPage.setProductId(0L);
+
+		ProductDisplayPage patchProductDisplayPage =
+			productDisplayPageResource.patchProductDisplayPage(
+				postProductDisplayPage.getId(), randomPatchProductDisplayPage);
+
+		randomPatchProductDisplayPage.setProductId(
+			randomPatchProductDisplayPageProductId);
+
+		ProductDisplayPage expectedPatchProductDisplayPage =
+			postProductDisplayPage.clone();
+
+		BeanTestUtil.copyProperties(
+			randomPatchProductDisplayPage, expectedPatchProductDisplayPage);
+
+		ProductDisplayPage getProductDisplayPage =
+			productDisplayPageResource.getProductDisplayPage(
+				patchProductDisplayPage.getId());
+
+		assertEquals(expectedPatchProductDisplayPage, getProductDisplayPage);
+		assertValid(getProductDisplayPage);
+		Assert.assertEquals(
+			randomPatchProductDisplayPage.getProductExternalReferenceCode(),
+			getProductDisplayPage.getProductExternalReferenceCode());
+		Assert.assertEquals(
+			randomPatchProductDisplayPageProductId,
+			GetterUtil.getLong(getProductDisplayPage.getProductId()));
+	}
+
+	private void _testPostChannelByExternalReferenceCodeProductDisplayPageWithProductExternalReferenceCode()
+		throws Exception {
+
+		ProductDisplayPage randomProductDisplayPage =
+			randomProductDisplayPage();
+
+		CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(
+			randomProductDisplayPage.getProductId());
+
+		CProduct cProduct = _cProductLocalService.getCProduct(
+			cpDefinition.getCProductId());
+
+		randomProductDisplayPage.setProductExternalReferenceCode(
+			cProduct.getExternalReferenceCode());
+
+		randomProductDisplayPage.setProductId(0L);
+
+		ProductDisplayPage postProductDisplayPage =
+			productDisplayPageResource.
+				postChannelByExternalReferenceCodeProductDisplayPage(
+					_commerceChannel.getExternalReferenceCode(),
+					randomProductDisplayPage);
+
+		assertEquals(randomProductDisplayPage, postProductDisplayPage);
+		assertValid(postProductDisplayPage);
+		Assert.assertEquals(
+			randomProductDisplayPage.getProductExternalReferenceCode(),
+			postProductDisplayPage.getProductExternalReferenceCode());
+		Assert.assertEquals(
+			cpDefinition.getCPDefinitionId(),
+			GetterUtil.getLong(postProductDisplayPage.getProductId()));
+	}
+
+	private void _testPostChannelIdProductDisplayPageWithProductExternalReferenceCode()
+		throws Exception {
+
+		ProductDisplayPage randomProductDisplayPage =
+			randomProductDisplayPage();
+
+		CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(
+			randomProductDisplayPage.getProductId());
+
+		CProduct cProduct = _cProductLocalService.getCProduct(
+			cpDefinition.getCProductId());
+
+		randomProductDisplayPage.setProductExternalReferenceCode(
+			cProduct.getExternalReferenceCode());
+
+		randomProductDisplayPage.setProductId(0L);
+
+		ProductDisplayPage postProductDisplayPage =
+			productDisplayPageResource.postChannelIdProductDisplayPage(
+				_commerceChannel.getCommerceChannelId(),
+				randomProductDisplayPage);
+
+		assertEquals(randomProductDisplayPage, postProductDisplayPage);
+		assertValid(postProductDisplayPage);
+		Assert.assertEquals(
+			randomProductDisplayPage.getProductExternalReferenceCode(),
+			postProductDisplayPage.getProductExternalReferenceCode());
+		Assert.assertEquals(
+			cpDefinition.getCPDefinitionId(),
+			GetterUtil.getLong(postProductDisplayPage.getProductId()));
+	}
+
 	@DeleteAfterTestRun
 	private CommerceCatalog _commerceCatalog;
 
@@ -241,6 +388,9 @@ public class ProductDisplayPageResourceTest
 	@DeleteAfterTestRun
 	private CommerceCurrency _commerceCurrency;
 
+	@Inject
+	private CPDefinitionLocalService _cpDefinitionLocalService;
+
 	@DeleteAfterTestRun
 	private List<CPDefinition> _cpDefinitions = new ArrayList<>();
 
@@ -249,6 +399,9 @@ public class ProductDisplayPageResourceTest
 
 	@DeleteAfterTestRun
 	private List<CPDisplayLayout> _cpDisplayLayouts = new ArrayList<>();
+
+	@Inject
+	private CProductLocalService _cProductLocalService;
 
 	@DeleteAfterTestRun
 	private List<Layout> _layouts = new ArrayList<>();

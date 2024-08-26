@@ -1437,6 +1437,8 @@ autoSaveAsDraftTest(
 			)
 		).toBeVisible({timeout: 1000});
 
+		await page.locator('body').click();
+
 		const title = getRandomString();
 
 		await journalEditArticlePage.fillTitle(title);
@@ -1464,6 +1466,20 @@ autoSaveAsDraftTest(
 		await journalPage.assertJournalArticlePermissions(title, [
 			{enabled: false, locator: '#guest_ACTION_VIEW'},
 		]);
+
+		await journalEditArticlePage.editArticle(title);
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {
+				name: 'Schedule Publication',
+			}),
+			trigger: page.getByRole('button', {
+				name: 'Select and Confirm Publish Settings',
+			}),
+		});
+
+		await expect(page.getByText('Viewable by')).toBeHidden();
 	}
 );
 

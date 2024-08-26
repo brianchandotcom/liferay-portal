@@ -146,7 +146,7 @@ journalEditArticleDisplayContext.setViewAttributes();
 						<c:choose>
 							<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPD-11228") %>'>
 								<div class="align-items-center d-none small text-danger" id="<portlet:namespace />lockErrorIndicator">
-									<liferay-ui:message key="alert-helper-error" />
+									<liferay-ui:message key="auto-save-error" />
 
 									<clay:icon
 										cssClass="ml-2 mt-0"

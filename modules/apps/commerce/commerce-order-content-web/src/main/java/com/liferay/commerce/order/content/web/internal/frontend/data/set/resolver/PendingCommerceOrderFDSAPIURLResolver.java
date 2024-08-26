@@ -8,7 +8,6 @@ package com.liferay.commerce.order.content.web.internal.frontend.data.set.resolv
 import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
-import com.liferay.commerce.frontend.constants.CommerceFDSRestApplicationConstants;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
@@ -24,7 +23,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Gianmarco Brunialti Masera
  */
 @Component(
-	property = "fds.rest.application.key=" + CommerceFDSRestApplicationConstants.DELIVERY_CART_V1 + "/Cart",
+	property = "fds.rest.application.key=/headless-commerce-delivery-cart/v1.0/Cart",
 	service = FDSAPIURLResolver.class
 )
 public class PendingCommerceOrderFDSAPIURLResolver

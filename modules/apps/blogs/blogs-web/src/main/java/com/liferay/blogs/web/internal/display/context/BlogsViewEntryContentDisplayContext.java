@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import javax.portlet.PortletRequest;
+
 /**
  * @author Roberto Díaz
  */
@@ -60,8 +62,8 @@ public class BlogsViewEntryContentDisplayContext {
 				"entryId", String.valueOf(entry.getEntryId()));
 		}
 
-		return PortletURLBuilder.createRenderURL(
-			_liferayPortletResponse
+		return PortletURLBuilder.createLiferayPortletURL(
+			_liferayPortletResponse, PortletRequest.RENDER_PHASE
 		).setMVCRenderCommandName(
 			"/blogs/view_entry"
 		).setRedirect(

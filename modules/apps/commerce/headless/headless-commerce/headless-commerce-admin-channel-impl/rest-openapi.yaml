@@ -388,6 +388,9 @@ components:
                     type: string
                 pageUuid:
                     type: string
+                productExternalReferenceCode:
+                    example: "DAB-34098-789-N"
+                    type: string
                 productId:
                     example: 30324
                     format: int64

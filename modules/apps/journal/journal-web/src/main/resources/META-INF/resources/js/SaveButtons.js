@@ -304,6 +304,7 @@ export default function SaveButtons({
 					}}
 					permissionsURL={permissionsURL}
 					portletNamespace={portletNamespace}
+					showPermissionsOptions={showPublishModal}
 					timeZone={timeZone}
 					workflowEnabled={workflowEnabled}
 				/>

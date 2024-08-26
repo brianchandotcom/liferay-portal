@@ -19,6 +19,7 @@ export default function PublishModal({
 	onPublishButtonClick,
 	permissionsURL,
 	portletNamespace,
+	showPermissionsOptions,
 	timeZone,
 	workflowEnabled,
 }) {
@@ -69,14 +70,15 @@ export default function PublishModal({
 					/>
 				) : null}
 
-				{(!articleId || Liferay.FeatureFlags['LPD-11228']) && (
-					<div className="mt-3">
-						<PermissionsOptions
-							formId={formId}
-							permissionsURL={permissionsURL}
-						/>
-					</div>
-				)}
+				{(!articleId || Liferay.FeatureFlags['LPD-11228']) &&
+					showPermissionsOptions && (
+						<div className="mt-3">
+							<PermissionsOptions
+								formId={formId}
+								permissionsURL={permissionsURL}
+							/>
+						</div>
+					)}
 			</ClayModal.Body>
 
 			<ClayModal.Footer

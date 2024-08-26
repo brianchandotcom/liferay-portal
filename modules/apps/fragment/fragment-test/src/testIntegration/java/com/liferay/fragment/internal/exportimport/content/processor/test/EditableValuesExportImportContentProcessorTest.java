@@ -92,18 +92,15 @@ public class EditableValuesExportImportContentProcessorTest {
 
 		_publishLayouts();
 
-		FragmentEntryLink liveFragmentEntryLink =
-			_fragmentEntryLinkLocalService.getFragmentEntryLinkByUuidAndGroupId(
-				stagingFragmentEntryLink.getUuid(), _liveGroup.getGroupId());
-
-		Layout liveLayout = _layoutLocalService.getLayoutByUuidAndGroupId(
-			layout.getUuid(), _liveGroup.getGroupId(),
-			layout.isPrivateLayout());
-
 		_assertLayoutJSONObject(
 			_getEditableFragmentEntryProcessorLayoutJSONObject(
-				liveFragmentEntryLink),
-			liveLayout);
+				_fragmentEntryLinkLocalService.
+					getFragmentEntryLinkByUuidAndGroupId(
+						stagingFragmentEntryLink.getUuid(),
+						_liveGroup.getGroupId())),
+			_layoutLocalService.getLayoutByUuidAndGroupId(
+				layout.getUuid(), _liveGroup.getGroupId(),
+				layout.isPrivateLayout()));
 	}
 
 	@Test
@@ -123,13 +120,12 @@ public class EditableValuesExportImportContentProcessorTest {
 
 		_publishLayouts();
 
-		FragmentEntryLink liveFragmentEntryLink =
-			_fragmentEntryLinkLocalService.getFragmentEntryLinkByUuidAndGroupId(
-				stagingFragmentEntryLink.getUuid(), _liveGroup.getGroupId());
-
 		_assertDeletedLayoutJSONObject(
 			_getEditableFragmentEntryProcessorLayoutJSONObject(
-				liveFragmentEntryLink));
+				_fragmentEntryLinkLocalService.
+					getFragmentEntryLinkByUuidAndGroupId(
+						stagingFragmentEntryLink.getUuid(),
+						_liveGroup.getGroupId())));
 	}
 
 	@Test
@@ -147,18 +143,15 @@ public class EditableValuesExportImportContentProcessorTest {
 
 		_publishLayouts();
 
-		FragmentEntryLink liveFragmentEntryLink =
-			_fragmentEntryLinkLocalService.getFragmentEntryLinkByUuidAndGroupId(
-				stagingFragmentEntryLink.getUuid(), _liveGroup.getGroupId());
-
-		Layout liveLayout = _layoutLocalService.getLayoutByUuidAndGroupId(
-			layout.getUuid(), _liveGroup.getGroupId(),
-			layout.isPrivateLayout());
-
 		_assertLayoutJSONObject(
 			_getFreeMarkerFragmentEntryProcessorLayoutJSONObject(
-				liveFragmentEntryLink),
-			liveLayout);
+				_fragmentEntryLinkLocalService.
+					getFragmentEntryLinkByUuidAndGroupId(
+						stagingFragmentEntryLink.getUuid(),
+						_liveGroup.getGroupId())),
+			_layoutLocalService.getLayoutByUuidAndGroupId(
+				layout.getUuid(), _liveGroup.getGroupId(),
+				layout.isPrivateLayout()));
 	}
 
 	@Test
@@ -178,13 +171,12 @@ public class EditableValuesExportImportContentProcessorTest {
 
 		_publishLayouts();
 
-		FragmentEntryLink liveFragmentEntryLink =
-			_fragmentEntryLinkLocalService.getFragmentEntryLinkByUuidAndGroupId(
-				stagingFragmentEntryLink.getUuid(), _liveGroup.getGroupId());
-
 		_assertDeletedLayoutJSONObject(
 			_getFreeMarkerFragmentEntryProcessorLayoutJSONObject(
-				liveFragmentEntryLink));
+				_fragmentEntryLinkLocalService.
+					getFragmentEntryLinkByUuidAndGroupId(
+						stagingFragmentEntryLink.getUuid(),
+						_liveGroup.getGroupId())));
 	}
 
 	private FragmentEntry _addFragmentEntry() throws Exception {
@@ -202,7 +194,9 @@ public class EditableValuesExportImportContentProcessorTest {
 			null, TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
 			fragmentCollection.getFragmentCollectionId(), null,
 			RandomTestUtil.randomString(), StringPool.BLANK,
-			"Original HTML Fragment" + _HTML, StringPool.BLANK, false,
+			"<div class=\"fragment_1\"><a href=${configuration.myURL}>Click " +
+				"this link!</a></div>",
+			StringPool.BLANK, false,
 			JSONUtil.put(
 				"fieldSets",
 				JSONUtil.put(
@@ -403,10 +397,6 @@ public class EditableValuesExportImportContentProcessorTest {
 			_stagingGroup.getGroupId(),
 			fragmentEntryLink.getFragmentEntryLinkId(), _layout.getPlid());
 	}
-
-	private static final String _HTML =
-		"<div class=\"fragment_1\"><a href=${configuration.myURL}>Click this " +
-			"link!</a></div>";
 
 	private Layout _draftLayout;
 

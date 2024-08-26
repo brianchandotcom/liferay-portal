@@ -276,6 +276,53 @@ public class BlogsEditEntryDisplayContextTest {
 
 	@FeatureFlags("LPD-11147")
 	@Test
+	public void testGetCurrentFriendlyURLAssetCategoriesJSONArrayWhenReverseCurrentFriendlyURLAssetCategories()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		_addAssetCategories(5);
+
+		serviceContext.setAssetCategoryIds(_assetCategoryIds);
+
+		_addCurrentFriendlyURLAssetCategories(3, serviceContext);
+
+		_reverseCurrentFriendlyURLAssetCategories(serviceContext);
+
+		BlogsEntry entry = _addBlogEntry("test", serviceContext);
+
+		JSONArray currentFriendlyURLAssetCategoriesJSONArray =
+			ReflectionTestUtil.invoke(
+				_getBlogsViewEntryContentDisplayContext(
+					entry.getEntryId(), null, null),
+				"getCurrentFriendlyURLAssetCategoriesJSONArray",
+				new Class<?>[0]);
+
+		Assert.assertEquals(
+			3, currentFriendlyURLAssetCategoriesJSONArray.length());
+
+		JSONObject jsonObject1 =
+			(JSONObject)currentFriendlyURLAssetCategoriesJSONArray.get(0);
+
+		Assert.assertEquals(
+			_assetCategoryIds[2], GetterUtil.getLong(jsonObject1.get("value")));
+
+		JSONObject jsonObject2 =
+			(JSONObject)currentFriendlyURLAssetCategoriesJSONArray.get(1);
+
+		Assert.assertEquals(
+			_assetCategoryIds[1], GetterUtil.getLong(jsonObject2.get("value")));
+
+		JSONObject jsonObject3 =
+			(JSONObject)currentFriendlyURLAssetCategoriesJSONArray.get(2);
+
+		Assert.assertEquals(
+			_assetCategoryIds[0], GetterUtil.getLong(jsonObject3.get("value")));
+	}
+
+	@FeatureFlags("LPD-11147")
+	@Test
 	public void testGetCurrentFriendlyURLAssetCategoriesJSONArrayWhenTwoCurrentFriendlyURLAssetCategories()
 		throws Exception {
 
@@ -435,6 +482,18 @@ public class BlogsEditEntryDisplayContextTest {
 		themeDisplay.setUser(TestPropsValues.getUser());
 
 		return themeDisplay;
+	}
+
+	private void _reverseCurrentFriendlyURLAssetCategories(
+		ServiceContext serviceContext) {
+
+		long[] friendlyURLAssetCategoryIds = GetterUtil.getLongValues(
+			serviceContext.getAttribute("friendlyURLAssetCategoryIds"));
+
+		ArrayUtil.reverse(friendlyURLAssetCategoryIds);
+
+		serviceContext.setAttribute(
+			"friendlyURLAssetCategoryIds", friendlyURLAssetCategoryIds);
 	}
 
 	private long[] _assetCategoryIds = new long[0];

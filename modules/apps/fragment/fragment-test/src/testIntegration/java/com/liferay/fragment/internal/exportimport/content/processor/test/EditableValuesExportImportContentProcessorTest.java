@@ -349,7 +349,7 @@ public class EditableValuesExportImportContentProcessorTest {
 				StringPool.BLANK, 0, fragmentEntry.getFragmentEntryKey(),
 				fragmentEntry.getType(),
 				ServiceContextTestUtil.getServiceContext(
-					_liveGroup.getGroupId(), TestPropsValues.getUserId()));
+					_stagingGroup.getGroupId(), TestPropsValues.getUserId()));
 
 		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
 			fragmentEntryLink, _draftLayout, null, 0, segmentsExperienceId);
@@ -396,7 +396,7 @@ public class EditableValuesExportImportContentProcessorTest {
 				StringPool.BLANK, 0, fragmentEntry.getFragmentEntryKey(),
 				fragmentEntry.getType(),
 				ServiceContextTestUtil.getServiceContext(
-					_liveGroup.getGroupId(), TestPropsValues.getUserId()));
+					_stagingGroup.getGroupId(), TestPropsValues.getUserId()));
 
 		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
 			draftLayoutFragmentEntryLink, _draftLayout, null, 0,

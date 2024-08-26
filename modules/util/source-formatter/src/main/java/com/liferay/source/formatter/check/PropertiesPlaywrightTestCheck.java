@@ -9,6 +9,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.source.formatter.check.util.SourceUtil;
+import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 
 import java.io.File;
@@ -110,7 +111,13 @@ public class PropertiesPlaywrightTestCheck extends BaseFileCheck {
 					fileName,
 					"Missing test.properties in " +
 						testPropertiesFileName.substring(x + 1, y));
+
+				return content;
 			}
+
+			_checkMissingPlaywrightTestProjectProperty(
+				fileName, FileUtil.read(file), moduleName,
+				file.getAbsolutePath());
 		}
 
 		if (absolutePath.contains("/modules/apps/") ||
@@ -137,49 +144,68 @@ public class PropertiesPlaywrightTestCheck extends BaseFileCheck {
 				return content;
 			}
 
-			Properties properties = new Properties();
-
-			properties.load(new StringReader(content));
-
-			List<String> relevantRuleNames = ListUtil.fromString(
-				properties.getProperty(_RELEVANT_RULE_NAMES), StringPool.COMMA);
-
-			if (ListUtil.isEmpty(relevantRuleNames)) {
-				addMessage(
-					fileName,
-					"Missing property '" + _RELEVANT_RULE_NAMES +
-						"' in test.properties for Playwright tests");
-
-				return content;
-			}
-
-			for (String relevantRuleName : relevantRuleNames) {
-				String playwrightTestProjectPropertyName = StringBundler.concat(
-					"playwright.test.project[playwright-js-tomcat90-mysql57-",
-					"jdk8][relevant][", relevantRuleName, "]");
-
-				List<String> playwrightTestProjectList = ListUtil.fromString(
-					properties.getProperty(playwrightTestProjectPropertyName),
-					StringPool.COMMA);
-
-				if (ListUtil.isEmpty(playwrightTestProjectList)) {
-					addMessage(
-						fileName,
-						"Missing property '" +
-							playwrightTestProjectPropertyName +
-								"' in test.properties");
-				}
-				else if (!playwrightTestProjectList.contains(moduleName)) {
-					addMessage(
-						fileName,
-						StringBundler.concat(
-							"Missing property value '", moduleName, "' in '",
-							playwrightTestProjectPropertyName, "'"));
-				}
-			}
+			_checkMissingPlaywrightTestProjectProperty(
+				fileName, content, moduleName, null);
 		}
 
 		return content;
+	}
+
+	private void _checkMissingPlaywrightTestProjectProperty(
+			String fileName, String content, String moduleName,
+			String moduleTestPropertiesFilePath)
+		throws IOException {
+
+		Properties properties = new Properties();
+
+		properties.load(new StringReader(content));
+
+		List<String> relevantRuleNames = ListUtil.fromString(
+			properties.getProperty(_RELEVANT_RULE_NAMES), StringPool.COMMA);
+
+		if (ListUtil.isEmpty(relevantRuleNames)) {
+			addMessage(
+				fileName,
+				"Missing property '" + _RELEVANT_RULE_NAMES +
+					"' in test.properties for Playwright tests");
+
+			return;
+		}
+
+		for (String relevantRuleName : relevantRuleNames) {
+			String playwrightTestProjectPropertyName = StringBundler.concat(
+				"playwright.test.project[playwright-js-tomcat90-mysql57-",
+				"jdk8][relevant][", relevantRuleName, "]");
+
+			List<String> playwrightTestProjectList = ListUtil.fromString(
+				properties.getProperty(playwrightTestProjectPropertyName),
+				StringPool.COMMA);
+
+			String additionalMessage = "";
+
+			if (moduleTestPropertiesFilePath != null) {
+				int x = moduleTestPropertiesFilePath.indexOf("/modules/");
+
+				additionalMessage =
+					" in " + moduleTestPropertiesFilePath.substring(x + 1);
+			}
+
+			if (ListUtil.isEmpty(playwrightTestProjectList)) {
+				addMessage(
+					fileName,
+					StringBundler.concat(
+						"Missing property '", playwrightTestProjectPropertyName,
+						"'", additionalMessage));
+			}
+			else if (!playwrightTestProjectList.contains(moduleName)) {
+				addMessage(
+					fileName,
+					StringBundler.concat(
+						"Missing property value '", moduleName, "' in '",
+						playwrightTestProjectPropertyName, "'",
+						additionalMessage));
+			}
+		}
 	}
 
 	private synchronized List<String> _getBuildGradleFileNames()

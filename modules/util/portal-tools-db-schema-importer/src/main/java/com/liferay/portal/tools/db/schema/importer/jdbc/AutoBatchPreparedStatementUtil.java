@@ -72,8 +72,10 @@ public class AutoBatchPreparedStatementUtil {
 		public Object invoke(Object proxy, Method method, Object[] args)
 			throws Throwable {
 
-			if (Objects.equals(method.getName(), "getConnection")) {
-				return _connection;
+			if (Objects.equals(method.getName(), "addBatch")) {
+				_addBatch();
+
+				return null;
 			}
 
 			if (Objects.equals(method.getName(), "close")) {
@@ -82,14 +84,12 @@ public class AutoBatchPreparedStatementUtil {
 				return null;
 			}
 
-			if (Objects.equals(method.getName(), "addBatch")) {
-				_addBatch();
-
-				return null;
-			}
-
 			if (Objects.equals(method.getName(), "executeBatch")) {
 				return _executeBatch();
+			}
+
+			if (Objects.equals(method.getName(), "getConnection")) {
+				return _connection;
 			}
 
 			return method.invoke(getPreparedStatement(), args);

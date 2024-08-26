@@ -284,8 +284,9 @@ public class UserResourceTest extends BaseUserResourceTestCase {
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {
-			"emails", "externalId", "name", "title", "userName",
-			"urn_ietf_params_scim_schemas_extension_liferay_2_0_User"
+			"emails", "externalId", "name", "title",
+			"urn_ietf_params_scim_schemas_extension_liferay_2_0_User",
+			"userName"
 		};
 	}
 

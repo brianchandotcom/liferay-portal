@@ -5,7 +5,6 @@
 
 package com.liferay.portal.instances.web.internal.portlet.action;
 
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.instances.service.PortalInstancesLocalService;
 import com.liferay.portal.instances.web.internal.constants.PortalInstancesPortletKeys;
 import com.liferay.portal.kernel.exception.CompanyMxException;
@@ -20,15 +19,12 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyService;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.util.PortalInstances;
-import com.liferay.site.initializer.extender.SiteInitializerThreadLocal;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -136,21 +132,13 @@ public class AddInstanceMVCActionCommand extends BaseMVCActionCommand {
 		String defaultAdminLastName = ParamUtil.getString(
 			actionRequest, "defaultAdminLastName", null);
 
-		SiteInitializerThreadLocal.setKey(
+		PortalInstances.addCompany(
+			() -> _companyService.addCompany(
+				webId, virtualHostname, mx, maxUsers, active,
+				defaultAdminPassword, defaultAdminScreenName,
+				defaultAdminEmailAddress, defaultAdminFirstName,
+				defaultAdminMiddleName, defaultAdminLastName),
 			ParamUtil.getString(actionRequest, "siteInitializerKey"));
-
-		Company company = _companyService.addCompany(
-			webId, virtualHostname, mx, maxUsers, active, defaultAdminPassword,
-			defaultAdminScreenName, defaultAdminEmailAddress,
-			defaultAdminFirstName, defaultAdminMiddleName,
-			defaultAdminLastName);
-
-		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setWithSafeCloseable(
-					company.getCompanyId())) {
-
-			PortalInstances.initCompany(company, true);
-		}
 
 		_synchronizePortalInstances();
 	}

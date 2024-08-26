@@ -5,7 +5,6 @@
 
 package com.liferay.portal.instances.internal.configuration;
 
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.instances.service.PortalInstancesLocalService;
 import com.liferay.portal.kernel.exception.NoSuchCompanyException;
@@ -14,11 +13,9 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.util.PortalInstances;
-import com.liferay.site.initializer.extender.SiteInitializerThreadLocal;
 
 import java.util.Map;
 
@@ -63,25 +60,18 @@ public class PortalInstancesConfigurationFactory {
 		}
 
 		if (company == null) {
-			SiteInitializerThreadLocal.setKey(
+			PortalInstances.addCompany(
+				() -> _companyLocalService.addCompany(
+					null, webId, virtualHostname, mx, maxUsers,
+					portalInstancesConfiguration.active(),
+					portalInstancesConfiguration.addDefaultAdminUser(),
+					portalInstancesConfiguration.adminPassword(),
+					portalInstancesConfiguration.adminScreenName(),
+					portalInstancesConfiguration.adminEmailAddress(),
+					portalInstancesConfiguration.adminFirstName(),
+					portalInstancesConfiguration.adminMiddleName(),
+					portalInstancesConfiguration.adminLastName()),
 				portalInstancesConfiguration.siteInitializerKey());
-
-			company = _companyLocalService.addCompany(
-				null, webId, virtualHostname, mx, maxUsers, active,
-				portalInstancesConfiguration.addDefaultAdminUser(),
-				portalInstancesConfiguration.adminPassword(),
-				portalInstancesConfiguration.adminScreenName(),
-				portalInstancesConfiguration.adminEmailAddress(),
-				portalInstancesConfiguration.adminFirstName(),
-				portalInstancesConfiguration.adminMiddleName(),
-				portalInstancesConfiguration.adminLastName());
-
-			try (SafeCloseable safeCloseable =
-					CompanyThreadLocal.setWithSafeCloseable(
-						company.getCompanyId())) {
-
-				PortalInstances.initCompany(company, true);
-			}
 		}
 		else {
 			if (company.getCompanyId() ==

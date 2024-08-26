@@ -673,7 +673,7 @@ public class LayoutsImporterTest {
 			fragmentCollection.getFragmentCollectionId(), fragmentEntryKey,
 			RandomTestUtil.randomString(), StringPool.BLANK,
 			"<div class=\"fragment_1\"><a href=${configuration.myURL}>" +
-				"Click this link!</a></div>",
+				RandomTestUtil.randomString() + "</a></div>",
 			StringPool.BLANK, false, configuration, null, 0, false,
 			FragmentConstants.TYPE_COMPONENT, null,
 			WorkflowConstants.STATUS_APPROVED, serviceContext);

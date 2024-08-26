@@ -190,8 +190,8 @@ public class EditableValuesExportImportContentProcessorTest {
 			null, TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
 			fragmentCollection.getFragmentCollectionId(), null,
 			RandomTestUtil.randomString(), StringPool.BLANK,
-			"<div class=\"fragment_1\"><a href=${configuration.myURL}>Click " +
-				"this link!</a></div>",
+			"<div class=\"fragment_1\"><a href=${configuration.myURL}>" +
+				RandomTestUtil.randomString() + "</a></div>",
 			StringPool.BLANK, false,
 			JSONUtil.put(
 				"fieldSets",

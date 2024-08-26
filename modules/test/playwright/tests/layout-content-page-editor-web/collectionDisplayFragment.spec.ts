@@ -92,7 +92,7 @@ test('Allows adding a Collection Display with a manual collection into another C
 
 	// Calculate the number of recent contents
 
-	const firstCollection = await pageEditorPage.getFragment(firstCollectionId);
+	const firstCollection = pageEditorPage.getFragment(firstCollectionId);
 
 	const count = await firstCollection.locator('.list-group-item').count();
 
@@ -213,7 +213,7 @@ test('Checks Content Flags, Content Ratings and Content Display are compatible w
 
 	// Check that the Content Ratings is shown in each item and the Field input has the corresponding name
 
-	const voteItem = await page.getByLabel('Vote', {exact: true});
+	const voteItem = page.getByLabel('Vote', {exact: true});
 
 	await expect(voteItem).toHaveCount(2);
 
@@ -231,7 +231,7 @@ test('Checks Content Flags, Content Ratings and Content Display are compatible w
 
 	// Check that the Content Flags is shown in each item and the Field input has the corresponding name
 
-	const reportItem = await page.locator('.taglib-flags');
+	const reportItem = page.locator('.taglib-flags');
 
 	await expect(reportItem).toHaveCount(2);
 
@@ -308,7 +308,7 @@ test('Checks the different styles for the Display Collection', async ({
 	pageManagementSite,
 }) => {
 	const checkStyleDisplay = async () => {
-		const listItem = await page.locator(
+		const listItem = page.locator(
 			'.lfr-layout-structure-item-collection ul'
 		);
 
@@ -336,7 +336,7 @@ test('Checks the different styles for the Display Collection', async ({
 
 		// Check the Numbered List style
 
-		const orderedListItem = await page.locator(
+		const orderedListItem = page.locator(
 			'.lfr-layout-structure-item-collection ol'
 		);
 

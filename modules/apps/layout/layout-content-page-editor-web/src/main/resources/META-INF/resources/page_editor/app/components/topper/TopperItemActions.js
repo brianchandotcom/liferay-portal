@@ -134,6 +134,7 @@ export default function TopperItemActions({disabled, item}) {
 		if (Liferay.FeatureFlags['LPD-18221']) {
 			items.push({
 				action: () => {},
+				disabled: true,
 				icon: 'paste',
 				label: Liferay.Language.get('paste'),
 			});
@@ -209,6 +210,7 @@ export default function TopperItemActions({disabled, item}) {
 						) : (
 							<React.Fragment key={index}>
 								<ClayDropDown.Item
+									disabled={dropdownItem.disabled}
 									onClick={(event) => {
 										event.stopPropagation();
 

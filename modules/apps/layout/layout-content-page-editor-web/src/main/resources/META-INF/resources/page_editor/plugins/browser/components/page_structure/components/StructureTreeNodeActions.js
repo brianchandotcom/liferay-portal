@@ -250,6 +250,7 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 				action: () => {
 					setText(Liferay.Language.get('item-pasted'));
 				},
+				disabled: true,
 				icon: 'paste',
 				label: Liferay.Language.get('paste'),
 			});
@@ -317,6 +318,7 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 									aria-label={Liferay.Language.get(
 										dropdownItem.label
 									)}
+									disabled={dropdownItem.disabled}
 									onClick={() => {
 										setActive(false);
 

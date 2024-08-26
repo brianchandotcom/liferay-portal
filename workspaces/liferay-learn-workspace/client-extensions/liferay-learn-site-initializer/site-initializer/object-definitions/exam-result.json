@@ -26,13 +26,16 @@
 		},
 		{
 			"DBType": "String",
-			"indexed": false,
+			"businessType": "Picklist",
+			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
 				"en_US": "Grade"
 			},
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Grade$]",
 			"name": "grade",
-			"required": false
+			"required": false,
+			"type": "String"
 		},
 		{
 			"DBType": "Integer",

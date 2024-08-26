@@ -23,16 +23,6 @@
 			},
 			"name": "expirationDate",
 			"required": false
-		},
-		{
-			"DBType": "String",
-			"indexed": false,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Name"
-			},
-			"name": "name",
-			"required": false
 		}
 	],
 	"pluralLabel": {

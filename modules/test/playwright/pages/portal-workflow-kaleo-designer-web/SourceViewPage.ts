@@ -13,7 +13,7 @@ export class SourceViewPage {
 
 	constructor(page: Page) {
 		this.diagramViewButton = page
-			.locator('button[title="Diagram View"]')
+			.getByRole('button', {name: 'Diagram View'})
 			.first();
 		this.saveButton = page.getByText('Save');
 		this.xmlFirstLine = page

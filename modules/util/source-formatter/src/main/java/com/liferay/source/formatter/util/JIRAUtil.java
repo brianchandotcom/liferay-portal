@@ -43,7 +43,8 @@ public class JIRAUtil {
 				commitMessageTitle = commitMessageTitle.substring(0, x);
 			}
 
-			if (commitMessageTitle.startsWith("Revert ") ||
+			if (commitMessageTitle.startsWith("Reapply ") ||
+				commitMessageTitle.startsWith("Revert ") ||
 				commitMessageTitle.startsWith("artifact:ignore") ||
 				commitMessageTitle.startsWith("build.gradle auto SF") ||
 				commitMessageTitle.endsWith("/ci-merge.")) {

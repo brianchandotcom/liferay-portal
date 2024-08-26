@@ -165,18 +165,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 	<#if javaDataTypeMap?keys?seq_contains(schemaName)>
 		@Test
 		public void testClientSerDesToDTO() throws Exception {
-			ObjectMapper objectMapper = new ObjectMapper() {
-				{
-					configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-					configure(SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-					enable(SerializationFeature.INDENT_OUTPUT);
-					setDateFormat(new ISO8601DateFormat());
-					setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-					setSerializationInclusion(JsonInclude.Include.NON_NULL);
-					setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-					setVisibility(PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-				}
-			};
+			ObjectMapper objectMapper = getClientSerDesObjectMapper();
 
 			${schemaName} ${schemaVarName}1 = random${schemaName}();
 
@@ -189,7 +178,19 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 		@Test
 		public void testClientSerDesToJSON() throws Exception {
-			ObjectMapper objectMapper = new ObjectMapper() {
+			ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+			${schemaName} ${schemaVarName} = random${schemaName}();
+
+			String json1 = objectMapper.writeValueAsString(${schemaVarName});
+			String json2 = ${schemaName}SerDes.toJSON(${schemaVarName});
+
+			Assert.assertEquals(
+				objectMapper.readTree(json1), objectMapper.readTree(json2));
+		}
+
+		protected ObjectMapper getClientSerDesObjectMapper() {
+			return new ObjectMapper() {
 				{
 					configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 					configure(SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
@@ -201,14 +202,6 @@ public abstract class Base${schemaName}ResourceTestCase {
 					setVisibility(PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 				}
 			};
-
-			${schemaName} ${schemaVarName} = random${schemaName}();
-
-			String json1 = objectMapper.writeValueAsString(${schemaVarName});
-			String json2 = ${schemaName}SerDes.toJSON(${schemaVarName});
-
-			Assert.assertEquals(
-				objectMapper.readTree(json1), objectMapper.readTree(json2));
 		}
 
 		@Test

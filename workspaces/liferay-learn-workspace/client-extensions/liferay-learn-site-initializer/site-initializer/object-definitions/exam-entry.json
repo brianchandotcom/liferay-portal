@@ -12,6 +12,16 @@
 				"en_US": "Name"
 			},
 			"name": "name",
+			"required": true
+		},
+		{
+			"DBType": "String",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Test Form Code"
+			},
+			"name": "testFormCode",
 			"required": false
 		}
 	],

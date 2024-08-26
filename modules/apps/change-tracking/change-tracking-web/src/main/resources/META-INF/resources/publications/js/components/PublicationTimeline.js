@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ClayButton, ClayButtonWithIcon} from '@clayui/button';
+import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown, {Align} from '@clayui/drop-down';
 import ClayLayout from '@clayui/layout';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
@@ -178,6 +178,107 @@ const PublicationTimeline = ({
 		);
 	};
 
+	const renderTimelineItemRow = (timelineItem) => {
+		return (
+			<ClayLayout.ContentRow
+				key={timelineItem.id}
+				style={{marginBottom: '8px'}}
+			>
+				<ClayLayout.ContentCol expand>
+					<div>
+						<span
+							style={{
+								paddingRight: '10px',
+							}}
+						>
+							{timelineItem.name}
+						</span>
+
+						<WorkflowStatusLabel
+							workflowStatus={timelineItem.status.code}
+						/>
+					</div>
+
+					<div className="text-secondary">
+						{timelineItem.description}
+					</div>
+
+					<div className="text-secondary">
+						{timelineItem.statusMessage}
+					</div>
+				</ClayLayout.ContentCol>
+
+				<ClayLayout.ContentCol>
+					{Liferay.FeatureFlags['LPD-20556'] ? (
+						<>
+							{timelineItem.actions.get ? (
+								<ClayDropDown
+									alignmentPosition={Align.BottomLeft}
+									renderMenuOnClick
+									spritemap={spritemap}
+									trigger={
+										<ClayButtonWithIcon
+											aria-label="timeline-actions"
+											displayType="unstyled"
+											size="sm"
+											spritemap={spritemap}
+											symbol="ellipsis-v"
+										/>
+									}
+								>
+									<TimelineDropdownMenu
+										namespace={namespace}
+										navigate={navigate}
+										timelineClassNameId={
+											timelineClassNameId
+										}
+										timelineClassPK={timelineClassPK}
+										timelineEditURL={timelineEditURL}
+										timelineItem={timelineItem}
+									/>
+								</ClayDropDown>
+							) : null}
+						</>
+					) : (
+						<>
+							{timelineItem.actions ? (
+								<TimelineDropdownMenu
+									deleteURL={
+										timelineItem.status.code ===
+											WORKFLOW_STATUS_DRAFT &&
+										!!timelineItem.actions.delete
+											? timelineItem.actions.delete.href
+											: undefined
+									}
+									editURL={
+										timelineItem.status.code ===
+											WORKFLOW_STATUS_DRAFT &&
+										!!timelineItem.actions.update
+											? getEditURL(timelineItem.id)
+											: undefined
+									}
+									revertURL={
+										timelineItem.status.code ===
+										WORKFLOW_STATUS_APPROVED
+											? getRevertURL(timelineItem.id)
+											: undefined
+									}
+									reviewURL={
+										timelineItem.status.code !==
+											WORKFLOW_STATUS_PENDING &&
+										!!timelineItem.actions.get
+											? getReviewURL(timelineItem.id)
+											: undefined
+									}
+								/>
+							) : null}
+						</>
+					)}
+				</ClayLayout.ContentCol>
+			</ClayLayout.ContentRow>
+		);
+	};
+
 	useEffect(() => {
 		if (!timelineItemsURL) {
 			return;
@@ -213,135 +314,18 @@ const PublicationTimeline = ({
 						}}
 					>
 						<ClayPanel.Body>
-							{timelineItems
-								.slice(0, MAX_DROPDOWN_ITEMS_SHOWN)
-								.map((timelineItem) => (
-									<ClayLayout.ContentRow
-										key={timelineItem.id}
-										style={{marginBottom: '8px'}}
-									>
-										<ClayLayout.ContentCol expand>
-											<div>
-												<span
-													style={{
-														paddingRight: '10px',
-													}}
-												>
-													{timelineItem.name}
-												</span>
-
-												<WorkflowStatusLabel
-													workflowStatus={
-														timelineItem.status.code
-													}
-												/>
-											</div>
-
-											<div className="text-secondary">
-												{timelineItem.description}
-											</div>
-
-											<div className="text-secondary">
-												{timelineItem.statusMessage}
-											</div>
-										</ClayLayout.ContentCol>
-
-										<ClayLayout.ContentCol>
-											{Liferay.FeatureFlags['LPD-20556'] ? (
-										<>
-											{timelineItem.actions.get ? (
-												<ClayDropDown
-													alignmentPosition={
-														Align.BottomLeft
-													}
-													renderMenuOnClick
-													spritemap={spritemap}
-													trigger={
-														<ClayButtonWithIcon
-															aria-label="timeline-actions"
-															displayType="unstyled"
-															size="sm"
-															spritemap={
-																spritemap
-															}
-															symbol="ellipsis-v"
-														/>
-													}
-												>
-													<TimelineDropdownMenu
-														namespace={namespace}
-														navigate={navigate}
-														timelineClassNameId={
-															timelineClassNameId
-														}
-														timelineClassPK={
-															timelineClassPK
-														}
-														timelineEditURL={
-															timelineEditURL
-														}
-														timelineItem={
-															timelineItem
-														}
-													/>
-												</ClayDropDown>
-											) : null}
-										</>
-									) : (
-										<>
-											{timelineItem.actions ? (
-												<TimelineDropdownMenu
-													deleteURL={
-														timelineItem.status
-															.code ===
-															WORKFLOW_STATUS_DRAFT &&
-														!!timelineItem.actions
-															.delete
-															? timelineItem
-																	.actions
-																	.delete.href
-															: undefined
-													}
-													editURL={
-														timelineItem.status
-															.code ===
-															WORKFLOW_STATUS_DRAFT &&
-														!!timelineItem.actions
-															.update
-															? getEditURL(
-																	timelineItem.id
-																)
-															: undefined
-													}
-													revertURL={
-														timelineItem.status
-															.code ===
-														WORKFLOW_STATUS_APPROVED
-															? getRevertURL(
-																	timelineItem.id
-																)
-															: undefined
-													}
-													reviewURL={
-														timelineItem.status
-															.code !==
-															WORKFLOW_STATUS_PENDING &&
-														!!timelineItem.actions
-															.get
-															? getReviewURL(
-																	timelineItem.id
-																)
-															: undefined
-													}
-												/>
-											) : null}
-										</>
+							{Liferay.FeatureFlags['LPD-20556']
+								? timelineItems
+										.slice(0, MAX_DROPDOWN_ITEMS_SHOWN)
+										.map((timelineItem) =>
+											renderTimelineItemRow(timelineItem)
+										)
+								: timelineItems.map((timelineItem) =>
+										renderTimelineItemRow(timelineItem)
 									)}
-										</ClayLayout.ContentCol>
-									</ClayLayout.ContentRow>
-								))}
 
-							{timelineItems.length > MAX_DROPDOWN_ITEMS_SHOWN ? (
+							{timelineItems.length > MAX_DROPDOWN_ITEMS_SHOWN &&
+							Liferay.FeatureFlags['LPD-20556'] ? (
 								<ClayLayout.SheetFooter
 									className="align-items-center"
 									style={{

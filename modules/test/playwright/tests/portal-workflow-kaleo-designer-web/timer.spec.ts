@@ -73,18 +73,23 @@ test.beforeEach(async ({apiHelpers}) => {
 	workflowDefinitionId = workflowDefinition.id;
 });
 
-test.afterEach(async ({apiHelpers}) => {
+test.afterEach(async ({apiHelpers, scriptManagementPage}) => {
 	await apiHelpers.headlessAdminWorkflow.deleteWorkflowDefinition(
 		workflowDefinitionId
 	);
+
+	await scriptManagementPage.disableScriptManagementConfiguration();
 });
 
 test('can create timer notifications', async ({
 	diagramViewPage,
 	nodePropertiesSidebarPage,
 	processBuilderPage,
+	scriptManagementPage,
 	timerPage,
 }) => {
+	await scriptManagementPage.enableScriptManagementConfiguration();
+
 	await processBuilderPage.goto();
 
 	await processBuilderPage.clickWorkflowDefinitionName(

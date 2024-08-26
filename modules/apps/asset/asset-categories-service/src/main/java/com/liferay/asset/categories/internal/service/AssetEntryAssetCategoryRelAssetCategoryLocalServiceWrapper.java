@@ -6,6 +6,7 @@
 package com.liferay.asset.categories.internal.service;
 
 import com.liferay.asset.categories.internal.util.comparator.AssetEntryAssetCategoryRelAssetCategoryIdComparator;
+import com.liferay.asset.categories.internal.util.comparator.AssetEntryAssetCategoryRelAssetEntryAssetCategoryRelIdComparator;
 import com.liferay.asset.entry.rel.model.AssetEntryAssetCategoryRel;
 import com.liferay.asset.entry.rel.service.AssetEntryAssetCategoryRelLocalService;
 import com.liferay.asset.kernel.model.AssetCategory;
@@ -19,6 +20,7 @@ import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -63,12 +65,32 @@ public class AssetEntryAssetCategoryRelAssetCategoryLocalServiceWrapper
 			return Collections.emptyList();
 		}
 
-		return _getAssetCategoriesByEntryId(entry.getEntryId());
+		return _getAssetCategoriesByEntryId(
+			entry.getEntryId(),
+			AssetEntryAssetCategoryRelAssetCategoryIdComparator.getInstance(
+				true));
 	}
 
 	@Override
 	public List<AssetCategory> getEntryCategories(long entryId) {
-		return _getAssetCategoriesByEntryId(entryId);
+		return _getAssetCategoriesByEntryId(
+			entryId,
+			AssetEntryAssetCategoryRelAssetCategoryIdComparator.getInstance(
+				true));
+	}
+
+	@Override
+	public List<AssetCategory> getEntryCategoriesByCategoryId(
+		long entryId, boolean orderByCategoryId) {
+
+		if (orderByCategoryId) {
+			return getEntryCategories(entryId);
+		}
+
+		return _getAssetCategoriesByEntryId(
+			entryId,
+			AssetEntryAssetCategoryRelAssetEntryAssetCategoryRelIdComparator.
+				getInstance(true));
 	}
 
 	@Override
@@ -115,14 +137,14 @@ public class AssetEntryAssetCategoryRelAssetCategoryLocalServiceWrapper
 	}
 
 	private List<AssetCategory> _getAssetCategoriesByEntryId(
-		long assetEntryId) {
+		long assetEntryId,
+		OrderByComparator<AssetEntryAssetCategoryRel> orderByComparator) {
 
 		List<AssetEntryAssetCategoryRel> assetEntryAssetCategoryRels =
 			_assetEntryAssetCategoryRelLocalService.
 				getAssetEntryAssetCategoryRelsByAssetEntryId(
 					assetEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					AssetEntryAssetCategoryRelAssetCategoryIdComparator.
-						getInstance(true));
+					orderByComparator);
 
 		List<AssetCategory> categories = new ArrayList<>();
 

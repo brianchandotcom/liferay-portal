@@ -416,6 +416,13 @@ public class AssetCategoryLocalServiceImpl
 	}
 
 	@Override
+	public List<AssetCategory> getEntryCategoriesByCategoryId(
+		long entryId, boolean orderByCategoryId) {
+
+		return Collections.emptyList();
+	}
+
+	@Override
 	public List<Long> getSubcategoryIds(long parentCategoryId) {
 		AssetCategory parentAssetCategory =
 			assetCategoryPersistence.fetchByPrimaryKey(parentCategoryId);

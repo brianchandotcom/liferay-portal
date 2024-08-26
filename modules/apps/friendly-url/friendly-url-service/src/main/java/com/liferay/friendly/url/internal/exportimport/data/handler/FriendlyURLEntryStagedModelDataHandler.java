@@ -7,6 +7,7 @@ package com.liferay.friendly.url.internal.exportimport.data.handler;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
@@ -210,7 +211,9 @@ public class FriendlyURLEntryStagedModelDataHandler
 			return;
 		}
 
-		List<AssetCategory> assetCategories = assetEntry.getCategories();
+		List<AssetCategory> assetCategories =
+			_assetCategoryLocalService.getEntryCategoriesByCategoryId(
+				assetEntry.getEntryId(), false);
 
 		if (ListUtil.isEmpty(assetCategories)) {
 			return;
@@ -282,6 +285,9 @@ public class FriendlyURLEntryStagedModelDataHandler
 			null, null, null, null, ContentTypes.TEXT_PLAIN, null, null, null,
 			null, null, 0, 0, serviceContext.getAssetPriority());
 	}
+
+	@Reference
+	private AssetCategoryLocalService _assetCategoryLocalService;
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;

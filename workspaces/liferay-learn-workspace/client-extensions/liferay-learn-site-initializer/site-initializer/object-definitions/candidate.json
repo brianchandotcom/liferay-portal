@@ -85,6 +85,7 @@
 			"required": false
 		}
 	],
+	"objectFolderExternalReferenceCode": "LEARNCERTIFICATE",
 	"pluralLabel": {
 		"en_US": "Candidates"
 	},

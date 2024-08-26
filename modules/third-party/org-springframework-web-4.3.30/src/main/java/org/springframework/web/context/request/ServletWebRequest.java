@@ -26,12 +26,11 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.http.ETag;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.util.ClassUtils;
@@ -61,12 +60,6 @@ public class ServletWebRequest extends ServletRequestAttributes implements Nativ
 	private static final String LAST_MODIFIED = "Last-Modified";
 
 	private static final List<String> SAFE_METHODS = Arrays.asList("GET", "HEAD");
-
-	/**
-	 * Pattern matching ETag multiple field values in headers such as "If-Match", "If-None-Match".
-	 * @see <a href="https://tools.ietf.org/html/rfc7232#section-2.3">Section 2.3 of RFC 7232</a>
-	 */
-	private static final Pattern ETAG_HEADER_VALUE_PATTERN = Pattern.compile("\\*|\\s*((W\\/)?(\"[^\"]*\"))\\s*,?");
 
 	/**
 	 * Date formats as specified in the HTTP RFC.
@@ -298,12 +291,10 @@ public class ServletWebRequest extends ServletRequestAttributes implements Nativ
 		// We will perform this validation...
 		etag = padEtagIfNecessary(etag);
 		while (ifNoneMatch.hasMoreElements()) {
-			String clientETags = ifNoneMatch.nextElement();
-			Matcher etagMatcher = ETAG_HEADER_VALUE_PATTERN.matcher(clientETags);
 			// Compare weak/strong ETags as per https://tools.ietf.org/html/rfc7232#section-2.3
-			while (etagMatcher.find()) {
-				if (StringUtils.hasLength(etagMatcher.group()) &&
-						etag.replaceFirst("^W/", "").equals(etagMatcher.group(3))) {
+			for (ETag requestedETag : ETag.parse(ifNoneMatch.nextElement())) {
+				String tag = requestedETag.tag();
+				if (StringUtils.hasLength(tag) && etag.equals(padEtagIfNecessary(tag))) {
 					this.notModified = true;
 					break;
 				}
@@ -408,3 +399,4 @@ public class ServletWebRequest extends ServletRequestAttributes implements Nativ
 	}
 
 }
+/* @generated */

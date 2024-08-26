@@ -34,8 +34,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.TimeZone;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.springframework.util.Assert;
 import org.springframework.util.LinkedCaseInsensitiveMap;
@@ -368,12 +366,6 @@ public class HttpHeaders implements MultiValueMap<String, String>, Serializable 
 	 * @see <a href="https://tools.ietf.org/html/rfc7235#section-4.1">Section 4.1 of RFC 7235</a>
 	 */
 	public static final String WWW_AUTHENTICATE = "WWW-Authenticate";
-
-	/**
-	 * Pattern matching ETag multiple field values in headers such as "If-Match", "If-None-Match".
-	 * @see <a href="https://tools.ietf.org/html/rfc7232#section-2.3">Section 2.3 of RFC 7232</a>
-	 */
-	private static final Pattern ETAG_HEADER_VALUE_PATTERN = Pattern.compile("\\*|\\s*((W\\/)?(\"[^\"]*\"))\\s*,?");
 
 	private static final TimeZone GMT = TimeZone.getTimeZone("GMT");
 
@@ -783,9 +775,8 @@ public class HttpHeaders implements MultiValueMap<String, String>, Serializable 
 	 */
 	public void setETag(String etag) {
 		if (etag != null) {
-			Assert.isTrue(etag.startsWith("\"") || etag.startsWith("W/"),
-					"Invalid ETag: does not start with W/ or \"");
-			Assert.isTrue(etag.endsWith("\""), "Invalid ETag: does not end with \"");
+			Assert.isTrue(etag.startsWith("\"") || etag.startsWith("W/\""), "ETag does not start with W/\" or \"");
+			Assert.isTrue(etag.endsWith("\""), "ETag does not end with \"");
 		}
 		set(ETAG, etag);
 	}
@@ -1104,34 +1095,26 @@ public class HttpHeaders implements MultiValueMap<String, String>, Serializable 
 
 	/**
 	 * Retrieve a combined result from the field values of the ETag header.
-	 * @param headerName the header name
+	 * @param name the header name
 	 * @return the combined result
 	 * @since 4.3
 	 */
-	protected List<String> getETagValuesAsList(String headerName) {
-		List<String> values = get(headerName);
-		if (values != null) {
-			List<String> result = new ArrayList<String>();
-			for (String value : values) {
-				if (value != null) {
-					Matcher matcher = ETAG_HEADER_VALUE_PATTERN.matcher(value);
-					while (matcher.find()) {
-						if ("*".equals(matcher.group())) {
-							result.add(matcher.group());
-						}
-						else {
-							result.add(matcher.group(1));
-						}
-					}
-					if (result.isEmpty()) {
-						throw new IllegalArgumentException(
-								"Could not parse header '" + headerName + "' with value '" + value + "'");
-					}
+	protected List<String> getETagValuesAsList(String name) {
+		List<String> values = get(name);
+		if (values == null) {
+			return Collections.emptyList();
+		}
+		List<String> result = new ArrayList<>();
+		for (String value : values) {
+			if (value != null) {
+				List<ETag> tags = ETag.parse(value);
+				Assert.notEmpty(tags, "Could not parse header '" + name + "' with value '" + value + "'");
+				for (ETag tag : tags) {
+					result.add(tag.formattedTag());
 				}
 			}
-			return result;
 		}
-		return Collections.emptyList();
+		return result;
 	}
 
 	/**
@@ -1377,3 +1360,4 @@ public class HttpHeaders implements MultiValueMap<String, String>, Serializable 
 	}
 
 }
+/* @generated */

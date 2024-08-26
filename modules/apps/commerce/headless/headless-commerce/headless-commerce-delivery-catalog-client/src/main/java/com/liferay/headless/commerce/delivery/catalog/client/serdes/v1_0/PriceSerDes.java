@@ -154,6 +154,30 @@ public class PriceSerDes {
 			sb.append(price.getPriceOnApplication());
 		}
 
+		if (price.getPricingQuantityPrice() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"pricingQuantityPrice\": ");
+
+			sb.append(price.getPricingQuantityPrice());
+		}
+
+		if (price.getPricingQuantityPriceFormatted() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"pricingQuantityPriceFormatted\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(price.getPricingQuantityPriceFormatted()));
+
+			sb.append("\"");
+		}
+
 		if (price.getPromoPrice() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -283,6 +307,24 @@ public class PriceSerDes {
 				String.valueOf(price.getPriceOnApplication()));
 		}
 
+		if (price.getPricingQuantityPrice() == null) {
+			map.put("pricingQuantityPrice", null);
+		}
+		else {
+			map.put(
+				"pricingQuantityPrice",
+				String.valueOf(price.getPricingQuantityPrice()));
+		}
+
+		if (price.getPricingQuantityPriceFormatted() == null) {
+			map.put("pricingQuantityPriceFormatted", null);
+		}
+		else {
+			map.put(
+				"pricingQuantityPriceFormatted",
+				String.valueOf(price.getPricingQuantityPriceFormatted()));
+		}
+
 		if (price.getPromoPrice() == null) {
 			map.put("promoPrice", null);
 		}
@@ -362,6 +404,16 @@ public class PriceSerDes {
 
 				return false;
 			}
+			else if (Objects.equals(
+						jsonParserFieldName, "pricingQuantityPrice")) {
+
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "pricingQuantityPriceFormatted")) {
+
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "promoPrice")) {
 				return false;
 			}
@@ -433,6 +485,22 @@ public class PriceSerDes {
 
 				if (jsonParserFieldValue != null) {
 					price.setPriceOnApplication((Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "pricingQuantityPrice")) {
+
+				if (jsonParserFieldValue != null) {
+					price.setPricingQuantityPrice(
+						Double.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "pricingQuantityPriceFormatted")) {
+
+				if (jsonParserFieldValue != null) {
+					price.setPricingQuantityPriceFormatted(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "promoPrice")) {

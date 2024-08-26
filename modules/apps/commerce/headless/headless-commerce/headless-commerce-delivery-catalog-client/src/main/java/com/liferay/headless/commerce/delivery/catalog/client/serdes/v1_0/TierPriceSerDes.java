@@ -84,6 +84,30 @@ public class TierPriceSerDes {
 			sb.append("\"");
 		}
 
+		if (tierPrice.getPricingQuantityPrice() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"pricingQuantityPrice\": ");
+
+			sb.append(tierPrice.getPricingQuantityPrice());
+		}
+
+		if (tierPrice.getPricingQuantityPriceFormatted() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"pricingQuantityPriceFormatted\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(tierPrice.getPricingQuantityPriceFormatted()));
+
+			sb.append("\"");
+		}
+
 		if (tierPrice.getQuantity() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -135,6 +159,24 @@ public class TierPriceSerDes {
 				String.valueOf(tierPrice.getPriceFormatted()));
 		}
 
+		if (tierPrice.getPricingQuantityPrice() == null) {
+			map.put("pricingQuantityPrice", null);
+		}
+		else {
+			map.put(
+				"pricingQuantityPrice",
+				String.valueOf(tierPrice.getPricingQuantityPrice()));
+		}
+
+		if (tierPrice.getPricingQuantityPriceFormatted() == null) {
+			map.put("pricingQuantityPriceFormatted", null);
+		}
+		else {
+			map.put(
+				"pricingQuantityPriceFormatted",
+				String.valueOf(tierPrice.getPricingQuantityPriceFormatted()));
+		}
+
 		if (tierPrice.getQuantity() == null) {
 			map.put("quantity", null);
 		}
@@ -168,6 +210,16 @@ public class TierPriceSerDes {
 			else if (Objects.equals(jsonParserFieldName, "priceFormatted")) {
 				return false;
 			}
+			else if (Objects.equals(
+						jsonParserFieldName, "pricingQuantityPrice")) {
+
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "pricingQuantityPriceFormatted")) {
+
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "quantity")) {
 				return false;
 			}
@@ -194,6 +246,22 @@ public class TierPriceSerDes {
 			else if (Objects.equals(jsonParserFieldName, "priceFormatted")) {
 				if (jsonParserFieldValue != null) {
 					tierPrice.setPriceFormatted((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "pricingQuantityPrice")) {
+
+				if (jsonParserFieldValue != null) {
+					tierPrice.setPricingQuantityPrice(
+						Double.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "pricingQuantityPriceFormatted")) {
+
+				if (jsonParserFieldValue != null) {
+					tierPrice.setPricingQuantityPriceFormatted(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "quantity")) {

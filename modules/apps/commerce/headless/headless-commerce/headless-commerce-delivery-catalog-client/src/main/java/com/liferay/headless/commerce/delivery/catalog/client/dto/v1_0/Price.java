@@ -193,6 +193,52 @@ public class Price implements Cloneable, Serializable {
 
 	protected Boolean priceOnApplication;
 
+	public Double getPricingQuantityPrice() {
+		return pricingQuantityPrice;
+	}
+
+	public void setPricingQuantityPrice(Double pricingQuantityPrice) {
+		this.pricingQuantityPrice = pricingQuantityPrice;
+	}
+
+	public void setPricingQuantityPrice(
+		UnsafeSupplier<Double, Exception> pricingQuantityPriceUnsafeSupplier) {
+
+		try {
+			pricingQuantityPrice = pricingQuantityPriceUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Double pricingQuantityPrice;
+
+	public String getPricingQuantityPriceFormatted() {
+		return pricingQuantityPriceFormatted;
+	}
+
+	public void setPricingQuantityPriceFormatted(
+		String pricingQuantityPriceFormatted) {
+
+		this.pricingQuantityPriceFormatted = pricingQuantityPriceFormatted;
+	}
+
+	public void setPricingQuantityPriceFormatted(
+		UnsafeSupplier<String, Exception>
+			pricingQuantityPriceFormattedUnsafeSupplier) {
+
+		try {
+			pricingQuantityPriceFormatted =
+				pricingQuantityPriceFormattedUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String pricingQuantityPriceFormatted;
+
 	public Double getPromoPrice() {
 		return promoPrice;
 	}

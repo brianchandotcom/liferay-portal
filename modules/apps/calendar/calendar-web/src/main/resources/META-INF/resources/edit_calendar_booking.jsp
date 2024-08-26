@@ -10,9 +10,9 @@
 <%
 String activeView = ParamUtil.getString(request, "activeView", defaultView);
 
-TimeZone calendarBookingTimeZone = userTimeZone;
-
 boolean allDay = BeanParamUtil.getBoolean(calendarBooking, request, "allDay");
+
+TimeZone calendarBookingTimeZone = allDay ? TimeZone.getTimeZone(StringPool.UTC) : userTimeZone;
 
 java.util.Calendar defaultStartTimeJCalendar = CalendarFactoryUtil.getCalendar(calendarBookingTimeZone);
 
@@ -28,7 +28,7 @@ long calendarId = BeanParamUtil.getLong(calendarBooking, request, "calendarId", 
 
 long startTime = BeanPropertiesUtil.getLong(calendarBooking, "startTime", defaultStartTimeJCalendar.getTimeInMillis());
 
-java.util.Calendar startTimeJCalendar = JCalendarUtil.getJCalendar(startTime, allDay ? TimeZone.getTimeZone(StringPool.UTC) : calendarBookingTimeZone);
+java.util.Calendar startTimeJCalendar = JCalendarUtil.getJCalendar(startTime, calendarBookingTimeZone);
 
 int startTimeYear = ParamUtil.getInteger(request, "startTimeYear", startTimeJCalendar.get(java.util.Calendar.YEAR));
 int startTimeMonth = ParamUtil.getInteger(request, "startTimeMonth", startTimeJCalendar.get(java.util.Calendar.MONTH));
@@ -54,7 +54,7 @@ defaultEndTimeJCalendar.add(java.util.Calendar.MINUTE, defaultDuration);
 
 long endTime = BeanPropertiesUtil.getLong(calendarBooking, "endTime", defaultEndTimeJCalendar.getTimeInMillis());
 
-java.util.Calendar endTimeJCalendar = JCalendarUtil.getJCalendar(endTime, allDay ? TimeZone.getTimeZone(StringPool.UTC) : calendarBookingTimeZone);
+java.util.Calendar endTimeJCalendar = JCalendarUtil.getJCalendar(endTime, calendarBookingTimeZone);
 
 int endTimeYear = ParamUtil.getInteger(request, "endTimeYear", endTimeJCalendar.get(java.util.Calendar.YEAR));
 int endTimeMonth = ParamUtil.getInteger(request, "endTimeMonth", endTimeJCalendar.get(java.util.Calendar.MONTH));

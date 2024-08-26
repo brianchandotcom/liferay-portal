@@ -21,6 +21,7 @@ import com.liferay.change.tracking.web.internal.configuration.CTConfiguration;
 import com.liferay.change.tracking.web.internal.configuration.helper.CTSettingsConfigurationHelper;
 import com.liferay.change.tracking.web.internal.constants.CTWebKeys;
 import com.liferay.change.tracking.web.internal.security.permission.resource.CTPermission;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -42,6 +43,7 @@ import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
@@ -51,6 +53,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -430,6 +433,52 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 							"symbolLeft", "simple-circle"
 						));
 				}
+				else {
+					Layout layout = themeDisplay.getLayout();
+
+					Layout previewLayout = null;
+
+					try (SafeCloseable safeCloseable =
+							CTCollectionThreadLocal.
+								setProductionModeWithSafeCloseable()) {
+
+						previewLayout = _layoutLocalService.fetchLayout(
+							layout.getPlid());
+					}
+
+					if (previewLayout != null) {
+						String url = HttpComponentsUtil.addParameter(
+							_portal.getLayoutFriendlyURL(
+								previewLayout, themeDisplay),
+							"p_l_mode", "preview");
+
+						url = HttpComponentsUtil.addParameter(
+							url, "previewCTCollectionId",
+							previewLayout.getCtCollectionId());
+
+						long segmentsExperienceId = ParamUtil.getLong(
+							httpServletRequest, "segmentsExperienceId");
+
+						if (segmentsExperienceId > 0) {
+							url = HttpComponentsUtil.addParameter(
+								url, "segmentsExperienceId",
+								segmentsExperienceId);
+						}
+
+						data.put(
+							"previewProductionDropdownItem",
+							JSONUtil.put(
+								"href", url
+							).put(
+								"label",
+								_language.get(
+									themeDisplay.getLocale(),
+									"view-on-production")
+							).put(
+								"symbolLeft", "simple-circle"
+							));
+					}
+				}
 			}
 		}
 
@@ -673,6 +722,9 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private Portal _portal;

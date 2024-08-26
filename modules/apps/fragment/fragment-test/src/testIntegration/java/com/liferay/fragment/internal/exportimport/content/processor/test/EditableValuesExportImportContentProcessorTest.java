@@ -131,10 +131,9 @@ public class EditableValuesExportImportContentProcessorTest {
 			_fragmentEntryLinkLocalService.getFragmentEntryLinkByUuidAndGroupId(
 				stagingFragmentEntryLink.getUuid(), _liveGroup.getGroupId());
 
-		_assertNotEquals(
+		_assertDeletedLayoutJSONObject(
 			_getEditableFragmentEntryProcessorLayoutJSONObject(
-				liveFragmentEntryLink),
-			layout);
+				liveFragmentEntryLink));
 	}
 
 	@Test
@@ -191,10 +190,9 @@ public class EditableValuesExportImportContentProcessorTest {
 			_fragmentEntryLinkLocalService.getFragmentEntryLinkByUuidAndGroupId(
 				stagingFragmentEntryLink.getUuid(), _liveGroup.getGroupId());
 
-		_assertNotEquals(
+		_assertDeletedLayoutJSONObject(
 			_getFreeMarkerFragmentEntryProcessorLayoutJSONObject(
-				liveFragmentEntryLink),
-			layout);
+				liveFragmentEntryLink));
 	}
 
 	private FragmentEntry _addFragmentEntry() throws Exception {
@@ -234,18 +232,15 @@ public class EditableValuesExportImportContentProcessorTest {
 			WorkflowConstants.STATUS_APPROVED, serviceContext);
 	}
 
-	private void _assertLayoutJSONObject(JSONObject jsonObject, Layout layout) {
+	private void _assertDeletedLayoutJSONObject(JSONObject layoutJSONObject) {
+		Assert.assertFalse(layoutJSONObject.has("groupId"));
+		Assert.assertFalse(layoutJSONObject.has("layoutId"));
+	}
 
+	private void _assertLayoutJSONObject(JSONObject jsonObject, Layout layout) {
 		Assert.assertEquals(layout.getGroupId(), jsonObject.getLong("groupId"));
 		Assert.assertEquals(
 			layout.getLayoutId(), jsonObject.getLong("layoutId"));
-	}
-
-	private void _assertNotEquals(JSONObject layoutJSONObject, Layout layout) {
-		Assert.assertNotEquals(
-			layout.getGroupId(), layoutJSONObject.getLong("groupId"));
-		Assert.assertNotEquals(
-			layout.getLayoutId(), layoutJSONObject.getLong("layoutId"));
 	}
 
 	private JSONObject _getEditableFragmentEntryProcessorLayoutJSONObject(

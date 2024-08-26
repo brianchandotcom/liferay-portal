@@ -85,7 +85,7 @@ public class EditableValuesExportImportContentProcessorTest {
 		FragmentEntryLink stagingFragmentEntryLink =
 			_setUpFragmentEntryLinkWithLinkMappedToLayout(layout);
 
-		_assertEquals(
+		_assertLayoutJSONObject(
 			_getEditableFragmentEntryProcessorLayoutJSONObject(
 				stagingFragmentEntryLink),
 			layout);
@@ -102,7 +102,7 @@ public class EditableValuesExportImportContentProcessorTest {
 			layout.getUuid(), _liveGroup.getGroupId(),
 			layout.isPrivateLayout());
 
-		_assertEquals(
+		_assertLayoutJSONObject(
 			_getEditableFragmentEntryProcessorLayoutJSONObject(
 				liveFragmentEntryLink),
 			liveLayout);
@@ -116,7 +116,7 @@ public class EditableValuesExportImportContentProcessorTest {
 		FragmentEntryLink stagingFragmentEntryLink =
 			_setUpFragmentEntryLinkWithLinkMappedToLayout(layout);
 
-		_assertEquals(
+		_assertLayoutJSONObject(
 			_getEditableFragmentEntryProcessorLayoutJSONObject(
 				stagingFragmentEntryLink),
 			layout);
@@ -145,7 +145,7 @@ public class EditableValuesExportImportContentProcessorTest {
 		FragmentEntryLink stagingFragmentEntryLink =
 			_setUpFragmentEntryLinkWithUrlMappedToLayout(layout);
 
-		_assertEquals(
+		_assertLayoutJSONObject(
 			_getFreeMarkerFragmentEntryProcessorLayoutJSONObject(
 				stagingFragmentEntryLink),
 			layout);
@@ -162,7 +162,7 @@ public class EditableValuesExportImportContentProcessorTest {
 			layout.getUuid(), _liveGroup.getGroupId(),
 			layout.isPrivateLayout());
 
-		_assertEquals(
+		_assertLayoutJSONObject(
 			_getFreeMarkerFragmentEntryProcessorLayoutJSONObject(
 				liveFragmentEntryLink),
 			liveLayout);
@@ -176,7 +176,7 @@ public class EditableValuesExportImportContentProcessorTest {
 		FragmentEntryLink stagingFragmentEntryLink =
 			_setUpFragmentEntryLinkWithUrlMappedToLayout(layout);
 
-		_assertEquals(
+		_assertLayoutJSONObject(
 			_getFreeMarkerFragmentEntryProcessorLayoutJSONObject(
 				stagingFragmentEntryLink),
 			layout);
@@ -234,13 +234,11 @@ public class EditableValuesExportImportContentProcessorTest {
 			WorkflowConstants.STATUS_APPROVED, serviceContext);
 	}
 
-	private void _assertEquals(JSONObject layoutJSONObject, Layout layout)
-		throws Exception {
+	private void _assertLayoutJSONObject(JSONObject jsonObject, Layout layout) {
 
+		Assert.assertEquals(layout.getGroupId(), jsonObject.getLong("groupId"));
 		Assert.assertEquals(
-			layout.getGroupId(), layoutJSONObject.getLong("groupId"));
-		Assert.assertEquals(
-			layout.getLayoutId(), layoutJSONObject.getLong("layoutId"));
+			layout.getLayoutId(), jsonObject.getLong("layoutId"));
 	}
 
 	private void _assertNotEquals(JSONObject layoutJSONObject, Layout layout) {
@@ -374,7 +372,7 @@ public class EditableValuesExportImportContentProcessorTest {
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
 				_draftLayout.getPlid());
 
-		FragmentEntryLink draftLayoutFragmentEntryLink =
+		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
 				null, TestPropsValues.getUserId(), _draftLayout.getGroupId(), 0,
 				fragmentEntry.getFragmentEntryId(), segmentsExperienceId,
@@ -409,7 +407,7 @@ public class EditableValuesExportImportContentProcessorTest {
 			draftLayoutFragmentEntryLink, _draftLayout, null, 0,
 			segmentsExperienceId);
 
-		return draftLayoutFragmentEntryLink;
+		return fragmentEntryLink;
 	}
 
 	private static final String _HTML =

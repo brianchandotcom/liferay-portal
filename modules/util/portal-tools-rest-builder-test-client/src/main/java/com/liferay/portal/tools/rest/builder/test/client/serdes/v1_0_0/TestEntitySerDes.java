@@ -55,18 +55,18 @@ public class TestEntitySerDes {
 				return ChildTestEntity1SerDes.toJSON(
 					(ChildTestEntity1)testEntity);
 			}
-			else if (typeString.equals("ChildTestEntity2")) {
+
+			if (typeString.equals("ChildTestEntity2")) {
 				return ChildTestEntity2SerDes.toJSON(
 					(ChildTestEntity2)testEntity);
 			}
-			else if (typeString.equals("ChildTestEntity3")) {
+
+			if (typeString.equals("ChildTestEntity3")) {
 				return ChildTestEntity3SerDes.toJSON(
 					(ChildTestEntity3)testEntity);
 			}
-			else {
-				throw new IllegalArgumentException(
-					"Unknown type " + typeString);
-			}
+
+			throw new IllegalArgumentException("Unknown type " + typeString);
 		}
 		else {
 			throw new IllegalArgumentException("Missing type parameter");
@@ -231,16 +231,17 @@ public class TestEntitySerDes {
 				if (typeString.equals("ChildTestEntity1")) {
 					return ChildTestEntity1.toDTO(json);
 				}
-				else if (typeString.equals("ChildTestEntity2")) {
+
+				if (typeString.equals("ChildTestEntity2")) {
 					return ChildTestEntity2.toDTO(json);
 				}
-				else if (typeString.equals("ChildTestEntity3")) {
+
+				if (typeString.equals("ChildTestEntity3")) {
 					return ChildTestEntity3.toDTO(json);
 				}
-				else {
-					throw new IllegalArgumentException(
-						"Unknown type " + typeString);
-				}
+
+				throw new IllegalArgumentException(
+					"Unknown type " + typeString);
 			}
 			else {
 				throw new IllegalArgumentException("Missing type parameter");

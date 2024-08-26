@@ -56,7 +56,7 @@ public class SemVerModulesBatchBuildTestrayCaseResult
 
 		long duration = 0;
 
-		for (TestResult testResult : getTestResults()) {
+		for (TestResult testResult : testResults) {
 			duration += testResult.getDuration();
 		}
 
@@ -193,9 +193,8 @@ public class SemVerModulesBatchBuildTestrayCaseResult
 		}
 
 		for (TestResult testResult : testClassResult.getTestResults()) {
-			String testName = testResult.getTestName();
-
-			Matcher matcher = _modulePathPattern.matcher(testName);
+			Matcher matcher = _modulePathPattern.matcher(
+				testResult.getTestName());
 
 			if (matcher.find()) {
 				String modulePath = matcher.group("modulePath");
@@ -217,20 +216,6 @@ public class SemVerModulesBatchBuildTestrayCaseResult
 		}
 
 		return modulePath;
-	}
-
-	private String _getTestName() {
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("testSemanticVersioning[");
-
-		String name = _semVerModulesTestClass.getName();
-
-		sb.append(name.replace("modules", ""));
-
-		sb.append("]");
-
-		return sb.toString();
 	}
 
 	private static final String _TEST_CLASS_NAME =

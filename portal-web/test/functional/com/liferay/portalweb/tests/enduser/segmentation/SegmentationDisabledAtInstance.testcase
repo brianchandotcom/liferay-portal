@@ -320,7 +320,7 @@ definition {
 
 	@description = "LPS-154019 Given the 'Enable Segmentation' is disabled When user clicks at Close button at Segments Page And the page is reloaded Then the alert reappears"
 	@priority = 3
-	test DisabledAlertAfterRefreshAtExperiences {
+	test DisabledAlertAfterRefreshAtSegmentsPage {
 		task ("Navigate to Segments Admin") {
 			Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
 		}

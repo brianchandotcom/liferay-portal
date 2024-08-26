@@ -2608,9 +2608,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 			<#if schema.discriminator?has_content>
 				<#list schema.discriminator.mapping as mappingName, mappingSchema>
-					<#assign
-						childSchemaProperties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, allSchemas[freeMarkerTool.getReferenceName(mappingSchema)], allSchemas)
-					/>
+					<#assign childSchemaProperties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, allSchemas[freeMarkerTool.getReferenceName(mappingSchema)], allSchemas) />
 
 					<#if childSchemaProperties?has_content>
 						<#list childSchemaProperties?keys as propertyName>
@@ -2842,9 +2840,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 			<#if schema.discriminator?has_content>
 				<#list schema.discriminator.mapping as mappingName, mappingSchema>
-					<#assign
-						childSchemaProperties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, allSchemas[freeMarkerTool.getReferenceName(mappingSchema)], allSchemas)
-					/>
+					<#assign childSchemaProperties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, allSchemas[freeMarkerTool.getReferenceName(mappingSchema)], allSchemas) />
 
 					<#if childSchemaProperties?has_content>
 						<#list childSchemaProperties?keys as propertyName>

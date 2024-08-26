@@ -5,6 +5,8 @@
 
 package com.liferay.content.dashboard.document.library.internal.search.spi.model.index.contributor;
 
+import com.liferay.content.dashboard.document.library.internal.constants.AspectRatio;
+import com.liferay.content.dashboard.document.library.internal.constants.Resolution;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileVersion;
@@ -99,22 +101,28 @@ public class DLFileEntryModelDocumentContributor
 					continue;
 				}
 
-				String aspectRatio = "square";
+				String aspectRatio = AspectRatio.SQUARE.toString();
 
 				if (tiffImageLength > tiffImageWidth) {
-					aspectRatio = "tall";
+					aspectRatio = AspectRatio.TALL.toString();
 				}
 				else if (tiffImageLength < tiffImageWidth) {
-					aspectRatio = "wide";
+					aspectRatio = AspectRatio.WIDE.toString();
 				}
 
-				String resolution = "large";
+				String resolution = Resolution.LARGE.toString();
 
-				if ((tiffImageLength <= 300) && (tiffImageWidth <= 400)) {
-					resolution = "small";
+				if ((tiffImageLength <= Resolution.SMALL.getEndLengthValue()) &&
+					(tiffImageWidth <= Resolution.SMALL.getEndWidthValue())) {
+
+					resolution = Resolution.SMALL.toString();
 				}
-				else if ((tiffImageLength <= 768) && (tiffImageWidth <= 1024)) {
-					resolution = "medium";
+				else if ((tiffImageLength <=
+							Resolution.MEDIUM.getEndLengthValue()) &&
+						 (tiffImageWidth <=
+							 Resolution.MEDIUM.getEndWidthValue())) {
+
+					resolution = Resolution.MEDIUM.toString();
 				}
 
 				document.addText("aspectRatio", aspectRatio);

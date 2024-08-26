@@ -21,3 +21,13 @@ type Field = {
 		itemType: string;
 	};
 };
+
+type FragmentCollection = {
+	fragmentCollectionId: string;
+	groupId: string;
+};
+
+type FragmentEntry = {
+	fragmentEntryId: string;
+	groupId: string;
+};

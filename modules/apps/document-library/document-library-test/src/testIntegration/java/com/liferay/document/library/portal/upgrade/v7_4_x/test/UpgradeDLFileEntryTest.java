@@ -63,7 +63,7 @@ public class UpgradeDLFileEntryTest {
 
 	@Test
 	public void testUpgrade() throws Exception {
-		DLFileEntry productionDLFileEntry;
+		DLFileEntry productionDLFileEntry = null;
 
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setProductionModeWithSafeCloseable()) {
@@ -81,7 +81,7 @@ public class UpgradeDLFileEntryTest {
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 		}
 
-		DLFileEntry ctCollectionDLFileEntry;
+		DLFileEntry ctCollectionDLFileEntry = null;
 
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(

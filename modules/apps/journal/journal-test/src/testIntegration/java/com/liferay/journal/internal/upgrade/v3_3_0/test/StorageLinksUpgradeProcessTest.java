@@ -70,7 +70,7 @@ public class StorageLinksUpgradeProcessTest {
 
 	@Test
 	public void testUpgrade() throws Exception {
-		DDMStructure productionDDMStructure;
+		DDMStructure productionDDMStructure = null;
 
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setProductionModeWithSafeCloseable()) {
@@ -92,7 +92,7 @@ public class StorageLinksUpgradeProcessTest {
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 		}
 
-		DDMStructure ctCollectionDDMStructure;
+		DDMStructure ctCollectionDDMStructure = null;
 
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
@@ -122,9 +122,6 @@ public class StorageLinksUpgradeProcessTest {
 
 		_multiVMPool.clear();
 
-		List<DDMStorageLink> ctCollectionDDMStorageLinks;
-		DDMStructureVersion ctCollectionDDMStructureVersion;
-
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
 					_ctCollection.getCtCollectionId())) {
@@ -133,39 +130,40 @@ public class StorageLinksUpgradeProcessTest {
 				_ddmStructureLocalService.fetchDDMStructure(
 					productionDDMStructure.getStructureId());
 
-			ctCollectionDDMStorageLinks =
+			List<DDMStorageLink> ctCollectionDDMStorageLinks =
 				_ddmStorageLinkLocalService.getStructureStorageLinks(
 					ctCollectionDDMStructure.getStructureId());
-
-			ctCollectionDDMStructureVersion =
+			DDMStructureVersion ctCollectionDDMStructureVersion =
 				ctCollectionDDMStructure.getStructureVersion();
+
+			List<Long> ddmStructureVersionIds = ListUtil.toList(
+				ctCollectionDDMStorageLinks,
+				DDMStorageLink::getStructureVersionId);
+
+			Assert.assertFalse(
+				ddmStructureVersionIds.toString(),
+				ListUtil.exists(
+					ddmStructureVersionIds,
+					ddmStructureVersionId -> ddmStructureVersionId == 0));
+			Assert.assertEquals(
+				ddmStructureVersionIds.toString(),
+				ddmStructureVersionIds.size(),
+				ListUtil.count(
+					ddmStructureVersionIds,
+					ddmStructureVersionId ->
+						ddmStructureVersionId ==
+							ctCollectionDDMStructureVersion.
+								getStructureVersionId()));
 		}
-
-		List<Long> ddmStructureVersionIds = ListUtil.toList(
-			ctCollectionDDMStorageLinks, DDMStorageLink::getStructureVersionId);
-
-		Assert.assertFalse(
-			ddmStructureVersionIds.toString(),
-			ListUtil.exists(
-				ddmStructureVersionIds,
-				ddmStructureVersionId -> ddmStructureVersionId == 0));
-		Assert.assertEquals(
-			ddmStructureVersionIds.toString(), ddmStructureVersionIds.size(),
-			ListUtil.count(
-				ddmStructureVersionIds,
-				ddmStructureVersionId ->
-					ddmStructureVersionId ==
-						ctCollectionDDMStructureVersion.
-							getStructureVersionId()));
 	}
 
 	private DDMForm _getDDMForm() {
 		DDMForm ddmForm = new DDMForm();
 
-		ddmForm.setDefaultLocale(LocaleUtil.US);
 		ddmForm.addAvailableLocale(LocaleUtil.US);
 		ddmForm.addDDMFormField(
 			new DDMFormField("field", DDMFormFieldTypeConstants.TEXT));
+		ddmForm.setDefaultLocale(LocaleUtil.US);
 
 		return ddmForm;
 	}

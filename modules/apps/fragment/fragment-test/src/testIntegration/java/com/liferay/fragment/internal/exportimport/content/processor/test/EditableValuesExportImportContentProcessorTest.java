@@ -371,10 +371,10 @@ public class EditableValuesExportImportContentProcessorTest {
 				FragmentEntryProcessorConstants.
 					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
 
-		JSONObject myUrlJSONObject = freemarkerJSONObject.getJSONObject(
+		JSONObject myURLJSONObject = freemarkerJSONObject.getJSONObject(
 			"myURL");
 
-		return myUrlJSONObject.getJSONObject("layout");
+		return myURLJSONObject.getJSONObject("layout");
 	}
 
 	private void _publishLayouts() throws Exception {

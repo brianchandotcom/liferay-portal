@@ -89,6 +89,7 @@ export default function TabItem({displayStyle, item, onRemoveHighlighted}) {
 
 	const {isDraggingSource, sourceRef} = useDragSymbol(
 		{
+			fieldTypes: item.data.fieldTypes,
 			fragmentEntryType: item.data.type,
 			icon: item.icon,
 			isWidget: item.data.portletId,

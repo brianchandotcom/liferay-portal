@@ -31,3 +31,5 @@ type FragmentEntry = {
 	fragmentEntryId: string;
 	groupId: string;
 };
+
+type FragmentEntryType = 'component' | 'input';

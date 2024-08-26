@@ -21,7 +21,7 @@ public class UpgradeBlogsClassName extends BaseUpgradeClassNames {
 
 	@Override
 	protected String getWhereClause() {
-		return " where workflowContext LIKE " +
+		return " where workflowContext like " +
 			"'%com.liferay.blogs.kernel.model.BlogsEntry%'";
 	}
 

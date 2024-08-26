@@ -273,12 +273,12 @@ public class UserResourceTest extends BaseUserResourceTestCase {
 					MapperConfig<?> config, AnnotatedField field,
 					String defaultName) {
 
-					if (StringUtil.startsWith(defaultName, "urn")) {
-						return "urn:ietf:params:scim:schemas:extension:" +
-							"liferay:2.0:User";
+					if (!StringUtil.startsWith(defaultName, "urn")) {
+						return super.nameForField(config, field, defaultName);
 					}
 
-					return super.nameForField(config, field, defaultName);
+					return "urn:ietf:params:scim:schemas:extension:liferay:" +
+						"2.0:User";
 				}
 
 			});

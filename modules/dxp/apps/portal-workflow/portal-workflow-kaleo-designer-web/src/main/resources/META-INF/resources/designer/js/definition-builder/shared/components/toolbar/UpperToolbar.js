@@ -249,23 +249,18 @@ export default function UpperToolbar({
 			parseInt(publishedOrSavedDefinitionResponseJSON.version, 10)
 		);
 
-		if (Liferay.FeatureFlags['LPD-29635']) {
-			setWorkflowDefinitionVersions((prevValues) => [
-				{
-					creatorName:
-						publishedOrSavedDefinitionResponseJSON.creator?.name,
-					dateCreated:
-						publishedOrSavedDefinitionResponseJSON.dateModified,
-					version: String(
-						parseInt(
-							publishedOrSavedDefinitionResponseJSON.version,
-							10
-						)
-					),
-				},
-				...prevValues,
-			]);
-		}
+		setWorkflowDefinitionVersions((prevValues) => [
+			{
+				creatorName:
+					publishedOrSavedDefinitionResponseJSON.creator?.name,
+				dateCreated:
+					publishedOrSavedDefinitionResponseJSON.dateModified,
+				version: String(
+					parseInt(publishedOrSavedDefinitionResponseJSON.version, 10)
+				),
+			},
+			...prevValues,
+		]);
 
 		if (publishedOrSavedDefinitionResponseJSON.version === '1') {
 			localStorage.setItem(

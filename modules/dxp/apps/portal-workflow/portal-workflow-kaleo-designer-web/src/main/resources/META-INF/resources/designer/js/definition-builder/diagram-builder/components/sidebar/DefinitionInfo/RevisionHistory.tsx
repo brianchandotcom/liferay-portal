@@ -12,71 +12,40 @@ interface RevisionHistoryProps {
 		React.SetStateAction<WorkflowDefinitionVersion[]>
 	>;
 	timeZoneId: string;
-	version: number;
 	workflowDefinitionVersions: WorkflowDefinitionVersion[];
 }
 
 export function RevisionHistory({
 	setWorkflowDefinitionVersions,
 	timeZoneId,
-	version,
 	workflowDefinitionVersions,
 }: RevisionHistoryProps) {
-	const otherVersions = [];
-
-	if (!Liferay.FeatureFlags['LPD-29635']) {
-		for (let i = version - 1; i > 0; i--) {
-			otherVersions.push({versionNumber: i});
-		}
-	}
-
-	const showWorkflowDefinitionVersion = () => {
-		if (Liferay.FeatureFlags['LPD-29635']) {
-			return workflowDefinitionVersions.length + 1;
-		}
-
-		return version;
-	};
-
 	return (
 		<>
 			<div className="info-group">
 				<label>
 					{Liferay.Language.get('current-version')}:{' '}
 
-					{showWorkflowDefinitionVersion()}
+					{workflowDefinitionVersions.length + 1}
 				</label>
 
 				<div className="sheet-subtitle" />
 			</div>
 
-			{Liferay.FeatureFlags['LPD-29635']
-				? workflowDefinitionVersions.map(
-						({creatorName, dateCreated, version}, index) => (
-							<VersionRow
-								creatorName={creatorName}
-								dateCreated={dateCreated}
-								key={`${dateCreated}_${index}`}
-								setWorkflowDefinitionVersions={
-									setWorkflowDefinitionVersions
-								}
-								timeZoneId={timeZoneId}
-								versionNumber={parseInt(version, 10)}
-							/>
-						)
-					)
-				: otherVersions.map(({versionNumber}, index) => (
-						<VersionRow
-							creatorName=""
-							dateCreated=""
-							key={index}
-							setWorkflowDefinitionVersions={
-								setWorkflowDefinitionVersions
-							}
-							timeZoneId=""
-							versionNumber={versionNumber}
-						/>
-					))}
+			{workflowDefinitionVersions.map(
+				({creatorName, dateCreated, version}, index) => (
+					<VersionRow
+						creatorName={creatorName}
+						dateCreated={dateCreated}
+						key={`${dateCreated}_${index}`}
+						setWorkflowDefinitionVersions={
+							setWorkflowDefinitionVersions
+						}
+						timeZoneId={timeZoneId}
+						versionNumber={parseInt(version, 10)}
+					/>
+				)
+			)}
 		</>
 	);
 }

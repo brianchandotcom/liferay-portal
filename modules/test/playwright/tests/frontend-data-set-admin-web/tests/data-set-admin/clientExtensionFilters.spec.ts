@@ -103,8 +103,6 @@ test.describe('Client Extension Filters in Data Set Manager', () => {
 			await filtersPage.newClientExtensionFilterForm.clientExtensionDropdown.click();
 			await page.getByRole('option', {name: clientExtensionName}).click();
 
-			await filtersPage.saveAddFilterForm();
-
 			await expect(page.getByText('This field is required.')).toHaveCount(
 				0
 			);

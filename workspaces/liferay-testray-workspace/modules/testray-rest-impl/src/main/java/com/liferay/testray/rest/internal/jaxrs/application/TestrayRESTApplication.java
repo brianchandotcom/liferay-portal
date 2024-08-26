@@ -14,10 +14,10 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"liferay.jackson=false", "osgi.jaxrs.application.base=/testray-rest",
 		"osgi.jaxrs.extension.select=(osgi.jaxrs.name=Liferay.Vulcan)",
-		"osgi.jaxrs.name=TestrayRest"
+		"osgi.jaxrs.name=Liferay.Testray.REST"
 	},
 	service = Application.class
 )
 @Generated("")
-public class TestrayRestApplication extends Application {
+public class TestrayRESTApplication extends Application {
 }

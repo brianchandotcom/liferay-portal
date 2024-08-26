@@ -39,7 +39,7 @@ public class ServletDataImpl implements ServletData {
 	}
 
 	public String getApplicationName() {
-		return "OsbTestrayRest";
+		return "Liferay.OSB.Testray.REST";
 	}
 
 	@Override

@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -20,10 +20,10 @@ import org.osgi.service.component.annotations.Component;
 		"liferay.jackson=false",
 		"osgi.jaxrs.application.base=/osb-testray-rest",
 		"osgi.jaxrs.extension.select=(osgi.jaxrs.name=Liferay.Vulcan)",
-		"osgi.jaxrs.name=OsbTestrayRest"
+		"osgi.jaxrs.name=Liferay.OSB.Testray.REST"
 	},
 	service = Application.class
 )
 @Generated("")
-public class OsbTestrayRestApplication extends Application {
+public class OSBTestrayRESTApplication extends Application {
 }

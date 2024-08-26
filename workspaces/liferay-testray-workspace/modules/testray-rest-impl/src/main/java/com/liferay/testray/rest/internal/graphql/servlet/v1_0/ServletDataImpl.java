@@ -57,7 +57,7 @@ public class ServletDataImpl implements ServletData {
 	}
 
 	public String getApplicationName() {
-		return "TestrayRest";
+		return "Liferay.Testray.REST";
 	}
 
 	@Override

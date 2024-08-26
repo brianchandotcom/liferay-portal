@@ -7,6 +7,7 @@ package com.liferay.friendly.url.model.impl;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalServiceUtil;
@@ -51,7 +52,9 @@ public class FriendlyURLEntryImpl extends FriendlyURLEntryBaseImpl {
 			return urlTitle;
 		}
 
-		List<AssetCategory> assetCategories = assetEntry.getCategories();
+		List<AssetCategory> assetCategories =
+			AssetCategoryLocalServiceUtil.getEntryCategoriesByCategoryId(
+				assetEntry.getEntryId(), false);
 
 		if (assetCategories.isEmpty()) {
 			return urlTitle;

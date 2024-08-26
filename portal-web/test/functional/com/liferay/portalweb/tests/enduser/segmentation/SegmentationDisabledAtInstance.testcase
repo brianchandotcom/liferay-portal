@@ -846,22 +846,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-151362 Given segmentation is disabled at Instance Settings When user navigates to Experience menu Then the warning alert explains how to re-enable it"
-	@priority = 3
-	test ViewReEnabledAlertAtExperiencesMenu {
-		task ("Open the Experience menu and check if warning appears") {
-			Navigator.openURL();
-
-			ContentPages.gotoPageEditor();
-
-			PageEditor.openExperienceMenu();
-
-			AssertTextEquals.assertPartialText(
-				locator1 = "Message#ERROR_3",
-				value1 = "To enable, go to Instance Settings.");
-		}
-	}
-
 	@description = "LPS-152539 Given segmentation is disabled at Instance Settings And user has permissions to Instance Settings When user navigates to Experiences menu Then alert is shown including breadcrumb link to segments service"
 	@priority = 3
 	test ViewReEnabledAlertLinkAtExperiencesMenu {

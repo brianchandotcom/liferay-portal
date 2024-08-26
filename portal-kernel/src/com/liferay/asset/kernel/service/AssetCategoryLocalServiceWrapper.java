@@ -571,6 +571,14 @@ public class AssetCategoryLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<AssetCategory> getEntryCategoriesByCategoryId(
+		long entryId, boolean orderByCategoryId) {
+
+		return _assetCategoryLocalService.getEntryCategoriesByCategoryId(
+			entryId, orderByCategoryId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
 		getExportActionableDynamicQuery(
 			com.liferay.exportimport.kernel.lar.PortletDataContext

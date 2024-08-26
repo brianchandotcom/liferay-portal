@@ -498,6 +498,13 @@ public class AssetCategoryLocalServiceUtil {
 		return getService().getEntryCategories(entryId);
 	}
 
+	public static List<AssetCategory> getEntryCategoriesByCategoryId(
+		long entryId, boolean orderByCategoryId) {
+
+		return getService().getEntryCategoriesByCategoryId(
+			entryId, orderByCategoryId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
 		getExportActionableDynamicQuery(
 			com.liferay.exportimport.kernel.lar.PortletDataContext

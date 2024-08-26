@@ -413,6 +413,10 @@ public interface AssetCategoryLocalService
 	public List<AssetCategory> getEntryCategories(long entryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AssetCategory> getEntryCategoriesByCategoryId(
+		long entryId, boolean orderByCategoryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		PortletDataContext portletDataContext);
 

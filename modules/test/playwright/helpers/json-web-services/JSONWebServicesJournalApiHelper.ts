@@ -17,7 +17,7 @@ type TFolder = {
 };
 
 type TWebContent = {
-	articleId?: number;
+	articleId?: string;
 	content?: string;
 	ddmStructureId: number | string;
 	ddmTemplateKey?: string;

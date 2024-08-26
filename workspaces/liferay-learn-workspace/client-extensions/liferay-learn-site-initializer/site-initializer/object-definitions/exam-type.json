@@ -25,6 +25,7 @@
 			"required": true
 		}
 	],
+	"objectFolderExternalReferenceCode": "LEARNCERTIFICATE",
 	"pluralLabel": {
 		"en_US": "Exam Types"
 	},

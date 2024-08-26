@@ -53,11 +53,13 @@ public class DDMFieldAttributeUpgradeProcess extends UpgradeProcess {
 				if (_log.isInfoEnabled()) {
 					_log.info(
 						StringBundler.concat(
-							"Change the company id value for field Attribute ",
-							"Id ", fieldAttributeId, " from 0 to ", companyId));
+							"Update company ID for dynamic data mapping field ",
+							"attribute ", fieldAttributeId, " from 0 to ",
+							companyId));
 				}
 			},
-			"Unable to update company id 0 of DDMFieldAttribute ");
+			"Unable to update company IDs for dynamic data mapping field " +
+				"attributes");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -104,14 +104,14 @@ public class AutoBatchPreparedStatementUtil {
 		}
 
 		private void _addBatch() throws SQLException {
-			PreparedStatement localPreparedStatement = getPreparedStatement();
+			PreparedStatement preparedStatement = getPreparedStatement();
 
-			localPreparedStatement.addBatch();
+			preparedStatement.addBatch();
 
 			if (++_count >= _BATCH_SIZE) {
 				_count = 0;
 
-				_executeAsync(() -> _executeBatch(localPreparedStatement));
+				_executeAsync(() -> _executeBatch(preparedStatement));
 			}
 		}
 
@@ -151,10 +151,9 @@ public class AutoBatchPreparedStatementUtil {
 			if (_count > 0) {
 				_count = 0;
 
-				PreparedStatement localPreparedStatement =
-					getPreparedStatement();
+				PreparedStatement preparedStatement = getPreparedStatement();
 
-				_executeAsync(() -> _executeBatch(localPreparedStatement));
+				_executeAsync(() -> _executeBatch(preparedStatement));
 			}
 
 			return new int[0];

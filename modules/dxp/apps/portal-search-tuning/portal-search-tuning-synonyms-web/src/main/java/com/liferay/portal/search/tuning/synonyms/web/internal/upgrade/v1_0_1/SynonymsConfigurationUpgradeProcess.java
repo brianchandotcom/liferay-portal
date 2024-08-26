@@ -44,7 +44,7 @@ public class SynonymsConfigurationUpgradeProcess extends UpgradeProcess {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select * from Configuration_ where configurationId = ?")) {
 
-			preparedStatement.setString(1, _PID);
+			preparedStatement.setString(1, _CONFIGURATION_ID);
 
 			ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -72,7 +72,7 @@ public class SynonymsConfigurationUpgradeProcess extends UpgradeProcess {
 				"filterNames", synonymFilterNames.toArray(new String[0]));
 
 			Configuration configuration = _configurationAdmin.getConfiguration(
-				_PID, "?");
+				_CONFIGURATION_ID, "?");
 
 			configuration.update(dictionary);
 		}
@@ -88,7 +88,7 @@ public class SynonymsConfigurationUpgradeProcess extends UpgradeProcess {
 		"liferay_filter_synonym_zh"
 	};
 
-	private static final String _PID =
+	private static final String _CONFIGURATION_ID =
 		"com.liferay.portal.search.tuning.synonyms.web.internal." +
 			"configuration.SynonymsConfiguration";
 

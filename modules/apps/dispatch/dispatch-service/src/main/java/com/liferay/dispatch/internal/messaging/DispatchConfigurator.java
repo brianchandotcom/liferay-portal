@@ -21,8 +21,6 @@ import com.liferay.portal.kernel.messaging.DestinationConfiguration;
 import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 
-import java.util.Dictionary;
-import java.util.concurrent.RejectedExecutionHandler;
 import java.util.concurrent.ThreadPoolExecutor;
 
 import org.osgi.framework.BundleContext;
@@ -54,8 +52,7 @@ public class DispatchConfigurator {
 				DispatchConstants.EXECUTOR_DESTINATION_NAME);
 
 		destinationConfiguration.setMaximumQueueSize(_MAXIMUM_QUEUE_SIZE);
-
-		RejectedExecutionHandler rejectedExecutionHandler =
+		destinationConfiguration.setRejectedExecutionHandler(
 			new ThreadPoolExecutor.CallerRunsPolicy() {
 
 				@Override
@@ -72,21 +69,16 @@ public class DispatchConfigurator {
 					super.rejectedExecution(runnable, threadPoolExecutor);
 				}
 
-			};
-
-		destinationConfiguration.setRejectedExecutionHandler(
-			rejectedExecutionHandler);
+			});
 
 		Destination destination = _destinationFactory.createDestination(
 			destinationConfiguration);
 
-		Dictionary<String, Object> properties =
+		_serviceRegistration = bundleContext.registerService(
+			Destination.class, destination,
 			HashMapDictionaryBuilder.<String, Object>put(
 				"destination.name", destination.getName()
-			).build();
-
-		_serviceRegistration = bundleContext.registerService(
-			Destination.class, destination, properties);
+			).build());
 
 		_addScheduledJobs();
 	}

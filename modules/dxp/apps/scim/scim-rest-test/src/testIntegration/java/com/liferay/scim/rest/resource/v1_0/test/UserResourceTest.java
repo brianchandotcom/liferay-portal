@@ -5,6 +5,17 @@
 
 package com.liferay.scim.rest.resource.v1_0.test;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.databind.MapperFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.cfg.MapperConfig;
+import com.fasterxml.jackson.databind.introspect.AnnotatedField;
+import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
+
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
@@ -34,6 +45,7 @@ import com.liferay.scim.rest.client.dto.v1_0.Name;
 import com.liferay.scim.rest.client.dto.v1_0.User;
 import com.liferay.scim.rest.client.dto.v1_0.UserSchemaExtension;
 import com.liferay.scim.rest.client.http.HttpInvoker;
+import com.liferay.scim.rest.client.serdes.v1_0.UserSerDes;
 import com.liferay.scim.rest.resource.v1_0.test.util.ScimTestUtil;
 
 import java.util.Arrays;
@@ -83,6 +95,30 @@ public class UserResourceTest extends BaseUserResourceTestCase {
 	@AfterClass
 	public static void tearDownClass() throws Exception {
 		ConfigurationTestUtil.deleteConfiguration(_pid);
+	}
+
+	@Override
+	@Test
+	public void testClientSerDesToDTO() throws Exception {
+		User user1 = randomUser();
+
+		String json = _objectMapper.writeValueAsString(user1);
+
+		User user2 = UserSerDes.toDTO(json);
+
+		Assert.assertTrue(equals(user1, user2));
+	}
+
+	@Override
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		User user = randomUser();
+
+		String json1 = _objectMapper.writeValueAsString(user);
+		String json2 = UserSerDes.toJSON(user);
+
+		Assert.assertEquals(
+			_objectMapper.readTree(json1), _objectMapper.readTree(json2));
 	}
 
 	@Override
@@ -377,6 +413,38 @@ public class UserResourceTest extends BaseUserResourceTestCase {
 
 		return User.toDTO(userObject.toString());
 	}
+
+	private static final ObjectMapper _objectMapper = new ObjectMapper() {
+		{
+			configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
+			configure(SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
+			enable(SerializationFeature.INDENT_OUTPUT);
+			setDateFormat(new ISO8601DateFormat());
+			setPropertyNamingStrategy(
+				new PropertyNamingStrategy() {
+
+					@Override
+					public String nameForField(
+						MapperConfig<?> config, AnnotatedField field,
+						String defaultName) {
+
+						if (StringUtil.startsWith(defaultName, "urn")) {
+							return "urn:ietf:params:scim:schemas:extension:" +
+								"liferay:2.0:User";
+						}
+
+						return super.nameForField(config, field, defaultName);
+					}
+
+				});
+			setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
+			setSerializationInclusion(JsonInclude.Include.NON_NULL);
+			setVisibility(
+				PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+			setVisibility(
+				PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
+		}
+	};
 
 	private static String _pid;
 

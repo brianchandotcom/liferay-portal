@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -472,11 +471,12 @@ public class LayoutStructure {
 				LayoutStructureItem layoutStructureItem =
 					_layoutStructureItems.get(parentItemId);
 
-				Set<String> containerTypes = new HashSet<>(
-					Arrays.asList("container", "collection", "form"));
-
-				if (!containerTypes.contains(
-						layoutStructureItem.getItemType())) {
+				if (!(layoutStructureItem instanceof
+						ContainerStyledLayoutStructureItem) &&
+					!(layoutStructureItem instanceof
+						CollectionStyledLayoutStructureItem) &&
+					!(layoutStructureItem instanceof
+						FormStyledLayoutStructureItem)) {
 
 					LayoutStructureItem parentLayoutStructureItem =
 						_layoutStructureItems.get(

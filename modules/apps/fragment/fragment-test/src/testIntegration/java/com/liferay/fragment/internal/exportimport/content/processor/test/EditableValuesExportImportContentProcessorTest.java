@@ -45,7 +45,6 @@ import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -63,27 +62,6 @@ public class EditableValuesExportImportContentProcessorTest {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
-
-	@BeforeClass
-	public static void setUpClass() throws Exception {
-		_configuration = JSONUtil.put(
-			"fieldSets",
-			JSONUtil.put(
-				JSONUtil.put(
-					"fields",
-					JSONUtil.put(
-						JSONUtil.put(
-							"label", "My URL"
-						).put(
-							"name", "myURL"
-						).put(
-							"type", "url"
-						))
-				).put(
-					"label", "Configuration"
-				))
-		).toString();
-	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -235,8 +213,25 @@ public class EditableValuesExportImportContentProcessorTest {
 			fragmentCollection.getFragmentCollectionId(), null,
 			RandomTestUtil.randomString(), StringPool.BLANK,
 			"Original HTML Fragment" + _HTML, StringPool.BLANK, false,
-			_configuration, null, 0, false, FragmentConstants.TYPE_COMPONENT,
-			null, WorkflowConstants.STATUS_APPROVED, serviceContext);
+			JSONUtil.put(
+				"fieldSets",
+				JSONUtil.put(
+					JSONUtil.put(
+						"fields",
+						JSONUtil.put(
+							JSONUtil.put(
+								"label", "My URL"
+							).put(
+								"name", "myURL"
+							).put(
+								"type", "url"
+							))
+					).put(
+						"label", "Configuration"
+					))
+			).toString(),
+			null, 0, false, FragmentConstants.TYPE_COMPONENT, null,
+			WorkflowConstants.STATUS_APPROVED, serviceContext);
 	}
 
 	private void _assertEquals(JSONObject layoutJSONObject, Layout layout)
@@ -379,32 +374,32 @@ public class EditableValuesExportImportContentProcessorTest {
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
 				_draftLayout.getPlid());
 
-		JSONObject layoutJSONObject = JSONUtil.put(
-			FragmentEntryProcessorConstants.
-				KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
-			JSONUtil.put(
-				"myURL",
-				JSONUtil.put(
-					"layout",
-					JSONUtil.put(
-						"groupId", layout.getGroupId()
-					).put(
-						"layoutId", layout.getLayoutId()
-					).put(
-						"layoutUuid", layout.getUuid()
-					).put(
-						"privateLayout", layout.isPrivateLayout()
-					).put(
-						"title", layout.getTitle()
-					))));
-
 		FragmentEntryLink draftLayoutFragmentEntryLink =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
 				null, TestPropsValues.getUserId(), _draftLayout.getGroupId(), 0,
 				fragmentEntry.getFragmentEntryId(), segmentsExperienceId,
 				_draftLayout.getPlid(), fragmentEntry.getCss(),
 				fragmentEntry.getHtml(), fragmentEntry.getJs(),
-				fragmentEntry.getConfiguration(), layoutJSONObject.toString(),
+				fragmentEntry.getConfiguration(),
+				JSONUtil.put(
+					FragmentEntryProcessorConstants.
+						KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+					JSONUtil.put(
+						"myURL",
+						JSONUtil.put(
+							"layout",
+							JSONUtil.put(
+								"groupId", layout.getGroupId()
+							).put(
+								"layoutId", layout.getLayoutId()
+							).put(
+								"layoutUuid", layout.getUuid()
+							).put(
+								"privateLayout", layout.isPrivateLayout()
+							).put(
+								"title", layout.getTitle()
+							)))
+				).toString(),
 				StringPool.BLANK, 0, fragmentEntry.getFragmentEntryKey(),
 				fragmentEntry.getType(),
 				ServiceContextTestUtil.getServiceContext(
@@ -420,8 +415,6 @@ public class EditableValuesExportImportContentProcessorTest {
 	private static final String _HTML =
 		"<div class=\"fragment_1\"><a href=${configuration.myURL}>Click this " +
 			"link!</a></div>";
-
-	private static String _configuration;
 
 	private Layout _draftLayout;
 

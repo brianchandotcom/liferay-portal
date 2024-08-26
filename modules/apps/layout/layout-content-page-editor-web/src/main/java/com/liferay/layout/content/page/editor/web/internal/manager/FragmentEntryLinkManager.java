@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -225,6 +226,25 @@ public class FragmentEntryLinkManager {
 			).put(
 				"editableValues", editableValuesJSONObject
 			).put(
+				"fieldTypes",
+				() -> {
+					if (fragmentEntry != null) {
+						return _getFieldTypesJSONArray(
+							fragmentEntry.getTypeOptions());
+					}
+
+					FragmentRenderer fragmentRenderer =
+						_fragmentRendererRegistry.getFragmentRenderer(
+							fragmentEntryLink.getRendererKey());
+
+					if (fragmentRenderer != null) {
+						return _getFieldTypesJSONArray(
+							fragmentRenderer.getTypeOptions());
+					}
+
+					return _jsonFactory.createJSONArray();
+				}
+			).put(
 				"fragmentEntryId",
 				() -> {
 					if (fragmentEntry != null) {
@@ -364,6 +384,23 @@ public class FragmentEntryLinkManager {
 		return _fragmentRendererController.render(
 			defaultFragmentRendererContext, httpServletRequest,
 			httpServletResponse);
+	}
+
+	private JSONArray _getFieldTypesJSONArray(String typeOptions) {
+		try {
+			JSONObject jsonObject = _jsonFactory.createJSONObject(typeOptions);
+
+			JSONArray jsonArray = jsonObject.getJSONArray("fieldTypes");
+
+			if (jsonArray != null) {
+				return jsonArray;
+			}
+		}
+		catch (JSONException jsonException) {
+			_log.error(jsonException);
+		}
+
+		return _jsonFactory.createJSONArray();
 	}
 
 	private FragmentEntry _getFragmentEntry(

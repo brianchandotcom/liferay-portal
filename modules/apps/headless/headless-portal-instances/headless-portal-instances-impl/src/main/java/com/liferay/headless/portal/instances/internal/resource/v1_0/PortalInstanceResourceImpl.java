@@ -8,14 +8,12 @@ package com.liferay.headless.portal.instances.internal.resource.v1_0;
 import com.liferay.headless.portal.instances.dto.v1_0.Admin;
 import com.liferay.headless.portal.instances.dto.v1_0.PortalInstance;
 import com.liferay.headless.portal.instances.resource.v1_0.PortalInstanceResource;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.instances.service.PortalInstancesLocalService;
 import com.liferay.portal.kernel.exception.UserEmailAddressException;
 import com.liferay.portal.kernel.exception.UserScreenNameException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.EmailAddressValidator;
 import com.liferay.portal.kernel.service.CompanyService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -26,7 +24,6 @@ import com.liferay.portal.security.auth.EmailAddressValidatorFactory;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.vulcan.pagination.Page;
-import com.liferay.site.initializer.extender.SiteInitializerThreadLocal;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -117,13 +114,14 @@ public class PortalInstanceResourceImpl extends BasePortalInstanceResourceImpl {
 			companyId = 0L;
 		}
 
-		SiteInitializerThreadLocal.setKey(
-			portalInstance.getSiteInitializerKey());
+		Long finalCompanyId = companyId;
 
-		Company company = _companyService.addCompany(
-			companyId, portalInstance.getPortalInstanceId(),
-			portalInstance.getVirtualHost(), portalInstance.getDomain(), 0,
-			true);
+		Company company = PortalInstances.addCompany(
+			() -> _companyService.addCompany(
+				finalCompanyId, portalInstance.getPortalInstanceId(),
+				portalInstance.getVirtualHost(), portalInstance.getDomain(), 0,
+				true),
+			portalInstance.getSiteInitializerKey());
 
 		if (admin != null) {
 			User defaultAdminUser = _userLocalService.getUserByEmailAddress(
@@ -154,13 +152,6 @@ public class PortalInstanceResourceImpl extends BasePortalInstanceResourceImpl {
 				contact.getFacebookSn(), contact.getJabberSn(),
 				contact.getSkypeSn(), contact.getTwitterSn(),
 				contact.getJobTitle(), null, null, null, null, null, null);
-		}
-
-		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setWithSafeCloseable(
-					company.getCompanyId())) {
-
-			PortalInstances.initCompany(company, true);
 		}
 
 		_portalInstancesLocalService.synchronizePortalInstances();

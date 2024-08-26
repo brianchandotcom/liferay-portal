@@ -2,60 +2,21 @@ Bundle-Name: Liferay Document Library Opener OneDrive Web
 Bundle-SymbolicName: com.liferay.document.library.opener.onedrive.web
 Bundle-Version: 3.0.61
 Import-Package:\
-	!android.os,\
-	\
-	!android.util,\
-	\
-	!com.github.luben.*,\
-	\
-	!com.google.errorprone.annotations.*,\
-	\
-	!com.graphbuilder.*,\
-	\
-	!com.microsoft.schemas.office.powerpoint.*,\
-	!com.microsoft.schemas.office.word.*,\
+	!android.*,\
 	\
 	!com.sun.javadoc.*,\
 	!com.sun.tools.javadoc.*,\
 	\
-	!javax.annotation.meta.*,\
-	\
-	!junit.framework,\
-	\
 	!net.sf.saxon.*,\
 	\
-	!org.apache.batik.anim.dom.*,\
-	!org.apache.batik.bridge.*,\
-	!org.apache.batik.ext.awt.*,\
-	!org.apache.batik.gvt.*,\
-	!org.apache.batik.util.*,\
-	!org.apache.commons.math3.*,\
-	!org.apache.http.*,\
-	!org.apache.jcp.xml.dsig.internal.dom.*,\
-	!org.apache.poi.hsmf.*,\
-	!org.apache.poi.hwpf.extractor.*,\
 	!org.apache.tools.ant.*,\
 	\
 	!org.bouncycastle.*,\
 	\
-	!org.checkerframework.*,\
-	\
 	!org.conscrypt.*,\
 	\
-	!org.etsi.uri.x01903.v14.*,\
-	\
-	!org.joda.time.*,\
-	\
-	!org.json.simple.*,\
-	\
-	!org.junit.*,\
-	\
-	!org.openxmlformats.schemas.officeDocument.x2006.*,\
-	!org.openxmlformats.schemas.schemaLibrary.x2006.*,\
-	\
-	org.brotli.*;resolution:=optional,\
-	\
-	org.tukaani.*;resolution:=optional,\
+	!org.openjsse.javax.net.ssl.*,\
+	!org.openjsse.net.ssl.*,\
 	\
 	*
 Web-ContextPath: /document-library-opener-onedrive-web

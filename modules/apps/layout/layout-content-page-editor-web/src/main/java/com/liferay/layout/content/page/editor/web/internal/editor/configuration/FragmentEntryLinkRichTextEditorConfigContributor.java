@@ -245,7 +245,8 @@ public class FragmentEntryLinkRichTextEditorConfigContributor
 		return JSONUtil.putAll(
 			_getToolbarsStylesSelectionsImageJSONObject(),
 			_getToolbarsStylesSelectionsLinkJSONObject(),
-			_getToolbarsStylesSelectionsTextJSONObject(locale));
+			_getToolbarsStylesSelectionsTextJSONObject(locale),
+			_getToolbarsStylesSelectionsTableJSONObject());
 	}
 
 	private JSONObject _getToolbarsStylesSelectionsLinkJSONObject() {
@@ -258,6 +259,24 @@ public class FragmentEntryLinkRichTextEditorConfigContributor
 		);
 	}
 
+	private JSONObject _getToolbarsStylesSelectionsTableJSONObject() {
+		return JSONUtil.put(
+			"buttons",
+			JSONUtil.putAll(
+				"tableHeading", "tableRow", "tableColumn", "tableCell",
+				"tableRemove")
+		).put(
+			"getArrowBoxClasses",
+			"AlloyEditor.SelectionGetArrowBoxClasses.table"
+		).put(
+			"name", "table"
+		).put(
+			"setPosition", "AlloyEditor.SelectionSetPosition.table"
+		).put(
+			"test", "AlloyEditor.SelectionTest.table"
+		);
+	}
+
 	private JSONObject _getToolbarsStylesSelectionsTextJSONObject(
 		Locale locale) {
 
@@ -267,6 +286,10 @@ public class FragmentEntryLinkRichTextEditorConfigContributor
 				_getStyleFormatsJSONObject(locale),
 				"bold", "italic", "underline", "ol",
 				"ul", "linkBrowse",
+
+				// Separate
+
+				"table",
 
 				// Separate
 

@@ -114,7 +114,33 @@ public abstract class BaseAccountOrganizationResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		AccountOrganization accountOrganization1 = randomAccountOrganization();
+
+		String json = objectMapper.writeValueAsString(accountOrganization1);
+
+		AccountOrganization accountOrganization2 =
+			AccountOrganizationSerDes.toDTO(json);
+
+		Assert.assertTrue(equals(accountOrganization1, accountOrganization2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		AccountOrganization accountOrganization = randomAccountOrganization();
+
+		String json1 = objectMapper.writeValueAsString(accountOrganization);
+		String json2 = AccountOrganizationSerDes.toJSON(accountOrganization);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -129,41 +155,6 @@ public abstract class BaseAccountOrganizationResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		AccountOrganization accountOrganization1 = randomAccountOrganization();
-
-		String json = objectMapper.writeValueAsString(accountOrganization1);
-
-		AccountOrganization accountOrganization2 =
-			AccountOrganizationSerDes.toDTO(json);
-
-		Assert.assertTrue(equals(accountOrganization1, accountOrganization2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		AccountOrganization accountOrganization = randomAccountOrganization();
-
-		String json1 = objectMapper.writeValueAsString(accountOrganization);
-		String json2 = AccountOrganizationSerDes.toJSON(accountOrganization);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

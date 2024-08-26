@@ -118,7 +118,33 @@ public abstract class BaseProductDisplayPageResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		ProductDisplayPage productDisplayPage1 = randomProductDisplayPage();
+
+		String json = objectMapper.writeValueAsString(productDisplayPage1);
+
+		ProductDisplayPage productDisplayPage2 = ProductDisplayPageSerDes.toDTO(
+			json);
+
+		Assert.assertTrue(equals(productDisplayPage1, productDisplayPage2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		ProductDisplayPage productDisplayPage = randomProductDisplayPage();
+
+		String json1 = objectMapper.writeValueAsString(productDisplayPage);
+		String json2 = ProductDisplayPageSerDes.toJSON(productDisplayPage);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -133,41 +159,6 @@ public abstract class BaseProductDisplayPageResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		ProductDisplayPage productDisplayPage1 = randomProductDisplayPage();
-
-		String json = objectMapper.writeValueAsString(productDisplayPage1);
-
-		ProductDisplayPage productDisplayPage2 = ProductDisplayPageSerDes.toDTO(
-			json);
-
-		Assert.assertTrue(equals(productDisplayPage1, productDisplayPage2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		ProductDisplayPage productDisplayPage = randomProductDisplayPage();
-
-		String json1 = objectMapper.writeValueAsString(productDisplayPage);
-		String json2 = ProductDisplayPageSerDes.toJSON(productDisplayPage);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

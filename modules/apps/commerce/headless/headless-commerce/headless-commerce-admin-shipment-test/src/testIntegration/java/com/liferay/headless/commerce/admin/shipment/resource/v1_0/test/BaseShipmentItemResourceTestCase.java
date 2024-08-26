@@ -115,7 +115,32 @@ public abstract class BaseShipmentItemResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		ShipmentItem shipmentItem1 = randomShipmentItem();
+
+		String json = objectMapper.writeValueAsString(shipmentItem1);
+
+		ShipmentItem shipmentItem2 = ShipmentItemSerDes.toDTO(json);
+
+		Assert.assertTrue(equals(shipmentItem1, shipmentItem2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		ShipmentItem shipmentItem = randomShipmentItem();
+
+		String json1 = objectMapper.writeValueAsString(shipmentItem);
+		String json2 = ShipmentItemSerDes.toJSON(shipmentItem);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -130,40 +155,6 @@ public abstract class BaseShipmentItemResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		ShipmentItem shipmentItem1 = randomShipmentItem();
-
-		String json = objectMapper.writeValueAsString(shipmentItem1);
-
-		ShipmentItem shipmentItem2 = ShipmentItemSerDes.toDTO(json);
-
-		Assert.assertTrue(equals(shipmentItem1, shipmentItem2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		ShipmentItem shipmentItem = randomShipmentItem();
-
-		String json1 = objectMapper.writeValueAsString(shipmentItem);
-		String json2 = ShipmentItemSerDes.toJSON(shipmentItem);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

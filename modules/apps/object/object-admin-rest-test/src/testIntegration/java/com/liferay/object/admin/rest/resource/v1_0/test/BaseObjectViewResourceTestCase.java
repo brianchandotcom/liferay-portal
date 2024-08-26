@@ -116,7 +116,32 @@ public abstract class BaseObjectViewResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		ObjectView objectView1 = randomObjectView();
+
+		String json = objectMapper.writeValueAsString(objectView1);
+
+		ObjectView objectView2 = ObjectViewSerDes.toDTO(json);
+
+		Assert.assertTrue(equals(objectView1, objectView2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		ObjectView objectView = randomObjectView();
+
+		String json1 = objectMapper.writeValueAsString(objectView);
+		String json2 = ObjectViewSerDes.toJSON(objectView);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -131,40 +156,6 @@ public abstract class BaseObjectViewResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		ObjectView objectView1 = randomObjectView();
-
-		String json = objectMapper.writeValueAsString(objectView1);
-
-		ObjectView objectView2 = ObjectViewSerDes.toDTO(json);
-
-		Assert.assertTrue(equals(objectView1, objectView2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		ObjectView objectView = randomObjectView();
-
-		String json1 = objectMapper.writeValueAsString(objectView);
-		String json2 = ObjectViewSerDes.toJSON(objectView);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

@@ -111,7 +111,32 @@ public abstract class BaseKeywordResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		Keyword keyword1 = randomKeyword();
+
+		String json = objectMapper.writeValueAsString(keyword1);
+
+		Keyword keyword2 = KeywordSerDes.toDTO(json);
+
+		Assert.assertTrue(equals(keyword1, keyword2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		Keyword keyword = randomKeyword();
+
+		String json1 = objectMapper.writeValueAsString(keyword);
+		String json2 = KeywordSerDes.toJSON(keyword);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -126,40 +151,6 @@ public abstract class BaseKeywordResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		Keyword keyword1 = randomKeyword();
-
-		String json = objectMapper.writeValueAsString(keyword1);
-
-		Keyword keyword2 = KeywordSerDes.toDTO(json);
-
-		Assert.assertTrue(equals(keyword1, keyword2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		Keyword keyword = randomKeyword();
-
-		String json1 = objectMapper.writeValueAsString(keyword);
-		String json2 = KeywordSerDes.toJSON(keyword);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

@@ -118,7 +118,32 @@ public abstract class BaseSXPElementResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		SXPElement sxpElement1 = randomSXPElement();
+
+		String json = objectMapper.writeValueAsString(sxpElement1);
+
+		SXPElement sxpElement2 = SXPElementSerDes.toDTO(json);
+
+		Assert.assertTrue(equals(sxpElement1, sxpElement2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		SXPElement sxpElement = randomSXPElement();
+
+		String json1 = objectMapper.writeValueAsString(sxpElement);
+		String json2 = SXPElementSerDes.toJSON(sxpElement);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -133,40 +158,6 @@ public abstract class BaseSXPElementResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		SXPElement sxpElement1 = randomSXPElement();
-
-		String json = objectMapper.writeValueAsString(sxpElement1);
-
-		SXPElement sxpElement2 = SXPElementSerDes.toDTO(json);
-
-		Assert.assertTrue(equals(sxpElement1, sxpElement2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		SXPElement sxpElement = randomSXPElement();
-
-		String json1 = objectMapper.writeValueAsString(sxpElement);
-		String json2 = SXPElementSerDes.toJSON(sxpElement);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

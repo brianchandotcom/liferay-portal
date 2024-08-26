@@ -117,7 +117,33 @@ public abstract class BaseDiscountOrderTypeResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		DiscountOrderType discountOrderType1 = randomDiscountOrderType();
+
+		String json = objectMapper.writeValueAsString(discountOrderType1);
+
+		DiscountOrderType discountOrderType2 = DiscountOrderTypeSerDes.toDTO(
+			json);
+
+		Assert.assertTrue(equals(discountOrderType1, discountOrderType2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		DiscountOrderType discountOrderType = randomDiscountOrderType();
+
+		String json1 = objectMapper.writeValueAsString(discountOrderType);
+		String json2 = DiscountOrderTypeSerDes.toJSON(discountOrderType);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -132,41 +158,6 @@ public abstract class BaseDiscountOrderTypeResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		DiscountOrderType discountOrderType1 = randomDiscountOrderType();
-
-		String json = objectMapper.writeValueAsString(discountOrderType1);
-
-		DiscountOrderType discountOrderType2 = DiscountOrderTypeSerDes.toDTO(
-			json);
-
-		Assert.assertTrue(equals(discountOrderType1, discountOrderType2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		DiscountOrderType discountOrderType = randomDiscountOrderType();
-
-		String json1 = objectMapper.writeValueAsString(discountOrderType);
-		String json2 = DiscountOrderTypeSerDes.toJSON(discountOrderType);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

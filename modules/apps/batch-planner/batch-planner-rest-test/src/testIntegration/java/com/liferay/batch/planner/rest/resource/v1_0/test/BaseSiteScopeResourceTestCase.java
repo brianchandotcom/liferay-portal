@@ -112,7 +112,32 @@ public abstract class BaseSiteScopeResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		SiteScope siteScope1 = randomSiteScope();
+
+		String json = objectMapper.writeValueAsString(siteScope1);
+
+		SiteScope siteScope2 = SiteScopeSerDes.toDTO(json);
+
+		Assert.assertTrue(equals(siteScope1, siteScope2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		SiteScope siteScope = randomSiteScope();
+
+		String json1 = objectMapper.writeValueAsString(siteScope);
+		String json2 = SiteScopeSerDes.toJSON(siteScope);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -127,40 +152,6 @@ public abstract class BaseSiteScopeResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		SiteScope siteScope1 = randomSiteScope();
-
-		String json = objectMapper.writeValueAsString(siteScope1);
-
-		SiteScope siteScope2 = SiteScopeSerDes.toDTO(json);
-
-		Assert.assertTrue(equals(siteScope1, siteScope2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		SiteScope siteScope = randomSiteScope();
-
-		String json1 = objectMapper.writeValueAsString(siteScope);
-		String json2 = SiteScopeSerDes.toJSON(siteScope);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

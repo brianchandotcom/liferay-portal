@@ -117,7 +117,32 @@ public abstract class BaseDiscountAccountResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		DiscountAccount discountAccount1 = randomDiscountAccount();
+
+		String json = objectMapper.writeValueAsString(discountAccount1);
+
+		DiscountAccount discountAccount2 = DiscountAccountSerDes.toDTO(json);
+
+		Assert.assertTrue(equals(discountAccount1, discountAccount2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		DiscountAccount discountAccount = randomDiscountAccount();
+
+		String json1 = objectMapper.writeValueAsString(discountAccount);
+		String json2 = DiscountAccountSerDes.toJSON(discountAccount);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -132,40 +157,6 @@ public abstract class BaseDiscountAccountResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		DiscountAccount discountAccount1 = randomDiscountAccount();
-
-		String json = objectMapper.writeValueAsString(discountAccount1);
-
-		DiscountAccount discountAccount2 = DiscountAccountSerDes.toDTO(json);
-
-		Assert.assertTrue(equals(discountAccount1, discountAccount2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		DiscountAccount discountAccount = randomDiscountAccount();
-
-		String json1 = objectMapper.writeValueAsString(discountAccount);
-		String json2 = DiscountAccountSerDes.toJSON(discountAccount);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

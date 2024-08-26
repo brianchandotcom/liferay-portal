@@ -117,7 +117,32 @@ public abstract class BaseOrderItemResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		OrderItem orderItem1 = randomOrderItem();
+
+		String json = objectMapper.writeValueAsString(orderItem1);
+
+		OrderItem orderItem2 = OrderItemSerDes.toDTO(json);
+
+		Assert.assertTrue(equals(orderItem1, orderItem2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		OrderItem orderItem = randomOrderItem();
+
+		String json1 = objectMapper.writeValueAsString(orderItem);
+		String json2 = OrderItemSerDes.toJSON(orderItem);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -132,40 +157,6 @@ public abstract class BaseOrderItemResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		OrderItem orderItem1 = randomOrderItem();
-
-		String json = objectMapper.writeValueAsString(orderItem1);
-
-		OrderItem orderItem2 = OrderItemSerDes.toDTO(json);
-
-		Assert.assertTrue(equals(orderItem1, orderItem2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		OrderItem orderItem = randomOrderItem();
-
-		String json1 = objectMapper.writeValueAsString(orderItem);
-		String json2 = OrderItemSerDes.toJSON(orderItem);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

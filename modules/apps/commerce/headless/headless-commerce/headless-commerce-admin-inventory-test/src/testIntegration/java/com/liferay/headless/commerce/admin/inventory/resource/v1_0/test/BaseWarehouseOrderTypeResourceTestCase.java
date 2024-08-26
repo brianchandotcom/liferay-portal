@@ -117,7 +117,33 @@ public abstract class BaseWarehouseOrderTypeResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		WarehouseOrderType warehouseOrderType1 = randomWarehouseOrderType();
+
+		String json = objectMapper.writeValueAsString(warehouseOrderType1);
+
+		WarehouseOrderType warehouseOrderType2 = WarehouseOrderTypeSerDes.toDTO(
+			json);
+
+		Assert.assertTrue(equals(warehouseOrderType1, warehouseOrderType2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		WarehouseOrderType warehouseOrderType = randomWarehouseOrderType();
+
+		String json1 = objectMapper.writeValueAsString(warehouseOrderType);
+		String json2 = WarehouseOrderTypeSerDes.toJSON(warehouseOrderType);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -132,41 +158,6 @@ public abstract class BaseWarehouseOrderTypeResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		WarehouseOrderType warehouseOrderType1 = randomWarehouseOrderType();
-
-		String json = objectMapper.writeValueAsString(warehouseOrderType1);
-
-		WarehouseOrderType warehouseOrderType2 = WarehouseOrderTypeSerDes.toDTO(
-			json);
-
-		Assert.assertTrue(equals(warehouseOrderType1, warehouseOrderType2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		WarehouseOrderType warehouseOrderType = randomWarehouseOrderType();
-
-		String json1 = objectMapper.writeValueAsString(warehouseOrderType);
-		String json2 = WarehouseOrderTypeSerDes.toJSON(warehouseOrderType);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

@@ -114,7 +114,32 @@ public abstract class BaseFormStructureResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		FormStructure formStructure1 = randomFormStructure();
+
+		String json = objectMapper.writeValueAsString(formStructure1);
+
+		FormStructure formStructure2 = FormStructureSerDes.toDTO(json);
+
+		Assert.assertTrue(equals(formStructure1, formStructure2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		FormStructure formStructure = randomFormStructure();
+
+		String json1 = objectMapper.writeValueAsString(formStructure);
+		String json2 = FormStructureSerDes.toJSON(formStructure);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -129,40 +154,6 @@ public abstract class BaseFormStructureResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		FormStructure formStructure1 = randomFormStructure();
-
-		String json = objectMapper.writeValueAsString(formStructure1);
-
-		FormStructure formStructure2 = FormStructureSerDes.toDTO(json);
-
-		Assert.assertTrue(equals(formStructure1, formStructure2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		FormStructure formStructure = randomFormStructure();
-
-		String json1 = objectMapper.writeValueAsString(formStructure);
-		String json2 = FormStructureSerDes.toJSON(formStructure);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

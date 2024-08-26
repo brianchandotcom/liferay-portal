@@ -116,7 +116,32 @@ public abstract class BaseCTRemoteResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		CTRemote ctRemote1 = randomCTRemote();
+
+		String json = objectMapper.writeValueAsString(ctRemote1);
+
+		CTRemote ctRemote2 = CTRemoteSerDes.toDTO(json);
+
+		Assert.assertTrue(equals(ctRemote1, ctRemote2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		CTRemote ctRemote = randomCTRemote();
+
+		String json1 = objectMapper.writeValueAsString(ctRemote);
+		String json2 = CTRemoteSerDes.toJSON(ctRemote);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -131,40 +156,6 @@ public abstract class BaseCTRemoteResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		CTRemote ctRemote1 = randomCTRemote();
-
-		String json = objectMapper.writeValueAsString(ctRemote1);
-
-		CTRemote ctRemote2 = CTRemoteSerDes.toDTO(json);
-
-		Assert.assertTrue(equals(ctRemote1, ctRemote2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		CTRemote ctRemote = randomCTRemote();
-
-		String json1 = objectMapper.writeValueAsString(ctRemote);
-		String json2 = CTRemoteSerDes.toJSON(ctRemote);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

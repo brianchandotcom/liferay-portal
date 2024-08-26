@@ -116,7 +116,32 @@ public abstract class BaseDiscountSkuResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		DiscountSku discountSku1 = randomDiscountSku();
+
+		String json = objectMapper.writeValueAsString(discountSku1);
+
+		DiscountSku discountSku2 = DiscountSkuSerDes.toDTO(json);
+
+		Assert.assertTrue(equals(discountSku1, discountSku2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		DiscountSku discountSku = randomDiscountSku();
+
+		String json1 = objectMapper.writeValueAsString(discountSku);
+		String json2 = DiscountSkuSerDes.toJSON(discountSku);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -131,40 +156,6 @@ public abstract class BaseDiscountSkuResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		DiscountSku discountSku1 = randomDiscountSku();
-
-		String json = objectMapper.writeValueAsString(discountSku1);
-
-		DiscountSku discountSku2 = DiscountSkuSerDes.toDTO(json);
-
-		Assert.assertTrue(equals(discountSku1, discountSku2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		DiscountSku discountSku = randomDiscountSku();
-
-		String json1 = objectMapper.writeValueAsString(discountSku);
-		String json2 = DiscountSkuSerDes.toJSON(discountSku);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

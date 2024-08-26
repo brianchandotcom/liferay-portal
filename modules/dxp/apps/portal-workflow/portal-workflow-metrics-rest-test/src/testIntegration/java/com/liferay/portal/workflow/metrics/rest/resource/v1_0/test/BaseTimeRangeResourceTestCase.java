@@ -112,7 +112,32 @@ public abstract class BaseTimeRangeResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		TimeRange timeRange1 = randomTimeRange();
+
+		String json = objectMapper.writeValueAsString(timeRange1);
+
+		TimeRange timeRange2 = TimeRangeSerDes.toDTO(json);
+
+		Assert.assertTrue(equals(timeRange1, timeRange2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		TimeRange timeRange = randomTimeRange();
+
+		String json1 = objectMapper.writeValueAsString(timeRange);
+		String json2 = TimeRangeSerDes.toJSON(timeRange);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -127,40 +152,6 @@ public abstract class BaseTimeRangeResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		TimeRange timeRange1 = randomTimeRange();
-
-		String json = objectMapper.writeValueAsString(timeRange1);
-
-		TimeRange timeRange2 = TimeRangeSerDes.toDTO(json);
-
-		Assert.assertTrue(equals(timeRange1, timeRange2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		TimeRange timeRange = randomTimeRange();
-
-		String json1 = objectMapper.writeValueAsString(timeRange);
-		String json2 = TimeRangeSerDes.toJSON(timeRange);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

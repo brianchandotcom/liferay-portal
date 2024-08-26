@@ -112,7 +112,32 @@ public abstract class BaseShippingMethodResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		ShippingMethod shippingMethod1 = randomShippingMethod();
+
+		String json = objectMapper.writeValueAsString(shippingMethod1);
+
+		ShippingMethod shippingMethod2 = ShippingMethodSerDes.toDTO(json);
+
+		Assert.assertTrue(equals(shippingMethod1, shippingMethod2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		ShippingMethod shippingMethod = randomShippingMethod();
+
+		String json1 = objectMapper.writeValueAsString(shippingMethod);
+		String json2 = ShippingMethodSerDes.toJSON(shippingMethod);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -127,40 +152,6 @@ public abstract class BaseShippingMethodResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		ShippingMethod shippingMethod1 = randomShippingMethod();
-
-		String json = objectMapper.writeValueAsString(shippingMethod1);
-
-		ShippingMethod shippingMethod2 = ShippingMethodSerDes.toDTO(json);
-
-		Assert.assertTrue(equals(shippingMethod1, shippingMethod2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		ShippingMethod shippingMethod = randomShippingMethod();
-
-		String json1 = objectMapper.writeValueAsString(shippingMethod);
-		String json2 = ShippingMethodSerDes.toJSON(shippingMethod);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

@@ -110,7 +110,32 @@ public abstract class BaseCompareRunsResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		CompareRuns compareRuns1 = randomCompareRuns();
+
+		String json = objectMapper.writeValueAsString(compareRuns1);
+
+		CompareRuns compareRuns2 = CompareRunsSerDes.toDTO(json);
+
+		Assert.assertTrue(equals(compareRuns1, compareRuns2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		CompareRuns compareRuns = randomCompareRuns();
+
+		String json1 = objectMapper.writeValueAsString(compareRuns);
+		String json2 = CompareRunsSerDes.toJSON(compareRuns);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -125,40 +150,6 @@ public abstract class BaseCompareRunsResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		CompareRuns compareRuns1 = randomCompareRuns();
-
-		String json = objectMapper.writeValueAsString(compareRuns1);
-
-		CompareRuns compareRuns2 = CompareRunsSerDes.toDTO(json);
-
-		Assert.assertTrue(equals(compareRuns1, compareRuns2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		CompareRuns compareRuns = randomCompareRuns();
-
-		String json1 = objectMapper.writeValueAsString(compareRuns);
-		String json2 = CompareRunsSerDes.toJSON(compareRuns);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

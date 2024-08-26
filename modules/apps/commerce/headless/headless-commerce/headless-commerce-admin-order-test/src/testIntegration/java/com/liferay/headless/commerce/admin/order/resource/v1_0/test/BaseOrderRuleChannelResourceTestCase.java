@@ -117,7 +117,32 @@ public abstract class BaseOrderRuleChannelResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		OrderRuleChannel orderRuleChannel1 = randomOrderRuleChannel();
+
+		String json = objectMapper.writeValueAsString(orderRuleChannel1);
+
+		OrderRuleChannel orderRuleChannel2 = OrderRuleChannelSerDes.toDTO(json);
+
+		Assert.assertTrue(equals(orderRuleChannel1, orderRuleChannel2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		OrderRuleChannel orderRuleChannel = randomOrderRuleChannel();
+
+		String json1 = objectMapper.writeValueAsString(orderRuleChannel);
+		String json2 = OrderRuleChannelSerDes.toJSON(orderRuleChannel);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -132,40 +157,6 @@ public abstract class BaseOrderRuleChannelResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		OrderRuleChannel orderRuleChannel1 = randomOrderRuleChannel();
-
-		String json = objectMapper.writeValueAsString(orderRuleChannel1);
-
-		OrderRuleChannel orderRuleChannel2 = OrderRuleChannelSerDes.toDTO(json);
-
-		Assert.assertTrue(equals(orderRuleChannel1, orderRuleChannel2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		OrderRuleChannel orderRuleChannel = randomOrderRuleChannel();
-
-		String json1 = objectMapper.writeValueAsString(orderRuleChannel);
-		String json2 = OrderRuleChannelSerDes.toJSON(orderRuleChannel);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

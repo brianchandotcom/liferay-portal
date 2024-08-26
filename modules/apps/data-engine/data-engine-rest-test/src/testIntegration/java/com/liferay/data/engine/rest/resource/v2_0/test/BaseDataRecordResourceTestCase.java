@@ -116,7 +116,32 @@ public abstract class BaseDataRecordResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		DataRecord dataRecord1 = randomDataRecord();
+
+		String json = objectMapper.writeValueAsString(dataRecord1);
+
+		DataRecord dataRecord2 = DataRecordSerDes.toDTO(json);
+
+		Assert.assertTrue(equals(dataRecord1, dataRecord2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		DataRecord dataRecord = randomDataRecord();
+
+		String json1 = objectMapper.writeValueAsString(dataRecord);
+		String json2 = DataRecordSerDes.toJSON(dataRecord);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -131,40 +156,6 @@ public abstract class BaseDataRecordResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		DataRecord dataRecord1 = randomDataRecord();
-
-		String json = objectMapper.writeValueAsString(dataRecord1);
-
-		DataRecord dataRecord2 = DataRecordSerDes.toDTO(json);
-
-		Assert.assertTrue(equals(dataRecord1, dataRecord2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		DataRecord dataRecord = randomDataRecord();
-
-		String json1 = objectMapper.writeValueAsString(dataRecord);
-		String json2 = DataRecordSerDes.toJSON(dataRecord);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

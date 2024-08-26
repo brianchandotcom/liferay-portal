@@ -116,7 +116,32 @@ public abstract class BaseObjectLayoutResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		ObjectLayout objectLayout1 = randomObjectLayout();
+
+		String json = objectMapper.writeValueAsString(objectLayout1);
+
+		ObjectLayout objectLayout2 = ObjectLayoutSerDes.toDTO(json);
+
+		Assert.assertTrue(equals(objectLayout1, objectLayout2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		ObjectLayout objectLayout = randomObjectLayout();
+
+		String json1 = objectMapper.writeValueAsString(objectLayout);
+		String json2 = ObjectLayoutSerDes.toJSON(objectLayout);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -131,40 +156,6 @@ public abstract class BaseObjectLayoutResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		ObjectLayout objectLayout1 = randomObjectLayout();
-
-		String json = objectMapper.writeValueAsString(objectLayout1);
-
-		ObjectLayout objectLayout2 = ObjectLayoutSerDes.toDTO(json);
-
-		Assert.assertTrue(equals(objectLayout1, objectLayout2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		ObjectLayout objectLayout = randomObjectLayout();
-
-		String json1 = objectMapper.writeValueAsString(objectLayout);
-		String json2 = ObjectLayoutSerDes.toJSON(objectLayout);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

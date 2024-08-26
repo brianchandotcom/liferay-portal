@@ -115,7 +115,32 @@ public abstract class BaseInstanceResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		Instance instance1 = randomInstance();
+
+		String json = objectMapper.writeValueAsString(instance1);
+
+		Instance instance2 = InstanceSerDes.toDTO(json);
+
+		Assert.assertTrue(equals(instance1, instance2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		Instance instance = randomInstance();
+
+		String json1 = objectMapper.writeValueAsString(instance);
+		String json2 = InstanceSerDes.toJSON(instance);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -130,40 +155,6 @@ public abstract class BaseInstanceResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		Instance instance1 = randomInstance();
-
-		String json = objectMapper.writeValueAsString(instance1);
-
-		Instance instance2 = InstanceSerDes.toDTO(json);
-
-		Assert.assertTrue(equals(instance1, instance2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		Instance instance = randomInstance();
-
-		String json1 = objectMapper.writeValueAsString(instance);
-		String json2 = InstanceSerDes.toJSON(instance);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

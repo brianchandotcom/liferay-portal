@@ -116,7 +116,32 @@ public abstract class BaseObjectActionResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		ObjectAction objectAction1 = randomObjectAction();
+
+		String json = objectMapper.writeValueAsString(objectAction1);
+
+		ObjectAction objectAction2 = ObjectActionSerDes.toDTO(json);
+
+		Assert.assertTrue(equals(objectAction1, objectAction2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		ObjectAction objectAction = randomObjectAction();
+
+		String json1 = objectMapper.writeValueAsString(objectAction);
+		String json2 = ObjectActionSerDes.toJSON(objectAction);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -131,40 +156,6 @@ public abstract class BaseObjectActionResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		ObjectAction objectAction1 = randomObjectAction();
-
-		String json = objectMapper.writeValueAsString(objectAction1);
-
-		ObjectAction objectAction2 = ObjectActionSerDes.toDTO(json);
-
-		Assert.assertTrue(equals(objectAction1, objectAction2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		ObjectAction objectAction = randomObjectAction();
-
-		String json1 = objectMapper.writeValueAsString(objectAction);
-		String json2 = ObjectActionSerDes.toJSON(objectAction);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

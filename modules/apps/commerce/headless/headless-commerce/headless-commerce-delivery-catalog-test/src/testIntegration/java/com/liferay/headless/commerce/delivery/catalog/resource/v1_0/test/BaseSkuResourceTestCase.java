@@ -114,7 +114,32 @@ public abstract class BaseSkuResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		Sku sku1 = randomSku();
+
+		String json = objectMapper.writeValueAsString(sku1);
+
+		Sku sku2 = SkuSerDes.toDTO(json);
+
+		Assert.assertTrue(equals(sku1, sku2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		Sku sku = randomSku();
+
+		String json1 = objectMapper.writeValueAsString(sku);
+		String json2 = SkuSerDes.toJSON(sku);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -129,40 +154,6 @@ public abstract class BaseSkuResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		Sku sku1 = randomSku();
-
-		String json = objectMapper.writeValueAsString(sku1);
-
-		Sku sku2 = SkuSerDes.toDTO(json);
-
-		Assert.assertTrue(equals(sku1, sku2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		Sku sku = randomSku();
-
-		String json1 = objectMapper.writeValueAsString(sku);
-		String json2 = SkuSerDes.toJSON(sku);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

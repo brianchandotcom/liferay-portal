@@ -117,7 +117,32 @@ public abstract class BaseProductGroupResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		ProductGroup productGroup1 = randomProductGroup();
+
+		String json = objectMapper.writeValueAsString(productGroup1);
+
+		ProductGroup productGroup2 = ProductGroupSerDes.toDTO(json);
+
+		Assert.assertTrue(equals(productGroup1, productGroup2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		ProductGroup productGroup = randomProductGroup();
+
+		String json1 = objectMapper.writeValueAsString(productGroup);
+		String json2 = ProductGroupSerDes.toJSON(productGroup);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -132,40 +157,6 @@ public abstract class BaseProductGroupResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		ProductGroup productGroup1 = randomProductGroup();
-
-		String json = objectMapper.writeValueAsString(productGroup1);
-
-		ProductGroup productGroup2 = ProductGroupSerDes.toDTO(json);
-
-		Assert.assertTrue(equals(productGroup1, productGroup2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		ProductGroup productGroup = randomProductGroup();
-
-		String json1 = objectMapper.writeValueAsString(productGroup);
-		String json2 = ProductGroupSerDes.toJSON(productGroup);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

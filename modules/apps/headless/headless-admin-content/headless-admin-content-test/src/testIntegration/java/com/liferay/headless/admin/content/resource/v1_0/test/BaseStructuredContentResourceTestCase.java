@@ -117,7 +117,33 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		StructuredContent structuredContent1 = randomStructuredContent();
+
+		String json = objectMapper.writeValueAsString(structuredContent1);
+
+		StructuredContent structuredContent2 = StructuredContentSerDes.toDTO(
+			json);
+
+		Assert.assertTrue(equals(structuredContent1, structuredContent2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		StructuredContent structuredContent = randomStructuredContent();
+
+		String json1 = objectMapper.writeValueAsString(structuredContent);
+		String json2 = StructuredContentSerDes.toJSON(structuredContent);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -132,41 +158,6 @@ public abstract class BaseStructuredContentResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		StructuredContent structuredContent1 = randomStructuredContent();
-
-		String json = objectMapper.writeValueAsString(structuredContent1);
-
-		StructuredContent structuredContent2 = StructuredContentSerDes.toDTO(
-			json);
-
-		Assert.assertTrue(equals(structuredContent1, structuredContent2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		StructuredContent structuredContent = randomStructuredContent();
-
-		String json1 = objectMapper.writeValueAsString(structuredContent);
-		String json2 = StructuredContentSerDes.toJSON(structuredContent);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

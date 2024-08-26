@@ -111,7 +111,32 @@ public abstract class BaseWebUrlResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		WebUrl webUrl1 = randomWebUrl();
+
+		String json = objectMapper.writeValueAsString(webUrl1);
+
+		WebUrl webUrl2 = WebUrlSerDes.toDTO(json);
+
+		Assert.assertTrue(equals(webUrl1, webUrl2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		WebUrl webUrl = randomWebUrl();
+
+		String json1 = objectMapper.writeValueAsString(webUrl);
+		String json2 = WebUrlSerDes.toJSON(webUrl);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -126,40 +151,6 @@ public abstract class BaseWebUrlResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		WebUrl webUrl1 = randomWebUrl();
-
-		String json = objectMapper.writeValueAsString(webUrl1);
-
-		WebUrl webUrl2 = WebUrlSerDes.toDTO(json);
-
-		Assert.assertTrue(equals(webUrl1, webUrl2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		WebUrl webUrl = randomWebUrl();
-
-		String json1 = objectMapper.writeValueAsString(webUrl);
-		String json2 = WebUrlSerDes.toJSON(webUrl);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

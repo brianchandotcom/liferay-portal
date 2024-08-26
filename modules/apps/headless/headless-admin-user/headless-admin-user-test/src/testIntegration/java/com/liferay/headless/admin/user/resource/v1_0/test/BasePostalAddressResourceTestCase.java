@@ -112,7 +112,32 @@ public abstract class BasePostalAddressResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		PostalAddress postalAddress1 = randomPostalAddress();
+
+		String json = objectMapper.writeValueAsString(postalAddress1);
+
+		PostalAddress postalAddress2 = PostalAddressSerDes.toDTO(json);
+
+		Assert.assertTrue(equals(postalAddress1, postalAddress2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		PostalAddress postalAddress = randomPostalAddress();
+
+		String json1 = objectMapper.writeValueAsString(postalAddress);
+		String json2 = PostalAddressSerDes.toJSON(postalAddress);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -127,40 +152,6 @@ public abstract class BasePostalAddressResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		PostalAddress postalAddress1 = randomPostalAddress();
-
-		String json = objectMapper.writeValueAsString(postalAddress1);
-
-		PostalAddress postalAddress2 = PostalAddressSerDes.toDTO(json);
-
-		Assert.assertTrue(equals(postalAddress1, postalAddress2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		PostalAddress postalAddress = randomPostalAddress();
-
-		String json1 = objectMapper.writeValueAsString(postalAddress);
-		String json2 = PostalAddressSerDes.toJSON(postalAddress);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

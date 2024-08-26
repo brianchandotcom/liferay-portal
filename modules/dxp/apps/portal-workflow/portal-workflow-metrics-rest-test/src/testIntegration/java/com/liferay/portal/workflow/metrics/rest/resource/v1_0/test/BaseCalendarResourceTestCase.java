@@ -111,7 +111,32 @@ public abstract class BaseCalendarResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		Calendar calendar1 = randomCalendar();
+
+		String json = objectMapper.writeValueAsString(calendar1);
+
+		Calendar calendar2 = CalendarSerDes.toDTO(json);
+
+		Assert.assertTrue(equals(calendar1, calendar2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		Calendar calendar = randomCalendar();
+
+		String json1 = objectMapper.writeValueAsString(calendar);
+		String json2 = CalendarSerDes.toJSON(calendar);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -126,40 +151,6 @@ public abstract class BaseCalendarResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		Calendar calendar1 = randomCalendar();
-
-		String json = objectMapper.writeValueAsString(calendar1);
-
-		Calendar calendar2 = CalendarSerDes.toDTO(json);
-
-		Assert.assertTrue(equals(calendar1, calendar2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		Calendar calendar = randomCalendar();
-
-		String json1 = objectMapper.writeValueAsString(calendar);
-		String json2 = CalendarSerDes.toJSON(calendar);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

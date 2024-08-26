@@ -115,7 +115,32 @@ public abstract class BaseProcessMetricResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		ProcessMetric processMetric1 = randomProcessMetric();
+
+		String json = objectMapper.writeValueAsString(processMetric1);
+
+		ProcessMetric processMetric2 = ProcessMetricSerDes.toDTO(json);
+
+		Assert.assertTrue(equals(processMetric1, processMetric2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		ProcessMetric processMetric = randomProcessMetric();
+
+		String json1 = objectMapper.writeValueAsString(processMetric);
+		String json2 = ProcessMetricSerDes.toJSON(processMetric);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -130,40 +155,6 @@ public abstract class BaseProcessMetricResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		ProcessMetric processMetric1 = randomProcessMetric();
-
-		String json = objectMapper.writeValueAsString(processMetric1);
-
-		ProcessMetric processMetric2 = ProcessMetricSerDes.toDTO(json);
-
-		Assert.assertTrue(equals(processMetric1, processMetric2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		ProcessMetric processMetric = randomProcessMetric();
-
-		String json1 = objectMapper.writeValueAsString(processMetric);
-		String json2 = ProcessMetricSerDes.toJSON(processMetric);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

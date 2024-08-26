@@ -112,7 +112,32 @@ public abstract class BaseSearchIndexResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		SearchIndex searchIndex1 = randomSearchIndex();
+
+		String json = objectMapper.writeValueAsString(searchIndex1);
+
+		SearchIndex searchIndex2 = SearchIndexSerDes.toDTO(json);
+
+		Assert.assertTrue(equals(searchIndex1, searchIndex2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		SearchIndex searchIndex = randomSearchIndex();
+
+		String json1 = objectMapper.writeValueAsString(searchIndex);
+		String json2 = SearchIndexSerDes.toJSON(searchIndex);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -127,40 +152,6 @@ public abstract class BaseSearchIndexResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		SearchIndex searchIndex1 = randomSearchIndex();
-
-		String json = objectMapper.writeValueAsString(searchIndex1);
-
-		SearchIndex searchIndex2 = SearchIndexSerDes.toDTO(json);
-
-		Assert.assertTrue(equals(searchIndex1, searchIndex2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		SearchIndex searchIndex = randomSearchIndex();
-
-		String json1 = objectMapper.writeValueAsString(searchIndex);
-		String json2 = SearchIndexSerDes.toJSON(searchIndex);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

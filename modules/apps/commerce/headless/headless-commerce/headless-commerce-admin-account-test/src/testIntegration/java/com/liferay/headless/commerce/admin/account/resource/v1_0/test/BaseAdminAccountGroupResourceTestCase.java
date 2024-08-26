@@ -117,7 +117,33 @@ public abstract class BaseAdminAccountGroupResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		AdminAccountGroup adminAccountGroup1 = randomAdminAccountGroup();
+
+		String json = objectMapper.writeValueAsString(adminAccountGroup1);
+
+		AdminAccountGroup adminAccountGroup2 = AdminAccountGroupSerDes.toDTO(
+			json);
+
+		Assert.assertTrue(equals(adminAccountGroup1, adminAccountGroup2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		AdminAccountGroup adminAccountGroup = randomAdminAccountGroup();
+
+		String json1 = objectMapper.writeValueAsString(adminAccountGroup);
+		String json2 = AdminAccountGroupSerDes.toJSON(adminAccountGroup);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -132,41 +158,6 @@ public abstract class BaseAdminAccountGroupResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		AdminAccountGroup adminAccountGroup1 = randomAdminAccountGroup();
-
-		String json = objectMapper.writeValueAsString(adminAccountGroup1);
-
-		AdminAccountGroup adminAccountGroup2 = AdminAccountGroupSerDes.toDTO(
-			json);
-
-		Assert.assertTrue(equals(adminAccountGroup1, adminAccountGroup2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		AdminAccountGroup adminAccountGroup = randomAdminAccountGroup();
-
-		String json1 = objectMapper.writeValueAsString(adminAccountGroup);
-		String json2 = AdminAccountGroupSerDes.toJSON(adminAccountGroup);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

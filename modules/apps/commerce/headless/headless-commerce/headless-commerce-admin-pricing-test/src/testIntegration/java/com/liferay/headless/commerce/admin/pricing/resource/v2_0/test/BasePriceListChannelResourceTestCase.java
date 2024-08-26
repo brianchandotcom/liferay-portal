@@ -117,7 +117,32 @@ public abstract class BasePriceListChannelResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		PriceListChannel priceListChannel1 = randomPriceListChannel();
+
+		String json = objectMapper.writeValueAsString(priceListChannel1);
+
+		PriceListChannel priceListChannel2 = PriceListChannelSerDes.toDTO(json);
+
+		Assert.assertTrue(equals(priceListChannel1, priceListChannel2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		PriceListChannel priceListChannel = randomPriceListChannel();
+
+		String json1 = objectMapper.writeValueAsString(priceListChannel);
+		String json2 = PriceListChannelSerDes.toJSON(priceListChannel);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -132,40 +157,6 @@ public abstract class BasePriceListChannelResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		PriceListChannel priceListChannel1 = randomPriceListChannel();
-
-		String json = objectMapper.writeValueAsString(priceListChannel1);
-
-		PriceListChannel priceListChannel2 = PriceListChannelSerDes.toDTO(json);
-
-		Assert.assertTrue(equals(priceListChannel1, priceListChannel2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		PriceListChannel priceListChannel = randomPriceListChannel();
-
-		String json1 = objectMapper.writeValueAsString(priceListChannel);
-		String json2 = PriceListChannelSerDes.toJSON(priceListChannel);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

@@ -116,7 +116,32 @@ public abstract class BaseDataLayoutResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		DataLayout dataLayout1 = randomDataLayout();
+
+		String json = objectMapper.writeValueAsString(dataLayout1);
+
+		DataLayout dataLayout2 = DataLayoutSerDes.toDTO(json);
+
+		Assert.assertTrue(equals(dataLayout1, dataLayout2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		DataLayout dataLayout = randomDataLayout();
+
+		String json1 = objectMapper.writeValueAsString(dataLayout);
+		String json2 = DataLayoutSerDes.toJSON(dataLayout);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -131,40 +156,6 @@ public abstract class BaseDataLayoutResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		DataLayout dataLayout1 = randomDataLayout();
-
-		String json = objectMapper.writeValueAsString(dataLayout1);
-
-		DataLayout dataLayout2 = DataLayoutSerDes.toDTO(json);
-
-		Assert.assertTrue(equals(dataLayout1, dataLayout2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		DataLayout dataLayout = randomDataLayout();
-
-		String json1 = objectMapper.writeValueAsString(dataLayout);
-		String json2 = DataLayoutSerDes.toJSON(dataLayout);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

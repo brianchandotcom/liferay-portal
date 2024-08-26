@@ -112,7 +112,33 @@ public abstract class BaseOrderAccountGroupResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		OrderAccountGroup orderAccountGroup1 = randomOrderAccountGroup();
+
+		String json = objectMapper.writeValueAsString(orderAccountGroup1);
+
+		OrderAccountGroup orderAccountGroup2 = OrderAccountGroupSerDes.toDTO(
+			json);
+
+		Assert.assertTrue(equals(orderAccountGroup1, orderAccountGroup2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		OrderAccountGroup orderAccountGroup = randomOrderAccountGroup();
+
+		String json1 = objectMapper.writeValueAsString(orderAccountGroup);
+		String json2 = OrderAccountGroupSerDes.toJSON(orderAccountGroup);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -127,41 +153,6 @@ public abstract class BaseOrderAccountGroupResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		OrderAccountGroup orderAccountGroup1 = randomOrderAccountGroup();
-
-		String json = objectMapper.writeValueAsString(orderAccountGroup1);
-
-		OrderAccountGroup orderAccountGroup2 = OrderAccountGroupSerDes.toDTO(
-			json);
-
-		Assert.assertTrue(equals(orderAccountGroup1, orderAccountGroup2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		OrderAccountGroup orderAccountGroup = randomOrderAccountGroup();
-
-		String json1 = objectMapper.writeValueAsString(orderAccountGroup);
-		String json2 = OrderAccountGroupSerDes.toJSON(orderAccountGroup);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

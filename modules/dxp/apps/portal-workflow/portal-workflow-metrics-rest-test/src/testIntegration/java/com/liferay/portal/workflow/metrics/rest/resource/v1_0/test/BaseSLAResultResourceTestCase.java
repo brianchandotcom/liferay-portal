@@ -112,7 +112,32 @@ public abstract class BaseSLAResultResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		SLAResult slaResult1 = randomSLAResult();
+
+		String json = objectMapper.writeValueAsString(slaResult1);
+
+		SLAResult slaResult2 = SLAResultSerDes.toDTO(json);
+
+		Assert.assertTrue(equals(slaResult1, slaResult2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		SLAResult slaResult = randomSLAResult();
+
+		String json1 = objectMapper.writeValueAsString(slaResult);
+		String json2 = SLAResultSerDes.toJSON(slaResult);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -127,40 +152,6 @@ public abstract class BaseSLAResultResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		SLAResult slaResult1 = randomSLAResult();
-
-		String json = objectMapper.writeValueAsString(slaResult1);
-
-		SLAResult slaResult2 = SLAResultSerDes.toDTO(json);
-
-		Assert.assertTrue(equals(slaResult1, slaResult2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		SLAResult slaResult = randomSLAResult();
-
-		String json1 = objectMapper.writeValueAsString(slaResult);
-		String json2 = SLAResultSerDes.toJSON(slaResult);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

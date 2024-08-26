@@ -117,7 +117,32 @@ public abstract class BaseShipmentResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		Shipment shipment1 = randomShipment();
+
+		String json = objectMapper.writeValueAsString(shipment1);
+
+		Shipment shipment2 = ShipmentSerDes.toDTO(json);
+
+		Assert.assertTrue(equals(shipment1, shipment2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		Shipment shipment = randomShipment();
+
+		String json1 = objectMapper.writeValueAsString(shipment);
+		String json2 = ShipmentSerDes.toJSON(shipment);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -132,40 +157,6 @@ public abstract class BaseShipmentResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		Shipment shipment1 = randomShipment();
-
-		String json = objectMapper.writeValueAsString(shipment1);
-
-		Shipment shipment2 = ShipmentSerDes.toDTO(json);
-
-		Assert.assertTrue(equals(shipment1, shipment2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		Shipment shipment = randomShipment();
-
-		String json1 = objectMapper.writeValueAsString(shipment);
-		String json2 = ShipmentSerDes.toJSON(shipment);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

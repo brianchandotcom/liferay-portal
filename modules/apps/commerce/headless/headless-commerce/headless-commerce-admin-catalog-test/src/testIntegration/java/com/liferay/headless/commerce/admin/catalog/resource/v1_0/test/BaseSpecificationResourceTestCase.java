@@ -117,7 +117,32 @@ public abstract class BaseSpecificationResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		Specification specification1 = randomSpecification();
+
+		String json = objectMapper.writeValueAsString(specification1);
+
+		Specification specification2 = SpecificationSerDes.toDTO(json);
+
+		Assert.assertTrue(equals(specification1, specification2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		Specification specification = randomSpecification();
+
+		String json1 = objectMapper.writeValueAsString(specification);
+		String json2 = SpecificationSerDes.toJSON(specification);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -132,40 +157,6 @@ public abstract class BaseSpecificationResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		Specification specification1 = randomSpecification();
-
-		String json = objectMapper.writeValueAsString(specification1);
-
-		Specification specification2 = SpecificationSerDes.toDTO(json);
-
-		Assert.assertTrue(equals(specification1, specification2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		Specification specification = randomSpecification();
-
-		String json1 = objectMapper.writeValueAsString(specification);
-		String json2 = SpecificationSerDes.toJSON(specification);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

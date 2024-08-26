@@ -117,7 +117,32 @@ public abstract class BaseUserNotificationResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		UserNotification userNotification1 = randomUserNotification();
+
+		String json = objectMapper.writeValueAsString(userNotification1);
+
+		UserNotification userNotification2 = UserNotificationSerDes.toDTO(json);
+
+		Assert.assertTrue(equals(userNotification1, userNotification2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		UserNotification userNotification = randomUserNotification();
+
+		String json1 = objectMapper.writeValueAsString(userNotification);
+		String json2 = UserNotificationSerDes.toJSON(userNotification);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -132,40 +157,6 @@ public abstract class BaseUserNotificationResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		UserNotification userNotification1 = randomUserNotification();
-
-		String json = objectMapper.writeValueAsString(userNotification1);
-
-		UserNotification userNotification2 = UserNotificationSerDes.toDTO(json);
-
-		Assert.assertTrue(equals(userNotification1, userNotification2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		UserNotification userNotification = randomUserNotification();
-
-		String json1 = objectMapper.writeValueAsString(userNotification);
-		String json2 = UserNotificationSerDes.toJSON(userNotification);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

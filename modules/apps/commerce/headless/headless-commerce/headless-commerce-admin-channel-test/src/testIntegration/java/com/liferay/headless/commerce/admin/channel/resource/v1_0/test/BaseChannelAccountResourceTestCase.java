@@ -117,7 +117,32 @@ public abstract class BaseChannelAccountResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		ChannelAccount channelAccount1 = randomChannelAccount();
+
+		String json = objectMapper.writeValueAsString(channelAccount1);
+
+		ChannelAccount channelAccount2 = ChannelAccountSerDes.toDTO(json);
+
+		Assert.assertTrue(equals(channelAccount1, channelAccount2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		ChannelAccount channelAccount = randomChannelAccount();
+
+		String json1 = objectMapper.writeValueAsString(channelAccount);
+		String json2 = ChannelAccountSerDes.toJSON(channelAccount);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -132,40 +157,6 @@ public abstract class BaseChannelAccountResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		ChannelAccount channelAccount1 = randomChannelAccount();
-
-		String json = objectMapper.writeValueAsString(channelAccount1);
-
-		ChannelAccount channelAccount2 = ChannelAccountSerDes.toDTO(json);
-
-		Assert.assertTrue(equals(channelAccount1, channelAccount2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		ChannelAccount channelAccount = randomChannelAccount();
-
-		String json1 = objectMapper.writeValueAsString(channelAccount);
-		String json2 = ChannelAccountSerDes.toJSON(channelAccount);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

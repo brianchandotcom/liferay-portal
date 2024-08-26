@@ -113,7 +113,32 @@ public abstract class BaseExperimentResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		Experiment experiment1 = randomExperiment();
+
+		String json = objectMapper.writeValueAsString(experiment1);
+
+		Experiment experiment2 = ExperimentSerDes.toDTO(json);
+
+		Assert.assertTrue(equals(experiment1, experiment2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		Experiment experiment = randomExperiment();
+
+		String json1 = objectMapper.writeValueAsString(experiment);
+		String json2 = ExperimentSerDes.toJSON(experiment);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -128,40 +153,6 @@ public abstract class BaseExperimentResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		Experiment experiment1 = randomExperiment();
-
-		String json = objectMapper.writeValueAsString(experiment1);
-
-		Experiment experiment2 = ExperimentSerDes.toDTO(json);
-
-		Assert.assertTrue(equals(experiment1, experiment2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		Experiment experiment = randomExperiment();
-
-		String json1 = objectMapper.writeValueAsString(experiment);
-		String json2 = ExperimentSerDes.toJSON(experiment);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

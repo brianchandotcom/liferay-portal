@@ -118,7 +118,32 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		MeasurementUnit measurementUnit1 = randomMeasurementUnit();
+
+		String json = objectMapper.writeValueAsString(measurementUnit1);
+
+		MeasurementUnit measurementUnit2 = MeasurementUnitSerDes.toDTO(json);
+
+		Assert.assertTrue(equals(measurementUnit1, measurementUnit2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		MeasurementUnit measurementUnit = randomMeasurementUnit();
+
+		String json1 = objectMapper.writeValueAsString(measurementUnit);
+		String json2 = MeasurementUnitSerDes.toJSON(measurementUnit);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -133,40 +158,6 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		MeasurementUnit measurementUnit1 = randomMeasurementUnit();
-
-		String json = objectMapper.writeValueAsString(measurementUnit1);
-
-		MeasurementUnit measurementUnit2 = MeasurementUnitSerDes.toDTO(json);
-
-		Assert.assertTrue(equals(measurementUnit1, measurementUnit2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		MeasurementUnit measurementUnit = randomMeasurementUnit();
-
-		String json1 = objectMapper.writeValueAsString(measurementUnit);
-		String json2 = MeasurementUnitSerDes.toJSON(measurementUnit);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

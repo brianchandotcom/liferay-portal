@@ -112,7 +112,32 @@ public abstract class BasePortalInstanceResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		PortalInstance portalInstance1 = randomPortalInstance();
+
+		String json = objectMapper.writeValueAsString(portalInstance1);
+
+		PortalInstance portalInstance2 = PortalInstanceSerDes.toDTO(json);
+
+		Assert.assertTrue(equals(portalInstance1, portalInstance2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		PortalInstance portalInstance = randomPortalInstance();
+
+		String json1 = objectMapper.writeValueAsString(portalInstance);
+		String json2 = PortalInstanceSerDes.toJSON(portalInstance);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -127,40 +152,6 @@ public abstract class BasePortalInstanceResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		PortalInstance portalInstance1 = randomPortalInstance();
-
-		String json = objectMapper.writeValueAsString(portalInstance1);
-
-		PortalInstance portalInstance2 = PortalInstanceSerDes.toDTO(json);
-
-		Assert.assertTrue(equals(portalInstance1, portalInstance2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		PortalInstance portalInstance = randomPortalInstance();
-
-		String json1 = objectMapper.writeValueAsString(portalInstance);
-		String json2 = PortalInstanceSerDes.toJSON(portalInstance);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

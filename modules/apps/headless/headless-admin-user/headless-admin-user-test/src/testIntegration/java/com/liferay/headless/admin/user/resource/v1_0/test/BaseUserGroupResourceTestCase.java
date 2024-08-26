@@ -117,7 +117,32 @@ public abstract class BaseUserGroupResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		UserGroup userGroup1 = randomUserGroup();
+
+		String json = objectMapper.writeValueAsString(userGroup1);
+
+		UserGroup userGroup2 = UserGroupSerDes.toDTO(json);
+
+		Assert.assertTrue(equals(userGroup1, userGroup2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		UserGroup userGroup = randomUserGroup();
+
+		String json1 = objectMapper.writeValueAsString(userGroup);
+		String json2 = UserGroupSerDes.toJSON(userGroup);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -132,40 +157,6 @@ public abstract class BaseUserGroupResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		UserGroup userGroup1 = randomUserGroup();
-
-		String json = objectMapper.writeValueAsString(userGroup1);
-
-		UserGroup userGroup2 = UserGroupSerDes.toDTO(json);
-
-		Assert.assertTrue(equals(userGroup1, userGroup2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		UserGroup userGroup = randomUserGroup();
-
-		String json1 = objectMapper.writeValueAsString(userGroup);
-		String json2 = UserGroupSerDes.toJSON(userGroup);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

@@ -117,7 +117,32 @@ public abstract class BaseCommerceChannelResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		CommerceChannel commerceChannel1 = randomCommerceChannel();
+
+		String json = objectMapper.writeValueAsString(commerceChannel1);
+
+		CommerceChannel commerceChannel2 = CommerceChannelSerDes.toDTO(json);
+
+		Assert.assertTrue(equals(commerceChannel1, commerceChannel2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		CommerceChannel commerceChannel = randomCommerceChannel();
+
+		String json1 = objectMapper.writeValueAsString(commerceChannel);
+		String json2 = CommerceChannelSerDes.toJSON(commerceChannel);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -132,40 +157,6 @@ public abstract class BaseCommerceChannelResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		CommerceChannel commerceChannel1 = randomCommerceChannel();
-
-		String json = objectMapper.writeValueAsString(commerceChannel1);
-
-		CommerceChannel commerceChannel2 = CommerceChannelSerDes.toDTO(json);
-
-		Assert.assertTrue(equals(commerceChannel1, commerceChannel2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		CommerceChannel commerceChannel = randomCommerceChannel();
-
-		String json1 = objectMapper.writeValueAsString(commerceChannel);
-		String json2 = CommerceChannelSerDes.toJSON(commerceChannel);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

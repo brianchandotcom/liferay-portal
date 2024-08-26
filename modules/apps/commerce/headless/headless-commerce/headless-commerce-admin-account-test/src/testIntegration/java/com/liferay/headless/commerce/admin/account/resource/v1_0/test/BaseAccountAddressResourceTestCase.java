@@ -115,7 +115,32 @@ public abstract class BaseAccountAddressResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		AccountAddress accountAddress1 = randomAccountAddress();
+
+		String json = objectMapper.writeValueAsString(accountAddress1);
+
+		AccountAddress accountAddress2 = AccountAddressSerDes.toDTO(json);
+
+		Assert.assertTrue(equals(accountAddress1, accountAddress2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		AccountAddress accountAddress = randomAccountAddress();
+
+		String json1 = objectMapper.writeValueAsString(accountAddress);
+		String json2 = AccountAddressSerDes.toJSON(accountAddress);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -130,40 +155,6 @@ public abstract class BaseAccountAddressResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		AccountAddress accountAddress1 = randomAccountAddress();
-
-		String json = objectMapper.writeValueAsString(accountAddress1);
-
-		AccountAddress accountAddress2 = AccountAddressSerDes.toDTO(json);
-
-		Assert.assertTrue(equals(accountAddress1, accountAddress2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		AccountAddress accountAddress = randomAccountAddress();
-
-		String json1 = objectMapper.writeValueAsString(accountAddress);
-		String json2 = AccountAddressSerDes.toJSON(accountAddress);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

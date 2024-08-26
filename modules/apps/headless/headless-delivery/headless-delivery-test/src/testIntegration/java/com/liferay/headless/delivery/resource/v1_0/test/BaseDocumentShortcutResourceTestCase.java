@@ -133,7 +133,32 @@ public abstract class BaseDocumentShortcutResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		DocumentShortcut documentShortcut1 = randomDocumentShortcut();
+
+		String json = objectMapper.writeValueAsString(documentShortcut1);
+
+		DocumentShortcut documentShortcut2 = DocumentShortcutSerDes.toDTO(json);
+
+		Assert.assertTrue(equals(documentShortcut1, documentShortcut2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		DocumentShortcut documentShortcut = randomDocumentShortcut();
+
+		String json1 = objectMapper.writeValueAsString(documentShortcut);
+		String json2 = DocumentShortcutSerDes.toJSON(documentShortcut);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -148,40 +173,6 @@ public abstract class BaseDocumentShortcutResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		DocumentShortcut documentShortcut1 = randomDocumentShortcut();
-
-		String json = objectMapper.writeValueAsString(documentShortcut1);
-
-		DocumentShortcut documentShortcut2 = DocumentShortcutSerDes.toDTO(json);
-
-		Assert.assertTrue(equals(documentShortcut1, documentShortcut2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		DocumentShortcut documentShortcut = randomDocumentShortcut();
-
-		String json1 = objectMapper.writeValueAsString(documentShortcut);
-		String json2 = DocumentShortcutSerDes.toJSON(documentShortcut);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

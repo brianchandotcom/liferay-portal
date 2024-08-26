@@ -114,7 +114,32 @@ public abstract class BaseDiscountRuleResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		DiscountRule discountRule1 = randomDiscountRule();
+
+		String json = objectMapper.writeValueAsString(discountRule1);
+
+		DiscountRule discountRule2 = DiscountRuleSerDes.toDTO(json);
+
+		Assert.assertTrue(equals(discountRule1, discountRule2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		DiscountRule discountRule = randomDiscountRule();
+
+		String json1 = objectMapper.writeValueAsString(discountRule);
+		String json2 = DiscountRuleSerDes.toJSON(discountRule);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -129,40 +154,6 @@ public abstract class BaseDiscountRuleResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		DiscountRule discountRule1 = randomDiscountRule();
-
-		String json = objectMapper.writeValueAsString(discountRule1);
-
-		DiscountRule discountRule2 = DiscountRuleSerDes.toDTO(json);
-
-		Assert.assertTrue(equals(discountRule1, discountRule2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		DiscountRule discountRule = randomDiscountRule();
-
-		String json1 = objectMapper.writeValueAsString(discountRule);
-		String json2 = DiscountRuleSerDes.toJSON(discountRule);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

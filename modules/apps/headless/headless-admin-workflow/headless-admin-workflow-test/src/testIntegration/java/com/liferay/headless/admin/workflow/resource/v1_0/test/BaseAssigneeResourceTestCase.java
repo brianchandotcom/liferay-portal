@@ -113,7 +113,32 @@ public abstract class BaseAssigneeResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		Assignee assignee1 = randomAssignee();
+
+		String json = objectMapper.writeValueAsString(assignee1);
+
+		Assignee assignee2 = AssigneeSerDes.toDTO(json);
+
+		Assert.assertTrue(equals(assignee1, assignee2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		Assignee assignee = randomAssignee();
+
+		String json1 = objectMapper.writeValueAsString(assignee);
+		String json2 = AssigneeSerDes.toJSON(assignee);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -128,40 +153,6 @@ public abstract class BaseAssigneeResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		Assignee assignee1 = randomAssignee();
-
-		String json = objectMapper.writeValueAsString(assignee1);
-
-		Assignee assignee2 = AssigneeSerDes.toDTO(json);
-
-		Assert.assertTrue(equals(assignee1, assignee2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		Assignee assignee = randomAssignee();
-
-		String json1 = objectMapper.writeValueAsString(assignee);
-		String json2 = AssigneeSerDes.toJSON(assignee);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

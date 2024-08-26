@@ -113,7 +113,32 @@ public abstract class BaseSegmentUserResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		SegmentUser segmentUser1 = randomSegmentUser();
+
+		String json = objectMapper.writeValueAsString(segmentUser1);
+
+		SegmentUser segmentUser2 = SegmentUserSerDes.toDTO(json);
+
+		Assert.assertTrue(equals(segmentUser1, segmentUser2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		SegmentUser segmentUser = randomSegmentUser();
+
+		String json1 = objectMapper.writeValueAsString(segmentUser);
+		String json2 = SegmentUserSerDes.toJSON(segmentUser);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -128,40 +153,6 @@ public abstract class BaseSegmentUserResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		SegmentUser segmentUser1 = randomSegmentUser();
-
-		String json = objectMapper.writeValueAsString(segmentUser1);
-
-		SegmentUser segmentUser2 = SegmentUserSerDes.toDTO(json);
-
-		Assert.assertTrue(equals(segmentUser1, segmentUser2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		SegmentUser segmentUser = randomSegmentUser();
-
-		String json1 = objectMapper.writeValueAsString(segmentUser);
-		String json2 = SegmentUserSerDes.toJSON(segmentUser);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

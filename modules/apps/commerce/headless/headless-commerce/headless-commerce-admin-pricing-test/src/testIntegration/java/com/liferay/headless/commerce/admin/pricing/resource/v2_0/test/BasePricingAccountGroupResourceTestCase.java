@@ -112,7 +112,33 @@ public abstract class BasePricingAccountGroupResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		PricingAccountGroup pricingAccountGroup1 = randomPricingAccountGroup();
+
+		String json = objectMapper.writeValueAsString(pricingAccountGroup1);
+
+		PricingAccountGroup pricingAccountGroup2 =
+			PricingAccountGroupSerDes.toDTO(json);
+
+		Assert.assertTrue(equals(pricingAccountGroup1, pricingAccountGroup2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		PricingAccountGroup pricingAccountGroup = randomPricingAccountGroup();
+
+		String json1 = objectMapper.writeValueAsString(pricingAccountGroup);
+		String json2 = PricingAccountGroupSerDes.toJSON(pricingAccountGroup);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -127,41 +153,6 @@ public abstract class BasePricingAccountGroupResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		PricingAccountGroup pricingAccountGroup1 = randomPricingAccountGroup();
-
-		String json = objectMapper.writeValueAsString(pricingAccountGroup1);
-
-		PricingAccountGroup pricingAccountGroup2 =
-			PricingAccountGroupSerDes.toDTO(json);
-
-		Assert.assertTrue(equals(pricingAccountGroup1, pricingAccountGroup2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		PricingAccountGroup pricingAccountGroup = randomPricingAccountGroup();
-
-		String json1 = objectMapper.writeValueAsString(pricingAccountGroup);
-		String json2 = PricingAccountGroupSerDes.toJSON(pricingAccountGroup);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

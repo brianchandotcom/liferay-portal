@@ -113,7 +113,32 @@ public abstract class BaseDispatchTriggerResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		DispatchTrigger dispatchTrigger1 = randomDispatchTrigger();
+
+		String json = objectMapper.writeValueAsString(dispatchTrigger1);
+
+		DispatchTrigger dispatchTrigger2 = DispatchTriggerSerDes.toDTO(json);
+
+		Assert.assertTrue(equals(dispatchTrigger1, dispatchTrigger2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		DispatchTrigger dispatchTrigger = randomDispatchTrigger();
+
+		String json1 = objectMapper.writeValueAsString(dispatchTrigger);
+		String json2 = DispatchTriggerSerDes.toJSON(dispatchTrigger);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -128,40 +153,6 @@ public abstract class BaseDispatchTriggerResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		DispatchTrigger dispatchTrigger1 = randomDispatchTrigger();
-
-		String json = objectMapper.writeValueAsString(dispatchTrigger1);
-
-		DispatchTrigger dispatchTrigger2 = DispatchTriggerSerDes.toDTO(json);
-
-		Assert.assertTrue(equals(dispatchTrigger1, dispatchTrigger2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		DispatchTrigger dispatchTrigger = randomDispatchTrigger();
-
-		String json1 = objectMapper.writeValueAsString(dispatchTrigger);
-		String json2 = DispatchTriggerSerDes.toJSON(dispatchTrigger);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

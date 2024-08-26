@@ -112,7 +112,32 @@ public abstract class BaseTicketResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		Ticket ticket1 = randomTicket();
+
+		String json = objectMapper.writeValueAsString(ticket1);
+
+		Ticket ticket2 = TicketSerDes.toDTO(json);
+
+		Assert.assertTrue(equals(ticket1, ticket2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		Ticket ticket = randomTicket();
+
+		String json1 = objectMapper.writeValueAsString(ticket);
+		String json2 = TicketSerDes.toJSON(ticket);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -127,40 +152,6 @@ public abstract class BaseTicketResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		Ticket ticket1 = randomTicket();
-
-		String json = objectMapper.writeValueAsString(ticket1);
-
-		Ticket ticket2 = TicketSerDes.toDTO(json);
-
-		Assert.assertTrue(equals(ticket1, ticket2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		Ticket ticket = randomTicket();
-
-		String json1 = objectMapper.writeValueAsString(ticket);
-		String json2 = TicketSerDes.toJSON(ticket);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

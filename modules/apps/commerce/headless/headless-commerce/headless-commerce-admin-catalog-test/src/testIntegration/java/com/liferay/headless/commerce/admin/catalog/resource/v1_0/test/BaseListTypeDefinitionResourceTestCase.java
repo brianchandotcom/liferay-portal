@@ -113,7 +113,33 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		ListTypeDefinition listTypeDefinition1 = randomListTypeDefinition();
+
+		String json = objectMapper.writeValueAsString(listTypeDefinition1);
+
+		ListTypeDefinition listTypeDefinition2 = ListTypeDefinitionSerDes.toDTO(
+			json);
+
+		Assert.assertTrue(equals(listTypeDefinition1, listTypeDefinition2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		ListTypeDefinition listTypeDefinition = randomListTypeDefinition();
+
+		String json1 = objectMapper.writeValueAsString(listTypeDefinition);
+		String json2 = ListTypeDefinitionSerDes.toJSON(listTypeDefinition);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -128,41 +154,6 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		ListTypeDefinition listTypeDefinition1 = randomListTypeDefinition();
-
-		String json = objectMapper.writeValueAsString(listTypeDefinition1);
-
-		ListTypeDefinition listTypeDefinition2 = ListTypeDefinitionSerDes.toDTO(
-			json);
-
-		Assert.assertTrue(equals(listTypeDefinition1, listTypeDefinition2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		ListTypeDefinition listTypeDefinition = randomListTypeDefinition();
-
-		String json1 = objectMapper.writeValueAsString(listTypeDefinition);
-		String json2 = ListTypeDefinitionSerDes.toJSON(listTypeDefinition);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

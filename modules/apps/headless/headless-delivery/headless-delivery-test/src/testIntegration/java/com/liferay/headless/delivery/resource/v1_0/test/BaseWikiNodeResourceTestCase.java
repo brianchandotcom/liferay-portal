@@ -122,7 +122,32 @@ public abstract class BaseWikiNodeResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		WikiNode wikiNode1 = randomWikiNode();
+
+		String json = objectMapper.writeValueAsString(wikiNode1);
+
+		WikiNode wikiNode2 = WikiNodeSerDes.toDTO(json);
+
+		Assert.assertTrue(equals(wikiNode1, wikiNode2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		WikiNode wikiNode = randomWikiNode();
+
+		String json1 = objectMapper.writeValueAsString(wikiNode);
+		String json2 = WikiNodeSerDes.toJSON(wikiNode);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -137,40 +162,6 @@ public abstract class BaseWikiNodeResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		WikiNode wikiNode1 = randomWikiNode();
-
-		String json = objectMapper.writeValueAsString(wikiNode1);
-
-		WikiNode wikiNode2 = WikiNodeSerDes.toDTO(json);
-
-		Assert.assertTrue(equals(wikiNode1, wikiNode2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		WikiNode wikiNode = randomWikiNode();
-
-		String json1 = objectMapper.writeValueAsString(wikiNode);
-		String json2 = WikiNodeSerDes.toJSON(wikiNode);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

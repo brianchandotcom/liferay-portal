@@ -117,7 +117,33 @@ public abstract class BaseContactOrganizationResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		ContactOrganization contactOrganization1 = randomContactOrganization();
+
+		String json = objectMapper.writeValueAsString(contactOrganization1);
+
+		ContactOrganization contactOrganization2 =
+			ContactOrganizationSerDes.toDTO(json);
+
+		Assert.assertTrue(equals(contactOrganization1, contactOrganization2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		ContactOrganization contactOrganization = randomContactOrganization();
+
+		String json1 = objectMapper.writeValueAsString(contactOrganization);
+		String json2 = ContactOrganizationSerDes.toJSON(contactOrganization);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -132,41 +158,6 @@ public abstract class BaseContactOrganizationResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		ContactOrganization contactOrganization1 = randomContactOrganization();
-
-		String json = objectMapper.writeValueAsString(contactOrganization1);
-
-		ContactOrganization contactOrganization2 =
-			ContactOrganizationSerDes.toDTO(json);
-
-		Assert.assertTrue(equals(contactOrganization1, contactOrganization2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		ContactOrganization contactOrganization = randomContactOrganization();
-
-		String json1 = objectMapper.writeValueAsString(contactOrganization);
-		String json2 = ContactOrganizationSerDes.toJSON(contactOrganization);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

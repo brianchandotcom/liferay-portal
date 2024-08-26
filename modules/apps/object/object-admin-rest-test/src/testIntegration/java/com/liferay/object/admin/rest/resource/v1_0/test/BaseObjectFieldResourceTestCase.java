@@ -117,7 +117,32 @@ public abstract class BaseObjectFieldResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		ObjectField objectField1 = randomObjectField();
+
+		String json = objectMapper.writeValueAsString(objectField1);
+
+		ObjectField objectField2 = ObjectFieldSerDes.toDTO(json);
+
+		Assert.assertTrue(equals(objectField1, objectField2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		ObjectField objectField = randomObjectField();
+
+		String json1 = objectMapper.writeValueAsString(objectField);
+		String json2 = ObjectFieldSerDes.toJSON(objectField);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -132,40 +157,6 @@ public abstract class BaseObjectFieldResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		ObjectField objectField1 = randomObjectField();
-
-		String json = objectMapper.writeValueAsString(objectField1);
-
-		ObjectField objectField2 = ObjectFieldSerDes.toDTO(json);
-
-		Assert.assertTrue(equals(objectField1, objectField2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		ObjectField objectField = randomObjectField();
-
-		String json1 = objectMapper.writeValueAsString(objectField);
-		String json2 = ObjectFieldSerDes.toJSON(objectField);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

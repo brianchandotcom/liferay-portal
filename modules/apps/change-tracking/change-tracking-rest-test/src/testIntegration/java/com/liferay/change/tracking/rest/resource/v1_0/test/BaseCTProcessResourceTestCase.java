@@ -116,7 +116,32 @@ public abstract class BaseCTProcessResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		CTProcess ctProcess1 = randomCTProcess();
+
+		String json = objectMapper.writeValueAsString(ctProcess1);
+
+		CTProcess ctProcess2 = CTProcessSerDes.toDTO(json);
+
+		Assert.assertTrue(equals(ctProcess1, ctProcess2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		CTProcess ctProcess = randomCTProcess();
+
+		String json1 = objectMapper.writeValueAsString(ctProcess);
+		String json2 = CTProcessSerDes.toJSON(ctProcess);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -131,40 +156,6 @@ public abstract class BaseCTProcessResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		CTProcess ctProcess1 = randomCTProcess();
-
-		String json = objectMapper.writeValueAsString(ctProcess1);
-
-		CTProcess ctProcess2 = CTProcessSerDes.toDTO(json);
-
-		Assert.assertTrue(equals(ctProcess1, ctProcess2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		CTProcess ctProcess = randomCTProcess();
-
-		String json1 = objectMapper.writeValueAsString(ctProcess);
-		String json2 = CTProcessSerDes.toJSON(ctProcess);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

@@ -120,7 +120,32 @@ public abstract class BaseDataDefinitionResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		DataDefinition dataDefinition1 = randomDataDefinition();
+
+		String json = objectMapper.writeValueAsString(dataDefinition1);
+
+		DataDefinition dataDefinition2 = DataDefinitionSerDes.toDTO(json);
+
+		Assert.assertTrue(equals(dataDefinition1, dataDefinition2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		DataDefinition dataDefinition = randomDataDefinition();
+
+		String json1 = objectMapper.writeValueAsString(dataDefinition);
+		String json2 = DataDefinitionSerDes.toJSON(dataDefinition);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -135,40 +160,6 @@ public abstract class BaseDataDefinitionResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		DataDefinition dataDefinition1 = randomDataDefinition();
-
-		String json = objectMapper.writeValueAsString(dataDefinition1);
-
-		DataDefinition dataDefinition2 = DataDefinitionSerDes.toDTO(json);
-
-		Assert.assertTrue(equals(dataDefinition1, dataDefinition2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		DataDefinition dataDefinition = randomDataDefinition();
-
-		String json1 = objectMapper.writeValueAsString(dataDefinition);
-		String json2 = DataDefinitionSerDes.toJSON(dataDefinition);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

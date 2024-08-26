@@ -123,7 +123,33 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		MessageBoardSection messageBoardSection1 = randomMessageBoardSection();
+
+		String json = objectMapper.writeValueAsString(messageBoardSection1);
+
+		MessageBoardSection messageBoardSection2 =
+			MessageBoardSectionSerDes.toDTO(json);
+
+		Assert.assertTrue(equals(messageBoardSection1, messageBoardSection2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		MessageBoardSection messageBoardSection = randomMessageBoardSection();
+
+		String json1 = objectMapper.writeValueAsString(messageBoardSection);
+		String json2 = MessageBoardSectionSerDes.toJSON(messageBoardSection);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -138,41 +164,6 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		MessageBoardSection messageBoardSection1 = randomMessageBoardSection();
-
-		String json = objectMapper.writeValueAsString(messageBoardSection1);
-
-		MessageBoardSection messageBoardSection2 =
-			MessageBoardSectionSerDes.toDTO(json);
-
-		Assert.assertTrue(equals(messageBoardSection1, messageBoardSection2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		MessageBoardSection messageBoardSection = randomMessageBoardSection();
-
-		String json1 = objectMapper.writeValueAsString(messageBoardSection);
-		String json2 = MessageBoardSectionSerDes.toJSON(messageBoardSection);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

@@ -122,7 +122,32 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		BlogPostingImage blogPostingImage1 = randomBlogPostingImage();
+
+		String json = objectMapper.writeValueAsString(blogPostingImage1);
+
+		BlogPostingImage blogPostingImage2 = BlogPostingImageSerDes.toDTO(json);
+
+		Assert.assertTrue(equals(blogPostingImage1, blogPostingImage2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		BlogPostingImage blogPostingImage = randomBlogPostingImage();
+
+		String json1 = objectMapper.writeValueAsString(blogPostingImage);
+		String json2 = BlogPostingImageSerDes.toJSON(blogPostingImage);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -137,40 +162,6 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		BlogPostingImage blogPostingImage1 = randomBlogPostingImage();
-
-		String json = objectMapper.writeValueAsString(blogPostingImage1);
-
-		BlogPostingImage blogPostingImage2 = BlogPostingImageSerDes.toDTO(json);
-
-		Assert.assertTrue(equals(blogPostingImage1, blogPostingImage2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		BlogPostingImage blogPostingImage = randomBlogPostingImage();
-
-		String json1 = objectMapper.writeValueAsString(blogPostingImage);
-		String json2 = BlogPostingImageSerDes.toJSON(blogPostingImage);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

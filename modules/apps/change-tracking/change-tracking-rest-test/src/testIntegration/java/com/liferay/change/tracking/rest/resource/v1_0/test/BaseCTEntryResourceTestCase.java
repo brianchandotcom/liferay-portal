@@ -116,7 +116,32 @@ public abstract class BaseCTEntryResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		CTEntry ctEntry1 = randomCTEntry();
+
+		String json = objectMapper.writeValueAsString(ctEntry1);
+
+		CTEntry ctEntry2 = CTEntrySerDes.toDTO(json);
+
+		Assert.assertTrue(equals(ctEntry1, ctEntry2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		CTEntry ctEntry = randomCTEntry();
+
+		String json1 = objectMapper.writeValueAsString(ctEntry);
+		String json2 = CTEntrySerDes.toJSON(ctEntry);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -131,40 +156,6 @@ public abstract class BaseCTEntryResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		CTEntry ctEntry1 = randomCTEntry();
-
-		String json = objectMapper.writeValueAsString(ctEntry1);
-
-		CTEntry ctEntry2 = CTEntrySerDes.toDTO(json);
-
-		Assert.assertTrue(equals(ctEntry1, ctEntry2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		CTEntry ctEntry = randomCTEntry();
-
-		String json1 = objectMapper.writeValueAsString(ctEntry);
-		String json2 = CTEntrySerDes.toJSON(ctEntry);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

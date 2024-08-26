@@ -112,7 +112,32 @@ public abstract class BaseShippingAddressResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		ShippingAddress shippingAddress1 = randomShippingAddress();
+
+		String json = objectMapper.writeValueAsString(shippingAddress1);
+
+		ShippingAddress shippingAddress2 = ShippingAddressSerDes.toDTO(json);
+
+		Assert.assertTrue(equals(shippingAddress1, shippingAddress2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		ShippingAddress shippingAddress = randomShippingAddress();
+
+		String json1 = objectMapper.writeValueAsString(shippingAddress);
+		String json2 = ShippingAddressSerDes.toJSON(shippingAddress);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -127,40 +152,6 @@ public abstract class BaseShippingAddressResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		ShippingAddress shippingAddress1 = randomShippingAddress();
-
-		String json = objectMapper.writeValueAsString(shippingAddress1);
-
-		ShippingAddress shippingAddress2 = ShippingAddressSerDes.toDTO(json);
-
-		Assert.assertTrue(equals(shippingAddress1, shippingAddress2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		ShippingAddress shippingAddress = randomShippingAddress();
-
-		String json1 = objectMapper.writeValueAsString(shippingAddress);
-		String json2 = ShippingAddressSerDes.toJSON(shippingAddress);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

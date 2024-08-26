@@ -113,7 +113,33 @@ public abstract class BaseSearchableAssetNameResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		SearchableAssetName searchableAssetName1 = randomSearchableAssetName();
+
+		String json = objectMapper.writeValueAsString(searchableAssetName1);
+
+		SearchableAssetName searchableAssetName2 =
+			SearchableAssetNameSerDes.toDTO(json);
+
+		Assert.assertTrue(equals(searchableAssetName1, searchableAssetName2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		SearchableAssetName searchableAssetName = randomSearchableAssetName();
+
+		String json1 = objectMapper.writeValueAsString(searchableAssetName);
+		String json2 = SearchableAssetNameSerDes.toJSON(searchableAssetName);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -128,41 +154,6 @@ public abstract class BaseSearchableAssetNameResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		SearchableAssetName searchableAssetName1 = randomSearchableAssetName();
-
-		String json = objectMapper.writeValueAsString(searchableAssetName1);
-
-		SearchableAssetName searchableAssetName2 =
-			SearchableAssetNameSerDes.toDTO(json);
-
-		Assert.assertTrue(equals(searchableAssetName1, searchableAssetName2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		SearchableAssetName searchableAssetName = randomSearchableAssetName();
-
-		String json1 = objectMapper.writeValueAsString(searchableAssetName);
-		String json2 = SearchableAssetNameSerDes.toJSON(searchableAssetName);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

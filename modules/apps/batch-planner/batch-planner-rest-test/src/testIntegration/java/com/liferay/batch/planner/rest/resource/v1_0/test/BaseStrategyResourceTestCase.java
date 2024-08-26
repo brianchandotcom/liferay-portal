@@ -112,7 +112,32 @@ public abstract class BaseStrategyResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		Strategy strategy1 = randomStrategy();
+
+		String json = objectMapper.writeValueAsString(strategy1);
+
+		Strategy strategy2 = StrategySerDes.toDTO(json);
+
+		Assert.assertTrue(equals(strategy1, strategy2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		Strategy strategy = randomStrategy();
+
+		String json1 = objectMapper.writeValueAsString(strategy);
+		String json2 = StrategySerDes.toJSON(strategy);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -127,40 +152,6 @@ public abstract class BaseStrategyResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		Strategy strategy1 = randomStrategy();
-
-		String json = objectMapper.writeValueAsString(strategy1);
-
-		Strategy strategy2 = StrategySerDes.toDTO(json);
-
-		Assert.assertTrue(equals(strategy1, strategy2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		Strategy strategy = randomStrategy();
-
-		String json1 = objectMapper.writeValueAsString(strategy);
-		String json2 = StrategySerDes.toJSON(strategy);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

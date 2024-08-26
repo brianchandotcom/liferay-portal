@@ -113,7 +113,32 @@ public abstract class BaseTermOrderTypeResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		TermOrderType termOrderType1 = randomTermOrderType();
+
+		String json = objectMapper.writeValueAsString(termOrderType1);
+
+		TermOrderType termOrderType2 = TermOrderTypeSerDes.toDTO(json);
+
+		Assert.assertTrue(equals(termOrderType1, termOrderType2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		TermOrderType termOrderType = randomTermOrderType();
+
+		String json1 = objectMapper.writeValueAsString(termOrderType);
+		String json2 = TermOrderTypeSerDes.toJSON(termOrderType);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -128,40 +153,6 @@ public abstract class BaseTermOrderTypeResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		TermOrderType termOrderType1 = randomTermOrderType();
-
-		String json = objectMapper.writeValueAsString(termOrderType1);
-
-		TermOrderType termOrderType2 = TermOrderTypeSerDes.toDTO(json);
-
-		Assert.assertTrue(equals(termOrderType1, termOrderType2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		TermOrderType termOrderType = randomTermOrderType();
-
-		String json1 = objectMapper.writeValueAsString(termOrderType);
-		String json2 = TermOrderTypeSerDes.toJSON(termOrderType);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

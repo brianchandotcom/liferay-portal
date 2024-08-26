@@ -130,7 +130,33 @@ public abstract class BaseContentSetElementResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		ContentSetElement contentSetElement1 = randomContentSetElement();
+
+		String json = objectMapper.writeValueAsString(contentSetElement1);
+
+		ContentSetElement contentSetElement2 = ContentSetElementSerDes.toDTO(
+			json);
+
+		Assert.assertTrue(equals(contentSetElement1, contentSetElement2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		ContentSetElement contentSetElement = randomContentSetElement();
+
+		String json1 = objectMapper.writeValueAsString(contentSetElement);
+		String json2 = ContentSetElementSerDes.toJSON(contentSetElement);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -145,41 +171,6 @@ public abstract class BaseContentSetElementResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		ContentSetElement contentSetElement1 = randomContentSetElement();
-
-		String json = objectMapper.writeValueAsString(contentSetElement1);
-
-		ContentSetElement contentSetElement2 = ContentSetElementSerDes.toDTO(
-			json);
-
-		Assert.assertTrue(equals(contentSetElement1, contentSetElement2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		ContentSetElement contentSetElement = randomContentSetElement();
-
-		String json1 = objectMapper.writeValueAsString(contentSetElement);
-		String json2 = ContentSetElementSerDes.toJSON(contentSetElement);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

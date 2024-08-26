@@ -115,7 +115,32 @@ public abstract class BaseWarehouseItemResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		WarehouseItem warehouseItem1 = randomWarehouseItem();
+
+		String json = objectMapper.writeValueAsString(warehouseItem1);
+
+		WarehouseItem warehouseItem2 = WarehouseItemSerDes.toDTO(json);
+
+		Assert.assertTrue(equals(warehouseItem1, warehouseItem2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		WarehouseItem warehouseItem = randomWarehouseItem();
+
+		String json1 = objectMapper.writeValueAsString(warehouseItem);
+		String json2 = WarehouseItemSerDes.toJSON(warehouseItem);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -130,40 +155,6 @@ public abstract class BaseWarehouseItemResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		WarehouseItem warehouseItem1 = randomWarehouseItem();
-
-		String json = objectMapper.writeValueAsString(warehouseItem1);
-
-		WarehouseItem warehouseItem2 = WarehouseItemSerDes.toDTO(json);
-
-		Assert.assertTrue(equals(warehouseItem1, warehouseItem2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		WarehouseItem warehouseItem = randomWarehouseItem();
-
-		String json1 = objectMapper.writeValueAsString(warehouseItem);
-		String json2 = WarehouseItemSerDes.toJSON(warehouseItem);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

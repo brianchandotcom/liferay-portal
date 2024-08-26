@@ -121,7 +121,32 @@ public abstract class BaseWikiPageResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		WikiPage wikiPage1 = randomWikiPage();
+
+		String json = objectMapper.writeValueAsString(wikiPage1);
+
+		WikiPage wikiPage2 = WikiPageSerDes.toDTO(json);
+
+		Assert.assertTrue(equals(wikiPage1, wikiPage2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		WikiPage wikiPage = randomWikiPage();
+
+		String json1 = objectMapper.writeValueAsString(wikiPage);
+		String json2 = WikiPageSerDes.toJSON(wikiPage);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -136,40 +161,6 @@ public abstract class BaseWikiPageResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		WikiPage wikiPage1 = randomWikiPage();
-
-		String json = objectMapper.writeValueAsString(wikiPage1);
-
-		WikiPage wikiPage2 = WikiPageSerDes.toDTO(json);
-
-		Assert.assertTrue(equals(wikiPage1, wikiPage2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		WikiPage wikiPage = randomWikiPage();
-
-		String json1 = objectMapper.writeValueAsString(wikiPage);
-		String json2 = WikiPageSerDes.toJSON(wikiPage);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

@@ -114,7 +114,32 @@ public abstract class BaseSubscriptionResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		Subscription subscription1 = randomSubscription();
+
+		String json = objectMapper.writeValueAsString(subscription1);
+
+		Subscription subscription2 = SubscriptionSerDes.toDTO(json);
+
+		Assert.assertTrue(equals(subscription1, subscription2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		Subscription subscription = randomSubscription();
+
+		String json1 = objectMapper.writeValueAsString(subscription);
+		String json2 = SubscriptionSerDes.toJSON(subscription);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -129,40 +154,6 @@ public abstract class BaseSubscriptionResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		Subscription subscription1 = randomSubscription();
-
-		String json = objectMapper.writeValueAsString(subscription1);
-
-		Subscription subscription2 = SubscriptionSerDes.toDTO(json);
-
-		Assert.assertTrue(equals(subscription1, subscription2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		Subscription subscription = randomSubscription();
-
-		String json1 = objectMapper.writeValueAsString(subscription);
-		String json2 = SubscriptionSerDes.toJSON(subscription);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

@@ -111,7 +111,32 @@ public abstract class BaseDiagramResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		Diagram diagram1 = randomDiagram();
+
+		String json = objectMapper.writeValueAsString(diagram1);
+
+		Diagram diagram2 = DiagramSerDes.toDTO(json);
+
+		Assert.assertTrue(equals(diagram1, diagram2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		Diagram diagram = randomDiagram();
+
+		String json1 = objectMapper.writeValueAsString(diagram);
+		String json2 = DiagramSerDes.toJSON(diagram);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -126,40 +151,6 @@ public abstract class BaseDiagramResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		Diagram diagram1 = randomDiagram();
-
-		String json = objectMapper.writeValueAsString(diagram1);
-
-		Diagram diagram2 = DiagramSerDes.toDTO(json);
-
-		Assert.assertTrue(equals(diagram1, diagram2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		Diagram diagram = randomDiagram();
-
-		String json1 = objectMapper.writeValueAsString(diagram);
-		String json2 = DiagramSerDes.toJSON(diagram);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

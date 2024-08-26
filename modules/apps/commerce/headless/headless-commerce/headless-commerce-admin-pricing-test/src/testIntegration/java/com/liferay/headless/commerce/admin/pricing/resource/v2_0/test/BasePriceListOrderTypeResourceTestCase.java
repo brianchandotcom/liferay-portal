@@ -114,7 +114,33 @@ public abstract class BasePriceListOrderTypeResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		PriceListOrderType priceListOrderType1 = randomPriceListOrderType();
+
+		String json = objectMapper.writeValueAsString(priceListOrderType1);
+
+		PriceListOrderType priceListOrderType2 = PriceListOrderTypeSerDes.toDTO(
+			json);
+
+		Assert.assertTrue(equals(priceListOrderType1, priceListOrderType2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		PriceListOrderType priceListOrderType = randomPriceListOrderType();
+
+		String json1 = objectMapper.writeValueAsString(priceListOrderType);
+		String json2 = PriceListOrderTypeSerDes.toJSON(priceListOrderType);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -129,41 +155,6 @@ public abstract class BasePriceListOrderTypeResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		PriceListOrderType priceListOrderType1 = randomPriceListOrderType();
-
-		String json = objectMapper.writeValueAsString(priceListOrderType1);
-
-		PriceListOrderType priceListOrderType2 = PriceListOrderTypeSerDes.toDTO(
-			json);
-
-		Assert.assertTrue(equals(priceListOrderType1, priceListOrderType2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		PriceListOrderType priceListOrderType = randomPriceListOrderType();
-
-		String json1 = objectMapper.writeValueAsString(priceListOrderType);
-		String json2 = PriceListOrderTypeSerDes.toJSON(priceListOrderType);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

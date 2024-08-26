@@ -116,7 +116,32 @@ public abstract class BaseWorkflowInstanceResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		WorkflowInstance workflowInstance1 = randomWorkflowInstance();
+
+		String json = objectMapper.writeValueAsString(workflowInstance1);
+
+		WorkflowInstance workflowInstance2 = WorkflowInstanceSerDes.toDTO(json);
+
+		Assert.assertTrue(equals(workflowInstance1, workflowInstance2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		WorkflowInstance workflowInstance = randomWorkflowInstance();
+
+		String json1 = objectMapper.writeValueAsString(workflowInstance);
+		String json2 = WorkflowInstanceSerDes.toJSON(workflowInstance);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -131,40 +156,6 @@ public abstract class BaseWorkflowInstanceResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		WorkflowInstance workflowInstance1 = randomWorkflowInstance();
-
-		String json = objectMapper.writeValueAsString(workflowInstance1);
-
-		WorkflowInstance workflowInstance2 = WorkflowInstanceSerDes.toDTO(json);
-
-		Assert.assertTrue(equals(workflowInstance1, workflowInstance2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		WorkflowInstance workflowInstance = randomWorkflowInstance();
-
-		String json1 = objectMapper.writeValueAsString(workflowInstance);
-		String json2 = WorkflowInstanceSerDes.toJSON(workflowInstance);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

@@ -114,7 +114,33 @@ public abstract class BaseProductOptionValueResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		ProductOptionValue productOptionValue1 = randomProductOptionValue();
+
+		String json = objectMapper.writeValueAsString(productOptionValue1);
+
+		ProductOptionValue productOptionValue2 = ProductOptionValueSerDes.toDTO(
+			json);
+
+		Assert.assertTrue(equals(productOptionValue1, productOptionValue2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		ProductOptionValue productOptionValue = randomProductOptionValue();
+
+		String json1 = objectMapper.writeValueAsString(productOptionValue);
+		String json2 = ProductOptionValueSerDes.toJSON(productOptionValue);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -129,41 +155,6 @@ public abstract class BaseProductOptionValueResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		ProductOptionValue productOptionValue1 = randomProductOptionValue();
-
-		String json = objectMapper.writeValueAsString(productOptionValue1);
-
-		ProductOptionValue productOptionValue2 = ProductOptionValueSerDes.toDTO(
-			json);
-
-		Assert.assertTrue(equals(productOptionValue1, productOptionValue2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		ProductOptionValue productOptionValue = randomProductOptionValue();
-
-		String json1 = objectMapper.writeValueAsString(productOptionValue);
-		String json2 = ProductOptionValueSerDes.toJSON(productOptionValue);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

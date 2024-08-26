@@ -121,7 +121,33 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		KnowledgeBaseFolder knowledgeBaseFolder1 = randomKnowledgeBaseFolder();
+
+		String json = objectMapper.writeValueAsString(knowledgeBaseFolder1);
+
+		KnowledgeBaseFolder knowledgeBaseFolder2 =
+			KnowledgeBaseFolderSerDes.toDTO(json);
+
+		Assert.assertTrue(equals(knowledgeBaseFolder1, knowledgeBaseFolder2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		KnowledgeBaseFolder knowledgeBaseFolder = randomKnowledgeBaseFolder();
+
+		String json1 = objectMapper.writeValueAsString(knowledgeBaseFolder);
+		String json2 = KnowledgeBaseFolderSerDes.toJSON(knowledgeBaseFolder);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -136,41 +162,6 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		KnowledgeBaseFolder knowledgeBaseFolder1 = randomKnowledgeBaseFolder();
-
-		String json = objectMapper.writeValueAsString(knowledgeBaseFolder1);
-
-		KnowledgeBaseFolder knowledgeBaseFolder2 =
-			KnowledgeBaseFolderSerDes.toDTO(json);
-
-		Assert.assertTrue(equals(knowledgeBaseFolder1, knowledgeBaseFolder2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		KnowledgeBaseFolder knowledgeBaseFolder = randomKnowledgeBaseFolder();
-
-		String json1 = objectMapper.writeValueAsString(knowledgeBaseFolder);
-		String json2 = KnowledgeBaseFolderSerDes.toJSON(knowledgeBaseFolder);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

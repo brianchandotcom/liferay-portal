@@ -117,7 +117,32 @@ public abstract class BaseDiscountCategoryResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		DiscountCategory discountCategory1 = randomDiscountCategory();
+
+		String json = objectMapper.writeValueAsString(discountCategory1);
+
+		DiscountCategory discountCategory2 = DiscountCategorySerDes.toDTO(json);
+
+		Assert.assertTrue(equals(discountCategory1, discountCategory2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		DiscountCategory discountCategory = randomDiscountCategory();
+
+		String json1 = objectMapper.writeValueAsString(discountCategory);
+		String json2 = DiscountCategorySerDes.toJSON(discountCategory);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -132,40 +157,6 @@ public abstract class BaseDiscountCategoryResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		DiscountCategory discountCategory1 = randomDiscountCategory();
-
-		String json = objectMapper.writeValueAsString(discountCategory1);
-
-		DiscountCategory discountCategory2 = DiscountCategorySerDes.toDTO(json);
-
-		Assert.assertTrue(equals(discountCategory1, discountCategory2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		DiscountCategory discountCategory = randomDiscountCategory();
-
-		String json1 = objectMapper.writeValueAsString(discountCategory);
-		String json2 = DiscountCategorySerDes.toJSON(discountCategory);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

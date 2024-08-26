@@ -113,7 +113,32 @@ public abstract class BaseFieldMappingInfoResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		FieldMappingInfo fieldMappingInfo1 = randomFieldMappingInfo();
+
+		String json = objectMapper.writeValueAsString(fieldMappingInfo1);
+
+		FieldMappingInfo fieldMappingInfo2 = FieldMappingInfoSerDes.toDTO(json);
+
+		Assert.assertTrue(equals(fieldMappingInfo1, fieldMappingInfo2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		FieldMappingInfo fieldMappingInfo = randomFieldMappingInfo();
+
+		String json1 = objectMapper.writeValueAsString(fieldMappingInfo);
+		String json2 = FieldMappingInfoSerDes.toJSON(fieldMappingInfo);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -128,40 +153,6 @@ public abstract class BaseFieldMappingInfoResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		FieldMappingInfo fieldMappingInfo1 = randomFieldMappingInfo();
-
-		String json = objectMapper.writeValueAsString(fieldMappingInfo1);
-
-		FieldMappingInfo fieldMappingInfo2 = FieldMappingInfoSerDes.toDTO(json);
-
-		Assert.assertTrue(equals(fieldMappingInfo1, fieldMappingInfo2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		FieldMappingInfo fieldMappingInfo = randomFieldMappingInfo();
-
-		String json1 = objectMapper.writeValueAsString(fieldMappingInfo);
-		String json2 = FieldMappingInfoSerDes.toJSON(fieldMappingInfo);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

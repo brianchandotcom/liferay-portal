@@ -111,7 +111,32 @@ public abstract class BaseSuggestionResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		Suggestion suggestion1 = randomSuggestion();
+
+		String json = objectMapper.writeValueAsString(suggestion1);
+
+		Suggestion suggestion2 = SuggestionSerDes.toDTO(json);
+
+		Assert.assertTrue(equals(suggestion1, suggestion2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		Suggestion suggestion = randomSuggestion();
+
+		String json1 = objectMapper.writeValueAsString(suggestion);
+		String json2 = SuggestionSerDes.toJSON(suggestion);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -126,40 +151,6 @@ public abstract class BaseSuggestionResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		Suggestion suggestion1 = randomSuggestion();
-
-		String json = objectMapper.writeValueAsString(suggestion1);
-
-		Suggestion suggestion2 = SuggestionSerDes.toDTO(json);
-
-		Assert.assertTrue(equals(suggestion1, suggestion2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		Suggestion suggestion = randomSuggestion();
-
-		String json1 = objectMapper.writeValueAsString(suggestion);
-		String json2 = SuggestionSerDes.toJSON(suggestion);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

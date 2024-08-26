@@ -115,7 +115,32 @@ public abstract class BaseProductChannelResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		ProductChannel productChannel1 = randomProductChannel();
+
+		String json = objectMapper.writeValueAsString(productChannel1);
+
+		ProductChannel productChannel2 = ProductChannelSerDes.toDTO(json);
+
+		Assert.assertTrue(equals(productChannel1, productChannel2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		ProductChannel productChannel = randomProductChannel();
+
+		String json1 = objectMapper.writeValueAsString(productChannel);
+		String json2 = ProductChannelSerDes.toJSON(productChannel);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -130,40 +155,6 @@ public abstract class BaseProductChannelResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		ProductChannel productChannel1 = randomProductChannel();
-
-		String json = objectMapper.writeValueAsString(productChannel1);
-
-		ProductChannel productChannel2 = ProductChannelSerDes.toDTO(json);
-
-		Assert.assertTrue(equals(productChannel1, productChannel2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		ProductChannel productChannel = randomProductChannel();
-
-		String json1 = objectMapper.writeValueAsString(productChannel);
-		String json2 = ProductChannelSerDes.toJSON(productChannel);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

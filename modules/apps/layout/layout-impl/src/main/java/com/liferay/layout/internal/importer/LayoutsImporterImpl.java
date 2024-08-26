@@ -2159,12 +2159,14 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 				deleteLayoutPageTemplateStructure(layoutPageTemplateStructure);
 		}
 
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
 		_layoutPageTemplateStructureLocalService.addLayoutPageTemplateStructure(
-			layout.getUserId(), layout.getGroupId(), layout.getPlid(),
+			serviceContext.getUserId(), layout.getGroupId(), layout.getPlid(),
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
 				layout.getPlid()),
-			jsonObject.toString(),
-			ServiceContextThreadLocal.getServiceContext());
+			jsonObject.toString(), serviceContext);
 
 		try (AutoCloseable autoCloseable =
 				_layoutServiceContextHelper.getServiceContextAutoCloseable(

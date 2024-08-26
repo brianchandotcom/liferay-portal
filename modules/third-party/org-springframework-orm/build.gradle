@@ -9,7 +9,7 @@ task patch(type: PatchTask)
 
 dependencies {
 	api group: "org.hibernate", name: "hibernate-core", version: "5.6.7.Final"
-	api group: "org.springframework", name: "spring-orm", version: "5.3.33"
+	api group: "org.springframework", name: "spring-orm", version: "5.3.39"
 }
 
 deploy {

@@ -109,6 +109,31 @@ public class ProductDisplayPage implements Cloneable, Serializable {
 
 	protected String pageUuid;
 
+	public String getProductExternalReferenceCode() {
+		return productExternalReferenceCode;
+	}
+
+	public void setProductExternalReferenceCode(
+		String productExternalReferenceCode) {
+
+		this.productExternalReferenceCode = productExternalReferenceCode;
+	}
+
+	public void setProductExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			productExternalReferenceCodeUnsafeSupplier) {
+
+		try {
+			productExternalReferenceCode =
+				productExternalReferenceCodeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String productExternalReferenceCode;
+
 	public Long getProductId() {
 		return productId;
 	}

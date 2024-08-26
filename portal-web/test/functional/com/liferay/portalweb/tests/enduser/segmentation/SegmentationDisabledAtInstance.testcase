@@ -497,7 +497,7 @@ definition {
 
 	@description = "LPS-154019 Given the 'Enable Segmentation' is disabled When user clicks at Close button at Segments Page And user leaves and returns to page Then the alert reappears"
 	@priority = 3
-	test DisabledAlertAfterReturnsAtExperiences {
+	test DisabledAlertAfterReturnsAtSegmentsPage {
 		task ("Navigate to Segments Admin") {
 			Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
 		}

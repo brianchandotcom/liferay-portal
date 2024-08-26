@@ -561,3 +561,48 @@ This change makes the method names consistent with the `PortletPreferences` vari
 
 Use getPortletPreferences() and setPortletPreferences() instead.
 ```
+
+----
+
+# 3abd46aedba5663099d5c66abd057d1f0392582f
+
+This commit is missing a breaking change message. The correct message is:
+
+```
+LPS-197267 Move PermissionConverter to portal-security-permission-api and Remove Util
+
+# breaking
+
+## What portal-kernel/src/com/liferay/portal/kernel/security/permission/PermissionConverterUtil.java
+
+Remove class PermissionConverterUtil.
+
+## Why
+
+Move PermissionConverter to portal-security-permission-api.
+
+## Alternative
+
+ Use OSGi service reference PermissionConverter
+
+```
+
+----
+
+# 91ba4f2de757ad28f4129563b8a0059dad4d58ad
+
+This commit is missing a breaking change message. The correct message is:
+
+```
+LPS-197267 Remove unused PermissionConverter overloaded methods
+
+# breaking
+
+## What portal-kernel/src/com/liferay/portal/kernel/security/permission/PermissionConverterUtil.java
+
+Remove class PermissionConverterUtil.
+
+## Why
+
+Move PermissionConverter to portal-security-permission-api.
+```

@@ -90,8 +90,6 @@ public class EditableValuesExportImportContentProcessorTest {
 				stagingFragmentEntryLink),
 			layout);
 
-		ContentLayoutTestUtil.publishLayout(_draftLayout, _layout);
-
 		_publishLayouts();
 
 		FragmentEntryLink liveFragmentEntryLink =
@@ -123,8 +121,6 @@ public class EditableValuesExportImportContentProcessorTest {
 
 		_layoutLocalService.deleteLayout(layout.getPlid());
 
-		ContentLayoutTestUtil.publishLayout(_draftLayout, _layout);
-
 		_publishLayouts();
 
 		FragmentEntryLink liveFragmentEntryLink =
@@ -148,8 +144,6 @@ public class EditableValuesExportImportContentProcessorTest {
 			_getFreeMarkerFragmentEntryProcessorLayoutJSONObject(
 				stagingFragmentEntryLink),
 			layout);
-
-		ContentLayoutTestUtil.publishLayout(_draftLayout, _layout);
 
 		_publishLayouts();
 
@@ -181,8 +175,6 @@ public class EditableValuesExportImportContentProcessorTest {
 			layout);
 
 		_layoutLocalService.deleteLayout(layout.getPlid());
-
-		ContentLayoutTestUtil.publishLayout(_draftLayout, _layout);
 
 		_publishLayouts();
 
@@ -354,7 +346,11 @@ public class EditableValuesExportImportContentProcessorTest {
 		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
 			fragmentEntryLink, _draftLayout, null, 0, segmentsExperienceId);
 
-		return fragmentEntryLink;
+		ContentLayoutTestUtil.publishLayout(_draftLayout, _layout);
+
+		return _fragmentEntryLinkLocalService.getFragmentEntryLink(
+			_stagingGroup.getGroupId(),
+			fragmentEntryLink.getFragmentEntryLinkId(), _layout.getPlid());
 	}
 
 	private FragmentEntryLink _setUpFragmentEntryLinkWithUrlMappedToLayout(
@@ -399,10 +395,13 @@ public class EditableValuesExportImportContentProcessorTest {
 					_stagingGroup.getGroupId(), TestPropsValues.getUserId()));
 
 		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
-			draftLayoutFragmentEntryLink, _draftLayout, null, 0,
-			segmentsExperienceId);
+			fragmentEntryLink, _draftLayout, null, 0, segmentsExperienceId);
 
-		return fragmentEntryLink;
+		ContentLayoutTestUtil.publishLayout(_draftLayout, _layout);
+
+		return _fragmentEntryLinkLocalService.getFragmentEntryLink(
+			_stagingGroup.getGroupId(),
+			fragmentEntryLink.getFragmentEntryLinkId(), _layout.getPlid());
 	}
 
 	private static final String _HTML =

@@ -319,7 +319,6 @@ public class UserResourceTest extends BaseUserResourceTestCase {
 				"urn:ietf:params:scim:schemas:core:2.0:User",
 				"urn:ietf:params:scim:schemas:extension:liferay:2.0:User"
 			});
-
 		user.setUrn_ietf_params_scim_schemas_extension_liferay_2_0_User(
 			new UserSchemaExtension() {
 				{

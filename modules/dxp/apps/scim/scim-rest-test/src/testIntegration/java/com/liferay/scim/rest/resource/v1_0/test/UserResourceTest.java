@@ -5,16 +5,10 @@
 
 package com.liferay.scim.rest.resource.v1_0.test;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.PropertyAccessor;
-import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.cfg.MapperConfig;
 import com.fasterxml.jackson.databind.introspect.AnnotatedField;
-import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
@@ -269,39 +263,27 @@ public class UserResourceTest extends BaseUserResourceTestCase {
 
 	@Override
 	protected ObjectMapper getClientSerDesObjectMapper() {
-		return new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				enable(SerializationFeature.INDENT_OUTPUT);
-				setDateFormat(new ISO8601DateFormat());
-				setPropertyNamingStrategy(
-					new PropertyNamingStrategy() {
+		ObjectMapper objectMapper = super.getClientSerDesObjectMapper();
 
-						@Override
-						public String nameForField(
-							MapperConfig<?> config, AnnotatedField field,
-							String defaultName) {
+		objectMapper.setPropertyNamingStrategy(
+			new PropertyNamingStrategy() {
 
-							if (StringUtil.startsWith(defaultName, "urn")) {
-								return "urn:ietf:params:scim:schemas:" +
-									"extension:liferay:2.0:User";
-							}
+				@Override
+				public String nameForField(
+					MapperConfig<?> config, AnnotatedField field,
+					String defaultName) {
 
-							return super.nameForField(
-								config, field, defaultName);
-						}
+					if (StringUtil.startsWith(defaultName, "urn")) {
+						return "urn:ietf:params:scim:schemas:extension:" +
+							"liferay:2.0:User";
+					}
 
-					});
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
+					return super.nameForField(config, field, defaultName);
+				}
+
+			});
+
+		return objectMapper;
 	}
 
 	@Override

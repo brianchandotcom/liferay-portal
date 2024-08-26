@@ -271,7 +271,7 @@ const Timers = ({setContentName, setErrors}) => {
 				) {
 					section.sectionData = data
 						.find((entry) => entry[0] === 'roleName')[1]
-						.map((index) => ({
+						.map((_, index) => ({
 							autoCreate: filterSectionDataProperty(
 								data,
 								index,

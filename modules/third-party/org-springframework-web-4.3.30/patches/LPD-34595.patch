@@ -1,0 +1,315 @@
+diff --git a/org/springframework/http/ETag.java b/org/springframework/http/ETag.java
+new file mode 100644
+index 0000000000000..200b9dea5efd3
+--- /dev/null
++++ b/org/springframework/http/ETag.java
+@@ -0,0 +1,162 @@
++/*
++ * Copyright 2002-2024 the original author or authors.
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      https://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package org.springframework.http;
++
++import java.util.ArrayList;
++import java.util.List;
++
++import org.apache.commons.logging.Log;
++import org.apache.commons.logging.LogFactory;
++
++import org.springframework.util.StringUtils;
++
++/**
++ * Represents an ETag for HTTP conditional requests.
++ *
++ * @author Rossen Stoyanchev
++ * @since 5.3.38
++ * @see <a href="https://datatracker.ietf.org/doc/html/rfc7232">RFC 7232</a>
++ */
++public class ETag {
++
++	private static final Log logger = LogFactory.getLog(ETag.class);
++
++	private static final ETag WILDCARD = new ETag("*", false);
++
++
++	private final String tag;
++
++	private final boolean weak;
++
++
++	public ETag(String tag, boolean weak) {
++		this.tag = tag;
++		this.weak = weak;
++	}
++
++
++	public String tag() {
++		return this.tag;
++	}
++
++	public boolean weak() {
++		return this.weak;
++	}
++
++	/**
++	 * Whether this a wildcard tag matching to any entity tag value.
++	 */
++	public boolean isWildcard() {
++		return (this == WILDCARD);
++	}
++
++	/**
++	 * Return the fully formatted tag including "W/" prefix and quotes.
++	 */
++	public String formattedTag() {
++		if (this == WILDCARD) {
++			return "*";
++		}
++		return (this.weak ? "W/" : "") + "\"" + this.tag + "\"";
++	}
++
++	@Override
++	public String toString() {
++		return formattedTag();
++	}
++
++
++	/**
++	 * Parse entity tags from an "If-Match" or "If-None-Match" header.
++	 * @param source the source string to parse
++	 * @return the parsed ETags
++	 */
++	public static List<ETag> parse(String source) {
++
++		List<ETag> result = new ArrayList<>();
++		State state = State.BEFORE_QUOTES;
++		int startIndex = -1;
++		boolean weak = false;
++
++		for (int i = 0; i < source.length(); i++) {
++			char c = source.charAt(i);
++
++			if (state == State.IN_QUOTES) {
++				if (c == '"') {
++					String tag = source.substring(startIndex, i);
++					if (StringUtils.hasText(tag)) {
++						result.add(new ETag(tag, weak));
++					}
++					state = State.AFTER_QUOTES;
++					startIndex = -1;
++					weak = false;
++				}
++				continue;
++			}
++
++			if (Character.isWhitespace(c)) {
++				continue;
++			}
++
++			if (c == ',') {
++				state = State.BEFORE_QUOTES;
++				continue;
++			}
++
++			if (state == State.BEFORE_QUOTES) {
++				if (c == '*') {
++					result.add(WILDCARD);
++					state = State.AFTER_QUOTES;
++					continue;
++				}
++				if (c == '"') {
++					state = State.IN_QUOTES;
++					startIndex = i + 1;
++					continue;
++				}
++				if (c == 'W' && source.length() > i + 2) {
++					if (source.charAt(i + 1) == '/' && source.charAt(i + 2) == '"') {
++						state = State.IN_QUOTES;
++						i = i + 2;
++						startIndex = i + 1;
++						weak = true;
++						continue;
++					}
++				}
++			}
++
++			if (logger.isDebugEnabled()) {
++				logger.debug("Unexpected char at index " + i);
++			}
++		}
++
++		if (state != State.IN_QUOTES && logger.isDebugEnabled()) {
++			logger.debug("Expected closing '\"'");
++		}
++
++		return result;
++	}
++
++
++	private enum State {
++
++		BEFORE_QUOTES, IN_QUOTES, AFTER_QUOTES
++
++	}
++
++}
++/* @generated */
+\ No newline at end of file
+diff --git a/org/springframework/http/HttpHeaders.java b/org/springframework/http/HttpHeaders.java
+index 23296c70524f9..c8371a5ae3342 100644
+--- a/org/springframework/http/HttpHeaders.java
++++ b/org/springframework/http/HttpHeaders.java
+@@ -34,8 +34,6 @@ import java.util.Locale;
+ import java.util.Map;
+ import java.util.Set;
+ import java.util.TimeZone;
+-import java.util.regex.Matcher;
+-import java.util.regex.Pattern;
+ 
+ import org.springframework.util.Assert;
+ import org.springframework.util.LinkedCaseInsensitiveMap;
+@@ -369,12 +367,6 @@ public class HttpHeaders implements MultiValueMap<String, String>, Serializable
+ 	 */
+ 	public static final String WWW_AUTHENTICATE = "WWW-Authenticate";
+ 
+-	/**
+-	 * Pattern matching ETag multiple field values in headers such as "If-Match", "If-None-Match".
+-	 * @see <a href="https://tools.ietf.org/html/rfc7232#section-2.3">Section 2.3 of RFC 7232</a>
+-	 */
+-	private static final Pattern ETAG_HEADER_VALUE_PATTERN = Pattern.compile("\\*|\\s*((W\\/)?(\"[^\"]*\"))\\s*,?");
+-
+ 	private static final TimeZone GMT = TimeZone.getTimeZone("GMT");
+ 
+ 	/**
+@@ -783,9 +775,8 @@ public class HttpHeaders implements MultiValueMap<String, String>, Serializable
+ 	 */
+ 	public void setETag(String etag) {
+ 		if (etag != null) {
+-			Assert.isTrue(etag.startsWith("\"") || etag.startsWith("W/"),
+-					"Invalid ETag: does not start with W/ or \"");
+-			Assert.isTrue(etag.endsWith("\""), "Invalid ETag: does not end with \"");
++			Assert.isTrue(etag.startsWith("\"") || etag.startsWith("W/\""), "ETag does not start with W/\" or \"");
++			Assert.isTrue(etag.endsWith("\""), "ETag does not end with \"");
+ 		}
+ 		set(ETAG, etag);
+ 	}
+@@ -1104,34 +1095,26 @@ public class HttpHeaders implements MultiValueMap<String, String>, Serializable
+ 
+ 	/**
+ 	 * Retrieve a combined result from the field values of the ETag header.
+-	 * @param headerName the header name
++	 * @param name the header name
+ 	 * @return the combined result
+ 	 * @since 4.3
+ 	 */
+-	protected List<String> getETagValuesAsList(String headerName) {
+-		List<String> values = get(headerName);
+-		if (values != null) {
+-			List<String> result = new ArrayList<String>();
+-			for (String value : values) {
+-				if (value != null) {
+-					Matcher matcher = ETAG_HEADER_VALUE_PATTERN.matcher(value);
+-					while (matcher.find()) {
+-						if ("*".equals(matcher.group())) {
+-							result.add(matcher.group());
+-						}
+-						else {
+-							result.add(matcher.group(1));
+-						}
+-					}
+-					if (result.isEmpty()) {
+-						throw new IllegalArgumentException(
+-								"Could not parse header '" + headerName + "' with value '" + value + "'");
+-					}
++	protected List<String> getETagValuesAsList(String name) {
++		List<String> values = get(name);
++		if (values == null) {
++			return Collections.emptyList();
++		}
++		List<String> result = new ArrayList<>();
++		for (String value : values) {
++			if (value != null) {
++				List<ETag> tags = ETag.parse(value);
++				Assert.notEmpty(tags, "Could not parse header '" + name + "' with value '" + value + "'");
++				for (ETag tag : tags) {
++					result.add(tag.formattedTag());
+ 				}
+ 			}
+-			return result;
+ 		}
+-		return Collections.emptyList();
++		return result;
+ 	}
+ 
+ 	/**
+@@ -1377,3 +1360,4 @@ public class HttpHeaders implements MultiValueMap<String, String>, Serializable
+ 	}
+ 
+ }
++/* @generated */
+\ No newline at end of file
+diff --git a/org/springframework/web/context/request/ServletWebRequest.java b/org/springframework/web/context/request/ServletWebRequest.java
+index 3f1cf262fbb2c..c9ef6890b057a 100644
+--- a/org/springframework/web/context/request/ServletWebRequest.java
++++ b/org/springframework/web/context/request/ServletWebRequest.java
+@@ -26,12 +26,11 @@ import java.util.List;
+ import java.util.Locale;
+ import java.util.Map;
+ import java.util.TimeZone;
+-import java.util.regex.Matcher;
+-import java.util.regex.Pattern;
+ import javax.servlet.http.HttpServletRequest;
+ import javax.servlet.http.HttpServletResponse;
+ import javax.servlet.http.HttpSession;
+ 
++import org.springframework.http.ETag;
+ import org.springframework.http.HttpMethod;
+ import org.springframework.http.HttpStatus;
+ import org.springframework.util.ClassUtils;
+@@ -62,12 +61,6 @@ public class ServletWebRequest extends ServletRequestAttributes implements Nativ
+ 
+ 	private static final List<String> SAFE_METHODS = Arrays.asList("GET", "HEAD");
+ 
+-	/**
+-	 * Pattern matching ETag multiple field values in headers such as "If-Match", "If-None-Match".
+-	 * @see <a href="https://tools.ietf.org/html/rfc7232#section-2.3">Section 2.3 of RFC 7232</a>
+-	 */
+-	private static final Pattern ETAG_HEADER_VALUE_PATTERN = Pattern.compile("\\*|\\s*((W\\/)?(\"[^\"]*\"))\\s*,?");
+-
+ 	/**
+ 	 * Date formats as specified in the HTTP RFC.
+ 	 * @see <a href="https://tools.ietf.org/html/rfc7231#section-7.1.1.1">Section 7.1.1.1 of RFC 7231</a>
+@@ -298,12 +291,10 @@ public class ServletWebRequest extends ServletRequestAttributes implements Nativ
+ 		// We will perform this validation...
+ 		etag = padEtagIfNecessary(etag);
+ 		while (ifNoneMatch.hasMoreElements()) {
+-			String clientETags = ifNoneMatch.nextElement();
+-			Matcher etagMatcher = ETAG_HEADER_VALUE_PATTERN.matcher(clientETags);
+ 			// Compare weak/strong ETags as per https://tools.ietf.org/html/rfc7232#section-2.3
+-			while (etagMatcher.find()) {
+-				if (StringUtils.hasLength(etagMatcher.group()) &&
+-						etag.replaceFirst("^W/", "").equals(etagMatcher.group(3))) {
++			for (ETag requestedETag : ETag.parse(ifNoneMatch.nextElement())) {
++				String tag = requestedETag.tag();
++				if (StringUtils.hasLength(tag) && etag.equals(padEtagIfNecessary(tag))) {
+ 					this.notModified = true;
+ 					break;
+ 				}
+@@ -408,3 +399,4 @@ public class ServletWebRequest extends ServletRequestAttributes implements Nativ
+ 	}
+ 
+ }
++/* @generated */
+\ No newline at end of file

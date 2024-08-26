@@ -44,7 +44,6 @@ interface DefinitionBuilderContextProviderProps {
 	setHasGroovyJavaScript: () => void;
 	setScriptManagementConfigurationPortletURL: () => void;
 	setShowAlert: (value: boolean) => void;
-	setVersion: (value: number) => void;
 	setWorkflowDefinitionVersions: React.Dispatch<
 		React.SetStateAction<WorkflowDefinitionVersion[]>
 	>;
@@ -53,7 +52,6 @@ interface DefinitionBuilderContextProviderProps {
 	sourceView: boolean;
 	statuses: LabelValueObject<number>[];
 	timeZoneId: string;
-	version: string;
 	workflowDefinitionVersions: WorkflowDefinitionVersion[];
 }
 

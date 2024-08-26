@@ -50,7 +50,6 @@ export function VersionRow({
 		setAlertType,
 		setDefinitionName,
 		setShowAlert,
-		setVersion,
 	} = useContext(DefinitionBuilderContext);
 
 	const versionCreationDate = toLocalDateTimeFormatted(
@@ -74,7 +73,6 @@ export function VersionRow({
 			(await response.json()) as WorkflowDefinition;
 
 		setDefinitionName(restoredWorkflowDefinition.name);
-		setVersion(parseInt(restoredWorkflowDefinition.version, 10));
 
 		setWorkflowDefinitionVersions((prevValues) => [
 			{

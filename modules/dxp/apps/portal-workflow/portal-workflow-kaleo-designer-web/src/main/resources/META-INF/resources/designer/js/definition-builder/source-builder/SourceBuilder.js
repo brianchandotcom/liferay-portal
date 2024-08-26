@@ -29,7 +29,7 @@ export default function SourceBuilder() {
 		elements,
 		setBlockingError,
 		setCurrentEditor,
-		version,
+		workflowDefinitionVersions,
 	} = useContext(DefinitionBuilderContext);
 	const editorRef = useRef();
 	const [loading, setLoading] = useState(true);
@@ -42,7 +42,7 @@ export default function SourceBuilder() {
 				const metadata = {
 					description: definitionDescription,
 					name: definitionName,
-					version,
+					version: workflowDefinitionVersions.length,
 				};
 
 				const currentData = currentEditor.getData();
@@ -91,7 +91,12 @@ export default function SourceBuilder() {
 		}, 1000);
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [currentEditor, definitionName, elements, version]);
+	}, [
+		currentEditor,
+		definitionName,
+		elements,
+		workflowDefinitionVersions.length,
+	]);
 
 	useEffect(() => {
 		if (blockingError.errorType === 'invalidXML') {

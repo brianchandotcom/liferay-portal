@@ -70,7 +70,7 @@ export default function DiagramBuilder() {
 		setHasGroovyOrJavaScript,
 		setShowDefinitionInfo,
 		statuses,
-		version,
+		workflowDefinitionVersions,
 	} = useContext(DefinitionBuilderContext);
 	const reactFlowWrapperRef = useRef(null);
 	const [collidingElements, setCollidingElements] = useState(null);
@@ -370,10 +370,14 @@ export default function DiagramBuilder() {
 		}
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [currentEditor, deserialize, version]);
+	}, [currentEditor, deserialize, workflowDefinitionVersions]);
 
 	useEffect(() => {
-		if (definitionName && version !== 0 && !deserialize) {
+		if (
+			definitionName &&
+			workflowDefinitionVersions.length !== 0 &&
+			!deserialize
+		) {
 			retrieveDefinitionRequest(definitionName)
 				.then((response) => response.json())
 				.then(
@@ -437,7 +441,7 @@ export default function DiagramBuilder() {
 		}
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [definitionName, version]);
+	}, [definitionName, workflowDefinitionVersions]);
 
 	const contextProps = {
 		collidingElements,

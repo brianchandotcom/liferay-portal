@@ -16,7 +16,7 @@ describe('The DiagramBuilder component should', () => {
 	beforeAll(() => {
 		const renderResult = render(
 			<MockDefinitionBuilderContext>
-				<DiagramBuilder version="0" />
+				<DiagramBuilder workflowDefinitionVersions={[]} />
 			</MockDefinitionBuilderContext>
 		);
 

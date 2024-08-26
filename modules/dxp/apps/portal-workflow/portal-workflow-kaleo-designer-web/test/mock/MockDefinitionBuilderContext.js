@@ -15,6 +15,8 @@ export default function MockDefinitionBuilderContext({children}) {
 	const [showDefinitionInfo, setShowDefinitionInfo] = useState(false);
 	const [definitionTitleTranslations, setDefinitionTitleTranslations] =
 		useState('');
+	const [workflowDefinitionVersions, setWorkflowDefinitionVersions] =
+		useState([{}]);
 
 	const contextProps = {
 		blockingError,
@@ -26,8 +28,10 @@ export default function MockDefinitionBuilderContext({children}) {
 		setSelectedLanguageId,
 		setShowDefinitionInfo,
 		setTranslations,
+		setWorkflowDefinitionVersions,
 		showDefinitionInfo,
 		translations,
+		workflowDefinitionVersions,
 	};
 
 	return (

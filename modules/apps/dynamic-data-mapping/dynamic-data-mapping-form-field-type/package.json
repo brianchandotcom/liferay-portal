@@ -40,6 +40,10 @@
 	"jest": {
 		"setupFiles": [
 			"<rootDir>/jest-setup.config.js"
+		],
+		"testMatch": [
+			"<rootDir>/test/**/*.js",
+			"<rootDir>/test/**/*.spec.js"
 		]
 	},
 	"main": "index.ts",

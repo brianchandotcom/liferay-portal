@@ -889,12 +889,13 @@ export class PageEditorPage {
 			}
 			else {
 				if (entryLocator) {
-					await expect(entryLocator).toBeVisible();
+					await entryLocator.waitFor();
 				}
 				else {
-					await expect(
-						iframe.getByRole('paragraph').filter({hasText: entry})
-					).toBeVisible();
+					await iframe
+						.getByRole('paragraph')
+						.filter({hasText: entry})
+						.waitFor();
 				}
 
 				await clickAndExpectToBeHidden({

@@ -45,7 +45,7 @@ CommerceReturnItem commerceReturnItem = commerceReturnEditDisplayContext.getComm
 					elementClasses="py-3"
 					title='<%= LanguageUtil.get(request, "return-reason") %>'
 				>
-					<p class="mb-0" data-qa-id="commerceReturnReturnReason"><%= commerceReturnItem.getReturnReason() %></p>
+					<p class="mb-0" data-qa-id="commerceReturnReturnReason"><%= commerceReturnEditDisplayContext.getReturnReasonName() %></p>
 				</commerce-ui:info-box>
 			</div>
 		</div>

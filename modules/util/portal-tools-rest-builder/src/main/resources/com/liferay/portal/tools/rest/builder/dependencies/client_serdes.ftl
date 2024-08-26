@@ -71,12 +71,9 @@ public class ${schemaName}SerDes {
 					if (${propertyName}String.equals("${mappingName}")) {
 						return ${freeMarkerTool.getReferenceName(mappingSchema)}SerDes.toJSON((${freeMarkerTool.getReferenceName(mappingSchema)})${schemaVarName});
 					}
-					else
 				</#list>
 
-				{
-					throw new IllegalArgumentException("Unknown ${propertyName} " + ${propertyName}String);
-				}
+				throw new IllegalArgumentException("Unknown ${propertyName} " + ${propertyName}String);
 			}
 			else {
 				throw new IllegalArgumentException("Missing ${propertyName} parameter");
@@ -328,12 +325,9 @@ public class ${schemaName}SerDes {
 						if (${propertyName}String.equals("${mappingName}")) {
 							return ${freeMarkerTool.getReferenceName(mappingSchema)}.toDTO(json);
 						}
-						else
 					</#list>
 
-					{
-						throw new IllegalArgumentException("Unknown ${propertyName} " + ${propertyName}String);
-					}
+					throw new IllegalArgumentException("Unknown ${propertyName} " + ${propertyName}String);
 				}
 				else {
 					throw new IllegalArgumentException("Missing ${propertyName} parameter");

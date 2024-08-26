@@ -108,6 +108,8 @@ public class DBSchemaImporter {
 
 		options.addOption(null, "help", false, "Print help message.");
 		options.addRequiredOption(
+			null, "path", true, "Set the path of the source SQL files.");
+		options.addRequiredOption(
 			null, "source-jdbc-url", true, "Set the source JDBC URL.");
 		options.addRequiredOption(
 			null, "source-password", true,
@@ -121,8 +123,6 @@ public class DBSchemaImporter {
 			"Set the target database user password.");
 		options.addRequiredOption(
 			null, "target-user", true, "Set the target database user.");
-		options.addRequiredOption(
-			null, "path", true, "Set the path with source SQL files.");
 
 		return options;
 	}

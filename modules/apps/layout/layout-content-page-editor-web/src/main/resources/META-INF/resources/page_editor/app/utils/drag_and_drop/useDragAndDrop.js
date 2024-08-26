@@ -31,6 +31,7 @@ import {openFormConversionModal} from '../../utils/openFormConversionModal';
 import {formIsMapped} from '../formIsMapped';
 import {getFormParent} from '../getFormParent';
 import {getStepperChild} from '../getStepperChild';
+import {hasFieldType} from '../hasFieldType';
 import {DRAG_DROP_TARGET_TYPE} from './constants/dragDropTargetType';
 import {TARGET_POSITIONS} from './constants/targetPositions';
 import defaultComputeHover from './defaultComputeHover';
@@ -186,13 +187,14 @@ export function useDragItem(sourceItem, onDragEnd, onBegin = () => {}) {
 }
 
 export function useDragSymbol(
-	{fragmentEntryType, icon, isWidget, label, type},
+	{fieldTypes, fragmentEntryType, icon, isWidget, label, type},
 	onDragEnd
 ) {
 	const selectItem = useSelectItem();
 
 	const sourceItem = useMemo(
 		() => ({
+			fieldTypes,
 			fragmentEntryType,
 			icon,
 			isSymbol: true,
@@ -201,7 +203,7 @@ export function useDragSymbol(
 			name: label,
 			type,
 		}),
-		[fragmentEntryType, icon, isWidget, label, type]
+		[fieldTypes, fragmentEntryType, icon, isWidget, label, type]
 	);
 
 	const {handlerRef, isDraggingSource, sourceRef} = useDragItem(
@@ -400,23 +402,30 @@ function computeDrop({
 			message = Liferay.Language.get(
 				'form-components-can-only-be-placed-inside-a-mapped-form-container'
 			);
-		}
-		else if (
-			dropItem.fragmentEntryType === FRAGMENT_ENTRY_TYPES.stepper
-		) {
-			const form = layoutDataRef.current.items[dropTargetItem.itemId];
 
-			const existingStepper = getStepperChild(
-				form,
-				layoutDataRef.current,
-				fragmentEntryLinksRef.current
-			);
+			if (
+				hasFieldType({
+					fieldTypes: dropItem.fieldTypes,
+					fragmentEntryLinks: fragmentEntryLinksRef.current,
+					itemId: dropItem.itemId,
+					layoutData: layoutDataRef.current,
+					requiredFieldType: 'stepper',
+				})
+			) {
+				const form = layoutDataRef.current.items[dropTargetItem.itemId];
 
-			message = existingStepper
-				? Liferay.Language.get('forms-can-only-contain-one-stepper')
-				: Liferay.Language.get(
-						'form-components-can-only-be-placed-inside-a-mapped-form-container'
-					);
+				const existingStepper = getStepperChild(
+					form,
+					layoutDataRef.current,
+					fragmentEntryLinksRef.current
+				);
+
+				message = existingStepper
+					? Liferay.Language.get('forms-can-only-contain-one-stepper')
+					: Liferay.Language.get(
+							'form-components-can-only-be-placed-inside-a-mapped-form-container'
+						);
+			}
 		}
 		else if (
 			dropItem.isWidget &&
@@ -454,7 +463,13 @@ function computeDrop({
 		const targetItem = layoutDataRef.current.items[dropTargetItem.itemId];
 
 		if (
-			dropItem.fragmentEntryType === FRAGMENT_ENTRY_TYPES.stepper &&
+			hasFieldType({
+				fieldTypes: dropItem.fieldTypes,
+				fragmentEntryLinks: fragmentEntryLinksRef.current,
+				itemId: dropItem.itemId,
+				layoutData: layoutDataRef.current,
+				requiredFieldType: 'stepper',
+			}) &&
 			dropTargetItem.type === LAYOUT_DATA_ITEM_TYPES.form &&
 			targetPositionWithMiddle === TARGET_POSITIONS.MIDDLE &&
 			!isMultistepForm(targetItem)

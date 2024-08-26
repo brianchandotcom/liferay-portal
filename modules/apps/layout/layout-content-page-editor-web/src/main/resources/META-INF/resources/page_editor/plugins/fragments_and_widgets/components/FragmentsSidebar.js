@@ -117,6 +117,7 @@ const normalizeCollection = (collection) => {
 
 const normalizeFragmentEntry = (fragmentEntry) => ({
 	data: {
+		fieldTypes: fragmentEntry.fieldTypes,
 		fragmentEntryKey: fragmentEntry.fragmentEntryKey,
 		groupId: fragmentEntry.groupId,
 		type: fragmentEntry.type,

@@ -283,6 +283,22 @@ public class AssetCategoriesSearchFacetDisplayContextTest
 	}
 
 	@Test
+	public void testSelectionOfNonexistentTerms() throws Exception {
+		FacetDisplayContext facetDisplayContext = createFacetDisplayContext(
+			RandomTestUtil.randomString());
+
+		List<BucketDisplayContext> bucketDisplayContexts =
+			facetDisplayContext.getBucketDisplayContexts();
+
+		Assert.assertEquals(
+			bucketDisplayContexts.toString(), 0, bucketDisplayContexts.size());
+
+		Assert.assertEquals("0", facetDisplayContext.getParameterValue());
+		Assert.assertFalse(facetDisplayContext.isNothingSelected());
+		Assert.assertFalse(facetDisplayContext.isRenderNothing());
+	}
+
+	@Test
 	public void testUnauthorized() throws Exception {
 		long assetCategoryId = RandomTestUtil.randomLong();
 

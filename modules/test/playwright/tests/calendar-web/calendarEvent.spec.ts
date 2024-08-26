@@ -26,39 +26,76 @@ export const test = mergeTests(
 	pageEditorPagesTest
 );
 
+const recurrence = {
+	frequency: 'WEEKLY',
+	ocurrences: '2',
+	repeatDays: ['Wednesday'],
+} as Recurrence;
+
+test.beforeEach(
+	async ({apiHelpers, calendarWidgetPage, page, pageEditorPage, site}) => {
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([
+				getWidgetDefinition({
+					id: getRandomString(),
+					widgetName:
+						'com_liferay_calendar_web_portlet_CalendarPortlet',
+				}),
+			]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		await calendarWidgetPage.setCalendarWidgetConfiguration(
+			'Europe/Paris',
+			false
+		);
+
+		await pageEditorPage.publishPage();
+
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
+	}
+);
+
 test('can create all-day calendar event with different time zone', async ({
-	apiHelpers,
 	calendarWidgetPage,
-	page,
-	pageEditorPage,
-	site,
 }) => {
-	const layout = await apiHelpers.headlessDelivery.createSitePage({
-		pageDefinition: getPageDefinition([
-			getWidgetDefinition({
-				id: getRandomString(),
-				widgetName: 'com_liferay_calendar_web_portlet_CalendarPortlet',
-			}),
-		]),
-		siteId: site.id,
-		title: getRandomString(),
-	});
-
-	await pageEditorPage.goto(layout, site.friendlyUrlPath);
-
-	await calendarWidgetPage.setCalendarWidgetConfiguration(
-		'Europe/Paris',
-		false
-	);
-
-	await pageEditorPage.publishPage();
-
-	await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
-
 	await calendarWidgetPage.addEvent(true);
 
 	const endTime = await calendarWidgetPage.endTime.inputValue();
 	const startTime = await calendarWidgetPage.startTime.inputValue();
 
 	await expect(endTime).toEqual(startTime);
+});
+
+test('can create an all-day calendar event in a different time zone, ensuring that the recurrence link remains consistent', async ({
+	calendarWidgetPage,
+}) => {
+	await calendarWidgetPage.fillEventWithRecurrence(true, recurrence);
+
+	const {frequency, ocurrences, repeatDays} = recurrence;
+
+	const expectedLink =
+		frequency +
+		', on ' +
+		repeatDays.join(',') +
+		', ' +
+		ocurrences +
+		' Times';
+
+	await expect(
+		calendarWidgetPage.page.frameLocator('iframe').getByRole('link', {
+			name: expectedLink,
+		})
+	).toBeVisible();
+
+	await calendarWidgetPage.publishEvent();
+
+	await expect(
+		calendarWidgetPage.page.frameLocator('iframe').getByRole('link', {
+			name: expectedLink,
+		})
+	).toBeVisible();
 });

@@ -304,15 +304,13 @@ function FiltersNew({
 	};
 
 	const onCreationButtonClick = (filterType: EFilterType) => {
-		setAvailableFields(() =>
-			fields.filter((item) =>
-				FILTER_TYPES[filterType as EFilterType].availableFieldsFilter(
-					item
-				)
-			)
+		const availableFieldsList = fields.filter((item) =>
+			FILTER_TYPES[filterType as EFilterType].availableFieldsFilter(item)
 		);
 
-		if (!availableFields.length) {
+		setAvailableFields(availableFieldsList);
+
+		if (!availableFieldsList.length) {
 			openModal({
 				bodyHTML: Liferay.Language.get(
 					'there-are-no-fields-compatible-with-this-type-of-filter'

@@ -173,6 +173,14 @@ public class FragmentEntryValidatorImpl implements FragmentEntryValidator {
 					"Captcha field type cannot be mixed with other field " +
 						"types");
 			}
+
+			if ((fieldTypesJSONArray.length() > 1) &&
+				JSONUtil.hasValue(fieldTypesJSONArray, "stepper")) {
+
+				throw new FragmentEntryFieldTypesException(
+					"Stepper field type cannot be mixed with other field " +
+						"types");
+			}
 		}
 		catch (JSONException jsonException) {
 			throw new FragmentEntryTypeOptionsException(

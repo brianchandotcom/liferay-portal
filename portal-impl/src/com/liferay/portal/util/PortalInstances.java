@@ -5,6 +5,7 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.events.EventsProcessorUtil;
@@ -32,6 +33,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.SiteInitializerThreadLocal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -52,6 +54,25 @@ import javax.servlet.http.HttpServletRequest;
  * @author Mika Koivisto
  */
 public class PortalInstances {
+
+	public static Company addCompany(
+			UnsafeSupplier<Company, PortalException> addCompanyUnsafeSupplier,
+			String siteInitializerKey)
+		throws PortalException {
+
+		SiteInitializerThreadLocal.setKey(siteInitializerKey);
+
+		Company company = addCompanyUnsafeSupplier.get();
+
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setWithSafeCloseable(
+					company.getCompanyId())) {
+
+			initCompany(company, true);
+		}
+
+		return company;
+	}
 
 	public static long getCompanyId(HttpServletRequest httpServletRequest) {
 		try {

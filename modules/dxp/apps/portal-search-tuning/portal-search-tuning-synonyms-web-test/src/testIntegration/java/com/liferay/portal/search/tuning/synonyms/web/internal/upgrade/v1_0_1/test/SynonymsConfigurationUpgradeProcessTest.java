@@ -52,21 +52,21 @@ public class SynonymsConfigurationUpgradeProcessTest {
 	@Test
 	public void testUpgradeSynonymsConfiguration() throws Exception {
 		try {
-			_addConfiguration(_PID);
+			_addConfiguration();
 
 			UpgradeProcess upgradeProcess = UpgradeTestUtil.getUpgradeStep(
 				_upgradeStepRegistrator, _UPGRADE_VERSION);
 
 			upgradeProcess.upgrade();
 
-			_assertConfiguration(_PID);
+			_assertConfiguration();
 		}
 		finally {
-			_removeConfiguration(_PID);
+			_removeConfiguration();
 		}
 	}
 
-	private void _addConfiguration(String servicePid) throws Exception {
+	private void _addConfiguration() throws Exception {
 		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 			new UnsyncByteArrayOutputStream();
 
@@ -81,7 +81,7 @@ public class SynonymsConfigurationUpgradeProcessTest {
 				"insert into Configuration_ (configurationId, dictionary) " +
 					"values(?, ?)")) {
 
-			preparedStatement.setString(1, servicePid);
+			preparedStatement.setString(1, _CONFIGURATION_ID);
 			preparedStatement.setString(
 				2, unsyncByteArrayOutputStream.toString());
 
@@ -89,13 +89,13 @@ public class SynonymsConfigurationUpgradeProcessTest {
 		}
 	}
 
-	private void _assertConfiguration(String servicePid) throws Exception {
+	private void _assertConfiguration() throws Exception {
 		try (Connection connection = DataAccess.getConnection();
-			PreparedStatement preparedStatement = connection.prepareStatement(
+			 PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
 					"select dictionary from Configuration_ where ",
-					"configurationId = '", servicePid, "'"));
-			ResultSet resultSet = preparedStatement.executeQuery()) {
+					"configurationId = '", _CONFIGURATION_ID, "'"));
+			 ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {
 				String dictionaryString = resultSet.getString("dictionary");
@@ -114,14 +114,14 @@ public class SynonymsConfigurationUpgradeProcessTest {
 		}
 	}
 
-	private void _removeConfiguration(String serviceFactoryPid)
+	private void _removeConfiguration()
 		throws Exception {
 
 		DB db = DBManagerUtil.getDB();
 
 		db.runSQL(
 			"delete from Configuration_ where configurationId like '" +
-				serviceFactoryPid + "%'");
+			_CONFIGURATION_ID + "%'");
 	}
 
 	private static final String[] _EXPECTED_FILTER_NAMES = {
@@ -140,7 +140,7 @@ public class SynonymsConfigurationUpgradeProcessTest {
 		"custom_filter_synonym_ru"
 	};
 
-	private static final String _PID =
+	private static final String _CONFIGURATION_ID =
 		"com.liferay.portal.search.tuning.synonyms.web.internal." +
 			"configuration.SynonymsConfiguration";
 

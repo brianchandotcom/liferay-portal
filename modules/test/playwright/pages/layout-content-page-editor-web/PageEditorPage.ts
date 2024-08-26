@@ -857,6 +857,8 @@ export class PageEditorPage {
 
 			const iframe = this.page.frameLocator('iframe[title="Select"]');
 
+			await iframe.getByRole('main').waitFor();
+
 			const hasMenuBar = await iframe.getByRole('menubar').isVisible();
 
 			if (hasMenuBar) {

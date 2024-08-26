@@ -51,9 +51,9 @@ public class SynonymsConfigurationUpgradeProcessTest {
 
 	@Test
 	public void testUpgradeSynonymsConfiguration() throws Exception {
-		try {
-			_addConfiguration();
+		_addConfiguration();
 
+		try {
 			UpgradeProcess upgradeProcess = UpgradeTestUtil.getUpgradeStep(
 				_upgradeStepRegistrator, _UPGRADE_VERSION);
 
@@ -91,11 +91,11 @@ public class SynonymsConfigurationUpgradeProcessTest {
 
 	private void _assertConfiguration() throws Exception {
 		try (Connection connection = DataAccess.getConnection();
-			 PreparedStatement preparedStatement = connection.prepareStatement(
+			PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
 					"select dictionary from Configuration_ where ",
 					"configurationId = '", _CONFIGURATION_ID, "'"));
-			 ResultSet resultSet = preparedStatement.executeQuery()) {
+			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {
 				String dictionaryString = resultSet.getString("dictionary");
@@ -114,15 +114,17 @@ public class SynonymsConfigurationUpgradeProcessTest {
 		}
 	}
 
-	private void _removeConfiguration()
-		throws Exception {
-
+	private void _removeConfiguration() throws Exception {
 		DB db = DBManagerUtil.getDB();
 
 		db.runSQL(
 			"delete from Configuration_ where configurationId ='" +
 				_CONFIGURATION_ID + "'");
 	}
+
+	private static final String _CONFIGURATION_ID =
+		"com.liferay.portal.search.tuning.synonyms.web.internal." +
+			"configuration.SynonymsConfiguration";
 
 	private static final String[] _EXPECTED_FILTER_NAMES = {
 		"custom_filter_synonym_ru", "liferay_filter_synonym_ar",
@@ -139,10 +141,6 @@ public class SynonymsConfigurationUpgradeProcessTest {
 		"liferay_filter_synonym_en", "liferay_filter_synonym_es",
 		"custom_filter_synonym_ru"
 	};
-
-	private static final String _CONFIGURATION_ID =
-		"com.liferay.portal.search.tuning.synonyms.web.internal." +
-			"configuration.SynonymsConfiguration";
 
 	private static final String _UPGRADE_VERSION =
 		"com.liferay.portal.search.tuning.synonyms.web.internal.upgrade." +

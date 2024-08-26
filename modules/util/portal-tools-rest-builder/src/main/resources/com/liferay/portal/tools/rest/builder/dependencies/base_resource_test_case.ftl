@@ -3115,7 +3115,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 			<#if schema.discriminator?has_content>
 				<#assign discriminatorPropertyName = schema.discriminator.propertyName />
 
-				List<Supplier<${schemaName}>> constructors = Arrays.asList(
+				List<Supplier<${schemaName}>> suppliers = Arrays.asList(
 
 				<#list schema.discriminator.mapping as mappingName, mappingSchema>
 					<#assign
@@ -3156,7 +3156,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 					);
 
-					return constructors.get(RandomTestUtil.randomInt(0, constructors.size() - 1)).get();
+					return suppliers.get(RandomTestUtil.randomInt(0, suppliers.size() - 1)).get();
 				}
 
 				private <T extends ${schemaName}> void setCommonAttributes(T ${schemaVarName}) {

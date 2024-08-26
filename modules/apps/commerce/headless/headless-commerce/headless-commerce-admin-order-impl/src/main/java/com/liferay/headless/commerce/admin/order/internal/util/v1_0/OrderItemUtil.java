@@ -67,7 +67,7 @@ public class OrderItemUtil {
 			throw new CPInstanceSkuException();
 		}
 
-		CommerceOrderItem commerceOrderItem;
+		CommerceOrderItem commerceOrderItem = null;
 
 		long replacedSkuId = GetterUtil.getLong(orderItem.getReplacedSkuId());
 

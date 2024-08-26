@@ -312,15 +312,15 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 							themeDisplay.getLocale(), "production-only-title"),
 						")"));
 				data.put(
-					"warningHeader",
-					_language.get(
-						themeDisplay.getLocale(), "production-only-title"));
-				data.put(
 					"warningBody",
 					_language.get(
 						themeDisplay.getLocale(), "production-only-message"));
-				data.put("warningLearnLink", null);
 				data.put("warningButton", false);
+				data.put(
+					"warningHeader",
+					_language.get(
+						themeDisplay.getLocale(), "production-only-title"));
+				data.put("warningLearnLink", null);
 			}
 			else if (unsupportedApplication) {
 				data.put(
@@ -332,26 +332,21 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 							"unsupported-application-title"),
 						")"));
 				data.put(
-					"warningHeader",
-					_language.get(
-						themeDisplay.getLocale(),
-						"unsupported-application-title"));
-				data.put(
 					"warningBody",
 					_language.get(
 						themeDisplay.getLocale(),
 						"unsupported-application-message"));
-				data.put("warningLearnLink", null);
 				data.put("warningButton", true);
-			}
-			else if (showContextChangePopover) {
-				data.put("contextChangeButtons", true);
-				data.put("title", ctCollection.getName());
 				data.put(
 					"warningHeader",
 					_language.get(
 						themeDisplay.getLocale(),
-						"keep-working-in-this-publication"));
+						"unsupported-application-title"));
+				data.put("warningLearnLink", null);
+			}
+			else if (showContextChangePopover) {
+				data.put("contextChangeButtons", true);
+				data.put("title", ctCollection.getName());
 				data.put(
 					"warningBody",
 					_language.get(
@@ -359,6 +354,11 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 						"you-just-switched-contexts.-do-you-want-to-keep-" +
 							"working-in-this-publication"));
 				data.put("warningButton", true);
+				data.put(
+					"warningHeader",
+					_language.get(
+						themeDisplay.getLocale(),
+						"keep-working-in-this-publication"));
 			}
 			else {
 				data.put("title", ctCollection.getName());

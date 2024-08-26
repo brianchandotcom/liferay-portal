@@ -376,6 +376,8 @@ function Body({
 								onChange={(picklist: IPickList) => {
 									setSource(picklist.externalReferenceCode);
 
+									setSelectedPicklist(picklist);
+
 									setSourceValidationError(false);
 
 									setFilteredSourceItems(

@@ -31,14 +31,13 @@ const test = mergeTests(
 	pageManagementSiteTest
 );
 
-const CONTENT_DISPLAY_FRAGMENT_HTML =
-	'<div class="content-display-fragment">' +
-	'[#if itemSelectorNameObject??]' +
-	'${itemSelectorNameObject.getTitle()}' +
-	'[#else]' +
-	'<div class="portlet-msg-info">The selected content will be shown here.</div>' +
-	'[/#if]' +
-	'</div>';
+const CONTENT_DISPLAY_FRAGMENT_HTML = `<div class="content-display-fragment">
+	[#if itemSelectorNameObject??]
+		\${itemSelectorNameObject.getTitle()}
+	[#else]
+		<div class="portlet-msg-info">The selected content will be shown here.</div>
+	[/#if]
+</div>`;
 
 function getContentDisplayFragmentConfiguration({
 	itemSubtype,

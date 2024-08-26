@@ -54,6 +54,7 @@ import com.liferay.commerce.shop.by.diagram.service.CSDiagramEntryService;
 import com.liferay.commerce.shop.by.diagram.service.CSDiagramPinService;
 import com.liferay.commerce.shop.by.diagram.service.CSDiagramSettingService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
@@ -113,6 +114,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RepositoryLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.settings.SystemSettingsLocator;
@@ -1126,8 +1128,8 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 					cpDefinition.getGroupId(), _cpAttachmentFileEntryService,
 					_cpDefinitionOptionRelService,
 					_cpDefinitionOptionValueRelService, _cpOptionService,
-					_dlFileEntryModelResourcePermission,
-					_uniqueFileNameProvider, attachment,
+					_dlAppLocalService, _dlFileEntryModelResourcePermission,
+					_groupLocalService, _uniqueFileNameProvider, attachment,
 					_classNameLocalService.getClassNameId(
 						cpDefinition.getModelClassName()),
 					cpDefinition.getCPDefinitionId(),
@@ -1149,8 +1151,8 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 					cpDefinition.getGroupId(), _cpAttachmentFileEntryService,
 					_cpDefinitionOptionRelService,
 					_cpDefinitionOptionValueRelService, _cpOptionService,
-					_dlFileEntryModelResourcePermission,
-					_uniqueFileNameProvider, attachment,
+					_dlAppLocalService, _dlFileEntryModelResourcePermission,
+					_groupLocalService, _uniqueFileNameProvider, attachment,
 					_classNameLocalService.getClassNameId(
 						cpDefinition.getModelClassName()),
 					cpDefinition.getCPDefinitionId(),
@@ -1599,6 +1601,9 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 	private CSDiagramSettingService _csDiagramSettingService;
 
 	@Reference
+	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
 	private DLAppService _dlAppService;
 
 	@Reference(
@@ -1618,6 +1623,9 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 
 	@Reference
 	private ExpandoTableLocalService _expandoTableLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private Portal _portal;

@@ -1,8 +1,8 @@
 {
 	"label": {
-		"en_US": "Exam Entry"
+		"en_US": "Exam"
 	},
-	"name": "ExamEntry",
+	"name": "Exam",
 	"objectFields": [
 		{
 			"DBType": "String",
@@ -26,7 +26,7 @@
 		}
 	],
 	"pluralLabel": {
-		"en_US": "Exam Entries"
+		"en_US": "Exams"
 	},
 	"scope": "site"
 }

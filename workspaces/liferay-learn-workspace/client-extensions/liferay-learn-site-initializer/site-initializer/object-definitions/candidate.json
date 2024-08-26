@@ -1,8 +1,8 @@
 {
 	"label": {
-		"en_US": "Person Entry"
+		"en_US": "Candidade"
 	},
-	"name": "PersonEntry",
+	"name": "Candidate",
 	"objectFields": [
 		{
 			"DBType": "String",
@@ -86,7 +86,7 @@
 		}
 	],
 	"pluralLabel": {
-		"en_US": "Person Entries"
+		"en_US": "Candidates"
 	},
 	"scope": "site"
 }

@@ -66,16 +66,6 @@
 			},
 			"name": "score",
 			"required": false
-		},
-		{
-			"DBType": "Integer",
-			"indexed": false,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Type"
-			},
-			"name": "type",
-			"required": false
 		}
 	],
 	"pluralLabel": {

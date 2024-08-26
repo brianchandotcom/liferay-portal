@@ -7,7 +7,7 @@ import ClayDatePicker from '@clayui/date-picker';
 import ClayForm from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import classNames from 'classnames';
-import {format, getYear, isBefore, isEqual} from 'date-fns';
+import {format, getYear, isBefore, isEqual, parseISO} from 'date-fns';
 import React, {useEffect, useState} from 'react';
 
 import {IDateFilter, IField, IFilter} from '../../../utils/types';
@@ -56,9 +56,15 @@ function Body({
 		fields.find((item) => item.name === filter?.fieldName)
 	);
 	const [from, setFrom] = useState<string>(
-		(filter as IDateFilter)?.from ?? ''
+		filter && (filter as IDateFilter)?.from
+			? format(parseISO((filter as IDateFilter)?.from), 'yyyy-MM-dd')
+			: ''
 	);
-	const [to, setTo] = useState<string>((filter as IDateFilter)?.to ?? '');
+	const [to, setTo] = useState<string>(
+		filter && (filter as IDateFilter)?.to
+			? format(parseISO((filter as IDateFilter)?.to), 'yyyy-MM-dd')
+			: ''
+	);
 	const [isValidDateRange, setIsValidDateRange] = useState<boolean>(true);
 
 	const fromFormElementId = `${namespace}From`;
@@ -198,16 +204,13 @@ function Body({
 							</label>
 
 							<ClayDatePicker
+								dateFormat="yyyy-MM-dd"
 								inputName={fromFormElementId}
 								onChange={(value: any) => {
 									setFrom(value);
 								}}
 								placeholder="YYYY-MM-DD"
-								value={
-									from
-										? format(new Date(from), 'yyyy-MM-dd')
-										: ''
-								}
+								value={from}
 								years={{
 									end: getYear(new Date()) + 25,
 									start: getYear(new Date()) - 50,
@@ -233,14 +236,13 @@ function Body({
 							</label>
 
 							<ClayDatePicker
+								dateFormat="yyyy-MM-dd"
 								inputName={toFormElementId}
 								onChange={(value: any) => {
 									setTo(value);
 								}}
 								placeholder="YYYY-MM-DD"
-								value={
-									to ? format(new Date(to), 'yyyy-MM-dd') : ''
-								}
+								value={to}
 								years={{
 									end: getYear(new Date()) + 25,
 									start: getYear(new Date()) - 50,

@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import getRandomString from '../../../utils/getRandomString';
+
 type ListStyle =
 	| 'Bordered List (Collection Provider)'
 	| 'Bulleted List (Collection Provider)'
@@ -88,7 +90,17 @@ export default function getCollectionDefinition({
 			listStyle: LIST_STYLES[listStyle] || '',
 		},
 		id,
-		pageElements,
+		pageElements: [getCollectionItemDefinition(pageElements)],
 		type: 'Collection',
+	};
+}
+
+function getCollectionItemDefinition(
+	pageElements: PageElement[] = []
+): PageElement {
+	return {
+		id: getRandomString(),
+		pageElements,
+		type: 'CollectionItem',
 	};
 }

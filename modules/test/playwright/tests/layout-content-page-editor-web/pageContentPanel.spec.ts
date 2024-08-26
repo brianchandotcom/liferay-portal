@@ -16,7 +16,6 @@ import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
 import {journalPagesTest} from '../journal-web/fixtures/journalPagesTest';
 import {ANIMALS_COLLECTION_NAME} from '../setup/page-management-site/constants';
 import getCollectionDefinition from './utils/getCollectionDefinition';
-import getCollectionItemDefinition from './utils/getCollectionItemDefinition';
 import getFragmentDefinition from './utils/getFragmentDefinition';
 import getPageDefinition from './utils/getPageDefinition';
 
@@ -70,21 +69,16 @@ test(
 			pageManagementSite.friendlyUrlPath
 		);
 
-		const animalsCollection = getCollectionItemDefinition(
-			getRandomString(),
-			[
+		const collectionDefinition = getCollectionDefinition({
+			classPK: animalsClassPK,
+			id: getRandomString(),
+			pageElements: [
 				getFragmentDefinition({
 					fragmentFields: FRAGMENT_FIELDS,
 					id: getRandomString(),
 					key: 'BASIC_COMPONENT-heading',
 				}),
-			]
-		);
-
-		const collectionDefinition = getCollectionDefinition({
-			classPK: animalsClassPK,
-			id: getRandomString(),
-			pageElements: [animalsCollection],
+			],
 		});
 
 		// Create a content page and go to edit mode
@@ -193,23 +187,18 @@ test(
 			pageManagementSite.friendlyUrlPath
 		);
 
-		const animalsCollection = getCollectionItemDefinition(
-			getRandomString(),
-			[
-				getFragmentDefinition({
-					fragmentFields: FRAGMENT_FIELDS,
-					id: getRandomString(),
-					key: 'BASIC_COMPONENT-heading',
-				}),
-			]
-		);
-
 		const collectionId = getRandomString();
 
 		const collectionDefinition = getCollectionDefinition({
 			classPK: animalsClassPK,
 			id: collectionId,
-			pageElements: [animalsCollection],
+			pageElements: [
+				getFragmentDefinition({
+					fragmentFields: FRAGMENT_FIELDS,
+					id: getRandomString(),
+					key: 'BASIC_COMPONENT-heading',
+				}),
+			],
 		});
 
 		const contentDisplayId = getRandomString();

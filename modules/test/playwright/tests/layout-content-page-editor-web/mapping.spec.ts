@@ -16,7 +16,6 @@ import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../utils/getRandomString';
 import {ANIMALS_COLLECTION_NAME} from '../setup/page-management-site/constants';
 import getCollectionDefinition from './utils/getCollectionDefinition';
-import getCollectionItemDefinition from './utils/getCollectionItemDefinition';
 import getFragmentDefinition from './utils/getFragmentDefinition';
 import getPageDefinition from './utils/getPageDefinition';
 
@@ -149,17 +148,11 @@ test('Allows selecting specific repeatable collection provider', async ({
 		pageManagementSite.friendlyUrlPath
 	);
 
-	const animalsCollection = getCollectionItemDefinition(
-		getRandomString(),
-		[]
-	);
-
 	const collectionId = getRandomString();
 
 	const collectionDefinition = getCollectionDefinition({
 		classPK: animalsClassPK,
 		id: collectionId,
-		pageElements: [animalsCollection],
 	});
 
 	const layout = await apiHelpers.headlessDelivery.createSitePage({

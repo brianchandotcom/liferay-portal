@@ -6,7 +6,6 @@
 import {ApiHelpers} from '../../../helpers/ApiHelpers';
 import getRandomString from '../../../utils/getRandomString';
 import getCollectionDefinition from './getCollectionDefinition';
-import getCollectionItemDefinition from './getCollectionItemDefinition';
 import getFragmentDefinition from './getFragmentDefinition';
 import getPageDefinition from './getPageDefinition';
 
@@ -48,15 +47,10 @@ export default async function createPageWithCollectionAndFilterCollection({
 		key: 'BASIC_COMPONENT-heading',
 	});
 
-	const collectionItemDefinition = getCollectionItemDefinition(
-		getRandomString(),
-		[collectionFragmentDefinition]
-	);
-
 	const collectionDefinition = getCollectionDefinition({
 		classPK,
 		id: getRandomString(),
-		pageElements: [collectionItemDefinition],
+		pageElements: [collectionFragmentDefinition],
 	});
 
 	return await apiHelpers.headlessDelivery.createSitePage({

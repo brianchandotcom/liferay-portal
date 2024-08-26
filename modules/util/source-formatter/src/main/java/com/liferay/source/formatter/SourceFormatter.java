@@ -1319,6 +1319,15 @@ public class SourceFormatter {
 		for (String commitMessage : commitMessages) {
 			String[] parts = commitMessage.split(":", 2);
 
+			if (StringUtil.startsWith(parts[1], "Reapply \"") ||
+				StringUtil.startsWith(parts[1], "Revert \"Revert")) {
+
+				throw new Exception(
+					StringBundler.concat(
+						"Found formatting issue in SHA ", parts[0], ":\n",
+						"Illegal nested revert, i.e. revert of a revert."));
+			}
+
 			for (String keyword :
 					_getPropertyValues("git.commit.vulnerability.keywords")) {
 

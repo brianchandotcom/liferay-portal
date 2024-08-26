@@ -27,7 +27,13 @@ import com.liferay.layout.util.PortalPreferencesUtil;
 import com.liferay.layout.util.structure.DropZoneLayoutStructureItem;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
@@ -284,6 +290,9 @@ public class FragmentCollectionManager {
 
 			fragmentEntryMapsList.add(
 				HashMapBuilder.<String, Object>put(
+					"fieldTypes",
+					_getFieldTypesJSONArray(fragmentRenderer.getTypeOptions())
+				).put(
 					"fragmentEntryKey", fragmentRenderer.getKey()
 				).put(
 					"highlighted",
@@ -303,6 +312,23 @@ public class FragmentCollectionManager {
 		}
 
 		return fragmentCollectionMaps;
+	}
+
+	private JSONArray _getFieldTypesJSONArray(String typeOptions) {
+		try {
+			JSONObject jsonObject = _jsonFactory.createJSONObject(typeOptions);
+
+			JSONArray jsonArray = jsonObject.getJSONArray("fieldTypes");
+
+			if (jsonArray != null) {
+				return jsonArray;
+			}
+		}
+		catch (JSONException jsonException) {
+			_log.error(jsonException);
+		}
+
+		return _jsonFactory.createJSONArray();
 	}
 
 	private Map<String, Map<String, Object>>
@@ -454,6 +480,9 @@ public class FragmentCollectionManager {
 
 			fragmentEntryMapsList.add(
 				HashMapBuilder.<String, Object>put(
+					"fieldTypes",
+					_getFieldTypesJSONArray(fragmentEntry.getTypeOptions())
+				).put(
 					"fragmentEntryKey", fragmentEntry.getFragmentEntryKey()
 				).put(
 					"groupId", fragmentEntry.getGroupId()
@@ -657,6 +686,9 @@ public class FragmentCollectionManager {
 		"layout-elements", "BASIC_COMPONENT", "INPUTS", "content-display"
 	};
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		FragmentCollectionManager.class);
+
 	@Reference
 	private FragmentCollectionContributorRegistry
 		_fragmentCollectionContributorRegistry;
@@ -678,6 +710,9 @@ public class FragmentCollectionManager {
 
 	@Reference
 	private InfoItemServiceRegistry _infoItemServiceRegistry;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Language _language;

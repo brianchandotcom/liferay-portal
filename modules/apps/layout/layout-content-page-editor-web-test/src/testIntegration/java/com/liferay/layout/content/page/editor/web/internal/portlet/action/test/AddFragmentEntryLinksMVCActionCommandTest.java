@@ -18,6 +18,7 @@ import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentCompositionLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
+import com.liferay.layout.manager.LayoutLockManager;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.serializer.LayoutStructureItemJSONSerializer;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
@@ -31,6 +32,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -44,6 +46,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -118,6 +121,8 @@ public class AddFragmentEntryLinksMVCActionCommandTest {
 		_serviceContext.setRequest(mockHttpServletRequest);
 
 		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
+
+		_user = UserTestUtil.addCompanyAdminUser(_company);
 	}
 
 	@After
@@ -307,6 +312,9 @@ public class AddFragmentEntryLinksMVCActionCommandTest {
 			(ThemeDisplay)mockLiferayPortletActionRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
+		themeDisplay.setRealUser(_user);
+		themeDisplay.setUser(_user);
+
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			mockLiferayPortletActionRequest);
 
@@ -347,10 +355,28 @@ public class AddFragmentEntryLinksMVCActionCommandTest {
 			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
 				_group.getGroupId(), _layout.getPlid());
 
-		JSONObject jsonObject = ReflectionTestUtil.invoke(
-			_mvcActionCommand, "_processAddFragmentEntryLinks",
-			new Class<?>[] {ActionRequest.class, ActionResponse.class},
-			mockLiferayPortletActionRequest, mockLiferayPortletActionResponse);
+		JSONObject jsonObject = null;
+
+		try {
+			ServiceContextThreadLocal.pushServiceContext(
+				ServiceContextTestUtil.getServiceContext(
+					_group, _user.getUserId()));
+
+			UserTestUtil.setUser(_user);
+
+			_layoutLockManager.getLock(mockLiferayPortletActionRequest);
+
+			jsonObject = ReflectionTestUtil.invoke(
+				_mvcActionCommand, "_processAddFragmentEntryLinks",
+				new Class<?>[] {ActionRequest.class, ActionResponse.class},
+				mockLiferayPortletActionRequest,
+				mockLiferayPortletActionResponse);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+
+			UserTestUtil.setUser(TestPropsValues.getUser());
+		}
 
 		List<FragmentEntryLink> actualFragmentEntryLinks =
 			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
@@ -401,6 +427,9 @@ public class AddFragmentEntryLinksMVCActionCommandTest {
 	private Layout _layout;
 
 	@Inject
+	private LayoutLockManager _layoutLockManager;
+
+	@Inject
 	private LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
 
@@ -420,5 +449,8 @@ public class AddFragmentEntryLinksMVCActionCommandTest {
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 	private ServiceContext _serviceContext;
+
+	@DeleteAfterTestRun
+	private User _user;
 
 }

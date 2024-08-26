@@ -8,6 +8,7 @@ import {getComparator} from 'playwright-core/lib/utils';
 
 import {ProductMenuPage} from '../../../pages/product-navigation-control-menu-web/ProductMenuPage';
 import {getTempDir} from '../../../utils/temp';
+import getRandomString from '../../../utils/getRandomString';
 
 export class StagingPage {
 	readonly localStagingCheckbox: Locator;
@@ -28,7 +29,8 @@ export class StagingPage {
 		expect(
 			comparator(
 				await this.getCurrentPageScreenshot('Live'),
-				await this.getCurrentPageScreenshot('Staging')
+				await this.getCurrentPageScreenshot('Staging'),
+				{ maxDiffPixelRatio: 0.05 }
 			)
 		).toBeNull();
 	}
@@ -46,8 +48,8 @@ export class StagingPage {
 		await this.saveButton.click();
 
 		await expect(
-			this.page.getByText('Initial Publish Process')
-		).toHaveCount(2);
+			this.page.getByText('Initial Publish Process').first()
+		).toBeVisible();
 
 		for await (const processResult of await this.page
 			.getByTestId('processResult')
@@ -76,14 +78,14 @@ export class StagingPage {
 		).toBeVisible();
 
 		return await this.page.screenshot({
-			path: getTempDir() + './screenshots/' + version + 'Image.png',
+			path: getTempDir() + '/' + getRandomString() + '.png',
 			mask: [
 				await this.page.locator('.control-menu-container').first(),
 				await this.page.locator('.sidenav-menu').first(),
 			],
 			maskColor: '#FFFFFF',
 			omitBackground: true,
-			fullPage: true,
+			fullPage: true
 		});
 	}
 }

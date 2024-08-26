@@ -477,14 +477,7 @@ public class LayoutStructure {
 				!(layoutStructureItem instanceof
 					FormStyledLayoutStructureItem)) {
 
-				LayoutStructureItem parentLayoutStructureItem =
-					_layoutStructureItems.get(
-						layoutStructureItem.getParentItemId());
-
-				List<String> childrenItemIds =
-					parentLayoutStructureItem.getChildrenItemIds();
-
-				position = childrenItemIds.indexOf(parentItemId) + 1;
+				position = -1;
 
 				finalParentItemId = layoutStructureItem.getParentItemId();
 			}

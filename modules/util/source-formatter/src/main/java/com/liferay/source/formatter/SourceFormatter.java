@@ -337,6 +337,8 @@ public class SourceFormatter {
 			_validateCommitMessages();
 		}
 
+		_validatePullModeChanges();
+
 		if (!_sourceFormatterArgs.isJavaParserEnabled()) {
 			System.out.println(
 				StringBundler.concat(
@@ -1345,6 +1347,70 @@ public class SourceFormatter {
 							"vulnerablities. Please see the vulnerability ",
 							"keywords that are specified in source-formatter.",
 							"properties in the liferay-portal repository."));
+				}
+			}
+		}
+	}
+
+	private void _validatePullModeChanges() throws Exception {
+		if (!_sourceFormatterArgs.isFormatCurrentBranch()) {
+			return;
+		}
+		
+		File portalDir = SourceFormatterUtil.getPortalDir(
+			_sourceFormatterArgs.getBaseDirName(),
+			_sourceFormatterArgs.getMaxLineLength());
+
+		if (portalDir == null) {
+			return;
+		}
+
+		List<String> pullModeGitRepoDirLocations = new ArrayList<>();
+
+		List<String> gitRepoFileNames = SourceFormatterUtil.scanForFileNames(
+			portalDir.getCanonicalPath(), new String[] {"**/*.gitrepo"});
+
+		for (String gitRepoFileName : gitRepoFileNames) {
+			int x = gitRepoFileName.indexOf("/modules/");
+
+			if (x == -1) {
+				continue;
+			}
+
+			String content = FileUtil.read(new File(gitRepoFileName));
+
+			if (content.contains("mode = pull")) {
+				int y = gitRepoFileName.lastIndexOf("/");
+
+				pullModeGitRepoDirLocations.add(
+					gitRepoFileName.substring(x + 1, y));
+			}
+		}
+
+		if (pullModeGitRepoDirLocations.isEmpty()) {
+			return;
+		}
+
+		List<String> fileNames = GitUtil.getCurrentBranchFileNames(
+			_sourceFormatterArgs.getBaseDirName(),
+			_sourceFormatterArgs.getGitWorkingBranchName(), true);
+
+		for (String fileName : fileNames) {
+			if (fileName.endsWith("/.gitrepo") ||
+				fileName.endsWith("/ci-merge")) {
+
+				continue;
+			}
+
+			for (String pullModeGitRepoDirLocation :
+					pullModeGitRepoDirLocations) {
+
+				if (fileName.startsWith(pullModeGitRepoDirLocation + "/")) {
+					throw new Exception(
+						StringBundler.concat(
+							"Found formatting issue:\n",
+							"Illegal change to a pull-only subdirectory ",
+							pullModeGitRepoDirLocation));
 				}
 			}
 		}

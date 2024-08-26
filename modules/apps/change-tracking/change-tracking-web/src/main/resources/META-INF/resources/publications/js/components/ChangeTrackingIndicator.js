@@ -34,6 +34,7 @@ export default function ChangeTrackingIndicator({
 	orderByAscending,
 	orderByColumn,
 	preferencesPrefix,
+	previewProductionDropdownItem,
 	reviewDropdownItem,
 	saveDisplayPreferenceURL,
 	spritemap,
@@ -95,6 +96,10 @@ export default function ChangeTrackingIndicator({
 			},
 			symbolLeft: checkoutDropdownItem.symbolLeft,
 		});
+	}
+
+	if (previewProductionDropdownItem) {
+		dropdownItems.push(previewProductionDropdownItem);
 	}
 
 	dropdownItems.push({

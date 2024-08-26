@@ -186,6 +186,8 @@ renderResponse.setTitle(blogsEditEntryDisplayContext.getPageTitle(resourceBundle
 					else {
 						automaticURL = blogsEditEntryDisplayContext.isAutomaticURL();
 					}
+
+					String inputAddon = StringUtil.shorten("/-/" + portlet.getFriendlyURLMapping(), 40) + StringPool.SLASH;
 					%>
 
 					<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-11147") %>'>
@@ -231,7 +233,7 @@ renderResponse.setTitle(blogsEditEntryDisplayContext.getPageTitle(resourceBundle
 										).put(
 											"disabled", automaticURL
 										).put(
-											"inputAddon", StringUtil.shorten("/-/" + portlet.getFriendlyURLMapping()) + StringPool.SLASH
+											"inputAddon", inputAddon
 										).build()
 									%>'
 								/>
@@ -241,7 +243,7 @@ renderResponse.setTitle(blogsEditEntryDisplayContext.getPageTitle(resourceBundle
 								className="<%= BlogsEntry.class.getName() %>"
 								classPK="<%= blogsEditEntryDisplayContext.getEntryId() %>"
 								disabled="<%= automaticURL %>"
-								inputAddon='<%= StringUtil.shorten("/-/" + portlet.getFriendlyURLMapping(), 40) + StringPool.SLASH %>'
+								inputAddon="<%= inputAddon %>"
 								localizable="<%= false %>"
 								name="urlTitle"
 							/>
@@ -267,7 +269,7 @@ renderResponse.setTitle(blogsEditEntryDisplayContext.getPageTitle(resourceBundle
 									className="<%= BlogsEntry.class.getName() %>"
 									classPK="<%= blogsEditEntryDisplayContext.getEntryId() %>"
 									disabled="<%= automaticURL %>"
-									inputAddon='<%= StringUtil.shorten("/-/" + portlet.getFriendlyURLMapping(), 40) + StringPool.SLASH %>'
+									inputAddon="<%= inputAddon %>"
 									localizable="<%= false %>"
 									name="urlTitle"
 								/>

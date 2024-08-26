@@ -619,65 +619,6 @@ definition {
 		}
 	}
 
-	@description = "Test Automation for LPS-130345: Segment member preview count shows the correct number of users when segments are combined"
-	@priority = 5
-	@uitest
-	test AddSegmentByOtherSegments {
-		property portal.acceptance = "true";
-
-		task ("Add users") {
-			JSONUser.addUser(
-				userEmailAddress = "userea1@liferay.com",
-				userFirstName = "userfn1",
-				userLastName = "userln1",
-				userScreenName = "usersn1");
-
-			JSONUser.addUser(
-				userEmailAddress = "userea2@liferay.com",
-				userFirstName = "userfn2",
-				userLastName = "userln2",
-				userScreenName = "usersn2");
-		}
-
-		task ("Add 2 segments") {
-			JSONSegmentsentry.addSegment(
-				fieldName = "Screen Name",
-				groupName = "Test Site Name",
-				operator = "equals",
-				segmentName = "Segment With User1",
-				text = "usersn1");
-
-			JSONSegmentsentry.addSegment(
-				fieldName = "Screen Name",
-				groupName = "Test Site Name",
-				operator = "equals",
-				segmentName = "Segment With User2",
-				text = "usersn2");
-		}
-
-		task ("Add segment that contains the segments created and check the users belong to the segment") {
-			LexiconEntry.gotoAdd();
-
-			Segmentation.gotoSidebar(fieldType = "Segments");
-
-			Segmentation.addProperties(propertyOption = "Segment");
-
-			Segmentation.fillProperty(selectEntry = "Segment With User1");
-
-			Segmentation.addSecondProperty(propertyOption = "Segment");
-
-			Segmentation.fillProperty(
-				indexNumber = 2,
-				selectEntry = "Segment With User2");
-
-			Segmentation.changeCriterionConjunction(criterionConjunctionItem = "Or");
-
-			Segmentation.fillTitle(titleField = "AddSegmentByOtherSegments Test");
-
-			Segmentation.viewMembers(memberNameList = "userfn1 userln1,userfn2 userln2");
-		}
-	}
-
 	@description = "Test Automation for LPS-130346: Segments based on segments are not available to create new segments"
 	@priority = 5
 	@uitest

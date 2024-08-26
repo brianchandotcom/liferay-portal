@@ -88,6 +88,8 @@ test.afterAll(async ({browser}) => {
 
 	await deleteVirtualInstance(DEFAULT_SP_NAME, newPage);
 
+	await newPage.waitForTimeout(60 * 1000);
+
 	// Reset saml configuration, in cases where test failed before doing so
 
 	await resetSamlConfiguration(newPage);

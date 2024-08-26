@@ -10,6 +10,7 @@ import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
 
 export class ServiceProviderConnectionsPage {
+	readonly addServiceProviderConnectionButton: Locator;
 	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly assertionLifetimeField: Locator;
 	readonly attributesEnabledToggle: Locator;
@@ -25,10 +26,14 @@ export class ServiceProviderConnectionsPage {
 	readonly nameIdentifierFormatField: Locator;
 	readonly page: Page;
 	readonly saveButton: Locator;
+	readonly serviceProviderConnectionsTab: Locator;
 	readonly serviceProviderConnectionsTable: Locator;
 	readonly successMessage: Locator;
 
 	constructor(page: Page) {
+		this.addServiceProviderConnectionButton = page.getByRole('button', {
+			name: 'Add Service Provider',
+		});
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);
 		this.assertionLifetimeField = page.getByLabel('Assertion Lifetime');
 		this.attributesEnabledToggle = page.getByText('Attributes Enabled', {
@@ -58,6 +63,9 @@ export class ServiceProviderConnectionsPage {
 		);
 		this.page = page;
 		this.saveButton = page.getByRole('button', {name: 'Save'});
+		this.serviceProviderConnectionsTab = page.getByRole('tab', {
+			name: 'Service Provider Connections',
+		});
 		this.serviceProviderConnectionsTable = page.locator(
 			'#_com_liferay_saml_web_internal_portlet_SamlAdminPortlet_samlIdpSpConnectionsSearchContainer'
 		);
@@ -82,9 +90,7 @@ export class ServiceProviderConnectionsPage {
 			}
 		}
 
-		await this.page
-			.getByRole('button', {name: 'Add Service Provider'})
-			.click();
+		await this.addServiceProviderConnectionButton.click();
 
 		await this.populateAndSaveServiceProviderConnectionDetails(
 			spConnection
@@ -138,12 +144,16 @@ export class ServiceProviderConnectionsPage {
 	}
 
 	async goTo(forceReload = false) {
-		await this.applicationsMenuPage.goToSamlAdmin(forceReload);
-		await this.page
-			.getByRole('tab', {name: 'Service Provider Connections'})
-			.click();
+		if (
+			forceReload ||
+			(await this.serviceProviderConnectionsTab.isHidden())
+		) {
+			await this.applicationsMenuPage.goToSamlAdmin(forceReload);
+		}
+
+		await this.serviceProviderConnectionsTab.click();
 		await expect(
-			await this.page.getByRole('button', {name: 'Add Service Provider'})
+			await this.addServiceProviderConnectionButton
 		).toBeVisible();
 	}
 

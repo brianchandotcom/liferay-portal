@@ -19,12 +19,14 @@ export interface AttributeMapping {
 }
 
 export class IdentityProviderConnectionsPage {
-	readonly basicUserFields: Locator;
+	readonly addIdentityProviderConnectionButton: Locator;
 	readonly applicationsMenuPage: ApplicationsMenuPage;
+	readonly basicUserFields: Locator;
 	readonly clockSkewField: Locator;
 	readonly enabledField: Locator;
 	readonly entityIdField: Locator;
 	readonly forceAuthnToggle: Locator;
+	readonly identityProviderConnectionsTab: Locator;
 	readonly identityProviderConnectionsTable: Locator;
 	readonly keepAliveUrlField: Locator;
 	readonly metadataUrlField: Locator;
@@ -38,6 +40,9 @@ export class IdentityProviderConnectionsPage {
 	readonly userMembershipsFields: Locator;
 
 	constructor(page: Page) {
+		this.addIdentityProviderConnectionButton = page.getByRole('button', {
+			name: 'Add Identity Provider',
+		});
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);
 		this.basicUserFields = page.getByText('Basic User Fields');
 		this.clockSkewField = page.getByLabel('Clock Skew');
@@ -45,6 +50,9 @@ export class IdentityProviderConnectionsPage {
 		this.entityIdField = page.getByLabel('Entity ID');
 		this.forceAuthnToggle = page.getByText('Force Authn', {
 			exact: true,
+		});
+		this.identityProviderConnectionsTab = page.getByRole('tab', {
+			name: 'Identity Provider Connections',
 		});
 		this.identityProviderConnectionsTable = page.locator(
 			'#_com_liferay_saml_web_internal_portlet_SamlAdminPortlet_samlSpIdpConnectionsSearchContainer'
@@ -85,9 +93,7 @@ export class IdentityProviderConnectionsPage {
 			}
 		}
 
-		await this.page
-			.getByRole('button', {name: 'Add Identity Provider'})
-			.click();
+		await this.addIdentityProviderConnectionButton.click();
 
 		await this.populateAndSaveIdentityProviderConnectionDetails(
 			idpConnection
@@ -145,12 +151,16 @@ export class IdentityProviderConnectionsPage {
 	}
 
 	async goTo(forceReload = false) {
-		await this.applicationsMenuPage.goToSamlAdmin(forceReload);
-		await this.page
-			.getByRole('tab', {name: 'Identity Provider Connections'})
-			.click();
-		expect(
-			await this.page.getByRole('button', {name: 'Add Identity Provider'})
+		if (
+			forceReload ||
+			(await this.identityProviderConnectionsTab.isHidden())
+		) {
+			await this.applicationsMenuPage.goToSamlAdmin(forceReload);
+		}
+
+		await this.identityProviderConnectionsTab.click();
+		await expect(
+			await this.addIdentityProviderConnectionButton
 		).toBeVisible();
 	}
 

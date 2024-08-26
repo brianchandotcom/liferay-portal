@@ -68,7 +68,7 @@ export default function StructureTreeNodeActions({disabled, item, visible}) {
 				aria-haspopup="true"
 				aria-label={Liferay.Language.get('options')}
 				className={classNames(
-					'ml-0 page-editor__page-structure__tree-node__actions-button',
+					'ml-0 page-editor__page-structure__tree-node__actions-button position-relative',
 					{
 						'page-editor__page-structure__tree-node__actions-button--visible':
 							visible,
@@ -89,6 +89,17 @@ export default function StructureTreeNodeActions({disabled, item, visible}) {
 				}
 				title={Liferay.Language.get('options')}
 			>
+				{active ? (
+					<div
+						className="position-absolute"
+						style={{
+							height: '50px',
+							transform: 'translateX(-10px, -10px)',
+							width: '50px',
+						}}
+					/>
+				) : null}
+
 				<ClayIcon symbol="ellipsis-v" />
 			</ClayButton>
 

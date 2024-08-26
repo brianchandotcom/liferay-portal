@@ -33,7 +33,7 @@ export class UtilityPagesPage {
 		);
 	}
 
-	async addUtilityPage({
+	async createPage({
 		draft = false,
 		name,
 		type,
@@ -107,7 +107,7 @@ export class UtilityPagesPage {
 		});
 	}
 
-	async delete(name: string) {
+	async deletePage(name: string) {
 		await this.clickOnAction('Delete', name);
 
 		await expect(
@@ -159,7 +159,7 @@ export class UtilityPagesPage {
 		await waitForSuccessAlert(this.page);
 	}
 
-	async preview(name: string) {
+	async previewPage(name: string) {
 		await clickAndExpectToBeVisible({
 			autoClick: true,
 			target: this.page.getByRole('menuitem', {name: 'Preview'}),
@@ -179,7 +179,7 @@ export class UtilityPagesPage {
 		);
 	}
 
-	async rename(newName: string, oldName: string) {
+	async renamePage(newName: string, oldName: string) {
 		await this.clickOnAction('Rename', oldName);
 
 		await this.page.getByLabel('Name', {exact: true}).fill(newName);

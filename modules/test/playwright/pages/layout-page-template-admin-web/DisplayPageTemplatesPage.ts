@@ -36,7 +36,7 @@ export class DisplayPageTemplatesPage {
 			.click();
 	}
 
-	async delete(name: string) {
+	async deleteTemplate(name: string) {
 		await this.clickMoreActions(name);
 
 		await this.page
@@ -112,7 +112,7 @@ export class DisplayPageTemplatesPage {
 		await waitForSuccessAlert(this.page);
 	}
 
-	async rename(newName: string, oldName: string) {
+	async renameTemplate(newName: string, oldName: string) {
 		await this.clickMoreActions(oldName);
 
 		await this.page

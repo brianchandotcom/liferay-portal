@@ -48,7 +48,7 @@ test(
 
 		const utilityPageName = getRandomString();
 
-		await utilityPagesPage.addUtilityPage({
+		await utilityPagesPage.createPage({
 			name: utilityPageName,
 			type: '404 Error',
 		});
@@ -81,7 +81,7 @@ test(
 
 		// Preview utility page
 
-		await utilityPagesPage.preview(utilityPageName);
+		await utilityPagesPage.previewPage(utilityPageName);
 
 		const pagePromise = context.waitForEvent('page');
 
@@ -113,7 +113,7 @@ test(
 
 		const newUtilityPageName = getRandomString();
 
-		await utilityPagesPage.rename(
+		await utilityPagesPage.renamePage(
 			newUtilityPageName,
 			`${utilityPageName} (Copy)`
 		);
@@ -153,7 +153,7 @@ test(
 		await utilityPagesPage.goto(site.friendlyUrlPath);
 
 		await utilityPagesPage.markAsDefault(utilityPageName);
-		await utilityPagesPage.delete(utilityPageName);
+		await utilityPagesPage.deletePage(utilityPageName);
 
 		await expect(card).not.toBeVisible();
 	}

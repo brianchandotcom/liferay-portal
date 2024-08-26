@@ -455,7 +455,7 @@ test('User can delete default display page template', async ({
 
 	// Delete default display page template
 
-	await displayPageTemplatesPage.delete(displayPageTemplateName);
+	await displayPageTemplatesPage.deleteTemplate(displayPageTemplateName);
 
 	await expect(
 		page.getByText(displayPageTemplateName, {exact: true})
@@ -483,7 +483,7 @@ test('User can rename a display page', async ({
 
 	const newDisplayPageTemplateName = getRandomString();
 
-	await displayPageTemplatesPage.rename(
+	await displayPageTemplatesPage.renameTemplate(
 		newDisplayPageTemplateName,
 		displayPageTemplateName
 	);

@@ -9,6 +9,26 @@
 			"indexed": false,
 			"indexedAsKeyword": false,
 			"label": {
+				"en_US": "City Name"
+			},
+			"name": "cityName",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Country Name"
+			},
+			"name": "countryName",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
 				"en_US": "Email Address"
 			},
 			"name": "emailAddress",
@@ -39,19 +59,9 @@
 			"indexed": false,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "City Name"
+				"en_US": "Postal Code"
 			},
-			"name": "cityName",
-			"required": false
-		},
-		{
-			"DBType": "String",
-			"indexed": false,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Country Name"
-			},
-			"name": "countryName",
+			"name": "postalCode",
 			"required": false
 		},
 		{
@@ -72,16 +82,6 @@
 				"en_US": "Street"
 			},
 			"name": "street",
-			"required": false
-		},
-		{
-			"DBType": "String",
-			"indexed": false,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Postal Code"
-			},
-			"name": "postalCode",
 			"required": false
 		}
 	],

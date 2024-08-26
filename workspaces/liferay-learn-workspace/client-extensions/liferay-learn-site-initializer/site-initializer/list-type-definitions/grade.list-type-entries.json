@@ -1,0 +1,18 @@
+[
+	{
+		"key": "FAIL",
+		"name": "Fail",
+		"name_i18n": {
+			"en-US": "Fail"
+		},
+		"type": "string"
+	},
+	{
+		"key": "PASS",
+		"name": "Pass",
+		"name_i18n": {
+			"en-US": "Pass"
+		},
+		"type": "string"
+	}
+]

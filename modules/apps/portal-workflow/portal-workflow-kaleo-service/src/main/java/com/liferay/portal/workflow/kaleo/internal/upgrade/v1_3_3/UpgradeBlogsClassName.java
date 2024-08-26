@@ -5,7 +5,6 @@
 
 package com.liferay.portal.workflow.kaleo.internal.upgrade.v1_3_3;
 
-import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.upgrade.util.Table;
 import com.liferay.portal.workflow.kaleo.internal.upgrade.v1_3_0.BaseUpgradeClassNames;
@@ -22,9 +21,8 @@ public class UpgradeBlogsClassName extends BaseUpgradeClassNames {
 
 	@Override
 	protected String getWhereClause() {
-		return SQLTransformer.transform(
-			" where workflowContext LIKE " +
-				"'%com.liferay.blogs.kernel.model.BlogsEntry%'");
+		return " where workflowContext LIKE " +
+			"'%com.liferay.blogs.kernel.model.BlogsEntry%'";
 	}
 
 	@Override

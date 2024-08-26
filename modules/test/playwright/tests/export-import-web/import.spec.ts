@@ -96,7 +96,7 @@ test('can import a lar file selecting some items to import', async ({
 		'staged and live versions of a site are equal with template ' + name,
 		async ({apiHelpers, applicationsMenuPage, stagingPage}) => {
 			const site = await apiHelpers.headlessSite.createSite({
-				name: getRandomString(),
+				name,
 				templateKey: name,
 				templateType: 'site-initializer',
 			});

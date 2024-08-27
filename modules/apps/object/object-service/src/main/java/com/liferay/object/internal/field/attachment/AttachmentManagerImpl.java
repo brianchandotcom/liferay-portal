@@ -65,78 +65,6 @@ import org.osgi.service.component.annotations.Reference;
 public class AttachmentManagerImpl implements AttachmentManager {
 
 	@Override
-	public FileEntry addFileEntry(
-			long companyId, byte[] fileContent, String fileName, long groupId,
-			long objectFieldId, ServiceContext serviceContext)
-		throws Exception {
-
-		_validateFile(
-			fileContent, fileName, objectFieldId, serviceContext.getUserId());
-
-		DLFolder dlFolder = getDLFolder(
-			companyId, groupId, objectFieldId, serviceContext,
-			serviceContext.getUserId());
-
-		try (InputStream inputStream = new ByteArrayInputStream(fileContent)) {
-			return _dlAppLocalService.addFileEntry(
-				null, serviceContext.getUserId(), dlFolder.getRepositoryId(),
-				dlFolder.getFolderId(),
-				DLUtil.getUniqueFileName(
-					groupId, dlFolder.getFolderId(), fileName, true),
-				_mimeTypes.getContentType(inputStream, fileName),
-				DLUtil.getUniqueTitle(
-					groupId, dlFolder.getFolderId(),
-					FileUtil.stripExtension(fileName)),
-				StringPool.BLANK, null, null, inputStream, fileContent.length,
-				null, null, null, serviceContext);
-		}
-	}
-
-	@Override
-	public FileEntry addFileEntry(
-			long companyId, byte[] fileContent, String fileName,
-			String folderExternalReferenceCode, long groupId,
-			long objectFieldId, ServiceContext serviceContext)
-		throws Exception {
-
-		_validateFile(
-			fileContent, fileName, objectFieldId, serviceContext.getUserId());
-
-		long folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
-		long repositoryId = groupId;
-
-		if (Validator.isNotNull(folderExternalReferenceCode)) {
-			DLFolder dlFolder =
-				_dlFolderService.getDLFolderByExternalReferenceCode(
-					folderExternalReferenceCode, groupId);
-
-			folderId = dlFolder.getFolderId();
-			repositoryId = dlFolder.getRepositoryId();
-		}
-
-		ServiceContext cloneServiceContext =
-			(ServiceContext)serviceContext.clone();
-
-		cloneServiceContext.setCompanyId(companyId);
-
-		try (InputStream inputStream = new ByteArrayInputStream(fileContent)) {
-			_dlValidator.validateFileSize(
-				groupId, fileName,
-				_mimeTypes.getContentType(inputStream, fileName),
-				fileContent.length);
-
-			return _dlAppService.addFileEntry(
-				null, repositoryId, folderId,
-				DLUtil.getUniqueFileName(groupId, folderId, fileName, true),
-				_mimeTypes.getContentType(inputStream, fileName),
-				DLUtil.getUniqueTitle(
-					groupId, folderId, FileUtil.stripExtension(fileName)),
-				StringPool.BLANK, null, null, inputStream, fileContent.length,
-				null, null, null, cloneServiceContext);
-		}
-	}
-
-	@Override
 	public String[] getAcceptedFileExtensions(long objectFieldId) {
 		ObjectFieldSetting objectFieldSetting =
 			_objectFieldSettingLocalService.fetchObjectFieldSetting(
@@ -202,6 +130,95 @@ public class AttachmentManagerImpl implements AttachmentManager {
 
 		return _objectConfiguration.maximumFileSizeForGuestUsers() *
 			_FILE_LENGTH_MB;
+	}
+
+	@Override
+	public FileEntry getOrAddFileEntry(
+			long companyId, String externalReferenceCode, byte[] fileContent,
+			String fileName, long groupId, long objectFieldId,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		FileEntry fileEntry =
+			_dlAppLocalService.fetchFileEntryByExternalReferenceCode(
+				groupId, externalReferenceCode);
+
+		if (fileEntry != null) {
+			return fileEntry;
+		}
+
+		_validateFile(
+			fileContent, fileName, objectFieldId, serviceContext.getUserId());
+
+		DLFolder dlFolder = getDLFolder(
+			companyId, groupId, objectFieldId, serviceContext,
+			serviceContext.getUserId());
+
+		try (InputStream inputStream = new ByteArrayInputStream(fileContent)) {
+			return _dlAppLocalService.addFileEntry(
+				externalReferenceCode, serviceContext.getUserId(),
+				dlFolder.getRepositoryId(), dlFolder.getFolderId(),
+				DLUtil.getUniqueFileName(
+					groupId, dlFolder.getFolderId(), fileName, true),
+				_mimeTypes.getContentType(inputStream, fileName),
+				DLUtil.getUniqueTitle(
+					groupId, dlFolder.getFolderId(),
+					FileUtil.stripExtension(fileName)),
+				StringPool.BLANK, null, null, inputStream, fileContent.length,
+				null, null, null, serviceContext);
+		}
+	}
+
+	@Override
+	public FileEntry getOrAddFileEntry(
+			long companyId, String externalReferenceCode, byte[] fileContent,
+			String fileName, String folderExternalReferenceCode, long groupId,
+			long objectFieldId, ServiceContext serviceContext)
+		throws Exception {
+
+		FileEntry fileEntry =
+			_dlAppLocalService.fetchFileEntryByExternalReferenceCode(
+				groupId, externalReferenceCode);
+
+		if (fileEntry != null) {
+			return fileEntry;
+		}
+
+		_validateFile(
+			fileContent, fileName, objectFieldId, serviceContext.getUserId());
+
+		long folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+		long repositoryId = groupId;
+
+		if (Validator.isNotNull(folderExternalReferenceCode)) {
+			DLFolder dlFolder =
+				_dlFolderService.getDLFolderByExternalReferenceCode(
+					folderExternalReferenceCode, groupId);
+
+			folderId = dlFolder.getFolderId();
+			repositoryId = dlFolder.getRepositoryId();
+		}
+
+		ServiceContext cloneServiceContext =
+			(ServiceContext)serviceContext.clone();
+
+		cloneServiceContext.setCompanyId(companyId);
+
+		try (InputStream inputStream = new ByteArrayInputStream(fileContent)) {
+			_dlValidator.validateFileSize(
+				groupId, fileName,
+				_mimeTypes.getContentType(inputStream, fileName),
+				fileContent.length);
+
+			return _dlAppService.addFileEntry(
+				externalReferenceCode, repositoryId, folderId,
+				DLUtil.getUniqueFileName(groupId, folderId, fileName, true),
+				_mimeTypes.getContentType(inputStream, fileName),
+				DLUtil.getUniqueTitle(
+					groupId, folderId, FileUtil.stripExtension(fileName)),
+				StringPool.BLANK, null, null, inputStream, fileContent.length,
+				null, null, null, cloneServiceContext);
+		}
 	}
 
 	@Override

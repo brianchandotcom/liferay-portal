@@ -5,6 +5,7 @@
 
 package com.liferay.object.rest.internal.manager.v1_0;
 
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.object.action.engine.ObjectActionEngine;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectConstants;
@@ -1384,11 +1385,16 @@ public class DefaultObjectEntryManagerImpl
 		FileEntry fileEntry = ObjectMapperUtil.readValue(
 			FileEntry.class, propertyValue);
 
-		if ((fileEntry == null) || (fileEntry.getFileBase64() == null)) {
+		if ((fileEntry == null) ||
+			((fileEntry.getExternalReferenceCode() == null) &&
+			 (fileEntry.getFileBase64() == null))) {
+
 			return;
 		}
 
-		if (fileEntry.getId() != null) {
+		if ((fileEntry.getId() != null) &&
+			(fileEntry.getFileBase64() != null)) {
+
 			throw new IllegalArgumentException(
 				"Expected either \"id\" or \"fileBase64\" fields");
 		}
@@ -1408,6 +1414,12 @@ public class DefaultObjectEntryManagerImpl
 		com.liferay.portal.kernel.repository.model.FileEntry
 			serviceBuilderFileEntry = null;
 
+		byte[] fileContent = {};
+
+		if (fileEntry.getFileBase64() != null) {
+			fileContent = _decode(fileEntry.getFileBase64());
+		}
+
 		if (StringUtil.equals(
 				fileSource, ObjectFieldSettingConstants.VALUE_DOCS_AND_MEDIA)) {
 
@@ -1424,8 +1436,9 @@ public class DefaultObjectEntryManagerImpl
 				folderGroupId = folder.getSiteId();
 			}
 
-			serviceBuilderFileEntry = _attachmentManager.addFileEntry(
-				objectField.getCompanyId(), _decode(fileEntry.getFileBase64()),
+			serviceBuilderFileEntry = _attachmentManager.getOrAddFileEntry(
+				objectField.getCompanyId(),
+				fileEntry.getExternalReferenceCode(), fileContent,
 				fileEntry.getName(), folderExternalReferenceCode, folderGroupId,
 				objectField.getObjectFieldId(), serviceContext);
 		}
@@ -1433,8 +1446,9 @@ public class DefaultObjectEntryManagerImpl
 					fileSource,
 					ObjectFieldSettingConstants.VALUE_USER_COMPUTER)) {
 
-			serviceBuilderFileEntry = _attachmentManager.addFileEntry(
-				objectField.getCompanyId(), _decode(fileEntry.getFileBase64()),
+			serviceBuilderFileEntry = _attachmentManager.getOrAddFileEntry(
+				objectField.getCompanyId(),
+				fileEntry.getExternalReferenceCode(), fileContent,
 				fileEntry.getName(),
 				getGroupId(objectDefinition, scopeKey, true),
 				objectField.getObjectFieldId(), serviceContext);
@@ -1770,6 +1784,9 @@ public class DefaultObjectEntryManagerImpl
 
 	@Reference
 	private AttachmentManager _attachmentManager;
+
+	@Reference
+	private DLAppLocalService _dlAppLocalService;
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;

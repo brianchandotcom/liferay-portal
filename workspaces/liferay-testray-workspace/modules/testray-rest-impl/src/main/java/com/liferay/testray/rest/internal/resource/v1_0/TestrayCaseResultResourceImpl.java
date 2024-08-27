@@ -224,23 +224,22 @@ public class TestrayCaseResultResourceImpl
 			String testrayTeamIds, String testrayUserId, Pagination pagination)
 		throws Exception {
 
-		StringBundler sb = new StringBundler(50);
+		StringBundler sb = new StringBundler(47);
 
 		sb.append("select cr.c_caseResultId_, cr.comment_, cr.dueStatus_, ");
 		sb.append("cr.errors_, cr.issues_, ct.name_ as caseTypeName, c.name_ ");
-		sb.append("as caseName, c.priority_, cx.flaky_, r.name_ as runName, ");
+		sb.append("as caseName, c.priority_, c.flaky_, r.name_ as runName, ");
 		sb.append("r.number_ as runNumber, co.name_ as componentName, ");
 		sb.append("t.name_ as teamName, u.firstName, u.lastName, ");
 		sb.append("u.middleName, u.uuid_, u.portraitId from ");
 		sb.append("O_[%COMPANY_ID%]_Build b, O_[%COMPANY_ID%]_CaseResult cr ");
 		sb.append("left outer join User_ u on u.userId = ");
 		sb.append("cr.r_userToCaseResults_userId, O_[%COMPANY_ID%]_Case c, ");
-		sb.append("O_[%COMPANY_ID%]_Case_x cx, O_[%COMPANY_ID%]_CaseType ct, ");
-		sb.append("O_[%COMPANY_ID%]_Component co, O_[%COMPANY_ID%]_Run r, ");
-		sb.append("O_[%COMPANY_ID%]_Team t where b.c_buildId_ = ? and ");
-		sb.append("cr.r_buildToCaseResult_c_buildId = b.c_buildId_ and ");
-		sb.append("c.c_caseId_ = cr.r_caseToCaseResult_c_caseId and ");
-		sb.append("c.c_caseId_ = cx.c_caseId_ and ct.c_caseTypeId_ = ");
+		sb.append("O_[%COMPANY_ID%]_CaseType ct, O_[%COMPANY_ID%]_Component ");
+		sb.append("co, O_[%COMPANY_ID%]_Run r, O_[%COMPANY_ID%]_Team t where ");
+		sb.append("b.c_buildId_ = ? and cr.r_buildToCaseResult_c_buildId = ");
+		sb.append("b.c_buildId_ and c.c_caseId_ = ");
+		sb.append("cr.r_caseToCaseResult_c_caseId and ct.c_caseTypeId_ = ");
 		sb.append("c.r_caseTypeToCases_c_caseTypeId and co.c_componentId_ = ");
 		sb.append("cr.r_componentToCaseResult_c_componentId and r.c_runId_ = ");
 		sb.append("cr.r_runToCaseResult_c_runId and t.c_teamId_ = ");
@@ -261,7 +260,7 @@ public class TestrayCaseResultResourceImpl
 		}
 
 		if (flaky != null) {
-			sb.append("and cx.flaky_ = ? ");
+			sb.append("and c.flaky_ = ? ");
 			params.add(flaky);
 		}
 
@@ -339,10 +338,8 @@ public class TestrayCaseResultResourceImpl
 			params.add(testrayUserId);
 		}
 
-		sb.append("group by cr.c_caseResultId_, u.firstName, u.lastName, ");
-		sb.append("u.middleName, u.uuid_, u.portraitId order by ");
-		sb.append("cr.dueStatus_ asc, cr.errors_ is null asc, c.priority_ ");
-		sb.append("desc, t.name_ asc, co.name_ asc, ct.name_ asc ");
+		sb.append("order by cr.dueStatus_ asc, cr.errors_ is null asc,");
+		sb.append("c.priority_ desc, t.name_ asc, co.name_ asc, ct.name_ asc ");
 
 		String sql = StringUtil.replace(
 			sb.toString(), "[%COMPANY_ID%]",

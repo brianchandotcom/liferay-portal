@@ -39,7 +39,7 @@ export class WidgetPagePage {
 	}
 
 	async addContent(contentName: string) {
-		await this.addButton.click();
+		await this.openAddPanel();
 
 		await this.contentTab.click();
 

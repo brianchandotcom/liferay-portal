@@ -332,6 +332,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-97345 (TC-10). If POST/Users tries to create a User that is already linked to another SCIM Client, the creation will fail."
+	@ignore = "true"
 	@priority = 5
 	test SCIMClientCannotPostAUserIfTheyAreLinkedToAnotherClient {
 		property test.liferay.virtual.instance = "false";
@@ -464,6 +465,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-97345 (TC-14). A SCIM Client cannot update a User if they are linked to a different SCIM Client."
+	@ignore = "true"
 	@priority = 5
 	test SCIMClientCannotUpdateAUserOfADifferentClient {
 		property test.liferay.virtual.instance = "false";

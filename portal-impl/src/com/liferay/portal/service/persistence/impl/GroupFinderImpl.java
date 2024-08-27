@@ -1162,18 +1162,18 @@ public class GroupFinderImpl
 			return;
 		}
 
+		if (params.containsKey("actionId")) {
+			Long userId = _getUserId(params);
+
+			queryPos.add(userId);
+			queryPos.add(userId);
+		}
+
 		for (Map.Entry<String, Object> entry : params.entrySet()) {
 			String key = entry.getKey();
 
 			if (key.equals("actionId")) {
-				Long userId = (Long)params.get("userId");
-
-				if (Validator.isNull(userId)) {
-					PermissionChecker permissionChecker =
-						PermissionThreadLocal.getPermissionChecker();
-
-					userId = permissionChecker.getUserId();
-				}
+				Long userId = _getUserId(params);
 
 				int hasUserRole = 0;
 
@@ -1445,6 +1445,19 @@ public class GroupFinderImpl
 		_joinMap = joinMap;
 
 		return _joinMap;
+	}
+
+	private Long _getUserId(Map<String, Object> params) {
+		Long currentUserId = (Long)params.get("userId");
+
+		if (Validator.isNull(currentUserId)) {
+			PermissionChecker permissionChecker =
+				PermissionThreadLocal.getPermissionChecker();
+
+			currentUserId = permissionChecker.getUserId();
+		}
+
+		return currentUserId;
 	}
 
 	private Map<String, String> _getWhereMap() {

@@ -186,11 +186,15 @@
 						roleId, userId
 					FROM
 						UserGroupRole
+					WHERE
+						userId = ?
 					UNION ALL
 					SELECT
 						roleId, userid
 					FROM
 						Users_Roles
+					WHERE
+						userId = ?
 				) Roles
 			ON
 				Users_Groups.userId = Roles.userId

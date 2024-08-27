@@ -428,15 +428,16 @@ async function createSiteTemplateWithWebContentOnWidgetPage({
 	await journalPage.publishArticle();
 
 	await productMenuPage.goToPages();
-	await uiElementsPage.clickNewButton();
-	if (!layoutSetPrototypePage.addTemplatePageButton.isVisible) {
-		await uiElementsPage.clickNewButton();
-		await layoutSetPrototypePage.addTemplatePageButton.waitFor({
-			state: 'visible',
-		});
-	}
-	await layoutSetPrototypePage.addTemplatePageButton.click();
-	await pagesAdminPage.addWidgetPage(templateName);
+
+	await page
+		.locator('.control-menu-level-1-heading')
+		.filter({hasText: 'Pages'})
+		.waitFor();
+
+	await pagesAdminPage.addWidgetPage({
+		addButtonLabel: 'Add Site Template Page',
+		name: templateName,
+	});
 
 	await productMenuPage.clickSpecificPage(templateName);
 	await widgetPagePage.addButton.click();
@@ -495,7 +496,7 @@ async function createSiteTemplateWithWebContentOnContentPage({
 		state: 'visible',
 	});
 	await layoutSetPrototypePage.addTemplatePageButton.click();
-	await pagesAdminPage.addContentPage(templateName);
+	await pagesAdminPage.createNewPage({name: templateName});
 
 	await pageEditorPage.addWidget('Content Management', 'Web Content Display');
 	await webContentDisplayPage.addWebContentWithDisplay();

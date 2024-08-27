@@ -30,16 +30,12 @@ test(
 	},
 	async ({page, pagesAdminPage, site, widgetPagePage}) => {
 		await pagesAdminPage.goto(site.friendlyUrlPath);
-		await pagesAdminPage.newButton.click();
 
-		await pagesAdminPage.addPageButton.waitFor({state: 'visible'});
-		await pagesAdminPage.addPageButton.click();
-
-		const title = getRandomString();
-		await pagesAdminPage.addWidgetPage(title);
+		const name = getRandomString();
+		await pagesAdminPage.addWidgetPage({name});
 
 		await pagesAdminPage.goto(site.friendlyUrlPath);
-		await page.getByLabel(title, {exact: true}).click();
+		await page.getByLabel(name, {exact: true}).click();
 
 		await widgetPagePage.addPortlet('Asset Publisher');
 		await page

@@ -66,9 +66,18 @@ long commerceWishListId = commerceWishListDisplayContext.getCommerceWishListId()
 							cssClass="table-cell-expand"
 							name="description"
 						>
-							<a class="font-weight-bold" href="<%= commerceWishListDisplayContext.getCPDefinitionURL(cpDefinition.getCPDefinitionId(), themeDisplay) %>">
-								<%= HtmlUtil.escape(cpDefinition.getName(themeDisplay.getLanguageId())) %>
-							</a>
+							<c:choose>
+								<c:when test="<%= commerceWishListDisplayContext.isProductVisibleToAccount(cpDefinition.getCPDefinitionId()) %>">
+									<a class="font-weight-bold" href="<%= commerceWishListDisplayContext.getCPDefinitionURL(cpDefinition.getCPDefinitionId(), themeDisplay) %>">
+										<%= HtmlUtil.escape(cpDefinition.getName(themeDisplay.getLanguageId())) %>
+									</a>
+								</c:when>
+								<c:otherwise>
+									<span class="font-weight-bold">
+										<%= HtmlUtil.escape(cpDefinition.getName(themeDisplay.getLanguageId())) %>
+									</span>
+								</c:otherwise>
+							</c:choose>
 
 							<div class="h6 text-default">
 								<%= HtmlUtil.escape(commerceWishListDisplayContext.getCommerceWishListItemDescription(commerceWishListItem)) %>

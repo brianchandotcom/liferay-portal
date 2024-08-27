@@ -1,0 +1,4 @@
+ext.expectedErrorMessage = "Client extension with-invalid-restrictedToAdminPages must have a boolean value for the property \"restrictedToAdminPages\""
+ext.taskPath = ":with-invalid-restrictedToAdminPages:validateClientExtensions"
+
+apply from: project.property("commonScript.shouldFailTestCase.gradle")

@@ -1,0 +1,4 @@
+ext.expectedErrorMessage = "Client extension with-invalid-script-location has an invalid value \"foo\" for the property \"scriptLocation\". Valid values are: bottom, head."
+ext.taskPath = ":with-invalid-script-location:validateClientExtensions"
+
+apply from: project.property("commonScript.shouldFailTestCase.gradle")

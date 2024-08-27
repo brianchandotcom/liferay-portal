@@ -1,0 +1,4 @@
+with-invalid-script-location:
+    scriptLocation: "foo"
+    type: globalJS
+    url: src/dummy.js

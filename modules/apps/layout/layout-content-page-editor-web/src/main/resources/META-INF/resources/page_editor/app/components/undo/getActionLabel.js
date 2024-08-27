@@ -12,10 +12,12 @@ import {
 	ADD_RULE,
 	ADD_STEPPER,
 	CHANGE_MASTER_LAYOUT,
+	CUT_ITEM,
 	DELETE_ITEM,
 	DELETE_RULE,
 	DUPLICATE_ITEM,
 	MOVE_ITEM,
+	PASTE_ITEM,
 	SWITCH_VIEWPORT_SIZE,
 	TOGGLE_FRAGMENT_HIGHLIGHTED,
 	TOGGLE_WIDGET_HIGHLIGHTED,
@@ -68,6 +70,10 @@ export default function getActionLabel(
 			return sub(Liferay.Language.get('delete-x'), action.itemName);
 		case DUPLICATE_ITEM:
 			return sub(Liferay.Language.get('duplicate-x'), action.itemName);
+		case PASTE_ITEM:
+			return sub(Liferay.Language.get('paste-x'), action.itemName);
+		case CUT_ITEM:
+			return sub(Liferay.Language.get('cut-x'), action.itemName);
 		case MOVE_ITEM:
 			return sub(Liferay.Language.get('move-x'), action.itemName);
 		case SELECT_SEGMENTS_EXPERIENCE:

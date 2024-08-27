@@ -18,11 +18,19 @@ import com.liferay.portal.kernel.service.ServiceContext;
  */
 public interface AttachmentManager {
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #getOrAddFileEntry(long, String, byte[], String, long, long, ServiceContext)} (String)}
+	 */
+	@Deprecated
 	public FileEntry addFileEntry(
 			long companyId, byte[] fileContent, String fileName, long groupId,
 			long objectFieldId, ServiceContext serviceContext)
 		throws Exception;
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #getOrAddFileEntry(long, String, byte[], String, String, long, long, ServiceContext)}
+	 */
+	@Deprecated
 	public FileEntry addFileEntry(
 			long companyId, byte[] fileContent, String fileName,
 			String folderExternalReferenceCode, long groupId,
@@ -37,6 +45,18 @@ public interface AttachmentManager {
 		throws PortalException;
 
 	public long getMaximumFileSize(long objectFieldId, boolean signedIn);
+
+	public FileEntry getOrAddFileEntry(
+			long companyId, String externalReferenceCode, byte[] fileContent,
+			String fileName, long groupId, long objectFieldId,
+			ServiceContext serviceContext)
+		throws Exception;
+
+	public FileEntry getOrAddFileEntry(
+			long companyId, String externalReferenceCode, byte[] fileContent,
+			String fileName, String folderExternalReferenceCode, long groupId,
+			long objectFieldId, ServiceContext serviceContext)
+		throws Exception;
 
 	public void validateFileExtension(String fileName, long objectFieldId)
 		throws FileExtensionException;

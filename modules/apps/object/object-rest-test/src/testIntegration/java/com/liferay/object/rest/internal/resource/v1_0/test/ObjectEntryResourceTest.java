@@ -5697,11 +5697,7 @@ public class ObjectEntryResourceTest {
 
 				jsonObject = HTTPTestUtil.invokeToJSONObject(
 					JSONUtil.putAll(
-						JSONUtil.put(
-							"actionIds", JSONUtil.putAll()
-						).put(
-							"roleName", role.getName()
-						)
+						_getPermissionsJSONObject(new String[0], role.getName())
 					).toString(),
 					StringBundler.concat(
 						_getEndpoint(
@@ -12161,19 +12157,15 @@ public class ObjectEntryResourceTest {
 	}
 
 	private JSONObject _getOwnerPermissionsJSONObject() {
-		return JSONUtil.put(
-			"actionIds",
-			JSONUtil.putAll(
+		return _getPermissionsJSONObject(
+			new String[] {
 				ActionKeys.DELETE, ActionKeys.PERMISSIONS, ActionKeys.UPDATE,
-				ActionKeys.VIEW)
-		).put(
-			"roleName", RoleConstants.OWNER
-		);
+				ActionKeys.VIEW
+			},
+			RoleConstants.OWNER);
 	}
 
-	private JSONArray _getPermissionsJSONArray(String[] actionIds, Role role)
-		throws Exception {
-
+	private JSONArray _getPermissionsJSONArray(String[] actionIds, Role role) {
 		return JSONUtil.putAll(
 			_getOwnerPermissionsJSONObject(),
 			_getPermissionsJSONObject(actionIds, role.getName()));

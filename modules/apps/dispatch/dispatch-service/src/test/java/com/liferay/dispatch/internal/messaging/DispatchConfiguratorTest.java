@@ -90,7 +90,9 @@ public class DispatchConfiguratorTest {
 	}
 
 	@Test
-	public void testNoClusterNoListener() throws Exception {
+	public void testOnActivationNoClusterMasterTokenTransitionListenerAddedWhenClusterDisabled()
+		throws Exception {
+
 		Mockito.when(
 			_clusterMasterExecutor.isEnabled()
 		).thenReturn(
@@ -381,7 +383,9 @@ public class DispatchConfiguratorTest {
 	}
 
 	@Test
-	public void testOnMasterTokenAcquired() throws Exception {
+	public void testOnMasterTokenAcquiredSchedulesAllTypesOfJobs()
+		throws Exception {
+
 		Mockito.when(
 			_clusterMasterExecutor.isEnabled()
 		).thenReturn(
@@ -462,7 +466,9 @@ public class DispatchConfiguratorTest {
 	}
 
 	@Test
-	public void testOnMasterTokenReleased() throws Exception {
+	public void testOnMasterTokenReleasedSchedulesOnlyAllNodesJobs()
+		throws Exception {
+
 		Mockito.when(
 			_clusterMasterExecutor.isEnabled()
 		).thenReturn(

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.site.navigation.menu.web.internal.exportimport.portlet.preferences.processor.test;
+package com.liferay.site.navigation.menu.web.internal.exportimport.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
@@ -65,7 +65,7 @@ import org.junit.runner.RunWith;
  */
 @FeatureFlags("LPD-23048")
 @RunWith(Arquillian.class)
-public class SiteNavigationMenuExportImportPortletPreferencesProcessorTest
+public class SiteNavigationMenuExportImportTest
 	extends BasePortletExportImportTestCase {
 
 	@ClassRule

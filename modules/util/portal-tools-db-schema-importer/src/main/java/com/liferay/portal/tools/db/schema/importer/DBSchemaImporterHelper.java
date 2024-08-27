@@ -79,7 +79,7 @@ public class DBSchemaImporterHelper {
 
 		AutoBatchPreparedStatementUtil.start();
 
-		_copyContent();
+		_copyTables();
 
 		AutoBatchPreparedStatementUtil.stop();
 
@@ -90,32 +90,7 @@ public class DBSchemaImporterHelper {
 		_executorService.awaitTermination(10, TimeUnit.SECONDS);
 	}
 
-	private void _copyContent() throws Exception {
-		List<Future<?>> futures = new ArrayList<>();
-
-		ExecutorService executorService = Executors.newFixedThreadPool(5);
-
-		Set<String> sourceTables = _sourceTableColumns.keySet();
-		Set<String> targetTables = _targetTableColumns.keySet();
-
-		Iterator<String> sourceTablesIterator = sourceTables.iterator();
-		Iterator<String> targetTablesIterator = targetTables.iterator();
-
-		while (sourceTablesIterator.hasNext()) {
-			String sourceTable = sourceTablesIterator.next();
-			String targetTable = targetTablesIterator.next();
-
-			futures.add(
-				executorService.submit(
-					() -> _safeCopyTableContent(sourceTable, targetTable)));
-		}
-
-		for (Future<?> future : futures) {
-			future.get();
-		}
-	}
-
-	private void _copyTableContent(
+	private void _copyTable(
 			String sourceTableName, String targetTableName,
 			Connection sourceConnection, Connection targetConnection)
 		throws Exception {
@@ -164,6 +139,31 @@ public class DBSchemaImporterHelper {
 			}
 
 			preparedStatement2.executeBatch();
+		}
+	}
+
+	private void _copyTables() throws Exception {
+		List<Future<?>> futures = new ArrayList<>();
+
+		ExecutorService executorService = Executors.newFixedThreadPool(5);
+
+		Set<String> sourceTables = _sourceTableColumns.keySet();
+		Set<String> targetTables = _targetTableColumns.keySet();
+
+		Iterator<String> sourceTablesIterator = sourceTables.iterator();
+		Iterator<String> targetTablesIterator = targetTables.iterator();
+
+		while (sourceTablesIterator.hasNext()) {
+			String sourceTable = sourceTablesIterator.next();
+			String targetTable = targetTablesIterator.next();
+
+			futures.add(
+				executorService.submit(
+					() -> _safeCopyTable(sourceTable, targetTable)));
+		}
+
+		for (Future<?> future : futures) {
+			future.get();
 		}
 	}
 
@@ -565,13 +565,13 @@ public class DBSchemaImporterHelper {
 		_syncSQLs.clear();
 	}
 
-	private void _safeCopyTableContent(
+	private void _safeCopyTable(
 		String sourceTableName, String targetTableName) {
 
 		try (Connection sourceConnection = _sourceDataSource.getConnection();
 			Connection targetConnection = _targetDataSource.getConnection()) {
 
-			_copyTableContent(
+			_copyTable(
 				sourceTableName, targetTableName, sourceConnection,
 				targetConnection);
 		}

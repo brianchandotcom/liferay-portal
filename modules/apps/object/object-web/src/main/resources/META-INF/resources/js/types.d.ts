@@ -299,6 +299,7 @@ type ObjectFieldBusinessTypeName =
 	| 'Aggregation'
 	| 'Attachment'
 	| 'AutoIncrement'
+	| 'Boolean'
 	| 'Date'
 	| 'DateTime'
 	| 'Decimal'

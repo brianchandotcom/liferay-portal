@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.upgrade.ReleaseManager;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.EnvPropertiesUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -930,6 +931,17 @@ public class UpgradeReport {
 					sb.append(propertyEntry.getKey());
 					sb.append(StringPool.COLON);
 					sb.append(StringPool.SPACE);
+
+					if (ArrayUtil.contains(
+							PropsValues.ADMIN_OBFUSCATED_PROPERTIES,
+							String.valueOf(propertyEntry.getValue()))) {
+
+						sb.append(StringPool.EIGHT_STARS);
+					}
+					else {
+						sb.append(propertyEntry.getValue());
+					}
+
 					sb.append(propertyEntry.getValue());
 					sb.append(StringPool.NEW_LINE);
 				}

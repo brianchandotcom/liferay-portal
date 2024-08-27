@@ -6,6 +6,7 @@
 package com.liferay.commerce.wish.list.web.internal.portlet;
 
 import com.liferay.commerce.price.CommerceProductPriceCalculation;
+import com.liferay.commerce.product.permission.CommerceProductViewPermission;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.wish.list.constants.CommerceWishListConstants;
@@ -64,9 +65,9 @@ public class CommerceWishListContentPortlet extends MVCPortlet {
 
 		CommerceWishListDisplayContext commerceWishListDisplayContext =
 			new CommerceWishListDisplayContext(
-				commerceProductPriceCalculation, commerceWishListHttpHelper,
-				commerceWishListItemService, commerceWishListService,
-				cpDefinitionHelper, cpInstanceHelper,
+				commerceProductPriceCalculation, _commerceProductViewPermission,
+				commerceWishListHttpHelper, commerceWishListItemService,
+				commerceWishListService, cpDefinitionHelper, cpInstanceHelper,
 				portal.getHttpServletRequest(renderRequest),
 				_portletResourcePermission);
 
@@ -96,6 +97,9 @@ public class CommerceWishListContentPortlet extends MVCPortlet {
 
 	@Reference
 	protected Portal portal;
+
+	@Reference
+	private CommerceProductViewPermission _commerceProductViewPermission;
 
 	@Reference(
 		target = "(resource.name=" + CommerceWishListConstants.RESOURCE_NAME + ")"

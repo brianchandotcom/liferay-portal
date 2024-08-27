@@ -13,6 +13,7 @@ import com.liferay.commerce.price.CommerceProductPriceCalculation;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.permission.CommerceProductViewPermission;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.util.CommerceUtil;
@@ -37,6 +38,7 @@ import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.KeyValuePair;
@@ -61,6 +63,7 @@ public class CommerceWishListDisplayContext {
 
 	public CommerceWishListDisplayContext(
 		CommerceProductPriceCalculation commerceProductPriceCalculation,
+		CommerceProductViewPermission commerceProductViewPermission,
 		CommerceWishListHttpHelper commerceWishListHttpHelper,
 		CommerceWishListItemService commerceWishListItemService,
 		CommerceWishListService commerceWishListService,
@@ -70,6 +73,7 @@ public class CommerceWishListDisplayContext {
 		PortletResourcePermission portletResourcePermission) {
 
 		_commerceProductPriceCalculation = commerceProductPriceCalculation;
+		_commerceProductViewPermission = commerceProductViewPermission;
 		_commerceWishListHttpHelper = commerceWishListHttpHelper;
 		_commerceWishListItemService = commerceWishListItemService;
 		_commerceWishListService = commerceWishListService;
@@ -342,6 +346,16 @@ public class CommerceWishListDisplayContext {
 			CommerceWishListActionKeys.MANAGE_COMMERCE_WISH_LISTS);
 	}
 
+	public boolean isProductVisibleToAccount(long cpDefinitionId)
+		throws PortalException {
+
+		return _commerceProductViewPermission.contains(
+			PermissionThreadLocal.getPermissionChecker(),
+			CommerceUtil.getCommerceAccountId(
+				_commerceWishListRequestHelper.getCommerceContext()),
+			cpDefinitionId);
+	}
+
 	private long _getDefaultCommerceWishListId() throws PortalException {
 		long defaultCommerceWishListId = 0;
 
@@ -410,6 +424,7 @@ public class CommerceWishListDisplayContext {
 
 	private final CommerceProductPriceCalculation
 		_commerceProductPriceCalculation;
+	private final CommerceProductViewPermission _commerceProductViewPermission;
 	private CommerceWishList _commerceWishList;
 	private final CommerceWishListHttpHelper _commerceWishListHttpHelper;
 	private final CommerceWishListItemService _commerceWishListItemService;

@@ -1340,6 +1340,10 @@ components:
                     description:
                         The document's description.
                     type: string
+                documentFolderExternalReferenceCode:
+                    description:
+                        The external reference code of the `DocumentFolder` where this document is stored.
+                    type: string
                 documentFolderId:
                     description:
                         The ID of the `DocumentFolder` where this document is stored.

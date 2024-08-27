@@ -1161,6 +1161,8 @@ public abstract class BaseTestEntityResourceTestCase {
 	protected TestEntity randomTestEntity() throws Exception {
 		List<Supplier<TestEntity>> suppliers = Arrays.asList(
 			() -> {
+				ChildTestEntity1 testEntity = new ChildTestEntity1();
+
 				testEntity.setDateCreated(RandomTestUtil.nextDate());
 				testEntity.setDateModified(RandomTestUtil.nextDate());
 				testEntity.setDescription(
@@ -1172,8 +1174,6 @@ public abstract class BaseTestEntityResourceTestCase {
 					StringUtil.toLowerCase(RandomTestUtil.randomString()));
 				testEntity.setSelf(
 					StringUtil.toLowerCase(RandomTestUtil.randomString()));
-
-				ChildTestEntity1 testEntity = new ChildTestEntity1();
 
 				testEntity.setProperty1(
 					StringUtil.toLowerCase(RandomTestUtil.randomString()));
@@ -1183,6 +1183,8 @@ public abstract class BaseTestEntityResourceTestCase {
 				return testEntity;
 			},
 			() -> {
+				ChildTestEntity2 testEntity = new ChildTestEntity2();
+
 				testEntity.setDateCreated(RandomTestUtil.nextDate());
 				testEntity.setDateModified(RandomTestUtil.nextDate());
 				testEntity.setDescription(
@@ -1194,8 +1196,6 @@ public abstract class BaseTestEntityResourceTestCase {
 					StringUtil.toLowerCase(RandomTestUtil.randomString()));
 				testEntity.setSelf(
 					StringUtil.toLowerCase(RandomTestUtil.randomString()));
-
-				ChildTestEntity2 testEntity = new ChildTestEntity2();
 
 				testEntity.setProperty2(
 					StringUtil.toLowerCase(RandomTestUtil.randomString()));
@@ -1205,6 +1205,8 @@ public abstract class BaseTestEntityResourceTestCase {
 				return testEntity;
 			},
 			() -> {
+				ChildTestEntity3 testEntity = new ChildTestEntity3();
+
 				testEntity.setDateCreated(RandomTestUtil.nextDate());
 				testEntity.setDateModified(RandomTestUtil.nextDate());
 				testEntity.setDescription(
@@ -1216,8 +1218,6 @@ public abstract class BaseTestEntityResourceTestCase {
 					StringUtil.toLowerCase(RandomTestUtil.randomString()));
 				testEntity.setSelf(
 					StringUtil.toLowerCase(RandomTestUtil.randomString()));
-
-				ChildTestEntity3 testEntity = new ChildTestEntity3();
 
 				testEntity.setType(TestEntity.Type.create("ChildTestEntity3"));
 

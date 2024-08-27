@@ -458,7 +458,7 @@ public class LayoutStructure {
 	}
 
 	public Map<String, List<LayoutStructureItem>> copyLayoutStructureItems(
-		List<String> parentItemIds, List<String> itemIds) {
+		List<String> itemIds, List<String> parentItemIds) {
 
 		Map<String, List<LayoutStructureItem>> copiedLayoutStructureItemsMap =
 			new HashMap<>();

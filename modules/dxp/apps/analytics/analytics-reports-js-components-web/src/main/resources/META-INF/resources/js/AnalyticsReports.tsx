@@ -6,6 +6,7 @@
 import React from 'react';
 
 import AppSetup from './components/AppSetup';
+import GlobalFilters from './components/GlobalFilters';
 
 interface AnalyticsReports {
 	contentPerformanceDataFetchURL: string;
@@ -18,7 +19,7 @@ const AnalyticsReports: React.FC<AnalyticsReports> = ({
 		<AppSetup
 			contentPerformanceDataFetchURL={contentPerformanceDataFetchURL}
 		>
-			<div>Hello, world!</div>
+			<GlobalFilters />
 		</AppSetup>
 	);
 };

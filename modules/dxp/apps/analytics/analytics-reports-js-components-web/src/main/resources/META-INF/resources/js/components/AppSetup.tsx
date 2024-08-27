@@ -4,11 +4,13 @@
  */
 
 import ClayAlert from '@clayui/alert';
+import {Provider as ClayIconProvider} from '@clayui/core';
 import ClayLink from '@clayui/link';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
+import {AnalyticsReportsProvider} from '../AnalyticsReportsContext';
 import EmptyState from './EmptyState';
 
 interface IAppSetupProps extends React.HTMLAttributes<HTMLElement> {
@@ -136,7 +138,13 @@ const AppSetup: React.FC<IAppSetupProps> = ({
 		);
 	}
 
-	return <>{children}</>;
+	return (
+		<ClayIconProvider
+			spritemap={`${Liferay.ThemeDisplay.getPathThemeImages()}/clay/icons.svg`}
+		>
+			<AnalyticsReportsProvider>{children}</AnalyticsReportsProvider>
+		</ClayIconProvider>
+	);
 };
 
 export default AppSetup;

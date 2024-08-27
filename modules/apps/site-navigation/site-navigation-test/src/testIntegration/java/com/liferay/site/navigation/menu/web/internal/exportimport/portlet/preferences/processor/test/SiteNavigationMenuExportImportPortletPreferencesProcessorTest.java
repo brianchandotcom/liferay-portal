@@ -14,6 +14,7 @@ import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
@@ -184,10 +185,14 @@ public class SiteNavigationMenuExportImportPortletPreferencesProcessorTest {
 			prototypeLayout, SiteNavigationMenuPortletKeys.SITE_NAVIGATION_MENU,
 			HashMapBuilder.put(
 				"siteNavigationMenuExternalReferenceCode",
-				new String[] {
-					SiteNavigationMenuTestUtil.addSiteNavigationMenu(
-						layoutSetPrototype.getGroup(), name
-					).getExternalReferenceCode()
+				() -> {
+					SiteNavigationMenu siteNavigationMenu =
+						SiteNavigationMenuTestUtil.addSiteNavigationMenu(
+							layoutSetPrototype.getGroup(), name);
+
+					return new String[] {
+						siteNavigationMenu.getExternalReferenceCode()
+					};
 				}
 			).build());
 
@@ -198,9 +203,10 @@ public class SiteNavigationMenuExportImportPortletPreferencesProcessorTest {
 		_sites.mergeLayoutSetPrototypeLayouts(
 			group, group.getPublicLayoutSet());
 
+		LayoutSet layoutSet = layoutSetPrototype.getLayoutSet();
+
 		UnicodeProperties layoutSetPrototypeSettingsUnicodeProperties =
-			layoutSetPrototype.getLayoutSet(
-			).getSettingsProperties();
+			layoutSet.getSettingsProperties();
 
 		Assert.assertEquals(
 			0,

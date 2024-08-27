@@ -1,5 +1,5 @@
 dependencies {
-	classpath group: "com.liferay", name: "com.liferay.gradle.plugins.defaults", version: "10.1.159"
+	classpath group: "com.liferay", name: "com.liferay.gradle.plugins.defaults", version: "10.1.160"
 	classpath group: "com.liferay", name: "com.liferay.gradle.plugins.maven.plugin.builder", version: "2.0.2"
 	classpath group: "de.undercouch", name: "gradle-download-task", version: "5.4.0"
 

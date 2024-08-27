@@ -18,15 +18,33 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface GlobalJSCET extends CET {
 
 	@CETProperty(
+		defaultValue = "page", label = "scope", name = "scope",
+		type = CETProperty.Type.String
+	)
+	public String getScope();
+
+	@CETProperty(
 		defaultValue = "", name = "scriptElementAttributesJSON",
 		type = CETProperty.Type.String
 	)
 	public String getScriptElementAttributesJSON();
 
 	@CETProperty(
+		defaultValue = "head", label = "script-location",
+		name = "scriptLocation", type = CETProperty.Type.String
+	)
+	public String getScriptLocation();
+
+	@CETProperty(
 		defaultValue = "", label = "js-url", name = "url",
 		type = CETProperty.Type.URL
 	)
 	public String getURL();
+
+	@CETProperty(
+		defaultValue = "false", label = "restricted-to-admin-pages",
+		name = "restrictedToAdminPages", type = CETProperty.Type.Boolean
+	)
+	public boolean isRestrictedToAdminPages();
 
 }

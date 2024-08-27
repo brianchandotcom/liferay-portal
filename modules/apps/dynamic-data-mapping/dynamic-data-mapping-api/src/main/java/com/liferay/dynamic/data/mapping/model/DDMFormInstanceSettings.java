@@ -42,7 +42,8 @@ import org.osgi.annotation.versioning.ProviderType;
 		@DDMFormRule(
 			actions = {
 				"setEnabled('autosaveEnabled', FALSE)",
-				"setValue('autosaveEnabled', FALSE)"
+				"setValue('autosaveEnabled', FALSE)",
+				"setValue('workflowDefinition', [\"no-workflow\"])"
 			},
 			condition = "contains(getValue('storageType'), \"object\")"
 		),

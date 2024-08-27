@@ -489,7 +489,7 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 			assetTagNames = sitePage.getKeywords();
 		}
 
-		return ServiceContextBuilder.create(
+		ServiceContext serviceContext = ServiceContextBuilder.create(
 			groupId, contextHttpServletRequest, null
 		).assetCategoryIds(
 			assetCategoryIds
@@ -501,6 +501,10 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 				sitePage.getCustomFields(),
 				contextAcceptLanguage.getPreferredLocale())
 		).build();
+
+		serviceContext.setUserId(contextUser.getUserId());
+
+		return serviceContext;
 	}
 
 	private Map<String, Map<String, String>> _getBasicActions(Layout layout) {

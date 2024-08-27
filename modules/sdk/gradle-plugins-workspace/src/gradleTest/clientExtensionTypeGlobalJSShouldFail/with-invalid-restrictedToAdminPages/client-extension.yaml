@@ -1,0 +1,4 @@
+with-invalid-restrictedToAdminPages:
+    restrictedToAdminPages: "true"
+    type: globalJS
+    url: src/dummy.js

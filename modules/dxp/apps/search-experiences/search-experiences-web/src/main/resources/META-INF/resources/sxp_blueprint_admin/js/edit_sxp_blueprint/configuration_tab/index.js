@@ -122,6 +122,16 @@ function ConfigurationTab({
 						{Liferay.Language.get('configuration')}
 					</h2>
 
+					<div className="sheet-text">
+						<span className="help-text">
+							{Liferay.Language.get(
+								'enter-additional-blueprints-configuration-settings-below-refer-to-the-documentation-for-help'
+							)}
+						</span>
+
+						<LearnMessage resourceKey="search-blueprint-configuration" />
+					</div>
+
 					<ClayForm.Group>
 						<label>
 							{Liferay.Language.get('aggregation-configuration')}

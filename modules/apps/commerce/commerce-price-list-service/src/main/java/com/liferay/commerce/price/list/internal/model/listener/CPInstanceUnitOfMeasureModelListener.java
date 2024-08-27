@@ -52,6 +52,8 @@ public class CPInstanceUnitOfMeasureModelListener
 							cpInstance.getCPInstanceUuid(), null,
 							StringPool.BLANK)) {
 
+					commercePriceEntry.setPricingQuantity(
+						cpInstanceUnitOfMeasure.getPricingQuantity());
 					commercePriceEntry.setQuantity(
 						cpInstanceUnitOfMeasure.getIncrementalOrderQuantity());
 					commercePriceEntry.setUnitOfMeasureKey(

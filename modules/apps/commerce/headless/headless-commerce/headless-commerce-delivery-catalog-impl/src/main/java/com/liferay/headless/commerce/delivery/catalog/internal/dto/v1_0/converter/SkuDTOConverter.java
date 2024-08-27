@@ -211,7 +211,7 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 						skuDTOConverterContext.getLocale(),
 						skuDTOConverterContext.getQuantity(),
 						_cpInstanceUnitOfMeasureLocalService.
-							getCPInstanceUnitOfMeasure(
+							fetchCPInstanceUnitOfMeasure(
 								cpInstance.getCPInstanceId(),
 								skuDTOConverterContext.getUnitOfMeasureKey())));
 				setProductConfiguration(
@@ -397,7 +397,8 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 						getCPDefinitionCommerceOptionValues(
 							cpInstance.getCPDefinitionId(), formFieldValues),
 					cpInstance.getCPInstanceId(), quantity,
-					cpInstanceUnitOfMeasure.getKey()));
+					(cpInstanceUnitOfMeasure == null) ? StringPool.BLANK :
+						cpInstanceUnitOfMeasure.getKey()));
 
 		if (commerceProductPrice == null) {
 			return new Price();

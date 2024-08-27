@@ -1161,6 +1161,18 @@ public abstract class BaseTestEntityResourceTestCase {
 	protected TestEntity randomTestEntity() throws Exception {
 		List<Supplier<TestEntity>> suppliers = Arrays.asList(
 			() -> {
+				testEntity.setDateCreated(RandomTestUtil.nextDate());
+				testEntity.setDateModified(RandomTestUtil.nextDate());
+				testEntity.setDescription(
+					StringUtil.toLowerCase(RandomTestUtil.randomString()));
+				testEntity.setDocumentId(RandomTestUtil.randomLong());
+				testEntity.setJsonProperty(
+					StringUtil.toLowerCase(RandomTestUtil.randomString()));
+				testEntity.setName(
+					StringUtil.toLowerCase(RandomTestUtil.randomString()));
+				testEntity.setSelf(
+					StringUtil.toLowerCase(RandomTestUtil.randomString()));
+
 				ChildTestEntity1 testEntity = new ChildTestEntity1();
 
 				testEntity.setProperty1(
@@ -1168,6 +1180,9 @@ public abstract class BaseTestEntityResourceTestCase {
 
 				testEntity.setType(TestEntity.Type.create("ChildTestEntity1"));
 
+				return testEntity;
+			},
+			() -> {
 				testEntity.setDateCreated(RandomTestUtil.nextDate());
 				testEntity.setDateModified(RandomTestUtil.nextDate());
 				testEntity.setDescription(
@@ -1180,9 +1195,6 @@ public abstract class BaseTestEntityResourceTestCase {
 				testEntity.setSelf(
 					StringUtil.toLowerCase(RandomTestUtil.randomString()));
 
-				return testEntity;
-			},
-			() -> {
 				ChildTestEntity2 testEntity = new ChildTestEntity2();
 
 				testEntity.setProperty2(
@@ -1190,25 +1202,9 @@ public abstract class BaseTestEntityResourceTestCase {
 
 				testEntity.setType(TestEntity.Type.create("ChildTestEntity2"));
 
-				testEntity.setDateCreated(RandomTestUtil.nextDate());
-				testEntity.setDateModified(RandomTestUtil.nextDate());
-				testEntity.setDescription(
-					StringUtil.toLowerCase(RandomTestUtil.randomString()));
-				testEntity.setDocumentId(RandomTestUtil.randomLong());
-				testEntity.setJsonProperty(
-					StringUtil.toLowerCase(RandomTestUtil.randomString()));
-				testEntity.setName(
-					StringUtil.toLowerCase(RandomTestUtil.randomString()));
-				testEntity.setSelf(
-					StringUtil.toLowerCase(RandomTestUtil.randomString()));
-
 				return testEntity;
 			},
 			() -> {
-				ChildTestEntity3 testEntity = new ChildTestEntity3();
-
-				testEntity.setType(TestEntity.Type.create("ChildTestEntity3"));
-
 				testEntity.setDateCreated(RandomTestUtil.nextDate());
 				testEntity.setDateModified(RandomTestUtil.nextDate());
 				testEntity.setDescription(
@@ -1220,6 +1216,10 @@ public abstract class BaseTestEntityResourceTestCase {
 					StringUtil.toLowerCase(RandomTestUtil.randomString()));
 				testEntity.setSelf(
 					StringUtil.toLowerCase(RandomTestUtil.randomString()));
+
+				ChildTestEntity3 testEntity = new ChildTestEntity3();
+
+				testEntity.setType(TestEntity.Type.create("ChildTestEntity3"));
 
 				return testEntity;
 			});

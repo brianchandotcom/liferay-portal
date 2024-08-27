@@ -83,7 +83,7 @@ export default function SaveButtons({
 				});
 			}
 		}
-		else {
+		else if (!Liferay.FeatureFlags['LPS-114700']) {
 			showAlert(
 				sub(
 					Liferay.Language.get(
@@ -266,7 +266,7 @@ export default function SaveButtons({
 									publishModalVisible: true,
 								});
 							}
-							else {
+							else if (!Liferay.FeatureFlags['LPS-114700']) {
 								showAlert(
 									sub(
 										Liferay.Language.get(

@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.cache.thread.local.Lifecycle;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCache;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCacheManager;
+import com.liferay.portal.kernel.change.tracking.CTCollectionPreviewThreadLocal;
 import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
 import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
@@ -770,6 +771,14 @@ public class PortalImpl implements Portal {
 				url = HttpComponentsUtil.setParameter(
 					url, "refererPlid", themeDisplay.getRefererPlid());
 			}
+		}
+
+		long previewCTCollectionId =
+			CTCollectionPreviewThreadLocal.getCTCollectionId();
+
+		if (previewCTCollectionId > -1) {
+			url = HttpComponentsUtil.setParameter(
+				url, "previewCTCollectionId", previewCTCollectionId);
 		}
 
 		return url;

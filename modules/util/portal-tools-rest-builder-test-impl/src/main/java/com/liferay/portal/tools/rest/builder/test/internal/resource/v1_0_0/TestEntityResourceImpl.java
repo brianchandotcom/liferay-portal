@@ -42,7 +42,7 @@ public class TestEntityResourceImpl extends BaseTestEntityResourceImpl {
 
 	@Override
 	public TestEntity patchTestEntity(
-		Long testEntityId, TestEntity testEntity) {
+		Long testEntityId, Long optionalParameter, TestEntity testEntity) {
 
 		TestEntity oldTestEntity = _testEntities.set(
 			Math.toIntExact(testEntityId), testEntity);

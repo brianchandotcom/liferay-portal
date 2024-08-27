@@ -259,6 +259,35 @@ export default {
 		);
 	},
 
+	pasteItem({
+		itemIds,
+		onNetworkStatus,
+		parentItemIds,
+		segmentsExperienceId,
+	}: {
+		itemIds: string[];
+		onNetworkStatus: OnNetworkStatus;
+		parentItemIds: string[];
+		segmentsExperienceId: string;
+	}) {
+		return draftServiceFetch<{
+			copiedFragmentEntryLinks: FragmentEntryLink[];
+			copiedItemIds: string[];
+			layoutData: LayoutData;
+			restrictedItemIds: string[];
+		}>(
+			config.copyItemsURL,
+			{
+				body: {
+					itemIds,
+					parentItemIds,
+					segmentsExperienceId,
+				},
+			},
+			onNetworkStatus
+		);
+	},
+
 	renderFragmentEntryLinksContent({
 		data,
 		languageId,

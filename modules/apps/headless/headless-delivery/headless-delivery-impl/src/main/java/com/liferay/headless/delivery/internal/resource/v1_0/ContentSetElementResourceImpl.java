@@ -115,9 +115,6 @@ public class ContentSetElementResourceImpl
 			throw new UnsupportedOperationException();
 		}
 
-		ServiceContextThreadLocal.pushServiceContext(
-			_getServiceContext(siteId));
-
 		InfoCollectionProvider<?> infoCollectionProvider =
 			_infoItemServiceRegistry.getInfoItemService(
 				InfoCollectionProvider.class, key);
@@ -133,6 +130,9 @@ public class ContentSetElementResourceImpl
 
 			return Page.of(Collections.emptyList());
 		}
+
+		ServiceContextThreadLocal.pushServiceContext(
+			_getServiceContext(siteId));
 
 		CollectionQuery collectionQuery = new CollectionQuery();
 

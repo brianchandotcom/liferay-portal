@@ -171,6 +171,7 @@ import com.liferay.portal.theme.ThemeLoader;
 import com.liferay.portal.theme.ThemeLoaderFactory;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.site.initializer.kernel.util.SiteInitializerThreadLocal;
 import com.liferay.social.kernel.service.SocialActivityLocalService;
 import com.liferay.social.kernel.service.SocialActivitySettingLocalService;
 import com.liferay.social.kernel.service.SocialRequestLocalService;
@@ -862,6 +863,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 				int type = GroupConstants.TYPE_SITE_RESTRICTED;
 				String friendlyURL = null;
 				boolean site = true;
+				UnicodeProperties typeSettingsUnicodeProperties = null;
 
 				if (groupKey.equals(GroupConstants.CMS)) {
 					type = GroupConstants.TYPE_SITE_PRIVATE;
@@ -880,6 +882,13 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 				}
 				else if (groupKey.equals(GroupConstants.GUEST)) {
 					friendlyURL = "/guest";
+					typeSettingsUnicodeProperties =
+						UnicodePropertiesBuilder.create(
+							true
+						).put(
+							"siteInitializerKey",
+							SiteInitializerThreadLocal.getKey()
+						).build();
 				}
 				else if (groupKey.equals(GroupConstants.USER_PERSONAL_SITE)) {
 					className = UserPersonalSite.class.getName();
@@ -896,6 +905,11 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 					getLocalizationMap(groupKey), null, type, true,
 					GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, friendlyURL,
 					site, true, null);
+
+				if (typeSettingsUnicodeProperties != null) {
+					group.setTypeSettingsProperties(
+						typeSettingsUnicodeProperties);
+				}
 
 				group.setExternalReferenceCode(
 					"L_" + TextFormatter.format(groupKey, TextFormatter.A));

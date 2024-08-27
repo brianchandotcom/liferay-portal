@@ -20,6 +20,7 @@ import com.liferay.notification.constants.NotificationRecipientConstants;
 import com.liferay.notification.constants.NotificationRecipientSettingConstants;
 import com.liferay.notification.constants.NotificationTemplateConstants;
 import com.liferay.notification.context.NotificationContext;
+import com.liferay.notification.contributor.TermValuesContributor;
 import com.liferay.notification.exception.NotificationRecipientSettingValueException;
 import com.liferay.notification.internal.type.email.provider.DefaultEmailProvider;
 import com.liferay.notification.internal.type.email.provider.EmailProvider;
@@ -604,8 +605,7 @@ public class EmailNotificationType extends BaseNotificationType {
 			}
 
 			if (httpServletRequest != null) {
-				template.put(
-					"portalURL", portal.getPortalURL(httpServletRequest));
+				_termValuesContributor.contribute(template);
 			}
 		}
 		finally {
@@ -781,6 +781,9 @@ public class EmailNotificationType extends BaseNotificationType {
 
 	@Reference
 	private TemplateNodeFactory _templateNodeFactory;
+
+	@Reference
+	private TermValuesContributor _termValuesContributor;
 
 	@Reference
 	private UserGroupRoleLocalService _userGroupRoleLocalService;

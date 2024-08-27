@@ -13,6 +13,7 @@ import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.notification.constants.NotificationPortletKeys;
+import com.liferay.notification.model.NotificationTemplate;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.string.StringBundler;
@@ -134,16 +135,8 @@ public class NotificationTemplateFTLElementsMVCResourceCommand
 		Map<String, TemplateVariableGroup> templateVariableGroupsMap =
 			TemplateContextHelper.getTemplateVariableGroups(
 				_classNameLocalService.getClassNameId(
-					InfoItemFormProvider.class.getName()),
+					NotificationTemplate.class.getName()),
 				0L, TemplateConstants.LANG_TYPE_FTL, locale);
-
-		TemplateVariableGroup generalVariablesTemplateVariableGroup =
-			templateVariableGroupsMap.get("general-variables");
-
-		String label = _language.get(locale, "portal-url");
-
-		generalVariablesTemplateVariableGroup.addFieldVariable(
-			label, TemplateNode.class, "portalURL", label, "text", false, null);
 
 		for (TemplateVariableGroup templateVariableGroup :
 				templateVariableGroupsMap.values()) {
@@ -177,6 +170,9 @@ public class NotificationTemplateFTLElementsMVCResourceCommand
 					if (infoField) {
 						content = StringBundler.concat(
 							"${", content, ".getData()}");
+					}
+					else {
+						content = StringBundler.concat("${", content, "}");
 					}
 
 					return content;

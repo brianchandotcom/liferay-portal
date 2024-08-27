@@ -174,7 +174,7 @@ public class TestrayBuildAutofillResourceImpl
 		for (Map<String, Serializable> values :
 				_objectEntryLocalService.getValuesList(
 					0, contextCompany.getCompanyId(), contextUser.getUserId(),
-					objectDefinition.getObjectDefinitionId(),
+					objectDefinition.getObjectDefinitionId(), null,
 					_filterFactory.create(
 						"buildId eq '" + testrayBuildId1 + "' and errors ne ''",
 						objectDefinition),

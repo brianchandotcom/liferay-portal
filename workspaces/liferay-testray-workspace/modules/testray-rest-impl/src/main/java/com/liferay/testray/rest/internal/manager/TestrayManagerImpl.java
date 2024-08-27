@@ -1188,7 +1188,7 @@ public class TestrayManagerImpl implements TestrayManager {
 
 		return _objectEntryLocalService.getValuesList(
 			0, companyId, userId, objectDefinition.getObjectDefinitionId(),
-			_filterFactory.create(filterString, objectDefinition), null,
+			null, _filterFactory.create(filterString, objectDefinition), null,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 

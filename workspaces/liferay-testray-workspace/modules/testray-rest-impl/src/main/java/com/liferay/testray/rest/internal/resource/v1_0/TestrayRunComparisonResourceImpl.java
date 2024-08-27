@@ -276,7 +276,7 @@ public class TestrayRunComparisonResourceImpl
 
 		_objectEntryLocalService.getValuesList(
 			0, contextCompany.getCompanyId(), contextUser.getUserId(),
-			objectDefinition.getObjectDefinitionId(),
+			objectDefinition.getObjectDefinitionId(), null,
 			_filterFactory.create(filterString, objectDefinition), null, -1, -1,
 			null
 		).forEach(

@@ -110,7 +110,7 @@ public class TestrayCaseFlakyClassifierDispatchTaskExecutor
 				_objectDefinitionLocalService.fetchObjectDefinition(
 					dispatchTrigger.getCompanyId(), "C_Case"
 				).getObjectDefinitionId(),
-				null, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+				null, null, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Checking " + testrayCases.size() + " tests");

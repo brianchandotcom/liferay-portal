@@ -851,3 +851,126 @@ test('LPD-3259 As a buyer with approval workflow, when I click review order in m
 
 	await expect(pendingOrdersPage.orderItemsTable).toBeVisible();
 });
+
+test('LPD-3440 As a order manager with buyer approval workflow, I can approve orders on pending orders page', async ({
+	apiHelpers,
+	commerceAdminChannelDetailsPage,
+	commerceAdminChannelsPage,
+	commerceLayoutsPage,
+	commerceMiniCartPage,
+	page,
+	pendingOrdersPage,
+}) => {
+	const {channel, site} = await miniumSetUp(apiHelpers);
+
+	const account = await apiHelpers.headlessAdminUser.postAccount({
+		name: getRandomString(),
+		type: 'business',
+	});
+
+	apiHelpers.data.push({id: account.id, type: 'account'});
+
+	const user =
+		await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
+			'demo.unprivileged@liferay.com'
+		);
+	const rolesResponse = await apiHelpers.headlessAdminUser.getAccountRoles(
+		account.id
+	);
+
+	const accountRoleOrderManager = rolesResponse?.items?.filter((role) => {
+		return role.name === 'Order Manager';
+	});
+
+	await apiHelpers.headlessAdminUser.assignAccountRoles(
+		account.externalReferenceCode,
+		accountRoleOrderManager[0].id,
+		user.emailAddress
+	);
+	await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+		account.id,
+		['demo.unprivileged@liferay.com']
+	);
+	const siteRole =
+		await apiHelpers.headlessAdminUser.getRoleByName('Site Member');
+	await apiHelpers.headlessAdminUser.assignUserToSite(
+		siteRole.id,
+		site.id,
+		user.id
+	);
+
+	await commerceAdminChannelsPage.changeCommerceChannelBuyerOrderApprovalWorkflow(
+		'Single Approver (Version 1)',
+		channel.name
+	);
+
+	await (
+		await commerceAdminChannelDetailsPage.commerceChannelHealthChecksTableRowAction(
+			'Fix Issue',
+			'Commerce Cart'
+		)
+	).click();
+
+	const product = await apiHelpers.headlessCommerceAdminCatalog.getProducts(
+		new URLSearchParams({
+			filter: `name eq 'Abs Sensor'`,
+		})
+	);
+
+	const productId = product.items[0].productId;
+
+	const productSkus = await apiHelpers.headlessCommerceAdminCatalog
+		.getProduct(productId)
+		.then((product) => {
+			return product.skus;
+		});
+
+	const sku = productSkus[0];
+
+	const phoneNumber = '12345';
+
+	const address = await apiHelpers.headlessCommerceAdminAccount.postAddress(
+		account.id,
+		{phoneNumber, regionISOCode: 'AL'}
+	);
+
+	await apiHelpers.headlessCommerceDeliveryCart.postCart(
+		{
+			accountId: account.id,
+			billingAddressId: address.id,
+			cartItems: [
+				{
+					options: '[]',
+					quantity: 1,
+					replacedSkuId: 0,
+					skuId: sku.id,
+				},
+			],
+			shippingAddressId: address.id,
+			shippingMethod: 'fixed',
+		},
+		channel.id
+	);
+
+	await page.goto(`/web/${site.name}`);
+
+	await commerceMiniCartPage.miniCartButton.click();
+	await commerceMiniCartPage.reviewOrderButton.click();
+	await commerceMiniCartPage.submitButton.click();
+
+	await expect(commerceMiniCartPage.submitButton).toBeHidden();
+
+	await performLogout(page);
+
+	await performLogin(page, 'demo.unprivileged');
+
+	await page.goto(`/web/${site.name}`);
+
+	await commerceLayoutsPage.pendingOrdersLink.click();
+
+	await pendingOrdersPage.viewButton.click();
+	await pendingOrdersPage.approveButton.click();
+	await pendingOrdersPage.doneButton.click();
+
+	await expect(pendingOrdersPage.checkoutButton).toBeVisible();
+});

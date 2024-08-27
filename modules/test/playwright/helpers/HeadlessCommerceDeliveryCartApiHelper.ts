@@ -19,10 +19,13 @@ type TCartItemUOM = {
 
 type TCart = {
 	accountId: number;
+	billingAddressId?: number;
 	cartItems?: TCartItem[];
 	currencyCode?: string;
 	id?: number;
 	paymentMethod?: string;
+	shippingAddressId?: number;
+	shippingMethod?: string;
 };
 
 export class HeadlessCommerceDeliveryCartApiHelper {
@@ -32,6 +35,12 @@ export class HeadlessCommerceDeliveryCartApiHelper {
 	constructor(apiHelpers: ApiHelpers | DataApiHelpers) {
 		this.apiHelpers = apiHelpers;
 		this.basePath = 'headless-commerce-delivery-cart/v1.0/';
+	}
+
+	async checkoutCart(cartId: number) {
+		return this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}${this.basePath}/carts/${cartId}/checkout`
+		);
 	}
 
 	async deleteCart(cartId: number) {

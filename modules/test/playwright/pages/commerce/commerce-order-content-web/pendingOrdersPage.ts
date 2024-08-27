@@ -9,6 +9,9 @@ import {searchTableRowByValue} from '../commerceDNDTablePage';
 import {CommerceLayoutsPage} from '../commerceLayoutsPage';
 
 export class PendingOrdersPage {
+	readonly approveButton: Locator;
+	readonly checkoutButton: Locator;
+	readonly doneButton: Locator;
 	readonly editMenuItem: Locator;
 	readonly errorMessageCloseButton: Locator;
 	readonly layoutsPage: CommerceLayoutsPage;
@@ -29,6 +32,12 @@ export class PendingOrdersPage {
 	readonly viewButton: Locator;
 
 	constructor(page: Page) {
+		this.approveButton = page.getByText('Approve');
+		this.checkoutButton = page.getByText('Checkout');
+		this.doneButton = page.getByRole('button', {
+			exact: true,
+			name: 'Done',
+		});
 		this.editMenuItem = page.getByRole('menuitem', {
 			exact: true,
 			name: 'Edit',

@@ -1,0 +1,4 @@
+with-invalid-scope:
+    scope: "foo"
+    type: globalJS
+    url: src/dummy.js

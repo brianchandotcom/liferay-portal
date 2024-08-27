@@ -9,6 +9,7 @@ import com.liferay.fragment.service.FragmentEntryLinkServiceUtil;
 import com.liferay.layout.responsive.ViewportSize;
 import com.liferay.layout.util.constants.LayoutStructureConstants;
 import com.liferay.petra.lang.HashUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -460,26 +461,59 @@ public class LayoutStructure {
 	public List<LayoutStructureItem> copyLayoutStructureItems(
 		List<String> itemIds, String parentItemId) {
 
+		LayoutStructureItem parentLayoutStructureItem =
+			_layoutStructureItems.get(parentItemId);
+
+		if (parentLayoutStructureItem instanceof
+				CollectionItemLayoutStructureItem) {
+
+			throw new UnsupportedOperationException(
+				StringBundler.concat(
+					"Unable to copy items because layout structure item of ",
+					"type ", parentLayoutStructureItem.getItemType(),
+					" cannot be selected as parent item"));
+		}
+
 		List<LayoutStructureItem> copiedLayoutStructureItems =
 			new ArrayList<>();
 
-		LayoutStructureItem layoutStructureItem = _layoutStructureItems.get(
-			parentItemId);
-
 		int position = 0;
 
-		if (!(layoutStructureItem instanceof
-				ContainerStyledLayoutStructureItem) &&
-			!(layoutStructureItem instanceof
-				CollectionStyledLayoutStructureItem) &&
-			!(layoutStructureItem instanceof FormStyledLayoutStructureItem)) {
+		if (parentLayoutStructureItem instanceof
+				FormStepContainerStyledLayoutStructureItem ||
+			parentLayoutStructureItem instanceof
+				FragmentStyledLayoutStructureItem ||
+			parentLayoutStructureItem instanceof RowStyledLayoutStructureItem) {
 
-			parentItemId = layoutStructureItem.getParentItemId();
+			parentItemId = parentLayoutStructureItem.getParentItemId();
 
 			position = -1;
 		}
 
 		for (String itemId : itemIds) {
+			if (Objects.equals(itemId, parentItemId)) {
+				throw new UnsupportedOperationException(
+					"Unable to copy items because item id and parent item id " +
+						"cannot be the same item");
+			}
+
+			LayoutStructureItem layoutStructureItem = _layoutStructureItems.get(
+				itemId);
+
+			if (layoutStructureItem instanceof ColumnLayoutStructureItem ||
+				layoutStructureItem instanceof DropZoneLayoutStructureItem ||
+				layoutStructureItem instanceof FormStepLayoutStructureItem ||
+				layoutStructureItem instanceof
+					FragmentDropZoneLayoutStructureItem ||
+				layoutStructureItem instanceof RootLayoutStructureItem) {
+
+				throw new UnsupportedOperationException(
+					StringBundler.concat(
+						"Unable to copy items because layout structure item ",
+						"of type ", layoutStructureItem.getItemType(),
+						" cannot be copied"));
+			}
+
 			copiedLayoutStructureItems.addAll(
 				_duplicateLayoutStructureItem(itemId, parentItemId, position));
 		}

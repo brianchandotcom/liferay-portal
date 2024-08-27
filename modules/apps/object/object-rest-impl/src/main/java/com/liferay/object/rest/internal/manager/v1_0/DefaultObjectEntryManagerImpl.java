@@ -1392,13 +1392,6 @@ public class DefaultObjectEntryManagerImpl
 			return;
 		}
 
-		if ((fileEntry.getId() != null) &&
-			(fileEntry.getFileBase64() != null)) {
-
-			throw new IllegalArgumentException(
-				"Expected either \"id\" or \"fileBase64\" fields");
-		}
-
 		String fileSource = ObjectFieldSettingUtil.getValue(
 			ObjectFieldSettingConstants.NAME_FILE_SOURCE, objectField);
 

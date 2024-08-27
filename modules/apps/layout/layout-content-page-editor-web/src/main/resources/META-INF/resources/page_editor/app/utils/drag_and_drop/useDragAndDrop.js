@@ -403,7 +403,10 @@ function computeDrop({
 			);
 
 			if (dropItem.fieldTypes.includes('stepper')) {
-				const form = layoutDataRef.current.items[dropTargetItem.itemId];
+				const form = getFormParent(
+					dropTargetItem,
+					layoutDataRef.current
+				);
 
 				const existingStepper = getStepperChild(
 					form,

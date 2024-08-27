@@ -81,7 +81,7 @@ public class TestrayManagerImpl implements TestrayManager {
 		sb.append("dueStatus_ as dueStatus_ from ");
 		sb.append("lportal.O_[%COMPANY_ID%]_CaseResult where ");
 		sb.append("r_caseToCaseResult_c_caseId = ? and (dueStatus_ = ");
-		sb.append("'passed' or dueStatus_ ='failed') and startDate_ is not ");
+		sb.append("'PASSED' or dueStatus_ ='FAILED') and startDate_ is not ");
 		sb.append("null and startDate_ >= ? order by c_caseResultId_) as cr ");
 		sb.append("group by r_caseToCaseResult_c_caseId");
 

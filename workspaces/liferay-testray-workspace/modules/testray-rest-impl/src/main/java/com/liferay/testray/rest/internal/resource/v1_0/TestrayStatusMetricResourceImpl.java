@@ -48,14 +48,14 @@ public class TestrayStatusMetricResourceImpl
 		StringBundler sb = new StringBundler(24);
 
 		sb.append("select ct.c_caseTypeId_, ct.name_, count(cr.dueStatus_) ");
-		sb.append("as total, sum(case when cr.dueStatus_ = 'blocked' then 1 ");
+		sb.append("as total, sum(case when cr.dueStatus_ = 'BLOCKED' then 1 ");
 		sb.append("else 0 end) as blocked, sum(case when cr.dueStatus_ =  ");
-		sb.append("'failed' then 1 else 0 end) as failed, sum(case when ");
-		sb.append("cr.dueStatus_ = 'inprogress' then 1 else 0 end) as ");
-		sb.append("inprogress, sum(case when cr.dueStatus_ = 'passed' then 1 ");
+		sb.append("'FAILED' then 1 else 0 end) as failed, sum(case when ");
+		sb.append("cr.dueStatus_ = 'INPROGRESS' then 1 else 0 end) as ");
+		sb.append("inprogress, sum(case when cr.dueStatus_ = 'PASSED' then 1 ");
 		sb.append("else 0 end) as passed, sum(case when cr.dueStatus_ = ");
-		sb.append("'testfix' then 1 else 0 end) as testfix, sum(case when ");
-		sb.append("cr.dueStatus_ = 'untested' then 1 else 0 end) as untested ");
+		sb.append("'TESTFIX' then 1 else 0 end) as testfix, sum(case when ");
+		sb.append("cr.dueStatus_ = 'UNTESTED' then 1 else 0 end) as untested ");
 		sb.append("from O_[%COMPANY_ID%]_Build b, ");
 		sb.append("O_[%COMPANY_ID%]_CaseResult cr, O_[%COMPANY_ID%]_Case c, ");
 		sb.append("O_[%COMPANY_ID%]_CaseType ct, O_[%COMPANY_ID%]_Component ");
@@ -126,14 +126,14 @@ public class TestrayStatusMetricResourceImpl
 		StringBundler sb = new StringBundler(25);
 
 		sb.append("select co.c_componentId_, co.name_, count(cr.dueStatus_) ");
-		sb.append("as total, sum(case when cr.dueStatus_ = 'blocked' then 1 ");
+		sb.append("as total, sum(case when cr.dueStatus_ = 'BLOCKED' then 1 ");
 		sb.append("else 0 end) as blocked, sum(case when cr.dueStatus_ =  ");
-		sb.append("'failed' then 1 else 0 end) as failed, sum(case when ");
-		sb.append("cr.dueStatus_ = 'inprogress' then 1 else 0 end) as  ");
-		sb.append("inprogress, sum(case when cr.dueStatus_ = 'passed' then 1 ");
+		sb.append("'FAILED' then 1 else 0 end) as failed, sum(case when ");
+		sb.append("cr.dueStatus_ = 'INPROGRESS' then 1 else 0 end) as  ");
+		sb.append("inprogress, sum(case when cr.dueStatus_ = 'PASSED' then 1 ");
 		sb.append("else 0 end) as passed, sum(case when cr.dueStatus_ = ");
-		sb.append("'testfix' then 1 else 0 end) as testfix, sum(case when ");
-		sb.append("cr.dueStatus_ = 'untested' then 1 else 0 end) as untested ");
+		sb.append("'TESTFIX' then 1 else 0 end) as testfix, sum(case when ");
+		sb.append("cr.dueStatus_ = 'UNTESTED' then 1 else 0 end) as untested ");
 		sb.append("from O_[%COMPANY_ID%]_Build b, ");
 		sb.append("O_[%COMPANY_ID%]_CaseResult cr, O_[%COMPANY_ID%]_Case c, ");
 		sb.append("O_[%COMPANY_ID%]_Component co where b.c_buildId_ = ? and ");
@@ -210,13 +210,13 @@ public class TestrayStatusMetricResourceImpl
 
 		sb.append("select r.c_runId_, r.name_, r.number_, ");
 		sb.append("count(cr.dueStatus_) as total, sum(case when ");
-		sb.append("cr.dueStatus_ = 'blocked' then 1 else 0 end) as blocked, ");
-		sb.append("sum(case when cr.dueStatus_ = 'failed' then 1 else 0 end) ");
-		sb.append("as failed, sum(case when cr.dueStatus_ = 'inprogress' ");
+		sb.append("cr.dueStatus_ = 'BLOCKED' then 1 else 0 end) as blocked, ");
+		sb.append("sum(case when cr.dueStatus_ = 'FAILED' then 1 else 0 end) ");
+		sb.append("as failed, sum(case when cr.dueStatus_ = 'INPROGRESS' ");
 		sb.append("then 1 else 0 end) as inprogress, sum(case when ");
-		sb.append("cr.dueStatus_ = 'passed' then 1 else 0 end) as passed, ");
-		sb.append("sum(case when cr.dueStatus_ = 'testfix' then 1 else 0 ");
-		sb.append("end) as testfix, sum(case when cr.dueStatus_ = 'untested' ");
+		sb.append("cr.dueStatus_ = 'PASSED' then 1 else 0 end) as passed, ");
+		sb.append("sum(case when cr.dueStatus_ = 'TESTFIX' then 1 else 0 ");
+		sb.append("end) as testfix, sum(case when cr.dueStatus_ = 'UNTESTED' ");
 		sb.append("then 1 else 0 end) as untested from ");
 		sb.append("O_[%COMPANY_ID%]_Build b, O_[%COMPANY_ID%]_Run r, ");
 		sb.append("O_[%COMPANY_ID%]_CaseResult cr, O_[%COMPANY_ID%]_Case c, ");
@@ -296,14 +296,14 @@ public class TestrayStatusMetricResourceImpl
 		StringBundler sb = new StringBundler(29);
 
 		sb.append("select t.c_teamId_ , t.name_, count(cr.dueStatus_) as ");
-		sb.append("total, sum(case when cr.dueStatus_ = 'blocked' then 1 ");
+		sb.append("total, sum(case when cr.dueStatus_ = 'BLOCKED' then 1 ");
 		sb.append("else 0 end) as blocked, sum(case when cr.dueStatus_ = ");
-		sb.append("'failed' then 1 else 0 end) as failed, sum(case when ");
-		sb.append("cr.dueStatus_ = 'inprogress' then 1 else 0 end) as ");
-		sb.append("inprogress, sum(case when cr.dueStatus_ = 'passed' then 1 ");
+		sb.append("'FAILED' then 1 else 0 end) as failed, sum(case when ");
+		sb.append("cr.dueStatus_ = 'INPROGRESS' then 1 else 0 end) as ");
+		sb.append("inprogress, sum(case when cr.dueStatus_ = 'PASSED' then 1 ");
 		sb.append("else 0 end) as passed, sum(case when cr.dueStatus_ = ");
-		sb.append("'testfix' then 1 else 0 end) as testfix, sum(case when ");
-		sb.append("cr.dueStatus_ = 'untested' then 1 else 0 end) as untested ");
+		sb.append("'TESTFIX' then 1 else 0 end) as testfix, sum(case when ");
+		sb.append("cr.dueStatus_ = 'UNTESTED' then 1 else 0 end) as untested ");
 		sb.append("from O_[%COMPANY_ID%]_Build b, ");
 		sb.append("O_[%COMPANY_ID%]_CaseResult cr, O_[%COMPANY_ID%]_Case c, ");
 		sb.append("O_[%COMPANY_ID%]_Component co, O_[%COMPANY_ID%]_Team t ");
@@ -386,13 +386,13 @@ public class TestrayStatusMetricResourceImpl
 		StringBundler sb = new StringBundler(37);
 
 		sb.append("select count(cr.dueStatus_) as total, sum(case when ");
-		sb.append("cr.dueStatus_ = 'blocked' then 1 else 0 end) as blocked, ");
-		sb.append("sum(case when cr.dueStatus_ = 'failed' then 1 else 0 end ");
-		sb.append(") as failed, sum(case when cr.dueStatus_ = 'inprogress' ");
+		sb.append("cr.dueStatus_ = 'BLOCKED' then 1 else 0 end) as blocked, ");
+		sb.append("sum(case when cr.dueStatus_ = 'FAILED' then 1 else 0 end ");
+		sb.append(") as failed, sum(case when cr.dueStatus_ = 'INPROGRESS' ");
 		sb.append("then 1 else 0 end) as inprogress, sum(case when ");
-		sb.append("cr.dueStatus_ = 'passed' then 1 else 0 end) as passed, ");
-		sb.append("sum(case when cr.dueStatus_ = 'testfix' then 1 else 0 end ");
-		sb.append(") as testfix, sum(case when cr.dueStatus_ = 'untested' ");
+		sb.append("cr.dueStatus_ = 'PASSED' then 1 else 0 end) as passed, ");
+		sb.append("sum(case when cr.dueStatus_ = 'TESTFIX' then 1 else 0 end ");
+		sb.append(") as testfix, sum(case when cr.dueStatus_ = 'UNTESTED' ");
 		sb.append("then 1 else 0 end) as untested, r.c_routineId_, r.name_, ");
 		sb.append("b.dueDate_ from O_[%COMPANY_ID%]_Project p, ");
 		sb.append("O_[%COMPANY_ID%]_Routine r, O_[%COMPANY_ID%]_CaseResult ");
@@ -537,13 +537,13 @@ public class TestrayStatusMetricResourceImpl
 		sb = new StringBundler(29);
 
 		sb.append("select count(cr.dueStatus_) as total, sum(case when ");
-		sb.append("cr.dueStatus_ = 'blocked' then 1 else 0 end) as blocked, ");
-		sb.append("sum(case when cr.dueStatus_ = 'failed' then 1 else 0 end ");
-		sb.append(") as failed, sum(case when cr.dueStatus_ = 'inprogress' ");
+		sb.append("cr.dueStatus_ = 'BLOCKED' then 1 else 0 end) as blocked, ");
+		sb.append("sum(case when cr.dueStatus_ = 'FAILED' then 1 else 0 end ");
+		sb.append(") as failed, sum(case when cr.dueStatus_ = 'INPROGRESS' ");
 		sb.append("then 1 else 0 end) as inprogress, sum(case when ");
-		sb.append("cr.dueStatus_ = 'passed' then 1 else 0 end) as passed, ");
-		sb.append("sum(case when cr.dueStatus_ = 'testfix' then 1 else 0 end ");
-		sb.append(") as testfix, sum(case when cr.dueStatus_ = 'untested' ");
+		sb.append("cr.dueStatus_ = 'PASSED' then 1 else 0 end) as passed, ");
+		sb.append("sum(case when cr.dueStatus_ = 'TESTFIX' then 1 else 0 end ");
+		sb.append(") as testfix, sum(case when cr.dueStatus_ = 'UNTESTED' ");
 		sb.append("then 1 else 0 end) as untested, b.c_buildId_, b.dueDate_, ");
 		sb.append("b.gitHash_, b.name_, b.promoted_, b.archived_, pv.name_ ");
 		sb.append("as productVersionName, (select dueStatus_ from ");

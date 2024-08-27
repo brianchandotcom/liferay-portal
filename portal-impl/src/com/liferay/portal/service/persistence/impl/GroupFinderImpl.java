@@ -1377,7 +1377,7 @@ public class GroupFinderImpl
 
 	private String _getCondition(String join) {
 		if (Validator.isNotNull(join)) {
-			int pos = join.indexOf("WHERE");
+			int pos = join.lastIndexOf("WHERE");
 
 			if (pos != -1) {
 				join = StringPool.OPEN_PARENTHESIS + join.substring(pos + 5);
@@ -1587,7 +1587,7 @@ public class GroupFinderImpl
 
 	private String _removeWhere(String join) {
 		if (Validator.isNotNull(join)) {
-			int pos = join.indexOf("WHERE");
+			int pos = join.lastIndexOf("WHERE");
 
 			if (pos != -1) {
 				join = join.substring(0, pos);

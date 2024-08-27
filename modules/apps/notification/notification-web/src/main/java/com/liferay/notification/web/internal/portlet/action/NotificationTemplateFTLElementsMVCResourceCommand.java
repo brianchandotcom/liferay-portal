@@ -177,6 +177,9 @@ public class NotificationTemplateFTLElementsMVCResourceCommand
 					if (infoField) {
 						content = StringBundler.concat(
 							"${", content, ".getData()}");
+					} else {
+						content = StringBundler.concat(
+							"${", content, "}");
 					}
 
 					return content;

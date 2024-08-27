@@ -12,6 +12,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.exportimport.portlet.preferences.processor.Capability;
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessor;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.service.PortletPreferenceValueLocalService;
@@ -131,6 +132,69 @@ public class SiteNavigationMenuExportImportPortletPreferencesProcessor
 		if (!FeatureFlagManagerUtil.isEnabled("LPD-23048")) {
 			return _processImportPortletPreferencesBySiteNavigationId(
 				portletDataContext, portletPreferences);
+		}
+
+		if (!MapUtil.getBoolean(
+				portletDataContext.getParameterMap(),
+				PortletDataHandlerKeys.PORTLET_DATA) &&
+			MergeLayoutPrototypesThreadLocal.isInProgress()) {
+
+			String siteNavigationMenuExternalReferenceCode = StringPool.BLANK;
+
+			long originalPlid = MapUtil.getLong(
+				portletDataContext.getParameterMap(), "portletPreferencePlid");
+
+			List<com.liferay.portal.kernel.model.PortletPreferences>
+				serviceBuilderPortletPreferencesList = null;
+
+			if (originalPlid == PortletKeys.PREFS_PLID_SHARED) {
+				serviceBuilderPortletPreferencesList =
+					_portletPreferencesLocalService.getPortletPreferences(
+						PortletKeys.PREFS_PLID_SHARED,
+						portletDataContext.getPortletId());
+			}
+			else {
+				serviceBuilderPortletPreferencesList =
+					_portletPreferencesLocalService.getPortletPreferences(
+						portletDataContext.getPlid(),
+						portletDataContext.getPortletId());
+			}
+
+			if (!serviceBuilderPortletPreferencesList.isEmpty()) {
+				for (com.liferay.portal.kernel.model.PortletPreferences
+						serviceBuilderPortletPreferences :
+							serviceBuilderPortletPreferencesList) {
+
+					if (serviceBuilderPortletPreferences.getCompanyId() !=
+							portletDataContext.getCompanyId()) {
+
+						continue;
+					}
+
+					PortletPreferences originalPortletPreferences =
+						_portletPreferenceValueLocalService.getPreferences(
+							serviceBuilderPortletPreferences);
+
+					siteNavigationMenuExternalReferenceCode =
+						originalPortletPreferences.getValue(
+							"siteNavigationMenuExternalReferenceCode",
+							StringPool.BLANK);
+				}
+			}
+
+			try {
+				portletPreferences.setValue(
+					"siteNavigationMenuExternalReferenceCode",
+					String.valueOf(siteNavigationMenuExternalReferenceCode));
+			}
+			catch (ReadOnlyException readOnlyException) {
+				PortletDataException portletDataException =
+					new PortletDataException(readOnlyException);
+
+				throw portletDataException;
+			}
+
+			return portletPreferences;
 		}
 
 		_importSiteNavigationMenuReference(portletDataContext);

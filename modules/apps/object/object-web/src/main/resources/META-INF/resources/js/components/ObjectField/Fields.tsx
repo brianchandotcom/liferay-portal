@@ -4,9 +4,8 @@
  */
 
 import {Text} from '@clayui/core';
-import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {FrontendDataSet} from '@liferay/frontend-data-set-web';
-import {API, stringUtils} from '@liferay/object-js-components-web';
+import {stringUtils} from '@liferay/object-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
@@ -30,11 +29,13 @@ interface ObjectFieldItemData {
 
 interface FieldsProps extends IFDSTableProps {
 	baseResourceURL: string;
+	creationLanguageId: Liferay.Language.Locale;
 }
 
 export default function Fields({
 	apiURL,
 	baseResourceURL,
+	creationLanguageId,
 	creationMenu,
 	formName,
 	id,
@@ -43,13 +44,8 @@ export default function Fields({
 	style,
 	url,
 }: FieldsProps) {
-	const [creationLanguageId, setCreationLanguageId] =
-		useState<Liferay.Language.Locale>();
-
 	const [deletedObjectField, setDeletedObjectField] =
 		useState<ObjectField | null>(null);
-
-	const [loadingFDS, setLoadingFDS] = useState<boolean>(false);
 
 	const [objectFieldDeleteInfo, setObjectFieldDeleteInfo] =
 		useState<ObjectFieldDeleteInfoProps>({
@@ -66,25 +62,6 @@ export default function Fields({
 
 		return () => Liferay.detach('addObjectField');
 	}, []);
-
-	useEffect(() => {
-		const makeFetch = async () => {
-			setLoadingFDS(true);
-
-			const objectDefinitionResponse =
-				await API.getObjectDefinitionByExternalReferenceCode(
-					objectDefinitionExternalReferenceCode
-				);
-
-			setCreationLanguageId(objectDefinitionResponse.defaultLanguageId);
-
-			setTimeout(() => {
-				setLoadingFDS(false);
-			}, 200);
-		};
-
-		makeFetch();
-	}, [baseResourceURL, objectDefinitionExternalReferenceCode]);
 
 	function objectFieldBusinessTypeDataRenderer({
 		itemData,
@@ -226,11 +203,7 @@ export default function Fields({
 
 	return (
 		<>
-			{loadingFDS ? (
-				<ClayLoadingIndicator />
-			) : (
-				<FrontendDataSet {...dataSetProps} />
-			)}
+			<FrontendDataSet {...dataSetProps} />
 
 			{showAddFieldModal && (
 				<ModalAddObjectField

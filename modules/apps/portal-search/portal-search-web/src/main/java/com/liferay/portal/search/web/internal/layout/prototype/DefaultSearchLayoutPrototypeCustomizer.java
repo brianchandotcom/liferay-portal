@@ -115,7 +115,7 @@ public class DefaultSearchLayoutPrototypeCustomizer
 		DefaultLayoutPrototypesUtil.updatePortletSetup(
 			layout, portletId,
 			HashMapBuilder.put(
-				"portletSetupPortletDecoratorId", "barebone"
+				"portletSetupPortletDecoratorId", "borderless"
 			).build());
 	}
 

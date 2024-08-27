@@ -500,9 +500,13 @@ public class ExportTaskResourceTest {
 			"ProductOptionValue",
 		"com.liferay.headless.commerce.admin.catalog.dto.v1_0." +
 			"ProductSpecification",
+		"com.liferay.headless.commerce.admin.catalog.dto.v1_0." +
+			"ProductVirtualSettingsFileEntry",
 		"com.liferay.headless.commerce.admin.catalog.dto.v1_0.RelatedProduct",
 		"com.liferay.headless.commerce.admin.catalog.dto.v1_0.Sku",
 		"com.liferay.headless.commerce.admin.catalog.dto.v1_0.SkuUnitOfMeasure",
+		"com.liferay.headless.commerce.admin.catalog.dto.v1_0." +
+			"SkuVirtualSettingsFileEntry",
 		"com.liferay.headless.commerce.admin.catalog.dto.v1_0.Specification",
 		"com.liferay.headless.commerce.admin.channel.dto.v1_0." +
 			"AccountAddressChannel",
@@ -664,6 +668,7 @@ public class ExportTaskResourceTest {
 		"com.liferay.object.admin.rest.dto.v1_0.ObjectValidationRule",
 		"com.liferay.object.admin.rest.dto.v1_0.ObjectView",
 		"com.liferay.portal.language.rest.dto.v1_0.Message",
+		"com.liferay.portal.search.rest.dto.v1_0.EmbeddingModel",
 		"com.liferay.portal.search.rest.dto.v1_0.SearchResult",
 		"com.liferay.portal.workflow.metrics.rest.dto.v1_0.Assignee",
 		"com.liferay.portal.workflow.metrics.rest.dto.v1_0.AssigneeMetric",

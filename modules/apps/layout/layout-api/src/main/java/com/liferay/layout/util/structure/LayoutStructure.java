@@ -457,49 +457,34 @@ public class LayoutStructure {
 		return rowStyledLayoutStructureItem;
 	}
 
-	public Map<String, List<LayoutStructureItem>> copyLayoutStructureItems(
-		List<String> itemIds, List<String> parentItemIds) {
+	public List<LayoutStructureItem> copyLayoutStructureItems(
+		List<String> itemIds, String parentItemId) {
 
-		Map<String, List<LayoutStructureItem>> copiedLayoutStructureItemsMap =
-			new HashMap<>();
+		List<LayoutStructureItem> copiedLayoutStructureItems =
+			new ArrayList<>();
 
-		for (String parentItemId : parentItemIds) {
-			int position = 0;
+		LayoutStructureItem layoutStructureItem = _layoutStructureItems.get(
+			parentItemId);
 
-			LayoutStructureItem layoutStructureItem = _layoutStructureItems.get(
-				parentItemId);
+		int position = 0;
 
-			if (!(layoutStructureItem instanceof
-					ContainerStyledLayoutStructureItem) &&
-				!(layoutStructureItem instanceof
-					CollectionStyledLayoutStructureItem) &&
-				!(layoutStructureItem instanceof
-					FormStyledLayoutStructureItem)) {
+		if (!(layoutStructureItem instanceof
+				ContainerStyledLayoutStructureItem) &&
+			!(layoutStructureItem instanceof
+				CollectionStyledLayoutStructureItem) &&
+			!(layoutStructureItem instanceof FormStyledLayoutStructureItem)) {
 
-				position = -1;
+			parentItemId = layoutStructureItem.getParentItemId();
 
-				parentItemId = layoutStructureItem.getParentItemId();
-			}
-
-			for (String itemId : itemIds) {
-				List<LayoutStructureItem> copiedLayoutStructureItems =
-					_duplicateLayoutStructureItem(
-						itemId, parentItemId, position);
-
-				if (ListUtil.isEmpty(copiedLayoutStructureItems)) {
-					continue;
-				}
-
-				LayoutStructureItem copiedLayoutStructure =
-					copiedLayoutStructureItems.get(0);
-
-				copiedLayoutStructureItemsMap.put(
-					copiedLayoutStructure.getItemId(),
-					copiedLayoutStructureItems);
-			}
+			position = -1;
 		}
 
-		return copiedLayoutStructureItemsMap;
+		for (String itemId : itemIds) {
+			copiedLayoutStructureItems.addAll(
+				_duplicateLayoutStructureItem(itemId, parentItemId, position));
+		}
+
+		return copiedLayoutStructureItems;
 	}
 
 	public List<LayoutStructureItem> deleteLayoutStructureItem(String itemId) {

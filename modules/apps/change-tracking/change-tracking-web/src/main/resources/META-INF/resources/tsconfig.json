@@ -1,5 +1,5 @@
 {
-	"@generated": "f0b903ebf89f4e17c6f01fcc876adeae5ecaa67b",
+	"@generated": "412d2377a5eeb444aa51293ab410224c3031c155",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -38,6 +38,9 @@
 		"../../../../../../../../global.d.ts"
 	],
 	"references": [
+		{
+			"path": "../../../../../../../frontend-data-set/frontend-data-set-web/src/main/resources/META-INF/resources/tsconfig.json"
+		},
 		{
 			"path": "../../../../../../../frontend-js/frontend-js-components-web/src/main/resources/META-INF/resources/tsconfig.json"
 		},

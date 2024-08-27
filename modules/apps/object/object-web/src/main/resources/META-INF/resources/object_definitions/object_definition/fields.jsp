@@ -31,6 +31,8 @@ renderResponse.setTitle(objectDefinition.getLabel(locale, true));
 			).put(
 				"baseResourceURL", String.valueOf(baseResourceURL)
 			).put(
+				"creationLanguageId", objectDefinition.getDefaultLanguageId()
+			).put(
 				"creationMenu", objectDefinitionsFieldsDisplayContext.getCreationMenu(objectDefinition)
 			).put(
 				"formName", "fm"

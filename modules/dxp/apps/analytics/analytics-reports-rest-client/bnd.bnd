@@ -1,3 +1,9 @@
 Bundle-Name: Liferay Analytics Reports REST Client
 Bundle-SymbolicName: com.liferay.analytics.reports.rest.client
 Bundle-Version: 1.0.2
+Export-Package:\
+	com.liferay.analytics.reports.rest.client.dto.v1_0,\
+	com.liferay.analytics.reports.rest.client.http,\
+	com.liferay.analytics.reports.rest.client.pagination,\
+	com.liferay.analytics.reports.rest.client.resource.v1_0,\
+	com.liferay.analytics.reports.rest.client.serdes.v1_0

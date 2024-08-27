@@ -35,8 +35,8 @@ public class AnalyticsCloudClient {
 
 	public AssetMetric getAssetMetric(
 			AnalyticsConfiguration analyticsConfiguration, String assetId,
-			String assetType, Long channelId, Integer rangeKey,
-			String[] selectedMetrics)
+			String assetType, Long channelId, String identityType,
+			Integer rangeKey, String[] selectedMetrics)
 		throws Exception {
 
 		try {
@@ -49,6 +49,9 @@ public class AnalyticsCloudClient {
 
 			url = HttpComponentsUtil.addParameter(url, "assetId", assetId);
 			url = HttpComponentsUtil.addParameter(url, "channelId", channelId);
+
+			url = HttpComponentsUtil.addParameter(
+				url, "identityType", identityType);
 
 			if (rangeKey != null) {
 				url = HttpComponentsUtil.addParameter(
@@ -95,8 +98,7 @@ public class AnalyticsCloudClient {
 				_log.debug(exception);
 			}
 
-			throw new PortalException(
-				"Unable to get analytics channels page", exception);
+			throw new PortalException("Unable to get asset metric", exception);
 		}
 	}
 

@@ -28,8 +28,8 @@ public class AssetMetricResourceImpl extends BaseAssetMetricResourceImpl {
 
 	@Override
 	public AssetMetric getGroupAssetMetric(
-			Integer groupId, String assetType, String assetId, Integer rangeKey,
-			String[] selectedMetrics)
+			Long groupId, String assetType, String assetId, String identityType,
+			Integer rangeKey, String[] selectedMetrics)
 		throws Exception {
 
 		AnalyticsCloudClient analyticsCloudClient = new AnalyticsCloudClient(
@@ -42,7 +42,7 @@ public class AssetMetricResourceImpl extends BaseAssetMetricResourceImpl {
 				group.getCompanyId()),
 			assetId, assetType,
 			Long.valueOf(group.getTypeSettingsProperty("analyticsChannelId")),
-			rangeKey, selectedMetrics);
+			identityType, rangeKey, selectedMetrics);
 	}
 
 	@Reference

@@ -3121,6 +3121,8 @@ public abstract class Base${schemaName}ResourceTestCase {
 					/>
 
 					() -> {
+						${childSchemaName} ${schemaVarName} = new ${childSchemaName}();
+
 						<#list properties?keys as propertyName>
 							<#if stringUtil.equals(propertyName, "siteId")>
 								${schemaVarName}.setGroupId(testGroup.getGroupId());
@@ -3136,8 +3138,6 @@ public abstract class Base${schemaName}ResourceTestCase {
 								${schemaVarName}.set${propertyName?cap_first}(RandomTestUtil.nextDate());
 							</#if>
 						</#list>
-
-						${childSchemaName} ${schemaVarName} = new ${childSchemaName}();
 
 						<#list childProperties?keys as propertyName>
 							<#if stringUtil.equals(propertyName, "siteId")>

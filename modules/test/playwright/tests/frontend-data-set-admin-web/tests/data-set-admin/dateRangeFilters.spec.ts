@@ -49,9 +49,6 @@ test.describe('Date range filter creation, edition and cancel', () => {
 	});
 
 	test.afterEach(async ({dataSetManagerApiHelpers}) => {
-
-		// await dataSetManagerApiHelpers.deleteDataSet({erc: dataSetERC});
-
 		for (const DATA_SET_ERC of dataSetERCs) {
 			await dataSetManagerApiHelpers.deleteDataSet({
 				erc: DATA_SET_ERC,

@@ -53,6 +53,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Javier Moral
  */
+@FeatureFlags("LPD-23048")
 @RunWith(Arquillian.class)
 public class SiteNavigationMenuExportImportPortletPreferencesProcessorTest {
 
@@ -82,7 +83,6 @@ public class SiteNavigationMenuExportImportPortletPreferencesProcessorTest {
 				_siteNavigationMenu);
 	}
 
-	@FeatureFlags("LPD-23048")
 	@Test
 	public void testExportImport() throws Exception {
 		String portletId = LayoutTestUtil.addPortletToLayout(
@@ -124,7 +124,6 @@ public class SiteNavigationMenuExportImportPortletPreferencesProcessorTest {
 				"rootMenuItemExternalReferenceCode", StringPool.BLANK));
 	}
 
-	@FeatureFlags("LPD-23048")
 	@Test
 	public void testExportImportEmptyPortletPreferences() throws Exception {
 		String portletId = LayoutTestUtil.addPortletToLayout(
@@ -151,7 +150,6 @@ public class SiteNavigationMenuExportImportPortletPreferencesProcessorTest {
 				"siteNavigationMenuType", StringPool.BLANK));
 	}
 
-	@FeatureFlags("LPS-173790")
 	@Test
 	public void testSiteTemplatePropagationWhenDuplicateSiteNavigationMenusExist()
 		throws Exception {

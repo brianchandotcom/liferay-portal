@@ -223,16 +223,16 @@ public class TestrayTestFlowResourceImpl
 				value -> new TestraySubtask() {
 					{
 						caseResultAmount = GetterUtil.getLong(
-							value.get("caseResultAmount"));
+							value.get("caseresultamount"));
 						error = GetterUtil.getString(value.get("errors_"));
-						id = GetterUtil.getLong(value.get("c_subtaskId_"));
+						id = GetterUtil.getLong(value.get("c_subtaskid_"));
 						issues = GetterUtil.getString(value.get("issues_"));
 						name = GetterUtil.getString(value.get("name_"));
 						score = GetterUtil.getLong(value.get("score_"));
-						status = GetterUtil.getString(value.get("dueStatus_"));
+						status = GetterUtil.getString(value.get("duestatus_"));
 						testrayTaskId = GetterUtil.getLong(
-							value.get("c_taskId_"));
-						userId = GetterUtil.getLong(value.get("userId"));
+							value.get("c_taskid_"));
+						userId = GetterUtil.getLong(value.get("userid"));
 
 						setUserName(
 							() -> {
@@ -241,16 +241,16 @@ public class TestrayTestFlowResourceImpl
 
 								return fullNameGenerator.getFullName(
 									GetterUtil.getString(
-										value.get("firstName")),
+										value.get("firstname")),
 									GetterUtil.getString(
-										value.get("middleName")),
+										value.get("middlename")),
 									GetterUtil.getString(
-										value.get("lastName")));
+										value.get("lastname")));
 							});
 						setUserPortraitUrl(
 							() -> {
 								long portraitId = GetterUtil.getLong(
-									value.get("portraitId"));
+									value.get("portraitid"));
 
 								if (portraitId == 0) {
 									return null;
@@ -303,7 +303,7 @@ public class TestrayTestFlowResourceImpl
 				sb.toString(), "[%COMPANY_ID%]",
 				String.valueOf(contextCompany.getCompanyId())),
 			ListUtil.fromArray(
-				GetterUtil.getLong(testrayBuild.get("c_buildId"))));
+				GetterUtil.getLong(testrayBuild.get("c_buildid"))));
 
 		objectDefinition = _objectDefinitionLocalService.getObjectDefinition(
 			contextCompany.getCompanyId(), "C_Subtask");
@@ -342,7 +342,7 @@ public class TestrayTestFlowResourceImpl
 					String.valueOf(contextCompany.getCompanyId())),
 				ListUtil.fromArray(
 					objectEntry.getObjectEntryId(),
-					GetterUtil.getLong(testrayBuild.get("c_buildId")),
+					GetterUtil.getLong(testrayBuild.get("c_buildid")),
 					String.valueOf(value.get("errors_"))));
 		}
 

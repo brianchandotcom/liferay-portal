@@ -235,14 +235,14 @@ public class TestrayBuildAutofillResourceImpl
 			values.get(
 				0
 			).get(
-				"runId"
+				"runid"
 			)
 		).put(
 			"testrayRunId2",
 			values.get(
 				1
 			).get(
-				"runId"
+				"runid"
 			)
 		);
 

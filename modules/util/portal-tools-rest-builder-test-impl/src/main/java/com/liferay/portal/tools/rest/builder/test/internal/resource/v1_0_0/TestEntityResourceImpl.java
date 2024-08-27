@@ -41,11 +41,26 @@ public class TestEntityResourceImpl extends BaseTestEntityResourceImpl {
 	}
 
 	@Override
+	public TestEntity patchTestEntity(
+		Long testEntityId, TestEntity testEntity) {
+
+		TestEntity oldTestEntity = _testEntities.set(
+			Math.toIntExact(testEntityId), testEntity);
+
+		testEntity.setDateCreated(oldTestEntity.getDateCreated());
+		testEntity.setDateModified(oldTestEntity.getDateModified());
+		testEntity.setId(oldTestEntity.getId());
+
+		return testEntity;
+	}
+
+	@Override
 	public TestEntity postTestEntity(TestEntity testEntity) {
 		_testEntities.add(testEntity);
 
 		testEntity.setDateCreated(new Date());
 		testEntity.setDateModified(new Date());
+		testEntity.setId(_testEntities.size() - 1L);
 
 		return testEntity;
 	}

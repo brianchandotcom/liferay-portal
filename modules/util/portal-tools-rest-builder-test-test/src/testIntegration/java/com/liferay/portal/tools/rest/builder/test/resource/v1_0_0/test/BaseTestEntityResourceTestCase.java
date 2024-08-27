@@ -116,7 +116,32 @@ public abstract class BaseTestEntityResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		TestEntity testEntity1 = randomTestEntity();
+
+		String json = objectMapper.writeValueAsString(testEntity1);
+
+		TestEntity testEntity2 = TestEntitySerDes.toDTO(json);
+
+		Assert.assertTrue(equals(testEntity1, testEntity2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		TestEntity testEntity = randomTestEntity();
+
+		String json1 = objectMapper.writeValueAsString(testEntity);
+		String json2 = TestEntitySerDes.toJSON(testEntity);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -131,40 +156,6 @@ public abstract class BaseTestEntityResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		TestEntity testEntity1 = randomTestEntity();
-
-		String json = objectMapper.writeValueAsString(testEntity1);
-
-		TestEntity testEntity2 = TestEntitySerDes.toDTO(json);
-
-		Assert.assertTrue(equals(testEntity1, testEntity2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		TestEntity testEntity = randomTestEntity();
-
-		String json1 = objectMapper.writeValueAsString(testEntity);
-		String json2 = TestEntitySerDes.toJSON(testEntity);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test
@@ -1171,26 +1162,64 @@ public abstract class BaseTestEntityResourceTestCase {
 		List<Supplier<TestEntity>> suppliers = Arrays.asList(
 			() -> {
 				ChildTestEntity1 testEntity = new ChildTestEntity1();
+
 				testEntity.setProperty1(
 					StringUtil.toLowerCase(RandomTestUtil.randomString()));
+
 				testEntity.setType(TestEntity.Type.create("ChildTestEntity1"));
-				setCommonAttributes(testEntity);
+
+				testEntity.setDateCreated(RandomTestUtil.nextDate());
+				testEntity.setDateModified(RandomTestUtil.nextDate());
+				testEntity.setDescription(
+					StringUtil.toLowerCase(RandomTestUtil.randomString()));
+				testEntity.setDocumentId(RandomTestUtil.randomLong());
+				testEntity.setJsonProperty(
+					StringUtil.toLowerCase(RandomTestUtil.randomString()));
+				testEntity.setName(
+					StringUtil.toLowerCase(RandomTestUtil.randomString()));
+				testEntity.setSelf(
+					StringUtil.toLowerCase(RandomTestUtil.randomString()));
 
 				return testEntity;
 			},
 			() -> {
 				ChildTestEntity2 testEntity = new ChildTestEntity2();
+
 				testEntity.setProperty2(
 					StringUtil.toLowerCase(RandomTestUtil.randomString()));
+
 				testEntity.setType(TestEntity.Type.create("ChildTestEntity2"));
-				setCommonAttributes(testEntity);
+
+				testEntity.setDateCreated(RandomTestUtil.nextDate());
+				testEntity.setDateModified(RandomTestUtil.nextDate());
+				testEntity.setDescription(
+					StringUtil.toLowerCase(RandomTestUtil.randomString()));
+				testEntity.setDocumentId(RandomTestUtil.randomLong());
+				testEntity.setJsonProperty(
+					StringUtil.toLowerCase(RandomTestUtil.randomString()));
+				testEntity.setName(
+					StringUtil.toLowerCase(RandomTestUtil.randomString()));
+				testEntity.setSelf(
+					StringUtil.toLowerCase(RandomTestUtil.randomString()));
 
 				return testEntity;
 			},
 			() -> {
 				ChildTestEntity3 testEntity = new ChildTestEntity3();
+
 				testEntity.setType(TestEntity.Type.create("ChildTestEntity3"));
-				setCommonAttributes(testEntity);
+
+				testEntity.setDateCreated(RandomTestUtil.nextDate());
+				testEntity.setDateModified(RandomTestUtil.nextDate());
+				testEntity.setDescription(
+					StringUtil.toLowerCase(RandomTestUtil.randomString()));
+				testEntity.setDocumentId(RandomTestUtil.randomLong());
+				testEntity.setJsonProperty(
+					StringUtil.toLowerCase(RandomTestUtil.randomString()));
+				testEntity.setName(
+					StringUtil.toLowerCase(RandomTestUtil.randomString()));
+				testEntity.setSelf(
+					StringUtil.toLowerCase(RandomTestUtil.randomString()));
 
 				return testEntity;
 			});
@@ -1199,20 +1228,6 @@ public abstract class BaseTestEntityResourceTestCase {
 			RandomTestUtil.randomInt(0, suppliers.size() - 1));
 
 		return supplier.get();
-	}
-
-	private <T extends TestEntity> void setCommonAttributes(T testEntity) {
-		testEntity.setDateCreated(RandomTestUtil.nextDate());
-		testEntity.setDateModified(RandomTestUtil.nextDate());
-		testEntity.setDescription(
-			StringUtil.toLowerCase(RandomTestUtil.randomString()));
-		testEntity.setDocumentId(RandomTestUtil.randomLong());
-		testEntity.setJsonProperty(
-			StringUtil.toLowerCase(RandomTestUtil.randomString()));
-		testEntity.setName(
-			StringUtil.toLowerCase(RandomTestUtil.randomString()));
-		testEntity.setSelf(
-			StringUtil.toLowerCase(RandomTestUtil.randomString()));
 	}
 
 	protected TestEntity randomIrrelevantTestEntity() throws Exception {

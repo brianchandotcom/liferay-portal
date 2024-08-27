@@ -33,13 +33,13 @@ public interface AssetMetricResource {
 	}
 
 	public AssetMetric getGroupAssetMetric(
-			Integer groupId, String assetType, String assetId, Integer rangeKey,
-			String[] selectedMetrics)
+			Long groupId, String assetType, String assetId, String identityType,
+			Integer rangeKey, String[] selectedMetrics)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getGroupAssetMetricHttpResponse(
-			Integer groupId, String assetType, String assetId, Integer rangeKey,
-			String[] selectedMetrics)
+			Long groupId, String assetType, String assetId, String identityType,
+			Integer rangeKey, String[] selectedMetrics)
 		throws Exception;
 
 	public static class Builder {
@@ -151,13 +151,14 @@ public interface AssetMetricResource {
 	public static class AssetMetricResourceImpl implements AssetMetricResource {
 
 		public AssetMetric getGroupAssetMetric(
-				Integer groupId, String assetType, String assetId,
-				Integer rangeKey, String[] selectedMetrics)
+				Long groupId, String assetType, String assetId,
+				String identityType, Integer rangeKey, String[] selectedMetrics)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getGroupAssetMetricHttpResponse(
-					groupId, assetType, assetId, rangeKey, selectedMetrics);
+					groupId, assetType, assetId, identityType, rangeKey,
+					selectedMetrics);
 
 			String content = httpResponse.getContent();
 
@@ -219,8 +220,8 @@ public interface AssetMetricResource {
 		}
 
 		public HttpInvoker.HttpResponse getGroupAssetMetricHttpResponse(
-				Integer groupId, String assetType, String assetId,
-				Integer rangeKey, String[] selectedMetrics)
+				Long groupId, String assetType, String assetId,
+				String identityType, Integer rangeKey, String[] selectedMetrics)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -246,6 +247,11 @@ public interface AssetMetricResource {
 
 			if (assetId != null) {
 				httpInvoker.parameter("assetId", String.valueOf(assetId));
+			}
+
+			if (identityType != null) {
+				httpInvoker.parameter(
+					"identityType", String.valueOf(identityType));
 			}
 
 			if (rangeKey != null) {

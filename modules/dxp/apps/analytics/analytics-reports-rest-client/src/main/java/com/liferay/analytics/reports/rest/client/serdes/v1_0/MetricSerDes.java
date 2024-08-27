@@ -82,6 +82,16 @@ public class MetricSerDes {
 			sb.append("\"");
 		}
 
+		if (metric.getTrend() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"trend\": ");
+
+			sb.append(String.valueOf(metric.getTrend()));
+		}
+
 		if (metric.getValue() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -147,6 +157,13 @@ public class MetricSerDes {
 				String.valueOf(metric.getPreviousValueKey()));
 		}
 
+		if (metric.getTrend() == null) {
+			map.put("trend", null);
+		}
+		else {
+			map.put("trend", String.valueOf(metric.getTrend()));
+		}
+
 		if (metric.getValue() == null) {
 			map.put("value", null);
 		}
@@ -187,6 +204,9 @@ public class MetricSerDes {
 			else if (Objects.equals(jsonParserFieldName, "previousValueKey")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "trend")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "value")) {
 				return false;
 			}
@@ -216,6 +236,12 @@ public class MetricSerDes {
 			else if (Objects.equals(jsonParserFieldName, "previousValueKey")) {
 				if (jsonParserFieldValue != null) {
 					metric.setPreviousValueKey((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "trend")) {
+				if (jsonParserFieldValue != null) {
+					metric.setTrend(
+						TrendSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "value")) {

@@ -88,6 +88,25 @@ public class Metric implements Cloneable, Serializable {
 
 	protected String previousValueKey;
 
+	public Trend getTrend() {
+		return trend;
+	}
+
+	public void setTrend(Trend trend) {
+		this.trend = trend;
+	}
+
+	public void setTrend(UnsafeSupplier<Trend, Exception> trendUnsafeSupplier) {
+		try {
+			trend = trendUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Trend trend;
+
 	public Double getValue() {
 		return value;
 	}

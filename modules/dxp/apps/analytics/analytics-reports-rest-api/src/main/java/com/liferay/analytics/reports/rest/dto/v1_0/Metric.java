@@ -28,6 +28,8 @@ import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -170,6 +172,46 @@ public class Metric implements Serializable {
 
 	@JsonIgnore
 	private Supplier<String> _previousValueKeySupplier;
+
+	@Schema
+	@Valid
+	public Trend getTrend() {
+		if (_trendSupplier != null) {
+			trend = _trendSupplier.get();
+
+			_trendSupplier = null;
+		}
+
+		return trend;
+	}
+
+	public void setTrend(Trend trend) {
+		this.trend = trend;
+
+		_trendSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setTrend(UnsafeSupplier<Trend, Exception> trendUnsafeSupplier) {
+		_trendSupplier = () -> {
+			try {
+				return trendUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Trend trend;
+
+	@JsonIgnore
+	private Supplier<Trend> _trendSupplier;
 
 	@Schema
 	public Double getValue() {
@@ -322,6 +364,18 @@ public class Metric implements Serializable {
 			sb.append(_escape(previousValueKey));
 
 			sb.append("\"");
+		}
+
+		Trend trend = getTrend();
+
+		if (trend != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"trend\": ");
+
+			sb.append(String.valueOf(trend));
 		}
 
 		Double value = getValue();

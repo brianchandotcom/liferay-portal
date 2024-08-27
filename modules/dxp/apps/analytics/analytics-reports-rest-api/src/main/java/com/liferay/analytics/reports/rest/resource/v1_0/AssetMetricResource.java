@@ -44,8 +44,8 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface AssetMetricResource {
 
 	public AssetMetric getGroupAssetMetric(
-			Integer groupId, String assetType, String assetId, Integer rangeKey,
-			String[] selectedMetrics)
+			Long groupId, String assetType, String assetId, String identityType,
+			Integer rangeKey, String[] selectedMetrics)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

@@ -48,13 +48,14 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {groupAssetMetric(assetId: ___, assetType: ___, groupId: ___, rangeKey: ___, selectedMetrics: ___){assetId, assetTitle, assetType, dataSourceId, defaultMetric, selectedMetrics}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {groupAssetMetric(assetId: ___, assetType: ___, groupId: ___, identityType: ___, rangeKey: ___, selectedMetrics: ___){assetId, assetTitle, assetType, dataSourceId, defaultMetric, selectedMetrics}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public AssetMetric groupAssetMetric(
-			@GraphQLName("groupId") Integer groupId,
+			@GraphQLName("groupId") Long groupId,
 			@GraphQLName("assetType") String assetType,
 			@GraphQLName("assetId") String assetId,
+			@GraphQLName("identityType") String identityType,
 			@GraphQLName("rangeKey") Integer rangeKey,
 			@GraphQLName("selectedMetrics") String[] selectedMetrics)
 		throws Exception {
@@ -63,7 +64,8 @@ public class Query {
 			_assetMetricResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			assetMetricResource -> assetMetricResource.getGroupAssetMetric(
-				groupId, assetType, assetId, rangeKey, selectedMetrics));
+				groupId, assetType, assetId, identityType, rangeKey,
+				selectedMetrics));
 	}
 
 	@GraphQLName("AssetMetricPage")

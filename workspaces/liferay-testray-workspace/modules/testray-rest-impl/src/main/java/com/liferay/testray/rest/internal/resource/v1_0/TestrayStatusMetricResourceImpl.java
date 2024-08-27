@@ -503,7 +503,7 @@ public class TestrayStatusMetricResourceImpl
 		sb.append("cr.r_buildToCaseResult_c_buildId = b.c_buildId_ and ");
 		sb.append("pv.c_productVersionId_ = ");
 		sb.append("b.r_productVersionToBuilds_c_productVersionId and ");
-		sb.append("b.template_ = 0 and b.archived_ = 0 ");
+		sb.append("b.template_ = false and b.archived_ = false ");
 
 		List<Object> params = new ArrayList<>();
 
@@ -560,7 +560,7 @@ public class TestrayStatusMetricResourceImpl
 		sb.append("cr.r_buildToCaseResult_c_buildId = b.c_buildId_ and ");
 		sb.append("pv.c_productVersionId_ = ");
 		sb.append("b.r_productVersionToBuilds_c_productVersionId and ");
-		sb.append("b.template_ = 0 and b.archived_ = 0 ");
+		sb.append("b.template_ = false and b.archived_ = false ");
 
 		params = new ArrayList<>();
 

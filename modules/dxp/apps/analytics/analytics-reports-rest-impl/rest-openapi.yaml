@@ -45,6 +45,7 @@ paths:
                 - in: path
                   name: groupId
                   schema:
+                      format: int64
                       type: integer
                 - in: path
                   name: assetType

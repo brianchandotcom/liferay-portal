@@ -28,6 +28,7 @@
 			"type": "Boolean"
 		}
 	],
+	"objectFolderExternalReferenceCode": "TESTRAY",
 	"pluralLabel": {
 		"en_US": "Testray Routines"
 	},

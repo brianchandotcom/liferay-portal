@@ -113,6 +113,7 @@
 			"type": "String"
 		}
 	],
+	"objectFolderExternalReferenceCode": "TESTRAY",
 	"pluralLabel": {
 		"en_US": "Testray Sub Tasks"
 	},

@@ -105,6 +105,7 @@
 			"type": "Long"
 		}
 	],
+	"objectFolderExternalReferenceCode": "TESTRAY",
 	"pluralLabel": {
 		"en_US": "Testray Cases"
 	},

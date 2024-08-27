@@ -79,6 +79,16 @@ export class ObjectAdminApiHelper {
 		);
 	}
 
+	async postObjectDefinitionObjectFieldBatch(
+		objectDefinitionId: number,
+		objectFields: Partial<ObjectField>[]
+	): Promise<ObjectField> {
+		return this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}${this.basePath}/object-definitions/${objectDefinitionId}/object-fields/batch`,
+			{data: objectFields}
+		);
+	}
+
 	async postObjectFieldByExternalReferenceCode(
 		externalReferenceCode: string,
 		objectField: Partial<ObjectField>
@@ -114,7 +124,7 @@ export class ObjectAdminApiHelper {
 		status,
 		titleObjectFieldName,
 	}: {
-		objectFields?: ObjectField[];
+		objectFields?: Partial<ObjectField>[];
 		objectFolderExternalReferenceCode?: string;
 		status: {code: number};
 		titleObjectFieldName?: string;

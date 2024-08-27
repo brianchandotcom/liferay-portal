@@ -9,15 +9,20 @@ import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {objectPagesTest} from '../../fixtures/objectPagesTest';
 import {getRandomInt} from '../../utils/getRandomInt';
+import {asyncFilter} from './utils/asyncFilter';
+import {asyncFind} from './utils/asyncFind';
+import {mockObjectFields} from './utils/mockObjectFields';
 
 export const test = mergeTests(apiHelpersTest, loginTest(), objectPagesTest);
 
 const createdEntities = {
 	listTypeDefinitionIds: [],
 	objectDefinitions: [],
+	objectFolders: [],
 } as {
 	listTypeDefinitionIds: number[];
 	objectDefinitions: ObjectDefinition[];
+	objectFolders: ObjectFolder[];
 };
 
 test.beforeEach(async ({apiHelpers}) => {
@@ -43,6 +48,18 @@ test.afterEach(async ({apiHelpers}) => {
 		createdEntities.objectDefinitions = [];
 	}
 
+	if (createdEntities.objectFolders.length) {
+		await Promise.all(
+			createdEntities.objectFolders.map(async (objectFolder) => {
+				await apiHelpers.objectAdmin.deleteObjectFolder(
+					objectFolder.id
+				);
+			})
+		);
+
+		createdEntities.objectDefinitions = [];
+	}
+
 	if (createdEntities.listTypeDefinitionIds.length) {
 		await Promise.all(
 			createdEntities.listTypeDefinitionIds.map(
@@ -52,9 +69,9 @@ test.afterEach(async ({apiHelpers}) => {
 					)
 			)
 		);
-
-		createdEntities.listTypeDefinitionIds = [];
 	}
+
+	createdEntities.listTypeDefinitionIds = [];
 });
 
 test.describe('Manage object fields through Model Builder', () => {
@@ -287,6 +304,113 @@ test.describe('Manage object fields through Model Builder', () => {
 		);
 
 		await expect(page.getByText(picklistFieldName)).toBeVisible();
+	});
+
+	test('can see the translation of the object fields businesses types in object definition node', async ({
+		apiHelpers,
+		modelBuilderDiagramPage,
+		page,
+	}) => {
+		const {listTypeDefinitionIds, objectDefinitions, objectFolders} =
+			createdEntities;
+		const objectFolder =
+			await apiHelpers.objectAdmin.postRandomObjectFolder();
+
+		objectFolders.push(objectFolder);
+
+		const {listTypeDefinition, objectFields} = await mockObjectFields({
+			apiHelpers,
+			objectFieldBusinessTypes: [
+				'attachment',
+				'boolean',
+				'date',
+				'decimal',
+				'integer',
+				'longInteger',
+				'longText',
+				'picklist',
+				'precisionDecimal',
+				'richText',
+				'text',
+			],
+		});
+
+		listTypeDefinitionIds.push(listTypeDefinition.id);
+
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFields,
+				objectFolderExternalReferenceCode:
+					objectFolder.externalReferenceCode,
+				status: {code: 1},
+			});
+
+		objectDefinitions.push(objectDefinition);
+
+		await apiHelpers.objectAdmin.postObjectDefinitionObjectFieldBatch(
+			objectDefinition.id,
+			objectFields
+		);
+
+		await page.goto('pt');
+
+		await page.waitForLoadState('networkidle');
+
+		await modelBuilderDiagramPage.goto({
+			objectFolderName: objectFolder.name,
+		});
+
+		await modelBuilderDiagramPage.objectDefinitionNodes
+			.filter({hasText: objectDefinition.label['en_US']})
+			.getByRole('button', {name: 'Exibir tudo campo'})
+			.click();
+
+		const objectDefinitionNodeObjectFields = await page
+			.locator('.lfr-objects__model-builder-node-field')
+			.all();
+
+		const {objectFields: objectDefinitionObjectFields} = objectDefinition;
+
+		expect(objectDefinitionNodeObjectFields).toHaveLength(
+			objectDefinitionObjectFields.length
+		);
+
+		const objectFieldBusinessTypeNameLabel = {
+			Attachment: 'Anexo',
+			Boolean: 'Boolean',
+			Date: 'Data',
+			Decimal: 'Decimal',
+			Integer: 'Inteiro',
+			LongInteger: 'Número inteiro longo',
+			LongText: 'Texto longo',
+			Picklist: 'Lista de seleção',
+			PrecisionDecimal: 'Casa decimal',
+			RichText: 'Rich Text',
+			Text: 'Texto',
+		};
+
+		for (let i = 0; i < objectDefinitionObjectFields.length; i++) {
+			const objectFieldRow = await asyncFind({
+				array: objectDefinitionNodeObjectFields,
+				predicate: async (objectFieldTableRow: Locator) => {
+					return (await objectFieldTableRow.textContent()).includes(
+						objectDefinitionObjectFields[i].label['en_US']
+					);
+				},
+			});
+
+			expect(objectFieldRow).toBeVisible();
+			expect(
+				objectFieldRow.getByText(
+					objectFieldBusinessTypeNameLabel[
+						objectDefinitionObjectFields[i].businessType
+					],
+					{exact: true}
+				)
+			).toBeVisible();
+		}
+
+		await page.goto('en');
 	});
 
 	test('can show and hide object fields in the object definition node', async ({
@@ -615,14 +739,14 @@ test.describe('Manage objectFields through Objects Admin UI', () => {
 			.locator('.dnd-tbody > .dnd-tr')
 			.all();
 
-		const objectFieldTableCustomRows = await asyncFilter(
-			objectFieldTableRows,
-			async (objectFieldTableRow: Locator) => {
+		const objectFieldTableCustomRows = await asyncFilter({
+			array: objectFieldTableRows,
+			predicate: async (objectFieldTableRow: Locator) => {
 				return (await objectFieldTableRow.textContent()).includes(
 					'Custom'
 				);
-			}
-		);
+			},
+		});
 
 		for (let i = 0; i < objectFieldsMock.length; i++) {
 			const {objectFieldBusinessType, objectFieldLabel} =

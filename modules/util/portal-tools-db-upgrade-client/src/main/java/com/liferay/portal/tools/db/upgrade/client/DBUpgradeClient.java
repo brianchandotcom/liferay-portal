@@ -58,10 +58,10 @@ public class DBUpgradeClient {
 			CommandLine commandLine = commandLineParser.parse(options, args);
 
 			if (commandLine.hasOption("help")) {
-				HelpFormatter helpFormatter = new HelpFormatter();
-
-				helpFormatter.printHelp(
-					"Liferay Portal Tools Database Upgrade Client", options);
+				new HelpFormatter(
+				).printHelp(
+					"Liferay Portal Tools Database Upgrade Client", options
+				);
 
 				return;
 			}
@@ -129,10 +129,10 @@ public class DBUpgradeClient {
 
 			parseException.printStackTrace();
 
-			HelpFormatter helpFormatter = new HelpFormatter();
-
-			helpFormatter.printHelp(
-				"Liferay Portal Tools Database Upgrade Client", options);
+			new HelpFormatter(
+			).printHelp(
+				"Liferay Portal Tools Database Upgrade Client", options
+			);
 		}
 		catch (Exception exception) {
 			System.err.println("Error running upgrade:");

@@ -25,10 +25,20 @@ components:
                     type: number
                 previousValueKey:
                     type: string
+                trend:
+                    $ref: "#/components/schemas/Trend"
                 value:
                     format: double
                     type: number
                 valueKey:
+                    type: string
+        Trend:
+            properties:
+                percentage:
+                    format: double
+                    type: number
+                trendClassification:
+                    enum: [NEGATIVE, NEUTRAL, POSITIVE]
                     type: string
 info:
     license:

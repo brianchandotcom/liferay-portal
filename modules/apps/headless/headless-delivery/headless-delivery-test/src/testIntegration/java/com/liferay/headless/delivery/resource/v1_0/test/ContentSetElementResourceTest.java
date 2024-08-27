@@ -78,9 +78,12 @@ public class ContentSetElementResourceTest
 		ServiceRegistration<InfoCollectionProvider<?>> serviceRegistration =
 			_registerInfoCollectionProviderService();
 
-		super.testGetSiteContentSetProviderByKeyContentSetElementsPage();
-
-		serviceRegistration.unregister();
+		try {
+			super.testGetSiteContentSetProviderByKeyContentSetElementsPage();
+		}
+		finally {
+			serviceRegistration.unregister();
+		}
 	}
 
 	@FeatureFlags("LPD-32867")
@@ -92,10 +95,13 @@ public class ContentSetElementResourceTest
 		ServiceRegistration<InfoCollectionProvider<?>> serviceRegistration =
 			_registerInfoCollectionProviderService();
 
-		super.
-			testGetSiteContentSetProviderByKeyContentSetElementsPageWithPagination();
-
-		serviceRegistration.unregister();
+		try {
+			super.
+				testGetSiteContentSetProviderByKeyContentSetElementsPageWithPagination();
+		}
+		finally {
+			serviceRegistration.unregister();
+		}
 	}
 
 	@Rule

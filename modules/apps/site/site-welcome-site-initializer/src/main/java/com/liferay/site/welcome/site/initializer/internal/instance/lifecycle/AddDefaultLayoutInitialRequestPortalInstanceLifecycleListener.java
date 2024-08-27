@@ -51,13 +51,14 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.RenderRequestFactory;
 import com.liferay.portlet.RenderResponseFactory;
 import com.liferay.site.initializer.SiteInitializer;
 import com.liferay.site.initializer.SiteInitializerRegistry;
-import com.liferay.site.initializer.kernel.util.SiteInitializerThreadLocal;
 
 import java.util.List;
 import java.util.Objects;
@@ -134,9 +135,13 @@ public class AddDefaultLayoutInitialRequestPortalInstanceLifecycleListener
 					currentThreadServiceContext.getRequest(), permissionChecker,
 					(ServiceContext)currentThreadServiceContext.clone(), user));
 
-			String siteInitializerKey = SiteInitializerThreadLocal.getKey();
+			UnicodeProperties typeSettingsUnicodeProperties =
+				group.getTypeSettingsProperties();
 
-			if (siteInitializerKey == null) {
+			String siteInitializerKey =
+				typeSettingsUnicodeProperties.getProperty("siteInitializerKey");
+
+			if (Validator.isNull(siteInitializerKey)) {
 				siteInitializerKey = _SITE_INITIALIZER_KEY_WELCOME;
 			}
 

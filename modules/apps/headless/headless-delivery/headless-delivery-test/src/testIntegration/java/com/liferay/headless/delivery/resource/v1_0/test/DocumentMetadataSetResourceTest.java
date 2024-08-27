@@ -120,11 +120,9 @@ public class DocumentMetadataSetResourceTest
 			{
 				setActions(() -> null);
 				setAssetLibraryKey(() -> GroupUtil.getAssetLibraryKey(group));
-
 				setAvailableLanguages(
 					() -> LocaleUtil.toW3cLanguageIds(
 						ddmStructure.getAvailableLanguageIds()));
-
 				setDataDefinitionFields(
 					() -> {
 						DataDefinitionResource.Builder
@@ -144,20 +142,16 @@ public class DocumentMetadataSetResourceTest
 					});
 				setDateCreated(ddmStructure::getCreateDate);
 				setDateModified(ddmStructure::getModifiedDate);
-
 				setDescription(
 					() -> ddmStructure.getDescription(
 						testGroup.getDefaultLanguageId()));
-
 				setDescription_i18n(
 					() -> LocalizedMapUtil.getI18nMap(
 						ddmStructure.getDescriptionMap()));
 				setId(ddmStructure.getStructureId());
-
 				setName(
 					() -> ddmStructure.getName(
 						testGroup.getDefaultLanguageId()));
-
 				setName_i18n(
 					() -> LocalizedMapUtil.getI18nMap(
 						ddmStructure.getNameMap()));

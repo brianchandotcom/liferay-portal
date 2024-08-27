@@ -49,11 +49,9 @@ public class DocumentMetadataSetDTOConverter
 			{
 				setActions(dtoConverterContext::getActions);
 				setAssetLibraryKey(() -> GroupUtil.getAssetLibraryKey(group));
-
 				setAvailableLanguages(
 					() -> LocaleUtil.toW3cLanguageIds(
 						ddmStructure.getAvailableLanguageIds()));
-
 				setDataDefinitionFields(
 					() -> {
 						DataDefinitionResource.Builder
@@ -73,20 +71,16 @@ public class DocumentMetadataSetDTOConverter
 					});
 				setDateCreated(ddmStructure::getCreateDate);
 				setDateModified(ddmStructure::getModifiedDate);
-
 				setDescription(
 					() -> ddmStructure.getDescription(
 						dtoConverterContext.getLocale()));
-
 				setDescription_i18n(
 					() -> LocalizedMapUtil.getI18nMap(
 						ddmStructure.getDescriptionMap()));
 				setId(ddmStructure::getStructureId);
-
 				setName(
 					() -> ddmStructure.getName(
 						dtoConverterContext.getLocale()));
-
 				setName_i18n(
 					() -> LocalizedMapUtil.getI18nMap(
 						ddmStructure.getNameMap()));

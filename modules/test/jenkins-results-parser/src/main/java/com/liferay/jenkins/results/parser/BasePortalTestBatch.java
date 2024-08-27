@@ -57,9 +57,9 @@ public abstract class BasePortalTestBatch<T extends PortalBatchBuildData>
 	}
 
 	protected Map<String, String> getEnvironmentVariables() {
-		PortalBatchBuildData portalBatchBuildData = getBatchBuildData();
-
 		Map<String, String> environmentVariables = new HashMap<>();
+
+		PortalBatchBuildData portalBatchBuildData = getBatchBuildData();
 
 		environmentVariables.put(
 			"TEST_PORTAL_BRANCH_NAME",

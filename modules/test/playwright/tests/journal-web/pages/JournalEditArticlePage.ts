@@ -18,6 +18,7 @@ export class JournalEditArticlePage {
 	readonly changesSavedIndicator: Locator;
 	readonly friendlyURLInput: Locator;
 	readonly friendlyUrlToggle: Locator;
+	readonly historyButton: Locator;
 	readonly journalPage: JournalPage;
 	readonly propertiesTab: Locator;
 	readonly publishButton: Locator;
@@ -36,6 +37,7 @@ export class JournalEditArticlePage {
 			'#_com_liferay_journal_web_portlet_JournalPortlet_friendlyURL'
 		);
 		this.friendlyUrlToggle = page.locator('#friendlyUrlToggle');
+		this.historyButton = page.getByLabel('History');
 		this.journalPage = new JournalPage(page);
 		this.propertiesTab = page.getByRole('tab', {name: 'Properties'});
 		this.publishButton = page.locator(

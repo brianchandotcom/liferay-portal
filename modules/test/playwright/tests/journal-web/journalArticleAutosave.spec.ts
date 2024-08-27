@@ -35,7 +35,7 @@ const autoSaveTest = mergeTests(
 	}),
 	isolatedSiteTest,
 	journalPagesTest,
-	loginTest(),
+	loginTest()
 );
 
 autoSaveTest(
@@ -270,6 +270,94 @@ autoSaveTest(
 		await expect(journalEditArticlePage.redoButton).toBeDisabled();
 
 		await expect(localizableField).toHaveValue(title);
+	}
+);
+
+autoSaveTest(
+	'History button test',
+	{
+		tag: '@LPD-31063',
+	},
+	async ({apiHelpers, journalEditArticlePage, page, site}) => {
+		const textFieldName = 'Text56789';
+		const structureName = 'Structure undo/redo';
+
+		const dataDefinition = getDataStructureDefinition({
+			defaultLanguageId: 'en_US',
+			fields: [{name: textFieldName, repeatable: false}],
+			name: structureName,
+		});
+
+		await apiHelpers.dataEngine.createStructure(site.id, dataDefinition);
+
+		await journalEditArticlePage.goto({
+			siteUrl: site.friendlyUrlPath,
+			structureName,
+		});
+
+		const historyButton = journalEditArticlePage.historyButton;
+		await expect(historyButton).toBeDisabled();
+
+		const friendlyURL = 'web-content-title';
+		const text = 'Web Content Content';
+		const title = 'Web Content Title';
+
+		await expect(async () => {
+			await journalEditArticlePage.fillTitle(title);
+			await expect(historyButton).toBeEnabled();
+		}).toPass();
+
+		await historyButton.click();
+
+		await expect(
+			page.getByRole('menuitem', {name: 'Undo All'})
+		).toBeEnabled();
+
+		await expect(
+			page.getByRole('menuitem', {name: 'Edit Title'})
+		).toBeDisabled();
+
+		await expect(async () => {
+			await journalEditArticlePage.fillFriendlyURL(friendlyURL);
+
+			await historyButton.click();
+
+			await expect(
+				page.getByRole('menuitem', {name: 'Edit Title'})
+			).toBeEnabled();
+		}).toPass();
+
+		await expect(
+			page.getByRole('menuitem', {name: 'Edit Friendly URL'})
+		).toBeDisabled();
+
+		const textField = page.getByLabel(textFieldName);
+
+		await fillAndClickOutside(page, textField, text);
+
+		await historyButton.click();
+
+		await page.getByRole('menuitem', {name: 'Undo All'}).click();
+
+		await expect(journalEditArticlePage.friendlyURLInput).toBeEmpty();
+
+		await expect(journalEditArticlePage.titleInput).toBeEmpty();
+
+		await expect(textField).toBeEmpty();
+
+		await historyButton.click();
+
+		await page
+			.getByRole('menuitem', {name: 'Edit ' + textFieldName})
+			.click();
+
+		await expect(journalEditArticlePage.friendlyURLInput).toHaveValue(
+			friendlyURL
+		);
+
+		await expect(journalEditArticlePage.titleInput).toHaveValue(title);
+
+		await expect(textField).toHaveValue(text);
 	}
 );
 

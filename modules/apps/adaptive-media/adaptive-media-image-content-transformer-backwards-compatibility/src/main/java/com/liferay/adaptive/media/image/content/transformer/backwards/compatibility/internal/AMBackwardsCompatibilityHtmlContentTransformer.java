@@ -55,16 +55,16 @@ public class AMBackwardsCompatibilityHtmlContentTransformer
 
 		StringBundler sb = new StringBundler();
 
-		int lastPos = 0;
+		int lastIndex = 0;
 
-		while (lastPos < html.length()) {
-			int pictureStart = html.indexOf(_OPEN_TAG_TOKEN_PICTURE, lastPos);
+		while (lastIndex < html.length()) {
+			int pictureStart = html.indexOf(_OPEN_TAG_TOKEN_PICTURE, lastIndex);
 
 			if (pictureStart == -1) {
 				pictureStart = html.length();
 			}
 
-			_transformImgTags(html, lastPos, pictureStart, sb);
+			_transformImgTags(html, lastIndex, pictureStart, sb);
 
 			if (pictureStart < html.length()) {
 				int pictureEnd = html.indexOf(
@@ -80,10 +80,10 @@ public class AMBackwardsCompatibilityHtmlContentTransformer
 
 				sb.append(html.substring(pictureStart, pictureEnd));
 
-				lastPos = pictureEnd;
+				lastIndex = pictureEnd;
 			}
 			else {
-				lastPos = pictureStart;
+				lastIndex = pictureStart;
 			}
 		}
 
@@ -229,18 +229,18 @@ public class AMBackwardsCompatibilityHtmlContentTransformer
 			String html, int start, int end, StringBundler sb)
 		throws PortalException {
 
-		int lastPos = start;
+		int lastIndex = start;
 
-		while (lastPos < end) {
-			int imgStart = html.indexOf(_OPEN_TAG_TOKEN_IMG, lastPos);
+		while (lastIndex < end) {
+			int imgStart = html.indexOf(_OPEN_TAG_TOKEN_IMG, lastIndex);
 
 			if ((imgStart == -1) || (imgStart > end)) {
-				sb.append(html.substring(lastPos, end));
+				sb.append(html.substring(lastIndex, end));
 
 				return;
 			}
 
-			sb.append(html.substring(lastPos, imgStart));
+			sb.append(html.substring(lastIndex, imgStart));
 
 			int imgEnd = html.indexOf(CharPool.GREATER_THAN, imgStart) + 1;
 
@@ -251,7 +251,7 @@ public class AMBackwardsCompatibilityHtmlContentTransformer
 			if ((srcStart == -1) || (srcStart > imgEnd)) {
 				sb.append(html.substring(imgStart, imgEnd));
 
-				lastPos = imgEnd;
+				lastIndex = imgEnd;
 
 				continue;
 			}
@@ -265,7 +265,7 @@ public class AMBackwardsCompatibilityHtmlContentTransformer
 					html.substring(imgStart, imgEnd),
 					html.substring(quotePos + 1, srcEnd)));
 
-			lastPos = imgEnd;
+			lastIndex = imgEnd;
 		}
 	}
 

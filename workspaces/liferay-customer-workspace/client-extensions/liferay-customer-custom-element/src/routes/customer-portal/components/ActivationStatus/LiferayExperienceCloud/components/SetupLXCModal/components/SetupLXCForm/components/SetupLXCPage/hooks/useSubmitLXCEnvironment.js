@@ -58,6 +58,7 @@ export default function useSubmitLXCEnvironment(
 	const [updateAccountSubscriptionGroupsInfo] = useMutation(
 		updateAccountSubscriptionGroups
 	);
+
 	const [createAdminLiferayExperienceCloud] =
 		useCreateAdminLiferayExperienceCloud();
 
@@ -71,6 +72,7 @@ export default function useSubmitLXCEnvironment(
 					filter: SearchBuilder.eq('accountKey', project.accountKey),
 				},
 			});
+
 			if (data) {
 				const status =
 					!!data?.c?.liferayExperienceCloudEnvironments?.items
@@ -100,6 +102,8 @@ export default function useSubmitLXCEnvironment(
 								lxcActivationFields.incidentManagementFullName,
 							primaryRegion: lxcActivationFields.primaryRegion,
 							projectId: lxcActivationFields.projectId,
+							r_accountEntryToLXCEnvironment_accountEntryId:
+								project.id,
 						},
 					},
 				});
@@ -135,6 +139,8 @@ export default function useSubmitLXCEnvironment(
 											fullName,
 											githubUsername: '...',
 											liferayExperienceCloudEnvironmentId,
+											r_accountEntryToAdminLiferayExperienceCloud_accountEntryId:
+												project.id,
 										},
 									},
 								});
@@ -157,6 +163,7 @@ export default function useSubmitLXCEnvironment(
 								return projectAdminEmailBody;
 							}
 						);
+
 						const notificationTemplateService =
 							new NotificationQueueService(client);
 

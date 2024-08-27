@@ -1,0 +1,11 @@
+{
+	"deletionType": "cascade",
+	"label": {
+		"en_US": "Admin Liferay Experience Cloud"
+	},
+	"name": "accountEntryToAdminLiferayExperienceCloud",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:AccountEntry$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:AdminLiferayExperienceCloud$]",
+	"objectDefinitionName2": "AdminLiferayExperienceCloud",
+	"type": "oneToMany"
+}

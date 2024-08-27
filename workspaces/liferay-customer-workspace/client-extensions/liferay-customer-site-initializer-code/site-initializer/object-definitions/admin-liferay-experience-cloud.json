@@ -1,6 +1,6 @@
 {
 	"label": {
-		"en-US": "Admin Liferay ExperienceCloud"
+		"en-US": "Admin Liferay Experience Cloud"
 	},
 	"name": "AdminLiferayExperienceCloud",
 	"objectFields": [
@@ -45,6 +45,7 @@
 			"required": true
 		}
 	],
+	"panelCategoryKey": "applications_menu.applications.content",
 	"pluralLabel": {
 		"en_US": "Admins Liferay Experience Cloud"
 	},

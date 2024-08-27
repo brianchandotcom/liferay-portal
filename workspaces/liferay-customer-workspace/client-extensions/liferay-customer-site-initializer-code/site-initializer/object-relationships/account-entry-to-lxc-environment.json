@@ -1,0 +1,11 @@
+{
+	"deletionType": "cascade",
+	"label": {
+		"en_US": "Liferay Experience Cloud Environment"
+	},
+	"name": "accountEntryToLXCEnvironment",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:AccountEntry$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:LiferayExperienceCloudEnvironment$]",
+	"objectDefinitionName2": "LiferayExperienceCloudEnvironment",
+	"type": "oneToMany"
+}

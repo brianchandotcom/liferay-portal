@@ -94,6 +94,10 @@ components:
                 documentId:
                     format: int64
                     type: integer
+                id:
+                    format: int64
+                    readOnly: true
+                    type: integer
                 jsonProperty:
                     type: string
                     xml:
@@ -212,6 +216,35 @@ paths:
                   schema:
                       format: int64
                       type: integer
+            responses:
+                200:
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/TestEntity"
+                        "application/xml":
+                            schema:
+                                $ref: "#/components/schemas/TestEntity"
+                    description:
+                        "OK"
+            tags: ["TestEntity"]
+        patch:
+            operationId: patchTestEntity
+            parameters:
+                - in: path
+                  name: testEntityId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/TestEntity"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/TestEntity"
             responses:
                 200:
                     content:

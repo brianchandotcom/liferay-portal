@@ -583,8 +583,8 @@ public class TestrayStatusMetricResourceImpl
 			sb.append(") ");
 		}
 
-		sb.append("group by b.c_buildId_ order by b.c_buildId_ desc limit ? ");
-		sb.append("offset ?");
+		sb.append("group by b.c_buildId_, pv.name_ order by b.c_buildId_ ");
+		sb.append("desc limit ? offset ?");
 
 		sql = StringUtil.replace(
 			sb.toString(), "[%COMPANY_ID%]",

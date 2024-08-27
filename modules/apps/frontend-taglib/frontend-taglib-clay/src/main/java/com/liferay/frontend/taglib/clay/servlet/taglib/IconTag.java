@@ -28,7 +28,6 @@ public class IconTag extends BaseContainerTag {
 		setContainerElement("svg");
 
 		setDynamicAttribute(StringPool.BLANK, "role", "presentation");
-		setDynamicAttribute(StringPool.BLANK, "viewBox", "0 0 512 512");
 
 		HttpServletRequest httpServletRequest = getRequest();
 

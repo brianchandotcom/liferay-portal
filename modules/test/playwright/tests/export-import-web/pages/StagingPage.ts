@@ -4,8 +4,11 @@
  */
 
 import {Locator, Page, expect} from '@playwright/test';
+import {getComparator} from 'playwright-core/lib/utils';
 
 import {ProductMenuPage} from '../../../pages/product-navigation-control-menu-web/ProductMenuPage';
+import { getTempDir } from '../../../utils/temp';
+import getRandomString from '../../../utils/getRandomString';
 
 export class StagingPage {
 	readonly localStagingCheckbox: Locator;
@@ -21,8 +24,14 @@ export class StagingPage {
 	}
 
 	async compareCurrentPageVersions() {
-		await this.getCurrentPageScreenshot('Live');
-		await this.getCurrentPageScreenshot('Staging');
+		const comparator = getComparator('image/png');
+
+		expect(
+			comparator(
+				await this.getCurrentPageScreenshot('Live'),
+				await this.getCurrentPageScreenshot('Staging')
+			)
+		).toBeNull();
 	}
 
 	async enableDefaultLocalStaging() {
@@ -69,14 +78,18 @@ export class StagingPage {
 
 		const url = this.page.url();
 
-		await this.page.goto(`${url}?p_l_mode=preview`);
+		await this.page.goto(`${url}?p_l_mode=preview`, {waitUntil: 'load'});
 
-		await expect(this.page).toHaveScreenshot({
-			fullPage: true,
+		await this.page.waitForFunction(() => document.fonts.ready);
+		
+		const screenshot = await this.page.screenshot({
+			fullPage: true,			
 			mask: [this.page.getByTestId('notificationsCount')],
-			maskColor: '#FFFFFF',
-			omitBackground: true,
+			path: getTempDir() + '/' + getRandomString() + '.png',
 		});
+
 		await this.page.goto(url);
+
+		return screenshot;
 	}
 }

@@ -31,7 +31,6 @@ import {openFormConversionModal} from '../../utils/openFormConversionModal';
 import {formIsMapped} from '../formIsMapped';
 import {getFormParent} from '../getFormParent';
 import {getStepperChild} from '../getStepperChild';
-import {hasFieldType} from '../hasFieldType';
 import {DRAG_DROP_TARGET_TYPE} from './constants/dragDropTargetType';
 import {TARGET_POSITIONS} from './constants/targetPositions';
 import defaultComputeHover from './defaultComputeHover';
@@ -403,15 +402,7 @@ function computeDrop({
 				'form-components-can-only-be-placed-inside-a-mapped-form-container'
 			);
 
-			if (
-				hasFieldType({
-					fieldTypes: dropItem.fieldTypes,
-					fragmentEntryLinks: fragmentEntryLinksRef.current,
-					itemId: dropItem.itemId,
-					layoutData: layoutDataRef.current,
-					requiredFieldType: 'stepper',
-				})
-			) {
+			if (dropItem.fieldTypes.includes('stepper')) {
 				const form = layoutDataRef.current.items[dropTargetItem.itemId];
 
 				const existingStepper = getStepperChild(
@@ -463,13 +454,7 @@ function computeDrop({
 		const targetItem = layoutDataRef.current.items[dropTargetItem.itemId];
 
 		if (
-			hasFieldType({
-				fieldTypes: dropItem.fieldTypes,
-				fragmentEntryLinks: fragmentEntryLinksRef.current,
-				itemId: dropItem.itemId,
-				layoutData: layoutDataRef.current,
-				requiredFieldType: 'stepper',
-			}) &&
+			dropItem.fieldTypes?.includes('stepper') &&
 			dropTargetItem.type === LAYOUT_DATA_ITEM_TYPES.form &&
 			targetPositionWithMiddle === TARGET_POSITIONS.MIDDLE &&
 			!isMultistepForm(targetItem)

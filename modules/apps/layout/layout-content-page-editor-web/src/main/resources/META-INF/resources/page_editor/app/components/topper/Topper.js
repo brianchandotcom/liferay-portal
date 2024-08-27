@@ -42,6 +42,7 @@ import selectCanUpdatePageStructure from '../../selectors/selectCanUpdatePageStr
 import selectLayoutDataItemLabel from '../../selectors/selectLayoutDataItemLabel';
 import moveItem from '../../thunks/moveItem';
 import switchSidebarPanel from '../../thunks/switchSidebarPanel';
+import {deepEqual} from '../../utils/checkDeepEqual';
 import {TARGET_POSITIONS} from '../../utils/drag_and_drop/constants/targetPositions';
 import {
 	useDragItem,
@@ -138,7 +139,7 @@ function TopperContent({
 		[item]
 	);
 
-	const fragmentEntryType = useSelectorCallback(
+	const {fieldTypes, fragmentEntryType} = useSelectorCallback(
 		(state) => {
 			if (!item.type === LAYOUT_DATA_ITEM_TYPES.fragment) {
 				return null;
@@ -147,9 +148,13 @@ function TopperContent({
 			const fragmentEntryLink =
 				state.fragmentEntryLinks[item.config?.fragmentEntryLinkId];
 
-			return fragmentEntryLink?.fragmentEntryType ?? null;
+			return {
+				fieldTypes: fragmentEntryLink?.fieldTypes ?? [],
+				fragmentEntryType: fragmentEntryLink?.fragmentEntryType ?? null,
+			};
 		},
-		[item]
+		[item],
+		deepEqual
 	);
 
 	const onDragEnd = (parentItemId, position) => {
@@ -164,7 +169,7 @@ function TopperContent({
 
 	const {handlerRef: itemHandlerRef, isDraggingSource: itemIsDraggingSource} =
 		useDragItem(
-			{...item, fragmentEntryType, isWidget, name},
+			{...item, fieldTypes, fragmentEntryType, isWidget, name},
 			onDragEnd,
 			() => {
 				if (!isActive) {
@@ -178,13 +183,17 @@ function TopperContent({
 	const {
 		handlerRef: topperHandlerRef,
 		isDraggingSource: topperIsDraggingSource,
-	} = useDragItem({...item, fragmentEntryType, name}, onDragEnd, () => {
-		if (!isActive) {
-			selectItem(item.itemId, {
-				origin: ITEM_ACTIVATION_ORIGINS.layout,
-			});
+	} = useDragItem(
+		{...item, fieldTypes, fragmentEntryType, name},
+		onDragEnd,
+		() => {
+			if (!isActive) {
+				selectItem(item.itemId, {
+					origin: ITEM_ACTIVATION_ORIGINS.layout,
+				});
+			}
 		}
-	});
+	);
 
 	const keyboardMovementSource = useMovementSource();
 

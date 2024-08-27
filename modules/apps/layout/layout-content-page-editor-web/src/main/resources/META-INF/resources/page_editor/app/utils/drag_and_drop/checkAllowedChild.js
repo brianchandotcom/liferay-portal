@@ -8,7 +8,6 @@ import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes
 import {getStepperChild} from '../../utils/getStepperChild';
 import {formIsMapped} from '../formIsMapped';
 import {getFormParent} from '../getFormParent';
-import {hasFieldType} from '../hasFieldType';
 import {isMultistepForm} from '../isMultistepForm';
 import {isUnmappedCollection} from '../isUnmappedCollection';
 
@@ -117,15 +116,7 @@ export default function checkAllowedChild(
 			}
 		}
 
-		if (
-			hasFieldType({
-				fieldTypes: child.fieldTypes,
-				fragmentEntryLinks: fragmentEntryLinksRef.current,
-				itemId: child.itemId,
-				layoutData: layoutDataRef.current,
-				requiredFieldType: 'stepper',
-			})
-		) {
+		if (child.fieldTypes?.includes('stepper')) {
 			if (parent.type !== LAYOUT_DATA_ITEM_TYPES.form) {
 				return false;
 			}

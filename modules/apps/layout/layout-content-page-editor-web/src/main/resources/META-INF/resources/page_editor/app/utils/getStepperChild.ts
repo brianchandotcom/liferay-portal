@@ -5,7 +5,6 @@
 
 import {LayoutData, LayoutDataItem} from '../../types/layout_data/LayoutData';
 import {FragmentEntryLinkMap} from '../actions/addFragmentEntryLinks';
-import {hasFieldType} from './hasFieldType';
 
 export function getStepperChild(
 	parent: LayoutDataItem,
@@ -23,14 +22,9 @@ export function getStepperChild(
 			return getStepperChild(child, layoutData, fragmentEntryLinks);
 		}
 
-		if (
-			hasFieldType({
-				fragmentEntryLinks,
-				itemId: childId,
-				layoutData,
-				requiredFieldType: 'stepper',
-			})
-		) {
+		const fragment = fragmentEntryLinks[child.config.fragmentEntryLinkId];
+
+		if (fragment.fieldTypes?.includes('stepper')) {
 			return child;
 		}
 	}

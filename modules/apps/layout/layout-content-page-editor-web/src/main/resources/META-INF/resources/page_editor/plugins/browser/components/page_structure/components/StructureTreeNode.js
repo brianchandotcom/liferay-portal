@@ -186,7 +186,7 @@ function StructureTreeNodeContent({
 		[layoutDataRef, node]
 	);
 
-	const fragmentEntryType = useSelectorCallback(
+	const {fieldTypes, fragmentEntryType} = useSelectorCallback(
 		(state) => {
 			if (!node.type === LAYOUT_DATA_ITEM_TYPES.fragment) {
 				return null;
@@ -195,9 +195,13 @@ function StructureTreeNodeContent({
 			const fragmentEntryLink =
 				state.fragmentEntryLinks[item.config?.fragmentEntryLinkId];
 
-			return fragmentEntryLink?.fragmentEntryType ?? null;
+			return {
+				fieldTypes: fragmentEntryLink?.fieldTypes ?? [],
+				fragmentEntryType: fragmentEntryLink?.fragmentEntryType ?? null,
+			};
 		},
-		[item]
+		[item],
+		deepEqual
 	);
 
 	const isWidget = useSelectorCallback(
@@ -211,7 +215,7 @@ function StructureTreeNodeContent({
 	);
 
 	const {handlerRef, isDraggingSource: itemIsDraggingSource} = useDragItem(
-		{...item, fragmentEntryType, isWidget},
+		{...item, fieldTypes, fragmentEntryType, isWidget},
 		(parentItemId, position) =>
 			dispatch(
 				moveItem({
@@ -366,6 +370,7 @@ function StructureTreeNodeContent({
 
 			<MoveButton
 				canUpdate={canUpdatePageStructure}
+				fieldTypes={fieldTypes}
 				fragmentEntryType={fragmentEntryType}
 				isWidget={isWidget}
 				node={node}
@@ -530,6 +535,7 @@ const NameLabel = React.forwardRef(
 
 const MoveButton = ({
 	canUpdate,
+	fieldTypes,
 	fragmentEntryType,
 	isWidget,
 	node,
@@ -575,6 +581,7 @@ const MoveButton = ({
 			onBlur={(event) => event.stopPropagation()}
 			onClick={() =>
 				setMovementSource({
+					fieldTypes,
 					fragmentEntryType,
 					icon: node.icon,
 					isWidget,

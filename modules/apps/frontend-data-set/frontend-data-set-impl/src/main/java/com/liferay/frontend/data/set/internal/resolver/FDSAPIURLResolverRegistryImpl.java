@@ -36,8 +36,7 @@ public class FDSAPIURLResolverRegistryImpl
 	public FDSAPIURLResolver getFDSAPIURLResolver(
 		String restApplication, String restSchema) {
 
-		String key = StringBundler.concat(
-			restApplication, "/", restSchema);
+		String key = StringBundler.concat(restApplication, "/", restSchema);
 
 		ServiceWrapper<FDSAPIURLResolver> serviceWrapper =
 			_serviceTrackerMap.getService(key);
@@ -57,11 +56,8 @@ public class FDSAPIURLResolverRegistryImpl
 	public List<FDSAPIURLResolver> getFDSAPIURLResolvers() {
 		List<FDSAPIURLResolver> fdsAPIURLResolvers = new ArrayList<>();
 
-		List<ServiceWrapper<FDSAPIURLResolver>> serviceWrappers =
-			ListUtil.fromCollection(_serviceTrackerMap.values());
-
 		for (ServiceWrapper<FDSAPIURLResolver> serviceWrapper :
-				serviceWrappers) {
+				_serviceTrackerMap.values()) {
 
 			fdsAPIURLResolvers.add(serviceWrapper.getService());
 		}

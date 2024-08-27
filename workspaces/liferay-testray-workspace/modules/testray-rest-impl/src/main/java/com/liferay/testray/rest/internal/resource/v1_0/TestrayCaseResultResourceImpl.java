@@ -179,34 +179,34 @@ public class TestrayCaseResultResourceImpl
 				value -> new TestrayCaseResult() {
 					{
 						error = GetterUtil.getString(value.get("errors_"));
-						gitHash = GetterUtil.getString(value.get("gitHash_"));
+						gitHash = GetterUtil.getString(value.get("githash_"));
 						issues = GetterUtil.getString(value.get("issues_"));
-						status = GetterUtil.getString(value.get("dueStatus_"));
+						status = GetterUtil.getString(value.get("duestatus_"));
 						testrayBuildId = GetterUtil.getLong(
-							value.get("c_buildId_"));
+							value.get("c_buildid_"));
 						testrayCaseResultId = GetterUtil.getLong(
-							value.get("c_caseResultId_"));
+							value.get("c_caseresultid_"));
 						testrayProductVersionName = GetterUtil.getString(
-							value.get("productVersion"));
+							value.get("productversion"));
 						testrayRoutineId = GetterUtil.getLong(
-							value.get("c_routineId_"));
+							value.get("c_routineid_"));
 						testrayRoutineName = GetterUtil.getString(
-							value.get("routineName"));
+							value.get("routinename"));
 						testrayRunName = GetterUtil.getString(
-							value.get("runName"));
+							value.get("runname"));
 						testrayTeamName = GetterUtil.getString(
-							value.get("teamName"));
+							value.get("teamname"));
 						userName = GetterUtil.getString(value.get("name"));
 						warning = GetterUtil.getInteger(value.get("warnings_"));
 
 						setExecutionDate(
 							() -> {
-								if (value.get("executionDate") == null) {
+								if (value.get("executiondate") == null) {
 									return null;
 								}
 
 								return value.get(
-									"executionDate"
+									"executiondate"
 								).toString();
 							});
 					}
@@ -371,21 +371,21 @@ public class TestrayCaseResultResourceImpl
 							String.valueOf(value.get("flaky_")));
 						issues = GetterUtil.getString(value.get("issues_"));
 						priority = GetterUtil.getLong(value.get("priority_"));
-						status = GetterUtil.getString(value.get("dueStatus_"));
+						status = GetterUtil.getString(value.get("duestatus_"));
 						testrayCaseName = GetterUtil.getString(
-							value.get("caseName"));
+							value.get("casename"));
 						testrayCaseResultId = GetterUtil.getLong(
-							value.get("c_caseResultId_"));
+							value.get("c_caseresultid_"));
 						testrayCaseTypeName = GetterUtil.getString(
-							value.get("caseTypeName"));
+							value.get("casetypename"));
 						testrayComponentName = GetterUtil.getString(
-							value.get("componentName"));
+							value.get("componentname"));
 						testrayRunName = GetterUtil.getString(
-							value.get("runName"));
+							value.get("runname"));
 						testrayRunNumber = GetterUtil.getLong(
-							value.get("runNumber"));
+							value.get("runnumber"));
 						testrayTeamName = GetterUtil.getString(
-							value.get("teamName"));
+							value.get("teamname"));
 
 						setUserName(
 							() -> {
@@ -394,16 +394,16 @@ public class TestrayCaseResultResourceImpl
 
 								return fullNameGenerator.getFullName(
 									GetterUtil.getString(
-										value.get("firstName")),
+										value.get("firstname")),
 									GetterUtil.getString(
-										value.get("middleName")),
+										value.get("middlename")),
 									GetterUtil.getString(
-										value.get("lastName")));
+										value.get("lastname")));
 							});
 						setUserPortraitUrl(
 							() -> {
 								long portraitId = GetterUtil.getLong(
-									value.get("portraitId"));
+									value.get("portraitid"));
 
 								if (portraitId == 0) {
 									return null;

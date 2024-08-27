@@ -134,19 +134,26 @@ public class ContentSetElementResourceImpl
 		ServiceContextThreadLocal.pushServiceContext(
 			_getServiceContext(siteId));
 
-		CollectionQuery collectionQuery = new CollectionQuery();
+		try {
+			CollectionQuery collectionQuery = new CollectionQuery();
 
-		collectionQuery.setPagination(
-			com.liferay.info.pagination.Pagination.of(
-				pagination.getEndPosition(), pagination.getStartPosition()));
+			collectionQuery.setPagination(
+				com.liferay.info.pagination.Pagination.of(
+					pagination.getEndPosition(),
+					pagination.getStartPosition()));
 
-		InfoPage<AssetEntry> infoPage =
-			(InfoPage<AssetEntry>)infoCollectionProvider.getCollectionInfoPage(
-				collectionQuery);
+			InfoPage<AssetEntry> infoPage =
+				(InfoPage<AssetEntry>)
+					infoCollectionProvider.getCollectionInfoPage(
+						collectionQuery);
 
-		return Page.of(
-			transform(infoPage.getPageItems(), this::_toContentSetElement),
-			pagination, infoPage.getTotalCount());
+			return Page.of(
+				transform(infoPage.getPageItems(), this::_toContentSetElement),
+				pagination, infoPage.getTotalCount());
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
 	}
 
 	private Page<ContentSetElement> _getContentSetContentSetElementsPage(

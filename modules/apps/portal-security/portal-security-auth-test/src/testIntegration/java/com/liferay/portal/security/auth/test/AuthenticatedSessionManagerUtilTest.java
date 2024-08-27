@@ -133,9 +133,9 @@ public class AuthenticatedSessionManagerUtilTest {
 			CookiesConstants.CONSENT_TYPE_FUNCTIONAL, cookie,
 			mockHttpServletRequest, mockHttpServletResponse);
 
-		ThemeDisplay themeDisplay = ThemeDisplayFactory.create();
-
 		Group group = GroupTestUtil.addGroup();
+
+		ThemeDisplay themeDisplay = ThemeDisplayFactory.create();
 
 		themeDisplay.setCompany(CompanyTestUtil.addCompany());
 		themeDisplay.setSiteGroupId(group.getGroupId());

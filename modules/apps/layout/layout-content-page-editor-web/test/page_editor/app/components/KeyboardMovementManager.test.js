@@ -26,6 +26,7 @@ jest.mock(
 		};
 
 		const source = {
+			fieldTypes: [],
 			fragmentEntryType: 'component',
 			isWidget: false,
 			itemId: 'item-3',
@@ -224,6 +225,7 @@ describe('KeyboardMovementManager', () => {
 		};
 
 		const formInputSource = {
+			fieldTypes: [],
 			fragmentEntryKey: 'INPUTS-date-input',
 			fragmentEntryType: 'input',
 			name: 'Date',

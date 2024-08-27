@@ -130,8 +130,8 @@ public class TestrayTestFlowResourceImpl
 		}
 
 		sb.append("group by s.c_subtaskId_, s.dueStatus_, s.errors_, ");
-		sb.append("s.issues_, s.score_, s.name_, ta.c_taskid_ union all select ");
-		sb.append("count(cr.r_subtaskToCaseResults_c_subtaskId) as ");
+		sb.append("s.issues_, s.score_, s.name_, ta.c_taskid_ union all ");
+		sb.append("select count(cr.r_subtaskToCaseResults_c_subtaskId) as ");
 		sb.append("caseResultAmount, s.c_subtaskId_, s.dueStatus_, ");
 		sb.append("s.errors_, s.issues_, s.score_, s.name_, u.firstName, ");
 		sb.append("u.userId, u.lastName, u.middleName, u.uuid_, ");
@@ -197,9 +197,9 @@ public class TestrayTestFlowResourceImpl
 		}
 
 		sb.append("group by s.c_subtaskId_, s.dueStatus_, s.errors_, ");
-		sb.append("s.issues_, s.score_, s.name_, ta.c_taskid_, u.firstName, u.lastName, ");
-		sb.append("u.middleName, u.userId, u.uuid_, u.portraitId ) as ");
-		sb.append("subtasks order by c_subtaskId_ asc ");
+		sb.append("s.issues_, s.score_, s.name_, ta.c_taskid_, u.firstName, ");
+		sb.append("u.lastName, u.middleName, u.userId, u.uuid_, u.portraitId ");
+		sb.append(") as subtasks order by c_subtaskId_ asc ");
 
 		String sql = StringUtil.replace(
 			sb.toString(), "[%COMPANY_ID%]",

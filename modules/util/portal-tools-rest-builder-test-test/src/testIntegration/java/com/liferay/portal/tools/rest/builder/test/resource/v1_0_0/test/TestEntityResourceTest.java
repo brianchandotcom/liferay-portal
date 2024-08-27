@@ -6,6 +6,7 @@
 package com.liferay.portal.tools.rest.builder.test.resource.v1_0_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0_0.TestEntity;
 
 import org.junit.Assert;
@@ -58,6 +59,11 @@ public class TestEntityResourceTest extends BaseTestEntityResourceTestCase {
 		throws Exception {
 
 		return testEntityResource.postTestEntity(testEntity);
+	}
+
+	@Override
+	protected TestEntity testPatchTestEntity_addTestEntity() throws Exception {
+		return testGetTestEntitiesPage_addTestEntity(randomTestEntity());
 	}
 
 	@Override

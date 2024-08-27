@@ -10,12 +10,14 @@ import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationPa
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
+import com.liferay.exportimport.test.util.lar.BasePortletExportImportTestCase;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
+import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -55,7 +57,8 @@ import org.junit.runner.RunWith;
  */
 @FeatureFlags("LPD-23048")
 @RunWith(Arquillian.class)
-public class SiteNavigationMenuExportImportPortletPreferencesProcessorTest {
+public class SiteNavigationMenuExportImportPortletPreferencesProcessorTest
+	extends BasePortletExportImportTestCase {
 
 	@ClassRule
 	@Rule
@@ -64,8 +67,17 @@ public class SiteNavigationMenuExportImportPortletPreferencesProcessorTest {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
+	@Override
+	public String getPortletId() throws Exception {
+		return PortletIdCodec.encode(
+			SiteNavigationMenuPortletKeys.SITE_NAVIGATION_MENU,
+			RandomTestUtil.randomString());
+	}
+
 	@Before
 	public void setUp() throws Exception {
+		super.setUp();
+
 		_liveGroup = GroupTestUtil.addGroup();
 
 		GroupTestUtil.enableLocalStaging(
@@ -122,6 +134,11 @@ public class SiteNavigationMenuExportImportPortletPreferencesProcessorTest {
 			_siteNavigationMenuItem.getExternalReferenceCode(),
 			portletPreferences.getValue(
 				"rootMenuItemExternalReferenceCode", StringPool.BLANK));
+	}
+
+	@Override
+	@Test
+	public void testExportImportAssetLinks() throws Exception {
 	}
 
 	@Test

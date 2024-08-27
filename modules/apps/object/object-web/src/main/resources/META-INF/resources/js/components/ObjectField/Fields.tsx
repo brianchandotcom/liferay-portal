@@ -7,7 +7,7 @@ import {Text} from '@clayui/core';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {FrontendDataSet} from '@liferay/frontend-data-set-web';
 import {API, stringUtils} from '@liferay/object-js-components-web';
-import {createResourceURL, fetch, sub} from 'frontend-js-web';
+import {sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import {
@@ -16,6 +16,7 @@ import {
 	fdsItem,
 	formatActionURL,
 } from '../../utils/fds';
+import {getObjectFieldBusinessTypeLabel} from '../../utils/getObjectFieldBusinessTypeLabel';
 import FDSSourceDataRenderer from '../FDSPropsTransformer/FDSSourceDataRenderer';
 import LabelRenderer from '../LabelRenderer';
 import ModalObjectFieldDeletionNotAllowed from '../ModalObjectFieldDeletionNotAllowed';
@@ -50,9 +51,6 @@ export default function Fields({
 
 	const [loadingFDS, setLoadingFDS] = useState<boolean>(false);
 
-	const [objectFieldBusinessTypes, setObjectFieldBusinessTypes] =
-		useState<Map<string, ObjectFieldBusinessType>>();
-
 	const [objectFieldDeleteInfo, setObjectFieldDeleteInfo] =
 		useState<ObjectFieldDeleteInfoProps>({
 			deleteLastPublishedObjectDefinitionObjectField: false,
@@ -78,33 +76,7 @@ export default function Fields({
 					objectDefinitionExternalReferenceCode
 				);
 
-			const url = createResourceURL(baseResourceURL, {
-				objectDefinitionId: objectDefinitionResponse.id,
-				p_p_resource_id:
-					'/object_definitions/get_object_field_business_types',
-			}).href;
-
-			const objectFieldBusinessTypesResponse = await fetch(url, {
-				method: 'GET',
-			});
-
-			const {objectFieldBusinessTypes: newObjectFieldBusinessTypes} =
-				(await objectFieldBusinessTypesResponse.json()) as {
-					objectFieldBusinessTypes: ObjectFieldBusinessType[];
-				};
-
-			const objectFieldBusinessTypesMap = new Map<
-				string,
-				ObjectFieldBusinessType
-			>(
-				newObjectFieldBusinessTypes.map((objectFieldBusinessType) => [
-					objectFieldBusinessType.businessType,
-					objectFieldBusinessType,
-				])
-			);
-
 			setCreationLanguageId(objectDefinitionResponse.defaultLanguageId);
-			setObjectFieldBusinessTypes(objectFieldBusinessTypesMap);
 
 			setTimeout(() => {
 				setLoadingFDS(false);
@@ -117,7 +89,7 @@ export default function Fields({
 	function objectFieldBusinessTypeDataRenderer({
 		itemData,
 	}: ObjectFieldItemData) {
-		return objectFieldBusinessTypes?.get(itemData.businessType)?.label;
+		return getObjectFieldBusinessTypeLabel(itemData.businessType);
 	}
 
 	function objectFieldLabelDataRenderer({

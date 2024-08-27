@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.test.rule.FeatureFlags;
@@ -141,10 +142,12 @@ public class SiteNavigationMenuExportImportPortletPreferencesProcessorTest {
 				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(),
 				portletId);
 
+		Map<String, String[]> portletPreferencesMap =
+			portletPreferences.getMap();
+
 		Assert.assertEquals(
-			_portletPreferencesLocalService.toString(), 0,
-			portletPreferences.getMap(
-			).size());
+			MapUtil.toString(portletPreferencesMap), 0,
+			portletPreferencesMap.size());
 	}
 
 	@FeatureFlags("LPS-173790")

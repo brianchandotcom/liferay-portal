@@ -11,7 +11,6 @@ import fillAndClickOutside from '../../utils/fillAndClickOutside';
 import {PORTLET_URLS} from '../../utils/portletUrls';
 import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
 import {PageEditorPage} from '../layout-content-page-editor-web/PageEditorPage';
-import {UIElementsPage} from '../uielements/UIElementsPage';
 
 export class PagesAdminPage {
 	readonly page: Page;
@@ -23,13 +22,10 @@ export class PagesAdminPage {
 	readonly configurationSaveButton: Locator;
 	readonly javaScriptClientExtensionsTab: Locator;
 	readonly newButton: Locator;
-	readonly oneColumnButton: Locator;
 	readonly pageEditorPage: PageEditorPage;
 	readonly pageTitleBox: Locator;
 	readonly searchButton: Locator;
 	readonly searchInput: Locator;
-	readonly uiElementsPage: UIElementsPage;
-	readonly widgetPageButton: Locator;
 
 	constructor(page: Page) {
 		this.page = page;
@@ -53,15 +49,12 @@ export class PagesAdminPage {
 		this.newButton = page
 			.locator('.management-bar')
 			.getByRole('button', {name: 'New'});
-		this.oneColumnButton = page.getByText('1 Column', {exact: true});
 		this.pageEditorPage = new PageEditorPage(this.page);
 		this.pageTitleBox = this.addPageIFrame.locator(
 			'input[id="_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_name"]'
 		);
 		this.searchButton = this.page.getByLabel('Search for', {exact: true});
 		this.searchInput = this.page.getByPlaceholder('Search for');
-		this.uiElementsPage = new UIElementsPage(page);
-		this.widgetPageButton = page.getByRole('button', {name: 'Widget Page'});
 	}
 
 	async goto(siteUrl?: Site['friendlyUrlPath']) {
@@ -179,7 +172,7 @@ export class PagesAdminPage {
 				}),
 				trigger: this.page
 					.locator('li', {has: this.page.getByText(parent)})
-					.getByTitle('Add Child Collection Page'),
+					.getByTitle('Add Child Page'),
 			});
 		}
 
@@ -203,20 +196,10 @@ export class PagesAdminPage {
 		}
 	}
 
-	async addContentPage(pageName: string) {
-		await this.blankTypeButton.waitFor({state: 'visible'});
-		await this.blankTypeButton.click();
-		await this.pageTitleBox.fill(pageName);
-		await this.addButton.click();
-		await this.page
-			.getByTitle(`Go to ${pageName}`)
-			.waitFor({state: 'visible'});
-	}
-
 	async addPage({
 		name,
 		successMessage,
-		template,
+		template = 'Blank',
 	}: {
 		name: string;
 		successMessage: string;
@@ -224,7 +207,7 @@ export class PagesAdminPage {
 	}) {
 		await this.page
 			.locator('.card-page-item')
-			.filter({hasText: template || 'Blank'})
+			.filter({hasText: template})
 			.click();
 
 		const loadingAnimation = this.page.locator(
@@ -242,24 +225,19 @@ export class PagesAdminPage {
 		await waitForSuccessAlert(this.page, successMessage);
 	}
 
-	async addWidgetPage(pageName: string) {
-		await this.widgetPageButton.waitFor({state: 'visible'});
-		await this.widgetPageButton.click();
-		await this.pageTitleBox.waitFor({state: 'attached'});
-		await this.pageTitleBox.hover();
-		await this.pageTitleBox.click();
-		await this.pageTitleBox.fill(pageName);
-		await this.addButton.waitFor({state: 'attached'});
-		await this.addButton.hover();
-		await this.addButton.click();
-		await this.page
-			.getByText('Success:The page was created successfully.')
-			.waitFor({state: 'visible'});
-		await this.oneColumnButton.click();
-		await this.uiElementsPage.saveButton.click();
-		await this.page
-			.getByText('Success:The page was updated successfully.')
-			.waitFor({state: 'visible'});
+	async addWidgetPage({
+		addButtonLabel = 'Page',
+		name,
+	}: {
+		addButtonLabel?: string;
+		name: string;
+	}) {
+		await this.createNewPage({
+			addButtonLabel,
+			draft: true,
+			name,
+			template: 'Widget Page',
+		});
 	}
 
 	async clickOnJavaScriptClientExtensionsTab() {
@@ -282,11 +260,13 @@ export class PagesAdminPage {
 	}
 
 	async createNewPage({
+		addButtonLabel = 'Page',
 		draft = false,
 		name,
 		parent,
 		template,
 	}: {
+		addButtonLabel?: string;
 		draft?: boolean;
 		name: string;
 		parent?: string;
@@ -300,7 +280,7 @@ export class PagesAdminPage {
 
 			await this.page
 				.getByRole('menuitem')
-				.getByText('Page', {exact: true})
+				.getByText(addButtonLabel, {exact: true})
 				.click();
 		}
 

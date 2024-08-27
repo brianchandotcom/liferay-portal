@@ -132,19 +132,6 @@ public class AMBackwardsCompatibilityHtmlContentTransformer
 		}
 	}
 
-	private String _getReplacement(String originalImgTag, FileEntry fileEntry)
-		throws PortalException {
-
-		if ((fileEntry == null) ||
-			!_amImageMimeTypeProvider.isMimeTypeSupported(
-				fileEntry.getMimeType())) {
-
-			return originalImgTag;
-		}
-
-		return _amImageHTMLTagFactory.create(originalImgTag, fileEntry);
-	}
-
 	private Group _getGroup(long companyId, String name)
 		throws PortalException {
 
@@ -158,6 +145,19 @@ public class AMBackwardsCompatibilityHtmlContentTransformer
 		User user = _userLocalService.getUserByScreenName(companyId, name);
 
 		return user.getGroup();
+	}
+
+	private String _getReplacement(String originalImgTag, FileEntry fileEntry)
+		throws PortalException {
+
+		if ((fileEntry == null) ||
+			!_amImageMimeTypeProvider.isMimeTypeSupported(
+				fileEntry.getMimeType())) {
+
+			return originalImgTag;
+		}
+
+		return _amImageHTMLTagFactory.create(originalImgTag, fileEntry);
 	}
 
 	private FileEntry _resolveFileEntry(String friendlyURL, String groupName)

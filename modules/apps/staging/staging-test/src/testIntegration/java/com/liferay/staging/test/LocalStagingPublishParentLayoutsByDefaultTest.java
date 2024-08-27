@@ -11,7 +11,6 @@ import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
 import com.liferay.data.engine.rest.test.util.DataDefinitionTestUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportDateUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
-import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.journal.constants.JournalContentPortletKeys;
@@ -41,17 +40,12 @@ import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.test.log.LogCapture;
-import com.liferay.portal.test.log.LogEntry;
-import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portletmvc4spring.test.mock.web.portlet.MockPortletRequest;
 import com.liferay.staging.configuration.StagingConfiguration;
-
-import java.util.List;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -436,7 +430,7 @@ public class LocalStagingPublishParentLayoutsByDefaultTest
 	}
 
 	/**
-	 * LPD-6808: AC6
+	 * LPD-34369
 	 */
 	@Test
 	public void testStagingWithUncheckedConfigurationAndModifiedContentAndNonexistingParentAndChildLayoutsOnLive()
@@ -448,48 +442,44 @@ public class LocalStagingPublishParentLayoutsByDefaultTest
 				"publishParentLayoutsByDefault", false
 			).build());
 
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"com.liferay.portal.background.task.internal.messaging." +
-					"BackgroundTaskMessageListener",
-				LoggerTestUtil.ERROR)) {
+		_mockPortletRequest = new MockPortletRequest();
 
-			_mockPortletRequest = new MockPortletRequest();
+		_mockPortletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, _getThemeDisplay(stagingGroup));
 
-			_mockPortletRequest.setAttribute(
-				WebKeys.THEME_DISPLAY, _getThemeDisplay(stagingGroup));
+		Layout parentLayout = LayoutTestUtil.addTypePortletLayout(stagingGroup);
 
-			Layout parentLayout = LayoutTestUtil.addTypePortletLayout(
-				stagingGroup);
+		Layout childLayout = LayoutTestUtil.addTypePortletLayout(
+			stagingGroup, parentLayout.getPlid());
 
-			Layout childLayout = LayoutTestUtil.addTypePortletLayout(
-				stagingGroup, parentLayout.getPlid());
+		_mockPortletRequest.setAttribute(
+			"layoutIdMap",
+			ExportImportHelperUtil.getSelectedLayoutsJSON(
+				stagingGroup.getGroupId(), false,
+				StringUtil.merge(new long[] {childLayout.getLayoutId()})));
 
-			_mockPortletRequest.setAttribute(
-				"layoutIdMap",
-				ExportImportHelperUtil.getSelectedLayoutsJSON(
-					stagingGroup.getGroupId(), false,
-					StringUtil.merge(new long[] {childLayout.getLayoutId()})));
+		_mockPortletRequest.setParameter(
+			"exportImportConfigurationId", String.valueOf(0));
+		_mockPortletRequest.setParameter(
+			"groupId", String.valueOf(stagingGroup.getGroupId()));
+		_mockPortletRequest.setParameter("PERMISSIONS", "false");
+		_mockPortletRequest.setParameter("tabs1", "public-pages");
 
-			_mockPortletRequest.setParameter(
-				"exportImportConfigurationId", String.valueOf(0));
-			_mockPortletRequest.setParameter(
-				"groupId", String.valueOf(stagingGroup.getGroupId()));
-			_mockPortletRequest.setParameter("PERMISSIONS", "false");
-			_mockPortletRequest.setParameter("tabs1", "public-pages");
+		StagingUtil.publishToLive(_mockPortletRequest);
 
-			StagingUtil.publishToLive(_mockPortletRequest);
+		Layout liveChildLayout = LayoutLocalServiceUtil.fetchLayout(
+			childLayout.getUuid(), liveGroup.getGroupId(),
+			childLayout.isPrivateLayout());
 
-			List<LogEntry> logEntries = logCapture.getLogEntries();
+		Layout liveParentLayout = LayoutLocalServiceUtil.fetchLayout(
+			parentLayout.getUuid(), liveGroup.getGroupId(),
+			parentLayout.isPrivateLayout());
 
-			LogEntry logEntry = logEntries.get(0);
+		Assert.assertNotNull(liveChildLayout);
 
-			Assert.assertEquals(
-				"Unable to execute background task", logEntry.getMessage());
+		Assert.assertNull(liveParentLayout);
 
-			Throwable throwable = logEntry.getThrowable();
-
-			Assert.assertSame(PortletDataException.class, throwable.getClass());
-		}
+		Assert.assertEquals(0, liveChildLayout.getParentLayoutId());
 	}
 
 	private ThemeDisplay _getThemeDisplay(Group group) throws Exception {

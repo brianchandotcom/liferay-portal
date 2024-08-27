@@ -101,21 +101,6 @@ export default function checkAllowedChild(
 	}
 
 	if (child.type === LAYOUT_DATA_ITEM_TYPES.fragment) {
-		if (child.fragmentEntryType === FRAGMENT_ENTRY_TYPES.input) {
-			const form = getFormParent(parent, layoutDataRef.current);
-
-			if (!form) {
-				return false;
-			}
-
-			if (
-				isMultistepForm(form) &&
-				parent.type !== LAYOUT_DATA_ITEM_TYPES.formStep
-			) {
-				return false;
-			}
-		}
-
 		if (child.fieldTypes?.includes('stepper')) {
 			if (parent.type !== LAYOUT_DATA_ITEM_TYPES.form) {
 				return false;
@@ -128,6 +113,20 @@ export default function checkAllowedChild(
 			);
 
 			if (existingStepper && existingStepper.itemId !== child.itemId) {
+				return false;
+			}
+		}
+		else if (child.fragmentEntryType === FRAGMENT_ENTRY_TYPES.input) {
+			const form = getFormParent(parent, layoutDataRef.current);
+
+			if (!form) {
+				return false;
+			}
+
+			if (
+				isMultistepForm(form) &&
+				parent.type !== LAYOUT_DATA_ITEM_TYPES.formStep
+			) {
 				return false;
 			}
 		}

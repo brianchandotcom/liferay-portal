@@ -56,6 +56,11 @@ paths:
                   schema:
                       type: string
                 - in: query
+                  name: identityType
+                  schema:
+                      enum: [ALL, KNOWN, UNKNOWN]
+                      type: string
+                - in: query
                   name: rangeKey
                   schema:
                       type: integer

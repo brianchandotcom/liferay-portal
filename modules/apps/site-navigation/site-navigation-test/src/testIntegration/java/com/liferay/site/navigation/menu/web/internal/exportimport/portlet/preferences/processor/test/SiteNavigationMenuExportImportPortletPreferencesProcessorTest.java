@@ -155,7 +155,7 @@ public class SiteNavigationMenuExportImportPortletPreferencesProcessorTest {
 	public void testSiteTemplatePropagationWhenDuplicateSiteNavigationMenusExist()
 		throws Exception {
 
-		_group = GroupTestUtil.addGroup();
+		Group group = GroupTestUtil.addGroup();
 
 		LayoutSetPrototype layoutSetPrototype =
 			LayoutTestUtil.addLayoutSetPrototype(RandomTestUtil.randomString());
@@ -166,11 +166,10 @@ public class SiteNavigationMenuExportImportPortletPreferencesProcessorTest {
 		MergeLayoutPrototypesThreadLocal.clearMergeComplete();
 
 		_sites.updateLayoutSetPrototypesLinks(
-			_group, layoutSetPrototype.getLayoutSetPrototypeId(), 0, true,
-			true);
+			group, layoutSetPrototype.getLayoutSetPrototypeId(), 0, true, true);
 
 		Layout layout = _layoutLocalService.getFriendlyURLLayout(
-			_group.getGroupId(), false, prototypeLayout.getFriendlyURL());
+			group.getGroupId(), false, prototypeLayout.getFriendlyURL());
 
 		layout.setLayoutPrototypeUuid(prototypeLayout.getUuid());
 		layout.setLayoutPrototypeLinkEnabled(true);
@@ -179,7 +178,7 @@ public class SiteNavigationMenuExportImportPortletPreferencesProcessorTest {
 
 		String name = RandomTestUtil.randomString();
 
-		SiteNavigationMenuTestUtil.addSiteNavigationMenu(_group, name);
+		SiteNavigationMenuTestUtil.addSiteNavigationMenu(group, name);
 
 		LayoutTestUtil.addPortletToLayout(
 			prototypeLayout, SiteNavigationMenuPortletKeys.SITE_NAVIGATION_MENU,
@@ -197,7 +196,7 @@ public class SiteNavigationMenuExportImportPortletPreferencesProcessorTest {
 		MergeLayoutPrototypesThreadLocal.setSkipMerge(false);
 
 		_sites.mergeLayoutSetPrototypeLayouts(
-			_group, _group.getPublicLayoutSet());
+			group, group.getPublicLayoutSet());
 
 		UnicodeProperties layoutSetPrototypeSettingsUnicodeProperties =
 			layoutSetPrototype.getLayoutSet(
@@ -227,9 +226,6 @@ public class SiteNavigationMenuExportImportPortletPreferencesProcessorTest {
 			TestPropsValues.getUserId(), _stagingGroup.getGroupId(),
 			_liveGroup.getGroupId(), false, parameterMap);
 	}
-
-	@DeleteAfterTestRun
-	private Group _group;
 
 	private Layout _layout;
 

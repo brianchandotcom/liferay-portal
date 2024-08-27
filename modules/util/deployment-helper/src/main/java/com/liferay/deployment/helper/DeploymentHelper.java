@@ -231,9 +231,10 @@ public class DeploymentHelper {
 	}
 
 	private static void _printOptions() {
-		HelpFormatter helpFormatter = new HelpFormatter();
-
-		helpFormatter.printHelp("Liferay Deployment Helper", _getOptions());
+		new HelpFormatter(
+		).printHelp(
+			"Liferay Deployment Helper", _getOptions()
+		);
 	}
 
 }

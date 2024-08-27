@@ -34,11 +34,11 @@ public class DBPartitionSchemaValidator {
 		Options options = _getOptions();
 
 		if ((args.length != 0) && args[0].equals("--help")) {
-			HelpFormatter helpFormatter = new HelpFormatter();
-
-			helpFormatter.printHelp(
+			new HelpFormatter(
+			).printHelp(
 				"Liferay Portal Tools Database Partition Schema Validator",
-				options);
+				options
+			);
 
 			return;
 		}

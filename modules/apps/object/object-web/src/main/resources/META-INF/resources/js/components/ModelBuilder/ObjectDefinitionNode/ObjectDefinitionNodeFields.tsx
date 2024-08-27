@@ -8,7 +8,7 @@ import classNames from 'classnames';
 import React from 'react';
 import {useStore} from 'react-flow-renderer';
 
-import {getBusinessTypeLabel} from '../../../utils/businessTypeLabel';
+import {getObjectFieldBusinessTypeLabel} from '../../../utils/getObjectFieldBusinessTypeLabel';
 import {useObjectFolderContext} from '../ModelBuilderContext/objectFolderContext';
 import {TYPES} from '../ModelBuilderContext/typesEnum';
 
@@ -74,13 +74,15 @@ export function ObjectDefinitionNodeFields({
 								</span>
 							</div>
 
-							<div className="lfr-objects__model-builder-node-field-business-type">
-								<span>
-									{getBusinessTypeLabel(
-										objectField.businessType as string
-									)}
-								</span>
-							</div>
+							{objectField.businessType && (
+								<div className="lfr-objects__model-builder-node-field-business-type">
+									<span>
+										{getObjectFieldBusinessTypeLabel(
+											objectField.businessType
+										)}
+									</span>
+								</div>
+							)}
 						</div>
 					);
 				}

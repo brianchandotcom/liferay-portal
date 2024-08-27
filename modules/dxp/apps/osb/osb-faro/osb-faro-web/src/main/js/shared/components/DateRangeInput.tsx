@@ -34,6 +34,7 @@ interface IDateInputProps {
 	className?: string;
 	displayFormat?: string;
 	format?: string;
+	groupId?: string;
 	id?: string;
 	name?: string;
 	onBlur?: (event?: FocusEvent) => void;
@@ -48,6 +49,7 @@ const DateInput: React.FC<IDateInputProps> = ({
 	className,
 	displayFormat,
 	format = DEFAULT_DATE_FORMAT,
+	groupId,
 	onBlur = noop,
 	onChange = noop,
 	showRetentionPeriod = true,
@@ -55,7 +57,7 @@ const DateInput: React.FC<IDateInputProps> = ({
 }) => {
 	const [active, setActive] = useState(false);
 
-	const {timeZoneId} = useTimeZone();
+	const {timeZoneId} = useTimeZone(groupId);
 	const retentionPeriod = useRetentionPeriod();
 
 	const convertMomentToDisplayFormat = (value: moment.Moment): string =>

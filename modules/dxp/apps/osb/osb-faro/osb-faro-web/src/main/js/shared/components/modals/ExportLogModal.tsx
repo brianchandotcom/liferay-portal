@@ -9,6 +9,7 @@ import {downloadDataAsFile} from 'shared/util/util';
 interface IExportLogModalProps {
 	description: string;
 	fileName: string;
+	groupId: string;
 	onClose: () => void;
 	onSubmit: ({
 		fromDate,
@@ -23,6 +24,7 @@ interface IExportLogModalProps {
 const ExportLogModal: React.FC<IExportLogModalProps> = ({
 	description,
 	fileName,
+	groupId,
 	onClose,
 	onSubmit,
 	title
@@ -53,6 +55,7 @@ const ExportLogModal: React.FC<IExportLogModalProps> = ({
 				<div className='d-flex'>
 					<DateRangeInput
 						className='w-100'
+						groupId={groupId}
 						onChange={setDateRange}
 						value={dateRange}
 					/>

@@ -256,9 +256,20 @@ public class CommerceWishListDisplayContext {
 		CommerceContext commerceContext =
 			_commerceWishListRequestHelper.getCommerceContext();
 
+		long commerceAccountId = CommerceUtil.getCommerceAccountId(
+			commerceContext);
+		long commerceChannelGroupId =
+			commerceContext.getCommerceChannelGroupId();
+
+		if (!_commerceProductViewPermission.contains(
+				PermissionThreadLocal.getPermissionChecker(), commerceAccountId,
+				commerceChannelGroupId, cpDefinitionId)) {
+
+			return null;
+		}
+
 		return _cpDefinitionHelper.getCPCatalogEntry(
-			CommerceUtil.getCommerceAccountId(commerceContext),
-			commerceContext.getCommerceChannelGroupId(), cpDefinitionId,
+			commerceAccountId, commerceChannelGroupId, cpDefinitionId,
 			_commerceWishListRequestHelper.getLocale());
 	}
 

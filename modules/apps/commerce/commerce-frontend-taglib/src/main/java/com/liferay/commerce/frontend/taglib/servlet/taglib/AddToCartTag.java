@@ -169,6 +169,9 @@ public class AddToCartTag extends IncludeTag {
 					_skuOptions = jsonArray.toString();
 				}
 			}
+			else {
+				_disabled = true;
+			}
 
 			AccountEntry accountEntry = commerceContext.getAccountEntry();
 
@@ -178,7 +181,7 @@ public class AddToCartTag extends IncludeTag {
 						(ThemeDisplay)httpServletRequest.getAttribute(
 							WebKeys.THEME_DISPLAY);
 
-					_disabled =
+					_disabled &=
 						!_commerceOrderPortletResourcePermission.contains(
 							themeDisplay.getPermissionChecker(),
 							accountEntry.getAccountEntryGroupId(),
@@ -198,7 +201,7 @@ public class AddToCartTag extends IncludeTag {
 									CommerceConstants.
 										SERVICE_NAME_COMMERCE_ORDER));
 
-					_disabled =
+					_disabled &=
 						accountEntry.isGuestAccount() &&
 						(CommerceChannelConstants.SITE_TYPE_B2B ==
 							commerceContext.getCommerceSiteType()) &&

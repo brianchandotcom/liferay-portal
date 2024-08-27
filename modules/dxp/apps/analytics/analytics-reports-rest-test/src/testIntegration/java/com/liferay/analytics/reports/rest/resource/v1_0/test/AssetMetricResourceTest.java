@@ -5,8 +5,10 @@
 
 package com.liferay.analytics.reports.rest.resource.v1_0.test;
 
+import com.liferay.analytics.reports.rest.client.dto.v1_0.Trend.TrendClassification;
 import com.liferay.analytics.reports.rest.dto.v1_0.AssetMetric;
 import com.liferay.analytics.reports.rest.dto.v1_0.Metric;
+import com.liferay.analytics.reports.rest.dto.v1_0.Trend;
 import com.liferay.analytics.reports.rest.resource.v1_0.AssetMetricResource;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
@@ -109,6 +111,15 @@ public class AssetMetricResourceTest extends BaseAssetMetricResourceTestCase {
 							JSONUtil.put(
 								"metricType", "VIEWS"
 							).put(
+								"previousValue", 1
+							).put(
+								"trend",
+								JSONUtil.put(
+									"percentage", 100
+								).put(
+									"trendClassification", "POSITIVE"
+								)
+							).put(
 								"value", 1
 							)
 						).put(
@@ -116,6 +127,15 @@ public class AssetMetricResourceTest extends BaseAssetMetricResourceTestCase {
 							JSONUtil.put(
 								JSONUtil.put(
 									"metricType", "VIEWS"
+								).put(
+									"previousValue", 1
+								).put(
+									"trend",
+									JSONUtil.put(
+										"percentage", 100
+									).put(
+										"trendClassification", "POSITIVE"
+									)
 								).put(
 									"value", 1
 								))
@@ -133,6 +153,13 @@ public class AssetMetricResourceTest extends BaseAssetMetricResourceTestCase {
 			Assert.assertEquals(1, metric.getValue(), 0);
 			Assert.assertEquals("VIEWS", metric.getMetricType());
 
+			Trend trend = metric.getTrend();
+
+			Assert.assertEquals(100, trend.getPercentage(), 0);
+			Assert.assertEquals(
+				TrendClassification.POSITIVE.toString(),
+				String.valueOf(trend.getTrendClassification()));
+
 			Metric[] selectedMetrics = assetMetric.getSelectedMetrics();
 
 			Assert.assertEquals(
@@ -142,6 +169,13 @@ public class AssetMetricResourceTest extends BaseAssetMetricResourceTestCase {
 
 			Assert.assertEquals(1, metric.getValue(), 0);
 			Assert.assertEquals("VIEWS", metric.getMetricType());
+
+			trend = metric.getTrend();
+
+			Assert.assertEquals(100, trend.getPercentage(), 0);
+			Assert.assertEquals(
+				TrendClassification.POSITIVE.toString(),
+				String.valueOf(trend.getTrendClassification()));
 		}
 		finally {
 			ReflectionTestUtil.setFieldValue(

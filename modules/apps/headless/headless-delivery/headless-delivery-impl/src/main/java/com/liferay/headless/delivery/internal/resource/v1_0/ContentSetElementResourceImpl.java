@@ -18,9 +18,11 @@ import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.pagination.InfoPage;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.events.ServicePreAction;
+import com.liferay.portal.events.ThemeServicePreAction;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.servlet.DummyHttpServletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -35,6 +37,8 @@ import com.liferay.segments.provider.SegmentsEntryProviderRegistry;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Objects;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -182,8 +186,17 @@ public class ContentSetElementResourceImpl
 
 		ServicePreAction servicePreAction = new ServicePreAction();
 
+		HttpServletResponse httpServletResponse =
+			new DummyHttpServletResponse();
+
 		servicePreAction.servicePre(
-			contextHttpServletRequest, contextHttpServletResponse, false);
+			contextHttpServletRequest, httpServletResponse, false);
+
+		ThemeServicePreAction themeServicePreAction =
+			new ThemeServicePreAction();
+
+		themeServicePreAction.run(
+			contextHttpServletRequest, httpServletResponse);
 
 		themeDisplay = (ThemeDisplay)contextHttpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);

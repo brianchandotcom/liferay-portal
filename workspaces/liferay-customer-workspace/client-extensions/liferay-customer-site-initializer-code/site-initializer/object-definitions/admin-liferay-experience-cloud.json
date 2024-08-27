@@ -1,4 +1,6 @@
 {
+	"accountEntryRestricted": true,
+	"accountEntryRestrictedObjectFieldName": "r_accountEntryToAdminLiferayExperienceCloud_accountEntryId",
 	"label": {
 		"en-US": "Admin Liferay Experience Cloud"
 	},

@@ -1,4 +1,6 @@
 {
+	"accountEntryRestricted": true,
+	"accountEntryRestrictedObjectFieldName": "r_accountEntryToAdminDXPCloud_accountEntryId",
 	"label": {
 		"en-US": "Admin DXP Cloud"
 	},

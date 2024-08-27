@@ -1,4 +1,6 @@
 {
+	"accountEntryRestricted": true,
+	"accountEntryRestrictedObjectFieldName": "r_accountEntryToKoroneikiAccount_accountEntryId",
 	"label": {
 		"en-US": "Koroneiki Account"
 	},

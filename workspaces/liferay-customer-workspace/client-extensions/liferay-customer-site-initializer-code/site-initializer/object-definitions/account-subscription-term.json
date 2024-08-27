@@ -1,4 +1,6 @@
 {
+	"accountEntryRestricted": true,
+	"accountEntryRestrictedObjectFieldName": "r_accountEntryToAccountSubscriptionTerm_accountEntryId",
 	"label": {
 		"en-US": "Account Subscription Term"
 	},

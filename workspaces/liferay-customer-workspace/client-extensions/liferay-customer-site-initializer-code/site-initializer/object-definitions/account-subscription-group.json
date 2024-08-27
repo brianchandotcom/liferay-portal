@@ -1,4 +1,6 @@
 {
+	"accountEntryRestricted": true,
+	"accountEntryRestrictedObjectFieldName": "r_accountEntryToAccountSubscriptionGroup_accountEntryId",
 	"label": {
 		"en-US": "Account Subscription Group"
 	},

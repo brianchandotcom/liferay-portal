@@ -1,4 +1,6 @@
 {
+	"accountEntryRestricted": true,
+	"accountEntryRestrictedObjectFieldName": "r_accountEntryToIncidentReportContactAC_accountEntryId",
 	"label": {
 		"en-US": "Incident Report Contact Analytics Cloud"
 	},

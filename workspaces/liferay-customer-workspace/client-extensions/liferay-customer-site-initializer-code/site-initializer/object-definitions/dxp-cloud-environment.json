@@ -1,4 +1,6 @@
 {
+	"accountEntryRestricted": true,
+	"accountEntryRestrictedObjectFieldName": "r_accountEntryToDXPCloudEnvironment_accountEntryId",
 	"label": {
 		"en-US": "DXP Cloud Environment"
 	},

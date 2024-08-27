@@ -1,4 +1,6 @@
 {
+	"accountEntryRestricted": true,
+	"accountEntryRestrictedObjectFieldName": "r_accountEntryToAnalyticsCloudWorkspace_accountEntryId",
 	"label": {
 		"en-US": "Analytics Cloud Workspace"
 	},

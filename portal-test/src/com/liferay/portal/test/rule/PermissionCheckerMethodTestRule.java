@@ -5,6 +5,8 @@
 
 package com.liferay.portal.test.rule;
 
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -38,10 +40,15 @@ public class PermissionCheckerMethodTestRule extends MethodTestRule<Void> {
 	public Void beforeMethod(Description description, Object target)
 		throws Exception {
 
-		setUpPermissionThreadLocal();
-		setUpPrincipalThreadLocal();
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setWithSafeCloseable(
+					TestPropsValues.getCompanyId())) {
 
-		return null;
+			setUpPermissionThreadLocal();
+			setUpPrincipalThreadLocal();
+
+			return null;
+		}
 	}
 
 	protected void setUpPermissionThreadLocal() throws Exception {

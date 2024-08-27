@@ -13,8 +13,10 @@ import com.liferay.account.model.AccountRole;
 import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.commerce.constants.CommerceAccountActionKeys;
 import com.liferay.commerce.constants.CommerceActionKeys;
+import com.liferay.commerce.constants.CommerceOrderActionKeys;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.notification.constants.CommerceNotificationActionKeys;
+import com.liferay.commerce.payment.model.CommercePaymentEntry;
 import com.liferay.commerce.price.list.constants.CommercePriceListActionKeys;
 import com.liferay.commerce.pricing.constants.CommercePricingClassActionKeys;
 import com.liferay.commerce.pricing.constants.CommercePricingPortletKeys;
@@ -361,6 +363,10 @@ public class CommerceAccountRoleHelperImpl
 				new String[] {ActionKeys.VIEW});
 		}
 		else if (name.equals(AccountRoleConstants.ROLE_NAME_RETURNS_MANAGER)) {
+			companyResourceActionIds.put(
+				CommercePaymentEntry.class.getName(),
+				new String[] {ActionKeys.VIEW});
+
 			for (String portletId :
 					_RETURNS_MANAGER_CONTROL_PANEL_PORTLET_IDS) {
 
@@ -372,6 +378,12 @@ public class CommerceAccountRoleHelperImpl
 			companyResourceActionIds.put(
 				PortletKeys.PORTAL,
 				new String[] {ActionKeys.VIEW_CONTROL_PANEL});
+			companyResourceActionIds.put(
+				"com.liferay.commerce.order",
+				new String[] {CommerceOrderActionKeys.VIEW_COMMERCE_ORDERS});
+			companyResourceActionIds.put(
+				"com.liferay.commerce.return",
+				new String[] {CommerceActionKeys.MANAGE_RETURNS});
 
 			for (String objectDefinitionName :
 					_RETURNS_MANAGER_OBJECT_DEFINITION_NAMES) {

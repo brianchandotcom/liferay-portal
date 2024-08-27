@@ -9,6 +9,7 @@ export async function performSpInitiatedSSO(
 	browser,
 	emailAddress: string,
 	spDomain: string,
+	assertSuccessful: boolean = true,
 	idpSelection?: string
 ): Promise<Page> {
 	const newPage = await browser.newPage({
@@ -60,9 +61,14 @@ export async function performSpInitiatedSSO(
 	await newPage.getByLabel('Remember Me').check();
 	await newPage.getByRole('button', {name: 'Sign In'}).click();
 
-	// Wait for authentication and redirection to complete
+	if (assertSuccessful) {
 
-	await newPage.getByTitle('User Profile Menu').waitFor({timeout: 30 * 1000});
+		// Wait for authentication and redirection to complete
+
+		await newPage
+			.getByTitle('User Profile Menu')
+			.waitFor({timeout: 30 * 1000});
+	}
 
 	return newPage;
 }

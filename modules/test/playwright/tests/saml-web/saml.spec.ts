@@ -554,6 +554,7 @@ test('Create two virtual instances, set localhost and one to IdP and one SP, and
 		browser,
 		userAccount.emailAddress,
 		DEFAULT_SP_URL,
+		true,
 		'localhost'
 	);
 
@@ -565,6 +566,7 @@ test('Create two virtual instances, set localhost and one to IdP and one SP, and
 		browser,
 		userAccount.emailAddress,
 		DEFAULT_SP_URL,
+		true,
 		DEFAULT_IDP_NAME
 	);
 

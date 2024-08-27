@@ -338,8 +338,9 @@ create unique index IX_239165C6 on RepositoryEntry (uuid_[$COLUMN_LENGTH:75$], c
 create unique index IX_EDB9986E on ResourceAction (name[$COLUMN_LENGTH:255$], actionId[$COLUMN_LENGTH:75$]);
 
 create index IX_26284944 on ResourcePermission (companyId, primKey[$COLUMN_LENGTH:255$]);
-create unique index IX_F2237D8E on ResourcePermission (companyId, scope, name[$COLUMN_LENGTH:255$], primKey[$COLUMN_LENGTH:255$], roleId, ctCollectionId);
-create index IX_FA3E7EEB on ResourcePermission (companyId, scope, name[$COLUMN_LENGTH:255$], roleId, primKeyId, viewActionId);
+create index IX_A24F62CB on ResourcePermission (companyId, scope, name[$COLUMN_LENGTH:255$], primKey[$COLUMN_LENGTH:255$]);
+create unique index IX_FD2D2D64 on ResourcePermission (companyId, scope, name[$COLUMN_LENGTH:255$], roleId, primKey[$COLUMN_LENGTH:255$], ctCollectionId);
+create index IX_D8997757 on ResourcePermission (companyId, scope, name[$COLUMN_LENGTH:255$], roleId, viewActionId, primKeyId);
 create index IX_F6BAE86A on ResourcePermission (companyId, scope, primKey[$COLUMN_LENGTH:255$]);
 create index IX_D5F1E2A2 on ResourcePermission (name[$COLUMN_LENGTH:255$]);
 create index IX_A37A0588 on ResourcePermission (roleId);

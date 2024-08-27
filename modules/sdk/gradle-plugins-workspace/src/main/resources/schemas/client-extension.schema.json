@@ -220,6 +220,14 @@
 						},
 						{
 							"properties": {
+								"restrictedToAdminPages": {
+									"description": "",
+									"type": "boolean"
+								},
+								"scope": {
+									"description": "",
+									"type": "string"
+								},
 								"scriptElementAttributes": {
 									"additionalProperties": {
 										"type": [
@@ -235,6 +243,10 @@
 									},
 									"title": "Script Element Attributes",
 									"type": "object"
+								},
+								"scriptLocation": {
+									"description": "",
+									"type": "string"
 								}
 							},
 							"type": "object"

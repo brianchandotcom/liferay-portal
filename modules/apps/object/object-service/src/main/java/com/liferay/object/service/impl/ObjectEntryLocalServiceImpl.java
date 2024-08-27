@@ -5054,7 +5054,8 @@ public class ObjectEntryLocalServiceImpl
 			if (!entryValueString.isEmpty()) {
 				long value = GetterUtil.getLong(entryValue);
 
-				if (!StringUtil.equals(
+				if ((value == 0) &&
+					!StringUtil.equals(
 						String.valueOf(value), entryValue.toString())) {
 
 					throw new ObjectEntryValuesException.ExceedsLongSize(

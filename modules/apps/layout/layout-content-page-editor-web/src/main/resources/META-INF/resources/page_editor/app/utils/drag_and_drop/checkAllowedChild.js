@@ -131,7 +131,7 @@ export default function checkAllowedChild(
 			}
 		}
 
-		if (parent.type === LAYOUT_DATA_ITEM_TYPES.form && child.isWidget) {
+		if (getFormParent(parent, layoutDataRef.current) && child.isWidget) {
 			return false;
 		}
 	}

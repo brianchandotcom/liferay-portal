@@ -423,7 +423,7 @@ function computeDrop({
 		}
 		else if (
 			dropItem.isWidget &&
-			getFormParent(dropItem, layoutDataRef.current)
+			getFormParent(dropTargetItem, layoutDataRef.current)
 		) {
 			message = Liferay.Language.get(
 				'widgets-cannot-be-placed-inside-a-form-container'

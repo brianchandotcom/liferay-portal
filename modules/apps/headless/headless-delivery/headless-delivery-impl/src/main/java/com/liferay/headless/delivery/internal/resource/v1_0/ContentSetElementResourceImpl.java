@@ -115,12 +115,8 @@ public class ContentSetElementResourceImpl
 			throw new UnsupportedOperationException();
 		}
 
-		_initThemeDisplay(siteId);
-
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		serviceContext.setScopeGroupId(siteId);
+		ServiceContextThreadLocal.pushServiceContext(
+			_getServiceContext(siteId));
 
 		InfoCollectionProvider<?> infoCollectionProvider =
 			_infoItemServiceRegistry.getInfoItemService(
@@ -173,6 +169,19 @@ public class ContentSetElementResourceImpl
 		return Page.of(
 			transform(infoPage.getPageItems(), this::_toContentSetElement),
 			pagination, infoPage.getTotalCount());
+	}
+
+	private ServiceContext _getServiceContext(Long siteId) throws Exception {
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setCompanyId(contextCompany.getCompanyId());
+		serviceContext.setRequest(contextHttpServletRequest);
+		serviceContext.setScopeGroupId(siteId);
+		serviceContext.setUserId(contextUser.getUserId());
+
+		_initThemeDisplay(siteId);
+
+		return serviceContext;
 	}
 
 	private void _initThemeDisplay(Long siteId) throws Exception {

@@ -552,14 +552,14 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 	public void testPropertiesSetByUserWithEnvVariable() throws Exception {
 		_setEnv(
 			"LIFERAY_MY_PERIOD_ENVIRONMENT_PERIOD_PROPERTY",
-			"my-environment-property-value");
+			"my environment property value");
 
 		_appender.start();
 
 		_appender.stop();
 
 		_assertReport("Properties set with environment variables");
-		_assertReport("my.environment.property: my-environment-property-value");
+		_assertReport("my.environment.property: my environment property value");
 
 		_assertLogContextContains(
 			"upgrade.report.properties.set.by.user",
@@ -567,7 +567,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 		_assertLogContextContains(
 			"upgrade.report.properties.set.by.user",
-			"my.environment.property: my-environment-property-value");
+			"my.environment.property: my environment property value");
 	}
 
 	@Test
@@ -585,7 +585,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 		Properties properties = new Properties();
 
-		properties.setProperty("my.property", "my-property-value");
+		properties.setProperty("my.property", "my property value");
 
 		try (Writer writer = new FileWriter(propertiesFile)) {
 			properties.store(writer, null);
@@ -595,7 +595,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 			_appender.stop();
 
 			_assertReport(propertiesFile.getAbsolutePath());
-			_assertReport("my.property: my-property-value");
+			_assertReport("my.property: my property value");
 
 			_assertLogContextContains(
 				"upgrade.report.properties.set.by.user",
@@ -603,7 +603,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 			_assertLogContextContains(
 				"upgrade.report.properties.set.by.user",
-				"my.property: my-property-value");
+				"my.property: my property value");
 		}
 		finally {
 			PropsUtil.set(

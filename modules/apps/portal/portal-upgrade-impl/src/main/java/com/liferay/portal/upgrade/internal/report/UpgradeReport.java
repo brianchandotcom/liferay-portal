@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.upgrade.ReleaseManager;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.EnvPropertiesUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -64,7 +63,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.TimeZone;
-import java.util.TreeMap;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.felix.cm.PersistenceManager;
@@ -307,66 +305,41 @@ public class UpgradeReport {
 		).put(
 			"properties.set.by.user",
 			() -> {
-				Map<String, Map<String, Object>> propertiesMap =
-					new LinkedHashMap<>();
+				Map<String, Properties> filesProperties = new LinkedHashMap<>();
 
-				String[] includeAndOverrideFiles = PropsUtil.getArray(
-					"include-and-override");
+				for (String filePath :
+						PropsUtil.getArray("include-and-override")) {
 
-				if (includeAndOverrideFiles != null) {
-					for (String filePath : includeAndOverrideFiles) {
-						File file = new File(filePath);
-
-						if (!file.exists()) {
-							continue;
-						}
-
-						Properties properties = new Properties();
-
-						try (InputStream inputStream = new FileInputStream(
-								file)) {
-
-							properties.load(inputStream);
-						}
-						catch (IOException ioException) {
-							if (_log.isWarnEnabled()) {
-								_log.warn(
-									"Failed to load properties from file: " +
-										filePath,
-									ioException);
-							}
-
-							continue;
-						}
-
-						Map<String, Object> filteredProperties =
-							new TreeMap<>();
-
-						for (Map.Entry<Object, Object> entry :
-								properties.entrySet()) {
-
-							String key = String.valueOf(entry.getKey());
-							Object value = entry.getValue();
-
-							if (ArrayUtil.contains(
-									PropsValues.ADMIN_OBFUSCATED_PROPERTIES,
-									key)) {
-
-								value = StringPool.EIGHT_STARS;
-							}
-
-							filteredProperties.put(key, value);
-						}
-
-						propertiesMap.put(filePath, filteredProperties);
+					if (!FileUtil.exists(filePath)) {
+						continue;
 					}
+
+					Properties properties = new Properties();
+
+					try (InputStream inputStream = new FileInputStream(
+							filePath)) {
+
+						properties.load(inputStream);
+					}
+					catch (IOException ioException) {
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"Failed to load properties from file: " +
+									filePath,
+								ioException);
+						}
+
+						continue;
+					}
+
+					filesProperties.put(filePath, properties);
 				}
 
 				String envPrefix = "LIFERAY_";
 
 				Map<String, String> env = System.getenv();
 
-				Map<String, Object> filteredProperties = new TreeMap<>();
+				Properties properties = new Properties();
 
 				for (Map.Entry<String, String> entry : env.entrySet()) {
 					String key = entry.getKey();
@@ -375,28 +348,17 @@ public class UpgradeReport {
 						continue;
 					}
 
-					String newKey = EnvPropertiesUtil.decode(
-						StringUtil.toLowerCase(
-							key.substring(envPrefix.length())));
-
-					Object value = entry.getValue();
-
-					if (ArrayUtil.contains(
-							PropsValues.ADMIN_OBFUSCATED_PROPERTIES, newKey)) {
-
-						value = StringPool.EIGHT_STARS;
-					}
-
-					filteredProperties.put(newKey, value);
+					properties.setProperty(
+						EnvPropertiesUtil.decode(
+							StringUtil.toLowerCase(
+								key.substring(envPrefix.length()))),
+						entry.getValue());
 				}
 
-				if (!filteredProperties.isEmpty()) {
-					propertiesMap.put(
-						"Properties set with environment variables",
-						filteredProperties);
-				}
+				filesProperties.put(
+					"Properties set with environment variables", properties);
 
-				return new PropertiesPrinter(propertiesMap);
+				return new PropertiesPrinter(filesProperties);
 			}
 		).put(
 			"document.library.storage.size",
@@ -933,10 +895,8 @@ public class UpgradeReport {
 
 	private class PropertiesPrinter {
 
-		public PropertiesPrinter(
-			Map<String, Map<String, Object>> propertiesMap) {
-
-			_propertiesMap = propertiesMap;
+		public PropertiesPrinter(Map<String, Properties> filesProperties) {
+			_filesProperties = filesProperties;
 		}
 
 		@Override
@@ -946,12 +906,12 @@ public class UpgradeReport {
 			sb.append(StringPool.NEW_LINE);
 			sb.append(StringPool.NEW_LINE);
 
-			for (Map.Entry<String, Map<String, Object>> sourceEntry :
-					_propertiesMap.entrySet()) {
+			for (Map.Entry<String, Properties> filePropertiesEntry :
+					_filesProperties.entrySet()) {
 
-				String source = sourceEntry.getKey();
+				String source = filePropertiesEntry.getKey();
 
-				Map<String, Object> properties = sourceEntry.getValue();
+				Properties properties = filePropertiesEntry.getValue();
 
 				sb.append(source);
 
@@ -964,7 +924,7 @@ public class UpgradeReport {
 
 				sb.append(StringPool.NEW_LINE);
 
-				for (Map.Entry<String, Object> propertyEntry :
+				for (Map.Entry<Object, Object> propertyEntry :
 						properties.entrySet()) {
 
 					sb.append(propertyEntry.getKey());
@@ -980,7 +940,7 @@ public class UpgradeReport {
 			return sb.toString();
 		}
 
-		private final Map<String, Map<String, Object>> _propertiesMap;
+		private final Map<String, Properties> _filesProperties;
 
 	}
 

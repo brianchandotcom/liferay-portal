@@ -346,16 +346,13 @@ public class UpgradeReport {
 								properties.entrySet()) {
 
 							String key = String.valueOf(entry.getKey());
-							Object value;
+							Object value = entry.getValue();
 
 							if (ArrayUtil.contains(
 									PropsValues.ADMIN_OBFUSCATED_PROPERTIES,
 									key)) {
 
 								value = StringPool.EIGHT_STARS;
-							}
-							else {
-								value = entry.getValue();
 							}
 
 							filteredProperties.put(key, value);
@@ -382,15 +379,12 @@ public class UpgradeReport {
 						StringUtil.toLowerCase(
 							key.substring(envPrefix.length())));
 
-					Object value;
+					Object value = entry.getValue();
 
 					if (ArrayUtil.contains(
 							PropsValues.ADMIN_OBFUSCATED_PROPERTIES, newKey)) {
 
 						value = StringPool.EIGHT_STARS;
-					}
-					else {
-						value = entry.getValue();
 					}
 
 					filteredProperties.put(newKey, value);

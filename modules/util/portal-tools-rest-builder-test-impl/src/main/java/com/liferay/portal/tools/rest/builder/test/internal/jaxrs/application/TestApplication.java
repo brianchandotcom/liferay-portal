@@ -19,7 +19,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"liferay.jackson=false", "osgi.jaxrs.application.base=/test",
 		"osgi.jaxrs.extension.select=(osgi.jaxrs.name=Liferay.Vulcan)",
-		"osgi.jaxrs.name=test-application"
+		"osgi.jaxrs.name=Liferay.Portal.Tools.REST.Builder.Test"
 	},
 	service = Application.class
 )

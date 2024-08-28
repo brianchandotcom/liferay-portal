@@ -39,6 +39,7 @@ function Body({
 	filter,
 	namespace,
 	onSave,
+	resolvedRESTSchemas,
 	restApplications,
 }: {
 	dismiss: Function;
@@ -47,6 +48,7 @@ function Body({
 	filter?: IFilter;
 	namespace: string;
 	onSave: Function;
+	resolvedRESTSchemas: string[];
 	restApplications: string[];
 }) {
 	const [fieldInUseValidationError, setFieldInUseValidationError] =
@@ -512,6 +514,7 @@ function Body({
 								requiredRESTApplicationValidationError={
 									requiredRESTApplicationValidationError
 								}
+								resolvedRESTSchemas={resolvedRESTSchemas}
 								restApplications={restApplications}
 								restEndpointValidationError={
 									restEndpointValidationError

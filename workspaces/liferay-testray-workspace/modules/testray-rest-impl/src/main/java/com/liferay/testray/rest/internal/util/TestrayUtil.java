@@ -121,4 +121,18 @@ public class TestrayUtil {
 		return sb.toString();
 	}
 
+	public static String interpolateParams(List<Object> params, Long[] values) {
+		StringBundler sb = new StringBundler();
+
+		for (Long value : values) {
+			sb.append("? ");
+			sb.append(", ");
+			params.add(value);
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		return sb.toString();
+	}
+
 }

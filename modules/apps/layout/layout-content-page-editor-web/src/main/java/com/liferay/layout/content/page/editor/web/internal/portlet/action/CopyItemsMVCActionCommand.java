@@ -152,20 +152,9 @@ public class CopyItemsMVCActionCommand
 
 		long segmentsExperienceId = ParamUtil.getLong(
 			actionRequest, "segmentsExperienceId");
-		String[] parentItemIds = null;
 
 		String parentItemId = ParamUtil.getString(
 			actionRequest, "parentItemId");
-
-		if (Validator.isNotNull(parentItemId)) {
-			parentItemIds = new String[] {parentItemId};
-		}
-		else {
-			parentItemIds = ParamUtil.getStringValues(
-				actionRequest, "parentItemIds");
-		}
-
-		String[] finalParentItemIds = parentItemIds;
 
 		String[] itemIds = null;
 
@@ -187,46 +176,41 @@ public class CopyItemsMVCActionCommand
 			themeDisplay.getScopeGroupId(), segmentsExperienceId,
 			themeDisplay.getPlid(),
 			layoutStructure -> {
-				Map<String, List<LayoutStructureItem>>
-					copiedLayoutStructureItemsMap =
-						layoutStructure.copyLayoutStructureItems(
-							Arrays.asList(finalParentItemIds),
-							Arrays.asList(finalItemIds));
+				List<LayoutStructureItem> copiedLayoutStructureItems =
+					layoutStructure.copyLayoutStructureItems(
+						Arrays.asList(finalItemIds), parentItemId);
 
-				for (Map.Entry<String, List<LayoutStructureItem>> entry :
-						copiedLayoutStructureItemsMap.entrySet()) {
+				for (LayoutStructureItem copiedLayoutStructureItem :
+						copiedLayoutStructureItems) {
 
-					copiedLayoutStructureItemIds.add(entry.getKey());
+					copiedLayoutStructureItemIds.add(
+						copiedLayoutStructureItem.getItemId());
 
-					for (LayoutStructureItem copiedLayoutStructureItem :
-							entry.getValue()) {
+					if (!(copiedLayoutStructureItem instanceof
+							FragmentStyledLayoutStructureItem)) {
 
-						if (!(copiedLayoutStructureItem instanceof
-								FragmentStyledLayoutStructureItem)) {
-
-							continue;
-						}
-
-						FragmentStyledLayoutStructureItem
-							fragmentStyledLayoutStructureItem =
-								(FragmentStyledLayoutStructureItem)
-									copiedLayoutStructureItem;
-
-						long originalFragmentEntryLinkId =
-							fragmentStyledLayoutStructureItem.
-								getFragmentEntryLinkId();
-
-						long fragmentEntryLinkId = _copyFragmentEntryLink(
-							actionRequest, originalFragmentEntryLinkId);
-
-						layoutStructure.updateItemConfig(
-							JSONUtil.put(
-								"fragmentEntryLinkId", fragmentEntryLinkId),
-							copiedLayoutStructureItem.getItemId());
-
-						copiedFragmentEntryLinkIdsMap.put(
-							fragmentEntryLinkId, originalFragmentEntryLinkId);
+						continue;
 					}
+
+					FragmentStyledLayoutStructureItem
+						fragmentStyledLayoutStructureItem =
+							(FragmentStyledLayoutStructureItem)
+								copiedLayoutStructureItem;
+
+					long originalFragmentEntryLinkId =
+						fragmentStyledLayoutStructureItem.
+							getFragmentEntryLinkId();
+
+					long fragmentEntryLinkId = _copyFragmentEntryLink(
+						actionRequest, originalFragmentEntryLinkId);
+
+					layoutStructure.updateItemConfig(
+						JSONUtil.put(
+							"fragmentEntryLinkId", fragmentEntryLinkId),
+						copiedLayoutStructureItem.getItemId());
+
+					copiedFragmentEntryLinkIdsMap.put(
+						fragmentEntryLinkId, originalFragmentEntryLinkId);
 				}
 			});
 

@@ -11,6 +11,8 @@ import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.commerce.configuration.CommerceOrderCheckoutConfiguration;
 import com.liferay.commerce.constants.CommerceAddressConstants;
 import com.liferay.commerce.constants.CommerceConstants;
+import com.liferay.commerce.constants.CommerceOrderActionKeys;
+import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.constants.CommercePaymentMethodConstants;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.context.CommerceContext;
@@ -41,6 +43,7 @@ import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.service.CommerceOrderTypeService;
 import com.liferay.commerce.service.CommerceShippingMethodLocalService;
+import com.liferay.commerce.util.CommerceAccountHelper;
 import com.liferay.commerce.util.CommerceCheckoutStep;
 import com.liferay.commerce.util.CommerceCheckoutStepRegistry;
 import com.liferay.headless.commerce.core.util.ExpandoUtil;
@@ -52,6 +55,7 @@ import com.liferay.headless.commerce.delivery.cart.dto.v1_0.CouponCode;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.SkuUnitOfMeasure;
 import com.liferay.headless.commerce.delivery.cart.internal.dto.v1_0.converter.CartItemDTOConverterContext;
 import com.liferay.headless.commerce.delivery.cart.internal.dto.v1_0.converter.constants.DTOConverterConstants;
+import com.liferay.headless.commerce.delivery.cart.internal.odata.entity.v1_0.CartEntityModel;
 import com.liferay.headless.commerce.delivery.cart.resource.v1_0.CartResource;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -60,11 +64,18 @@ import com.liferay.portal.configuration.module.configuration.ConfigurationProvid
 import com.liferay.portal.events.ServicePreAction;
 import com.liferay.portal.events.ThemeServicePreAction;
 import com.liferay.portal.kernel.encryptor.Encryptor;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.CountryService;
 import com.liferay.portal.kernel.service.RegionLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -77,10 +88,12 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.math.BigDecimal;
 
@@ -92,6 +105,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 
 import org.osgi.service.component.annotations.Component;
@@ -191,6 +205,26 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 	}
 
 	@Override
+	public Page<Cart> getChannelAccountCartsPage(
+			Long accountId, Long channelId, String search,
+			Pagination pagination)
+		throws Exception {
+
+		CommerceChannel commerceChannel =
+			_commerceChannelLocalService.getCommerceChannel(channelId);
+
+		return Page.of(
+			transform(
+				_commerceOrderService.getPendingCommerceOrders(
+					commerceChannel.getGroupId(), accountId, search,
+					pagination.getStartPosition(), pagination.getEndPosition()),
+				this::_toCart),
+			pagination,
+			_commerceOrderService.getPendingCommerceOrdersCount(
+				commerceChannel.getGroupId(), accountId, search));
+	}
+
+	@Override
 	public Page<Cart>
 			getChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodeCartsPage(
 				String accountExternalReferenceCode,
@@ -208,29 +242,53 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 					channelExternalReferenceCode,
 					contextCompany.getCompanyId());
 
-		return getChannelCartsPage(
+		return getChannelAccountCartsPage(
 			accountEntry.getAccountEntryId(),
 			commerceChannel.getCommerceChannelId(), search, pagination);
 	}
 
 	@Override
 	public Page<Cart> getChannelCartsPage(
-			Long accountId, Long channelId, String search,
-			Pagination pagination)
+			Long channelId, String search, Filter filter, Pagination pagination,
+			Sort[] sorts)
 		throws Exception {
 
 		CommerceChannel commerceChannel =
 			_commerceChannelLocalService.getCommerceChannel(channelId);
 
-		return Page.of(
-			transform(
-				_commerceOrderService.getPendingCommerceOrders(
-					commerceChannel.getGroupId(), accountId, search,
-					pagination.getStartPosition(), pagination.getEndPosition()),
-				this::_toCart),
-			pagination,
-			_commerceOrderService.getPendingCommerceOrdersCount(
-				commerceChannel.getGroupId(), accountId, search));
+		return SearchUtil.search(
+			null,
+			booleanQuery -> {
+			},
+			filter, CommerceOrder.class.getName(), search, pagination,
+			queryConfig -> queryConfig.setSelectedFieldNames(
+				Field.ENTRY_CLASS_PK),
+			searchContext -> {
+				searchContext.setAttribute(
+					"commerceAccountIds",
+					_getCommerceAccountIds(commerceChannel.getGroupId()));
+				searchContext.setAttribute(
+					"orderStatuses",
+					new int[] {CommerceOrderConstants.ORDER_STATUS_OPEN});
+				searchContext.setCompanyId(contextCompany.getCompanyId());
+				searchContext.setGroupIds(
+					new long[] {commerceChannel.getGroupId()});
+
+				if (Validator.isNotNull(search)) {
+					searchContext.setKeywords(search);
+				}
+
+				searchContext.setUserId(0);
+			},
+			sorts,
+			document -> _toCart(
+				_commerceOrderService.getCommerceOrder(
+					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
+		return _entityModel;
 	}
 
 	@Override
@@ -695,6 +753,22 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 		return cart;
 	}
 
+	private long[] _getCommerceAccountIds(long groupId) throws PortalException {
+		PortletResourcePermission portletResourcePermission =
+			_commerceOrderModelResourcePermission.
+				getPortletResourcePermission();
+
+		if (!portletResourcePermission.contains(
+				PermissionThreadLocal.getPermissionChecker(), groupId,
+				CommerceOrderActionKeys.MANAGE_ALL_ACCOUNTS)) {
+
+			return _commerceAccountHelper.getUserCommerceAccountIds(
+				contextUser.getUserId(), groupId);
+		}
+
+		return null;
+	}
+
 	private long _getCommerceOrderTypeId(Cart cart) throws Exception {
 		if (cart.getOrderTypeId() != null) {
 			return cart.getOrderTypeId();
@@ -1027,6 +1101,8 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 		_addOrUpdateNestedResources(cart, commerceOrder, commerceContext);
 	}
 
+	private static final EntityModel _entityModel = new CartEntityModel();
+
 	@Reference
 	private AccountEntryLocalService _accountEntryLocalService;
 
@@ -1037,6 +1113,9 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 
 	@Reference(target = DTOConverterConstants.CART_ITEM_DTO_CONVERTER)
 	private DTOConverter<CommerceOrderItem, CartItem> _cartItemDTOConverter;
+
+	@Reference
+	private CommerceAccountHelper _commerceAccountHelper;
 
 	@Reference
 	private CommerceAddressService _commerceAddressService;
@@ -1058,6 +1137,12 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 
 	@Reference
 	private CommerceOrderItemService _commerceOrderItemService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.model.CommerceOrder)"
+	)
+	private ModelResourcePermission<CommerceOrder>
+		_commerceOrderModelResourcePermission;
 
 	@Reference
 	private CommerceOrderService _commerceOrderService;

@@ -338,7 +338,8 @@ public abstract class BaseTestEntityResourceTestCase {
 
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		TestEntity patchTestEntity = testEntityResource.patchTestEntity(
-			postTestEntity.getId(), randomPatchTestEntity);
+			postTestEntity.getId(), testPatchTestEntity_getOptionalParameter(),
+			randomPatchTestEntity);
 
 		TestEntity expectedPatchTestEntity = postTestEntity.clone();
 
@@ -353,6 +354,11 @@ public abstract class BaseTestEntityResourceTestCase {
 	}
 
 	protected TestEntity testPatchTestEntity_addTestEntity() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testPatchTestEntity_getOptionalParameter() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}

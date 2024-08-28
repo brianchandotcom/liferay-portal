@@ -439,7 +439,8 @@ public abstract class BaseTestEntityResourceImpl
 			testEntityUnsafeFunction = testEntity -> patchTestEntity(
 				testEntity.getId() != null ? testEntity.getId() :
 					_parseLong((String)parameters.get("testEntityId")),
-				optionalParameter, testEntity);
+				_parseLong((String)parameters.get("optionalParameter")),
+				testEntity);
 		}
 
 		if (testEntityUnsafeFunction == null) {

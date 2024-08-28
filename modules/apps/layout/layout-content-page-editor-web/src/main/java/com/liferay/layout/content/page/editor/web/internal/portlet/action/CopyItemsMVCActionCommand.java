@@ -5,23 +5,17 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
-import com.liferay.fragment.exception.NoSuchEntryLinkException;
 import com.liferay.fragment.listener.FragmentEntryLinkListener;
 import com.liferay.fragment.listener.FragmentEntryLinkListenerRegistry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
-import com.liferay.layout.content.page.editor.web.internal.exception.NoninstanceablePortletException;
 import com.liferay.layout.content.page.editor.web.internal.manager.ContentManager;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.LockedLayoutException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -36,9 +30,6 @@ import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -66,50 +57,8 @@ public class CopyItemsMVCActionCommand
 	}
 
 	@Override
-	protected JSONObject processException(
-		ActionRequest actionRequest, Exception exception) {
-
-		if (exception instanceof LockedLayoutException) {
-			return processLockedLayoutException(actionRequest);
-		}
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String errorMessage = StringPool.BLANK;
-
-		if (exception instanceof NoSuchEntryLinkException) {
-			errorMessage = _language.get(
-				themeDisplay.getRequest(),
-				"the-section-could-not-be-copied-because-it-has-been-deleted");
-		}
-		else if (exception instanceof NoninstanceablePortletException) {
-			NoninstanceablePortletException noninstanceablePortletException =
-				(NoninstanceablePortletException)exception;
-
-			Portlet portlet = portletLocalService.getPortletById(
-				themeDisplay.getCompanyId(),
-				noninstanceablePortletException.getPortletId());
-
-			HttpServletRequest httpServletRequest =
-				portal.getHttpServletRequest(actionRequest);
-
-			HttpSession httpSession = httpServletRequest.getSession();
-
-			errorMessage = _language.format(
-				themeDisplay.getRequest(),
-				"the-layout-could-not-be-copied-because-it-contains-a-widget-" +
-					"x-that-can-only-appear-once-in-the-page",
-				portal.getPortletTitle(
-					portlet, httpSession.getServletContext(),
-					themeDisplay.getLocale()));
-		}
-		else {
-			errorMessage = _language.get(
-				themeDisplay.getRequest(), "an-unexpected-error-occurred");
-		}
-
-		return JSONUtil.put("error", errorMessage);
+	protected String getActionLabel() {
+		return "copied";
 	}
 
 	private JSONObject _addCopiedFragmentEntryLinkToLayoutDataJSONObject(
@@ -238,8 +187,5 @@ public class CopyItemsMVCActionCommand
 	@Reference
 	private FragmentEntryLinkListenerRegistry
 		_fragmentEntryLinkListenerRegistry;
-
-	@Reference
-	private Language _language;
 
 }

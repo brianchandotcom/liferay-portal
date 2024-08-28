@@ -72,7 +72,9 @@ public class TestEntityResourceTest extends BaseTestEntityResourceTestCase {
 
 		ChildTestEntity1 patchChildTestEntity1 =
 			(ChildTestEntity1)testEntityResource.patchTestEntity(
-				postChildTestEntity1.getId(), randomPatchChildTestEntity1);
+				postChildTestEntity1.getId(),
+				testPatchTestEntity_getOptionalParameter(),
+				randomPatchChildTestEntity1);
 
 		ChildTestEntity1 expectedPatchChildTestEntity1 =
 			postChildTestEntity1.clone();
@@ -98,7 +100,9 @@ public class TestEntityResourceTest extends BaseTestEntityResourceTestCase {
 
 		ChildTestEntity2 patchChildTestEntity2 =
 			(ChildTestEntity2)testEntityResource.patchTestEntity(
-				postChildTestEntity1.getId(), randomPatchChildTestEntity2);
+				postChildTestEntity1.getId(),
+				testPatchTestEntity_getOptionalParameter(),
+				randomPatchChildTestEntity2);
 
 		ChildTestEntity2 expectedPatchChildTestEntity2 = new ChildTestEntity2();
 
@@ -138,6 +142,11 @@ public class TestEntityResourceTest extends BaseTestEntityResourceTestCase {
 	@Override
 	protected TestEntity testPatchTestEntity_addTestEntity() throws Exception {
 		return testGetTestEntitiesPage_addTestEntity(randomTestEntity());
+	}
+
+	@Override
+	protected Long testPatchTestEntity_getOptionalParameter() {
+		return RandomTestUtil.nextLong();
 	}
 
 	@Override

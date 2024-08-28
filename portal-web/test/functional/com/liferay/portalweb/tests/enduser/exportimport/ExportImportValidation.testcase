@@ -57,6 +57,24 @@ definition {
 
 			ExportImport.addSourceContent(content = '''<p><a href="${portalURL}/dl/XYZ123">${portalURL}/dl/XYZ123</a></p>''');
 
+			WaitForPageLoad();
+
+			WaitForElementPresent(
+				key_fieldLabel = "Content",
+				locator1 = "CKEditor#BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");
+
+			SelectFrame.selectFrameNoLoading(
+				key_fieldLabel = "Content",
+				locator1 = "CKEditor#BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "CKEditor#BODY",
+				value1 = "dl/XYZ123");
+
+			SelectFrame.selectFrameTop();
+
+			WaitForPageLoad();
+
 			Button.clickPublish();
 
 			ExportImport.viewValidationMessage(
@@ -80,6 +98,24 @@ definition {
 			var portalURL = PropsUtil.get("portal.url");
 
 			ExportImport.addSourceContent(content = '''<p><a href="${portalURL}/dl/XYZ123">${portalURL}/dl/XYZ123</a></p>''');
+
+			WaitForPageLoad();
+
+			WaitForElementPresent(
+				key_fieldLabel = "Content",
+				locator1 = "CKEditor#BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");
+
+			SelectFrame.selectFrameNoLoading(
+				key_fieldLabel = "Content",
+				locator1 = "CKEditor#BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "CKEditor#BODY",
+				value1 = "dl/XYZ123");
+
+			SelectFrame.selectFrameTop();
+
+			WaitForPageLoad();
 
 			PortletEntry.publish();
 		}

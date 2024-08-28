@@ -62,13 +62,14 @@ test(
 
 		await pageEditorPage.goToWidgetConfiguration(layout, site, widgetId);
 
-		// Create a manual collection
+		// Set asset selection and create a manual collection
 
 		const collectionName = getRandomString();
 
+		await assetPublisherPage.changeAssetSelection('Manual');
+
 		await assetPublisherPage.createCollectionFromAssetPublisher(
-			collectionName,
-			'Manual'
+			collectionName
 		);
 
 		// Check that the collection has been created correctly
@@ -113,13 +114,14 @@ test(
 
 		await pageEditorPage.goToWidgetConfiguration(layout, site, widgetId);
 
-		// Create a dynamic collection
+		// Set asset selection and create a manual collection
 
 		const collectionName = getRandomString();
 
+		await assetPublisherPage.changeAssetSelection('Dynamic');
+
 		await assetPublisherPage.createCollectionFromAssetPublisher(
-			collectionName,
-			'Dynamic'
+			collectionName
 		);
 
 		// Check that the collection has been created correctly

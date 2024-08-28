@@ -11,6 +11,7 @@ import React from 'react';
 import ConvertToPageTemplateModal from '../../plugins/convert_to_page_template_modal/components/ConvertToPageTemplateModal';
 import {StyleBookContextProvider} from '../../plugins/page_design_options/hooks/useStyleBook';
 import {INIT} from '../actions/types';
+import {ClipboardContextProvider} from '../contexts/ClipboardContext';
 import {CollectionActiveItemContextProvider} from '../contexts/CollectionActiveItemContext';
 import {ControlsProvider} from '../contexts/ControlsContext';
 import {DisplayPagePreviewItemContextProvider} from '../contexts/DisplayPagePreviewItemContext';
@@ -72,33 +73,35 @@ export default function App({state}) {
 										<Toolbar />
 
 										<KeyboardMovementContextProvider>
-											<ShortcutContextProvider>
-												<KeyboardManager />
+											<ClipboardContextProvider>
+												<ShortcutContextProvider>
+													<KeyboardManager />
 
-												<KeyboardMovementPreview />
+													<KeyboardMovementPreview />
 
-												<KeyboardMovementText />
+													<KeyboardMovementText />
 
-												<PortletContentContextProvider>
-													<LocalConfigContextProvider>
-														<GlobalContextProvider>
-															<CommonStylesManager />
+													<PortletContentContextProvider>
+														<LocalConfigContextProvider>
+															<GlobalContextProvider>
+																<CommonStylesManager />
 
-															<StyleBookContextProvider>
-																<Sidebar />
+																<StyleBookContextProvider>
+																	<Sidebar />
 
-																<LayoutKeyboardContextProvider>
-																	<LayoutViewport />
-																</LayoutKeyboardContextProvider>
+																	<LayoutKeyboardContextProvider>
+																		<LayoutViewport />
+																	</LayoutKeyboardContextProvider>
 
-																<LayoutBreadcrumbs />
+																	<LayoutBreadcrumbs />
 
-																<ItemConfigurationSidebar />
-															</StyleBookContextProvider>
-														</GlobalContextProvider>
-													</LocalConfigContextProvider>
-												</PortletContentContextProvider>
-											</ShortcutContextProvider>
+																	<ItemConfigurationSidebar />
+																</StyleBookContextProvider>
+															</GlobalContextProvider>
+														</LocalConfigContextProvider>
+													</PortletContentContextProvider>
+												</ShortcutContextProvider>
+											</ClipboardContextProvider>
 										</KeyboardMovementContextProvider>
 									</FormValidationContextProvider>
 								</DisplayPagePreviewItemContextProvider>

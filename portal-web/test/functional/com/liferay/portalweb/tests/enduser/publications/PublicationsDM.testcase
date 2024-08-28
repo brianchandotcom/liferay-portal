@@ -28,8 +28,6 @@ definition {
 	@description = "This is the use case for LPS-161041. Can view changes to a document across multiple publications"
 	@priority = 4
 	test CanViewDocumentFolderAndFileOverMultiplePublications {
-		property custom.properties = "feature.flag.LPS-161033=true";
-
 		task ("Add new document folder and file on new added site") {
 			HeadlessSite.addSite(siteName = "Site Name");
 

@@ -302,8 +302,6 @@ definition {
 	@description = "This is the use case for LPS-161037."
 	@priority = 4
 	test CanViewWebContentTimelineOverMultiplePublications {
-		property custom.properties = "feature.flag.LPS-161033=true";
-
 		task ("Add new web content on new added site") {
 			HeadlessSite.addSite(siteName = "Site Name");
 

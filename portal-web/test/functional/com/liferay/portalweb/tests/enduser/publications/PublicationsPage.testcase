@@ -1278,7 +1278,6 @@ definition {
 	@description = "This is use case for LPS-179333. Verify that timline and conflict icon can display for the conflict pulication bar."
 	@priority = 3
 	test TimelineAndConflictIconCanAppearOnConflictPublicationBar {
-		property custom.properties = "feature.flag.LPS-161033=true";
 		property test.assert.warning.exceptions = "true";
 
 		task ("Make change to the Home page on Publication 1 Name") {
@@ -1339,8 +1338,6 @@ definition {
 	@description = "Verify that changes made across multiple Publications are shown in the history"
 	@priority = 3
 	test ViewChangesAcrossMultiplePublications {
-		property custom.properties = "feature.flag.LPS-161033=true";
-
 		task ("Add new site and a new page in it with Documents and Media widget") {
 			HeadlessSite.addSite(siteName = "Site Name");
 

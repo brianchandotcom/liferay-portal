@@ -338,7 +338,7 @@ public class FreeMarkerTool {
 
 		fieldName = fieldName.replaceAll("[ \\-\\/]", "_");
 
-		fieldName = fieldName.replaceAll("[_.]", "_");
+		fieldName = fieldName.replaceAll("\\.", "_point_");
 
 		fieldName = fieldName.replaceAll("[^a-zA-Z0-9_]", "");
 

@@ -83,24 +83,24 @@ test('can import a lar file selecting some items to import', async ({
 });
 
 [{name: 'com.liferay.site.initializer.welcome'}].forEach(({name}) => {
-	test(
-		`staged and live versions of a site are equal with template ${name}`,
-		async ({apiHelpers, stagingPage}) => {
-			const site = await apiHelpers.headlessSite.createSite({
-				name,
-				templateKey: name,
-				templateType: 'site-initializer',
-			});
+	test(`staged and live versions of a site are equal with template ${name}`, async ({
+		apiHelpers,
+		stagingPage,
+	}) => {
+		const site = await apiHelpers.headlessSite.createSite({
+			name,
+			templateKey: name,
+			templateType: 'site-initializer',
+		});
 
-			expect(site.name).toBeDefined();
+		expect(site.name).toBeDefined();
 
-			apiHelpers.data.push({id: site.id, type: 'site'});
+		apiHelpers.data.push({id: site.id, type: 'site'});
 
-			await stagingPage.goToStaging(site.name);
+		await stagingPage.goToStaging(site.name);
 
-			await stagingPage.enableDefaultLocalStaging();
+		await stagingPage.enableDefaultLocalStaging();
 
-			await stagingPage.compareCurrentPageVersions(site.name);
-		}
-	);
+		await stagingPage.compareCurrentPageVersions(site.name);
+	});
 });

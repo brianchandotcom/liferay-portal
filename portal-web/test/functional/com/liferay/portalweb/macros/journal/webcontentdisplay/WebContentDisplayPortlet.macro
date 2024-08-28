@@ -559,7 +559,7 @@ definition {
 				key_webContentTitle = ${webContentTitle},
 				locator1 = "WCD#WEB_CONTENT_LINK");
 
-			Click(
+			Click.clickNoMouseOverNoWaitForVisible(
 				key_displayText = ${displayText},
 				key_webContentTitle = ${webContentTitle},
 				locator1 = "WCD#WEB_CONTENT_LINK");

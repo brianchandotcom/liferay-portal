@@ -671,9 +671,13 @@ definition {
 		}
 
 		task ("Then: The page link in the WCD portlet is be present") {
+			WaitForPageLoad();
+
 			Navigator.gotoSitePage(
 				pageName = "Page1 Name",
 				siteName = "Site Name");
+
+			WaitForPageLoad();
 
 			WebContentDisplayPortlet.viewContent(
 				displayText = ${entryExternalURL},

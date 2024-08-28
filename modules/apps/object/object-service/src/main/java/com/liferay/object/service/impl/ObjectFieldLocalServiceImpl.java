@@ -62,7 +62,6 @@ import com.liferay.object.service.persistence.ObjectLayoutColumnPersistence;
 import com.liferay.object.service.persistence.ObjectRelationshipPersistence;
 import com.liferay.object.system.SystemObjectDefinitionManager;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.Table;
@@ -341,12 +340,6 @@ public class ObjectFieldLocalServiceImpl
 	}
 
 	@Override
-	public ObjectField fetchObjectField(long objectFieldId) {
-		return _getObjectField(
-			objectFieldPersistence.fetchByPrimaryKey(objectFieldId));
-	}
-
-	@Override
 	public ObjectField fetchObjectField(long objectDefinitionId, String name) {
 		return objectFieldPersistence.fetchByODI_N(objectDefinitionId, name);
 	}
@@ -459,24 +452,14 @@ public class ObjectFieldLocalServiceImpl
 
 	@Override
 	public List<ObjectField> getLocalizedObjectFields(long objectDefinitionId) {
-		return _getObjectFields(
-			objectFieldPersistence.findByODI_L(objectDefinitionId, true));
-	}
-
-	@Override
-	public ObjectField getObjectField(long objectFieldId)
-		throws PortalException {
-
-		return _getObjectField(
-			objectFieldPersistence.findByPrimaryKey(objectFieldId));
+		return objectFieldPersistence.findByODI_L(objectDefinitionId, true);
 	}
 
 	@Override
 	public ObjectField getObjectField(long objectDefinitionId, String name)
 		throws PortalException {
 
-		return _getObjectField(
-			objectFieldPersistence.findByODI_N(objectDefinitionId, name));
+		return objectFieldPersistence.findByODI_N(objectDefinitionId, name);
 	}
 
 	@Override
@@ -494,17 +477,15 @@ public class ObjectFieldLocalServiceImpl
 
 	@Override
 	public List<ObjectField> getObjectFields(long objectDefinitionId) {
-		return _getObjectFields(
-			objectFieldPersistence.findByObjectDefinitionId(
-				objectDefinitionId));
+		return objectFieldPersistence.findByObjectDefinitionId(
+			objectDefinitionId);
 	}
 
 	@Override
 	public List<ObjectField> getObjectFields(
 		long objectDefinitionId, boolean system) {
 
-		return _getObjectFields(
-			objectFieldPersistence.findByODI_S(objectDefinitionId, system));
+		return objectFieldPersistence.findByODI_S(objectDefinitionId, system);
 	}
 
 	@Override
@@ -512,27 +493,24 @@ public class ObjectFieldLocalServiceImpl
 		long objectDefinitionId, int start, int end,
 		OrderByComparator<ObjectField> orderByComparator) {
 
-		return _getObjectFields(
-			objectFieldPersistence.findByObjectDefinitionId(
-				objectDefinitionId, start, end, orderByComparator));
+		return objectFieldPersistence.findByObjectDefinitionId(
+			objectDefinitionId, start, end, orderByComparator);
 	}
 
 	@Override
 	public List<ObjectField> getObjectFields(
 		long objectDefinitionId, String dbTableName) {
 
-		return _getObjectFields(
-			objectFieldPersistence.findByODI_DTN(
-				objectDefinitionId, dbTableName));
+		return objectFieldPersistence.findByODI_DTN(
+			objectDefinitionId, dbTableName);
 	}
 
 	@Override
 	public List<ObjectField> getObjectFieldsByBusinessType(
 		long objectDefinitionId, String businessType) {
 
-		return _getObjectFields(
-			objectFieldPersistence.findByODI_BT(
-				objectDefinitionId, businessType));
+		return objectFieldPersistence.findByODI_BT(
+			objectDefinitionId, businessType);
 	}
 
 	@Override
@@ -1228,23 +1206,6 @@ public class ObjectFieldLocalServiceImpl
 		}
 
 		return indexedLanguageId;
-	}
-
-	private ObjectField _getObjectField(ObjectField objectField) {
-		if (objectField == null) {
-			return null;
-		}
-
-		objectField.setObjectFieldSettings(
-			_objectFieldSettingLocalService.getObjectFieldObjectFieldSettings(
-				objectField.getObjectFieldId()));
-
-		return objectField;
-	}
-
-	private List<ObjectField> _getObjectFields(List<ObjectField> objectFields) {
-		return TransformUtil.transform(
-			objectFields, objectField -> _getObjectField(objectField));
 	}
 
 	private ObjectFieldSettingContributor _getObjectFieldSettingContributor(

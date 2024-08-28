@@ -122,7 +122,7 @@ public class CopyItemsMVCActionCommandTest {
 	}
 
 	@Test
-	public void testDuplicateDropZoneFragmentEntryLink() throws Exception {
+	public void testCopyDropZoneFragmentEntryLink() throws Exception {
 		long segmentsExperienceId =
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
 				_layout.getPlid());
@@ -189,59 +189,59 @@ public class CopyItemsMVCActionCommandTest {
 				new String[] {
 					dropZoneFragmentStyledLayoutStructureItem.getItemId()
 				},
+				dropZoneFragmentStyledLayoutStructureItem.getItemId(),
 				segmentsExperienceId),
 			new MockLiferayPortletActionResponse());
 
-		List<String> duplicatedItemIds = (List<String>)jsonObject.get(
-			"duplicatedItemIds");
+		List<String> copiedItemIds = (List<String>)jsonObject.get(
+			"copiedItemIds");
 
-		String duplicatedItemId = duplicatedItemIds.get(0);
+		String copiedItemId = copiedItemIds.get(0);
 
-		Assert.assertNotNull(duplicatedItemId);
+		Assert.assertNotNull(copiedItemId);
 
 		layoutStructure = LayoutStructure.of(
 			layoutPageTemplateStructure.getData(segmentsExperienceId));
 
 		FragmentStyledLayoutStructureItem
-			duplicatedDropZoneFragmentStyledLayoutStructureItem =
+			copiedDropZoneFragmentStyledLayoutStructureItem =
 				_assertFragmentStyledLayoutStructureItem(
-					layoutStructure.getLayoutStructureItem(duplicatedItemId));
+					layoutStructure.getLayoutStructureItem(copiedItemId));
 
-		FragmentEntryLink duplicatedDropzoneFragmentEntryLink =
+		FragmentEntryLink copiedDropzoneFragmentEntryLink =
 			_fragmentEntryLinkLocalService.getFragmentEntryLink(
-				duplicatedDropZoneFragmentStyledLayoutStructureItem.
+				copiedDropZoneFragmentStyledLayoutStructureItem.
 					getFragmentEntryLinkId());
 
-		_assertDuplicatedFragmentEntryLink(
-			duplicatedDropzoneFragmentEntryLink, dropzoneFragmentEntryLink);
+		_assertCopiedFragmentEntryLink(
+			copiedDropzoneFragmentEntryLink, dropzoneFragmentEntryLink);
 
 		FragmentDropZoneLayoutStructureItem
-			duplicatedFragmentDropZoneLayoutStructureItem =
+			copiedFragmentDropZoneLayoutStructureItem =
 				_assertFragmentDropZoneLayoutStructureItem(
 					layoutStructure,
-					duplicatedDropZoneFragmentStyledLayoutStructureItem);
+					copiedDropZoneFragmentStyledLayoutStructureItem);
 
 		Assert.assertEquals(
-			duplicatedDropzoneFragmentEntryLink.getNamespace(),
-			duplicatedFragmentDropZoneLayoutStructureItem.
-				getFragmentDropZoneId());
+			copiedDropzoneFragmentEntryLink.getNamespace(),
+			copiedFragmentDropZoneLayoutStructureItem.getFragmentDropZoneId());
 
 		FragmentStyledLayoutStructureItem
-			duplicatedHeadingFragmentStyledLayoutStructureItem =
+			copiedHeadingFragmentStyledLayoutStructureItem =
 				_assertFragmentStyledLayoutStructureItem(
 					_assertChildrenItems(
 						layoutStructure,
-						duplicatedFragmentDropZoneLayoutStructureItem));
+						copiedFragmentDropZoneLayoutStructureItem));
 
-		_assertDuplicatedFragmentEntryLink(
+		_assertCopiedFragmentEntryLink(
 			_fragmentEntryLinkLocalService.getFragmentEntryLink(
-				duplicatedHeadingFragmentStyledLayoutStructureItem.
+				copiedHeadingFragmentStyledLayoutStructureItem.
 					getFragmentEntryLinkId()),
 			headingFragmentEntryLink);
 	}
 
 	@Test
-	public void testDuplicateMultipleItems() throws Exception {
+	public void testCopyMultipleItems() throws Exception {
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
 				fetchLayoutPageTemplateStructure(
@@ -262,6 +262,10 @@ public class CopyItemsMVCActionCommandTest {
 			layoutStructure.addRowStyledLayoutStructureItem(
 				layoutStructure.getMainItemId(), 0, 1);
 
+		LayoutStructureItem rowStyledLayoutStructureItem3 =
+			layoutStructure.addRowStyledLayoutStructureItem(
+				layoutStructure.getMainItemId(), 0, 1);
+
 		_layoutPageTemplateStructureLocalService.
 			updateLayoutPageTemplateStructureData(
 				_layout.getGroupId(), _layout.getPlid(),
@@ -275,14 +279,14 @@ public class CopyItemsMVCActionCommandTest {
 					rowStyledLayoutStructureItem1.getItemId(),
 					rowStyledLayoutStructureItem2.getItemId()
 				},
+				rowStyledLayoutStructureItem3.getItemId(),
 				segmentsExperienceId),
 			new MockLiferayPortletActionResponse());
 
-		List<String> duplicatedItemIds = (List<String>)jsonObject.get(
-			"duplicatedItemIds");
+		List<String> copiedItemIds = (List<String>)jsonObject.get(
+			"copiedItemIds");
 
-		Assert.assertEquals(
-			duplicatedItemIds.toString(), 2, duplicatedItemIds.size());
+		Assert.assertEquals(copiedItemIds.toString(), 2, copiedItemIds.size());
 
 		JSONObject layoutDataJSONObject = jsonObject.getJSONObject(
 			"layoutData");
@@ -297,7 +301,7 @@ public class CopyItemsMVCActionCommandTest {
 			mainLayoutStructureItem.getChildrenItemIds();
 
 		Assert.assertEquals(
-			childrenItemIds.toString(), 4, childrenItemIds.size());
+			childrenItemIds.toString(), 5, childrenItemIds.size());
 	}
 
 	private FragmentEntryLink _addFragmentEntryLink(
@@ -358,20 +362,20 @@ public class CopyItemsMVCActionCommandTest {
 		return childLayoutStructureItem;
 	}
 
-	private void _assertDuplicatedFragmentEntryLink(
-		FragmentEntryLink duplicatedFragmentEntryLink,
+	private void _assertCopiedFragmentEntryLink(
+		FragmentEntryLink copiedFragmentEntryLink,
 		FragmentEntryLink fragmentEntryLink) {
 
 		Assert.assertEquals(
 			fragmentEntryLink.getFragmentEntryId(),
-			duplicatedFragmentEntryLink.getFragmentEntryId());
+			copiedFragmentEntryLink.getFragmentEntryId());
 		Assert.assertEquals(
-			fragmentEntryLink.getHtml(), duplicatedFragmentEntryLink.getHtml());
+			fragmentEntryLink.getHtml(), copiedFragmentEntryLink.getHtml());
 		Assert.assertNotEquals(
 			fragmentEntryLink.getNamespace(),
-			duplicatedFragmentEntryLink.getNamespace());
+			copiedFragmentEntryLink.getNamespace());
 		Assert.assertEquals(
-			0, duplicatedFragmentEntryLink.getOriginalFragmentEntryLinkId());
+			0, copiedFragmentEntryLink.getOriginalFragmentEntryLinkId());
 	}
 
 	private FragmentDropZoneLayoutStructureItem
@@ -417,7 +421,7 @@ public class CopyItemsMVCActionCommandTest {
 	}
 
 	private MockLiferayPortletActionRequest _getMockLiferayPortletActionRequest(
-			String[] itemIds, long segmentExperienceId)
+			String[] itemIds, String parentItemId, long segmentExperienceId)
 		throws Exception {
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
@@ -427,6 +431,8 @@ public class CopyItemsMVCActionCommandTest {
 			WebKeys.THEME_DISPLAY, _getThemeDisplay());
 
 		mockLiferayPortletActionRequest.addParameter("itemIds", itemIds);
+		mockLiferayPortletActionRequest.addParameter(
+			"parentItemId", parentItemId);
 		mockLiferayPortletActionRequest.addParameter(
 			"segmentsExperienceId", String.valueOf(segmentExperienceId));
 
@@ -476,9 +482,7 @@ public class CopyItemsMVCActionCommandTest {
 	private LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
 
-	@Inject(
-		filter = "mvc.command.name=/layout_content_page_editor/duplicate_item"
-	)
+	@Inject(filter = "mvc.command.name=/layout_content_page_editor/copy_items")
 	private MVCActionCommand _mvcActionCommand;
 
 	@Inject

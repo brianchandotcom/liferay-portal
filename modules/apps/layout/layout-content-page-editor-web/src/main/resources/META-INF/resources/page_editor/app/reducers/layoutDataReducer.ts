@@ -23,6 +23,7 @@ import {
 	DUPLICATE_ITEM,
 	MOVE_ITEM,
 	MOVE_STEPPER,
+	PASTE_ITEM,
 	UPDATE_COLLECTION_DISPLAY_COLLECTION,
 	UPDATE_COL_SIZE,
 	UPDATE_FORM_ITEM_CONFIG,
@@ -60,6 +61,7 @@ export default function layoutDataReducer(
 		| ReturnType<typeof deleteItem>
 		| ReturnType<typeof deleteRule>
 		| ReturnType<typeof duplicateItem>
+		| ReturnType<typeof pasteItem>
 		| ReturnType<typeof moveItem>
 		| ReturnType<typeof moveStepper>
 		| ReturnType<typeof updateCollectionDisplayCollection>
@@ -79,6 +81,7 @@ export default function layoutDataReducer(
 		case DELETE_ITEM:
 		case DELETE_RULE:
 		case DUPLICATE_ITEM:
+		case PASTE_ITEM:
 		case MOVE_ITEM:
 		case MOVE_STEPPER:
 		case UPDATE_COL_SIZE:

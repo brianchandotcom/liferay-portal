@@ -75,7 +75,7 @@ public class TestrayTestFlowResourceImpl
 		sb.append("cr.r_componentToCaseResult_c_componentId = ");
 		sb.append("c.c_componentId_ and c.r_teamToComponents_c_teamId = ");
 		sb.append("t.c_teamId_ and cr.r_subtaskToCaseResults_c_subtaskId = ");
-		sb.append("s.c_subtaskId_ and s.dueStatus_ <> 'merged' and ");
+		sb.append("s.c_subtaskId_ and s.dueStatus_ <> 'MERGED' and ");
 		sb.append("s.r_userToSubtasks_userId = 0 and ta.c_taskId_ = ");
 		sb.append("s.r_taskToSubtasks_c_taskId ");
 
@@ -144,7 +144,7 @@ public class TestrayTestFlowResourceImpl
 		sb.append("and cr.r_componentToCaseResult_c_componentId = ");
 		sb.append("c.c_componentId_ and c.r_teamToComponents_c_teamId = ");
 		sb.append("t.c_teamId_ and cr.r_subtaskToCaseResults_c_subtaskId = ");
-		sb.append("s.c_subtaskId_ and s.dueStatus_ <> 'merged' and ");
+		sb.append("s.c_subtaskId_ and s.dueStatus_ <> 'MERGED' and ");
 		sb.append("ta.c_taskId_ = s.r_taskToSubtasks_c_taskId and u.userId = ");
 		sb.append("s.r_userToSubtasks_userId ");
 
@@ -291,9 +291,8 @@ public class TestrayTestFlowResourceImpl
 		StringBundler sb = new StringBundler(9);
 
 		sb.append("select cr.errors_ , sum(c.priority_) as score from ");
-		sb.append("lportal.O_[%COMPANY_ID%]_CaseResult cr, ");
-		sb.append("lportal.O_[%COMPANY_ID%]_Case c where cr.errors_ is not ");
-		sb.append("null and cr.errors_ != '' and ");
+		sb.append("O_[%COMPANY_ID%]_CaseResult cr, O_[%COMPANY_ID%]_Case c ");
+		sb.append("where cr.errors_ is not null and cr.errors_ != '' and ");
 		sb.append("cr.r_caseToCaseResult_c_caseId = c.c_caseId_ and ");
 		sb.append("cr.r_buildToCaseResult_c_buildId = ? group by cr.errors_ ");
 		sb.append("order by score desc");
@@ -303,7 +302,7 @@ public class TestrayTestFlowResourceImpl
 				sb.toString(), "[%COMPANY_ID%]",
 				String.valueOf(contextCompany.getCompanyId())),
 			ListUtil.fromArray(
-				GetterUtil.getLong(testrayBuild.get("c_buildid"))));
+				GetterUtil.getLong(testrayBuild.get("c_buildId"))));
 
 		objectDefinition = _objectDefinitionLocalService.getObjectDefinition(
 			contextCompany.getCompanyId(), "C_Subtask");
@@ -342,7 +341,7 @@ public class TestrayTestFlowResourceImpl
 					String.valueOf(contextCompany.getCompanyId())),
 				ListUtil.fromArray(
 					objectEntry.getObjectEntryId(),
-					GetterUtil.getLong(testrayBuild.get("c_buildid")),
+					GetterUtil.getLong(testrayBuild.get("c_buildId")),
 					String.valueOf(value.get("errors_"))));
 		}
 

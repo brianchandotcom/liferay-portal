@@ -97,7 +97,7 @@ test('can import a lar file selecting some items to import', async ({
 
 		apiHelpers.data.push({id: site.id, type: 'site'});
 
-		await stagingPage.goToStaging(site.name);
+		await stagingPage.goto(site.name);
 
 		await stagingPage.enableDefaultLocalStaging();
 

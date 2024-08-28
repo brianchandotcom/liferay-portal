@@ -72,7 +72,7 @@ export class StagingPage {
 		}
 	}
 
-	async goToStaging(siteKey: string) {
+	async goto(siteKey: string) {
 		await this.page.goto(
 			`/group/${siteKey}/~/control_panel/manage?p_p_id=com_liferay_staging_processes_web_portlet_StagingProcessesPortlet`
 		);

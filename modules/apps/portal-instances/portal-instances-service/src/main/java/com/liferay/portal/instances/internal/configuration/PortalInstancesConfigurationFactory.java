@@ -71,7 +71,8 @@ public class PortalInstancesConfigurationFactory {
 					portalInstancesConfiguration.adminEmailAddress(),
 					portalInstancesConfiguration.adminFirstName(),
 					portalInstancesConfiguration.adminMiddleName(),
-					portalInstancesConfiguration.adminLastName()));
+					portalInstancesConfiguration.adminLastName(),
+					portalInstancesConfiguration.siteInitializerKey()));
 		}
 		else {
 			if (company.getCompanyId() ==

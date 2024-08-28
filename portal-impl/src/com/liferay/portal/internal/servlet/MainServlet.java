@@ -770,7 +770,8 @@ public class MainServlet extends HttpServlet {
 					PropsValues.COMPANY_DEFAULT_VIRTUAL_HOST_MAIL_DOMAIN,
 					PropsValues.COMPANY_DEFAULT_WEB_ID),
 				0, true, PropsValues.COMPANY_DEFAULT_ADD_DEFAULT_ADMIN_USER,
-				null, null, null, null, null, null);
+				null, null, null, null, null, null,
+				PropsValues.COMPANY_DEFAULT_SITE_INITIALIZER_KEY);
 		}
 
 		if (Validator.isNull(PropsValues.COMPANY_DEFAULT_WEB_ID)) {
@@ -784,10 +785,15 @@ public class MainServlet extends HttpServlet {
 						PropsValues.COMPANY_DEFAULT_WEB_ID,
 						company.getWebId())) {
 
-					PortalInstances.initCompany(company, true);
+					PortalInstances.initCompany(
+						company,
+						PropsValues.COMPANY_DEFAULT_SITE_INITIALIZER_KEY, true);
 				}
 				else {
-					PortalInstances.initCompany(company, false);
+					PortalInstances.initCompany(
+						company,
+						PropsValues.COMPANY_DEFAULT_SITE_INITIALIZER_KEY,
+						false);
 				}
 			});
 

@@ -364,6 +364,10 @@ public class PropsValues {
 	public static String COMPANY_DEFAULT_NAME = PropsUtil.get(
 		PropsKeys.COMPANY_DEFAULT_NAME);
 
+	public static final String COMPANY_DEFAULT_SITE_INITIALIZER_KEY =
+		GetterUtil.getString(
+			PropsUtil.get(PropsKeys.COMPANY_DEFAULT_SITE_INITIALIZER_KEY));
+
 	public static String COMPANY_DEFAULT_TIME_ZONE = PropsUtil.get(
 		PropsKeys.COMPANY_DEFAULT_TIME_ZONE);
 

@@ -131,14 +131,16 @@ public class AddInstanceMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "defaultAdminMiddleName", null);
 		String defaultAdminLastName = ParamUtil.getString(
 			actionRequest, "defaultAdminLastName", null);
+		String siteInitializerKey = ParamUtil.getString(actionRequest, "siteInitializerKey", _SITE_INITIALIZER_KEY_WELCOME);
 
 		PortalInstances.addCompany(
-			ParamUtil.getString(actionRequest, "siteInitializerKey"),
+			siteInitializerKey,
 			() -> _companyService.addCompany(
 				webId, virtualHostname, mx, maxUsers, active,
 				defaultAdminPassword, defaultAdminScreenName,
 				defaultAdminEmailAddress, defaultAdminFirstName,
-				defaultAdminMiddleName, defaultAdminLastName));
+				defaultAdminMiddleName, defaultAdminLastName,
+				siteInitializerKey));
 
 		_synchronizePortalInstances();
 	}
@@ -146,6 +148,9 @@ public class AddInstanceMVCActionCommand extends BaseMVCActionCommand {
 	private void _synchronizePortalInstances() {
 		_portalInstancesLocalService.synchronizePortalInstances();
 	}
+
+	private static final String _SITE_INITIALIZER_KEY_WELCOME =
+		"com.liferay.site.initializer.welcome";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AddInstanceMVCActionCommand.class);

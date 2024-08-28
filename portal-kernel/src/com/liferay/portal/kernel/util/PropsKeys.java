@@ -453,6 +453,9 @@ public interface PropsKeys {
 
 	public static final String COMPANY_DEFAULT_NAME = "company.default.name";
 
+	public static final String COMPANY_DEFAULT_SITE_INITIALIZER_KEY =
+		"company.default.site.initializer.key";
+
 	public static final String COMPANY_DEFAULT_TIME_ZONE =
 		"company.default.time.zone";
 

@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.site.initializer.kernel.util.SiteInitializerThreadLocal;
 
 import java.sql.SQLException;
 
@@ -60,15 +59,13 @@ public class PortalInstances {
 			UnsafeSupplier<Company, PortalException> unsafeSupplier)
 		throws PortalException {
 
-		SiteInitializerThreadLocal.setKey(siteInitializerKey);
-
 		Company company = unsafeSupplier.get();
 
 		try (SafeCloseable safeCloseable =
 				CompanyThreadLocal.setWithSafeCloseable(
 					company.getCompanyId())) {
 
-			initCompany(company, true);
+			initCompany(company, siteInitializerKey, true);
 		}
 
 		return company;
@@ -241,10 +238,15 @@ public class PortalInstances {
 	}
 
 	public static long initCompany(Company company) {
-		return initCompany(company, false);
+		return initCompany(company, _SITE_INITIALIZER_KEY_WELCOME, false);
 	}
 
 	public static long initCompany(Company company, boolean skipCheck) {
+		return initCompany(company, _SITE_INITIALIZER_KEY_WELCOME, skipCheck);
+	}
+
+	public static long initCompany(
+		Company company, String siteInitializerKey, boolean skipCheck) {
 
 		// Begin initializing company
 
@@ -262,7 +264,8 @@ public class PortalInstances {
 
 			if (!skipCheck) {
 				try {
-					CompanyLocalServiceUtil.checkCompany(company.getWebId());
+					CompanyLocalServiceUtil.checkCompany(
+						siteInitializerKey, company.getWebId());
 				}
 				catch (Exception exception) {
 					_log.error(exception);
@@ -519,6 +522,9 @@ public class PortalInstances {
 
 	private PortalInstances() {
 	}
+
+	private static final String _SITE_INITIALIZER_KEY_WELCOME =
+		"com.liferay.site.initializer.welcome";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortalInstances.class);

@@ -1302,6 +1302,8 @@ public abstract class Base${schemaName}ResourceTestCase {
 								<#else>
 									null
 								</#if>
+							<#elseif freeMarkerTool.isQueryParameter(javaMethodParameter, javaMethodSignature.operation)>
+								, test${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}()
 							</#if>
 						</#list>, randomPatch${schemaName}
 						<#if freeMarkerTool.hasRequestBodyMediaType(javaMethodSignature, "multipart/form-data")>
@@ -1356,6 +1358,14 @@ public abstract class Base${schemaName}ResourceTestCase {
 					</#if>
 				}
 			</#if>
+
+			<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
+				<#if freeMarkerTool.isQueryParameter(javaMethodParameter, javaMethodSignature.operation)>
+					protected ${javaMethodParameter.parameterType} test${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}() throws Exception {
+						throw new UnsupportedOperationException("This method needs to be implemented");
+					}
+				</#if>
+			</#list>
 		<#elseif freeMarkerTool.hasHTTPMethod(javaMethodSignature, "post") && javaMethodSignature.returnType?ends_with(schemaName)>
 			@Test
 			public void test${javaMethodSignature.methodName?cap_first}() throws Exception {

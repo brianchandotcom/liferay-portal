@@ -1,8 +1,0 @@
-Bundle-Name: Liferay Portal URL Rewrite Filter
-Bundle-SymbolicName: com.liferay.portal.url.rewrite.filter
-Bundle-Version: 1.0.10
-Import-Package:\
-	!org.apache.commons.httpclient.*,\
-	!org.apache.tools.ant,\
-	\
-	*

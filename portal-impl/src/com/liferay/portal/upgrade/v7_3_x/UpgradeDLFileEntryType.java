@@ -7,7 +7,6 @@ package com.liferay.portal.upgrade.v7_3_x;
 
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.util.DLUtil;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
@@ -37,41 +36,37 @@ public class UpgradeDLFileEntryType extends UpgradeProcess {
 
 	private void _populateFields() throws Exception {
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
-				"select ctCollectionId, uuid_, fileEntryTypeId, groupId, " +
-					"fileEntryTypeKey from DLFileEntryType where " +
-						"(dataDefinitionId IS NULL OR dataDefinitionId = 0)");
+				"select uuid_, fileEntryTypeId, groupId, fileEntryTypeKey " +
+					"from DLFileEntryType where (dataDefinitionId IS NULL OR " +
+						"dataDefinitionId = 0)");
 			PreparedStatement preparedStatement2 = connection.prepareStatement(
-				StringBundler.concat(
-					"select ctCollectionId, structureId FROM DDMStructure ",
-					"where ctCollectionId = ? AND groupId = ? AND classNameId ",
-					"= ? AND (structureKey = ? OR structureKey = ? OR ",
-					"structureKey = ? ) "));
+				"select structureId FROM DDMStructure where groupId = ? AND " +
+					"classNameId = ? AND (structureKey = ? OR structureKey = " +
+						"? OR structureKey = ? ) ");
 			PreparedStatement preparedStatement3 =
 				AutoBatchPreparedStatementUtil.autoBatch(
 					connection,
 					"update DLFileEntryType set dataDefinitionId = ? where " +
-						"ctCollectionId = ? AND fileEntryTypeId = ? ");
+						"fileEntryTypeId = ? ");
 			ResultSet resultSet1 = preparedStatement1.executeQuery()) {
 
 			long classNameId = PortalUtil.getClassNameId(
 				DLFileEntryMetadata.class);
 
 			while (resultSet1.next()) {
-				preparedStatement2.setLong(1, resultSet1.getLong(1));
-				preparedStatement2.setLong(2, resultSet1.getLong(4));
-				preparedStatement2.setLong(3, classNameId);
+				preparedStatement2.setLong(1, resultSet1.getLong(3));
+				preparedStatement2.setLong(2, classNameId);
 				preparedStatement2.setString(
-					4, DLUtil.getDDMStructureKey(resultSet1.getString(2)));
+					3, DLUtil.getDDMStructureKey(resultSet1.getString(1)));
 				preparedStatement2.setString(
-					5,
-					DLUtil.getDeprecatedDDMStructureKey(resultSet1.getLong(3)));
-				preparedStatement2.setString(6, resultSet1.getString(5));
+					4,
+					DLUtil.getDeprecatedDDMStructureKey(resultSet1.getLong(2)));
+				preparedStatement2.setString(5, resultSet1.getString(4));
 
 				try (ResultSet resultSet2 = preparedStatement2.executeQuery()) {
 					if (resultSet2.next()) {
-						preparedStatement3.setLong(1, resultSet2.getLong(2));
-						preparedStatement3.setLong(2, resultSet2.getLong(1));
-						preparedStatement3.setLong(3, resultSet1.getLong(3));
+						preparedStatement3.setLong(1, resultSet2.getLong(1));
+						preparedStatement3.setLong(2, resultSet1.getLong(2));
 
 						preparedStatement3.addBatch();
 					}

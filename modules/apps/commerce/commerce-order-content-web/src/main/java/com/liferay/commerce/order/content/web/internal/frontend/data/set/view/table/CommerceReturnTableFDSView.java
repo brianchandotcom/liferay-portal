@@ -61,7 +61,7 @@ public class CommerceReturnTableFDSView extends BaseTableFDSView {
 		).add(
 			"returnStatus", "return-status",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"commerceStatusDataRenderer")
+				"commerceReturnStatusDataRenderer")
 		).build();
 	}
 

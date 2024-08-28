@@ -203,17 +203,17 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 				setPrice(
 					() -> _getPrice(
 						skuDTOConverterContext.getCommerceContext(), cpInstance,
+						_cpInstanceUnitOfMeasureLocalService.
+							fetchCPInstanceUnitOfMeasure(
+								cpInstance.getCPInstanceId(),
+								skuDTOConverterContext.getUnitOfMeasureKey()),
 						JSONUtil.toString(
 							JSONUtil.toJSONArray(
 								skuOptionsArray,
 								skuOption -> _jsonFactory.createJSONObject(
 									skuOption.toString()))),
 						skuDTOConverterContext.getLocale(),
-						skuDTOConverterContext.getQuantity(),
-						_cpInstanceUnitOfMeasureLocalService.
-							fetchCPInstanceUnitOfMeasure(
-								cpInstance.getCPInstanceId(),
-								skuDTOConverterContext.getUnitOfMeasureKey())));
+						skuDTOConverterContext.getQuantity()));
 				setProductConfiguration(
 					() -> _productConfigurationDTOConverter.toDTO(
 						new DefaultDTOConverterContext(
@@ -385,8 +385,8 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 
 	private Price _getPrice(
 			CommerceContext commerceContext, CPInstance cpInstance,
-			String formFieldValues, Locale locale, BigDecimal quantity,
-			CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure)
+			CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure,
+			String formFieldValues, Locale locale, BigDecimal quantity)
 		throws Exception {
 
 		CommerceProductPrice commerceProductPrice =
@@ -645,6 +645,10 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 						return _getPrice(
 							skuDTOConverterContext.getCommerceContext(),
 							replacementCPInstance,
+							_cpInstanceUnitOfMeasureLocalService.
+								getCPInstanceUnitOfMeasure(
+									replacementCPInstance.getCPInstanceId(),
+									replacementUnitOfMeasureKey),
 							JSONUtil.toString(
 								JSONUtil.toJSONArray(
 									replacementSkuSkuOptions,
@@ -653,11 +657,7 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 											replacementSkuSkuOption.
 												toString()))),
 							skuDTOConverterContext.getLocale(),
-							skuDTOConverterContext.getQuantity(),
-							_cpInstanceUnitOfMeasureLocalService.
-								getCPInstanceUnitOfMeasure(
-									replacementCPInstance.getCPInstanceId(),
-									replacementUnitOfMeasureKey));
+							skuDTOConverterContext.getQuantity());
 					});
 				setProductConfiguration(
 					() -> {

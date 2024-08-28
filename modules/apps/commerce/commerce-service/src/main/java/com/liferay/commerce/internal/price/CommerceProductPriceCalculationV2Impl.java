@@ -127,12 +127,12 @@ public class CommerceProductPriceCalculationV2Impl
 				unitCommercePriceEntry.getQuantity();
 		}
 
-		CommerceMoney unitPriceCommerceMoney = _getUnitPrice(
+		CommerceMoney unitPriceCommerceMoney = _getUnitPriceCommerceMoney(
 			unitCommercePriceEntry, commercePriceListId, quantity,
 			commerceContext);
 
 		CommerceMoney pricingQuantityUnitPriceCommerceMoney =
-			_getPricingQuantityUnitPrice(
+			_getPricingQuantityUnitPriceCommerceMoney(
 				unitCommercePriceEntry, commercePriceListId, commerceContext);
 
 		boolean priceOnApplication =
@@ -143,7 +143,7 @@ public class CommerceProductPriceCalculationV2Impl
 		long commercePromoPriceListId = _getCommercePromoPriceListId(
 			cpInstanceId, commerceContext, unitOfMeasureKey);
 
-		CommerceMoney promoPriceCommerceMoney = _getPromoPrice(
+		CommerceMoney promoPriceCommerceMoney = _getPromoPriceCommerceMoney(
 			commercePromoPriceListId, cpInstanceId, quantity, unitOfMeasureKey,
 			commerceContext);
 
@@ -385,7 +385,7 @@ public class CommerceProductPriceCalculationV2Impl
 			String unitOfMeasureKey, CommerceContext commerceContext)
 		throws PortalException {
 
-		return _getPromoPrice(
+		return _getPromoPriceCommerceMoney(
 			_getCommercePromoPriceListId(
 				cpInstanceId, commerceContext, unitOfMeasureKey),
 			cpInstanceId, quantity, unitOfMeasureKey, commerceContext);
@@ -538,7 +538,7 @@ public class CommerceProductPriceCalculationV2Impl
 		long commercePriceListId = _getCommercePriceListId(
 			cpInstanceId, unitOfMeasureKey, commerceContext);
 
-		return _getUnitPrice(
+		return _getUnitPriceCommerceMoney(
 			_getUnitPriceEntry(
 				commercePriceListId, cpInstanceId, unitOfMeasureKey),
 			commercePriceListId, quantity, commerceContext);
@@ -1136,7 +1136,7 @@ public class CommerceProductPriceCalculationV2Impl
 		return _ONE_HUNDRED.subtract(discountPercentage, mathContext);
 	}
 
-	private CommerceMoney _getPricingQuantityUnitPrice(
+	private CommerceMoney _getPricingQuantityUnitPriceCommerceMoney(
 			CommercePriceEntry commercePriceEntry, long commercePriceListId,
 			CommerceContext commerceContext)
 		throws PortalException {
@@ -1187,7 +1187,7 @@ public class CommerceProductPriceCalculationV2Impl
 			commerceContext.getCommerceCurrency(), pricingQuantityUnitPrice);
 	}
 
-	private CommerceMoney _getPromoPrice(
+	private CommerceMoney _getPromoPriceCommerceMoney(
 			long commercePriceListId, long cpInstanceId, BigDecimal quantity,
 			String unitOfMeasureKey, CommerceContext commerceContext)
 		throws PortalException {
@@ -1255,7 +1255,7 @@ public class CommerceProductPriceCalculationV2Impl
 			promoPrice);
 	}
 
-	private CommerceMoney _getUnitPrice(
+	private CommerceMoney _getUnitPriceCommerceMoney(
 			CommercePriceEntry commercePriceEntry, long commercePriceListId,
 			BigDecimal quantity, CommerceContext commerceContext)
 		throws PortalException {

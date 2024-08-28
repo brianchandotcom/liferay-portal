@@ -3797,7 +3797,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 					SiteInitializerUtil.toMap(
 						jsonObject.getString("name_i18n")),
 					null, jsonObject.getBoolean("active", true),
-					jsonObject.getString("criteria"), serviceContext);
+					jsonObject.get(
+						"criteria"
+					).toString(),
+					serviceContext);
 			}
 			else {
 				segmentsEntry = _segmentsEntryLocalService.updateSegmentsEntry(
@@ -3806,7 +3809,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 					SiteInitializerUtil.toMap(
 						jsonObject.getString("name_i18n")),
 					null, jsonObject.getBoolean("active", true),
-					jsonObject.getString("criteria"), serviceContext);
+					jsonObject.get(
+						"criteria"
+					).toString(),
+					serviceContext);
 			}
 
 			stringUtilReplaceValues.put(

@@ -13,12 +13,17 @@ import React, {useMemo, useState} from 'react';
 import {getLayoutDataItemPropTypes} from '../../../prop_types/index';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import {
+	useCopiedNodeIds,
+	useSetCopiedNodeIds,
+} from '../../contexts/ClipboardContext';
+import {
 	useSelectItem,
 	useSelectMultipleItems,
 } from '../../contexts/ControlsContext';
 import {useDispatch, useSelector} from '../../contexts/StoreContext';
 import deleteItem from '../../thunks/deleteItem';
 import duplicateItem from '../../thunks/duplicateItem';
+import pasteItem from '../../thunks/pasteItem';
 import canBeDuplicated from '../../utils/canBeDuplicated';
 import canBeRemoved from '../../utils/canBeRemoved';
 import canBeSaved from '../../utils/canBeSaved';
@@ -36,8 +41,10 @@ export default function TopperItemActions({disabled, item}) {
 	const [active, setActive] = useState(false);
 	const dispatch = useDispatch();
 	const hasRequiredChild = useHasRequiredChild(item.itemId);
+	const copiedNodeIds = useCopiedNodeIds();
 	const selectItem = useSelectItem();
 	const selectMultipleItems = useSelectMultipleItems();
+	const setCopiedNodeIds = useSetCopiedNodeIds();
 	const widgets = useSelector((state) => state.widgets);
 
 	const selectItems = Liferay.FeatureFlags['LPD-18221']
@@ -97,18 +104,33 @@ export default function TopperItemActions({disabled, item}) {
 			});
 		}
 
-		if (Liferay.FeatureFlags['LPD-18221']) {
+		if (
+			Liferay.FeatureFlags['LPD-18221'] &&
+			canBeRemoved(item, layoutData)
+		) {
 			items.push({
-				action: () => {},
+				action: () => {
+					setCopiedNodeIds([item.itemId]);
+					dispatch(
+						deleteItem({
+							itemIds: [item.itemId],
+							selectItems,
+						})
+					);
+				},
 				icon: 'cut',
 				label: Liferay.Language.get('cut'),
 			});
 
-			items.push({
-				action: () => {},
-				icon: 'copy',
-				label: Liferay.Language.get('copy'),
-			});
+			if (
+				canBeDuplicated(fragmentEntryLinks, item, layoutData, widgets)
+			) {
+				items.push({
+					action: () => setCopiedNodeIds([item.itemId]),
+					icon: 'copy',
+					label: Liferay.Language.get('copy'),
+				});
+			}
 		}
 
 		if (canBeDuplicated(fragmentEntryLinks, item, layoutData, widgets)) {
@@ -131,10 +153,20 @@ export default function TopperItemActions({disabled, item}) {
 			}
 		}
 
-		if (Liferay.FeatureFlags['LPD-18221']) {
+		if (
+			Liferay.FeatureFlags['LPD-18221'] &&
+			canBeDuplicated(fragmentEntryLinks, item, layoutData, widgets)
+		) {
 			items.push({
-				action: () => {},
-				disabled: true,
+				action: () =>
+					dispatch(
+						pasteItem({
+							copyItemIds: copiedNodeIds,
+							itemIds: [item.itemId],
+							selectItems,
+						})
+					),
+				disabled: !copiedNodeIds?.length,
 				icon: 'paste',
 				label: Liferay.Language.get('paste'),
 			});
@@ -160,12 +192,14 @@ export default function TopperItemActions({disabled, item}) {
 
 		return items;
 	}, [
+		copiedNodeIds,
 		dispatch,
 		fragmentEntryLinks,
 		hasRequiredChild,
 		item,
 		layoutData,
 		selectedViewportSize,
+		setCopiedNodeIds,
 		selectItems,
 		widgets,
 	]);

@@ -91,6 +91,22 @@ export class ChangeTrackingPage {
 			user.id
 		);
 
+		const site =
+			await apiHelpers.headlessAdminUser.getSiteByFriendlyUrlPath(
+				'guest'
+			);
+
+		const siteAdminRole =
+			await apiHelpers.headlessAdminUser.getRoleByName(
+				'Site Administrator'
+			);
+
+		await apiHelpers.headlessAdminUser.assignUserToSite(
+			siteAdminRole.id,
+			site.id,
+			user.id
+		);
+
 		return user;
 	}
 
@@ -252,6 +268,38 @@ export class ChangeTrackingPage {
 			this.page,
 			`Success:Your request completed successfully.`
 		);
+	}
+
+	async toggleSandboxConfiguration(check: boolean) {
+		await this.instanceSettingsPage.goToInstanceSetting(
+			'Publications',
+			'Publications Settings'
+		);
+
+		await expect(this.page.getByText('Sandbox Enabled')).toBeVisible();
+
+		const checkBox = this.page.getByLabel('Sandbox Enabled');
+
+		if (check) {
+			await checkBox.setChecked(true);
+
+			await this.instanceSettingsPage.saveButton.click();
+
+			await waitForSuccessAlert(
+				this.page,
+				`Success:Your request completed successfully.`
+			);
+		}
+		else {
+			await checkBox.setChecked(false);
+
+			await this.instanceSettingsPage.saveButton.click();
+
+			await waitForSuccessAlert(
+				this.page,
+				`Success:Your request completed successfully.`
+			);
+		}
 	}
 
 	async viewDisplayTab(tabLabel: string, {isHidden} = {isHidden: false}) {

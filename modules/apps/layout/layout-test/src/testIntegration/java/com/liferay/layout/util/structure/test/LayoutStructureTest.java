@@ -273,6 +273,39 @@ public class LayoutStructureTest {
 			childrenItemIds.get(0));
 	}
 
+	@Test(expected = UnsupportedOperationException.class)
+	public void testCopyLayoutStructureItemsWithParentItemAsChildrenOfItemId()
+		throws Exception {
+
+		LayoutStructure layoutStructure = new LayoutStructure();
+
+		LayoutStructureItem rootLayoutStructureItem =
+			layoutStructure.addRootLayoutStructureItem();
+
+		LayoutStructureItem containerStyledLayoutStructureItem =
+			layoutStructure.addContainerStyledLayoutStructureItem(
+				rootLayoutStructureItem.getItemId(), 0);
+
+		LayoutStructureItem rowStyledLayoutStructureItem =
+			layoutStructure.addRowStyledLayoutStructureItem(
+				containerStyledLayoutStructureItem.getItemId(), 0, 1);
+
+		LayoutStructureItem columnLayoutStructureItem =
+			layoutStructure.addColumnLayoutStructureItem(
+				rowStyledLayoutStructureItem.getItemId(), 0);
+
+		FragmentEntryLink fragmentEntryLink = _addFragmentEntryLink();
+
+		layoutStructure.addFragmentStyledLayoutStructureItem(
+			fragmentEntryLink.getFragmentEntryLinkId(),
+			columnLayoutStructureItem.getItemId(), 0);
+
+		layoutStructure.copyLayoutStructureItems(
+			Collections.singletonList(
+				containerStyledLayoutStructureItem.getItemId()),
+			columnLayoutStructureItem.getItemId());
+	}
+
 	@Test
 	public void testCopyLayoutStructureItemWithCollectionStyledLayoutStructureItemAsParent()
 		throws Exception {

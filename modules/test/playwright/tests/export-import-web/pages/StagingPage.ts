@@ -63,7 +63,7 @@ export class StagingPage {
 			this.page.getByText('Initial Publish Process').first()
 		).toBeVisible();
 
-		for await (const processResult of await this.page
+		for (const processResult of await this.page
 			.getByTestId('processResult')
 			.all()) {
 			await expect(processResult.getByText('Successful')).toBeVisible({

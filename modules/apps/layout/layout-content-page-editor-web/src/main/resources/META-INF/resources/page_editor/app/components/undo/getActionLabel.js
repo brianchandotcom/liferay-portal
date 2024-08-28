@@ -12,7 +12,6 @@ import {
 	ADD_RULE,
 	ADD_STEPPER,
 	CHANGE_MASTER_LAYOUT,
-	CUT_ITEM,
 	DELETE_ITEM,
 	DELETE_RULE,
 	DUPLICATE_ITEM,
@@ -72,8 +71,6 @@ export default function getActionLabel(
 			return sub(Liferay.Language.get('duplicate-x'), action.itemName);
 		case PASTE_ITEM:
 			return sub(Liferay.Language.get('paste-x'), action.itemName);
-		case CUT_ITEM:
-			return sub(Liferay.Language.get('cut-x'), action.itemName);
 		case MOVE_ITEM:
 			return sub(Liferay.Language.get('move-x'), action.itemName);
 		case SELECT_SEGMENTS_EXPERIENCE:

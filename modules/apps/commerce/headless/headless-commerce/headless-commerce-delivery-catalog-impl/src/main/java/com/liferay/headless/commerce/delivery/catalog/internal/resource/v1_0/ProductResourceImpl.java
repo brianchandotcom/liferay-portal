@@ -25,10 +25,13 @@ import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelLocalS
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.util.CommerceAccountHelper;
+import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
+import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Product;
 import com.liferay.headless.commerce.delivery.catalog.internal.dto.v1_0.converter.ProductDTOConverterContext;
 import com.liferay.headless.commerce.delivery.catalog.internal.odata.entity.v1_0.ProductEntityModel;
 import com.liferay.headless.commerce.delivery.catalog.resource.v1_0.ProductResource;
+import com.liferay.headless.common.spi.odata.entity.EntityFieldsUtil;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.search.BooleanClause;
@@ -45,8 +48,10 @@ import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.MatchAllQuery;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.search.expando.ExpandoBridgeIndexer;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -175,7 +180,11 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 
 	@Override
 	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
-		return _entityModel;
+		return new ProductEntityModel(
+			EntityFieldsUtil.getEntityFields(
+				_portal.getClassNameId(CPDefinition.class.getName()),
+				contextCompany.getCompanyId(), _expandoBridgeIndexer,
+				_expandoColumnLocalService, _expandoTableLocalService));
 	}
 
 	private BooleanClause<Query> _getBooleanClause(
@@ -290,8 +299,6 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 		return products;
 	}
 
-	private static final EntityModel _entityModel = new ProductEntityModel();
-
 	@Reference
 	private AccountEntryLocalService _accountEntryLocalService;
 
@@ -319,6 +326,18 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 
 	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;
+
+	@Reference
+	private ExpandoBridgeIndexer _expandoBridgeIndexer;
+
+	@Reference
+	private ExpandoColumnLocalService _expandoColumnLocalService;
+
+	@Reference
+	private ExpandoTableLocalService _expandoTableLocalService;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference(
 		target = "(component.name=com.liferay.headless.commerce.delivery.catalog.internal.dto.v1_0.converter.ProductDTOConverter)"

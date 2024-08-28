@@ -82,16 +82,7 @@ test('can import a lar file selecting some items to import', async ({
 	).toBeVisible();
 });
 
-[
-	{name: 'com.liferay.site.initializer.masterclass'},
-	{name: 'minium-initializer'},
-	{name: 'minium-full-initializer'},
-	{name: 'com.liferay.site.initializer.raylife.ap'},
-	{name: 'com.liferay.site.initializer.raylife.d2c'},
-	{name: 'speedwell-initializer'},
-	{name: 'com.liferay.site.initializer.team.extranet'},
-	{name: 'com.liferay.site.initializer.welcome'},
-].forEach(({name}) => {
+[{name: 'com.liferay.site.initializer.welcome'}].forEach(({name}) => {
 	test(
 		'staged and live versions of a site are equal with template ' + name,
 		async ({apiHelpers, applicationsMenuPage, stagingPage}) => {

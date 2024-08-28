@@ -33,8 +33,8 @@ definition {
 	@priority = 4
 	test CanEnableLogAndConsoleAudit {
 		property log.context.enabled = "true";
-		property osgi.module.configuration.file.names = "com.liferay.portal.security.audit.router.configuration.CSVLogMessageFormatterConfiguration.config:com.liferay.portal.security.audit.router.configuration.LoggingAuditMessageProcessorConfiguration.config";
-		property osgi.module.configurations = "columns=[\"eventType\",\"userId\",\"userName\"]:enabled=B\"true\"${line.separator}logMessageFormat=\"CSV\"${line.separator}outputToConsole=B\"true\"";
+		property osgi.module.configuration.file.names = "com.liferay.portal.security.audit.router.configuration.CSVLogMessageFormatterConfiguration.config:com.liferay.portal.security.audit.router.configuration.LoggingAuditMessageProcessorConfiguration.config:com.liferay.portal.security.audit.router.configuration.PersistentAuditMessageProcessorConfiguration.config";
+		property osgi.module.configurations = "columns=[\"eventType\",\"userId\",\"userName\"]:enabled=B\"true\"${line.separator}logMessageFormat=\"CSV\"${line.separator}outputToConsole=B\"true\":bufferSize=\"0\"";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -67,8 +67,8 @@ definition {
 	@description = "This test Audit can be enabled or disabled through System Settings and OSGI config file."
 	@priority = 4
 	test CanEnableOrDisableAudit {
-		property osgi.module.configuration.file.names = "com.liferay.portal.security.audit.configuration.AuditConfiguration.config";
-		property osgi.module.configurations = "enabled=\"false\"";
+		property osgi.module.configuration.file.names = "com.liferay.portal.security.audit.configuration.AuditConfiguration.config:com.liferay.portal.security.audit.router.configuration.PersistentAuditMessageProcessorConfiguration.config";
+		property osgi.module.configurations = "enabled=\"false\":bufferSize=\"0\"";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 

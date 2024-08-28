@@ -246,7 +246,11 @@ testFeatureFlagsEnabled(
 );
 
 testUploadMultipleFieldsWithCustomDocumentType(
-	'LPD-29609 Error uploading multiples files with custom document type',
+	'Error uploading multiples files with custom document type',
+	{
+		tag: '@LPD-29609',
+	},
+
 	async ({
 		documentLibraryEditDocumentTypesPage,
 		documentLibraryEditFilePage,

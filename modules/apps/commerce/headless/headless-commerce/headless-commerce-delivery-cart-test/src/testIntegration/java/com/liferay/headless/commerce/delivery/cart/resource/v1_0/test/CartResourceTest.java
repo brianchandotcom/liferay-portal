@@ -74,7 +74,7 @@ public class CartResourceTest extends BaseCartResourceTestCase {
 
 		_accountEntry = CommerceAccountTestUtil.addBusinessAccountEntry(
 			_serviceContext.getUserId(), "Test Business Account", null, null,
-			null, null, _serviceContext);
+			new long[] {_user.getUserId()}, null, _serviceContext);
 
 		_commerceCurrency = CommerceCurrencyTestUtil.addCommerceCurrency(
 			testGroup.getCompanyId());
@@ -218,6 +218,11 @@ public class CartResourceTest extends BaseCartResourceTestCase {
 	}
 
 	@Override
+	protected String[] getIgnoredEntityFieldNames() {
+		return new String[] {"accountId", "orderDate", "orderId"};
+	}
+
+	@Override
 	protected Cart randomCart() throws Exception {
 		CommerceOrder commerceOrder = _getCommerceOrder();
 
@@ -277,6 +282,28 @@ public class CartResourceTest extends BaseCartResourceTestCase {
 	}
 
 	@Override
+	protected Cart testGetChannelAccountCartsPage_addCart(
+			Long accountId, Long channelId, Cart cart)
+		throws Exception {
+
+		return cartResource.postCartCheckout(cart.getId());
+	}
+
+	@Override
+	protected Long testGetChannelAccountCartsPage_getAccountId()
+		throws Exception {
+
+		return _accountEntry.getAccountEntryId();
+	}
+
+	@Override
+	protected Long testGetChannelAccountCartsPage_getChannelId()
+		throws Exception {
+
+		return _commerceChannel.getCommerceChannelId();
+	}
+
+	@Override
 	protected Cart
 			testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodeCartsPage_addCart(
 				String accountExternalReferenceCode,
@@ -304,16 +331,10 @@ public class CartResourceTest extends BaseCartResourceTestCase {
 	}
 
 	@Override
-	protected Cart testGetChannelCartsPage_addCart(
-			Long accountId, Long channelId, Cart cart)
+	protected Cart testGetChannelCartsPage_addCart(Long channelId, Cart cart)
 		throws Exception {
 
 		return cartResource.postCartCheckout(cart.getId());
-	}
-
-	@Override
-	protected Long testGetChannelCartsPage_getAccountId() throws Exception {
-		return _accountEntry.getAccountEntryId();
 	}
 
 	@Override

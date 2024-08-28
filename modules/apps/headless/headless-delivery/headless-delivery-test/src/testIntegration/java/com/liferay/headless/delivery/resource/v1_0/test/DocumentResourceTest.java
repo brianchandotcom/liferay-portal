@@ -237,7 +237,7 @@ public class DocumentResourceTest extends BaseDocumentResourceTestCase {
 	public void testPutSiteDocumentByExternalReferenceCode() throws Exception {
 		super.testPutSiteDocumentByExternalReferenceCode();
 
-		DLFolder dlFolder = _dlFolderLocalService.addFolder(
+		DLFolder dlFolder1 = _dlFolderLocalService.addFolder(
 			null, TestPropsValues.getUserId(), testGroup.getGroupId(),
 			testGroup.getGroupId(), false,
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
@@ -246,7 +246,7 @@ public class DocumentResourceTest extends BaseDocumentResourceTestCase {
 
 		Document randomDocument = randomDocument();
 
-		randomDocument.setDocumentFolderId(dlFolder.getFolderId());
+		randomDocument.setDocumentFolderId(dlFolder1.getFolderId());
 
 		Document putDocument =
 			documentResource.putSiteDocumentByExternalReferenceCode(
@@ -255,7 +255,24 @@ public class DocumentResourceTest extends BaseDocumentResourceTestCase {
 				getMultipartFiles());
 
 		Assert.assertEquals(
-			(Long)dlFolder.getFolderId(), putDocument.getDocumentFolderId());
+			(Long)dlFolder1.getFolderId(), putDocument.getDocumentFolderId());
+
+		DLFolder dlFolder2 = _dlFolderLocalService.addFolder(
+			null, TestPropsValues.getUserId(), testGroup.getGroupId(),
+			testGroup.getGroupId(), false,
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), false,
+			ServiceContextTestUtil.getServiceContext(testGroup.getGroupId()));
+
+		putDocument.setDocumentFolderExternalReferenceCode(
+			dlFolder2.getExternalReferenceCode());
+
+		putDocument = documentResource.putSiteDocumentByExternalReferenceCode(
+			putDocument.getSiteId(), putDocument.getExternalReferenceCode(),
+			putDocument, getMultipartFiles());
+
+		Assert.assertEquals(
+			(Long)dlFolder2.getFolderId(), putDocument.getDocumentFolderId());
 	}
 
 	@Override

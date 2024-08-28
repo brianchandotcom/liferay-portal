@@ -84,12 +84,12 @@ definition {
 					panel = "General");
 			}
 
-			task ("Duplicate the Submit Button") {
-				PageEditor.gotoDuplicate(fragmentName = "Submit Button");
+			task ("Duplicate the Form Button") {
+				PageEditor.gotoDuplicate(fragmentName = "Form Button");
 			}
 
 			task ("Change the the first submit button to draft") {
-				PageEditor.gotoConfiguration(fragmentName = "Submit Button");
+				PageEditor.gotoConfiguration(fragmentName = "Form Button");
 
 				Select(
 					key_fieldLabel = "Submitted Entry Status",
@@ -120,12 +120,12 @@ definition {
 					panel = "General");
 			}
 
-			task ("Duplicate the Submit Button") {
-				PageEditor.gotoDuplicate(fragmentName = "Submit Button");
+			task ("Duplicate the Form Button") {
+				PageEditor.gotoDuplicate(fragmentName = "Form Button");
 			}
 
 			task ("Change the the first submit button to draft") {
-				PageEditor.gotoConfiguration(fragmentName = "Submit Button");
+				PageEditor.gotoConfiguration(fragmentName = "Form Button");
 
 				Select(
 					key_fieldLabel = "Submitted Entry Status",
@@ -534,7 +534,7 @@ definition {
 
 			task ("Select the fragment from Form Components") {
 				Click(
-					key_tableEntry = "Submit Button",
+					key_tableEntry = "Form Button",
 					key_text = "Select",
 					locator1 = "LexiconTable#TABLE_ENTRY_BUTTON");
 
@@ -545,7 +545,7 @@ definition {
 		}
 
 		task ("Then assert there's only Submit Button displayed") {
-			LexiconCard.viewCardPresent(card = "Submit Button");
+			LexiconCard.viewCardPresent(card = "Form Button");
 
 			for (var fragmentName : list "CAPTCHA,Checkbox,Date,File Upload,Multiselect,Numeric,Rich Text,Select,Text,Textarea") {
 				LexiconCard.viewCardNotPresent(card = ${fragmentName});
@@ -580,13 +580,13 @@ definition {
 				LexiconEntry.gotoHeaderMenuItem(menuItem = "Configuration");
 
 				FragmentsAdmin.viewFormFragementForEachFieldType(
-					fieldType = "Submit Button",
-					formFragmentName = "Submit Button");
+					fieldType = "Form Button",
+					formFragmentName = "Form Button");
 			}
 
 			task ("Open the Select Fragment modal for Submit Button field type") {
 				Click(
-					key_tableEntry = "Submit Button",
+					key_tableEntry = "Form Button",
 					key_text = "Select",
 					locator1 = "LexiconTable#TABLE_ENTRY_BUTTON");
 			}
@@ -607,7 +607,7 @@ definition {
 				SelectFrameTop();
 
 				FragmentsAdmin.viewFormFragementForEachFieldType(
-					fieldType = "Submit Button",
+					fieldType = "Form Button",
 					formFragmentName = "Submit Fragment Example");
 
 				Button.clickSave();
@@ -701,7 +701,7 @@ definition {
 
 		task ("Then the page designer could configure the Submit Button fragment") {
 			task ("Change the Type of Submit Button to Secondary") {
-				PageEditor.gotoConfiguration(fragmentName = "Submit Button");
+				PageEditor.gotoConfiguration(fragmentName = "Form Button");
 
 				PageEditor.configureFragment(style = "Secondary");
 
@@ -721,21 +721,21 @@ definition {
 			task ("Edit the inline text of Submit Button") {
 				PageEditor.editFragmentText(
 					className = "button",
-					fragmentName = "Submit Button",
+					fragmentName = "Form Button",
 					id = "text",
 					text = "Invoke");
 
 				PageEditor.viewFragmentEditableText(
 					className = "button",
 					editableText = "Invoke",
-					fragmentName = "Submit Button",
+					fragmentName = "Form Button",
 					id = "text");
 			}
 
 			task ("Map the Submit Button to the Content field") {
 				PageEditorMapping.gotoEditableFieldMapping(
 					className = "button",
-					fragmentName = "Submit Button",
+					fragmentName = "Form Button",
 					id = "text");
 
 				PageEditorMapping.mapEditableFieldToAsset(
@@ -749,7 +749,7 @@ definition {
 				PageEditor.viewFragmentEditableText(
 					className = "button",
 					editableText = "Continue",
-					fragmentName = "Submit Button",
+					fragmentName = "Form Button",
 					id = "text");
 			}
 		}
@@ -834,7 +834,7 @@ definition {
 			}
 
 			task ("Change the submit button to draft") {
-				PageEditor.gotoConfiguration(fragmentName = "Submit Button");
+				PageEditor.gotoConfiguration(fragmentName = "Form Button");
 
 				Select(
 					key_fieldLabel = "Submitted Entry Status",
@@ -903,7 +903,7 @@ definition {
 			}
 
 			task ("Change the submit button to draft") {
-				PageEditor.gotoConfiguration(fragmentName = "Submit Button");
+				PageEditor.gotoConfiguration(fragmentName = "Form Button");
 
 				Select(
 					key_fieldLabel = "Submitted Entry Status",
@@ -989,7 +989,7 @@ definition {
 
 			task ("Select the fragment from Form Components") {
 				Click(
-					key_tableEntry = "Submit Button",
+					key_tableEntry = "Form Button",
 					key_text = "Select",
 					locator1 = "LexiconTable#TABLE_ENTRY_BUTTON");
 
@@ -1038,9 +1038,9 @@ definition {
 			}
 
 			task ("Hide the Submit Button") {
-				PageEditor.hideFragmentViaPageStyles(fragmentName = "Submit Button");
+				PageEditor.hideFragmentViaPageStyles(fragmentName = "Form Button");
 
-				PageEditor.viewFragmentNotPresent(fragmentName = "Submit Button");
+				PageEditor.viewFragmentNotPresent(fragmentName = "Form Button");
 			}
 		}
 
@@ -1078,7 +1078,7 @@ definition {
 				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_COLLAPSED");
 
 			Click(
-				key_nodeName = "Submit Button",
+				key_nodeName = "Form Button",
 				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE");
 
 			PageEditor.configureFragment(hideFragment = "false");
@@ -1086,7 +1086,7 @@ definition {
 			PageEditor.viewFragmentEditableText(
 				className = "button",
 				editableText = "Submit",
-				fragmentName = "Submit Button",
+				fragmentName = "Form Button",
 				id = "text");
 
 			Button.click(button = "Publish");
@@ -1116,7 +1116,7 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			PageEditor.removeFragment(fragmentName = "Submit Button");
+			PageEditor.removeFragment(fragmentName = "Form Button");
 		}
 
 		task ("Then the page designer sees the Form Container is empty") {
@@ -1168,7 +1168,7 @@ definition {
 			}
 
 			task ("Change the submit button to draft") {
-				PageEditor.gotoConfiguration(fragmentName = "Submit Button");
+				PageEditor.gotoConfiguration(fragmentName = "Form Button");
 
 				Select(
 					key_fieldLabel = "Submitted Entry Status",
@@ -1232,7 +1232,7 @@ definition {
 
 			task ("Select the heading fragment from Basic Components") {
 				Click(
-					key_tableEntry = "Submit Button",
+					key_tableEntry = "Form Button",
 					key_text = "Select",
 					locator1 = "LexiconTable#TABLE_ENTRY_BUTTON");
 
@@ -1247,7 +1247,7 @@ definition {
 				SelectFrameTop();
 
 				FragmentsAdmin.viewFormFragementForEachFieldType(
-					fieldType = "Submit Button",
+					fieldType = "Form Button",
 					formFragmentName = "Heading");
 
 				Button.clickSave();

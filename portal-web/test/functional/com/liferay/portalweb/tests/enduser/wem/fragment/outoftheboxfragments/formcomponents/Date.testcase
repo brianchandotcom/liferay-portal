@@ -63,7 +63,7 @@ definition {
 			}
 
 			task ("Remove the automatic added fragments") {
-				for (var fragmentName : list "Date,Submit Button") {
+				for (var fragmentName : list "Date,Form Button") {
 					PageEditor.removeFragment(fragmentName = ${fragmentName});
 				}
 			}

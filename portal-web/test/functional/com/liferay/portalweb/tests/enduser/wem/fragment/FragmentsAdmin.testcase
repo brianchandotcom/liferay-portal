@@ -922,7 +922,7 @@ if (layoutMode === 'edit') {
 			PageEditor.addFragmentToFormContainer(
 				collectionName = "Fragment Set Name",
 				fragmentName = "Fragment Name",
-				targetFragmentName = "Submit Button");
+				targetFragmentName = "Form Button");
 
 			PageEditor.editInput(
 				field = "Region",

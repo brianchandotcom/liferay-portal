@@ -183,8 +183,7 @@ public class DuplicateItemMVCActionCommandTest {
 			headingFragmentStyledLayoutStructureItem.getParentItemId());
 
 		JSONObject jsonObject = ReflectionTestUtil.invoke(
-			_mvcActionCommand,
-			"_addDuplicateFragmentEntryLinkToLayoutDataJSONObject",
+			_mvcActionCommand, "doTransactionalCommand",
 			new Class<?>[] {ActionRequest.class, ActionResponse.class},
 			_getMockLiferayPortletActionRequest(
 				new String[] {

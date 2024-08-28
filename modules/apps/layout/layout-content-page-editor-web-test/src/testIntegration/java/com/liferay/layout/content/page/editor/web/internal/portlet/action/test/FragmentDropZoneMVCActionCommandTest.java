@@ -222,8 +222,7 @@ public class FragmentDropZoneMVCActionCommandTest {
 			"itemId", fragmentLayoutStructureItem.getItemId());
 
 		jsonObject = ReflectionTestUtil.invoke(
-			_duplicateItemMVCActionCommand,
-			"_addDuplicateFragmentEntryLinkToLayoutDataJSONObject",
+			_duplicateItemMVCActionCommand, "doTransactionalCommand",
 			new Class<?>[] {ActionRequest.class, ActionResponse.class},
 			mockLiferayPortletActionRequest,
 			new MockLiferayPortletActionResponse());

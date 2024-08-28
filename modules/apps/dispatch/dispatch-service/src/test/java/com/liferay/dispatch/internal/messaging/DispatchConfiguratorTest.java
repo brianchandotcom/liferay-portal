@@ -525,6 +525,20 @@ public class DispatchConfiguratorTest {
 			Mockito.eq(StorageType.MEMORY), Mockito.any()
 		);
 
+		Mockito.verify(
+			_dispatchTriggerHelper, Mockito.never()
+		).addSchedulerJob(
+			Mockito.same(_singleNodeMemoryClusteredDispatchTrigger),
+			Mockito.eq(StorageType.MEMORY_CLUSTERED), Mockito.any()
+		);
+
+		Mockito.verify(
+			_dispatchTriggerHelper, Mockito.never()
+		).addSchedulerJob(
+			Mockito.same(_singleNodePersistedDispatchTrigger),
+			Mockito.eq(StorageType.PERSISTED), Mockito.any()
+		);
+
 		_dispatchConfigurator.deactivate();
 
 		Mockito.verify(

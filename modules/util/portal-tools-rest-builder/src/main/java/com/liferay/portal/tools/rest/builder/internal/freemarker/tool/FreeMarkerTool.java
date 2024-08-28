@@ -338,6 +338,8 @@ public class FreeMarkerTool {
 
 		fieldName = fieldName.replaceFirst("^\\-([0-9])", "negative_$1");
 
+		fieldName = fieldName.replaceFirst("^([0-9])", "positive_$1");
+
 		fieldName = fieldName.replaceAll("[ \\-\\/]", "_");
 
 		fieldName = fieldName.replaceAll("\\.", "_point_");
@@ -345,10 +347,6 @@ public class FreeMarkerTool {
 		fieldName = fieldName.replaceAll("[^a-zA-Z0-9_]", "");
 
 		fieldName = fieldName.replaceAll("_+", "_");
-
-		if (fieldName.matches("^[0-9].*")) {
-			fieldName = "num_" + fieldName;
-		}
 
 		return StringUtil.toUpperCase(fieldName);
 	}

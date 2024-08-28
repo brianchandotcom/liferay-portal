@@ -19,6 +19,9 @@ Import-Package:\
 	\
 	!org.conscrypt.*,\
 	\
+	!org.openjsse.javax.net.ssl.*,\
+	!org.openjsse.net.ssl.*,\
+	\
 	*
 -conditionalpackage: org.apache.felix.configurator.impl.*
 -fixupmessages: Classes found in the wrong directory

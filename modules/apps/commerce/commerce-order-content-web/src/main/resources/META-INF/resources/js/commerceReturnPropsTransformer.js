@@ -4,14 +4,14 @@
  */
 
 import CommerceCurrencyDataRenderer from './CommerceCurrencyDataRenderer';
-import CommerceStatusDataRenderer from './CommerceStatusDataRenderer';
+import {CommerceReturnStatusDataRenderer} from './CommerceReturnStatusDataRenderer';
 
 export default function propsTransformer({...otherProps}) {
 	return {
 		...otherProps,
 		customDataRenderers: {
 			commerceCurrencyDataRenderer: CommerceCurrencyDataRenderer,
-			commerceStatusDataRenderer: CommerceStatusDataRenderer,
+			commerceReturnStatusDataRenderer: CommerceReturnStatusDataRenderer,
 		},
 	};
 }

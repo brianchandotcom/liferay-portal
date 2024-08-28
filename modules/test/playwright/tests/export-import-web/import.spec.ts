@@ -99,7 +99,7 @@ test('can import a lar file selecting some items to import', async ({
 
 		await stagingPage.goto(site.name);
 
-		await stagingPage.enableDefaultLocalStaging();
+		await stagingPage.enableLocalStaging();
 
 		await stagingPage.compareCurrentPageVersions(site.name);
 	});

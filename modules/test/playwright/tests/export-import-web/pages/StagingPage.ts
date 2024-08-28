@@ -44,7 +44,7 @@ export class StagingPage {
 		expect(buffer).toBeNull();
 	}
 
-	async enableDefaultLocalStaging() {
+	async enableLocalStaging() {
 		await this.localStagingCheckbox.check();
 
 		this.page.once('dialog', async (dialog) => {

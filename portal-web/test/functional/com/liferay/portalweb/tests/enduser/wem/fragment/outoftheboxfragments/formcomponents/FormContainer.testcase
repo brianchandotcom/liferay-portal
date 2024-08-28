@@ -92,7 +92,7 @@ definition {
 				contentType = "Purchase Order",
 				panel = "General");
 
-			for (var fragmentName : list "Text,Submit Button") {
+			for (var fragmentName : list "Text,Form Button") {
 				PageEditor.removeFragment(fragmentName = ${fragmentName});
 			}
 
@@ -525,12 +525,12 @@ definition {
 			PageEditor.viewFragmentEditableText(
 				className = "button",
 				editableText = "Submit",
-				fragmentName = "Submit Button",
+				fragmentName = "Form Button",
 				id = "submit-button");
 		}
 
 		task ("Then the page creator could remove automatically added input fragments") {
-			for (var fragmentName : list "Text,Textarea,Submit Button") {
+			for (var fragmentName : list "Text,Textarea,Form Button") {
 				PageEditor.removeFragment(fragmentName = ${fragmentName});
 			}
 
@@ -594,7 +594,7 @@ definition {
 				contentType = "Purchase Order",
 				panel = "General");
 
-			for (var fragmentName : list "Text,Submit Button") {
+			for (var fragmentName : list "Text,Form Button") {
 				PageEditor.removeFragment(fragmentName = ${fragmentName});
 			}
 		}
@@ -642,7 +642,7 @@ definition {
 
 			PageEditor.addFragmentToFormContainer(
 				collectionName = "Form Components",
-				fragmentName = "Submit Button",
+				fragmentName = "Form Button",
 				targetFragmentName = "Text");
 
 			PageEditor.publish();
@@ -1531,7 +1531,7 @@ definition {
 
 				Button.clickSave();
 
-				//MastersPageTemplates.deselectAllowedFragments(fragmentNameList = "Date,Numeric,Submit Button,Text");
+				//MastersPageTemplates.deselectAllowedFragments(fragmentNameList = "Date,Numeric,Form Button,Text");
 
 				MastersPageTemplates.publishMaster();
 			}
@@ -1707,7 +1707,7 @@ definition {
 				contentType = "Purchase Order",
 				panel = "General");
 
-			PageEditor.removeFragment(fragmentName = "Submit Button");
+			PageEditor.removeFragment(fragmentName = "Form Button");
 
 			PageEditor.editInput(
 				field = "-- Unmapped --",
@@ -2312,7 +2312,7 @@ definition {
 				contentType = "Purchase Order",
 				panel = "General");
 
-			for (var fragmentName : list "Date,Submit Button") {
+			for (var fragmentName : list "Date,Form Button") {
 				PageEditor.removeFragment(fragmentName = ${fragmentName});
 			}
 
@@ -2370,7 +2370,7 @@ definition {
 				contentType = "Purchase Order",
 				panel = "General");
 
-			for (var fragmentName : list "Text,Submit Button") {
+			for (var fragmentName : list "Text,Form Button") {
 				PageEditor.removeFragment(fragmentName = ${fragmentName});
 			}
 
@@ -2429,7 +2429,7 @@ definition {
 				contentType = "Purchase Order",
 				panel = "General");
 
-			for (var fragmentName : list "Date,Submit Button") {
+			for (var fragmentName : list "Date,Form Button") {
 				PageEditor.removeFragment(fragmentName = ${fragmentName});
 			}
 
@@ -2488,7 +2488,7 @@ definition {
 				contentType = "Purchase Order",
 				panel = "General");
 
-			for (var fragmentName : list "Text,Submit Button") {
+			for (var fragmentName : list "Text,Form Button") {
 				PageEditor.removeFragment(fragmentName = ${fragmentName});
 			}
 
@@ -2548,7 +2548,7 @@ definition {
 				contentType = "Purchase Order",
 				panel = "General");
 
-			for (var fragmentName : list "Text,Submit Button") {
+			for (var fragmentName : list "Text,Form Button") {
 				PageEditor.removeFragment(fragmentName = ${fragmentName});
 			}
 
@@ -2558,7 +2558,7 @@ definition {
 
 			PageEditor.addFragmentToFormContainer(
 				collectionName = "Form Components",
-				fragmentName = "Submit Button",
+				fragmentName = "Form Button",
 				height = "Tall",
 				targetFragmentName = "Container");
 
@@ -2618,7 +2618,7 @@ definition {
 				contentType = "Purchase Order",
 				panel = "General");
 
-			for (var fragmentName : list "Text,Submit Button") {
+			for (var fragmentName : list "Text,Form Button") {
 				PageEditor.removeFragment(fragmentName = ${fragmentName});
 			}
 
@@ -2628,7 +2628,7 @@ definition {
 
 			PageEditor.addFragmentToFormContainer(
 				collectionName = "Form Components",
-				fragmentName = "Submit Button",
+				fragmentName = "Form Button",
 				height = "Tall",
 				targetFragmentName = "Grid");
 
@@ -2689,7 +2689,7 @@ definition {
 				contentType = "Purchase Order",
 				panel = "General");
 
-			for (var fragmentName : list "Text,Submit Button") {
+			for (var fragmentName : list "Text,Form Button") {
 				PageEditor.removeFragment(fragmentName = ${fragmentName});
 			}
 
@@ -2699,7 +2699,7 @@ definition {
 
 			PageEditor.addFragmentToFormContainer(
 				collectionName = "Form Components",
-				fragmentName = "Submit Button",
+				fragmentName = "Form Button",
 				height = "Tall",
 				targetFragmentName = "Container");
 
@@ -2760,7 +2760,7 @@ definition {
 				contentType = "Purchase Order",
 				panel = "General");
 
-			for (var fragmentName : list "Text,Submit Button") {
+			for (var fragmentName : list "Text,Form Button") {
 				PageEditor.removeFragment(fragmentName = ${fragmentName});
 			}
 
@@ -2770,7 +2770,7 @@ definition {
 
 			PageEditor.addFragmentToFormContainer(
 				collectionName = "Form Components",
-				fragmentName = "Submit Button",
+				fragmentName = "Form Button",
 				height = "Tall",
 				targetFragmentName = "Grid");
 
@@ -2832,7 +2832,7 @@ definition {
 				contentType = "Purchase Order",
 				panel = "General");
 
-			PageEditor.removeFragment(fragmentName = "Submit Button");
+			PageEditor.removeFragment(fragmentName = "Form Button");
 		}
 
 		task ("When the page creator publishes the content page") {
@@ -2857,7 +2857,7 @@ definition {
 
 			PageEditor.addElementToContainer(
 				collectionName = "Form Components",
-				fragmentName = "Submit Button",
+				fragmentName = "Form Button",
 				navTab = "Fragments");
 
 			PageEditor.hideFragmentViaHeader(fragmentName = "Container");

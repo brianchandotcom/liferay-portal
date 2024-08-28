@@ -91,7 +91,7 @@ definition {
 						index = ${index});
 				}
 
-				for (var fragmentName : list "Numeric,Submit Button") {
+				for (var fragmentName : list "Numeric,Form Button") {
 					PageEditor.removeFragment(fragmentName = ${fragmentName});
 				}
 			}
@@ -488,7 +488,7 @@ definition {
 						index = ${index});
 				}
 
-				for (var fragmentName : list "Numeric,Submit Button") {
+				for (var fragmentName : list "Numeric,Form Button") {
 					PageEditor.removeFragment(fragmentName = ${fragmentName});
 				}
 			}

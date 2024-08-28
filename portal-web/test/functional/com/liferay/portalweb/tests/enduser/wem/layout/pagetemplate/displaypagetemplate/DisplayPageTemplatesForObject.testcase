@@ -199,7 +199,7 @@ definition {
 			PageEditor.viewFragmentEditableText(
 				className = "button",
 				editableText = "Submit",
-				fragmentName = "Submit Button",
+				fragmentName = "Form Button",
 				id = "submit-button");
 
 			PageEditor.gotoConfiguration(fragmentName = "Form Container");

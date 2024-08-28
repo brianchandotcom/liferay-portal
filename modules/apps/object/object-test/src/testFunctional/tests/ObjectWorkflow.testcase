@@ -175,7 +175,7 @@ definition {
 
 			Click.javaScriptClick(
 				index = 1,
-				key_fragmentName = "Submit Button",
+				key_fragmentName = "Form Button",
 				locator1 = "Fragment#FRAGMENT_LABEL");
 
 			Select(

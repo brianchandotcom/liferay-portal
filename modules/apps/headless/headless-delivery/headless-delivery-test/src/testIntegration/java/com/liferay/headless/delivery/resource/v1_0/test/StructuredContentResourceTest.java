@@ -12,7 +12,9 @@ import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.test.util.BlogsTestUtil;
+import com.liferay.data.engine.rest.dto.v2_0.DataDefinition;
 import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
+import com.liferay.data.engine.rest.test.util.DataDefinitionTestUtil;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.test.util.DLTestUtil;
@@ -26,6 +28,9 @@ import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestHelper;
 import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
@@ -52,6 +57,9 @@ import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeCon
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -431,6 +439,7 @@ public class StructuredContentResourceTest
 			false);
 		_testGetStructuredContentWithAllTypesOfContentFieldsAndAcceptAllLanguagesHeader(
 			true);
+		_testGetStructuredContentWithDataDefinitionEmptyDefaultValue();
 		_testGetStructuredContentWithDateExpired();
 		_testGetStructuredContentWithDateExpiredNeverExpire();
 		_testGetStructuredContentWithDifferentFolder();
@@ -1800,6 +1809,51 @@ public class StructuredContentResourceTest
 
 		assertEquals(postStructuredContent, getStructuredContent);
 		assertValid(getStructuredContent);
+	}
+
+	private void _testGetStructuredContentWithDataDefinitionEmptyDefaultValue()
+		throws Exception {
+
+		Class<?> clazz = StructuredContentResourceTest.class;
+
+		InputStream inputStream = clazz.getResourceAsStream(
+			"dependencies/test-data-definition.json");
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			StringUtil.read(inputStream));
+
+		DataDefinition dataDefinition =
+			DataDefinitionTestUtil.addDataDefinition(
+				"journal", _dataDefinitionResourceFactory,
+				testGroup.getGroupId(), jsonObject.toString(),
+				TestPropsValues.getUser());
+
+		DDMStructure ddmStructure =
+			DDMStructureLocalServiceUtil.getDDMStructure(
+				dataDefinition.getId());
+
+		DDMFormValues ddmFormValues = new DDMFormValues(
+			ddmStructure.getDDMForm());
+
+		Fields fields = _ddmFormValuesToFieldsConverter.convert(
+			ddmStructure, ddmFormValues);
+
+		JournalArticle article = JournalTestUtil.addArticleWithXMLContent(
+			testGroup.getGroupId(),
+			_journalConverter.getContent(
+				ddmStructure, fields, testGroup.getGroupId()),
+			ddmStructure.getStructureKey(), null);
+
+		StructuredContent getStructuredContent =
+			structuredContentResource.getStructuredContent(
+				article.getResourcePrimKey());
+
+		ContentField[] contentFields = getStructuredContent.getContentFields();
+
+		ContentFieldValue contentFieldValue =
+			contentFields[0].getContentFieldValue();
+
+		Assert.assertEquals(StringPool.BLANK, contentFieldValue.getData());
 	}
 
 	private void _testGetStructuredContentWithDateExpired() throws Exception {

@@ -241,6 +241,21 @@ public class DocumentSerDes {
 			sb.append("\"");
 		}
 
+		if (document.getDocumentFolderExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"documentFolderExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				_escape(document.getDocumentFolderExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (document.getDocumentFolderId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -627,6 +642,16 @@ public class DocumentSerDes {
 			map.put("description", String.valueOf(document.getDescription()));
 		}
 
+		if (document.getDocumentFolderExternalReferenceCode() == null) {
+			map.put("documentFolderExternalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"documentFolderExternalReferenceCode",
+				String.valueOf(
+					document.getDocumentFolderExternalReferenceCode()));
+		}
+
 		if (document.getDocumentFolderId() == null) {
 			map.put("documentFolderId", null);
 		}
@@ -827,6 +852,12 @@ public class DocumentSerDes {
 			else if (Objects.equals(jsonParserFieldName, "description")) {
 				return false;
 			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"documentFolderExternalReferenceCode")) {
+
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "documentFolderId")) {
 				return false;
 			}
@@ -989,6 +1020,15 @@ public class DocumentSerDes {
 			else if (Objects.equals(jsonParserFieldName, "description")) {
 				if (jsonParserFieldValue != null) {
 					document.setDescription((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"documentFolderExternalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					document.setDocumentFolderExternalReferenceCode(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "documentFolderId")) {

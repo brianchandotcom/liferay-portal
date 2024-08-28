@@ -302,6 +302,32 @@ public class Document implements Cloneable, Serializable {
 
 	protected String description;
 
+	public String getDocumentFolderExternalReferenceCode() {
+		return documentFolderExternalReferenceCode;
+	}
+
+	public void setDocumentFolderExternalReferenceCode(
+		String documentFolderExternalReferenceCode) {
+
+		this.documentFolderExternalReferenceCode =
+			documentFolderExternalReferenceCode;
+	}
+
+	public void setDocumentFolderExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			documentFolderExternalReferenceCodeUnsafeSupplier) {
+
+		try {
+			documentFolderExternalReferenceCode =
+				documentFolderExternalReferenceCodeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String documentFolderExternalReferenceCode;
+
 	public Long getDocumentFolderId() {
 		return documentFolderId;
 	}

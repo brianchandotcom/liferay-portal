@@ -623,6 +623,56 @@ public class Document implements Serializable {
 	private Supplier<String> _descriptionSupplier;
 
 	@Schema(
+		description = "The external reference code of the `DocumentFolder` where this document is stored."
+	)
+	public String getDocumentFolderExternalReferenceCode() {
+		if (_documentFolderExternalReferenceCodeSupplier != null) {
+			documentFolderExternalReferenceCode =
+				_documentFolderExternalReferenceCodeSupplier.get();
+
+			_documentFolderExternalReferenceCodeSupplier = null;
+		}
+
+		return documentFolderExternalReferenceCode;
+	}
+
+	public void setDocumentFolderExternalReferenceCode(
+		String documentFolderExternalReferenceCode) {
+
+		this.documentFolderExternalReferenceCode =
+			documentFolderExternalReferenceCode;
+
+		_documentFolderExternalReferenceCodeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setDocumentFolderExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			documentFolderExternalReferenceCodeUnsafeSupplier) {
+
+		_documentFolderExternalReferenceCodeSupplier = () -> {
+			try {
+				return documentFolderExternalReferenceCodeUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(
+		description = "The external reference code of the `DocumentFolder` where this document is stored."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String documentFolderExternalReferenceCode;
+
+	@JsonIgnore
+	private Supplier<String> _documentFolderExternalReferenceCodeSupplier;
+
+	@Schema(
 		description = "The ID of the `DocumentFolder` where this document is stored."
 	)
 	public Long getDocumentFolderId() {
@@ -1638,6 +1688,23 @@ public class Document implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(description));
+
+			sb.append("\"");
+		}
+
+		String documentFolderExternalReferenceCode =
+			getDocumentFolderExternalReferenceCode();
+
+		if (documentFolderExternalReferenceCode != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"documentFolderExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(documentFolderExternalReferenceCode));
 
 			sb.append("\"");
 		}

@@ -192,6 +192,7 @@ public abstract class BaseDocumentResourceTestCase {
 		document.setContentUrl(regex);
 		document.setContentValue(regex);
 		document.setDescription(regex);
+		document.setDocumentFolderExternalReferenceCode(regex);
 		document.setEncodingFormat(regex);
 		document.setExternalReferenceCode(regex);
 		document.setFileExtension(regex);
@@ -209,6 +210,8 @@ public abstract class BaseDocumentResourceTestCase {
 		Assert.assertEquals(regex, document.getContentUrl());
 		Assert.assertEquals(regex, document.getContentValue());
 		Assert.assertEquals(regex, document.getDescription());
+		Assert.assertEquals(
+			regex, document.getDocumentFolderExternalReferenceCode());
 		Assert.assertEquals(regex, document.getEncodingFormat());
 		Assert.assertEquals(regex, document.getExternalReferenceCode());
 		Assert.assertEquals(regex, document.getFileExtension());
@@ -3319,6 +3322,17 @@ public abstract class BaseDocumentResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"documentFolderExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (document.getDocumentFolderExternalReferenceCode() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("documentFolderId", additionalAssertFieldName)) {
 				if (document.getDocumentFolderId() == null) {
 					valid = false;
@@ -3771,6 +3785,20 @@ public abstract class BaseDocumentResourceTestCase {
 				if (!Objects.deepEquals(
 						document1.getDescription(),
 						document2.getDescription())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"documentFolderExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						document1.getDocumentFolderExternalReferenceCode(),
+						document2.getDocumentFolderExternalReferenceCode())) {
 
 					return false;
 				}
@@ -4498,6 +4526,52 @@ public abstract class BaseDocumentResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("documentFolderExternalReferenceCode")) {
+			Object object = document.getDocumentFolderExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("documentFolderId")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -4896,6 +4970,8 @@ public abstract class BaseDocumentResourceTestCase {
 				dateModified = RandomTestUtil.nextDate();
 				datePublished = RandomTestUtil.nextDate();
 				description = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				documentFolderExternalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				documentFolderId = RandomTestUtil.randomLong();
 				encodingFormat = StringUtil.toLowerCase(

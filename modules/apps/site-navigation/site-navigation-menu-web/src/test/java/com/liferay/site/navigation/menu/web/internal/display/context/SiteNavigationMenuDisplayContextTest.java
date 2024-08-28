@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.site.navigation.constants.SiteNavigationConstants;
 import com.liferay.site.navigation.menu.web.internal.configuration.SiteNavigationMenuPortletInstanceConfiguration;
@@ -166,7 +165,6 @@ public class SiteNavigationMenuDisplayContextTest {
 			siteNavigationMenuDisplayContext.getDisplayStyleGroupId());
 	}
 
-	@FeatureFlags("LPD-23048")
 	@Test
 	public void testGetDisplayStyleGroupIdFeatureFlagEnabled()
 		throws ConfigurationException {
@@ -201,7 +199,6 @@ public class SiteNavigationMenuDisplayContextTest {
 			siteNavigationMenuDisplayContext.getRootMenuItemId());
 	}
 
-	@FeatureFlags("LPD-23048")
 	@Test
 	public void testGetRootMenuItemIdFeatureFlagEnabled()
 		throws ConfigurationException {
@@ -236,7 +233,6 @@ public class SiteNavigationMenuDisplayContextTest {
 			siteNavigationMenuDisplayContext.getSiteNavigationMenuId());
 	}
 
-	@FeatureFlags("LPD-23048")
 	@Test
 	public void testGetSiteNavigationMenuIdFeatureFlagEnabled()
 		throws ConfigurationException {

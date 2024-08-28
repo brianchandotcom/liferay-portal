@@ -8,7 +8,6 @@ package com.liferay.site.navigation.menu.web.internal.portlet.action;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
@@ -114,10 +113,6 @@ public class SiteNavigationMenuConfigurationAction
 	private void _updateDisplayStyleGroupPreferences(
 		ModifiableSettings modifiableSettings, PortletRequest portletRequest) {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-23048")) {
-			return;
-		}
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -155,10 +150,6 @@ public class SiteNavigationMenuConfigurationAction
 			modifiableSettings.reset("rootMenuItemId");
 		}
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-23048")) {
-			return;
-		}
-
 		SiteNavigationMenuItem siteNavigationMenuItem =
 			siteNavigationMenuItemLocalService.fetchSiteNavigationMenuItem(
 				rootMenuItemId);
@@ -177,10 +168,6 @@ public class SiteNavigationMenuConfigurationAction
 	private void _updateSiteNavigationMenuPreferences(
 			ModifiableSettings modifiableSettings)
 		throws PortalException {
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-23048")) {
-			return;
-		}
 
 		long siteNavigationMenuId = GetterUtil.getLong(
 			modifiableSettings.getValue("siteNavigationMenuId", null));

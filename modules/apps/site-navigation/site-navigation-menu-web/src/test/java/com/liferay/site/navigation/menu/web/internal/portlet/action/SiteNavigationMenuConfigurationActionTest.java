@@ -14,7 +14,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
@@ -71,7 +70,6 @@ public class SiteNavigationMenuConfigurationActionTest {
 			_modifiableSettings.getValue("displayStyleGroupKey", null));
 	}
 
-	@FeatureFlags("LPD-23048")
 	@Test
 	public void testUpdateDisplayStyleGroupPreferencesWithFeatureFlagEnabledDifferentScope()
 		throws Exception {
@@ -96,7 +94,6 @@ public class SiteNavigationMenuConfigurationActionTest {
 			_modifiableSettings.getValue("displayStyleGroupKey", null));
 	}
 
-	@FeatureFlags("LPD-23048")
 	@Test
 	public void testUpdateDisplayStyleGroupPreferencesWithFeatureFlagEnabledSameScope()
 		throws Exception {
@@ -138,7 +135,6 @@ public class SiteNavigationMenuConfigurationActionTest {
 			_modifiableSettings.getValue("rootMenuItemId", null));
 	}
 
-	@FeatureFlags("LPD-23048")
 	@Test
 	public void testUpdateRootMenuItemPreferencesWithFeatureFlagEnabled()
 		throws Exception {
@@ -181,7 +177,6 @@ public class SiteNavigationMenuConfigurationActionTest {
 			_modifiableSettings.getValue("siteNavigationMenuId", null));
 	}
 
-	@FeatureFlags("LPD-23048")
 	@Test
 	public void testUpdateSiteNavigationMenuPreferencesWithFeatureFlagEnabled()
 		throws Exception {

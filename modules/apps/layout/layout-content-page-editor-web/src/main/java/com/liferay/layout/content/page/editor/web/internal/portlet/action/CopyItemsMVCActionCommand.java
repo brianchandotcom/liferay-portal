@@ -203,13 +203,6 @@ public class CopyItemsMVCActionCommand
 			}
 		}
 
-		LayoutStructure layoutStructure =
-			LayoutStructureUtil.getLayoutStructure(
-				themeDisplay.getScopeGroupId(), themeDisplay.getPlid(),
-				segmentsExperienceId);
-
-		JSONObject layoutDataJSONObject = layoutStructure.toJSONObject();
-
 		return JSONUtil.put(
 			"copiedFragmentEntryLinks",
 			getFragmentEntryLinksJSONArray(
@@ -219,7 +212,15 @@ public class CopyItemsMVCActionCommand
 		).put(
 			"copiedItemIds", copiedLayoutStructureItemIds
 		).put(
-			"layoutData", layoutDataJSONObject
+			"layoutData",
+			() -> {
+				LayoutStructure layoutStructure =
+					LayoutStructureUtil.getLayoutStructure(
+						themeDisplay.getScopeGroupId(), themeDisplay.getPlid(),
+						segmentsExperienceId);
+
+				return layoutStructure.toJSONObject();
+			}
 		).put(
 			"restrictedItemIds",
 			_contentManager.getRestrictedItemIds(

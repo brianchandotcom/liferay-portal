@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.model.ContactConstants;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
-import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -32,7 +31,6 @@ import com.liferay.scim.rest.internal.model.ScimUser;
 import java.io.File;
 
 import java.text.DateFormat;
-import java.text.Format;
 
 import java.util.Calendar;
 import java.util.Collections;
@@ -336,12 +334,15 @@ public class ScimUtil {
 		ComplexAttribute complexAttribute = new ComplexAttribute(
 			attributeSchema.getName());
 
+		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+			_PATTERN);
+
 		complexAttribute.setSubAttributesList(
 			HashMapBuilder.<String, Attribute>put(
 				"birthday",
 				_createSimpleAttribute(
 					attributeSchema.getSubAttributeSchema("birthday"),
-					_format.format(scimUser.getBirthday()))
+					dateFormat.format(scimUser.getBirthday()))
 			).put(
 				"male",
 				_createSimpleAttribute(
@@ -493,7 +494,5 @@ public class ScimUtil {
 
 	private static final DCLSingleton<AttributeSchema>
 		_attributeSchemaDCLSingleton = new DCLSingleton<>();
-	private static final Format _format =
-		FastDateFormatFactoryUtil.getSimpleDateFormat(_PATTERN);
 
 }

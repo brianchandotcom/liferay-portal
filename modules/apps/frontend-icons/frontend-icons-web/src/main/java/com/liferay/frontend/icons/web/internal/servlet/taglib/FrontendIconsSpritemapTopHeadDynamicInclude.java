@@ -35,7 +35,7 @@ public class FrontendIconsSpritemapTopHeadDynamicInclude
 
 		PrintWriter printWriter = httpServletResponse.getWriter();
 
-		StringBundler sb = new StringBundler(5);
+		StringBundler sb = new StringBundler(10);
 
 		sb.append("<script");
 		sb.append(
@@ -49,18 +49,13 @@ public class FrontendIconsSpritemapTopHeadDynamicInclude
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		sb.append(
-			StringBundler.concat(
-				"Liferay.Icons.controlPanelSpritemap = '",
-				themeDisplay.getPathControlPanelSpritemap(), "';"));
-		sb.append(
-			StringBundler.concat(
-				"Liferay.Icons.spritemap = '",
-				themeDisplay.getPathThemeSpritemap(), "';"));
+		sb.append("Liferay.Icons.controlPanelSpritemap = '");
+		sb.append(themeDisplay.getPathControlPanelSpritemap());
+		sb.append("';Liferay.Icons.spritemap = '");
+		sb.append(themeDisplay.getPathThemeSpritemap());
+		sb.append("';</script>\n");
 
-		sb.append("</script>");
-
-		printWriter.println(sb);
+		printWriter.write(sb.toString());
 	}
 
 	@Override

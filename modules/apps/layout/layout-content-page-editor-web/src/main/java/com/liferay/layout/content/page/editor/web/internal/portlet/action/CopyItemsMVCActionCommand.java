@@ -139,6 +139,11 @@ public class CopyItemsMVCActionCommand
 			}
 		}
 
+		LayoutStructure layoutStructure =
+			LayoutStructureUtil.getLayoutStructure(
+				themeDisplay.getScopeGroupId(), themeDisplay.getPlid(),
+				segmentsExperienceId);
+
 		return JSONUtil.put(
 			"copiedFragmentEntryLinks",
 			getFragmentEntryLinksJSONArray(
@@ -148,22 +153,11 @@ public class CopyItemsMVCActionCommand
 		).put(
 			"copiedItemIds", copiedLayoutStructureItemIds
 		).put(
-			"layoutData",
-			() -> {
-				LayoutStructure layoutStructure =
-					LayoutStructureUtil.getLayoutStructure(
-						themeDisplay.getScopeGroupId(), themeDisplay.getPlid(),
-						segmentsExperienceId);
-
-				return layoutStructure.toJSONObject();
-			}
+			"layoutData", layoutStructure.toJSONObject()
 		).put(
 			"restrictedItemIds",
 			_contentManager.getRestrictedItemIds(
-				portal.getHttpServletRequest(actionRequest),
-				LayoutStructureUtil.getLayoutStructure(
-					themeDisplay.getScopeGroupId(), themeDisplay.getPlid(),
-					segmentsExperienceId),
+				portal.getHttpServletRequest(actionRequest), layoutStructure,
 				themeDisplay)
 		);
 	}

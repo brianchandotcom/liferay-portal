@@ -109,7 +109,7 @@ public class ConfigurationDisplayContext {
 					).put(
 						"label",
 						LanguageUtil.get(
-							themeDisplay.getLocale(), "submit-button")
+							themeDisplay.getLocale(), "form-button")
 					).put(
 						"name",
 						DefaultInputFragmentEntryConfigurationProvider.

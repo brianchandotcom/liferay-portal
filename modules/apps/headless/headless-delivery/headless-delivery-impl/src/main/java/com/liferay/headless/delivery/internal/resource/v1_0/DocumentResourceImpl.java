@@ -552,6 +552,18 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 			externalReferenceCode = document.getExternalReferenceCode();
 		}
 
+		if ((document != null) &&
+			(document.getDocumentFolderExternalReferenceCode() != null)) {
+
+			Folder folder =
+				_dlAppLocalService.fetchFolderByExternalReferenceCode(
+					document.getDocumentFolderExternalReferenceCode(), groupId);
+
+			if (folder != null) {
+				documentFolderId = folder.getFolderId();
+			}
+		}
+
 		if (documentFolderId == null) {
 			if (document != null) {
 				documentFolderId = document.getDocumentFolderId();
@@ -918,11 +930,26 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 
 		Long folderId = null;
 
-		if ((document != null) && (document.getDocumentFolderId() != null) &&
-			(document.getDocumentFolderId() !=
-				existingFileEntry.getFolderId())) {
+		if (document != null) {
+			String documentFolderExternalReferenceCode =
+				document.getDocumentFolderExternalReferenceCode();
 
-			folderId = document.getDocumentFolderId();
+			if (documentFolderExternalReferenceCode != null) {
+				Folder folder =
+					_dlAppLocalService.fetchFolderByExternalReferenceCode(
+						documentFolderExternalReferenceCode,
+						existingFileEntry.getGroupId());
+
+				if (folder != null) {
+					folderId = folder.getFolderId();
+				}
+			}
+			else if ((document.getDocumentFolderId() != null) &&
+					 (document.getDocumentFolderId() !=
+						 existingFileEntry.getFolderId())) {
+
+				folderId = document.getDocumentFolderId();
+			}
 		}
 
 		if (folderId != null) {

@@ -82,13 +82,13 @@ type FilterCollection = Array<IFilter>;
 
 interface IPropsFilterFormComponent {
 	dataSet: IDataSet | FDSViewType;
-	dismiss: Function;
 	fdsFilterClientExtensions?: IClientExtensionRenderer[];
 	fieldNames?: string[];
 	fields: IField[];
 	filter?: IFilter | ISelectionFilter;
 	filterType?: EFilterType;
 	namespace: string;
+	onCancel: Function;
 	onSave: (newFilter: IFilter) => void;
 	resolvedRESTSchemas: string[];
 	restApplications: string[];
@@ -96,13 +96,13 @@ interface IPropsFilterFormComponent {
 
 function FilterFormComponent({
 	dataSet,
-	dismiss,
 	fdsFilterClientExtensions = [],
 	fieldNames,
 	fields,
 	filter,
 	filterType,
 	namespace,
+	onCancel,
 	onSave,
 	resolvedRESTSchemas,
 	restApplications,
@@ -157,12 +157,12 @@ function FilterFormComponent({
 			</ClayLayout.SheetHeader>
 
 			<Component.Body
-				dismiss={dismiss}
 				fdsFilterClientExtensions={fdsFilterClientExtensions}
 				fieldNames={fieldNames}
 				fields={fields}
 				filter={filter}
 				namespace={namespace}
+				onCancel={onCancel}
 				onSave={(formData: any) => saveFDSFilter(formData)}
 				resolvedRESTSchemas={resolvedRESTSchemas}
 				restApplications={restApplications}
@@ -452,7 +452,6 @@ function Filters({
 					{activeFilterType && (
 						<FilterFormComponent
 							dataSet={dataSet}
-							dismiss={() => setActiveMode(FILTER_MODE.LIST)}
 							fdsFilterClientExtensions={
 								fdsFilterClientExtensions
 							}
@@ -462,6 +461,7 @@ function Filters({
 							fields={availableFields}
 							filterType={activeFilterType}
 							namespace={namespace}
+							onCancel={() => setActiveMode(FILTER_MODE.LIST)}
 							onSave={(newfilter) => {
 								if (newfilter.label === undefined) {
 									newfilter.label = '';
@@ -481,7 +481,6 @@ function Filters({
 					{activeFilter && (
 						<FilterFormComponent
 							dataSet={dataSet}
-							dismiss={() => setActiveMode(FILTER_MODE.LIST)}
 							fdsFilterClientExtensions={
 								fdsFilterClientExtensions
 							}
@@ -492,6 +491,7 @@ function Filters({
 							filter={activeFilter}
 							filterType={activeFilter.filterType}
 							namespace={namespace}
+							onCancel={() => setActiveMode(FILTER_MODE.LIST)}
 							onSave={(newfilter) => {
 								const newFilters = filters.map((item) => {
 									if (item.id === newfilter.id) {

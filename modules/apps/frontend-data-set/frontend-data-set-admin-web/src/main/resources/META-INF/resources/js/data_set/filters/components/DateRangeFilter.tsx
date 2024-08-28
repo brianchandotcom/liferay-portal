@@ -19,20 +19,20 @@ function Header() {
 }
 
 interface IBodyProps {
-	dismiss: Function;
 	fieldNames?: string[];
 	fields: IField[];
 	filter?: IFilter;
 	namespace: string;
+	onCancel: Function;
 	onSave: Function;
 }
 
 function Body({
-	dismiss,
 	fieldNames,
 	fields,
 	filter,
 	namespace,
+	onCancel,
 	onSave,
 }: IBodyProps) {
 	const [fieldInUseValidationError, setFieldInUseValidationError] =
@@ -254,7 +254,7 @@ function Body({
 			</ClayLayout.SheetSection>
 
 			<Footer
-				dismiss={dismiss}
+				onCancel={onCancel}
 				onSave={saveDateRangeFilter}
 				saveButtonDisabled={saveButtonDisabled}
 			/>

@@ -33,20 +33,20 @@ function Header() {
 }
 
 function Body({
-	dismiss,
 	fieldNames,
 	fields,
 	filter,
 	namespace,
+	onCancel,
 	onSave,
 	resolvedRESTSchemas,
 	restApplications,
 }: {
-	dismiss: Function;
 	fieldNames?: string[];
 	fields: IField[];
 	filter?: IFilter;
 	namespace: string;
+	onCancel: Function;
 	onSave: Function;
 	resolvedRESTSchemas: string[];
 	restApplications: string[];
@@ -712,7 +712,7 @@ function Body({
 			</ClayLayout.SheetSection>
 
 			<Footer
-				dismiss={dismiss}
+				onCancel={onCancel}
 				onSave={saveSelectionFilter}
 				saveButtonDisabled={saveButtonDisabled}
 			/>

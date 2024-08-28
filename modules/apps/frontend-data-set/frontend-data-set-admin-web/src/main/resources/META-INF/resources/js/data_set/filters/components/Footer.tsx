@@ -8,12 +8,12 @@ import ClayLayout from '@clayui/layout';
 import React from 'react';
 
 export interface IFooterProps {
-	dismiss: Function;
+	onCancel: Function;
 	onSave: Function;
 	saveButtonDisabled: boolean;
 }
 
-function Footer({dismiss, onSave, saveButtonDisabled}: IFooterProps) {
+function Footer({onCancel, onSave, saveButtonDisabled}: IFooterProps) {
 	return (
 		<ClayLayout.SheetFooter>
 			<ClayButton.Group spaced>
@@ -25,7 +25,7 @@ function Footer({dismiss, onSave, saveButtonDisabled}: IFooterProps) {
 					{Liferay.Language.get('save')}
 				</ClayButton>
 
-				<ClayButton displayType="secondary" onClick={() => dismiss()}>
+				<ClayButton displayType="secondary" onClick={() => onCancel()}>
 					{Liferay.Language.get('cancel')}
 				</ClayButton>
 			</ClayButton.Group>

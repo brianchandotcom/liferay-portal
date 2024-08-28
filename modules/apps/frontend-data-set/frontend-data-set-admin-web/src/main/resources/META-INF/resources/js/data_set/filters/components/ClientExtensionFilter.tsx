@@ -22,22 +22,22 @@ function Header() {
 }
 
 interface IBodyProps {
-	dismiss: Function;
 	fdsFilterClientExtensions: IClientExtensionRenderer[];
 	fieldNames?: string[];
 	fields: IField[];
 	filter?: IFilter;
 	namespace: string;
+	onCancel: Function;
 	onSave: Function;
 }
 
 function Body({
-	dismiss,
 	fdsFilterClientExtensions,
 	fieldNames,
 	fields,
 	filter,
 	namespace,
+	onCancel,
 	onSave,
 }: IBodyProps) {
 	const [clientExtensionValidationError, setClientExtensionValidationError] =
@@ -250,7 +250,7 @@ function Body({
 			</ClayLayout.SheetSection>
 
 			<Footer
-				dismiss={dismiss}
+				onCancel={onCancel}
 				onSave={saveClientExtensionFilter}
 				saveButtonDisabled={saveButtonDisabled}
 			/>

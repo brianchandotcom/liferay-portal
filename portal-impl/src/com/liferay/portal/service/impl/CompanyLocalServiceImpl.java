@@ -178,6 +178,23 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		return super.addCompany(company);
 	}
 
+	@Override
+	public Company addCompany(
+			Long companyId, String webId, String virtualHostname, String mx,
+			int maxUsers, boolean active, boolean addDefaultAdminUser,
+			String defaultAdminPassword, String defaultAdminScreenName,
+			String defaultAdminEmailAddress, String defaultAdminFirstName,
+			String defaultAdminMiddleName, String defaultAdminLastName)
+		throws PortalException {
+
+		return addCompany(
+			companyId, webId, virtualHostname, mx, maxUsers, active,
+			addDefaultAdminUser, defaultAdminPassword, defaultAdminScreenName,
+			defaultAdminEmailAddress, defaultAdminFirstName,
+			defaultAdminMiddleName, defaultAdminLastName,
+			_SITE_INITIALIZER_KEY_WELCOME);
+	}
+
 	/**
 	 * Adds a company with the primary key.
 	 *
@@ -197,7 +214,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			int maxUsers, boolean active, boolean addDefaultAdminUser,
 			String defaultAdminPassword, String defaultAdminScreenName,
 			String defaultAdminEmailAddress, String defaultAdminFirstName,
-			String defaultAdminMiddleName, String defaultAdminLastName)
+			String defaultAdminMiddleName, String defaultAdminLastName,
+			String siteInitializerKey)
 		throws PortalException {
 
 		// Company
@@ -281,7 +299,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 						_addDemoSettings(updatedCompany);
 					}
 
-					updatedCompany = _checkCompany(updatedCompany);
+					updatedCompany = _checkCompany(
+						updatedCompany, siteInitializerKey);
 
 					if (addDefaultAdminUser) {
 						_userLocalService.addDefaultAdminUser(
@@ -443,18 +462,20 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 	/**
 	 * Returns the company with the web domain.
-	 *
+	 * <p>
 	 * The method sets mail domain to the web domain to the default name set in
 	 * portal.properties
 	 *
-	 * @param  webId the company's web domain
+	 * @param webId the company's web domain
 	 * @return the company with the web domain
 	 */
 	@Override
-	public Company checkCompany(String webId) throws PortalException {
+	public Company checkCompany(String siteInitializerKey, String webId)
+		throws PortalException {
+
 		Company company = getCompanyByWebId(webId);
 
-		return _checkCompany(company);
+		return _checkCompany(company, siteInitializerKey);
 	}
 
 	/**
@@ -2267,7 +2288,9 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		return guestUser;
 	}
 
-	private Company _checkCompany(Company company) throws PortalException {
+	private Company _checkCompany(Company company, String siteInitializerKey)
+		throws PortalException {
+
 		Locale localeThreadLocalDefaultLocale =
 			LocaleThreadLocal.getDefaultLocale();
 		Locale localeThreadSiteDefaultLocale =
@@ -2303,7 +2326,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 			// System groups
 
-			_groupLocalService.checkSystemGroups(company.getCompanyId());
+			_groupLocalService.checkSystemGroups(
+				company.getCompanyId(), siteInitializerKey);
 
 			// Company group
 
@@ -2514,6 +2538,9 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	}
 
 	private static final String _DEFAULT_VIRTUAL_HOST = "localhost";
+
+	private static final String _SITE_INITIALIZER_KEY_WELCOME =
+		"com.liferay.site.initializer.welcome";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CompanyLocalServiceImpl.class);

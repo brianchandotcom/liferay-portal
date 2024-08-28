@@ -62,6 +62,16 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 			int maxUsers, boolean active)
 		throws PortalException {
 
+		return addCompany(companyId, webId, virtualHost, mx, maxUsers, active, _SITE_INITIALIZER_KEY_WELCOME);
+	}
+
+	@JSONWebService
+	@Override
+	public Company addCompany(
+		long companyId, String webId, String virtualHost, String mx,
+		int maxUsers, boolean active, String siteInitializerKey)
+		throws PortalException {
+
 		PermissionChecker permissionChecker = getPermissionChecker();
 
 		if (!permissionChecker.isOmniadmin()) {
@@ -70,7 +80,7 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 
 		return companyLocalService.addCompany(
 			companyId, webId, virtualHost, mx, maxUsers, active, true, null,
-			null, null, null, null, null);
+			null, null, null, null, null, siteInitializerKey);
 	}
 
 	/**
@@ -94,6 +104,21 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 			String defaultAdminLastName)
 		throws PortalException {
 
+		return addCompany(webId, virtualHost, mx, maxUsers, active, defaultAdminPassword,
+			defaultAdminScreenName, defaultAdminEmailAddress, defaultAdminFirstName,
+			defaultAdminMiddleName, defaultAdminLastName, _SITE_INITIALIZER_KEY_WELCOME);
+	}
+
+	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
+	@Override
+	public Company addCompany(
+		String webId, String virtualHost, String mx, int maxUsers,
+		boolean active, String defaultAdminPassword,
+		String defaultAdminScreenName, String defaultAdminEmailAddress,
+		String defaultAdminFirstName, String defaultAdminMiddleName,
+		String defaultAdminLastName, String siteInitializerKey)
+		throws PortalException {
+
 		PermissionChecker permissionChecker = getPermissionChecker();
 
 		if (!permissionChecker.isOmniadmin()) {
@@ -104,7 +129,7 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 			null, webId, virtualHost, mx, maxUsers, active, true,
 			defaultAdminPassword, defaultAdminScreenName,
 			defaultAdminEmailAddress, defaultAdminFirstName,
-			defaultAdminMiddleName, defaultAdminLastName);
+			defaultAdminMiddleName, defaultAdminLastName, siteInitializerKey);
 	}
 
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
@@ -510,6 +535,9 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 			companyId, authType, autoLogin, sendPassword, strangers,
 			strangersWithMx, strangersVerify, siteLogo);
 	}
+
+	private static final String _SITE_INITIALIZER_KEY_WELCOME =
+		"com.liferay.site.initializer.welcome";
 
 	@BeanReference(type = RoleLocalService.class)
 	private RoleLocalService _roleLocalService;

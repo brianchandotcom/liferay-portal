@@ -705,6 +705,10 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		_commerceAccountHelper.getCurrentCommerceAccount(null);
 	}
 
+	public void method(HttpServletRequest httpServletRequest, Object value) {
+		httpServletRequest.setAttribute(null, null);
+	}
+
 	public void method(HttpServletRequest httpServletRequest, String name) {
 		CookieKeys.getCookie(httpServletRequest, "test123");
 		CookiesManagerUtil.getCookieValue(name, httpServletRequest);

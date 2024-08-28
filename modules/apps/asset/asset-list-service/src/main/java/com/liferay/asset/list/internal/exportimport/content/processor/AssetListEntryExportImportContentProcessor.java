@@ -356,8 +356,7 @@ public class AssetListEntryExportImportContentProcessor
 	}
 
 	private void _addGroupMappingsElement(
-			PortletDataContext portletDataContext, long[] groupIds)
-		throws Exception {
+		PortletDataContext portletDataContext, long[] groupIds) {
 
 		Element rootElement = portletDataContext.getExportDataRootElement();
 
@@ -368,7 +367,11 @@ public class AssetListEntryExportImportContentProcessor
 			Element groupIdMappingElement = groupIdMappingsElement.addElement(
 				"group-id-mapping");
 
-			Group group = _groupLocalService.getGroup(groupId);
+			Group group = _groupLocalService.fetchGroup(groupId);
+
+			if (group == null) {
+				continue;
+			}
 
 			long liveGroupId = group.getLiveGroupId();
 

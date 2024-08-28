@@ -3,7 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-function isIdDuplicated(elements, id) {
+import type {Elements} from 'react-flow-renderer';
+
+export function isIdDuplicated(elements: Elements, id: string) {
 	let duplicated = false;
 
 	elements.map((element) => {
@@ -15,7 +17,7 @@ function isIdDuplicated(elements, id) {
 	return duplicated;
 }
 
-function getModalInfo(itemType) {
+export function getModalInfo(itemType: string) {
 	if (itemType === 'actions') {
 		return {
 			message: Liferay.Language.get(
@@ -123,5 +125,3 @@ function getModalInfo(itemType) {
 
 	return {};
 }
-
-export {getModalInfo, isIdDuplicated};

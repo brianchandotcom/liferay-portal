@@ -5,7 +5,22 @@
 
 import {isIdDuplicated} from '../utils';
 
-function checkLabelErrors(errors, target) {
+import type {Elements, Node} from 'react-flow-renderer';
+
+export type NodeInformationError = {
+	id:
+		| false
+		| {
+				duplicated: boolean;
+				empty: boolean;
+		  };
+	label: boolean;
+};
+
+export function checkLabelErrors(
+	errors: NodeInformationError,
+	target: HTMLInputElement
+) {
 	if (target.value.trim() === '') {
 		return {...errors, label: true};
 	}
@@ -14,7 +29,11 @@ function checkLabelErrors(errors, target) {
 	}
 }
 
-function checkIdErrors(elements, errors, target) {
+export function checkIdErrors(
+	elements: Elements,
+	errors: NodeInformationError,
+	target: HTMLInputElement
+) {
 	if (target.value.trim() === '') {
 		return {
 			...errors,
@@ -37,7 +56,11 @@ function checkIdErrors(elements, errors, target) {
 	}
 }
 
-function getUpdatedLabelItem(key, selectedItem, target) {
+export function getUpdatedLabelItem(
+	key: Liferay.Language.Locale,
+	selectedItem: Node,
+	target: HTMLInputElement
+) {
 	return {
 		...selectedItem,
 		data: {
@@ -50,22 +73,6 @@ function getUpdatedLabelItem(key, selectedItem, target) {
 	};
 }
 
-function limitValue({defaultValue, min, value}) {
-	if (isNaN(value) || value < min) {
-		return defaultValue;
-	}
-
-	return value;
-}
-
-function sortElements(array, property) {
+export function sortElements<T extends object>(array: T[], property: keyof T) {
 	array.sort((a, b) => (a[property] > b[property] ? 1 : -1));
 }
-
-export {
-	checkLabelErrors,
-	checkIdErrors,
-	getUpdatedLabelItem,
-	limitValue,
-	sortElements,
-};

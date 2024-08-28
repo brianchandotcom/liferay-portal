@@ -10,7 +10,8 @@ import {commercePagesTest} from '../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
-import {commerceReturnSetUp} from './utils/commerce';
+import performLogin, {performLogout} from '../../utils/performLogin';
+import {commerceReturnSetUp, miniumSetUp} from './utils/commerce';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -96,4 +97,42 @@ test('LPD-32524 Returns admin page shows comments for return items', async ({
 	await expect(
 		commerceAdminReturnsPage.returnItemsCommentInput
 	).toBeVisible();
+});
+
+test('LPD-34670 Returns Manager can view and edit returns in returns admin page', async ({
+	apiHelpers,
+	commerceAdminReturnsPage,
+	page,
+}) => {
+	await miniumSetUp(apiHelpers);
+
+	const {commerceReturn} = await commerceReturnSetUp(apiHelpers);
+
+	const user =
+		await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
+			'demo.unprivileged@liferay.com'
+		);
+
+	const role =
+		await apiHelpers.headlessAdminUser.getRoleByName('Returns Manager');
+
+	await apiHelpers.headlessAdminUser.assignUserToRole(
+		role.externalReferenceCode,
+		user.id
+	);
+
+	await performLogout(page);
+
+	await performLogin(page, 'demo.unprivileged');
+
+	await commerceAdminReturnsPage.goto(false);
+
+	await (
+		await commerceAdminReturnsPage.tableRowLink({
+			colIndex: 0,
+			rowValue: commerceReturn.id,
+		})
+	).click();
+
+	await expect(page.getByTestId('headerDetailsTitle')).toBeVisible();
 });

@@ -42,7 +42,7 @@ export class CommerceAdminReturnsPage extends CommerceDNDTablePage {
 		);
 	}
 
-	async goto() {
-		await this.applicationsMenuPage.goToCommerceReturns();
+	async goto(checkTabVisibility = true) {
+		await this.applicationsMenuPage.goToCommerceReturns(checkTabVisibility);
 	}
 }

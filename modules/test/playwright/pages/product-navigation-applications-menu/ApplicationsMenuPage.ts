@@ -348,8 +348,8 @@ export class ApplicationsMenuPage {
 		await this.commerceOrdersMenuItem.click();
 	}
 
-	async goToCommerceReturns() {
-		await this.goToCommercePanel();
+	async goToCommerceReturns(checkTabVisibility = true) {
+		await this.goToCommercePanel(checkTabVisibility);
 		await this.commerceReturnsMenuItem.click();
 	}
 

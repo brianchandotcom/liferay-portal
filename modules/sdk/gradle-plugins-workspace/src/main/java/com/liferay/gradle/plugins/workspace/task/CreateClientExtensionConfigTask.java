@@ -401,10 +401,10 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 		for (Map.Entry<String, Object> entry : typeSettings.entrySet()) {
 			Object currentValue = entry.getValue();
 
+			String key = StringUtil.toLowerCase(entry.getKey());
+
 			if (currentValue instanceof String) {
 				String currentValueString = (String)currentValue;
-
-				String key = StringUtil.toLowerCase(entry.getKey());
 
 				if (key.contains("url") &&
 					_isWildcardValue(currentValueString)) {
@@ -418,7 +418,7 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 				List<String> values = new ArrayList<>();
 
 				for (String value : (List<String>)currentValue) {
-					if (_isWildcardValue(value)) {
+					if (key.contains("url") && _isWildcardValue(value)) {
 						values.addAll(_getMatchingPaths(staticDirPath, value));
 					}
 					else {

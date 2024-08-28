@@ -5,8 +5,6 @@
 
 package com.liferay.gradle.plugins.workspace.internal.util;
 
-import com.liferay.petra.string.CharPool;
-
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -29,6 +27,8 @@ import java.util.stream.Stream;
 public class StringUtil {
 
 	public static final String BLANK = "";
+
+	public static final String COLON = ":";
 
 	public static final String COMMA = ",";
 
@@ -97,21 +97,18 @@ public class StringUtil {
 	}
 
 	public static boolean isUrl(String url) {
-		if (!isBlank(url)) {
-			if (url.indexOf(CharPool.COLON) == -1) {
-				return false;
-			}
-
-			try {
-				new URL(url);
-
-				return true;
-			}
-			catch (MalformedURLException malformedURLException) {
-			}
+		if (isBlank(url) || !url.contains(COLON)) {
+			return false;
 		}
 
-		return false;
+		try {
+			new URL(url);
+
+			return true;
+		}
+		catch (MalformedURLException malformedURLException) {
+			return false;
+		}
 	}
 
 	public static String join(String delimiter, Collection<?> objects) {

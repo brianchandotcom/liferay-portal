@@ -163,7 +163,7 @@ public class ExportTranslationDisplayContext {
 		).put(
 			"pathModule", PortalUtil.getPathModule()
 		).put(
-			"redirectURL", getRedirect()
+			"redirectURL", PortalUtil.escapeRedirect(getRedirect())
 		).build();
 	}
 

@@ -7,7 +7,6 @@ package com.liferay.portal.upgrade.v7_4_x.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
 import com.liferay.portal.kernel.model.Role;
@@ -16,7 +15,6 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.test.rule.Inject;
@@ -61,9 +59,7 @@ public class RoleExternalReferenceCodeUpgradeProcessTest
 				StringBundler.concat(
 					"select 1 from ", tableName,
 					" where externalReferenceCode in ('",
-					ArrayUtil.toString(
-						externalReferenceCodes, StringPool.BLANK, "', '"),
-					"')"))) {
+					StringUtil.merge(externalReferenceCodes, "', '"), "')"))) {
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				Assert.assertFalse(resultSet.next());
@@ -111,9 +107,7 @@ public class RoleExternalReferenceCodeUpgradeProcessTest
 				"update ", tableName,
 				" set externalReferenceCode = null where ",
 				"externalReferenceCode in ('",
-				ArrayUtil.toString(
-					externalReferenceCodes, StringPool.BLANK, "', '"),
-				"')"));
+				StringUtil.merge(externalReferenceCodes, "', '"), "')"));
 
 		entityCache.clearCache();
 		multiVMPool.clear();

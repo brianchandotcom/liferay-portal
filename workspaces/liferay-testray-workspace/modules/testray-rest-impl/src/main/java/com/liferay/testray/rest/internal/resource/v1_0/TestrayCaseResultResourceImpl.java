@@ -9,6 +9,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.security.auth.FullNameGenerator;
 import com.liferay.portal.kernel.security.auth.FullNameGeneratorFactory;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -116,7 +117,10 @@ public class TestrayCaseResultResourceImpl
 
 		if (Validator.isNotNull(status)) {
 			sb.append("and cr.dueStatus_ in (");
-			sb.append(TestrayUtil.interpolateParams(params, status));
+			sb.append(
+				TestrayUtil.interpolateParams(
+					params,
+					ArrayUtil.toLongArray(StringUtil.split(status, ",", 0L))));
 			sb.append(") ");
 		}
 
@@ -124,13 +128,19 @@ public class TestrayCaseResultResourceImpl
 			sb.append("and pv.c_productVersionId_ in (");
 			sb.append(
 				TestrayUtil.interpolateParams(
-					params, testrayProductVersionIds));
+					params,
+					ArrayUtil.toLongArray(
+						StringUtil.split(testrayProductVersionIds, ",", 0L))));
 			sb.append(") ");
 		}
 
 		if (Validator.isNotNull(testrayRoutineIds)) {
 			sb.append("and ro.c_routineId_ in (");
-			sb.append(TestrayUtil.interpolateParams(params, testrayRoutineIds));
+			sb.append(
+				TestrayUtil.interpolateParams(
+					params,
+					ArrayUtil.toLongArray(
+						StringUtil.split(testrayRoutineIds, ",", 0L))));
 			sb.append(") ");
 		}
 
@@ -141,13 +151,17 @@ public class TestrayCaseResultResourceImpl
 
 		if (Validator.isNotNull(testrayTeamIds)) {
 			sb.append("and co.r_teamToComponents_c_teamId in (");
-			sb.append(TestrayUtil.interpolateParams(params, testrayTeamIds));
+			sb.append(
+				TestrayUtil.interpolateParams(
+					params,
+					ArrayUtil.toLongArray(
+						StringUtil.split(testrayTeamIds, ",", 0L))));
 			sb.append(") ");
 		}
 
 		if (Validator.isNotNull(testrayUserId)) {
 			sb.append("and cr.r_userToCaseResults_userId  = ? ");
-			params.add(testrayUserId);
+			params.add(GetterUtil.getLong(testrayUserId));
 		}
 
 		if (Validator.isNotNull(warning)) {
@@ -155,7 +169,7 @@ public class TestrayCaseResultResourceImpl
 			params.add(warning);
 		}
 
-		sb.append("group by cr.c_caseResultId_ order by b.dueDate_ desc ");
+		sb.append("order by b.dueDate_ desc ");
 
 		String sql = StringUtil.replace(
 			sb.toString(), "[%COMPANY_ID%]",
@@ -283,7 +297,11 @@ public class TestrayCaseResultResourceImpl
 
 		if (Validator.isNotNull(priority)) {
 			sb.append("and c.priority_ in (");
-			sb.append(TestrayUtil.interpolateParams(params, priority));
+			sb.append(
+				TestrayUtil.interpolateParams(
+					params,
+					ArrayUtil.toLongArray(
+						StringUtil.split(priority, ",", 0L))));
 			sb.append(") ");
 		}
 
@@ -301,20 +319,26 @@ public class TestrayCaseResultResourceImpl
 		if (Validator.isNotNull(testrayCaseTypeIds)) {
 			sb.append("and c.r_caseTypeToCases_c_caseTypeId in (");
 			sb.append(
-				TestrayUtil.interpolateParams(params, testrayCaseTypeIds));
+				TestrayUtil.interpolateParams(
+					params,
+					ArrayUtil.toLongArray(
+						StringUtil.split(testrayCaseTypeIds, ",", 0L))));
 			sb.append(") ");
 		}
 
 		if (Validator.isNotNull(testrayComponentIds)) {
 			sb.append("and cr.r_componentToCaseResult_c_componentId in (");
 			sb.append(
-				TestrayUtil.interpolateParams(params, testrayComponentIds));
+				TestrayUtil.interpolateParams(
+					params,
+					ArrayUtil.toLongArray(
+						StringUtil.split(testrayComponentIds, ",", 0L))));
 			sb.append(") ");
 		}
 
 		if (Validator.isNotNull(testrayRunId)) {
 			sb.append("and cr.r_runToCaseResult_c_runId = ? ");
-			params.add(testrayRunId);
+			params.add(GetterUtil.getLong(testrayRunId));
 		}
 
 		if (Validator.isNotNull(testrayRunName)) {
@@ -324,18 +348,22 @@ public class TestrayCaseResultResourceImpl
 
 		if (Validator.isNotNull(testraySubtaskId)) {
 			sb.append("and cr.r_subtaskToCaseResults_c_subtaskId = ? ");
-			params.add(testraySubtaskId);
+			params.add(GetterUtil.getLong(testraySubtaskId));
 		}
 
 		if (Validator.isNotNull(testrayTeamIds)) {
 			sb.append("and co.r_teamToComponents_c_teamId in (");
-			sb.append(TestrayUtil.interpolateParams(params, testrayTeamIds));
+			sb.append(
+				TestrayUtil.interpolateParams(
+					params,
+					ArrayUtil.toLongArray(
+						StringUtil.split(testrayTeamIds, ",", 0L))));
 			sb.append(") ");
 		}
 
 		if (Validator.isNotNull(testrayUserId)) {
 			sb.append("and cr.r_userToCaseResults_userId  = ? ");
-			params.add(testrayUserId);
+			params.add(GetterUtil.getLong(testrayUserId));
 		}
 
 		sb.append("order by cr.dueStatus_ asc, cr.errors_ is null asc,");

@@ -209,10 +209,10 @@ public class GroupLocalServiceWrapper
 	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
-	public void checkSystemGroups(long companyId)
+	public void checkSystemGroups(long companyId, String siteInitializerKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		_groupLocalService.checkSystemGroups(companyId);
+		_groupLocalService.checkSystemGroups(companyId, siteInitializerKey);
 	}
 
 	@Override

@@ -202,10 +202,11 @@ public class GroupLocalServiceUtil {
 	 * @param companyId the primary key of the company
 	 * @throws PortalException if a portal exception occurred
 	 */
-	public static void checkSystemGroups(long companyId)
+	public static void checkSystemGroups(
+			long companyId, String siteInitializerKey)
 		throws PortalException {
 
-		getService().checkSystemGroups(companyId);
+		getService().checkSystemGroups(companyId, siteInitializerKey);
 	}
 
 	public static void clearOrganizationGroups(long organizationId) {

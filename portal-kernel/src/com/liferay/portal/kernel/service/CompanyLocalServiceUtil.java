@@ -51,6 +51,21 @@ public class CompanyLocalServiceUtil {
 		return getService().addCompany(company);
 	}
 
+	public static Company addCompany(
+			Long companyId, String webId, String virtualHostname, String mx,
+			int maxUsers, boolean active, boolean addDefaultAdminUser,
+			String defaultAdminPassword, String defaultAdminScreenName,
+			String defaultAdminEmailAddress, String defaultAdminFirstName,
+			String defaultAdminMiddleName, String defaultAdminLastName)
+		throws PortalException {
+
+		return getService().addCompany(
+			companyId, webId, virtualHostname, mx, maxUsers, active,
+			addDefaultAdminUser, defaultAdminPassword, defaultAdminScreenName,
+			defaultAdminEmailAddress, defaultAdminFirstName,
+			defaultAdminMiddleName, defaultAdminLastName);
+	}
+
 	/**
 	 * Adds a company with the primary key.
 	 *
@@ -69,14 +84,15 @@ public class CompanyLocalServiceUtil {
 			int maxUsers, boolean active, boolean addDefaultAdminUser,
 			String defaultAdminPassword, String defaultAdminScreenName,
 			String defaultAdminEmailAddress, String defaultAdminFirstName,
-			String defaultAdminMiddleName, String defaultAdminLastName)
+			String defaultAdminMiddleName, String defaultAdminLastName,
+			String siteInitializerKey)
 		throws PortalException {
 
 		return getService().addCompany(
 			companyId, webId, virtualHostname, mx, maxUsers, active,
 			addDefaultAdminUser, defaultAdminPassword, defaultAdminScreenName,
 			defaultAdminEmailAddress, defaultAdminFirstName,
-			defaultAdminMiddleName, defaultAdminLastName);
+			defaultAdminMiddleName, defaultAdminLastName, siteInitializerKey);
 	}
 
 	public static Company addDBPartitionCompany(
@@ -89,15 +105,17 @@ public class CompanyLocalServiceUtil {
 
 	/**
 	 * Returns the company with the web domain.
-	 *
+	 * <p>
 	 * The method sets mail domain to the web domain to the default name set in
 	 * portal.properties
 	 *
 	 * @param webId the company's web domain
 	 * @return the company with the web domain
 	 */
-	public static Company checkCompany(String webId) throws PortalException {
-		return getService().checkCompany(webId);
+	public static Company checkCompany(String siteInitializerKey, String webId)
+		throws PortalException {
+
+		return getService().checkCompany(siteInitializerKey, webId);
 	}
 
 	/**

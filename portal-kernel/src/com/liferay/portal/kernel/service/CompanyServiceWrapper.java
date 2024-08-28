@@ -47,6 +47,18 @@ public class CompanyServiceWrapper
 			companyId, webId, virtualHost, mx, maxUsers, active);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.model.Company addCompany(
+			long companyId, java.lang.String webId,
+			java.lang.String virtualHost, java.lang.String mx, int maxUsers,
+			boolean active, java.lang.String siteInitializerKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _companyService.addCompany(
+			companyId, webId, virtualHost, mx, maxUsers, active,
+			siteInitializerKey);
+	}
+
 	/**
 	 * Adds a company.
 	 *
@@ -75,6 +87,26 @@ public class CompanyServiceWrapper
 			defaultAdminScreenName, defaultAdminEmailAddress,
 			defaultAdminFirstName, defaultAdminMiddleName,
 			defaultAdminLastName);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.Company addCompany(
+			java.lang.String webId, java.lang.String virtualHost,
+			java.lang.String mx, int maxUsers, boolean active,
+			java.lang.String defaultAdminPassword,
+			java.lang.String defaultAdminScreenName,
+			java.lang.String defaultAdminEmailAddress,
+			java.lang.String defaultAdminFirstName,
+			java.lang.String defaultAdminMiddleName,
+			java.lang.String defaultAdminLastName,
+			java.lang.String siteInitializerKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _companyService.addCompany(
+			webId, virtualHost, mx, maxUsers, active, defaultAdminPassword,
+			defaultAdminScreenName, defaultAdminEmailAddress,
+			defaultAdminFirstName, defaultAdminMiddleName, defaultAdminLastName,
+			siteInitializerKey);
 	}
 
 	@Override

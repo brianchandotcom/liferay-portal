@@ -74,6 +74,14 @@ public interface CompanyLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public Company addCompany(Company company);
 
+	public Company addCompany(
+			Long companyId, String webId, String virtualHostname, String mx,
+			int maxUsers, boolean active, boolean addDefaultAdminUser,
+			String defaultAdminPassword, String defaultAdminScreenName,
+			String defaultAdminEmailAddress, String defaultAdminFirstName,
+			String defaultAdminMiddleName, String defaultAdminLastName)
+		throws PortalException;
+
 	/**
 	 * Adds a company with the primary key.
 	 *
@@ -92,7 +100,8 @@ public interface CompanyLocalService
 			int maxUsers, boolean active, boolean addDefaultAdminUser,
 			String defaultAdminPassword, String defaultAdminScreenName,
 			String defaultAdminEmailAddress, String defaultAdminFirstName,
-			String defaultAdminMiddleName, String defaultAdminLastName)
+			String defaultAdminMiddleName, String defaultAdminLastName,
+			String siteInitializerKey)
 		throws PortalException;
 
 	public Company addDBPartitionCompany(
@@ -101,14 +110,15 @@ public interface CompanyLocalService
 
 	/**
 	 * Returns the company with the web domain.
-	 *
+	 * <p>
 	 * The method sets mail domain to the web domain to the default name set in
 	 * portal.properties
 	 *
 	 * @param webId the company's web domain
 	 * @return the company with the web domain
 	 */
-	public Company checkCompany(String webId) throws PortalException;
+	public Company checkCompany(String siteInitializerKey, String webId)
+		throws PortalException;
 
 	/**
 	 * Checks if the company has an encryption key. It will create a key if one

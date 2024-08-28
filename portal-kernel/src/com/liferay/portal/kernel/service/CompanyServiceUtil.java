@@ -54,6 +54,16 @@ public class CompanyServiceUtil {
 			companyId, webId, virtualHost, mx, maxUsers, active);
 	}
 
+	public static Company addCompany(
+			long companyId, String webId, String virtualHost, String mx,
+			int maxUsers, boolean active, String siteInitializerKey)
+		throws PortalException {
+
+		return getService().addCompany(
+			companyId, webId, virtualHost, mx, maxUsers, active,
+			siteInitializerKey);
+	}
+
 	/**
 	 * Adds a company.
 	 *
@@ -78,6 +88,21 @@ public class CompanyServiceUtil {
 			defaultAdminScreenName, defaultAdminEmailAddress,
 			defaultAdminFirstName, defaultAdminMiddleName,
 			defaultAdminLastName);
+	}
+
+	public static Company addCompany(
+			String webId, String virtualHost, String mx, int maxUsers,
+			boolean active, String defaultAdminPassword,
+			String defaultAdminScreenName, String defaultAdminEmailAddress,
+			String defaultAdminFirstName, String defaultAdminMiddleName,
+			String defaultAdminLastName, String siteInitializerKey)
+		throws PortalException {
+
+		return getService().addCompany(
+			webId, virtualHost, mx, maxUsers, active, defaultAdminPassword,
+			defaultAdminScreenName, defaultAdminEmailAddress,
+			defaultAdminFirstName, defaultAdminMiddleName, defaultAdminLastName,
+			siteInitializerKey);
 	}
 
 	public static Company deleteCompany(long companyId) throws PortalException {

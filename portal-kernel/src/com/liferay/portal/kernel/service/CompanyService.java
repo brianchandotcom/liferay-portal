@@ -70,6 +70,12 @@ public interface CompanyService extends BaseService {
 			int maxUsers, boolean active)
 		throws PortalException;
 
+	@JSONWebService
+	public Company addCompany(
+			long companyId, String webId, String virtualHost, String mx,
+			int maxUsers, boolean active, String siteInitializerKey)
+		throws PortalException;
+
 	/**
 	 * Adds a company.
 	 *
@@ -88,6 +94,15 @@ public interface CompanyService extends BaseService {
 			String defaultAdminScreenName, String defaultAdminEmailAddress,
 			String defaultAdminFirstName, String defaultAdminMiddleName,
 			String defaultAdminLastName)
+		throws PortalException;
+
+	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
+	public Company addCompany(
+			String webId, String virtualHost, String mx, int maxUsers,
+			boolean active, String defaultAdminPassword,
+			String defaultAdminScreenName, String defaultAdminEmailAddress,
+			String defaultAdminFirstName, String defaultAdminMiddleName,
+			String defaultAdminLastName, String siteInitializerKey)
 		throws PortalException;
 
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)

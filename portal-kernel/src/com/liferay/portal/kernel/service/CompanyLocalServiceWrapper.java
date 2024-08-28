@@ -42,6 +42,22 @@ public class CompanyLocalServiceWrapper
 		return _companyLocalService.addCompany(company);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.model.Company addCompany(
+			Long companyId, String webId, String virtualHostname, String mx,
+			int maxUsers, boolean active, boolean addDefaultAdminUser,
+			String defaultAdminPassword, String defaultAdminScreenName,
+			String defaultAdminEmailAddress, String defaultAdminFirstName,
+			String defaultAdminMiddleName, String defaultAdminLastName)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _companyLocalService.addCompany(
+			companyId, webId, virtualHostname, mx, maxUsers, active,
+			addDefaultAdminUser, defaultAdminPassword, defaultAdminScreenName,
+			defaultAdminEmailAddress, defaultAdminFirstName,
+			defaultAdminMiddleName, defaultAdminLastName);
+	}
+
 	/**
 	 * Adds a company with the primary key.
 	 *
@@ -61,14 +77,15 @@ public class CompanyLocalServiceWrapper
 			int maxUsers, boolean active, boolean addDefaultAdminUser,
 			String defaultAdminPassword, String defaultAdminScreenName,
 			String defaultAdminEmailAddress, String defaultAdminFirstName,
-			String defaultAdminMiddleName, String defaultAdminLastName)
+			String defaultAdminMiddleName, String defaultAdminLastName,
+			String siteInitializerKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _companyLocalService.addCompany(
 			companyId, webId, virtualHostname, mx, maxUsers, active,
 			addDefaultAdminUser, defaultAdminPassword, defaultAdminScreenName,
 			defaultAdminEmailAddress, defaultAdminFirstName,
-			defaultAdminMiddleName, defaultAdminLastName);
+			defaultAdminMiddleName, defaultAdminLastName, siteInitializerKey);
 	}
 
 	@Override
@@ -82,7 +99,7 @@ public class CompanyLocalServiceWrapper
 
 	/**
 	 * Returns the company with the web domain.
-	 *
+	 * <p>
 	 * The method sets mail domain to the web domain to the default name set in
 	 * portal.properties
 	 *
@@ -90,10 +107,11 @@ public class CompanyLocalServiceWrapper
 	 * @return the company with the web domain
 	 */
 	@Override
-	public com.liferay.portal.kernel.model.Company checkCompany(String webId)
+	public com.liferay.portal.kernel.model.Company checkCompany(
+			String siteInitializerKey, String webId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _companyLocalService.checkCompany(webId);
+		return _companyLocalService.checkCompany(siteInitializerKey, webId);
 	}
 
 	/**

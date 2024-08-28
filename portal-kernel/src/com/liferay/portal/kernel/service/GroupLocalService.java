@@ -162,7 +162,8 @@ public interface GroupLocalService
 	 * @throws PortalException if a portal exception occurred
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public void checkSystemGroups(long companyId) throws PortalException;
+	public void checkSystemGroups(long companyId, String siteInitializerKey)
+		throws PortalException;
 
 	public void clearOrganizationGroups(long organizationId);
 

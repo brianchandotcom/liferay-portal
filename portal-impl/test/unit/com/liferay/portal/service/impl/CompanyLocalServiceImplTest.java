@@ -66,7 +66,8 @@ public class CompanyLocalServiceImplTest {
 			new CompanyLocalServiceImpl() {
 
 				@Override
-				public Company checkCompany(String webId)
+				public Company checkCompany(
+						String siteInitializerKey, String webId)
 					throws PortalException {
 
 					return syncVirtualHost(getCompanyByWebId(webId));
@@ -107,7 +108,7 @@ public class CompanyLocalServiceImplTest {
 					"COMPANY_DEFAULT_VIRTUAL_HOST_SYNC_ON_STARTUP", true)) {
 
 			Company checkedCompany = companyLocalServiceImpl.checkCompany(
-				PropsValues.COMPANY_DEFAULT_WEB_ID);
+				null, PropsValues.COMPANY_DEFAULT_WEB_ID);
 
 			Assert.assertEquals(domain, checkedCompany.getMx());
 			Assert.assertEquals(domain, checkedCompany.getVirtualHostname());

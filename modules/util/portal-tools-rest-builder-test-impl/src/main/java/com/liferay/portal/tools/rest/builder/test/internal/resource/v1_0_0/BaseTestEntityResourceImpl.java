@@ -284,6 +284,10 @@ public abstract class BaseTestEntityResourceImpl
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
 				name = "testEntityId"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "optionalParameter"
 			)
 		}
 	)
@@ -300,6 +304,9 @@ public abstract class BaseTestEntityResourceImpl
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("testEntityId")
 			Long testEntityId,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("optionalParameter")
+			Long optionalParameter,
 			TestEntity testEntity)
 		throws Exception {
 
@@ -432,7 +439,7 @@ public abstract class BaseTestEntityResourceImpl
 			testEntityUnsafeFunction = testEntity -> patchTestEntity(
 				testEntity.getId() != null ? testEntity.getId() :
 					_parseLong((String)parameters.get("testEntityId")),
-				testEntity);
+				optionalParameter, testEntity);
 		}
 
 		if (testEntityUnsafeFunction == null) {

@@ -75,11 +75,12 @@ public interface TestEntityResource {
 	public HttpInvoker.HttpResponse getTestEntityHttpResponse(Long testEntityId)
 		throws Exception;
 
-	public TestEntity patchTestEntity(Long testEntityId, TestEntity testEntity)
+	public TestEntity patchTestEntity(
+			Long testEntityId, Long optionalParameter, TestEntity testEntity)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse patchTestEntityHttpResponse(
-			Long testEntityId, TestEntity testEntity)
+			Long testEntityId, Long optionalParameter, TestEntity testEntity)
 		throws Exception;
 
 	public static class Builder {
@@ -887,11 +888,12 @@ public interface TestEntityResource {
 		}
 
 		public TestEntity patchTestEntity(
-				Long testEntityId, TestEntity testEntity)
+				Long testEntityId, Long optionalParameter,
+				TestEntity testEntity)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse = patchTestEntityHttpResponse(
-				testEntityId, testEntity);
+				testEntityId, optionalParameter, testEntity);
 
 			String content = httpResponse.getContent();
 
@@ -953,7 +955,8 @@ public interface TestEntityResource {
 		}
 
 		public HttpInvoker.HttpResponse patchTestEntityHttpResponse(
-				Long testEntityId, TestEntity testEntity)
+				Long testEntityId, Long optionalParameter,
+				TestEntity testEntity)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -978,6 +981,11 @@ public interface TestEntityResource {
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PATCH);
+
+			if (optionalParameter != null) {
+				httpInvoker.parameter(
+					"optionalParameter", String.valueOf(optionalParameter));
+			}
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +

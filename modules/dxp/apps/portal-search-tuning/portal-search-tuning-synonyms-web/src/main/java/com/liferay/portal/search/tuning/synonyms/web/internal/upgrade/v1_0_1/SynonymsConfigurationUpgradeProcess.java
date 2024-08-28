@@ -43,40 +43,42 @@ public class SynonymsConfigurationUpgradeProcess extends UpgradeProcess {
 
 			ResultSet resultSet = preparedStatement1.executeQuery();
 
-			resultSet.next();
+			if (resultSet.next()) {
+				String dictionaryString = resultSet.getString("dictionary");
 
-			String dictionaryString = resultSet.getString("dictionary");
+				if (Validator.isNull(dictionaryString)) {
+					return;
+				}
 
-			if (Validator.isNull(dictionaryString)) {
-				return;
+				Dictionary<String, Object> dictionary =
+					ConfigurationHandler.read(
+						new UnsyncByteArrayInputStream(
+							dictionaryString.getBytes(StringPool.UTF8)));
+
+				List<String> synonymFilterNames = new ArrayList<>(
+					Arrays.asList((String[])dictionary.get("filterNames")));
+
+				synonymFilterNames.addAll(
+					new ArrayList<>(Arrays.asList(_FILTER_NAMES)));
+
+				Collections.sort(synonymFilterNames);
+
+				dictionary.put(
+					"filterNames", synonymFilterNames.toArray(new String[0]));
+
+				UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
+					new UnsyncByteArrayOutputStream();
+
+				ConfigurationHandler.write(
+					unsyncByteArrayOutputStream, dictionary);
+
+				preparedStatement2.setString(
+					1, unsyncByteArrayOutputStream.toString());
+
+				preparedStatement2.setString(2, _CONFIGURATION_ID);
+
+				preparedStatement2.executeUpdate();
 			}
-
-			Dictionary<String, Object> dictionary = ConfigurationHandler.read(
-				new UnsyncByteArrayInputStream(
-					dictionaryString.getBytes(StringPool.UTF8)));
-
-			List<String> synonymFilterNames = new ArrayList<>(
-				Arrays.asList((String[])dictionary.get("filterNames")));
-
-			synonymFilterNames.addAll(
-				new ArrayList<>(Arrays.asList(_FILTER_NAMES)));
-
-			Collections.sort(synonymFilterNames);
-
-			dictionary.put(
-				"filterNames", synonymFilterNames.toArray(new String[0]));
-
-			UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
-				new UnsyncByteArrayOutputStream();
-
-			ConfigurationHandler.write(unsyncByteArrayOutputStream, dictionary);
-
-			preparedStatement2.setString(
-				1, unsyncByteArrayOutputStream.toString());
-
-			preparedStatement2.setString(2, _CONFIGURATION_ID);
-
-			preparedStatement2.executeUpdate();
 		}
 	}
 

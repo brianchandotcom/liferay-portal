@@ -6,6 +6,7 @@
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
+import com.liferay.fragment.exception.NoSuchEntryLinkException;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkService;
@@ -13,10 +14,14 @@ import com.liferay.layout.content.page.editor.web.internal.exception.Noninstance
 import com.liferay.layout.content.page.editor.web.internal.manager.FragmentEntryLinkManager;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.LockedLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletPreferencesIds;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -36,6 +41,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 import java.util.Set;
@@ -45,6 +51,7 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletPreferences;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.osgi.service.component.annotations.Reference;
 
@@ -120,6 +127,8 @@ public abstract class BaseDuplicateItemMVCActionCommand
 		return duplicatedFragmentEntryLink.getFragmentEntryLinkId();
 	}
 
+	protected abstract String getActionLabel();
+
 	protected JSONArray getFragmentEntryLinksJSONArray(
 			ActionRequest actionRequest, ActionResponse actionResponse,
 			Set<Long> duplicatedFragmentEntryLinkIds, long segmentsExperienceId,
@@ -146,6 +155,57 @@ public abstract class BaseDuplicateItemMVCActionCommand
 		return jsonArray;
 	}
 
+	@Override
+	protected JSONObject processException(
+		ActionRequest actionRequest, Exception exception) {
+
+		if (exception instanceof LockedLayoutException) {
+			return processLockedLayoutException(actionRequest);
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String errorMessage = StringPool.BLANK;
+
+		if (exception instanceof NoSuchEntryLinkException) {
+			errorMessage = language.format(
+				themeDisplay.getRequest(),
+				"the-section-could-not-be-x-because-it-has-been-deleted",
+				getActionLabel());
+		}
+		else if (exception instanceof NoninstanceablePortletException) {
+			NoninstanceablePortletException noninstanceablePortletException =
+				(NoninstanceablePortletException)exception;
+
+			Portlet portlet = portletLocalService.getPortletById(
+				themeDisplay.getCompanyId(),
+				noninstanceablePortletException.getPortletId());
+
+			HttpServletRequest httpServletRequest =
+				portal.getHttpServletRequest(actionRequest);
+
+			HttpSession httpSession = httpServletRequest.getSession();
+
+			errorMessage = language.format(
+				themeDisplay.getRequest(),
+				"the-layout-could-not-be-x-because-it-contains-a-widget-x-" +
+					"that-can-only-appear-once-in-the-page",
+				new String[] {
+					getActionLabel(),
+					portal.getPortletTitle(
+						portlet, httpSession.getServletContext(),
+						themeDisplay.getLocale())
+				});
+		}
+		else {
+			errorMessage = language.get(
+				themeDisplay.getRequest(), "an-unexpected-error-occurred");
+		}
+
+		return JSONUtil.put("error", errorMessage);
+	}
+
 	@Reference
 	protected FragmentEntryLinkLocalService fragmentEntryLinkLocalService;
 
@@ -157,6 +217,9 @@ public abstract class BaseDuplicateItemMVCActionCommand
 
 	@Reference
 	protected JSONFactory jsonFactory;
+
+	@Reference
+	protected Language language;
 
 	@Reference
 	protected Portal portal;

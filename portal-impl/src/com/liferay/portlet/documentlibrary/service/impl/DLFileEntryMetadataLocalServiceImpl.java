@@ -211,8 +211,6 @@ public class DLFileEntryMetadataLocalServiceImpl
 		else {
 			_validateExternalReferenceCode(externalReferenceCode, companyId);
 
-			// File entry metadata
-
 			long fileEntryMetadataId = counterLocalService.increment();
 
 			fileEntryMetadata = dlFileEntryMetadataPersistence.create(
@@ -229,8 +227,6 @@ public class DLFileEntryMetadataLocalServiceImpl
 
 			fileEntryMetadata = dlFileEntryMetadataPersistence.update(
 				fileEntryMetadata);
-
-			// Dynamic data mapping structure link
 
 			DDMStructureLinkManagerUtil.addStructureLink(
 				_classNameLocalService.getClassNameId(

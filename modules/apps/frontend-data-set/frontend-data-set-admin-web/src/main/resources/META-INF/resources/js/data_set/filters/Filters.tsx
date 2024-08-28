@@ -469,8 +469,8 @@ function Filters({
 								setFilters([...filters, newfilter]);
 								setActiveMode(FILTER_MODE.LIST);
 							}}
-							restApplications={restApplications}
 							resolvedRESTSchemas={resolvedRESTSchemas}
+							restApplications={restApplications}
 						/>
 					)}
 				</ClayLayout.Sheet>
@@ -516,8 +516,8 @@ function Filters({
 								setFilters(newFilters);
 								setActiveMode(FILTER_MODE.LIST);
 							}}
-							restApplications={restApplications}
 							resolvedRESTSchemas={resolvedRESTSchemas}
+							restApplications={restApplications}
 						/>
 					)}
 				</ClayLayout.Sheet>

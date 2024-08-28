@@ -61,6 +61,7 @@ export class StagingPage {
 
 	async goToStaging() {
 		await this.productMenuPage.openProductMenuIfClosed();
+		await this.page.waitForTimeout(4000);
 		await this.productMenuPage.goToStaging();
 	}
 
@@ -75,6 +76,8 @@ export class StagingPage {
 				.getByTestId('productMenuSiteAdministrationPanelCategory')
 				.getByText(version)
 		).toBeVisible();
+
+		await this.page.waitForTimeout(4000);
 
 		const url = this.page.url();
 

@@ -9,8 +9,11 @@ import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.site.navigation.menu.web.internal.upgrade.v1_0_0.UpgradePortletId;
 import com.liferay.site.navigation.menu.web.internal.upgrade.v1_0_0.UpgradePortletPreferences;
 import com.liferay.site.navigation.menu.web.internal.upgrade.v1_0_1.PortletPreferencesUpgradeProcess;
+import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
+import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -29,6 +32,20 @@ public class SiteNavigationMenuWebUpgradeStepRegistrator
 
 		registry.register(
 			"1.0.0", "1.0.1", new PortletPreferencesUpgradeProcess());
+
+		registry.register(
+			"1.0.1", "1.0.2",
+			new com.liferay.site.navigation.menu.web.internal.upgrade.v1_0_2.
+				PortletPreferencesUpgradeProcess(
+					_siteNavigationMenuItemLocalService,
+					_siteNavigationMenuLocalService));
 	}
+
+	@Reference
+	private SiteNavigationMenuItemLocalService
+		_siteNavigationMenuItemLocalService;
+
+	@Reference
+	private SiteNavigationMenuLocalService _siteNavigationMenuLocalService;
 
 }

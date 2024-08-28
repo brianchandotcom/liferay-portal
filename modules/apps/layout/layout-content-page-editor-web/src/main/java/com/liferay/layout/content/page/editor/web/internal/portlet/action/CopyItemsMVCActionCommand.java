@@ -52,19 +52,6 @@ public class CopyItemsMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		return _addCopiedFragmentEntryLinkToLayoutDataJSONObject(
-			actionRequest, actionResponse);
-	}
-
-	@Override
-	protected String getActionLabel() {
-		return "copied";
-	}
-
-	private JSONObject _addCopiedFragmentEntryLinkToLayoutDataJSONObject(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -179,6 +166,11 @@ public class CopyItemsMVCActionCommand
 					segmentsExperienceId),
 				themeDisplay)
 		);
+	}
+
+	@Override
+	protected String getActionLabel() {
+		return "copied";
 	}
 
 	@Reference

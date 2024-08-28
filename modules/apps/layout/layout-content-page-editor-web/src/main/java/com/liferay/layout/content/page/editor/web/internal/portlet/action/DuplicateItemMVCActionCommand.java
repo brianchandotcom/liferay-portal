@@ -52,19 +52,6 @@ public class DuplicateItemMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		return _addDuplicateFragmentEntryLinkToLayoutDataJSONObject(
-			actionRequest, actionResponse);
-	}
-
-	@Override
-	protected String getActionLabel() {
-		return "duplicated";
-	}
-
-	private JSONObject _addDuplicateFragmentEntryLinkToLayoutDataJSONObject(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -180,6 +167,11 @@ public class DuplicateItemMVCActionCommand
 					segmentsExperienceId),
 				themeDisplay)
 		);
+	}
+
+	@Override
+	protected String getActionLabel() {
+		return "duplicated";
 	}
 
 	@Reference

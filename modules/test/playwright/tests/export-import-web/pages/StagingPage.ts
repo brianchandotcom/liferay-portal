@@ -6,19 +6,16 @@
 import {Locator, Page, expect} from '@playwright/test';
 import {getComparator} from 'playwright-core/lib/utils';
 
-import {ProductMenuPage} from '../../../pages/product-navigation-control-menu-web/ProductMenuPage';
 import {getTempDir} from '../../../utils/temp';
 
 export class StagingPage {
 	readonly localStagingCheckbox: Locator;
 	readonly page: Page;
-	readonly productMenuPage: ProductMenuPage;
 	readonly saveButton: Locator;
 
 	constructor(page: Page) {
 		this.localStagingCheckbox = page.getByTestId('stagingType_local');
 		this.page = page;
-		this.productMenuPage = new ProductMenuPage(page);
 		this.saveButton = page.getByRole('button', {name: 'Save'});
 	}
 

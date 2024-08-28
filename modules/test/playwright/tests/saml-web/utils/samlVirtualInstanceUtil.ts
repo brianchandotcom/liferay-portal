@@ -199,15 +199,11 @@ export async function resetSamlKeystoreManagerTarget(page: Page) {
 
 	await clickAndExpectToBeVisible({
 		autoClick: true,
-		target: systemSettingsPage.page.getByRole('button', {name: 'Actions'}),
-		trigger: systemSettingsPage.page.getByRole('link', {
+		target: systemSettingsPage.page.getByRole('link', {
 			name: 'Reset Default Values',
 		}),
+		trigger: systemSettingsPage.page.getByRole('button', {name: 'Actions'}),
 	});
-
-	await systemSettingsPage.page
-		.getByRole('link', {name: 'Reset Default Values'})
-		.click();
 
 	await waitForSuccessAlert(page);
 }

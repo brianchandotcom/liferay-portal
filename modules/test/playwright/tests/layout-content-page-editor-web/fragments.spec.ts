@@ -56,83 +56,42 @@ const test = mergeTests(
 
 const ENTER_KEY = 'Enter';
 
-const CONTENT_DISPLAY_FRAGMENT_HTML = `<div class="content-display-fragment">
-	[#if itemSelectorNameObject??]
-		\${itemSelectorNameObject.getTitle()}
-	[#else]
-		<div class="portlet-msg-info">The selected content will be shown here.</div>
-	[/#if]
-</div>`;
-
-async function openDropdownAndCheckStyle(
-	pageEditorPage: PageEditorPage,
-	dropdownId: string,
-	isDesktop = true,
-	style: string,
-	value: string
-) {
-
-	// Select dropdown
-
-	await pageEditorPage.selectFragment(dropdownId, isDesktop);
-
-	const dropdownFragment = pageEditorPage.getFragment(dropdownId, isDesktop);
-
-	const dropdownButton = dropdownFragment.locator(
-		'.dropdown-fragment-toggle'
-	);
-
-	// Open dropdown
-
-	await dropdownButton.press(ENTER_KEY);
-
-	const dropdownMenu = dropdownFragment.locator('.dropdown-fragment-menu');
-
-	await dropdownMenu.waitFor();
-
-	// Check style
-
-	expect(
-		await dropdownMenu.evaluate((element, style) => {
-			return window.getComputedStyle(element).getPropertyValue(style);
-		}, style)
-	).toBe(value);
-
-	// Close dropdown
-
-	await dropdownButton.press(ENTER_KEY);
-
-	await dropdownMenu.waitFor({state: 'hidden'});
-}
-
-function getContentDisplayFragmentConfiguration({
-	itemSubtype,
-	itemType,
-}: {
-	itemSubtype?: string;
-	itemType: string;
-}): FragmentConfiguration {
-	return {
-		fieldSets: [
-			{
-				fields: [
-					{
-						label: 'Item',
-						name: 'itemSelectorName',
-						type: 'itemSelector',
-						typeOptions: {
-							enableSelectTemplate: true,
-							itemSubtype,
-							itemType,
-						},
-					},
-				],
-			},
-		],
-	};
-}
-
 test.describe('Content Display Fragment', () => {
+	const CONTENT_DISPLAY_FRAGMENT_HTML = `<div class="content-display-fragment">
+		[#if itemSelectorNameObject??]
+			\${itemSelectorNameObject.getTitle()}
+		[#else]
+			<div class="portlet-msg-info">The selected content will be shown here.</div>
+		[/#if]
+	</div>`;
+
+	function getContentDisplayFragmentConfiguration({
+		itemSubtype,
+		itemType,
+	}: {
+		itemSubtype?: string;
+		itemType: string;
+	}): FragmentConfiguration {
+		return {
+			fieldSets: [
+				{
+					fields: [
+						{
+							label: 'Item',
+							name: 'itemSelectorName',
+							type: 'itemSelector',
+							typeOptions: {
+								enableSelectTemplate: true,
+								itemSubtype,
+								itemType,
+							},
+						},
+					],
+				},
+			],
+		};
+	}
+
 	test('Does not show alert when accessing a page with a web content display mapped to a restricted web content', async ({
 		apiHelpers,
 		browser,
@@ -494,6 +453,52 @@ test.describe('Content Display Fragment', () => {
 });
 
 test.describe('Dropdown Fragment', () => {
+	async function openDropdownAndCheckStyle(
+		pageEditorPage: PageEditorPage,
+		dropdownId: string,
+		isDesktop = true,
+		style: string,
+		value: string
+	) {
+
+		// Select dropdown
+
+		await pageEditorPage.selectFragment(dropdownId, isDesktop);
+
+		const dropdownFragment = pageEditorPage.getFragment(
+			dropdownId,
+			isDesktop
+		);
+
+		const dropdownButton = dropdownFragment.locator(
+			'.dropdown-fragment-toggle'
+		);
+
+		// Open dropdown
+
+		await dropdownButton.press(ENTER_KEY);
+
+		const dropdownMenu = dropdownFragment.locator(
+			'.dropdown-fragment-menu'
+		);
+
+		await dropdownMenu.waitFor();
+
+		// Check style
+
+		expect(
+			await dropdownMenu.evaluate((element, style) => {
+				return window.getComputedStyle(element).getPropertyValue(style);
+			}, style)
+		).toBe(value);
+
+		// Close dropdown
+
+		await dropdownButton.press(ENTER_KEY);
+
+		await dropdownMenu.waitFor({state: 'hidden'});
+	}
+
 	test('Check the functionality of the Dropdown fragment', async ({
 		apiHelpers,
 		page,

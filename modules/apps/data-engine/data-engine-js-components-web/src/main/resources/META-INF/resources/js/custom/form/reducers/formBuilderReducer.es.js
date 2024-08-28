@@ -25,6 +25,7 @@ export default function formBuilderReducer(state, action) {
 			const {focusedField} = action.payload;
 
 			return {
+				focusedField,
 				formBuilder: {
 					...state.formBuilder,
 					focusedField,

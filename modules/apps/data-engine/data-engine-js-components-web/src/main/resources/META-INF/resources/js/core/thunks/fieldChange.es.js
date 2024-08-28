@@ -61,6 +61,7 @@ let lastEditedPages = [];
 export default function fieldChange({
 	defaultLanguageId,
 	editingLanguageId,
+	focusedField,
 	formId,
 	objectFields,
 	pages,
@@ -114,7 +115,10 @@ export default function fieldChange({
 					viewMode,
 				});
 
-				dispatch({payload: properties, type: EVENT_TYPES.FIELD.CHANGE});
+				dispatch({
+					payload: {...properties, focusedField},
+					type: EVENT_TYPES.FIELD.CHANGE,
+				});
 
 				if (REVALIDATE_UPDATES.length) {
 
@@ -164,7 +168,10 @@ export default function fieldChange({
 			}
 		}
 		else {
-			dispatch({payload: properties, type: EVENT_TYPES.FIELD.CHANGE});
+			dispatch({
+				payload: {...properties, focusedField},
+				type: EVENT_TYPES.FIELD.CHANGE,
+			});
 
 			REVALIDATE_UPDATES.push({
 				editingLanguageId,

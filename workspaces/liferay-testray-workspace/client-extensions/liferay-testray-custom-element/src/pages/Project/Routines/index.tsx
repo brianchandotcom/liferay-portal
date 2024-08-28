@@ -27,8 +27,8 @@ const Routines = () => {
 		fetcher(
 			`/testray-run-comparisons/by-testray-routineId/${testrayRoutineId}`
 		)
-			.then(({runId1, runId2}) =>
-				navigate(`/compare-runs/${runId1.runId}/${runId2.runId}/teams`)
+			.then(({run1, run2}) =>
+				navigate(`/compare-runs/${run1.id}/${run2.id}/teams`)
 			)
 			.catch((_) =>
 				Liferay.Util.openToast({

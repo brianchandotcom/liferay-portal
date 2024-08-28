@@ -100,7 +100,7 @@ public class TestrayRunComparisonResourceImpl
 		sb.append("O_[%COMPANY_ID%]_CaseResult cr where ");
 		sb.append("cr.r_buildToCaseResult_c_buildId = b.c_buildId_ group by ");
 		sb.append("cr.r_runToCaseResult_c_runId order by ");
-		sb.append("count(cr.c_caseResultId_) desc limit 1) as runId from ");
+		sb.append("count(cr.c_caseResultId_) desc limit 1) as id from ");
 		sb.append("O_[%COMPANY_ID%]_Build b where ");
 		sb.append("b.r_routineToBuilds_c_routineId = ? order by b.dueDate_ ");
 		sb.append("desc limit 2");
@@ -119,9 +119,9 @@ public class TestrayRunComparisonResourceImpl
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		jsonObject.put(
-			"runId1", values.get(0)
+			"run1", values.get(0)
 		).put(
-			"runId2", values.get(1)
+			"run2", values.get(1)
 		);
 
 		return jsonObject;

@@ -87,8 +87,10 @@ public class GetContentPerformanceInfoMVCResourceCommand
 
 			boolean assetLibrary = false;
 
+			String className = _getClassName(resourceRequest);
+
 			AssetEntry assetEntry = _assetEntryLocalService.getEntry(
-				_getClassName(resourceRequest),
+				className,
 				GetterUtil.getLong(
 					ParamUtil.getLong(resourceRequest, "classPK")));
 
@@ -128,11 +130,17 @@ public class GetContentPerformanceInfoMVCResourceCommand
 						"configurationScreenKey", "analytics-cloud-connection"
 					).buildString()
 				).put(
+					"assetId", assetEntry.getClassPK()
+				).put(
 					"assetLibrary", assetLibrary
+				).put(
+					"assetType", _getAssetType(className)
 				).put(
 					"connectedToAnalyticsCloud", connectedToAnalyticsCloud
 				).put(
 					"connectedToAssetLibrary", connectedToAssetLibrary
+				).put(
+					"groupId", assetEntry.getGroupId()
 				).put(
 					"siteEditDepotEntryDepotAdminPortletURL",
 					() -> {
@@ -176,6 +184,20 @@ public class GetContentPerformanceInfoMVCResourceCommand
 							_portal.getLocale(resourceRequest), getClass()),
 						"an-unexpected-error-occurred")));
 		}
+	}
+
+	private String _getAssetType(String className) {
+		if (StringUtil.endsWith(className, "BlogsEntry")) {
+			return "blog";
+		}
+		else if (StringUtil.endsWith(className, "DLFileEntry")) {
+			return "document";
+		}
+		else if (StringUtil.endsWith(className, "JournalArticle")) {
+			return "journal";
+		}
+
+		return null;
 	}
 
 	private String _getClassName(ResourceRequest resourceRequest) {

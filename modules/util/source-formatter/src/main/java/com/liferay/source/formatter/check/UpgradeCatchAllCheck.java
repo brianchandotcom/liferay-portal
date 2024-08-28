@@ -363,7 +363,10 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 			String from = jsonObject.getString("from");
 			String to = jsonObject.getString("to");
 
-			if (from.contains(StringPool.OPEN_PARENTHESIS)) {
+			if (from.startsWith("regex:")) {
+				newContent = newContent.replaceAll(pattern.toString(), to);
+			}
+			else if (from.contains(StringPool.OPEN_PARENTHESIS)) {
 				newContent = _formatMethodCall(
 					fileName, from, newContent, jsonObject, matcher, newContent,
 					to);

@@ -15,6 +15,8 @@ export const BACKSPACE_KEY_CODE = 'Backspace';
 
 export const CONTROL_KEY_CODE = 'Control';
 
+export const C_KEY_CODE = 'KeyC';
+
 export const D_KEY_CODE = 'KeyD';
 
 export const END_KEY_CODE = 'End';
@@ -41,4 +43,8 @@ export const SPACE_KEY_CODE = 'Space';
 
 export const TAB_KEY_CODE = 'Tab';
 
+export const V_KEY_CODE = 'KeyV';
+
 export const Z_KEY_CODE = 'KeyZ';
+
+export const X_KEY_CODE = 'KeyX';

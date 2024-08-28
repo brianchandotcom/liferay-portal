@@ -42,10 +42,12 @@ const pageManagementSiteTest = test.extend<{
 					site.id
 				);
 
-				for (const page of items) {
-					await apiHelpers.jsonWebServicesLayout.deleteLayout(
-						page.id
-					);
+				if (items) {
+					for (const page of items) {
+						await apiHelpers.jsonWebServicesLayout.deleteLayout(
+							page.id
+						);
+					}
 				}
 			}
 		},

@@ -674,11 +674,7 @@ export class PageEditorPage {
 		);
 	}
 
-	async mapFormFragment(
-		fragmentId: string,
-		type: string,
-		fields: string[] = []
-	) {
+	async mapFormFragment(fragmentId: string, type: string, fields?: string[]) {
 		const fragment = this.getFragment(fragmentId);
 
 		await fragment.getByLabel('Content Type').selectOption(type);
@@ -694,11 +690,18 @@ export class PageEditorPage {
 				.first()
 				.waitFor();
 
-			for (const field of fields) {
+			if (!fields) {
 				await fieldsModal
-					.getByRole('row', {name: field})
-					.getByRole('checkbox')
+					.getByLabel('Select All Items on the Page')
 					.check();
+			}
+			else {
+				for (const field of fields) {
+					await fieldsModal
+						.getByRole('row', {name: field})
+						.getByRole('checkbox')
+						.check();
+				}
 			}
 
 			await clickAndExpectToBeHidden({

@@ -68,12 +68,12 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
-import com.liferay.portal.kernel.util.InheritableMap;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -323,10 +323,13 @@ public class CPDefinitionAssetDisplayPageFriendlyURLResolver
 
 		String layoutActualURL = _portal.getLayoutActualURL(layout, mainPath);
 
-		InheritableMap<String, String[]> actualParams = new InheritableMap<>();
+		Map<String, String[]> actualParams;
 
-		if (params != null) {
-			actualParams.setParentMap(params);
+		if (params == null) {
+			actualParams = new HashMap<>();
+		}
+		else {
+			actualParams = new HashMap<>(params);
 		}
 
 		actualParams.put("p_p_lifecycle", new String[] {"0"});

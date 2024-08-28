@@ -46,7 +46,7 @@ export default function NodeInformation({errors, setErrors}) {
 
 			<SidebarPanel panelTitle={Liferay.Language.get('information')}>
 				<ClayForm.Group className={errors.label ? 'has-error' : ''}>
-					<label htmlFor="nodeLabel">
+					<label htmlFor="workflowDefinitionBaseNodeLabel">
 						{Liferay.Language.get('label')}
 
 						<span className="ml-1 mr-1 text-warning">*</span>
@@ -60,7 +60,7 @@ export default function NodeInformation({errors, setErrors}) {
 					</label>
 
 					<ClayInput
-						id="nodeLabel"
+						id="workflowDefinitionBaseNodeLabel"
 						onChange={({target}) => {
 							setErrors(checkLabelErrors(errors, target));
 
@@ -101,7 +101,7 @@ export default function NodeInformation({errors, setErrors}) {
 							: ''
 					}
 				>
-					<label htmlFor="nodeName">
+					<label htmlFor="workflowDefinitionBaseNodeName">
 						<span>
 							{`${Liferay.Language.get(
 								'node'
@@ -123,7 +123,7 @@ export default function NodeInformation({errors, setErrors}) {
 					</label>
 
 					<ClayInput
-						id="nodeName"
+						id="workflowDefinitionBaseNodeName"
 						onChange={({target}) => {
 							const filteredElements = elements.slice();
 
@@ -161,13 +161,13 @@ export default function NodeInformation({errors, setErrors}) {
 				</ClayForm.Group>
 
 				<ClayForm.Group>
-					<label htmlFor="nodeDescription">
+					<label htmlFor="workflowDefinitionBaseNodeDescription">
 						{Liferay.Language.get('description')}
 					</label>
 
 					<ClayInput
 						component="textarea"
-						id="nodeDescription"
+						id="workflowDefinitionBaseNodeDescription"
 						onChange={({target}) =>
 							setSelectedItem({
 								...selectedItem,

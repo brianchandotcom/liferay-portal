@@ -15,7 +15,9 @@ import java.util.Map;
  * @author Michael Young
  * @author Connor McKay
  * @author Shuyang Zhou
+ * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
  */
+@Deprecated
 public class InheritableMap<K, V> extends HashMap<K, V> {
 
 	public InheritableMap() {

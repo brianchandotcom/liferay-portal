@@ -282,11 +282,9 @@ public class DLFileEntryMetadataLocalServiceTest {
 	public void testUpdateFileEntryMetadataWithExternalReferenceCode()
 		throws Exception {
 
-		User user = TestPropsValues.getUser();
-
-		DLFileVersion dlFileVersion = _dlFileEntry.getFileVersion();
-
 		String externalReferenceCode = RandomTestUtil.randomString();
+		DLFileVersion dlFileVersion = _dlFileEntry.getFileVersion();
+		User user = TestPropsValues.getUser();
 
 		_dlFileEntryMetadataLocalService.updateFileEntryMetadata(
 			externalReferenceCode, _dlFileEntryType.getFileEntryTypeId(),

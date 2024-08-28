@@ -317,6 +317,18 @@ test(
 				.map((category) => category.name_i18n['ES-es'])
 				.join('/')}/${title}`
 		);
+
+		// change back to english language
+
+		await page
+			.locator('.alert-info', {
+				hasText: 'Información: This page is displayed in Spanish',
+			})
+			.waitFor();
+
+		await page
+			.getByRole('link', {name: 'Display the page in English'})
+			.click();
 	}
 );
 

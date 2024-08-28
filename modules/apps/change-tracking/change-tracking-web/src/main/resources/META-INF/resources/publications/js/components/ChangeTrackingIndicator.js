@@ -35,6 +35,7 @@ export default function ChangeTrackingIndicator({
 	orderByColumn,
 	preferencesPrefix,
 	previewProductionDropdownItem,
+	returnToPublicationDropdownItem,
 	reviewDropdownItem,
 	saveDisplayPreferenceURL,
 	spritemap,
@@ -102,11 +103,16 @@ export default function ChangeTrackingIndicator({
 		dropdownItems.push(previewProductionDropdownItem);
 	}
 
-	dropdownItems.push({
-		label: Liferay.Language.get('select-a-publication'),
-		onClick: () => setShowModal(true),
-		symbolLeft: 'cards2',
-	});
+	if (returnToPublicationDropdownItem) {
+		dropdownItems.push(returnToPublicationDropdownItem);
+	}
+	else {
+		dropdownItems.push({
+			label: Liferay.Language.get('select-a-publication'),
+			onClick: () => setShowModal(true),
+			symbolLeft: 'cards2',
+		});
+	}
 
 	if (createDropdownItem) {
 		dropdownItems.push(createDropdownItem);

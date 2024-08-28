@@ -121,6 +121,9 @@ public class CTCollectionPreviewFilter extends BasePortalFilter {
 
 		CTCollectionPreviewThreadLocal.setCTCollectionId(previewCTCollectionId);
 
+		CTCollectionPreviewThreadLocal.setIndicatorEnabled(
+			ParamUtil.getBoolean(httpServletRequest, "previewCTIndicator"));
+
 		processFilter(
 			CTCollectionPreviewFilter.class.getName(), httpServletRequest,
 			httpServletResponse, filterChain);

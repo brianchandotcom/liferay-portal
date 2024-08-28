@@ -16,10 +16,18 @@ public class CTCollectionPreviewThreadLocal {
 		return _ctCollectionId.get();
 	}
 
+	public static boolean isIndicatorEnabled() {
+		return _indicatorEnabled.get();
+	}
+
 	public static void setCTCollectionId(long collectionId) {
 		_ctCollectionId.set(collectionId);
 
 		CTCollectionThreadLocal.removeCTCollectionId();
+	}
+
+	public static void setIndicatorEnabled(boolean indicatorEnabled) {
+		_indicatorEnabled.set(indicatorEnabled);
 	}
 
 	private CTCollectionPreviewThreadLocal() {
@@ -29,5 +37,9 @@ public class CTCollectionPreviewThreadLocal {
 		new CentralizedThreadLocal<>(
 			CTCollectionPreviewThreadLocal.class + "._ctCollectionId",
 			() -> -1L);
+	private static final CentralizedThreadLocal<Boolean> _indicatorEnabled =
+		new CentralizedThreadLocal<>(
+			CTCollectionPreviewThreadLocal.class + "._indicatorEnabled",
+			() -> false);
 
 }

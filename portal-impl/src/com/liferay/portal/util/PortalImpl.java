@@ -781,6 +781,11 @@ public class PortalImpl implements Portal {
 				url, "previewCTCollectionId", previewCTCollectionId);
 		}
 
+		if (CTCollectionPreviewThreadLocal.isIndicatorEnabled()) {
+			url = HttpComponentsUtil.setParameter(
+				url, "previewCTIndicator", true);
+		}
+
 		return url;
 	}
 

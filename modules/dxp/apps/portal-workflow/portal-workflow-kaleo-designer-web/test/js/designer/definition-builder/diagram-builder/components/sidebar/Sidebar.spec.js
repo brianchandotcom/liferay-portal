@@ -84,10 +84,14 @@ describe('The Sidebar component should', () => {
 		expect(labels[1]).toHaveTextContent('node name*');
 		expect(labels[2]).toHaveTextContent('description');
 
-		const inputLabel = container.querySelector('input#nodeLabel');
-		const inputName = container.querySelector('input#nodeName');
+		const inputLabel = container.querySelector(
+			'input#workflowDefinitionBaseNodeLabel'
+		);
+		const inputName = container.querySelector(
+			'input#workflowDefinitionBaseNodeName'
+		);
 		const textareaDescription = container.querySelector(
-			'textarea#nodeDescription'
+			'textarea#workflowDefinitionBaseNodeDescription'
 		);
 
 		expect(inputLabel).toHaveValue('start node');

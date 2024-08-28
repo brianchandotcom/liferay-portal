@@ -83,7 +83,7 @@ test('can import a lar file selecting some items to import', async ({
 });
 
 [{name: 'com.liferay.site.initializer.welcome'}].forEach(({name}) => {
-	test(`staged and live versions of a site are equal with template ${name}`, async ({
+	test(`site initializer ${name} can be exported and imported`, async ({
 		apiHelpers,
 		stagingPage,
 	}) => {

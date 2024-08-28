@@ -66,6 +66,9 @@ public interface TestEntityResource {
 
 	public TestEntity getTestEntity(Long testEntityId) throws Exception;
 
+	public TestEntity patchTestEntity(Long testEntityId, TestEntity testEntity)
+		throws Exception;
+
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {
 	}

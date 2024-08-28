@@ -137,6 +137,18 @@ public class ChildTestEntity3 extends TestEntity implements Serializable {
 			sb.append(documentId);
 		}
 
+		Long id = getId();
+
+		if (id != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"id\": ");
+
+			sb.append(id);
+		}
+
 		String jsonProperty = getJsonProperty();
 
 		if (jsonProperty != null) {

@@ -241,6 +241,7 @@ public abstract class BaseTestEntityResourceTestCase {
 				description = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				documentId = RandomTestUtil.randomLong();
+				id = RandomTestUtil.randomLong();
 				jsonProperty = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
@@ -263,6 +264,7 @@ public abstract class BaseTestEntityResourceTestCase {
 				description = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				documentId = RandomTestUtil.randomLong();
+				id = RandomTestUtil.randomLong();
 				jsonProperty = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
@@ -285,6 +287,7 @@ public abstract class BaseTestEntityResourceTestCase {
 				description = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				documentId = RandomTestUtil.randomLong();
+				id = RandomTestUtil.randomLong();
 				jsonProperty = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
@@ -313,7 +316,52 @@ public abstract class BaseTestEntityResourceTestCase {
 
 	@Test
 	public void testGetTestEntity() throws Exception {
-		Assert.assertTrue(false);
+		TestEntity postTestEntity = testGetTestEntity_addTestEntity();
+
+		TestEntity getTestEntity = testEntityResource.getTestEntity(
+			postTestEntity.getId());
+
+		assertEquals(postTestEntity, getTestEntity);
+		assertValid(getTestEntity);
+	}
+
+	protected TestEntity testGetTestEntity_addTestEntity() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPatchTestEntity() throws Exception {
+		TestEntity postTestEntity = testPatchTestEntity_addTestEntity();
+
+		TestEntity randomPatchTestEntity = randomPatchTestEntity();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		TestEntity patchTestEntity = testEntityResource.patchTestEntity(
+			postTestEntity.getId(), randomPatchTestEntity);
+
+		TestEntity expectedPatchTestEntity = postTestEntity.clone();
+
+		BeanTestUtil.copyProperties(
+			randomPatchTestEntity, expectedPatchTestEntity);
+
+		TestEntity getTestEntity = testEntityResource.getTestEntity(
+			patchTestEntity.getId());
+
+		assertEquals(expectedPatchTestEntity, getTestEntity);
+		assertValid(getTestEntity);
+	}
+
+	protected TestEntity testPatchTestEntity_addTestEntity() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected TestEntity testGraphQLTestEntity_addTestEntity()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected void assertContains(
@@ -391,6 +439,10 @@ public abstract class BaseTestEntityResourceTestCase {
 		}
 
 		if (testEntity.getDateModified() == null) {
+			valid = false;
+		}
+
+		if (testEntity.getId() == null) {
 			valid = false;
 		}
 
@@ -639,6 +691,16 @@ public abstract class BaseTestEntityResourceTestCase {
 				if (!Objects.deepEquals(
 						testEntity1.getDocumentId(),
 						testEntity2.getDocumentId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("id", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						testEntity1.getId(), testEntity2.getId())) {
 
 					return false;
 				}
@@ -963,6 +1025,11 @@ public abstract class BaseTestEntityResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("id")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("jsonProperty")) {
 			Object object = testEntity.getJsonProperty();
 
@@ -1168,6 +1235,7 @@ public abstract class BaseTestEntityResourceTestCase {
 				testEntity.setDescription(
 					StringUtil.toLowerCase(RandomTestUtil.randomString()));
 				testEntity.setDocumentId(RandomTestUtil.randomLong());
+				testEntity.setId(RandomTestUtil.randomLong());
 				testEntity.setJsonProperty(
 					StringUtil.toLowerCase(RandomTestUtil.randomString()));
 				testEntity.setName(
@@ -1190,6 +1258,7 @@ public abstract class BaseTestEntityResourceTestCase {
 				testEntity.setDescription(
 					StringUtil.toLowerCase(RandomTestUtil.randomString()));
 				testEntity.setDocumentId(RandomTestUtil.randomLong());
+				testEntity.setId(RandomTestUtil.randomLong());
 				testEntity.setJsonProperty(
 					StringUtil.toLowerCase(RandomTestUtil.randomString()));
 				testEntity.setName(
@@ -1212,6 +1281,7 @@ public abstract class BaseTestEntityResourceTestCase {
 				testEntity.setDescription(
 					StringUtil.toLowerCase(RandomTestUtil.randomString()));
 				testEntity.setDocumentId(RandomTestUtil.randomLong());
+				testEntity.setId(RandomTestUtil.randomLong());
 				testEntity.setJsonProperty(
 					StringUtil.toLowerCase(RandomTestUtil.randomString()));
 				testEntity.setName(

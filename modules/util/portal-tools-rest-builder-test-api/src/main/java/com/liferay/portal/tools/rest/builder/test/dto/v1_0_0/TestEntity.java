@@ -244,6 +244,45 @@ public abstract class TestEntity implements Serializable {
 	private Supplier<Long> _documentIdSupplier;
 
 	@Schema
+	public Long getId() {
+		if (_idSupplier != null) {
+			id = _idSupplier.get();
+
+			_idSupplier = null;
+		}
+
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+
+		_idSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
+		_idSupplier = () -> {
+			try {
+				return idUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Long id;
+
+	@JsonIgnore
+	private Supplier<Long> _idSupplier;
+
+	@Schema
 	public String getJsonProperty() {
 		if (_jsonPropertySupplier != null) {
 			jsonProperty = _jsonPropertySupplier.get();
@@ -588,6 +627,18 @@ public abstract class TestEntity implements Serializable {
 			sb.append("\"documentId\": ");
 
 			sb.append(documentId);
+		}
+
+		Long id = getId();
+
+		if (id != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"id\": ");
+
+			sb.append(id);
 		}
 
 		String jsonProperty = getJsonProperty();

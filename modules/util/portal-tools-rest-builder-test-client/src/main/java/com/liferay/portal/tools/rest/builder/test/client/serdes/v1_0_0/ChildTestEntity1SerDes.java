@@ -122,6 +122,16 @@ public class ChildTestEntity1SerDes {
 			sb.append(childTestEntity1.getDocumentId());
 		}
 
+		if (childTestEntity1.getId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"id\": ");
+
+			sb.append(childTestEntity1.getId());
+		}
+
 		if (childTestEntity1.getJsonProperty() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -265,6 +275,13 @@ public class ChildTestEntity1SerDes {
 				"documentId", String.valueOf(childTestEntity1.getDocumentId()));
 		}
 
+		if (childTestEntity1.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(childTestEntity1.getId()));
+		}
+
 		if (childTestEntity1.getJsonProperty() == null) {
 			map.put("jsonProperty", null);
 		}
@@ -346,6 +363,9 @@ public class ChildTestEntity1SerDes {
 			else if (Objects.equals(jsonParserFieldName, "documentId")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "id")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "jsonProperty")) {
 				return false;
 			}
@@ -399,6 +419,12 @@ public class ChildTestEntity1SerDes {
 			else if (Objects.equals(jsonParserFieldName, "documentId")) {
 				if (jsonParserFieldValue != null) {
 					childTestEntity1.setDocumentId(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "id")) {
+				if (jsonParserFieldValue != null) {
+					childTestEntity1.setId(
 						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}

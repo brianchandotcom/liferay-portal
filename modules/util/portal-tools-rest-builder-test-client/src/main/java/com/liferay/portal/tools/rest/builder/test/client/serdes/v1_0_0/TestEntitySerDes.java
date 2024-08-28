@@ -121,6 +121,13 @@ public class TestEntitySerDes {
 			map.put("documentId", String.valueOf(testEntity.getDocumentId()));
 		}
 
+		if (testEntity.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(testEntity.getId()));
+		}
+
 		if (testEntity.getJsonProperty() == null) {
 			map.put("jsonProperty", null);
 		}
@@ -195,6 +202,9 @@ public class TestEntitySerDes {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "documentId")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "id")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "jsonProperty")) {
@@ -273,6 +283,12 @@ public class TestEntitySerDes {
 			else if (Objects.equals(jsonParserFieldName, "documentId")) {
 				if (jsonParserFieldValue != null) {
 					testEntity.setDocumentId(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "id")) {
+				if (jsonParserFieldValue != null) {
+					testEntity.setId(
 						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}

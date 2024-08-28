@@ -109,9 +109,14 @@ public interface CartResource {
 			String externalReferenceCode, Cart cart)
 		throws Exception;
 
-	public Page<Cart> getChannelCartsPage(
+	public Page<Cart> getChannelAccountCartsPage(
 			Long accountId, Long channelId, String search,
 			Pagination pagination)
+		throws Exception;
+
+	public Page<Cart> getChannelCartsPage(
+			Long channelId, String search, Filter filter, Pagination pagination,
+			Sort[] sorts)
 		throws Exception;
 
 	public Cart postChannelCart(Long channelId, Cart cart) throws Exception;

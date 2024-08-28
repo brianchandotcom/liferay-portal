@@ -310,6 +310,11 @@ public class ServletDataImpl implements ServletData {
 							CartResourceImpl.class,
 							"getChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodeCartsPage"));
 					put(
+						"query#channelAccountCarts",
+						new ObjectValuePair<>(
+							CartResourceImpl.class,
+							"getChannelAccountCartsPage"));
+					put(
 						"query#channelCarts",
 						new ObjectValuePair<>(
 							CartResourceImpl.class, "getChannelCartsPage"));

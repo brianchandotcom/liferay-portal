@@ -16,6 +16,7 @@ import deleteFragmentEntryLinkComment from '../actions/deleteFragmentEntryLinkCo
 import deleteItem from '../actions/deleteItem';
 import duplicateItem from '../actions/duplicateItem';
 import editFragmentEntryLinkComment from '../actions/editFragmentEntryLinkComment';
+import pasteItem from '../actions/pasteItem';
 import {
 	ADD_FRAGMENT_ENTRY_LINKS,
 	ADD_FRAGMENT_ENTRY_LINK_COMMENT,
@@ -26,6 +27,7 @@ import {
 	DELETE_ITEM,
 	DUPLICATE_ITEM,
 	EDIT_FRAGMENT_ENTRY_LINK_COMMENT,
+	PASTE_ITEM,
 	UPDATE_COLLECTION_DISPLAY_COLLECTION,
 	UPDATE_EDITABLE_VALUES,
 	UPDATE_FORM_ITEM_CONFIG,
@@ -55,6 +57,7 @@ export default function fragmentEntryLinksReducer(
 		| typeof deleteItem
 		| typeof deleteFragmentEntryLinkComment
 		| typeof duplicateItem
+		| typeof pasteItem
 		| typeof editFragmentEntryLinkComment
 		| typeof updateCollectionDisplayCollection
 		| typeof updateEditableValues
@@ -209,7 +212,8 @@ export default function fragmentEntryLinksReducer(
 			};
 		}
 
-		case DUPLICATE_ITEM: {
+		case DUPLICATE_ITEM:
+		case PASTE_ITEM: {
 			const nextFragmentEntryLinks: FragmentEntryLinkMap = {
 				...fragmentEntryLinks,
 			};

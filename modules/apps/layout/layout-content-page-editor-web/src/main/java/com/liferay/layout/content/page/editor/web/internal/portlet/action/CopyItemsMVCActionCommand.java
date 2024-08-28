@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -62,13 +61,8 @@ public class CopyItemsMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		JSONObject jsonObject =
-			_addCopiedFragmentEntryLinkToLayoutDataJSONObject(
-				actionRequest, actionResponse);
-
-		SessionMessages.add(actionRequest, "fragmentEntryLinkCopy");
-
-		return jsonObject;
+		return _addCopiedFragmentEntryLinkToLayoutDataJSONObject(
+			actionRequest, actionResponse);
 	}
 
 	@Override

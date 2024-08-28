@@ -1,7 +1,18 @@
 [
 	{
 		"active": "true",
-		"criteria": "{\"filterStrings\":{\"model\":\"(roleIds eq '[$ROLE_ID:Test Role 1$]')\"},\"criteria\":{\"user\":{\"conjunction\":\"and\",\"filterString\":\"(roleIds eq '[$ROLE_ID:Test Role 1$]')\",\"typeValue\":\"model\"}}}",
+		"criteria": {
+			"criteria": {
+				"user": {
+					"conjunction": "and",
+					"filterString": "(roleIds eq '[$ROLE_ID:Test Role 1$]')",
+					"typeValue": "model"
+				}
+			},
+			"filterStrings": {
+				"model": "(roleIds eq '[$ROLE_ID:Test Role 1$]')"
+			}
+		},
 		"name_i18n": {
 			"en-US": "Test Segments Entry 1"
 		},
@@ -10,7 +21,18 @@
 	},
 	{
 		"active": "false",
-		"criteria": "{\"filterStrings\":{\"model\":\"(roleIds eq '[$ROLE_ID:Test Role 2$]')\"},\"criteria\":{\"user\":{\"conjunction\":\"and\",\"filterString\":\"(roleIds eq '[$ROLE_ID:Test Role 2$]')\",\"typeValue\":\"model\"}}}",
+		"criteria": {
+			"criteria": {
+				"user": {
+					"conjunction": "and",
+					"filterString": "(roleIds eq '[$ROLE_ID:Test Role 2$]')",
+					"typeValue": "model"
+				}
+			},
+			"filterStrings": {
+				"model": "(roleIds eq '[$ROLE_ID:Test Role 2$]')"
+			}
+		},
 		"name_i18n": {
 			"en-US": "Test Segments Entry 2"
 		},

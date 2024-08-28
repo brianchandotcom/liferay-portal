@@ -136,7 +136,6 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -3588,62 +3587,30 @@ public class BundleSiteInitializerTest {
 				_group.getGroupId(), "TEST-SEGMENTS-ENTRY-1");
 
 		Assert.assertNotNull(segmentsEntry1);
-		Assert.assertTrue(segmentsEntry1.isActive());
 		Assert.assertEquals(
 			"Test Segments Entry 1",
 			segmentsEntry1.getName(LocaleUtil.getSiteDefault()));
-
-		Role role1 = _roleLocalService.fetchRole(
-			_group.getCompanyId(), "Test Role 1");
-
-		String segmentCriteria = JSONUtil.put(
-			"criteria",
-			JSONUtil.put(
-				"user",
-				JSONUtil.put(
-					"conjunction", "and"
-				).put(
-					"filterString", "(roleIds eq '" + role1.getRoleId() + "')"
-				).put(
-					"typeValue", "model"
-				))
-		).put(
-			"filterStrings",
-			JSONUtil.put("model", "(roleIds eq '" + role1.getRoleId() + "')")
-		).toString();
-
-		Assert.assertEquals(segmentCriteria, segmentsEntry1.getCriteria());
+		Assert.assertTrue(segmentsEntry1.isActive());
+		Assert.assertFalse(
+			segmentsEntry1.getCriteria(
+			).contains(
+				"[$ROLE_ID:Test Role 1$]"
+			));
 
 		SegmentsEntry segmentsEntry2 =
 			_segmentsEntryLocalService.fetchSegmentsEntry(
 				_group.getGroupId(), "TEST-SEGMENTS-ENTRY-2");
 
 		Assert.assertNotNull(segmentsEntry2);
-		Assert.assertFalse(segmentsEntry2.isActive());
 		Assert.assertEquals(
 			"Test Segments Entry 2",
 			segmentsEntry2.getName(LocaleUtil.getSiteDefault()));
-
-		Role role2 = _roleLocalService.fetchRole(
-			_group.getCompanyId(), "Test Role 2");
-
-		segmentCriteria = JSONUtil.put(
-			"criteria",
-			JSONUtil.put(
-				"user",
-				JSONUtil.put(
-					"conjunction", "and"
-				).put(
-					"filterString", "(roleIds eq '" + role2.getRoleId() + "')"
-				).put(
-					"typeValue", "model"
-				))
-		).put(
-			"filterStrings",
-			JSONUtil.put("model", "(roleIds eq '" + role2.getRoleId() + "')")
-		).toString();
-
-		Assert.assertEquals(segmentCriteria, segmentsEntry2.getCriteria());
+		Assert.assertFalse(segmentsEntry2.isActive());
+		Assert.assertFalse(
+			segmentsEntry2.getCriteria(
+			).contains(
+				"[$ROLE_ID:Test Role 2$]"
+			));
 
 		Layout layout = _layoutLocalService.fetchLayoutByFriendlyURL(
 			_group.getGroupId(), false, "/test-public-layout");

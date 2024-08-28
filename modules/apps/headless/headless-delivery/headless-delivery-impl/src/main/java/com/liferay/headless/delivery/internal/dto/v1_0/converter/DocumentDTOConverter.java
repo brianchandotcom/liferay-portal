@@ -58,6 +58,7 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -166,6 +167,17 @@ public class DocumentDTOConverter
 				}
 
 				setDescription(fileEntry::getDescription);
+				setDocumentFolderExternalReferenceCode(
+					() -> {
+						if (fileEntry.getFolderId() > 0) {
+							Folder folder = _dlAppService.getFolder(
+								fileEntry.getFolderId());
+
+							return folder.getExternalReferenceCode();
+						}
+
+						return null;
+					});
 				setDocumentFolderId(fileEntry::getFolderId);
 				setDocumentType(
 					() -> _toDocumentType(dtoConverterContext, fileVersion));

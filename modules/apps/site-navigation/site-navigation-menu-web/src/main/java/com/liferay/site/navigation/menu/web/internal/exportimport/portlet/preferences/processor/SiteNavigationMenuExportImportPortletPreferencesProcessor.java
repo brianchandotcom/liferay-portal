@@ -14,7 +14,6 @@ import com.liferay.exportimport.portlet.preferences.processor.Capability;
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessor;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.service.PortletPreferenceValueLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -29,7 +28,6 @@ import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.ReadOnlyException;
@@ -49,20 +47,12 @@ public class SiteNavigationMenuExportImportPortletPreferencesProcessor
 
 	@Override
 	public List<Capability> getExportCapabilities() {
-		if (FeatureFlagManagerUtil.isEnabled("LPD-23048")) {
-			return ListUtil.fromArray(_exportCapability);
-		}
-
-		return ListUtil.fromArray(_legacyExportCapability);
+		return ListUtil.fromArray(_exportCapability);
 	}
 
 	@Override
 	public List<Capability> getImportCapabilities() {
-		if (FeatureFlagManagerUtil.isEnabled("LPD-23048")) {
-			return ListUtil.fromArray(_importCapability);
-		}
-
-		return ListUtil.fromArray(_legacyImportCapability);
+		return ListUtil.fromArray(_importCapability);
 	}
 
 	@Override
@@ -86,11 +76,6 @@ public class SiteNavigationMenuExportImportPortletPreferencesProcessor
 		catch (PortalException portalException) {
 			throw new PortletDataException(
 				"Unable to export portlet permissions", portalException);
-		}
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-23048")) {
-			return _processExportPortletPreferencesBySiteNavigationId(
-				portletDataContext, portletPreferences);
 		}
 
 		String siteNavigationMenuExternalReferenceCode =
@@ -127,11 +112,6 @@ public class SiteNavigationMenuExportImportPortletPreferencesProcessor
 		catch (PortalException portalException) {
 			throw new PortletDataException(
 				"Unable to import portlet permissions", portalException);
-		}
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-23048")) {
-			return _processImportPortletPreferencesBySiteNavigationId(
-				portletDataContext, portletPreferences);
 		}
 
 		if (!MapUtil.getBoolean(
@@ -232,153 +212,11 @@ public class SiteNavigationMenuExportImportPortletPreferencesProcessor
 		}
 	}
 
-	private PortletPreferences
-			_processExportPortletPreferencesBySiteNavigationId(
-				PortletDataContext portletDataContext,
-				PortletPreferences portletPreferences)
-		throws PortletDataException {
-
-		long siteNavigationMenuId = GetterUtil.getLong(
-			portletPreferences.getValue("siteNavigationMenuId", null));
-
-		if (siteNavigationMenuId > 0) {
-			SiteNavigationMenu siteNavigationMenu =
-				_siteNavigationMenuLocalService.fetchSiteNavigationMenu(
-					siteNavigationMenuId);
-
-			if (siteNavigationMenu != null) {
-				String siteNavigationMenuUuid = siteNavigationMenu.getUuid();
-
-				SiteNavigationMenu siteNavigationMenuToExport =
-					_siteNavigationMenuLocalService.
-						fetchSiteNavigationMenuByUuidAndGroupId(
-							siteNavigationMenuUuid,
-							portletDataContext.getScopeGroupId());
-
-				if (siteNavigationMenuToExport != null) {
-					StagedModelDataHandlerUtil.exportReferenceStagedModel(
-						portletDataContext, portletDataContext.getPortletId(),
-						siteNavigationMenuToExport);
-				}
-			}
-		}
-
-		return portletPreferences;
-	}
-
-	private PortletPreferences
-			_processImportPortletPreferencesBySiteNavigationId(
-				PortletDataContext portletDataContext,
-				PortletPreferences portletPreferences)
-		throws PortletDataException {
-
-		if (!MapUtil.getBoolean(
-				portletDataContext.getParameterMap(),
-				PortletDataHandlerKeys.PORTLET_DATA) &&
-			MergeLayoutPrototypesThreadLocal.isInProgress()) {
-
-			long siteNavigationMenuId = 0;
-
-			long originalPlid = MapUtil.getLong(
-				portletDataContext.getParameterMap(), "portletPreferencePlid");
-
-			List<com.liferay.portal.kernel.model.PortletPreferences>
-				serviceBuilderPortletPreferencesList = null;
-
-			if (originalPlid == PortletKeys.PREFS_PLID_SHARED) {
-				serviceBuilderPortletPreferencesList =
-					_portletPreferencesLocalService.getPortletPreferences(
-						PortletKeys.PREFS_PLID_SHARED,
-						portletDataContext.getPortletId());
-			}
-			else {
-				serviceBuilderPortletPreferencesList =
-					_portletPreferencesLocalService.getPortletPreferences(
-						portletDataContext.getPlid(),
-						portletDataContext.getPortletId());
-			}
-
-			if (!serviceBuilderPortletPreferencesList.isEmpty()) {
-				for (com.liferay.portal.kernel.model.PortletPreferences
-						serviceBuilderPortletPreferences :
-							serviceBuilderPortletPreferencesList) {
-
-					if (serviceBuilderPortletPreferences.getCompanyId() !=
-							portletDataContext.getCompanyId()) {
-
-						continue;
-					}
-
-					PortletPreferences originalPortletPreferences =
-						_portletPreferenceValueLocalService.getPreferences(
-							serviceBuilderPortletPreferences);
-
-					siteNavigationMenuId = GetterUtil.getLong(
-						originalPortletPreferences.getValue(
-							"siteNavigationMenuId", "0"));
-				}
-			}
-
-			try {
-				portletPreferences.setValue(
-					"siteNavigationMenuId",
-					String.valueOf(siteNavigationMenuId));
-			}
-			catch (ReadOnlyException readOnlyException) {
-				PortletDataException portletDataException =
-					new PortletDataException(readOnlyException);
-
-				throw portletDataException;
-			}
-
-			return portletPreferences;
-		}
-
-		long importedSiteNavigationMenuId = GetterUtil.getLong(
-			portletPreferences.getValue("siteNavigationMenuId", null));
-
-		try {
-			if (importedSiteNavigationMenuId > 0) {
-				StagedModelDataHandlerUtil.importReferenceStagedModel(
-					portletDataContext, SiteNavigationMenu.class,
-					importedSiteNavigationMenuId);
-
-				Map<Long, Long> siteNavigationMenuIds =
-					(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-						SiteNavigationMenu.class);
-
-				long siteNavigationMenuId = MapUtil.getLong(
-					siteNavigationMenuIds, importedSiteNavigationMenuId,
-					importedSiteNavigationMenuId);
-
-				if (siteNavigationMenuId > 0) {
-					portletPreferences.setValue(
-						"siteNavigationMenuId",
-						String.valueOf(siteNavigationMenuId));
-				}
-			}
-		}
-		catch (ReadOnlyException readOnlyException) {
-			PortletDataException portletDataException =
-				new PortletDataException(readOnlyException);
-
-			throw portletDataException;
-		}
-
-		return portletPreferences;
-	}
-
 	@Reference(target = "(name=CommonPortletDisplayTemplateExportCapability)")
 	private Capability _exportCapability;
 
 	@Reference(target = "(name=CommonPortletDisplayTemplateImportCapability)")
 	private Capability _importCapability;
-
-	@Reference(target = "(name=PortletDisplayTemplateExporter)")
-	private Capability _legacyExportCapability;
-
-	@Reference(target = "(name=PortletDisplayTemplateImporter)")
-	private Capability _legacyImportCapability;
 
 	@Reference(unbind = "-")
 	private PortletPreferencesLocalService _portletPreferencesLocalService;

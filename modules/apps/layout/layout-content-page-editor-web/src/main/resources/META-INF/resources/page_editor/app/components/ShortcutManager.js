@@ -9,14 +9,21 @@ import {ITEM_ACTIVATION_ORIGINS} from '../config/constants/itemActivationOrigins
 import {ITEM_TYPES} from '../config/constants/itemTypes';
 import {
 	BACKSPACE_KEY_CODE,
+	C_KEY_CODE,
 	D_KEY_CODE,
 	H_KEY_CODE,
 	PERIOD_KEY_CODE,
 	R_KEY_CODE,
 	S_KEY_CODE,
+	V_KEY_CODE,
+	X_KEY_CODE,
 	Z_KEY_CODE,
 } from '../config/constants/keyboardCodes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
+import {
+	useCopiedNodeIds,
+	useSetCopiedNodeIds,
+} from '../contexts/ClipboardContext';
 import {
 	useActiveItemIds,
 	useActiveItemType,
@@ -32,6 +39,7 @@ import {useDispatch, useSelector} from '../contexts/StoreContext';
 import selectCanUpdatePageStructure from '../selectors/selectCanUpdatePageStructure';
 import deleteItem from '../thunks/deleteItem';
 import duplicateItem from '../thunks/duplicateItem';
+import pasteItem from '../thunks/pasteItem';
 import switchSidebarPanel from '../thunks/switchSidebarPanel';
 import canBeDuplicated from '../utils/canBeDuplicated';
 import canBeHidden from '../utils/canBeHidden';
@@ -70,12 +78,14 @@ export default function ShortcutManager() {
 	const activeItemType = useActiveItemType();
 	const dispatch = useDispatch();
 	const canUpdatePageStructure = useSelector(selectCanUpdatePageStructure);
+	const copiedNodeIds = useCopiedNodeIds();
 	const {onRedo, onUndo} = useUndoRedoActions();
 	const [openSaveModal, setOpenSaveModal] = useState(false);
 	const openShortcutModal = useOpenShorcutModal();
 	const selectItem = useSelectItem();
 	const selectMultipleItems = useSelectMultipleItems();
 	const setEditedNodeId = useSetEditedNodeId();
+	const setCopiedNodeIds = useSetCopiedNodeIds();
 	const setOpenShorcutModal = useSetOpenShorcutModal();
 	const state = useSelector((state) => state);
 	const sidebarHidden = state.sidebar.hidden;
@@ -102,6 +112,21 @@ export default function ShortcutManager() {
 		(state) => state.selectedViewportSize
 	);
 
+	const copy = () => {
+		setCopiedNodeIds(activeItemIds);
+	};
+
+	const cut = () => {
+		setCopiedNodeIds(activeItemIds);
+
+		dispatch(
+			deleteItem({
+				itemIds: activeItemIds,
+				selectItems,
+			})
+		);
+	};
+
 	const duplicate = () => {
 		dispatch(
 			duplicateItem({
@@ -127,6 +152,16 @@ export default function ShortcutManager() {
 
 	const hideSidebar = () => {
 		dispatch(switchSidebarPanel({hidden: !sidebarHidden}));
+	};
+
+	const paste = () => {
+		dispatch(
+			pasteItem({
+				copyItemIds: copiedNodeIds,
+				itemIds: activeItemIds,
+				selectItems,
+			})
+		);
 	};
 
 	const remove = () => {
@@ -188,6 +223,43 @@ export default function ShortcutManager() {
 	const keymapRef = useRef(null);
 
 	keymapRef.current = {
+		...(Liferay.FeatureFlags['LPD-18221'] && {
+			copy: {
+				action: copy,
+				canBeExecuted: () =>
+					canUpdatePageStructure &&
+					activeItemIds.every(
+						(activeItemId) =>
+							!!layoutData.items[activeItemId] &&
+							canBeDuplicated(
+								fragmentEntryLinks,
+								layoutData.items[activeItemId],
+								layoutData,
+								widgets
+							)
+					),
+				isKeyCombination: (event) =>
+					isCtrlOrMeta(event) && event.code === C_KEY_CODE,
+			},
+		}),
+		...(Liferay.FeatureFlags['LPD-18221'] && {
+			cut: {
+				action: cut,
+				canBeExecuted: (event) =>
+					canUpdatePageStructure &&
+					activeItemIds.every(
+						(activeItemId) =>
+							!!layoutData.items[activeItemId] &&
+							canBeRemoved(
+								layoutData.items[activeItemId],
+								layoutData
+							) &&
+							!isInteractiveElement(event.target)
+					),
+				isKeyCombination: (event) =>
+					isCtrlOrMeta(event) && event.code === X_KEY_CODE,
+			},
+		}),
 		duplicate: {
 			action: duplicate,
 			canBeExecuted: () =>
@@ -249,6 +321,26 @@ export default function ShortcutManager() {
 				!isEditingEditableField(),
 			isKeyCombination: (event) => event.shiftKey && event.key === '?',
 		},
+		...(Liferay.FeatureFlags['LPD-18221'] && {
+			paste: {
+				action: paste,
+				canBeExecuted: () =>
+					canUpdatePageStructure &&
+					activeItemIds?.length === 1 &&
+					copiedNodeIds.every(
+						(copiedNodeId) =>
+							!!layoutData.items[copiedNodeId] &&
+							canBeDuplicated(
+								fragmentEntryLinks,
+								layoutData.items[copiedNodeId],
+								layoutData,
+								widgets
+							)
+					),
+				isKeyCombination: (event) =>
+					isCtrlOrMeta(event) && event.code === V_KEY_CODE,
+			},
+		}),
 		remove: {
 			action: remove,
 			canBeExecuted: (event) =>

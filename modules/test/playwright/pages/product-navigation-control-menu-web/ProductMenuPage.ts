@@ -108,11 +108,6 @@ export class ProductMenuPage {
 		await this.siteSettingsButton.click();
 	}
 
-	async goToStaging() {
-		await this.publishingButton.click();
-		await this.stagingMenuItem.click();
-	}
-
 	async goToTeams(siteUrl?: string) {
 		await this.page.goto(
 			`/group${siteUrl || '/guest'}${PORTLET_URLS.teams}`

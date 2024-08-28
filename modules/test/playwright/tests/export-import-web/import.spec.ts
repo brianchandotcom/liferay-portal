@@ -105,13 +105,11 @@ test('can import a lar file selecting some items to import', async ({
 
 			apiHelpers.data.push({id: site.id, type: 'site'});
 
-			await applicationsMenuPage.goToSite(site.name);
-
-			await stagingPage.goToStaging();
+			await stagingPage.goToStaging(site.name);
 
 			await stagingPage.enableDefaultLocalStaging();
 
-			await stagingPage.compareCurrentPageVersions();
+			await stagingPage.compareCurrentPageVersions(site.name);
 		}
 	);
 });

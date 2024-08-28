@@ -7,8 +7,7 @@ import {Locator, Page, expect} from '@playwright/test';
 import {getComparator} from 'playwright-core/lib/utils';
 
 import {ProductMenuPage} from '../../../pages/product-navigation-control-menu-web/ProductMenuPage';
-import { getTempDir } from '../../../utils/temp';
-import getRandomString from '../../../utils/getRandomString';
+import {getTempDir} from '../../../utils/temp';
 
 export class StagingPage {
 	readonly localStagingCheckbox: Locator;
@@ -23,15 +22,29 @@ export class StagingPage {
 		this.saveButton = page.getByRole('button', {name: 'Save'});
 	}
 
-	async compareCurrentPageVersions() {
+	async compareCurrentPageVersions(siteKey: string) {
 		const comparator = getComparator('image/png');
 
-		expect(
-			comparator(
-				await this.getCurrentPageScreenshot('Live'),
-				await this.getCurrentPageScreenshot('Staging')
-			)
-		).toBeNull();
+		const buffer = comparator(
+			await this.getCurrentPageScreenshot(siteKey, 'Live'),
+			await this.getCurrentPageScreenshot(siteKey, 'Staging')
+		);
+
+		if (buffer !== null && buffer.diff !== undefined) {
+			const fs = require('fs');
+
+			fs.writeFile(
+				getTempDir() + '/' + siteKey + '-diff.png',
+				buffer.diff,
+				(error) => {
+					if (error) {
+						throw error;
+					}
+				}
+			);
+		}
+
+		expect(buffer).toBeNull();
 	}
 
 	async enableDefaultLocalStaging() {
@@ -59,13 +72,13 @@ export class StagingPage {
 		}
 	}
 
-	async goToStaging() {
-		await this.productMenuPage.openProductMenuIfClosed();
-		await this.page.waitForTimeout(4000);
-		await this.productMenuPage.goToStaging();
+	async goToStaging(siteKey: string) {
+		await this.page.goto(
+			`/group/${siteKey}/~/control_panel/manage?p_p_id=com_liferay_staging_processes_web_portlet_StagingProcessesPortlet`
+		);
 	}
 
-	private async getCurrentPageScreenshot(version: string) {
+	private async getCurrentPageScreenshot(siteKey: string, version: string) {
 		await this.page
 			.getByLabel('Product Menu', {exact: true})
 			.getByRole('link', {name: version})
@@ -77,18 +90,16 @@ export class StagingPage {
 				.getByText(version)
 		).toBeVisible();
 
-		await this.page.waitForTimeout(4000);
-
 		const url = this.page.url();
 
 		await this.page.goto(`${url}?p_l_mode=preview`, {waitUntil: 'load'});
 
 		await this.page.waitForFunction(() => document.fonts.ready);
-		
+
 		const screenshot = await this.page.screenshot({
-			fullPage: true,			
+			fullPage: true,
 			mask: [this.page.getByTestId('notificationsCount')],
-			path: getTempDir() + '/' + getRandomString() + '.png',
+			path: getTempDir() + '/' + siteKey + '-' + version + '.png',
 		});
 
 		await this.page.goto(url);

@@ -7,6 +7,9 @@ package com.liferay.portal.tools.rest.builder.test.resource.v1_0_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0_0.ChildTestEntity1;
+import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0_0.ChildTestEntity2;
 import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0_0.TestEntity;
 
 import org.junit.Assert;
@@ -40,6 +43,77 @@ public class TestEntityResourceTest extends BaseTestEntityResourceTestCase {
 		Assert.assertEquals(
 			Integer.valueOf(initialCount + 1),
 			testEntityResource.getTestEntityCount());
+	}
+
+	@Override
+	@Test
+	public void testPatchTestEntity() throws Exception {
+		super.testPatchTestEntity();
+
+		ChildTestEntity1 postChildTestEntity1 = new ChildTestEntity1();
+
+		postChildTestEntity1.setProperty1(
+			StringUtil.toLowerCase(RandomTestUtil.randomString()));
+		postChildTestEntity1.setType(
+			TestEntity.Type.create("ChildTestEntity1"));
+
+		postChildTestEntity1 =
+			(ChildTestEntity1)testEntityResource.postTestEntity(
+				postChildTestEntity1);
+
+		// Patch ChildTestEntity1
+
+		ChildTestEntity1 randomPatchChildTestEntity1 = new ChildTestEntity1();
+
+		randomPatchChildTestEntity1.setProperty1(
+			StringUtil.toLowerCase(RandomTestUtil.randomString()));
+		randomPatchChildTestEntity1.setType(
+			TestEntity.Type.create("ChildTestEntity1"));
+
+		ChildTestEntity1 patchChildTestEntity1 =
+			(ChildTestEntity1)testEntityResource.patchTestEntity(
+				postChildTestEntity1.getId(), randomPatchChildTestEntity1);
+
+		ChildTestEntity1 expectedPatchChildTestEntity1 =
+			postChildTestEntity1.clone();
+
+		BeanTestUtil.copyProperties(
+			randomPatchChildTestEntity1, expectedPatchChildTestEntity1);
+
+		ChildTestEntity1 getChildTestEntity1 =
+			(ChildTestEntity1)testEntityResource.getTestEntity(
+				patchChildTestEntity1.getId());
+
+		assertEquals(expectedPatchChildTestEntity1, getChildTestEntity1);
+		assertValid(getChildTestEntity1);
+
+		// Patch ChildTestEntity2
+
+		ChildTestEntity2 randomPatchChildTestEntity2 = new ChildTestEntity2();
+
+		randomPatchChildTestEntity2.setProperty2(
+			StringUtil.toLowerCase(RandomTestUtil.randomString()));
+		randomPatchChildTestEntity2.setType(
+			TestEntity.Type.create("ChildTestEntity2"));
+
+		ChildTestEntity2 patchChildTestEntity2 =
+			(ChildTestEntity2)testEntityResource.patchTestEntity(
+				postChildTestEntity1.getId(), randomPatchChildTestEntity2);
+
+		ChildTestEntity2 expectedPatchChildTestEntity2 = new ChildTestEntity2();
+
+		BeanTestUtil.copyProperties(
+			postChildTestEntity1, expectedPatchChildTestEntity2);
+
+		BeanTestUtil.copyProperties(
+			randomPatchChildTestEntity2, expectedPatchChildTestEntity2);
+
+		ChildTestEntity2 getChildTestEntity2 =
+			(ChildTestEntity2)testEntityResource.getTestEntity(
+				patchChildTestEntity2.getId());
+
+		assertEquals(expectedPatchChildTestEntity2, getChildTestEntity2);
+		assertValid(getChildTestEntity2);
 	}
 
 	@Override

@@ -419,9 +419,15 @@ public class BaseAuthFilterTest {
 	}
 
 	private User _setUpUser(int status) {
+		String digest = RandomTestUtil.randomString();
+
 		User user = new UserImpl();
 
+		user.setDigest(digest);
+
 		user.setStatus(status);
+
+		_mockHttpSession.setAttribute("DIGEST", digest);
 
 		_mockHttpSession.setAttribute(WebKeys.USER, user);
 
@@ -446,6 +452,12 @@ public class BaseAuthFilterTest {
 			userLocalServiceUtil.getUser(ArgumentMatchers.anyLong())
 		).thenReturn(
 			user
+		);
+
+		Mockito.when(
+			user.isActive()
+		).thenReturn(
+			true
 		);
 
 		return user;

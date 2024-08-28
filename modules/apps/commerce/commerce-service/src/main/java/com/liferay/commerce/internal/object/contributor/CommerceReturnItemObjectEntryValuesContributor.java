@@ -121,11 +121,16 @@ public class CommerceReturnItemObjectEntryValuesContributor
 		}
 
 		values.put(
-			"returnItemStatus", _getNextReturnItemStatus(values, returnStatus));
+			"returnItemStatus",
+			_getNextReturnItemStatus(
+				objectEntryContext.getObjectDefinitionId(), values,
+				returnStatus));
 	}
 
 	private String _getNextReturnItemStatus(
-		Map<String, Serializable> values, String returnStatus) {
+			long objectDefinitionId, Map<String, Serializable> values,
+			String returnStatus)
+		throws Exception {
 
 		BigDecimal authorized = BigDecimal.valueOf(
 			GetterUtil.getDouble(values.get("authorized")));
@@ -173,6 +178,25 @@ public class CommerceReturnItemObjectEntryValuesContributor
 					returnStatus,
 					CommerceReturnConstants.RETURN_STATUS_AUTHORIZED) &&
 				BigDecimalUtil.gt(authorized, BigDecimal.ZERO)) {
+
+				ObjectEntry originalObjectEntry =
+					_objectEntryLocalService.getObjectEntry(
+						GetterUtil.getString(
+							values.get("externalReferenceCode")),
+						objectDefinitionId);
+
+				Map<String, Serializable> originalValues =
+					originalObjectEntry.getValues();
+
+				if (!BigDecimalUtil.eq(
+						authorized,
+						BigDecimal.valueOf(
+							GetterUtil.getDouble(
+								originalValues.get("authorized"))))) {
+
+					return CommerceReturnConstants.
+						RETURN_ITEM_STATUS_AWAITING_RECEIPT;
+				}
 
 				return CommerceReturnConstants.
 					RETURN_ITEM_STATUS_RECEIPT_REJECTED;

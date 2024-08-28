@@ -140,6 +140,11 @@ public class DuplicateItemMVCActionCommand
 			}
 		}
 
+		LayoutStructure layoutStructure =
+			LayoutStructureUtil.getLayoutStructure(
+				themeDisplay.getScopeGroupId(), themeDisplay.getPlid(),
+				segmentsExperienceId);
+
 		return JSONUtil.put(
 			"duplicatedFragmentEntryLinks",
 			getFragmentEntryLinksJSONArray(
@@ -149,22 +154,11 @@ public class DuplicateItemMVCActionCommand
 		).put(
 			"duplicatedItemIds", duplicatedLayoutStructureItemIds
 		).put(
-			"layoutData",
-			() -> {
-				LayoutStructure layoutStructure =
-					LayoutStructureUtil.getLayoutStructure(
-						themeDisplay.getScopeGroupId(), themeDisplay.getPlid(),
-						segmentsExperienceId);
-
-				return layoutStructure.toJSONObject();
-			}
+			"layoutData", layoutStructure.toJSONObject()
 		).put(
 			"restrictedItemIds",
 			_contentManager.getRestrictedItemIds(
-				portal.getHttpServletRequest(actionRequest),
-				LayoutStructureUtil.getLayoutStructure(
-					themeDisplay.getScopeGroupId(), themeDisplay.getPlid(),
-					segmentsExperienceId),
+				portal.getHttpServletRequest(actionRequest), layoutStructure,
 				themeDisplay)
 		);
 	}

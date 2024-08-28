@@ -32,9 +32,9 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
@@ -131,9 +131,7 @@ public class DLFileEntryMetadataExternalReferenceCodeUpgradeProcessTest
 				StringBundler.concat(
 					"select 1 from ", tableName,
 					" where externalReferenceCode in ('",
-					ArrayUtil.toString(
-						externalReferenceCodes, StringPool.BLANK, "', '"),
-					"')"))) {
+					StringUtil.merge(externalReferenceCodes, "', '"), "')"))) {
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				Assert.assertFalse(resultSet.next());
@@ -209,9 +207,7 @@ public class DLFileEntryMetadataExternalReferenceCodeUpgradeProcessTest
 				"update ", tableName,
 				" set externalReferenceCode = null where ",
 				"externalReferenceCode in ('",
-				ArrayUtil.toString(
-					externalReferenceCodes, StringPool.BLANK, "', '"),
-				"')"));
+				StringUtil.merge(externalReferenceCodes, "', '"), "')"));
 
 		entityCache.clearCache();
 		multiVMPool.clear();

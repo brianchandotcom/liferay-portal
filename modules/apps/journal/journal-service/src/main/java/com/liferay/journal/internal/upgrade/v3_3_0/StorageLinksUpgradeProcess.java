@@ -31,7 +31,6 @@ public class StorageLinksUpgradeProcess extends UpgradeProcess {
 				connection.prepareStatement(
 					StringBundler.concat(
 						"select DDMStructureVersion.structureVersionId, ",
-						"DDMStorageLink.ctCollectionId, ",
 						"DDMStorageLink.storageLinkId from DDMStorageLink ",
 						"inner join DDMStructure on DDMStructure.structureId ",
 						"= DDMStorageLink.structureVersionId inner join ",
@@ -46,13 +45,12 @@ public class StorageLinksUpgradeProcess extends UpgradeProcess {
 				AutoBatchPreparedStatementUtil.autoBatch(
 					connection,
 					"update DDMStorageLink set structureVersionId = ? where " +
-						"ctCollectionId = ? and storageLinkId = ?");
+						"storageLinkId = ?");
 			ResultSet resultSet = selectPreparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {
 				updatePreparedStatement.setLong(1, resultSet.getLong(1));
 				updatePreparedStatement.setLong(2, resultSet.getLong(2));
-				updatePreparedStatement.setLong(3, resultSet.getLong(3));
 
 				updatePreparedStatement.addBatch();
 			}
@@ -64,7 +62,6 @@ public class StorageLinksUpgradeProcess extends UpgradeProcess {
 				connection.prepareStatement(
 					StringBundler.concat(
 						"select DDMStructureVersion.structureId, ",
-						"DDMStorageLink.ctCollectionId, ",
 						"DDMStorageLink.storageLinkId from DDMStorageLink ",
 						"inner join DDMStructureVersion on ",
 						"DDMStructureVersion.structureVersionId = ",
@@ -74,13 +71,12 @@ public class StorageLinksUpgradeProcess extends UpgradeProcess {
 				AutoBatchPreparedStatementUtil.autoBatch(
 					connection,
 					"update DDMStorageLink set structureId = ? where " +
-						"ctCollectionId = ? and storageLinkId = ?");
+						"storageLinkId = ?");
 			ResultSet resultSet = selectPreparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {
 				updatePreparedStatement.setLong(1, resultSet.getLong(1));
 				updatePreparedStatement.setLong(2, resultSet.getLong(2));
-				updatePreparedStatement.setLong(3, resultSet.getLong(3));
 
 				updatePreparedStatement.addBatch();
 			}

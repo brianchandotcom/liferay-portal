@@ -13,6 +13,7 @@ import deleteRule from '../actions/deleteRule';
 import duplicateItem from '../actions/duplicateItem';
 import moveItem from '../actions/moveItem';
 import moveStepper from '../actions/moveStepper';
+import pasteItem from '../actions/pasteItem';
 import {
 	ADD_FRAGMENT_ENTRY_LINKS,
 	ADD_ITEM,

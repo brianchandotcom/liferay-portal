@@ -491,12 +491,15 @@ async function createSiteTemplateWithWebContentOnContentPage({
 	await journalPage.publishArticle();
 
 	await productMenuPage.goToPages();
-	await uiElementsPage.clickNewButton();
+	await pagesAdminPage.newButton.click();
 	await layoutSetPrototypePage.addTemplatePageButton.waitFor({
 		state: 'visible',
 	});
 	await layoutSetPrototypePage.addTemplatePageButton.click();
-	await pagesAdminPage.createNewPage({name: templateName});
+	await pagesAdminPage.addPage({
+		name: templateName,
+		successMessage: 'Success:The page was created successfully.',
+	});
 
 	await pageEditorPage.addWidget('Content Management', 'Web Content Display');
 	await webContentDisplayPage.addWebContentWithDisplay();

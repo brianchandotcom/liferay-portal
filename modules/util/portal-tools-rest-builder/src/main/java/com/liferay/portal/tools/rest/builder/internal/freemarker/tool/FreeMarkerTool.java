@@ -336,6 +336,8 @@ public class FreeMarkerTool {
 	public String getEnumFieldName(String value) {
 		String fieldName = TextFormatter.format(value, TextFormatter.H);
 
+		fieldName = fieldName.replaceFirst("^\\-([0-9])", "negative_$1");
+
 		fieldName = fieldName.replaceAll("[ \\-\\/]", "_");
 
 		fieldName = fieldName.replaceAll("\\.", "_point_");

@@ -2,8 +2,4 @@
 <!DOCTYPE urlrewrite PUBLIC "-//tuckey.org//DTD UrlRewrite 4.0//EN" "http://www.tuckey.org/res/dtds/urlrewrite4.0.dtd">
 
 <urlrewrite>
-	<rule>
-		<from>^/o/portal-search-rest/(.*)</from>
-		<to type="forward">%{context-path}/o/search/$1</to>
-	</rule>
 </urlrewrite>

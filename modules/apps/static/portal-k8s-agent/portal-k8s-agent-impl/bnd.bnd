@@ -7,7 +7,9 @@ Export-Package:\
 	\
 	okhttp3.*;mandatory:=usage;usage=test,\
 	\
-	okio;mandatory:=usage;usage=test
+	okio;mandatory:=usage;usage=test,\
+	\
+	kotlin.*;mandatory:=usage;usage=test
 Import-Package:\
 	!android.*,\
 	\

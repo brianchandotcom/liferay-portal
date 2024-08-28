@@ -12662,7 +12662,6 @@ public class ObjectEntryResourceTest {
 		);
 
 		String randomExternalReferenceCode = RandomTestUtil.randomString();
-		long randomGroupId = RandomTestUtil.randomLong();
 
 		_testPatchPutCustomObjectEntryWithAttachmentField(
 			fileEntry -> JSONUtil.put(
@@ -12671,13 +12670,13 @@ public class ObjectEntryResourceTest {
 				"title",
 				StringBundler.concat(
 					"No DLFolder exists with the key {externalReferenceCode=",
-					randomExternalReferenceCode, ", groupId=", randomGroupId,
-					"}")
+					randomExternalReferenceCode, ", groupId=",
+					TestPropsValues.getGroupId(), "}")
 			),
 			_toFileEntry(
 				Base64::encode, RandomTestUtil.randomString(),
 				RandomTestUtil.randomString() + ".txt",
-				randomExternalReferenceCode, randomGroupId),
+				randomExternalReferenceCode, TestPropsValues.getGroupId()),
 			httpMethod, null, objectDefinition,
 			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
 			useExternalReferenceCode);
@@ -13164,7 +13163,6 @@ public class ObjectEntryResourceTest {
 		);
 
 		String randomExternalReferenceCode = RandomTestUtil.randomString();
-		long randomGroupId = RandomTestUtil.randomLong();
 
 		_testPostCustomObjectEntryWithAttachmentField(
 			fileEntry -> JSONUtil.put(
@@ -13173,13 +13171,13 @@ public class ObjectEntryResourceTest {
 				"title",
 				StringBundler.concat(
 					"No DLFolder exists with the key {externalReferenceCode=",
-					randomExternalReferenceCode, ", groupId=", randomGroupId,
-					"}")
+					randomExternalReferenceCode, ", groupId=",
+					TestPropsValues.getGroupId(), "}")
 			),
 			_toFileEntry(
 				Base64::encode, RandomTestUtil.randomString(),
 				RandomTestUtil.randomString() + ".txt",
-				randomExternalReferenceCode, randomGroupId),
+				randomExternalReferenceCode, TestPropsValues.getGroupId()),
 			null, objectDefinition,
 			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE);
 

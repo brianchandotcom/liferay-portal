@@ -124,10 +124,21 @@ export class DocumentLibraryEditFilePage {
 	async publishMultipleFiles(dTypeTitle: string, filePaths: string[]) {
 		await this.page.getByRole('button', {name: 'Select Files'}).waitFor();
 		await this.page.locator('input[type="file"]').setInputFiles(filePaths);
+
+		await this.page.getByLabel('Select All').check();
+
 		await this.page.getByRole('button', {name: 'Document Type'}).click();
 		await this.page.getByRole('button', {name: 'Basic Document'}).click();
+
 		await this.page.getByRole('menuitem', {name: dTypeTitle}).click();
-		await this.page.getByRole('button', {name: 'Publish'}).click();
+
+		await clickAndExpectToBeVisible({
+			autoClick: false,
+			target: this.page.locator(
+				'#_com_liferay_document_library_web_portlet_DLAdminPortlet_documentLibraryContainer'
+			),
+			trigger: this.page.getByRole('button', {name: 'Publish'}),
+		});
 	}
 
 	async publishNewFileWithoutGuestViewPermission(title: string) {

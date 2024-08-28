@@ -10,9 +10,14 @@ import com.bmuschko.gradle.docker.DockerRemoteApiPlugin;
 import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage;
 import com.bmuschko.gradle.docker.tasks.image.DockerRemoveImage;
 
+import com.fasterxml.jackson.core.FormatSchema;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.exc.StreamWriteException;
+import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
@@ -35,15 +40,21 @@ import com.liferay.gradle.util.Validator;
 
 import groovy.lang.Closure;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -56,6 +67,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.io.FileUtils;
 import org.gradle.api.Action;
 import org.gradle.api.GradleException;
 import org.gradle.api.Project;
@@ -69,6 +81,7 @@ import org.gradle.api.file.ConfigurableFileCollection;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.DirectoryProperty;
 import org.gradle.api.initialization.Settings;
+import org.gradle.api.internal.TaskOutputsInternal;
 import org.gradle.api.invocation.Gradle;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.plugins.BasePlugin;
@@ -100,6 +113,9 @@ public class ClientExtensionProjectConfigurator
 
 	public static final String BUILD_SITE_INITIALIZER_ZIP_TASK_NAME =
 		"buildSiteInitializerZip";
+
+	public static final String BUILD_LANGUAGE_ZIP_TASK_NAME =
+		"buildLanguageZip";
 
 	public static final String CREATE_CLIENT_EXTENSION_CONFIG_TASK_NAME =
 		"createClientExtensionConfig";
@@ -151,6 +167,10 @@ public class ClientExtensionProjectConfigurator
 		TaskProvider<Zip> buildSiteInitializerZipTaskProvider =
 			GradleUtil.addTaskProvider(
 				project, BUILD_SITE_INITIALIZER_ZIP_TASK_NAME, Zip.class);
+
+		TaskProvider<Zip> buildLanguageZipTaskProvider =
+			GradleUtil.addTaskProvider(
+				project, BUILD_LANGUAGE_ZIP_TASK_NAME, Zip.class);
 
 		TaskProvider<Task> validateClientExtensionIdsTaskProvider =
 			GradleUtil.addTaskProvider(
@@ -559,6 +579,69 @@ public class ClientExtensionProjectConfigurator
 							fromPath = fromJsonNode.asText();
 						}
 
+						Iterator<File> fileIterator = FileUtils.iterateFiles(new File("batch/"),
+							new String[]{"properties"}, true);
+
+						fileIterator.forEachRemaining(file -> {
+							String name = file.getName();
+
+							if (name.matches("Language_(.*).properties")) {
+								String newName = name.replace(".properties", "");
+								String languageId = newName.replace("Language_", "");
+
+								Map<String, Object> batchEngineMap = new HashMap<>();
+
+								Map<String, Object> configurationMap = new HashMap<>();
+
+								configurationMap.put("className", "com.liferay.portal.language.rest.dto.v1_0.Message");
+
+								Map<String, Object> parametersMap = new HashMap<>();
+
+								parametersMap.put("containsHeaders", "true");
+//								parametersMap.put("createStrategy", "UPSERT");
+								parametersMap.put("importStrategy", "ON_ERROR_FAIL");
+								parametersMap.put("updateStrategy", "UPDATE");
+
+								configurationMap.put("parameters", parametersMap);
+								configurationMap.put("taskItemDelegateName", "DEFAULT");
+
+								batchEngineMap.put("configuration", configurationMap);
+
+								List<Map<String, String>> items = new ArrayList<>();
+
+								items.add(new HashMap<String, String>() {{
+									put("key", "uploaded-via-batch");
+									put("languageId", languageId);
+									put("value", "UPLOADED VIA BATCH");
+								}});
+
+								batchEngineMap.put("items", items);
+
+								ObjectMapper objectMapper = new ObjectMapper();
+//
+//								objectMapper.configure(
+//									SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS, true);
+//
+//								objectMapper.configure(SerializationFeature.INDENT_OUTPUT, true);
+
+//								System.out.println("\nSource path: " + file.getAbsolutePath());
+								try (BufferedWriter writer = new BufferedWriter(
+									new FileWriter("batch/Language.batch-engine-data.json"))) {
+
+									String json = objectMapper.writeValueAsString(batchEngineMap);
+
+//							com.liferay.portal.language.rest.dto.v1_0.Message
+									writer.write(json);
+
+//									file.exclude();
+								}
+								catch (IOException e) {
+									throw new RuntimeException(e);
+								}
+							}
+						});
+
+
 						assembleClientExtensionCopy.from(
 							(fromPath != null) ? fromPath : ".",
 							copySpec -> {
@@ -701,6 +784,8 @@ public class ClientExtensionProjectConfigurator
 						@Override
 						public void execute(Task task) {
 							Copy copy1 = (Copy)task;
+
+							System.out.printf("Destination dir %s", copy1.getDestinationDir());
 
 							project.delete(copy1.getDestinationDir());
 						}

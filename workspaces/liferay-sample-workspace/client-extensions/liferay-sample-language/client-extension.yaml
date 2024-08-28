@@ -1,0 +1,14 @@
+assemble:
+  - from: content
+    into: content
+liferay-sample-language:
+    name: Liferay Sample Language
+    oAuthApplicationHeadlessServer: liferay-sample-language-oauth-application-headless-server
+    type: language
+liferay-sample-language-oauth-application-headless-server:
+    .serviceAddress: localhost:8080
+    .serviceScheme: http
+    name: Liferay Sample Language OAuth Application Headless Server
+    scopes:
+        - Liferay.Headless.Admin.Language.everything
+    type: oAuthApplicationHeadlessServer

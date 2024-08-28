@@ -11,6 +11,7 @@ liferay-sample-batch-oauth-application-headless-server:
     name: Liferay Sample OAuth Application Headless Server
     scopes:
         - Liferay.Headless.Admin.Workflow.everything
+        - Liferay.Headless.Admin.Language.everything
         - Liferay.Headless.Batch.Engine.everything
         - Liferay.Object.Admin.REST.everything
     type: oAuthApplicationHeadlessServer

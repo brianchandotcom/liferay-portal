@@ -1,0 +1,14 @@
+assemble:
+  - from: content
+    into: content
+liferay-language-client-extension:
+    name: Liferay Language Client Extension
+    oAuthApplicationHeadlessServer: liferay-language-client-extension-oauth-application-headless-server
+    type: language
+liferay-language-client-extension-oauth-application-headless-server:
+    .serviceAddress: localhost:8080
+    .serviceScheme: http
+    name: Liferay Language Client Extension OAuth Application Headless Server
+    scopes:
+        - Liferay.Headless.Admin.Language.everything
+    type: oAuthApplicationHeadlessServer

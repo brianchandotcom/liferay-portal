@@ -136,6 +136,14 @@ public class AMBackwardsCompatibilityHtmlContentTransformerTest {
 	}
 
 	@Test
+	public void testReplacesImageTagsWithQueryParameters() throws Exception {
+		Assert.assertEquals(
+			_CONTENT_PREFIX + "[REPLACED]" + _CONTENT_SUFFIX,
+			_contentTransformer.transform(
+				_CONTENT_WITH_IMAGE_AND_QUERY_PARAMETERS));
+	}
+
+	@Test
 	public void testReplacesImageTagsWithSingleQuotes() throws Exception {
 		Assert.assertEquals(
 			_CONTENT_PREFIX + "[REPLACED]" + _CONTENT_SUFFIX,
@@ -190,6 +198,12 @@ public class AMBackwardsCompatibilityHtmlContentTransformerTest {
 			_CONTENT_PREFIX, "<img\nsrc=\"/documents/20138/0/sample.jpg",
 			"/1710bfe2-2b7c-1f69-f8b7-23ff6bd5dd4b?t=1506075653544\"\n />",
 			_CONTENT_SUFFIX);
+
+	private static final String _CONTENT_WITH_IMAGE_AND_QUERY_PARAMETERS =
+		StringBundler.concat(
+			_CONTENT_PREFIX, "<img src=\"/documents/20117/32920/sample.jpg",
+			"/f095aa50-7c0c-ae36-05b6-94a5270085c8?version=1.0&t=",
+			"1724834658363&imageThumbnail=1\" />", _CONTENT_SUFFIX);
 
 	private static final String _CONTENT_WITH_IMAGE_AND_SINGLE_QUOTES =
 		StringBundler.concat(

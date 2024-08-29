@@ -5,6 +5,7 @@
 
 import {Page, expect} from '@playwright/test';
 import fs from 'fs/promises';
+import path from 'path';
 import {getComparator} from 'playwright-core/lib/utils';
 
 import {getTempDir} from '../../../utils/temp';
@@ -26,7 +27,7 @@ export class StagingPage {
 
 		if (buffer !== null && buffer.diff !== undefined) {
 			await fs.writeFile(
-				getTempDir() + '/' + siteKey + '-diff.png',
+				path.join(getTempDir(), `${siteKey}-diff.png`),
 				buffer.diff
 			);
 		}
@@ -79,7 +80,7 @@ export class StagingPage {
 		const screenshot = await this.page.screenshot({
 			fullPage: true,
 			mask: [this.page.getByTestId('notificationsCount')],
-			path: getTempDir() + '/' + siteKey + '-' + version + '.png',
+			path: path.join(getTempDir(), `${siteKey}-${version}.png`),
 		});
 
 		await this.page.goto(url);

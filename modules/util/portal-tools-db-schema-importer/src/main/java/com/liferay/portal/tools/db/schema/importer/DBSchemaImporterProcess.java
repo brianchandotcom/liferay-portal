@@ -447,7 +447,7 @@ public class DBSchemaImporterProcess {
 			alternativeValue = String.valueOf(value);
 		}
 		else {
-			throw new PortalException("Invalid type: " + sourceType);
+			throw new PortalException("Invalid type " + sourceType);
 		}
 
 		_setColumn(index, preparedStatement, targetType, alternativeValue);

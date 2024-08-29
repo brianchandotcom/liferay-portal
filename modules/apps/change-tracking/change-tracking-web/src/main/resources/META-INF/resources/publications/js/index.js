@@ -9,6 +9,7 @@ export {default as ChangeTrackingChangeView} from './views/ChangeTrackingChangeV
 export {default as ChangeTrackingCollectionEditView} from './views/ChangeTrackingCollectionEditView';
 export {default as ChangeTrackingConflictsView} from './views/ChangeTrackingConflictsView';
 export {default as ChangeTrackingIndicator} from './components/ChangeTrackingIndicator';
+export {default as ChangeTrackingOverview} from './views/ChangeTrackingOverview';
 export {default as ChangeTrackingRelatedEntriesView} from './views/ChangeTrackingRelatedEntriesView';
 export {default as ChangeTrackingRelationshipsView} from './views/ChangeTrackingRelationshipsView';
 export {default as ChangeTrackingRenderView} from './views/ChangeTrackingRenderView';

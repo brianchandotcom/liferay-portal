@@ -6,11 +6,12 @@
 import {Locator, Page} from '@playwright/test';
 
 import {DiagramViewPage} from './DiagramViewPage';
+import {NodePropertiesSidebarPage} from './NodePropertiesSidebarPage';
 
 export class ConditionNode {
 	readonly conditionNodeSideBarItem: Locator;
 	readonly diagramViewPage: DiagramViewPage;
-	readonly nodeLabel: Locator;
+	readonly nodePropertiesSideBarPage: NodePropertiesSidebarPage;
 	readonly scriptLanguageSelect: Locator;
 	readonly scriptInput: Locator;
 
@@ -19,7 +20,7 @@ export class ConditionNode {
 			exact: true,
 		});
 		this.diagramViewPage = new DiagramViewPage(page);
-		this.nodeLabel = page.locator('#nodeLabel');
+		this.nodePropertiesSideBarPage = new NodePropertiesSidebarPage(page);
 		this.scriptLanguageSelect = page.locator('#script-language');
 		this.scriptInput = page.locator('#nodeScript');
 	}
@@ -36,7 +37,7 @@ export class ConditionNode {
 		scriptLanguageOption: string,
 		script: string
 	) {
-		await this.nodeLabel.fill(nodeLabel);
+		await this.nodePropertiesSideBarPage.nodeLabelInput.fill(nodeLabel);
 		await this.scriptLanguageSelect.selectOption(scriptLanguageOption);
 		await this.scriptInput.fill(script);
 	}

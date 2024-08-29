@@ -72,9 +72,9 @@ public class DBSchemaImporterProcess {
 		_runSQLTemplateConcurrently(
 			_targetDataSource, _readFile(new File(_path, "tables.sql")));
 
-		_loadColumnsMetadata(
+		_loadColumnNamesMap(
 			_sourceColumnNamesMap, _sourceColumnsType, _sourceDataSource);
-		_loadColumnsMetadata(
+		_loadColumnNamesMap(
 			_targetColumnNamesMap, _targetColumnsType, _targetDataSource);
 
 		AutoBatchPreparedStatementUtil.start();
@@ -458,7 +458,7 @@ public class DBSchemaImporterProcess {
 		_setColumn(index, preparedStatement, targetType, alternativeValue);
 	}
 
-	private void _loadColumnsMetadata(
+	private void _loadColumnNamesMap(
 			Map<String, List<String>> columnNamesMap,
 			Map<String, Integer> columnTypes, DataSource dataSource)
 		throws Exception {

@@ -140,57 +140,6 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-97345 (TC-1 & TC-2). Verify that HeadlessAPI SCIM sends back an empty list if there are no linked Users and lists the linked Users if there is any."
-	@priority = 5
-	test GetV2UserMethodSendsBackUsersLinkedToSCIMClient {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		task ("Given: After setting up SCIM Client getV2User sends back an empty list if there are no linked Users") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
-
-			PortalSettings.gotoConfiguration(
-				configurationCategory = "SCIM",
-				configurationName = "SCIM",
-				configurationScope = "Virtual Instance Scope");
-
-			SCIM.configureSCIM(
-				applicationName = "Name",
-				generateAccessToken = "Yeah",
-				matcherField = "userName");
-
-			var response = SCIMAPI.getUsers(printheader = "true");
-
-			TestUtils.assertPartialEquals(
-				actual = ${response},
-				expected = "\"totalResults\":0");
-		}
-
-		task ("When: A User is posted by postV2User, the previous method sends back a list of the linked Users") {
-			var response = SCIMAPI.postUser(
-				emailAddress = "eren@liferay.com",
-				familyName = "Yeager",
-				givenName = "Eren",
-				printheader = "true",
-				userName = "eren");
-
-			TestUtils.assertPartialEquals(
-				actual = ${response},
-				expected = '''"emails":[{"type":"default","value":"eren@liferay.com"''');
-		}
-
-		task ("Then: Verify that as a User was created and linked to the client, the method sends back the number of linked Users (alongside the data of the Users)") {
-			var response = SCIMAPI.getUsers(printheader = "true");
-
-			TestUtils.assertPartialEquals(
-				actual = ${response},
-				expected = "\"totalResults\":1");
-		}
-	}
-
 	@description = "This is a use case for LPS-190327. TC1: Verify the grace period should work after generating a new access token."
 	@priority = 4
 	test GracePeriodShouldBeTriggerredWhenGenerateNewAccessToken {

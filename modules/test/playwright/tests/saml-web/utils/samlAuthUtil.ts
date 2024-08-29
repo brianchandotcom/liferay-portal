@@ -5,6 +5,39 @@
 
 import {Page} from '@playwright/test';
 
+export async function clickSignInButton(page: Page, idpSelection?: string) {
+	const signInButton = await page.getByRole('button', {
+		name: 'Sign In',
+	});
+
+	await signInButton.click();
+
+	// An undefined IdP selection means we assume only one IdP available, so we
+	// are redirected automatically.  Else, IdP is defined, so select it.
+
+	if (idpSelection === undefined) {
+		await page
+			.getByText('Redirecting to your identity provider...')
+			.waitFor({timeout: 30 * 1000});
+	}
+	else {
+		await page
+			.getByRole('paragraph')
+			.getByText('Please select your identity provider.')
+			.waitFor({timeout: 30 * 1000});
+
+		await page.getByLabel('Identity Provider').selectOption(idpSelection);
+
+		await page
+			.locator('#content')
+			.getByRole('button', {
+				exact: true,
+				name: 'Sign In',
+			})
+			.click();
+	}
+}
+
 export async function performSpInitiatedSSO(
 	browser,
 	emailAddress: string,
@@ -16,40 +49,9 @@ export async function performSpInitiatedSSO(
 		baseURL: spDomain,
 	});
 
-	await newPage.goto('/');
+	await newPage.goto(spDomain);
 
-	const signInButton = await newPage.getByRole('button', {
-		name: 'Sign In',
-	});
-
-	await signInButton.click();
-
-	// An undefined IdP selection means we assume only one IdP available, so we
-	// are redirected automatically.  Else, IdP is defined, so select it.
-
-	if (idpSelection === undefined) {
-		await newPage
-			.getByText('Redirecting to your identity provider...')
-			.waitFor({timeout: 30 * 1000});
-	}
-	else {
-		await newPage
-			.getByRole('paragraph')
-			.getByText('Please select your identity provider.')
-			.waitFor({timeout: 30 * 1000});
-
-		await newPage
-			.getByLabel('Identity Provider')
-			.selectOption(idpSelection);
-
-		await newPage
-			.locator('#content')
-			.getByRole('button', {
-				exact: true,
-				name: 'Sign In',
-			})
-			.click();
-	}
+	await clickSignInButton(newPage, idpSelection);
 
 	await newPage.getByLabel('Email Address').waitFor({timeout: 30 * 1000});
 

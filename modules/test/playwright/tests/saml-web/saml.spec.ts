@@ -40,6 +40,7 @@ import {
 	configureServiceProvider,
 } from './utils/ServiceProviderUtil';
 import {
+	clickSignInButton,
 	performIdpInitiatedSSO,
 	performSpInitiatedSSO,
 } from './utils/samlAuthUtil';
@@ -891,13 +892,7 @@ test('Verify IdP initiated SLO also logs out of authenticated SP when Require Au
 
 	await newPage.goto(DEFAULT_SP_URL);
 
-	const signInButton = await newPage.getByRole('button', {
-		name: 'Sign In',
-	});
-
-	await signInButton.waitFor();
-
-	await signInButton.click();
+	await clickSignInButton(newPage);
 
 	await newPage.getByTitle('User Profile Menu').waitFor({timeout: 30 * 1000});
 
@@ -914,6 +909,10 @@ test('Verify IdP initiated SLO also logs out of authenticated SP when Require Au
 	// SP should also be logged out after IdP initiated SLO
 
 	await newPage.goto(DEFAULT_SP_URL);
+
+	const signInButton = await newPage.getByRole('button', {
+		name: 'Sign In',
+	});
 
 	await reloadUntilVisible({
 		myLocator: signInButton,

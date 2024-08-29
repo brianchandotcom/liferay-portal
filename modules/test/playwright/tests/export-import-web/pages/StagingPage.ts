@@ -26,13 +26,12 @@ export class StagingPage {
 		);
 
 		if (buffer !== null && buffer.diff !== undefined) {
-			await fs.writeFile(
-				path.join(getTempDir(), `${siteKey}-diff.png`),
-				buffer.diff
+			const diffPath = path.join(getTempDir(), `${siteKey}-diff.png`);
+			await fs.writeFile(diffPath, buffer.diff);
+			throw new Error(
+				`The live and staging pages differ. Check the screenshot diff at "${diffPath}".`
 			);
 		}
-
-		expect(buffer).toBeNull();
 	}
 
 	async enableLocalStaging() {

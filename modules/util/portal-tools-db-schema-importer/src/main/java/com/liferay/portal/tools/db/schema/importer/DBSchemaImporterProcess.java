@@ -73,9 +73,9 @@ public class DBSchemaImporterProcess {
 			_targetDataSource, _readFile(new File(_path, "tables.sql")));
 
 		_loadColumnsMetadata(
-			_sourceDataSource, _sourceColumnNamesMap, _sourceColumnsType);
+			_sourceColumnNamesMap, _sourceColumnsType, _sourceDataSource);
 		_loadColumnsMetadata(
-			_targetDataSource, _targetColumnNamesMap, _targetColumnsType);
+			_targetColumnNamesMap, _targetColumnsType, _targetDataSource);
 
 		AutoBatchPreparedStatementUtil.start();
 
@@ -459,8 +459,8 @@ public class DBSchemaImporterProcess {
 	}
 
 	private void _loadColumnsMetadata(
-			DataSource dataSource, Map<String, List<String>> columnNamesMap,
-			Map<String, Integer> columnTypes)
+			Map<String, List<String>> columnNamesMap,
+			Map<String, Integer> columnTypes, DataSource dataSource)
 		throws Exception {
 
 		try (Connection connection = dataSource.getConnection()) {

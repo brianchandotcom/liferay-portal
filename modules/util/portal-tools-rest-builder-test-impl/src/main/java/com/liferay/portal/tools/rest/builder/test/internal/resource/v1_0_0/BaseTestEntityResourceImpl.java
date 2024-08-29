@@ -310,8 +310,7 @@ public abstract class BaseTestEntityResourceImpl
 			TestEntity testEntity)
 		throws Exception {
 
-		TestEntity existingTestEntity = getTestEntity(
-			testEntityId, optionalParameter);
+		TestEntity existingTestEntity = getTestEntity(testEntityId);
 
 		if (testEntity.getDateCreated() != null) {
 			existingTestEntity.setDateCreated(testEntity.getDateCreated());

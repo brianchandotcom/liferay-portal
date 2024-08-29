@@ -495,7 +495,14 @@ test.describe('Manage objectFields through Objects Admin UI', () => {
 	}) => {
 		const {listTypeDefinitionIds, objectDefinitions} = createdEntities;
 
-		const [objectDefinition] = objectDefinitions;
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFields: [],
+				objectFolderExternalReferenceCode: 'default',
+				status: {code: 1},
+			});
+
+		objectDefinitions.push(objectDefinition);
 
 		const listTypeDefinition =
 			await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
@@ -507,61 +514,60 @@ test.describe('Manage objectFields through Objects Admin UI', () => {
 		const objectFieldsMock = [
 			{
 				objectFieldBusinessType: 'Attachment',
-				objectFieldLabel: 'Custom Attachment',
+				objectFieldLabel: `attachment${getRandomInt()}`,
 			},
 			{
 				objectFieldBusinessType: 'Boolean',
-				objectFieldLabel: 'Custom Boolean',
+				objectFieldLabel: `boolean${getRandomInt()}`,
 			},
 			{
 				objectFieldBusinessType: 'Date',
-				objectFieldLabel: 'Custom Date',
+				objectFieldLabel: `date${getRandomInt()}`,
 			},
 			{
 				objectFieldBusinessType: 'Decimal',
-				objectFieldLabel: 'Custom Decimal',
+				objectFieldLabel: `decimal${getRandomInt()}`,
 			},
 			{
 				objectFieldBusinessType: 'Integer',
-				objectFieldLabel: 'Custom Integer',
+				objectFieldLabel: `integer${getRandomInt()}`,
 			},
 			{
 				objectFieldBusinessType: 'Long Integer',
-				objectFieldLabel: 'Custom Long Integer',
+				objectFieldLabel: `longInteger${getRandomInt()}`,
 			},
 			{
 				objectFieldBusinessType: 'Long Text',
-				objectFieldLabel: 'Custom Long Text',
+				objectFieldLabel: `longText${getRandomInt()}`,
 			},
 			{
 				objectFieldBusinessType: 'Multiselect Picklist',
-				objectFieldLabel: 'Custom Multiselect Picklist',
+				objectFieldLabel: `multiselectPicklist${getRandomInt()}`,
 			},
 			{
 				objectFieldBusinessType: 'Picklist',
-				objectFieldLabel: 'Custom Picklist',
+				objectFieldLabel: `picklist${getRandomInt()}`,
 			},
-
 			{
 				objectFieldBusinessType: 'Precision Decimal',
-				objectFieldLabel: 'Custom Precision Decimal',
+				objectFieldLabel: `precisionDecimal${getRandomInt()}`,
 			},
 			{
 				objectFieldBusinessType: 'Rich Text',
-				objectFieldLabel: 'Custom Rich Text',
+				objectFieldLabel: `richText${getRandomInt()}`,
 			},
 			{
 				objectFieldBusinessType: 'Text',
-				objectFieldLabel: 'Custom Text',
+				objectFieldLabel: `text${getRandomInt()}`,
 			},
 		] as {
 			objectFieldBusinessType: string;
 			objectFieldLabel: string;
 		}[];
 
-		for (let i = 0; i < objectFieldsMock.length; i++) {
+		for (const objectField of objectFieldsMock) {
 			const {objectFieldBusinessType, objectFieldLabel} =
-				objectFieldsMock[i];
+				objectField;
 
 			if (objectFieldBusinessType === 'Attachment') {
 				await objectFieldsPage.addObjectField({
@@ -598,10 +604,51 @@ test.describe('Manage objectFields through Objects Admin UI', () => {
 			});
 		}
 
-		for (let i = 0; i < objectFieldsMock.length; i++) {
-			const {objectFieldLabel} = objectFieldsMock[i];
+		while (
+			(await page.locator('.dnd-tbody > .dnd-tr').all()).length !==
+			objectDefinition.objectFields.length + objectFieldsMock.length
+		) {
+			await page.waitForTimeout(1000);
+		}
 
-			await expect(page.getByText(objectFieldLabel)).toBeVisible();
+		const objectFieldTableRows = await page
+			.locator('.dnd-tbody > .dnd-tr')
+			.all();
+
+		const asyncFilter = async (
+			array: Locator[],
+			predicate: (value: Locator) => Promise<boolean>
+		) => {
+			const results = await Promise.all(array.map(predicate));
+
+			return array.filter((_, index) => results[index]);
+		};
+
+		const objectFieldTableCustomRows = await asyncFilter(
+			objectFieldTableRows,
+			async (objectFieldTableRow: Locator) => {
+				return (await objectFieldTableRow.textContent()).includes(
+					'Custom'
+				);
+			}
+		);
+
+		for (let i = 0; i < objectFieldsMock.length; i++) {
+			const {objectFieldBusinessType, objectFieldLabel} =
+				objectFieldsMock[i];
+
+			await expect(
+				objectFieldTableCustomRows[i].getByText(objectFieldLabel, {
+					exact: true,
+				})
+			).toBeVisible();
+
+			await expect(
+				objectFieldTableCustomRows[i].getByText(
+					objectFieldBusinessType,
+					{exact: true}
+				)
+			).toBeVisible();
 		}
 	});
 

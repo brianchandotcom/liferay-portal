@@ -16,7 +16,10 @@ import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisibl
 import {getRandomInt} from '../../../utils/getRandomInt';
 import performLogin, {userData} from '../../../utils/performLogin';
 import {waitForSuccessAlert} from '../../../utils/waitForSuccessAlert';
-import {deleteAfterTestProviderConnections} from '../saml.spec';
+import {
+	deleteAfterTestProviderConnections,
+	deleteAfterTestVirtualInstances,
+} from '../saml.spec';
 import {connectSpAndIdp} from './samlProviderConnectionUtil';
 
 export const DEFAULT_IDP_NAME = 'www.able.com';
@@ -91,6 +94,8 @@ async function createSamlVirtualInstance(
 	const virtualInstancesPage = new VirtualInstancesPage(page);
 
 	await virtualInstancesPage.addNewVirtualInstance(name);
+
+	deleteAfterTestVirtualInstances.add(name);
 
 	return await configureVirtualInstanceForSaml(browser, entityId, samlRole);
 }

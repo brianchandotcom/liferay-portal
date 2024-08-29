@@ -310,7 +310,135 @@ public abstract class BaseTestEntityResourceImpl
 			TestEntity testEntity)
 		throws Exception {
 
+		TestEntity existingTestEntity = getTestEntity(
+			testEntityId, optionalParameter);
+
+		if (testEntity.getDateCreated() != null) {
+			existingTestEntity.setDateCreated(testEntity.getDateCreated());
+		}
+
+		if (testEntity.getDateModified() != null) {
+			existingTestEntity.setDateModified(testEntity.getDateModified());
+		}
+
+		if (testEntity.getDescription() != null) {
+			existingTestEntity.setDescription(testEntity.getDescription());
+		}
+
+		if (testEntity.getDocumentId() != null) {
+			existingTestEntity.setDocumentId(testEntity.getDocumentId());
+		}
+
+		if (testEntity.getJsonProperty() != null) {
+			existingTestEntity.setJsonProperty(testEntity.getJsonProperty());
+		}
+
+		if (testEntity.getName() != null) {
+			existingTestEntity.setName(testEntity.getName());
+		}
+
+		if (testEntity.getSelf() != null) {
+			existingTestEntity.setSelf(testEntity.getSelf());
+		}
+
+		if (testEntity.getType() != null) {
+			existingTestEntity.setType(testEntity.getType());
+		}
+
+		preparePatch(testEntity, existingTestEntity);
+
+		return putTestEntity(
+			testEntityId, optionalParameter, existingTestEntity);
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/test/1.0.0/test-entities/{testEntityId}' -d $'{"dateCreated": ___, "dateModified": ___, "description": ___, "documentId": ___, "jsonProperty": ___, "name": ___, "nestedTestEntity": ___, "self": ___, "testEntities": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "testEntityId"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "optionalParameter"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "TestEntity")}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.Path("/test-entities/{testEntityId}")
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@javax.ws.rs.PUT
+	@Override
+	public TestEntity putTestEntity(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("testEntityId")
+			Long testEntityId,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("optionalParameter")
+			Long optionalParameter,
+			TestEntity testEntity)
+		throws Exception {
+
 		return null;
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/test/1.0.0/test-entities/batch'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "optionalParameter"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "callbackURL"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "TestEntity")}
+	)
+	@javax.ws.rs.Consumes("application/json")
+	@javax.ws.rs.Path("/test-entities/batch")
+	@javax.ws.rs.Produces("application/json")
+	@javax.ws.rs.PUT
+	@Override
+	public Response putTestEntityBatch(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("optionalParameter")
+			Long optionalParameter,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("callbackURL")
+			String callbackURL,
+			Object object)
+		throws Exception {
+
+		vulcanBatchEngineImportTaskResource.setContextAcceptLanguage(
+			contextAcceptLanguage);
+		vulcanBatchEngineImportTaskResource.setContextCompany(contextCompany);
+		vulcanBatchEngineImportTaskResource.setContextHttpServletRequest(
+			contextHttpServletRequest);
+		vulcanBatchEngineImportTaskResource.setContextUriInfo(contextUriInfo);
+		vulcanBatchEngineImportTaskResource.setContextUser(contextUser);
+
+		Response.ResponseBuilder responseBuilder = Response.accepted();
+
+		return responseBuilder.entity(
+			vulcanBatchEngineImportTaskResource.putImportTask(
+				TestEntity.class.getName(), callbackURL, object)
+		).build();
 	}
 
 	@Override
@@ -366,7 +494,7 @@ public abstract class BaseTestEntityResourceImpl
 	}
 
 	public Set<String> getAvailableUpdateStrategies() {
-		return SetUtil.fromArray("PARTIAL_UPDATE");
+		return SetUtil.fromArray("PARTIAL_UPDATE", "UPDATE");
 	}
 
 	@Override
@@ -437,6 +565,14 @@ public abstract class BaseTestEntityResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			testEntityUnsafeFunction = testEntity -> patchTestEntity(
+				testEntity.getId() != null ? testEntity.getId() :
+					_parseLong((String)parameters.get("testEntityId")),
+				_parseLong((String)parameters.get("optionalParameter")),
+				testEntity);
+		}
+
+		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+			testEntityUnsafeFunction = testEntity -> putTestEntity(
 				testEntity.getId() != null ? testEntity.getId() :
 					_parseLong((String)parameters.get("testEntityId")),
 				_parseLong((String)parameters.get("optionalParameter")),
@@ -672,6 +808,10 @@ public abstract class BaseTestEntityResourceImpl
 
 		return addAction(
 			actionName, siteId, methodName, null, permissionName, siteId);
+	}
+
+	protected void preparePatch(
+		TestEntity testEntity, TestEntity existingTestEntity) {
 	}
 
 	protected <T, R, E extends Throwable> List<R> transform(

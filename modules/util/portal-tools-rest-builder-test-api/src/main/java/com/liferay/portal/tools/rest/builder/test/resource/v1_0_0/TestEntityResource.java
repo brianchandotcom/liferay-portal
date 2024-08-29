@@ -70,6 +70,14 @@ public interface TestEntityResource {
 			Long testEntityId, Long optionalParameter, TestEntity testEntity)
 		throws Exception;
 
+	public TestEntity putTestEntity(
+			Long testEntityId, Long optionalParameter, TestEntity testEntity)
+		throws Exception;
+
+	public Response putTestEntityBatch(
+			Long optionalParameter, String callbackURL, Object object)
+		throws Exception;
+
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {
 	}

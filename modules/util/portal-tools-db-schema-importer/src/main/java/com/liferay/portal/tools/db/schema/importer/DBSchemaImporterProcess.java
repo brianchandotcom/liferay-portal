@@ -92,8 +92,8 @@ public class DBSchemaImporterProcess {
 	}
 
 	private void _copyTable(
-			String sourceTableName, String targetTableName,
-			Connection sourceConnection, Connection targetConnection)
+			Connection sourceConnection, String sourceTableName,
+			Connection targetConnection, String targetTableName)
 		throws Exception {
 
 		List<String> sourceColumnsName = _sourceTableColumns.get(
@@ -573,8 +573,8 @@ public class DBSchemaImporterProcess {
 			Connection targetConnection = _targetDataSource.getConnection()) {
 
 			_copyTable(
-				sourceTableName, targetTableName, sourceConnection,
-				targetConnection);
+				sourceConnection, sourceTableName, targetConnection,
+				targetTableName);
 		}
 		catch (Exception exception) {
 			_log.error(exception);

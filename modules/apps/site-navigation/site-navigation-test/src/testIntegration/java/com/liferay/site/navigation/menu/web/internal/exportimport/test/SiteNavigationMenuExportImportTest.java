@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -63,7 +62,6 @@ import org.junit.runner.RunWith;
 /**
  * @author Javier Moral
  */
-@FeatureFlags("LPD-23048")
 @RunWith(Arquillian.class)
 public class SiteNavigationMenuExportImportTest
 	extends BasePortletExportImportTestCase {

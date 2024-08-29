@@ -143,6 +143,19 @@ public class DBSchemaImporterProcess {
 		}
 	}
 
+	private void _copyTable(String sourceTableName, String targetTableName) {
+		try (Connection sourceConnection = _sourceDataSource.getConnection();
+			Connection targetConnection = _targetDataSource.getConnection()) {
+
+			_copyTable(
+				sourceConnection, sourceTableName, targetConnection,
+				targetTableName);
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+		}
+	}
+
 	private void _copyTables() throws Exception {
 		List<Future<?>> futures = new ArrayList<>();
 
@@ -564,21 +577,6 @@ public class DBSchemaImporterProcess {
 		}
 
 		_syncSQLs.clear();
-	}
-
-	private void _copyTable(
-		String sourceTableName, String targetTableName) {
-
-		try (Connection sourceConnection = _sourceDataSource.getConnection();
-			Connection targetConnection = _targetDataSource.getConnection()) {
-
-			_copyTable(
-				sourceConnection, sourceTableName, targetConnection,
-				targetTableName);
-		}
-		catch (Exception exception) {
-			_log.error(exception);
-		}
 	}
 
 	private void _setColumn(

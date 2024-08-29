@@ -40,8 +40,11 @@ import java.util.Enumeration;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Supplier;
 
 import javax.portlet.PortletPreferences;
+import javax.portlet.ReadOnlyException;
+import javax.portlet.ValidatorException;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
@@ -239,15 +242,21 @@ public class PrefsPropsImpl implements PrefsProps {
 
 	@Override
 	public PortletPreferences getPreferences() {
-		return _portalPreferencesLocalService.getPreferences(
-			PortletKeys.PREFS_OWNER_ID_DEFAULT,
-			PortletKeys.PREFS_OWNER_TYPE_COMPANY);
+		return getPreferences(PortletKeys.PREFS_OWNER_ID_DEFAULT);
 	}
 
 	@Override
 	public PortletPreferences getPreferences(long companyId) {
-		return _portalPreferencesLocalService.getPreferences(
-			companyId, PortletKeys.PREFS_OWNER_TYPE_COMPANY);
+		PortletPreferences portletPreferences = _fetchPreferences(companyId);
+
+		if (portletPreferences == _emptyPortletPreferences) {
+			portletPreferences = new LazyPortletPreferences(
+				_emptyPortletPreferences,
+				() -> _portalPreferencesLocalService.getPreferences(
+					companyId, PortletKeys.PREFS_OWNER_TYPE_COMPANY));
+		}
+
+		return portletPreferences;
 	}
 
 	@Override
@@ -522,6 +531,88 @@ public class PrefsPropsImpl implements PrefsProps {
 		_portalPreferenceValueLocalService;
 
 	private ServiceRegistration<?> _serviceRegistration;
+
+	private static class LazyPortletPreferences implements PortletPreferences {
+
+		@Override
+		public Map<String, String[]> getMap() {
+			return _portletPreferences.getMap();
+		}
+
+		@Override
+		public Enumeration<String> getNames() {
+			return _portletPreferences.getNames();
+		}
+
+		@Override
+		public String getValue(String key, String def) {
+			return _portletPreferences.getValue(key, def);
+		}
+
+		@Override
+		public String[] getValues(String key, String[] def) {
+			return _portletPreferences.getValues(key, def);
+		}
+
+		@Override
+		public boolean isReadOnly(String key) {
+			return _portletPreferences.isReadOnly(key);
+		}
+
+		@Override
+		public void reset(String key) throws ReadOnlyException {
+			_ensureLoaded();
+
+			_portletPreferences.reset(key);
+		}
+
+		@Override
+		public void setValue(String key, String value)
+			throws ReadOnlyException {
+
+			_ensureLoaded();
+
+			_portletPreferences.setValue(key, value);
+		}
+
+		@Override
+		public void setValues(String key, String... values)
+			throws ReadOnlyException {
+
+			_ensureLoaded();
+
+			_portletPreferences.setValues(key, values);
+		}
+
+		@Override
+		public void store() throws IOException, ValidatorException {
+			_ensureLoaded();
+
+			_portletPreferences.store();
+		}
+
+		private LazyPortletPreferences(
+			PortletPreferences portletPreferences,
+			Supplier<PortletPreferences> writePortletPreferencesSupplier) {
+
+			_portletPreferences = portletPreferences;
+			_writePortletPreferencesSupplier = writePortletPreferencesSupplier;
+		}
+
+		private void _ensureLoaded() {
+			if (!_loaded) {
+				_portletPreferences = _writePortletPreferencesSupplier.get();
+
+				_loaded = true;
+			}
+		}
+
+		private boolean _loaded;
+		private PortletPreferences _portletPreferences;
+		private final Supplier<PortletPreferences>
+			_writePortletPreferencesSupplier;
+
+	}
 
 	private class PortalPreferenceValueModelListener
 		extends BaseModelListener<PortalPreferenceValue> {

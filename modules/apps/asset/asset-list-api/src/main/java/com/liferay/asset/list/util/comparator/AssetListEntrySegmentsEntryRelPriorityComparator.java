@@ -22,12 +22,14 @@ public class AssetListEntrySegmentsEntryRelPriorityComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"priority"};
 
-	public AssetListEntrySegmentsEntryRelPriorityComparator() {
-		this(true);
-	}
+	public static AssetListEntrySegmentsEntryRelPriorityComparator getInstance(
+		boolean ascending) {
 
-	public AssetListEntrySegmentsEntryRelPriorityComparator(boolean ascending) {
-		_ascending = ascending;
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -64,6 +66,20 @@ public class AssetListEntrySegmentsEntryRelPriorityComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private AssetListEntrySegmentsEntryRelPriorityComparator(
+		boolean ascending) {
+
+		_ascending = ascending;
+	}
+
+	private static final AssetListEntrySegmentsEntryRelPriorityComparator
+		_INSTANCE_ASCENDING =
+			new AssetListEntrySegmentsEntryRelPriorityComparator(true);
+
+	private static final AssetListEntrySegmentsEntryRelPriorityComparator
+		_INSTANCE_DESCENDING =
+			new AssetListEntrySegmentsEntryRelPriorityComparator(false);
 
 	private final boolean _ascending;
 

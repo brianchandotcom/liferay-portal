@@ -21,12 +21,12 @@ public class AssetListEntryTitleComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"title"};
 
-	public AssetListEntryTitleComparator() {
-		this(false);
-	}
+	public static AssetListEntryTitleComparator getInstance(boolean ascending) {
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
 
-	public AssetListEntryTitleComparator(boolean ascending) {
-		_ascending = ascending;
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -63,6 +63,16 @@ public class AssetListEntryTitleComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private AssetListEntryTitleComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final AssetListEntryTitleComparator _INSTANCE_ASCENDING =
+		new AssetListEntryTitleComparator(true);
+
+	private static final AssetListEntryTitleComparator _INSTANCE_DESCENDING =
+		new AssetListEntryTitleComparator(false);
 
 	private final boolean _ascending;
 

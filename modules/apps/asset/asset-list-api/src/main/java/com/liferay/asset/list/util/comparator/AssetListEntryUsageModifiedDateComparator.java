@@ -23,12 +23,14 @@ public class AssetListEntryUsageModifiedDateComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"modifiedDate"};
 
-	public AssetListEntryUsageModifiedDateComparator() {
-		this(true);
-	}
+	public static AssetListEntryUsageModifiedDateComparator getInstance(
+		boolean ascending) {
 
-	public AssetListEntryUsageModifiedDateComparator(boolean ascending) {
-		_ascending = ascending;
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -65,6 +67,18 @@ public class AssetListEntryUsageModifiedDateComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private AssetListEntryUsageModifiedDateComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final AssetListEntryUsageModifiedDateComparator
+		_INSTANCE_ASCENDING = new AssetListEntryUsageModifiedDateComparator(
+			true);
+
+	private static final AssetListEntryUsageModifiedDateComparator
+		_INSTANCE_DESCENDING = new AssetListEntryUsageModifiedDateComparator(
+			false);
 
 	private final boolean _ascending;
 

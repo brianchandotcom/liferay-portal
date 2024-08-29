@@ -641,14 +641,14 @@ public class DBSchemaImporterProcess {
 	private final ExecutorService _executorService =
 		Executors.newFixedThreadPool(5);
 	private final String _path;
+	private final Map<String, List<String>> _sourceColumnNamesMap =
+		new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
 	private final Map<String, Integer> _sourceColumnsType = new HashMap<>();
 	private final DataSource _sourceDataSource;
-	private final Map<String, List<String>> _sourceColumnNamesMap = new TreeMap<>(
-		String.CASE_INSENSITIVE_ORDER);
 	private final List<String> _syncSQLs = new ArrayList<>();
+	private final Map<String, List<String>> _targetColumnNamesMap =
+		new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
 	private final Map<String, Integer> _targetColumnsType = new HashMap<>();
 	private final DataSource _targetDataSource;
-	private final Map<String, List<String>> _targetColumnNamesMap = new TreeMap<>(
-		String.CASE_INSENSITIVE_ORDER);
 
 }

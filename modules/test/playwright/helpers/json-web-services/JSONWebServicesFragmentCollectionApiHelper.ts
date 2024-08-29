@@ -41,4 +41,21 @@ export class JSONWebServicesFragmentCollectionApiHelper {
 			}
 		);
 	}
+
+	async deleteFragmentCollection(
+		fragmentCollectionId: string
+	): Promise<FragmentCollection> {
+		const urlSearchParams = new URLSearchParams();
+
+		urlSearchParams.append('fragmentCollectionId', fragmentCollectionId);
+
+		return await this.apiHelpers.post(
+			`${liferayConfig.environment.baseUrl}${this.basePath}/delete-fragment-collection`,
+			{
+				data: urlSearchParams.toString(),
+				failOnStatusCode: true,
+				headers: await this.apiHelpers.getJSONWebServicesHeaders(),
+			}
+		);
+	}
 }

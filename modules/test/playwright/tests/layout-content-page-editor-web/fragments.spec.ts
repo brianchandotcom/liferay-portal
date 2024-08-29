@@ -7,7 +7,6 @@ import {Page, expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
-import {fragmentsPagesTest} from '../../fixtures/fragmentPagesTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {masterPagesPagesTest} from '../../fixtures/masterPagesPagesTest';
@@ -44,7 +43,6 @@ const test = mergeTests(
 	featureFlagsTest({
 		'LPS-178052': true,
 	}),
-	fragmentsPagesTest,
 	isolatedSiteTest,
 	journalPagesTest,
 	loginTest(),
@@ -175,23 +173,15 @@ test.describe('Content Display Fragment', () => {
 		{
 			tag: ['@LPS-97182', '@LPS-100545', '@LPS-101249'],
 		},
-		async ({
-			apiHelpers,
-			fragmentsPage,
-			page,
-			pageEditorPage,
-			pageManagementSite,
-		}) => {
+		async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
 
 			// Create a fragment with itemSelector configuration for file entries
-
-			const fragmentCollectionName = getRandomString();
 
 			const fragmentCollection =
 				await apiHelpers.jsonWebServicesFragmentCollection.addFragmentCollection(
 					{
 						groupId: pageManagementSite.id,
-						name: fragmentCollectionName,
+						name: getRandomString(),
 					}
 				);
 
@@ -273,9 +263,9 @@ test.describe('Content Display Fragment', () => {
 
 			// Remove fragment set
 
-			await fragmentsPage.goto(pageManagementSite.friendlyUrlPath);
-
-			await fragmentsPage.deleteFragmentSet(fragmentCollectionName);
+			await apiHelpers.jsonWebServicesFragmentCollection.deleteFragmentCollection(
+				fragmentCollection.fragmentCollectionId
+			);
 		}
 	);
 
@@ -284,13 +274,7 @@ test.describe('Content Display Fragment', () => {
 		{
 			tag: ['@LPS-97182', '@LPS-100545', '@LPS-101249'],
 		},
-		async ({
-			apiHelpers,
-			fragmentsPage,
-			page,
-			pageEditorPage,
-			pageManagementSite,
-		}) => {
+		async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
 
 			// Create animal web content
 
@@ -326,13 +310,11 @@ test.describe('Content Display Fragment', () => {
 
 			// Create a fragment with itemSelector configuration for animals
 
-			const fragmentCollectionName = getRandomString();
-
 			const fragmentCollection =
 				await apiHelpers.jsonWebServicesFragmentCollection.addFragmentCollection(
 					{
 						groupId: pageManagementSite.id,
-						name: fragmentCollectionName,
+						name: getRandomString(),
 					}
 				);
 
@@ -445,9 +427,9 @@ test.describe('Content Display Fragment', () => {
 
 			// Remove fragment set
 
-			await fragmentsPage.goto(pageManagementSite.friendlyUrlPath);
-
-			await fragmentsPage.deleteFragmentSet(fragmentCollectionName);
+			await apiHelpers.jsonWebServicesFragmentCollection.deleteFragmentCollection(
+				fragmentCollection.fragmentCollectionId
+			);
 		}
 	);
 });

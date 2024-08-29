@@ -152,6 +152,8 @@ public class ActionKeys {
 
 	public static final String DOWNLOAD = "DOWNLOAD";
 
+	public static final String EDIT_SUBORGANIZATIONS = "EDIT_SUBORGANIZATIONS";
+
 	public static final String EXPIRE = "EXPIRE";
 
 	public static final String EXPORT_ALL_EVENTS = "EXPORT_ALL_EVENTS";

@@ -177,7 +177,7 @@ test.describe('Content Display Fragment', () => {
 
 			// Create a fragment with itemSelector configuration for file entries
 
-			const fragmentCollection =
+			const {fragmentCollectionId} =
 				await apiHelpers.jsonWebServicesFragmentCollection.addFragmentCollection(
 					{
 						groupId: pageManagementSite.id,
@@ -192,7 +192,7 @@ test.describe('Content Display Fragment', () => {
 					itemType:
 						'com.liferay.portal.kernel.repository.model.FileEntry',
 				}),
-				fragmentCollectionId: fragmentCollection.fragmentCollectionId,
+				fragmentCollectionId,
 				groupId: pageManagementSite.id,
 				html: CONTENT_DISPLAY_FRAGMENT_HTML,
 				name: fragmentEntryName,
@@ -264,7 +264,7 @@ test.describe('Content Display Fragment', () => {
 			// Remove fragment set
 
 			await apiHelpers.jsonWebServicesFragmentCollection.deleteFragmentCollection(
-				fragmentCollection.fragmentCollectionId
+				fragmentCollectionId
 			);
 		}
 	);
@@ -310,7 +310,7 @@ test.describe('Content Display Fragment', () => {
 
 			// Create a fragment with itemSelector configuration for animals
 
-			const fragmentCollection =
+			const {fragmentCollectionId} =
 				await apiHelpers.jsonWebServicesFragmentCollection.addFragmentCollection(
 					{
 						groupId: pageManagementSite.id,
@@ -325,7 +325,7 @@ test.describe('Content Display Fragment', () => {
 					itemSubtype: ANIMAL_DDM_STRUCTURE_KEY,
 					itemType: 'com.liferay.journal.model.JournalArticle',
 				}),
-				fragmentCollectionId: fragmentCollection.fragmentCollectionId,
+				fragmentCollectionId,
 				groupId: pageManagementSite.id,
 				html: CONTENT_DISPLAY_FRAGMENT_HTML,
 				name: fragmentEntryName,
@@ -428,7 +428,7 @@ test.describe('Content Display Fragment', () => {
 			// Remove fragment set
 
 			await apiHelpers.jsonWebServicesFragmentCollection.deleteFragmentCollection(
-				fragmentCollection.fragmentCollectionId
+				fragmentCollectionId
 			);
 		}
 	);

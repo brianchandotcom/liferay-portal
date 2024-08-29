@@ -368,7 +368,7 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 	public void testSearchEndpointRedirect() throws Exception {
 		_baseURI = "portal-search-rest";
 
-		_testPostSearchPageWithKeywords();
+		testPostSearchPage();
 	}
 
 	@Override

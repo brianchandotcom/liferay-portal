@@ -1016,13 +1016,11 @@ public abstract class Base${schemaName}ResourceImpl
 							/>
 						<#elseif stringUtil.equals(javaMethodParameter.parameterName, "multipartBody")>
 							null
-						<#elseif freeMarkerTool.isQueryParameter(javaMethodParameter, patchBatchJavaMethodSignature.operation)>
+						<#else>
 							<@castParameters
 								type = javaMethodParameter.parameterType
 								value = javaMethodParameter.parameterName
 							/>
-						<#else>
-							${javaMethodParameter.parameterName}
 						</#if>
 
 						<#sep>, </#sep>

@@ -87,6 +87,7 @@ public class DBSchemaImporterProcess {
 			_targetDataSource, _readFile(new File(_path, "indexes.sql")));
 
 		_executorService.shutdownNow();
+
 		_executorService.awaitTermination(10, TimeUnit.SECONDS);
 	}
 

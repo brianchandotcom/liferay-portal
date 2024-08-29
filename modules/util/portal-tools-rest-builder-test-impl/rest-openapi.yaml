@@ -263,3 +263,38 @@ paths:
                     description:
                         "OK"
             tags: ["TestEntity"]
+        put:
+            operationId: putTestEntity
+            parameters:
+                - in: path
+                  name: testEntityId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: optionalParameter
+                  required: false
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/TestEntity"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/TestEntity"
+            responses:
+                200:
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/TestEntity"
+                        "application/xml":
+                            schema:
+                                $ref: "#/components/schemas/TestEntity"
+                    description:
+                        "OK"
+            tags: ["TestEntity"]

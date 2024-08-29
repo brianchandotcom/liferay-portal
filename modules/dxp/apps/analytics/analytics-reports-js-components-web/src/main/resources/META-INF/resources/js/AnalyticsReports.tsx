@@ -12,8 +12,6 @@ import OverviewMetrics from './components/OverviewMetrics';
 import '../css/main.scss';
 
 interface AnalyticsReports {
-	assetId: string;
-	assetType: string;
 	contentPerformanceDataFetchURL: string;
 }
 

@@ -42,6 +42,7 @@ const GlobalFilters = () => {
 				<Filter
 					active={filters.individual}
 					className="mr-3"
+					filterByValue="individuals"
 					icon="users"
 					items={[
 						{
@@ -65,6 +66,7 @@ const GlobalFilters = () => {
 
 				<Filter
 					active={filters.rangeSelector}
+					filterByValue="rangeSelectors"
 					icon="calendar"
 					items={[
 						{

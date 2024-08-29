@@ -106,11 +106,12 @@ const OverviewMetrics = () => {
 			try {
 				const response = await fetchAssetMetric({
 					assetId,
-					assetType: assetType || AssetTypes.Blog,
+					assetType: assetType || AssetTypes.Undefined,
 					groupId,
 					individual: filters.individual,
 					rangeSelector: filters.rangeSelector,
-					selectedMetrics: assetMetrics[assetType || AssetTypes.Blog],
+					selectedMetrics:
+						assetMetrics[assetType || AssetTypes.Undefined],
 				});
 
 				const data = await response.json();

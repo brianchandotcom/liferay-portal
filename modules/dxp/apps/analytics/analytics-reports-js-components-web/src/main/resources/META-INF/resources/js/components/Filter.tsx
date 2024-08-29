@@ -18,6 +18,7 @@ type Item = {
 
 interface IFilterProps extends React.HTMLAttributes<HTMLElement> {
 	active: string;
+	filterByValue: string;
 	icon: string;
 	items: Item[];
 	onSelectItem: (item: Item) => void;
@@ -27,6 +28,7 @@ interface IFilterProps extends React.HTMLAttributes<HTMLElement> {
 const Filter: React.FC<IFilterProps> = ({
 	active,
 	className,
+	filterByValue,
 	icon,
 	items,
 	onSelectItem,
@@ -41,6 +43,7 @@ const Filter: React.FC<IFilterProps> = ({
 				<ClayButton
 					aria-label={triggerLabel}
 					borderless
+					data-testid={filterByValue}
 					displayType="secondary"
 					size="xs"
 				>
@@ -57,6 +60,7 @@ const Filter: React.FC<IFilterProps> = ({
 			{items.map(({description, label, value}) => (
 				<ClayDropdown.Item
 					active={value === active}
+					data-testid={`filter-item-${value}`}
 					key={value}
 					onClick={() => onSelectItem({label, value})}
 					symbolLeft={value === active ? 'check' : ''}

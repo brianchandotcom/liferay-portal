@@ -448,8 +448,15 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 			Settings settings = pageDefinition.getSettings();
 
 			if (settings != null) {
-				layout = _layoutsImporter.importLayoutSettings(
-					contextUser.getUserId(), layout, settings.toString());
+				ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+				try {
+					layout = _layoutsImporter.importLayoutSettings(
+						contextUser.getUserId(), layout, settings.toString());
+				}
+				finally {
+					ServiceContextThreadLocal.popServiceContext();
+				}
 			}
 		}
 

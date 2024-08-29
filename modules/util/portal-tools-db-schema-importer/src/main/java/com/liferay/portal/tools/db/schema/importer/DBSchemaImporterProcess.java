@@ -73,9 +73,9 @@ public class DBSchemaImporterProcess {
 			_targetDataSource, _readFile(new File(_path, "tables.sql")));
 
 		_loadColumnsMetadata(
-			_sourceDataSource, _sourceTableColumns, _sourceColumnsType);
+			_sourceDataSource, _sourceColumnNamesMap, _sourceColumnsType);
 		_loadColumnsMetadata(
-			_targetDataSource, _targetTableColumns, _targetColumnsType);
+			_targetDataSource, _targetColumnNamesMap, _targetColumnsType);
 
 		AutoBatchPreparedStatementUtil.start();
 
@@ -96,14 +96,14 @@ public class DBSchemaImporterProcess {
 			Connection targetConnection, String targetTableName)
 		throws Exception {
 
-		List<String> sourceColumnsName = _sourceTableColumns.get(
+		List<String> sourceColumnsName = _sourceColumnNamesMap.get(
 			sourceTableName);
 
 		String selectSQL = StringBundler.concat(
 			"select ", StringUtil.merge(sourceColumnsName), " from ",
 			sourceTableName);
 
-		List<String> targetColumnsName = _targetTableColumns.get(
+		List<String> targetColumnsName = _targetColumnNamesMap.get(
 			targetTableName);
 
 		String insertSQL = StringBundler.concat(
@@ -161,8 +161,8 @@ public class DBSchemaImporterProcess {
 
 		ExecutorService executorService = Executors.newFixedThreadPool(5);
 
-		Set<String> sourceTables = _sourceTableColumns.keySet();
-		Set<String> targetTables = _targetTableColumns.keySet();
+		Set<String> sourceTables = _sourceColumnNamesMap.keySet();
+		Set<String> targetTables = _targetColumnNamesMap.keySet();
 
 		Iterator<String> sourceTablesIterator = sourceTables.iterator();
 		Iterator<String> targetTablesIterator = targetTables.iterator();
@@ -643,12 +643,12 @@ public class DBSchemaImporterProcess {
 	private final String _path;
 	private final Map<String, Integer> _sourceColumnsType = new HashMap<>();
 	private final DataSource _sourceDataSource;
-	private final Map<String, List<String>> _sourceTableColumns = new TreeMap<>(
+	private final Map<String, List<String>> _sourceColumnNamesMap = new TreeMap<>(
 		String.CASE_INSENSITIVE_ORDER);
 	private final List<String> _syncSQLs = new ArrayList<>();
 	private final Map<String, Integer> _targetColumnsType = new HashMap<>();
 	private final DataSource _targetDataSource;
-	private final Map<String, List<String>> _targetTableColumns = new TreeMap<>(
+	private final Map<String, List<String>> _targetColumnNamesMap = new TreeMap<>(
 		String.CASE_INSENSITIVE_ORDER);
 
 }

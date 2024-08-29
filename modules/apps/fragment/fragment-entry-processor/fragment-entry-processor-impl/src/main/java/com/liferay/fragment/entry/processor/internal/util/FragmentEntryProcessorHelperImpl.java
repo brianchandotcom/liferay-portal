@@ -302,9 +302,7 @@ public class FragmentEntryProcessorHelperImpl
 		JSONObject configJSONObject = editableValueJSONObject.getJSONObject(
 			"config");
 
-		if (FeatureFlagManagerUtil.isEnabled("LPD-11377") &&
-			infoField.isRepeatable()) {
-
+		if (infoField.isRepeatable()) {
 			List<InfoFieldValue<Object>> infoFieldValues = new ArrayList<>(
 				infoItemFieldValues.getInfoFieldValues(fieldName));
 
@@ -330,9 +328,7 @@ public class FragmentEntryProcessorHelperImpl
 				return StringPool.BLANK;
 			}
 
-			if (JSONUtil.isEmpty(configJSONObject) ||
-				!FeatureFlagManagerUtil.isEnabled("LPD-11377")) {
-
+			if (JSONUtil.isEmpty(configJSONObject)) {
 				Object firstItem = list.get(0);
 
 				Class<?> firstItemClass = firstItem.getClass();
@@ -859,9 +855,7 @@ public class FragmentEntryProcessorHelperImpl
 			return null;
 		}
 
-		if (JSONUtil.isEmpty(configJSONObject) ||
-			!FeatureFlagManagerUtil.isEnabled("LPD-11377")) {
-
+		if (JSONUtil.isEmpty(configJSONObject)) {
 			return list.get(0);
 		}
 

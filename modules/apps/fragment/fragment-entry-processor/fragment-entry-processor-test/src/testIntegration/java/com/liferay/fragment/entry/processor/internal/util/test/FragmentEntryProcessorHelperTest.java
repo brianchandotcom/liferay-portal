@@ -72,7 +72,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -501,7 +500,6 @@ public class FragmentEntryProcessorHelperTest {
 				fieldId, LocaleUtil.getSiteDefault()));
 	}
 
-	@FeatureFlags("LPD-11377")
 	@Test
 	public void testGetRepeatableAssetTags() throws Exception {
 		JSONObject jsonObject = JSONUtil.put(
@@ -546,7 +544,6 @@ public class FragmentEntryProcessorHelperTest {
 				LocaleUtil.SPAIN));
 	}
 
-	@FeatureFlags("LPD-11377")
 	@Test
 	public void testGetRepeatableAssetVocabularies() throws Exception {
 		JSONObject jsonObject = JSONUtil.put(
@@ -593,7 +590,6 @@ public class FragmentEntryProcessorHelperTest {
 				LocaleUtil.SPAIN));
 	}
 
-	@FeatureFlags("LPD-11377")
 	@Test
 	public void testGetRepeatableFieldValue() throws Exception {
 		JSONObject jsonObject = JSONUtil.put(

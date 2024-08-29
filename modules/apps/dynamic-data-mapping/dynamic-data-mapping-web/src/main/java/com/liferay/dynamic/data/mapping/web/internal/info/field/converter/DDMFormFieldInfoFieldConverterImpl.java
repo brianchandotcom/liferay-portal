@@ -28,7 +28,6 @@ import com.liferay.info.field.type.URLInfoFieldType;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.info.localized.bundle.FunctionInfoLocalizedValue;
 import com.liferay.petra.function.transform.TransformUtil;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.List;
@@ -71,11 +70,9 @@ public class DDMFormFieldInfoFieldConverterImpl
 			ddmFormField.isLocalizable()
 		).required(
 			ddmFormField.isRequired()
+		).repeatable(
+			ddmFormField.isRepeatable()
 		);
-
-		if (FeatureFlagManagerUtil.isEnabled("LPD-11377")) {
-			finalStep = finalStep.repeatable(ddmFormField.isRepeatable());
-		}
 
 		return finalStep.build();
 	}

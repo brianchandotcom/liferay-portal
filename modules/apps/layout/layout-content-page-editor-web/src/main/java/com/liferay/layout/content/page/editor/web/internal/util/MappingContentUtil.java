@@ -13,7 +13,6 @@ import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.search.InfoSearchClassMapperRegistryUtil;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -48,9 +47,7 @@ public class MappingContentUtil {
 		).put(
 			"label",
 			() -> {
-				if ((infoField.isMultivalued() || infoField.isRepeatable()) &&
-					FeatureFlagManagerUtil.isEnabled("LPD-11377")) {
-
+				if (infoField.isMultivalued() || infoField.isRepeatable()) {
 					return LanguageUtil.format(
 						locale, "x-repeatable", infoField.getLabel(locale),
 						false);

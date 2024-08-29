@@ -12,7 +12,6 @@ import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderIt
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewDescriptorRenderer;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 
@@ -70,9 +69,7 @@ public class RepeatableFieldInfoCollectionProviderItemSelectorView
 					RepeatableFieldsInfoItemFormProvider.class,
 					itemSelectorCriterion.getItemType());
 
-		if ((repeatableFieldsInfoItemFormProvider != null) &&
-			FeatureFlagManagerUtil.isEnabled("LPD-11377")) {
-
+		if (repeatableFieldsInfoItemFormProvider != null) {
 			return true;
 		}
 

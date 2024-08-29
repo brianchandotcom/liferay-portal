@@ -17,7 +17,6 @@ import {displayPageTemplatesPagesTest} from './fixtures/displayPageTemplatesPage
 const test = mergeTests(
 	displayPageTemplatesPagesTest,
 	featureFlagsTest({
-		'LPD-11377': true,
 		'LPD-20213': true,
 	}),
 	pageEditorPagesTest,

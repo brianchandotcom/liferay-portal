@@ -49,7 +49,7 @@ export class NodePropertiesSidebarPage {
 		this.editAssignmentButton = page.locator(
 			'a.c-link:has-text("Asset Creator")'
 		);
-		this.nodeLabelInput = page.locator('#nodeLabel');
+		this.nodeLabelInput = page.locator('#workflowDefinitionBaseNodeLabel');
 		this.notificationPage = new NotificationSectionPage(page);
 		this.page = page;
 		this.sidebarBackButton = page

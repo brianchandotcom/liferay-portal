@@ -4,7 +4,7 @@
  */
 
 import {Page, expect} from '@playwright/test';
-import fs from 'fs';
+import fs from 'fs/promises';
 import {getComparator} from 'playwright-core/lib/utils';
 
 import {getTempDir} from '../../../utils/temp';
@@ -25,14 +25,9 @@ export class StagingPage {
 		);
 
 		if (buffer !== null && buffer.diff !== undefined) {
-			fs.writeFile(
+			await fs.writeFile(
 				getTempDir() + '/' + siteKey + '-diff.png',
-				buffer.diff,
-				(error) => {
-					if (error) {
-						throw error;
-					}
-				}
+				buffer.diff
 			);
 		}
 

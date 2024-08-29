@@ -14,7 +14,6 @@ import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 
 import javax.portlet.PortletPreferences;
-import javax.portlet.ReadOnlyException;
 
 /**
  * @author Javier Moral
@@ -42,7 +41,7 @@ public class PortletPreferencesUpgradeProcess
 	protected void upgradePreferences(
 			long companyId, long ownerId, int ownerType, long plid,
 			String portletId, PortletPreferences portletPreferences)
-		throws ReadOnlyException {
+		throws Exception {
 
 		_addSiteNavigationMenuExternalReferenceCode(portletPreferences);
 
@@ -51,7 +50,7 @@ public class PortletPreferencesUpgradeProcess
 
 	private void _addRootMenuItemExternalReferenceCode(
 			PortletPreferences portletPreferences)
-		throws ReadOnlyException {
+		throws Exception {
 
 		long rootMenuItemId = GetterUtil.getLong(
 			portletPreferences.getValue("rootMenuItemId", "0"));
@@ -75,7 +74,7 @@ public class PortletPreferencesUpgradeProcess
 
 	private void _addSiteNavigationMenuExternalReferenceCode(
 			PortletPreferences portletPreferences)
-		throws ReadOnlyException {
+		throws Exception {
 
 		long siteNavigationMenuId = GetterUtil.getLong(
 			portletPreferences.getValue("siteNavigationMenuId", "0"));

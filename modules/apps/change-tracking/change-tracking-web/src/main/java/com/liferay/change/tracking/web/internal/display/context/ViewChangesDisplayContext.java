@@ -310,6 +310,57 @@ public class ViewChangesDisplayContext {
 		).build();
 	}
 
+	public Map<String, Object> getItemsOverview() {
+		boolean showHideable = ParamUtil.getBoolean(
+			_renderRequest, "showHideable");
+
+		Map<Long, String> siteNames = DisplayContextUtil.getSiteNames(
+			_ctCollection.getCtCollectionId(), showHideable, _themeDisplay);
+
+		siteNames.put((long)-1, "System Changes");
+
+		JSONArray itemsOverviewJSONArray = JSONFactoryUtil.createJSONArray();
+
+		for (Map.Entry<Long, String> site : siteNames.entrySet()) {
+			List<String> siteCount = DisplayContextUtil.getTypeNamesBySite(
+				_ctCollection.getCtCollectionId(), site.getKey(), showHideable,
+				_themeDisplay);
+
+			if (siteCount.isEmpty()) {
+				continue;
+			}
+
+			Map<String, Integer> typeNameCounts = new HashMap<>();
+
+			for (String typeName : siteCount) {
+				typeNameCounts.put(
+					typeName, typeNameCounts.getOrDefault(typeName, 0) + 1);
+			}
+
+			JSONArray typeNameAndCountJSONArray =
+				JSONFactoryUtil.createJSONArray();
+
+			for (Map.Entry<String, Integer> entry : typeNameCounts.entrySet()) {
+				typeNameAndCountJSONArray.put(
+					StringBundler.concat(
+						entry.getKey(), " (", entry.getValue(), ")"));
+			}
+
+			itemsOverviewJSONArray.put(
+				JSONUtil.put(
+					"siteCount", siteCount.size()
+				).put(
+					"siteName", site.getValue()
+				).put(
+					"typeNameAndCount", typeNameAndCountJSONArray
+				));
+		}
+
+		return HashMapBuilder.<String, Object>put(
+			"itemsOverview", itemsOverviewJSONArray
+		).build();
+	}
+
 	public String getMyWorkflowTaskPortletNamespace() {
 		return PortalUtil.getPortletNamespace(PortletKeys.MY_WORKFLOW_TASK);
 	}

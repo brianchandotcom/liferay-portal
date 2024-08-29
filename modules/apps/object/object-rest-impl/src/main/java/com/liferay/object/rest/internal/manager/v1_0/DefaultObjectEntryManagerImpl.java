@@ -28,6 +28,7 @@ import com.liferay.object.relationship.util.ObjectRelationshipUtil;
 import com.liferay.object.rest.dto.v1_0.FileEntry;
 import com.liferay.object.rest.dto.v1_0.Folder;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
+import com.liferay.object.rest.dto.v1_0.Scope;
 import com.liferay.object.rest.dto.v1_0.Status;
 import com.liferay.object.rest.filter.factory.FilterFactory;
 import com.liferay.object.rest.filter.parser.ObjectDefinitionFilterParser;
@@ -63,6 +64,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
@@ -1141,6 +1143,22 @@ public class DefaultObjectEntryManagerImpl
 		return QueryUtil.ALL_POS;
 	}
 
+	private long _getFileEntryGroupId(
+		String groupExternalReferenceCode, ObjectDefinition objectDefinition,
+		String scopeKey) {
+
+		if (Validator.isNotNull(groupExternalReferenceCode)) {
+			Group group = groupLocalService.fetchGroupByExternalReferenceCode(
+				groupExternalReferenceCode, objectDefinition.getCompanyId());
+
+			if (group != null) {
+				return group.getGroupId();
+			}
+		}
+
+		return getGroupId(objectDefinition, scopeKey, true);
+	}
+
 	private BaseModel<ExternalReferenceCodeModel> _getManyToOneRelatedModel(
 			ObjectRelationship objectRelationship, long primaryKey,
 			ObjectDefinition relatedObjectDefinition)
@@ -1413,6 +1431,14 @@ public class DefaultObjectEntryManagerImpl
 			fileContent = _decode(fileEntry.getFileBase64());
 		}
 
+		String groupExternalReferenceCode = null;
+
+		Scope scope = fileEntry.getScope();
+
+		if (scope != null) {
+			groupExternalReferenceCode = scope.getExternalReferenceCode();
+		}
+
 		if (StringUtil.equals(
 				fileSource, ObjectFieldSettingConstants.VALUE_DOCS_AND_MEDIA)) {
 
@@ -1422,7 +1448,8 @@ public class DefaultObjectEntryManagerImpl
 			long folderGroupId = 0;
 
 			if ((folder == null) || Validator.isNull(folder.getSiteId())) {
-				folderGroupId = getGroupId(objectDefinition, scopeKey, true);
+				folderGroupId = _getFileEntryGroupId(
+					groupExternalReferenceCode, objectDefinition, scopeKey);
 			}
 			else {
 				folderExternalReferenceCode = folder.getExternalReferenceCode();
@@ -1443,7 +1470,8 @@ public class DefaultObjectEntryManagerImpl
 				objectField.getCompanyId(),
 				fileEntry.getExternalReferenceCode(), fileContent,
 				fileEntry.getName(),
-				getGroupId(objectDefinition, scopeKey, true),
+				_getFileEntryGroupId(
+					groupExternalReferenceCode, objectDefinition, scopeKey),
 				objectField.getObjectFieldId(), serviceContext);
 		}
 

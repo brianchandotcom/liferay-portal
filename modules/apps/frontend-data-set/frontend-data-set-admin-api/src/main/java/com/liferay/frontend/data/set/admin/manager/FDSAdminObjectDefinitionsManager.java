@@ -3,17 +3,15 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.frontend.data.set.admin.model;
+package com.liferay.frontend.data.set.admin.manager;
 
 import com.liferay.portal.kernel.model.Company;
 
 /**
  * @author Daniel Sanz
  */
-public interface DataSetModelManager {
+public interface FDSAdminObjectDefinitionsManager {
 
-	public void checkCompany(Company company);
-
-	public void checkCompany(long companyId);
+	public void generateObjectDefinitions(Company company);
 
 }

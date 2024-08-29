@@ -9,6 +9,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.PortletSetupUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import javax.portlet.PortletPreferences;
@@ -44,14 +45,16 @@ public class PortletConfigurationUtil {
 	}
 
 	public static String getPortletTitle(
-		PortletPreferences portletPreferences, String languageId) {
+		String portletId, PortletPreferences portletPreferences,
+		String languageId) {
 
 		if (!isUseCustomTitle(portletPreferences)) {
 			return null;
 		}
 
 		return portletPreferences.getValue(
-			"portletSetupTitle_" + languageId, null);
+			"portletSetupTitle_" + languageId,
+			PortalUtil.getPortletTitle(portletId, languageId));
 	}
 
 	public static boolean isUseCustomTitle(

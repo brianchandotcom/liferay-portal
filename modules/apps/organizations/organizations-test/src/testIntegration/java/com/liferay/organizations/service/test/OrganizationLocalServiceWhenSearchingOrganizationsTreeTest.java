@@ -112,6 +112,21 @@ public class OrganizationLocalServiceWhenSearchingOrganizationsTreeTest {
 	}
 
 	@Test
+	public void testShouldIncludeRelatedOrganizationsOnlyWithEditSuborganizationsPermission()
+		throws Exception {
+		_role = RoleTestUtil.addRole(RoleConstants.TYPE_ORGANIZATION);
+
+		RoleTestUtil.addResourcePermission(
+			_role, Organization.class.getName(),
+			ResourceConstants.SCOPE_GROUP,
+			String.valueOf(_organization.getOrganizationId()),
+			ActionKeys.EDIT_SUBORGANIZATIONS);
+
+		_assertSearch(true);
+
+	}
+
+	@Test
 	public void testShouldIncludeSuborganizationsWitManageSuborganizationPermission()
 		throws Exception {
 

@@ -3,6 +3,13 @@
 		{
 			"fields": [
 				{
+					"dataType": "int",
+					"defaultValue": "2",
+					"label": "number-of-steps",
+					"name": "numberOfSteps",
+					"type": "text"
+				},
+				{
 					"defaultValue": true,
 					"label": "show-bullets-numbers",
 					"name": "showNumbers",

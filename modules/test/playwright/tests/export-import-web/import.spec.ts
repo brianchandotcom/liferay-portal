@@ -112,7 +112,10 @@ test('can import a lar file selecting some items to import', async ({
 	).toBeVisible();
 });
 
-[{name: 'com.liferay.site.initializer.welcome'}].forEach(({name}) => {
+[
+	{name: 'com.liferay.site.initializer.masterclass'},
+	{name: 'com.liferay.site.initializer.welcome'},
+].forEach(({name}) => {
 	test(`site initializer ${name} can be exported and imported`, async ({
 		apiHelpers,
 		page,

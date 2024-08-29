@@ -1403,6 +1403,14 @@ public class DefaultObjectEntryManagerImpl
 		FileEntry fileEntry = ObjectMapperUtil.readValue(
 			FileEntry.class, propertyValue);
 
+		if ((fileEntry != null) &&
+			!FeatureFlagManagerUtil.isEnabled(
+				objectDefinition.getCompanyId(), "LPD-29347")) {
+
+			fileEntry.setExternalReferenceCode(() -> null);
+			fileEntry.setScope(() -> null);
+		}
+
 		if ((fileEntry == null) ||
 			((fileEntry.getExternalReferenceCode() == null) &&
 			 (fileEntry.getFileBase64() == null))) {

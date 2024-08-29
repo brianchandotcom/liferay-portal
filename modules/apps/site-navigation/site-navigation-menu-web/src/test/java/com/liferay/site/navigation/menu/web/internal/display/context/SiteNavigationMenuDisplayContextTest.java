@@ -150,46 +150,51 @@ public class SiteNavigationMenuDisplayContextTest {
 
 	@Test
 	public void testGetDisplayStyleGroupId() throws ConfigurationException {
-		_setUpGroupLocalServiceUtil(_GROUP_ID);
+		long groupId = RandomTestUtil.randomLong();
+
+		_setUpGroupLocalServiceUtil(groupId);
 
 		SiteNavigationMenuDisplayContext siteNavigationMenuDisplayContext =
 			new SiteNavigationMenuDisplayContext(_httpServletRequest);
 
 		_setUpSiteNavigationMenuPortletInstanceConfigurationDisplayStyleGroup(
-			_DISPLAY_STYLE_GROUP_ID);
+			RandomTestUtil.randomLong());
 
 		Assert.assertEquals(
-			_GROUP_ID,
-			siteNavigationMenuDisplayContext.getDisplayStyleGroupId());
+			groupId, siteNavigationMenuDisplayContext.getDisplayStyleGroupId());
 	}
 
 	@Test
 	public void testGetRootMenuItemId() throws ConfigurationException {
-		_setUpSiteNavigationMenuItemLocalServiceUtil(_GROUP_ID);
+		long rootMenuItemId = RandomTestUtil.randomLong();
+
+		_setUpSiteNavigationMenuItemLocalServiceUtil(rootMenuItemId);
 
 		SiteNavigationMenuDisplayContext siteNavigationMenuDisplayContext =
 			new SiteNavigationMenuDisplayContext(_httpServletRequest);
 
 		_setUpSiteNavigationMenuPortletInstanceConfigurationRootMenuItem(
-			String.valueOf(_DISPLAY_STYLE_GROUP_ID));
+			String.valueOf(RandomTestUtil.randomLong()));
 
 		Assert.assertEquals(
-			String.valueOf(_GROUP_ID),
+			String.valueOf(rootMenuItemId),
 			siteNavigationMenuDisplayContext.getRootMenuItemId());
 	}
 
 	@Test
 	public void testGetSiteNavigationMenuId() throws ConfigurationException {
-		_setUpSiteNavigationMenuLocalServiceUtil(_GROUP_ID);
+		long siteNavigationMenuId = RandomTestUtil.randomLong();
+
+		_setUpSiteNavigationMenuLocalServiceUtil(siteNavigationMenuId);
 
 		SiteNavigationMenuDisplayContext siteNavigationMenuDisplayContext =
 			new SiteNavigationMenuDisplayContext(_httpServletRequest);
 
 		_setUpSiteNavigationMenuPortletInstanceConfigurationSiteNavigationMenu(
-			_DISPLAY_STYLE_GROUP_ID);
+			RandomTestUtil.randomLong());
 
 		Assert.assertEquals(
-			_GROUP_ID,
+			siteNavigationMenuId,
 			siteNavigationMenuDisplayContext.getSiteNavigationMenuId());
 	}
 
@@ -403,11 +408,6 @@ public class SiteNavigationMenuDisplayContextTest {
 			_layout
 		);
 	}
-
-	private static final long _DISPLAY_STYLE_GROUP_ID =
-		RandomTestUtil.randomLong();
-
-	private static final long _GROUP_ID = RandomTestUtil.randomLong();
 
 	private static final MockedStatic<ConfigurationProviderUtil>
 		_configurationProviderUtilMockedStatic = Mockito.mockStatic(

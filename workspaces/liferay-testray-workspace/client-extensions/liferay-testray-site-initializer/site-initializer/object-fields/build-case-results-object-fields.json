@@ -1,8 +1,8 @@
 {
 	"object-fields": [
 		{
-			"DBType": "String",
-			"businessType": "Aggregation",
+			"DBType": "Integer",
+			"businessType": "Integer",
 			"externalReferenceCode": "CASE-RESULTS-BLOCKED",
 			"indexed": false,
 			"indexedAsKeyword": false,
@@ -10,37 +10,13 @@
 				"en_US": "Case Results Blocked"
 			},
 			"name": "caseResultBlocked",
-			"objectFieldSettings": [
-				{
-					"name": "objectRelationshipName",
-					"value": "buildToCaseResult"
-				},
-				{
-					"name": "filters",
-					"value": [
-						{
-							"filterBy": "dueStatus",
-							"filterType": "includes",
-							"json": {
-								"in": [
-									"BLOCKED"
-								]
-							}
-						}
-					]
-				},
-				{
-					"name": "function",
-					"value": "COUNT"
-				}
-			],
 			"required": false,
 			"state": false,
 			"system": false
 		},
 		{
-			"DBType": "String",
-			"businessType": "Aggregation",
+			"DBType": "Integer",
+			"businessType": "Integer",
 			"externalReferenceCode": "CASE-RESULTS-DID-NOT-RUN",
 			"indexed": false,
 			"indexedAsKeyword": false,
@@ -48,37 +24,13 @@
 				"en_US": "Case Results Did Not Run"
 			},
 			"name": "caseResultDidNotRun",
-			"objectFieldSettings": [
-				{
-					"name": "objectRelationshipName",
-					"value": "buildToCaseResult"
-				},
-				{
-					"name": "filters",
-					"value": [
-						{
-							"filterBy": "dueStatus",
-							"filterType": "includes",
-							"json": {
-								"in": [
-									"DIDNOTRUN"
-								]
-							}
-						}
-					]
-				},
-				{
-					"name": "function",
-					"value": "COUNT"
-				}
-			],
 			"required": false,
 			"state": false,
 			"system": false
 		},
 		{
-			"DBType": "String",
-			"businessType": "Aggregation",
+			"DBType": "Integer",
+			"businessType": "Integer",
 			"externalReferenceCode": "CASE-RESULTS-FAILED",
 			"indexed": false,
 			"indexedAsKeyword": false,
@@ -86,37 +38,13 @@
 				"en_US": "Case Results Failed"
 			},
 			"name": "caseResultFailed",
-			"objectFieldSettings": [
-				{
-					"name": "objectRelationshipName",
-					"value": "buildToCaseResult"
-				},
-				{
-					"name": "filters",
-					"value": [
-						{
-							"filterBy": "dueStatus",
-							"filterType": "includes",
-							"json": {
-								"in": [
-									"FAILED"
-								]
-							}
-						}
-					]
-				},
-				{
-					"name": "function",
-					"value": "COUNT"
-				}
-			],
 			"required": false,
 			"state": false,
 			"system": false
 		},
 		{
-			"DBType": "String",
-			"businessType": "Aggregation",
+			"DBType": "Integer",
+			"businessType": "Integer",
 			"externalReferenceCode": "CASE-RESULTS-IN-PROGRESS",
 			"indexed": false,
 			"indexedAsKeyword": false,
@@ -124,37 +52,13 @@
 				"en_US": "Case Results In Progress"
 			},
 			"name": "caseResultInProgress",
-			"objectFieldSettings": [
-				{
-					"name": "objectRelationshipName",
-					"value": "buildToCaseResult"
-				},
-				{
-					"name": "filters",
-					"value": [
-						{
-							"filterBy": "dueStatus",
-							"filterType": "includes",
-							"json": {
-								"in": [
-									"INPROGRESS"
-								]
-							}
-						}
-					]
-				},
-				{
-					"name": "function",
-					"value": "COUNT"
-				}
-			],
 			"required": false,
 			"state": false,
 			"system": false
 		},
 		{
-			"DBType": "String",
-			"businessType": "Aggregation",
+			"DBType": "Integer",
+			"businessType": "Integer",
 			"externalReferenceCode": "CASE-RESULTS-INCOMPLETE",
 			"indexed": false,
 			"indexedAsKeyword": false,
@@ -162,38 +66,13 @@
 				"en_US": "Case Results Incomplete"
 			},
 			"name": "caseResultIncomplete",
-			"objectFieldSettings": [
-				{
-					"name": "objectRelationshipName",
-					"value": "buildToCaseResult"
-				},
-				{
-					"name": "filters",
-					"value": [
-						{
-							"filterBy": "dueStatus",
-							"filterType": "includes",
-							"json": {
-								"in": [
-									"INPROGRESS",
-									"UNTESTED"
-								]
-							}
-						}
-					]
-				},
-				{
-					"name": "function",
-					"value": "COUNT"
-				}
-			],
 			"required": false,
 			"state": false,
 			"system": false
 		},
 		{
-			"DBType": "String",
-			"businessType": "Aggregation",
+			"DBType": "Integer",
+			"businessType": "Integer",
 			"externalReferenceCode": "CASE-RESULTS-PASSED",
 			"indexed": false,
 			"indexedAsKeyword": false,
@@ -201,37 +80,13 @@
 				"en_US": "Case Results Passed"
 			},
 			"name": "caseResultPassed",
-			"objectFieldSettings": [
-				{
-					"name": "objectRelationshipName",
-					"value": "buildToCaseResult"
-				},
-				{
-					"name": "filters",
-					"value": [
-						{
-							"filterBy": "dueStatus",
-							"filterType": "includes",
-							"json": {
-								"in": [
-									"PASSED"
-								]
-							}
-						}
-					]
-				},
-				{
-					"name": "function",
-					"value": "COUNT"
-				}
-			],
 			"required": false,
 			"state": false,
 			"system": false
 		},
 		{
-			"DBType": "String",
-			"businessType": "Aggregation",
+			"DBType": "Integer",
+			"businessType": "Integer",
 			"externalReferenceCode": "CASE-RESULTS-TEST-FIX",
 			"indexed": false,
 			"indexedAsKeyword": false,
@@ -239,37 +94,13 @@
 				"en_US": "Case Results Test Fix"
 			},
 			"name": "caseResultTestFix",
-			"objectFieldSettings": [
-				{
-					"name": "objectRelationshipName",
-					"value": "buildToCaseResult"
-				},
-				{
-					"name": "filters",
-					"value": [
-						{
-							"filterBy": "dueStatus",
-							"filterType": "includes",
-							"json": {
-								"in": [
-									"TESTFIX"
-								]
-							}
-						}
-					]
-				},
-				{
-					"name": "function",
-					"value": "COUNT"
-				}
-			],
 			"required": false,
 			"state": false,
 			"system": false
 		},
 		{
-			"DBType": "String",
-			"businessType": "Aggregation",
+			"DBType": "Integer",
+			"businessType": "Integer",
 			"externalReferenceCode": "CASE-RESULTS-UNTESTED",
 			"indexed": false,
 			"indexedAsKeyword": false,
@@ -277,30 +108,6 @@
 				"en_US": "Case Results Untested"
 			},
 			"name": "caseResultUntested",
-			"objectFieldSettings": [
-				{
-					"name": "objectRelationshipName",
-					"value": "buildToCaseResult"
-				},
-				{
-					"name": "filters",
-					"value": [
-						{
-							"filterBy": "dueStatus",
-							"filterType": "includes",
-							"json": {
-								"in": [
-									"UNTESTED"
-								]
-							}
-						}
-					]
-				},
-				{
-					"name": "function",
-					"value": "COUNT"
-				}
-			],
 			"required": false,
 			"state": false,
 			"system": false

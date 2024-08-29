@@ -97,8 +97,8 @@ public class PortletPreferencesUpgradeProcess extends UpgradeProcess {
 					"?)"))) {
 
 			preparedStatement.setLong(1, ctCollectionId);
-			preparedStatement.setLong(2, ctCollectionId);
-			preparedStatement.setString(3, namespace);
+			preparedStatement.setString(2, namespace);
+			preparedStatement.setLong(3, ctCollectionId);
 			preparedStatement.setLong(4, groupId);
 			preparedStatement.setLong(
 				5, _companyControlPanelPlids.get(companyId));

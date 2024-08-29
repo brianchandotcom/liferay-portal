@@ -30,7 +30,7 @@ export const test = mergeTests(
 	loginTest()
 );
 
-async function getCurrentPageScreenshot(siteKey: string, staging: boolean) {
+async function getSiteHomePageScreenshot(siteKey: string, staging: boolean) {
 	await this.page.goto(`/web/${siteKey}${staging ? '-staging' : ''}`);
 
 	const url = this.page.url();
@@ -130,8 +130,8 @@ test('can import a lar file selecting some items to import', async ({
 		const comparator = getComparator('image/png');
 
 		const buffer = comparator(
-			await getCurrentPageScreenshot(site.name, false),
-			await getCurrentPageScreenshot(site.name, true)
+			await getSiteHomePageScreenshot(site.name, false),
+			await getSiteHomePageScreenshot(site.name, true)
 		);
 
 		if (buffer !== null && buffer.diff !== undefined) {

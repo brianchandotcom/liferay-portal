@@ -408,17 +408,18 @@ function computeDrop({
 					layoutDataRef.current
 				);
 
-				const existingStepper = getStepperChild(
-					form,
-					layoutDataRef.current,
-					fragmentEntryLinksRef.current
-				);
-
-				message = existingStepper
-					? Liferay.Language.get('forms-can-only-contain-one-stepper')
-					: Liferay.Language.get(
-							'form-components-can-only-be-placed-inside-a-mapped-form-container'
-						);
+				if (
+					form &&
+					getStepperChild(
+						form,
+						layoutDataRef.current,
+						fragmentEntryLinksRef.current
+					)
+				) {
+					message = Liferay.Language.get(
+						'forms-can-only-contain-one-stepper'
+					);
+				}
 			}
 		}
 		else if (

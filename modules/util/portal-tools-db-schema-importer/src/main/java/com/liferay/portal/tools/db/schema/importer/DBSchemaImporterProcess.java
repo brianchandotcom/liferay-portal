@@ -459,7 +459,7 @@ public class DBSchemaImporterProcess {
 	}
 
 	private void _loadColumnsMetadata(
-			DataSource dataSource, Map<String, List<String>> tableColumns,
+			DataSource dataSource, Map<String, List<String>> columnNamesMap,
 			Map<String, Integer> columnTypes)
 		throws Exception {
 
@@ -474,7 +474,7 @@ public class DBSchemaImporterProcess {
 					String tableName = resultSet.getString("TABLE_NAME");
 					String columnName = resultSet.getString("COLUMN_NAME");
 
-					List<String> columnNames = tableColumns.computeIfAbsent(
+					List<String> columnNames = columnNamesMap.computeIfAbsent(
 						tableName, key -> new ArrayList<>());
 
 					columnNames.add(columnName);
@@ -486,7 +486,7 @@ public class DBSchemaImporterProcess {
 			}
 		}
 
-		for (List<String> columnNames : tableColumns.values()) {
+		for (List<String> columnNames : columnNamesMap.values()) {
 			Collections.sort(columnNames, String.CASE_INSENSITIVE_ORDER);
 		}
 	}

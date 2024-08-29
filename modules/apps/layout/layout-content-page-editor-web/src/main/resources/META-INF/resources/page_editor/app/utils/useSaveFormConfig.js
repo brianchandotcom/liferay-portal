@@ -24,7 +24,7 @@ export function useSaveFormConfig(item) {
 				});
 			}
 
-			dispatch(
+			return dispatch(
 				updateFormItemConfig({
 					fields,
 					itemConfig: nextConfig,

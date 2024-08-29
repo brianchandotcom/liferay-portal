@@ -119,6 +119,10 @@ public class AddDefaultLayoutInitialRequestPortalInstanceLifecycleListener
 		ServiceContext currentThreadServiceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
+		if (currentThreadServiceContext == null) {
+			currentThreadServiceContext = new ServiceContext();
+		}
+
 		try (SafeCloseable safeCloseable =
 				CompanyThreadLocal.setInitializingPortalInstance(true)) {
 

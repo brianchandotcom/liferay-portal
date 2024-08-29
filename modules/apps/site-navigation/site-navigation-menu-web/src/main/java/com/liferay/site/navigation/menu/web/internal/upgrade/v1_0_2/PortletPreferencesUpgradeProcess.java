@@ -43,14 +43,24 @@ public class PortletPreferencesUpgradeProcess
 			String portletId, PortletPreferences portletPreferences)
 		throws Exception {
 
-		_addSiteNavigationMenuExternalReferenceCode(portletPreferences);
+		long siteNavigationMenuId = GetterUtil.getLong(
+			portletPreferences.getValue("siteNavigationMenuId", "0"));
 
-		_addRootMenuItemExternalReferenceCode(portletPreferences);
-	}
+		if (siteNavigationMenuId <= 0) {
+			return;
+		}
 
-	private void _addRootMenuItemExternalReferenceCode(
-			PortletPreferences portletPreferences)
-		throws Exception {
+		SiteNavigationMenu siteNavigationMenu =
+			_siteNavigationMenuLocalService.fetchSiteNavigationMenu(
+				siteNavigationMenuId);
+
+		if (siteNavigationMenu == null) {
+			return;
+		}
+
+		portletPreferences.setValue(
+			"siteNavigationMenuExternalReferenceCode",
+			siteNavigationMenu.getExternalReferenceCode());
 
 		long rootMenuItemId = GetterUtil.getLong(
 			portletPreferences.getValue("rootMenuItemId", "0"));
@@ -70,30 +80,6 @@ public class PortletPreferencesUpgradeProcess
 		portletPreferences.setValue(
 			"rootMenuItemExternalReferenceCode",
 			siteNavigationMenuItem.getExternalReferenceCode());
-	}
-
-	private void _addSiteNavigationMenuExternalReferenceCode(
-			PortletPreferences portletPreferences)
-		throws Exception {
-
-		long siteNavigationMenuId = GetterUtil.getLong(
-			portletPreferences.getValue("siteNavigationMenuId", "0"));
-
-		if (siteNavigationMenuId <= 0) {
-			return;
-		}
-
-		SiteNavigationMenu siteNavigationMenu =
-			_siteNavigationMenuLocalService.fetchSiteNavigationMenu(
-				siteNavigationMenuId);
-
-		if (siteNavigationMenu == null) {
-			return;
-		}
-
-		portletPreferences.setValue(
-			"siteNavigationMenuExternalReferenceCode",
-			siteNavigationMenu.getExternalReferenceCode());
 	}
 
 	private final SiteNavigationMenuItemLocalService

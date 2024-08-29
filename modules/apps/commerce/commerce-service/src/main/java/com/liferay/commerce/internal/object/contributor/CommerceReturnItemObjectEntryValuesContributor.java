@@ -123,13 +123,13 @@ public class CommerceReturnItemObjectEntryValuesContributor
 		values.put(
 			"returnItemStatus",
 			_getNextReturnItemStatus(
-				objectEntryContext.getObjectDefinitionId(), values,
-				returnStatus));
+				objectEntryContext.getObjectDefinitionId(), returnStatus,
+				values));
 	}
 
 	private String _getNextReturnItemStatus(
-			long objectDefinitionId, Map<String, Serializable> values,
-			String returnStatus)
+			long objectDefinitionId, String returnStatus,
+			Map<String, Serializable> values)
 		throws Exception {
 
 		BigDecimal authorized = BigDecimal.valueOf(

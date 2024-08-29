@@ -489,24 +489,30 @@ public class ObjectEntryDTOConverter
 
 			fileEntry.setFileBase64(
 				() -> {
-					String fileSource = String.valueOf(
-						ObjectFieldSettingUtil.getValue(
-							ObjectFieldSettingConstants.NAME_FILE_SOURCE,
-							objectField.getObjectFieldSettings()));
+					if (FeatureFlagManagerUtil.isEnabled(
+							objectDefinition.getCompanyId(), "LPD-29347")) {
 
-					if (fileSource.equals(
-							ObjectFieldSettingConstants.VALUE_USER_COMPUTER)) {
+						String fileSource = String.valueOf(
+							ObjectFieldSettingUtil.getValue(
+								ObjectFieldSettingConstants.NAME_FILE_SOURCE,
+								objectField.getObjectFieldSettings()));
 
-						boolean showFilesInDocumentsAndMedia =
-							GetterUtil.getBoolean(
-								ObjectFieldSettingUtil.getValue(
-									ObjectFieldSettingConstants.
-										NAME_SHOW_FILES_IN_DOCS_AND_MEDIA,
-									objectField.getObjectFieldSettings()));
+						if (fileSource.equals(
+								ObjectFieldSettingConstants.
+									VALUE_USER_COMPUTER)) {
 
-						if (!showFilesInDocumentsAndMedia) {
-							return Base64.encode(
-								_file.getBytes(dlFileEntry.getContentStream()));
+							boolean showFilesInDocumentsAndMedia =
+								GetterUtil.getBoolean(
+									ObjectFieldSettingUtil.getValue(
+										ObjectFieldSettingConstants.
+											NAME_SHOW_FILES_IN_DOCS_AND_MEDIA,
+										objectField.getObjectFieldSettings()));
+
+							if (!showFilesInDocumentsAndMedia) {
+								return Base64.encode(
+									_file.getBytes(
+										dlFileEntry.getContentStream()));
+							}
 						}
 					}
 

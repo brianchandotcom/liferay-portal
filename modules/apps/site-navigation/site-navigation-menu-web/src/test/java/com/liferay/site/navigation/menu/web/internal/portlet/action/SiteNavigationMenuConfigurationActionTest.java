@@ -50,28 +50,7 @@ public class SiteNavigationMenuConfigurationActionTest {
 	}
 
 	@Test
-	public void testUpdateDisplayStyleGroupPreferencesWithFeatureFlagDisabled()
-		throws Exception {
-
-		_setUpSiteNavigationMenuConfigurationAction(null, null, null);
-
-		_siteNavigationMenuConfigurationAction.postProcess(
-			_COMPANY_ID, _getPortletRequest(RandomTestUtil.randomLong()),
-			_settings);
-
-		Assert.assertNull(
-			_modifiableSettings.getValue(
-				"displayStyleGroupExternalReferenceCode", null));
-		Assert.assertEquals(
-			_DISPLAY_STYLE_GROUP_ID,
-			_modifiableSettings.getValue("displayStyleGroupId", null));
-		Assert.assertEquals(
-			_DISPLAY_STYLE_GROUP_KEY,
-			_modifiableSettings.getValue("displayStyleGroupKey", null));
-	}
-
-	@Test
-	public void testUpdateDisplayStyleGroupPreferencesWithFeatureFlagEnabledDifferentScope()
+	public void testUpdateDisplayStyleGroupPreferencesWithDifferentScope()
 		throws Exception {
 
 		Group group = _getGroup(RandomTestUtil.randomLong());
@@ -95,7 +74,7 @@ public class SiteNavigationMenuConfigurationActionTest {
 	}
 
 	@Test
-	public void testUpdateDisplayStyleGroupPreferencesWithFeatureFlagEnabledSameScope()
+	public void testUpdateDisplayStyleGroupPreferencesWithSameScope()
 		throws Exception {
 
 		Group group = _getGroup(RandomTestUtil.randomLong());
@@ -117,28 +96,7 @@ public class SiteNavigationMenuConfigurationActionTest {
 	}
 
 	@Test
-	public void testUpdateRootMenuItemPreferencesWithFeatureFlagDisabled()
-		throws Exception {
-
-		_setUpSiteNavigationMenuConfigurationAction(
-			null, null, RandomTestUtil.randomString());
-
-		_siteNavigationMenuConfigurationAction.postProcess(
-			_COMPANY_ID, _getPortletRequest(RandomTestUtil.randomLong()),
-			_settings);
-
-		Assert.assertNull(
-			_modifiableSettings.getValue(
-				"rootMenuItemExternalReferenceCode", null));
-		Assert.assertEquals(
-			_ROOT_MENU_ITEM_ID,
-			_modifiableSettings.getValue("rootMenuItemId", null));
-	}
-
-	@Test
-	public void testUpdateRootMenuItemPreferencesWithFeatureFlagEnabled()
-		throws Exception {
-
+	public void testUpdateRootMenuItemPreferences() throws Exception {
 		String rootMenuItemExternalReferenceCode =
 			RandomTestUtil.randomString();
 
@@ -159,28 +117,7 @@ public class SiteNavigationMenuConfigurationActionTest {
 	}
 
 	@Test
-	public void testUpdateSiteNavigationMenuPreferencesWithFeatureFlagDisabled()
-		throws Exception {
-
-		_setUpSiteNavigationMenuConfigurationAction(
-			null, RandomTestUtil.randomString(), null);
-
-		_siteNavigationMenuConfigurationAction.postProcess(
-			_COMPANY_ID, _getPortletRequest(RandomTestUtil.randomLong()),
-			_settings);
-
-		Assert.assertNull(
-			_modifiableSettings.getValue(
-				"siteNavigationMenuExternalReferenceCode", null));
-		Assert.assertEquals(
-			_SITE_NAVIGATION_MENU_ITEM_ID,
-			_modifiableSettings.getValue("siteNavigationMenuId", null));
-	}
-
-	@Test
-	public void testUpdateSiteNavigationMenuPreferencesWithFeatureFlagEnabled()
-		throws Exception {
-
+	public void testUpdateSiteNavigationMenuPreferences() throws Exception {
 		String siteNavigationMenuExternalReferenceCode =
 			RandomTestUtil.randomString();
 

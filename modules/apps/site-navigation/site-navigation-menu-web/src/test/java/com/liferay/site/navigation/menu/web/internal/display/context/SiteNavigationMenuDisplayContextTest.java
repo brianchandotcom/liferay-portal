@@ -149,26 +149,7 @@ public class SiteNavigationMenuDisplayContextTest {
 	}
 
 	@Test
-	public void testGetDisplayStyleGroupIdFeatureFlagDisabled()
-		throws ConfigurationException {
-
-		_setUpGroupLocalServiceUtil(_GROUP_ID);
-
-		SiteNavigationMenuDisplayContext siteNavigationMenuDisplayContext =
-			new SiteNavigationMenuDisplayContext(_httpServletRequest);
-
-		_setUpSiteNavigationMenuPortletInstanceConfigurationDisplayStyleGroup(
-			_DISPLAY_STYLE_GROUP_ID);
-
-		Assert.assertEquals(
-			_DISPLAY_STYLE_GROUP_ID,
-			siteNavigationMenuDisplayContext.getDisplayStyleGroupId());
-	}
-
-	@Test
-	public void testGetDisplayStyleGroupIdFeatureFlagEnabled()
-		throws ConfigurationException {
-
+	public void testGetDisplayStyleGroupId() throws ConfigurationException {
 		_setUpGroupLocalServiceUtil(_GROUP_ID);
 
 		SiteNavigationMenuDisplayContext siteNavigationMenuDisplayContext =
@@ -183,26 +164,7 @@ public class SiteNavigationMenuDisplayContextTest {
 	}
 
 	@Test
-	public void testGetRootMenuItemIdFeatureFlagDisabled()
-		throws ConfigurationException {
-
-		_setUpSiteNavigationMenuItemLocalServiceUtil(_GROUP_ID);
-
-		SiteNavigationMenuDisplayContext siteNavigationMenuDisplayContext =
-			new SiteNavigationMenuDisplayContext(_httpServletRequest);
-
-		_setUpSiteNavigationMenuPortletInstanceConfigurationRootMenuItem(
-			String.valueOf(_DISPLAY_STYLE_GROUP_ID));
-
-		Assert.assertEquals(
-			String.valueOf(_DISPLAY_STYLE_GROUP_ID),
-			siteNavigationMenuDisplayContext.getRootMenuItemId());
-	}
-
-	@Test
-	public void testGetRootMenuItemIdFeatureFlagEnabled()
-		throws ConfigurationException {
-
+	public void testGetRootMenuItemId() throws ConfigurationException {
 		_setUpSiteNavigationMenuItemLocalServiceUtil(_GROUP_ID);
 
 		SiteNavigationMenuDisplayContext siteNavigationMenuDisplayContext =
@@ -217,26 +179,7 @@ public class SiteNavigationMenuDisplayContextTest {
 	}
 
 	@Test
-	public void testGetSiteNavigationMenuIdFeatureFlagDisabled()
-		throws ConfigurationException {
-
-		_setUpSiteNavigationMenuLocalServiceUtil(_GROUP_ID);
-
-		SiteNavigationMenuDisplayContext siteNavigationMenuDisplayContext =
-			new SiteNavigationMenuDisplayContext(_httpServletRequest);
-
-		_setUpSiteNavigationMenuPortletInstanceConfigurationSiteNavigationMenu(
-			_DISPLAY_STYLE_GROUP_ID);
-
-		Assert.assertEquals(
-			_DISPLAY_STYLE_GROUP_ID,
-			siteNavigationMenuDisplayContext.getSiteNavigationMenuId());
-	}
-
-	@Test
-	public void testGetSiteNavigationMenuIdFeatureFlagEnabled()
-		throws ConfigurationException {
-
+	public void testGetSiteNavigationMenuId() throws ConfigurationException {
 		_setUpSiteNavigationMenuLocalServiceUtil(_GROUP_ID);
 
 		SiteNavigationMenuDisplayContext siteNavigationMenuDisplayContext =

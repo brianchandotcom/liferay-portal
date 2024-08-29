@@ -9,13 +9,33 @@ import React from 'react';
 import {SWITCH_SIDEBAR_PANEL} from '../../../../src/main/resources/META-INF/resources/page_editor/app/actions/types';
 import ShortcutManager from '../../../../src/main/resources/META-INF/resources/page_editor/app/components/ShortcutManager';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/layoutDataItemTypes';
+import {
+	ClipboardContextProvider,
+	useSetCopiedNodeIds,
+} from '../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ClipboardContext';
 import {ControlsProvider} from '../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ControlsContext';
 import {
 	ShortcutContextProvider,
 	useSetEditedNodeId,
 } from '../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ShortcutContext';
+import deleteItem from '../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/deleteItem';
+import pasteItem from '../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/pasteItem';
 import updateItemStyle from '../../../../src/main/resources/META-INF/resources/page_editor/app/utils/updateItemStyle';
 import StoreMother from '../../../../src/main/resources/META-INF/resources/page_editor/test_utils/StoreMother';
+
+jest.mock(
+	'../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ClipboardContext',
+	() => {
+		const setCopiedNodeIds = jest.fn();
+
+		return {
+			...jest.requireActual(
+				'../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ClipboardContext'
+			),
+			useSetCopiedNodeIds: () => setCopiedNodeIds,
+		};
+	}
+);
 
 jest.mock(
 	'../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ShortcutContext',
@@ -32,8 +52,18 @@ jest.mock(
 );
 
 jest.mock(
+	'../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/deleteItem',
+	() => jest.fn()
+);
+
+jest.mock(
 	'../../../../src/main/resources/META-INF/resources/page_editor/app/utils/updateItemStyle',
 	() => jest.fn(() => () => Promise.resolve())
+);
+
+jest.mock(
+	'../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/pasteItem',
+	() => jest.fn()
 );
 
 const DEFAULT_STATE = {
@@ -66,9 +96,11 @@ const renderComponent = ({
 					activeItemIds,
 				}}
 			>
-				<ShortcutContextProvider>
-					<ShortcutManager />
-				</ShortcutContextProvider>
+				<ClipboardContextProvider>
+					<ShortcutContextProvider>
+						<ShortcutManager />
+					</ShortcutContextProvider>
+				</ClipboardContextProvider>
 			</ControlsProvider>
 		</StoreMother.Component>
 	);
@@ -210,5 +242,77 @@ describe('ShortcutManager', () => {
 				styleValue: 'none',
 			})
 		);
+	});
+
+	it('sets the node id to be cut when pressing ctrl + X', () => {
+		Liferay.FeatureFlags['LPD-18221'] = true;
+
+		const setCopiedNodeIds = useSetCopiedNodeIds();
+
+		renderComponent({
+			activeItemIds: ['fragment01'],
+		});
+
+		document.body.dispatchEvent(
+			new KeyboardEvent('keydown', {
+				code: 'KeyX',
+				ctrlKey: true,
+			})
+		);
+
+		expect(deleteItem).toBeCalledWith(
+			expect.objectContaining({
+				itemIds: ['fragment01'],
+			})
+		);
+
+		expect(setCopiedNodeIds).toBeCalledWith(['fragment01']);
+
+		Liferay.FeatureFlags['LPD-18221'] = false;
+	});
+
+	it('sets the node id to be copied when pressing ctrl + C', () => {
+		Liferay.FeatureFlags['LPD-18221'] = true;
+
+		const setCopiedNodeIds = useSetCopiedNodeIds();
+
+		renderComponent({
+			activeItemIds: ['fragment01'],
+		});
+
+		document.body.dispatchEvent(
+			new KeyboardEvent('keydown', {
+				code: 'KeyC',
+				ctrlKey: true,
+			})
+		);
+
+		expect(setCopiedNodeIds).toBeCalledWith(['fragment01']);
+
+		Liferay.FeatureFlags['LPD-18221'] = false;
+	});
+
+	it('sets the node id to be pasted when pressing ctrl + V', () => {
+		Liferay.FeatureFlags['LPD-18221'] = true;
+
+		renderComponent({
+			activeItemIds: ['fragment01'],
+		});
+
+		document.body.dispatchEvent(
+			new KeyboardEvent('keydown', {
+				code: 'KeyV',
+				ctrlKey: true,
+			})
+		);
+
+		expect(pasteItem).toBeCalledWith(
+			expect.objectContaining({
+				copyItemIds: [],
+				parentItemId: 'fragment01',
+			})
+		);
+
+		Liferay.FeatureFlags['LPD-18221'] = false;
 	});
 });

@@ -460,7 +460,7 @@ public class DBSchemaImporterProcess {
 
 	private void _loadColumnsMetadata(
 			DataSource dataSource, Map<String, List<String>> tableColumns,
-			Map<String, Integer> columnsType)
+			Map<String, Integer> columnTypes)
 		throws Exception {
 
 		try (Connection connection = dataSource.getConnection()) {
@@ -479,7 +479,7 @@ public class DBSchemaImporterProcess {
 
 					columnNames.add(columnName);
 
-					columnsType.put(
+					columnTypes.put(
 						tableName + "." + columnName,
 						resultSet.getInt("DATA_TYPE"));
 				}

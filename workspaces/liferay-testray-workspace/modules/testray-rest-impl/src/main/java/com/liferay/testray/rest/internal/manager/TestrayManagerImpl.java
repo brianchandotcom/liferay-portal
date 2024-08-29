@@ -9,6 +9,7 @@ import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.rest.filter.factory.FilterFactory;
+import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.sql.dsl.expression.Predicate;
@@ -22,11 +23,18 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.vulcan.aggregation.Aggregation;
+import com.liferay.portal.vulcan.aggregation.Facet;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.testray.rest.dto.v1_0.TestrayCache;
 import com.liferay.testray.rest.internal.util.TestrayUtil;
 import com.liferay.testray.rest.manager.TestrayManager;
@@ -189,6 +197,9 @@ public class TestrayManagerImpl implements TestrayManager {
 				testrayCache.getTestrayCaseResultAmount(), dueStatus,
 				System.currentTimeMillis() - startTime, fileName, bytes.length,
 				serviceContext, testrayCache, userId);
+
+			updateTestrayBuildSummary(
+				companyId, testrayCache.getTestrayBuildId(), userId);
 		}
 	}
 
@@ -249,6 +260,72 @@ public class TestrayManagerImpl implements TestrayManager {
 					serviceContext, testrayCache, userId);
 			}
 		}
+	}
+
+	@Override
+	public void updateTestrayBuildSummary(
+			long companyId, long testrayBuildId, long userId)
+		throws Exception {
+
+		Page<com.liferay.object.rest.dto.v1_0.ObjectEntry> objectEntriesPage =
+			_objectEntryManager.getObjectEntries(
+				companyId,
+				_objectDefinitionLocalService.fetchObjectDefinition(
+					companyId, "C_CaseResult"),
+				null,
+				new Aggregation() {
+					{
+						setAggregationTerms(
+							HashMapBuilder.put(
+								"dueStatus", "dueStatus"
+							).build());
+					}
+				},
+				new DefaultDTOConverterContext(
+					false, null, null, null, null, LocaleUtil.getSiteDefault(),
+					null, _userLocalService.fetchUser(userId)),
+				"buildId eq '" + testrayBuildId + "'", Pagination.of(1, 8),
+				null, null);
+
+		List<Facet> facets = objectEntriesPage.getFacets();
+
+		Facet facet = facets.get(0);
+
+		List<Facet.FacetValue> facetValues = facet.getFacetValues();
+
+		Map<String, Integer> map = new HashMap<>();
+
+		for (Facet.FacetValue facetValue : facetValues) {
+			String key = facetValue.getTerm();
+
+			if (key.equals("INPROGRESS")) {
+				key = "InProgress";
+			}
+			else if (key.equals("DIDNOTRUN")) {
+				key = "DidNotRun";
+			}
+			else if (key.equals("TESTFIX")) {
+				key = "TestFix";
+			}
+			else {
+				key = StringUtil.upperCaseFirstLetter(
+					StringUtil.lowerCase(key));
+			}
+
+			map.put("caseResult" + key, facetValue.getNumberOfOccurrences());
+		}
+
+		ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
+			testrayBuildId);
+
+		objectEntry.getValues(
+		).putAll(
+			map
+		);
+
+		_objectEntryLocalService.updateObjectEntry(
+			userId, objectEntry.getObjectEntryId(), objectEntry.getValues(),
+			new ServiceContext());
 	}
 
 	private void _addDefaultFactors(
@@ -343,6 +420,10 @@ public class TestrayManagerImpl implements TestrayManager {
 
 					return "UNTESTED";
 				}
+			).put(
+				"duration",
+				GetterUtil.getLong(
+					testrayCasePropertiesMap.get("testray.testcase.duration"))
 			).put(
 				"r_buildToCaseResult_c_buildId", testrayBuildId
 			).put(
@@ -1371,5 +1452,11 @@ public class TestrayManagerImpl implements TestrayManager {
 
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;
+
+	@Reference(target = "(object.entry.manager.storage.type=default)")
+	private ObjectEntryManager _objectEntryManager;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

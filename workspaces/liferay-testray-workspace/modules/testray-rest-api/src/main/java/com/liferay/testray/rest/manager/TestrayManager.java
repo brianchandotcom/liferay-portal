@@ -38,4 +38,8 @@ public interface TestrayManager {
 			long userId)
 		throws Exception;
 
+	public void updateTestrayBuildSummary(
+			long companyId, long testrayBuildId, long userId)
+		throws Exception;
+
 }

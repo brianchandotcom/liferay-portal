@@ -363,6 +363,36 @@ public abstract class BaseTestEntityResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@Test
+	public void testPutTestEntity() throws Exception {
+		TestEntity postTestEntity = testPutTestEntity_addTestEntity();
+
+		TestEntity randomTestEntity = randomTestEntity();
+
+		TestEntity putTestEntity = testEntityResource.putTestEntity(
+			postTestEntity.getId(), testPutTestEntity_getOptionalParameter(),
+			randomTestEntity);
+
+		assertEquals(randomTestEntity, putTestEntity);
+		assertValid(putTestEntity);
+
+		TestEntity getTestEntity = testEntityResource.getTestEntity(
+			putTestEntity.getId());
+
+		assertEquals(randomTestEntity, getTestEntity);
+		assertValid(getTestEntity);
+	}
+
+	protected Long testPutTestEntity_getOptionalParameter() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected TestEntity testPutTestEntity_addTestEntity() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	protected TestEntity testGraphQLTestEntity_addTestEntity()
 		throws Exception {
 

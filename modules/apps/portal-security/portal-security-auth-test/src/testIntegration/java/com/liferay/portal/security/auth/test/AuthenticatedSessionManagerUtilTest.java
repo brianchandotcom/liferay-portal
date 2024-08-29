@@ -131,11 +131,16 @@ public class AuthenticatedSessionManagerUtilTest {
 			CookiesConstants.CONSENT_TYPE_FUNCTIONAL, cookie,
 			mockHttpServletRequest, mockHttpServletResponse);
 
+		mockHttpServletRequest.setCookies(mockHttpServletResponse.getCookies());
+
+		mockHttpServletRequest.setPathInfo(StringPool.SLASH);
+
 		ThemeDisplay themeDisplay = ThemeDisplayFactory.create();
 
 		themeDisplay.setCompany(
 			_companyLocalService.getCompany(TestPropsValues.getCompanyId()));
 		themeDisplay.setSiteGroupId(TestPropsValues.getGroupId());
+		themeDisplay.setUser(_user);
 
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);

@@ -12320,7 +12320,7 @@ public class ObjectEntryResourceTest {
 		String endpoint =
 			_objectDefinition1.getRESTContextPath() +
 				"/by-external-reference-code/" +
-					objectEntryJSONObject.getLong("externalReferenceCode");
+					objectEntryJSONObject.getString("externalReferenceCode");
 
 		if (nestedFields) {
 			endpoint = endpoint + "?nestedFields=permissions";

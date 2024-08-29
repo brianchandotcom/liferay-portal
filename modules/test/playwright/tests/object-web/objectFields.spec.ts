@@ -615,15 +615,6 @@ test.describe('Manage objectFields through Objects Admin UI', () => {
 			.locator('.dnd-tbody > .dnd-tr')
 			.all();
 
-		const asyncFilter = async (
-			array: Locator[],
-			predicate: (value: Locator) => Promise<boolean>
-		) => {
-			const results = await Promise.all(array.map(predicate));
-
-			return array.filter((_, index) => results[index]);
-		};
-
 		const objectFieldTableCustomRows = await asyncFilter(
 			objectFieldTableRows,
 			async (objectFieldTableRow: Locator) => {

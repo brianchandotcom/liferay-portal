@@ -160,7 +160,7 @@ public class DBSchemaImporterProcess {
 
 			futures.add(
 				executorService.submit(
-					() -> _safeCopyTable(sourceTable, targetTable)));
+					() -> _copyTable(sourceTable, targetTable)));
 		}
 
 		for (Future<?> future : futures) {
@@ -566,7 +566,7 @@ public class DBSchemaImporterProcess {
 		_syncSQLs.clear();
 	}
 
-	private void _safeCopyTable(
+	private void _copyTable(
 		String sourceTableName, String targetTableName) {
 
 		try (Connection sourceConnection = _sourceDataSource.getConnection();

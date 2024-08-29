@@ -1,4 +1,5 @@
 dependencies {
 	testIntegrationImplementation project(":apps:layout:layout-test-util")
+	testIntegrationImplementation project(":apps:message-boards:message-boards-api")
 	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

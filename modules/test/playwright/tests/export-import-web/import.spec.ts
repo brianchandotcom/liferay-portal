@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {expect, mergeTests} from '@playwright/test';
+import {Page, expect, mergeTests} from '@playwright/test';
 import fs from 'fs/promises';
 import * as path from 'path';
 import {getComparator} from 'playwright-core/lib/utils';
@@ -31,27 +31,28 @@ export const test = mergeTests(
 );
 
 async function getSiteHomePageScreenshot(
+	page: Page,
 	siteKey: string,
 	{staging}: {staging: boolean}
 ) {
-	await this.page.goto(`/web/${siteKey}${staging ? '-staging' : ''}`);
+	await page.goto(`/web/${siteKey}${staging ? '-staging' : ''}`);
 
-	const url = this.page.url();
+	const url = page.url();
 
-	await this.page.goto(`${url}?p_l_mode=preview`, {waitUntil: 'load'});
+	await page.goto(`${url}?p_l_mode=preview`, {waitUntil: 'load'});
 
-	await this.page.waitForFunction(() => document.fonts.ready);
+	await page.waitForFunction(() => document.fonts.ready);
 
-	const screenshot = await this.page.screenshot({
+	const screenshot = await page.screenshot({
 		fullPage: true,
-		mask: [this.page.getByTestId('notificationsCount')],
+		mask: [page.getByTestId('notificationsCount')],
 		path: path.join(
 			getTempDir(),
 			`${siteKey}-${staging ? 'staging' : 'live'}.png`
 		),
 	});
 
-	await this.page.goto(url);
+	await page.goto(url);
 
 	return screenshot;
 }
@@ -114,6 +115,7 @@ test('can import a lar file selecting some items to import', async ({
 [{name: 'com.liferay.site.initializer.welcome'}].forEach(({name}) => {
 	test(`site initializer ${name} can be exported and imported`, async ({
 		apiHelpers,
+		page,
 		stagingPage,
 	}) => {
 		const site = await apiHelpers.headlessSite.createSite({
@@ -133,8 +135,8 @@ test('can import a lar file selecting some items to import', async ({
 		const comparator = getComparator('image/png');
 
 		const buffer = comparator(
-			await getSiteHomePageScreenshot(site.name, {staging: false}),
-			await getSiteHomePageScreenshot(site.name, {staging: true})
+			await getSiteHomePageScreenshot(page, site.name, {staging: false}),
+			await getSiteHomePageScreenshot(page, site.name, {staging: true})
 		);
 
 		if (buffer !== null && buffer.diff !== undefined) {

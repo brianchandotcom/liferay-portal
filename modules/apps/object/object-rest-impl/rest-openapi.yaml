@@ -47,7 +47,6 @@ components:
                     type: string
                 scope:
                     $ref: "#/components/schemas/Scope"
-                    readOnly: true
             type: object
         Folder:
             properties:

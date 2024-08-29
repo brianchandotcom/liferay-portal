@@ -6372,6 +6372,35 @@ paths:
                                     $ref: "#/components/schemas/ContentTemplate"
                                 type: array
             tags: ["ContentTemplate"]
+    "/asset-libraries/{assetLibraryId}/document-data-definition-types":
+        post:
+            description:
+                Creates a new document data definition type.
+            parameters:
+                - in: path
+                  name: assetLibraryId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/DocumentDataDefinitionType"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/DocumentDataDefinitionType"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/DocumentDataDefinitionType"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/DocumentDataDefinitionType"
+            tags: ["DocumentDataDefinitionTypes"]
     "/asset-libraries/{assetLibraryId}/document-folders":
         get:
             operationId: getAssetLibraryDocumentFoldersPage
@@ -12714,6 +12743,35 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/ContentTemplate"
             tags: ["ContentTemplate"]
+    "/sites/{siteId}/document-data-definition-types":
+        post:
+            description:
+                Creates a new document data definition type.
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/DocumentDataDefinitionType"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/DocumentDataDefinitionType"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/DocumentDataDefinitionType"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/DocumentDataDefinitionType"
+            tags: ["DocumentDataDefinitionTypes"]
     "/sites/{siteId}/document-folders":
         get:
             description:

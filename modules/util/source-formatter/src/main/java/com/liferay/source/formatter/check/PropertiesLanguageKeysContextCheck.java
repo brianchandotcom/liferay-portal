@@ -39,6 +39,8 @@ public class PropertiesLanguageKeysContextCheck extends BaseFileCheck {
 
 		List<String> allowedSingleWordLanguageKeys =
 			_getAllowedSingleWordLanguageKeys();
+		List<String> ambiguousSingleWordLanguageKeys =
+			_getAmbiguousSingleWordLanguageKeys();
 
 		int contextDepth = GetterUtil.getInteger(
 			getAttributeValue(_CONTEXT_DEPTH_KEY, absolutePath));
@@ -69,6 +71,16 @@ public class PropertiesLanguageKeysContextCheck extends BaseFileCheck {
 							"The single-word key '", key,
 							"' should include a word of context at the end, ",
 							"within a [], to indicate specific meaning"),
+						lineNumber);
+				}
+				else if (ambiguousSingleWordLanguageKeys.contains(key)) {
+					addMessage(
+						fileName,
+						StringBundler.concat(
+							"The single-word key '", key,
+							"' should include a word of context at the end, ",
+							"within a [], like [noun] or [verb] to indicate ",
+							"specific meaning"),
 						lineNumber);
 				}
 
@@ -136,6 +148,32 @@ public class PropertiesLanguageKeysContextCheck extends BaseFileCheck {
 		return _allowedSingleWordLanguageKeys;
 	}
 
+	private synchronized List<String> _getAmbiguousSingleWordLanguageKeys()
+		throws IOException {
+
+		if (_ambiguousSingleWordLanguageKeys != null) {
+			return _ambiguousSingleWordLanguageKeys;
+		}
+
+		_ambiguousSingleWordLanguageKeys = new ArrayList<>();
+
+		Class<?> clazz = getClass();
+
+		ClassLoader classLoader = clazz.getClassLoader();
+
+		InputStream inputStream = classLoader.getResourceAsStream(
+			"dependencies/ambiguous-single-word-language-keys.txt");
+
+		if (inputStream == null) {
+			return Collections.emptyList();
+		}
+
+		_ambiguousSingleWordLanguageKeys = ListUtil.fromString(
+			StringUtil.read(inputStream));
+
+		return _ambiguousSingleWordLanguageKeys;
+	}
+
 	private int _getLineNumber(String content, String key) {
 		int x = content.indexOf("\n" + key + "=");
 
@@ -155,5 +193,6 @@ public class PropertiesLanguageKeysContextCheck extends BaseFileCheck {
 		"[\\s\\S]+\\[([\\s\\S]*)\\]");
 
 	private List<String> _allowedSingleWordLanguageKeys;
+	private List<String> _ambiguousSingleWordLanguageKeys;
 
 }

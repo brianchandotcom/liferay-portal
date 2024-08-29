@@ -113,6 +113,7 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 
 		ListUtil.fromArray(LanguageUtil.getAvailableLocales());
 
+		new AppTitleComparator();
 		new ArticleCreateDateComparator();
 		new ArticleDisplayDateComparator();
 		new ArticleIDComparator();
@@ -123,6 +124,9 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		new ArticleVersionComparator();
 		new AssetCategoryCreateDateComparator();
 		new AssetListEntryCreateDateComparator();
+		new AssetListEntrySegmentsEntryRelPriorityComparator();
+		new AssetListEntryTitleComparator();
+		new AssetListEntryUsageModifiedDateComparator();
 		new AssetTagAssetCountComparator();
 		new AssetTagCountComparator();
 		new AssetVocabularyCreateDateComparator();
@@ -400,6 +404,7 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		layoutItemSelectorCriterion.setShowHiddenPages(null);
 		layoutItemSelectorCriterion.setShowHiddenPages(showHiddenPages);
 
+		new AppTitleComparator(showHiddenPages);
 		new ArticleCreateDateComparator(showHiddenPages);
 		new ArticleDisplayDateComparator(showHiddenPages);
 		new ArticleIDComparator(showHiddenPages);
@@ -410,6 +415,9 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		new ArticleVersionComparator(showHiddenPages);
 		new AssetCategoryCreateDateComparator(showHiddenPages);
 		new AssetListEntryCreateDateComparator(showHiddenPages);
+		new AssetListEntrySegmentsEntryRelPriorityComparator(showHiddenPages);
+		new AssetListEntryTitleComparator(showHiddenPages);
+		new AssetListEntryUsageModifiedDateComparator(showHiddenPages);
 		new AssetTagAssetCountComparator(showHiddenPages);
 		new AssetTagCountComparator(showHiddenPages);
 		new AssetVocabularyCreateDateComparator(showHiddenPages);

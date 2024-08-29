@@ -1949,6 +1949,54 @@
 		"to": "SXPBlueprintModifiedDateComparator.getInstance(param#0#)"
 	},
 	{
+		"from": "new AppTitleComparator()",
+		"issueKey": "LPD-27020",
+		"skipParametersValidation": true,
+		"to": "AppTitleComparator.getInstance(true)"
+	},
+	{
+		"from": "new AppTitleComparator(boolean paramName)",
+		"issueKey": "LPD-27020",
+		"skipParametersValidation": true,
+		"to": "AppTitleComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new AssetListEntrySegmentsEntryRelPriorityComparator()",
+		"issueKey": "LPD-27020",
+		"skipParametersValidation": true,
+		"to": "AssetListEntrySegmentsEntryRelPriorityComparator.getInstance(true)"
+	},
+	{
+		"from": "new AssetListEntrySegmentsEntryRelPriorityComparator(boolean paramName)",
+		"issueKey": "LPD-27020",
+		"skipParametersValidation": true,
+		"to": "AssetListEntrySegmentsEntryRelPriorityComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new AssetListEntryTitleComparator()",
+		"issueKey": "LPD-27020",
+		"skipParametersValidation": true,
+		"to": "AssetListEntryTitleComparator.getInstance(false)"
+	},
+	{
+		"from": "new AssetListEntryTitleComparator(boolean paramName)",
+		"issueKey": "LPD-27020",
+		"skipParametersValidation": true,
+		"to": "AssetListEntryTitleComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new AssetListEntryUsageModifiedDateComparator()",
+		"issueKey": "LPD-27020",
+		"skipParametersValidation": true,
+		"to": "AssetListEntryUsageModifiedDateComparator.getInstance(true)"
+	},
+	{
+		"from": "new AssetListEntryUsageModifiedDateComparator(boolean paramName)",
+		"issueKey": "LPD-27020",
+		"skipParametersValidation": true,
+		"to": "AssetListEntryUsageModifiedDateComparator.getInstance(param#0#)"
+	},
+	{
 		"from": "new CommerceCurrencyPriorityComparator()",
 		"issueKey": "LPD-27027",
 		"skipParametersValidation": true,

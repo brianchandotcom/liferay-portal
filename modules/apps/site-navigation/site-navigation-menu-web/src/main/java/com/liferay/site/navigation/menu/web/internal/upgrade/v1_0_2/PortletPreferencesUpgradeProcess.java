@@ -44,9 +44,9 @@ public class PortletPreferencesUpgradeProcess
 		throws Exception {
 
 		long siteNavigationMenuId = GetterUtil.getLong(
-			portletPreferences.getValue("siteNavigationMenuId", "0"));
+			portletPreferences.getValue("siteNavigationMenuId", null));
 
-		if (siteNavigationMenuId <= 0) {
+		if (siteNavigationMenuId == 0) {
 			return;
 		}
 
@@ -63,9 +63,9 @@ public class PortletPreferencesUpgradeProcess
 			siteNavigationMenu.getExternalReferenceCode());
 
 		long rootMenuItemId = GetterUtil.getLong(
-			portletPreferences.getValue("rootMenuItemId", "0"));
+			portletPreferences.getValue("rootMenuItemId", null));
 
-		if (rootMenuItemId <= 0) {
+		if (rootMenuItemId == 0) {
 			return;
 		}
 

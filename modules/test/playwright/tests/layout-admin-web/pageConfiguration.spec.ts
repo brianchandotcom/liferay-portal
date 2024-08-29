@@ -535,7 +535,7 @@ test.describe('CSS Client Extensions', () => {
 					{
 						groupId: site.id,
 						name: layoutPageTemplateEntryName,
-						type: '3',
+						type: 'master_layout',
 					}
 				);
 
@@ -731,7 +731,7 @@ test.describe('JavaScript Client Extensions', () => {
 					{
 						groupId: site.id,
 						name: layoutPageTemplateEntryName,
-						type: '3',
+						type: 'master_layout',
 					}
 				);
 

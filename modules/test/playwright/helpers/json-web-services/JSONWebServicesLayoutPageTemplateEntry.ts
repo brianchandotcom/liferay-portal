@@ -4,6 +4,7 @@
  */
 
 import {liferayConfig} from '../../liferay.config';
+import {LAYOUT_PAGE_TEMPLATE_ENTRY_TYPES} from '../../utils/layoutPageTemplateEntryTypes';
 import {ApiHelpers} from '../ApiHelpers';
 
 export class JSONWebServicesLayoutPageTemplateEntryApiHelper {
@@ -19,12 +20,12 @@ export class JSONWebServicesLayoutPageTemplateEntryApiHelper {
 		externalReferenceCode = '',
 		groupId,
 		name,
-		type,
+		type = 'basic',
 	}: {
 		externalReferenceCode?: string;
 		groupId: string;
 		name: string;
-		type: string;
+		type?: LayoutPageTemplateEntryType;
 	}): Promise<LayoutPageTemplateEntry> {
 		const urlSearchParams = new URLSearchParams();
 
@@ -32,7 +33,7 @@ export class JSONWebServicesLayoutPageTemplateEntryApiHelper {
 		urlSearchParams.append('groupId', groupId);
 		urlSearchParams.append('layoutPageTemplateCollectionId', '0');
 		urlSearchParams.append('name', name);
-		urlSearchParams.append('type', type);
+		urlSearchParams.append('type', LAYOUT_PAGE_TEMPLATE_ENTRY_TYPES[type]);
 		urlSearchParams.append('masterLayoutPlid', '0');
 		urlSearchParams.append('status', '0');
 		urlSearchParams.append('serviceContext', JSON.stringify({}));

@@ -4,7 +4,9 @@
  */
 
 import {expect, mergeTests} from '@playwright/test';
+import fs from 'fs/promises';
 import * as path from 'path';
+import {getComparator} from 'playwright-core/lib/utils';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
@@ -13,6 +15,7 @@ import {documentLibraryPagesTest} from '../../fixtures/documentLibraryPages.fixt
 import {loginTest} from '../../fixtures/loginTest';
 import {productMenuPageTest} from '../../fixtures/productMenuPageTest';
 import getRandomString from '../../utils/getRandomString';
+import {getTempDir} from '../../utils/temp';
 import {exportImportPagesTest} from './fixtures/exportImportPagesTest';
 import {stagingPageTest} from './fixtures/stagingPageTest';
 
@@ -26,6 +29,29 @@ export const test = mergeTests(
 	stagingPageTest,
 	loginTest()
 );
+
+async function getCurrentPageScreenshot(siteKey: string, staging: boolean) {
+	await this.page.goto(`/web/${siteKey}${staging ? '-staging' : ''}`);
+
+	const url = this.page.url();
+
+	await this.page.goto(`${url}?p_l_mode=preview`, {waitUntil: 'load'});
+
+	await this.page.waitForFunction(() => document.fonts.ready);
+
+	const screenshot = await this.page.screenshot({
+		fullPage: true,
+		mask: [this.page.getByTestId('notificationsCount')],
+		path: path.join(
+			getTempDir(),
+			`${siteKey}-${staging ? 'staging' : 'live'}.png`
+		),
+	});
+
+	await this.page.goto(url);
+
+	return screenshot;
+}
 
 test('can import a folder with document type restrictions and workflow', async ({
 	apiHelpers,
@@ -101,6 +127,19 @@ test('can import a lar file selecting some items to import', async ({
 
 		await stagingPage.enableLocalStaging();
 
-		await stagingPage.compareCurrentPageVersions(site.name);
+		const comparator = getComparator('image/png');
+
+		const buffer = comparator(
+			await getCurrentPageScreenshot(site.name, false),
+			await getCurrentPageScreenshot(site.name, true)
+		);
+
+		if (buffer !== null && buffer.diff !== undefined) {
+			const diffPath = path.join(getTempDir(), `${site.name}-diff.png`);
+			await fs.writeFile(diffPath, buffer.diff);
+			throw new Error(
+				`The live and staging pages differ. Check the screenshot diff at "${diffPath}".`
+			);
+		}
 	});
 });

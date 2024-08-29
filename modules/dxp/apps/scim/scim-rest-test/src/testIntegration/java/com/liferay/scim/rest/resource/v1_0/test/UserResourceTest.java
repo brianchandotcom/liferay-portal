@@ -240,16 +240,27 @@ public class UserResourceTest extends BaseUserResourceTestCase {
 	@Override
 	@Test
 	public void testPutV2User() throws Exception {
-		User user = testDeleteV2User_addUser();
+		assertHttpResponseStatusCode(
+			404, userResource.putV2UserHttpResponse("12345", randomUser()));
+
+		com.liferay.portal.kernel.model.User portalUser =
+			UserTestUtil.addUser();
+
+		User user1 = _createUser(portalUser);
+
+		assertHttpResponseStatusCode(
+			404, userResource.putV2UserHttpResponse(user1.getId(), user1));
+
+		User user2 = testDeleteV2User_addUser();
 
 		String newTitle = StringUtil.toLowerCase(RandomTestUtil.randomString());
 
-		user.setTitle(newTitle);
+		user2.setTitle(newTitle);
 
 		HttpInvoker.HttpResponse httpResponse =
-			userResource.putV2UserHttpResponse(user.getId(), user);
+			userResource.putV2UserHttpResponse(user2.getId(), user2);
 
-		assertEquals(user, User.toDTO(httpResponse.getContent()));
+		assertEquals(user2, User.toDTO(httpResponse.getContent()));
 	}
 
 	@Override

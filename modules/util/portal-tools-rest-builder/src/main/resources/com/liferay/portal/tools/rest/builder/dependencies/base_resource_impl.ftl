@@ -364,20 +364,29 @@ public abstract class Base${schemaName}ResourceImpl
 				<#assign
 					generatePatchMethods = true
 					javaMethodParameters = javaMethodSignature.javaMethodParameters[0..javaMethodSignature.javaMethodParameters?size-2]
-					javaMethodParameterName = ""
 				/>
 
 				<#if javaMethodSignature.methodName?contains("ByExternalReferenceCode")>
-					<#assign javaMethodParameterName = javaMethodSignature.methodName?replace("patch", "get") />
+					<#assign getJavaMethodSignature = freeMarkerTool.getJavaMethodSignature(javaMethodSignatures, javaMethodSignature.methodName?replace("patch", "get")) />
 				<#else>
-					<#assign javaMethodParameterName = "get" + schemaName />
+					<#assign getJavaMethodSignature = freeMarkerTool.getJavaMethodSignature(javaMethodSignatures, "get" + schemaName) />
 				</#if>
 
-				${javaDataType} existing${schemaName} = ${javaMethodParameterName}(
-					<#list javaMethodParameters as javaMethodParameter>
-						${javaMethodParameter.parameterName}
+				${javaDataType} existing${schemaName} = ${getJavaMethodSignature.methodName}(
+					<#assign firstParameter = true />
 
-						<#sep>, </#sep>
+					<#list javaMethodParameters as javaMethodParameter>
+						<#if !freeMarkerTool.hasParameter(getJavaMethodSignature, javaMethodParameter.parameterName)>
+							<#continue>
+						</#if>
+
+						<#if firstParameter>
+							<#assign firstParameter = false />
+						<#else>
+							,
+						</#if>
+
+						${javaMethodParameter.parameterName}
 					</#list>
 				);
 

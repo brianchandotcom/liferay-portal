@@ -1,5 +1,5 @@
 {
-	"@generated": "de1ead395d0e6f76f8e8bc9dcd043a86133fd184",
+	"@generated": "3f5d01b0aad04f53a9391053500a6ab2e2719e4b",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -12,6 +12,9 @@
 		"module": "es6",
 		"moduleResolution": "node",
 		"paths": {
+			"@liferay/analytics-reports-js-components-web": [
+				"../../../../../../../../dxp/apps/analytics/analytics-reports-js-components-web/src/main/resources/META-INF/resources/js/index.ts"
+			],
 			"@liferay/frontend-js-react-web": [
 				"../../../../../../../frontend-js/frontend-js-react-web/src/main/resources/META-INF/resources/js/index.ts"
 			],
@@ -38,6 +41,9 @@
 		"../../../../../../../../global.d.ts"
 	],
 	"references": [
+		{
+			"path": "../../../../../../../../dxp/apps/analytics/analytics-reports-js-components-web/src/main/resources/META-INF/resources/tsconfig.json"
+		},
 		{
 			"path": "../../../../../../../frontend-js/frontend-js-react-web/src/main/resources/META-INF/resources/tsconfig.json"
 		},

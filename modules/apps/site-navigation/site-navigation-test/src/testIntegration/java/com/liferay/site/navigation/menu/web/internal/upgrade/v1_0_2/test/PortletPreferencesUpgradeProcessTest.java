@@ -48,7 +48,8 @@ public class PortletPreferencesUpgradeProcessTest
 
 		SiteNavigationMenu siteNavigationMenu =
 			_siteNavigationMenuLocalService.addSiteNavigationMenu(
-				null, TestPropsValues.getUserId(), group.getGroupId(), "Menu",
+				null, TestPropsValues.getUserId(), group.getGroupId(),
+				RandomTestUtil.randomString(),
 				SiteNavigationConstants.TYPE_DEFAULT, true, serviceContext);
 
 		SiteNavigationMenuItem siteNavigationMenuItem =
@@ -88,6 +89,46 @@ public class PortletPreferencesUpgradeProcessTest
 				"rootMenuItemId",
 				String.valueOf(
 					siteNavigationMenuItem.getSiteNavigationMenuItemId())
+			).put(
+				"siteNavigationMenuId",
+				String.valueOf(siteNavigationMenu.getSiteNavigationMenuId())
+			).build());
+	}
+
+	@Test
+	public void testUpgradeMissingSiteNavigationMenu() throws Exception {
+		testUpgrade(
+			HashMapBuilder.put(
+				"rootMenuItemId", String.valueOf(RandomTestUtil.randomLong())
+			).put(
+				"siteNavigationMenuId",
+				String.valueOf(RandomTestUtil.randomLong())
+			).build());
+	}
+
+	@Test
+	public void testUpgradeMissingSiteNavigationMenuItem() throws Exception {
+		SiteNavigationMenu siteNavigationMenu =
+			_siteNavigationMenuLocalService.addSiteNavigationMenu(
+				null, TestPropsValues.getUserId(), group.getGroupId(), "Menu",
+				SiteNavigationConstants.TYPE_DEFAULT, true,
+				ServiceContextTestUtil.getServiceContext(
+					group.getGroupId(), TestPropsValues.getUserId()));
+
+		String rootMenuItemId = String.valueOf(RandomTestUtil.randomLong());
+
+		testUpgrade(
+			HashMapBuilder.put(
+				"rootMenuItemId", rootMenuItemId
+			).put(
+				"siteNavigationMenuExternalReferenceCode",
+				siteNavigationMenu.getExternalReferenceCode()
+			).put(
+				"siteNavigationMenuId",
+				String.valueOf(siteNavigationMenu.getSiteNavigationMenuId())
+			).build(),
+			HashMapBuilder.put(
+				"rootMenuItemId", rootMenuItemId
 			).put(
 				"siteNavigationMenuId",
 				String.valueOf(siteNavigationMenu.getSiteNavigationMenuId())

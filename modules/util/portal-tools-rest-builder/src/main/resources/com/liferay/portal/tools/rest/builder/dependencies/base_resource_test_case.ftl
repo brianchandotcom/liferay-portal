@@ -3288,7 +3288,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 		private static List<java.lang.reflect.Field> _getAllDeclaredFields(Class<?> clazz) {
 			List<java.lang.reflect.Field> fields = new ArrayList<>();
 
-			while (clazz != null) {
+			while ((clazz != null) && (clazz != Object.class)) {
 				java.lang.reflect.Field[] declaredFields = clazz.getDeclaredFields();
 
 				for (java.lang.reflect.Field field : declaredFields) {

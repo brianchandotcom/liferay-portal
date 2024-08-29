@@ -474,10 +474,10 @@ public class DBSchemaImporterProcess {
 					String tableName = resultSet.getString("TABLE_NAME");
 					String columnName = resultSet.getString("COLUMN_NAME");
 
-					List<String> columnsName = tableColumns.computeIfAbsent(
+					List<String> columnNames = tableColumns.computeIfAbsent(
 						tableName, key -> new ArrayList<>());
 
-					columnsName.add(columnName);
+					columnNames.add(columnName);
 
 					columnsType.put(
 						tableName + "." + columnName,
@@ -486,8 +486,8 @@ public class DBSchemaImporterProcess {
 			}
 		}
 
-		for (List<String> columnsName : tableColumns.values()) {
-			Collections.sort(columnsName, String.CASE_INSENSITIVE_ORDER);
+		for (List<String> columnNames : tableColumns.values()) {
+			Collections.sort(columnNames, String.CASE_INSENSITIVE_ORDER);
 		}
 	}
 

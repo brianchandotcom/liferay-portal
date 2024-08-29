@@ -156,4 +156,14 @@ public class TestEntityResourceTest extends BaseTestEntityResourceTestCase {
 		return testGetTestEntitiesPage_addTestEntity(testEntity);
 	}
 
+	@Override
+	protected TestEntity testPutTestEntity_addTestEntity() throws Exception {
+		return testGetTestEntitiesPage_addTestEntity(randomTestEntity());
+	}
+
+	@Override
+	protected Long testPutTestEntity_getOptionalParameter() {
+		return RandomTestUtil.nextLong();
+	}
+
 }

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {expect, mergeTests} from '@playwright/test';
+import {Locator, expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {loginTest} from '../../fixtures/loginTest';
@@ -14,10 +14,10 @@ export const test = mergeTests(apiHelpersTest, loginTest(), objectPagesTest);
 
 const createdEntities = {
 	listTypeDefinitionIds: [],
-	objectDefinition: {},
+	objectDefinitions: [],
 } as {
 	listTypeDefinitionIds: number[];
-	objectDefinition: ObjectDefinition;
+	objectDefinitions: ObjectDefinition[];
 };
 
 test.beforeEach(async ({apiHelpers}) => {
@@ -27,13 +27,21 @@ test.beforeEach(async ({apiHelpers}) => {
 			status: {code: 0},
 		});
 
-	createdEntities.objectDefinition = newObjectDefinition;
+	createdEntities.objectDefinitions.push(newObjectDefinition);
 });
 
 test.afterEach(async ({apiHelpers}) => {
-	await apiHelpers.objectAdmin.deleteObjectDefinition(
-		createdEntities.objectDefinition.id
-	);
+	if (createdEntities.objectDefinitions.length) {
+		await Promise.all(
+			createdEntities.objectDefinitions.map(async (objectDefinition) => {
+				await apiHelpers.objectAdmin.deleteObjectDefinition(
+					objectDefinition.id
+				);
+			})
+		);
+
+		createdEntities.objectDefinitions = [];
+	}
 
 	if (createdEntities.listTypeDefinitionIds.length) {
 		await Promise.all(
@@ -59,7 +67,9 @@ test.describe('Manage object fields through Model Builder', () => {
 		modelBuilderDiagramPage,
 		modelBuilderObjectDefinitionNodePage,
 	}) => {
-		const {listTypeDefinitionIds, objectDefinition} = createdEntities;
+		const {listTypeDefinitionIds, objectDefinitions} = createdEntities;
+
+		const [objectDefinition] = objectDefinitions;
 
 		const existingListTypeDefinitions = (
 			await apiHelpers.listTypeAdmin.getListTypeDefinitions()
@@ -115,7 +125,9 @@ test.describe('Manage object fields through Model Builder', () => {
 		page,
 		viewObjectDefinitionsPage,
 	}) => {
-		const {listTypeDefinitionIds, objectDefinition} = createdEntities;
+		const {listTypeDefinitionIds, objectDefinitions} = createdEntities;
+
+		const [objectDefinition] = objectDefinitions;
 
 		await page.goto('/');
 
@@ -156,7 +168,7 @@ test.describe('Manage object fields through Model Builder', () => {
 		modelBuilderObjectDefinitionNodePage,
 		modelBuilderRightSidebarPage,
 	}) => {
-		const {objectDefinition} = createdEntities;
+		const [objectDefinition] = createdEntities.objectDefinitions;
 
 		await apiHelpers.objectAdmin.postObjectFieldByExternalReferenceCode(
 			objectDefinition.externalReferenceCode,
@@ -185,7 +197,7 @@ test.describe('Manage object fields through Model Builder', () => {
 			.click();
 
 		await modelBuilderObjectDefinitionNodePage.clickShowAllFieldsButton(
-			objectDefinition.name,
+			objectDefinition.label['en_US'],
 			modelBuilderDiagramPage.objectDefinitionNodes
 		);
 
@@ -219,6 +231,8 @@ test.describe('Manage object fields through Model Builder', () => {
 				objectFolderExternalReferenceCode: 'default',
 				status: {code: 2},
 			});
+
+		createdEntities.objectDefinitions.push(draftObjectDefinition);
 
 		const listTypeDefinition =
 			await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
@@ -273,10 +287,6 @@ test.describe('Manage object fields through Model Builder', () => {
 		);
 
 		await expect(page.getByText(picklistFieldName)).toBeVisible();
-
-		await apiHelpers.objectAdmin.deleteObjectDefinition(
-			draftObjectDefinition.id
-		);
 	});
 
 	test('can show and hide object fields in the object definition node', async ({
@@ -286,7 +296,8 @@ test.describe('Manage object fields through Model Builder', () => {
 		modelBuilderObjectDefinitionNodePage,
 		page,
 	}) => {
-		const {objectDefinition} = createdEntities;
+		const [objectDefinition] = createdEntities.objectDefinitions;
+
 		const dateFieldName = 'dateField' + getRandomInt();
 		const integerFieldName = 'integerField' + getRandomInt();
 
@@ -364,7 +375,7 @@ test.describe('Manage object fields through Model Builder', () => {
 		modelBuilderRightSidebarPage,
 		page,
 	}) => {
-		const {objectDefinition} = createdEntities;
+		const [objectDefinition] = createdEntities.objectDefinitions;
 
 		const integerFieldName = 'integerField' + getRandomInt();
 
@@ -449,7 +460,7 @@ test.describe('Manage object fields through Model Builder', () => {
 		modelBuilderRightSidebarPage,
 		page,
 	}) => {
-		const {objectDefinition} = createdEntities;
+		const [objectDefinition] = createdEntities.objectDefinitions;
 
 		await modelBuilderDiagramPage.goto({objectFolderName: 'Default'});
 
@@ -482,7 +493,9 @@ test.describe('Manage objectFields through Objects Admin UI', () => {
 		objectFieldsPage,
 		page,
 	}) => {
-		const {listTypeDefinitionIds, objectDefinition} = createdEntities;
+		const {listTypeDefinitionIds, objectDefinitions} = createdEntities;
+
+		const [objectDefinition] = objectDefinitions;
 
 		const listTypeDefinition =
 			await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
@@ -597,7 +610,7 @@ test.describe('Manage objectFields through Objects Admin UI', () => {
 		objectFieldsPage,
 		page,
 	}) => {
-		const {objectDefinition} = createdEntities;
+		const [objectDefinition] = createdEntities.objectDefinitions;
 		const integerFieldName = 'integerField' + getRandomInt();
 
 		await apiHelpers.objectAdmin.postObjectFieldByExternalReferenceCode(

@@ -5,7 +5,6 @@
 
 package com.liferay.portlet.documentlibrary.service.impl;
 
-import com.liferay.document.library.kernel.exception.DuplicateDLFileEntryMetadataExternalReferenceCodeException;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
@@ -13,12 +12,10 @@ import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructureLinkManagerUtil;
 import com.liferay.dynamic.data.mapping.kernel.StorageEngineManagerUtil;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.documentlibrary.service.base.DLFileEntryMetadataLocalServiceBaseImpl;
 
 import java.util.List;
@@ -209,8 +206,6 @@ public class DLFileEntryMetadataLocalServiceImpl
 				serviceContext);
 		}
 		else {
-			_validateExternalReferenceCode(externalReferenceCode, companyId);
-
 			long fileEntryMetadataId = counterLocalService.increment();
 
 			fileEntryMetadata = dlFileEntryMetadataPersistence.create(
@@ -233,25 +228,6 @@ public class DLFileEntryMetadataLocalServiceImpl
 					DLFileEntryMetadata.class),
 				fileEntryMetadata.getFileEntryMetadataId(),
 				ddmStructure.getStructureId());
-		}
-	}
-
-	private void _validateExternalReferenceCode(
-		String externalReferenceCode, long companyId) {
-
-		if (Validator.isNull(externalReferenceCode)) {
-			return;
-		}
-
-		DLFileEntryMetadata dlFileEntryMetadata =
-			dlFileEntryMetadataPersistence.fetchByERC_C(
-				externalReferenceCode, companyId);
-
-		if (dlFileEntryMetadata != null) {
-			throw new DuplicateDLFileEntryMetadataExternalReferenceCodeException(
-				StringBundler.concat(
-					"Duplicate file entry metadata external reference code ",
-					externalReferenceCode, " in company ", companyId));
 		}
 	}
 

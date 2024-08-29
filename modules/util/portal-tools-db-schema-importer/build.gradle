@@ -12,9 +12,9 @@ dependencies {
 
 	compileOnly group: "com.liferay", name: "com.liferay.petra.lang", version: "5.2.0"
 	compileOnly group: "com.liferay", name: "com.liferay.petra.string", version: "5.3.0"
-	compileOnly group: "com.liferay", name: "org.springframework.beans", version: "5.3.33.LIFERAY-PATCHED-1"
+	compileOnly group: "com.liferay", name: "org.springframework.beans", version: "5.3.39.LIFERAY-PATCHED-1"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
-	compileOnly group: "org.springframework", name: "spring-jdbc", version: "5.3.33"
+	compileOnly group: "org.springframework", name: "spring-jdbc", version: "5.3.39"
 	compileOnly project(":core:petra:petra-concurrent")
 	compileOnly project(":core:petra:petra-reflect")
 }

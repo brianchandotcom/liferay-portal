@@ -30,11 +30,7 @@ if ((organization == null) && (parentOrganizationId == OrganizationConstants.DEF
 	List<Organization> manageableOrganizations = new ArrayList<Organization>();
 
 	for (Organization curOrganization : selUser.getOrganizations()) {
-		if (OrganizationPermissionUtil.contains(
-			permissionChecker, curOrganization, ActionKeys.EDIT_SUBORGANIZATIONS) ||
-			(OrganizationPermissionUtil.contains(
-				permissionChecker, curOrganization, ActionKeys.MANAGE_SUBORGANIZATIONS
-			))) {
+		if (OrganizationPermissionUtil.contains(permissionChecker, curOrganization, ActionKeys.EDIT_SUBORGANIZATIONS) || OrganizationPermissionUtil.contains(permissionChecker, curOrganization, ActionKeys.MANAGE_SUBORGANIZATIONS)) {
 			manageableOrganizations.add(curOrganization);
 		}
 	}

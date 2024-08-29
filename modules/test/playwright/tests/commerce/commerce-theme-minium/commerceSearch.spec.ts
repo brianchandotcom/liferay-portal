@@ -24,36 +24,32 @@ export const test = mergeTests(
 test('LPD-29997 Search for products by typing different specification values in global search', async ({
 	apiHelpers,
 	applicationsMenuPage,
-	commerceThemeMiniumPage,
+	commerceCatalogPage,
 }) => {
 	const {site} = await miniumSetUp(apiHelpers);
 
 	await applicationsMenuPage.goToSite(site.name);
 
-	await commerceThemeMiniumPage.globalSearchButton.click();
-
-	await commerceThemeMiniumPage.globalSearchInput.click();
-
-	await commerceThemeMiniumPage.globalSearchInput.fill('Plastic');
+	await commerceCatalogPage.focusGlobalSearchBarInput();
+	await commerceCatalogPage.search('Plastic');
 
 	await expect(
-		await commerceThemeMiniumPage.globalSearchSuggestionsItem(
+		await commerceCatalogPage.globalSearchBarCommerceItemLink(
 			'Timing Chain Tensioner'
 		)
 	).toBeVisible();
 
-	await commerceThemeMiniumPage.globalSearchClearButton.click();
-
-	await commerceThemeMiniumPage.globalSearchInput.fill('Plastic, Ceramic');
+	await commerceCatalogPage.clearSearchButton.click();
+	await commerceCatalogPage.search('Plastic, Ceramic');
 
 	await expect(
-		await commerceThemeMiniumPage.globalSearchSuggestionsItem(
+		await commerceCatalogPage.globalSearchBarCommerceItemLink(
 			'Timing Chain Tensioner'
 		)
 	).toBeVisible();
 
 	await expect(
-		await commerceThemeMiniumPage.globalSearchSuggestionsItem(
+		await commerceCatalogPage.globalSearchBarCommerceItemLink(
 			'Premium Brake Pads'
 		)
 	).toBeVisible();
@@ -62,39 +58,41 @@ test('LPD-29997 Search for products by typing different specification values in 
 test('LPD-30191 Search for products by typing different SKUs in global search', async ({
 	apiHelpers,
 	applicationsMenuPage,
-	commerceThemeMiniumPage,
+	commerceCatalogPage,
 }) => {
 	const {site} = await miniumSetUp(apiHelpers);
 
 	await applicationsMenuPage.goToSite(site.name);
 
-	await commerceThemeMiniumPage.globalSearchButton.click();
-
-	await commerceThemeMiniumPage.globalSearchInput.click();
-
-	await commerceThemeMiniumPage.globalSearchInput.fill('MIN93015');
+	await commerceCatalogPage.focusGlobalSearchBarInput();
+	await commerceCatalogPage.search('MIN93015');
 
 	await expect(
-		await commerceThemeMiniumPage.globalSearchSuggestionsItem('ABS Sensor')
+		await commerceCatalogPage.globalSearchBarCommerceItemLink(
+			'ABS Sensor Product designed'
+		)
 	).toBeVisible();
 
-	await commerceThemeMiniumPage.globalSearchClearButton.click();
-
-	await commerceThemeMiniumPage.globalSearchInput.fill('MIN93015 MIN55861');
+	await commerceCatalogPage.clearSearchButton.click();
+	await commerceCatalogPage.search('MIN93015 MIN55861');
 
 	await expect(
-		await commerceThemeMiniumPage.globalSearchSuggestionsItem('ABS Sensor')
+		await commerceCatalogPage.globalSearchBarCommerceItemLink(
+			'ABS Sensor Product designed'
+		)
 	).toBeVisible();
 
 	await expect(
-		await commerceThemeMiniumPage.globalSearchSuggestionsItem('U-Joint')
+		await commerceCatalogPage.globalSearchBarCommerceItemLink(
+			'U-Joint Product designed'
+		)
 	).toBeVisible();
 });
 
 test('LPD-30370 Search for all orders by typing user email in global search', async ({
 	apiHelpers,
 	applicationsMenuPage,
-	commerceThemeMiniumPage,
+	commerceCatalogPage,
 }) => {
 	const {channel, site} = await miniumSetUp(apiHelpers);
 
@@ -157,20 +155,17 @@ test('LPD-30370 Search for all orders by typing user email in global search', as
 
 	await applicationsMenuPage.goToSite(site.name);
 
-	await commerceThemeMiniumPage.globalSearchButton.click();
-
-	await commerceThemeMiniumPage.globalSearchInput.click();
-
-	await commerceThemeMiniumPage.globalSearchInput.fill('test@liferay.com');
+	await commerceCatalogPage.focusGlobalSearchBarInput();
+	await commerceCatalogPage.search('test@liferay.com');
 
 	await expect(
-		await commerceThemeMiniumPage.globalSearchSuggestionsItem(
+		await commerceCatalogPage.globalSearchBarCommerceItemLink(
 			String(openOrder.id)
 		)
 	).toBeVisible();
 
 	await expect(
-		await commerceThemeMiniumPage.globalSearchSuggestionsItem(
+		await commerceCatalogPage.globalSearchBarCommerceItemLink(
 			String(placedOrder.id)
 		)
 	).toBeVisible();

@@ -10,6 +10,7 @@ import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
 import ClaySticker from '@clayui/sticker';
 import ClayTabs from '@clayui/tabs';
+import {AnalyticsReports} from '@liferay/analytics-reports-js-components-web';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useCallback, useState} from 'react';
@@ -35,6 +36,7 @@ const TABS_2 = {
 };
 
 const SidebarPanelInfoView = ({
+	contentPerformanceDataFetchURL,
 	classPK,
 	createDate,
 	description,
@@ -71,7 +73,13 @@ const SidebarPanelInfoView = ({
 	const hasCategorization =
 		!!tags.length || !!Object.keys(vocabularies).length;
 
-	const showTabs = !!getItemVersionsURL || hasCategorization;
+	const hasPerformanceTab =
+		type === 'Blogs Entry' ||
+		type === 'Document' ||
+		type === 'Web Content Article';
+
+	const showTabs =
+		!!getItemVersionsURL || hasCategorization || hasPerformanceTab;
 
 	const allTabs = !!getItemVersionsURL && hasCategorization;
 
@@ -191,6 +199,21 @@ const SidebarPanelInfoView = ({
 							{Liferay.Language.get('details')}
 						</ClayTabs.Item>
 
+						{!!Liferay.FeatureFlags['LPD-28830'] && (
+							<ClayTabs.Item
+								active={activeTabKeyValue === TABS.performance}
+								className="flex-shrink-0"
+								innerProps={{
+									'aria-controls': 'performance',
+								}}
+								onClick={() =>
+									setActiveTabKeyValue(TABS.performance)
+								}
+							>
+								{Liferay.Language.get('performance')}
+							</ClayTabs.Item>
+						)}
+
 						{hasCategorization && (
 							<ClayTabs.Item
 								active={
@@ -273,6 +296,21 @@ const SidebarPanelInfoView = ({
 								viewURLs={viewURLs}
 							/>
 						</ClayTabs.TabPane>
+
+						{!!Liferay.FeatureFlags['LPD-28830'] &&
+							showTabs &&
+							activeTabKeyValue === TABS.performance && (
+								<ClayTabs.TabPane
+									aria-labelledby={`tab-${TABS.performance + 1}`}
+									className="flex-shrink-0"
+								>
+									<AnalyticsReports
+										contentPerformanceDataFetchURL={
+											contentPerformanceDataFetchURL
+										}
+									/>
+								</ClayTabs.TabPane>
+							)}
 
 						{hasCategorization &&
 							showTabs &&

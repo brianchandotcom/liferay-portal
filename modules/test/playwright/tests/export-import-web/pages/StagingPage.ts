@@ -21,8 +21,8 @@ export class StagingPage {
 		const comparator = getComparator('image/png');
 
 		const buffer = comparator(
-			await this.getCurrentPageScreenshot(siteKey, 'Live'),
-			await this.getCurrentPageScreenshot(siteKey, 'Staging')
+			await this.getCurrentPageScreenshot(siteKey, false),
+			await this.getCurrentPageScreenshot(siteKey, true)
 		);
 
 		if (buffer !== null && buffer.diff !== undefined) {
@@ -65,10 +65,8 @@ export class StagingPage {
 		);
 	}
 
-	private async getCurrentPageScreenshot(siteKey: string, version: string) {
-		await this.page.goto(
-			`/web/${siteKey}${version === 'Staging' ? '-staging' : ''}`
-		);
+	private async getCurrentPageScreenshot(siteKey: string, staging: boolean) {
+		await this.page.goto(`/web/${siteKey}${staging ? '-staging' : ''}`);
 
 		const url = this.page.url();
 
@@ -79,7 +77,10 @@ export class StagingPage {
 		const screenshot = await this.page.screenshot({
 			fullPage: true,
 			mask: [this.page.getByTestId('notificationsCount')],
-			path: path.join(getTempDir(), `${siteKey}-${version}.png`),
+			path: path.join(
+				getTempDir(),
+				`${siteKey}-${staging ? 'staging' : 'live'}.png`
+			),
 		});
 
 		await this.page.goto(url);

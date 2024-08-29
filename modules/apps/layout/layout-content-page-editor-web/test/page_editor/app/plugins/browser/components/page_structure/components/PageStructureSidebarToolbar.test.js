@@ -10,11 +10,29 @@ import React from 'react';
 
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/layoutDataItemTypes';
 import {VIEWPORT_SIZES} from '../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/viewportSizes';
+import {
+	ClipboardContextProvider,
+	useSetCopiedNodeIds,
+} from '../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ClipboardContext';
 import deleteItem from '../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/deleteItem';
 import duplicateItem from '../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/duplicateItem';
 import updateItemStyle from '../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/utils/updateItemStyle';
 import PageStructureSidebarToolbar from '../../../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/browser/components/page_structure/components/PageStructureSidebarToolbar';
 import StoreMother from '../../../../../../../../src/main/resources/META-INF/resources/page_editor/test_utils/StoreMother';
+
+jest.mock(
+	'../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ClipboardContext',
+	() => {
+		const setCopiedNodeIds = jest.fn();
+
+		return {
+			...jest.requireActual(
+				'../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ClipboardContext'
+			),
+			useSetCopiedNodeIds: () => setCopiedNodeIds,
+		};
+	}
+);
 
 jest.mock(
 	'../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/utils/updateItemStyle',
@@ -91,7 +109,9 @@ const renderComponent = ({
 				selectedViewportSize: viewportSize,
 			})}
 		>
-			<PageStructureSidebarToolbar activeItemIds={activeItemIds} />
+			<ClipboardContextProvider>
+				<PageStructureSidebarToolbar activeItemIds={activeItemIds} />
+			</ClipboardContextProvider>
 		</StoreMother.Component>
 	);
 
@@ -173,5 +193,61 @@ describe('PageStructureSidebarToolbar', () => {
 		});
 
 		expect(screen.getByText('show-fragments')).toBeInTheDocument();
+	});
+
+	it('calls deleteItem when Delete action is pressed', () => {
+		renderComponent({
+			activeItemIds: ['fragment01', 'fragment02'],
+		});
+
+		userEvent.click(screen.getByText('delete'));
+
+		expect(deleteItem).toBeCalledWith(
+			expect.objectContaining({
+				itemIds: ['fragment01', 'fragment02'],
+			})
+		);
+	});
+
+	it('calls setCopiedNodeIds and deleteItem when Cut action is pressed', () => {
+		const setCopiedNodeIds = useSetCopiedNodeIds();
+
+		renderComponent({
+			activeItemIds: ['fragment01', 'fragment02'],
+		});
+
+		userEvent.click(screen.getByText('cut'));
+
+		expect(deleteItem).toBeCalledWith(
+			expect.objectContaining({
+				itemIds: ['fragment01', 'fragment02'],
+			})
+		);
+
+		expect(setCopiedNodeIds).toBeCalledWith(
+			expect.objectContaining(['fragment01', 'fragment02'])
+		);
+	});
+
+	it('calls setCopiedNodeIds when Copy action is pressed', () => {
+		const setCopiedNodeIds = useSetCopiedNodeIds();
+
+		renderComponent({
+			activeItemIds: ['fragment01', 'fragment02'],
+		});
+
+		userEvent.click(screen.getByText('copy'));
+
+		expect(setCopiedNodeIds).toBeCalledWith(
+			expect.objectContaining(['fragment01', 'fragment02'])
+		);
+	});
+
+	it('do not allow the Paste action on multiple selections', () => {
+		renderComponent({
+			activeItemIds: ['fragment01', 'fragment02'],
+		});
+
+		expect(screen.queryByText('paste')).not.toBeInTheDocument();
 	});
 });

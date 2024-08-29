@@ -6873,8 +6873,17 @@ public class ObjectEntryResourceTest {
 		Assert.assertEquals("NOT_FOUND", jsonObject.getString("status"));
 
 		jsonObject =
-			_putByExternalReferenceCodeCustomObjectEntryWithPermissions(
-				true, _postCustomObjectEntryWithPermissions(true, null),
+			_patchPutByExternalReferenceCodeCustomObjectEntryWithPermissions(
+				Http.Method.PATCH, true,
+				_postCustomObjectEntryWithPermissions(true, null),
+				invalidPermissionsJSONArray);
+
+		Assert.assertEquals("NOT_FOUND", jsonObject.getString("status"));
+
+		jsonObject =
+			_patchPutByExternalReferenceCodeCustomObjectEntryWithPermissions(
+				Http.Method.PUT, true,
+				_postCustomObjectEntryWithPermissions(true, null),
 				invalidPermissionsJSONArray);
 
 		Assert.assertEquals("NOT_FOUND", jsonObject.getString("status"));
@@ -6903,8 +6912,12 @@ public class ObjectEntryResourceTest {
 			objectEntryJSONObject);
 		_assertCustomObjectEntryWithPermissions(
 			JSONUtil.putAll(_getOwnerPermissionsJSONObject()),
-			_putByExternalReferenceCodeCustomObjectEntryWithPermissions(
-				true, objectEntryJSONObject, null));
+			_patchPutByExternalReferenceCodeCustomObjectEntryWithPermissions(
+				Http.Method.PATCH, true, objectEntryJSONObject, null));
+		_assertCustomObjectEntryWithPermissions(
+			JSONUtil.putAll(_getOwnerPermissionsJSONObject()),
+			_patchPutByExternalReferenceCodeCustomObjectEntryWithPermissions(
+				Http.Method.PUT, true, objectEntryJSONObject, null));
 		_assertCustomObjectEntryWithPermissions(
 			JSONUtil.putAll(_getOwnerPermissionsJSONObject()),
 			_patchPutCustomObjectEntryWithPermissions(
@@ -6954,13 +6967,29 @@ public class ObjectEntryResourceTest {
 					role1.getName()),
 				_getPermissionsJSONObject(
 					new String[] {ActionKeys.DELETE}, role3.getName())),
-			_putByExternalReferenceCodeCustomObjectEntryWithPermissions(
-				true, objectEntryJSONObject,
+			_patchPutByExternalReferenceCodeCustomObjectEntryWithPermissions(
+				Http.Method.PATCH, true, objectEntryJSONObject,
 				JSONUtil.putAll(
 					_getPermissionsJSONObject(
 						new String[] {ActionKeys.UPDATE}, role1.getName()),
 					_getPermissionsJSONObject(
 						new String[] {ActionKeys.DELETE}, role3.getName()))));
+		_assertCustomObjectEntryWithPermissions(
+			JSONUtil.putAll(
+				_getPermissionsJSONObject(
+					new String[] {ActionKeys.DELETE, ActionKeys.UPDATE},
+					role1.getName()),
+				_getPermissionsJSONObject(
+					new String[] {ActionKeys.DELETE, ActionKeys.VIEW},
+					role3.getName())),
+			_patchPutByExternalReferenceCodeCustomObjectEntryWithPermissions(
+				Http.Method.PUT, true, objectEntryJSONObject,
+				JSONUtil.putAll(
+					_getPermissionsJSONObject(
+						new String[] {ActionKeys.UPDATE}, role1.getName()),
+					_getPermissionsJSONObject(
+						new String[] {ActionKeys.DELETE, ActionKeys.VIEW},
+						role3.getName()))));
 		_assertCustomObjectEntryWithPermissions(
 			JSONUtil.putAll(
 				_getPermissionsJSONObject(
@@ -6996,8 +7025,14 @@ public class ObjectEntryResourceTest {
 				true, _jsonFactory.createJSONArray()));
 		_assertCustomObjectEntryWithPermissions(
 			companyPermissionsJSONArray,
-			_putByExternalReferenceCodeCustomObjectEntryWithPermissions(
-				true, objectEntryJSONObject, _jsonFactory.createJSONArray()));
+			_patchPutByExternalReferenceCodeCustomObjectEntryWithPermissions(
+				Http.Method.PATCH, true, objectEntryJSONObject,
+				_jsonFactory.createJSONArray()));
+		_assertCustomObjectEntryWithPermissions(
+			companyPermissionsJSONArray,
+			_patchPutByExternalReferenceCodeCustomObjectEntryWithPermissions(
+				Http.Method.PUT, true, objectEntryJSONObject,
+				_jsonFactory.createJSONArray()));
 		_assertCustomObjectEntryWithPermissions(
 			companyPermissionsJSONArray,
 			_patchPutCustomObjectEntryWithPermissions(
@@ -7017,8 +7052,14 @@ public class ObjectEntryResourceTest {
 		Assert.assertNull(objectEntryJSONObject.get("permissions"));
 
 		objectEntryJSONObject =
-			_putByExternalReferenceCodeCustomObjectEntryWithPermissions(
-				false, objectEntryJSONObject, null);
+			_patchPutByExternalReferenceCodeCustomObjectEntryWithPermissions(
+				Http.Method.PATCH, false, objectEntryJSONObject, null);
+
+		Assert.assertNull(objectEntryJSONObject.get("permissions"));
+
+		objectEntryJSONObject =
+			_patchPutByExternalReferenceCodeCustomObjectEntryWithPermissions(
+				Http.Method.PUT, false, objectEntryJSONObject, null);
 
 		Assert.assertNull(objectEntryJSONObject.get("permissions"));
 
@@ -12269,6 +12310,31 @@ public class ObjectEntryResourceTest {
 		return Type.MANY_TO_MANY;
 	}
 
+	private JSONObject
+			_patchPutByExternalReferenceCodeCustomObjectEntryWithPermissions(
+				Http.Method httpMethod, boolean nestedFields,
+				JSONObject objectEntryJSONObject,
+				JSONArray permissionsJSONArray)
+		throws Exception {
+
+		String endpoint =
+			_objectDefinition1.getRESTContextPath() +
+				"/by-external-reference-code/" +
+					objectEntryJSONObject.getLong("externalReferenceCode");
+
+		if (nestedFields) {
+			endpoint = endpoint + "?nestedFields=permissions";
+		}
+
+		return HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
+			).put(
+				"permissions", permissionsJSONArray
+			).toString(),
+			endpoint, httpMethod);
+	}
+
 	private JSONObject _patchPutCustomObjectEntryWithPermissions(
 			Http.Method httpMethod, boolean nestedFields,
 			JSONObject objectEntryJSONObject, JSONArray permissionsJSONArray)
@@ -12335,30 +12401,6 @@ public class ObjectEntryResourceTest {
 					taxonomyCategories, TaxonomyCategory::getId, String.class)
 			).toString(),
 			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
-	}
-
-	private JSONObject
-			_putByExternalReferenceCodeCustomObjectEntryWithPermissions(
-				boolean nestedFields, JSONObject objectEntryJSONObject,
-				JSONArray permissionsJSONArray)
-		throws Exception {
-
-		String endpoint =
-			_objectDefinition1.getRESTContextPath() +
-				"/by-external-reference-code/" +
-					objectEntryJSONObject.getLong("externalReferenceCode");
-
-		if (nestedFields) {
-			endpoint = endpoint + "?nestedFields=permissions";
-		}
-
-		return HTTPTestUtil.invokeToJSONObject(
-			JSONUtil.put(
-				_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
-			).put(
-				"permissions", permissionsJSONArray
-			).toString(),
-			endpoint, Http.Method.PUT);
 	}
 
 	private void _registerUnsafeSupplierInvocations(

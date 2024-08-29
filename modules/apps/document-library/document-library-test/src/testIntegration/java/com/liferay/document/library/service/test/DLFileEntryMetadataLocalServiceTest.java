@@ -6,6 +6,7 @@
 package com.liferay.document.library.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.document.library.kernel.exception.DuplicateDLFileEntryMetadataExternalReferenceCodeException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
@@ -106,7 +107,7 @@ public class DLFileEntryMetadataLocalServiceTest {
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_SCOPE_DEFAULT,
 			serviceContext);
 
-		Map<String, DDMFormValues> ddmFormValuesMap = setUpDDMFormValuesMap(
+		_ddmFormValuesMap = setUpDDMFormValuesMap(
 			_ddmStructure.getStructureKey(), user.getLocale());
 
 		_dlFileEntry = _dlFileEntryLocalService.addFileEntry(
@@ -114,7 +115,7 @@ public class DLFileEntryMetadataLocalServiceTest {
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), null, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), null, null,
-			_dlFileEntryType.getFileEntryTypeId(), ddmFormValuesMap, null,
+			_dlFileEntryType.getFileEntryTypeId(), _ddmFormValuesMap, null,
 			new ByteArrayInputStream(TestDataConstants.TEST_BYTE_ARRAY),
 			TestDataConstants.TEST_BYTE_ARRAY.length, null, null, null,
 			serviceContext);
@@ -278,6 +279,44 @@ public class DLFileEntryMetadataLocalServiceTest {
 		}
 	}
 
+	@Test(
+		expected = DuplicateDLFileEntryMetadataExternalReferenceCodeException.class
+	)
+	public void testUpdateFileEntryMetadataWithExistingExternalReferenceCode()
+		throws Exception {
+
+		DLFileVersion dlFileVersion = _dlFileEntry.getFileVersion();
+
+		User user = TestPropsValues.getUser();
+
+		DLFileEntryMetadata dlFileEntryMetadata =
+			_dlFileEntryMetadataLocalService.getFileEntryMetadata(
+				_ddmStructure.getStructureId(),
+				dlFileVersion.getFileVersionId());
+
+		ServiceContext serviceContext = _getServiceContext(_group, user);
+
+		DLFileEntry dlFileEntry = _dlFileEntryLocalService.addFileEntry(
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
+			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(), null, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), null, null,
+			_dlFileEntryType.getFileEntryTypeId(), _ddmFormValuesMap, null,
+			new ByteArrayInputStream(TestDataConstants.TEST_BYTE_ARRAY),
+			TestDataConstants.TEST_BYTE_ARRAY.length, null, null, null,
+			serviceContext);
+
+		dlFileVersion = dlFileEntry.getFileVersion();
+
+		_dlFileEntryMetadataLocalService.updateFileEntryMetadata(
+			dlFileEntryMetadata.getExternalReferenceCode(),
+			_dlFileEntryType.getFileEntryTypeId(), dlFileEntry.getFileEntryId(),
+			dlFileVersion.getFileVersionId(),
+			setUpDDMFormValuesMap(
+				_ddmStructure.getStructureKey(), user.getLocale()),
+			serviceContext);
+	}
+
 	@Test
 	public void testUpdateFileEntryMetadataWithExternalReferenceCode()
 		throws Exception {
@@ -291,7 +330,7 @@ public class DLFileEntryMetadataLocalServiceTest {
 			_dlFileEntry.getFileEntryId(), dlFileVersion.getFileVersionId(),
 			setUpDDMFormValuesMap(
 				_ddmStructure.getStructureKey(), user.getLocale()),
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+			_getServiceContext(_group, user));
 
 		DLFileEntryMetadata dlFileEntryMetadata =
 			_dlFileEntryMetadataLocalService.getFileEntryMetadata(
@@ -372,6 +411,7 @@ public class DLFileEntryMetadataLocalServiceTest {
 	@Inject(filter = "ddm.form.deserializer.type=xsd")
 	private DDMFormDeserializer _ddmFormDeserializer;
 
+	private Map<String, DDMFormValues> _ddmFormValuesMap;
 	private DDMStructure _ddmStructure;
 	private DLFileEntry _dlFileEntry;
 	private DLFileEntryType _dlFileEntryType;

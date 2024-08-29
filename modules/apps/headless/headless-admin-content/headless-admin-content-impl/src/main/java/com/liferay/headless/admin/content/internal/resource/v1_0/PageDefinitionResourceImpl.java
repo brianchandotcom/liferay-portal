@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.security.permission.resource.PortletResourcePer
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.permission.LayoutPermission;
 import com.liferay.portal.kernel.servlet.DummyHttpServletResponse;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
@@ -137,6 +138,10 @@ public class PageDefinitionResourceImpl extends BasePageDefinitionResourceImpl {
 
 		ObjectWriter objectWriter = objectMapper.writer(filterProvider);
 
+		serviceContext.setRequest(contextHttpServletRequest);
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
 		try {
 			_layoutsImporter.importPageElement(
 				layout, layoutStructure, layoutStructure.getMainItemId(),
@@ -155,6 +160,9 @@ public class PageDefinitionResourceImpl extends BasePageDefinitionResourceImpl {
 			).entity(
 				"Unable to post page definition preview"
 			).build();
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
 		}
 
 		contextHttpServletRequest = DynamicServletRequest.addQueryString(

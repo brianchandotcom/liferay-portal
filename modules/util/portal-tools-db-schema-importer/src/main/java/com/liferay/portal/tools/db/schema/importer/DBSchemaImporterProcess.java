@@ -161,19 +161,19 @@ public class DBSchemaImporterProcess {
 
 		ExecutorService executorService = Executors.newFixedThreadPool(5);
 
-		Set<String> sourceTables = _sourceColumnNamesMap.keySet();
-		Set<String> targetTables = _targetColumnNamesMap.keySet();
+		Set<String> sourceTableNames = _sourceColumnNamesMap.keySet();
+		Set<String> targetTableNames = _targetColumnNamesMap.keySet();
 
-		Iterator<String> sourceTablesIterator = sourceTables.iterator();
-		Iterator<String> targetTablesIterator = targetTables.iterator();
+		Iterator<String> sourceIterator = sourceTableNames.iterator();
+		Iterator<String> targetIterator = targetTableNames.iterator();
 
-		while (sourceTablesIterator.hasNext()) {
-			String sourceTable = sourceTablesIterator.next();
-			String targetTable = targetTablesIterator.next();
+		while (sourceIterator.hasNext()) {
+			String sourceTableName = sourceIterator.next();
+			String targetTableName = targetIterator.next();
 
 			futures.add(
 				executorService.submit(
-					() -> _copyTable(sourceTable, targetTable)));
+					() -> _copyTable(sourceTableName, targetTableName)));
 		}
 
 		for (Future<?> future : futures) {

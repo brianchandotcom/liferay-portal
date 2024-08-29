@@ -76,16 +76,9 @@ export class StagingPage {
 	}
 
 	private async getCurrentPageScreenshot(siteKey: string, version: string) {
-		await this.page
-			.getByLabel('Product Menu', {exact: true})
-			.getByRole('link', {name: version})
-			.click();
-
-		await expect(
-			this.page
-				.getByTestId('productMenuSiteAdministrationPanelCategory')
-				.getByText(version)
-		).toBeVisible();
+		await this.page.goto(
+			`/web/${siteKey}${version === 'Staging' ? '-staging' : ''}`
+		);
 
 		const url = this.page.url();
 

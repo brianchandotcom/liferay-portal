@@ -79,9 +79,7 @@ export default function FormMultistepOptions({item, onValueSelect}) {
 	return (
 		<>
 			<SelectField
-				className={classNames('mb-2', {
-					'mt-3': Liferay.FeatureFlags['LPD-20213'],
-				})}
+				className={classNames('mb-2', 'mt-3')}
 				field={{
 					label: Liferay.Language.get('form-type'),
 					name: 'formType',

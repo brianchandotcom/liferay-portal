@@ -376,8 +376,6 @@ describe('FormGeneralPanel', () => {
 	});
 
 	it('opens field selection modal with correct type when clicking sidebar button', async () => {
-		Liferay.FeatureFlags['LPD-20213'] = true;
-
 		await act(async () => {
 			renderComponent();
 		});
@@ -391,7 +389,5 @@ describe('FormGeneralPanel', () => {
 				itemType: '11111-className',
 			})
 		);
-
-		Liferay.FeatureFlags['LPD-20213'] = false;
 	});
 });

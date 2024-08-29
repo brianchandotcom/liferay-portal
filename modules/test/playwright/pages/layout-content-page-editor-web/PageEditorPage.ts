@@ -679,43 +679,41 @@ export class PageEditorPage {
 
 		await fragment.getByLabel('Content Type').selectOption(type);
 
-		if (await this.page.evaluate(() => Liferay.FeatureFlags['LPD-20213'])) {
-			const fieldsModal = this.page.frameLocator(
-				'iframe[title="Manage Form Fields"]'
-			);
+		const fieldsModal = this.page.frameLocator(
+			'iframe[title="Manage Form Fields"]'
+		);
 
+		await fieldsModal
+			.getByRole('row')
+			.getByRole('checkbox')
+			.first()
+			.waitFor();
+
+		if (!fields) {
 			await fieldsModal
-				.getByRole('row')
-				.getByRole('checkbox')
-				.first()
-				.waitFor();
-
-			if (!fields) {
+				.getByLabel('Select All Items on the Page')
+				.check();
+		}
+		else {
+			for (const field of fields) {
 				await fieldsModal
-					.getByLabel('Select All Items on the Page')
+					.getByRole('row', {name: field})
+					.getByRole('checkbox')
 					.check();
 			}
-			else {
-				for (const field of fields) {
-					await fieldsModal
-						.getByRole('row', {name: field})
-						.getByRole('checkbox')
-						.check();
-				}
-			}
-
-			await clickAndExpectToBeHidden({
-				target: this.page.locator('.modal-title', {
-					hasText: 'Manage Form Fields',
-				}),
-				trigger: this.page.locator('.modal-footer').getByText('Save'),
-			});
-
-			await waitForSuccessAlert(
-				this.page,
-				'Success:Your form has been successfully loaded.'
-			);
 		}
+
+		await clickAndExpectToBeHidden({
+			target: this.page.locator('.modal-title', {
+				hasText: 'Manage Form Fields',
+			}),
+			trigger: this.page.locator('.modal-footer').getByText('Save'),
+		});
+
+		await waitForSuccessAlert(
+			this.page,
+			'Success:Your form has been successfully loaded.'
+		);
 	}
 
 	async openExperienceSelector() {

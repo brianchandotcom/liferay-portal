@@ -56,7 +56,7 @@ export default function FormMappingOptions({
 					fields.map(({uniqueId}) => uniqueId)
 				);
 
-			if (Liferay.FeatureFlags['LPD-20213'] && classNameId !== '0') {
+			if (classNameId !== '0') {
 				openInfoFieldSelector({
 					formItemId: item.itemId,
 					itemType: type.className,
@@ -110,7 +110,7 @@ export default function FormMappingOptions({
 				value={classNameId}
 			/>
 
-			{Liferay.FeatureFlags['LPD-20213'] && formIsMapped(item) ? (
+			{formIsMapped(item) ? (
 				<ClayButton
 					displayType="secondary"
 					onClick={() => onSelect(classNameId, classTypeId)}

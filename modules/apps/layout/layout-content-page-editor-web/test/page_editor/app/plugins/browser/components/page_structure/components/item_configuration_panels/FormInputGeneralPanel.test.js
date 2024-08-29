@@ -243,12 +243,8 @@ describe('FormInputGeneralPanel', () => {
 	});
 
 	it('shows source selector when there is any relationship', () => {
-		Liferay.FeatureFlags['LPD-20213'] = true;
-
 		renderComponent();
 
 		expect(screen.getByLabelText('source')).toBeInTheDocument();
-
-		Liferay.FeatureFlags['LPD-20213'] = false;
 	});
 });

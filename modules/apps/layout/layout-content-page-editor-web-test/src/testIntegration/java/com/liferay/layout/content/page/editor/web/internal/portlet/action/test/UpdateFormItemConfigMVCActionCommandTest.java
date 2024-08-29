@@ -312,7 +312,6 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 		}
 	}
 
-	@FeatureFlags("LPD-20213")
 	@Test
 	public void testUpdateFormItemConfigMVCActionCommandMappingFormChangingFormTypeMultistep()
 		throws Exception {
@@ -415,7 +414,6 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 			layoutStructureItem instanceof ContainerStyledLayoutStructureItem);
 	}
 
-	@FeatureFlags("LPD-20213")
 	@Test
 	public void testUpdateFormItemConfigMVCActionCommandMappingFormDeletingInfoFields()
 		throws Exception {
@@ -490,7 +488,6 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 		}
 	}
 
-	@FeatureFlags("LPD-20213")
 	@Test
 	public void testUpdateFormItemConfigMVCActionCommandMappingFormWithEmptySpecificInfoField()
 		throws Exception {
@@ -538,7 +535,6 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 		}
 	}
 
-	@FeatureFlags("LPD-20213")
 	@Test
 	public void testUpdateFormItemConfigMVCActionCommandMappingFormWithNewInfoFields()
 		throws Exception {

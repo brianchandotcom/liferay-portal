@@ -6,7 +6,6 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {displayPageTemplatesPagesTest} from '../../fixtures/displayPageTemplatesPagesTest';
-import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {pageManagementSiteTest} from '../../fixtures/pageManagementSiteTest';
@@ -16,9 +15,6 @@ import getRandomString from '../../utils/getRandomString';
 
 const test = mergeTests(
 	displayPageTemplatesPagesTest,
-	featureFlagsTest({
-		'LPD-20213': true,
-	}),
 	pageEditorPagesTest,
 	loginTest(),
 	pageManagementSiteTest

@@ -65,11 +65,7 @@ function filterFields(
 		);
 	}
 
-	if (
-		Liferay.FeatureFlags['LPD-20213'] &&
-		relationships &&
-		!selectedRelationship
-	) {
+	if (relationships && !selectedRelationship) {
 		fields = fields.filter(
 			(fieldSet) =>
 				!relationships
@@ -396,11 +392,7 @@ function MappingSelector({
 			});
 		}
 
-		if (
-			relationships?.length &&
-			fieldType !== EDITABLE_TYPES.action &&
-			Liferay.FeatureFlags['LPD-20213']
-		) {
+		if (relationships?.length && fieldType !== EDITABLE_TYPES.action) {
 			types.push({
 				label: Liferay.Language.get('relationship'),
 				value: MAPPING_SOURCE_TYPES.relationship,

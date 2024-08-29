@@ -259,8 +259,6 @@ describe('FormWithControls', () => {
 	});
 
 	it('opens field selection modal with correct type when mapping the form', () => {
-		Liferay.FeatureFlags['LPD-20213'] = true;
-
 		render(
 			<StoreMother.Component>
 				<FormWithControls
@@ -287,7 +285,5 @@ describe('FormWithControls', () => {
 				itemType: '33333-className',
 			})
 		);
-
-		Liferay.FeatureFlags['LPD-20213'] = false;
 	});
 });

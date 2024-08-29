@@ -54,7 +54,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -110,7 +109,6 @@ public class InfoFieldItemSelectorViewDescriptorTest {
 					"myRichText", false)));
 	}
 
-	@FeatureFlags("LPD-20213")
 	@Test
 	public void testGetResultRowSplitter() throws Exception {
 		_objectDefinition2 = ObjectDefinitionTestUtil.publishObjectDefinition(
@@ -236,7 +234,6 @@ public class InfoFieldItemSelectorViewDescriptorTest {
 		Assert.assertEquals(1, searchContainer.getTotal());
 	}
 
-	@FeatureFlags("LPD-20213")
 	@Test
 	public void testGetSearchContainerWithRelationship() throws Exception {
 		_objectDefinition2 = ObjectDefinitionTestUtil.publishObjectDefinition(
@@ -259,7 +256,6 @@ public class InfoFieldItemSelectorViewDescriptorTest {
 		Assert.assertEquals(5, searchContainer.getTotal());
 	}
 
-	@FeatureFlags("LPD-20213")
 	@Test
 	public void testRowCheckerWithCheckedInfoFields() throws Exception {
 		MockHttpServletRequest mockHttpServletRequest =
@@ -300,7 +296,6 @@ public class InfoFieldItemSelectorViewDescriptorTest {
 		}
 	}
 
-	@FeatureFlags("LPD-20213")
 	@Test
 	public void testRowCheckerWithoutCheckedInfoFields() throws Exception {
 		MockHttpServletRequest mockHttpServletRequest =

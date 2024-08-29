@@ -411,8 +411,6 @@ describe('MappingSelector', () => {
 	});
 
 	it('allows selecting relationship in display pages', async () => {
-		Liferay.FeatureFlags['LPD-20213'] = true;
-
 		config.layoutType = LAYOUT_TYPES.display;
 
 		renderMappingSelector({});
@@ -425,13 +423,9 @@ describe('MappingSelector', () => {
 		expect(
 			screen.getByRole('option', {name: 'relationship'}).selected
 		).toBe(true);
-
-		Liferay.FeatureFlags['LPD-20213'] = false;
 	});
 
 	it('shows a new select for relationships when selecting that source', async () => {
-		Liferay.FeatureFlags['LPD-20213'] = true;
-
 		config.layoutType = LAYOUT_TYPES.display;
 
 		renderMappingSelector({});
@@ -442,8 +436,6 @@ describe('MappingSelector', () => {
 		fireEvent.change(sourceSelect);
 
 		expect(screen.getByLabelText('relationship')).toBeInTheDocument();
-
-		Liferay.FeatureFlags['LPD-20213'] = false;
 	});
 
 	it('shows field type when an item is mapped and a field is selected', async () => {

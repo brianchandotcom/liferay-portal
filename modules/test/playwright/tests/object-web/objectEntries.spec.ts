@@ -608,7 +608,75 @@ test('can view success message entirely in arabic', async ({
 	await expect(viewObjectEntriesPage.successMessageArabic).toBeVisible();
 });
 
-test.describe('Manage object entries through Workflow Metrics', () => {
+test.describe('Manage object entries through Workflow', () => {
+	test('can edit object entry through workflow task page', async ({
+		apiHelpers,
+		applicationsMenuPage,
+		configurationTabPage,
+		page,
+		viewObjectEntriesPage,
+		workflowTaskDetailsPage,
+		workflowTasksPage,
+	}) => {
+		const {objectDefinitions} = createdEntities;
+
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFolderExternalReferenceCode: 'default',
+				status: {code: 0},
+				titleObjectFieldName: 'textField',
+			});
+
+		objectDefinitions.push(objectDefinition);
+
+		await applicationsMenuPage.goToProcessBuilder();
+
+		await configurationTabPage.configurationTabLink.click();
+
+		await configurationTabPage.assignWorkflowToAssetType(
+			'Single Approver',
+			objectDefinition.label['en_US']
+		);
+
+		const applicationName =
+			'c/' + objectDefinition.name.toLowerCase() + 's';
+
+		await apiHelpers.objectEntry.postObjectEntry(
+			{textField: 'entry'},
+			applicationName
+		);
+
+		await workflowTasksPage.goToAssignedToMyRoles();
+
+		await workflowTasksPage.assignToMe('entry');
+
+		await workflowTasksPage.goto();
+
+		await workflowTaskDetailsPage.selectAsset(
+			objectDefinition.label['en_US']
+		);
+
+		await workflowTaskDetailsPage.editAssetButton.click();
+
+		const objectFieldValue = getRandomString();
+
+		await viewObjectEntriesPage.fillObjectEntry({
+			objectFieldBusinessType: 'Text',
+			objectFieldLabel: objectDefinition.titleObjectFieldName,
+			objectFieldValue,
+		});
+
+		await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+		await expect(viewObjectEntriesPage.successMessage).toBeVisible();
+
+		await viewObjectEntriesPage.backButton.click();
+
+		await expect(page.getByLabel('textField', {exact: true})).toHaveValue(
+			objectFieldValue
+		);
+	});
+
 	test('can view Asset Title, Asset Type and Item Subject of an entry on metrics page', async ({
 		apiHelpers,
 		applicationsMenuPage,

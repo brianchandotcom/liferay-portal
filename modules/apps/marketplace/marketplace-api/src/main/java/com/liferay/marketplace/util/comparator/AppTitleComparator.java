@@ -20,12 +20,12 @@ public class AppTitleComparator extends OrderByComparator<App> {
 
 	public static final String[] ORDER_BY_FIELDS = {"title"};
 
-	public AppTitleComparator() {
-		this(true);
-	}
+	public static AppTitleComparator getInstance(boolean ascending) {
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
 
-	public AppTitleComparator(boolean ascending) {
-		_ascending = ascending;
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -60,6 +60,16 @@ public class AppTitleComparator extends OrderByComparator<App> {
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private AppTitleComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final AppTitleComparator _INSTANCE_ASCENDING =
+		new AppTitleComparator(true);
+
+	private static final AppTitleComparator _INSTANCE_DESCENDING =
+		new AppTitleComparator(false);
 
 	private final boolean _ascending;
 

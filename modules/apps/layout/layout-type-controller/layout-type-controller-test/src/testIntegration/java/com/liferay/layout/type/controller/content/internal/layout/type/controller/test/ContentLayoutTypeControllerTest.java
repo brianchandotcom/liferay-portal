@@ -147,7 +147,7 @@ public class ContentLayoutTypeControllerTest {
 	}
 
 	@Test(expected = NoSuchLayoutException.class)
-	public void testContentLayoutTypeControllerNoPublishedPageGuestUser()
+	public void testContentLayoutTypeControllerNoPublishedLayoutGuestUser()
 		throws Exception {
 
 		LayoutTypeController layoutTypeController =
@@ -162,7 +162,7 @@ public class ContentLayoutTypeControllerTest {
 	}
 
 	@Test
-	public void testContentLayoutTypeControllerNoPublishedPagePermissionUser()
+	public void testContentLayoutTypeControllerNoPublishedLayoutPermissionUser()
 		throws Exception {
 
 		LayoutTypeController layoutTypeController =
@@ -205,7 +205,7 @@ public class ContentLayoutTypeControllerTest {
 	}
 
 	@Test
-	public void testContentLayoutTypeControllerPublishedPageGuestUser()
+	public void testContentLayoutTypeControllerPublishedLayoutGuestUser()
 		throws Exception {
 
 		LayoutTypeController layoutTypeController =
@@ -232,7 +232,7 @@ public class ContentLayoutTypeControllerTest {
 	}
 
 	@Test
-	public void testContentLayoutTypeControllerPublishedPagePermissionUser()
+	public void testContentLayoutTypeControllerPublishedLayoutPermissionUser()
 		throws Exception {
 
 		LayoutTypeController layoutTypeController =

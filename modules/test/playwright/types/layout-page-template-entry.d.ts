@@ -5,6 +5,6 @@
 
 type LayoutPageTemplateEntryType =
 	| 'basic'
-	| 'display_page'
-	| 'master_layout'
-	| 'widget_page';
+	| 'display-page'
+	| 'master-layout'
+	| 'widget-page';

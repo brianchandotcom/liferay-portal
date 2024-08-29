@@ -1108,7 +1108,7 @@ test.describe('Tabs Fragment', () => {
 			{
 				groupId: site.id,
 				name: masterPageName,
-				type: 'master_layout',
+				type: 'master-layout',
 			}
 		);
 

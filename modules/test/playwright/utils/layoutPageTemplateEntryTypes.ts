@@ -7,8 +7,8 @@ export const LAYOUT_PAGE_TEMPLATE_ENTRY_TYPES: Record<
 	LayoutPageTemplateEntryType,
 	string
 > = {
-	basic: '0',
-	display_page: '1',
-	master_layout: '3',
-	widget_page: '2',
+	'basic': '0',
+	'display-page': '1',
+	'master-layout': '3',
+	'widget-page': '2',
 } as const;

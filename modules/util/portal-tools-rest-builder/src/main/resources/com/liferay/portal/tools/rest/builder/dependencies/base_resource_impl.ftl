@@ -1067,7 +1067,10 @@ public abstract class Base${schemaName}ResourceImpl
 						<#elseif stringUtil.equals(javaMethodParameter.parameterName, "multipartBody")>
 							null
 						<#else>
-							${javaMethodParameter.parameterName}
+							<@castParameters
+								type = javaMethodParameter.parameterType
+								value = javaMethodParameter.parameterName
+							/>
 						</#if>
 
 						<#sep>, </#sep>

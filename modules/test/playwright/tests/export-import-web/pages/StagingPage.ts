@@ -3,20 +3,16 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Locator, Page, expect} from '@playwright/test';
+import {Page, expect} from '@playwright/test';
 import {getComparator} from 'playwright-core/lib/utils';
 
 import {getTempDir} from '../../../utils/temp';
 
 export class StagingPage {
-	readonly localStagingCheckbox: Locator;
 	readonly page: Page;
-	readonly saveButton: Locator;
 
 	constructor(page: Page) {
-		this.localStagingCheckbox = page.getByTestId('stagingType_local');
 		this.page = page;
-		this.saveButton = page.getByRole('button', {name: 'Save'});
 	}
 
 	async compareCurrentPageVersions(siteKey: string) {
@@ -45,7 +41,7 @@ export class StagingPage {
 	}
 
 	async enableLocalStaging() {
-		await this.localStagingCheckbox.check();
+		await this.page.getByTestId('stagingType_local').check();
 
 		this.page.once('dialog', async (dialog) => {
 			expect(dialog.message()).toContain(
@@ -54,7 +50,7 @@ export class StagingPage {
 			await dialog.accept().catch();
 		});
 
-		await this.saveButton.click();
+		await this.page.getByRole('button', {name: 'Save'}).click();
 
 		await expect(
 			this.page.getByText('Initial Publish Process').first()

@@ -40,6 +40,8 @@ public class ObjectEntryManagerUtil {
 			existingObjectEntry.setKeywords(objectEntry::getKeywords);
 		}
 
+		existingObjectEntry.setPermissions(objectEntry::getPermissions);
+
 		if (objectEntry.getProperties() != null) {
 			Map<String, Object> existingProperties =
 				existingObjectEntry.getProperties();

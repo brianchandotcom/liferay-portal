@@ -1,4 +1,4 @@
 Bundle-Name: Liferay Image Uploader Web
 Bundle-SymbolicName: com.liferay.image.uploader.web
-Bundle-Version: 5.0.51
+Bundle-Version: 5.0.52
 Web-ContextPath: /image-uploader-web

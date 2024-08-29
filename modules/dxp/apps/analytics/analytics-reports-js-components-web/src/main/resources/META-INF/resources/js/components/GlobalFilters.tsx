@@ -35,13 +35,14 @@ const GlobalFilters = () => {
 		useContext(AnalyticsReportsContext);
 
 	return (
-		<div className="d-flex justify-content-between">
+		<div className="d-flex global-filters justify-content-between">
 			<Title value={Liferay.Language.get('overview')} />
 
 			<div className="d-flex">
 				<Filter
 					active={filters.individual}
 					className="mr-3"
+					icon="users"
 					items={[
 						{
 							label: Liferay.Language.get('all-individuals'),
@@ -64,6 +65,7 @@ const GlobalFilters = () => {
 
 				<Filter
 					active={filters.rangeSelector}
+					icon="calendar"
 					items={[
 						{
 							description: getDateRange(RangeSelectors.Last7Days),

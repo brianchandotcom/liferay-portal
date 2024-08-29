@@ -11,6 +11,7 @@ import {fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import {AnalyticsReportsProvider} from '../AnalyticsReportsContext';
+import {AssetTypes} from '../types/global';
 import EmptyState from './EmptyState';
 
 interface IAppSetupProps extends React.HTMLAttributes<HTMLElement> {
@@ -19,9 +20,12 @@ interface IAppSetupProps extends React.HTMLAttributes<HTMLElement> {
 
 type Data = {
 	analyticsSettingsPortletURL: string;
+	assetId: string;
 	assetLibrary: boolean;
+	assetType: AssetTypes | null;
 	connectedToAnalyticsCloud: boolean;
 	connectedToAssetLibrary: boolean;
+	groupId: string;
 	siteEditDepotEntryDepotAdminPortletURL: string;
 	siteSyncedToAnalyticsCloud: boolean;
 };
@@ -48,14 +52,14 @@ const AppSetup: React.FC<IAppSetupProps> = ({
 				}
 
 				setData(data);
+				setLoading(false);
 			}
 			catch (error: any) {
 				console.error(error);
 
 				setError(error.toString());
+				setLoading(false);
 			}
-
-			setLoading(false);
 		}
 
 		fetchData();
@@ -142,7 +146,13 @@ const AppSetup: React.FC<IAppSetupProps> = ({
 		<ClayIconProvider
 			spritemap={`${Liferay.ThemeDisplay.getPathThemeImages()}/clay/icons.svg`}
 		>
-			<AnalyticsReportsProvider>{children}</AnalyticsReportsProvider>
+			<AnalyticsReportsProvider
+				assetId={data?.assetId ?? '0'}
+				assetType={data?.assetType ?? null}
+				groupId={data?.groupId ?? '0'}
+			>
+				{children}
+			</AnalyticsReportsProvider>
 		</ClayIconProvider>
 	);
 };

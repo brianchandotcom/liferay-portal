@@ -4,9 +4,9 @@
  */
 
 export enum Individuals {
-	AllIndividuals = 'ALL_INDIVIDUALS',
-	KnownIndividuals = 'KNOWN_INDIVIDUALS',
-	AnonymousIndividuals = 'ANONYMOUS_INDIVIDUALS',
+	AllIndividuals = 'ALL',
+	KnownIndividuals = 'KNOWN',
+	AnonymousIndividuals = 'UNKNOWN',
 }
 
 export enum RangeSelectors {
@@ -14,4 +14,29 @@ export enum RangeSelectors {
 	Last28Days = '28',
 	Last30Days = '30',
 	Last90Days = '90',
+}
+
+export enum MetricName {
+	Comments = 'commentsMetric',
+	Downloads = 'downloadsMetric',
+	Previews = 'previewsMetric',
+	Ratings = 'ratingsMetric',
+	ReadingTime = 'readingTimeMetric',
+	Views = 'viewsMetric',
+}
+
+export enum AssetTypes {
+	Document = 'document',
+	WebContent = 'journal',
+	Blog = 'blog',
+	Undefined = 'undefined',
+}
+
+export enum MetricType {
+	Comments = 'COMMENTS',
+	Downloads = 'DOWNLOADS',
+	Previews = 'PREVIEWS',
+	Ratings = 'RATINGS',
+	ReadingTime = 'READING_TIME',
+	Views = 'VIEWS',
 }

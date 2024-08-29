@@ -5,34 +5,50 @@
 
 import React, {createContext, useReducer} from 'react';
 
-import {Individuals, RangeSelectors} from './types/global';
+import {
+	AssetTypes,
+	Individuals,
+	MetricType,
+	RangeSelectors,
+} from './types/global';
 
 type State = {
+	assetId: string;
+	assetType: AssetTypes | null;
 	changeIndividualFilter: (value: any) => void;
+	changeMetricFilter: (value: any) => void;
 	changeRangeSelectorFilter: (value: any) => void;
 	filters: {
 		individual: Individuals;
+		metric: MetricType | null;
 		rangeSelector: RangeSelectors;
 	};
+	groupId: string;
 };
 
-enum Actions {
+enum Types {
 	ChangeIndividualFilter = 'CHANGE_INDIVIDUAL_FILTER',
+	ChangeMetricFilter = 'CHANGE_METRIC_FILTER',
 	ChangeRangeSelectorFilter = 'CHANGE_RANGE_SELECTOR_FILTER',
 }
 
 type Action = {
 	payload: any;
-	type: Actions;
+	type: Types;
 };
 
 const initialState: State = {
+	assetId: '0',
+	assetType: AssetTypes.Undefined,
 	changeIndividualFilter: () => {},
+	changeMetricFilter: () => {},
 	changeRangeSelectorFilter: () => {},
 	filters: {
 		individual: Individuals.AllIndividuals,
+		metric: null,
 		rangeSelector: RangeSelectors.Last30Days,
 	},
+	groupId: '0',
 };
 
 export const AnalyticsReportsContext = createContext(initialState);
@@ -41,7 +57,7 @@ AnalyticsReportsContext.displayName = 'AnalyticsReportsContext';
 
 const reducer = (state: State, action: Action): State => {
 	switch (action.type) {
-		case Actions.ChangeIndividualFilter: {
+		case Types.ChangeIndividualFilter: {
 			return {
 				...state,
 				filters: {
@@ -51,7 +67,17 @@ const reducer = (state: State, action: Action): State => {
 			};
 		}
 
-		case Actions.ChangeRangeSelectorFilter: {
+		case Types.ChangeMetricFilter: {
+			return {
+				...state,
+				filters: {
+					...state.filters,
+					metric: action.payload,
+				},
+			};
+		}
+
+		case Types.ChangeRangeSelectorFilter: {
 			return {
 				...state,
 				filters: {
@@ -67,22 +93,39 @@ const reducer = (state: State, action: Action): State => {
 	}
 };
 
-const AnalyticsReportsProvider: React.FC<React.HTMLAttributes<HTMLElement>> = ({
+interface IAnalyticsReportsProviderProps
+	extends React.HTMLAttributes<HTMLElement> {
+	assetId: string;
+	assetType: AssetTypes | null;
+	groupId: string;
+}
+
+const AnalyticsReportsProvider: React.FC<IAnalyticsReportsProviderProps> = ({
+	assetId,
+	assetType,
 	children,
+	groupId,
 }) => {
 	const [state, dispatch] = useReducer(reducer, initialState);
 
 	const changeIndividualFilter = (payload: any) => {
 		dispatch({
 			payload,
-			type: Actions.ChangeIndividualFilter,
+			type: Types.ChangeIndividualFilter,
+		});
+	};
+
+	const changeMetricFilter = (payload: any) => {
+		dispatch({
+			payload,
+			type: Types.ChangeMetricFilter,
 		});
 	};
 
 	const changeRangeSelectorFilter = (payload: any) => {
 		dispatch({
 			payload,
-			type: Actions.ChangeRangeSelectorFilter,
+			type: Types.ChangeRangeSelectorFilter,
 		});
 	};
 
@@ -90,8 +133,12 @@ const AnalyticsReportsProvider: React.FC<React.HTMLAttributes<HTMLElement>> = ({
 		<AnalyticsReportsContext.Provider
 			value={{
 				...state,
+				assetId,
+				assetType,
 				changeIndividualFilter,
+				changeMetricFilter,
 				changeRangeSelectorFilter,
+				groupId,
 			}}
 		>
 			{children}

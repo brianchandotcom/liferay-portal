@@ -4,7 +4,7 @@
  */
 
 /**
- * @returns a formatted data MMM DD 
+ * @returns a formatted data MMM DD
  */
 
 export function formatDate(date: Date) {
@@ -14,4 +14,4 @@ export function formatDate(date: Date) {
 	};
 
 	return date.toLocaleDateString('en-US', options).toLowerCase();
-};
+}

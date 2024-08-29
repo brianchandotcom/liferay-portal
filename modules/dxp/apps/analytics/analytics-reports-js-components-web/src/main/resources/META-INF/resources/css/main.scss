@@ -1,0 +1,75 @@
+@import 'cadmin-variables';
+
+html#{$cadmin-selector} {
+	.cadmin {
+		.global-filters .filter .filter__trigger-label {
+			@media screen and (max-width: 1920px) {
+				display: none;
+			}
+		}
+
+		.overview-metrics {
+			display: flex;
+			margin: 1rem 0;
+
+			@media screen and (max-width: 1920px) {
+				display: block;
+
+				.overview-metrics__secondary-content {
+					display: flex;
+					margin-top: 1rem;
+
+					.overview-metric {
+						width: 50% !important;
+
+						&__percentage-description {
+							display: none;
+						}
+
+						&__value {
+							font-size: 16px;
+						}
+					}
+				}
+			}
+
+			.overview-metric {
+				margin-right: 1rem;
+
+				&:last-child {
+					margin-right: 0;
+				}
+			}
+		}
+
+		.overview-metric {
+			background-color: $cadmin-white;
+			border-radius: 4px;
+			color: $cadmin-secondary;
+			padding: 0.75rem;
+			width: 185px;
+
+			&__value {
+				font-size: 2rem;
+				font-weight: 600;
+			}
+
+			&:focus {
+				box-shadow:
+					0 0 0 2px #fff,
+					0 0 0 4px #5791ff;
+				outline: 0;
+			}
+
+			&:hover {
+				background-color: $cadmin-gray-100;
+				color: $cadmin-black;
+			}
+
+			&.selected {
+				background-color: $cadmin-primary-l3;
+				color: $cadmin-black;
+			}
+		}
+	}
+}

@@ -7,8 +7,13 @@ import React from 'react';
 
 import AppSetup from './components/AppSetup';
 import GlobalFilters from './components/GlobalFilters';
+import OverviewMetrics from './components/OverviewMetrics';
+
+import '../css/main.scss';
 
 interface AnalyticsReports {
+	assetId: string;
+	assetType: string;
 	contentPerformanceDataFetchURL: string;
 }
 
@@ -20,6 +25,8 @@ const AnalyticsReports: React.FC<AnalyticsReports> = ({
 			contentPerformanceDataFetchURL={contentPerformanceDataFetchURL}
 		>
 			<GlobalFilters />
+
+			<OverviewMetrics />
 		</AppSetup>
 	);
 };

@@ -7,6 +7,7 @@ import ClayButton from '@clayui/button';
 import {Text} from '@clayui/core';
 import ClayDropdown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
+import classNames from 'classnames';
 import React from 'react';
 
 type Item = {
@@ -17,6 +18,7 @@ type Item = {
 
 interface IFilterProps extends React.HTMLAttributes<HTMLElement> {
 	active: string;
+	icon: string;
 	items: Item[];
 	onSelectItem: (item: Item) => void;
 	triggerLabel: string;
@@ -25,22 +27,30 @@ interface IFilterProps extends React.HTMLAttributes<HTMLElement> {
 const Filter: React.FC<IFilterProps> = ({
 	active,
 	className,
+	icon,
 	items,
 	onSelectItem,
 	triggerLabel,
 }) => {
 	return (
 		<ClayDropdown
-			className={className}
+			className={classNames('filter', className)}
 			closeOnClick
 			hasLeftSymbols
 			trigger={
-				<ClayButton borderless displayType="secondary" size="xs">
-					<ClayIcon className="mr-2" symbol="users" />
+				<ClayButton
+					aria-label={triggerLabel}
+					borderless
+					displayType="secondary"
+					size="xs"
+				>
+					<ClayIcon symbol={icon} />
 
-					{triggerLabel}
+					<span className="filter__trigger-label ml-2">
+						{triggerLabel}
 
-					<ClayIcon className="ml-2" symbol="caret-bottom" />
+						<ClayIcon className="ml-2" symbol="caret-bottom" />
+					</span>
 				</ClayButton>
 			}
 		>

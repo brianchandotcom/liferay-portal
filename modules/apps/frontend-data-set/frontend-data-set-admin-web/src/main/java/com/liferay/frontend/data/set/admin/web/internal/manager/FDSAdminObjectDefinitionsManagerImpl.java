@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.frontend.data.set.admin.web.internal.model;
+package com.liferay.frontend.data.set.admin.web.internal.manager;
 
 import com.liferay.batch.engine.unit.BatchEngineUnitThreadLocal;
-import com.liferay.frontend.data.set.admin.model.DataSetModelManager;
+import com.liferay.frontend.data.set.admin.manager.FDSAdminObjectDefinitionsManager;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
@@ -49,15 +49,16 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Daniel Sanz
  */
-@Component(service = DataSetModelManager.class)
-public class DataSetModelManagerImpl implements DataSetModelManager {
+@Component(service = FDSAdminObjectDefinitionsManager.class)
+public class FDSAdminObjectDefinitionsManagerImpl
+	implements FDSAdminObjectDefinitionsManager {
 
-	public void checkCompany(Company company) {
-		if (_checkedCompanies == null) {
-			_checkedCompanies = new HashSet<>();
+	public void generateObjectDefinitions(Company company) {
+		if (_completedCompanyIds == null) {
+			_completedCompanyIds = new HashSet<>();
 		}
 
-		if (_checkedCompanies.contains(company.getCompanyId())) {
+		if (_completedCompanyIds.contains(company.getCompanyId())) {
 			return;
 		}
 
@@ -66,24 +67,11 @@ public class DataSetModelManagerImpl implements DataSetModelManager {
 				company.getCompanyId(), "FDSView");
 
 		if (fdsViewObjectDefinition != null) {
-			_checkedCompanies.add(company.getCompanyId());
+			_completedCompanyIds.add(company.getCompanyId());
 
 			return;
 		}
 
-		generate(company);
-	}
-
-	public void checkCompany(long companyId) {
-		try {
-			checkCompany(_companyLocalService.getCompany(companyId));
-		}
-		catch (PortalException portalException) {
-			_log.error(portalException);
-		}
-	}
-
-	public void generate(Company company) {
 		try {
 			BatchEngineUnitThreadLocal.setFileName(_bundle.toString());
 
@@ -113,6 +101,8 @@ public class DataSetModelManagerImpl implements DataSetModelManager {
 			_generate(
 				company.getCompanyId(), company.getLocale(),
 				adminUser.getUserId());
+
+			_completedCompanyIds.add(company.getCompanyId());
 		}
 		catch (Exception exception) {
 			_log.error(exception);
@@ -127,7 +117,8 @@ public class DataSetModelManagerImpl implements DataSetModelManager {
 		_bundle = BundleUtil.getBundle(
 			bundleContext, "com.liferay.frontend.data.set.admin.web");
 
-		_companyLocalService.forEachCompany(company -> checkCompany(company));
+		_companyLocalService.forEachCompany(
+			company -> generateObjectDefinitions(company));
 	}
 
 	private void _addLocalizedCustomObjectField(
@@ -979,18 +970,17 @@ public class DataSetModelManagerImpl implements DataSetModelManager {
 			fdsViewObjectDefinition, locale, userId, objectFolderId);
 		_createFDSSortObjectDefinition(
 			fdsViewObjectDefinition, locale, userId, objectFolderId);
-
-		_checkedCompanies.add(companyId);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DataSetModelManagerImpl.class);
+		FDSAdminObjectDefinitionsManagerImpl.class);
 
 	private Bundle _bundle;
-	private Set<Long> _checkedCompanies;
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	private Set<Long> _completedCompanyIds;
 
 	@Reference
 	private Language _language;

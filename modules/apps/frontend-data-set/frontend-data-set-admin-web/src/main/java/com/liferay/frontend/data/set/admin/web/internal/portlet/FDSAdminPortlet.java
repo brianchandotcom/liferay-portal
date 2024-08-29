@@ -6,7 +6,6 @@
 package com.liferay.frontend.data.set.admin.web.internal.portlet;
 
 import com.liferay.client.extension.type.manager.CETManager;
-import com.liferay.frontend.data.set.admin.model.DataSetModelManager;
 import com.liferay.frontend.data.set.admin.web.internal.constants.FDSAdminPortletKeys;
 import com.liferay.frontend.data.set.admin.web.internal.constants.FDSAdminWebKeys;
 import com.liferay.frontend.data.set.admin.web.internal.display.context.FDSAdminDisplayContext;
@@ -16,7 +15,6 @@ import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.io.IOException;
@@ -100,8 +98,6 @@ public class FDSAdminPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		_dataSetModelManager.checkCompany(CompanyThreadLocal.getCompanyId());
-
 		renderRequest.setAttribute(
 			FDSAdminWebKeys.FDS_ADMIN_DISPLAY_CONTEXT,
 			new FDSAdminDisplayContext(
@@ -114,9 +110,6 @@ public class FDSAdminPortlet extends MVCPortlet {
 
 	@Reference
 	private CETManager _cetManager;
-
-	@Reference
-	private DataSetModelManager _dataSetModelManager;
 
 	@Reference
 	private FDSAPIURLResolverRegistry _fdsAPIURLResolverRegistry;

@@ -6,8 +6,7 @@
 package com.liferay.site.initializer.kernel.util;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
-
-import java.util.Objects;
+import com.liferay.petra.lang.SafeCloseable;
 
 /**
  * @author Nilton Vieira
@@ -18,15 +17,11 @@ public class SiteInitializerThreadLocal {
 		return _key.get();
 	}
 
-	public static void setKey(String name) {
-		if (Objects.equals(_key.get(), name)) {
-			return;
-		}
-
-		_key.set(name);
+	public static SafeCloseable setKey(String key) {
+		return _key.setWithSafeCloseable(key);
 	}
 
-	private static final ThreadLocal<String> _key =
+	private static final CentralizedThreadLocal<String> _key =
 		new CentralizedThreadLocal<>(
 			SiteInitializerThreadLocal.class + "._key");
 

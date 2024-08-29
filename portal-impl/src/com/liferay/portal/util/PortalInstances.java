@@ -60,18 +60,20 @@ public class PortalInstances {
 			UnsafeSupplier<Company, PortalException> unsafeSupplier)
 		throws PortalException {
 
-		SiteInitializerThreadLocal.setKey(siteInitializerKey);
+		try (SafeCloseable safeCloseable1 = SiteInitializerThreadLocal.setKey(
+				siteInitializerKey)) {
 
-		Company company = unsafeSupplier.get();
+			Company company = unsafeSupplier.get();
 
-		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setWithSafeCloseable(
-					company.getCompanyId())) {
+			try (SafeCloseable safeCloseable2 =
+					CompanyThreadLocal.setWithSafeCloseable(
+						company.getCompanyId())) {
 
-			initCompany(company, true);
+				initCompany(company, true);
+			}
+
+			return company;
 		}
-
-		return company;
 	}
 
 	public static long getCompanyId(HttpServletRequest httpServletRequest) {

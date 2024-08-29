@@ -135,10 +135,10 @@ public class PortletPreferencesUpgradeProcess extends UpgradeProcess {
 			ResultSet resultSet = preparedStatement1.executeQuery()) {
 
 			while (resultSet.next()) {
-				long classPK = resultSet.getLong("classPK");
-				long companyId = resultSet.getLong("companyId");
-				long ctCollectionId = resultSet.getLong("ctCollectionId");
 				long groupId = resultSet.getLong("groupId");
+				long companyId = resultSet.getLong("companyId");
+				long classPK = resultSet.getLong("classPK");
+				long ctCollectionId = resultSet.getLong("ctCollectionId");
 				String namespace = resultSet.getString("namespace");
 
 				try {

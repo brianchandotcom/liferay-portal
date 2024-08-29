@@ -945,7 +945,8 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 			WebKeys.THEME_DISPLAY);
 
 		String portletTitle = PortletConfigurationUtil.getPortletTitle(
-			portletPreferences, themeDisplay.getLanguageId());
+			portlet.getPortletId(), portletPreferences,
+			themeDisplay.getLanguageId());
 
 		if (Validator.isNull(portletTitle)) {
 			ServletContext servletContext =

@@ -210,7 +210,8 @@ public class ActionUtil {
 		}
 
 		String title = PortletConfigurationUtil.getPortletTitle(
-			portletPreferences, themeDisplay.getLanguageId());
+			portlet.getPortletId(), portletPreferences,
+			themeDisplay.getLanguageId());
 
 		if (Validator.isNull(title)) {
 			ServletContext servletContext =

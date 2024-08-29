@@ -173,7 +173,8 @@ public class AssetEntriesCheckerHelper {
 				_assetPublisherWebHelper.getSubscriptionClassPK(
 					portletPreferencesModel.getPlid(),
 					portletPreferencesModel.getPortletId())),
-			portletPreferences, newAssetEntries);
+			portletPreferencesModel.getPortletId(), portletPreferences,
+			newAssetEntries);
 
 		NotifiedAssetEntryThreadLocal.setNotifiedAssetEntryIdsModified(true);
 
@@ -425,7 +426,7 @@ public class AssetEntriesCheckerHelper {
 	}
 
 	private Map<Locale, String> _getPortletTitleMap(
-		PortletPreferences portletPreferences) {
+		String portletId, PortletPreferences portletPreferences) {
 
 		if (!PortletConfigurationUtil.isUseCustomTitle(portletPreferences)) {
 			return null;
@@ -438,7 +439,8 @@ public class AssetEntriesCheckerHelper {
 		for (Locale locale : _language.getAvailableLocales()) {
 			String portletTitle = GetterUtil.getString(
 				PortletConfigurationUtil.getPortletTitle(
-					portletPreferences, LocaleUtil.toLanguageId(locale)));
+					portletId, portletPreferences,
+					LocaleUtil.toLanguageId(locale)));
 
 			map.put(locale, portletTitle);
 
@@ -455,8 +457,8 @@ public class AssetEntriesCheckerHelper {
 	}
 
 	private SubscriptionSender _getSubscriptionSender(
-		Layout layout, String layoutURL, PortletPreferences portletPreferences,
-		List<AssetEntry> assetEntries) {
+		Layout layout, String layoutURL, String portletId,
+		PortletPreferences portletPreferences, List<AssetEntry> assetEntries) {
 
 		if (assetEntries.isEmpty()) {
 			return null;
@@ -500,7 +502,7 @@ public class AssetEntriesCheckerHelper {
 			new EscapableLocalizableFunction(
 				locale -> _getGroupDescriptiveName(layout, locale)));
 		subscriptionSender.setLocalizedPortletTitleMap(
-			_getPortletTitleMap(portletPreferences));
+			_getPortletTitleMap(portletId, portletPreferences));
 		subscriptionSender.setLocalizedSubjectMap(localizedSubjectMap);
 		subscriptionSender.setMailId("asset_entry", assetEntry.getEntryId());
 		subscriptionSender.setNotificationType(
@@ -514,7 +516,8 @@ public class AssetEntriesCheckerHelper {
 
 	private void _notifySubscribers(
 		Layout layout, String layoutURL, List<Subscription> subscriptions,
-		PortletPreferences portletPreferences, List<AssetEntry> assetEntries) {
+		String portletId, PortletPreferences portletPreferences,
+		List<AssetEntry> assetEntries) {
 
 		if (!_assetPublisherWebHelper.getEmailAssetEntryAddedEnabled(
 				portletPreferences)) {
@@ -556,7 +559,8 @@ public class AssetEntriesCheckerHelper {
 				assetEntriesToUsersMap.entrySet()) {
 
 			SubscriptionSender subscriptionSender = _getSubscriptionSender(
-				layout, layoutURL, portletPreferences, entry.getKey());
+				layout, layoutURL, portletId, portletPreferences,
+				entry.getKey());
 
 			if (subscriptionSender == null) {
 				continue;

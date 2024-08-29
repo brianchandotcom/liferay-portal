@@ -133,6 +133,7 @@ public class ActionUtil {
 			renderRequest, portlet);
 
 		String title = PortletConfigurationUtil.getPortletTitle(
+			portlet.getPortletId(),
 			_getPortletSetup(
 				httpServletRequest, renderRequest.getPreferences(),
 				portletPreferences),

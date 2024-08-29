@@ -235,11 +235,6 @@ public class DBSchemaImporterProcess {
 				return;
 			}
 			else if (targetType == Types.BIGINT) {
-
-				// Although OID fields are meant to save binary
-				// objects in PostgreSQL the field itself is an
-				// identifier that points to the real object.
-
 				PostgreSQLJDBCUtil.setLargeObject(
 					preparedStatement, index, value);
 

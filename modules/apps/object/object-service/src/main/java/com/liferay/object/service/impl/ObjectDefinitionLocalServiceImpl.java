@@ -228,6 +228,8 @@ public class ObjectDefinitionLocalServiceImpl
 
 		objectDefinition = objectDefinitionPersistence.update(objectDefinition);
 
+		_addOrUpdateObjectDefinitionPLOEntries(objectDefinition);
+
 		_resourceLocalService.addResources(
 			objectDefinition.getCompanyId(), 0, objectDefinition.getUserId(),
 			ObjectDefinition.class.getName(),
@@ -498,6 +500,8 @@ public class ObjectDefinitionLocalServiceImpl
 			objectDefinition.getObjectDefinitionId());
 
 		if (!objectDefinition.isUnmodifiableSystemObject()) {
+			_deleteObjectDefinitionPLOEntries(objectDefinition);
+
 			List<ObjectEntry> objectEntries =
 				_objectEntryPersistence.findByObjectDefinitionId(
 					objectDefinition.getObjectDefinitionId());
@@ -1447,6 +1451,8 @@ public class ObjectDefinitionLocalServiceImpl
 		if (objectDefinition.isModifiable() ||
 			!objectDefinition.isUnmodifiableSystemObject()) {
 
+			_addOrUpdateObjectDefinitionPLOEntries(objectDefinition);
+
 			dbTableName = "ObjectEntry";
 		}
 
@@ -1525,6 +1531,25 @@ public class ObjectDefinitionLocalServiceImpl
 				objectAction.getObjectActionTriggerKey(),
 				objectAction.getParametersUnicodeProperties(),
 				objectAction.isSystem());
+		}
+	}
+
+	private void _addOrUpdateObjectDefinitionPLOEntries(
+			ObjectDefinition objectDefinition)
+		throws PortalException {
+
+		for (Locale locale : _language.getAvailableLocales()) {
+			String languageId = LocaleUtil.toLanguageId(locale);
+
+			_ploEntryLocalService.addOrUpdatePLOEntry(
+				objectDefinition.getCompanyId(), objectDefinition.getUserId(),
+				"model.resource.com.liferay.object.model.ObjectDefinition#" +
+					objectDefinition.getObjectDefinitionId(),
+				languageId, objectDefinition.getLabel(locale));
+			_ploEntryLocalService.addOrUpdatePLOEntry(
+				objectDefinition.getCompanyId(), objectDefinition.getUserId(),
+				"model.resource." + objectDefinition.getResourceName(),
+				languageId, objectDefinition.getPluralLabel(locale));
 		}
 	}
 
@@ -1634,6 +1659,18 @@ public class ObjectDefinitionLocalServiceImpl
 				dynamicObjectDefinitionTable.getTableName(), false,
 				objectField.getDBColumnName());
 		}
+	}
+
+	private void _deleteObjectDefinitionPLOEntries(
+		ObjectDefinition objectDefinition) {
+
+		_ploEntryLocalService.deletePLOEntries(
+			objectDefinition.getCompanyId(),
+			"model.resource." + objectDefinition.getResourceName());
+		_ploEntryLocalService.deletePLOEntries(
+			objectDefinition.getCompanyId(),
+			"model.resource.com.liferay.object.model.ObjectDefinition#" +
+				objectDefinition.getObjectDefinitionId());
 	}
 
 	private void _dropTable(String dbTableName) {
@@ -1946,6 +1983,10 @@ public class ObjectDefinitionLocalServiceImpl
 		objectDefinition.setPanelCategoryKey(panelCategoryKey);
 		objectDefinition.setPluralLabelMap(pluralLabelMap);
 		objectDefinition.setPortlet(portlet);
+
+		if (!objectDefinition.isUnmodifiableSystemObject()) {
+			_addOrUpdateObjectDefinitionPLOEntries(objectDefinition);
+		}
 
 		if (objectDefinition.isApproved()) {
 			if (!active && oldActive) {

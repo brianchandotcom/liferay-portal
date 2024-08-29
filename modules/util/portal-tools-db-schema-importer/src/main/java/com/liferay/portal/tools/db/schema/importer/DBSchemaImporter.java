@@ -111,7 +111,7 @@ public class DBSchemaImporter {
 					commandLine.getOptionValue("target-jdbc-url"),
 					commandLine.getOptionValue("target-password"),
 					commandLine.getOptionValue("target-user"))
-			).importDB();
+			).run();
 
 			System.exit(_LIFERAY_COMMON_EXIT_CODE_OK);
 		}
@@ -195,7 +195,7 @@ public class DBSchemaImporter {
 			_targetDataSource = targetDataSource;
 		}
 
-		public void importDB() throws Exception {
+		public void run() throws Exception {
 			_runSQLTemplateConcurrently(
 				_targetDataSource, _readFile(new File(_path, "tables.sql")));
 

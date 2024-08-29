@@ -1489,6 +1489,117 @@ components:
                     type: string
                     writeOnly: true
             type: object
+        DocumentDataDefinitionType:
+            description:
+                Represents a document data definition type.
+            properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    # @review
+                    description:
+                        Block of actions allowed by the user making the request.
+                    readOnly: true
+                    type: object
+                assetLibraryKey:
+                    # @review
+                    description:
+                        The key of the asset library to which the document data definition type is scoped.
+                    readOnly: true
+                    type: string
+                availableLanguages:
+                    description:
+                        The list of languages the document data definition type has a translation for.
+                    items:
+                        type: string
+                    type: array
+                creator:
+                    $ref: "#/components/schemas/Creator"
+                    description:
+                        The document data definition type's creator.
+                    readOnly: true
+                dataDefinitionFields:
+                    description:
+                        The list of the document data definition type's data definition fields.
+                    items:
+                        $ref: "../../../data-engine/data-engine-rest-impl/rest-openapi.yaml#DataDefinitionField"
+                    type: array
+                dataLayout:
+                    $ref: "../../../data-engine/data-engine-rest-impl/rest-openapi.yaml#DataLayout"
+                    description:
+                        The layout of the document data definition type fields.
+                dateCreated:
+                    description:
+                        The document data definition type's creation date.
+                    format: date-time
+                    readOnly: true
+                    type: string
+                dateModified:
+                    description:
+                        The last time a field of the document data definition type changed.
+                    format: date-time
+                    readOnly: true
+                    type: string
+                description:
+                    description:
+                        The document data definition type's description.
+                    type: string
+                description_i18n:
+                    additionalProperties:
+                        type: string
+                    # @review
+                    description:
+                        The localized document data definition type's description.
+                    type: object
+                documentMetadataSetIds:
+                    description:
+                        The list of document data definition type's id associated with document type.
+                    items:
+                        format: int64
+                        type: integer
+                    type: array
+                externalReferenceCode:
+                    # @review
+                    description:
+                        The document data definition type's external reference code.
+                    type: string
+                id:
+                    description:
+                        The document data definition type's ID.
+                    format: int64
+                    readOnly: true
+                    type: integer
+                name:
+                    description:
+                        The document data definition type's name.
+                    type: string
+                name_i18n:
+                    additionalProperties:
+                        type: string
+                    # @review
+                    description:
+                        The localized document data definition type's names.
+                    type: object
+                siteId:
+                    description:
+                        The ID of the site to which the document data definition type is scoped.
+                    format: int64
+                    readOnly: true
+                    type: integer
+                viewableBy:
+                    description:
+                        A write-only property that specifies the document data definition type's default permissions.
+                    enum: [Anyone, Members, Owner]
+                    type: string
+                    writeOnly: true
+            required:
+                - availableLanguages
+                - dataDefinitionFields
+                - dataLayout
+                - name
+            type: object
         DocumentFolder:
             description:
                 Represents a document folder that can contain documents and other folders.

@@ -96,21 +96,21 @@ public class DBSchemaImporterProcess {
 			Connection targetConnection, String targetTableName)
 		throws Exception {
 
-		List<String> sourceColumnsName = _sourceColumnNamesMap.get(
+		List<String> sourceColumnNames = _sourceColumnNamesMap.get(
 			sourceTableName);
 
 		String selectSQL = StringBundler.concat(
-			"select ", StringUtil.merge(sourceColumnsName), " from ",
+			"select ", StringUtil.merge(sourceColumnNames), " from ",
 			sourceTableName);
 
-		List<String> targetColumnsName = _targetColumnNamesMap.get(
+		List<String> targetColumnNames = _targetColumnNamesMap.get(
 			targetTableName);
 
 		String insertSQL = StringBundler.concat(
 			"insert into ", targetTableName, "(",
-			StringUtil.merge(targetColumnsName), ") values (",
+			StringUtil.merge(targetColumnNames), ") values (",
 			StringUtil.merge(
-				Collections.nCopies(targetColumnsName.size(), "?")),
+				Collections.nCopies(targetColumnNames.size(), "?")),
 			")");
 
 		try (PreparedStatement preparedStatement1 =
@@ -123,8 +123,8 @@ public class DBSchemaImporterProcess {
 
 			try (ResultSet resultSet = preparedStatement1.executeQuery()) {
 				while (resultSet.next()) {
-					for (int i = 0; i < sourceColumnsName.size(); i++) {
-						String columnName = sourceColumnsName.get(i);
+					for (int i = 0; i < sourceColumnNames.size(); i++) {
+						String columnName = sourceColumnNames.get(i);
 
 						_getAndSetColumn(
 							columnName, i + 1, preparedStatement2, resultSet,
@@ -132,7 +132,7 @@ public class DBSchemaImporterProcess {
 								sourceTableName + "." + columnName),
 							_targetColumnsType.get(
 								targetTableName + "." +
-									targetColumnsName.get(i)));
+									targetColumnNames.get(i)));
 					}
 
 					preparedStatement2.addBatch();

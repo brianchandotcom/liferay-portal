@@ -192,6 +192,7 @@ export default function ShortcutManager() {
 			action: duplicate,
 			canBeExecuted: () =>
 				canUpdatePageStructure &&
+				!!activeItemIds.length &&
 				activeItemIds.every(
 					(activeItemId) =>
 						!!layoutData.items[activeItemId] &&
@@ -210,6 +211,7 @@ export default function ShortcutManager() {
 			action: hideShow,
 			canBeExecuted: () =>
 				canUpdatePageStructure &&
+				!!activeItemIds.length &&
 				activeItemIds.every(
 					(activeItemId) =>
 						!!layoutData.items[activeItemId] &&
@@ -251,6 +253,7 @@ export default function ShortcutManager() {
 			action: remove,
 			canBeExecuted: (event) =>
 				canUpdatePageStructure &&
+				!!activeItemIds.length &&
 				activeItemIds.every(
 					(activeItemId) =>
 						!!layoutData.items[activeItemId] &&

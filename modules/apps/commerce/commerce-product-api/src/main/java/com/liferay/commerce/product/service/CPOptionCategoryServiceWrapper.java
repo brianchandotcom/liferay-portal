@@ -73,6 +73,16 @@ public class CPOptionCategoryServiceWrapper
 	}
 
 	@Override
+	public CPOptionCategory fetchCPOptionCategoryByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpOptionCategoryService.
+			fetchCPOptionCategoryByExternalReferenceCode(
+				externalReferenceCode, companyId);
+	}
+
+	@Override
 	public CPOptionCategory getCPOptionCategory(long cpOptionCategoryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

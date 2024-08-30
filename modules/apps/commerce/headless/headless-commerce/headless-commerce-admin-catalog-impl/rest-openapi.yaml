@@ -1201,8 +1201,6 @@ components:
                 name:
                     example: Alessio Antonio Rendina
                     type: string
-            required:
-                - id
             type: object
         ProductChannel:
             properties:
@@ -1227,8 +1225,6 @@ components:
                     type: string
                 type:
                     type: string
-            required:
-                - id
             type: object
         ProductConfiguration:
             properties:

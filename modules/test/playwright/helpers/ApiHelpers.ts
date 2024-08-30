@@ -448,12 +448,6 @@ export class DataApiHelpers extends ApiHelpers {
 					);
 
 					break;
-				case 'shipment':
-					await this.headlessCommerceAdminShipment.deleteShipment(
-						item.id
-					);
-
-					break;
 				case 'specification':
 					await this.headlessCommerceAdminCatalog.deleteSpecification(
 						item.id

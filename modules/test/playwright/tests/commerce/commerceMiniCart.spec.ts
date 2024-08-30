@@ -291,9 +291,9 @@ test('COMMERCE-12316 Mini cart bundle with UOM', async ({
 
 	await expect(commerceMiniCartPage.miniCartSaveButton).toBeDisabled();
 
-	await commerceMiniCartPage.editQuantitySelector.fill('4');
+	await commerceMiniCartPage.editQuantitySelector.fill('6');
 
-	await expect(page.getByText('Price as Configured$ 100.00')).toBeVisible();
+	await expect(page.getByText('Price as Configured$ 150.00')).toBeVisible();
 
 	await expect(commerceMiniCartPage.miniCartSaveButton).toBeEnabled();
 
@@ -306,7 +306,7 @@ test('COMMERCE-12316 Mini cart bundle with UOM', async ({
 	await expect(page.getByText('Black', {exact: true})).toBeVisible();
 	await expect(page.getByText('XL', {exact: true})).toBeVisible();
 	await expect(
-		page.getByText('$ 100.00', {exact: true}).first()
+		page.getByText('$ 150.00', {exact: true}).first()
 	).toBeVisible();
 });
 

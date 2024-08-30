@@ -6,37 +6,95 @@
 import {Locator, Page} from '@playwright/test';
 
 import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
-import {CommerceDNDTablePage} from './commerceDNDTablePage';
+import {
+	CommerceDNDTablePage,
+	searchTableRowByValue,
+} from './commerceDNDTablePage';
 
 export class CommerceAdminOrdersPage extends CommerceDNDTablePage {
 	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly backLink: Locator;
 	readonly deleteItemMenuItem: Locator;
+	readonly editCommerceOrderTable: Locator;
+	readonly editCommerceOrderTableRow: (
+		colPosition: number,
+		value: number | string,
+		strictEqual?: boolean
+	) => Promise<{column: Locator; row: Locator}>;
+	readonly editCommerceOrderTableRows: () => Promise<Locator[]>;
+	readonly editCommerceOrderTableRowLink: ({
+		colIndex,
+		rowValue,
+	}) => Promise<Locator>;
 	readonly itemsTableRow: (
 		colPosition: number,
 		value: number | string,
 		strictEqual?: boolean
 	) => Promise<{column: Locator; row: Locator}>;
 	readonly itemsTableRows: () => Promise<Locator[]>;
-	itemsTableRowAction: (countryName: string) => Promise<Locator>;
+	readonly itemsTableRowAction: (sku: string) => Promise<Locator>;
 	readonly keyOrderStatus: (orderStatus: string) => Locator;
-	readonly orderIdLink: (orderId: string) => Locator;
 	readonly orderStatusLink: (orderStatus: string) => Locator;
 	readonly page: Page;
 
 	constructor(page: Page) {
 		super(
 			page,
+			'#_com_liferay_commerce_order_web_internal_portlet_CommerceOrderPortlet_fm .dnd-table'
+		);
+
+		this.editCommerceOrderTable = page.locator(
 			'#_com_liferay_commerce_order_web_internal_portlet_CommerceOrderPortlet_editOrderContainer .dnd-table'
 		);
+		this.editCommerceOrderTableRow = async (
+			colPosition: number,
+			value: number | string,
+			strictEqual: boolean = false
+		) => {
+			return await searchTableRowByValue(
+				this.editCommerceOrderTable,
+				colPosition,
+				String(value),
+				strictEqual
+			);
+		};
+		this.editCommerceOrderTableRows = async () => {
+			await this.editCommerceOrderTable.elementHandle();
+
+			return await this.editCommerceOrderTable
+				.locator('div.dnd-tbody div.dnd-tr')
+				.all();
+		};
+		this.editCommerceOrderTableRowLink = async ({
+			colIndex = 1,
+			rowValue,
+		}: {
+			colIndex: number;
+			rowValue: number | string;
+		}) => {
+			const tableRow = await this.editCommerceOrderTableRow(
+				colIndex,
+				rowValue,
+				true
+			);
+
+			if (tableRow && tableRow.column) {
+				return tableRow.column.getByRole('link', {
+					name: String(rowValue),
+				});
+			}
+
+			throw new Error(`Cannot locate row with rowValue: ${rowValue}`);
+		};
+
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);
 		this.backLink = page.getByRole('link', {exact: true, name: 'Back'});
 		this.deleteItemMenuItem = page.getByRole('menuitem', {
 			exact: true,
 			name: 'Delete',
 		});
-		this.itemsTableRow = this.tableRow;
-		this.itemsTableRows = this.tableRows;
+		this.itemsTableRow = this.editCommerceOrderTableRow;
+		this.itemsTableRows = this.editCommerceOrderTableRows;
 		this.itemsTableRowAction = async (sku: string) => {
 			const itemsTableRow = await this.itemsTableRow(1, sku, true);
 
@@ -47,14 +105,12 @@ export class CommerceAdminOrdersPage extends CommerceDNDTablePage {
 				});
 			}
 
-			throw new Error(`Cannot locate country row with name ${sku}`);
+			throw new Error(`Cannot locate order row with value ${sku}`);
 		};
 		this.keyOrderStatus = (orderStatus: string) =>
 			page.locator('.dnd-table').getByText(orderStatus);
 		this.orderStatusLink = (orderStatus: string) =>
 			page.getByRole('link', {exact: true, name: orderStatus});
-		this.orderIdLink = (orderId: string) =>
-			page.getByRole('link', {exact: true, name: orderId});
 		this.page = page;
 	}
 

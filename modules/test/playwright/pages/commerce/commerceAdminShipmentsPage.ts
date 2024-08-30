@@ -28,9 +28,7 @@ export class CommerceAdminShipmentsPage extends CommerceIframeDNDTablePage {
 		strictEqual?: boolean
 	) => Promise<{column: Locator; row: Locator}>;
 	readonly shipmentItemsTableRows: () => Promise<Locator[]>;
-	readonly shipmentItemsTableRowAction: (
-		countryName: string
-	) => Promise<Locator>;
+	readonly shipmentItemsTableRowAction: (sku: string) => Promise<Locator>;
 	readonly shipmentStatusLink: (shipmentStatus: string) => Locator;
 
 	constructor(page: Page) {
@@ -87,7 +85,7 @@ export class CommerceAdminShipmentsPage extends CommerceIframeDNDTablePage {
 				return shipmentTableRow.row.getByLabel('', {exact: true});
 			}
 
-			throw new Error(`Cannot locate country row with name ${sku}`);
+			throw new Error(`Cannot locate shipment row with value ${sku}`);
 		};
 		this.shipmentStatusLink = (shipmentStatus: string) =>
 			page.getByRole('link', {exact: true, name: shipmentStatus});

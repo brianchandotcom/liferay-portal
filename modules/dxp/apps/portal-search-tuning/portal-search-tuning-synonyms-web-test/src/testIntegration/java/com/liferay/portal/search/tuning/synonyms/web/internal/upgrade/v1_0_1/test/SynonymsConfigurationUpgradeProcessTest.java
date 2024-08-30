@@ -138,8 +138,8 @@ public class SynonymsConfigurationUpgradeProcessTest {
 	};
 
 	private static final String[] _FILTER_NAMES = {
-		"liferay_filter_synonym_en", "liferay_filter_synonym_es",
-		"custom_filter_synonym_ru"
+		"custom_filter_synonym_ru", "liferay_filter_synonym_en",
+		"liferay_filter_synonym_es", "liferay_filter_synonym_fr"
 	};
 
 	private static final String _UPGRADE_VERSION =

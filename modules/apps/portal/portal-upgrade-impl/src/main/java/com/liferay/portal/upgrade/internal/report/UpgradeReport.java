@@ -942,7 +942,6 @@ public class UpgradeReport {
 						sb.append(propertyEntry.getValue());
 					}
 
-					sb.append(propertyEntry.getValue());
 					sb.append(StringPool.NEW_LINE);
 				}
 

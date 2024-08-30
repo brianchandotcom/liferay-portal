@@ -31,15 +31,11 @@ describe('CompareCheckbox', () => {
 			detach: jest.fn(),
 			fire: jest.fn(),
 			on: jest.fn((eventName, callback) => {
-				switch (eventName) {
-					case PRODUCT_COMPARISON_TOGGLED:
-						toggleCompareTrigger = callback;
-						break;
-					case ITEM_REMOVED_FROM_COMPARE:
-						removeFromCompareTrigger = callback;
-						break;
-					default:
-						break;
+				if (eventName === ITEM_REMOVED_FROM_COMPARE) {
+					removeFromCompareTrigger = callback;
+				}
+				else if (eventName === PRODUCT_COMPARISON_TOGGLED) {
+					toggleCompareTrigger = callback;
 				}
 			}),
 		};

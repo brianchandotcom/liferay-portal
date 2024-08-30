@@ -8,24 +8,22 @@ import React from 'react';
 
 export function CommerceReturnStatusDataRenderer(props) {
 	const getLabelType = (label) => {
-		switch (label) {
-			case 'authorized':
-				return 'label-secondary';
-			case 'cancelled':
-				return 'label-danger';
-			case 'completed':
-				return 'label-success';
-			case 'draft':
-				return 'label-secondary';
-			case 'pending':
-				return 'label-warning';
-			case 'processing':
-				return 'label-info';
-			case 'rejected':
-				return 'label-danger';
-			default:
-				return 'label-secondary';
+		let labelType = 'label-secondary';
+
+		if (label === 'cancelled' || label === 'rejected') {
+			labelType = 'label-danger';
 		}
+		else if (label === 'completed') {
+			labelType = 'label-success';
+		}
+		else if (label === 'pending') {
+			labelType = 'label-warning';
+		}
+		else if (label === 'processing') {
+			labelType = 'label-info';
+		}
+
+		return labelType;
 	};
 
 	return props.value ? (

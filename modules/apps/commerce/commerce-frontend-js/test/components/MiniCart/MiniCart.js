@@ -65,15 +65,11 @@ describe('MiniCart', () => {
 			detach: jest.fn(),
 			fire: jest.fn(),
 			on: jest.fn((eventName, callback) => {
-				switch (eventName) {
-					case CURRENT_ORDER_UPDATED:
-						onCurrentOrderUpdated = callback;
-						break;
-					case CURRENT_ACCOUNT_UPDATED:
-						onCurrentAccountUpdated = callback;
-						break;
-					default:
-						break;
+				if (eventName === CURRENT_ACCOUNT_UPDATED) {
+					onCurrentAccountUpdated = callback;
+				}
+				else if (eventName === CURRENT_ORDER_UPDATED) {
+					onCurrentOrderUpdated = callback;
 				}
 			}),
 		};

@@ -72,6 +72,21 @@ public class AccountGroupServiceImpl extends AccountGroupServiceBaseImpl {
 	}
 
 	@Override
+	public AccountGroup fetchAccountGroup(long accountGroupId)
+		throws PortalException {
+
+		AccountGroup accountGroup = accountGroupLocalService.fetchAccountGroup(
+			accountGroupId);
+
+		if (accountGroup != null) {
+			_accountGroupModelResourcePermission.check(
+				getPermissionChecker(), accountGroup, ActionKeys.VIEW);
+		}
+
+		return accountGroup;
+	}
+
+	@Override
 	public AccountGroup fetchAccountGroupByExternalReferenceCode(
 			String externalReferenceCode, long companyId)
 		throws PortalException {

@@ -50,21 +50,21 @@ export default {
 
 	addFragmentComposition({
 		description,
+		fileEntryId,
 		fragmentCollectionId,
 		itemId,
 		name,
 		onNetworkStatus,
-		previewImageURL,
 		saveInlineContent,
 		saveMappingConfiguration,
 		segmentsExperienceId,
 	}: {
 		description: string;
+		fileEntryId?: string;
 		fragmentCollectionId: string;
 		itemId: string;
 		name: string;
 		onNetworkStatus: OnNetworkStatus;
-		previewImageURL?: string;
 		saveInlineContent: boolean;
 		saveMappingConfiguration: boolean;
 		segmentsExperienceId: string;
@@ -77,10 +77,10 @@ export default {
 			{
 				body: {
 					description,
+					fileEntryId,
 					fragmentCollectionId,
 					itemId,
 					name,
-					previewImageURL,
 					saveInlineContent,
 					saveMappingConfiguration,
 					segmentsExperienceId,

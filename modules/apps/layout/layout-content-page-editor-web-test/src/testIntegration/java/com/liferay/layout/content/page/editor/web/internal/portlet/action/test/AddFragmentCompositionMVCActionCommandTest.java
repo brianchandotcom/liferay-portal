@@ -9,6 +9,8 @@ import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentComposition;
@@ -32,6 +34,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -47,6 +50,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -433,8 +437,16 @@ public class AddFragmentCompositionMVCActionCommandTest {
 			"name", RandomTestUtil.randomString());
 		mockLiferayPortletActionRequest.addParameter(
 			"itemId", layoutStructure.getMainItemId());
+
+		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "liferay.jpg",
+			ContentTypes.IMAGE_JPEG,
+			FileUtil.getBytes(getClass(), "dependencies/liferay.jpg"), null,
+			null, null, ServiceContextThreadLocal.getServiceContext());
+
 		mockLiferayPortletActionRequest.addParameter(
-			"previewImageURL", _THUMBNAIL_DATA);
+			"fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
 
 		JSONObject jsonObject = ReflectionTestUtil.invoke(
 			_mvcActionCommand, "doTransactionalCommand",
@@ -512,14 +524,13 @@ public class AddFragmentCompositionMVCActionCommandTest {
 			FileUtil.getBytes(getClass(), "dependencies/" + fileName));
 	}
 
-	private static final String _THUMBNAIL_DATA =
-		"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAA" +
-			"AADUlEQVQYV2M4c+bMfwAIMANkq3cY2wAAAABJRU5ErkJggg==";
-
 	private Company _company;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
+
+	@Inject
+	private DLAppLocalService _dlAppLocalService;
 
 	@Inject
 	private FragmentCollectionLocalService _fragmentCollectionLocalService;

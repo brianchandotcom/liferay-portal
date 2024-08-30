@@ -8,11 +8,16 @@ import ClayDropDown, {Align} from '@clayui/drop-down';
 import ClayLayout from '@clayui/layout';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayPanel from '@clayui/panel';
-import {fetch} from 'frontend-js-web';
+import {createPortletURL, fetch, getPortletId} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import TimelineDropdownMenu from './TimelineDropdownMenu';
-import {WorkflowStatusLabel} from './WorkflowStatusLabel';
+import {
+	WORKFLOW_STATUS_APPROVED,
+	WORKFLOW_STATUS_DRAFT,
+	WORKFLOW_STATUS_PENDING,
+	WorkflowStatusLabel,
+} from './WorkflowStatusLabel';
 
 const PublicationTimeline = ({
 	namespace,
@@ -25,6 +30,43 @@ const PublicationTimeline = ({
 }) => {
 	const [timelineItems, setTimelineItems] = useState([]);
 	const [loading, setLoading] = useState(true);
+
+	const createMVCRenderCommandURL = (
+		ctCollectionId,
+		mvcRenderCommandName,
+		additionalParams = {}
+	) => {
+		return createPortletURL(
+			themeDisplay.getLayoutRelativeControlPanelURL(),
+			{
+				ctCollectionId,
+				mvcRenderCommandName,
+				p_p_id: getPortletId(namespace),
+				...additionalParams,
+			}
+		).toString();
+	};
+
+	const getEditURL = (ctCollectionId) => {
+		return createMVCRenderCommandURL(
+			ctCollectionId,
+			'/change_tracking/edit_ct_collection'
+		);
+	};
+
+	const getRevertURL = (ctCollectionId) => {
+		return createMVCRenderCommandURL(
+			ctCollectionId,
+			'/change_tracking/undo_ct_collection',
+			{revert: true}
+		);
+	};
+	const getReviewURL = (ctCollectionId) => {
+		return createMVCRenderCommandURL(
+			ctCollectionId,
+			'/change_tracking/view_changes'
+		);
+	};
 
 	useEffect(() => {
 		if (!timelineItemsURL) {
@@ -84,37 +126,96 @@ const PublicationTimeline = ({
 								</ClayLayout.ContentCol>
 
 								<ClayLayout.ContentCol>
-									{timelineItem.actions.get ? (
-										<ClayDropDown
-											alignmentPosition={Align.BottomLeft}
-											renderMenuOnClick
-											spritemap={spritemap}
-											trigger={
-												<ClayButtonWithIcon
-													aria-label="timeline-actions"
-													displayType="unstyled"
-													size="sm"
+									{Liferay.FeatureFlags['LPD-20556'] ? (
+										<>
+											{timelineItem.actions.get ? (
+												<ClayDropDown
+													alignmentPosition={
+														Align.BottomLeft
+													}
+													renderMenuOnClick
 													spritemap={spritemap}
-													symbol="ellipsis-v"
+													trigger={
+														<ClayButtonWithIcon
+															aria-label="timeline-actions"
+															displayType="unstyled"
+															size="sm"
+															spritemap={
+																spritemap
+															}
+															symbol="ellipsis-v"
+														/>
+													}
+												>
+													<TimelineDropdownMenu
+														namespace={namespace}
+														navigate={navigate}
+														timelineClassNameId={
+															timelineClassNameId
+														}
+														timelineClassPK={
+															timelineClassPK
+														}
+														timelineEditURL={
+															timelineEditURL
+														}
+														timelineItem={
+															timelineItem
+														}
+													/>
+												</ClayDropDown>
+											) : null}
+										</>
+									) : (
+										<>
+											{timelineItem.actions ? (
+												<TimelineDropdownMenu
+													deleteURL={
+														timelineItem.status
+															.code ===
+															WORKFLOW_STATUS_DRAFT &&
+														!!timelineItem.actions
+															.delete
+															? timelineItem
+																	.actions
+																	.delete.href
+															: undefined
+													}
+													editURL={
+														timelineItem.status
+															.code ===
+															WORKFLOW_STATUS_DRAFT &&
+														!!timelineItem.actions
+															.update
+															? getEditURL(
+																	timelineItem.id
+																)
+															: undefined
+													}
+													revertURL={
+														timelineItem.status
+															.code ===
+														WORKFLOW_STATUS_APPROVED
+															? getRevertURL(
+																	timelineItem.id
+																)
+															: undefined
+													}
+													reviewURL={
+														timelineItem.status
+															.code !==
+															WORKFLOW_STATUS_PENDING &&
+														!!timelineItem.actions
+															.get
+															? getReviewURL(
+																	timelineItem.id
+																)
+															: undefined
+													}
 												/>
-											}
-										>
-											<TimelineDropdownMenu
-												namespace={namespace}
-												navigate={navigate}
-												timelineClassNameId={
-													timelineClassNameId
-												}
-												timelineClassPK={
-													timelineClassPK
-												}
-												timelineEditURL={
-													timelineEditURL
-												}
-												timelineItem={timelineItem}
-											/>
-										</ClayDropDown>
-									) : null}
+											) : null}
+										</>
+									)}
 								</ClayLayout.ContentCol>
 							</ClayLayout.ContentRow>
 						</ClayPanel.Body>

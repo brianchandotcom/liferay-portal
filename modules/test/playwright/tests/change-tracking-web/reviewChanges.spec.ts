@@ -4,12 +4,20 @@
  */
 
 import {expect, mergeTests} from '@playwright/test';
+import {createReadStream} from 'fs';
+import path from 'path';
 
+import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {changeTrackingPagesTest} from '../../fixtures/changeTrackingPagesTest';
+import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import getRandomString from '../../utils/getRandomString';
 import {PORTLET_URLS} from '../../utils/portletUrls';
 
-export const test = mergeTests(changeTrackingPagesTest);
+export const test = mergeTests(
+	apiHelpersTest,
+	changeTrackingPagesTest,
+	dataApiHelpersTest
+);
 
 test('LPD-28276 Assert tag data persists in parent tab', async ({
 	changeTrackingPage,
@@ -35,4 +43,95 @@ test('LPD-28276 Assert tag data persists in parent tab', async ({
 	await page.waitForTimeout(3000);
 
 	await expect(page.getByText('Guest', {exact: true})).toBeVisible();
+});
+
+test('LPD-29088 Assert Publication Overview panel empty', async ({
+	changeTrackingPage,
+	ctCollection,
+	page,
+}) => {
+	await changeTrackingPage.goToReviewChanges(ctCollection.name);
+
+	const publicationOverviewPanel = page.getByRole('button', {
+		name: 'Publication Overview',
+	});
+
+	await expect(publicationOverviewPanel).toBeVisible();
+	await expect(page.getByText('No changes were found.')).toBeVisible();
+
+	await publicationOverviewPanel.click();
+	await expect(page.getByText('No changes were found.')).not.toBeVisible();
+});
+
+test('LPD-29088 Assert Publication Overview panel is visible', async ({
+	apiHelpers,
+	changeTrackingPage,
+	ctCollection,
+	page,
+}) => {
+	await changeTrackingPage.workOnProduction();
+
+	const site1 = await apiHelpers.headlessSite.createSite({
+		name: getRandomString(),
+	});
+	apiHelpers.data.push({id: site1.id, type: 'site'});
+
+	const site2 = await apiHelpers.headlessSite.createSite({
+		name: getRandomString(),
+	});
+	apiHelpers.data.push({id: site2.id, type: 'site'});
+
+	await changeTrackingPage.workOnPublication(ctCollection);
+
+	await page.goto(`/group/guest${PORTLET_URLS.tagsAdmin}`);
+	await page.getByRole('link', {name: 'Add Tag'}).click();
+	await page.getByPlaceholder('Name').fill(getRandomString());
+	await page.getByRole('button', {name: 'Save'}).click();
+
+	await apiHelpers.headlessDelivery.postMessageBoardThread({
+		articleBody: getRandomString(),
+		headline: getRandomString(),
+		siteId: site1.id,
+	});
+
+	for (let i = 0; i < 3; i++) {
+		await apiHelpers.headlessDelivery.postDocument(
+			site1.id,
+			createReadStream(
+				path.join(__dirname, '/dependencies/attachment.txt')
+			)
+		);
+
+		await apiHelpers.headlessDelivery.postBlog(site2.id);
+	}
+
+	await changeTrackingPage.goToReviewChanges(ctCollection.name);
+
+	await expect(page.getByText('Liferay DXP (1): Tag (1)')).toBeVisible();
+	await expect(
+		page.getByText(
+			site1.name +
+				' (5):  Message Boards Message (1), Message Boards Thread (1), Document (3)'
+		)
+	).toBeVisible();
+	await expect(
+		page.getByText(site2.name + ' (3):  Blogs Entry (3)')
+	).toBeVisible();
+
+	await apiHelpers.headlessChangeTracking.publishCTCollection(
+		ctCollection.id
+	);
+
+	await changeTrackingPage.goToReviewChangesHistory(ctCollection.name);
+
+	await expect(page.getByText('Liferay DXP (1): Tag (1)')).toBeVisible();
+	await expect(
+		page.getByText(
+			site1.name +
+				' (5):  Message Boards Message (1), Message Boards Thread (1), Document (3)'
+		)
+	).toBeVisible();
+	await expect(
+		page.getByText(site2.name + ' (3):   Blogs Entry (3)')
+	).toBeVisible();
 });

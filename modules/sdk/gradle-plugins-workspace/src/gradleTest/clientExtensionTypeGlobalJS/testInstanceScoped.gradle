@@ -1,0 +1,9 @@
+ext.expectedContentStrings = [
+	'restrictedToAdminPages=true',
+	'scope=instance',
+	'scriptLocation=head'
+]
+ext.expectedFilePath = "with-instance-scoped-global-js-client-extension.client-extension-config.json"
+ext.taskPath = ":with-instance-scoped-global-js-client-extension:createClientExtensionConfig"
+
+apply from: project.property("commonScript.testClientExtensionBuildFileContentsTestCase.gradle")

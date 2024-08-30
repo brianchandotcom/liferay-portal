@@ -1,4 +1,4 @@
-with-invalid-restrictedToAdminPages:
+with-invalid-restricted-to-admin-pages-global-js-client-extension:
     restrictedToAdminPages: "true"
     type: globalJS
     url: src/dummy.js

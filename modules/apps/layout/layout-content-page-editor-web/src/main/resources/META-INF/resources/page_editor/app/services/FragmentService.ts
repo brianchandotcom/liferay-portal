@@ -91,6 +91,7 @@ export default {
 	},
 
 	addFragmentEntryLink({
+		editableValues,
 		fragmentEntryKey,
 		groupId,
 		onNetworkStatus,
@@ -98,6 +99,7 @@ export default {
 		position,
 		segmentsExperienceId,
 	}: {
+		editableValues?: FragmentEntryLink['editableValues'];
 		fragmentEntryKey: string;
 		groupId: string;
 		onNetworkStatus: OnNetworkStatus;
@@ -105,6 +107,25 @@ export default {
 		position: number;
 		segmentsExperienceId: string;
 	}) {
+		const body: {
+			editableValues?: string;
+			fragmentEntryKey: string;
+			groupId: string;
+			parentItemId: string;
+			position: number;
+			segmentsExperienceId: string;
+		} = {
+			fragmentEntryKey,
+			groupId,
+			parentItemId,
+			position,
+			segmentsExperienceId,
+		};
+
+		if (editableValues) {
+			body.editableValues = JSON.stringify(editableValues);
+		}
+
 		return draftServiceFetch<{
 			addedItemId: string;
 			fragmentEntryLink: FragmentEntryLink;
@@ -112,13 +133,7 @@ export default {
 		}>(
 			config.addFragmentEntryLinkURL,
 			{
-				body: {
-					fragmentEntryKey,
-					groupId,
-					parentItemId,
-					position,
-					segmentsExperienceId,
-				},
+				body,
 			},
 			onNetworkStatus
 		);

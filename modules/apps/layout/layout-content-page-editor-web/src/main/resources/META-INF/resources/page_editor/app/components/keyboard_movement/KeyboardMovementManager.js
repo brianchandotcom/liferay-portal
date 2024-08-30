@@ -125,6 +125,7 @@ export default function KeyboardMovementManager() {
 						}
 						else {
 							thunk = addFragment({
+								fieldTypes: source.fieldTypes,
 								fragmentEntryKey: source.fragmentEntryKey,
 								groupId: source.groupId,
 								parentItemId: dropItemId,

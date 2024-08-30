@@ -97,7 +97,7 @@ public class SynonymsConfigurationUpgradeProcessTest {
 					"configurationId = '", _CONFIGURATION_ID, "'"));
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
-			while (resultSet.next()) {
+			if (resultSet.next()) {
 				String dictionaryString = resultSet.getString("dictionary");
 
 				Dictionary<String, Object> dictionary =

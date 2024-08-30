@@ -9,6 +9,7 @@ import {IClientExtensionRenderer} from '@liferay/frontend-data-set-web';
 import {fetch, openModal, sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
+import {visit} from '../../components/FieldSelectModalContent';
 import {
 	API_URL,
 	DEFAULT_FETCH_HEADERS,
@@ -32,7 +33,6 @@ import ClientExtensionFilterFormContent from './components/ClientExtensionFilter
 import DateRangeFilterFormContent from './components/DateRangeFilter';
 import FilterList from './components/FilterList';
 import SelectionFilterFormContent from './components/selection_filter/SelectionFilter';
-import {visit} from '../../components/FieldSelectModalContent';
 
 import '../../../css/Filters.scss';
 import {IDataSet} from '../../DataSets';

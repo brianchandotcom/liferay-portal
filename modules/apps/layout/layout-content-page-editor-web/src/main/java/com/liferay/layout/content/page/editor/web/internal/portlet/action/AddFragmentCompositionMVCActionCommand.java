@@ -179,7 +179,8 @@ public class AddFragmentCompositionMVCActionCommand
 			null, themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
 			FragmentComposition.class.getName(), fragmentCompositionId,
 			FragmentPortletKeys.FRAGMENT, repository.getDlFolderId(),
-			fileEntry.getContentStream(), fragmentCompositionId + "_preview",
+			fileEntry.getContentStream(),
+			fragmentCompositionId + "_preview." + fileEntry.getExtension(),
 			fileEntry.getMimeType(), false);
 	}
 

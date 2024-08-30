@@ -12131,17 +12131,36 @@ public class ObjectEntryResourceTest {
 					Folder folder = fileEntry.getFolder();
 
 					if (folder == null) {
-						if (StringUtil.equals(
-								objectDefinition.getScope(),
-								ObjectDefinitionConstants.SCOPE_SITE)) {
+						Scope scope = fileEntry.getScope();
 
-							repositoryId = TestPropsValues.getGroupId();
+						if ((scope != null) &&
+							(scope.getExternalReferenceCode() != null)) {
+
+							Group group =
+								_groupLocalService.
+									fetchGroupByExternalReferenceCode(
+										scope.getExternalReferenceCode(),
+										objectDefinition.getCompanyId());
+
+							if (group != null) {
+								repositoryId = group.getGroupId();
+							}
 						}
-						else {
-							Company company = _companyLocalService.getCompany(
-								objectDefinition.getCompanyId());
 
-							repositoryId = company.getGroupId();
+						if (repositoryId == 0) {
+							if (StringUtil.equals(
+									objectDefinition.getScope(),
+									ObjectDefinitionConstants.SCOPE_SITE)) {
+
+								repositoryId = TestPropsValues.getGroupId();
+							}
+							else {
+								Company company =
+									_companyLocalService.getCompany(
+										objectDefinition.getCompanyId());
+
+								repositoryId = company.getGroupId();
+							}
 						}
 					}
 					else {
@@ -13566,6 +13585,15 @@ public class ObjectEntryResourceTest {
 
 		testFileEntry.setExternalReferenceCode(RandomTestUtil.randomString());
 
+		Group group = GroupTestUtil.addGroup();
+
+		Scope scope = new Scope();
+
+		scope.setExternalReferenceCode(group.getExternalReferenceCode());
+		scope.setType(Scope.Type.SITE);
+
+		testFileEntry.setScope(scope);
+
 		String externalReferenceCode3 =
 			testFileEntry.getExternalReferenceCode();
 
@@ -13590,6 +13618,7 @@ public class ObjectEntryResourceTest {
 		Assert.assertEquals(
 			externalReferenceCode3,
 			createdFileEntry.getExternalReferenceCode());
+		Assert.assertEquals(group.getGroupId(), createdFileEntry.getGroupId());
 
 		InputStream inputStream = createdFileEntry.getContentStream();
 

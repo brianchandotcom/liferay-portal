@@ -32,6 +32,7 @@ import org.gradle.api.tasks.OutputDirectory;
 
 /**
  * @author David Truong
+ * @author Drew Brokke
  */
 public class InitBundleTask extends JavaExec {
 

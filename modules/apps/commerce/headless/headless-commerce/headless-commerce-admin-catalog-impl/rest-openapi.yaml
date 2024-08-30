@@ -1546,6 +1546,9 @@ components:
                         hr_HR: Product Name HR
                         hu_HU: Product Name HU
                     type: object
+                optionCategoryExternalReferenceCode:
+                    example: AB-34098-789-N
+                    type: string
                 optionCategoryId:
                     example: 30129
                     format: int64
@@ -1561,6 +1564,9 @@ components:
                     format: int64
                     minimum: 0
                     type: integer
+                specificationExternalReferenceCode:
+                    example: AB-34098-789-N
+                    type: string
                 specificationId:
                     example: 30129
                     format: int64
@@ -1582,7 +1588,6 @@ components:
                         hu_HU: Horvatorszag
                     type: object
             required:
-                - specificationKey
                 - value
             type: object
         ProductSubscriptionConfiguration:
@@ -9943,6 +9948,167 @@ paths:
                       - HeadlessCommerceAdminCatalog.read
             summary: Gets a list of channel related to a product.
             tags: ["ProductChannel"]
+    "/products/by-externalReferenceCode/{externalReferenceCode}/product-specifications":
+        get:
+            operationId: getProductByExternalReferenceCodeProductSpecificationsPage
+            parameters:
+                - in: path
+                  explode: false
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+                  style: simple
+                - in: query
+                  explode: true
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
+                  style: form
+                - in: query
+                  explode: true
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
+                  style: form
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ProductSpecification"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ProductSpecification"
+                                type: array
+                    description:
+                        Successful operation
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - HeadlessCommerceAdminCatalog.read
+            summary: Gets a list of product specification.
+            tags: ["ProductSpecification"]
+        post:
+            operationId: postProductByExternalReferenceCodeProductSpecification
+            parameters:
+                - in: path
+                  explode: false
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+                  style: simple
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ProductSpecification"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ProductSpecification"
+                required: true
+            responses:
+                201:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ProductSpecification"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ProductSpecification"
+                    description:
+                        Created
+                202:
+                    description:
+                        Accepted - Async
+                204:
+                    description:
+                        Updated
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - HeadlessCommerceAdminCatalog.write
+            summary: Creates or updates a product specification
+            tags: ["ProductSpecification"]
     "/products/by-externalReferenceCode/{externalReferenceCode}/product-virtual-settings":
         get:
             operationId: getProductByExternalReferenceCodeProductVirtualSettings

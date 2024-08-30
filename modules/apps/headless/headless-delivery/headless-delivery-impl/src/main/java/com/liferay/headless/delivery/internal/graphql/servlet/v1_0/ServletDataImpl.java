@@ -15,6 +15,7 @@ import com.liferay.headless.delivery.internal.resource.v1_0.ContentSetElementRes
 import com.liferay.headless.delivery.internal.resource.v1_0.ContentStructureResourceImpl;
 import com.liferay.headless.delivery.internal.resource.v1_0.ContentTemplateResourceImpl;
 import com.liferay.headless.delivery.internal.resource.v1_0.DocumentFolderResourceImpl;
+import com.liferay.headless.delivery.internal.resource.v1_0.DocumentMetadataSetResourceImpl;
 import com.liferay.headless.delivery.internal.resource.v1_0.DocumentResourceImpl;
 import com.liferay.headless.delivery.internal.resource.v1_0.DocumentShortcutResourceImpl;
 import com.liferay.headless.delivery.internal.resource.v1_0.KnowledgeBaseArticleResourceImpl;
@@ -40,6 +41,7 @@ import com.liferay.headless.delivery.resource.v1_0.ContentSetElementResource;
 import com.liferay.headless.delivery.resource.v1_0.ContentStructureResource;
 import com.liferay.headless.delivery.resource.v1_0.ContentTemplateResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentFolderResource;
+import com.liferay.headless.delivery.resource.v1_0.DocumentMetadataSetResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentShortcutResource;
 import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseArticleResource;
@@ -98,6 +100,8 @@ public class ServletDataImpl implements ServletData {
 			_documentResourceComponentServiceObjects);
 		Mutation.setDocumentFolderResourceComponentServiceObjects(
 			_documentFolderResourceComponentServiceObjects);
+		Mutation.setDocumentMetadataSetResourceComponentServiceObjects(
+			_documentMetadataSetResourceComponentServiceObjects);
 		Mutation.setDocumentShortcutResourceComponentServiceObjects(
 			_documentShortcutResourceComponentServiceObjects);
 		Mutation.setKnowledgeBaseArticleResourceComponentServiceObjects(
@@ -149,6 +153,8 @@ public class ServletDataImpl implements ServletData {
 			_documentResourceComponentServiceObjects);
 		Query.setDocumentFolderResourceComponentServiceObjects(
 			_documentFolderResourceComponentServiceObjects);
+		Query.setDocumentMetadataSetResourceComponentServiceObjects(
+			_documentMetadataSetResourceComponentServiceObjects);
 		Query.setDocumentShortcutResourceComponentServiceObjects(
 			_documentShortcutResourceComponentServiceObjects);
 		Query.setKnowledgeBaseArticleResourceComponentServiceObjects(
@@ -697,6 +703,16 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							DocumentFolderResourceImpl.class,
 							"putSiteDocumentsFolderByExternalReferenceCode"));
+					put(
+						"mutation#createAssetLibraryDocumentMetadataSetsPageExportBatch",
+						new ObjectValuePair<>(
+							DocumentMetadataSetResourceImpl.class,
+							"postAssetLibraryDocumentMetadataSetsPageExportBatch"));
+					put(
+						"mutation#createSiteDocumentMetadataSetsPageExportBatch",
+						new ObjectValuePair<>(
+							DocumentMetadataSetResourceImpl.class,
+							"postSiteDocumentMetadataSetsPageExportBatch"));
 					put(
 						"mutation#createAssetLibraryDocumentShortcutsPageExportBatch",
 						new ObjectValuePair<>(
@@ -2020,6 +2036,21 @@ public class ServletDataImpl implements ServletData {
 							DocumentFolderResourceImpl.class,
 							"getSiteDocumentsFolderByExternalReferenceCode"));
 					put(
+						"query#assetLibraryDocumentMetadataSets",
+						new ObjectValuePair<>(
+							DocumentMetadataSetResourceImpl.class,
+							"getAssetLibraryDocumentMetadataSetsPage"));
+					put(
+						"query#documentMetadataSet",
+						new ObjectValuePair<>(
+							DocumentMetadataSetResourceImpl.class,
+							"getDocumentMetadataSet"));
+					put(
+						"query#documentMetadataSets",
+						new ObjectValuePair<>(
+							DocumentMetadataSetResourceImpl.class,
+							"getSiteDocumentMetadataSetsPage"));
+					put(
 						"query#assetLibraryDocumentShortcuts",
 						new ObjectValuePair<>(
 							DocumentShortcutResourceImpl.class,
@@ -2833,6 +2864,10 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<DocumentFolderResource>
 		_documentFolderResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<DocumentMetadataSetResource>
+		_documentMetadataSetResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<DocumentShortcutResource>

@@ -103,6 +103,8 @@ public class OpenAPIResourceImpl {
 
 			add(DocumentFolderResourceImpl.class);
 
+			add(DocumentMetadataSetResourceImpl.class);
+
 			add(DocumentShortcutResourceImpl.class);
 
 			add(KnowledgeBaseArticleResourceImpl.class);

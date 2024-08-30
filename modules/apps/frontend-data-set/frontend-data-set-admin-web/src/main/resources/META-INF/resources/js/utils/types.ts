@@ -71,6 +71,7 @@ export interface IFDSField extends IOrderable {
 
 export interface IFieldTreeItem extends IField {
 	children?: IFieldTreeItem[];
+	disabled?: boolean;
 	initialChildren?: IFieldTreeItem[];
 	query?: string;
 	savedId?: string;

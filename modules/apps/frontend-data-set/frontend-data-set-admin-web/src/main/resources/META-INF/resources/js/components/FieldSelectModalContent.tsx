@@ -293,6 +293,7 @@ const FieldSelectModalContent = ({
 							>
 								{({
 									children,
+									disabled,
 									initialChildren,
 									label,
 									query,
@@ -301,7 +302,8 @@ const FieldSelectModalContent = ({
 										{selectionMode === 'single' ? (
 											<TreeView.ItemStack
 												disabled={
-													!!initialChildren?.length
+													!!initialChildren?.length ||
+													!!disabled
 												}
 												expanderDisabled={false}
 											>
@@ -313,7 +315,9 @@ const FieldSelectModalContent = ({
 												/>
 											</TreeView.ItemStack>
 										) : (
-											<TreeView.ItemStack>
+											<TreeView.ItemStack
+												disabled={disabled}
+											>
 												<ClayCheckbox checked>
 													<Highlight
 														query={query}
@@ -324,8 +328,13 @@ const FieldSelectModalContent = ({
 										)}
 
 										<TreeView.Group items={children}>
-											{({label}: IFieldTreeItem) => (
-												<TreeView.Item>
+											{({
+												disabled: childDisabled,
+												label,
+											}: IFieldTreeItem) => (
+												<TreeView.Item
+													disabled={childDisabled}
+												>
 													<ClayCheckbox checked>
 														{selectionMode ===
 															'multiple' && (

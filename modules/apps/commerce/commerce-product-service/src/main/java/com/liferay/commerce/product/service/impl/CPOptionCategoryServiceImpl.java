@@ -123,6 +123,25 @@ public class CPOptionCategoryServiceImpl
 	}
 
 	@Override
+	public CPOptionCategory fetchCPOptionCategoryByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		CPOptionCategory cpOptionCategory =
+			cpOptionCategoryLocalService.
+				fetchCPOptionCategoryByExternalReferenceCode(
+					externalReferenceCode, companyId);
+
+		if (cpOptionCategory != null) {
+			_cpOptionCategoryModelResourcePermission.check(
+				getPermissionChecker(),
+				cpOptionCategory.getCPOptionCategoryId(), ActionKeys.VIEW);
+		}
+
+		return cpOptionCategory;
+	}
+
+	@Override
 	public CPOptionCategory getCPOptionCategory(long cpOptionCategoryId)
 		throws PortalException {
 

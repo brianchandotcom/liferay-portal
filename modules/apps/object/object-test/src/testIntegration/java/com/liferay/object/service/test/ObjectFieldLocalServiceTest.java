@@ -2761,6 +2761,7 @@ public class ObjectFieldLocalServiceTest {
 			expectedObjectField.getLabelMap(), objectField.getLabelMap());
 		Assert.assertEquals(
 			expectedObjectField.getName(), objectField.getName());
+		Assert.assertNotNull(objectField.getObjectFieldSettings());
 		Assert.assertEquals(
 			expectedObjectField.isRequired(), objectField.isRequired());
 		Assert.assertEquals(

@@ -26,6 +26,7 @@ import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPInstanceUnitOfMeasure;
 import com.liferay.commerce.product.model.CPOption;
+import com.liferay.commerce.product.model.CPOptionCategory;
 import com.liferay.commerce.product.model.CPOptionValue;
 import com.liferay.commerce.product.model.CPSpecificationOption;
 import com.liferay.commerce.product.model.CommerceCatalog;
@@ -34,6 +35,7 @@ import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalServiceUti
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelLocalServiceUtil;
 import com.liferay.commerce.product.service.CPInstanceLocalServiceUtil;
 import com.liferay.commerce.product.service.CPInstanceUnitOfMeasureLocalServiceUtil;
+import com.liferay.commerce.product.service.CPOptionCategoryLocalServiceUtil;
 import com.liferay.commerce.product.service.CPOptionLocalServiceUtil;
 import com.liferay.commerce.product.service.CPOptionValueLocalServiceUtil;
 import com.liferay.commerce.product.service.CPSpecificationOptionLocalServiceUtil;
@@ -707,6 +709,20 @@ public class CPTestUtil {
 			skuContributor, RandomTestUtil.randomString(), serviceContext);
 	}
 
+	public static CPOptionCategory addCPOptionCategory(long groupId)
+		throws PortalException {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
+
+		return CPOptionCategoryLocalServiceUtil.addCPOptionCategory(
+			RandomTestUtil.randomString(), serviceContext.getUserId(),
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomDouble(), RandomTestUtil.randomString(),
+			serviceContext);
+	}
+
 	public static CPOptionValue addCPOptionValue(CPOption cpOption)
 		throws PortalException {
 
@@ -732,7 +748,7 @@ public class CPTestUtil {
 			ServiceContextTestUtil.getServiceContext(groupId);
 
 		return CPSpecificationOptionLocalServiceUtil.addCPSpecificationOption(
-			null, serviceContext.getUserId(), 0, 0,
+			RandomTestUtil.randomString(), serviceContext.getUserId(), 0, 0,
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(), false,
 			RandomTestUtil.randomString(), RandomTestUtil.randomDouble(),

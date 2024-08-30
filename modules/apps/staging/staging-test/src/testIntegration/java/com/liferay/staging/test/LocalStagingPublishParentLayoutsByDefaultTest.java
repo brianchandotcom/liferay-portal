@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.PortletServlet;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -78,10 +79,8 @@ public class LocalStagingPublishParentLayoutsByDefaultTest
 			StagingConfiguration.class.getName());
 	}
 
-	/**
-	 * LPD-6808: AC7
-	 */
 	@Test
+	@TestInfo("LPD-6808: AC7")
 	public void testLocalStagingPublishJournalContentWithLayoutURLLayoutDoesNotExistOnImportSide()
 		throws Exception {
 
@@ -172,10 +171,8 @@ public class LocalStagingPublishParentLayoutsByDefaultTest
 		Assert.assertEquals(content, groupJournalArticle.getContent());
 	}
 
-	/**
-	 * LPD-6808: AC3
-	 */
 	@Test
+	@TestInfo("LPD-6808: AC3")
 	public void testStagingWithCheckedConfigurationAndModifiedContentAndExistingParentAndChildLayoutsOnLive()
 		throws Exception {
 
@@ -274,10 +271,8 @@ public class LocalStagingPublishParentLayoutsByDefaultTest
 			));
 	}
 
-	/**
-	 * LPD-6808: AC4
-	 */
 	@Test
+	@TestInfo("LPD-6808: AC4")
 	public void testStagingWithCheckedConfigurationAndModifiedContentAndNonexistingParentAndChildLayoutsOnLive()
 		throws Exception {
 
@@ -328,10 +323,8 @@ public class LocalStagingPublishParentLayoutsByDefaultTest
 			importedParentLayout.getLayoutId());
 	}
 
-	/**
-	 * LPD-6808: AC5
-	 */
 	@Test
+	@TestInfo("LPD-6808: AC5")
 	public void testStagingWithUncheckedConfigurationAndModifiedContentAndExistingParentAndChildLayoutsOnLive()
 		throws Exception {
 
@@ -429,10 +422,8 @@ public class LocalStagingPublishParentLayoutsByDefaultTest
 			));
 	}
 
-	/**
-	 * LPD-34369
-	 */
 	@Test
+	@TestInfo("LPD-34369")
 	public void testStagingWithUncheckedConfigurationAndModifiedContentAndNonexistingParentAndChildLayoutsOnLive()
 		throws Exception {
 

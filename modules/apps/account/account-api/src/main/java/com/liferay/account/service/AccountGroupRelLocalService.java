@@ -243,16 +243,17 @@ public interface AccountGroupRelLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AccountGroupRel> getAccountGroupRels(
+		long[] accountGroupIds, String className, long classPK, String keywords,
+		int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AccountGroupRel> getAccountGroupRels(
 		String className, long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AccountGroupRel> getAccountGroupRels(
 		String className, long classPK, int start, int end,
 		OrderByComparator<AccountGroupRel> orderByComparator);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<AccountGroupRel> getAccountGroupRels(
-		String className, long classPK, String keywords, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AccountGroupRel> getAccountGroupRelsByAccountGroupId(
@@ -270,6 +271,11 @@ public interface AccountGroupRelLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getAccountGroupRelsCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getAccountGroupRelsCount(
+		long[] accountGroupIds, String className, long classPK,
+		String keywords);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getAccountGroupRelsCount(String className, long classPK);

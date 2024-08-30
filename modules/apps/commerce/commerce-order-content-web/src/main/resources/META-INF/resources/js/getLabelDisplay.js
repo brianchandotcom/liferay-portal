@@ -13,26 +13,22 @@ export function getLabelDisplay(value) {
 		};
 	}
 
-	switch (label.label) {
-		case 'approved':
-		case 'completed':
-			label.displayType = 'success';
-			break;
-		case 'denied':
-			label.displayType = 'danger';
-			break;
-		case 'expired':
-			label.displayType = 'warning';
-			break;
-		case 'draft':
-		case 'pending':
-		case 'scheduled':
-			label.displayType = 'info';
-			break;
-		default:
-			label.displayType = 'secondary';
-			break;
+	if (label.label === 'approved' || label.label === 'completed') {
+		return 'success';
+	}
+	if (label.label === 'denied') {
+		return 'danger';
+	}
+	if (
+		label.label === 'draft' ||
+		label.label === 'pending' ||
+		label.label === 'scheduled'
+	) {
+		return 'info';
+	}
+	if (label.label === 'expired') {
+		return 'warning';
 	}
 
-	return label;
+	return 'secondary';
 }

@@ -8,21 +8,22 @@ import React from 'react';
 
 export function CommerceReturnItemStatusDataRenderer(props) {
 	const getLabelType = (label) => {
-		switch (label) {
-			case 'authorized':
-			case 'completed':
-			case 'defined':
-			case 'partiallyAuthorized':
-			case 'partiallyReceived':
-			case 'processed':
-			case 'received':
-				return 'label-success';
-			case 'notAuthorized':
-			case 'receiptRejected':
-				return 'label-danger';
-			default:
-				return 'label-secondary';
+		if (
+			label === 'authorized' ||
+			label === 'completed' ||
+			label === 'defined' ||
+			label === 'partiallyAuthorized' ||
+			label === 'partiallyReceived' ||
+			label === 'processed' ||
+			label === 'received'
+		) {
+			return 'label-success';
 		}
+		if (label === 'notAuthorized' || label === 'receiptRejected') {
+			return 'label-danger';
+		}
+
+		return 'label-secondary';
 	};
 
 	return props.value ? (

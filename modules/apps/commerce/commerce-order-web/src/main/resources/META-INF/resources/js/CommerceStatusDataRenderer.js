@@ -8,20 +8,20 @@ import React from 'react';
 
 export default function CommerceStatusDataRenderer(props) {
 	const getLabelType = (label) => {
-		switch (label) {
-			case 'approved':
-				return 'label-success';
-			case 'denied':
-				return 'label-danger';
-			case 'expired':
-				return 'label-warning';
-			case 'draft':
-			case 'pending':
-			case 'scheduled':
-				return 'label-info';
-			default:
-				return 'label-secondary';
+		if (label === 'approved') {
+			return 'label-success';
 		}
+		if (label === 'denied') {
+			return 'label-danger';
+		}
+		if (label === 'draft' || label === 'pending' || label === 'scheduled') {
+			return 'label-info';
+		}
+		if (label === 'expired') {
+			return 'label-warning';
+		}
+
+		return 'label-secondary';
 	};
 
 	return props.value ? (

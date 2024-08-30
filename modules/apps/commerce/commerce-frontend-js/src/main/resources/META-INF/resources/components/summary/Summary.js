@@ -78,19 +78,17 @@ function SummaryItem(props) {
 
 	let ItemVariant;
 
-	switch (style) {
-		case 'big':
-			ItemVariant = SummaryItemBigVariant;
-			break;
-		case 'divider':
-			ItemVariant = SummaryItemDividerVariant;
-			break;
-		case 'danger':
-			ItemVariant = SummaryItemDangerVariant;
-			break;
-		default:
-			ItemVariant = SummaryItemBase;
-			break;
+	if (style === 'big') {
+		ItemVariant = SummaryItemBigVariant;
+	}
+	else if (style === 'danger') {
+		ItemVariant = SummaryItemDangerVariant;
+	}
+	else if (style === 'divider') {
+		ItemVariant = SummaryItemDividerVariant;
+	}
+	else {
+		ItemVariant = SummaryItemBase;
 	}
 
 	return <ItemVariant {...itemProps} />;

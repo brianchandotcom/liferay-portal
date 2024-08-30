@@ -28,14 +28,14 @@ const FORWARDS = 'forwards';
 function validateInterval(interval) {
 	const MIN = 4000;
 
-	switch (true) {
-		case interval > 0 && interval <= MIN:
-			return MIN;
-		case interval > MIN:
-			return interval;
-		default:
-			return null;
+	if (interval > 0 && interval <= MIN) {
+		return MIN;
 	}
+	if (interval > MIN) {
+		return interval;
+	}
+
+	return null;
 }
 
 const SpeedwellSlider = function (
@@ -243,19 +243,17 @@ SpeedwellSlider.prototype = {
 
 	setupSliders() {
 		return new Promise((resolve, reject) => {
-			switch (this.datasetSize) {
-				case 0:
-					reject(new Error('No dataset size.'));
-					break;
-				case 1:
-					this.oneSlideSetup();
-					break;
-				case 2:
-					this.twoSlidesSetup();
-					break;
-				default:
-					this.defaultSetup();
-					break;
+			if (this.datasetSize === 0) {
+				reject(new Error('No dataset size.'));
+			}
+			else if (this.datasetSize === 1) {
+				this.oneSlideSetup();
+			}
+			else if (this.datasetSize === 2) {
+				this.twoSlidesSetup();
+			}
+			else {
+				this.defaultSetup();
 			}
 
 			this.slides = Array.from(

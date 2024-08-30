@@ -33,7 +33,7 @@ import org.gradle.api.tasks.TaskAction;
 public class InitBundleTask extends DefaultTask {
 
 	@TaskAction
-	public void initBundle() {
+	public void doInitBundle() {
 		InitBundleCommand initBundleCommand = new InitBundleCommand();
 
 		File configsDir = getConfigsDir();

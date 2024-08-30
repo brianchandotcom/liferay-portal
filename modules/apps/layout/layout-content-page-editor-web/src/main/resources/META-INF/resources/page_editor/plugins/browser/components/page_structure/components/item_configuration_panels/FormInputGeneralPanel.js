@@ -193,7 +193,8 @@ export function FormInputGeneralPanel({item}) {
 	const isSpecialInput = useMemo(
 		() =>
 			allowedInputTypes?.includes('captcha') ||
-			allowedInputTypes?.includes('categorization'),
+			allowedInputTypes?.includes('categorization') ||
+			allowedInputTypes?.includes('stepper'),
 		[allowedInputTypes]
 	);
 

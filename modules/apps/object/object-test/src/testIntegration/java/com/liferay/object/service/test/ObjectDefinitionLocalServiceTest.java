@@ -99,6 +99,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.language.override.model.PLOEntry;
+import com.liferay.portal.language.override.service.PLOEntryLocalService;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -1941,13 +1943,10 @@ public class ObjectDefinitionLocalServiceTest {
 				Collections.emptyList());
 
 		Assert.assertFalse(objectDefinition.isActive());
-		Assert.assertEquals(
-			LocalizedMapUtil.getLocalizedMap("Able"),
-			objectDefinition.getLabelMap());
+
+		_assertLabelAndPluralLabel(objectDefinition, "Able", "Ables");
+
 		Assert.assertEquals("C_Able", objectDefinition.getName());
-		Assert.assertEquals(
-			LocalizedMapUtil.getLocalizedMap("Ables"),
-			objectDefinition.getPluralLabelMap());
 		Assert.assertEquals(
 			ObjectDefinitionConstants.STORAGE_TYPE_SALESFORCE,
 			objectDefinition.getStorageType());
@@ -2064,13 +2063,10 @@ public class ObjectDefinitionLocalServiceTest {
 		Assert.assertFalse(objectDefinition.isActive());
 		Assert.assertTrue(objectDefinition.isEnableIndexSearch());
 		Assert.assertTrue(objectDefinition.isEnableObjectEntryHistory());
-		Assert.assertEquals(
-			LocalizedMapUtil.getLocalizedMap("Baker"),
-			objectDefinition.getLabelMap());
+
+		_assertLabelAndPluralLabel(objectDefinition, "Baker", "Bakers");
+
 		Assert.assertEquals("C_Baker", objectDefinition.getName());
-		Assert.assertEquals(
-			LocalizedMapUtil.getLocalizedMap("Bakers"),
-			objectDefinition.getPluralLabelMap());
 
 		objectDefinition =
 			_objectDefinitionLocalService.publishCustomObjectDefinition(
@@ -2088,13 +2084,10 @@ public class ObjectDefinitionLocalServiceTest {
 		Assert.assertTrue(objectDefinition.isActive());
 		Assert.assertTrue(objectDefinition.isEnableIndexSearch());
 		Assert.assertTrue(objectDefinition.isEnableObjectEntryHistory());
-		Assert.assertEquals(
-			LocalizedMapUtil.getLocalizedMap("Charlie"),
-			objectDefinition.getLabelMap());
+
+		_assertLabelAndPluralLabel(objectDefinition, "Charlie", "Charlies");
+
 		Assert.assertEquals("C_Baker", objectDefinition.getName());
-		Assert.assertEquals(
-			LocalizedMapUtil.getLocalizedMap("Charlies"),
-			objectDefinition.getPluralLabelMap());
 
 		_testUpdateCustomObjectDefinitionThrowsObjectFieldRelationshipTypeException(
 			objectDefinition);
@@ -2294,13 +2287,10 @@ public class ObjectDefinitionLocalServiceTest {
 			objectDefinition2.getObjectFolderId());
 		Assert.assertFalse(objectDefinition2.isEnableCategorization());
 		Assert.assertTrue(objectDefinition2.isEnableComments());
-		Assert.assertEquals(
-			LocalizedMapUtil.getLocalizedMap("Charlie"),
-			objectDefinition2.getLabelMap());
+
+		_assertLabelAndPluralLabel(objectDefinition2, "Charlie", "Charlies");
+
 		Assert.assertEquals("Test", objectDefinition2.getName());
-		Assert.assertEquals(
-			LocalizedMapUtil.getLocalizedMap("Charlies"),
-			objectDefinition2.getPluralLabelMap());
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition2);
 
@@ -2453,6 +2443,33 @@ public class ObjectDefinitionLocalServiceTest {
 				).build()));
 	}
 
+	private void _assertLabelAndPluralLabel(
+		ObjectDefinition objectDefinition, String label, String pluralLabel) {
+
+		Assert.assertEquals(
+			LocalizedMapUtil.getLocalizedMap(label),
+			objectDefinition.getLabelMap());
+
+		PLOEntry labelPLOEntryKey = _ploEntryLocalService.fetchPLOEntry(
+			objectDefinition.getCompanyId(),
+			"model.resource.com.liferay.object.model.ObjectDefinition#" +
+				objectDefinition.getObjectDefinitionId(),
+			objectDefinition.getDefaultLanguageId());
+
+		Assert.assertEquals(labelPLOEntryKey.getValue(), label);
+
+		Assert.assertEquals(
+			LocalizedMapUtil.getLocalizedMap(pluralLabel),
+			objectDefinition.getPluralLabelMap());
+
+		PLOEntry pluralLabelPLOEntryKey = _ploEntryLocalService.fetchPLOEntry(
+			objectDefinition.getCompanyId(),
+			"model.resource." + objectDefinition.getResourceName(),
+			objectDefinition.getDefaultLanguageId());
+
+		Assert.assertEquals(pluralLabelPLOEntryKey.getValue(), pluralLabel);
+	}
+
 	private void _assertObjectField(
 			ObjectDefinition objectDefinition, String dbColumnName,
 			String dbType, String name, boolean required)
@@ -2601,7 +2618,10 @@ public class ObjectDefinitionLocalServiceTest {
 		Assert.assertFalse(objectDefinition.isActive());
 		Assert.assertEquals(
 			StringPool.BLANK, objectDefinition.getDBTableName());
-		Assert.assertEquals(externalReferenceCode, objectDefinition.getLabel());
+
+		_assertLabelAndPluralLabel(
+			objectDefinition, externalReferenceCode, externalReferenceCode);
+
 		Assert.assertFalse(objectDefinition.isEnableCategorization());
 		Assert.assertFalse(objectDefinition.isEnableComments());
 		Assert.assertFalse(objectDefinition.isEnableIndexSearch());
@@ -2609,8 +2629,6 @@ public class ObjectDefinitionLocalServiceTest {
 		Assert.assertFalse(objectDefinition.isEnableObjectEntryHistory());
 		Assert.assertEquals(modifiable, objectDefinition.isModifiable());
 		Assert.assertEquals(externalReferenceCode, objectDefinition.getName());
-		Assert.assertEquals(
-			externalReferenceCode, objectDefinition.getPluralLabel());
 		Assert.assertEquals(
 			ObjectDefinitionConstants.SCOPE_COMPANY,
 			objectDefinition.getScope());
@@ -2914,6 +2932,9 @@ public class ObjectDefinitionLocalServiceTest {
 
 	@Inject
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;
+
+	@Inject
+	private PLOEntryLocalService _ploEntryLocalService;
 
 	@Inject
 	private ResourceActionLocalService _resourceActionLocalService;

@@ -1,4 +1,4 @@
-ext.expectedErrorMessage = "Client extension with-invalid-scope has an invalid value \"foo\" for the property \"scope\". Valid values are: instance, page."
-ext.taskPath = ":with-invalid-scope:validateClientExtensions"
+ext.expectedErrorMessage = "Client extension with-invalid-scope-global-js-client-extension has an invalid value \"foo\" for the property \"scope\". Valid values are: instance, page."
+ext.taskPath = ":with-invalid-scope-global-js-client-extension:validateClientExtensions"
 
 apply from: project.property("commonScript.shouldFailTestCase.gradle")

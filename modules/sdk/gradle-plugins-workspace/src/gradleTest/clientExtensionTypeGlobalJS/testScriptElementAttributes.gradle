@@ -1,0 +1,7 @@
+ext.expectedContentStrings = [
+	'scriptElementAttributesJSON={\\"async\\":false,\\"data-bool-false\\":false,\\"data-bool-true\\":true,\\"data-empty\\":\\"\\",\\"data-str-false\\":\\"false\\",\\"data-str-true\\":\\"true\\",\\"defer\\":true,\\"nomodule\\":false}',
+]
+ext.expectedFilePath = "with-script-element-attributes-global-js-client-extension.client-extension-config.json"
+ext.taskPath = ":with-script-element-attributes-global-js-client-extension:createClientExtensionConfig"
+
+apply from: project.property("commonScript.testClientExtensionBuildFileContentsTestCase.gradle")

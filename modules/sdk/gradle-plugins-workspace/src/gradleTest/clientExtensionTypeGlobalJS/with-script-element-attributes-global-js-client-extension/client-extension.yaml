@@ -1,4 +1,4 @@
-global-js-client-extension:
+with-script-element-attributes-global-js-client-extension:
     scriptElementAttributes:
         async: false
         data-bool-false: false

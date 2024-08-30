@@ -1,0 +1,29 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Acme C2P9 Form Field Implementation
+Bundle-SymbolicName: com.acme.c2p9.impl
+Bundle-Version: 1.0.0
+Created-By: 1.8.0_392 (Azul Systems, Inc.)
+Import-Package: com.liferay.dynamic.data.mapping.annotations,com.lifer
+ ay.dynamic.data.mapping.form.field.type,com.liferay.dynamic.data.mapp
+ ing.model,com.liferay.frontend.js.loader.modules.extender.npm
+Javac-Debug: on
+Javac-Deprecation: off
+Javac-Encoding: UTF-8
+Private-Package: com.acme.c2p9.internal.dynamic.data.mapping.form.fiel
+ d.type,content
+Provide-Capability: osgi.service;objectClass:List<String>="com.liferay
+ .dynamic.data.mapping.form.field.type.DDMFormFieldType";uses:="com.li
+ feray.dynamic.data.mapping.form.field.type",liferay.resource.bundle;b
+ undle.symbolic.name="com.acme.c2p9.impl";resource.bundle.base.name="c
+ ontent.Language"
+Require-Capability: osgi.service;filter:="(objectClass=com.liferay.fro
+ ntend.js.loader.modules.extender.npm.NPMResolver)";effective:=active,
+ osgi.extender;filter:="(&(osgi.extender=osgi.component)(version>=1.4.
+ 0)(!(version>=2.0.0)))",osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1
+ .8))"
+Service-Component: OSGI-INF/com.acme.c2p9.internal.dynamic.data.mappin
+ g.form.field.type.C2P9DDMFormFieldType.xml
+Tool: Bnd-6.4.0.202211291949
+Web-ContextPath: /dynamic-data-mapping-form-field-type-c2p9-slider
+

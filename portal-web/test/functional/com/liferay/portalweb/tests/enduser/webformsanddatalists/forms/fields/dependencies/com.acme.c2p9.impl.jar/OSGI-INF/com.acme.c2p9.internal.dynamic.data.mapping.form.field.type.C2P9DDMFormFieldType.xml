@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.3.0" name="com.acme.c2p9.internal.dynamic.data.mapping.form.field.type.C2P9DDMFormFieldType">
+  <property name="ddm.form.field.type.description" type="String" value="c2p9-description"/>
+  <property name="ddm.form.field.type.display.order" type="Integer" value="10"/>
+  <property name="ddm.form.field.type.group" type="String" value="customized"/>
+  <property name="ddm.form.field.type.icon" type="String" value="text"/>
+  <property name="ddm.form.field.type.label" type="String" value="c2p9-label"/>
+  <property name="ddm.form.field.type.name" type="String" value="c2p9-slider"/>
+  <service>
+    <provide interface="com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType"/>
+  </service>
+  <reference name="_npmResolver" interface="com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver" field="_npmResolver"/>
+  <implementation class="com.acme.c2p9.internal.dynamic.data.mapping.form.field.type.C2P9DDMFormFieldType"/>
+</scr:component>

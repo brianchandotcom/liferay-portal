@@ -292,6 +292,15 @@ export function FormInputGeneralPanel({item}) {
 				)
 				.flatMap((fieldSet) => fieldSet.fields) ?? [];
 
+		if (
+			Liferay.FeatureFlags['LPD-10727'] &&
+			allowedInputTypes?.includes('stepper')
+		) {
+			return fieldSetsWithoutLabel.filter(
+				(field) => field.name !== 'numberOfSteps'
+			);
+		}
+
 		if (isSpecialInput) {
 			return fieldSetsWithoutLabel;
 		}
@@ -302,7 +311,13 @@ export function FormInputGeneralPanel({item}) {
 		);
 
 		return [...inputCommonFields, ...fieldSetsWithoutLabel];
-	}, [configurationValues, fragmentEntryLinkRef, formFields, isSpecialInput]);
+	}, [
+		allowedInputTypes,
+		configurationValues,
+		fragmentEntryLinkRef,
+		formFields,
+		isSpecialInput,
+	]);
 
 	const handleValueSelect = (key, value) => {
 		const keyPath = [FREEMARKER_FRAGMENT_ENTRY_PROCESSOR, key];

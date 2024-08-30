@@ -14,6 +14,7 @@ import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.account.service.AccountGroupLocalService;
 import com.liferay.account.service.AccountGroupRelLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.headless.admin.user.client.dto.v1_0.Account;
 import com.liferay.headless.admin.user.client.dto.v1_0.AccountContactInformation;
 import com.liferay.headless.admin.user.client.dto.v1_0.EmailAddress;
@@ -23,20 +24,32 @@ import com.liferay.headless.admin.user.client.dto.v1_0.WebUrl;
 import com.liferay.headless.admin.user.client.pagination.Page;
 import com.liferay.headless.admin.user.client.problem.Problem;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Address;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.repository.LocalRepository;
+import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.AddressLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
+
+import java.io.InputStream;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -190,7 +203,16 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 		super.testPatchAccount();
 
 		_testPatchAccountWithContactInformation();
+		_testPatchAccountWithMoreExternalReferenceCodes();
 		_testPatchAccountWithPostalAddressPhoneNumber();
+	}
+
+	@Override
+	@Test
+	public void testPatchAccountByExternalReferenceCode() throws Exception {
+		super.testPatchAccountByExternalReferenceCode();
+
+		_testPatchAccountByExternalReferenceCodeWithMoreExternalReferenceCodes();
 	}
 
 	@Override
@@ -300,6 +322,7 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 
 		_testPostAccountDuplicateExternalReferenceCode();
 		_testPostAccountWithContactInformation();
+		_testPostAccountWithMoreExternalReferenceCodes();
 		_testPostAccountWithPostalAddressPhoneNumber();
 	}
 
@@ -369,6 +392,7 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 		super.testPutAccount();
 
 		_testPutAccountWithContactInformation();
+		_testPutAccountWithMoreExternalReferenceCodes();
 		_testPutAccountWithPostalAddressPhoneNumber();
 	}
 
@@ -378,6 +402,7 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 		super.testPutAccountByExternalReferenceCode();
 
 		_testPutAccountByExternalReferenceCodeWithContactInformation();
+		_testPutAccountByExternalReferenceCodeWithMoreExternalReferenceCodes();
 	}
 
 	@Override
@@ -556,6 +581,29 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 		accountEntry.setExternalReferenceCode(RandomTestUtil.randomString());
 
 		return _accountEntryLocalService.updateAccountEntry(accountEntry);
+	}
+
+	private FileEntry _addImageFileEntry() throws Exception {
+		Group group = _groupLocalService.getCompanyGroup(
+			_accountGroup.getCompanyId());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		byte[] bytes = FileUtil.getBytes(getClass(), "/images/liferay.png");
+
+		InputStream inputStream = new UnsyncByteArrayInputStream(bytes);
+
+		LocalRepository localRepository =
+			RepositoryProviderUtil.getLocalRepository(group.getGroupId());
+
+		return localRepository.addFileEntry(
+			null, TestPropsValues.getUserId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(), ContentTypes.IMAGE_JPEG,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			StringPool.BLANK, StringPool.BLANK, inputStream, bytes.length, null,
+			null, null, serviceContext);
 	}
 
 	private void _assertEquals(
@@ -850,6 +898,78 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 		}
 	}
 
+	private void _testPatchAccountByExternalReferenceCodeWithMoreExternalReferenceCodes()
+		throws Exception {
+
+		Account postAccount =
+			testPatchAccountByExternalReferenceCode_addAccount();
+
+		Account randomPatchAccount = randomPatchAccount();
+
+		Organization organization1 = OrganizationTestUtil.addOrganization();
+
+		Address billingAddress = OrganizationTestUtil.addAddress(organization1);
+
+		randomPatchAccount.setDefaultBillingAddressExternalReferenceCode(
+			billingAddress.getExternalReferenceCode());
+
+		randomPatchAccount.setDefaultBillingAddressId(0L);
+
+		Organization organization2 = OrganizationTestUtil.addOrganization();
+
+		Address shippingAddress = OrganizationTestUtil.addAddress(
+			organization2);
+
+		randomPatchAccount.setDefaultShippingAddressExternalReferenceCode(
+			shippingAddress.getExternalReferenceCode());
+
+		randomPatchAccount.setDefaultShippingAddressId(0L);
+
+		FileEntry fileEntry = _addImageFileEntry();
+
+		randomPatchAccount.setLogoExternalReferenceCode(
+			fileEntry.getExternalReferenceCode());
+
+		randomPatchAccount.setLogoId(0L);
+		randomPatchAccount.setOrganizationExternalReferenceCodes(
+			new String[] {
+				organization1.getExternalReferenceCode(),
+				organization2.getExternalReferenceCode()
+			});
+		randomPatchAccount.setOrganizationIds(new Long[0]);
+
+		Account parentAccount = randomAccount();
+
+		Account postParentAccount = testPostAccount_addAccount(parentAccount);
+
+		randomPatchAccount.setParentAccountExternalReferenceCode(
+			postParentAccount.getExternalReferenceCode());
+
+		randomPatchAccount.setParentAccountId(0L);
+
+		Account patchAccount =
+			accountResource.patchAccountByExternalReferenceCode(
+				postAccount.getExternalReferenceCode(), randomPatchAccount);
+
+		Arrays.sort(patchAccount.getOrganizationIds());
+
+		Assert.assertArrayEquals(
+			new Long[] {
+				organization1.getOrganizationId(),
+				organization2.getOrganizationId()
+			},
+			patchAccount.getOrganizationIds());
+		Assert.assertEquals(
+			billingAddress.getAddressId(),
+			GetterUtil.getLong(patchAccount.getDefaultBillingAddressId()));
+		Assert.assertEquals(
+			shippingAddress.getAddressId(),
+			GetterUtil.getLong(patchAccount.getDefaultShippingAddressId()));
+		Assert.assertEquals(
+			postParentAccount.getId(), patchAccount.getParentAccountId());
+		Assert.assertTrue(patchAccount.getLogoId() > 0);
+	}
+
 	private void _testPatchAccountWithContactInformation() throws Exception {
 		Account postAccount = testPatchAccount_addAccount();
 
@@ -867,6 +987,76 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 		_assertEquals(
 			accountContactInformation,
 			patchAccount.getAccountContactInformation());
+	}
+
+	private void _testPatchAccountWithMoreExternalReferenceCodes()
+		throws Exception {
+
+		Account postAccount = testPatchAccount_addAccount();
+
+		Account randomPatchAccount = randomPatchAccount();
+
+		Organization organization1 = OrganizationTestUtil.addOrganization();
+
+		Address billingAddress = OrganizationTestUtil.addAddress(organization1);
+
+		randomPatchAccount.setDefaultBillingAddressExternalReferenceCode(
+			billingAddress.getExternalReferenceCode());
+
+		randomPatchAccount.setDefaultBillingAddressId(0L);
+
+		Organization organization2 = OrganizationTestUtil.addOrganization();
+
+		Address shippingAddress = OrganizationTestUtil.addAddress(
+			organization2);
+
+		randomPatchAccount.setDefaultShippingAddressExternalReferenceCode(
+			shippingAddress.getExternalReferenceCode());
+
+		randomPatchAccount.setDefaultShippingAddressId(0L);
+
+		FileEntry fileEntry = _addImageFileEntry();
+
+		randomPatchAccount.setLogoExternalReferenceCode(
+			fileEntry.getExternalReferenceCode());
+
+		randomPatchAccount.setLogoId(0L);
+		randomPatchAccount.setOrganizationExternalReferenceCodes(
+			new String[] {
+				organization1.getExternalReferenceCode(),
+				organization2.getExternalReferenceCode()
+			});
+		randomPatchAccount.setOrganizationIds(new Long[0]);
+
+		Account parentAccount = randomAccount();
+
+		Account postParentAccount = testPostAccount_addAccount(parentAccount);
+
+		randomPatchAccount.setParentAccountExternalReferenceCode(
+			postParentAccount.getExternalReferenceCode());
+
+		randomPatchAccount.setParentAccountId(0L);
+
+		Account patchAccount = accountResource.patchAccount(
+			postAccount.getId(), randomPatchAccount);
+
+		Arrays.sort(patchAccount.getOrganizationIds());
+
+		Assert.assertArrayEquals(
+			new Long[] {
+				organization1.getOrganizationId(),
+				organization2.getOrganizationId()
+			},
+			patchAccount.getOrganizationIds());
+		Assert.assertEquals(
+			billingAddress.getAddressId(),
+			GetterUtil.getLong(patchAccount.getDefaultBillingAddressId()));
+		Assert.assertEquals(
+			shippingAddress.getAddressId(),
+			GetterUtil.getLong(patchAccount.getDefaultShippingAddressId()));
+		Assert.assertEquals(
+			postParentAccount.getId(), patchAccount.getParentAccountId());
+		Assert.assertTrue(patchAccount.getLogoId() > 0);
 	}
 
 	private void _testPatchAccountWithPostalAddressPhoneNumber()
@@ -942,6 +1132,73 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 			postAccount.getAccountContactInformation());
 	}
 
+	private void _testPostAccountWithMoreExternalReferenceCodes()
+		throws Exception {
+
+		Account randomAccount = randomAccount();
+
+		Organization organization1 = OrganizationTestUtil.addOrganization();
+
+		Address billingAddress = OrganizationTestUtil.addAddress(organization1);
+
+		randomAccount.setDefaultBillingAddressExternalReferenceCode(
+			billingAddress.getExternalReferenceCode());
+
+		randomAccount.setDefaultBillingAddressId(0L);
+
+		Organization organization2 = OrganizationTestUtil.addOrganization();
+
+		Address shippingAddress = OrganizationTestUtil.addAddress(
+			organization2);
+
+		randomAccount.setDefaultShippingAddressExternalReferenceCode(
+			shippingAddress.getExternalReferenceCode());
+
+		randomAccount.setDefaultShippingAddressId(0L);
+
+		FileEntry fileEntry = _addImageFileEntry();
+
+		randomAccount.setLogoExternalReferenceCode(
+			fileEntry.getExternalReferenceCode());
+
+		randomAccount.setLogoId(0L);
+		randomAccount.setOrganizationExternalReferenceCodes(
+			new String[] {
+				organization1.getExternalReferenceCode(),
+				organization2.getExternalReferenceCode()
+			});
+		randomAccount.setOrganizationIds(new Long[0]);
+
+		Account parentAccount = randomAccount();
+
+		Account postParentAccount = testPostAccount_addAccount(parentAccount);
+
+		randomAccount.setParentAccountExternalReferenceCode(
+			postParentAccount.getExternalReferenceCode());
+
+		randomAccount.setParentAccountId(0L);
+
+		Account postAccount = testPostAccount_addAccount(randomAccount);
+
+		Arrays.sort(postAccount.getOrganizationIds());
+
+		Assert.assertArrayEquals(
+			new Long[] {
+				Long.valueOf(organization1.getOrganizationId()),
+				Long.valueOf(organization2.getOrganizationId())
+			},
+			postAccount.getOrganizationIds());
+		Assert.assertEquals(
+			Long.valueOf(billingAddress.getAddressId()),
+			postAccount.getDefaultBillingAddressId());
+		Assert.assertEquals(
+			Long.valueOf(shippingAddress.getAddressId()),
+			postAccount.getDefaultShippingAddressId());
+		Assert.assertEquals(
+			postParentAccount.getId(), postAccount.getParentAccountId());
+		Assert.assertTrue(postAccount.getLogoId() > 0);
+	}
+
 	private void _testPostAccountWithPostalAddressPhoneNumber()
 		throws Exception {
 
@@ -986,6 +1243,77 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 			putAccount.getAccountContactInformation());
 	}
 
+	private void _testPutAccountByExternalReferenceCodeWithMoreExternalReferenceCodes()
+		throws Exception {
+
+		Account postAccount =
+			testPutAccountByExternalReferenceCode_addAccount();
+
+		Account randomPutAccount = randomAccount();
+
+		Organization organization1 = OrganizationTestUtil.addOrganization();
+
+		Address billingAddress = OrganizationTestUtil.addAddress(organization1);
+
+		randomPutAccount.setDefaultBillingAddressExternalReferenceCode(
+			billingAddress.getExternalReferenceCode());
+
+		randomPutAccount.setDefaultBillingAddressId(0L);
+
+		Organization organization2 = OrganizationTestUtil.addOrganization();
+
+		Address shippingAddress = OrganizationTestUtil.addAddress(
+			organization2);
+
+		randomPutAccount.setDefaultShippingAddressExternalReferenceCode(
+			shippingAddress.getExternalReferenceCode());
+
+		randomPutAccount.setDefaultShippingAddressId(0L);
+
+		FileEntry fileEntry = _addImageFileEntry();
+
+		randomPutAccount.setLogoExternalReferenceCode(
+			fileEntry.getExternalReferenceCode());
+
+		randomPutAccount.setLogoId(0L);
+		randomPutAccount.setOrganizationExternalReferenceCodes(
+			new String[] {
+				organization1.getExternalReferenceCode(),
+				organization2.getExternalReferenceCode()
+			});
+		randomPutAccount.setOrganizationIds(new Long[0]);
+
+		Account parentAccount = randomAccount();
+
+		Account postParentAccount = testPostAccount_addAccount(parentAccount);
+
+		randomPutAccount.setParentAccountExternalReferenceCode(
+			postParentAccount.getExternalReferenceCode());
+
+		randomPutAccount.setParentAccountId(0L);
+
+		Account putAccount = accountResource.putAccountByExternalReferenceCode(
+			postAccount.getExternalReferenceCode(), randomPutAccount);
+
+		Arrays.sort(putAccount.getOrganizationIds());
+
+		Assert.assertArrayEquals(
+			new Long[] {
+				organization1.getOrganizationId(),
+				organization2.getOrganizationId()
+			},
+			putAccount.getOrganizationIds());
+		Assert.assertEquals(
+			billingAddress.getAddressId(),
+			GetterUtil.getLong(putAccount.getDefaultBillingAddressId()));
+		Assert.assertEquals(
+			shippingAddress.getAddressId(),
+			GetterUtil.getLong(putAccount.getDefaultShippingAddressId()));
+		Assert.assertEquals(
+			postParentAccount.getId(), putAccount.getParentAccountId());
+		Assert.assertTrue(putAccount.getLogoId() > 0);
+	}
+
 	private void _testPutAccountWithContactInformation() throws Exception {
 		Account postAccount = testPutAccount_addAccount();
 
@@ -1002,6 +1330,76 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 		_assertEquals(
 			accountContactInformation,
 			putAccount.getAccountContactInformation());
+	}
+
+	private void _testPutAccountWithMoreExternalReferenceCodes()
+		throws Exception {
+
+		Account postAccount = testPutAccount_addAccount();
+
+		Account randomPutAccount = randomAccount();
+
+		Organization organization1 = OrganizationTestUtil.addOrganization();
+
+		Address billingAddress = OrganizationTestUtil.addAddress(organization1);
+
+		randomPutAccount.setDefaultBillingAddressExternalReferenceCode(
+			billingAddress.getExternalReferenceCode());
+
+		randomPutAccount.setDefaultBillingAddressId(0L);
+
+		Organization organization2 = OrganizationTestUtil.addOrganization();
+
+		Address shippingAddress = OrganizationTestUtil.addAddress(
+			organization2);
+
+		randomPutAccount.setDefaultShippingAddressExternalReferenceCode(
+			shippingAddress.getExternalReferenceCode());
+
+		randomPutAccount.setDefaultShippingAddressId(0L);
+
+		FileEntry fileEntry = _addImageFileEntry();
+
+		randomPutAccount.setLogoExternalReferenceCode(
+			fileEntry.getExternalReferenceCode());
+
+		randomPutAccount.setLogoId(0L);
+		randomPutAccount.setOrganizationExternalReferenceCodes(
+			new String[] {
+				organization1.getExternalReferenceCode(),
+				organization2.getExternalReferenceCode()
+			});
+		randomPutAccount.setOrganizationIds(new Long[0]);
+
+		Account parentAccount = randomAccount();
+
+		Account postParentAccount = testPostAccount_addAccount(parentAccount);
+
+		randomPutAccount.setParentAccountExternalReferenceCode(
+			postParentAccount.getExternalReferenceCode());
+
+		randomPutAccount.setParentAccountId(0L);
+
+		Account putAccount = accountResource.putAccount(
+			postAccount.getId(), randomPutAccount);
+
+		Arrays.sort(putAccount.getOrganizationIds());
+
+		Assert.assertArrayEquals(
+			new Long[] {
+				organization1.getOrganizationId(),
+				organization2.getOrganizationId()
+			},
+			putAccount.getOrganizationIds());
+		Assert.assertEquals(
+			billingAddress.getAddressId(),
+			GetterUtil.getLong(putAccount.getDefaultBillingAddressId()));
+		Assert.assertEquals(
+			shippingAddress.getAddressId(),
+			GetterUtil.getLong(putAccount.getDefaultShippingAddressId()));
+		Assert.assertEquals(
+			postParentAccount.getId(), putAccount.getParentAccountId());
+		Assert.assertTrue(putAccount.getLogoId() > 0);
 	}
 
 	private void _testPutAccountWithPostalAddressPhoneNumber()
@@ -1047,5 +1445,8 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 
 	@Inject
 	private AddressLocalService _addressLocalService;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
 
 }

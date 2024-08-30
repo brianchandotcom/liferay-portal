@@ -24,11 +24,15 @@ import com.liferay.headless.admin.user.internal.dto.v1_0.util.PostalAddressUtil;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.WebUrlUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Contact;
+import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.service.AddressLocalService;
 import com.liferay.portal.kernel.service.ListTypeLocalService;
+import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.webserver.WebServerServletToken;
@@ -96,8 +100,30 @@ public class AccountResourceDTOConverter
 						dtoConverterContext.getLocale()));
 				setDateCreated(accountEntry::getCreateDate);
 				setDateModified(accountEntry::getModifiedDate);
+				setDefaultBillingAddressExternalReferenceCode(
+					() -> {
+						Address address = _addressLocalService.fetchAddress(
+							accountEntry.getDefaultBillingAddressId());
+
+						if (address == null) {
+							return null;
+						}
+
+						return address.getExternalReferenceCode();
+					});
 				setDefaultBillingAddressId(
 					accountEntry::getDefaultBillingAddressId);
+				setDefaultShippingAddressExternalReferenceCode(
+					() -> {
+						Address address = _addressLocalService.fetchAddress(
+							accountEntry.getDefaultShippingAddressId());
+
+						if (address == null) {
+							return null;
+						}
+
+						return address.getExternalReferenceCode();
+					});
 				setDefaultShippingAddressId(
 					accountEntry::getDefaultShippingAddressId);
 				setDescription(accountEntry::getDescription);
@@ -119,6 +145,24 @@ public class AccountResourceDTOConverter
 							_accountEntryUserRelLocalService.
 								getAccountEntryUserRelsCountByAccountEntryId(
 									accountEntry.getAccountEntryId()));
+				setOrganizationExternalReferenceCodes(
+					() -> TransformUtil.transformToArray(
+						_accountEntryOrganizationRelLocalService.
+							getAccountEntryOrganizationRels(
+								accountEntry.getAccountEntryId()),
+						accountEntryOrganizationRel -> {
+							Organization organization =
+								_organizationLocalService.fetchOrganization(
+									accountEntryOrganizationRel.
+										getOrganizationId());
+
+							if (organization == null) {
+								return null;
+							}
+
+							return organization.getExternalReferenceCode();
+						},
+						String.class));
 				setOrganizationIds(
 					() -> TransformUtil.transformToArray(
 						_accountEntryOrganizationRelLocalService.
@@ -126,6 +170,18 @@ public class AccountResourceDTOConverter
 								accountEntry.getAccountEntryId()),
 						AccountEntryOrganizationRel::getOrganizationId,
 						Long.class));
+				setParentAccountExternalReferenceCode(
+					() -> {
+						AccountEntry parentAccountEntry =
+							_accountEntryLocalService.fetchAccountEntry(
+								accountEntry.getParentAccountEntryId());
+
+						if (parentAccountEntry == null) {
+							return null;
+						}
+
+						return parentAccountEntry.getExternalReferenceCode();
+					});
 				setParentAccountId(accountEntry::getParentAccountEntryId);
 				setStatus(accountEntry::getStatus);
 				setTaxId(accountEntry::getTaxIdNumber);
@@ -239,7 +295,13 @@ public class AccountResourceDTOConverter
 	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
 
 	@Reference
+	private AddressLocalService _addressLocalService;
+
+	@Reference
 	private ListTypeLocalService _listTypeLocalService;
+
+	@Reference
+	private OrganizationLocalService _organizationLocalService;
 
 	@Reference
 	private WebServerServletToken _webServerServletToken;

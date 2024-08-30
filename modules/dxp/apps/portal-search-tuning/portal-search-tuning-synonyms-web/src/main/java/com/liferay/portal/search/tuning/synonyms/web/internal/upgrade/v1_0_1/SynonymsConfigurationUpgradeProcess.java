@@ -9,16 +9,17 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Dictionary;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.felix.cm.file.ConfigurationHandler;
 
@@ -55,16 +56,17 @@ public class SynonymsConfigurationUpgradeProcess extends UpgradeProcess {
 						new UnsyncByteArrayInputStream(
 							dictionaryString.getBytes(StringPool.UTF8)));
 
-				List<String> synonymFilterNames = new ArrayList<>(
-					Arrays.asList((String[])dictionary.get("filterNames")));
+				Set<String> synonymFilterNameSet = SetUtil.fromArray(
+					(String[])dictionary.get("filterNames"));
 
-				synonymFilterNames.addAll(
-					new ArrayList<>(Arrays.asList(_FILTER_NAMES)));
+				synonymFilterNameSet.addAll(_filterNames);
 
-				Collections.sort(synonymFilterNames);
+				String[] synonymFilterNames = synonymFilterNameSet.toArray(
+					new String[0]);
 
-				dictionary.put(
-					"filterNames", synonymFilterNames.toArray(new String[0]));
+				Arrays.sort(synonymFilterNames);
+
+				dictionary.put("filterNames", synonymFilterNames);
 
 				UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 					new UnsyncByteArrayOutputStream();
@@ -86,14 +88,13 @@ public class SynonymsConfigurationUpgradeProcess extends UpgradeProcess {
 		"com.liferay.portal.search.tuning.synonyms.web.internal." +
 			"configuration.SynonymsConfiguration";
 
-	private static final String[] _FILTER_NAMES = {
+	private static final List<String> _filterNames = ListUtil.fromArray(
 		"liferay_filter_synonym_ar", "liferay_filter_synonym_ca",
 		"liferay_filter_synonym_de", "liferay_filter_synonym_fi",
 		"liferay_filter_synonym_fr", "liferay_filter_synonym_hu",
 		"liferay_filter_synonym_it", "liferay_filter_synonym_ja",
 		"liferay_filter_synonym_nl", "liferay_filter_synonym_pt_BR",
 		"liferay_filter_synonym_pt_PT", "liferay_filter_synonym_sv",
-		"liferay_filter_synonym_zh"
-	};
+		"liferay_filter_synonym_zh");
 
 }

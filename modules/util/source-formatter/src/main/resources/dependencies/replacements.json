@@ -65,6 +65,15 @@
 		]
 	},
 	{
+		"classNames": [
+			"HttpServletRequest"
+		],
+		"from": "regex:\t*[a-zA-Z0-9_]+\\.setAttribute\\(InfoDisplayWebKeys\\.INFO_ITEM_FIELD_VALUES_PROVIDER,.*?\\);\n",
+		"issueKey": "LPD-8022",
+		"skipParametersValidation": true,
+		"to": ""
+	},
+	{
 		"from": "LayoutFriendlyURLComposite(Layout paramName, String paramName)",
 		"issueKey": "LPD-8025",
 		"skipParametersValidation": true,

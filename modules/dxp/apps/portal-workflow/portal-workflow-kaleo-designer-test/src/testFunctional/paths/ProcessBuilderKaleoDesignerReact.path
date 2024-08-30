@@ -321,7 +321,7 @@
 </tr>
 <tr>
 	<td>NODE_INFO_INPUT</td>
-	<td>//div[@class='sidebar']//input[contains(@ID,'node${key_infoOption}')] | //div[@class='sidebar']//textarea[contains(@ID,'node${key_infoOption}')]</td>
+	<td>//div[@class='sidebar']//input[contains(@ID,'workflowDefinitionBaseNode${key_infoOption}')] | //div[@class='sidebar']//textarea[contains(@ID,'workflowDefinitionBaseNode${key_infoOption}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -331,7 +331,7 @@
 </tr>
 <tr>
 	<td>NODE_NAME_GETTER</td>
-	<td>//input[@id='nodeName']</td>
+	<td>//input[@id='workflowDefinitionBaseNodeName']</td>
 	<td></td>
 </tr>
 <tr>

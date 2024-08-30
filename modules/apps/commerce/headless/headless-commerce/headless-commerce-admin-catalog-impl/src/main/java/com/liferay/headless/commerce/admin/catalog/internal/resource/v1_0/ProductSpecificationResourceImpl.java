@@ -11,6 +11,7 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueService;
+import com.liferay.commerce.product.service.CPOptionCategoryService;
 import com.liferay.commerce.product.service.CPSpecificationOptionService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductSpecification;
@@ -59,6 +60,27 @@ public class ProductSpecificationResourceImpl
 			deleteCPDefinitionSpecificationOptionValue(
 				cpDefinitionSpecificationOptionValue.
 					getCPDefinitionSpecificationOptionValueId());
+	}
+
+	@Override
+	public Page<ProductSpecification>
+			getProductByExternalReferenceCodeProductSpecificationsPage(
+				String externalReferenceCode, Pagination pagination)
+		throws Exception {
+
+		CPDefinition cpDefinition =
+			_cpDefinitionService.
+				fetchCPDefinitionByCProductExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId());
+
+		if (cpDefinition == null) {
+			throw new NoSuchCPDefinitionException(
+				"Unable to find product with external reference code " +
+					externalReferenceCode);
+		}
+
+		return getProductIdProductSpecificationsPage(
+			cpDefinition.getCProductId(), pagination);
 	}
 
 	@NestedField(parentClass = Product.class, value = "productSpecifications")
@@ -124,6 +146,28 @@ public class ProductSpecificationResourceImpl
 	}
 
 	@Override
+	public ProductSpecification
+			postProductByExternalReferenceCodeProductSpecification(
+				String externalReferenceCode,
+				ProductSpecification productSpecification)
+		throws Exception {
+
+		CPDefinition cpDefinition =
+			_cpDefinitionService.
+				fetchCPDefinitionByCProductExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId());
+
+		if (cpDefinition == null) {
+			throw new NoSuchCPDefinitionException(
+				"Unable to find product with external reference code " +
+					externalReferenceCode);
+		}
+
+		return postProductIdProductSpecification(
+			cpDefinition.getCProductId(), productSpecification);
+	}
+
+	@Override
 	public ProductSpecification postProductIdProductSpecification(
 			Long id, ProductSpecification productSpecification)
 		throws Exception {
@@ -173,7 +217,7 @@ public class ProductSpecificationResourceImpl
 				ProductSpecificationUtil.
 					addCPDefinitionSpecificationOptionValue(
 						_cpDefinitionSpecificationOptionValueService,
-						_cpSpecificationOptionService,
+						_cpOptionCategoryService, _cpSpecificationOptionService,
 						cpDefinition.getCPDefinitionId(), productSpecification,
 						_serviceContextHelper.getServiceContext());
 
@@ -219,7 +263,7 @@ public class ProductSpecificationResourceImpl
 		return ProductSpecificationUtil.
 			updateCPDefinitionSpecificationOptionValue(
 				_cpDefinitionSpecificationOptionValueService,
-				cpDefinitionSpecificationOptionValue,
+				cpDefinitionSpecificationOptionValue, _cpOptionCategoryService,
 				_cpSpecificationOptionService, productSpecification,
 				_serviceContextHelper.getServiceContext());
 	}
@@ -233,6 +277,9 @@ public class ProductSpecificationResourceImpl
 	@Reference
 	private CPDefinitionSpecificationOptionValueService
 		_cpDefinitionSpecificationOptionValueService;
+
+	@Reference
+	private CPOptionCategoryService _cpOptionCategoryService;
 
 	@Reference
 	private CPSpecificationOptionService _cpSpecificationOptionService;

@@ -32,6 +32,50 @@ definition {
 		}
 	}
 
+	@description = "LPD-34101 Verify if value of options from a custom form field with property named options are being persisted"
+	@priority = 5
+	test CanAddOptionsToCustomFormFieldWithOptionsProperty {
+		property portal.acceptance = "true";
+
+		var appName = "com.acme.c2p9.impl";
+
+		FileInstall.deployFileOnServer(jarFile = "${appName}.jar");
+
+		WaitForConsoleTextPresent(value1 = "STARTED ${appName}");
+
+		// The pause is needed for the custom form field of LPD-34101 to be present
+
+		Pause(value1 = 10000);
+
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form with custom form field");
+
+		Form.gotoAddField(fieldType = "C2P9 Slider");
+
+		FormFields.addSingleSelectionOption(
+			optionName = "Option Edited",
+			optionValue = 1);
+
+		FormFields.clickAddOptionButton();
+
+		FormFields.addSingleSelectionOption(
+			optionName = "New Option",
+			optionValue = 2);
+
+		Form.closeSidebar();
+
+		FormsAdminNavigator.gotoEditField(fieldName = "C2P9 Slider");
+
+		FormFields.viewOptionsRowFieldValueOrFieldReference(
+			fieldValue = "Option Edited",
+			rowNumber = 1);
+
+		FormFields.viewOptionsRowFieldValueOrFieldReference(
+			fieldValue = "New Option",
+			rowNumber = 2);
+	}
+
 	@description = "Verify that a Single Selection Field can be created"
 	@priority = 5
 	test CanBeCreated {

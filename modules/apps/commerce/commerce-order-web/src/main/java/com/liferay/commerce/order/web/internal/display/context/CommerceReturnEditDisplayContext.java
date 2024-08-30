@@ -150,6 +150,17 @@ public class CommerceReturnEditDisplayContext {
 			_commerceReturnRequestHelper.getLocale());
 	}
 
+	public String getCommerceOrderShippingAmountFormatted()
+		throws PortalException {
+
+		CommerceOrder commerceOrder = getCommerceReturnCommerceOrder();
+
+		return _commercePriceFormatter.format(
+			commerceOrder.getCommerceCurrency(),
+			commerceOrder.getShippingAmount(),
+			_commerceReturnRequestHelper.getLocale());
+	}
+
 	public CommerceReturn getCommerceReturn() {
 		return _commerceReturn;
 	}

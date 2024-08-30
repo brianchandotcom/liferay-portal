@@ -204,6 +204,14 @@ CommerceOrder commerceOrder = commerceReturnEditDisplayContext.getCommerceReturn
 					</div>
 
 					<div class="col-6 col-md-9">
+						<span class="summary-table-item"><liferay-ui:message key="delivery" /></span>
+					</div>
+
+					<div class="col-6 col-md-3">
+						<span class="summary-table-item"><%= commerceReturnEditDisplayContext.getCommerceOrderShippingAmountFormatted() %></span>
+					</div>
+
+					<div class="col-6 col-md-9">
 						<span class="summary-table-item"><liferay-ui:message key="refund-subtotal" /></span>
 					</div>
 

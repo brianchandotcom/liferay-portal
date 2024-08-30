@@ -254,15 +254,17 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 		_addTaskInitBundle(
 			project, downloadBundleTask, workspaceExtension,
-			providedModulesConfiguration, INIT_BUNDLE_TASK_NAME);
+			bundleSupportConfiguration, providedModulesConfiguration,
+			INIT_BUNDLE_TASK_NAME);
 
 		Copy distBundleTask = _addTaskDistBundle(
 			project, downloadBundleTask, DIST_BUNDLE_TASK_NAME,
-			workspaceExtension, null, providedModulesConfiguration);
+			workspaceExtension, bundleSupportConfiguration, null,
+			providedModulesConfiguration);
 
 		_addTasksDistBundleEnvironments(
 			project, downloadBundleTask, workspaceExtension,
-			providedModulesConfiguration);
+			bundleSupportConfiguration, providedModulesConfiguration);
 
 		_addTasksDistBundleArchive(project, distBundleTask, workspaceExtension);
 
@@ -719,12 +721,14 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 	private Copy _addTaskDistBundle(
 		Project project, Download downloadBundleTask, String taskName,
-		WorkspaceExtension workspaceExtension, String environment,
+		WorkspaceExtension workspaceExtension,
+		Configuration bundleSupportConfiguration, String environment,
 		Configuration providedModulesConfiguration) {
 
 		InitBundleTask initBundleTask = _addTaskInitBundle(
 			project, downloadBundleTask, workspaceExtension,
-			providedModulesConfiguration, taskName + "InitBundle");
+			bundleSupportConfiguration, providedModulesConfiguration,
+			taskName + "InitBundle");
 
 		initBundleTask.setConfigEnvironment(
 			new Callable<String>() {
@@ -1348,6 +1352,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 	private void _addTasksDistBundleEnvironments(
 		Project project, Download downloadBundleTask,
 		WorkspaceExtension workspaceExtension,
+		Configuration bundleSupportConfiguration,
 		Configuration providedModulesConfiguration) {
 
 		long buildTime = System.currentTimeMillis();
@@ -1398,8 +1403,8 @@ public class RootProjectConfigurator implements Plugin<Project> {
 							project, downloadBundleTask,
 							DIST_BUNDLE_TASK_NAME +
 								StringUtil.capitalize(environment),
-							workspaceExtension, environment,
-							providedModulesConfiguration);
+							workspaceExtension, bundleSupportConfiguration,
+							environment, providedModulesConfiguration);
 
 						Tar distBundleTarTask = _addTaskDistBundle(
 							project,

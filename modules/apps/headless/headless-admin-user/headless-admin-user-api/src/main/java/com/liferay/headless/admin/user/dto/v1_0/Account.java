@@ -326,6 +326,54 @@ public class Account implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
+	@Schema(example = "AB-34098-789-N")
+	public String getDefaultBillingAddressExternalReferenceCode() {
+		if (_defaultBillingAddressExternalReferenceCodeSupplier != null) {
+			defaultBillingAddressExternalReferenceCode =
+				_defaultBillingAddressExternalReferenceCodeSupplier.get();
+
+			_defaultBillingAddressExternalReferenceCodeSupplier = null;
+		}
+
+		return defaultBillingAddressExternalReferenceCode;
+	}
+
+	public void setDefaultBillingAddressExternalReferenceCode(
+		String defaultBillingAddressExternalReferenceCode) {
+
+		this.defaultBillingAddressExternalReferenceCode =
+			defaultBillingAddressExternalReferenceCode;
+
+		_defaultBillingAddressExternalReferenceCodeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setDefaultBillingAddressExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			defaultBillingAddressExternalReferenceCodeUnsafeSupplier) {
+
+		_defaultBillingAddressExternalReferenceCodeSupplier = () -> {
+			try {
+				return defaultBillingAddressExternalReferenceCodeUnsafeSupplier.
+					get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String defaultBillingAddressExternalReferenceCode;
+
+	@JsonIgnore
+	private Supplier<String>
+		_defaultBillingAddressExternalReferenceCodeSupplier;
+
 	@Schema
 	public Long getDefaultBillingAddressId() {
 		if (_defaultBillingAddressIdSupplier != null) {
@@ -366,6 +414,54 @@ public class Account implements Serializable {
 
 	@JsonIgnore
 	private Supplier<Long> _defaultBillingAddressIdSupplier;
+
+	@Schema(example = "AB-34098-789-N")
+	public String getDefaultShippingAddressExternalReferenceCode() {
+		if (_defaultShippingAddressExternalReferenceCodeSupplier != null) {
+			defaultShippingAddressExternalReferenceCode =
+				_defaultShippingAddressExternalReferenceCodeSupplier.get();
+
+			_defaultShippingAddressExternalReferenceCodeSupplier = null;
+		}
+
+		return defaultShippingAddressExternalReferenceCode;
+	}
+
+	public void setDefaultShippingAddressExternalReferenceCode(
+		String defaultShippingAddressExternalReferenceCode) {
+
+		this.defaultShippingAddressExternalReferenceCode =
+			defaultShippingAddressExternalReferenceCode;
+
+		_defaultShippingAddressExternalReferenceCodeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setDefaultShippingAddressExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			defaultShippingAddressExternalReferenceCodeUnsafeSupplier) {
+
+		_defaultShippingAddressExternalReferenceCodeSupplier = () -> {
+			try {
+				return defaultShippingAddressExternalReferenceCodeUnsafeSupplier.
+					get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String defaultShippingAddressExternalReferenceCode;
+
+	@JsonIgnore
+	private Supplier<String>
+		_defaultShippingAddressExternalReferenceCodeSupplier;
 
 	@Schema
 	public Long getDefaultShippingAddressId() {
@@ -575,6 +671,49 @@ public class Account implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
+	@Schema(example = "AB-34098-789-N")
+	public String getLogoExternalReferenceCode() {
+		if (_logoExternalReferenceCodeSupplier != null) {
+			logoExternalReferenceCode =
+				_logoExternalReferenceCodeSupplier.get();
+
+			_logoExternalReferenceCodeSupplier = null;
+		}
+
+		return logoExternalReferenceCode;
+	}
+
+	public void setLogoExternalReferenceCode(String logoExternalReferenceCode) {
+		this.logoExternalReferenceCode = logoExternalReferenceCode;
+
+		_logoExternalReferenceCodeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setLogoExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			logoExternalReferenceCodeUnsafeSupplier) {
+
+		_logoExternalReferenceCodeSupplier = () -> {
+			try {
+				return logoExternalReferenceCodeUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String logoExternalReferenceCode;
+
+	@JsonIgnore
+	private Supplier<String> _logoExternalReferenceCodeSupplier;
+
 	@Schema
 	public Long getLogoId() {
 		if (_logoIdSupplier != null) {
@@ -741,6 +880,52 @@ public class Account implements Serializable {
 	private Supplier<Integer> _numberOfUsersSupplier;
 
 	@Schema
+	public String[] getOrganizationExternalReferenceCodes() {
+		if (_organizationExternalReferenceCodesSupplier != null) {
+			organizationExternalReferenceCodes =
+				_organizationExternalReferenceCodesSupplier.get();
+
+			_organizationExternalReferenceCodesSupplier = null;
+		}
+
+		return organizationExternalReferenceCodes;
+	}
+
+	public void setOrganizationExternalReferenceCodes(
+		String[] organizationExternalReferenceCodes) {
+
+		this.organizationExternalReferenceCodes =
+			organizationExternalReferenceCodes;
+
+		_organizationExternalReferenceCodesSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setOrganizationExternalReferenceCodes(
+		UnsafeSupplier<String[], Exception>
+			organizationExternalReferenceCodesUnsafeSupplier) {
+
+		_organizationExternalReferenceCodesSupplier = () -> {
+			try {
+				return organizationExternalReferenceCodesUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String[] organizationExternalReferenceCodes;
+
+	@JsonIgnore
+	private Supplier<String[]> _organizationExternalReferenceCodesSupplier;
+
+	@Schema
 	public Long[] getOrganizationIds() {
 		if (_organizationIdsSupplier != null) {
 			organizationIds = _organizationIdsSupplier.get();
@@ -780,6 +965,52 @@ public class Account implements Serializable {
 
 	@JsonIgnore
 	private Supplier<Long[]> _organizationIdsSupplier;
+
+	@Schema(example = "AB-34098-789-N")
+	public String getParentAccountExternalReferenceCode() {
+		if (_parentAccountExternalReferenceCodeSupplier != null) {
+			parentAccountExternalReferenceCode =
+				_parentAccountExternalReferenceCodeSupplier.get();
+
+			_parentAccountExternalReferenceCodeSupplier = null;
+		}
+
+		return parentAccountExternalReferenceCode;
+	}
+
+	public void setParentAccountExternalReferenceCode(
+		String parentAccountExternalReferenceCode) {
+
+		this.parentAccountExternalReferenceCode =
+			parentAccountExternalReferenceCode;
+
+		_parentAccountExternalReferenceCodeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setParentAccountExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			parentAccountExternalReferenceCodeUnsafeSupplier) {
+
+		_parentAccountExternalReferenceCodeSupplier = () -> {
+			try {
+				return parentAccountExternalReferenceCodeUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String parentAccountExternalReferenceCode;
+
+	@JsonIgnore
+	private Supplier<String> _parentAccountExternalReferenceCodeSupplier;
 
 	@Schema
 	public Long getParentAccountId() {
@@ -1130,6 +1361,23 @@ public class Account implements Serializable {
 			sb.append("\"");
 		}
 
+		String defaultBillingAddressExternalReferenceCode =
+			getDefaultBillingAddressExternalReferenceCode();
+
+		if (defaultBillingAddressExternalReferenceCode != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"defaultBillingAddressExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(defaultBillingAddressExternalReferenceCode));
+
+			sb.append("\"");
+		}
+
 		Long defaultBillingAddressId = getDefaultBillingAddressId();
 
 		if (defaultBillingAddressId != null) {
@@ -1140,6 +1388,23 @@ public class Account implements Serializable {
 			sb.append("\"defaultBillingAddressId\": ");
 
 			sb.append(defaultBillingAddressId);
+		}
+
+		String defaultShippingAddressExternalReferenceCode =
+			getDefaultShippingAddressExternalReferenceCode();
+
+		if (defaultShippingAddressExternalReferenceCode != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"defaultShippingAddressExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(defaultShippingAddressExternalReferenceCode));
+
+			sb.append("\"");
 		}
 
 		Long defaultShippingAddressId = getDefaultShippingAddressId();
@@ -1224,6 +1489,22 @@ public class Account implements Serializable {
 			sb.append(id);
 		}
 
+		String logoExternalReferenceCode = getLogoExternalReferenceCode();
+
+		if (logoExternalReferenceCode != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"logoExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(logoExternalReferenceCode));
+
+			sb.append("\"");
+		}
+
 		Long logoId = getLogoId();
 
 		if (logoId != null) {
@@ -1280,6 +1561,35 @@ public class Account implements Serializable {
 			sb.append(numberOfUsers);
 		}
 
+		String[] organizationExternalReferenceCodes =
+			getOrganizationExternalReferenceCodes();
+
+		if (organizationExternalReferenceCodes != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"organizationExternalReferenceCodes\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < organizationExternalReferenceCodes.length;
+				 i++) {
+
+				sb.append("\"");
+
+				sb.append(_escape(organizationExternalReferenceCodes[i]));
+
+				sb.append("\"");
+
+				if ((i + 1) < organizationExternalReferenceCodes.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		Long[] organizationIds = getOrganizationIds();
 
 		if (organizationIds != null) {
@@ -1300,6 +1610,23 @@ public class Account implements Serializable {
 			}
 
 			sb.append("]");
+		}
+
+		String parentAccountExternalReferenceCode =
+			getParentAccountExternalReferenceCode();
+
+		if (parentAccountExternalReferenceCode != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"parentAccountExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(parentAccountExternalReferenceCode));
+
+			sb.append("\"");
 		}
 
 		Long parentAccountId = getParentAccountId();

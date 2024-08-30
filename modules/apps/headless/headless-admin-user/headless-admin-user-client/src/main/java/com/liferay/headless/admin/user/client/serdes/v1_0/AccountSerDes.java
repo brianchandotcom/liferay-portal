@@ -142,6 +142,22 @@ public class AccountSerDes {
 			sb.append("\"");
 		}
 
+		if (account.getDefaultBillingAddressExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"defaultBillingAddressExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				_escape(
+					account.getDefaultBillingAddressExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (account.getDefaultBillingAddressId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -150,6 +166,22 @@ public class AccountSerDes {
 			sb.append("\"defaultBillingAddressId\": ");
 
 			sb.append(account.getDefaultBillingAddressId());
+		}
+
+		if (account.getDefaultShippingAddressExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"defaultShippingAddressExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				_escape(
+					account.getDefaultShippingAddressExternalReferenceCode()));
+
+			sb.append("\"");
 		}
 
 		if (account.getDefaultShippingAddressId() != null) {
@@ -220,6 +252,20 @@ public class AccountSerDes {
 			sb.append(account.getId());
 		}
 
+		if (account.getLogoExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"logoExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(account.getLogoExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (account.getLogoId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -268,6 +314,34 @@ public class AccountSerDes {
 			sb.append(account.getNumberOfUsers());
 		}
 
+		if (account.getOrganizationExternalReferenceCodes() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"organizationExternalReferenceCodes\": ");
+
+			sb.append("[");
+
+			for (int i = 0;
+				 i < account.getOrganizationExternalReferenceCodes().length;
+				 i++) {
+
+				sb.append(
+					_toJSON(
+						account.getOrganizationExternalReferenceCodes()[i]));
+
+				if ((i + 1) <
+						account.
+							getOrganizationExternalReferenceCodes().length) {
+
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (account.getOrganizationIds() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -286,6 +360,20 @@ public class AccountSerDes {
 			}
 
 			sb.append("]");
+		}
+
+		if (account.getParentAccountExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"parentAccountExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(account.getParentAccountExternalReferenceCode()));
+
+			sb.append("\"");
 		}
 
 		if (account.getParentAccountId() != null) {
@@ -427,6 +515,16 @@ public class AccountSerDes {
 				liferayToJSONDateFormat.format(account.getDateModified()));
 		}
 
+		if (account.getDefaultBillingAddressExternalReferenceCode() == null) {
+			map.put("defaultBillingAddressExternalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"defaultBillingAddressExternalReferenceCode",
+				String.valueOf(
+					account.getDefaultBillingAddressExternalReferenceCode()));
+		}
+
 		if (account.getDefaultBillingAddressId() == null) {
 			map.put("defaultBillingAddressId", null);
 		}
@@ -434,6 +532,16 @@ public class AccountSerDes {
 			map.put(
 				"defaultBillingAddressId",
 				String.valueOf(account.getDefaultBillingAddressId()));
+		}
+
+		if (account.getDefaultShippingAddressExternalReferenceCode() == null) {
+			map.put("defaultShippingAddressExternalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"defaultShippingAddressExternalReferenceCode",
+				String.valueOf(
+					account.getDefaultShippingAddressExternalReferenceCode()));
 		}
 
 		if (account.getDefaultShippingAddressId() == null) {
@@ -475,6 +583,15 @@ public class AccountSerDes {
 			map.put("id", String.valueOf(account.getId()));
 		}
 
+		if (account.getLogoExternalReferenceCode() == null) {
+			map.put("logoExternalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"logoExternalReferenceCode",
+				String.valueOf(account.getLogoExternalReferenceCode()));
+		}
+
 		if (account.getLogoId() == null) {
 			map.put("logoId", null);
 		}
@@ -504,6 +621,16 @@ public class AccountSerDes {
 				"numberOfUsers", String.valueOf(account.getNumberOfUsers()));
 		}
 
+		if (account.getOrganizationExternalReferenceCodes() == null) {
+			map.put("organizationExternalReferenceCodes", null);
+		}
+		else {
+			map.put(
+				"organizationExternalReferenceCodes",
+				String.valueOf(
+					account.getOrganizationExternalReferenceCodes()));
+		}
+
 		if (account.getOrganizationIds() == null) {
 			map.put("organizationIds", null);
 		}
@@ -511,6 +638,16 @@ public class AccountSerDes {
 			map.put(
 				"organizationIds",
 				String.valueOf(account.getOrganizationIds()));
+		}
+
+		if (account.getParentAccountExternalReferenceCode() == null) {
+			map.put("parentAccountExternalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"parentAccountExternalReferenceCode",
+				String.valueOf(
+					account.getParentAccountExternalReferenceCode()));
 		}
 
 		if (account.getParentAccountId() == null) {
@@ -592,7 +729,19 @@ public class AccountSerDes {
 				return false;
 			}
 			else if (Objects.equals(
+						jsonParserFieldName,
+						"defaultBillingAddressExternalReferenceCode")) {
+
+				return false;
+			}
+			else if (Objects.equals(
 						jsonParserFieldName, "defaultBillingAddressId")) {
+
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"defaultShippingAddressExternalReferenceCode")) {
 
 				return false;
 			}
@@ -615,6 +764,11 @@ public class AccountSerDes {
 			else if (Objects.equals(jsonParserFieldName, "id")) {
 				return false;
 			}
+			else if (Objects.equals(
+						jsonParserFieldName, "logoExternalReferenceCode")) {
+
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "logoId")) {
 				return false;
 			}
@@ -627,7 +781,19 @@ public class AccountSerDes {
 			else if (Objects.equals(jsonParserFieldName, "numberOfUsers")) {
 				return false;
 			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"organizationExternalReferenceCodes")) {
+
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "organizationIds")) {
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"parentAccountExternalReferenceCode")) {
+
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "parentAccountId")) {
@@ -716,11 +882,29 @@ public class AccountSerDes {
 				}
 			}
 			else if (Objects.equals(
+						jsonParserFieldName,
+						"defaultBillingAddressExternalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					account.setDefaultBillingAddressExternalReferenceCode(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
 						jsonParserFieldName, "defaultBillingAddressId")) {
 
 				if (jsonParserFieldValue != null) {
 					account.setDefaultBillingAddressId(
 						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"defaultShippingAddressExternalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					account.setDefaultShippingAddressExternalReferenceCode(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(
@@ -755,6 +939,14 @@ public class AccountSerDes {
 					account.setId(Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
+			else if (Objects.equals(
+						jsonParserFieldName, "logoExternalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					account.setLogoExternalReferenceCode(
+						(String)jsonParserFieldValue);
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "logoId")) {
 				if (jsonParserFieldValue != null) {
 					account.setLogoId(
@@ -777,10 +969,28 @@ public class AccountSerDes {
 						Integer.valueOf((String)jsonParserFieldValue));
 				}
 			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"organizationExternalReferenceCodes")) {
+
+				if (jsonParserFieldValue != null) {
+					account.setOrganizationExternalReferenceCodes(
+						toStrings((Object[])jsonParserFieldValue));
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "organizationIds")) {
 				if (jsonParserFieldValue != null) {
 					account.setOrganizationIds(
 						toLongs((Object[])jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"parentAccountExternalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					account.setParentAccountExternalReferenceCode(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "parentAccountId")) {

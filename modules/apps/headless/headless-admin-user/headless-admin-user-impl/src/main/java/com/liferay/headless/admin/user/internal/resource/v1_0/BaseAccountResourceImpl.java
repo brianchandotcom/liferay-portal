@@ -406,7 +406,7 @@ public abstract class BaseAccountResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-user/v1.0/accounts' -d $'{"accountContactInformation": ___, "accountUserAccounts": ___, "customFields": ___, "defaultBillingAddressId": ___, "defaultShippingAddressId": ___, "description": ___, "domains": ___, "externalReferenceCode": ___, "logoId": ___, "logoURL": ___, "name": ___, "organizationIds": ___, "parentAccountId": ___, "postalAddresses": ___, "status": ___, "taxId": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-user/v1.0/accounts' -d $'{"accountContactInformation": ___, "accountUserAccounts": ___, "customFields": ___, "defaultBillingAddressExternalReferenceCode": ___, "defaultBillingAddressId": ___, "defaultShippingAddressExternalReferenceCode": ___, "defaultShippingAddressId": ___, "description": ___, "domains": ___, "externalReferenceCode": ___, "logoExternalReferenceCode": ___, "logoId": ___, "logoURL": ___, "name": ___, "organizationExternalReferenceCodes": ___, "organizationIds": ___, "parentAccountExternalReferenceCode": ___, "parentAccountId": ___, "postalAddresses": ___, "status": ___, "taxId": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Creates a new account"
@@ -535,7 +535,7 @@ public abstract class BaseAccountResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-admin-user/v1.0/accounts/by-external-reference-code/{externalReferenceCode}' -d $'{"accountContactInformation": ___, "accountUserAccounts": ___, "customFields": ___, "defaultBillingAddressId": ___, "defaultShippingAddressId": ___, "description": ___, "domains": ___, "externalReferenceCode": ___, "logoId": ___, "logoURL": ___, "name": ___, "organizationIds": ___, "parentAccountId": ___, "postalAddresses": ___, "status": ___, "taxId": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-admin-user/v1.0/accounts/by-external-reference-code/{externalReferenceCode}' -d $'{"accountContactInformation": ___, "accountUserAccounts": ___, "customFields": ___, "defaultBillingAddressExternalReferenceCode": ___, "defaultBillingAddressId": ___, "defaultShippingAddressExternalReferenceCode": ___, "defaultShippingAddressId": ___, "description": ___, "domains": ___, "externalReferenceCode": ___, "logoExternalReferenceCode": ___, "logoId": ___, "logoURL": ___, "name": ___, "organizationExternalReferenceCodes": ___, "organizationIds": ___, "parentAccountExternalReferenceCode": ___, "parentAccountId": ___, "postalAddresses": ___, "status": ___, "taxId": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Updates the account with information sent in the request body. Only the provided fields are updated."
@@ -571,9 +571,19 @@ public abstract class BaseAccountResourceImpl
 
 		existingAccount.setCustomFields(account.getCustomFields());
 
+		if (account.getDefaultBillingAddressExternalReferenceCode() != null) {
+			existingAccount.setDefaultBillingAddressExternalReferenceCode(
+				account.getDefaultBillingAddressExternalReferenceCode());
+		}
+
 		if (account.getDefaultBillingAddressId() != null) {
 			existingAccount.setDefaultBillingAddressId(
 				account.getDefaultBillingAddressId());
+		}
+
+		if (account.getDefaultShippingAddressExternalReferenceCode() != null) {
+			existingAccount.setDefaultShippingAddressExternalReferenceCode(
+				account.getDefaultShippingAddressExternalReferenceCode());
 		}
 
 		if (account.getDefaultShippingAddressId() != null) {
@@ -594,6 +604,11 @@ public abstract class BaseAccountResourceImpl
 				account.getExternalReferenceCode());
 		}
 
+		if (account.getLogoExternalReferenceCode() != null) {
+			existingAccount.setLogoExternalReferenceCode(
+				account.getLogoExternalReferenceCode());
+		}
+
 		if (account.getLogoId() != null) {
 			existingAccount.setLogoId(account.getLogoId());
 		}
@@ -606,8 +621,18 @@ public abstract class BaseAccountResourceImpl
 			existingAccount.setName(account.getName());
 		}
 
+		if (account.getOrganizationExternalReferenceCodes() != null) {
+			existingAccount.setOrganizationExternalReferenceCodes(
+				account.getOrganizationExternalReferenceCodes());
+		}
+
 		if (account.getOrganizationIds() != null) {
 			existingAccount.setOrganizationIds(account.getOrganizationIds());
+		}
+
+		if (account.getParentAccountExternalReferenceCode() != null) {
+			existingAccount.setParentAccountExternalReferenceCode(
+				account.getParentAccountExternalReferenceCode());
 		}
 
 		if (account.getParentAccountId() != null) {
@@ -635,7 +660,7 @@ public abstract class BaseAccountResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-user/v1.0/accounts/by-external-reference-code/{externalReferenceCode}' -d $'{"accountContactInformation": ___, "accountUserAccounts": ___, "customFields": ___, "defaultBillingAddressId": ___, "defaultShippingAddressId": ___, "description": ___, "domains": ___, "externalReferenceCode": ___, "logoId": ___, "logoURL": ___, "name": ___, "organizationIds": ___, "parentAccountId": ___, "postalAddresses": ___, "status": ___, "taxId": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-user/v1.0/accounts/by-external-reference-code/{externalReferenceCode}' -d $'{"accountContactInformation": ___, "accountUserAccounts": ___, "customFields": ___, "defaultBillingAddressExternalReferenceCode": ___, "defaultBillingAddressId": ___, "defaultShippingAddressExternalReferenceCode": ___, "defaultShippingAddressId": ___, "description": ___, "domains": ___, "externalReferenceCode": ___, "logoExternalReferenceCode": ___, "logoId": ___, "logoURL": ___, "name": ___, "organizationExternalReferenceCodes": ___, "organizationIds": ___, "parentAccountExternalReferenceCode": ___, "parentAccountId": ___, "postalAddresses": ___, "status": ___, "taxId": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Replaces the account with information sent in the request body. Any missing fields are deleted unless they are required."
@@ -777,7 +802,7 @@ public abstract class BaseAccountResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-admin-user/v1.0/accounts/{accountId}' -d $'{"accountContactInformation": ___, "accountUserAccounts": ___, "customFields": ___, "defaultBillingAddressId": ___, "defaultShippingAddressId": ___, "description": ___, "domains": ___, "externalReferenceCode": ___, "logoId": ___, "logoURL": ___, "name": ___, "organizationIds": ___, "parentAccountId": ___, "postalAddresses": ___, "status": ___, "taxId": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-admin-user/v1.0/accounts/{accountId}' -d $'{"accountContactInformation": ___, "accountUserAccounts": ___, "customFields": ___, "defaultBillingAddressExternalReferenceCode": ___, "defaultBillingAddressId": ___, "defaultShippingAddressExternalReferenceCode": ___, "defaultShippingAddressId": ___, "description": ___, "domains": ___, "externalReferenceCode": ___, "logoExternalReferenceCode": ___, "logoId": ___, "logoURL": ___, "name": ___, "organizationExternalReferenceCodes": ___, "organizationIds": ___, "parentAccountExternalReferenceCode": ___, "parentAccountId": ___, "postalAddresses": ___, "status": ___, "taxId": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Updates the account with information sent in the request body. Only the provided fields are updated."
@@ -810,9 +835,19 @@ public abstract class BaseAccountResourceImpl
 
 		existingAccount.setCustomFields(account.getCustomFields());
 
+		if (account.getDefaultBillingAddressExternalReferenceCode() != null) {
+			existingAccount.setDefaultBillingAddressExternalReferenceCode(
+				account.getDefaultBillingAddressExternalReferenceCode());
+		}
+
 		if (account.getDefaultBillingAddressId() != null) {
 			existingAccount.setDefaultBillingAddressId(
 				account.getDefaultBillingAddressId());
+		}
+
+		if (account.getDefaultShippingAddressExternalReferenceCode() != null) {
+			existingAccount.setDefaultShippingAddressExternalReferenceCode(
+				account.getDefaultShippingAddressExternalReferenceCode());
 		}
 
 		if (account.getDefaultShippingAddressId() != null) {
@@ -833,6 +868,11 @@ public abstract class BaseAccountResourceImpl
 				account.getExternalReferenceCode());
 		}
 
+		if (account.getLogoExternalReferenceCode() != null) {
+			existingAccount.setLogoExternalReferenceCode(
+				account.getLogoExternalReferenceCode());
+		}
+
 		if (account.getLogoId() != null) {
 			existingAccount.setLogoId(account.getLogoId());
 		}
@@ -845,8 +885,18 @@ public abstract class BaseAccountResourceImpl
 			existingAccount.setName(account.getName());
 		}
 
+		if (account.getOrganizationExternalReferenceCodes() != null) {
+			existingAccount.setOrganizationExternalReferenceCodes(
+				account.getOrganizationExternalReferenceCodes());
+		}
+
 		if (account.getOrganizationIds() != null) {
 			existingAccount.setOrganizationIds(account.getOrganizationIds());
+		}
+
+		if (account.getParentAccountExternalReferenceCode() != null) {
+			existingAccount.setParentAccountExternalReferenceCode(
+				account.getParentAccountExternalReferenceCode());
 		}
 
 		if (account.getParentAccountId() != null) {
@@ -873,7 +923,7 @@ public abstract class BaseAccountResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-user/v1.0/accounts/{accountId}' -d $'{"accountContactInformation": ___, "accountUserAccounts": ___, "customFields": ___, "defaultBillingAddressId": ___, "defaultShippingAddressId": ___, "description": ___, "domains": ___, "externalReferenceCode": ___, "logoId": ___, "logoURL": ___, "name": ___, "organizationIds": ___, "parentAccountId": ___, "postalAddresses": ___, "status": ___, "taxId": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-user/v1.0/accounts/{accountId}' -d $'{"accountContactInformation": ___, "accountUserAccounts": ___, "customFields": ___, "defaultBillingAddressExternalReferenceCode": ___, "defaultBillingAddressId": ___, "defaultShippingAddressExternalReferenceCode": ___, "defaultShippingAddressId": ___, "description": ___, "domains": ___, "externalReferenceCode": ___, "logoExternalReferenceCode": ___, "logoId": ___, "logoURL": ___, "name": ___, "organizationExternalReferenceCodes": ___, "organizationIds": ___, "parentAccountExternalReferenceCode": ___, "parentAccountId": ___, "postalAddresses": ___, "status": ___, "taxId": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Replaces the account with information sent in the request body. Any missing fields are deleted unless they are required."

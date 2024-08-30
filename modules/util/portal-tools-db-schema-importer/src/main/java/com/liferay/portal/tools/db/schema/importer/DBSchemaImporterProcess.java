@@ -486,19 +486,19 @@ public class DBSchemaImporterProcess {
 		}
 	}
 
-	private void _preprocessSQL(String sqlTemplate) throws Exception {
-		sqlTemplate = StringUtil.trim(sqlTemplate);
+	private void _preprocessSQLTemplate(String template) throws Exception {
+		template = StringUtil.trim(template);
 
-		if ((sqlTemplate == null) || sqlTemplate.isEmpty()) {
+		if ((template == null) || template.isEmpty()) {
 			return;
 		}
 
-		if (!sqlTemplate.endsWith(StringPool.SEMICOLON)) {
-			sqlTemplate += StringPool.SEMICOLON;
+		if (!template.endsWith(StringPool.SEMICOLON)) {
+			template += StringPool.SEMICOLON;
 		}
 
 		try (UnsyncBufferedReader unsyncBufferedReader =
-				new UnsyncBufferedReader(new UnsyncStringReader(sqlTemplate))) {
+				new UnsyncBufferedReader(new UnsyncStringReader(template))) {
 
 			StringBundler sb = new StringBundler();
 
@@ -534,10 +534,10 @@ public class DBSchemaImporterProcess {
 	}
 
 	private void _runSQLTemplateConcurrently(
-			DataSource dataSource, String sqlTemplate)
+			DataSource dataSource, String template)
 		throws Exception {
 
-		_preprocessSQL(sqlTemplate);
+		_preprocessSQLTemplate(template);
 
 		List<Future<?>> futures = new ArrayList<>();
 

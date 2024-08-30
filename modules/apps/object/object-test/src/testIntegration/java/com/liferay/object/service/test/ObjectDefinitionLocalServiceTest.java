@@ -1942,10 +1942,9 @@ public class ObjectDefinitionLocalServiceTest {
 				ObjectDefinitionConstants.STORAGE_TYPE_SALESFORCE,
 				Collections.emptyList());
 
-		Assert.assertFalse(objectDefinition.isActive());
-
 		_assertLabelAndPluralLabel(objectDefinition, "Able", "Ables");
 
+		Assert.assertFalse(objectDefinition.isActive());
 		Assert.assertEquals("C_Able", objectDefinition.getName());
 		Assert.assertEquals(
 			ObjectDefinitionConstants.STORAGE_TYPE_SALESFORCE,
@@ -2060,12 +2059,11 @@ public class ObjectDefinitionLocalServiceTest {
 				null, null, false, LocalizedMapUtil.getLocalizedMap("Bakers"),
 				objectDefinition.getScope(), objectDefinition.getStatus());
 
+		_assertLabelAndPluralLabel(objectDefinition, "Baker", "Bakers");
+
 		Assert.assertFalse(objectDefinition.isActive());
 		Assert.assertTrue(objectDefinition.isEnableIndexSearch());
 		Assert.assertTrue(objectDefinition.isEnableObjectEntryHistory());
-
-		_assertLabelAndPluralLabel(objectDefinition, "Baker", "Bakers");
-
 		Assert.assertEquals("C_Baker", objectDefinition.getName());
 
 		objectDefinition =
@@ -2081,12 +2079,11 @@ public class ObjectDefinitionLocalServiceTest {
 				null, false, LocalizedMapUtil.getLocalizedMap("Charlies"),
 				objectDefinition.getScope(), objectDefinition.getStatus());
 
+		_assertLabelAndPluralLabel(objectDefinition, "Charlie", "Charlies");
+
 		Assert.assertTrue(objectDefinition.isActive());
 		Assert.assertTrue(objectDefinition.isEnableIndexSearch());
 		Assert.assertTrue(objectDefinition.isEnableObjectEntryHistory());
-
-		_assertLabelAndPluralLabel(objectDefinition, "Charlie", "Charlies");
-
 		Assert.assertEquals("C_Baker", objectDefinition.getName());
 
 		_testUpdateCustomObjectDefinitionThrowsObjectFieldRelationshipTypeException(
@@ -2282,14 +2279,13 @@ public class ObjectDefinitionLocalServiceTest {
 				null, false, LocalizedMapUtil.getLocalizedMap("Charlies"),
 				objectDefinition2.getScope(), objectDefinition2.getStatus());
 
+		_assertLabelAndPluralLabel(objectDefinition2, "Charlie", "Charlies");
+
 		Assert.assertEquals(
 			objectFolder.getObjectFolderId(),
 			objectDefinition2.getObjectFolderId());
 		Assert.assertFalse(objectDefinition2.isEnableCategorization());
 		Assert.assertTrue(objectDefinition2.isEnableComments());
-
-		_assertLabelAndPluralLabel(objectDefinition2, "Charlie", "Charlies");
-
 		Assert.assertEquals("Test", objectDefinition2.getName());
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition2);
@@ -2605,6 +2601,9 @@ public class ObjectDefinitionLocalServiceTest {
 				externalReferenceCode, user.getUserId(),
 				objectFolder.getObjectFolderId(), 0, modifiable, system);
 
+		_assertLabelAndPluralLabel(
+			objectDefinition, externalReferenceCode, externalReferenceCode);
+
 		Assert.assertEquals(
 			externalReferenceCode, objectDefinition.getExternalReferenceCode());
 		Assert.assertEquals(
@@ -2618,10 +2617,6 @@ public class ObjectDefinitionLocalServiceTest {
 		Assert.assertFalse(objectDefinition.isActive());
 		Assert.assertEquals(
 			StringPool.BLANK, objectDefinition.getDBTableName());
-
-		_assertLabelAndPluralLabel(
-			objectDefinition, externalReferenceCode, externalReferenceCode);
-
 		Assert.assertFalse(objectDefinition.isEnableCategorization());
 		Assert.assertFalse(objectDefinition.isEnableComments());
 		Assert.assertFalse(objectDefinition.isEnableIndexSearch());

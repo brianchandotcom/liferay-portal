@@ -316,7 +316,7 @@ public class FragmentCollectionImpl extends FragmentCollectionBaseImpl {
 			else if (object instanceof FileEntry) {
 				FileEntry fileEntry = (FileEntry)object;
 
-				String fileEntryPath = fileEntry.getTitle();
+				String fileEntryPath = fileEntry.getFileName();
 
 				if (!Validator.isBlank(parentPath)) {
 					fileEntryPath =

@@ -2804,7 +2804,7 @@ definition {
 
 	@summary = "Default summary"
 	macro setExpirationDate(invalidExpirationDate = null, increaseMinutes = null) {
-		Panel.expandPanel(panel = "Expiration Date");
+		Panel.expandPanel(panel = "Schedule");
 
 		if (isSet(enableExpirationDate)) {
 			Uncheck(
@@ -2853,7 +2853,7 @@ definition {
 
 	@summary = "Default summary"
 	macro setReviewDate(increaseMinutes = null) {
-		Panel.expandPanel(panel = "Expiration Date");
+		Panel.expandPanel(panel = "Schedule");
 
 		if (isSet(enableReviewDate)) {
 			Uncheck(

@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -11,6 +11,7 @@ import {
 	ISelectionFilterApiHeadless,
 	ISelectionFilterPicklist,
 } from '../../../../../utils/types';
+import {FieldSelectModalComponent} from '../../../components/FieldSelectModalComponent';
 import {DataSetPage} from '../DataSetPage';
 
 interface NewFilterForm {
@@ -18,6 +19,7 @@ interface NewFilterForm {
 	closeButton: Locator;
 	filterByDropdown: Locator;
 	filterBySelect: Locator;
+	filterBySelectButton: Locator;
 	formFeedback: Locator;
 	modalBody: Locator;
 	nameInput: Locator;
@@ -55,9 +57,9 @@ interface NewDateRangeFilterForm extends NewFilterForm {
 
 export class FiltersPage {
 	private readonly dataSetPage: DataSetPage;
+	readonly fieldSelectModalComponent: FieldSelectModalComponent;
 
 	private readonly filterTable: Locator;
-
 	readonly newClientExtensionFilterForm: NewClientExtensionFilterForm;
 	readonly newDateRangeFilterForm: NewDateRangeFilterForm;
 	readonly newFilterButton: Locator;
@@ -69,6 +71,7 @@ export class FiltersPage {
 
 	constructor(page: Page) {
 		this.dataSetPage = new DataSetPage(page);
+		this.fieldSelectModalComponent = new FieldSelectModalComponent(page);
 		this.filterTable = page.getByRole('table');
 		this.newFilterButton = page
 			.getByRole('button', {name: 'New Filter'})
@@ -81,6 +84,7 @@ export class FiltersPage {
 			}),
 			filterByDropdown: page.locator('.fds-field-name-dropdown-menu'),
 			filterBySelect: page.getByLabel('Filter By'),
+			filterBySelectButton: page.getByRole('button', {name: 'Select'}),
 			formFeedback: page.locator('.form-feedback-item'),
 			modalBody: page.locator('.modal-body'),
 			nameInput: page.getByPlaceholder('Add a name'),
@@ -177,6 +181,7 @@ export class FiltersPage {
 		clientExtension,
 		filterBy,
 		name,
+		useFieldSelectionModal = false,
 	}: IClientExtensionFilter) {
 		await this.openNewFilterForm({
 			dropdownItemLabel: 'Client Extension',
@@ -184,13 +189,32 @@ export class FiltersPage {
 
 		await this.newClientExtensionFilterForm.nameInput.click();
 		await this.newClientExtensionFilterForm.nameInput.fill(name);
-		await this.newClientExtensionFilterForm.filterBySelect.click();
-		await this.page.getByRole('option', {name: filterBy}).click();
+		if (!useFieldSelectionModal) {
+			await this.newClientExtensionFilterForm.filterBySelect.click();
+			await this.page.getByRole('option', {name: filterBy}).click();
+		}
+		else {
+			await this.newClientExtensionFilterForm.filterBySelectButton
+				.first()
+				.click();
+			await this.fieldSelectModalComponent.selectField({
+				fieldName: filterBy,
+			});
+
+			await this.fieldSelectModalComponent.saveAddFieldsModal();
+		}
+
 		await this.newClientExtensionFilterForm.clientExtensionDropdown.click();
 		await this.page.getByRole('option', {name: clientExtension}).click();
 	}
 
-	async createDateRangeFilter({filterBy, from, name, to}: IDateRangeFilter) {
+	async createDateRangeFilter({
+		filterBy,
+		from,
+		name,
+		to,
+		useFieldSelectionModal = false,
+	}: IDateRangeFilter) {
 		await this.openNewFilterForm({
 			dropdownItemLabel: 'Date Range',
 		});
@@ -198,13 +222,33 @@ export class FiltersPage {
 		await this.newDateRangeFilterForm.nameInput.click();
 		await this.newDateRangeFilterForm.nameInput.fill(name);
 
-		await this.newDateRangeFilterForm.filterBySelect.click();
+		if (!useFieldSelectionModal) {
+			await this.newDateRangeFilterForm.filterBySelect.click();
+			await this.page
+				.getByRole('option', {
+					name: filterBy,
+				})
+				.click();
+		}
+		else {
+			await this.newDateRangeFilterForm.filterBySelectButton.click();
 
-		const dateFilterOption = this.page.getByRole('option', {
-			name: filterBy,
-		});
+			const notDateField = 'label';
+			await expect(
+				this.fieldSelectModalComponent.getFieldCheckboxByLabel(
+					notDateField
+				)
+			).toBeDisabled();
+			await expect(
+				this.fieldSelectModalComponent.getFieldCheckboxByLabel(filterBy)
+			).toBeEnabled();
 
-		await dateFilterOption.click();
+			await this.fieldSelectModalComponent.selectField({
+				fieldName: filterBy,
+			});
+
+			await this.fieldSelectModalComponent.saveAddFieldsModal();
+		}
 
 		if (from) {
 			await this.newDateRangeFilterForm.fromInput.fill(from);
@@ -227,6 +271,7 @@ export class FiltersPage {
 		restSchema,
 		selectionType,
 		sourceType,
+		useFieldSelectionModal = false,
 	}: ISelectionFilterApiHeadless) {
 		await this.openNewFilterForm({
 			dropdownItemLabel: 'Selection',
@@ -235,8 +280,29 @@ export class FiltersPage {
 		await this.newSelectionFilterForm.nameInput.click();
 		await this.newSelectionFilterForm.nameInput.fill(name);
 
-		await this.newSelectionFilterForm.filterBySelect.click();
-		await this.page.getByRole('option', {name: filterBy}).click();
+		if (!useFieldSelectionModal) {
+			await this.newSelectionFilterForm.filterBySelect.click();
+			await this.page.getByRole('option', {name: filterBy}).click();
+		}
+		else {
+			await this.newSelectionFilterForm.filterBySelectButton.click();
+
+			const notSelectionFilterField = 'keywords';
+			await expect(
+				this.fieldSelectModalComponent.getFieldCheckboxByLabel(
+					notSelectionFilterField
+				)
+			).toBeDisabled();
+			await expect(
+				this.fieldSelectModalComponent.getFieldCheckboxByLabel(filterBy)
+			).toBeEnabled();
+
+			await this.fieldSelectModalComponent.selectField({
+				fieldName: filterBy,
+			});
+
+			await this.fieldSelectModalComponent.saveAddFieldsModal();
+		}
 
 		await this.newSelectionFilterForm.sourceTypeDropdown.selectOption(
 			sourceType
@@ -293,6 +359,7 @@ export class FiltersPage {
 		selectionType,
 		source,
 		sourceType,
+		useFieldSelectionModal = false,
 	}: ISelectionFilterPicklist) {
 		await this.openNewFilterForm({
 			dropdownItemLabel: 'Selection',
@@ -300,8 +367,10 @@ export class FiltersPage {
 
 		await this.newSelectionFilterForm.nameInput.click();
 		await this.newSelectionFilterForm.nameInput.fill(name);
-		await this.newSelectionFilterForm.filterBySelect.click();
-		await this.page.getByRole('option', {name: filterBy}).click();
+		if (!useFieldSelectionModal) {
+			await this.newSelectionFilterForm.filterBySelect.click();
+			await this.page.getByRole('option', {name: filterBy}).click();
+		}
 		await this.newSelectionFilterForm.sourceTypeDropdown.click();
 		await this.newSelectionFilterForm.sourceTypeDropdown.selectOption(
 			sourceType

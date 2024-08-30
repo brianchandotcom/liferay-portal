@@ -65,6 +65,7 @@ export interface IItemAction extends IBaseAction {
 interface IBaseFilter {
 	filterBy: string;
 	name: string;
+	useFieldSelectionModal?: boolean;
 }
 
 export interface IDateRangeFilter extends IBaseFilter {

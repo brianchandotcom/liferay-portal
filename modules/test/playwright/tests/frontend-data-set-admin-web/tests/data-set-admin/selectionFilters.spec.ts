@@ -22,15 +22,23 @@ const SELECTION_PICKLIST_NO_PRESELECTED_VALUES_FILTER_NAME =
 const PICKLIST_VALUE_KEY = uuidv4().replaceAll('-', '');
 const PICKLIST_VALUE_NAME = getRandomString();
 
-export const test = mergeTests(
+const test = mergeTests(
 	dataSetManagerApiHelpersTest,
 	featureFlagsTest({
+		'LPD-25905': false,
 		'LPS-178052': true,
 	}),
 	filtersPageTest,
 	loginTest(),
 	picklistApiHelpersTest,
 	dataSetManagerSetupTest
+);
+
+const modalFieldTest = mergeTests(
+	test,
+	featureFlagsTest({
+		'LPD-25905': true,
+	})
 );
 
 let dataSetERC: string;
@@ -314,3 +322,42 @@ test('Preselected filter values are checked in the multiSelect', async ({
 		).toBeChecked();
 	});
 });
+
+modalFieldTest(
+	'Can create a selection filter with API Headless source using the field selection modal',
+	async ({filtersPage, page}) => {
+		await modalFieldTest.step(
+			'Create a selection filter from API Headless source',
+			async () => {
+				await filtersPage.createSelectionFilterApiHeadless({
+					filterBy: 'externalReferenceCode',
+					filterMode: 'Include',
+					itemKey: 'id',
+					itemLabel: 'label',
+					name: SELECTION_API_HEADLESS_FILTER_NAME,
+					preselectedValues: [dataSetLabel],
+					restApplication: '/data-set-manager/data-sets',
+					restEndpoint: '/',
+					restSchema: 'FDSView',
+					selectionType: 'Single',
+					sourceType: 'API REST Application',
+					useFieldSelectionModal: true,
+				});
+
+				await filtersPage.saveAddFilterForm();
+			}
+		);
+
+		await modalFieldTest.step(
+			'Check that the selection filter is in the list',
+			async () => {
+				await expect(
+					page.getByRole('cell', {
+						exact: true,
+						name: SELECTION_API_HEADLESS_FILTER_NAME,
+					})
+				).toBeVisible();
+			}
+		);
+	}
+);

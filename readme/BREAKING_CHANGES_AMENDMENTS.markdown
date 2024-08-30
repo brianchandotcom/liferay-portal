@@ -575,16 +575,15 @@ LPS-197267 Move PermissionConverter to portal-security-permission-api and Remove
 
 ## What portal-kernel/src/com/liferay/portal/kernel/security/permission/PermissionConverterUtil.java
 
-Remove class PermissionConverterUtil.
+The PermissionConverterUtil class is removed.
 
 ## Why
 
-Move PermissionConverter to portal-security-permission-api.
+The PermissionConverter APIs are now in portal-security-permission-api.
 
 ## Alternative
 
- Use OSGi service reference PermissionConverter
-
+Use an OSGi service to reference PermissionConverter.
 ```
 
 ----

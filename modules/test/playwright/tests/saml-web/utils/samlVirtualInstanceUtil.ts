@@ -105,7 +105,7 @@ export async function configureVirtualInstanceForSaml(
 	entityId: string,
 	samlRole: string
 ): Promise<Page> {
-	deleteAfterTestProviderConnections.push(entityId);
+	deleteAfterTestProviderConnections.add(entityId);
 
 	const defaultBaseUrl = liferayConfig.environment.baseUrl;
 

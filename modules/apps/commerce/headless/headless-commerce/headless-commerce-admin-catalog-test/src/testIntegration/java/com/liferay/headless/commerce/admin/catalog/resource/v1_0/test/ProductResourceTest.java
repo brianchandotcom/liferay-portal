@@ -5,17 +5,24 @@
 
 package com.liferay.headless.commerce.admin.catalog.resource.v1_0.test;
 
+import com.liferay.account.constants.AccountConstants;
+import com.liferay.account.model.AccountGroup;
+import com.liferay.account.service.AccountGroupLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CommerceCatalog;
+import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogLocalServiceUtil;
 import com.liferay.commerce.product.type.simple.constants.SimpleCPTypeConstants;
 import com.liferay.commerce.product.type.virtual.constants.VirtualCPTypeConstants;
+import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Product;
+import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.ProductAccountGroup;
+import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.ProductChannel;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.ProductVirtualSettings;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.ProductVirtualSettingsFileEntry;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Sku;
@@ -32,6 +39,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -66,6 +74,16 @@ public class ProductResourceTest extends BaseProductResourceTestCase {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(testCompany.getGroupId());
 
+		_accountGroup = _accountGroupLocalService.addAccountGroup(
+			user.getUserId(), null, RandomTestUtil.randomString(),
+			serviceContext);
+
+		_accountGroup.setDefaultAccountGroup(false);
+		_accountGroup.setType(AccountConstants.ACCOUNT_GROUP_TYPE_STATIC);
+
+		_accountGroup = _accountGroupLocalService.updateAccountGroup(
+			_accountGroup);
+
 		_commerceCatalog = CommerceCatalogLocalServiceUtil.addCommerceCatalog(
 			null, RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			LocaleUtil.US.getDisplayLanguage(), serviceContext);
@@ -77,6 +95,9 @@ public class ProductResourceTest extends BaseProductResourceTestCase {
 				RandomTestUtil.randomString(), BigDecimal.ONE,
 				RandomTestUtil.randomLocaleStringMap(), 2, 2, "HALF_EVEN",
 				false, RandomTestUtil.nextDouble(), true);
+
+		_commerceChannel = CommerceTestUtil.addCommerceChannel(
+			testGroup.getGroupId(), commerceCurrency.getCode());
 
 		_commercePriceListLocalService.addCatalogBaseCommercePriceList(
 			_commerceCatalog.getGroupId(), user.getUserId(),
@@ -305,6 +326,8 @@ public class ProductResourceTest extends BaseProductResourceTestCase {
 		assertValid(getProduct);
 
 		_testPostProductVirtual();
+		_testPostProductWithProductAccountGroupExternalReferenceCode();
+		_testPostProductWithProductChannelExternalReferenceCode();
 	}
 
 	@Override
@@ -557,8 +580,105 @@ public class ProductResourceTest extends BaseProductResourceTestCase {
 		Assert.assertNotNull(productVirtualSettingsFileEntry.getSrc());
 	}
 
+	private void _testPostProductWithProductAccountGroupExternalReferenceCode()
+		throws Exception {
+
+		User omniadminUser = UserTestUtil.addOmniadminUser();
+
+		String password = RandomTestUtil.randomString();
+
+		_userLocalService.updatePassword(
+			omniadminUser.getUserId(), password, password, false, true);
+
+		ProductResource productResource = ProductResource.builder(
+		).authentication(
+			omniadminUser.getEmailAddress(), password
+		).locale(
+			LocaleUtil.getDefault()
+		).parameters(
+			"nestedFields", "productAccountGroups"
+		).build();
+
+		Product randomProduct = _randomProductWithSku();
+
+		randomProduct.setProductAccountGroupFilter(true);
+		randomProduct.setProductAccountGroups(
+			new ProductAccountGroup[] {
+				new ProductAccountGroup() {
+					{
+						externalReferenceCode =
+							_accountGroup.getExternalReferenceCode();
+					}
+				}
+			});
+
+		Product postProduct = productResource.postProduct(randomProduct);
+
+		ProductAccountGroup productAccountGroup =
+			postProduct.getProductAccountGroups()[0];
+
+		Assert.assertEquals(
+			_accountGroup.getAccountGroupId(),
+			GetterUtil.getLong(productAccountGroup.getAccountGroupId()));
+		Assert.assertEquals(
+			_accountGroup.getExternalReferenceCode(),
+			productAccountGroup.getExternalReferenceCode());
+	}
+
+	private void _testPostProductWithProductChannelExternalReferenceCode()
+		throws Exception {
+
+		User omniadminUser = UserTestUtil.addOmniadminUser();
+
+		String password = RandomTestUtil.randomString();
+
+		_userLocalService.updatePassword(
+			omniadminUser.getUserId(), password, password, false, true);
+
+		ProductResource productResource = ProductResource.builder(
+		).authentication(
+			omniadminUser.getEmailAddress(), password
+		).locale(
+			LocaleUtil.getDefault()
+		).parameters(
+			"nestedFields", "productChannels"
+		).build();
+
+		Product randomProduct = _randomProductWithSku();
+
+		randomProduct.setProductChannels(
+			new ProductChannel[] {
+				new ProductChannel() {
+					{
+						externalReferenceCode =
+							_commerceChannel.getExternalReferenceCode();
+					}
+				}
+			});
+
+		Product postProduct = productResource.postProduct(randomProduct);
+
+		ProductChannel productChannel = postProduct.getProductChannels()[0];
+
+		Assert.assertEquals(
+			_commerceChannel.getCommerceChannelId(),
+			GetterUtil.getLong(productChannel.getChannelId()));
+		Assert.assertEquals(
+			_commerceChannel.getExternalReferenceCode(),
+			productChannel.getExternalReferenceCode());
+	}
+
+	@DeleteAfterTestRun
+	private AccountGroup _accountGroup;
+
+	@Inject
+	private AccountGroupLocalService _accountGroupLocalService;
+
 	@DeleteAfterTestRun
 	private CommerceCatalog _commerceCatalog;
+
+	@DeleteAfterTestRun
+	private CommerceChannel _commerceChannel;
 
 	@Inject
 	private CommerceCurrencyLocalService _commerceCurrencyLocalService;

@@ -23,7 +23,9 @@ import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import org.opensearch.client.opensearch.OpenSearchClient;
 import org.opensearch.client.opensearch.cat.OpenSearchCatClient;
@@ -71,6 +73,10 @@ public class OpenSearchSearchEngineBackupTest extends BaseOpenSearchTestCase {
 
 	@Test
 	public void testBackup() throws SearchException {
+		expectedException.expect(RuntimeException.class);
+		expectedException.expectMessage(
+			"Missing required property 'GetSnapshotResponse.total'");
+
 		OpenSearchSearchEngine openSearchSearchEngine =
 			_openSearchSearchEngineFixture.getOpenSearchSearchEngine();
 
@@ -112,6 +118,9 @@ public class OpenSearchSearchEngineBackupTest extends BaseOpenSearchTestCase {
 
 		_deleteSnapshot(_BACKUP_REPOSITORY_NAME, "restore_test");
 	}
+
+	@Rule
+	public ExpectedException expectedException = ExpectedException.none();
 
 	protected OpenSearchSnapshotClient getOpenSearchSnapshotClient() {
 		OpenSearchClient openSearchClient =

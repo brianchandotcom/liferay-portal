@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -465,7 +466,15 @@ public class AddFragmentCompositionMVCActionCommandTest {
 				fragmentCompositionJSONObject.getString("fragmentEntryKey"));
 
 		Assert.assertNotNull(fragmentComposition);
-		Assert.assertTrue(fragmentComposition.getPreviewFileEntryId() > 0);
+
+		long previewFileEntryId = fragmentComposition.getPreviewFileEntryId();
+
+		Assert.assertTrue(previewFileEntryId > 0);
+
+		FileEntry previewFileEntry = _portletFileRepository.getPortletFileEntry(
+			previewFileEntryId);
+
+		Assert.assertTrue(Validator.isNotNull(previewFileEntry.getExtension()));
 	}
 
 	private JournalArticle _addJournalArticle(String title) throws Exception {
@@ -562,6 +571,9 @@ public class AddFragmentCompositionMVCActionCommandTest {
 
 	@Inject
 	private Portal _portal;
+
+	@Inject
+	private PortletFileRepository _portletFileRepository;
 
 	@Inject
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;

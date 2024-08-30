@@ -36,6 +36,7 @@ import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueService;
 import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.commerce.product.service.CPInstanceUnitOfMeasureService;
+import com.liferay.commerce.product.service.CPOptionCategoryService;
 import com.liferay.commerce.product.service.CPOptionService;
 import com.liferay.commerce.product.service.CPSpecificationOptionService;
 import com.liferay.commerce.product.service.CProductLocalService;
@@ -1010,7 +1011,7 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 				ProductSpecificationUtil.
 					addCPDefinitionSpecificationOptionValue(
 						_cpDefinitionSpecificationOptionValueService,
-						_cpSpecificationOptionService,
+						_cpOptionCategoryService, _cpSpecificationOptionService,
 						cpDefinition.getCPDefinitionId(), productSpecification,
 						serviceContext);
 			}
@@ -1578,6 +1579,9 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 
 	@Reference
 	private CPInstanceUnitOfMeasureService _cpInstanceUnitOfMeasureService;
+
+	@Reference
+	private CPOptionCategoryService _cpOptionCategoryService;
 
 	@Reference
 	private CPOptionService _cpOptionService;

@@ -1,45 +1,34 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import {Locator, Page, expect} from '@playwright/test';
 
+import {FieldSelectModalComponent} from '../../../components/FieldSelectModalComponent';
 import {DataSetPage} from '../DataSetPage';
 
 export class VisualizationModesPage {
 	private readonly addFieldsButton: Locator;
-	private readonly addFieldsDialog: {
-		cancelButton: Locator;
-		fields: Locator;
-		fieldsTreeview: Locator;
-		saveButton: Locator;
-	};
 	readonly cardsVisualizationModeContainer: Locator;
 	private readonly container: Locator;
 	readonly dataSetPage: DataSetPage;
-	readonly fieldSelectModalContainer: Locator;
+	readonly fieldSelectModalComponent: FieldSelectModalComponent;
 	readonly listVisualizationModeContainer: Locator;
 	readonly page: Page;
 	readonly tableVisualizationModeContainer: Locator;
 
 	constructor(page: Page) {
 		this.addFieldsButton = page.getByLabel('Add Fields');
-		this.addFieldsDialog = {
-			cancelButton: page.getByRole('button', {name: 'Cancel'}),
-			fields: page.locator('.treeview-item'),
-			fieldsTreeview: page.locator('.treeview'),
-			saveButton: page.getByRole('button', {name: 'Save'}),
-		};
 		this.cardsVisualizationModeContainer = page.locator(
 			'.cards-visualization-mode'
 		);
 		this.container = page.locator('.visualization-modes');
 		this.dataSetPage = new DataSetPage(page);
+		this.fieldSelectModalComponent = new FieldSelectModalComponent(page);
 		this.listVisualizationModeContainer = page.locator(
 			'.list-visualization-mode'
 		);
-		this.fieldSelectModalContainer = page.locator('.field-select-modal');
 		this.page = page;
 		this.tableVisualizationModeContainer = page.locator(
 			'.table-visualization-mode'
@@ -53,36 +42,7 @@ export class VisualizationModesPage {
 	}
 
 	async cancelAddFieldsModal() {
-		await this.addFieldsDialog.cancelButton.click();
-	}
-
-	private async checkField({
-		dataId,
-		expected,
-		fieldName,
-	}: {
-		dataId?: string;
-		expected: boolean;
-		fieldName: string;
-	}) {
-		const treeItem = this.fieldSelectModalContainer.locator(
-			`.treeview-link[data-id$="${dataId ?? fieldName}"]`
-		);
-
-		await treeItem
-			.getByText(fieldName, {
-				exact: true,
-			})
-			.click();
-
-		const checkbox = treeItem.locator('input[type="checkbox"]');
-
-		if (expected) {
-			await expect(checkbox).toBeChecked();
-		}
-		else {
-			await expect(checkbox).not.toBeChecked();
-		}
+		await this.fieldSelectModalComponent.cancelAddFieldsModal();
 	}
 
 	async getAssignedFieldLocator({
@@ -105,9 +65,7 @@ export class VisualizationModesPage {
 	}
 
 	getFieldCheckboxByLabel(label: string) {
-		return this.fieldSelectModalContainer
-			.getByRole('treeitem', {name: label})
-			.locator('input[type="checkbox"]');
+		return this.fieldSelectModalComponent.getFieldCheckboxByLabel(label);
 	}
 
 	async goto({dataSetLabel}: {dataSetLabel: string}) {
@@ -121,7 +79,9 @@ export class VisualizationModesPage {
 	async openAddFieldsModal() {
 		await this.addFieldsButton.click();
 
-		await this.addFieldsDialog.fields.first().waitFor();
+		await this.fieldSelectModalComponent.addFieldsDialog.fields
+			.first()
+			.waitFor();
 	}
 
 	async openAssignFieldModal({
@@ -136,18 +96,6 @@ export class VisualizationModesPage {
 			.filter({has: this.page.getByText(sectionLabel)})
 			.getByTitle('Assign Field')
 			.click();
-
-		await expect(
-			this.fieldSelectModalContainer
-				.locator('.custom-control-input')
-				.first()
-		).toBeVisible();
-
-		await expect(
-			this.fieldSelectModalContainer
-				.locator('.custom-control-label')
-				.first()
-		).toBeInViewport();
 	}
 
 	async openChangeFieldModal({
@@ -170,30 +118,13 @@ export class VisualizationModesPage {
 		await changeAssignmentButton.waitFor();
 		await changeAssignmentButton.click();
 
-		await this.fieldSelectModalContainer
+		await this.fieldSelectModalComponent.fieldSelectModalContainer
 			.getByPlaceholder('Search')
 			.waitFor();
 	}
 
 	async searchAndSelectField(path: string) {
-		const fieldSearch = await this.page
-			.getByRole('dialog', {name: 'Select Field'})
-			.getByPlaceholder('Search');
-
-		const FDS_NESTED_FIELD_NAME_DELIMITER = '.';
-
-		const itemPath = path
-			.replace(/\[\]/g, '.')
-			.split(FDS_NESTED_FIELD_NAME_DELIMITER)
-			.filter((item) => item !== '*');
-
-		const selectedFieldName = itemPath[itemPath.length - 1];
-		await fieldSearch.fill(selectedFieldName);
-
-		await this.page
-			.locator(`[data-id$=",${path}"]`)
-			.getByText(selectedFieldName, {exact: true})
-			.check();
+		await this.fieldSelectModalComponent.searchAndSelectField(path);
 	}
 
 	async selectField({
@@ -203,7 +134,11 @@ export class VisualizationModesPage {
 		dataId?: string;
 		fieldName: string;
 	}) {
-		await this.checkField({dataId, expected: true, fieldName});
+		await this.fieldSelectModalComponent.checkField({
+			dataId,
+			expected: true,
+			fieldName,
+		});
 	}
 
 	async selectTab(tabLabel: string) {
@@ -222,13 +157,14 @@ export class VisualizationModesPage {
 		dataId?: string;
 		fieldName: string;
 	}) {
-		await this.checkField({dataId, expected: false, fieldName});
+		await this.fieldSelectModalComponent.checkField({
+			dataId,
+			expected: false,
+			fieldName,
+		});
 	}
 
 	async unSelectSelectedFields() {
-		await this.page
-			.getByRole('dialog', {name: 'Select Field'})
-			.getByRole('button', {name: 'Deselect All'})
-			.click();
+		await this.fieldSelectModalComponent.unSelectSelectedFields();
 	}
 }

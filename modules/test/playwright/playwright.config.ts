@@ -28,6 +28,7 @@ import {config as featureFlagWebConfig} from './tests/feature-flag-web/config';
 import {config as fragmentWebConfig} from './tests/fragment-web/config';
 import {config as frontendDataSetAdminWebConfig} from './tests/frontend-data-set-admin-web/config';
 import {config as frontendDataSetWebConfig} from './tests/frontend-data-set-web/config';
+import {config as frontendEditorCKEditorSampleWebConfig} from './tests/frontend-editor-ckeditor-sample-web/config';
 import {config as frontendJsSpaWebConfig} from './tests/frontend-js-spa-web/config';
 import {config as frontendTaglibClayConfig} from './tests/frontend-taglib-clay/config';
 import {config as headlessBuilderImplConfig} from './tests/headless-builder-impl/config';
@@ -115,6 +116,7 @@ export default defineConfig({
 		fragmentWebConfig,
 		frontendDataSetAdminWebConfig,
 		frontendDataSetWebConfig,
+		frontendEditorCKEditorSampleWebConfig,
 		frontendJsSpaWebConfig,
 		frontendTaglibClayConfig,
 		headlessBuilderImplConfig,

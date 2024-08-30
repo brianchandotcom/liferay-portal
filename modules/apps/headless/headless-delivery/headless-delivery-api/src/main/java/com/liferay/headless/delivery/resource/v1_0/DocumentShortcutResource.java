@@ -105,6 +105,19 @@ public interface DocumentShortcutResource {
 			Long siteId, String callbackURL, Object object)
 		throws Exception;
 
+	public void deleteSiteDocumentShortcutByExternalReferenceCode(
+			Long siteId, String externalReferenceCode)
+		throws Exception;
+
+	public DocumentShortcut getSiteDocumentShortcutByExternalReferenceCode(
+			Long siteId, String externalReferenceCode)
+		throws Exception;
+
+	public DocumentShortcut putSiteDocumentShortcutByExternalReferenceCode(
+			Long siteId, String externalReferenceCode,
+			DocumentShortcut documentShortcut)
+		throws Exception;
+
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {
 	}

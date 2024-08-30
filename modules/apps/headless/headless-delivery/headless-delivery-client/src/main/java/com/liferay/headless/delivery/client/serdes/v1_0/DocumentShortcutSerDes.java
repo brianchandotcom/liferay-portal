@@ -108,6 +108,20 @@ public class DocumentShortcutSerDes {
 			sb.append("\"");
 		}
 
+		if (documentShortcut.getExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(documentShortcut.getExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (documentShortcut.getFolderId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -234,6 +248,15 @@ public class DocumentShortcutSerDes {
 					documentShortcut.getDateModified()));
 		}
 
+		if (documentShortcut.getExternalReferenceCode() == null) {
+			map.put("externalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"externalReferenceCode",
+				String.valueOf(documentShortcut.getExternalReferenceCode()));
+		}
+
 		if (documentShortcut.getFolderId() == null) {
 			map.put("folderId", null);
 		}
@@ -309,6 +332,11 @@ public class DocumentShortcutSerDes {
 			else if (Objects.equals(jsonParserFieldName, "dateModified")) {
 				return false;
 			}
+			else if (Objects.equals(
+						jsonParserFieldName, "externalReferenceCode")) {
+
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "folderId")) {
 				return false;
 			}
@@ -358,6 +386,14 @@ public class DocumentShortcutSerDes {
 				if (jsonParserFieldValue != null) {
 					documentShortcut.setDateModified(
 						toDate((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "externalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					documentShortcut.setExternalReferenceCode(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "folderId")) {

@@ -2254,6 +2254,42 @@ public class Mutation {
 	}
 
 	@GraphQLField(
+		description = "Deletes the site's document shortcut by external reference code returns a 204 if the operation succeeds."
+	)
+	public boolean deleteSiteDocumentShortcutByExternalReferenceCode(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_documentShortcutResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentShortcutResource ->
+				documentShortcutResource.
+					deleteSiteDocumentShortcutByExternalReferenceCode(
+						Long.valueOf(siteKey), externalReferenceCode));
+
+		return true;
+	}
+
+	@GraphQLField
+	public DocumentShortcut updateSiteDocumentShortcutByExternalReferenceCode(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("documentShortcut") DocumentShortcut documentShortcut)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_documentShortcutResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentShortcutResource ->
+				documentShortcutResource.
+					putSiteDocumentShortcutByExternalReferenceCode(
+						Long.valueOf(siteKey), externalReferenceCode,
+						documentShortcut));
+	}
+
+	@GraphQLField(
 		description = "Deletes the knowledge base article and returns a 204 if the operation succeeds."
 	)
 	public boolean deleteKnowledgeBaseArticle(

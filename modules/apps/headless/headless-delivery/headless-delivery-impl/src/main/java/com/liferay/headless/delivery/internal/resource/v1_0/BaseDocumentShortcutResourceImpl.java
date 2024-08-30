@@ -12,6 +12,7 @@ import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -195,7 +196,7 @@ public abstract class BaseDocumentShortcutResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/asset-libraries/{assetLibraryId}/document-shortcuts' -d $'{"folderId": ___, "targetDocumentId": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/asset-libraries/{assetLibraryId}/document-shortcuts' -d $'{"externalReferenceCode": ___, "folderId": ___, "targetDocumentId": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -411,7 +412,7 @@ public abstract class BaseDocumentShortcutResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-delivery/v1.0/document-shortcuts/{documentShortcutId}' -d $'{"folderId": ___, "targetDocumentId": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-delivery/v1.0/document-shortcuts/{documentShortcutId}' -d $'{"externalReferenceCode": ___, "folderId": ___, "targetDocumentId": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Updates only the fields received in the request body, leaving any other fields untouched."
@@ -445,6 +446,11 @@ public abstract class BaseDocumentShortcutResourceImpl
 		DocumentShortcut existingDocumentShortcut = getDocumentShortcut(
 			documentShortcutId);
 
+		if (documentShortcut.getExternalReferenceCode() != null) {
+			existingDocumentShortcut.setExternalReferenceCode(
+				documentShortcut.getExternalReferenceCode());
+		}
+
 		if (documentShortcut.getFolderId() != null) {
 			existingDocumentShortcut.setFolderId(
 				documentShortcut.getFolderId());
@@ -469,7 +475,7 @@ public abstract class BaseDocumentShortcutResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/document-shortcuts/{documentShortcutId}' -d $'{"folderId": ___, "targetDocumentId": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/document-shortcuts/{documentShortcutId}' -d $'{"externalReferenceCode": ___, "folderId": ___, "targetDocumentId": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Replaces the document shortcut with the information sent in the request body. Any missing fields are deleted, unless they are required."
@@ -672,7 +678,7 @@ public abstract class BaseDocumentShortcutResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/document-shortcuts' -d $'{"folderId": ___, "targetDocumentId": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/document-shortcuts' -d $'{"externalReferenceCode": ___, "folderId": ___, "targetDocumentId": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -757,6 +763,138 @@ public abstract class BaseDocumentShortcutResourceImpl
 		).build();
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/document-shortcuts/by-external-reference-code/{externalReferenceCode}'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Deletes the site's document shortcut by external reference code returns a 204 if the operation succeeds."
+	)
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "siteId"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "externalReferenceCode"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "DocumentShortcut")
+		}
+	)
+	@javax.ws.rs.DELETE
+	@javax.ws.rs.Path(
+		"/sites/{siteId}/document-shortcuts/by-external-reference-code/{externalReferenceCode}"
+	)
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public void deleteSiteDocumentShortcutByExternalReferenceCode(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("siteId")
+			Long siteId,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("externalReferenceCode")
+			String externalReferenceCode)
+		throws Exception {
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/document-shortcuts/by-external-reference-code/{externalReferenceCode}'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Retrieves the site's document shortcut by external reference code."
+	)
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "siteId"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "externalReferenceCode"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "DocumentShortcut")
+		}
+	)
+	@javax.ws.rs.GET
+	@javax.ws.rs.Path(
+		"/sites/{siteId}/document-shortcuts/by-external-reference-code/{externalReferenceCode}"
+	)
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public DocumentShortcut getSiteDocumentShortcutByExternalReferenceCode(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("siteId")
+			Long siteId,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("externalReferenceCode")
+			String externalReferenceCode)
+		throws Exception {
+
+		return new DocumentShortcut();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/document-shortcuts/by-external-reference-code/{externalReferenceCode}' -d $'{"externalReferenceCode": ___, "folderId": ___, "targetDocumentId": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "siteId"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "externalReferenceCode"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "DocumentShortcut")
+		}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.Path(
+		"/sites/{siteId}/document-shortcuts/by-external-reference-code/{externalReferenceCode}"
+	)
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@javax.ws.rs.PUT
+	@Override
+	public DocumentShortcut putSiteDocumentShortcutByExternalReferenceCode(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("siteId")
+			Long siteId,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("externalReferenceCode")
+			String externalReferenceCode,
+			DocumentShortcut documentShortcut)
+		throws Exception {
+
+		return new DocumentShortcut();
+	}
+
 	@Override
 	@SuppressWarnings("PMD.UnusedLocalVariable")
 	public void create(
@@ -785,6 +923,64 @@ public abstract class BaseDocumentShortcutResourceImpl
 			else {
 				throw new NotSupportedException(
 					"One of the following parameters must be specified: [assetLibraryId, siteId]");
+			}
+		}
+
+		if (StringUtil.equalsIgnoreCase(createStrategy, "UPSERT")) {
+			String updateStrategy = (String)parameters.getOrDefault(
+				"updateStrategy", "UPDATE");
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+				documentShortcutUnsafeFunction = documentShortcut ->
+					putSiteDocumentShortcutByExternalReferenceCode(
+						documentShortcut.getSiteId() != null ?
+							documentShortcut.getSiteId() :
+								(Long)parameters.get("siteId"),
+						documentShortcut.getExternalReferenceCode(),
+						documentShortcut);
+			}
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
+				documentShortcutUnsafeFunction = documentShortcut -> {
+					DocumentShortcut persistedDocumentShortcut = null;
+
+					try {
+						DocumentShortcut getDocumentShortcut =
+							getSiteDocumentShortcutByExternalReferenceCode(
+								documentShortcut.getSiteId() != null ?
+									documentShortcut.getSiteId() :
+										(Long)parameters.get("siteId"),
+								documentShortcut.getExternalReferenceCode());
+
+						persistedDocumentShortcut = patchDocumentShortcut(
+							getDocumentShortcut.getId() != null ?
+								getDocumentShortcut.getId() :
+									_parseLong(
+										(String)parameters.get(
+											"documentShortcutId")),
+							documentShortcut);
+					}
+					catch (NoSuchModelException noSuchModelException) {
+						if (parameters.containsKey("assetLibraryId")) {
+							persistedDocumentShortcut =
+								postAssetLibraryDocumentShortcut(
+									(Long)parameters.get("assetLibraryId"),
+									documentShortcut);
+						}
+						else if (parameters.containsKey("siteId")) {
+							persistedDocumentShortcut =
+								postSiteDocumentShortcut(
+									(Long)parameters.get("siteId"),
+									documentShortcut);
+						}
+						else {
+							throw new NotSupportedException(
+								"One of the following parameters must be specified: [assetLibraryId]");
+						}
+					}
+
+					return persistedDocumentShortcut;
+				};
 			}
 		}
 
@@ -821,7 +1017,7 @@ public abstract class BaseDocumentShortcutResourceImpl
 	}
 
 	public Set<String> getAvailableCreateStrategies() {
-		return SetUtil.fromArray("INSERT");
+		return SetUtil.fromArray("INSERT", "UPSERT");
 	}
 
 	public Set<String> getAvailableUpdateStrategies() {

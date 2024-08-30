@@ -753,6 +753,16 @@ public class ServletDataImpl implements ServletData {
 							DocumentShortcutResourceImpl.class,
 							"postSiteDocumentShortcutBatch"));
 					put(
+						"mutation#deleteSiteDocumentShortcutByExternalReferenceCode",
+						new ObjectValuePair<>(
+							DocumentShortcutResourceImpl.class,
+							"deleteSiteDocumentShortcutByExternalReferenceCode"));
+					put(
+						"mutation#updateSiteDocumentShortcutByExternalReferenceCode",
+						new ObjectValuePair<>(
+							DocumentShortcutResourceImpl.class,
+							"putSiteDocumentShortcutByExternalReferenceCode"));
+					put(
 						"mutation#deleteKnowledgeBaseArticle",
 						new ObjectValuePair<>(
 							KnowledgeBaseArticleResourceImpl.class,
@@ -2034,6 +2044,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							DocumentShortcutResourceImpl.class,
 							"getSiteDocumentShortcutsPage"));
+					put(
+						"query#documentShortcutByExternalReferenceCode",
+						new ObjectValuePair<>(
+							DocumentShortcutResourceImpl.class,
+							"getSiteDocumentShortcutByExternalReferenceCode"));
 					put(
 						"query#knowledgeBaseArticle",
 						new ObjectValuePair<>(

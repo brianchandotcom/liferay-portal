@@ -13031,7 +13031,7 @@ paths:
             # @review
             description:
                 Deletes the site's document shortcut by external reference code returns a 204 if the operation succeeds.
-            operationId: deleteSiteDocumentShortcutsByExternalReferenceCode
+            operationId: deleteSiteDocumentShortcutByExternalReferenceCode
             parameters:
                 - in: path
                   name: siteId
@@ -13054,7 +13054,7 @@ paths:
             # @review
             description:
                 Retrieves the site's document shortcut by external reference code.
-            operationId: getSiteDocumentShortcutsByExternalReferenceCode
+            operationId: getSiteDocumentShortcutByExternalReferenceCode
             parameters:
                 - in: path
                   name: siteId
@@ -13078,7 +13078,7 @@ paths:
                                 $ref: "#/components/schemas/DocumentShortcut"
             tags: ["DocumentShortcut"]
         put:
-            operationId: putSiteDocumentShortcutsByExternalReferenceCode
+            operationId: putSiteDocumentShortcutByExternalReferenceCode
             parameters:
                 - in: path
                   name: siteId

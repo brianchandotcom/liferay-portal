@@ -1100,7 +1100,7 @@ public class ClientExtensionProjectConfigurator
 		else if (Objects.equals(clientExtension.type, "globalJS")) {
 			_validateGlobalJSScriptElementAttributes(clientExtension);
 			_validateTypeSettingsBoolean(
-				clientExtension, false, "restrictedToAdminPages");
+				clientExtension, "restrictedToAdminPages");
 			_validateTypeSettingsValues(
 				clientExtension, "scope", "instance", "page");
 			_validateTypeSettingsValues(
@@ -1213,14 +1213,13 @@ public class ClientExtensionProjectConfigurator
 	}
 
 	private void _validateTypeSettingsBoolean(
-			ClientExtension clientExtension, boolean required,
-			String typeSettingsKey)
+			ClientExtension clientExtension, String typeSettingsKey)
 		throws GradleException {
 
 		Object typeSettingsValue = clientExtension.typeSettings.get(
 			typeSettingsKey);
 
-		if (((typeSettingsValue == null) && !required) ||
+		if ((typeSettingsValue == null) ||
 			(typeSettingsValue instanceof Boolean)) {
 
 			return;

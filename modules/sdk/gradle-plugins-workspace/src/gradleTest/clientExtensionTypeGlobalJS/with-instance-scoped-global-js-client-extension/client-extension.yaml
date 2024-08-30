@@ -1,4 +1,4 @@
-instance-scoped-global-js-client-extension:
+with-instance-scoped-global-js-client-extension:
     restrictedToAdminPages: true
     scope: "instance"
     scriptLocation: "head"

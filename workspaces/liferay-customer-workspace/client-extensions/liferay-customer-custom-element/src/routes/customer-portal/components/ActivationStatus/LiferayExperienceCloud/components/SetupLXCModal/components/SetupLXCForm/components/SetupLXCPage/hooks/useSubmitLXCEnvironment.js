@@ -102,7 +102,7 @@ export default function useSubmitLXCEnvironment(
 								lxcActivationFields.incidentManagementFullName,
 							primaryRegion: lxcActivationFields.primaryRegion,
 							projectId: lxcActivationFields.projectId,
-							r_accountEntryToLXCEnvironment_accountEntryId:
+							r_liferayExperienceCloudEnvironment_accountEntryId:
 								project.id,
 						},
 					},

@@ -1,6 +1,6 @@
 {
 	"accountEntryRestricted": true,
-	"accountEntryRestrictedObjectFieldName": "r_accountEntryToLXCEnvironment_accountEntryId",
+	"accountEntryRestrictedObjectFieldName": "r_liferayExperienceCloudEnvironment_accountEntryId",
 	"label": {
 		"en-US": "Liferay Experience Cloud Environment"
 	},

@@ -69,6 +69,14 @@ public class CPOptionCategoryServiceUtil {
 		return getService().fetchCPOptionCategory(cpOptionCategoryId);
 	}
 
+	public static CPOptionCategory fetchCPOptionCategoryByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return getService().fetchCPOptionCategoryByExternalReferenceCode(
+			externalReferenceCode, companyId);
+	}
+
 	public static CPOptionCategory getCPOptionCategory(long cpOptionCategoryId)
 		throws PortalException {
 

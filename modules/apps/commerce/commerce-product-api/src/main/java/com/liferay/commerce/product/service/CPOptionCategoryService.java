@@ -68,6 +68,11 @@ public interface CPOptionCategoryService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPOptionCategory fetchCPOptionCategoryByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPOptionCategory getCPOptionCategory(long cpOptionCategoryId)
 		throws PortalException;
 

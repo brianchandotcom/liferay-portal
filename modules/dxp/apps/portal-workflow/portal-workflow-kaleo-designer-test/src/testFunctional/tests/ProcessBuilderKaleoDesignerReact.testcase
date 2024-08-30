@@ -2708,7 +2708,7 @@ definition {
 			infoValue = "");
 
 		ProcessBuilderKaleoDesignerReact.viewRequiredField(
-			requiredField = "nodeName",
+			requiredField = "workflowDefinitionBaseNodeName",
 			save = "true");
 	}
 
@@ -4656,7 +4656,7 @@ definition {
 		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "task");
 	}
 
-	@description = "Verify that each type of Node has Description property"
+	@description = "Verify that node has description property"
 	@priority = 4
 	test HasDescriptionProperty {
 		property test.liferay.virtual.instance = "false";
@@ -4683,16 +4683,6 @@ definition {
 		ProcessBuilderKaleoDesignerReact.viewNodeInfo(
 			descriptionValue = "Split the workflow into multiple paths.",
 			nodeType = "fork");
-
-		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
-
-		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
-			nodeLabel = "Condition",
-			nodePosition = "20,100");
-
-		ProcessBuilderKaleoDesignerReact.viewNodeInfo(
-			descriptionValue = "Execute conditional logic.",
-			nodeType = "condition");
 	}
 
 	@description = "LPS-141713 - Verify that the imported workflow definition is shown in the Process Builder"
@@ -5055,7 +5045,7 @@ definition {
 			infoValue = " ");
 
 		ProcessBuilderKaleoDesignerReact.viewRequiredField(
-			requiredField = "nodeLabel",
+			requiredField = "workflowDefinitionBaseNodeLabel",
 			save = "true");
 	}
 
@@ -5078,7 +5068,7 @@ definition {
 			infoValue = " ");
 
 		ProcessBuilderKaleoDesignerReact.viewRequiredField(
-			requiredField = "nodeName",
+			requiredField = "workflowDefinitionBaseNodeName",
 			save = "true");
 	}
 

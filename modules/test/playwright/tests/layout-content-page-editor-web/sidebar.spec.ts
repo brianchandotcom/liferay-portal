@@ -223,6 +223,45 @@ test.describe('Fragments Panel', () => {
 
 		await expect(page.getByText(unpublishedFragmentName)).not.toBeVisible();
 	});
+
+	test('Can remove search text when pressing backspace', async ({
+		apiHelpers,
+		page,
+		pageEditorPage,
+		site,
+	}) => {
+
+		// Create content page and go to edit mode
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		// Open the "Fragments and Widgets" panel
+
+		await pageEditorPage.goToSidebarTab('Fragments and Widgets');
+
+		// Find the search input and type some text
+
+		const searchInput = page.getByPlaceholder('Search...');
+
+		await searchInput.fill('Heading');
+
+		// Verify the search text is present
+
+		await expect(searchInput).toHaveValue('Heading');
+
+		// Press Backspace to remove the text
+
+		await searchInput.press('Backspace');
+
+		// Verify the search text has been removed
+
+		await expect(searchInput).toHaveValue('Headin');
+	});
 });
 
 test.describe('Page Contents Panel', () => {

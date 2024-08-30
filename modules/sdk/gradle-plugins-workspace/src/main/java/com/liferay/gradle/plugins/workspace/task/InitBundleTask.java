@@ -29,7 +29,6 @@ import org.gradle.api.tasks.TaskAction;
 
 /**
  * @author David Truong
- * @author Drew Brokke
  */
 public class InitBundleTask extends DefaultTask {
 
@@ -75,6 +74,7 @@ public class InitBundleTask extends DefaultTask {
 		}
 
 		initBundleCommand.setEnvironment(getConfigEnvironment());
+
 		initBundleCommand.setLiferayHomeDir(getDestinationDir());
 
 		FileCollection providedModules = getProvidedModules();

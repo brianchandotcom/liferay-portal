@@ -22,6 +22,7 @@ import {
 	EFilterType,
 	IDateFilter,
 	IField,
+	IFieldTreeItem,
 	IFilter,
 	IFilterTypeProps,
 	ISelectionFilter,
@@ -29,13 +30,14 @@ import {
 import {IDataSetSectionProps} from '../DataSet';
 import ClientExtensionFilterFormContent from './components/ClientExtensionFilter';
 import DateRangeFilterFormContent from './components/DateRangeFilter';
+import FilterList from './components/FilterList';
 import SelectionFilterFormContent from './components/selection_filter/SelectionFilter';
+import {visit} from '../../components/FieldSelectModalContent';
 
 import '../../../css/Filters.scss';
 import {IDataSet} from '../../DataSets';
 import {FDSViewType} from '../../FDSViews';
 import sortItems from '../../utils/sortItems';
-import FilterList from './components/FilterList';
 
 const FILTER_MODE = {
 	CREATION: 'filter-creation',
@@ -306,13 +308,43 @@ function Filters({
 	};
 
 	const onCreationButtonClick = (filterType: EFilterType) => {
-		const availableFieldsList = fields.filter((item) =>
-			FILTER_TYPES[filterType as EFilterType].availableFieldsFilter(item)
-		);
+		let availableFieldsListLength = 0;
 
-		setAvailableFields(availableFieldsList);
+		if (Liferay.FeatureFlags['LPD-25905']) {
+			const availableFfilterTypeFields = JSON.parse(
+				JSON.stringify(fields)
+			);
 
-		if (!availableFieldsList.length) {
+			visit(availableFfilterTypeFields, (field: IFieldTreeItem) => {
+				if (
+					!FILTER_TYPES[
+						filterType as EFilterType
+					].availableFieldsFilter(field)
+				) {
+					field.disabled = true;
+				}
+				else {
+					availableFieldsListLength++;
+
+					field.disabled = false;
+				}
+			});
+
+			setAvailableFields(availableFfilterTypeFields);
+		}
+		else {
+			const availableFieldsList = fields.filter((item) =>
+				FILTER_TYPES[filterType as EFilterType].availableFieldsFilter(
+					item
+				)
+			);
+
+			availableFieldsListLength = availableFieldsList.length;
+
+			setAvailableFields(availableFieldsList);
+		}
+
+		if (!availableFieldsListLength) {
 			openModal({
 				bodyHTML: Liferay.Language.get(
 					'there-are-no-fields-compatible-with-this-type-of-filter'

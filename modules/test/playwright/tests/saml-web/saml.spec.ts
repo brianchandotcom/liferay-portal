@@ -1158,3 +1158,101 @@ test('Verify SSO login and logout mechanism works the same when having multiple 
 
 	await deleteAfterTestVirtualInstances.delete(sp2Name);
 });
+
+test('Verify the SAML configuration is not applied to the sites when ACS is disabled.  See LPS-170940.', async ({
+	browser,
+}) => {
+	const idpAdminPage = await configureVirtualInstanceForSaml(
+		browser,
+		DEFAULT_IDP_NAME,
+		'Identity Provider'
+	);
+
+	const spAdminPage = await configureVirtualInstanceForSaml(
+		browser,
+		DEFAULT_SP_NAME,
+		'Service Provider'
+	);
+
+	await connectSpAndIdp(
+		idpAdminPage,
+		DEFAULT_IDP_NAME,
+		spAdminPage,
+		DEFAULT_SP_NAME
+	);
+
+	// Add site to SP
+
+	const defaultBaseUrl = liferayConfig.environment.baseUrl;
+
+	liferayConfig.environment.baseUrl = DEFAULT_SP_URL;
+
+	const apiHelpers = new ApiHelpers(spAdminPage);
+
+	liferayConfig.environment.baseUrl = defaultBaseUrl;
+
+	const site = await apiHelpers.headlessSite.createSite({
+		name: getRandomString(),
+		templateKey: 'com.liferay.site.initializer.welcome',
+		templateType: 'site-initializer',
+	});
+
+	await spAdminPage.goto(`/web/${site.name}`);
+
+	await spAdminPage.waitForTimeout(1000);
+
+	// Configure site virtual hostname
+
+	const siteSettingsPage = new SiteSettingsPage(spAdminPage);
+
+	await siteSettingsPage.goToSiteSetting('Site Configuration', 'Site URL');
+
+	const siteVirtualHostName = 'www.easy.com';
+
+	await siteSettingsPage.page
+		.getByLabel('Virtual Host')
+		.fill(siteVirtualHostName);
+
+	await siteSettingsPage.page.getByRole('button', {name: 'Save'}).click();
+
+	await waitForSuccessAlert(siteSettingsPage.page);
+
+	// Create IdP user
+
+	const userAccount = await createUser(idpAdminPage, DEFAULT_IDP_NAME);
+
+	// Disable ACS on IdP
+
+	const identityProvider: TIdentityProvider = {
+		authnRequestSigningAllowsDynamicAcsUrl: false,
+	};
+
+	await configureIdentityProvider(idpAdminPage, identityProvider);
+
+	// Assert SP initiated SSO from default SP virtual hostname works
+
+	let spInstancePage = await performSpInitiatedSSO(
+		browser,
+		userAccount.emailAddress,
+		DEFAULT_SP_URL
+	);
+
+	await performLogout(spInstancePage);
+
+	// Assert SP initiated SSO from site virtual hostname does not work
+
+	spInstancePage = await performSpInitiatedSSO(
+		browser,
+		userAccount.emailAddress,
+		`http://${siteVirtualHostName}:8080`,
+		false
+	);
+
+	await expect(
+		await spInstancePage.getByRole('button', {name: 'Sign In'})
+	).toBeVisible();
+
+	// Remove site from SP instance
+
+	await apiHelpers.headlessSite.deleteSite(String(site.id));
+});

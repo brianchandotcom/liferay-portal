@@ -6,7 +6,6 @@
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
-import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.listener.FragmentEntryLinkListener;
 import com.liferay.fragment.listener.FragmentEntryLinkListenerRegistry;
 import com.liferay.fragment.model.FragmentEntryLink;
@@ -27,8 +26,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
-
-import java.util.Iterator;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -61,45 +58,9 @@ public class UpdateConfigurationValuesMVCActionCommand
 			JSONObject defaultEditableValuesJSONObject, String editableValues)
 		throws Exception {
 
-		JSONObject editableValuesJSONObject = _jsonFactory.createJSONObject(
-			editableValues);
-
-		for (String fragmentEntryProcessorKey :
-				_FRAGMENT_ENTRY_PROCESSOR_KEYS) {
-
-			JSONObject editableFragmentEntryProcessorJSONObject =
-				editableValuesJSONObject.getJSONObject(
-					fragmentEntryProcessorKey);
-
-			JSONObject defaultEditableFragmentEntryProcessorJSONObject =
-				defaultEditableValuesJSONObject.getJSONObject(
-					fragmentEntryProcessorKey);
-
-			if (defaultEditableFragmentEntryProcessorJSONObject == null) {
-				continue;
-			}
-
-			if (editableFragmentEntryProcessorJSONObject != null) {
-				Iterator<String> iterator =
-					defaultEditableFragmentEntryProcessorJSONObject.keys();
-
-				while (iterator.hasNext()) {
-					String key = iterator.next();
-
-					if (editableFragmentEntryProcessorJSONObject.has(key)) {
-						defaultEditableFragmentEntryProcessorJSONObject.put(
-							key,
-							editableFragmentEntryProcessorJSONObject.get(key));
-					}
-				}
-			}
-
-			editableValuesJSONObject.put(
-				fragmentEntryProcessorKey,
-				defaultEditableFragmentEntryProcessorJSONObject);
-		}
-
-		return editableValuesJSONObject;
+		return _fragmentEntryLinkManager.mergeEditableValuesJSONObject(
+			defaultEditableValuesJSONObject,
+			_jsonFactory.createJSONObject(editableValues));
 	}
 
 	private JSONObject _processUpdateConfigurationValues(
@@ -160,12 +121,6 @@ public class UpdateConfigurationValuesMVCActionCommand
 			"layoutData", layoutStructure.toJSONObject()
 		);
 	}
-
-	private static final String[] _FRAGMENT_ENTRY_PROCESSOR_KEYS = {
-		FragmentEntryProcessorConstants.
-			KEY_BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
-		FragmentEntryProcessorConstants.KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR
-	};
 
 	@Reference
 	private FragmentEntryLinkListenerRegistry

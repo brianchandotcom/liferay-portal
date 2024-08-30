@@ -5,13 +5,15 @@
 
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
-import ClayForm from '@clayui/form';
+import ClayForm, {ClayInput} from '@clayui/form';
 import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
 import classNames from 'classnames';
 import {InputLocalized} from 'frontend-js-components-web';
+import {openModal} from 'frontend-js-web';
 import React, {useState} from 'react';
 
+import FieldSelectModalContent from '../../../components/FieldSelectModalContent';
 import RequiredMark from '../../../components/RequiredMark';
 import ValidationFeedback from '../../../components/ValidationFeedback';
 import {IField, IFilter} from '../../../utils/types';
@@ -106,6 +108,31 @@ function Configuration({
 		);
 	};
 
+	const openSelectFieldModal = () => {
+		openModal({
+			contentComponent: ({closeModal}: {closeModal: Function}) => (
+				<FieldSelectModalContent
+					closeModal={closeModal}
+					fieldTreeItems={fields}
+					onSaveButtonClick={({
+						selectedFields,
+					}: {
+						selectedFields: Array<IField>;
+					}) => {
+						setSelectedField(selectedFields[0]);
+
+						onChangeField(selectedFields[0]);
+
+						closeModal();
+					}}
+					saveButtonDisabled={false}
+					selectedFields={selectedField ? [selectedField] : []}
+				/>
+			),
+			size: 'full-screen',
+		});
+	};
+
 	return (
 		<>
 			<ClayLayout.SheetSection className="mb-4">
@@ -154,20 +181,48 @@ function Configuration({
 					<RequiredMark />
 				</label>
 
-				<FieldNameDropdown
-					fields={fields}
-					onItemClick={(item: IField) => {
-						const newVal = fields.find((field) => {
-							return field.label === item.label;
-						});
+				{Liferay.FeatureFlags['LPD-25905'] ? (
+					<ClayInput.Group>
+						<ClayInput.GroupItem>
+							<ClayInput
+								placeholder={Liferay.Language.get('select')}
+								readOnly
+								type="text"
+								value={
+									filter
+										? filter?.fieldName
+										: selectedField?.name
+								}
+							/>
+						</ClayInput.GroupItem>
 
-						if (newVal) {
-							setSelectedField(newVal);
+						<ClayInput.GroupItem shrink>
+							<ClayButton
+								disabled={!!filter}
+								displayType="secondary"
+								onClick={openSelectFieldModal}
+								type="submit"
+							>
+								{Liferay.Language.get('select')}
+							</ClayButton>
+						</ClayInput.GroupItem>
+					</ClayInput.Group>
+				) : (
+					<FieldNameDropdown
+						fields={fields}
+						onItemClick={(item: IField) => {
+							const newVal = fields.find((field) => {
+								return field.label === item.label;
+							});
 
-							onChangeField(newVal);
-						}
-					}}
-				/>
+							if (newVal) {
+								setSelectedField(newVal);
+
+								onChangeField(newVal);
+							}
+						}}
+					/>
+				)}
 
 				{fieldInUseValidationError && (
 					<ValidationFeedback

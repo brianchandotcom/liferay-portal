@@ -58,7 +58,7 @@ export const MetricsTitle: Metrics = {
 	[MetricType.Comments]: Liferay.Language.get('comments'),
 	[MetricType.Downloads]: Liferay.Language.get('downloads'),
 	[MetricType.Previews]: Liferay.Language.get('previews'),
-	[MetricType.Ratings]: Liferay.Language.get('rating'),
+	[MetricType.Ratings]: Liferay.Language.get('ratings'),
 	[MetricType.ReadingTime]: Liferay.Language.get('reading-time'),
 	[MetricType.Views]: Liferay.Language.get('views'),
 };

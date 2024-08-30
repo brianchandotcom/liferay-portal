@@ -52,6 +52,12 @@ public class AccountGroupServiceUtil {
 		getService().deleteAccountGroups(accountGroupIds);
 	}
 
+	public static AccountGroup fetchAccountGroup(long accountGroupId)
+		throws PortalException {
+
+		return getService().fetchAccountGroup(accountGroupId);
+	}
+
 	public static AccountGroup fetchAccountGroupByExternalReferenceCode(
 			String externalReferenceCode, long companyId)
 		throws PortalException {

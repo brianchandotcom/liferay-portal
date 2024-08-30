@@ -29,7 +29,6 @@ import java.util.function.Supplier;
 import javax.annotation.Generated;
 
 import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.NotNull;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -40,7 +39,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Generated("")
 @GraphQLName("ProductAccountGroup")
 @JsonFilter("Liferay.Vulcan")
-@Schema(requiredProperties = {"id"})
 @XmlRootElement(name = "ProductAccountGroup")
 public class ProductAccountGroup implements Serializable {
 
@@ -171,7 +169,6 @@ public class ProductAccountGroup implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	@NotNull
 	protected Long id;
 
 	@JsonIgnore

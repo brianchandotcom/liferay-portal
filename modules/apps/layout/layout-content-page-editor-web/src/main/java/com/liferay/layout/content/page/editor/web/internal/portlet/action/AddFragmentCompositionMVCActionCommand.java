@@ -5,7 +5,7 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
-import com.liferay.dynamic.data.mapping.exception.StorageFieldValueException;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentComposition;
@@ -14,12 +14,9 @@ import com.liferay.fragment.service.FragmentCompositionService;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.constants.ContentPageEditorConstants;
 import com.liferay.layout.page.template.serializer.LayoutStructureItemJSONSerializer;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
@@ -30,17 +27,10 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Base64;
-import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.URLUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-
-import java.net.URL;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -115,12 +105,11 @@ public class AddFragmentCompositionMVCActionCommand
 				description, layoutStructureItemJSON, 0,
 				WorkflowConstants.STATUS_APPROVED, serviceContext);
 
-		String previewImageURL = ParamUtil.getString(
-			actionRequest, "previewImageURL");
+		long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
 
-		if (Validator.isNotNull(previewImageURL)) {
+		if (fileEntryId > 0) {
 			FileEntry previewFileEntry = _addPreviewImage(
-				fragmentComposition.getFragmentCompositionId(), previewImageURL,
+				fileEntryId, fragmentComposition.getFragmentCompositionId(),
 				serviceContext, themeDisplay);
 
 			if (previewFileEntry != null) {
@@ -167,65 +156,35 @@ public class AddFragmentCompositionMVCActionCommand
 	}
 
 	private FileEntry _addPreviewImage(
-			long fragmentCompositionId, String url,
+			long fileEntryId, long fragmentCompositionId,
 			ServiceContext serviceContext, ThemeDisplay themeDisplay)
 		throws Exception {
 
-		byte[] bytes = {};
+		FileEntry fileEntry = _dlAppLocalService.getFileEntry(fileEntryId);
 
-		try {
-			if (url.startsWith("data:image/")) {
-				String[] urlParts = url.split(";base64,");
+		Repository repository =
+			PortletFileRepositoryUtil.fetchPortletRepository(
+				themeDisplay.getScopeGroupId(), FragmentPortletKeys.FRAGMENT);
 
-				bytes = Base64.decode(urlParts[1]);
-			}
-			else if (Validator.isUrl(url, true)) {
-				if (StringUtil.startsWith(url, StringPool.SLASH)) {
-					url = _portal.getPortalURL(themeDisplay) + url;
-				}
+		if (repository == null) {
+			serviceContext.setAddGroupPermissions(true);
+			serviceContext.setAddGuestPermissions(true);
 
-				bytes = URLUtil.toByteArray(new URL(url));
-			}
-
-			if (bytes.length == 0) {
-				return null;
-			}
-
-			Repository repository =
-				PortletFileRepositoryUtil.fetchPortletRepository(
-					themeDisplay.getScopeGroupId(),
-					FragmentPortletKeys.FRAGMENT);
-
-			if (repository == null) {
-				serviceContext.setAddGroupPermissions(true);
-				serviceContext.setAddGuestPermissions(true);
-
-				repository = PortletFileRepositoryUtil.addPortletRepository(
-					themeDisplay.getScopeGroupId(),
-					FragmentPortletKeys.FRAGMENT, serviceContext);
-			}
-
-			return _portletFileRepository.addPortletFileEntry(
-				themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
-				FragmentComposition.class.getName(), fragmentCompositionId,
-				FragmentPortletKeys.FRAGMENT, repository.getDlFolderId(), bytes,
-				fragmentCompositionId + "_preview",
-				MimeTypesUtil.getContentType(url), false);
+			repository = PortletFileRepositoryUtil.addPortletRepository(
+				themeDisplay.getScopeGroupId(), FragmentPortletKeys.FRAGMENT,
+				serviceContext);
 		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(exception);
-			}
 
-			throw new StorageFieldValueException(
-				_language.format(
-					themeDisplay.getRequest(), "the-file-x-cannot-be-saved",
-					url));
-		}
+		return _portletFileRepository.addPortletFileEntry(
+			null, themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
+			FragmentComposition.class.getName(), fragmentCompositionId,
+			FragmentPortletKeys.FRAGMENT, repository.getDlFolderId(),
+			fileEntry.getContentStream(), fragmentCompositionId + "_preview",
+			fileEntry.getMimeType(), false);
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		AddFragmentCompositionMVCActionCommand.class);
+	@Reference
+	private DLAppLocalService _dlAppLocalService;
 
 	@Reference
 	private FragmentCollectionService _fragmentCollectionService;

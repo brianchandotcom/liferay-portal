@@ -10,21 +10,21 @@ import FragmentService from '../services/FragmentService';
 
 export default function addFragmentComposition({
 	description,
+	fileEntryId,
 	fragmentCollectionId,
 	itemId,
 	name,
-	previewImageURL,
 	saveInlineContent,
 	saveMappingConfiguration,
 }) {
 	return (dispatch, getState) => {
 		return FragmentService.addFragmentComposition({
 			description,
+			fileEntryId,
 			fragmentCollectionId,
 			itemId,
 			name,
 			onNetworkStatus: dispatch,
-			previewImageURL,
 			saveInlineContent,
 			saveMappingConfiguration,
 			segmentsExperienceId: getState().segmentsExperienceId,

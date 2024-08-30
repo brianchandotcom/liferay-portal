@@ -66,10 +66,10 @@ const SaveFragmentCompositionModal = ({itemId, onCloseModal}) => {
 			dispatch(
 				addFragmentComposition({
 					description,
+					fileEntryId: thumbnail.fileEntryId,
 					fragmentCollectionId,
 					itemId: itemId || activeItemId,
 					name,
-					previewImageURL: thumbnail.url,
 					saveInlineContent,
 					saveMappingConfiguration,
 				})

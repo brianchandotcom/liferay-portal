@@ -77,6 +77,10 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 		).put(
 			"channelItemSelectorURL", cpDefinitionsDisplayContext.getChannelItemSelectorUrl()
 		).put(
+			"checkedAccountGroupIds", cpDefinitionsDisplayContext.getCheckedCommerceAccountGroupIds()
+		).put(
+			"checkedChannelIds", cpDefinitionsDisplayContext.getCheckedCommerceChannelIds()
+		).put(
 			"productId", cpDefinition.getCProductId()
 		).build()
 	%>'

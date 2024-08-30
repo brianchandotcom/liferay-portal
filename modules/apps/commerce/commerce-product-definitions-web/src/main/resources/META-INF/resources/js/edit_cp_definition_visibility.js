@@ -29,6 +29,8 @@ function handleEvent({
 
 	return AdminCatalogResource.updateProduct(productId, formattedData).finally(
 		() => {
+			window.location.reload();
+
 			Liferay.fire(commerceEvents.FDS_UPDATE_DISPLAY, {
 				id: dataSetId,
 			});
@@ -48,6 +50,8 @@ export default function ({
 	accountGroupItemSelectorURL,
 	channelDataSetId,
 	channelItemSelectorURL,
+	checkedAccountGroupIds,
+	checkedChannelIds,
 	namespace,
 	productId,
 }) {
@@ -62,6 +66,12 @@ export default function ({
 					if (!selectedItems || !selectedItems.length) {
 						return;
 					}
+
+					const accountGroupIds = checkedAccountGroupIds.split(',');
+
+					accountGroupIds.map((accountGroupId) => {
+						selectedItems.push({value: accountGroupId});
+					});
 
 					handleEvent({
 						dataSetId: accountGroupDataSetId,
@@ -89,6 +99,12 @@ export default function ({
 					if (!selectedItems || !selectedItems.length) {
 						return;
 					}
+
+					const channelIds = checkedChannelIds.split(',');
+
+					channelIds.map((channelId) => {
+						selectedItems.push({value: channelId});
+					});
 
 					handleEvent({
 						dataSetId: channelDataSetId,

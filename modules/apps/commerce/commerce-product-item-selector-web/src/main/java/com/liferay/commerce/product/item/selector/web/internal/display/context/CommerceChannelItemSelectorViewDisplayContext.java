@@ -13,6 +13,7 @@ import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import javax.portlet.PortletURL;
 
@@ -96,8 +97,11 @@ public class CommerceChannelItemSelectorViewDisplayContext
 	}
 
 	private long[] _getCheckedCommerceChannelIds() {
-		return ParamUtil.getLongValues(
-			cpRequestHelper.getRenderRequest(), "checkedCommerceChannelIds");
+		return StringUtil.split(
+			ParamUtil.getString(
+				cpRequestHelper.getRenderRequest(),
+				"checkedCommerceChannelIds"),
+			0L);
 	}
 
 	private String _getClassName() {

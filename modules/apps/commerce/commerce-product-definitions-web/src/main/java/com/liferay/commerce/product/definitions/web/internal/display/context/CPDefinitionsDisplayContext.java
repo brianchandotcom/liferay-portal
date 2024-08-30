@@ -120,12 +120,7 @@ public class CPDefinitionsDisplayContext
 				commerceAccountGroupItemSelectorCriterion)
 		).setParameter(
 			"checkedCommerceAccountGroupIds",
-			StringUtil.merge(
-				TransformUtil.transformToLongArray(
-					_accountGroupRelLocalService.getAccountGroupRels(
-						CPDefinition.class.getName(), getCPDefinitionId(),
-						QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
-					AccountGroupRel::getAccountGroupId))
+			getCheckedCommerceAccountGroupIds()
 		).setParameter(
 			"permissionUserId",
 			() -> {
@@ -193,13 +188,7 @@ public class CPDefinitionsDisplayContext
 				requestBackedPortletURLFactory, "channelSelectItem",
 				commerceChannelItemSelectorCriterion)
 		).setParameter(
-			"checkedCommerceChannelIds",
-			StringUtil.merge(
-				TransformUtil.transformToLongArray(
-					_commerceChannelRelService.getCommerceChannelRels(
-						CPDefinition.class.getName(), getCPDefinitionId(), null,
-						QueryUtil.ALL_POS, QueryUtil.ALL_POS),
-					CommerceChannelRel::getCommerceChannelId))
+			"checkedCommerceChannelIds", getCheckedCommerceChannelIds()
 		).buildString();
 	}
 
@@ -225,6 +214,24 @@ public class CPDefinitionsDisplayContext
 				dropdownItem.setTarget("event");
 			}
 		).build();
+	}
+
+	public String getCheckedCommerceAccountGroupIds() throws PortalException {
+		return StringUtil.merge(
+			TransformUtil.transformToLongArray(
+				_accountGroupRelLocalService.getAccountGroupRels(
+					CPDefinition.class.getName(), getCPDefinitionId(),
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
+				AccountGroupRel::getAccountGroupId));
+	}
+
+	public String getCheckedCommerceChannelIds() throws PortalException {
+		return StringUtil.merge(
+			TransformUtil.transformToLongArray(
+				_commerceChannelRelService.getCommerceChannelRels(
+					CPDefinition.class.getName(), getCPDefinitionId(), null,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+				CommerceChannelRel::getCommerceChannelId));
 	}
 
 	public List<CommerceCatalog> getCommerceCatalogs() throws PortalException {
@@ -528,7 +535,7 @@ public class CPDefinitionsDisplayContext
 				WebKeys.THEME_DISPLAY);
 
 		return _portletResourcePermission.contains(
-			themeDisplay.getPermissionChecker(), null,
+			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroupId(),
 			CPActionKeys.MANAGE_COMMERCE_PRODUCT_CHANNEL_VISIBILITY);
 	}
 

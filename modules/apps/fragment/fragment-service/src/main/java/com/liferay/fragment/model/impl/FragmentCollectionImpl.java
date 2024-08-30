@@ -119,6 +119,7 @@ public class FragmentCollectionImpl extends FragmentCollectionBaseImpl {
 		return _resourcesFolderId;
 	}
 
+	@Override
 	public Map<String, FileEntry> getResourcesMap() throws PortalException {
 		return _getResourcesMap(
 			PortletFileRepositoryUtil.getPortletFolder(getResourcesFolderId()),

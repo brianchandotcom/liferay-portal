@@ -2960,6 +2960,11 @@ include-and-override=portal-liferay-online.properties</echo>
 						token="${database.mysql.driver}"
 						value="${database.mariadb.driver}"
 					/>
+					<replace
+						file="portal-impl/src/portal-ext.properties"
+						token="jdbc:mysql:"
+						value="jdbc:mariadb:"
+					/>
 				</then>
 			</if>
 
@@ -5251,6 +5256,11 @@ include-and-override=portal-liferay-online.properties</echo>
 								file="${liferay.home}/tools/portal-tools-db-upgrade-client/portal-upgrade-database.properties"
 								token="${database.mysql.driver}"
 								value="${database.mariadb.driver}"
+							/>
+							<replace
+								file="${liferay.home}/tools/portal-tools-db-upgrade-client/portal-upgrade-database.properties"
+								token="jdbc:mysql:"
+								value="jdbc:mariadb:"
 							/>
 						</then>
 					</if>

@@ -48,6 +48,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.TreeSet;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -99,12 +100,33 @@ public class DBSchemaImporterProcess {
 		List<String> sourceColumnNames = _sourceColumnNamesMap.get(
 			sourceTableName);
 
+		List<String> targetColumnNames = _targetColumnNamesMap.get(
+			targetTableName);
+
+		if (sourceColumnNames.size() > targetColumnNames.size()) {
+			throw new IllegalStateException(
+				StringBundler.concat(
+					"Incorrect number of columns for table ", targetTableName,
+					". Source has ", sourceColumnNames.size(),
+					" and target has ", targetColumnNames.size(),
+					StringPool.PERIOD));
+		}
+		else if (sourceColumnNames.size() < targetColumnNames.size()) {
+			Set<String> sourceColumnNamesSet = new TreeSet<String>(
+				String.CASE_INSENSITIVE_ORDER) {
+
+				{
+					addAll(sourceColumnNames);
+				}
+			};
+
+			targetColumnNames.removeIf(
+				columnName -> !sourceColumnNamesSet.contains(columnName));
+		}
+
 		String selectSQL = StringBundler.concat(
 			"select ", StringUtil.merge(sourceColumnNames), " from ",
 			sourceTableName);
-
-		List<String> targetColumnNames = _targetColumnNamesMap.get(
-			targetTableName);
 
 		String insertSQL = StringBundler.concat(
 			"insert into ", targetTableName, "(",

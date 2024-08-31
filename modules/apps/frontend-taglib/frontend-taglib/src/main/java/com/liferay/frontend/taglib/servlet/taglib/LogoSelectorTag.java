@@ -7,6 +7,7 @@ package com.liferay.frontend.taglib.servlet.taglib;
 
 import com.liferay.frontend.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
@@ -181,6 +182,11 @@ public class LogoSelectorTag extends IncludeTag {
 			"/image_uploader/upload_image"
 		).setParameter(
 			"aspectRatio", getAspectRatio()
+		).setParameter(
+			"ctCollectionId",
+			ParamUtil.getLong(
+				httpServletRequest, "ctCollectionId",
+				CTCollectionThreadLocal.getCTCollectionId())
 		).setParameter(
 			"currentLogoURL", "[$CURRENT_LOGO_URL$]"
 		).setParameter(

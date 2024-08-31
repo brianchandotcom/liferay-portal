@@ -37,6 +37,11 @@ public class BasicAuthHeaderAuthVerifier implements AuthVerifier {
 	}
 
 	@Override
+	public boolean isForceable() {
+		return true;
+	}
+
+	@Override
 	public AuthVerifierResult verify(
 			AccessControlContext accessControlContext, Properties properties)
 		throws AuthException {

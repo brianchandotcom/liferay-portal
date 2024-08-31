@@ -5,6 +5,7 @@
 
 package com.liferay.portal.kernel.upgrade.recorder;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.util.CallableStatementWrapper;
 import com.liferay.portal.kernel.dao.jdbc.util.ConnectionWrapper;
 import com.liferay.portal.kernel.dao.jdbc.util.PreparedStatementWrapper;
@@ -21,7 +22,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author István András Dézsi
@@ -29,6 +32,14 @@ import java.util.List;
 public class UpgradeSQLRecorder {
 
 	public static Connection getConnectionWrapper(Connection connection) {
+		return getConnectionWrapper(connection, StringPool.BLANK);
+	}
+
+	public static Connection getConnectionWrapper(
+		Connection connection, String upgradeProcessClassName) {
+
+		_upgradeProcessClassName = upgradeProcessClassName;
+
 		if (!_enabled) {
 			return connection;
 		}
@@ -153,8 +164,14 @@ public class UpgradeSQLRecorder {
 		return _failedSQLs;
 	}
 
+	public static Map<String, Long> getSQLExecutionTimes() {
+		return _sqlExecutionTimes;
+	}
+
 	public static void start() {
 		_failedSQLs.clear();
+
+		_sqlExecutionTimes.clear();
 
 		_enabled = true;
 	}
@@ -165,6 +182,8 @@ public class UpgradeSQLRecorder {
 
 	private static <T> T _execute(SQLCallable<T> sqlCallable, Object object)
 		throws SQLException {
+
+		long startTime = System.currentTimeMillis();
 
 		try {
 			return sqlCallable.call();
@@ -186,6 +205,24 @@ public class UpgradeSQLRecorder {
 			}
 
 			throw sqlException;
+		}
+		finally {
+			long endTime = System.currentTimeMillis();
+
+			String sql = _extractSQL(object);
+
+			if (sql != null) {
+				long duration = endTime - startTime;
+
+				if (Validator.isBlank(_upgradeProcessClassName)) {
+					_sqlExecutionTimes.put(sql, duration);
+				}
+				else {
+					_sqlExecutionTimes.put(
+						_upgradeProcessClassName + StringPool.PIPE + sql,
+						duration);
+				}
+			}
 		}
 	}
 
@@ -333,6 +370,8 @@ public class UpgradeSQLRecorder {
 
 	private static boolean _enabled;
 	private static final List<String> _failedSQLs = new ArrayList<>();
+	private static final Map<String, Long> _sqlExecutionTimes = new HashMap<>();
+	private static String _upgradeProcessClassName = StringPool.BLANK;
 
 	@FunctionalInterface
 	private interface SQLCallable<R> {

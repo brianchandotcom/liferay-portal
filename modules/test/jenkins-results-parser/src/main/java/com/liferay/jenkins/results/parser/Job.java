@@ -53,6 +53,10 @@ public interface Job {
 
 	public List<String> getDistNodes(String networkName);
 
+	public Set<String> getDistRequiredBatchNames();
+
+	public Set<String> getDistRequiredSegmentNames();
+
 	public DistType getDistType();
 
 	public Set<String> getDistTypes();
@@ -79,6 +83,10 @@ public interface Job {
 
 	public List<SegmentTestClassGroup> getSegmentTestClassGroups();
 
+	public Set<String> getStandaloneBatchNames();
+
+	public Set<String> getStandaloneSegmentNames();
+
 	public String getTestPropertiesContent();
 
 	public int getTimeoutMinutes(JenkinsMaster jenkinsMaster);
@@ -88,6 +96,8 @@ public interface Job {
 	public boolean isJUnitTestsModifiedOnly();
 
 	public boolean isSegmentEnabled();
+
+	public boolean isStandaloneBatchEnabled();
 
 	public boolean isValidationRequired();
 

@@ -352,6 +352,57 @@ public abstract class BaseJob implements Job {
 	}
 
 	@Override
+	public Set<String> getDistRequiredBatchNames() {
+		if (!isStandaloneBatchEnabled()) {
+			return getBatchNames();
+		}
+
+		Set<String> batchNames = new TreeSet<>();
+
+		JobProperty jobProperty = getJobProperty("test.batch.names.standalone");
+
+		Set<String> standaloneTestBatchNames = getSetFromString(
+			jobProperty.getValue());
+
+		for (BatchTestClassGroup batchTestClassGroup :
+				getBatchTestClassGroups()) {
+
+			String batchName = batchTestClassGroup.getBatchName();
+
+			if (!standaloneTestBatchNames.contains(batchName)) {
+				batchNames.add(batchName);
+			}
+		}
+
+		return batchNames;
+	}
+
+	public Set<String> getDistRequiredSegmentNames() {
+		if (!isStandaloneBatchEnabled()) {
+			return getSegmentNames();
+		}
+
+		Set<String> segmentNames = new TreeSet<>();
+
+		JobProperty jobProperty = getJobProperty("test.batch.names.standalone");
+
+		Set<String> standaloneTestBatchNames = getSetFromString(
+			jobProperty.getValue());
+
+		for (SegmentTestClassGroup segmentTestClassGroup :
+				getSegmentTestClassGroups()) {
+
+			if (!standaloneTestBatchNames.contains(
+					segmentTestClassGroup.getBatchName())) {
+
+				segmentNames.add(segmentTestClassGroup.getSegmentName());
+			}
+		}
+
+		return segmentNames;
+	}
+
+	@Override
 	public DistType getDistType() {
 		return DistType.CI;
 	}
@@ -528,6 +579,58 @@ public abstract class BaseJob implements Job {
 		}
 
 		return segmentTestClassGroups;
+	}
+
+	@Override
+	public Set<String> getStandaloneBatchNames() {
+		if (!isStandaloneBatchEnabled()) {
+			return Collections.emptySet();
+		}
+
+		Set<String> batchNames = new TreeSet<>();
+
+		JobProperty jobProperty = getJobProperty("test.batch.names.standalone");
+
+		Set<String> standaloneTestBatchNames = getSetFromString(
+			jobProperty.getValue());
+
+		for (BatchTestClassGroup batchTestClassGroup :
+				getBatchTestClassGroups()) {
+
+			String batchName = batchTestClassGroup.getBatchName();
+
+			if (standaloneTestBatchNames.contains(batchName)) {
+				batchNames.add(batchName);
+			}
+		}
+
+		return batchNames;
+	}
+
+	@Override
+	public Set<String> getStandaloneSegmentNames() {
+		if (!isStandaloneBatchEnabled()) {
+			return Collections.emptySet();
+		}
+
+		Set<String> segmentNames = new TreeSet<>();
+
+		JobProperty jobProperty = getJobProperty("test.batch.names.standalone");
+
+		Set<String> standaloneTestBatchNames = getSetFromString(
+			jobProperty.getValue());
+
+		for (SegmentTestClassGroup segmentTestClassGroup :
+				getSegmentTestClassGroups()) {
+
+			if (standaloneTestBatchNames.contains(
+					segmentTestClassGroup.getBatchName())) {
+
+				segmentNames.add(segmentTestClassGroup.getSegmentName());
+			}
+		}
+
+		return segmentNames;
 	}
 
 	@Override
@@ -752,6 +855,11 @@ public abstract class BaseJob implements Job {
 			return true;
 		}
 
+		return false;
+	}
+
+	@Override
+	public boolean isStandaloneBatchEnabled() {
 		return false;
 	}
 

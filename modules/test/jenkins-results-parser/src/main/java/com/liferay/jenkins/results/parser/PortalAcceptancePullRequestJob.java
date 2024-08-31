@@ -95,6 +95,11 @@ public class PortalAcceptancePullRequestJob
 		return _centralMergePullRequest;
 	}
 
+	@Override
+	public boolean isStandaloneBatchEnabled() {
+		return true;
+	}
+
 	protected PortalAcceptancePullRequestJob(
 		BuildProfile buildProfile, String jobName,
 		PortalGitWorkingDirectory portalGitWorkingDirectory,

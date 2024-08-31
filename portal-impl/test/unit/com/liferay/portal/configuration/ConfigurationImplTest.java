@@ -144,6 +144,8 @@ public class ConfigurationImplTest {
 		Assert.assertEquals("valuex", properties.get("key2"));
 	}
 
+	@NewEnv(type = NewEnv.Type.JVM)
+	@NewEnv.Environment(append = false, variables = {})
 	@Test
 	public void testLoadEmptyProperties() throws Exception {
 		TestResourceClassLoader testResourceClassLoader =

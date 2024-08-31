@@ -4,6 +4,7 @@
  */
 
 import {Locator, Page} from '@playwright/test';
+import path from 'path';
 
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import fillAndClickOutside from '../../../utils/fillAndClickOutside';
@@ -82,6 +83,40 @@ export class TemplatesPage {
 		await this.clickAction('Delete', title);
 
 		await this.page.getByRole('button', {name: 'Delete'}).click();
+
+		await waitForSuccessAlert(this.page);
+	}
+
+	async editInformationTemplate(name: string) {
+		await this.page.getByRole('link', {exact: true, name}).click();
+	}
+
+	async importInformationTemplate(dirname: string, fileName: string) {
+		const fileChooserPromise = this.page.waitForEvent('filechooser');
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page
+				.locator('.dropdown-menu')
+				.getByRole('menuitem', {name: 'Import Script'}),
+			trigger: this.page
+				.locator('.control-menu-nav-item')
+				.getByLabel('Options', {exact: true}),
+		});
+
+		const fileChooser = await fileChooserPromise;
+
+		await fileChooser.setFiles(
+			path.join(dirname, '/dependencies/' + fileName)
+		);
+
+		await waitForSuccessAlert(this.page, `Success:${fileName} Imported`);
+	}
+
+	async saveInformationTemplate() {
+		await this.page
+			.getByRole('button', {exact: true, name: 'Save'})
+			.click();
 
 		await waitForSuccessAlert(this.page);
 	}

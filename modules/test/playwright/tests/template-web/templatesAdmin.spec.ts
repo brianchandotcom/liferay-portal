@@ -8,10 +8,57 @@ import {expect, mergeTests} from '@playwright/test';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import getRandomString from '../../utils/getRandomString';
-import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
 import {templatesPageTest} from './fixtures/templatesPageTest';
 
 const test = mergeTests(isolatedSiteTest, loginTest(), templatesPageTest);
+
+test(
+	'Add an information template via script file',
+	{
+		tag: '@LPS-124478',
+	},
+	async ({page, site, templatesPage}) => {
+
+		// Go to templates administration
+
+		await templatesPage.goto(site.friendlyUrlPath);
+
+		// Create information template
+
+		const informationTemplateName = getRandomString();
+
+		await templatesPage.createInformationTemplate({
+			itemType: 'Blogs Entry',
+			name: informationTemplateName,
+		});
+
+		// Import from script file
+
+		await templatesPage.importInformationTemplate(
+			__dirname,
+			'information_template_blogs.ftl'
+		);
+
+		await templatesPage.saveInformationTemplate();
+
+		// View the script content is shown in code mirror
+
+		await templatesPage.editInformationTemplate(informationTemplateName);
+
+		await expect(page.locator('.ddm_template_editor__App')).toContainText(
+			'coverImage.getData()'
+		);
+		await expect(page.locator('.ddm_template_editor__App')).toContainText(
+			'description.getData()'
+		);
+		await expect(page.locator('.ddm_template_editor__App')).toContainText(
+			'displayDate.getData()'
+		);
+		await expect(page.locator('.ddm_template_editor__App')).toContainText(
+			'title.getData()'
+		);
+	}
+);
 
 test(
 	'Can add, copy and delete an information template',
@@ -108,14 +155,11 @@ test(
 
 		// Save information template
 
-		await page.getByRole('button', {exact: true, name: 'Save'}).click();
-		await waitForSuccessAlert(page);
+		await templatesPage.saveInformationTemplate();
 
-		// Edit
+		// View the script content is shown in code mirror
 
-		await page
-			.getByRole('link', {exact: true, name: informationTemplateName})
-			.click();
+		await templatesPage.editInformationTemplate(informationTemplateName);
 
 		await expect(page.locator('.ddm_template_editor__App')).toContainText(
 			'${JournalArticle_title.getData()}'

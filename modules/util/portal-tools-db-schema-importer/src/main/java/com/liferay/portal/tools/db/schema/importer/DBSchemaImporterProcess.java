@@ -186,6 +186,10 @@ public class DBSchemaImporterProcess {
 		Set<String> sourceTableNames = _sourceColumnNamesMap.keySet();
 		Set<String> targetTableNames = _targetColumnNamesMap.keySet();
 
+		sourceTableNames.retainAll(targetTableNames);
+
+		targetTableNames.retainAll(sourceTableNames);
+
 		Iterator<String> sourceIterator = sourceTableNames.iterator();
 		Iterator<String> targetIterator = targetTableNames.iterator();
 

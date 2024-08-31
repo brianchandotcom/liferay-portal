@@ -1341,10 +1341,9 @@ public abstract class BaseWishListResourceTestCase {
 			List<java.lang.reflect.Field> fields = new ArrayList<>();
 
 			while ((clazz != null) && (clazz != Object.class)) {
-				java.lang.reflect.Field[] declaredFields =
-					clazz.getDeclaredFields();
+				for (java.lang.reflect.Field field :
+						clazz.getDeclaredFields()) {
 
-				for (java.lang.reflect.Field field : declaredFields) {
 					fields.add(field);
 				}
 

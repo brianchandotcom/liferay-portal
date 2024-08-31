@@ -126,12 +126,12 @@ export class CommerceAdminProductPage {
 		await this.page.reload();
 	}
 
-	async goto() {
-		await this.applicationsMenuPage.goToProducts();
+	async goto(checkTabVisibility = true) {
+		await this.applicationsMenuPage.goToProducts(checkTabVisibility);
 	}
 
-	async gotoProduct(productName: string) {
-		await this.goto();
+	async gotoProduct(productName: string, checkTabVisibility = true) {
+		await this.goto(checkTabVisibility);
 		await this.managementToolbarSearchInput.fill(productName);
 		await this.managementToolbarSearchInput.press('Enter');
 		await this.productsTableRowLink(productName).click();

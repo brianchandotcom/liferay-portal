@@ -11,6 +11,7 @@ export class CommerceAdminProductDetailsPage {
 	readonly productOptionsTab: Locator;
 	readonly productRelationsTab: Locator;
 	readonly productSkusTab: Locator;
+	readonly productVisibilityTab: Locator;
 
 	constructor(page: Page) {
 		this.page = page;
@@ -25,6 +26,9 @@ export class CommerceAdminProductDetailsPage {
 		});
 		this.productSkusTab = page.getByRole('link', {
 			name: 'Skus',
+		});
+		this.productVisibilityTab = page.getByRole('link', {
+			name: 'Visibility',
 		});
 	}
 
@@ -42,5 +46,9 @@ export class CommerceAdminProductDetailsPage {
 
 	async goToProductSkus() {
 		await this.productSkusTab.click();
+	}
+
+	async goToProductVisibility() {
+		await this.productVisibilityTab.click();
 	}
 }

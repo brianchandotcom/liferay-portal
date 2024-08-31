@@ -644,7 +644,7 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 							skuDTOConverterContext.getCommerceContext(),
 							replacementCPInstance,
 							_cpInstanceUnitOfMeasureLocalService.
-								getCPInstanceUnitOfMeasure(
+								fetchCPInstanceUnitOfMeasure(
 									replacementCPInstance.getCPInstanceId(),
 									replacementUnitOfMeasureKey),
 							JSONUtil.toString(

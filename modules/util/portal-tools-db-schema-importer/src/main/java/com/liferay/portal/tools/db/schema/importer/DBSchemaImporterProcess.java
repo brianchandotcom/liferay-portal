@@ -615,7 +615,9 @@ public class DBSchemaImporterProcess {
 			preparedStatement.setShort(index, GetterUtil.getShort(value));
 		}
 		else if (targetType == Types.TIMESTAMP) {
-			Date date = _dateFormat.parse(value);
+			DateFormat dateFormat = DateUtil.getISOFormat();
+
+			Date date = dateFormat.parse(value);
 
 			preparedStatement.setTimestamp(
 				index, new Timestamp(date.getTime()));
@@ -631,7 +633,6 @@ public class DBSchemaImporterProcess {
 		DBSchemaImporterProcess.class);
 
 	private final List<String> _asyncSQLs = new ArrayList<>();
-	private final DateFormat _dateFormat = DateUtil.getISOFormat();
 	private final ExecutorService _executorService =
 		Executors.newFixedThreadPool(5);
 	private final String _path;

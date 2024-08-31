@@ -16,7 +16,7 @@
 				<use xlink:href="<%= spritemap %>#exclamation-full" />
 			</svg>
 
-			<strong class="lead"><liferay-ui:message key="alert-helper-error" />: </strong>
+			<strong class="lead"><liferay-ui:message key="autosave-error" />: </strong>
 		</c:when>
 		<c:when test="<%= type == AlertType.INFO.getAlertCode() %>">
 			<svg aria-hidden="true" class="lexicon-icon lexicon-icon-info-circle">

@@ -49,6 +49,23 @@ export class EditUserPage {
 		value: string,
 		strictEqual?: boolean
 	) => Promise<{column: Locator; row: Locator}>;
+	readonly selectSiteRolesButton: Locator;
+	readonly selectSiteRolesFrame: FrameLocator;
+	readonly selectSiteRolesTable: Locator;
+	readonly selectSiteRolesTableRow: (
+		colPosition: number,
+		value: string,
+		strictEqual?: boolean
+	) => Promise<{column: Locator; row: Locator}>;
+	readonly selectSiteRolesSearchBar: Locator;
+	readonly selectSiteRolesSearchBarButton: Locator;
+	readonly selectSitesTable: Locator;
+	readonly selectSitesTableRow: (
+		colPosition: number,
+		value: string,
+		strictEqual?: boolean
+	) => Promise<{column: Locator; row: Locator}>;
+	readonly selectSitesTableRowButton: (siteName: string) => Promise<Locator>;
 	readonly webDAVPasswordLabel: Locator;
 	readonly yourPasswordInput: Locator;
 
@@ -170,6 +187,67 @@ export class EditUserPage {
 				value,
 				strictEqual
 			);
+		};
+		this.selectSiteRolesButton = page.locator(
+			'#_com_liferay_users_admin_web_portlet_UsersAdminPortlet_selectSiteRoleLink'
+		);
+		this.selectSiteRolesFrame = page.frameLocator(
+			'iframe[title="Select Site Role"]'
+		);
+		this.selectSiteRolesTable = this.selectSiteRolesFrame.locator(
+			'#_com_liferay_roles_admin_web_portlet_RolesAdminPortlet_rolesSearchContainer'
+		);
+		this.selectSiteRolesTableRow = async (
+			colPosition: number,
+			value: string,
+			strictEqual: boolean
+		) => {
+			return await searchTableRowByValue(
+				this.selectSiteRolesTable,
+				colPosition,
+				value,
+				strictEqual
+			);
+		};
+		this.selectSiteRolesSearchBar =
+			this.selectSiteRolesFrame.getByPlaceholder('Search for');
+		this.selectSiteRolesSearchBarButton =
+			this.selectSiteRolesFrame.getByRole('button', {
+				name: 'Search for',
+			});
+		this.selectSitesTable = page
+			.frameLocator(
+				'#_com_liferay_users_admin_web_portlet_UsersAdminPortlet_selectSiteRole_iframe_'
+			)
+			.locator(
+				'#_com_liferay_roles_admin_web_portlet_RolesAdminPortlet_groupsSearchContainer'
+			);
+		this.selectSitesTableRow = async (
+			colPosition: number,
+			value: string,
+			strictEqual: boolean
+		) => {
+			return await searchTableRowByValue(
+				this.selectSitesTable,
+				colPosition,
+				value,
+				strictEqual
+			);
+		};
+		this.selectSitesTableRowButton = async (siteName: string) => {
+			const sitesTableRow = await this.selectSitesTableRow(
+				0,
+				siteName,
+				true
+			);
+
+			if (sitesTableRow && sitesTableRow.column) {
+				return sitesTableRow.row.getByRole('button', {
+					name: 'Choose',
+				});
+			}
+
+			throw new Error(`Cannot locate user row with siteName ${siteName}`);
 		};
 		this.webDAVPasswordLabel = page.locator(
 			'#_com_liferay_users_admin_web_portlet_UsersAdminPortlet_webDAVPassword'

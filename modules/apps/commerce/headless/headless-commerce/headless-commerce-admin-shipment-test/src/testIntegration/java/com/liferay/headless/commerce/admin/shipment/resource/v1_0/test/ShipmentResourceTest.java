@@ -326,11 +326,9 @@ public class ShipmentResourceTest extends BaseShipmentResourceTestCase {
 			randomShipment.getShippingMethodId(),
 			postShipment.getShippingMethodId());
 
-		ShippingAddress postShippingAddress = postShipment.getShippingAddress();
-
 		ShippingAddress getShippingAddress = _toShippingAddress(
 			_commerceAddressService.getCommerceAddress(
-				postShippingAddress.getId()));
+				postShipment.getShippingAddressId()));
 
 		Assert.assertEquals(
 			randomShippingAddress.getExternalReferenceCode(),

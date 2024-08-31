@@ -61,7 +61,7 @@ public class TestEntityResourceTest extends BaseTestEntityResourceTestCase {
 			(ChildTestEntity1)testEntityResource.postTestEntity(
 				postChildTestEntity1);
 
-		// Patch ChildTestEntity1
+		// Patch child test entity 1
 
 		ChildTestEntity1 randomPatchChildTestEntity1 = new ChildTestEntity1();
 
@@ -89,7 +89,7 @@ public class TestEntityResourceTest extends BaseTestEntityResourceTestCase {
 		assertEquals(expectedPatchChildTestEntity1, getChildTestEntity1);
 		assertValid(getChildTestEntity1);
 
-		// Patch ChildTestEntity2
+		// Patch child test entity 2
 
 		ChildTestEntity2 randomPatchChildTestEntity2 = new ChildTestEntity2();
 

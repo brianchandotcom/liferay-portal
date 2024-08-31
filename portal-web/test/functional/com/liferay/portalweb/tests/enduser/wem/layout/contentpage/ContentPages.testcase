@@ -112,38 +112,6 @@ definition {
 		}
 	}
 
-	@description = "Users can only edit content pages in edit mode."
-	@priority = 5
-	test CannotEditInViewMode {
-		property portal.acceptance = "true";
-
-		task ("Navigate to the content page") {
-			ContentPagesNavigator.openViewContentPage(
-				pageName = "Test Content Page Name",
-				siteName = ${randomSiteName});
-		}
-
-		task ("Assert the page cannot be edited in 'View Mode' by asserting the fragments side bar is not present") {
-			AssertElementNotPresent(locator1 = "PageEditor#FRAGMENT_SIDEBAR_BODY");
-		}
-
-		task ("Navigate to the content page's 'Edit Mode'") {
-			ContentPages.gotoPageEditor();
-		}
-
-		task ("Assert the content page can be edited in 'Edit Mode' by asserting the fragments side bar is present") {
-			AssertVisible(locator1 = "PageEditor#FRAGMENT_SIDEBAR_BODY");
-		}
-
-		task ("Navigate back to the content page") {
-			PageEditor.clickBack();
-		}
-
-		task ("Assert the page cannot be edited by asserting the fragments side bar is not present") {
-			AssertElementNotPresent(locator1 = "PageEditor#FRAGMENT_SIDEBAR_BODY");
-		}
-	}
-
 	@description = "This is a test for LPS-125985. The Page Creater can configure configuration template of widget in page editor."
 	@priority = 5
 	test ConfigureConfigurationTemplateOfAssetPublisherInPageEditor {

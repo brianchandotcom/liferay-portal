@@ -530,6 +530,50 @@ public class UpgradeReport {
 				return longestRunningUpgradeProcesses;
 			}
 		).put(
+			"longest.running.sqls",
+			() -> {
+				Map<String, Long> sqlExecutionTimes =
+					upgradeRecorder.getSQLExecutionTimes();
+
+				List<RunningSQLQuery> longestRunningSQLQueries =
+					new ArrayList<>();
+
+				List<Map.Entry<String, Long>> entries = new ArrayList<>(
+					sqlExecutionTimes.entrySet());
+
+				entries.sort(
+					(entry1, entry2) -> Long.compare(
+						entry2.getValue(), entry1.getValue()));
+
+				int count = Math.min(_TOP_SQL_QUERIES_COUNT, entries.size());
+
+				for (int i = 0; i < count; i++) {
+					Map.Entry<String, Long> entry = entries.get(i);
+
+					String key = entry.getKey();
+					Long duration = entry.getValue();
+
+					String upgradeProcessName = StringPool.BLANK;
+					String sql;
+
+					if (key.contains(StringPool.PIPE)) {
+						int separatorIndex = key.indexOf(StringPool.PIPE);
+
+						upgradeProcessName = key.substring(0, separatorIndex);
+
+						sql = key.substring(separatorIndex + 1);
+					}
+					else {
+						sql = key;
+					}
+
+					longestRunningSQLQueries.add(
+						new RunningSQLQuery(upgradeProcessName, sql, duration));
+				}
+
+				return longestRunningSQLQueries;
+			}
+		).put(
 			"failed.sqls", upgradeRecorder.getFailedSQLs()
 		).put(
 			"errors", _getMessagesPrinters(upgradeRecorder.getErrorMessages())
@@ -808,6 +852,8 @@ public class UpgradeReport {
 		"com.liferay.portal.store.file.system.configuration." +
 			"FileSystemStoreConfiguration";
 
+	private static final int _TOP_SQL_QUERIES_COUNT = 20;
+
 	private static final int _UPGRADE_PROCESSES_COUNT = 20;
 
 	private static final Log _log = LogFactoryUtil.getLog(UpgradeReport.class);
@@ -952,6 +998,44 @@ public class UpgradeReport {
 		}
 
 		private final Map<String, Properties> _propertiesMap;
+
+	}
+
+	private class RunningSQLQuery {
+
+		public RunningSQLQuery(
+			String upgradeProcessName, String sql, long duration) {
+
+			_upgradeProcessName = upgradeProcessName;
+			_sql = sql;
+			_duration = duration;
+		}
+
+		public long getDuration() {
+			return _duration;
+		}
+
+		public String getSql() {
+			return _sql;
+		}
+
+		@Override
+		public String toString() {
+			if (_logContext) {
+				return StringBundler.concat(
+					_upgradeProcessName, StringPool.COLON, _sql,
+					StringPool.SEMICOLON, StringPool.COLON, _duration, " ms");
+			}
+
+			return StringBundler.concat(
+				"Upgrade Process: ", _upgradeProcessName, StringPool.NEW_LINE,
+				"SQL: ", _sql, StringPool.SEMICOLON, StringPool.NEW_LINE,
+				"Duration: ", _duration, " ms", StringPool.NEW_LINE);
+		}
+
+		private final long _duration;
+		private final String _sql;
+		private final String _upgradeProcessName;
 
 	}
 

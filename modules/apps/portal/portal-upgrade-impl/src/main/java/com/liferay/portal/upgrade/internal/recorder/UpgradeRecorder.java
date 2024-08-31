@@ -78,6 +78,10 @@ public class UpgradeRecorder {
 		return _result;
 	}
 
+	public Map<String, Long> getSQLExecutionTimes() {
+		return UpgradeSQLRecorder.getSQLExecutionTimes();
+	}
+
 	public String getType() {
 		return _type;
 	}

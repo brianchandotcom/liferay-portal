@@ -926,6 +926,96 @@ test('Verify IdP initiated SLO also logs out of authenticated SP when Require Au
 	expect(await signInButton).toBeVisible();
 });
 
+test('Verify IdP initiated SLO logs out of multiple authenticated SPs.  See LPS-129934.', async ({
+	browser,
+}) => {
+
+	// Configure localhost as SP
+
+	const localhostSpAdminPage = await configureVirtualInstanceForSaml(
+		browser,
+		'localhost',
+		'Service Provider'
+	);
+
+	// Configure the other virtual instances as usual
+
+	const idpAdminPage = await configureVirtualInstanceForSaml(
+		browser,
+		DEFAULT_IDP_NAME,
+		'Identity Provider'
+	);
+
+	const spAdminPage = await configureVirtualInstanceForSaml(
+		browser,
+		DEFAULT_SP_NAME,
+		'Service Provider'
+	);
+
+	await connectSpAndIdp(
+		idpAdminPage,
+		DEFAULT_IDP_NAME,
+		spAdminPage,
+		DEFAULT_SP_NAME
+	);
+
+	await connectSpAndIdp(
+		idpAdminPage,
+		DEFAULT_IDP_NAME,
+		localhostSpAdminPage,
+		'localhost'
+	);
+
+	// Create IdP User
+
+	const userAccount = await createUser(idpAdminPage, DEFAULT_IDP_NAME);
+
+	// SP initiated SSO
+
+	const spIntancePage = await performSpInitiatedSSO(
+		browser,
+		userAccount.emailAddress,
+		DEFAULT_SP_URL
+	);
+
+	// Clicking Sign In button on other SP page should auto-login
+
+	await spIntancePage.goto('http://localhost:8080');
+
+	await clickSignInButton(spIntancePage);
+
+	await spIntancePage
+		.getByTitle('User Profile Menu')
+		.waitFor({timeout: 30 * 1000});
+
+	// Idp initiated SLO
+
+	await spIntancePage.goto(DEFAULT_IDP_URL);
+
+	await spIntancePage.getByTitle('User Profile Menu').click();
+
+	await spIntancePage.getByRole('menuitem', {name: 'Sign Out'}).click();
+
+	await spIntancePage.waitForTimeout(8000);
+
+	// Both SPs should also be logged out after IdP initiated SLO
+
+	for (const spUrl of ['http://localhost:8080', DEFAULT_SP_URL]) {
+		await spIntancePage.goto(spUrl);
+
+		const signInButton = await spIntancePage.getByRole('button', {
+			name: 'Sign In',
+		});
+
+		await reloadUntilVisible({
+			myLocator: signInButton,
+			page: spIntancePage,
+		});
+
+		expect(await signInButton).toBeVisible();
+	}
+});
+
 test('Verify SSO login and logout mechanism works the same when having multiple sites configured as SP.  See LPS-170940.', async ({
 	browser,
 }) => {

@@ -457,10 +457,31 @@ public class DBCopyTablesProcess {
 		_setColumn(index, preparedStatement, targetType, alternativeValue);
 	}
 
+	private TreeSet<String> _getViews(DataSource dataSource) throws Exception {
+		TreeSet<String> treeSet = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
+
+		try (Connection connection = dataSource.getConnection()) {
+			DatabaseMetaData databaseMetaData = connection.getMetaData();
+
+			try (ResultSet resultSet = databaseMetaData.getTables(
+					connection.getCatalog(), connection.getSchema(), null,
+					new String[] {"VIEW"})) {
+
+				while (resultSet.next()) {
+					treeSet.add(resultSet.getString("TABLE_NAME"));
+				}
+			}
+		}
+
+		return treeSet;
+	}
+
 	private void _loadColumnNamesMap(
 			Map<String, List<String>> columnNamesMap,
 			Map<String, Integer> columnTypes, DataSource dataSource)
 		throws Exception {
+
+		Set<String> views = _getViews(dataSource);
 
 		try (Connection connection = dataSource.getConnection()) {
 			DatabaseMetaData databaseMetaData = connection.getMetaData();
@@ -471,6 +492,11 @@ public class DBCopyTablesProcess {
 
 				while (resultSet.next()) {
 					String tableName = resultSet.getString("TABLE_NAME");
+
+					if (views.contains(tableName)) {
+						continue;
+					}
+
 					String columnName = resultSet.getString("COLUMN_NAME");
 
 					List<String> columnNames = columnNamesMap.computeIfAbsent(

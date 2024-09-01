@@ -13,6 +13,8 @@ import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.announcements.kernel.service.AnnouncementsDeliveryLocalService;
 import com.liferay.captcha.util.CaptchaUtil;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
+import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.headless.admin.user.dto.v1_0.Account;
 import com.liferay.headless.admin.user.dto.v1_0.AccountBrief;
 import com.liferay.headless.admin.user.dto.v1_0.EmailAddress;
@@ -33,6 +35,7 @@ import com.liferay.headless.admin.user.internal.dto.v1_0.util.ServiceBuilderWebs
 import com.liferay.headless.admin.user.internal.odata.entity.v1_0.UserAccountEntityModel;
 import com.liferay.headless.admin.user.resource.v1_0.AccountRoleResource;
 import com.liferay.headless.admin.user.resource.v1_0.UserAccountResource;
+import com.liferay.headless.common.spi.odata.entity.EntityFieldsUtil;
 import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.CharPool;
@@ -87,6 +90,7 @@ import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.search.expando.ExpandoBridgeIndexer;
 import com.liferay.portal.security.auth.session.AuthenticatedSessionManagerUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
@@ -314,7 +318,11 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 
 	@Override
 	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
-		return _entityModel;
+		return new UserAccountEntityModel(
+			EntityFieldsUtil.getEntityFields(
+				_portal.getClassNameId(User.class.getName()),
+				contextCompany.getCompanyId(), _expandoBridgeIndexer,
+				_expandoColumnLocalService, _expandoTableLocalService));
 	}
 
 	@Override
@@ -1701,9 +1709,6 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 		return user;
 	}
 
-	private static final EntityModel _entityModel =
-		new UserAccountEntityModel();
-
 	@Reference(
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY,
@@ -1742,6 +1747,15 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
+
+	@Reference
+	private ExpandoBridgeIndexer _expandoBridgeIndexer;
+
+	@Reference
+	private ExpandoColumnLocalService _expandoColumnLocalService;
+
+	@Reference
+	private ExpandoTableLocalService _expandoTableLocalService;
 
 	@Reference
 	private File _file;

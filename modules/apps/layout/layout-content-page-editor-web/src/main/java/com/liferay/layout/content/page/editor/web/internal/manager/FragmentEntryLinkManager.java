@@ -61,6 +61,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -231,8 +232,8 @@ public class FragmentEntryLinkManager {
 				"fieldTypes",
 				() -> {
 					if (fragmentEntry != null) {
-						return _getFieldTypesJSONArray(
-							fragmentEntry.getTypeOptions());
+						return _jsonFactory.createJSONArray(
+							_getFieldTypes(fragmentEntry.getTypeOptions()));
 					}
 
 					FragmentRenderer fragmentRenderer =
@@ -240,8 +241,8 @@ public class FragmentEntryLinkManager {
 							fragmentEntryLink.getRendererKey());
 
 					if (fragmentRenderer != null) {
-						return _getFieldTypesJSONArray(
-							fragmentRenderer.getTypeOptions());
+						return _jsonFactory.createJSONArray(
+							_getFieldTypes(fragmentRenderer.getTypeOptions()));
 					}
 
 					return _jsonFactory.createJSONArray();
@@ -430,21 +431,21 @@ public class FragmentEntryLinkManager {
 			httpServletResponse);
 	}
 
-	private JSONArray _getFieldTypesJSONArray(String typeOptions) {
+	private Set<String> _getFieldTypes(String typeOptions) {
 		try {
 			JSONObject jsonObject = _jsonFactory.createJSONObject(typeOptions);
 
 			JSONArray jsonArray = jsonObject.getJSONArray("fieldTypes");
 
 			if (jsonArray != null) {
-				return jsonArray;
+				return JSONUtil.toStringSet(jsonArray);
 			}
 		}
 		catch (JSONException jsonException) {
 			_log.error(jsonException);
 		}
 
-		return _jsonFactory.createJSONArray();
+		return Collections.emptySet();
 	}
 
 	private FragmentEntry _getFragmentEntry(

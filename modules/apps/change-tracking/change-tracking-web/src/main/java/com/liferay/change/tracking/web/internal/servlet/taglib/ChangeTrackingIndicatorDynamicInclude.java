@@ -455,7 +455,6 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 						url = HttpComponentsUtil.addParameter(
 							url, "previewCTCollectionId",
 							previewLayout.getCtCollectionId());
-
 						url = HttpComponentsUtil.addParameter(
 							url, "previewCTIndicator", true);
 

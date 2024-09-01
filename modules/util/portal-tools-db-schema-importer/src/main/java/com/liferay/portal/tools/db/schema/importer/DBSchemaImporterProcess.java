@@ -5,6 +5,7 @@
 
 package com.liferay.portal.tools.db.schema.importer;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
@@ -26,7 +27,10 @@ import java.sql.Connection;
 import java.sql.Statement;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -62,20 +66,52 @@ public class DBSchemaImporterProcess {
 
 	public void run() throws Exception {
 		_createTables();
-
-		AutoBatchPreparedStatementUtil.start();
-
-		new DBCopyTablesProcess(
-			_sourceDataSource, _targetDataSource
-		).run();
-
-		AutoBatchPreparedStatementUtil.stop();
-
+		_copyTables();
 		_createIndexes();
 
 		_executorService.shutdownNow();
 
 		_executorService.awaitTermination(10, TimeUnit.SECONDS);
+	}
+
+	private void _copyTables() throws Exception {
+		AutoBatchPreparedStatementUtil.start();
+
+		Set<Future<?>> futures = Collections.newSetFromMap(
+			new ConcurrentHashMap<>());
+
+		futures.add(
+			_executorService.submit(
+				() -> {
+					new DBCopyTablesProcess(
+						_sourceDataSource, _targetDataSource
+					).run();
+
+					return null;
+				}));
+
+		for (String partitionName : _partitionNames) {
+			futures.add(
+				_executorService.submit(
+					() -> {
+						new DBCopyTablesProcess(
+							DataSourceFactoryUtil.initDataSource(
+								_sourceJDBCURL, _sourcePassword, _sourceUser,
+								partitionName),
+							DataSourceFactoryUtil.initDataSource(
+								_targetJDBCURL, _targetPassword, _targetUser,
+								partitionName)
+						).run();
+
+						return null;
+					}));
+		}
+
+		for (Future<?> future : futures) {
+			future.get();
+		}
+
+		AutoBatchPreparedStatementUtil.stop();
 	}
 
 	private void _createIndexes() throws Exception {
@@ -167,6 +203,12 @@ public class DBSchemaImporterProcess {
 								sql, "create schema if not exists")) {
 
 						_syncInitialSQLs.add(sql);
+
+						String[] parts = StringUtil.split(sql, CharPool.SPACE);
+
+						_partitionNames.add(
+							StringUtil.removeChar(
+								parts[5], CharPool.SEMICOLON));
 					}
 					else {
 						_asyncSQLs.add(sql);
@@ -239,6 +281,7 @@ public class DBSchemaImporterProcess {
 	private final List<String> _asyncSQLs = new ArrayList<>();
 	private final ExecutorService _executorService =
 		Executors.newFixedThreadPool(5);
+	private final List<String> _partitionNames = new ArrayList<>();
 	private final String _path;
 	private final DataSource _sourceDataSource;
 	private final String _sourceJDBCURL;

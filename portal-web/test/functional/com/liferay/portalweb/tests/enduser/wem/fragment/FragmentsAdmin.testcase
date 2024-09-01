@@ -355,8 +355,8 @@ definition {
 			}
 
 			task ("View the default form fragment displayed by default for each field type") {
-				var fieldTypeList = "Boolean,Date,File,HTML,Long Text,Multiselect,Number,Relationship,Select,Text,Submit Button";
-				var formFragmentNameList = "Checkbox,Date,File Upload,Rich Text,Textarea,Multiselect,Numeric,Select,Select,Text,Submit Button";
+				var fieldTypeList = "Boolean,Date,File,Form Button,HTML,Long Text,Multiselect,Number,Relationship,Select,Text";
+				var formFragmentNameList = "Checkbox,Date,File Upload,Form Button,Rich Text,Textarea,Multiselect,Numeric,Select,Select,Text";
 				var i = 0;
 				var list1 = ListUtil.newListFromString(${fieldTypeList});
 				var list2 = ListUtil.newListFromString(${formFragmentNameList});

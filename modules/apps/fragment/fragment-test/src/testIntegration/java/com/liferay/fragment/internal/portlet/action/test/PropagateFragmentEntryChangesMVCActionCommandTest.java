@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -17,7 +17,6 @@ import com.liferay.fragment.test.util.FragmentTestUtil;
 import com.liferay.layout.manager.LayoutLockManager;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
@@ -30,7 +29,6 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
@@ -61,11 +59,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
- * @author Jürgen Kappler
+ * @author Eudaldo Alonso
  */
 @RunWith(Arquillian.class)
 @Sync
-public class PropagateGroupFragmentEntryChangesMVCActionCommandTest {
+public class PropagateFragmentEntryChangesMVCActionCommandTest {
 
 	@ClassRule
 	@Rule
@@ -78,57 +76,13 @@ public class PropagateGroupFragmentEntryChangesMVCActionCommandTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		_company = _companyLocalService.getCompany(_group.getCompanyId());
-
-		_fragmentCollection = FragmentTestUtil.addFragmentCollection(
-			_group.getGroupId());
+		FragmentCollection fragmentCollection =
+			FragmentTestUtil.addFragmentCollection(_group.getGroupId());
 
 		_fragmentEntry = FragmentEntryTestUtil.addFragmentEntry(
-			_fragmentCollection.getFragmentCollectionId());
+			fragmentCollection.getFragmentCollectionId());
 
 		_layout = LayoutTestUtil.addTypeContentLayout(_group);
-	}
-
-	@Test
-	public void testAddFragmentEntryLink() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group, TestPropsValues.getUserId());
-
-		FragmentEntryLink fragmentEntryLink =
-			_fragmentEntryLinkLocalService.addFragmentEntryLink(
-				null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
-				_fragmentEntry.getFragmentEntryId(),
-				_segmentsExperienceLocalService.
-					fetchDefaultSegmentsExperienceId(_layout.getPlid()),
-				_layout.getPlid(), "css value", "<div>HTML value</div>",
-				"js value", "{fieldSets: []}", StringPool.BLANK,
-				StringPool.BLANK, 0, null, _fragmentEntry.getType(),
-				serviceContext);
-
-		_fragmentEntry.setCss("new css value");
-		_fragmentEntry.setHtml("<div>new updated HTML value</div>");
-		_fragmentEntry.setJs("new js value");
-
-		_fragmentEntry = _fragmentEntryLocalService.updateFragmentEntry(
-			_fragmentEntry);
-
-		ReflectionTestUtil.invoke(
-			_mvcActionCommand, "processAction",
-			new Class<?>[] {ActionRequest.class, ActionResponse.class},
-			_getMockLiferayPortletActionRequest(),
-			new MockLiferayPortletActionResponse());
-
-		FragmentEntryLink persistedFragmentEntryLink =
-			_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
-				fragmentEntryLink.getFragmentEntryLinkId());
-
-		Assert.assertEquals(
-			_fragmentEntry.getCss(), persistedFragmentEntryLink.getCss());
-		Assert.assertEquals(
-			_fragmentEntry.getHtml(), persistedFragmentEntryLink.getHtml());
-		Assert.assertEquals(
-			_fragmentEntry.getJs(), persistedFragmentEntryLink.getJs());
 	}
 
 	@Test
@@ -166,7 +120,10 @@ public class PropagateGroupFragmentEntryChangesMVCActionCommandTest {
 		ReflectionTestUtil.invoke(
 			_mvcActionCommand, "processAction",
 			new Class<?>[] {ActionRequest.class, ActionResponse.class},
-			_getMockLiferayPortletActionRequest(),
+			_getMockLiferayPortletActionRequest(
+				new String[] {
+					String.valueOf(fragmentEntryLink.getFragmentEntryLinkId())
+				}),
 			new MockLiferayPortletActionResponse());
 
 		FragmentEntryLink persistedFragmentEntryLink =
@@ -181,8 +138,8 @@ public class PropagateGroupFragmentEntryChangesMVCActionCommandTest {
 			_fragmentEntry.getJs(), persistedFragmentEntryLink.getJs());
 	}
 
-	private MockLiferayPortletActionRequest
-			_getMockLiferayPortletActionRequest()
+	private MockLiferayPortletActionRequest _getMockLiferayPortletActionRequest(
+			String[] rowIds)
 		throws Exception {
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
@@ -204,16 +161,7 @@ public class PropagateGroupFragmentEntryChangesMVCActionCommandTest {
 
 		mockLiferayPortletActionRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, _getThemeDisplay());
-		mockLiferayPortletActionRequest.setParameter(
-			"segmentsExperienceId",
-			String.valueOf(
-				_segmentsExperienceLocalService.
-					fetchDefaultSegmentsExperienceId(_layout.getPlid())));
-		mockLiferayPortletActionRequest.setParameter(
-			"fragmentEntryId",
-			String.valueOf(_fragmentEntry.getFragmentEntryId()));
-		mockLiferayPortletActionRequest.setParameter(
-			"rowIds", new String[] {String.valueOf(_group.getGroupId())});
+		mockLiferayPortletActionRequest.setParameter("rowIds", rowIds);
 
 		return mockLiferayPortletActionRequest;
 	}
@@ -221,10 +169,11 @@ public class PropagateGroupFragmentEntryChangesMVCActionCommandTest {
 	private ThemeDisplay _getThemeDisplay() throws Exception {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
-		themeDisplay.setCompany(_company);
+		themeDisplay.setCompany(
+			_companyLocalService.getCompany(_group.getCompanyId()));
 
 		Layout controlPanelLayout = _layoutLocalService.getLayout(
-			_portal.getControlPanelPlid(_company.getCompanyId()));
+			_portal.getControlPanelPlid(TestPropsValues.getCompanyId()));
 
 		themeDisplay.setLayout(controlPanelLayout);
 
@@ -242,12 +191,9 @@ public class PropagateGroupFragmentEntryChangesMVCActionCommandTest {
 		return themeDisplay;
 	}
 
-	private Company _company;
-
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
-	private FragmentCollection _fragmentCollection;
 	private FragmentEntry _fragmentEntry;
 
 	@Inject
@@ -268,7 +214,7 @@ public class PropagateGroupFragmentEntryChangesMVCActionCommandTest {
 	private LayoutLockManager _layoutLockManager;
 
 	@Inject(
-		filter = "mvc.command.name=/fragment/propagate_group_fragment_entry_changes"
+		filter = "mvc.command.name=/fragment/propagate_fragment_entry_changes"
 	)
 	private MVCActionCommand _mvcActionCommand;
 

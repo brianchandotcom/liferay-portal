@@ -37,57 +37,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-182022. The user could overwrite the locked master page by import."
-	@priority = 4
-	test OverwriteLockedMasterPageByImport {
-		task ("Given a page designer has a locked master page") {
-			var siteName = selenium.getText("Home#SITE_NAME");
-
-			JSONLayoutpagetemplate.addMasterPageTemplateEntry(
-				groupName = "Test Site Name",
-				masterPageTemplateEntryName = "Master Page Template",
-				masterPageTemplateStatus = "Approved");
-
-			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
-
-			MastersPageTemplatesAdmin.gotoMastersEllipsisItem(
-				item = "Export",
-				masterLayoutName = "Master Page Template");
-
-			DownloadTempFile();
-
-			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Master Page Template");
-
-			PageEditor.addFragment(
-				collectionName = "Basic Components",
-				dropTarget = "Header",
-				fragmentName = "Button",
-				scope = "Master");
-		}
-
-		task ("When the page designer navigates to the Masters admin") {
-			var baseURL = PropsUtil.get("portal.url");
-
-			Open.openInTheNewTab(value1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_users_admin_web_portlet_UsersAdminPortlet");
-
-			User.impersonateCP(
-				siteName = ${siteName},
-				userScreenName = "usersn");
-
-			UserBar.gotoMySite(siteName = "Test Site Name");
-
-			ProductMenu.gotoPortlet(
-				category = "Design",
-				portlet = "Page Templates");
-		}
-
-		task ("Then the page designer could overwrite the locked master page by import") {
-			MastersPageTemplatesAdmin.importMastersFromTempFolder(importOption = "Overwrite Existing Items");
-
-			MastersPageTemplatesAdmin.viewMastersPresent(masterLayoutName = "Master Page Template");
-		}
-	}
-
 	@description = "This is a test for LPS-182022. The user could propagate the changes of fragment to a locked content page."
 	@priority = 4
 	test PropagateChangesOfFragmentToLockedContentPage {

@@ -161,33 +161,44 @@ test('Checks the correct label for restricted page in the page heading', async (
 	await expect(header.getByText('Restricted Page')).toBeVisible();
 });
 
-test('Checks page title in view mode and in edit mode', async ({
-	apiHelpers,
-	page,
-	pageEditorPage,
-	site,
-}) => {
+test(
+	'Checks page title in view mode and in edit mode',
+	{
+		tag: '@LPS-146373',
+	},
+	async ({apiHelpers, page, site}) => {
 
-	// Create a content page
+		// Create a content page
 
-	const pageName = getRandomString();
+		const pageName = getRandomString();
 
-	const layout = await apiHelpers.headlessDelivery.createSitePage({
-		siteId: site.id,
-		title: pageName,
-	});
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			siteId: site.id,
+			title: pageName,
+		});
 
-	// Check the page title in the view mode
+		// Check the page title in the view mode
 
-	await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
 
-	expect(await page.title()).toBe(`${pageName} - ${site.name} - Liferay DXP`);
+		expect(await page.title()).toBe(
+			`${pageName} - ${site.name} - Liferay DXP`
+		);
 
-	// Check the page title in the edit mode
+		// Check the page title in the edit mode
 
-	await pageEditorPage.goto(layout, site.friendlyUrlPath);
+		await page.getByTitle('Edit', {exact: true}).click();
 
-	expect(await page.title()).toBe(
-		`${pageName} - ${site.name} - Liferay DXP (Editing)`
-	);
-});
+		expect(await page.title()).toBe(
+			`${pageName} - ${site.name} - Liferay DXP (Editing)`
+		);
+
+		// Click back button
+
+		await page.getByTitle(`Go to ${pageName}`).click();
+
+		expect(await page.title()).toBe(
+			`${pageName} - ${site.name} - Liferay DXP`
+		);
+	}
+);

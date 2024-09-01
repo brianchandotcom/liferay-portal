@@ -161,7 +161,12 @@ public class DBSchemaImporterProcess {
 					sb.setIndex(0);
 
 					if (StringUtil.startsWith(sql, "create or replace rule")) {
-						_syncSQLs.add(sql);
+						_syncFinalSQLs.add(sql);
+					}
+					else if (StringUtil.startsWith(
+								sql, "create schema if not exists")) {
+
+						_syncInitialSQLs.add(sql);
 					}
 					else {
 						_asyncSQLs.add(sql);
@@ -180,6 +185,16 @@ public class DBSchemaImporterProcess {
 		throws Exception {
 
 		_preprocessSQLTemplate(template);
+
+		for (String sql : _syncInitialSQLs) {
+			try (Connection connection = dataSource.getConnection();
+				Statement statement = connection.createStatement()) {
+
+				statement.executeUpdate(sql);
+			}
+		}
+
+		_syncInitialSQLs.clear();
 
 		List<Future<?>> futures = new ArrayList<>();
 
@@ -205,7 +220,7 @@ public class DBSchemaImporterProcess {
 			future.get();
 		}
 
-		for (String sql : _syncSQLs) {
+		for (String sql : _syncFinalSQLs) {
 			try (Connection connection = dataSource.getConnection();
 				Statement statement = connection.createStatement()) {
 
@@ -213,7 +228,7 @@ public class DBSchemaImporterProcess {
 			}
 		}
 
-		_syncSQLs.clear();
+		_syncFinalSQLs.clear();
 	}
 
 	private static final int _COMPANY_BATCH_SIZE = 5;
@@ -229,7 +244,8 @@ public class DBSchemaImporterProcess {
 	private final String _sourceJDBCURL;
 	private final String _sourcePassword;
 	private final String _sourceUser;
-	private final List<String> _syncSQLs = new ArrayList<>();
+	private final List<String> _syncFinalSQLs = new ArrayList<>();
+	private final List<String> _syncInitialSQLs = new ArrayList<>();
 	private final DataSource _targetDataSource;
 	private final String _targetJDBCURL;
 	private final String _targetPassword;

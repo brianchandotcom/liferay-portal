@@ -65,6 +65,58 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = FormItemManager.class)
 public class FormItemManager {
 
+	public List<FragmentEntryLink> addFormStepLayoutStructureItems(
+			FormStyledLayoutStructureItem formStyledLayoutStructureItem,
+			Layout layout, LayoutStructure layoutStructure, Locale locale,
+			int numberOfSteps, long segmentsExperienceId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		FormStepContainerStyledLayoutStructureItem
+			formStepContainerStyledLayoutStructureItem =
+				_findFormStepContainerStyledLayoutStructureItem(
+					formStyledLayoutStructureItem, layoutStructure);
+
+		if (formStepContainerStyledLayoutStructureItem == null) {
+			return Collections.emptyList();
+		}
+
+		List<FragmentEntryLink> addedFragmentEntryLinks = new ArrayList<>();
+
+		List<String> childrenItemIds =
+			formStepContainerStyledLayoutStructureItem.getChildrenItemIds();
+
+		FormStepLayoutStructureItem formStepLayoutStructureItem =
+			(FormStepLayoutStructureItem)layoutStructure.getLayoutStructureItem(
+				childrenItemIds.get(childrenItemIds.size() - 1));
+
+		int stepIndex = childrenItemIds.size() - 1;
+
+		addedFragmentEntryLinks.addAll(
+			_addFormButtons(
+				formStepLayoutStructureItem, formStyledLayoutStructureItem,
+				layout, locale, layoutStructure, numberOfSteps,
+				segmentsExperienceId, stepIndex, serviceContext));
+
+		int numberOfNewSteps = numberOfSteps - childrenItemIds.size();
+
+		for (int i = 1; i <= numberOfNewSteps; i++) {
+			formStepLayoutStructureItem =
+				(FormStepLayoutStructureItem)
+					layoutStructure.addFormStepLayoutStructureItem(
+						formStepContainerStyledLayoutStructureItem.getItemId(),
+						-1);
+
+			addedFragmentEntryLinks.addAll(
+				_addFormButtons(
+					formStepLayoutStructureItem, formStyledLayoutStructureItem,
+					layout, locale, layoutStructure, numberOfSteps,
+					segmentsExperienceId, stepIndex + i, serviceContext));
+		}
+
+		return addedFragmentEntryLinks;
+	}
+
 	public List<FragmentEntryLink> addFragmentEntryLinks(
 			JSONObject errorJSONObject,
 			FormStyledLayoutStructureItem formStyledLayoutStructureItem,
@@ -511,6 +563,28 @@ public class FormItemManager {
 					layoutStructureItem)) {
 
 				return layoutStructureItem;
+			}
+		}
+
+		return null;
+	}
+
+	private FormStepContainerStyledLayoutStructureItem
+		_findFormStepContainerStyledLayoutStructureItem(
+			FormStyledLayoutStructureItem formStyledLayoutStructureItem,
+			LayoutStructure layoutStructure) {
+
+		for (String childrenItemId :
+				formStyledLayoutStructureItem.getChildrenItemIds()) {
+
+			LayoutStructureItem layoutStructureItem =
+				layoutStructure.getLayoutStructureItem(childrenItemId);
+
+			if (layoutStructureItem instanceof
+					FormStepContainerStyledLayoutStructureItem) {
+
+				return (FormStepContainerStyledLayoutStructureItem)
+					layoutStructureItem;
 			}
 		}
 

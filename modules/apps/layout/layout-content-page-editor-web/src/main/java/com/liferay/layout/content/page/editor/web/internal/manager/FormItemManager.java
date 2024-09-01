@@ -20,7 +20,10 @@ import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
+import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.DropZoneLayoutStructureItem;
+import com.liferay.layout.util.structure.FormStepContainerStyledLayoutStructureItem;
+import com.liferay.layout.util.structure.FormStepLayoutStructureItem;
 import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
@@ -31,6 +34,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -48,6 +52,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
+import java.util.Set;
 import java.util.TreeSet;
 
 import org.osgi.service.component.annotations.Component;
@@ -177,6 +183,87 @@ public class FormItemManager {
 		return addedFragmentEntryLinks;
 	}
 
+	public List<FragmentEntryLink> changeToMultiStepFormType(
+			FormStyledLayoutStructureItem formStyledLayoutStructureItem,
+			Layout layout, LayoutStructure layoutStructure, Locale locale,
+			int numberOfSteps, long segmentsExperienceId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		List<FragmentEntryLink> addedFragmentEntryLinks = new ArrayList<>();
+
+		List<String> childrenItemIds = new ArrayList<>(
+			formStyledLayoutStructureItem.getChildrenItemIds());
+
+		FormStepContainerStyledLayoutStructureItem
+			formStepContainerStyledLayoutStructureItem =
+				(FormStepContainerStyledLayoutStructureItem)
+					layoutStructure.
+						addFormStepContainerStyledLayoutStructureItem(
+							formStyledLayoutStructureItem.getItemId(), -1);
+
+		FormStepLayoutStructureItem formStepLayoutStructureItem =
+			(FormStepLayoutStructureItem)
+				layoutStructure.addFormStepLayoutStructureItem(
+					formStepContainerStyledLayoutStructureItem.getItemId(), 0);
+
+		for (String childrenItemId : childrenItemIds) {
+			LayoutStructureItem layoutStructureItem =
+				layoutStructure.getLayoutStructureItem(childrenItemId);
+
+			if (layoutStructureItem instanceof
+					FragmentStyledLayoutStructureItem) {
+
+				FragmentStyledLayoutStructureItem
+					fragmentStyledLayoutStructureItem =
+						(FragmentStyledLayoutStructureItem)layoutStructureItem;
+
+				Set<String> fieldTypes =
+					_fragmentEntryLinkManager.getFragmentEntryLinkFieldTypes(
+						fragmentStyledLayoutStructureItem.
+							getFragmentEntryLinkId(),
+						locale);
+
+				if (fieldTypes.contains("stepper")) {
+					continue;
+				}
+
+				if (fieldTypes.contains("formButton")) {
+					layoutStructure.markLayoutStructureItemForDeletion(
+						Collections.singletonList(childrenItemId),
+						Collections.emptyList());
+
+					continue;
+				}
+			}
+
+			layoutStructure.moveLayoutStructureItem(
+				childrenItemId, formStepLayoutStructureItem.getItemId(), -1);
+		}
+
+		addedFragmentEntryLinks.addAll(
+			_addFormButtons(
+				formStepLayoutStructureItem, formStyledLayoutStructureItem,
+				layout, locale, layoutStructure, numberOfSteps,
+				segmentsExperienceId, 0, serviceContext));
+
+		for (int i = 1; i < numberOfSteps; i++) {
+			formStepLayoutStructureItem =
+				(FormStepLayoutStructureItem)
+					layoutStructure.addFormStepLayoutStructureItem(
+						formStepContainerStyledLayoutStructureItem.getItemId(),
+						i);
+
+			addedFragmentEntryLinks.addAll(
+				_addFormButtons(
+					formStepLayoutStructureItem, formStyledLayoutStructureItem,
+					layout, locale, layoutStructure, numberOfSteps,
+					segmentsExperienceId, 1, serviceContext));
+		}
+
+		return addedFragmentEntryLinks;
+	}
+
 	public JSONArray removeLayoutStructureItemsJSONArray(
 		FormStyledLayoutStructureItem formStyledLayoutStructureItem,
 		LayoutStructure layoutStructure, List<String> removedItemIds) {
@@ -219,6 +306,140 @@ public class FormItemManager {
 		}
 
 		return fragmentEntryLinkIdsJSONArray;
+	}
+
+	private FragmentEntryLink _addFormButtonFragmentEntryLink(
+			Layout layout, Locale locale, String type,
+			long segmentsExperienceId, ServiceContext serviceContext)
+		throws PortalException {
+
+		FragmentEntry fragmentEntry = _getFragmentEntry(
+			layout.getCompanyId(),
+			_defaultInputFragmentEntryConfigurationProvider.
+				getDefaultInputFragmentEntryKeysJSONObject(layout.getGroupId()),
+			DefaultInputFragmentEntryConfigurationProvider.
+				FORM_INPUT_SUBMIT_BUTTON);
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkService.addFragmentEntryLink(
+				null, layout.getGroupId(), 0,
+				fragmentEntry.getFragmentEntryId(), segmentsExperienceId,
+				layout.getPlid(), fragmentEntry.getCss(),
+				fragmentEntry.getHtml(), fragmentEntry.getJs(),
+				fragmentEntry.getConfiguration(), null, StringPool.BLANK, 0,
+				fragmentEntry.getFragmentEntryKey(), fragmentEntry.getType(),
+				serviceContext);
+
+		JSONObject editableValuesJSONObject = _jsonFactory.createJSONObject();
+
+		if (Validator.isNotNull(fragmentEntryLink.getEditableValues())) {
+			editableValuesJSONObject = _jsonFactory.createJSONObject(
+				fragmentEntryLink.getEditableValues());
+		}
+
+		JSONObject jsonObject = editableValuesJSONObject.getJSONObject(
+			FragmentEntryProcessorConstants.
+				KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
+
+		if (jsonObject == null) {
+			jsonObject = _jsonFactory.createJSONObject();
+
+			editableValuesJSONObject.put(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+				jsonObject);
+		}
+
+		jsonObject.put("type", type);
+
+		jsonObject = editableValuesJSONObject.getJSONObject(
+			FragmentEntryProcessorConstants.
+				KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR);
+
+		if (jsonObject == null) {
+			jsonObject = _jsonFactory.createJSONObject();
+
+			editableValuesJSONObject.put(
+				FragmentEntryProcessorConstants.
+					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+				jsonObject);
+		}
+
+		jsonObject.put(
+			type + "-button-text",
+			JSONUtil.put("defaultValue", _language.get(locale, type)));
+
+		return _fragmentEntryLinkService.updateFragmentEntryLink(
+			fragmentEntryLink.getFragmentEntryLinkId(),
+			editableValuesJSONObject.toString());
+	}
+
+	private List<FragmentEntryLink> _addFormButtons(
+			FormStepLayoutStructureItem formStepLayoutStructureItem,
+			FormStyledLayoutStructureItem formStyledLayoutStructureItem,
+			Layout layout, Locale locale, LayoutStructure layoutStructure,
+			int numberOfSteps, long segmentsExperienceId, int stepIndex,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		LayoutStructureItem layoutStructureItem = _findFormButtonsContainer(
+			formStepLayoutStructureItem, formStyledLayoutStructureItem,
+			layoutStructure);
+
+		if (layoutStructureItem != null) {
+			layoutStructure.markLayoutStructureItemForDeletion(
+				Collections.singletonList(layoutStructureItem.getItemId()),
+				Collections.emptyList());
+		}
+
+		List<FragmentEntryLink> fragmentEntryLinks = new ArrayList<>();
+
+		if (stepIndex == 0) {
+			fragmentEntryLinks.add(
+				_addFormButtonFragmentEntryLink(
+					layout, locale, "next", segmentsExperienceId,
+					serviceContext));
+		}
+		else if (stepIndex == (numberOfSteps - 1)) {
+			fragmentEntryLinks.add(
+				_addFormButtonFragmentEntryLink(
+					layout, locale, "previous", segmentsExperienceId,
+					serviceContext));
+
+			fragmentEntryLinks.add(
+				_addFormButtonFragmentEntryLink(
+					layout, locale, "submit", segmentsExperienceId,
+					serviceContext));
+		}
+		else {
+			fragmentEntryLinks.add(
+				_addFormButtonFragmentEntryLink(
+					layout, locale, "previous", segmentsExperienceId,
+					serviceContext));
+
+			fragmentEntryLinks.add(
+				_addFormButtonFragmentEntryLink(
+					layout, locale, "next", segmentsExperienceId,
+					serviceContext));
+		}
+
+		ContainerStyledLayoutStructureItem containerStyledLayoutStructureItem =
+			(ContainerStyledLayoutStructureItem)
+				layoutStructure.addContainerStyledLayoutStructureItem(
+					_getFormButtonsContainerId(
+						formStepLayoutStructureItem,
+						formStyledLayoutStructureItem),
+					formStepLayoutStructureItem.getItemId(), -1);
+
+		containerStyledLayoutStructureItem.setContentDisplay("flex-row");
+
+		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
+			layoutStructure.addFragmentStyledLayoutStructureItem(
+				fragmentEntryLink.getFragmentEntryLinkId(),
+				containerStyledLayoutStructureItem.getItemId(), -1);
+		}
+
+		return fragmentEntryLinks;
 	}
 
 	private FragmentEntryLink _addFragmentEntryLink(
@@ -272,6 +493,36 @@ public class FormItemManager {
 			fragmentEntryLink.getFragmentEntryLinkId(), formItemId, -1);
 
 		return fragmentEntryLink;
+	}
+
+	private LayoutStructureItem _findFormButtonsContainer(
+		FormStepLayoutStructureItem formStepLayoutStructureItem,
+		FormStyledLayoutStructureItem formStyledLayoutStructureItem,
+		LayoutStructure layoutStructure) {
+
+		for (String childrenItemId :
+				formStepLayoutStructureItem.getChildrenItemIds()) {
+
+			LayoutStructureItem layoutStructureItem =
+				layoutStructure.getLayoutStructureItem(childrenItemId);
+
+			if (_isFormButtonsContainer(
+					formStepLayoutStructureItem, formStyledLayoutStructureItem,
+					layoutStructureItem)) {
+
+				return layoutStructureItem;
+			}
+		}
+
+		return null;
+	}
+
+	private String _getFormButtonsContainerId(
+		FormStepLayoutStructureItem formStepLayoutStructureItem,
+		FormStyledLayoutStructureItem formStyledLayoutStructureItem) {
+
+		return formStyledLayoutStructureItem.getItemId() + StringPool.DASH +
+			formStepLayoutStructureItem.getItemId();
 	}
 
 	private FragmentEntry _getFragmentEntry(
@@ -394,6 +645,25 @@ public class FormItemManager {
 		return false;
 	}
 
+	private boolean _isFormButtonsContainer(
+		FormStepLayoutStructureItem formStepLayoutStructureItem,
+		FormStyledLayoutStructureItem formStyledLayoutStructureItem,
+		LayoutStructureItem layoutStructureItem) {
+
+		if ((layoutStructureItem instanceof
+				ContainerStyledLayoutStructureItem) &&
+			Objects.equals(
+				layoutStructureItem.getItemId(),
+				_getFormButtonsContainerId(
+					formStepLayoutStructureItem,
+					formStyledLayoutStructureItem))) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		FormItemManager.class);
 
@@ -404,6 +674,9 @@ public class FormItemManager {
 	@Reference
 	private FragmentCollectionContributorRegistry
 		_fragmentCollectionContributorRegistry;
+
+	@Reference
+	private FragmentEntryLinkManager _fragmentEntryLinkManager;
 
 	@Reference
 	private FragmentEntryLinkService _fragmentEntryLinkService;

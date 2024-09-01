@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.db.schema.importer.jdbc.AutoBatchPreparedStatementUtil;
+import com.liferay.portal.tools.db.schema.importer.jdbc.DataSourceFactoryUtil;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -39,11 +40,24 @@ import javax.sql.DataSource;
 public class DBSchemaImporterProcess {
 
 	public DBSchemaImporterProcess(
-		String path, DataSource sourceDataSource, DataSource targetDataSource) {
+			String path, String sourceJDBCURL, String sourcePassword,
+			String sourceUser, String targetJDBCURL, String targetPassword,
+			String targetUser)
+		throws Exception {
 
 		_path = path;
-		_sourceDataSource = sourceDataSource;
-		_targetDataSource = targetDataSource;
+		_sourceJDBCURL = sourceJDBCURL;
+		_sourcePassword = sourcePassword;
+		_sourceUser = sourceUser;
+		_targetJDBCURL = targetJDBCURL;
+		_targetPassword = targetPassword;
+		_targetUser = targetUser;
+
+		_sourceDataSource = DataSourceFactoryUtil.initDataSource(
+			sourceJDBCURL, sourcePassword, sourceUser);
+
+		_targetDataSource = DataSourceFactoryUtil.initDataSource(
+			_targetJDBCURL, _targetPassword, _targetUser);
 	}
 
 	public void run() throws Exception {
@@ -212,7 +226,13 @@ public class DBSchemaImporterProcess {
 		Executors.newFixedThreadPool(5);
 	private final String _path;
 	private final DataSource _sourceDataSource;
+	private final String _sourceJDBCURL;
+	private final String _sourcePassword;
+	private final String _sourceUser;
 	private final List<String> _syncSQLs = new ArrayList<>();
 	private final DataSource _targetDataSource;
+	private final String _targetJDBCURL;
+	private final String _targetPassword;
+	private final String _targetUser;
 
 }

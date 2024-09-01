@@ -5,11 +5,6 @@
 
 package com.liferay.portal.tools.db.schema.importer;
 
-import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
-
-import javax.sql.DataSource;
-
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
@@ -55,14 +50,12 @@ public class DBSchemaImporter {
 		try {
 			new DBSchemaImporterProcess(
 				commandLine.getOptionValue("path"),
-				_getDataSource(
-					commandLine.getOptionValue("source-jdbc-url"),
-					commandLine.getOptionValue("source-password"),
-					commandLine.getOptionValue("source-user")),
-				_getDataSource(
-					commandLine.getOptionValue("target-jdbc-url"),
-					commandLine.getOptionValue("target-password"),
-					commandLine.getOptionValue("target-user"))
+				commandLine.getOptionValue("source-jdbc-url"),
+				commandLine.getOptionValue("source-password"),
+				commandLine.getOptionValue("source-user"),
+				commandLine.getOptionValue("target-jdbc-url"),
+				commandLine.getOptionValue("target-password"),
+				commandLine.getOptionValue("target-user")
 			).run();
 
 			System.exit(_LIFERAY_COMMON_EXIT_CODE_OK);
@@ -72,35 +65,6 @@ public class DBSchemaImporter {
 
 			System.exit(_LIFERAY_COMMON_EXIT_CODE_BAD);
 		}
-	}
-
-	private static DataSource _getDataSource(
-			String jdbcURL, String password, String userName)
-		throws Exception {
-
-		String driverClassName = "com.mysql.cj.jdbc.Driver";
-
-		if (jdbcURL.indexOf("postgresql") > 0) {
-			driverClassName = "org.postgresql.Driver";
-		}
-
-		Class.forName(driverClassName);
-
-		HikariConfig hikariConfig = new HikariConfig();
-
-		hikariConfig.setDriverClassName(driverClassName);
-		hikariConfig.setJdbcUrl(jdbcURL);
-		hikariConfig.setPassword(password);
-		hikariConfig.setUsername(userName);
-
-		hikariConfig.setConnectionTimeout(30000);
-		hikariConfig.setIdleTimeout(600000);
-		hikariConfig.setMaximumPoolSize(10);
-		hikariConfig.setMaxLifetime(0);
-		hikariConfig.setMinimumIdle(10);
-		hikariConfig.setTransactionIsolation("TRANSACTION_READ_UNCOMMITTED");
-
-		return new HikariDataSource(hikariConfig);
 	}
 
 	private static Options _getOptions() {

@@ -465,3 +465,45 @@ autoSaveTest(
 		await expect(page.getByText('Draft', {exact: true})).toBeVisible();
 	}
 );
+
+autoSaveTest(
+	'Autosave is not enabled until all required fields are completed',
+	{
+		tag: '@LPD-34923',
+	},
+	async ({apiHelpers, journalEditArticlePage, page, site}) => {
+		const requiredFieldName = 'RequiredTextField';
+		const structureName = 'Structure';
+
+		const dataDefinition = getDataStructureDefinition({
+			defaultLanguageId: 'en_US',
+			fields: [{name: requiredFieldName, required: true}],
+			name: structureName,
+		});
+
+		await apiHelpers.dataEngine.createStructure(site.id, dataDefinition);
+
+		await journalEditArticlePage.goto({
+			siteUrl: site.friendlyUrlPath,
+			structureName,
+		});
+
+		await journalEditArticlePage.fillTitle(getRandomString());
+
+		const errorIndicator = await page.locator(
+			'#_com_liferay_journal_web_portlet_JournalPortlet_lockErrorIndicator'
+		);
+
+		await expect(errorIndicator).toBeVisible();
+
+		const requiredField = page.getByRole('textbox', {
+			name: requiredFieldName,
+		});
+
+		await fillAndClickOutside(page, requiredField);
+
+		await expect(
+			journalEditArticlePage.changesSavedIndicator
+		).toBeVisible();
+	}
+);

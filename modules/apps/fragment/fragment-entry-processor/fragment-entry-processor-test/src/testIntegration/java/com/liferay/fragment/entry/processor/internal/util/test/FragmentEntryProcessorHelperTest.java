@@ -54,6 +54,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -501,6 +502,7 @@ public class FragmentEntryProcessorHelperTest {
 	}
 
 	@Test
+	@TestInfo("LPD-11377")
 	public void testGetRepeatableAssetTags() throws Exception {
 		JSONObject jsonObject = JSONUtil.put(
 			"className", JournalArticle.class.getName()
@@ -545,6 +547,7 @@ public class FragmentEntryProcessorHelperTest {
 	}
 
 	@Test
+	@TestInfo("LPD-11377")
 	public void testGetRepeatableAssetVocabularies() throws Exception {
 		JSONObject jsonObject = JSONUtil.put(
 			"className", JournalArticle.class.getName()
@@ -591,6 +594,7 @@ public class FragmentEntryProcessorHelperTest {
 	}
 
 	@Test
+	@TestInfo("LPD-11377")
 	public void testGetRepeatableFieldValue() throws Exception {
 		JSONObject jsonObject = JSONUtil.put(
 			"className", JournalArticle.class.getName()

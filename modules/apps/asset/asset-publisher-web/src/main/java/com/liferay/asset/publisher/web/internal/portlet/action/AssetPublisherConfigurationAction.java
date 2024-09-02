@@ -34,6 +34,7 @@ import com.liferay.item.selector.ItemSelector;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
@@ -42,7 +43,6 @@ import com.liferay.portal.kernel.model.LayoutSetBranch;
 import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
-import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -64,6 +64,7 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.PortletPreferencesImpl;
+import com.liferay.portlet.display.template.portlet.action.BasePortletDisplayTemplateConfigurationAction;
 import com.liferay.segments.SegmentsEntryRetriever;
 import com.liferay.segments.context.RequestContextMapper;
 
@@ -101,7 +102,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = ConfigurationAction.class
 )
 public class AssetPublisherConfigurationAction
-	extends DefaultConfigurationAction {
+	extends BasePortletDisplayTemplateConfigurationAction {
 
 	@Override
 	public String getJspPath(HttpServletRequest httpServletRequest) {
@@ -166,7 +167,9 @@ public class AssetPublisherConfigurationAction
 	public void postProcess(
 			long companyId, PortletRequest portletRequest,
 			PortletPreferences portletPreferences)
-		throws ConfigurationException {
+		throws PortalException {
+
+		super.postProcess(companyId, portletRequest, portletPreferences);
 
 		AssetPublisherPortletInstanceConfiguration
 			assetPublisherPortletInstanceConfiguration =
@@ -370,31 +373,6 @@ public class AssetPublisherConfigurationAction
 			setPreference(
 				actionRequest, "assetListEntryGroupExternalReferenceCode",
 				group.getExternalReferenceCode());
-		}
-	}
-
-	protected void updateDisplayStyleGroupPreferences(
-			ActionRequest actionRequest, PortletPreferences portletPreferences)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String displayStyleGroupKey = getParameter(
-			actionRequest, "displayStyleGroupKey");
-
-		Group group = groupLocalService.fetchGroup(
-			themeDisplay.getCompanyId(), displayStyleGroupKey);
-
-		if ((group != null) &&
-			(group.getGroupId() != themeDisplay.getScopeGroupId())) {
-
-			setPreference(
-				actionRequest, "displayStyleGroupExternalReferenceCode",
-				group.getExternalReferenceCode());
-		}
-		else {
-			portletPreferences.reset("displayStyleGroupExternalReferenceCode");
 		}
 	}
 
@@ -773,8 +751,6 @@ public class AssetPublisherConfigurationAction
 
 			portletPreferences.setValue("displayStyle", "full-content");
 		}
-
-		updateDisplayStyleGroupPreferences(actionRequest, portletPreferences);
 	}
 
 	private void _updateDefaultAssetPublisher(ActionRequest actionRequest)

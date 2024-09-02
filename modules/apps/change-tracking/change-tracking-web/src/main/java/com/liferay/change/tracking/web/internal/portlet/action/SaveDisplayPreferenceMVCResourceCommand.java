@@ -10,7 +10,11 @@ import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+
+import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -37,10 +41,25 @@ public class SaveDisplayPreferenceMVCResourceCommand
 		PortalPreferences portalPreferences =
 			PortletPreferencesFactoryUtil.getPortalPreferences(resourceRequest);
 
-		portalPreferences.setValue(
-			CTPortletKeys.PUBLICATIONS,
-			ParamUtil.getString(resourceRequest, "key"),
-			ParamUtil.getString(resourceRequest, "value"));
+		String key = ParamUtil.getString(resourceRequest, "key");
+		String value = ParamUtil.getString(resourceRequest, "value");
+
+		if (Objects.equals(key, "hideContextChangeWarningDuration")) {
+			key = "hideContextChangeWarningExpiryTime";
+
+			long hideContextChangeWarningExpiryTime = GetterUtil.getLong(value);
+
+			if (hideContextChangeWarningExpiryTime > 0) {
+				long currentTime = System.currentTimeMillis();
+
+				value = String.valueOf(
+					currentTime +
+						TimeUnit.HOURS.toMillis(
+							hideContextChangeWarningExpiryTime));
+			}
+		}
+
+		portalPreferences.setValue(CTPortletKeys.PUBLICATIONS, key, value);
 	}
 
 }

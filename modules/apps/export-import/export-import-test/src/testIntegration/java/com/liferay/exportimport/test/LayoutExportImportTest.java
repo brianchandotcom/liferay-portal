@@ -22,7 +22,6 @@ import com.liferay.layout.friendly.url.LayoutFriendlyURLEntryHelper;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
-import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
@@ -649,7 +648,13 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 		Layout childLayout = LayoutTestUtil.addTypeContentLayout(
 			group, parentLayout.getPlid());
 
-		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+		_fragmentEntryLinkLocalService.addFragmentEntryLink(
+			null, TestPropsValues.getUserId(), group.getGroupId(), 0,
+			RandomTestUtil.randomLong(),
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				layout.getPlid()),
+			layout.getPlid(), StringPool.BLANK, StringPool.BLANK,
+			StringPool.BLANK, StringPool.BLANK,
 			StringUtil.replace(
 				_getContent(
 					"fragment_entry_link_editable_values_with_configuration." +
@@ -662,23 +667,12 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 					String.valueOf(childLayout.getLayoutId()),
 					childLayout.getUuid(), childLayout.getName("en_US")
 				}),
-			layout,
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				layout.getPlid()));
+			StringPool.BLANK, 0, StringPool.BLANK,
+			FragmentConstants.TYPE_COMPONENT,
+			ServiceContextTestUtil.getServiceContext());
 
-		Map<Long, Boolean> selectedLayouts = HashMapBuilder.put(
-			layout.getPlid(), true
-		).build();
-
-		Map<String, String[]> exportParameterMap = getExportParameterMap();
-
-		exportParameterMap.put(Constants.CMD, new String[] {Constants.EXPORT});
-
-		exportLayouts(
-			ExportImportHelperUtil.getLayoutIds(selectedLayouts),
-			exportParameterMap);
-
-		importLayouts(exportParameterMap, false);
+		exportImportLayouts(
+			new long[] {layout.getLayoutId()}, getImportParameterMap());
 
 		Layout importedChildLayout =
 			LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(

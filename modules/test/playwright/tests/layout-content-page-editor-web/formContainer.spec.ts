@@ -210,9 +210,11 @@ test.describe('Multistep', {tag: '@LPD-10727'}, () => {
 
 		// Check steps titles and bullets numbers are displayed
 
-		page.locator('.multi-step-nav').getByText('Step 01').waitFor();
+		await page.locator('.multi-step-nav').getByText('Step 1').waitFor();
 
-		page.locator('.multi-step-icon[data-multi-step-icon="1"]').waitFor();
+		await page
+			.locator('.multi-step-icon[data-multi-step-icon="1"]')
+			.waitFor();
 
 		// Hide both and check they are not displayed
 
@@ -231,7 +233,7 @@ test.describe('Multistep', {tag: '@LPD-10727'}, () => {
 		});
 
 		await expect(
-			page.locator('.multi-step-nav').getByText('Step 01')
+			page.locator('.multi-step-nav').getByText('Step 1')
 		).not.toBeVisible();
 
 		await expect(

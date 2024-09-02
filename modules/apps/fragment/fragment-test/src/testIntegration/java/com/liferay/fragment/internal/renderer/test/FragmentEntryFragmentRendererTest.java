@@ -15,6 +15,8 @@ import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTCollectionService;
+import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.fragment.cache.FragmentEntryLinkCache;
 import com.liferay.fragment.configuration.FragmentJavascriptConfiguration;
 import com.liferay.fragment.constants.FragmentConstants;
@@ -43,6 +45,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -55,9 +58,11 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Time;
@@ -268,6 +273,57 @@ public class FragmentEntryFragmentRendererTest {
 
 		MockHttpServletResponse mockHttpServletResponse =
 			_renderFragmentEntryLink(blogsHeadingFragmentEntryLink);
+
+		String content = mockHttpServletResponse.getContentAsString();
+
+		Assert.assertTrue(
+			content.contains(assetCategory.getTitle(LocaleUtil.getDefault())));
+	}
+
+	@Test
+	public void testMapCategoryFromFileEntryToEditableField() throws Exception {
+		AssetVocabulary assetVocabulary =
+			_assetVocabularyLocalService.addVocabulary(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), _serviceContext);
+
+		AssetCategory assetCategory = _assetCategoryLocalService.addCategory(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			RandomTestUtil.randomString(), assetVocabulary.getVocabularyId(),
+			_serviceContext);
+
+		_serviceContext.setAssetCategoryIds(
+			new long[] {assetCategory.getCategoryId()});
+
+		FileEntry fileEntry = _addFileEntry();
+
+		String fieldId = "AssetVocabulary_" + assetVocabulary.getVocabularyId();
+
+		FragmentEntryLink fileHeadingFragmentEntryLink =
+			_addHeadingFragmentEntryLink(
+				JSONUtil.put(
+					"element-text",
+					JSONUtil.put(
+						"classNameId",
+						PortalUtil.getClassNameId(FileEntry.class)
+					).put(
+						"classPK", fileEntry.getFileEntryId()
+					).put(
+						"config", JSONUtil.put("mapperType", "link")
+					).put(
+						"defaultValue", "Heading Example"
+					).put(
+						"fieldId", fieldId
+					).put(
+						"itemSubtype", "Basic Document"
+					).put(
+						"itemType", "Document"
+					).put(
+						"title", fileEntry.getTitle()
+					)));
+
+		MockHttpServletResponse mockHttpServletResponse =
+			_renderFragmentEntryLink(fileHeadingFragmentEntryLink);
 
 		String content = mockHttpServletResponse.getContentAsString();
 
@@ -524,6 +580,15 @@ public class FragmentEntryFragmentRendererTest {
 			RandomTestUtil.randomString(),
 			DateUtil.newDate(System.currentTimeMillis() - Time.DAY), true, true,
 			new String[0], StringPool.BLANK, null, null, _serviceContext);
+	}
+
+	private FileEntry _addFileEntry() throws Exception {
+		return DLAppLocalServiceUtil.addFileEntry(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString() + "." + ContentTypes.IMAGE_JPEG,
+			MimeTypesUtil.getExtensionContentType(ContentTypes.IMAGE_JPEG),
+			new byte[0], null, null, null, _serviceContext);
 	}
 
 	private FragmentEntryLink _addHeadingFragmentEntryLink(

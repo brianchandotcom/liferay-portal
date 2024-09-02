@@ -9,14 +9,11 @@ import com.liferay.item.selector.ItemSelector;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
-import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
-import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
+import com.liferay.portlet.display.template.portlet.action.BasePortletDisplayTemplateConfigurationAction;
 import com.liferay.site.navigation.constants.SiteNavigationMenuPortletKeys;
 import com.liferay.site.navigation.menu.web.internal.constants.SiteNavigationMenuWebKeys;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
@@ -53,7 +50,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = ConfigurationAction.class
 )
 public class SiteNavigationMenuConfigurationAction
-	extends DefaultConfigurationAction {
+	extends BasePortletDisplayTemplateConfigurationAction {
 
 	@Override
 	public String getJspPath(HttpServletRequest httpServletRequest) {
@@ -92,11 +89,11 @@ public class SiteNavigationMenuConfigurationAction
 			PortletPreferences portletPreferences)
 		throws PortalException {
 
+		super.postProcess(companyId, portletRequest, portletPreferences);
+
 		try {
 			portletPreferences.reset("included-layouts");
 
-			_updateDisplayStyleGroupPreferences(
-				portletPreferences, portletRequest);
 			_updateRootMenuItemPreferences(portletPreferences);
 			_updateSiteNavigationMenuPreferences(portletPreferences);
 		}
@@ -106,40 +103,11 @@ public class SiteNavigationMenuConfigurationAction
 	}
 
 	@Reference
-	protected GroupLocalService groupLocalService;
-
-	@Reference
 	protected SiteNavigationMenuItemLocalService
 		siteNavigationMenuItemLocalService;
 
 	@Reference
 	protected SiteNavigationMenuService siteNavigationMenuService;
-
-	private void _updateDisplayStyleGroupPreferences(
-			PortletPreferences portletPreferences,
-			PortletRequest portletRequest)
-		throws ReadOnlyException {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String displayStyleGroupKey = portletPreferences.getValue(
-			"displayStyleGroupKey", null);
-
-		Group group = groupLocalService.fetchGroup(
-			themeDisplay.getCompanyId(), displayStyleGroupKey);
-
-		if ((group != null) &&
-			(group.getGroupId() != themeDisplay.getScopeGroupId())) {
-
-			portletPreferences.setValue(
-				"displayStyleGroupExternalReferenceCode",
-				group.getExternalReferenceCode());
-		}
-		else {
-			portletPreferences.reset("displayStyleGroupExternalReferenceCode");
-		}
-	}
 
 	private void _updateRootMenuItemPreferences(
 			PortletPreferences portletPreferences)

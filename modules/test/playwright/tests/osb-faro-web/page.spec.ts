@@ -71,6 +71,87 @@ const goToWithReferrer = async function ({
 };
 
 test(
+	'Create the page name with special characters makes the correct name appear in the path part of AC pages',
+	{
+		tag: '@LRAC-8988',
+	},
+
+	async ({apiHelpers, page}) => {
+		const pageTitle = 'Snúið Vinsælar þú';
+		const sitePage = await createSitePage({
+			apiHelpers,
+			pageTitle,
+		});
+
+		const channelName = 'My Property - ' + getRandomString();
+		await test.step('Connect the DXP to AC', async () => {
+			await syncAnalyticsCloud({
+				apiHelpers,
+				channelName,
+				page,
+			});
+		});
+
+		await test.step('Go to Snúið Vinsælar þú Page', async () => {
+			await navigateToSitePage({
+				page,
+				pageName: pageTitle,
+			});
+			await page.waitForTimeout(10000);
+		});
+
+		await test.step('Go to Analytics Cloud and Switch the property', async () => {
+			await navigateToACWorkspace({page});
+			await switchChannel({
+				channelName,
+				page,
+			});
+		});
+
+		await test.step('Go to Pages Tab', async () => {
+			await navigateTo({
+				page,
+				pageName: 'Pages',
+			});
+		});
+
+		await test.step('Change the time filter to Last 24 hours', async () => {
+			await changeTimeFilter({
+				page,
+				timeFilterPeriod: 'Last 24 hours',
+			});
+		});
+
+		await test.step('Access one of the pages on the list > Go to Path Tab', async () => {
+			await navigateTo({
+				page,
+				pageName: pageTitle,
+			});
+			await navigateTo({
+				page,
+				pageName: 'Path',
+			});
+		});
+
+		await test.step('Check that Snúið Vinsælar þú Page appear as referral page', async () => {
+			await expect(
+				page.getByText('Snúið Vinsælar ...', {exact: true}).first()
+			).toBeVisible({
+				timeout: 100 * 1000,
+			});
+		});
+
+		await test.step('Delete pages created in DXP during automation execution', async () => {
+			await page.goto(liferayConfig.environment.baseUrl);
+
+			await apiHelpers.jsonWebServicesLayout.deleteLayout(
+				String(sitePage.id)
+			);
+		});
+	}
+);
+
+test(
 	'Check that the Dynamic Segment does not continue to appear in the audience card after the segment is deleted',
 	{
 		tag: '@LPD-27586',

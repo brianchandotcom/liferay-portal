@@ -152,6 +152,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ICON_DOCUMENT_WORKFLOW_STATUS_APPROVED</td>
+	<td>//dd[contains(.,'${key_dmDocumentTitle}')]//span[@class='label label-success']//span[@class='label-item label-item-expand']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ICON_DOCUMENT_WORKFLOW_STATUS_DRAFT</td>
+	<td>//dd[contains(.,'${key_dmDocumentTitle}')]//span[@class='label label-secondary']//span[@class='label-item label-item-expand']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

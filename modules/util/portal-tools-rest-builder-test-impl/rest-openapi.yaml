@@ -1,5 +1,11 @@
 components:
     schemas:
+        EnumTestEntity:
+            properties:
+                testEnum:
+                    enum: [-1em, -0.95em, 1em, 0.95em]
+                    type: string
+            type: object
         ChildTestEntity1:
             allOf:
                 - $ref: "#/components/schemas/TestEntity"

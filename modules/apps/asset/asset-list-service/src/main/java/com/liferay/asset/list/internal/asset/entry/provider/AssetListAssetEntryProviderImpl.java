@@ -758,7 +758,9 @@ public class AssetListAssetEntryProviderImpl
 			_assetListEntrySegmentsEntryRelLocalService.
 				getAssetListEntrySegmentsEntryRels(
 					assetListEntry.getAssetListEntryId(), segmentsEntryIds, 0,
-					1, new AssetListEntrySegmentsEntryRelPriorityComparator());
+					1,
+					AssetListEntrySegmentsEntryRelPriorityComparator.
+						getInstance(true));
 
 		AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel =
 			assetListEntrySegmentsEntryRels.get(0);

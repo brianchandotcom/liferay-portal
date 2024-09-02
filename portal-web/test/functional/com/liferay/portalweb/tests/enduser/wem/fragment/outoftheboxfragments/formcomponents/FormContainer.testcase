@@ -88,9 +88,7 @@ definition {
 		}
 
 		task ("When the page creator tries to add a Heading fragment into Form Container after mapping entity") {
-			PageEditor.editFormContainer(
-				contentType = "Purchase Order",
-				panel = "General");
+			PageEditor.editFormContainer(contentType = "Purchase Order");
 
 			for (var fragmentName : list "Text,Form Button") {
 				PageEditor.removeFragment(fragmentName = ${fragmentName});
@@ -206,7 +204,6 @@ definition {
 			PageEditor.editFormContainer(
 				contentType = "Purchase Order",
 				displayPageName = "Default",
-				panel = "General",
 				successMessage = "Go to Entry Display Page");
 
 			PageEditor.publish();
@@ -459,7 +456,6 @@ definition {
 
 		task ("When the page creator enables the Show Notification when Form Is Submitted") {
 			PageEditor.editFormContainer(
-				panel = "General",
 				showNotificationWhenFormIsSubmitted = "true",
 				successNotificationText = "Your form was successfully submitted.");
 		}
@@ -590,9 +586,7 @@ definition {
 		}
 
 		task ("When the page designer maps the Form Container to new Object") {
-			PageEditor.editFormContainer(
-				contentType = "Purchase Order",
-				panel = "General");
+			PageEditor.editFormContainer(contentType = "Purchase Order");
 
 			for (var fragmentName : list "Text,Form Button") {
 				PageEditor.removeFragment(fragmentName = ${fragmentName});
@@ -669,7 +663,6 @@ definition {
 				siteName = "Test Site Name");
 
 			PageEditor.editFormContainer(
-				panel = "General",
 				successMessage = "Show Embedded Message",
 				successText = "We are glad to receive your Form!");
 		}
@@ -734,7 +727,6 @@ definition {
 			task ("Add External URL on success message") {
 				PageEditor.editFormContainer(
 					contentType = "Purchase Order",
-					panel = "General",
 					successMessage = "Go to External URL",
 					url = "https://www.liferay.com");
 
@@ -811,7 +803,6 @@ definition {
 				PageEditor.editFormContainer(
 					contentType = "Purchase Order",
 					pageName = "Thank you page",
-					panel = "General",
 					successMessage = "Go to Page");
 
 				PageEditor.viewItemSelectorText(
@@ -878,7 +869,6 @@ definition {
 			PageEditor.editFormContainer(
 				changePage = "true",
 				pageName = "Home",
-				panel = "General",
 				siteName = ${siteName},
 				successMessage = "Go to Page");
 
@@ -943,9 +933,7 @@ definition {
 			}
 
 			task ("Map the Form Container to new Object") {
-				PageEditor.editFormContainer(
-					contentType = "Purchase Order",
-					panel = "General");
+				PageEditor.editFormContainer(contentType = "Purchase Order");
 			}
 
 			task ("Add a Language Selector below Form Container") {
@@ -962,7 +950,6 @@ definition {
 				locale = "es-ES");
 
 			PageEditor.editFormContainer(
-				panel = "General",
 				successMessage = "Show Embedded Message",
 				successText = "Estamos muy agradecidos de recibir su formulario.");
 
@@ -971,7 +958,6 @@ definition {
 				locale = "pt-BR");
 
 			PageEditor.editFormContainer(
-				panel = "General",
 				successMessage = "Show Embedded Message",
 				successText = "Obrigado por nos enviar seu formulario!");
 		}
@@ -1605,9 +1591,7 @@ definition {
 				fragmentName = "Form Container",
 				navTab = "Fragments");
 
-			PageEditor.editFormContainer(
-				contentType = "Purchase Order",
-				panel = "General");
+			PageEditor.editFormContainer(contentType = "Purchase Order");
 		}
 
 		task ("When the page designer hides the Container") {
@@ -1650,9 +1634,7 @@ definition {
 				fragmentName = "Form Container",
 				navTab = "Fragments");
 
-			PageEditor.editFormContainer(
-				contentType = "Purchase Order",
-				panel = "General");
+			PageEditor.editFormContainer(contentType = "Purchase Order");
 		}
 
 		task ("When the page designer hides the Grid") {
@@ -1703,9 +1685,7 @@ definition {
 				collectionName = "Form Components",
 				fragmentName = "Form Container");
 
-			PageEditor.editFormContainer(
-				contentType = "Purchase Order",
-				panel = "General");
+			PageEditor.editFormContainer(contentType = "Purchase Order");
 
 			PageEditor.removeFragment(fragmentName = "Form Button");
 
@@ -1798,9 +1778,7 @@ definition {
 					collectionName = "Form Components",
 					fragmentName = "Form Container");
 
-				PageEditor.editFormContainer(
-					contentType = "Purchase Order",
-					panel = "General");
+				PageEditor.editFormContainer(contentType = "Purchase Order");
 			}
 
 			task ("Mark the Checkbox as required") {
@@ -2009,7 +1987,6 @@ definition {
 		task ("When the page creator defines the success notification of Go to Entry Display Page") {
 			PageEditor.editFormContainer(
 				displayPageName = "Default",
-				panel = "General",
 				showNotificationWhenFormIsSubmitted = "true",
 				successMessage = "Go to Entry Display Page",
 				successNotificationText = "Your form was successfully submitted.");
@@ -2080,7 +2057,6 @@ definition {
 		task ("When the page creator defines the success notification of Go to Page") {
 			PageEditor.editFormContainer(
 				pageName = "Thank you page",
-				panel = "General",
 				showNotificationWhenFormIsSubmitted = "true",
 				successMessage = "Go to Page",
 				successNotificationText = "Your form was successfully submitted.");
@@ -2137,7 +2113,6 @@ definition {
 
 		task ("When the page creator defines the success notification of Show Embedded Message") {
 			PageEditor.editFormContainer(
-				panel = "General",
 				showNotificationWhenFormIsSubmitted = "true",
 				successNotificationText = "Your form was successfully submitted.");
 
@@ -2193,7 +2168,6 @@ definition {
 
 		task ("When the page creator defines the success notification of Stay in Page") {
 			PageEditor.editFormContainer(
-				panel = "General",
 				showNotificationWhenFormIsSubmitted = "true",
 				successMessage = "Stay in Page",
 				successNotificationText = "Your form was successfully submitted.");
@@ -2255,9 +2229,7 @@ definition {
 				collectionName = "Form Components",
 				fragmentName = "Form Container");
 
-			PageEditor.editFormContainer(
-				contentType = "Purchase Order",
-				panel = "General");
+			PageEditor.editFormContainer(contentType = "Purchase Order");
 
 			PageEditor.editInput(
 				fragmentName = "Text",
@@ -2308,9 +2280,7 @@ definition {
 				collectionName = "Form Components",
 				fragmentName = "Form Container");
 
-			PageEditor.editFormContainer(
-				contentType = "Purchase Order",
-				panel = "General");
+			PageEditor.editFormContainer(contentType = "Purchase Order");
 
 			for (var fragmentName : list "Date,Form Button") {
 				PageEditor.removeFragment(fragmentName = ${fragmentName});
@@ -2366,9 +2336,7 @@ definition {
 				collectionName = "Form Components",
 				fragmentName = "Form Container");
 
-			PageEditor.editFormContainer(
-				contentType = "Purchase Order",
-				panel = "General");
+			PageEditor.editFormContainer(contentType = "Purchase Order");
 
 			for (var fragmentName : list "Text,Form Button") {
 				PageEditor.removeFragment(fragmentName = ${fragmentName});
@@ -2425,9 +2393,7 @@ definition {
 				collectionName = "Form Components",
 				fragmentName = "Form Container");
 
-			PageEditor.editFormContainer(
-				contentType = "Purchase Order",
-				panel = "General");
+			PageEditor.editFormContainer(contentType = "Purchase Order");
 
 			for (var fragmentName : list "Date,Form Button") {
 				PageEditor.removeFragment(fragmentName = ${fragmentName});
@@ -2484,9 +2450,7 @@ definition {
 				collectionName = "Form Components",
 				fragmentName = "Form Container");
 
-			PageEditor.editFormContainer(
-				contentType = "Purchase Order",
-				panel = "General");
+			PageEditor.editFormContainer(contentType = "Purchase Order");
 
 			for (var fragmentName : list "Text,Form Button") {
 				PageEditor.removeFragment(fragmentName = ${fragmentName});
@@ -2544,9 +2508,7 @@ definition {
 				collectionName = "Form Components",
 				fragmentName = "Form Container");
 
-			PageEditor.editFormContainer(
-				contentType = "Purchase Order",
-				panel = "General");
+			PageEditor.editFormContainer(contentType = "Purchase Order");
 
 			for (var fragmentName : list "Text,Form Button") {
 				PageEditor.removeFragment(fragmentName = ${fragmentName});
@@ -2614,9 +2576,7 @@ definition {
 				collectionName = "Form Components",
 				fragmentName = "Form Container");
 
-			PageEditor.editFormContainer(
-				contentType = "Purchase Order",
-				panel = "General");
+			PageEditor.editFormContainer(contentType = "Purchase Order");
 
 			for (var fragmentName : list "Text,Form Button") {
 				PageEditor.removeFragment(fragmentName = ${fragmentName});
@@ -2685,9 +2645,7 @@ definition {
 				collectionName = "Form Components",
 				fragmentName = "Form Container");
 
-			PageEditor.editFormContainer(
-				contentType = "Purchase Order",
-				panel = "General");
+			PageEditor.editFormContainer(contentType = "Purchase Order");
 
 			for (var fragmentName : list "Text,Form Button") {
 				PageEditor.removeFragment(fragmentName = ${fragmentName});
@@ -2756,9 +2714,7 @@ definition {
 				collectionName = "Form Components",
 				fragmentName = "Form Container");
 
-			PageEditor.editFormContainer(
-				contentType = "Purchase Order",
-				panel = "General");
+			PageEditor.editFormContainer(contentType = "Purchase Order");
 
 			for (var fragmentName : list "Text,Form Button") {
 				PageEditor.removeFragment(fragmentName = ${fragmentName});
@@ -2828,9 +2784,7 @@ definition {
 				collectionName = "Form Components",
 				fragmentName = "Form Container");
 
-			PageEditor.editFormContainer(
-				contentType = "Purchase Order",
-				panel = "General");
+			PageEditor.editFormContainer(contentType = "Purchase Order");
 
 			PageEditor.removeFragment(fragmentName = "Form Button");
 		}
@@ -2903,9 +2857,7 @@ definition {
 				collectionName = "Form Components",
 				fragmentName = "Form Container");
 
-			PageEditor.editFormContainer(
-				contentType = "Purchase Order",
-				panel = "General");
+			PageEditor.editFormContainer(contentType = "Purchase Order");
 
 			PageEditor.editInput(
 				field = "-- Unmapped --",
@@ -2960,9 +2912,7 @@ definition {
 				collectionName = "Form Components",
 				fragmentName = "Form Container");
 
-			PageEditor.editFormContainer(
-				contentType = "Purchase Order",
-				panel = "General");
+			PageEditor.editFormContainer(contentType = "Purchase Order");
 
 			PageEditor.removeFragment(fragmentName = "Date");
 		}

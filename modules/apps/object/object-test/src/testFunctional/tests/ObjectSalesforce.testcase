@@ -322,9 +322,7 @@ definition {
 				collectionName = "Form Components",
 				fragmentName = "Form Container");
 
-			PageEditor.editFormContainer(
-				contentType = "Poshi Test",
-				panel = "General");
+			PageEditor.editFormContainer(contentType = "Poshi Test");
 
 			PageEditor.publish();
 		}

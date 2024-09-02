@@ -59,9 +59,7 @@ definition {
 			}
 
 			task ("Add a File Upload fragment and Submit Button fragment into Form Container") {
-				PageEditor.editFormContainer(
-					contentType = "Upload Object",
-					panel = "General");
+				PageEditor.editFormContainer(contentType = "Upload Object");
 
 				PageEditor.publish();
 			}
@@ -136,9 +134,7 @@ definition {
 					collectionName = "Form Components",
 					fragmentName = "Form Container");
 
-				PageEditor.editFormContainer(
-					contentType = "Upload Object",
-					panel = "General");
+				PageEditor.editFormContainer(contentType = "Upload Object");
 			}
 		}
 
@@ -221,9 +217,7 @@ definition {
 					collectionName = "Form Components",
 					fragmentName = "Form Container");
 
-				PageEditor.editFormContainer(
-					contentType = "Upload Object",
-					panel = "General");
+				PageEditor.editFormContainer(contentType = "Upload Object");
 
 				PageEditor.removeFragment(
 					fragmentName = "File Upload",
@@ -393,9 +387,7 @@ definition {
 					collectionName = "Form Components",
 					fragmentName = "Form Container");
 
-				PageEditor.editFormContainer(
-					contentType = "Upload Object",
-					panel = "General");
+				PageEditor.editFormContainer(contentType = "Upload Object");
 
 				PageEditor.publish();
 			}
@@ -664,9 +656,7 @@ definition {
 					collectionName = "Form Components",
 					fragmentName = "Form Container");
 
-				PageEditor.editFormContainer(
-					contentType = "Upload Object",
-					panel = "General");
+				PageEditor.editFormContainer(contentType = "Upload Object");
 
 				PageEditor.publish();
 			}
@@ -718,9 +708,7 @@ definition {
 					collectionName = "Form Components",
 					fragmentName = "Form Container");
 
-				PageEditor.editFormContainer(
-					contentType = "Upload Object",
-					panel = "General");
+				PageEditor.editFormContainer(contentType = "Upload Object");
 
 				PageEditor.publish();
 			}

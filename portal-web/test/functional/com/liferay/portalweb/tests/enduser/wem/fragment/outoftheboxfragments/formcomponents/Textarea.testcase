@@ -52,9 +52,7 @@ definition {
 				collectionName = "Form Components",
 				fragmentName = "Form Container");
 
-			PageEditor.editFormContainer(
-				contentType = "Purchase Order",
-				panel = "General");
+			PageEditor.editFormContainer(contentType = "Purchase Order");
 		}
 
 		task ("When the page designer accesses to the General tab of Textarea fragment") {
@@ -140,9 +138,7 @@ definition {
 		}
 
 		task ("When the pages designer maps the Form Container to object") {
-			PageEditor.editFormContainer(
-				contentType = "Purchase Order",
-				panel = "General");
+			PageEditor.editFormContainer(contentType = "Purchase Order");
 		}
 
 		task ("Then the pages designer sees the Textarea fragment mapped to Long Text field") {
@@ -208,9 +204,7 @@ definition {
 				collectionName = "Form Components",
 				fragmentName = "Form Container");
 
-			PageEditor.editFormContainer(
-				contentType = "Purchase Order",
-				panel = "General");
+			PageEditor.editFormContainer(contentType = "Purchase Order");
 		}
 
 		task ("When the page designer enables the Show Characters Count of Textarea fragment") {
@@ -270,9 +264,7 @@ definition {
 					collectionName = "Form Components",
 					fragmentName = "Form Container");
 
-				PageEditor.editFormContainer(
-					contentType = "Purchase Order",
-					panel = "General");
+				PageEditor.editFormContainer(contentType = "Purchase Order");
 
 				PageEditor.publish();
 			}

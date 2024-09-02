@@ -58,9 +58,7 @@ definition {
 			}
 
 			task ("Map the Form Container to new Object") {
-				PageEditor.editFormContainer(
-					contentType = "Purchase Order",
-					panel = "General");
+				PageEditor.editFormContainer(contentType = "Purchase Order");
 			}
 		}
 
@@ -112,9 +110,7 @@ definition {
 			}
 
 			task ("Map the Form Container to new Object") {
-				PageEditor.editFormContainer(
-					contentType = "Purchase Order",
-					panel = "General");
+				PageEditor.editFormContainer(contentType = "Purchase Order");
 			}
 
 			task ("Add a Captcha and a Submit Button fragment into Form Container") {
@@ -206,9 +202,7 @@ definition {
 			}
 
 			task ("Map the Form Container to new Object") {
-				PageEditor.editFormContainer(
-					contentType = "Purchase Order",
-					panel = "General");
+				PageEditor.editFormContainer(contentType = "Purchase Order");
 			}
 
 			task ("Add a Captcha and a Submit Button fragment into Form Container") {

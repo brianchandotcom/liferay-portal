@@ -52,9 +52,7 @@ definition {
 				collectionName = "Form Components",
 				fragmentName = "Form Container");
 
-			PageEditor.editFormContainer(
-				contentType = "Purchase Order",
-				panel = "General");
+			PageEditor.editFormContainer(contentType = "Purchase Order");
 		}
 
 		task ("When the pages designer adds a custom name in Text Input fields") {
@@ -150,9 +148,7 @@ definition {
 					collectionName = "Form Components",
 					fragmentName = "Form Container");
 
-				PageEditor.editFormContainer(
-					contentType = "Purchase Order",
-					panel = "General");
+				PageEditor.editFormContainer(contentType = "Purchase Order");
 			}
 
 			task ("Add a Language Selector below Form Container") {
@@ -256,9 +252,7 @@ definition {
 				collectionName = "Form Components",
 				fragmentName = "Form Container");
 
-			PageEditor.editFormContainer(
-				contentType = "Purchase Order",
-				panel = "General");
+			PageEditor.editFormContainer(contentType = "Purchase Order");
 		}
 
 		task ("When the page designer opens the browser panel on page editor") {
@@ -314,9 +308,7 @@ definition {
 				collectionName = "Form Components",
 				fragmentName = "Form Container");
 
-			PageEditor.editFormContainer(
-				contentType = "Purchase Order",
-				panel = "General");
+			PageEditor.editFormContainer(contentType = "Purchase Order");
 
 			PageEditor.publish();
 		}
@@ -386,9 +378,7 @@ definition {
 					collectionName = "Form Components",
 					fragmentName = "Form Container");
 
-				PageEditor.editFormContainer(
-					contentType = "Purchase Order",
-					panel = "General");
+				PageEditor.editFormContainer(contentType = "Purchase Order");
 			}
 		}
 
@@ -422,9 +412,7 @@ definition {
 					collectionName = "Form Components",
 					fragmentName = "Form Container");
 
-				PageEditor.editFormContainer(
-					contentType = "Purchase Order",
-					panel = "General");
+				PageEditor.editFormContainer(contentType = "Purchase Order");
 			}
 
 			task ("Mark the Text Input fragment as required") {
@@ -498,9 +486,7 @@ definition {
 			}
 
 			task ("Map the Text Input fragment to Region field") {
-				PageEditor.editFormContainer(
-					contentType = "Purchase Order",
-					panel = "General");
+				PageEditor.editFormContainer(contentType = "Purchase Order");
 
 				PageEditor.editInput(
 					fragmentName = "Text",

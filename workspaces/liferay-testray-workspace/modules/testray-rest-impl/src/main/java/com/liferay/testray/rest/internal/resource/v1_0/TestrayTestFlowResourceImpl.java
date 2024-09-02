@@ -30,6 +30,7 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.testray.rest.dto.v1_0.TestraySubtask;
 import com.liferay.testray.rest.dto.v1_0.TestrayTestFlow;
 import com.liferay.testray.rest.internal.util.TestrayUtil;
+import com.liferay.testray.rest.manager.TestrayManager;
 import com.liferay.testray.rest.resource.v1_0.TestrayTestFlowResource;
 
 import java.io.Serializable;
@@ -396,6 +397,21 @@ public class TestrayTestFlowResourceImpl
 
 		EntityCacheUtil.clearCache();
 
+		ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
+			testraySubtaskId);
+
+		Map<String, Serializable> values = objectEntry.getValues();
+
+		objectEntry = _objectEntryLocalService.getObjectEntry(
+			GetterUtil.getLong(values.get("r_taskToSubtasks_c_taskId")));
+
+		values = objectEntry.getValues();
+
+		_testrayManager.updateTestrayBuildSummary(
+			contextCompany.getCompanyId(),
+			GetterUtil.getInteger(values.get("r_buildToTasks_c_buildId")),
+			contextUser.getUserId());
+
 		return testrayTestFlow;
 	}
 
@@ -412,5 +428,8 @@ public class TestrayTestFlowResourceImpl
 
 	@Reference
 	private ServiceContextHelper _serviceContextHelper;
+
+	@Reference
+	private TestrayManager _testrayManager;
 
 }

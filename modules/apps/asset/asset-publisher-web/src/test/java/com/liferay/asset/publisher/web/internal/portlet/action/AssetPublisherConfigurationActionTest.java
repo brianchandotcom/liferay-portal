@@ -7,10 +7,14 @@ package com.liferay.asset.publisher.web.internal.portlet.action;
 
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
+import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherPortletInstanceConfiguration;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -19,15 +23,18 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portletmvc4spring.test.mock.web.portlet.MockActionRequest;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.portlet.PortletPreferences;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
+import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
 /**
@@ -39,6 +46,11 @@ public class AssetPublisherConfigurationActionTest {
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
+
+	@AfterClass
+	public static void tearDownClass() {
+		_groupLocalServiceUtilMockedStatic.close();
+	}
 
 	@Test
 	public void testUpdateAssetListEntryPreferencesWithFeatureWithDifferentGroup()
@@ -175,56 +187,54 @@ public class AssetPublisherConfigurationActionTest {
 
 		Group group = _getGroup(RandomTestUtil.randomLong());
 
-		AssetPublisherConfigurationAction assetPublisherConfigurationAction =
-			_getAssetPublisherConfigurationAction(null, group);
+		_setUpGroupLocalServiceUtil(group);
 
-		Map<String, String[]> portletPreferencesMap = new HashMap<>();
+		AssetPublisherConfigurationAction assetPublisherConfigurationAction =
+			_getAssetPublisherConfigurationAction(null, null);
+
 		PortletPreferences portletPreferences = Mockito.mock(
 			PortletPreferences.class);
 
-		assetPublisherConfigurationAction.updateDisplayStyleGroupPreferences(
+		assetPublisherConfigurationAction.postProcess(
+			0L,
 			_getMockActionRequest(
 				StringPool.BLANK, 0, StringPool.BLANK, group.getGroupKey(),
-				portletPreferencesMap,
-				_getThemeDisplay(RandomTestUtil.randomLong())),
+				new HashMap<>(), _getThemeDisplay(RandomTestUtil.randomLong())),
 			portletPreferences);
 
-		Mockito.verify(
-			assetPublisherConfigurationAction.groupLocalService
-		).fetchGroup(
-			0, group.getGroupKey()
-		);
+		_groupLocalServiceUtilMockedStatic.verify(
+			() -> GroupLocalServiceUtil.fetchGroup(0, group.getGroupKey()));
 
-		Assert.assertArrayEquals(
-			MapUtil.toString(portletPreferencesMap),
-			new String[] {group.getExternalReferenceCode()},
-			portletPreferencesMap.get(
-				"displayStyleGroupExternalReferenceCode"));
+		Mockito.verify(
+			portletPreferences
+		).setValue(
+			"displayStyleGroupExternalReferenceCode",
+			group.getExternalReferenceCode()
+		);
 	}
 
 	@Test
 	public void testUpdateDisplayStyleGroupPreferencesWithNoSelection()
 		throws Exception {
 
+		_setUpGroupLocalServiceUtil(null);
+
 		AssetPublisherConfigurationAction assetPublisherConfigurationAction =
 			_getAssetPublisherConfigurationAction(null, null);
 
-		Map<String, String[]> portletPreferencesMap = new HashMap<>();
 		PortletPreferences portletPreferences = Mockito.mock(
 			PortletPreferences.class);
 
-		assetPublisherConfigurationAction.updateDisplayStyleGroupPreferences(
+		assetPublisherConfigurationAction.postProcess(
+			0L,
 			_getMockActionRequest(
 				StringPool.BLANK, 0, StringPool.BLANK, StringPool.BLANK,
-				portletPreferencesMap,
-				_getThemeDisplay(RandomTestUtil.randomLong())),
+				new HashMap<>(), _getThemeDisplay(RandomTestUtil.randomLong())),
 			portletPreferences);
 
-		Mockito.verify(
-			assetPublisherConfigurationAction.groupLocalService
-		).fetchGroup(
-			0, StringPool.BLANK
-		);
+		_groupLocalServiceUtilMockedStatic.verify(
+			() -> GroupLocalServiceUtil.fetchGroup(0, StringPool.BLANK));
+
 		Mockito.verify(
 			portletPreferences
 		).reset(
@@ -238,33 +248,35 @@ public class AssetPublisherConfigurationActionTest {
 
 		Group group = _getGroup(RandomTestUtil.randomLong());
 
-		AssetPublisherConfigurationAction assetPublisherConfigurationAction =
-			_getAssetPublisherConfigurationAction(null, group);
+		_setUpGroupLocalServiceUtil(group);
 
-		Map<String, String[]> portletPreferencesMap = new HashMap<>();
+		AssetPublisherConfigurationAction assetPublisherConfigurationAction =
+			_getAssetPublisherConfigurationAction(null, null);
+
 		PortletPreferences portletPreferences = Mockito.mock(
 			PortletPreferences.class);
 
-		assetPublisherConfigurationAction.updateDisplayStyleGroupPreferences(
+		assetPublisherConfigurationAction.postProcess(
+			0L,
 			_getMockActionRequest(
 				StringPool.BLANK, 0, StringPool.BLANK, group.getGroupKey(),
-				portletPreferencesMap, _getThemeDisplay(group.getGroupId())),
+				new HashMap<>(), _getThemeDisplay(group.getGroupId())),
 			portletPreferences);
 
-		Mockito.verify(
-			assetPublisherConfigurationAction.groupLocalService
-		).fetchGroup(
-			0, group.getGroupKey()
-		);
+		_groupLocalServiceUtilMockedStatic.verify(
+			() -> GroupLocalServiceUtil.fetchGroup(0, group.getGroupKey()));
+
 		Mockito.verify(
 			portletPreferences
 		).reset(
 			"displayStyleGroupExternalReferenceCode"
 		);
 
-		Assert.assertTrue(
-			MapUtil.toString(portletPreferencesMap),
-			MapUtil.isEmpty(portletPreferencesMap));
+		Mockito.verify(
+			portletPreferences
+		).reset(
+			"displayStyleGroupExternalReferenceCode"
+		);
 	}
 
 	private AssetListEntry _getAssetListEntry() {
@@ -325,10 +337,52 @@ public class AssetPublisherConfigurationActionTest {
 
 		assetPublisherConfigurationAction.assetListEntryLocalService =
 			_getAssetListEntryLocalService(assetListEntry);
+		assetPublisherConfigurationAction.configurationProvider =
+			_getConfigurationProvider();
 		assetPublisherConfigurationAction.groupLocalService =
 			_getGroupLocalService(group);
 
 		return assetPublisherConfigurationAction;
+	}
+
+	private ConfigurationProvider _getConfigurationProvider() throws Exception {
+		ConfigurationProvider configurationProvider = Mockito.mock(
+			ConfigurationProvider.class);
+
+		AssetPublisherPortletInstanceConfiguration
+			assetPublisherPortletInstanceConfiguration = Mockito.mock(
+				AssetPublisherPortletInstanceConfiguration.class);
+
+		LocalizedValuesMap localizedValuesMap = Mockito.mock(
+			LocalizedValuesMap.class);
+
+		Mockito.when(
+			localizedValuesMap.get(Mockito.any(Locale.class))
+		).thenReturn(
+			RandomTestUtil.randomString()
+		);
+
+		Mockito.when(
+			assetPublisherPortletInstanceConfiguration.
+				emailAssetEntryAddedBody()
+		).thenReturn(
+			localizedValuesMap
+		);
+		Mockito.when(
+			assetPublisherPortletInstanceConfiguration.
+				emailAssetEntryAddedSubject()
+		).thenReturn(
+			localizedValuesMap
+		);
+
+		Mockito.when(
+			configurationProvider.getSystemConfiguration(
+				AssetPublisherPortletInstanceConfiguration.class)
+		).thenReturn(
+			assetPublisherPortletInstanceConfiguration
+		);
+
+		return configurationProvider;
 	}
 
 	private Group _getGroup(long groupId) {
@@ -423,5 +477,39 @@ public class AssetPublisherConfigurationActionTest {
 
 		return themeDisplay;
 	}
+
+	private void _setUpGroupLocalServiceUtil(Group group) throws Exception {
+		_groupLocalServiceUtilMockedStatic.reset();
+
+		if (group == null) {
+			_groupLocalServiceUtilMockedStatic.when(
+				() -> GroupLocalServiceUtil.fetchGroup(
+					Mockito.anyLong(), Mockito.anyString())
+			).thenReturn(
+				null
+			);
+			_groupLocalServiceUtilMockedStatic.when(
+				() -> GroupLocalServiceUtil.getGroup(Mockito.anyLong())
+			).thenReturn(
+				null
+			);
+		}
+		else {
+			_groupLocalServiceUtilMockedStatic.when(
+				() -> GroupLocalServiceUtil.fetchGroup(0L, group.getGroupKey())
+			).thenReturn(
+				group
+			);
+			_groupLocalServiceUtilMockedStatic.when(
+				() -> GroupLocalServiceUtil.getGroup(group.getGroupId())
+			).thenReturn(
+				group
+			);
+		}
+	}
+
+	private static final MockedStatic<GroupLocalServiceUtil>
+		_groupLocalServiceUtilMockedStatic = Mockito.mockStatic(
+			GroupLocalServiceUtil.class);
 
 }

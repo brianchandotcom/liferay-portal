@@ -40,11 +40,13 @@ public class SiteNavigationBreadcrumbDisplayContext {
 		_httpServletRequest = httpServletRequest;
 		_httpServletResponse = httpServletResponse;
 
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		_siteNavigationBreadcrumbPortletInstanceConfiguration =
 			ConfigurationProviderUtil.getPortletInstanceConfiguration(
 				SiteNavigationBreadcrumbPortletInstanceConfiguration.class,
-				(ThemeDisplay)httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY));
+				_themeDisplay);
 	}
 
 	public List<BreadcrumbEntry> getBreadcrumbEntries() {
@@ -73,22 +75,30 @@ public class SiteNavigationBreadcrumbDisplayContext {
 	}
 
 	public long getDisplayStyleGroupId() {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		String displayStyleGroupKey = getDisplayStyleGroupKey();
-
-		if (Validator.isNotNull(displayStyleGroupKey)) {
-			Group group = GroupLocalServiceUtil.fetchGroup(
-				themeDisplay.getCompanyId(), displayStyleGroupKey);
-
-			if (group != null) {
-				return group.getGroupId();
-			}
+		if (_displayStyleGroupId != null) {
+			return _displayStyleGroupId;
 		}
 
-		return themeDisplay.getScopeGroupId();
+		String displayStyleGroupExternalReferenceCode =
+			_siteNavigationBreadcrumbPortletInstanceConfiguration.
+				displayStyleGroupExternalReferenceCode();
+
+		Group group = _themeDisplay.getScopeGroup();
+
+		if (Validator.isNotNull(displayStyleGroupExternalReferenceCode)) {
+			group = GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
+				displayStyleGroupExternalReferenceCode,
+				_themeDisplay.getCompanyId());
+		}
+
+		if (group != null) {
+			_displayStyleGroupId = group.getGroupId();
+		}
+		else {
+			_displayStyleGroupId = _themeDisplay.getScopeGroupId();
+		}
+
+		return _displayStyleGroupId;
 	}
 
 	public String getDisplayStyleGroupKey() {
@@ -96,33 +106,23 @@ public class SiteNavigationBreadcrumbDisplayContext {
 			return _displayStyleGroupKey;
 		}
 
-		String displayStyleGroupKey =
+		String displayStyleGroupExternalReferenceCode =
 			_siteNavigationBreadcrumbPortletInstanceConfiguration.
-				displayStyleGroupKey();
+				displayStyleGroupExternalReferenceCode();
 
-		if (Validator.isNotNull(displayStyleGroupKey)) {
-			_displayStyleGroupKey = displayStyleGroupKey;
+		Group group = _themeDisplay.getScopeGroup();
 
-			return _displayStyleGroupKey;
+		if (Validator.isNotNull(displayStyleGroupExternalReferenceCode)) {
+			group = GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
+				displayStyleGroupExternalReferenceCode,
+				_themeDisplay.getCompanyId());
 		}
-
-		long displayStyleGroupId = ParamUtil.getLong(
-			_httpServletRequest, "displayStyleGroupId",
-			_siteNavigationBreadcrumbPortletInstanceConfiguration.
-				displayStyleGroupId());
-
-		if (displayStyleGroupId <= 0) {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)_httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			displayStyleGroupId = themeDisplay.getScopeGroupId();
-		}
-
-		Group group = GroupLocalServiceUtil.fetchGroup(displayStyleGroupId);
 
 		if (group != null) {
 			_displayStyleGroupKey = group.getGroupKey();
+		}
+		else {
+			_displayStyleGroupKey = StringPool.BLANK;
 		}
 
 		return _displayStyleGroupKey;
@@ -222,6 +222,7 @@ public class SiteNavigationBreadcrumbDisplayContext {
 
 	private List<BreadcrumbEntry> _breadcrumbEntries;
 	private String _displayStyle;
+	private Long _displayStyleGroupId;
 	private String _displayStyleGroupKey;
 	private final HttpServletRequest _httpServletRequest;
 	private final HttpServletResponse _httpServletResponse;
@@ -233,5 +234,6 @@ public class SiteNavigationBreadcrumbDisplayContext {
 	private Boolean _showPortletBreadcrumb;
 	private final SiteNavigationBreadcrumbPortletInstanceConfiguration
 		_siteNavigationBreadcrumbPortletInstanceConfiguration;
+	private final ThemeDisplay _themeDisplay;
 
 }

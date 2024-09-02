@@ -10,11 +10,11 @@ import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.constants.DDMFormConstants;
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
-import com.liferay.dynamic.data.mapping.form.field.type.BaseDDMFormFieldTypeSettingsTestCase;
 import com.liferay.dynamic.data.mapping.form.item.selector.criterion.DDMUserPersonalFolderItemSelectorCriterion;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalService;
+import com.liferay.dynamic.data.mapping.test.util.BaseSettingsTestCase;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion;
 import com.liferay.petra.string.StringPool;
@@ -74,7 +74,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
  * @author Pedro Queiroz
  */
 public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
-	extends BaseDDMFormFieldTypeSettingsTestCase {
+	extends BaseSettingsTestCase {
 
 	@ClassRule
 	@Rule

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.dynamic.data.mapping.form.field.type;
+package com.liferay.dynamic.data.mapping.test.util;
 
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutColumn;
@@ -37,7 +37,7 @@ import org.mockito.Mockito;
 /**
  * @author Leonardo Barros
  */
-public abstract class BaseDDMFormFieldTypeSettingsTestCase {
+public abstract class BaseSettingsTestCase {
 
 	@Before
 	public void setUp() throws Exception {

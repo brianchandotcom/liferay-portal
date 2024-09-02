@@ -5,7 +5,6 @@
 
 package com.liferay.dynamic.data.mapping.form.field.type.internal.numeric;
 
-import com.liferay.dynamic.data.mapping.form.field.type.BaseDDMFormFieldTypeSettingsTestCase;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidation;
@@ -13,6 +12,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidationExpression;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMFormRule;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
+import com.liferay.dynamic.data.mapping.test.util.BaseSettingsTestCase;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormLayoutTestUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.dynamic.data.mapping.util.DDMFormLayoutFactory;
@@ -34,8 +34,7 @@ import org.mockito.Mockito;
 /**
  * @author Leonardo Barros
  */
-public class NumericDDMFormFieldTypeSettingsTest
-	extends BaseDDMFormFieldTypeSettingsTestCase {
+public class NumericDDMFormFieldTypeSettingsTest extends BaseSettingsTestCase {
 
 	@ClassRule
 	@Rule

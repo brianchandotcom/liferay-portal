@@ -6,11 +6,11 @@
 package com.liferay.dynamic.data.mapping.form.field.type.internal.search.location;
 
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
-import com.liferay.dynamic.data.mapping.form.field.type.BaseDDMFormFieldTypeSettingsTestCase;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMFormRule;
+import com.liferay.dynamic.data.mapping.test.util.BaseSettingsTestCase;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormLayoutTestUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.dynamic.data.mapping.util.DDMFormLayoutFactory;
@@ -34,7 +34,7 @@ import org.mockito.Mockito;
  * @author Marcela Cunha
  */
 public class SearchLocationDDMFormFieldTypeSettingsTest
-	extends BaseDDMFormFieldTypeSettingsTestCase {
+	extends BaseSettingsTestCase {
 
 	@ClassRule
 	@Rule

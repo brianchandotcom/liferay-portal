@@ -5,9 +5,9 @@
 
 package com.liferay.dynamic.data.mapping.form.field.type.internal.numeric.input.mask;
 
-import com.liferay.dynamic.data.mapping.form.field.type.BaseDDMFormFieldTypeSettingsTestCase;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
+import com.liferay.dynamic.data.mapping.test.util.BaseSettingsTestCase;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -36,7 +36,7 @@ import org.mockito.Mockito;
  * @author Carolina Barbosa
  */
 public class NumericInputMaskDDMFormFieldTemplateContextContributorTest
-	extends BaseDDMFormFieldTypeSettingsTestCase {
+	extends BaseSettingsTestCase {
 
 	@ClassRule
 	@Rule

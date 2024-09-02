@@ -4,3 +4,11 @@ Bundle-Version: 14.2.1
 Export-Package:\
 	com.liferay.dynamic.data.mapping.test.util,\
 	com.liferay.dynamic.data.mapping.test.util.search
+Import-Package:\
+	!javax.portlet.*,\
+	\
+	!javax.servlet.*,\
+	\
+	!org.mockito.*,\
+	\
+	*

@@ -5,9 +5,9 @@
 
 package com.liferay.dynamic.data.mapping.form.field.type.internal.numeric;
 
-import com.liferay.dynamic.data.mapping.form.field.type.BaseDDMFormFieldTypeSettingsTestCase;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
+import com.liferay.dynamic.data.mapping.test.util.BaseSettingsTestCase;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -33,7 +33,7 @@ import org.mockito.Mockito;
  * @author Marcellus Tavares
  */
 public class NumericDDMFormFieldTemplateContextContributorTest
-	extends BaseDDMFormFieldTypeSettingsTestCase {
+	extends BaseSettingsTestCase {
 
 	@ClassRule
 	@Rule

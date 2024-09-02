@@ -10,10 +10,13 @@ import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.events.StartupHelperUtil;
+import com.liferay.portal.file.install.constants.FileInstallConstants;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -28,6 +31,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReleaseInfo;
@@ -50,16 +54,22 @@ import java.io.Writer;
 
 import java.lang.reflect.Field;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
 import java.util.Arrays;
+import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.felix.cm.file.ConfigurationHandler;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Appender;
@@ -155,6 +165,70 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 		_upgradeReportLogger.removeAppender(_logContextAppender);
 
 		_logContextAppender.stop();
+	}
+
+	@Test
+	public void testConfigurationSetByUser() throws Exception {
+		String serviceFactoryPid = "test.configuration";
+
+		String fileName = serviceFactoryPid + ".config";
+
+		Path path = Paths.get(
+			PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR, fileName);
+
+		Dictionary<String, Object> dictionary =
+			HashMapDictionaryBuilder.<String, Object>put(
+				FileInstallConstants.FELIX_FILE_INSTALL_FILENAME, fileName
+			).put(
+				"password", "superSecret"
+			).put(
+				"testKey", "testValue"
+			).build();
+
+		String pid = ConfigurationTestUtil.createFactoryConfiguration(
+			serviceFactoryPid, dictionary);
+
+		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
+			new UnsyncByteArrayOutputStream();
+
+		ConfigurationHandler.write(unsyncByteArrayOutputStream, dictionary);
+
+		Files.write(path, unsyncByteArrayOutputStream.toByteArray());
+
+		try {
+			_appender.start();
+
+			_appender.stop();
+
+			_assertReport(PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR);
+
+			_assertReport(fileName);
+
+			_assertReport("testKey=\"testValue\"");
+
+			_assertReport("password=\"********\"");
+
+			_assertLogContextContains(
+				"upgrade.report.configurations.set.by.user",
+				PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR);
+
+			_assertLogContextContains(
+				"upgrade.report.configurations.set.by.user", fileName);
+
+			_assertLogContextContains(
+				"upgrade.report.configurations.set.by.user",
+				"testKey=\"testValue\"");
+
+			_assertLogContextContains(
+				"upgrade.report.configurations.set.by.user",
+				"password=\"********\"");
+		}
+		finally {
+			ConfigurationTestUtil.deleteFactoryConfiguration(
+				pid, serviceFactoryPid);
+
+			Files.deleteIfExists(path);
+		}
 	}
 
 	@Test

@@ -1,29 +1,21 @@
 <%--
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 --%>
 
 <%@ include file="/init.jsp" %>
 
-<%@ page import="javax.portlet.PortletRequest" %><%@
-page import="com.liferay.portal.kernel.util.JavaConstants" %>
-
 <%
+PortletRequest portletRequest = (PortletRequest)request.getAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);
 
-	PortletRequest portletRequest = (PortletRequest) request.getAttribute(
-		JavaConstants.JAVAX_PORTLET_REQUEST);
-
-	if (portletRequest != null) {
-		portletRequest.setAttribute("aui:form:portletNamespace",
-			"<\u002fscript><scrIpt>alert(12451);<\u002fscRipt><script>");
-	}
-
+if (portletRequest != null) {
+	portletRequest.setAttribute("aui:form:portletNamespace", "<\u002fscript><scrIpt>alert(12451);<\u002fscRipt><script>");
+}
 %>
 
 <p>Before editor</p>
-
 
 <liferay-util:buffer
 	var="contents"
@@ -43,10 +35,9 @@ page import="com.liferay.portal.kernel.util.JavaConstants" %>
 />
 
 <%
-	if (portletRequest != null) {
-		portletRequest.removeAttribute("aui:form:portletNamespace");
-	}
+if (portletRequest != null) {
+	portletRequest.removeAttribute("aui:form:portletNamespace");
+}
 %>
 
 <p>After editor</p>
-

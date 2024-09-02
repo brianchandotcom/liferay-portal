@@ -14,9 +14,12 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.frontend.editor.ckeditor.sample.web.internal.constants.CKEditorSampleWebKeys" %><%@
 page import="com.liferay.frontend.editor.ckeditor.sample.web.internal.display.context.CKEditorSampleDisplayContext" %><%@
-page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.TabsItem" %>
+page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.TabsItem" %><%@
+page import="com.liferay.portal.kernel.util.JavaConstants" %>
 
 <%@ page import="java.util.List" %>
+
+<%@ page import="javax.portlet.PortletRequest" %>
 
 <liferay-theme:defineObjects />
 

@@ -9,8 +9,7 @@ import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {objectPagesTest} from '../../fixtures/objectPagesTest';
 import {getRandomInt} from '../../utils/getRandomInt';
-import {asyncFilter} from './utils/asyncFilter';
-import {asyncFind} from './utils/asyncFind';
+import {AsyncArray} from './utils/AsyncArray';
 import {mockObjectFields} from './utils/mockObjectFields';
 
 export const test = mergeTests(apiHelpersTest, loginTest(), objectPagesTest);
@@ -389,8 +388,10 @@ test.describe('Manage object fields through Model Builder', () => {
 			Text: 'Texto',
 		};
 
+		const asyncArray = new AsyncArray<Locator, boolean>();
+
 		for (let i = 0; i < objectDefinitionObjectFields.length; i++) {
-			const objectFieldRow = await asyncFind({
+			const objectFieldRow = await asyncArray.find({
 				array: objectDefinitionNodeObjectFields,
 				predicate: async (objectFieldTableRow: Locator) => {
 					return (await objectFieldTableRow.textContent()).includes(
@@ -739,7 +740,9 @@ test.describe('Manage objectFields through Objects Admin UI', () => {
 			.locator('.dnd-tbody > .dnd-tr')
 			.all();
 
-		const objectFieldTableCustomRows = await asyncFilter({
+		const asyncArray = new AsyncArray<Locator, boolean>();
+
+		const objectFieldTableCustomRows = await asyncArray.filter({
 			array: objectFieldTableRows,
 			predicate: async (objectFieldTableRow: Locator) => {
 				return (await objectFieldTableRow.textContent()).includes(

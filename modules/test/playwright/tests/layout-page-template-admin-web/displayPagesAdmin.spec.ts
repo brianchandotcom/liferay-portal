@@ -14,6 +14,7 @@ import {loginTest} from '../../fixtures/loginTest';
 import {ApiHelpers} from '../../helpers/ApiHelpers';
 import {getRandomInt} from '../../utils/getRandomInt';
 import getRandomString from '../../utils/getRandomString';
+import {performLogout} from '../../utils/performLogin';
 import getBasicWebContentStructureId from '../../utils/structured-content/getBasicWebContentStructureId';
 import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
 import {blogsPagesTest} from '../blogs-web/fixtures/blogsPagesTest';
@@ -26,6 +27,9 @@ const test = mergeTests(
 	blogsPagesTest,
 	displayPageTemplatesPagesTest,
 	documentLibraryPagesTest,
+	featureFlagsTest({
+		'LPS-178052': true,
+	}),
 	isolatedSiteTest,
 	journalPagesTest,
 	loginTest()
@@ -404,6 +408,126 @@ test.describe('Usages', () => {
 				.getByRole('checkbox')
 				.first();
 			await expect(firstRowCheckbox).toBeVisible();
+		}
+	);
+});
+
+test.describe('View', () => {
+	test(
+		'View display page',
+		{
+			tag: [
+				'@LPS-86190',
+				'@LPS-96438',
+				'@LPS-90999',
+				'@LPS-121195',
+				'@LPS-150919',
+			],
+		},
+		async ({apiHelpers, displayPageTemplatesPage, page, site}) => {
+
+			// Create a content page
+
+			await apiHelpers.headlessDelivery.createSitePage({
+				siteId: site.id,
+				title: getRandomString(),
+			});
+
+			// Create a display page template for Basic Web Content
+
+			await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+
+			const displayPageTemplateName =
+				'basicWebContentDpt' + getRandomInt();
+
+			await displayPageTemplatesPage.createTemplate({
+				contentSubtype: 'Basic Web Content',
+				contentType: 'Web Content Article',
+				name: displayPageTemplateName,
+			});
+
+			await displayPageTemplatesPage.markAsDefault(
+				displayPageTemplateName
+			);
+
+			// Create a Basic Web Content
+
+			const journalArticleTitle = getRandomString();
+
+			const contentStructureId =
+				await getBasicWebContentStructureId(apiHelpers);
+
+			await apiHelpers.headlessDelivery.postStructuredContent({
+				contentStructureId,
+				datePublished: null,
+				siteId: site.id,
+				tags: ['Cats', 'Dogs'],
+				title: journalArticleTitle,
+				viewableBy: 'Anyone',
+			});
+
+			const blogsEntryName = getRandomString();
+
+			await apiHelpers.headlessDelivery.postBlog(site.id, {
+				headline: blogsEntryName,
+			});
+
+			// Go to display page
+
+			await page.goto(
+				`web${site.friendlyUrlPath}/w/${journalArticleTitle}`
+			);
+
+			await expect(
+				page.getByRole('heading', {name: journalArticleTitle})
+			).toBeVisible();
+
+			// Can access to edit the web content article or display page while viewing the article through its display page
+
+			await page
+				.locator('.control-menu-nav-item')
+				.getByLabel('Edit', {exact: true})
+				.click();
+
+			await expect(
+				page.locator('.dropdown-menu').getByRole('menuitem', {
+					name: `Edit ${journalArticleTitle}`,
+				})
+			).toBeVisible();
+
+			await expect(
+				page
+					.locator('.dropdown-menu')
+					.getByRole('menuitem', {name: 'Edit Display Page Template'})
+			).toBeVisible();
+
+			// Assert metadata should appear in page source
+
+			await expect(
+				page.locator('meta[content="cats,dogs"]')
+			).toBeAttached();
+
+			// Verify guest user can view display page
+
+			await performLogout(page);
+
+			await page.goto(
+				`web${site.friendlyUrlPath}/w/${journalArticleTitle}`
+			);
+
+			await expect(page.getByText('Page Not Found')).not.toBeVisible();
+
+			await expect(
+				page.locator(
+					`link[href*="web${site.friendlyUrlPath}/w/${journalArticleTitle}"][rel="canonical"]`
+				)
+			).toBeAttached();
+
+			await expect(
+				page.locator(
+					`link[href*="zh/web${site.friendlyUrlPath}/w/${journalArticleTitle}"][hreflang="zh-CN"][rel="alternate"]`
+				)
+			).toBeAttached();
 		}
 	);
 });

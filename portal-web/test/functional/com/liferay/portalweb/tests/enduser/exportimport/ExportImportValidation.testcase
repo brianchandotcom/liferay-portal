@@ -230,6 +230,26 @@ definition {
 				webContentTitle = "Web Content Title");
 
 			Button.clickPublish();
+
+			WaitForPageLoad();
+
+			WaitForElementPresent(
+				key_fieldLabel = "Content",
+				locator1 = "CKEditor#BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");
+
+			SelectFrame.selectFrameNoLoading(
+				key_fieldLabel = "Content",
+				locator1 = "CKEditor#BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");
+
+			var portalURL = PropsUtil.get("portal.url");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "CKEditor#BODY",
+				value1 = "/unaddedurl/XYZ123");
+
+			SelectFrame.selectFrameTop();
+
+			WaitForPageLoad();
 		}
 
 		task ("Then: Custom URL cannot bypass validation") {
@@ -248,6 +268,24 @@ definition {
 			var portalURL = PropsUtil.get("portal.url");
 
 			ExportImport.addSourceContent(content = '''<p><a href="${portalURL}/files/MyFileToLinkToWebContent">MyFileToLinkToWebContent</a></p>''');
+
+			WaitForPageLoad();
+
+			WaitForElementPresent(
+				key_fieldLabel = "Content",
+				locator1 = "CKEditor#BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");
+
+			SelectFrame.selectFrameNoLoading(
+				key_fieldLabel = "Content",
+				locator1 = "CKEditor#BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "CKEditor#BODY",
+				value1 = "MyFileToLinkToWebContent");
+
+			SelectFrame.selectFrameTop();
+
+			WaitForPageLoad();
 		}
 
 		task ("Then: Custom URL can bypass validation") {

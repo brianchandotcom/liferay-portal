@@ -91,7 +91,6 @@ export default {
 	},
 
 	addFragmentEntryLink({
-		editableValues,
 		fragmentEntryKey,
 		groupId,
 		onNetworkStatus,
@@ -99,7 +98,6 @@ export default {
 		position,
 		segmentsExperienceId,
 	}: {
-		editableValues?: FragmentEntryLink['editableValues'];
 		fragmentEntryKey: string;
 		groupId: string;
 		onNetworkStatus: OnNetworkStatus;
@@ -107,25 +105,6 @@ export default {
 		position: number;
 		segmentsExperienceId: string;
 	}) {
-		const body: {
-			editableValues?: string;
-			fragmentEntryKey: string;
-			groupId: string;
-			parentItemId: string;
-			position: number;
-			segmentsExperienceId: string;
-		} = {
-			fragmentEntryKey,
-			groupId,
-			parentItemId,
-			position,
-			segmentsExperienceId,
-		};
-
-		if (editableValues) {
-			body.editableValues = JSON.stringify(editableValues);
-		}
-
 		return draftServiceFetch<{
 			addedItemId: string;
 			fragmentEntryLink: FragmentEntryLink;
@@ -133,7 +112,13 @@ export default {
 		}>(
 			config.addFragmentEntryLinkURL,
 			{
-				body,
+				body: {
+					fragmentEntryKey,
+					groupId,
+					parentItemId,
+					position,
+					segmentsExperienceId,
+				},
 			},
 			onNetworkStatus
 		);
@@ -162,6 +147,43 @@ export default {
 			config.addFragmentEntryLinksURL,
 			{
 				body: {
+					fragmentEntryKey,
+					groupId,
+					parentItemId,
+					position,
+					segmentsExperienceId,
+				},
+			},
+			onNetworkStatus
+		);
+	},
+
+	addStepperFragmentEntryLink({
+		editableValues,
+		fragmentEntryKey,
+		groupId,
+		onNetworkStatus,
+		parentItemId,
+		position,
+		segmentsExperienceId,
+	}: {
+		editableValues: FragmentEntryLink['editableValues'];
+		fragmentEntryKey: string;
+		groupId: string;
+		onNetworkStatus: OnNetworkStatus;
+		parentItemId: string;
+		position: number;
+		segmentsExperienceId: string;
+	}) {
+		return draftServiceFetch<{
+			addedItemId: string;
+			fragmentEntryLink: FragmentEntryLink;
+			layoutData: LayoutData;
+		}>(
+			config.addStepperFragmentEntryLinkURL,
+			{
+				body: {
+					editableValues: JSON.stringify(editableValues),
 					fragmentEntryKey,
 					groupId,
 					parentItemId,

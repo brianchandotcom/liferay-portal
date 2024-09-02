@@ -65,6 +65,16 @@ export default function addFragment({
 						numberOfSteps: form.config.numberOfSteps,
 					},
 				};
+
+				return FragmentService.addStepperFragmentEntryLink(params).then(
+					({addedItemId, fragmentEntryLink, layoutData}) => {
+						updateState(
+							[fragmentEntryLink],
+							layoutData,
+							addedItemId
+						);
+					}
+				);
 			}
 
 			return FragmentService.addFragmentEntryLink(params).then(

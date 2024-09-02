@@ -266,6 +266,14 @@ public class UpgradeReport {
 					StringPool.PERIOD, db.getMinorVersion());
 			}
 		).put(
+			"configurations.set.by.user",
+			() -> {
+				Map<String, Map<String, Object>> configurationMap =
+					upgradeRecorder.getConfigurationMap();
+
+				return new ConfigurationPrinter(configurationMap);
+			}
+		).put(
 			"property",
 			() -> {
 				if (StringUtil.equals(
@@ -824,6 +832,98 @@ public class UpgradeReport {
 	private final int _initialBuildNumber;
 	private Map<String, Integer> _initialTableCounts;
 	private String _rootDir;
+
+	private class ConfigurationPrinter {
+
+		public ConfigurationPrinter(
+			Map<String, Map<String, Object>> configurationMap) {
+
+			_configurationMap = configurationMap;
+		}
+
+		@Override
+		public String toString() {
+			StringBundler sb = new StringBundler();
+
+			sb.append(StringPool.NEW_LINE);
+			sb.append(StringPool.NEW_LINE);
+
+			sb.append("Configuration directory:");
+			sb.append(StringPool.NEW_LINE);
+
+			sb.append(PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR);
+
+			sb.append(StringPool.NEW_LINE);
+			sb.append(StringPool.NEW_LINE);
+
+			for (Map.Entry<String, Map<String, Object>> sourceEntry :
+					_configurationMap.entrySet()) {
+
+				String source = sourceEntry.getKey();
+
+				Map<String, Object> properties = sourceEntry.getValue();
+
+				sb.append(source);
+
+				sb.append(StringPool.NEW_LINE);
+
+				sb.append(
+					ListUtil.toString(
+						Collections.nCopies(source.length(), StringPool.MINUS),
+						StringPool.NULL, StringPool.BLANK));
+
+				sb.append(StringPool.NEW_LINE);
+
+				for (Map.Entry<String, Object> propertyEntry :
+						properties.entrySet()) {
+
+					sb.append(propertyEntry.getKey());
+					sb.append(StringPool.EQUAL);
+					sb.append(_formatValue(propertyEntry.getValue()));
+					sb.append(StringPool.NEW_LINE);
+				}
+
+				sb.append(StringPool.NEW_LINE);
+			}
+
+			return sb.toString();
+		}
+
+		private String _formatValue(Object value) {
+			StringBundler sb = new StringBundler();
+
+			if (value instanceof String[]) {
+				sb.append(StringPool.OPEN_BRACKET);
+				sb.append(StringPool.NEW_LINE);
+
+				String[] valueArray = (String[])value;
+
+				for (String valueElement : valueArray) {
+					sb.append(StringPool.SPACE);
+					sb.append(StringPool.SPACE);
+					sb.append(StringPool.QUOTE);
+					sb.append(valueElement);
+					sb.append(StringPool.QUOTE);
+					sb.append(StringPool.COMMA);
+					sb.append(StringPool.SPACE);
+					sb.append(StringPool.BACK_SLASH);
+					sb.append(StringPool.NEW_LINE);
+				}
+
+				sb.append(StringPool.CLOSE_BRACKET);
+			}
+			else {
+				sb.append(StringPool.QUOTE);
+				sb.append(value);
+				sb.append(StringPool.QUOTE);
+			}
+
+			return sb.toString();
+		}
+
+		private final Map<String, Map<String, Object>> _configurationMap;
+
+	}
 
 	private class DLSizeThread extends Thread {
 

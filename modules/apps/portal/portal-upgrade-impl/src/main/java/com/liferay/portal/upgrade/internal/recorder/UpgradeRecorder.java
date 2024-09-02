@@ -7,6 +7,12 @@ package com.liferay.portal.upgrade.internal.recorder;
 
 import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.metatype.definitions.ExtendedAttributeDefinition;
+import com.liferay.portal.configuration.metatype.definitions.ExtendedMetaTypeInformation;
+import com.liferay.portal.configuration.metatype.definitions.ExtendedMetaTypeService;
+import com.liferay.portal.configuration.metatype.definitions.ExtendedObjectClassDefinition;
+import com.liferay.portal.file.install.constants.FileInstallConstants;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.ReleaseManager;
@@ -24,18 +30,27 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Dictionary;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.sql.DataSource;
 
 import org.apache.logging.log4j.ThreadContext;
 
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.service.cm.Configuration;
+import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.metatype.AttributeDefinition;
 import org.osgi.util.tracker.ServiceTracker;
 
 /**
@@ -43,6 +58,10 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 @Component(service = UpgradeRecorder.class)
 public class UpgradeRecorder {
+
+	public Map<String, Map<String, Object>> getConfigurationMap() {
+		return _configurationMap;
+	}
 
 	public Map<String, Map<String, Integer>> getErrorMessages() {
 		return _errorMessages;
@@ -126,6 +145,7 @@ public class UpgradeRecorder {
 	}
 
 	public void start() {
+		_configurationMap.clear();
 		_errorMessages.clear();
 		_result = "running";
 		_schemaVersionsMap.clear();
@@ -149,6 +169,8 @@ public class UpgradeRecorder {
 		_result = _calculateResult();
 
 		_type = _calculateType(_result);
+
+		_populateConfigurationMap(_configurationMap);
 
 		if (PropsValues.UPGRADE_LOG_CONTEXT_ENABLED) {
 			ThreadContext.put("upgrade.type", _type);
@@ -178,6 +200,8 @@ public class UpgradeRecorder {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
+		_bundleContext = bundleContext;
+
 		_serviceTracker = new ServiceTracker<>(
 			bundleContext, ReleaseManager.class, null);
 
@@ -268,6 +292,127 @@ public class UpgradeRecorder {
 		return messages;
 	}
 
+	private boolean _isPasswordField(String key, String pid) {
+		String[] passwordKeywords = {
+			"password", "secret", "securitycredential"
+		};
+
+		String lowerCaseKey = StringUtil.toLowerCase(key);
+
+		for (String keyword : passwordKeywords) {
+			if (lowerCaseKey.contains(keyword)) {
+				return true;
+			}
+		}
+
+		Bundle[] bundles = _bundleContext.getBundles();
+
+		for (Bundle bundle : bundles) {
+			if (bundle.getState() != Bundle.ACTIVE) {
+				continue;
+			}
+
+			ExtendedMetaTypeInformation extendedMetaTypeInformation =
+				_extendedMetaTypeService.getMetaTypeInformation(bundle);
+
+			if ((extendedMetaTypeInformation == null) ||
+				!Arrays.asList(
+					extendedMetaTypeInformation.getPids()
+				).contains(
+					pid
+				)) {
+
+				continue;
+			}
+
+			ExtendedObjectClassDefinition extendedObjectClassDefinition =
+				extendedMetaTypeInformation.getObjectClassDefinition(pid, null);
+
+			if (extendedObjectClassDefinition == null) {
+				continue;
+			}
+
+			ExtendedAttributeDefinition[] attributeDefinitions =
+				extendedObjectClassDefinition.getAttributeDefinitions(
+					ExtendedObjectClassDefinition.ALL);
+
+			for (AttributeDefinition attributeDefinition :
+					attributeDefinitions) {
+
+				if (StringUtil.equals(key, attributeDefinition.getID()) &&
+					(attributeDefinition.getType() ==
+						AttributeDefinition.PASSWORD)) {
+
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
+	private Map<String, Map<String, Object>> _populateConfigurationMap(
+		Map<String, Map<String, Object>> configurationMap) {
+
+		try {
+			Configuration[] configurations =
+				_configurationAdmin.listConfigurations(
+					"(" + FileInstallConstants.FELIX_FILE_INSTALL_FILENAME +
+						"=*)");
+
+			if (configurations != null) {
+				for (Configuration configuration : configurations) {
+					if (configuration != null) {
+						Dictionary<String, Object> properties =
+							configuration.getProperties();
+
+						if (properties != null) {
+							String pid = configuration.getPid();
+
+							Map<String, Object> propertiesMap = new TreeMap<>();
+
+							Enumeration<String> enumeration = properties.keys();
+
+							while (enumeration.hasMoreElements()) {
+								String key = enumeration.nextElement();
+
+								if (StringUtil.equals(
+										key,
+										FileInstallConstants.
+											FELIX_FILE_INSTALL_FILENAME) ||
+									StringUtil.equals(key, "service.pid") ||
+									StringUtil.equals(
+										key, "service.factoryPid")) {
+
+									continue;
+								}
+
+								Object value = properties.get(key);
+
+								if (_isPasswordField(key, pid)) {
+									value = StringPool.EIGHT_STARS;
+								}
+
+								propertiesMap.put(key, value);
+							}
+
+							configurationMap.put(
+								(String)properties.get(
+									FileInstallConstants.
+										FELIX_FILE_INSTALL_FILENAME),
+								propertiesMap);
+						}
+					}
+				}
+			}
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+		}
+
+		return configurationMap;
+	}
+
 	private void _processRelease(
 		UnsafeBiConsumer<SchemaVersions, String, Exception> unsafeBiConsumer) {
 
@@ -317,6 +462,8 @@ public class UpgradeRecorder {
 	private static final Log _log = LogFactoryUtil.getLog(
 		UpgradeRecorder.class);
 
+	private static final Map<String, Map<String, Object>> _configurationMap =
+		new ConcurrentHashMap<>();
 	private static final Map<String, Map<String, Integer>> _errorMessages =
 		new ConcurrentHashMap<>();
 	private static String _result;
@@ -341,6 +488,14 @@ public class UpgradeRecorder {
 			_type = "not enabled";
 		}
 	}
+
+	private BundleContext _bundleContext;
+
+	@Reference
+	private ConfigurationAdmin _configurationAdmin;
+
+	@Reference
+	private ExtendedMetaTypeService _extendedMetaTypeService;
 
 	private ServiceTracker<ReleaseManager, ReleaseManager> _serviceTracker;
 

@@ -298,11 +298,11 @@ public class TestrayManagerImpl implements TestrayManager {
 		for (Facet.FacetValue facetValue : facetValues) {
 			String key = facetValue.getTerm();
 
-			if (key.equals("INPROGRESS")) {
-				key = "InProgress";
-			}
-			else if (key.equals("DIDNOTRUN")) {
+			if (key.equals("DIDNOTRUN")) {
 				key = "DidNotRun";
+			}
+			else if (key.equals("INPROGRESS")) {
+				key = "InProgress";
 			}
 			else if (key.equals("TESTFIX")) {
 				key = "TestFix";

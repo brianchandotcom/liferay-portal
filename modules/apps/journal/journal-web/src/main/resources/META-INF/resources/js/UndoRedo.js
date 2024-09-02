@@ -454,7 +454,7 @@ export default function UndoRedo({
 					<ClayButtonWithIcon
 						aria-label={Liferay.Language.get('history')}
 						aria-pressed={active}
-						disabled={step <= 0}
+						disabled={history.length <= 1}
 						displayType="secondary"
 						size="sm"
 						symbol="time"

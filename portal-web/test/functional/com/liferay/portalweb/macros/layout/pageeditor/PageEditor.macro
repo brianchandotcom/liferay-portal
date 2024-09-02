@@ -3012,7 +3012,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editFormContainer(deviceType = null, showNotificationWhenFormIsSubmitted = null, displayPageName = null, siteName = null, successMessage = null, pageName = null, url = null, columnNumber = null, subtype = null, successText = null, panel = null, contentType = null, successNotificationText = null) {
+	macro editFormContainer(deviceType = null, showNotificationWhenFormIsSubmitted = null, displayPageName = null, siteName = null, successMessage = null, pageName = null, url = null, columnNumber = null, subtype = null, successText = null, contentType = null, successNotificationText = null) {
 		if (!(isSet(index))) {
 			var index = 1;
 		}
@@ -3046,185 +3046,183 @@ definition {
 			key_sidebarButton = "Browser",
 			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
 
-		if (${panel} == "General") {
-			Navigator.gotoNavTab(navTab = "General");
+		Navigator.gotoNavTab(navTab = "General");
 
-			if (isSet(contentType)) {
-				Select(
-					key_fieldLabel = "Content Type",
-					locator1 = "Select#GENERIC_SELECT_FIELD",
-					value1 = ${contentType});
+		if (isSet(contentType)) {
+			Select(
+				key_fieldLabel = "Content Type",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = ${contentType});
 
-				PageEditor.waitForAutoSave();
+			PageEditor.waitForAutoSave();
 
-				AssertSelectedLabel(
-					key_fieldLabel = "Content Type",
-					locator1 = "Select#GENERIC_SELECT_FIELD",
-					value1 = ${contentType});
+			AssertSelectedLabel(
+				key_fieldLabel = "Content Type",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = ${contentType});
+		}
+
+		if (isSet(subtype)) {
+			Select(
+				key_fieldLabel = "Subtype",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = ${subtype});
+
+			PageEditor.waitForAutoSave();
+
+			AssertSelectedLabel(
+				key_fieldLabel = "Subtype",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = ${subtype});
+		}
+
+		if (${successMessage} == "Stay in Page") {
+			Select(
+				key_fieldLabel = "Success Action",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Stay in Page");
+
+			AssertSelectedLabel(
+				key_fieldLabel = "Success Action",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Stay in Page");
+
+			PageEditor.waitForAutoSave();
+		}
+		else if (${successMessage} == "Show Embedded Message") {
+			Select(
+				key_fieldLabel = "Success Action",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Show Embedded Message");
+
+			AssertSelectedLabel(
+				key_fieldLabel = "Success Action",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Show Embedded Message");
+
+			if (isSet(successText)) {
+				Type(
+					key_text = "Embedded Message",
+					locator1 = "TextInput#ANY",
+					value1 = ${successText});
+
+				Click(
+					key_sidebarButton = "Browser",
+					locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
 			}
 
-			if (isSet(subtype)) {
-				Select(
-					key_fieldLabel = "Subtype",
-					locator1 = "Select#GENERIC_SELECT_FIELD",
-					value1 = ${subtype});
+			PageEditor.waitForAutoSave();
+		}
+		else if (${successMessage} == "Go to Page") {
+			Select(
+				key_fieldLabel = "Success Action",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Go to Page");
 
-				PageEditor.waitForAutoSave();
+			AssertSelectedLabel(
+				key_fieldLabel = "Success Action",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Go to Page");
 
-				AssertSelectedLabel(
-					key_fieldLabel = "Subtype",
-					locator1 = "Select#GENERIC_SELECT_FIELD",
-					value1 = ${subtype});
-			}
-
-			if (${successMessage} == "Stay in Page") {
-				Select(
-					key_fieldLabel = "Success Action",
-					locator1 = "Select#GENERIC_SELECT_FIELD",
-					value1 = "Stay in Page");
-
-				AssertSelectedLabel(
-					key_fieldLabel = "Success Action",
-					locator1 = "Select#GENERIC_SELECT_FIELD",
-					value1 = "Stay in Page");
-
-				PageEditor.waitForAutoSave();
-			}
-			else if (${successMessage} == "Show Embedded Message") {
-				Select(
-					key_fieldLabel = "Success Action",
-					locator1 = "Select#GENERIC_SELECT_FIELD",
-					value1 = "Show Embedded Message");
-
-				AssertSelectedLabel(
-					key_fieldLabel = "Success Action",
-					locator1 = "Select#GENERIC_SELECT_FIELD",
-					value1 = "Show Embedded Message");
-
-				if (isSet(successText)) {
-					Type(
-						key_text = "Embedded Message",
-						locator1 = "TextInput#ANY",
-						value1 = ${successText});
-
+			if (isSet(pageName)) {
+				if (IsTextEqual(key_fieldLabel = "Page", locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT", value1 = "")) {
 					Click(
-						key_sidebarButton = "Browser",
-						locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
+						key_fieldLabel = "Page",
+						key_text = "plus",
+						locator1 = "Icon#ANY_ITEM_SELECTOR");
+				}
+				else {
+					Click(
+						key_fieldLabel = "Page",
+						key_text = "change",
+						locator1 = "Icon#ANY_ITEM_SELECTOR");
 				}
 
-				PageEditor.waitForAutoSave();
-			}
-			else if (${successMessage} == "Go to Page") {
-				Select(
-					key_fieldLabel = "Success Action",
-					locator1 = "Select#GENERIC_SELECT_FIELD",
-					value1 = "Go to Page");
+				SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-				AssertSelectedLabel(
-					key_fieldLabel = "Success Action",
-					locator1 = "Select#GENERIC_SELECT_FIELD",
-					value1 = "Go to Page");
+				if (isSet(siteName)) {
+					AssertClick(
+						key_breadcrumbName = "Sites and Libraries",
+						locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
+						value1 = "Sites and Libraries");
 
-				if (isSet(pageName)) {
-					if (IsTextEqual(key_fieldLabel = "Page", locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT", value1 = "")) {
-						Click(
-							key_fieldLabel = "Page",
-							key_text = "plus",
-							locator1 = "Icon#ANY_ITEM_SELECTOR");
-					}
-					else {
-						Click(
-							key_fieldLabel = "Page",
-							key_text = "change",
-							locator1 = "Icon#ANY_ITEM_SELECTOR");
-					}
-
-					SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-					if (isSet(siteName)) {
-						AssertClick(
-							key_breadcrumbName = "Sites and Libraries",
-							locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
-							value1 = "Sites and Libraries");
-
-						LexiconCard.clickCardTitle(card = ${siteName});
-					}
-
-					Portlet.expandTree();
-
-					AssertVisible(
-						key_nodeName = ${pageName},
-						locator1 = "Treeview#NODE_ITEM");
-
-					Click(
-						key_nodeName = ${pageName},
-						locator1 = "Treeview#NODE_UNSELECTED");
-
-					SelectFrame(value1 = "relative=top");
+					LexiconCard.clickCardTitle(card = ${siteName});
 				}
 
-				PageEditor.waitForAutoSave();
-			}
-			else if (${successMessage} == "Go to External URL") {
-				Select(
-					key_fieldLabel = "Success Action",
-					locator1 = "Select#GENERIC_SELECT_FIELD",
-					value1 = "Go to External URL");
+				Portlet.expandTree();
 
-				AssertSelectedLabel(
-					key_fieldLabel = "Success Action",
-					locator1 = "Select#GENERIC_SELECT_FIELD",
-					value1 = "Go to External URL");
+				AssertVisible(
+					key_nodeName = ${pageName},
+					locator1 = "Treeview#NODE_ITEM");
 
-				if (isSet(url)) {
-					Type(
-						key_text = "External URL",
-						locator1 = "TextInput#ANY",
-						value1 = ${url});
+				Click(
+					key_nodeName = ${pageName},
+					locator1 = "Treeview#NODE_UNSELECTED");
 
-					Click(
-						key_sidebarButton = "Browser",
-						locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
-				}
-
-				PageEditor.waitForAutoSave();
-			}
-			else if (${successMessage} == "Go to Entry Display Page") {
-				Select(
-					key_fieldLabel = "Success Action",
-					locator1 = "Select#GENERIC_SELECT_FIELD",
-					value1 = "Go to Entry Display Page");
-
-				AssertSelectedLabel(
-					key_fieldLabel = "Success Action",
-					locator1 = "Select#GENERIC_SELECT_FIELD",
-					value1 = "Go to Entry Display Page");
-
-				Select(
-					key_fieldLabel = "Display Page",
-					locator1 = "Select#GENERIC_SELECT_FIELD",
-					value1 = ${displayPageName});
-
-				PageEditor.waitForAutoSave();
+				SelectFrame(value1 = "relative=top");
 			}
 
-			if (${showNotificationWhenFormIsSubmitted} == "true") {
-				Check.checkNotVisible(
-					checkboxName = "Show Notification After Submit",
-					locator1 = "Checkbox#ANY_CHECKBOX");
+			PageEditor.waitForAutoSave();
+		}
+		else if (${successMessage} == "Go to External URL") {
+			Select(
+				key_fieldLabel = "Success Action",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Go to External URL");
 
-				if (isSet(successNotificationText)) {
-					Type(
-						key_text = "Success Notification Text",
-						locator1 = "TextInput#ANY",
-						value1 = ${successNotificationText});
+			AssertSelectedLabel(
+				key_fieldLabel = "Success Action",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Go to External URL");
 
-					Click(
-						key_sidebarButton = "Browser",
-						locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
+			if (isSet(url)) {
+				Type(
+					key_text = "External URL",
+					locator1 = "TextInput#ANY",
+					value1 = ${url});
 
-					PageEditor.waitForAutoSave();
-				}
+				Click(
+					key_sidebarButton = "Browser",
+					locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
+			}
+
+			PageEditor.waitForAutoSave();
+		}
+		else if (${successMessage} == "Go to Entry Display Page") {
+			Select(
+				key_fieldLabel = "Success Action",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Go to Entry Display Page");
+
+			AssertSelectedLabel(
+				key_fieldLabel = "Success Action",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Go to Entry Display Page");
+
+			Select(
+				key_fieldLabel = "Display Page",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = ${displayPageName});
+
+			PageEditor.waitForAutoSave();
+		}
+
+		if (${showNotificationWhenFormIsSubmitted} == "true") {
+			Check.checkNotVisible(
+				checkboxName = "Show Notification After Submit",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+
+			if (isSet(successNotificationText)) {
+				Type(
+					key_text = "Success Notification Text",
+					locator1 = "TextInput#ANY",
+					value1 = ${successNotificationText});
+
+				Click(
+					key_sidebarButton = "Browser",
+					locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
+
+				PageEditor.waitForAutoSave();
 			}
 		}
 	}

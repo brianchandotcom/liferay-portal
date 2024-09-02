@@ -79,9 +79,7 @@ definition {
 			}
 
 			task ("Map the Form Container to the object") {
-				PageEditor.editFormContainer(
-					contentType = "Purchase Order (Default)",
-					panel = "General");
+				PageEditor.editFormContainer(contentType = "Purchase Order (Default)");
 			}
 
 			task ("Duplicate the Form Button") {
@@ -115,9 +113,7 @@ definition {
 			}
 
 			task ("Map the Form Container to the object") {
-				PageEditor.editFormContainer(
-					contentType = "Purchase Order",
-					panel = "General");
+				PageEditor.editFormContainer(contentType = "Purchase Order");
 			}
 
 			task ("Duplicate the Form Button") {
@@ -631,9 +627,7 @@ definition {
 			}
 
 			task ("Map the Form Container to the object") {
-				PageEditor.editFormContainer(
-					contentType = "Purchase Order",
-					panel = "General");
+				PageEditor.editFormContainer(contentType = "Purchase Order");
 			}
 		}
 
@@ -694,9 +688,7 @@ definition {
 		}
 
 		task ("When the page designer maps the Form Container to an entity with text field") {
-			PageEditor.editFormContainer(
-				contentType = "Purchase Order",
-				panel = "General");
+			PageEditor.editFormContainer(contentType = "Purchase Order");
 		}
 
 		task ("Then the page designer could configure the Submit Button fragment") {
@@ -828,9 +820,7 @@ definition {
 			}
 
 			task ("Map the Form Container to the object") {
-				PageEditor.editFormContainer(
-					contentType = "Purchase Order",
-					panel = "General");
+				PageEditor.editFormContainer(contentType = "Purchase Order");
 			}
 
 			task ("Change the submit button to draft") {
@@ -897,9 +887,7 @@ definition {
 			}
 
 			task ("Map the Form Container to the object") {
-				PageEditor.editFormContainer(
-					contentType = "Purchase Order",
-					panel = "General");
+				PageEditor.editFormContainer(contentType = "Purchase Order");
 			}
 
 			task ("Change the submit button to draft") {
@@ -1028,9 +1016,7 @@ definition {
 					collectionName = "Form Components",
 					fragmentName = "Form Container");
 
-				PageEditor.editFormContainer(
-					contentType = "Purchase Order",
-					panel = "General");
+				PageEditor.editFormContainer(contentType = "Purchase Order");
 			}
 
 			task ("Delete the Text Input fragment") {
@@ -1162,9 +1148,7 @@ definition {
 			}
 
 			task ("Map the Form Container to the object") {
-				PageEditor.editFormContainer(
-					contentType = "Purchase Order",
-					panel = "General");
+				PageEditor.editFormContainer(contentType = "Purchase Order");
 			}
 
 			task ("Change the submit button to draft") {
@@ -1271,9 +1255,7 @@ definition {
 			}
 
 			task ("Map the Form Container to the object") {
-				PageEditor.editFormContainer(
-					contentType = "Purchase Order",
-					panel = "General");
+				PageEditor.editFormContainer(contentType = "Purchase Order");
 			}
 		}
 

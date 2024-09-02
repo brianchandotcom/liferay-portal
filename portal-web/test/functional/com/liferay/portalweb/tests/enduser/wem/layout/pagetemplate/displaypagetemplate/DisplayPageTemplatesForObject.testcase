@@ -1492,7 +1492,6 @@ definition {
 			PageEditor.editFormContainer(
 				contentType = "Purchase Order",
 				displayPageName = "Display Page Name",
-				panel = "General",
 				successMessage = "Go to Entry Display Page");
 
 			PageEditor.publish();
@@ -1639,7 +1638,6 @@ definition {
 			PageEditor.editFormContainer(
 				contentType = "Purchase Order",
 				displayPageName = "Display Page Name",
-				panel = "General",
 				successMessage = "Go to Entry Display Page");
 
 			PageEditor.publish();

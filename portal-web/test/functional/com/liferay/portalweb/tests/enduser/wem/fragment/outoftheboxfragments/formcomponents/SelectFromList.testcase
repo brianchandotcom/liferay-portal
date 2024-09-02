@@ -68,9 +68,7 @@ definition {
 		}
 
 		task ("When the page designer maps Select from list fragment and views it after publishing") {
-			PageEditor.editFormContainer(
-				contentType = "Purchase Order",
-				panel = "General");
+			PageEditor.editFormContainer(contentType = "Purchase Order");
 
 			PageEditor.editInput(
 				fragmentName = "Select",
@@ -170,9 +168,7 @@ definition {
 		}
 
 		task ("When the page designer maps Select from list fragment to relationship and views it after publishing") {
-			PageEditor.editFormContainer(
-				contentType = "Purchase Order",
-				panel = "General");
+			PageEditor.editFormContainer(contentType = "Purchase Order");
 
 			PageEditor.editInput(
 				fragmentName = "Select",
@@ -247,9 +243,7 @@ definition {
 		}
 
 		task ("When the page designer maps Select from list fragment to relationship and views it after publishing") {
-			PageEditor.editFormContainer(
-				contentType = "Purchase Order",
-				panel = "General");
+			PageEditor.editFormContainer(contentType = "Purchase Order");
 
 			PageEditor.editInput(
 				fragmentName = "Select",
@@ -317,9 +311,7 @@ definition {
 			}
 
 			task ("Map the Select from List fragment to Type field") {
-				PageEditor.editFormContainer(
-					contentType = "Purchase Order",
-					panel = "General");
+				PageEditor.editFormContainer(contentType = "Purchase Order");
 
 				PageEditor.publish(objectName = "Purchase Order");
 			}

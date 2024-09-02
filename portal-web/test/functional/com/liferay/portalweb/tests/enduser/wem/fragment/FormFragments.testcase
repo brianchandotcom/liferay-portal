@@ -309,9 +309,7 @@ definition {
 				collectionName = "Form Components",
 				fragmentName = "Form Container");
 
-			PageEditor.editFormContainer(
-				contentType = "Purchase Order",
-				panel = "General");
+			PageEditor.editFormContainer(contentType = "Purchase Order");
 
 			PageEditor.publish();
 
@@ -549,9 +547,7 @@ definition {
 				collectionName = "Form Components",
 				fragmentName = "Form Container");
 
-			PageEditor.editFormContainer(
-				contentType = "Purchase Order",
-				panel = "General");
+			PageEditor.editFormContainer(contentType = "Purchase Order");
 
 			PageEditor.publish();
 

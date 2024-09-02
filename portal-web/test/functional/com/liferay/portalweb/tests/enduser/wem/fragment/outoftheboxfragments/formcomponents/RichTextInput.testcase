@@ -56,9 +56,7 @@ definition {
 		}
 
 		task ("When the pages designer maps the Form Container to object") {
-			PageEditor.editFormContainer(
-				contentType = "Purchase Order",
-				panel = "General");
+			PageEditor.editFormContainer(contentType = "Purchase Order");
 		}
 
 		task ("Then the pages designer sees the Rich Text Input fragment mapped to Rich Text field") {

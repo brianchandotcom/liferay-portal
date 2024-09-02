@@ -1668,7 +1668,7 @@ definition {
 
 			Select(
 				locator1 = "PageEditorEditableLink#FIELD",
-				value1 = "Tags");
+				value1 = "Tags (Repeatable)");
 
 			PageEditor.waitForAutoSave();
 		}

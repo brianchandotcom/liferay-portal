@@ -121,7 +121,7 @@ public class RenderRestController extends BaseRestController {
 					transactionCode,
 					itemJSONObject.getString("transactionCode"))) {
 
-				return itemJSONObject.getString("id");
+				return String.valueOf(itemJSONObject.getInt("id"));
 			}
 		}
 

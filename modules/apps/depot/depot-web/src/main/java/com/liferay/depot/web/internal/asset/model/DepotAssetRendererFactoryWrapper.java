@@ -10,6 +10,7 @@ import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.asset.util.AssetRendererFactoryWrapper;
+import com.liferay.depot.group.provider.SiteConnectedGroupGroupProvider;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.depot.web.internal.application.controller.DepotApplicationController;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -21,6 +22,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GroupThreadLocal;
 
 import java.util.Locale;
@@ -38,12 +40,14 @@ public class DepotAssetRendererFactoryWrapper<T>
 		AssetRendererFactory<T> assetRendererFactory,
 		DepotApplicationController depotApplicationController,
 		DepotEntryLocalService depotEntryLocalService,
-		GroupLocalService groupLocalService) {
+		GroupLocalService groupLocalService,
+		SiteConnectedGroupGroupProvider siteConnectedGroupGroupProvider) {
 
 		_assetRendererFactory = assetRendererFactory;
 		_depotApplicationController = depotApplicationController;
 		_depotEntryLocalService = depotEntryLocalService;
 		_groupLocalService = groupLocalService;
+		_siteConnectedGroupGroupProvider = siteConnectedGroupGroupProvider;
 	}
 
 	@Override
@@ -67,7 +71,33 @@ public class DepotAssetRendererFactoryWrapper<T>
 	public AssetRenderer<T> getAssetRenderer(long classPK)
 		throws PortalException {
 
-		return _assetRendererFactory.getAssetRenderer(classPK);
+		AssetRenderer<T> assetRenderer = _assetRendererFactory.getAssetRenderer(
+			classPK);
+
+		if (assetRenderer == null) {
+			return null;
+		}
+
+		long groupId = assetRenderer.getGroupId();
+
+		Group assetRendererGroup = _groupLocalService.fetchGroup(groupId);
+
+		if ((assetRendererGroup == null) || !assetRendererGroup.isDepot()) {
+			return assetRenderer;
+		}
+
+		Group group = _getGroup();
+
+		if (ArrayUtil.contains(
+				_siteConnectedGroupGroupProvider.
+					getCurrentAndAncestorSiteAndDepotGroupIds(
+						group.getGroupId()),
+				groupId)) {
+
+			return assetRenderer;
+		}
+
+		return null;
 	}
 
 	@Override
@@ -268,5 +298,7 @@ public class DepotAssetRendererFactoryWrapper<T>
 	private final DepotApplicationController _depotApplicationController;
 	private final DepotEntryLocalService _depotEntryLocalService;
 	private final GroupLocalService _groupLocalService;
+	private final SiteConnectedGroupGroupProvider
+		_siteConnectedGroupGroupProvider;
 
 }

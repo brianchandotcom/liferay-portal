@@ -8,53 +8,57 @@ import {expect, mergeTests} from '@playwright/test';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {wikiPagesTest} from '../../fixtures/wikiPagesTest';
+import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 
 export const test = mergeTests(isolatedSiteTest, loginTest(), wikiPagesTest);
 
-test('LPD-26435 Icon menu should close when another icon menu is open', async ({
-	page,
-	wikiPage,
-}) => {
-	await wikiPage.goto();
+test(
+	'Icon menu should close when another icon menu is open',
+	{
+		tag: '@LPD-26435',
+	},
+	async ({page, wikiPage}) => {
+		await wikiPage.goto();
 
-	await wikiPage.createNewWikiNode('Wiki Node Title');
+		await wikiPage.createNewWikiNode('Wiki Node Title');
 
-	await page.getByLabel('Order').waitFor();
-
-	const wikiNodeMenu = await page.locator(
-		'[id="_com_liferay_wiki_web_portlet_WikiAdminPortlet_wikiNodes_1_menu"]'
-	);
-
-	await test.step('Check menu gets closed', async () => {
-		await wikiNodeMenu.click();
-
-		const menuOne = await page.locator(
-			'[aria-labelledby="_com_liferay_wiki_web_portlet_WikiAdminPortlet_wikiNodes_1_menu"]'
+		const wikiNodeMenu = page.locator(
+			'[id="_com_liferay_wiki_web_portlet_WikiAdminPortlet_wikiNodes_1_menu"]'
 		);
 
-		await expect(menuOne).toBeVisible();
+		await test.step('Check menu gets closed', async () => {
+			const menuOne = page.locator(
+				'[aria-labelledby="_com_liferay_wiki_web_portlet_WikiAdminPortlet_wikiNodes_1_menu"]'
+			);
 
-		await page
-			.locator(
-				'[id="_com_liferay_wiki_web_portlet_WikiAdminPortlet_wikiNodes_2_menu"]'
-			)
-			.click();
+			await clickAndExpectToBeVisible({
+				autoClick: false,
+				target: menuOne,
+				trigger: wikiNodeMenu,
+			});
 
-		const menuTwo = await page.locator(
-			'[aria-labelledby="_com_liferay_wiki_web_portlet_WikiAdminPortlet_wikiNodes_2_menu"]'
-		);
+			await page
+				.locator(
+					'[id="_com_liferay_wiki_web_portlet_WikiAdminPortlet_wikiNodes_2_menu"]'
+				)
+				.click();
 
-		await expect(menuTwo).toBeVisible();
+			const menuTwo = page.locator(
+				'[aria-labelledby="_com_liferay_wiki_web_portlet_WikiAdminPortlet_wikiNodes_2_menu"]'
+			);
 
-		await expect(menuOne).toBeHidden();
-	});
+			await expect(menuTwo).toBeVisible();
 
-	await test.step('Wiki node is deleted', async () => {
-		await wikiNodeMenu.click();
+			await expect(menuOne).toBeHidden();
+		});
 
-		await page.getByRole('link', {name: 'Delete'}).click();
-	});
-});
+		await test.step('Wiki node is deleted', async () => {
+			await wikiNodeMenu.click();
+
+			await page.getByRole('link', {name: 'Delete'}).click();
+		});
+	}
+);
 
 test('LPD-28898 Image added via rich text editor on Wiki tool losing reference', async ({
 	page,

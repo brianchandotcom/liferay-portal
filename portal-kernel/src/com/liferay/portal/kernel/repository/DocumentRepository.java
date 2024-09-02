@@ -94,6 +94,13 @@ public interface DocumentRepository extends CapabilityProvider {
 			"This method needs to be implemented");
 	}
 
+	public default FileShortcut fetchFileShortcutByExternalReferenceCode(
+		String externalReferenceCode) {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	public default Folder fetchFolderByExternalReferenceCode(
 		String externalReferenceCode) {
 
@@ -162,6 +169,14 @@ public interface DocumentRepository extends CapabilityProvider {
 
 	public FileShortcut getFileShortcut(long fileShortcutId)
 		throws PortalException;
+
+	public default FileShortcut getFileShortcutByExternalReferenceCode(
+			String externalReferenceCode)
+		throws PortalException {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
 
 	public FileVersion getFileVersion(long fileVersionId)
 		throws PortalException;

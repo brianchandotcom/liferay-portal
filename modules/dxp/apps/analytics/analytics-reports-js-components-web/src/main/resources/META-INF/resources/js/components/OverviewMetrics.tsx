@@ -80,54 +80,27 @@ const OverviewMetricsWithData: React.FC<IOverviewMetricsWithDataProps> = ({
 
 	return (
 		<div className="overview-metrics">
-			<OverviewMetric
-				name={MetricsTitle[data.defaultMetric.metricType]}
-				onSelectMetric={() =>
-					changeMetricFilter(data.defaultMetric.metricType)
-				}
-				selected={filters.metric === data.defaultMetric.metricType}
-				trend={{
-					percentage: data.defaultMetric.trend.percentage ?? 0,
-					trendClassification:
-						data.defaultMetric.trend.trendClassification ??
-						TrendClassification.Neutral,
-				}}
-				value={data.defaultMetric.value}
-			/>
-
-			<div className="overview-metrics__secondary-content">
-				{data.selectedMetrics.map(
-					({metricType, trend, value}, index) => {
-						if (!index) {
-							return null;
-						}
-
-						return (
-							<OverviewMetric
-								key={metricType}
-								name={MetricsTitle[metricType]}
-								onSelectMetric={() =>
-									changeMetricFilter(metricType)
-								}
-								selected={filters.metric === metricType}
-								trend={{
-									percentage: trend.percentage ?? 0,
-									trendClassification:
-										trend.trendClassification,
-								}}
-								value={value}
-							/>
-						);
-					}
-				)}
-			</div>
+			{data.selectedMetrics.map(({metricType, trend, value}) => (
+				<OverviewMetric
+					key={metricType}
+					name={MetricsTitle[metricType]}
+					onSelectMetric={() => changeMetricFilter(metricType)}
+					selected={filters.metric === metricType}
+					trend={{
+						percentage: trend.percentage ?? 0,
+						trendClassification: trend.trendClassification,
+					}}
+					value={value}
+				/>
+			))}
 		</div>
 	);
 };
 
 const OverviewMetrics = () => {
-	const {assetId, assetType, changeMetricFilter, filters, groupId} =
-		useContext(AnalyticsReportsContext);
+	const {assetId, assetType, filters, groupId} = useContext(
+		AnalyticsReportsContext
+	);
 
 	const [data, setData] = useState<Data | null>(null);
 	const [error, setError] = useState('');
@@ -135,6 +108,8 @@ const OverviewMetrics = () => {
 
 	useEffect(() => {
 		async function fetchData() {
+			setLoading(true);
+
 			try {
 				const response = await fetchAssetMetric({
 					assetId,
@@ -153,12 +128,14 @@ const OverviewMetrics = () => {
 
 				setData(data);
 				setLoading(false);
+				setError('');
 			}
 			catch (error: any) {
 				console.error(error);
 
-				setError(error.toString());
+				setData(null);
 				setLoading(false);
+				setError(error.toString());
 			}
 		}
 
@@ -166,9 +143,7 @@ const OverviewMetrics = () => {
 	}, [
 		assetId,
 		assetType,
-		changeMetricFilter,
 		filters.individual,
-		filters.metric,
 		filters.rangeSelector,
 		groupId,
 	]);

@@ -2,39 +2,35 @@
 
 html#{$cadmin-selector} {
 	.cadmin {
+		.analytics-reports {
+			transition: opacity 0.5s ease;
+		}
+
 		.global-filters .filter .filter__trigger-label {
-			@media screen and (max-width: 1920px) {
+			@media screen and (max-width: 768px) {
 				display: none;
 			}
 		}
 
 		.overview-metrics {
-			display: flex;
 			margin: 1rem 0;
 
-			@media screen and (max-width: 1920px) {
-				display: block;
+			@media screen and (max-width: 768px) {
+				.overview-metric {
+					width: 92px !important;
 
-				.overview-metrics__secondary-content {
-					display: flex;
-					margin-top: 1rem;
+					&__percentage-description {
+						display: none;
+					}
 
-					.overview-metric {
-						width: 50% !important;
-
-						&__percentage-description {
-							display: none;
-						}
-
-						&__value {
-							font-size: 16px;
-						}
+					&__value {
+						font-size: 16px;
 					}
 				}
 			}
 
 			.overview-metric {
-				margin-right: 1rem;
+				margin: 0 1rem 1rem 0;
 
 				&:last-child {
 					margin-right: 0;

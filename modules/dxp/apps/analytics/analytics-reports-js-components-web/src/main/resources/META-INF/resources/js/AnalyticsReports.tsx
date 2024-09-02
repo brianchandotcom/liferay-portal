@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import React from 'react';
+import React, {useEffect, useRef} from 'react';
 
 import AppSetup from './components/AppSetup';
 import GlobalFilters from './components/GlobalFilters';
@@ -20,14 +20,33 @@ interface AnalyticsReports {
 const AnalyticsReports: React.FC<AnalyticsReports> = ({
 	contentPerformanceDataFetchURL,
 }) => {
-	return (
-		<AppSetup
-			contentPerformanceDataFetchURL={contentPerformanceDataFetchURL}
-		>
-			<GlobalFilters />
+	const analyticsReportsRef = useRef<HTMLDivElement>(null);
 
-			<OverviewMetrics />
-		</AppSetup>
+	// workaround to avoid a blink when the user clicks on the
+	// performance tab to load the Analytics Reports component.
+
+	useEffect(() => {
+		setTimeout(() => {
+			if (analyticsReportsRef.current) {
+				analyticsReportsRef.current.style.opacity = '1';
+			}
+		}, 500);
+	}, []);
+
+	return (
+		<div
+			className="analytics-reports"
+			ref={analyticsReportsRef}
+			style={{opacity: 0}}
+		>
+			<AppSetup
+				contentPerformanceDataFetchURL={contentPerformanceDataFetchURL}
+			>
+				<GlobalFilters />
+
+				<OverviewMetrics />
+			</AppSetup>
+		</div>
 	);
 };
 

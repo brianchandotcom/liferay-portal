@@ -53,12 +53,14 @@ const AppSetup: React.FC<IAppSetupProps> = ({
 
 				setData(data);
 				setLoading(false);
+				setError('');
 			}
 			catch (error: any) {
 				console.error(error);
 
-				setError(error.toString());
+				setData(null);
 				setLoading(false);
+				setError(error.toString());
 			}
 		}
 

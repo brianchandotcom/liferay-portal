@@ -364,14 +364,14 @@ public class AssetListEntryExportImportContentProcessor
 			"group-id-mappings");
 
 		for (long groupId : groupIds) {
-			Element groupIdMappingElement = groupIdMappingsElement.addElement(
-				"group-id-mapping");
-
 			Group group = _groupLocalService.fetchGroup(groupId);
 
 			if (group == null) {
 				continue;
 			}
+
+			Element groupIdMappingElement = groupIdMappingsElement.addElement(
+				"group-id-mapping");
 
 			long liveGroupId = group.getLiveGroupId();
 

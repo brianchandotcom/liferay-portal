@@ -72,29 +72,26 @@ public class HttpInvokerTest {
 	}
 
 	@Test
-	public void testPathReplacement()
-		throws IllegalAccessException, NoSuchFieldException {
-
-		_testPathReplacement("\\\\");
+	public void testPathReplacement() throws Exception {
 		_testPathReplacement("$");
+		_testPathReplacement("\\\\");
 	}
 
 	private void _testPathReplacement(String specialCharacter)
-		throws IllegalAccessException, NoSuchFieldException {
+		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 		httpInvoker.path("/api/users/{name}");
-
 		httpInvoker.path("name", "value" + specialCharacter);
 
-		Field pathField = HttpInvoker.class.getDeclaredField("_path");
+		Field field = HttpInvoker.class.getDeclaredField("_path");
 
-		pathField.setAccessible(true);
+		field.setAccessible(true);
 
-		String actualPath = (String)pathField.get(httpInvoker);
-
-		Assert.assertEquals("/api/users/value" + specialCharacter, actualPath);
+		Assert.assertEquals(
+			"/api/users/value" + specialCharacter,
+			(String)field.get(httpInvoker));
 	}
 
 	private static final Field _httpMethodField;

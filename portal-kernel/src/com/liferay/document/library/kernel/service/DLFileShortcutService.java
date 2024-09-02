@@ -56,6 +56,11 @@ public interface DLFileShortcutService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DLFileShortcut getDLFileShortcutByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DLFileShortcut getFileShortcut(long fileShortcutId)
 		throws PortalException;
 

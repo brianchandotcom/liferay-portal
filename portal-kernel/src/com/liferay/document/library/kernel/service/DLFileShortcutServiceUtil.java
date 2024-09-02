@@ -53,6 +53,14 @@ public class DLFileShortcutServiceUtil {
 		getService().deleteFileShortcut(externalReferenceCode, groupId);
 	}
 
+	public static DLFileShortcut getDLFileShortcutByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return getService().getDLFileShortcutByExternalReferenceCode(
+			externalReferenceCode, groupId);
+	}
+
 	public static DLFileShortcut getFileShortcut(long fileShortcutId)
 		throws PortalException {
 

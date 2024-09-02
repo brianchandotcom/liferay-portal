@@ -1052,6 +1052,15 @@ public class DLAppServiceUtil {
 		return getService().getFileShortcut(fileShortcutId);
 	}
 
+	public static com.liferay.portal.kernel.repository.model.FileShortcut
+			getFileShortcutByExternalReferenceCode(
+				String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return getService().getFileShortcutByExternalReferenceCode(
+			externalReferenceCode, groupId);
+	}
+
 	/**
 	 * Returns the file version with the primary key.
 	 *

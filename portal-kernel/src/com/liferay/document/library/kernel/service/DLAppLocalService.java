@@ -360,6 +360,11 @@ public interface DLAppLocalService extends BaseLocalService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public FileShortcut fetchFileShortcutByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Folder fetchFolderByExternalReferenceCode(
 			String externalReferenceCode, long groupId)
 		throws PortalException;
@@ -436,6 +441,11 @@ public interface DLAppLocalService extends BaseLocalService {
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public FileShortcut getFileShortcut(long fileShortcutId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public FileShortcut getFileShortcutByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
 		throws PortalException;
 
 	/**

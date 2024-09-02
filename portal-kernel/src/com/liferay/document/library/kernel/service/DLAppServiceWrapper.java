@@ -1090,6 +1090,16 @@ public class DLAppServiceWrapper
 		return _dlAppService.getFileShortcut(fileShortcutId);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.repository.model.FileShortcut
+			getFileShortcutByExternalReferenceCode(
+				String externalReferenceCode, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _dlAppService.getFileShortcutByExternalReferenceCode(
+			externalReferenceCode, groupId);
+	}
+
 	/**
 	 * Returns the file version with the primary key.
 	 *

@@ -427,6 +427,15 @@ public class DLAppLocalServiceUtil {
 			groupId, externalReferenceCode);
 	}
 
+	public static com.liferay.portal.kernel.repository.model.FileShortcut
+			fetchFileShortcutByExternalReferenceCode(
+				String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return getService().fetchFileShortcutByExternalReferenceCode(
+			externalReferenceCode, groupId);
+	}
+
 	public static com.liferay.portal.kernel.repository.model.Folder
 			fetchFolderByExternalReferenceCode(
 				String externalReferenceCode, long groupId)
@@ -527,6 +536,15 @@ public class DLAppLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getFileShortcut(fileShortcutId);
+	}
+
+	public static com.liferay.portal.kernel.repository.model.FileShortcut
+			getFileShortcutByExternalReferenceCode(
+				String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return getService().getFileShortcutByExternalReferenceCode(
+			externalReferenceCode, groupId);
 	}
 
 	/**

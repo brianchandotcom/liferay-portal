@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.db.schema.importer.jdbc.AutoBatchPreparedStatementUtil;
@@ -24,6 +25,9 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.Statement;
 
 import java.util.ArrayList;
@@ -62,6 +66,8 @@ public class DBSchemaImporterProcess {
 
 		_targetDataSource = DataSourceFactoryUtil.initDataSource(
 			_targetJDBCURL, _targetPassword, _targetUser);
+
+		_targetCharsetEncoding = _getSessionCharsetEncoding(_targetDataSource);
 	}
 
 	public void run() throws Exception {
@@ -147,6 +153,35 @@ public class DBSchemaImporterProcess {
 		}
 	}
 
+	private String _getSessionCharsetEncoding(DataSource dataSource)
+		throws Exception {
+
+		try (Connection connection = dataSource.getConnection()) {
+			DatabaseMetaData metaData = connection.getMetaData();
+
+			if (!StringUtil.startsWith(
+					GetterUtil.getString(metaData.getDatabaseProductName()),
+					"MySQL")) {
+
+				return null;
+			}
+
+			try (PreparedStatement preparedStatement =
+					connection.prepareStatement(
+						"select variable_value from " +
+							"performance_schema.session_variables where " +
+								"variable_name = 'character_set_client'");
+				ResultSet resultSet = preparedStatement.executeQuery()) {
+
+				if (resultSet.next()) {
+					return resultSet.getString("variable_value");
+				}
+
+				return "utf8";
+			}
+		}
+	}
+
 	private File[] _listFiles(String filter) {
 		File dir = new File(_path);
 
@@ -202,13 +237,23 @@ public class DBSchemaImporterProcess {
 					else if (StringUtil.startsWith(
 								sql, "create schema if not exists")) {
 
-						_syncInitialSQLs.add(sql);
-
 						String[] parts = StringUtil.split(sql, CharPool.SPACE);
 
-						_partitionNames.add(
-							StringUtil.removeChar(
-								parts[5], CharPool.SEMICOLON));
+						String partitionName = StringUtil.removeChar(
+							parts[5], CharPool.SEMICOLON);
+
+						_partitionNames.add(partitionName);
+
+						if (_targetCharsetEncoding != null) {
+							_syncInitialSQLs.add(
+								StringBundler.concat(
+									"create schema if not exists ",
+									partitionName, " character set ",
+									_targetCharsetEncoding));
+						}
+						else {
+							_syncInitialSQLs.add(sql);
+						}
 					}
 					else {
 						_asyncSQLs.add(sql);
@@ -289,6 +334,7 @@ public class DBSchemaImporterProcess {
 	private final String _sourceUser;
 	private final List<String> _syncFinalSQLs = new ArrayList<>();
 	private final List<String> _syncInitialSQLs = new ArrayList<>();
+	private final String _targetCharsetEncoding;
 	private final DataSource _targetDataSource;
 	private final String _targetJDBCURL;
 	private final String _targetPassword;

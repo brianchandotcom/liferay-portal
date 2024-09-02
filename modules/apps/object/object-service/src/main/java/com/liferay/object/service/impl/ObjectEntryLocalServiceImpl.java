@@ -5028,12 +5028,10 @@ public class ObjectEntryLocalServiceImpl
 					objectField.getDBType(),
 					ObjectFieldConstants.DB_TYPE_INTEGER)) {
 
-			Serializable entryValue = entry.getValue();
-
-			String entryValueString = entryValue.toString();
+			String entryValueString = String.valueOf(entry.getValue());
 
 			if (!entryValueString.isEmpty()) {
-				int value = GetterUtil.getInteger(entryValue);
+				int value = GetterUtil.getInteger(entryValueString);
 
 				if ((value == 0) &&
 					!StringUtil.equals(
@@ -5048,16 +5046,14 @@ public class ObjectEntryLocalServiceImpl
 					objectField.getDBType(),
 					ObjectFieldConstants.DB_TYPE_LONG)) {
 
-			Serializable entryValue = entry.getValue();
-
-			String entryValueString = entryValue.toString();
+			String entryValueString = String.valueOf(entry.getValue());
 
 			if (!entryValueString.isEmpty()) {
-				long value = GetterUtil.getLong(entryValue);
+				long value = GetterUtil.getLong(entryValueString);
 
 				if ((value == 0) &&
 					!StringUtil.equals(
-						String.valueOf(value), entryValue.toString())) {
+						String.valueOf(value), entryValueString)) {
 
 					throw new ObjectEntryValuesException.ExceedsLongSize(
 						16, objectField.getName());

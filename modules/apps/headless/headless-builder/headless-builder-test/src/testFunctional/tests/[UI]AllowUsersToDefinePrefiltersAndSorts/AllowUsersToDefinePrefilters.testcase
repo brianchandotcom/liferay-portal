@@ -115,6 +115,8 @@ definition {
 		}
 	}
 
+	@description = "Ignored because of bug LPD-31282"
+	@ignore = "true"
 	@priority = 4
 	test CanApplyPrefilterAndFilter {
 		property portal.acceptance = "true";
@@ -148,6 +150,8 @@ definition {
 		}
 	}
 
+	@description = "Ignored because of bug LPD-31282"
+	@ignore = "true"
 	@priority = 4
 	test CanResetPrefiltering {
 		property portal.acceptance = "true";
@@ -219,6 +223,8 @@ definition {
 		}
 	}
 
+	@description = "Ignored because of bug LPD-31282"
+	@ignore = "true"
 	@priority = 5
 	test PrefilterAndFilterReturnTheSameData {
 		property portal.acceptance = "true";

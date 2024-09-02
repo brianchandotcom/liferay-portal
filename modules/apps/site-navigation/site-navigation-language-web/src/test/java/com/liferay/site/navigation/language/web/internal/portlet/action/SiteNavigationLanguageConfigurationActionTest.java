@@ -8,8 +8,7 @@ package com.liferay.site.navigation.language.web.internal.portlet.action;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -19,10 +18,12 @@ import com.liferay.portletmvc4spring.test.mock.web.portlet.MockActionRequest;
 
 import javax.portlet.PortletPreferences;
 
+import org.junit.AfterClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
+import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
 /**
@@ -34,6 +35,11 @@ public class SiteNavigationLanguageConfigurationActionTest {
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
+
+	@AfterClass
+	public static void tearDownClass() {
+		_groupLocalServiceUtilMockedStatic.close();
+	}
 
 	@Test
 	@TestInfo("LPD-33733")
@@ -56,11 +62,9 @@ public class SiteNavigationLanguageConfigurationActionTest {
 				_getThemeDisplay(RandomTestUtil.randomLong())),
 			portletPreferences);
 
-		Mockito.verify(
-			_groupLocalService
-		).fetchGroup(
-			0, group.getGroupKey()
-		);
+		_groupLocalServiceUtilMockedStatic.verify(
+			() -> GroupLocalServiceUtil.fetchGroup(
+				_COMPANY_ID, group.getGroupKey()));
 
 		Mockito.verify(
 			portletPreferences
@@ -89,11 +93,9 @@ public class SiteNavigationLanguageConfigurationActionTest {
 				_getThemeDisplay(RandomTestUtil.randomLong())),
 			portletPreferences);
 
-		Mockito.verify(
-			_groupLocalService
-		).fetchGroup(
-			0, StringPool.BLANK
-		);
+		_groupLocalServiceUtilMockedStatic.verify(
+			() -> GroupLocalServiceUtil.fetchGroup(
+				_COMPANY_ID, StringPool.BLANK));
 
 		Mockito.verify(
 			portletPreferences
@@ -121,11 +123,9 @@ public class SiteNavigationLanguageConfigurationActionTest {
 				group.getGroupKey(), _getThemeDisplay(group.getGroupId())),
 			portletPreferences);
 
-		Mockito.verify(
-			_groupLocalService
-		).fetchGroup(
-			0, group.getGroupKey()
-		);
+		_groupLocalServiceUtilMockedStatic.verify(
+			() -> GroupLocalServiceUtil.fetchGroup(
+				_COMPANY_ID, group.getGroupKey()));
 
 		Mockito.verify(
 			portletPreferences
@@ -178,11 +178,7 @@ public class SiteNavigationLanguageConfigurationActionTest {
 			siteNavigationLanguageConfigurationAction =
 				new SiteNavigationLanguageConfigurationAction();
 
-		_setUpGroupLocalService(group);
-
-		ReflectionTestUtil.setFieldValue(
-			siteNavigationLanguageConfigurationAction, "_groupLocalService",
-			_groupLocalService);
+		_setUpGroupLocalServiceUtil(group);
 
 		return siteNavigationLanguageConfigurationAction;
 	}
@@ -190,38 +186,46 @@ public class SiteNavigationLanguageConfigurationActionTest {
 	private ThemeDisplay _getThemeDisplay(long groupId) throws Exception {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
-		themeDisplay.setCompany(Mockito.mock(Company.class));
+		Company company = Mockito.mock(Company.class);
+
+		Mockito.when(
+			company.getCompanyId()
+		).thenReturn(
+			_COMPANY_ID
+		);
+
+		themeDisplay.setCompany(company);
+
 		themeDisplay.setScopeGroupId(groupId);
 
 		return themeDisplay;
 	}
 
-	private void _setUpGroupLocalService(Group group) throws Exception {
-		Mockito.reset(_groupLocalService);
+	private void _setUpGroupLocalServiceUtil(Group group) throws Exception {
+		_groupLocalServiceUtilMockedStatic.reset();
 
 		if (group == null) {
-			Mockito.when(
-				_groupLocalService.fetchGroup(
+			_groupLocalServiceUtilMockedStatic.when(
+				() -> GroupLocalServiceUtil.fetchGroup(
 					Mockito.anyLong(), Mockito.anyString())
 			).thenReturn(
 				null
 			);
-
-			Mockito.when(
-				_groupLocalService.getGroup(Mockito.anyLong())
+			_groupLocalServiceUtilMockedStatic.when(
+				() -> GroupLocalServiceUtil.getGroup(Mockito.anyLong())
 			).thenReturn(
 				null
 			);
 		}
 		else {
-			Mockito.when(
-				_groupLocalService.fetchGroup(0, group.getGroupKey())
+			_groupLocalServiceUtilMockedStatic.when(
+				() -> GroupLocalServiceUtil.fetchGroup(
+					_COMPANY_ID, group.getGroupKey())
 			).thenReturn(
 				group
 			);
-
-			Mockito.when(
-				_groupLocalService.getGroup(group.getGroupId())
+			_groupLocalServiceUtilMockedStatic.when(
+				() -> GroupLocalServiceUtil.getGroup(group.getGroupId())
 			).thenReturn(
 				group
 			);
@@ -230,7 +234,8 @@ public class SiteNavigationLanguageConfigurationActionTest {
 
 	private static final long _COMPANY_ID = RandomTestUtil.randomLong();
 
-	private final GroupLocalService _groupLocalService = Mockito.mock(
-		GroupLocalService.class);
+	private static final MockedStatic<GroupLocalServiceUtil>
+		_groupLocalServiceUtilMockedStatic = Mockito.mockStatic(
+			GroupLocalServiceUtil.class);
 
 }

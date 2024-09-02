@@ -75,6 +75,7 @@ import {config as siteAdminWebConfig} from './tests/site-admin-web/config';
 import {config as siteNavigationAdminWebConfig} from './tests/site-navigation-admin-web/config';
 import {config as siteNavigationLanguageWebConfig} from './tests/site-navigation-language-web/config';
 import {config as stableConfig} from './tests/stable/config';
+import {config as stagingConfig} from './tests/staging-configuration-web/config';
 import {config as stylebookWebConfig} from './tests/style-book-web/config';
 import {config as templateWebConfig} from './tests/template-web/config';
 import {config as usersAdminWebConfig} from './tests/users-admin-web/config';
@@ -164,6 +165,7 @@ export default defineConfig({
 		siteNavigationAdminWebConfig,
 		siteNavigationLanguageWebConfig,
 		stableConfig,
+		stagingConfig,
 		stylebookWebConfig,
 		templateWebConfig,
 		usersAdminWebConfig,

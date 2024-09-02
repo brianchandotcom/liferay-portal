@@ -1479,6 +1479,8 @@ definition {
 		var key_workflowAssetTitle = ${workflowAssetTitle};
 		var key_workflowTask = ${workflowTask};
 
+		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
+
 		AssertTextEquals(
 			locator1 = "MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_TASK",
 			value1 = ${workflowTask});

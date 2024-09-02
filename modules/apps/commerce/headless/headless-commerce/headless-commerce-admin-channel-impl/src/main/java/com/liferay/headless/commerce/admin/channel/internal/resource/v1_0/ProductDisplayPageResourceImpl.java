@@ -131,9 +131,9 @@ public class ProductDisplayPageResourceImpl
 			throw new NoSuchCPDisplayLayoutException();
 		}
 
-		long productId = GetterUtil.getLong(productDisplayPage.getProductId());
+		long classPK = GetterUtil.getLong(productDisplayPage.getProductId());
 
-		if (productId == 0) {
+		if (classPK == 0) {
 			CPDefinition cpDefinition =
 				_cpDefinitionService.
 					fetchCPDefinitionByCProductExternalReferenceCode(
@@ -141,15 +141,15 @@ public class ProductDisplayPageResourceImpl
 						contextCompany.getCompanyId());
 
 			if (cpDefinition == null) {
-				productId = cpDisplayLayout.getClassPK();
+				classPK = cpDisplayLayout.getClassPK();
 			}
 			else {
-				productId = cpDefinition.getCPDefinitionId();
+				classPK = cpDefinition.getCPDefinitionId();
 			}
 		}
 
 		_cpDisplayLayoutService.updateCPDisplayLayout(
-			id, productId, cpDisplayLayout.getLayoutPageTemplateEntryUuid(),
+			id, classPK, cpDisplayLayout.getLayoutPageTemplateEntryUuid(),
 			GetterUtil.getString(
 				productDisplayPage.getPageUuid(),
 				cpDisplayLayout.getLayoutUuid()));
@@ -178,9 +178,9 @@ public class ProductDisplayPageResourceImpl
 			Long id, ProductDisplayPage productDisplayPage)
 		throws Exception {
 
-		long productId = GetterUtil.getLong(productDisplayPage.getProductId());
+		long classPK = GetterUtil.getLong(productDisplayPage.getProductId());
 
-		if (productId == 0) {
+		if (classPK == 0) {
 			CPDefinition cpDefinition =
 				_cpDefinitionService.
 					fetchCPDefinitionByCProductExternalReferenceCode(
@@ -191,7 +191,7 @@ public class ProductDisplayPageResourceImpl
 				throw new NoSuchCPDefinitionException();
 			}
 
-			productId = cpDefinition.getCPDefinitionId();
+			classPK = cpDefinition.getCPDefinitionId();
 		}
 
 		CommerceChannel commerceChannel =
@@ -199,7 +199,7 @@ public class ProductDisplayPageResourceImpl
 
 		CPDisplayLayout cpDisplayLayout =
 			_cpDisplayLayoutService.addCPDisplayLayout(
-				commerceChannel.getSiteGroupId(), CPDefinition.class, productId,
+				commerceChannel.getSiteGroupId(), CPDefinition.class, classPK,
 				productDisplayPage.getPageTemplateUuid(),
 				productDisplayPage.getPageUuid());
 

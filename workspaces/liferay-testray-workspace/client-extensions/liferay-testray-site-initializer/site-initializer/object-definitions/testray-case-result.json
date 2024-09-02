@@ -62,6 +62,18 @@
 			"type": "DateTime"
 		},
 		{
+			"businessType": "LongInteger",
+			"DBType": "Long",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Duration"
+			},
+			"name": "duration",
+			"required": false,
+			"type": "Long"
+		},
+		{
 			"DBType": "Clob",
 			"indexed": true,
 			"indexedAsKeyword": true,

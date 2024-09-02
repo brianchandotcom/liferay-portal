@@ -7,11 +7,10 @@ package com.liferay.site.navigation.site.map.web.internal.display.context;
 
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.model.impl.GroupImpl;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.site.navigation.site.map.web.internal.configuration.SiteNavigationSiteMapPortletInstanceConfiguration;
 
@@ -19,7 +18,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
 
@@ -35,12 +33,6 @@ public class SiteNavigationSiteMapDisplayContextTest {
 	public static LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
-	@Before
-	public void setUp() {
-		_setUpConfigurationProviderUtil();
-		_setUpGroupLocalServiceUtil();
-	}
-
 	@After
 	public void tearDown() {
 		_configurationProviderUtilMockedStatic.close();
@@ -48,43 +40,85 @@ public class SiteNavigationSiteMapDisplayContextTest {
 	}
 
 	@Test
-	public void testGetDisplayStyleGroupKey() throws Exception {
-		SiteNavigationSiteMapDisplayContext
-			siteNavigationSiteMapDisplayContext =
-				new SiteNavigationSiteMapDisplayContext(
-					_mockHttpServletRequest(), null);
+	public void testGetDisplayStyleGroup() throws Exception {
+		_setUpDisplayStyleGroupExternalReferenceCode(null);
+		_setUpGroupLocalServiceUtil(_getGroup());
 
-		Assert.assertEquals(
-			GroupConstants.GUEST,
-			siteNavigationSiteMapDisplayContext.getDisplayStyleGroupKey());
+		Group group = _getGroup();
+
+		_assertSiteNavigationSiteMapDisplayContext(
+			_mockHttpServletRequest(group), group);
+
+		_groupLocalServiceUtilMockedStatic.verifyNoInteractions();
 	}
 
 	@Test
-	public void testGetDisplayStyleGroupKeyWithConfiguration()
-		throws Exception {
+	public void testGetDisplayStyleGroupWithConfiguration() throws Exception {
+		Group group = _getGroup();
 
-		Mockito.when(
-			_siteNavigationSiteMapPortletInstanceConfiguration.
-				displayStyleGroupKey()
-		).thenReturn(
-			GroupConstants.CONTROL_PANEL
-		);
+		_setUpDisplayStyleGroupExternalReferenceCode(
+			group.getExternalReferenceCode());
+		_setUpGroupLocalServiceUtil(group);
+
+		_assertSiteNavigationSiteMapDisplayContext(
+			_mockHttpServletRequest(_getGroup()), group);
+
+		_groupLocalServiceUtilMockedStatic.verify(
+			() -> GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
+				group.getExternalReferenceCode(), 0L),
+			Mockito.times(2));
+	}
+
+	private void _assertSiteNavigationSiteMapDisplayContext(
+			HttpServletRequest httpServletRequest, Group group)
+		throws Exception {
 
 		SiteNavigationSiteMapDisplayContext
 			siteNavigationSiteMapDisplayContext =
 				new SiteNavigationSiteMapDisplayContext(
-					_mockHttpServletRequest(), null);
+					httpServletRequest, null);
 
 		Assert.assertEquals(
-			GroupConstants.CONTROL_PANEL,
+			group.getGroupId(),
+			siteNavigationSiteMapDisplayContext.getDisplayStyleGroupId());
+		Assert.assertEquals(
+			group.getGroupKey(),
 			siteNavigationSiteMapDisplayContext.getDisplayStyleGroupKey());
 	}
 
-	private HttpServletRequest _mockHttpServletRequest() {
+	private Group _getGroup() {
+		Group group = Mockito.mock(Group.class);
+
+		Mockito.when(
+			group.getExternalReferenceCode()
+		).thenReturn(
+			RandomTestUtil.randomString()
+		);
+		Mockito.when(
+			group.getGroupId()
+		).thenReturn(
+			RandomTestUtil.randomLong()
+		);
+		Mockito.when(
+			group.getGroupKey()
+		).thenReturn(
+			RandomTestUtil.randomString()
+		);
+
+		return group;
+	}
+
+	private HttpServletRequest _mockHttpServletRequest(Group group) {
 		HttpServletRequest httpServletRequest = Mockito.mock(
 			HttpServletRequest.class);
 
 		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
+
+		Mockito.when(
+			themeDisplay.getScopeGroup()
+		).thenReturn(
+			group
+		);
 
 		Mockito.when(
 			(ThemeDisplay)httpServletRequest.getAttribute(WebKeys.THEME_DISPLAY)
@@ -95,22 +129,25 @@ public class SiteNavigationSiteMapDisplayContextTest {
 		return httpServletRequest;
 	}
 
-	private void _setUpConfigurationProviderUtil() {
-		_configurationProviderUtilMockedStatic.when(
-			() -> ConfigurationProviderUtil.getPortletInstanceConfiguration(
-				Mockito.any(), Mockito.any())
+	private void _setUpDisplayStyleGroupExternalReferenceCode(
+		String externalReferenceCode) {
+
+		Mockito.reset(_siteNavigationSiteMapPortletInstanceConfiguration);
+
+		Mockito.when(
+			_siteNavigationSiteMapPortletInstanceConfiguration.
+				displayStyleGroupExternalReferenceCode()
 		).thenReturn(
-			_siteNavigationSiteMapPortletInstanceConfiguration
+			externalReferenceCode
 		);
 	}
 
-	private void _setUpGroupLocalServiceUtil() {
-		Group group = new GroupImpl();
-
-		group.setGroupKey(GroupConstants.GUEST);
+	private void _setUpGroupLocalServiceUtil(Group group) throws Exception {
+		_groupLocalServiceUtilMockedStatic.reset();
 
 		Mockito.when(
-			GroupLocalServiceUtil.fetchGroup(Mockito.anyLong())
+			GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
+				group.getExternalReferenceCode(), 0L)
 		).thenReturn(
 			group
 		);

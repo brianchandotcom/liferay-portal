@@ -16,9 +16,9 @@ import com.liferay.rss.web.internal.configuration.RSSPortletInstanceConfiguratio
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Test;
 
@@ -34,14 +34,18 @@ public class RSSDisplayContextTest {
 	public static LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
-	@Before
-	public void setUp() {
-		_setUpConfigurationProviderUtil();
-		_setUpGroupLocalServiceUtil();
+	@BeforeClass
+	public static void setUpClass() {
+		_configurationProviderUtilMockedStatic.when(
+			() -> ConfigurationProviderUtil.getPortletInstanceConfiguration(
+				Mockito.any(), Mockito.any())
+		).thenReturn(
+			_rssPortletInstanceConfiguration
+		);
 	}
 
-	@After
-	public void tearDown() {
+	@AfterClass
+	public static void tearDownClass() {
 		_configurationProviderUtilMockedStatic.close();
 		_groupLocalServiceUtilMockedStatic.close();
 	}
@@ -154,13 +158,13 @@ public class RSSDisplayContextTest {
 		);
 	}
 
-	private final MockedStatic<ConfigurationProviderUtil>
+	private static final MockedStatic<ConfigurationProviderUtil>
 		_configurationProviderUtilMockedStatic = Mockito.mockStatic(
 			ConfigurationProviderUtil.class);
-	private final MockedStatic<GroupLocalServiceUtil>
+	private static final MockedStatic<GroupLocalServiceUtil>
 		_groupLocalServiceUtilMockedStatic = Mockito.mockStatic(
 			GroupLocalServiceUtil.class);
-	private final RSSPortletInstanceConfiguration
+	private static final RSSPortletInstanceConfiguration
 		_rssPortletInstanceConfiguration = Mockito.mock(
 			RSSPortletInstanceConfiguration.class);
 

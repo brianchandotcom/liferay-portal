@@ -90,7 +90,7 @@ public class DispatchConfiguratorTest {
 	}
 
 	@Test
-	public void testOnActivationNoClusterMasterTokenTransitionListenerAddedWhenClusterDisabled()
+	public void testActivateNoClusterMasterTokenTransitionListenerAddedWhenClusterDisabled()
 		throws Exception {
 
 		Mockito.when(
@@ -125,7 +125,7 @@ public class DispatchConfiguratorTest {
 	}
 
 	@Test
-	public void testOnActivationSchedulesAllTypesOfJobsOnMasterNode()
+	public void testActivateSchedulesAllTypesOfJobsOnMasterNode()
 		throws Exception {
 
 		Mockito.when(
@@ -188,7 +188,7 @@ public class DispatchConfiguratorTest {
 	}
 
 	@Test
-	public void testOnActivationSchedulesOnlyAllNodesJobs() throws Exception {
+	public void testActivateSchedulesOnlyAllNodesJobs() throws Exception {
 		Mockito.when(
 			_clusterMasterExecutor.isMaster()
 		).thenReturn(
@@ -249,7 +249,7 @@ public class DispatchConfiguratorTest {
 	}
 
 	@Test
-	public void testOnDeactivationUnschedulesAllTypeOfJobsOnMasterNode() {
+	public void testDeactivateUnschedulesAllTypeOfJobsOnMasterNode() {
 		Mockito.when(
 			_clusterMasterExecutor.isMaster()
 		).thenReturn(
@@ -316,7 +316,7 @@ public class DispatchConfiguratorTest {
 	}
 
 	@Test
-	public void testOnDeactivationUnschedulesOnlyAllNodesJobs() {
+	public void testDeactivateUnschedulesOnlyAllNodesJobs() {
 		Mockito.when(
 			_clusterMasterExecutor.isMaster()
 		).thenReturn(
@@ -383,7 +383,7 @@ public class DispatchConfiguratorTest {
 	}
 
 	@Test
-	public void testOnMasterTokenAcquiredSchedulesAllTypesOfJobs()
+	public void testMasterTokenAcquiredSchedulesAllTypesOfJobs()
 		throws Exception {
 
 		Mockito.when(
@@ -466,7 +466,7 @@ public class DispatchConfiguratorTest {
 	}
 
 	@Test
-	public void testOnMasterTokenReleasedSchedulesOnlyAllNodesJobs()
+	public void testMasterTokenReleasedSchedulesOnlyAllNodesJobs()
 		throws Exception {
 
 		Mockito.when(

@@ -676,6 +676,87 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 	}
 
 	@Test
+	public void testSQLStatementsWithClassNameAndDuration() throws Exception {
+		String statement1 = "insert into UpgradeReportTable1 (id_) values (2)";
+		String statement2 = "delete from UpgradeReportTable1 where id_ = 2";
+
+		UpgradeProcess upgradeProcess1 = UpgradeProcessFactory.runSQL(
+			statement1);
+
+		UpgradeProcess upgradeProcess2 = UpgradeProcessFactory.runSQL(
+			statement2);
+
+		String upgradeProcess1ClassName = upgradeProcess1.getClass(
+		).getName();
+
+		String upgradeProcess2ClassName = upgradeProcess2.getClass(
+		).getName();
+
+		_appender.start();
+
+		upgradeProcess1.upgrade();
+
+		upgradeProcess2.upgrade();
+
+		_appender.stop();
+
+		if (_reportContent == null) {
+			_reportContent = _getReportContent();
+		}
+
+		String recordEntry1 = String.format(
+			"Upgrade Process: %s\nSQL: %s;", upgradeProcess1ClassName,
+			statement1);
+
+		String recordEntry2 = String.format(
+			"Upgrade Process: %s\nSQL: %s;", upgradeProcess2ClassName,
+			statement2);
+
+		_assertReport(recordEntry1);
+
+		_assertReport(recordEntry2);
+
+		String logContextRecordEntry1 = String.format(
+			"%s:%s;", upgradeProcess1ClassName, statement1);
+
+		String logContextRecordEntry2 = String.format(
+			"%s:%s;", upgradeProcess2ClassName, statement2);
+
+		_assertLogContextContains(
+			"upgrade.report.longest.running.sqls", logContextRecordEntry1);
+
+		_assertLogContextContains(
+			"upgrade.report.longest.running.sqls", logContextRecordEntry2);
+
+		Map<String, Long> sqlExecutionTimes = ReflectionTestUtil.invoke(
+			_upgradeRecorder, "getSQLExecutionTimes", new Class<?>[0]);
+
+		for (Map.Entry<String, Long> entry : sqlExecutionTimes.entrySet()) {
+			String sql = entry.getKey();
+			Long duration = entry.getValue();
+
+			String[] splitKey = sql.split("\\|");
+
+			String storedUpgradeProcessClassName = splitKey[0];
+
+			String storedSql = splitKey[1];
+
+			String recordEntry = String.format(
+				"Upgrade Process: %s\nSQL: %s;\nDuration: %d ms",
+				storedUpgradeProcessClassName, storedSql, duration);
+
+			_assertReport(recordEntry);
+
+			String logContextRecordEntry = String.format(
+				"%s:%s;:%d ms", storedUpgradeProcessClassName, storedSql,
+				duration);
+
+			_assertLogContextContains(
+				"upgrade.report.longest.running.sqls", logContextRecordEntry);
+		}
+	}
+
+	@Test
 	public void testUpgradeReportDirectory() throws Exception {
 		String originalUpgradeReportDir =
 			ReflectionTestUtil.getAndSetFieldValue(

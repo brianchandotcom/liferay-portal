@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.db.schema.importer.jdbc.AutoBatchPreparedStatementUtil;
+import com.liferay.portal.tools.db.schema.importer.jdbc.DataSourceFactoryUtil;
 
 import java.io.Reader;
 
@@ -119,7 +120,8 @@ public class DBCopyTablesProcess {
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					targetConnection, insertSQL)) {
 
-			preparedStatement1.setFetchSize(_FETCH_SIZE);
+			preparedStatement1.setFetchSize(
+				DataSourceFactoryUtil.getFetchSize());
 
 			try (ResultSet resultSet = preparedStatement1.executeQuery()) {
 				while (resultSet.next()) {
@@ -569,8 +571,6 @@ public class DBCopyTablesProcess {
 			throw new PortalException("Invalid type: " + targetType);
 		}
 	}
-
-	private static final int _FETCH_SIZE = 2500;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DBCopyTablesProcess.class);

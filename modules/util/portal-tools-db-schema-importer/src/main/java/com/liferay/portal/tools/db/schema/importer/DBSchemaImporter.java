@@ -5,6 +5,8 @@
 
 package com.liferay.portal.tools.db.schema.importer;
 
+import com.liferay.portal.tools.db.schema.importer.jdbc.DataSourceFactoryUtil;
+
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
@@ -48,6 +50,11 @@ public class DBSchemaImporter {
 		}
 
 		try {
+			DataSourceFactoryUtil.setBatchSize(
+				commandLine.getOptionValue("target-jdbc-batch-size"));
+			DataSourceFactoryUtil.setFetchSize(
+				commandLine.getOptionValue("source-jdbc-fetch-size"));
+
 			new DBSchemaImporterProcess(
 				commandLine.getOptionValue("path"),
 				commandLine.getOptionValue("source-jdbc-url"),
@@ -73,6 +80,9 @@ public class DBSchemaImporter {
 		options.addOption(null, "help", false, "Print help message.");
 		options.addRequiredOption(
 			null, "path", true, "Set the path of the source SQL files.");
+		options.addOption(
+			null, "source-jdbc-fetch-size", true,
+			"Set the source JDBC ResultSet fetch size.");
 		options.addRequiredOption(
 			null, "source-jdbc-url", true, "Set the source JDBC URL.");
 		options.addRequiredOption(
@@ -80,6 +90,9 @@ public class DBSchemaImporter {
 			"Set the source database user password.");
 		options.addRequiredOption(
 			null, "source-user", true, "Set the source database user.");
+		options.addOption(
+			null, "target-jdbc-batch-size", true,
+			"Set the source JDBC batch size.");
 		options.addRequiredOption(
 			null, "target-jdbc-url", true, "Set the target JDBC URL.");
 		options.addRequiredOption(

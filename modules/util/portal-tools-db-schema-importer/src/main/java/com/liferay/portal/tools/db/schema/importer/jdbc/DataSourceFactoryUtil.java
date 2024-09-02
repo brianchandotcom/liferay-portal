@@ -5,6 +5,7 @@
 
 package com.liferay.portal.tools.db.schema.importer.jdbc;
 
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import com.zaxxer.hikari.HikariConfig;
@@ -16,6 +17,14 @@ import javax.sql.DataSource;
  * @author Mariano Álvaro Sáiz
  */
 public class DataSourceFactoryUtil {
+
+	public static int getBatchSize() {
+		return _batchSize;
+	}
+
+	public static int getFetchSize() {
+		return _fetchSize;
+	}
 
 	public static DataSource initDataSource(
 			String jdbcURL, String password, String userName)
@@ -62,5 +71,20 @@ public class DataSourceFactoryUtil {
 
 		return new HikariDataSource(hikariConfig);
 	}
+
+	public static void setBatchSize(String batchSize) {
+		_batchSize = GetterUtil.get(batchSize, _DEFAULT_BATCH_SIZE);
+	}
+
+	public static void setFetchSize(String fetchSize) {
+		_fetchSize = GetterUtil.get(fetchSize, _DEFAULT_FETCH_SIZE);
+	}
+
+	private static final int _DEFAULT_BATCH_SIZE = 2500;
+
+	private static final int _DEFAULT_FETCH_SIZE = 2500;
+
+	private static int _batchSize;
+	private static int _fetchSize;
 
 }

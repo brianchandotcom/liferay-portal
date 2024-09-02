@@ -5,6 +5,7 @@
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown, {Align, ClayDropDownWithItems} from '@clayui/drop-down';
+import {ClayCheckbox, ClaySelectWithOption} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import ClayList from '@clayui/list';
@@ -16,11 +17,25 @@ import {
 	fetch,
 	navigate as navigateUtil,
 	openConfirmModal,
+	sub,
 } from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import PublicationTimeline from './PublicationTimeline';
 import PublicationsSearchContainer from './PublicationsSearchContainer';
+
+const HIDE_CONTEXT_CHANGE_WARNING_DURATION_OPTIONS = [
+	{label: sub(Liferay.Language.get('x-hour'), 1), value: 1},
+	{label: sub(Liferay.Language.get('x-hours'), 4), value: 4},
+	{
+		label: sub(Liferay.Language.get('x-hours'), 24),
+		value: 24,
+	},
+	{
+		label: Liferay.Language.get('forever'),
+		value: -1,
+	},
+];
 
 export default function ChangeTrackingIndicator({
 	checkoutDropdownItem,
@@ -59,10 +74,24 @@ export default function ChangeTrackingIndicator({
 	const [column, setColumn] = useState(
 		orderByColumn === COLUMN_NAME ? COLUMN_NAME : COLUMN_MODIFIED_DATE
 	);
+	const [
+		hideContextChangeWarningDuration,
+		setHideContextChangeWarningDuration,
+	] = useState('24');
+	const [popoverCheckbox, setPopoverCheckbox] = useState(false);
 	const [showModal, setShowModal] = useState(false);
 	const [showWarning, setShowWarning] = useState(
 		warningBody || warningHeader
 	);
+
+	const savePortalPreferences = (key, url, value) => {
+		const portletURL = createPortletURL(url, {
+			key,
+			value,
+		});
+
+		fetch(portletURL);
+	};
 
 	const navigate = (url, action) => {
 		const portletURL = createPortletURL(url, {
@@ -458,6 +487,52 @@ export default function ChangeTrackingIndicator({
 						</ClayLayout.Col>
 					</ClayLayout.Row>
 
+					{contextChangeButtons && (
+						<>
+							<ClayLayout.Row
+								style={{marginBottom: '8px', marginTop: '16px'}}
+							>
+								<ClayLayout.Col
+									style={{
+										alignItems: 'center',
+										display: 'flex',
+									}}
+								>
+									<ClayCheckbox
+										checked={popoverCheckbox}
+										label={Liferay.Language.get(
+											'do-not-show-this-message-again-in-the-selected-period-of-time'
+										)}
+										onChange={() =>
+											setPopoverCheckbox(!popoverCheckbox)
+										}
+										style={{marginLeft: '10px'}}
+									/>
+
+									<ClaySelectWithOption
+										id="hideContextChangeWarningDuration"
+										onChange={(event) => {
+											setHideContextChangeWarningDuration(
+												event.target.value
+											);
+										}}
+										options={
+											HIDE_CONTEXT_CHANGE_WARNING_DURATION_OPTIONS
+										}
+										sizing="sm"
+										style={{
+											marginLeft: '10px',
+											marginTop: '-16px',
+											width: '120px',
+										}}
+										title="hideContextChangeWarningDuration"
+										value={hideContextChangeWarningDuration}
+									/>
+								</ClayLayout.Col>
+							</ClayLayout.Row>
+						</>
+					)}
+
 					<ClayLayout.Row>
 						{contextChangeButtons && (
 							<>
@@ -466,6 +541,14 @@ export default function ChangeTrackingIndicator({
 										displayType="secondary"
 										onClick={() => {
 											setCloseWarning(true);
+
+											if (popoverCheckbox) {
+												savePortalPreferences(
+													'hideContextChangeWarningDuration',
+													saveDisplayPreferenceURL,
+													hideContextChangeWarningDuration
+												);
+											}
 										}}
 										size="sm"
 										style={{
@@ -485,6 +568,14 @@ export default function ChangeTrackingIndicator({
 										onClick={() => {
 											setShowModal(true);
 											setCloseWarning(true);
+
+											if (popoverCheckbox) {
+												savePortalPreferences(
+													'hideContextChangeWarningDuration',
+													saveDisplayPreferenceURL,
+													hideContextChangeWarningDuration
+												);
+											}
 										}}
 										size="sm"
 										style={{
@@ -505,6 +596,14 @@ export default function ChangeTrackingIndicator({
 								<ClayButton
 									displayType="secondary"
 									onClick={() => {
+										if (popoverCheckbox) {
+											savePortalPreferences(
+												'hideContextChangeWarningDuration',
+												saveDisplayPreferenceURL,
+												hideContextChangeWarningDuration
+											);
+										}
+
 										if (
 											!checkoutDropdownItem.confirmationMessage
 										) {

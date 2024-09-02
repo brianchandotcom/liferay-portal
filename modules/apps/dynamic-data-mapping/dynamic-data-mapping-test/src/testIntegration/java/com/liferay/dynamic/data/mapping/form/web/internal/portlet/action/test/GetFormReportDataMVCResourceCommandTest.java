@@ -21,10 +21,16 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.PortletLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceResponse;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -38,6 +44,7 @@ import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.io.ByteArrayOutputStream;
 
@@ -48,7 +55,6 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.TestRule;
 import org.junit.runner.RunWith;
 
 /**
@@ -59,7 +65,10 @@ public class GetFormReportDataMVCResourceCommandTest {
 
 	@ClassRule
 	@Rule
-	public static final TestRule testRule = new LiferayIntegrationTestRule();
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {
@@ -90,7 +99,7 @@ public class GetFormReportDataMVCResourceCommandTest {
 		Assert.assertNotNull(ddmFormInstanceReport);
 
 		JSONObject jsonObject = _getJSONObject(
-			ddmFormInstance.getFormInstanceId());
+			ddmFormInstance.getFormInstanceId(), true);
 
 		Assert.assertEquals(
 			ddmFormInstanceReport.getData(), jsonObject.get("data"));
@@ -115,17 +124,56 @@ public class GetFormReportDataMVCResourceCommandTest {
 
 	@Test
 	public void testServeResourceWithError() throws Exception {
-		JSONObject jsonObject = _getJSONObject(RandomTestUtil.randomLong());
+
+		// Nonexistent DDMFormInstance
+
+		JSONObject jsonObject = _getJSONObject(
+			RandomTestUtil.randomLong(), true);
 
 		Assert.assertTrue(jsonObject.has("errorMessage"));
+
+		// Signed out user
+
+		DDMFormInstance ddmFormInstance =
+			DDMFormInstanceTestUtil.addDDMFormInstance(
+				_group, _user.getUserId());
+
+		jsonObject = _getJSONObject(ddmFormInstance.getFormInstanceId(), false);
+
+		Assert.assertTrue(jsonObject.has("errorMessage"));
+
+		// User with no permission
+
+		PermissionChecker originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+		String originalName = PrincipalThreadLocal.getName();
+		User user = UserTestUtil.addUser();
+
+		try {
+			PermissionThreadLocal.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(user));
+			PrincipalThreadLocal.setName(user.getUserId());
+
+			jsonObject = _getJSONObject(
+				ddmFormInstance.getFormInstanceId(), true);
+
+			Assert.assertTrue(jsonObject.has("errorMessage"));
+		}
+		finally {
+			PermissionThreadLocal.setPermissionChecker(
+				originalPermissionChecker);
+			PrincipalThreadLocal.setName(originalName);
+		}
 	}
 
-	private JSONObject _getJSONObject(long formInstanceId) throws Exception {
+	private JSONObject _getJSONObject(long formInstanceId, boolean signedIn)
+		throws Exception {
+
 		MockLiferayResourceResponse mockLiferayResourceResponse =
 			new MockLiferayResourceResponse();
 
 		_mvcResourceCommand.serveResource(
-			_mockLiferayResourceRequest(formInstanceId),
+			_mockLiferayResourceRequest(formInstanceId, signedIn),
 			mockLiferayResourceResponse);
 
 		ByteArrayOutputStream byteArrayOutputStream =
@@ -143,17 +191,18 @@ public class GetFormReportDataMVCResourceCommandTest {
 			null);
 	}
 
-	private ThemeDisplay _getThemeDisplay() throws Exception {
+	private ThemeDisplay _getThemeDisplay(boolean signedIn) throws Exception {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
 		themeDisplay.setLocale(LocaleUtil.getSiteDefault());
+		themeDisplay.setSignedIn(signedIn);
 		themeDisplay.setTimeZone(TimeZoneUtil.getDefault());
 
 		return themeDisplay;
 	}
 
 	private MockLiferayResourceRequest _mockLiferayResourceRequest(
-			long formInstanceId)
+			long formInstanceId, boolean signedIn)
 		throws Exception {
 
 		MockLiferayResourceRequest mockLiferayResourceRequest =
@@ -162,7 +211,7 @@ public class GetFormReportDataMVCResourceCommandTest {
 		mockLiferayResourceRequest.setAttribute(
 			JavaConstants.JAVAX_PORTLET_CONFIG, _getLiferayPortletConfig());
 		mockLiferayResourceRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, _getThemeDisplay());
+			WebKeys.THEME_DISPLAY, _getThemeDisplay(signedIn));
 		mockLiferayResourceRequest.addParameter(
 			"formInstanceId", String.valueOf(formInstanceId));
 
@@ -197,5 +246,8 @@ public class GetFormReportDataMVCResourceCommandTest {
 
 	@DeleteAfterTestRun
 	private User _user;
+
+	@Inject(type = UserLocalService.class)
+	private UserLocalService _userLocalService;
 
 }

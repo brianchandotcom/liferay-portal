@@ -101,6 +101,8 @@ public class OpenAPIResourceImpl {
 
 			add(DocumentResourceImpl.class);
 
+			add(DocumentDataDefinitionTypesResourceImpl.class);
+
 			add(DocumentFolderResourceImpl.class);
 
 			add(DocumentShortcutResourceImpl.class);

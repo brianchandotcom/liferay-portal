@@ -29,6 +29,9 @@ import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.test.util.FragmentTestUtil;
+import com.liferay.journal.constants.JournalFolderConstants;
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
@@ -273,6 +276,62 @@ public class FragmentEntryFragmentRendererTest {
 	}
 
 	@Test
+	public void testMapCategoryFromJournalArticleToEditableField()
+		throws Exception {
+
+		AssetVocabulary assetVocabulary =
+			_assetVocabularyLocalService.addVocabulary(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), _serviceContext);
+
+		AssetCategory assetCategory = _assetCategoryLocalService.addCategory(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			RandomTestUtil.randomString(), assetVocabulary.getVocabularyId(),
+			_serviceContext);
+
+		_serviceContext.setAssetCategoryIds(
+			new long[] {assetCategory.getCategoryId()});
+
+		JournalArticle journalArticle = _addJournalArticle();
+
+		String fieldId = "AssetVocabulary_" + assetVocabulary.getVocabularyId();
+
+		FragmentEntryLink journalHeadingFragmentEntryLink =
+			_addHeadingFragmentEntryLink(
+				JSONUtil.put(
+					"element-text",
+					JSONUtil.put(
+						"classNameId",
+						PortalUtil.getClassNameId(JournalArticle.class)
+					).put(
+						"classPK", journalArticle.getResourcePrimKey()
+					).put(
+						"classTypeId", journalArticle.getDDMStructureId()
+					).put(
+						"config", JSONUtil.put("mapperType", "link")
+					).put(
+						"defaultValue", "Heading Example"
+					).put(
+						"fieldId", fieldId
+					).put(
+						"itemSubtype", "Basic Web Content"
+					).put(
+						"itemType", "Web Content Article"
+					).put(
+						"title",
+						journalArticle.getTitle(LocaleUtil.getDefault())
+					)));
+
+		MockHttpServletResponse mockHttpServletResponse =
+			_renderFragmentEntryLink(journalHeadingFragmentEntryLink);
+
+		String content = mockHttpServletResponse.getContentAsString();
+
+		Assert.assertTrue(
+			content.contains(assetCategory.getTitle(LocaleUtil.getDefault())));
+	}
+
+	@Test
 	public void testNoncacheableFragmentEntryLink() throws Exception {
 		FragmentEntry fragmentEntry = _getFragmentEntry(false);
 
@@ -487,6 +546,13 @@ public class FragmentEntryFragmentRendererTest {
 			).toString(),
 			StringPool.BLANK, 0, fragmentEntry.getFragmentEntryKey(),
 			fragmentEntry.getType(), _serviceContext);
+	}
+
+	private JournalArticle _addJournalArticle() throws Exception {
+		return JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, StringPool.BLANK,
+			true, _serviceContext);
 	}
 
 	private FragmentEntry _getFragmentEntry(boolean cacheable)

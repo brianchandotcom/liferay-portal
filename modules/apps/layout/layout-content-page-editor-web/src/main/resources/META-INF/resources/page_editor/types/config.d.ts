@@ -16,6 +16,7 @@ export interface Config {
 	addPortletURL: string;
 	addRuleURL: string;
 	addSegmentsExperienceURL: string;
+	addStepperFragmentEntryLinkURL: string;
 
 	assetCategoryTreeNodeItemSelectorURL: string;
 

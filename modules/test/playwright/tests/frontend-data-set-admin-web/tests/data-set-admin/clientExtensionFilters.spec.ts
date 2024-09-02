@@ -174,6 +174,7 @@ test.describe('Client Extension Filters in Data Set Manager', () => {
 
 modalFieldTest(
 	'Can create a Client Extension Filter in DSM using field selection modal',
+	{tag: '@LPD-25905'},
 	async ({filtersPage, page}) => {
 		const filterLabel = getRandomString();
 

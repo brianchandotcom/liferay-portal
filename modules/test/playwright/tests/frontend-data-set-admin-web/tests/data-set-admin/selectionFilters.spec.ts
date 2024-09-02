@@ -325,6 +325,7 @@ test('Preselected filter values are checked in the multiSelect', async ({
 
 modalFieldTest(
 	'Can create a selection filter with API Headless source using the field selection modal',
+	{tag: '@LPD-25905'},
 	async ({filtersPage, page}) => {
 		await modalFieldTest.step(
 			'Create a selection filter from API Headless source',

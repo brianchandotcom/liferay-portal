@@ -5,7 +5,7 @@
 
 import {Locator, Page, expect} from '@playwright/test';
 
-import {FieldSelectModalComponent} from '../../../components/FieldSelectModalComponent';
+import {FieldSelectModalPage} from '../../components/FieldSelectModalPage';
 import {DataSetPage} from '../DataSetPage';
 
 export class VisualizationModesPage {
@@ -13,7 +13,7 @@ export class VisualizationModesPage {
 	readonly cardsVisualizationModeContainer: Locator;
 	private readonly container: Locator;
 	readonly dataSetPage: DataSetPage;
-	readonly fieldSelectModalComponent: FieldSelectModalComponent;
+	readonly fieldSelectModalPage: FieldSelectModalPage;
 	readonly listVisualizationModeContainer: Locator;
 	readonly page: Page;
 	readonly tableVisualizationModeContainer: Locator;
@@ -25,7 +25,7 @@ export class VisualizationModesPage {
 		);
 		this.container = page.locator('.visualization-modes');
 		this.dataSetPage = new DataSetPage(page);
-		this.fieldSelectModalComponent = new FieldSelectModalComponent(page);
+		this.fieldSelectModalPage = new FieldSelectModalPage(page);
 		this.listVisualizationModeContainer = page.locator(
 			'.list-visualization-mode'
 		);
@@ -42,7 +42,7 @@ export class VisualizationModesPage {
 	}
 
 	async cancelAddFieldsModal() {
-		await this.fieldSelectModalComponent.cancelAddFieldsModal();
+		await this.fieldSelectModalPage.cancelAddFieldsModal();
 	}
 
 	async getAssignedFieldLocator({
@@ -65,7 +65,7 @@ export class VisualizationModesPage {
 	}
 
 	getFieldCheckboxByLabel(label: string) {
-		return this.fieldSelectModalComponent.getFieldCheckboxByLabel(label);
+		return this.fieldSelectModalPage.getFieldCheckboxByLabel(label);
 	}
 
 	async goto({dataSetLabel}: {dataSetLabel: string}) {
@@ -79,7 +79,7 @@ export class VisualizationModesPage {
 	async openAddFieldsModal() {
 		await this.addFieldsButton.click();
 
-		await this.fieldSelectModalComponent.addFieldsDialog.fields
+		await this.fieldSelectModalPage.addFieldsDialog.fields
 			.first()
 			.waitFor();
 	}
@@ -118,13 +118,13 @@ export class VisualizationModesPage {
 		await changeAssignmentButton.waitFor();
 		await changeAssignmentButton.click();
 
-		await this.fieldSelectModalComponent.fieldSelectModalContainer
+		await this.fieldSelectModalPage.fieldSelectModalContainer
 			.getByPlaceholder('Search')
 			.waitFor();
 	}
 
 	async searchAndSelectField(path: string) {
-		await this.fieldSelectModalComponent.searchAndSelectField(path);
+		await this.fieldSelectModalPage.searchAndSelectField(path);
 	}
 
 	async selectField({
@@ -134,7 +134,7 @@ export class VisualizationModesPage {
 		dataId?: string;
 		fieldName: string;
 	}) {
-		await this.fieldSelectModalComponent.checkField({
+		await this.fieldSelectModalPage.checkField({
 			dataId,
 			expected: true,
 			fieldName,
@@ -157,7 +157,7 @@ export class VisualizationModesPage {
 		dataId?: string;
 		fieldName: string;
 	}) {
-		await this.fieldSelectModalComponent.checkField({
+		await this.fieldSelectModalPage.checkField({
 			dataId,
 			expected: false,
 			fieldName,
@@ -165,6 +165,6 @@ export class VisualizationModesPage {
 	}
 
 	async unSelectSelectedFields() {
-		await this.fieldSelectModalComponent.unSelectSelectedFields();
+		await this.fieldSelectModalPage.unSelectSelectedFields();
 	}
 }

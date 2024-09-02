@@ -320,6 +320,7 @@ test('No date filters can be created if schema has no date fields', async ({
 
 modalFieldTest(
 	'Can create a date range filter in DSM using the field selection modal',
+	{tag: '@LPD-25905'},
 	async ({filtersPage, page}) => {
 		await modalFieldTest.step('Create a data range filter', async () => {
 			await filtersPage.createDateRangeFilter({

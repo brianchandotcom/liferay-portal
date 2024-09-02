@@ -11,7 +11,7 @@ import {
 	ISelectionFilterApiHeadless,
 	ISelectionFilterPicklist,
 } from '../../../../../utils/types';
-import {FieldSelectModalComponent} from '../../../components/FieldSelectModalComponent';
+import {FieldSelectModalPage} from '../../components/FieldSelectModalPage';
 import {DataSetPage} from '../DataSetPage';
 
 interface NewFilterForm {
@@ -57,7 +57,7 @@ interface NewDateRangeFilterForm extends NewFilterForm {
 
 export class FiltersPage {
 	private readonly dataSetPage: DataSetPage;
-	readonly fieldSelectModalComponent: FieldSelectModalComponent;
+	readonly fieldSelectModalPage: FieldSelectModalPage;
 
 	private readonly filterTable: Locator;
 	readonly newClientExtensionFilterForm: NewClientExtensionFilterForm;
@@ -71,7 +71,7 @@ export class FiltersPage {
 
 	constructor(page: Page) {
 		this.dataSetPage = new DataSetPage(page);
-		this.fieldSelectModalComponent = new FieldSelectModalComponent(page);
+		this.fieldSelectModalPage = new FieldSelectModalPage(page);
 		this.filterTable = page.getByRole('table');
 		this.newFilterButton = page
 			.getByRole('button', {name: 'New Filter'})
@@ -197,11 +197,11 @@ export class FiltersPage {
 			await this.newClientExtensionFilterForm.filterBySelectButton
 				.first()
 				.click();
-			await this.fieldSelectModalComponent.selectField({
+			await this.fieldSelectModalPage.selectField({
 				fieldName: filterBy,
 			});
 
-			await this.fieldSelectModalComponent.saveAddFieldsModal();
+			await this.fieldSelectModalPage.saveAddFieldsModal();
 		}
 
 		await this.newClientExtensionFilterForm.clientExtensionDropdown.click();
@@ -235,19 +235,17 @@ export class FiltersPage {
 
 			const notDateField = 'label';
 			await expect(
-				this.fieldSelectModalComponent.getFieldCheckboxByLabel(
-					notDateField
-				)
+				this.fieldSelectModalPage.getFieldCheckboxByLabel(notDateField)
 			).toBeDisabled();
 			await expect(
-				this.fieldSelectModalComponent.getFieldCheckboxByLabel(filterBy)
+				this.fieldSelectModalPage.getFieldCheckboxByLabel(filterBy)
 			).toBeEnabled();
 
-			await this.fieldSelectModalComponent.selectField({
+			await this.fieldSelectModalPage.selectField({
 				fieldName: filterBy,
 			});
 
-			await this.fieldSelectModalComponent.saveAddFieldsModal();
+			await this.fieldSelectModalPage.saveAddFieldsModal();
 		}
 
 		if (from) {
@@ -289,19 +287,19 @@ export class FiltersPage {
 
 			const notSelectionFilterField = 'keywords';
 			await expect(
-				this.fieldSelectModalComponent.getFieldCheckboxByLabel(
+				this.fieldSelectModalPage.getFieldCheckboxByLabel(
 					notSelectionFilterField
 				)
 			).toBeDisabled();
 			await expect(
-				this.fieldSelectModalComponent.getFieldCheckboxByLabel(filterBy)
+				this.fieldSelectModalPage.getFieldCheckboxByLabel(filterBy)
 			).toBeEnabled();
 
-			await this.fieldSelectModalComponent.selectField({
+			await this.fieldSelectModalPage.selectField({
 				fieldName: filterBy,
 			});
 
-			await this.fieldSelectModalComponent.saveAddFieldsModal();
+			await this.fieldSelectModalPage.saveAddFieldsModal();
 		}
 
 		await this.newSelectionFilterForm.sourceTypeDropdown.selectOption(

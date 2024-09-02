@@ -5,7 +5,7 @@
 
 import {Locator, Page, expect} from '@playwright/test';
 
-export class FieldSelectModalComponent {
+export class FieldSelectModalPage {
 	readonly addFieldsDialog: {
 		cancelButton: Locator;
 		fields: Locator;

@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Friendly URL Test Utilities
+Bundle-SymbolicName: com.liferay.friendly.url.test.util
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.friendly.url.test.util

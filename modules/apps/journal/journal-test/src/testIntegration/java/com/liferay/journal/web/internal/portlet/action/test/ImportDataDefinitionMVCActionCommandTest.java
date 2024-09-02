@@ -109,7 +109,7 @@ public class ImportDataDefinitionMVCActionCommandTest {
 	}
 
 	@Test
-	public void testImportDataDefinitionWithUniqueFieldNames()
+	public void testExpectImportedStructureWithUniqueFieldNames()
 		throws Exception {
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =

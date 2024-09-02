@@ -1,0 +1,115 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.layout.content.page.editor.web.internal.editor.configuration.test;
+
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
+import com.liferay.layout.test.util.ContentLayoutTestUtil;
+import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
+import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+
+import java.util.Collections;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import org.springframework.mock.web.MockHttpServletRequest;
+
+/**
+ * @author Lourdes Fernández Besada
+ */
+@RunWith(Arquillian.class)
+public class ContentPageEditorDefaultEditorConfigurationTest {
+
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
+
+	@Before
+	public void setUp() throws Exception {
+		_group = GroupTestUtil.addGroup();
+
+		_themeDisplay = _getThemeDisplay();
+	}
+
+	@Test
+	public void testRichTextEditor() {
+		JSONObject jsonObject = _getEditorConfigurationConfigJSONObject(
+			"fragmenEntryLinkRichTextEditor");
+
+		Assert.assertEquals(
+			_EXTRA_PLUGINS,	jsonObject.getString("extraPlugins"));
+	}
+
+	private JSONObject _getEditorConfigurationConfigJSONObject(
+		String editorConfigKey) {
+
+		EditorConfiguration editorConfiguration =
+			EditorConfigurationFactoryUtil.getEditorConfiguration(
+				ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
+				editorConfigKey, StringPool.BLANK, Collections.emptyMap(),
+				_themeDisplay,
+				RequestBackedPortletURLFactoryUtil.create(
+					_themeDisplay.getRequest()));
+
+		return editorConfiguration.getConfigJSONObject();
+	}
+
+	private ThemeDisplay _getThemeDisplay() throws Exception {
+		Layout layout = LayoutTestUtil.addTypePortletLayout(
+			_group.getGroupId());
+
+		ThemeDisplay themeDisplay = ContentLayoutTestUtil.getThemeDisplay(
+			_companyLocalService.getCompany(_group.getCompanyId()), _group,
+			layout);
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setAttribute(WebKeys.LAYOUT, layout);
+
+		themeDisplay.setRequest(mockHttpServletRequest);
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
+
+		return themeDisplay;
+	}
+
+	private static final String _EXTRA_PLUGINS = StringBundler.concat(
+		"autolink,ae_dragresize,ae_addimages,ae_imagealignment,",
+		"ae_placeholder,ae_selectionregion,ae_tableresize,",
+		"ae_tabletools,ae_uicore,itemselector,media,adaptivemedia");
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
+
+	@DeleteAfterTestRun
+	private Group _group;
+
+	private ThemeDisplay _themeDisplay;
+
+}

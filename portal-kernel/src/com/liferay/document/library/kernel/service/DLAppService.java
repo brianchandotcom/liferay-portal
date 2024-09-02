@@ -877,6 +877,11 @@ public interface DLAppService extends BaseService {
 	public FileShortcut getFileShortcut(long fileShortcutId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public FileShortcut getFileShortcutByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException;
+
 	/**
 	 * Returns the file version with the primary key.
 	 *

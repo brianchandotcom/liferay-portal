@@ -440,6 +440,16 @@ public class DLAppLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.repository.model.FileShortcut
+			fetchFileShortcutByExternalReferenceCode(
+				String externalReferenceCode, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _dlAppLocalService.fetchFileShortcutByExternalReferenceCode(
+			externalReferenceCode, groupId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.repository.model.Folder
 			fetchFolderByExternalReferenceCode(
 				String externalReferenceCode, long groupId)
@@ -547,6 +557,16 @@ public class DLAppLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _dlAppLocalService.getFileShortcut(fileShortcutId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.repository.model.FileShortcut
+			getFileShortcutByExternalReferenceCode(
+				String externalReferenceCode, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _dlAppLocalService.getFileShortcutByExternalReferenceCode(
+			externalReferenceCode, groupId);
 	}
 
 	/**

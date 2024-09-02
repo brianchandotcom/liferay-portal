@@ -56,6 +56,15 @@ public class DLFileShortcutServiceWrapper
 	}
 
 	@Override
+	public DLFileShortcut getDLFileShortcutByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _dlFileShortcutService.getDLFileShortcutByExternalReferenceCode(
+			externalReferenceCode, groupId);
+	}
+
+	@Override
 	public DLFileShortcut getFileShortcut(long fileShortcutId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

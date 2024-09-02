@@ -21,5 +21,6 @@ export type FormLayoutDataItem = BaseLayoutDataItem<
 		MappedFormConfig & {
 			formConfig: number;
 			formType: 'multistep' | 'simple';
+			numberOfSteps: number;
 		} & ResponsiveConfig<{}>
 >;

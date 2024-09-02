@@ -10,7 +10,8 @@ import React from 'react';
 import useSetRef from '../../../common/hooks/useSetRef';
 import {getLayoutDataItemPropTypes} from '../../../prop_types/index';
 import {useGetFieldValue} from '../../contexts/CollectionItemContext';
-import {useSelector} from '../../contexts/StoreContext';
+import {FormStepContextProvider} from '../../contexts/FormStepContext';
+import {useSelector, useSelectorCallback} from '../../contexts/StoreContext';
 import getLayoutDataItemClassName from '../../utils/getLayoutDataItemClassName';
 import getLayoutDataItemCssClasses from '../../utils/getLayoutDataItemCssClasses';
 import getLayoutDataItemTopperUniqueClassName from '../../utils/getLayoutDataItemTopperUniqueClassName';
@@ -72,22 +73,29 @@ const FormStepContainer = React.forwardRef(({children, item}, ref) => {
 		}
 	}
 
-	return (
-		<div
-			className={classNames(
-				getLayoutDataItemClassName(item.type),
-				getLayoutDataItemCssClasses(item),
-				getLayoutDataItemUniqueClassName(item.itemId)
-			)}
-			ref={ref}
-			style={style}
-		>
-			{backgroundImageValue.mediaQueries ? (
-				<style>{backgroundImageValue.mediaQueries}</style>
-			) : null}
+	const form = useSelectorCallback(
+		(state) => state.layoutData.items[item.parentId],
+		[item]
+	);
 
-			{children}
-		</div>
+	return (
+		<FormStepContextProvider form={form}>
+			<div
+				className={classNames(
+					getLayoutDataItemClassName(item.type),
+					getLayoutDataItemCssClasses(item),
+					getLayoutDataItemUniqueClassName(item.itemId)
+				)}
+				ref={ref}
+				style={style}
+			>
+				{backgroundImageValue.mediaQueries ? (
+					<style>{backgroundImageValue.mediaQueries}</style>
+				) : null}
+
+				{children}
+			</div>
+		</FormStepContextProvider>
 	);
 });
 

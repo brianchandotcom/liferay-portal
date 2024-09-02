@@ -48,6 +48,8 @@ public class DocumentShortcutDTOConverter
 				setAssetLibraryKey(() -> GroupUtil.getAssetLibraryKey(group));
 				setDateCreated(fileShortcut::getCreateDate);
 				setDateModified(fileShortcut::getModifiedDate);
+				setExternalReferenceCode(
+					fileShortcut::getExternalReferenceCode);
 				setFolderId(fileShortcut::getFolderId);
 				setId(fileShortcut::getFileShortcutId);
 				setSiteId(fileShortcut::getGroupId);

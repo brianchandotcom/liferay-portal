@@ -48,6 +48,15 @@ public class DocumentShortcutResourceImpl
 	}
 
 	@Override
+	public void deleteSiteDocumentShortcutByExternalReferenceCode(
+			Long siteId, String externalReferenceCode)
+		throws Exception {
+
+		_dlAppService.deleteFileEntryByExternalReferenceCode(
+			externalReferenceCode, siteId);
+	}
+
+	@Override
 	public Page<DocumentShortcut> getAssetLibraryDocumentShortcutsPage(
 			Long assetLibraryId, Pagination pagination)
 		throws Exception {
@@ -79,6 +88,16 @@ public class DocumentShortcutResourceImpl
 
 		return _toDocumentShortcut(
 			_dlAppService.getFileShortcut(documentShortcutId));
+	}
+
+	@Override
+	public DocumentShortcut getSiteDocumentShortcutByExternalReferenceCode(
+			Long siteId, String externalReferenceCode)
+		throws Exception {
+
+		return _toDocumentShortcut(
+			_dlAppService.getFileShortcutByExternalReferenceCode(
+				externalReferenceCode, siteId));
 	}
 
 	@Override
@@ -144,6 +163,26 @@ public class DocumentShortcutResourceImpl
 		return _toDocumentShortcut(
 			_dlAppService.updateFileShortcut(
 				documentShortcutId, documentShortcut.getFolderId(),
+				documentShortcut.getTargetDocumentId(),
+				_createServiceContext(
+					fileShortcut.getGroupId(),
+					documentShortcut.getViewableByAsString())));
+	}
+
+	@Override
+	public DocumentShortcut putSiteDocumentShortcutByExternalReferenceCode(
+			Long siteId, String externalReferenceCode,
+			DocumentShortcut documentShortcut)
+		throws Exception {
+
+		FileShortcut fileShortcut =
+			_dlAppService.getFileShortcutByExternalReferenceCode(
+				externalReferenceCode, siteId);
+
+		return _toDocumentShortcut(
+			_dlAppService.updateFileShortcut(
+				fileShortcut.getFileShortcutId(),
+				documentShortcut.getFolderId(),
 				documentShortcut.getTargetDocumentId(),
 				_createServiceContext(
 					fileShortcut.getGroupId(),

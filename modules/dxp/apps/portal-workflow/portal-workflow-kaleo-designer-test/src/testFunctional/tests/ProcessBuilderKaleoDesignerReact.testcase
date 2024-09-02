@@ -5028,7 +5028,7 @@ definition {
 
 	@description = "LPS-139387 - Verify that the Step Label is a required field"
 	@priority = 3
-	test StepLabelIsRequired {
+	test StepLabelAndNameAreRequired {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -5044,28 +5044,13 @@ definition {
 			infoOption = "Label",
 			infoValue = " ");
 
-		ProcessBuilderKaleoDesignerReact.viewRequiredField(
-			requiredField = "workflowDefinitionBaseNodeLabel",
-			save = "true");
-	}
-
-	@description = "LPS-139387 - Verify that the Node Name is a required field"
-	@priority = 3
-	test StepNameIsRequired {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		Workflow.openWorkflowListView();
-
-		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
-
-		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
-			nodeLabel = "Task",
-			nodePosition = "-20,-40");
-
 		ProcessBuilderKaleoDesignerReact.editNodeInformationField(
 			infoOption = "Name",
 			infoValue = " ");
+
+		ProcessBuilderKaleoDesignerReact.viewRequiredField(
+			requiredField = "workflowDefinitionBaseNodeLabel",
+			save = "true");
 
 		ProcessBuilderKaleoDesignerReact.viewRequiredField(
 			requiredField = "workflowDefinitionBaseNodeName",

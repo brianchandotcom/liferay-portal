@@ -55,6 +55,7 @@ import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
@@ -135,11 +136,9 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 		exportImportJournalArticle(true);
 	}
 
-	/**
-	 * LPD-6808: AC15-AC16
-	 */
 	@FeatureFlags("LPS-199086")
 	@Test
+	@TestInfo("LPD-6808: AC15-AC16")
 	public void testExportImportJournalArticleWithLayoutURLLayoutDoesNotExistOnImportSide()
 		throws Exception {
 
@@ -188,11 +187,9 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 		}
 	}
 
-	/**
-	 * LPD-6808: AC15-AC17
-	 */
 	@FeatureFlags("LPS-199086")
 	@Test
+	@TestInfo("LPD-6808: AC15-AC17")
 	public void testExportImportJournalArticleWithLayoutURLLayoutExistOnImportSide()
 		throws Exception {
 

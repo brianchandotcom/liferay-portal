@@ -3076,6 +3076,22 @@ definition {
 				value1 = ${subtype});
 		}
 
+		if (isSet(contentType)) {
+			task ("Select all form fields") {
+				SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MANAGE_FORM_FIELDS");
+
+				PortletEntry.selectAll();
+
+				SelectFrame(value1 = "relative=top");
+
+				Click(
+					key_text = "Save",
+					locator1 = "Modal#MODAL_FOOTER_BUTTON");
+
+				PageEditor.waitForAutoSave();
+			}
+		}
+
 		if (${successMessage} == "Stay in Page") {
 			Select(
 				key_fieldLabel = "Success Action",
@@ -4844,6 +4860,20 @@ return	Array.from(getWebElement("(//div[@data-name='${fragmentName}'])[${index}]
 			key_position = ${index},
 			locator1 = "PageEditor#FORM_CONTAINER_SELECT_FIELD",
 			value1 = ${contentType});
+
+		task ("Select all form fields") {
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MANAGE_FORM_FIELDS");
+
+			PortletEntry.selectAll();
+
+			SelectFrame(value1 = "relative=top");
+
+			Click(
+				key_text = "Save",
+				locator1 = "Modal#MODAL_FOOTER_BUTTON");
+
+			PageEditor.waitForAutoSave();
+		}
 	}
 
 	@summary = "Default summary"

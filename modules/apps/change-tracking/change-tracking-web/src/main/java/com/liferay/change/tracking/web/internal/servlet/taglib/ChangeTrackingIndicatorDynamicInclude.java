@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -67,6 +68,7 @@ import java.io.Writer;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -195,7 +197,9 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 						ctConfiguration.productionOnlyApplication(), portletId),
 					_ctSettingsConfigurationHelper.isSandboxEnabled(
 						themeDisplay.getCompanyId()),
-					_isShowContextChangePopover(themeDisplay), themeDisplay,
+					_isShowContextChangePopover(
+						httpServletRequest, themeDisplay),
+					themeDisplay,
 					Validator.isNotNull(portletId) &&
 					ArrayUtil.contains(
 						ctConfiguration.unsupportedApplication(), portletId)),
@@ -680,7 +684,9 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 		}
 	}
 
-	private boolean _isShowContextChangePopover(ThemeDisplay themeDisplay) {
+	private boolean _isShowContextChangePopover(
+		HttpServletRequest httpServletRequest, ThemeDisplay themeDisplay) {
+
 		Group group = themeDisplay.getScopeGroup();
 
 		if (CTCollectionThreadLocal.isProductionMode() ||
@@ -706,7 +712,30 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 			httpSession.setAttribute(
 				CTWebKeys.CT_LAST_GROUP_ID, group.getGroupId());
 
-			return true;
+			PortalPreferences portalPreferences =
+				_portletPreferencesFactory.getPortalPreferences(
+					httpServletRequest);
+
+			String hideContextChangeWarningExpiryTime =
+				portalPreferences.getValue(
+					CTPortletKeys.PUBLICATIONS,
+					"hideContextChangeWarningExpiryTime");
+
+			if (Validator.isNull(hideContextChangeWarningExpiryTime)) {
+				return true;
+			}
+
+			if (Objects.equals(hideContextChangeWarningExpiryTime, "-1")) {
+				return false;
+			}
+
+			if (GetterUtil.getLong(hideContextChangeWarningExpiryTime) <=
+					System.currentTimeMillis()) {
+
+				return true;
+			}
+
+			return false;
 		}
 
 		return false;
@@ -746,6 +775,9 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private PortletPreferencesFactory _portletPreferencesFactory;
 
 	@Reference
 	private ReactRenderer _reactRenderer;

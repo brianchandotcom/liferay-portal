@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.site.navigation.language.web.internal.portlet.action;
+package com.liferay.portlet.display.template.portlet.action;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
@@ -29,7 +29,7 @@ import org.mockito.Mockito;
 /**
  * @author Lourdes Fernández Besada
  */
-public class SiteNavigationLanguageConfigurationActionTest {
+public class BasePortletDisplayTemplateConfigurationActionTest {
 
 	@ClassRule
 	@Rule
@@ -48,14 +48,16 @@ public class SiteNavigationLanguageConfigurationActionTest {
 
 		Group group = _getGroup(RandomTestUtil.randomLong());
 
-		SiteNavigationLanguageConfigurationAction
-			siteNavigationLanguageConfigurationAction =
-				_getSiteNavigationLanguageConfigurationAction(group);
+		_setUpGroupLocalServiceUtil(group);
+
+		TestPortletDisplayTemplateConfigurationAction
+			testPortletDisplayTemplateConfigurationAction =
+				new TestPortletDisplayTemplateConfigurationAction();
 
 		PortletPreferences portletPreferences = Mockito.mock(
 			PortletPreferences.class);
 
-		siteNavigationLanguageConfigurationAction.postProcess(
+		testPortletDisplayTemplateConfigurationAction.postProcess(
 			_COMPANY_ID,
 			_getMockActionRequest(
 				group.getGroupKey(),
@@ -78,15 +80,16 @@ public class SiteNavigationLanguageConfigurationActionTest {
 	public void testUpdateDisplayStyleGroupPreferencesWithNoSelection()
 		throws Exception {
 
-		SiteNavigationLanguageConfigurationAction
-			siteNavigationLanguageConfigurationAction =
-				_getSiteNavigationLanguageConfigurationAction(
-					_getGroup(RandomTestUtil.randomLong()));
+		_setUpGroupLocalServiceUtil(_getGroup(RandomTestUtil.randomLong()));
+
+		TestPortletDisplayTemplateConfigurationAction
+			testPortletDisplayTemplateConfigurationAction =
+				new TestPortletDisplayTemplateConfigurationAction();
 
 		PortletPreferences portletPreferences = Mockito.mock(
 			PortletPreferences.class);
 
-		siteNavigationLanguageConfigurationAction.postProcess(
+		testPortletDisplayTemplateConfigurationAction.postProcess(
 			_COMPANY_ID,
 			_getMockActionRequest(
 				StringPool.BLANK,
@@ -110,14 +113,16 @@ public class SiteNavigationLanguageConfigurationActionTest {
 
 		Group group = _getGroup(RandomTestUtil.randomLong());
 
-		SiteNavigationLanguageConfigurationAction
-			siteNavigationLanguageConfigurationAction =
-				_getSiteNavigationLanguageConfigurationAction(group);
+		_setUpGroupLocalServiceUtil(group);
+
+		TestPortletDisplayTemplateConfigurationAction
+			testPortletDisplayTemplateConfigurationAction =
+				new TestPortletDisplayTemplateConfigurationAction();
 
 		PortletPreferences portletPreferences = Mockito.mock(
 			PortletPreferences.class);
 
-		siteNavigationLanguageConfigurationAction.postProcess(
+		testPortletDisplayTemplateConfigurationAction.postProcess(
 			_COMPANY_ID,
 			_getMockActionRequest(
 				group.getGroupKey(), _getThemeDisplay(group.getGroupId())),
@@ -168,19 +173,6 @@ public class SiteNavigationLanguageConfigurationActionTest {
 			"preferences--displayStyleGroupKey--", displayStyleGroupKey);
 
 		return mockActionRequest;
-	}
-
-	private SiteNavigationLanguageConfigurationAction
-			_getSiteNavigationLanguageConfigurationAction(Group group)
-		throws Exception {
-
-		SiteNavigationLanguageConfigurationAction
-			siteNavigationLanguageConfigurationAction =
-				new SiteNavigationLanguageConfigurationAction();
-
-		_setUpGroupLocalServiceUtil(group);
-
-		return siteNavigationLanguageConfigurationAction;
 	}
 
 	private ThemeDisplay _getThemeDisplay(long groupId) throws Exception {
@@ -237,5 +229,9 @@ public class SiteNavigationLanguageConfigurationActionTest {
 	private static final MockedStatic<GroupLocalServiceUtil>
 		_groupLocalServiceUtilMockedStatic = Mockito.mockStatic(
 			GroupLocalServiceUtil.class);
+
+	private class TestPortletDisplayTemplateConfigurationAction
+		extends BasePortletDisplayTemplateConfigurationAction {
+	}
 
 }

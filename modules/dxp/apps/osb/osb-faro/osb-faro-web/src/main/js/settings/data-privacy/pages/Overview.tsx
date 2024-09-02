@@ -52,7 +52,7 @@ const fetchDownload = ({fromDate, groupId, toDate, type}) =>
 		{method: 'GET'}
 	).then(response => {
 		if (response.status === 200) {
-			return response.json();
+			return response.text();
 		}
 
 		throw new Error('Request Error');

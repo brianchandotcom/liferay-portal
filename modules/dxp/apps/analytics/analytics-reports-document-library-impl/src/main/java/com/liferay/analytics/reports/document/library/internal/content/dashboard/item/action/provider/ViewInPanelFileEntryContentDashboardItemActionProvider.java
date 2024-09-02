@@ -11,6 +11,7 @@ import com.liferay.content.dashboard.item.action.exception.ContentDashboardItemA
 import com.liferay.content.dashboard.item.action.provider.ContentDashboardItemActionProvider;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -32,7 +33,10 @@ public class ViewInPanelFileEntryContentDashboardItemActionProvider
 			FileEntry fileEntry, HttpServletRequest httpServletRequest)
 		throws ContentDashboardItemActionException {
 
-		if (!isShow(fileEntry, httpServletRequest)) {
+		if (FeatureFlagManagerUtil.isEnabled(
+				fileEntry.getCompanyId(), "LPD-28830") ||
+			!isShow(fileEntry, httpServletRequest)) {
+
 			return null;
 		}
 

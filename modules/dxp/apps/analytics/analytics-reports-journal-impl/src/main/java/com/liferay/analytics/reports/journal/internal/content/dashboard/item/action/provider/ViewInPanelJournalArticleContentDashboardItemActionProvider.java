@@ -12,6 +12,7 @@ import com.liferay.content.dashboard.item.action.provider.ContentDashboardItemAc
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
@@ -33,7 +34,10 @@ public class ViewInPanelJournalArticleContentDashboardItemActionProvider
 			HttpServletRequest httpServletRequest)
 		throws ContentDashboardItemActionException {
 
-		if (!isShow(journalArticle, httpServletRequest)) {
+		if (FeatureFlagManagerUtil.isEnabled(
+				journalArticle.getCompanyId(), "LPD-28830") ||
+			!isShow(journalArticle, httpServletRequest)) {
+
 			return null;
 		}
 

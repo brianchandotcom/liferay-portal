@@ -1,12 +1,12 @@
 {
 	"dependencies": {
-		"@clayui/autocomplete": "3.118.0",
+		"@clayui/autocomplete": "3.119.0",
 		"@clayui/button": "3.116.0",
-		"@clayui/drop-down": "3.118.0",
-		"@clayui/form": "3.116.0",
+		"@clayui/drop-down": "3.119.0",
+		"@clayui/form": "3.119.0",
 		"@clayui/icon": "3.111.0",
 		"@clayui/loading-indicator": "3.111.0",
-		"@clayui/shared": "3.116.0",
+		"@clayui/shared": "3.119.0",
 		"@liferay/frontend-data-set-web": "*",
 		"data-engine-js-components-web": "*",
 		"dynamic-data-mapping-form-field-type": "*",

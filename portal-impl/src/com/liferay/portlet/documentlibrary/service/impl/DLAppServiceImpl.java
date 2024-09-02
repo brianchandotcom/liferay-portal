@@ -1464,6 +1464,17 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		return repository.getFileShortcut(fileShortcutId);
 	}
 
+	@Override
+	public FileShortcut getFileShortcutByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		Repository repository = getRepository(groupId);
+
+		return repository.getFileShortcutByExternalReferenceCode(
+			externalReferenceCode);
+	}
+
 	/**
 	 * Returns the file version with the primary key.
 	 *

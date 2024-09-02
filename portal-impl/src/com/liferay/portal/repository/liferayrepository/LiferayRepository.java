@@ -510,6 +510,18 @@ public class LiferayRepository
 	}
 
 	@Override
+	public FileShortcut getFileShortcutByExternalReferenceCode(
+			String externalReferenceCode)
+		throws PortalException {
+
+		DLFileShortcut dlFileShortcut =
+			dlFileShortcutService.getDLFileShortcutByExternalReferenceCode(
+				externalReferenceCode, getGroupId());
+
+		return new LiferayFileShortcut(dlFileShortcut);
+	}
+
+	@Override
 	public FileVersion getFileVersion(long fileVersionId)
 		throws PortalException {
 

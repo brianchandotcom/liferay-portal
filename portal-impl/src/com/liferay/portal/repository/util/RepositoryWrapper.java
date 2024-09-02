@@ -358,6 +358,15 @@ public class RepositoryWrapper implements Repository {
 	}
 
 	@Override
+	public FileShortcut getFileShortcutByExternalReferenceCode(
+			String externalReferenceCode)
+		throws PortalException {
+
+		return _repository.getFileShortcutByExternalReferenceCode(
+			externalReferenceCode);
+	}
+
+	@Override
 	public FileVersion getFileVersion(long fileVersionId)
 		throws PortalException {
 

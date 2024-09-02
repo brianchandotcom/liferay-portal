@@ -162,6 +162,14 @@ public class LocalRepositoryWrapper implements LocalRepository {
 	}
 
 	@Override
+	public FileShortcut fetchFileShortcutByExternalReferenceCode(
+		String externalReferenceCode) {
+
+		return _localRepository.fetchFileShortcutByExternalReferenceCode(
+			externalReferenceCode);
+	}
+
+	@Override
 	public Folder fetchFolderByExternalReferenceCode(
 		String externalReferenceCode) {
 
@@ -280,6 +288,15 @@ public class LocalRepositoryWrapper implements LocalRepository {
 		throws PortalException {
 
 		return _localRepository.getFileShortcut(fileShortcutId);
+	}
+
+	@Override
+	public FileShortcut getFileShortcutByExternalReferenceCode(
+			String externalReferenceCode)
+		throws PortalException {
+
+		return _localRepository.getFileShortcutByExternalReferenceCode(
+			externalReferenceCode);
 	}
 
 	@Override

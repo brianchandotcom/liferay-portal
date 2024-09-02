@@ -822,7 +822,11 @@ export class PageEditorPage {
 			element.classList.contains('page-editor__collection')
 		);
 
-		if (isCollection) {
+		const isForm = await fragment.evaluate(
+			(element) => !!element.closest('.page-editor__form')
+		);
+
+		if (isCollection || isForm) {
 			await this.goToSidebarTab('Browser');
 
 			const treeNode = this.page.locator(

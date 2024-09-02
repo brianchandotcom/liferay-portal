@@ -583,4 +583,66 @@ test.describe('Multistep', {tag: '@LPD-10727'}, () => {
 		await expect(heading).not.toBeVisible();
 		await expect(button).toBeVisible();
 	});
+
+	test('Stepper gets number of steps from parent form', async ({
+		apiHelpers,
+		page,
+		pageEditorPage,
+		pageManagementSite,
+	}) => {
+
+		// Get the id of Lemon object from the site initializer
+
+		const {id: objectDefinitionId} =
+			await apiHelpers.objectAdmin.getObjectDefinitionByExternalReferenceCode(
+				LEMON_OBJECT_ERC
+			);
+
+		// Create a form with a Stepper
+
+		const stepperId = getRandomString();
+
+		const stepperFragment = getFragmentDefinition({
+			id: stepperId,
+			key: 'INPUTS-stepper',
+		});
+
+		const formId = getRandomString();
+
+		const formDefinition = getFormContainerDefinition({
+			id: formId,
+			objectDefinitionId,
+			pageElements: [stepperFragment],
+			steps: [[]],
+		});
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([formDefinition]),
+			siteId: pageManagementSite.id,
+			title: getRandomString(),
+		});
+
+		// Go to edit mode of page
+
+		await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
+
+		// Check changing number of stepps in Form affects the Stepper
+
+		await pageEditorPage.changeFragmentConfiguration({
+			fieldLabel: 'Number of Steps',
+			fragmentId: formId,
+			tab: 'General',
+			value: '4',
+		});
+
+		await expect(page.locator('.multi-step-indicator')).toHaveCount(4);
+
+		// Delete the Stepper and check that when adding it again, it takes the correct number of steps
+
+		await pageEditorPage.deleteFragment(stepperId);
+
+		await pageEditorPage.addFragment('Form Components', 'Stepper');
+
+		await expect(page.locator('.multi-step-indicator')).toHaveCount(4);
+	});
 });

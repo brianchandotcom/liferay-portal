@@ -40,7 +40,7 @@ export class LayoutSetPrototypePage {
 		webContentBody: string
 	) {
 		await this.page.goto(
-			liferayConfig.environment.baseUrl + `/group/${siteName}`
+			liferayConfig.environment.baseUrl + `/web/${siteName}`
 		);
 		const myLocator = this.page.getByRole('link', {
 			name: `Go to ${siteName}`,

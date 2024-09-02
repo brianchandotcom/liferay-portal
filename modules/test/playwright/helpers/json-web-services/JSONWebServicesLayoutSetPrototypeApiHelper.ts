@@ -7,7 +7,7 @@ import {liferayConfig} from '../../liferay.config';
 import {ApiHelpers} from '../ApiHelpers';
 
 export type LayoutSetPrototype = {
-	layoutSetPrototypeId: number;
+	layoutSetPrototypeId: string;
 	nameCurrentValue: string;
 	uuid: string;
 };
@@ -50,6 +50,27 @@ export class JSONWebServicesLayoutSetPrototypeApiHelper {
 
 		return this.apiHelpers.post(
 			`${liferayConfig.environment.baseUrl}${this.basePath}/get-layout-set-prototypes`,
+			{
+				data: urlSearchParams.toString(),
+				failOnStatusCode: true,
+				headers: await this.apiHelpers.getJSONWebServicesHeaders(),
+			}
+		);
+	}
+
+	async addLayoutSetPrototypes(name: string): Promise<LayoutSetPrototype> {
+		const urlSearchParams = new URLSearchParams();
+
+		const booleanTrue: boolean = true;
+
+		urlSearchParams.append('name', name);
+		urlSearchParams.append('description', '');
+		urlSearchParams.append('active', booleanTrue.toString());
+		urlSearchParams.append('layoutsUpdateable', booleanTrue.toString());
+		urlSearchParams.append('readyForPropagation', booleanTrue.toString());
+
+		return this.apiHelpers.post(
+			`${liferayConfig.environment.baseUrl}${this.basePath}/add-layout-set-prototype`,
 			{
 				data: urlSearchParams.toString(),
 				failOnStatusCode: true,

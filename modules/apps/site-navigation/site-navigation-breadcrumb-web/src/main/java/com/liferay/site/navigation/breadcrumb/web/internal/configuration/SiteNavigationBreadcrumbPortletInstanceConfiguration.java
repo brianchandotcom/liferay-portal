@@ -35,7 +35,10 @@ public interface SiteNavigationBreadcrumbPortletInstanceConfiguration {
 	)
 	public long displayStyleGroupId();
 
-	@Meta.AD(name = "display-style-group-key", required = false)
+	@Meta.AD(
+		description = "display-style-group-key-description",
+		name = "display-style-group-key", required = false
+	)
 	public String displayStyleGroupKey();
 
 	/**

@@ -10,7 +10,8 @@
 <%@ taglib uri="http://liferay.com/tld/learn" prefix="liferay-learn" %><%@
 taglib uri="http://liferay.com/tld/react" prefix="react" %>
 
-<%@ page import="com.liferay.client.extension.exception.ClientExtensionEntryNameException" %><%@
+<%@ page import="com.liferay.client.extension.constants.ClientExtensionEntryConstants" %><%@
+page import="com.liferay.client.extension.exception.ClientExtensionEntryNameException" %><%@
 page import="com.liferay.client.extension.exception.ClientExtensionEntryTypeSettingsException" %><%@
 page import="com.liferay.client.extension.type.CommerceCheckoutStepCET" %><%@
 page import="com.liferay.client.extension.type.CustomElementCET" %><%@
@@ -32,6 +33,7 @@ page import="com.liferay.client.extension.web.internal.display.context.ClientExt
 page import="com.liferay.client.extension.web.internal.display.context.EditClientExtensionEntryDisplayContext" %><%@
 page import="com.liferay.client.extension.web.internal.display.context.ViewClientExtensionEntryDisplayContext" %><%@
 page import="com.liferay.learn.LearnMessageUtil" %><%@
+page import="com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %>

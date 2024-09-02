@@ -7,6 +7,10 @@
 
 <%@ include file="/init.jsp" %>
 
+<portlet:renderURL var="viewXSSURL">
+	<portlet:param name="mvcPath" value="/view_xss.jsp" />
+</portlet:renderURL>
+
 <liferay-util:buffer
 	var="contents"
 >
@@ -23,3 +27,5 @@
 	name="sampleLegacyEditor"
 	placeholder="content"
 />
+
+<a class="bg-light d-inline-flex mt-2 p-2 rounded text-decoration-none" href="<%= viewXSSURL %>">Go to XSS View</a>

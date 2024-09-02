@@ -5,6 +5,6 @@
 
 import {LAYOUT_STRUCTURE_ITEM_CLASS_NAME_PREFIX} from '../config/constants/layoutStructureItemClassNamePrefix';
 
-export default function getLayoutDataItemUniqueClassName(itemId) {
+export default function getLayoutDataItemUniqueClassName(itemId: string) {
 	return `${LAYOUT_STRUCTURE_ITEM_CLASS_NAME_PREFIX}${itemId}`;
 }

@@ -28,10 +28,7 @@ import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.model.DDMTemplate;
-import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
-import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationParameterMapFactoryUtil;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactoryUtil;
 import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants;
@@ -44,7 +41,6 @@ import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalSer
 import com.liferay.exportimport.kernel.service.ExportImportLocalService;
 import com.liferay.exportimport.kernel.service.StagingLocalServiceUtil;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
-import com.liferay.exportimport.test.util.lar.BasePortletExportImportTestCase;
 import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
@@ -69,9 +65,6 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.template.TemplateConstants;
-import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -88,9 +81,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.test.rule.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
-import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.PortletPreferencesImpl;
-import com.liferay.portlet.display.template.PortletDisplayTemplate;
+import com.liferay.portlet.display.template.test.util.BaseExportImportTestCase;
 import com.liferay.portletmvc4spring.test.mock.web.portlet.MockPortletRequest;
 
 import java.io.Serializable;
@@ -111,7 +103,6 @@ import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -126,15 +117,7 @@ import org.osgi.service.cm.ConfigurationAdmin;
  * @author Julio Camarero
  */
 @RunWith(Arquillian.class)
-public class AssetPublisherExportImportTest
-	extends BasePortletExportImportTestCase {
-
-	@ClassRule
-	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(),
-			SynchronousDestinationTestRule.INSTANCE);
+public class AssetPublisherExportImportTest extends BaseExportImportTestCase {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
@@ -1407,79 +1390,6 @@ public class AssetPublisherExportImportTest
 		assertAssetEntries(assetEntries, actualAssetEntries);
 	}
 
-	@Override
-	protected void testExportImportDisplayStyle(
-			long displayStyleGroupId, String scopeType)
-		throws Exception {
-
-		Group displayStyleGroup = _groupLocalService.getGroup(
-			displayStyleGroupId);
-
-		long classNameId = _portal.getClassNameId(AssetEntry.class.getName());
-
-		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
-			displayStyleGroup.getGroupId(), classNameId, 0,
-			_portal.getClassNameId(PortletDisplayTemplate.class.getName()),
-			TemplateConstants.LANG_TYPE_FTL, RandomTestUtil.randomString(),
-			_portal.getSiteDefaultLocale(displayStyleGroup));
-
-		PortletPreferences portletPreferences = getImportedPortletPreferences(
-			HashMapBuilder.put(
-				"displayStyle",
-				new String[] {
-					PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
-						ddmTemplate.getTemplateKey()
-				}
-			).put(
-				"displayStyleGroupExternalReferenceCode",
-				() -> {
-					if (displayStyleGroup.getGroupId() == layout.getGroupId()) {
-						return null;
-					}
-
-					return new String[] {
-						displayStyleGroup.getExternalReferenceCode()
-					};
-				}
-			).put(
-				"lfrScopeLayoutUuid",
-				() -> {
-					if (scopeType.equals("layout")) {
-						return new String[] {layout.getUuid()};
-					}
-
-					return null;
-				}
-			).put(
-				"lfrScopeType", new String[] {scopeType}
-			).build());
-
-		Assert.assertEquals(
-			PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
-				ddmTemplate.getTemplateKey(),
-			portletPreferences.getValue("displayStyle", null));
-
-		DDMTemplate importedDDMTemplate =
-			_ddmTemplateLocalService.fetchTemplate(
-				layout.getGroupId(), classNameId, ddmTemplate.getTemplateKey());
-
-		String importedDisplayStyleGroupExternalReferenceCode =
-			portletPreferences.getValue(
-				"displayStyleGroupExternalReferenceCode", null);
-
-		if (displayStyleGroup.getGroupId() != layout.getGroupId()) {
-			Assert.assertNull(importedDDMTemplate);
-
-			Assert.assertEquals(
-				displayStyleGroup.getExternalReferenceCode(),
-				importedDisplayStyleGroupExternalReferenceCode);
-		}
-		else {
-			Assert.assertNotNull(importedDDMTemplate);
-			Assert.assertNull(importedDisplayStyleGroupExternalReferenceCode);
-		}
-	}
-
 	protected void testSortByAssetVocabulary(boolean globalVocabulary)
 		throws Exception {
 
@@ -1619,9 +1529,6 @@ public class AssetPublisherExportImportTest
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
-
-	@Inject
-	private DDMTemplateLocalService _ddmTemplateLocalService;
 
 	@Inject
 	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;

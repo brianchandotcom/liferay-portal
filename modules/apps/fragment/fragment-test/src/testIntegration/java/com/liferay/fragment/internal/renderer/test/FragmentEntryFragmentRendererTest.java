@@ -6,6 +6,12 @@
 package com.liferay.fragment.internal.renderer.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
+import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTCollectionService;
@@ -46,9 +52,12 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.struts.Definition;
@@ -208,6 +217,59 @@ public class FragmentEntryFragmentRendererTest {
 
 			Assert.assertFalse(content.contains("type=\"module\""));
 		}
+	}
+
+	@Test
+	public void testMapCategoryFromBlogEntryToEditableField() throws Exception {
+		AssetVocabulary assetVocabulary =
+			_assetVocabularyLocalService.addVocabulary(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), _serviceContext);
+
+		AssetCategory assetCategory = _assetCategoryLocalService.addCategory(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			RandomTestUtil.randomString(), assetVocabulary.getVocabularyId(),
+			_serviceContext);
+
+		_serviceContext.setAssetCategoryIds(
+			new long[] {assetCategory.getCategoryId()});
+
+		BlogsEntry blogsEntry = _addBlogsEntry();
+
+		String fieldId = "AssetVocabulary_" + assetVocabulary.getVocabularyId();
+
+		FragmentEntryLink blogsHeadingFragmentEntryLink =
+			_addHeadingFragmentEntryLink(
+				JSONUtil.put(
+					"element-text",
+					JSONUtil.put(
+						"className", BlogsEntry.class
+					).put(
+						"classNameId",
+						PortalUtil.getClassNameId(BlogsEntry.class)
+					).put(
+						"classPK", blogsEntry.getEntryId()
+					).put(
+						"classTypeId", "0"
+					).put(
+						"config", JSONUtil.put("mapperType", "link")
+					).put(
+						"defaultValue", "Heading Example"
+					).put(
+						"fieldId", fieldId
+					).put(
+						"itemType", "Blogs Entry"
+					).put(
+						"title", blogsEntry.getTitle()
+					)));
+
+		MockHttpServletResponse mockHttpServletResponse =
+			_renderFragmentEntryLink(blogsHeadingFragmentEntryLink);
+
+		String content = mockHttpServletResponse.getContentAsString();
+
+		Assert.assertTrue(
+			content.contains(assetCategory.getTitle(LocaleUtil.getDefault())));
 	}
 
 	@Test
@@ -396,6 +458,15 @@ public class FragmentEntryFragmentRendererTest {
 		Assert.assertTrue(content.contains(fragmentEntry.getHtml()));
 	}
 
+	private BlogsEntry _addBlogsEntry() throws Exception {
+		return _blogsEntryLocalService.addEntry(
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(),
+			DateUtil.newDate(System.currentTimeMillis() - Time.DAY), true, true,
+			new String[0], StringPool.BLANK, null, null, _serviceContext);
+	}
+
 	private FragmentEntryLink _addHeadingFragmentEntryLink(
 			JSONObject jsonObject)
 		throws Exception {
@@ -500,6 +571,15 @@ public class FragmentEntryFragmentRendererTest {
 
 	@Inject
 	private static CTCollectionLocalService _ctCollectionLocalService;
+
+	@Inject
+	private AssetCategoryLocalService _assetCategoryLocalService;
+
+	@Inject
+	private AssetVocabularyLocalService _assetVocabularyLocalService;
+
+	@Inject
+	private BlogsEntryLocalService _blogsEntryLocalService;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;

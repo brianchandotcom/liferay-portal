@@ -11175,6 +11175,11 @@ liferay-ckeditor@4.21.0-liferay.3:
   resolved "https://registry.yarnpkg.com/liferay-ckeditor/-/liferay-ckeditor-4.21.0-liferay.3.tgz#522e4d4e5c3965bdb10dc1cc4434cd34243573eb"
   integrity sha512-WFET4jRWCL46mF6jOXG1HMH7N74feYaJP5fx69WftS8AF8rD1IWdbwgSlUatGFZA/3l4YBpKDbu3ZkVv0ax1Zg==
 
+liferay-ckeditor@4.21.0-liferay.4:
+  version "4.21.0-liferay.4"
+  resolved "https://registry.yarnpkg.com/liferay-ckeditor/-/liferay-ckeditor-4.21.0-liferay.4.tgz#d9067b1ae4bd3825b9d0ad743223de2a18fb880d"
+  integrity sha512-8RdQuTJ1xkV8RPd+HRj7lrM6YSHkc9ZR+jD3JHwlbISPuRlPokJoI86kj6dxAWo4IS7vdZQk/69R7V8JhVPuiA==
+
 liferay-frontend-common-css@1.0.4, liferay-frontend-common-css@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/liferay-frontend-common-css/-/liferay-frontend-common-css-1.0.4.tgz#e4d73e406020d907c909bcacb2700a52fa1c7f16"

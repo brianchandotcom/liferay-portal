@@ -1225,10 +1225,6 @@ definition {
 				questionTabField = "Questions",
 				questionTitle = "Question");
 
-			var pageSource = selenium.getHtmlSource();
-
-			echo("## * Page Source: ${pageSource}");
-
 			Questions.assertCanonicalURL(
 				category = "category",
 				pageName = "questions-page",

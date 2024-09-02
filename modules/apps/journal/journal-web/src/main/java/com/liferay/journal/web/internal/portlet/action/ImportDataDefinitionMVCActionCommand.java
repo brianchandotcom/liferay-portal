@@ -29,10 +29,9 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -116,7 +115,7 @@ public class ImportDataDefinitionMVCActionCommand extends BaseMVCActionCommand {
 			newFieldName = DDMFormFieldUtil.getDDMFormFieldName(fieldName);
 		}
 
-		while (_fieldNames.contains(newFieldName)) {
+		while (_fieldNameMap.containsKey(newFieldName)) {
 			_generateFieldName(fieldName);
 		}
 
@@ -127,7 +126,7 @@ public class ImportDataDefinitionMVCActionCommand extends BaseMVCActionCommand {
 		for (DataDefinitionField dataDefinitionField :
 				dataDefinition.getDataDefinitionFields()) {
 
-			_fieldNames.add(dataDefinitionField.getName());
+			_fieldNameMap.put(dataDefinitionField.getName(), true);
 		}
 	}
 
@@ -137,7 +136,7 @@ public class ImportDataDefinitionMVCActionCommand extends BaseMVCActionCommand {
 		for (DataDefinitionField nestedDataDefinitionField :
 				dataDefinitionField.getNestedDataDefinitionFields()) {
 
-			_fieldNames.add(nestedDataDefinitionField.getName());
+			_fieldNameMap.put(nestedDataDefinitionField.getName(), true);
 		}
 	}
 
@@ -159,7 +158,7 @@ public class ImportDataDefinitionMVCActionCommand extends BaseMVCActionCommand {
 
 			dataDefinitionField.setName(() -> (String)newFieldName);
 
-			_fieldNames.add(newFieldName);
+			_fieldNameMap.put(newFieldName, true);
 
 			DataLayout dataLayout = dataDefinition.getDefaultDataLayout();
 
@@ -187,7 +186,7 @@ public class ImportDataDefinitionMVCActionCommand extends BaseMVCActionCommand {
 
 			nestedDataDefinitionField.setName(() -> (String)newFieldName);
 
-			_fieldNames.add(newFieldName);
+			_fieldNameMap.put(newFieldName, true);
 
 			_updateDataLayoutFieldset(
 				dataDefinitionField, newFieldName, oldFieldName);
@@ -259,7 +258,7 @@ public class ImportDataDefinitionMVCActionCommand extends BaseMVCActionCommand {
 	@Reference
 	private DataDefinitionResource.Factory _dataDefinitionResourceFactory;
 
-	private final Set<String> _fieldNames = new HashSet<>();
+	private final Map<String, Boolean> _fieldNameMap = new HashMap<>();
 
 	@Reference
 	private Portal _portal;

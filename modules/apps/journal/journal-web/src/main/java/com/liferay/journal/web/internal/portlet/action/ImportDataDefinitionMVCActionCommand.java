@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -122,27 +121,7 @@ public class ImportDataDefinitionMVCActionCommand extends BaseMVCActionCommand {
 		return newFieldName;
 	}
 
-	private void _populateFieldNameBlacklist(DataDefinition dataDefinition) {
-		for (DataDefinitionField dataDefinitionField :
-				dataDefinition.getDataDefinitionFields()) {
-
-			_fieldNameMap.put(dataDefinitionField.getName(), true);
-		}
-	}
-
-	private void _populateFieldNameBlacklist(
-		DataDefinitionField dataDefinitionField) {
-
-		for (DataDefinitionField nestedDataDefinitionField :
-				dataDefinitionField.getNestedDataDefinitionFields()) {
-
-			_fieldNameMap.put(nestedDataDefinitionField.getName(), true);
-		}
-	}
-
 	private void _uniquifyDataDefinitionFields(DataDefinition dataDefinition) {
-		_populateFieldNameBlacklist(dataDefinition);
-
 		for (DataDefinitionField dataDefinitionField :
 				dataDefinition.getDataDefinitionFields()) {
 
@@ -158,18 +137,37 @@ public class ImportDataDefinitionMVCActionCommand extends BaseMVCActionCommand {
 
 			dataDefinitionField.setName(() -> (String)newFieldName);
 
-			_fieldNameMap.put(newFieldName, true);
-
 			DataLayout dataLayout = dataDefinition.getDefaultDataLayout();
 
-			_updateDataLayout(dataLayout, newFieldName, oldFieldName);
+			for (DataLayoutPage dataLayoutPage :
+					dataLayout.getDataLayoutPages()) {
+
+				for (DataLayoutRow dataLayoutRow :
+						dataLayoutPage.getDataLayoutRows()) {
+
+					for (DataLayoutColumn dataLayoutColumn :
+							dataLayoutRow.getDataLayoutColumns()) {
+
+						String[] dataLayoutColumnFieldNames =
+							dataLayoutColumn.getFieldNames();
+
+						for (int i = 0; i < dataLayoutColumnFieldNames.length;
+							 i++) {
+
+							if (dataLayoutColumnFieldNames[i].equals(
+									oldFieldName)) {
+
+								dataLayoutColumnFieldNames[i] = newFieldName;
+							}
+						}
+					}
+				}
+			}
 		}
 	}
 
 	private void _uniquifyDataDefinitionFieldset(
 		DataDefinitionField dataDefinitionField) {
-
-		_populateFieldNameBlacklist(dataDefinitionField);
 
 		for (DataDefinitionField nestedDataDefinitionField :
 				dataDefinitionField.getNestedDataDefinitionFields()) {
@@ -186,66 +184,25 @@ public class ImportDataDefinitionMVCActionCommand extends BaseMVCActionCommand {
 
 			nestedDataDefinitionField.setName(() -> (String)newFieldName);
 
-			_fieldNameMap.put(newFieldName, true);
+			Map<String, Object> customProperties =
+				dataDefinitionField.getCustomProperties();
 
-			_updateDataLayoutFieldset(
-				dataDefinitionField, newFieldName, oldFieldName);
-		}
-	}
+			Object[] rows = (Object[])customProperties.get("rows");
 
-	private void _updateDataLayout(
-		DataLayout dataLayout, String newFieldName, String oldFieldName) {
+			for (Object row : rows) {
+				Map<String, Object> rowMap = (Map<String, Object>)row;
 
-		for (DataLayoutPage dataLayoutPage : dataLayout.getDataLayoutPages()) {
-			for (DataLayoutRow dataLayoutRow :
-					dataLayoutPage.getDataLayoutRows()) {
+				Object[] columns = (Object[])rowMap.get("columns");
 
-				for (DataLayoutColumn dataLayoutColumn :
-						dataLayoutRow.getDataLayoutColumns()) {
+				for (Object column : columns) {
+					Map<String, Object> columnMap = (Map<String, Object>)column;
 
-					String[] dataLayoutColumnFieldNames =
-						dataLayoutColumn.getFieldNames();
+					Object[] fields = (Object[])columnMap.get("fields");
 
-					for (int i = 0; i < dataLayoutColumnFieldNames.length;
-						 i++) {
-
-						if (dataLayoutColumnFieldNames[i].equals(
-								oldFieldName)) {
-
-							dataLayoutColumnFieldNames[i] = newFieldName;
-
-							return;
+					for (int i = 0; i < fields.length; i++) {
+						if (Objects.equals(fields[i], oldFieldName)) {
+							fields[i] = newFieldName;
 						}
-					}
-				}
-			}
-		}
-	}
-
-	private void _updateDataLayoutFieldset(
-		DataDefinitionField dataDefinitionField, String newFieldName,
-		String oldFieldName) {
-
-		Map<String, Object> customProperties =
-			dataDefinitionField.getCustomProperties();
-
-		Object[] rows = (Object[])customProperties.get("rows");
-
-		for (Object row : rows) {
-			Map<String, Object> rowMap = (Map<String, Object>)row;
-
-			Object[] columns = (Object[])rowMap.get("columns");
-
-			for (Object column : columns) {
-				Map<String, Object> columnMap = (Map<String, Object>)column;
-
-				Object[] fields = (Object[])columnMap.get("fields");
-
-				for (int i = 0; i < fields.length; i++) {
-					if (Objects.equals(fields[i], oldFieldName)) {
-						fields[i] = newFieldName;
-
-						return;
 					}
 				}
 			}
@@ -257,8 +214,6 @@ public class ImportDataDefinitionMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private DataDefinitionResource.Factory _dataDefinitionResourceFactory;
-
-	private final Map<String, Boolean> _fieldNameMap = new HashMap<>();
 
 	@Reference
 	private Portal _portal;

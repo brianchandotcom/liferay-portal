@@ -105,6 +105,8 @@ definition {
 		}
 	}
 
+	@description = "Ignored because of bug LPD-31798"
+	@ignore = "true"
 	@priority = 4
 	test CanResetSorting {
 		property portal.acceptance = "true";
@@ -241,6 +243,8 @@ definition {
 		}
 	}
 
+	@description = "Ignored because of bug LPD-31798"
+	@ignore = "true"
 	@priority = 4
 	test SortingWorksWithMainObjectFieldsThatAreNotPartOfSchemaProperties {
 		property portal.acceptance = "true";
@@ -267,6 +271,8 @@ definition {
 		}
 	}
 
+	@description = "Ignored because of bug LPD-31798"
+	@ignore = "true"
 	@priority = 4
 	test SortingWorksWithSchemaPropertiesMadeOfMainObjectFields {
 		property portal.acceptance = "true";

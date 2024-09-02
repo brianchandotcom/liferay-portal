@@ -7,6 +7,7 @@ package com.liferay.depot.web.internal.asset.model;
 
 import com.liferay.asset.kernel.AssetRendererFactoryCustomizer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.depot.group.provider.SiteConnectedGroupGroupProvider;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.depot.web.internal.application.controller.DepotApplicationController;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -27,7 +28,8 @@ public class DepotAssetRendererFactoryCustomizer
 
 		return new DepotAssetRendererFactoryWrapper<>(
 			assetRendererFactory, _depotApplicationController,
-			_depotEntryLocalService, _groupLocalService);
+			_depotEntryLocalService, _groupLocalService,
+			_siteConnectedGroupGroupProvider);
 	}
 
 	@Reference
@@ -38,5 +40,8 @@ public class DepotAssetRendererFactoryCustomizer
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private SiteConnectedGroupGroupProvider _siteConnectedGroupGroupProvider;
 
 }

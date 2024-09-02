@@ -102,6 +102,7 @@ public class ImportDataDefinitionMVCActionCommandTest {
 		Assert.assertEquals(
 			dataDefinitionFields[0].getName(),
 			dataLayoutRows[0].getDataLayoutColumns()[0].getFieldNames()[0]);
+
 		Assert.assertEquals(
 			dataDefinitionFields[1].getName(),
 			dataLayoutRows[1].getDataLayoutColumns()[0].getFieldNames()[0]);
@@ -128,10 +129,10 @@ public class ImportDataDefinitionMVCActionCommandTest {
 
 		String previousTextFieldName = "Text12293201";
 
+		String previousFieldsGroupFieldName = "FieldsGroup19507604";
+
 		Assert.assertNotEquals(
 			previousTextFieldName, dataDefinitionFields[0].getName());
-
-		String previousFieldsGroupFieldName = "FieldsGroup19507604";
 
 		Assert.assertNotEquals(
 			previousFieldsGroupFieldName, dataDefinitionFields[1].getName());
@@ -141,10 +142,10 @@ public class ImportDataDefinitionMVCActionCommandTest {
 
 		String previousNumericFieldName = "Numeric34461674";
 
+		String previousDateFieldName = "Date46675757";
+
 		Assert.assertNotEquals(
 			previousNumericFieldName, nestedDataDefinitionFields[0].getName());
-
-		String previousDateFieldName = "Date46675757";
 
 		Assert.assertNotEquals(
 			previousDateFieldName, nestedDataDefinitionFields[1].getName());

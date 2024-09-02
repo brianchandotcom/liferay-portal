@@ -16,9 +16,9 @@ import com.liferay.site.navigation.breadcrumb.web.internal.configuration.SiteNav
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Test;
 
@@ -34,8 +34,18 @@ public class SiteNavigationBreadcrumbDisplayContextTest {
 	public static LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
-	@After
-	public void tearDown() {
+	@BeforeClass
+	public static void setUpClass() {
+		_configurationProviderUtilMockedStatic.when(
+			() -> ConfigurationProviderUtil.getPortletInstanceConfiguration(
+				Mockito.any(), Mockito.any())
+		).thenReturn(
+			_siteNavigationBreadcrumbPortletInstanceConfiguration
+		);
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
 		_configurationProviderUtilMockedStatic.close();
 		_groupLocalServiceUtilMockedStatic.close();
 	}
@@ -154,13 +164,13 @@ public class SiteNavigationBreadcrumbDisplayContextTest {
 		);
 	}
 
-	private final MockedStatic<ConfigurationProviderUtil>
+	private static final MockedStatic<ConfigurationProviderUtil>
 		_configurationProviderUtilMockedStatic = Mockito.mockStatic(
 			ConfigurationProviderUtil.class);
-	private final MockedStatic<GroupLocalServiceUtil>
+	private static final MockedStatic<GroupLocalServiceUtil>
 		_groupLocalServiceUtilMockedStatic = Mockito.mockStatic(
 			GroupLocalServiceUtil.class);
-	private final SiteNavigationBreadcrumbPortletInstanceConfiguration
+	private static final SiteNavigationBreadcrumbPortletInstanceConfiguration
 		_siteNavigationBreadcrumbPortletInstanceConfiguration = Mockito.mock(
 			SiteNavigationBreadcrumbPortletInstanceConfiguration.class);
 

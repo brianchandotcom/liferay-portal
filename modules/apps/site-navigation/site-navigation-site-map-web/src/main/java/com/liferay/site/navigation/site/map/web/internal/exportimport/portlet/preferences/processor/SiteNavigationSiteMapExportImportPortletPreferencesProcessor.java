@@ -57,10 +57,10 @@ public class SiteNavigationSiteMapExportImportPortletPreferencesProcessor
 		return null;
 	}
 
-	@Reference(target = "(name=PortletDisplayTemplateExporter)")
+	@Reference(target = "(name=CommonPortletDisplayTemplateExportCapability)")
 	private Capability _exportCapability;
 
-	@Reference(target = "(name=PortletDisplayTemplateImporter)")
+	@Reference(target = "(name=CommonPortletDisplayTemplateImportCapability)")
 	private Capability _importCapability;
 
 }

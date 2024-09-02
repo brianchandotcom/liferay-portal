@@ -35,12 +35,7 @@ type Data = {
 };
 
 const assetMetrics: AssetMetrics = {
-	[AssetTypes.Blog]: [
-		MetricName.Views,
-		MetricName.ReadingTime,
-		MetricName.Comments,
-		MetricName.Ratings,
-	],
+	[AssetTypes.Blog]: [MetricName.Views, MetricName.Comments],
 	[AssetTypes.Document]: [
 		MetricName.Downloads,
 		MetricName.Previews,
@@ -58,8 +53,6 @@ export const MetricsTitle: Metrics = {
 	[MetricType.Comments]: Liferay.Language.get('comments'),
 	[MetricType.Downloads]: Liferay.Language.get('downloads'),
 	[MetricType.Previews]: Liferay.Language.get('previews'),
-	[MetricType.Ratings]: Liferay.Language.get('ratings'),
-	[MetricType.ReadingTime]: Liferay.Language.get('reading-time'),
 	[MetricType.Views]: Liferay.Language.get('views'),
 };
 

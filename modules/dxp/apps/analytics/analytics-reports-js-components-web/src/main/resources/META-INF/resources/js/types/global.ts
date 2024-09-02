@@ -20,8 +20,6 @@ export enum MetricName {
 	Comments = 'commentsMetric',
 	Downloads = 'downloadsMetric',
 	Previews = 'previewsMetric',
-	Ratings = 'ratingsMetric',
-	ReadingTime = 'readingTimeMetric',
 	Views = 'viewsMetric',
 }
 
@@ -36,7 +34,5 @@ export enum MetricType {
 	Comments = 'COMMENTS',
 	Downloads = 'DOWNLOADS',
 	Previews = 'PREVIEWS',
-	Ratings = 'RATINGS',
-	ReadingTime = 'READING_TIME',
 	Views = 'VIEWS',
 }

@@ -80,6 +80,12 @@ public class RememberMeTokenLocalServiceImpl
 			return null;
 		}
 
+		if (rememberMeToken.isExpired()) {
+			rememberMeTokenLocalService.deleteRememberMeToken(rememberMeToken);
+
+			return null;
+		}
+
 		return rememberMeToken;
 	}
 

@@ -46,20 +46,16 @@ test('Changes the permissions of a group of pages', async ({
 
 	await pagesAdminPage.goto(site.friendlyUrlPath);
 
-	// Select the first page and change the Guest-View permission
+	// Change permissions for first page
 
-	await pagesAdminPage.selectPageAndChangePermissions(
+	await pagesAdminPage.changePagesPermissions(
 		[firstName],
 		['guest_ACTION_VIEW']
 	);
 
-	// Select the second page (keeping the first page checked) and open the modal of permissions
+	// Select first and second page and open the modal of permissions
 
-	await page
-		.getByLabel(`Select ${secondName}`, {
-			exact: true,
-		})
-		.check();
+	await pagesAdminPage.selectPages([firstName, secondName]);
 
 	await page.getByRole('button', {name: 'Permissions'}).click();
 
@@ -79,7 +75,7 @@ test('Changes the permissions of a group of pages', async ({
 
 	// Change the Guest-View permission for both pages
 
-	await pagesAdminPage.selectPageAndChangePermissions(
+	await pagesAdminPage.changePagesPermissions(
 		[firstName, secondName],
 		['guest_ACTION_VIEW']
 	);

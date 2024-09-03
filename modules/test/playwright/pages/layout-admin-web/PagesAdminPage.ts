@@ -442,21 +442,30 @@ export class PagesAdminPage {
 		await this.configurationSaveButton.click();
 	}
 
-	async selectPageAndChangePermissions(
-		pageNames: string[],
-		permissionIds: string[]
-	) {
-
-		// Select the pages
-
-		for (const pageName of pageNames) {
+	async selectPages(pageNames: string[]) {
+		for (const [index, pageName] of pageNames.entries()) {
 			const checkbox = this.page.getByLabel(`Select ${pageName}`, {
 				exact: true,
 			});
 
-			await checkbox.waitFor();
-			await checkbox.check();
+			if (!(await checkbox.isChecked())) {
+				await clickAndExpectToBeVisible({
+					target: this.page
+						.locator('.management-bar .nav-item')
+						.getByText(`${index + 1} of`),
+					trigger: this.page.getByLabel(`Select ${pageName}`, {
+						exact: true,
+					}),
+				});
+			}
 		}
+	}
+
+	async changePagesPermissions(pageNames: string[], permissionIds: string[]) {
+
+		// Select the pages
+
+		await this.selectPages(pageNames);
 
 		// Open the permissions modal
 
@@ -491,5 +500,9 @@ export class PagesAdminPage {
 		await waitForSuccessAlert(permissionsFrame, successMessage);
 
 		await this.page.getByLabel('close', {exact: true}).click();
+
+		await this.page.getByLabel('Clear selection').click();
+
+		await this.page.getByLabel('Select All Items').waitFor();
 	}
 }

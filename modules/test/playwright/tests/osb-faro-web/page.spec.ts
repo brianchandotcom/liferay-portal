@@ -22,7 +22,11 @@ import {
 	navigateToACPageViaURL,
 	navigateToACWorkspace,
 } from './utils/navigation';
-import {createSitePage, navigateToSitePage} from './utils/portal';
+import {
+	createSitePage,
+	navigateToDXPandDeleteSite,
+	navigateToSitePage,
+} from './utils/portal';
 import {
 	addSegmentField,
 	addStaticMember,
@@ -147,6 +151,148 @@ test(
 			await apiHelpers.jsonWebServicesLayout.deleteLayout(
 				String(sitePage.id)
 			);
+		});
+	}
+);
+
+test(
+	'Assert clicking on a page in the pages lists navigates to the page profile',
+	{
+		tag: '@LRAC-8112 Legacy',
+	},
+
+	async ({apiHelpers, page}) => {
+		const siteName = getRandomString();
+
+		const site = await apiHelpers.headlessSite.createSite({
+			name: siteName,
+		});
+
+		const pageTitle = 'MyPage ' + getRandomString();
+
+		await createSitePage({
+			apiHelpers,
+			pageTitle,
+			siteName,
+		});
+
+		const channelName = 'My Property ' + getRandomString();
+
+		const {channel, project} = await syncAnalyticsCloud({
+			apiHelpers,
+			channelName,
+			page,
+			siteName,
+		});
+
+		await test.step('Go to My Page', async () => {
+			await navigateToSitePage({
+				page,
+				pageName: pageTitle,
+				siteName,
+			});
+			await page.waitForTimeout(10000);
+		});
+
+		await test.step('Go to Analytics Cloud and Switch the property', async () => {
+			await navigateToACWorkspace({page});
+			await switchChannel({
+				channelName,
+				page,
+			});
+		});
+
+		await test.step('Go to Pages Tab', async () => {
+			await navigateTo({
+				page,
+				pageName: 'Pages',
+			});
+		});
+
+		await test.step('Change the time filter to Last 24 hours', async () => {
+			await changeTimeFilter({
+				page,
+				timeFilterPeriod: 'Last 24 hours',
+			});
+		});
+
+		await test.step('Access one of the pages on the list', async () => {
+			await navigateTo({
+				page,
+				pageName: pageTitle,
+			});
+		});
+
+		await test.step('Assert Page Profile', async () => {
+			await expect(page.locator('h1.title')).toContainText(pageTitle);
+			await expect(page.locator('h1.title')).toContainText(siteName);
+
+			const cardsNames = [
+				'Unique Visitors',
+				'Views',
+				'Bounce Rate',
+				'Time On Page',
+				'Entrances',
+				'Exit Rate',
+			];
+
+			for (const card of cardsNames) {
+				await expect(
+					page.getByRole('button').getByText(card, {exact: true})
+				).toBeVisible();
+			}
+		});
+
+		await test.step('View the time filter of Visitors Behavior is Last 24 Hours', async () => {
+			await expect(
+				page
+					.locator('[id="container\\.report\\.visitorsBehaviorCard"]')
+					.getByRole('button', {name: 'Last 24 hours'})
+			).toBeVisible();
+		});
+
+		const tabNames = ['Path', 'Known Individuals'];
+
+		for (const tab of tabNames) {
+			await test.step('Switch the tab', async () => {
+				await navigateTo({
+					page,
+					pageName: tab,
+				});
+			});
+
+			await test.step('Set the time filter to the last 30 days', async () => {
+				await changeTimeFilter({
+					page,
+					timeFilterPeriod: 'Last 30 days',
+				});
+			});
+
+			await test.step('Switch to Overview tab and view the time filter of Visitors Behavior is Last 24 Hours', async () => {
+				await navigateTo({
+					page,
+					pageName: 'Overview',
+				});
+
+				await expect(
+					page
+						.locator(
+							'[id="container\\.report\\.visitorsBehaviorCard"]'
+						)
+						.getByRole('button', {name: 'Last 24 hours'})
+				).toBeVisible();
+			});
+		}
+
+		await test.step('delete channel', async () => {
+			await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
+				`[${channel.id}]`,
+				project.groupId
+			);
+		});
+
+		await test.step('delete site on DXP side', async () => {
+			await navigateToDXPandDeleteSite({apiHelpers, page, site});
 		});
 	}
 );

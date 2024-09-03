@@ -1,6 +1,6 @@
 {
 	"friendlyURL": "/customer-portal",
-	"hidden": false,
+	"hidden": true,
 	"name_i18n": {
 		"en_US": "Customer Portal"
 	},

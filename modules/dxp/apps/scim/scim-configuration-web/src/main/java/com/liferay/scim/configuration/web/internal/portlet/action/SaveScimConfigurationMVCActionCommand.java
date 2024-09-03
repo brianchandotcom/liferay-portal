@@ -105,7 +105,8 @@ public class SaveScimConfigurationMVCActionCommand
 
 			JSONObject jsonObject = _jsonFactory.createJSONObject(
 				_localOAuthClient.requestTokens(
-					oAuth2Application, oAuth2Application.getUserId()));
+					oAuth2Application,
+					oAuth2Application.getClientCredentialUserId()));
 
 			String accessToken = jsonObject.getString("access_token");
 

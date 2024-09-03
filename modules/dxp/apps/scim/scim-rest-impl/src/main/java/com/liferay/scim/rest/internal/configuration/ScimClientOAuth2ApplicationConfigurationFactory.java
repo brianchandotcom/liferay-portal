@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.scim.rest.internal.provider.ScimClientBearerTokenProvider;
 import com.liferay.scim.rest.util.ScimClientUtil;
 
@@ -117,9 +116,6 @@ public class ScimClientOAuth2ApplicationConfigurationFactory {
 			long userId)
 		throws Exception {
 
-		User clientCredentialUser = _userLocalService.getUserByScreenName(
-			companyId, PropsValues.DEFAULT_ADMIN_SCREEN_NAME);
-
 		String clientId = ScimClientUtil.generateScimClientId(
 			scimClientOAuth2ApplicationConfiguration.oAuth2ApplicationName());
 
@@ -134,8 +130,8 @@ public class ScimClientOAuth2ApplicationConfigurationFactory {
 				_oAuth2ApplicationLocalService.addOAuth2Application(
 					companyId, user.getUserId(), user.getScreenName(),
 					ListUtil.fromArray(GrantType.JWT_BEARER),
-					"client_secret_post", clientCredentialUser.getUserId(),
-					clientId, ClientProfile.HEADLESS_SERVER.id(),
+					"client_secret_post", user.getUserId(), clientId,
+					ClientProfile.HEADLESS_SERVER.id(),
 					OAuth2SecureRandomGenerator.generateClientSecret(), null,
 					Collections.emptyList(), null, 0, null,
 					scimClientOAuth2ApplicationConfiguration.

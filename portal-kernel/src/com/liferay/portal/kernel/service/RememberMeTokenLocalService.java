@@ -92,6 +92,8 @@ public interface RememberMeTokenLocalService
 	@Transactional(enabled = false)
 	public RememberMeToken createRememberMeToken(long rememberMeTokenId);
 
+	public void deleteExpiredRememberMeTokens(Date expirationDate);
+
 	public void deleteExpiredRememberMeTokens(long userId);
 
 	/**

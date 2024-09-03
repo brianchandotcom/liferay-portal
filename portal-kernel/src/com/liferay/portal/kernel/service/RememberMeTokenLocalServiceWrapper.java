@@ -81,6 +81,12 @@ public class RememberMeTokenLocalServiceWrapper
 	}
 
 	@Override
+	public void deleteExpiredRememberMeTokens(java.util.Date expirationDate) {
+		_rememberMeTokenLocalService.deleteExpiredRememberMeTokens(
+			expirationDate);
+	}
+
+	@Override
 	public void deleteExpiredRememberMeTokens(long userId) {
 		_rememberMeTokenLocalService.deleteExpiredRememberMeTokens(userId);
 	}

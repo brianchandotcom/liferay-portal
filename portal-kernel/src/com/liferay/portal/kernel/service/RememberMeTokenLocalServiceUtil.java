@@ -82,6 +82,12 @@ public class RememberMeTokenLocalServiceUtil {
 		return getService().createRememberMeToken(rememberMeTokenId);
 	}
 
+	public static void deleteExpiredRememberMeTokens(
+		java.util.Date expirationDate) {
+
+		getService().deleteExpiredRememberMeTokens(expirationDate);
+	}
+
 	public static void deleteExpiredRememberMeTokens(long userId) {
 		getService().deleteExpiredRememberMeTokens(userId);
 	}

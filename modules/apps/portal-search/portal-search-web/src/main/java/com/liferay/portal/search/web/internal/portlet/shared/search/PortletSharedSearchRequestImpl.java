@@ -279,14 +279,10 @@ public class PortletSharedSearchRequestImpl
 			Portlet portlet = portletLocalService.getPortletById(
 				companyId, portletPreferences.getPortletId());
 
-			if (portletIdsToFilter.contains(portlet.getPortletName()) &&
-				!instanceIdsToKeep.contains(portlet.getInstanceId())) {
-
-				continue;
-			}
-
 			if (portlet.isInstanceable() &&
-				Validator.isNotNull(portlet.getInstanceId())) {
+				Validator.isNotNull(portlet.getInstanceId()) &&
+				(!portletIdsToFilter.contains(portlet.getPortletName()) ||
+				 instanceIdsToKeep.contains(portlet.getInstanceId()))) {
 
 				portlets.add(portlet);
 			}

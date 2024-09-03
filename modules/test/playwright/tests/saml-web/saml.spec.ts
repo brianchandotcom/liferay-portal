@@ -25,12 +25,14 @@ import {
 } from '../../pages/saml-web/IdentityProviderConnectionsPage';
 import {SamlAdminPage} from '../../pages/saml-web/SamlAdminPage';
 import {ServiceProviderConnectionsPage} from '../../pages/saml-web/ServiceProviderConnectionsPage';
+import {SiteSettingsPage} from '../../pages/site-admin-web/SiteSettingsPage';
 import {EditUserPage} from '../../pages/users-admin-web/EditUserPage';
 import {UsersAndOrganizationsPage} from '../../pages/users-admin-web/UsersAndOrganizationsPage';
 import {getRandomInt} from '../../utils/getRandomInt';
 import getRandomString from '../../utils/getRandomString';
 import performLogin, {performLogout} from '../../utils/performLogin';
 import {reloadUntilVisible} from '../../utils/reloadUntilVisible';
+import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
 import {
 	TIdentityProvider,
 	configureIdentityProvider,
@@ -56,6 +58,8 @@ import {
 	DEFAULT_SP_URL,
 	configureVirtualInstanceForSaml,
 	createCustomField,
+	createIdentityProviderVirtualInstance,
+	createServiceProviderVirtualInstance,
 	createUser,
 	deleteVirtualInstance,
 	performSamlSafeLogin,
@@ -920,4 +924,237 @@ test('Verify IdP initiated SLO also logs out of authenticated SP when Require Au
 	});
 
 	expect(await signInButton).toBeVisible();
+});
+
+test('Verify SSO login and logout mechanism works the same when having multiple sites configured as SP.  See LPS-170940.', async ({
+	browser,
+}) => {
+	const idp1AdminPage = await configureVirtualInstanceForSaml(
+		browser,
+		DEFAULT_IDP_NAME,
+		'Identity Provider'
+	);
+
+	const idp2Name = 'www.fox.com';
+
+	const sp2Name = 'www.dog.com';
+
+	// Create an additional IdP virtual instance
+
+	const localhostAdminPage = await browser.newPage();
+
+	await performLogin(localhostAdminPage, 'test');
+
+	const idp2AdminPage = await createIdentityProviderVirtualInstance(
+		browser,
+		localhostAdminPage,
+		idp2Name
+	);
+
+	const sp1AdminPage = await configureVirtualInstanceForSaml(
+		browser,
+		DEFAULT_SP_NAME,
+		'Service Provider'
+	);
+
+	// Create an additional SP virtual instance
+
+	const sp2AdminPage = await createServiceProviderVirtualInstance(
+		browser,
+		sp2Name,
+		sp2Name,
+		localhostAdminPage
+	);
+
+	// Connect all IdPs and SPs
+
+	await connectSpAndIdp(
+		idp1AdminPage,
+		DEFAULT_IDP_NAME,
+		sp1AdminPage,
+		DEFAULT_SP_NAME
+	);
+
+	await connectSpAndIdp(
+		idp1AdminPage,
+		DEFAULT_IDP_NAME,
+		sp2AdminPage,
+		sp2Name
+	);
+
+	await connectSpAndIdp(
+		idp2AdminPage,
+		idp2Name,
+		sp1AdminPage,
+		DEFAULT_SP_NAME
+	);
+
+	await connectSpAndIdp(idp2AdminPage, idp2Name, sp2AdminPage, sp2Name);
+
+	// In SP2, create two sites with virtual hostnames
+
+	const site1Name = getRandomString();
+	const site2Name = getRandomString();
+
+	const defaultBaseUrl = liferayConfig.environment.baseUrl;
+
+	liferayConfig.environment.baseUrl = `http://${sp2Name}:8080`;
+
+	const apiHelpers = new ApiHelpers(sp2AdminPage);
+
+	liferayConfig.environment.baseUrl = defaultBaseUrl;
+
+	await apiHelpers.headlessSite.createSite({
+		name: site1Name,
+		templateKey: 'com.liferay.site.initializer.welcome',
+		templateType: 'site-initializer',
+	});
+
+	await apiHelpers.headlessSite.createSite({
+		name: site2Name,
+		templateKey: 'com.liferay.site.initializer.welcome',
+		templateType: 'site-initializer',
+	});
+
+	await sp2AdminPage.goto(`/web/${site1Name}`);
+
+	await sp2AdminPage.waitForTimeout(1000);
+
+	let siteSettingsPage = new SiteSettingsPage(sp2AdminPage);
+
+	await siteSettingsPage.goToSiteSetting('Site Configuration', 'Site URL');
+
+	const site1VirtualHostName = 'www.easy.com';
+
+	await siteSettingsPage.page
+		.getByLabel('Virtual Host')
+		.fill(site1VirtualHostName);
+
+	await siteSettingsPage.page.getByRole('button', {name: 'Save'}).click();
+
+	await waitForSuccessAlert(siteSettingsPage.page);
+
+	await sp2AdminPage.goto(`/web/${site2Name}`);
+
+	await sp2AdminPage.waitForTimeout(1000);
+
+	siteSettingsPage = new SiteSettingsPage(sp2AdminPage);
+
+	await siteSettingsPage.goToSiteSetting('Site Configuration', 'Site URL');
+
+	const site2VirtualHostName = 'www.charlie.com';
+
+	await siteSettingsPage.page
+		.getByLabel('Virtual Host')
+		.fill(site2VirtualHostName);
+
+	await siteSettingsPage.page.getByRole('button', {name: 'Save'}).click();
+
+	await waitForSuccessAlert(siteSettingsPage.page);
+
+	// Create users for both IdP virtual instances
+
+	const idp1User = await createUser(idp1AdminPage, DEFAULT_IDP_NAME);
+
+	const idp2User = await createUser(idp2AdminPage, idp2Name);
+
+	// Verify SP1 initiated SSO works on IdP1
+
+	const idp1SpPages = await performSpInitiatedSSO(
+		browser,
+		idp1User.emailAddress,
+		DEFAULT_SP_URL,
+		true,
+		DEFAULT_IDP_NAME
+	);
+
+	// Verify clicking sign-in button and selecting IdP1 works from SP2 site1
+
+	await idp1SpPages.goto(`http://${site1VirtualHostName}:8080`);
+
+	await clickSignInButton(idp1SpPages, DEFAULT_IDP_NAME);
+
+	// Assert authenticated
+
+	await expect(await idp1SpPages.getByTitle('User Profile Menu')).toBeVisible(
+		{
+			timeout: 30 * 1000,
+		}
+	);
+
+	// Verify SP2 initiated SSO works on IdP2
+
+	const idp2SpPages = await performSpInitiatedSSO(
+		browser,
+		idp2User.emailAddress,
+		`http://${sp2Name}:8080`,
+		true,
+		idp2Name
+	);
+
+	// Verify clicking sign-in button and selecting IdP2 works from SP2 site2
+
+	await idp2SpPages.goto(`http://${site2VirtualHostName}:8080`);
+
+	await clickSignInButton(idp2SpPages, idp2Name);
+
+	// Assert authenticated
+
+	await expect(await idp2SpPages.getByTitle('User Profile Menu')).toBeVisible(
+		{
+			timeout: 30 * 1000,
+		}
+	);
+
+	// Perform SP2 Site 2 initiated SLO
+
+	await performLogout(idp2SpPages);
+
+	// Verify IdP2 user is logged out from SP2 Site 2
+
+	expect(
+		await idp2SpPages.getByRole('button', {name: 'Sign In'})
+	).toBeVisible();
+
+	// Go to SP2 instance and verify logged out
+
+	await idp2SpPages.goto(DEFAULT_SP_URL);
+
+	await expect(
+		await idp2SpPages.getByRole('button', {name: 'Sign In'})
+	).toBeVisible();
+
+	// Verify IdP1 user is not affected, and still authenticated on both sites
+
+	await idp1SpPages.reload();
+
+	await idp1SpPages.waitForTimeout(1000);
+
+	await expect(await idp1SpPages.getByTitle('User Profile Menu')).toBeVisible(
+		{
+			timeout: 30 * 1000,
+		}
+	);
+
+	await idp1SpPages.goto(`http://${site1VirtualHostName}:8080`);
+
+	await idp1SpPages.waitForTimeout(1000);
+
+	expect(await idp1SpPages.getByTitle('User Profile Menu')).toBeVisible({
+		timeout: 30 * 1000,
+	});
+
+	// Delete newly created virtual instances, and remove from afterAll deletion
+
+	await deleteVirtualInstance(idp2Name, localhostAdminPage);
+
+	await deleteAfterTestProviderConnections.delete(idp2Name);
+
+	await deleteAfterTestVirtualInstances.delete(idp2Name);
+
+	await deleteVirtualInstance(sp2Name, localhostAdminPage);
+
+	await deleteAfterTestProviderConnections.delete(sp2Name);
+
+	await deleteAfterTestVirtualInstances.delete(sp2Name);
 });

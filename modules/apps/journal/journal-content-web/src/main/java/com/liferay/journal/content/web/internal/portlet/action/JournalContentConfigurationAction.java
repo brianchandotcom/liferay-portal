@@ -193,9 +193,17 @@ public class JournalContentConfigurationAction
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(
 				JournalArticle.class);
 
+		if (articleAssetRendererFactory == null) {
+			return StringPool.BLANK;
+		}
+
 		AssetRenderer<JournalArticle> articleAssetRenderer =
 			articleAssetRendererFactory.getAssetRenderer(
 				assetEntry.getClassPK());
+
+		if (articleAssetRenderer == null) {
+			return StringPool.BLANK;
+		}
 
 		JournalArticle article = articleAssetRenderer.getAssetObject();
 

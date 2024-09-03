@@ -198,6 +198,10 @@ public class CommentAssetRenderer
 		AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(
 			_workflowableComment.getClassPK());
 
+		if (assetRenderer == null) {
+			return null;
+		}
+
 		return assetRenderer.getURLViewInContext(
 			liferayPortletRequest, liferayPortletResponse, noSuchEntryRedirect);
 	}
@@ -217,6 +221,10 @@ public class CommentAssetRenderer
 
 		AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(
 			_workflowableComment.getClassPK());
+
+		if (assetRenderer == null) {
+			return null;
+		}
 
 		return assetRenderer.getURLViewInContext(
 			themeDisplay, noSuchEntryRedirect);

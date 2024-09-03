@@ -110,6 +110,10 @@ public class FileEntryLayoutDisplayPageObjectProvider
 				assetRendererFactory.getAssetRenderer(
 					fileEntry.getFileEntryId());
 
+			if (assetRenderer == null) {
+				return null;
+			}
+
 			return assetRendererFactory.getAssetEntry(
 				DLFileEntryConstants.getClassName(),
 				assetRenderer.getClassPK());

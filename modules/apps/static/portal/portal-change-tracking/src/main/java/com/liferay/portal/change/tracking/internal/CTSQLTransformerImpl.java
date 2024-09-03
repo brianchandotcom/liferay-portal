@@ -226,12 +226,6 @@ public class CTSQLTransformerImpl implements CTSQLTransformer {
 
 	@Override
 	public String transform(String sql) {
-		if (CTSQLModeThreadLocal.getCTSQLMode() ==
-				CTSQLModeThreadLocal.CTSQLMode.CT_ALL) {
-
-			return sql;
-		}
-
 		long ctCollectionId = CTCollectionThreadLocal.getCTCollectionId();
 
 		String transformedSQL = null;

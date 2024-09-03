@@ -250,9 +250,10 @@ public class FragmentEntryFragmentRendererTest {
 					"className", BlogsEntry.class.getName()
 				).put(
 					"classNameId",
-					_portal.getClassNameId(BlogsEntry.class.getName())
+					String.valueOf(
+						_portal.getClassNameId(BlogsEntry.class.getName()))
 				).put(
-					"classPK", blogsEntry.getEntryId()
+					"classPK", String.valueOf(blogsEntry.getEntryId())
 				).put(
 					"classTypeId", "0"
 				).put(
@@ -275,9 +276,10 @@ public class FragmentEntryFragmentRendererTest {
 				"element-text",
 				JSONUtil.put(
 					"classNameId",
-					_portal.getClassNameId(FileEntry.class.getName())
+					String.valueOf(
+						_portal.getClassNameId(FileEntry.class.getName()))
 				).put(
-					"classPK", fileEntry.getFileEntryId()
+					"classPK", String.valueOf(fileEntry.getFileEntryId())
 				).put(
 					"config", JSONUtil.put("mapperType", "link")
 				).put(
@@ -300,11 +302,14 @@ public class FragmentEntryFragmentRendererTest {
 				"element-text",
 				JSONUtil.put(
 					"classNameId",
-					_portal.getClassNameId(JournalArticle.class.getName())
+					String.valueOf(
+						_portal.getClassNameId(JournalArticle.class.getName()))
 				).put(
-					"classPK", journalArticle.getResourcePrimKey()
+					"classPK",
+					String.valueOf(journalArticle.getResourcePrimKey())
 				).put(
-					"classTypeId", journalArticle.getDDMStructureId()
+					"classTypeId",
+					String.valueOf(journalArticle.getDDMStructureId())
 				).put(
 					"config", JSONUtil.put("mapperType", "link")
 				).put(

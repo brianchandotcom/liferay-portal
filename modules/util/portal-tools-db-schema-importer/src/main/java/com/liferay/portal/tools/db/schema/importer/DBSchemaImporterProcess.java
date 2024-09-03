@@ -89,9 +89,14 @@ public class DBSchemaImporterProcess {
 		futures.add(
 			_executorService.submit(
 				() -> {
-					new DBCopyTablesProcess(
-						_sourceDataSource, _targetDataSource
-					).run();
+					try {
+						new DBCopyTablesProcess(
+							_sourceDataSource, _targetDataSource
+						).run();
+					}
+					catch (Exception exception) {
+						throw new RuntimeException(exception);
+					}
 
 					return null;
 				}));
@@ -100,14 +105,19 @@ public class DBSchemaImporterProcess {
 			futures.add(
 				_executorService.submit(
 					() -> {
-						new DBCopyTablesProcess(
-							DataSourceFactoryUtil.initDataSource(
-								_sourceJDBCURL, _sourcePassword, _sourceUser,
-								partitionName),
-							DataSourceFactoryUtil.initDataSource(
-								_targetJDBCURL, _targetPassword, _targetUser,
-								partitionName)
-						).run();
+						try {
+							new DBCopyTablesProcess(
+								DataSourceFactoryUtil.initDataSource(
+									_sourceJDBCURL, _sourcePassword,
+									_sourceUser, partitionName),
+								DataSourceFactoryUtil.initDataSource(
+									_targetJDBCURL, _targetPassword,
+									_targetUser, partitionName)
+							).run();
+						}
+						catch (Exception exception) {
+							throw new RuntimeException(exception);
+						}
 
 						return null;
 					}));

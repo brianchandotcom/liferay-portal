@@ -218,7 +218,7 @@ test.describe('Manage object fields through Model Builder', () => {
 
 		await modelBuilderDiagramPage.objectDefinitionNodes
 			.filter({hasText: objectDefinition.name})
-			.getByText('integer', {exact: true})
+			.getByText('Integer', {exact: true})
 			.click();
 
 		await modelBuilderRightSidebarPage.deleteTrashButton.click();

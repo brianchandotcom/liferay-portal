@@ -41,9 +41,9 @@ public class DBSchemaImporter {
 
 		try {
 			ConnectionConfigUtil.setBatchSize(
-				commandLine.getOptionValue("target-jdbc-batch-size"));
+				commandLine.getOptionValue("jdbc-batch-size"));
 			ConnectionConfigUtil.setFetchSize(
-				commandLine.getOptionValue("source-jdbc-fetch-size"));
+				commandLine.getOptionValue("jdbc-fetch-size"));
 
 			new DBSchemaImporterProcess(
 				commandLine.getOptionValue("path"),
@@ -68,11 +68,13 @@ public class DBSchemaImporter {
 		Options options = new Options();
 
 		options.addOption(null, "help", false, "Print help message.");
+		options.addOption(
+			null, "jdbc-batch-size", true, "Set the JDBC batch size.");
+		options.addOption(
+			null, "jdbc-fetch-size", true,
+			"Set the JDBC ResultSet fetch size.");
 		options.addRequiredOption(
 			null, "path", true, "Set the path of the source SQL files.");
-		options.addOption(
-			null, "source-jdbc-fetch-size", true,
-			"Set the source JDBC ResultSet fetch size.");
 		options.addRequiredOption(
 			null, "source-jdbc-url", true, "Set the source JDBC URL.");
 		options.addRequiredOption(
@@ -80,9 +82,6 @@ public class DBSchemaImporter {
 			"Set the source database user password.");
 		options.addRequiredOption(
 			null, "source-user", true, "Set the source database user.");
-		options.addOption(
-			null, "target-jdbc-batch-size", true,
-			"Set the source JDBC batch size.");
 		options.addRequiredOption(
 			null, "target-jdbc-url", true, "Set the target JDBC URL.");
 		options.addRequiredOption(

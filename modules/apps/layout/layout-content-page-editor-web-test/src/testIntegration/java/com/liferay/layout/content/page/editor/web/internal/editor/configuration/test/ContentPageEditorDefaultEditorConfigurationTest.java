@@ -13,7 +13,9 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactoryUtil;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
@@ -21,12 +23,16 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Collections;
+import java.util.Objects;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -61,7 +67,115 @@ public class ContentPageEditorDefaultEditorConfigurationTest {
 			"fragmenEntryLinkRichTextEditor");
 
 		Assert.assertEquals(
-			_EXTRA_PLUGINS,	jsonObject.getString("extraPlugins"));
+			_ALLOWED_CONTENT, jsonObject.getString("allowedContent"));
+
+		Assert.assertFalse(jsonObject.getBoolean("autoParagraph"));
+
+		_assertItemSelectorURL(jsonObject.getString("documentBrowseLinkUrl"));
+
+		Assert.assertEquals(
+			_EXTRA_PLUGINS, jsonObject.getString("extraPlugins"));
+
+		_assertItemSelectorURL(
+			jsonObject.getString("filebrowserImageBrowseLinkUrl"));
+		_assertItemSelectorURL(
+			jsonObject.getString("filebrowserImageBrowseUrl"));
+
+		Assert.assertEquals(
+			_REMOVE_PLUGINS, jsonObject.getString("removePlugins"));
+
+		Assert.assertEquals("moono-lisa", jsonObject.getString("skin"));
+
+		Assert.assertEquals(
+			_themeDisplay.getPathThemeSpritemap(),
+			jsonObject.getString("spritemap"));
+
+		_assertToolbarsJSONObject(jsonObject.getJSONObject("toolbars"));
+	}
+
+	private void _assertItemSelectorURL(String url) {
+		Assert.assertTrue(
+			url,
+			StringUtil.contains(
+				url,
+				"_com_liferay_item_selector_web_portlet_ItemSelectorPortlet_" +
+					"itemSelectedEventName=_EDITOR_NAME_selectItem",
+				StringPool.BLANK));
+	}
+
+	private void _assertToolbarsJSONObject(JSONObject jsonObject) {
+		JSONObject addJSONObject = jsonObject.getJSONObject("add");
+
+		Objects.equals(
+			JSONUtil.putAll("image", "hline"),
+			addJSONObject.getJSONArray("buttons"));
+
+		JSONObject stylesJSONObject = jsonObject.getJSONObject("styles");
+
+		JSONArray selectionsStylesJSONArray = stylesJSONObject.getJSONArray(
+			"selections");
+
+		Assert.assertEquals(
+			selectionsStylesJSONArray.toString(), 4,
+			selectionsStylesJSONArray.length());
+
+		Objects.equals(
+			JSONUtil.put(
+				"buttons",
+				JSONUtil.putAll("imageLeft", "imageCenter", "imageRight")
+			).put(
+				"name", "image"
+			).put(
+				"test", "AlloyEditor.SelectionTest.image"
+			),
+			selectionsStylesJSONArray.getJSONObject(0));
+
+		Objects.equals(
+			JSONUtil.put(
+				"buttons", JSONUtil.put("linkEditBrowse")
+			).put(
+				"name", "link"
+			).put(
+				"test", "AlloyEditor.SelectionTest.link"
+			),
+			selectionsStylesJSONArray.getJSONObject(1));
+
+		_assertToolbarStylesSelectionsTextJSONObject(
+			selectionsStylesJSONArray.getJSONObject(2));
+
+		Objects.equals(
+			JSONUtil.put(
+				"buttons",
+				JSONUtil.putAll(
+					"tableHeading", "tableRow", "tableColumn", "tableCell",
+					"tableRemove")
+			).put(
+				"getArrowBoxClasses",
+				"AlloyEditor.SelectionGetArrowBoxClasses.table"
+			).put(
+				"name", "table"
+			).put(
+				"setPosition", "AlloyEditor.SelectionSetPosition.table"
+			).put(
+				"test", "AlloyEditor.SelectionTest.table"
+			),
+			selectionsStylesJSONArray.getJSONObject(3));
+	}
+
+	private void _assertToolbarStylesSelectionsTextJSONObject(
+		JSONObject jsonObject) {
+
+		JSONArray buttonsJSONArray = jsonObject.getJSONArray("buttons");
+
+		JSONObject styleFormatsJSONObject = buttonsJSONArray.getJSONObject(0);
+
+		Assert.assertTrue(styleFormatsJSONObject.has("cfg"));
+		Assert.assertEquals("styles", styleFormatsJSONObject.getString("name"));
+
+		for (int i = 1; i < buttonsJSONArray.length(); i++) {
+			ArrayUtil.contains(
+				_STYLES_SELECTIONS_TEXT, buttonsJSONArray.getString(i));
+		}
 	}
 
 	private JSONObject _getEditorConfigurationConfigJSONObject(
@@ -86,6 +200,8 @@ public class ContentPageEditorDefaultEditorConfigurationTest {
 			_companyLocalService.getCompany(_group.getCompanyId()), _group,
 			layout);
 
+		themeDisplay.setPathThemeSpritemap(RandomTestUtil.randomString());
+
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
@@ -99,10 +215,26 @@ public class ContentPageEditorDefaultEditorConfigurationTest {
 		return themeDisplay;
 	}
 
+	private static final String _ALLOWED_CONTENT = StringBundler.concat(
+		"b code em h1 h2 h3 h4 h5 h6 hr i p pre strong u [*](*){*}; a[*](*); ",
+		"div[*](*){text-align}; img[*](*){*}; p[*](*); li ol ul ",
+		"[*](*){*};table[border, cellpadding, cellspacing] {width}; tbody td ",
+		"th[scope]; thead tr[scope]; span[*](*){*}; ");
+
 	private static final String _EXTRA_PLUGINS = StringBundler.concat(
 		"autolink,ae_dragresize,ae_addimages,ae_imagealignment,",
 		"ae_placeholder,ae_selectionregion,ae_tableresize,",
 		"ae_tabletools,ae_uicore,itemselector,media,adaptivemedia");
+
+	private static final String _REMOVE_PLUGINS =
+		"contextmenu,elementspath,floatingspace,image,liststyle," +
+			"magicline,resize,tabletools,toolbar,ae_embed";
+
+	private static final String[] _STYLES_SELECTIONS_TEXT = {
+		"bold", "italic", "underline", "ol", "ul", "linkBrowse", "table",
+		"paragraphLeft", "paragraphCenter", "paragraphRight",
+		"paragraphJustify", "spacing", "color", "removeFormat"
+	};
 
 	@Inject
 	private CompanyLocalService _companyLocalService;

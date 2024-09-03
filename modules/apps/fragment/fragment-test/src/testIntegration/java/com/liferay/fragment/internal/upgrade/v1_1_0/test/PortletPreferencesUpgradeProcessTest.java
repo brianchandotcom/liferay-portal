@@ -82,7 +82,7 @@ public class PortletPreferencesUpgradeProcessTest {
 	public void testUpgrade() throws Exception {
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
-		PortletPreferences portletPreferences = _getPortletPreferences(
+		PortletPreferences layoutPortletPreferences = _getPortletPreferences(
 			layout, _addPortletFragmentEntryLink(layout));
 
 		Layout controlPanelLayout = LayoutTestUtil.addTypeContentLayout(_group);
@@ -90,25 +90,29 @@ public class PortletPreferencesUpgradeProcessTest {
 		_layoutLocalService.updateType(
 			controlPanelLayout.getPlid(), LayoutConstants.TYPE_CONTROL_PANEL);
 
-		portletPreferences.setPlid(controlPanelLayout.getPlid());
-
-		portletPreferences =
-			_portletPreferencesLocalService.updatePortletPreferences(
-				portletPreferences);
+		PortletPreferences controlPanelPortletPreferences =
+			_clonePortletPreferences(
+				controlPanelLayout.getPlid(), layoutPortletPreferences);
 
 		Assert.assertEquals(
-			controlPanelLayout.getPlid(), portletPreferences.getPlid());
+			controlPanelLayout.getPlid(),
+			controlPanelPortletPreferences.getPlid());
 
 		_assertUpgrade();
 
 		Assert.assertNull(
 			_layoutLocalService.fetchLayout(controlPanelLayout.getPlid()));
 
-		portletPreferences =
+		Assert.assertNull(
 			_portletPreferencesLocalService.fetchPortletPreferences(
-				portletPreferences.getPortletPreferencesId());
+				layoutPortletPreferences.getPortletPreferencesId()));
 
-		Assert.assertEquals(layout.getPlid(), portletPreferences.getPlid());
+		controlPanelPortletPreferences =
+			_portletPreferencesLocalService.fetchPortletPreferences(
+				controlPanelPortletPreferences.getPortletPreferencesId());
+
+		Assert.assertEquals(
+			layout.getPlid(), controlPanelPortletPreferences.getPlid());
 	}
 
 	@Test

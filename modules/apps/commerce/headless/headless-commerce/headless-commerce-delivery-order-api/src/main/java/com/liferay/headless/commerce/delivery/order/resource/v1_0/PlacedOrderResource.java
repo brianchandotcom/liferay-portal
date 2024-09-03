@@ -61,11 +61,19 @@ public interface PlacedOrderResource {
 			String externalReferenceCode)
 		throws Exception;
 
+	public PlacedOrder patchPlacedOrderByExternalReferenceCode(
+			String externalReferenceCode, PlacedOrder placedOrder)
+		throws Exception;
+
 	public String getPlacedOrderByExternalReferenceCodePaymentURL(
 			String externalReferenceCode, String callbackURL)
 		throws Exception;
 
 	public PlacedOrder getPlacedOrder(Long placedOrderId) throws Exception;
+
+	public PlacedOrder patchPlacedOrder(
+			Long placedOrderId, PlacedOrder placedOrder)
+		throws Exception;
 
 	public String getPlacedOrderPaymentURL(
 			Long placedOrderId, String callbackURL)

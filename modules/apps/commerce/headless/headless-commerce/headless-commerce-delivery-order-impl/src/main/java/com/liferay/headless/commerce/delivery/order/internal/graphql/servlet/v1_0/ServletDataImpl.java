@@ -42,6 +42,8 @@ public class ServletDataImpl implements ServletData {
 
 	@Activate
 	public void activate(BundleContext bundleContext) {
+		Mutation.setPlacedOrderResourceComponentServiceObjects(
+			_placedOrderResourceComponentServiceObjects);
 		Mutation.setPlacedOrderCommentResourceComponentServiceObjects(
 			_placedOrderCommentResourceComponentServiceObjects);
 		Mutation.setPlacedOrderItemResourceComponentServiceObjects(
@@ -95,6 +97,15 @@ public class ServletDataImpl implements ServletData {
 		_resourceMethodObjectValuePairs =
 			new HashMap<String, ObjectValuePair<Class<?>, String>>() {
 				{
+					put(
+						"mutation#patchPlacedOrderByExternalReferenceCode",
+						new ObjectValuePair<>(
+							PlacedOrderResourceImpl.class,
+							"patchPlacedOrderByExternalReferenceCode"));
+					put(
+						"mutation#patchPlacedOrder",
+						new ObjectValuePair<>(
+							PlacedOrderResourceImpl.class, "patchPlacedOrder"));
 					put(
 						"mutation#createPlacedOrderPlacedOrderCommentsPageExportBatch",
 						new ObjectValuePair<>(
@@ -275,6 +286,10 @@ public class ServletDataImpl implements ServletData {
 			};
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<PlacedOrderResource>
+		_placedOrderResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<PlacedOrderCommentResource>
 		_placedOrderCommentResourceComponentServiceObjects;
 
@@ -285,10 +300,6 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<PlacedOrderItemShipmentResource>
 		_placedOrderItemShipmentResourceComponentServiceObjects;
-
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<PlacedOrderResource>
-		_placedOrderResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<PlacedOrderAddressResource>

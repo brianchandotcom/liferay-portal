@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.filter.ExpressionConvert;
@@ -53,6 +54,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.UriInfo;
@@ -210,6 +212,40 @@ public abstract class BasePlacedOrderResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-delivery-order/v1.0/placed-orders/by-externalReferenceCode/{externalReferenceCode}' -d $'{"customFields": ___, "name": ___, "printedNote": ___, "purchaseOrderNumber": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "externalReferenceCode"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "PlacedOrder")}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.PATCH
+	@javax.ws.rs.Path(
+		"/placed-orders/by-externalReferenceCode/{externalReferenceCode}"
+	)
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public PlacedOrder patchPlacedOrderByExternalReferenceCode(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("externalReferenceCode")
+			String externalReferenceCode,
+			PlacedOrder placedOrder)
+		throws Exception {
+
+		return new PlacedOrder();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-delivery-order/v1.0/placed-orders/by-externalReferenceCode/{externalReferenceCode}/payment-url'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
@@ -282,6 +318,38 @@ public abstract class BasePlacedOrderResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-delivery-order/v1.0/placed-orders/{placedOrderId}' -d $'{"customFields": ___, "name": ___, "printedNote": ___, "purchaseOrderNumber": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "placedOrderId"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "PlacedOrder")}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.PATCH
+	@javax.ws.rs.Path("/placed-orders/{placedOrderId}")
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public PlacedOrder patchPlacedOrder(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("placedOrderId")
+			Long placedOrderId,
+			PlacedOrder placedOrder)
+		throws Exception {
+
+		return new PlacedOrder();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-delivery-order/v1.0/placed-orders/{placedOrderId}/payment-url'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
@@ -342,7 +410,7 @@ public abstract class BasePlacedOrderResourceImpl
 	}
 
 	public Set<String> getAvailableUpdateStrategies() {
-		return SetUtil.fromArray();
+		return SetUtil.fromArray("PARTIAL_UPDATE");
 	}
 
 	@Override
@@ -406,8 +474,46 @@ public abstract class BasePlacedOrderResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		UnsafeFunction<PlacedOrder, PlacedOrder, Exception>
+			placedOrderUnsafeFunction = null;
+
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
+			placedOrderUnsafeFunction = placedOrder -> patchPlacedOrder(
+				placedOrder.getId() != null ? placedOrder.getId() :
+					_parseLong((String)parameters.get("placedOrderId")),
+				placedOrder);
+		}
+
+		if (placedOrderUnsafeFunction == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" is not supported for PlacedOrder");
+		}
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				placedOrders, placedOrderUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				placedOrders, placedOrderUnsafeFunction::apply);
+		}
+		else {
+			for (PlacedOrder placedOrder : placedOrders) {
+				placedOrderUnsafeFunction.apply(placedOrder);
+			}
+		}
+	}
+
+	private Long _parseLong(String value) {
+		if (value != null) {
+			return Long.parseLong(value);
+		}
+
+		return null;
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

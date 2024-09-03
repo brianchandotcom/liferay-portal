@@ -63,6 +63,10 @@ public class FileEntrySharingEntryDropdownItemContributor
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
 				sharingEntry.getClassName());
 
+		if (assetRendererFactory == null) {
+			return null;
+		}
+
 		return assetRendererFactory.getAssetRenderer(sharingEntry.getClassPK());
 	}
 

@@ -132,53 +132,60 @@ if (journalContentDisplayContext.isShowArticle()) {
 						AssetRenderer<JournalArticle> assetRenderer = assetRendererFactory.getAssetRenderer(article.getResourcePrimKey());
 						%>
 
-						<liferay-util:buffer
-							var="scheduledOrNotApprovedMessage"
-						>
-							<c:choose>
-								<c:when test="<%= article.isScheduled() %>">
-									<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(article.getTitle(locale)), dateTimeFormat.format(article.getDisplayDate())} %>" key="x-is-scheduled-and-will-be-displayed-on-x" />
-								</c:when>
-								<c:otherwise>
-									<liferay-ui:message arguments="<%= HtmlUtil.escape(article.getTitle(locale)) %>" key="x-is-not-approved" />
-								</c:otherwise>
-							</c:choose>
-						</liferay-util:buffer>
+						<c:if test="<%= assetRenderer != null %>">
+							<liferay-util:buffer
+								var="scheduledOrNotApprovedMessage"
+							>
+								<c:choose>
+									<c:when test="<%= article.isScheduled() %>">
+										<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(article.getTitle(locale)), dateTimeFormat.format(article.getDisplayDate())} %>" key="x-is-scheduled-and-will-be-displayed-on-x" />
+									</c:when>
+									<c:otherwise>
+										<liferay-ui:message arguments="<%= HtmlUtil.escape(article.getTitle(locale)) %>" key="x-is-not-approved" />
+									</c:otherwise>
+								</c:choose>
+							</liferay-util:buffer>
 
-						<clay:alert
-							defaultTitleDisabled="<%= true %>"
-							displayType="warning"
-						>
-							<c:choose>
-								<c:when test="<%= assetRenderer.hasEditPermission(permissionChecker) %>">
-									<a href="<%= assetRenderer.getURLEdit(liferayPortletRequest, liferayPortletResponse, WindowState.NORMAL, currentURLObj) %>">
+							<clay:alert
+								defaultTitleDisabled="<%= true %>"
+								displayType="warning"
+							>
+								<c:choose>
+									<c:when test="<%= assetRenderer.hasEditPermission(permissionChecker) %>">
+										<a href="<%= assetRenderer.getURLEdit(liferayPortletRequest, liferayPortletResponse, WindowState.NORMAL, currentURLObj) %>">
+											<%= scheduledOrNotApprovedMessage %>
+										</a>
+									</c:when>
+									<c:otherwise>
 										<%= scheduledOrNotApprovedMessage %>
-									</a>
-								</c:when>
-								<c:otherwise>
-									<%= scheduledOrNotApprovedMessage %>
-								</c:otherwise>
-							</c:choose>
-						</clay:alert>
+									</c:otherwise>
+								</c:choose>
+							</clay:alert>
+						</c:if>
 					</c:when>
 					<c:when test="<%= articleDisplay != null %>">
 
 						<%
 						AssetRenderer<JournalArticle> assetRenderer = assetRendererFactory.getAssetRenderer(article.getResourcePrimKey());
-
-						Map<String, Object> data = HashMapBuilder.<String, Object>put(
-							"fragments-editor-item-id", PortalUtil.getClassNameId(JournalArticle.class) + "-" + assetRenderer.getClassPK()
-						).put(
-							"fragments-editor-item-type", "fragments-editor-mapped-item"
-						).build();
 						%>
 
-						<div class="<%= journalContentDisplayContext.isPreview() ? "p-1 preview-asset-entry" : StringPool.BLANK %>" <%= AUIUtil.buildData(data) %>>
-							<liferay-journal:journal-article-display
-								articleDisplay="<%= articleDisplay %>"
-								paginationURL="<%= renderResponse.createRenderURL() %>"
-							/>
-						</div>
+						<c:if test="<%= assetRenderer != null %>">
+
+							<%
+							Map<String, Object> data = HashMapBuilder.<String, Object>put(
+								"fragments-editor-item-id", PortalUtil.getClassNameId(JournalArticle.class) + "-" + assetRenderer.getClassPK()
+							).put(
+								"fragments-editor-item-type", "fragments-editor-mapped-item"
+							).build();
+							%>
+
+							<div class="<%= journalContentDisplayContext.isPreview() ? "p-1 preview-asset-entry" : StringPool.BLANK %>" <%= AUIUtil.buildData(data) %>>
+								<liferay-journal:journal-article-display
+									articleDisplay="<%= articleDisplay %>"
+									paginationURL="<%= renderResponse.createRenderURL() %>"
+								/>
+							</div>
+						</c:if>
 					</c:when>
 				</c:choose>
 			</c:when>

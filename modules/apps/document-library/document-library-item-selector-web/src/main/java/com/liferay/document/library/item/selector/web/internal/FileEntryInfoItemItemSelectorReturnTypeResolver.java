@@ -92,6 +92,10 @@ public class FileEntryInfoItemItemSelectorReturnTypeResolver
 				assetRendererFactory.getAssetRenderer(
 					fileEntry.getFileEntryId());
 
+			if (assetRenderer == null) {
+				return null;
+			}
+
 			AssetEntry assetEntry = assetRendererFactory.getAssetEntry(
 				DLFileEntryConstants.getClassName(),
 				assetRenderer.getClassPK());

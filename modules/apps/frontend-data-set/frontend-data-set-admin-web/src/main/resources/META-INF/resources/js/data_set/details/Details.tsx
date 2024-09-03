@@ -24,6 +24,20 @@ import openDefaultFailureToast from '../../utils/openDefaultFailureToast';
 import openDefaultSuccessToast from '../../utils/openDefaultSuccessToast';
 import {IDataSetSectionProps} from '../DataSet';
 
+const getURLPreview = ({
+	parameters = '',
+	restApplication,
+	restEndpoint,
+}: {
+	parameters: string;
+	restApplication: string;
+	restEndpoint: string;
+}) => {
+	const encodedParameters = encodeURI(parameters.trim());
+
+	return restApplication + restEndpoint + '?' + encodedParameters;
+};
+
 const Details = ({
 	backURL,
 	dataSet,
@@ -32,13 +46,37 @@ const Details = ({
 }: IDataSetSectionProps) => {
 	const [labelValidationError, setLabelValidationError] = useState(false);
 
+	const dataSetAsIDataSet = dataSet as IDataSet;
+
+	const [urlPreview, setURLPreview] = useState(
+		getURLPreview({
+			parameters: dataSetAsIDataSet.parameters,
+			restApplication: dataSetAsIDataSet.restApplication,
+			restEndpoint: dataSetAsIDataSet.restEndpoint,
+		})
+	);
+
 	const descriptionRef = useRef<HTMLInputElement>(null);
 	const labelRef = useRef<HTMLInputElement>(null);
+	const parametersRef = useRef<HTMLInputElement>(null);
+
+	const handleKeyUpParameters = (
+		event: React.ChangeEvent<HTMLInputElement>
+	) => {
+		setURLPreview(
+			getURLPreview({
+				parameters: event.currentTarget.value,
+				restApplication: dataSetAsIDataSet.restApplication,
+				restEndpoint: dataSetAsIDataSet.restEndpoint,
+			})
+		);
+	};
 
 	const updateFDSView = async () => {
 		const body = {
 			description: descriptionRef.current?.value,
 			label: labelRef.current?.value,
+			parameters: parametersRef.current?.value,
 		};
 
 		const response = await fetch(
@@ -193,6 +231,60 @@ const Details = ({
 					</ClayList.Item>
 				</ClayList>
 			</ClayLayout.SheetSection>
+
+			{Liferay.FeatureFlags['LPD-25230'] && (
+				<ClayLayout.SheetSection className="mb-4">
+					<h3 className="sheet-subtitle">
+						{Liferay.Language.get('advanced-optional-parameters')}
+					</h3>
+
+					<ClayForm.Group>
+						<label htmlFor={`${namespace}dataSetParametersInput`}>
+							{Liferay.Language.get('parameters')}
+
+							<span
+								className="label-icon lfr-portal-tooltip ml-2"
+								title={Liferay.Language.get(
+									'data-set-parameters-help'
+								)}
+							>
+								<ClayIcon symbol="question-circle-full" />
+							</span>
+						</label>
+
+						<ClayInput
+							component="textarea"
+							defaultValue={dataSet.parameters}
+							id={`${namespace}dataSetParametersInput`}
+							onChange={handleKeyUpParameters}
+							placeholder={Liferay.Language.get(
+								'data-set-parameters-placeholder'
+							)}
+							ref={parametersRef}
+							type="text"
+						/>
+					</ClayForm.Group>
+
+					<ClayForm.Group>
+						<label htmlFor={`${namespace}dataSetURLPreviewInput`}>
+							{Liferay.Language.get('url-preview')}
+
+							<span
+								className="label-icon lfr-portal-tooltip ml-2"
+								title={Liferay.Language.get('url-preview-help')}
+							>
+								<ClayIcon symbol="question-circle-full" />
+							</span>
+						</label>
+
+						<ClayInput
+							id={`${namespace}dataSetURLPreviewInput`}
+							readOnly
+							value={urlPreview}
+						/>
+					</ClayForm.Group>
+				</ClayLayout.SheetSection>
+			)}
 
 			<ClayLayout.SheetFooter>
 				<ClayButton.Group spaced>

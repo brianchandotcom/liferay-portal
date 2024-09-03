@@ -48,6 +48,7 @@ export interface IDataSet {
 	id: string;
 	label: string;
 	listOfItemsPerPage: string;
+	parameters: string;
 	restApplication: string;
 	restEndpoint: string;
 	restSchema: string;

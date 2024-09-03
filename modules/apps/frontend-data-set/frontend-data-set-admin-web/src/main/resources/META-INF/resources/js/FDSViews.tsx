@@ -40,6 +40,7 @@ type FDSViewType = {
 	id: string;
 	label: string;
 	listOfItemsPerPage: string;
+	parameters: string;
 };
 
 interface IAddFDSViewModalContentInterface {

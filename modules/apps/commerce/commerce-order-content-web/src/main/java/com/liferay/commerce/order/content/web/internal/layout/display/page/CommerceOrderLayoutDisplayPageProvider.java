@@ -6,13 +6,16 @@
 package com.liferay.commerce.order.content.web.internal.layout.display.page;
 
 import com.liferay.commerce.model.CommerceOrder;
-import com.liferay.commerce.service.CommerceOrderLocalService;
+import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.layout.display.page.BaseLayoutDisplayPageProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -70,44 +73,56 @@ public class CommerceOrderLayoutDisplayPageProvider
 			(ClassPKInfoItemIdentifier)
 				infoItemReference.getInfoItemIdentifier();
 
-		CommerceOrder commerceOrder =
-			_commerceOrderLocalService.fetchCommerceOrder(
-				classPKInfoItemIdentifier.getClassPK());
+		try {
+			CommerceOrder commerceOrder =
+				_commerceOrderService.getCommerceOrder(
+					classPKInfoItemIdentifier.getClassPK());
 
-		if (commerceOrder == null) {
-			return null;
+			long groupId = commerceOrder.getGroupId();
+
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
+
+			if (serviceContext != null) {
+				groupId = serviceContext.getScopeGroupId();
+			}
+
+			return new CommerceOrderLayoutDisplayPageObjectProvider(
+				commerceOrder, groupId);
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
 		}
 
-		long groupId = commerceOrder.getGroupId();
-
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		if (serviceContext != null) {
-			groupId = serviceContext.getScopeGroupId();
-		}
-
-		return new CommerceOrderLayoutDisplayPageObjectProvider(
-			commerceOrder, groupId);
+		return null;
 	}
 
 	@Override
 	public LayoutDisplayPageObjectProvider<CommerceOrder>
 		getLayoutDisplayPageObjectProvider(long groupId, String urlTitle) {
 
-		CommerceOrder commerceOrder =
-			_commerceOrderLocalService.fetchCommerceOrder(
-				Long.valueOf(urlTitle));
+		try {
+			CommerceOrder commerceOrder =
+				_commerceOrderService.getCommerceOrder(Long.valueOf(urlTitle));
 
-		if (commerceOrder == null) {
-			return null;
+			return new CommerceOrderLayoutDisplayPageObjectProvider(
+				commerceOrder, groupId);
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
 		}
 
-		return new CommerceOrderLayoutDisplayPageObjectProvider(
-			commerceOrder, groupId);
+		return null;
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		CommerceOrderLayoutDisplayPageProvider.class);
+
 	@Reference
-	private CommerceOrderLocalService _commerceOrderLocalService;
+	private CommerceOrderService _commerceOrderService;
 
 }

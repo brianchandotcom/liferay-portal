@@ -13,7 +13,7 @@ import com.liferay.commerce.order.content.web.internal.util.CommerceOrderItemUti
 import com.liferay.commerce.price.CommerceOrderItemPrice;
 import com.liferay.commerce.price.CommerceOrderPriceCalculation;
 import com.liferay.commerce.product.model.CPInstance;
-import com.liferay.commerce.product.service.CPInstanceLocalService;
+import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.util.CommerceUtil;
@@ -93,7 +93,7 @@ public class CommerceOrderItemInfoItemRenderer
 			_commerceOrderPriceCalculation.getCommerceOrderItemPrice(
 				commerceOrder.getCommerceCurrency(), commerceOrderItem);
 
-		CPInstance cpInstance = _cpInstanceLocalService.fetchCPInstance(
+		CPInstance cpInstance = _cpInstanceService.fetchCPInstance(
 			commerceOrderItem.getCPInstanceId());
 
 		return HashMapBuilder.put(
@@ -140,7 +140,7 @@ public class CommerceOrderItemInfoItemRenderer
 	private CPInstanceHelper _cpInstanceHelper;
 
 	@Reference
-	private CPInstanceLocalService _cpInstanceLocalService;
+	private CPInstanceService _cpInstanceService;
 
 	@Reference
 	private Language _language;

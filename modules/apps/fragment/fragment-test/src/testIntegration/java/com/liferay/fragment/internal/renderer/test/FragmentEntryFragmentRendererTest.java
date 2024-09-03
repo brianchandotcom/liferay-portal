@@ -228,7 +228,7 @@ public class FragmentEntryFragmentRendererTest {
 	}
 
 	@Test
-	public void testMapCategoryFromBlogEntryToEditableField() throws Exception {
+	public void testMapAssetVocabularyToInfoField() throws Exception {
 		AssetVocabulary assetVocabulary =
 			_assetVocabularyLocalService.addVocabulary(
 				TestPropsValues.getUserId(), _group.getGroupId(),
@@ -246,145 +246,82 @@ public class FragmentEntryFragmentRendererTest {
 
 		String fieldId = "AssetVocabulary_" + assetVocabulary.getVocabularyId();
 
-		FragmentEntryLink blogsHeadingFragmentEntryLink =
-			_addHeadingFragmentEntryLink(
+		String title = assetCategory.getTitle(LocaleUtil.getDefault());
+
+		_assertRenderFragmentEntryLink(
+			title,
+			JSONUtil.put(
+				"element-text",
 				JSONUtil.put(
-					"element-text",
-					JSONUtil.put(
-						"className", BlogsEntry.class
-					).put(
-						"classNameId",
-						PortalUtil.getClassNameId(BlogsEntry.class)
-					).put(
-						"classPK", blogsEntry.getEntryId()
-					).put(
-						"classTypeId", "0"
-					).put(
-						"config", JSONUtil.put("mapperType", "link")
-					).put(
-						"defaultValue", "Heading Example"
-					).put(
-						"fieldId", fieldId
-					).put(
-						"itemType", "Blogs Entry"
-					).put(
-						"title", blogsEntry.getTitle()
-					)));
-
-		MockHttpServletResponse mockHttpServletResponse =
-			_renderFragmentEntryLink(blogsHeadingFragmentEntryLink);
-
-		String content = mockHttpServletResponse.getContentAsString();
-
-		Assert.assertTrue(
-			content.contains(assetCategory.getTitle(LocaleUtil.getDefault())));
-	}
-
-	@Test
-	public void testMapCategoryFromFileEntryToEditableField() throws Exception {
-		AssetVocabulary assetVocabulary =
-			_assetVocabularyLocalService.addVocabulary(
-				TestPropsValues.getUserId(), _group.getGroupId(),
-				RandomTestUtil.randomString(), _serviceContext);
-
-		AssetCategory assetCategory = _assetCategoryLocalService.addCategory(
-			TestPropsValues.getUserId(), _group.getGroupId(),
-			RandomTestUtil.randomString(), assetVocabulary.getVocabularyId(),
-			_serviceContext);
-
-		_serviceContext.setAssetCategoryIds(
-			new long[] {assetCategory.getCategoryId()});
+					"className", BlogsEntry.class
+				).put(
+					"classNameId", PortalUtil.getClassNameId(BlogsEntry.class)
+				).put(
+					"classPK", blogsEntry.getEntryId()
+				).put(
+					"classTypeId", "0"
+				).put(
+					"config", JSONUtil.put("mapperType", "link")
+				).put(
+					"defaultValue", "Heading Example"
+				).put(
+					"fieldId", fieldId
+				).put(
+					"itemType", "Blogs Entry"
+				).put(
+					"title", blogsEntry.getTitle()
+				)));
 
 		FileEntry fileEntry = _addFileEntry();
 
-		String fieldId = "AssetVocabulary_" + assetVocabulary.getVocabularyId();
-
-		FragmentEntryLink fileHeadingFragmentEntryLink =
-			_addHeadingFragmentEntryLink(
+		_assertRenderFragmentEntryLink(
+			title,
+			JSONUtil.put(
+				"element-text",
 				JSONUtil.put(
-					"element-text",
-					JSONUtil.put(
-						"classNameId",
-						PortalUtil.getClassNameId(FileEntry.class)
-					).put(
-						"classPK", fileEntry.getFileEntryId()
-					).put(
-						"config", JSONUtil.put("mapperType", "link")
-					).put(
-						"defaultValue", "Heading Example"
-					).put(
-						"fieldId", fieldId
-					).put(
-						"itemSubtype", "Basic Document"
-					).put(
-						"itemType", "Document"
-					).put(
-						"title", fileEntry.getTitle()
-					)));
-
-		MockHttpServletResponse mockHttpServletResponse =
-			_renderFragmentEntryLink(fileHeadingFragmentEntryLink);
-
-		String content = mockHttpServletResponse.getContentAsString();
-
-		Assert.assertTrue(
-			content.contains(assetCategory.getTitle(LocaleUtil.getDefault())));
-	}
-
-	@Test
-	public void testMapCategoryFromJournalArticleToEditableField()
-		throws Exception {
-
-		AssetVocabulary assetVocabulary =
-			_assetVocabularyLocalService.addVocabulary(
-				TestPropsValues.getUserId(), _group.getGroupId(),
-				RandomTestUtil.randomString(), _serviceContext);
-
-		AssetCategory assetCategory = _assetCategoryLocalService.addCategory(
-			TestPropsValues.getUserId(), _group.getGroupId(),
-			RandomTestUtil.randomString(), assetVocabulary.getVocabularyId(),
-			_serviceContext);
-
-		_serviceContext.setAssetCategoryIds(
-			new long[] {assetCategory.getCategoryId()});
+					"classNameId", PortalUtil.getClassNameId(FileEntry.class)
+				).put(
+					"classPK", fileEntry.getFileEntryId()
+				).put(
+					"config", JSONUtil.put("mapperType", "link")
+				).put(
+					"defaultValue", "Heading Example"
+				).put(
+					"fieldId", fieldId
+				).put(
+					"itemSubtype", "Basic Document"
+				).put(
+					"itemType", "Document"
+				).put(
+					"title", fileEntry.getTitle()
+				)));
 
 		JournalArticle journalArticle = _addJournalArticle();
 
-		String fieldId = "AssetVocabulary_" + assetVocabulary.getVocabularyId();
-
-		FragmentEntryLink journalHeadingFragmentEntryLink =
-			_addHeadingFragmentEntryLink(
+		_assertRenderFragmentEntryLink(
+			title,
+			JSONUtil.put(
+				"element-text",
 				JSONUtil.put(
-					"element-text",
-					JSONUtil.put(
-						"classNameId",
-						PortalUtil.getClassNameId(JournalArticle.class)
-					).put(
-						"classPK", journalArticle.getResourcePrimKey()
-					).put(
-						"classTypeId", journalArticle.getDDMStructureId()
-					).put(
-						"config", JSONUtil.put("mapperType", "link")
-					).put(
-						"defaultValue", "Heading Example"
-					).put(
-						"fieldId", fieldId
-					).put(
-						"itemSubtype", "Basic Web Content"
-					).put(
-						"itemType", "Web Content Article"
-					).put(
-						"title",
-						journalArticle.getTitle(LocaleUtil.getDefault())
-					)));
-
-		MockHttpServletResponse mockHttpServletResponse =
-			_renderFragmentEntryLink(journalHeadingFragmentEntryLink);
-
-		String content = mockHttpServletResponse.getContentAsString();
-
-		Assert.assertTrue(
-			content.contains(assetCategory.getTitle(LocaleUtil.getDefault())));
+					"classNameId",
+					PortalUtil.getClassNameId(JournalArticle.class)
+				).put(
+					"classPK", journalArticle.getResourcePrimKey()
+				).put(
+					"classTypeId", journalArticle.getDDMStructureId()
+				).put(
+					"config", JSONUtil.put("mapperType", "link")
+				).put(
+					"defaultValue", "Heading Example"
+				).put(
+					"fieldId", fieldId
+				).put(
+					"itemSubtype", "Basic Web Content"
+				).put(
+					"itemType", "Web Content Article"
+				).put(
+					"title", journalArticle.getTitle(LocaleUtil.getDefault())
+				)));
 	}
 
 	@Test
@@ -618,6 +555,21 @@ public class FragmentEntryFragmentRendererTest {
 			_group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, StringPool.BLANK,
 			true, _serviceContext);
+	}
+
+	private void _assertRenderFragmentEntryLink(
+			String expected, JSONObject jsonObject)
+		throws Exception {
+
+		FragmentEntryLink fileHeadingFragmentEntryLink =
+			_addHeadingFragmentEntryLink(jsonObject);
+
+		MockHttpServletResponse mockHttpServletResponse =
+			_renderFragmentEntryLink(fileHeadingFragmentEntryLink);
+
+		String content = mockHttpServletResponse.getContentAsString();
+
+		Assert.assertTrue(content, content.contains(expected));
 	}
 
 	private FragmentEntry _getFragmentEntry(boolean cacheable)

@@ -95,8 +95,7 @@ public class PlacedOrderResourceTest extends BasePlacedOrderResourceTestCase {
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {
-			"accountId", "orderUUID", "paymentMethod", "paymentStatus",
-			"printedNote", "purchaseOrderNumber", "shippingOption"
+			"accountId", "name", "printedNote", "purchaseOrderNumber"
 		};
 	}
 
@@ -207,6 +206,21 @@ public class PlacedOrderResourceTest extends BasePlacedOrderResourceTestCase {
 		return _addCommerceOrder(randomPlacedOrder());
 	}
 
+	@Override
+	protected PlacedOrder testPatchPlacedOrder_addPlacedOrder()
+		throws Exception {
+
+		return _addCommerceOrder(randomPlacedOrder());
+	}
+
+	@Override
+	protected PlacedOrder
+			testPatchPlacedOrderByExternalReferenceCode_addPlacedOrder()
+		throws Exception {
+
+		return _addCommerceOrder(randomPlacedOrder());
+	}
+
 	private PlacedOrder _addCommerceOrder(PlacedOrder placedOrder)
 		throws Exception {
 
@@ -246,6 +260,7 @@ public class PlacedOrderResourceTest extends BasePlacedOrderResourceTestCase {
 				id = commerceOrder.getCommerceOrderId();
 				lastPriceUpdateDate = commerceOrder.getLastPriceUpdateDate();
 				modifiedDate = commerceOrder.getModifiedDate();
+				name = commerceOrder.getName();
 				orderUUID = commerceOrder.getUuid();
 				paymentMethod = commerceOrder.getCommercePaymentMethodKey();
 				paymentStatus = commerceOrder.getPaymentStatus();

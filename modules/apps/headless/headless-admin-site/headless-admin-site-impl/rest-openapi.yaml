@@ -3655,6 +3655,441 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/FragmentComposition"
             tags: ["FragmentComposition"]
+    "/sites/{siteExternalReferenceCode}/master-pages":
+        get:
+            # @review
+            description:
+                Retrieves the master pages of the site.
+            operationId: getSiteSiteByExternalReferenceCodeMasterPagesPage
+            parameters:
+                - in: path
+                  name: siteExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: query
+                  name: aggregationTerms
+                  schema:
+                      items:
+                          type: string
+                      type: array
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
+                - in: query
+                  name: nestedFields
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
+                - in: query
+                  name: search
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/MasterPage"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/MasterPage"
+                                type: array
+            tags: ["MasterPage"]
+        post:
+            # @review
+            description:
+                Adds a new master page.
+            operationId: postSiteSiteByExternalReferenceCodeMasterPage
+            parameters:
+                - in: path
+                  name: siteExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/MasterPage"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/MasterPage"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/MasterPage"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/MasterPage"
+            # @review
+            tags: ["MasterPage"]
+    "/sites/{siteExternalReferenceCode}/master-pages/permissions":
+        get:
+            operationId: getSiteSiteByExternalReferenceCodeMasterPagePermissionsPage
+            parameters:
+                - in: path
+                  name: siteExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
+                - in: query
+                  name: roleNames
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["MasterPage"]
+        put:
+            operationId: putSiteSiteByExternalReferenceCodeMasterPagePermissionsPage
+            parameters:
+                - in: path
+                  name: siteExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/json: {}
+                    application/xml: {}
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["MasterPage"]
+    "/sites/{siteExternalReferenceCode}/master-pages/{masterPageExternalReferenceCode}":
+        delete:
+            # @review
+            description:
+                Deletes a specific master page of a site.
+            operationId: deleteSiteSiteByExternalReferenceCodeMasterPage
+            parameters:
+                - in: path
+                  name: siteExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: masterPageExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["MasterPage"]
+        get:
+            # @review
+            description:
+                Retrieves a specific master page of a site.
+            operationId: getSiteSiteByExternalReferenceCodeMasterPage
+            parameters:
+                - in: path
+                  name: siteExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: masterPageExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: nestedFields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/MasterPage"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/MasterPage"
+            tags: ["MasterPage"]
+        patch:
+            # @review
+            description:
+                Updates only the fields received in the request body, leaving any other fields untouched.
+            operationId: patchSiteSiteByExternalReferenceCodeMasterPage
+            parameters:
+                - in: path
+                  name: siteExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: masterPageExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: nestedFields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/MasterPage"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/MasterPage"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/MasterPage"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/MasterPage"
+            tags: ["MasterPage"]
+        put:
+            # @review
+            description:
+                Updates the master page with the given external reference code, or creates it if it does not exist.
+            operationId: putSiteSiteByExternalReferenceCodeMasterPage
+            parameters:
+                - in: path
+                  name: siteExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: masterPageExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: nestedFields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/MasterPage"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/MasterPage"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/MasterPage"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/MasterPage"
+            tags: ["MasterPage"]
+    "/sites/{siteExternalReferenceCode}/master-pages/{masterPageExternalReferenceCode}/page-specifications":
+        get:
+            # @review
+            description:
+                Retrieves all the page specifications of a master page.
+            operationId: getSiteSiteByExternalReferenceCodeMasterPagePageSpecificationsPage
+            parameters:
+                - in: path
+                  name: siteExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: masterPageExternalReferenceCode
+                  schema:
+                      type: string
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: nestedFields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/PageSpecification"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/PageSpecification"
+                                type: array
+            # @review
+            tags: ["PageSpecification"]
+        post:
+            # @review
+            description:
+                Adds a new page specification in draft status to a master page.
+            operationId: postSiteSiteByExternalReferenceCodeMasterPagePageSpecification
+            parameters:
+                - in: path
+                  name: siteExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: masterPageExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: nestedFields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ContentPageSpecification"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ContentPageSpecification"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ContentPageSpecification"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ContentPageSpecification"
+            # @review
+            tags: ["MasterPage"]
+    "/sites/{siteExternalReferenceCode}/master-pages/{masterPageExternalReferenceCode}/permissions":
+        get:
+            parameters:
+                - in: path
+                  name: siteExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: masterPageExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
+                - in: query
+                  name: roleNames
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["MasterPage"]
+        put:
+            parameters:
+                - in: path
+                  name: siteExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: masterPageExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/json: {}
+                    application/xml: {}
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["MasterPage"]
     "/sites/{siteExternalReferenceCode}/page-elements/{pageElementExternalReferenceCode}":
         delete:
             # @review

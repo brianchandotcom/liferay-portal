@@ -247,9 +247,10 @@ public class FragmentEntryFragmentRendererTest {
 			JSONUtil.put(
 				"element-text",
 				JSONUtil.put(
-					"className", BlogsEntry.class
+					"className", BlogsEntry.class.getName()
 				).put(
-					"classNameId", PortalUtil.getClassNameId(BlogsEntry.class)
+					"classNameId",
+					_portal.getClassNameId(BlogsEntry.class.getName())
 				).put(
 					"classPK", blogsEntry.getEntryId()
 				).put(
@@ -273,7 +274,8 @@ public class FragmentEntryFragmentRendererTest {
 			JSONUtil.put(
 				"element-text",
 				JSONUtil.put(
-					"classNameId", PortalUtil.getClassNameId(FileEntry.class)
+					"classNameId",
+					_portal.getClassNameId(FileEntry.class.getName())
 				).put(
 					"classPK", fileEntry.getFileEntryId()
 				).put(
@@ -298,7 +300,7 @@ public class FragmentEntryFragmentRendererTest {
 				"element-text",
 				JSONUtil.put(
 					"classNameId",
-					PortalUtil.getClassNameId(JournalArticle.class)
+					_portal.getClassNameId(JournalArticle.class.getName())
 				).put(
 					"classPK", journalArticle.getResourcePrimKey()
 				).put(

@@ -67,6 +67,7 @@ test.describe('manage object definitions through model builder', () => {
 	test('can edit object folder label and ERC by Model Builder', async ({
 		apiHelpers,
 		modalEditObjectFolderPage,
+		modelBuilderLeftSidebarPage,
 		modelBuilderPage,
 	}) => {
 		const objectFolder =
@@ -90,7 +91,7 @@ test.describe('manage object definitions through model builder', () => {
 			)
 		).toBeVisible();
 
-		expect(modelBuilderPage.selectedObjectFolder).toBeVisible();
+		expect(modelBuilderLeftSidebarPage.selectedObjectFolder).toBeVisible();
 
 		expect(
 			modelBuilderPage.getObjectFolderERCHeaderLocator(newObjectFolderERC)

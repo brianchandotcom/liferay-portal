@@ -280,6 +280,7 @@ test.describe('Manage object definitions through Model Builder', () => {
 	test('linked object definitions are created when object definitions are related and put into different folders', async ({
 		apiHelpers,
 		modelBuilderLeftSidebarPage,
+		modelBuilderObjectDefinitionNodePage,
 		modelBuilderPage,
 	}) => {
 		const objectFolder =
@@ -329,13 +330,13 @@ test.describe('Manage object definitions through Model Builder', () => {
 		await modelBuilderPage.goto({objectFolderName: 'Default'});
 
 		await expect(
-			modelBuilderPage.getLinkedObjectDefinitionIconLocator(
+			modelBuilderObjectDefinitionNodePage.getLinkedObjectDefinitionIconLocator(
 				objectDefinition1.label['en_US']
 			)
 		).toBeVisible();
 
 		await expect(
-			modelBuilderPage.getLinkedObjectDefinitionIconLocator(
+			modelBuilderObjectDefinitionNodePage.getLinkedObjectDefinitionIconLocator(
 				objectDefinition2.label['en_US']
 			)
 		).toBeHidden();
@@ -347,13 +348,13 @@ test.describe('Manage object definitions through Model Builder', () => {
 		await modelBuilderLeftSidebarPage.goToFolderButton.click();
 
 		await expect(
-			modelBuilderPage.getLinkedObjectDefinitionIconLocator(
+			modelBuilderObjectDefinitionNodePage.getLinkedObjectDefinitionIconLocator(
 				objectDefinition1.label['en_US']
 			)
 		).toBeHidden();
 
 		await expect(
-			modelBuilderPage.getLinkedObjectDefinitionIconLocator(
+			modelBuilderObjectDefinitionNodePage.getLinkedObjectDefinitionIconLocator(
 				objectDefinition2.label['en_US']
 			)
 		).toBeVisible();

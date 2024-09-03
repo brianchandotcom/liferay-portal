@@ -26,7 +26,6 @@ export class ModelBuilderPage {
 	readonly openPageViewButton: Locator;
 	readonly page: Page;
 	readonly postalAddressObjectRelationshipWarning: Locator;
-	readonly selectedObjectFolder: Locator;
 	readonly toggleSidebarsButton: Locator;
 	readonly viewObjectDefinitionsPage: ViewObjectDefinitionsPage;
 
@@ -74,11 +73,6 @@ export class ModelBuilderPage {
 					'Postal Address can only have a relationship with the Account object.',
 			}
 		);
-		this.selectedObjectFolder = page
-			.getByRole('tabpanel')
-			.getByRole('treeitem')
-			.filter({hasNot: page.getByTitle('Go to Folder')})
-			.first();
 		this.toggleSidebarsButton = page.getByLabel('Toggle Sidebars');
 	}
 
@@ -132,14 +126,6 @@ export class ModelBuilderPage {
 				targetPosition: {x: targetX, y: targetY},
 			});
 	}
-
-	getLinkedObjectDefinitionIconLocator = (objectDefinitionLabel: string) => {
-		return this.objectDefinitionNodes
-			.filter({
-				hasText: objectDefinitionLabel,
-			})
-			.locator('svg.lexicon-icon-link');
-	};
 
 	getObjectDefinitionNodeRelationshipHandle(
 		objectDefinitionId: number,

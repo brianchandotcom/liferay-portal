@@ -10,6 +10,7 @@ export class ModelBuilderLeftSidebarPage {
 	readonly goToFolderButton: Locator;
 	readonly sidebarItems: Locator;
 	readonly otherObjectFolders: Locator;
+	readonly selectedObjectFolder: Locator;
 
 	constructor(page: Page) {
 		this.createNewObjectDefinitionButton =
@@ -22,6 +23,11 @@ export class ModelBuilderLeftSidebarPage {
 		this.otherObjectFolders = page
 			.getByRole('region')
 			.filter({has: page.getByTitle('Go to Folder')});
+		this.selectedObjectFolder = page
+			.getByRole('tabpanel')
+			.getByRole('treeitem')
+			.filter({hasNot: page.getByTitle('Go to Folder')})
+			.first();
 	}
 
 	async clickSideBarItem(objectDefinitionLabel: string) {
@@ -39,9 +45,9 @@ export class ModelBuilderLeftSidebarPage {
 			.click();
 	}
 
-	getOtherObjectFolderLocator = (objectFolderLabel: string) => {
+	getOtherObjectFolderLocator(objectFolderLabel: string) {
 		return this.otherObjectFolders
 			.getByRole('treeitem')
 			.filter({hasText: objectFolderLabel});
-	};
+	}
 }

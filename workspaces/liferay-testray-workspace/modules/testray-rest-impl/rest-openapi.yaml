@@ -1,5 +1,63 @@
 components:
     schemas:
+        TestrayBuild:
+            properties:
+                archived:
+                    type: boolean
+                caseResultBlocked:
+                    format: int32
+                    type: integer
+                caseResultDidNotRun:
+                    format: int32
+                    type: integer
+                caseResultFailed:
+                    format: int32
+                    type: integer
+                caseResultInProgress:
+                    format: int32
+                    type: integer
+                caseResultIncomplete:
+                    format: int32
+                    type: integer
+                caseResultPassed:
+                    format: int32
+                    type: integer
+                caseResultTestFix:
+                    format: int32
+                    type: integer
+                caseResultUntested:
+                    format: int32
+                    type: integer
+                dateArchived:
+                    type: string
+                description:
+                    type: string
+                dueDate:
+                    type: string
+                dueStatus:
+                    type: string
+                gitHash:
+                    type: string
+                githubCompareURLs:
+                    type: string
+                name:
+                    type: string
+                promoted:
+                    type: boolean
+                r_productVersionToBuilds_c_productVersionId:
+                    format: int64
+                    type: integer
+                r_projectToBuilds_c_projectId:
+                    format: int64
+                    type: integer
+                r_routineToBuilds_c_routineId:
+                    format: int64
+                    type: integer
+                template:
+                    type: boolean
+                templateTestrayBuildId:
+                    format: int64
+                    type: integer
         TestrayBuildAutofill:
             properties:
                 caseAmount:
@@ -303,6 +361,26 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/TestrayBuildAutofill"
             tags: ["TestrayBuildAutofill"]
+    "/testray-build/{testrayBuildId}":
+        patch:
+            operationId: patchTestrayBuild
+            parameters:
+                - in: path
+                  name: testrayBuildId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/TestrayBuild"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/TestrayBuild"
+            tags: ["TestrayBuild"]
     "/testray-case-result-history/{testrayCaseId}":
         get:
             operationId: getTestrayCaseResultHistoryTestrayCasePage

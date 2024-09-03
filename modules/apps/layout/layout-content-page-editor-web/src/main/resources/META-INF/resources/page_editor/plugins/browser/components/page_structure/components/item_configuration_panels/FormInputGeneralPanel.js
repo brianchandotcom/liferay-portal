@@ -194,6 +194,7 @@ export function FormInputGeneralPanel({item}) {
 		() =>
 			allowedInputTypes?.includes('captcha') ||
 			allowedInputTypes?.includes('categorization') ||
+			allowedInputTypes?.includes('formButton') ||
 			allowedInputTypes?.includes('stepper'),
 		[allowedInputTypes]
 	);

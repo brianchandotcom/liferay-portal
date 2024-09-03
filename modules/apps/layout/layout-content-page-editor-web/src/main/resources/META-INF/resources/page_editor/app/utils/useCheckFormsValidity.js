@@ -215,7 +215,8 @@ async function checkUnmappedInputChild(
 
 		const isSpecialFieldType =
 			allowedFieldTypes.includes('captcha') ||
-			allowedFieldTypes.includes('categorization');
+			allowedFieldTypes.includes('categorization') ||
+			allowedFieldTypes.includes('formButton');
 
 		if (isSpecialFieldType) {
 			continue;

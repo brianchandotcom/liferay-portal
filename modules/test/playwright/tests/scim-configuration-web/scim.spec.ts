@@ -8,9 +8,12 @@ import {expect, mergeTests} from '@playwright/test';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {ApiHelpers} from '../../helpers/ApiHelpers';
+import {liferayConfig} from '../../liferay.config';
+import {VirtualInstancesPage} from '../../pages/portal-instances-web/VirtualInstancesPage';
 import {ApplicationsMenuPage} from '../../pages/product-navigation-applications-menu/ApplicationsMenuPage';
 import {SCIMConfigurationPage} from '../../pages/scim-configuraiton-web/SCIMConfigurationPage';
 import {getRandomInt} from '../../utils/getRandomInt';
+import performLogin, {performLogout} from '../../utils/performLogin';
 
 export const test = mergeTests(
 	featureFlagsTest({
@@ -18,6 +21,8 @@ export const test = mergeTests(
 	}),
 	loginTest()
 );
+
+const DEFAULT_VIRTUAL_INSTANCE_NAME = 'www.able.com';
 
 const RESET_SCIM_HELP_TEXT =
 	'All SCIM Client related data and generated OAuth 2 tokens will be ' +
@@ -308,4 +313,49 @@ test('LPD-33284 verify that post and get groups requests work with oauth token',
 	expect(response).toContain('"totalResults":1');
 
 	await scimConfigurationPage.resetClientData();
+});
+
+test('LPS-190119 (TC-2 & TC-5). Admin User can Generate and Revoke SCIM Access Tokens on a new Virtual Instance.', async ({
+	browser,
+	page,
+}) => {
+	const virtualInstancesPage = new VirtualInstancesPage(page);
+
+	await virtualInstancesPage.addNewVirtualInstance(
+		DEFAULT_VIRTUAL_INSTANCE_NAME
+	);
+
+	const defaultBaseUrl = liferayConfig.environment.baseUrl;
+
+	liferayConfig.environment.baseUrl = `http://${DEFAULT_VIRTUAL_INSTANCE_NAME}:8080`;
+
+	const newPage = await browser.newPage({
+		baseURL: `http://${DEFAULT_VIRTUAL_INSTANCE_NAME}:8080`,
+	});
+
+	await performLogin(
+		newPage,
+		'test',
+		'?p_p_id=com_liferay_login_web_portlet_LoginPortlet&' +
+			'p_p_state=maximized',
+		`@${DEFAULT_VIRTUAL_INSTANCE_NAME}.com`
+	);
+
+	const scimConfigurationPage = new SCIMConfigurationPage(newPage);
+
+	await scimConfigurationPage.goTo();
+
+	await scimConfigurationPage.configureSCIM('email', 'Test SCIM Client');
+
+	await scimConfigurationPage.generateToken();
+
+	await scimConfigurationPage.revokeToken();
+
+	await performLogout(newPage);
+
+	liferayConfig.environment.baseUrl = defaultBaseUrl;
+
+	await virtualInstancesPage.deleteVirtualInstance(
+		DEFAULT_VIRTUAL_INSTANCE_NAME
+	);
 });

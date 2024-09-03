@@ -168,3 +168,174 @@ test('LPD-33439 Default order display page template is accessible via friendly U
 		}
 	}
 });
+
+test('LPD-32227 Order info box fragment configuration', async ({
+	apiHelpers,
+	applicationsMenuPage,
+	commerceLayoutsPage,
+	page,
+	systemSettingsPage,
+}) => {
+	try {
+		await systemSettingsPage.goToSystemSetting(
+			'Feature Flags',
+			'Developer'
+		);
+
+		await page.getByLabel('COMMERCE-9410').click();
+
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			name: getRandomString(),
+			type: 'person',
+		});
+
+		apiHelpers.data.push({id: account.id, type: 'account'});
+
+		const site = await apiHelpers.headlessSite.createSite({
+			name: getRandomString(),
+		});
+
+		apiHelpers.data.push({id: site.id, type: 'site'});
+
+		await applicationsMenuPage.goToSite(site.name);
+
+		await commerceLayoutsPage.goToDisplayPageTemplates();
+		await commerceLayoutsPage.createDisplayPageTemplate(
+			getRandomString(),
+			'Order',
+			site.name
+		);
+		await commerceLayoutsPage.addFragment('Info Box', 'Order');
+		await commerceLayoutsPage.infoBoxReadOnlyToggle.uncheck();
+
+		await expect(
+			page.getByText(
+				'The info box component is not correctly configured.'
+			)
+		).toBeVisible();
+
+		await commerceLayoutsPage.infoBoxFieldSelect.selectOption(
+			'purchaseOrderNumber'
+		);
+
+		await expect(
+			page.getByText(
+				'The info box component is not correctly configured.'
+			)
+		).toBeHidden();
+
+		await commerceLayoutsPage.infoBoxLabelInput.fill('PON');
+		await commerceLayoutsPage.publishButton.click();
+
+		await waitForSuccessAlert(
+			page,
+			'The display page template was published successfully.'
+		);
+
+		await commerceLayoutsPage.moreActionsButton.click();
+		await commerceLayoutsPage.markAsDefaultMenuItem.click();
+
+		await waitForSuccessAlert(page);
+
+		await expect(
+			commerceLayoutsPage.defaultDisplayPageTemplateIcon
+		).toBeVisible();
+
+		const channel =
+			await apiHelpers.headlessCommerceAdminChannel.postChannel({
+				siteGroupId: site.id,
+			});
+
+		const catalog =
+			await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
+
+		const product =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+			});
+
+		const sku = product.skus[0];
+
+		const cart = await apiHelpers.headlessCommerceDeliveryCart.postCart(
+			{
+				accountId: account.id,
+				cartItems: [
+					{
+						quantity: 1,
+						skuId: sku.id,
+					},
+				],
+			},
+			channel.id
+		);
+
+		await page.goto(
+			liferayConfig.environment.baseUrl +
+				`/web/${site.name}/order/${cart.id}`
+		);
+
+		await expect(page.getByText('PON')).toBeVisible();
+
+		await commerceLayoutsPage.infoBoxButton('PON').click();
+		await commerceLayoutsPage.inputTextbox('PON').fill('testPON');
+		await commerceLayoutsPage.saveButton.click();
+
+		await expect(page.getByText('testPON')).toBeVisible();
+
+		await commerceLayoutsPage.infoBoxButton('PON').click();
+		await commerceLayoutsPage.inputTextbox('PON').fill('testPONEdited');
+		await commerceLayoutsPage.saveButton.click();
+
+		await expect(page.getByText('testPONEdited')).toBeVisible();
+
+		await commerceLayoutsPage.goToDisplayPageTemplates();
+		await commerceLayoutsPage.moreActionsButton.click();
+		await commerceLayoutsPage.editMenuItem.click();
+		await commerceLayoutsPage.firstFragment.click();
+		await commerceLayoutsPage.infoBoxFieldSelect.selectOption(
+			'accountInfo'
+		);
+
+		await expect(
+			page.getByText(
+				'The info box component is not correctly configured.'
+			)
+		).toBeVisible();
+
+		await commerceLayoutsPage.infoBoxReadOnlyToggle.check();
+
+		await expect(
+			page.getByText(
+				'The info box component is not correctly configured.'
+			)
+		).toBeHidden();
+
+		await commerceLayoutsPage.infoBoxLabelInput.fill('Account Info');
+		await commerceLayoutsPage.publishButton.click();
+
+		await waitForSuccessAlert(
+			page,
+			'The display page template was published successfully.'
+		);
+
+		await page.goto(
+			liferayConfig.environment.baseUrl +
+				`/web/${site.name}/order/${cart.id}`
+		);
+
+		await expect(page.getByText('Account Info')).toBeVisible();
+		await expect(page.getByText(account.name)).toBeVisible();
+		await expect(page.getByText(String(account.id))).toBeVisible();
+		await expect(commerceLayoutsPage.infoBoxButton('PON')).toBeHidden();
+	}
+	finally {
+		await systemSettingsPage.goToSystemSetting(
+			'Feature Flags',
+			'Developer'
+		);
+
+		if (await page.getByLabel('COMMERCE-9410').isChecked()) {
+			await page.getByLabel('COMMERCE-9410').click();
+		}
+	}
+});

@@ -30,6 +30,13 @@ export class CommerceLayoutsPage {
 	readonly designLink: Locator;
 	readonly displayPageTemplateLink: (name: string) => Locator;
 	readonly displayPageTemplatesLink: Locator;
+	readonly editMenuItem: Locator;
+	readonly firstFragment: Locator;
+	readonly infoBoxButton: (label: string) => Locator;
+	readonly infoBoxFieldSelect: Locator;
+	readonly infoBoxLabelInput: Locator;
+	readonly infoBoxReadOnlyToggle: Locator;
+	readonly inputTextbox: (name: string) => Locator;
 	readonly markAsDefaultMenuItem: Locator;
 	readonly moreActionsButton: Locator;
 	readonly openProductMenuButton: Locator;
@@ -120,6 +127,18 @@ export class CommerceLayoutsPage {
 			exact: true,
 			name: 'Display Page Templates',
 		});
+		this.editMenuItem = page.getByRole('menuitem', {
+			exact: true,
+			name: 'Edit',
+		});
+		this.firstFragment = page.locator('#page-editor div').nth(2);
+		this.infoBoxButton = (label: string) =>
+			page.getByTestId(label + '-infoBoxButton');
+		this.infoBoxFieldSelect = page.getByLabel('Field');
+		this.infoBoxLabelInput = page.getByLabel('Label');
+		this.infoBoxReadOnlyToggle = page.getByLabel('Read Only');
+		this.inputTextbox = (name: string) =>
+			page.getByRole('textbox', {exact: true, name});
 		this.markAsDefaultMenuItem = page.getByRole('menuitem', {
 			exact: true,
 			name: 'Mark as Default',
@@ -170,10 +189,19 @@ export class CommerceLayoutsPage {
 			});
 	}
 
-	async addFragment(itemName: string) {
+	async addFragment(itemName: string, menuName: string = '') {
 		const source = await this.page.getByRole('menuitem', {
 			name: itemName,
 		});
+
+		if ((await source.isHidden()) && menuName) {
+			await this.page
+				.getByRole('menuitem', {
+					exact: true,
+					name: menuName,
+				})
+				.click();
+		}
 
 		await source.focus();
 		await source.press('Enter');

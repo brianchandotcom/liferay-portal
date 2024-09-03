@@ -49,9 +49,7 @@ export class IdentityProviderConnectionsPage {
 		this.clockSkewField = page.getByLabel('Clock Skew');
 		this.enabledField = page.getByText('Enabled', {exact: true});
 		this.entityIdField = page.getByLabel('Entity ID');
-		this.forceAuthnToggle = page.getByText('Force Authn', {
-			exact: true,
-		});
+		this.forceAuthnToggle = page.getByText('Force Authn');
 		this.identityProviderConnectionsTab = page.getByRole('tab', {
 			name: 'Identity Provider Connections',
 		});

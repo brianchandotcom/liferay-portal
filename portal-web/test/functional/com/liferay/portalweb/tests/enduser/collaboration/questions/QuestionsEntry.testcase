@@ -1300,6 +1300,7 @@ definition {
 		task ("Then a he can see the question title on url as 'question-1'") {
 			Questions.assertCanonicalURL(
 				category = "category",
+				directNavigation = "true",
 				pageName = "Questions Page",
 				portalURL = ${portalURL},
 				title = "question-1");

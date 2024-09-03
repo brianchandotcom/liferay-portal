@@ -238,7 +238,13 @@ export default function SaveButtons({
 					>
 						{articleId
 							? workflowEnabled
-								? Liferay.Language.get('submit-for-workflow')
+								? showPublishModal
+									? Liferay.Language.get(
+											'submit-for-workflow-with-permissions'
+										)
+									: Liferay.Language.get(
+											'submit-for-workflow'
+										)
 								: showPublishModal
 									? Liferay.Language.get(
 											'publish-with-permissions'

@@ -34,6 +34,7 @@ import com.liferay.portal.search.web.internal.search.bar.portlet.display.context
 import com.liferay.portal.search.web.internal.search.bar.portlet.helper.SearchBarPrecedenceHelper;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRequest;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchResponse;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portlet.PortletPreferencesImpl;
 
@@ -56,7 +57,9 @@ import org.mockito.Mockito;
 
 /**
  * @author Adam Brandizzi
+ * @author Petteri Karttunne
  */
+@FeatureFlags("LPD-35128")
 public class SearchBarPortletDisplayContextFactoryTest {
 
 	@ClassRule
@@ -325,6 +328,14 @@ public class SearchBarPortletDisplayContextFactoryTest {
 		_assertScope(searchBarPortletDisplayContextFactory, false, true, false);
 	}
 
+	@Test
+	public void testsIncludeAttachmentsInSuggestionsContributorConfiguration()
+		throws Exception {
+
+		_testIncludeAttachmentsInSuggestionsContributorConfiguration(false);
+		_testIncludeAttachmentsInSuggestionsContributorConfiguration(true);
+	}
+
 	@Rule
 	public ExpectedException expectedException = ExpectedException.none();
 
@@ -402,23 +413,14 @@ public class SearchBarPortletDisplayContextFactoryTest {
 		throws Exception {
 
 		return _createSearchBarPortletDisplayContextFactory(
-			destination, null, null, null);
+			destination, false, false, null, null, null);
 	}
 
 	private SearchBarPortletDisplayContextFactory
 			_createSearchBarPortletDisplayContextFactory(
-				String scope, String scopeParameterName,
-				String scopeParameterValue)
-		throws Exception {
-
-		return _createSearchBarPortletDisplayContextFactory(
-			null, scope, scopeParameterName, scopeParameterValue);
-	}
-
-	private SearchBarPortletDisplayContextFactory
-			_createSearchBarPortletDisplayContextFactory(
-				String destination, String scope, String scopeParameterName,
-				String scopeParameterValue)
+				String destination, boolean enableSuggestionsPoint,
+				boolean includeAttachments, String scope,
+				String scopeParameterName, String scopeParameterValue)
 		throws Exception {
 
 		RenderRequest renderRequest = Mockito.mock(RenderRequest.class);
@@ -439,6 +441,9 @@ public class SearchBarPortletDisplayContextFactoryTest {
 		portletPreferences.setValue(
 			SearchBarPortletPreferences.PREFERENCE_KEY_DESTINATION,
 			destination);
+		portletPreferences.setValue(
+			SearchBarPortletPreferences.PREFERENCE_KEY_INCLUDE_ATTACHMENTS,
+			Boolean.toString(includeAttachments));
 		portletPreferences.setValue(
 			SearchBarPortletPreferences.PREFERENCE_KEY_SEARCH_SCOPE, scope);
 
@@ -475,6 +480,13 @@ public class SearchBarPortletDisplayContextFactoryTest {
 			_searchBarPortletInstanceConfiguration.destination()
 		).thenReturn(
 			destination
+		);
+
+		Mockito.when(
+			_searchBarPortletInstanceConfiguration.
+				suggestionsContributorConfigurations()
+		).thenReturn(
+			new String[] {"{}"}
 		);
 
 		Mockito.when(
@@ -522,7 +534,23 @@ public class SearchBarPortletDisplayContextFactoryTest {
 			0
 		);
 
+		Mockito.doReturn(
+			enableSuggestionsPoint
+		).when(
+			_searchSuggestionsCompanyConfiguration
+		).enableSuggestionsEndpoint();
+
 		return searchBarPortletDisplayContextFactory;
+	}
+
+	private SearchBarPortletDisplayContextFactory
+			_createSearchBarPortletDisplayContextFactory(
+				String scope, String scopeParameterName,
+				String scopeParameterValue)
+		throws Exception {
+
+		return _createSearchBarPortletDisplayContextFactory(
+			null, false, false, scope, scopeParameterName, scopeParameterValue);
 	}
 
 	private void _setUpLanguageUtil() {
@@ -572,6 +600,30 @@ public class SearchBarPortletDisplayContextFactoryTest {
 		).thenReturn(
 			_searchBarPortletInstanceConfiguration
 		);
+	}
+
+	private void _testIncludeAttachmentsInSuggestionsContributorConfiguration(
+			boolean includeAttachments)
+		throws Exception {
+
+		SearchBarPortletDisplayContextFactory
+			searchBarPortletDisplayContextFactory =
+				_createSearchBarPortletDisplayContextFactory(
+					null, true, includeAttachments, null, null, null);
+
+		SearchBarPortletDisplayContext searchBarPortletDisplayContext =
+			searchBarPortletDisplayContextFactory.create(
+				_portletPreferencesLookup, _portletSharedSearchRequest,
+				_searchBarPrecedenceHelper, _searchCapabilities);
+
+		String suggestionsContributorConfiguration =
+			searchBarPortletDisplayContext.
+				getSuggestionsContributorConfiguration();
+
+		Assert.assertTrue(
+			suggestionsContributorConfiguration,
+			suggestionsContributorConfiguration.contains(
+				"\"includeAttachments\":" + includeAttachments));
 	}
 
 	private void _whenLayoutLocalServiceFetchLayoutByFriendlyURL(

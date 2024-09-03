@@ -5658,18 +5658,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/development/annotations.jar</file-name>
-				<version>1.0</version>
-				<project-name>Common Annotations</project-name>
-				<project-url>http://jsr250.dev.java.net</project-url>
-				<licenses>
-					<license>
-						<license-name>CDDL 1.0</license-name>
-						<license-url>http://glassfish.java.net/public/CDDLv1.0.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/development/ant-apache-bsf.jar</file-name>
 				<version>1.10.9</version>
 				<project-name>Ant</project-name>
@@ -6116,18 +6104,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/development/jasper.jar</file-name>
-				<version>9.0.90</version>
-				<project-name>Tomcat</project-name>
-				<project-url>http://tomcat.apache.org</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/development/jaxb-api.jar</file-name>
 				<version>2.1.9</version>
 				<project-name>Java Architecture for XML Binding</project-name>
@@ -6196,18 +6172,6 @@
 					<license>
 						<license-name>Apache License 2.0</license-name>
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/development/jsp-api.jar</file-name>
-				<version>2.1</version>
-				<project-name>JavaServer Pages</project-name>
-				<project-url>http://java.sun.com/products/jsp</project-url>
-				<licenses>
-					<license>
-						<license-name>Common Development and Distribution License 1.0</license-name>
-						<license-url>https://opensource.org/licenses/CDDL-1.0</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -6488,18 +6452,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/development/servlet-api.jar</file-name>
-				<version>3.1.0</version>
-				<project-name>Java Servlet</project-name>
-				<project-url>http://java.sun.com/products/servlet</project-url>
-				<licenses>
-					<license>
-						<license-name>Common Development and Distribution License 1.1</license-name>
-						<license-url>https://oss.oracle.com/licenses/CDDL-1.1</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/development/slf4j-simple.jar</file-name>
 				<version>1.7.10</version>
 				<project-name>SLF4J Simple Binding</project-name>
@@ -6612,6 +6564,18 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>lib/development/tomcat-annotations-api.jar</file-name>
+				<version>9.0.90</version>
+				<project-name>Tomcat</project-name>
+				<project-url>http://tomcat.apache.org</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>lib/development/tomcat-api.jar</file-name>
 				<version>9.0.90</version>
 				<project-name>Tomcat</project-name>
@@ -6625,6 +6589,78 @@
 			</library>
 			<library>
 				<file-name>lib/development/tomcat-coyote.jar</file-name>
+				<version>9.0.90</version>
+				<project-name>Tomcat</project-name>
+				<project-url>http://tomcat.apache.org</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>lib/development/tomcat-el-api.jar</file-name>
+				<version>9.0.90</version>
+				<project-name>Tomcat</project-name>
+				<project-url>http://tomcat.apache.org</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>lib/development/tomcat-jasper-el.jar</file-name>
+				<version>9.0.90</version>
+				<project-name>Tomcat</project-name>
+				<project-url>http://tomcat.apache.org</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>lib/development/tomcat-jasper.jar</file-name>
+				<version>9.0.90</version>
+				<project-name>Tomcat</project-name>
+				<project-url>http://tomcat.apache.org</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>lib/development/tomcat-jsp-api.jar</file-name>
+				<version>9.0.90</version>
+				<project-name>Tomcat</project-name>
+				<project-url>http://tomcat.apache.org</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>lib/development/tomcat-juli.jar</file-name>
+				<version>9.0.90</version>
+				<project-name>Tomcat</project-name>
+				<project-url>http://tomcat.apache.org</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>lib/development/tomcat-servlet-api.jar</file-name>
 				<version>9.0.90</version>
 				<project-name>Tomcat</project-name>
 				<project-url>http://tomcat.apache.org</project-url>
@@ -6672,6 +6708,18 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>lib/development/tomcat-websocket-api.jar</file-name>
+				<version>9.0.90</version>
+				<project-name>Tomcat</project-name>
+				<project-url>http://tomcat.apache.org</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>lib/development/velocity-tools.jar</file-name>
 				<version>1.4</version>
 				<project-name>Velocity</project-name>
@@ -6694,18 +6742,6 @@
 						<license-name>Apache License 2.0</license-name>
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
 						<copyright-notice>Copyright (c) 2000-2007 The Apache Software Foundation</copyright-notice>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/development/websocket-api.jar</file-name>
-				<version>1.1</version>
-				<project-name>WebSocket</project-name>
-				<project-url>http://www.oracle.com/technetwork/articles/java/jsr356-1937161.html</project-url>
-				<licenses>
-					<license>
-						<license-name>CDDL 1.1</license-name>
-						<license-url>https://glassfish.java.net/public/CDDL+GPL_1_1.html</license-url>
 					</license>
 				</licenses>
 			</library>

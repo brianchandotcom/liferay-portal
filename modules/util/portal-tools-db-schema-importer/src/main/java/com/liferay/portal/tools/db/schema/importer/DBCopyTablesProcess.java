@@ -15,7 +15,7 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.db.schema.importer.jdbc.AutoBatchPreparedStatementUtil;
-import com.liferay.portal.tools.db.schema.importer.jdbc.DataSourceFactoryUtil;
+import com.liferay.portal.tools.db.schema.importer.jdbc.ConnectionConfigUtil;
 
 import java.io.Reader;
 
@@ -119,7 +119,7 @@ public class DBCopyTablesProcess {
 					targetConnection, insertSQL)) {
 
 			preparedStatement1.setFetchSize(
-				DataSourceFactoryUtil.getFetchSize());
+				ConnectionConfigUtil.getFetchSize());
 
 			try (ResultSet resultSet = preparedStatement1.executeQuery()) {
 				while (resultSet.next()) {

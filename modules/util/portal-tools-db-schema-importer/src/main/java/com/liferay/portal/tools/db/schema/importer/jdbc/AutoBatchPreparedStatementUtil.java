@@ -106,7 +106,7 @@ public class AutoBatchPreparedStatementUtil {
 
 			preparedStatement.addBatch();
 
-			if (++_count >= DataSourceFactoryUtil.getBatchSize()) {
+			if (++_count >= ConnectionConfigUtil.getBatchSize()) {
 				_count = 0;
 
 				_executeAsync(() -> _executeBatch(preparedStatement));

@@ -5,7 +5,7 @@
 
 package com.liferay.portal.tools.db.schema.importer;
 
-import com.liferay.portal.tools.db.schema.importer.jdbc.DataSourceFactoryUtil;
+import com.liferay.portal.tools.db.schema.importer.jdbc.ConnectionConfigUtil;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -40,9 +40,9 @@ public class DBSchemaImporter {
 		}
 
 		try {
-			DataSourceFactoryUtil.setBatchSize(
+			ConnectionConfigUtil.setBatchSize(
 				commandLine.getOptionValue("target-jdbc-batch-size"));
-			DataSourceFactoryUtil.setFetchSize(
+			ConnectionConfigUtil.setFetchSize(
 				commandLine.getOptionValue("source-jdbc-fetch-size"));
 
 			new DBSchemaImporterProcess(

@@ -5,7 +5,7 @@
 
 package com.liferay.petra.http.invoker;
 
-import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.io.IOException;
@@ -73,25 +73,20 @@ public class HttpInvokerTest {
 	}
 
 	@Test
-	public void testPathReplacement() throws Exception {
+	public void testPathReplacement() {
 		_testPathReplacement("$");
 		_testPathReplacement("\\\\");
 	}
 
-	private void _testPathReplacement(String specialCharacter)
-		throws Exception {
-
+	private void _testPathReplacement(String specialCharacter) {
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 		httpInvoker.path("/api/users/{name}");
 		httpInvoker.path("name", "value" + specialCharacter);
 
-		Field field = ReflectionUtil.getDeclaredField(
-			HttpInvoker.class, "_path");
-
-		String actualPath = (String)field.get(httpInvoker);
-
-		Assert.assertEquals("/api/users/value" + specialCharacter, actualPath);
+		Assert.assertEquals(
+			"/api/users/value" + specialCharacter,
+			ReflectionTestUtil.getFieldValue(httpInvoker, "_path"));
 	}
 
 	private static final Field _httpMethodField;

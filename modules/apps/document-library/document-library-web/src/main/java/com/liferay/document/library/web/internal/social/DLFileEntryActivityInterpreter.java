@@ -65,14 +65,22 @@ public class DLFileEntryActivityInterpreter
 			}
 		}
 
-		StringBundler sb = new StringBundler(3);
-
 		AssetRendererFactory<?> assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
 				DLFileEntry.class.getName());
 
+		if (assetRendererFactory == null) {
+			return StringPool.BLANK;
+		}
+
 		AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(
 			fileEntry.getFileEntryId());
+
+		if (assetRenderer == null) {
+			return StringPool.BLANK;
+		}
+
+		StringBundler sb = new StringBundler(3);
 
 		String fileEntryLink = assetRenderer.getURLDownload(
 			serviceContext.getThemeDisplay());

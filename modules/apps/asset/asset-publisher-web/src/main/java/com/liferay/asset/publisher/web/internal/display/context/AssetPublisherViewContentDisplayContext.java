@@ -181,6 +181,13 @@ public class AssetPublisherViewContentDisplayContext {
 				_assetRenderer = _assetRendererFactory.getAssetRenderer(
 					getGroupId(), _getURLTitle());
 
+				if (_assetRenderer == null) {
+					SessionErrors.add(
+						_renderRequest, NoSuchModelException.class.getName());
+
+					return;
+				}
+
 				_assetEntry = _assetRendererFactory.getAssetEntry(
 					_assetRendererFactory.getClassName(),
 					_assetRenderer.getClassPK());

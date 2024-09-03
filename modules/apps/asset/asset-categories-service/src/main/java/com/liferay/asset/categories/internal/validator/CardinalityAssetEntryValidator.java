@@ -100,7 +100,9 @@ public class CardinalityAssetEntryValidator implements AssetEntryValidator {
 				AssetRenderer<?> assetRenderer =
 					assetRendererFactory.getAssetRenderer(classPK);
 
-				if (!assetRenderer.isCategorizable(groupId)) {
+				if ((assetRenderer == null) ||
+					!assetRenderer.isCategorizable(groupId)) {
+
 					return false;
 				}
 			}

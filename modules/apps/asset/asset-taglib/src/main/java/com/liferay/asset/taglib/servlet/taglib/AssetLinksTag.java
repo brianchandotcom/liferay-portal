@@ -238,6 +238,16 @@ public class AssetLinksTag extends IncludeTag {
 				assetRendererFactory.getAssetRenderer(
 					assetLinkEntry.getClassPK());
 
+			if (assetRenderer == null) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"No asset renderer found for classPK " +
+							assetLinkEntry.getClassPK());
+				}
+
+				continue;
+			}
+
 			if (!assetRenderer.hasViewPermission(
 					themeDisplay.getPermissionChecker()) ||
 				!(assetLinkEntry.isVisible() ||

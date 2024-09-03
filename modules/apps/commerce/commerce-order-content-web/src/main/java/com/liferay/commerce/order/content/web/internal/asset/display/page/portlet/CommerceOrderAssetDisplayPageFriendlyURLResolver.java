@@ -59,7 +59,9 @@ public class CommerceOrderAssetDisplayPageFriendlyURLResolver
 		HttpServletRequest httpServletRequest =
 			(HttpServletRequest)requestContext.get("request");
 
-		_setCurrentCommerceOrder(commerceOrder, httpServletRequest);
+		if (commerceOrder.isOpen()) {
+			_setCurrentCommerceOrder(commerceOrder, httpServletRequest);
+		}
 
 		httpServletRequest.setAttribute(
 			CommerceWebKeys.COMMERCE_ORDER, commerceOrder);

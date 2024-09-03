@@ -5183,7 +5183,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/PageElement"
             # @review
-            tags: ["FragmentComposition"]
+            tags: ["PageElement"]
     "/sites/{siteExternalReferenceCode}/page-elements/{pageElementExternalReferenceCode}/page-elements":
         get:
             # @review
@@ -6288,7 +6288,7 @@ paths:
         delete:
             # @review
             description:
-                Deletes a page specification.
+                Deletes a page specification of a site page.
             operationId: deleteSiteSiteByExternalReferenceCodePageSpecification
             parameters:
                 - in: path
@@ -6322,7 +6322,7 @@ paths:
         get:
             # @review
             description:
-                Retrieves a page specification.
+                Retrieves a page specification of a site page.
             operationId: getSiteSiteByExternalReferenceCodePageSpecification
             parameters:
                 - in: path
@@ -6360,8 +6360,8 @@ paths:
         patch:
             # @review
             description:
-                Updates a page specification. Updates only the fields received in the request body, leaving any other
-                fields untouched.
+                Updates a page specification of a site page. Updates only the fields received in the request body,
+                leaving any other fields untouched.
             operationId: patchSiteSiteByExternalReferenceCodePageSpecification
             parameters:
                 - in: path
@@ -6407,7 +6407,7 @@ paths:
         put:
             # @review
             description:
-                Updates a page specification.
+                Updates a page specification of a site page.
             operationId: putSiteSiteByExternalReferenceCodePageSpecification
             parameters:
                 - in: path
@@ -6545,7 +6545,7 @@ paths:
         post:
             # @review
             description:
-                Publishes a page specification in draft status.
+                Publishes a page specification in draft status of a site page.
             operationId: postSiteSiteByExternalReferenceCodePageSpecificationPublish
             parameters:
                 - in: path
@@ -7797,7 +7797,7 @@ paths:
         get:
             # @review
             description:
-                Retrieves all the page specifications (e.g: draft, published) of a site page.
+                Retrieves all the page specifications of a site page.
             operationId: getSiteSiteByExternalReferenceCodeSitePagePageSpecificationsPage
             parameters:
                 - in: path

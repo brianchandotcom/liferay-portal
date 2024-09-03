@@ -432,15 +432,33 @@ public abstract class Base${schemaName}ResourceTestCase {
 						${schemaName} post${schemaName} = test${javaMethodSignature.methodName?cap_first}_add${schemaName}();
 					</#if>
 
-					Page<Permission> page = ${schemaVarName}Resource.${javaMethodSignature.methodName}(
-						<#if stringUtil.equals("assetLibraryId", firstParameterName)>
-							testDepotEntry.getDepotEntryId()
-						<#elseif stringUtil.equals("siteId", firstParameterName)>
-							testGroup.getGroupId()
-						<#else>
-							post${schemaName}.getId()
-						</#if>
-					, RoleConstants.GUEST);
+					<#if javaMethodSignature.javaMethodParameters?size == 3>
+						Page<Permission> page = ${schemaVarName}Resource.${javaMethodSignature.methodName}(
+							<#if stringUtil.equals("assetLibraryId", firstParameterName)>
+								testDepotEntry.getDepotEntryId()
+							<#elseif stringUtil.equals("siteId", firstParameterName)>
+								testGroup.getGroupId()
+							<#elseif stringUtil.equals("siteExternalReferenceCode", firstParameterName)>
+								testGroup.getExternalReferenceCode()
+							<#else>
+								post${schemaName}.getId()
+							</#if>
+						, post${schemaName}.getExternalReferenceCode(), RoleConstants.GUEST);
+
+					<#else>
+						Page<Permission> page = ${schemaVarName}Resource.${javaMethodSignature.methodName}(
+							<#if stringUtil.equals("assetLibraryId", firstParameterName)>
+								testDepotEntry.getDepotEntryId()
+							<#elseif stringUtil.equals("siteId", firstParameterName)>
+								testGroup.getGroupId()
+							<#elseif stringUtil.equals("siteExternalReferenceCode", firstParameterName)>
+								testGroup.getExternalReferenceCode()
+							<#else>
+								post${schemaName}.getId()
+							</#if>
+						, RoleConstants.GUEST);
+
+					</#if>
 
 					Assert.assertNotNull(page);
 				}

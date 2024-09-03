@@ -72,6 +72,19 @@ describe('SaveButtons', () => {
 		expect(screen.getByText('save article')).toBeInTheDocument();
 	});
 
+	it('submit for workflow with permissions when publishing for the first time', () => {
+		renderComponent({
+			...DEFAULT_PROPS,
+			articleId: '2611',
+			showPublishModal: true,
+			workflowEnabled: true,
+		});
+
+		expect(
+			screen.getByText('submit-for-workflow-with-permissions')
+		).toBeInTheDocument();
+	});
+
 	it('Do not open modal for all buttons when there is an articleId', () => {
 		renderComponent({
 			...DEFAULT_PROPS,

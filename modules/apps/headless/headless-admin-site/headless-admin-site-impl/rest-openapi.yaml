@@ -4445,6 +4445,176 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/PageRuleAction"
             tags: ["PageRuleAction"]
+    "/sites/{siteExternalReferenceCode}/page-rule-conditions/{pageRuleConditionExternalReferenceCode}":
+        delete:
+            # @review
+            description:
+                Deletes a page rule condition within a page rule of an experience of a specific page specification of a
+                site page within a site.
+            operationId: deleteSiteSiteByExternalReferenceCodePageRuleCondition
+            parameters:
+                - in: path
+                  name: siteExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: pageRuleConditionExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: nestedFields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["PageRuleCondition"]
+        get:
+            # @review
+            description:
+                Retrieves a page rule condition within a page rule of an experience of a specific page specification of
+                a site page within a site.
+            operationId: getSiteSiteByExternalReferenceCodePageRuleCondition
+            parameters:
+                - in: path
+                  name: siteExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: pageRuleConditionExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: nestedFields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/PageRuleCondition"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/PageRuleCondition"
+            tags: ["PageRuleCondition"]
+        patch:
+            # @review
+            description:
+                Updates a page rule condition within a page rule of an experience of a specific page specification of a
+                site page within a site. Updates only the fields received in the request body, leaving any other fields
+                untouched.
+            operationId: patchSiteSiteByExternalReferenceCodePageRuleCondition
+            parameters:
+                - in: path
+                  name: siteExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: pageRuleConditionExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: nestedFields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/PageRuleCondition"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/PageRuleCondition"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/PageRuleCondition"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/PageRuleCondition"
+            tags: ["PageRuleCondition"]
+        put:
+            # @review
+            description:
+                Updates a page rule condition within a page rule of an experience of a specific page specification of a
+                site page within a site.
+            operationId: putSiteSiteByExternalReferenceCodePageRuleCondition
+            parameters:
+                - in: path
+                  name: siteExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: pageRuleConditionExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: nestedFields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/PageRuleCondition"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/PageRuleCondition"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/PageRuleCondition"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/PageRuleCondition"
+            tags: ["PageRuleCondition"]
     "/sites/{siteExternalReferenceCode}/page-rules/{pageRuleExternalReferenceCode}":
         delete:
             # @review
@@ -4706,6 +4876,102 @@ paths:
                                 $ref: "#/components/schemas/PageRuleAction"
             # @review
             tags: ["PageRuleAction"]
+    "/sites/{siteExternalReferenceCode}/page-rules/{pageRuleExternalReferenceCode}/page-rule-conditions":
+        get:
+            # @review
+            description:
+                Retrieves all the page rule condition conditions within an experience in a page specification of a site
+                page.
+            operationId: getSiteSiteByExternalReferenceCodePageRulePageRuleConditionsPage
+            parameters:
+                - in: path
+                  name: siteExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: pageRuleExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: flatten
+                  schema:
+                      type: boolean
+                - in: query
+                  name: nestedFields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/PageRuleCondition"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/PageRuleCondition"
+                                type: array
+            # @review
+            tags: ["PageRuleCondition"]
+        post:
+            # @review
+            description:
+                Adds a new page rule condition to a page rule in an experience in a page specification in draft status
+                of a site page.
+            operationId: postSiteSiteByExternalReferenceCodePageRulePageRuleCondition
+            parameters:
+                - in: path
+                  name: siteExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: pageRuleExternalReferenceCode
+                  schema:
+                      type: string
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: nestedFields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/PageRuleCondition"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/PageRuleCondition"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/PageRuleCondition"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/PageRuleCondition"
+            # @review
+            tags: ["PageRuleCondition"]
     "/sites/{siteExternalReferenceCode}/page-specifications/{pageSpecificationExternalReferenceCode}":
         delete:
             # @review

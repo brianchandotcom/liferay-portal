@@ -64,7 +64,8 @@ public class ContentPageEditorDefaultEditorConfigurationTest {
 
 	@Test
 	public void testCommentEditor() {
-		_assertTextEditorConfigJSONObject("pageEditorCommentEditor");
+		_assertTextEditorConfigJSONObject(
+			"pageEditorCommentEditor", _EXTRA_PLUGINS + ",autocomplete");
 	}
 
 	@Test
@@ -103,7 +104,8 @@ public class ContentPageEditorDefaultEditorConfigurationTest {
 
 	@Test
 	public void testTextEditor() {
-		_assertTextEditorConfigJSONObject("fragmenEntryLinkEditor");
+		_assertTextEditorConfigJSONObject(
+			"fragmenEntryLinkEditor", _EXTRA_PLUGINS);
 	}
 
 	private void _assertItemSelectorURL(String eventName, String url) {
@@ -116,7 +118,9 @@ public class ContentPageEditorDefaultEditorConfigurationTest {
 				StringPool.BLANK));
 	}
 
-	private void _assertTextEditorConfigJSONObject(String editorConfigKey) {
+	private void _assertTextEditorConfigJSONObject(
+		String editorConfigKey, String extraPlugins) {
+
 		JSONObject jsonObject = _getEditorConfigurationConfigJSONObject(
 			editorConfigKey);
 
@@ -128,8 +132,7 @@ public class ContentPageEditorDefaultEditorConfigurationTest {
 			"selectItem", jsonObject.getString("documentBrowseLinkUrl"));
 
 		Assert.assertEquals(2, jsonObject.getInt("enterMode"));
-		Assert.assertEquals(
-			_EXTRA_PLUGINS, jsonObject.getString("extraPlugins"));
+		Assert.assertEquals(extraPlugins, jsonObject.getString("extraPlugins"));
 
 		_assertItemSelectorURL(
 			"selectImage",

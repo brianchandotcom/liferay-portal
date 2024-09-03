@@ -47,6 +47,10 @@ public interface SearchSettings {
 
 	public SearchRequestBuilder getSearchRequestBuilder();
 
+	public Boolean isIncludeAttachments();
+
+	public void setIncludeAttachments(boolean includeAttachments);
+
 	public void setKeywords(String keywords);
 
 	public void setKeywordsParameterName(String keywordsParameterName);

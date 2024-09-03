@@ -8,9 +8,14 @@ package com.liferay.portal.search.web.internal.search.bar.portlet.display.contex
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -23,6 +28,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.capabilities.SearchCapabilities;
@@ -135,6 +141,7 @@ public class SearchBarPortletDisplayContextFactory {
 
 		searchBarPortletDisplayContext.setEverythingSearchScopeParameterString(
 			SearchScope.EVERYTHING.getParameterString());
+
 		searchBarPortletDisplayContext.setInputPlaceholder(
 			LanguageUtil.get(
 				getHttpServletRequest(_renderRequest), "search-..."));
@@ -196,13 +203,13 @@ public class SearchBarPortletDisplayContextFactory {
 		else {
 			searchBarPortletDisplayContext.
 				setSuggestionsContributorConfiguration(
-					StringBundler.concat(
-						StringPool.OPEN_BRACKET,
-						StringUtil.merge(
-							searchBarPortletInstanceConfiguration.
-								suggestionsContributorConfigurations(),
-							StringPool.COMMA),
-						StringPool.CLOSE_BRACKET));
+					_getSuggestionsContributorConfiguration(
+						_isIncludeAttachments(
+							portletPreferencesLookup, searchBarPrecedenceHelper,
+							portletSharedSearchResponse.getSearchSettings(),
+							searchBarPortletPreferences, themeDisplay),
+						searchBarPortletInstanceConfiguration.
+							suggestionsContributorConfigurations()));
 			searchBarPortletDisplayContext.setSuggestionsDisplayThreshold(
 				searchBarPortletInstanceConfiguration.
 					suggestionsDisplayThreshold());
@@ -412,8 +419,84 @@ public class SearchBarPortletDisplayContextFactory {
 		return searchBarPortletPreferences.getScopeParameterName();
 	}
 
+	private String _getSuggestionsContributorConfiguration(
+		boolean includeAttachments,
+		String[] suggestionsContributorConfigurations) {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-35128")) {
+			return StringBundler.concat(
+				StringPool.OPEN_BRACKET,
+				StringUtil.merge(
+					suggestionsContributorConfigurations, StringPool.COMMA),
+				StringPool.CLOSE_BRACKET);
+		}
+
+		try {
+			JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+			for (String suggestionsContributorConfiguration :
+					suggestionsContributorConfigurations) {
+
+				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+					suggestionsContributorConfiguration);
+
+				JSONObject attributesJSONObject = jsonObject.getJSONObject(
+					"attributes");
+
+				if (attributesJSONObject != null) {
+					attributesJSONObject.put(
+						"includeAttachments", includeAttachments);
+				}
+				else {
+					jsonObject.put(
+						"attributes",
+						JSONUtil.put("includeAttachments", includeAttachments));
+				}
+
+				jsonArray.put(jsonObject);
+			}
+
+			return jsonArray.toString();
+		}
+		catch (JSONException jsonException) {
+			_log.error(jsonException);
+		}
+
+		return StringPool.OPEN_BRACKET + StringPool.CLOSE_BRACKET;
+	}
+
 	private String _getURLCurrentPath(ThemeDisplay themeDisplay) {
 		return HttpComponentsUtil.getPath(themeDisplay.getURLCurrent());
+	}
+
+	private boolean _isIncludeAttachments(
+		PortletPreferencesLookup portletPreferencesLookup,
+		SearchBarPrecedenceHelper searchBarPrecedenceHelper,
+		SearchSettings searchSettings,
+		SearchBarPortletPreferences searchBarPortletPreferences,
+		ThemeDisplay themeDisplay) {
+
+		Portlet headerSearchBarPortlet =
+			searchBarPrecedenceHelper.findHeaderSearchBarPortlet(themeDisplay);
+
+		if (headerSearchBarPortlet == null) {
+			return searchBarPortletPreferences.isIncludeAttachments();
+		}
+
+		PortletPreferences portletPreferences =
+			portletPreferencesLookup.fetchPreferences(
+				headerSearchBarPortlet, themeDisplay);
+
+		if ((portletPreferences == null) ||
+			!SearchBarPortletDestinationUtil.isSameDestination(
+				portletPreferences, themeDisplay)) {
+
+			return searchBarPortletPreferences.isIncludeAttachments();
+		}
+
+		return GetterUtil.getBoolean(
+			searchSettings.isIncludeAttachments(),
+			searchBarPortletPreferences.isIncludeAttachments());
 	}
 
 	private void _setSelectedSearchScopePreference(

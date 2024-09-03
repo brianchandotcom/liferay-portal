@@ -111,6 +111,16 @@ public class SearchSettingsImpl implements SearchSettings {
 	}
 
 	@Override
+	public Boolean isIncludeAttachments() {
+		return _includeAttachments;
+	}
+
+	@Override
+	public void setIncludeAttachments(boolean includeAttachments) {
+		_includeAttachments = includeAttachments;
+	}
+
+	@Override
 	public void setKeywords(String keywords) {
 		_searchContext.setKeywords(keywords);
 	}
@@ -165,6 +175,7 @@ public class SearchSettingsImpl implements SearchSettings {
 		return facet.getFieldName();
 	}
 
+	private boolean _includeAttachments;
 	private String _keywordsParameterName;
 	private Integer _paginationDelta;
 	private String _paginationDeltaParameterName;

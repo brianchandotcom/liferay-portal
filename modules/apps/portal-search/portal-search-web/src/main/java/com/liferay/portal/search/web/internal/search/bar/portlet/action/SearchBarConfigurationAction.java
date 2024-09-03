@@ -6,6 +6,7 @@
 package com.liferay.portal.search.web.internal.search.bar.portlet.action;
 
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
@@ -40,6 +41,9 @@ public class SearchBarConfigurationAction extends DefaultConfigurationAction {
 
 		SearchBarPortletDisplayContext searchBarPortletDisplayContext =
 			new SearchBarPortletDisplayContext();
+
+		searchBarPortletDisplayContext.setDisplayIncludeAttachments(
+			FeatureFlagManagerUtil.isEnabled("LPD-35128"));
 
 		SearchBarPortletInstanceConfiguration
 			searchBarPortletInstanceConfiguration =

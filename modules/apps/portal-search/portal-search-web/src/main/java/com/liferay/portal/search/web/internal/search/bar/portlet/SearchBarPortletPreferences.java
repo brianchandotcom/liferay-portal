@@ -17,6 +17,9 @@ public interface SearchBarPortletPreferences {
 	public static final String PREFERENCE_KEY_FEDERATED_SEARCH_KEY =
 		"federatedSearchKey";
 
+	public static final String PREFERENCE_KEY_INCLUDE_ATTACHMENTS =
+		"includeAttachments";
+
 	public static final String PREFERENCE_KEY_INVISIBLE = "invisible";
 
 	public static final String PREFERENCE_KEY_KEYWORDS_PARAMETER_NAME =
@@ -54,6 +57,8 @@ public interface SearchBarPortletPreferences {
 	public SearchScopePreference getSearchScopePreference();
 
 	public String getSearchScopePreferenceString();
+
+	public boolean isIncludeAttachments();
 
 	public boolean isInvisible();
 

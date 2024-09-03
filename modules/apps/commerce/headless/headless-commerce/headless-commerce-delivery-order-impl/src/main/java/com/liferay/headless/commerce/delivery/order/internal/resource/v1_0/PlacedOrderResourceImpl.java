@@ -10,14 +10,19 @@ import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryService;
 import com.liferay.commerce.constants.CommercePaymentMethodConstants;
 import com.liferay.commerce.constants.CommercePortletKeys;
+import com.liferay.commerce.context.CommerceContext;
+import com.liferay.commerce.context.CommerceContextFactory;
+import com.liferay.commerce.exception.CommerceOrderStatusException;
 import com.liferay.commerce.exception.NoSuchOrderException;
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.order.engine.CommerceOrderEngine;
 import com.liferay.commerce.product.exception.NoSuchChannelException;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.util.CommerceCheckoutStep;
 import com.liferay.commerce.util.CommerceCheckoutStepRegistry;
+import com.liferay.headless.commerce.core.util.ExpandoUtil;
 import com.liferay.headless.commerce.delivery.order.dto.v1_0.PlacedOrder;
 import com.liferay.headless.commerce.delivery.order.resource.v1_0.PlacedOrderResource;
 import com.liferay.petra.string.CharPool;
@@ -31,6 +36,7 @@ import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.servlet.DummyHttpServletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
@@ -43,6 +49,8 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.security.Key;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
@@ -51,6 +59,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 
 /**
  * @author Andrea Sbarra
+ * @author Alessio Antonio Rendina
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/placed-order.properties",
@@ -214,6 +223,49 @@ public class PlacedOrderResourceImpl extends BasePlacedOrderResourceImpl {
 		return sb.toString();
 	}
 
+	@Override
+	public PlacedOrder patchPlacedOrder(
+			Long placedOrderId, PlacedOrder placedOrder)
+		throws Exception {
+
+		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
+			placedOrderId);
+
+		if (commerceOrder.isOpen()) {
+			throw new CommerceOrderStatusException(
+				"Unable to patch an open order");
+		}
+
+		_updateOrder(commerceOrder, placedOrder);
+
+		return _toPlacedOrder(commerceOrder.getCommerceOrderId());
+	}
+
+	@Override
+	public PlacedOrder patchPlacedOrderByExternalReferenceCode(
+			String externalReferenceCode, PlacedOrder placedOrder)
+		throws Exception {
+
+		CommerceOrder commerceOrder =
+			_commerceOrderService.fetchByExternalReferenceCode(
+				externalReferenceCode, contextCompany.getCompanyId());
+
+		if (commerceOrder == null) {
+			throw new NoSuchOrderException(
+				"Unable to find order with external reference code " +
+					externalReferenceCode);
+		}
+
+		if (commerceOrder.isOpen()) {
+			throw new CommerceOrderStatusException(
+				"Unable to patch an open order");
+		}
+
+		_updateOrder(commerceOrder, placedOrder);
+
+		return _toPlacedOrder(commerceOrder.getCommerceOrderId());
+	}
+
 	private String _getPlacedOrderConfirmationCheckoutStepURL(
 			CommerceOrder commerceOrder)
 		throws Exception {
@@ -280,6 +332,51 @@ public class PlacedOrderResourceImpl extends BasePlacedOrderResourceImpl {
 				contextUser));
 	}
 
+	private void _updateOrder(
+			CommerceOrder commerceOrder, PlacedOrder placedOrder)
+		throws Exception {
+
+		CommerceContext commerceContext = _commerceContextFactory.create(
+			contextCompany.getCompanyId(), commerceOrder.getGroupId(),
+			contextUser.getUserId(), commerceOrder.getCommerceOrderId(),
+			commerceOrder.getCommerceAccountId());
+
+		_commerceOrderEngine.updateCommerceOrder(
+			commerceOrder.getExternalReferenceCode(),
+			commerceOrder.getCommerceOrderId(),
+			commerceOrder.getBillingAddressId(),
+			commerceOrder.getCommerceShippingMethodId(),
+			commerceOrder.getShippingAddressId(),
+			commerceOrder.getAdvanceStatus(),
+			commerceOrder.getCommercePaymentMethodKey(),
+			GetterUtil.getString(
+				placedOrder.getName(), commerceOrder.getName()),
+			GetterUtil.get(
+				placedOrder.getPurchaseOrderNumber(),
+				commerceOrder.getPurchaseOrderNumber()),
+			commerceOrder.getShippingAmount(),
+			commerceOrder.getShippingOptionName(),
+			commerceOrder.getShippingWithTaxAmount(),
+			commerceOrder.getSubtotal(),
+			commerceOrder.getSubtotalWithTaxAmount(),
+			commerceOrder.getTaxAmount(), commerceOrder.getTotal(),
+			commerceOrder.getTotalDiscountAmount(),
+			commerceOrder.getTotalWithTaxAmount(), commerceContext, false);
+
+		commerceOrder = _commerceOrderService.updatePrintedNote(
+			commerceOrder.getCommerceOrderId(),
+			GetterUtil.get(
+				placedOrder.getPrintedNote(), commerceOrder.getPrintedNote()));
+
+		Map<String, ?> customFields = placedOrder.getCustomFields();
+
+		if ((customFields != null) && !customFields.isEmpty()) {
+			ExpandoUtil.updateExpando(
+				contextCompany.getCompanyId(), CommerceOrder.class,
+				commerceOrder.getPrimaryKey(), customFields);
+		}
+	}
+
 	@Reference
 	private AccountEntryService _accountEntryService;
 
@@ -288,6 +385,12 @@ public class PlacedOrderResourceImpl extends BasePlacedOrderResourceImpl {
 
 	@Reference
 	private CommerceCheckoutStepRegistry _commerceCheckoutStepRegistry;
+
+	@Reference
+	private CommerceContextFactory _commerceContextFactory;
+
+	@Reference
+	private CommerceOrderEngine _commerceOrderEngine;
 
 	@Reference
 	private CommerceOrderService _commerceOrderService;

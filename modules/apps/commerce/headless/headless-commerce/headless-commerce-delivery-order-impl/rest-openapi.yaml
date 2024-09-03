@@ -53,7 +53,6 @@ components:
                     type: string
                 customFields:
                     additionalProperties: true
-                    readOnly: true
                     type: object
                 errorMessages:
                     items:
@@ -134,10 +133,8 @@ components:
                     readOnly: true
                     type: integer
                 printedNote:
-                    readOnly: true
                     type: string
                 purchaseOrderNumber:
-                    readOnly: true
                     type: string
                 shippingMethod:
                     readOnly: true
@@ -1213,6 +1210,73 @@ paths:
                     description:
                         Unexpected error
             tags: ["PlacedOrder"]
+        patch:
+            operationId: patchPlacedOrderByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/PlacedOrder"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/PlacedOrder"
+                required: true
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/PlacedOrder"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/PlacedOrder"
+                    description:
+                        Updated
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            summary: Updates a Placed Order by external reference code.
+            tags: ["PlacedOrder"]
     /placed-orders/by-externalReferenceCode/{externalReferenceCode}/payment-url:
         get:
             operationId: getPlacedOrderByExternalReferenceCodePaymentURL
@@ -1542,6 +1606,74 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Unexpected error
+            tags: ["PlacedOrder"]
+        patch:
+            operationId: patchPlacedOrder
+            parameters:
+                - in: path
+                  explode: false
+                  name: placedOrderId
+                  required: true
+                  schema:
+                      description:
+                          Order Id
+                      format: int64
+                      type: integer
+                  style: simple
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/PlacedOrder"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/PlacedOrder"
+                required: true
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/PlacedOrder"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/PlacedOrder"
+                    description:
+                        Updated
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            summary: Updates a Placed Order.
             tags: ["PlacedOrder"]
     /placed-orders/{placedOrderId}/payment-url:
         get:

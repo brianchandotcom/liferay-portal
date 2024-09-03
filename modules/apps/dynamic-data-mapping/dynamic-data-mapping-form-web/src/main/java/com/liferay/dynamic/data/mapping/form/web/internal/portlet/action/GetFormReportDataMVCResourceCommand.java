@@ -8,6 +8,7 @@ package com.liferay.dynamic.data.mapping.form.web.internal.portlet.action;
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceReport;
+import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceReportLocalService;
 import com.liferay.dynamic.data.mapping.util.DDMFormReportDataUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -55,13 +56,17 @@ public class GetFormReportDataMVCResourceCommand
 		long formInstanceId = ParamUtil.getLong(
 			resourceRequest, "formInstanceId");
 
+		DDMFormInstance ddmFormInstance =
+			_ddmFormInstanceLocalService.fetchDDMFormInstance(formInstanceId);
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (!themeDisplay.isSignedIn() ||
+		if ((ddmFormInstance == null) ||
 			!_ddmFormInstanceModelResourcePermission.contains(
 				GuestOrUserUtil.getPermissionChecker(), formInstanceId,
-				ActionKeys.VIEW)) {
+				ActionKeys.VIEW) ||
+			!themeDisplay.isSignedIn()) {
 
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse,
@@ -129,6 +134,9 @@ public class GetFormReportDataMVCResourceCommand
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		GetFormReportDataMVCResourceCommand.class);
+
+	@Reference
+	private DDMFormInstanceLocalService _ddmFormInstanceLocalService;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.dynamic.data.mapping.model.DDMFormInstance)"

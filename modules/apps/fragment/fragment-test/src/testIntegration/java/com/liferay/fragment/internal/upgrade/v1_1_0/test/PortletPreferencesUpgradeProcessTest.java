@@ -268,8 +268,7 @@ public class PortletPreferencesUpgradeProcessTest {
 	}
 
 	private PortletPreferences _getPortletPreferences(
-			Layout layout, String portletId)
-		throws Exception {
+		Layout layout, String portletId) {
 
 		List<PortletPreferences> portletPreferences =
 			_portletPreferencesLocalService.getPortletPreferences(

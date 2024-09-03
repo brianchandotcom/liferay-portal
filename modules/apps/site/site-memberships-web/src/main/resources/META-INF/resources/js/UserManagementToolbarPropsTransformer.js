@@ -5,7 +5,6 @@
 
 import {
 	addParams,
-	getPortletId,
 	openConfirmModal,
 	openSelectionModal,
 	sub,
@@ -122,10 +121,7 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 				Liferay.Language.get('assign-users-to-this-x'),
 				itemData?.groupTypeLabel
 			),
-			url: addParams(
-				`p_p_id=${getPortletId(portletNamespace)}`,
-				itemData?.selectUsersURL
-			),
+			url: itemData?.selectUsersURL,
 		});
 	};
 

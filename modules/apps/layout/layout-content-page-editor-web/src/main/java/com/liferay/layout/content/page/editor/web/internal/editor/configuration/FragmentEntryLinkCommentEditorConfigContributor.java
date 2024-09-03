@@ -7,14 +7,8 @@ package com.liferay.layout.content.page.editor.web.internal.editor.configuration
 
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-
-import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alejandro Tardín
@@ -28,19 +22,4 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class FragmentEntryLinkCommentEditorConfigContributor
 	extends FragmentEntryLinkEditorConfigContributor {
-
-	@Override
-	public void populateConfigJSONObject(
-		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
-		ThemeDisplay themeDisplay,
-		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
-
-		_fragmentEntryLinkEditorConfigContributor.populateConfigJSONObject(
-			jsonObject, inputEditorTaglibAttributes, themeDisplay,
-			requestBackedPortletURLFactory);
-	}
-
-	@Reference(target = "(editor.config.key=fragmentEntryLinkEditor)")
-	private EditorConfigContributor _fragmentEntryLinkEditorConfigContributor;
-
 }

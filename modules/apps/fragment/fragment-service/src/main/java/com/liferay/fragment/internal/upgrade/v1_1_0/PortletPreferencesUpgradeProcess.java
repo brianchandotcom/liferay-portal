@@ -78,7 +78,12 @@ public class PortletPreferencesUpgradeProcess extends UpgradeProcess {
 		for (Long groupControlPanelLayoutPlid :
 				_groupControlPanelPlids.values()) {
 
-			_layoutLocalService.deleteLayout(groupControlPanelLayoutPlid);
+			try {
+				_layoutLocalService.deleteLayout(groupControlPanelLayoutPlid);
+			}
+			catch (Exception exception) {
+				_log.error(exception);
+			}
 		}
 	}
 

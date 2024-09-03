@@ -316,6 +316,66 @@ public class FormItemManager {
 		return addedFragmentEntryLinks;
 	}
 
+	public List<FragmentEntryLink> removeFormStepLayoutStructureItems(
+			FormStyledLayoutStructureItem formStyledLayoutStructureItem,
+			Layout layout, LayoutStructure layoutStructure, Locale locale,
+			int numberOfSteps, long segmentsExperienceId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		FormStepContainerStyledLayoutStructureItem
+			formStepContainerStyledLayoutStructureItem =
+				_findFormStepContainerStyledLayoutStructureItem(
+					formStyledLayoutStructureItem, layoutStructure);
+
+		if (formStepContainerStyledLayoutStructureItem == null) {
+			return Collections.emptyList();
+		}
+
+		List<String> childrenItemIds = new ArrayList<>(
+			formStepContainerStyledLayoutStructureItem.getChildrenItemIds());
+
+		FormStepLayoutStructureItem previousFormStepLayoutStructureItem =
+			(FormStepLayoutStructureItem)layoutStructure.getLayoutStructureItem(
+				childrenItemIds.get(numberOfSteps - 1));
+
+		for (int i = numberOfSteps; i < childrenItemIds.size(); i++) {
+			FormStepLayoutStructureItem formStepLayoutStructureItem =
+				(FormStepLayoutStructureItem)
+					layoutStructure.getLayoutStructureItem(
+						childrenItemIds.get(i));
+
+			List<String> formStepLayoutStructureItemChildrenItemIds =
+				new ArrayList<>(
+					formStepLayoutStructureItem.getChildrenItemIds());
+
+			for (String childrenItemId :
+					formStepLayoutStructureItemChildrenItemIds) {
+
+				if (!_isFormButtonsContainer(
+						formStepLayoutStructureItem,
+						formStyledLayoutStructureItem,
+						layoutStructure.getLayoutStructureItem(
+							childrenItemId))) {
+
+					layoutStructure.moveLayoutStructureItem(
+						childrenItemId,
+						previousFormStepLayoutStructureItem.getItemId(), -1);
+				}
+			}
+
+			layoutStructure.markLayoutStructureItemForDeletion(
+				Collections.singletonList(
+					formStepLayoutStructureItem.getItemId()),
+				Collections.emptyList());
+		}
+
+		return _addFormButtons(
+			previousFormStepLayoutStructureItem, formStyledLayoutStructureItem,
+			layout, locale, layoutStructure, numberOfSteps,
+			segmentsExperienceId, numberOfSteps - 1, serviceContext);
+	}
+
 	public JSONArray removeLayoutStructureItemsJSONArray(
 		FormStyledLayoutStructureItem formStyledLayoutStructureItem,
 		LayoutStructure layoutStructure, List<String> removedItemIds) {

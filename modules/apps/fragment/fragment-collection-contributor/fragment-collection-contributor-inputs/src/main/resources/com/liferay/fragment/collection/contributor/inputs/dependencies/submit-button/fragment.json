@@ -3,5 +3,10 @@
 	"fragmentEntryKey": "submit-button",
 	"icon": "button",
 	"name": "form-button",
-	"type": "component"
+	"type": "input",
+	"typeOptions": {
+		"fieldTypes": [
+			"formButton"
+		]
+	}
 }

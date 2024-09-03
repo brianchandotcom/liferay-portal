@@ -6,7 +6,6 @@
 import {useEffect} from 'react';
 import {HashRouter, Outlet, Route, Routes} from 'react-router-dom';
 
-import NewAppContextProvider from '../../context/NewAppContext';
 import SolutionContextProvider from '../../context/SolutionContext';
 import withProviders from '../../hoc/withProviders';
 import {useAccount} from '../../hooks/data/useAccounts';
@@ -21,8 +20,6 @@ import App from './pages/Apps/App';
 import {AppContextProvider} from './pages/Apps/AppCreationFlow/AppContext/AppManageState';
 import {AppCreationFlow} from './pages/Apps/AppCreationFlow/AppCreationFlow';
 import Members from './pages/Members';
-import PublishNewAppOutlet from './pages/NewAppFlow/PublishNewAppOutlet';
-import {NewAppBuild, NewAppProfile} from './pages/NewAppFlow/pages';
 import Projects from './pages/Projects';
 import Solutions from './pages/Solutions';
 import PublishSolutionOutlet from './pages/Solutions/NewSolutionFlow/PublishSolutionOutlet';
@@ -96,30 +93,6 @@ const PublisherDashboardRouter = () => {
 
 					<Route path="solutions">
 						<Route element={<Solutions />} index />
-					</Route>
-				</Route>
-
-				<Route path="newapp">
-					<Route
-						element={
-							<NewAppContextProvider
-								catalogId={catalogId as number}
-							>
-								<Outlet />
-							</NewAppContextProvider>
-						}
-						path=":productId?"
-					>
-						<Route
-							element={<PublishNewAppOutlet />}
-							path="publisher"
-						>
-							<Route element={<Create />} path="" />
-
-							<Route element={<NewAppProfile />} path="profile" />
-
-							<Route element={<NewAppBuild />} path="build" />
-						</Route>
 					</Route>
 				</Route>
 

@@ -76,6 +76,7 @@ const CloudResourceRequirements = () => {
 					type="text"
 					value={resourceRequirements.ram ?? ''}
 				/>
+
 				<Form.HelpMessage>
 					{i18n.translate(
 						'enter-the-required-ram-0-is-a-valid-value'

@@ -18,7 +18,8 @@ import usePublishSolutionHeader from '../../hooks/usePublishSolutionHeader';
 import PublishNav from '../Solutions/components/PublishNav';
 
 import './PublishNewAppOutlet.scss';
-import usePublishNewAppNavigation from '../../hooks/usePublishAppNavigation';
+import usePublishNavigation from '../../hooks/usePublishNavigation';
+import {APP_FLOW_ITEMS} from './constants';
 
 const PublishNewAppOutlet = () => {
 	usePublishSolutionHeader();
@@ -33,8 +34,8 @@ const PublishNewAppOutlet = () => {
 		onClickContinue,
 		onClickPrevious,
 		onExit,
-		publishAppSteps,
-	} = usePublishNewAppNavigation();
+		steps,
+	} = usePublishNavigation({exitLink: '/apps', flowItems: APP_FLOW_ITEMS});
 
 	const {observer, onOpenChange, open} = useModal();
 	const onExitModal = useModal();
@@ -90,7 +91,7 @@ const PublishNewAppOutlet = () => {
 			<hr />
 
 			<div className="d-flex justify-content-center mt-8">
-				<PublishNav activeIndex={activeIndex} items={publishAppSteps} />
+				<PublishNav activeIndex={activeIndex} items={steps} />
 
 				<div className="ml-8 new-app-body-container">
 					<h1 className="header-title mb-4">{activeRoute.title}</h1>
@@ -116,7 +117,7 @@ const PublishNewAppOutlet = () => {
 							displayType="primary"
 							onClick={onClickContinue}
 						>
-							{isLastStep ? 'Submit App' : 'Continue'}
+							{i18n.translate(isLastStep ? 'submit' : 'continue')}
 						</ClayButton>
 					</div>
 				</div>
@@ -149,15 +150,13 @@ const PublishNewAppOutlet = () => {
 			{onExitModal.open && (
 				<Modal
 					last={
-						<>
-							<ClayButton
-								className="btn btn-primary ml-2"
-								displayType="primary"
-								onClick={onExit}
-							>
-								{i18n.translate('exit')}
-							</ClayButton>
-						</>
+						<ClayButton
+							className="btn btn-primary ml-2"
+							displayType="primary"
+							onClick={onExit}
+						>
+							{i18n.translate('exit')}
+						</ClayButton>
 					}
 					observer={onExitModal.observer}
 					size={'md' as any}

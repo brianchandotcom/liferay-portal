@@ -19,10 +19,11 @@ import Modal from '../../../../../components/Modal';
 import {useSolutionContext} from '../../../../../context/SolutionContext';
 import {PRODUCT_WORKFLOW_STATUS_CODE} from '../../../../../enums/Product';
 import i18n from '../../../../../i18n';
+import usePublishNavigation from '../../../hooks/usePublishNavigation';
 import usePublishSolutionHeader from '../../../hooks/usePublishSolutionHeader';
-import usePublishSolutionNavigation from '../../../hooks/usePublishSolutionNavigation';
 import usePublishSolutionSubmission from '../../../hooks/usePublishSolutionSubmission';
 import PublishNav from '../components/PublishNav';
+import {SOLUTION_FLOW_ITEMS} from '../constants';
 
 const PublishSolutionOutlet = () => {
 	usePublishSolutionHeader();
@@ -37,8 +38,11 @@ const PublishSolutionOutlet = () => {
 		onClickContinue,
 		onClickPrevious,
 		onExit,
-		publishSolutionSteps,
-	} = usePublishSolutionNavigation();
+		steps,
+	} = usePublishNavigation({
+		exitLink: '/solutions',
+		flowItems: SOLUTION_FLOW_ITEMS,
+	});
 
 	const {onSave, onSaveAsDraft} = usePublishSolutionSubmission(
 		context,
@@ -103,10 +107,7 @@ const PublishSolutionOutlet = () => {
 			<hr />
 
 			<div className="d-flex justify-content-center mt-8">
-				<PublishNav
-					activeIndex={activeIndex}
-					items={publishSolutionSteps}
-				/>
+				<PublishNav activeIndex={activeIndex} items={steps} />
 
 				<div className="ml-8 solutions-body-container">
 					<h1 className="header-title mb-4">{activeRoute.title}</h1>

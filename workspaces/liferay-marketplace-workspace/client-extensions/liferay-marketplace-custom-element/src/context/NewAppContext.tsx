@@ -32,7 +32,7 @@ export enum NewAppTypes {
 
 type NewAppPayload = {
 	[NewAppTypes.SET_BUILD]: Partial<{
-		cloudCompatible?: boolean;
+		cloudCompatible: boolean;
 		compatibleOffering: any[];
 		liferayPackages: {
 			file: any[];

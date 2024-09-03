@@ -17,10 +17,10 @@ import useListTypeDefinition from '../../../../../hooks/useListTypeDefinition';
 import i18n from '../../../../../i18n';
 import {LIFERAY_VERSION_PICKLIST} from '../constants';
 
-interface NewAppPackageVersionModal {
+type NewAppPackageVersionModal = {
 	currentVersions: string[];
 	handleClose: () => void;
-}
+};
 
 export function NewAppPackageVersionModal({
 	currentVersions,
@@ -39,7 +39,7 @@ export function NewAppPackageVersionModal({
 	const [checkboxVersions, setCheckboxVersions] =
 		useState<string[]>(currentVersions);
 
-	const [selectedVersion, setSelectedVersion] = useState<string>('');
+	const [selectedVersion, setSelectedVersion] = useState('');
 
 	const {data} = useListTypeDefinition(LIFERAY_VERSION_PICKLIST);
 
@@ -48,8 +48,6 @@ export function NewAppPackageVersionModal({
 			data?.listTypeEntries?.map((entry) => entry.name).reverse() || []
 		);
 	}, [data?.listTypeEntries]);
-
-	const [versions] = useState<string[]>(newVersions);
 
 	return (
 		<ClayModal
@@ -96,7 +94,7 @@ export function NewAppPackageVersionModal({
 
 				<ClayForm className="modal-form">
 					<ClayForm.Group>
-						{versions
+						{newVersions
 							?.filter((version) =>
 								version
 									.toLowerCase()

@@ -5,16 +5,20 @@
 
 import {useLocation, useNavigate, useParams} from 'react-router-dom';
 
-import {APP_FLOW_ITEMS} from '../pages/NewAppFlow/constants';
-
-const usePublishNewAppNavigation = () => {
+const usePublishNavigation = ({
+	exitLink,
+	flowItems,
+}: {
+	exitLink: string;
+	flowItems: any[];
+}) => {
 	const location = useLocation();
 	const navigate = useNavigate();
 	const {id} = useParams();
 
-	const [, ..._publishAppSteps] = APP_FLOW_ITEMS;
+	const [, ...steps] = flowItems;
 
-	const publishAppSteps = id ? _publishAppSteps : APP_FLOW_ITEMS;
+	const publishAppSteps = id ? steps : flowItems;
 
 	const paths = location.pathname.split('/');
 	const lastPath = paths.at(-1);
@@ -37,7 +41,7 @@ const usePublishNewAppNavigation = () => {
 		navigate(publishAppSteps[activeIndex + 1].path);
 	};
 
-	const onExit = () => navigate('/apps');
+	const onExit = () => navigate(exitLink);
 
 	return {
 		activeIndex,
@@ -47,8 +51,8 @@ const usePublishNewAppNavigation = () => {
 		onClickContinue,
 		onClickPrevious,
 		onExit,
-		publishAppSteps,
+		steps,
 	};
 };
 
-export default usePublishNewAppNavigation;
+export default usePublishNavigation;

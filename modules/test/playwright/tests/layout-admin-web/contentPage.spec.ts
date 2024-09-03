@@ -189,6 +189,8 @@ test(
 
 		await page.getByTitle('Edit', {exact: true}).click();
 
+		await page.getByText('Place fragments or widgets here').waitFor();
+
 		expect(await page.title()).toBe(
 			`${pageName} - ${site.name} - Liferay DXP (Editing)`
 		);
@@ -196,6 +198,8 @@ test(
 		// Click back button
 
 		await page.getByTitle(`Go to ${pageName}`).click();
+
+		await page.getByTitle('Edit', {exact: true}).waitFor();
 
 		expect(await page.title()).toBe(
 			`${pageName} - ${site.name} - Liferay DXP`

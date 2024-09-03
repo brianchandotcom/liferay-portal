@@ -8,6 +8,7 @@ import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 
 export function isMultistepForm(item: LayoutDataItem) {
 	return (
+		item &&
 		item.type === LAYOUT_DATA_ITEM_TYPES.form &&
 		item.config.formType === 'multistep'
 	);

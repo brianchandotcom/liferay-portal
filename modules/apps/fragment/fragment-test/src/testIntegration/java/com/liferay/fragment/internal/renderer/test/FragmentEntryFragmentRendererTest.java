@@ -15,7 +15,7 @@ import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTCollectionService;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
-import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.fragment.cache.FragmentEntryLinkCache;
 import com.liferay.fragment.configuration.FragmentJavascriptConfiguration;
 import com.liferay.fragment.constants.FragmentConstants;
@@ -63,7 +63,6 @@ import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -515,7 +514,7 @@ public class FragmentEntryFragmentRendererTest {
 	}
 
 	private FileEntry _addFileEntry() throws Exception {
-		return DLAppLocalServiceUtil.addFileEntry(
+		return _dlAppLocalService.addFileEntry(
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString() + "." + ContentTypes.IMAGE_JPEG,
@@ -666,6 +665,9 @@ public class FragmentEntryFragmentRendererTest {
 	private CTCollectionService _ctCollectionService;
 
 	private long _defaultSegmentsExperienceId;
+
+	@Inject
+	private DLAppLocalService _dlAppLocalService;
 
 	@Inject
 	private FragmentCollectionContributorRegistry

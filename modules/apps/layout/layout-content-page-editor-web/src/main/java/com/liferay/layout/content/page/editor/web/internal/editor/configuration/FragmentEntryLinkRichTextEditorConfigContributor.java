@@ -214,7 +214,7 @@ public class FragmentEntryLinkRichTextEditorConfigContributor
 		return JSONUtil.put(
 			"add",
 			JSONUtil.put(
-				"buttons", toJSONArray("['image', 'hline']")
+				"buttons", JSONUtil.put("image", "hline")
 			).put(
 				"tabIndex", 1
 			)
@@ -251,7 +251,7 @@ public class FragmentEntryLinkRichTextEditorConfigContributor
 
 	private JSONObject _getToolbarsStylesSelectionsLinkJSONObject() {
 		return JSONUtil.put(
-			"buttons", toJSONArray("['linkEditBrowse']")
+			"buttons", JSONUtil.put("linkEditBrowse")
 		).put(
 			"name", "link"
 		).put(

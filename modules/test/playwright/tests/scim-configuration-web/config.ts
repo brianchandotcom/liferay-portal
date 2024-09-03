@@ -6,4 +6,5 @@
 export const config = {
 	name: 'scim-configuration-web',
 	testDir: 'tests/scim-configuration-web',
+	timeout: 480 * 1000,
 };

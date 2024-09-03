@@ -1,3 +1,3393 @@
+components:
+    schemas:
+        ActionExecutionResult:
+            # @review
+            description:
+                The result of an action execution.
+            properties:
+                type:
+                    # @review
+                    description:
+                        The type of result.
+                    enum: [DisplayPage, None, Notification, Page, URL]
+                    type:
+                        string
+                value:
+                    oneOf:
+                        - $ref: "#/components/schemas/DisplayPageActionExecutionResult"
+                        - $ref: "#/components/schemas/NoneActionExecutionResult"
+                        - $ref: "#/components/schemas/NotificationActionExecutionResult"
+                        - $ref: "#/components/schemas/SitePageActionExecutionResult"
+                        - $ref: "#/components/schemas/URLActionExecutionResult"
+            type: object
+        ClassNameReference:
+            allOf:
+                - $ref: "#/components/schemas/CollectionReference"
+                - properties:
+                      className:
+                          type: string
+            # @review
+            description:
+                A reference specifying the class name.
+            required:
+                - className
+            type: object
+        ClassSubtypeReference:
+            # @review
+            description:
+                A reference specifying the class name and an optional subtype.
+            properties:
+                className:
+                    type: string
+                subTypeExternalReference:
+                    $ref: "#/components/schemas/ItemExternalReference"
+            required:
+                - className
+            type: object
+        ClientExtension:
+            # @review
+            description:
+                A reference to a client extension along with its configuration values.
+            properties:
+                clientExtensionConfig:
+                    additionalProperties:
+                        type: string
+                    # @review
+                    description:
+                        The configuration keys and values of the client extension.
+                    type: object
+                externalReferenceCode:
+                    # @review
+                    description:
+                        The client extension's external reference code.
+                    type: string
+            type: object
+        CollectionPageSettings:
+            allOf:
+                - $ref: "#/components/schemas/PageSettings"
+                - properties:
+                      collectionReference:
+                          $ref: "#/components/schemas/CollectionReference"
+                          writeOnly: true
+                  required:
+                      - collectionReference
+            # @review
+            description:
+                The settings of a collection page.
+            type: object
+        CollectionReference:
+            # @review
+            description:
+                The page collection's reference.
+            discriminator:
+                mapping:
+                    Collection: "#/components/schemas/ItemExternalReference"
+                    CollectionProvider: "#/components/schemas/ClassNameReference"
+                propertyName: collectionType
+            properties:
+                collectionType:
+                    # @review
+                    description:
+                        The collection's type (Collection, CollectionProvider).
+                    enum: [Collection, CollectionProvider]
+                    type: string
+            type: object
+        CollectionViewport:
+            # @review
+            description:
+                A collection viewport.
+            properties:
+                collectionViewportDefinition:
+                    # @review
+                    description:
+                        The definition of the collection viewport.
+                    properties:
+                        numberOfColumns:
+                            # @review
+                            description:
+                                The number of columns of the collection viewport.
+                            type: integer
+                    type: object
+                id:
+                    # @review
+                    description:
+                        The collection viewport's ID.
+                    type: string
+            required:
+                - id
+                - collectionViewportDefinition
+            type: object
+        ColumnViewport:
+            # @review
+            description:
+                A column in a viewport.
+            properties:
+                columnViewportDefinition:
+                    properties:
+                        size:
+                            maximum: 12
+                            minimum: 1
+                            type: integer
+                    type: object
+                id:
+                    type: string
+            required:
+                - columnViewportDefinition
+                - id
+            type: object
+        ContentPageSettings:
+            allOf:
+                - $ref: "#/components/schemas/PageSettings"
+            # @review
+            description:
+                The settings of a content page.
+            type: object
+        ContentPageSpecification:
+            allOf:
+                - $ref: "#/components/schemas/PageSpecification"
+                - properties:
+                      pageExperiences:
+                          items:
+                              $ref: "#/components/schemas/PageExperience"
+                          type: array
+            # @review
+            description:
+                A page specification of a content page. A content page may contain 0 or 1 page specifications in draft
+                status and 0 or 1 page specifications in published status.
+            type: object
+        ContentPageTemplate:
+            allOf:
+                - $ref: "#/components/schemas/PageTemplate"
+            # @review
+            description:
+                A content page template.
+            type: object
+        ContentPageTemplateSettings:
+            allOf:
+                - $ref: "#/components/schemas/PageTemplateSettings"
+            # @review
+            description:
+                The settings of a content page template.
+            type: object
+        ContextReference:
+            # @review
+            description:
+                A reference of type context, used in collection display fragments and display page templates.
+            properties:
+                contextSource:
+                    enum: [CollectionItem, DisplayPageItem]
+                    type: string
+            required:
+                - contextSource
+            type: object
+        CustomCSSViewport:
+            # @review
+            description:
+                A custom CSS viewport.
+            properties:
+                customCSS:
+                    # @review
+                    description:
+                        The definition of the custom CSS viewport.
+                    type: string
+                id:
+                    # @review
+                    description:
+                        The custom CSS viewport's ID.
+                    type: string
+            required:
+                - id
+                - customCSS
+            type: object
+        CustomField:
+            # @review
+            description:
+                The value of each custom field. Fields can contain different information types (e.g., geolocation,
+                strings, etc.).
+            properties:
+                customValue:
+                    $ref: "#/components/schemas/CustomValue"
+                    description:
+                        The field's value.
+                dataType:
+                    description:
+                        The field type (e.g., image, text, etc.).
+                    readOnly: true
+                    type: string
+                name:
+                    description:
+                        The field's internal name. This is valid for comparisons and unique in the structured content.
+                    type: string
+        CustomMetaTag:
+            # @review
+            description:
+                A custom meta tag.
+            properties:
+                key:
+                    # @review
+                    description:
+                        The custom meta tag's key.
+                    type: string
+                value_i18n:
+                    additionalProperties:
+                        type: string
+                    # @review
+                    description:
+                        The localized custom meta tag's values.
+                    type: object
+            type: object
+        CustomValue:
+            # @review
+            description:
+                A custom value.
+            properties:
+                data_i18n:
+                    additionalProperties:
+                        type: string
+                    # @review
+                    description:
+                        The localized field's content values for simple types.
+                    type: object
+                geo:
+                    $ref: "#/components/schemas/Geo"
+                    description:
+                        A point determined by latitude and longitude.
+            type: object
+        DefaultFragmentReference:
+            # @review
+            description:
+                A reference to a default fragment (provided out-of-the-box).
+            properties:
+                defaultFragmentKey:
+                    # @review
+                    description:
+                        The key of the default fragment.
+                    type: string
+            type: object
+        DisplayPageActionExecutionResult:
+            # @review
+            description:
+                The definition of an action execution of type display page.
+            properties:
+                mapping:
+                    # @review
+                    description:
+                        The mapping of the display page action result.
+                    properties:
+                        fieldKey:
+                            # @review
+                            description:
+                                The mapping's field key.
+                            type: string
+                    type: object
+            type: object
+        DisplayPageTemplate:
+            # @review
+            description:
+                A display page template.
+            properties:
+                contentTypeReference:
+                    $ref: "#/components/schemas/ClassSubtypeReference"
+                    description:
+                        The content type (and optionally subtype) associated to the display page template.
+                creator:
+                    $ref: "../../headless-admin-user/headless-admin-user-impl/rest-openapi.yaml#Creator"
+                    # @review
+                    description:
+                        The display page template's creator. It is not returned by default. It can be embedded via
+                        nestedFields.
+                    readOnly: true
+                creatorExternalReferenceCode:
+                    # @review
+                    description:
+                        The display page template's creator external reference code.
+                    type: string
+                dateCreated:
+                    # @review
+                    description:
+                        The display page template's creation date.
+                    format: date-time
+                    type: string
+                dateModified:
+                    # @review
+                    description:
+                        The last time any field of the display page template was changed.
+                    format: date-time
+                    type: string
+                datePublished:
+                    # @review
+                    description:
+                        The display page template's most recent publication date.
+                    format: date-time
+                    type: string
+                displayPageTemplateSettings:
+                    $ref: "#/components/schemas/DisplayPageTemplateSettings"
+                    # @review
+                    description:
+                        Settings of the display page template, such as SEO or OpenGraph.
+                externalReferenceCode:
+                    # @review
+                    description:
+                        The display page template's external reference code.
+                    type: string
+                friendlyUrlPath_i18n:
+                    additionalProperties:
+                        type: string
+                    # @review
+                    description:
+                        The localized relative URLs to the display page template's rendered content.
+                    type: object
+                key:
+                    # @review
+                    description:
+                        The display page template's key.
+                    type: string
+                markedAsDefault:
+                    # @review
+                    description:
+                        Whether the display page template is the default one for the given content type/subtype.
+                    type: boolean
+                name:
+                    # @review
+                    description:
+                        The display page template's name.
+                    type: string
+                pageSpecifications:
+                    # @review
+                    description:
+                        The display page template's specifications. A display page template may contain 0 or 1 page
+                        specifications in draft status and 0 or 1 page specifications in published status.
+                    items:
+                        $ref: "#/components/schemas/PageSpecification"
+                    type: array
+                parentFolder:
+                    $ref: "#/components/schemas/DisplayPageTemplateFolder"
+                    # @review
+                    description:
+                        The display page template's parent folder.
+                thumbnail:
+                    $ref: "#/components/schemas/ItemExternalReference"
+                    # @review
+                    description:
+                        The display page template's thumbnail.
+                uuid:
+                    # @review
+                    description:
+                        A valid external identifier to reference this display page template.
+                    type: string
+            type: object
+        DisplayPageTemplateFolder:
+            # @review
+            description:
+                A display page template folder.
+            properties:
+                creator:
+                    $ref: "../../headless-admin-user/headless-admin-user-impl/rest-openapi.yaml#Creator"
+                    # @review
+                    description:
+                        The display page template folder's creator. It is not returned by default. It can be embedded
+                        via nestedFields.
+                    readOnly: true
+                creatorExternalReferenceCode:
+                    # @review
+                    description:
+                        The display page template folder's creator external reference code.
+                    type: string
+                dateCreated:
+                    # @review
+                    description:
+                        The display page template folder's creation date.
+                    format: date-time
+                    type: string
+                dateModified:
+                    # @review
+                    description:
+                        The last time any field of the display page template folder was changed.
+                    format: date-time
+                    type: string
+                description:
+                    # @review
+                    description:
+                        The display page template folder's description.
+                    type: string
+                externalReferenceCode:
+                    # @review
+                    description:
+                        The display page template folder's external reference code.
+                    type: string
+                key:
+                    # @review
+                    description:
+                        The display page template folder's key.
+                    type: string
+                name:
+                    # @review
+                    description:
+                        The display page template folder's name.
+                    type: string
+                uuid:
+                    # @review
+                    description:
+                        A valid external identifier to reference this page template folder.
+                    type: string
+            type: object
+        DisplayPageTemplateSettings:
+            # @review
+            description:
+                The settings of a Display Page Template.
+            properties:
+                openGraphSettings:
+                    $ref: "#/components/schemas/OpenGraphSettings"
+                    # @review
+                    description:
+                        The display page template's Open Graph settings.
+                seoSettings:
+                    $ref: "#/components/schemas/SEOSettings"
+                    # @review
+                    description:
+                        The display page template's SEO settings.
+            type: object
+        FragmentComposition:
+            # @review
+            description:
+                A composition of fragments that can be added to a site page.
+            properties:
+                creator:
+                    $ref: "../../headless-admin-user/headless-admin-user-impl/rest-openapi.yaml#Creator"
+                    # @review
+                    description:
+                        The fragment composition's creator. It is not returned by default. It can be embedded via
+                        nestedFields.
+                    readOnly: true
+                creatorExternalReferenceCode:
+                    # @review
+                    description:
+                        The page's creator external reference code.
+                    type: string
+                dateCreated:
+                    description:
+                        The structured content's creation date.
+                    format: date-time
+                    type: string
+                dateModified:
+                    description:
+                        The last time any field of the structured content was changed.
+                    format: date-time
+                    type: string
+                datePublished:
+                    description:
+                        The structured content's most recent publication date.
+                    format: date-time
+                    type: string
+                description:
+                    # @review
+                    description:
+                        The description of this fragment composition.
+                    type: string
+                externalReferenceCode:
+                    # @review
+                    description:
+                        The external reference code of this fragment composition.
+                    type: string
+                fragmentSetExternalReferenceCode:
+                    # @review
+                    description:
+                        The external reference code of the fragment set this fragment composition belongs to.
+                    type: string
+                key:
+                    # @review
+                    description:
+                        The fragment composition's key.
+                    type: string
+                name:
+                    # @review
+                    description:
+                        The fragment composition's name.
+                    type: string
+                pageElement:
+                    $ref: "#/components/schemas/PageElement"
+                    # @review
+                    description:
+                        The fragment composition's page element, whose definition must be of type PageSectionDefinition.
+                thumbnail:
+                    $ref: "#/components/schemas/ItemExternalReference"
+                    # @review
+                    description:
+                        The fragment composition's thumbnail.
+            type: object
+        FragmentField:
+            # @review
+            description:
+                A fragment field.
+            properties:
+                id:
+                    # @review
+                    description:
+                        The fragment field's ID.
+                    type: string
+                value:
+                    anyOf:
+                        - $ref: "#/components/schemas/FragmentFieldAction"
+                        - $ref: "#/components/schemas/FragmentFieldBackgroundImage"
+                        - $ref: "#/components/schemas/FragmentFieldHTML"
+                        - $ref: "#/components/schemas/FragmentFieldImage"
+                        - $ref: "#/components/schemas/FragmentFieldText"
+                    # @review
+                    description:
+                        The fragment field's value.
+            type: object
+        FragmentFieldAction:
+            # @review
+            description:
+                A fragment field with an action.
+            properties:
+                action:
+                    # @review
+                    description:
+                        The fragment field's action. Must be mapped to an external value.
+                    oneOf:
+                        - $ref: "#/components/schemas/FragmentMappedValue"
+                onError:
+                    $ref: "#/components/schemas/ActionExecutionResult"
+                    # @review
+                    description:
+                        The action execution result in case the action fails.
+                onSuccess:
+                    $ref: "#/components/schemas/ActionExecutionResult"
+                    # @review
+                    description:
+                        The action execution result in case the action succeeds.
+                text:
+                    # @review
+                    description:
+                        The fragment field's text.
+                    oneOf:
+                        - $ref: "#/components/schemas/FragmentInlineValue"
+                        - $ref: "#/components/schemas/FragmentMappedValue"
+            type: object
+        FragmentFieldBackgroundImage:
+            # @review
+            description:
+                A fragment field with a background image.
+            properties:
+                backgroundFragmentImage:
+                    $ref: "#/components/schemas/FragmentImage"
+                    # @review
+                    description:
+                        The fragment field's background image.
+            type: object
+        FragmentFieldHTML:
+            # @review
+            description:
+                A fragment field with HTML.
+            properties:
+                html:
+                    # @review
+                    description:
+                        The fragment field's HTML. Can be inline or mapped to an external value.
+                    oneOf:
+                        - $ref: "#/components/schemas/FragmentInlineValue"
+                        - $ref: "#/components/schemas/FragmentMappedValue"
+            type: object
+        FragmentFieldImage:
+            # @review
+            description:
+                A fragment field with an image.
+            properties:
+                fragmentImage:
+                    $ref: "#/components/schemas/FragmentImage"
+                    # @review
+                    description:
+                        The fragment field's image.
+                fragmentLink:
+                    $ref: "#/components/schemas/FragmentLink"
+                    # @review
+                    description:
+                        A link to a fragment.
+            type: object
+        FragmentFieldText:
+            # @review
+            description:
+                A fragment field with text.
+            properties:
+                fragmentLink:
+                    $ref: "#/components/schemas/FragmentLink"
+                    # @review
+                    description:
+                        A link to a fragment.
+                text:
+                    # @review
+                    description:
+                        The fragment field's text.
+                    oneOf:
+                        - $ref: "#/components/schemas/FragmentInlineValue"
+                        - $ref: "#/components/schemas/FragmentMappedValue"
+            type: object
+        FragmentImage:
+            # @review
+            description:
+                A fragment image.
+            properties:
+                config:
+                    # @review
+                    description:
+                        Represents the Adaptive Media fragment image configuration for different viewports.
+                    properties:
+                        landscapeMobile:
+                            # @review
+                            description:
+                                The landscape mobile configuration of the fragment image.
+                            type: string
+                        portraitMobile:
+                            # @review
+                            description:
+                                The portrait mobile configuration of the fragment image.
+                            type: string
+                        tablet:
+                            # @review
+                            description:
+                                The tablet configuration of the fragment image.
+                            type: string
+                    type: object
+                description:
+                    # @review
+                    description:
+                        The fragment image's description.
+                    oneOf:
+                        - $ref: "#/components/schemas/FragmentInlineValue"
+                itemExternalReference:
+                    $ref: "#/components/schemas/ItemExternalReference"
+                title:
+                    # @review
+                    description:
+                        The fragment image's title.
+                    oneOf:
+                        - $ref: "#/components/schemas/FragmentInlineValue"
+                url:
+                    # @review
+                    description:
+                        The fragment image's url. Can be inline or mapped to an external value.
+                    oneOf:
+                        - $ref: "#/components/schemas/FragmentInlineValue"
+                        - $ref: "#/components/schemas/FragmentMappedValue"
+            type: object
+        FragmentInlineValue:
+            # @review
+            description:
+                A fragment inline value.
+            properties:
+                value_i18n:
+                    additionalProperties:
+                        type: string
+                    # @review
+                    description:
+                        The localized fragment's inline values.
+                    type: object
+            type: object
+        FragmentLink:
+            # @review
+            description:
+                A fragment link.
+            properties:
+                value_i18n:
+                    additionalProperties:
+                        $ref: "#/components/schemas/FragmentLinkValue"
+                    # @review
+                    description:
+                        The localized fragment link's values.
+                    type: object
+        FragmentLinkValue:
+            # @review
+            description:
+                A fragment link value.
+            properties:
+                href:
+                    # @review
+                    description:
+                        The fragment link value's hypertext reference. Can be an inline value or mapped to an external
+                        value.
+                    oneOf:
+                        - $ref: "#/components/schemas/FragmentInlineValue"
+                        - $ref: "#/components/schemas/FragmentMappedValue"
+                target:
+                    # @review
+                    description:
+                        The fragment link value's target (blank, parent, self, top).
+                    enum: [Blank, Parent, Self, Top]
+                    type: string
+        FragmentMappedValue:
+            # @review
+            description:
+                A fragment mapped value.
+            properties:
+                mapping:
+                    # @review
+                    description:
+                        The mapping of the fragment mapped value.
+                    properties:
+                        fieldKey:
+                            # @review
+                            description:
+                                The mapping's field key.
+                            type: string
+                        itemReference:
+                            # @review
+                            description:
+                                The mapping's item reference.
+                            oneOf:
+                                - $ref: "#/components/schemas/ItemExternalReference"
+                                - $ref: "#/components/schemas/ContextReference"
+                    type: object
+            type: object
+        FragmentSettingsAllowed:
+            # @review
+            description:
+                Represents the settings of allowed fragments in a page drop zone.
+            properties:
+                allowedFragmentItemExternalReferences:
+                    # @review
+                    description:
+                        A list of allowed fragments.
+                    items:
+                        $ref: "#/components/schemas/ItemExternalReference"
+                    type: array
+            type: object
+        FragmentSettingsUnallowed:
+            # @review
+            description:
+                Represents the settings of unallowed fragments in a page drop zone.
+            properties:
+                unallowedFragmentItemExternalReferences:
+                    items:
+                        $ref: "#/components/schemas/ItemExternalReference"
+                    type: array
+            type: object
+        FragmentStyle:
+            # @review
+            description:
+                A fragment style.
+            properties:
+                backgroundColor:
+                    # @review
+                    description:
+                        The fragment's background color.
+                    type: string
+                backgroundFragmentImage:
+                    $ref: "#/components/schemas/FragmentImage"
+                    # @review
+                    description:
+                        The fragment's background image.
+                borderColor:
+                    # @review
+                    description:
+                        The fragment's border color.
+                    type: string
+                borderRadius:
+                    # @review
+                    description:
+                        The fragment's background radius.
+                    type: string
+                borderWidth:
+                    # @review
+                    description:
+                        The fragment's border width.
+                    type: string
+                fontFamily:
+                    # @review
+                    description:
+                        The fragment's font family.
+                    type: string
+                fontSize:
+                    # @review
+                    description:
+                        The fragment's font size.
+                    type: string
+                fontWeight:
+                    # @review
+                    description:
+                        The fragment's font weight.
+                    type: string
+                height:
+                    # @review
+                    description:
+                        The fragment's height.
+                    type: string
+                hidden:
+                    # @review
+                    description:
+                        Specifies if the fragment is hidden to the user.
+                    type: boolean
+                marginBottom:
+                    # @review
+                    description:
+                        The fragment's margin bottom.
+                    type: string
+                marginLeft:
+                    # @review
+                    description:
+                        The fragment's margin left.
+                    type: string
+                marginRight:
+                    # @review
+                    description:
+                        The fragment's margin right.
+                    type: string
+                marginTop:
+                    # @review
+                    description:
+                        The fragment's margin top.
+                    type: string
+                maxHeight:
+                    # @review
+                    description:
+                        The fragment's max height.
+                    type: string
+                maxWidth:
+                    # @review
+                    description:
+                        The fragment's max width.
+                    type: string
+                minHeight:
+                    # @review
+                    description:
+                        The fragment's min height.
+                    type: string
+                minWidth:
+                    # @review
+                    description:
+                        The fragment's min width.
+                    type: string
+                opacity:
+                    # @review
+                    description:
+                        The fragment's opacity.
+                    type: string
+                overflow:
+                    # @review
+                    description:
+                        The fragment's overflow behavior.
+                    type: string
+                paddingBottom:
+                    # @review
+                    description:
+                        The fragment's padding bottom.
+                    type: string
+                paddingLeft:
+                    # @review
+                    description:
+                        The fragment's padding left.
+                    type: string
+                paddingRight:
+                    # @review
+                    description:
+                        The fragment's padding right.
+                    type: string
+                paddingTop:
+                    # @review
+                    description:
+                        The fragment's padding top.
+                    type: string
+                shadow:
+                    # @review
+                    description:
+                        The fragment's shadow effect.
+                    type: string
+                textAlign:
+                    # @review
+                    description:
+                        The fragment's text align.
+                    type: string
+                textColor:
+                    # @review
+                    description:
+                        The fragment's text color.
+                    type: string
+                width:
+                    # @review
+                    description:
+                        The fragment's width.
+                    type: string
+            type: object
+        FragmentViewport:
+            # @review
+            description:
+                A fragment viewport.
+            properties:
+                fragmentViewportStyle:
+                    # @review
+                    description:
+                        The fragment's viewport style.
+                    properties:
+                        backgroundColor:
+                            # @review
+                            description:
+                                The fragment viewport's background color.
+                            type: string
+                        borderColor:
+                            # @review
+                            description:
+                                The fragment viewport's border color.
+                            type: string
+                        borderRadius:
+                            # @review
+                            description:
+                                The fragment viewport's background radius.
+                            type: string
+                        borderWidth:
+                            # @review
+                            description:
+                                The fragment viewport's border width.
+                            type: string
+                        fontFamily:
+                            # @review
+                            description:
+                                The fragment viewport's font family.
+                            type: string
+                        fontSize:
+                            # @review
+                            description:
+                                The fragment viewport's font size.
+                            type: string
+                        fontWeight:
+                            # @review
+                            description:
+                                The fragment viewport's font weight.
+                            type: string
+                        height:
+                            # @review
+                            description:
+                                The fragment viewport's height.
+                            type: string
+                        hidden:
+                            # @review
+                            description:
+                                Specifies if the fragment's viewport is hidden to the user.
+                            type: boolean
+                        marginBottom:
+                            # @review
+                            description:
+                                The fragment viewport's margin bottom.
+                            type: string
+                        marginLeft:
+                            # @review
+                            description:
+                                The fragment viewport's margin left.
+                            type: string
+                        marginRight:
+                            # @review
+                            description:
+                                The fragment viewport's margin right.
+                            type: string
+                        marginTop:
+                            # @review
+                            description:
+                                The fragment viewport's margin top.
+                            type: string
+                        maxHeight:
+                            # @review
+                            description:
+                                The fragment viewport's max height.
+                            type: string
+                        maxWidth:
+                            # @review
+                            description:
+                                The fragment viewport's max width.
+                            type: string
+                        minHeight:
+                            # @review
+                            description:
+                                The fragment viewport's min height.
+                            type: string
+                        minWidth:
+                            # @review
+                            description:
+                                The fragment viewport's min width.
+                            type: string
+                        opacity:
+                            # @review
+                            description:
+                                The fragment viewport's opacity.
+                            type: string
+                        overflow:
+                            # @review
+                            description:
+                                The fragment viewport's overflow behavior.
+                            type: string
+                        paddingBottom:
+                            # @review
+                            description:
+                                The fragment viewport's padding bottom.
+                            type: string
+                        paddingLeft:
+                            # @review
+                            description:
+                                The fragment viewport's padding left.
+                            type: string
+                        paddingRight:
+                            # @review
+                            description:
+                                The fragment viewport's padding right.
+                            type: string
+                        paddingTop:
+                            # @review
+                            description:
+                                The fragment viewport's padding top.
+                            type: string
+                        shadow:
+                            # @review
+                            description:
+                                The fragment viewport's shadow effect.
+                            type: string
+                        textAlign:
+                            # @review
+                            description:
+                                The fragment viewport's text align.
+                            type: string
+                        textColor:
+                            # @review
+                            description:
+                                The fragment viewport's text color.
+                            type: string
+                        width:
+                            # @review
+                            description:
+                                The fragment viewport's width.
+                            type: string
+                    type: object
+                id:
+                    # @review
+                    description:
+                        The fragment viewport's ID.
+                    type: string
+            required:
+                - fragmentViewportStyle
+                - id
+            type: object
+        FriendlyUrlHistory:
+            # @review
+            description:
+                Represents the history of previously used URLs for a page to prevent broken links and provide an easy
+                way to revert changes.
+            properties:
+                friendlyUrlPath_i18n:
+                    additionalProperties:
+                        items:
+                            type: string
+                        type: array
+                    # @review
+                    description:
+                        The old localized relative URLs to the page's rendered content.
+                    type: object
+            type: object
+        Geo:
+            description:
+                A point determined by latitude and longitude.
+            properties:
+                latitude:
+                    description:
+                        The latitude of a point in space.
+                    format: double
+                    type: number
+                longitude:
+                    description:
+                        The longitude of a point in space.
+                    format: double
+                    type: number
+            type: object
+        ItemExternalReference:
+            allOf:
+                - $ref: "#/components/schemas/CollectionReference"
+                - properties:
+                      className:
+                          type: string
+                      externalReferenceCode:
+                          type: string
+                      scope:
+                          properties:
+                              externalReferenceCode:
+                                  type: string
+                              type:
+                                  enum: [AssetLibrary, Site]
+                                  type: string
+                          required:
+                              - externalReferenceCode
+                              - type
+                          type: object
+            # @review
+            description:
+                A unique reference to an entity which remains constant across environments.
+            required:
+                - externalReferenceCode
+            type: object
+        MasterPage:
+            # @review
+            description:
+                A page with common elements (header, footer, ...) used for all or several pages of a site.
+            properties:
+                creator:
+                    $ref: "../../headless-admin-user/headless-admin-user-impl/rest-openapi.yaml#Creator"
+                    # @review
+                    description:
+                        The master page's creator. It is not returned by default. It can be embedded via nestedFields.
+                    readOnly: true
+                creatorExternalReferenceCode:
+                    # @review
+                    description:
+                        The page's creator external reference code.
+                    type: string
+                dateCreated:
+                    # @review
+                    description:
+                        The master page's creation date.
+                    format: date-time
+                    type: string
+                dateModified:
+                    # @review
+                    description:
+                        The last time any field of the master page was changed.
+                    format: date-time
+                    type: string
+                datePublished:
+                    # @review
+                    description:
+                        The master page's most recent publication date.
+                    format: date-time
+                    type: string
+                externalReferenceCode:
+                    description:
+                        The master page's external reference code, unique per site.
+                    type: string
+                key:
+                    # @review
+                    description:
+                        The master page's key.
+                    type: string
+                keywordItemExternalReferences:
+                    description:
+                        The external references to the associated keywords.
+                    items:
+                        "$ref": "#/components/schemas/ItemExternalReference"
+                    type: array
+                keywords:
+                    description:
+                        The associated keywords. They are not returned by default. They can be embedded via
+                        nestedFields.
+                    items:
+                        $ref: "../../headless-admin-taxonomy/headless-admin-taxonomy-impl/rest-openapi.yaml#Keyword"
+                    readOnly: true
+                    type: array
+                markedAsDefault:
+                    # @review
+                    description:
+                        Whether the master page is the default one.
+                    type: boolean
+                name:
+                    # @review
+                    description:
+                        The master page's name.
+                    type: string
+                pageSpecifications:
+                    # @review
+                    description:
+                        The master page's specifications. A master page may contain 0 or 1 page specifications in draft
+                        status and 0 or 1 page specifications in published status.
+                    items:
+                        $ref: "#/components/schemas/PageSpecification"
+                    type: array
+                taxonomyCategories:
+                    # @review
+                    description:
+                        The associated categories. They are not returned by default. They can be embedded via
+                        nestedFields.
+                    items:
+                        $ref: "../../headless-admin-taxonomy/headless-admin-taxonomy-impl/rest-openapi.yaml#TaxonomyCategory"
+                    readOnly: true
+                    type: array
+                taxonomyCategoryItemExternalReferences:
+                    # @review
+                    description:
+                        The external references to the associated categories.
+                    items:
+                        "$ref": "#/components/schemas/ItemExternalReference"
+                    type: array
+                thumbnail:
+                    $ref: "#/components/schemas/ItemExternalReference"
+                    # @review
+                    description:
+                        The master page's thumbnail.
+                uuid:
+                    # @review
+                    description:
+                        A valid external identifier to reference this page.
+                    type: string
+            type: object
+        MessageFormSubmissionResult:
+            # @review
+            description:
+                The definition of a submission result of type message.
+            properties:
+                message:
+                    $ref: "#/components/schemas/FragmentInlineValue"
+                    # @review
+                    description:
+                        The localized submission of message type.
+                messageType:
+                    # @review
+                    description:
+                        The message form submission type (embedded, none).
+                    enum: [Embedded, None]
+                    type: string
+                showNotification:
+                    type: boolean
+            type: object
+        NavigationMenuSettings:
+            # @review
+            description:
+                Represents settings related with the site navigation menu of a page.
+            properties:
+                queryString:
+                    # @review
+                    description:
+                        The default parameter for a page.
+                    type: string
+                target:
+                    # @review
+                    description:
+                        The page's description to be used as summary for search engines.
+                    type: string
+                targetType:
+                    # @review
+                    description:
+                        The target's type (specific frame or new tab).
+                    enum: [SpecificFrame, NewTab]
+                    type: string
+            type: object
+        NoneActionExecutionResult:
+            # @review
+            description:
+                The definition of an action execution result of type none.
+            properties:
+                reload:
+                    # @review
+                    description:
+                        Whether to reload the page after the action is executed.
+                    type: boolean
+            type: object
+        NotificationActionExecutionResult:
+            # @review
+            description:
+                The definition of an action execution result of type notification.
+            properties:
+                reload:
+                    # @review
+                    description:
+                        Whether to reload the page after the action is executed.
+                    type: boolean
+                text:
+                    $ref: "#/components/schemas/FragmentInlineValue"
+                    # @review
+                    description:
+                        The localized text to display when an action is executed.
+            type: object
+        OpenGraphSettings:
+            # @review
+            description:
+                Represents settings related with Open Graph protocol.
+            properties:
+                description_i18n:
+                    additionalProperties:
+                        type: string
+                    # @review
+                    description:
+                        The localized Open Graph's descriptions.
+                    type: object
+                image:
+                    $ref: "#/components/schemas/ItemExternalReference"
+                    # @review
+                    description:
+                        The Open Graph's image.
+                imageAlt_i18n:
+                    additionalProperties:
+                        type: string
+                    # @review
+                    description:
+                        The localized Open Graph's image alts.
+                    type: object
+                title_i18n:
+                    additionalProperties:
+                        type: string
+                    # @review
+                    description:
+                        The localized Open Graph's titles.
+                    type: object
+            type: object
+        PageCollectionDefinition:
+            # @review
+            description:
+                The definition of a Page Collection.
+            properties:
+                collectionReference:
+                    $ref: "#/components/schemas/CollectionReference"
+                collectionViewports:
+                    # @review
+                    description:
+                        A list of viewports of the page collection.
+                    items:
+                        $ref: "#/components/schemas/CollectionViewport"
+                    type: array
+                displayAllItems:
+                    # @review
+                    description:
+                        Whether to show all items when pagination is disabled.
+                    type: boolean
+                displayAllPages:
+                    # @review
+                    description:
+                        Whether to show all pages when pagination is enabled.
+                    type: boolean
+                emptyCollectionConfig:
+                    properties:
+                        displayMessage:
+                            # @review
+                            description:
+                                Whether to display a message when the collection is empty or no results match the
+                                applied filters (true by default).
+                            type: boolean
+                        message_i18n:
+                            additionalProperties:
+                                type: string
+                            # @review
+                            description:
+                                The localized message to display when the collection is empty or no results match the
+                                applied filters ('No Results Found' by default).
+                            type: object
+                    type: object
+                fragmentStyle:
+                    $ref: "#/components/schemas/FragmentStyle"
+                    # @review
+                    description:
+                        The fragment style of the page collection.
+                fragmentViewports:
+                    # @review
+                    description:
+                        The fragment viewports of the page collection.
+                    items:
+                        $ref: "#/components/schemas/FragmentViewport"
+                    type: array
+                layout:
+                    # @review
+                    description:
+                        the page collection's layout.
+                    properties:
+                        align:
+                            enum: [Baseline, Center, End, None, Start, Stretch]
+                            type: string
+                        flexWrap:
+                            enum: [NoWrap, Wrap, WrapReverse]
+                            type: string
+                        justify:
+                            enum: [Center, End, None, SpaceAround, SpaceBetween, Start]
+                            type: string
+                    type: object
+                listItemStyle:
+                    # @review
+                    description:
+                        The style of a list of items in the page collection.
+                    type: string
+                listStyle:
+                    # @review
+                    description:
+                        The style of a list in the page collection.
+                    type: string
+                name:
+                    # @review
+                    description:
+                        The custom name of a Page Collection.
+                    type: string
+                numberOfColumns:
+                    # @review
+                    description:
+                        The number of columns in the page collection.
+                    type: integer
+                numberOfItems:
+                    # @review
+                    description:
+                        The maximum number of items to display in the page collection when pagination is disabled.
+                    type: integer
+                numberOfItemsPerPage:
+                    # @review
+                    description:
+                        The number of items per page in the page collection.
+                    type: integer
+                numberOfPages:
+                    # @review
+                    description:
+                        The maximum number of pages to show when pagination is enabled.
+                    type: integer
+                paginationType:
+                    # @review
+                    description:
+                        The type of pagination.
+                    enum: [
+                        None,
+                        Numeric,
+                        Simple]
+                    type: string
+                templateKey:
+                    # @review
+                    description:
+                        The page collection's template key.
+                    type: string
+            type: object
+        PageCollectionItemDefinition:
+            # @review
+            description:
+                The definition of a Page Collection Item.
+            properties:
+                collectionItemConfig:
+                    # @review
+                    description:
+                        The page collection item's configuration.
+                    type: object
+            type: object
+        PageColumnDefinition:
+            # @review
+            description:
+                The definition of a Page Column.
+            properties:
+                columnViewports:
+                    # @review
+                    description:
+                        A list of column viewports of the page column definition.
+                    items:
+                        $ref: "#/components/schemas/ColumnViewport"
+                    type: array
+                size:
+                    # @review
+                    description:
+                        The page column's size.
+                    maximum: 12
+                    minimum: 1
+                    type: integer
+            type: object
+        PageContainerDefinition:
+            # @review
+            description:
+                The definition of a Page section.
+            properties:
+                backgroundFragmentImage:
+                    $ref: "#/components/schemas/FragmentImage"
+                    # @review
+                    description:
+                        The background fragment image of the page section.
+                contentVisibility:
+                    # @review
+                    description:
+                        Defines the content visibility of the container.
+                    type: string
+                cssClasses:
+                    # @review
+                    description:
+                        A list of CSS Classes that are applied to the element.
+                    items:
+                        type: string
+                    type: array
+                customCSS:
+                    # @review
+                    description:
+                        Custom CSS that is applied on the fragment.
+                    type: string
+                customCSSViewports:
+                    # @review
+                    description:
+                        The custom CSS viewports of the page collection.
+                    items:
+                        $ref: "#/components/schemas/CustomCSSViewport"
+                    type: array
+                fragmentLink:
+                    $ref: "#/components/schemas/FragmentLink"
+                    # @review
+                    description:
+                        The fragment link of the page section.
+                fragmentStyle:
+                    $ref: "#/components/schemas/FragmentStyle"
+                    # @review
+                    description:
+                        The fragment style of the page section.
+                fragmentViewports:
+                    # @review
+                    description:
+                        A list of fragment viewports of the page section.
+                    items:
+                        $ref: "#/components/schemas/FragmentViewport"
+                    type: array
+                htmlProperties:
+                    # @review
+                    description:
+                        The page section's html properties
+                    properties:
+                        htmlTag:
+                            enum: [Article, Aside, Div, Footer, Header, Main, Nav, Section]
+                            type: string
+                    type: object
+                indexed:
+                    # @review
+                    description:
+                        A flag that indicates whether the page section is indexed or not.
+                    type: boolean
+                layout:
+                    # @review
+                    description:
+                        the page container's layout.
+                    properties:
+                        containerType:
+                            # @review
+                            description:
+                                The container's type (fixed or fluid).
+                            enum: [Fixed, Fluid]
+                            type: string
+                        flexWrap:
+                            enum: [NoWrap, Wrap, WrapReverse]
+                            type: string
+                        widthType:
+                            # @review
+                            description:
+                                The width's type (fixed or fluid).
+                            enum: [Fixed, Fluid]
+                            type: string
+                    type: object
+                name:
+                    # @review
+                    description:
+                        The custom name of a Page section.
+                    type: string
+            type: object
+        PageDefinition:
+            # @review
+            description:
+                Represent a definition of a Page.
+            properties:
+                pageElement:
+                    $ref: "#/components/schemas/PageElement"
+                    # @review
+                    description:
+                        The page's page element.
+                pageRules:
+                    # @review
+                    description:
+                        A list of the page rules this page has.
+                    items:
+                        $ref: "#/components/schemas/PageRule"
+                    type: array
+                settings:
+                    $ref: "#/components/schemas/Settings"
+                    # @review
+                    description:
+                        The page's settings.
+                version:
+                    # @review
+                    description:
+                        The version of the JSON generated by page definition.
+                    format: double
+                    type: number
+            type: object
+        PageDropZoneDefinition:
+            # @review
+            description:
+                Represent a definition of a Page drop zone.
+            properties:
+                fragmentSettings:
+                    # @review
+                    description:
+                        The page drop zone's allowed or unallowed fragments.
+                    oneOf:
+                        - $ref: "#/components/schemas/FragmentSettingsAllowed"
+                        - $ref: "#/components/schemas/FragmentSettingsUnallowed"
+            type: object
+        PageElement:
+            # @review
+            description:
+                A page element.
+            properties:
+                definition:
+                    # @review
+                    description:
+                        The page element's definition.
+                    oneOf:
+                        - $ref: "#/components/schemas/PageCollectionDefinition"
+                        - $ref: "#/components/schemas/PageCollectionItemDefinition"
+                        - $ref: "#/components/schemas/PageColumnDefinition"
+                        - $ref: "#/components/schemas/PageContainerDefinition"
+                        - $ref: "#/components/schemas/PageDropZoneDefinition"
+                        - $ref: "#/components/schemas/PageFormDefinition"
+                        - $ref: "#/components/schemas/PageFragmentCompositionInstanceDefinition"
+                        - $ref: "#/components/schemas/PageFragmentDropZoneDefinition"
+                        - $ref: "#/components/schemas/PageFragmentInstanceDefinition"
+                        - $ref: "#/components/schemas/PageRowDefinition"
+                        - $ref: "#/components/schemas/PageWidgetInstanceDefinition"
+                externalReferenceCode:
+                    description:
+                        The page element's external reference code. Unique within the site.
+                    type: string
+                pageElements:
+                    # @review
+                    description:
+                        A list of the page elements this page element has.
+                    items:
+                        $ref: "#/components/schemas/PageElement"
+                    type: array
+                parentExternalReferenceCode:
+                    description:
+                        The parent's page element's external reference code. Unique within the site.
+                    type: string
+                position:
+                    description:
+                        The 0-based position this page element occupies with respect to its siblings (0 for first child,
+                        1 for second child, ...). If not specified when creating a page element the page element will be
+                        added at the last valid position.
+                    minimum: 0
+                    type: integer
+                type:
+                    # @review
+                    description:
+                        The page element's type (collection, collection item, column, container, drop zone, form,
+                        fragment, fragment composition, fragment drop zone, row, widget or widget section).
+                    enum: [Collection, CollectionItem, Column, Container, DropZone, Form, Fragment, FragmentComposition, FragmentDropZone, Row, Widget]
+                    type: string
+        PageExperience:
+            description:
+                # @review
+                A customized experience for a given page specification.
+            properties:
+                externalReferenceCode:
+                    description:
+                        The experience's external reference code, unique per site.
+                    type: string
+                key:
+                    # @review
+                    description:
+                        The experience's key.
+                    type: string
+                name_i18n:
+                    additionalProperties:
+                        type: string
+                    # @review
+                    description:
+                        The localized experience's names.
+                    type: object
+                pageElements:
+                    # @review
+                    description:
+                        The page elements in the experience.
+                    items:
+                        $ref: "#/components/schemas/PageElement"
+                    type: array
+                pageRules:
+                    # @review
+                    description:
+                        The page rules in the experience.
+                    items:
+                        $ref: "#/components/schemas/PageRule"
+                    type: array
+                priority:
+                    # @review
+                    description:
+                        the experience's priority. It must be a unique value within the page specification. The default
+                        experience will always be assigned priority 0. A priority higher than 0 will result in an
+                        experience being active and a priority lower than 0 will result in an experience being inactive.
+                    type: integer
+                segmentItemExternalReferences:
+                    # @review
+                    description:
+                        A list of external references to the segments the experience is used for.
+                    items:
+                        $ref: "#/components/schemas/ItemExternalReference"
+                    type: array
+            type: object
+        PageFormDefinition:
+            # @review
+            description:
+                The definition of a page form.
+            properties:
+                cssClasses:
+                    # @review
+                    description:
+                        A list of CSS classes that are applied to the page element.
+                    items:
+                        type: string
+                    type: array
+                customCSS:
+                    # @review
+                    description:
+                        Custom CSS that is applied on the page element.
+                    type: string
+                customCSSViewports:
+                    # @review
+                    description:
+                        The custom CSS viewports of the page form.
+                    items:
+                        $ref: "#/components/schemas/CustomCSSViewport"
+                    type: array
+                formConfig:
+                    # @review
+                    description:
+                        The page form's configuration.
+                    properties:
+                        formReference:
+                            # @review
+                            description:
+                                The form reference.
+                            oneOf:
+                                - $ref: "#/components/schemas/ClassSubtypeReference"
+                                - $ref: "#/components/schemas/ContextReference"
+                        formSuccessSubmissionResult:
+                            # @review
+                            description:
+                                The definition for the success message of the form.
+                            oneOf:
+                                - $ref: "#/components/schemas/MessageFormSubmissionResult"
+                                - $ref: "#/components/schemas/SitePageFormSubmissionResult"
+                                - $ref: "#/components/schemas/URLFormSubmissionResult"
+                            type: object
+                    type: object
+                fragmentStyle:
+                    $ref: "#/components/schemas/FragmentStyle"
+                    # @review
+                    description:
+                        The fragment style of a page form.
+                fragmentViewports:
+                    # @review
+                    description:
+                        A list of fragment viewports of a page form.
+                    items:
+                        $ref: "#/components/schemas/FragmentViewport"
+                    type: array
+                indexed:
+                    # @review
+                    description:
+                        A flag that indicates whether the page fragment instance is indexed or not.
+                    type: boolean
+                layout:
+                    # @review
+                    description:
+                        The page form's layout.
+                    properties:
+                        align:
+                            enum: [Baseline, Center, End, None, Start, Stretch]
+                            type: string
+                        contentDisplay:
+                            enum: [Block, FlexColumn, FlexRow]
+                            type: string
+                        flexWrap:
+                            enum: [NoWrap, Wrap, WrapReverse]
+                            type: string
+                        justify:
+                            enum: [Center, End, None, SpaceAround, SpaceBetween, Start]
+                            type: string
+                        widthType:
+                            # @review
+                            description:
+                                The width's type (fixed or fluid).
+                            enum: [Fixed, Fluid]
+                            type: string
+                    type: object
+                name:
+                    # @review
+                    description:
+                        The custom name of of a page form.
+                    type: string
+            type: object
+        PageFragmentCompositionInstanceDefinition:
+            # @review
+            description:
+                The definition of a page fragment composition instance.
+            properties:
+                fragmentComposition:
+                    $ref: "#/components/schemas/ItemExternalReference"
+                    # @review
+                    description:
+                        The reference to the fragment composition that will be used to generate the page elment of type
+                        section that will be added.
+            type: object
+        PageFragmentDropZoneDefinition:
+            # @review
+            description:
+                The definition of a page fragment drop zone.
+            properties:
+                fragmentDropZoneId:
+                    # @review
+                    description:
+                        The id of the fragment drop zone
+                    type: string
+            type: object
+        PageFragmentInstanceDefinition:
+            # @review
+            description:
+                A definition of a page fragment instance.
+            properties:
+                cssClasses:
+                    # @review
+                    description:
+                        A list of CSS classes that are applied to the fragment instance.
+                    items:
+                        type: string
+                    type: array
+                customCSS:
+                    # @review
+                    description:
+                        Custom CSS that is applied on the fragment instance.
+                    type: string
+                customCSSViewports:
+                    # @review
+                    description:
+                        The custom CSS viewports of the fragment instance.
+                    items:
+                        $ref: "#/components/schemas/CustomCSSViewport"
+                    type: array
+                datePropagated:
+                    description:
+                        The fragment instance's most recent propagation date.
+                    format: date-time
+                    type: string
+                datePublished:
+                    description:
+                        The fragment instance's most recent publication date.
+                    format: date-time
+                    type: string
+                draftPageElementExternalReferenceCode:
+                    # @review
+                    description:
+                        The external reference code of the corresponding page element in the draft of the page.
+                        Available only in the published page specification.
+                    type: string
+                fragmentConfig:
+                    additionalProperties:
+                        type: object
+                    # @review
+                    description:
+                        The configuration values of the fragment instance.
+                    type: object
+                fragmentFields:
+                    # @review
+                    description:
+                        The fragment field values of the the fragment instance.
+                    items:
+                        $ref: "#/components/schemas/FragmentField"
+                    type: array
+                fragmentReference:
+                    # @review
+                    description:
+                        An external reference to the fragment.
+                    oneOf:
+                        - $ref: "#/components/schemas/DefaultFragmentReference"
+                        - $ref: "#/components/schemas/ItemExternalReference"
+                fragmentStyle:
+                    $ref: "#/components/schemas/FragmentStyle"
+                    # @review
+                    description:
+                        The fragment style of the page fragment instance.
+                fragmentViewports:
+                    # @review
+                    description:
+                        A list of fragment viewports of the page fragment instance.
+                    items:
+                        $ref: "#/components/schemas/FragmentViewport"
+                    type: array
+                indexed:
+                    # @review
+                    description:
+                        A flag that indicates whether the page fragment instance is indexed or not.
+                    type: boolean
+                name:
+                    # @review
+                    description:
+                        The custom name of a fragment instance.
+                    type: string
+                namespace:
+                    # @review
+                    description:
+                        The fragment instance's namespace.
+                    type: string
+                uuid:
+                    # @review
+                    description:
+                        A valid external identifier to reference this fragment instance.
+                    type: string
+                widgetInstances:
+                    # @review
+                    description:
+                        A list of widget instances within the fragment instance.
+                    items:
+                        $ref: "#/components/schemas/WidgetInstance"
+                    type: array
+            type: object
+        PageRowDefinition:
+            # @review
+            description:
+                The definition of a page row.
+            properties:
+                cssClasses:
+                    # @review
+                    description:
+                        A list of CSS classes that are applied to the page row.
+                    items:
+                        type: string
+                    type: array
+                customCSS:
+                    # @review
+                    description:
+                        Custom CSS that is applied on the page row.
+                    type: string
+                customCSSViewports:
+                    # @review
+                    description:
+                        The custom CSS viewports of the page row.
+                    items:
+                        $ref: "#/components/schemas/CustomCSSViewport"
+                    type: array
+                fragmentStyle:
+                    $ref: "#/components/schemas/FragmentStyle"
+                    # @review
+                    description:
+                        The fragment style of the page row.
+                fragmentViewports:
+                    # @review
+                    description:
+                        A list of fragment viewports of a page row.
+                    items:
+                        $ref: "#/components/schemas/FragmentViewport"
+                    type: array
+                gutters:
+                    # @review
+                    description:
+                        A flag that indicates whether the page row has gutters.
+                    type: boolean
+                indexed:
+                    # @review
+                    description:
+                        A flag that indicates whether the page row is indexed or not.
+                    type: boolean
+                modulesPerRow:
+                    # @review
+                    description:
+                        The page row's modules per row.
+                    type: integer
+                name:
+                    # @review
+                    description:
+                        The custom name of a page row.
+                    type: string
+                numberOfColumns:
+                    # @review
+                    description:
+                        The page row's number of columns.
+                    type: integer
+                reverseOrder:
+                    # @review
+                    description:
+                        A flag that indicates whether the page row has reverse order.
+                    type: boolean
+                rowViewports:
+                    # @review
+                    description:
+                        A list of viewports of the page row.
+                    items:
+                        $ref: "#/components/schemas/RowViewport"
+                    type: array
+                verticalAlignment:
+                    # @review
+                    description:
+                        The vertical alignment property of the page row.
+                    type: string
+            type: object
+        PageRule:
+            # @review
+            description:
+                The definition of a page rule.
+            properties:
+                conditionType:
+                    # @review
+                    description:
+                        The custom name of a Page rule.
+                    enum: [All, Any]
+                    type: string
+                externalReferenceCode:
+                    # @review
+                    description:
+                        The page rule external reference code.
+                    type: string
+                name:
+                    # @review
+                    description:
+                        The custom name of a page rule.
+                    type: string
+                pageRuleActions:
+                    # @review
+                    description:
+                        A list of actions of a page rule.
+                    items:
+                        $ref: "#/components/schemas/PageRuleAction"
+                    type: array
+                pageRuleConditions:
+                    # @review
+                    description:
+                        A list of conditions of a page rule.
+                    items:
+                        $ref: "#/components/schemas/PageRuleCondition"
+                    type: array
+            type: object
+        PageRuleAction:
+            # @review
+            description:
+                The definition of a page rule action.
+            properties:
+                action:
+                    # @review
+                    description:
+                        The page rule action's action.
+                    type: string
+                externalReferenceCode:
+                    # @review
+                    description:
+                        The page rule action's external reference code.
+                    type: string
+                itemId:
+                    # @review
+                    description:
+                        The page rule action's item ID.
+                    type: string
+                type:
+                    # @review
+                    description:
+                        The page rule action's type.
+                    type: string
+            type: object
+        PageRuleCondition:
+            # @review
+            description:
+                The definition of a Page Rule Condition.
+            properties:
+                condition:
+                    # @review
+                    description:
+                        The page rule condition's description.
+                    type: string
+                externalReferenceCode:
+                    # @review
+                    description:
+                        The page rule condition's external reference code.
+                    type: string
+                type:
+                    # @review
+                    description:
+                        The page rule condition's type.
+                    type: string
+                value:
+                    # @review
+                    description:
+                        The page rule condition's value.
+                    type: string
+            type: object
+        PageSettings:
+            discriminator:
+                mapping:
+                    CollectionPage: "#/components/schemas/CollectionPageSettings"
+                    ContentPage: "#/components/schemas/ContentPageSettings"
+                    WidgetPage: "#/components/schemas/WidgetPageSettings"
+                propertyName: type
+            properties:
+                customMetaTags:
+                    # @review
+                    description:
+                        A list of custom meta tags this page has.
+                    items:
+                        $ref: "#/components/schemas/CustomMetaTag"
+                    type: array
+                hiddenFromNavigation:
+                    # @review
+                    description:
+                        A flag that indicates whether the page is hidden from navigation.
+                    type: boolean
+                navigationMenuSettings:
+                    $ref: "#/components/schemas/NavigationMenuSettings"
+                    # @review
+                    description:
+                        The page's site navigation menu settings.
+                openGraphSettings:
+                    $ref: "#/components/schemas/OpenGraphSettings"
+                    # @review
+                    description:
+                        The page's Open Graph settings.
+                seoSettings:
+                    $ref: "#/components/schemas/SEOSettings"
+                    # @review
+                    description:
+                        The page's SEO settings.
+                type:
+                    enum:
+                        - CollectionPageSettings
+                        - ContentPageSettings
+                        - WidgetPageSettings
+                    type: string
+            type: object
+        PageSpecification:
+            # @review
+            description:
+                A page specification of a content page, content page template, widget page, or widget page template. A
+                content page may contain 0 or 1 page specifications in draft status and 0 or 1 page specifications in
+                published status. A widget page contains only 1 page specification in published status.
+            discriminator:
+                mapping:
+                    ContentPageSpecification: "#/components/schemas/ContentPageSpecification"
+                    WidgetPageSpecification: "#/components/schemas/WidgetPageSpecification"
+                propertyName: type
+            properties:
+                externalReferenceCode:
+                    description:
+                        The page specification's external reference code, unique per site.
+                    type: string
+                settings:
+                    $ref: "#/components/schemas/Settings"
+                type:
+                    # @review
+                    description:
+                        The type of the page specification.
+                    enum:
+                        - ContentPageSpecification
+                        - WidgetPageSpecification
+                    type: string
+            type: object
+        PageTemplate:
+            discriminator:
+                mapping:
+                    ContentPageTemplate: "#/components/schemas/ContentPageTemplate"
+                    WidgetPageTemplate: "#/components/schemas/WidgetPageTemplate"
+                propertyName: type
+            properties:
+                creator:
+                    $ref: "../../headless-admin-user/headless-admin-user-impl/rest-openapi.yaml#Creator"
+                    # @review
+                    description:
+                        The page template's creator. It is not returned by default. It can be embedded via nestedFields.
+                    readOnly: true
+                creatorExternalReferenceCode:
+                    # @review
+                    description:
+                        The page's creator external reference code.
+                    type: string
+                dateCreated:
+                    # @review
+                    description:
+                        The page template's creation date.
+                    format: date-time
+                    type: string
+                dateModified:
+                    # @review
+                    description:
+                        The last time the page template changed.
+                    format: date-time
+                    type: string
+                datePublished:
+                    # @review
+                    description:
+                        The last time the page template was published.
+                    format: date-time
+                    type: string
+                externalReferenceCode:
+                    # @review
+                    description:
+                        The page template's external reference code.
+                    type: string
+                key:
+                    # @review
+                    description:
+                        The page template's key.
+                    type: string
+                keywordItemExternalReferences:
+                    description:
+                        The external references to the associated keywords.
+                    items:
+                        "$ref": "#/components/schemas/ItemExternalReference"
+                    type: array
+                keywords:
+                    description:
+                        The associated keywords. They are not returned by default. They can be embedded via
+                        nestedFields.
+                    items:
+                        $ref: "../../headless-admin-taxonomy/headless-admin-taxonomy-impl/rest-openapi.yaml#Keyword"
+                    readOnly: true
+                    type: array
+                name:
+                    # @review
+                    description:
+                        The page template's name.
+                    type: string
+                pageSpecifications:
+                    # @review
+                    description:
+                        The page template's specifications. A page template of type content may contain 0 or 1 page
+                        specifications in draft status and 0 or 1 page specifications in published status. A page
+                        template of type widget contains only 1 page specification in published status.
+                    items:
+                        $ref: "#/components/schemas/PageSpecification"
+                    type: array
+                pageTemplateSet:
+                    $ref: "#/components/schemas/PageTemplateSet"
+                    # @review
+                    description:
+                        The page template's set.
+                pageTemplateSettings:
+                    $ref: "#/components/schemas/PageTemplateSettings"
+                    # @review
+                    description:
+                        The settings of the page template.
+                taxonomyCategories:
+                    # @review
+                    description:
+                        The associated categories. They are not returned by default. They can be embedded via
+                        nestedFields.
+                    items:
+                        $ref: "../../headless-admin-taxonomy/headless-admin-taxonomy-impl/rest-openapi.yaml#TaxonomyCategory"
+                    readOnly: true
+                    type: array
+                taxonomyCategoryItemExternalReferences:
+                    # @review
+                    description:
+                        The external references to the associated categories.
+                    items:
+                        "$ref": "#/components/schemas/ItemExternalReference"
+                    type: array
+                type:
+                    # @review
+                    description:
+                        The type of the page template.
+                    enum:
+                        - ContentPageTemplate
+                        - WidgetPageTemplate
+                    type: string
+                uuid:
+                    # @review
+                    description:
+                        A valid external identifier to reference this page template.
+                    type: string
+            type: object
+        PageTemplateSet:
+            # @review
+            description:
+                A page template set.
+            properties:
+                creator:
+                    $ref: "../../headless-admin-user/headless-admin-user-impl/rest-openapi.yaml#Creator"
+                    # @review
+                    description:
+                        The page template set's creator. It is not returned by default. It can be embedded via
+                        nestedFields.
+                    readOnly: true
+                creatorExternalReferenceCode:
+                    # @review
+                    description:
+                        The page template set's creator external reference code.
+                    type: string
+                dateCreated:
+                    # @review
+                    description:
+                        The page template set's creation date.
+                    format: date-time
+                    type: string
+                dateModified:
+                    # @review
+                    description:
+                        The last time the page template set changed.
+                    format: date-time
+                    type: string
+                description:
+                    # @review
+                    description:
+                        The page template set's description.
+                    type: string
+                externalReferenceCode:
+                    # @review
+                    description:
+                        The page template set's external reference code.
+                    type: string
+                key:
+                    # @review
+                    description:
+                        The page template set's key.
+                    type: string
+                name:
+                    # @review
+                    description:
+                        The page template set's name.
+                    type: string
+                uuid:
+                    description:
+                        A valid external identifier to reference this page template set.
+                    type: string
+            type: object
+        PageTemplateSettings:
+            # @review
+            description:
+                The settings of the page template.
+            discriminator:
+                mapping:
+                    ContentPageTemplate: "#/components/schemas/ContentPageTemplateSettings"
+                    WidgetPageTemplate: "#/components/schemas/WidgetPageTemplateSettings"
+                propertyName: type
+            properties:
+                type:
+                    enum:
+                        - ContentPageTemplateSettings
+                        - WidgetPageTemplateSettings
+                    type: string
+            type: object
+        PageWidgetInstanceDefinition:
+            # @review
+            description:
+                The definition of a page widget instance.
+            properties:
+                cssClasses:
+                    # @review
+                    description:
+                        A list of CSS classes that are applied to the element.
+                    items:
+                        type: string
+                    type: array
+                customCSS:
+                    # @review
+                    description:
+                        Custom CSS that is applied on the fragment.
+                    type: string
+                customCSSViewports:
+                    # @review
+                    description:
+                        The custom CSS viewports of the page collection.
+                    items:
+                        $ref: "#/components/schemas/CustomCSSViewport"
+                    type: array
+                fragmentStyle:
+                    $ref: "#/components/schemas/FragmentStyle"
+                    # @review
+                    description:
+                        The fragment style of the page widget instance.
+                fragmentViewports:
+                    # @review
+                    description:
+                        A list of fragment viewports of the page widget instance.
+                    items:
+                        $ref: "#/components/schemas/FragmentViewport"
+                    type: array
+                name:
+                    # @review
+                    description:
+                        The custom name of a page widget instance.
+                    type: string
+                widgetInstance:
+                    $ref: "#/components/schemas/WidgetInstance"
+                    # @review
+                    description:
+                        The widget instance.
+            type: object
+        RowViewport:
+            # @review
+            description:
+                A row viewport.
+            properties:
+                id:
+                    # @review
+                    description:
+                        The row viewport's ID.
+                    type: string
+                rowViewportDefinition:
+                    # @review
+                    description:
+                        The definition of the row viewport.
+                    properties:
+                        modulesPerRow:
+                            # @review
+                            description:
+                                The number of modules per row.
+                            type: integer
+                        reverseOrder:
+                            # @review
+                            description:
+                                A flag that indicates whether the row viewport has reverse order.
+                            type: boolean
+                        verticalAlignment:
+                            # @review
+                            description:
+                                The vertical alignment property of the row viewport.
+                            type: string
+                    type: object
+            required:
+                - id
+                - rowViewportDefinition
+            type: object
+        SEOSettings:
+            # @review
+            description:
+                Settings related with SEO.
+            properties:
+                customCanonicalURL_i18n:
+                    additionalProperties:
+                        type: string
+                    # @review
+                    description:
+                        The localized canonical URL of the page, if it exists.
+                    type: object
+                description_i18n:
+                    additionalProperties:
+                        type: string
+                    # @review
+                    description:
+                        The localized descriptions of the page to be used as summary for search engines.
+                    type: object
+                htmlTitle_i18n:
+                    additionalProperties:
+                        type: string
+                    # @review
+                    description:
+                        The localized main titles of the page to be used by search engines.
+                    type: object
+                robots_i18n:
+                    additionalProperties:
+                        type: string
+                    # @review
+                    description:
+                        A localized tag telling search engines if and how they should crawl the page.
+                    type: object
+                seoKeywords_i18n:
+                    additionalProperties:
+                        type: string
+                    # @review
+                    description:
+                        A list of localized target keywords of the page to be used by search engines.
+                    type: object
+                siteMapSettings:
+                    # @review
+                    description:
+                        Represents settings related with the site map.
+                    properties:
+                        changeFrequency:
+                            description:
+                                Indicates how often a page is updated.
+                            enum:
+                                - Always
+                                - Hourly
+                                - Daily
+                                - Weekly
+                                - Monthly
+                                - Yearly
+                                - Never
+                            type: string
+                        include:
+                            description:
+                                Whether search engines should crawl and index the page.
+                            type: boolean
+                        includeChildSitePages:
+                            # @review
+                            description:
+                                Whether search engines should crawl and index the child pages.
+                            type: boolean
+                        pagePriority:
+                            description:
+                                How the page should be prioritized relative to other pages.
+                            format: double
+                            maximum: 1
+                            minimum: 0
+                            type: number
+                    type: object
+            type: object
+        Settings:
+            # @review
+            description:
+                Represents the settings of a page specification.
+            properties:
+                colorSchemeName:
+                    # @review
+                    description:
+                        The page specification's color scheme name.
+                    type: string
+                css:
+                    # @review
+                    description:
+                        The page specification's CSS.
+                    type: string
+                favIcon:
+                    # @review
+                    description:
+                        The FavIcon of the page specification.
+                    oneOf:
+                        - $ref: "#/components/schemas/ClientExtension"
+                        - $ref: "#/components/schemas/ItemExternalReference"
+                globalCSSClientExtensions:
+                    description:
+                        The client extensions for global CSS associated to the page.
+                    items:
+                        $ref: "#/components/schemas/ClientExtension"
+                    type: array
+                globalJSClientExtensions:
+                    description:
+                        The client extensions for global JS associated to the page.
+                    items:
+                        $ref: "#/components/schemas/ClientExtension"
+                    type: array
+                javascript:
+                    # @review
+                    description:
+                        The page specification's JavaScript.
+                    type: string
+                masterPage:
+                    $ref: "#/components/schemas/MasterPage"
+                    # @review
+                    description:
+                        The page specification's master page. This property is not applied if the page specification
+                        belongs to a master page.
+                styleBook:
+                    # @review
+                    description:
+                        The style book that is applied to the page specification.
+                    properties:
+                        key:
+                            # @review
+                            description:
+                                The style book's key.
+                            type: string
+                        name:
+                            # @review
+                            description:
+                                The style book's name.
+                            type: string
+                    type: object
+                themeCSSClientExtension:
+                    $ref: "#/components/schemas/ClientExtension"
+                    # @review
+                    description:
+                        The client extension for the theme CSS of a page specification.
+                themeName:
+                    # @review
+                    description:
+                        The page specification's theme name.
+                    type: string
+                themeSettings:
+                    # @review
+                    description:
+                        The page specification's theme settings.
+                    type: object
+                themeSpritemapClientExtension:
+                    $ref: "#/components/schemas/ClientExtension"
+                    # @review
+                    description:
+                        The client extension for the theme spritemap of a page specification.
+            type: object
+        SitePage:
+            # @review
+            description:
+                A page on a site, which can be of type content or widget.
+            properties:
+                availableLanguages:
+                    # @review
+                    description:
+                        The list of languages the page has a translation for.
+                    items:
+                        type: string
+                    readOnly: true
+                    type: array
+                creator:
+                    $ref: "../../headless-admin-user/headless-admin-user-impl/rest-openapi.yaml#Creator"
+                    # @review
+                    description:
+                        The page's creator. It is not returned by default. It can be embedded via nestedFields.
+                    readOnly: true
+                creatorExternalReferenceCode:
+                    # @review
+                    description:
+                        The page's creator external reference code.
+                    type: string
+                customFields:
+                    # @review
+                    description:
+                        Custom fields associated with the page.
+                    items:
+                        $ref: "#/components/schemas/CustomField"
+                    type: array
+                dateCreated:
+                    # @review
+                    description:
+                        The page's creation date.
+                    format: date-time
+                    type: string
+                dateModified:
+                    # @review
+                    description:
+                        The last time any field of the page was changed.
+                    format: date-time
+                    type: string
+                datePublished:
+                    # @review
+                    description:
+                        The page's most recent publication date.
+                    format: date-time
+                    type: string
+                externalReferenceCode:
+                    description:
+                        The page's external reference code.
+                    type: string
+                friendlyUrlHistory:
+                    $ref: "#/components/schemas/FriendlyUrlHistory"
+                    # @review
+                    description:
+                        The history of previously used URLs to the page's rendered content. This field is not returned
+                        by default. It can be requested via nestedFields.
+                friendlyUrlPath_i18n:
+                    additionalProperties:
+                        type: string
+                    # @review
+                    description:
+                        The localized relative URLs to the page's rendered content.
+                    type: object
+                keywordItemExternalReferences:
+                    description:
+                        The external references to the associated keywords.
+                    items:
+                        "$ref": "#/components/schemas/ItemExternalReference"
+                    type: array
+                keywords:
+                    # @review
+                    description:
+                        The associated keywords. They are not returned by default. They can be embedded via
+                        nestedFields.
+                    items:
+                        $ref: "../../headless-admin-taxonomy/headless-admin-taxonomy-impl/rest-openapi.yaml#Keyword"
+                    readOnly: true
+                    type: array
+                pageSettings:
+                    $ref: "#/components/schemas/PageSettings"
+                    # @review
+                    description:
+                        Settings of the page, such as SEO or OpenGraph.
+                pageSpecifications:
+                    # @review
+                    description:
+                        The page's specifications. A page may contain 0 or 1 page specifications in draft status and 0
+                        or 1 page specifications in published status.
+                    items:
+                        $ref: "#/components/schemas/PageSpecification"
+                    type: array
+                parentSitePageExternalReferenceCode:
+                    # @review
+                    description:
+                        The parent page external reference code or null if it is a top level page.
+                    type: string
+                siteExternalReferenceCode:
+                    # @review
+                    description:
+                        The external reference code of the site to which this page is scoped.
+                    readOnly: true
+                    type: string
+                taxonomyCategories:
+                    # @review
+                    description:
+                        The associated categories. They are not returned by default. They can be embedded via
+                        nestedFields.
+                    items:
+                        $ref: "../../headless-admin-taxonomy/headless-admin-taxonomy-impl/rest-openapi.yaml#TaxonomyCategory"
+                    readOnly: true
+                    type: array
+                taxonomyCategoryItemExternalReferences:
+                    # @review
+                    description:
+                        The external references to the associated categories.
+                    items:
+                        "$ref": "#/components/schemas/ItemExternalReference"
+                    type: array
+                title_i18n:
+                    additionalProperties:
+                        type: string
+                    # @review
+                    description:
+                        The localized page's titles.
+                    type: object
+                type:
+                    enum:
+                        - CollectionPage
+                        - ContentPage
+                        - WidgetPage
+                    type: string
+                uuid:
+                    # @review
+                    description:
+                        A valid external identifier to reference this page.
+                    type: string
+                viewableBy:
+                    description:
+                        A write-only property that specifies the default permissions.
+                    enum:
+                        - Anyone
+                        - Members
+                        - Owner
+                    type: string
+                    writeOnly: true
+            type: object
+        SitePageActionExecutionResult:
+            # @review
+            description:
+                The definition of an action execution of type page.
+            properties:
+                itemReference:
+                    $ref: "#/components/schemas/ItemExternalReference"
+                    # @review
+                    description:
+                        The reference to a page.
+            type: object
+        SitePageFormSubmissionResult:
+            # @review
+            description:
+                The definition of a submission result of type page.
+            properties:
+                itemReference:
+                    $ref: "#/components/schemas/ItemExternalReference"
+                    # @review
+                    description:
+                        The localized submission of page type.
+            type: object
+        URLActionExecutionResult:
+            # @review
+            description:
+                The definition of an action execution result of type URL.
+            properties:
+                url:
+                    $ref: "#/components/schemas/FragmentInlineValue"
+                    # @review
+                    description:
+                        The localized action execution result of type URL.
+            type: object
+        URLFormSubmissionResult:
+            # @review
+            description:
+                The definition of a submission result of type URL.
+            properties:
+                url:
+                    $ref: "#/components/schemas/FragmentInlineValue"
+                    # @review
+                    description:
+                        The localized submission of URL type.
+            type: object
+        UtilityPage:
+            description:
+                The definition of a Utility Page.
+            properties:
+                creator:
+                    $ref: "../../headless-admin-user/headless-admin-user-impl/rest-openapi.yaml#Creator"
+                    # @review
+                    description:
+                        The utility page's creator. It is not returned by default. It can be embedded via nestedFields.
+                    readOnly: true
+                creatorExternalReferenceCode:
+                    # @review
+                    description:
+                        The utility page's creator external reference code.
+                    type: string
+                dateCreated:
+                    # @review
+                    description:
+                        The utility page's creation date.
+                    format: date-time
+                    type: string
+                dateModified:
+                    # @review
+                    description:
+                        The last time the utility page changed.
+                    format: date-time
+                    type: string
+                datePublished:
+                    # @review
+                    description:
+                        The last time the utility page changed.
+                    format: date-time
+                    type: string
+                externalReferenceCode:
+                    # @review
+                    description:
+                        The utility page's external reference code.
+                    type: string
+                markedAsDefault:
+                    # @review
+                    description:
+                        Specifies if the utility page should be the default for the given type.
+                    type: boolean
+                name:
+                    # @review
+                    description:
+                        The utility page's name.
+                    type: string
+                pageSpecifications:
+                    # @review
+                    description:
+                        The utility page's specifications. A utility page may contain 0 or 1 page specifications in
+                        draft status and 0 or 1 page specifications in published status.
+                    items:
+                        $ref: "#/components/schemas/PageSpecification"
+                    type: array
+                thumbnail:
+                    $ref: "#/components/schemas/ItemExternalReference"
+                    # @review
+                    description:
+                        The utility page's thumbnail.
+                type:
+                    # @review
+                    description:
+                        The utility page's type.
+                    enum: [CookiePolicy, CreateAccount, Error, ErrorCode404, ErrorCode500, ForgotPassword, Login, TermsOfUse]
+                    type: string
+                utilityPageSettings:
+                    $ref: "#/components/schemas/UtilityPageSettings"
+                    # @review
+                    description:
+                        Settings of the utility page.
+                uuid:
+                    description:
+                        A valid external identifier to reference this utility page.
+                    type: string
+            type: object
+        UtilityPageSEOSettings:
+            # @review
+            description:
+                Settings related with SEO of an utility page.
+            properties:
+                description_i18n:
+                    additionalProperties:
+                        type: string
+                    # @review
+                    description:
+                        The localized descriptions of the utility page to be used as summary for search engines.
+                    type: object
+                htmlTitle_i18n:
+                    additionalProperties:
+                        type: string
+                    # @review
+                    description:
+                        The localized main titles of the utility page to be used by search engines.
+                    type: object
+            type: object
+        UtilityPageSettings:
+            # @review
+            description:
+                The settings of an utility page.
+            properties:
+                seoSettings:
+                    $ref: "#/components/schemas/UtilityPageSEOSettings"
+                    # @review
+                    description:
+                        The utility page's SEO settings.
+            type: object
+        WidgetInstance:
+            # @review
+            description:
+                A widget instance, containing the common properties of both a content page widget instance and a widget
+                page widget instance.
+            properties:
+                widgetConfig:
+                    additionalProperties:
+                        type: object
+                    # @review
+                    description:
+                        The configuration keys and values of the widget instance.
+                    type: object
+                widgetInstanceId:
+                    # @review
+                    description:
+                        The widget instance's ID.
+                    type: string
+                widgetName:
+                    # @review
+                    description:
+                        The widget instance's name.
+                    type: string
+                widgetPermissions:
+                    # @review
+                    description:
+                        The widget instance's permissions.
+                    items:
+                        properties:
+                            actionIds:
+                                # @review
+                                description:
+                                    The IDs of the actions the role has permission for.
+                                items:
+                                    type: string
+                                type: array
+                            roleName:
+                                # @review
+                                description:
+                                    The role's name.
+                                type: string
+                        type: object
+                    type: array
+            type: object
+        WidgetPageSection:
+            # @review
+            description:
+                A widget page section.
+            properties:
+                customizable:
+                    # @review
+                    description:
+                        A flag that indicates whether the widget page section is customizable or not.
+                    type: boolean
+                id:
+                    description:
+                        The widget page section's id.
+                    type: string
+                widgetPageWidgetInstances:
+                    # @review
+                    description:
+                        A list of the widget instances within this page section.
+                    items:
+                        $ref: "#/components/schemas/WidgetPageWidgetInstance"
+                    type: array
+        WidgetPageSettings:
+            allOf:
+                - $ref: "#/components/schemas/PageSettings"
+                - properties:
+                      customizable:
+                          # @review
+                          description:
+                              A flag that indicates whether the widget page is customizable.
+                          type: boolean
+                      customizableSectionIds:
+                          # @review
+                          description:
+                              The IDs of the customizable sections.
+                          items:
+                              type: string
+                          type: array
+                      inheritChanges:
+                          # @review
+                          description:
+                              Whether this widget page will inherit changes made to the associated widget page template.
+                          type: boolean
+                      layoutTemplateId:
+                          # @review
+                          description:
+                              The ID of the layout template.
+                          type: string
+                      widgetPageTemplateReference:
+                          $ref: "#/components/schemas/ItemExternalReference"
+                  required:
+                      - layoutPageTemplateId
+            # @review
+            description:
+                The settings of a widget page.
+            type: object
+        WidgetPageSpecification:
+            allOf:
+                - $ref: "#/components/schemas/PageSpecification"
+                - properties:
+                      widgetPageSections:
+                          # @review
+                          description:
+                              The sections of a widget page.
+                          items:
+                              $ref: "#/components/schemas/WidgetPageSection"
+                          type: array
+            # @review
+            description:
+                A page specification of a widget page. A widget page contains always 1 page specification in published
+                status.
+            type: object
+        WidgetPageTemplate:
+            allOf:
+                - $ref: "#/components/schemas/PageTemplate"
+                - properties:
+                      active:
+                          # @review
+                          description:
+                              A flag that indicates whether the widget page template is active.
+                          type: boolean
+                      description_i18n:
+                          additionalProperties:
+                              type: string
+                          # @review
+                          description:
+                              The localized descriptions of the widget page template.
+                          type: object
+                      friendlyUrlPath_i18n:
+                          additionalProperties:
+                              type: string
+                          # @review
+                          description:
+                              The localized relative URLs to the page's rendered content.
+                          type: object
+                      hiddenFromNavigation:
+                          # @review
+                          description:
+                              A flag that indicates whether the page created based on this page template is hidden from
+                              navigation.
+                          type: boolean
+                      name_i18n:
+                          additionalProperties:
+                              type: string
+                          # @review
+                          description:
+                              The localized names of the widget page template.
+                          type: object
+            # @review
+            description:
+                A widget page template.
+            type: object
+        WidgetPageTemplateSettings:
+            allOf:
+                - $ref: "#/components/schemas/PageTemplateSettings"
+                - properties:
+                      layoutTemplateId:
+                          # @review
+                          description:
+                              The identifier of the layout template.
+                          type: string
+                      navigationMenuSettings:
+                          # @review
+                          description:
+                              The widget page template's site navigation menu settings.
+                          properties:
+                              target:
+                                  # @review
+                                  description:
+                                      The page's description to be used as summary for search engines.
+                                  type: string
+                              targetType:
+                                  # @review
+                                  description:
+                                      The target's type (specific frame or new tab).
+                                  enum: [SpecificFrame, NewTab]
+                                  type: string
+                          type: object
+            # @review
+            description:
+                The settings of a widget page template.
+            type: object
+        WidgetPageWidgetInstance:
+            allOf:
+                - $ref: "#/components/schemas/WidgetInstance"
+                - properties:
+                      externalReferenceCode:
+                          description:
+                              The external reference code of the widget instance.
+                          type: string
+                      parentSectionId:
+                          description:
+                              The section's ID of the widget page or the nested application widget instance this widget
+                              belongs to.
+                          type: string
+                      parentWidgetInstanceExternalReferenceCode:
+                          description:
+                              The external reference code of the parent widget instance. Only available if this widget
+                              instance is within a nested applications widget instance.
+                          type: string
+                      position:
+                          description:
+                              The 0-based position this widget instance occupies with respect to its siblings (0 for
+                              first child, 1 for second child, ...). If not specified when creating a widget instance
+                              the widget instance will be added at the last valid position.
+                          minimum: 0
+                          type: integer
+                      widgetLookAndFeelConfig:
+                          # @review
+                          description:
+                              The widget instance's look and feel configuration.
+                          items:
+                              properties:
+                                  advancedStylingConfig:
+                                      properties:
+                                          customCSS:
+                                              type: string
+                                          customCSSClassNames:
+                                              type: string
+                                      type: object
+                                  backgroundStylesConfig:
+                                      properties:
+                                          backgroundColor:
+                                              example: "#FF0D0D"
+                                              type: string
+                                      type: object
+                                  borderStylesConfig:
+                                      properties:
+                                          borderColor:
+                                              properties:
+                                                  bottom:
+                                                      example: "#FF0D0D"
+                                                      type: string
+                                                  left:
+                                                      example: "#FF0D0D"
+                                                      type: string
+                                                  right:
+                                                      example: "#FF0D0D"
+                                                      type: string
+                                                  sameForAll:
+                                                      type: boolean
+                                                  top:
+                                                      example: "#FF0D0D"
+                                                      type: string
+                                              type: object
+                                          borderStyle:
+                                              properties:
+                                                  bottom:
+                                                      enum:
+                                                          - Dashed
+                                                          - Doubled
+                                                          - Dotted
+                                                          - Groove
+                                                          - Hidden
+                                                          - Dotted
+                                                          - Inset
+                                                          - Outset
+                                                          - Ridge
+                                                          - Solid
+                                                      type: string
+                                                  left:
+                                                      enum:
+                                                          - Dashed
+                                                          - Doubled
+                                                          - Dotted
+                                                          - Groove
+                                                          - Hidden
+                                                          - Dotted
+                                                          - Inset
+                                                          - Outset
+                                                          - Ridge
+                                                          - Solid
+                                                      type: string
+                                                  right:
+                                                      enum:
+                                                          - Dashed
+                                                          - Doubled
+                                                          - Dotted
+                                                          - Groove
+                                                          - Hidden
+                                                          - Dotted
+                                                          - Inset
+                                                          - Outset
+                                                          - Ridge
+                                                          - Solid
+                                                      type: string
+                                                  sameForAll:
+                                                      type: boolean
+                                                  top:
+                                                      enum:
+                                                          - Dashed
+                                                          - Doubled
+                                                          - Dotted
+                                                          - Groove
+                                                          - Hidden
+                                                          - Dotted
+                                                          - Inset
+                                                          - Outset
+                                                          - Ridge
+                                                          - Solid
+                                                      type: string
+                                              type: object
+                                          borderWidth:
+                                              properties:
+                                                  bottom:
+                                                      properties:
+                                                          unit:
+                                                              enum:
+                                                                  - Emphasis
+                                                                  - Percentage
+                                                                  - Pixel
+                                                              type: string
+                                                          value:
+                                                              type: string
+                                                      type: object
+                                                  left:
+                                                      properties:
+                                                          unit:
+                                                              enum:
+                                                                  - Emphasis
+                                                                  - Percentage
+                                                                  - Pixel
+                                                              type: string
+                                                          value:
+                                                              type: string
+                                                      type: object
+                                                  right:
+                                                      properties:
+                                                          unit:
+                                                              enum:
+                                                                  - Emphasis
+                                                                  - Percentage
+                                                                  - Pixel
+                                                              type: string
+                                                          value:
+                                                              type: string
+                                                      type: object
+                                                  sameForAll:
+                                                      type: boolean
+                                                  top:
+                                                      properties:
+                                                          unit:
+                                                              enum:
+                                                                  - Emphasis
+                                                                  - Percentage
+                                                                  - Pixel
+                                                              type: string
+                                                          value:
+                                                              type: string
+                                                      type: object
+                                              type: object
+                                      type: object
+                                  generalConfig:
+                                      properties:
+                                          applicationDecorator:
+                                              enum: [Barebone, Borderless, Decorate]
+                                              type: string
+                                          customTitle_i18n:
+                                              additionalProperties:
+                                                  type: string
+                                              # @review
+                                              description:
+                                                  The localized custom titles.
+                                              type: object
+                                          useCustomTitle:
+                                              # @review
+                                              description:
+                                                  Whether to use a custom title.
+                                              type: boolean
+                                      type: object
+                                  marginAndPaddingConfig:
+                                      properties:
+                                          margin:
+                                              properties:
+                                                  bottom:
+                                                      properties:
+                                                          unit:
+                                                              enum:
+                                                                  - Emphasis
+                                                                  - Percentage
+                                                                  - Pixel
+                                                              type: string
+                                                          value:
+                                                              type: string
+                                                      type: object
+                                                  left:
+                                                      properties:
+                                                          unit:
+                                                              enum:
+                                                                  - Emphasis
+                                                                  - Percentage
+                                                                  - Pixel
+                                                              type: string
+                                                          value:
+                                                              type: string
+                                                      type: object
+                                                  right:
+                                                      properties:
+                                                          unit:
+                                                              enum:
+                                                                  - Emphasis
+                                                                  - Percentage
+                                                                  - Pixel
+                                                              type: string
+                                                          value:
+                                                              type: string
+                                                      type: object
+                                                  sameForAll:
+                                                      type: boolean
+                                                  top:
+                                                      properties:
+                                                          unit:
+                                                              enum:
+                                                                  - Emphasis
+                                                                  - Percentage
+                                                                  - Pixel
+                                                              type: string
+                                                          value:
+                                                              type: string
+                                                      type: object
+                                              type: object
+                                          padding:
+                                              properties:
+                                                  bottom:
+                                                      properties:
+                                                          unit:
+                                                              enum:
+                                                                  - Emphasis
+                                                                  - Percentage
+                                                                  - Pixel
+                                                              type: string
+                                                          value:
+                                                              type: string
+                                                      type: object
+                                                  left:
+                                                      properties:
+                                                          unit:
+                                                              enum:
+                                                                  - Emphasis
+                                                                  - Percentage
+                                                                  - Pixel
+                                                              type: string
+                                                          value:
+                                                              type: string
+                                                      type: object
+                                                  right:
+                                                      properties:
+                                                          unit:
+                                                              enum:
+                                                                  - Emphasis
+                                                                  - Percentage
+                                                                  - Pixel
+                                                              type: string
+                                                          value:
+                                                              type: string
+                                                      type: object
+                                                  sameForAll:
+                                                      type: boolean
+                                                  top:
+                                                      properties:
+                                                          unit:
+                                                              enum:
+                                                                  - Emphasis
+                                                                  - Percentage
+                                                                  - Pixel
+                                                              type: string
+                                                          value:
+                                                              type: string
+                                                      type: object
+                                              type: object
+                                      type: object
+                                  textStylesConfig:
+                                      properties:
+                                          alignment:
+                                              enum: [Center, Justify, Left, Right]
+                                              type: string
+                                          bold:
+                                              type: boolean
+                                          color:
+                                              example: "#FF0D0D"
+                                              type: string
+                                          font:
+                                              enum: [Arial, Georgia, Tahoma, TimesNewRoman, TrebuchetMS, Verdana]
+                                              type: string
+                                          italic:
+                                              type: boolean
+                                          letterSpacing:
+                                              type: string
+                                          lineHeight:
+                                              type: string
+                                          size:
+                                              type: string
+                                          textDecoration:
+                                              enum: [None, Overline, Strikethrough, Underline]
+                                              type: string
+                                          wordSpacing:
+                                              type: string
+                                      type: object
+                              type: object
+                          type: array
+            # @review
+            description:
+                A widget instance in a widget page.
+            type: object
 info:
     description:
         "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID

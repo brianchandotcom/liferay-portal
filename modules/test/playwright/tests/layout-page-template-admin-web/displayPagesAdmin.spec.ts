@@ -75,6 +75,204 @@ async function addBasicJournalArticleWithSpecificDisplayPageTemplate(
 	);
 }
 
+testInfoPanel.describe('InfoPanel', () => {
+	testInfoPanel(
+		'View the info panel for a display page and for a folder',
+		{
+			tag: ['@LPD-34205', '@LPS-189857'],
+		},
+		async ({displayPageTemplatesPage, page, site}) => {
+
+			// Create a folder
+
+			await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+
+			const displayPageTemplateFolderName = getRandomString();
+
+			await displayPageTemplatesPage.createFolder(
+				displayPageTemplateFolderName
+			);
+
+			// Create a display page template for Blogs Entry
+
+			const displayPageTemplateName = getRandomString();
+
+			await displayPageTemplatesPage.createTemplate({
+				contentType: 'Blogs Entry',
+				folderName: displayPageTemplateFolderName,
+				name: displayPageTemplateName,
+			});
+
+			// Check folder info panel
+
+			await page.getByTitle('Toggle Info Panel', {exact: true}).click();
+
+			const infoPanel = page.getByLabel('Info Panel', {exact: true});
+
+			await expect(
+				infoPanel.locator('.sidebar-header .component-title')
+			).toContainText(displayPageTemplateFolderName);
+
+			await expect(
+				infoPanel.locator('.sidebar-header .component-subtitle')
+			).toContainText('Folder');
+
+			await expect(
+				infoPanel.locator('.sidebar-body .mb-4').nth(0)
+			).toContainText('Location');
+
+			await expect(
+				infoPanel.locator('.sidebar-body .mb-4').nth(0)
+			).toContainText(`Home > ${displayPageTemplateFolderName}`);
+
+			await expect(
+				infoPanel.locator('.sidebar-body .mb-4').nth(1)
+			).toContainText('Number of Items');
+
+			await expect(
+				infoPanel.locator('.sidebar-body .mb-4').nth(1)
+			).toContainText('1');
+
+			await expect(
+				infoPanel.locator('.sidebar-body .mb-4').nth(2)
+			).toContainText('Created');
+
+			await expect(
+				infoPanel.locator('.sidebar-body .mb-4').nth(3)
+			).toContainText('Modified');
+
+			// Check display page info panel
+
+			await page
+				.getByLabel(`Select ${displayPageTemplateName}`, {exact: true})
+				.check();
+
+			await expect(
+				infoPanel.locator('.sidebar-header .component-title')
+			).toContainText(displayPageTemplateName);
+
+			await expect(
+				infoPanel.locator('.sidebar-header .component-subtitle')
+			).toContainText('Display Page Template');
+
+			await expect(
+				infoPanel.locator('.sidebar-header .label-item')
+			).toContainText('Approved');
+
+			await expect(
+				infoPanel.locator('.sidebar-body .mb-4').nth(0)
+			).toContainText('Location');
+
+			await expect(
+				infoPanel.locator('.sidebar-body .mb-4').nth(0)
+			).toContainText(`Home > ${displayPageTemplateFolderName}`);
+
+			await expect(
+				infoPanel.locator('.sidebar-body .mb-4').nth(1)
+			).toContainText('Content Type');
+
+			await expect(
+				infoPanel.locator('.sidebar-body .mb-4').nth(1)
+			).toContainText('Blogs Entry');
+
+			await expect(
+				infoPanel.locator('.sidebar-body .mb-4').nth(2)
+			).toContainText('Created');
+
+			await expect(
+				infoPanel.locator('.sidebar-body .mb-4').nth(3)
+			).toContainText('Modified');
+		}
+	);
+});
+
+test.describe('UI', () => {
+	test('Checks that the card checkbox has the correct aria label', async ({
+		displayPageTemplatesPage,
+		page,
+		site,
+	}) => {
+
+		// Go to display pages administration
+
+		await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+
+		// Create new DPT and check checkbox aria-label
+
+		const displayPageTemplateName = getRandomString();
+
+		await displayPageTemplatesPage.createTemplate({
+			contentSubtype: 'Basic Web Content',
+			contentType: 'Web Content Article',
+			name: displayPageTemplateName,
+		});
+
+		await expect(
+			page.getByLabel(`Select ${displayPageTemplateName}`)
+		).toBeVisible();
+	});
+
+	test('User can delete default display page template', async ({
+		displayPageTemplatesPage,
+		page,
+		site,
+	}) => {
+
+		// Create a display page template for Basic Web Content and mark as default
+
+		await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+
+		const displayPageTemplateName = getRandomString();
+
+		await displayPageTemplatesPage.createTemplate({
+			contentSubtype: 'Basic Web Content',
+			contentType: 'Web Content Article',
+			name: displayPageTemplateName,
+		});
+
+		await displayPageTemplatesPage.markAsDefault(displayPageTemplateName);
+
+		// Delete default display page template
+
+		await displayPageTemplatesPage.deleteTemplate(displayPageTemplateName);
+
+		await expect(
+			page.getByText(displayPageTemplateName, {exact: true})
+		).not.toBeVisible();
+	});
+
+	test('User can rename a display page', async ({
+		displayPageTemplatesPage,
+		page,
+		site,
+	}) => {
+
+		// Create a display page template for Blogs Entry
+
+		await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+
+		const displayPageTemplateName = getRandomString();
+
+		await displayPageTemplatesPage.createTemplate({
+			contentType: 'Blogs Entry',
+			name: displayPageTemplateName,
+		});
+
+		// Rename display page template
+
+		const newDisplayPageTemplateName = getRandomString();
+
+		await displayPageTemplatesPage.renameTemplate(
+			newDisplayPageTemplateName,
+			displayPageTemplateName
+		);
+
+		await expect(
+			page.getByText(newDisplayPageTemplateName, {exact: true})
+		).toBeVisible();
+	});
+});
+
 test.describe('Usages', () => {
 	test(
 		'Can assign usage to default even if the default display page template does not exist',
@@ -531,197 +729,3 @@ test.describe('View', () => {
 		}
 	);
 });
-
-test('Checks that the card checkbox has the correct aria label', async ({
-	displayPageTemplatesPage,
-	page,
-	site,
-}) => {
-
-	// Go to display pages administration
-
-	await displayPageTemplatesPage.goto(site.friendlyUrlPath);
-
-	// Create new DPT and check checkbox aria-label
-
-	const displayPageTemplateName = getRandomString();
-
-	await displayPageTemplatesPage.createTemplate({
-		contentSubtype: 'Basic Web Content',
-		contentType: 'Web Content Article',
-		name: displayPageTemplateName,
-	});
-
-	await expect(
-		page.getByLabel(`Select ${displayPageTemplateName}`)
-	).toBeVisible();
-});
-
-test('User can delete default display page template', async ({
-	displayPageTemplatesPage,
-	page,
-	site,
-}) => {
-
-	// Create a display page template for Basic Web Content and mark as default
-
-	await displayPageTemplatesPage.goto(site.friendlyUrlPath);
-
-	const displayPageTemplateName = getRandomString();
-
-	await displayPageTemplatesPage.createTemplate({
-		contentSubtype: 'Basic Web Content',
-		contentType: 'Web Content Article',
-		name: displayPageTemplateName,
-	});
-
-	await displayPageTemplatesPage.markAsDefault(displayPageTemplateName);
-
-	// Delete default display page template
-
-	await displayPageTemplatesPage.deleteTemplate(displayPageTemplateName);
-
-	await expect(
-		page.getByText(displayPageTemplateName, {exact: true})
-	).not.toBeVisible();
-});
-
-test('User can rename a display page', async ({
-	displayPageTemplatesPage,
-	page,
-	site,
-}) => {
-
-	// Create a display page template for Blogs Entry
-
-	await displayPageTemplatesPage.goto(site.friendlyUrlPath);
-
-	const displayPageTemplateName = getRandomString();
-
-	await displayPageTemplatesPage.createTemplate({
-		contentType: 'Blogs Entry',
-		name: displayPageTemplateName,
-	});
-
-	// Rename display page template
-
-	const newDisplayPageTemplateName = getRandomString();
-
-	await displayPageTemplatesPage.renameTemplate(
-		newDisplayPageTemplateName,
-		displayPageTemplateName
-	);
-
-	await expect(
-		page.getByText(newDisplayPageTemplateName, {exact: true})
-	).toBeVisible();
-});
-
-testInfoPanel(
-	'View the info panel for a display page and for a folder',
-	{
-		tag: ['@LPD-34205', '@LPS-189857'],
-	},
-	async ({displayPageTemplatesPage, page, site}) => {
-
-		// Create a folder
-
-		await displayPageTemplatesPage.goto(site.friendlyUrlPath);
-
-		const displayPageTemplateFolderName = getRandomString();
-
-		await displayPageTemplatesPage.createFolder(
-			displayPageTemplateFolderName
-		);
-
-		// Create a display page template for Blogs Entry
-
-		const displayPageTemplateName = getRandomString();
-
-		await displayPageTemplatesPage.createTemplate({
-			contentType: 'Blogs Entry',
-			folderName: displayPageTemplateFolderName,
-			name: displayPageTemplateName,
-		});
-
-		// Check folder info panel
-
-		await page.getByTitle('Toggle Info Panel', {exact: true}).click();
-
-		const infoPanel = page.getByLabel('Info Panel', {exact: true});
-
-		await expect(
-			infoPanel.locator('.sidebar-header .component-title')
-		).toContainText(displayPageTemplateFolderName);
-
-		await expect(
-			infoPanel.locator('.sidebar-header .component-subtitle')
-		).toContainText('Folder');
-
-		await expect(
-			infoPanel.locator('.sidebar-body .mb-4').nth(0)
-		).toContainText('Location');
-
-		await expect(
-			infoPanel.locator('.sidebar-body .mb-4').nth(0)
-		).toContainText(`Home > ${displayPageTemplateFolderName}`);
-
-		await expect(
-			infoPanel.locator('.sidebar-body .mb-4').nth(1)
-		).toContainText('Number of Items');
-
-		await expect(
-			infoPanel.locator('.sidebar-body .mb-4').nth(1)
-		).toContainText('1');
-
-		await expect(
-			infoPanel.locator('.sidebar-body .mb-4').nth(2)
-		).toContainText('Created');
-
-		await expect(
-			infoPanel.locator('.sidebar-body .mb-4').nth(3)
-		).toContainText('Modified');
-
-		// Check display page info panel
-
-		await page
-			.getByLabel(`Select ${displayPageTemplateName}`, {exact: true})
-			.check();
-
-		await expect(
-			infoPanel.locator('.sidebar-header .component-title')
-		).toContainText(displayPageTemplateName);
-
-		await expect(
-			infoPanel.locator('.sidebar-header .component-subtitle')
-		).toContainText('Display Page Template');
-
-		await expect(
-			infoPanel.locator('.sidebar-header .label-item')
-		).toContainText('Approved');
-
-		await expect(
-			infoPanel.locator('.sidebar-body .mb-4').nth(0)
-		).toContainText('Location');
-
-		await expect(
-			infoPanel.locator('.sidebar-body .mb-4').nth(0)
-		).toContainText(`Home > ${displayPageTemplateFolderName}`);
-
-		await expect(
-			infoPanel.locator('.sidebar-body .mb-4').nth(1)
-		).toContainText('Content Type');
-
-		await expect(
-			infoPanel.locator('.sidebar-body .mb-4').nth(1)
-		).toContainText('Blogs Entry');
-
-		await expect(
-			infoPanel.locator('.sidebar-body .mb-4').nth(2)
-		).toContainText('Created');
-
-		await expect(
-			infoPanel.locator('.sidebar-body .mb-4').nth(3)
-		).toContainText('Modified');
-	}
-);

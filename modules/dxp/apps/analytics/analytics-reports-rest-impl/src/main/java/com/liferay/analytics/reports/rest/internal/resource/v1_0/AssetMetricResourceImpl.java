@@ -10,7 +10,7 @@ import com.liferay.analytics.reports.rest.internal.client.AnalyticsCloudClient;
 import com.liferay.analytics.reports.rest.resource.v1_0.AssetMetricResource;
 import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.service.GroupService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.Http;
 
 import org.osgi.service.component.annotations.Component;
@@ -35,7 +35,7 @@ public class AssetMetricResourceImpl extends BaseAssetMetricResourceImpl {
 		AnalyticsCloudClient analyticsCloudClient = new AnalyticsCloudClient(
 			_http);
 
-		Group group = _groupService.getGroup(groupId);
+		Group group = _groupLocalService.getGroup(groupId);
 
 		return analyticsCloudClient.getAssetMetric(
 			_analyticsSettingsManager.getAnalyticsConfiguration(
@@ -49,7 +49,7 @@ public class AssetMetricResourceImpl extends BaseAssetMetricResourceImpl {
 	private AnalyticsSettingsManager _analyticsSettingsManager;
 
 	@Reference
-	private GroupService _groupService;
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private Http _http;

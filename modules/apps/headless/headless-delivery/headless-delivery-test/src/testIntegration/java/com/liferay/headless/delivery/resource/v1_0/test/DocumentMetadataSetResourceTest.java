@@ -6,15 +6,16 @@
 package com.liferay.headless.delivery.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.data.engine.rest.dto.v2_0.DataDefinition;
 import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.headless.delivery.client.dto.v1_0.DocumentMetadataSet;
+import com.liferay.headless.delivery.client.serdes.v1_0.DataDefinitionFieldSerDes;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -124,22 +125,11 @@ public class DocumentMetadataSetResourceTest
 					() -> LocaleUtil.toW3cLanguageIds(
 						ddmStructure.getAvailableLanguageIds()));
 				setDataDefinitionFields(
-					() -> {
-						DataDefinitionResource.Builder
-							dataDefinitionResourceBuilder =
-								_dataDefinitionResourceFactory.create();
-
-						DataDefinitionResource dataDefinitionResource =
-							dataDefinitionResourceBuilder.user(
-								TestPropsValues.getUser()
-							).build();
-
-						DataDefinition dataDefinition =
-							dataDefinitionResource.getDataDefinition(
-								ddmStructure.getStructureId());
-
-						return dataDefinition.getDataDefinitionFields();
-					});
+					() -> DataDefinitionFieldSerDes.toDTOs(
+						StringBundler.concat(
+							StringPool.OPEN_BRACKET,
+							ddmStructure.getDefinition(),
+							StringPool.CLOSE_BRACKET)));
 				setDateCreated(ddmStructure::getCreateDate);
 				setDateModified(ddmStructure::getModifiedDate);
 				setDescription(

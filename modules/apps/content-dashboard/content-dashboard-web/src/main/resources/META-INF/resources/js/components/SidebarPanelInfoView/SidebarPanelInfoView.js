@@ -29,9 +29,9 @@ const TABS_1 = {
 };
 
 const TABS_2 = {
-	categorization: 2,
+	categorization: 1,
 	details: 0,
-	performance: 1,
+	performance: 2,
 	version: 3,
 };
 
@@ -199,21 +199,6 @@ const SidebarPanelInfoView = ({
 							{Liferay.Language.get('details')}
 						</ClayTabs.Item>
 
-						{!!Liferay.FeatureFlags['LPD-28830'] && (
-							<ClayTabs.Item
-								active={activeTabKeyValue === TABS.performance}
-								className="flex-shrink-0"
-								innerProps={{
-									'aria-controls': 'performance',
-								}}
-								onClick={() =>
-									setActiveTabKeyValue(TABS.performance)
-								}
-							>
-								{Liferay.Language.get('performance')}
-							</ClayTabs.Item>
-						)}
-
 						{hasCategorization && (
 							<ClayTabs.Item
 								active={
@@ -228,6 +213,21 @@ const SidebarPanelInfoView = ({
 								}
 							>
 								{Liferay.Language.get('categorization')}
+							</ClayTabs.Item>
+						)}
+
+						{!!Liferay.FeatureFlags['LPD-28830'] && (
+							<ClayTabs.Item
+								active={activeTabKeyValue === TABS.performance}
+								className="flex-shrink-0"
+								innerProps={{
+									'aria-controls': 'performance',
+								}}
+								onClick={() =>
+									setActiveTabKeyValue(TABS.performance)
+								}
+							>
+								{Liferay.Language.get('performance')}
 							</ClayTabs.Item>
 						)}
 
@@ -279,7 +279,7 @@ const SidebarPanelInfoView = ({
 				<div>
 					<ClayTabs.Content activeIndex={activeTabKeyValue} fade>
 						<ClayTabs.TabPane
-							aria-labelledby={`tab-${TABS.details + 1}`}
+							aria-labelledby={`tab-${TABS.details}`}
 							className="flex-shrink-0"
 						>
 							<DetailsContent
@@ -297,38 +297,34 @@ const SidebarPanelInfoView = ({
 							/>
 						</ClayTabs.TabPane>
 
-						{!!Liferay.FeatureFlags['LPD-28830'] &&
-							showTabs &&
-							activeTabKeyValue === TABS.performance && (
-								<ClayTabs.TabPane
-									aria-labelledby={`tab-${TABS.performance + 1}`}
-									className="flex-shrink-0"
-								>
-									<AnalyticsReports
-										contentPerformanceDataFetchURL={
-											contentPerformanceDataFetchURL
-										}
-									/>
-								</ClayTabs.TabPane>
-							)}
-
-						{hasCategorization &&
-							showTabs &&
-							activeTabKeyValue === TABS.categorization && (
-								<ClayTabs.TabPane
-									aria-labelledby={`tab-${TABS.categorization + 1}`}
-									className="flex-shrink-0"
-								>
-									<Categorization
-										tags={tags}
-										vocabularies={vocabularies}
-									/>
-								</ClayTabs.TabPane>
-							)}
-
-						{showTabs && activeTabKeyValue === TABS.version && (
+						{hasCategorization && showTabs && (
 							<ClayTabs.TabPane
-								aria-labelledby={`tab-${TABS.version + 1}`}
+								aria-labelledby={`tab-${TABS.categorization}`}
+								className="flex-shrink-0"
+							>
+								<Categorization
+									tags={tags}
+									vocabularies={vocabularies}
+								/>
+							</ClayTabs.TabPane>
+						)}
+
+						{!!Liferay.FeatureFlags['LPD-28830'] && showTabs && (
+							<ClayTabs.TabPane
+								aria-labelledby={`tab-${TABS.performance}`}
+								className="flex-shrink-0"
+							>
+								<AnalyticsReports
+									contentPerformanceDataFetchURL={
+										contentPerformanceDataFetchURL
+									}
+								/>
+							</ClayTabs.TabPane>
+						)}
+
+						{showTabs && (
+							<ClayTabs.TabPane
+								aria-labelledby={`tab-${TABS.version}`}
 								className="flex-shrink-0"
 							>
 								<VersionsContent

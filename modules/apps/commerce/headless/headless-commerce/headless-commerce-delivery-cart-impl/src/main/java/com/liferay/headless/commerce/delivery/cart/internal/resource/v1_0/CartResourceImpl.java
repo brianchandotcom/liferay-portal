@@ -296,6 +296,11 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
 			cartId);
 
+		if (!commerceOrder.isOpen()) {
+			throw new CommerceOrderStatusException(
+				"Unable to patch a placed order");
+		}
+
 		_updateOrder(commerceOrder, cart);
 
 		return _toCart(commerceOrder);
@@ -314,6 +319,11 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 			throw new NoSuchOrderException(
 				"Unable to find order with external reference code " +
 					externalReferenceCode);
+		}
+
+		if (!commerceOrder.isOpen()) {
+			throw new CommerceOrderStatusException(
+				"Unable to patch a placed order");
 		}
 
 		_updateOrder(commerceOrder, cart);
@@ -375,6 +385,11 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
 			cartId);
 
+		if (!commerceOrder.isOpen()) {
+			throw new CommerceOrderStatusException(
+				"Unable to patch a placed order");
+		}
+
 		return _toCart(
 			_commerceOrderService.applyCouponCode(
 				cartId, couponCode.getCode(),
@@ -415,6 +430,11 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
 			cartId);
 
+		if (!commerceOrder.isOpen()) {
+			throw new CommerceOrderStatusException(
+				"Unable to put a placed order");
+		}
+
 		_updateOrder(commerceOrder, cart);
 
 		return _toCart(commerceOrder);
@@ -433,6 +453,11 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 			throw new NoSuchOrderException(
 				"Unable to find order with external reference code " +
 					externalReferenceCode);
+		}
+
+		if (!commerceOrder.isOpen()) {
+			throw new CommerceOrderStatusException(
+				"Unable to put a placed order");
 		}
 
 		_updateOrder(commerceOrder, cart);
@@ -1049,17 +1074,6 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 			}
 		}
 
-		String purchaseOrderNumber = StringPool.BLANK;
-
-		if (commerceOrder.isOpen()) {
-			purchaseOrderNumber = GetterUtil.get(
-				cart.getPurchaseOrderNumber(),
-				commerceOrder.getPurchaseOrderNumber());
-		}
-		else {
-			purchaseOrderNumber = commerceOrder.getPurchaseOrderNumber();
-		}
-
 		CommerceContext commerceContext = _commerceContextFactory.create(
 			contextCompany.getCompanyId(), commerceOrder.getGroupId(),
 			contextUser.getUserId(), commerceOrder.getCommerceOrderId(),
@@ -1074,7 +1088,10 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 				cart.getPaymentMethod(),
 				commerceOrder.getCommercePaymentMethodKey()),
 			GetterUtil.getString(cart.getName(), commerceOrder.getName()),
-			purchaseOrderNumber, commerceOrder.getShippingAmount(),
+			GetterUtil.get(
+				cart.getPurchaseOrderNumber(),
+				commerceOrder.getPurchaseOrderNumber()),
+			commerceOrder.getShippingAmount(),
 			GetterUtil.get(
 				cart.getShippingOption(),
 				commerceOrder.getShippingOptionName()),

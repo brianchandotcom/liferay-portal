@@ -136,6 +136,12 @@
 			<description name="Checks if the property value for `Web-ContextPath` matches the module directory." />
 		</check>
 	</source-processor>
+	<source-processor name="CIMergeAndGitRepoSourceProcessor">
+		<check name="CIMergeAndGitRepoFileCheck">
+			<category name="Bug Prevention" />
+			<description name="Checks that `ci-merge` and `.gitrepo` files can not be added or modified." />
+		</check>
+	</source-processor>
 	<source-processor name="CodeownersSourceProcessor">
 		<check name="CodeownersFileLocationCheck">
 			<category name="Bug Prevention" />

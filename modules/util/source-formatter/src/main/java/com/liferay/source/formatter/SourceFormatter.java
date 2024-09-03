@@ -31,6 +31,7 @@ import com.liferay.source.formatter.exception.SourceMismatchException;
 import com.liferay.source.formatter.processor.BNDRunSourceProcessor;
 import com.liferay.source.formatter.processor.BNDSourceProcessor;
 import com.liferay.source.formatter.processor.CETSourceProcessor;
+import com.liferay.source.formatter.processor.CIMergeAndGitRepoSourceProcessor;
 import com.liferay.source.formatter.processor.CQLSourceProcessor;
 import com.liferay.source.formatter.processor.CSSSourceProcessor;
 import com.liferay.source.formatter.processor.CodeownersSourceProcessor;
@@ -349,6 +350,7 @@ public class SourceFormatter {
 
 		_sourceProcessors.add(new BNDRunSourceProcessor());
 		_sourceProcessors.add(new BNDSourceProcessor());
+		_sourceProcessors.add(new CIMergeAndGitRepoSourceProcessor());
 		_sourceProcessors.add(new CodeownersSourceProcessor());
 		_sourceProcessors.add(new ConfigSourceProcessor());
 		_sourceProcessors.add(new CQLSourceProcessor());

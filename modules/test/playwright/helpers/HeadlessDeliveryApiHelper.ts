@@ -179,6 +179,7 @@ export class HeadlessDeliveryApiHelper {
 		siteId,
 		tags,
 		title,
+		viewableBy = '',
 	}: {
 		categoryIds?: number[];
 		contentStructureId: number;
@@ -186,6 +187,7 @@ export class HeadlessDeliveryApiHelper {
 		siteId: string;
 		tags?: string[];
 		title: string;
+		viewableBy?: string;
 	}): Promise<StructuredContent> {
 		return this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/sites/${siteId}/structured-contents`,
@@ -196,6 +198,7 @@ export class HeadlessDeliveryApiHelper {
 					keywords: tags,
 					taxonomyCategoryIds: categoryIds,
 					title,
+					viewableBy,
 				},
 				failOnStatusCode: true,
 			}

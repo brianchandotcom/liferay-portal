@@ -313,8 +313,7 @@ type ObjectFieldBusinessTypeName =
 	| 'PrecisionDecimal'
 	| 'Relationship'
 	| 'RichText'
-	| 'Text'
-	| 'Workflow Status';
+	| 'Text';
 
 type ObjectFieldDateRangeFilterSettings = {
 	[key: string]: string;

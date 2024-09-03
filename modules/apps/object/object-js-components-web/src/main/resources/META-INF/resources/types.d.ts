@@ -74,19 +74,25 @@ interface ObjectField {
 	system?: boolean;
 }
 
-type ObjectFieldBusinessType =
-	| 'Attachment'
-	| 'LongText'
-	| 'Picklist'
-	| 'Relationship'
-	| 'Text'
+type ObjectFieldBusinessTypeName =
 	| 'Aggregation'
-	| 'LongInteger'
-	| 'Integer'
+	| 'Attachment'
+	| 'AutoIncrement'
+	| 'Boolean'
+	| 'Date'
+	| 'DateTime'
 	| 'Decimal'
+	| 'Encrypted'
+	| 'Formula'
+	| 'Integer'
+	| 'LongInteger'
+	| 'LongText'
+	| 'MultiselectPicklist'
+	| 'Picklist'
 	| 'PrecisionDecimal'
-	| 'Workflow Status'
-	| 'Date';
+	| 'Relationship'
+	| 'RichText'
+	| 'Text';
 
 interface ObjectFieldSetting {
 	name: ObjectFieldSettingName;

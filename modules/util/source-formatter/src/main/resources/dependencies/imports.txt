@@ -351,6 +351,7 @@ com.liferay.portal.kernel.mobile.device.rulegroup.RuleGroupProcessorUtil=com.lif
 com.liferay.portal.kernel.mobile.device.rulegroup.action.ActionHandler=com.liferay.mobile.device.rules.action.ActionHandler
 com.liferay.portal.kernel.mobile.device.rulegroup.rule.RuleHandler=com.liferay.mobile.device.rules.rule.RuleHandler
 com.liferay.portal.kernel.mobile.device.rulegroup.rule.UnknownRuleHandlerException=com.liferay.mobile.device.rules.rule.UnknownRuleHandlerException
+com.liferay.portal.kernel.module.configuration.ConfigurationProvider=com.liferay.portal.configuration.module.configuration.ConfigurationProvider
 com.liferay.portal.kernel.nio.charset.CharsetDecoderUtil=com.liferay.petra.nio.CharsetDecoderUtil
 com.liferay.portal.kernel.nio.charset.CharsetEncoderUtil=com.liferay.petra.nio.CharsetEncoderUtil
 com.liferay.portal.kernel.portlet.PortletPreferencesFactoryConstants=com.liferay.portal.kernel.portlet.constants.PortletPreferencesFactoryConstants

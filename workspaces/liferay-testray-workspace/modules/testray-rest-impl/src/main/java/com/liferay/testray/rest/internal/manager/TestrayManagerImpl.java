@@ -263,7 +263,7 @@ public class TestrayManagerImpl implements TestrayManager {
 	}
 
 	@Override
-	public void updateTestrayBuildSummary(
+	public ObjectEntry updateTestrayBuildSummary(
 			long companyId, long testrayBuildId, long userId)
 		throws Exception {
 
@@ -323,7 +323,7 @@ public class TestrayManagerImpl implements TestrayManager {
 			map
 		);
 
-		_objectEntryLocalService.updateObjectEntry(
+		return _objectEntryLocalService.updateObjectEntry(
 			userId, objectEntry.getObjectEntryId(), objectEntry.getValues(),
 			new ServiceContext());
 	}

@@ -20,12 +20,14 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -141,6 +143,11 @@ public class GetContentPerformanceInfoMVCResourceCommand
 					"connectedToAssetLibrary", connectedToAssetLibrary
 				).put(
 					"groupId", assetEntry.getGroupId()
+				).put(
+					"isAdmin",
+					_roleLocalService.hasUserRole(
+						themeDisplay.getUserId(), themeDisplay.getCompanyId(),
+						RoleConstants.ADMINISTRATOR, true)
 				).put(
 					"siteEditDepotEntryDepotAdminPortletURL",
 					() -> {
@@ -262,5 +269,8 @@ public class GetContentPerformanceInfoMVCResourceCommand
 
 	@Reference
 	private PortletURLFactory _portletURLFactory;
+
+	@Reference
+	private RoleLocalService _roleLocalService;
 
 }

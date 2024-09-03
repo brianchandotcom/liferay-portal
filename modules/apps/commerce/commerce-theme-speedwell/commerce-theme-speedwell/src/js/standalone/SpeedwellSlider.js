@@ -31,7 +31,7 @@ function validateInterval(interval) {
 	if (interval > 0 && interval <= MIN) {
 		return MIN;
 	}
-	if (interval > MIN) {
+	else if (interval > MIN) {
 		return interval;
 	}
 

@@ -71,7 +71,7 @@ public class ContentPageEditorDefaultEditorConfigurationTest {
 	@Test
 	public void testRichTextEditor() {
 		JSONObject jsonObject = _getEditorConfigurationConfigJSONObject(
-			"fragmenEntryLinkRichTextEditor");
+			"fragmentEntryLinkRichTextEditor");
 
 		Assert.assertEquals(
 			_ALLOWED_CONTENT, jsonObject.getString("allowedContent"));
@@ -105,7 +105,7 @@ public class ContentPageEditorDefaultEditorConfigurationTest {
 	@Test
 	public void testTextEditor() {
 		_assertTextEditorConfigJSONObject(
-			"fragmenEntryLinkEditor", _EXTRA_PLUGINS);
+			"fragmentEntryLinkEditor", _EXTRA_PLUGINS);
 	}
 
 	private void _assertItemSelectorURL(String eventName, String url) {

@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = {
-		"editor.config.key=fragmenEntryLinkRichTextEditor",
+		"editor.config.key=fragmentEntryLinkRichTextEditor",
 		"javax.portlet.name=" + ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET
 	},
 	service = EditorConfigContributor.class

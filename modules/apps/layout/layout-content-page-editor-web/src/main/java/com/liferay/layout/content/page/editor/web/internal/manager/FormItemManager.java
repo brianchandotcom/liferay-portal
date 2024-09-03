@@ -316,6 +316,64 @@ public class FormItemManager {
 		return addedFragmentEntryLinks;
 	}
 
+	public List<FragmentEntryLink> changeToSimpleFormType(
+			FormStyledLayoutStructureItem formStyledLayoutStructureItem,
+			Layout layout, LayoutStructure layoutStructure, Locale locale,
+			long segmentsExperienceId, ServiceContext serviceContext)
+		throws PortalException {
+
+		FormStepContainerStyledLayoutStructureItem
+			formStepContainerStyledLayoutStructureItem =
+				_findFormStepContainerStyledLayoutStructureItem(
+					formStyledLayoutStructureItem, layoutStructure);
+
+		if (formStepContainerStyledLayoutStructureItem == null) {
+			return Collections.emptyList();
+		}
+
+		List<String> childrenItemIds = new ArrayList<>(
+			formStepContainerStyledLayoutStructureItem.getChildrenItemIds());
+
+		for (String childrenItemId : childrenItemIds) {
+			FormStepLayoutStructureItem formStepLayoutStructureItem =
+				(FormStepLayoutStructureItem)
+					layoutStructure.getLayoutStructureItem(childrenItemId);
+
+			List<String> formStepLayoutStructureItemChildrenItemIds =
+				new ArrayList<>(
+					formStepLayoutStructureItem.getChildrenItemIds());
+
+			for (String formStepLayoutStructureItemChildrenItemId :
+					formStepLayoutStructureItemChildrenItemIds) {
+
+				if (!_isFormButtonsContainer(
+						formStepLayoutStructureItem,
+						formStyledLayoutStructureItem,
+						layoutStructure.getLayoutStructureItem(
+							formStepLayoutStructureItemChildrenItemId))) {
+
+					layoutStructure.moveLayoutStructureItem(
+						formStepLayoutStructureItemChildrenItemId,
+						formStyledLayoutStructureItem.getItemId(), -1);
+				}
+			}
+		}
+
+		layoutStructure.markLayoutStructureItemForDeletion(
+			Collections.singletonList(
+				formStepContainerStyledLayoutStructureItem.getItemId()),
+			Collections.emptyList());
+
+		FragmentEntryLink fragmentEntryLink = _addFormButtonFragmentEntryLink(
+			layout, locale, "submit", segmentsExperienceId, serviceContext);
+
+		layoutStructure.addFragmentStyledLayoutStructureItem(
+			fragmentEntryLink.getFragmentEntryLinkId(),
+			formStyledLayoutStructureItem.getItemId(), -1);
+
+		return Collections.singletonList(fragmentEntryLink);
+	}
+
 	public List<FragmentEntryLink> removeFormStepLayoutStructureItems(
 			FormStyledLayoutStructureItem formStyledLayoutStructureItem,
 			Layout layout, LayoutStructure layoutStructure, Locale locale,

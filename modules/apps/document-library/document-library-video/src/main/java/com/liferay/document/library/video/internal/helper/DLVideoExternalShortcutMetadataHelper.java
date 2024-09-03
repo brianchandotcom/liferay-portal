@@ -153,9 +153,6 @@ public class DLVideoExternalShortcutMetadataHelper {
 				_dlFileEntryMetadataLocalService.createDLFileEntryMetadata(
 					CounterLocalServiceUtil.increment());
 
-			_dlFileEntryMetadata.setExternalReferenceCode(
-				_dlFileEntryMetadata.getUuid());
-
 			long ddmStructureId = _ddmStructure.getStructureId();
 
 			Fields fields = new Fields();
@@ -174,13 +171,13 @@ public class DLVideoExternalShortcutMetadataHelper {
 				new Field(
 					ddmStructureId, DLVideoConstants.DDM_FIELD_NAME_URL, ""));
 
-			DDMFormValues ddmFormValues = _toDDMFormValues(fields);
-
 			ServiceContext serviceContext = new ServiceContext();
 
 			serviceContext.setAttribute("validateDDMFormValues", Boolean.FALSE);
 			serviceContext.setScopeGroupId(_dlFileVersion.getGroupId());
 			serviceContext.setUserId(_dlFileVersion.getUserId());
+
+			DDMFormValues ddmFormValues = _toDDMFormValues(fields);
 
 			_dlFileEntryMetadata.setDDMStorageId(
 				_ddmStorageEngineManager.create(

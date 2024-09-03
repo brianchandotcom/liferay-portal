@@ -10,8 +10,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.dao.jdbc.postgresql.PostgreSQLJDBCUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -71,9 +69,7 @@ public class DBCopyTablesProcess {
 		_copyTables();
 	}
 
-	private void _copyTable(
-			Connection sourceConnection, String sourceTableName,
-			Connection targetConnection, String targetTableName)
+	private void _copyTable(String sourceTableName, String targetTableName)
 		throws Exception {
 
 		List<String> sourceColumnNames = _sourceColumnNamesMap.get(
@@ -114,7 +110,9 @@ public class DBCopyTablesProcess {
 				Collections.nCopies(targetColumnNames.size(), "?")),
 			")");
 
-		try (PreparedStatement preparedStatement1 =
+		try (Connection sourceConnection = _sourceDataSource.getConnection();
+			Connection targetConnection = _targetDataSource.getConnection();
+			PreparedStatement preparedStatement1 =
 				sourceConnection.prepareStatement(selectSQL);
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
@@ -145,19 +143,6 @@ public class DBCopyTablesProcess {
 		}
 	}
 
-	private void _copyTable(String sourceTableName, String targetTableName) {
-		try (Connection sourceConnection = _sourceDataSource.getConnection();
-			Connection targetConnection = _targetDataSource.getConnection()) {
-
-			_copyTable(
-				sourceConnection, sourceTableName, targetConnection,
-				targetTableName);
-		}
-		catch (Exception exception) {
-			_log.error(exception);
-		}
-	}
-
 	private void _copyTables() throws Exception {
 		List<Future<?>> futures = new ArrayList<>();
 
@@ -179,7 +164,14 @@ public class DBCopyTablesProcess {
 
 			futures.add(
 				executorService.submit(
-					() -> _copyTable(sourceTableName, targetTableName)));
+					() -> {
+						try {
+							_copyTable(sourceTableName, targetTableName);
+						}
+						catch (Exception exception) {
+							throw new RuntimeException(exception);
+						}
+					}));
 		}
 
 		for (Future<?> future : futures) {
@@ -571,9 +563,6 @@ public class DBCopyTablesProcess {
 			throw new PortalException("Invalid type: " + targetType);
 		}
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DBCopyTablesProcess.class);
 
 	private final Map<String, List<String>> _sourceColumnNamesMap =
 		new TreeMap<>(String.CASE_INSENSITIVE_ORDER);

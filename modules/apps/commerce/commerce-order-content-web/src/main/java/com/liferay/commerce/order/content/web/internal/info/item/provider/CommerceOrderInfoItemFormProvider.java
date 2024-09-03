@@ -52,8 +52,6 @@ public class CommerceOrderInfoItemFormProvider
 		).infoFieldSetEntry(
 			CommerceOrderInfoItemFields.accountNameInfoField
 		).infoFieldSetEntry(
-			CommerceOrderInfoItemFields.billingAddressIdInfoField
-		).infoFieldSetEntry(
 			CommerceOrderInfoItemFields.couponCodeInfoField
 		).infoFieldSetEntry(
 			CommerceOrderInfoItemFields.
@@ -79,6 +77,8 @@ public class CommerceOrderInfoItemFormProvider
 		).infoFieldSetEntry(
 			CommerceOrderInfoItemFields.formattedTotalWithTaxAmountInfoField
 		).infoFieldSetEntry(
+			CommerceOrderInfoItemFields.nameInfoField
+		).infoFieldSetEntry(
 			CommerceOrderInfoItemFields.orderDateInfoField
 		).infoFieldSetEntry(
 			CommerceOrderInfoItemFields.orderIdInfoField
@@ -86,6 +86,8 @@ public class CommerceOrderInfoItemFormProvider
 			CommerceOrderInfoItemFields.orderStatusInfoField
 		).infoFieldSetEntry(
 			CommerceOrderInfoItemFields.orderTypeIdInfoField
+		).infoFieldSetEntry(
+			CommerceOrderInfoItemFields.orderTypeNameInfoField
 		).infoFieldSetEntry(
 			CommerceOrderInfoItemFields.
 				paymentCommerceTermEntryDescriptionInfoField
@@ -97,12 +99,37 @@ public class CommerceOrderInfoItemFormProvider
 			CommerceOrderInfoItemFields.purchaseOrderNumberInfoField
 		).infoFieldSetEntry(
 			CommerceOrderInfoItemFields.requestedDeliveryDateInfoField
-		).infoFieldSetEntry(
-			CommerceOrderInfoItemFields.shippingAddressIdInfoField
 		).labelInfoLocalizedValue(
 			InfoLocalizedValue.localize(getClass(), "basic-information")
 		).name(
 			"basic-information"
+		).build();
+	}
+
+	private InfoFieldSet _getBillingAddressInfoFieldSet() {
+		return InfoFieldSet.builder(
+		).infoFieldSetEntry(
+			CommerceOrderInfoItemFields.billingAddressCityInfoField
+		).infoFieldSetEntry(
+			CommerceOrderInfoItemFields.billingAddressCountryInfoField
+		).infoFieldSetEntry(
+			CommerceOrderInfoItemFields.billingAddressIdInfoField
+		).infoFieldSetEntry(
+			CommerceOrderInfoItemFields.billingAddressPhoneNumberInfoField
+		).infoFieldSetEntry(
+			CommerceOrderInfoItemFields.billingAddressRegionInfoField
+		).infoFieldSetEntry(
+			CommerceOrderInfoItemFields.billingAddressStreet1InfoField
+		).infoFieldSetEntry(
+			CommerceOrderInfoItemFields.billingAddressStreet2InfoField
+		).infoFieldSetEntry(
+			CommerceOrderInfoItemFields.billingAddressStreet3InfoField
+		).infoFieldSetEntry(
+			CommerceOrderInfoItemFields.billingAddressZipInfoField
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(getClass(), "billing-address")
+		).name(
+			"billing-address"
 		).build();
 	}
 
@@ -258,6 +285,10 @@ public class CommerceOrderInfoItemFormProvider
 		).infoFieldSetEntry(
 			_getDetailedInformationInfoFieldSet()
 		).infoFieldSetEntry(
+			_getBillingAddressInfoFieldSet()
+		).infoFieldSetEntry(
+			_getShippingAddressInfoFieldSet()
+		).infoFieldSetEntry(
 			_getOrderStatusInformationInfoFieldSet()
 		).infoFieldSetEntry(
 			_getWorkflowStatusInformationInfoFieldSet()
@@ -313,6 +344,33 @@ public class CommerceOrderInfoItemFormProvider
 			InfoLocalizedValue.localize(getClass(), "order-status-information")
 		).name(
 			"order-status-information"
+		).build();
+	}
+
+	private InfoFieldSet _getShippingAddressInfoFieldSet() {
+		return InfoFieldSet.builder(
+		).infoFieldSetEntry(
+			CommerceOrderInfoItemFields.shippingAddressCityInfoField
+		).infoFieldSetEntry(
+			CommerceOrderInfoItemFields.shippingAddressCountryInfoField
+		).infoFieldSetEntry(
+			CommerceOrderInfoItemFields.shippingAddressIdInfoField
+		).infoFieldSetEntry(
+			CommerceOrderInfoItemFields.shippingAddressPhoneNumberInfoField
+		).infoFieldSetEntry(
+			CommerceOrderInfoItemFields.shippingAddressRegionInfoField
+		).infoFieldSetEntry(
+			CommerceOrderInfoItemFields.shippingAddressStreet1InfoField
+		).infoFieldSetEntry(
+			CommerceOrderInfoItemFields.shippingAddressStreet2InfoField
+		).infoFieldSetEntry(
+			CommerceOrderInfoItemFields.shippingAddressStreet3InfoField
+		).infoFieldSetEntry(
+			CommerceOrderInfoItemFields.shippingAddressZipInfoField
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(getClass(), "shipping-address")
+		).name(
+			"shipping-address"
 		).build();
 	}
 

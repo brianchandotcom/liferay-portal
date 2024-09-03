@@ -73,6 +73,24 @@ public class CommerceOrderInfoItemFields {
 			InfoLocalizedValue.localize(
 				CommerceOrderInfoItemFields.class, "b2b")
 		).build();
+	public static final InfoField<TextInfoFieldType>
+		billingAddressCityInfoField = BuilderHolder._builder.infoFieldType(
+			TextInfoFieldType.INSTANCE
+		).name(
+			"billingAddressCity"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				CommerceOrderInfoItemFields.class, "billing-address-city")
+		).build();
+	public static final InfoField<TextInfoFieldType>
+		billingAddressCountryInfoField = BuilderHolder._builder.infoFieldType(
+			TextInfoFieldType.INSTANCE
+		).name(
+			"billingAddressCountry"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				CommerceOrderInfoItemFields.class, "billing-address-country")
+		).build();
 	public static final InfoField<NumberInfoFieldType>
 		billingAddressIdInfoField = BuilderHolder._builder.infoFieldType(
 			NumberInfoFieldType.INSTANCE
@@ -81,6 +99,62 @@ public class CommerceOrderInfoItemFields {
 		).labelInfoLocalizedValue(
 			InfoLocalizedValue.localize(
 				CommerceOrderInfoItemFields.class, "billing-address-id")
+		).build();
+	public static final InfoField<TextInfoFieldType>
+		billingAddressPhoneNumberInfoField =
+			BuilderHolder._builder.infoFieldType(
+				TextInfoFieldType.INSTANCE
+			).name(
+				"billingAddressPhoneNumber"
+			).labelInfoLocalizedValue(
+				InfoLocalizedValue.localize(
+					CommerceOrderInfoItemFields.class,
+					"billing-address-phone-number")
+			).build();
+	public static final InfoField<TextInfoFieldType>
+		billingAddressRegionInfoField = BuilderHolder._builder.infoFieldType(
+			TextInfoFieldType.INSTANCE
+		).name(
+			"billingAddressRegion"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				CommerceOrderInfoItemFields.class, "billing-address-region")
+		).build();
+	public static final InfoField<TextInfoFieldType>
+		billingAddressStreet1InfoField = BuilderHolder._builder.infoFieldType(
+			TextInfoFieldType.INSTANCE
+		).name(
+			"billingAddressStreet1"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				CommerceOrderInfoItemFields.class, "billing-address-street1")
+		).build();
+	public static final InfoField<TextInfoFieldType>
+		billingAddressStreet2InfoField = BuilderHolder._builder.infoFieldType(
+			TextInfoFieldType.INSTANCE
+		).name(
+			"billingAddressStreet2"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				CommerceOrderInfoItemFields.class, "billing-address-street2")
+		).build();
+	public static final InfoField<TextInfoFieldType>
+		billingAddressStreet3InfoField = BuilderHolder._builder.infoFieldType(
+			TextInfoFieldType.INSTANCE
+		).name(
+			"billingAddressStreet3"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				CommerceOrderInfoItemFields.class, "billing-address-street3")
+		).build();
+	public static final InfoField<TextInfoFieldType>
+		billingAddressZipInfoField = BuilderHolder._builder.infoFieldType(
+			TextInfoFieldType.INSTANCE
+		).name(
+			"billingAddressZip"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				CommerceOrderInfoItemFields.class, "billing-address-zip")
 		).build();
 	public static final InfoField<BooleanInfoFieldType>
 		cancelledOrderStatusInfoField = BuilderHolder._builder.infoFieldType(
@@ -382,6 +456,15 @@ public class CommerceOrderInfoItemFields {
 			InfoLocalizedValue.localize(
 				CommerceOrderInfoItemFields.class, "modified-date")
 		).build();
+	public static final InfoField<TextInfoFieldType> nameInfoField =
+		BuilderHolder._builder.infoFieldType(
+			TextInfoFieldType.INSTANCE
+		).name(
+			"name"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				CommerceOrderInfoItemFields.class, "name")
+		).build();
 	public static final InfoField<BooleanInfoFieldType>
 		onHoldOrderStatusInfoField = BuilderHolder._builder.infoFieldType(
 			BooleanInfoFieldType.INSTANCE
@@ -435,6 +518,15 @@ public class CommerceOrderInfoItemFields {
 		).labelInfoLocalizedValue(
 			InfoLocalizedValue.localize(
 				CommerceOrderInfoItemFields.class, "order-type-id")
+		).build();
+	public static final InfoField<TextInfoFieldType> orderTypeNameInfoField =
+		BuilderHolder._builder.infoFieldType(
+			TextInfoFieldType.INSTANCE
+		).name(
+			"orderTypeName"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				CommerceOrderInfoItemFields.class, "order-type-name")
 		).build();
 	public static final InfoField<BooleanInfoFieldType>
 		partiallyRefundedOrderStatusInfoField =
@@ -587,6 +679,24 @@ public class CommerceOrderInfoItemFields {
 			InfoLocalizedValue.localize(
 				CommerceOrderInfoItemFields.class, "shipped")
 		).build();
+	public static final InfoField<TextInfoFieldType>
+		shippingAddressCityInfoField = BuilderHolder._builder.infoFieldType(
+			TextInfoFieldType.INSTANCE
+		).name(
+			"shippingAddressCity"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				CommerceOrderInfoItemFields.class, "shipping-address-city")
+		).build();
+	public static final InfoField<TextInfoFieldType>
+		shippingAddressCountryInfoField = BuilderHolder._builder.infoFieldType(
+			TextInfoFieldType.INSTANCE
+		).name(
+			"shippingAddressCountry"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				CommerceOrderInfoItemFields.class, "shipping-address-country")
+		).build();
 	public static final InfoField<NumberInfoFieldType>
 		shippingAddressIdInfoField = BuilderHolder._builder.infoFieldType(
 			NumberInfoFieldType.INSTANCE
@@ -595,6 +705,62 @@ public class CommerceOrderInfoItemFields {
 		).labelInfoLocalizedValue(
 			InfoLocalizedValue.localize(
 				CommerceOrderInfoItemFields.class, "shipping-address-id")
+		).build();
+	public static final InfoField<TextInfoFieldType>
+		shippingAddressPhoneNumberInfoField =
+			BuilderHolder._builder.infoFieldType(
+				TextInfoFieldType.INSTANCE
+			).name(
+				"shippingAddressPhoneNumber"
+			).labelInfoLocalizedValue(
+				InfoLocalizedValue.localize(
+					CommerceOrderInfoItemFields.class,
+					"shipping-address-phone-number")
+			).build();
+	public static final InfoField<TextInfoFieldType>
+		shippingAddressRegionInfoField = BuilderHolder._builder.infoFieldType(
+			TextInfoFieldType.INSTANCE
+		).name(
+			"shippingAddressRegion"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				CommerceOrderInfoItemFields.class, "shipping-address-region")
+		).build();
+	public static final InfoField<TextInfoFieldType>
+		shippingAddressStreet1InfoField = BuilderHolder._builder.infoFieldType(
+			TextInfoFieldType.INSTANCE
+		).name(
+			"shippingAddressStreet1"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				CommerceOrderInfoItemFields.class, "shipping-address-street1")
+		).build();
+	public static final InfoField<TextInfoFieldType>
+		shippingAddressStreet2InfoField = BuilderHolder._builder.infoFieldType(
+			TextInfoFieldType.INSTANCE
+		).name(
+			"shippingAddressStreet2"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				CommerceOrderInfoItemFields.class, "shipping-address-street2")
+		).build();
+	public static final InfoField<TextInfoFieldType>
+		shippingAddressStreet3InfoField = BuilderHolder._builder.infoFieldType(
+			TextInfoFieldType.INSTANCE
+		).name(
+			"shippingAddressStreet3"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				CommerceOrderInfoItemFields.class, "shipping-address-street3")
+		).build();
+	public static final InfoField<TextInfoFieldType>
+		shippingAddressZipInfoField = BuilderHolder._builder.infoFieldType(
+			TextInfoFieldType.INSTANCE
+		).name(
+			"shippingAddressZip"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				CommerceOrderInfoItemFields.class, "shipping-address-zip")
 		).build();
 	public static final InfoField<NumberInfoFieldType> shippingAmountInfoField =
 		BuilderHolder._builder.infoFieldType(

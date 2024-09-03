@@ -438,16 +438,11 @@ test.describe('Multistep', {tag: '@LPD-10727'}, () => {
 			key: 'INPUTS-submit-button',
 		});
 
-		const submitButton = getFragmentDefinition({
-			id: getRandomString(),
-			key: 'INPUTS-submit-button',
-		});
-
 		const formDefinition = getFormContainerDefinition({
 			id: getRandomString(),
 			objectDefinitionId,
 			steps: [
-				[headingDefinition, formButtonNext, submitButton],
+				[headingDefinition, formButtonNext],
 				[buttonDefinition, formButtonPrevious],
 			],
 		});
@@ -458,40 +453,51 @@ test.describe('Multistep', {tag: '@LPD-10727'}, () => {
 			title: getRandomString(),
 		});
 
-		// Go to edit mode and publish the page
+		// Create function that check form buttons behavior
 
-		await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
+		const checkFormButtonsBehavior = async () => {
 
-		await pageEditorPage.publishPage();
+			// Check initial state
 
-		// Go to view mode of page
+			const button = page.locator(
+				'.lfr-layout-structure-item-basic-component-button'
+			);
+
+			const heading = page.locator(
+				'.lfr-layout-structure-item-basic-component-heading'
+			);
+
+			await expect(heading).toBeVisible();
+			await expect(button).not.toBeVisible();
+
+			// Check Next button works
+
+			await page.locator('.btn', {hasText: 'Next'}).click();
+
+			await expect(heading).not.toBeVisible();
+			await expect(button).toBeVisible();
+
+			// Check Previous button works
+
+			await page.locator('.btn', {hasText: 'Previous'}).click();
+
+			await expect(heading).toBeVisible();
+			await expect(button).not.toBeVisible();
+		};
+
+		// Check in view mode
 
 		await page.goto(
 			`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
 		);
 
-		// Check step change works properly
+		await checkFormButtonsBehavior();
 
-		const button = page.locator(
-			'.lfr-layout-structure-item-basic-component-button'
-		);
+		// Check in edit mode
 
-		const heading = page.locator(
-			'.lfr-layout-structure-item-basic-component-heading'
-		);
+		await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
 
-		await expect(button).not.toBeVisible();
-		await expect(heading).toBeVisible();
-
-		await page.getByText('Next', {exact: true}).click();
-
-		await expect(button).toBeVisible();
-		await expect(heading).not.toBeVisible();
-
-		await page.getByText('Previous').click();
-
-		await expect(button).not.toBeVisible();
-		await expect(heading).toBeVisible();
+		await checkFormButtonsBehavior();
 	});
 
 	test('Step change affects only desired form', async ({

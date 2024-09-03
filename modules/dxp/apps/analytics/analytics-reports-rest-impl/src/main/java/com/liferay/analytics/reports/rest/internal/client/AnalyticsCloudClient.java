@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.net.HttpURLConnection;
 
+import java.util.List;
+
 /**
  * @author Marcos Martins
  */
@@ -35,7 +37,7 @@ public class AnalyticsCloudClient {
 
 	public AssetMetric getAssetMetric(
 			AnalyticsConfiguration analyticsConfiguration, String assetId,
-			String assetType, Long channelId, String identityType,
+			String assetType, List<Long> channelIds, String identityType,
 			Integer rangeKey, String[] selectedMetrics)
 		throws Exception {
 
@@ -48,7 +50,10 @@ public class AnalyticsCloudClient {
 				"/api/1.0/asset-metric/", assetType);
 
 			url = HttpComponentsUtil.addParameter(url, "assetId", assetId);
-			url = HttpComponentsUtil.addParameter(url, "channelId", channelId);
+			url = HttpComponentsUtil.addParameter(
+				url, "channelIds",
+				StringUtil.merge(channelIds, StringPool.COMMA));
+
 			url = HttpComponentsUtil.addParameter(
 				url, "identityType", identityType);
 

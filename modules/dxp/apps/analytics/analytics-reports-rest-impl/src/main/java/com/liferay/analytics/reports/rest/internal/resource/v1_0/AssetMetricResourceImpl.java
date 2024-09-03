@@ -9,9 +9,18 @@ import com.liferay.analytics.reports.rest.dto.v1_0.AssetMetric;
 import com.liferay.analytics.reports.rest.internal.client.AnalyticsCloudClient;
 import com.liferay.analytics.reports.rest.resource.v1_0.AssetMetricResource;
 import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.model.DepotEntryGroupRel;
+import com.liferay.depot.service.DepotEntryGroupRelLocalService;
+import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.Validator;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -32,21 +41,62 @@ public class AssetMetricResourceImpl extends BaseAssetMetricResourceImpl {
 			Integer rangeKey, String[] selectedMetrics)
 		throws Exception {
 
-		AnalyticsCloudClient analyticsCloudClient = new AnalyticsCloudClient(
-			_http);
+		List<Long> analyticsCloudChannelIds = new ArrayList<>();
 
 		Group group = _groupLocalService.getGroup(groupId);
+
+		DepotEntry depotEntry = _depotEntryLocalService.fetchGroupDepotEntry(
+			groupId);
+
+		if (depotEntry != null) {
+			analyticsCloudChannelIds = _getAnalyticsCloudChannelIds(
+				_depotEntryGroupRelLocalService.getDepotEntryGroupRels(
+					depotEntry));
+		}
+		else {
+			analyticsCloudChannelIds = Collections.singletonList(
+				Long.valueOf(
+					group.getTypeSettingsProperty("analyticsChannelId")));
+		}
+
+		AnalyticsCloudClient analyticsCloudClient = new AnalyticsCloudClient(
+			_http);
 
 		return analyticsCloudClient.getAssetMetric(
 			_analyticsSettingsManager.getAnalyticsConfiguration(
 				group.getCompanyId()),
-			assetId, assetType,
-			Long.valueOf(group.getTypeSettingsProperty("analyticsChannelId")),
-			identityType, rangeKey, selectedMetrics);
+			assetId, assetType, analyticsCloudChannelIds, identityType,
+			rangeKey, selectedMetrics);
+	}
+
+	private List<Long> _getAnalyticsCloudChannelIds(
+			List<DepotEntryGroupRel> depotEntryGroupRels)
+		throws Exception {
+
+		List<Long> analyticsCloudChannelIds = new ArrayList<>();
+
+		for (DepotEntryGroupRel depotEntryGroupRel : depotEntryGroupRels) {
+			Group group = _groupLocalService.getGroup(
+				depotEntryGroupRel.getToGroupId());
+
+			String analyticsChannelId = group.getTypeSettingsProperty(
+				"analyticsChannelId");
+
+			if (Validator.isNotNull(analyticsChannelId)) {
+				analyticsCloudChannelIds.add(Long.valueOf(analyticsChannelId));
+			}
+		}
+
+		return analyticsCloudChannelIds;
 	}
 
 	@Reference
 	private AnalyticsSettingsManager _analyticsSettingsManager;
+
+	private DepotEntryGroupRelLocalService _depotEntryGroupRelLocalService;
+
+	@Reference
+	private DepotEntryLocalService _depotEntryLocalService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

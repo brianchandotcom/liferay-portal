@@ -99,17 +99,7 @@ public class PortletPreferencesUpgradeProcessTest {
 		Assert.assertEquals(
 			controlPanelLayout.getPlid(), portletPreferences.getPlid());
 
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"com.liferay.fragment.internal.upgrade.v1_1_0." +
-					"PortletPreferencesUpgradeProcess",
-				LoggerTestUtil.ALL)) {
-
-			_runUpgrade();
-
-			List<LogEntry> logEntries = logCapture.getLogEntries();
-
-			Assert.assertTrue(logEntries.isEmpty());
-		}
+		_assertUpgrade();
 
 		Assert.assertNull(
 			_layoutLocalService.fetchLayout(controlPanelLayout.getPlid()));
@@ -147,17 +137,7 @@ public class PortletPreferencesUpgradeProcessTest {
 				portletPreferences -> _clonePortletPreferences(
 					groupControlPanelLayout.getPlid(), portletPreferences)));
 
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"com.liferay.fragment.internal.upgrade.v1_1_0." +
-					"PortletPreferencesUpgradeProcess",
-				LoggerTestUtil.ALL)) {
-
-			_runUpgrade();
-
-			List<LogEntry> logEntries = logCapture.getLogEntries();
-
-			Assert.assertTrue(logEntries.isEmpty());
-		}
+		_assertUpgrade();
 
 		Assert.assertNull(
 			_layoutLocalService.fetchLayout(groupControlPanelLayout.getPlid()));
@@ -241,6 +221,20 @@ public class PortletPreferencesUpgradeProcessTest {
 		return PortletIdCodec.encode(
 			editableValuesJSONObject.getString("portletId"),
 			editableValuesJSONObject.getString("instanceId"));
+	}
+
+	private void _assertUpgrade() throws Exception {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.fragment.internal.upgrade.v1_1_0." +
+					"PortletPreferencesUpgradeProcess",
+				LoggerTestUtil.ALL)) {
+
+			_runUpgrade();
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertTrue(logEntries.toString(), logEntries.isEmpty());
+		}
 	}
 
 	private PortletPreferences _clonePortletPreferences(

@@ -281,6 +281,10 @@ class TestrayBuildImpl extends Rest<Build, TestrayBuild> {
 		return this.update(id, data);
 	}
 
+	public async updateBuildSummary(id: string){
+		return fetcher.patch(`/testray-build/${id}`, null);
+	}
+
 	public async updateArchivedFlag(id: number, archived: boolean) {
 		const dateArchived = archived ? new Date().toISOString() : '';
 

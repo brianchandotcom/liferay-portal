@@ -21,6 +21,7 @@ import yupSchema from '~/schema/yup';
 import {Liferay} from '~/services/liferay';
 import {
 	MessageBoardMessage,
+	testrayBuildImpl,
 	TestrayCaseResult,
 	testrayCaseResultImpl,
 } from '~/services/rest';
@@ -39,6 +40,7 @@ const CaseResultEditTest = () => {
 		form: {onClose, onError, onSave, onSubmit, submitting},
 	} = useFormActions();
 
+	const {buildId} = useParams();
 	const {caseResultId} = useParams();
 
 	const {caseResult, mbMessage, mutateCaseResult}: OutletContext =
@@ -92,6 +94,10 @@ const CaseResultEditTest = () => {
 						testrayCaseResultImpl.update(id, data),
 				}
 			);
+
+			if (buildId !== undefined) {
+				testrayBuildImpl.updateBuildSummary(buildId);
+			}
 
 			mutateCaseResult({
 				...response,

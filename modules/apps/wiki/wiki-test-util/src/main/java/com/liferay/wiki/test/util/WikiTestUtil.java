@@ -417,6 +417,26 @@ public class WikiTestUtil {
 		return file;
 	}
 
+	public static File addWikiAttachment(
+			String attachmentFileName, Class<?> clazz, long nodeId,
+			String testFileName, String title, long userId)
+		throws Exception {
+
+		byte[] bytes = FileUtil.getBytes(clazz, "dependencies/" + testFileName);
+
+		if (ArrayUtil.isEmpty(bytes)) {
+			throw new RuntimeException("File not found: " + testFileName);
+		}
+
+		File file = FileUtil.createTempFile(bytes);
+
+		WikiPageLocalServiceUtil.addPageAttachment(
+			userId, nodeId, title, attachmentFileName, file,
+			MimeTypesUtil.getContentType(file));
+
+		return file;
+	}
+
 	public static WikiPage copyPage(
 			WikiPage page, boolean approved, ServiceContext serviceContext)
 		throws Exception {

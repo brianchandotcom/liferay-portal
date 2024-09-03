@@ -19,10 +19,16 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
+
+import java.io.File;
+import java.io.FileInputStream;
 
 /**
  * @author Vy Bui
@@ -37,6 +43,28 @@ public class KBTestUtil {
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
 			null, RandomTestUtil.nextDate(), null, null, null,
 			ServiceContextTestUtil.getServiceContext(groupId));
+	}
+
+	public static File addKBArticleAttachment(
+			String attachmentFileName, Class<?> clazz, long resourcePrimKey,
+			String testFileName, long userId)
+		throws Exception {
+
+		byte[] bytes = FileUtil.getBytes(clazz, "dependencies/" + testFileName);
+
+		if (ArrayUtil.isEmpty(bytes)) {
+			throw new RuntimeException("File not found: " + testFileName);
+		}
+
+		File file = FileUtil.createTempFile(bytes);
+
+		try (FileInputStream fileInputStream = new FileInputStream(file)) {
+			KBArticleLocalServiceUtil.addAttachment(
+				userId, resourcePrimKey, attachmentFileName, fileInputStream,
+				MimeTypesUtil.getContentType(file));
+		}
+
+		return file;
 	}
 
 	public static KBArticle addKBArticleWithWorkflow(

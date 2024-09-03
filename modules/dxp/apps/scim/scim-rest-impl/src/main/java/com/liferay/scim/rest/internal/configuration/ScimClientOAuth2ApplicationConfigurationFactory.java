@@ -129,7 +129,7 @@ public class ScimClientOAuth2ApplicationConfigurationFactory {
 			oAuth2Application =
 				_oAuth2ApplicationLocalService.addOAuth2Application(
 					companyId, user.getUserId(), user.getScreenName(),
-					ListUtil.fromArray(GrantType.JWT_BEARER),
+					ListUtil.fromArray(GrantType.CLIENT_CREDENTIALS),
 					"client_secret_post", user.getUserId(), clientId,
 					ClientProfile.HEADLESS_SERVER.id(),
 					OAuth2SecureRandomGenerator.generateClientSecret(), null,

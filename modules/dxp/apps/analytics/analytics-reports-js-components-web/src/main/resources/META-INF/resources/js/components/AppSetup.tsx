@@ -26,6 +26,7 @@ type Data = {
 	connectedToAnalyticsCloud: boolean;
 	connectedToAssetLibrary: boolean;
 	groupId: string;
+	isAdmin: boolean;
 	siteEditDepotEntryDepotAdminPortletURL: string;
 	siteSyncedToAnalyticsCloud: boolean;
 };
@@ -83,7 +84,7 @@ const AppSetup: React.FC<IAppSetupProps> = ({
 	}
 
 	if (data && !data.connectedToAnalyticsCloud) {
-		return (
+		if (data.isAdmin) {
 			<EmptyState
 				description={Liferay.Language.get(
 					'in-order-to-view-asset-performance,-your-liferay-dxp-instance-has-to-be-connected-with-liferay-analytics-cloud'
@@ -99,48 +100,84 @@ const AppSetup: React.FC<IAppSetupProps> = ({
 				>
 					{Liferay.Language.get('connect')}
 				</ClayLink>
-			</EmptyState>
+			</EmptyState>;
+		}
+
+		return (
+			<EmptyState
+				description={Liferay.Language.get(
+					'please-contact-a-dxp-instance-administrator-to-connect-your-dxp-instance-to-analytics-cloud'
+				)}
+				title={Liferay.Language.get(
+					'connect-to-liferay-analytics-cloud'
+				)}
+			/>
 		);
 	}
 
 	if (data && data.assetLibrary && !data.connectedToAssetLibrary) {
+		if (data.isAdmin) {
+			return (
+				<EmptyState
+					description={Liferay.Language.get(
+						'in-order-to-view-asset-performance,-connect-sites-that-are-synced-to-analytics-cloud-to-your-asset-library'
+					)}
+					imgSrc={`${Liferay.ThemeDisplay.getPathThemeImages()}/states/search_state.svg`}
+					title={Liferay.Language.get(
+						'there-are-no-sites-connected-to-this-asset-library'
+					)}
+				>
+					<ClayLink
+						button
+						displayType="secondary"
+						href={data.siteEditDepotEntryDepotAdminPortletURL}
+					>
+						{Liferay.Language.get('connect')}
+					</ClayLink>
+				</EmptyState>
+			);
+		}
+
 		return (
 			<EmptyState
 				description={Liferay.Language.get(
-					'in-order-to-view-asset-performance,-connect-sites-that-are-synced-to-analytics-cloud-to-your-asset-library'
+					'please-contact-a-dxp-instance-administrator-to-connect-your-sites-to-an-asset-library'
 				)}
 				imgSrc={`${Liferay.ThemeDisplay.getPathThemeImages()}/states/search_state.svg`}
 				title={Liferay.Language.get(
 					'there-are-no-sites-connected-to-this-asset-library'
 				)}
-			>
-				<ClayLink
-					button
-					displayType="secondary"
-					href={data.siteEditDepotEntryDepotAdminPortletURL}
-				>
-					{Liferay.Language.get('connect')}
-				</ClayLink>
-			</EmptyState>
+			/>
 		);
 	}
 
 	if (data && !data.siteSyncedToAnalyticsCloud) {
+		if (data.isAdmin) {
+			return (
+				<EmptyState
+					description={Liferay.Language.get(
+						'in-order-to-view-asset-performance,-your-sites-have-to-be-synced-to-liferay-analytics-cloud'
+					)}
+					title={Liferay.Language.get('sync-to-analytics-cloud')}
+				>
+					<ClayLink
+						button
+						displayType="secondary"
+						href={`${data.analyticsSettingsPortletURL}&currentPage=PROPERTIES`}
+					>
+						{Liferay.Language.get('sync')}
+					</ClayLink>
+				</EmptyState>
+			);
+		}
+
 		return (
 			<EmptyState
 				description={Liferay.Language.get(
-					'in-order-to-view-asset-performance,-your-sites-have-to-be-synced-to-liferay-analytics-cloud'
+					'please-contact-a-dxp-instance-administrator-to-sync-your-sites-to-analytics-cloud'
 				)}
 				title={Liferay.Language.get('sync-to-analytics-cloud')}
-			>
-				<ClayLink
-					button
-					displayType="secondary"
-					href={`${data.analyticsSettingsPortletURL}&currentPage=PROPERTIES`}
-				>
-					{Liferay.Language.get('sync')}
-				</ClayLink>
-			</EmptyState>
+			/>
 		);
 	}
 

@@ -62,8 +62,8 @@
 			"type": "DateTime"
 		},
 		{
-			"businessType": "LongInteger",
 			"DBType": "Long",
+			"businessType": "LongInteger",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {

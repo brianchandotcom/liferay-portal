@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutRevisionLocalService;
 import com.liferay.portal.kernel.service.LayoutSetBranchLocalService;
 import com.liferay.portal.kernel.service.PortalPreferencesLocalService;
+import com.liferay.portal.kernel.service.PortletPreferenceValueLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -283,6 +284,8 @@ public class EditServerMVCActionCommandTest {
 			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _layout.getPlid(),
 			RandomTestUtil.randomString());
 
+		PortletPreferences modifiedPortletPreferences;
+
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
 					_ctCollection.getCtCollectionId())) {
@@ -291,6 +294,20 @@ public class EditServerMVCActionCommandTest {
 				PortletKeys.PREFS_OWNER_ID_DEFAULT,
 				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _layout.getPlid(),
 				RandomTestUtil.randomString());
+
+			javax.portlet.PortletPreferences jxPortletPreferences =
+				_portletPreferenceValueLocalService.getPreferences(
+					_portletPreferences);
+
+			jxPortletPreferences.setValue(
+				_ctCollection.getUserName(), RandomTestUtil.randomString());
+
+			modifiedPortletPreferences =
+				_portletPreferencesLocalService.updatePreferences(
+					_portletPreferences.getOwnerId(),
+					_portletPreferences.getOwnerType(),
+					_portletPreferences.getPlid(),
+					_portletPreferences.getPortletId(), jxPortletPreferences);
 		}
 
 		ReflectionTestUtil.invoke(
@@ -308,6 +325,10 @@ public class EditServerMVCActionCommandTest {
 			Assert.assertNull(
 				_portletPreferencesLocalService.fetchPortletPreferences(
 					_ctPortletPreferences.getPortletPreferencesId()));
+
+			Assert.assertNull(
+				_portletPreferencesLocalService.fetchPortletPreferences(
+					modifiedPortletPreferences.getPortletPreferencesId()));
 		}
 	}
 
@@ -703,5 +724,9 @@ public class EditServerMVCActionCommandTest {
 
 	@Inject
 	private PortletPreferencesLocalService _portletPreferencesLocalService;
+
+	@Inject
+	private PortletPreferenceValueLocalService
+		_portletPreferenceValueLocalService;
 
 }

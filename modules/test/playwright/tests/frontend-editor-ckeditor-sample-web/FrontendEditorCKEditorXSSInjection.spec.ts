@@ -64,8 +64,6 @@ test.describe('CKEditor Sample Web', () => {
 
 			await expect(sampleEditorContainer).toBeInViewport();
 
-			await page.waitForTimeout(500);
-
 			await expect(page.locator('body')).not.toHaveText('12451');
 		});
 	});

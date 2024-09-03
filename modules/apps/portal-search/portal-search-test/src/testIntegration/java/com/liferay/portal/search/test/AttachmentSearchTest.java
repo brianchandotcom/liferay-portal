@@ -53,7 +53,7 @@ public class AttachmentSearchTest {
 		KBArticle kbArticle = KBTestUtil.addKBArticle(_group.getGroupId());
 
 		KBTestUtil.addKBArticleAttachment(
-			getClass(), kbArticle.getTitle(), kbArticle.getResourcePrimKey(),
+			kbArticle.getTitle(), getClass(), kbArticle.getResourcePrimKey(),
 			"Test.docx", kbArticle.getUserId());
 
 		Assert.assertEquals(1, _searchCount(false, kbArticle.getTitle()));
@@ -68,7 +68,7 @@ public class AttachmentSearchTest {
 			_group.getGroupId(), wikiNode.getNodeId(), true);
 
 		WikiTestUtil.addWikiAttachment(
-			getClass(), wikiPage.getTitle(), wikiPage.getNodeId(), "Test.docx",
+			wikiPage.getTitle(), getClass(), wikiPage.getNodeId(), "Test.docx",
 			wikiPage.getTitle(), wikiPage.getUserId());
 
 		Assert.assertEquals(1, _searchCount(false, wikiPage.getTitle()));

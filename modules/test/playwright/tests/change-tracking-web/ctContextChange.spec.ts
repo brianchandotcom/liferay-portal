@@ -107,3 +107,35 @@ test('LPD-33582 Assert context change popover buttons behavior', async ({
 		ctCollection2.id
 	);
 });
+
+test('LPD-29693 Assert silence context change popover behavior', async ({
+	apiHelpers,
+	journalPage,
+	page,
+}) => {
+	const site1 = await apiHelpers.headlessSite.createSite({
+		name: getRandomString(),
+	});
+
+	await journalPage.goto(site1.friendlyUrlPath);
+
+	await page.getByLabel('Do not show this message').click();
+
+	await page
+		.getByTitle('hideContextChangeWarningDuration')
+		.selectOption({label: 'Forever'});
+
+	await page
+		.getByRole('button', {name: 'Stay in Current Publication'})
+		.click();
+
+	const site2 = await apiHelpers.headlessSite.createSite({
+		name: getRandomString(),
+	});
+
+	await journalPage.goto(site2.friendlyUrlPath);
+
+	await expect(
+		page.getByText('Keep working in this publication?', {exact: true})
+	).toBeHidden();
+});

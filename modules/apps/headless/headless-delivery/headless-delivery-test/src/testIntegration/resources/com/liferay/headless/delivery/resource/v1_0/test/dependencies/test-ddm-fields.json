@@ -1,0 +1,285 @@
+[
+	{
+		"customProperties": {
+			"confirmationErrorMessage": {
+				"en_US": "",
+				"es_ES": ""
+			},
+			"confirmationLabel": {
+				"en_US": "",
+				"es_ES": ""
+			},
+			"dataType": "string",
+			"direction": [
+				"vertical"
+			],
+			"displayStyle": "singleline",
+			"fieldNamespace": "",
+			"fieldReference": "firstNameReferenec",
+			"hideField": false,
+			"htmlAutocompleteAttribute": "",
+			"labelAtStructureLevel": true,
+			"nativeField": false,
+			"options": {
+			},
+			"placeholder": {
+				"en_US": "Input your first name",
+				"es_ES": "Introduce tu nombre"
+			},
+			"requireConfirmation": false,
+			"tooltip": {
+				"en_US": "",
+				"es_ES": ""
+			},
+			"visibilityExpression": ""
+		},
+		"defaultValue": {
+			"en_US": "",
+			"es_ES": ""
+		},
+		"fieldType": "text",
+		"indexType": "keyword",
+		"indexable": true,
+		"label": {
+			"en_US": "First name",
+			"es_ES": "Nombre"
+		},
+		"localizable": true,
+		"name": "Text90802395",
+		"nestedDataDefinitionFields": [
+		],
+		"readOnly": false,
+		"repeatable": false,
+		"required": true,
+		"showLabel": true,
+		"tip": {
+			"en_US": "",
+			"es_ES": ""
+		}
+	},
+	{
+		"customProperties": {
+			"confirmationErrorMessage": {
+				"en_US": "",
+				"es_ES": ""
+			},
+			"confirmationLabel": {
+				"en_US": "",
+				"es_ES": ""
+			},
+			"dataType": "string",
+			"direction": [
+				"vertical"
+			],
+			"displayStyle": "singleline",
+			"fieldNamespace": "",
+			"fieldReference": "lastNameReference",
+			"hideField": false,
+			"htmlAutocompleteAttribute": "",
+			"labelAtStructureLevel": true,
+			"nativeField": false,
+			"options": {
+			},
+			"placeholder": {
+				"en_US": "Input your last names",
+				"es_ES": "Introduce tus apellidos"
+			},
+			"requireConfirmation": false,
+			"tooltip": {
+				"en_US": "",
+				"es_ES": ""
+			},
+			"visibilityExpression": ""
+		},
+		"defaultValue": {
+			"en_US": "",
+			"es_ES": ""
+		},
+		"fieldType": "text",
+		"indexType": "keyword",
+		"indexable": true,
+		"label": {
+			"en_US": "Last names",
+			"es_ES": "Apellidos"
+		},
+		"localizable": true,
+		"name": "Text47374045",
+		"nestedDataDefinitionFields": [
+		],
+		"readOnly": false,
+		"repeatable": false,
+		"required": true,
+		"showLabel": true,
+		"tip": {
+			"en_US": "",
+			"es_ES": ""
+		}
+	},
+	{
+		"customProperties": {
+			"alphabeticalOrder": false,
+			"dataSourceType": [
+				"manual"
+			],
+			"dataType": "string",
+			"ddmDataProviderInstanceId": [
+			],
+			"ddmDataProviderInstanceOutput": [
+			],
+			"fieldNamespace": "",
+			"fieldReference": "genderReference",
+			"labelAtStructureLevel": true,
+			"multiple": false,
+			"nativeField": false,
+			"options": {
+				"en_US": [
+					{
+						"label": "Male",
+						"reference": "maleOptionReference",
+						"value": "Option59906836"
+					},
+					{
+						"label": "Female",
+						"reference": "femaleOptionReference",
+						"value": "Option84346221"
+					}
+				],
+				"es_ES": [
+					{
+						"label": "Male",
+						"reference": "maleOptionReference",
+						"value": "Option59906836"
+					},
+					{
+						"label": "Female",
+						"reference": "femaleOptionReference",
+						"value": "Option84346221"
+					}
+				]
+			},
+			"visibilityExpression": ""
+		},
+		"defaultValue": {
+			"en_US": [
+			],
+			"es_ES": [
+			]
+		},
+		"fieldType": "select",
+		"indexType": "keyword",
+		"indexable": true,
+		"label": {
+			"en_US": "Gender",
+			"es_ES": "Género"
+		},
+		"localizable": true,
+		"name": "Select31863317",
+		"nestedDataDefinitionFields": [
+		],
+		"readOnly": false,
+		"repeatable": false,
+		"required": true,
+		"showLabel": true,
+		"tip": {
+			"en_US": "Select your gender",
+			"es_ES": "Selecciona tu género"
+		}
+	},
+	{
+		"customProperties": {
+			"dataType": "boolean",
+			"fieldNamespace": "",
+			"fieldReference": "ageReference",
+			"labelAtStructureLevel": true,
+			"options": {
+			},
+			"showAsSwitcher": false,
+			"visibilityExpression": ""
+		},
+		"defaultValue": {
+			"en_US": [
+				"false"
+			],
+			"es_ES": [
+				"false"
+			]
+		},
+		"fieldType": "checkbox",
+		"indexType": "keyword",
+		"indexable": true,
+		"label": {
+			"en_US": "are you of age?",
+			"es_ES": "Eres mayor de edad?"
+		},
+		"localizable": true,
+		"name": "Checkbox54858939",
+		"nestedDataDefinitionFields": [
+		],
+		"readOnly": false,
+		"repeatable": false,
+		"required": true,
+		"showLabel": true,
+		"tip": {
+			"en_US": "",
+			"es_ES": ""
+		}
+	},
+	{
+		"customProperties": {
+			"confirmationErrorMessage": {
+				"en_US": "",
+				"es_ES": ""
+			},
+			"confirmationLabel": {
+				"en_US": "",
+				"es_ES": ""
+			},
+			"dataType": "string",
+			"direction": [
+				"vertical"
+			],
+			"displayStyle": "multiline",
+			"fieldNamespace": "",
+			"fieldReference": "hobbiesReference",
+			"hideField": false,
+			"htmlAutocompleteAttribute": "",
+			"labelAtStructureLevel": true,
+			"nativeField": false,
+			"options": {
+			},
+			"placeholder": {
+				"en_US": "Input your hobbies",
+				"es_ES": "Introduce tus aficiones"
+			},
+			"requireConfirmation": false,
+			"tooltip": {
+				"en_US": "",
+				"es_ES": ""
+			},
+			"visibilityExpression": ""
+		},
+		"defaultValue": {
+			"en_US": "",
+			"es_ES": ""
+		},
+		"fieldType": "text",
+		"indexType": "keyword",
+		"indexable": true,
+		"label": {
+			"en_US": "Hoobies",
+			"es_ES": "Aficiones"
+		},
+		"localizable": true,
+		"name": "Text36170158",
+		"nestedDataDefinitionFields": [
+		],
+		"readOnly": false,
+		"repeatable": false,
+		"required": false,
+		"showLabel": true,
+		"tip": {
+			"en_US": "",
+			"es_ES": ""
+		}
+	}
+]

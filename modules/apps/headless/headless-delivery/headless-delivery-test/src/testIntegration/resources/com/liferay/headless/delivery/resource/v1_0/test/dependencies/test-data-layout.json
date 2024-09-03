@@ -1,0 +1,77 @@
+{
+	"dataDefinitionId": 33931,
+	"dataLayoutFields": {
+	},
+	"dataLayoutKey": "33930",
+	"dataLayoutPages": [
+		{
+			"dataLayoutRows": [
+				{
+					"dataLayoutColumns": [
+						{
+							"columnSize": 5,
+							"fieldNames": [
+								"Text90802395"
+							]
+						},
+						{
+							"columnSize": 7,
+							"fieldNames": [
+								"Text47374045"
+							]
+						}
+					]
+				},
+				{
+					"dataLayoutColumns": [
+						{
+							"columnSize": 12,
+							"fieldNames": [
+								"Select31863317"
+							]
+						}
+					]
+				},
+				{
+					"dataLayoutColumns": [
+						{
+							"columnSize": 12,
+							"fieldNames": [
+								"Checkbox54858939"
+							]
+						}
+					]
+				},
+				{
+					"dataLayoutColumns": [
+						{
+							"columnSize": 12,
+							"fieldNames": [
+								"Text36170158"
+							]
+						}
+					]
+				}
+			],
+			"description": {
+				"en_US": ""
+			},
+			"title": {
+				"en_US": ""
+			}
+		}
+	],
+	"dataRules": [
+	],
+	"dateCreated": "2024-09-03T08:44:05Z",
+	"dateModified": "2024-09-03T08:46:27Z",
+	"description": {
+	},
+	"id": 33933,
+	"name": {
+		"en_US": "Test1"
+	},
+	"paginationMode": "single-page",
+	"siteId": 20117,
+	"userId": 20123
+}

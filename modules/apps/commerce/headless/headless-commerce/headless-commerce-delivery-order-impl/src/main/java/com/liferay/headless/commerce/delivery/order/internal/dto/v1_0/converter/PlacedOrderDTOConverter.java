@@ -76,6 +76,15 @@ public class PlacedOrderDTOConverter
 				setAccount(commerceOrder::getCommerceAccountName);
 				setAccountId(commerceOrder::getCommerceAccountId);
 				setAuthor(commerceOrder::getUserName);
+				setChannelId(
+					() -> {
+						CommerceChannel commerceChannel =
+							_commerceChannelLocalService.
+								getCommerceChannelByOrderGroupId(
+									commerceOrder.getGroupId());
+
+						return commerceChannel.getCommerceChannelId();
+					});
 				setCouponCode(commerceOrder::getCouponCode);
 				setCreateDate(commerceOrder::getCreateDate);
 				setCustomFields(

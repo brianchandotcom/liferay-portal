@@ -169,7 +169,7 @@ export class ModelBuilderPage {
 		objectFieldBusinessType,
 		objectFieldLabel,
 	}: CreateObjectField) {
-		await this.openNewFieldModal(objectDefinitionName);
+		await this.openAddNewObjectFieldModal(objectDefinitionName);
 
 		await this.fillNewObjectFieldLabel(objectFieldLabel);
 
@@ -237,7 +237,7 @@ export class ModelBuilderPage {
 		await this.newObjectFieldLabel.fill(objectFieldLabel);
 	}
 
-	async openNewFieldModal(objectDefinitionName: string) {
+	async openAddNewObjectFieldModal(objectDefinitionName: string) {
 		await this.modelBuilderLeftSidebarPage.sidebarItems
 			.filter({hasText: objectDefinitionName})
 			.click();

@@ -187,6 +187,77 @@ testInfoPanel.describe('InfoPanel', () => {
 });
 
 test.describe('UI', () => {
+	test(
+		'Assert warning message when user change the content type',
+		{
+			tag: '@LPS-192722',
+		},
+		async ({displayPageTemplatesPage, page, site}) => {
+
+			// Create a display page template for Basic Web Content
+
+			await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+
+			const displayPageTemplateName = getRandomString();
+
+			await displayPageTemplatesPage.createTemplate({
+				contentSubtype: 'Basic Web Content',
+				contentType: 'Web Content Article',
+				name: displayPageTemplateName,
+			});
+
+			// Assert warning message
+
+			await displayPageTemplatesPage.clickMoreActions(
+				displayPageTemplateName
+			);
+
+			await page
+				.getByRole('menuitem', {
+					exact: true,
+					name: 'Change Content Type',
+				})
+				.click();
+
+			await expect(
+				page.getByText(
+					'Changing the content type may cause some elements of the display page template to lose their previous mapping.'
+				)
+			).toBeVisible();
+
+			// Dismiss warning message
+
+			await page
+				.locator('.alert-dismissible')
+				.getByLabel('Close', {exact: true})
+				.click();
+
+			await page
+				.locator('.modal-header')
+				.getByLabel('close', {exact: true})
+				.click();
+
+			// Assert warning message
+
+			await displayPageTemplatesPage.clickMoreActions(
+				displayPageTemplateName
+			);
+
+			await page
+				.getByRole('menuitem', {
+					exact: true,
+					name: 'Change Content Type',
+				})
+				.click();
+
+			await expect(
+				page.getByText(
+					'Changing the content type may cause some elements of the display page template to lose their previous mapping.'
+				)
+			).toBeVisible();
+		}
+	);
+
 	test('Checks that the card checkbox has the correct aria label', async ({
 		displayPageTemplatesPage,
 		page,

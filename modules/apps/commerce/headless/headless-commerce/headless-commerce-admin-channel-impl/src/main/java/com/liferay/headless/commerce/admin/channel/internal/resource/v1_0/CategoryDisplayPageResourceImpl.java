@@ -131,10 +131,9 @@ public class CategoryDisplayPageResourceImpl
 		CPDisplayLayout cpDisplayLayout =
 			_cpDisplayLayoutService.getCPDisplayLayout(id);
 
-		long categoryId = GetterUtil.getLong(
-			categoryDisplayPage.getCategoryId());
+		long classPK = GetterUtil.getLong(categoryDisplayPage.getCategoryId());
 
-		if (categoryId == 0) {
+		if (classPK == 0) {
 			String categoryExternalReferenceCode = GetterUtil.getString(
 				categoryDisplayPage.getCategoryExternalReferenceCode());
 
@@ -152,17 +151,17 @@ public class CategoryDisplayPageResourceImpl
 						categoryExternalReferenceCode, group.getGroupId());
 
 				if (assetCategory != null) {
-					categoryId = assetCategory.getCategoryId();
+					classPK = assetCategory.getCategoryId();
 				}
 			}
 
-			if (categoryId == 0) {
-				categoryId = cpDisplayLayout.getClassPK();
+			if (classPK == 0) {
+				classPK = cpDisplayLayout.getClassPK();
 			}
 		}
 
 		_cpDisplayLayoutService.updateCPDisplayLayout(
-			id, categoryId, cpDisplayLayout.getLayoutPageTemplateEntryUuid(),
+			id, classPK, cpDisplayLayout.getLayoutPageTemplateEntryUuid(),
 			GetterUtil.getString(
 				categoryDisplayPage.getPageUuid(),
 				cpDisplayLayout.getLayoutUuid()));
@@ -191,10 +190,9 @@ public class CategoryDisplayPageResourceImpl
 			Long id, CategoryDisplayPage categoryDisplayPage)
 		throws Exception {
 
-		long categoryId = GetterUtil.getLong(
-			categoryDisplayPage.getCategoryId());
+		long classPK = GetterUtil.getLong(categoryDisplayPage.getCategoryId());
 
-		if (categoryId == 0) {
+		if (classPK == 0) {
 			Group group = _groupService.fetchGroupByExternalReferenceCode(
 				categoryDisplayPage.getGroupExternalReferenceCode(),
 				contextCompany.getCompanyId());
@@ -212,7 +210,7 @@ public class CategoryDisplayPageResourceImpl
 				throw new NoSuchCategoryException();
 			}
 
-			categoryId = assetCategory.getCategoryId();
+			classPK = assetCategory.getCategoryId();
 		}
 
 		CommerceChannel commerceChannel =
@@ -220,8 +218,8 @@ public class CategoryDisplayPageResourceImpl
 
 		CPDisplayLayout cpDisplayLayout =
 			_cpDisplayLayoutService.addCPDisplayLayout(
-				commerceChannel.getSiteGroupId(), AssetCategory.class,
-				categoryId, null, categoryDisplayPage.getPageUuid());
+				commerceChannel.getSiteGroupId(), AssetCategory.class, classPK,
+				null, categoryDisplayPage.getPageUuid());
 
 		return _toCategoryDisplayPage(cpDisplayLayout.getCPDisplayLayoutId());
 	}

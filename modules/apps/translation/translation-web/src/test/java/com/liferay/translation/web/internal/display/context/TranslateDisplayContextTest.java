@@ -7,13 +7,20 @@ package com.liferay.translation.web.internal.display.context;
 
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemFieldValues;
+import com.liferay.portal.bean.BeanPropertiesImpl;
+import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
+import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
+import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.PortletServlet;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
+import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderResponse;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -21,15 +28,19 @@ import com.liferay.portal.language.LanguageImpl;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.util.PortalImpl;
 import com.liferay.translation.info.field.TranslationInfoFieldChecker;
+import com.liferay.translation.service.TranslationEntryLocalServiceUtil;
 
 import java.util.ArrayList;
+import java.util.Map;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
+import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -44,21 +55,27 @@ public class TranslateDisplayContextTest {
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
+	@AfterClass
+	public static void tearDownClass() {
+		_classNameLocalServiceUtilMockedStatic.close();
+		_translationEntryLocalServiceUtilMockedStatic.close();
+		_workflowDefinitionLinkLocalServiceUtilMockedStatic.close();
+	}
+
 	@Before
 	public void setUp() {
+		_setUpBeanPropertiesUtil();
 		_setUpLanguageUtil();
 		_setUpPortalUtil();
 	}
 
 	@Test
-	public void testRedirect() {
-		String redirect = _getRedirect("javascript:alert(document.domain)");
+	public void testRedirectURL() {
+		Assert.assertNull(_getRedirectURL("javascript:alert(document.domain)"));
 
-		Assert.assertNull(redirect);
+		String url = "/myexample1.png?param1=a&param2=b";
 
-		redirect = _getRedirect("/myexample1.png");
-
-		Assert.assertEquals("/myexample1.png", redirect);
+		Assert.assertEquals(url, String.valueOf(_getRedirectURL(url)));
 	}
 
 	private MockHttpServletRequest _getMockHttpServletRequest() {
@@ -66,12 +83,15 @@ public class TranslateDisplayContextTest {
 			new MockHttpServletRequest();
 
 		mockHttpServletRequest.setAttribute(
+			JavaConstants.JAVAX_PORTLET_REQUEST,
+			new MockLiferayPortletRenderRequest());
+		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, Mockito.mock(ThemeDisplay.class));
 
 		return mockHttpServletRequest;
 	}
 
-	private String _getRedirect(String value) {
+	private Object _getRedirectURL(String value) {
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			new MockLiferayPortletActionRequest();
 
@@ -83,11 +103,29 @@ public class TranslateDisplayContextTest {
 		mockLiferayPortletActionRequest.setAttribute(
 			PortletServlet.PORTLET_SERVLET_REQUEST, mockHttpServletRequest);
 
+		InfoForm infoForm = Mockito.mock(InfoForm.class);
+
+		Mockito.when(
+			infoForm.getInfoFieldSetEntries()
+		).thenReturn(
+			new ArrayList<>()
+		);
+
+		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService =
+			Mockito.mock(WorkflowDefinitionLinkLocalService.class);
+
+		Mockito.when(
+			workflowDefinitionLinkLocalService.hasWorkflowDefinitionLink(
+				Mockito.anyLong(), Mockito.anyLong(), Mockito.anyString())
+		).thenReturn(
+			true
+		);
+
 		TranslateDisplayContext translateDisplayContext =
 			new TranslateDisplayContext(
 				new ArrayList<>(), new ArrayList<>(), () -> true,
 				RandomTestUtil.randomString(), RandomTestUtil.randomLong(),
-				Mockito.mock(InfoForm.class), mockLiferayPortletActionRequest,
+				infoForm, mockLiferayPortletActionRequest,
 				new MockLiferayPortletRenderResponse(), null,
 				RandomTestUtil.randomLong(),
 				Mockito.mock(InfoItemFieldValues.class),
@@ -98,8 +136,17 @@ public class TranslateDisplayContextTest {
 
 		Assert.assertNotNull(translateDisplayContext);
 
-		return ReflectionTestUtil.invoke(
-			translateDisplayContext, "_getRedirect", new Class<?>[0]);
+		Map<String, Object> infoFieldSetEntriesData = ReflectionTestUtil.invoke(
+			translateDisplayContext, "getInfoFieldSetEntriesData",
+			new Class<?>[0]);
+
+		return infoFieldSetEntriesData.get("redirectURL");
+	}
+
+	private void _setUpBeanPropertiesUtil() {
+		BeanPropertiesUtil beanPropertiesUtil = new BeanPropertiesUtil();
+
+		beanPropertiesUtil.setBeanProperties(new BeanPropertiesImpl());
 	}
 
 	private void _setUpLanguageUtil() {
@@ -113,5 +160,15 @@ public class TranslateDisplayContextTest {
 
 		portalUtil.setPortal(new PortalImpl());
 	}
+
+	private static final MockedStatic<ClassNameLocalServiceUtil>
+		_classNameLocalServiceUtilMockedStatic = Mockito.mockStatic(
+			ClassNameLocalServiceUtil.class);
+	private static final MockedStatic<TranslationEntryLocalServiceUtil>
+		_translationEntryLocalServiceUtilMockedStatic = Mockito.mockStatic(
+			TranslationEntryLocalServiceUtil.class);
+	private static final MockedStatic<WorkflowDefinitionLinkLocalServiceUtil>
+		_workflowDefinitionLinkLocalServiceUtilMockedStatic =
+			Mockito.mockStatic(WorkflowDefinitionLinkLocalServiceUtil.class);
 
 }

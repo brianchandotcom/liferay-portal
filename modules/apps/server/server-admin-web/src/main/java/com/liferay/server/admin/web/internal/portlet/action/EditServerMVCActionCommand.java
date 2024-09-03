@@ -475,11 +475,7 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 
 		CacheRegistryUtil.setActive(true);
 
-		try (LoggingTimer loggingTimer = new LoggingTimer();
-			SafeCloseable safeCloseable =
-				CTSQLModeThreadLocal.setCTSQLModeWithSafeCloseable(
-					CTSQLModeThreadLocal.CTSQLMode.CT_ALL)) {
-
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			ActionableDynamicQuery actionableDynamicQuery =
 				_portletPreferencesLocalService.getActionableDynamicQuery();
 

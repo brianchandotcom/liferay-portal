@@ -1,0 +1,76 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"defaultValue": "secondary",
+					"label": "button-style",
+					"name": "buttonStyle",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "link",
+								"value": "link"
+							},
+							{
+								"label": "secondary",
+								"value": "secondary"
+							},
+							{
+								"label": "primary",
+								"value": "primary"
+							}
+						]
+					}
+				},
+				{
+					"defaultValue": "accountInfo",
+					"label": "field",
+					"name": "field",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "account-info",
+								"value": "accountInfo"
+							},
+							{
+								"label": "channel-name",
+								"value": "channelName"
+							},
+							{
+								"label": "order-date",
+								"value": "orderDate"
+							},
+							{
+								"label": "order-type",
+								"value": "orderType"
+							},
+							{
+								"label": "purchase-order-number",
+								"value": "purchaseOrderNumber"
+							}
+						]
+					}
+				},
+				{
+					"defaultValue": "",
+					"label": "label",
+					"localizable": true,
+					"name": "label",
+					"type": "text"
+				},
+				{
+					"defaultValue": true,
+					"label": "read-only",
+					"name": "readOnly",
+					"type": "checkbox",
+					"typeOptions": {
+						"displayType": "toggle"
+					}
+				}
+			]
+		}
+	]
+}

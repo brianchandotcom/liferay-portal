@@ -14,11 +14,14 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.ListUtil;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -145,9 +148,9 @@ public class PortletPreferencesUpgradeProcess extends UpgradeProcess {
 						continue;
 					}
 
-					Long companyPortletPreferencesId = null;
-					Long groupPortletPreferencesId = null;
-					Long layoutPortletPreferencesId = null;
+					List<Long> companyPortletPreferencesIds = new ArrayList<>();
+					List<Long> groupPortletPreferencesIds = new ArrayList<>();
+					List<Long> layoutPortletPreferencesIds = new ArrayList<>();
 
 					long companyControlPanelPlid =
 						_companyControlPanelPlids.get(companyId);
@@ -162,49 +165,68 @@ public class PortletPreferencesUpgradeProcess extends UpgradeProcess {
 						Long portletPreferencesPlid = entry.getValue();
 
 						if (portletPreferencesPlid == companyControlPanelPlid) {
-							companyPortletPreferencesId = portletPreferencesId;
+							companyPortletPreferencesIds.add(
+								portletPreferencesId);
 						}
 						else if (portletPreferencesPlid ==
 									groupControlPanelPlid) {
 
-							groupPortletPreferencesId = portletPreferencesId;
+							groupPortletPreferencesIds.add(
+								portletPreferencesId);
 						}
 						else if (portletPreferencesPlid == layoutPlid) {
-							layoutPortletPreferencesId = portletPreferencesId;
+							layoutPortletPreferencesIds.add(
+								portletPreferencesId);
 						}
 					}
 
-					if (groupPortletPreferencesId != null) {
-						if (companyPortletPreferencesId != null) {
+					if (ListUtil.isNotEmpty(groupPortletPreferencesIds)) {
+						for (Long companyPortletPreferencesId :
+								companyPortletPreferencesIds) {
+
 							preparedStatement2.setLong(
 								1, companyPortletPreferencesId);
 							preparedStatement2.addBatch();
 						}
 
-						if (layoutPortletPreferencesId != null) {
+						for (Long layoutPortletPreferencesId :
+								layoutPortletPreferencesIds) {
+
 							preparedStatement2.setLong(
 								1, layoutPortletPreferencesId);
 							preparedStatement2.addBatch();
 						}
 
-						preparedStatement3.setLong(1, classPK);
-						preparedStatement3.setLong(
-							2, groupPortletPreferencesId);
+						for (Long groupPortletPreferencesId :
+								groupPortletPreferencesIds) {
 
-						preparedStatement3.addBatch();
+							preparedStatement3.setLong(1, classPK);
+							preparedStatement3.setLong(
+								2, groupPortletPreferencesId);
+
+							preparedStatement3.addBatch();
+						}
 					}
-					else if (companyPortletPreferencesId != null) {
-						if (layoutPortletPreferencesId != null) {
+					else if (ListUtil.isNotEmpty(
+								companyPortletPreferencesIds)) {
+
+						for (Long layoutPortletPreferencesId :
+								layoutPortletPreferencesIds) {
+
 							preparedStatement2.setLong(
 								1, layoutPortletPreferencesId);
 							preparedStatement2.addBatch();
 						}
 
-						preparedStatement3.setLong(1, classPK);
-						preparedStatement3.setLong(
-							2, companyPortletPreferencesId);
+						for (Long companyPortletPreferencesId :
+								companyPortletPreferencesIds) {
 
-						preparedStatement3.addBatch();
+							preparedStatement3.setLong(1, classPK);
+							preparedStatement3.setLong(
+								2, companyPortletPreferencesId);
+
+							preparedStatement3.addBatch();
+						}
 					}
 				}
 				catch (Exception exception) {

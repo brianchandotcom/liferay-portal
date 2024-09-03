@@ -772,7 +772,14 @@ public class LayoutStructure {
 		LayoutStructureItem newParentLayoutStructureItem =
 			_layoutStructureItems.get(parentItemId);
 
-		newParentLayoutStructureItem.addChildrenItem(position, itemId);
+		if (position >= 0) {
+			newParentLayoutStructureItem.addChildrenItem(
+				position, layoutStructureItem.getItemId());
+		}
+		else {
+			newParentLayoutStructureItem.addChildrenItem(
+				layoutStructureItem.getItemId());
+		}
 
 		layoutStructureItem.setParentItemId(parentItemId);
 

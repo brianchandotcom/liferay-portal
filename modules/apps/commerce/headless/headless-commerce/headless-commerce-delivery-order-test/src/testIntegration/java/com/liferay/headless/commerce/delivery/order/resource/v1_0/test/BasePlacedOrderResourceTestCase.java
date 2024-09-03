@@ -774,6 +774,40 @@ public abstract class BasePlacedOrderResourceTestCase {
 	}
 
 	@Test
+	public void testPatchPlacedOrderByExternalReferenceCode() throws Exception {
+		PlacedOrder postPlacedOrder =
+			testPatchPlacedOrderByExternalReferenceCode_addPlacedOrder();
+
+		PlacedOrder randomPatchPlacedOrder = randomPatchPlacedOrder();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		PlacedOrder patchPlacedOrder =
+			placedOrderResource.patchPlacedOrderByExternalReferenceCode(
+				postPlacedOrder.getExternalReferenceCode(),
+				randomPatchPlacedOrder);
+
+		PlacedOrder expectedPatchPlacedOrder = postPlacedOrder.clone();
+
+		BeanTestUtil.copyProperties(
+			randomPatchPlacedOrder, expectedPatchPlacedOrder);
+
+		PlacedOrder getPlacedOrder =
+			placedOrderResource.getPlacedOrderByExternalReferenceCode(
+				patchPlacedOrder.getExternalReferenceCode());
+
+		assertEquals(expectedPatchPlacedOrder, getPlacedOrder);
+		assertValid(getPlacedOrder);
+	}
+
+	protected PlacedOrder
+			testPatchPlacedOrderByExternalReferenceCode_addPlacedOrder()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetPlacedOrderByExternalReferenceCodePaymentURL()
 		throws Exception {
 
@@ -892,6 +926,35 @@ public abstract class BasePlacedOrderResourceTestCase {
 		throws Exception {
 
 		return testGraphQLPlacedOrder_addPlacedOrder();
+	}
+
+	@Test
+	public void testPatchPlacedOrder() throws Exception {
+		PlacedOrder postPlacedOrder = testPatchPlacedOrder_addPlacedOrder();
+
+		PlacedOrder randomPatchPlacedOrder = randomPatchPlacedOrder();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		PlacedOrder patchPlacedOrder = placedOrderResource.patchPlacedOrder(
+			postPlacedOrder.getId(), randomPatchPlacedOrder);
+
+		PlacedOrder expectedPatchPlacedOrder = postPlacedOrder.clone();
+
+		BeanTestUtil.copyProperties(
+			randomPatchPlacedOrder, expectedPatchPlacedOrder);
+
+		PlacedOrder getPlacedOrder = placedOrderResource.getPlacedOrder(
+			patchPlacedOrder.getId());
+
+		assertEquals(expectedPatchPlacedOrder, getPlacedOrder);
+		assertValid(getPlacedOrder);
+	}
+
+	protected PlacedOrder testPatchPlacedOrder_addPlacedOrder()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

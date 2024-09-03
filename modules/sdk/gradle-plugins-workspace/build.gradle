@@ -30,7 +30,7 @@ dependencies {
 	api group: "com.bmuschko", name: "gradle-docker-plugin", version: "6.7.0"
 	api group: "com.fasterxml.jackson.dataformat", name: "jackson-dataformat-yaml", version: "2.16.1"
 	api group: "com.liferay", name: "com.liferay.ant.bnd", version: "3.2.12"
-	api(group: "com.liferay", name: "com.liferay.gradle.plugins", version: "15.0.76") {
+	api(group: "com.liferay", name: "com.liferay.gradle.plugins", version: "15.0.77") {
 		exclude group: "biz.aQute.bnd", module: "biz.aQute.bnd"
 	}
 	api(group: "com.liferay", name: "com.liferay.gradle.plugins.css.builder", version: "5.0.14") {

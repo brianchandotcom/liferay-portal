@@ -30,7 +30,6 @@
 			"FileEntry": {
 				"properties": {
 					"externalReferenceCode": {
-						"readOnly": true,
 						"type": "string"
 					},
 					"fileBase64": {
@@ -343,7 +342,6 @@
 						"type": "string"
 					}
 				},
-				"readOnly": true,
 				"type": "object",
 				"xml": {
 					"name": "Scope"

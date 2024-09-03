@@ -25,7 +25,7 @@ export class FragmentEditorPage {
 
 		// Delete current configuration
 
-		const codeMirror = await this.page.locator('.CodeMirror-scroll').last();
+		const codeMirror = this.page.locator('.CodeMirror-scroll').last();
 		await codeMirror.click();
 
 		await this.page.keyboard.press('Control+KeyA');
@@ -53,9 +53,7 @@ export class FragmentEditorPage {
 
 		// Delete current configuration
 
-		const codeMirror = await this.page
-			.locator('.CodeMirror-scroll')
-			.first();
+		const codeMirror = this.page.locator('.CodeMirror-scroll').first();
 		await codeMirror.click();
 
 		await this.page.keyboard.press('Control+KeyA');

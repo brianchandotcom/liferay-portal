@@ -228,7 +228,7 @@ test('Checks the correct keyboard navigation in the experience selector', async 
 	await expect(newExperienceButton).not.toBeVisible();
 });
 
-test('checks that a fragment is selected when it is added and the panel does not change when the fragment is selected', async ({
+test('Checks that a fragment is selected when it is added and the panel does not change when the fragment is selected', async ({
 	apiHelpers,
 	page,
 	pageEditorPage,
@@ -247,7 +247,7 @@ test('checks that a fragment is selected when it is added and the panel does not
 
 	const headingId = await pageEditorPage.getFragmentId('Heading');
 
-	await expect(await pageEditorPage.isActive(headingId)).toBe(true);
+	expect(await pageEditorPage.isActive(headingId)).toBe(true);
 
 	// Checks that Container is selected when it is added to the page
 
@@ -255,7 +255,7 @@ test('checks that a fragment is selected when it is added and the panel does not
 
 	const containerId = await pageEditorPage.getFragmentId('Container');
 
-	await expect(await pageEditorPage.isActive(containerId)).toBe(true);
+	expect(await pageEditorPage.isActive(containerId)).toBe(true);
 
 	// Checks that a Widget is selected when it is added to the page
 
@@ -263,13 +263,11 @@ test('checks that a fragment is selected when it is added and the panel does not
 
 	const widgetId = await pageEditorPage.getFragmentId('Sort');
 
-	await expect(await pageEditorPage.isActive(widgetId)).toBe(true);
+	expect(await pageEditorPage.isActive(widgetId)).toBe(true);
 
 	// The panel does not change to the Browser panel when a fragment is selected
 
 	await pageEditorPage.selectFragment(headingId);
 
-	await expect(
-		await page.getByLabel('Fragments and Widgets Panel')
-	).toBeVisible();
+	await expect(page.getByLabel('Fragments and Widgets Panel')).toBeVisible();
 });

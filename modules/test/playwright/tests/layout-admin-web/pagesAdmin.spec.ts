@@ -71,7 +71,7 @@ test('Changes the permissions of a group of pages', async ({
 
 	// Check that the Guest-View permission value for both pages is indeterminate
 
-	const permission = await permissionsFrame.locator('#guest_ACTION_VIEW');
+	const permission = permissionsFrame.locator('#guest_ACTION_VIEW');
 
 	await expect(permission).toHaveValue('indeterminate');
 
@@ -252,7 +252,7 @@ test(
 
 		await pagesAdminPage.searchPage('Layout');
 
-		const listItem = await page.locator('.lfr-title-column');
+		const listItem = page.locator('.lfr-title-column');
 
 		await expect(listItem.nth(1)).toHaveText(layoutTitle);
 		await expect(listItem.nth(2)).toHaveText(childLayoutTitle);

@@ -359,7 +359,7 @@ test('Correct viewport configuration is set when adding a Grid', async ({
 
 	await pageEditorPage.switchViewport('Landscape Phone');
 
-	const globalFrame = await page.frameLocator(
+	const globalFrame = page.frameLocator(
 		'.page-editor__global-context-iframe'
 	);
 

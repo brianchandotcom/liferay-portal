@@ -14,7 +14,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.db.schema.importer.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.tools.db.schema.importer.jdbc.DataSourceFactoryUtil;
 
@@ -144,22 +143,22 @@ public class DBSchemaImporterProcess {
 	private void _executeFilesSQL(String fileFilter) throws Exception {
 		File[] files = _listFiles(fileFilter);
 
-		String sqlContent = StringPool.BLANK;
+		StringBundler sb = new StringBundler();
 
 		int count = 0;
 
 		for (File file : files) {
-			sqlContent += _readFile(file);
+			sb.append(_readFile(file));
 
 			if ((++count % _COMPANY_BATCH_SIZE) == 0) {
-				_runSQLTemplate(_targetDataSource, sqlContent);
+				_runSQLTemplate(_targetDataSource, sb.toString());
 
-				sqlContent = StringPool.BLANK;
+				sb.setIndex(0);
 			}
 		}
 
-		if (Validator.isNotNull(sqlContent)) {
-			_runSQLTemplate(_targetDataSource, sqlContent);
+		if (sb.index() > 0) {
+			_runSQLTemplate(_targetDataSource, sb.toString());
 		}
 	}
 

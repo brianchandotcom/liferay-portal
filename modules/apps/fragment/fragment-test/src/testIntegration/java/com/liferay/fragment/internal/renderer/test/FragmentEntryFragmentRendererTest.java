@@ -257,15 +257,7 @@ public class FragmentEntryFragmentRendererTest {
 				).put(
 					"classTypeId", "0"
 				).put(
-					"config", JSONUtil.put("mapperType", "link")
-				).put(
-					"defaultValue", "Heading Example"
-				).put(
 					"fieldId", fieldId
-				).put(
-					"itemType", "Blogs Entry"
-				).put(
-					"title", blogsEntry.getTitle()
 				)));
 
 		FileEntry fileEntry = _addFileEntry();
@@ -275,23 +267,17 @@ public class FragmentEntryFragmentRendererTest {
 			JSONUtil.put(
 				"element-text",
 				JSONUtil.put(
+					"className", FileEntry.class.getName()
+				).put(
 					"classNameId",
 					String.valueOf(
 						_portal.getClassNameId(FileEntry.class.getName()))
 				).put(
 					"classPK", String.valueOf(fileEntry.getFileEntryId())
 				).put(
-					"config", JSONUtil.put("mapperType", "link")
-				).put(
-					"defaultValue", "Heading Example"
+					"classTypeId", "0"
 				).put(
 					"fieldId", fieldId
-				).put(
-					"itemSubtype", "Basic Document"
-				).put(
-					"itemType", "Document"
-				).put(
-					"title", fileEntry.getTitle()
 				)));
 
 		JournalArticle journalArticle = _addJournalArticle();
@@ -301,6 +287,8 @@ public class FragmentEntryFragmentRendererTest {
 			JSONUtil.put(
 				"element-text",
 				JSONUtil.put(
+					"className", JournalArticle.class.getName()
+				).put(
 					"classNameId",
 					String.valueOf(
 						_portal.getClassNameId(JournalArticle.class.getName()))
@@ -311,17 +299,7 @@ public class FragmentEntryFragmentRendererTest {
 					"classTypeId",
 					String.valueOf(journalArticle.getDDMStructureId())
 				).put(
-					"config", JSONUtil.put("mapperType", "link")
-				).put(
-					"defaultValue", "Heading Example"
-				).put(
 					"fieldId", fieldId
-				).put(
-					"itemSubtype", "Basic Web Content"
-				).put(
-					"itemType", "Web Content Article"
-				).put(
-					"title", journalArticle.getTitle(LocaleUtil.getDefault())
 				)));
 	}
 

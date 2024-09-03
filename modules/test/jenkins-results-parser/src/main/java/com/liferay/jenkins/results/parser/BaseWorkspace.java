@@ -139,6 +139,17 @@ public abstract class BaseWorkspace implements Workspace {
 
 	@Override
 	public synchronized void startSynchronizeToGitHubDev() {
+		startSynchronizeToGitHubDev(true);
+	}
+
+	@Override
+	public synchronized void startSynchronizeToGitHubDev(
+		boolean synchronizePrimaryWorkspaceGitRepository) {
+
+		if (synchronizePrimaryWorkspaceGitRepository) {
+			_primaryWorkspaceGitRepository.synchronizeToGitHubDev();
+		}
+
 		if (_parallelExecutor != null) {
 			return;
 		}
@@ -147,6 +158,12 @@ public abstract class BaseWorkspace implements Workspace {
 
 		for (final WorkspaceGitRepository workspaceGitRepository :
 				getWorkspaceGitRepositories()) {
+
+			if (synchronizePrimaryWorkspaceGitRepository &&
+				workspaceGitRepository.equals(_primaryWorkspaceGitRepository)) {
+
+				continue;
+			}
 
 			Callable<Object> callable =
 				new ParallelExecutor.SequentialCallable<Object>(

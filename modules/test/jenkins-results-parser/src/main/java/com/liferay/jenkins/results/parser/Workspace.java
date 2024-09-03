@@ -27,6 +27,9 @@ public interface Workspace {
 
 	public void startSynchronizeToGitHubDev();
 
+	public void startSynchronizeToGitHubDev(
+		boolean synchronizePrimaryWorkspaceGitRepository);
+
 	public void synchronizeToGitHubDev();
 
 	public void tearDown();

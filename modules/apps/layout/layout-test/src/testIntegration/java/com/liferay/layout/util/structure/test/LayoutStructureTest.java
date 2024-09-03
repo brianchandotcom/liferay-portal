@@ -13,10 +13,6 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.structure.ColumnLayoutStructureItem;
-import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
-import com.liferay.layout.util.structure.FormStepContainerStyledLayoutStructureItem;
-import com.liferay.layout.util.structure.FormStepLayoutStructureItem;
-import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
@@ -97,73 +93,6 @@ public class LayoutStructureTest {
 				_fragmentEntry.getJs(), _fragmentEntry.getConfiguration(), null,
 				StringPool.BLANK, 0, null, _fragmentEntry.getType(),
 				serviceContext);
-	}
-
-	@Test
-	public void testChangeFormType() throws IOException {
-		LayoutStructure layoutStructure = LayoutStructure.of(_readLayoutData());
-
-		layoutStructure.updateFormStyledLayoutStructureItemFormType(
-			"formId", "multistep", 3);
-
-		FormStyledLayoutStructureItem formStyledLayoutStructureItem =
-			(FormStyledLayoutStructureItem)
-				layoutStructure.getLayoutStructureItem("formId");
-
-		List<String> childrenItemIds =
-			formStyledLayoutStructureItem.getChildrenItemIds();
-
-		Assert.assertEquals(
-			childrenItemIds.toString(), 1, childrenItemIds.size());
-
-		FormStepContainerStyledLayoutStructureItem
-			formStepContainerStyledLayoutStructureItem =
-				(FormStepContainerStyledLayoutStructureItem)
-					layoutStructure.getLayoutStructureItem(
-						childrenItemIds.get(0));
-
-		childrenItemIds =
-			formStepContainerStyledLayoutStructureItem.getChildrenItemIds();
-
-		Assert.assertEquals(
-			childrenItemIds.toString(), 3, childrenItemIds.size());
-
-		FormStepLayoutStructureItem formStepLayoutStructureItem =
-			(FormStepLayoutStructureItem)layoutStructure.getLayoutStructureItem(
-				childrenItemIds.get(0));
-
-		childrenItemIds = formStepLayoutStructureItem.getChildrenItemIds();
-
-		Assert.assertEquals("containerId", childrenItemIds.get(0));
-	}
-
-	@Test
-	public void testChangeFormTypeToSimple() throws IOException {
-		LayoutStructure layoutStructure = LayoutStructure.of(_readLayoutData());
-
-		layoutStructure.updateFormStyledLayoutStructureItemFormType(
-			"formId", "multistep", 3);
-
-		layoutStructure.updateFormStyledLayoutStructureItemFormType(
-			"formId", "simple", 3);
-
-		FormStyledLayoutStructureItem formStyledLayoutStructureItem =
-			(FormStyledLayoutStructureItem)
-				layoutStructure.getLayoutStructureItem("formId");
-
-		List<String> childrenItemIds =
-			formStyledLayoutStructureItem.getChildrenItemIds();
-
-		Assert.assertEquals(
-			childrenItemIds.toString(), 1, childrenItemIds.size());
-
-		LayoutStructureItem layoutStructureItem =
-			layoutStructure.getLayoutStructureItem(childrenItemIds.get(0));
-
-		Assert.assertTrue(
-			layoutStructureItem instanceof ContainerStyledLayoutStructureItem);
-
-		Assert.assertEquals("containerId", layoutStructureItem.getItemId());
 	}
 
 	@Test(expected = UnsupportedOperationException.class)

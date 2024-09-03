@@ -2,7 +2,7 @@ const button = fragmentElement.querySelector(
 	`#fragment-${fragmentNamespace}-form-button`
 );
 
-if (button && layoutMode === 'view') {
+if (button) {
 	button.addEventListener('click', () => {
 		Liferay.fire('formFragment:changeStep', {
 			emitter: fragmentElement,

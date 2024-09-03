@@ -6,6 +6,7 @@
 import {Page, expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
+import {displayPageTemplatesPagesTest} from '../../fixtures/displayPageTemplatesPagesTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
@@ -25,7 +26,6 @@ import getBasicWebContentStructureId, {
 	getWebContentStructureId,
 } from '../../utils/structured-content/getBasicWebContentStructureId';
 import {journalPagesTest} from '../journal-web/fixtures/journalPagesTest';
-import {displayPageTemplatesPagesTest} from '../layout-page-template-admin-web/fixtures/displayPageTemplatesPagesTest';
 import {
 	ANIMAL_DDM_STRUCTURE_KEY,
 	ANIMAL_DDM_TEMPLATE_KEY,

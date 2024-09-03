@@ -8,8 +8,8 @@ import {expect, mergeTests} from '@playwright/test';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pagesAdminPagesTest} from '../../fixtures/pagesAdminPagesTest';
+import {widgetPageTemplatesPagesTest} from '../../fixtures/widgetPageTemplatesPagesTest';
 import getRandomString from '../../utils/getRandomString';
-import {widgetPageTemplatesPagesTest} from './fixtures/widgetPageTemplatesPagesTest';
 
 export const test = mergeTests(
 	isolatedSiteTest,

@@ -7,7 +7,7 @@
 
 import {test} from '@playwright/test';
 
-import {PageTemplatesPage} from '../../../pages/layout-page-template-admin-web/PageTemplatesPage';
+import {PageTemplatesPage} from '../pages/layout-page-template-admin-web/PageTemplatesPage';
 
 const pageTemplatesPagesTest = test.extend<{
 	pageTemplatesPage: PageTemplatesPage;

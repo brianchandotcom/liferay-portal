@@ -17,8 +17,8 @@ test(
 	{
 		tag: '@LPD-26435',
 	},
-	async ({page, wikiPage}) => {
-		await wikiPage.goto();
+	async ({page, site, wikiPage}) => {
+		await wikiPage.goto(site.friendlyUrlPath);
 
 		await wikiPage.createNewWikiNode('Wiki Node Title');
 
@@ -51,20 +51,15 @@ test(
 
 			await expect(menuOne).toBeHidden();
 		});
-
-		await test.step('Wiki node is deleted', async () => {
-			await wikiNodeMenu.click();
-
-			await page.getByRole('link', {name: 'Delete'}).click();
-		});
 	}
 );
 
 test('LPD-28898 Image added via rich text editor on Wiki tool losing reference', async ({
 	page,
+	site,
 	wikiPage,
 }) => {
-	await wikiPage.goto();
+	await wikiPage.goto(site.friendlyUrlPath);
 
 	await wikiPage.goToWikiNode('Main');
 
@@ -86,7 +81,7 @@ test('LPD-28898 Image added via rich text editor on Wiki tool losing reference',
 
 	await wikiPage.publishPage();
 
-	await wikiPage.goto();
+	await wikiPage.goto(site.friendlyUrlPath);
 
 	await wikiPage.goToWikiNode('Main');
 

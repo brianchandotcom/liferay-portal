@@ -23,10 +23,12 @@ import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -165,6 +167,124 @@ public class PortletPreferencesUpgradeProcessTest {
 		}
 	}
 
+	@Test
+	@TestInfo("LPD-34944")
+	public void testUpgradeFragmentEntryLinkWithMultiplePortletsAndCompanyControlPanelLayout()
+		throws Exception {
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		_addFragmentEntryLink(layout);
+
+		Layout groupControlPanelLayout = LayoutTestUtil.addTypeContentLayout(
+			_group);
+
+		_layoutLocalService.updateType(
+			groupControlPanelLayout.getPlid(),
+			LayoutConstants.TYPE_CONTROL_PANEL);
+
+		List<PortletPreferences> layoutPortletPreferencesList = new ArrayList<>(
+			_portletPreferencesLocalService.getPortletPreferencesByPlid(
+				layout.getPlid()));
+
+		List<PortletPreferences> portletPreferencesList = new ArrayList<>(
+			layoutPortletPreferencesList);
+
+		portletPreferencesList.addAll(
+			TransformUtil.transform(
+				layoutPortletPreferencesList,
+				portletPreferences -> _clonePortletPreferences(
+					groupControlPanelLayout.getPlid(), portletPreferences)));
+
+		Layout companyControlPanelLayout = _getCompanyControlPanelLayout();
+
+		portletPreferencesList.addAll(
+			TransformUtil.transform(
+				layoutPortletPreferencesList,
+				portletPreferences -> _clonePortletPreferences(
+					companyControlPanelLayout.getPlid(), portletPreferences)));
+
+		_assertUpgrade();
+
+		Assert.assertNull(
+			_layoutLocalService.fetchLayout(groupControlPanelLayout.getPlid()));
+
+		for (PortletPreferences portletPreferences : portletPreferencesList) {
+			PortletPreferences curPortletPreferences =
+				_portletPreferencesLocalService.fetchPortletPreferences(
+					portletPreferences.getPortletPreferencesId());
+
+			if ((portletPreferences.getPlid() == layout.getPlid()) ||
+				(portletPreferences.getPlid() ==
+					companyControlPanelLayout.getPlid())) {
+
+				Assert.assertNull(curPortletPreferences);
+
+				continue;
+			}
+
+			Assert.assertEquals(
+				groupControlPanelLayout.getPlid(),
+				portletPreferences.getPlid());
+			Assert.assertEquals(
+				layout.getPlid(), curPortletPreferences.getPlid());
+		}
+	}
+
+	@Test
+	public void testUpgradeWithCompanyControlPanelLayout() throws Exception {
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		PortletPreferences layoutPortletPreferences = _getPortletPreferences(
+			layout, _addPortletFragmentEntryLink(layout));
+
+		Layout groupControlPanelLayout = LayoutTestUtil.addTypeContentLayout(
+			_group);
+
+		_layoutLocalService.updateType(
+			groupControlPanelLayout.getPlid(),
+			LayoutConstants.TYPE_CONTROL_PANEL);
+
+		PortletPreferences groupControlPanelPortletPreferences =
+			_clonePortletPreferences(
+				groupControlPanelLayout.getPlid(), layoutPortletPreferences);
+
+		Assert.assertEquals(
+			groupControlPanelLayout.getPlid(),
+			groupControlPanelPortletPreferences.getPlid());
+
+		Layout companyControlPanelLayout = _getCompanyControlPanelLayout();
+
+		PortletPreferences companyControlPanelPortletPreferences =
+			_clonePortletPreferences(
+				companyControlPanelLayout.getPlid(), layoutPortletPreferences);
+
+		Assert.assertEquals(
+			companyControlPanelLayout.getPlid(),
+			companyControlPanelPortletPreferences.getPlid());
+
+		_assertUpgrade();
+
+		Assert.assertNull(
+			_layoutLocalService.fetchLayout(groupControlPanelLayout.getPlid()));
+
+		Assert.assertNull(
+			_portletPreferencesLocalService.fetchPortletPreferences(
+				layoutPortletPreferences.getPortletPreferencesId()));
+
+		Assert.assertNull(
+			_portletPreferencesLocalService.fetchPortletPreferences(
+				companyControlPanelPortletPreferences.
+					getPortletPreferencesId()));
+
+		groupControlPanelPortletPreferences =
+			_portletPreferencesLocalService.fetchPortletPreferences(
+				groupControlPanelPortletPreferences.getPortletPreferencesId());
+
+		Assert.assertEquals(
+			layout.getPlid(), groupControlPanelPortletPreferences.getPlid());
+	}
+
 	private void _addFragmentEntryLink(Layout layout) throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -267,6 +387,17 @@ public class PortletPreferencesUpgradeProcessTest {
 		return clonedPortletPreferences;
 	}
 
+	private Layout _getCompanyControlPanelLayout() throws Exception {
+		Group controlPanelGroup = _groupLocalService.getGroup(
+			TestPropsValues.getCompanyId(), GroupConstants.CONTROL_PANEL);
+
+		List<Layout> layouts = _layoutLocalService.getLayouts(
+			controlPanelGroup.getGroupId(), true,
+			LayoutConstants.TYPE_CONTROL_PANEL);
+
+		return layouts.get(0);
+	}
+
 	private PortletPreferences _getPortletPreferences(
 		Layout layout, String portletId) {
 
@@ -316,6 +447,9 @@ public class PortletPreferencesUpgradeProcessTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;

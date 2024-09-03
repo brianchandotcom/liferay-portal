@@ -5,13 +5,13 @@
 
 package com.liferay.portal.tools.db.schema.importer;
 
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.framework.ThrowableCollector;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.db.schema.importer.jdbc.AutoBatchPreparedStatementUtil;
@@ -85,6 +85,8 @@ public class DBSchemaImporterProcess {
 		Set<Future<?>> futures = Collections.newSetFromMap(
 			new ConcurrentHashMap<>());
 
+		ThrowableCollector throwableCollector = new ThrowableCollector();
+
 		futures.add(
 			_executorService.submit(
 				() -> {
@@ -94,7 +96,7 @@ public class DBSchemaImporterProcess {
 						).run();
 					}
 					catch (Exception exception) {
-						throw new RuntimeException(exception);
+						throwableCollector.collect(exception);
 					}
 
 					return null;
@@ -115,7 +117,7 @@ public class DBSchemaImporterProcess {
 							).run();
 						}
 						catch (Exception exception) {
-							throw new RuntimeException(exception);
+							throwableCollector.collect(exception);
 						}
 
 						return null;
@@ -127,6 +129,12 @@ public class DBSchemaImporterProcess {
 		}
 
 		AutoBatchPreparedStatementUtil.stop();
+
+		Throwable throwable = throwableCollector.getThrowable();
+
+		if (throwable != null) {
+			ReflectionUtil.throwException(throwable);
+		}
 	}
 
 	private void _createIndexes() throws Exception {
@@ -294,6 +302,8 @@ public class DBSchemaImporterProcess {
 
 		List<Future<?>> futures = new ArrayList<>();
 
+		ThrowableCollector throwableCollector = new ThrowableCollector();
+
 		for (String sql : _asyncSQLs) {
 			futures.add(
 				_executorService.submit(
@@ -305,7 +315,7 @@ public class DBSchemaImporterProcess {
 							statement.executeUpdate(sql);
 						}
 						catch (Exception exception) {
-							_log.error(exception);
+							throwableCollector.collect(exception);
 						}
 					}));
 		}
@@ -314,6 +324,12 @@ public class DBSchemaImporterProcess {
 
 		for (Future<?> future : futures) {
 			future.get();
+		}
+
+		Throwable throwable = throwableCollector.getThrowable();
+
+		if (throwable != null) {
+			ReflectionUtil.throwException(throwable);
 		}
 
 		for (String sql : _syncFinalSQLs) {
@@ -328,9 +344,6 @@ public class DBSchemaImporterProcess {
 	}
 
 	private static final int _COMPANY_BATCH_SIZE = 5;
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DBSchemaImporterProcess.class);
 
 	private final List<String> _asyncSQLs = new ArrayList<>();
 	private final ExecutorService _executorService =

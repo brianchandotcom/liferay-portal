@@ -5,11 +5,13 @@
 
 package com.liferay.portal.tools.db.schema.importer;
 
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.dao.jdbc.postgresql.PostgreSQLJDBCUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
+import com.liferay.portal.kernel.module.framework.ThrowableCollector;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -158,6 +160,8 @@ public class DBCopyTablesProcess {
 		Iterator<String> sourceIterator = sourceTableNames.iterator();
 		Iterator<String> targetIterator = targetTableNames.iterator();
 
+		ThrowableCollector throwableCollector = new ThrowableCollector();
+
 		while (sourceIterator.hasNext()) {
 			String sourceTableName = sourceIterator.next();
 			String targetTableName = targetIterator.next();
@@ -169,13 +173,19 @@ public class DBCopyTablesProcess {
 							_copyTable(sourceTableName, targetTableName);
 						}
 						catch (Exception exception) {
-							throw new RuntimeException(exception);
+							throwableCollector.collect(exception);
 						}
 					}));
 		}
 
 		for (Future<?> future : futures) {
 			future.get();
+		}
+
+		Throwable throwable = throwableCollector.getThrowable();
+
+		if (throwable != null) {
+			ReflectionUtil.throwException(throwable);
 		}
 	}
 

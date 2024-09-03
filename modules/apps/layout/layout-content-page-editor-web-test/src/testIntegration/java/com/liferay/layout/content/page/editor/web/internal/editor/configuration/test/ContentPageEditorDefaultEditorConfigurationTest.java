@@ -14,6 +14,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactoryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -62,6 +63,11 @@ public class ContentPageEditorDefaultEditorConfigurationTest {
 	}
 
 	@Test
+	public void testCommentEditor() {
+		_assertTextEditorConfigJSONObject("pageEditorCommentEditor");
+	}
+
+	@Test
 	public void testRichTextEditor() {
 		JSONObject jsonObject = _getEditorConfigurationConfigJSONObject(
 			"fragmenEntryLinkRichTextEditor");
@@ -71,15 +77,17 @@ public class ContentPageEditorDefaultEditorConfigurationTest {
 
 		Assert.assertFalse(jsonObject.getBoolean("autoParagraph"));
 
-		_assertItemSelectorURL(jsonObject.getString("documentBrowseLinkUrl"));
+		_assertItemSelectorURL(
+			"selectItem", jsonObject.getString("documentBrowseLinkUrl"));
 
 		Assert.assertEquals(
 			_EXTRA_PLUGINS, jsonObject.getString("extraPlugins"));
 
 		_assertItemSelectorURL(
+			"selectItem",
 			jsonObject.getString("filebrowserImageBrowseLinkUrl"));
 		_assertItemSelectorURL(
-			jsonObject.getString("filebrowserImageBrowseUrl"));
+			"selectItem", jsonObject.getString("filebrowserImageBrowseUrl"));
 
 		Assert.assertEquals(
 			_REMOVE_PLUGINS, jsonObject.getString("removePlugins"));
@@ -93,14 +101,52 @@ public class ContentPageEditorDefaultEditorConfigurationTest {
 		_assertToolbarsJSONObject(jsonObject.getJSONObject("toolbars"));
 	}
 
-	private void _assertItemSelectorURL(String url) {
+	@Test
+	public void testTextEditor() {
+		_assertTextEditorConfigJSONObject("fragmenEntryLinkEditor");
+	}
+
+	private void _assertItemSelectorURL(String eventName, String url) {
 		Assert.assertTrue(
 			url,
 			StringUtil.contains(
 				url,
 				"_com_liferay_item_selector_web_portlet_ItemSelectorPortlet_" +
-					"itemSelectedEventName=_EDITOR_NAME_selectItem",
+					"itemSelectedEventName=_EDITOR_NAME_" + eventName,
 				StringPool.BLANK));
+	}
+
+	private void _assertTextEditorConfigJSONObject(String editorConfigKey) {
+		JSONObject jsonObject = _getEditorConfigurationConfigJSONObject(
+			editorConfigKey);
+
+		Assert.assertEquals(
+			StringPool.BLANK, jsonObject.getString("allowedContent"));
+		Assert.assertEquals("br", jsonObject.getString("disallowedContent"));
+
+		_assertItemSelectorURL(
+			"selectItem", jsonObject.getString("documentBrowseLinkUrl"));
+
+		Assert.assertEquals(2, jsonObject.getInt("enterMode"));
+		Assert.assertEquals(
+			_EXTRA_PLUGINS, jsonObject.getString("extraPlugins"));
+
+		_assertItemSelectorURL(
+			"selectImage",
+			jsonObject.getString("filebrowserImageBrowseLinkUrl"));
+		_assertItemSelectorURL(
+			"selectImage", jsonObject.getString("filebrowserImageBrowseUrl"));
+
+		Assert.assertEquals(
+			_REMOVE_PLUGINS, jsonObject.getString("removePlugins"));
+
+		Assert.assertEquals("moono-lisa", jsonObject.getString("skin"));
+
+		JSONObject toolbarsJSONObject = jsonObject.getJSONObject("toolbars");
+
+		Assert.assertTrue(
+			toolbarsJSONObject.toString(),
+			JSONUtil.isEmpty(toolbarsJSONObject));
 	}
 
 	private void _assertToolbarsJSONObject(JSONObject jsonObject) {
@@ -241,6 +287,9 @@ public class ContentPageEditorDefaultEditorConfigurationTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private JSONFactory _jsonFactory;
 
 	private ThemeDisplay _themeDisplay;
 

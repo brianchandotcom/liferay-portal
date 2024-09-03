@@ -1249,6 +1249,93 @@ test('Verify SSO login and logout mechanism works the same when having multiple 
 	await deleteAfterTestVirtualInstances.delete(sp2Name);
 });
 
+test('View single logout and force auth with multiple SPs.  See LRQA-31886.', async ({
+	browser,
+}) => {
+
+	// Configure localhost as SP
+
+	const localhostSpAdminPage = await configureVirtualInstanceForSaml(
+		browser,
+		'localhost',
+		'Service Provider'
+	);
+
+	// Configure the other virtual instances as usual
+
+	const idpAdminPage = await configureVirtualInstanceForSaml(
+		browser,
+		DEFAULT_IDP_NAME,
+		'Identity Provider'
+	);
+
+	const spAdminPage = await configureVirtualInstanceForSaml(
+		browser,
+		DEFAULT_SP_NAME,
+		'Service Provider'
+	);
+
+	await connectSpAndIdp(
+		idpAdminPage,
+		DEFAULT_IDP_NAME,
+		spAdminPage,
+		DEFAULT_SP_NAME
+	);
+
+	await connectSpAndIdp(
+		idpAdminPage,
+		DEFAULT_IDP_NAME,
+		localhostSpAdminPage,
+		'localhost'
+	);
+
+	// Create IdP User
+
+	const userAccount = await createUser(idpAdminPage, DEFAULT_IDP_NAME);
+
+	// Configure IdP connections to require force authentication
+
+	let idpConnection: TIdpConnection = {
+		entityId: DEFAULT_IDP_NAME,
+		forceAuthn: true,
+		idpDomain: `http://${DEFAULT_IDP_NAME}:8080`,
+		idpName: DEFAULT_IDP_NAME,
+		spName: DEFAULT_SP_NAME,
+		...DEFAULT_IDP_CONNECTION_VALUES,
+	};
+
+	await editIdentityProviderConnection(spAdminPage, idpConnection);
+
+	idpConnection = {
+		entityId: DEFAULT_IDP_NAME,
+		forceAuthn: true,
+		idpDomain: `http://${DEFAULT_IDP_NAME}:8080`,
+		idpName: DEFAULT_IDP_NAME,
+		spName: 'localhost',
+		...DEFAULT_IDP_CONNECTION_VALUES,
+	};
+
+	await editIdentityProviderConnection(localhostSpAdminPage, idpConnection);
+
+	// SP initiated SSO
+
+	const spIntancePage = await performSpInitiatedSSO(
+		browser,
+		userAccount.emailAddress,
+		DEFAULT_SP_URL
+	);
+
+	// Assert clicking Sign In button on other SP page does not auto-login
+
+	await spIntancePage.goto('http://localhost:8080');
+
+	await clickSignInButton(spIntancePage);
+
+	await spIntancePage.waitForTimeout(2000);
+
+	await expect(await spIntancePage.getByLabel('Email Address')).toBeVisible();
+});
+
 test('Verify the SAML configuration is not applied to the sites when ACS is disabled.  See LPS-170940.', async ({
 	browser,
 }) => {

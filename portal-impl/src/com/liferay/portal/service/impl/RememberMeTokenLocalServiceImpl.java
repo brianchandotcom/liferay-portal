@@ -48,6 +48,11 @@ public class RememberMeTokenLocalServiceImpl
 	}
 
 	@Override
+	public void deleteExpiredRememberMeTokens(Date expirationDate) {
+		rememberMeTokenPersistence.removeByLteExpirationDate(expirationDate);
+	}
+
+	@Override
 	public void deleteExpiredRememberMeTokens(long userId) {
 		for (RememberMeToken rememberMeToken :
 				rememberMeTokenPersistence.findByUserId(userId)) {

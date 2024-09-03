@@ -6,7 +6,7 @@
 package com.liferay.commerce.order.content.web.internal.info.item.provider;
 
 import com.liferay.commerce.model.CommerceOrder;
-import com.liferay.commerce.service.CommerceOrderLocalService;
+import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemIdentifier;
@@ -42,7 +42,7 @@ public class CommerceOrderInfoItemObjectProvider
 			(ClassPKInfoItemIdentifier)infoItemIdentifier;
 
 		try {
-			return _commerceOrderLocalService.getCommerceOrder(
+			return _commerceOrderService.getCommerceOrder(
 				classPKInfoItemIdentifier.getClassPK());
 		}
 		catch (PortalException portalException) {
@@ -54,6 +54,6 @@ public class CommerceOrderInfoItemObjectProvider
 	}
 
 	@Reference
-	private CommerceOrderLocalService _commerceOrderLocalService;
+	private CommerceOrderService _commerceOrderService;
 
 }

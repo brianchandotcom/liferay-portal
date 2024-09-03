@@ -8,8 +8,7 @@ package com.liferay.fragment.internal.renderer.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
-import com.liferay.asset.kernel.service.AssetCategoryLocalService;
-import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
+import com.liferay.asset.test.util.AssetTestUtil;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.change.tracking.model.CTCollection;
@@ -229,15 +228,11 @@ public class FragmentEntryFragmentRendererTest {
 
 	@Test
 	public void testMapAssetVocabularyToInfoField() throws Exception {
-		AssetVocabulary assetVocabulary =
-			_assetVocabularyLocalService.addVocabulary(
-				TestPropsValues.getUserId(), _group.getGroupId(),
-				RandomTestUtil.randomString(), _serviceContext);
+		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
+			_group.getGroupId());
 
-		AssetCategory assetCategory = _assetCategoryLocalService.addCategory(
-			TestPropsValues.getUserId(), _group.getGroupId(),
-			RandomTestUtil.randomString(), assetVocabulary.getVocabularyId(),
-			_serviceContext);
+		AssetCategory assetCategory = AssetTestUtil.addCategory(
+			_group.getGroupId(), assetVocabulary.getVocabularyId());
 
 		_serviceContext.setAssetCategoryIds(
 			new long[] {assetCategory.getCategoryId()});
@@ -654,12 +649,6 @@ public class FragmentEntryFragmentRendererTest {
 
 	@Inject
 	private static CTCollectionLocalService _ctCollectionLocalService;
-
-	@Inject
-	private AssetCategoryLocalService _assetCategoryLocalService;
-
-	@Inject
-	private AssetVocabularyLocalService _assetVocabularyLocalService;
 
 	@Inject
 	private BlogsEntryLocalService _blogsEntryLocalService;

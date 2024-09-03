@@ -23,12 +23,7 @@ public class DBSchemaImporter {
 		Options options = _getOptions();
 
 		if ((args.length != 0) && args[0].equals("--help")) {
-			new HelpFormatter(
-			).printHelp(
-				"Liferay Portal Tools Database Schema Importer", options
-			);
-
-			System.exit(_LIFERAY_COMMON_EXIT_CODE_HELP);
+			_printHelpAndExit(options);
 		}
 
 		CommandLineParser commandLineParser = new DefaultParser();
@@ -41,12 +36,7 @@ public class DBSchemaImporter {
 		catch (ParseException parseException) {
 			System.err.println(parseException.getMessage());
 
-			new HelpFormatter(
-			).printHelp(
-				"Liferay Portal Tools Database Schema Importer", options
-			);
-
-			System.exit(_LIFERAY_COMMON_EXIT_CODE_HELP);
+			_printHelpAndExit(options);
 		}
 
 		try {
@@ -102,6 +92,15 @@ public class DBSchemaImporter {
 			null, "target-user", true, "Set the target database user.");
 
 		return options;
+	}
+
+	private static void _printHelpAndExit(Options options) {
+		new HelpFormatter(
+		).printHelp(
+			"Liferay Portal Tools Database Schema Importer", options
+		);
+
+		System.exit(_LIFERAY_COMMON_EXIT_CODE_HELP);
 	}
 
 	/**

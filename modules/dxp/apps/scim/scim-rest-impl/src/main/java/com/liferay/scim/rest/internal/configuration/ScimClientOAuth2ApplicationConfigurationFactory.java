@@ -136,7 +136,7 @@ public class ScimClientOAuth2ApplicationConfigurationFactory {
 					Collections.emptyList(), null, 0, null,
 					scimClientOAuth2ApplicationConfiguration.
 						oAuth2ApplicationName(),
-					null, Collections.emptyList(), false, true, null,
+					null, Collections.emptyList(), false, false, null,
 					new ServiceContext());
 
 			if (_log.isDebugEnabled()) {

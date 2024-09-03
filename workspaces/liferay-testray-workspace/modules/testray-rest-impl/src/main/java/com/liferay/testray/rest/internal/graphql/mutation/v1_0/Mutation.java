@@ -11,10 +11,12 @@ import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTa
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
+import com.liferay.testray.rest.dto.v1_0.TestrayBuild;
 import com.liferay.testray.rest.dto.v1_0.TestrayBuildAutofill;
 import com.liferay.testray.rest.dto.v1_0.TestrayTestFlow;
 import com.liferay.testray.rest.dto.v1_0.TestrayTestSuite;
 import com.liferay.testray.rest.resource.v1_0.TestrayBuildAutofillResource;
+import com.liferay.testray.rest.resource.v1_0.TestrayBuildResource;
 import com.liferay.testray.rest.resource.v1_0.TestrayTestFlowResource;
 import com.liferay.testray.rest.resource.v1_0.TestrayTestSuiteResource;
 
@@ -36,6 +38,14 @@ import org.osgi.service.component.ComponentServiceObjects;
  */
 @Generated("")
 public class Mutation {
+
+	public static void setTestrayBuildResourceComponentServiceObjects(
+		ComponentServiceObjects<TestrayBuildResource>
+			testrayBuildResourceComponentServiceObjects) {
+
+		_testrayBuildResourceComponentServiceObjects =
+			testrayBuildResourceComponentServiceObjects;
+	}
 
 	public static void setTestrayBuildAutofillResourceComponentServiceObjects(
 		ComponentServiceObjects<TestrayBuildAutofillResource>
@@ -59,6 +69,18 @@ public class Mutation {
 
 		_testrayTestSuiteResourceComponentServiceObjects =
 			testrayTestSuiteResourceComponentServiceObjects;
+	}
+
+	@GraphQLField
+	public TestrayBuild patchTestrayBuild(
+			@GraphQLName("testrayBuildId") Long testrayBuildId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_testrayBuildResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			testrayBuildResource -> testrayBuildResource.patchTestrayBuild(
+				testrayBuildId));
 	}
 
 	@GraphQLField
@@ -203,6 +225,21 @@ public class Mutation {
 	}
 
 	private void _populateResourceContext(
+			TestrayBuildResource testrayBuildResource)
+		throws Exception {
+
+		testrayBuildResource.setContextAcceptLanguage(_acceptLanguage);
+		testrayBuildResource.setContextCompany(_company);
+		testrayBuildResource.setContextHttpServletRequest(_httpServletRequest);
+		testrayBuildResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		testrayBuildResource.setContextUriInfo(_uriInfo);
+		testrayBuildResource.setContextUser(_user);
+		testrayBuildResource.setGroupLocalService(_groupLocalService);
+		testrayBuildResource.setRoleLocalService(_roleLocalService);
+	}
+
+	private void _populateResourceContext(
 			TestrayBuildAutofillResource testrayBuildAutofillResource)
 		throws Exception {
 
@@ -268,6 +305,8 @@ public class Mutation {
 			_vulcanBatchEngineImportTaskResource);
 	}
 
+	private static ComponentServiceObjects<TestrayBuildResource>
+		_testrayBuildResourceComponentServiceObjects;
 	private static ComponentServiceObjects<TestrayBuildAutofillResource>
 		_testrayBuildAutofillResourceComponentServiceObjects;
 	private static ComponentServiceObjects<TestrayTestFlowResource>

@@ -5,12 +5,14 @@ import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 import com.liferay.testray.rest.internal.graphql.mutation.v1_0.Mutation;
 import com.liferay.testray.rest.internal.graphql.query.v1_0.Query;
 import com.liferay.testray.rest.internal.resource.v1_0.TestrayBuildAutofillResourceImpl;
+import com.liferay.testray.rest.internal.resource.v1_0.TestrayBuildResourceImpl;
 import com.liferay.testray.rest.internal.resource.v1_0.TestrayCaseResultResourceImpl;
 import com.liferay.testray.rest.internal.resource.v1_0.TestrayRunComparisonResourceImpl;
 import com.liferay.testray.rest.internal.resource.v1_0.TestrayStatusMetricResourceImpl;
 import com.liferay.testray.rest.internal.resource.v1_0.TestrayTestFlowResourceImpl;
 import com.liferay.testray.rest.internal.resource.v1_0.TestrayTestSuiteResourceImpl;
 import com.liferay.testray.rest.resource.v1_0.TestrayBuildAutofillResource;
+import com.liferay.testray.rest.resource.v1_0.TestrayBuildResource;
 import com.liferay.testray.rest.resource.v1_0.TestrayCaseResultResource;
 import com.liferay.testray.rest.resource.v1_0.TestrayRunComparisonResource;
 import com.liferay.testray.rest.resource.v1_0.TestrayStatusMetricResource;
@@ -39,6 +41,8 @@ public class ServletDataImpl implements ServletData {
 
 	@Activate
 	public void activate(BundleContext bundleContext) {
+		Mutation.setTestrayBuildResourceComponentServiceObjects(
+			_testrayBuildResourceComponentServiceObjects);
 		Mutation.setTestrayBuildAutofillResourceComponentServiceObjects(
 			_testrayBuildAutofillResourceComponentServiceObjects);
 		Mutation.setTestrayTestFlowResourceComponentServiceObjects(
@@ -90,6 +94,11 @@ public class ServletDataImpl implements ServletData {
 		_resourceMethodObjectValuePairs =
 			new HashMap<String, ObjectValuePair<Class<?>, String>>() {
 				{
+					put(
+						"mutation#patchTestrayBuild",
+						new ObjectValuePair<>(
+							TestrayBuildResourceImpl.class,
+							"patchTestrayBuild"));
 					put(
 						"mutation#createTestrayBuildAutofill",
 						new ObjectValuePair<>(
@@ -198,6 +207,10 @@ public class ServletDataImpl implements ServletData {
 							"getTestrayTestFlowTestraySubtaskPage"));
 				}
 			};
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<TestrayBuildResource>
+		_testrayBuildResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<TestrayBuildAutofillResource>

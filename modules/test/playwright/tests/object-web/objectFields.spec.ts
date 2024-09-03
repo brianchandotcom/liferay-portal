@@ -35,40 +35,39 @@ test.beforeEach(async ({apiHelpers}) => {
 });
 
 test.afterEach(async ({apiHelpers}) => {
-	if (createdEntities.objectDefinitions.length) {
-		await Promise.all(
-			createdEntities.objectDefinitions.map(async (objectDefinition) => {
-				await apiHelpers.objectAdmin.deleteObjectDefinition(
-					objectDefinition.id
-				);
-			})
-		);
+	const asyncArray = new AsyncArray<
+		ObjectDefinition | ObjectFolder | number,
+		void
+	>();
 
-		createdEntities.objectDefinitions = [];
-	}
+	await asyncArray.map({
+		array: createdEntities.objectDefinitions,
+		predicate: async (objectDefinition: ObjectDefinition) => {
+			await apiHelpers.objectAdmin.deleteObjectDefinition(
+				objectDefinition.id
+			);
+		},
+	});
 
-	if (createdEntities.objectFolders.length) {
-		await Promise.all(
-			createdEntities.objectFolders.map(async (objectFolder) => {
-				await apiHelpers.objectAdmin.deleteObjectFolder(
-					objectFolder.id
-				);
-			})
-		);
+	createdEntities.objectDefinitions = [];
 
-		createdEntities.objectDefinitions = [];
-	}
+	await asyncArray.map({
+		array: createdEntities.objectFolders,
+		predicate: async (objectFolder: ObjectFolder) => {
+			await apiHelpers.objectAdmin.deleteObjectFolder(objectFolder.id);
+		},
+	});
 
-	if (createdEntities.listTypeDefinitionIds.length) {
-		await Promise.all(
-			createdEntities.listTypeDefinitionIds.map(
-				async (listTypeDefinitionId) =>
-					await apiHelpers.listTypeAdmin.deleteListTypeDefinition(
-						listTypeDefinitionId
-					)
-			)
-		);
-	}
+	createdEntities.objectDefinitions = [];
+
+	await asyncArray.map({
+		array: createdEntities.listTypeDefinitionIds,
+		predicate: async (listTypeDefinitionId: number) => {
+			await apiHelpers.listTypeAdmin.deleteListTypeDefinition(
+				listTypeDefinitionId
+			);
+		},
+	});
 
 	createdEntities.listTypeDefinitionIds = [];
 });
@@ -691,8 +690,7 @@ test.describe('Manage objectFields through Objects Admin UI', () => {
 		}[];
 
 		for (const objectField of objectFieldsMock) {
-			const {objectFieldBusinessType, objectFieldLabel} =
-				objectField;
+			const {objectFieldBusinessType, objectFieldLabel} = objectField;
 
 			if (objectFieldBusinessType === 'Attachment') {
 				await objectFieldsPage.addObjectField({

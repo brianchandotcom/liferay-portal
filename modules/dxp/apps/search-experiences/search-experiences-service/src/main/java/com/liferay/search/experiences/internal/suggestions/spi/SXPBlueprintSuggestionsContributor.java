@@ -10,12 +10,15 @@ import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -89,7 +92,7 @@ public class SXPBlueprintSuggestionsContributor
 		}
 
 		if (!_exceedsCharacterThreshold(
-				(Map<String, Object>)attributes, searchContext.getKeywords())) {
+				attributes, searchContext.getKeywords())) {
 
 			return null;
 		}
@@ -210,6 +213,12 @@ public class SXPBlueprintSuggestionsContributor
 						SearchContextAttributes.ATTRIBUTE_KEY_EMPTY_SEARCH));
 				searchContext2.setCompanyId(searchContext1.getCompanyId());
 				searchContext2.setGroupIds(searchContext1.getGroupIds());
+
+				if (FeatureFlagManagerUtil.isEnabled("LPD-35128")) {
+					searchContext2.setIncludeAttachments(
+						MapUtil.getBoolean(attributes, "includeAttachments"));
+				}
+
 				searchContext2.setKeywords(searchContext1.getKeywords());
 				searchContext2.setLocale(searchContext1.getLocale());
 				searchContext2.setTimeZone(searchContext1.getTimeZone());
@@ -247,44 +256,14 @@ public class SXPBlueprintSuggestionsContributor
 			return suggestionBuilder.build();
 		}
 
-		String entryClassName = document.getString(Field.ENTRY_CLASS_NAME);
-
-		AssetRendererFactory<?> assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				entryClassName);
-
-		if (assetRendererFactory == null) {
-			return suggestionBuilder.build();
+		try {
+			_setAssetFields(
+				document, includeAssetSearchSummary, includeAssetURL,
+				liferayPortletRequest, liferayPortletResponse,
+				searchContext.getLocale(), suggestionBuilder, useAssetTitle);
 		}
-
-		long entryClassPK = document.getLong(Field.ENTRY_CLASS_PK);
-
-		AssetRenderer<?> assetRenderer = _getAssetRenderer(
-			assetRendererFactory, entryClassPK);
-
-		if (assetRenderer == null) {
-			return suggestionBuilder.build();
-		}
-
-		if (includeAssetSearchSummary) {
-			suggestionBuilder.attribute(
-				"assetSearchSummary",
-				assetRenderer.getSummary(
-					liferayPortletRequest, liferayPortletResponse));
-		}
-
-		if (includeAssetURL) {
-			suggestionBuilder.attribute(
-				"assetURL",
-				_assetURLViewProvider.getAssetURLView(
-					assetRenderer, assetRendererFactory, entryClassName,
-					entryClassPK, liferayPortletRequest,
-					liferayPortletResponse));
-		}
-
-		if (useAssetTitle) {
-			suggestionBuilder.text(
-				assetRenderer.getTitle(searchContext.getLocale()));
+		catch (Exception exception) {
+			_log.error(exception);
 		}
 
 		return suggestionBuilder.build();
@@ -366,6 +345,72 @@ public class SXPBlueprintSuggestionsContributor
 			fieldName, "${language_id}", LocaleUtil.toLanguageId(locale));
 	}
 
+	private void _setAssetFields(
+			Document document, boolean includeAssetSearchSummary,
+			boolean includeAssetURL,
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse, Locale locale,
+			SuggestionBuilder suggestionBuilder, boolean useAssetTitle)
+		throws Exception {
+
+		String entryClassName = document.getString(Field.ENTRY_CLASS_NAME);
+
+		AssetRendererFactory<?> assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				entryClassName);
+
+		if (assetRendererFactory == null) {
+			return;
+		}
+
+		long entryClassPK = document.getLong(Field.ENTRY_CLASS_PK);
+
+		AssetRenderer<?> assetRenderer = _getAssetRenderer(
+			assetRendererFactory, entryClassPK);
+
+		if (assetRenderer == null) {
+			return;
+		}
+
+		if (includeAssetSearchSummary) {
+			suggestionBuilder.attribute(
+				"assetSearchSummary",
+				assetRenderer.getSummary(
+					liferayPortletRequest, liferayPortletResponse));
+		}
+
+		if (includeAssetURL) {
+			long classNameId = GetterUtil.getLong(
+				document.getValue(Field.CLASS_NAME_ID));
+			long classPK = GetterUtil.getLong(
+				document.getValue(Field.CLASS_PK));
+
+			if ((classNameId > 0) && (classPK > 0)) {
+				ClassName className = _classNameLocalService.getClassName(
+					classNameId);
+
+				suggestionBuilder.attribute(
+					"assetURL",
+					_assetURLViewProvider.getAssetURLView(
+						assetRenderer, assetRendererFactory,
+						className.getClassName(), classPK,
+						liferayPortletRequest, liferayPortletResponse));
+			}
+			else {
+				suggestionBuilder.attribute(
+					"assetURL",
+					_assetURLViewProvider.getAssetURLView(
+						assetRenderer, assetRendererFactory, entryClassName,
+						entryClassPK, liferayPortletRequest,
+						liferayPortletResponse));
+			}
+		}
+
+		if (useAssetTitle) {
+			suggestionBuilder.text(assetRenderer.getTitle(locale));
+		}
+	}
+
 	private void _setSearchExperiencesSearchContextAttributes(
 		Map<String, Object> attributes, SearchContext sourceSearchContext,
 		SearchContext targetSearchContext) {
@@ -403,6 +448,9 @@ public class SXPBlueprintSuggestionsContributor
 
 	@Reference
 	private AssetURLViewProvider _assetURLViewProvider;
+
+	@Reference
+	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
 	private Searcher _searcher;

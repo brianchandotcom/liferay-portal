@@ -1,6 +1,6 @@
 {
 	"friendlyURL": "/supplier-portal",
-	"hidden": false,
+	"hidden": true,
 	"name_i18n": {
 		"en_US": "Supplier Portal"
 	},

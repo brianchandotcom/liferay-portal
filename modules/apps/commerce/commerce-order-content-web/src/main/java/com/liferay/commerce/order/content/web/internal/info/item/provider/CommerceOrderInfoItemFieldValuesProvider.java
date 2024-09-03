@@ -8,8 +8,11 @@ package com.liferay.commerce.order.content.web.internal.info.item.provider;
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.util.CommercePriceFormatter;
+import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.model.CommerceOrderType;
 import com.liferay.commerce.order.content.web.internal.info.CommerceOrderInfoItemFields;
+import com.liferay.commerce.service.CommerceOrderTypeLocalService;
 import com.liferay.expando.info.item.provider.ExpandoInfoItemFieldSetProvider;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemFieldValues;
@@ -17,6 +20,8 @@ import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.field.reader.InfoItemFieldReaderFieldSetProvider;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Country;
+import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -69,8 +74,7 @@ public class CommerceOrderInfoItemFieldValuesProvider
 			new ArrayList<>();
 
 		try {
-			CommerceCurrency commerceCurrency =
-				commerceOrder.getCommerceCurrency();
+			ThemeDisplay themeDisplay = _getThemeDisplay();
 
 			commerceOrderInfoFieldValues.add(
 				new InfoFieldValue<>(
@@ -99,6 +103,80 @@ public class CommerceOrderInfoItemFieldValuesProvider
 				new InfoFieldValue<>(
 					CommerceOrderInfoItemFields.b2bInfoField,
 					commerceOrder.isB2B()));
+
+			CommerceAddress billingCommerceAddress =
+				commerceOrder.getBillingAddress();
+
+			if (billingCommerceAddress != null) {
+				commerceOrderInfoFieldValues.add(
+					new InfoFieldValue<>(
+						CommerceOrderInfoItemFields.billingAddressCityInfoField,
+						billingCommerceAddress.getCity()));
+
+				Country billingAddressCountry =
+					billingCommerceAddress.getCountry();
+
+				String billingAddressCountryName =
+					billingAddressCountry.getName();
+
+				if (themeDisplay != null) {
+					billingAddressCountryName = billingAddressCountry.getName(
+						themeDisplay.getLocale());
+				}
+
+				commerceOrderInfoFieldValues.add(
+					new InfoFieldValue<>(
+						CommerceOrderInfoItemFields.
+							billingAddressCountryInfoField,
+						billingAddressCountryName));
+
+				commerceOrderInfoFieldValues.add(
+					new InfoFieldValue<>(
+						CommerceOrderInfoItemFields.
+							billingAddressPhoneNumberInfoField,
+						billingCommerceAddress.getPhoneNumber()));
+
+				Region billingAddressRegion =
+					billingCommerceAddress.getRegion();
+
+				if (billingAddressRegion != null) {
+					String billingAddressRegionTitle =
+						billingAddressRegion.getTitle();
+
+					if (themeDisplay != null) {
+						billingAddressRegionTitle =
+							billingAddressRegion.getTitle(
+								themeDisplay.getLanguageId());
+					}
+
+					commerceOrderInfoFieldValues.add(
+						new InfoFieldValue<>(
+							CommerceOrderInfoItemFields.
+								billingAddressRegionInfoField,
+							billingAddressRegionTitle));
+				}
+
+				commerceOrderInfoFieldValues.add(
+					new InfoFieldValue<>(
+						CommerceOrderInfoItemFields.
+							billingAddressStreet1InfoField,
+						billingCommerceAddress.getStreet1()));
+				commerceOrderInfoFieldValues.add(
+					new InfoFieldValue<>(
+						CommerceOrderInfoItemFields.
+							billingAddressStreet2InfoField,
+						billingCommerceAddress.getStreet2()));
+				commerceOrderInfoFieldValues.add(
+					new InfoFieldValue<>(
+						CommerceOrderInfoItemFields.
+							billingAddressStreet3InfoField,
+						billingCommerceAddress.getStreet3()));
+				commerceOrderInfoFieldValues.add(
+					new InfoFieldValue<>(
+						CommerceOrderInfoItemFields.billingAddressZipInfoField,
+						billingCommerceAddress.getZip()));
+			}
+
 			commerceOrderInfoFieldValues.add(
 				new InfoFieldValue<>(
 					CommerceOrderInfoItemFields.billingAddressIdInfoField,
@@ -137,10 +215,15 @@ public class CommerceOrderInfoItemFieldValuesProvider
 					_isOrderStatus(
 						commerceOrder,
 						CommerceOrderConstants.ORDER_STATUS_DECLINED)));
+
+			CommerceCurrency commerceCurrency =
+				commerceOrder.getCommerceCurrency();
+
 			commerceOrderInfoFieldValues.add(
 				new InfoFieldValue<>(
 					CommerceOrderInfoItemFields.defaultLanguageIdInfoField,
 					commerceCurrency.getDefaultLanguageId()));
+
 			commerceOrderInfoFieldValues.add(
 				new InfoFieldValue<>(
 					CommerceOrderInfoItemFields.
@@ -178,8 +261,6 @@ public class CommerceOrderInfoItemFieldValuesProvider
 				new InfoFieldValue<>(
 					CommerceOrderInfoItemFields.expiredInfoField,
 					commerceOrder.isExpired()));
-
-			ThemeDisplay themeDisplay = _getThemeDisplay();
 
 			if (themeDisplay != null) {
 				commerceOrderInfoFieldValues.add(
@@ -290,6 +371,10 @@ public class CommerceOrderInfoItemFieldValuesProvider
 					commerceOrder.getModifiedDate()));
 			commerceOrderInfoFieldValues.add(
 				new InfoFieldValue<>(
+					CommerceOrderInfoItemFields.nameInfoField,
+					commerceOrder.getName()));
+			commerceOrderInfoFieldValues.add(
+				new InfoFieldValue<>(
 					CommerceOrderInfoItemFields.onHoldOrderStatusInfoField,
 					_isOrderStatus(
 						commerceOrder,
@@ -316,6 +401,25 @@ public class CommerceOrderInfoItemFieldValuesProvider
 				new InfoFieldValue<>(
 					CommerceOrderInfoItemFields.orderTypeIdInfoField,
 					commerceOrder.getCommerceOrderTypeId()));
+
+			CommerceOrderType commerceOrderType =
+				_commerceOrderTypeLocalService.fetchCommerceOrderType(
+					commerceOrder.getCommerceOrderTypeId());
+
+			if (commerceOrderType != null) {
+				String commerceOrderTypeName = commerceOrderType.getName();
+
+				if (themeDisplay != null) {
+					commerceOrderTypeName = commerceOrderType.getName(
+						themeDisplay.getLocale());
+				}
+
+				commerceOrderInfoFieldValues.add(
+					new InfoFieldValue<>(
+						CommerceOrderInfoItemFields.orderTypeNameInfoField,
+						commerceOrderTypeName));
+			}
+
 			commerceOrderInfoFieldValues.add(
 				new InfoFieldValue<>(
 					CommerceOrderInfoItemFields.
@@ -399,6 +503,81 @@ public class CommerceOrderInfoItemFieldValuesProvider
 					_isOrderStatus(
 						commerceOrder,
 						CommerceOrderConstants.ORDER_STATUS_SHIPPED)));
+
+			CommerceAddress shippingCommerceAddress =
+				commerceOrder.getShippingAddress();
+
+			if (shippingCommerceAddress != null) {
+				commerceOrderInfoFieldValues.add(
+					new InfoFieldValue<>(
+						CommerceOrderInfoItemFields.
+							shippingAddressCityInfoField,
+						shippingCommerceAddress.getCity()));
+
+				Country shippingAddressCountry =
+					shippingCommerceAddress.getCountry();
+
+				String shippingAddressCountryName =
+					shippingAddressCountry.getName();
+
+				if (themeDisplay != null) {
+					shippingAddressCountryName = shippingAddressCountry.getName(
+						themeDisplay.getLocale());
+				}
+
+				commerceOrderInfoFieldValues.add(
+					new InfoFieldValue<>(
+						CommerceOrderInfoItemFields.
+							shippingAddressCountryInfoField,
+						shippingAddressCountryName));
+
+				commerceOrderInfoFieldValues.add(
+					new InfoFieldValue<>(
+						CommerceOrderInfoItemFields.
+							shippingAddressPhoneNumberInfoField,
+						shippingCommerceAddress.getPhoneNumber()));
+
+				Region shippingAddressRegion =
+					shippingCommerceAddress.getRegion();
+
+				if (shippingAddressRegion != null) {
+					String shippingAddressRegionTitle =
+						shippingAddressRegion.getTitle();
+
+					if (themeDisplay != null) {
+						shippingAddressRegionTitle =
+							shippingAddressRegion.getTitle(
+								themeDisplay.getLanguageId());
+					}
+
+					commerceOrderInfoFieldValues.add(
+						new InfoFieldValue<>(
+							CommerceOrderInfoItemFields.
+								shippingAddressRegionInfoField,
+							shippingAddressRegionTitle));
+				}
+
+				commerceOrderInfoFieldValues.add(
+					new InfoFieldValue<>(
+						CommerceOrderInfoItemFields.
+							shippingAddressStreet1InfoField,
+						shippingCommerceAddress.getStreet1()));
+				commerceOrderInfoFieldValues.add(
+					new InfoFieldValue<>(
+						CommerceOrderInfoItemFields.
+							shippingAddressStreet2InfoField,
+						shippingCommerceAddress.getStreet2()));
+				commerceOrderInfoFieldValues.add(
+					new InfoFieldValue<>(
+						CommerceOrderInfoItemFields.
+							shippingAddressStreet3InfoField,
+						shippingCommerceAddress.getStreet3()));
+				commerceOrderInfoFieldValues.add(
+					new InfoFieldValue<>(
+						CommerceOrderInfoItemFields.shippingAddressZipInfoField,
+						shippingCommerceAddress.getZip()));
+			}
+
 			commerceOrderInfoFieldValues.add(
 				new InfoFieldValue<>(
 					CommerceOrderInfoItemFields.shippingAddressIdInfoField,
@@ -676,6 +855,9 @@ public class CommerceOrderInfoItemFieldValuesProvider
 
 		return false;
 	}
+
+	@Reference
+	private CommerceOrderTypeLocalService _commerceOrderTypeLocalService;
 
 	@Reference
 	private CommercePriceFormatter _commercePriceFormatter;

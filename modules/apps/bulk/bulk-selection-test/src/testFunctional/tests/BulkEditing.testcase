@@ -465,6 +465,16 @@ definition {
 	test CanEditShortcutsPermissions {
 		HeadlessSite.addSite(siteName = "Site Name");
 
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Documents and Media Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = 2,
+			groupName = "Site Name",
+			layoutName = "Documents and Media Page",
+			widgetName = "Documents and Media");
+
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title1",
@@ -489,7 +499,7 @@ definition {
 			sourceGroupName = "Site Name",
 			targetGroupName = "Guest");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
 		DMNavigator.gotoDocumentPermissionsCP(dmDocumentTitle = "DM Document Title1");
 
@@ -498,7 +508,13 @@ definition {
 			permissionsKeyList = "INLINE_PERMISSIONS_VIEW_CHECKBOX",
 			roleTitle = "Guest");
 
-		Navigator.gotoPage(pageName = "Documents and Media Page");
+		Navigator.openSitePage(
+			pageName = "Documents and Media Page",
+			siteName = "Site Name");
+
+		DMDocument.enableActionsMenuOnPortlet();
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		DMDocument.selectDocuments(dmDocumentTitle = "DM Document Title1,DM Document Title2");
 
@@ -514,7 +530,9 @@ definition {
 
 		User.logoutPG();
 
-		Navigator.gotoPage(pageName = "Documents and Media Page");
+		Navigator.openSitePage(
+			pageName = "Documents and Media Page",
+			siteName = "Site Name");
 
 		LexiconEntry.viewEntryName(rowEntry = "DM Document Title1");
 

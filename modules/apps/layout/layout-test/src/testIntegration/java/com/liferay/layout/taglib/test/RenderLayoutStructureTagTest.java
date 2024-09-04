@@ -93,6 +93,7 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -779,6 +780,62 @@ public class RenderLayoutStructureTagTest {
 		finally {
 			portalUtil.setPortal(new PortalImpl());
 		}
+	}
+
+	@Test
+	@TestInfo("LPS-119817")
+	public void testRenderContainerWithLinkToURL() throws Exception {
+		String languageId = LocaleUtil.toLanguageId(
+			_portal.getSiteDefaultLocale(_group));
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		long segmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				layout.getPlid());
+
+		JSONObject jsonObject = ContentLayoutTestUtil.addItemToLayout(
+			JSONUtil.put(
+				"link",
+				JSONUtil.put(
+					"href", JSONUtil.put(languageId, "https://www.liferay.com/")
+				).put(
+					"target", "_blank"
+				)
+			).toString(),
+			LayoutDataItemTypeConstants.TYPE_CONTAINER,
+			layout.fetchDraftLayout(), _layoutStructureProvider,
+			segmentsExperienceId);
+
+		String expectedContent = RandomTestUtil.randomString();
+
+		_addFragmentEntryLinkToLayout(
+			JSONUtil.put(languageId, expectedContent),
+			layout.fetchDraftLayout(), jsonObject.getString("addedItemId"),
+			segmentsExperienceId);
+
+		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
+
+		String content = _getRenderLayoutHTML(layout);
+
+		Assert.assertTrue(
+			content,
+			StringUtil.startsWith(
+				content, "<a href=\"https://www.liferay.com/\""));
+		Assert.assertTrue(
+			content,
+			StringUtil.contains(
+				content, "target=\"_blank\"><div", StringPool.BLANK));
+		Assert.assertTrue(
+			content,
+			StringUtil.contains(
+				content,
+				StringBundler.concat(
+					"<h1 data-lfr-editable-id=\"element-text\" ",
+					"data-lfr-editable-type=\"text\">", expectedContent,
+					"</h1>"),
+				StringPool.BLANK));
+		Assert.assertTrue(content, StringUtil.endsWith(content, "</div></a>"));
 	}
 
 	@Test

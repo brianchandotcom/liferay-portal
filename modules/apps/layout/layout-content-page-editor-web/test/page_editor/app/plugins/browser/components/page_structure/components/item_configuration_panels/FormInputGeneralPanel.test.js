@@ -48,7 +48,7 @@ const INPUT_ITEM_2 = {
 	type: LAYOUT_DATA_ITEM_TYPES.fragment,
 };
 
-const MOCK_CACHE = {
+let MOCK_CACHE = {
 	'allowedInputTypes-dateFragment': ['date'],
 	'allowedInputTypes-numericFragment': ['numeric'],
 	'allowedInputTypes-textFragment': ['text'],
@@ -79,10 +79,6 @@ const MOCK_CACHE = {
 			],
 			label: 'Fieldset',
 		},
-	],
-	'relationships-classNameId-classTypeId': [
-		{classNameId: 'relationship-1', label: 'Relationship 1'},
-		{classNameId: 'relationship-2', label: 'Relationship 2'},
 	],
 };
 
@@ -115,6 +111,20 @@ jest.mock(
 		},
 	})
 );
+
+const mockRelationships = () => {
+	MOCK_CACHE = {
+		...MOCK_CACHE,
+		'relationships-classNameId-classTypeId': [
+			{classNameId: 'relationship-1', label: 'Relationship 1'},
+			{classNameId: 'relationship-2', label: 'Relationship 2'},
+		],
+	};
+};
+
+const clearRelationships = () => {
+	delete MOCK_CACHE['relationships-classNameId-classTypeId'];
+};
 
 const renderComponent = ({
 	fragmentEntryKey = 'textFragment',
@@ -243,8 +253,12 @@ describe('FormInputGeneralPanel', () => {
 	});
 
 	it('shows source selector when there is any relationship', () => {
+		mockRelationships();
+
 		renderComponent();
 
 		expect(screen.getByLabelText('source')).toBeInTheDocument();
+
+		clearRelationships();
 	});
 });

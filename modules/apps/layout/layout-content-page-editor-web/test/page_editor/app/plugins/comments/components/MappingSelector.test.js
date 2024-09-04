@@ -25,6 +25,7 @@ import {useCollectionConfig} from '../../../../../../src/main/resources/META-INF
 import {StoreAPIContextProvider} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
 import CollectionService from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/services/CollectionService';
 import getSelectedField from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/utils/getSelectedField';
+import useCache from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/utils/useCache';
 import {pageContentsAtom} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/utils/usePageContents';
 import MappingSelector from '../../../../../../src/main/resources/META-INF/resources/page_editor/common/components/MappingSelector';
 
@@ -70,6 +71,8 @@ const emptyCollectionConfig = {
 		itemType: 'collectionItemType',
 	},
 };
+
+const onMappingSelect = jest.fn();
 
 jest.mock(
 	'../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/index',
@@ -118,12 +121,7 @@ jest.mock(
 				},
 			])
 		),
-		getInfoItemRelationships: jest.fn(() =>
-			Promise.resolve([
-				{classNameId: 'relationship-1', label: 'Relationship 1'},
-				{classNameId: 'relationship-2', label: 'Relationship 2'},
-			])
-		),
+		getInfoItemRelationships: jest.fn(),
 	})
 );
 
@@ -144,10 +142,30 @@ jest.mock(
 	() => jest.fn(() => null)
 );
 
+jest.mock(
+	'../../../../../../src/main/resources/META-INF/resources/page_editor/app/utils/useCache',
+	() => jest.fn()
+);
+
+const mockRelationships = () => {
+	const MOCK_CACHE = {
+		'relationships-mappingType-mappingSubtype': [
+			{classNameId: 'relationship-1', label: 'Relationship 1'},
+			{classNameId: 'relationship-2', label: 'Relationship 2'},
+		],
+	};
+
+	useCache.mockImplementation(({key}) => MOCK_CACHE[key.join('-')]);
+};
+
+const switchToDisplayPage = () => {
+	config.layoutType = LAYOUT_TYPES.display;
+};
+
 function renderMappingSelector({
 	mappedItem = {},
 	mappingFields = defaultMappingFields,
-	onMappingSelect = () => {},
+	onMappingSelect,
 }) {
 	const state = {
 		fragmentEntryLinks: {
@@ -203,6 +221,10 @@ describe('MappingSelector', () => {
 		});
 	});
 
+	afterEach(() => {
+		config.layoutType = LAYOUT_TYPES.content;
+	});
+
 	it('renders correct selects in content pages', async () => {
 		renderMappingSelector({});
 
@@ -216,7 +238,7 @@ describe('MappingSelector', () => {
 	});
 
 	it('renders correct selects in display pages', async () => {
-		config.layoutType = LAYOUT_TYPES.display;
+		switchToDisplayPage();
 
 		renderMappingSelector({});
 
@@ -227,7 +249,7 @@ describe('MappingSelector', () => {
 	});
 
 	it('does not render content select when selecting structure as source', async () => {
-		config.layoutType = LAYOUT_TYPES.display;
+		switchToDisplayPage();
 
 		const {getByLabelText, getByText, queryByText} = renderMappingSelector(
 			{}
@@ -247,10 +269,6 @@ describe('MappingSelector', () => {
 	});
 
 	it('calls onMappingSelect with correct params when mapping to content', async () => {
-		config.layoutType = LAYOUT_TYPES.content;
-
-		const onMappingSelect = jest.fn();
-
 		renderMappingSelector({
 			mappedItem: infoItem,
 			onMappingSelect,
@@ -275,9 +293,7 @@ describe('MappingSelector', () => {
 	});
 
 	it('calls onMappingSelect with correct params when mapping to structure', async () => {
-		config.layoutType = LAYOUT_TYPES.display;
-
-		const onMappingSelect = jest.fn();
+		switchToDisplayPage();
 
 		renderMappingSelector({
 			onMappingSelect,
@@ -303,8 +319,6 @@ describe('MappingSelector', () => {
 	});
 
 	it('calls onMappingSelect with empty object when unmapping', async () => {
-		const onMappingSelect = jest.fn();
-
 		renderMappingSelector({
 			mappedItem: infoItem,
 			onMappingSelect,
@@ -366,8 +380,6 @@ describe('MappingSelector', () => {
 	});
 
 	it('shows a warning and disables the selector if the fields array is empty', async () => {
-		config.layoutType = LAYOUT_TYPES.content;
-
 		renderMappingSelector({
 			mappedItem: infoItem,
 			mappingFields: {
@@ -389,8 +401,6 @@ describe('MappingSelector', () => {
 	});
 
 	it('shows type and subtype label when some item is mapped', async () => {
-		config.layoutType = LAYOUT_TYPES.content;
-
 		renderMappingSelector({
 			mappedItem: {
 				classNameId: 'mappedItemClassNameId',
@@ -411,7 +421,8 @@ describe('MappingSelector', () => {
 	});
 
 	it('allows selecting relationship in display pages', async () => {
-		config.layoutType = LAYOUT_TYPES.display;
+		switchToDisplayPage();
+		mockRelationships();
 
 		renderMappingSelector({});
 
@@ -426,7 +437,8 @@ describe('MappingSelector', () => {
 	});
 
 	it('shows a new select for relationships when selecting that source', async () => {
-		config.layoutType = LAYOUT_TYPES.display;
+		switchToDisplayPage();
+		mockRelationships();
 
 		renderMappingSelector({});
 
@@ -439,8 +451,6 @@ describe('MappingSelector', () => {
 	});
 
 	it('shows field type when an item is mapped and a field is selected', async () => {
-		config.layoutType = LAYOUT_TYPES.content;
-
 		getSelectedField.mockImplementation(() => ({
 			typeLabel: 'text',
 		}));

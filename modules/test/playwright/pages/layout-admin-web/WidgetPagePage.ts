@@ -94,6 +94,33 @@ export class WidgetPagePage {
 			.click();
 	}
 
+	async dragPortlet(portletName: string, target: Locator) {
+		const topper = this.page.locator(
+			'.portlet-journal-content .portlet-topper',
+			{hasText: portletName}
+		);
+
+		const targetRect = await target.evaluate((element) =>
+			element.getBoundingClientRect()
+		);
+
+		await topper.hover();
+
+		await this.page.mouse.down();
+
+		await this.page.mouse.move(
+			targetRect.x + targetRect.width / 2,
+			targetRect.y + targetRect.height / 2,
+			{steps: 10}
+		);
+
+		await this.page
+			.locator('.sortable-layout-drag-indicator')
+			.waitFor({state: 'visible'});
+
+		await this.page.mouse.up();
+	}
+
 	async openAddPanel() {
 		const isOpen = await this.addButton.evaluate((element) =>
 			element.classList.contains('open')

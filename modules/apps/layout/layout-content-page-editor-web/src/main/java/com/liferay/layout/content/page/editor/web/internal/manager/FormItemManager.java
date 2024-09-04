@@ -84,24 +84,22 @@ public class FormItemManager {
 		List<String> childrenItemIds =
 			formStepContainerStyledLayoutStructureItem.getChildrenItemIds();
 
-		LayoutStructureItem formStepLayoutStructureItem =
-			layoutStructure.getLayoutStructureItem(
-				childrenItemIds.get(childrenItemIds.size() - 1));
-
 		int stepIndex = childrenItemIds.size() - 1;
 
-		addedFragmentEntryLinks.addAll(
-			_addFormButtons(
-				formStepLayoutStructureItem, formStyledLayoutStructureItem,
-				layout, locale, layoutStructure, numberOfSteps,
-				segmentsExperienceId, stepIndex, serviceContext));
+		for (int i = 0; i < (numberOfSteps - stepIndex); i++) {
+			LayoutStructureItem formStepLayoutStructureItem = null;
 
-		int numberOfNewSteps = numberOfSteps - childrenItemIds.size();
-
-		for (int i = 1; i <= numberOfNewSteps; i++) {
-			formStepLayoutStructureItem =
-				layoutStructure.addFormStepLayoutStructureItem(
-					formStepContainerStyledLayoutStructureItem.getItemId(), -1);
+			if (i == 0) {
+				formStepLayoutStructureItem =
+					layoutStructure.getLayoutStructureItem(
+						childrenItemIds.get(stepIndex));
+			}
+			else {
+				formStepLayoutStructureItem =
+					layoutStructure.addFormStepLayoutStructureItem(
+						formStepContainerStyledLayoutStructureItem.getItemId(),
+						-1);
+			}
 
 			addedFragmentEntryLinks.addAll(
 				_addFormButtons(

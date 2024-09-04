@@ -304,6 +304,7 @@ const PublicationTimeline = ({
 					timelineItem['ctEntryChangeType'] = jsonResponse.changeType;
 					timelineItem['ctEntryDateModified'] =
 						jsonResponse.dateModified;
+					timelineItem['ctEntryId'] = jsonResponse.id;
 					timelineItem['ctEntryStatus'] = jsonResponse.status;
 					timelineItem['ctEntryStatusMessage'] =
 						jsonResponse.statusMessage;

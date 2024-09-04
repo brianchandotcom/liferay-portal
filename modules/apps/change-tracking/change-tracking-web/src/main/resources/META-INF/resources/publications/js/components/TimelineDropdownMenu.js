@@ -7,7 +7,7 @@ import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {Align, ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import {createPortletURL, fetch, getPortletId, sub} from 'frontend-js-web';
-import React, {useState} from 'react';
+import React from 'react';
 
 import {showNotification} from '../util/util';
 import {
@@ -29,7 +29,6 @@ export default function TimelineDropdownMenu({
 	timelineItem,
 }) {
 	const dropdownItems = [];
-	const [ctEntryId, setCTEntryId] = useState([]);
 
 	if (Liferay.FeatureFlags['LPD-20556']) {
 		const ctCollectionId = timelineItem.id;
@@ -47,21 +46,6 @@ export default function TimelineDropdownMenu({
 					...additionalParams,
 				}
 			).toString();
-		};
-
-		const getCTEntryId = () => {
-			fetch(
-				`/o/change-tracking-rest/v1.0/ct-collections/${ctCollectionId}/ct-entries/by-model-class-name-id/${timelineClassNameId}/by-model-class-pk/${timelineClassPK}`,
-				{method: 'GET'}
-			)
-				.then((response) => {
-					return response.json();
-				})
-				.then((jsonResponse) => {
-					setCTEntryId(jsonResponse.id);
-				});
-
-			return ctEntryId;
 		};
 
 		const discardURL = createMVCRenderCommandURL(
@@ -86,7 +70,7 @@ export default function TimelineDropdownMenu({
 		const viewURL = createMVCRenderCommandURL(
 			'/change_tracking/view_change',
 			{
-				ctEntryId: getCTEntryId(),
+				ctEntryId: timelineItem.ctEntryId,
 			}
 		);
 
@@ -250,7 +234,7 @@ export default function TimelineDropdownMenu({
 			trigger={
 				<ClayButtonWithIcon
 					displayType="unstyled"
-					small
+					size="sm"
 					spritemap={spritemap}
 					symbol="ellipsis-v"
 				/>

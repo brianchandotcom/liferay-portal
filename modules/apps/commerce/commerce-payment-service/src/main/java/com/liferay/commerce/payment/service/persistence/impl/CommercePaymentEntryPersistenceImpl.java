@@ -3082,6 +3082,1151 @@ public class CommercePaymentEntryPersistenceImpl
 	private static final String _FINDER_COLUMN_C_C_C_T_TYPE_2_SQL =
 		"commercePaymentEntry.type_ = ?";
 
+	private FinderPath _finderPathWithPaginationFindByC_C_C_P_T;
+	private FinderPath _finderPathWithoutPaginationFindByC_C_C_P_T;
+	private FinderPath _finderPathCountByC_C_C_P_T;
+
+	/**
+	 * Returns all the commerce payment entries where companyId = &#63; and classNameId = &#63; and classPK = &#63; and paymentStatus = &#63; and type = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param paymentStatus the payment status
+	 * @param type the type
+	 * @return the matching commerce payment entries
+	 */
+	@Override
+	public List<CommercePaymentEntry> findByC_C_C_P_T(
+		long companyId, long classNameId, long classPK, int paymentStatus,
+		int type) {
+
+		return findByC_C_C_P_T(
+			companyId, classNameId, classPK, paymentStatus, type,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the commerce payment entries where companyId = &#63; and classNameId = &#63; and classPK = &#63; and paymentStatus = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommercePaymentEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param paymentStatus the payment status
+	 * @param type the type
+	 * @param start the lower bound of the range of commerce payment entries
+	 * @param end the upper bound of the range of commerce payment entries (not inclusive)
+	 * @return the range of matching commerce payment entries
+	 */
+	@Override
+	public List<CommercePaymentEntry> findByC_C_C_P_T(
+		long companyId, long classNameId, long classPK, int paymentStatus,
+		int type, int start, int end) {
+
+		return findByC_C_C_P_T(
+			companyId, classNameId, classPK, paymentStatus, type, start, end,
+			null);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce payment entries where companyId = &#63; and classNameId = &#63; and classPK = &#63; and paymentStatus = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommercePaymentEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param paymentStatus the payment status
+	 * @param type the type
+	 * @param start the lower bound of the range of commerce payment entries
+	 * @param end the upper bound of the range of commerce payment entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce payment entries
+	 */
+	@Override
+	public List<CommercePaymentEntry> findByC_C_C_P_T(
+		long companyId, long classNameId, long classPK, int paymentStatus,
+		int type, int start, int end,
+		OrderByComparator<CommercePaymentEntry> orderByComparator) {
+
+		return findByC_C_C_P_T(
+			companyId, classNameId, classPK, paymentStatus, type, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce payment entries where companyId = &#63; and classNameId = &#63; and classPK = &#63; and paymentStatus = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommercePaymentEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param paymentStatus the payment status
+	 * @param type the type
+	 * @param start the lower bound of the range of commerce payment entries
+	 * @param end the upper bound of the range of commerce payment entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching commerce payment entries
+	 */
+	@Override
+	public List<CommercePaymentEntry> findByC_C_C_P_T(
+		long companyId, long classNameId, long classPK, int paymentStatus,
+		int type, int start, int end,
+		OrderByComparator<CommercePaymentEntry> orderByComparator,
+		boolean useFinderCache) {
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByC_C_C_P_T;
+				finderArgs = new Object[] {
+					companyId, classNameId, classPK, paymentStatus, type
+				};
+			}
+		}
+		else if (useFinderCache) {
+			finderPath = _finderPathWithPaginationFindByC_C_C_P_T;
+			finderArgs = new Object[] {
+				companyId, classNameId, classPK, paymentStatus, type, start,
+				end, orderByComparator
+			};
+		}
+
+		List<CommercePaymentEntry> list = null;
+
+		if (useFinderCache) {
+			list = (List<CommercePaymentEntry>)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (CommercePaymentEntry commercePaymentEntry : list) {
+					if ((companyId != commercePaymentEntry.getCompanyId()) ||
+						(classNameId !=
+							commercePaymentEntry.getClassNameId()) ||
+						(classPK != commercePaymentEntry.getClassPK()) ||
+						(paymentStatus !=
+							commercePaymentEntry.getPaymentStatus()) ||
+						(type != commercePaymentEntry.getType())) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler sb = null;
+
+			if (orderByComparator != null) {
+				sb = new StringBundler(
+					7 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				sb = new StringBundler(7);
+			}
+
+			sb.append(_SQL_SELECT_COMMERCEPAYMENTENTRY_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_C_C_P_T_COMPANYID_2);
+
+			sb.append(_FINDER_COLUMN_C_C_C_P_T_CLASSNAMEID_2);
+
+			sb.append(_FINDER_COLUMN_C_C_C_P_T_CLASSPK_2);
+
+			sb.append(_FINDER_COLUMN_C_C_C_P_T_PAYMENTSTATUS_2);
+
+			sb.append(_FINDER_COLUMN_C_C_C_P_T_TYPE_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				sb.append(CommercePaymentEntryModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(companyId);
+
+				queryPos.add(classNameId);
+
+				queryPos.add(classPK);
+
+				queryPos.add(paymentStatus);
+
+				queryPos.add(type);
+
+				list = (List<CommercePaymentEntry>)QueryUtil.list(
+					query, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first commerce payment entry in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and paymentStatus = &#63; and type = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param paymentStatus the payment status
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce payment entry
+	 * @throws NoSuchPaymentEntryException if a matching commerce payment entry could not be found
+	 */
+	@Override
+	public CommercePaymentEntry findByC_C_C_P_T_First(
+			long companyId, long classNameId, long classPK, int paymentStatus,
+			int type, OrderByComparator<CommercePaymentEntry> orderByComparator)
+		throws NoSuchPaymentEntryException {
+
+		CommercePaymentEntry commercePaymentEntry = fetchByC_C_C_P_T_First(
+			companyId, classNameId, classPK, paymentStatus, type,
+			orderByComparator);
+
+		if (commercePaymentEntry != null) {
+			return commercePaymentEntry;
+		}
+
+		StringBundler sb = new StringBundler(12);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("companyId=");
+		sb.append(companyId);
+
+		sb.append(", classNameId=");
+		sb.append(classNameId);
+
+		sb.append(", classPK=");
+		sb.append(classPK);
+
+		sb.append(", paymentStatus=");
+		sb.append(paymentStatus);
+
+		sb.append(", type=");
+		sb.append(type);
+
+		sb.append("}");
+
+		throw new NoSuchPaymentEntryException(sb.toString());
+	}
+
+	/**
+	 * Returns the first commerce payment entry in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and paymentStatus = &#63; and type = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param paymentStatus the payment status
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce payment entry, or <code>null</code> if a matching commerce payment entry could not be found
+	 */
+	@Override
+	public CommercePaymentEntry fetchByC_C_C_P_T_First(
+		long companyId, long classNameId, long classPK, int paymentStatus,
+		int type, OrderByComparator<CommercePaymentEntry> orderByComparator) {
+
+		List<CommercePaymentEntry> list = findByC_C_C_P_T(
+			companyId, classNameId, classPK, paymentStatus, type, 0, 1,
+			orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last commerce payment entry in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and paymentStatus = &#63; and type = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param paymentStatus the payment status
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce payment entry
+	 * @throws NoSuchPaymentEntryException if a matching commerce payment entry could not be found
+	 */
+	@Override
+	public CommercePaymentEntry findByC_C_C_P_T_Last(
+			long companyId, long classNameId, long classPK, int paymentStatus,
+			int type, OrderByComparator<CommercePaymentEntry> orderByComparator)
+		throws NoSuchPaymentEntryException {
+
+		CommercePaymentEntry commercePaymentEntry = fetchByC_C_C_P_T_Last(
+			companyId, classNameId, classPK, paymentStatus, type,
+			orderByComparator);
+
+		if (commercePaymentEntry != null) {
+			return commercePaymentEntry;
+		}
+
+		StringBundler sb = new StringBundler(12);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("companyId=");
+		sb.append(companyId);
+
+		sb.append(", classNameId=");
+		sb.append(classNameId);
+
+		sb.append(", classPK=");
+		sb.append(classPK);
+
+		sb.append(", paymentStatus=");
+		sb.append(paymentStatus);
+
+		sb.append(", type=");
+		sb.append(type);
+
+		sb.append("}");
+
+		throw new NoSuchPaymentEntryException(sb.toString());
+	}
+
+	/**
+	 * Returns the last commerce payment entry in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and paymentStatus = &#63; and type = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param paymentStatus the payment status
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce payment entry, or <code>null</code> if a matching commerce payment entry could not be found
+	 */
+	@Override
+	public CommercePaymentEntry fetchByC_C_C_P_T_Last(
+		long companyId, long classNameId, long classPK, int paymentStatus,
+		int type, OrderByComparator<CommercePaymentEntry> orderByComparator) {
+
+		int count = countByC_C_C_P_T(
+			companyId, classNameId, classPK, paymentStatus, type);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<CommercePaymentEntry> list = findByC_C_C_P_T(
+			companyId, classNameId, classPK, paymentStatus, type, count - 1,
+			count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the commerce payment entries before and after the current commerce payment entry in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and paymentStatus = &#63; and type = &#63;.
+	 *
+	 * @param commercePaymentEntryId the primary key of the current commerce payment entry
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param paymentStatus the payment status
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce payment entry
+	 * @throws NoSuchPaymentEntryException if a commerce payment entry with the primary key could not be found
+	 */
+	@Override
+	public CommercePaymentEntry[] findByC_C_C_P_T_PrevAndNext(
+			long commercePaymentEntryId, long companyId, long classNameId,
+			long classPK, int paymentStatus, int type,
+			OrderByComparator<CommercePaymentEntry> orderByComparator)
+		throws NoSuchPaymentEntryException {
+
+		CommercePaymentEntry commercePaymentEntry = findByPrimaryKey(
+			commercePaymentEntryId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			CommercePaymentEntry[] array = new CommercePaymentEntryImpl[3];
+
+			array[0] = getByC_C_C_P_T_PrevAndNext(
+				session, commercePaymentEntry, companyId, classNameId, classPK,
+				paymentStatus, type, orderByComparator, true);
+
+			array[1] = commercePaymentEntry;
+
+			array[2] = getByC_C_C_P_T_PrevAndNext(
+				session, commercePaymentEntry, companyId, classNameId, classPK,
+				paymentStatus, type, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected CommercePaymentEntry getByC_C_C_P_T_PrevAndNext(
+		Session session, CommercePaymentEntry commercePaymentEntry,
+		long companyId, long classNameId, long classPK, int paymentStatus,
+		int type, OrderByComparator<CommercePaymentEntry> orderByComparator,
+		boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				8 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(7);
+		}
+
+		sb.append(_SQL_SELECT_COMMERCEPAYMENTENTRY_WHERE);
+
+		sb.append(_FINDER_COLUMN_C_C_C_P_T_COMPANYID_2);
+
+		sb.append(_FINDER_COLUMN_C_C_C_P_T_CLASSNAMEID_2);
+
+		sb.append(_FINDER_COLUMN_C_C_C_P_T_CLASSPK_2);
+
+		sb.append(_FINDER_COLUMN_C_C_C_P_T_PAYMENTSTATUS_2);
+
+		sb.append(_FINDER_COLUMN_C_C_C_P_T_TYPE_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			sb.append(CommercePaymentEntryModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = sb.toString();
+
+		Query query = session.createQuery(sql);
+
+		query.setFirstResult(0);
+		query.setMaxResults(2);
+
+		QueryPos queryPos = QueryPos.getInstance(query);
+
+		queryPos.add(companyId);
+
+		queryPos.add(classNameId);
+
+		queryPos.add(classPK);
+
+		queryPos.add(paymentStatus);
+
+		queryPos.add(type);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						commercePaymentEntry)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<CommercePaymentEntry> list = query.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Returns all the commerce payment entries that the user has permission to view where companyId = &#63; and classNameId = &#63; and classPK = &#63; and paymentStatus = &#63; and type = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param paymentStatus the payment status
+	 * @param type the type
+	 * @return the matching commerce payment entries that the user has permission to view
+	 */
+	@Override
+	public List<CommercePaymentEntry> filterFindByC_C_C_P_T(
+		long companyId, long classNameId, long classPK, int paymentStatus,
+		int type) {
+
+		return filterFindByC_C_C_P_T(
+			companyId, classNameId, classPK, paymentStatus, type,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the commerce payment entries that the user has permission to view where companyId = &#63; and classNameId = &#63; and classPK = &#63; and paymentStatus = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommercePaymentEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param paymentStatus the payment status
+	 * @param type the type
+	 * @param start the lower bound of the range of commerce payment entries
+	 * @param end the upper bound of the range of commerce payment entries (not inclusive)
+	 * @return the range of matching commerce payment entries that the user has permission to view
+	 */
+	@Override
+	public List<CommercePaymentEntry> filterFindByC_C_C_P_T(
+		long companyId, long classNameId, long classPK, int paymentStatus,
+		int type, int start, int end) {
+
+		return filterFindByC_C_C_P_T(
+			companyId, classNameId, classPK, paymentStatus, type, start, end,
+			null);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce payment entries that the user has permissions to view where companyId = &#63; and classNameId = &#63; and classPK = &#63; and paymentStatus = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommercePaymentEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param paymentStatus the payment status
+	 * @param type the type
+	 * @param start the lower bound of the range of commerce payment entries
+	 * @param end the upper bound of the range of commerce payment entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce payment entries that the user has permission to view
+	 */
+	@Override
+	public List<CommercePaymentEntry> filterFindByC_C_C_P_T(
+		long companyId, long classNameId, long classPK, int paymentStatus,
+		int type, int start, int end,
+		OrderByComparator<CommercePaymentEntry> orderByComparator) {
+
+		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+			return findByC_C_C_P_T(
+				companyId, classNameId, classPK, paymentStatus, type, start,
+				end, orderByComparator);
+		}
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				7 + (orderByComparator.getOrderByFields().length * 2));
+		}
+		else {
+			sb = new StringBundler(8);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			sb.append(_FILTER_SQL_SELECT_COMMERCEPAYMENTENTRY_WHERE);
+		}
+		else {
+			sb.append(
+				_FILTER_SQL_SELECT_COMMERCEPAYMENTENTRY_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		sb.append(_FINDER_COLUMN_C_C_C_P_T_COMPANYID_2);
+
+		sb.append(_FINDER_COLUMN_C_C_C_P_T_CLASSNAMEID_2);
+
+		sb.append(_FINDER_COLUMN_C_C_C_P_T_CLASSPK_2);
+
+		sb.append(_FINDER_COLUMN_C_C_C_P_T_PAYMENTSTATUS_2);
+
+		sb.append(_FINDER_COLUMN_C_C_C_P_T_TYPE_2_SQL);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			sb.append(
+				_FILTER_SQL_SELECT_COMMERCEPAYMENTENTRY_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				sb.append(
+					CommercePaymentEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+			}
+			else {
+				sb.append(CommercePaymentEntryModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			sb.toString(), CommercePaymentEntry.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				sqlQuery.addEntity(
+					_FILTER_ENTITY_ALIAS, CommercePaymentEntryImpl.class);
+			}
+			else {
+				sqlQuery.addEntity(
+					_FILTER_ENTITY_TABLE, CommercePaymentEntryImpl.class);
+			}
+
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
+
+			queryPos.add(companyId);
+
+			queryPos.add(classNameId);
+
+			queryPos.add(classPK);
+
+			queryPos.add(paymentStatus);
+
+			queryPos.add(type);
+
+			return (List<CommercePaymentEntry>)QueryUtil.list(
+				sqlQuery, getDialect(), start, end);
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the commerce payment entries before and after the current commerce payment entry in the ordered set of commerce payment entries that the user has permission to view where companyId = &#63; and classNameId = &#63; and classPK = &#63; and paymentStatus = &#63; and type = &#63;.
+	 *
+	 * @param commercePaymentEntryId the primary key of the current commerce payment entry
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param paymentStatus the payment status
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce payment entry
+	 * @throws NoSuchPaymentEntryException if a commerce payment entry with the primary key could not be found
+	 */
+	@Override
+	public CommercePaymentEntry[] filterFindByC_C_C_P_T_PrevAndNext(
+			long commercePaymentEntryId, long companyId, long classNameId,
+			long classPK, int paymentStatus, int type,
+			OrderByComparator<CommercePaymentEntry> orderByComparator)
+		throws NoSuchPaymentEntryException {
+
+		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+			return findByC_C_C_P_T_PrevAndNext(
+				commercePaymentEntryId, companyId, classNameId, classPK,
+				paymentStatus, type, orderByComparator);
+		}
+
+		CommercePaymentEntry commercePaymentEntry = findByPrimaryKey(
+			commercePaymentEntryId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			CommercePaymentEntry[] array = new CommercePaymentEntryImpl[3];
+
+			array[0] = filterGetByC_C_C_P_T_PrevAndNext(
+				session, commercePaymentEntry, companyId, classNameId, classPK,
+				paymentStatus, type, orderByComparator, true);
+
+			array[1] = commercePaymentEntry;
+
+			array[2] = filterGetByC_C_C_P_T_PrevAndNext(
+				session, commercePaymentEntry, companyId, classNameId, classPK,
+				paymentStatus, type, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected CommercePaymentEntry filterGetByC_C_C_P_T_PrevAndNext(
+		Session session, CommercePaymentEntry commercePaymentEntry,
+		long companyId, long classNameId, long classPK, int paymentStatus,
+		int type, OrderByComparator<CommercePaymentEntry> orderByComparator,
+		boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				9 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(8);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			sb.append(_FILTER_SQL_SELECT_COMMERCEPAYMENTENTRY_WHERE);
+		}
+		else {
+			sb.append(
+				_FILTER_SQL_SELECT_COMMERCEPAYMENTENTRY_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		sb.append(_FINDER_COLUMN_C_C_C_P_T_COMPANYID_2);
+
+		sb.append(_FINDER_COLUMN_C_C_C_P_T_CLASSNAMEID_2);
+
+		sb.append(_FINDER_COLUMN_C_C_C_P_T_CLASSPK_2);
+
+		sb.append(_FINDER_COLUMN_C_C_C_P_T_PAYMENTSTATUS_2);
+
+		sb.append(_FINDER_COLUMN_C_C_C_P_T_TYPE_2_SQL);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			sb.append(
+				_FILTER_SQL_SELECT_COMMERCEPAYMENTENTRY_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					sb.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_ALIAS, orderByConditionFields[i],
+							true));
+				}
+				else {
+					sb.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_TABLE, orderByConditionFields[i],
+							true));
+				}
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					sb.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_ALIAS, orderByFields[i], true));
+				}
+				else {
+					sb.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_TABLE, orderByFields[i], true));
+				}
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				sb.append(
+					CommercePaymentEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+			}
+			else {
+				sb.append(CommercePaymentEntryModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			sb.toString(), CommercePaymentEntry.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+
+		SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+		sqlQuery.setFirstResult(0);
+		sqlQuery.setMaxResults(2);
+
+		if (getDB().isSupportsInlineDistinct()) {
+			sqlQuery.addEntity(
+				_FILTER_ENTITY_ALIAS, CommercePaymentEntryImpl.class);
+		}
+		else {
+			sqlQuery.addEntity(
+				_FILTER_ENTITY_TABLE, CommercePaymentEntryImpl.class);
+		}
+
+		QueryPos queryPos = QueryPos.getInstance(sqlQuery);
+
+		queryPos.add(companyId);
+
+		queryPos.add(classNameId);
+
+		queryPos.add(classPK);
+
+		queryPos.add(paymentStatus);
+
+		queryPos.add(type);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						commercePaymentEntry)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<CommercePaymentEntry> list = sqlQuery.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the commerce payment entries where companyId = &#63; and classNameId = &#63; and classPK = &#63; and paymentStatus = &#63; and type = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param paymentStatus the payment status
+	 * @param type the type
+	 */
+	@Override
+	public void removeByC_C_C_P_T(
+		long companyId, long classNameId, long classPK, int paymentStatus,
+		int type) {
+
+		for (CommercePaymentEntry commercePaymentEntry :
+				findByC_C_C_P_T(
+					companyId, classNameId, classPK, paymentStatus, type,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
+			remove(commercePaymentEntry);
+		}
+	}
+
+	/**
+	 * Returns the number of commerce payment entries where companyId = &#63; and classNameId = &#63; and classPK = &#63; and paymentStatus = &#63; and type = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param paymentStatus the payment status
+	 * @param type the type
+	 * @return the number of matching commerce payment entries
+	 */
+	@Override
+	public int countByC_C_C_P_T(
+		long companyId, long classNameId, long classPK, int paymentStatus,
+		int type) {
+
+		FinderPath finderPath = _finderPathCountByC_C_C_P_T;
+
+		Object[] finderArgs = new Object[] {
+			companyId, classNameId, classPK, paymentStatus, type
+		};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(6);
+
+			sb.append(_SQL_COUNT_COMMERCEPAYMENTENTRY_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_C_C_P_T_COMPANYID_2);
+
+			sb.append(_FINDER_COLUMN_C_C_C_P_T_CLASSNAMEID_2);
+
+			sb.append(_FINDER_COLUMN_C_C_C_P_T_CLASSPK_2);
+
+			sb.append(_FINDER_COLUMN_C_C_C_P_T_PAYMENTSTATUS_2);
+
+			sb.append(_FINDER_COLUMN_C_C_C_P_T_TYPE_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(companyId);
+
+				queryPos.add(classNameId);
+
+				queryPos.add(classPK);
+
+				queryPos.add(paymentStatus);
+
+				queryPos.add(type);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of commerce payment entries that the user has permission to view where companyId = &#63; and classNameId = &#63; and classPK = &#63; and paymentStatus = &#63; and type = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param paymentStatus the payment status
+	 * @param type the type
+	 * @return the number of matching commerce payment entries that the user has permission to view
+	 */
+	@Override
+	public int filterCountByC_C_C_P_T(
+		long companyId, long classNameId, long classPK, int paymentStatus,
+		int type) {
+
+		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+			return countByC_C_C_P_T(
+				companyId, classNameId, classPK, paymentStatus, type);
+		}
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append(_FILTER_SQL_COUNT_COMMERCEPAYMENTENTRY_WHERE);
+
+		sb.append(_FINDER_COLUMN_C_C_C_P_T_COMPANYID_2);
+
+		sb.append(_FINDER_COLUMN_C_C_C_P_T_CLASSNAMEID_2);
+
+		sb.append(_FINDER_COLUMN_C_C_C_P_T_CLASSPK_2);
+
+		sb.append(_FINDER_COLUMN_C_C_C_P_T_PAYMENTSTATUS_2);
+
+		sb.append(_FINDER_COLUMN_C_C_C_P_T_TYPE_2_SQL);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			sb.toString(), CommercePaymentEntry.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+			sqlQuery.addScalar(
+				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
+
+			queryPos.add(companyId);
+
+			queryPos.add(classNameId);
+
+			queryPos.add(classPK);
+
+			queryPos.add(paymentStatus);
+
+			queryPos.add(type);
+
+			Long count = (Long)sqlQuery.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	private static final String _FINDER_COLUMN_C_C_C_P_T_COMPANYID_2 =
+		"commercePaymentEntry.companyId = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_C_C_P_T_CLASSNAMEID_2 =
+		"commercePaymentEntry.classNameId = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_C_C_P_T_CLASSPK_2 =
+		"commercePaymentEntry.classPK = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_C_C_P_T_PAYMENTSTATUS_2 =
+		"commercePaymentEntry.paymentStatus = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_C_C_P_T_TYPE_2 =
+		"commercePaymentEntry.type = ?";
+
+	private static final String _FINDER_COLUMN_C_C_C_P_T_TYPE_2_SQL =
+		"commercePaymentEntry.type_ = ?";
+
 	private FinderPath _finderPathFetchByERC_C;
 	private FinderPath _finderPathCountByERC_C;
 
@@ -4069,6 +5214,43 @@ public class CommercePaymentEntryPersistenceImpl
 				Long.class.getName(), Integer.class.getName()
 			},
 			new String[] {"companyId", "classNameId", "classPK", "type_"},
+			false);
+
+		_finderPathWithPaginationFindByC_C_C_P_T = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_C_P_T",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			},
+			new String[] {
+				"companyId", "classNameId", "classPK", "paymentStatus", "type_"
+			},
+			true);
+
+		_finderPathWithoutPaginationFindByC_C_C_P_T = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C_C_P_T",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName()
+			},
+			new String[] {
+				"companyId", "classNameId", "classPK", "paymentStatus", "type_"
+			},
+			true);
+
+		_finderPathCountByC_C_C_P_T = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_C_P_T",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName()
+			},
+			new String[] {
+				"companyId", "classNameId", "classPK", "paymentStatus", "type_"
+			},
 			false);
 
 		_finderPathFetchByERC_C = new FinderPath(

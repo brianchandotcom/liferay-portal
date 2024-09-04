@@ -1002,6 +1002,362 @@ public class CommercePaymentEntryUtil {
 	}
 
 	/**
+	 * Returns all the commerce payment entries where companyId = &#63; and classNameId = &#63; and classPK = &#63; and paymentStatus = &#63; and type = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param paymentStatus the payment status
+	 * @param type the type
+	 * @return the matching commerce payment entries
+	 */
+	public static List<CommercePaymentEntry> findByC_C_C_P_T(
+		long companyId, long classNameId, long classPK, int paymentStatus,
+		int type) {
+
+		return getPersistence().findByC_C_C_P_T(
+			companyId, classNameId, classPK, paymentStatus, type);
+	}
+
+	/**
+	 * Returns a range of all the commerce payment entries where companyId = &#63; and classNameId = &#63; and classPK = &#63; and paymentStatus = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommercePaymentEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param paymentStatus the payment status
+	 * @param type the type
+	 * @param start the lower bound of the range of commerce payment entries
+	 * @param end the upper bound of the range of commerce payment entries (not inclusive)
+	 * @return the range of matching commerce payment entries
+	 */
+	public static List<CommercePaymentEntry> findByC_C_C_P_T(
+		long companyId, long classNameId, long classPK, int paymentStatus,
+		int type, int start, int end) {
+
+		return getPersistence().findByC_C_C_P_T(
+			companyId, classNameId, classPK, paymentStatus, type, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce payment entries where companyId = &#63; and classNameId = &#63; and classPK = &#63; and paymentStatus = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommercePaymentEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param paymentStatus the payment status
+	 * @param type the type
+	 * @param start the lower bound of the range of commerce payment entries
+	 * @param end the upper bound of the range of commerce payment entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce payment entries
+	 */
+	public static List<CommercePaymentEntry> findByC_C_C_P_T(
+		long companyId, long classNameId, long classPK, int paymentStatus,
+		int type, int start, int end,
+		OrderByComparator<CommercePaymentEntry> orderByComparator) {
+
+		return getPersistence().findByC_C_C_P_T(
+			companyId, classNameId, classPK, paymentStatus, type, start, end,
+			orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce payment entries where companyId = &#63; and classNameId = &#63; and classPK = &#63; and paymentStatus = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommercePaymentEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param paymentStatus the payment status
+	 * @param type the type
+	 * @param start the lower bound of the range of commerce payment entries
+	 * @param end the upper bound of the range of commerce payment entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching commerce payment entries
+	 */
+	public static List<CommercePaymentEntry> findByC_C_C_P_T(
+		long companyId, long classNameId, long classPK, int paymentStatus,
+		int type, int start, int end,
+		OrderByComparator<CommercePaymentEntry> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByC_C_C_P_T(
+			companyId, classNameId, classPK, paymentStatus, type, start, end,
+			orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first commerce payment entry in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and paymentStatus = &#63; and type = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param paymentStatus the payment status
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce payment entry
+	 * @throws NoSuchPaymentEntryException if a matching commerce payment entry could not be found
+	 */
+	public static CommercePaymentEntry findByC_C_C_P_T_First(
+			long companyId, long classNameId, long classPK, int paymentStatus,
+			int type, OrderByComparator<CommercePaymentEntry> orderByComparator)
+		throws com.liferay.commerce.payment.exception.
+			NoSuchPaymentEntryException {
+
+		return getPersistence().findByC_C_C_P_T_First(
+			companyId, classNameId, classPK, paymentStatus, type,
+			orderByComparator);
+	}
+
+	/**
+	 * Returns the first commerce payment entry in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and paymentStatus = &#63; and type = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param paymentStatus the payment status
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce payment entry, or <code>null</code> if a matching commerce payment entry could not be found
+	 */
+	public static CommercePaymentEntry fetchByC_C_C_P_T_First(
+		long companyId, long classNameId, long classPK, int paymentStatus,
+		int type, OrderByComparator<CommercePaymentEntry> orderByComparator) {
+
+		return getPersistence().fetchByC_C_C_P_T_First(
+			companyId, classNameId, classPK, paymentStatus, type,
+			orderByComparator);
+	}
+
+	/**
+	 * Returns the last commerce payment entry in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and paymentStatus = &#63; and type = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param paymentStatus the payment status
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce payment entry
+	 * @throws NoSuchPaymentEntryException if a matching commerce payment entry could not be found
+	 */
+	public static CommercePaymentEntry findByC_C_C_P_T_Last(
+			long companyId, long classNameId, long classPK, int paymentStatus,
+			int type, OrderByComparator<CommercePaymentEntry> orderByComparator)
+		throws com.liferay.commerce.payment.exception.
+			NoSuchPaymentEntryException {
+
+		return getPersistence().findByC_C_C_P_T_Last(
+			companyId, classNameId, classPK, paymentStatus, type,
+			orderByComparator);
+	}
+
+	/**
+	 * Returns the last commerce payment entry in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and paymentStatus = &#63; and type = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param paymentStatus the payment status
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce payment entry, or <code>null</code> if a matching commerce payment entry could not be found
+	 */
+	public static CommercePaymentEntry fetchByC_C_C_P_T_Last(
+		long companyId, long classNameId, long classPK, int paymentStatus,
+		int type, OrderByComparator<CommercePaymentEntry> orderByComparator) {
+
+		return getPersistence().fetchByC_C_C_P_T_Last(
+			companyId, classNameId, classPK, paymentStatus, type,
+			orderByComparator);
+	}
+
+	/**
+	 * Returns the commerce payment entries before and after the current commerce payment entry in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and paymentStatus = &#63; and type = &#63;.
+	 *
+	 * @param commercePaymentEntryId the primary key of the current commerce payment entry
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param paymentStatus the payment status
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce payment entry
+	 * @throws NoSuchPaymentEntryException if a commerce payment entry with the primary key could not be found
+	 */
+	public static CommercePaymentEntry[] findByC_C_C_P_T_PrevAndNext(
+			long commercePaymentEntryId, long companyId, long classNameId,
+			long classPK, int paymentStatus, int type,
+			OrderByComparator<CommercePaymentEntry> orderByComparator)
+		throws com.liferay.commerce.payment.exception.
+			NoSuchPaymentEntryException {
+
+		return getPersistence().findByC_C_C_P_T_PrevAndNext(
+			commercePaymentEntryId, companyId, classNameId, classPK,
+			paymentStatus, type, orderByComparator);
+	}
+
+	/**
+	 * Returns all the commerce payment entries that the user has permission to view where companyId = &#63; and classNameId = &#63; and classPK = &#63; and paymentStatus = &#63; and type = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param paymentStatus the payment status
+	 * @param type the type
+	 * @return the matching commerce payment entries that the user has permission to view
+	 */
+	public static List<CommercePaymentEntry> filterFindByC_C_C_P_T(
+		long companyId, long classNameId, long classPK, int paymentStatus,
+		int type) {
+
+		return getPersistence().filterFindByC_C_C_P_T(
+			companyId, classNameId, classPK, paymentStatus, type);
+	}
+
+	/**
+	 * Returns a range of all the commerce payment entries that the user has permission to view where companyId = &#63; and classNameId = &#63; and classPK = &#63; and paymentStatus = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommercePaymentEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param paymentStatus the payment status
+	 * @param type the type
+	 * @param start the lower bound of the range of commerce payment entries
+	 * @param end the upper bound of the range of commerce payment entries (not inclusive)
+	 * @return the range of matching commerce payment entries that the user has permission to view
+	 */
+	public static List<CommercePaymentEntry> filterFindByC_C_C_P_T(
+		long companyId, long classNameId, long classPK, int paymentStatus,
+		int type, int start, int end) {
+
+		return getPersistence().filterFindByC_C_C_P_T(
+			companyId, classNameId, classPK, paymentStatus, type, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce payment entries that the user has permissions to view where companyId = &#63; and classNameId = &#63; and classPK = &#63; and paymentStatus = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommercePaymentEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param paymentStatus the payment status
+	 * @param type the type
+	 * @param start the lower bound of the range of commerce payment entries
+	 * @param end the upper bound of the range of commerce payment entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce payment entries that the user has permission to view
+	 */
+	public static List<CommercePaymentEntry> filterFindByC_C_C_P_T(
+		long companyId, long classNameId, long classPK, int paymentStatus,
+		int type, int start, int end,
+		OrderByComparator<CommercePaymentEntry> orderByComparator) {
+
+		return getPersistence().filterFindByC_C_C_P_T(
+			companyId, classNameId, classPK, paymentStatus, type, start, end,
+			orderByComparator);
+	}
+
+	/**
+	 * Returns the commerce payment entries before and after the current commerce payment entry in the ordered set of commerce payment entries that the user has permission to view where companyId = &#63; and classNameId = &#63; and classPK = &#63; and paymentStatus = &#63; and type = &#63;.
+	 *
+	 * @param commercePaymentEntryId the primary key of the current commerce payment entry
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param paymentStatus the payment status
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce payment entry
+	 * @throws NoSuchPaymentEntryException if a commerce payment entry with the primary key could not be found
+	 */
+	public static CommercePaymentEntry[] filterFindByC_C_C_P_T_PrevAndNext(
+			long commercePaymentEntryId, long companyId, long classNameId,
+			long classPK, int paymentStatus, int type,
+			OrderByComparator<CommercePaymentEntry> orderByComparator)
+		throws com.liferay.commerce.payment.exception.
+			NoSuchPaymentEntryException {
+
+		return getPersistence().filterFindByC_C_C_P_T_PrevAndNext(
+			commercePaymentEntryId, companyId, classNameId, classPK,
+			paymentStatus, type, orderByComparator);
+	}
+
+	/**
+	 * Removes all the commerce payment entries where companyId = &#63; and classNameId = &#63; and classPK = &#63; and paymentStatus = &#63; and type = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param paymentStatus the payment status
+	 * @param type the type
+	 */
+	public static void removeByC_C_C_P_T(
+		long companyId, long classNameId, long classPK, int paymentStatus,
+		int type) {
+
+		getPersistence().removeByC_C_C_P_T(
+			companyId, classNameId, classPK, paymentStatus, type);
+	}
+
+	/**
+	 * Returns the number of commerce payment entries where companyId = &#63; and classNameId = &#63; and classPK = &#63; and paymentStatus = &#63; and type = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param paymentStatus the payment status
+	 * @param type the type
+	 * @return the number of matching commerce payment entries
+	 */
+	public static int countByC_C_C_P_T(
+		long companyId, long classNameId, long classPK, int paymentStatus,
+		int type) {
+
+		return getPersistence().countByC_C_C_P_T(
+			companyId, classNameId, classPK, paymentStatus, type);
+	}
+
+	/**
+	 * Returns the number of commerce payment entries that the user has permission to view where companyId = &#63; and classNameId = &#63; and classPK = &#63; and paymentStatus = &#63; and type = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param paymentStatus the payment status
+	 * @param type the type
+	 * @return the number of matching commerce payment entries that the user has permission to view
+	 */
+	public static int filterCountByC_C_C_P_T(
+		long companyId, long classNameId, long classPK, int paymentStatus,
+		int type) {
+
+		return getPersistence().filterCountByC_C_C_P_T(
+			companyId, classNameId, classPK, paymentStatus, type);
+	}
+
+	/**
 	 * Returns the commerce payment entry where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchPaymentEntryException</code> if it could not be found.
 	 *
 	 * @param externalReferenceCode the external reference code

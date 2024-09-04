@@ -320,6 +320,16 @@ public class CommercePaymentEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_C_C_P_T() throws Exception {
+		_persistence.countByC_C_C_P_T(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt(),
+			RandomTestUtil.nextInt());
+
+		_persistence.countByC_C_C_P_T(0L, 0L, 0L, 0, 0);
+	}
+
+	@Test
 	public void testCountByERC_C() throws Exception {
 		_persistence.countByERC_C("", RandomTestUtil.nextLong());
 

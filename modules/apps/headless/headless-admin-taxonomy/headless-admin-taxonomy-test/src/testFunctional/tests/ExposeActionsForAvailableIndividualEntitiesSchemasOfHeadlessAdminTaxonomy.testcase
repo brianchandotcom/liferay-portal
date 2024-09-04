@@ -4,7 +4,7 @@ definition {
 	property custom.properties = "feature.flag.LPS-180090=true";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.component.names = "REST infrastructure (vulcan)";
+	property testray.component.names = "REST Infrastructure";
 	property testray.main.component.name = "Headless Admin Taxonomy API";
 
 	setUp {

@@ -363,10 +363,6 @@ public class CommerceAccountRoleHelperImpl
 				new String[] {ActionKeys.VIEW});
 		}
 		else if (name.equals(AccountRoleConstants.ROLE_NAME_RETURNS_MANAGER)) {
-			companyResourceActionIds.put(
-				CommercePaymentEntry.class.getName(),
-				new String[] {ActionKeys.VIEW});
-
 			for (String portletId :
 					_RETURNS_MANAGER_CONTROL_PANEL_PORTLET_IDS) {
 
@@ -375,6 +371,9 @@ public class CommerceAccountRoleHelperImpl
 					new String[] {ActionKeys.ACCESS_IN_CONTROL_PANEL});
 			}
 
+			companyResourceActionIds.put(
+				CommercePaymentEntry.class.getName(),
+				new String[] {ActionKeys.VIEW});
 			companyResourceActionIds.put(
 				PortletKeys.PORTAL,
 				new String[] {ActionKeys.VIEW_CONTROL_PANEL});

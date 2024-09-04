@@ -43,15 +43,39 @@ public class ContentSecurityPolicyFilterTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
+	public void testIsFilterEnabled() throws Exception {
+		try (CompanyConfigurationTemporarySwapper
+				configurationTemporarySwapper =
+					_getCompanyConfigurationTemporarySwapper(false, null, "")) {
+
+			HttpURLConnection httpURLConnection = _openHttpURLConnection(
+				"http://localhost:8080/html/icons/flags.png");
+
+			Map<String, List<String>> headerFields =
+				httpURLConnection.getHeaderFields();
+
+			Assert.assertFalse(
+				headerFields.containsKey("Content-Security-Policy"));
+
+			httpURLConnection.disconnect();
+		}
+	}
+
+	@Test
 	public void testProcessFilter() throws Exception {
 		try (CompanyConfigurationTemporarySwapper
 				configurationTemporarySwapper =
 					_getCompanyConfigurationTemporarySwapper(false, null, "")) {
 
-			HttpURLConnection httpURLConnection = _openHttpURLConnection();
+			HttpURLConnection httpURLConnection = _openHttpURLConnection(
+				"http://localhost:8080/web/guest");
+
+			System.out.println("httpURLConnection: " + httpURLConnection);
 
 			Map<String, List<String>> headerFields =
 				httpURLConnection.getHeaderFields();
+
+			System.out.println("headerFields: " + headerFields);
 
 			Assert.assertFalse(
 				headerFields.containsKey("Content-Security-Policy"));
@@ -63,7 +87,8 @@ public class ContentSecurityPolicyFilterTest {
 				configurationTemporarySwapper =
 					_getCompanyConfigurationTemporarySwapper(true, null, "")) {
 
-			HttpURLConnection httpURLConnection = _openHttpURLConnection();
+			HttpURLConnection httpURLConnection = _openHttpURLConnection(
+				"http://localhost:8080/web/guest");
 
 			Map<String, List<String>> headerFields =
 				httpURLConnection.getHeaderFields();
@@ -85,7 +110,8 @@ public class ContentSecurityPolicyFilterTest {
 					_getCompanyConfigurationTemporarySwapper(
 						true, null, policy)) {
 
-			HttpURLConnection httpURLConnection = _openHttpURLConnection();
+			HttpURLConnection httpURLConnection = _openHttpURLConnection(
+				"http://localhost:8080/web/guest");
 
 			Map<String, List<String>> headerFields =
 				httpURLConnection.getHeaderFields();
@@ -109,7 +135,8 @@ public class ContentSecurityPolicyFilterTest {
 					_getCompanyConfigurationTemporarySwapper(
 						true, null, policy)) {
 
-			HttpURLConnection httpURLConnection = _openHttpURLConnection();
+			HttpURLConnection httpURLConnection = _openHttpURLConnection(
+				"http://localhost:8080/web/guest");
 
 			Map<String, List<String>> headerFields =
 				httpURLConnection.getHeaderFields();
@@ -148,7 +175,8 @@ public class ContentSecurityPolicyFilterTest {
 						true, new String[] {"/c/portal/layout", "/web/guest"},
 						policy)) {
 
-			HttpURLConnection httpURLConnection = _openHttpURLConnection();
+			HttpURLConnection httpURLConnection = _openHttpURLConnection(
+				"http://localhost:8080/web/guest");
 
 			Map<String, List<String>> headerFields =
 				httpURLConnection.getHeaderFields();
@@ -198,8 +226,10 @@ public class ContentSecurityPolicyFilterTest {
 		return sb.toString();
 	}
 
-	private HttpURLConnection _openHttpURLConnection() throws IOException {
-		URL url = new URL("http://localhost:8080/web/guest");
+	private HttpURLConnection _openHttpURLConnection(String spec)
+		throws IOException {
+
+		URL url = new URL(spec);
 
 		HttpURLConnection httpURLConnection =
 			(HttpURLConnection)url.openConnection();

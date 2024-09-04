@@ -442,6 +442,27 @@ public class CommercePaymentEntryLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List
+		<com.liferay.commerce.payment.model.CommercePaymentEntry>
+			getRefundCommercePaymentEntries(
+				long companyId, long classNameId, long classPK, int start,
+				int end) {
+
+		return _commercePaymentEntryLocalService.
+			getRefundCommercePaymentEntries(
+				companyId, classNameId, classPK, start, end);
+	}
+
+	@Override
+	public int getRefundCommercePaymentEntriesCount(
+		long companyId, long classNameId, long classPK) {
+
+		return _commercePaymentEntryLocalService.
+			getRefundCommercePaymentEntriesCount(
+				companyId, classNameId, classPK);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.search.BaseModelSearchResult
 		<com.liferay.commerce.payment.model.CommercePaymentEntry>
 			searchCommercePaymentEntries(

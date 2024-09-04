@@ -372,6 +372,20 @@ public class CommercePaymentEntryLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static List<CommercePaymentEntry> getRefundCommercePaymentEntries(
+		long companyId, long classNameId, long classPK, int start, int end) {
+
+		return getService().getRefundCommercePaymentEntries(
+			companyId, classNameId, classPK, start, end);
+	}
+
+	public static int getRefundCommercePaymentEntriesCount(
+		long companyId, long classNameId, long classPK) {
+
+		return getService().getRefundCommercePaymentEntriesCount(
+			companyId, classNameId, classPK);
+	}
+
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult
 		<CommercePaymentEntry> searchCommercePaymentEntries(
 			long companyId, String keywords,

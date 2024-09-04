@@ -316,6 +316,14 @@ public interface CommercePaymentEntryLocalService
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommercePaymentEntry> getRefundCommercePaymentEntries(
+		long companyId, long classNameId, long classPK, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getRefundCommercePaymentEntriesCount(
+		long companyId, long classNameId, long classPK);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<CommercePaymentEntry>
 		searchCommercePaymentEntries(
 			long companyId, String keywords,

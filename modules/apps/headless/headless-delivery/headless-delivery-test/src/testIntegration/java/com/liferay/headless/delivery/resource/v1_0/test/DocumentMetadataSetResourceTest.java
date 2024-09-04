@@ -15,6 +15,7 @@ import com.liferay.headless.delivery.client.dto.v1_0.DocumentMetadataSet;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -29,6 +30,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Javier Gamarra
  */
+@FeatureFlags("LPD-32247")
 @RunWith(Arquillian.class)
 public class DocumentMetadataSetResourceTest
 	extends BaseDocumentMetadataSetResourceTestCase {

@@ -295,6 +295,7 @@ com.liferay.portal.DuplicateUserEmailAddressException=com.liferay.portal.kernel.
 com.liferay.portal.background.task.BackgroundTaskContextMapConstants=com.liferay.portal.background.task.constants.BackgroundTaskContextMapConstants
 com.liferay.portal.kernel.audit.AuditMessageProcessor=com.liferay.portal.security.audit.AuditMessageProcessor
 com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants=com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants
+com.liferay.portal.kernel.backgroundtask.display.BaseBackgroundTaskDisplay=com.liferay.portal.background.task.display.BaseBackgroundTaskDisplay
 com.liferay.portal.kernel.bi.reporting.ByteArrayReportResultContainer=com.liferay.portal.reports.engine.ByteArrayReportResultContainer
 com.liferay.portal.kernel.bi.reporting.ContextClassloaderReportDesignRetriever=com.liferay.portal.reports.engine.ContextClassloaderReportDesignRetriever
 com.liferay.portal.kernel.bi.reporting.MemoryReportDesignRetriever=com.liferay.portal.reports.engine.MemoryReportDesignRetriever

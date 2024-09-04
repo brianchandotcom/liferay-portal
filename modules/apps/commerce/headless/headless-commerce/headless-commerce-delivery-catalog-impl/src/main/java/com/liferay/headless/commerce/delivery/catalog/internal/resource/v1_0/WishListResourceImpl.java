@@ -108,7 +108,7 @@ public class WishListResourceImpl extends BaseWishListResourceImpl {
 			_commerceWishListItemService.deleteCommerceWishListItems(
 				commerceWishList.getCommerceWishListId());
 
-			_addOrUpdateWishListItems(
+			_postWishListItems(
 				commerceWishList, accountId, wishListItems);
 		}
 
@@ -144,13 +144,13 @@ public class WishListResourceImpl extends BaseWishListResourceImpl {
 				_serviceContextHelper.getServiceContext(
 					commerceChannel.getSiteGroupId()));
 
-		_addOrUpdateWishListItems(
+		_postWishListItems(
 			commerceWishList, accountId, wishList.getWishListItems());
 
 		return _toWishList(commerceWishList);
 	}
 
-	private void _addOrUpdateWishListItems(
+	private void _postWishListItems(
 			CommerceWishList commerceWishList, Long accountId,
 			WishListItem[] wishListItems)
 		throws Exception {

@@ -19,9 +19,9 @@ function Header() {
 }
 
 interface IBodyProps {
+	fieldNames?: string[];
 	fields: IField[];
 	filter?: IFilter;
-	fieldNames?: string[];
 	namespace: string;
 	onCancel: Function;
 	onSave: Function;

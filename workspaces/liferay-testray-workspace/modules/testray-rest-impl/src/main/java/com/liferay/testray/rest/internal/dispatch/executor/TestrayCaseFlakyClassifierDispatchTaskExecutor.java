@@ -133,9 +133,9 @@ public class TestrayCaseFlakyClassifierDispatchTaskExecutor
 			}
 
 			double totalChanges = GetterUtil.getDouble(
-				testrayCaseFlakyParameters.get("totalChanges"));
+				testrayCaseFlakyParameters.get("totalchanges"));
 			double totalCases = GetterUtil.getDouble(
-				testrayCaseFlakyParameters.get("totalCases"));
+				testrayCaseFlakyParameters.get("totalcases"));
 
 			if ((totalChanges / totalCases) > GetterUtil.getDouble(
 					unicodeProperties.getProperty(

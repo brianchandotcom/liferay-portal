@@ -79,15 +79,16 @@ public class TestrayManagerImpl implements TestrayManager {
 			long companyId, OffsetDateTime offsetDateTime, long testrayCaseId)
 		throws Exception {
 
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(12);
 
 		sb.append("select cr.r_caseToCaseResult_c_caseId, sum(case when ");
-		sb.append("cr.previousStatus != cr.dueStatus_ then 1 else 0 end) as ");
-		sb.append("totalChanges, count(c_caseResultId_) as totalCases from ");
-		sb.append("(select c_caseResultId_, r_caseToCaseResult_c_caseId, ");
-		sb.append("@previousStatus previousStatus, @previousStatus := ");
-		sb.append("dueStatus_ as dueStatus_ from ");
-		sb.append("lportal.O_[%COMPANY_ID%]_CaseResult where ");
+		sb.append("cr.previousStatus != cr.dueStatus_ and cr.previousStatus ");
+		sb.append("is not null then 1 end) as totalChanges, ");
+		sb.append("count(c_caseResultId_) as totalCases from (select ");
+		sb.append("c_caseResultId_, r_caseToCaseResult_c_caseId, dueStatus_, ");
+		sb.append("lag(dueStatus_) over (partition by ");
+		sb.append("r_caseToCaseResult_c_caseId order by c_caseResultId_) ");
+		sb.append("previousStatus from O_[%COMPANY_ID%]_CaseResult where ");
 		sb.append("r_caseToCaseResult_c_caseId = ? and (dueStatus_ = ");
 		sb.append("'PASSED' or dueStatus_ ='FAILED') and startDate_ is not ");
 		sb.append("null and startDate_ >= ? order by c_caseResultId_) as cr ");
@@ -97,7 +98,8 @@ public class TestrayManagerImpl implements TestrayManager {
 			StringUtil.replace(
 				sb.toString(), "[%COMPANY_ID%]", String.valueOf(companyId)),
 			ListUtil.fromArray(
-				GetterUtil.getLong(testrayCaseId), offsetDateTime));
+				GetterUtil.getLong(testrayCaseId),
+				Timestamp.valueOf(offsetDateTime.toLocalDateTime())));
 
 		if (values.isEmpty()) {
 			return null;

@@ -101,22 +101,6 @@ public class WishListResourceTest extends BaseWishListResourceTestCase {
 		};
 	}
 
-	private WishListItem _randomWishListItem() throws Exception {
-		CPInstance cpInstance = CPTestUtil.addCPInstanceWithRandomSku(
-			testGroup.getGroupId(), BigDecimal.ONE);
-
-		CPDefinition cpDefinition = cpInstance.getCPDefinition();
-
-		CProduct commerceProduct = cpDefinition.getCProduct();
-
-		return new WishListItem() {
-			{
-				productId = commerceProduct.getCProductId();
-				skuId = cpInstance.getCPInstanceId();
-			}
-		};
-	}
-
 	@Override
 	protected WishList testDeleteWishList_addWishList() throws Exception {
 		return _postChannelWishList(randomWishList());
@@ -187,6 +171,22 @@ public class WishListResourceTest extends BaseWishListResourceTestCase {
 		return wishListResource.postChannelWishList(
 			_commerceChannel.getCommerceChannelId(),
 			_accountEntry.getAccountEntryId(), wishList);
+	}
+
+	private WishListItem _randomWishListItem() throws Exception {
+		CPInstance cpInstance = CPTestUtil.addCPInstanceWithRandomSku(
+			testGroup.getGroupId(), BigDecimal.ONE);
+
+		CPDefinition cpDefinition = cpInstance.getCPDefinition();
+
+		CProduct commerceProduct = cpDefinition.getCProduct();
+
+		return new WishListItem() {
+			{
+				productId = commerceProduct.getCProductId();
+				skuId = cpInstance.getCPInstanceId();
+			}
+		};
 	}
 
 	private void _testPatchWishListWithWishListItems(WishList wishList)

@@ -108,8 +108,7 @@ public class WishListResourceImpl extends BaseWishListResourceImpl {
 			_commerceWishListItemService.deleteCommerceWishListItems(
 				commerceWishList.getCommerceWishListId());
 
-			_postWishListItems(
-				commerceWishList, accountId, wishListItems);
+			_postWishListItems(commerceWishList, accountId, wishListItems);
 		}
 
 		return _toWishList(commerceWishList);

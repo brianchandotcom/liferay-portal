@@ -18,7 +18,6 @@ import {
 	TSpConnection,
 } from '../../helpers/SamlProviderConnectionHelper';
 import {liferayConfig} from '../../liferay.config';
-import {ViewAttributesPage} from '../../pages/expando-web/ViewAttributesPage';
 import {
 	AttributeMapping,
 	IdentityProviderConnectionsPage,
@@ -56,6 +55,10 @@ import {
 	DEFAULT_IDP_URL,
 	DEFAULT_SP_NAME,
 	DEFAULT_SP_URL,
+	SECONDARY_IDP_NAME,
+	SECONDARY_IDP_URL,
+	SECONDARY_SP_NAME,
+	SECONDARY_SP_URL,
 	configureVirtualInstanceForSaml,
 	createCustomField,
 	createIdentityProviderVirtualInstance,
@@ -77,9 +80,7 @@ export const test = mergeTests(
 	virtualInstancesPagesTest
 );
 
-const deleteAfterTestCustomFields: string[] = [];
 export const deleteAfterTestProviderConnections = new Set<string>();
-const deleteAfterTestUserIds: string[] = [];
 export const deleteAfterTestVirtualInstances = new Set<string>();
 
 test.afterAll(async ({browser}) => {
@@ -103,22 +104,6 @@ test.afterAll(async ({browser}) => {
 	// Reset saml keystore
 
 	await resetSamlKeystoreManagerTarget(newPage);
-
-	// Remove localhost SAML users
-
-	const apiHelpers = new ApiHelpers(newPage);
-
-	for (const userId of deleteAfterTestUserIds) {
-		await apiHelpers.headlessAdminUser.deleteUserAccount(Number(userId));
-	}
-
-	// Remove localhost Custom Fields
-
-	const viewAttributePage = new ViewAttributesPage(newPage);
-
-	for (const customFieldName of deleteAfterTestCustomFields) {
-		await viewAttributePage.deleteCustomField(customFieldName, 'User');
-	}
 });
 
 test.afterEach(async ({browser}) => {
@@ -288,6 +273,208 @@ test('Create, edit, and delete a new virtual instance', async ({
 	await virtualInstancesPage.deleteVirtualInstance(name);
 });
 
+test('Create three virtual instances, set two to IdP and one SP, and verify Custom User Attributes', async ({
+	browser,
+	editUserPage,
+	searchAdminPage,
+	usersAndOrganizationsPage,
+}) => {
+	const idpAdminPage = await configureVirtualInstanceForSaml(
+		browser,
+		DEFAULT_IDP_NAME,
+		'Identity Provider'
+	);
+
+	const spAdminPage = await configureVirtualInstanceForSaml(
+		browser,
+		DEFAULT_SP_NAME,
+		'Service Provider'
+	);
+
+	await connectSpAndIdp(
+		idpAdminPage,
+		DEFAULT_IDP_NAME,
+		spAdminPage,
+		DEFAULT_SP_NAME
+	);
+
+	// Create an additional IdP virtual instance, and connect it to the SP
+
+	const localhostAdminPage = await browser.newPage();
+
+	await performLogin(localhostAdminPage, 'test');
+
+	const secondaryIdpAdminPage = await createIdentityProviderVirtualInstance(
+		browser,
+		localhostAdminPage,
+		SECONDARY_IDP_NAME
+	);
+
+	await connectSpAndIdp(
+		secondaryIdpAdminPage,
+		SECONDARY_IDP_NAME,
+		spAdminPage,
+		DEFAULT_SP_NAME
+	);
+
+	// Create identical Custom Fields for all instances, except starting value
+
+	const customFieldName = 'CustomField' + getRandomInt();
+
+	const fieldValues: TInputField = {
+		startingValue: 'ableStartingValue',
+	};
+
+	const customField: TCustomField = {
+		fieldName: customFieldName,
+		fieldType: 'inputField',
+		fieldValues,
+		resource: 'User',
+	};
+
+	await createCustomField(idpAdminPage, customField);
+
+	fieldValues.startingValue = 'charlieStartingValue';
+
+	customField.fieldValues = fieldValues;
+
+	await createCustomField(secondaryIdpAdminPage, customField);
+
+	fieldValues.startingValue = 'bakerStartingValue';
+
+	customField.fieldValues = fieldValues;
+
+	await createCustomField(spAdminPage, customField);
+
+	// Edit IdP Connections to include User Custom Field attribute mapping
+
+	const attributeMappings: AttributeMapping[] = [
+		{
+			attributeMappingType: 'User Custom Fields',
+			samlAttribute: customFieldName,
+			userFieldExpression: customFieldName,
+		},
+	];
+
+	let idpConnection: TIdpConnection = {
+		attributeMappings,
+		entityId: DEFAULT_IDP_NAME,
+		idpDomain: DEFAULT_IDP_URL,
+		idpName: DEFAULT_IDP_NAME,
+		spName: DEFAULT_SP_NAME,
+		...DEFAULT_IDP_CONNECTION_VALUES,
+	};
+
+	await editIdentityProviderConnection(spAdminPage, idpConnection);
+
+	idpConnection = {
+		attributeMappings,
+		entityId: SECONDARY_IDP_NAME,
+		idpDomain: SECONDARY_IDP_URL,
+		idpName: SECONDARY_IDP_NAME,
+		spName: DEFAULT_SP_NAME,
+		...DEFAULT_IDP_CONNECTION_VALUES,
+	};
+
+	await editIdentityProviderConnection(spAdminPage, idpConnection);
+
+	// Edit SP Connection to include User Custom Field attribute
+
+	const spConnection: TSpConnection = {
+		entityId: DEFAULT_SP_NAME,
+		idpName: DEFAULT_IDP_NAME,
+		spDomain: DEFAULT_SP_URL,
+		spName: DEFAULT_SP_NAME,
+		...DEFAULT_SP_CONNECTION_VALUES,
+	};
+
+	spConnection.attributes =
+		spConnection.attributes + `\nexpando:${customFieldName}`;
+
+	await editServiceProviderConnection(idpAdminPage, spConnection);
+
+	// Create a user on the IdP instances
+
+	const userId = getRandomInt();
+
+	const userAccount = await createUser(
+		secondaryIdpAdminPage,
+		SECONDARY_IDP_NAME,
+		userId
+	);
+
+	await createUser(idpAdminPage, DEFAULT_IDP_NAME, userId);
+
+	// Perform SP initiated SSO, using the secondary IdP
+
+	let spInstancePage = await performSpInitiatedSSO(
+		browser,
+		userAccount.emailAddress,
+		DEFAULT_SP_URL,
+		true,
+		SECONDARY_IDP_NAME
+	);
+
+	await performLogout(spInstancePage);
+
+	// Perform SP initiated SSO again, this time using www.able.com as the IdP
+
+	spInstancePage = await performSpInitiatedSSO(
+		browser,
+		userAccount.emailAddress,
+		DEFAULT_SP_URL,
+		true,
+		DEFAULT_IDP_NAME
+	);
+
+	await performLogout(spInstancePage);
+
+	// Perform reindex on User object
+
+	await searchAdminPage.goto();
+
+	await searchAdminPage.goToIndexActionsTab();
+
+	await searchAdminPage.reindexIndexActionsItem('User');
+
+	// Login to SP as admin, verify user custom field was imported properly
+
+	const defaultBaseUrl = liferayConfig.environment.baseUrl;
+
+	liferayConfig.environment.baseUrl = DEFAULT_SP_URL;
+
+	spInstancePage = await performSamlSafeLogin(browser, DEFAULT_SP_NAME);
+
+	usersAndOrganizationsPage = await new UsersAndOrganizationsPage(
+		spInstancePage
+	);
+
+	await usersAndOrganizationsPage.goToUsers(false);
+
+	await (
+		await usersAndOrganizationsPage.usersTableRowLink(
+			userAccount.alternateName
+		)
+	).click();
+
+	editUserPage = await new EditUserPage(spInstancePage);
+
+	await expect(await editUserPage.customField(customFieldName)).toHaveValue(
+		'ableStartingValue',
+		{timeout: 30 * 1000}
+	);
+
+	liferayConfig.environment.baseUrl = defaultBaseUrl;
+
+	// Delete newly created virtual instance, and remove from afterAll deletion
+
+	await deleteVirtualInstance(SECONDARY_IDP_NAME, localhostAdminPage);
+
+	await deleteAfterTestProviderConnections.delete(SECONDARY_IDP_NAME);
+
+	await deleteAfterTestVirtualInstances.delete(SECONDARY_IDP_NAME);
+});
+
 test('Create two virtual instances, one IdP and one SP, and verify Custom User Attributes', async ({
 	browser,
 	editUserPage,
@@ -418,198 +605,6 @@ test('Create two virtual instances, one IdP and one SP, and verify Custom User A
 
 	await expect(await editUserPage.customField(customFieldName)).toHaveValue(
 		'idpStartingValue'
-	);
-
-	liferayConfig.environment.baseUrl = defaultBaseUrl;
-});
-
-test('Create two virtual instances, set localhost and one to IdP and one SP, and verify Custom User Attributes', async ({
-	browser,
-	editUserPage,
-	searchAdminPage,
-	usersAndOrganizationsPage,
-}) => {
-	const idpAdminPage = await configureVirtualInstanceForSaml(
-		browser,
-		DEFAULT_IDP_NAME,
-		'Identity Provider'
-	);
-
-	const localhostIdpAdminPage = await configureVirtualInstanceForSaml(
-		browser,
-		'localhost',
-		'Identity Provider'
-	);
-
-	const spAdminPage = await configureVirtualInstanceForSaml(
-		browser,
-		DEFAULT_SP_NAME,
-		'Service Provider'
-	);
-
-	await connectSpAndIdp(
-		idpAdminPage,
-		DEFAULT_IDP_NAME,
-		spAdminPage,
-		DEFAULT_SP_NAME
-	);
-
-	await connectSpAndIdp(
-		localhostIdpAdminPage,
-		'localhost',
-		spAdminPage,
-		DEFAULT_SP_NAME
-	);
-
-	// Create identical Custom Fields for all instances, except starting value
-
-	const customFieldName = 'CustomField' + getRandomInt();
-
-	const fieldValues: TInputField = {
-		startingValue: 'ableStartingValue',
-	};
-
-	const customField: TCustomField = {
-		fieldName: customFieldName,
-		fieldType: 'inputField',
-		fieldValues,
-		resource: 'User',
-	};
-
-	await createCustomField(idpAdminPage, customField);
-
-	fieldValues.startingValue = 'localhostStartingValue';
-
-	customField.fieldValues = fieldValues;
-
-	deleteAfterTestCustomFields.push(customFieldName);
-
-	await createCustomField(localhostIdpAdminPage, customField);
-
-	fieldValues.startingValue = 'bakerStartingValue';
-
-	customField.fieldValues = fieldValues;
-
-	await createCustomField(spAdminPage, customField);
-
-	// Edit IdP Connections to include User Custom Field attribute mapping
-
-	const attributeMappings: AttributeMapping[] = [
-		{
-			attributeMappingType: 'User Custom Fields',
-			samlAttribute: customFieldName,
-			userFieldExpression: customFieldName,
-		},
-	];
-
-	let idpConnection: TIdpConnection = {
-		attributeMappings,
-		entityId: DEFAULT_IDP_NAME,
-		idpDomain: `http://${DEFAULT_IDP_NAME}:8080`,
-		idpName: DEFAULT_IDP_NAME,
-		spName: DEFAULT_SP_NAME,
-		...DEFAULT_IDP_CONNECTION_VALUES,
-	};
-
-	await editIdentityProviderConnection(spAdminPage, idpConnection);
-
-	idpConnection = {
-		attributeMappings,
-		entityId: 'localhost',
-		idpDomain: `http://localhost:8080`,
-		idpName: 'localhost',
-		spName: DEFAULT_SP_NAME,
-		...DEFAULT_IDP_CONNECTION_VALUES,
-	};
-
-	await editIdentityProviderConnection(spAdminPage, idpConnection);
-
-	// Edit SP Connection to include User Custom Field attribute
-
-	const spConnection: TSpConnection = {
-		entityId: DEFAULT_SP_NAME,
-		idpName: DEFAULT_IDP_NAME,
-		spDomain: `http://${DEFAULT_SP_NAME}:8080`,
-		spName: DEFAULT_SP_NAME,
-		...DEFAULT_SP_CONNECTION_VALUES,
-	};
-
-	spConnection.attributes =
-		spConnection.attributes + `\nexpando:${customFieldName}`;
-
-	await editServiceProviderConnection(idpAdminPage, spConnection);
-
-	// Create a user on the IdP instances
-
-	const userId = getRandomInt();
-
-	const userAccount = await createUser(
-		localhostIdpAdminPage,
-		'localhost',
-		userId
-	);
-
-	deleteAfterTestUserIds.push(userAccount.id);
-
-	await createUser(idpAdminPage, DEFAULT_IDP_NAME, userId);
-
-	// Perform SP initiated SSO, using localhost as the IdP
-
-	let spInstancePage = await performSpInitiatedSSO(
-		browser,
-		userAccount.emailAddress,
-		DEFAULT_SP_URL,
-		true,
-		'localhost'
-	);
-
-	await performLogout(spInstancePage);
-
-	// Perform SP initiated SSO again, this time using www.able.com as the IdP
-
-	spInstancePage = await performSpInitiatedSSO(
-		browser,
-		userAccount.emailAddress,
-		DEFAULT_SP_URL,
-		true,
-		DEFAULT_IDP_NAME
-	);
-
-	await performLogout(spInstancePage);
-
-	// Perform reindex on User object
-
-	await searchAdminPage.goto();
-
-	await searchAdminPage.goToIndexActionsTab();
-
-	await searchAdminPage.reindexIndexActionsItem('User');
-
-	// Login to SP as admin, verify user custom field was imported properly
-
-	const defaultBaseUrl = liferayConfig.environment.baseUrl;
-
-	liferayConfig.environment.baseUrl = DEFAULT_SP_URL;
-
-	spInstancePage = await performSamlSafeLogin(browser, DEFAULT_SP_NAME);
-
-	usersAndOrganizationsPage = await new UsersAndOrganizationsPage(
-		spInstancePage
-	);
-
-	await usersAndOrganizationsPage.goToUsers(false);
-
-	await (
-		await usersAndOrganizationsPage.usersTableRowLink(
-			userAccount.alternateName
-		)
-	).click();
-
-	editUserPage = await new EditUserPage(spInstancePage);
-
-	await expect(await editUserPage.customField(customFieldName)).toHaveValue(
-		'ableStartingValue',
-		{timeout: 30 * 1000}
 	);
 
 	liferayConfig.environment.baseUrl = defaultBaseUrl;
@@ -930,12 +925,17 @@ test('Verify IdP initiated SLO logs out of multiple authenticated SPs.  See LPS-
 	browser,
 }) => {
 
-	// Configure localhost as SP
+	// Create and configure secondary SP
 
-	const localhostSpAdminPage = await configureVirtualInstanceForSaml(
+	const localhostAdminPage = await browser.newPage();
+
+	await performLogin(localhostAdminPage, 'test');
+
+	const secondarySpAdminPage = await createServiceProviderVirtualInstance(
 		browser,
-		'localhost',
-		'Service Provider'
+		SECONDARY_SP_NAME,
+		SECONDARY_SP_NAME,
+		localhostAdminPage
 	);
 
 	// Configure the other virtual instances as usual
@@ -962,8 +962,8 @@ test('Verify IdP initiated SLO logs out of multiple authenticated SPs.  See LPS-
 	await connectSpAndIdp(
 		idpAdminPage,
 		DEFAULT_IDP_NAME,
-		localhostSpAdminPage,
-		'localhost'
+		secondarySpAdminPage,
+		SECONDARY_SP_NAME
 	);
 
 	// Create IdP User
@@ -980,7 +980,7 @@ test('Verify IdP initiated SLO logs out of multiple authenticated SPs.  See LPS-
 
 	// Clicking Sign In button on other SP page should auto-login
 
-	await spIntancePage.goto('http://localhost:8080');
+	await spIntancePage.goto(SECONDARY_SP_URL);
 
 	await clickSignInButton(spIntancePage);
 
@@ -1000,7 +1000,7 @@ test('Verify IdP initiated SLO logs out of multiple authenticated SPs.  See LPS-
 
 	// Both SPs should also be logged out after IdP initiated SLO
 
-	for (const spUrl of ['http://localhost:8080', DEFAULT_SP_URL]) {
+	for (const spUrl of [DEFAULT_SP_URL, SECONDARY_SP_URL]) {
 		await spIntancePage.goto(spUrl);
 
 		const signInButton = await spIntancePage.getByRole('button', {
@@ -1014,20 +1014,24 @@ test('Verify IdP initiated SLO logs out of multiple authenticated SPs.  See LPS-
 
 		expect(await signInButton).toBeVisible();
 	}
+
+	// Delete newly created virtual instance, and remove from afterAll deletion
+
+	await deleteVirtualInstance(SECONDARY_SP_NAME, localhostAdminPage);
+
+	await deleteAfterTestProviderConnections.delete(SECONDARY_SP_NAME);
+
+	await deleteAfterTestVirtualInstances.delete(SECONDARY_SP_NAME);
 });
 
 test('Verify SSO login and logout mechanism works the same when having multiple sites configured as SP.  See LPS-170940.', async ({
 	browser,
 }) => {
-	const idp1AdminPage = await configureVirtualInstanceForSaml(
+	const idpAdminPage = await configureVirtualInstanceForSaml(
 		browser,
 		DEFAULT_IDP_NAME,
 		'Identity Provider'
 	);
-
-	const idp2Name = 'www.fox.com';
-
-	const sp2Name = 'www.dog.com';
 
 	// Create an additional IdP virtual instance
 
@@ -1035,13 +1039,13 @@ test('Verify SSO login and logout mechanism works the same when having multiple 
 
 	await performLogin(localhostAdminPage, 'test');
 
-	const idp2AdminPage = await createIdentityProviderVirtualInstance(
+	const secondaryIdpAdminPage = await createIdentityProviderVirtualInstance(
 		browser,
 		localhostAdminPage,
-		idp2Name
+		SECONDARY_IDP_NAME
 	);
 
-	const sp1AdminPage = await configureVirtualInstanceForSaml(
+	const spAdminPage = await configureVirtualInstanceForSaml(
 		browser,
 		DEFAULT_SP_NAME,
 		'Service Provider'
@@ -1049,48 +1053,53 @@ test('Verify SSO login and logout mechanism works the same when having multiple 
 
 	// Create an additional SP virtual instance
 
-	const sp2AdminPage = await createServiceProviderVirtualInstance(
+	const secondarySpAdminPage = await createServiceProviderVirtualInstance(
 		browser,
-		sp2Name,
-		sp2Name,
+		SECONDARY_SP_NAME,
+		SECONDARY_SP_NAME,
 		localhostAdminPage
 	);
 
 	// Connect all IdPs and SPs
 
 	await connectSpAndIdp(
-		idp1AdminPage,
+		idpAdminPage,
 		DEFAULT_IDP_NAME,
-		sp1AdminPage,
+		spAdminPage,
 		DEFAULT_SP_NAME
 	);
 
 	await connectSpAndIdp(
-		idp1AdminPage,
+		idpAdminPage,
 		DEFAULT_IDP_NAME,
-		sp2AdminPage,
-		sp2Name
+		secondarySpAdminPage,
+		SECONDARY_SP_NAME
 	);
 
 	await connectSpAndIdp(
-		idp2AdminPage,
-		idp2Name,
-		sp1AdminPage,
+		secondaryIdpAdminPage,
+		SECONDARY_IDP_NAME,
+		spAdminPage,
 		DEFAULT_SP_NAME
 	);
 
-	await connectSpAndIdp(idp2AdminPage, idp2Name, sp2AdminPage, sp2Name);
+	await connectSpAndIdp(
+		secondaryIdpAdminPage,
+		SECONDARY_IDP_NAME,
+		secondarySpAdminPage,
+		SECONDARY_SP_NAME
+	);
 
-	// In SP2, create two sites with virtual hostnames
+	// In Secondary SP, create two sites with virtual hostnames
 
 	const site1Name = getRandomString();
 	const site2Name = getRandomString();
 
 	const defaultBaseUrl = liferayConfig.environment.baseUrl;
 
-	liferayConfig.environment.baseUrl = `http://${sp2Name}:8080`;
+	liferayConfig.environment.baseUrl = SECONDARY_SP_URL;
 
-	const apiHelpers = new ApiHelpers(sp2AdminPage);
+	const apiHelpers = new ApiHelpers(secondarySpAdminPage);
 
 	liferayConfig.environment.baseUrl = defaultBaseUrl;
 
@@ -1106,11 +1115,11 @@ test('Verify SSO login and logout mechanism works the same when having multiple 
 		templateType: 'site-initializer',
 	});
 
-	await sp2AdminPage.goto(`/web/${site1Name}`);
+	await secondarySpAdminPage.goto(`/web/${site1Name}`);
 
-	await sp2AdminPage.waitForTimeout(1000);
+	await secondarySpAdminPage.waitForTimeout(1000);
 
-	let siteSettingsPage = new SiteSettingsPage(sp2AdminPage);
+	let siteSettingsPage = new SiteSettingsPage(secondarySpAdminPage);
 
 	await siteSettingsPage.goToSiteSetting('Site Configuration', 'Site URL');
 
@@ -1124,15 +1133,15 @@ test('Verify SSO login and logout mechanism works the same when having multiple 
 
 	await waitForSuccessAlert(siteSettingsPage.page);
 
-	await sp2AdminPage.goto(`/web/${site2Name}`);
+	await secondarySpAdminPage.goto(`/web/${site2Name}`);
 
-	await sp2AdminPage.waitForTimeout(1000);
+	await secondarySpAdminPage.waitForTimeout(1000);
 
-	siteSettingsPage = new SiteSettingsPage(sp2AdminPage);
+	siteSettingsPage = new SiteSettingsPage(secondarySpAdminPage);
 
 	await siteSettingsPage.goToSiteSetting('Site Configuration', 'Site URL');
 
-	const site2VirtualHostName = 'www.charlie.com';
+	const site2VirtualHostName = 'www.fox.com';
 
 	await siteSettingsPage.page
 		.getByLabel('Virtual Host')
@@ -1144,9 +1153,12 @@ test('Verify SSO login and logout mechanism works the same when having multiple 
 
 	// Create users for both IdP virtual instances
 
-	const idp1User = await createUser(idp1AdminPage, DEFAULT_IDP_NAME);
+	const idp1User = await createUser(idpAdminPage, DEFAULT_IDP_NAME);
 
-	const idp2User = await createUser(idp2AdminPage, idp2Name);
+	const idp2User = await createUser(
+		secondaryIdpAdminPage,
+		SECONDARY_IDP_NAME
+	);
 
 	// Verify SP1 initiated SSO works on IdP1
 
@@ -1177,16 +1189,16 @@ test('Verify SSO login and logout mechanism works the same when having multiple 
 	const idp2SpPages = await performSpInitiatedSSO(
 		browser,
 		idp2User.emailAddress,
-		`http://${sp2Name}:8080`,
+		SECONDARY_SP_URL,
 		true,
-		idp2Name
+		SECONDARY_IDP_NAME
 	);
 
 	// Verify clicking sign-in button and selecting IdP2 works from SP2 site2
 
 	await idp2SpPages.goto(`http://${site2VirtualHostName}:8080`);
 
-	await clickSignInButton(idp2SpPages, idp2Name);
+	await clickSignInButton(idp2SpPages, SECONDARY_IDP_NAME);
 
 	// Assert authenticated
 
@@ -1236,29 +1248,34 @@ test('Verify SSO login and logout mechanism works the same when having multiple 
 
 	// Delete newly created virtual instances, and remove from afterAll deletion
 
-	await deleteVirtualInstance(idp2Name, localhostAdminPage);
+	await deleteVirtualInstance(SECONDARY_IDP_NAME, localhostAdminPage);
 
-	await deleteAfterTestProviderConnections.delete(idp2Name);
+	await deleteAfterTestProviderConnections.delete(SECONDARY_IDP_NAME);
 
-	await deleteAfterTestVirtualInstances.delete(idp2Name);
+	await deleteAfterTestVirtualInstances.delete(SECONDARY_IDP_NAME);
 
-	await deleteVirtualInstance(sp2Name, localhostAdminPage);
+	await deleteVirtualInstance(SECONDARY_SP_NAME, localhostAdminPage);
 
-	await deleteAfterTestProviderConnections.delete(sp2Name);
+	await deleteAfterTestProviderConnections.delete(SECONDARY_SP_NAME);
 
-	await deleteAfterTestVirtualInstances.delete(sp2Name);
+	await deleteAfterTestVirtualInstances.delete(SECONDARY_SP_NAME);
 });
 
 test('View single logout and force auth with multiple SPs.  See LRQA-31886.', async ({
 	browser,
 }) => {
 
-	// Configure localhost as SP
+	// Create and configure Secondary SP
 
-	const localhostSpAdminPage = await configureVirtualInstanceForSaml(
+	const localhostAdminPage = await browser.newPage();
+
+	await performLogin(localhostAdminPage, 'test');
+
+	const secondarySpAdminPage = await createServiceProviderVirtualInstance(
 		browser,
-		'localhost',
-		'Service Provider'
+		SECONDARY_SP_NAME,
+		SECONDARY_SP_NAME,
+		localhostAdminPage
 	);
 
 	// Configure the other virtual instances as usual
@@ -1285,8 +1302,8 @@ test('View single logout and force auth with multiple SPs.  See LRQA-31886.', as
 	await connectSpAndIdp(
 		idpAdminPage,
 		DEFAULT_IDP_NAME,
-		localhostSpAdminPage,
-		'localhost'
+		secondarySpAdminPage,
+		SECONDARY_SP_NAME
 	);
 
 	// Create IdP User
@@ -1298,7 +1315,7 @@ test('View single logout and force auth with multiple SPs.  See LRQA-31886.', as
 	let idpConnection: TIdpConnection = {
 		entityId: DEFAULT_IDP_NAME,
 		forceAuthn: true,
-		idpDomain: `http://${DEFAULT_IDP_NAME}:8080`,
+		idpDomain: DEFAULT_IDP_URL,
 		idpName: DEFAULT_IDP_NAME,
 		spName: DEFAULT_SP_NAME,
 		...DEFAULT_IDP_CONNECTION_VALUES,
@@ -1309,13 +1326,13 @@ test('View single logout and force auth with multiple SPs.  See LRQA-31886.', as
 	idpConnection = {
 		entityId: DEFAULT_IDP_NAME,
 		forceAuthn: true,
-		idpDomain: `http://${DEFAULT_IDP_NAME}:8080`,
+		idpDomain: DEFAULT_IDP_URL,
 		idpName: DEFAULT_IDP_NAME,
-		spName: 'localhost',
+		spName: SECONDARY_SP_NAME,
 		...DEFAULT_IDP_CONNECTION_VALUES,
 	};
 
-	await editIdentityProviderConnection(localhostSpAdminPage, idpConnection);
+	await editIdentityProviderConnection(secondarySpAdminPage, idpConnection);
 
 	// SP initiated SSO
 
@@ -1327,13 +1344,21 @@ test('View single logout and force auth with multiple SPs.  See LRQA-31886.', as
 
 	// Assert clicking Sign In button on other SP page does not auto-login
 
-	await spIntancePage.goto('http://localhost:8080');
+	await spIntancePage.goto(SECONDARY_SP_URL);
 
 	await clickSignInButton(spIntancePage);
 
 	await spIntancePage.waitForTimeout(2000);
 
 	await expect(await spIntancePage.getByLabel('Email Address')).toBeVisible();
+
+	// Delete newly created virtual instances, and remove from afterAll deletion
+
+	await deleteVirtualInstance(SECONDARY_SP_NAME, localhostAdminPage);
+
+	await deleteAfterTestProviderConnections.delete(SECONDARY_SP_NAME);
+
+	await deleteAfterTestVirtualInstances.delete(SECONDARY_SP_NAME);
 });
 
 test('Verify the SAML configuration is not applied to the sites when ACS is disabled.  See LPS-170940.', async ({

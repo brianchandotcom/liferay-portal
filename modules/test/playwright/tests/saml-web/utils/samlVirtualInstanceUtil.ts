@@ -26,6 +26,10 @@ export const DEFAULT_IDP_NAME = 'www.able.com';
 export const DEFAULT_IDP_URL = `http://${DEFAULT_IDP_NAME}:8080`;
 export const DEFAULT_SP_NAME = 'www.baker.com';
 export const DEFAULT_SP_URL = `http://${DEFAULT_SP_NAME}:8080`;
+export const SECONDARY_IDP_NAME = 'www.charlie.com';
+export const SECONDARY_IDP_URL = `http://${SECONDARY_IDP_NAME}:8080`;
+export const SECONDARY_SP_NAME = 'www.dog.com';
+export const SECONDARY_SP_URL = `http://${SECONDARY_SP_NAME}:8080`;
 
 export async function createCustomField(
 	adminPage: Page,

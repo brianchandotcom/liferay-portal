@@ -44,89 +44,9 @@ import org.osgi.service.component.annotations.Reference;
 	service = EditorConfigContributor.class
 )
 public class AMBlogsEditorConfigContributor
-	extends BaseEditorConfigContributor {
+	extends BaseAMEditorConfigContributor {
 
 	@Override
-	public void populateConfigJSONObject(
-		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
-		ThemeDisplay themeDisplay,
-		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
-
-		String allowedContent = jsonObject.getString("allowedContent");
-
-		if (Validator.isNotNull(allowedContent) &&
-			!allowedContent.equals(Boolean.TRUE.toString()) &&
-			!allowedContent.contains(_IMG_TAG_RULE)) {
-
-			allowedContent += StringPool.SPACE + _IMG_TAG_RULE;
-
-			jsonObject.put("allowedContent", allowedContent);
-		}
-
-		String itemSelectorURL = jsonObject.getString(
-			"filebrowserImageBrowseLinkUrl");
-
-		if (Validator.isNull(itemSelectorURL)) {
-			return;
-		}
-
-		List<ItemSelectorCriterion> itemSelectorCriteria =
-			_itemSelector.getItemSelectorCriteria(itemSelectorURL);
-
-		boolean amImageURLItemSelectorReturnTypeAdded = false;
-
-		for (ItemSelectorCriterion itemSelectorCriterion :
-				itemSelectorCriteria) {
-
-			if (isItemSelectorCriterionOverridable(itemSelectorCriterion)) {
-				_addAMImageFileEntryItemSelectorReturnType(
-					itemSelectorCriterion);
-
-				amImageURLItemSelectorReturnTypeAdded = true;
-			}
-		}
-
-		if (!amImageURLItemSelectorReturnTypeAdded) {
-			return;
-		}
-
-		jsonObject.put(
-			"adaptiveMediaFileEntryAttributeName",
-			AMImageHTMLConstants.ATTRIBUTE_NAME_FILE_ENTRY_ID);
-
-		String extraPlugins = jsonObject.getString("extraPlugins");
-
-		if (Validator.isNotNull(extraPlugins)) {
-			extraPlugins = extraPlugins + ",adaptivemedia";
-		}
-		else {
-			extraPlugins = "adaptivemedia";
-		}
-
-		jsonObject.put("extraPlugins", extraPlugins);
-
-		PortletURL itemSelectorPortletURL = _itemSelector.getItemSelectorURL(
-			requestBackedPortletURLFactory,
-			_itemSelector.getItemSelectedEventName(itemSelectorURL),
-			itemSelectorCriteria.toArray(new ItemSelectorCriterion[0]));
-
-		jsonObject.put(
-			"filebrowserImageBrowseLinkUrl", itemSelectorPortletURL.toString()
-		).put(
-			"filebrowserImageBrowseUrl", itemSelectorPortletURL.toString()
-		);
-	}
-
-	private void _addAMImageFileEntryItemSelectorReturnType(
-		ItemSelectorCriterion itemSelectorCriterion) {
-
-		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
-			itemSelectorCriterion.getDesiredItemSelectorReturnTypes();
-
-		desiredItemSelectorReturnTypes.add(
-			0, new AMImageFileEntryItemSelectorReturnType());
-	}
-
 	protected boolean isItemSelectorCriterionOverridable(
 		ItemSelectorCriterion itemSelectorCriterion) {
 
@@ -140,10 +60,5 @@ public class AMBlogsEditorConfigContributor
 
 		return false;
 	}
-
-	private static final String _IMG_TAG_RULE = "img[*](*){*};";
-
-	@Reference
-	private ItemSelector _itemSelector;
 
 }

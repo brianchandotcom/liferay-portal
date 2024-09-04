@@ -1662,10 +1662,9 @@
 			UPDATE
 				User_
 			SET
-				mvccVersion = ?, loginDate = ?, loginIP = ?, lastLoginDate = ?, lastLoginIP = ?, failedLoginAttempts = ?
+				loginDate = ?, loginIP = ?, lastLoginDate = ?, lastLoginIP = ?, failedLoginAttempts = ?
 			WHERE
-				(mvccVersion = ?) AND
-				(userId = ?)
+				userId = ?
 		]]>
 	</sql>
 	<sql id="com.liferay.util.dao.orm.CustomSQL.countBySelectSQL">

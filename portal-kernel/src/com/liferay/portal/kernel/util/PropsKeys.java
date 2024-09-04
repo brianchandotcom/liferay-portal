@@ -2842,6 +2842,12 @@ public interface PropsKeys {
 	public static final String USERS_UPDATE_LAST_LOGIN =
 		"users.update.last.login";
 
+	public static final String USERS_UPDATE_LAST_LOGIN_BATCH_INTERVAL =
+		"users.update.last.login.batch.interval";
+
+	public static final String USERS_UPDATE_LAST_LOGIN_BATCH_SIZE =
+		"users.update.last.login.batch.size";
+
 	public static final String USERS_UPDATE_USER_NAME =
 		"users.update.user.name.";
 

@@ -14,6 +14,7 @@ import com.liferay.mail.kernel.template.MailTemplate;
 import com.liferay.mail.kernel.template.MailTemplateContext;
 import com.liferay.mail.kernel.template.MailTemplateContextBuilder;
 import com.liferay.mail.kernel.template.MailTemplateFactoryUtil;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -23,11 +24,10 @@ import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
 import com.liferay.portal.kernel.cache.PortalCacheMapSynchronizeUtil;
 import com.liferay.portal.kernel.change.tracking.CTAware;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.encryptor.EncryptorException;
@@ -144,8 +144,11 @@ import com.liferay.portal.kernel.service.persistence.TeamPersistence;
 import com.liferay.portal.kernel.service.persistence.UserGroupPersistence;
 import com.liferay.portal.kernel.service.persistence.UserGroupRolePersistence;
 import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.BatchProcessor;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.Digester;
 import com.liferay.portal.kernel.util.DigesterUtil;
@@ -197,6 +200,10 @@ import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.io.IOException;
 import java.io.Serializable;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 import java.text.DateFormat;
 
@@ -1463,6 +1470,45 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		serviceLatch.openOn(
 			() -> {
 			});
+
+		_batchProcessor = new BatchProcessor<>(
+			UserLocalServiceImpl.class.getName(),
+			users -> {
+				Map<Long, User> userMap = new HashMap<>();
+
+				for (User user : users) {
+					userMap.put(user.getUserId(), user);
+				}
+
+				List<User> deduplicatedUsers = new ArrayList<>(
+					userMap.values());
+
+				try {
+					TransactionInvokerUtil.invoke(
+						_transactionConfig,
+						() -> {
+							Session session = null;
+
+							try {
+								session = userPersistence.openSession();
+
+								session.apply(
+									connection -> _updateLastLogin(
+										connection, deduplicatedUsers));
+							}
+							finally {
+								userPersistence.closeSession(session);
+							}
+
+							return null;
+						});
+				}
+				catch (Throwable throwable) {
+					_log.error(throwable);
+				}
+			},
+			PropsValues.USERS_UPDATE_LAST_LOGIN_BATCH_INTERVAL,
+			PropsValues.USERS_UPDATE_LAST_LOGIN_BATCH_SIZE);
 	}
 
 	/**
@@ -2109,6 +2155,13 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		_userGroupPersistence.removeUser(userGroupId, userId);
 
 		reindex(userId);
+	}
+
+	@Override
+	public void destroy() {
+		_batchProcessor.close();
+
+		super.destroy();
 	}
 
 	/**
@@ -4889,12 +4942,12 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @param  loginIP the IP address the user logged in from
 	 * @return the user
 	 */
-	@CTAware(onProduction = true)
 	@Indexable(
 		callbackKey = "com.liferay.portal.kernel.model.User#lastLoginDate",
 		type = IndexableType.REINDEX
 	)
 	@Override
+	@Transactional(enabled = false)
 	public User updateLastLogin(long userId, String loginIP)
 		throws PortalException {
 
@@ -4902,37 +4955,41 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			userPersistence.findByPrimaryKey(userId), loginIP);
 	}
 
-	@CTAware(onProduction = true)
 	@Indexable(
 		callbackKey = "com.liferay.portal.kernel.model.User#lastLoginDate",
 		type = IndexableType.REINDEX
 	)
 	@Override
+	@Transactional(enabled = false)
 	public User updateLastLogin(User user, String loginIP)
 		throws PortalException {
 
-		Date lastLoginDate = user.getLoginDate();
+		user.setLoginIP(loginIP);
+		user.setLastLoginIP(user.getLoginIP());
+		user.setFailedLoginAttempts(0);
 
-		if (lastLoginDate == null) {
-			lastLoginDate = new Date();
+		Date date = new Date();
+
+		Date loginDate = user.getLoginDate();
+
+		if (loginDate == null) {
+			user.setLoginDate(date);
+			user.setLastLoginDate(date);
+
+			try (SafeCloseable safeCloseable =
+					CTCollectionThreadLocal.
+						setProductionModeWithSafeCloseable()) {
+
+				return userLocalService.updateUser(user);
+			}
 		}
 
-		String lastLoginIP = user.getLoginIP();
+		user.setLoginDate(date);
+		user.setLastLoginDate(loginDate);
 
-		if (lastLoginIP == null) {
-			lastLoginIP = loginIP;
-		}
+		_batchProcessor.add(user);
 
-		User updatedUser = _updateLastLogin(
-			user, new Date(), loginIP, lastLoginDate, lastLoginIP, 0);
-
-		if (updatedUser == null) {
-			return userPersistence.findByPrimaryKey(user.getUserId());
-		}
-
-		EntityCacheUtil.putResult(UserImpl.class, updatedUser, false, false);
-
-		return updatedUser;
+		return user;
 	}
 
 	/**
@@ -7391,6 +7448,10 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		}
 	}
 
+	private java.sql.Date _toSQLDate(Date date) {
+		return new java.sql.Date(date.getTime());
+	}
+
 	private User _unlockOutUser(User user, PasswordPolicy passwordPolicy) {
 		Date date = new Date();
 		int failedLoginAttempts = user.getFailedLoginAttempts();
@@ -7437,54 +7498,38 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		return user;
 	}
 
-	private User _updateLastLogin(
-		User user, Date loginDate, String loginIP, Date lastLoginDate,
-		String lastLoginIP, int failedLoginAttempts) {
+	private void _updateLastLogin(Connection connection, List<User> users)
+		throws SQLException {
 
-		Session session = null;
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				CustomSQLUtil.get(_UPDATE_LAST_LOGIN))) {
 
-		try {
-			session = userPersistence.openSession();
+			for (User user : users) {
+				preparedStatement.setDate(1, _toSQLDate(user.getLoginDate()));
+				preparedStatement.setString(2, user.getLoginIP());
+				preparedStatement.setDate(
+					3, _toSQLDate(user.getLastLoginDate()));
+				preparedStatement.setString(4, user.getLastLoginIP());
+				preparedStatement.setInt(5, user.getFailedLoginAttempts());
+				preparedStatement.setLong(6, user.getPrimaryKey());
 
-			String sql = CustomSQLUtil.get(_UPDATE_LAST_LOGIN);
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			long mvccVersion = user.getMvccVersion();
-
-			queryPos.add(mvccVersion + 1);
-
-			queryPos.add(loginDate);
-			queryPos.add(loginIP);
-			queryPos.add(lastLoginDate);
-			queryPos.add(lastLoginIP);
-			queryPos.add(failedLoginAttempts);
-			queryPos.add(mvccVersion);
-			queryPos.add(user.getUserId());
-
-			int count = sqlQuery.executeUpdate();
-
-			if (count != 1) {
-				userPersistence.clearCache(user);
-
-				return null;
+				preparedStatement.addBatch();
 			}
 
-			user.setMvccVersion(mvccVersion + 1);
-			user.setLoginDate(loginDate);
-			user.setLoginIP(loginIP);
-			user.setLastLoginDate(lastLoginDate);
-			user.setLastLoginIP(lastLoginIP);
-			user.setFailedLoginAttempts(failedLoginAttempts);
+			int[] results = preparedStatement.executeBatch();
 
-			return user;
-		}
-		finally {
-			session.evict(UserImpl.class, user.getUserId());
+			for (int i = 0; i < results.length; i++) {
+				User deduplicatedUser = users.get(i);
 
-			userPersistence.closeSession(session);
+				if (results[i] == 1) {
+					EntityCacheUtil.putResult(
+						UserImpl.class, deduplicatedUser, true, false);
+				}
+				else {
+					EntityCacheUtil.removeResult(
+						UserImpl.class, deduplicatedUser.getUserId());
+				}
+			}
 		}
 	}
 
@@ -7494,6 +7539,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	private static final Log _log = LogFactoryUtil.getLog(
 		UserLocalServiceImpl.class);
 
+	private static final TransactionConfig _transactionConfig =
+		TransactionConfig.Factory.create(
+			Propagation.SUPPORTS, new Class<?>[] {Exception.class});
 	private static final Snapshot<UserFileUploadsSettings>
 		_userFileUploadsSettingsSnapshot = new Snapshot<>(
 			UserLocalServiceImpl.class, UserFileUploadsSettings.class);
@@ -7504,6 +7552,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 	@BeanReference(type = AssetEntryLocalService.class)
 	private AssetEntryLocalService _assetEntryLocalService;
+
+	private BatchProcessor<User> _batchProcessor;
 
 	@BeanReference(type = BrowserTrackerLocalService.class)
 	private BrowserTrackerLocalService _browserTrackerLocalService;

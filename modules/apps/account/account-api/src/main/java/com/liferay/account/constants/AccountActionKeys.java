@@ -20,11 +20,6 @@ public class AccountActionKeys {
 
 	public static final String ASSIGN_USERS = "ASSIGN_USERS";
 
-	public static final String EDIT_ORGANIZATIONS = "EDIT_ORGANIZATIONS";
-
-	public static final String EDIT_SUBORGANIZATIONS_ACCOUNTS =
-		"EDIT_SUBORGANIZATIONS_ACCOUNTS";
-
 	public static final String INVITE_USER = "INVITE_USER";
 
 	public static final String MANAGE_ACCOUNTS = "MANAGE_ACCOUNTS";
@@ -40,6 +35,11 @@ public class AccountActionKeys {
 
 	public static final String MANAGE_SUBORGANIZATIONS_ACCOUNTS =
 		"MANAGE_SUBORGANIZATIONS_ACCOUNTS";
+
+	public static final String UPDATE_ORGANIZATIONS = "UPDATE_ORGANIZATIONS";
+
+	public static final String UPDATE_SUBORGANIZATIONS_ACCOUNTS =
+		"UPDATE_SUBORGANIZATIONS_ACCOUNTS";
 
 	public static final String VIEW_ACCOUNT_GROUPS = "VIEW_ACCOUNT_GROUPS";
 

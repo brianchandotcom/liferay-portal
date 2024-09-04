@@ -12,13 +12,13 @@
 			<supports>
 				<action-key>ADD_ACCOUNT_ROLE</action-key>
 				<action-key>DELETE</action-key>
-				<action-key>EDIT_ORGANIZATIONS</action-key>
 				<action-key>INVITE_USER</action-key>
 				<action-key>MANAGE_ADDRESSES</action-key>
 				<action-key>MANAGE_DOMAINS</action-key>
 				<action-key>MANAGE_ORGANIZATIONS</action-key>
 				<action-key>MANAGE_USERS</action-key>
 				<action-key>UPDATE</action-key>
+				<action-key>UPDATE_ORGANIZATIONS</action-key>
 				<action-key>VIEW</action-key>
 				<action-key>VIEW_ACCOUNT_GROUPS</action-key>
 				<action-key>VIEW_ACCOUNT_ROLES</action-key>
@@ -67,10 +67,10 @@
 		</portlet-ref>
 		<permissions>
 			<supports>
-				<action-key>EDIT_SUBORGANIZATIONS_ACCOUNTS</action-key>
 				<action-key>MANAGE_ACCOUNTS</action-key>
 				<action-key>MANAGE_AVAILABLE_ACCOUNTS</action-key>
 				<action-key>MANAGE_SUBORGANIZATIONS_ACCOUNTS</action-key>
+				<action-key>UPDATE_SUBORGANIZATIONS_ACCOUNTS</action-key>
 			</supports>
 			<guest-unsupported>
 				<action-key>MANAGE_ACCOUNTS</action-key>

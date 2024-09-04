@@ -22,6 +22,7 @@ export class ActionsPage {
 		iconInput: Locator;
 		labelInput: Locator;
 		methodSelect: Locator;
+		requestBodyInput: Locator;
 		saveButton: Locator;
 		selectIconModal: Locator;
 		successStatusMessageInput: Locator;
@@ -64,6 +65,7 @@ export class ActionsPage {
 			iconInput: page.getByPlaceholder('No Icon Selected'),
 			labelInput: page.getByPlaceholder('Action Name'),
 			methodSelect: page.getByLabel('MethodRequired', {exact: true}),
+			requestBodyInput: page.getByPlaceholder('Add a request body here'),
 			saveButton: page.getByRole('button', {name: 'Save'}),
 			selectIconModal: page.locator('.dsm-actions-icon-selection-modal'),
 			successStatusMessageInput: page.getByTestId(
@@ -169,6 +171,7 @@ export class ActionsPage {
 			confirmationMessageType,
 			errorStatusMessage,
 			method,
+			requestBody,
 			successStatusMessage,
 			type,
 		} = itemActionProps;
@@ -191,6 +194,10 @@ export class ActionsPage {
 
 		if (method) {
 			await this.actionForm.methodSelect.selectOption(method);
+		}
+
+		if (requestBody) {
+			await this.actionForm.requestBodyInput.fill(requestBody);
 		}
 
 		if (successStatusMessage) {

@@ -257,6 +257,7 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 		method,
 		modalSize = EModalActionVariant.FULL_SCREEN,
 		permissionKey,
+		requestBody = '{}',
 		successMessage_i18n,
 		title_i18n,
 		type = EItemActionType.LINK,
@@ -271,6 +272,7 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 		method?: EAsyncActionMethod;
 		modalSize?: EModalActionVariant;
 		permissionKey?: string;
+		requestBody?: string;
 		successMessage_i18n?: {[key: string]: string};
 		title_i18n?: {[key: string]: string};
 		type?: EItemActionType;
@@ -288,6 +290,7 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 			method,
 			modalSize,
 			permissionKey,
+			requestBody,
 			successMessage_i18n,
 			title_i18n,
 			type,

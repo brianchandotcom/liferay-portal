@@ -43,7 +43,6 @@ CATALINA_OPTS=&quot;${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${solr.dir}/serv
 "com.liferay.portal.search.elasticsearch.monitoring.web",\
 "com.liferay.portal.search.elasticsearch7.api",\
 "com.liferay.portal.search.elasticsearch7.impl",\
-"com.liferay.portal.search.tuning.rankings.web",\
 "com.liferay.portal.search.tuning.synonyms.api",\
 "com.liferay.portal.search.tuning.synonyms.web",\
 "com.liferay.portal.search.tuning.web",\

@@ -68,7 +68,7 @@ public class AssetListEntryExportImportContentProcessor
 		long[] groupIds = GetterUtil.getLongValues(
 			StringUtil.split(unicodeProperties.getProperty("groupIds", null)));
 
-		_addGroupMappingsElement(portletDataContext, groupIds);
+		addGroupMappingsElement(portletDataContext, groupIds);
 
 		String[] classNames = TransformUtil.transform(
 			StringUtil.split(
@@ -355,7 +355,7 @@ public class AssetListEntryExportImportContentProcessor
 		throws PortalException {
 	}
 
-	private void _addGroupMappingsElement(
+	protected void addGroupMappingsElement(
 		PortletDataContext portletDataContext, long[] groupIds) {
 
 		Element rootElement = portletDataContext.getExportDataRootElement();

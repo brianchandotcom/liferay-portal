@@ -1,0 +1,2610 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"indexed": true,
+					"layout": {}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"fragmentStyle": {
+								"backgroundColor": "colorNeutral1",
+								"borderRadius": "borderRadiusLg",
+								"marginBottom": "4",
+								"paddingBottom": "3",
+								"paddingLeft": "4",
+								"paddingRight": "5",
+								"paddingTop": "3"
+							},
+							"indexed": true,
+							"layout": {
+								"marginBottom": 2,
+								"paddingBottom": 1,
+								"paddingLeft": 2,
+								"paddingRight": 4,
+								"paddingTop": 1
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"gutters": true,
+									"indexed": true,
+									"modulesPerRow": 2,
+									"numberOfColumns": 2,
+									"reverseOrder": false,
+									"rowViewports": [
+										{
+											"id": "landscapeMobile",
+											"rowViewportDefinition": {
+												"modulesPerRow": 1
+											}
+										},
+										{
+											"id": "portraitMobile",
+											"rowViewportDefinition": {}
+										},
+										{
+											"id": "tablet",
+											"rowViewportDefinition": {}
+										}
+									],
+									"verticalAlignment": "middle"
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"columnViewports": [
+												{
+													"columnViewportDefinition": {
+														"size": 12
+													},
+													"id": "landscapeMobile"
+												},
+												{
+													"columnViewportDefinition": {},
+													"id": "portraitMobile"
+												},
+												{
+													"columnViewportDefinition": {},
+													"id": "tablet"
+												}
+											],
+											"size": 6
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "dialect-dialect-text"
+													},
+													"fragmentConfig": {
+														"textType": "h1"
+													},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {},
+																"text": {
+																	"value_i18n": {
+																		"ar_SA": "Marketing Resources",
+																		"ca_ES": "Marketing Resources",
+																		"de_DE": "Marketing Resources",
+																		"en_US": "Marketing Resources",
+																		"es_ES": "Marketing Resources",
+																		"fi_FI": "Marketing Resources",
+																		"fr_FR": "Marketing Resources",
+																		"hu_HU": "Marketing Resources",
+																		"ja_JP": "Marketing Resources",
+																		"nl_NL": "Marketing Resources",
+																		"pt_BR": "Marketing Resources",
+																		"sv_SE": "Marketing Resources",
+																		"zh_CN": "Marketing Resources"
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"fontWeight": "fontWeightBold",
+														"marginBottom": "3"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "dialect-dialect-text"
+													},
+													"fragmentConfig": {
+														"textType": "text-paragraph"
+													},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {},
+																"text": {
+																	"value_i18n": {
+																		"ar_SA": "Establish your brand as a Liferay partner, drive demand for your services, and expand your reach in the market.",
+																		"ca_ES": "Establish your brand as a Liferay partner, drive demand for your services, and expand your reach in the market.",
+																		"de_DE": "Establish your brand as a Liferay partner, drive demand for your services, and expand your reach in the market.",
+																		"en_US": "Establish your brand as a Liferay partner, drive demand for your services, and expand your reach in the market.",
+																		"es_ES": "Establish your brand as a Liferay partner, drive demand for your services, and expand your reach in the market.",
+																		"fi_FI": "Establish your brand as a Liferay partner, drive demand for your services, and expand your reach in the market.",
+																		"fr_FR": "Establish your brand as a Liferay partner, drive demand for your services, and expand your reach in the market.",
+																		"hu_HU": "Establish your brand as a Liferay partner, drive demand for your services, and expand your reach in the market.",
+																		"ja_JP": "Establish your brand as a Liferay partner, drive demand for your services, and expand your reach in the market.",
+																		"nl_NL": "Establish your brand as a Liferay partner, drive demand for your services, and expand your reach in the market.",
+																		"pt_BR": "Establish your brand as a Liferay partner, drive demand for your services, and expand your reach in the market.",
+																		"sv_SE": "Establish your brand as a Liferay partner, drive demand for your services, and expand your reach in the market.",
+																		"zh_CN": "Establish your brand as a Liferay partner, drive demand for your services, and expand your reach in the market."
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"marginBottom": "3"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragmentStyle": {
+														"hidden": true
+													},
+													"indexed": true,
+													"layout": {
+														"contentDisplay": "FlexRow"
+													}
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "dialect-dialect-button"
+															},
+															"fragmentConfig": {
+																"uppercase": false,
+																"style": "primary",
+																"type": "solid",
+																"inverted": false,
+																"buttonSize": ""
+															},
+															"fragmentFields": [
+																{
+																	"id": "link",
+																	"value": {
+																		"fragmentLink": {
+																			"value": {
+																				"href": {
+																					"mapping": {
+																						"itemReference": {
+																							"className": "com.liferay.portal.kernel.model.Layout",
+																							"fields": [
+																								{
+																									"fieldName": "friendlyURL",
+																									"fieldValue": "/pricing-calculator"
+																								},
+																								{
+																									"fieldName": "privatePage",
+																									"fieldValue": "false"
+																								},
+																								{
+																									"fieldName": "siteKey",
+																									"fieldValue": "[$GROUP_KEY$]"
+																								}
+																							]
+																						}
+																					}
+																				}
+																			}
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"ar_SA": "Go to Pricing Calculator",
+																				"ca_ES": "Go to Pricing Calculator",
+																				"de_DE": "Go to Pricing Calculator",
+																				"en_US": "Go to Pricing Calculator",
+																				"es_ES": "Go to Pricing Calculator",
+																				"fi_FI": "Go to Pricing Calculator",
+																				"fr_FR": "Go to Pricing Calculator",
+																				"hu_HU": "Go to Pricing Calculator",
+																				"ja_JP": "Go to Pricing Calculator",
+																				"nl_NL": "Go to Pricing Calculator",
+																				"pt_BR": "Go to Pricing Calculator",
+																				"sv_SE": "Go to Pricing Calculator",
+																				"zh_CN": "Go to Pricing Calculator"
+																			}
+																		}
+																	}
+																}
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "Section"
+											}
+										],
+										"type": "Column"
+									},
+									{
+										"definition": {
+											"columnViewports": [
+												{
+													"columnViewportDefinition": {
+														"size": 12
+													},
+													"id": "landscapeMobile"
+												},
+												{
+													"columnViewportDefinition": {},
+													"id": "portraitMobile"
+												},
+												{
+													"columnViewportDefinition": {},
+													"id": "tablet"
+												}
+											],
+											"size": 6
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"indexed": true,
+													"layout": {
+														"align": "Center",
+														"contentDisplay": "FlexRow",
+														"justify": "Center"
+													}
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "BASIC_COMPONENT-image"
+															},
+															"fragmentConfig": {
+																"imageSize": "w-100"
+															},
+															"fragmentFields": [
+																{
+																	"id": "image-square",
+																	"value": {
+																		"fragmentImage": {
+																			"url": {
+																				"mapping": {
+																					"fieldKey": "FileEntry_previewImage",
+																					"itemReference": {
+																						"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																						"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/home.png#]"
+																					}
+																				}
+																			}
+																		},
+																		"fragmentLink": {}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"maxWidth": "300px"
+															},
+															"indexed": true
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "Section"
+											}
+										],
+										"type": "Column"
+									}
+								],
+								"type": "Row"
+							}
+						],
+						"type": "Section"
+					},
+					{
+						"definition": {
+							"fragmentStyle": {
+								"hidden": true,
+								"marginBottom": "5",
+								"marginTop": "4"
+							},
+							"indexed": true,
+							"layout": {
+								"marginBottom": 4,
+								"marginTop": 2
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragment": {
+										"key": "dialect-dialect-text"
+									},
+									"fragmentConfig": {
+										"textType": "h3"
+									},
+									"fragmentFields": [
+										{
+											"id": "element-text",
+											"value": {
+												"fragmentLink": {},
+												"text": {
+													"value_i18n": {
+														"ar_SA": "Liferay Brand Guidelines",
+														"ca_ES": "Liferay Brand Guidelines",
+														"de_DE": "Liferay Brand Guidelines",
+														"en_US": "Liferay Brand Guidelines",
+														"es_ES": "Liferay Brand Guidelines",
+														"fi_FI": "Liferay Brand Guidelines",
+														"fr_FR": "Liferay Brand Guidelines",
+														"hu_HU": "Liferay Brand Guidelines",
+														"ja_JP": "Liferay Brand Guidelines",
+														"nl_NL": "Liferay Brand Guidelines",
+														"pt_BR": "Liferay Brand Guidelines",
+														"sv_SE": "Liferay Brand Guidelines",
+														"zh_CN": "Liferay Brand Guidelines"
+													}
+												}
+											}
+										}
+									],
+									"fragmentStyle": {
+										"marginBottom": "3"
+									},
+									"indexed": true
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "BASIC_COMPONENT-paragraph"
+									},
+									"fragmentConfig": {},
+									"fragmentFields": [
+										{
+											"id": "element-text",
+											"value": {
+												"fragmentLink": {},
+												"text": {
+													"value_i18n": {
+														"ar_SA": "Liferay's approach is SaaS first. This pricing model supports Endless Solutions on Liferay Experience Cloud, the three plans provide different levels of capabilities. Pro, Business &amp; Enterprise. With each of these models, it is essential to include a MALU Band and an APV band. \u003Cstrong\u003E\u003Cu\u003E\u003Ca href=\"https://learn.liferay.com/w/courses/selling-liferay/level-1-business/liferay-pricing/liferay-pricing-saas-malus-apvs\" rel=\"noopener noreferrer\"\u003EClick here\u003C/a\u003E\u003C/u\u003E\u003C/strong\u003E to learn more about how to calculate MALU and APV bands.",
+														"ca_ES": "Liferay's approach is SaaS first. This pricing model supports Endless Solutions on Liferay Experience Cloud, the three plans provide different levels of capabilities. Pro, Business &amp; Enterprise. With each of these models, it is essential to include a MALU Band and an APV band. \u003Cstrong\u003E\u003Cu\u003E\u003Ca href=\"https://learn.liferay.com/w/courses/selling-liferay/level-1-business/liferay-pricing/liferay-pricing-saas-malus-apvs\" rel=\"noopener noreferrer\"\u003EClick here\u003C/a\u003E\u003C/u\u003E\u003C/strong\u003E to learn more about how to calculate MALU and APV bands.",
+														"de_DE": "Liferay's approach is SaaS first. This pricing model supports Endless Solutions on Liferay Experience Cloud, the three plans provide different levels of capabilities. Pro, Business &amp; Enterprise. With each of these models, it is essential to include a MALU Band and an APV band. \u003Cstrong\u003E\u003Cu\u003E\u003Ca href=\"https://learn.liferay.com/w/courses/selling-liferay/level-1-business/liferay-pricing/liferay-pricing-saas-malus-apvs\" rel=\"noopener noreferrer\"\u003EClick here\u003C/a\u003E\u003C/u\u003E\u003C/strong\u003E to learn more about how to calculate MALU and APV bands.",
+														"en_US": "Liferay's approach is SaaS first. This pricing model supports Endless Solutions on Liferay Experience Cloud, the three plans provide different levels of capabilities. Pro, Business &amp; Enterprise. With each of these models, it is essential to include a MALU Band and an APV band. \u003Cstrong\u003E\u003Cu\u003E\u003Ca href=\"https://learn.liferay.com/w/courses/selling-liferay/level-1-business/liferay-pricing/liferay-pricing-saas-malus-apvs\" rel=\"noopener noreferrer\"\u003EClick here\u003C/a\u003E\u003C/u\u003E\u003C/strong\u003E to learn more about how to calculate MALU and APV bands.",
+														"es_ES": "Liferay's approach is SaaS first. This pricing model supports Endless Solutions on Liferay Experience Cloud, the three plans provide different levels of capabilities. Pro, Business &amp; Enterprise. With each of these models, it is essential to include a MALU Band and an APV band. \u003Cstrong\u003E\u003Cu\u003E\u003Ca href=\"https://learn.liferay.com/w/courses/selling-liferay/level-1-business/liferay-pricing/liferay-pricing-saas-malus-apvs\" rel=\"noopener noreferrer\"\u003EClick here\u003C/a\u003E\u003C/u\u003E\u003C/strong\u003E to learn more about how to calculate MALU and APV bands.",
+														"fi_FI": "Liferay's approach is SaaS first. This pricing model supports Endless Solutions on Liferay Experience Cloud, the three plans provide different levels of capabilities. Pro, Business &amp; Enterprise. With each of these models, it is essential to include a MALU Band and an APV band. \u003Cstrong\u003E\u003Cu\u003E\u003Ca href=\"https://learn.liferay.com/w/courses/selling-liferay/level-1-business/liferay-pricing/liferay-pricing-saas-malus-apvs\" rel=\"noopener noreferrer\"\u003EClick here\u003C/a\u003E\u003C/u\u003E\u003C/strong\u003E to learn more about how to calculate MALU and APV bands.",
+														"fr_FR": "Liferay's approach is SaaS first. This pricing model supports Endless Solutions on Liferay Experience Cloud, the three plans provide different levels of capabilities. Pro, Business &amp; Enterprise. With each of these models, it is essential to include a MALU Band and an APV band. \u003Cstrong\u003E\u003Cu\u003E\u003Ca href=\"https://learn.liferay.com/w/courses/selling-liferay/level-1-business/liferay-pricing/liferay-pricing-saas-malus-apvs\" rel=\"noopener noreferrer\"\u003EClick here\u003C/a\u003E\u003C/u\u003E\u003C/strong\u003E to learn more about how to calculate MALU and APV bands.",
+														"hu_HU": "Liferay's approach is SaaS first. This pricing model supports Endless Solutions on Liferay Experience Cloud, the three plans provide different levels of capabilities. Pro, Business &amp; Enterprise. With each of these models, it is essential to include a MALU Band and an APV band. \u003Cstrong\u003E\u003Cu\u003E\u003Ca href=\"https://learn.liferay.com/w/courses/selling-liferay/level-1-business/liferay-pricing/liferay-pricing-saas-malus-apvs\" rel=\"noopener noreferrer\"\u003EClick here\u003C/a\u003E\u003C/u\u003E\u003C/strong\u003E to learn more about how to calculate MALU and APV bands.",
+														"ja_JP": "Liferay's approach is SaaS first. This pricing model supports Endless Solutions on Liferay Experience Cloud, the three plans provide different levels of capabilities. Pro, Business &amp; Enterprise. With each of these models, it is essential to include a MALU Band and an APV band. \u003Cstrong\u003E\u003Cu\u003E\u003Ca href=\"https://learn.liferay.com/w/courses/selling-liferay/level-1-business/liferay-pricing/liferay-pricing-saas-malus-apvs\" rel=\"noopener noreferrer\"\u003EClick here\u003C/a\u003E\u003C/u\u003E\u003C/strong\u003E to learn more about how to calculate MALU and APV bands.",
+														"nl_NL": "Liferay's approach is SaaS first. This pricing model supports Endless Solutions on Liferay Experience Cloud, the three plans provide different levels of capabilities. Pro, Business &amp; Enterprise. With each of these models, it is essential to include a MALU Band and an APV band. \u003Cstrong\u003E\u003Cu\u003E\u003Ca href=\"https://learn.liferay.com/w/courses/selling-liferay/level-1-business/liferay-pricing/liferay-pricing-saas-malus-apvs\" rel=\"noopener noreferrer\"\u003EClick here\u003C/a\u003E\u003C/u\u003E\u003C/strong\u003E to learn more about how to calculate MALU and APV bands.",
+														"pt_BR": "Liferay's approach is SaaS first. This pricing model supports Endless Solutions on Liferay Experience Cloud, the three plans provide different levels of capabilities. Pro, Business &amp; Enterprise. With each of these models, it is essential to include a MALU Band and an APV band. \u003Cstrong\u003E\u003Cu\u003E\u003Ca href=\"https://learn.liferay.com/w/courses/selling-liferay/level-1-business/liferay-pricing/liferay-pricing-saas-malus-apvs\" rel=\"noopener noreferrer\"\u003EClick here\u003C/a\u003E\u003C/u\u003E\u003C/strong\u003E to learn more about how to calculate MALU and APV bands.",
+														"sv_SE": "Liferay's approach is SaaS first. This pricing model supports Endless Solutions on Liferay Experience Cloud, the three plans provide different levels of capabilities. Pro, Business &amp; Enterprise. With each of these models, it is essential to include a MALU Band and an APV band. \u003Cstrong\u003E\u003Cu\u003E\u003Ca href=\"https://learn.liferay.com/w/courses/selling-liferay/level-1-business/liferay-pricing/liferay-pricing-saas-malus-apvs\" rel=\"noopener noreferrer\"\u003EClick here\u003C/a\u003E\u003C/u\u003E\u003C/strong\u003E to learn more about how to calculate MALU and APV bands.",
+														"zh_CN": "Liferay's approach is SaaS first. This pricing model supports Endless Solutions on Liferay Experience Cloud, the three plans provide different levels of capabilities. Pro, Business &amp; Enterprise. With each of these models, it is essential to include a MALU Band and an APV band. \u003Cstrong\u003E\u003Cu\u003E\u003Ca href=\"https://learn.liferay.com/w/courses/selling-liferay/level-1-business/liferay-pricing/liferay-pricing-saas-malus-apvs\" rel=\"noopener noreferrer\"\u003EClick here\u003C/a\u003E\u003C/u\u003E\u003C/strong\u003E to learn more about how to calculate MALU and APV bands."
+													}
+												}
+											}
+										}
+									],
+									"fragmentStyle": {
+										"marginBottom": "5"
+									},
+									"indexed": true
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "BASIC_COMPONENT-button"
+									},
+									"fragmentConfig": {
+										"buttonType": "outline-primary",
+										"type": "link",
+										"buttonSize": "sm"
+									},
+									"fragmentFields": [
+										{
+											"id": "link",
+											"value": {
+												"fragmentLink": {
+													"value": {
+														"href": {
+															"value_i18n": {
+																"ar_SA": "https://learn.liferay.com/w/courses/selling-liferay/level-1-business/liferay-pricing/liferay-pricing-saas",
+																"ca_ES": "https://learn.liferay.com/w/courses/selling-liferay/level-1-business/liferay-pricing/liferay-pricing-saas",
+																"de_DE": "https://learn.liferay.com/w/courses/selling-liferay/level-1-business/liferay-pricing/liferay-pricing-saas",
+																"en_US": "https://learn.liferay.com/w/courses/selling-liferay/level-1-business/liferay-pricing/liferay-pricing-saas",
+																"es_ES": "https://learn.liferay.com/w/courses/selling-liferay/level-1-business/liferay-pricing/liferay-pricing-saas",
+																"fi_FI": "https://learn.liferay.com/w/courses/selling-liferay/level-1-business/liferay-pricing/liferay-pricing-saas",
+																"fr_FR": "https://learn.liferay.com/w/courses/selling-liferay/level-1-business/liferay-pricing/liferay-pricing-saas",
+																"hu_HU": "https://learn.liferay.com/w/courses/selling-liferay/level-1-business/liferay-pricing/liferay-pricing-saas",
+																"ja_JP": "https://learn.liferay.com/w/courses/selling-liferay/level-1-business/liferay-pricing/liferay-pricing-saas",
+																"nl_NL": "https://learn.liferay.com/w/courses/selling-liferay/level-1-business/liferay-pricing/liferay-pricing-saas",
+																"pt_BR": "https://learn.liferay.com/w/courses/selling-liferay/level-1-business/liferay-pricing/liferay-pricing-saas",
+																"sv_SE": "https://learn.liferay.com/w/courses/selling-liferay/level-1-business/liferay-pricing/liferay-pricing-saas",
+																"zh_CN": "https://learn.liferay.com/w/courses/selling-liferay/level-1-business/liferay-pricing/liferay-pricing-saas"
+															}
+														},
+														"target": "Blank"
+													}
+												},
+												"text": {
+													"value_i18n": {
+														"ar_SA": "Learn More...",
+														"ca_ES": "Learn More...",
+														"de_DE": "Learn More...",
+														"en_US": "Learn More...",
+														"es_ES": "Learn More...",
+														"fi_FI": "Learn More...",
+														"fr_FR": "Learn More...",
+														"hu_HU": "Learn More...",
+														"ja_JP": "Learn More...",
+														"nl_NL": "Learn More...",
+														"pt_BR": "Learn More...",
+														"sv_SE": "Learn More...",
+														"zh_CN": "Learn More..."
+													}
+												}
+											}
+										}
+									],
+									"indexed": true
+								},
+								"type": "Fragment"
+							}
+						],
+						"type": "Section"
+					},
+					{
+						"definition": {
+							"fragmentStyle": {
+								"marginBottom": "5",
+								"marginTop": "4",
+								"paddingLeft": "4"
+							},
+							"indexed": true,
+							"layout": {
+								"marginBottom": 4,
+								"marginTop": 2,
+								"paddingLeft": 2
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragment": {
+										"key": "dialect-dialect-text"
+									},
+									"fragmentConfig": {
+										"textType": "h3"
+									},
+									"fragmentFields": [
+										{
+											"id": "element-text",
+											"value": {
+												"fragmentLink": {},
+												"text": {
+													"value_i18n": {
+														"ar_SA": "Liferay Partner Brand Collateral",
+														"ca_ES": "Liferay Partner Brand Collateral",
+														"de_DE": "Liferay Partner Brand Collateral",
+														"en_US": "Liferay Partner Brand Collateral",
+														"es_ES": "Liferay Partner Brand Collateral",
+														"fi_FI": "Liferay Partner Brand Collateral",
+														"fr_FR": "Liferay Partner Brand Collateral",
+														"hu_HU": "Liferay Partner Brand Collateral",
+														"ja_JP": "Liferay Partner Brand Collateral",
+														"nl_NL": "Liferay Partner Brand Collateral",
+														"pt_BR": "Liferay Partner Brand Collateral",
+														"sv_SE": "Liferay Partner Brand Collateral",
+														"zh_CN": "Liferay Partner Brand Collateral"
+													}
+												}
+											}
+										}
+									],
+									"fragmentStyle": {
+										"marginBottom": "3"
+									},
+									"indexed": true
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "dialect-dialect-text"
+									},
+									"fragmentConfig": {
+										"textType": "text-paragraph"
+									},
+									"fragmentFields": [
+										{
+											"id": "element-text",
+											"value": {
+												"fragmentLink": {},
+												"text": {
+													"value_i18n": {
+														"ar_SA": "Find Liferay creative files to identify and promote your Liferay partnership in print and digital formats.",
+														"ca_ES": "Find Liferay creative files to identify and promote your Liferay partnership in print and digital formats.",
+														"de_DE": "Find Liferay creative files to identify and promote your Liferay partnership in print and digital formats.",
+														"en_US": "Find Liferay creative files to identify and promote your Liferay partnership in print and digital formats.",
+														"es_ES": "Find Liferay creative files to identify and promote your Liferay partnership in print and digital formats.",
+														"fi_FI": "Find Liferay creative files to identify and promote your Liferay partnership in print and digital formats.",
+														"fr_FR": "Find Liferay creative files to identify and promote your Liferay partnership in print and digital formats.",
+														"hu_HU": "Find Liferay creative files to identify and promote your Liferay partnership in print and digital formats.",
+														"ja_JP": "Find Liferay creative files to identify and promote your Liferay partnership in print and digital formats.",
+														"nl_NL": "Find Liferay creative files to identify and promote your Liferay partnership in print and digital formats.",
+														"pt_BR": "Find Liferay creative files to identify and promote your Liferay partnership in print and digital formats.",
+														"sv_SE": "Find Liferay creative files to identify and promote your Liferay partnership in print and digital formats.",
+														"zh_CN": "Find Liferay creative files to identify and promote your Liferay partnership in print and digital formats."
+													}
+												}
+											}
+										}
+									],
+									"fragmentStyle": {
+										"marginBottom": "4",
+										"paddingRight": "3"
+									},
+									"indexed": true
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "dialect-dialect-text"
+									},
+									"fragmentConfig": {
+										"textType": "text-paragraph"
+									},
+									"fragmentFields": [
+										{
+											"id": "element-text",
+											"value": {
+												"fragmentLink": {},
+												"text": {
+													"value_i18n": {
+														"ar_SA": "Partner Brand Guidelines",
+														"ca_ES": "Partner Brand Guidelines",
+														"de_DE": "Partner Brand Guidelines",
+														"en_US": "Partner Brand Guidelines",
+														"es_ES": "Partner Brand Guidelines",
+														"fi_FI": "Partner Brand Guidelines",
+														"fr_FR": "Partner Brand Guidelines",
+														"hu_HU": "Partner Brand Guidelines",
+														"ja_JP": "Partner Brand Guidelines",
+														"nl_NL": "Partner Brand Guidelines",
+														"pt_BR": "Partner Brand Guidelines",
+														"sv_SE": "Partner Brand Guidelines",
+														"zh_CN": "Partner Brand Guidelines"
+													}
+												}
+											}
+										}
+									],
+									"fragmentStyle": {
+										"fontWeight": "fontWeightBold",
+										"marginBottom": "1",
+										"paddingRight": "3"
+									},
+									"indexed": true
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "dialect-dialect-text"
+									},
+									"fragmentConfig": {
+										"textType": "text-paragraph"
+									},
+									"fragmentFields": [
+										{
+											"id": "element-text",
+											"value": {
+												"fragmentLink": {},
+												"text": {
+													"value_i18n": {
+														"ar_SA": "The Liferay logo is the most visible and recognizable expression of the Liferay brand. We understand and appreciate that our partners may want to show affiliation with Liferay. Use the brand guidelines to ensure that Liferay logo is shown properly with your partner logo on external sites, events, and campaigns.",
+														"ca_ES": "The Liferay logo is the most visible and recognizable expression of the Liferay brand. We understand and appreciate that our partners may want to show affiliation with Liferay. Use the brand guidelines to ensure that Liferay logo is shown properly with your partner logo on external sites, events, and campaigns.",
+														"de_DE": "The Liferay logo is the most visible and recognizable expression of the Liferay brand. We understand and appreciate that our partners may want to show affiliation with Liferay. Use the brand guidelines to ensure that Liferay logo is shown properly with your partner logo on external sites, events, and campaigns.",
+														"en_US": "The Liferay logo is the most visible and recognizable expression of the Liferay brand. We understand and appreciate that our partners may want to show affiliation with Liferay. Use the brand guidelines to ensure that Liferay logo is shown properly with your partner logo on external sites, events, and campaigns.",
+														"es_ES": "The Liferay logo is the most visible and recognizable expression of the Liferay brand. We understand and appreciate that our partners may want to show affiliation with Liferay. Use the brand guidelines to ensure that Liferay logo is shown properly with your partner logo on external sites, events, and campaigns.",
+														"fi_FI": "The Liferay logo is the most visible and recognizable expression of the Liferay brand. We understand and appreciate that our partners may want to show affiliation with Liferay. Use the brand guidelines to ensure that Liferay logo is shown properly with your partner logo on external sites, events, and campaigns.",
+														"fr_FR": "The Liferay logo is the most visible and recognizable expression of the Liferay brand. We understand and appreciate that our partners may want to show affiliation with Liferay. Use the brand guidelines to ensure that Liferay logo is shown properly with your partner logo on external sites, events, and campaigns.",
+														"hu_HU": "The Liferay logo is the most visible and recognizable expression of the Liferay brand. We understand and appreciate that our partners may want to show affiliation with Liferay. Use the brand guidelines to ensure that Liferay logo is shown properly with your partner logo on external sites, events, and campaigns.",
+														"ja_JP": "The Liferay logo is the most visible and recognizable expression of the Liferay brand. We understand and appreciate that our partners may want to show affiliation with Liferay. Use the brand guidelines to ensure that Liferay logo is shown properly with your partner logo on external sites, events, and campaigns.",
+														"nl_NL": "The Liferay logo is the most visible and recognizable expression of the Liferay brand. We understand and appreciate that our partners may want to show affiliation with Liferay. Use the brand guidelines to ensure that Liferay logo is shown properly with your partner logo on external sites, events, and campaigns.",
+														"pt_BR": "The Liferay logo is the most visible and recognizable expression of the Liferay brand. We understand and appreciate that our partners may want to show affiliation with Liferay. Use the brand guidelines to ensure that Liferay logo is shown properly with your partner logo on external sites, events, and campaigns.",
+														"sv_SE": "The Liferay logo is the most visible and recognizable expression of the Liferay brand. We understand and appreciate that our partners may want to show affiliation with Liferay. Use the brand guidelines to ensure that Liferay logo is shown properly with your partner logo on external sites, events, and campaigns.",
+														"zh_CN": "The Liferay logo is the most visible and recognizable expression of the Liferay brand. We understand and appreciate that our partners may want to show affiliation with Liferay. Use the brand guidelines to ensure that Liferay logo is shown properly with your partner logo on external sites, events, and campaigns."
+													}
+												}
+											}
+										}
+									],
+									"fragmentStyle": {
+										"marginBottom": "4",
+										"paddingRight": "3"
+									},
+									"indexed": true
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "dialect-dialect-text"
+									},
+									"fragmentConfig": {
+										"textType": "text-paragraph"
+									},
+									"fragmentFields": [
+										{
+											"id": "element-text",
+											"value": {
+												"fragmentLink": {},
+												"text": {
+													"value_i18n": {
+														"ar_SA": "Partner Logos",
+														"ca_ES": "Partner Logos",
+														"de_DE": "Partner Logos",
+														"en_US": "Partner Logos",
+														"es_ES": "Partner Logos",
+														"fi_FI": "Partner Logos",
+														"fr_FR": "Partner Logos",
+														"hu_HU": "Partner Logos",
+														"ja_JP": "Partner Logos",
+														"nl_NL": "Partner Logos",
+														"pt_BR": "Partner Logos",
+														"sv_SE": "Partner Logos",
+														"zh_CN": "Partner Logos"
+													}
+												}
+											}
+										}
+									],
+									"fragmentStyle": {
+										"fontWeight": "fontWeightBold",
+										"marginBottom": "1",
+										"paddingRight": "3"
+									},
+									"indexed": true
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "dialect-dialect-text"
+									},
+									"fragmentConfig": {
+										"textType": "text-paragraph"
+									},
+									"fragmentFields": [
+										{
+											"id": "element-text",
+											"value": {
+												"fragmentLink": {},
+												"text": {
+													"value_i18n": {
+														"ar_SA": "To show your affiliation with Liferay, download&nbsp;the Liferay Partner Program logo&nbsp;for your current partnership level using the brand guidelines.&nbsp;",
+														"ca_ES": "To show your affiliation with Liferay, download&nbsp;the Liferay Partner Program logo&nbsp;for your current partnership level using the brand guidelines.&nbsp;",
+														"de_DE": "To show your affiliation with Liferay, download&nbsp;the Liferay Partner Program logo&nbsp;for your current partnership level using the brand guidelines.&nbsp;",
+														"en_US": "To show your affiliation with Liferay, download&nbsp;the Liferay Partner Program logo&nbsp;for your current partnership level using the brand guidelines.&nbsp;",
+														"es_ES": "To show your affiliation with Liferay, download&nbsp;the Liferay Partner Program logo&nbsp;for your current partnership level using the brand guidelines.&nbsp;",
+														"fi_FI": "To show your affiliation with Liferay, download&nbsp;the Liferay Partner Program logo&nbsp;for your current partnership level using the brand guidelines.&nbsp;",
+														"fr_FR": "To show your affiliation with Liferay, download&nbsp;the Liferay Partner Program logo&nbsp;for your current partnership level using the brand guidelines.&nbsp;",
+														"hu_HU": "To show your affiliation with Liferay, download&nbsp;the Liferay Partner Program logo&nbsp;for your current partnership level using the brand guidelines.&nbsp;",
+														"ja_JP": "To show your affiliation with Liferay, download&nbsp;the Liferay Partner Program logo&nbsp;for your current partnership level using the brand guidelines.&nbsp;",
+														"nl_NL": "To show your affiliation with Liferay, download&nbsp;the Liferay Partner Program logo&nbsp;for your current partnership level using the brand guidelines.&nbsp;",
+														"pt_BR": "To show your affiliation with Liferay, download&nbsp;the Liferay Partner Program logo&nbsp;for your current partnership level using the brand guidelines.&nbsp;",
+														"sv_SE": "To show your affiliation with Liferay, download&nbsp;the Liferay Partner Program logo&nbsp;for your current partnership level using the brand guidelines.&nbsp;",
+														"zh_CN": "To show your affiliation with Liferay, download&nbsp;the Liferay Partner Program logo&nbsp;for your current partnership level using the brand guidelines.&nbsp;"
+													}
+												}
+											}
+										}
+									],
+									"fragmentStyle": {
+										"marginBottom": "4",
+										"paddingRight": "3"
+									},
+									"indexed": true
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "BASIC_COMPONENT-button"
+									},
+									"fragmentConfig": {
+										"buttonType": "outline-primary",
+										"type": "link",
+										"buttonSize": "sm"
+									},
+									"fragmentFields": [
+										{
+											"id": "link",
+											"value": {
+												"fragmentLink": {
+													"value": {
+														"href": {
+															"value_i18n": {
+																"ar_SA": "https://learn.liferay.com/w/courses/selling-liferay/level-1-business/liferay-pricing/liferay-pricing-self-hosted",
+																"ca_ES": "https://learn.liferay.com/w/courses/selling-liferay/level-1-business/liferay-pricing/liferay-pricing-self-hosted",
+																"de_DE": "https://learn.liferay.com/w/courses/selling-liferay/level-1-business/liferay-pricing/liferay-pricing-self-hosted",
+																"en_US": "https://learn.liferay.com/w/courses/selling-liferay/level-1-business/liferay-pricing/liferay-pricing-self-hosted",
+																"es_ES": "https://learn.liferay.com/w/courses/selling-liferay/level-1-business/liferay-pricing/liferay-pricing-self-hosted",
+																"fi_FI": "https://learn.liferay.com/w/courses/selling-liferay/level-1-business/liferay-pricing/liferay-pricing-self-hosted",
+																"fr_FR": "https://learn.liferay.com/w/courses/selling-liferay/level-1-business/liferay-pricing/liferay-pricing-self-hosted",
+																"hu_HU": "https://learn.liferay.com/w/courses/selling-liferay/level-1-business/liferay-pricing/liferay-pricing-self-hosted",
+																"ja_JP": "https://learn.liferay.com/w/courses/selling-liferay/level-1-business/liferay-pricing/liferay-pricing-self-hosted",
+																"nl_NL": "https://learn.liferay.com/w/courses/selling-liferay/level-1-business/liferay-pricing/liferay-pricing-self-hosted",
+																"pt_BR": "https://learn.liferay.com/w/courses/selling-liferay/level-1-business/liferay-pricing/liferay-pricing-self-hosted",
+																"sv_SE": "https://learn.liferay.com/w/courses/selling-liferay/level-1-business/liferay-pricing/liferay-pricing-self-hosted",
+																"zh_CN": "https://learn.liferay.com/w/courses/selling-liferay/level-1-business/liferay-pricing/liferay-pricing-self-hosted"
+															}
+														},
+														"target": "Blank"
+													}
+												},
+												"text": {
+													"value_i18n": {
+														"ar_SA": "See logos",
+														"ca_ES": "See logos",
+														"de_DE": "See logos",
+														"en_US": "See logos",
+														"es_ES": "See logos",
+														"fi_FI": "See logos",
+														"fr_FR": "See logos",
+														"hu_HU": "See logos",
+														"ja_JP": "See logos",
+														"nl_NL": "See logos",
+														"pt_BR": "See logos",
+														"sv_SE": "See logos",
+														"zh_CN": "See logos"
+													}
+												}
+											}
+										}
+									],
+									"fragmentStyle": {
+										"hidden": true
+									},
+									"indexed": true
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragmentStyle": {
+										"marginBottom": "5",
+										"marginTop": "5",
+										"paddingRight": "2"
+									},
+									"gutters": true,
+									"indexed": true,
+									"modulesPerRow": 4,
+									"numberOfColumns": 4,
+									"reverseOrder": false,
+									"rowViewports": [
+										{
+											"id": "landscapeMobile",
+											"rowViewportDefinition": {
+												"modulesPerRow": 1
+											}
+										},
+										{
+											"id": "portraitMobile",
+											"rowViewportDefinition": {}
+										},
+										{
+											"id": "tablet",
+											"rowViewportDefinition": {}
+										}
+									],
+									"verticalAlignment": "top"
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"columnViewports": [
+												{
+													"columnViewportDefinition": {
+														"size": 12
+													},
+													"id": "landscapeMobile"
+												},
+												{
+													"columnViewportDefinition": {},
+													"id": "portraitMobile"
+												},
+												{
+													"columnViewportDefinition": {},
+													"id": "tablet"
+												}
+											],
+											"size": 3
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "dialect-dialect-text"
+													},
+													"fragmentConfig": {
+														"textType": "h4"
+													},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {},
+																"text": {
+																	"value_i18n": {
+																		"ar_SA": "Authorized",
+																		"ca_ES": "Authorized",
+																		"de_DE": "Authorized",
+																		"en_US": "Authorized",
+																		"es_ES": "Authorized",
+																		"fi_FI": "Authorized",
+																		"fr_FR": "Authorized",
+																		"hu_HU": "Authorized",
+																		"ja_JP": "Authorized",
+																		"nl_NL": "Authorized",
+																		"pt_BR": "Authorized",
+																		"sv_SE": "Authorized",
+																		"zh_CN": "Authorized"
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"fontWeight": "fontWeightBold",
+														"marginBottom": "2",
+														"textAlign": "center",
+														"textColor": ""
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragmentStyle": {
+														"borderColor": "colorNeutral5",
+														"borderRadius": "borderRadiusLg",
+														"borderWidth": "2px",
+														"marginBottom": "3",
+														"marginLeft": "2",
+														"marginRight": "2",
+														"paddingBottom": "2",
+														"paddingLeft": "2",
+														"paddingRight": "2",
+														"paddingTop": "2"
+													},
+													"indexed": true,
+													"layout": {
+														"borderColor": "colorNeutral5",
+														"marginBottom": 1
+													}
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragmentStyle": {
+																"marginBottom": "2",
+																"paddingBottom": "1",
+																"paddingLeft": "1",
+																"paddingRight": "1",
+																"paddingTop": "1"
+															},
+															"indexed": true,
+															"layout": {
+																"contentDisplay": "FlexRow"
+															}
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "clay-icon-link"
+																	},
+																	"fragmentConfig": {
+																		"iconLink": "",
+																		"iconName": "check-circle"
+																	},
+																	"fragmentFields": [],
+																	"fragmentStyle": {
+																		"paddingRight": "2",
+																		"textColor": "colorBrandPrimary"
+																	},
+																	"indexed": true
+																},
+																"type": "Fragment"
+															},
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "dialect-dialect-text"
+																	},
+																	"fragmentConfig": {
+																		"textType": "text-paragraph"
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "element-text",
+																			"value": {
+																				"fragmentLink": {},
+																				"text": {
+																					"value_i18n": {
+																						"ar_SA": "Brand guidelines",
+																						"ca_ES": "Brand guidelines",
+																						"de_DE": "Brand guidelines",
+																						"en_US": "Brand guidelines",
+																						"es_ES": "Brand guidelines",
+																						"fi_FI": "Brand guidelines",
+																						"fr_FR": "Brand guidelines",
+																						"hu_HU": "Brand guidelines",
+																						"ja_JP": "Brand guidelines",
+																						"nl_NL": "Brand guidelines",
+																						"pt_BR": "Brand guidelines",
+																						"sv_SE": "Brand guidelines",
+																						"zh_CN": "Brand guidelines"
+																					}
+																				}
+																			}
+																		}
+																	],
+																	"indexed": true
+																},
+																"type": "Fragment"
+															}
+														],
+														"type": "Section"
+													},
+													{
+														"definition": {
+															"fragmentStyle": {
+																"marginBottom": "2",
+																"paddingBottom": "1",
+																"paddingLeft": "1",
+																"paddingRight": "1",
+																"paddingTop": "1"
+															},
+															"indexed": true,
+															"layout": {
+																"contentDisplay": "FlexRow"
+															}
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "clay-icon-link"
+																	},
+																	"fragmentConfig": {
+																		"iconLink": "",
+																		"iconName": "check-circle"
+																	},
+																	"fragmentFields": [],
+																	"fragmentStyle": {
+																		"paddingRight": "2",
+																		"textColor": "colorBrandPrimary"
+																	},
+																	"indexed": true
+																},
+																"type": "Fragment"
+															},
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "dialect-dialect-text"
+																	},
+																	"fragmentConfig": {
+																		"textType": "text-paragraph"
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "element-text",
+																			"value": {
+																				"fragmentLink": {},
+																				"text": {
+																					"value_i18n": {
+																						"ar_SA": "PNG logos",
+																						"ca_ES": "PNG logos",
+																						"de_DE": "PNG logos",
+																						"en_US": "PNG logos",
+																						"es_ES": "PNG logos",
+																						"fi_FI": "PNG logos",
+																						"fr_FR": "PNG logos",
+																						"hu_HU": "PNG logos",
+																						"ja_JP": "PNG logos",
+																						"nl_NL": "PNG logos",
+																						"pt_BR": "PNG logos",
+																						"sv_SE": "PNG logos",
+																						"zh_CN": "PNG logos"
+																					}
+																				}
+																			}
+																		}
+																	],
+																	"indexed": true
+																},
+																"type": "Fragment"
+															}
+														],
+														"type": "Section"
+													},
+													{
+														"definition": {
+															"fragmentStyle": {
+																"marginBottom": "2",
+																"paddingBottom": "1",
+																"paddingLeft": "1",
+																"paddingRight": "1",
+																"paddingTop": "1"
+															},
+															"indexed": true,
+															"layout": {
+																"contentDisplay": "FlexRow"
+															}
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "clay-icon-link"
+																	},
+																	"fragmentConfig": {
+																		"iconLink": "",
+																		"iconName": "check-circle"
+																	},
+																	"fragmentFields": [],
+																	"fragmentStyle": {
+																		"paddingRight": "2",
+																		"textColor": "colorBrandPrimary"
+																	},
+																	"indexed": true
+																},
+																"type": "Fragment"
+															},
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "dialect-dialect-text"
+																	},
+																	"fragmentConfig": {
+																		"textType": "text-paragraph"
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "element-text",
+																			"value": {
+																				"fragmentLink": {},
+																				"text": {
+																					"value_i18n": {
+																						"ar_SA": "SVG logos",
+																						"ca_ES": "SVG logos",
+																						"de_DE": "SVG logos",
+																						"en_US": "SVG logos",
+																						"es_ES": "SVG logos",
+																						"fi_FI": "SVG logos",
+																						"fr_FR": "SVG logos",
+																						"hu_HU": "SVG logos",
+																						"ja_JP": "SVG logos",
+																						"nl_NL": "SVG logos",
+																						"pt_BR": "SVG logos",
+																						"sv_SE": "SVG logos",
+																						"zh_CN": "SVG logos"
+																					}
+																				}
+																			}
+																		}
+																	],
+																	"indexed": true
+																},
+																"type": "Fragment"
+															}
+														],
+														"type": "Section"
+													}
+												],
+												"type": "Section"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "dialect-dialect-button"
+													},
+													"fragmentConfig": {
+														"uppercase": false,
+														"style": "primary",
+														"type": "solid",
+														"inverted": false,
+														"buttonSize": ""
+													},
+													"fragmentFields": [
+														{
+															"id": "link",
+															"value": {
+																"fragmentLink": {},
+																"text": {
+																	"value_i18n": {
+																		"ar_SA": "Download&nbsp; Brand Assets",
+																		"ca_ES": "Download&nbsp; Brand Assets",
+																		"de_DE": "Download&nbsp; Brand Assets",
+																		"en_US": "Download&nbsp; Brand Assets",
+																		"es_ES": "Download&nbsp; Brand Assets",
+																		"fi_FI": "Download&nbsp; Brand Assets",
+																		"fr_FR": "Download&nbsp; Brand Assets",
+																		"hu_HU": "Download&nbsp; Brand Assets",
+																		"ja_JP": "Download&nbsp; Brand Assets",
+																		"nl_NL": "Download&nbsp; Brand Assets",
+																		"pt_BR": "Download&nbsp; Brand Assets",
+																		"sv_SE": "Download&nbsp; Brand Assets",
+																		"zh_CN": "Download&nbsp; Brand Assets"
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"textAlign": "center"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											}
+										],
+										"type": "Column"
+									},
+									{
+										"definition": {
+											"columnViewports": [
+												{
+													"columnViewportDefinition": {
+														"size": 12
+													},
+													"id": "landscapeMobile"
+												},
+												{
+													"columnViewportDefinition": {},
+													"id": "portraitMobile"
+												},
+												{
+													"columnViewportDefinition": {},
+													"id": "tablet"
+												}
+											],
+											"size": 3
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "dialect-dialect-text"
+													},
+													"fragmentConfig": {
+														"textType": "h4"
+													},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {},
+																"text": {
+																	"value_i18n": {
+																		"ar_SA": "Silver",
+																		"ca_ES": "Silver",
+																		"de_DE": "Silver",
+																		"en_US": "Silver",
+																		"es_ES": "Silver",
+																		"fi_FI": "Silver",
+																		"fr_FR": "Silver",
+																		"hu_HU": "Silver",
+																		"ja_JP": "Silver",
+																		"nl_NL": "Silver",
+																		"pt_BR": "Silver",
+																		"sv_SE": "Silver",
+																		"zh_CN": "Silver"
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"fontWeight": "fontWeightBold",
+														"marginBottom": "2",
+														"textAlign": "center",
+														"textColor": ""
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragmentStyle": {
+														"borderColor": "colorNeutral6",
+														"borderRadius": "borderRadiusLg",
+														"borderWidth": "2px",
+														"marginBottom": "3",
+														"marginLeft": "2",
+														"marginRight": "2",
+														"paddingBottom": "2",
+														"paddingLeft": "2",
+														"paddingRight": "2",
+														"paddingTop": "2"
+													},
+													"indexed": true,
+													"layout": {
+														"borderColor": "colorNeutral6",
+														"marginBottom": 1
+													}
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragmentStyle": {
+																"marginBottom": "2",
+																"paddingBottom": "1",
+																"paddingLeft": "1",
+																"paddingRight": "1",
+																"paddingTop": "1"
+															},
+															"indexed": true,
+															"layout": {
+																"contentDisplay": "FlexRow"
+															}
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "clay-icon-link"
+																	},
+																	"fragmentConfig": {
+																		"iconLink": "",
+																		"iconName": "check-circle"
+																	},
+																	"fragmentFields": [],
+																	"fragmentStyle": {
+																		"paddingRight": "2",
+																		"textColor": "colorBrandPrimary"
+																	},
+																	"indexed": true
+																},
+																"type": "Fragment"
+															},
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "dialect-dialect-text"
+																	},
+																	"fragmentConfig": {
+																		"textType": "text-paragraph"
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "element-text",
+																			"value": {
+																				"fragmentLink": {},
+																				"text": {
+																					"value_i18n": {
+																						"ar_SA": "Brand guidelines",
+																						"ca_ES": "Brand guidelines",
+																						"de_DE": "Brand guidelines",
+																						"en_US": "Brand guidelines",
+																						"es_ES": "Brand guidelines",
+																						"fi_FI": "Brand guidelines",
+																						"fr_FR": "Brand guidelines",
+																						"hu_HU": "Brand guidelines",
+																						"ja_JP": "Brand guidelines",
+																						"nl_NL": "Brand guidelines",
+																						"pt_BR": "Brand guidelines",
+																						"sv_SE": "Brand guidelines",
+																						"zh_CN": "Brand guidelines"
+																					}
+																				}
+																			}
+																		}
+																	],
+																	"indexed": true
+																},
+																"type": "Fragment"
+															}
+														],
+														"type": "Section"
+													},
+													{
+														"definition": {
+															"fragmentStyle": {
+																"marginBottom": "2",
+																"paddingBottom": "1",
+																"paddingLeft": "1",
+																"paddingRight": "1",
+																"paddingTop": "1"
+															},
+															"indexed": true,
+															"layout": {
+																"contentDisplay": "FlexRow"
+															}
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "clay-icon-link"
+																	},
+																	"fragmentConfig": {
+																		"iconLink": "",
+																		"iconName": "check-circle"
+																	},
+																	"fragmentFields": [],
+																	"fragmentStyle": {
+																		"paddingRight": "2",
+																		"textColor": "colorBrandPrimary"
+																	},
+																	"indexed": true
+																},
+																"type": "Fragment"
+															},
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "dialect-dialect-text"
+																	},
+																	"fragmentConfig": {
+																		"textType": "text-paragraph"
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "element-text",
+																			"value": {
+																				"fragmentLink": {},
+																				"text": {
+																					"value_i18n": {
+																						"ar_SA": "PNG logos",
+																						"ca_ES": "PNG logos",
+																						"de_DE": "PNG logos",
+																						"en_US": "PNG logos",
+																						"es_ES": "PNG logos",
+																						"fi_FI": "PNG logos",
+																						"fr_FR": "PNG logos",
+																						"hu_HU": "PNG logos",
+																						"ja_JP": "PNG logos",
+																						"nl_NL": "PNG logos",
+																						"pt_BR": "PNG logos",
+																						"sv_SE": "PNG logos",
+																						"zh_CN": "PNG logos"
+																					}
+																				}
+																			}
+																		}
+																	],
+																	"indexed": true
+																},
+																"type": "Fragment"
+															}
+														],
+														"type": "Section"
+													},
+													{
+														"definition": {
+															"fragmentStyle": {
+																"marginBottom": "2",
+																"paddingBottom": "1",
+																"paddingLeft": "1",
+																"paddingRight": "1",
+																"paddingTop": "1"
+															},
+															"indexed": true,
+															"layout": {
+																"contentDisplay": "FlexRow"
+															}
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "clay-icon-link"
+																	},
+																	"fragmentConfig": {
+																		"iconLink": "",
+																		"iconName": "check-circle"
+																	},
+																	"fragmentFields": [],
+																	"fragmentStyle": {
+																		"paddingRight": "2",
+																		"textColor": "colorBrandPrimary"
+																	},
+																	"indexed": true
+																},
+																"type": "Fragment"
+															},
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "dialect-dialect-text"
+																	},
+																	"fragmentConfig": {
+																		"textType": "text-paragraph"
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "element-text",
+																			"value": {
+																				"fragmentLink": {},
+																				"text": {
+																					"value_i18n": {
+																						"ar_SA": "SVG logos",
+																						"ca_ES": "SVG logos",
+																						"de_DE": "SVG logos",
+																						"en_US": "SVG logos",
+																						"es_ES": "SVG logos",
+																						"fi_FI": "SVG logos",
+																						"fr_FR": "SVG logos",
+																						"hu_HU": "SVG logos",
+																						"ja_JP": "SVG logos",
+																						"nl_NL": "SVG logos",
+																						"pt_BR": "SVG logos",
+																						"sv_SE": "SVG logos",
+																						"zh_CN": "SVG logos"
+																					}
+																				}
+																			}
+																		}
+																	],
+																	"indexed": true
+																},
+																"type": "Fragment"
+															}
+														],
+														"type": "Section"
+													}
+												],
+												"type": "Section"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "dialect-dialect-button"
+													},
+													"fragmentConfig": {
+														"uppercase": false,
+														"style": "primary",
+														"type": "solid",
+														"inverted": false,
+														"buttonSize": ""
+													},
+													"fragmentFields": [
+														{
+															"id": "link",
+															"value": {
+																"fragmentLink": {},
+																"text": {
+																	"value_i18n": {
+																		"ar_SA": "Download&nbsp; Brand Assets",
+																		"ca_ES": "Download&nbsp; Brand Assets",
+																		"de_DE": "Download&nbsp; Brand Assets",
+																		"en_US": "Download&nbsp; Brand Assets",
+																		"es_ES": "Download&nbsp; Brand Assets",
+																		"fi_FI": "Download&nbsp; Brand Assets",
+																		"fr_FR": "Download&nbsp; Brand Assets",
+																		"hu_HU": "Download&nbsp; Brand Assets",
+																		"ja_JP": "Download&nbsp; Brand Assets",
+																		"nl_NL": "Download&nbsp; Brand Assets",
+																		"pt_BR": "Download&nbsp; Brand Assets",
+																		"sv_SE": "Download&nbsp; Brand Assets",
+																		"zh_CN": "Download&nbsp; Brand Assets"
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"textAlign": "center"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											}
+										],
+										"type": "Column"
+									},
+									{
+										"definition": {
+											"columnViewports": [
+												{
+													"columnViewportDefinition": {
+														"size": 12
+													},
+													"id": "landscapeMobile"
+												},
+												{
+													"columnViewportDefinition": {},
+													"id": "portraitMobile"
+												},
+												{
+													"columnViewportDefinition": {},
+													"id": "tablet"
+												}
+											],
+											"size": 3
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "dialect-dialect-text"
+													},
+													"fragmentConfig": {
+														"textType": "h4"
+													},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {},
+																"text": {
+																	"value_i18n": {
+																		"ar_SA": "Gold",
+																		"ca_ES": "Gold",
+																		"de_DE": "Gold",
+																		"en_US": "Gold",
+																		"es_ES": "Gold",
+																		"fi_FI": "Gold",
+																		"fr_FR": "Gold",
+																		"hu_HU": "Gold",
+																		"ja_JP": "Gold",
+																		"nl_NL": "Gold",
+																		"pt_BR": "Gold",
+																		"sv_SE": "Gold",
+																		"zh_CN": "Gold"
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"fontWeight": "fontWeightBold",
+														"marginBottom": "2",
+														"textAlign": "center",
+														"textColor": ""
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragmentStyle": {
+														"borderColor": "colorNeutral6",
+														"borderRadius": "borderRadiusLg",
+														"borderWidth": "2px",
+														"marginBottom": "3",
+														"marginLeft": "2",
+														"marginRight": "2",
+														"paddingBottom": "2",
+														"paddingLeft": "2",
+														"paddingRight": "2",
+														"paddingTop": "2"
+													},
+													"indexed": true,
+													"layout": {
+														"borderColor": "colorNeutral6",
+														"marginBottom": 1
+													}
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragmentStyle": {
+																"backgroundColor": "colorBrandPrimaryDarken2",
+																"borderRadius": "borderRadiusLg",
+																"hidden": true,
+																"marginBottom": "4",
+																"paddingBottom": "1",
+																"paddingLeft": "1.75rem",
+																"paddingRight": "1.75rem",
+																"paddingTop": "1",
+																"textColor": "colorBrandPrimaryLighten6"
+															},
+															"indexed": true,
+															"layout": {
+																"marginBottom": 2
+															}
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "dialect-dialect-text"
+																	},
+																	"fragmentConfig": {
+																		"textType": "h4"
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "element-text",
+																			"value": {
+																				"fragmentLink": {},
+																				"text": {
+																					"value_i18n": {
+																						"ar_SA": "*115,000/yr",
+																						"ca_ES": "*115,000/yr",
+																						"de_DE": "*115,000/yr",
+																						"en_US": "*115,000/yr",
+																						"es_ES": "*115,000/yr",
+																						"fi_FI": "*115,000/yr",
+																						"fr_FR": "*115,000/yr",
+																						"hu_HU": "*115,000/yr",
+																						"ja_JP": "*115,000/yr",
+																						"nl_NL": "*115,000/yr",
+																						"pt_BR": "*115,000/yr",
+																						"sv_SE": "*115,000/yr",
+																						"zh_CN": "*115,000/yr"
+																					}
+																				}
+																			}
+																		}
+																	],
+																	"fragmentStyle": {
+																		"textAlign": "center"
+																	},
+																	"indexed": true
+																},
+																"type": "Fragment"
+															}
+														],
+														"type": "Section"
+													},
+													{
+														"definition": {
+															"fragmentStyle": {
+																"marginBottom": "2",
+																"paddingBottom": "1",
+																"paddingLeft": "1",
+																"paddingRight": "1",
+																"paddingTop": "1"
+															},
+															"indexed": true,
+															"layout": {
+																"contentDisplay": "FlexRow"
+															}
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "clay-icon-link"
+																	},
+																	"fragmentConfig": {
+																		"iconLink": "",
+																		"iconName": "check-circle"
+																	},
+																	"fragmentFields": [],
+																	"fragmentStyle": {
+																		"paddingRight": "2",
+																		"textColor": "colorBrandPrimary"
+																	},
+																	"indexed": true
+																},
+																"type": "Fragment"
+															},
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "dialect-dialect-text"
+																	},
+																	"fragmentConfig": {
+																		"textType": "text-paragraph"
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "element-text",
+																			"value": {
+																				"fragmentLink": {},
+																				"text": {
+																					"value_i18n": {
+																						"ar_SA": "Brand guidelines",
+																						"ca_ES": "Brand guidelines",
+																						"de_DE": "Brand guidelines",
+																						"en_US": "Brand guidelines",
+																						"es_ES": "Brand guidelines",
+																						"fi_FI": "Brand guidelines",
+																						"fr_FR": "Brand guidelines",
+																						"hu_HU": "Brand guidelines",
+																						"ja_JP": "Brand guidelines",
+																						"nl_NL": "Brand guidelines",
+																						"pt_BR": "Brand guidelines",
+																						"sv_SE": "Brand guidelines",
+																						"zh_CN": "Brand guidelines"
+																					}
+																				}
+																			}
+																		}
+																	],
+																	"indexed": true
+																},
+																"type": "Fragment"
+															}
+														],
+														"type": "Section"
+													},
+													{
+														"definition": {
+															"fragmentStyle": {
+																"marginBottom": "2",
+																"paddingBottom": "1",
+																"paddingLeft": "1",
+																"paddingRight": "1",
+																"paddingTop": "1"
+															},
+															"indexed": true,
+															"layout": {
+																"contentDisplay": "FlexRow"
+															}
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "clay-icon-link"
+																	},
+																	"fragmentConfig": {
+																		"iconLink": "",
+																		"iconName": "check-circle"
+																	},
+																	"fragmentFields": [],
+																	"fragmentStyle": {
+																		"paddingRight": "2",
+																		"textColor": "colorBrandPrimary"
+																	},
+																	"indexed": true
+																},
+																"type": "Fragment"
+															},
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "dialect-dialect-text"
+																	},
+																	"fragmentConfig": {
+																		"textType": "text-paragraph"
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "element-text",
+																			"value": {
+																				"fragmentLink": {},
+																				"text": {
+																					"value_i18n": {
+																						"ar_SA": "PNG logos",
+																						"ca_ES": "PNG logos",
+																						"de_DE": "PNG logos",
+																						"en_US": "PNG logos",
+																						"es_ES": "PNG logos",
+																						"fi_FI": "PNG logos",
+																						"fr_FR": "PNG logos",
+																						"hu_HU": "PNG logos",
+																						"ja_JP": "PNG logos",
+																						"nl_NL": "PNG logos",
+																						"pt_BR": "PNG logos",
+																						"sv_SE": "PNG logos",
+																						"zh_CN": "PNG logos"
+																					}
+																				}
+																			}
+																		}
+																	],
+																	"indexed": true
+																},
+																"type": "Fragment"
+															}
+														],
+														"type": "Section"
+													},
+													{
+														"definition": {
+															"fragmentStyle": {
+																"marginBottom": "2",
+																"paddingBottom": "1",
+																"paddingLeft": "1",
+																"paddingRight": "1",
+																"paddingTop": "1"
+															},
+															"indexed": true,
+															"layout": {
+																"contentDisplay": "FlexRow"
+															}
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "clay-icon-link"
+																	},
+																	"fragmentConfig": {
+																		"iconLink": "",
+																		"iconName": "check-circle"
+																	},
+																	"fragmentFields": [],
+																	"fragmentStyle": {
+																		"paddingRight": "2",
+																		"textColor": "colorBrandPrimary"
+																	},
+																	"indexed": true
+																},
+																"type": "Fragment"
+															},
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "dialect-dialect-text"
+																	},
+																	"fragmentConfig": {
+																		"textType": "text-paragraph"
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "element-text",
+																			"value": {
+																				"fragmentLink": {},
+																				"text": {
+																					"value_i18n": {
+																						"ar_SA": "SVG logos",
+																						"ca_ES": "SVG logos",
+																						"de_DE": "SVG logos",
+																						"en_US": "SVG logos",
+																						"es_ES": "SVG logos",
+																						"fi_FI": "SVG logos",
+																						"fr_FR": "SVG logos",
+																						"hu_HU": "SVG logos",
+																						"ja_JP": "SVG logos",
+																						"nl_NL": "SVG logos",
+																						"pt_BR": "SVG logos",
+																						"sv_SE": "SVG logos",
+																						"zh_CN": "SVG logos"
+																					}
+																				}
+																			}
+																		}
+																	],
+																	"indexed": true
+																},
+																"type": "Fragment"
+															}
+														],
+														"type": "Section"
+													}
+												],
+												"type": "Section"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "dialect-dialect-button"
+													},
+													"fragmentConfig": {
+														"uppercase": false,
+														"style": "primary",
+														"type": "solid",
+														"inverted": false,
+														"buttonSize": ""
+													},
+													"fragmentFields": [
+														{
+															"id": "link",
+															"value": {
+																"fragmentLink": {},
+																"text": {
+																	"value_i18n": {
+																		"ar_SA": "Download&nbsp; Brand Assets",
+																		"ca_ES": "Download&nbsp; Brand Assets",
+																		"de_DE": "Download&nbsp; Brand Assets",
+																		"en_US": "Download&nbsp; Brand Assets",
+																		"es_ES": "Download&nbsp; Brand Assets",
+																		"fi_FI": "Download&nbsp; Brand Assets",
+																		"fr_FR": "Download&nbsp; Brand Assets",
+																		"hu_HU": "Download&nbsp; Brand Assets",
+																		"ja_JP": "Download&nbsp; Brand Assets",
+																		"nl_NL": "Download&nbsp; Brand Assets",
+																		"pt_BR": "Download&nbsp; Brand Assets",
+																		"sv_SE": "Download&nbsp; Brand Assets",
+																		"zh_CN": "Download&nbsp; Brand Assets"
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"textAlign": "center"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											}
+										],
+										"type": "Column"
+									},
+									{
+										"definition": {
+											"columnViewports": [
+												{
+													"columnViewportDefinition": {
+														"size": 12
+													},
+													"id": "landscapeMobile"
+												},
+												{
+													"columnViewportDefinition": {},
+													"id": "portraitMobile"
+												},
+												{
+													"columnViewportDefinition": {},
+													"id": "tablet"
+												}
+											],
+											"size": 3
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "dialect-dialect-text"
+													},
+													"fragmentConfig": {
+														"textType": "h4"
+													},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {},
+																"text": {
+																	"value_i18n": {
+																		"ar_SA": "Platinum",
+																		"ca_ES": "Platinum",
+																		"de_DE": "Platinum",
+																		"en_US": "Platinum",
+																		"es_ES": "Platinum",
+																		"fi_FI": "Platinum",
+																		"fr_FR": "Platinum",
+																		"hu_HU": "Platinum",
+																		"ja_JP": "Platinum",
+																		"nl_NL": "Platinum",
+																		"pt_BR": "Platinum",
+																		"sv_SE": "Platinum",
+																		"zh_CN": "Platinum"
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"fontWeight": "fontWeightBold",
+														"marginBottom": "2",
+														"textAlign": "center",
+														"textColor": ""
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragmentStyle": {
+														"borderColor": "colorNeutral6",
+														"borderRadius": "borderRadiusLg",
+														"borderWidth": "2px",
+														"marginBottom": "3",
+														"marginLeft": "2",
+														"marginRight": "2",
+														"paddingBottom": "2",
+														"paddingLeft": "2",
+														"paddingRight": "2",
+														"paddingTop": "2"
+													},
+													"indexed": true,
+													"layout": {
+														"borderColor": "colorNeutral6",
+														"marginBottom": 1
+													}
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragmentStyle": {
+																"marginBottom": "2",
+																"paddingBottom": "1",
+																"paddingLeft": "1",
+																"paddingRight": "1",
+																"paddingTop": "1"
+															},
+															"indexed": true,
+															"layout": {
+																"contentDisplay": "FlexRow"
+															}
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "clay-icon-link"
+																	},
+																	"fragmentConfig": {
+																		"iconLink": "",
+																		"iconName": "check-circle"
+																	},
+																	"fragmentFields": [],
+																	"fragmentStyle": {
+																		"paddingRight": "2",
+																		"textColor": "colorBrandPrimary"
+																	},
+																	"indexed": true
+																},
+																"type": "Fragment"
+															},
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "dialect-dialect-text"
+																	},
+																	"fragmentConfig": {
+																		"textType": "text-paragraph"
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "element-text",
+																			"value": {
+																				"fragmentLink": {},
+																				"text": {
+																					"value_i18n": {
+																						"ar_SA": "Brand guidelines",
+																						"ca_ES": "Brand guidelines",
+																						"de_DE": "Brand guidelines",
+																						"en_US": "Brand guidelines",
+																						"es_ES": "Brand guidelines",
+																						"fi_FI": "Brand guidelines",
+																						"fr_FR": "Brand guidelines",
+																						"hu_HU": "Brand guidelines",
+																						"ja_JP": "Brand guidelines",
+																						"nl_NL": "Brand guidelines",
+																						"pt_BR": "Brand guidelines",
+																						"sv_SE": "Brand guidelines",
+																						"zh_CN": "Brand guidelines"
+																					}
+																				}
+																			}
+																		}
+																	],
+																	"indexed": true
+																},
+																"type": "Fragment"
+															}
+														],
+														"type": "Section"
+													},
+													{
+														"definition": {
+															"fragmentStyle": {
+																"marginBottom": "2",
+																"paddingBottom": "1",
+																"paddingLeft": "1",
+																"paddingRight": "1",
+																"paddingTop": "1"
+															},
+															"indexed": true,
+															"layout": {
+																"contentDisplay": "FlexRow"
+															}
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "clay-icon-link"
+																	},
+																	"fragmentConfig": {
+																		"iconLink": "",
+																		"iconName": "check-circle"
+																	},
+																	"fragmentFields": [],
+																	"fragmentStyle": {
+																		"paddingRight": "2",
+																		"textColor": "colorBrandPrimary"
+																	},
+																	"indexed": true
+																},
+																"type": "Fragment"
+															},
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "dialect-dialect-text"
+																	},
+																	"fragmentConfig": {
+																		"textType": "text-paragraph"
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "element-text",
+																			"value": {
+																				"fragmentLink": {},
+																				"text": {
+																					"value_i18n": {
+																						"ar_SA": "PNG logos",
+																						"ca_ES": "PNG logos",
+																						"de_DE": "PNG logos",
+																						"en_US": "PNG logos",
+																						"es_ES": "PNG logos",
+																						"fi_FI": "PNG logos",
+																						"fr_FR": "PNG logos",
+																						"hu_HU": "PNG logos",
+																						"ja_JP": "PNG logos",
+																						"nl_NL": "PNG logos",
+																						"pt_BR": "PNG logos",
+																						"sv_SE": "PNG logos",
+																						"zh_CN": "PNG logos"
+																					}
+																				}
+																			}
+																		}
+																	],
+																	"indexed": true
+																},
+																"type": "Fragment"
+															}
+														],
+														"type": "Section"
+													},
+													{
+														"definition": {
+															"fragmentStyle": {
+																"marginBottom": "2",
+																"paddingBottom": "1",
+																"paddingLeft": "1",
+																"paddingRight": "1",
+																"paddingTop": "1"
+															},
+															"indexed": true,
+															"layout": {
+																"contentDisplay": "FlexRow"
+															}
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "clay-icon-link"
+																	},
+																	"fragmentConfig": {
+																		"iconLink": "",
+																		"iconName": "check-circle"
+																	},
+																	"fragmentFields": [],
+																	"fragmentStyle": {
+																		"paddingRight": "2",
+																		"textColor": "colorBrandPrimary"
+																	},
+																	"indexed": true
+																},
+																"type": "Fragment"
+															},
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "dialect-dialect-text"
+																	},
+																	"fragmentConfig": {
+																		"textType": "text-paragraph"
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "element-text",
+																			"value": {
+																				"fragmentLink": {},
+																				"text": {
+																					"value_i18n": {
+																						"ar_SA": "SVG logos",
+																						"ca_ES": "SVG logos",
+																						"de_DE": "SVG logos",
+																						"en_US": "SVG logos",
+																						"es_ES": "SVG logos",
+																						"fi_FI": "SVG logos",
+																						"fr_FR": "SVG logos",
+																						"hu_HU": "SVG logos",
+																						"ja_JP": "SVG logos",
+																						"nl_NL": "SVG logos",
+																						"pt_BR": "SVG logos",
+																						"sv_SE": "SVG logos",
+																						"zh_CN": "SVG logos"
+																					}
+																				}
+																			}
+																		}
+																	],
+																	"indexed": true
+																},
+																"type": "Fragment"
+															}
+														],
+														"type": "Section"
+													}
+												],
+												"type": "Section"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "dialect-dialect-button"
+													},
+													"fragmentConfig": {
+														"uppercase": false,
+														"style": "primary",
+														"type": "solid",
+														"inverted": false,
+														"buttonSize": ""
+													},
+													"fragmentFields": [
+														{
+															"id": "link",
+															"value": {
+																"fragmentLink": {},
+																"text": {
+																	"value_i18n": {
+																		"ar_SA": "Download&nbsp; Brand Assets",
+																		"ca_ES": "Download&nbsp; Brand Assets",
+																		"de_DE": "Download&nbsp; Brand Assets",
+																		"en_US": "Download&nbsp; Brand Assets",
+																		"es_ES": "Download&nbsp; Brand Assets",
+																		"fi_FI": "Download&nbsp; Brand Assets",
+																		"fr_FR": "Download&nbsp; Brand Assets",
+																		"hu_HU": "Download&nbsp; Brand Assets",
+																		"ja_JP": "Download&nbsp; Brand Assets",
+																		"nl_NL": "Download&nbsp; Brand Assets",
+																		"pt_BR": "Download&nbsp; Brand Assets",
+																		"sv_SE": "Download&nbsp; Brand Assets",
+																		"zh_CN": "Download&nbsp; Brand Assets"
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"textAlign": "center"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											}
+										],
+										"type": "Column"
+									}
+								],
+								"type": "Row"
+							}
+						],
+						"type": "Section"
+					},
+					{
+						"definition": {
+							"fragment": {
+								"key": "BASIC_COMPONENT-separator"
+							},
+							"fragmentConfig": {
+								"separatorColor": "",
+								"bottomSpacing": "3"
+							},
+							"fragmentFields": [],
+							"indexed": true
+						},
+						"type": "Fragment"
+					},
+					{
+						"definition": {
+							"fragmentStyle": {
+								"marginBottom": "5",
+								"marginTop": "4",
+								"paddingLeft": "4"
+							},
+							"indexed": true,
+							"layout": {
+								"marginBottom": 4,
+								"marginTop": 2,
+								"paddingLeft": 2
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragment": {
+										"key": "dialect-dialect-text"
+									},
+									"fragmentConfig": {
+										"textType": "h3"
+									},
+									"fragmentFields": [
+										{
+											"id": "element-text",
+											"value": {
+												"fragmentLink": {},
+												"text": {
+													"value_i18n": {
+														"ar_SA": "New Partner Collateral: Announce Your Liferay Partnership",
+														"ca_ES": "New Partner Collateral: Announce Your Liferay Partnership",
+														"de_DE": "New Partner Collateral: Announce Your Liferay Partnership",
+														"en_US": "New Partner Collateral: Announce Your Liferay Partnership",
+														"es_ES": "New Partner Collateral: Announce Your Liferay Partnership",
+														"fi_FI": "New Partner Collateral: Announce Your Liferay Partnership",
+														"fr_FR": "New Partner Collateral: Announce Your Liferay Partnership",
+														"hu_HU": "New Partner Collateral: Announce Your Liferay Partnership",
+														"ja_JP": "New Partner Collateral: Announce Your Liferay Partnership",
+														"nl_NL": "New Partner Collateral: Announce Your Liferay Partnership",
+														"pt_BR": "New Partner Collateral: Announce Your Liferay Partnership",
+														"sv_SE": "New Partner Collateral: Announce Your Liferay Partnership",
+														"zh_CN": "New Partner Collateral: Announce Your Liferay Partnership"
+													}
+												}
+											}
+										}
+									],
+									"fragmentStyle": {
+										"marginBottom": "3"
+									},
+									"indexed": true
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "dialect-dialect-text"
+									},
+									"fragmentConfig": {
+										"textType": "text-paragraph"
+									},
+									"fragmentFields": [
+										{
+											"id": "element-text",
+											"value": {
+												"fragmentLink": {},
+												"text": {
+													"value_i18n": {
+														"ar_SA": "Find resources below to share your partnership with Liferay.",
+														"ca_ES": "Find resources below to share your partnership with Liferay.",
+														"de_DE": "Find resources below to share your partnership with Liferay.",
+														"en_US": "Find resources below to share your partnership with Liferay.",
+														"es_ES": "Find resources below to share your partnership with Liferay.",
+														"fi_FI": "Find resources below to share your partnership with Liferay.",
+														"fr_FR": "Find resources below to share your partnership with Liferay.",
+														"hu_HU": "Find resources below to share your partnership with Liferay.",
+														"ja_JP": "Find resources below to share your partnership with Liferay.",
+														"nl_NL": "Find resources below to share your partnership with Liferay.",
+														"pt_BR": "Find resources below to share your partnership with Liferay.",
+														"sv_SE": "Find resources below to share your partnership with Liferay.",
+														"zh_CN": "Find resources below to share your partnership with Liferay."
+													}
+												}
+											}
+										}
+									],
+									"fragmentStyle": {
+										"marginBottom": "4",
+										"paddingRight": "3"
+									},
+									"indexed": true
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "dialect-dialect-text"
+									},
+									"fragmentConfig": {
+										"textType": "text-paragraph"
+									},
+									"fragmentFields": [
+										{
+											"id": "element-text",
+											"value": {
+												"fragmentLink": {},
+												"text": {
+													"value_i18n": {
+														"ar_SA": "Partnership Announcement Toolkit",
+														"ca_ES": "Partnership Announcement Toolkit",
+														"de_DE": "Partnership Announcement Toolkit",
+														"en_US": "Partnership Announcement Toolkit",
+														"es_ES": "Partnership Announcement Toolkit",
+														"fi_FI": "Partnership Announcement Toolkit",
+														"fr_FR": "Partnership Announcement Toolkit",
+														"hu_HU": "Partnership Announcement Toolkit",
+														"ja_JP": "Partnership Announcement Toolkit",
+														"nl_NL": "Partnership Announcement Toolkit",
+														"pt_BR": "Partnership Announcement Toolkit",
+														"sv_SE": "Partnership Announcement Toolkit",
+														"zh_CN": "Partnership Announcement Toolkit"
+													}
+												}
+											}
+										}
+									],
+									"fragmentStyle": {
+										"fontWeight": "fontWeightBold",
+										"marginBottom": "1",
+										"paddingRight": "3"
+									},
+									"indexed": true
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "BASIC_COMPONENT-paragraph"
+									},
+									"fragmentConfig": {},
+									"fragmentFields": [
+										{
+											"id": "element-text",
+											"value": {
+												"fragmentLink": {},
+												"text": {
+													"value_i18n": {
+														"ar_SA": "\u003Cp\u003EGet an overview of you can announce your new partnership using these assets:&nbsp;\u003C/p\u003E\n\n\u003Cul\u003E\n\t\u003Cli\u003EPress release template (customizable)\u003C/li\u003E\n\t\u003Cli\u003ESocial media banners (customizable)\u003C/li\u003E\n\t\u003Cli\u003EAuthorized partner logo\u003C/li\u003E\n\t\u003Cli\u003EBrand guidelines\u003C/li\u003E\n\u003C/ul\u003E\n",
+														"ca_ES": "\u003Cp\u003EGet an overview of you can announce your new partnership using these assets:&nbsp;\u003C/p\u003E\n\n\u003Cul\u003E\n\t\u003Cli\u003EPress release template (customizable)\u003C/li\u003E\n\t\u003Cli\u003ESocial media banners (customizable)\u003C/li\u003E\n\t\u003Cli\u003EAuthorized partner logo\u003C/li\u003E\n\t\u003Cli\u003EBrand guidelines\u003C/li\u003E\n\u003C/ul\u003E\n",
+														"de_DE": "\u003Cp\u003EGet an overview of you can announce your new partnership using these assets:&nbsp;\u003C/p\u003E\n\n\u003Cul\u003E\n\t\u003Cli\u003EPress release template (customizable)\u003C/li\u003E\n\t\u003Cli\u003ESocial media banners (customizable)\u003C/li\u003E\n\t\u003Cli\u003EAuthorized partner logo\u003C/li\u003E\n\t\u003Cli\u003EBrand guidelines\u003C/li\u003E\n\u003C/ul\u003E\n",
+														"en_US": "\u003Cp\u003EGet an overview of you can announce your new partnership using these assets:&nbsp;\u003C/p\u003E\n\n\u003Cul\u003E\n\t\u003Cli\u003EPress release template (customizable)\u003C/li\u003E\n\t\u003Cli\u003ESocial media banners (customizable)\u003C/li\u003E\n\t\u003Cli\u003EAuthorized partner logo\u003C/li\u003E\n\t\u003Cli\u003EBrand guidelines\u003C/li\u003E\n\u003C/ul\u003E\n",
+														"es_ES": "\u003Cp\u003EGet an overview of you can announce your new partnership using these assets:&nbsp;\u003C/p\u003E\n\n\u003Cul\u003E\n\t\u003Cli\u003EPress release template (customizable)\u003C/li\u003E\n\t\u003Cli\u003ESocial media banners (customizable)\u003C/li\u003E\n\t\u003Cli\u003EAuthorized partner logo\u003C/li\u003E\n\t\u003Cli\u003EBrand guidelines\u003C/li\u003E\n\u003C/ul\u003E\n",
+														"fi_FI": "\u003Cp\u003EGet an overview of you can announce your new partnership using these assets:&nbsp;\u003C/p\u003E\n\n\u003Cul\u003E\n\t\u003Cli\u003EPress release template (customizable)\u003C/li\u003E\n\t\u003Cli\u003ESocial media banners (customizable)\u003C/li\u003E\n\t\u003Cli\u003EAuthorized partner logo\u003C/li\u003E\n\t\u003Cli\u003EBrand guidelines\u003C/li\u003E\n\u003C/ul\u003E\n",
+														"fr_FR": "\u003Cp\u003EGet an overview of you can announce your new partnership using these assets:&nbsp;\u003C/p\u003E\n\n\u003Cul\u003E\n\t\u003Cli\u003EPress release template (customizable)\u003C/li\u003E\n\t\u003Cli\u003ESocial media banners (customizable)\u003C/li\u003E\n\t\u003Cli\u003EAuthorized partner logo\u003C/li\u003E\n\t\u003Cli\u003EBrand guidelines\u003C/li\u003E\n\u003C/ul\u003E\n",
+														"hu_HU": "\u003Cp\u003EGet an overview of you can announce your new partnership using these assets:&nbsp;\u003C/p\u003E\n\n\u003Cul\u003E\n\t\u003Cli\u003EPress release template (customizable)\u003C/li\u003E\n\t\u003Cli\u003ESocial media banners (customizable)\u003C/li\u003E\n\t\u003Cli\u003EAuthorized partner logo\u003C/li\u003E\n\t\u003Cli\u003EBrand guidelines\u003C/li\u003E\n\u003C/ul\u003E\n",
+														"ja_JP": "\u003Cp\u003EGet an overview of you can announce your new partnership using these assets:&nbsp;\u003C/p\u003E\n\n\u003Cul\u003E\n\t\u003Cli\u003EPress release template (customizable)\u003C/li\u003E\n\t\u003Cli\u003ESocial media banners (customizable)\u003C/li\u003E\n\t\u003Cli\u003EAuthorized partner logo\u003C/li\u003E\n\t\u003Cli\u003EBrand guidelines\u003C/li\u003E\n\u003C/ul\u003E\n",
+														"nl_NL": "\u003Cp\u003EGet an overview of you can announce your new partnership using these assets:&nbsp;\u003C/p\u003E\n\n\u003Cul\u003E\n\t\u003Cli\u003EPress release template (customizable)\u003C/li\u003E\n\t\u003Cli\u003ESocial media banners (customizable)\u003C/li\u003E\n\t\u003Cli\u003EAuthorized partner logo\u003C/li\u003E\n\t\u003Cli\u003EBrand guidelines\u003C/li\u003E\n\u003C/ul\u003E\n",
+														"pt_BR": "\u003Cp\u003EGet an overview of you can announce your new partnership using these assets:&nbsp;\u003C/p\u003E\n\n\u003Cul\u003E\n\t\u003Cli\u003EPress release template (customizable)\u003C/li\u003E\n\t\u003Cli\u003ESocial media banners (customizable)\u003C/li\u003E\n\t\u003Cli\u003EAuthorized partner logo\u003C/li\u003E\n\t\u003Cli\u003EBrand guidelines\u003C/li\u003E\n\u003C/ul\u003E\n",
+														"sv_SE": "\u003Cp\u003EGet an overview of you can announce your new partnership using these assets:&nbsp;\u003C/p\u003E\n\n\u003Cul\u003E\n\t\u003Cli\u003EPress release template (customizable)\u003C/li\u003E\n\t\u003Cli\u003ESocial media banners (customizable)\u003C/li\u003E\n\t\u003Cli\u003EAuthorized partner logo\u003C/li\u003E\n\t\u003Cli\u003EBrand guidelines\u003C/li\u003E\n\u003C/ul\u003E\n",
+														"zh_CN": "\u003Cp\u003EGet an overview of you can announce your new partnership using these assets:&nbsp;\u003C/p\u003E\n\n\u003Cul\u003E\n\t\u003Cli\u003EPress release template (customizable)\u003C/li\u003E\n\t\u003Cli\u003ESocial media banners (customizable)\u003C/li\u003E\n\t\u003Cli\u003EAuthorized partner logo\u003C/li\u003E\n\t\u003Cli\u003EBrand guidelines\u003C/li\u003E\n\u003C/ul\u003E\n"
+													}
+												}
+											}
+										}
+									],
+									"fragmentStyle": {
+										"marginBottom": "4"
+									},
+									"indexed": true
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "dialect-dialect-button"
+									},
+									"fragmentConfig": {
+										"uppercase": false,
+										"style": "primary",
+										"type": "solid",
+										"inverted": false,
+										"buttonSize": ""
+									},
+									"fragmentFields": [
+										{
+											"id": "link",
+											"value": {
+												"fragmentLink": {},
+												"text": {
+													"value_i18n": {
+														"ar_SA": "Download Announcement Toolkit",
+														"ca_ES": "Download Announcement Toolkit",
+														"de_DE": "Download Announcement Toolkit",
+														"en_US": "Download Announcement Toolkit",
+														"es_ES": "Download Announcement Toolkit",
+														"fi_FI": "Download Announcement Toolkit",
+														"fr_FR": "Download Announcement Toolkit",
+														"hu_HU": "Download Announcement Toolkit",
+														"ja_JP": "Download Announcement Toolkit",
+														"nl_NL": "Download Announcement Toolkit",
+														"pt_BR": "Download Announcement Toolkit",
+														"sv_SE": "Download Announcement Toolkit",
+														"zh_CN": "Download Announcement Toolkit"
+													}
+												}
+											}
+										}
+									],
+									"indexed": true
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "BASIC_COMPONENT-button"
+									},
+									"fragmentConfig": {
+										"buttonType": "outline-primary",
+										"type": "link",
+										"buttonSize": "sm"
+									},
+									"fragmentFields": [
+										{
+											"id": "link",
+											"value": {
+												"fragmentLink": {
+													"value": {
+														"href": {
+															"value_i18n": {
+																"en_US": "https://learn.liferay.com/w/courses/selling-liferay/level-1-business/liferay-pricing/liferay-pricing-self-hosted"
+															}
+														},
+														"target": "Blank"
+													}
+												},
+												"text": {
+													"value_i18n": {
+														"ar_SA": "See logos",
+														"ca_ES": "See logos",
+														"de_DE": "See logos",
+														"en_US": "See logos",
+														"es_ES": "See logos",
+														"fi_FI": "See logos",
+														"fr_FR": "See logos",
+														"hu_HU": "See logos",
+														"ja_JP": "See logos",
+														"nl_NL": "See logos",
+														"pt_BR": "See logos",
+														"sv_SE": "See logos",
+														"zh_CN": "See logos"
+													}
+												}
+											}
+										}
+									],
+									"fragmentStyle": {
+										"hidden": true
+									},
+									"indexed": true
+								},
+								"type": "Fragment"
+							}
+						],
+						"type": "Section"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"masterPage": {
+			"key": "main-template"
+		}
+	},
+	"version": 1.1
+}

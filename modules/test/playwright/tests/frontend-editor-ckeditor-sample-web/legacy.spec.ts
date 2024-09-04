@@ -45,11 +45,18 @@ test.describe('CKEditor Sample Web', () => {
 			});
 		});
 
-		await test.step('Click on the "Go to XSS" button', async () => {
+		await test.step('Navigate to the "Legacy" tab', async () => {
 			await page.goto(
 				`${liferayConfig.environment.baseUrl}/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
 			);
+			const legacyTab = page.getByRole('tab', {name: 'Legacy'});
 
+			await expect(legacyTab).toBeInViewport();
+
+			legacyTab.click();
+		});
+
+		await test.step('Click on the "Go to XSS" button', async () => {
 			const gotToXSSViewButton = page.getByText('Go to XSS View');
 
 			await expect(gotToXSSViewButton).toBeInViewport();
@@ -59,7 +66,7 @@ test.describe('CKEditor Sample Web', () => {
 
 		await test.step('Check that XSS was not executed', async () => {
 			const sampleEditorContainer = page.locator(
-				'[id="\\<\\/script\\>\\<scrIpt\\>alert\\(12451\\)\\;\\<\\/scRipt\\>\\<script\\>sampleLegacyEditorContainer"]'
+				'[id="\\<\\/script\\>\\<scrIpt\\>alert\\(12451\\)\\;\\<\\/scRipt\\>\\<script\\>sampleXSSEditorContainer"]'
 			);
 
 			await expect(sampleEditorContainer).toBeInViewport();

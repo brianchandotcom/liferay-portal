@@ -367,6 +367,10 @@ public class FormItemManager {
 		FragmentEntryLink fragmentEntryLink = _addFormButtonFragmentEntryLink(
 			layout, locale, _SUBMIT, segmentsExperienceId, serviceContext);
 
+		if (fragmentEntryLink == null) {
+			return Collections.emptyList();
+		}
+
 		layoutStructure.addFragmentStyledLayoutStructureItem(
 			fragmentEntryLink.getFragmentEntryLinkId(),
 			formStyledLayoutStructureItem.getItemId(), -1);
@@ -489,6 +493,10 @@ public class FormItemManager {
 				getDefaultInputFragmentEntryKeysJSONObject(layout.getGroupId()),
 			DefaultInputFragmentEntryConfigurationProvider.
 				FORM_INPUT_SUBMIT_BUTTON);
+
+		if (fragmentEntry == null) {
+			return null;
+		}
 
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkService.addFragmentEntryLink(

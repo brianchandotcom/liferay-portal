@@ -21,10 +21,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author István András Dézsi
@@ -371,8 +371,10 @@ public class UpgradeSQLRecorder {
 	}
 
 	private static boolean _enabled;
-	private static final List<String> _failedSQLs = new ArrayList<>();
-	private static final Map<String, Long> _sqlExecutionTimes = new HashMap<>();
+	private static final List<String> _failedSQLs =
+		new CopyOnWriteArrayList<>();
+	private static final Map<String, Long> _sqlExecutionTimes =
+		new ConcurrentHashMap<>();
 	private static String _upgradeProcessClassName = StringPool.BLANK;
 
 	@FunctionalInterface

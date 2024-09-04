@@ -86,7 +86,7 @@ function Body({
 		JSON.parse(filter?.preselectedValues || '[]')
 	);
 	const [selectedField, setSelectedField] = useState<IField | undefined>(
-		fields.find((item) => item.name === filter?.fieldName)
+		filter ? {label: filter.fieldName, name: filter.fieldName} : undefined
 	);
 	const [source, setSource] = useState<string | undefined>(filter?.source);
 	const [sourceType, setSourceType] = useState(filter?.sourceType);
@@ -266,6 +266,7 @@ function Body({
 					}}
 					onChangeField={(newValue) => {
 						setSelectedField(newValue);
+
 						setFieldValidationError(!newValue);
 						setFieldInUseValidationError(
 							newValue
@@ -276,6 +277,7 @@ function Body({
 					onChangeLabel={(newValue) => {
 						setI18nFilterLabels(newValue);
 					}}
+					selectedField={selectedField}
 				/>
 
 				{!fieldInUseValidationError && (

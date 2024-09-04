@@ -49,7 +49,7 @@ function Body({
 	);
 
 	const [selectedField, setSelectedField] = useState<IField | undefined>(
-		fields.find((item) => item.name === filter?.fieldName)
+		filter ? {label: filter.fieldName, name: filter.fieldName} : undefined
 	);
 	const [from, setFrom] = useState<string>(
 		filter && (filter as IDateFilter)?.from
@@ -186,6 +186,7 @@ function Body({
 					onChangeLabel={(newValue) => {
 						setI18nFilterLabels(newValue);
 					}}
+					selectedField={selectedField}
 				/>
 
 				{!fieldInUseValidationError && (

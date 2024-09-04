@@ -31,6 +31,7 @@ interface IConfigurationProps {
 	onChangeLabel: (
 		i18nFilterLabels: Partial<Liferay.Language.FullyLocalizedValue<string>>
 	) => void;
+	selectedField: IField | undefined;
 }
 
 function Configuration({
@@ -44,10 +45,8 @@ function Configuration({
 	onBlur,
 	onChangeField,
 	onChangeLabel,
+	selectedField,
 }: IConfigurationProps) {
-	const [selectedField, setSelectedField] = useState<IField | undefined>(
-		fields.find((item) => item.name === filter?.fieldName)
-	);
 	const fdsFilterLabelTranslations = filter?.label_i18n ?? {};
 
 	const [i18nFilterLabels, setI18nFilterLabels] = useState(
@@ -116,7 +115,8 @@ function Configuration({
 					}: {
 						selectedFields: Array<IField>;
 					}) => {
-						setSelectedField(selectedFields[0]);
+
+						// setSelectedField(selectedFields[0]);
 
 						onChangeField(selectedFields[0]);
 
@@ -182,6 +182,7 @@ function Configuration({
 					<ClayInput.Group>
 						<ClayInput.GroupItem>
 							<ClayInput
+								id={selectedFieldFormElementId}
 								placeholder={Liferay.Language.get('select')}
 								readOnly
 								type="text"
@@ -213,7 +214,8 @@ function Configuration({
 							});
 
 							if (newVal) {
-								setSelectedField(newVal);
+
+								// setSelectedField(newVal);
 
 								onChangeField(newVal);
 							}

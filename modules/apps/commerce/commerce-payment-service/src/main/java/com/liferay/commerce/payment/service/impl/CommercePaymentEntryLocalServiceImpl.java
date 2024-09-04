@@ -15,9 +15,12 @@ import com.liferay.commerce.payment.exception.CommercePaymentEntryPaymentIntegra
 import com.liferay.commerce.payment.exception.CommercePaymentEntryPaymentStatusException;
 import com.liferay.commerce.payment.exception.CommercePaymentEntryReasonKeyException;
 import com.liferay.commerce.payment.model.CommercePaymentEntry;
+import com.liferay.commerce.payment.model.CommercePaymentEntryTable;
 import com.liferay.commerce.payment.service.CommercePaymentEntryAuditLocalService;
 import com.liferay.commerce.payment.service.base.CommercePaymentEntryLocalServiceBaseImpl;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -261,6 +264,35 @@ public class CommercePaymentEntryLocalServiceImpl
 	}
 
 	@Override
+	public List<CommercePaymentEntry> getRefundCommercePaymentEntries(
+		long companyId, long classNameId, long classPK, int start, int end) {
+
+		return dslQuery(
+			DSLQueryFactoryUtil.select(
+				CommercePaymentEntryTable.INSTANCE
+			).from(
+				CommercePaymentEntryTable.INSTANCE
+			).where(
+				_getPredicate(companyId, classNameId, classPK)
+			).limit(
+				start, end
+			));
+	}
+
+	@Override
+	public int getRefundCommercePaymentEntriesCount(
+		long companyId, long classNameId, long classPK) {
+
+		return dslQueryCount(
+			DSLQueryFactoryUtil.count(
+			).from(
+				CommercePaymentEntryTable.INSTANCE
+			).where(
+				_getPredicate(companyId, classNameId, classPK)
+			));
+	}
+
+	@Override
 	public BaseModelSearchResult<CommercePaymentEntry>
 		searchCommercePaymentEntries(
 			long companyId, String keywords,
@@ -432,6 +464,36 @@ public class CommercePaymentEntryLocalServiceImpl
 		}
 
 		return commercePaymentEntryPersistence.update(commercePaymentEntry);
+	}
+
+	private Predicate _getPredicate(
+		long companyId, long classNameId, long classPK) {
+
+		return CommercePaymentEntryTable.INSTANCE.classPK.in(
+			DSLQueryFactoryUtil.select(
+				CommercePaymentEntryTable.INSTANCE.commercePaymentEntryId
+			).from(
+				CommercePaymentEntryTable.INSTANCE
+			).where(
+				CommercePaymentEntryTable.INSTANCE.companyId.eq(
+					companyId
+				).and(
+					CommercePaymentEntryTable.INSTANCE.classNameId.eq(
+						classNameId)
+				).and(
+					CommercePaymentEntryTable.INSTANCE.classPK.eq(classPK)
+				).and(
+					CommercePaymentEntryTable.INSTANCE.paymentStatus.eq(
+						CommercePaymentEntryConstants.STATUS_COMPLETED)
+				).and(
+					CommercePaymentEntryTable.INSTANCE.type.eq(
+						CommercePaymentEntryConstants.TYPE_PAYMENT)
+				)
+			)
+		).and(
+			CommercePaymentEntryTable.INSTANCE.type.eq(
+				CommercePaymentEntryConstants.TYPE_REFUND)
+		);
 	}
 
 	private SearchRequest _getSearchRequest(

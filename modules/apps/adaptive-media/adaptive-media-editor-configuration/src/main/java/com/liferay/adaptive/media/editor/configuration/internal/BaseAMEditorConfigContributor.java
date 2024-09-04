@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-
 package com.liferay.adaptive.media.editor.configuration.internal;
 
 import com.liferay.adaptive.media.image.html.constants.AMImageHTMLConstants;
@@ -17,22 +16,19 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Validator;
-import org.osgi.service.component.annotations.Reference;
 
-import javax.portlet.PortletURL;
 import java.util.List;
 import java.util.Map;
+
+import javax.portlet.PortletURL;
+
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
  */
 public abstract class BaseAMEditorConfigContributor
 	extends BaseEditorConfigContributor {
-
-	private static final String _IMG_TAG_RULE = "img[*](*){*};";
-
-	@Reference
-	private ItemSelector _itemSelector;
 
 	@Override
 	public void populateConfigJSONObject(
@@ -59,12 +55,12 @@ public abstract class BaseAMEditorConfigContributor
 		}
 
 		List<ItemSelectorCriterion> itemSelectorCriteria =
-			_itemSelector.getItemSelectorCriteria(itemSelectorURL);
+			itemSelector.getItemSelectorCriteria(itemSelectorURL);
 
 		boolean amImageURLItemSelectorReturnTypeAdded = false;
 
 		for (ItemSelectorCriterion itemSelectorCriterion :
-			itemSelectorCriteria) {
+				itemSelectorCriteria) {
 
 			if (isItemSelectorCriterionOverridable(itemSelectorCriterion)) {
 				_addAMImageFileEntryItemSelectorReturnType(
@@ -93,9 +89,9 @@ public abstract class BaseAMEditorConfigContributor
 
 		jsonObject.put("extraPlugins", extraPlugins);
 
-		PortletURL itemSelectorPortletURL = _itemSelector.getItemSelectorURL(
+		PortletURL itemSelectorPortletURL = itemSelector.getItemSelectorURL(
 			requestBackedPortletURLFactory,
-			_itemSelector.getItemSelectedEventName(itemSelectorURL),
+			itemSelector.getItemSelectedEventName(itemSelectorURL),
 			itemSelectorCriteria.toArray(new ItemSelectorCriterion[0]));
 
 		jsonObject.put(
@@ -104,6 +100,12 @@ public abstract class BaseAMEditorConfigContributor
 			"filebrowserImageBrowseUrl", itemSelectorPortletURL.toString()
 		);
 	}
+
+	protected abstract boolean isItemSelectorCriterionOverridable(
+		ItemSelectorCriterion itemSelectorCriterion);
+
+	@Reference
+	protected ItemSelector itemSelector;
 
 	private void _addAMImageFileEntryItemSelectorReturnType(
 		ItemSelectorCriterion itemSelectorCriterion) {
@@ -115,6 +117,6 @@ public abstract class BaseAMEditorConfigContributor
 			0, new AMImageFileEntryItemSelectorReturnType());
 	}
 
-	protected abstract boolean isItemSelectorCriterionOverridable(
-		ItemSelectorCriterion itemSelectorCriterion);
+	private static final String _IMG_TAG_RULE = "img[*](*){*};";
+
 }

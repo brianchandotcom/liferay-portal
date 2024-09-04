@@ -23,7 +23,6 @@ import com.liferay.layout.content.page.editor.web.internal.util.layout.structure
 import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.DropZoneLayoutStructureItem;
 import com.liferay.layout.util.structure.FormStepContainerStyledLayoutStructureItem;
-import com.liferay.layout.util.structure.FormStepLayoutStructureItem;
 import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
@@ -72,10 +71,9 @@ public class FormItemManager {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		FormStepContainerStyledLayoutStructureItem
-			formStepContainerStyledLayoutStructureItem =
-				_findFormStepContainerStyledLayoutStructureItem(
-					formStyledLayoutStructureItem, layoutStructure);
+		LayoutStructureItem formStepContainerStyledLayoutStructureItem =
+			_findFormStepContainerStyledLayoutStructureItem(
+				formStyledLayoutStructureItem, layoutStructure);
 
 		if (formStepContainerStyledLayoutStructureItem == null) {
 			return Collections.emptyList();
@@ -86,8 +84,8 @@ public class FormItemManager {
 		List<String> childrenItemIds =
 			formStepContainerStyledLayoutStructureItem.getChildrenItemIds();
 
-		FormStepLayoutStructureItem formStepLayoutStructureItem =
-			(FormStepLayoutStructureItem)layoutStructure.getLayoutStructureItem(
+		LayoutStructureItem formStepLayoutStructureItem =
+			layoutStructure.getLayoutStructureItem(
 				childrenItemIds.get(childrenItemIds.size() - 1));
 
 		int stepIndex = childrenItemIds.size() - 1;
@@ -102,10 +100,8 @@ public class FormItemManager {
 
 		for (int i = 1; i <= numberOfNewSteps; i++) {
 			formStepLayoutStructureItem =
-				(FormStepLayoutStructureItem)
-					layoutStructure.addFormStepLayoutStructureItem(
-						formStepContainerStyledLayoutStructureItem.getItemId(),
-						-1);
+				layoutStructure.addFormStepLayoutStructureItem(
+					formStepContainerStyledLayoutStructureItem.getItemId(), -1);
 
 			addedFragmentEntryLinks.addAll(
 				_addFormButtons(
@@ -247,17 +243,13 @@ public class FormItemManager {
 		List<String> childrenItemIds = new ArrayList<>(
 			formStyledLayoutStructureItem.getChildrenItemIds());
 
-		FormStepContainerStyledLayoutStructureItem
-			formStepContainerStyledLayoutStructureItem =
-				(FormStepContainerStyledLayoutStructureItem)
-					layoutStructure.
-						addFormStepContainerStyledLayoutStructureItem(
-							formStyledLayoutStructureItem.getItemId(), -1);
+		LayoutStructureItem formStepContainerStyledLayoutStructureItem =
+			layoutStructure.addFormStepContainerStyledLayoutStructureItem(
+				formStyledLayoutStructureItem.getItemId(), -1);
 
-		FormStepLayoutStructureItem formStepLayoutStructureItem =
-			(FormStepLayoutStructureItem)
-				layoutStructure.addFormStepLayoutStructureItem(
-					formStepContainerStyledLayoutStructureItem.getItemId(), 0);
+		LayoutStructureItem formStepLayoutStructureItem =
+			layoutStructure.addFormStepLayoutStructureItem(
+				formStepContainerStyledLayoutStructureItem.getItemId(), 0);
 
 		for (String childrenItemId : childrenItemIds) {
 			LayoutStructureItem layoutStructureItem =
@@ -301,10 +293,8 @@ public class FormItemManager {
 
 		for (int i = 1; i < numberOfSteps; i++) {
 			formStepLayoutStructureItem =
-				(FormStepLayoutStructureItem)
-					layoutStructure.addFormStepLayoutStructureItem(
-						formStepContainerStyledLayoutStructureItem.getItemId(),
-						i);
+				layoutStructure.addFormStepLayoutStructureItem(
+					formStepContainerStyledLayoutStructureItem.getItemId(), i);
 
 			addedFragmentEntryLinks.addAll(
 				_addFormButtons(
@@ -322,10 +312,9 @@ public class FormItemManager {
 			long segmentsExperienceId, ServiceContext serviceContext)
 		throws PortalException {
 
-		FormStepContainerStyledLayoutStructureItem
-			formStepContainerStyledLayoutStructureItem =
-				_findFormStepContainerStyledLayoutStructureItem(
-					formStyledLayoutStructureItem, layoutStructure);
+		LayoutStructureItem formStepContainerStyledLayoutStructureItem =
+			_findFormStepContainerStyledLayoutStructureItem(
+				formStyledLayoutStructureItem, layoutStructure);
 
 		if (formStepContainerStyledLayoutStructureItem == null) {
 			return Collections.emptyList();
@@ -336,9 +325,8 @@ public class FormItemManager {
 					formStepContainerStyledLayoutStructureItem.
 						getChildrenItemIds())) {
 
-			FormStepLayoutStructureItem formStepLayoutStructureItem =
-				(FormStepLayoutStructureItem)
-					layoutStructure.getLayoutStructureItem(childrenItemId);
+			LayoutStructureItem formStepLayoutStructureItem =
+				layoutStructure.getLayoutStructureItem(childrenItemId);
 
 			for (String formStepLayoutStructureItemChildrenItemId :
 					new ArrayList<>(
@@ -383,10 +371,9 @@ public class FormItemManager {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		FormStepContainerStyledLayoutStructureItem
-			formStepContainerStyledLayoutStructureItem =
-				_findFormStepContainerStyledLayoutStructureItem(
-					formStyledLayoutStructureItem, layoutStructure);
+		LayoutStructureItem formStepContainerStyledLayoutStructureItem =
+			_findFormStepContainerStyledLayoutStructureItem(
+				formStyledLayoutStructureItem, layoutStructure);
 
 		if (formStepContainerStyledLayoutStructureItem == null) {
 			return Collections.emptyList();
@@ -395,15 +382,13 @@ public class FormItemManager {
 		List<String> childrenItemIds = new ArrayList<>(
 			formStepContainerStyledLayoutStructureItem.getChildrenItemIds());
 
-		FormStepLayoutStructureItem previousFormStepLayoutStructureItem =
-			(FormStepLayoutStructureItem)layoutStructure.getLayoutStructureItem(
+		LayoutStructureItem previousFormStepLayoutStructureItem =
+			layoutStructure.getLayoutStructureItem(
 				childrenItemIds.get(numberOfSteps - 1));
 
 		for (int i = numberOfSteps; i < childrenItemIds.size(); i++) {
-			FormStepLayoutStructureItem formStepLayoutStructureItem =
-				(FormStepLayoutStructureItem)
-					layoutStructure.getLayoutStructureItem(
-						childrenItemIds.get(i));
+			LayoutStructureItem formStepLayoutStructureItem =
+				layoutStructure.getLayoutStructureItem(childrenItemIds.get(i));
 
 			for (String childrenItemId :
 					new ArrayList<>(
@@ -545,7 +530,7 @@ public class FormItemManager {
 	}
 
 	private List<FragmentEntryLink> _addFormButtons(
-			FormStepLayoutStructureItem formStepLayoutStructureItem,
+			LayoutStructureItem formStepLayoutStructureItem,
 			FormStyledLayoutStructureItem formStyledLayoutStructureItem,
 			Layout layout, Locale locale, LayoutStructure layoutStructure,
 			int numberOfSteps, long segmentsExperienceId, int stepIndex,
@@ -661,8 +646,8 @@ public class FormItemManager {
 	}
 
 	private LayoutStructureItem _findFormButtonsContainer(
-		FormStepLayoutStructureItem formStepLayoutStructureItem,
-		FormStyledLayoutStructureItem formStyledLayoutStructureItem,
+		LayoutStructureItem formStepLayoutStructureItem,
+		LayoutStructureItem formStyledLayoutStructureItem,
 		LayoutStructure layoutStructure) {
 
 		for (String childrenItemId :
@@ -682,10 +667,9 @@ public class FormItemManager {
 		return null;
 	}
 
-	private FormStepContainerStyledLayoutStructureItem
-		_findFormStepContainerStyledLayoutStructureItem(
-			FormStyledLayoutStructureItem formStyledLayoutStructureItem,
-			LayoutStructure layoutStructure) {
+	private LayoutStructureItem _findFormStepContainerStyledLayoutStructureItem(
+		FormStyledLayoutStructureItem formStyledLayoutStructureItem,
+		LayoutStructure layoutStructure) {
 
 		for (String childrenItemId :
 				formStyledLayoutStructureItem.getChildrenItemIds()) {
@@ -696,8 +680,7 @@ public class FormItemManager {
 			if (layoutStructureItem instanceof
 					FormStepContainerStyledLayoutStructureItem) {
 
-				return (FormStepContainerStyledLayoutStructureItem)
-					layoutStructureItem;
+				return layoutStructureItem;
 			}
 		}
 
@@ -705,8 +688,8 @@ public class FormItemManager {
 	}
 
 	private String _getFormButtonsContainerId(
-		FormStepLayoutStructureItem formStepLayoutStructureItem,
-		FormStyledLayoutStructureItem formStyledLayoutStructureItem) {
+		LayoutStructureItem formStepLayoutStructureItem,
+		LayoutStructureItem formStyledLayoutStructureItem) {
 
 		return formStyledLayoutStructureItem.getItemId() + StringPool.DASH +
 			formStepLayoutStructureItem.getItemId();
@@ -833,8 +816,8 @@ public class FormItemManager {
 	}
 
 	private boolean _isFormButtonsContainer(
-		FormStepLayoutStructureItem formStepLayoutStructureItem,
-		FormStyledLayoutStructureItem formStyledLayoutStructureItem,
+		LayoutStructureItem formStepLayoutStructureItem,
+		LayoutStructureItem formStyledLayoutStructureItem,
 		LayoutStructureItem layoutStructureItem) {
 
 		if ((layoutStructureItem instanceof

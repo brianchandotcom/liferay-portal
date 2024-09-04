@@ -214,6 +214,8 @@ public class UpgradeSQLRecorder {
 			if (sql != null) {
 				long duration = endTime - startTime;
 
+				sql += StringPool.SEMICOLON;
+
 				if (Validator.isBlank(_upgradeProcessClassName)) {
 					_sqlExecutionTimes.put(sql, duration);
 				}

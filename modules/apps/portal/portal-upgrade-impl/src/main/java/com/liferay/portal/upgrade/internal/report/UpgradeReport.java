@@ -1024,13 +1024,13 @@ public class UpgradeReport {
 			if (_logContext) {
 				return StringBundler.concat(
 					_upgradeProcessName, StringPool.COLON, _sql,
-					StringPool.SEMICOLON, StringPool.COLON, _duration, " ms");
+					StringPool.COLON, _duration, " ms");
 			}
 
 			return StringBundler.concat(
 				"Upgrade Process: ", _upgradeProcessName, StringPool.NEW_LINE,
-				"SQL: ", _sql, StringPool.SEMICOLON, StringPool.NEW_LINE,
-				"Duration: ", _duration, " ms", StringPool.NEW_LINE);
+				"SQL: ", _sql, StringPool.NEW_LINE, "Duration: ", _duration,
+				" ms", StringPool.NEW_LINE);
 		}
 
 		private final long _duration;

@@ -103,7 +103,7 @@ public class ContentSecurityPolicyFilter extends BasePortalFilter {
 			filterChain.doFilter(
 				httpServletRequest, contentSecurityPolicyHttpServletResponse);
 
-			String content = _updateContent(
+			String content = updateContent(
 				contentSecurityPolicyHttpServletResponse.getContent(), nonce);
 
 			printWriter.write(content);
@@ -117,41 +117,7 @@ public class ContentSecurityPolicyFilter extends BasePortalFilter {
 		}
 	}
 
-	private boolean _isExcludedURIPath(
-		ContentSecurityPolicyConfiguration contentSecurityPolicyConfiguration,
-		HttpServletRequest httpServletRequest) {
-
-		String requestURI = httpServletRequest.getRequestURI();
-
-		if (Validator.isNull(requestURI)) {
-			return false;
-		}
-
-		for (String internallyExcludedPath : _INTERNALLY_EXCLUDED_PATHS) {
-			if (Validator.isNotNull(internallyExcludedPath) &&
-				requestURI.startsWith(
-					StringUtil.toLowerCase(internallyExcludedPath))) {
-
-				return true;
-			}
-		}
-
-		requestURI = StringUtil.toLowerCase(requestURI);
-
-		for (String excludedPath :
-				contentSecurityPolicyConfiguration.excludedPaths()) {
-
-			if (Validator.isNotNull(excludedPath) &&
-				requestURI.startsWith(StringUtil.toLowerCase(excludedPath))) {
-
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	private String _updateContent(String content, String nonce) {
+	protected String updateContent(String content, String nonce) {
 		String nonceAttribute = "nonce=\"" + nonce + "\"";
 		String escapedNonceAttribute = "nonce=\\\"" + nonce + "\\\"";
 
@@ -207,6 +173,40 @@ public class ContentSecurityPolicyFilter extends BasePortalFilter {
 		}
 
 		return content;
+	}
+
+	private boolean _isExcludedURIPath(
+		ContentSecurityPolicyConfiguration contentSecurityPolicyConfiguration,
+		HttpServletRequest httpServletRequest) {
+
+		String requestURI = httpServletRequest.getRequestURI();
+
+		if (Validator.isNull(requestURI)) {
+			return false;
+		}
+
+		for (String internallyExcludedPath : _INTERNALLY_EXCLUDED_PATHS) {
+			if (Validator.isNotNull(internallyExcludedPath) &&
+				requestURI.startsWith(
+					StringUtil.toLowerCase(internallyExcludedPath))) {
+
+				return true;
+			}
+		}
+
+		requestURI = StringUtil.toLowerCase(requestURI);
+
+		for (String excludedPath :
+				contentSecurityPolicyConfiguration.excludedPaths()) {
+
+			if (Validator.isNotNull(excludedPath) &&
+				requestURI.startsWith(StringUtil.toLowerCase(excludedPath))) {
+
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private static final String[] _INTERNALLY_EXCLUDED_PATHS = {

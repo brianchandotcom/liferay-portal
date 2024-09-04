@@ -32,12 +32,12 @@ public class ContentSecurityPolicyFilterTest {
 				_HTML_CONTEXT_START,
 				StringUtil.merge(_HTML_CONTENT, " nonce=\"" + _NONCE + "\""),
 				_HTML_CONTEXT_END),
-			_contentSecurityPolicyFilter.rewriteContent(
-				_NONCE,
+			_contentSecurityPolicyFilter.updateContent(
 				StringBundler.concat(
 					_HTML_CONTEXT_START,
 					StringUtil.merge(_HTML_CONTENT, StringPool.BLANK),
-					_HTML_CONTEXT_END)));
+					_HTML_CONTEXT_END),
+				_NONCE));
 	}
 
 	@Test
@@ -59,14 +59,14 @@ public class ContentSecurityPolicyFilterTest {
 				StringUtil.merge(_HTML_CONTENT, " nonce=\"" + _NONCE + "\""),
 				jsObjectLiteralContextStart, jsObjectLiteralContextEnd,
 				_HTML_CONTEXT_END),
-			contentSecurityPolicyFilter.rewriteContent(
-				_NONCE,
+			contentSecurityPolicyFilter.updateContent(
 				StringBundler.concat(
 					_HTML_CONTEXT_START, jsObjectLiteralContextStart,
 					jsObjectLiteralContextEnd,
 					StringUtil.merge(_HTML_CONTENT, StringPool.BLANK),
 					jsObjectLiteralContextStart, jsObjectLiteralContextEnd,
-					_HTML_CONTEXT_END)));
+					_HTML_CONTEXT_END),
+				_NONCE));
 	}
 
 	@Test
@@ -88,13 +88,13 @@ public class ContentSecurityPolicyFilterTest {
 					StringUtil.merge(
 						_HTML_CONTENT, " nonce=\"" + _NONCE + "\"")),
 				jsObjectLiteralContextEnd, _HTML_CONTEXT_END),
-			contentSecurityPolicyFilter.rewriteContent(
-				_NONCE,
+			contentSecurityPolicyFilter.updateContent(
 				StringBundler.concat(
 					_HTML_CONTEXT_START, jsObjectLiteralContextStart,
 					_escapeJS(
 						StringUtil.merge(_HTML_CONTENT, StringPool.BLANK)),
-					jsObjectLiteralContextEnd, _HTML_CONTEXT_END)));
+					jsObjectLiteralContextEnd, _HTML_CONTEXT_END),
+				_NONCE));
 	}
 
 	private String _escapeJS(String content) {

@@ -28,23 +28,23 @@ export class DisplayPageTemplatesPage {
 		);
 	}
 
-	async clickMoreActions(name: string) {
+	async clickMoreActions(name: string, actionName: string) {
 		await this.page
 			.locator('.card-page-item')
 			.filter({hasText: name})
 			.getByLabel('More actions')
 			.click();
-	}
-
-	async deleteTemplate(name: string) {
-		await this.clickMoreActions(name);
 
 		await this.page
 			.getByRole('menuitem', {
 				exact: true,
-				name: 'Delete',
+				name: actionName,
 			})
 			.click();
+	}
+
+	async deleteTemplate(name: string) {
+		await this.clickMoreActions(name, 'Delete');
 
 		await this.page.getByRole('button', {name: 'Delete'}).click();
 
@@ -68,14 +68,7 @@ export class DisplayPageTemplatesPage {
 	}
 
 	async editTemplate(name: string) {
-		await this.clickMoreActions(name);
-
-		await this.page
-			.getByRole('menuitem', {
-				exact: true,
-				name: 'Edit',
-			})
-			.click();
+		await this.clickMoreActions(name, 'Edit');
 
 		await this.page
 			.getByText('Select a Page Element', {exact: true})
@@ -83,7 +76,7 @@ export class DisplayPageTemplatesPage {
 	}
 
 	async viewUsages(name: string) {
-		await this.clickMoreActions(name);
+		await this.clickMoreActions(name, 'View Usages');
 
 		await clickAndExpectToBeVisible({
 			target: this.page.getByRole('row').getByRole('checkbox').first(),
@@ -100,27 +93,13 @@ export class DisplayPageTemplatesPage {
 			dialog.accept().catch(() => {});
 		});
 
-		await this.clickMoreActions(name);
-
-		await this.page
-			.getByRole('menuitem', {
-				exact: true,
-				name: 'Mark as Default',
-			})
-			.click();
+		await this.clickMoreActions(name, 'Mark as Default');
 
 		await waitForSuccessAlert(this.page);
 	}
 
 	async renameTemplate(newName: string, oldName: string) {
-		await this.clickMoreActions(oldName);
-
-		await this.page
-			.getByRole('menuitem', {
-				exact: true,
-				name: 'Rename',
-			})
-			.click();
+		await this.clickMoreActions(oldName, 'Rename');
 
 		await this.page.getByLabel('Name', {exact: true}).fill(newName);
 

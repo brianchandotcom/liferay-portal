@@ -209,15 +209,9 @@ test.describe('UI', () => {
 			// Assert warning message
 
 			await displayPageTemplatesPage.clickMoreActions(
-				displayPageTemplateName
+				displayPageTemplateName,
+				'Change Content Type'
 			);
-
-			await page
-				.getByRole('menuitem', {
-					exact: true,
-					name: 'Change Content Type',
-				})
-				.click();
 
 			await expect(
 				page.getByText(
@@ -240,15 +234,9 @@ test.describe('UI', () => {
 			// Assert warning message
 
 			await displayPageTemplatesPage.clickMoreActions(
-				displayPageTemplateName
+				displayPageTemplateName,
+				'Change Content Type'
 			);
-
-			await page
-				.getByRole('menuitem', {
-					exact: true,
-					name: 'Change Content Type',
-				})
-				.click();
 
 			await expect(
 				page.getByText(

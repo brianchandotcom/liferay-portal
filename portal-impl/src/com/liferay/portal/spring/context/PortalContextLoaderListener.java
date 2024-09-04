@@ -153,7 +153,8 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 			}
 		}
 
-		closeDataSource("liferayDataSource");
+		DataSource dataSource = (DataSource)PortalBeanLocatorUtil.locate(
+			"liferayDataSource");
 
 		super.contextDestroyed(servletContextEvent);
 
@@ -161,6 +162,8 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 			(SessionFactory)InfrastructureUtil.getSessionFactory();
 
 		sessionFactory.close();
+
+		closeDataSource(dataSource);
 
 		_cleanUpJDBCDrivers();
 
@@ -228,9 +231,7 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		}
 	}
 
-	protected void closeDataSource(String name) {
-		DataSource dataSource = (DataSource)PortalBeanLocatorUtil.locate(name);
-
+	protected void closeDataSource(DataSource dataSource) {
 		if (dataSource instanceof DelegatingDataSource) {
 			DelegatingDataSource delegatingDataSource =
 				(DelegatingDataSource)dataSource;

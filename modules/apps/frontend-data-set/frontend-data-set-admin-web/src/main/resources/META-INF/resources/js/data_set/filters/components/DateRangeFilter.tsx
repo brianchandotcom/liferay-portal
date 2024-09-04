@@ -21,16 +21,16 @@ function Header() {
 interface IBodyProps {
 	fields: IField[];
 	filter?: IFilter;
-	inUseFieldNames?: string[];
+	fieldNames?: string[];
 	namespace: string;
 	onCancel: Function;
 	onSave: Function;
 }
 
 function Body({
+	fieldNames: usedFieldNames,
 	fields,
 	filter,
-	inUseFieldNames,
 	namespace,
 	onCancel,
 	onSave,
@@ -113,7 +113,7 @@ function Body({
 		}
 
 		if (selectedField && !filter) {
-			if (inUseFieldNames?.includes(selectedField?.name)) {
+			if (usedFieldNames?.includes(selectedField?.name)) {
 				setFieldInUseValidationError(true);
 
 				isValid = false;
@@ -163,10 +163,10 @@ function Body({
 			<ClayLayout.SheetSection>
 				<Configuration
 					fieldInUseValidationError={fieldInUseValidationError}
+					fieldNames={usedFieldNames}
 					fieldValidationError={fieldValidationError}
 					fields={fields}
 					filter={filter}
-					inUseFieldNames={inUseFieldNames}
 					labelValidationError={labelValidationError}
 					namespace={namespace}
 					onBlur={() => {
@@ -179,7 +179,7 @@ function Body({
 						setFieldValidationError(!newValue);
 						setFieldInUseValidationError(
 							newValue
-								? !!inUseFieldNames?.includes(newValue.name)
+								? !!usedFieldNames?.includes(newValue.name)
 								: false
 						);
 					}}

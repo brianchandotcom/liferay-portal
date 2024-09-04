@@ -121,7 +121,7 @@ public class OrganizationLocalServiceWhenSearchingOrganizationsTreeTest {
 			_role, Organization.class.getName(),
 			ResourceConstants.SCOPE_COMPANY,
 			String.valueOf(_user.getCompanyId()),
-			ActionKeys.EDIT_SUBORGANIZATIONS);
+			ActionKeys.UPDATE_SUBORGANIZATIONS);
 
 		userLocalService.addRoleUser(_role.getRoleId(), _user);
 

@@ -216,7 +216,7 @@ public class AccountRoleModelResourcePermission
 				if (!Objects.equals(organization, originalOrganization) &&
 					(OrganizationPermissionUtil.contains(
 						permissionChecker, organization,
-						AccountActionKeys.EDIT_SUBORGANIZATIONS_ACCOUNTS) ||
+						AccountActionKeys.UPDATE_SUBORGANIZATIONS_ACCOUNTS) ||
 					 OrganizationPermissionUtil.contains(
 						 permissionChecker, organization,
 						 AccountActionKeys.MANAGE_SUBORGANIZATIONS_ACCOUNTS)) &&

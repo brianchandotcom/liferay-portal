@@ -40,7 +40,7 @@ public class AccountEntryOrganizationRelServiceImpl
 
 		_accountEntryModelResourcePermission.check(
 			getPermissionChecker(), accountEntryId,
-			AccountActionKeys.EDIT_ORGANIZATIONS);
+			AccountActionKeys.UPDATE_ORGANIZATIONS);
 
 		return accountEntryOrganizationRelLocalService.
 			addAccountEntryOrganizationRel(accountEntryId, organizationId);
@@ -53,7 +53,7 @@ public class AccountEntryOrganizationRelServiceImpl
 
 		_accountEntryModelResourcePermission.check(
 			getPermissionChecker(), accountEntryId,
-			AccountActionKeys.EDIT_ORGANIZATIONS);
+			AccountActionKeys.UPDATE_ORGANIZATIONS);
 
 		accountEntryOrganizationRelLocalService.addAccountEntryOrganizationRels(
 			accountEntryId, organizationIds);
@@ -66,7 +66,7 @@ public class AccountEntryOrganizationRelServiceImpl
 
 		_accountEntryModelResourcePermission.check(
 			getPermissionChecker(), accountEntryId,
-			AccountActionKeys.EDIT_ORGANIZATIONS);
+			AccountActionKeys.UPDATE_ORGANIZATIONS);
 
 		accountEntryOrganizationRelLocalService.
 			deleteAccountEntryOrganizationRel(accountEntryId, organizationId);
@@ -79,7 +79,7 @@ public class AccountEntryOrganizationRelServiceImpl
 
 		_accountEntryModelResourcePermission.check(
 			getPermissionChecker(), accountEntryId,
-			AccountActionKeys.EDIT_ORGANIZATIONS);
+			AccountActionKeys.UPDATE_ORGANIZATIONS);
 
 		accountEntryOrganizationRelLocalService.
 			deleteAccountEntryOrganizationRels(accountEntryId, organizationIds);
@@ -118,7 +118,7 @@ public class AccountEntryOrganizationRelServiceImpl
 			_accountEntryModelResourcePermission.check(
 				getPermissionChecker(),
 				accountEntryOrganizationRel.getAccountEntryId(),
-				AccountActionKeys.EDIT_ORGANIZATIONS);
+				AccountActionKeys.UPDATE_ORGANIZATIONS);
 		}
 
 		return accountEntryOrganizationRel;
@@ -131,7 +131,7 @@ public class AccountEntryOrganizationRelServiceImpl
 
 		_accountEntryModelResourcePermission.check(
 			getPermissionChecker(), accountEntryId,
-			AccountActionKeys.EDIT_ORGANIZATIONS);
+			AccountActionKeys.UPDATE_ORGANIZATIONS);
 
 		return accountEntryOrganizationRelLocalService.
 			getAccountEntryOrganizationRel(accountEntryId, organizationId);
@@ -144,7 +144,7 @@ public class AccountEntryOrganizationRelServiceImpl
 
 		_accountEntryModelResourcePermission.check(
 			getPermissionChecker(), accountEntryId,
-			AccountActionKeys.EDIT_ORGANIZATIONS);
+			AccountActionKeys.UPDATE_ORGANIZATIONS);
 
 		return accountEntryOrganizationRelLocalService.
 			getAccountEntryOrganizationRels(accountEntryId, start, end);
@@ -156,7 +156,7 @@ public class AccountEntryOrganizationRelServiceImpl
 
 		_accountEntryModelResourcePermission.check(
 			getPermissionChecker(), accountEntryId,
-			AccountActionKeys.EDIT_ORGANIZATIONS);
+			AccountActionKeys.UPDATE_ORGANIZATIONS);
 
 		return accountEntryOrganizationRelLocalService.
 			getAccountEntryOrganizationRelsCount(accountEntryId);

@@ -983,7 +983,7 @@ public class OrganizationFinderImpl
 								 organization.getOrganizationId()) ||
 							 OrganizationPermissionUtil.contains(
 								 permissionChecker, organization,
-								 ActionKeys.EDIT_SUBORGANIZATIONS) ||
+								 ActionKeys.UPDATE_SUBORGANIZATIONS) ||
 							 OrganizationPermissionUtil.contains(
 								 permissionChecker, organization,
 								 ActionKeys.MANAGE_SUBORGANIZATIONS))) {

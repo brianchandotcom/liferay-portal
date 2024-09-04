@@ -110,7 +110,7 @@ public class AccountEntryModelResourcePermission
 
 			while (organization != null) {
 				if (Objects.equals(
-						actionId, AccountActionKeys.EDIT_ORGANIZATIONS) &&
+						actionId, AccountActionKeys.UPDATE_ORGANIZATIONS) &&
 					permissionChecker.hasPermission(
 						organization.getGroupId(), AccountEntry.class.getName(),
 						accountEntryId,
@@ -123,7 +123,7 @@ public class AccountEntryModelResourcePermission
 					userOrganizationIds, organization.getOrganizationId());
 
 				if (!Objects.equals(
-						actionId, AccountActionKeys.EDIT_ORGANIZATIONS) &&
+						actionId, AccountActionKeys.UPDATE_ORGANIZATIONS) &&
 					!Objects.equals(
 						actionId, AccountActionKeys.MANAGE_ORGANIZATIONS) &&
 					organizationMember &&
@@ -145,7 +145,7 @@ public class AccountEntryModelResourcePermission
 				if (!Objects.equals(organization, originalOrganization) &&
 					(OrganizationPermissionUtil.contains(
 						permissionChecker, organization,
-						AccountActionKeys.EDIT_SUBORGANIZATIONS_ACCOUNTS) ||
+						AccountActionKeys.UPDATE_SUBORGANIZATIONS_ACCOUNTS) ||
 					 OrganizationPermissionUtil.contains(
 						 permissionChecker, organization,
 						 AccountActionKeys.MANAGE_SUBORGANIZATIONS_ACCOUNTS)) &&
@@ -169,7 +169,7 @@ public class AccountEntryModelResourcePermission
 			accountEntryGroupId = accountEntry.getAccountEntryGroupId();
 		}
 
-		if (Objects.equals(actionId, AccountActionKeys.EDIT_ORGANIZATIONS) &&
+		if (Objects.equals(actionId, AccountActionKeys.UPDATE_ORGANIZATIONS) &&
 			permissionChecker.hasPermission(
 				accountEntryGroupId, AccountEntry.class.getName(),
 				accountEntryId, AccountActionKeys.MANAGE_ORGANIZATIONS)) {

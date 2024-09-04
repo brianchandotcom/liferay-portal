@@ -152,8 +152,6 @@ public class ActionKeys {
 
 	public static final String DOWNLOAD = "DOWNLOAD";
 
-	public static final String EDIT_SUBORGANIZATIONS = "EDIT_SUBORGANIZATIONS";
-
 	public static final String EXPIRE = "EXPIRE";
 
 	public static final String EXPORT_ALL_EVENTS = "EXPORT_ALL_EVENTS";
@@ -250,6 +248,8 @@ public class ActionKeys {
 	public static final String UPDATE_LAYOUT_CONTENT = "UPDATE_LAYOUT_CONTENT";
 
 	public static final String UPDATE_LAYOUT_LIMITED = "UPDATE_LAYOUT_LIMITED";
+
+	public static final String UPDATE_SUBORGANIZATIONS = "UPDATE_SUBORGANIZATIONS";
 
 	public static final String UPDATE_THREAD_PRIORITY =
 		"UPDATE_THREAD_PRIORITY";

@@ -12,7 +12,7 @@ export class ModalAddObjectDefinitionPage {
 	readonly page: Page;
 
 	constructor(page: Page) {
-		this.objectDefinitionSaveButton = page.getByText('Save');
+		this.objectDefinitionSaveButton = page.getByText('Save', {exact: true});
 		this.objectLabelInput = page.locator('input[name="label"]');
 		this.objectPluralLabelInput = page.locator('input[name="pluralLabel"]');
 		this.page = page;

@@ -1323,8 +1323,9 @@ public class SourceFormatter {
 		for (String commitMessage : commitMessages) {
 			String[] parts = commitMessage.split(":", 2);
 
-			if (StringUtil.startsWith(parts[1], "Reapply \"") ||
-				StringUtil.startsWith(parts[1], "Revert \"Revert")) {
+			if ((parts[1].startsWith("Reapply \"") &&
+				 (parts[1].indexOf("This reverts commit") != -1)) ||
+				parts[1].startsWith("Revert \"Revert")) {
 
 				throw new Exception(
 					StringBundler.concat(
@@ -1358,7 +1359,7 @@ public class SourceFormatter {
 		if (!_sourceFormatterArgs.isFormatCurrentBranch()) {
 			return;
 		}
-		
+
 		File portalDir = SourceFormatterUtil.getPortalDir(
 			_sourceFormatterArgs.getBaseDirName(),
 			_sourceFormatterArgs.getMaxLineLength());

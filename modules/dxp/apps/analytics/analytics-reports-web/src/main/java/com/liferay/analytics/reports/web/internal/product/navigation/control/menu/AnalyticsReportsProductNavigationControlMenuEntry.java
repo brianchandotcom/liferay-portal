@@ -208,7 +208,6 @@ public class AnalyticsReportsProductNavigationControlMenuEntry
 			(AnalyticsReportsInfoItem<Object>)
 				_analyticsReportsInfoItemRegistry.getAnalyticsReportsInfoItem(
 					infoItemReference.getClassName());
-
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);

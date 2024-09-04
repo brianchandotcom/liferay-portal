@@ -68,7 +68,7 @@ public class BooleanQueryTranslatorImpl implements BooleanQueryTranslator {
 			_filterTranslatorSnapshot.get();
 
 		wrapperBooleanQueryBuilder.add(
-			filterTranslator.translate(booleanFilter), Occur.FILTER);
+			filterTranslator.translate(booleanFilter), Occur.MUST);
 
 		return _addBoost(booleanQuery, wrapperBooleanQueryBuilder.build());
 	}

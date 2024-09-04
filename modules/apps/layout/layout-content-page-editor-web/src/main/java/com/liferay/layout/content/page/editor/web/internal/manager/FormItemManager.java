@@ -365,7 +365,7 @@ public class FormItemManager {
 			Collections.emptyList());
 
 		FragmentEntryLink fragmentEntryLink = _addFormButtonFragmentEntryLink(
-			layout, locale, "submit", segmentsExperienceId, serviceContext);
+			layout, locale, _SUBMIT, segmentsExperienceId, serviceContext);
 
 		layoutStructure.addFragmentStyledLayoutStructureItem(
 			fragmentEntryLink.getFragmentEntryLinkId(),
@@ -567,29 +567,29 @@ public class FormItemManager {
 		if (stepIndex == 0) {
 			fragmentEntryLinks.add(
 				_addFormButtonFragmentEntryLink(
-					layout, locale, "next", segmentsExperienceId,
+					layout, locale, _NEXT, segmentsExperienceId,
 					serviceContext));
 		}
-		else if (stepIndex == (numberOfSteps - 1)) {
+		else if (stepIndex < numberOfSteps) {
 			fragmentEntryLinks.add(
 				_addFormButtonFragmentEntryLink(
-					layout, locale, "previous", segmentsExperienceId,
+					layout, locale, _PREVIOUS, segmentsExperienceId,
 					serviceContext));
 
 			fragmentEntryLinks.add(
 				_addFormButtonFragmentEntryLink(
-					layout, locale, "submit", segmentsExperienceId,
+					layout, locale, _NEXT, segmentsExperienceId,
 					serviceContext));
 		}
 		else {
 			fragmentEntryLinks.add(
 				_addFormButtonFragmentEntryLink(
-					layout, locale, "previous", segmentsExperienceId,
+					layout, locale, _PREVIOUS, segmentsExperienceId,
 					serviceContext));
 
 			fragmentEntryLinks.add(
 				_addFormButtonFragmentEntryLink(
-					layout, locale, "next", segmentsExperienceId,
+					layout, locale, _SUBMIT, segmentsExperienceId,
 					serviceContext));
 		}
 
@@ -855,6 +855,12 @@ public class FormItemManager {
 
 		return false;
 	}
+
+	private static final String _NEXT = "next";
+
+	private static final String _PREVIOUS = "previous";
+
+	private static final String _SUBMIT = "submit";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FormItemManager.class);

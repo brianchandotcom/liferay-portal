@@ -433,7 +433,9 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 							"symbolLeft", "simple-circle"
 						));
 				}
-				else {
+				else if (FeatureFlagManagerUtil.isEnabled(
+							themeDisplay.getCompanyId(), "LPD-20556")) {
+
 					Layout layout = themeDisplay.getLayout();
 
 					Layout previewLayout = null;

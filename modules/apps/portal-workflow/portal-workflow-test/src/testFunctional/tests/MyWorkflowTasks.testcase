@@ -631,8 +631,6 @@ definition {
 	@description = "Verify that the Clear All option cleans the search results"
 	@priority = 3
 	test CanClearAllSearchResults {
-		property portal.upstream = "quarantine";
-
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");

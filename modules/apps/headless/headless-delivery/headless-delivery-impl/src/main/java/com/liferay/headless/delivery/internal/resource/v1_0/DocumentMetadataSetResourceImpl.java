@@ -10,6 +10,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.headless.delivery.dto.v1_0.DocumentMetadataSet;
 import com.liferay.headless.delivery.resource.v1_0.DocumentMetadataSetResource;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
@@ -44,6 +45,10 @@ public class DocumentMetadataSetResourceImpl
 			Long assetLibraryId, Pagination pagination)
 		throws Exception {
 
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-32247")) {
+			throw new UnsupportedOperationException();
+		}
+
 		return _getPage(
 			HashMapBuilder.put(
 				"get",
@@ -59,6 +64,10 @@ public class DocumentMetadataSetResourceImpl
 			Long documentMetadataSetId)
 		throws Exception {
 
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-32247")) {
+			throw new UnsupportedOperationException();
+		}
+
 		return _toDocumentMetadataSet(
 			_ddmStructureService.getStructure(documentMetadataSetId));
 	}
@@ -67,6 +76,10 @@ public class DocumentMetadataSetResourceImpl
 	public Page<DocumentMetadataSet> getSiteDocumentMetadataSetsPage(
 			Long siteId, Pagination pagination)
 		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-32247")) {
+			throw new UnsupportedOperationException();
+		}
 
 		return _getPage(
 			HashMapBuilder.put(

@@ -50,7 +50,7 @@ public class StylesheetTag extends AttributesTagSupport {
 
 		OutputData outputData = _getOutputData(httpServletRequest);
 
-		StringBundler sb = new StringBundler(3);
+		StringBundler sb = new StringBundler(5);
 
 		sb.append("<link");
 		sb.append(

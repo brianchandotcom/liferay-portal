@@ -70,8 +70,8 @@ public class GlobalJSCETImpl extends BaseCETImpl implements GlobalJSCET {
 	}
 
 	@Override
-	public boolean isRestrictedToAdminPages() {
-		return getBoolean("restrictedToAdminPages");
+	public boolean isRestrictedToAdminLayouts() {
+		return getBoolean("restrictedToAdminLayouts");
 	}
 
 }

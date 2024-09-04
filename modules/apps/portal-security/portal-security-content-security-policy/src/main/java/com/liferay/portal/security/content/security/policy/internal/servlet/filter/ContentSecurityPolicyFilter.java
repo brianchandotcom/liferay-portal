@@ -8,6 +8,9 @@ package com.liferay.portal.security.content.security.policy.internal.servlet.fil
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -52,6 +55,17 @@ public class ContentSecurityPolicyFilter extends BasePortalFilter {
 	public boolean isFilterEnabled(
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
+
+		if (_portal.getCompanyId(httpServletRequest) ==
+				CompanyConstants.SYSTEM) {
+
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"No content security policy filter needed if company is 0");
+			}
+
+			return false;
+		}
 
 		ContentSecurityPolicyConfiguration contentSecurityPolicyConfiguration =
 			ContentSecurityPolicyConfigurationUtil.
@@ -212,6 +226,9 @@ public class ContentSecurityPolicyFilter extends BasePortalFilter {
 	private static final String[] _INTERNALLY_EXCLUDED_PATHS = {
 		"/group/", "/user/", "/web/"
 	};
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ContentSecurityPolicyFilter.class);
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

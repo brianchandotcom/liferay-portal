@@ -6776,7 +6776,33 @@ information. Make sure to commit in all format-javadoc results.
 					<propertyresource name="modules.test.class.group" />
 				</loadresource>
 
-				<for list="${modules.compile.task.groups}" param="modules.compile.task.group" trim="true">
+				<beanshell>
+					<![CDATA[
+						import java.io.File;
+
+						String modulesCompileTaskGroup = project.getProperty("modules.compile.task.groups");
+
+						String[] modulesCompileTaskGroupList = modulesCompileTaskGroup.split(" ");
+
+						StringBuilder sb = new StringBuilder();
+
+						for (String task : modulesCompileTaskGroupList) {
+							String taskPathString = "/opt/dev/projects/github/liferay-portal/modules/" + task.replace(":", "/");
+
+							File taskPathFile = new File(taskPathString + "/" + ".lfrbuild-portal");
+
+							File taskPath = new File(taskPathString);
+
+							if (taskPath.isDirectory() && !taskPathFile.exists()); {
+								sb.append(task + " ");
+							}
+						}
+
+						project.setProperty("modules.compile.processed.task.groups", sb.toString());
+					]]>
+				</beanshell>
+
+				<for list="${modules.compile.processed.task.groups}" param="modules.compile.task.group" trim="true">
 					<sequential>
 						<echo>Executing Gradle tasks: @{modules.compile.task.group}.</echo>
 

@@ -281,7 +281,7 @@
 			},
 			{
 				"default": "false",
-				"name": "restrictedToAdminPages",
+				"name": "restrictedToAdminLayouts",
 				"type": "CETProperty.Type.Boolean"
 			},
 			{

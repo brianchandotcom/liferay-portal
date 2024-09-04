@@ -1,0 +1,4 @@
+with-invalid-restricted-to-admin-layouts-global-js-client-extension:
+    restrictedToAdminLayouts: "true"
+    type: globalJS
+    url: src/dummy.js

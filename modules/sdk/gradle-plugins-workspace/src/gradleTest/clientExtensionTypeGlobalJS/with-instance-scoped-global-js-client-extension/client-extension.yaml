@@ -1,5 +1,5 @@
 with-instance-scoped-global-js-client-extension:
-    restrictedToAdminPages: true
+    restrictedToAdminLayouts: true
     scope: "instance"
     scriptLocation: "head"
     type: globalJS

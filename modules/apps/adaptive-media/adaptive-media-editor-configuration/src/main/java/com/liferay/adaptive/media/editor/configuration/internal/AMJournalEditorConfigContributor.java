@@ -54,7 +54,8 @@ public class AMJournalEditorConfigContributor
 		String allowedContent = jsonObject.getString("allowedContent");
 
 		if (Validator.isNotNull(allowedContent) &&
-			!allowedContent.equals(Boolean.TRUE.toString())) {
+			!allowedContent.equals(Boolean.TRUE.toString()) &&
+			!allowedContent.contains(_IMG_TAG_RULE)) {
 
 			allowedContent += StringPool.SPACE + _IMG_TAG_RULE;
 
@@ -76,12 +77,8 @@ public class AMJournalEditorConfigContributor
 		for (ItemSelectorCriterion itemSelectorCriterion :
 				itemSelectorCriteria) {
 
-			if (itemSelectorCriterion instanceof FileItemSelectorCriterion ||
-				itemSelectorCriterion instanceof ImageItemSelectorCriterion ||
-				itemSelectorCriterion instanceof JournalItemSelectorCriterion ||
-				itemSelectorCriterion instanceof UploadItemSelectorCriterion) {
-
-				addAMImageFileEntryItemSelectorReturnType(
+			if (isItemSelectorCriterionOverridable(itemSelectorCriterion)) {
+				_addAMImageFileEntryItemSelectorReturnType(
 					itemSelectorCriterion);
 
 				amImageURLItemSelectorReturnTypeAdded = true;
@@ -119,14 +116,28 @@ public class AMJournalEditorConfigContributor
 		);
 	}
 
-	protected void addAMImageFileEntryItemSelectorReturnType(
+	private void _addAMImageFileEntryItemSelectorReturnType(
 		ItemSelectorCriterion itemSelectorCriterion) {
 
 		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
 			itemSelectorCriterion.getDesiredItemSelectorReturnTypes();
 
 		desiredItemSelectorReturnTypes.add(
-			new AMImageFileEntryItemSelectorReturnType());
+			0, new AMImageFileEntryItemSelectorReturnType());
+	}
+
+	protected boolean isItemSelectorCriterionOverridable(
+		ItemSelectorCriterion itemSelectorCriterion) {
+
+		if (itemSelectorCriterion instanceof FileItemSelectorCriterion ||
+			itemSelectorCriterion instanceof ImageItemSelectorCriterion ||
+			itemSelectorCriterion instanceof JournalItemSelectorCriterion ||
+			itemSelectorCriterion instanceof UploadItemSelectorCriterion) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final String _IMG_TAG_RULE = "img[*](*){*};";

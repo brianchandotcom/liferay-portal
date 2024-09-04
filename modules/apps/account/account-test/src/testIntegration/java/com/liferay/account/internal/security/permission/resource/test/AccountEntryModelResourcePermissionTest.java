@@ -86,7 +86,7 @@ public class AccountEntryModelResourcePermissionTest {
 			role, Organization.class.getName(),
 			ResourceConstants.SCOPE_GROUP_TEMPLATE,
 			String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
-			AccountActionKeys.EDIT_SUBORGANIZATIONS_ACCOUNTS);
+			AccountActionKeys.UPDATE_SUBORGANIZATIONS_ACCOUNTS);
 
 		_assertContains(user, accountEntry, _ACTION_IDS);
 		_assertDoesNotContain(

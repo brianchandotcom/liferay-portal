@@ -42,9 +42,9 @@ public interface GlobalJSCET extends CET {
 	public String getURL();
 
 	@CETProperty(
-		defaultValue = "false", label = "restricted-to-admin-pages",
-		name = "restrictedToAdminPages", type = CETProperty.Type.Boolean
+		defaultValue = "false", label = "restricted-to-admin-layouts",
+		name = "restrictedToAdminLayouts", type = CETProperty.Type.Boolean
 	)
-	public boolean isRestrictedToAdminPages();
+	public boolean isRestrictedToAdminLayouts();
 
 }

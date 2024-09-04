@@ -508,12 +508,8 @@ public class FormItemManager {
 				fragmentEntry.getFragmentEntryKey(), fragmentEntry.getType(),
 				serviceContext);
 
-		JSONObject editableValuesJSONObject = _jsonFactory.createJSONObject();
-
-		if (Validator.isNotNull(fragmentEntryLink.getEditableValues())) {
-			editableValuesJSONObject = _jsonFactory.createJSONObject(
-				fragmentEntryLink.getEditableValues());
-		}
+		JSONObject editableValuesJSONObject = _jsonFactory.createJSONObject(
+			fragmentEntryLink.getEditableValues());
 
 		JSONObject jsonObject = editableValuesJSONObject.getJSONObject(
 			FragmentEntryProcessorConstants.
@@ -638,13 +634,8 @@ public class FormItemManager {
 				serviceContext);
 
 		if (infoField != null) {
-			JSONObject editableValuesJSONObject =
-				_jsonFactory.createJSONObject();
-
-			if (Validator.isNotNull(fragmentEntryLink.getEditableValues())) {
-				editableValuesJSONObject = _jsonFactory.createJSONObject(
-					fragmentEntryLink.getEditableValues());
-			}
+			JSONObject editableValuesJSONObject = _jsonFactory.createJSONObject(
+				fragmentEntryLink.getEditableValues());
 
 			JSONObject jsonObject = editableValuesJSONObject.getJSONObject(
 				FragmentEntryProcessorConstants.

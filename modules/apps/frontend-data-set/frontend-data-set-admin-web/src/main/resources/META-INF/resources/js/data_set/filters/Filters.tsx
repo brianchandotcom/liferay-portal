@@ -85,10 +85,10 @@ type FilterCollection = Array<IFilter>;
 interface IPropsFilterFormComponent {
 	dataSet: IDataSet | FDSViewType;
 	fdsFilterClientExtensions?: IClientExtensionRenderer[];
-	fieldNames?: string[];
 	fields: IField[];
 	filter?: IFilter | ISelectionFilter;
 	filterType?: EFilterType;
+	inUseFieldNames?: string[];
 	namespace: string;
 	onCancel: Function;
 	onSave: (newFilter: IFilter) => void;
@@ -99,10 +99,10 @@ interface IPropsFilterFormComponent {
 function FilterFormComponent({
 	dataSet,
 	fdsFilterClientExtensions = [],
-	fieldNames,
 	fields,
 	filter,
 	filterType,
+	inUseFieldNames,
 	namespace,
 	onCancel,
 	onSave,
@@ -160,9 +160,9 @@ function FilterFormComponent({
 
 			<Component.Body
 				fdsFilterClientExtensions={fdsFilterClientExtensions}
-				fieldNames={fieldNames}
 				fields={fields}
 				filter={filter}
+				inUseFieldNames={inUseFieldNames}
 				namespace={namespace}
 				onCancel={onCancel}
 				onSave={(formData: any) => saveFDSFilter(formData)}
@@ -187,6 +187,7 @@ function Filters({
 	const [activeMode, setActiveMode] = useState(FILTER_MODE.LIST);
 	const [filters, setFilters] = useState<IFilter[]>([]);
 	const [availableFields, setAvailableFields] = useState(fields);
+	const [inUseFieldNames, setInUseFieldNames] = useState<string[]>([]);
 	useEffect(() => {
 		const getFilters = async () => {
 			const response = await fetch(
@@ -233,6 +234,10 @@ function Filters({
 						label: filter.label || '',
 					};
 				})
+			);
+
+			setInUseFieldNames(
+				filtersOrdered.map((filter) => filter.fieldName)
 			);
 		};
 
@@ -416,12 +421,13 @@ function Filters({
 						})
 							.then(() => {
 								openDefaultSuccessToast();
+								const filterList = filters.filter(
+									(filter: IFilter) => filter.id !== item.id
+								);
+								setFilters(filterList);
 
-								setFilters(
-									filters.filter(
-										(filter: IFilter) =>
-											filter.id !== item.id
-									)
+								setInUseFieldNames(
+									filterList.map((filter) => filter.fieldName)
 								);
 							})
 							.catch(openDefaultFailureToast);
@@ -487,11 +493,9 @@ function Filters({
 							fdsFilterClientExtensions={
 								fdsFilterClientExtensions
 							}
-							fieldNames={filters.map(
-								(filter) => filter.fieldName
-							)}
 							fields={availableFields}
 							filterType={activeFilterType}
+							inUseFieldNames={inUseFieldNames}
 							namespace={namespace}
 							onCancel={() => setActiveMode(FILTER_MODE.LIST)}
 							onSave={(newfilter) => {
@@ -499,6 +503,10 @@ function Filters({
 									newfilter.label = '';
 								}
 								setFilters([...filters, newfilter]);
+								setInUseFieldNames([
+									...inUseFieldNames,
+									newfilter.fieldName,
+								]);
 								setActiveMode(FILTER_MODE.LIST);
 							}}
 							resolvedRESTSchemas={resolvedRESTSchemas}
@@ -516,12 +524,10 @@ function Filters({
 							fdsFilterClientExtensions={
 								fdsFilterClientExtensions
 							}
-							fieldNames={filters.map(
-								(filter) => filter.fieldName
-							)}
 							fields={fields}
 							filter={activeFilter}
 							filterType={activeFilter.filterType}
+							inUseFieldNames={inUseFieldNames}
 							namespace={namespace}
 							onCancel={() => setActiveMode(FILTER_MODE.LIST)}
 							onSave={(newfilter) => {

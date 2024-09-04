@@ -20,10 +20,10 @@ import {IField, IFilter} from '../../../utils/types';
 
 interface IConfigurationProps {
 	fieldInUseValidationError: boolean;
-	fieldNames?: string[];
 	fieldValidationError: boolean;
 	fields: IField[];
 	filter?: IFilter;
+	inUseFieldNames?: string[];
 	labelValidationError?: boolean;
 	namespace: string;
 	onBlur: (event: React.FocusEvent<HTMLInputElement>) => void;
@@ -35,10 +35,10 @@ interface IConfigurationProps {
 
 function Configuration({
 	fieldInUseValidationError,
-	fieldNames,
 	fieldValidationError,
 	fields,
 	filter,
+	inUseFieldNames,
 	labelValidationError,
 	namespace,
 	onBlur,
@@ -54,9 +54,6 @@ function Configuration({
 		fdsFilterLabelTranslations
 	);
 
-	const inUseFields: (string | undefined)[] = fields.map((item) =>
-		fieldNames?.includes(item.name) ? item.name : undefined
-	);
 	const nameFormElementId = `${namespace}Name`;
 	const selectedFieldFormElementId = `${namespace}SelectedField`;
 
@@ -96,7 +93,7 @@ function Configuration({
 						>
 							{field.label}
 
-							{inUseFields.includes(field.name) && (
+							{inUseFieldNames?.includes(field.name) && (
 								<ClayLabel displayType="info">
 									{Liferay.Language.get('in-use')}
 								</ClayLabel>

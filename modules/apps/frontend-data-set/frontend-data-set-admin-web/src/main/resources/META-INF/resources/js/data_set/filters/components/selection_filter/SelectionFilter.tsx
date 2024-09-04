@@ -33,18 +33,18 @@ function Header() {
 }
 
 function Body({
-	fieldNames,
 	fields,
 	filter,
+	inUseFieldNames,
 	namespace,
 	onCancel,
 	onSave,
 	resolvedRESTSchemas,
 	restApplications,
 }: {
-	fieldNames?: string[];
 	fields: IField[];
 	filter?: IFilter;
+	inUseFieldNames?: string[];
 	namespace: string;
 	onCancel: Function;
 	onSave: Function;
@@ -78,9 +78,7 @@ function Body({
 	const [saveButtonDisabled, setSaveButtonDisabled] =
 		useState<boolean>(false);
 	const [includeMode, setIncludeMode] = useState<string>('include');
-	const inUseFields: (string | undefined)[] = fields.map((item) =>
-		fieldNames?.includes(item.name) ? item.name : undefined
-	);
+
 	const [multiple, setMultiple] = useState(filter?.multiple ?? true);
 	const [picklists, setPicklists] = useState<IPickList[]>();
 	const [preselectedValueInput, setPreselectedValueInput] = useState('');
@@ -155,7 +153,7 @@ function Body({
 		}
 
 		if (selectedField && !filter) {
-			if (inUseFields.includes(selectedField?.name)) {
+			if (inUseFieldNames?.includes(selectedField?.name)) {
 				setFieldInUseValidationError(true);
 
 				isValid = false;
@@ -255,10 +253,10 @@ function Body({
 			<ClayLayout.SheetSection>
 				<Configuration
 					fieldInUseValidationError={fieldInUseValidationError}
-					fieldNames={fieldNames}
 					fieldValidationError={fieldValidationError}
 					fields={fields}
 					filter={filter}
+					inUseFieldNames={inUseFieldNames}
 					labelValidationError={labelValidationError}
 					namespace={namespace}
 					onBlur={() => {
@@ -271,7 +269,7 @@ function Body({
 						setFieldValidationError(!newValue);
 						setFieldInUseValidationError(
 							newValue
-								? inUseFields.includes(newValue.name)
+								? !!inUseFieldNames?.includes(newValue.name)
 								: false
 						);
 					}}

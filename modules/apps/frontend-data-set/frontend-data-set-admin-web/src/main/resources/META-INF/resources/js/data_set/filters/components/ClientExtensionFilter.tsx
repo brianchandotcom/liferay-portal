@@ -23,9 +23,9 @@ function Header() {
 
 interface IBodyProps {
 	fdsFilterClientExtensions: IClientExtensionRenderer[];
-	fieldNames?: string[];
 	fields: IField[];
 	filter?: IFilter;
+	inUseFieldNames?: string[];
 	namespace: string;
 	onCancel: Function;
 	onSave: Function;
@@ -33,9 +33,9 @@ interface IBodyProps {
 
 function Body({
 	fdsFilterClientExtensions,
-	fieldNames,
 	fields,
 	filter,
+	inUseFieldNames,
 	namespace,
 	onCancel,
 	onSave,
@@ -67,9 +67,7 @@ function Body({
 	const [i18nFilterLabels, setI18nFilterLabels] = useState(
 		fdsFilterLabelTranslations
 	);
-	const inUseFields: (string | undefined)[] = fields.map((item) =>
-		fieldNames?.includes(item.name) ? item.name : undefined
-	);
+
 	const [selectedField, setSelectedField] = useState<IField | undefined>(
 		fields.find((item) => item.name === filter?.fieldName)
 	);
@@ -108,7 +106,7 @@ function Body({
 		}
 
 		if (selectedField && !filter) {
-			if (inUseFields.includes(selectedField?.name)) {
+			if (inUseFieldNames?.includes(selectedField?.name)) {
 				setFieldInUseValidationError(true);
 
 				isValid = false;
@@ -149,10 +147,10 @@ function Body({
 			<ClayLayout.SheetSection>
 				<Configuration
 					fieldInUseValidationError={fieldInUseValidationError}
-					fieldNames={fieldNames}
 					fieldValidationError={fieldValidationError}
 					fields={fields}
 					filter={filter}
+					inUseFieldNames={inUseFieldNames}
 					labelValidationError={labelValidationError}
 					namespace={namespace}
 					onBlur={() => {
@@ -165,7 +163,7 @@ function Body({
 						setFieldValidationError(!newValue);
 						setFieldInUseValidationError(
 							newValue
-								? inUseFields.includes(newValue.name)
+								? !!inUseFieldNames?.includes(newValue.name)
 								: false
 						);
 					}}

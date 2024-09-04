@@ -21,16 +21,16 @@ public class ConnectionConfigUtil {
 	}
 
 	public static void setBatchSize(String batchSize) {
-		_batchSize = GetterUtil.get(batchSize, _DEFAULT_BATCH_SIZE);
+		_batchSize = GetterUtil.get(batchSize, _BATCH_SIZE);
 	}
 
 	public static void setFetchSize(String fetchSize) {
-		_fetchSize = GetterUtil.get(fetchSize, _DEFAULT_FETCH_SIZE);
+		_fetchSize = GetterUtil.get(fetchSize, _FETCH_SIZE);
 	}
 
-	private static final int _DEFAULT_BATCH_SIZE = 2500;
+	private static final int _BATCH_SIZE = 2500;
 
-	private static final int _DEFAULT_FETCH_SIZE = 2500;
+	private static final int _FETCH_SIZE = 2500;
 
 	private static int _batchSize;
 	private static int _fetchSize;

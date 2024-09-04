@@ -11,7 +11,6 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -72,8 +71,6 @@ public class AddSegmentsExperienceMVCActionCommandTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
-
-		_company = _companyLocalService.getCompany(_group.getCompanyId());
 
 		_layout = LayoutTestUtil.addTypeContentLayout(_group);
 
@@ -195,7 +192,8 @@ public class AddSegmentsExperienceMVCActionCommandTest {
 	private ThemeDisplay _getThemeDisplay() throws Exception {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
-		themeDisplay.setCompany(_company);
+		themeDisplay.setCompany(
+			_companyLocalService.getCompany(_group.getCompanyId()));
 		themeDisplay.setLayout(_draftLayout);
 		themeDisplay.setLayoutSet(_draftLayout.getLayoutSet());
 		themeDisplay.setLocale(LocaleUtil.getDefault());
@@ -211,8 +209,6 @@ public class AddSegmentsExperienceMVCActionCommandTest {
 
 		return themeDisplay;
 	}
-
-	private Company _company;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;

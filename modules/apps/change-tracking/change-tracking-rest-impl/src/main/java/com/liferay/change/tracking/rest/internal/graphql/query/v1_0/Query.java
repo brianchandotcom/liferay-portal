@@ -221,7 +221,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {ctCollectionCTEntryByModelClassNameByModelClassPkModelClassPK(ctCollectionId: ___, modelClassNameId: ___, modelClassPK: ___){actions, changeType, ctCollectionId, dateCreated, dateModified, hideable, id, modelClassNameId, modelClassPK, ownerId, ownerName, siteId, siteName, status, title, typeName}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {ctCollectionCTEntryByModelClassNameByModelClassPkModelClassPK(ctCollectionId: ___, modelClassNameId: ___, modelClassPK: ___){actions, changeType, ctCollectionId, dateCreated, dateModified, hideable, id, modelClassNameId, modelClassPK, ownerId, ownerName, siteId, siteName, status, statusMessage, title, typeName}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public CTEntry
@@ -243,7 +243,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cTEntry(ctEntryId: ___){actions, changeType, ctCollectionId, dateCreated, dateModified, hideable, id, modelClassNameId, modelClassPK, ownerId, ownerName, siteId, siteName, status, title, typeName}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cTEntry(ctEntryId: ___){actions, changeType, ctCollectionId, dateCreated, dateModified, hideable, id, modelClassNameId, modelClassPK, ownerId, ownerName, siteId, siteName, status, statusMessage, title, typeName}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public CTEntry cTEntry(@GraphQLName("ctEntryId") Long ctEntryId)

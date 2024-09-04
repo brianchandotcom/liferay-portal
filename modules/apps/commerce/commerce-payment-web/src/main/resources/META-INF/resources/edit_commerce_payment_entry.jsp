@@ -16,7 +16,10 @@ String note = (commercePaymentEntry == null) ? StringPool.BLANK : commercePaymen
 int paymentStatus = (commercePaymentEntry == null) ? CommercePaymentEntryConstants.STATUS_PENDING : commercePaymentEntry.getPaymentStatus();
 
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(String.valueOf(renderResponse.createRenderURL()));
+
+String backURL = ParamUtil.getString(request, "backURL", String.valueOf(renderResponse.createRenderURL()));
+
+portletDisplay.setURLBack(backURL);
 %>
 
 <liferay-portlet:renderURL var="editCommercePaymentEntryExternalReferenceCodeURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
@@ -40,6 +43,7 @@ portletDisplay.setURLBack(String.valueOf(renderResponse.createRenderURL()));
 	<aui:form action="<%= editCommercePaymentEntryActionURL %>" cssClass="pt-4" method="post" name="fm">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (commercePaymentEntry == null) ? Constants.ADD : Constants.UPDATE %>" />
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+		<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
 		<aui:input name="externalReferenceCode" type="hidden" value="<%= (commercePaymentEntry == null) ? StringPool.BLANK : commercePaymentEntry.getExternalReferenceCode() %>" />
 		<aui:input name="commercePaymentEntryId" type="hidden" value="<%= commercePaymentEntryDisplayContext.getCommercePaymentEntryId() %>" />
 		<aui:input name="commerceChannelId" type="hidden" value="<%= commercePaymentEntryDisplayContext.getCommerceChannelId() %>" />
@@ -80,7 +84,17 @@ portletDisplay.setURLBack(String.valueOf(renderResponse.createRenderURL()));
 								title='<%= LanguageUtil.get(request, "related-to") %>'
 							>
 								<p class="mb-0"><%= commercePaymentEntryDisplayContext.getRelatedToClassName() %></p>
-								<p class="mb-0">#<%= commercePaymentEntryDisplayContext.getRelatedToClassPK() %></p>
+
+								<c:choose>
+									<c:when test="<%= commercePaymentEntryDisplayContext.isRelatedToOrder() %>">
+										<a href="<%= commercePaymentEntryDisplayContext.getRelatedToLink() %>">
+											<p class="mb-0">#<%= commercePaymentEntryDisplayContext.getRelatedToClassPK() %></p>
+										</a>
+									</c:when>
+									<c:otherwise>
+										<p class="mb-0">#<%= commercePaymentEntryDisplayContext.getRelatedToClassPK() %></p>
+									</c:otherwise>
+								</c:choose>
 							</commerce-ui:info-box>
 						</div>
 

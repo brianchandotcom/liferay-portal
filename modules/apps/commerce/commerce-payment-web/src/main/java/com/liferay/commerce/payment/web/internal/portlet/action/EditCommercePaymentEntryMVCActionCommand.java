@@ -126,6 +126,8 @@ public class EditCommercePaymentEntryMVCActionCommand
 				PortletProvider.Action.EDIT)
 		).setMVCRenderCommandName(
 			"/commerce_payment/edit_commerce_payment_entry"
+		).setBackURL(
+			ParamUtil.getString(actionRequest, "backURL")
 		).setParameter(
 			"commercePaymentEntryId", commercePaymentEntryId
 		).buildString();

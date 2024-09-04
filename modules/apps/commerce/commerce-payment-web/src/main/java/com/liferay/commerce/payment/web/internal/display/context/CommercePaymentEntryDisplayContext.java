@@ -7,6 +7,7 @@ package com.liferay.commerce.payment.web.internal.display.context;
 
 import com.liferay.commerce.constants.CommercePaymentEntryConstants;
 import com.liferay.commerce.frontend.model.HeaderActionModel;
+import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.payment.entry.CommercePaymentEntryRefundType;
 import com.liferay.commerce.payment.entry.CommercePaymentEntryRefundTypeRegistry;
 import com.liferay.commerce.payment.model.CommercePaymentEntry;
@@ -32,6 +33,7 @@ import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.math.BigDecimal;
 
@@ -346,6 +348,24 @@ public class CommercePaymentEntryDisplayContext {
 		return String.valueOf(_relatedCommercePaymentEntry.getClassPK());
 	}
 
+	public String getRelatedToLink() throws PortalException {
+		if (_relatedCommercePaymentEntry == null) {
+			return StringPool.BLANK;
+		}
+
+		return PortletURLBuilder.create(
+			PortletProviderUtil.getPortletURL(
+				_commercePaymentRequestHelper.getRequest(),
+				CommerceOrder.class.getName(), PortletProvider.Action.MANAGE)
+		).setMVCRenderCommandName(
+			"/commerce_order/edit_commerce_order"
+		).setBackURL(
+			_portal.getCurrentURL(_commercePaymentRequestHelper.getRequest())
+		).setParameter(
+			"commerceOrderId", _relatedCommercePaymentEntry.getClassPK()
+		).buildString();
+	}
+
 	public String getTransactionCode() {
 		if (_relatedCommercePaymentEntry == null) {
 			return StringPool.BLANK;
@@ -377,6 +397,16 @@ public class CommercePaymentEntryDisplayContext {
 		}
 
 		return false;
+	}
+
+	public boolean isRelatedToOrder() {
+		if (_relatedCommercePaymentEntry == null) {
+			return false;
+		}
+
+		return StringUtil.equals(
+			_relatedCommercePaymentEntry.getClassName(),
+			CommerceOrder.class.getName());
 	}
 
 	private final CommerceChannelService _commerceChannelService;

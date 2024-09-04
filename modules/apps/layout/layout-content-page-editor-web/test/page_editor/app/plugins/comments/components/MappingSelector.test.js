@@ -29,7 +29,7 @@ import useCache from '../../../../../../src/main/resources/META-INF/resources/pa
 import {pageContentsAtom} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/utils/usePageContents';
 import MappingSelector from '../../../../../../src/main/resources/META-INF/resources/page_editor/common/components/MappingSelector';
 
-const defaultMappingFields = {
+const DEFAULT_MAPPING_FIELDS = {
 	'InfoItemClassNameId-infoItemClassTypeId': [
 		{
 			fields: [
@@ -55,7 +55,7 @@ const defaultMappingFields = {
 	],
 };
 
-const infoItem = {
+const INFO_ITEM = {
 	className: 'InfoItemClassName',
 	classNameId: 'InfoItemClassNameId',
 	classPK: 'infoItemClassPK',
@@ -63,7 +63,7 @@ const infoItem = {
 	title: 'Info Item',
 };
 
-const emptyCollectionConfig = {
+const EMPTY_COLLECTION_CONFIG = {
 	collection: {
 		classNameId: 'collectionClassNameId',
 		classPK: 'collectionClassPK',
@@ -73,6 +73,11 @@ const emptyCollectionConfig = {
 };
 
 const onMappingSelect = jest.fn();
+
+jest.mock('frontend-js-web', () => ({
+	...jest.requireActual('frontend-js-web'),
+	sub: jest.fn((key, arg) => key.replace('x', arg)),
+}));
 
 jest.mock(
 	'../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/index',
@@ -94,8 +99,10 @@ jest.mock(
 );
 
 jest.mock(
-	'../../../../../../src/main/resources/META-INF/resources/page_editor/app/services/serviceFetch',
-	() => jest.fn(() => Promise.resolve())
+	'../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/CollectionItemContext',
+	() => ({
+		useCollectionConfig: jest.fn(),
+	})
 );
 
 jest.mock(
@@ -126,16 +133,9 @@ jest.mock(
 );
 
 jest.mock(
-	'../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/CollectionItemContext',
-	() => ({
-		useCollectionConfig: jest.fn(),
-	})
+	'../../../../../../src/main/resources/META-INF/resources/page_editor/app/services/serviceFetch',
+	() => jest.fn(() => Promise.resolve())
 );
-
-jest.mock('frontend-js-web', () => ({
-	...jest.requireActual('frontend-js-web'),
-	sub: jest.fn((key, arg) => key.replace('x', arg)),
-}));
 
 jest.mock(
 	'../../../../../../src/main/resources/META-INF/resources/page_editor/app/utils/getSelectedField',
@@ -147,24 +147,9 @@ jest.mock(
 	() => jest.fn()
 );
 
-const mockRelationships = () => {
-	const MOCK_CACHE = {
-		'relationships-mappingType-mappingSubtype': [
-			{classNameId: 'relationship-1', label: 'Relationship 1'},
-			{classNameId: 'relationship-2', label: 'Relationship 2'},
-		],
-	};
-
-	useCache.mockImplementation(({key}) => MOCK_CACHE[key.join('-')]);
-};
-
-const switchToDisplayPage = () => {
-	config.layoutType = LAYOUT_TYPES.display;
-};
-
 function renderMappingSelector({
 	mappedItem = {},
-	mappingFields = defaultMappingFields,
+	mappingFields = DEFAULT_MAPPING_FIELDS,
 	onMappingSelect,
 }) {
 	const state = {
@@ -221,246 +206,263 @@ describe('MappingSelector', () => {
 		});
 	});
 
-	afterEach(() => {
-		config.layoutType = LAYOUT_TYPES.content;
-	});
+	describe('Content Pages', () => {
+		it('renders correct selects in content pages', async () => {
+			renderMappingSelector({});
 
-	it('renders correct selects in content pages', async () => {
-		renderMappingSelector({});
-
-		await act(async () => {
-			expect(getByText(document.body, 'item')).toBeInTheDocument();
-			expect(getByText(document.body, 'field')).toBeInTheDocument();
-			expect(
-				queryByText(document.body, 'source')
-			).not.toBeInTheDocument();
-		});
-	});
-
-	it('renders correct selects in display pages', async () => {
-		switchToDisplayPage();
-
-		renderMappingSelector({});
-
-		await act(async () => {
-			expect(getByText(document.body, 'field')).toBeInTheDocument();
-			expect(getByText(document.body, 'source')).toBeInTheDocument();
-		});
-	});
-
-	it('does not render content select when selecting structure as source', async () => {
-		switchToDisplayPage();
-
-		const {getByLabelText, getByText, queryByText} = renderMappingSelector(
-			{}
-		);
-
-		const sourceTypeSelect = getByLabelText('source');
-
-		await act(async () => {
-			fireEvent.change(sourceTypeSelect, {
-				target: {value: 'structure'},
+			await act(async () => {
+				expect(getByText(document.body, 'item')).toBeInTheDocument();
+				expect(getByText(document.body, 'field')).toBeInTheDocument();
+				expect(
+					queryByText(document.body, 'source')
+				).not.toBeInTheDocument();
 			});
 		});
 
-		expect(getByText('field')).toBeInTheDocument();
-		expect(getByText('source')).toBeInTheDocument();
-		expect(queryByText('item')).not.toBeInTheDocument();
-	});
-
-	it('calls onMappingSelect with correct params when mapping to content', async () => {
-		renderMappingSelector({
-			mappedItem: infoItem,
-			onMappingSelect,
-		});
-
-		const fieldSelect = getByLabelText(document.body, 'field');
-
-		await act(async () => {
-			fireEvent.change(fieldSelect, {
-				target: {value: 'text-field-1'},
-			});
-		});
-
-		expect(onMappingSelect).toBeCalledWith({
-			className: 'InfoItemClassName',
-			classNameId: 'InfoItemClassNameId',
-			classPK: 'infoItemClassPK',
-			classTypeId: 'infoItemClassTypeId',
-			fieldId: 'text-field-1',
-			title: 'Info Item',
-		});
-	});
-
-	it('calls onMappingSelect with correct params when mapping to structure', async () => {
-		switchToDisplayPage();
-
-		renderMappingSelector({
-			onMappingSelect,
-		});
-
-		const sourceTypeSelect = getByLabelText(document.body, 'source');
-
-		await act(async () => {
-			fireEvent.change(sourceTypeSelect, {
-				target: {value: 'structure'},
+		it('calls onMappingSelect with correct params when mapping to content', async () => {
+			renderMappingSelector({
+				mappedItem: INFO_ITEM,
+				onMappingSelect,
 			});
 
 			const fieldSelect = getByLabelText(document.body, 'field');
 
-			fireEvent.change(fieldSelect, {
-				target: {value: 'structure-field-1'},
+			await act(async () => {
+				fireEvent.change(fieldSelect, {
+					target: {value: 'text-field-1'},
+				});
+			});
+
+			expect(onMappingSelect).toBeCalledWith({
+				className: 'InfoItemClassName',
+				classNameId: 'InfoItemClassNameId',
+				classPK: 'infoItemClassPK',
+				classTypeId: 'infoItemClassTypeId',
+				fieldId: 'text-field-1',
+				title: 'Info Item',
 			});
 		});
 
-		expect(onMappingSelect).toBeCalledWith({
-			mappedField: 'structure-field-1',
-		});
-	});
-
-	it('calls onMappingSelect with empty object when unmapping', async () => {
-		renderMappingSelector({
-			mappedItem: infoItem,
-			onMappingSelect,
-		});
-
-		const fieldSelect = getByLabelText(document.body, 'field');
-
-		await act(async () => {
-			fireEvent.change(fieldSelect, {
-				target: {value: 'unmapped'},
-			});
-		});
-
-		expect(onMappingSelect).toBeCalledWith({});
-	});
-
-	it('renders correct selects when using Collection context', async () => {
-		const collectionFields = [
-			{key: 'field-1', label: 'Field 1', type: 'text'},
-			{key: 'field-2', label: 'Field 2', type: 'text'},
-		];
-
-		useCollectionConfig.mockImplementation(() => emptyCollectionConfig);
-
-		CollectionService.getCollectionMappingFields.mockImplementation(() =>
-			Promise.resolve({
-				mappingFields: [
-					{
-						fields: collectionFields,
-					},
-				],
-			})
-		);
-
-		await act(async () => {
+		it('calls onMappingSelect with empty object when unmapping', async () => {
 			renderMappingSelector({
+				mappedItem: INFO_ITEM,
+				onMappingSelect,
+			});
+
+			const fieldSelect = getByLabelText(document.body, 'field');
+
+			await act(async () => {
+				fireEvent.change(fieldSelect, {
+					target: {value: 'unmapped'},
+				});
+			});
+
+			expect(onMappingSelect).toBeCalledWith({});
+		});
+
+		it('renders correct selects when using Collection context', async () => {
+			const collectionFields = [
+				{key: 'field-1', label: 'Field 1', type: 'text'},
+				{key: 'field-2', label: 'Field 2', type: 'text'},
+			];
+
+			useCollectionConfig.mockImplementation(
+				() => EMPTY_COLLECTION_CONFIG
+			);
+
+			CollectionService.getCollectionMappingFields.mockImplementation(
+				() =>
+					Promise.resolve({
+						mappingFields: [
+							{
+								fields: collectionFields,
+							},
+						],
+					})
+			);
+
+			await act(async () => {
+				renderMappingSelector({
+					mappingFields: {
+						'collectionClassNameId-collectionClassPK': [
+							{
+								fields: collectionFields,
+							},
+						],
+					},
+				});
+			});
+
+			useCollectionConfig.mockReset();
+
+			CollectionService.getCollectionMappingFields.mockReset();
+
+			expect(
+				queryByText(document.body, 'source')
+			).not.toBeInTheDocument();
+			expect(queryByText(document.body, 'item')).not.toBeInTheDocument();
+
+			expect(getByText(document.body, 'field')).toBeInTheDocument();
+
+			collectionFields.forEach((field) =>
+				expect(
+					getByText(document.body, field.label)
+				).toBeInTheDocument()
+			);
+		});
+
+		it('shows a warning and disables the selector if the fields array is empty', async () => {
+			renderMappingSelector({
+				mappedItem: INFO_ITEM,
 				mappingFields: {
-					'collectionClassNameId-collectionClassPK': [
-						{
-							fields: collectionFields,
-						},
-					],
+					'InfoItemClassNameId-infoItemClassTypeId': [],
 				},
 			});
+
+			const fieldSelect = getByLabelText(document.body, 'field');
+
+			await act(async () => {
+				expect(fieldSelect).toBeInTheDocument();
+				expect(
+					getByText(
+						document.body,
+						'no-fields-are-available-for-text-editable'
+					)
+				).toBeInTheDocument();
+			});
 		});
 
-		useCollectionConfig.mockReset();
+		it('shows type and subtype label when some item is mapped', async () => {
+			renderMappingSelector({
+				mappedItem: {
+					classNameId: 'mappedItemClassNameId',
+					classPK: 'mappedItemClassPK',
+					fieldId: 'mappedFieldId',
+				},
+			});
 
-		CollectionService.getCollectionMappingFields.mockReset();
+			await act(async () => {
+				expect(
+					getByText(document.body, 'Mapped Item Type')
+				).toBeInTheDocument();
 
-		expect(queryByText(document.body, 'source')).not.toBeInTheDocument();
-		expect(queryByText(document.body, 'item')).not.toBeInTheDocument();
+				expect(
+					getByText(document.body, 'Mapped Item Subtype')
+				).toBeInTheDocument();
+			});
+		});
 
-		expect(getByText(document.body, 'field')).toBeInTheDocument();
+		it('shows field type when an item is mapped and a field is selected', async () => {
+			getSelectedField.mockImplementation(() => ({
+				typeLabel: 'text',
+			}));
 
-		collectionFields.forEach((field) =>
-			expect(getByText(document.body, field.label)).toBeInTheDocument()
-		);
+			renderMappingSelector({});
+
+			await act(async () => {
+				expect(
+					screen.getByText('field-type:').parentElement
+				).toHaveTextContent('text');
+			});
+		});
 	});
 
-	it('shows a warning and disables the selector if the fields array is empty', async () => {
-		renderMappingSelector({
-			mappedItem: infoItem,
-			mappingFields: {
-				'InfoItemClassNameId-infoItemClassTypeId': [],
-			},
+	describe('Display Pages', () => {
+		beforeAll(() => {
+			config.layoutType = LAYOUT_TYPES.display;
 		});
 
-		const fieldSelect = getByLabelText(document.body, 'field');
+		afterAll(() => {
+			config.layoutType = LAYOUT_TYPES.content;
+		});
 
-		await act(async () => {
-			expect(fieldSelect).toBeInTheDocument();
+		const mockRelationships = () => {
+			const MOCK_CACHE = {
+				'relationships-mappingType-mappingSubtype': [
+					{classNameId: 'relationship-1', label: 'Relationship 1'},
+					{classNameId: 'relationship-2', label: 'Relationship 2'},
+				],
+			};
+
+			useCache.mockImplementation(({key}) => MOCK_CACHE[key.join('-')]);
+		};
+
+		it('renders correct selects in display pages', async () => {
+			renderMappingSelector({});
+
+			await act(async () => {
+				expect(getByText(document.body, 'field')).toBeInTheDocument();
+				expect(getByText(document.body, 'source')).toBeInTheDocument();
+			});
+		});
+
+		it('does not render content select when selecting structure as source', async () => {
+			const {getByLabelText, getByText, queryByText} =
+				renderMappingSelector({});
+
+			const sourceTypeSelect = getByLabelText('source');
+
+			await act(async () => {
+				fireEvent.change(sourceTypeSelect, {
+					target: {value: 'structure'},
+				});
+			});
+
+			expect(getByText('field')).toBeInTheDocument();
+			expect(getByText('source')).toBeInTheDocument();
+			expect(queryByText('item')).not.toBeInTheDocument();
+		});
+
+		it('calls onMappingSelect with correct params when mapping to structure', async () => {
+			renderMappingSelector({
+				onMappingSelect,
+			});
+
+			const sourceTypeSelect = getByLabelText(document.body, 'source');
+
+			await act(async () => {
+				fireEvent.change(sourceTypeSelect, {
+					target: {value: 'structure'},
+				});
+
+				const fieldSelect = getByLabelText(document.body, 'field');
+
+				fireEvent.change(fieldSelect, {
+					target: {value: 'structure-field-1'},
+				});
+			});
+
+			expect(onMappingSelect).toBeCalledWith({
+				mappedField: 'structure-field-1',
+			});
+		});
+
+		it('allows selecting relationship in display pages', async () => {
+			mockRelationships();
+
+			renderMappingSelector({});
+
+			const sourceSelect = screen.getByLabelText('source');
+
+			userEvent.selectOptions(sourceSelect, 'relationship');
+			fireEvent.change(sourceSelect);
+
 			expect(
-				getByText(
-					document.body,
-					'no-fields-are-available-for-text-editable'
-				)
-			).toBeInTheDocument();
-		});
-	});
-
-	it('shows type and subtype label when some item is mapped', async () => {
-		renderMappingSelector({
-			mappedItem: {
-				classNameId: 'mappedItemClassNameId',
-				classPK: 'mappedItemClassPK',
-				fieldId: 'mappedFieldId',
-			},
+				screen.getByRole('option', {name: 'relationship'}).selected
+			).toBe(true);
 		});
 
-		await act(async () => {
-			expect(
-				getByText(document.body, 'Mapped Item Type')
-			).toBeInTheDocument();
+		it('shows a new select for relationships when selecting that source', async () => {
+			mockRelationships();
 
-			expect(
-				getByText(document.body, 'Mapped Item Subtype')
-			).toBeInTheDocument();
-		});
-	});
+			renderMappingSelector({});
 
-	it('allows selecting relationship in display pages', async () => {
-		switchToDisplayPage();
-		mockRelationships();
+			const sourceSelect = screen.getByLabelText('source');
 
-		renderMappingSelector({});
+			userEvent.selectOptions(sourceSelect, 'relationship');
+			fireEvent.change(sourceSelect);
 
-		const sourceSelect = screen.getByLabelText('source');
-
-		userEvent.selectOptions(sourceSelect, 'relationship');
-		fireEvent.change(sourceSelect);
-
-		expect(
-			screen.getByRole('option', {name: 'relationship'}).selected
-		).toBe(true);
-	});
-
-	it('shows a new select for relationships when selecting that source', async () => {
-		switchToDisplayPage();
-		mockRelationships();
-
-		renderMappingSelector({});
-
-		const sourceSelect = screen.getByLabelText('source');
-
-		userEvent.selectOptions(sourceSelect, 'relationship');
-		fireEvent.change(sourceSelect);
-
-		expect(screen.getByLabelText('relationship')).toBeInTheDocument();
-	});
-
-	it('shows field type when an item is mapped and a field is selected', async () => {
-		getSelectedField.mockImplementation(() => ({
-			typeLabel: 'text',
-		}));
-
-		renderMappingSelector({});
-
-		await act(async () => {
-			expect(
-				screen.getByText('field-type:').parentElement
-			).toHaveTextContent('text');
+			expect(screen.getByLabelText('relationship')).toBeInTheDocument();
 		});
 	});
 });

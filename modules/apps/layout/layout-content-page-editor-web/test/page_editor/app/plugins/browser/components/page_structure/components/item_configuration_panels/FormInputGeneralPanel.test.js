@@ -14,9 +14,6 @@ import {VIEWPORT_SIZES} from '../../../../../../../../../src/main/resources/META
 import {StoreAPIContextProvider} from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
 import {FormInputGeneralPanel} from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/browser/components/page_structure/components/item_configuration_panels/FormInputGeneralPanel';
 
-const FRAGMENT_ENTRY_LINK_ID_1 = '1';
-const FRAGMENT_ENTRY_LINK_ID_2 = '2';
-
 const FORM_ITEM = {
 	children: ['input-item-1', 'input-item-2'],
 	config: {
@@ -27,6 +24,9 @@ const FORM_ITEM = {
 	parentId: '',
 	type: LAYOUT_DATA_ITEM_TYPES.form,
 };
+
+const FRAGMENT_ENTRY_LINK_ID_1 = '1';
+const FRAGMENT_ENTRY_LINK_ID_2 = '2';
 
 const INPUT_ITEM_1 = {
 	children: [],
@@ -83,11 +83,6 @@ let MOCK_CACHE = {
 };
 
 jest.mock(
-	'../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/utils/useCache',
-	() => jest.fn(({key}) => MOCK_CACHE[key.join('-')])
-);
-
-jest.mock(
 	'../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/index',
 	() => ({
 		config: {
@@ -110,6 +105,11 @@ jest.mock(
 			],
 		},
 	})
+);
+
+jest.mock(
+	'../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/utils/useCache',
+	() => jest.fn(({key}) => MOCK_CACHE[key.join('-')])
 );
 
 const mockRelationships = () => {

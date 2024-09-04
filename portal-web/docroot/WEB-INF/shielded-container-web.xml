@@ -85,7 +85,7 @@
 		<servlet-class>com.liferay.portal.servlet.ServletAdapter</servlet-class>
 		<init-param>
 			<param-name>filter</param-name>
-			<param-value>(osgi.http.whiteboard.servlet.name=com.liferay.frontend.theme.favicon.servlet.internal.FaviconServlet)</param-value>
+			<param-value>(servlet.type=favicon)</param-value>
 		</init-param>
 		<async-supported>true</async-supported>
 	</servlet>

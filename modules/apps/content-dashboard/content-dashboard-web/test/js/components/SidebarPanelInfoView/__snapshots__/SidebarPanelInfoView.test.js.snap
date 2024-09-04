@@ -227,7 +227,7 @@ exports[`SidebarPanelInfoView renders 1`] = `
             class="tab-content"
           >
             <div
-              aria-labelledby="tab-1"
+              aria-labelledby="tab-0"
               class="tab-pane active fade show flex-shrink-0"
               role="tabpanel"
               tabindex="0"
@@ -598,6 +598,937 @@ exports[`SidebarPanelInfoView renders 1`] = `
                   </div>
                 </div>
               </div>
+            </div>
+            <div
+              aria-labelledby="tab-1"
+              class="tab-pane fade flex-shrink-0"
+              role="tabpanel"
+              tabindex="0"
+            >
+              <div
+                class="panel c-mb-1 panel-unstyled"
+              >
+                <button
+                  aria-controls="clay-id-3"
+                  aria-expanded="true"
+                  class="panel-header panel-header-link collapse-icon collapse-icon-middle show btn btn-unstyled"
+                  type="button"
+                >
+                  <div>
+                    <div
+                      class="autofit-row"
+                    >
+                      <div
+                        class="align-self-center panel-title autofit-col autofit-col-expand"
+                      >
+                        <span
+                          aria-label="view public-categories"
+                        >
+                          public-categories
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <span
+                    class="collapse-icon-closed"
+                  >
+                    <svg
+                      class="lexicon-icon lexicon-icon-angle-right"
+                      role="presentation"
+                    >
+                      <use
+                        href="#angle-right"
+                      />
+                    </svg>
+                  </span>
+                  <span
+                    class="collapse-icon-open"
+                  >
+                    <svg
+                      class="lexicon-icon lexicon-icon-angle-down"
+                      role="presentation"
+                    >
+                      <use
+                        href="#angle-down"
+                      />
+                    </svg>
+                  </span>
+                </button>
+                <div
+                  aria-labelledby="clay-id-3"
+                  class="panel-collapse"
+                  id="clay-id-3"
+                  role="region"
+                >
+                  <div
+                    class="panel-body"
+                  >
+                    <div>
+                      <div
+                        class="c-mb-2 font-weight-semi-bold h5 vocabulary"
+                      >
+                        AA Another Fake vocabulary (Liferay)
+                      </div>
+                      <p>
+                        <span
+                          class="label c-mr-2 label-lg label-secondary"
+                        >
+                          <span
+                            class="label-item label-item-expand"
+                          >
+                            Another Fake 1
+                          </span>
+                        </span>
+                        <span
+                          class="label c-mr-2 label-lg label-secondary"
+                        >
+                          <span
+                            class="label-item label-item-expand"
+                          >
+                            Another Fake 2
+                          </span>
+                        </span>
+                        <span
+                          class="label c-mr-2 label-lg label-secondary"
+                        >
+                          <span
+                            class="label-item label-item-expand"
+                          >
+                            Another Fake 3
+                          </span>
+                        </span>
+                        <span
+                          class="label c-mr-2 label-lg label-secondary"
+                        >
+                          <span
+                            class="label-item label-item-expand"
+                          >
+                            Another Fake 4
+                          </span>
+                        </span>
+                        <span
+                          class="label c-mr-2 label-lg label-secondary"
+                        >
+                          <span
+                            class="label-item label-item-expand"
+                          >
+                            Another Fake 5
+                          </span>
+                        </span>
+                        <span
+                          class="label c-mr-2 label-lg label-secondary"
+                        >
+                          <span
+                            class="label-item label-item-expand"
+                          >
+                            Another Fake 6
+                          </span>
+                        </span>
+                      </p>
+                      <div
+                        class="c-mb-2 font-weight-semi-bold h5 vocabulary"
+                      >
+                        Clothes (Demo Site)
+                      </div>
+                      <p>
+                        <span
+                          class="label c-mr-2 label-lg label-secondary"
+                        >
+                          <span
+                            class="label-item label-item-expand"
+                          >
+                            Clothe 1
+                          </span>
+                        </span>
+                        <span
+                          class="label c-mr-2 label-lg label-secondary"
+                        >
+                          <span
+                            class="label-item label-item-expand"
+                          >
+                            Clothe 2
+                          </span>
+                        </span>
+                        <span
+                          class="label c-mr-2 label-lg label-secondary"
+                        >
+                          <span
+                            class="label-item label-item-expand"
+                          >
+                            Clothe 3
+                          </span>
+                        </span>
+                        <span
+                          class="label c-mr-2 label-lg label-secondary"
+                        >
+                          <span
+                            class="label-item label-item-expand"
+                          >
+                            Clothe 4
+                          </span>
+                        </span>
+                        <span
+                          class="label c-mr-2 label-lg label-secondary"
+                        >
+                          <span
+                            class="label-item label-item-expand"
+                          >
+                            Clothe 5
+                          </span>
+                        </span>
+                        <span
+                          class="label c-mr-2 label-lg label-secondary"
+                        >
+                          <span
+                            class="label-item label-item-expand"
+                          >
+                            Clothe 6
+                          </span>
+                        </span>
+                        <span
+                          class="label c-mr-2 label-lg label-secondary"
+                        >
+                          <span
+                            class="label-item label-item-expand"
+                          >
+                            Clothe 7
+                          </span>
+                        </span>
+                      </p>
+                      <div
+                        class="c-mb-2 font-weight-semi-bold h5 vocabulary"
+                      >
+                        Developers (Liferay)
+                      </div>
+                      <p>
+                        <span
+                          class="label c-mr-2 label-lg label-secondary"
+                        >
+                          <span
+                            class="label-item label-item-expand"
+                          >
+                            Backend
+                          </span>
+                        </span>
+                        <span
+                          class="label c-mr-2 label-lg label-secondary"
+                        >
+                          <span
+                            class="label-item label-item-expand"
+                          >
+                            Data Scientist
+                          </span>
+                        </span>
+                        <span
+                          class="label c-mr-2 label-lg label-secondary"
+                        >
+                          <span
+                            class="label-item label-item-expand"
+                          >
+                            Design
+                          </span>
+                        </span>
+                        <span
+                          class="label c-mr-2 label-lg label-secondary"
+                        >
+                          <span
+                            class="label-item label-item-expand"
+                          >
+                            Devops
+                          </span>
+                        </span>
+                        <span
+                          class="label c-mr-2 label-lg label-secondary"
+                        >
+                          <span
+                            class="label-item label-item-expand"
+                          >
+                            Frontend
+                          </span>
+                        </span>
+                        <span
+                          class="label c-mr-2 label-lg label-secondary"
+                        >
+                          <span
+                            class="label-item label-item-expand"
+                          >
+                            QA
+                          </span>
+                        </span>
+                      </p>
+                      <div
+                        class="c-mb-2 font-weight-semi-bold h5 vocabulary"
+                      >
+                        Travel (Demo Site)
+                      </div>
+                      <p>
+                        <span
+                          class="label c-mr-2 label-lg label-secondary"
+                        >
+                          <span
+                            class="label-item label-item-expand"
+                          >
+                            Travel 1
+                          </span>
+                        </span>
+                        <span
+                          class="label c-mr-2 label-lg label-secondary"
+                        >
+                          <span
+                            class="label-item label-item-expand"
+                          >
+                            Travel 2
+                          </span>
+                        </span>
+                        <span
+                          class="label c-mr-2 label-lg label-secondary"
+                        >
+                          <span
+                            class="label-item label-item-expand"
+                          >
+                            Travel 3
+                          </span>
+                        </span>
+                        <span
+                          class="label c-mr-2 label-lg label-secondary"
+                        >
+                          <span
+                            class="label-item label-item-expand"
+                          >
+                            Travel 4
+                          </span>
+                        </span>
+                        <span
+                          class="label c-mr-2 label-lg label-secondary"
+                        >
+                          <span
+                            class="label-item label-item-expand"
+                          >
+                            Travel 5
+                          </span>
+                        </span>
+                        <span
+                          class="label c-mr-2 label-lg label-secondary"
+                        >
+                          <span
+                            class="label-item label-item-expand"
+                          >
+                            Travel 6
+                          </span>
+                        </span>
+                        <span
+                          class="label c-mr-2 label-lg label-secondary"
+                        >
+                          <span
+                            class="label-item label-item-expand"
+                          >
+                            Travel 7
+                          </span>
+                        </span>
+                      </p>
+                      <div
+                        class="c-mb-2 font-weight-semi-bold h5 vocabulary"
+                      >
+                        ZZ Fake vocabulary (Liferay)
+                      </div>
+                      <p>
+                        <span
+                          class="label c-mr-2 label-lg label-secondary"
+                        >
+                          <span
+                            class="label-item label-item-expand"
+                          >
+                            Fake 1
+                          </span>
+                        </span>
+                        <span
+                          class="label c-mr-2 label-lg label-secondary"
+                        >
+                          <span
+                            class="label-item label-item-expand"
+                          >
+                            Fake 2
+                          </span>
+                        </span>
+                        <span
+                          class="label c-mr-2 label-lg label-secondary"
+                        >
+                          <span
+                            class="label-item label-item-expand"
+                          >
+                            Fake 3
+                          </span>
+                        </span>
+                        <span
+                          class="label c-mr-2 label-lg label-secondary"
+                        >
+                          <span
+                            class="label-item label-item-expand"
+                          >
+                            Fake 4
+                          </span>
+                        </span>
+                        <span
+                          class="label c-mr-2 label-lg label-secondary"
+                        >
+                          <span
+                            class="label-item label-item-expand"
+                          >
+                            Fake 5
+                          </span>
+                        </span>
+                        <span
+                          class="label c-mr-2 label-lg label-secondary"
+                        >
+                          <span
+                            class="label-item label-item-expand"
+                          >
+                            Fake 6
+                          </span>
+                        </span>
+                      </p>
+                      <div
+                        class="c-mb-2 font-weight-semi-bold h5 vocabulary"
+                      >
+                        AA Another Global Random Vocabulary (Global)
+                      </div>
+                      <p>
+                        <span
+                          class="label c-mr-2 label-lg label-secondary"
+                        >
+                          <span
+                            class="label-item label-item-expand"
+                          >
+                            Another Global Random 1
+                          </span>
+                        </span>
+                        <span
+                          class="label c-mr-2 label-lg label-secondary"
+                        >
+                          <span
+                            class="label-item label-item-expand"
+                          >
+                            Another Global Random 2
+                          </span>
+                        </span>
+                        <span
+                          class="label c-mr-2 label-lg label-secondary"
+                        >
+                          <span
+                            class="label-item label-item-expand"
+                          >
+                            Another Global Random 3
+                          </span>
+                        </span>
+                        <span
+                          class="label c-mr-2 label-lg label-secondary"
+                        >
+                          <span
+                            class="label-item label-item-expand"
+                          >
+                            Another Global Random 4
+                          </span>
+                        </span>
+                        <span
+                          class="label c-mr-2 label-lg label-secondary"
+                        >
+                          <span
+                            class="label-item label-item-expand"
+                          >
+                            Another Global Random 5
+                          </span>
+                        </span>
+                        <span
+                          class="label c-mr-2 label-lg label-secondary"
+                        >
+                          <span
+                            class="label-item label-item-expand"
+                          >
+                            Another Global Random 6
+                          </span>
+                        </span>
+                      </p>
+                      <div
+                        class="c-mb-2 font-weight-semi-bold h5 vocabulary"
+                      >
+                        Foods (Global)
+                      </div>
+                      <p>
+                        <span
+                          class="label c-mr-2 label-lg label-secondary"
+                        >
+                          <span
+                            class="label-item label-item-expand"
+                          >
+                            Chinese
+                          </span>
+                        </span>
+                        <span
+                          class="label c-mr-2 label-lg label-secondary"
+                        >
+                          <span
+                            class="label-item label-item-expand"
+                          >
+                            Indian
+                          </span>
+                        </span>
+                        <span
+                          class="label c-mr-2 label-lg label-secondary"
+                        >
+                          <span
+                            class="label-item label-item-expand"
+                          >
+                            Italian
+                          </span>
+                        </span>
+                        <span
+                          class="label c-mr-2 label-lg label-secondary"
+                        >
+                          <span
+                            class="label-item label-item-expand"
+                          >
+                            Mexican
+                          </span>
+                        </span>
+                        <span
+                          class="label c-mr-2 label-lg label-secondary"
+                        >
+                          <span
+                            class="label-item label-item-expand"
+                          >
+                            Spanish
+                          </span>
+                        </span>
+                        <span
+                          class="label c-mr-2 label-lg label-secondary"
+                        >
+                          <span
+                            class="label-item label-item-expand"
+                          >
+                            Thai
+                          </span>
+                        </span>
+                      </p>
+                      <div
+                        class="c-mb-2 font-weight-semi-bold h5 vocabulary"
+                      >
+                        Topic (Global)
+                      </div>
+                      <p>
+                        <span
+                          class="label c-mr-2 label-lg label-secondary"
+                        >
+                          <span
+                            class="label-item label-item-expand"
+                          >
+                            Topic 1
+                          </span>
+                        </span>
+                        <span
+                          class="label c-mr-2 label-lg label-secondary"
+                        >
+                          <span
+                            class="label-item label-item-expand"
+                          >
+                            Topic 2
+                          </span>
+                        </span>
+                        <span
+                          class="label c-mr-2 label-lg label-secondary"
+                        >
+                          <span
+                            class="label-item label-item-expand"
+                          >
+                            Topic 3
+                          </span>
+                        </span>
+                        <span
+                          class="label c-mr-2 label-lg label-secondary"
+                        >
+                          <span
+                            class="label-item label-item-expand"
+                          >
+                            Topic 4
+                          </span>
+                        </span>
+                        <span
+                          class="label c-mr-2 label-lg label-secondary"
+                        >
+                          <span
+                            class="label-item label-item-expand"
+                          >
+                            Topic 5
+                          </span>
+                        </span>
+                        <span
+                          class="label c-mr-2 label-lg label-secondary"
+                        >
+                          <span
+                            class="label-item label-item-expand"
+                          >
+                            Topic 6
+                          </span>
+                        </span>
+                        <span
+                          class="label c-mr-2 label-lg label-secondary"
+                        >
+                          <span
+                            class="label-item label-item-expand"
+                          >
+                            Topic 7
+                          </span>
+                        </span>
+                      </p>
+                      <div
+                        class="c-mb-2 font-weight-semi-bold h5 vocabulary"
+                      >
+                        ZZ Global Random Vocabulary (Global)
+                      </div>
+                      <p>
+                        <span
+                          class="label c-mr-2 label-lg label-secondary"
+                        >
+                          <span
+                            class="label-item label-item-expand"
+                          >
+                            Global Random 1
+                          </span>
+                        </span>
+                        <span
+                          class="label c-mr-2 label-lg label-secondary"
+                        >
+                          <span
+                            class="label-item label-item-expand"
+                          >
+                            Global Random 2
+                          </span>
+                        </span>
+                        <span
+                          class="label c-mr-2 label-lg label-secondary"
+                        >
+                          <span
+                            class="label-item label-item-expand"
+                          >
+                            Global Random 3
+                          </span>
+                        </span>
+                        <span
+                          class="label c-mr-2 label-lg label-secondary"
+                        >
+                          <span
+                            class="label-item label-item-expand"
+                          >
+                            Global Random 4
+                          </span>
+                        </span>
+                        <span
+                          class="label c-mr-2 label-lg label-secondary"
+                        >
+                          <span
+                            class="label-item label-item-expand"
+                          >
+                            Global Random 5
+                          </span>
+                        </span>
+                        <span
+                          class="label c-mr-2 label-lg label-secondary"
+                        >
+                          <span
+                            class="label-item label-item-expand"
+                          >
+                            Global Random 6
+                          </span>
+                        </span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="panel c-mb-1 panel-unstyled"
+              >
+                <button
+                  aria-controls="clay-id-4"
+                  aria-expanded="true"
+                  class="panel-header panel-header-link collapse-icon collapse-icon-middle show btn btn-unstyled"
+                  type="button"
+                >
+                  <div>
+                    <div
+                      class="autofit-row"
+                    >
+                      <div
+                        class="align-self-center panel-title autofit-col autofit-col-expand"
+                      >
+                        <span
+                          aria-label="view internal-categories"
+                        >
+                          internal-categories
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <span
+                    class="collapse-icon-closed"
+                  >
+                    <svg
+                      class="lexicon-icon lexicon-icon-angle-right"
+                      role="presentation"
+                    >
+                      <use
+                        href="#angle-right"
+                      />
+                    </svg>
+                  </span>
+                  <span
+                    class="collapse-icon-open"
+                  >
+                    <svg
+                      class="lexicon-icon lexicon-icon-angle-down"
+                      role="presentation"
+                    >
+                      <use
+                        href="#angle-down"
+                      />
+                    </svg>
+                  </span>
+                </button>
+                <div
+                  aria-labelledby="clay-id-4"
+                  class="panel-collapse"
+                  id="clay-id-4"
+                  role="region"
+                >
+                  <div
+                    class="panel-body"
+                  >
+                    <div>
+                      <div
+                        class="c-mb-2 font-weight-semi-bold h5 vocabulary"
+                      >
+                        Internal categorization (Liferay)
+                      </div>
+                      <p>
+                        <span
+                          class="label c-mr-2 label-lg label-secondary"
+                        >
+                          <span
+                            class="label-item label-item-expand"
+                          >
+                            Internal 1
+                          </span>
+                        </span>
+                        <span
+                          class="label c-mr-2 label-lg label-secondary"
+                        >
+                          <span
+                            class="label-item label-item-expand"
+                          >
+                            Internal 2
+                          </span>
+                        </span>
+                        <span
+                          class="label c-mr-2 label-lg label-secondary"
+                        >
+                          <span
+                            class="label-item label-item-expand"
+                          >
+                            Internal 3
+                          </span>
+                        </span>
+                        <span
+                          class="label c-mr-2 label-lg label-secondary"
+                        >
+                          <span
+                            class="label-item label-item-expand"
+                          >
+                            Internal 4
+                          </span>
+                        </span>
+                        <span
+                          class="label c-mr-2 label-lg label-secondary"
+                        >
+                          <span
+                            class="label-item label-item-expand"
+                          >
+                            Internal 5
+                          </span>
+                        </span>
+                        <span
+                          class="label c-mr-2 label-lg label-secondary"
+                        >
+                          <span
+                            class="label-item label-item-expand"
+                          >
+                            Internal 6
+                          </span>
+                        </span>
+                      </p>
+                      <div
+                        class="c-mb-2 font-weight-semi-bold h5 vocabulary"
+                      >
+                        Private Stuff (Demo Site)
+                      </div>
+                      <p>
+                        <span
+                          class="label c-mr-2 label-lg label-secondary"
+                        >
+                          <span
+                            class="label-item label-item-expand"
+                          >
+                            Private Stuff 1
+                          </span>
+                        </span>
+                        <span
+                          class="label c-mr-2 label-lg label-secondary"
+                        >
+                          <span
+                            class="label-item label-item-expand"
+                          >
+                            Private Stuff 2
+                          </span>
+                        </span>
+                        <span
+                          class="label c-mr-2 label-lg label-secondary"
+                        >
+                          <span
+                            class="label-item label-item-expand"
+                          >
+                            Private Stuff 3
+                          </span>
+                        </span>
+                        <span
+                          class="label c-mr-2 label-lg label-secondary"
+                        >
+                          <span
+                            class="label-item label-item-expand"
+                          >
+                            Private Stuff 4
+                          </span>
+                        </span>
+                        <span
+                          class="label c-mr-2 label-lg label-secondary"
+                        >
+                          <span
+                            class="label-item label-item-expand"
+                          >
+                            Private Stuff 5
+                          </span>
+                        </span>
+                        <span
+                          class="label c-mr-2 label-lg label-secondary"
+                        >
+                          <span
+                            class="label-item label-item-expand"
+                          >
+                            Private Stuff 6
+                          </span>
+                        </span>
+                        <span
+                          class="label c-mr-2 label-lg label-secondary"
+                        >
+                          <span
+                            class="label-item label-item-expand"
+                          >
+                            Private Stuff 7
+                          </span>
+                        </span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="panel c-mb-1 panel-unstyled"
+              >
+                <button
+                  aria-controls="clay-id-5"
+                  aria-expanded="true"
+                  class="panel-header panel-header-link collapse-icon collapse-icon-middle show btn btn-unstyled"
+                  type="button"
+                >
+                  <div>
+                    <div
+                      class="autofit-row"
+                    >
+                      <div
+                        class="align-self-center panel-title autofit-col autofit-col-expand"
+                      >
+                        <span
+                          aria-label="view tags"
+                        >
+                          tags
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <span
+                    class="collapse-icon-closed"
+                  >
+                    <svg
+                      class="lexicon-icon lexicon-icon-angle-right"
+                      role="presentation"
+                    >
+                      <use
+                        href="#angle-right"
+                      />
+                    </svg>
+                  </span>
+                  <span
+                    class="collapse-icon-open"
+                  >
+                    <svg
+                      class="lexicon-icon lexicon-icon-angle-down"
+                      role="presentation"
+                    >
+                      <use
+                        href="#angle-down"
+                      />
+                    </svg>
+                  </span>
+                </button>
+                <div
+                  aria-labelledby="clay-id-5"
+                  class="panel-collapse"
+                  id="clay-id-5"
+                  role="region"
+                >
+                  <div
+                    class="panel-body"
+                  >
+                    <p>
+                      <span
+                        class="label c-mb-2 c-mr-2 label-lg label-secondary"
+                      >
+                        <span
+                          class="label-item label-item-expand"
+                        >
+                          tag1
+                        </span>
+                      </span>
+                      <span
+                        class="label c-mb-2 c-mr-2 label-lg label-secondary"
+                      >
+                        <span
+                          class="label-item label-item-expand"
+                        >
+                          tag2
+                        </span>
+                      </span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              aria-labelledby="tab-2"
+              class="tab-pane fade flex-shrink-0"
+              role="tabpanel"
+              tabindex="0"
+            >
+              <ul
+                class="list-group sidebar-list-group"
+              />
             </div>
           </div>
         </div>

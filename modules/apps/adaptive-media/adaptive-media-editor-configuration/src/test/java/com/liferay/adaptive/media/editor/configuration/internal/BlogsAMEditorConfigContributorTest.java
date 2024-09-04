@@ -27,9 +27,12 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Predicate;
 
 import javax.portlet.PortletURL;
 
@@ -87,31 +90,39 @@ public class BlogsAMEditorConfigContributorTest {
 
 		Mockito.when(
 			_itemSelector.getItemSelectorCriteria(
-				"blogsItemSelectorCriterionFileEntryItemSelectorReturnType")
+				getItemSelectorCriterionFileEntryItemSelectorReturnTypeName())
 		).thenReturn(
-			_getBlogsItemSelectorCriterionFileEntryItemSelectorReturnType()
+			_getItemSelectorCriterionFileEntryItemSelectorReturnType()
 		);
 
 		JSONObject originalJSONObject = JSONUtil.put(
 			"filebrowserImageBrowseLinkUrl",
-			"blogsItemSelectorCriterionFileEntryItemSelectorReturnType");
+			getItemSelectorCriterionFileEntryItemSelectorReturnTypeName());
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			originalJSONObject.toString());
 
-		BlogsAMEditorConfigContributor blogsAMEditorConfigContributor =
-			new BlogsAMEditorConfigContributor();
+		BaseAMEditorConfigContributor baseAMEditorConfigContributor =
+			getBaseAMEditorConfigContributor();
 
 		ReflectionTestUtil.setFieldValue(
-			blogsAMEditorConfigContributor, "_itemSelector", _itemSelector);
+			baseAMEditorConfigContributor, "itemSelector", _itemSelector);
 
-		blogsAMEditorConfigContributor.populateConfigJSONObject(
+		baseAMEditorConfigContributor.populateConfigJSONObject(
 			jsonObject, _inputEditorTaglibAttributes, _themeDisplay,
 			_requestBackedPortletURLFactory);
 
 		Assert.assertEquals(
 			"data-fileentryid",
 			jsonObject.get("adaptiveMediaFileEntryAttributeName"));
+	}
+
+	protected BaseAMEditorConfigContributor getBaseAMEditorConfigContributor() {
+		return new BlogsAMEditorConfigContributor();
+	}
+
+	protected String getItemSelectorCriterionFileEntryItemSelectorReturnTypeName() {
+		return "blogsItemSelectorCriterionFileEntryItemSelectorReturnType";
 	}
 
 	@Test
@@ -140,25 +151,25 @@ public class BlogsAMEditorConfigContributorTest {
 
 		Mockito.when(
 			_itemSelector.getItemSelectorCriteria(
-				"blogsItemSelectorCriterionFileEntryItemSelectorReturnType")
+				getItemSelectorCriterionFileEntryItemSelectorReturnTypeName())
 		).thenReturn(
-			_getBlogsItemSelectorCriterionFileEntryItemSelectorReturnType()
+			_getItemSelectorCriterionFileEntryItemSelectorReturnType()
 		);
 
 		JSONObject originalJSONObject = JSONUtil.put(
 			"filebrowserImageBrowseLinkUrl",
-			"blogsItemSelectorCriterionFileEntryItemSelectorReturnType");
+			getItemSelectorCriterionFileEntryItemSelectorReturnTypeName());
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			originalJSONObject.toString());
 
-		BlogsAMEditorConfigContributor blogsAMEditorConfigContributor =
-			new BlogsAMEditorConfigContributor();
+		BaseAMEditorConfigContributor baseAMEditorConfigContributor =
+			getBaseAMEditorConfigContributor();
 
 		ReflectionTestUtil.setFieldValue(
-			blogsAMEditorConfigContributor, "_itemSelector", _itemSelector);
+			baseAMEditorConfigContributor, "itemSelector", _itemSelector);
 
-		blogsAMEditorConfigContributor.populateConfigJSONObject(
+		baseAMEditorConfigContributor.populateConfigJSONObject(
 			jsonObject, _inputEditorTaglibAttributes, _themeDisplay,
 			_requestBackedPortletURLFactory);
 
@@ -192,9 +203,9 @@ public class BlogsAMEditorConfigContributorTest {
 
 		Mockito.when(
 			_itemSelector.getItemSelectorCriteria(
-				"blogsItemSelectorCriterionFileEntryItemSelectorReturnType")
+				getItemSelectorCriterionFileEntryItemSelectorReturnTypeName())
 		).thenReturn(
-			_getBlogsItemSelectorCriterionFileEntryItemSelectorReturnType()
+			_getItemSelectorCriterionFileEntryItemSelectorReturnType()
 		);
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
@@ -202,16 +213,16 @@ public class BlogsAMEditorConfigContributorTest {
 				"extraPlugins", "ae_placeholder,ae_selectionregion,ae_uicore"
 			).put(
 				"filebrowserImageBrowseLinkUrl",
-				"blogsItemSelectorCriterionFileEntryItemSelectorReturnType"
+				getItemSelectorCriterionFileEntryItemSelectorReturnTypeName()
 			).toString());
 
-		BlogsAMEditorConfigContributor blogsAMEditorConfigContributor =
-			new BlogsAMEditorConfigContributor();
+		BaseAMEditorConfigContributor baseAMEditorConfigContributor =
+			getBaseAMEditorConfigContributor();
 
 		ReflectionTestUtil.setFieldValue(
-			blogsAMEditorConfigContributor, "_itemSelector", _itemSelector);
+			baseAMEditorConfigContributor, "itemSelector", _itemSelector);
 
-		blogsAMEditorConfigContributor.populateConfigJSONObject(
+		baseAMEditorConfigContributor.populateConfigJSONObject(
 			jsonObject, _inputEditorTaglibAttributes, _themeDisplay,
 			_requestBackedPortletURLFactory);
 
@@ -221,34 +232,41 @@ public class BlogsAMEditorConfigContributorTest {
 	}
 
 	@Test
-	public void testAddAMImageFileEntryItemSelectorReturnType()
-		throws Exception {
+	public void testAddAMImageFileEntryItemSelectorReturnType() {
+		BaseAMEditorConfigContributor baseAMEditorConfigContributor =
+			getBaseAMEditorConfigContributor();
 
-		BlogsAMEditorConfigContributor blogsAMEditorConfigContributor =
-			new BlogsAMEditorConfigContributor();
+		ItemSelectorCriterion itemSelectorCriterion =
+			getItemSelectorCriterion();
 
-		BlogsItemSelectorCriterion blogsItemSelectorCriterion =
-			new BlogsItemSelectorCriterion();
-
-		blogsItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new FileEntryItemSelectorReturnType());
 
-		blogsAMEditorConfigContributor.
+		baseAMEditorConfigContributor.
 			addAMImageFileEntryItemSelectorReturnType(
-				blogsItemSelectorCriterion);
+				itemSelectorCriterion);
 
 		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
-			blogsItemSelectorCriterion.getDesiredItemSelectorReturnTypes();
+			itemSelectorCriterion.getDesiredItemSelectorReturnTypes();
 
 		Assert.assertEquals(
 			desiredItemSelectorReturnTypes.toString(), 2,
 			desiredItemSelectorReturnTypes.size());
-		Assert.assertTrue(
-			desiredItemSelectorReturnTypes.get(0) instanceof
+
+		_assertContains(
+			desiredItemSelectorReturnTypes,
+			itemSelectorReturnType -> itemSelectorReturnType instanceof
 				AMImageFileEntryItemSelectorReturnType);
-		Assert.assertTrue(
-			desiredItemSelectorReturnTypes.get(1) instanceof
-				FileEntryItemSelectorReturnType);
+
+		_assertContains(
+			desiredItemSelectorReturnTypes,
+			itemSelectorReturnType ->
+				itemSelectorReturnType instanceof
+					FileEntryItemSelectorReturnType);
+	}
+
+	protected ItemSelectorCriterion getItemSelectorCriterion() {
+		return new BlogsItemSelectorCriterion();
 	}
 
 	@Test
@@ -256,7 +274,7 @@ public class BlogsAMEditorConfigContributorTest {
 		throws Exception {
 
 		ItemSelectorCriterion[] itemSelectorCriteria = {
-			_initializeItemSelectorCriterion(new BlogsItemSelectorCriterion()),
+			_initializeItemSelectorCriterion(getItemSelectorCriterion()),
 			_initializeItemSelectorCriterion(new FileItemSelectorCriterion()),
 			_initializeItemSelectorCriterion(new ImageItemSelectorCriterion()),
 			_initializeItemSelectorCriterion(new UploadItemSelectorCriterion())
@@ -291,13 +309,13 @@ public class BlogsAMEditorConfigContributorTest {
 			RandomTestUtil.randomString()
 		);
 
-		BlogsAMEditorConfigContributor blogsAMEditorConfigContributor =
-			new BlogsAMEditorConfigContributor();
+		BaseAMEditorConfigContributor baseAMEditorConfigContributor =
+			getBaseAMEditorConfigContributor();
 
 		ReflectionTestUtil.setFieldValue(
-			blogsAMEditorConfigContributor, "_itemSelector", _itemSelector);
+			baseAMEditorConfigContributor, "itemSelector", _itemSelector);
 
-		blogsAMEditorConfigContributor.populateConfigJSONObject(
+		baseAMEditorConfigContributor.populateConfigJSONObject(
 			jsonObject, _inputEditorTaglibAttributes, _themeDisplay,
 			_requestBackedPortletURLFactory);
 
@@ -322,10 +340,10 @@ public class BlogsAMEditorConfigContributorTest {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			originalJSONObject.toString());
 
-		BlogsAMEditorConfigContributor blogsAMEditorConfigContributor =
-			new BlogsAMEditorConfigContributor();
+		BaseAMEditorConfigContributor baseAMEditorConfigContributor =
+			getBaseAMEditorConfigContributor();
 
-		blogsAMEditorConfigContributor.populateConfigJSONObject(
+		baseAMEditorConfigContributor.populateConfigJSONObject(
 			jsonObject, _inputEditorTaglibAttributes, _themeDisplay,
 			_requestBackedPortletURLFactory);
 
@@ -343,10 +361,10 @@ public class BlogsAMEditorConfigContributorTest {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			originalJSONObject.toString());
 
-		BlogsAMEditorConfigContributor blogsAMEditorConfigContributor =
-			new BlogsAMEditorConfigContributor();
+		BaseAMEditorConfigContributor baseAMEditorConfigContributor =
+			getBaseAMEditorConfigContributor();
 
-		blogsAMEditorConfigContributor.populateConfigJSONObject(
+		baseAMEditorConfigContributor.populateConfigJSONObject(
 			jsonObject, _inputEditorTaglibAttributes, _themeDisplay,
 			_requestBackedPortletURLFactory);
 
@@ -366,10 +384,10 @@ public class BlogsAMEditorConfigContributorTest {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			originalJSONObject.toString());
 
-		BlogsAMEditorConfigContributor blogsAMEditorConfigContributor =
-			new BlogsAMEditorConfigContributor();
+		BaseAMEditorConfigContributor baseAMEditorConfigContributor =
+			getBaseAMEditorConfigContributor();
 
-		blogsAMEditorConfigContributor.populateConfigJSONObject(
+		baseAMEditorConfigContributor.populateConfigJSONObject(
 			jsonObject, _inputEditorTaglibAttributes, _themeDisplay,
 			_requestBackedPortletURLFactory);
 
@@ -390,15 +408,37 @@ public class BlogsAMEditorConfigContributorTest {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			originalJSONObject.toString());
 
-		BlogsAMEditorConfigContributor blogsAMEditorConfigContributor =
-			new BlogsAMEditorConfigContributor();
+		BaseAMEditorConfigContributor baseAMEditorConfigContributor =
+			getBaseAMEditorConfigContributor();
 
-		blogsAMEditorConfigContributor.populateConfigJSONObject(
+		baseAMEditorConfigContributor.populateConfigJSONObject(
 			jsonObject, _inputEditorTaglibAttributes, _themeDisplay,
 			_requestBackedPortletURLFactory);
 
 		JSONObject expectedJSONObject = JSONUtil.put(
 			"allowedContent", Boolean.TRUE.toString());
+
+		JSONAssert.assertEquals(
+			expectedJSONObject.toString(), jsonObject.toString(), true);
+	}
+
+	@Test
+	public void testImgIsNotAddedToAllowedContentIfEverythingWasAlreadyAllowed()
+		throws Exception {
+
+		JSONObject originalJSONObject = JSONUtil.put("allowedContent", true);
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			originalJSONObject.toString());
+
+		BaseAMEditorConfigContributor baseAMEditorConfigContributor =
+			getBaseAMEditorConfigContributor();
+
+		baseAMEditorConfigContributor.populateConfigJSONObject(
+			jsonObject, _inputEditorTaglibAttributes, _themeDisplay,
+			_requestBackedPortletURLFactory);
+
+		JSONObject expectedJSONObject = JSONUtil.put("allowedContent", true);
 
 		JSONAssert.assertEquals(
 			expectedJSONObject.toString(), jsonObject.toString(), true);
@@ -414,13 +454,13 @@ public class BlogsAMEditorConfigContributorTest {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			originalJSONObject.toString());
 
-		BlogsAMEditorConfigContributor blogsAMEditorConfigContributor =
-			new BlogsAMEditorConfigContributor();
+		BaseAMEditorConfigContributor baseAMEditorConfigContributor =
+			getBaseAMEditorConfigContributor();
 
 		ReflectionTestUtil.setFieldValue(
-			blogsAMEditorConfigContributor, "_itemSelector", _itemSelector);
+			baseAMEditorConfigContributor, "itemSelector", _itemSelector);
 
-		blogsAMEditorConfigContributor.populateConfigJSONObject(
+		baseAMEditorConfigContributor.populateConfigJSONObject(
 			jsonObject, _inputEditorTaglibAttributes, _themeDisplay,
 			_requestBackedPortletURLFactory);
 
@@ -456,13 +496,13 @@ public class BlogsAMEditorConfigContributorTest {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			originalJSONObject.toString());
 
-		BlogsAMEditorConfigContributor blogsAMEditorConfigContributor =
-			new BlogsAMEditorConfigContributor();
+		BaseAMEditorConfigContributor baseAMEditorConfigContributor =
+			getBaseAMEditorConfigContributor();
 
 		ReflectionTestUtil.setFieldValue(
-			blogsAMEditorConfigContributor, "_itemSelector", _itemSelector);
+			baseAMEditorConfigContributor, "itemSelector", _itemSelector);
 
-		blogsAMEditorConfigContributor.populateConfigJSONObject(
+		baseAMEditorConfigContributor.populateConfigJSONObject(
 			jsonObject, _inputEditorTaglibAttributes, _themeDisplay,
 			_requestBackedPortletURLFactory);
 
@@ -481,7 +521,7 @@ public class BlogsAMEditorConfigContributorTest {
 	}
 
 	@Test
-	public void testItemSelectorURLWithBlogsItemSelectorCriterion()
+	public void testItemSelectorURLWithItemSelectorCriterion()
 		throws Exception {
 
 		PortletURL itemSelectorPortletURL = Mockito.mock(PortletURL.class);
@@ -508,25 +548,25 @@ public class BlogsAMEditorConfigContributorTest {
 
 		Mockito.when(
 			_itemSelector.getItemSelectorCriteria(
-				"blogsItemSelectorCriterionFileEntryItemSelectorReturnType")
+				getItemSelectorCriterionFileEntryItemSelectorReturnTypeName())
 		).thenReturn(
-			_getBlogsItemSelectorCriterionFileEntryItemSelectorReturnType()
+			_getItemSelectorCriterionFileEntryItemSelectorReturnType()
 		);
 
 		JSONObject originalJSONObject = JSONUtil.put(
 			"filebrowserImageBrowseLinkUrl",
-			"blogsItemSelectorCriterionFileEntryItemSelectorReturnType");
+			getItemSelectorCriterionFileEntryItemSelectorReturnTypeName());
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			originalJSONObject.toString());
 
-		BlogsAMEditorConfigContributor blogsAMEditorConfigContributor =
-			new BlogsAMEditorConfigContributor();
+		BaseAMEditorConfigContributor baseAMEditorConfigContributor =
+			getBaseAMEditorConfigContributor();
 
 		ReflectionTestUtil.setFieldValue(
-			blogsAMEditorConfigContributor, "_itemSelector", _itemSelector);
+			baseAMEditorConfigContributor, "itemSelector", _itemSelector);
 
-		blogsAMEditorConfigContributor.populateConfigJSONObject(
+		baseAMEditorConfigContributor.populateConfigJSONObject(
 			jsonObject, _inputEditorTaglibAttributes, _themeDisplay,
 			_requestBackedPortletURLFactory);
 
@@ -578,13 +618,13 @@ public class BlogsAMEditorConfigContributorTest {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			originalJSONObject.toString());
 
-		BlogsAMEditorConfigContributor blogsAMEditorConfigContributor =
-			new BlogsAMEditorConfigContributor();
+		BaseAMEditorConfigContributor baseAMEditorConfigContributor =
+			getBaseAMEditorConfigContributor();
 
 		ReflectionTestUtil.setFieldValue(
-			blogsAMEditorConfigContributor, "_itemSelector", _itemSelector);
+			baseAMEditorConfigContributor, "itemSelector", _itemSelector);
 
-		blogsAMEditorConfigContributor.populateConfigJSONObject(
+		baseAMEditorConfigContributor.populateConfigJSONObject(
 			jsonObject, _inputEditorTaglibAttributes, _themeDisplay,
 			_requestBackedPortletURLFactory);
 
@@ -596,10 +636,24 @@ public class BlogsAMEditorConfigContributorTest {
 		);
 	}
 
+	private <T> void _assertContains(
+		Collection<T> collection, Predicate<T> predicate) {
+
+		boolean match = false;
+
+		for (T t : collection) {
+			if (predicate.test(t)) {
+				match = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(match);
+	}
+
 	private List<ItemSelectorCriterion>
 		_getAudioItemSelectorCriterionFileEntryItemSelectorReturnType() {
-
-		List<ItemSelectorCriterion> itemSelectorCriteria = new ArrayList<>();
 
 		AudioItemSelectorCriterion audioItemSelectorCriterion =
 			new AudioItemSelectorCriterion();
@@ -607,31 +661,23 @@ public class BlogsAMEditorConfigContributorTest {
 		audioItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new FileEntryItemSelectorReturnType());
 
-		itemSelectorCriteria.add(audioItemSelectorCriterion);
-
-		return itemSelectorCriteria;
+		return Collections.singletonList(audioItemSelectorCriterion);
 	}
 
 	private List<ItemSelectorCriterion>
-		_getBlogsItemSelectorCriterionFileEntryItemSelectorReturnType() {
+	_getItemSelectorCriterionFileEntryItemSelectorReturnType() {
 
-		List<ItemSelectorCriterion> itemSelectorCriteria = new ArrayList<>();
+		ItemSelectorCriterion itemSelectorCriterion =
+			getItemSelectorCriterion();
 
-		BlogsItemSelectorCriterion blogsItemSelectorCriterion =
-			new BlogsItemSelectorCriterion();
-
-		blogsItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new FileEntryItemSelectorReturnType());
 
-		itemSelectorCriteria.add(blogsItemSelectorCriterion);
-
-		return itemSelectorCriteria;
+		return Collections.singletonList(itemSelectorCriterion);
 	}
 
 	private List<ItemSelectorCriterion>
 		_getFileItemSelectorCriterionFileEntryItemSelectorReturnType() {
-
-		List<ItemSelectorCriterion> itemSelectorCriteria = new ArrayList<>();
 
 		FileItemSelectorCriterion fileItemSelectorCriterion =
 			new FileItemSelectorCriterion();
@@ -639,9 +685,7 @@ public class BlogsAMEditorConfigContributorTest {
 		fileItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new FileEntryItemSelectorReturnType());
 
-		itemSelectorCriteria.add(fileItemSelectorCriterion);
-
-		return itemSelectorCriteria;
+		return Collections.singletonList(fileItemSelectorCriterion);
 	}
 
 	private ItemSelectorCriterion _initializeItemSelectorCriterion(

@@ -43,19 +43,11 @@ CATALINA_OPTS=&quot;${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${solr.dir}/serv
 "com.liferay.portal.search.elasticsearch.monitoring.web",\
 "com.liferay.portal.search.elasticsearch7.api",\
 "com.liferay.portal.search.elasticsearch7.impl",\
-"com.liferay.portal.search.tuning.rankings.api",\
 "com.liferay.portal.search.tuning.rankings.web",\
 "com.liferay.portal.search.tuning.synonyms.api",\
 "com.liferay.portal.search.tuning.synonyms.web",\
 "com.liferay.portal.search.tuning.web",\
-"com.liferay.portal.search.tuning.web.api",\
-"com.liferay.search.experiences.api",\
-"com.liferay.search.experiences.lang",\
-"com.liferay.search.experiences.rest.api",\
-"com.liferay.search.experiences.rest.client",\
-"com.liferay.search.experiences.rest.impl",\
-"com.liferay.search.experiences.service",\
-"com.liferay.search.experiences.web"\
+"com.liferay.portal.search.tuning.web.api"\
 ]</echo>
 				</else>
 			</if>
@@ -90,19 +82,6 @@ authenticationMode="CERT"</echo>
 
 			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.solr8.configuration.SolrSSLSocketFactoryConfiguration.config">keyStorePath="${solr.dir}/server/etc/solr-ssl.keystore.jks"
 trustStorePath="${solr.dir}/server/etc/solr-ssl.keystore.jks"</echo>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="configure-portal-properties">
-		<sequential>
-			<if>
-				<isset property="env.TEST_PORTAL_RELEASE_VERSION" />
-				<then>
-					<echo append="true" file="${app.server.classes.portal.dir}/portal-ext.properties">
-
-enterprise.product.enterprise.search.enabled=false</echo>
-				</then>
-			</if>
 		</sequential>
 	</macrodef>
 
@@ -376,8 +355,6 @@ schema=schema.xml</echo>
 		<configure-blacklist-osgi-config />
 
 		<configure-liferay-solr-adapter-osgi-configs />
-
-		<configure-portal-properties />
 
 		<get-testcase-property property.name="solr.ssl.authentication.enabled" />
 

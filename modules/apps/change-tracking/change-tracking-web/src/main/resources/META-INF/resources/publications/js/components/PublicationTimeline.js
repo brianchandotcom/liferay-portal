@@ -124,21 +124,23 @@ const PublicationTimeline = ({
 											),
 											sortable: true,
 										},
+										timelineItems[0].ctEntryStatus
+											? {
+													contentRenderer: 'status',
+													fieldName: 'ctEntryStatus',
+													label: Liferay.Language.get(
+														'status'
+													),
+													sortable: true,
+												}
+											: null,
 										{
-											contentRenderer: 'status',
-											fieldName: 'status',
-											label: Liferay.Language.get(
-												'status'
-											),
-											sortable: true,
-										},
-										{
-											fieldName: 'user',
+											fieldName: 'ctEntryUser',
 											label: Liferay.Language.get('user'),
 											sortable: true,
 										},
 										{
-											fieldName: 'changed',
+											fieldName: 'ctEntryChangeType',
 											label: Liferay.Language.get(
 												'changed'
 											),
@@ -146,7 +148,7 @@ const PublicationTimeline = ({
 										},
 										{
 											contentRenderer: 'dateTime',
-											fieldName: 'lastModified',
+											fieldName: 'ctEntryDateModified',
 											label: Liferay.Language.get(
 												'last-modified'
 											),
@@ -185,9 +187,13 @@ const PublicationTimeline = ({
 						<div>
 							<span className="c-pr-2">{timelineItem.name}</span>
 
-							<WorkflowStatusLabel
-								workflowStatus={timelineItem.status.code}
-							/>
+							{timelineItem.ctEntryStatus ? (
+								<WorkflowStatusLabel
+									workflowStatus={
+										timelineItem.ctEntryStatus.code
+									}
+								/>
+							) : null}
 						</div>
 
 						<div className="text-secondary">
@@ -195,7 +201,7 @@ const PublicationTimeline = ({
 						</div>
 
 						<div className="text-secondary">
-							{timelineItem.statusMessage}
+							{timelineItem.ctEntryStatusMessage}
 						</div>
 					</ClayLayout.ContentCol>
 
@@ -285,7 +291,26 @@ const PublicationTimeline = ({
 				setTimelineItems(jsonResponse.items);
 				setLoading(false);
 			});
-	}, [timelineItemsURL]);
+
+		for (const timelineItem in timelineItems) {
+			fetch(
+				`/o/change-tracking-rest/v1.0/ct-collections/${timelineItem.id}/ct-entries/by-model-class-name-id/${timelineClassNameId}/by-model-class-pk/${timelineClassPK}`,
+				{method: 'GET'}
+			)
+				.then((response) => {
+					return response.json();
+				})
+				.then((jsonResponse) => {
+					timelineItem['ctEntryChangeType'] = jsonResponse.changeType;
+					timelineItem['ctEntryDateModified'] =
+						jsonResponse.dateModified;
+					timelineItem['ctEntryStatus'] = jsonResponse.status;
+					timelineItem['ctEntryStatusMessage'] =
+						jsonResponse.statusMessage;
+					timelineItem['ctEntryUser'] = jsonResponse.ownerName;
+				});
+		}
+	}, [timelineClassNameId, timelineClassPK, timelineItems, timelineItemsURL]);
 
 	if (loading) {
 		return (

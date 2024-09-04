@@ -112,7 +112,7 @@ public class OrganizationLocalServiceWhenSearchingOrganizationsTreeTest {
 	}
 
 	@Test
-	public void testShouldIncludeSuborganizationsWithEditSuborganizationsPermission()
+	public void testShouldIncludeSuborganizationsWithUpdateSuborganizationsPermission()
 		throws Exception {
 
 		_role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);

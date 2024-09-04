@@ -245,9 +245,27 @@ public class FormItemManager {
 			layoutStructure.addFormStepContainerStyledLayoutStructureItem(
 				formStyledLayoutStructureItem.getItemId(), -1);
 
-		LayoutStructureItem formStepLayoutStructureItem =
-			layoutStructure.addFormStepLayoutStructureItem(
-				formStepContainerStyledLayoutStructureItem.getItemId(), 0);
+		LayoutStructureItem firstFormStepLayoutStructureItem = null;
+
+		for (int i = 0; i < numberOfSteps; i++) {
+			LayoutStructureItem formStepLayoutStructureItem =
+				layoutStructure.addFormStepLayoutStructureItem(
+					formStepContainerStyledLayoutStructureItem.getItemId(), i);
+
+			if (i == 0) {
+				firstFormStepLayoutStructureItem = formStepLayoutStructureItem;
+			}
+
+			addedFragmentEntryLinks.addAll(
+				_addFormButtons(
+					formStepLayoutStructureItem, formStyledLayoutStructureItem,
+					layout, locale, layoutStructure, numberOfSteps - 1,
+					segmentsExperienceId, i, serviceContext));
+		}
+
+		if (firstFormStepLayoutStructureItem == null) {
+			return Collections.emptyList();
+		}
 
 		for (String childrenItemId : childrenItemIds) {
 			LayoutStructureItem layoutStructureItem =
@@ -280,25 +298,8 @@ public class FormItemManager {
 			}
 
 			layoutStructure.moveLayoutStructureItem(
-				childrenItemId, formStepLayoutStructureItem.getItemId(), -1);
-		}
-
-		addedFragmentEntryLinks.addAll(
-			_addFormButtons(
-				formStepLayoutStructureItem, formStyledLayoutStructureItem,
-				layout, locale, layoutStructure, numberOfSteps,
-				segmentsExperienceId, 0, serviceContext));
-
-		for (int i = 1; i < numberOfSteps; i++) {
-			formStepLayoutStructureItem =
-				layoutStructure.addFormStepLayoutStructureItem(
-					formStepContainerStyledLayoutStructureItem.getItemId(), i);
-
-			addedFragmentEntryLinks.addAll(
-				_addFormButtons(
-					formStepLayoutStructureItem, formStyledLayoutStructureItem,
-					layout, locale, layoutStructure, numberOfSteps,
-					segmentsExperienceId, 1, serviceContext));
+				childrenItemId, firstFormStepLayoutStructureItem.getItemId(),
+				-1);
 		}
 
 		return addedFragmentEntryLinks;

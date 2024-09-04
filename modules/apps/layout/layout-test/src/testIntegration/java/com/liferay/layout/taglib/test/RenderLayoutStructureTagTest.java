@@ -219,10 +219,7 @@ public class RenderLayoutStructureTagTest {
 
 		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
 
-		MockHttpServletResponse mockHttpServletResponse = _renderLayout(
-			layout, _getMockHttpServletRequest(layout));
-
-		String content = mockHttpServletResponse.getContentAsString();
+		String content = _getRenderLayoutHTML(layout);
 
 		Assert.assertTrue(
 			content, StringUtil.contains(content, url, StringPool.BLANK));
@@ -237,10 +234,7 @@ public class RenderLayoutStructureTagTest {
 		Assert.assertTrue(
 			StringUtil.contains(url, "/new-friendly-url", StringPool.BLANK));
 
-		mockHttpServletResponse = _renderLayout(
-			layout, _getMockHttpServletRequest(layout));
-
-		content = mockHttpServletResponse.getContentAsString();
+		content = _getRenderLayoutHTML(layout);
 
 		Assert.assertTrue(
 			content, StringUtil.contains(content, url, StringPool.BLANK));
@@ -803,10 +797,7 @@ public class RenderLayoutStructureTagTest {
 						fetchDefaultSegmentsExperienceId(layout.getPlid()),
 					layoutStructure.toString());
 
-			MockHttpServletResponse mockHttpServletResponse = _renderLayout(
-				layout, _getMockHttpServletRequest(layout));
-
-			String content = mockHttpServletResponse.getContentAsString();
+			String content = _getRenderLayoutHTML(layout);
 
 			Assert.assertTrue(content.contains(url));
 			Assert.assertFalse(content.contains(pathContext + url));
@@ -1042,10 +1033,7 @@ public class RenderLayoutStructureTagTest {
 				"0", layout, _layoutStructureProvider, infoField,
 				readOnlyInfoField);
 
-			MockHttpServletResponse mockHttpServletResponse = _renderLayout(
-				layout, _getMockHttpServletRequest(layout));
-
-			String content = mockHttpServletResponse.getContentAsString();
+			String content = _getRenderLayoutHTML(layout);
 
 			String errorHTML = "<div class=\"alert alert-danger\">";
 
@@ -1466,6 +1454,13 @@ public class RenderLayoutStructureTagTest {
 		themeDisplay.setRequest(mockHttpServletRequest);
 
 		return mockHttpServletRequest;
+	}
+
+	private String _getRenderLayoutHTML(Layout layout) throws Exception {
+		MockHttpServletResponse mockHttpServletResponse = _renderLayout(
+			layout, _getMockHttpServletRequest(layout));
+
+		return mockHttpServletResponse.getContentAsString();
 	}
 
 	private RenderLayoutStructureTag _getRenderLayoutStructureTag(

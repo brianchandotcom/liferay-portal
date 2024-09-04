@@ -117,4 +117,24 @@ CommerceOrder commerceOrder = commerceOrderEditDisplayContext.getCommerceOrder()
 			/>
 		</commerce-ui:panel>
 	</div>
+
+	<div class="col-12">
+		<commerce-ui:panel
+			bodyClasses="p-0"
+			elementClasses="flex-fill"
+			title='<%= LanguageUtil.get(request, "refund-history") %>'
+		>
+			<frontend-data-set:classic-display
+				contextParams='<%=
+					HashMapBuilder.<String, String>put(
+						"commerceOrderId", String.valueOf(commerceOrder.getCommerceOrderId())
+					).build()
+				%>'
+				dataProviderKey="<%= CommerceOrderFDSNames.REFUNDS %>"
+				id="<%= CommerceOrderFDSNames.REFUNDS %>"
+				itemsPerPage="<%= 10 %>"
+				showSearch="<%= false %>"
+			/>
+		</commerce-ui:panel>
+	</div>
 </div>

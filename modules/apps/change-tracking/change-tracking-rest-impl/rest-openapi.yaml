@@ -110,6 +110,11 @@ components:
                 status:
                     $ref: "#/components/schemas/Status"
                     readOnly: true
+                statusMessage:
+                    description:
+                        Info on when a change was made.
+                    readOnly: true
+                    type: string
                 title:
                     readOnly: true
                     type: string

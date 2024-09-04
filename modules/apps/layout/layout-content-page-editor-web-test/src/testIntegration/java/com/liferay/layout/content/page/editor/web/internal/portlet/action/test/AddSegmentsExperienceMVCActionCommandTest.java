@@ -77,6 +77,8 @@ public class AddSegmentsExperienceMVCActionCommandTest {
 
 		_layout = LayoutTestUtil.addTypeContentLayout(_group);
 
+		_draftLayout = _layout.fetchDraftLayout();
+
 		ServiceContextThreadLocal.pushServiceContext(new ServiceContext());
 	}
 
@@ -89,7 +91,7 @@ public class AddSegmentsExperienceMVCActionCommandTest {
 	public void testAddSegmentsExperiment() throws Exception {
 		FragmentEntryLink sourceFragmentEntryLink =
 			ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
-				"{}", _layout,
+				"{}", _draftLayout,
 				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(_layout.getPlid()));
 
@@ -176,10 +178,10 @@ public class AddSegmentsExperienceMVCActionCommandTest {
 			new MockLiferayPortletActionRequest();
 
 		mockLiferayPortletActionRequest.addParameter(
-			"groupId", String.valueOf(_layout.getGroupId()));
+			"groupId", String.valueOf(_group.getGroupId()));
 		mockLiferayPortletActionRequest.addParameter("name", name);
 		mockLiferayPortletActionRequest.addParameter(
-			"plid", String.valueOf(_layout.getPlid()));
+			"plid", String.valueOf(_draftLayout.getPlid()));
 		mockLiferayPortletActionRequest.addParameter(
 			"segmentsEntryId", String.valueOf(segmentsEntryId));
 		mockLiferayPortletActionRequest.setAttribute(
@@ -192,12 +194,12 @@ public class AddSegmentsExperienceMVCActionCommandTest {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
 		themeDisplay.setCompany(_company);
-		themeDisplay.setLayout(_layout);
-		themeDisplay.setLayoutSet(_layout.getLayoutSet());
+		themeDisplay.setLayout(_draftLayout);
+		themeDisplay.setLayoutSet(_draftLayout.getLayoutSet());
 		themeDisplay.setLocale(LocaleUtil.getDefault());
 		themeDisplay.setPermissionChecker(
 			PermissionThreadLocal.getPermissionChecker());
-		themeDisplay.setPlid(_layout.getPlid());
+		themeDisplay.setPlid(_draftLayout.getPlid());
 		themeDisplay.setRequest(new MockHttpServletRequest());
 		themeDisplay.setScopeGroupId(_group.getGroupId());
 		themeDisplay.setServerName("localhost");
@@ -212,6 +214,8 @@ public class AddSegmentsExperienceMVCActionCommandTest {
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
+
+	private Layout _draftLayout;
 
 	@Inject
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;

@@ -45,6 +45,8 @@ import java.io.InputStream;
 import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
 
+import java.net.URI;
+
 import java.nio.file.Files;
 
 import java.sql.Connection;
@@ -117,6 +119,44 @@ public class UpgradeReport {
 		}
 
 		return 0;
+	}
+
+	private List<String> _getFilePaths() {
+		List<String> loadedSources = PropsUtil.loadedSources();
+
+		List<String> sourcePaths = new ArrayList<>();
+
+		for (String loadedSource : loadedSources) {
+			try {
+				URI uri = new URI(loadedSource);
+
+				if (StringUtil.equals("file", uri.getScheme())) {
+					String sourcePath = uri.getPath();
+
+					if ((sourcePath != null) && sourcePath.startsWith("/") &&
+						(sourcePath.length() > 2) &&
+						(sourcePath.charAt(2) == ':')) {
+
+						sourcePath = sourcePath.substring(1);
+					}
+
+					sourcePaths.add(sourcePath);
+				}
+			}
+			catch (Exception exception) {
+				_log.error("Unable to process file path", exception);
+			}
+		}
+
+		List<String> includeAndOverrideEntries = ListUtil.fromArray(
+			PropsUtil.getArray("include-and-override"));
+
+		List<String> filePaths = ListUtil.concat(
+			sourcePaths, includeAndOverrideEntries);
+
+		ListUtil.distinct(filePaths);
+
+		return filePaths;
 	}
 
 	private List<MessagesPrinter> _getMessagesPrinters(
@@ -357,9 +397,7 @@ public class UpgradeReport {
 			() -> {
 				Map<String, Properties> propertiesMap = new LinkedHashMap<>();
 
-				for (String filePath :
-						PropsUtil.getArray("include-and-override")) {
-
+				for (String filePath : _getFilePaths()) {
 					if (!FileUtil.exists(filePath)) {
 						continue;
 					}

@@ -145,6 +145,8 @@ function FilterFormComponent({
 		onSave({...responseJSON, displayType, filterType});
 	};
 
+	const selectedField = filter ? {name: filter.fieldName} : undefined;
+
 	return (
 		<>
 			<ClayLayout.SheetHeader className="mb-4">
@@ -168,6 +170,7 @@ function FilterFormComponent({
 				onSave={(formData: any) => saveFDSFilter(formData)}
 				resolvedRESTSchemas={resolvedRESTSchemas}
 				restApplications={restApplications}
+				selectedField={selectedField}
 			/>
 		</>
 	);

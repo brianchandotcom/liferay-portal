@@ -56,7 +56,7 @@ export class WidgetPagePage {
 	}
 
 	async addPortlet(portletName: string) {
-		await this.addButton.click();
+		await this.openAddPanel();
 
 		await this.widgetsTab.click();
 

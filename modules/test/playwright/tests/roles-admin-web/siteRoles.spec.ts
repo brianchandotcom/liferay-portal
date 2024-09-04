@@ -21,6 +21,7 @@ export const test = mergeTests(
 test('LPD-35066 Site role search should not persist after selecting an option', async ({
 	apiHelpers,
 	editUserPage,
+	page,
 	usersAndOrganizationsPage,
 }) => {
 	const site1 = await apiHelpers.headlessSite.createSite({
@@ -57,14 +58,22 @@ test('LPD-35066 Site role search should not persist after selecting an option', 
 		await usersAndOrganizationsPage.usersTableRowLink(user.alternateName)
 	).click();
 
+	await editUserPage.rolesLink.waitFor({state: 'visible'});
 	await editUserPage.rolesLink.click();
 	await editUserPage.selectSiteRolesButton.click();
 	await editUserPage.selectSiteRolesSearchBar.fill(site1.name);
 	await editUserPage.selectSiteRolesSearchBarButton.click();
-	await editUserPage.selectSitesTable.waitFor({state: 'visible'});
-	await (await editUserPage.selectSitesTableRowButton(site1.name)).click();
 
-	await expect(editUserPage.selectSiteRolesTable).toBeVisible();
+	await page.waitForTimeout(500);
+	await editUserPage.selectSitesTable.waitFor({state: 'visible'});
+
+	await expect(
+		editUserPage.selectSiteRolesFrame.getByText(site1.name)
+	).toBeVisible();
+
+	await (await editUserPage.selectSitesTableRowButton(site1.name)).click();
+	await editUserPage.selectSiteRolesTable.waitFor({state: 'visible'});
+
 	await expect(
 		(await editUserPage.selectSiteRolesTable.getByRole('row').all()).length
 	).toBeGreaterThanOrEqual(1);

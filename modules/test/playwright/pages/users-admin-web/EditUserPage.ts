@@ -241,7 +241,7 @@ export class EditUserPage {
 				true
 			);
 
-			if (sitesTableRow && sitesTableRow.column) {
+			if (sitesTableRow) {
 				return sitesTableRow.row.getByRole('button', {
 					name: 'Choose',
 				});

@@ -869,6 +869,10 @@ public class ObjectRelationshipLocalServiceImpl
 			objectDefinitionId2);
 	}
 
+	public Map<String, ServiceRegistration<?>> getServiceRegistrations() {
+		return _serviceRegistrations;
+	}
+
 	@Override
 	public void registerObjectRelationshipsRelatedInfoCollectionProviders(
 		ObjectDefinition objectDefinition1,
@@ -898,7 +902,7 @@ public class ObjectRelationshipLocalServiceImpl
 						ObjectRelationshipConstants.TYPE_MANY_TO_MANY)) {
 
 					_registerRelatedInfoItemCollectionProvider(
-						objectDefinition1, objectDefinition2,
+						objectDefinition2, objectDefinition1,
 						objectRelationshipLocalService.getObjectRelationship(
 							objectRelationship.getObjectDefinitionId2(),
 							objectRelationship.getName()));

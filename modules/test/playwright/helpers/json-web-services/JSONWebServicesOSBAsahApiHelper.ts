@@ -7,6 +7,35 @@ import {asahConfig} from '../../tests/osb-faro-web/asah.config';
 import {Nanites} from '../../tests/osb-faro-web/utils/nanites';
 import {ApiHelpers} from '../ApiHelpers';
 
+type BlogDaily = {
+	assetId: string;
+	assetTitle: string;
+	canonicalUrl: string;
+	channelId: string;
+	clicks: number;
+	comments: number;
+	eventDate: string;
+	ratings: number;
+	ratingsScore: number;
+	readTime: number;
+	sessions: number;
+	userId: string;
+	views: number;
+};
+
+type DocumentLibraryDaily = {
+	assetId: string;
+	assetTitle: string;
+	canonicalUrl: string;
+	channelId: string;
+	downloads: number;
+	eventDate: string;
+	previews: number;
+	ratings: number;
+	ratingsScore: number;
+	userId: string;
+};
+
 type Event = {
 	applicationId: string;
 	assetId?: string;
@@ -44,6 +73,16 @@ type Identity = {
 	createDate: string;
 	id: string;
 	individualId?: string;
+};
+
+type JournalDaily = {
+	assetId: string;
+	assetTitle: string;
+	canonicalUrl: string;
+	channelId: string;
+	eventDate: string;
+	userId: string;
+	views: number;
 };
 
 type Field = {
@@ -160,6 +199,41 @@ export class JSONWebServicesOSBAsahApiHelper {
 			`${asahConfig.environment.backendUrl}${this.basePath}/pagesdaily`,
 			{
 				data: pagesDaily,
+				failOnStatusCode: true,
+				headers: this.getHeaders(),
+			}
+		);
+	}
+
+	async createBlogsDaily(blogsDaily: BlogDaily[]): Promise<any> {
+		return this.apiHelpers.post(
+			`${asahConfig.environment.backendUrl}${this.basePath}/blogsdaily`,
+			{
+				data: blogsDaily,
+				failOnStatusCode: true,
+				headers: this.getHeaders(),
+			}
+		);
+	}
+
+	async createDocumentLibrariesDaily(
+		documentLibrariesDaily: DocumentLibraryDaily[]
+	): Promise<any> {
+		return this.apiHelpers.post(
+			`${asahConfig.environment.backendUrl}${this.basePath}/documentlibrariesdaily`,
+			{
+				data: documentLibrariesDaily,
+				failOnStatusCode: true,
+				headers: this.getHeaders(),
+			}
+		);
+	}
+
+	async createJournalsDaily(journalsdaily: JournalDaily[]): Promise<any> {
+		return this.apiHelpers.post(
+			`${asahConfig.environment.backendUrl}${this.basePath}/journalsdaily`,
+			{
+				data: journalsdaily,
 				failOnStatusCode: true,
 				headers: this.getHeaders(),
 			}

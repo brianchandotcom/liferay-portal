@@ -182,26 +182,15 @@ public class PortletSharedSearchRequestImpl
 	private List<Portlet> _getInstantiatedPortlets(
 		Layout layout, long companyId, long segmentsExperienceId) {
 
-		List<Portlet> portlets = new ArrayList<>();
+		List<Portlet> instantiatedPortlets = new ArrayList<>();
 
 		List<PortletPreferences> portletPreferencesList =
 			portletPreferencesLocalService.getPortletPreferences(
 				PortletKeys.PREFS_OWNER_ID_DEFAULT,
 				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid());
 
-		List<FragmentEntryLink> fragmentEntryLinks =
-			_fragmentEntryLinkLocalService.
-				getFragmentEntryLinksBySegmentsExperienceId(
-					layout.getGroupId(), segmentsExperienceId,
-					layout.getPlid());
-
-		Set<String> portletIds = new HashSet<>();
-
-		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
-			portletIds.addAll(
-				_portletRegistry.getFragmentEntryLinkPortletIds(
-					fragmentEntryLink));
-		}
+		Set<String> segmentExperiencePortletIds =
+			_getPortletIdsForSegmentExperience(layout, segmentsExperienceId);
 
 		for (PortletPreferences portletPreferences : portletPreferencesList) {
 			Portlet portlet = portletLocalService.getPortletById(
@@ -209,13 +198,34 @@ public class PortletSharedSearchRequestImpl
 
 			if (portlet.isInstanceable() &&
 				Validator.isNotNull(portlet.getInstanceId()) &&
-				portletIds.contains(portletPreferences.getPortletId())) {
+				segmentExperiencePortletIds.contains(
+					portletPreferences.getPortletId())) {
 
-				portlets.add(portlet);
+				instantiatedPortlets.add(portlet);
 			}
 		}
 
-		return portlets;
+		return instantiatedPortlets;
+	}
+
+	private Set<String> _getPortletIdsForSegmentExperience(
+		Layout layout, long segmentsExperienceId) {
+
+		Set<String> portletIdsForSegmentExperience = new HashSet<>();
+
+		List<FragmentEntryLink> fragmentEntryLinks =
+			_fragmentEntryLinkLocalService.
+				getFragmentEntryLinksBySegmentsExperienceId(
+					layout.getGroupId(), segmentsExperienceId,
+					layout.getPlid());
+
+		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
+			portletIdsForSegmentExperience.addAll(
+				_portletRegistry.getFragmentEntryLinkPortletIds(
+					fragmentEntryLink));
+		}
+
+		return portletIdsForSegmentExperience;
 	}
 
 	private List<Portlet> _getPortlets(

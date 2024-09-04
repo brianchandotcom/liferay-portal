@@ -367,6 +367,10 @@ public abstract class BaseWishListResourceImpl
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
 				name = "wishListId"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "accountId"
 			)
 		}
 	)
@@ -383,6 +387,9 @@ public abstract class BaseWishListResourceImpl
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("wishListId")
 			Long wishListId,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("accountId")
+			Long accountId,
 			WishList wishList)
 		throws Exception {
 
@@ -490,7 +497,7 @@ public abstract class BaseWishListResourceImpl
 			wishListUnsafeFunction = wishList -> patchWishList(
 				wishList.getId() != null ? wishList.getId() :
 					_parseLong((String)parameters.get("wishListId")),
-				wishList);
+				_parseLong((String)parameters.get("accountId")), wishList);
 		}
 
 		if (wishListUnsafeFunction == null) {

@@ -340,6 +340,7 @@ public class Mutation {
 	@GraphQLField
 	public WishList patchWishList(
 			@GraphQLName("wishListId") Long wishListId,
+			@GraphQLName("accountId") Long accountId,
 			@GraphQLName("wishList") WishList wishList)
 		throws Exception {
 
@@ -347,7 +348,7 @@ public class Mutation {
 			_wishListResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			wishListResource -> wishListResource.patchWishList(
-				wishListId, wishList));
+				wishListId, accountId, wishList));
 	}
 
 	@GraphQLField(description = "Deletes a wishlist item by wishListItemId.")

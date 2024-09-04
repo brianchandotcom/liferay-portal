@@ -113,6 +113,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -198,6 +199,16 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 
 		// Notification triggered by admin user
 
+		ObjectAction objectAction = _addNotificationTemplateObjectAction(
+			null, ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE,
+			childObjectDefinition);
+
+		String notificationTemplateId =
+			objectAction.getParametersUnicodeProperties(
+			).getProperty(
+				"notificationTemplateId"
+			);
+
 		ObjectEntry objectEntry = objectEntryManager.addObjectEntry(
 			dtoConverterContext, childObjectDefinition,
 			new ObjectEntry() {
@@ -221,9 +232,20 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 
 		String body = StringUtil.merge(termValues.keySet(), StringPool.POUND);
 
-		ObjectAction objectAction = _addNotificationTemplateObjectAction(
-			body, ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE,
-			childObjectDefinition);
+		_getFreeMarkerGeneralVariablesTermValues(
+			termValues, notificationTemplateId);
+
+		String generalVariablesBody = StringUtil.merge(
+			termValues.keySet(), StringPool.POUND);
+
+		NotificationTemplate notificationTemplate =
+			notificationTemplateLocalService.getNotificationTemplate(
+				Long.valueOf(notificationTemplateId));
+
+		notificationTemplate.setBody(generalVariablesBody);
+
+		notificationTemplateLocalService.updateNotificationTemplate(
+			notificationTemplate);
 
 		objectEntryManager.updateObjectEntry(
 			TestPropsValues.getCompanyId(), dtoConverterContext,
@@ -290,6 +312,17 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 					"Basic Information",
 					childObjectDefinition.getLabel(
 						LanguageUtil.getLanguageId(LocaleUtil.US)))));
+
+		body = StringUtil.merge(termValues.keySet(), StringPool.POUND);
+
+		notificationTemplate =
+			notificationTemplateLocalService.getNotificationTemplate(
+				Long.valueOf(notificationTemplateId));
+
+		notificationTemplate.setBody(body);
+
+		notificationTemplateLocalService.updateNotificationTemplate(
+			notificationTemplate);
 
 		_assertNotificationQueueEntryTermValues(
 			new ArrayList<>(termValues.values()), StringPool.POUND);
@@ -1252,6 +1285,30 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 				notificationQueueEntry.getNotificationQueueEntryId()));
 	}
 
+	private Map<String, Object> _getFreeMarkerGeneralVariablesTermValues(
+			Map<String, Object> termValues, String notificationTemplateId)
+		throws Exception {
+
+		termValues.put(
+			"${currentURL}",
+			_portal.getCurrentURL(
+				ObjectActionThreadLocal.getHttpServletRequest()));
+		termValues.put(
+			"${locale}",
+			_portal.getLocale(ObjectActionThreadLocal.getHttpServletRequest()));
+		termValues.put(
+			"${portalURL}",
+			_portal.getPortalURL(
+				ObjectActionThreadLocal.getHttpServletRequest()));
+		termValues.put(
+			"${request}",
+			_portal.getOriginalServletRequest(
+				ObjectActionThreadLocal.getHttpServletRequest()));
+		termValues.put("${template_id}", Long.valueOf(notificationTemplateId));
+
+		return termValues;
+	}
+
 	private Map<String, Object> _getFreeMarkerTermValues(
 			ObjectDefinition objectDefinition, PersistedModel persistedModel,
 			Set<String> termNames)
@@ -1310,11 +1367,6 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 
 			termValues.put(termName, termValue);
 		}
-
-		termValues.put(
-			"${portalURL}",
-			_portal.getPortalURL(
-				ObjectActionThreadLocal.getHttpServletRequest()));
 
 		return termValues;
 	}
@@ -1379,6 +1431,9 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 
 		themeDisplay.setLocale(LocaleUtil.US);
 
+		httpServletRequest.setAttribute(
+			WebKeys.CURRENT_URL,
+			HttpComponentsUtil.getCompleteURL(httpServletRequest));
 		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
 
 		ObjectActionThreadLocal.setHttpServletRequest(httpServletRequest);

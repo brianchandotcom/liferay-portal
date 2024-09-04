@@ -62,6 +62,13 @@
 			<finder-column name="classPK" />
 			<finder-column name="type" />
 		</finder>
+		<finder name="C_C_C_P_T" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+			<finder-column name="paymentStatus" />
+			<finder-column name="type" />
+		</finder>
 	</entity>
 	<entity local-service="true" name="CommercePaymentEntryAudit" remote-service="true">
 

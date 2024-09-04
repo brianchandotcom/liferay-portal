@@ -208,7 +208,6 @@ public class UsersAdminPortletTest {
 			organization.getOrganizationId());
 
 		Assert.assertTrue(organizationUsers.contains(user));
-
 		Assert.assertFalse(organizationUsers.contains(organizationUser));
 
 		List<Organization> parentOrganizations =

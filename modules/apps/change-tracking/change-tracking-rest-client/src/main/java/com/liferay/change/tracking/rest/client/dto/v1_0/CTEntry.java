@@ -320,6 +320,27 @@ public class CTEntry implements Cloneable, Serializable {
 
 	protected Status status;
 
+	public String getStatusMessage() {
+		return statusMessage;
+	}
+
+	public void setStatusMessage(String statusMessage) {
+		this.statusMessage = statusMessage;
+	}
+
+	public void setStatusMessage(
+		UnsafeSupplier<String, Exception> statusMessageUnsafeSupplier) {
+
+		try {
+			statusMessage = statusMessageUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String statusMessage;
+
 	public String getTitle() {
 		return title;
 	}

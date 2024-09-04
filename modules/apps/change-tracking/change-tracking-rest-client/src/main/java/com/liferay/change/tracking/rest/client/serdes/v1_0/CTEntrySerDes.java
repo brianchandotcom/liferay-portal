@@ -211,6 +211,20 @@ public class CTEntrySerDes {
 			sb.append(String.valueOf(ctEntry.getStatus()));
 		}
 
+		if (ctEntry.getStatusMessage() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"statusMessage\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(ctEntry.getStatusMessage()));
+
+			sb.append("\"");
+		}
+
 		if (ctEntry.getTitle() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -365,6 +379,14 @@ public class CTEntrySerDes {
 			map.put("status", String.valueOf(ctEntry.getStatus()));
 		}
 
+		if (ctEntry.getStatusMessage() == null) {
+			map.put("statusMessage", null);
+		}
+		else {
+			map.put(
+				"statusMessage", String.valueOf(ctEntry.getStatusMessage()));
+		}
+
 		if (ctEntry.getTitle() == null) {
 			map.put("title", null);
 		}
@@ -436,6 +458,9 @@ public class CTEntrySerDes {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "status")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "statusMessage")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "title")) {
@@ -530,6 +555,11 @@ public class CTEntrySerDes {
 				if (jsonParserFieldValue != null) {
 					ctEntry.setStatus(
 						StatusSerDes.toDTO((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "statusMessage")) {
+				if (jsonParserFieldValue != null) {
+					ctEntry.setStatusMessage((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "title")) {

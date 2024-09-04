@@ -167,6 +167,7 @@ public abstract class BaseCTEntryResourceTestCase {
 		ctEntry.setChangeType(regex);
 		ctEntry.setOwnerName(regex);
 		ctEntry.setSiteName(regex);
+		ctEntry.setStatusMessage(regex);
 		ctEntry.setTitle(regex);
 		ctEntry.setTypeName(regex);
 
@@ -179,6 +180,7 @@ public abstract class BaseCTEntryResourceTestCase {
 		Assert.assertEquals(regex, ctEntry.getChangeType());
 		Assert.assertEquals(regex, ctEntry.getOwnerName());
 		Assert.assertEquals(regex, ctEntry.getSiteName());
+		Assert.assertEquals(regex, ctEntry.getStatusMessage());
 		Assert.assertEquals(regex, ctEntry.getTitle());
 		Assert.assertEquals(regex, ctEntry.getTypeName());
 	}
@@ -1057,6 +1059,14 @@ public abstract class BaseCTEntryResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("statusMessage", additionalAssertFieldName)) {
+				if (ctEntry.getStatusMessage() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("title", additionalAssertFieldName)) {
 				if (ctEntry.getTitle() == null) {
 					valid = false;
@@ -1320,6 +1330,17 @@ public abstract class BaseCTEntryResourceTestCase {
 			if (Objects.equals("status", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						ctEntry1.getStatus(), ctEntry2.getStatus())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("statusMessage", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						ctEntry1.getStatusMessage(),
+						ctEntry2.getStatusMessage())) {
 
 					return false;
 				}
@@ -1699,6 +1720,52 @@ public abstract class BaseCTEntryResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("statusMessage")) {
+			Object object = ctEntry.getStatusMessage();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("title")) {
 			Object object = ctEntry.getTitle();
 
@@ -1850,6 +1917,8 @@ public abstract class BaseCTEntryResourceTestCase {
 					RandomTestUtil.randomString());
 				siteId = testGroup.getGroupId();
 				siteName = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				statusMessage = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				title = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				typeName = StringUtil.toLowerCase(

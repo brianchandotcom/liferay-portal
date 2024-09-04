@@ -85,10 +85,10 @@ type FilterCollection = Array<IFilter>;
 interface IPropsFilterFormComponent {
 	dataSet: IDataSet | FDSViewType;
 	fdsFilterClientExtensions?: IClientExtensionRenderer[];
+	fieldNames?: string[];
 	fields: IField[];
 	filter?: IFilter | ISelectionFilter;
 	filterType?: EFilterType;
-	inUseFieldNames?: string[];
 	namespace: string;
 	onCancel: Function;
 	onSave: (newFilter: IFilter) => void;
@@ -99,10 +99,10 @@ interface IPropsFilterFormComponent {
 function FilterFormComponent({
 	dataSet,
 	fdsFilterClientExtensions = [],
+	fieldNames,
 	fields,
 	filter,
 	filterType,
-	inUseFieldNames,
 	namespace,
 	onCancel,
 	onSave,
@@ -145,8 +145,6 @@ function FilterFormComponent({
 		onSave({...responseJSON, displayType, filterType});
 	};
 
-	const selectedField = filter ? {name: filter.fieldName} : undefined;
-
 	return (
 		<>
 			<ClayLayout.SheetHeader className="mb-4">
@@ -162,15 +160,15 @@ function FilterFormComponent({
 
 			<Component.Body
 				fdsFilterClientExtensions={fdsFilterClientExtensions}
+				fieldNames={fieldNames}
 				fields={fields}
 				filter={filter}
-				inUseFieldNames={inUseFieldNames}
 				namespace={namespace}
 				onCancel={onCancel}
 				onSave={(formData: any) => saveFDSFilter(formData)}
 				resolvedRESTSchemas={resolvedRESTSchemas}
 				restApplications={restApplications}
-				selectedField={selectedField}
+				selectedField={filter ? {name: filter.fieldName} : undefined}
 			/>
 		</>
 	);
@@ -188,9 +186,10 @@ function Filters({
 	const [activeFilterType, setActiveFilterType] =
 		useState<EFilterType | null>(null);
 	const [activeMode, setActiveMode] = useState(FILTER_MODE.LIST);
-	const [filters, setFilters] = useState<IFilter[]>([]);
 	const [availableFields, setAvailableFields] = useState(fields);
-	const [inUseFieldNames, setInUseFieldNames] = useState<string[]>([]);
+	const [fieldNames, setFieldNames] = useState<string[]>([]);
+	const [filters, setFilters] = useState<IFilter[]>([]);
+
 	useEffect(() => {
 		const getFilters = async () => {
 			const response = await fetch(
@@ -239,9 +238,7 @@ function Filters({
 				})
 			);
 
-			setInUseFieldNames(
-				filtersOrdered.map((filter) => filter.fieldName)
-			);
+			setFieldNames(filtersOrdered.map((filter) => filter.fieldName));
 		};
 
 		getFilters();
@@ -429,7 +426,7 @@ function Filters({
 								);
 								setFilters(filterList);
 
-								setInUseFieldNames(
+								setFieldNames(
 									filterList.map((filter) => filter.fieldName)
 								);
 							})
@@ -496,9 +493,9 @@ function Filters({
 							fdsFilterClientExtensions={
 								fdsFilterClientExtensions
 							}
+							fieldNames={fieldNames}
 							fields={availableFields}
 							filterType={activeFilterType}
-							inUseFieldNames={inUseFieldNames}
 							namespace={namespace}
 							onCancel={() => setActiveMode(FILTER_MODE.LIST)}
 							onSave={(newfilter) => {
@@ -506,8 +503,8 @@ function Filters({
 									newfilter.label = '';
 								}
 								setFilters([...filters, newfilter]);
-								setInUseFieldNames([
-									...inUseFieldNames,
+								setFieldNames([
+									...fieldNames,
 									newfilter.fieldName,
 								]);
 								setActiveMode(FILTER_MODE.LIST);
@@ -527,10 +524,10 @@ function Filters({
 							fdsFilterClientExtensions={
 								fdsFilterClientExtensions
 							}
+							fieldNames={fieldNames}
 							fields={fields}
 							filter={activeFilter}
 							filterType={activeFilter.filterType}
-							inUseFieldNames={inUseFieldNames}
 							namespace={namespace}
 							onCancel={() => setActiveMode(FILTER_MODE.LIST)}
 							onSave={(newfilter) => {

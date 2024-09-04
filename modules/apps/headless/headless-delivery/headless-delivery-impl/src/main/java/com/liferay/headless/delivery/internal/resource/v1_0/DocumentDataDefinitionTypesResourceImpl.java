@@ -14,6 +14,7 @@ import com.liferay.document.library.kernel.service.DLFileEntryTypeService;
 import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.headless.delivery.dto.v1_0.DocumentDataDefinitionType;
 import com.liferay.headless.delivery.resource.v1_0.DocumentDataDefinitionTypesResource;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -47,6 +48,10 @@ public class DocumentDataDefinitionTypesResourceImpl
 				DocumentDataDefinitionType documentDataDefinitionType)
 		throws Exception {
 
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-32247")) {
+			throw new UnsupportedOperationException();
+		}
+
 		return postSiteDocumentDataDefinitionTypes(
 			assetLibraryId, documentDataDefinitionType);
 	}
@@ -55,6 +60,10 @@ public class DocumentDataDefinitionTypesResourceImpl
 	public DocumentDataDefinitionType postSiteDocumentDataDefinitionTypes(
 			Long siteId, DocumentDataDefinitionType documentDataDefinitionType)
 		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-32247")) {
+			throw new UnsupportedOperationException();
+		}
 
 		DataDefinitionResource.Builder dataDefinitionResourceBuilder =
 			_dataDefinitionResourceFactory.create();

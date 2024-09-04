@@ -1185,7 +1185,7 @@ public class ClientExtensionProjectConfigurator
 		else if (Objects.equals(clientExtension.type, "globalJS")) {
 			_validateGlobalJSScriptElementAttributes(clientExtension);
 			_validateTypeSettingsBoolean(
-				clientExtension, "restrictedToAdminPages");
+				clientExtension, "restrictedToAdminLayouts");
 			_validateTypeSettingsValues(
 				clientExtension, "scope", "instance", "page");
 			_validateTypeSettingsValues(

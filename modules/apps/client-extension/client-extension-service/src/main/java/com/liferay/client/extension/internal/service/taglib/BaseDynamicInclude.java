@@ -119,7 +119,7 @@ public abstract class BaseDynamicInclude implements DynamicInclude {
 
 				Layout layout = themeDisplay.getLayout();
 
-				if (globalJSCET.isRestrictedToAdminPages() &&
+				if (globalJSCET.isRestrictedToAdminLayouts() &&
 					!layout.isTypeControlPanel()) {
 
 					continue;
@@ -140,9 +140,8 @@ public abstract class BaseDynamicInclude implements DynamicInclude {
 		}
 		catch (Exception exception) {
 			_log.error(
-				"Unable to inject global JS client extensions for company " +
-					themeDisplay.getCompanyId(),
-				exception);
+				"Unable to inject global JavaScript client extensions for " +
+				"company " + themeDisplay.getCompanyId(), exception);
 		}
 	}
 

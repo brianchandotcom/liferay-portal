@@ -42,7 +42,7 @@ import {config as layoutSetPrototypeWebConfig} from './tests/layout-set-prototyp
 import {config as lockedItemsWebConfig} from './tests/locked-items-web/config';
 import {config as loginWebConfig} from './tests/login-web/config';
 import {config as messageBoardsWebConfig} from './tests/message-boards-web/config';
-import {config as nestedPortletsWebWebConfig} from './tests/nested-portlets-web/config';
+import {config as nestedPortletsWebConfig} from './tests/nested-portlets-web/config';
 import {config as notificationWebConfig} from './tests/notification-web/config';
 import {config as objectWebConfig} from './tests/object-web/config';
 import {config as openIdLinkConfig} from './tests/openid-link/config';
@@ -131,7 +131,7 @@ export default defineConfig({
 		loginWebConfig,
 		marketplaceConfig,
 		messageBoardsWebConfig,
-		nestedPortletsWebWebConfig,
+		nestedPortletsWebConfig,
 		notificationWebConfig,
 		objectWebConfig,
 		openIdLinkConfig,

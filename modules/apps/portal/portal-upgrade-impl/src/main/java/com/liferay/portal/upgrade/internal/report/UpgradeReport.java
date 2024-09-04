@@ -869,20 +869,21 @@ public class UpgradeReport {
 			sb.append(StringPool.NEW_LINE);
 			sb.append(StringPool.NEW_LINE);
 
-			for (Map.Entry<String, Map<String, Object>> sourceEntry :
+			for (Map.Entry<String, Map<String, Object>> configurationEntry :
 					_configurationMap.entrySet()) {
 
-				String source = sourceEntry.getKey();
+				String sourceFileName = configurationEntry.getKey();
 
-				Map<String, Object> properties = sourceEntry.getValue();
+				Map<String, Object> properties = configurationEntry.getValue();
 
-				sb.append(source);
+				sb.append(sourceFileName);
 
 				sb.append(StringPool.NEW_LINE);
 
 				sb.append(
 					ListUtil.toString(
-						Collections.nCopies(source.length(), StringPool.MINUS),
+						Collections.nCopies(
+							sourceFileName.length(), StringPool.MINUS),
 						StringPool.NULL, StringPool.BLANK));
 
 				sb.append(StringPool.NEW_LINE);

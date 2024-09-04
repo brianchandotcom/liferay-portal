@@ -333,7 +333,7 @@ public class UpdateFormItemConfigMVCActionCommand
 
 		if (!Objects.equals(formType, previousFormType)) {
 			if (Objects.equals(formType, "multistep")) {
-				return _formItemManager.changeToMultiStepFormType(
+				return _formItemManager.changeToMultistepFormType(
 					formStyledLayoutStructureItem, layout, layoutStructure,
 					locale, numberOfSteps, segmentsExperienceId,
 					serviceContext);
@@ -346,13 +346,13 @@ public class UpdateFormItemConfigMVCActionCommand
 
 		if (numberOfSteps != previousNumberOfSteps) {
 			if (numberOfSteps > previousNumberOfSteps) {
-				return _formItemManager.addFormStepLayoutStructureItems(
+				return _formItemManager.addFormButtonsFragmentEntryLinks(
 					formStyledLayoutStructureItem, layout, layoutStructure,
 					locale, numberOfSteps, segmentsExperienceId,
 					serviceContext);
 			}
 
-			return _formItemManager.removeFormStepLayoutStructureItems(
+			return _formItemManager.removeFormButtonsFragmentEntryLinks(
 				formStyledLayoutStructureItem, layout, layoutStructure, locale,
 				numberOfSteps, segmentsExperienceId, serviceContext);
 		}

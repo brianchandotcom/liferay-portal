@@ -299,7 +299,10 @@ public class UpgradeReport {
 				}
 
 				return LinkedHashMapBuilder.<String, Object>put(
-					"liferay.home", PropsValues.LIFERAY_HOME
+					"liferay.home",
+					new File(
+						PropsValues.LIFERAY_HOME
+					).getCanonicalPath()
 				).put(
 					"locales", Arrays.toString(PropsValues.LOCALES)
 				).put(
@@ -625,7 +628,9 @@ public class UpgradeReport {
 				dlStoreConfigurationPid);
 
 			if (configurations != null) {
-				return configurations.get("rootDir");
+				return new File(
+					configurations.get("rootDir")
+				).getCanonicalPath();
 			}
 		}
 		catch (IOException ioException) {
@@ -851,7 +856,15 @@ public class UpgradeReport {
 			sb.append("Configuration directory:");
 			sb.append(StringPool.NEW_LINE);
 
-			sb.append(PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR);
+			try {
+				sb.append(
+					new File(
+						PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR
+					).getCanonicalPath());
+			}
+			catch (IOException ioException) {
+				throw new RuntimeException(ioException);
+			}
 
 			sb.append(StringPool.NEW_LINE);
 			sb.append(StringPool.NEW_LINE);

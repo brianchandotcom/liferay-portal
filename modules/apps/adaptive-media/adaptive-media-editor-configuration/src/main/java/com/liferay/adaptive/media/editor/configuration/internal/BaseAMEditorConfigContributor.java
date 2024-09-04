@@ -63,7 +63,7 @@ public abstract class BaseAMEditorConfigContributor
 				itemSelectorCriteria) {
 
 			if (isItemSelectorCriterionOverridable(itemSelectorCriterion)) {
-				_addAMImageFileEntryItemSelectorReturnType(
+				addAMImageFileEntryItemSelectorReturnType(
 					itemSelectorCriterion);
 
 				amImageURLItemSelectorReturnTypeAdded = true;
@@ -107,7 +107,7 @@ public abstract class BaseAMEditorConfigContributor
 	@Reference
 	protected ItemSelector itemSelector;
 
-	private void _addAMImageFileEntryItemSelectorReturnType(
+	protected void addAMImageFileEntryItemSelectorReturnType(
 		ItemSelectorCriterion itemSelectorCriterion) {
 
 		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =

@@ -101,12 +101,6 @@ public abstract class BaseAMEditorConfigContributor
 		);
 	}
 
-	protected abstract boolean isItemSelectorCriterionOverridable(
-		ItemSelectorCriterion itemSelectorCriterion);
-
-	@Reference
-	protected ItemSelector itemSelector;
-
 	protected void addAMImageFileEntryItemSelectorReturnType(
 		ItemSelectorCriterion itemSelectorCriterion) {
 
@@ -116,6 +110,12 @@ public abstract class BaseAMEditorConfigContributor
 		desiredItemSelectorReturnTypes.add(
 			0, new AMImageFileEntryItemSelectorReturnType());
 	}
+
+	protected abstract boolean isItemSelectorCriterionOverridable(
+		ItemSelectorCriterion itemSelectorCriterion);
+
+	@Reference
+	protected ItemSelector itemSelector;
 
 	private static final String _IMG_TAG_RULE = "img[*](*){*};";
 

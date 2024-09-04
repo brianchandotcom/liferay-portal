@@ -175,10 +175,11 @@ public class DBSchemaImporterProcess {
 		throws Exception {
 
 		try (Connection connection = dataSource.getConnection()) {
-			DatabaseMetaData metaData = connection.getMetaData();
+			DatabaseMetaData databaseMetaData = connection.getMetaData();
 
 			if (!StringUtil.startsWith(
-					GetterUtil.getString(metaData.getDatabaseProductName()),
+					GetterUtil.getString(
+						databaseMetaData.getDatabaseProductName()),
 					"MySQL")) {
 
 				return null;

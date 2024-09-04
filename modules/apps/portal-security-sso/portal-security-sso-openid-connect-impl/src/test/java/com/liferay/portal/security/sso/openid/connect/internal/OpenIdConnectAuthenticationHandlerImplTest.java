@@ -52,20 +52,20 @@ public class OpenIdConnectAuthenticationHandlerImplTest {
 	}
 
 	@Test
+	public void testWhenEmailIsInJWTClaimSet() throws Exception {
+		Map<String, Object> claims = _processClaimSet(
+			"{\"sub\":\"subject\",\"name\": \"test_account\",\"email\": " +
+				"\"exists@test.com\"}");
+
+		Assert.assertEquals("exists@test.com", claims.get("email"));
+	}
+
+	@Test
 	public void testWhenEmailIsNotInJWTClaimSet() throws Exception {
 		Map<String, Object> claims = _processClaimSet(
 			"{\"sub\":\"subject\",\"name\": \"test_account\"}");
 
 		Assert.assertNull(claims.get("email"));
-	}
-
-	@Test
-	public void testWhenEmailIsInJWTClaimSet() throws Exception {
-		Map<String, Object> claims = _processClaimSet(
-			"{\"sub\":\"subject\",\"name\": \"test_account\",\"email\": " +
-			"\"exists@test.com\"}");
-
-		Assert.assertEquals("exists@test.com", claims.get("email"));
 	}
 
 	private Map<String, Object> _processClaimSet(String claimSetJSON)

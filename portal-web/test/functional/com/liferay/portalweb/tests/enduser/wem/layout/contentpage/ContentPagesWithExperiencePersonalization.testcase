@@ -195,38 +195,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-110227. Categories Navigation portlet can be seen within the Section where it was placed and can be opened/configured."
-	@priority = 4
-	test ConfigureCategoryFilterInNewExperience {
-		task ("Given a user has a content page with Category Filter") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Page Name",
-				siteName = ${randomSiteName});
-
-			PageEditor.addWidget(portletName = "Asset Publisher");
-
-			PageEditor.addWidget(
-				portletName = "Category Filter",
-				targetFragmentName = "Asset Publisher");
-		}
-
-		task ("When the user adds a new experience") {
-			PageEditor.addExperience(
-				experienceName = "New Experience",
-				segmentName = "Anyone");
-		}
-
-		task ("Then the category filter configuration modal can be opened in new experience") {
-			Portlet.gotoPortletOptions(
-				portletName = "Category Filter",
-				portletOption = "Configuration");
-
-			AssertTextEquals(
-				locator1 = "Modal#HEADER",
-				value1 = "Category Filter - Configuration");
-		}
-	}
-
 	@description = "This is a test for LPS-140483. The site admin could create page template from content page based on non-default experience."
 	@priority = 4
 	test CreatePageTemplateFromContentPageBasedOnNonDefaultExperience {

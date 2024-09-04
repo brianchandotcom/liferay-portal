@@ -52,6 +52,9 @@ public interface CommerceWishListItemService extends BaseService {
 	public void deleteCommerceWishListItem(long commerceWishListItemId)
 		throws PortalException;
 
+	public void deleteCommerceWishListItems(long commerceWishListId)
+		throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceWishListItem getCommerceWishListItem(
 			long commerceWishListItemId)

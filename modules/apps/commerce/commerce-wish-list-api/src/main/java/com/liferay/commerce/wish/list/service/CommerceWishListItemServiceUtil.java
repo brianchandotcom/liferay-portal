@@ -48,6 +48,12 @@ public class CommerceWishListItemServiceUtil {
 		getService().deleteCommerceWishListItem(commerceWishListItemId);
 	}
 
+	public static void deleteCommerceWishListItems(long commerceWishListId)
+		throws PortalException {
+
+		getService().deleteCommerceWishListItems(commerceWishListId);
+	}
+
 	public static CommerceWishListItem getCommerceWishListItem(
 			long commerceWishListItemId)
 		throws PortalException {

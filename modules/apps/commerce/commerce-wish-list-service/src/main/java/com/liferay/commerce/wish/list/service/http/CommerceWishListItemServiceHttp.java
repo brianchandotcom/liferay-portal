@@ -125,6 +125,43 @@ public class CommerceWishListItemServiceHttp {
 		}
 	}
 
+	public static void deleteCommerceWishListItems(
+			HttpPrincipal httpPrincipal, long commerceWishListId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CommerceWishListItemServiceUtil.class,
+				"deleteCommerceWishListItems",
+				_deleteCommerceWishListItemsParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, commerceWishListId);
+
+			try {
+				TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static com.liferay.commerce.wish.list.model.CommerceWishListItem
 			getCommerceWishListItem(
 				HttpPrincipal httpPrincipal, long commerceWishListItemId)
@@ -134,7 +171,7 @@ public class CommerceWishListItemServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CommerceWishListItemServiceUtil.class,
 				"getCommerceWishListItem",
-				_getCommerceWishListItemParameterTypes2);
+				_getCommerceWishListItemParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commerceWishListItemId);
@@ -178,7 +215,7 @@ public class CommerceWishListItemServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CommerceWishListItemServiceUtil.class,
 				"getCommerceWishListItem",
-				_getCommerceWishListItemParameterTypes3);
+				_getCommerceWishListItemParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commerceWishListId, cpInstanceUuid, cProductId);
@@ -221,7 +258,7 @@ public class CommerceWishListItemServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CommerceWishListItemServiceUtil.class,
 				"getCommerceWishListItemByContainsCPInstanceCount",
-				_getCommerceWishListItemByContainsCPInstanceCountParameterTypes4);
+				_getCommerceWishListItemByContainsCPInstanceCountParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commerceWishListId, cpInstanceUuid);
@@ -263,7 +300,7 @@ public class CommerceWishListItemServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CommerceWishListItemServiceUtil.class,
 				"getCommerceWishListItemByContainsCProductCount",
-				_getCommerceWishListItemByContainsCProductCountParameterTypes5);
+				_getCommerceWishListItemByContainsCProductCountParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commerceWishListId, cProductId);
@@ -310,7 +347,7 @@ public class CommerceWishListItemServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CommerceWishListItemServiceUtil.class,
 				"getCommerceWishListItems",
-				_getCommerceWishListItemsParameterTypes6);
+				_getCommerceWishListItemsParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commerceWishListId, start, end, orderByComparator);
@@ -353,7 +390,7 @@ public class CommerceWishListItemServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CommerceWishListItemServiceUtil.class,
 				"getCommerceWishListItemsCount",
-				_getCommerceWishListItemsCountParameterTypes7);
+				_getCommerceWishListItemsCountParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commerceWishListId);
@@ -396,23 +433,25 @@ public class CommerceWishListItemServiceHttp {
 		};
 	private static final Class<?>[] _deleteCommerceWishListItemParameterTypes1 =
 		new Class[] {long.class};
-	private static final Class<?>[] _getCommerceWishListItemParameterTypes2 =
-		new Class[] {long.class};
+	private static final Class<?>[]
+		_deleteCommerceWishListItemsParameterTypes2 = new Class[] {long.class};
 	private static final Class<?>[] _getCommerceWishListItemParameterTypes3 =
+		new Class[] {long.class};
+	private static final Class<?>[] _getCommerceWishListItemParameterTypes4 =
 		new Class[] {long.class, String.class, long.class};
 	private static final Class<?>[]
-		_getCommerceWishListItemByContainsCPInstanceCountParameterTypes4 =
+		_getCommerceWishListItemByContainsCPInstanceCountParameterTypes5 =
 			new Class[] {long.class, String.class};
 	private static final Class<?>[]
-		_getCommerceWishListItemByContainsCProductCountParameterTypes5 =
+		_getCommerceWishListItemByContainsCProductCountParameterTypes6 =
 			new Class[] {long.class, long.class};
-	private static final Class<?>[] _getCommerceWishListItemsParameterTypes6 =
+	private static final Class<?>[] _getCommerceWishListItemsParameterTypes7 =
 		new Class[] {
 			long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[]
-		_getCommerceWishListItemsCountParameterTypes7 = new Class[] {
+		_getCommerceWishListItemsCountParameterTypes8 = new Class[] {
 			long.class
 		};
 

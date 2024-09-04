@@ -50,6 +50,14 @@ public class CommerceWishListItemServiceWrapper
 	}
 
 	@Override
+	public void deleteCommerceWishListItems(long commerceWishListId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_commerceWishListItemService.deleteCommerceWishListItems(
+			commerceWishListId);
+	}
+
+	@Override
 	public com.liferay.commerce.wish.list.model.CommerceWishListItem
 			getCommerceWishListItem(long commerceWishListItemId)
 		throws com.liferay.portal.kernel.exception.PortalException {

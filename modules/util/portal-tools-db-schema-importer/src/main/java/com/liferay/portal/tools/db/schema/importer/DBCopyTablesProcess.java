@@ -457,8 +457,8 @@ public class DBCopyTablesProcess {
 		_setColumn(index, preparedStatement, targetType, valueString);
 	}
 
-	private TreeSet<String> _getViews(DataSource dataSource) throws Exception {
-		TreeSet<String> treeSet = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
+	private Set<String> _getViews(DataSource dataSource) throws Exception {
+		Set<String> views = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
 
 		try (Connection connection = dataSource.getConnection()) {
 			DatabaseMetaData databaseMetaData = connection.getMetaData();
@@ -468,12 +468,12 @@ public class DBCopyTablesProcess {
 					new String[] {"VIEW"})) {
 
 				while (resultSet.next()) {
-					treeSet.add(resultSet.getString("TABLE_NAME"));
+					views.add(resultSet.getString("TABLE_NAME"));
 				}
 			}
 		}
 
-		return treeSet;
+		return views;
 	}
 
 	private void _loadColumnNamesMap(

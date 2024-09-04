@@ -1231,6 +1231,7 @@ com.liferay.portal.util.PortalSimpleDateFormat=com.liferay.portal.kernel.util.Po
 com.liferay.portal.util.PortalUtil=com.liferay.portal.kernel.util.PortalUtil
 com.liferay.portal.util.PortletCategoryKeys=com.liferay.portal.kernel.util.PortletCategoryKeys
 com.liferay.portal.util.PortletKeys=com.liferay.portal.kernel.util.PortletKeys
+com.liferay.portal.util.PrefsPropsUtil=com.liferay.portal.kernel.util.PrefsPropsUtil
 com.liferay.portal.util.SessionClicks=com.liferay.portal.kernel.util.SessionClicks
 com.liferay.portal.util.SessionClicks_IW=com.liferay.portal.kernel.util.SessionClicks_IW
 com.liferay.portal.util.SubscriptionSender=com.liferay.portal.kernel.util.SubscriptionSender

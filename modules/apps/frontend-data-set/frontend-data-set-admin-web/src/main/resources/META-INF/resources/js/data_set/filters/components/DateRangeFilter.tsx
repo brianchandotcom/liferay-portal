@@ -19,18 +19,18 @@ function Header() {
 }
 
 interface IBodyProps {
-	fieldNames?: string[];
 	fields: IField[];
 	filter?: IFilter;
+	inUseFieldNames?: string[];
 	namespace: string;
 	onCancel: Function;
 	onSave: Function;
 }
 
 function Body({
-	fieldNames,
 	fields,
 	filter,
+	inUseFieldNames,
 	namespace,
 	onCancel,
 	onSave,
@@ -46,10 +46,6 @@ function Body({
 	const fdsFilterLabelTranslations = filter?.label_i18n ?? {};
 	const [i18nFilterLabels, setI18nFilterLabels] = useState(
 		fdsFilterLabelTranslations
-	);
-
-	const inUseFields: (string | undefined)[] = fields.map((item) =>
-		fieldNames?.includes(item.name) ? item.name : undefined
 	);
 
 	const [selectedField, setSelectedField] = useState<IField | undefined>(
@@ -117,7 +113,7 @@ function Body({
 		}
 
 		if (selectedField && !filter) {
-			if (inUseFields.includes(selectedField?.name)) {
+			if (inUseFieldNames?.includes(selectedField?.name)) {
 				setFieldInUseValidationError(true);
 
 				isValid = false;
@@ -167,10 +163,10 @@ function Body({
 			<ClayLayout.SheetSection>
 				<Configuration
 					fieldInUseValidationError={fieldInUseValidationError}
-					fieldNames={fieldNames}
 					fieldValidationError={fieldValidationError}
 					fields={fields}
 					filter={filter}
+					inUseFieldNames={inUseFieldNames}
 					labelValidationError={labelValidationError}
 					namespace={namespace}
 					onBlur={() => {
@@ -183,7 +179,7 @@ function Body({
 						setFieldValidationError(!newValue);
 						setFieldInUseValidationError(
 							newValue
-								? inUseFields.includes(newValue.name)
+								? !!inUseFieldNames?.includes(newValue.name)
 								: false
 						);
 					}}

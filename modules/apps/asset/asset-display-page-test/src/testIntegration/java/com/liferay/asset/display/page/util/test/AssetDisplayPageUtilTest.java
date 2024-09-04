@@ -7,7 +7,7 @@ package com.liferay.asset.display.page.util.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
-import com.liferay.asset.display.page.test.util.AssetDisplayPageEntryTestUtil;
+import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
 import com.liferay.asset.display.page.util.AssetDisplayPageUtil;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
@@ -56,7 +56,7 @@ public class AssetDisplayPageUtilTest {
 	}
 
 	@Test
-	public void testViewNondefaultDisplayPageTemplate() throws Exception {
+	public void testViewNondefaultAssetDisplayPageEntry() throws Exception {
 		JournalArticle journalArticle = JournalTestUtil.addArticle(
 			_group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
@@ -73,10 +73,12 @@ public class AssetDisplayPageUtilTest {
 			defaultLayoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
 			true);
 
-		_assertAssetDisplayPageEntry(
-			journalArticle.getResourcePrimKey(),
-			journalArticle.getDDMStructureId(),
-			defaultLayoutPageTemplateEntry.getLayoutPageTemplateEntryId());
+		Assert.assertEquals(
+			defaultLayoutPageTemplateEntry,
+			AssetDisplayPageUtil.getAssetDisplayPageLayoutPageTemplateEntry(
+				_group.getGroupId(), _classNameId,
+				journalArticle.getResourcePrimKey(),
+				journalArticle.getDDMStructureId()));
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
@@ -86,34 +88,30 @@ public class AssetDisplayPageUtilTest {
 				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0, false, 0,
 				0, 0, WorkflowConstants.STATUS_APPROVED, new ServiceContext());
 
-		_assertAssetDisplayPageEntry(
-			journalArticle.getResourcePrimKey(),
-			journalArticle.getDDMStructureId(),
-			defaultLayoutPageTemplateEntry.getLayoutPageTemplateEntryId());
+		Assert.assertEquals(
+			defaultLayoutPageTemplateEntry,
+			AssetDisplayPageUtil.getAssetDisplayPageLayoutPageTemplateEntry(
+				_group.getGroupId(), _classNameId,
+				journalArticle.getResourcePrimKey(),
+				journalArticle.getDDMStructureId()));
 
-		AssetDisplayPageEntryTestUtil.addAssetDisplayPageEntry(
-			_group.getGroupId(), _classNameId,
+		_assetDisplayPageEntryLocalService.addAssetDisplayPageEntry(
+			TestPropsValues.getUserId(), _group.getGroupId(), _classNameId,
 			journalArticle.getResourcePrimKey(),
 			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
-			AssetDisplayPageConstants.TYPE_SPECIFIC);
-
-		_assertAssetDisplayPageEntry(
-			journalArticle.getResourcePrimKey(),
-			journalArticle.getDDMStructureId(),
-			layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
-	}
-
-	private void _assertAssetDisplayPageEntry(
-		long classPK, long classTypeId, long layoutPageTemplateEntryId) {
-
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			AssetDisplayPageUtil.getAssetDisplayPageLayoutPageTemplateEntry(
-				_group.getGroupId(), _classNameId, classPK, classTypeId);
+			AssetDisplayPageConstants.TYPE_SPECIFIC, new ServiceContext());
 
 		Assert.assertEquals(
-			layoutPageTemplateEntryId,
-			layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
+			layoutPageTemplateEntry,
+			AssetDisplayPageUtil.getAssetDisplayPageLayoutPageTemplateEntry(
+				_group.getGroupId(), _classNameId,
+				journalArticle.getResourcePrimKey(),
+				journalArticle.getDDMStructureId()));
 	}
+
+	@Inject
+	private AssetDisplayPageEntryLocalService
+		_assetDisplayPageEntryLocalService;
 
 	private long _classNameId;
 

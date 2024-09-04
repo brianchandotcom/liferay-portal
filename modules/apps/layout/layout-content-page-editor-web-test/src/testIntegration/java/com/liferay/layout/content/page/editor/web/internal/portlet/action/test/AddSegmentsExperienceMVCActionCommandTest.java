@@ -6,19 +6,32 @@
 package com.liferay.layout.content.page.editor.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.categories.navigation.constants.AssetCategoriesNavigationPortletKeys;
+import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.test.util.AssetTestUtil;
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
+import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.layout.provider.LayoutStructureProvider;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.layout.util.LayoutServiceContextHelper;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -30,10 +43,12 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
@@ -41,9 +56,11 @@ import com.liferay.segments.service.SegmentsExperienceService;
 import com.liferay.segments.test.util.SegmentsTestUtil;
 
 import java.util.Iterator;
+import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletPreferences;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -84,6 +101,56 @@ public class AddSegmentsExperienceMVCActionCommandTest {
 	@After
 	public void tearDown() {
 		ServiceContextThreadLocal.popServiceContext();
+	}
+
+	@Test
+	@TestInfo("LPS-110227")
+	public void testAddSegmentsExperienceWithPortlet() throws Exception {
+		AssetVocabulary assetVocabulary1 = AssetTestUtil.addVocabulary(
+			_group.getGroupId());
+
+		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
+			_group.getGroupId(),
+			_portal.getClassNameId(AssetCategory.class.getName()), 0,
+			_portal.getClassNameId(PortletDisplayTemplate.class.getName()),
+			TemplateConstants.LANG_TYPE_FTL,
+			"<#if entries?has_content><#list entries as curVocabulary>" +
+				"${curVocabulary.name}</#list></#if>",
+			_portal.getSiteDefaultLocale(_group));
+
+		String displayStyle =
+			PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
+				ddmTemplate.getTemplateKey();
+
+		_setUpPortletPreferences(
+			assetVocabulary1.getVocabularyId(), _addPortletToLayout(),
+			displayStyle);
+
+		AssetVocabulary assetVocabulary2 = AssetTestUtil.addVocabulary(
+			_group.getGroupId());
+
+		long segmentsExperienceId = _addSegmentsExperience();
+
+		_setUpPortletPreferences(
+			assetVocabulary2.getVocabularyId(),
+			_getPortletId(segmentsExperienceId), displayStyle);
+
+		ContentLayoutTestUtil.publishLayout(_draftLayout, _layout);
+
+		String html = ContentLayoutTestUtil.getRenderLayoutHTML(
+			_layout, _layoutServiceContextHelper, _layoutStructureProvider,
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				_layout.getPlid()));
+
+		Assert.assertTrue(html.contains(assetVocabulary1.getName()));
+		Assert.assertFalse(html.contains(assetVocabulary2.getName()));
+
+		html = ContentLayoutTestUtil.getRenderLayoutHTML(
+			_layout, _layoutServiceContextHelper, _layoutStructureProvider,
+			segmentsExperienceId);
+
+		Assert.assertFalse(html.contains(assetVocabulary1.getName()));
+		Assert.assertTrue(html.contains(assetVocabulary2.getName()));
 	}
 
 	@Test
@@ -130,6 +197,35 @@ public class AddSegmentsExperienceMVCActionCommandTest {
 		_assertFragmentEntryLinks(
 			responseJSONObject.getJSONObject("fragmentEntryLinks"),
 			sourceFragmentEntryLink);
+	}
+
+	private String _addPortletToLayout() throws Exception {
+		JSONObject processAddPortletJSONObject =
+			ContentLayoutTestUtil.addPortletToLayout(
+				_draftLayout,
+				AssetCategoriesNavigationPortletKeys.
+					ASSET_CATEGORIES_NAVIGATION);
+
+		JSONObject fragmentEntryLinkJSONObject =
+			processAddPortletJSONObject.getJSONObject("fragmentEntryLink");
+
+		JSONObject editableValuesJSONObject =
+			fragmentEntryLinkJSONObject.getJSONObject("editableValues");
+
+		return PortletIdCodec.encode(
+			editableValuesJSONObject.getString("portletId"),
+			editableValuesJSONObject.getString("instanceId"));
+	}
+
+	private long _addSegmentsExperience() throws Exception {
+		JSONObject responseJSONObject = _addSegmentsExperience(
+			RandomTestUtil.randomString(), 0);
+
+		JSONObject segmentsExperienceJSONObject =
+			responseJSONObject.getJSONObject("segmentsExperience");
+
+		return GetterUtil.getLong(
+			segmentsExperienceJSONObject.get("segmentsExperienceId"));
 	}
 
 	private JSONObject _addSegmentsExperience(String name, long segmentsEntryId)
@@ -189,6 +285,29 @@ public class AddSegmentsExperienceMVCActionCommandTest {
 		return mockLiferayPortletActionRequest;
 	}
 
+	private String _getPortletId(long segmentsExperienceId) throws Exception {
+		List<FragmentEntryLink> fragmentEntryLinks =
+			_fragmentEntryLinkLocalService.
+				getFragmentEntryLinksBySegmentsExperienceId(
+					_group.getGroupId(), segmentsExperienceId,
+					_draftLayout.getPlid());
+
+		Assert.assertEquals(
+			fragmentEntryLinks.toString(), 1, fragmentEntryLinks.size());
+
+		FragmentEntryLink fragmentEntryLink = fragmentEntryLinks.get(0);
+
+		Assert.assertEquals(
+			FragmentConstants.TYPE_PORTLET, fragmentEntryLink.getType());
+
+		JSONObject editableValuesJSONObject = _jsonFactory.createJSONObject(
+			fragmentEntryLink.getEditableValues());
+
+		return PortletIdCodec.encode(
+			editableValuesJSONObject.getString("portletId"),
+			editableValuesJSONObject.getString("instanceId"));
+	}
+
 	private ThemeDisplay _getThemeDisplay() throws Exception {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
@@ -210,6 +329,26 @@ public class AddSegmentsExperienceMVCActionCommandTest {
 		return themeDisplay;
 	}
 
+	private void _setUpPortletPreferences(
+			long assetVocabularyId, String portletId, String displayStyle)
+		throws Exception {
+
+		PortletPreferences portletPreferences =
+			LayoutTestUtil.getPortletPreferences(_draftLayout, portletId);
+
+		portletPreferences.setValue(
+			"allAssetVocabularies", Boolean.FALSE.toString());
+		portletPreferences.setValue(
+			"assetVocabularyIds", String.valueOf(assetVocabularyId));
+		portletPreferences.setValue("displayStyle", displayStyle);
+		portletPreferences.setValue(
+			"displayStyleGroupId", String.valueOf(_group.getGroupId()));
+		portletPreferences.setValue(
+			"displayStyleGroupKey", _group.getGroupKey());
+
+		portletPreferences.store();
+	}
+
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
@@ -221,15 +360,27 @@ public class AddSegmentsExperienceMVCActionCommandTest {
 	@DeleteAfterTestRun
 	private Group _group;
 
+	@Inject
+	private JSONFactory _jsonFactory;
+
 	private Layout _layout;
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;
 
+	@Inject
+	private LayoutServiceContextHelper _layoutServiceContextHelper;
+
+	@Inject
+	private LayoutStructureProvider _layoutStructureProvider;
+
 	@Inject(
 		filter = "mvc.command.name=/layout_content_page_editor/add_segments_experience"
 	)
 	private MVCActionCommand _mvcActionCommand;
+
+	@Inject
+	private Portal _portal;
 
 	@Inject
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;

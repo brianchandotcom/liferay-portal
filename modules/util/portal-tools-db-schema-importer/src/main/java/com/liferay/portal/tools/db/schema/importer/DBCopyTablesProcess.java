@@ -190,7 +190,7 @@ public class DBCopyTablesProcess {
 			ResultSet resultSet, int sourceType, int targetType)
 		throws Exception {
 
-		String alternativeValue = null;
+		String valueString = null;
 
 		if ((sourceType == Types.BIGINT) || (sourceType == Types.NUMERIC)) {
 			if ((targetType == Types.BINARY) ||
@@ -218,7 +218,7 @@ public class DBCopyTablesProcess {
 				return;
 			}
 
-			alternativeValue = String.valueOf(value);
+			valueString = String.valueOf(value);
 		}
 		else if ((sourceType == Types.BINARY) ||
 				 (sourceType == Types.LONGVARBINARY)) {
@@ -245,7 +245,7 @@ public class DBCopyTablesProcess {
 				return;
 			}
 
-			alternativeValue = new String(value);
+			valueString = new String(value);
 		}
 		else if (sourceType == Types.BLOB) {
 			Blob value = resultSet.getBlob(columnName);
@@ -269,7 +269,7 @@ public class DBCopyTablesProcess {
 				return;
 			}
 
-			alternativeValue = new String(
+			valueString = new String(
 				value.getBytes(1, (int)value.length()));
 		}
 		else if ((sourceType == Types.BOOLEAN) || (sourceType == Types.BIT)) {
@@ -287,7 +287,7 @@ public class DBCopyTablesProcess {
 				return;
 			}
 
-			alternativeValue = value ? "1" : "0";
+			valueString = value ? "1" : "0";
 		}
 		else if (sourceType == Types.CLOB) {
 			Clob value = resultSet.getClob(columnName);
@@ -320,7 +320,7 @@ public class DBCopyTablesProcess {
 					sb.append(line);
 				}
 
-				alternativeValue = sb.toString();
+				valueString = sb.toString();
 			}
 		}
 		else if (sourceType == Types.DECIMAL) {
@@ -338,7 +338,7 @@ public class DBCopyTablesProcess {
 				return;
 			}
 
-			alternativeValue = value.toString();
+			valueString = value.toString();
 		}
 		else if (sourceType == Types.DOUBLE) {
 			double value = resultSet.getDouble(columnName);
@@ -355,7 +355,7 @@ public class DBCopyTablesProcess {
 				return;
 			}
 
-			alternativeValue = String.valueOf(value);
+			valueString = String.valueOf(value);
 		}
 		else if (sourceType == Types.FLOAT) {
 			float value = resultSet.getFloat(columnName);
@@ -372,7 +372,7 @@ public class DBCopyTablesProcess {
 				return;
 			}
 
-			alternativeValue = String.valueOf(value);
+			valueString = String.valueOf(value);
 		}
 		else if (sourceType == Types.INTEGER) {
 			int value = resultSet.getInt(columnName);
@@ -389,7 +389,7 @@ public class DBCopyTablesProcess {
 				return;
 			}
 
-			alternativeValue = String.valueOf(value);
+			valueString = String.valueOf(value);
 		}
 		else if ((sourceType == Types.LONGVARCHAR) ||
 				 (sourceType == Types.VARCHAR)) {
@@ -410,7 +410,7 @@ public class DBCopyTablesProcess {
 				return;
 			}
 
-			alternativeValue = value;
+			valueString = value;
 		}
 		else if (sourceType == Types.TIMESTAMP) {
 			Timestamp value = resultSet.getTimestamp(columnName);
@@ -427,7 +427,7 @@ public class DBCopyTablesProcess {
 				return;
 			}
 
-			alternativeValue = value.toString();
+			valueString = value.toString();
 		}
 		else if ((sourceType == Types.TINYINT) ||
 				 (sourceType == Types.SMALLINT)) {
@@ -448,13 +448,13 @@ public class DBCopyTablesProcess {
 				return;
 			}
 
-			alternativeValue = String.valueOf(value);
+			valueString = String.valueOf(value);
 		}
 		else {
 			throw new PortalException("Invalid type " + sourceType);
 		}
 
-		_setColumn(index, preparedStatement, targetType, alternativeValue);
+		_setColumn(index, preparedStatement, targetType, valueString);
 	}
 
 	private TreeSet<String> _getViews(DataSource dataSource) throws Exception {

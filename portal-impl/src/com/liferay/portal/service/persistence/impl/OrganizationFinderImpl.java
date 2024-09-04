@@ -983,10 +983,10 @@ public class OrganizationFinderImpl
 								 organization.getOrganizationId()) ||
 							 OrganizationPermissionUtil.contains(
 								 permissionChecker, organization,
-								 ActionKeys.UPDATE_SUBORGANIZATIONS) ||
+								 ActionKeys.MANAGE_SUBORGANIZATIONS) ||
 							 OrganizationPermissionUtil.contains(
 								 permissionChecker, organization,
-								 ActionKeys.MANAGE_SUBORGANIZATIONS))) {
+								 ActionKeys.UPDATE_SUBORGANIZATIONS))) {
 
 							sb.append(StringPool.PERCENT);
 						}

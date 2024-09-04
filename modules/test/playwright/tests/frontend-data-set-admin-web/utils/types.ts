@@ -58,6 +58,7 @@ export interface IItemAction extends IBaseAction {
 	confirmationMessageType?: string;
 	errorStatusMessage?: string;
 	method?: EAsyncActionMethod;
+	requestBody?: string;
 	successStatusMessage?: string;
 	type: EItemActionType;
 }

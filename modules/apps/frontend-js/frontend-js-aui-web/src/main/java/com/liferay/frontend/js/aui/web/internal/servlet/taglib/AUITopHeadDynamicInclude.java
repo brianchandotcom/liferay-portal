@@ -37,11 +37,9 @@ public class AUITopHeadDynamicInclude extends BaseDynamicInclude {
 		PrintWriter printWriter = httpServletResponse.getWriter();
 
 		printWriter.print("<link data-senna-track=\"permanent\"");
-
 		printWriter.print(
 			ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
 				httpServletRequest));
-
 		printWriter.print(" rel=\"stylesheet\" href=\"");
 
 		AbsolutePortalURLBuilder absolutePortalURLBuilder =
@@ -50,7 +48,7 @@ public class AUITopHeadDynamicInclude extends BaseDynamicInclude {
 
 		printWriter.print(
 			absolutePortalURLBuilder.forBundleStylesheet(
-				_bundleContext.getBundle(), "alloy-ui.css"
+				_bundleContext.getBundle(), "alloy_ui.css"
 			).build());
 
 		printWriter.print("\">\n");

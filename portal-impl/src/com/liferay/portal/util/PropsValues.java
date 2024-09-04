@@ -2481,6 +2481,14 @@ public class PropsValues {
 	public static final boolean USERS_UPDATE_LAST_LOGIN = GetterUtil.getBoolean(
 		PropsUtil.get(PropsKeys.USERS_UPDATE_LAST_LOGIN));
 
+	public static final long USERS_UPDATE_LAST_LOGIN_BATCH_INTERVAL =
+		GetterUtil.getLong(
+			PropsUtil.get(PropsKeys.USERS_UPDATE_LAST_LOGIN_BATCH_INTERVAL));
+
+	public static final int USERS_UPDATE_LAST_LOGIN_BATCH_SIZE =
+		GetterUtil.getInteger(
+			PropsUtil.get(PropsKeys.USERS_UPDATE_LAST_LOGIN_BATCH_SIZE));
+
 	public static final boolean VALUE_OBJECT_ENTITY_CACHE_ENABLED =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.VALUE_OBJECT_ENTITY_CACHE_ENABLED));

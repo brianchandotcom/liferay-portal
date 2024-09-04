@@ -8,6 +8,7 @@ package com.liferay.change.tracking.rest.internal.dto.v1_0.converter;
 import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.rest.dto.v1_0.CTEntry;
 import com.liferay.change.tracking.rest.dto.v1_0.Status;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.BaseModel;
@@ -16,13 +17,17 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
+import java.util.Date;
 import java.util.Locale;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -63,6 +68,57 @@ public class CTEntryDTOConverter
 
 		return MapUtil.getWithFallbackKey(
 			field.getLocalizedValues(), locale, LocaleUtil.getDefault());
+	}
+
+	private String _getStatusMessage(
+		com.liferay.change.tracking.model.CTEntry ctEntry,
+		HttpServletRequest httpServletRequest) {
+
+		if (ctEntry == null) {
+			return StringPool.BLANK;
+		}
+
+		StringBundler sb = new StringBundler(3);
+
+		if (ctEntry.getChangeType() == CTConstants.CT_CHANGE_TYPE_ADDITION) {
+			sb.append(
+				_language.get(
+					httpServletRequest,
+					CTConstants.CT_CHANGE_TYPE_LABEL_ADDITION));
+		}
+		else if (ctEntry.getChangeType() ==
+					CTConstants.CT_CHANGE_TYPE_DELETION) {
+
+			sb.append(
+				_language.get(
+					httpServletRequest,
+					CTConstants.CT_CHANGE_TYPE_LABEL_DELETION));
+		}
+		else if (ctEntry.getChangeType() ==
+					CTConstants.CT_CHANGE_TYPE_MODIFICATION) {
+
+			sb.append(
+				_language.get(
+					httpServletRequest,
+					CTConstants.CT_CHANGE_TYPE_LABEL_MODIFICATION));
+		}
+
+		sb.append(StringPool.SPACE);
+
+		Date modifiedDate = ctEntry.getModifiedDate();
+
+		sb.append(
+			_language.format(
+				httpServletRequest, "x-ago-by-x",
+				new Object[] {
+					_language.getTimeDescription(
+						httpServletRequest,
+						System.currentTimeMillis() - modifiedDate.getTime(),
+						true),
+					HtmlUtil.escape(ctEntry.getUserName())
+				}));
+
+		return sb.toString();
 	}
 
 	private <T extends BaseModel<T>> CTEntry _toCTEntry(
@@ -116,6 +172,9 @@ public class CTEntryDTOConverter
 					});
 				setStatus(
 					() -> _toStatus(dtoConverterContext.getLocale(), document));
+				setStatusMessage(
+					() -> _getStatusMessage(
+						ctEntry, dtoConverterContext.getHttpServletRequest()));
 				setTitle(
 					() -> _getLocalizedValue(
 						document.getField("title"),

@@ -32,14 +32,7 @@ export class WidgetPageTemplatesPage {
 	}
 
 	async deactivateGlobalWidgetPageTemplate(name: string) {
-		await this.clickMoreActions(name);
-
-		await this.page
-			.getByRole('menuitem', {
-				exact: true,
-				name: 'Configure',
-			})
-			.click();
+		await this.clickMoreActions(name, 'Configure');
 
 		await this.page.getByLabel('Active').click();
 
@@ -48,23 +41,23 @@ export class WidgetPageTemplatesPage {
 		await waitForSuccessAlert(this.page);
 	}
 
-	async clickMoreActions(name: string) {
+	async clickMoreActions(name: string, actionName: string) {
 		await this.page
 			.locator('.card-page-item')
 			.filter({hasText: name})
 			.getByLabel('More actions')
 			.click();
-	}
-
-	async delete(name: string) {
-		await this.clickMoreActions(name);
 
 		await this.page
 			.getByRole('menuitem', {
 				exact: true,
-				name: 'Delete',
+				name: actionName,
 			})
 			.click();
+	}
+
+	async delete(name: string) {
+		await this.clickMoreActions(name, 'Delete');
 
 		await this.page.getByRole('button', {name: 'Delete'}).click();
 
@@ -72,14 +65,7 @@ export class WidgetPageTemplatesPage {
 	}
 
 	async renameGlobalWidgetPageTemplate(newName: string, oldName: string) {
-		await this.clickMoreActions(oldName);
-
-		await this.page
-			.getByRole('menuitem', {
-				exact: true,
-				name: 'Configure',
-			})
-			.click();
+		await this.clickMoreActions(oldName, 'Configure');
 
 		await this.page.getByPlaceholder('Name').fill(newName);
 		await this.page.getByRole('button', {name: 'Save'}).click();

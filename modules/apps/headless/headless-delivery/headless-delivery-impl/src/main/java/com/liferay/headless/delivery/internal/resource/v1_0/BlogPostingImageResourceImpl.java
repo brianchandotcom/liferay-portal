@@ -54,7 +54,9 @@ public class BlogPostingImageResourceImpl
 	public void deleteBlogPostingImage(Long blogPostingImageId)
 		throws Exception {
 
-		FileEntry fileEntry = _getFileEntry(blogPostingImageId);
+		FileEntry fileEntry = _dlAppService.getFileEntry(blogPostingImageId);
+
+		_validate(fileEntry);
 
 		_dlAppService.deleteFileEntry(fileEntry.getFileEntryId());
 	}
@@ -63,7 +65,11 @@ public class BlogPostingImageResourceImpl
 	public BlogPostingImage getBlogPostingImage(Long blogPostingImageId)
 		throws Exception {
 
-		return _toBlogPostingImage(_getFileEntry(blogPostingImageId));
+		FileEntry fileEntry = _dlAppService.getFileEntry(blogPostingImageId);
+
+		_validate(fileEntry);
+
+		return _toBlogPostingImage(fileEntry);
 	}
 
 	@Override
@@ -146,21 +152,6 @@ public class BlogPostingImageResourceImpl
 		return _toBlogPostingImage(fileEntry);
 	}
 
-	private FileEntry _getFileEntry(Long fileEntryId) throws Exception {
-		FileEntry fileEntry = _dlAppService.getFileEntry(fileEntryId);
-
-		Folder folder = _blogsEntryService.addAttachmentsFolder(
-			fileEntry.getGroupId());
-
-		if (fileEntry.getFolderId() != folder.getFolderId()) {
-			throw new BadRequestException(
-				fileEntryId +
-					" does not correspond to a valid BlogPostingImage");
-		}
-
-		return fileEntry;
-	}
-
 	private BlogPostingImage _toBlogPostingImage(FileEntry fileEntry)
 		throws Exception {
 
@@ -180,6 +171,17 @@ public class BlogPostingImageResourceImpl
 				setTitle(fileEntry::getTitle);
 			}
 		};
+	}
+
+	private void _validate(FileEntry fileEntry) throws Exception {
+		Folder folder = _blogsEntryService.addAttachmentsFolder(
+			fileEntry.getGroupId());
+
+		if (fileEntry.getFolderId() != folder.getFolderId()) {
+			throw new BadRequestException(
+				fileEntry.getFileEntryId() +
+					" does not correspond to a valid BlogPostingImage");
+		}
 	}
 
 	private static final EntityModel _entityModel =

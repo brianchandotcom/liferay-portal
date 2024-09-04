@@ -9,9 +9,12 @@ import com.liferay.portal.configuration.persistence.upgrade.ConfigurationUpgrade
 import com.liferay.portal.kernel.upgrade.BasePortletIdUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeKernelPackage;
+import com.liferay.portlet.display.template.upgrade.BaseUpgradePortletPreferences;
 import com.liferay.rss.constants.RSSPortletKeys;
 import com.liferay.rss.web.internal.configuration.RSSPortletInstanceConfiguration;
 import com.liferay.rss.web.internal.configuration.RSSWebCacheConfiguration;
+
+import javax.portlet.PortletPreferences;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -67,6 +70,24 @@ public class RSSWebUpgradeStepRegistrator implements UpgradeStepRegistrator {
 			_configurationUpgradeStepFactory.createUpgradeStep(
 				"com.liferay.rss.web.configuration.RSSWebCacheConfiguration",
 				RSSWebCacheConfiguration.class.getName()));
+
+		registry.register(
+			"3.0.1", "3.0.2",
+			new BaseUpgradePortletPreferences() {
+
+				@Override
+				protected String[] getPortletIds() {
+					return new String[] {RSSPortletKeys.RSS + "_INSTANCE_%"};
+				}
+
+				@Override
+				protected void upgradePreferences(
+						long companyId, long ownerId, int ownerType, long plid,
+						String portletId, PortletPreferences portletPreferences)
+					throws Exception {
+				}
+
+			});
 	}
 
 	@Reference

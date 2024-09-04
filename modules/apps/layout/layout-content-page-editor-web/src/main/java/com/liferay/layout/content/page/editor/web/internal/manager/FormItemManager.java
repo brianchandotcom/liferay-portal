@@ -64,7 +64,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = FormItemManager.class)
 public class FormItemManager {
 
-	public List<FragmentEntryLink> addFormStepLayoutStructureItems(
+	public List<FragmentEntryLink> addFormButtonsFragmentEntryLinks(
 			FormStyledLayoutStructureItem formStyledLayoutStructureItem,
 			Layout layout, LayoutStructure layoutStructure, Locale locale,
 			int numberOfSteps, long segmentsExperienceId,
@@ -102,7 +102,7 @@ public class FormItemManager {
 			}
 
 			addedFragmentEntryLinks.addAll(
-				_addFormButtons(
+				_addFormButtonsFragmentEntryLinks(
 					formStepLayoutStructureItem, formStyledLayoutStructureItem,
 					layout, locale, layoutStructure, numberOfSteps - 1,
 					segmentsExperienceId, i, serviceContext));
@@ -229,7 +229,7 @@ public class FormItemManager {
 		return addedFragmentEntryLinks;
 	}
 
-	public List<FragmentEntryLink> changeToMultiStepFormType(
+	public List<FragmentEntryLink> changeToMultistepFormType(
 			FormStyledLayoutStructureItem formStyledLayoutStructureItem,
 			Layout layout, LayoutStructure layoutStructure, Locale locale,
 			int numberOfSteps, long segmentsExperienceId,
@@ -257,7 +257,7 @@ public class FormItemManager {
 			}
 
 			addedFragmentEntryLinks.addAll(
-				_addFormButtons(
+				_addFormButtonsFragmentEntryLinks(
 					formStepLayoutStructureItem, formStyledLayoutStructureItem,
 					layout, locale, layoutStructure, numberOfSteps - 1,
 					segmentsExperienceId, i, serviceContext));
@@ -331,7 +331,7 @@ public class FormItemManager {
 					new ArrayList<>(
 						formStepLayoutStructureItem.getChildrenItemIds())) {
 
-				if (!_isFormButtonsContainer(
+				if (!_isFormButtonsContainerStyledLayoutStructureItem(
 						formStepLayoutStructureItem,
 						formStyledLayoutStructureItem,
 						layoutStructure.getLayoutStructureItem(
@@ -363,7 +363,7 @@ public class FormItemManager {
 		return Collections.singletonList(fragmentEntryLink);
 	}
 
-	public List<FragmentEntryLink> removeFormStepLayoutStructureItems(
+	public List<FragmentEntryLink> removeFormButtonsFragmentEntryLinks(
 			FormStyledLayoutStructureItem formStyledLayoutStructureItem,
 			Layout layout, LayoutStructure layoutStructure, Locale locale,
 			int numberOfSteps, long segmentsExperienceId,
@@ -393,7 +393,7 @@ public class FormItemManager {
 					new ArrayList<>(
 						formStepLayoutStructureItem.getChildrenItemIds())) {
 
-				if (!_isFormButtonsContainer(
+				if (!_isFormButtonsContainerStyledLayoutStructureItem(
 						formStepLayoutStructureItem,
 						formStyledLayoutStructureItem,
 						layoutStructure.getLayoutStructureItem(
@@ -411,7 +411,7 @@ public class FormItemManager {
 				Collections.emptyList());
 		}
 
-		return _addFormButtons(
+		return _addFormButtonsFragmentEntryLinks(
 			previousFormStepLayoutStructureItem, formStyledLayoutStructureItem,
 			layout, locale, layoutStructure, numberOfSteps,
 			segmentsExperienceId, numberOfSteps - 1, serviceContext);
@@ -528,7 +528,7 @@ public class FormItemManager {
 			editableValuesJSONObject.toString());
 	}
 
-	private List<FragmentEntryLink> _addFormButtons(
+	private List<FragmentEntryLink> _addFormButtonsFragmentEntryLinks(
 			LayoutStructureItem formStepLayoutStructureItem,
 			FormStyledLayoutStructureItem formStyledLayoutStructureItem,
 			Layout layout, Locale locale, LayoutStructure layoutStructure,
@@ -536,9 +536,10 @@ public class FormItemManager {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		LayoutStructureItem layoutStructureItem = _findFormButtonsContainer(
-			formStepLayoutStructureItem, formStyledLayoutStructureItem,
-			layoutStructure);
+		LayoutStructureItem layoutStructureItem =
+			_findFormButtonsContainerStyledLayoutStructureItem(
+				formStepLayoutStructureItem, formStyledLayoutStructureItem,
+				layoutStructure);
 
 		if (layoutStructureItem != null) {
 			layoutStructure.markLayoutStructureItemForDeletion(
@@ -657,10 +658,11 @@ public class FormItemManager {
 		return fragmentEntryLink;
 	}
 
-	private LayoutStructureItem _findFormButtonsContainer(
-		LayoutStructureItem formStepLayoutStructureItem,
-		LayoutStructureItem formStyledLayoutStructureItem,
-		LayoutStructure layoutStructure) {
+	private LayoutStructureItem
+		_findFormButtonsContainerStyledLayoutStructureItem(
+			LayoutStructureItem formStepLayoutStructureItem,
+			LayoutStructureItem formStyledLayoutStructureItem,
+			LayoutStructure layoutStructure) {
 
 		for (String childrenItemId :
 				formStepLayoutStructureItem.getChildrenItemIds()) {
@@ -668,7 +670,7 @@ public class FormItemManager {
 			LayoutStructureItem layoutStructureItem =
 				layoutStructure.getLayoutStructureItem(childrenItemId);
 
-			if (_isFormButtonsContainer(
+			if (_isFormButtonsContainerStyledLayoutStructureItem(
 					formStepLayoutStructureItem, formStyledLayoutStructureItem,
 					layoutStructureItem)) {
 
@@ -827,7 +829,7 @@ public class FormItemManager {
 		return false;
 	}
 
-	private boolean _isFormButtonsContainer(
+	private boolean _isFormButtonsContainerStyledLayoutStructureItem(
 		LayoutStructureItem formStepLayoutStructureItem,
 		LayoutStructureItem formStyledLayoutStructureItem,
 		LayoutStructureItem layoutStructureItem) {

@@ -86,7 +86,6 @@ public class DBSchemaImporterProcess {
 
 		Set<Future<?>> futures = Collections.newSetFromMap(
 			new ConcurrentHashMap<>());
-
 		ThrowableCollector throwableCollector = new ThrowableCollector();
 
 		futures.add(
@@ -150,8 +149,8 @@ public class DBSchemaImporterProcess {
 		_executeFilesSQL("_tables.sql");
 	}
 
-	private void _executeFilesSQL(String fileFilter) throws Exception {
-		File[] files = _listFiles(fileFilter);
+	private void _executeFilesSQL(String suffix) throws Exception {
+		File[] files = _listFiles(suffix);
 
 		StringBundler sb = new StringBundler();
 
@@ -187,9 +186,9 @@ public class DBSchemaImporterProcess {
 
 			try (PreparedStatement preparedStatement =
 					connection.prepareStatement(
-						"select variable_value from " +
-							"performance_schema.session_variables where " +
-								"variable_name = 'character_set_client'");
+						"select variable_value from performance_schema." +
+							"session_variables where variable_name = " +
+								"'character_set_client'");
 				ResultSet resultSet = preparedStatement.executeQuery()) {
 
 				if (resultSet.next()) {
@@ -201,7 +200,7 @@ public class DBSchemaImporterProcess {
 		}
 	}
 
-	private File[] _listFiles(String filter) {
+	private File[] _listFiles(String suffix) {
 		File dir = new File(_path);
 
 		return dir.listFiles(
@@ -213,7 +212,7 @@ public class DBSchemaImporterProcess {
 						return false;
 					}
 
-					return StringUtil.endsWith(file.getName(), filter);
+					return StringUtil.endsWith(file.getName(), suffix);
 				}
 
 			});
@@ -303,7 +302,6 @@ public class DBSchemaImporterProcess {
 		_syncInitialSQLs.clear();
 
 		List<Future<?>> futures = new ArrayList<>();
-
 		ThrowableCollector throwableCollector = new ThrowableCollector();
 
 		for (String sql : _asyncSQLs) {

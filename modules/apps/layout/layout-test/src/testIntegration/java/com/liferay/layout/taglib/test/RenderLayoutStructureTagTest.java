@@ -29,6 +29,7 @@ import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.info.collection.provider.RepeatableFieldInfoItemCollectionProvider;
@@ -430,36 +431,9 @@ public class RenderLayoutStructureTagTest {
 		List<String> childrenItemIds =
 			collectionStyledLayoutStructureItem.getChildrenItemIds();
 
-		FragmentCollection fragmentCollection =
-			_fragmentCollectionLocalService.addFragmentCollection(
-				null, TestPropsValues.getUserId(), _group.getGroupId(),
-				StringUtil.randomString(), StringPool.BLANK, _serviceContext);
-
-		FragmentEntry fragmentEntry =
-			_fragmentEntryLocalService.addFragmentEntry(
-				null, TestPropsValues.getUserId(), _group.getGroupId(),
-				fragmentCollection.getFragmentCollectionId(),
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				StringPool.BLANK,
-				"<h1 data-lfr-editable-id=\"element-text\" " +
-					"data-lfr-editable-type=\"text\">Heading Example</h1>",
-				StringPool.BLANK, false, StringPool.BLANK, null, 0, false,
-				FragmentConstants.TYPE_COMPONENT, null,
-				WorkflowConstants.STATUS_APPROVED, _serviceContext);
-
-		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
-			JSONUtil.put(
-				FragmentEntryProcessorConstants.
-					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
-				JSONUtil.put(
-					"element-text",
-					JSONUtil.put("collectionFieldId", "DDMStructure_Text1"))
-			).toString(),
-			fragmentEntry.getCss(), fragmentEntry.getConfiguration(),
-			fragmentEntry.getFragmentEntryId(), fragmentEntry.getHtml(),
-			fragmentEntry.getJs(), layout, fragmentEntry.getFragmentEntryKey(),
-			fragmentEntry.getType(), childrenItemIds.get(0), 0,
-			segmentsExperienceId);
+		_addFragmentEntryLinkToLayout(
+			JSONUtil.put("collectionFieldId", "DDMStructure_Text1"), layout,
+			childrenItemIds.get(0), segmentsExperienceId);
 
 		MockHttpServletResponse mockHttpServletResponse = _renderLayout(
 			layout, mockHttpServletRequest);
@@ -1239,43 +1213,68 @@ public class RenderLayoutStructureTagTest {
 		return _layoutLocalService.getLayout(layout.getPlid());
 	}
 
-	private void _addFragmentEntryLinks(
-			Layout layout, String parentItemId, long segmentsExperienceId)
-		throws Exception {
-
+	private FragmentEntry _addFragmentEntry() throws Exception {
 		FragmentCollection fragmentCollection =
 			_fragmentCollectionLocalService.addFragmentCollection(
 				null, TestPropsValues.getUserId(), _group.getGroupId(),
 				StringUtil.randomString(), StringPool.BLANK, _serviceContext);
 
-		FragmentEntry fragmentEntry =
-			_fragmentEntryLocalService.addFragmentEntry(
-				null, TestPropsValues.getUserId(), _group.getGroupId(),
-				fragmentCollection.getFragmentCollectionId(),
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				StringPool.BLANK,
-				"<h1 data-lfr-editable-id=\"element-text\" " +
-					"data-lfr-editable-type=\"text\">Heading Example</h1>",
-				StringPool.BLANK, false, StringPool.BLANK, null, 0, false,
-				FragmentConstants.TYPE_COMPONENT, null,
-				WorkflowConstants.STATUS_APPROVED, _serviceContext);
+		return _fragmentEntryLocalService.addFragmentEntry(
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
+			fragmentCollection.getFragmentCollectionId(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			StringPool.BLANK,
+			"<h1 data-lfr-editable-id=\"element-text\" " +
+				"data-lfr-editable-type=\"text\">Heading Example</h1>",
+			StringPool.BLANK, false, StringPool.BLANK, null, 0, false,
+			FragmentConstants.TYPE_COMPONENT, null,
+			WorkflowConstants.STATUS_APPROVED, _serviceContext);
+	}
+
+	private void _addFragmentEntryLinks(
+			Layout layout, String parentItemId, long segmentsExperienceId)
+		throws Exception {
+
+		FragmentEntry fragmentEntry = _addFragmentEntry();
 
 		for (int i = 0; i < _COUNT_FRAGMENT_ENTRY_LINKS; i++) {
-			ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+			_addFragmentEntryLinkToLayout(
 				JSONUtil.put(
-					FragmentEntryProcessorConstants.
-						KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
-					JSONUtil.put(
-						"element-text",
-						JSONUtil.put(
-							"collectionFieldId", "JournalArticle_title"))
-				).toString(),
-				fragmentEntry.getCss(), fragmentEntry.getConfiguration(),
-				fragmentEntry.getFragmentEntryId(), fragmentEntry.getHtml(),
-				fragmentEntry.getJs(), layout,
-				fragmentEntry.getFragmentEntryKey(), fragmentEntry.getType(),
-				parentItemId, i, segmentsExperienceId);
+					"element-text",
+					JSONUtil.put("collectionFieldId", "JournalArticle_title")),
+				fragmentEntry, layout, parentItemId, i, segmentsExperienceId);
 		}
+	}
+
+	private FragmentEntryLink _addFragmentEntryLinkToLayout(
+			JSONObject editableFragmentEntryProcessorJSONObject,
+			FragmentEntry fragmentEntry, Layout layout, String parentItemId,
+			int position, long segmentsExperienceId)
+		throws Exception {
+
+		return ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+				editableFragmentEntryProcessorJSONObject
+			).toString(),
+			fragmentEntry.getCss(), fragmentEntry.getConfiguration(),
+			fragmentEntry.getFragmentEntryId(), fragmentEntry.getHtml(),
+			fragmentEntry.getJs(), layout, fragmentEntry.getFragmentEntryKey(),
+			fragmentEntry.getType(), parentItemId, position,
+			segmentsExperienceId);
+	}
+
+	private FragmentEntryLink _addFragmentEntryLinkToLayout(
+			JSONObject elemenTextJSONObject, Layout layout, String parentItemId,
+			long segmentsExperienceId)
+		throws Exception {
+
+		FragmentEntry fragmentEntry = _addFragmentEntry();
+
+		return _addFragmentEntryLinkToLayout(
+			JSONUtil.put("element-text", elemenTextJSONObject), fragmentEntry,
+			layout, parentItemId, 0, segmentsExperienceId);
 	}
 
 	private JournalArticle _addJournalArticle(DDMStructure ddmStructure)

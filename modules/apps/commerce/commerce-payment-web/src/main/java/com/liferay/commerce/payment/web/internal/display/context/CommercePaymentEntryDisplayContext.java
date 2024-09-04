@@ -348,7 +348,7 @@ public class CommercePaymentEntryDisplayContext {
 		return String.valueOf(_relatedCommercePaymentEntry.getClassPK());
 	}
 
-	public String getRelatedToLink() throws PortalException {
+	public String getRelatedToURL() throws PortalException {
 		if (_relatedCommercePaymentEntry == null) {
 			return StringPool.BLANK;
 		}

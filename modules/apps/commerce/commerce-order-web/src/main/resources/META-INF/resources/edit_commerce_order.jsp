@@ -22,7 +22,7 @@ else {
 }
 
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(String.valueOf(renderResponse.createRenderURL()));
+portletDisplay.setURLBack(ParamUtil.getString(request, "backURL", String.valueOf(renderResponse.createRenderURL())));
 %>
 
 <liferay-portlet:renderURL var="editCommerceOrderExternalReferenceCodeURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">

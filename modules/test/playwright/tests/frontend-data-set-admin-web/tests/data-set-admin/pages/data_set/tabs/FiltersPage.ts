@@ -64,7 +64,7 @@ export class FiltersPage {
 	readonly newDateRangeFilterForm: NewDateRangeFilterForm;
 	readonly newFilterButton: Locator;
 	private readonly newFilterForm: NewFilterForm;
-	private readonly newSelectionFilterForm: NewSelectionFilterForm;
+	readonly newSelectionFilterForm: NewSelectionFilterForm;
 	readonly page: Page;
 	readonly searchButton: Locator;
 	readonly searchInput: Locator;

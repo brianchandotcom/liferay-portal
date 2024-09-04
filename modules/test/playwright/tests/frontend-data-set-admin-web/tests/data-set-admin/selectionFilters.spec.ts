@@ -324,7 +324,7 @@ test('Preselected filter values are checked in the multiSelect', async ({
 });
 
 modalFieldTest(
-	'Can create a selection filter with API Headless source using the field selection modal',
+	'Can create and edit a selection filter with API Headless source using the field selection modal',
 	{tag: '@LPD-25905'},
 	async ({filtersPage, page}) => {
 		await modalFieldTest.step(
@@ -344,6 +344,70 @@ modalFieldTest(
 					sourceType: 'API REST Application',
 					useFieldSelectionModal: true,
 				});
+
+				await filtersPage.saveAddFilterForm();
+			}
+		);
+
+		await modalFieldTest.step(
+			'Check that the selection filter is in the list',
+			async () => {
+				await expect(
+					page.getByRole('cell', {
+						exact: true,
+						name: SELECTION_API_HEADLESS_FILTER_NAME,
+					})
+				).toBeVisible();
+			}
+		);
+
+		await modalFieldTest.step('Open the edit filter form', async () => {
+			const filterActionsButton = page
+				.getByRole('cell', {name: 'Actions'})
+				.getByRole('button');
+
+			await expect(filterActionsButton).toBeVisible();
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('menuitem', {name: 'Edit'}),
+				trigger: filterActionsButton,
+			});
+
+			const dialogFilterSourceSubtitle = page.getByRole('heading', {
+				name: 'Filter Source',
+			});
+
+			await expect(dialogFilterSourceSubtitle).toBeVisible();
+
+			const dialogFilterOptionsSubtitle = page.getByRole('heading', {
+				name: 'Filter Options',
+			});
+
+			await expect(dialogFilterOptionsSubtitle).toBeVisible();
+		});
+
+		await modalFieldTest.step('Change the filter name', async () => {
+			await filtersPage.newSelectionFilterForm.nameInput.clear();
+
+			await filtersPage.saveAddFilterForm();
+		});
+
+		await modalFieldTest.step(
+			'Confirm that a "This field is required." message appears in the form',
+			async () => {
+				await filtersPage.page
+					.getByText('This field is required.')
+					.isVisible();
+			}
+		);
+
+		await modalFieldTest.step(
+			'Save filter form without errors',
+			async () => {
+				await filtersPage.newSelectionFilterForm.nameInput.fill(
+					SELECTION_API_HEADLESS_FILTER_NAME
+				);
 
 				await filtersPage.saveAddFilterForm();
 			}

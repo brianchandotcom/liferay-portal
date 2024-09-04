@@ -319,9 +319,11 @@ test('No date filters can be created if schema has no date fields', async ({
 });
 
 modalFieldTest(
-	'Can create a date range filter in DSM using the field selection modal',
+	'Can create and edit a date range filter in DSM using the field selection modal',
 	{tag: '@LPD-25905'},
 	async ({filtersPage, page}) => {
+		const filterNewName = 'Date Created';
+
 		await modalFieldTest.step('Create a data range filter', async () => {
 			await filtersPage.createDateRangeFilter({
 				filterBy: 'dateCreated',
@@ -343,6 +345,48 @@ modalFieldTest(
 						name: DATE_FILTER_NAME,
 					})
 				).toBeVisible();
+			}
+		);
+
+		await modalFieldTest.step(
+			'Edit the filter, change its label',
+			async () => {
+				await filtersPage
+					.getRowByText(DATE_FILTER_NAME)
+					.locator('.actions-cell button')
+					.click();
+
+				const editButton = filtersPage.page.getByRole('menuitem', {
+					name: 'Edit',
+				});
+
+				await expect(editButton).toBeInViewport();
+
+				await editButton.click();
+
+				const nameInput = filtersPage.newDateRangeFilterForm.nameInput;
+
+				await expect(nameInput).toBeInViewport();
+
+				await expect(nameInput).toBeEnabled();
+
+				await nameInput.fill(filterNewName);
+
+				await filtersPage.saveAddFilterForm();
+			}
+		);
+
+		await modalFieldTest.step(
+			'Assert filter with new name is saved @LPS-183056',
+			async () => {
+				await expect(
+					filtersPage
+						.getRowByText(filterNewName)
+						.locator('td')
+						.nth(NAME_COLUMN_INDEX)
+				).toHaveText(filterNewName);
+
+				await filtersPage.assertFiltersTableRowCount(1);
 			}
 		);
 	}

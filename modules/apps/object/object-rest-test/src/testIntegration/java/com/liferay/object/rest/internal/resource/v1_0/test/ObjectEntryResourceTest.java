@@ -6696,13 +6696,13 @@ public class ObjectEntryResourceTest {
 					"WebApplicationExceptionMapper",
 				LoggerTestUtil.ERROR)) {
 
-			JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
-				null,
-				_getEndpoint(
-					RandomTestUtil.randomLong(), _siteScopedObjectDefinition1),
-				Http.Method.GET);
-
-			Assert.assertEquals("NOT_FOUND", jsonObject.getString("status"));
+			_assertNotFound(
+				HTTPTestUtil.invokeToJSONObject(
+					null,
+					_getEndpoint(
+						RandomTestUtil.randomLong(),
+						_siteScopedObjectDefinition1),
+					Http.Method.GET));
 		}
 
 		_siteScopedObjectEntry1 = ObjectEntryTestUtil.addObjectEntry(
@@ -6867,40 +6867,29 @@ public class ObjectEntryResourceTest {
 				new String[] {ActionKeys.DELETE},
 				RandomTestUtil.randomString()));
 
-		JSONObject jsonObject = _postCustomObjectEntryWithPermissions(
-			true, invalidPermissionsJSONArray);
-
-		Assert.assertEquals("NOT_FOUND", jsonObject.getString("status"));
-
-		jsonObject =
+		_assertNotFound(
+			_postCustomObjectEntryWithPermissions(
+				true, invalidPermissionsJSONArray));
+		_assertNotFound(
 			_patchPutByExternalReferenceCodeCustomObjectEntryWithPermissions(
 				Http.Method.PATCH, true,
 				_postCustomObjectEntryWithPermissions(true, null),
-				invalidPermissionsJSONArray);
-
-		Assert.assertEquals("NOT_FOUND", jsonObject.getString("status"));
-
-		jsonObject =
+				invalidPermissionsJSONArray));
+		_assertNotFound(
 			_patchPutByExternalReferenceCodeCustomObjectEntryWithPermissions(
 				Http.Method.PUT, true,
 				_postCustomObjectEntryWithPermissions(true, null),
-				invalidPermissionsJSONArray);
-
-		Assert.assertEquals("NOT_FOUND", jsonObject.getString("status"));
-
-		jsonObject = _patchPutCustomObjectEntryWithPermissions(
-			Http.Method.PATCH, true,
-			_postCustomObjectEntryWithPermissions(true, null),
-			invalidPermissionsJSONArray);
-
-		Assert.assertEquals("NOT_FOUND", jsonObject.getString("status"));
-
-		jsonObject = _patchPutCustomObjectEntryWithPermissions(
-			Http.Method.PUT, true,
-			_postCustomObjectEntryWithPermissions(true, null),
-			invalidPermissionsJSONArray);
-
-		Assert.assertEquals("NOT_FOUND", jsonObject.getString("status"));
+				invalidPermissionsJSONArray));
+		_assertNotFound(
+			_patchPutCustomObjectEntryWithPermissions(
+				Http.Method.PATCH, true,
+				_postCustomObjectEntryWithPermissions(true, null),
+				invalidPermissionsJSONArray));
+		_assertNotFound(
+			_patchPutCustomObjectEntryWithPermissions(
+				Http.Method.PUT, true,
+				_postCustomObjectEntryWithPermissions(true, null),
+				invalidPermissionsJSONArray));
 
 		// No permissions in the body request
 
@@ -11944,6 +11933,10 @@ public class ObjectEntryResourceTest {
 			_getRelatedJSONObject(jsonObject, nestedFieldName, type),
 			nestedFieldName, objectFieldNamesAndObjectFieldValues,
 			permissionsJSONArrays, _getReverseType(type));
+	}
+
+	private void _assertNotFound(JSONObject jsonObject) {
+		Assert.assertEquals("NOT_FOUND", jsonObject.getString("status"));
 	}
 
 	private void _assertObjectEntryField(

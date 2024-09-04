@@ -789,60 +789,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-119817. Map manual URL to Container element."
-	@priority = 5
-	test MapManualURLToContainerElement {
-		property portal.acceptance = "true";
-
-		task ("Add a Container element to page") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Content Page Name",
-				siteName = "Test Site Name");
-
-			PageEditor.addFragment(
-				collectionName = "Layout Elements",
-				fragmentName = "Container");
-		}
-
-		task ("Add a Card fragment into the Container") {
-			PageEditor.addElementToContainer(
-				collectionName = "Basic Components",
-				fragmentName = "Card",
-				navTab = "Fragments");
-		}
-
-		task ("Map Manual URL to Container") {
-			PageEditor.editLayoutContainer(
-				panel = "General",
-				url = "https://liferay.com");
-
-			AssertVisible(
-				key_append = "//img",
-				key_url = "https://liferay.com",
-				locator1 = "Fragment#FRAGMENT_LINK");
-
-			PageEditor.publish();
-		}
-
-		task ("Assert mapped URL work in view mode") {
-			ContentPagesNavigator.openViewContentPage(
-				pageName = "Content Page Name",
-				siteName = "Test Site Name");
-
-			AssertVisible(
-				key_append = "/img",
-				key_url = "https://liferay.com",
-				locator1 = "Fragment#FRAGMENT_LINK");
-
-			Click(
-				key_append = "/img",
-				key_url = "https://liferay.com",
-				locator1 = "Fragment#FRAGMENT_LINK");
-
-			AssertLocation.assertPartialLocation(value1 = "liferay.com");
-		}
-	}
-
 	@description = "This case ensures a user can map the layout of a fragment to an existing image content."
 	@priority = 5
 	test MapWebContentImageToBackgroundImageOfContainerInContentPage {

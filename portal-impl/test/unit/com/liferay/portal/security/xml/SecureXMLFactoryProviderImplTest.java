@@ -17,6 +17,8 @@ import java.io.StringReader;
 
 import java.net.ConnectException;
 
+import java.util.NoSuchElementException;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.stream.XMLEventReader;
@@ -136,33 +138,34 @@ public class SecureXMLFactoryProviderImplTest {
 
 		runXMLSecurityTest(
 			xmlInputFactoryTest, _xmlBombBillionLaughsXML,
-			OutOfMemoryError.class, "Billion Laughs XML attack does not work.",
-			null, "Vulnerable to Billion Laughs XML attack.");
+			NoSuchElementException.class,
+			"Billion Laughs XML attack does not work.", null,
+			"Vulnerable to Billion Laughs XML attack.");
 		runXMLSecurityTest(
 			xmlInputFactoryTest, _xmlBombQuadraticBlowupXML,
-			OutOfMemoryError.class,
+			NoSuchElementException.class,
 			"Quadratic Blowup XML attack does not work.", null,
 			"Vulnerable to Quadratic Blowup XML attack.");
 		runXMLSecurityTest(
 			xmlInputFactoryTest, _xxeGeneralEntitiesXML1,
-			ConnectException.class,
+			NoSuchElementException.class,
 			"General Entities XXE attack using SYSTEM entity does not work.",
 			null,
 			"Vulnerable to General Entities XXE attack using SYSTEM entity.");
 		runXMLSecurityTest(
 			xmlInputFactoryTest, _xxeGeneralEntitiesXML2,
-			ConnectException.class,
+			NoSuchElementException.class,
 			"General Entities XXE attack using PUBLIC entity does not work.",
 			null,
 			"Vulnerable to  General Entities XXE attack using PUBLIC entity.");
 		runXMLSecurityTest(
 			xmlInputFactoryTest, _xxeParameterEntitiesXML1,
-			ConnectException.class,
+			NoSuchElementException.class,
 			"Parameter Entities XXE using SYSTEM entity does not work.", null,
 			"Vulnerable to Parameter Entities XXE using SYSTEM entity.");
 		runXMLSecurityTest(
 			xmlInputFactoryTest, _xxeParameterEntitiesXML2,
-			ConnectException.class,
+			NoSuchElementException.class,
 			"Parameter Entities XXE attack using PUBLIC entity does not work.",
 			null,
 			"Vulnerable to Parameter Entities XXE attack using PUBLIC entity.");

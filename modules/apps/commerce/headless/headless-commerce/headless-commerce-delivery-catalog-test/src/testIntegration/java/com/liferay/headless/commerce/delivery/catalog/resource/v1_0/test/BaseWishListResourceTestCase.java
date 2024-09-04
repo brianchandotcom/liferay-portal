@@ -764,7 +764,8 @@ public abstract class BaseWishListResourceTestCase {
 
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		WishList patchWishList = wishListResource.patchWishList(
-			postWishList.getId(), randomPatchWishList);
+			postWishList.getId(), testPatchWishList_getAccountId(),
+			randomPatchWishList);
 
 		WishList expectedPatchWishList = postWishList.clone();
 
@@ -778,6 +779,11 @@ public abstract class BaseWishListResourceTestCase {
 	}
 
 	protected WishList testPatchWishList_addWishList() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testPatchWishList_getAccountId() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}

@@ -86,11 +86,12 @@ public interface WishListResource {
 	public HttpInvoker.HttpResponse getWishListHttpResponse(Long wishListId)
 		throws Exception;
 
-	public WishList patchWishList(Long wishListId, WishList wishList)
+	public WishList patchWishList(
+			Long wishListId, Long accountId, WishList wishList)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse patchWishListHttpResponse(
-			Long wishListId, WishList wishList)
+			Long wishListId, Long accountId, WishList wishList)
 		throws Exception;
 
 	public static class Builder {
@@ -957,11 +958,12 @@ public interface WishListResource {
 			return httpInvoker.invoke();
 		}
 
-		public WishList patchWishList(Long wishListId, WishList wishList)
+		public WishList patchWishList(
+				Long wishListId, Long accountId, WishList wishList)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse = patchWishListHttpResponse(
-				wishListId, wishList);
+				wishListId, accountId, wishList);
 
 			String content = httpResponse.getContent();
 
@@ -1023,7 +1025,7 @@ public interface WishListResource {
 		}
 
 		public HttpInvoker.HttpResponse patchWishListHttpResponse(
-				Long wishListId, WishList wishList)
+				Long wishListId, Long accountId, WishList wishList)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -1048,6 +1050,10 @@ public interface WishListResource {
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PATCH);
+
+			if (accountId != null) {
+				httpInvoker.parameter("accountId", String.valueOf(accountId));
+			}
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +

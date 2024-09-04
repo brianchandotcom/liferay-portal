@@ -18,7 +18,6 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
@@ -33,7 +32,6 @@ import org.junit.runner.RunWith;
 /**
  * @author Javier Gamarra
  */
-@FeatureFlags("LPD-29637")
 @RunWith(Arquillian.class)
 public class ObjectValidationRuleResourceTest
 	extends BaseObjectValidationRuleResourceTestCase {

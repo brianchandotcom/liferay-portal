@@ -5,8 +5,6 @@
 
 import {getDisabledValidationActionToggleState} from '../../components/ObjectValidation/ObjectValidationActiveToggle';
 
-Liferay.FeatureFlags['LPD-29637'] = true;
-
 function getObjectValidationRuleSettingsMock(
 	value: string
 ): ObjectValidationRuleSetting[] {

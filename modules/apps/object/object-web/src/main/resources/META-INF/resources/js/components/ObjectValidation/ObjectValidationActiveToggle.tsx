@@ -18,14 +18,12 @@ export function getDisabledValidationActionToggleState(
 	disabledGroovyValidation: boolean,
 	objectValidationRuleSettings: ObjectValidationRuleSetting[]
 ) {
-	if (Liferay.FeatureFlags['LPD-29637']) {
-		const allowActiveStatusUpdate = objectValidationRuleSettings.find(
-			({name}) => name === 'allowActiveStatusUpdate'
-		);
+	const allowActiveStatusUpdate = objectValidationRuleSettings.find(
+		({name}) => name === 'allowActiveStatusUpdate'
+	);
 
-		if (allowActiveStatusUpdate) {
-			return allowActiveStatusUpdate.value === 'false';
-		}
+	if (allowActiveStatusUpdate) {
+		return allowActiveStatusUpdate.value === 'false';
 	}
 
 	return disabled || disabledGroovyValidation;

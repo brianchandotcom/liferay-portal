@@ -74,7 +74,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Javier Gamarra
  */
-@FeatureFlags({"LPD-29637", "LPS-187142"})
+@FeatureFlags("LPS-187142")
 @RunWith(Arquillian.class)
 public class ObjectDefinitionResourceTest
 	extends BaseObjectDefinitionResourceTestCase {

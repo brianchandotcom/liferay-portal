@@ -51,8 +51,6 @@ public class AutoBatchPreparedStatementUtil {
 		_executorService.awaitTermination(10, TimeUnit.SECONDS);
 	}
 
-	private static final int _BATCH_SIZE = 2500;
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		AutoBatchPreparedStatementUtil.class);
 
@@ -108,7 +106,7 @@ public class AutoBatchPreparedStatementUtil {
 
 			preparedStatement.addBatch();
 
-			if (++_count >= _BATCH_SIZE) {
+			if (++_count >= ConnectionConfigUtil.getBatchSize()) {
 				_count = 0;
 
 				_executeAsync(() -> _executeBatch(preparedStatement));

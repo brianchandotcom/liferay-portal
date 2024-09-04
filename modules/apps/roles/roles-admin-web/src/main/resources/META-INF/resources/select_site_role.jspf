@@ -60,7 +60,11 @@ if (step == 2) {
 	selectRoleManagementToolbarDisplayContext.setGroupId(groupId);
 }
 
-PortletURL portletURL = selectRoleManagementToolbarDisplayContext.getPortletURL();
+PortletURL portletURL = PortletURLBuilder.create(
+	selectRoleManagementToolbarDisplayContext.getPortletURL()
+).setKeywords(
+	StringPool.BLANK
+).buildPortletURL();
 
 SearchContainer<Role> roleSearchContainer = selectRoleManagementToolbarDisplayContext.getRoleSearchContainer(filterManageableRoles, groupId);
 %>
@@ -85,7 +89,7 @@ SearchContainer<Role> roleSearchContainer = selectRoleManagementToolbarDisplayCo
 			</div>
 
 			<liferay-ui:search-container
-				searchContainer="<%= new GroupSearch(renderRequest, portletURL) %>"
+				searchContainer="<%= new GroupSearch(renderRequest, selectRoleManagementToolbarDisplayContext.getPortletURL()) %>"
 				total="<%= groups.size() %>"
 			>
 				<liferay-ui:search-container-results

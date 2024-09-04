@@ -65,7 +65,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -116,7 +115,6 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 		_initCategoryAndVocabulary();
 	}
 
-	@FeatureFlags("LPD-30087")
 	@Test
 	public void testGetFileEntrySpecificFields() throws Exception {
 		JSONObject jsonObject = _serveResource(
@@ -149,7 +147,6 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 			jsonObject.getJSONArray("specificFields"));
 	}
 
-	@FeatureFlags("LPD-30087")
 	@Test
 	public void testServeResource() throws Exception {
 		ContentDashboardItem<?> contentDashboardItem =

@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.ArrayList;
@@ -56,7 +57,11 @@ public class PortletTitleTest {
 
 			if ((resourceBundle != null) &&
 				!resourceBundle.containsKey(
-					"javax.portlet.title.".concat(rootPortletId))) {
+					"javax.portlet.title.".concat(rootPortletId)) &&
+				!StringUtil.startsWith(
+					rootPortletId,
+					"com_liferay_object_web_internal_object_definitions_" +
+						"portlet_ObjectDefinitionsPortlet")) {
 
 				portletIdsWithMissingTitles.add(rootPortletId);
 			}

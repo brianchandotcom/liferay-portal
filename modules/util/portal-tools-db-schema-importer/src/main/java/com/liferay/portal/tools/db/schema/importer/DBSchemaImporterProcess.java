@@ -5,49 +5,35 @@
 
 package com.liferay.portal.tools.db.schema.importer;
 
+import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.dao.jdbc.postgresql.PostgreSQLJDBCUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.Base64;
-import com.liferay.portal.kernel.util.DateUtil;
+import com.liferay.portal.kernel.module.framework.ThrowableCollector;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.db.schema.importer.jdbc.AutoBatchPreparedStatementUtil;
+import com.liferay.portal.tools.db.schema.importer.jdbc.DataSourceFactoryUtil;
 
 import java.io.File;
-import java.io.Reader;
-
-import java.math.BigDecimal;
+import java.io.FileFilter;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 
-import java.sql.Blob;
-import java.sql.Clob;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.sql.Timestamp;
-import java.sql.Types;
-
-import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
-import java.util.TreeMap;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -61,429 +47,176 @@ import javax.sql.DataSource;
 public class DBSchemaImporterProcess {
 
 	public DBSchemaImporterProcess(
-		String path, DataSource sourceDataSource, DataSource targetDataSource) {
+			String path, String sourceJDBCURL, String sourcePassword,
+			String sourceUser, String targetJDBCURL, String targetPassword,
+			String targetUser)
+		throws Exception {
 
 		_path = path;
-		_sourceDataSource = sourceDataSource;
-		_targetDataSource = targetDataSource;
+		_sourceJDBCURL = sourceJDBCURL;
+		_sourcePassword = sourcePassword;
+		_sourceUser = sourceUser;
+		_targetJDBCURL = targetJDBCURL;
+		_targetPassword = targetPassword;
+		_targetUser = targetUser;
+
+		_sourceDataSource = DataSourceFactoryUtil.initDataSource(
+			sourceJDBCURL, sourcePassword, sourceUser);
+
+		_targetDataSource = DataSourceFactoryUtil.initDataSource(
+			_targetJDBCURL, _targetPassword, _targetUser);
+
+		_targetCharsetEncoding = _getSessionCharsetEncoding(_targetDataSource);
 	}
 
 	public void run() throws Exception {
-		_runSQLTemplate(
-			_targetDataSource, _readFile(new File(_path, "tables.sql")));
+		_createTables();
 
-		_loadColumnNamesMap(
-			_sourceColumnNamesMap, _sourceColumnsType, _sourceDataSource);
-		_loadColumnNamesMap(
-			_targetColumnNamesMap, _targetColumnsType, _targetDataSource);
-
-		AutoBatchPreparedStatementUtil.start();
+		_createIndexes();
 
 		_copyTables();
-
-		AutoBatchPreparedStatementUtil.stop();
-
-		_runSQLTemplate(
-			_targetDataSource, _readFile(new File(_path, "indexes.sql")));
 
 		_executorService.shutdownNow();
 
 		_executorService.awaitTermination(10, TimeUnit.SECONDS);
 	}
 
-	private void _copyTable(
-			Connection sourceConnection, String sourceTableName,
-			Connection targetConnection, String targetTableName)
-		throws Exception {
+	private void _copyTables() throws Exception {
+		AutoBatchPreparedStatementUtil.start();
 
-		List<String> sourceColumnNames = _sourceColumnNamesMap.get(
-			sourceTableName);
+		Set<Future<?>> futures = Collections.newSetFromMap(
+			new ConcurrentHashMap<>());
+		ThrowableCollector throwableCollector = new ThrowableCollector();
 
-		String selectSQL = StringBundler.concat(
-			"select ", StringUtil.merge(sourceColumnNames), " from ",
-			sourceTableName);
-
-		List<String> targetColumnNames = _targetColumnNamesMap.get(
-			targetTableName);
-
-		String insertSQL = StringBundler.concat(
-			"insert into ", targetTableName, "(",
-			StringUtil.merge(targetColumnNames), ") values (",
-			StringUtil.merge(
-				Collections.nCopies(targetColumnNames.size(), "?")),
-			")");
-
-		try (PreparedStatement preparedStatement1 =
-				sourceConnection.prepareStatement(selectSQL);
-			PreparedStatement preparedStatement2 =
-				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-					targetConnection, insertSQL)) {
-
-			preparedStatement1.setFetchSize(_FETCH_SIZE);
-
-			try (ResultSet resultSet = preparedStatement1.executeQuery()) {
-				while (resultSet.next()) {
-					for (int i = 0; i < sourceColumnNames.size(); i++) {
-						String columnName = sourceColumnNames.get(i);
-
-						_getAndSetColumn(
-							columnName, i + 1, preparedStatement2, resultSet,
-							_sourceColumnsType.get(
-								sourceTableName + "." + columnName),
-							_targetColumnsType.get(
-								targetTableName + "." +
-									targetColumnNames.get(i)));
+		futures.add(
+			_executorService.submit(
+				() -> {
+					try {
+						new DBCopyTablesProcess(
+							_sourceDataSource, _targetDataSource
+						).run();
+					}
+					catch (Exception exception) {
+						throwableCollector.collect(exception);
 					}
 
-					preparedStatement2.addBatch();
-				}
-			}
+					return null;
+				}));
 
-			preparedStatement2.executeBatch();
-		}
-	}
-
-	private void _copyTable(String sourceTableName, String targetTableName) {
-		try (Connection sourceConnection = _sourceDataSource.getConnection();
-			Connection targetConnection = _targetDataSource.getConnection()) {
-
-			_copyTable(
-				sourceConnection, sourceTableName, targetConnection,
-				targetTableName);
-		}
-		catch (Exception exception) {
-			_log.error(exception);
-		}
-	}
-
-	private void _copyTables() throws Exception {
-		List<Future<?>> futures = new ArrayList<>();
-
-		ExecutorService executorService = Executors.newFixedThreadPool(5);
-
-		Set<String> sourceTableNames = _sourceColumnNamesMap.keySet();
-		Set<String> targetTableNames = _targetColumnNamesMap.keySet();
-
-		Iterator<String> sourceIterator = sourceTableNames.iterator();
-		Iterator<String> targetIterator = targetTableNames.iterator();
-
-		while (sourceIterator.hasNext()) {
-			String sourceTableName = sourceIterator.next();
-			String targetTableName = targetIterator.next();
-
+		for (String partitionName : _partitionNames) {
 			futures.add(
-				executorService.submit(
-					() -> _copyTable(sourceTableName, targetTableName)));
+				_executorService.submit(
+					() -> {
+						try {
+							new DBCopyTablesProcess(
+								DataSourceFactoryUtil.initDataSource(
+									_sourceJDBCURL, _sourcePassword,
+									_sourceUser, partitionName),
+								DataSourceFactoryUtil.initDataSource(
+									_targetJDBCURL, _targetPassword,
+									_targetUser, partitionName)
+							).run();
+						}
+						catch (Exception exception) {
+							throwableCollector.collect(exception);
+						}
+
+						return null;
+					}));
 		}
 
 		for (Future<?> future : futures) {
 			future.get();
 		}
+
+		AutoBatchPreparedStatementUtil.stop();
+
+		Throwable throwable = throwableCollector.getThrowable();
+
+		if (throwable != null) {
+			ReflectionUtil.throwException(throwable);
+		}
 	}
 
-	private void _getAndSetColumn(
-			String columnName, int index, PreparedStatement preparedStatement,
-			ResultSet resultSet, int sourceType, int targetType)
-		throws Exception {
-
-		String alternativeValue = null;
-
-		if ((sourceType == Types.BIGINT) || (sourceType == Types.NUMERIC)) {
-			if ((targetType == Types.BINARY) ||
-				(targetType == Types.LONGVARBINARY) ||
-				(targetType == Types.BLOB)) {
-
-				preparedStatement.setBytes(
-					index,
-					PostgreSQLJDBCUtil.getLargeObject(resultSet, columnName));
-
-				return;
-			}
-
-			long value = resultSet.getLong(columnName);
-
-			if ((value == 0L) && resultSet.wasNull()) {
-				preparedStatement.setNull(index, targetType);
-
-				return;
-			}
-
-			if ((targetType == Types.BIGINT) || (targetType == Types.NUMERIC)) {
-				preparedStatement.setLong(index, value);
-
-				return;
-			}
-
-			alternativeValue = String.valueOf(value);
-		}
-		else if ((sourceType == Types.BINARY) ||
-				 (sourceType == Types.LONGVARBINARY)) {
-
-			byte[] value = resultSet.getBytes(columnName);
-
-			if (value == null) {
-				preparedStatement.setNull(index, targetType);
-
-				return;
-			}
-
-			if ((targetType == Types.BINARY) ||
-				(targetType == Types.LONGVARBINARY)) {
-
-				preparedStatement.setBytes(index, value);
-
-				return;
-			}
-			else if (targetType == Types.BIGINT) {
-				PostgreSQLJDBCUtil.setLargeObject(
-					preparedStatement, index, value);
-
-				return;
-			}
-
-			alternativeValue = new String(value);
-		}
-		else if (sourceType == Types.BLOB) {
-			Blob value = resultSet.getBlob(columnName);
-
-			if (value == null) {
-				preparedStatement.setNull(index, targetType);
-
-				return;
-			}
-
-			if (targetType == Types.BLOB) {
-				preparedStatement.setBlob(index, value);
-
-				return;
-			}
-			else if (targetType == Types.BIGINT) {
-				PostgreSQLJDBCUtil.setLargeObject(
-					preparedStatement, index,
-					value.getBytes(1, (int)value.length()));
-
-				return;
-			}
-
-			alternativeValue = new String(
-				value.getBytes(1, (int)value.length()));
-		}
-		else if ((sourceType == Types.BOOLEAN) || (sourceType == Types.BIT)) {
-			boolean value = resultSet.getBoolean(columnName);
-
-			if (!value && resultSet.wasNull()) {
-				preparedStatement.setNull(index, targetType);
-
-				return;
-			}
-
-			if ((targetType == Types.BOOLEAN) || (targetType == Types.BIT)) {
-				preparedStatement.setBoolean(index, value);
-
-				return;
-			}
-
-			alternativeValue = value ? "1" : "0";
-		}
-		else if (sourceType == Types.CLOB) {
-			Clob value = resultSet.getClob(columnName);
-
-			if (value == null) {
-				preparedStatement.setNull(index, targetType);
-
-				return;
-			}
-
-			if (targetType == Types.CLOB) {
-				preparedStatement.setClob(index, value);
-
-				return;
-			}
-
-			try (Reader reader = value.getCharacterStream();
-				UnsyncBufferedReader unsyncBufferedReader =
-					new UnsyncBufferedReader(reader)) {
-
-				StringBundler sb = new StringBundler();
-
-				String line = null;
-
-				while ((line = unsyncBufferedReader.readLine()) != null) {
-					if (sb.length() != 0) {
-						sb.append("\n");
-					}
-
-					sb.append(line);
-				}
-
-				alternativeValue = sb.toString();
-			}
-		}
-		else if (sourceType == Types.DECIMAL) {
-			BigDecimal value = resultSet.getBigDecimal(columnName);
-
-			if (value == null) {
-				preparedStatement.setNull(index, targetType);
-
-				return;
-			}
-
-			if (targetType == Types.DECIMAL) {
-				preparedStatement.setBigDecimal(index, value);
-
-				return;
-			}
-
-			alternativeValue = value.toString();
-		}
-		else if (sourceType == Types.DOUBLE) {
-			double value = resultSet.getDouble(columnName);
-
-			if ((value == 0.0) && resultSet.wasNull()) {
-				preparedStatement.setNull(index, targetType);
-
-				return;
-			}
-
-			if (targetType == Types.DOUBLE) {
-				preparedStatement.setDouble(index, value);
-
-				return;
-			}
-
-			alternativeValue = String.valueOf(value);
-		}
-		else if (sourceType == Types.FLOAT) {
-			float value = resultSet.getFloat(columnName);
-
-			if ((value == 0.0F) && resultSet.wasNull()) {
-				preparedStatement.setNull(index, targetType);
-
-				return;
-			}
-
-			if (targetType == Types.FLOAT) {
-				preparedStatement.setFloat(index, value);
-
-				return;
-			}
-
-			alternativeValue = String.valueOf(value);
-		}
-		else if (sourceType == Types.INTEGER) {
-			int value = resultSet.getInt(columnName);
-
-			if ((value == 0) && resultSet.wasNull()) {
-				preparedStatement.setNull(index, targetType);
-
-				return;
-			}
-
-			if (targetType == Types.INTEGER) {
-				preparedStatement.setInt(index, value);
-
-				return;
-			}
-
-			alternativeValue = String.valueOf(value);
-		}
-		else if ((sourceType == Types.LONGVARCHAR) ||
-				 (sourceType == Types.VARCHAR)) {
-
-			String value = resultSet.getString(columnName);
-
-			if (value == null) {
-				preparedStatement.setNull(index, targetType);
-
-				return;
-			}
-
-			if ((targetType == Types.LONGNVARCHAR) ||
-				(targetType == Types.VARCHAR)) {
-
-				preparedStatement.setString(index, value);
-
-				return;
-			}
-
-			alternativeValue = value;
-		}
-		else if (sourceType == Types.TIMESTAMP) {
-			Timestamp value = resultSet.getTimestamp(columnName);
-
-			if (value == null) {
-				preparedStatement.setNull(index, targetType);
-
-				return;
-			}
-
-			if (targetType == Types.TIMESTAMP) {
-				preparedStatement.setTimestamp(index, value);
-
-				return;
-			}
-
-			alternativeValue = value.toString();
-		}
-		else if ((sourceType == Types.TINYINT) ||
-				 (sourceType == Types.SMALLINT)) {
-
-			short value = resultSet.getShort(columnName);
-
-			if ((value == 0) && resultSet.wasNull()) {
-				preparedStatement.setNull(index, targetType);
-
-				return;
-			}
-
-			if ((targetType == Types.TINYINT) ||
-				(targetType == Types.SMALLINT)) {
-
-				preparedStatement.setShort(index, value);
-
-				return;
-			}
-
-			alternativeValue = String.valueOf(value);
-		}
-		else {
-			throw new PortalException("Invalid type " + sourceType);
-		}
-
-		_setColumn(index, preparedStatement, targetType, alternativeValue);
+	private void _createIndexes() throws Exception {
+		_executeFilesSQL("indexes.sql");
 	}
 
-	private void _loadColumnNamesMap(
-			Map<String, List<String>> columnNamesMap,
-			Map<String, Integer> columnTypes, DataSource dataSource)
+	private void _createTables() throws Exception {
+		_runSQLTemplate(
+			_targetDataSource, _readFile(new File(_path, "tables.sql")));
+
+		_executeFilesSQL("_tables.sql");
+	}
+
+	private void _executeFilesSQL(String suffix) throws Exception {
+		File[] files = _listFiles(suffix);
+
+		StringBundler sb = new StringBundler();
+
+		int count = 0;
+
+		for (File file : files) {
+			sb.append(_readFile(file));
+
+			if ((++count % _COMPANY_BATCH_SIZE) == 0) {
+				_runSQLTemplate(_targetDataSource, sb.toString());
+
+				sb.setIndex(0);
+			}
+		}
+
+		if (sb.index() > 0) {
+			_runSQLTemplate(_targetDataSource, sb.toString());
+		}
+	}
+
+	private String _getSessionCharsetEncoding(DataSource dataSource)
 		throws Exception {
 
 		try (Connection connection = dataSource.getConnection()) {
 			DatabaseMetaData databaseMetaData = connection.getMetaData();
 
-			try (ResultSet resultSet = databaseMetaData.getColumns(
-					connection.getCatalog(), connection.getSchema(), null,
-					null)) {
+			if (!StringUtil.startsWith(
+					GetterUtil.getString(
+						databaseMetaData.getDatabaseProductName()),
+					"MySQL")) {
 
-				while (resultSet.next()) {
-					String tableName = resultSet.getString("TABLE_NAME");
-					String columnName = resultSet.getString("COLUMN_NAME");
+				return null;
+			}
 
-					List<String> columnNames = columnNamesMap.computeIfAbsent(
-						tableName, key -> new ArrayList<>());
+			try (PreparedStatement preparedStatement =
+					connection.prepareStatement(
+						"select variable_value from performance_schema." +
+							"session_variables where variable_name = " +
+								"'character_set_client'");
+				ResultSet resultSet = preparedStatement.executeQuery()) {
 
-					columnNames.add(columnName);
-
-					columnTypes.put(
-						tableName + "." + columnName,
-						resultSet.getInt("DATA_TYPE"));
+				if (resultSet.next()) {
+					return resultSet.getString("variable_value");
 				}
+
+				return "utf8";
 			}
 		}
+	}
 
-		for (List<String> columnNames : columnNamesMap.values()) {
-			Collections.sort(columnNames, String.CASE_INSENSITIVE_ORDER);
-		}
+	private File[] _listFiles(String suffix) {
+		File dir = new File(_path);
+
+		return dir.listFiles(
+			new FileFilter() {
+
+				@Override
+				public boolean accept(File file) {
+					if (file.isDirectory()) {
+						return false;
+					}
+
+					return StringUtil.endsWith(file.getName(), suffix);
+				}
+
+			});
 	}
 
 	private void _preprocessSQLTemplate(String template) throws Exception {
@@ -518,7 +251,28 @@ public class DBSchemaImporterProcess {
 					sb.setIndex(0);
 
 					if (StringUtil.startsWith(sql, "create or replace rule")) {
-						_syncSQLs.add(sql);
+						_syncFinalSQLs.add(sql);
+					}
+					else if (StringUtil.startsWith(
+								sql, "create schema if not exists")) {
+
+						String[] parts = StringUtil.split(sql, CharPool.SPACE);
+
+						String partitionName = StringUtil.removeChar(
+							parts[5], CharPool.SEMICOLON);
+
+						_partitionNames.add(partitionName);
+
+						if (_targetCharsetEncoding != null) {
+							_syncInitialSQLs.add(
+								StringBundler.concat(
+									"create schema if not exists ",
+									partitionName, " character set ",
+									_targetCharsetEncoding));
+						}
+						else {
+							_syncInitialSQLs.add(sql);
+						}
 					}
 					else {
 						_asyncSQLs.add(sql);
@@ -538,7 +292,18 @@ public class DBSchemaImporterProcess {
 
 		_preprocessSQLTemplate(template);
 
+		for (String sql : _syncInitialSQLs) {
+			try (Connection connection = dataSource.getConnection();
+				Statement statement = connection.createStatement()) {
+
+				statement.executeUpdate(sql);
+			}
+		}
+
+		_syncInitialSQLs.clear();
+
 		List<Future<?>> futures = new ArrayList<>();
+		ThrowableCollector throwableCollector = new ThrowableCollector();
 
 		for (String sql : _asyncSQLs) {
 			futures.add(
@@ -551,7 +316,7 @@ public class DBSchemaImporterProcess {
 							statement.executeUpdate(sql);
 						}
 						catch (Exception exception) {
-							_log.error(exception);
+							throwableCollector.collect(exception);
 						}
 					}));
 		}
@@ -562,7 +327,13 @@ public class DBSchemaImporterProcess {
 			future.get();
 		}
 
-		for (String sql : _syncSQLs) {
+		Throwable throwable = throwableCollector.getThrowable();
+
+		if (throwable != null) {
+			ReflectionUtil.throwException(throwable);
+		}
+
+		for (String sql : _syncFinalSQLs) {
 			try (Connection connection = dataSource.getConnection();
 				Statement statement = connection.createStatement()) {
 
@@ -570,80 +341,26 @@ public class DBSchemaImporterProcess {
 			}
 		}
 
-		_syncSQLs.clear();
+		_syncFinalSQLs.clear();
 	}
 
-	private void _setColumn(
-			int index, PreparedStatement preparedStatement, int targetType,
-			String value)
-		throws Exception {
-
-		if ((targetType == Types.BIGINT) || (targetType == Types.NUMERIC)) {
-			preparedStatement.setLong(index, GetterUtil.getLong(value));
-		}
-		else if ((targetType == Types.BIT) || (targetType == Types.BOOLEAN)) {
-			preparedStatement.setBoolean(index, GetterUtil.getBoolean(value));
-		}
-		else if ((targetType == Types.BLOB) ||
-				 (targetType == Types.LONGVARBINARY) ||
-				 (targetType == Types.BINARY)) {
-
-			preparedStatement.setBytes(index, Base64.decode(value));
-		}
-		else if ((targetType == Types.CLOB) ||
-				 (targetType == Types.LONGVARCHAR) ||
-				 (targetType == Types.VARCHAR)) {
-
-			preparedStatement.setString(index, value);
-		}
-		else if (targetType == Types.DECIMAL) {
-			preparedStatement.setBigDecimal(
-				index, (BigDecimal)GetterUtil.get(value, BigDecimal.ZERO));
-		}
-		else if (targetType == Types.DOUBLE) {
-			preparedStatement.setDouble(index, GetterUtil.getDouble(value));
-		}
-		else if (targetType == Types.FLOAT) {
-			preparedStatement.setFloat(index, GetterUtil.getFloat(value));
-		}
-		else if (targetType == Types.INTEGER) {
-			preparedStatement.setInt(index, GetterUtil.getInteger(value));
-		}
-		else if ((targetType == Types.SMALLINT) ||
-				 (targetType == Types.TINYINT)) {
-
-			preparedStatement.setShort(index, GetterUtil.getShort(value));
-		}
-		else if (targetType == Types.TIMESTAMP) {
-			DateFormat dateFormat = DateUtil.getISOFormat();
-
-			Date date = dateFormat.parse(value);
-
-			preparedStatement.setTimestamp(
-				index, new Timestamp(date.getTime()));
-		}
-		else {
-			throw new PortalException("Invalid type: " + targetType);
-		}
-	}
-
-	private static final int _FETCH_SIZE = 2500;
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DBSchemaImporterProcess.class);
+	private static final int _COMPANY_BATCH_SIZE = 5;
 
 	private final List<String> _asyncSQLs = new ArrayList<>();
 	private final ExecutorService _executorService =
 		Executors.newFixedThreadPool(5);
+	private final List<String> _partitionNames = new ArrayList<>();
 	private final String _path;
-	private final Map<String, List<String>> _sourceColumnNamesMap =
-		new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
-	private final Map<String, Integer> _sourceColumnsType = new HashMap<>();
 	private final DataSource _sourceDataSource;
-	private final List<String> _syncSQLs = new ArrayList<>();
-	private final Map<String, List<String>> _targetColumnNamesMap =
-		new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
-	private final Map<String, Integer> _targetColumnsType = new HashMap<>();
+	private final String _sourceJDBCURL;
+	private final String _sourcePassword;
+	private final String _sourceUser;
+	private final List<String> _syncFinalSQLs = new ArrayList<>();
+	private final List<String> _syncInitialSQLs = new ArrayList<>();
+	private final String _targetCharsetEncoding;
 	private final DataSource _targetDataSource;
+	private final String _targetJDBCURL;
+	private final String _targetPassword;
+	private final String _targetUser;
 
 }

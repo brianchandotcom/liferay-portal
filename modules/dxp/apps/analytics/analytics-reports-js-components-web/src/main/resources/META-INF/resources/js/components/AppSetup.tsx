@@ -85,22 +85,24 @@ const AppSetup: React.FC<IAppSetupProps> = ({
 
 	if (data && !data.connectedToAnalyticsCloud) {
 		if (data.isAdmin) {
-			<EmptyState
-				description={Liferay.Language.get(
-					'in-order-to-view-asset-performance,-your-liferay-dxp-instance-has-to-be-connected-with-liferay-analytics-cloud'
-				)}
-				title={Liferay.Language.get(
-					'connect-to-liferay-analytics-cloud'
-				)}
-			>
-				<ClayLink
-					button
-					displayType="secondary"
-					href={data.analyticsSettingsPortletURL}
+			return (
+				<EmptyState
+					description={Liferay.Language.get(
+						'in-order-to-view-asset-performance,-your-liferay-dxp-instance-has-to-be-connected-with-liferay-analytics-cloud'
+					)}
+					title={Liferay.Language.get(
+						'connect-to-liferay-analytics-cloud'
+					)}
 				>
-					{Liferay.Language.get('connect')}
-				</ClayLink>
-			</EmptyState>;
+					<ClayLink
+						button
+						displayType="secondary"
+						href={data.analyticsSettingsPortletURL}
+					>
+						{Liferay.Language.get('connect')}
+					</ClayLink>
+				</EmptyState>
+			);
 		}
 
 		return (

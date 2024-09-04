@@ -15,7 +15,6 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageEngineManager;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
@@ -45,12 +44,6 @@ public class DLFileEntryModelDocumentContributor
 		try {
 			if (_log.isDebugEnabled()) {
 				_log.debug("Indexing document file entry " + dlFileEntry);
-			}
-
-			if (!FeatureFlagManagerUtil.isEnabled(
-					dlFileEntry.getCompanyId(), "LPD-30087")) {
-
-				return;
 			}
 
 			_addFileEntryTypeAttributes(document, dlFileEntry.getFileVersion());

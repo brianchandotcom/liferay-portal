@@ -6,7 +6,9 @@
 package com.liferay.dynamic.data.mapping.form.web.internal.portlet.action;
 
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
+import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceReport;
+import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceReportLocalService;
 import com.liferay.dynamic.data.mapping.util.DDMFormReportDataUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -17,6 +19,9 @@ import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
+import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -48,10 +53,33 @@ public class GetFormReportDataMVCResourceCommand
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		try {
-			long formInstanceId = ParamUtil.getLong(
-				resourceRequest, "formInstanceId");
+		long formInstanceId = ParamUtil.getLong(
+			resourceRequest, "formInstanceId");
 
+		DDMFormInstance ddmFormInstance =
+			_ddmFormInstanceLocalService.fetchDDMFormInstance(formInstanceId);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if ((ddmFormInstance == null) ||
+			!_ddmFormInstanceModelResourcePermission.contains(
+				GuestOrUserUtil.getPermissionChecker(), formInstanceId,
+				ActionKeys.VIEW) ||
+			!themeDisplay.isSignedIn()) {
+
+			JSONPortletResponseUtil.writeJSON(
+				resourceRequest, resourceResponse,
+				JSONUtil.put(
+					"errorMessage",
+					_language.get(
+						_portal.getHttpServletRequest(resourceRequest),
+						"your-request-failed-to-complete")));
+
+			return;
+		}
+
+		try {
 			DDMFormInstanceReport ddmFormInstanceReport =
 				_ddmFormInstanceReportLocalService.
 					getFormInstanceReportByFormInstanceId(formInstanceId);
@@ -79,15 +107,9 @@ public class GetFormReportDataMVCResourceCommand
 						portletNamespace + "formInstanceId", formInstanceId)
 				).put(
 					"lastModifiedDate",
-					() -> {
-						ThemeDisplay themeDisplay =
-							(ThemeDisplay)resourceRequest.getAttribute(
-								WebKeys.THEME_DISPLAY);
-
-						return DDMFormReportDataUtil.getLastModifiedDate(
-							ddmFormInstanceReport, themeDisplay.getLocale(),
-							themeDisplay.getTimeZone());
-					}
+					DDMFormReportDataUtil.getLastModifiedDate(
+						ddmFormInstanceReport, themeDisplay.getLocale(),
+						themeDisplay.getTimeZone())
 				).put(
 					"portletNamespace", portletNamespace
 				).put(
@@ -112,6 +134,15 @@ public class GetFormReportDataMVCResourceCommand
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		GetFormReportDataMVCResourceCommand.class);
+
+	@Reference
+	private DDMFormInstanceLocalService _ddmFormInstanceLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.dynamic.data.mapping.model.DDMFormInstance)"
+	)
+	private ModelResourcePermission<DDMFormInstance>
+		_ddmFormInstanceModelResourcePermission;
 
 	@Reference
 	private DDMFormInstanceReportLocalService

@@ -5,10 +5,7 @@
 
 package com.liferay.portal.tools.db.schema.importer;
 
-import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
-
-import javax.sql.DataSource;
+import com.liferay.portal.tools.db.schema.importer.jdbc.ConnectionConfigUtil;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -26,12 +23,7 @@ public class DBSchemaImporter {
 		Options options = _getOptions();
 
 		if ((args.length != 0) && args[0].equals("--help")) {
-			new HelpFormatter(
-			).printHelp(
-				"Liferay Portal Tools Database Schema Importer", options
-			);
-
-			System.exit(_LIFERAY_COMMON_EXIT_CODE_HELP);
+			_printHelpAndExit(options);
 		}
 
 		CommandLineParser commandLineParser = new DefaultParser();
@@ -44,25 +36,23 @@ public class DBSchemaImporter {
 		catch (ParseException parseException) {
 			System.err.println(parseException.getMessage());
 
-			new HelpFormatter(
-			).printHelp(
-				"Liferay Portal Tools Database Schema Importer", options
-			);
-
-			System.exit(_LIFERAY_COMMON_EXIT_CODE_HELP);
+			_printHelpAndExit(options);
 		}
 
 		try {
+			ConnectionConfigUtil.setBatchSize(
+				commandLine.getOptionValue("jdbc-batch-size"));
+			ConnectionConfigUtil.setFetchSize(
+				commandLine.getOptionValue("jdbc-fetch-size"));
+
 			new DBSchemaImporterProcess(
 				commandLine.getOptionValue("path"),
-				_getDataSource(
-					commandLine.getOptionValue("source-jdbc-url"),
-					commandLine.getOptionValue("source-password"),
-					commandLine.getOptionValue("source-user")),
-				_getDataSource(
-					commandLine.getOptionValue("target-jdbc-url"),
-					commandLine.getOptionValue("target-password"),
-					commandLine.getOptionValue("target-user"))
+				commandLine.getOptionValue("source-jdbc-url"),
+				commandLine.getOptionValue("source-password"),
+				commandLine.getOptionValue("source-user"),
+				commandLine.getOptionValue("target-jdbc-url"),
+				commandLine.getOptionValue("target-password"),
+				commandLine.getOptionValue("target-user")
 			).run();
 
 			System.exit(_LIFERAY_COMMON_EXIT_CODE_OK);
@@ -74,39 +64,15 @@ public class DBSchemaImporter {
 		}
 	}
 
-	private static DataSource _getDataSource(
-			String jdbcURL, String password, String userName)
-		throws Exception {
-
-		String driverClassName = "com.mysql.cj.jdbc.Driver";
-
-		if (jdbcURL.indexOf("postgresql") > 0) {
-			driverClassName = "org.postgresql.Driver";
-		}
-
-		Class.forName(driverClassName);
-
-		HikariConfig hikariConfig = new HikariConfig();
-
-		hikariConfig.setDriverClassName(driverClassName);
-		hikariConfig.setJdbcUrl(jdbcURL);
-		hikariConfig.setPassword(password);
-		hikariConfig.setUsername(userName);
-
-		hikariConfig.setConnectionTimeout(30000);
-		hikariConfig.setIdleTimeout(600000);
-		hikariConfig.setMaximumPoolSize(10);
-		hikariConfig.setMaxLifetime(0);
-		hikariConfig.setMinimumIdle(10);
-		hikariConfig.setTransactionIsolation("TRANSACTION_READ_UNCOMMITTED");
-
-		return new HikariDataSource(hikariConfig);
-	}
-
 	private static Options _getOptions() {
 		Options options = new Options();
 
 		options.addOption(null, "help", false, "Print help message.");
+		options.addOption(
+			null, "jdbc-batch-size", true, "Set the JDBC batch size.");
+		options.addOption(
+			null, "jdbc-fetch-size", true,
+			"Set the JDBC result set fetch size.");
 		options.addRequiredOption(
 			null, "path", true, "Set the path of the source SQL files.");
 		options.addRequiredOption(
@@ -125,6 +91,15 @@ public class DBSchemaImporter {
 			null, "target-user", true, "Set the target database user.");
 
 		return options;
+	}
+
+	private static void _printHelpAndExit(Options options) {
+		new HelpFormatter(
+		).printHelp(
+			"Liferay Portal Tools Database Schema Importer", options
+		);
+
+		System.exit(_LIFERAY_COMMON_EXIT_CODE_HELP);
 	}
 
 	/**

@@ -87,7 +87,7 @@ portletDisplay.setURLBack(backURL);
 
 								<c:choose>
 									<c:when test="<%= commercePaymentEntryDisplayContext.isRelatedToOrder() %>">
-										<a href="<%= commercePaymentEntryDisplayContext.getRelatedToLink() %>">
+										<a href="<%= commercePaymentEntryDisplayContext.getRelatedToURL() %>">
 											<p class="mb-0">#<%= commercePaymentEntryDisplayContext.getRelatedToClassPK() %></p>
 										</a>
 									</c:when>

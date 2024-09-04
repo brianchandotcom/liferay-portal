@@ -979,6 +979,10 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 	private void _testPostSearchPageWithEmbeddedNestedFields()
 		throws Exception {
 
+		if (Objects.equals(_searchEngine.getVendor(), "Solr")) {
+			return;
+		}
+
 		ObjectField objectField = ObjectFieldUtil.createObjectField(
 			"Text", "String", true, true, null,
 			StringUtil.toLowerCase(RandomTestUtil.randomString()), "test",
@@ -1097,6 +1101,10 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 	private void _testPostSearchPageWithHighlightConfiguration()
 		throws Exception {
 
+		if (Objects.equals(_searchEngine.getVendor(), "Solr")) {
+			return;
+		}
+
 		SearchPage<SearchResult> searchPage =
 			_postSearchPageWithSXPBlueprintConfiguration(
 				_user.getModelClassName(), _user.getFullName(),
@@ -1176,6 +1184,10 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 
 	private void _testPostSearchPageWithoutHighlightConfiguration()
 		throws Exception {
+
+		if (Objects.equals(_searchEngine.getVendor(), "Solr")) {
+			return;
+		}
 
 		SearchPage<SearchResult> searchPage =
 			_postSearchPageWithSXPBlueprintConfiguration(

@@ -13,6 +13,9 @@ import OverviewMetric, {
 	TrendClassification,
 } from '../components/OverviewMetric';
 import {AssetTypes, MetricName, MetricType} from '../types/global';
+import {useResource} from '@clayui/data-provider';
+import {fetch} from 'frontend-js-web';
+import {API_PREFIX} from '../apis/utils';
 
 type AssetMetrics = {
 	[key in AssetTypes]: MetricName[];
@@ -99,6 +102,13 @@ const OverviewMetrics = () => {
 	const [error, setError] = useState('');
 	const [loading, setLoading] = useState(true);
 
+	const result = useResource({
+		fetch,
+		link: `${window.location.origin}/${API_PREFIX}/${groupId}/asset-metrics/${assetType || AssetTypes.Undefined}?assetId=${assetId}&identityType=${filters.individual}&rangeKey=${filters.rangeSelector}&selectedMetrics=${assetMetrics[assetType || AssetTypes.Undefined]}`,
+	});
+
+	console.log({result});
+
 	useEffect(() => {
 		async function fetchData() {
 			setLoading(true);
@@ -125,7 +135,9 @@ const OverviewMetrics = () => {
 				setError('');
 			}
 			catch (error: any) {
-				console.error(error);
+				if (process.env.NODE_ENV === 'development') {
+					console.error(error);
+				}
 
 				setData(null);
 				setLoading(false);

@@ -10,6 +10,7 @@ import GlobalFilters from './components/GlobalFilters';
 import OverviewMetrics from './components/OverviewMetrics';
 
 import '../css/main.scss';
+import VisitorsBehavior from './components/VisitorsBehavior';
 
 interface AnalyticsReports {
 	contentPerformanceDataFetchURL: string;
@@ -43,6 +44,8 @@ const AnalyticsReports: React.FC<AnalyticsReports> = ({
 				<GlobalFilters />
 
 				<OverviewMetrics />
+
+				<VisitorsBehavior />
 			</AppSetup>
 		</div>
 	);

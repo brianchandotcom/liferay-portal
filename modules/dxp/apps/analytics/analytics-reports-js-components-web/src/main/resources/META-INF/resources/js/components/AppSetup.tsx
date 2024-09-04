@@ -57,7 +57,9 @@ const AppSetup: React.FC<IAppSetupProps> = ({
 				setError('');
 			}
 			catch (error: any) {
-				console.error(error);
+				if (process.env.NODE_ENV === 'development') {
+					console.error(error);
+				}
 
 				setData(null);
 				setLoading(false);

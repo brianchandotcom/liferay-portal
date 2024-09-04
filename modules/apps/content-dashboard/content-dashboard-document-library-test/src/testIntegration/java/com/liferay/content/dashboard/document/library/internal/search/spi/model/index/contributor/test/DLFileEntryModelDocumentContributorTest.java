@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -44,7 +43,6 @@ import org.junit.runner.RunWith;
 /**
  * @author Mikel Lorza
  */
-@FeatureFlags("LPD-30087")
 @RunWith(Arquillian.class)
 public class DLFileEntryModelDocumentContributorTest {
 

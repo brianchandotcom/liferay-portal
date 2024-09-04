@@ -36,7 +36,6 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -642,12 +641,6 @@ public class FileEntryContentDashboardItem
 	}
 
 	private List<DLFileEntryMetadata> _getDLFileEntryMetadatas() {
-		if (!FeatureFlagManagerUtil.isEnabled(
-				_fileEntry.getCompanyId(), "LPD-30087")) {
-
-			return null;
-		}
-
 		FileVersion fileVersion = null;
 
 		try {

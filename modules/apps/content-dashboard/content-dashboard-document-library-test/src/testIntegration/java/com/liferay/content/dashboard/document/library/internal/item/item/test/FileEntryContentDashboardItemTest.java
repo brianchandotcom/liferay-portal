@@ -52,7 +52,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -443,7 +442,6 @@ public class FileEntryContentDashboardItemTest {
 				LocaleUtil.getDefault()));
 	}
 
-	@FeatureFlags("LPD-30087")
 	@Test
 	public void testGetSpecificInformationList() throws Exception {
 		ServiceContextThreadLocal.pushServiceContext(_serviceContext);

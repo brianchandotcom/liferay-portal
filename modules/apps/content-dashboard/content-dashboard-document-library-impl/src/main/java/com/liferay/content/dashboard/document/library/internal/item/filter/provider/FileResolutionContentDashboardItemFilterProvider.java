@@ -9,7 +9,6 @@ import com.liferay.content.dashboard.document.library.internal.item.filter.FileR
 import com.liferay.content.dashboard.item.action.exception.ContentDashboardItemActionException;
 import com.liferay.content.dashboard.item.filter.ContentDashboardItemFilter;
 import com.liferay.content.dashboard.item.filter.provider.ContentDashboardItemFilterProvider;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.Portal;
 
@@ -49,12 +48,6 @@ public class FileResolutionContentDashboardItemFilterProvider
 
 	@Override
 	public boolean isShow(HttpServletRequest httpServletRequest) {
-		if (!FeatureFlagManagerUtil.isEnabled(
-				_portal.getCompanyId(httpServletRequest), "LPD-30087")) {
-
-			return false;
-		}
-
 		return true;
 	}
 

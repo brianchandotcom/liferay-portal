@@ -41,7 +41,9 @@ public class CommerceOrderPaymentConstants {
 		if (orderPaymentStatus == STATUS_AUTHORIZED) {
 			return "info";
 		}
-		else if (orderPaymentStatus == STATUS_COMPLETED) {
+		else if ((orderPaymentStatus == STATUS_COMPLETED) ||
+				 (orderPaymentStatus == STATUS_REFUNDED)) {
+
 			return "success";
 		}
 		else if (orderPaymentStatus == STATUS_PENDING) {
@@ -71,6 +73,9 @@ public class CommerceOrderPaymentConstants {
 		}
 		else if (orderPaymentStatus == STATUS_PENDING) {
 			return WorkflowConstants.LABEL_PENDING;
+		}
+		else if (orderPaymentStatus == STATUS_REFUNDED) {
+			return "refunded";
 		}
 
 		return null;

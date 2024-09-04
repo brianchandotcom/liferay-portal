@@ -69,13 +69,31 @@ test('User can nest a widget inside nested portlets widget', async ({
 		'.portlet-journal-content .portlet-topper'
 	);
 
-	await webContentDisplayTopper.waitFor({state: 'visible'});
+	const nestedPortletDropZone = page
+		.locator('.portlet-nested-portlets .portlet-dropzone.empty')
+		.first();
 
-	await webContentDisplayTopper.dragTo(
-		page.locator(
-			'.portlet-nested-portlets .portlet-column-first.yui3-dd-drop.yui3.dd-drop-over'
-		)
+	const boundingClientRect = await nestedPortletDropZone.evaluate((element) =>
+		element.getBoundingClientRect()
 	);
+
+	await webContentDisplayTopper.hover();
+
+	await page.mouse.down();
+
+	await page.mouse.move(
+		boundingClientRect.x + boundingClientRect.width / 2,
+		boundingClientRect.y + boundingClientRect.height / 2,
+		{steps: 10}
+	);
+
+	await page
+		.locator('.sortable-layout-drag-indicator')
+		.waitFor({state: 'visible'});
+
+	await page.mouse.up();
+
+	// Check if the web content display widget is added to the nested portlets widget
 
 	await expect(
 		page

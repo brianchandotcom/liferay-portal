@@ -168,6 +168,16 @@ public class ClientExtensionProjectConfigurator
 			validateClientExtensionIdsTaskProvider,
 			validateClientExtensionTaskProvider, workspaceExtension);
 
+		// if (parent is root project && has Langauge.properties file in the right place)
+			// clientExtension = new ClientExtension()
+			// - add metadata here
+			// clientExtension.type = "batch"
+			// clientExtension.name = "root-lang-reserved-name"
+			// createClientExtensionConfigTask.addClientExtension(clientExtension);
+			// transform Language.properties file to batch file with PLOEntries
+
+// ---------------------------
+
 		AtomicBoolean hasThemeCSSClientExtension = new AtomicBoolean(false);
 
 		Map<String, JsonNode> profileJsonNodes =
@@ -297,6 +307,8 @@ public class ClientExtensionProjectConfigurator
 				});
 		}
 
+		// Special lang config here
+
 		if (hasThemeCSSClientExtension.get()) {
 			_themeCSSTypeConfigurer.apply(
 				project, assembleClientExtensionTaskProvider);
@@ -310,6 +322,10 @@ public class ClientExtensionProjectConfigurator
 			createClientExtensionConfigTaskProvider, workspaceExtension);
 
 		_configureLiferayRoutes(project, workspaceExtension);
+	}
+
+	private boolean _isSpecialLanguageProject(Path dirpath) {
+		return true;
 	}
 
 	@Override
@@ -345,6 +361,16 @@ public class ClientExtensionProjectConfigurator
 
 					if (Files.exists(clientExtensionPath) &&
 						!Objects.equals(dirPath, rootDir.toPath())) {
+
+						projectDirs.add(dirPath.toFile());
+
+						return FileVisitResult.SKIP_SUBTREE;
+					}
+
+					Path langPropertiesFile = dirPath.resolve("Language.properties");
+
+					if (dirPath.getName() == "language" && Files.exists(langPropertiesFile) &&
+						Objects.equals(dirPath.getParent(), rootDir.toPath())) {
 
 						projectDirs.add(dirPath.toFile());
 
@@ -606,6 +632,10 @@ public class ClientExtensionProjectConfigurator
 		Map<String, JsonNode> profileJsonNodes = new HashMap<>();
 
 		File clientExtensionYamlFile = project.file(_CLIENT_EXTENSION_YAML);
+
+		if (!clientExtensionYamlFile.exists()) {
+			return Collections.emptyMap();
+		}
 
 		JsonNode rootJsonNode = _getJsonNode(clientExtensionYamlFile);
 

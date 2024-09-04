@@ -704,6 +704,14 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 			_reportContent = _getReportContent();
 		}
 
+		_assertLogContextContains(
+			"upgrade.report.longest.running.sqls",
+			String.format("%s:%s", upgradeProcess1ClassName, statement1));
+
+		_assertLogContextContains(
+			"upgrade.report.longest.running.sqls",
+			String.format("%s:%s", upgradeProcess2ClassName, statement2));
+
 		_assertReport(
 			String.format(
 				"Upgrade Process: %s\nSQL: %s", upgradeProcess1ClassName,
@@ -714,37 +722,30 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 				"Upgrade Process: %s\nSQL: %s", upgradeProcess2ClassName,
 				statement2));
 
-		_assertLogContextContains(
-			"upgrade.report.longest.running.sqls",
-			String.format("%s:%s", upgradeProcess1ClassName, statement1));
-
-		_assertLogContextContains(
-			"upgrade.report.longest.running.sqls",
-			String.format("%s:%s", upgradeProcess2ClassName, statement2));
-
 		Map<String, Long> sqlExecutionTimes = ReflectionTestUtil.invoke(
 			_upgradeRecorder, "getSQLExecutionTimes", new Class<?>[0]);
 
 		for (Map.Entry<String, Long> entry : sqlExecutionTimes.entrySet()) {
-			String sql = entry.getKey();
 			Long duration = entry.getValue();
+
+			String sql = entry.getKey();
 
 			String[] splitKey = sql.split("\\|");
 
-			String storedUpgradeProcessClassName = splitKey[0];
-
 			String storedSql = splitKey[1];
 
-			_assertReport(
-				String.format(
-					"Upgrade Process: %s\nSQL: %s\nDuration: %d ms",
-					storedUpgradeProcessClassName, storedSql, duration));
+			String storedUpgradeProcessClassName = splitKey[0];
 
 			_assertLogContextContains(
 				"upgrade.report.longest.running.sqls",
 				String.format(
 					"%s:%s:%d ms", storedUpgradeProcessClassName, storedSql,
 					duration));
+
+			_assertReport(
+				String.format(
+					"Upgrade Process: %s\nSQL: %s\nDuration: %d ms",
+					storedUpgradeProcessClassName, storedSql, duration));
 		}
 	}
 

@@ -311,11 +311,11 @@ function Filters({
 		let availableFieldsListLength = 0;
 
 		if (Liferay.FeatureFlags['LPD-25905']) {
-			const availableFfilterTypeFields = JSON.parse(
+			const availableFilterTypeFields = JSON.parse(
 				JSON.stringify(fields)
 			);
 
-			visit(availableFfilterTypeFields, (field: IFieldTreeItem) => {
+			visit(availableFilterTypeFields, (field: IFieldTreeItem) => {
 				if (
 					!FILTER_TYPES[
 						filterType as EFilterType
@@ -330,7 +330,7 @@ function Filters({
 				}
 			});
 
-			setAvailableFields(availableFfilterTypeFields);
+			setAvailableFields(availableFilterTypeFields);
 		}
 		else {
 			const availableFieldsList = fields.filter((item) =>

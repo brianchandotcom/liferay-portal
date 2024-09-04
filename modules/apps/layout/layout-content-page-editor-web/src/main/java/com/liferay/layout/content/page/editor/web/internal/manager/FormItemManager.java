@@ -84,15 +84,15 @@ public class FormItemManager {
 		List<String> childrenItemIds =
 			formStepContainerStyledLayoutStructureItem.getChildrenItemIds();
 
-		int stepIndex = childrenItemIds.size() - 1;
+		int initialStepIndex = childrenItemIds.size() - 1;
 
-		for (int i = 0; i < (numberOfSteps - stepIndex); i++) {
+		for (int i = initialStepIndex; i < numberOfSteps; i++) {
 			LayoutStructureItem formStepLayoutStructureItem = null;
 
-			if (i == 0) {
+			if (i == initialStepIndex) {
 				formStepLayoutStructureItem =
 					layoutStructure.getLayoutStructureItem(
-						childrenItemIds.get(stepIndex));
+						childrenItemIds.get(initialStepIndex));
 			}
 			else {
 				formStepLayoutStructureItem =
@@ -104,8 +104,8 @@ public class FormItemManager {
 			addedFragmentEntryLinks.addAll(
 				_addFormButtons(
 					formStepLayoutStructureItem, formStyledLayoutStructureItem,
-					layout, locale, layoutStructure, numberOfSteps,
-					segmentsExperienceId, stepIndex + i, serviceContext));
+					layout, locale, layoutStructure, numberOfSteps - 1,
+					segmentsExperienceId, i, serviceContext));
 		}
 
 		return addedFragmentEntryLinks;
@@ -545,37 +545,6 @@ public class FormItemManager {
 				Collections.emptyList());
 		}
 
-		List<FragmentEntryLink> fragmentEntryLinks = new ArrayList<>();
-
-		if (stepIndex == 0) {
-			fragmentEntryLinks.add(
-				_addFormButtonFragmentEntryLink(
-					layout, locale, _NEXT, segmentsExperienceId,
-					serviceContext));
-		}
-		else if (stepIndex < numberOfSteps) {
-			fragmentEntryLinks.add(
-				_addFormButtonFragmentEntryLink(
-					layout, locale, _PREVIOUS, segmentsExperienceId,
-					serviceContext));
-
-			fragmentEntryLinks.add(
-				_addFormButtonFragmentEntryLink(
-					layout, locale, _NEXT, segmentsExperienceId,
-					serviceContext));
-		}
-		else {
-			fragmentEntryLinks.add(
-				_addFormButtonFragmentEntryLink(
-					layout, locale, _PREVIOUS, segmentsExperienceId,
-					serviceContext));
-
-			fragmentEntryLinks.add(
-				_addFormButtonFragmentEntryLink(
-					layout, locale, _SUBMIT, segmentsExperienceId,
-					serviceContext));
-		}
-
 		ContainerStyledLayoutStructureItem containerStyledLayoutStructureItem =
 			(ContainerStyledLayoutStructureItem)
 				layoutStructure.addContainerStyledLayoutStructureItem(
@@ -586,9 +555,53 @@ public class FormItemManager {
 
 		containerStyledLayoutStructureItem.setContentDisplay("flex-row");
 
-		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
+		if (stepIndex == 0) {
+			FragmentEntryLink nextFormButtonFragmentEntryLink =
+				_addFormButtonFragmentEntryLink(
+					layout, locale, _NEXT, segmentsExperienceId,
+					serviceContext);
+
+			if (nextFormButtonFragmentEntryLink == null) {
+				return Collections.emptyList();
+			}
+
 			layoutStructure.addFragmentStyledLayoutStructureItem(
-				fragmentEntryLink.getFragmentEntryLinkId(),
+				nextFormButtonFragmentEntryLink.getFragmentEntryLinkId(),
+				containerStyledLayoutStructureItem.getItemId(), -1);
+
+			return Collections.singletonList(nextFormButtonFragmentEntryLink);
+		}
+
+		List<FragmentEntryLink> fragmentEntryLinks = new ArrayList<>();
+
+		FragmentEntryLink previousFormButtonFragmentEntryLink =
+			_addFormButtonFragmentEntryLink(
+				layout, locale, _PREVIOUS, segmentsExperienceId,
+				serviceContext);
+
+		if (previousFormButtonFragmentEntryLink != null) {
+			fragmentEntryLinks.add(previousFormButtonFragmentEntryLink);
+
+			layoutStructure.addFragmentStyledLayoutStructureItem(
+				previousFormButtonFragmentEntryLink.getFragmentEntryLinkId(),
+				containerStyledLayoutStructureItem.getItemId(), -1);
+		}
+
+		String type = _SUBMIT;
+
+		if (stepIndex < numberOfSteps) {
+			type = _NEXT;
+		}
+
+		FragmentEntryLink submitFormButtonFragmentEntryLink =
+			_addFormButtonFragmentEntryLink(
+				layout, locale, type, segmentsExperienceId, serviceContext);
+
+		if (submitFormButtonFragmentEntryLink != null) {
+			fragmentEntryLinks.add(submitFormButtonFragmentEntryLink);
+
+			layoutStructure.addFragmentStyledLayoutStructureItem(
+				submitFormButtonFragmentEntryLink.getFragmentEntryLinkId(),
 				containerStyledLayoutStructureItem.getItemId(), -1);
 		}
 

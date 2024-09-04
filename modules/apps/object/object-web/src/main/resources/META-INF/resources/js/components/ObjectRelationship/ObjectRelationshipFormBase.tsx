@@ -348,6 +348,7 @@ export function ObjectRelationshipFormBase({
 				className={className}
 				disabled={readonly}
 				error={errors.type}
+				id="lfr-objects__object-relationship-form-base-type"
 				items={objectRelationshipTypes}
 				label={Liferay.Language.get('type')}
 				onSelectionChange={(value) => {

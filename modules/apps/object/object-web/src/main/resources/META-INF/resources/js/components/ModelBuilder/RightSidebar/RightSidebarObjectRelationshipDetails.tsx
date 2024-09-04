@@ -250,6 +250,7 @@ export function RightSidebarObjectRelationshipDetails({
 				<InputLocalized
 					disabled={readOnly}
 					error={errors.label}
+					id="lfr-objects__object-relationship-form-base-label"
 					label={Liferay.Language.get('label')}
 					onBlur={(event) => {
 						event.stopPropagation();
@@ -263,6 +264,7 @@ export function RightSidebarObjectRelationshipDetails({
 
 				<Input
 					disabled
+					id="lfr-objects__object-relationship-form-base-name"
 					label={Liferay.Language.get('name')}
 					required
 					value={values.name}
@@ -270,6 +272,7 @@ export function RightSidebarObjectRelationshipDetails({
 
 				<Input
 					disabled
+					id="lfr-objects__object-relationship-form-base-type"
 					label={Liferay.Language.get('type')}
 					required
 					value={
@@ -281,6 +284,7 @@ export function RightSidebarObjectRelationshipDetails({
 
 				<Input
 					disabled
+					id="lfr-objects__object-relationship-form-base-one-record-of"
 					label={
 						values.type === 'manyToMany'
 							? Liferay.Language.get('many-records-of')
@@ -292,6 +296,7 @@ export function RightSidebarObjectRelationshipDetails({
 
 				<Input
 					disabled
+					id="lfr-objects__object-relationship-form-base-many-records-of"
 					label={Liferay.Language.get('many-records-of')}
 					required
 					value={objectDefinition2?.name}
@@ -303,6 +308,7 @@ export function RightSidebarObjectRelationshipDetails({
 						readOnly ||
 						(Liferay.FeatureFlags['LPS-187142'] && values.edge)
 					}
+					id="lfr-objects__object-relationship-form-base-deletion-type"
 					items={objectRelationshipDeletionTypes}
 					label={Liferay.Language.get('deletion-type')}
 					onSelectionChange={(value) => {

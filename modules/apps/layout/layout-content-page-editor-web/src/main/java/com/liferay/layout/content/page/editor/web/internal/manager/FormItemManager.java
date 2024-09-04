@@ -331,20 +331,18 @@ public class FormItemManager {
 			return Collections.emptyList();
 		}
 
-		List<String> childrenItemIds = new ArrayList<>(
-			formStepContainerStyledLayoutStructureItem.getChildrenItemIds());
+		for (String childrenItemId :
+				new ArrayList<>(
+					formStepContainerStyledLayoutStructureItem.
+						getChildrenItemIds())) {
 
-		for (String childrenItemId : childrenItemIds) {
 			FormStepLayoutStructureItem formStepLayoutStructureItem =
 				(FormStepLayoutStructureItem)
 					layoutStructure.getLayoutStructureItem(childrenItemId);
 
-			List<String> formStepLayoutStructureItemChildrenItemIds =
-				new ArrayList<>(
-					formStepLayoutStructureItem.getChildrenItemIds());
-
 			for (String formStepLayoutStructureItemChildrenItemId :
-					formStepLayoutStructureItemChildrenItemIds) {
+					new ArrayList<>(
+						formStepLayoutStructureItem.getChildrenItemIds())) {
 
 				if (!_isFormButtonsContainer(
 						formStepLayoutStructureItem,
@@ -407,12 +405,9 @@ public class FormItemManager {
 					layoutStructure.getLayoutStructureItem(
 						childrenItemIds.get(i));
 
-			List<String> formStepLayoutStructureItemChildrenItemIds =
-				new ArrayList<>(
-					formStepLayoutStructureItem.getChildrenItemIds());
-
 			for (String childrenItemId :
-					formStepLayoutStructureItemChildrenItemIds) {
+					new ArrayList<>(
+						formStepLayoutStructureItem.getChildrenItemIds())) {
 
 				if (!_isFormButtonsContainer(
 						formStepLayoutStructureItem,

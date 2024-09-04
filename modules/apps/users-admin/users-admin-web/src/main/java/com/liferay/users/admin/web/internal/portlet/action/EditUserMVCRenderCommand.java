@@ -5,6 +5,7 @@
 
 package com.liferay.users.admin.web.internal.portlet.action;
 
+import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayRenderRequest;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
@@ -44,19 +45,23 @@ public class EditUserMVCRenderCommand implements MVCRenderCommand {
 		try {
 			String portletId = _portal.getPortletId(renderRequest);
 
+			LiferayRenderRequest liferayRenderRequest =
+				(LiferayRenderRequest)renderRequest;
+
+			DynamicServletRequest dynamicServletRequest =
+				(DynamicServletRequest)
+					liferayRenderRequest.getHttpServletRequest();
+
 			if (portletId.equals(UsersAdminPortletKeys.MY_ACCOUNT)) {
 				User user = _portal.getUser(renderRequest);
-
-				LiferayRenderRequest liferayRenderRequest =
-					(LiferayRenderRequest)renderRequest;
-
-				DynamicServletRequest dynamicServletRequest =
-					(DynamicServletRequest)
-						liferayRenderRequest.getHttpServletRequest();
 
 				dynamicServletRequest.setParameter(
 					"p_u_i_d", String.valueOf(user.getUserId()));
 			}
+
+			dynamicServletRequest.setParameter(
+				"ctCollectionId",
+				String.valueOf(CTConstants.CT_COLLECTION_ID_PRODUCTION));
 
 			_portal.getSelectedUser(renderRequest);
 		}

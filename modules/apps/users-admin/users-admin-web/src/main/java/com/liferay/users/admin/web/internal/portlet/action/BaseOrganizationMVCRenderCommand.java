@@ -5,9 +5,12 @@
 
 package com.liferay.users.admin.web.internal.portlet.action;
 
+import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.portal.kernel.exception.NoSuchOrganizationException;
+import com.liferay.portal.kernel.portlet.LiferayRenderRequest;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 
 import javax.portlet.PortletException;
@@ -27,6 +30,17 @@ public abstract class BaseOrganizationMVCRenderCommand
 
 		try {
 			ActionUtil.getOrganization(renderRequest);
+
+			LiferayRenderRequest liferayRenderRequest =
+				(LiferayRenderRequest)renderRequest;
+
+			DynamicServletRequest dynamicServletRequest =
+				(DynamicServletRequest)
+					liferayRenderRequest.getHttpServletRequest();
+
+			dynamicServletRequest.setParameter(
+				"ctCollectionId",
+				String.valueOf(CTConstants.CT_COLLECTION_ID_PRODUCTION));
 		}
 		catch (Exception exception) {
 			if (exception instanceof NoSuchOrganizationException ||

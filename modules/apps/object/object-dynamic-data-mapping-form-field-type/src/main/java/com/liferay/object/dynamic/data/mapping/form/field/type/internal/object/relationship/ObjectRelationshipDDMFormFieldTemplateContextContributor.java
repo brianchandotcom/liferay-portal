@@ -55,12 +55,23 @@ public class ObjectRelationshipDDMFormFieldTemplateContextContributor
 		DDMFormField ddmFormField,
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
+		ObjectDefinition objectDefinition = _getObjectDefinition(ddmFormField);
+
 		return HashMapBuilder.<String, Object>put(
 			"apiURL", _getAPIURL(ddmFormField, ddmFormFieldRenderingContext)
 		).put(
 			"inputName", ddmFormField.getName()
 		).put(
-			"labelKey", _getLabelKey(ddmFormField)
+			"labelKey", _getLabelKey(ddmFormField, objectDefinition)
+		).put(
+			"objectDefinitionDefaultLanguageId",
+			() -> {
+				if (objectDefinition == null) {
+					return null;
+				}
+
+				return objectDefinition.getDefaultLanguageId();
+			}
 		).put(
 			"objectDefinitionId",
 			GetterUtil.getLong(ddmFormField.getProperty("objectDefinitionId"))
@@ -69,7 +80,8 @@ public class ObjectRelationshipDDMFormFieldTemplateContextContributor
 			GetterUtil.getLong(
 				ddmFormFieldRenderingContext.getProperty("objectEntryId"))
 		).put(
-			"objectFieldBusinessType", _getObjectFieldBusinessType(ddmFormField)
+			"objectFieldBusinessType",
+			_getObjectFieldBusinessType(objectDefinition)
 		).put(
 			"parameterObjectFieldName",
 			GetterUtil.getString(
@@ -100,7 +112,7 @@ public class ObjectRelationshipDDMFormFieldTemplateContextContributor
 				return value;
 			}
 		).put(
-			"valueKey", _getValueKey(ddmFormField)
+			"valueKey", _getValueKey(objectDefinition)
 		).build();
 	}
 
@@ -179,7 +191,9 @@ public class ObjectRelationshipDDMFormFieldTemplateContextContributor
 		}
 	}
 
-	private String _getLabelKey(DDMFormField ddmFormField) {
+	private String _getLabelKey(
+		DDMFormField ddmFormField, ObjectDefinition objectDefinition) {
+
 		String labelKey = GetterUtil.getString(
 			ddmFormField.getProperty("labelKey"));
 
@@ -187,10 +201,14 @@ public class ObjectRelationshipDDMFormFieldTemplateContextContributor
 			return labelKey;
 		}
 
-		ObjectField objectField = _getObjectField(ddmFormField);
+		ObjectField objectField = _getObjectField(objectDefinition);
 
 		if (objectField == null) {
 			return "id";
+		}
+
+		if (objectField.isLocalized()) {
+			return objectField.getI18nObjectFieldName();
 		}
 
 		String objectFieldName = objectField.getName();
@@ -211,9 +229,7 @@ public class ObjectRelationshipDDMFormFieldTemplateContextContributor
 						ddmFormField.getProperty("objectDefinitionId")))));
 	}
 
-	private ObjectField _getObjectField(DDMFormField ddmFormField) {
-		ObjectDefinition objectDefinition = _getObjectDefinition(ddmFormField);
-
+	private ObjectField _getObjectField(ObjectDefinition objectDefinition) {
 		if ((objectDefinition != null) &&
 			(objectDefinition.getTitleObjectFieldId() > 0)) {
 
@@ -224,8 +240,10 @@ public class ObjectRelationshipDDMFormFieldTemplateContextContributor
 		return null;
 	}
 
-	private String _getObjectFieldBusinessType(DDMFormField ddmFormField) {
-		ObjectField objectField = _getObjectField(ddmFormField);
+	private String _getObjectFieldBusinessType(
+		ObjectDefinition objectDefinition) {
+
+		ObjectField objectField = _getObjectField(objectDefinition);
 
 		if (objectField == null) {
 			return null;
@@ -234,9 +252,7 @@ public class ObjectRelationshipDDMFormFieldTemplateContextContributor
 		return objectField.getBusinessType();
 	}
 
-	private String _getValueKey(DDMFormField ddmFormField) {
-		ObjectDefinition objectDefinition = _getObjectDefinition(ddmFormField);
-
+	private String _getValueKey(ObjectDefinition objectDefinition) {
 		SystemObjectDefinitionManager systemObjectDefinitionManager =
 			_systemObjectDefinitionManagerRegistry.
 				getSystemObjectDefinitionManager(objectDefinition.getName());

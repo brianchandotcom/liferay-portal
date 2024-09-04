@@ -7,7 +7,10 @@ package com.liferay.site.navigation.site.map.web.internal.upgrade.registry;
 
 import com.liferay.portal.kernel.upgrade.BasePortletIdUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+import com.liferay.portlet.display.template.upgrade.BaseUpgradePortletPreferences;
 import com.liferay.site.navigation.site.map.web.internal.constants.SiteNavigationSiteMapPortletKeys;
+
+import javax.portlet.PortletPreferences;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -35,6 +38,27 @@ public class SiteNavigationSiteMapWebUpgradeStepRegistrator
 								SITE_NAVIGATION_SITE_MAP
 						}
 					};
+				}
+
+			});
+
+		registry.register(
+			"1.0.0", "1.0.1",
+			new BaseUpgradePortletPreferences() {
+
+				@Override
+				protected String[] getPortletIds() {
+					return new String[] {
+						SiteNavigationSiteMapPortletKeys.
+							SITE_NAVIGATION_SITE_MAP + "_INSTANCE_%"
+					};
+				}
+
+				@Override
+				protected void upgradePreferences(
+						long companyId, long ownerId, int ownerType, long plid,
+						String portletId, PortletPreferences portletPreferences)
+					throws Exception {
 				}
 
 			});

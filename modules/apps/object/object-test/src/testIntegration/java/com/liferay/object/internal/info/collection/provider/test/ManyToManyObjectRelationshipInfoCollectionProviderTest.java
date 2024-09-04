@@ -42,6 +42,7 @@ import java.io.Serializable;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -49,6 +50,8 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Jürgen Kappler
@@ -149,6 +152,76 @@ public class ManyToManyObjectRelationshipInfoCollectionProviderTest {
 			objectDefinition2ObjectEntry.getObjectEntryId(),
 			objectDefinition1ObjectEntry2.getObjectEntryId(),
 			new ServiceContext());
+
+		_assertRelatedInfoCollectionProvider(
+			_objectDefinition1, objectDefinition1ObjectEntry1,
+			objectDefinition2ObjectEntry);
+		_assertRelatedInfoCollectionProvider(
+			_objectDefinition1, objectDefinition1ObjectEntry2,
+			objectDefinition2ObjectEntry);
+		_assertRelatedInfoCollectionProvider(
+			_objectDefinition2, objectDefinition2ObjectEntry,
+			objectDefinition1ObjectEntry1, objectDefinition1ObjectEntry2);
+
+		Map<String, ServiceRegistration<?>> serviceRegistrations =
+			_objectRelationshipLocalService.getServiceRegistrations();
+
+		String serviceRegistrationKey = StringBundler.concat(
+			_objectRelationship.getCompanyId(), StringPool.POUND,
+			_objectRelationship.getObjectRelationshipId());
+
+		ServiceRegistration<?> objectRelationshipServiceRegistration =
+			serviceRegistrations.get(serviceRegistrationKey);
+
+		objectRelationshipServiceRegistration.unregister();
+
+		serviceRegistrations.remove(serviceRegistrationKey);
+
+		_assertRelatedInfoCollectionProvider(
+			_objectDefinition1, objectDefinition1ObjectEntry1,
+			objectDefinition2ObjectEntry);
+		_assertRelatedInfoCollectionProvider(
+			_objectDefinition1, objectDefinition1ObjectEntry2,
+			objectDefinition2ObjectEntry);
+		Assert.assertNull(
+			_infoItemServiceRegistry.getFirstInfoItemService(
+				RelatedInfoItemCollectionProvider.class,
+				StringBundler.concat(
+					ObjectDefinition.class.getName(), StringPool.POUND,
+					_objectDefinition2.getObjectDefinitionId())));
+
+		ObjectRelationship reverseObjectRelationship =
+			_objectRelationshipLocalService.getObjectRelationship(
+				_objectRelationship.getObjectDefinitionId2(),
+				_objectRelationship.getName());
+
+		serviceRegistrationKey = StringBundler.concat(
+			reverseObjectRelationship.getCompanyId(), StringPool.POUND,
+			reverseObjectRelationship.getObjectRelationshipId());
+
+		objectRelationshipServiceRegistration = serviceRegistrations.get(
+			serviceRegistrationKey);
+
+		objectRelationshipServiceRegistration.unregister();
+
+		serviceRegistrations.remove(serviceRegistrationKey);
+
+		Assert.assertNull(
+			_infoItemServiceRegistry.getFirstInfoItemService(
+				RelatedInfoItemCollectionProvider.class,
+				StringBundler.concat(
+					ObjectDefinition.class.getName(), StringPool.POUND,
+					_objectDefinition1.getObjectDefinitionId())));
+		Assert.assertNull(
+			_infoItemServiceRegistry.getFirstInfoItemService(
+				RelatedInfoItemCollectionProvider.class,
+				StringBundler.concat(
+					ObjectDefinition.class.getName(), StringPool.POUND,
+					_objectDefinition2.getObjectDefinitionId())));
+
+		_objectRelationshipLocalService.
+			registerObjectRelationshipsRelatedInfoCollectionProviders(
+				_objectDefinition2, _objectDefinitionLocalService);
 
 		_assertRelatedInfoCollectionProvider(
 			_objectDefinition1, objectDefinition1ObjectEntry1,

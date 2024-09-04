@@ -37,6 +37,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -269,8 +270,7 @@ public class DBCopyTablesProcess {
 				return;
 			}
 
-			valueString = new String(
-				value.getBytes(1, (int)value.length()));
+			valueString = new String(value.getBytes(1, (int)value.length()));
 		}
 		else if ((sourceType == Types.BOOLEAN) || (sourceType == Types.BIT)) {
 			boolean value = resultSet.getBoolean(columnName);
@@ -458,7 +458,7 @@ public class DBCopyTablesProcess {
 	}
 
 	private Set<String> _getViews(DataSource dataSource) throws Exception {
-		Set<String> views = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
+		Set<String> views = new HashSet<>();
 
 		try (Connection connection = dataSource.getConnection()) {
 			DatabaseMetaData databaseMetaData = connection.getMetaData();

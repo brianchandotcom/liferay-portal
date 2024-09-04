@@ -37,10 +37,12 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -55,12 +57,33 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Feliphe Marinho
  */
 public abstract class BaseNotificationType implements NotificationType {
+
+	public static void prepareGeneralVariablesTemplate(
+		Map<String, Object> termValues, String notificationId) {
+
+		HttpServletRequest httpServletRequest =
+			ServiceContextThreadLocal.getServiceContext(
+			).getRequest();
+
+		termValues.put(
+			"currentURL", PortalUtil.getCurrentURL(httpServletRequest));
+		termValues.put("locale", PortalUtil.getLocale(httpServletRequest));
+		termValues.put(
+			"portalURL", PortalUtil.getPortalURL(httpServletRequest));
+		termValues.put(
+			"request",
+			PortalUtil.getOriginalServletRequest(httpServletRequest));
+
+		termValues.put("templateId", notificationId);
+	}
 
 	@Override
 	public NotificationQueueEntry createNotificationQueueEntry(

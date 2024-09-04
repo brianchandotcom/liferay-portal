@@ -583,16 +583,10 @@ public class EmailNotificationType extends BaseNotificationType {
 			}
 
 			if (httpServletRequest != null) {
-				template.put(
-					"portalURL", portal.getPortalURL(httpServletRequest));
-				template.put(
-					"currentURL", portal.getCurrentURL(httpServletRequest));
-				template.put(
-					"locale", portal.getLocale(httpServletRequest));
-				template.put(
-					"request", portal.getOriginalServletRequest(httpServletRequest));
-				template.put(
-					"template_id", notificationTemplate.getNotificationTemplateId());
+				prepareGeneralVariablesTemplate(
+					template,
+					String.valueOf(
+						notificationTemplate.getNotificationTemplateId()));
 			}
 		}
 		finally {

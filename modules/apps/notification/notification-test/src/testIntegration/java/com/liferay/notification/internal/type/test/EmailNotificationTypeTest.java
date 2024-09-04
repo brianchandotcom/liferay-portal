@@ -44,6 +44,7 @@ import com.liferay.notification.model.NotificationTemplate;
 import com.liferay.notification.service.NotificationQueueEntryAttachmentLocalService;
 import com.liferay.notification.service.NotificationRecipientLocalServiceUtil;
 import com.liferay.notification.test.util.NotificationTemplateUtil;
+import com.liferay.notification.type.BaseNotificationType;
 import com.liferay.notification.util.NotificationRecipientSettingUtil;
 import com.liferay.object.action.trigger.ObjectActionTriggerRegistry;
 import com.liferay.object.action.util.ObjectActionThreadLocal;
@@ -113,6 +114,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -198,73 +200,20 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 
 		// Notification triggered by admin user
 
-		ObjectEntry objectEntry = objectEntryManager.addObjectEntry(
-			dtoConverterContext, childObjectDefinition,
-			new ObjectEntry() {
-				{
-					properties = HashMapBuilder.putAll(
-						childObjectEntryValues
-					).build();
-				}
-			},
-			group.getGroupKey());
-
-		Map<String, Object> termValues = _getFreeMarkerTermValues(
-			childObjectDefinition,
-			_objectEntryLocalService.getPersistedModel(objectEntry.getId()),
-			_getTermNames(
-				childObjectDefinition.getObjectDefinitionId(),
-				SetUtil.fromArray(
-					"Basic Information",
-					childObjectDefinition.getLabel(
-						LanguageUtil.getLanguageId(LocaleUtil.US)))));
-
-		String body = StringUtil.merge(termValues.keySet(), StringPool.POUND);
-
-		ObjectAction objectAction = _addNotificationTemplateObjectAction(
-			body, ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE,
-			childObjectDefinition);
-
-		objectEntryManager.updateObjectEntry(
-			TestPropsValues.getCompanyId(), dtoConverterContext,
-			objectEntry.getExternalReferenceCode(), childObjectDefinition,
-			objectEntry, group.getGroupKey());
-
-		_assertNotificationQueueEntryTermValues(
-			new ArrayList<>(termValues.values()), StringPool.POUND);
-
-		_objectActionLocalService.deleteObjectAction(objectAction);
-
-		// Notification triggered by guest user
-
-		Role guestRole = _roleLocalService.getRole(
-			TestPropsValues.getCompanyId(), RoleConstants.GUEST);
-
-		resourcePermissionLocalService.addResourcePermission(
-			guestUser.getCompanyId(), childObjectDefinition.getResourceName(),
-			ResourceConstants.SCOPE_COMPANY,
-			String.valueOf(guestUser.getCompanyId()), guestRole.getRoleId(),
-			ObjectActionKeys.ADD_OBJECT_ENTRY);
-		resourcePermissionLocalService.addResourcePermission(
-			guestUser.getCompanyId(), childObjectDefinition.getClassName(),
-			ResourceConstants.SCOPE_COMPANY,
-			String.valueOf(guestUser.getCompanyId()), guestRole.getRoleId(),
-			ActionKeys.VIEW);
-
-		objectAction = _addNotificationTemplateObjectAction(
-			body, ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
-			childObjectDefinition);
-
-		PermissionChecker originalPermissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-		String originalName = PrincipalThreadLocal.getName();
-
 		try {
-			PermissionThreadLocal.setPermissionChecker(
-				PermissionCheckerFactoryUtil.create(guestUser));
-			PrincipalThreadLocal.setName(guestUser.getUserId());
+			_pushServiceContext();
 
-			objectEntry = objectEntryManager.addObjectEntry(
+			ObjectAction objectAction = _addNotificationTemplateObjectAction(
+				null, ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE,
+				childObjectDefinition);
+
+			String notificationTemplateId =
+				objectAction.getParametersUnicodeProperties(
+				).getProperty(
+					"notificationTemplateId"
+				);
+
+			ObjectEntry objectEntry = objectEntryManager.addObjectEntry(
 				dtoConverterContext, childObjectDefinition,
 				new ObjectEntry() {
 					{
@@ -274,27 +223,112 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 					}
 				},
 				group.getGroupKey());
+
+			Map<String, Object> termValues = _getFreeMarkerTermValues(
+				childObjectDefinition,
+				_objectEntryLocalService.getPersistedModel(objectEntry.getId()),
+				_getTermNames(
+					childObjectDefinition.getObjectDefinitionId(),
+					SetUtil.fromArray(
+						"Basic Information",
+						childObjectDefinition.getLabel(
+							LanguageUtil.getLanguageId(LocaleUtil.US)))),
+				notificationTemplateId);
+
+			String body = StringUtil.merge(
+				termValues.keySet(), StringPool.POUND);
+
+			NotificationTemplate notificationTemplate =
+				notificationTemplateLocalService.getNotificationTemplate(
+					Long.valueOf(notificationTemplateId));
+
+			notificationTemplate.setBody(body);
+
+			notificationTemplateLocalService.updateNotificationTemplate(
+				notificationTemplate);
+
+			objectEntryManager.updateObjectEntry(
+				TestPropsValues.getCompanyId(), dtoConverterContext,
+				objectEntry.getExternalReferenceCode(), childObjectDefinition,
+				objectEntry, group.getGroupKey());
+
+			_assertNotificationQueueEntryTermValues(
+				new ArrayList<>(termValues.values()), StringPool.POUND);
+
+			_objectActionLocalService.deleteObjectAction(objectAction);
+
+			// Notification triggered by guest user
+
+			Role guestRole = _roleLocalService.getRole(
+				TestPropsValues.getCompanyId(), RoleConstants.GUEST);
+
+			resourcePermissionLocalService.addResourcePermission(
+				guestUser.getCompanyId(),
+				childObjectDefinition.getResourceName(),
+				ResourceConstants.SCOPE_COMPANY,
+				String.valueOf(guestUser.getCompanyId()), guestRole.getRoleId(),
+				ObjectActionKeys.ADD_OBJECT_ENTRY);
+			resourcePermissionLocalService.addResourcePermission(
+				guestUser.getCompanyId(), childObjectDefinition.getClassName(),
+				ResourceConstants.SCOPE_COMPANY,
+				String.valueOf(guestUser.getCompanyId()), guestRole.getRoleId(),
+				ActionKeys.VIEW);
+
+			objectAction = _addNotificationTemplateObjectAction(
+				body, ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
+				childObjectDefinition);
+
+			notificationTemplateId =
+				objectAction.getParametersUnicodeProperties(
+				).getProperty(
+					"notificationTemplateId"
+				);
+
+			PermissionChecker originalPermissionChecker =
+				PermissionThreadLocal.getPermissionChecker();
+			String originalName = PrincipalThreadLocal.getName();
+
+			try {
+				PermissionThreadLocal.setPermissionChecker(
+					PermissionCheckerFactoryUtil.create(guestUser));
+				PrincipalThreadLocal.setName(guestUser.getUserId());
+
+				objectEntry = objectEntryManager.addObjectEntry(
+					dtoConverterContext, childObjectDefinition,
+					new ObjectEntry() {
+						{
+							properties = HashMapBuilder.putAll(
+								childObjectEntryValues
+							).build();
+						}
+					},
+					group.getGroupKey());
+			}
+			finally {
+				PermissionThreadLocal.setPermissionChecker(
+					originalPermissionChecker);
+				PrincipalThreadLocal.setName(originalName);
+			}
+
+			termValues = _getFreeMarkerTermValues(
+				childObjectDefinition,
+				_objectEntryLocalService.getPersistedModel(objectEntry.getId()),
+				_getTermNames(
+					childObjectDefinition.getObjectDefinitionId(),
+					SetUtil.fromArray(
+						"Basic Information",
+						childObjectDefinition.getLabel(
+							LanguageUtil.getLanguageId(LocaleUtil.US)))),
+				notificationTemplateId);
+
+			_assertNotificationQueueEntryTermValues(
+				new ArrayList<>(termValues.values()), StringPool.POUND);
+
+			_objectActionLocalService.deleteObjectAction(objectAction);
 		}
 		finally {
-			PermissionThreadLocal.setPermissionChecker(
-				originalPermissionChecker);
-			PrincipalThreadLocal.setName(originalName);
+			ServiceContextThreadLocal.popServiceContext();
 		}
-
-		termValues = _getFreeMarkerTermValues(
-			childObjectDefinition,
-			_objectEntryLocalService.getPersistedModel(objectEntry.getId()),
-			_getTermNames(
-				childObjectDefinition.getObjectDefinitionId(),
-				SetUtil.fromArray(
-					"Basic Information",
-					childObjectDefinition.getLabel(
-						LanguageUtil.getLanguageId(LocaleUtil.US)))));
-
-		_assertNotificationQueueEntryTermValues(
-			new ArrayList<>(termValues.values()), StringPool.POUND);
-
-		_objectActionLocalService.deleteObjectAction(objectAction);
 	}
 
 	@Test
@@ -328,54 +362,79 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 
 	@Test
 	public void testFreeMarkerNotificationWithCommerceOrder() throws Exception {
-		CommerceCurrency commerceCurrency =
-			CommerceCurrencyTestUtil.addCommerceCurrency(
-				TestPropsValues.getCompanyId());
+		try {
+			_pushServiceContext();
 
-		CommerceChannel commerceChannel = CommerceTestUtil.addCommerceChannel(
-			TestPropsValues.getGroupId(), commerceCurrency.getCode());
+			CommerceCurrency commerceCurrency =
+				CommerceCurrencyTestUtil.addCommerceCurrency(
+					TestPropsValues.getCompanyId());
 
-		CommerceOrder commerceOrder = CommerceTestUtil.addB2CCommerceOrder(
-			TestPropsValues.getUserId(), commerceChannel.getGroupId(),
-			commerceCurrency);
+			CommerceChannel commerceChannel =
+				CommerceTestUtil.addCommerceChannel(
+					TestPropsValues.getGroupId(), commerceCurrency.getCode());
 
-		commerceOrder = CommerceTestUtil.addCheckoutDetailsToCommerceOrder(
-			commerceOrder, TestPropsValues.getUserId(), true, true);
+			CommerceOrder commerceOrder = CommerceTestUtil.addB2CCommerceOrder(
+				TestPropsValues.getUserId(), commerceChannel.getGroupId(),
+				commerceCurrency);
 
-		ObjectDefinition commerceOrderObjectDefinition =
-			_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
-				TestPropsValues.getCompanyId(), CommerceOrder.class.getName());
+			commerceOrder = CommerceTestUtil.addCheckoutDetailsToCommerceOrder(
+				commerceOrder, TestPropsValues.getUserId(), true, true);
 
-		Map<String, Object> termValues = _getFreeMarkerTermValues(
-			commerceOrderObjectDefinition, commerceOrder,
-			_getTermNames(
-				commerceOrderObjectDefinition.getObjectDefinitionId(),
-				SetUtil.fromArray(
-					"Basic Information", "Workflow Status Information")));
+			ObjectDefinition commerceOrderObjectDefinition =
+				_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
+					TestPropsValues.getCompanyId(),
+					CommerceOrder.class.getName());
 
-		String body =
-			StringUtil.merge(termValues.keySet(), StringPool.POUND) +
-				StringPool.POUND;
+			ObjectAction objectAction = _addNotificationTemplateObjectAction(
+				null, DestinationNames.COMMERCE_PAYMENT_STATUS,
+				commerceOrderObjectDefinition);
 
-		ObjectAction objectAction = _addNotificationTemplateObjectAction(
-			body, DestinationNames.COMMERCE_PAYMENT_STATUS,
-			commerceOrderObjectDefinition);
+			String notificationTemplateId =
+				objectAction.getParametersUnicodeProperties(
+				).getProperty(
+					"notificationTemplateId"
+				);
 
-		_commerceOrderLocalService.updatePaymentStatus(
-			TestPropsValues.getUserId(), commerceOrder.getCommerceOrderId(),
-			CommerceOrderPaymentConstants.STATUS_PENDING);
+			Map<String, Object> termValues = _getFreeMarkerTermValues(
+				commerceOrderObjectDefinition, commerceOrder,
+				_getTermNames(
+					commerceOrderObjectDefinition.getObjectDefinitionId(),
+					SetUtil.fromArray(
+						"Basic Information", "Workflow Status Information")),
+				notificationTemplateId);
 
-		_assertNotificationQueueEntryTermValues(
-			new ArrayList<>(termValues.values()), StringPool.POUND);
+			String body =
+				StringUtil.merge(termValues.keySet(), StringPool.POUND) +
+					StringPool.POUND;
 
-		_objectActionLocalService.deleteObjectAction(objectAction);
+			NotificationTemplate notificationTemplate =
+				notificationTemplateLocalService.getNotificationTemplate(
+					Long.valueOf(notificationTemplateId));
 
-		_commerceOrderLocalService.deleteCommerceOrder(
-			commerceOrder.getCommerceOrderId());
+			notificationTemplate.setBody(body);
 
-		_accountEntryLocalService.deleteAccountEntry(
-			_accountEntryLocalService.fetchPersonAccountEntry(
-				TestPropsValues.getUserId()));
+			notificationTemplateLocalService.updateNotificationTemplate(
+				notificationTemplate);
+
+			_commerceOrderLocalService.updatePaymentStatus(
+				TestPropsValues.getUserId(), commerceOrder.getCommerceOrderId(),
+				CommerceOrderPaymentConstants.STATUS_PENDING);
+
+			_assertNotificationQueueEntryTermValues(
+				new ArrayList<>(termValues.values()), StringPool.POUND);
+
+			_objectActionLocalService.deleteObjectAction(objectAction);
+
+			_commerceOrderLocalService.deleteCommerceOrder(
+				commerceOrder.getCommerceOrderId());
+
+			_accountEntryLocalService.deleteAccountEntry(
+				_accountEntryLocalService.fetchPersonAccountEntry(
+					TestPropsValues.getUserId()));
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
 	}
 
 	@Test
@@ -1254,7 +1313,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 
 	private Map<String, Object> _getFreeMarkerTermValues(
 			ObjectDefinition objectDefinition, PersistedModel persistedModel,
-			Set<String> termNames)
+			Set<String> termNames, String notificationId)
 		throws Exception {
 
 		Map<String, Object> termValues = new HashMap<>();
@@ -1268,17 +1327,26 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 				InfoItemFieldValuesProvider.class,
 				objectDefinition.getClassName());
 
-		InfoItemFieldValues infoItemFieldValues;
+		InfoItemFieldValues infoItemFieldValues =
+			infoItemFieldValuesProvider.getInfoItemFieldValues(persistedModel);
 
-		try {
-			_pushServiceContext();
+		BaseNotificationType.prepareGeneralVariablesTemplate(
+			termValues, notificationId);
 
-			infoItemFieldValues =
-				infoItemFieldValuesProvider.getInfoItemFieldValues(
-					persistedModel);
-		}
-		finally {
-			ServiceContextThreadLocal.popServiceContext();
+		Map<String, Object> formattedTermValues = new HashMap<>();
+
+		for (Map.Entry<String, Object> entry : termValues.entrySet()) {
+			String key = entry.getKey();
+			Object value = entry.getValue();
+
+			if (key.equals("currentURL") || key.equals("locale") ||
+				key.equals("portalURL") || key.equals("request") ||
+				key.equals("templateId")) {
+
+				key = "${" + key + "}";
+			}
+
+			formattedTermValues.put(key, value);
 		}
 
 		for (InfoFieldValue<Object> infoFieldValue :
@@ -1308,15 +1376,10 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 					(Date)termValue);
 			}
 
-			termValues.put(termName, termValue);
+			formattedTermValues.put(termName, termValue);
 		}
 
-		termValues.put(
-			"${portalURL}",
-			_portal.getPortalURL(
-				ObjectActionThreadLocal.getHttpServletRequest()));
-
-		return termValues;
+		return formattedTermValues;
 	}
 
 	private Set<String> _getTermNames(
@@ -1379,6 +1442,9 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 
 		themeDisplay.setLocale(LocaleUtil.US);
 
+		httpServletRequest.setAttribute(
+			WebKeys.CURRENT_URL,
+			HttpComponentsUtil.getCompleteURL(httpServletRequest));
 		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
 
 		ObjectActionThreadLocal.setHttpServletRequest(httpServletRequest);

@@ -52,46 +52,35 @@ public class OpenIdConnectAuthenticationHandlerImplTest {
 	}
 
 	@Test
-	public void testWhenEmailAndEmailsAreNotInJWTClaimSet() throws Exception {
-		String jsonRequest = "{\"sub\":\"subject\",\"name\": \"test_account\"}";
-
-		Map<String, Object> claims = _getEmailClaimFromJWT(jsonRequest);
+	public void testWhenEmailIsNotInJWTClaimSet() throws Exception {
+		Map<String, Object> claims = _processClaimSet(
+			"{\"sub\":\"subject\",\"name\": \"test_account\"}");
 
 		Assert.assertNull(claims.get("email"));
 	}
 
 	@Test
 	public void testWhenEmailIsInJWTClaimSet() throws Exception {
-		String jsonRequest =
+		Map<String, Object> claims = _processClaimSet(
 			"{\"sub\":\"subject\",\"name\": \"test_account\",\"email\": " +
-				"\"exists@test.com\"}";
-
-		Map<String, Object> claims = _getEmailClaimFromJWT(jsonRequest);
+			"\"exists@test.com\"}");
 
 		Assert.assertEquals("exists@test.com", claims.get("email"));
 	}
 
-	private Map<String, Object> _getEmailClaimFromJWT(String jsonRequest)
+	private Map<String, Object> _processClaimSet(String claimSetJSON)
 		throws Exception {
 
 		JWT mockJWT = Mockito.mock(JWT.class);
 
-		_mockJWTClaimSet(jsonRequest, mockJWT);
-
-		return _openIdConnectAuthenticationHandlerImpl.
-			requestUserInfoClaimsFromTokens(mockJWT);
-	}
-
-	private void _mockJWTClaimSet(String jsonRequest, JWT mockJWT)
-		throws Exception {
-
-		JWTClaimsSet jwtClaimsSet = JWTClaimsSet.parse(jsonRequest);
-
 		Mockito.when(
 			mockJWT.getJWTClaimsSet()
 		).thenReturn(
-			jwtClaimsSet
+			JWTClaimsSet.parse(claimSetJSON)
 		);
+
+		return _openIdConnectAuthenticationHandlerImpl.getUserInfoClaims(
+			mockJWT);
 	}
 
 	private MockHttpServletRequest _mockHttpServletRequest;

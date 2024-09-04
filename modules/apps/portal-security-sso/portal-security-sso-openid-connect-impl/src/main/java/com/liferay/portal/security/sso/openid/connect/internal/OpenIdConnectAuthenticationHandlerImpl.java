@@ -143,8 +143,7 @@ public class OpenIdConnectAuthenticationHandlerImpl
 
 		if (oidcProviderMetadata.getUserInfoEndpointURI() == null) {
 			UserInfo userInfo = new UserInfo(
-				JWTClaimsSet.parse(
-					requestUserInfoClaimsFromTokens(oidcTokens.getIDToken())));
+				JWTClaimsSet.parse(getUserInfoClaims(oidcTokens.getIDToken())));
 
 			userInfoJSON = userInfo.toJSONString();
 		}
@@ -262,7 +261,7 @@ public class OpenIdConnectAuthenticationHandlerImpl
 			httpServletRequest, httpServletResponse);
 	}
 
-	protected Map<String, Object> requestUserInfoClaimsFromTokens(JWT jwt)
+	protected Map<String, Object> getUserInfoClaims(JWT jwt)
 		throws java.text.ParseException {
 
 		JWTClaimsSet jwtClaimsSet = jwt.getJWTClaimsSet();

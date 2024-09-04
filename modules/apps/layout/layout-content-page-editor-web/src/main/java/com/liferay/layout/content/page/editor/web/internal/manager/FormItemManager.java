@@ -511,35 +511,36 @@ public class FormItemManager {
 		JSONObject editableValuesJSONObject = _jsonFactory.createJSONObject(
 			fragmentEntryLink.getEditableValues());
 
-		JSONObject jsonObject = editableValuesJSONObject.getJSONObject(
-			FragmentEntryProcessorConstants.
-				KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
+		JSONObject freemarkerJSONObject =
+			editableValuesJSONObject.getJSONObject(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
 
-		if (jsonObject == null) {
-			jsonObject = _jsonFactory.createJSONObject();
+		if (freemarkerJSONObject == null) {
+			freemarkerJSONObject = _jsonFactory.createJSONObject();
 
 			editableValuesJSONObject.put(
 				FragmentEntryProcessorConstants.
 					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
-				jsonObject);
+				freemarkerJSONObject);
 		}
 
-		jsonObject.put("type", type);
+		freemarkerJSONObject.put("type", type);
 
-		jsonObject = editableValuesJSONObject.getJSONObject(
+		JSONObject editableJSONObject = editableValuesJSONObject.getJSONObject(
 			FragmentEntryProcessorConstants.
 				KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR);
 
-		if (jsonObject == null) {
-			jsonObject = _jsonFactory.createJSONObject();
+		if (editableJSONObject == null) {
+			editableJSONObject = _jsonFactory.createJSONObject();
 
 			editableValuesJSONObject.put(
 				FragmentEntryProcessorConstants.
 					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
-				jsonObject);
+				editableJSONObject);
 		}
 
-		jsonObject.put(
+		editableJSONObject.put(
 			type + "-button-text",
 			JSONUtil.put("defaultValue", _language.get(locale, type)));
 

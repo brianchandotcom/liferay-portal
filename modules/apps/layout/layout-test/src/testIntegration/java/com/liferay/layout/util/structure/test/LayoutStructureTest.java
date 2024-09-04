@@ -35,8 +35,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
-import java.io.IOException;
-
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -1004,12 +1002,6 @@ public class LayoutStructureTest {
 			childrenItemIds.size());
 		Assert.assertEquals(
 			childrenItemIds.get(childIndex), layoutStructureItem.getItemId());
-	}
-
-	private String _readLayoutData() throws IOException {
-		return StringUtil.read(
-			LayoutStructureTest.class.getResourceAsStream(
-				"dependencies/layout_data_with_form.json"));
 	}
 
 	private FragmentEntry _fragmentEntry;

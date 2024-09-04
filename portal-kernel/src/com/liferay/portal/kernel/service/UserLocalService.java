@@ -2269,19 +2269,19 @@ public interface UserLocalService
 	 * @param loginIP the IP address the user logged in from
 	 * @return the user
 	 */
-	@CTAware(onProduction = true)
 	@Indexable(
 		callbackKey = "com.liferay.portal.kernel.model.User#lastLoginDate",
 		type = IndexableType.REINDEX
 	)
+	@Transactional(enabled = false)
 	public User updateLastLogin(long userId, String loginIP)
 		throws PortalException;
 
-	@CTAware(onProduction = true)
 	@Indexable(
 		callbackKey = "com.liferay.portal.kernel.model.User#lastLoginDate",
 		type = IndexableType.REINDEX
 	)
+	@Transactional(enabled = false)
 	public User updateLastLogin(User user, String loginIP)
 		throws PortalException;
 

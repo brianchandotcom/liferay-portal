@@ -1,0 +1,408 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"indexed": true,
+					"layout": {}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"fragmentStyle": {
+								"backgroundColor": "colorNeutral1",
+								"borderRadius": "borderRadiusLg",
+								"paddingBottom": "3",
+								"paddingLeft": "5",
+								"paddingRight": "5",
+								"paddingTop": "3"
+							},
+							"indexed": true,
+							"layout": {
+								"paddingBottom": 1,
+								"paddingLeft": 4,
+								"paddingRight": 4,
+								"paddingTop": 1
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"gutters": true,
+									"indexed": true,
+									"modulesPerRow": 1,
+									"numberOfColumns": 1,
+									"reverseOrder": false,
+									"rowViewports": [
+										{
+											"id": "landscapeMobile",
+											"rowViewportDefinition": {
+												"modulesPerRow": 1
+											}
+										},
+										{
+											"id": "portraitMobile",
+											"rowViewportDefinition": {}
+										},
+										{
+											"id": "tablet",
+											"rowViewportDefinition": {}
+										}
+									],
+									"verticalAlignment": "middle"
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"columnViewports": [
+												{
+													"columnViewportDefinition": {
+														"size": 12
+													},
+													"id": "landscapeMobile"
+												},
+												{
+													"columnViewportDefinition": {},
+													"id": "portraitMobile"
+												},
+												{
+													"columnViewportDefinition": {},
+													"id": "tablet"
+												}
+											],
+											"size": 12
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "dialect-dialect-text"
+													},
+													"fragmentConfig": {
+														"textType": "h1"
+													},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {},
+																"text": {
+																	"value_i18n": {
+																		"ar_SA": "Innovation Partner of the Year Award",
+																		"ca_ES": "Innovation Partner of the Year Award",
+																		"de_DE": "Innovation Partner of the Year Award",
+																		"en_US": "Innovation Partner of the Year Award",
+																		"es_ES": "Innovation Partner of the Year Award",
+																		"fi_FI": "Innovation Partner of the Year Award",
+																		"fr_FR": "Innovation Partner of the Year Award",
+																		"hu_HU": "Innovation Partner of the Year Award",
+																		"ja_JP": "Innovation Partner of the Year Award",
+																		"nl_NL": "Innovation Partner of the Year Award",
+																		"pt_BR": "Innovation Partner of the Year Award",
+																		"sv_SE": "Innovation Partner of the Year Award",
+																		"zh_CN": "Innovation Partner of the Year Award"
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"fontWeight": "fontWeightBold",
+														"marginBottom": "3",
+														"textColor": "colorNeutral10"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "dialect-dialect-text"
+													},
+													"fragmentConfig": {
+														"textType": "text-paragraph"
+													},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {},
+																"text": {
+																	"value_i18n": {
+																		"ar_SA": "The Liferay Innovation Partner of the Year award recognizes partners who exhibit true innovation in how they go to market. The nature of innovation is limitless!&nbsp;",
+																		"ca_ES": "The Liferay Innovation Partner of the Year award recognizes partners who exhibit true innovation in how they go to market. The nature of innovation is limitless!&nbsp;",
+																		"de_DE": "The Liferay Innovation Partner of the Year award recognizes partners who exhibit true innovation in how they go to market. The nature of innovation is limitless!&nbsp;",
+																		"en_US": "The Liferay Innovation Partner of the Year award recognizes partners who exhibit true innovation in how they go to market. The nature of innovation is limitless!&nbsp;",
+																		"es_ES": "The Liferay Innovation Partner of the Year award recognizes partners who exhibit true innovation in how they go to market. The nature of innovation is limitless!&nbsp;",
+																		"fi_FI": "The Liferay Innovation Partner of the Year award recognizes partners who exhibit true innovation in how they go to market. The nature of innovation is limitless!&nbsp;",
+																		"fr_FR": "The Liferay Innovation Partner of the Year award recognizes partners who exhibit true innovation in how they go to market. The nature of innovation is limitless!&nbsp;",
+																		"hu_HU": "The Liferay Innovation Partner of the Year award recognizes partners who exhibit true innovation in how they go to market. The nature of innovation is limitless!&nbsp;",
+																		"ja_JP": "The Liferay Innovation Partner of the Year award recognizes partners who exhibit true innovation in how they go to market. The nature of innovation is limitless!&nbsp;",
+																		"nl_NL": "The Liferay Innovation Partner of the Year award recognizes partners who exhibit true innovation in how they go to market. The nature of innovation is limitless!&nbsp;",
+																		"pt_BR": "The Liferay Innovation Partner of the Year award recognizes partners who exhibit true innovation in how they go to market. The nature of innovation is limitless!&nbsp;",
+																		"sv_SE": "The Liferay Innovation Partner of the Year award recognizes partners who exhibit true innovation in how they go to market. The nature of innovation is limitless!&nbsp;",
+																		"zh_CN": "The Liferay Innovation Partner of the Year award recognizes partners who exhibit true innovation in how they go to market. The nature of innovation is limitless!&nbsp;"
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"marginBottom": "3"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "dialect-dialect-text"
+													},
+													"fragmentConfig": {
+														"textType": "text-paragraph"
+													},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {},
+																"text": {
+																	"value_i18n": {
+																		"ar_SA": "&nbsp;Winners of this award may have developed new business model concepts that created higher levels of growth and profitability, implemented successful strategies of going to market with 3rd parties, used inventive methods that delivered increased revenue and use of Liferay products and services. This can even include hyper-transformative innovation that redefined or disrupted markets or solved major socio-economic issues.",
+																		"ca_ES": "&nbsp;Winners of this award may have developed new business model concepts that created higher levels of growth and profitability, implemented successful strategies of going to market with 3rd parties, used inventive methods that delivered increased revenue and use of Liferay products and services. This can even include hyper-transformative innovation that redefined or disrupted markets or solved major socio-economic issues.",
+																		"de_DE": "&nbsp;Winners of this award may have developed new business model concepts that created higher levels of growth and profitability, implemented successful strategies of going to market with 3rd parties, used inventive methods that delivered increased revenue and use of Liferay products and services. This can even include hyper-transformative innovation that redefined or disrupted markets or solved major socio-economic issues.",
+																		"en_US": "&nbsp;Winners of this award may have developed new business model concepts that created higher levels of growth and profitability, implemented successful strategies of going to market with 3rd parties, used inventive methods that delivered increased revenue and use of Liferay products and services. This can even include hyper-transformative innovation that redefined or disrupted markets or solved major socio-economic issues.",
+																		"es_ES": "&nbsp;Winners of this award may have developed new business model concepts that created higher levels of growth and profitability, implemented successful strategies of going to market with 3rd parties, used inventive methods that delivered increased revenue and use of Liferay products and services. This can even include hyper-transformative innovation that redefined or disrupted markets or solved major socio-economic issues.",
+																		"fi_FI": "&nbsp;Winners of this award may have developed new business model concepts that created higher levels of growth and profitability, implemented successful strategies of going to market with 3rd parties, used inventive methods that delivered increased revenue and use of Liferay products and services. This can even include hyper-transformative innovation that redefined or disrupted markets or solved major socio-economic issues.",
+																		"fr_FR": "&nbsp;Winners of this award may have developed new business model concepts that created higher levels of growth and profitability, implemented successful strategies of going to market with 3rd parties, used inventive methods that delivered increased revenue and use of Liferay products and services. This can even include hyper-transformative innovation that redefined or disrupted markets or solved major socio-economic issues.",
+																		"hu_HU": "&nbsp;Winners of this award may have developed new business model concepts that created higher levels of growth and profitability, implemented successful strategies of going to market with 3rd parties, used inventive methods that delivered increased revenue and use of Liferay products and services. This can even include hyper-transformative innovation that redefined or disrupted markets or solved major socio-economic issues.",
+																		"ja_JP": "&nbsp;Winners of this award may have developed new business model concepts that created higher levels of growth and profitability, implemented successful strategies of going to market with 3rd parties, used inventive methods that delivered increased revenue and use of Liferay products and services. This can even include hyper-transformative innovation that redefined or disrupted markets or solved major socio-economic issues.",
+																		"nl_NL": "&nbsp;Winners of this award may have developed new business model concepts that created higher levels of growth and profitability, implemented successful strategies of going to market with 3rd parties, used inventive methods that delivered increased revenue and use of Liferay products and services. This can even include hyper-transformative innovation that redefined or disrupted markets or solved major socio-economic issues.",
+																		"pt_BR": "&nbsp;Winners of this award may have developed new business model concepts that created higher levels of growth and profitability, implemented successful strategies of going to market with 3rd parties, used inventive methods that delivered increased revenue and use of Liferay products and services. This can even include hyper-transformative innovation that redefined or disrupted markets or solved major socio-economic issues.",
+																		"sv_SE": "&nbsp;Winners of this award may have developed new business model concepts that created higher levels of growth and profitability, implemented successful strategies of going to market with 3rd parties, used inventive methods that delivered increased revenue and use of Liferay products and services. This can even include hyper-transformative innovation that redefined or disrupted markets or solved major socio-economic issues.",
+																		"zh_CN": "&nbsp;Winners of this award may have developed new business model concepts that created higher levels of growth and profitability, implemented successful strategies of going to market with 3rd parties, used inventive methods that delivered increased revenue and use of Liferay products and services. This can even include hyper-transformative innovation that redefined or disrupted markets or solved major socio-economic issues."
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"marginBottom": "3"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											}
+										],
+										"type": "Column"
+									}
+								],
+								"type": "Row"
+							}
+						],
+						"type": "Section"
+					},
+					{
+						"definition": {
+							"gutters": true,
+							"indexed": true,
+							"modulesPerRow": 1,
+							"numberOfColumns": 1,
+							"reverseOrder": false,
+							"rowViewports": [
+								{
+									"id": "landscapeMobile",
+									"rowViewportDefinition": {
+										"modulesPerRow": 1
+									}
+								},
+								{
+									"id": "portraitMobile",
+									"rowViewportDefinition": {}
+								},
+								{
+									"id": "tablet",
+									"rowViewportDefinition": {}
+								}
+							],
+							"verticalAlignment": "top"
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"columnViewports": [
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "landscapeMobile"
+										},
+										{
+											"columnViewportDefinition": {},
+											"id": "portraitMobile"
+										},
+										{
+											"columnViewportDefinition": {},
+											"id": "tablet"
+										}
+									],
+									"size": 12
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "BASIC_COMPONENT-paragraph"
+											},
+											"fragmentConfig": {},
+											"fragmentFields": [
+												{
+													"id": "element-text",
+													"value": {
+														"fragmentLink": {},
+														"text": {
+															"value_i18n": {
+																"ar_SA": "\u003Ch3 dir=\"ltr\"\u003ESubmission Guidelines\u003C/h3\u003E\n\n\u003Cul dir=\"ltr\"\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003ETo be considered, \u003Cstrong\u003EInnovation Partner of the Year\u003C/strong\u003E nominations must demonstrate\u003C/div\u003E\n\n\t\u003Cul\u003E\n\t\t\u003Cli\u003E\n\t\t\u003Cdiv class=\"mb-1 mt-1\"\u003EHow they have created significant impact in the market through net new logos, key wins, high incremental annual recurring revenue growth, new partnerships, etc.&nbsp;\u003C/div\u003E\n\t\t\u003C/li\u003E\n\t\t\u003Cli\u003E\n\t\t\u003Cdiv class=\"mb-1 mt-1\"\u003EAnd/or they must demonstrate how they are redefining and disrupting business models, positively impacting humanity, or creating new business models that reach net new customers.\u003C/div\u003E\n\t\t\u003C/li\u003E\n\t\u003C/ul\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EResponses must be written in English.\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EAwards cover services and solutions implemented January 1, 2023 through December 1, 2023.&nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EAll questions in the application must be complete and include current contact information for the partner contact.\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003ETo be considered, partners need to be compliant under the Liferay Solution Partner Program Guidelines as outlined in the Program Guide.&nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EWe recommend partners use as much content as possible to deliver a comprehensive, complete picture of their relevant customer success.&nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli class=\"mb-1 mt-1\"\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EWinners are determined by a decision committee of Liferay executive and channel director stakeholders.\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli class=\"mb-1 mt-1\"\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003E\u003Cstrong\u003EThe entry submission deadline is Friday, January 19, 2024 at 11:59 PM PDT\u003C/strong\u003E. No exceptions.&nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli class=\"mb-1 mt-1\"\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EPlease direct any questions to \u003Ca href=\"mailto:partner-marketing@liferay.com\"\u003Epartner-marketing@liferay.com\u003C/a\u003E.&nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\u003C/ul\u003E\n\n\u003Cp dir=\"ltr\"\u003E \u003C/p\u003E\n",
+																"ca_ES": "\u003Ch3 dir=\"ltr\"\u003ESubmission Guidelines\u003C/h3\u003E\n\n\u003Cul dir=\"ltr\"\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003ETo be considered, \u003Cstrong\u003EInnovation Partner of the Year\u003C/strong\u003E nominations must demonstrate\u003C/div\u003E\n\n\t\u003Cul\u003E\n\t\t\u003Cli\u003E\n\t\t\u003Cdiv class=\"mb-1 mt-1\"\u003EHow they have created significant impact in the market through net new logos, key wins, high incremental annual recurring revenue growth, new partnerships, etc.&nbsp;\u003C/div\u003E\n\t\t\u003C/li\u003E\n\t\t\u003Cli\u003E\n\t\t\u003Cdiv class=\"mb-1 mt-1\"\u003EAnd/or they must demonstrate how they are redefining and disrupting business models, positively impacting humanity, or creating new business models that reach net new customers.\u003C/div\u003E\n\t\t\u003C/li\u003E\n\t\u003C/ul\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EResponses must be written in English.\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EAwards cover services and solutions implemented January 1, 2023 through December 1, 2023.&nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EAll questions in the application must be complete and include current contact information for the partner contact.\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003ETo be considered, partners need to be compliant under the Liferay Solution Partner Program Guidelines as outlined in the Program Guide.&nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EWe recommend partners use as much content as possible to deliver a comprehensive, complete picture of their relevant customer success.&nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli class=\"mb-1 mt-1\"\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EWinners are determined by a decision committee of Liferay executive and channel director stakeholders.\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli class=\"mb-1 mt-1\"\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003E\u003Cstrong\u003EThe entry submission deadline is Friday, January 19, 2024 at 11:59 PM PDT\u003C/strong\u003E. No exceptions.&nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli class=\"mb-1 mt-1\"\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EPlease direct any questions to \u003Ca href=\"mailto:partner-marketing@liferay.com\"\u003Epartner-marketing@liferay.com\u003C/a\u003E.&nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\u003C/ul\u003E\n\n\u003Cp dir=\"ltr\"\u003E \u003C/p\u003E\n",
+																"de_DE": "\u003Ch3 dir=\"ltr\"\u003ESubmission Guidelines\u003C/h3\u003E\n\n\u003Cul dir=\"ltr\"\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003ETo be considered, \u003Cstrong\u003EInnovation Partner of the Year\u003C/strong\u003E nominations must demonstrate\u003C/div\u003E\n\n\t\u003Cul\u003E\n\t\t\u003Cli\u003E\n\t\t\u003Cdiv class=\"mb-1 mt-1\"\u003EHow they have created significant impact in the market through net new logos, key wins, high incremental annual recurring revenue growth, new partnerships, etc.&nbsp;\u003C/div\u003E\n\t\t\u003C/li\u003E\n\t\t\u003Cli\u003E\n\t\t\u003Cdiv class=\"mb-1 mt-1\"\u003EAnd/or they must demonstrate how they are redefining and disrupting business models, positively impacting humanity, or creating new business models that reach net new customers.\u003C/div\u003E\n\t\t\u003C/li\u003E\n\t\u003C/ul\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EResponses must be written in English.\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EAwards cover services and solutions implemented January 1, 2023 through December 1, 2023.&nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EAll questions in the application must be complete and include current contact information for the partner contact.\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003ETo be considered, partners need to be compliant under the Liferay Solution Partner Program Guidelines as outlined in the Program Guide.&nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EWe recommend partners use as much content as possible to deliver a comprehensive, complete picture of their relevant customer success.&nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli class=\"mb-1 mt-1\"\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EWinners are determined by a decision committee of Liferay executive and channel director stakeholders.\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli class=\"mb-1 mt-1\"\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003E\u003Cstrong\u003EThe entry submission deadline is Friday, January 19, 2024 at 11:59 PM PDT\u003C/strong\u003E. No exceptions.&nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli class=\"mb-1 mt-1\"\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EPlease direct any questions to \u003Ca href=\"mailto:partner-marketing@liferay.com\"\u003Epartner-marketing@liferay.com\u003C/a\u003E.&nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\u003C/ul\u003E\n\n\u003Cp dir=\"ltr\"\u003E \u003C/p\u003E\n",
+																"en_US": "\u003Ch3 dir=\"ltr\"\u003ESubmission Guidelines\u003C/h3\u003E\n\n\u003Cul dir=\"ltr\"\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003ETo be considered, \u003Cstrong\u003EInnovation Partner of the Year\u003C/strong\u003E nominations must demonstrate\u003C/div\u003E\n\n\t\u003Cul\u003E\n\t\t\u003Cli\u003E\n\t\t\u003Cdiv class=\"mb-1 mt-1\"\u003EHow they have created significant impact in the market through net new logos, key wins, high incremental annual recurring revenue growth, new partnerships, etc.&nbsp;\u003C/div\u003E\n\t\t\u003C/li\u003E\n\t\t\u003Cli\u003E\n\t\t\u003Cdiv class=\"mb-1 mt-1\"\u003EAnd/or they must demonstrate how they are redefining and disrupting business models, positively impacting humanity, or creating new business models that reach net new customers.\u003C/div\u003E\n\t\t\u003C/li\u003E\n\t\u003C/ul\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EResponses must be written in English.\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EAwards cover services and solutions implemented January 1, 2023 through December 1, 2023.&nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EAll questions in the application must be complete and include current contact information for the partner contact.\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003ETo be considered, partners need to be compliant under the Liferay Solution Partner Program Guidelines as outlined in the Program Guide.&nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EWe recommend partners use as much content as possible to deliver a comprehensive, complete picture of their relevant customer success.&nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli class=\"mb-1 mt-1\"\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EWinners are determined by a decision committee of Liferay executive and channel director stakeholders.\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli class=\"mb-1 mt-1\"\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003E\u003Cstrong\u003EThe entry submission deadline is Friday, January 19, 2024 at 11:59 PM PDT\u003C/strong\u003E. No exceptions.&nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli class=\"mb-1 mt-1\"\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EPlease direct any questions to \u003Ca href=\"mailto:partner-marketing@liferay.com\"\u003Epartner-marketing@liferay.com\u003C/a\u003E.&nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\u003C/ul\u003E\n\n\u003Cp dir=\"ltr\"\u003E \u003C/p\u003E\n",
+																"es_ES": "\u003Ch3 dir=\"ltr\"\u003ESubmission Guidelines\u003C/h3\u003E\n\n\u003Cul dir=\"ltr\"\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003ETo be considered, \u003Cstrong\u003EInnovation Partner of the Year\u003C/strong\u003E nominations must demonstrate\u003C/div\u003E\n\n\t\u003Cul\u003E\n\t\t\u003Cli\u003E\n\t\t\u003Cdiv class=\"mb-1 mt-1\"\u003EHow they have created significant impact in the market through net new logos, key wins, high incremental annual recurring revenue growth, new partnerships, etc.&nbsp;\u003C/div\u003E\n\t\t\u003C/li\u003E\n\t\t\u003Cli\u003E\n\t\t\u003Cdiv class=\"mb-1 mt-1\"\u003EAnd/or they must demonstrate how they are redefining and disrupting business models, positively impacting humanity, or creating new business models that reach net new customers.\u003C/div\u003E\n\t\t\u003C/li\u003E\n\t\u003C/ul\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EResponses must be written in English.\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EAwards cover services and solutions implemented January 1, 2023 through December 1, 2023.&nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EAll questions in the application must be complete and include current contact information for the partner contact.\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003ETo be considered, partners need to be compliant under the Liferay Solution Partner Program Guidelines as outlined in the Program Guide.&nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EWe recommend partners use as much content as possible to deliver a comprehensive, complete picture of their relevant customer success.&nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli class=\"mb-1 mt-1\"\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EWinners are determined by a decision committee of Liferay executive and channel director stakeholders.\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli class=\"mb-1 mt-1\"\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003E\u003Cstrong\u003EThe entry submission deadline is Friday, January 19, 2024 at 11:59 PM PDT\u003C/strong\u003E. No exceptions.&nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli class=\"mb-1 mt-1\"\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EPlease direct any questions to \u003Ca href=\"mailto:partner-marketing@liferay.com\"\u003Epartner-marketing@liferay.com\u003C/a\u003E.&nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\u003C/ul\u003E\n\n\u003Cp dir=\"ltr\"\u003E \u003C/p\u003E\n",
+																"fi_FI": "\u003Ch3 dir=\"ltr\"\u003ESubmission Guidelines\u003C/h3\u003E\n\n\u003Cul dir=\"ltr\"\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003ETo be considered, \u003Cstrong\u003EInnovation Partner of the Year\u003C/strong\u003E nominations must demonstrate\u003C/div\u003E\n\n\t\u003Cul\u003E\n\t\t\u003Cli\u003E\n\t\t\u003Cdiv class=\"mb-1 mt-1\"\u003EHow they have created significant impact in the market through net new logos, key wins, high incremental annual recurring revenue growth, new partnerships, etc.&nbsp;\u003C/div\u003E\n\t\t\u003C/li\u003E\n\t\t\u003Cli\u003E\n\t\t\u003Cdiv class=\"mb-1 mt-1\"\u003EAnd/or they must demonstrate how they are redefining and disrupting business models, positively impacting humanity, or creating new business models that reach net new customers.\u003C/div\u003E\n\t\t\u003C/li\u003E\n\t\u003C/ul\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EResponses must be written in English.\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EAwards cover services and solutions implemented January 1, 2023 through December 1, 2023.&nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EAll questions in the application must be complete and include current contact information for the partner contact.\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003ETo be considered, partners need to be compliant under the Liferay Solution Partner Program Guidelines as outlined in the Program Guide.&nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EWe recommend partners use as much content as possible to deliver a comprehensive, complete picture of their relevant customer success.&nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli class=\"mb-1 mt-1\"\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EWinners are determined by a decision committee of Liferay executive and channel director stakeholders.\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli class=\"mb-1 mt-1\"\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003E\u003Cstrong\u003EThe entry submission deadline is Friday, January 19, 2024 at 11:59 PM PDT\u003C/strong\u003E. No exceptions.&nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli class=\"mb-1 mt-1\"\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EPlease direct any questions to \u003Ca href=\"mailto:partner-marketing@liferay.com\"\u003Epartner-marketing@liferay.com\u003C/a\u003E.&nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\u003C/ul\u003E\n\n\u003Cp dir=\"ltr\"\u003E \u003C/p\u003E\n",
+																"fr_FR": "\u003Ch3 dir=\"ltr\"\u003ESubmission Guidelines\u003C/h3\u003E\n\n\u003Cul dir=\"ltr\"\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003ETo be considered, \u003Cstrong\u003EInnovation Partner of the Year\u003C/strong\u003E nominations must demonstrate\u003C/div\u003E\n\n\t\u003Cul\u003E\n\t\t\u003Cli\u003E\n\t\t\u003Cdiv class=\"mb-1 mt-1\"\u003EHow they have created significant impact in the market through net new logos, key wins, high incremental annual recurring revenue growth, new partnerships, etc.&nbsp;\u003C/div\u003E\n\t\t\u003C/li\u003E\n\t\t\u003Cli\u003E\n\t\t\u003Cdiv class=\"mb-1 mt-1\"\u003EAnd/or they must demonstrate how they are redefining and disrupting business models, positively impacting humanity, or creating new business models that reach net new customers.\u003C/div\u003E\n\t\t\u003C/li\u003E\n\t\u003C/ul\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EResponses must be written in English.\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EAwards cover services and solutions implemented January 1, 2023 through December 1, 2023.&nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EAll questions in the application must be complete and include current contact information for the partner contact.\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003ETo be considered, partners need to be compliant under the Liferay Solution Partner Program Guidelines as outlined in the Program Guide.&nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EWe recommend partners use as much content as possible to deliver a comprehensive, complete picture of their relevant customer success.&nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli class=\"mb-1 mt-1\"\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EWinners are determined by a decision committee of Liferay executive and channel director stakeholders.\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli class=\"mb-1 mt-1\"\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003E\u003Cstrong\u003EThe entry submission deadline is Friday, January 19, 2024 at 11:59 PM PDT\u003C/strong\u003E. No exceptions.&nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli class=\"mb-1 mt-1\"\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EPlease direct any questions to \u003Ca href=\"mailto:partner-marketing@liferay.com\"\u003Epartner-marketing@liferay.com\u003C/a\u003E.&nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\u003C/ul\u003E\n\n\u003Cp dir=\"ltr\"\u003E \u003C/p\u003E\n",
+																"hu_HU": "\u003Ch3 dir=\"ltr\"\u003ESubmission Guidelines\u003C/h3\u003E\n\n\u003Cul dir=\"ltr\"\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003ETo be considered, \u003Cstrong\u003EInnovation Partner of the Year\u003C/strong\u003E nominations must demonstrate\u003C/div\u003E\n\n\t\u003Cul\u003E\n\t\t\u003Cli\u003E\n\t\t\u003Cdiv class=\"mb-1 mt-1\"\u003EHow they have created significant impact in the market through net new logos, key wins, high incremental annual recurring revenue growth, new partnerships, etc.&nbsp;\u003C/div\u003E\n\t\t\u003C/li\u003E\n\t\t\u003Cli\u003E\n\t\t\u003Cdiv class=\"mb-1 mt-1\"\u003EAnd/or they must demonstrate how they are redefining and disrupting business models, positively impacting humanity, or creating new business models that reach net new customers.\u003C/div\u003E\n\t\t\u003C/li\u003E\n\t\u003C/ul\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EResponses must be written in English.\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EAwards cover services and solutions implemented January 1, 2023 through December 1, 2023.&nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EAll questions in the application must be complete and include current contact information for the partner contact.\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003ETo be considered, partners need to be compliant under the Liferay Solution Partner Program Guidelines as outlined in the Program Guide.&nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EWe recommend partners use as much content as possible to deliver a comprehensive, complete picture of their relevant customer success.&nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli class=\"mb-1 mt-1\"\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EWinners are determined by a decision committee of Liferay executive and channel director stakeholders.\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli class=\"mb-1 mt-1\"\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003E\u003Cstrong\u003EThe entry submission deadline is Friday, January 19, 2024 at 11:59 PM PDT\u003C/strong\u003E. No exceptions.&nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli class=\"mb-1 mt-1\"\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EPlease direct any questions to \u003Ca href=\"mailto:partner-marketing@liferay.com\"\u003Epartner-marketing@liferay.com\u003C/a\u003E.&nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\u003C/ul\u003E\n\n\u003Cp dir=\"ltr\"\u003E \u003C/p\u003E\n",
+																"ja_JP": "\u003Ch3 dir=\"ltr\"\u003ESubmission Guidelines\u003C/h3\u003E\n\n\u003Cul dir=\"ltr\"\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003ETo be considered, \u003Cstrong\u003EInnovation Partner of the Year\u003C/strong\u003E nominations must demonstrate\u003C/div\u003E\n\n\t\u003Cul\u003E\n\t\t\u003Cli\u003E\n\t\t\u003Cdiv class=\"mb-1 mt-1\"\u003EHow they have created significant impact in the market through net new logos, key wins, high incremental annual recurring revenue growth, new partnerships, etc.&nbsp;\u003C/div\u003E\n\t\t\u003C/li\u003E\n\t\t\u003Cli\u003E\n\t\t\u003Cdiv class=\"mb-1 mt-1\"\u003EAnd/or they must demonstrate how they are redefining and disrupting business models, positively impacting humanity, or creating new business models that reach net new customers.\u003C/div\u003E\n\t\t\u003C/li\u003E\n\t\u003C/ul\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EResponses must be written in English.\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EAwards cover services and solutions implemented January 1, 2023 through December 1, 2023.&nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EAll questions in the application must be complete and include current contact information for the partner contact.\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003ETo be considered, partners need to be compliant under the Liferay Solution Partner Program Guidelines as outlined in the Program Guide.&nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EWe recommend partners use as much content as possible to deliver a comprehensive, complete picture of their relevant customer success.&nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli class=\"mb-1 mt-1\"\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EWinners are determined by a decision committee of Liferay executive and channel director stakeholders.\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli class=\"mb-1 mt-1\"\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003E\u003Cstrong\u003EThe entry submission deadline is Friday, January 19, 2024 at 11:59 PM PDT\u003C/strong\u003E. No exceptions.&nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli class=\"mb-1 mt-1\"\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EPlease direct any questions to \u003Ca href=\"mailto:partner-marketing@liferay.com\"\u003Epartner-marketing@liferay.com\u003C/a\u003E.&nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\u003C/ul\u003E\n\n\u003Cp dir=\"ltr\"\u003E \u003C/p\u003E\n",
+																"nl_NL": "\u003Ch3 dir=\"ltr\"\u003ESubmission Guidelines\u003C/h3\u003E\n\n\u003Cul dir=\"ltr\"\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003ETo be considered, \u003Cstrong\u003EInnovation Partner of the Year\u003C/strong\u003E nominations must demonstrate\u003C/div\u003E\n\n\t\u003Cul\u003E\n\t\t\u003Cli\u003E\n\t\t\u003Cdiv class=\"mb-1 mt-1\"\u003EHow they have created significant impact in the market through net new logos, key wins, high incremental annual recurring revenue growth, new partnerships, etc.&nbsp;\u003C/div\u003E\n\t\t\u003C/li\u003E\n\t\t\u003Cli\u003E\n\t\t\u003Cdiv class=\"mb-1 mt-1\"\u003EAnd/or they must demonstrate how they are redefining and disrupting business models, positively impacting humanity, or creating new business models that reach net new customers.\u003C/div\u003E\n\t\t\u003C/li\u003E\n\t\u003C/ul\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EResponses must be written in English.\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EAwards cover services and solutions implemented January 1, 2023 through December 1, 2023.&nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EAll questions in the application must be complete and include current contact information for the partner contact.\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003ETo be considered, partners need to be compliant under the Liferay Solution Partner Program Guidelines as outlined in the Program Guide.&nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EWe recommend partners use as much content as possible to deliver a comprehensive, complete picture of their relevant customer success.&nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli class=\"mb-1 mt-1\"\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EWinners are determined by a decision committee of Liferay executive and channel director stakeholders.\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli class=\"mb-1 mt-1\"\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003E\u003Cstrong\u003EThe entry submission deadline is Friday, January 19, 2024 at 11:59 PM PDT\u003C/strong\u003E. No exceptions.&nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli class=\"mb-1 mt-1\"\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EPlease direct any questions to \u003Ca href=\"mailto:partner-marketing@liferay.com\"\u003Epartner-marketing@liferay.com\u003C/a\u003E.&nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\u003C/ul\u003E\n\n\u003Cp dir=\"ltr\"\u003E \u003C/p\u003E\n",
+																"pt_BR": "\u003Ch3 dir=\"ltr\"\u003ESubmission Guidelines\u003C/h3\u003E\n\n\u003Cul dir=\"ltr\"\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003ETo be considered, \u003Cstrong\u003EInnovation Partner of the Year\u003C/strong\u003E nominations must demonstrate\u003C/div\u003E\n\n\t\u003Cul\u003E\n\t\t\u003Cli\u003E\n\t\t\u003Cdiv class=\"mb-1 mt-1\"\u003EHow they have created significant impact in the market through net new logos, key wins, high incremental annual recurring revenue growth, new partnerships, etc.&nbsp;\u003C/div\u003E\n\t\t\u003C/li\u003E\n\t\t\u003Cli\u003E\n\t\t\u003Cdiv class=\"mb-1 mt-1\"\u003EAnd/or they must demonstrate how they are redefining and disrupting business models, positively impacting humanity, or creating new business models that reach net new customers.\u003C/div\u003E\n\t\t\u003C/li\u003E\n\t\u003C/ul\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EResponses must be written in English.\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EAwards cover services and solutions implemented January 1, 2023 through December 1, 2023.&nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EAll questions in the application must be complete and include current contact information for the partner contact.\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003ETo be considered, partners need to be compliant under the Liferay Solution Partner Program Guidelines as outlined in the Program Guide.&nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EWe recommend partners use as much content as possible to deliver a comprehensive, complete picture of their relevant customer success.&nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli class=\"mb-1 mt-1\"\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EWinners are determined by a decision committee of Liferay executive and channel director stakeholders.\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli class=\"mb-1 mt-1\"\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003E\u003Cstrong\u003EThe entry submission deadline is Friday, January 19, 2024 at 11:59 PM PDT\u003C/strong\u003E. No exceptions.&nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli class=\"mb-1 mt-1\"\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EPlease direct any questions to \u003Ca href=\"mailto:partner-marketing@liferay.com\"\u003Epartner-marketing@liferay.com\u003C/a\u003E.&nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\u003C/ul\u003E\n\n\u003Cp dir=\"ltr\"\u003E \u003C/p\u003E\n",
+																"sv_SE": "\u003Ch3 dir=\"ltr\"\u003ESubmission Guidelines\u003C/h3\u003E\n\n\u003Cul dir=\"ltr\"\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003ETo be considered, \u003Cstrong\u003EInnovation Partner of the Year\u003C/strong\u003E nominations must demonstrate\u003C/div\u003E\n\n\t\u003Cul\u003E\n\t\t\u003Cli\u003E\n\t\t\u003Cdiv class=\"mb-1 mt-1\"\u003EHow they have created significant impact in the market through net new logos, key wins, high incremental annual recurring revenue growth, new partnerships, etc.&nbsp;\u003C/div\u003E\n\t\t\u003C/li\u003E\n\t\t\u003Cli\u003E\n\t\t\u003Cdiv class=\"mb-1 mt-1\"\u003EAnd/or they must demonstrate how they are redefining and disrupting business models, positively impacting humanity, or creating new business models that reach net new customers.\u003C/div\u003E\n\t\t\u003C/li\u003E\n\t\u003C/ul\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EResponses must be written in English.\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EAwards cover services and solutions implemented January 1, 2023 through December 1, 2023.&nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EAll questions in the application must be complete and include current contact information for the partner contact.\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003ETo be considered, partners need to be compliant under the Liferay Solution Partner Program Guidelines as outlined in the Program Guide.&nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EWe recommend partners use as much content as possible to deliver a comprehensive, complete picture of their relevant customer success.&nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli class=\"mb-1 mt-1\"\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EWinners are determined by a decision committee of Liferay executive and channel director stakeholders.\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli class=\"mb-1 mt-1\"\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003E\u003Cstrong\u003EThe entry submission deadline is Friday, January 19, 2024 at 11:59 PM PDT\u003C/strong\u003E. No exceptions.&nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli class=\"mb-1 mt-1\"\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EPlease direct any questions to \u003Ca href=\"mailto:partner-marketing@liferay.com\"\u003Epartner-marketing@liferay.com\u003C/a\u003E.&nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\u003C/ul\u003E\n\n\u003Cp dir=\"ltr\"\u003E \u003C/p\u003E\n",
+																"zh_CN": "\u003Ch3 dir=\"ltr\"\u003ESubmission Guidelines\u003C/h3\u003E\n\n\u003Cul dir=\"ltr\"\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003ETo be considered, \u003Cstrong\u003EInnovation Partner of the Year\u003C/strong\u003E nominations must demonstrate\u003C/div\u003E\n\n\t\u003Cul\u003E\n\t\t\u003Cli\u003E\n\t\t\u003Cdiv class=\"mb-1 mt-1\"\u003EHow they have created significant impact in the market through net new logos, key wins, high incremental annual recurring revenue growth, new partnerships, etc.&nbsp;\u003C/div\u003E\n\t\t\u003C/li\u003E\n\t\t\u003Cli\u003E\n\t\t\u003Cdiv class=\"mb-1 mt-1\"\u003EAnd/or they must demonstrate how they are redefining and disrupting business models, positively impacting humanity, or creating new business models that reach net new customers.\u003C/div\u003E\n\t\t\u003C/li\u003E\n\t\u003C/ul\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EResponses must be written in English.\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EAwards cover services and solutions implemented January 1, 2023 through December 1, 2023.&nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EAll questions in the application must be complete and include current contact information for the partner contact.\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003ETo be considered, partners need to be compliant under the Liferay Solution Partner Program Guidelines as outlined in the Program Guide.&nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EWe recommend partners use as much content as possible to deliver a comprehensive, complete picture of their relevant customer success.&nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli class=\"mb-1 mt-1\"\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EWinners are determined by a decision committee of Liferay executive and channel director stakeholders.\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli class=\"mb-1 mt-1\"\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003E\u003Cstrong\u003EThe entry submission deadline is Friday, January 19, 2024 at 11:59 PM PDT\u003C/strong\u003E. No exceptions.&nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli class=\"mb-1 mt-1\"\u003E\n\t\u003Cdiv class=\"mb-1 mt-1\"\u003EPlease direct any questions to \u003Ca href=\"mailto:partner-marketing@liferay.com\"\u003Epartner-marketing@liferay.com\u003C/a\u003E.&nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\u003C/ul\u003E\n\n\u003Cp dir=\"ltr\"\u003E \u003C/p\u003E\n"
+															}
+														}
+													}
+												}
+											],
+											"fragmentStyle": {
+												"paddingLeft": "5",
+												"paddingRight": "3",
+												"paddingTop": "4"
+											},
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "Column"
+							}
+						],
+						"type": "Row"
+					},
+					{
+						"definition": {
+							"fragmentStyle": {
+								"marginTop": "4"
+							},
+							"gutters": true,
+							"indexed": true,
+							"modulesPerRow": 1,
+							"numberOfColumns": 1,
+							"reverseOrder": false,
+							"rowViewports": [
+								{
+									"id": "landscapeMobile",
+									"rowViewportDefinition": {
+										"modulesPerRow": 1
+									}
+								},
+								{
+									"id": "portraitMobile",
+									"rowViewportDefinition": {}
+								},
+								{
+									"id": "tablet",
+									"rowViewportDefinition": {}
+								}
+							],
+							"verticalAlignment": "top"
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"columnViewports": [
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "landscapeMobile"
+										},
+										{
+											"columnViewportDefinition": {},
+											"id": "portraitMobile"
+										},
+										{
+											"columnViewportDefinition": {},
+											"id": "tablet"
+										}
+									],
+									"size": 12
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragmentStyle": {
+												"hidden": true,
+												"paddingLeft": "4"
+											},
+											"widgetInstance": {
+												"widgetConfig": {
+													"groupId": "15095646",
+													"formInstanceId": "16884250"
+												},
+												"widgetName": "com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormPortlet",
+												"widgetPermissions": [
+													{
+														"actionKeys": [
+															"PERMISSIONS",
+															"PREFERENCES",
+															"CONFIGURATION",
+															"VIEW",
+															"ADD_TO_PAGE"
+														],
+														"roleKey": "Owner"
+													},
+													{
+														"actionKeys": [
+															"VIEW"
+														],
+														"roleKey": "Site Member"
+													},
+													{
+														"actionKeys": [
+															"VIEW"
+														],
+														"roleKey": "Guest"
+													}
+												]
+											}
+										},
+										"type": "Widget"
+									}
+								],
+								"type": "Column"
+							}
+						],
+						"type": "Row"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"masterPage": {
+			"key": "main-template"
+		}
+	},
+	"version": 1.1
+}

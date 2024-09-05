@@ -8,9 +8,7 @@ import {expect, mergeTests} from '@playwright/test';
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {usersAndOrganizationsPagesTest} from '../../fixtures/usersAndOrganizationsPagesTest';
-import {EditUserPage} from '../../pages/users-admin-web/EditUserPage';
 import {UsersAndOrganizationsPage} from '../../pages/users-admin-web/UsersAndOrganizationsPage';
-import {getRandomInt} from '../../utils/getRandomInt';
 
 export const test = mergeTests(
 	dataApiHelpersTest,
@@ -38,7 +36,7 @@ test('LPD-35306 Breadcrumb in My Organizations does not have a link if user does
 	);
 
 	const role = await apiHelpers.headlessAdminUser.getRoleByName(
-		"Organization Administrator"
+		'Organization Administrator'
 	);
 
 	await apiHelpers.headlessAdminUser.assignUserToOrganizationRole(

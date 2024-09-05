@@ -148,9 +148,9 @@ export class UsersAndOrganizationsPage {
 			organizationName: string
 		) => {
 			return page.getByRole('link', {
-				name: organizationName
+				name: organizationName,
 			});
-		}
+		};
 		this.myOrganizationsMenuItem = page.getByRole('menuitem', {
 			exact: true,
 			name: 'My Organizations',

@@ -10,12 +10,12 @@
 <liferay-util:dynamic-include key="com.liferay.journal.web#/asset/full_content.jsp#pre" />
 
 <%
-AssetFullContentDisplayContext assetFullContentDisplayContext = new AssetFullContentDisplayContext(request);
+AssetFullContentDisplayContext assetFullContentDisplayContext = new AssetFullContentDisplayContext(request, liferayPortletRequest, liferayPortletResponse);
 %>
 
 <liferay-journal:journal-article-display
 	articleDisplay="<%= assetFullContentDisplayContext.getJournalArticleDisplay() %>"
-	paginationURL="<%= assetFullContentDisplayContext.getPaginationURL(currentURL) %>"
+	paginationURL="<%= assetFullContentDisplayContext.getPaginationURL() %>"
 />
 
 <liferay-util:dynamic-include key="com.liferay.journal.web#/asset/full_content.jsp#post" />

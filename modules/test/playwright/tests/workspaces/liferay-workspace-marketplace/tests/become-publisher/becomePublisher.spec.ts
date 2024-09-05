@@ -17,13 +17,13 @@ test.describe('Customers can become a publisher', () => {
 		marketplace,
 		page,
 	}) => {
-		const becomePublisherLink = page.getByRole('link', {
+		const becomePublisher = page.getByRole('link', {
 			name: 'Become a Publisher',
 		});
 
-		await expect(becomePublisherLink).toBeVisible();
+		await expect(becomePublisher).toBeVisible();
 
-		await becomePublisherLink.click();
+		await becomePublisher.click();
 		await becomePublisherPage.goto(marketplace.friendlyUrlPath);
 
 		await expect(becomePublisherPage.becomePublisherTitle).toBeVisible();

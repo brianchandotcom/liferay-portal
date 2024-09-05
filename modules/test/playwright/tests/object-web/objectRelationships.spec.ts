@@ -42,6 +42,86 @@ test.describe('Manage object relationships through Model Builder', () => {
 		page.setViewportSize({height: 1080, width: 1920});
 	});
 
+	test('can create multiple object relationships between the same objects', async ({
+		apiHelpers,
+		modelBuilderDiagramPage,
+		modelBuilderObjectDefinitionNodePage,
+		page,
+		viewObjectDefinitionsPage,
+	}) => {
+		const objectFolder =
+			await apiHelpers.objectAdmin.postRandomObjectFolder();
+
+		createdEntities.objectFolderIds.push(objectFolder.id);
+
+		const objectDefinition1 =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFolderExternalReferenceCode:
+					objectFolder.externalReferenceCode,
+				status: {code: 0},
+			});
+		const objectDefinition2 =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFolderExternalReferenceCode:
+					objectFolder.externalReferenceCode,
+				status: {code: 0},
+			});
+
+		createdEntities.objectDefinitionIds.push(
+			objectDefinition1.id,
+			objectDefinition2.id
+		);
+
+		await viewObjectDefinitionsPage.goto();
+
+		await viewObjectDefinitionsPage.openObjectFolder(
+			objectFolder.label['en_US']
+		);
+
+		await viewObjectDefinitionsPage.viewInModelBuilderButton.click();
+
+		await modelBuilderDiagramPage.connectObjectDefinitionsNodeHandles(
+			objectDefinition1.id,
+			objectDefinition2.id
+		);
+
+		const objectRelationship1Label = 'objectRelationship' + getRandomInt();
+
+		await modelBuilderObjectDefinitionNodePage.handleObjectRelationshipModal(
+			{
+			objectRelationshipLabel: objectRelationship1Label,
+			type: 'One to Many',
+			}
+		);
+
+		await modelBuilderDiagramPage.connectObjectDefinitionsNodeHandles(
+			objectDefinition2.id,
+			objectDefinition1.id,
+			['top', 'bottom']
+		);
+
+		const objectRelationship2Label = 'objectRelationship' + getRandomInt();
+
+		await modelBuilderObjectDefinitionNodePage.handleObjectRelationshipModal(
+			{
+			objectRelationshipLabel: objectRelationship2Label,
+			type: 'One to Many',
+			}
+		);
+
+		await page.waitForTimeout(500);
+
+		await modelBuilderDiagramPage.clickObjectRelationshipEdge('2');
+
+		expect(
+			page.getByRole('menuitem', {name: objectRelationship1Label})
+		).toBeVisible();
+
+		expect(
+			page.getByRole('menuitem', {name: objectRelationship2Label})
+		).toBeVisible();
+	});
+
 	test('can create one to many relationship with object field by dragging node handles', async ({
 		apiHelpers,
 		modelBuilderDiagramPage,

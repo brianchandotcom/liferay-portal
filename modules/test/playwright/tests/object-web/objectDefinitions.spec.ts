@@ -478,9 +478,9 @@ test.describe('Manage object definitions through Model Builder', () => {
 
 			// Object Data Container
 
-			await expect(modelBuilderRightSidebarPage.sidebarLabel).toHaveValue(
-				objectDefinition.label['en_US']
-			);
+			await expect(
+				modelBuilderRightSidebarPage.sidebarLabelInput
+			).toHaveValue(objectDefinition.label['en_US']);
 
 			await modelBuilderRightSidebarPage.objectDefinitionLabelLocalizationButton.click();
 
@@ -488,9 +488,9 @@ test.describe('Manage object definitions through Model Builder', () => {
 				.getByRole('menuitem', {name: 'pt_BR Translated'})
 				.click();
 
-			await expect(modelBuilderRightSidebarPage.sidebarLabel).toHaveValue(
-				objectDefinition.label['pt_BR']
-			);
+			await expect(
+				modelBuilderRightSidebarPage.sidebarLabelInput
+			).toHaveValue(objectDefinition.label['pt_BR']);
 
 			await page.keyboard.press('Escape');
 

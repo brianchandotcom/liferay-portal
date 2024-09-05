@@ -38,6 +38,10 @@ test.afterEach(async ({apiHelpers}) => {
 });
 
 test.describe('Manage object relationships through Model Builder', () => {
+	test.beforeEach(({page}) => {
+		page.setViewportSize({height: 1080, width: 1920});
+	});
+
 	test('can create one to many relationship with object field by dragging node handles', async ({
 		apiHelpers,
 		modelBuilderDiagramPage,
@@ -89,7 +93,7 @@ test.describe('Manage object relationships through Model Builder', () => {
 		const objectRelationship =
 			await modelBuilderObjectDefinitionNodePage.handleObjectRelationshipModal(
 				{
-				objectRelationshipLabel,
+					objectRelationshipLabel,
 					type: 'One to Many',
 				}
 			);
@@ -213,6 +217,92 @@ test.describe('Manage object relationships through Model Builder', () => {
 				hasText: objectDefinition2.label['en_US'],
 			})
 		).not.toBeVisible();
+	});
+
+	test('can edit object relationship details in Right Sidebar', async ({
+		apiHelpers,
+		modelBuilderDiagramPage,
+		modelBuilderLeftSidebarPage,
+		modelBuilderRightSidebarPage,
+		page,
+		viewObjectDefinitionsPage,
+	}) => {
+		const objectFolder =
+			await apiHelpers.objectAdmin.postRandomObjectFolder();
+
+		const objectDefinition1 =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFolderExternalReferenceCode:
+					objectFolder.externalReferenceCode,
+				status: {code: 0},
+			});
+		const objectDefinition2 =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFolderExternalReferenceCode:
+					objectFolder.externalReferenceCode,
+				status: {code: 0},
+			});
+
+		createdEntities.objectDefinitionIds.push(
+			objectDefinition1.id,
+			objectDefinition2.id
+		);
+
+		const objectRelationshipLabel =
+			'objectRelationshipLabel' + getRandomInt();
+		const objectRelationshipName =
+			'objectRelationshipName' + Math.floor(Math.random() * 99);
+
+		const objectRelationshipData: Partial<ObjectRelationship> = {
+			label: {
+				en_US: objectRelationshipLabel,
+			},
+			name: objectRelationshipName,
+			objectDefinitionExternalReferenceCode1:
+				objectDefinition1.externalReferenceCode,
+			objectDefinitionExternalReferenceCode2:
+				objectDefinition2.externalReferenceCode,
+			objectDefinitionId1: objectDefinition1.id,
+			objectDefinitionId2: objectDefinition2.id,
+			objectDefinitionName2: objectDefinition2.name,
+			type: 'oneToMany' as ObjectRelationshipType,
+		};
+
+		await apiHelpers.objectAdmin.postObjectRelationship(
+			objectRelationshipData
+		);
+
+		createdEntities.objectRelationshipIds.push(objectRelationshipData.id);
+
+		await viewObjectDefinitionsPage.goto();
+
+		await viewObjectDefinitionsPage.openObjectFolder(
+			objectFolder.label['en_US']
+		);
+
+		await viewObjectDefinitionsPage.viewInModelBuilderButton.click();
+
+		await modelBuilderDiagramPage.clickObjectRelationshipEdge(
+			objectRelationshipLabel
+		);
+
+		await modelBuilderRightSidebarPage.sidebarLabelInput.fill('Value Test');
+
+		await modelBuilderRightSidebarPage.objectRelationshipDeletionType.click();
+		await page.getByRole('option', {name: 'Cascade'}).click();
+
+		await modelBuilderLeftSidebarPage.sidebarItems
+			.filter({hasText: objectDefinition1.label['en_US']})
+			.click();
+
+		await modelBuilderDiagramPage.clickObjectRelationshipEdge('Value Test');
+
+		await expect(
+			modelBuilderRightSidebarPage.sidebarLabelInput
+		).toHaveValue('Value Test');
+		await expect(
+			modelBuilderRightSidebarPage.objectRelationshipDeletionType
+		).toContainText('Cascade');
 	});
 
 	test('cannot create relationship between the postal address object and objects without an one-to-many relationship with the account object', async ({

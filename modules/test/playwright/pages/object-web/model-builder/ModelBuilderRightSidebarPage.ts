@@ -22,7 +22,7 @@ export class ModelBuilderRightSidebarPage {
 	readonly objectRelationshipOneRecordOf: Locator;
 	readonly objectRelationshipType: Locator;
 	readonly page: Page;
-	readonly sidebarLabel: Locator;
+	readonly sidebarLabelInput: Locator;
 	readonly sidebarName: Locator;
 
 	constructor(page: Page) {
@@ -43,12 +43,15 @@ export class ModelBuilderRightSidebarPage {
 			page.getByLabel('Activate Object');
 		this.objectDefinitionEntryTitleField =
 			page.getByLabel('Entry Title Field');
-		this.sidebarLabel = page.getByLabel('Label' + 'Mandatory', {
+		this.sidebarLabelInput = page.getByLabel('Label' + 'Mandatory', {
 			exact: true,
 		});
 		this.sidebarName = page.getByLabel('Name' + 'Mandatory', {
 			exact: true,
 		});
+		this.objectDefinitionLabelLocalizationButton = page
+			.getByTitle('Open Localizations')
+			.first();
 		this.objectDefinitionPanelLink = page.getByLabel('Panel Link');
 		this.objectDefinitionPluralLabel = page.getByLabel('Plural Label');
 		this.objectDefinitionPluralLabelLocalizationButton = page

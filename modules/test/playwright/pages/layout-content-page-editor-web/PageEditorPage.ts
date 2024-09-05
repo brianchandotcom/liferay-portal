@@ -828,7 +828,7 @@ export class PageEditorPage {
 			await this.goToSidebarTab('Browser');
 
 			const treeNode = this.page.locator(
-				`.treeview-link[data-id*="${fragmentId}"]`
+				`.treeview-link[data-id$="${fragmentId}"]`
 			);
 
 			await treeNode.click();

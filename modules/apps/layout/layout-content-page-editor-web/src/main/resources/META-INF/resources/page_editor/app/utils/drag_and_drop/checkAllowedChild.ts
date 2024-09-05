@@ -17,6 +17,7 @@ import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes
 import {getStepperChild} from '../../utils/getStepperChild';
 import {formIsMapped} from '../formIsMapped';
 import {getFormParent} from '../getFormParent';
+import {hasFormStepParent} from '../hasFormStepParent';
 import {isMultistepForm} from '../isMultistepForm';
 import {isUnmappedCollection} from '../isUnmappedCollection';
 
@@ -120,7 +121,7 @@ export default function checkAllowedChild(
 	if (
 		!isStepper &&
 		isMultistepForm(formParent) &&
-		parent.type !== LAYOUT_DATA_ITEM_TYPES.formStep
+		!hasFormStepParent(parent, layoutDataRef.current)
 	) {
 		return false;
 	}

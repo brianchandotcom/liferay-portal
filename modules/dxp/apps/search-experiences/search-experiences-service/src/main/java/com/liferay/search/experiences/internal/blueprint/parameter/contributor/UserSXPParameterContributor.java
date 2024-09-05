@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.UserGroupGroupRole;
@@ -156,9 +157,16 @@ public class UserSXPParameterContributor implements SXPParameterContributor {
 					StringSXPParameter.class, "email-domain",
 					"user.email_domain"),
 				new SXPParameterContributorDefinition(
+					StringSXPParameter.class, "external-reference-code",
+					"user.external_reference_code"),
+				new SXPParameterContributorDefinition(
 					StringSXPParameter.class, "first-name", "user.first_name"),
 				new SXPParameterContributorDefinition(
 					StringSXPParameter.class, "full-name", "user.full_name"),
+				new SXPParameterContributorDefinition(
+					StringArraySXPParameter.class,
+					"group-external-reference-codes",
+					"user.group_external_reference_codes"),
 				new SXPParameterContributorDefinition(
 					LongArraySXPParameter.class, "group-ids", "user.group_ids"),
 				new SXPParameterContributorDefinition(
@@ -189,6 +197,10 @@ public class UserSXPParameterContributor implements SXPParameterContributor {
 				new SXPParameterContributorDefinition(
 					LongArraySXPParameter.class, "regular-role-ids",
 					"user.regular_role_ids"),
+				new SXPParameterContributorDefinition(
+					StringArraySXPParameter.class,
+					"user-group-external-reference-codes",
+					"user.user_group_external_reference_codes"),
 				new SXPParameterContributorDefinition(
 					LongArraySXPParameter.class, "user-group-ids",
 					"user.user_group_ids")));
@@ -472,6 +484,10 @@ public class UserSXPParameterContributor implements SXPParameterContributor {
 				"user.email_domain", true, _getEmailAddressDomain(user)));
 		sxpParameters.add(
 			new StringSXPParameter(
+				"user.external_reference_code", true,
+				user.getExternalReferenceCode()));
+		sxpParameters.add(
+			new StringSXPParameter(
 				"user.first_name", true, user.getFirstName()));
 		sxpParameters.add(
 			new StringSXPParameter("user.full_name", true, user.getFullName()));
@@ -479,6 +495,18 @@ public class UserSXPParameterContributor implements SXPParameterContributor {
 			new LongArraySXPParameter(
 				"user.group_ids", true,
 				ArrayUtil.toLongArray(user.getGroupIds())));
+
+		List<Group> groups = _groupLocalService.getGroups(user.getGroupIds());
+
+		if (!groups.isEmpty()) {
+			sxpParameters.add(
+				new StringArraySXPParameter(
+					"user.group_external_reference_codes", true,
+					TransformUtil.transformToArray(
+						groups, Group::getExternalReferenceCode,
+						String.class)));
+		}
+
 		sxpParameters.add(
 			new LongSXPParameter("user.id", true, user.getUserId()));
 		sxpParameters.add(
@@ -515,6 +543,13 @@ public class UserSXPParameterContributor implements SXPParameterContributor {
 					"user.user_group_ids", true,
 					TransformUtil.transformToArray(
 						userGroups, UserGroup::getUserGroupId, Long.class)));
+
+			sxpParameters.add(
+				new StringArraySXPParameter(
+					"user.user_group_external_reference_codes", true,
+					TransformUtil.transformToArray(
+						userGroups, UserGroup::getExternalReferenceCode,
+						String.class)));
 		}
 
 		_addAssetCategories(sxpParameters, user);

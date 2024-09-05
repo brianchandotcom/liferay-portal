@@ -108,6 +108,11 @@ public class ContextSXPParameterContributor implements SXPParameterContributor {
 					new BooleanSXPParameter(
 						"context.is_staging_group", true,
 						group.isStagingGroup()));
+
+				sxpParameters.add(
+					new StringSXPParameter(
+						"context.scope_group_external_reference_code", true,
+						group.getExternalReferenceCode()));
 			}
 			catch (PortalException portalException) {
 				exceptionListener.exceptionThrown(portalException);
@@ -144,7 +149,10 @@ public class ContextSXPParameterContributor implements SXPParameterContributor {
 				"context.publication_id"),
 			new SXPParameterContributorDefinition(
 				LongSXPParameter.class, "scope-group-id",
-				"context.scope_group_id"));
+				"context.scope_group_id"),
+			new SXPParameterContributorDefinition(
+				StringSXPParameter.class, "scope-group-external-reference-code",
+				"context.scope_group_external_reference_code"));
 	}
 
 	private final GroupLocalService _groupLocalService;

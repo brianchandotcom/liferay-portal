@@ -7,12 +7,16 @@ import type {Locator, Page} from '@playwright/test';
 
 export class ModelBuilderLeftSidebarPage {
 	readonly createNewObjectDefinitionButton: Locator;
+	readonly collapseOtherFoldersButton: Locator;
 	readonly goToFolderButton: Locator;
 	readonly sidebarItems: Locator;
 	readonly otherObjectFolders: Locator;
 	readonly selectedObjectFolder: Locator;
 
 	constructor(page: Page) {
+		this.collapseOtherFoldersButton = page.getByRole('button', {
+			name: 'Other Folders',
+		});
 		this.createNewObjectDefinitionButton =
 			page.getByText('Create New Object');
 		this.goToFolderButton = page.getByRole('button', {

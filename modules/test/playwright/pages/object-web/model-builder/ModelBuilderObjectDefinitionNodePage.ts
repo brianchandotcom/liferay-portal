@@ -9,15 +9,18 @@ import type {Locator, Page} from '@playwright/test';
 
 export class ModelBuilderObjectDefinitionNodePage {
 	readonly addObjectFieldButton: Locator;
+	readonly addObjectFieldOrRelationshipButton: Locator;
+	readonly addObjectRelationshipButton: Locator;
 	readonly deleteObjectDefinitionOption: Locator;
-	readonly newObjectRelationshipSaveButton: Locator;
 	readonly newObjectFieldSaveButton: Locator;
+	readonly newObjectRelationshipSaveButton: Locator;
 	readonly modalDeleteObjectDefinitionTextField: Locator;
 	readonly modalDeleteObjectDefinitionConfirmationButton: Locator;
 	readonly objectFieldBusinessTypeSelect: Locator;
 	readonly objectFieldLabelInput: Locator;
 	readonly objectFieldPicklistSelect: Locator;
 	readonly objectRelationshipLabelInput: Locator;
+	readonly objectRelationshipManyRecordsOf: Locator;
 	readonly objectRelationshipTitle: Locator;
 	readonly objectRelationshipTypeButton: Locator;
 	readonly page: Page;
@@ -26,6 +29,14 @@ export class ModelBuilderObjectDefinitionNodePage {
 		this.addObjectFieldButton = page.getByRole('menuitem', {
 			exact: true,
 			name: 'Add Field',
+		});
+		this.addObjectFieldOrRelationshipButton = page.getByRole('button', {
+			exact: true,
+			name: 'Add Field or Relationship',
+		});
+		this.addObjectRelationshipButton = page.getByRole('menuitem', {
+			exact: true,
+			name: 'Add Relationship',
 		});
 		this.deleteObjectDefinitionOption = page.getByRole('menuitem', {
 			name: 'Delete Object',
@@ -38,6 +49,11 @@ export class ModelBuilderObjectDefinitionNodePage {
 		);
 		this.newObjectFieldSaveButton = page
 			.getByLabel('New Field')
+			.getByRole('button', {
+				name: 'Save',
+			});
+		this.newObjectRelationshipSaveButton = page
+			.getByLabel('New Relationship')
 			.getByRole('button', {
 				name: 'Save',
 			});
@@ -57,20 +73,12 @@ export class ModelBuilderObjectDefinitionNodePage {
 			.locator('div.form-group')
 			.filter({hasText: /^LabelMandatory$/})
 			.getByRole('textbox');
+		this.objectRelationshipManyRecordsOf =
+			page.getByLabel('Many Records Of');
 		this.objectRelationshipTitle = page.getByRole('heading', {
 			name: 'New Relationship',
 		});
-		this.objectRelationshipTypeButton = page.getByText('Many to Many');
-		this.newObjectRelationshipSaveButton = page
-			.getByLabel('New Relationship')
-			.getByRole('button', {
-				name: 'Save',
-			});
-		this.newObjectRelationshipSaveButton = page
-			.getByLabel('New Relationship')
-			.getByRole('button', {
-				name: 'Save',
-			});
+		this.objectRelationshipTypeButton = page.getByLabel('Type');
 		this.page = page;
 	}
 
@@ -143,14 +151,42 @@ export class ModelBuilderObjectDefinitionNodePage {
 	}
 
 	async createObjectRelationship(
+		manyRecordsOf: string,
 		objectRelationshipLabel: string,
-		type: string
-	) {
+		objectRelationshipType: string
+	): Promise<ObjectRelationship> {
+		await this.addObjectFieldOrRelationshipButton.click();
+		await this.addObjectRelationshipButton.click();
+
+		const objectRelationship = await this.handleObjectRelationshipModal({
+			manyRecordsOf,
+			objectRelationshipLabel,
+			type: objectRelationshipType,
+		});
+
+		return objectRelationship;
+	}
+
+	async handleObjectRelationshipModal({
+		manyRecordsOf,
+		objectRelationshipLabel,
+		type,
+	}: {
+		manyRecordsOf?: string;
+		objectRelationshipLabel: string;
+		type: string;
+	}): Promise<ObjectRelationship> {
 		await expect(this.objectRelationshipTitle).toBeVisible();
 
 		await this.objectRelationshipLabelInput.fill(objectRelationshipLabel);
 		await this.objectRelationshipTypeButton.click();
 		await this.page.getByRole('option', {name: type}).click();
+
+		if (manyRecordsOf) {
+			await this.objectRelationshipManyRecordsOf.click();
+			await this.page.getByRole('option', {name: manyRecordsOf}).click();
+		}
+
 		const responsePromise = this.page.waitForResponse(
 			'**/object-relationships'
 		);

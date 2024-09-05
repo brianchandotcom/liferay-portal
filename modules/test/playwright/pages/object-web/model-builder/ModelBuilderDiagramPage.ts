@@ -59,15 +59,16 @@ export class ModelBuilderDiagramPage {
 
 	async connectObjectDefinitionsNodeHandles(
 		objectDefinitionId1: number,
-		objectDefinitionId2: number
+		objectDefinitionId2: number,
+		direction: [Direction, Direction] = ['right', 'left']
 	) {
 		await this.getObjectDefinitionNodeRelationshipHandle(
 			objectDefinitionId1,
-			'right'
+			direction[0]
 		).dragTo(
 			this.getObjectDefinitionNodeRelationshipHandle(
 				objectDefinitionId2,
-				'left'
+				direction[1]
 			)
 		);
 	}

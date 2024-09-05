@@ -17,6 +17,7 @@ interface CreateObjectField {
 	mandatory?: boolean;
 	objectDefinitionLabel?: string;
 	objectDefinitionNodes: unknown;
+
 	objectFieldBusinessType: string;
 	objectFieldLabel: string;
 }
@@ -32,6 +33,8 @@ interface CreateObjectRelationship {
 interface DataObject {
 	[K: string]: unknown;
 }
+
+type Direction = 'bottom' | 'left' | 'right' | 'top';
 
 type ExcludesFilterOperator = {
 	not: {

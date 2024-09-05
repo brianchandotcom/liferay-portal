@@ -10,7 +10,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CompanyConstants;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -56,12 +56,11 @@ public class ContentSecurityPolicyFilter extends BasePortalFilter {
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
 
-		if (_portal.getCompanyId(httpServletRequest) ==
-				CompanyConstants.SYSTEM) {
-
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					"No content security policy filter needed if company is 0");
+		if (CompanyThreadLocal.getCompanyId() == 0) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"CompanyThreadLocal not initialized for this request so " +
+						"CSP will not be applied");
 			}
 
 			return false;

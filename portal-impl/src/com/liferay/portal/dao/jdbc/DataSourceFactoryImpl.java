@@ -393,6 +393,10 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 				if (parameter.length == 2) {
 					existingParameterValues.put(parameter[0], parameter[1]);
 				}
+				else {
+					existingParameterValues.put(
+						parameterString, _MALFORMED_PARAMETER_PLACE_HOLDER);
+				}
 			}
 		}
 
@@ -422,8 +426,14 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 				existingParameterValues.entrySet()) {
 
 			sb.append(entry.getKey());
-			sb.append(CharPool.EQUAL);
-			sb.append(entry.getValue());
+
+			String value = entry.getValue();
+
+			if (!_MALFORMED_PARAMETER_PLACE_HOLDER.equals(value)) {
+				sb.append(CharPool.EQUAL);
+				sb.append(value);
+			}
+
 			sb.append(CharPool.AMPERSAND);
 		}
 
@@ -508,6 +518,9 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 					"use a data source instead");
 		}
 	}
+
+	private static final String _MALFORMED_PARAMETER_PLACE_HOLDER =
+		"_MALFORMED_PARAMETER_PLACE_HOLDER";
 
 	private static final String[][] _MYSQL_DEFAULT_PARAMETERS = {
 		{"cachePrepStmts", "true"}, {"characterEncoding", "UTF-8"},

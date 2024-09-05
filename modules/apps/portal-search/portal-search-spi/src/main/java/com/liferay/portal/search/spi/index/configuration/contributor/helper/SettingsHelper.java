@@ -18,9 +18,9 @@ public interface SettingsHelper {
 	public String get(String key);
 
 	/**
-	 * This method loads the passed in settings into the Settings.Builder.
+	 * This method allows contributors to add one or more search engine settings.
 	 *
-	 * @param source Either the JSON or YAML settings.
+	 * @param source The settings in either JSON or YAML format.
 	 */
 	public void loadFromSource(String source);
 
@@ -29,7 +29,6 @@ public interface SettingsHelper {
 	 *
 	 * @param key The name of the setting to be added.
 	 * @param value The value of the setting to be added.
-	 * @throws Exception if there is an error adding the setting to the search engine.
 	 */
 	public void put(String key, String value);
 

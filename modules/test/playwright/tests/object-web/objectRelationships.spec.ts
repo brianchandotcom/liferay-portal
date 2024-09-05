@@ -200,6 +200,88 @@ test.describe('Manage object relationships through Model Builder', () => {
 		).toBeVisible();
 	});
 
+	test('can create relationship between definitions from different folders', async ({
+		apiHelpers,
+		modelBuilderDiagramPage,
+		modelBuilderLeftSidebarPage,
+		modelBuilderObjectDefinitionNodePage,
+		page,
+	}) => {
+		const objectFolder =
+			await apiHelpers.objectAdmin.postRandomObjectFolder();
+
+		createdEntities.objectFolderIds.push(objectFolder.id);
+
+		const objectDefinition1 =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFolderExternalReferenceCode: 'default',
+				status: {code: 0},
+			});
+
+		const objectDefinition2 =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFolderExternalReferenceCode:
+					objectFolder.externalReferenceCode,
+				status: {code: 0},
+			});
+
+		createdEntities.objectDefinitionIds.push(
+			objectDefinition1.id,
+			objectDefinition2.id
+		);
+
+		await modelBuilderDiagramPage.goto({objectFolderName: 'Default'});
+
+		await modelBuilderDiagramPage.toggleSidebarsButton.click();
+
+		await modelBuilderDiagramPage.fitViewButton.click();
+
+		const objectRelationship =
+			await modelBuilderObjectDefinitionNodePage.createObjectRelationship(
+				{
+					manyRecordsOf: objectDefinition2.label['en_US'],
+					objectDefinitionLabel: objectDefinition1.label['en_US'],
+					objectDefinitionNodes:
+						modelBuilderDiagramPage.objectDefinitionNodes,
+					objectRelationshipLabel:
+						'objectRelationship' + getRandomInt(),
+					objectRelationshipType: 'One to Many',
+				}
+			);
+
+		createdEntities.objectRelationshipIds.push(objectRelationship.id);
+
+		await expect(
+			modelBuilderDiagramPage.objectRelationshipEdges.filter({
+				hasText: objectRelationship.label['en_US'],
+			})
+		).toBeVisible();
+
+		await expect(
+			modelBuilderDiagramPage.objectDefinitionNodes.filter({
+				hasText: objectDefinition2.label['en_US'],
+			})
+		).toBeVisible();
+
+		await expect(
+			modelBuilderDiagramPage.objectDefinitionNodes
+				.filter({
+					hasText: objectDefinition2.label['en_US'],
+				})
+				.locator('.lfr-objects__model-builder-node-container')
+		).toHaveClass(/link/);
+
+		await modelBuilderDiagramPage.toggleSidebarsButton.click();
+
+		await modelBuilderLeftSidebarPage.collapseOtherFoldersButton.click();
+
+		await expect(
+			page
+				.getByRole('group', {name: 'Default'})
+				.getByLabel(objectDefinition2.label['en_US'])
+		).toBeVisible();
+	});
+
 	test('can create relationship by using add relationship button', async ({
 		apiHelpers,
 		modelBuilderDiagramPage,

@@ -245,27 +245,9 @@ public class FormItemManager {
 			layoutStructure.addFormStepContainerStyledLayoutStructureItem(
 				formStyledLayoutStructureItem.getItemId(), -1);
 
-		LayoutStructureItem firstFormStepLayoutStructureItem = null;
-
-		for (int i = 0; i < numberOfSteps; i++) {
-			LayoutStructureItem formStepLayoutStructureItem =
-				layoutStructure.addFormStepLayoutStructureItem(
-					formStepContainerStyledLayoutStructureItem.getItemId(), i);
-
-			if (i == 0) {
-				firstFormStepLayoutStructureItem = formStepLayoutStructureItem;
-			}
-
-			addedFragmentEntryLinks.addAll(
-				_addFormButtonsFragmentEntryLinks(
-					formStepLayoutStructureItem, formStyledLayoutStructureItem,
-					layout, locale, layoutStructure, numberOfSteps - 1,
-					segmentsExperienceId, i, serviceContext));
-		}
-
-		if (firstFormStepLayoutStructureItem == null) {
-			return Collections.emptyList();
-		}
+		LayoutStructureItem firstFormStepLayoutStructureItem =
+			layoutStructure.addFormStepLayoutStructureItem(
+				formStepContainerStyledLayoutStructureItem.getItemId(), 0);
 
 		for (String childrenItemId : childrenItemIds) {
 			LayoutStructureItem layoutStructureItem =
@@ -300,6 +282,24 @@ public class FormItemManager {
 			layoutStructure.moveLayoutStructureItem(
 				childrenItemId, firstFormStepLayoutStructureItem.getItemId(),
 				-1);
+		}
+
+		addedFragmentEntryLinks.addAll(
+			_addFormButtonsFragmentEntryLinks(
+				firstFormStepLayoutStructureItem, formStyledLayoutStructureItem,
+				layout, locale, layoutStructure, numberOfSteps - 1,
+				segmentsExperienceId, 0, serviceContext));
+
+		for (int i = 1; i < numberOfSteps; i++) {
+			LayoutStructureItem formStepLayoutStructureItem =
+				layoutStructure.addFormStepLayoutStructureItem(
+					formStepContainerStyledLayoutStructureItem.getItemId(), i);
+
+			addedFragmentEntryLinks.addAll(
+				_addFormButtonsFragmentEntryLinks(
+					formStepLayoutStructureItem, formStyledLayoutStructureItem,
+					layout, locale, layoutStructure, numberOfSteps - 1,
+					segmentsExperienceId, i, serviceContext));
 		}
 
 		return addedFragmentEntryLinks;

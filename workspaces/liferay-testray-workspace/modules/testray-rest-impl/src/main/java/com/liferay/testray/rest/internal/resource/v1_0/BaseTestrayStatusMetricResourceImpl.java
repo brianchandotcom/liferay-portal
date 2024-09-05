@@ -334,22 +334,6 @@ public abstract class BaseTestrayStatusMetricResourceImpl
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "pageSize"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "testrayCasePriorities"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "testrayCaseTypes"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "testrayRoutineId"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "testrayTeamId"
 			)
 		}
 	)
@@ -372,18 +356,6 @@ public abstract class BaseTestrayStatusMetricResourceImpl
 				@javax.validation.constraints.NotNull
 				@javax.ws.rs.PathParam("testrayProjectId")
 				Long testrayProjectId,
-				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@javax.ws.rs.QueryParam("testrayCasePriorities")
-				String testrayCasePriorities,
-				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@javax.ws.rs.QueryParam("testrayCaseTypes")
-				String testrayCaseTypes,
-				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@javax.ws.rs.QueryParam("testrayRoutineId")
-				Long testrayRoutineId,
-				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@javax.ws.rs.QueryParam("testrayTeamId")
-				Long testrayTeamId,
 				@javax.ws.rs.core.Context Pagination pagination)
 		throws Exception {
 

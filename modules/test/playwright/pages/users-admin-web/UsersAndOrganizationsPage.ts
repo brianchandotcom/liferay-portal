@@ -54,6 +54,9 @@ export class UsersAndOrganizationsPage {
 	readonly exportPersonalDataItem: Locator;
 	readonly impersonateUserMenuItem: Locator;
 	readonly manageCustomFieldsOptionsMenuItem: Locator;
+	readonly myOrganizationsBreadCrumbLink: (
+		organizationName: string
+	) => Promise<Locator>;
 	readonly myOrganizationsMenuItem: Locator;
 	readonly myOrganizationsTable: Locator;
 	readonly myOrganizationsTableRow: (
@@ -141,6 +144,13 @@ export class UsersAndOrganizationsPage {
 		this.manageCustomFieldsOptionsMenuItem = page.getByRole('menuitem', {
 			name: 'Manage Custom Fields',
 		});
+		this.myOrganizationsBreadCrumbLink = async (
+			organizationName: string
+		) => {
+			return page.getByRole('link', {
+				name: organizationName
+			});
+		}
 		this.myOrganizationsMenuItem = page.getByRole('menuitem', {
 			exact: true,
 			name: 'My Organizations',

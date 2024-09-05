@@ -11,6 +11,8 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
+import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
@@ -30,9 +32,11 @@ import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.LiferayActionRequest;
 import com.liferay.portal.kernel.portlet.LiferayStateAwareResponse;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.AddressLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.ImageLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.service.ListTypeServiceUtil;
@@ -52,6 +56,8 @@ import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -265,6 +271,57 @@ public class UsersAdminPortletTest {
 	}
 
 	@Test
+	public void testEditOrganizationImageDoesNotAddCTEntry() throws Exception {
+		Organization organization = OrganizationTestUtil.addOrganization();
+
+		long oldLogoId = organization.getLogoId();
+
+		ListType listType = ListTypeServiceUtil.getListType(
+			TestPropsValues.getCompanyId(),
+			ListTypeConstants.ORGANIZATION_STATUS_DEFAULT,
+			ListTypeConstants.ORGANIZATION_STATUS);
+
+		_processActionRequestInPublication(
+			_ctCollection, "/users_admin/edit_organization",
+			HashMapBuilder.put(
+				Constants.CMD, Constants.UPDATE
+			).put(
+				"fileEntryId",
+				() -> {
+					_fileEntry = _dlAppLocalService.addFileEntry(
+						null, TestPropsValues.getUserId(),
+						TestPropsValues.getGroupId(),
+						DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+						StringUtil.randomString(), ContentTypes.IMAGE_JPEG,
+						_getImageBytes(), null, null, null,
+						ServiceContextTestUtil.getServiceContext(
+							TestPropsValues.getGroupId()));
+
+					return String.valueOf(_fileEntry.getFileEntryId());
+				}
+			).put(
+				"name", organization.getName()
+			).put(
+				"organizationId",
+				String.valueOf(organization.getOrganizationId())
+			).put(
+				"statusId", String.valueOf(listType.getListTypeId())
+			).put(
+				"type", organization.getType()
+			).build());
+
+		_assertNoCTEntry();
+
+		organization = _organizationLocalService.fetchOrganization(
+			organization.getOrganizationId());
+
+		Assert.assertNotNull(
+			_imageLocalService.getImage(organization.getLogoId()));
+
+		Assert.assertNotEquals(oldLogoId, organization.getLogoId());
+	}
+
+	@Test
 	public void testEditUserDoesNotAddCTEntry() throws Exception {
 		String addUserScreenName = RandomTestUtil.randomString();
 
@@ -348,6 +405,43 @@ public class UsersAdminPortletTest {
 			_userLocalService.getRoleUsers(
 				role.getRoleId()
 			).size());
+	}
+
+	@Test
+	public void testEditUserImageDoesNotAddCTEntry() throws Exception {
+		User user = UserTestUtil.addUser();
+
+		long oldPortraitId = user.getPortraitId();
+
+		_processActionRequestInPublication(
+			_ctCollection, "/users_admin/edit_user",
+			HashMapBuilder.put(
+				Constants.CMD, Constants.UPDATE
+			).put(
+				"fileEntryId",
+				() -> {
+					_fileEntry = _dlAppLocalService.addFileEntry(
+						null, TestPropsValues.getUserId(),
+						TestPropsValues.getGroupId(),
+						DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+						StringUtil.randomString(), ContentTypes.IMAGE_JPEG,
+						_getImageBytes(), null, null, null,
+						ServiceContextTestUtil.getServiceContext(
+							TestPropsValues.getGroupId()));
+
+					return String.valueOf(_fileEntry.getFileEntryId());
+				}
+			).put(
+				"p_u_i_d", String.valueOf(user.getUserId())
+			).build());
+
+		_assertNoCTEntry();
+
+		user = _userLocalService.fetchUser(user.getUserId());
+
+		Assert.assertNotNull(_imageLocalService.getImage(user.getPortraitId()));
+
+		Assert.assertNotEquals(oldPortraitId, user.getPortraitId());
 	}
 
 	@Test
@@ -703,6 +797,11 @@ public class UsersAdminPortletTest {
 				_ctCollection.getCtCollectionId()));
 	}
 
+	private byte[] _getImageBytes() throws Exception {
+		return FileUtil.getBytes(
+			UsersAdminPortletTest.class, "dependencies/image.jpg");
+	}
+
 	private ThemeDisplay _getThemeDisplay() throws Exception {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
@@ -785,6 +884,14 @@ public class UsersAdminPortletTest {
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
+
+	@Inject
+	private DLAppLocalService _dlAppLocalService;
+
+	private FileEntry _fileEntry;
+
+	@Inject
+	private ImageLocalService _imageLocalService;
 
 	private Layout _layout;
 

@@ -59,6 +59,7 @@ import com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil;
 import com.liferay.portal.kernel.service.permission.RolePermissionUtil;
 import com.liferay.portal.kernel.service.permission.UserGroupRolePermissionUtil;
 import com.liferay.portal.kernel.service.permission.UserPermissionUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -72,6 +73,7 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.util.comparator.GroupNameComparator;
 import com.liferay.portal.kernel.util.comparator.GroupTypeComparator;
 import com.liferay.portal.kernel.util.comparator.OrganizationNameComparator;
@@ -319,14 +321,30 @@ public class UsersAdminUtil {
 
 		Collections.reverse(ancestorOrganizations);
 
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		PermissionChecker permissionChecker =
+			themeDisplay.getPermissionChecker();
+
 		for (Organization ancestorOrganization : ancestorOrganizations) {
 			portletURL.setParameter(
 				"organizationId",
 				String.valueOf(ancestorOrganization.getOrganizationId()));
 
-			PortalUtil.addPortletBreadcrumbEntry(
-				httpServletRequest, ancestorOrganization.getName(),
-				portletURL.toString());
+			if (OrganizationPermissionUtil.contains(
+				permissionChecker, ancestorOrganization, ActionKeys.VIEW)) {
+
+				PortalUtil.addPortletBreadcrumbEntry(
+					httpServletRequest, ancestorOrganization.getName(),
+					portletURL.toString());
+			} else {
+
+				PortalUtil.addPortletBreadcrumbEntry(
+					httpServletRequest, ancestorOrganization.getName(),
+					null);
+			}
 		}
 
 		Organization unescapedOrganization = organization.toUnescapedModel();

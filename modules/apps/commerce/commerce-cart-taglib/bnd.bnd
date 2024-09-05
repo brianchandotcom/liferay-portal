@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Commerce Cart Taglib
 Bundle-SymbolicName: com.liferay.commerce.cart.taglib
-Bundle-Version: 5.0.37
+Bundle-Version: 5.0.38
 Export-Package: com.liferay.commerce.cart.taglib.servlet.taglib
 Provide-Capability:\
 	osgi.extender;\

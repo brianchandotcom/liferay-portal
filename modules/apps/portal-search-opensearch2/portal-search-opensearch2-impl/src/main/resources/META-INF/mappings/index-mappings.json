@@ -1481,6 +1481,24 @@
 			}
 		},
 		{
+			"template_text_embedding_1536": {
+				"mapping": {
+					"dimension": 1536,
+					"type": "knn_vector"
+				},
+				"path_match": "text_embedding_1536*"
+			}
+		},
+		{
+			"template_text_embedding_3072": {
+				"mapping": {
+					"dimension": 3072,
+					"type": "knn_vector"
+				},
+				"path_match": "text_embedding_3072*"
+			}
+		},
+		{
 			"template_": {
 				"mapping": {
 					"store": true,

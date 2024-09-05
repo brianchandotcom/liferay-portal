@@ -120,6 +120,121 @@ test.describe('Manage object relationships through Model Builder', () => {
 		).toBeVisible();
 	});
 
+	test('can create object relationship to linked object definition by drag and drop', async ({
+		apiHelpers,
+		modelBuilderDiagramPage,
+		modelBuilderObjectDefinitionNodePage,
+		page,
+		viewObjectDefinitionsPage,
+	}) => {
+		await page.goto('/');
+
+		const objectFolder =
+			await apiHelpers.objectAdmin.postRandomObjectFolder();
+
+		createdEntities.objectFolderIds.push(objectFolder.id);
+
+		const objectDefinition1 =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFolderExternalReferenceCode:
+					objectFolder.externalReferenceCode,
+				status: {code: 0},
+			});
+
+		const objectDefinition2 =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFolderExternalReferenceCode: 'default',
+				status: {code: 0},
+			});
+
+		const objectDefinition3 =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFolderExternalReferenceCode:
+					objectFolder.externalReferenceCode,
+				status: {code: 0},
+			});
+
+		createdEntities.objectDefinitionIds.push(
+			objectDefinition1.id,
+			objectDefinition2.id,
+			objectDefinition3.id
+		);
+
+		const objectRelationshipLabel =
+			'objectRelationshipLabel' + getRandomInt();
+		const objectRelationshipName =
+			'objectRelationshipName' + Math.floor(Math.random() * 99);
+
+		const objectRelationshipData: Partial<ObjectRelationship> = {
+			label: {
+				en_US: objectRelationshipLabel,
+			},
+			name: objectRelationshipName,
+			objectDefinitionExternalReferenceCode1:
+				objectDefinition1.externalReferenceCode,
+			objectDefinitionExternalReferenceCode2:
+				objectDefinition2.externalReferenceCode,
+			objectDefinitionId1: objectDefinition1.id,
+			objectDefinitionId2: objectDefinition2.id,
+			objectDefinitionName2: objectDefinition2.name,
+			type: 'oneToMany' as ObjectRelationshipType,
+		};
+
+		await apiHelpers.objectAdmin.postObjectRelationship(
+			objectRelationshipData
+		);
+
+		createdEntities.objectRelationshipIds.push(objectRelationshipData.id);
+
+		await viewObjectDefinitionsPage.goto();
+
+		await viewObjectDefinitionsPage.openObjectFolder(
+			objectFolder.label['en_US']
+		);
+
+		await viewObjectDefinitionsPage.viewInModelBuilderButton.click();
+
+		await modelBuilderDiagramPage.toggleSidebarsButton.click();
+
+		await modelBuilderDiagramPage.fitViewButton.click();
+
+		await modelBuilderDiagramPage.connectObjectDefinitionsNodeHandles(
+			objectDefinition3.id,
+			objectDefinition2.id
+		);
+
+		const objectRelationshipLabel2 = 'objectRelationship' + getRandomInt();
+
+		const objectRelationship2 =
+			await modelBuilderObjectDefinitionNodePage.handleObjectRelationshipModal(
+				{
+					objectRelationshipLabel: objectRelationshipLabel2,
+					type: 'One to Many',
+				}
+			);
+
+		createdEntities.objectRelationshipIds.push(objectRelationship2.id);
+
+		await expect(
+			modelBuilderDiagramPage.objectRelationshipEdges.filter({
+				hasText: objectRelationshipLabel2,
+			})
+		).toBeVisible();
+
+		await modelBuilderObjectDefinitionNodePage.clickShowAllFieldsButton(
+			objectDefinition2.label['en_US'],
+			modelBuilderDiagramPage.objectDefinitionNodes
+		);
+
+		await modelBuilderDiagramPage.fitViewButton.click();
+
+		await expect(
+			modelBuilderDiagramPage.objectDefinitionNodes
+				.filter({hasText: objectDefinition2.label['en_US']})
+				.getByText(objectRelationshipLabel2)
+		).toBeVisible();
+	});
+
 	test('can delete object relationship from different folders', async ({
 		apiHelpers,
 		modelBuilderDiagramPage,
@@ -229,6 +344,8 @@ test.describe('Manage object relationships through Model Builder', () => {
 	}) => {
 		const objectFolder =
 			await apiHelpers.objectAdmin.postRandomObjectFolder();
+
+		createdEntities.objectFolderIds.push(objectFolder.id);
 
 		const objectDefinition1 =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({

@@ -292,7 +292,7 @@ public class UpgradeRecorder {
 		return messages;
 	}
 
-	private boolean _isPasswordField(String key, String pid) {
+	private boolean _isPasswordField(String key, String factoryPid) {
 		Bundle[] bundles = _bundleContext.getBundles();
 
 		for (Bundle bundle : bundles) {
@@ -305,16 +305,17 @@ public class UpgradeRecorder {
 
 			if ((extendedMetaTypeInformation == null) ||
 				!Arrays.asList(
-					extendedMetaTypeInformation.getPids()
+					extendedMetaTypeInformation.getFactoryPids()
 				).contains(
-					pid
+					factoryPid
 				)) {
 
 				continue;
 			}
 
 			ExtendedObjectClassDefinition extendedObjectClassDefinition =
-				extendedMetaTypeInformation.getObjectClassDefinition(pid, null);
+				extendedMetaTypeInformation.getObjectClassDefinition(
+					factoryPid, null);
 
 			if (extendedObjectClassDefinition == null) {
 				continue;
@@ -355,7 +356,11 @@ public class UpgradeRecorder {
 							configuration.getProperties();
 
 						if (properties != null) {
-							String pid = configuration.getPid();
+							String factoryPid = configuration.getFactoryPid();
+
+							if (factoryPid == null) {
+								factoryPid = configuration.getPid();
+							}
 
 							Map<String, Object> propertiesMap = new TreeMap<>();
 
@@ -377,7 +382,7 @@ public class UpgradeRecorder {
 
 								Object value = properties.get(key);
 
-								if (_isPasswordField(key, pid)) {
+								if (_isPasswordField(key, factoryPid)) {
 									value = StringPool.EIGHT_STARS;
 								}
 

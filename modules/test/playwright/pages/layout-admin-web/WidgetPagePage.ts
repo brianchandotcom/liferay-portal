@@ -139,6 +139,24 @@ export class WidgetPagePage {
 		}
 	}
 
+	async saveAndClose(title: string) {
+		const configurationIFrame = this.page.frameLocator(
+			`iframe[title*="${title}"]`
+		);
+
+		await configurationIFrame.getByRole('button', {name: 'Save'}).click();
+
+		await waitForSuccessAlert(
+			configurationIFrame,
+			'Success:You have successfully updated the setup.'
+		);
+
+		await this.page
+			.locator('.modal-header')
+			.getByLabel('close', {exact: true})
+			.click();
+	}
+
 	async toggleControls(state: 'visible' | 'hidden') {
 		const isOpen = await this.toggleControlsButton
 			.locator('svg')

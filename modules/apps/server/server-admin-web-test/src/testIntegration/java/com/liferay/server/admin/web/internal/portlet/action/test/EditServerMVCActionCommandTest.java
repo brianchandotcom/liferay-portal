@@ -284,7 +284,7 @@ public class EditServerMVCActionCommandTest {
 			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _layout.getPlid(),
 			RandomTestUtil.randomString());
 
-		PortletPreferences modifiedPortletPreferences;
+		PortletPreferences modifiedPortletPreferences = null;
 
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
@@ -325,7 +325,6 @@ public class EditServerMVCActionCommandTest {
 			Assert.assertNull(
 				_portletPreferencesLocalService.fetchPortletPreferences(
 					_ctPortletPreferences.getPortletPreferencesId()));
-
 			Assert.assertNull(
 				_portletPreferencesLocalService.fetchPortletPreferences(
 					modifiedPortletPreferences.getPortletPreferencesId()));

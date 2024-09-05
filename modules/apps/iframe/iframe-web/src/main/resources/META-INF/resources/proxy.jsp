@@ -14,7 +14,7 @@
 		<meta content="0" http-equiv="Expires" />
 	</head>
 
-	<body onLoad="setTimeout('document.fm.submit()', 100);">
+	<body>
 		<form action="<%= HtmlUtil.escapeAttribute(iFramePortletInstanceConfiguration.src()) %>" method="<%= HtmlUtil.escapeAttribute(iFrameDisplayContext.getFormMethod()) %>" name="fm">
 
 			<%
@@ -30,5 +30,11 @@
 			<input name="<%= HtmlUtil.escapeAttribute(iFramePortletInstanceConfiguration.userNameField()) %>" type="hidden" value="<%= HtmlUtil.escapeAttribute(iFrameDisplayContext.getUserName()) %>" />
 			<input name="<%= HtmlUtil.escapeAttribute(iFramePortletInstanceConfiguration.passwordField()) %>" type="hidden" value="<%= HtmlUtil.escapeAttribute(iFrameDisplayContext.getPassword()) %>" />
 		</form>
+
+		<aui:script type="text/javascript">
+			window.body.onload = function () {
+				setTimeout('document.fm.submit()', 100);
+			};
+		</aui:script>
 	</body>
 </html>

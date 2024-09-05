@@ -5,6 +5,8 @@
  */
 --%>
 
+<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %>
+
 <%@ page import="com.liferay.petra.string.CharPool" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.events.ServicePreAction" %><%@

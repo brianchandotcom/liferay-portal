@@ -64,7 +64,11 @@ response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
 		<meta content="1; url=<%= HtmlUtil.escapeAttribute(redirect) %>" http-equiv="refresh" />
 	</head>
 
-	<body onload="javascript:location.replace('<%= HtmlUtil.escapeJS(redirect) %>')">
-
+	<body>
+		<aui:script type="text/javascript">
+			window.body.onload = function() {
+				window.location.replace('<%= HtmlUtil.escapeJS(redirect) %>');
+			}
+		</aui:script>
 	</body>
 </html>

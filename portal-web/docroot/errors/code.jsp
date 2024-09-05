@@ -68,7 +68,7 @@ String xRequestWith = request.getHeader(HttpHeaders.X_REQUESTED_WITH);
 				<meta content="1; url=<%= HtmlUtil.escapeAttribute(redirect) %>" http-equiv="refresh" />
 			</head>
 
-			<body onload="javascript:location.replace('<%= HtmlUtil.escapeJS(redirect) %>');">
+			<body>
 
 				<!--
 				The numbers below are used to fill up space so that this works properly in IE.
@@ -79,6 +79,12 @@ String xRequestWith = request.getHeader(HttpHeaders.X_REQUESTED_WITH);
 				12345678901234567890123456789012345678901234567890123456789012345678901234567890
 				12345678901234567890123456789012345678901234567890123456789012345678901234567890
 				-->
+
+				<aui:script type="text/javascript">
+					window.body.onload = function() {
+						window.location.replace('<%= HtmlUtil.escapeJS(redirect) %>');
+					}
+				</aui:script>
 			</body>
 		</html>
 	</c:when>

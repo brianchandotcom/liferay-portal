@@ -5,53 +5,61 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageViewModePagesTest} from '../../fixtures/pageViewModePagesTest';
-import {pagesAdminPagesTest} from '../../fixtures/pagesAdminPagesTest';
-import {productMenuPageTest} from '../../fixtures/productMenuPageTest';
-import {uiElementsPageTest} from '../../fixtures/uiElementsTest';
 import getRandomString from '../../utils/getRandomString';
 
-const baseTest = mergeTests(isolatedSiteTest, loginTest());
-
-export const test = mergeTests(
-	baseTest,
-	pagesAdminPagesTest,
-	pageViewModePagesTest,
-	productMenuPageTest,
-	uiElementsPageTest
+const test = mergeTests(
+	apiHelpersTest,
+	isolatedSiteTest,
+	loginTest(),
+	pageViewModePagesTest
 );
 
 test(
-	'Checks center text alignment in Look & Feel',
+	'Checks center text alignment in Look and Feel',
 	{
 		tag: '@LPD-31641',
 	},
-	async ({page, pagesAdminPage, site, widgetPagePage}) => {
-		await pagesAdminPage.goto(site.friendlyUrlPath);
+	async ({apiHelpers, page, site, widgetPagePage}) => {
 
-		const name = getRandomString();
-		await pagesAdminPage.addWidgetPage({name});
+		// Create page and go to view mode
 
-		await pagesAdminPage.goto(site.friendlyUrlPath);
-		await page.getByLabel(name, {exact: true}).click();
+		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+			groupId: site.id,
+			title: getRandomString(),
+		});
+
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
+
+		// Add Asset Publisher widget
 
 		await widgetPagePage.addPortlet('Asset Publisher');
+
+		// Open Look and Feel Configuration
 
 		await widgetPagePage.clickOnAction(
 			'Look and Feel Configuration',
 			page.locator('.portlet-asset-publisher').first()
 		);
 
-		const lookAndFeelFrame = page.frameLocator(
+		const lookAndFeelIFrame = page.frameLocator(
 			'iframe[title="Look and Feel Configuration"]'
 		);
-		await lookAndFeelFrame.getByRole('tab', {name: 'Text Styles'}).click();
-		await lookAndFeelFrame.getByLabel('Alignment').selectOption('center');
-		await lookAndFeelFrame.getByRole('button', {name: 'Save'}).click();
 
-		await expect(lookAndFeelFrame.getByLabel('Alignment')).toHaveValue(
+		// Update Look and Feel Configuration
+
+		await lookAndFeelIFrame.getByRole('tab', {name: 'Text Styles'}).click();
+
+		await lookAndFeelIFrame.getByLabel('Alignment').selectOption('center');
+
+		await lookAndFeelIFrame.getByRole('button', {name: 'Save'}).click();
+
+		// Assert custom styles
+
+		await expect(lookAndFeelIFrame.getByLabel('Alignment')).toHaveValue(
 			'center'
 		);
 	}

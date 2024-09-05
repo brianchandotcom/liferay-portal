@@ -287,30 +287,35 @@ const PublicationTimeline = ({
 			.then((response) => {
 				return response.json();
 			})
-			.then((jsonResponse) => {
-				setTimelineItems(jsonResponse.items);
+			.then(async (jsonResponse) => {
+				const tempTimelineItems = jsonResponse.items;
+
+				for (let i = 0; i < tempTimelineItems.length; i++) {
+					await fetch(
+						`/o/change-tracking-rest/v1.0/ct-collections/${tempTimelineItems[i].id}/ct-entries/by-model-class-name-id/${timelineClassNameId}/by-model-class-pk/${timelineClassPK}`,
+						{method: 'GET'}
+					)
+						.then((response) => {
+							return response.json();
+						})
+						.then((jsonResponse) => {
+							tempTimelineItems[i].ctEntryChangeType =
+								jsonResponse.changeType;
+							tempTimelineItems[i].ctEntryDateModified =
+								jsonResponse.dateModified;
+							tempTimelineItems[i].ctEntryId = jsonResponse.id;
+							tempTimelineItems[i].ctEntryStatus =
+								jsonResponse.status;
+							tempTimelineItems[i].ctEntryStatusMessage =
+								jsonResponse.statusMessage;
+							tempTimelineItems[i].ctEntryUser =
+								jsonResponse.ownerName;
+						});
+				}
+
+				setTimelineItems(tempTimelineItems);
 				setLoading(false);
 			});
-
-		for (const timelineItem in timelineItems) {
-			fetch(
-				`/o/change-tracking-rest/v1.0/ct-collections/${timelineItem.id}/ct-entries/by-model-class-name-id/${timelineClassNameId}/by-model-class-pk/${timelineClassPK}`,
-				{method: 'GET'}
-			)
-				.then((response) => {
-					return response.json();
-				})
-				.then((jsonResponse) => {
-					timelineItem['ctEntryChangeType'] = jsonResponse.changeType;
-					timelineItem['ctEntryDateModified'] =
-						jsonResponse.dateModified;
-					timelineItem['ctEntryId'] = jsonResponse.id;
-					timelineItem['ctEntryStatus'] = jsonResponse.status;
-					timelineItem['ctEntryStatusMessage'] =
-						jsonResponse.statusMessage;
-					timelineItem['ctEntryUser'] = jsonResponse.ownerName;
-				});
-		}
 	}, [timelineClassNameId, timelineClassPK, timelineItems, timelineItemsURL]);
 
 	if (loading) {

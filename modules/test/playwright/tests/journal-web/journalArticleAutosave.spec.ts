@@ -488,11 +488,15 @@ autoSaveTest(
 			structureName,
 		});
 
-		await journalEditArticlePage.fillTitle(getRandomString());
+		await journalEditArticlePage.fillFriendlyURL(getRandomString());
 
 		const errorIndicator = await page.locator(
 			'#_com_liferay_journal_web_portlet_JournalPortlet_lockErrorIndicator'
 		);
+
+		await expect(errorIndicator).toBeVisible();
+
+		await journalEditArticlePage.fillTitle(getRandomString());
 
 		await expect(errorIndicator).toBeVisible();
 

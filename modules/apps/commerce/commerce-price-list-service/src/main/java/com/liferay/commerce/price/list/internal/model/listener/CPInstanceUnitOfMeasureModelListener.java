@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.math.BigDecimal;
@@ -144,11 +145,12 @@ public class CPInstanceUnitOfMeasureModelListener
 			BigDecimal pricingQuantity =
 				cpInstanceUnitOfMeasure.getPricingQuantity();
 
-			if (compare == 0) {
-				BigDecimal originalPricingQuantity =
-					originalCPInstanceUnitOfMeasure.getPricingQuantity();
+			if ((compare == 0) &&
+				!BigDecimalUtil.eq(
+					originalCPInstanceUnitOfMeasure.getPricingQuantity(),
+					pricingQuantity)) {
 
-				compare = originalPricingQuantity.compareTo(pricingQuantity);
+				compare = 1;
 			}
 
 			if (!StringUtil.equals(

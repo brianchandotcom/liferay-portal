@@ -24,7 +24,7 @@ enum URLConstants {
 	DownloadDXP72FixPack11 = 'https://customer.liferay.com/downloads/-/download/liferay-dxp-7-2-fix-pack-11',
 	DownloadDXP73FixPack1 = 'https://customer.liferay.com/downloads/-/download/liferay-dxp-7-3-fix-pack-1',
 	EventAnalysisDocumentationLink = 'https://learn.liferay.com/analytics-cloud/latest/en/touchpoints/events/events-analysis.html',
-	EventAttributesDocumentation = 'https://learn.liferay.com/analytics-cloud/latest/en/workspace-data/definitions/definitions-for-event-attributes.html',
+	EventAttributesDocumentation = 'https://learn.liferay.com/w/analytics-cloud/workspace-data/definitions#event-attributes',
 	ExperimentDocumentationLink = 'https://learn.liferay.com/analytics-cloud/latest/en/optimization/a-b-testing.html',
 	HelpConnectDxp = 'https://learn.liferay.com/analytics-cloud/latest/en/connecting-data-sources/connecting-liferay-dxp-to-analytics-cloud.html',
 	IndividualProfilesDocument = 'https://learn.liferay.com/analytics-cloud/latest/en/people/individuals/individual-profiles.html#individual-profiles',

@@ -145,6 +145,8 @@ public class SemanticSearchConfigurationFormRenderer
 				add("512");
 				add("768");
 				add("1024");
+				add("1536");
+				add("3072");
 			}
 		};
 	}

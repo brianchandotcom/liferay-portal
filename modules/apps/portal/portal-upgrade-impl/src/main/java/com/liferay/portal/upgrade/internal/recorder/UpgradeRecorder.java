@@ -293,6 +293,18 @@ public class UpgradeRecorder {
 	}
 
 	private boolean _isPasswordField(String key, String factoryPid) {
+		String[] passwordKeywords = {
+			"password", "secret", "securitycredential"
+		};
+
+		String lowerCaseKey = StringUtil.toLowerCase(key);
+
+		for (String keyword : passwordKeywords) {
+			if (lowerCaseKey.contains(keyword)) {
+				return true;
+			}
+		}
+
 		Bundle[] bundles = _bundleContext.getBundles();
 
 		for (Bundle bundle : bundles) {

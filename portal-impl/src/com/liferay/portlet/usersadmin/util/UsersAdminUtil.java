@@ -334,16 +334,15 @@ public class UsersAdminUtil {
 				String.valueOf(ancestorOrganization.getOrganizationId()));
 
 			if (OrganizationPermissionUtil.contains(
-				permissionChecker, ancestorOrganization, ActionKeys.VIEW)) {
+					permissionChecker, ancestorOrganization, ActionKeys.VIEW)) {
 
 				PortalUtil.addPortletBreadcrumbEntry(
 					httpServletRequest, ancestorOrganization.getName(),
 					portletURL.toString());
-			} else {
-
+			}
+			else {
 				PortalUtil.addPortletBreadcrumbEntry(
-					httpServletRequest, ancestorOrganization.getName(),
-					null);
+					httpServletRequest, ancestorOrganization.getName(), null);
 			}
 		}
 

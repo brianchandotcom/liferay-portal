@@ -13261,6 +13261,89 @@ public class ObjectEntryResourceTest {
 			null, objectDefinition,
 			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE);
 
+		// File with a nonexistent external reference code
+
+		com.liferay.object.rest.dto.v1_0.FileEntry testFileEntry = _toFileEntry(
+			content -> null, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString() + ".txt", null, null);
+
+		testFileEntry.setExternalReferenceCode(RandomTestUtil.randomString());
+
+		Group group = GroupTestUtil.addGroup();
+
+		Scope scope = new Scope();
+
+		scope.setExternalReferenceCode(group.getExternalReferenceCode());
+		scope.setType(Scope.Type.SITE);
+
+		testFileEntry.setScope(scope);
+
+		String externalReferenceCode3 =
+			testFileEntry.getExternalReferenceCode();
+
+		_testPostCustomObjectEntryWithAttachmentField(
+			fileEntry -> JSONUtil.put(
+				_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
+				() -> {
+					JSONObject jsonObject = _getFileEntryJSONObject(
+						null, fileEntry, objectDefinition);
+
+					jsonObject.put(
+						"externalReferenceCode", externalReferenceCode3);
+
+					return jsonObject;
+				}),
+			testFileEntry, null, objectDefinition,
+			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE);
+
+		FileEntry createdFileEntry = _dlAppLocalService.getFileEntry(
+			_testDLFileEntryModelListener.getLastFileEntryId());
+
+		Assert.assertEquals(
+			externalReferenceCode3,
+			createdFileEntry.getExternalReferenceCode());
+		Assert.assertEquals(group.getGroupId(), createdFileEntry.getGroupId());
+
+		InputStream inputStream = createdFileEntry.getContentStream();
+
+		Assert.assertEquals(-1, inputStream.read());
+
+		testFileEntry = _toFileEntry(
+			content -> null, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString() + ".txt", null, null);
+
+		testFileEntry.setExternalReferenceCode(RandomTestUtil.randomString());
+
+		String externalReferenceCode4 =
+			testFileEntry.getExternalReferenceCode();
+
+		_testPostCustomObjectEntryWithAttachmentField(
+			fileEntry -> JSONUtil.put(
+				_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_SOURCE_1,
+				() -> {
+					JSONObject jsonObject = _getFileEntryJSONObject(
+						_getDLFolder(objectDefinition, true), fileEntry,
+						objectDefinition);
+
+					jsonObject.put(
+						"externalReferenceCode", externalReferenceCode4);
+
+					return jsonObject;
+				}),
+			testFileEntry, null, objectDefinition,
+			_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_SOURCE_1);
+
+		createdFileEntry = _dlAppLocalService.getFileEntry(
+			_testDLFileEntryModelListener.getLastFileEntryId());
+
+		Assert.assertEquals(
+			externalReferenceCode4,
+			createdFileEntry.getExternalReferenceCode());
+
+		inputStream = createdFileEntry.getContentStream();
+
+		Assert.assertEquals(-1, inputStream.read());
+
 		// File with a nonexistent name (documents and media source)
 
 		DLFolder dlFolder1 = DLTestUtil.addDLFolder(
@@ -13444,9 +13527,77 @@ public class ObjectEntryResourceTest {
 			"fileBase64,folder", objectDefinition,
 			_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_SOURCE_2);
 
+		// File with an existing external reference code
+
+		String fileContent = RandomTestUtil.randomString();
+
+		com.liferay.portal.kernel.repository.model.Folder existingFolder =
+			_dlAppLocalService.addFolder(
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				ServiceContextTestUtil.getServiceContext());
+
+		DLFileEntry existingFile = _addDLFileEntry(
+			fileContent, existingFolder.getFolderId());
+
+		testFileEntry = _toFileEntry(
+			Base64::encode, fileContent, existingFile.getFileName(), null,
+			TestPropsValues.getGroupId());
+
+		testFileEntry.setExternalReferenceCode(
+			existingFile.getExternalReferenceCode());
+
+		String externalReferenceCode1 = existingFile.getExternalReferenceCode();
+
+		_testPostCustomObjectEntryWithAttachmentField(
+			fileEntry -> JSONUtil.put(
+				_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
+				() -> {
+					JSONObject jsonObject = _getFileEntryJSONObject(
+						null, fileEntry, objectDefinition);
+
+					jsonObject.put(
+						"externalReferenceCode", externalReferenceCode1);
+
+					return jsonObject;
+				}),
+			testFileEntry, null, objectDefinition,
+			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE);
+
+		fileContent = RandomTestUtil.randomString();
+
+		existingFile = _addDLFileEntry(
+			fileContent, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		testFileEntry = _toFileEntry(
+			Base64::encode, fileContent, existingFile.getFileName(), null,
+			TestPropsValues.getGroupId());
+
+		testFileEntry.setExternalReferenceCode(
+			existingFile.getExternalReferenceCode());
+
+		String externalReferenceCode2 = existingFile.getExternalReferenceCode();
+
+		_testPostCustomObjectEntryWithAttachmentField(
+			fileEntry -> JSONUtil.put(
+				_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_SOURCE_1,
+				() -> {
+					JSONObject jsonObject = _getFileEntryJSONObject(
+						_getDLFolder(objectDefinition, true), fileEntry,
+						objectDefinition);
+
+					jsonObject.put(
+						"externalReferenceCode", externalReferenceCode2);
+
+					return jsonObject;
+				}),
+			testFileEntry, null, objectDefinition,
+			_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_SOURCE_1);
+
 		// File with an existing name
 
-		com.liferay.object.rest.dto.v1_0.FileEntry testFileEntry = _toFileEntry(
+		testFileEntry = _toFileEntry(
 			Base64::encode, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString() + ".txt", null, null);
 
@@ -13508,157 +13659,6 @@ public class ObjectEntryResourceTest {
 			},
 			testFileEntry, null, objectDefinition,
 			_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_SOURCE_2);
-
-		// File with an existing ERC
-
-		String fileContent = RandomTestUtil.randomString();
-
-		com.liferay.portal.kernel.repository.model.Folder folder =
-			_dlAppLocalService.addFolder(
-				null, TestPropsValues.getUserId(), _group.getGroupId(),
-				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				ServiceContextTestUtil.getServiceContext());
-
-		DLFileEntry existingFile = _addDLFileEntry(
-			fileContent, folder.getFolderId());
-
-		testFileEntry = _toFileEntry(
-			Base64::encode, fileContent, existingFile.getFileName(), null,
-			TestPropsValues.getGroupId());
-
-		testFileEntry.setExternalReferenceCode(
-			existingFile.getExternalReferenceCode());
-
-		String externalReferenceCode1 = existingFile.getExternalReferenceCode();
-
-		_testPostCustomObjectEntryWithAttachmentField(
-			fileEntry -> JSONUtil.put(
-				_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
-				() -> {
-					JSONObject jsonObject = _getFileEntryJSONObject(
-						null, fileEntry, objectDefinition);
-
-					jsonObject.put(
-						"externalReferenceCode", externalReferenceCode1);
-
-					return jsonObject;
-				}),
-			testFileEntry, null, objectDefinition,
-			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE);
-
-		fileContent = RandomTestUtil.randomString();
-
-		existingFile = _addDLFileEntry(
-			fileContent, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
-
-		testFileEntry = _toFileEntry(
-			Base64::encode, fileContent, existingFile.getFileName(), null,
-			TestPropsValues.getGroupId());
-
-		testFileEntry.setExternalReferenceCode(
-			existingFile.getExternalReferenceCode());
-
-		String externalReferenceCode2 = existingFile.getExternalReferenceCode();
-
-		_testPostCustomObjectEntryWithAttachmentField(
-			fileEntry -> JSONUtil.put(
-				_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_SOURCE_1,
-				() -> {
-					JSONObject jsonObject = _getFileEntryJSONObject(
-						_getDLFolder(objectDefinition, true), fileEntry,
-						objectDefinition);
-
-					jsonObject.put(
-						"externalReferenceCode", externalReferenceCode2);
-
-					return jsonObject;
-				}),
-			testFileEntry, null, objectDefinition,
-			_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_SOURCE_1);
-
-		// File with a nonexistent ERC (empty shell must be created)
-
-		testFileEntry = _toFileEntry(
-			content -> null, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString() + ".txt", null, null);
-
-		testFileEntry.setExternalReferenceCode(RandomTestUtil.randomString());
-
-		Group group = GroupTestUtil.addGroup();
-
-		Scope scope = new Scope();
-
-		scope.setExternalReferenceCode(group.getExternalReferenceCode());
-		scope.setType(Scope.Type.SITE);
-
-		testFileEntry.setScope(scope);
-
-		String externalReferenceCode3 =
-			testFileEntry.getExternalReferenceCode();
-
-		_testPostCustomObjectEntryWithAttachmentField(
-			fileEntry -> JSONUtil.put(
-				_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
-				() -> {
-					JSONObject jsonObject = _getFileEntryJSONObject(
-						null, fileEntry, objectDefinition);
-
-					jsonObject.put(
-						"externalReferenceCode", externalReferenceCode3);
-
-					return jsonObject;
-				}),
-			testFileEntry, null, objectDefinition,
-			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE);
-
-		FileEntry createdFileEntry = _dlAppLocalService.getFileEntry(
-			_testDLFileEntryModelListener.getLastFileEntryId());
-
-		Assert.assertEquals(
-			externalReferenceCode3,
-			createdFileEntry.getExternalReferenceCode());
-		Assert.assertEquals(group.getGroupId(), createdFileEntry.getGroupId());
-
-		InputStream inputStream = createdFileEntry.getContentStream();
-
-		Assert.assertEquals(-1, inputStream.read());
-
-		testFileEntry = _toFileEntry(
-			content -> null, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString() + ".txt", null, null);
-
-		testFileEntry.setExternalReferenceCode(RandomTestUtil.randomString());
-
-		String externalReferenceCode4 =
-			testFileEntry.getExternalReferenceCode();
-
-		_testPostCustomObjectEntryWithAttachmentField(
-			fileEntry -> JSONUtil.put(
-				_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_SOURCE_1,
-				() -> {
-					JSONObject jsonObject = _getFileEntryJSONObject(
-						_getDLFolder(objectDefinition, true), fileEntry,
-						objectDefinition);
-
-					jsonObject.put(
-						"externalReferenceCode", externalReferenceCode4);
-
-					return jsonObject;
-				}),
-			testFileEntry, null, objectDefinition,
-			_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_SOURCE_1);
-
-		createdFileEntry = _dlAppLocalService.getFileEntry(
-			_testDLFileEntryModelListener.getLastFileEntryId());
-
-		Assert.assertEquals(
-			externalReferenceCode4,
-			createdFileEntry.getExternalReferenceCode());
-
-		inputStream = createdFileEntry.getContentStream();
-
-		Assert.assertEquals(-1, inputStream.read());
 	}
 
 	private void _testPostCustomObjectEntryWithAttachmentField(

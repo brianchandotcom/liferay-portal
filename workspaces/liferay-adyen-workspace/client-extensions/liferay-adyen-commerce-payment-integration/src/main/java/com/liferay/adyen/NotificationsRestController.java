@@ -64,8 +64,8 @@ public class NotificationsRestController extends BaseRestController {
 
 			JSONObject n1a0AdyenWebhookJSONObject = get(
 				_liferayOAuth2AccessTokenManager.getAuthorization(
-					"liferay-adyen-payment-integration-oauth-application-" +
-						"headless-server"),
+					"liferay-adyen-commerce-payment-integration-oauth-" +
+						"application-headless-server"),
 				"/o/c/n1a0adyenwebhooks/by-external-reference-code/" +
 					externalReferenceCode);
 
@@ -128,8 +128,8 @@ public class NotificationsRestController extends BaseRestController {
 
 				delete(
 					_liferayOAuth2AccessTokenManager.getAuthorization(
-						"liferay-adyen-payment-integration-oauth-application-" +
-							"headless-server"),
+						"liferay-adyen-commerce-payment-integration-oauth-" +
+							"application-headless-server"),
 					"/o/c/n1a0adyenwebhooks/by-external-reference-code/" +
 						externalReferenceCode);
 			}
@@ -170,8 +170,8 @@ public class NotificationsRestController extends BaseRestController {
 
 		JSONObject paymentsJSONObject = get(
 			_liferayOAuth2AccessTokenManager.getAuthorization(
-				"liferay-adyen-payment-integration-oauth-application-" +
-					"headless-server"),
+				"liferay-adyen-commerce-payment-integration-oauth-" +
+					"application-headless-server"),
 			"/o/headless-commerce-admin-payment/v1.0/payments/?filter=" +
 				"relatedItemId eq " +
 					notificationRequestItem.getMerchantReference());
@@ -234,8 +234,8 @@ public class NotificationsRestController extends BaseRestController {
 
 		patch(
 			_liferayOAuth2AccessTokenManager.getAuthorization(
-				"liferay-adyen-payment-integration-oauth-application-" +
-					"headless-server"),
+				"liferay-adyen-commerce-payment-integration-oauth-" +
+					"application-headless-server"),
 			new JSONObject(
 			).put(
 				"errorMessages", errorMessages

@@ -7,8 +7,10 @@ package com.liferay.journal.web.internal.display.context;
 
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.journal.model.JournalArticleDisplay;
+import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
@@ -16,6 +18,8 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.Objects;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
@@ -33,10 +37,8 @@ public class AssetFullContentDisplayContext {
 		LiferayPortletResponse liferayPortletResponse) {
 
 		_httpServletRequest = httpServletRequest;
+		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
-
-		_currentURLObj = PortletURLUtil.getCurrent(
-			liferayPortletRequest, liferayPortletResponse);
 	}
 
 	public JournalArticleDisplay getJournalArticleDisplay() {
@@ -58,12 +60,20 @@ public class AssetFullContentDisplayContext {
 		String pageRedirect = ParamUtil.getString(
 			_httpServletRequest, "redirect");
 
-		if (Validator.isNull(pageRedirect)) {
+		PortletURL currentURLObj = _getCurrentURLObj();
+
+		if (Validator.isNull(pageRedirect) && (currentURLObj != null)) {
 			pageRedirect = _currentURLObj.toString();
 		}
 
+		PortletURL portletURL = _getPortletURL();
+
+		if (portletURL == null) {
+			return null;
+		}
+
 		return PortletURLBuilder.create(
-			_getPortletURL()
+			portletURL
 		).setMVCPath(
 			"/view_content.jsp"
 		).setRedirect(
@@ -99,7 +109,39 @@ public class AssetFullContentDisplayContext {
 		return _assetRendererFactory;
 	}
 
+	private PortletURL _getCurrentURLObj() {
+		if ((_liferayPortletRequest == null) ||
+			(_liferayPortletResponse == null)) {
+
+			return null;
+		}
+
+		Portlet portlet = _liferayPortletResponse.getPortlet();
+
+		if (Objects.equals(
+				portlet.getPortletId(),
+				ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET)) {
+
+			return null;
+		}
+
+		if (_currentURLObj != null) {
+			return _currentURLObj;
+		}
+
+		_currentURLObj = PortletURLUtil.getCurrent(
+			_liferayPortletRequest, _liferayPortletResponse);
+
+		return _currentURLObj;
+	}
+
 	private PortletURL _getPortletURL() {
+		PortletURL portletURL = _getCurrentURLObj();
+
+		if (portletURL == null) {
+			return null;
+		}
+
 		try {
 			return PortletURLUtil.clone(
 				_currentURLObj, _liferayPortletResponse);
@@ -121,9 +163,10 @@ public class AssetFullContentDisplayContext {
 		AssetFullContentDisplayContext.class);
 
 	private AssetRendererFactory<?> _assetRendererFactory;
-	private final PortletURL _currentURLObj;
+	private PortletURL _currentURLObj;
 	private final HttpServletRequest _httpServletRequest;
 	private JournalArticleDisplay _journalArticleDisplay;
+	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 
 }

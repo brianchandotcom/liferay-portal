@@ -3,11 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {CommerceServiceProvider, commerceEvents} from 'commerce-frontend-js';
-import {openSelectionModal, openToast} from 'frontend-js-web';
+import {CommerceServiceProvider} from 'commerce-frontend-js';
+import {openSelectionModal, sessionStorage} from 'frontend-js-web';
 
 function handleEvent({
-	dataSetId,
 	fieldName,
 	fieldValueName,
 	filterFieldName,
@@ -29,18 +28,13 @@ function handleEvent({
 
 	return AdminCatalogResource.updateProduct(productId, formattedData).finally(
 		() => {
+			sessionStorage.setItem(
+				'com.liferay.commerce.product.definitions.web.successMessage',
+				Liferay.Language.get('your-request-completed-successfully'),
+				sessionStorage.TYPES.NECESSARY
+			);
+
 			window.location.reload();
-
-			Liferay.fire(commerceEvents.FDS_UPDATE_DISPLAY, {
-				id: dataSetId,
-			});
-
-			openToast({
-				message: Liferay.Language.get(
-					'your-request-completed-successfully'
-				),
-				type: 'success',
-			});
 		}
 	);
 }
@@ -51,7 +45,7 @@ export default function ({
 	channelDataSetId,
 	channelItemSelectorURL,
 	checkedAccountGroupIds,
-	checkedChannelIds,
+	checkedCommerceChannelIds,
 	namespace,
 	productId,
 }) {
@@ -100,7 +94,7 @@ export default function ({
 						return;
 					}
 
-					const channelIds = checkedChannelIds.split(',');
+					const channelIds = checkedCommerceChannelIds.split(',');
 
 					channelIds.map((channelId) => {
 						selectedItems.push({value: channelId});

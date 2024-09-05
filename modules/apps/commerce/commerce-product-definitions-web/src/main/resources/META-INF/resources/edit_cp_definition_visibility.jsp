@@ -16,6 +16,8 @@ long cpDefinitionId = cpDefinitionsDisplayContext.getCPDefinitionId();
 
 Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 	"cpDefinitionId", String.valueOf(cpDefinitionId)
+).put(
+	"permissionUserId", String.valueOf(themeDisplay.getUserId())
 ).build();
 %>
 
@@ -69,8 +71,6 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 <liferay-frontend:component
 	context='<%=
 		HashMapBuilder.<String, Object>put(
-			"accountGroupDataSetId", CommerceProductFDSNames.PRODUCT_ACCOUNT_GROUPS
-		).put(
 			"accountGroupItemSelectorURL", cpDefinitionsDisplayContext.getAccountGroupItemSelectorUrl()
 		).put(
 			"channelDataSetId", CommerceProductFDSNames.PRODUCT_CHANNELS
@@ -79,10 +79,28 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 		).put(
 			"checkedAccountGroupIds", cpDefinitionsDisplayContext.getCheckedCommerceAccountGroupIds()
 		).put(
-			"checkedChannelIds", cpDefinitionsDisplayContext.getCheckedCommerceChannelIds()
+			"checkedCommerceChannelIds", cpDefinitionsDisplayContext.getCheckedCommerceChannelIds()
 		).put(
 			"productId", cpDefinition.getCProductId()
 		).build()
 	%>'
 	module="{editCpDefinitionVisibility} from commerce-product-definitions-web"
 />
+
+<aui:script>
+	sessionKey = 'com.liferay.commerce.product.definitions.web.successMessage';
+
+	successMessage = Liferay.Util.SessionStorage.getItem(
+		sessionKey,
+		Liferay.Util.SessionStorage.TYPES.NECESSARY
+	);
+
+	if (successMessage) {
+		Liferay.Util.openToast({
+			message: successMessage,
+			type: 'success',
+		});
+
+		Liferay.Util.SessionStorage.removeItem(sessionKey);
+	}
+</aui:script>

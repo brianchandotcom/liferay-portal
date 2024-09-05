@@ -16,8 +16,8 @@ export class CommerceAdminProductDetailsVisibilityPage {
 
 	constructor(page: Page) {
 		this.page = page;
-		this.selectAccountGroupsButton = page.locator(
-			'[data-testid="fdsCreationActionButton"]'
+		this.selectAccountGroupsButton = page.getByLabel(
+			'Add Account Group Relation to'
 		);
 		this.selectAccountGroupsFrame = page.frameLocator(
 			'iframe[title="Select Account Groups"]'

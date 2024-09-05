@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -157,7 +158,7 @@ public class AccountGroupRelLocalServiceImpl
 
 	@Override
 	public List<AccountGroupRel> getAccountGroupRels(
-		Long[] accountEntryIds, String className, long classPK, String keywords,
+		long[] accountGroupIds, String className, long classPK, String keywords,
 		int start, int end) {
 
 		return dslQuery(
@@ -170,7 +171,7 @@ public class AccountGroupRelLocalServiceImpl
 				AccountGroupTable.INSTANCE.accountGroupId.eq(
 					AccountGroupRelTable.INSTANCE.accountGroupId)
 			).where(
-				_getPredicate(accountEntryIds, className, classPK, keywords)
+				_getPredicate(accountGroupIds, className, classPK, keywords)
 			).limit(
 				start, end
 			));
@@ -212,7 +213,7 @@ public class AccountGroupRelLocalServiceImpl
 
 	@Override
 	public int getAccountGroupRelsCount(
-		Long[] accountEntryIds, String className, long classPK,
+		long[] accountGroupIds, String className, long classPK,
 		String keywords) {
 
 		return dslQueryCount(
@@ -224,7 +225,7 @@ public class AccountGroupRelLocalServiceImpl
 				AccountGroupTable.INSTANCE.accountGroupId.eq(
 					AccountGroupRelTable.INSTANCE.accountGroupId)
 			).where(
-				_getPredicate(accountEntryIds, className, classPK, keywords)
+				_getPredicate(accountGroupIds, className, classPK, keywords)
 			));
 	}
 
@@ -240,32 +241,17 @@ public class AccountGroupRelLocalServiceImpl
 	}
 
 	private Predicate _getPredicate(
-		Long[] accountEntryIds, String className, long classPK,
+		long[] accountGroupIds, String className, long classPK,
 		String keywords) {
 
 		Predicate predicate = AccountGroupRelTable.INSTANCE.classNameId.eq(
 			_classNameLocalService.getClassNameId(className)
 		).and(
 			AccountGroupRelTable.INSTANCE.classPK.eq(classPK)
+		).and(
+			AccountGroupRelTable.INSTANCE.accountGroupId.in(
+				ArrayUtil.toArray(accountGroupIds))
 		);
-
-		if (accountEntryIds.length > 0) {
-			predicate = predicate.and(
-				AccountGroupRelTable.INSTANCE.accountGroupId.in(
-					DSLQueryFactoryUtil.selectDistinct(
-						AccountGroupRelTable.INSTANCE.accountGroupId
-					).from(
-						AccountGroupRelTable.INSTANCE
-					).where(
-						AccountGroupRelTable.INSTANCE.classNameId.eq(
-							_classNameLocalService.getClassNameId(
-								AccountEntry.class.getName())
-						).and(
-							AccountGroupRelTable.INSTANCE.classPK.in(
-								accountEntryIds)
-						)
-					)));
-		}
 
 		if (Validator.isNotNull(keywords)) {
 			return Predicate.withParentheses(

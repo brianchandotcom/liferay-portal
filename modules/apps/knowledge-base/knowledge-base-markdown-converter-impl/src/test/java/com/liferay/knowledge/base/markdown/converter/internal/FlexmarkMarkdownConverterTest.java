@@ -17,7 +17,7 @@ import org.junit.Test;
 /**
  * @author Andy Wu
  */
-public class MarkdownConverterTest {
+public class FlexmarkMarkdownConverterTest {
 
 	@ClassRule
 	@Rule

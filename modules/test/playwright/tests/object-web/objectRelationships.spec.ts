@@ -38,7 +38,7 @@ test.afterEach(async ({apiHelpers}) => {
 });
 
 test.describe('Manage object relationships through Model Builder', () => {
-	test('can create relationship by dragging node handles', async ({
+	test('can create one to many relationship with object field by dragging node handles', async ({
 		apiHelpers,
 		modelBuilderPage,
 		viewObjectDefinitionsPage,

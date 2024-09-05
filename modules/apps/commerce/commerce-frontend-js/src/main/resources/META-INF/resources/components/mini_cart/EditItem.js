@@ -410,6 +410,7 @@ function EditItem() {
 									)}
 									productId={cpInstance.productId}
 									resetQuantity={false}
+									useQuantity={true}
 									value={cpInstance.skuUnitOfMeasure?.key}
 								/>
 							</div>

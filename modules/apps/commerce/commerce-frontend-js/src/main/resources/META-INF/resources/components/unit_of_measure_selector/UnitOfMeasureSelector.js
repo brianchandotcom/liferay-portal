@@ -36,6 +36,7 @@ function UnitOfMeasureSelector({
 	productId,
 	resetQuantity,
 	size,
+	useQuantity,
 	value,
 }) {
 	const [inputProperties, setInputProperties] = useState({
@@ -121,7 +122,9 @@ function UnitOfMeasureSelector({
 
 				if (skuUnitOfMeasure?.key) {
 					postChannelProductSkuBySkuOption(
-						quantity,
+						(useQuantity
+							? quantity
+							: skuUnitOfMeasure?.incrementalOrderQuantity) || 1,
 						skuUnitOfMeasure?.key
 					);
 				}
@@ -252,12 +255,15 @@ function UnitOfMeasureSelector({
 							);
 
 						postChannelProductSkuBySkuOption(
-							getMinQuantity(
-								productConfiguration?.minOrderQuantity,
-								selectedUnitOfMeasure?.incrementalOrderQuantity ||
-									1,
-								selectedUnitOfMeasure?.precision || 0
-							),
+							(useQuantity
+								? getMinQuantity(
+										productConfiguration?.minOrderQuantity,
+										selectedUnitOfMeasure?.incrementalOrderQuantity ||
+											1,
+										selectedUnitOfMeasure?.precision || 0
+									)
+								: selectedUnitOfMeasure?.incrementalOrderQuantity) ||
+								1,
 							target.value
 						);
 					}}
@@ -279,6 +285,7 @@ UnitOfMeasureSelector.defaultProps = {
 	loadFinalPrice: false,
 	resetQuantity: true,
 	size: 'lg',
+	useQuantity: false,
 };
 
 UnitOfMeasureSelector.propTypes = {
@@ -300,6 +307,7 @@ UnitOfMeasureSelector.propTypes = {
 	productId: PropTypes.number.isRequired,
 	resetQuantity: PropTypes.bool,
 	size: PropTypes.oneOf(['lg', 'md', 'sm']),
+	useQuantity: PropTypes.bool,
 	value: PropTypes.string,
 };
 

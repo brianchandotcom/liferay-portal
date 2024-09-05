@@ -149,12 +149,15 @@ public class SkuResourceImpl extends BaseSkuResourceImpl {
 			throw new NoSuchCPInstanceException();
 		}
 
+		String defaultUnitOfMeasureKey = _getDefaultUnitOfMeasureKey(
+			cpInstance.getCPInstanceId());
+
 		return _skuDTOConverter.toDTO(
 			new SkuDTOConverterContext(
 				commerceContext, contextCompany.getCompanyId(), cpDefinition,
-				contextAcceptLanguage.getPreferredLocale(), BigDecimal.ONE,
-				cpInstance.getCPInstanceId(), null,
-				_getDefaultUnitOfMeasureKey(cpInstance.getCPInstanceId()),
+				contextAcceptLanguage.getPreferredLocale(),
+				_getDefaultQuantity(cpInstance, defaultUnitOfMeasureKey),
+				cpInstance.getCPInstanceId(), null, defaultUnitOfMeasureKey,
 				contextUriInfo, contextUser));
 	}
 
@@ -301,7 +304,9 @@ public class SkuResourceImpl extends BaseSkuResourceImpl {
 			new SkuDTOConverterContext(
 				commerceContext, contextCompany.getCompanyId(), cpDefinition,
 				contextAcceptLanguage.getPreferredLocale(),
-				BigDecimalUtil.get(quantity, BigDecimal.ONE),
+				BigDecimalUtil.get(
+					quantity,
+					_getDefaultQuantity(cpInstance, skuUnitOfMeasureKey)),
 				cpInstance.getCPInstanceId(), skuOptionJSONArray,
 				skuUnitOfMeasureKey, contextUriInfo, contextUser));
 	}
@@ -341,6 +346,23 @@ public class SkuResourceImpl extends BaseSkuResourceImpl {
 			contextUser.getUserId(), 0, commerceAccountIds[0]);
 	}
 
+	private BigDecimal _getDefaultQuantity(
+		CPInstance cpInstance, String unitOfMeasureKey) {
+
+		if ((cpInstance == null) || Validator.isNull(unitOfMeasureKey)) {
+			return BigDecimal.ONE;
+		}
+
+		CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
+			cpInstance.fetchCPInstanceUnitOfMeasure(unitOfMeasureKey);
+
+		if (cpInstanceUnitOfMeasure != null) {
+			return cpInstanceUnitOfMeasure.getIncrementalOrderQuantity();
+		}
+
+		return BigDecimal.ONE;
+	}
+
 	private String _getDefaultUnitOfMeasureKey(long cpInstanceId) {
 		List<CPInstanceUnitOfMeasure> cpInstanceUnitOfMeasures =
 			_cpInstanceUnitOfMeasureLocalService.
@@ -367,15 +389,17 @@ public class SkuResourceImpl extends BaseSkuResourceImpl {
 			_commerceChannelLocalService.getCommerceChannel(channelId);
 
 		for (CPInstance cpInstance : cpInstances) {
+			String unitOfMeasureKey = _getDefaultUnitOfMeasureKey(
+				cpInstance.getCPInstanceId());
+
 			skus.add(
 				_skuDTOConverter.toDTO(
 					new SkuDTOConverterContext(
 						_getCommerceContext(accountId, commerceChannel),
 						contextCompany.getCompanyId(), cpDefinition,
 						contextAcceptLanguage.getPreferredLocale(),
-						BigDecimal.ONE, cpInstance.getCPInstanceId(), null,
-						_getDefaultUnitOfMeasureKey(
-							cpInstance.getCPInstanceId()),
+						_getDefaultQuantity(cpInstance, unitOfMeasureKey),
+						cpInstance.getCPInstanceId(), null, unitOfMeasureKey,
 						contextUriInfo, contextUser)));
 		}
 

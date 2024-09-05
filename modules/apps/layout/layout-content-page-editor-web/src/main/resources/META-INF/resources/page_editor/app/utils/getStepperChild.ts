@@ -9,17 +9,21 @@ import {FragmentEntryLinkMap} from '../actions/addFragmentEntryLinks';
 
 export function getStepperChild(
 	form: FormLayoutDataItem,
-	layoutData: LayoutData,
-	fragmentEntryLinks: FragmentEntryLinkMap
+	layoutData: LayoutData | null,
+	fragmentEntryLinks: FragmentEntryLinkMap | null
 ): LayoutDataItem | null {
+	if (!layoutData || !fragmentEntryLinks) {
+		return null;
+	}
+
 	for (const childId of form.children) {
-		const child = layoutData.items[childId];
+		const child = layoutData?.items[childId];
 
 		if (!child || !('fragmentEntryLinkId' in child.config)) {
 			continue;
 		}
 
-		const fragment = fragmentEntryLinks[child.config.fragmentEntryLinkId];
+		const fragment = fragmentEntryLinks?.[child.config.fragmentEntryLinkId];
 
 		if (fragment.fieldTypes?.includes('stepper')) {
 			return child;

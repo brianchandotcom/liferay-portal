@@ -3,18 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {LayoutDataItem} from '../../types/layout_data/LayoutData';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 
-export function getFormParent(item, layoutData) {
-	if (item.type === LAYOUT_DATA_ITEM_TYPES.form) {
-		return item;
-	}
-
-	const parent = layoutData?.items?.[item.parentId];
-
-	if (!parent) {
-		return null;
-	}
-
-	return getFormParent(parent, layoutData);
+export function isUnmappedCollection(item: LayoutDataItem) {
+	return (
+		item.type === LAYOUT_DATA_ITEM_TYPES.collection &&
+		!item.config.collection
+	);
 }

@@ -139,6 +139,7 @@ public class LayoutActionsProductNavigationControlMenuEntryTest {
 			PermissionThreadLocal.getPermissionChecker());
 		themeDisplay.setRequest(httpServletRequest);
 		themeDisplay.setScopeGroupId(_group.getGroupId());
+		themeDisplay.setSiteGroupId(_group.getGroupId());
 		themeDisplay.setUser(TestPropsValues.getUser());
 
 		return themeDisplay;

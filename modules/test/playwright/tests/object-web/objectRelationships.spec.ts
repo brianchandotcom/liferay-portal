@@ -200,6 +200,66 @@ test.describe('Manage object relationships through Model Builder', () => {
 		).toBeVisible();
 	});
 
+	test('can create relationship by using add relationship button', async ({
+		apiHelpers,
+		modelBuilderDiagramPage,
+		modelBuilderObjectDefinitionNodePage,
+		viewObjectDefinitionsPage,
+	}) => {
+		const objectFolder =
+			await apiHelpers.objectAdmin.postRandomObjectFolder();
+
+		createdEntities.objectFolderIds.push(objectFolder.id);
+
+		const objectDefinition1 =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFolderExternalReferenceCode:
+					objectFolder.externalReferenceCode,
+				status: {code: 0},
+			});
+		const objectDefinition2 =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFolderExternalReferenceCode:
+					objectFolder.externalReferenceCode,
+				status: {code: 0},
+			});
+
+		createdEntities.objectDefinitionIds.push(
+			objectDefinition1.id,
+			objectDefinition2.id
+		);
+
+		await viewObjectDefinitionsPage.goto();
+
+		await viewObjectDefinitionsPage.openObjectFolder(
+			objectFolder.label['en_US']
+		);
+
+		await viewObjectDefinitionsPage.viewInModelBuilderButton.click();
+
+		const objectRelationshipLabel = 'objectRelationship' + getRandomInt();
+
+		const objectRelationship =
+			await modelBuilderObjectDefinitionNodePage.createObjectRelationship(
+				{
+			manyRecordsOf: objectDefinition1.name,
+			objectDefinitionLabel: objectDefinition2.label['en_US'],
+					objectDefinitionNodes:
+						modelBuilderDiagramPage.objectDefinitionNodes,
+					objectRelationshipLabel,
+			objectRelationshipType: 'One to Many',
+				}
+			);
+
+		createdEntities.objectRelationshipIds.push(objectRelationship.id);
+
+		await expect(
+			modelBuilderDiagramPage.objectRelationshipEdges.filter({
+				hasText: objectRelationshipLabel,
+			})
+		).toBeVisible();
+	});
+
 	test('can create object relationship to linked object definition by drag and drop', async ({
 		apiHelpers,
 		modelBuilderDiagramPage,

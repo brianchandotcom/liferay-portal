@@ -52,6 +52,10 @@ public class SupplierRoleUpgradeProcess extends UpgradeProcess {
 		Role role = _roleLocalService.fetchRole(
 			companyId, AccountRoleConstants.ROLE_NAME_ACCOUNT_SUPPLIER);
 
+		if (role == null) {
+			return;
+		}
+
 		_resourcePermissionLocalService.addResourcePermission(
 			companyId, AccountEntry.class.getName(), 3,
 			String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),

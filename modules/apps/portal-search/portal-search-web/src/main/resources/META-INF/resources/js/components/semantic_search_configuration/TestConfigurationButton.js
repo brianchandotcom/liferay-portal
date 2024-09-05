@@ -18,20 +18,26 @@ import {TEXT_EMBEDDING_PROVIDER_TYPES} from './constants';
  */
 function TestConfigurationButton({
 	accessToken,
+	apiKey,
+	autoTruncate,
 	availableTextEmbeddingProviders,
 	basicAuthPassword,
 	basicAuthUsername,
+	dimensions,
 	disabled,
 	embeddingVectorDimensions,
 	errors,
 	hostAddress,
 	languageIds,
+	location,
 	maxCharacterCount,
 	model,
 	modelClassNames,
 	modelTimeout,
+	projectId,
 	textEmbeddingProvider,
 	textTruncationStrategy,
+	user,
 }) {
 	const [loading, setLoading] = useState(false);
 	const [testResultsMessage, setTestResultsMessage] = useState({}); // {message, type}
@@ -43,8 +49,10 @@ function TestConfigurationButton({
 		setTestResultsMessage({});
 	}, [
 		accessToken,
+		apiKey,
 		basicAuthPassword,
 		basicAuthUsername,
+		dimensions,
 		embeddingVectorDimensions,
 		hostAddress,
 		languageIds,
@@ -54,6 +62,7 @@ function TestConfigurationButton({
 		modelTimeout,
 		textEmbeddingProvider,
 		textTruncationStrategy,
+		user,
 	]);
 
 	/**
@@ -84,11 +93,29 @@ function TestConfigurationButton({
 			};
 		}
 
+		if (textEmbeddingProvider === TEXT_EMBEDDING_PROVIDER_TYPES.OPENAI) {
+			return {
+				apiKey,
+				dimensions,
+				model,
+				user,
+			};
+		}
+
 		if (textEmbeddingProvider === TEXT_EMBEDDING_PROVIDER_TYPES.TXTAI) {
 			return {
 				basicAuthPassword,
 				basicAuthUsername,
 				hostAddress,
+			};
+		}
+
+		if (textEmbeddingProvider === TEXT_EMBEDDING_PROVIDER_TYPES.VERTEX_AI) {
+			return {
+				autoTruncate,
+				location,
+				model,
+				projectId,
 			};
 		}
 
@@ -271,8 +298,20 @@ function TestConfigurationButton({
 			);
 		}
 
+		if (textEmbeddingProvider === TEXT_EMBEDDING_PROVIDER_TYPES.OPENAI) {
+			return errors?.attributes?.apiKey || errors?.attributes?.model;
+		}
+
 		if (textEmbeddingProvider === TEXT_EMBEDDING_PROVIDER_TYPES.TXTAI) {
 			return errors?.attributes?.hostAddress;
+		}
+
+		if (textEmbeddingProvider === TEXT_EMBEDDING_PROVIDER_TYPES.VERTEX_AI) {
+			return (
+				errors?.attributes?.model ||
+				errors?.attributes?.location ||
+				errors?.attributes?.projectId
+			);
 		}
 
 		return false;

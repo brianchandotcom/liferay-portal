@@ -223,13 +223,19 @@ export default function ({
 
 		const {
 			accessToken,
+			apiKey,
+			autoTruncate,
 			basicAuthPassword,
 			basicAuthUsername,
+			dimensions,
 			hostAddress,
+			location,
 			maxCharacterCount,
 			model,
 			modelTimeout,
+			projectId,
 			textTruncationStrategy,
+			user,
 		} = attributes;
 
 		const textEmbeddingProviderSettings =
@@ -246,13 +252,28 @@ export default function ({
 							accessToken,
 							hostAddress,
 						}
-					: providerName === TEXT_EMBEDDING_PROVIDER_TYPES.TXTAI
+					: providerName === TEXT_EMBEDDING_PROVIDER_TYPES.OPENAI
 						? {
-								basicAuthPassword,
-								basicAuthUsername,
-								hostAddress,
+								apiKey,
+								dimensions,
+								model,
+								user,
 							}
-						: {};
+						: providerName === TEXT_EMBEDDING_PROVIDER_TYPES.TXTAI
+							? {
+									basicAuthPassword,
+									basicAuthUsername,
+									hostAddress,
+								}
+							: providerName ===
+								  TEXT_EMBEDDING_PROVIDER_TYPES.VERTEX_AI
+								? {
+										autoTruncate,
+										location,
+										model,
+										projectId,
+									}
+								: {};
 
 		const responseData = await fetch(
 			'/o/search/v1.0/embeddings/validate-provider-configuration',
@@ -474,6 +495,78 @@ export default function ({
 						}
 					}
 
+					if (
+						textEmbeddingProviderConfigurationJSON.providerName ===
+						TEXT_EMBEDDING_PROVIDER_TYPES.OPENAI
+					) {
+
+						// Validate "apiKey" field.
+
+						if (
+							!textEmbeddingProviderConfigurationJSON.attributes
+								?.apiKey ||
+							textEmbeddingProviderConfigurationJSON.attributes
+								?.apiKey === ''
+						) {
+							textEmbeddingProviderConfigurationJSONError.attributes.apiKey =
+								Liferay.Language.get('this-field-is-required');
+						}
+
+						// Validate "Model" field.
+
+						if (
+							!textEmbeddingProviderConfigurationJSON.attributes
+								?.model ||
+							textEmbeddingProviderConfigurationJSON.attributes
+								?.model === ''
+						) {
+							textEmbeddingProviderConfigurationJSONError.attributes.model =
+								Liferay.Language.get('this-field-is-required');
+						}
+					}
+
+					if (
+						textEmbeddingProviderConfigurationJSON.providerName ===
+						TEXT_EMBEDDING_PROVIDER_TYPES.VERTEX_AI
+					) {
+
+						// Validate "Location" field.
+
+						if (
+							!textEmbeddingProviderConfigurationJSON.attributes
+								?.location ||
+							textEmbeddingProviderConfigurationJSON.attributes
+								?.location === ''
+						) {
+							textEmbeddingProviderConfigurationJSONError.attributes.location =
+								Liferay.Language.get('this-field-is-required');
+						}
+
+						// Validate "Model" field.
+
+						if (
+							!textEmbeddingProviderConfigurationJSON.attributes
+								?.model ||
+							textEmbeddingProviderConfigurationJSON.attributes
+								?.model === ''
+						) {
+							textEmbeddingProviderConfigurationJSONError.attributes.model =
+								Liferay.Language.get('this-field-is-required');
+						}
+
+						// Validate "Project ID" field.
+
+						if (
+							!textEmbeddingProviderConfigurationJSON.attributes
+								?.projectId ||
+							textEmbeddingProviderConfigurationJSON.attributes
+								?.projectId === ''
+						) {
+							textEmbeddingProviderConfigurationJSONError.attributes.projectId =
+								Liferay.Language.get('this-field-is-required');
+						}
+					}
+
 					return textEmbeddingProviderConfigurationJSONError;
 				}
 			);
@@ -572,11 +665,16 @@ export default function ({
 					}) ||
 					[
 						'accessToken',
+						'apiKey',
+						'dimensions',
 						'basicAuthPassword',
 						'basicAuthUsername',
 						'hostAddress',
+						'location',
 						'model',
+						'projectId',
 						'modelTimeout',
+						'user',
 					].some((property) => {
 						return isNotEqual(
 							resolvedInitialTextEmbeddingProviderConfigurationJSONs[
@@ -880,7 +978,7 @@ export default function ({
 									]?.attributes?.modelTimeout
 								}
 								helpText={Liferay.Language.get(
-									'text-embedding-provider-model-timeout-help'
+									'text-embedding-provider-hugging-face-inference-api-model-timeout-help'
 								)}
 								label={Liferay.Language.get('model-timeout')}
 								name={`textEmbeddingProviderConfigurationJSONs[${index}].attributes.modelTimeout`}
@@ -980,6 +1078,279 @@ export default function ({
 						</>
 					)}
 
+					{formik.values.textEmbeddingProviderConfigurationJSONs?.[
+						index
+					]?.providerName ===
+						TEXT_EMBEDDING_PROVIDER_TYPES.OPENAI && (
+						<>
+							<Input
+								disabled={formik.isSubmitting}
+								error={
+									formik.errors
+										.textEmbeddingProviderConfigurationJSONs?.[
+										index
+									]?.attributes?.apiKey
+								}
+								helpText={Liferay.Language.get(
+									'text-embedding-provider-api-key-help'
+								)}
+								label={Liferay.Language.get('api-key')}
+								name={`textEmbeddingProviderConfigurationJSONs[${index}].attributes.apiKey`}
+								onBlur={_handleInputBlur(
+									`textEmbeddingProviderConfigurationJSONs[${index}].attributes.apiKey`
+								)}
+								onChange={_handleInputChange(
+									`textEmbeddingProviderConfigurationJSONs[${index}].attributes.apiKey`
+								)}
+								required
+								touched={
+									formik.touched
+										.textEmbeddingProviderConfigurationJSONs?.[
+										index
+									]?.attributes?.apiKey
+								}
+								value={
+									formik.values
+										.textEmbeddingProviderConfigurationJSONs?.[
+										index
+									]?.attributes?.apiKey
+								}
+							/>
+
+							<Input
+								disabled={formik.isSubmitting}
+								error={
+									formik.errors
+										.textEmbeddingProviderConfigurationJSONs?.[
+										index
+									]?.attributes?.dimensions
+								}
+								helpText={Liferay.Language.get(
+									'text-embedding-provider-openai-dimensions-help'
+								)}
+								label={Liferay.Language.get('dimensions')}
+								name={`textEmbeddingProviderConfigurationJSONs[${index}].attributes.dimensions`}
+								onBlur={_handleInputBlur(
+									`textEmbeddingProviderConfigurationJSONs[${index}].attributes.dimensions`
+								)}
+								onChange={_handleInputChange(
+									`textEmbeddingProviderConfigurationJSONs[${index}].attributes.dimensions`
+								)}
+								touched={
+									formik.touched
+										.textEmbeddingProviderConfigurationJSONs?.[
+										index
+									]?.attributes?.dimensions
+								}
+								value={
+									formik.values
+										.textEmbeddingProviderConfigurationJSONs?.[
+										index
+									]?.attributes?.dimensions
+								}
+							/>
+
+							<Input
+								disabled={formik.isSubmitting}
+								error={
+									formik.errors
+										.textEmbeddingProviderConfigurationJSONs?.[
+										index
+									]?.attributes?.model
+								}
+								helpText={Liferay.Language.get(
+									'text-embedding-provider-model-help'
+								)}
+								label={Liferay.Language.get('model')}
+								name={`textEmbeddingProviderConfigurationJSONs[${index}].attributes.model`}
+								onBlur={_handleInputBlur(
+									`textEmbeddingProviderConfigurationJSONs[${index}].attributes.model`
+								)}
+								onChange={_handleInputChange(
+									`textEmbeddingProviderConfigurationJSONs[${index}].attributes.model`
+								)}
+								required
+								touched={
+									formik.touched
+										.textEmbeddingProviderConfigurationJSONs?.[
+										index
+									]?.attributes?.model
+								}
+								value={
+									formik.values
+										.textEmbeddingProviderConfigurationJSONs?.[
+										index
+									]?.attributes?.model
+								}
+							/>
+
+							<Input
+								disabled={formik.isSubmitting}
+								error={
+									formik.errors
+										.textEmbeddingProviderConfigurationJSONs?.[
+										index
+									]?.attributes?.user
+								}
+								helpText={Liferay.Language.get(
+									'text-embedding-provider-openai-user-help'
+								)}
+								label={Liferay.Language.get('user')}
+								name={`textEmbeddingProviderConfigurationJSONs[${index}].attributes.user`}
+								onBlur={_handleInputBlur(
+									`textEmbeddingProviderConfigurationJSONs[${index}].attributes.user`
+								)}
+								onChange={_handleInputChange(
+									`textEmbeddingProviderConfigurationJSONs[${index}].attributes.user`
+								)}
+								touched={
+									formik.touched
+										.textEmbeddingProviderConfigurationJSONs?.[
+										index
+									]?.attributes?.user
+								}
+								value={
+									formik.values
+										.textEmbeddingProviderConfigurationJSONs?.[
+										index
+									]?.attributes?.user
+								}
+							/>
+						</>
+					)}
+
+					{formik.values.textEmbeddingProviderConfigurationJSONs?.[
+						index
+					]?.providerName ===
+						TEXT_EMBEDDING_PROVIDER_TYPES.VERTEX_AI && (
+						<>
+							<ClayCheckbox
+								aria-label={Liferay.Language.get(
+									'auto-truncate'
+								)}
+								checked={
+									!!formik.values
+										.textEmbeddingProviderConfigurationJSONs?.[
+										index
+									]?.attributes?.autoTruncate
+								}
+								disabled={formik.isSubmitting}
+								label={Liferay.Language.get('auto-truncate')}
+								name={`textEmbeddingProviderConfigurationJSONs[${index}].attributes.autoTruncate`}
+								onChange={_handleCheckboxChange(
+									`textEmbeddingProviderConfigurationJSONs[${index}].attributes.autoTruncate`
+								)}
+								value={
+									formik.values
+										.textEmbeddingProviderConfigurationJSONs?.[
+										index
+									]?.attributes?.autoTruncate
+								}
+							/>
+							<Input
+								disabled={formik.isSubmitting}
+								error={
+									formik.errors
+										.textEmbeddingProviderConfigurationJSONs?.[
+										index
+									]?.attributes?.location
+								}
+								helpText={Liferay.Language.get(
+									'text-embedding-provider-vertex-ai-location-help'
+								)}
+								label={Liferay.Language.get('location')}
+								name={`textEmbeddingProviderConfigurationJSONs[${index}].attributes.location`}
+								onBlur={_handleInputBlur(
+									`textEmbeddingProviderConfigurationJSONs[${index}].attributes.location`
+								)}
+								onChange={_handleInputChange(
+									`textEmbeddingProviderConfigurationJSONs[${index}].attributes.location`
+								)}
+								required
+								touched={
+									formik.touched
+										.textEmbeddingProviderConfigurationJSONs?.[
+										index
+									]?.attributes?.location
+								}
+								value={
+									formik.values
+										.textEmbeddingProviderConfigurationJSONs?.[
+										index
+									]?.attributes?.location
+								}
+							/>
+
+							<Input
+								disabled={formik.isSubmitting}
+								error={
+									formik.errors
+										.textEmbeddingProviderConfigurationJSONs?.[
+										index
+									]?.attributes?.model
+								}
+								helpText={Liferay.Language.get(
+									'text-embedding-provider-model-help'
+								)}
+								label={Liferay.Language.get('model')}
+								name={`textEmbeddingProviderConfigurationJSONs[${index}].attributes.model`}
+								onBlur={_handleInputBlur(
+									`textEmbeddingProviderConfigurationJSONs[${index}].attributes.model`
+								)}
+								onChange={_handleInputChange(
+									`textEmbeddingProviderConfigurationJSONs[${index}].attributes.model`
+								)}
+								required
+								touched={
+									formik.touched
+										.textEmbeddingProviderConfigurationJSONs?.[
+										index
+									]?.attributes?.model
+								}
+								value={
+									formik.values
+										.textEmbeddingProviderConfigurationJSONs?.[
+										index
+									]?.attributes?.model
+								}
+							/>
+
+							<Input
+								disabled={formik.isSubmitting}
+								error={
+									formik.errors
+										.textEmbeddingProviderConfigurationJSONs?.[
+										index
+									]?.attributes?.projectId
+								}
+								helpText={Liferay.Language.get(
+									'text-embedding-provider-vertex-ai-project-id-help'
+								)}
+								label={Liferay.Language.get('project-id')}
+								name={`textEmbeddingProviderConfigurationJSONs[${index}].attributes.projectId`}
+								onBlur={_handleInputBlur(
+									`textEmbeddingProviderConfigurationJSONs[${index}].attributes.projectId`
+								)}
+								onChange={_handleInputChange(
+									`textEmbeddingProviderConfigurationJSONs[${index}].attributes.projectId`
+								)}
+								required
+								touched={
+									formik.touched
+										.textEmbeddingProviderConfigurationJSONs?.[
+										index
+									]?.attributes?.projectId
+								}
+								value={
+									formik.values
+										.textEmbeddingProviderConfigurationJSONs?.[
+										index
+									]?.attributes?.projectId
+								}
+							/>
+						</>
+					)}
+
 					<Input
 						disabled={formik.isSubmitting}
 						error={
@@ -1019,6 +1390,16 @@ export default function ({
 								.textEmbeddingProviderConfigurationJSONs[index]
 								?.attributes?.accessToken
 						}
+						apiKey={
+							formik.values
+								.textEmbeddingProviderConfigurationJSONs[index]
+								?.attributes?.apiKey
+						}
+						autoTruncate={
+							formik.values
+								.textEmbeddingProviderConfigurationJSONs[index]
+								?.attributes?.autoTruncate
+						}
 						availableTextEmbeddingProviders={
 							availableTextEmbeddingProviders
 						}
@@ -1031,6 +1412,11 @@ export default function ({
 							formik.values
 								.textEmbeddingProviderConfigurationJSONs[index]
 								?.attributes.basicAuthUsername
+						}
+						dimensions={
+							formik.values
+								.textEmbeddingProviderConfigurationJSONs[index]
+								?.attributes?.dimensions
 						}
 						disabled={formik.isSubmitting}
 						embeddingVectorDimensions={
@@ -1054,6 +1440,11 @@ export default function ({
 								.textEmbeddingProviderConfigurationJSONs[index]
 								?.languageIds
 						}
+						location={
+							formik.values
+								.textEmbeddingProviderConfigurationJSONs[index]
+								?.attributes?.location
+						}
 						maxCharacterCount={
 							formik.values
 								.textEmbeddingProviderConfigurationJSONs[index]
@@ -1074,6 +1465,11 @@ export default function ({
 								.textEmbeddingProviderConfigurationJSONs[index]
 								?.attributes?.modelTimeout
 						}
+						projectId={
+							formik.values
+								.textEmbeddingProviderConfigurationJSONs[index]
+								?.attributes?.projectId
+						}
 						textEmbeddingCacheTimeout={
 							formik.values.textEmbeddingCacheTimeout
 						}
@@ -1089,6 +1485,11 @@ export default function ({
 							formik.values
 								.textEmbeddingProviderConfigurationJSONs[index]
 								?.attributes.textTruncationStrategy
+						}
+						user={
+							formik.values
+								.textEmbeddingProviderConfigurationJSONs[index]
+								?.attributes?.user
 						}
 					/>
 				</div>

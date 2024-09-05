@@ -7,6 +7,8 @@ package com.liferay.knowledge.base.markdown.converter.internal;
 
 import com.liferay.knowledge.base.markdown.converter.MarkdownConverter;
 import com.liferay.knowledge.base.markdown.converter.factory.MarkdownConverterFactory;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.Assert;
@@ -26,10 +28,11 @@ public class FlexmarkMarkdownConverterTest {
 
 	@Test
 	public void testLiferayToHtmlSerializer() throws Exception {
-		String markdownString =
-			"### The liferay-ui:logo-selector Tag Requires Parameter Changes " +
-				"[](id=the-liferay-uilogo-selector-tag-requires-parameter-" +
-					"changes)";
+		String randomId = StringUtil.randomId();
+
+		String markdownString = StringBundler.concat(
+			"### The liferay-ui:logo-selector Tag Requires Parameter Changes ",
+			"[](id=", randomId, ")");
 
 		MarkdownConverterFactory markdownConverterFactory =
 			new FlexmarkMarkdownConverterFactory();
@@ -38,11 +41,7 @@ public class FlexmarkMarkdownConverterTest {
 
 		String html = markdownConverter.convert(markdownString);
 
-		int index = html.indexOf(
-			"id=\"the-liferay-uilogo-selector-tag-requires-parameter-" +
-				"changes\"");
-
-		Assert.assertNotEquals(-1, index);
+		Assert.assertTrue(html, html.contains("id=\"" + randomId + "\""));
 	}
 
 }

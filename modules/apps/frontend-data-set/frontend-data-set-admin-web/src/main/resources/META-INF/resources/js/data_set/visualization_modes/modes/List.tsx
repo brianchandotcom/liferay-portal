@@ -305,6 +305,7 @@ function ListSection({
 
 	const openSelectFieldModal = () => {
 		openModal({
+			className: 'modal-height-full',
 			contentComponent: ({closeModal}: {closeModal: Function}) => (
 				<FieldSelectModalContent
 					{...modalProps}
@@ -324,7 +325,7 @@ function ListSection({
 					selectedFields={field ? [field] : []}
 				/>
 			),
-			size: 'full-screen',
+			size: 'lg',
 		});
 	};
 

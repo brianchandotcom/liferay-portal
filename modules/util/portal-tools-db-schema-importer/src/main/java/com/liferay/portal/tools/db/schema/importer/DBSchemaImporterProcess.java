@@ -12,6 +12,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.module.framework.ThrowableCollector;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -30,6 +31,8 @@ import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+
+import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -70,6 +73,30 @@ public class DBSchemaImporterProcess {
 			_targetJDBCURL, _targetPassword, _targetUser);
 
 		_targetCharsetEncoding = _getSessionCharsetEncoding(_targetDataSource);
+	}
+
+	public String getReleaseInfo() throws Exception {
+		StringBundler sb = new StringBundler();
+
+		try (Connection connection = _sourceDataSource.getConnection();
+			Statement statement = connection.createStatement();
+			ResultSet resultSet = statement.executeQuery(
+				"select buildDate, buildNumber, schemaVersion from Release_ " +
+					"where servletContextName = 'portal'")) {
+
+			resultSet.next();
+
+			sb.append("Portal build date: ");
+			sb.append(_simpleDateFormat.format(resultSet.getDate("buildDate")));
+			sb.append(StringPool.NEW_LINE);
+			sb.append("Portal build number: ");
+			sb.append(resultSet.getLong("buildNumber"));
+			sb.append(StringPool.NEW_LINE);
+			sb.append("Portal schema version: ");
+			sb.append(resultSet.getString("schemaVersion"));
+		}
+
+		return sb.toString();
 	}
 
 	public List<String> getReportInfo() {
@@ -445,6 +472,9 @@ public class DBSchemaImporterProcess {
 	}
 
 	private static final int _COMPANY_BATCH_SIZE = 5;
+
+	private static final SimpleDateFormat _simpleDateFormat =
+		new SimpleDateFormat(DateUtil.ISO_8601_PATTERN);
 
 	private final List<String> _asyncSQLs = new ArrayList<>();
 	private final ExecutorService _executorService =

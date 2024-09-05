@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
@@ -144,11 +145,8 @@ public class LayoutSEOEntryStagedModelDataHandler
 				layoutSEOEntry.getUuid(), layoutSEOEntry.getGroupId());
 
 		if (existingLayoutSEOEntry == null) {
-			Map<Long, Layout> newPrimaryKeysMap =
-				(Map<Long, Layout>)portletDataContext.getNewPrimaryKeysMap(
-					Layout.class + ".layout");
-
-			Layout layout = newPrimaryKeysMap.get(layoutSEOEntry.getLayoutId());
+			Layout layout = _layoutLocalService.getLayout(
+				portletDataContext.getPlid());
 
 			_layoutSEOEntryLocalService.updateLayoutSEOEntry(
 				layoutSEOEntry.getUserId(), layout.getGroupId(),
@@ -267,6 +265,9 @@ public class LayoutSEOEntryStagedModelDataHandler
 
 	@Reference(target = "(ddm.form.values.serializer.type=json)")
 	private DDMFormValuesSerializer _jsonDDMFormValuesSerializer;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private LayoutSEOEntryLocalService _layoutSEOEntryLocalService;

@@ -72,9 +72,9 @@ public class DBSchemaImporterProcess {
 	public void run() throws Exception {
 		_createTables();
 
-		_createIndexes();
-
 		_copyTables();
+
+		_createIndexes();
 
 		_executorService.shutdownNow();
 

@@ -449,7 +449,7 @@ public class TestrayFactory {
 		Pattern.compile("testray.server.url\\[(?<serverVersion>[^\\]]+)\\]");
 	private static final Pattern _testrayURLPattern = Pattern.compile(
 		"https://(testray(-old)?\\.liferay\\.com|webserver-testray2" +
-			"(-prd|-uat)?.lfr.cloud)");
+			"(-prd\\d*|-uat\\d*)?.lfr.cloud)");
 	private static final Map<Long, TopLevelBuildTestrayCaseResult>
 		_topLevelBuildTestrayCaseResults = new HashMap<>();
 

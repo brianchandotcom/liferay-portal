@@ -71,12 +71,21 @@ public class ObjectDefinitionExportImportTest extends BaseExportImportTestCase {
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_APPROVED, (int)status.getCode());
 
+		// Localized modifiable system object definition
+
+		testExportImport(
+			"test-modifiable-system-object-definition.portuguese-default-" +
+				"locale.json",
+			"test-modifiable-system-object-definition.site-default-locale.json",
+			"TESTMODIFIABLESYSTEMOBJECTDEFINITIONPORTUGUESE",
+			"TestModifiableSystemObjectDefinitionptBR");
+
 		// Localized object definition
 
 		testExportImport(
 			"test-object-definition.portuguese-default-locale.json",
 			"test-object-definition.site-default-locale.json",
-			"TESTOBJECTDEFINITIONPORTUGUESE", "TestObjectDefinitionPortuguese");
+			"TESTOBJECTDEFINITIONPORTUGUESE", "TestObjectDefinitionptBR");
 
 		// Published object definition
 

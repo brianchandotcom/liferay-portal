@@ -1,0 +1,162 @@
+{
+	"defaultLanguageId": "en_US",
+	"label": {
+		"en_US": "Definição de Objeto Teste",
+		"pt_BR": "Definição de Objeto Teste"
+	},
+	"objectActions": [
+		{
+			"active": true,
+			"conditionExpression": "",
+			"description": "",
+			"label": {
+				"en_US": "Test Object Action 1"
+			},
+			"name": "testObjectAction1",
+			"objectActionExecutorKey": "notification",
+			"objectActionTriggerKey": "onAfterAdd",
+			"parameters": {
+				"notificationTemplateExternalReferenceCode": "TESTNOTIFICATIONTEMPLATE1"
+			}
+		},
+		{
+			"active": true,
+			"conditionExpression": "",
+			"description": "",
+			"label": {
+				"en_US": "Ação do Objeto Teste 2",
+				"pt_BR": "Ação do Objeto Teste 2"
+			},
+			"name": "testObjectAction2",
+			"objectActionExecutorKey": "notification",
+			"objectActionTriggerKey": "onAfterAdd",
+			"parameters": {
+				"notificationTemplateExternalReferenceCode": "TESTNOTIFICATIONTEMPLATE2"
+			}
+		},
+		{
+			"active": true,
+			"conditionExpression": "",
+			"description": "",
+			"label": {
+				"en_US": "testObjectAction3",
+				"es_ES": "Acción del objeto de prueba 3"
+			},
+			"name": "testObjectAction3",
+			"objectActionExecutorKey": "notification",
+			"objectActionTriggerKey": "onAfterAdd",
+			"parameters": {
+				"notificationTemplateExternalReferenceCode": "TESTNOTIFICATIONTEMPLATE3"
+			}
+		}
+	],
+	"objectFields": [
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"label": {
+				"en_US": "Author",
+				"pt_BR": "Autor"
+			},
+			"name": "creator",
+			"system": true
+		},
+		{
+			"DBType": "Date",
+			"businessType": "Date",
+			"label": {
+				"en_US": "Create Date",
+				"pt_BR": "Data de Criação"
+			},
+			"name": "createDate",
+			"system": true
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"label": {
+				"en_US": "External Reference Code",
+				"pt_BR": "Código de Referência Externo"
+			},
+			"name": "externalReferenceCode",
+			"system": true
+		},
+		{
+			"DBType": "Long",
+			"businessType": "LongInteger",
+			"label": {
+				"en_US": "ID",
+				"pt_BR": "ID"
+			},
+			"name": "id",
+			"system": true
+		},
+		{
+			"DBType": "Date",
+			"businessType": "Date",
+			"label": {
+				"en_US": "Modified Date",
+				"pt_BR": "Data de Modificação"
+			},
+			"name": "modifiedDate",
+			"system": true
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"label": {
+				"en_US": "Nome",
+				"pt_BR": "Nome"
+			},
+			"name": "name"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"label": {
+				"en_US": "Status",
+				"pt_BR": "Estado"
+			},
+			"name": "status",
+			"system": true
+		},
+		{
+			"DBType": "Integer",
+			"businessType": "Integer",
+			"label": {
+				"en_US": "Age"
+			},
+			"name": "age",
+			"readOnly": "false",
+			"system": false
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"label": {
+				"en_US": "Descrição",
+				"pt_BR": "Descrição"
+			},
+			"name": "description",
+			"readOnly": "false",
+			"system": false
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"label": {
+				"en_US": "email",
+				"es_ES": "Correo Electrónico"
+			},
+			"name": "email",
+			"readOnly": "false",
+			"system": false
+		}
+	],
+	"objectFolderExternalReferenceCode": "default",
+	"pluralLabel": {
+		"en_US": "Definições de Objeto Teste",
+		"pt_BR": "Definições de Objeto Teste"
+	},
+	"scope": "company"
+}

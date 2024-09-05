@@ -710,6 +710,32 @@ public class TestrayImporter {
 						_replaceEnvVars(testrayProjectName, true));
 				}
 			}
+
+			PortalRelease portalRelease = getPortalRelease();
+
+			if (portalRelease != null) {
+				String portalVersion = portalRelease.getPortalVersion();
+
+				if (PortalRelease.isQuarterlyRelease(portalVersion)) {
+					Matcher quarterlyReleaseVersionMatcher =
+						_quarterlyReleaseVersionPattern.matcher(portalVersion);
+
+					if (quarterlyReleaseVersionMatcher.find()) {
+						String year = quarterlyReleaseVersionMatcher.group(
+							"year");
+
+						String quarter = quarterlyReleaseVersionMatcher.group(
+							"quarter");
+
+						testrayProjectName = JenkinsResultsParserUtil.combine(
+							"Liferay Portal ", year, " ",
+							quarter.toUpperCase());
+
+						testrayProject = testrayServer.getTestrayProjectByName(
+							_replaceEnvVars(testrayProjectName, true));
+					}
+				}
+			}
 		}
 		finally {
 			if (testrayProject != null) {
@@ -2457,6 +2483,8 @@ public class TestrayImporter {
 
 	private static final ExecutorService _executorService =
 		JenkinsResultsParserUtil.getNewThreadPoolExecutor(10, true);
+	private static final Pattern _quarterlyReleaseVersionPattern =
+		Pattern.compile("(?<year>\\d{4}).(?<quarter>[Qq]\\d+).\\d+");
 	private static final Pattern _releaseArtifactURLPattern = Pattern.compile(
 		"https?://.+/(?<releaseName>[^/]+)(.7z|.tar.gz|.war|.zip)");
 	private static final Pattern _releaseBranchPattern = Pattern.compile(

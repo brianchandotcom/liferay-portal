@@ -367,7 +367,7 @@ journalEditArticleDisplayContext.setViewAttributes();
 												<%
 												StringBundler sb = new StringBundler(3);
 
-												sb.append(LanguageUtil.get(request, "changing-the-friendly-url-will-affect-all-web-content-article-versions-even-when-saving-it-as-a-draft"));
+												sb.append(LanguageUtil.get(request, "changing-the-friendly-url-will-affect-all-web-content-article-versions-even-when-autosaving"));
 												sb.append(StringPool.SPACE);
 												sb.append(LanguageUtil.get(request, "the-friendly-url-may-be-modified-to-ensure-uniqueness"));
 												%>

@@ -21,7 +21,7 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = (JournalEdit
 	/>
 </c:if>
 
-<p class="text-secondary"><liferay-ui:message key="changing-the-friendly-url-will-affect-all-web-content-article-versions-even-when-saving-it-as-a-draft" /></p>
+<p class="text-secondary"><liferay-ui:message key="changing-the-friendly-url-will-affect-all-web-content-article-versions-even-when-autosaving" /></p>
 
 <p class="text-secondary"><liferay-ui:message key="the-friendly-url-may-be-modified-to-ensure-uniqueness" /></p>
 

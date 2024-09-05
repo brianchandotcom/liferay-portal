@@ -4,8 +4,8 @@
  */
 
 import addFragmentEntryLinks from '../actions/addFragmentEntryLinks';
+import {FORM_DEFAULT_NUMBER_OF_STEPS} from '../config/constants/formDefaultNumberOfSteps';
 import {FRAGMENT_ENTRY_TYPES} from '../config/constants/fragmentEntryTypes';
-import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../config/constants/freemarkerFragmentEntryProcessor';
 import FragmentService from '../services/FragmentService';
 import selectFirstControlsItem from '../utils/selectFirstControlsItem';
 
@@ -60,16 +60,15 @@ export default function addFragment({
 			if (fieldTypes.includes('stepper')) {
 				const form = getState().layoutData.items[parentItemId];
 
-				params.editableValues = {
-					[FREEMARKER_FRAGMENT_ENTRY_PROCESSOR]: {
-						numberOfSteps: form.config.numberOfSteps,
-					},
-				};
+				params.numberOfSteps =
+					form.config.formType === 'simple'
+						? FORM_DEFAULT_NUMBER_OF_STEPS
+						: form.config.numberOfSteps;
 
 				return FragmentService.addStepperFragmentEntryLink(params).then(
-					({addedItemId, fragmentEntryLink, layoutData}) => {
+					({addedItemId, fragmentEntryLinks, layoutData}) => {
 						updateState(
-							[fragmentEntryLink],
+							fragmentEntryLinks,
 							layoutData,
 							addedItemId
 						);

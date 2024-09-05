@@ -159,17 +159,17 @@ export default {
 	},
 
 	addStepperFragmentEntryLink({
-		editableValues,
 		fragmentEntryKey,
 		groupId,
+		numberOfSteps,
 		onNetworkStatus,
 		parentItemId,
 		position,
 		segmentsExperienceId,
 	}: {
-		editableValues: FragmentEntryLink['editableValues'];
 		fragmentEntryKey: string;
 		groupId: string;
+		numberOfSteps: number;
 		onNetworkStatus: OnNetworkStatus;
 		parentItemId: string;
 		position: number;
@@ -183,9 +183,9 @@ export default {
 			config.addStepperFragmentEntryLinkURL,
 			{
 				body: {
-					editableValues: JSON.stringify(editableValues),
 					fragmentEntryKey,
 					groupId,
+					numberOfSteps,
 					parentItemId,
 					position,
 					segmentsExperienceId,

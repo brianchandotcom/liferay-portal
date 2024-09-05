@@ -443,7 +443,6 @@ test('can use notification terms and freeMarker variables in notification templa
 		'Portal URL',
 		'Publish Date',
 		'Template ID',
-		'Theme Display',
 		'Status',
 		'User Profile Image',
 		objectFieldName,
@@ -469,7 +468,7 @@ test('can use notification terms and freeMarker variables in notification templa
 		page
 			.locator('.CodeMirror-lines')
 			.getByText(
-				'currentURL$' + `{ObjectField_${objectFieldName}.getData()}`
+				'${currentURL}$' + `{ObjectField_${objectFieldName}.getData()}`
 			)
 	).toBeVisible();
 });

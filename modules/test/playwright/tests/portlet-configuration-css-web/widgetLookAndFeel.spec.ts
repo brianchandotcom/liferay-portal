@@ -51,16 +51,44 @@ test(
 
 		// Update Look and Feel Configuration
 
+		await lookAndFeelIFrame.getByRole('tab', {name: 'General'}).click();
+
+		await lookAndFeelIFrame
+			.getByLabel('Application Decorators')
+			.selectOption('Decorate');
+
 		await lookAndFeelIFrame.getByRole('tab', {name: 'Text Styles'}).click();
 
 		await lookAndFeelIFrame.getByLabel('Alignment').selectOption('center');
 
+		await lookAndFeelIFrame.getByLabel('Font').selectOption('Verdana');
+
 		await lookAndFeelIFrame.getByRole('button', {name: 'Save'}).click();
 
-		// Assert custom styles
+		// Assert custom styles in configuration modal
 
 		await expect(lookAndFeelIFrame.getByLabel('Alignment')).toHaveValue(
 			'center'
 		);
+
+		await expect(lookAndFeelIFrame.getByLabel('Font')).toHaveValue(
+			'Verdana'
+		);
+
+		// Refresh page and assert custom styles in view mode
+
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
+
+		await expect(
+			page.locator('.portlet-asset-publisher').first()
+		).toHaveClass(/portlet-decorate/);
+
+		await expect(
+			page.locator('.portlet-asset-publisher .portlet-content').first()
+		).toHaveCSS('font-family', 'Verdana');
+
+		await expect(
+			page.locator('.portlet-asset-publisher .portlet-content').first()
+		).toHaveCSS('text-align', 'center');
 	}
 );

@@ -8,6 +8,7 @@ package com.liferay.portal.security.content.security.policy.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -43,13 +44,13 @@ public class ContentSecurityPolicyFilterTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testIsFilterEnabled() throws Exception {
+	public void testNotNeededForDocrootHtmlResources() throws Exception {
 		try (CompanyConfigurationTemporarySwapper
 				configurationTemporarySwapper =
 					_getCompanyConfigurationTemporarySwapper(false, null, "")) {
 
 			HttpURLConnection httpURLConnection = _openHttpURLConnection(
-				"http://localhost:8080/html/icons/flags.png");
+				"http://localhost:8080/html/" + RandomTestUtil.randomString());
 
 			Map<String, List<String>> headerFields =
 				httpURLConnection.getHeaderFields();

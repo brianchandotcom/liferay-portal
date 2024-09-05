@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.search.internal.ml.embedding.text.util.ConfigurationValidationUtil;
 import com.liferay.portal.search.rest.dto.v1_0.EmbeddingProviderConfiguration;
 
 import java.net.HttpURLConnection;
@@ -40,10 +41,8 @@ public class HuggingFaceInferenceAPITextEmbeddingProvider
 		Map<String, Object> attributes =
 			(Map<String, Object>)embeddingProviderConfiguration.getAttributes();
 
-		if ((attributes == null) || !attributes.containsKey("accessToken")) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Attributes do not contain access token");
-			}
+		if (!ConfigurationValidationUtil.validateAttributes(
+				attributes, new String[] {"accessToken", "model"})) {
 
 			return new Double[0];
 		}
@@ -55,23 +54,7 @@ public class HuggingFaceInferenceAPITextEmbeddingProvider
 		Map<String, Object> attributes, String text) {
 
 		try {
-			Http.Options options = new Http.Options();
-
-			JSONObject jsonObject = JSONUtil.put("inputs", text);
-
-			options.addHeader(
-				HttpHeaders.AUTHORIZATION,
-				"Bearer " + MapUtil.getString(attributes, "accessToken"));
-			options.addHeader(
-				HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
-			options.setBody(
-				jsonObject.toString(), ContentTypes.APPLICATION_JSON,
-				StringPool.UTF8);
-			options.setCookieSpec(Http.CookieSpec.STANDARD);
-			options.setLocation(
-				"https://api-inference.huggingface.co/models/" +
-					MapUtil.getString(attributes, "model"));
-			options.setPost(true);
+			Http.Options options = _getOptions(attributes, text);
 
 			String responseJSON = HttpUtil.URLtoString(options);
 
@@ -118,6 +101,30 @@ public class HuggingFaceInferenceAPITextEmbeddingProvider
 		}
 
 		return jsonArray1;
+	}
+
+	private Http.Options _getOptions(
+		Map<String, Object> attributes, String text) {
+
+		Http.Options options = new Http.Options();
+
+		JSONObject jsonObject = JSONUtil.put("inputs", text);
+
+		options.addHeader(
+			HttpHeaders.AUTHORIZATION,
+			"Bearer " + MapUtil.getString(attributes, "accessToken"));
+		options.addHeader(
+			HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
+		options.setBody(
+			jsonObject.toString(), ContentTypes.APPLICATION_JSON,
+			StringPool.UTF8);
+		options.setCookieSpec(Http.CookieSpec.STANDARD);
+		options.setLocation(
+			"https://api-inference.huggingface.co/models/" +
+				MapUtil.getString(attributes, "model"));
+		options.setPost(true);
+
+		return options;
 	}
 
 	private boolean _isValidResponse(String s) {

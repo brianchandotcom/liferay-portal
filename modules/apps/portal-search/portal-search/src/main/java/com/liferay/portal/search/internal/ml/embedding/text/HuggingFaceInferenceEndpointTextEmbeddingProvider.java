@@ -10,13 +10,12 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.search.internal.ml.embedding.text.util.ConfigurationValidationUtil;
 import com.liferay.portal.search.rest.dto.v1_0.EmbeddingProviderConfiguration;
 
 import java.util.List;
@@ -36,10 +35,8 @@ public class HuggingFaceInferenceEndpointTextEmbeddingProvider
 		Map<String, Object> attributes =
 			(Map<String, Object>)embeddingProviderConfiguration.getAttributes();
 
-		if ((attributes == null) || !attributes.containsKey("accessToken")) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Attributes do not contain access token");
-			}
+		if (!ConfigurationValidationUtil.validateAttributes(
+				attributes, new String[] {"accessToken", "hostAddress"})) {
 
 			return new Double[0];
 		}
@@ -51,24 +48,8 @@ public class HuggingFaceInferenceEndpointTextEmbeddingProvider
 		Map<String, Object> attributes, String text) {
 
 		try {
-			Http.Options options = new Http.Options();
-
-			JSONObject requestJSONObject = JSONUtil.put("inputs", text);
-
-			options.addHeader(
-				HttpHeaders.AUTHORIZATION,
-				"Bearer " + MapUtil.getString(attributes, "accessToken"));
-			options.addHeader(
-				HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
-			options.setBody(
-				requestJSONObject.toString(), ContentTypes.APPLICATION_JSON,
-				StringPool.UTF8);
-			options.setCookieSpec(Http.CookieSpec.STANDARD);
-			options.setLocation(MapUtil.getString(attributes, "hostAddress"));
-			options.setPost(true);
-
 			JSONObject responseJSONObject = JSONFactoryUtil.createJSONObject(
-				HttpUtil.URLtoString(options));
+				HttpUtil.URLtoString(_getOptions(attributes, text)));
 
 			if (responseJSONObject.has("embeddings")) {
 				List<Double> list = JSONUtil.toDoubleList(
@@ -84,7 +65,26 @@ public class HuggingFaceInferenceEndpointTextEmbeddingProvider
 		}
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		HuggingFaceInferenceEndpointTextEmbeddingProvider.class);
+	private Http.Options _getOptions(
+		Map<String, Object> attributes, String text) {
+
+		Http.Options options = new Http.Options();
+
+		options.addHeader(
+			HttpHeaders.AUTHORIZATION,
+			"Bearer " + MapUtil.getString(attributes, "accessToken"));
+		options.addHeader(
+			HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
+		options.setBody(
+			JSONUtil.put(
+				"inputs", text
+			).toString(),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+		options.setCookieSpec(Http.CookieSpec.STANDARD);
+		options.setLocation(MapUtil.getString(attributes, "hostAddress"));
+		options.setPost(true);
+
+		return options;
+	}
 
 }

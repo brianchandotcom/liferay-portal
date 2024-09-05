@@ -105,6 +105,9 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
@@ -1153,9 +1156,19 @@ public class LayoutStagedModelDataHandlerTest
 			PortletDataHandlerKeys.PORTLET_DATA_ALL,
 			new String[] {Boolean.TRUE.toString()});
 
-		StagingUtil.publishLayouts(
-			TestPropsValues.getUserId(), stagingGroup.getGroupId(),
-			group.getGroupId(), false, parameterMap);
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.exportimport.internal.lifecycle." +
+					"LoggerExportImportLifecycleListener",
+				LoggerTestUtil.ERROR)) {
+
+			StagingUtil.publishLayouts(
+				TestPropsValues.getUserId(), stagingGroup.getGroupId(),
+				group.getGroupId(), false, parameterMap);
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertTrue(logEntries.toString(), logEntries.isEmpty());
+		}
 
 		List<BackgroundTask> failedBackgroundTasks =
 			_backgroundTaskLocalService.getBackgroundTasks(

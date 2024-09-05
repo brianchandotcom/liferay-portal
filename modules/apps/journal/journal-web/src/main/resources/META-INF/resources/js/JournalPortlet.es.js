@@ -259,6 +259,16 @@ export default function _JournalPortlet({
 			lockHolder.lock?.unlock(true);
 		}
 		else {
+			Liferay.Form.get(formId).formValidator.validate();
+			Liferay.componentReady(`${namespace}dataEngineLayoutRenderer`).then(
+				(dataEngineLayoutRenderer) => {
+					const dataEngineLayoutRendererRef =
+						dataEngineLayoutRenderer?.reactComponentRef;
+
+					return dataEngineLayoutRendererRef.current.validate();
+				}
+			);
+
 			lockHolder.lock?.unlock(true);
 		}
 	};

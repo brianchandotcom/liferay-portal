@@ -948,24 +948,6 @@ paths:
                   name: pageSize
                   schema:
                       type: string
-                - in: query
-                  name: testrayCasePriorities
-                  schema:
-                      type: string
-                - in: query
-                  name: testrayCaseTypes
-                  schema:
-                      type: string
-                - in: query
-                  name: testrayRoutineId
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
-                  name: testrayTeamId
-                  schema:
-                      format: int64
-                      type: integer
             responses:
                 200:
                     content:

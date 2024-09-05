@@ -58,6 +58,9 @@ import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.background.task.model.BackgroundTask;
+import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
+import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -1153,6 +1156,16 @@ public class LayoutStagedModelDataHandlerTest
 		StagingUtil.publishLayouts(
 			TestPropsValues.getUserId(), stagingGroup.getGroupId(),
 			group.getGroupId(), false, parameterMap);
+
+		List<BackgroundTask> failedBackgroundTasks =
+			_backgroundTaskLocalService.getBackgroundTasks(
+				stagingGroup.getGroupId(),
+				"com.liferay.exportimport.internal.background.task." +
+					"LayoutStagingBackgroundTaskExecutor",
+				BackgroundTaskConstants.STATUS_FAILED);
+
+		Assert.assertTrue(
+			failedBackgroundTasks.toString(), failedBackgroundTasks.isEmpty());
 	}
 
 	private ServiceRegistration<Portlet> _registerTestPortlet() {
@@ -1311,6 +1324,9 @@ public class LayoutStagedModelDataHandlerTest
 
 	@Inject
 	private AssetCategoryLocalService _assetCategoryLocalService;
+
+	@Inject
+	private BackgroundTaskLocalService _backgroundTaskLocalService;
 
 	@Inject
 	private ClientExtensionEntryLocalService _clientExtensionEntryLocalService;

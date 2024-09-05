@@ -7,12 +7,16 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {changeTrackingPagesTest} from '../../fixtures/changeTrackingPagesTest';
+import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import performLogin, {performLogout} from '../../utils/performLogin';
 
 export const test = mergeTests(
-	changeTrackingPagesTest,
 	apiHelpersTest,
+	changeTrackingPagesTest,
+	featureFlagsTest({
+		'LPD-20556': true,
+	}),
 	loginTest()
 );
 

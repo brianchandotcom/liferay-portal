@@ -64,7 +64,7 @@ const FormStepWithControls = React.forwardRef(({children, item}, ref) => {
 					<div className="page-editor__no-fragments-state">
 						<p className="page-editor__no-fragments-state__message">
 							{Liferay.Language.get(
-								'place-fragments-or-widgets-here'
+								'drag-and-drop-fragments-or-widgets-here'
 							)}
 						</p>
 					</div>

@@ -321,6 +321,34 @@ public class FormItemManager {
 
 		for (String childrenItemId :
 				new ArrayList<>(
+					formStyledLayoutStructureItem.getChildrenItemIds())) {
+
+			LayoutStructureItem layoutStructureItem =
+				layoutStructure.getLayoutStructureItem(childrenItemId);
+
+			if (layoutStructureItem instanceof
+					FragmentStyledLayoutStructureItem) {
+
+				FragmentStyledLayoutStructureItem
+					fragmentStyledLayoutStructureItem =
+						(FragmentStyledLayoutStructureItem)layoutStructureItem;
+
+				Set<String> fieldTypes =
+					_fragmentEntryLinkManager.getFragmentEntryLinkFieldTypes(
+						fragmentStyledLayoutStructureItem.
+							getFragmentEntryLinkId(),
+						locale);
+
+				if (fieldTypes.contains("stepper")) {
+					layoutStructure.markLayoutStructureItemForDeletion(
+						Collections.singletonList(childrenItemId),
+						Collections.emptyList());
+				}
+			}
+		}
+
+		for (String childrenItemId :
+				new ArrayList<>(
 					formStepContainerStyledLayoutStructureItem.
 						getChildrenItemIds())) {
 

@@ -4,7 +4,7 @@ $emptyItemMinHeight: 180px;
 $emptyCollectionItemMinWidth: 124px;
 $emptyColumnMinWidth: 48px;
 $emptyContainerMinWidth: 180px;
-$dashedBorderWidth: 2px;
+$dashedBorderWidth: 4px;
 
 html#{$cadmin-selector} {
 	.page-editor {
@@ -246,6 +246,9 @@ html#{$cadmin-selector} {
 		&__no-fragments-state {
 			background: $cadmin-primary-l3;
 			border: $dashedBorderWidth dashed $cadmin-primary-l2;
+			border-radius: 8px;
+			container-type: inline-size;
+			justify-content: center;
 			padding: 15vh 12%;
 
 			&.page-editor__form-unmapped-state {
@@ -263,6 +266,16 @@ html#{$cadmin-selector} {
 				color: $secondary;
 				font-size: 14px;
 				margin: 0;
+			}
+
+			@container (max-width: 100px) {
+				&__image {
+					display: none;
+				}
+
+				&__message {
+					overflow-wrap: anywhere;
+				}
 			}
 
 			&__title {

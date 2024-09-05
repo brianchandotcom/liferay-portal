@@ -11,6 +11,7 @@ import React, {useCallback} from 'react';
 import {CheckboxField} from '../../../../../../app/components/fragment_configuration_fields/CheckboxField';
 import {SelectField} from '../../../../../../app/components/fragment_configuration_fields/SelectField';
 import {TextField} from '../../../../../../app/components/fragment_configuration_fields/TextField';
+import {FORM_DEFAULT_NUMBER_OF_STEPS} from '../../../../../../app/config/constants/formDefaultNumberOfSteps';
 import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../app/config/constants/freemarkerFragmentEntryProcessor';
 import {
 	useItemLocalConfig,
@@ -93,7 +94,7 @@ export default function FormMultistepOptions({item, onValueSelect}) {
 					if (formType === 'multistep') {
 						onValueSelect({
 							formType,
-							numberOfSteps: 2,
+							numberOfSteps: FORM_DEFAULT_NUMBER_OF_STEPS,
 						});
 					}
 					else {
@@ -130,7 +131,7 @@ export default function FormMultistepOptions({item, onValueSelect}) {
 					onValueSelect={(_, numberOfSteps) =>
 						updateNumberOfSteps(numberOfSteps)
 					}
-					value={numberOfSteps || 2}
+					value={numberOfSteps || FORM_DEFAULT_NUMBER_OF_STEPS}
 				/>
 			) : null}
 

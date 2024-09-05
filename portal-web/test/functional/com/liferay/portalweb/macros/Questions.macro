@@ -194,17 +194,10 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertCanonicalURL(category = null, directNavigation = null, title = null) {
+	macro assertCanonicalURL(category = null, title = null) {
 		var html = '''<link href="''';
 		var html2 = '''" rel="canonical" data-react-helmet="true">''';
-
-		if (${directNavigation} == "true") {
-			var portalURL = ${portalURL};
-		}
-		else {
-			var portalURL = "${portalURL}/web/guest";
-		}
-
+		var portalURL = "${portalURL}/web/guest";
 		var pageName = StringUtil.lowerCase(${pageName});
 
 		var pageNameURL = StringUtil.replace(${pageName}, " ", "-");

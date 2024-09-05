@@ -6,26 +6,26 @@
 import {Locator, Page} from '@playwright/test';
 
 export class BecomePublisherPage {
-	readonly page: Page;
 	readonly becomePublisherTitle: Locator;
 	readonly completePublisherTitle: Locator;
 	readonly continueButton: Locator;
 	readonly description: Locator;
 	readonly firstName: Locator;
 	readonly lastName: Locator;
+	readonly page: Page;
 	readonly phone: Locator;
 	readonly requestAccountButton: Locator;
 	readonly requestAccountTitle: Locator;
 	readonly thankYou: Locator;
 
 	constructor(page: Page) {
-		this.page = page;
 		this.becomePublisherTitle = page.getByText('Becoming a Liferay');
 		this.completePublisherTitle = page.getByText('Complete Publisher');
 		this.continueButton = page.getByRole('button', {name: 'Continue'});
 		this.description = page.getByPlaceholder('Enter the name and a brief');
 		this.firstName = page.getByPlaceholder('Enter first name');
 		this.lastName = page.getByPlaceholder('Enter last name');
+		this.page = page;
 		this.phone = page.getByPlaceholder('___–___–____');
 		this.requestAccountTitle = page.getByText('Request a Marketplace');
 		this.requestAccountButton = page.getByRole('button', {

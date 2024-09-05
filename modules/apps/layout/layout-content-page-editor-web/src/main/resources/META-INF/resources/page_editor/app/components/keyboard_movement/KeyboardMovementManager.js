@@ -38,6 +38,7 @@ import checkAllowedChild from '../../utils/drag_and_drop/checkAllowedChild';
 import {TARGET_POSITIONS} from '../../utils/drag_and_drop/constants/targetPositions';
 import getDropData from '../../utils/drag_and_drop/getDropData';
 import itemIsAncestor from '../../utils/drag_and_drop/itemIsAncestor';
+import {getFormParent} from '../../utils/getFormParent';
 import {isMultistepForm} from '../../utils/isMultistepForm';
 import {isUnmappedCollection} from '../../utils/isUnmappedCollection';
 import {openFormConversionModal} from '../../utils/openFormConversionModal';
@@ -162,12 +163,15 @@ export default function KeyboardMovementManager() {
 				};
 
 				const targetItem = layoutDataRef.current.items[target.itemId];
+				const formParent = getFormParent(
+					targetItem,
+					layoutDataRef.current
+				);
 
 				if (
+					formParent &&
 					source.fieldTypes?.includes('stepper') &&
-					target.position === TARGET_POSITIONS.MIDDLE &&
-					targetItem.type === LAYOUT_DATA_ITEM_TYPES.form &&
-					isMultistepForm(targetItem)
+					!isMultistepForm(formParent)
 				) {
 					openFormConversionModal({
 						onContinue: () => executeAction(),

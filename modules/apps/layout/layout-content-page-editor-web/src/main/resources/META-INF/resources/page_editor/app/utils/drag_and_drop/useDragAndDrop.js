@@ -32,7 +32,6 @@ import {formIsMapped} from '../formIsMapped';
 import {getFormParent} from '../getFormParent';
 import {getStepperChild} from '../getStepperChild';
 import {DRAG_DROP_TARGET_TYPE} from './constants/dragDropTargetType';
-import {TARGET_POSITIONS} from './constants/targetPositions';
 import defaultComputeHover from './defaultComputeHover';
 import getDropData from './getDropData';
 
@@ -368,13 +367,8 @@ function computeDrop({
 	onDragEnd,
 	state,
 }) {
-	const {
-		dropItem,
-		dropTargetItem,
-		droppable,
-		targetPositionWithMiddle,
-		targetPositionWithoutMiddle,
-	} = state;
+	const {dropItem, dropTargetItem, droppable, targetPositionWithoutMiddle} =
+		state;
 
 	if (!droppable) {
 		let message = '';
@@ -456,12 +450,12 @@ function computeDrop({
 		});
 
 		const targetItem = layoutDataRef.current.items[dropTargetItem.itemId];
+		const formParent = getFormParent(targetItem, layoutDataRef.current);
 
 		if (
+			formParent &&
 			dropItem.fieldTypes?.includes('stepper') &&
-			dropTargetItem.type === LAYOUT_DATA_ITEM_TYPES.form &&
-			targetPositionWithMiddle === TARGET_POSITIONS.MIDDLE &&
-			!isMultistepForm(targetItem)
+			!isMultistepForm(formParent)
 		) {
 			openFormConversionModal({
 				onContinue: () => onDragEnd(dropItemId, position),

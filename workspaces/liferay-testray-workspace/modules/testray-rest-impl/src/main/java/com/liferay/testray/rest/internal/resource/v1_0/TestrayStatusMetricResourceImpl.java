@@ -489,10 +489,9 @@ public class TestrayStatusMetricResourceImpl
 				String testrayTaskStatus, Pagination pagination)
 		throws Exception {
 
-		StringBundler sb = new StringBundler(16);
+		StringBundler sb = new StringBundler(14);
 
 		sb.append("select b.c_buildId_ from O_[%COMPANY_ID%]_Build b, ");
-		sb.append("O_[%COMPANY_ID%]_CaseResult cr, ");
 		sb.append("O_[%COMPANY_ID%]_ProductVersion pv ");
 
 		if (Validator.isNotNull(testrayTaskStatus)) {
@@ -500,7 +499,6 @@ public class TestrayStatusMetricResourceImpl
 		}
 
 		sb.append("where b.r_routineToBuilds_c_routineId = ? and ");
-		sb.append("cr.r_buildToCaseResult_c_buildId = b.c_buildId_ and ");
 		sb.append("pv.c_productVersionId_ = ");
 		sb.append("b.r_productVersionToBuilds_c_productVersionId and ");
 		sb.append("b.template_ = false and b.archived_ = false ");
@@ -534,22 +532,20 @@ public class TestrayStatusMetricResourceImpl
 
 		long totalCount = TestrayUtil.getTotalCount(sql, params);
 
-		sb = new StringBundler(29);
+		sb = new StringBundler(26);
 
-		sb.append("select count(cr.dueStatus_) as total, sum(case when ");
-		sb.append("cr.dueStatus_ = 'BLOCKED' then 1 else 0 end) as blocked, ");
-		sb.append("sum(case when cr.dueStatus_ = 'FAILED' then 1 else 0 end ");
-		sb.append(") as failed, sum(case when cr.dueStatus_ = 'INPROGRESS' ");
-		sb.append("then 1 else 0 end) as inprogress, sum(case when ");
-		sb.append("cr.dueStatus_ = 'PASSED' then 1 else 0 end) as passed, ");
-		sb.append("sum(case when cr.dueStatus_ = 'TESTFIX' then 1 else 0 end ");
-		sb.append(") as testfix, sum(case when cr.dueStatus_ = 'UNTESTED' ");
-		sb.append("then 1 else 0 end) as untested, b.c_buildId_, b.dueDate_, ");
-		sb.append("b.gitHash_, b.name_, b.promoted_, b.archived_, pv.name_ ");
-		sb.append("as productVersionName, (select dueStatus_ from ");
-		sb.append("O_[%COMPANY_ID%]_Task t where t.r_buildToTasks_c_buildId ");
-		sb.append("= b.c_buildId_) as taskStatus from O_[%COMPANY_ID%]_Build ");
-		sb.append("b, O_[%COMPANY_ID%]_CaseResult cr, ");
+		sb.append("select (b.caseresultblocked_ + b.caseresultfailed_ + ");
+		sb.append("b.caseresultinprogress_ + b.caseresultpassed_ + ");
+		sb.append("b.caseresulttestfix_ + b.caseresultuntested_) as total,");
+		sb.append("b.caseResultBlocked_ as blocked, b.caseresultfailed_ as ");
+		sb.append("failed, b.caseresultinprogress_ as inprogress, ");
+		sb.append("b.caseresultpassed_ as passed, b.caseresulttestfix_ as ");
+		sb.append("testfix, b.caseresultuntested_ as untested, b.c_buildId_, ");
+		sb.append("b.dueDate_, b.gitHash_, b.name_, b.promoted_, ");
+		sb.append("b.archived_, pv.name_ as productVersionName, (select ");
+		sb.append("dueStatus_ from O_[%COMPANY_ID%]_Task t where ");
+		sb.append("t.r_buildToTasks_c_buildId = b.c_buildId_) as taskStatus ");
+		sb.append("from O_[%COMPANY_ID%]_Build b, ");
 		sb.append("O_[%COMPANY_ID%]_ProductVersion pv ");
 
 		if (Validator.isNotNull(testrayTaskStatus)) {
@@ -557,7 +553,6 @@ public class TestrayStatusMetricResourceImpl
 		}
 
 		sb.append("where b.r_routineToBuilds_c_routineId = ? and ");
-		sb.append("cr.r_buildToCaseResult_c_buildId = b.c_buildId_ and ");
 		sb.append("pv.c_productVersionId_ = ");
 		sb.append("b.r_productVersionToBuilds_c_productVersionId and ");
 		sb.append("b.template_ = false and b.archived_ = false ");

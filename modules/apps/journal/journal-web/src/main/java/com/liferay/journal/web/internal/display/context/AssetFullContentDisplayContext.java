@@ -6,15 +6,18 @@
 package com.liferay.journal.web.internal.display.context;
 
 import com.liferay.asset.kernel.model.AssetRendererFactory;
-import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticleDisplay;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import javax.portlet.PortletRequest;
+import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,9 +28,15 @@ import javax.servlet.http.HttpServletRequest;
 public class AssetFullContentDisplayContext {
 
 	public AssetFullContentDisplayContext(
-		HttpServletRequest httpServletRequest) {
+		HttpServletRequest httpServletRequest,
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse) {
 
 		_httpServletRequest = httpServletRequest;
+		_liferayPortletResponse = liferayPortletResponse;
+
+		_currentURLObj = PortletURLUtil.getCurrent(
+			liferayPortletRequest, liferayPortletResponse);
 	}
 
 	public JournalArticleDisplay getJournalArticleDisplay() {
@@ -42,7 +51,7 @@ public class AssetFullContentDisplayContext {
 		return _journalArticleDisplay;
 	}
 
-	public PortletURL getPaginationURL(String currentURL) {
+	public PortletURL getPaginationURL() {
 		JournalArticleDisplay journalArticleDisplay =
 			getJournalArticleDisplay();
 
@@ -50,13 +59,11 @@ public class AssetFullContentDisplayContext {
 			_httpServletRequest, "redirect");
 
 		if (Validator.isNull(pageRedirect)) {
-			pageRedirect = currentURL;
+			pageRedirect = _currentURLObj.toString();
 		}
 
 		return PortletURLBuilder.create(
-			PortalUtil.getControlPanelPortletURL(
-				_httpServletRequest, JournalPortletKeys.JOURNAL,
-				PortletRequest.RENDER_PHASE)
+			_getPortletURL()
 		).setMVCPath(
 			"/view_content.jsp"
 		).setRedirect(
@@ -65,6 +72,8 @@ public class AssetFullContentDisplayContext {
 			"cur", ParamUtil.getInteger(_httpServletRequest, "cur")
 		).setParameter(
 			"groupId", journalArticleDisplay.getGroupId()
+		).setParameter(
+			"page", (String)null
 		).setParameter(
 			"type",
 			() -> {
@@ -90,8 +99,31 @@ public class AssetFullContentDisplayContext {
 		return _assetRendererFactory;
 	}
 
+	private PortletURL _getPortletURL() {
+		try {
+			return PortletURLUtil.clone(
+				_currentURLObj, _liferayPortletResponse);
+		}
+		catch (PortletException portletException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(portletException);
+			}
+
+			return PortletURLBuilder.createRenderURL(
+				_liferayPortletResponse
+			).setParameters(
+				_currentURLObj.getParameterMap()
+			).buildPortletURL();
+		}
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AssetFullContentDisplayContext.class);
+
 	private AssetRendererFactory<?> _assetRendererFactory;
+	private final PortletURL _currentURLObj;
 	private final HttpServletRequest _httpServletRequest;
 	private JournalArticleDisplay _journalArticleDisplay;
+	private final LiferayPortletResponse _liferayPortletResponse;
 
 }

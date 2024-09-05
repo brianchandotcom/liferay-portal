@@ -118,6 +118,25 @@ public class GroupFinderTest {
 
 		Assert.assertTrue(groups.contains(withActionIdGroup));
 		Assert.assertFalse(groups.contains(withoutActionIdGroup));
+
+		// Parameter order is important. See LPD-34884.
+
+		groups = _groupFinder.findByC_C_PG_N_D(
+			TestPropsValues.getCompanyId(),
+			new long[] {_portal.getClassNameId(Group.class)},
+			GroupConstants.ANY_PARENT_GROUP_ID, new String[] {null},
+			new String[] {null},
+			LinkedHashMapBuilder.<String, Object>put(
+				"active", true
+			).put(
+				"actionId", _arbitraryResourceAction.getActionId()
+			).put(
+				"userId", _user.getUserId()
+			).build(),
+			true, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		Assert.assertTrue(groups.contains(withActionIdGroup));
+		Assert.assertFalse(groups.contains(withoutActionIdGroup));
 	}
 
 	@Test

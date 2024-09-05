@@ -193,7 +193,9 @@ async function checkUnmappedInputChild(
 			fragmentEntryLinks[item.config.fragmentEntryLinkId];
 
 		if (
-			fragmentEntryLink.fragmentEntryType !== FRAGMENT_ENTRY_TYPES.input
+			fragmentEntryLink.fragmentEntryType !==
+				FRAGMENT_ENTRY_TYPES.input ||
+			fragmentEntryLink.fieldTypes.includes('stepper')
 		) {
 			continue;
 		}

@@ -5,6 +5,7 @@
 
 import {test} from '@playwright/test';
 
+import {BecomePublisherPage} from '../pages/become-publisher/becomePublisherPage';
 import {CustomerDashboardAppDetailsPage} from '../pages/customer-dashboard/customerDashboardAppDetailsPage';
 import {CustomerDashboardPage} from '../pages/customer-dashboard/customerDashboardPage';
 import {PublisherAppPage} from '../pages/publisher-dashboard/publisherAppPage';
@@ -13,6 +14,7 @@ import {PublisherDashboardSolutionDetailsPage} from '../pages/publisher-dashboar
 import {PublisherSolutionPage} from '../pages/publisher-dashboard/publisherSolutionPage';
 
 const marketplacePagesTest = test.extend<{
+	becomePublisherPage: BecomePublisherPage;
 	customerDashboardAppDetailsPage: CustomerDashboardAppDetailsPage;
 	customerDashboardPage: CustomerDashboardPage;
 	publisherAppPage: PublisherAppPage;
@@ -20,6 +22,9 @@ const marketplacePagesTest = test.extend<{
 	publisherDashboardSolutionDetailsPage: PublisherDashboardSolutionDetailsPage;
 	publisherSolutionPage: PublisherSolutionPage;
 }>({
+	becomePublisherPage: async ({page}, use) => {
+		await use(new BecomePublisherPage(page));
+	},
 	customerDashboardAppDetailsPage: async ({page}, use) => {
 		await use(new CustomerDashboardAppDetailsPage(page));
 	},

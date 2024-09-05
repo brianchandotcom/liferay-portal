@@ -196,3 +196,126 @@ test('LPD-29583 Check discount on products with UOM', async ({
 		)
 	).toBeVisible();
 });
+
+test('LPD-35633 Check discount on products with minOrderQuantity greater than 1', async ({
+	apiHelpers,
+	page,
+	productDetailsPage,
+}) => {
+	test.setTimeout(180000);
+
+	const {catalog, site} = await miniumSetUp(apiHelpers);
+
+	const account = await apiHelpers.headlessAdminUser.postAccount({
+		name: getRandomString(),
+		type: 'business',
+	});
+
+	apiHelpers.data.push({id: account.id, type: 'account'});
+
+	await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+		account.id,
+		['test@liferay.com']
+	);
+
+	const user =
+		await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
+			'test@liferay.com'
+		);
+
+	const roles = await apiHelpers.headlessAdminUser.getRoles('Sales Agent');
+
+	await apiHelpers.headlessAdminUser.postRoleUserAccountAssociation(
+		roles.items[0].id,
+		user.id
+	);
+
+	apiHelpers.data.push({
+		id: `${roles.items[0].id}_${user.id}`,
+		type: 'roleUserAccountAssociation',
+	});
+
+	const product = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+		catalogId: catalog.id,
+		name: {en_US: `product-${getRandomInt()}`},
+		productConfiguration: {
+			minOrderQuantity: 10,
+			multipleOrderQuantity: 10,
+		},
+		skus: [
+			{
+				cost: 50,
+				price: 50,
+				published: true,
+				purchasable: true,
+				sku: 'Sku' + getRandomInt(),
+			},
+		],
+	});
+
+	await apiHelpers.headlessCommerceAdminPricing.postDiscount({
+		discountProducts: [
+			{
+				productId: product.productId,
+			},
+		],
+		percentageLevel1: 10,
+		usePercentage: true,
+	});
+
+	await page.goto(`/web${site.friendlyUrlPath}/p/${product.name['en_US']}`);
+
+	await expect(
+		await productDetailsPage.priceField(
+			'$ 50.00',
+			productDetailsPage.priceContainer
+		)
+	).toBeVisible();
+	await expect(
+		await productDetailsPage.priceField(
+			'–10%',
+			productDetailsPage.priceContainer
+		)
+	).toBeVisible();
+	await expect(
+		await productDetailsPage.priceField(
+			'$ 45.00',
+			productDetailsPage.priceContainer
+		)
+	).toBeVisible();
+
+	await apiHelpers.headlessCommerceAdminCatalog.postSkuUnitOfMeasure(
+		product.skus[0].id,
+		{
+			basePrice: 10,
+			incrementalOrderQuantity: 0.1,
+			key: getRandomString(),
+			name: {en_US: `Box`},
+			precision: 1,
+			primary: true,
+			priority: 1,
+			rate: 1,
+		}
+	);
+
+	await page.reload();
+
+	await expect(
+		await productDetailsPage.priceField(
+			'$ 10.00',
+			productDetailsPage.priceContainer
+		)
+	).toBeVisible();
+	await expect(
+		await productDetailsPage.priceField(
+			'–10%',
+			productDetailsPage.priceContainer
+		)
+	).toBeVisible();
+	await expect(
+		await productDetailsPage.priceField(
+			'$ 9.00',
+			productDetailsPage.priceContainer
+		)
+	).toBeVisible();
+});

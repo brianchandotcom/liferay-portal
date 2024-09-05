@@ -538,6 +538,7 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 					rate: getRandomInt(),
 					...skuUnitOfMeasure,
 				},
+				failOnStatusCode: true,
 			}
 		);
 

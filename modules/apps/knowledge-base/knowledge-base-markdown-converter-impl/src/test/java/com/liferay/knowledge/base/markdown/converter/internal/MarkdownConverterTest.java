@@ -7,7 +7,6 @@ package com.liferay.knowledge.base.markdown.converter.internal;
 
 import com.liferay.knowledge.base.markdown.converter.MarkdownConverter;
 import com.liferay.knowledge.base.markdown.converter.factory.MarkdownConverterFactory;
-import com.liferay.knowledge.base.markdown.converter.internal.pegdown.factory.MarkdownConverterFactoryImpl;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.Assert;
@@ -33,7 +32,7 @@ public class MarkdownConverterTest {
 					"changes)";
 
 		MarkdownConverterFactory markdownConverterFactory =
-			new MarkdownConverterFactoryImpl();
+			new FlexmarkMarkdownConverterFactory();
 
 		MarkdownConverter markdownConverter = markdownConverterFactory.create();
 

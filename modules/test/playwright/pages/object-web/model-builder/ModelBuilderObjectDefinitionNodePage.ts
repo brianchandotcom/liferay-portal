@@ -113,18 +113,17 @@ export class ModelBuilderObjectDefinitionNodePage {
 	}
 
 	async createObjectField({
-		leftSidebarItems,
 		listTypeDefinitionName,
 		mandatory,
-		objectDefinitionName,
+		objectDefinitionLabel,
 		objectDefinitionNodes,
 		objectFieldBusinessType,
 		objectFieldLabel,
 	}: CreateObjectField) {
-		await this.openAddNewObjectFieldModal(
-			leftSidebarItems,
-			objectDefinitionName,
-			objectDefinitionNodes
+		await this.openAddNewObjectFieldOrRelationshipModal(
+			objectDefinitionLabel,
+			objectDefinitionNodes,
+			this.addObjectFieldButton
 		);
 
 		await this.fillObjectFieldLabelInput(objectFieldLabel);
@@ -150,13 +149,18 @@ export class ModelBuilderObjectDefinitionNodePage {
 		await this.newObjectFieldSaveButton.click();
 	}
 
-	async createObjectRelationship(
-		manyRecordsOf: string,
-		objectRelationshipLabel: string,
-		objectRelationshipType: string
-	): Promise<ObjectRelationship> {
-		await this.addObjectFieldOrRelationshipButton.click();
-		await this.addObjectRelationshipButton.click();
+	async createObjectRelationship({
+		manyRecordsOf,
+		objectDefinitionLabel,
+		objectDefinitionNodes,
+		objectRelationshipLabel,
+		objectRelationshipType,
+	}: CreateObjectRelationship): Promise<ObjectRelationship> {
+		await this.openAddNewObjectFieldOrRelationshipModal(
+			objectDefinitionLabel,
+			objectDefinitionNodes,
+			this.addObjectRelationshipButton
+		);
 
 		const objectRelationship = await this.handleObjectRelationshipModal({
 			manyRecordsOf,
@@ -220,21 +224,17 @@ export class ModelBuilderObjectDefinitionNodePage {
 			.locator('svg.lexicon-icon-link');
 	}
 
-	async openAddNewObjectFieldModal(
-		leftSidebarItems: unknown,
-		objectDefinitionName: string,
-		objectDefinitionNodes: unknown
+	async openAddNewObjectFieldOrRelationshipModal(
+		objectDefinitionLabel: string,
+		objectDefinitionNodes: unknown,
+		openModalButton: Locator
 	) {
-		await (leftSidebarItems as Locator)
-			.filter({hasText: objectDefinitionName})
-			.click();
-
 		await (objectDefinitionNodes as Locator)
-			.filter({hasText: objectDefinitionName})
+			.filter({hasText: objectDefinitionLabel})
 			.getByRole('button', {name: 'Add Field or Relationship'})
 			.click();
 
-		await this.addObjectFieldButton.click();
+		await openModalButton.click();
 	}
 
 	async selectNewObjectFieldBusinessTypeOption(

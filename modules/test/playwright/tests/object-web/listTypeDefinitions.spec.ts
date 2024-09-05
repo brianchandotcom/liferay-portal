@@ -288,7 +288,6 @@ test.describe('ensure picklist translation', () => {
 		formSettingsModalPage,
 		listTypeDefinitionPage,
 		modelBuilderDiagramPage,
-		modelBuilderLeftSidebarPage,
 		objectFieldsPage,
 		page,
 		viewObjectDefinitionsPage,
@@ -341,7 +340,6 @@ test.describe('ensure picklist translation', () => {
 		const fieldLabel = 'picklistField' + getRandomInt();
 
 		await objectFieldsPage.addObjectField({
-			leftSidebarItems: modelBuilderLeftSidebarPage.sidebarItems,
 			listTypeDefinitionName: listTypeDefinition.name,
 			objectDefinitionNodes:
 				modelBuilderDiagramPage.objectDefinitionNodes,

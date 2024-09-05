@@ -13,13 +13,20 @@ interface Actions {
 
 interface CreateObjectField {
 	attachmentSource?: string;
-	leftSidebarItems: unknown;
 	listTypeDefinitionName?: string;
 	mandatory?: boolean;
-	objectDefinitionName?: string;
+	objectDefinitionLabel?: string;
 	objectDefinitionNodes: unknown;
 	objectFieldBusinessType: string;
 	objectFieldLabel: string;
+}
+
+interface CreateObjectRelationship {
+	manyRecordsOf: string;
+	objectDefinitionLabel: string;
+	objectDefinitionNodes: unknown;
+	objectRelationshipLabel: string;
+	objectRelationshipType: string;
 }
 
 interface DataObject {

@@ -77,6 +77,14 @@ export class WidgetPagePage {
 		);
 	}
 
+	async clickOnAction(action: string, locator: Locator) {
+		await locator.getByLabel('Options').click();
+
+		await this.page
+			.getByRole('menuitem', {exact: true, name: action})
+			.click();
+	}
+
 	async deletePortlet(portletName: string) {
 		this.page.on('dialog', async (dialog) => {
 			await dialog.accept();

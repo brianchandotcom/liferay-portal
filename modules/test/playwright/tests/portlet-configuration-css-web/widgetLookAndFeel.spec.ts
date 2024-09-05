@@ -38,14 +38,12 @@ test(
 		await page.getByLabel(name, {exact: true}).click();
 
 		await widgetPagePage.addPortlet('Asset Publisher');
-		await page
-			.locator('.portlet-asset-publisher')
-			.first()
-			.getByLabel('Options')
-			.click();
-		await page
-			.getByRole('menuitem', {name: 'Look and Feel Configuration'})
-			.click();
+
+		await widgetPagePage.clickOnAction(
+			'Look and Feel Configuration',
+			page.locator('.portlet-asset-publisher').first()
+		);
+
 		const lookAndFeelFrame = page.frameLocator(
 			'iframe[title="Look and Feel Configuration"]'
 		);

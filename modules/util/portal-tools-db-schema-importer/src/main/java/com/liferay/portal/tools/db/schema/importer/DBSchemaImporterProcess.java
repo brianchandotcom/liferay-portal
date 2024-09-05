@@ -13,7 +13,9 @@ import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.module.framework.ThrowableCollector;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.db.schema.importer.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.tools.db.schema.importer.jdbc.DataSourceFactoryUtil;
 
@@ -31,6 +33,7 @@ import java.sql.Statement;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -69,6 +72,10 @@ public class DBSchemaImporterProcess {
 		_targetCharsetEncoding = _getSessionCharsetEncoding(_targetDataSource);
 	}
 
+	public List<String> getReportInfo() {
+		return _reportInfo;
+	}
+
 	public void run() throws Exception {
 		_createTables();
 
@@ -95,6 +102,11 @@ public class DBSchemaImporterProcess {
 						new DBCopyTablesProcess(
 							_sourceDataSource, _targetDataSource
 						).run();
+
+						_reportInfo.add(
+							0,
+							_getDataSourceInfo(
+								_sourceDataSource, _targetDataSource, null));
 					}
 					catch (Exception exception) {
 						throwableCollector.collect(exception);
@@ -108,14 +120,24 @@ public class DBSchemaImporterProcess {
 				_executorService.submit(
 					() -> {
 						try {
-							new DBCopyTablesProcess(
+							DataSource sourceDataSource =
 								DataSourceFactoryUtil.initDataSource(
 									_sourceJDBCURL, _sourcePassword,
-									_sourceUser, partitionName),
+									_sourceUser, partitionName);
+
+							DataSource targetDataSource =
 								DataSourceFactoryUtil.initDataSource(
 									_targetJDBCURL, _targetPassword,
-									_targetUser, partitionName)
+									_targetUser, partitionName);
+
+							new DBCopyTablesProcess(
+								sourceDataSource, targetDataSource
 							).run();
+
+							_reportInfo.add(
+								_getDataSourceInfo(
+									sourceDataSource, targetDataSource,
+									partitionName));
 						}
 						catch (Exception exception) {
 							throwableCollector.collect(exception);
@@ -169,6 +191,84 @@ public class DBSchemaImporterProcess {
 		if (sb.index() > 0) {
 			_runSQLTemplate(_targetDataSource, sb.toString());
 		}
+	}
+
+	private String _getDataSourceInfo(
+			DataSource sourceDataSource, DataSource targetDataSource,
+			String partitionName)
+		throws Exception {
+
+		Set<String> sourceTableNames = _getDBTableNames(
+			sourceDataSource, "TABLE");
+		Set<String> targetTableNames = _getDBTableNames(
+			targetDataSource, "TABLE");
+
+		Set<String> sourceViewNames = _getDBTableNames(
+			sourceDataSource, "VIEW");
+		Set<String> targetViewNames = _getDBTableNames(
+			targetDataSource, "VIEW");
+
+		if (Validator.isNull(partitionName)) {
+			partitionName = "Default";
+		}
+
+		String asymmetricDifferenceTargetSourceTables = StringUtil.merge(
+			SetUtil.asymmetricDifference(targetTableNames, sourceTableNames),
+			StringPool.COMMA_AND_SPACE);
+		String asymmetricDifferenceSourceTargetTables = StringUtil.merge(
+			SetUtil.asymmetricDifference(sourceTableNames, targetTableNames),
+			StringPool.COMMA_AND_SPACE);
+		String asymmetricDifferenceTargetSourceViews = StringUtil.merge(
+			SetUtil.asymmetricDifference(targetViewNames, sourceViewNames),
+			StringPool.COMMA_AND_SPACE);
+		String asymmetricDifferenceSourceTargetViews = StringUtil.merge(
+			SetUtil.asymmetricDifference(sourceViewNames, targetViewNames),
+			StringPool.COMMA_AND_SPACE);
+
+		return StringUtil.merge(
+			new Object[] {
+				partitionName + " partition source tables: " +
+					sourceTableNames.size(),
+				partitionName + " partition target tables: " +
+					targetTableNames.size(),
+				partitionName + " partition source views: " +
+					sourceViewNames.size(),
+				partitionName + " partition target views: " +
+					targetViewNames.size(),
+				partitionName + " partition missing source tables: " +
+					asymmetricDifferenceTargetSourceTables,
+				partitionName + " partition missing target tables: " +
+					asymmetricDifferenceSourceTargetTables,
+				partitionName + " partition missing source views: " +
+					asymmetricDifferenceTargetSourceViews,
+				partitionName + " partition missing target views: " +
+					asymmetricDifferenceSourceTargetViews,
+				StringPool.NEW_LINE
+			},
+			StringPool.NEW_LINE);
+	}
+
+	private Set<String> _getDBTableNames(DataSource dataSource, String type)
+		throws Exception {
+
+		Set<String> tableNames = new HashSet<>();
+
+		try (Connection connection = dataSource.getConnection()) {
+			DatabaseMetaData databaseMetaData = connection.getMetaData();
+
+			try (ResultSet resultSet = databaseMetaData.getTables(
+					connection.getCatalog(), connection.getSchema(), null,
+					new String[] {type})) {
+
+				while (resultSet.next()) {
+					tableNames.add(
+						StringUtil.toLowerCase(
+							resultSet.getString("TABLE_NAME")));
+				}
+			}
+		}
+
+		return tableNames;
 	}
 
 	private String _getSessionCharsetEncoding(DataSource dataSource)
@@ -351,6 +451,8 @@ public class DBSchemaImporterProcess {
 		Executors.newFixedThreadPool(5);
 	private final List<String> _partitionNames = new ArrayList<>();
 	private final String _path;
+	private final List<String> _reportInfo = Collections.synchronizedList(
+		new ArrayList<>());
 	private final DataSource _sourceDataSource;
 	private final String _sourceJDBCURL;
 	private final String _sourcePassword;

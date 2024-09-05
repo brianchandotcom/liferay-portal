@@ -1490,7 +1490,6 @@ definition {
 			PageEditor.mapFormContainerToObject(contentType = "Purchase Order");
 
 			PageEditor.editFormContainer(
-				contentType = "Purchase Order",
 				displayPageName = "Display Page Name",
 				successMessage = "Go to Entry Display Page");
 
@@ -1636,7 +1635,6 @@ definition {
 			PageEditor.mapFormContainerToObject(contentType = "Purchase Order");
 
 			PageEditor.editFormContainer(
-				contentType = "Purchase Order",
 				displayPageName = "Display Page Name",
 				successMessage = "Go to Entry Display Page");
 

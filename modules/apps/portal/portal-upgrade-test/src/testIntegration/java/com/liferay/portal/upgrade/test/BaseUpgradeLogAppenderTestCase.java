@@ -14,11 +14,13 @@ import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.db.partition.DBPartition;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.model.ReleaseConstants;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -691,6 +693,15 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 		String upgradeProcess2ClassName = upgradeProcess2.getClass(
 		).getName();
+
+		if (DBPartition.isPartitionEnabled()) {
+			upgradeProcess1ClassName =
+				upgradeProcess1ClassName + StringPool.AT +
+					CompanyThreadLocal.getCompanyId();
+			upgradeProcess2ClassName =
+				upgradeProcess2ClassName + StringPool.AT +
+					CompanyThreadLocal.getCompanyId();
+		}
 
 		_appender.start();
 

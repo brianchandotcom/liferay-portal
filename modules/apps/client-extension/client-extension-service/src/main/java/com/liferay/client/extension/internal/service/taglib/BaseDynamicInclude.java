@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -113,14 +112,6 @@ public abstract class BaseDynamicInclude implements DynamicInclude {
 
 				if (!StringUtil.equalsIgnoreCase(
 						globalJSCET.getScope(), "instance")) {
-
-					continue;
-				}
-
-				Layout layout = themeDisplay.getLayout();
-
-				if (globalJSCET.isRestrictedToAdminLayouts() &&
-					!layout.isTypeControlPanel()) {
 
 					continue;
 				}

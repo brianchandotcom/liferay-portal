@@ -19,7 +19,7 @@ for (Method method : methods) {
 	String type = viewClientExtensionEntryDisplayContext.getType();
 	Object value = viewClientExtensionEntryDisplayContext.getValue(method);
 
-	if (!FeatureFlagManagerUtil.isEnabled("LPD-30371") && type.equals(ClientExtensionEntryConstants.TYPE_GLOBAL_JS) && (name.equals("restrictedToAdminLayouts") || name.equals("scope") || name.equals("scriptLocation"))) {
+	if (!FeatureFlagManagerUtil.isEnabled("LPD-30371") && type.equals(ClientExtensionEntryConstants.TYPE_GLOBAL_JS) && (name.equals("scope") || name.equals("scriptLocation"))) {
 		continue;
 	}
 %>

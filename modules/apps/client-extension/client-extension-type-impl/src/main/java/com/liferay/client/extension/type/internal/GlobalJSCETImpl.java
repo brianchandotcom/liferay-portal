@@ -69,9 +69,4 @@ public class GlobalJSCETImpl extends BaseCETImpl implements GlobalJSCET {
 		return false;
 	}
 
-	@Override
-	public boolean isRestrictedToAdminLayouts() {
-		return getBoolean("restrictedToAdminLayouts");
-	}
-
 }

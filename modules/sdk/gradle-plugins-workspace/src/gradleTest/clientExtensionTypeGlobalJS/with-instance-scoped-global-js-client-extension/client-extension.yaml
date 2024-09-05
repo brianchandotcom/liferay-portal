@@ -1,5 +1,4 @@
 with-instance-scoped-global-js-client-extension:
-    restrictedToAdminLayouts: true
     scope: "instance"
     scriptLocation: "head"
     type: globalJS

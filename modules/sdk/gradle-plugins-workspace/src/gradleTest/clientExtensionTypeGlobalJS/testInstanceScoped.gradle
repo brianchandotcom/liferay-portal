@@ -1,5 +1,4 @@
 ext.expectedContentStrings = [
-	'restrictedToAdminLayouts=true',
 	'scope=instance',
 	'scriptLocation=head'
 ]

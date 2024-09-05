@@ -1099,8 +1099,6 @@ public class ClientExtensionProjectConfigurator
 		}
 		else if (Objects.equals(clientExtension.type, "globalJS")) {
 			_validateGlobalJSScriptElementAttributes(clientExtension);
-			_validateTypeSettingsBoolean(
-				clientExtension, "restrictedToAdminLayouts");
 			_validateTypeSettingsValues(
 				clientExtension, "scope", "instance", "page");
 			_validateTypeSettingsValues(
@@ -1210,26 +1208,6 @@ public class ClientExtensionProjectConfigurator
 					clientExtension.id, clientExtension.type,
 					StringUtil.quote(requiredTypeSettingsKey)));
 		}
-	}
-
-	private void _validateTypeSettingsBoolean(
-			ClientExtension clientExtension, String typeSettingsKey)
-		throws GradleException {
-
-		Object typeSettingsValue = clientExtension.typeSettings.get(
-			typeSettingsKey);
-
-		if ((typeSettingsValue == null) ||
-			(typeSettingsValue instanceof Boolean)) {
-
-			return;
-		}
-
-		throw new GradleException(
-			String.format(
-				"Client extension %s must have a boolean value for the " +
-					"property %s",
-				clientExtension.id, StringUtil.quote(typeSettingsKey)));
 	}
 
 	private void _validateTypeSettingsValues(

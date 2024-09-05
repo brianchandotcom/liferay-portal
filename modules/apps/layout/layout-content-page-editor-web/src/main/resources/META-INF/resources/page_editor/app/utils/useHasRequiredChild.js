@@ -6,7 +6,11 @@
 import {useCallback} from 'react';
 
 import {useGlobalContext} from '../contexts/GlobalContext';
-import {useSelectorCallback, useSelectorRef} from '../contexts/StoreContext';
+import {
+	useSelector,
+	useSelectorCallback,
+	useSelectorRef,
+} from '../contexts/StoreContext';
 import selectFormConfiguration from '../selectors/selectFormConfiguration';
 import FormService from '../services/FormService';
 import {CACHE_KEYS} from './cache';
@@ -20,6 +24,9 @@ export default function useHasRequiredChild(itemId) {
 	const layoutDataRef = useSelectorRef((state) => state.layoutData);
 	const fragmentEntryLinksRef = useSelectorRef(
 		(state) => state.fragmentEntryLinks
+	);
+	const selectedViewportSize = useSelector(
+		(state) => state.selectedViewportSize
 	);
 
 	const formConfiguration = useSelectorCallback(
@@ -44,7 +51,13 @@ export default function useHasRequiredChild(itemId) {
 		}
 
 		return (
-			hasVisibleSubmitChild(itemId, globalContext) ||
+			hasVisibleSubmitChild(
+				itemId,
+				globalContext,
+				layoutDataRef.current,
+				fragmentEntryLinksRef.current,
+				selectedViewportSize
+			) ||
 			hasRequiredInputChild({
 				formFields,
 				fragmentEntryLinks: fragmentEntryLinksRef.current,
@@ -58,5 +71,6 @@ export default function useHasRequiredChild(itemId) {
 		fragmentEntryLinksRef,
 		itemId,
 		globalContext,
+		selectedViewportSize,
 	]);
 }

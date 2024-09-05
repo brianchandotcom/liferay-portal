@@ -45,7 +45,15 @@ export default function useCheckFormsValidity() {
 		}
 
 		for (const form of forms) {
-			if (!hasVisibleSubmitChild(form.itemId, globalContext)) {
+			if (
+				!hasVisibleSubmitChild(
+					form.itemId,
+					globalContext,
+					layoutData,
+					fragmentEntryLinks,
+					selectedViewportSize
+				)
+			) {
 				addError(validations, form, FORM_ERROR_TYPES.missingSubmit);
 			}
 

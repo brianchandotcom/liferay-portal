@@ -106,6 +106,7 @@ function Configuration({
 
 	const openSelectFieldModal = () => {
 		openModal({
+			className: 'modal-height-full',
 			contentComponent: ({closeModal}: {closeModal: Function}) => (
 				<FieldSelectModalContent
 					closeModal={closeModal}
@@ -123,7 +124,7 @@ function Configuration({
 					selectedFields={selectedField ? [selectedField] : []}
 				/>
 			),
-			size: 'full-screen',
+			size: 'lg',
 		});
 	};
 

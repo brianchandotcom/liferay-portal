@@ -581,6 +581,7 @@ function Table(props: IDataSetSectionProps & {title?: string}) {
 
 	const onCreationButtonClick = () => {
 		openModal({
+			className: 'modal-height-full',
 			contentComponent: ({closeModal}: {closeModal: Function}) => (
 				<FieldSelectModalContent
 					{...props}
@@ -605,7 +606,7 @@ function Table(props: IDataSetSectionProps & {title?: string}) {
 					selectionMode="multiple"
 				/>
 			),
-			size: 'full-screen',
+			size: 'lg',
 		});
 	};
 

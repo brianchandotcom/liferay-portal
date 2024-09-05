@@ -89,8 +89,8 @@ test.describe('Manage object relationships through Model Builder', () => {
 
 		await modelBuilderObjectDefinitionNodePage.handleObjectRelationshipModal(
 			{
-			objectRelationshipLabel: objectRelationship1Label,
-			type: 'One to Many',
+				objectRelationshipLabel: objectRelationship1Label,
+				type: 'One to Many',
 			}
 		);
 
@@ -104,8 +104,8 @@ test.describe('Manage object relationships through Model Builder', () => {
 
 		await modelBuilderObjectDefinitionNodePage.handleObjectRelationshipModal(
 			{
-			objectRelationshipLabel: objectRelationship2Label,
-			type: 'One to Many',
+				objectRelationshipLabel: objectRelationship2Label,
+				type: 'One to Many',
 			}
 		);
 
@@ -324,12 +324,12 @@ test.describe('Manage object relationships through Model Builder', () => {
 		const objectRelationship =
 			await modelBuilderObjectDefinitionNodePage.createObjectRelationship(
 				{
-			manyRecordsOf: objectDefinition1.name,
-			objectDefinitionLabel: objectDefinition2.label['en_US'],
+					manyRecordsOf: objectDefinition1.name,
+					objectDefinitionLabel: objectDefinition2.label['en_US'],
 					objectDefinitionNodes:
 						modelBuilderDiagramPage.objectDefinitionNodes,
 					objectRelationshipLabel,
-			objectRelationshipType: 'One to Many',
+					objectRelationshipType: 'One to Many',
 				}
 			);
 
@@ -455,6 +455,99 @@ test.describe('Manage object relationships through Model Builder', () => {
 				.filter({hasText: objectDefinition2.label['en_US']})
 				.getByText(objectRelationshipLabel2)
 		).toBeVisible();
+	});
+
+	test('can create two self object relationship', async ({
+		apiHelpers,
+		modelBuilderDiagramPage,
+		page,
+		viewObjectDefinitionsPage,
+	}) => {
+		const objectFolder =
+			await apiHelpers.objectAdmin.postRandomObjectFolder();
+
+		createdEntities.objectFolderIds.push(objectFolder.id);
+
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFolderExternalReferenceCode:
+					objectFolder.externalReferenceCode,
+				status: {code: 0},
+			});
+
+		createdEntities.objectDefinitionIds.push(objectDefinition.id);
+
+		const objectRelationshipDetails: {
+			label: string;
+			type: ObjectRelationshipType;
+		}[] = [
+			{
+				label: 'objectRelationshipLabel' + getRandomInt(),
+				type: 'oneToMany',
+			},
+			{
+				label: 'objectRelationshipLabel' + getRandomInt(),
+				type: 'manyToMany',
+			},
+		];
+
+		for (const {label, type} of objectRelationshipDetails) {
+			const objectRelationshipName =
+				'objectRelationshipName' + Math.floor(Math.random() * 99);
+			const objectRelationshipData: Partial<ObjectRelationship> = {
+				label: {
+					en_US: label,
+				},
+				name: objectRelationshipName,
+				objectDefinitionExternalReferenceCode1:
+					objectDefinition.externalReferenceCode,
+				objectDefinitionExternalReferenceCode2:
+					objectDefinition.externalReferenceCode,
+				objectDefinitionId1: objectDefinition.id,
+				objectDefinitionId2: objectDefinition.id,
+				objectDefinitionName2: objectDefinition.name,
+				type,
+			};
+			await apiHelpers.objectAdmin.postObjectRelationship(
+				objectRelationshipData
+			);
+			createdEntities.objectRelationshipIds.push(
+				objectRelationshipData.id
+			);
+		}
+
+		await viewObjectDefinitionsPage.goto();
+
+		await viewObjectDefinitionsPage.openObjectFolder(
+			objectFolder.label['en_US']
+		);
+
+		await viewObjectDefinitionsPage.viewInModelBuilderButton.click();
+
+		await expect(
+			modelBuilderDiagramPage.objectDefinitionNodes.filter({
+				hasText: objectDefinition.label['en_US'],
+			})
+		).toBeVisible();
+
+		await page
+			.locator('svg')
+			.filter({hasText: '2'})
+			.locator('rect')
+			.click();
+
+		for (const {label, type} of objectRelationshipDetails) {
+			await expect(
+				page.getByRole('menuitem', {
+					name: label,
+				})
+			).toBeVisible();
+			await expect(
+				page.getByRole('menuitem', {
+					name: type,
+				})
+			).toBeVisible();
+		}
 	});
 
 	test('can delete object relationship from different folders', async ({

@@ -728,8 +728,15 @@ public class LayoutStagedModelDataHandler
 					layout, Layout.class, layout.getGroupId(),
 					masterLayoutUuid);
 
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, masterLayoutElement);
+			long originalPlid = portletDataContext.getPlid();
+
+			try {
+				StagedModelDataHandlerUtil.importStagedModel(
+					portletDataContext, masterLayoutElement);
+			}
+			finally {
+				portletDataContext.setPlid(originalPlid);
+			}
 
 			long masterLayoutPlid = GetterUtil.getLong(
 				layoutElement.attributeValue("master-layout-plid"));

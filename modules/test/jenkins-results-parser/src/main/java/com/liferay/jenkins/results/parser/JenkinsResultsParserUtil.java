@@ -5842,8 +5842,8 @@ public class JenkinsResultsParserUtil {
 			System.out.println(
 				JenkinsResultsParserUtil.combine(
 					"Configuring client credentials:\n* Client ID: ",
-					_getMaskedString(_clientId), "\n* Client secret: ",
-					_getMaskedString(_clientSecret), "\n* Token URL: ",
+					_getMaskedString(clientId), "\n* Client secret: ",
+					_getMaskedString(clientSecret), "\n* Token URL: ",
 					String.valueOf(_tokenURL)));
 		}
 

@@ -10,6 +10,8 @@ import com.liferay.portal.kernel.dao.jdbc.util.CallableStatementWrapper;
 import com.liferay.portal.kernel.dao.jdbc.util.ConnectionWrapper;
 import com.liferay.portal.kernel.dao.jdbc.util.PreparedStatementWrapper;
 import com.liferay.portal.kernel.dao.jdbc.util.StatementWrapper;
+import com.liferay.portal.kernel.db.partition.DBPartition;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -220,9 +222,20 @@ public class UpgradeSQLRecorder {
 					_sqlExecutionTimes.put(sql, duration);
 				}
 				else {
-					_sqlExecutionTimes.put(
-						_upgradeProcessClassName + StringPool.PIPE + sql,
-						duration);
+					if (_DATABASE_PARTITION_ENABLED) {
+						_sqlExecutionTimes.put(
+							StringBundler.concat(
+								_upgradeProcessClassName, StringPool.AT,
+								String.valueOf(
+									CompanyThreadLocal.getCompanyId()),
+								StringPool.PIPE, sql),
+							duration);
+					}
+					else {
+						_sqlExecutionTimes.put(
+							_upgradeProcessClassName + StringPool.PIPE + sql,
+							duration);
+					}
 				}
 			}
 		}
@@ -370,12 +383,15 @@ public class UpgradeSQLRecorder {
 		};
 	}
 
+	private static final boolean _DATABASE_PARTITION_ENABLED =
+		DBPartition.isPartitionEnabled();
+
 	private static boolean _enabled;
 	private static final List<String> _failedSQLs =
 		new CopyOnWriteArrayList<>();
 	private static final Map<String, Long> _sqlExecutionTimes =
 		new ConcurrentHashMap<>();
-	private static String _upgradeProcessClassName = StringPool.BLANK;
+	private static volatile String _upgradeProcessClassName = StringPool.BLANK;
 
 	@FunctionalInterface
 	private interface SQLCallable<R> {

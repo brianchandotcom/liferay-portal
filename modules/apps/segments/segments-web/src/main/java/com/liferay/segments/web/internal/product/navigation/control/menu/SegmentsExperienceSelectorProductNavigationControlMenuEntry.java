@@ -93,7 +93,7 @@ public class SegmentsExperienceSelectorProductNavigationControlMenuEntry
 			PrintWriter printWriter = httpServletResponse.getWriter();
 
 			printWriter.write("<div class=\"border-left border-secondary ");
-			printWriter.write("control-menu-nav-item c-ml-3 c-pl-md-3\">");
+			printWriter.write("control-menu-nav-item\">");
 
 			_reactRenderer.renderReact(
 				new ComponentDescriptor("{ExperiencePicker} from segments-web"),

@@ -43,14 +43,14 @@ const TriggerLabel = React.forwardRef(
 			<button
 				{...otherProps}
 				className={classNames(
-					'btn btn-block btn-sm form-control-select layout__experience-selector',
+					'btn btn-block btn-sm c-ml-1 c-py-1 form-control-select layout__experience-selector',
 					{'btn-secondary': displayType === 'light'}
 				)}
 				ref={ref}
 			>
 				<Layout.ContentRow verticalAlign="center">
 					<Layout.ContentCol className="c-mr-2 text-truncate" expand>
-						<Text size={3} weight="normal">
+						<Text color="secondary" size={4} weight="normal">
 							{selectedItem.segmentsExperienceName}
 						</Text>
 					</Layout.ContentCol>

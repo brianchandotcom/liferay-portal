@@ -350,7 +350,7 @@ public class FormItemManager {
 			Collections.emptyList());
 
 		FragmentEntryLink fragmentEntryLink = _addFormButtonFragmentEntryLink(
-			layout, locale, _FORM_BUTTON_SUBMIT, segmentsExperienceId,
+			layout, locale, _FORM_BUTTON_TYPE_SUBMIT, segmentsExperienceId,
 			serviceContext);
 
 		if (fragmentEntryLink == null) {
@@ -561,8 +561,8 @@ public class FormItemManager {
 		if (stepIndex == 0) {
 			FragmentEntryLink nextFormButtonFragmentEntryLink =
 				_addFormButtonFragmentEntryLink(
-					layout, locale, _FORM_BUTTON_NEXT, segmentsExperienceId,
-					serviceContext);
+					layout, locale, _FORM_BUTTON_TYPE_NEXT,
+					segmentsExperienceId, serviceContext);
 
 			if (nextFormButtonFragmentEntryLink == null) {
 				return Collections.emptyList();
@@ -579,8 +579,8 @@ public class FormItemManager {
 
 		FragmentEntryLink previousFormButtonFragmentEntryLink =
 			_addFormButtonFragmentEntryLink(
-				layout, locale, _FORM_BUTTON_PREVIOUS, segmentsExperienceId,
-				serviceContext);
+				layout, locale, _FORM_BUTTON_TYPE_PREVIOUS,
+				segmentsExperienceId, serviceContext);
 
 		if (previousFormButtonFragmentEntryLink != null) {
 			fragmentEntryLinks.add(previousFormButtonFragmentEntryLink);
@@ -590,10 +590,10 @@ public class FormItemManager {
 				containerStyledLayoutStructureItem.getItemId(), -1);
 		}
 
-		String type = _FORM_BUTTON_SUBMIT;
+		String type = _FORM_BUTTON_TYPE_SUBMIT;
 
 		if (stepIndex < numberOfSteps) {
-			type = _FORM_BUTTON_NEXT;
+			type = _FORM_BUTTON_TYPE_NEXT;
 		}
 
 		FragmentEntryLink submitFormButtonFragmentEntryLink =
@@ -849,11 +849,11 @@ public class FormItemManager {
 		return false;
 	}
 
-	private static final String _FORM_BUTTON_NEXT = "next";
+	private static final String _FORM_BUTTON_TYPE_NEXT = "next";
 
-	private static final String _FORM_BUTTON_PREVIOUS = "previous";
+	private static final String _FORM_BUTTON_TYPE_PREVIOUS = "previous";
 
-	private static final String _FORM_BUTTON_SUBMIT = "submit";
+	private static final String _FORM_BUTTON_TYPE_SUBMIT = "submit";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FormItemManager.class);

@@ -280,11 +280,6 @@
 				"type": "CETProperty.Type.String"
 			},
 			{
-				"default": "false",
-				"name": "restrictedToAdminLayouts",
-				"type": "CETProperty.Type.Boolean"
-			},
-			{
 				"default": "page",
 				"name": "scope",
 				"type": "CETProperty.Type.String"

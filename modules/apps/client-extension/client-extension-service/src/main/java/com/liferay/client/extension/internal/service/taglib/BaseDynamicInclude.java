@@ -117,14 +117,6 @@ public abstract class BaseDynamicInclude implements DynamicInclude {
 					continue;
 				}
 
-				Layout layout = themeDisplay.getLayout();
-
-				if (globalJSCET.isRestrictedToAdminLayouts() &&
-					!layout.isTypeControlPanel()) {
-
-					continue;
-				}
-
 				String scriptLocation = globalJSCET.getScriptLocation();
 
 				if (Validator.isNull(scriptLocation) ||

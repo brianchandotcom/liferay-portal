@@ -220,10 +220,6 @@
 						},
 						{
 							"properties": {
-								"restrictedToAdminLayouts": {
-									"description": "",
-									"type": "boolean"
-								},
 								"scope": {
 									"description": "",
 									"type": "string"

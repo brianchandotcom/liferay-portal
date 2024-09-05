@@ -1,4 +1,0 @@
-ext.expectedErrorMessage = "Client extension with-invalid-restricted-to-admin-layouts-global-js-client-extension must have a boolean value for the property \"restrictedToAdminLayouts\""
-ext.taskPath = ":with-invalid-restricted-to-admin-layouts-global-js-client-extension:validateClientExtensions"
-
-apply from: project.property("commonScript.shouldFailTestCase.gradle")

@@ -166,6 +166,74 @@ test.describe('Relationships', () => {
 });
 
 test.describe('Multistep', {tag: '@LPD-10727'}, () => {
+	test('Change to multistep when adding a stepper fragment and remove it when changing to simple', async ({
+		apiHelpers,
+		page,
+		pageEditorPage,
+		pageManagementSite,
+	}) => {
+
+		// Create a page with a Form fragment
+
+		const formId = getRandomString();
+
+		const formDefinition = getFormContainerDefinition({
+			id: formId,
+		});
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([formDefinition]),
+			siteId: pageManagementSite.id,
+			title: getRandomString(),
+		});
+
+		// Go to edit mode
+
+		await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
+
+		// Map the form to Lemon object and select fields
+
+		await pageEditorPage.mapFormFragment(formId, 'Lemon', [
+			'Lemon Size',
+			'Lemon Basket Color',
+		]);
+
+		// Add stepper and check multistep modal is shown
+
+		await pageEditorPage.addFragment('Form Components', 'Stepper');
+
+		expect(
+			page.getByText(
+				'Adding a stepper fragment inside a simple form will turn it into a multistep form. Are you sure you want to continue?'
+			)
+		).toBeVisible();
+
+		await page.getByRole('button', {name: 'Continue'}).click();
+
+		// Check that the form is now multistep
+
+		await pageEditorPage.selectFragment(
+			await pageEditorPage.getFragmentId('Form Container')
+		);
+
+		await expect(page.getByLabel('Form Type', {exact: true})).toHaveValue(
+			'multistep'
+		);
+
+		// Change to simple and check stepper is removed
+
+		await pageEditorPage.changeFragmentConfiguration({
+			fieldLabel: 'Form Type',
+			fragmentId: formId,
+			tab: 'General',
+			value: 'simple',
+		});
+
+		await page.getByRole('button', {name: 'Continue'}).click();
+
+		await expect(page.locator('[data-name="Stepper"]')).not.toBeVisible();
+	});
+
 	test('Can add and configure a Stepper fragment', async ({
 		apiHelpers,
 		page,

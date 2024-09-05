@@ -155,13 +155,15 @@ public class GroupSelectorTag extends IncludeTag {
 	}
 
 	private int _getGroupsCount(HttpServletRequest httpServletRequest) {
+		String groupType = _getGroupType(httpServletRequest);
+
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
 		Group group = _getGroup(themeDisplay);
 
-		if (_isScopeGroupType(httpServletRequest)) {
+		if (_isScopeGroupType(httpServletRequest) && groupType.equals("site")) {
 			if (group.isCompany()) {
 				_groupsCount = 1;
 			}
@@ -174,7 +176,7 @@ public class GroupSelectorTag extends IncludeTag {
 
 		GroupItemSelectorProvider groupSelectorProvider =
 			GroupItemSelectorProviderRegistryUtil.getGroupItemSelectorProvider(
-				_getGroupType(httpServletRequest));
+				groupType);
 
 		if (groupSelectorProvider == null) {
 			_groupsCount = 0;

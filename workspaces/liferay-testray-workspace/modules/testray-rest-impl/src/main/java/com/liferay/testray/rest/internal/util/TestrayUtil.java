@@ -127,6 +127,13 @@ public class TestrayUtil {
 		for (String value : valuesArray) {
 			sb.append("? ");
 			sb.append(", ");
+
+			if (StringUtil.equals(value, StringUtil.extractDigits(values))) {
+				params.add(GetterUtil.getLong(value));
+
+				continue;
+			}
+
 			params.add(value);
 		}
 

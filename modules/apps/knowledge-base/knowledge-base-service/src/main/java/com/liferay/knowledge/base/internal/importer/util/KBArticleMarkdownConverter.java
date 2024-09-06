@@ -61,7 +61,7 @@ public class KBArticleMarkdownConverter {
 				"Unable to extract title heading from file: " + fileEntryName);
 		}
 
-		_urlTitle = getUrlTitle(heading);
+		_urlTitle = getUrlTitle(html);
 
 		if (Validator.isNull(_urlTitle)) {
 			throw new KBArticleImportException(
@@ -202,20 +202,22 @@ public class KBArticleMarkdownConverter {
 	}
 
 	protected String getUrlTitle(String heading) {
-		int x = heading.indexOf("[](id=");
+		int x = heading.indexOf("<h1 id=");
 
 		if (x == -1) {
 			return null;
 		}
 
+		x += 7;
+
+		char quote = heading.charAt(x);
+
 		String urlTitle = null;
 
-		int y = heading.indexOf(StringPool.CLOSE_PARENTHESIS, x);
+		int y = heading.indexOf(quote, x + 1);
 
 		if (y > (x + 1)) {
-			int equalsSign = heading.indexOf(StringPool.EQUAL, x);
-
-			urlTitle = heading.substring(equalsSign + 1, y);
+			urlTitle = heading.substring(x + 1, y);
 
 			urlTitle = StringUtil.replace(
 				urlTitle, CharPool.SPACE, CharPool.DASH);
@@ -279,14 +281,17 @@ public class KBArticleMarkdownConverter {
 	}
 
 	private String _getHeading(String html) {
-		int x = html.indexOf("<h1>");
-		int y = html.indexOf("</h1>");
+		int x = html.indexOf("<h1");
+
+		int y = html.indexOf("</h1>", x);
+
+		x = html.indexOf(CharPool.GREATER_THAN, x + 3);
 
 		if ((x == -1) || (y == -1) || (x > y)) {
 			return null;
 		}
 
-		return html.substring(x + 4, y);
+		return html.substring(x + 1, y);
 	}
 
 	private String _stripHeading(String html) {

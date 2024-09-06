@@ -21,8 +21,8 @@ import yupSchema from '~/schema/yup';
 import {Liferay} from '~/services/liferay';
 import {
 	MessageBoardMessage,
-	testrayBuildImpl,
 	TestrayCaseResult,
+	testrayBuildImpl,
 	testrayCaseResultImpl,
 } from '~/services/rest';
 import {CaseResultStatuses} from '~/util/statuses';

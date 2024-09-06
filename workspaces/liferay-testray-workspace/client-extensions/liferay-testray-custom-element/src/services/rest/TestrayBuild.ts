@@ -281,7 +281,7 @@ class TestrayBuildImpl extends Rest<Build, TestrayBuild> {
 		return this.update(id, data);
 	}
 
-	public async updateBuildSummary(id: string){
+	public async updateBuildSummary(id: string) {
 		return fetcher.patch(`/testray-build/${id}`, null);
 	}
 

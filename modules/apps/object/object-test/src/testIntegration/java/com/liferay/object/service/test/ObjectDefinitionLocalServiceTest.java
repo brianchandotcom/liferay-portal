@@ -1232,6 +1232,8 @@ public class ObjectDefinitionLocalServiceTest {
 				ObjectDefinitionConstants.
 					EXTERNAL_REFERENCE_CODE_PREFIX_SYSTEM_OBJECT_DEFINITION));
 		Assert.assertEquals("/test", objectDefinition.getRESTContextPath());
+		Assert.assertEquals(
+			"l_testId", objectDefinition.getPKObjectFieldName());
 		Assert.assertTrue(objectDefinition.isApproved());
 		Assert.assertTrue(objectDefinition.isEnableCategorization());
 		Assert.assertTrue(objectDefinition.isModifiable());

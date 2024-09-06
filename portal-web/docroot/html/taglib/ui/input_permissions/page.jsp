@@ -79,7 +79,7 @@ String modelName = (String)request.getAttribute("liferay-ui:input-permissions:mo
 					<liferay-ui:message key="viewable-by" />
 				</label>
 
-				<select class="form-control" id="<%= uniqueNamespace %>inputPermissionsViewRole" name="<%= namespace %>inputPermissionsViewRole" onChange="<%= uniqueNamespace %>updatePermissionsView();">
+				<select class="form-control" id="<%= uniqueNamespace %>inputPermissionsViewRole" name="<%= namespace %>inputPermissionsViewRole">
 
 					<%
 					String guestRoleLabel = LanguageUtil.format(request, "x-role", guestRole.getTitle(themeDisplay.getLocale()), false);
@@ -112,6 +112,12 @@ String modelName = (String)request.getAttribute("liferay-ui:input-permissions:mo
 
 					<option <%= inputPermissionsViewRole.equals(RoleConstants.OWNER) ? "selected=\"selected\"" : "" %> value="<%= RoleConstants.OWNER %>"><liferay-ui:message key="owner" /></option>
 				</select>
+
+				<aui:script>
+					document.getElementById('<%= uniqueNamespace %>inputPermissionsViewRole').onchange = function() {
+						<%= uniqueNamespace %>updatePermissionsView();
+					}
+				</aui:script>
 
 				<button aria-controls="<%= uniqueNamespace %>inputPermissionsTable" aria-expanded="<%= inputPermissionsShowOptions %>" class="btn btn-secondary btn-sm mt-3" id="<%= uniqueNamespace %>inputPermissionsOptionsButton" onclick="<%= uniqueNamespace %>inputPermissionsToggle();" type="button">
 					<%= inputPermissionsShowOptions ? LanguageUtil.get(request, "hide-options") : LanguageUtil.get(request, "more-options") %>

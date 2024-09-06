@@ -81,7 +81,7 @@ public class ElasticsearchConnectionConfigurationActivationHandler {
 		).port(
 			elasticsearchConnectionConfiguration.proxyPort()
 		).userName(
-			elasticsearchConnectionConfiguration.proxyHost()
+			elasticsearchConnectionConfiguration.proxyUserName()
 		).build();
 	}
 

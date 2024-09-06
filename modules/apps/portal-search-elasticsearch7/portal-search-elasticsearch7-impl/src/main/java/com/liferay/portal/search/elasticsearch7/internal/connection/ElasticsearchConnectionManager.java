@@ -328,7 +328,7 @@ public class ElasticsearchConnectionManager
 		).port(
 			elasticsearchConfigurationWrapper.proxyPort()
 		).userName(
-			elasticsearchConfigurationWrapper.proxyHost()
+			elasticsearchConfigurationWrapper.proxyUserName()
 		).build();
 	}
 

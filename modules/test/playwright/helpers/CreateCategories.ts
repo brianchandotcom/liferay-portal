@@ -13,12 +13,12 @@ export type TCategory = Omit<
 
 export async function createCategories({
 	apiHelpers,
-	friendlyUrlCategories,
+	categoryNames,
 	site,
 	vocabularyName,
 }: {
 	apiHelpers: ApiHelpers;
-	friendlyUrlCategories: TCategory[];
+	categoryNames: TCategory[];
 	site: Site;
 	vocabularyName: string;
 }): Promise<({id: number} & TCategory)[]> {
@@ -29,7 +29,7 @@ export async function createCategories({
 		});
 
 	const categories = [];
-	for (const {name, name_i18n} of friendlyUrlCategories) {
+	for (const {name, name_i18n} of categoryNames) {
 		const {id} =
 			await apiHelpers.headlessAdminTaxonomy.postTaxonomyVocabularyTaxonomyCategory(
 				{

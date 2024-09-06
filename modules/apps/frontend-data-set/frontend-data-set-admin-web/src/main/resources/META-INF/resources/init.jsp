@@ -15,6 +15,7 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 <%@ page import="com.liferay.frontend.data.set.admin.web.internal.constants.FDSAdminWebKeys" %><%@
 page import="com.liferay.frontend.data.set.admin.web.internal.display.context.FDSAdminDisplayContext" %><%@
 page import="com.liferay.frontend.data.set.admin.web.internal.display.context.FDSAdminItemSelectorDisplayContext" %><%@
+page import="com.liferay.learn.LearnMessageUtil" %><%@
 page import="com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %>

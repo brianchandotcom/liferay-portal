@@ -7,6 +7,10 @@ import ClayButton from '@clayui/button';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayNavigationBar from '@clayui/navigation-bar';
 import {IClientExtensionRenderer} from '@liferay/frontend-data-set-web';
+import {
+	ILearnResourceContext,
+	LearnResourcesContext,
+} from 'frontend-js-components-web';
 import {fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
@@ -81,6 +85,7 @@ const DataSet = ({
 	fdsClientExtensionCellRenderers,
 	fdsFilterClientExtensions,
 	fdsViewId,
+	learnResources,
 	namespace,
 	resolvedRESTSchemas = [],
 	restApplications,
@@ -93,6 +98,7 @@ const DataSet = ({
 	fdsClientExtensionCellRenderers: IClientExtensionRenderer[];
 	fdsFilterClientExtensions: IClientExtensionRenderer[];
 	fdsViewId: string;
+	learnResources: ILearnResourceContext;
 	namespace: string;
 	resolvedRESTSchemas: string[];
 	restApplications: string[];
@@ -145,48 +151,52 @@ const DataSet = ({
 	const Content = NAVIGATION_BAR_ITEMS[activeIndex].Component;
 
 	return (
-		<div className="cadmin fds-view">
-			<ClayNavigationBar
-				triggerLabel={NAVIGATION_BAR_ITEMS[activeIndex].label}
-			>
-				{NAVIGATION_BAR_ITEMS.map((item, index) => (
-					<ClayNavigationBar.Item
-						active={index === activeIndex}
-						key={index}
-					>
-						<ClayButton onClick={() => setActiveIndex(index)}>
-							{item.label}
-						</ClayButton>
-					</ClayNavigationBar.Item>
-				))}
-			</ClayNavigationBar>
+		<LearnResourcesContext.Provider value={learnResources}>
+			<div className="cadmin fds-view">
+				<ClayNavigationBar
+					triggerLabel={NAVIGATION_BAR_ITEMS[activeIndex].label}
+				>
+					{NAVIGATION_BAR_ITEMS.map((item, index) => (
+						<ClayNavigationBar.Item
+							active={index === activeIndex}
+							key={index}
+						>
+							<ClayButton onClick={() => setActiveIndex(index)}>
+								{item.label}
+							</ClayButton>
+						</ClayNavigationBar.Item>
+					))}
+				</ClayNavigationBar>
 
-			{loading ? (
-				<ClayLoadingIndicator />
-			) : (
-				dataSet && (
-					<Content
-						backURL={backURL}
-						dataSet={dataSet}
-						fdsClientExtensionCellRenderers={
-							fdsClientExtensionCellRenderers
-						}
-						fdsFilterClientExtensions={fdsFilterClientExtensions}
-						fieldTreeItems={fieldTreeItems}
-						namespace={namespace}
-						onActiveSectionChange={(tab) => setActiveIndex(tab)}
-						onDataSetUpdate={(updatedDataSet) => {
-							setDataSet({...dataSet, ...updatedDataSet});
-						}}
-						resolvedRESTSchemas={resolvedRESTSchemas}
-						restApplications={restApplications}
-						saveFDSFieldsURL={saveFDSFieldsURL}
-						saveFDSSortURL={saveFDSSortURL}
-						spritemap={spritemap}
-					/>
-				)
-			)}
-		</div>
+				{loading ? (
+					<ClayLoadingIndicator />
+				) : (
+					dataSet && (
+						<Content
+							backURL={backURL}
+							dataSet={dataSet}
+							fdsClientExtensionCellRenderers={
+								fdsClientExtensionCellRenderers
+							}
+							fdsFilterClientExtensions={
+								fdsFilterClientExtensions
+							}
+							fieldTreeItems={fieldTreeItems}
+							namespace={namespace}
+							onActiveSectionChange={(tab) => setActiveIndex(tab)}
+							onDataSetUpdate={(updatedDataSet) => {
+								setDataSet({...dataSet, ...updatedDataSet});
+							}}
+							resolvedRESTSchemas={resolvedRESTSchemas}
+							restApplications={restApplications}
+							saveFDSFieldsURL={saveFDSFieldsURL}
+							saveFDSSortURL={saveFDSSortURL}
+							spritemap={spritemap}
+						/>
+					)
+				)}
+			</div>
+		</LearnResourcesContext.Provider>
 	);
 };
 

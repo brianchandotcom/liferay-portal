@@ -9,6 +9,7 @@ import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import ClayList from '@clayui/list';
 import classNames from 'classnames';
+import {LearnMessage} from 'frontend-js-components-web';
 import {fetch, navigate} from 'frontend-js-web';
 import React, {useRef, useState} from 'react';
 
@@ -283,6 +284,11 @@ const Details = ({
 							value={urlPreview}
 						/>
 					</ClayForm.Group>
+
+					<LearnMessage
+						resource="frontend-data-set-admin-web"
+						resourceKey="rest-parameters"
+					/>
 				</ClayLayout.SheetSection>
 			)}
 

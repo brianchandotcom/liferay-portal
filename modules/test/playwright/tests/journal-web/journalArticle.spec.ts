@@ -1450,7 +1450,7 @@ baseTest(
 			.getByRole('tab', {name: 'Asset Selection'})
 			.click();
 		await configurationFrame.getByText('Dynamic').click();
-		await configurationFrame.getByRole('button', {name: 'Save'}).click();
+		await configurationFrame.getByLabel('close').click();
 		await configurationFrame
 			.getByRole('tab', {name: 'Display Settings'})
 			.click();

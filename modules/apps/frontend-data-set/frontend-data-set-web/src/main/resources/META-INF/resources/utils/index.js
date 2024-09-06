@@ -113,7 +113,8 @@ export async function loadData(
 	searchParam,
 	delta,
 	page = 1,
-	sorts = []
+	sorts = [],
+	parameters
 ) {
 	const fullUrl = apiURL.startsWith('/')
 		? themeDisplay.getPortalURL() + themeDisplay.getPathContext() + apiURL
@@ -154,6 +155,16 @@ export async function loadData(
 			'sort',
 			sorts.map((item) => `${item.key}:${item.direction}`).join(',')
 		);
+	}
+
+	if (Liferay.FeatureFlags['LPD-25230'] && parameters) {
+		const parametersArray = parameters.split('&');
+
+		parametersArray.forEach((parameter) => {
+			const [key, value] = parameter.split('=');
+
+			url.searchParams.append(key, value);
+		});
 	}
 
 	const response = await fetch(url, {

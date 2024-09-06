@@ -305,6 +305,8 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 			).put(
 				"pagination", _getPaginationJSONObject(fdsViewObjectEntry)
 			).put(
+				"parameters", fdsViewObjectEntry.getPropertyValue("parameters")
+			).put(
 				"sorts",
 				_getSortsJSONArray(fdsViewObjectDefinition, fdsViewObjectEntry)
 			).put(

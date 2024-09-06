@@ -446,7 +446,6 @@ definition {
 	@priority = 5
 	@uitest
 	test AddSegmentByOrganizationRegion {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -1678,7 +1677,6 @@ definition {
 	@priority = 5
 	@uitest
 	test AddSegmentByUserSiteOrganizationRole {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -1920,7 +1918,6 @@ definition {
 	@description = "LPS-147454 Validate if the user can use a custom field as criteria to create a segment"
 	@priority = 4
 	test AddSegmentUsingCustomFields {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -2472,7 +2469,6 @@ definition {
 	@description = "LPS-130919 Given the Segment Editor When the user adds a Session Property Vocabulary in the Instance Settings Then the associated Categories must be available when selecting the session property"
 	@priority = 5
 	test InstanceSettingsSessionPropertyVocabularyInSegmentsEditor {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -2538,7 +2534,6 @@ definition {
 	@description = "LPS-132249 If vocabulary or value is deleted, in the segment editor the condition will keep working if the user go out without saving changes"
 	@priority = 4
 	test KeepInfomationOfDeleteVocabularyInSegment {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -3276,7 +3271,6 @@ definition {
 	@description = "LPS-132249 In System Settings>Segments, all vocabularies created will be listed in the Vocabulary dropdown"
 	@priority = 4
 	test VocabulariesListedInSystemSettingsSegments {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 

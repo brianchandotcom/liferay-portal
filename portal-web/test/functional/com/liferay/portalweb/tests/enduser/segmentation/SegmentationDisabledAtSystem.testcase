@@ -35,7 +35,6 @@ definition {
 	@description = "LPS-152541 Add an alert to Segments Service in Instance Settings when those configurations are disabled in System Settings"
 	@priority = 4
 	test CheckAssignRolesDisabledAlertAtInstanceSettings {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -61,7 +60,6 @@ definition {
 	@description = "LPS-152541 Add an alert to Segments Service in Instance Settings when those configurations are disabled in System Settings"
 	@priority = 4
 	test CheckSegmentationDisabledAlertAtInstanceSettings {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 

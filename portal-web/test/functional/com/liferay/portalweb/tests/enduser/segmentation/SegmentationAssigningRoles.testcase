@@ -52,7 +52,6 @@ definition {
 	@description = "LPS-130918 Given the Segment Service Configuration in Instance Settings And Enable Segmentation by roles is checked in System Settings When Enable Segmentation by roles is disabled And the user accesses the Segments tab in the role assignment screen Then the user may still add segments to the list by using the ""+"" button, but assigning won't be accomplished"
 	@priority = 4
 	test AssigningBySegmentNotWorkingDisabledInstanceSettings {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -139,7 +138,6 @@ definition {
 	@priority = 4
 	@uitest
 	test AssignSiteRolesOptionInSegmentsEditor {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -286,7 +284,6 @@ definition {
 	@description = "LPS-130918 Given the Segment Service Configuration in Instance Settings And Enable Segmentation by roles is checked in System Settings When Enable Segmentation by roles is enabled Then it shows a dialog allowing user to assign/unassign site roles"
 	@priority = 4
 	test CanAssignSiteRolesToSegment {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -372,7 +369,6 @@ definition {
 	@priority = 4
 	@uitest
 	test DisableAssignRolesBySegment {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -449,7 +445,6 @@ definition {
 	@priority = 3
 	@uitest
 	test DisableAssignRolesWarningMessage {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -486,7 +481,6 @@ definition {
 	@description = "LPS-130918 Given the Segment Service Configuration in Instance Settings And Enable Segmentation by roles is checked in System Settings When Enable Segmentation by roles is disabled Then the Assign Site Roles option will be disabled in the Segments Editor"
 	@priority = 4
 	test DisabledAssignSiteRolesOptionInSegmentsEditor {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -540,7 +534,6 @@ definition {
 	@description = "LPS-161227 Bug: NoSuchExperienceException when attempting to edit Content Page with Enable Assign Roles by Segment configuration enabled"
 	@priority = 5
 	test EditPageAfterEnableAssignRole {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -580,7 +573,6 @@ definition {
 	@priority = 4
 	@uitest
 	test EnableAssignRolesBySegment {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -663,7 +655,6 @@ definition {
 	@priority = 3
 	@uitest
 	test EnableAssignRolesNoWarningMessage {
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 

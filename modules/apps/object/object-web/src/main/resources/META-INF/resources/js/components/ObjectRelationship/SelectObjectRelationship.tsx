@@ -10,20 +10,19 @@ import {
 } from '@liferay/object-js-components-web';
 import React, {useEffect, useMemo, useState} from 'react';
 
-interface IProps {
+interface SelectObjectRelationshipProps {
 	error?: string;
 	objectDefinitionExternalReferenceCode1: string;
 	onChange: (objectFieldName: string) => void;
 	value?: string;
 }
 
-export default function SelectRelationship({
+export function SelectObjectRelationship({
 	error,
 	objectDefinitionExternalReferenceCode1,
 	onChange,
 	value,
-	...otherProps
-}: IProps) {
+}: SelectObjectRelationshipProps) {
 	const [creationLanguageId, setCreationLanguageId] =
 		useState<Liferay.Language.Locale>();
 	const [objectFields, setObjectFields] = useState<ObjectField[]>([]);
@@ -106,7 +105,6 @@ export default function SelectRelationship({
 			tooltip={Liferay.Language.get(
 				'choose-a-relationship-field-from-the-selected-object'
 			)}
-			{...otherProps}
 		/>
 	);
 }

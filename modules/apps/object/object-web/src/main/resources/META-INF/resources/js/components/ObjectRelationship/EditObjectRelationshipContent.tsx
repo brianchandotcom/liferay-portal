@@ -9,7 +9,7 @@ import {InputLocalized} from 'frontend-js-components-web';
 import React from 'react';
 
 import {ObjectRelationshipFormBase} from './ObjectRelationshipFormBase';
-import SelectObjectRelationship from './SelectObjectRelationship';
+import {SelectObjectRelationship} from './SelectObjectRelationship';
 
 import type {FormError} from '@liferay/object-js-components-web';
 import type {ChangeEventHandler} from 'react';

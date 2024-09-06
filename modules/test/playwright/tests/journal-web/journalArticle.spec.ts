@@ -771,7 +771,7 @@ translationTest(
 			trigger: translationFilterButton,
 		});
 
-		const fieldsWrapper = page.getByRole('button', {name: 'Fields'});
+		const fieldsWrapper = page.getByRole('link', {name: 'Fields'});
 
 		const metadataWapper = page.getByRole('button', {name: 'Metadata'});
 

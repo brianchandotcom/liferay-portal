@@ -51,14 +51,22 @@
 							<span class="autofit-col autofit-col-expand">
 								<div class="custom-checkbox custom-control">
 									<label>
+										<#assign inputRandomId = stringUtil.randomId() />
+
 										<input
 											${selected?then("checked", "")}
 											class="custom-control-input facet-term"
 											data-term-id=${id}
 											disabled
-											onChange="Liferay.Search.FacetUtil.changeSelection(event);"
+											id="${inputRandomId}"
 											type="checkbox"
 										/>
+
+										<@liferay_aui.script>
+											document.getElementById('${inputRandomId}').onchange = function() {
+												Liferay.Search.FacetUtil.changeSelection(event);
+											}
+										</@liferay_aui.script>
 
 										<span class="custom-control-label">
 											<span class="custom-control-label-text">

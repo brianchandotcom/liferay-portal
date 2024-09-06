@@ -105,9 +105,16 @@ CPSpecificationOptionFacetsDisplayContext cpSpecificationOptionFacetsDisplayCont
 																	data-term-id="<%= HtmlUtil.escapeAttribute(cpSpecificationOptionsSearchFacetTermDisplayContext.getDisplayName()) %>"
 																	id="<portlet:namespace />term_<%= parameterName + i %>"
 																	name="<portlet:namespace />term_<%= parameterName + i %>"
-																	onChange="Liferay.Search.FacetUtil.changeSelection(event);"
 																	type="checkbox"
 																/>
+
+																<aui:script>
+																	document.getElementById(
+																		'<portlet:namespace />term_<%= parameterName + i %>'
+																	).onchange = function (event) {
+																		Liferay.Search.FacetUtil.changeSelection(event);
+																	};
+																</aui:script>
 
 																<span class="custom-control-label term-name <%= cpSpecificationOptionsSearchFacetTermDisplayContext.isSelected() ? "facet-term-selected" : "facet-term-unselected" %>">
 																	<span class="custom-control-label-text"><%= HtmlUtil.escape(cpSpecificationOptionsSearchFacetTermDisplayContext.getDisplayName()) %></span>

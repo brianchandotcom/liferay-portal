@@ -86,7 +86,7 @@ public class DBSchemaImporter {
 		throws Exception {
 
 		try (PrintWriter printWriter = new PrintWriter(
-				new File(dirName, "db_schema_importer_report.info"))) {
+				new File(dirName, "db_schema_import_report.info"))) {
 
 			printWriter.println(
 				StringUtil.merge(

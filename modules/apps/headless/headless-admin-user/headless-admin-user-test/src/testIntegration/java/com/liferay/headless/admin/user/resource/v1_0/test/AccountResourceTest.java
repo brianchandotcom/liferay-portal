@@ -587,15 +587,15 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 		Group group = _groupLocalService.getCompanyGroup(
 			_accountGroup.getCompanyId());
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+		LocalRepository localRepository =
+			RepositoryProviderUtil.getLocalRepository(group.getGroupId());
 
 		byte[] bytes = FileUtil.getBytes(getClass(), "/images/liferay.png");
 
 		InputStream inputStream = new UnsyncByteArrayInputStream(bytes);
 
-		LocalRepository localRepository =
-			RepositoryProviderUtil.getLocalRepository(group.getGroupId());
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
 		return localRepository.addFileEntry(
 			null, TestPropsValues.getUserId(),

@@ -57,7 +57,7 @@ public class FlexmarkMarkdownConverter implements MarkdownConverter {
 	}
 
 	private static final Pattern _pattern = Pattern.compile(
-		"^(#+.*?)\\[\\]\\(id=(([^\\s]+?))\\)\\s*$");
+		"(?m)^(.*?)\\[\\]\\(id=([^\\s]+?)\\)\\s*$");
 
 	private final HtmlRenderer _htmlRenderer;
 	private final Parser _parser;

@@ -27,7 +27,7 @@ public class FlexmarkMarkdownConverterTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
-	public void testLiferayToHtmlSerializer() throws Exception {
+	public void testPrefixHeading() throws Exception {
 		String randomId = StringUtil.randomId();
 
 		String markdownString = StringBundler.concat(
@@ -44,4 +44,21 @@ public class FlexmarkMarkdownConverterTest {
 		Assert.assertTrue(html, html.contains("id=\"" + randomId + "\""));
 	}
 
+	@Test
+	public void testMultilineHeading() throws Exception {
+		String randomId = StringUtil.randomId();
+
+		String markdownString = StringBundler.concat(
+			"The liferay-ui:logo-selector Tag Requires Parameter Changes ",
+			"[](id=", randomId, ")\n", "=================================");
+
+		MarkdownConverterFactory markdownConverterFactory =
+			new FlexmarkMarkdownConverterFactory();
+
+		MarkdownConverter markdownConverter = markdownConverterFactory.create();
+
+		String html = markdownConverter.convert(markdownString);
+
+		Assert.assertTrue(html, html.contains("id=\"" + randomId + "\""));
+	}
 }

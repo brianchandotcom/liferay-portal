@@ -52,7 +52,7 @@ public class AttachmentSearchTest {
 	public void testIncludeKnowledgeBaseArticleAttachments() throws Exception {
 		KBArticle kbArticle = KBTestUtil.addKBArticle(_group.getGroupId());
 
-		KBTestUtil.addKBArticleAttachment(
+		KBTestUtil.addAttachment(
 			kbArticle.getTitle(), getClass(), kbArticle.getResourcePrimKey(),
 			"Test.docx", kbArticle.getUserId());
 

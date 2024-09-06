@@ -28,6 +28,8 @@ renderResponse.setTitle(ParamUtil.getString(request, "dataSetLabel"));
 		).put(
 			"fdsFilterClientExtensions", fdsAdminDisplayContext.getFDSFilterCETsJSONArray()
 		).put(
+			"learnResources", LearnMessageUtil.getReactDataJSONObject("frontend-data-set-admin-web")
+		).put(
 			"namespace", liferayPortletResponse.getNamespace()
 		).put(
 			"resolvedRESTSchemas", fdsAdminDisplayContext.getRESTApplicationResolvedSchemasJSONArray()

@@ -55,8 +55,8 @@ public class UpgradeJavaSortFieldNameTranslatorCheck extends BaseUpgradeCheck {
 		}
 
 		throw new Exception(
-			"Unable to find the class path of upgrading model name in " +
-				"SortFieldNameTranslator upgrade");
+			"Unable to find the value of " +
+				"ContributorConstants.ENTRY_CLASS_NAME_PROPERTY_KEY");
 	}
 
 	private String _getNewContent(String content) throws Exception {
@@ -83,7 +83,7 @@ public class UpgradeJavaSortFieldNameTranslatorCheck extends BaseUpgradeCheck {
 
 			return joinLines(
 				"\t@Override", "\tpublic Class<?> getEntityClass() {",
-				String.format("\t\treturn %s.class;", clazz), "\t}");
+				String.format("\t\treturn %s.class;", clazz), "\t}", "");
 		}
 
 		throw new Exception(

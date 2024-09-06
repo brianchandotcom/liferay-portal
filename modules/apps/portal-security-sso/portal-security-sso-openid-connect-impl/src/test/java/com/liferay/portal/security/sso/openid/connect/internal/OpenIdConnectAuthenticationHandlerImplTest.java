@@ -6,6 +6,8 @@
 package com.liferay.portal.security.sso.openid.connect.internal;
 
 import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import com.nimbusds.jwt.JWT;
@@ -53,17 +55,28 @@ public class OpenIdConnectAuthenticationHandlerImplTest {
 
 	@Test
 	public void testWhenEmailIsInJWTClaimSet() throws Exception {
-		Map<String, Object> claims = _processClaimSet(
-			"{\"sub\":\"subject\",\"name\": \"test_account\",\"email\": " +
-				"\"exists@test.com\"}");
+		_jsonObject = JSONUtil.put(
+			"email", "exists@test.com"
+		).put(
+			"name", "test_account"
+		).put(
+			"sub", "subject"
+		);
+
+		Map<String, Object> claims = _processClaimSet(_jsonObject.toString());
 
 		Assert.assertEquals("exists@test.com", claims.get("email"));
 	}
 
 	@Test
 	public void testWhenEmailIsNotInJWTClaimSet() throws Exception {
-		Map<String, Object> claims = _processClaimSet(
-			"{\"sub\":\"subject\",\"name\": \"test_account\"}");
+		_jsonObject = JSONUtil.put(
+			"name", "test_account"
+		).put(
+			"sub", "subject"
+		);
+
+		Map<String, Object> claims = _processClaimSet(_jsonObject.toString());
 
 		Assert.assertNull(claims.get("email"));
 	}
@@ -83,6 +96,7 @@ public class OpenIdConnectAuthenticationHandlerImplTest {
 			mockJWT);
 	}
 
+	private JSONObject _jsonObject;
 	private MockHttpServletRequest _mockHttpServletRequest;
 	private MockHttpServletResponse _mockHttpServletResponse;
 	private MockHttpSession _mockHttpSession;

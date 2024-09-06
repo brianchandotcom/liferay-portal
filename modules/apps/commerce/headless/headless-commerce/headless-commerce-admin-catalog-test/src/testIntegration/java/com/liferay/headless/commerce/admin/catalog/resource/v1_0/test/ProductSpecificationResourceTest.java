@@ -41,10 +41,10 @@ public class ProductSpecificationResourceTest
 		_cpDefinition = CPTestUtil.addCPDefinition(
 			commerceCatalog.getGroupId());
 
-		_cpSpecificationOption = CPTestUtil.addCPSpecificationOption(
+		_cpOptionCategory = CPTestUtil.addCPOptionCategory(
 			testGroup.getGroupId());
 
-		_cpOptionCategory = CPTestUtil.addCPOptionCategory(
+		_cpSpecificationOption = CPTestUtil.addCPSpecificationOption(
 			testGroup.getGroupId());
 	}
 
@@ -68,6 +68,30 @@ public class ProductSpecificationResourceTest
 	}
 
 	@Override
+	@Test
+	public void testPostProductByExternalReferenceCodeProductSpecification()
+		throws Exception {
+
+		super.testPostProductByExternalReferenceCodeProductSpecification();
+
+		ProductSpecification
+			randomProductSpecificationWithExternalReferenceCode =
+				randomProductSpecificationWithExternalReferenceCode();
+
+		ProductSpecification postProductSpecification =
+			testPostProductByExternalReferenceCodeProductSpecification_addProductSpecification(
+				randomProductSpecificationWithExternalReferenceCode);
+
+		randomProductSpecificationWithExternalReferenceCode.setSpecificationKey(
+			_cpSpecificationOption.getKey());
+
+		assertEquals(
+			randomProductSpecificationWithExternalReferenceCode,
+			postProductSpecification);
+		assertValid(postProductSpecification);
+	}
+
+	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {"priority", "specificationKey", "value"};
 	}
@@ -79,9 +103,23 @@ public class ProductSpecificationResourceTest
 				optionCategoryExternalReferenceCode =
 					_cpOptionCategory.getExternalReferenceCode();
 				priority = RandomTestUtil.randomDouble();
+				specificationKey = _cpSpecificationOption.getKey();
+				value = LanguageUtils.getLanguageIdMap(
+					RandomTestUtil.randomLocaleStringMap());
+			}
+		};
+	}
+
+	protected ProductSpecification
+		randomProductSpecificationWithExternalReferenceCode() {
+
+		return new ProductSpecification() {
+			{
+				optionCategoryExternalReferenceCode =
+					_cpOptionCategory.getExternalReferenceCode();
+				priority = RandomTestUtil.randomDouble();
 				specificationExternalReferenceCode =
 					_cpSpecificationOption.getExternalReferenceCode();
-				specificationKey = _cpSpecificationOption.getKey();
 				value = LanguageUtils.getLanguageIdMap(
 					RandomTestUtil.randomLocaleStringMap());
 			}

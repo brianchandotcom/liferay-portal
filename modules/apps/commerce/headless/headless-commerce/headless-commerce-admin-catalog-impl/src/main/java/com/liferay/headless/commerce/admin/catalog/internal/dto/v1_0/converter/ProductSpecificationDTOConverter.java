@@ -47,9 +47,6 @@ public class ProductSpecificationDTOConverter
 		CPSpecificationOption cpSpecificationOption =
 			cpDefinitionSpecificationOptionValue.getCPSpecificationOption();
 
-		CPOptionCategory cpOptionCategory =
-			cpSpecificationOption.getCPOptionCategory();
-
 		return new ProductSpecification() {
 			{
 				setId(
@@ -61,6 +58,9 @@ public class ProductSpecificationDTOConverter
 						cpSpecificationOption.getTitleMap()));
 				setOptionCategoryExternalReferenceCode(
 					() -> {
+						CPOptionCategory cpOptionCategory =
+							cpSpecificationOption.getCPOptionCategory();
+
 						if (cpOptionCategory == null) {
 							return null;
 						}

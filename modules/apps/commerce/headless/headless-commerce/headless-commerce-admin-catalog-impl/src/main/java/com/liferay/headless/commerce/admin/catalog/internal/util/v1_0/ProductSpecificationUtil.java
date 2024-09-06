@@ -119,7 +119,7 @@ public class ProductSpecificationUtil {
 		}
 
 		cpOptionCategory = cpOptionCategoryService.fetchCPOptionCategory(
-			GetterUtil.get(productSpecification.getOptionCategoryId(), 0));
+			GetterUtil.getLong(productSpecification.getOptionCategoryId()));
 
 		if (cpOptionCategory != null) {
 			return cpOptionCategory.getCPOptionCategoryId();

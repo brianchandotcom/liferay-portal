@@ -104,6 +104,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
@@ -1114,6 +1115,73 @@ public class RenderLayoutStructureTagTest {
 
 			Assert.assertFalse(content.contains(expectedInfoFieldInput));
 		}
+	}
+
+	@Test
+	@TestInfo("LPS-120094")
+	public void testRenderFragmentEntryLinkWithImageLinkToURL()
+		throws Exception {
+
+		String languageId = LocaleUtil.toLanguageId(
+			_portal.getSiteDefaultLocale(_group));
+
+		String expectedContent = RandomTestUtil.randomString();
+
+		FileEntry fileEntry = _addFileEntry();
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		_addFragmentEntryLinkToLayout(
+			JSONUtil.put(
+				"image-square",
+				JSONUtil.put(
+					languageId, expectedContent
+				).put(
+					languageId,
+					JSONUtil.put(
+						"classNameId", _portal.getClassNameId(FileEntry.class)
+					).put(
+						"classPK", fileEntry.getFileEntryId()
+					).put(
+						"fileEntryId", fileEntry.getFileEntryId()
+					).put(
+						"url",
+						_dlURLHelper.getPreviewURL(
+							fileEntry, fileEntry.getFileVersion(), null,
+							StringPool.BLANK, false, false)
+					)
+				).put(
+					"config",
+					JSONUtil.put(
+						"href",
+						JSONUtil.put(languageId, "https://www.liferay.com/")
+					).put(
+						"mapperType", "link"
+					)
+				)),
+			"BASIC_COMPONENT-image", layout.fetchDraftLayout(),
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				layout.getPlid()));
+
+		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
+
+		String content = _getRenderLayoutHTML(layout);
+
+		Assert.assertTrue(
+			content,
+			StringUtil.contains(
+				content,
+				StringBundler.concat(
+					"<a href=\"https://www.liferay.com/\"><img alt=\"\" ",
+					"class=\"w-100\" data-lfr-editable-id=\"image-square\" ",
+					"data-lfr-editable-type=\"image\" src=\"",
+					HtmlUtil.escape(
+						_dlURLHelper.getPreviewURL(
+							fileEntry, fileEntry.getFileVersion(), null,
+							StringPool.BLANK)),
+					"\" data-fileentryid=\"", fileEntry.getFileEntryId(),
+					"\"></a>"),
+				StringPool.BLANK));
 	}
 
 	@Test

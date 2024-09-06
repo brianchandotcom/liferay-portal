@@ -33,9 +33,6 @@ export const testSearchInDlPortlet = mergeTests(
 	})
 );
 
-export const testUploadMultipleFieldsWithCustomDocumentType =
-	mergeTests(baseTest);
-
 baseTest(
 	'Check order by Relevance in Search of DL',
 	{
@@ -239,7 +236,7 @@ baseTest(
 	}
 );
 
-testUploadMultipleFieldsWithCustomDocumentType(
+baseTest(
 	'Error uploading multiples files with custom document type',
 	{
 		tag: '@LPD-29609',

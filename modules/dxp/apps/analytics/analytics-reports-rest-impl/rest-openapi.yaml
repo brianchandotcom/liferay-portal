@@ -24,12 +24,12 @@ components:
                     type: array
         Histogram:
             properties:
+                metricName:
+                    type: string
                 metrics:
                     items:
                         $ref: "#/components/schemas/Metric"
                     type: array
-                metricName:
-                    type: string
                 total:
                     format: double
                     type: number

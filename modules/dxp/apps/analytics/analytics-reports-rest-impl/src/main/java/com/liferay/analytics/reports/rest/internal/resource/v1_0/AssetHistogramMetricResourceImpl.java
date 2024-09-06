@@ -6,10 +6,8 @@
 package com.liferay.analytics.reports.rest.internal.resource.v1_0;
 
 import com.liferay.analytics.reports.rest.dto.v1_0.AssetHistogramMetric;
-import com.liferay.analytics.reports.rest.dto.v1_0.AssetMetric;
 import com.liferay.analytics.reports.rest.internal.client.AnalyticsCloudClient;
 import com.liferay.analytics.reports.rest.resource.v1_0.AssetHistogramMetricResource;
-
 import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.model.DepotEntryGroupRel;
@@ -19,13 +17,14 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Validator;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ServiceScope;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ServiceScope;
 
 /**
  * @author Marcos Martins
@@ -72,7 +71,7 @@ public class AssetHistogramMetricResourceImpl
 	}
 
 	private List<Long> _getAnalyticsCloudChannelIds(
-		List<DepotEntryGroupRel> depotEntryGroupRels)
+			List<DepotEntryGroupRel> depotEntryGroupRels)
 		throws Exception {
 
 		List<Long> analyticsCloudChannelIds = new ArrayList<>();

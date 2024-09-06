@@ -62,7 +62,11 @@ public class CTCollectionLocalServicePerformanceTest {
 			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
 			0, RandomTestUtil.randomString(), null);
 
-		_group = GroupTestUtil.addGroup();
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setProductionModeWithSafeCloseable()) {
+
+			_group = GroupTestUtil.addGroup();
+		}
 	}
 
 	@After
@@ -70,7 +74,11 @@ public class CTCollectionLocalServicePerformanceTest {
 		_ctCollectionLocalService.deleteCTCollection(_ctCollection1);
 		_ctCollectionLocalService.deleteCTCollection(_ctCollection2);
 
-		GroupTestUtil.deleteGroup(_group);
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setProductionModeWithSafeCloseable()) {
+
+			GroupTestUtil.deleteGroup(_group);
+		}
 	}
 
 	@Test
@@ -90,11 +98,16 @@ public class CTCollectionLocalServicePerformanceTest {
 			ServiceContextThreadLocal.pushServiceContext(
 				ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 
-			SiteInitializer siteInitializer =
-				_siteInitializerRegistry.getSiteInitializer(
-					"com.liferay.site.initializer.welcome");
+			try {
+				SiteInitializer siteInitializer =
+					_siteInitializerRegistry.getSiteInitializer(
+						"com.liferay.site.initializer.welcome");
 
-			siteInitializer.initialize(group.getGroupId());
+				siteInitializer.initialize(group.getGroupId());
+			}
+			finally {
+				ServiceContextThreadLocal.popServiceContext();
+			}
 		}
 
 		try (SafeCloseable safeCloseable =
@@ -108,11 +121,16 @@ public class CTCollectionLocalServicePerformanceTest {
 			ServiceContextThreadLocal.pushServiceContext(
 				ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 
-			SiteInitializer siteInitializer =
-				_siteInitializerRegistry.getSiteInitializer(
-					"com.liferay.site.initializer.welcome");
+			try {
+				SiteInitializer siteInitializer =
+					_siteInitializerRegistry.getSiteInitializer(
+						"com.liferay.site.initializer.welcome");
 
-			siteInitializer.initialize(group.getGroupId());
+				siteInitializer.initialize(group.getGroupId());
+			}
+			finally {
+				ServiceContextThreadLocal.popServiceContext();
+			}
 		}
 
 		try (PerformanceTimer performanceTimer = new PerformanceTimer(45000)) {
@@ -124,7 +142,11 @@ public class CTCollectionLocalServicePerformanceTest {
 			_ctCollectionLocalService.checkConflicts(_ctCollection1);
 		}
 
-		GroupTestUtil.deleteGroup(group);
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setProductionModeWithSafeCloseable()) {
+
+			GroupTestUtil.deleteGroup(group);
+		}
 	}
 
 	@Test
@@ -159,18 +181,26 @@ public class CTCollectionLocalServicePerformanceTest {
 	public void testDiscardCTEntryLayout() throws Exception {
 		Layout layout = null;
 
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					_ctCollection1.getCtCollectionId())) {
+		ServiceContextThreadLocal.pushServiceContext(
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
-			SiteInitializer siteInitializer =
-				_siteInitializerRegistry.getSiteInitializer(
-					"com.liferay.site.initializer.welcome");
+		try {
+			try (SafeCloseable safeCloseable =
+					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+						_ctCollection1.getCtCollectionId())) {
 
-			siteInitializer.initialize(_group.getGroupId());
+				SiteInitializer siteInitializer =
+					_siteInitializerRegistry.getSiteInitializer(
+						"com.liferay.site.initializer.welcome");
 
-			layout = _layoutLocalService.fetchDefaultLayout(
-				_group.getGroupId(), false);
+				siteInitializer.initialize(_group.getGroupId());
+
+				layout = _layoutLocalService.fetchDefaultLayout(
+					_group.getGroupId(), false);
+			}
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
 		}
 
 		try (PerformanceTimer performanceTimer = new PerformanceTimer(10000)) {

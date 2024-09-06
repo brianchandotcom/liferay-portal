@@ -137,7 +137,7 @@ const ActionForm = ({
 	const [labelTranslations, setLabelTranslations] = useState(
 		initialValues?.label_i18n ?? {}
 	);
-	const [bodyRequestValidationError, setBodyRequestValidationError] =
+	const [requestBodyValidationError, setRequestBodyValidationError] =
 		useState(false);
 	const [labelValidationError, setLabelValidationError] = useState(false);
 	const [permissionKeyValidationError, setPermissionKeyValidationError] =
@@ -302,7 +302,7 @@ const ActionForm = ({
 			if (!isValidJSON(requestBody)) {
 				valid = false;
 
-				setBodyRequestValidationError(!isValidJSON(requestBody));
+				setRequestBodyValidationError(!isValidJSON(requestBody));
 			}
 		}
 
@@ -720,7 +720,7 @@ const ActionForm = ({
 							<ClayLayout.Col lg>
 								<ClayForm.Group
 									className={classNames({
-										'has-error': bodyRequestValidationError,
+										'has-error': requestBodyValidationError,
 									})}
 								>
 									<label htmlFor={requestBodyFormElementId}>
@@ -748,7 +748,7 @@ const ActionForm = ({
 												requestBody,
 											});
 
-											setBodyRequestValidationError(
+											setRequestBodyValidationError(
 												!isValidJSON(requestBody)
 											);
 										}}
@@ -758,7 +758,7 @@ const ActionForm = ({
 										value={actionData.requestBody}
 									/>
 
-									{bodyRequestValidationError && (
+									{requestBodyValidationError && (
 										<ValidationFeedback
 											message={Liferay.Language.get(
 												'this-field-must-contain-a-valid-json'

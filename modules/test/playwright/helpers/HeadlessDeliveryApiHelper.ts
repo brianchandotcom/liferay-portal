@@ -21,6 +21,7 @@ type TDocument = {
 	externalReferenceCode?: string;
 	fileName?: string;
 	id?: number;
+	taxonomyCategoryIds?: number[];
 	title?: string;
 	viewableBy?: string;
 };

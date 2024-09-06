@@ -36,40 +36,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-152105. The page creator could add CSS class to fragment."
-	@priority = 5
-	test AddCSSClassToFragment {
-		property portal.acceptance = "true";
-
-		task ("Given a page creator has a content page with a Heading fragment") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Page Name",
-				siteName = "Test Site Name");
-
-			PageEditor.addFragment(
-				collectionName = "Basic Components",
-				fragmentName = "Heading");
-		}
-
-		task ("When the page creator accesses to the Advanced panel of Heading") {
-			PageEditor.gotoAdvanced(fragmentName = "Heading");
-		}
-
-		task ("Then the page creator could add CSS Class to Heading") {
-			PageEditor.configureFragment(cssClasses = "background-color");
-
-			AssertElementPresent(
-				fieldLabel = "CSS Classes",
-				itemName = "background-color",
-				locator1 = "PageEditor#LABEL_ITEM");
-
-			TestUtils.assertPartialAttributeValue(
-				attribute = "class",
-				element = "//div[@data-name='Heading']//div[contains(@class,'page-editor__fragment-content')]",
-				value = "background-color");
-		}
-	}
-
 	@description = "This is a test for LPS-152105. The page creator could add multiple CSS classes to fragment."
 	@priority = 5
 	test AddMultipleCSSClassesToFragment {

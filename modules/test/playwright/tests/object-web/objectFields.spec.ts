@@ -80,6 +80,7 @@ test.describe('Manage object fields through Model Builder', () => {
 	test('all picklist definitions are listed during object field creation', async ({
 		apiHelpers,
 		modelBuilderDiagramPage,
+		modelBuilderLeftSidebarPage,
 		modelBuilderObjectDefinitionNodePage,
 	}) => {
 		const {listTypeDefinitionIds, objectDefinitions} = createdEntities;
@@ -106,6 +107,10 @@ test.describe('Manage object fields through Model Builder', () => {
 		);
 
 		await modelBuilderDiagramPage.goto({objectFolderName: 'Default'});
+
+		await modelBuilderLeftSidebarPage.sidebarItems
+			.filter({hasText: objectDefinition.name})
+			.click();
 
 		await modelBuilderObjectDefinitionNodePage.openAddNewObjectFieldOrRelationshipModal(
 			objectDefinition.name,
@@ -136,6 +141,7 @@ test.describe('Manage object fields through Model Builder', () => {
 	test('can add picklist object field to object definition node', async ({
 		apiHelpers,
 		modelBuilderDiagramPage,
+		modelBuilderLeftSidebarPage,
 		modelBuilderObjectDefinitionNodePage,
 		page,
 		viewObjectDefinitionsPage,
@@ -156,6 +162,10 @@ test.describe('Manage object fields through Model Builder', () => {
 		await viewObjectDefinitionsPage.openObjectFolder('default');
 
 		await viewObjectDefinitionsPage.viewInModelBuilderButton.click();
+
+		await modelBuilderLeftSidebarPage.sidebarItems
+			.filter({hasText: objectDefinition.name})
+			.click();
 
 		const objectFieldLabel = 'objectFieldLabel' + getRandomInt();
 

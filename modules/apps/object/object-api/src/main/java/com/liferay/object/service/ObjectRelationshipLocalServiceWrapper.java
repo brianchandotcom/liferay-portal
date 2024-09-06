@@ -620,6 +620,13 @@ public class ObjectRelationshipLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.Map<String, org.osgi.framework.ServiceRegistration<?>>
+		getServiceRegistrations() {
+
+		return _objectRelationshipLocalService.getServiceRegistrations();
+	}
+
+	@Override
 	public void registerObjectRelationshipsRelatedInfoCollectionProviders(
 		com.liferay.object.model.ObjectDefinition objectDefinition1,
 		ObjectDefinitionLocalService objectDefinitionLocalService) {

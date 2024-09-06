@@ -532,6 +532,12 @@ public class ObjectRelationshipLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static Map<String, org.osgi.framework.ServiceRegistration<?>>
+		getServiceRegistrations() {
+
+		return getService().getServiceRegistrations();
+	}
+
 	public static void
 		registerObjectRelationshipsRelatedInfoCollectionProviders(
 			com.liferay.object.model.ObjectDefinition objectDefinition1,

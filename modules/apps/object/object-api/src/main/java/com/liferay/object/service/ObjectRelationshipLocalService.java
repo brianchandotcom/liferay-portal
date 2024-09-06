@@ -37,6 +37,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * Provides the local service interface for ObjectRelationship. Methods of this
@@ -406,6 +407,9 @@ public interface ObjectRelationshipLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Map<String, ServiceRegistration<?>> getServiceRegistrations();
 
 	public void registerObjectRelationshipsRelatedInfoCollectionProviders(
 		ObjectDefinition objectDefinition1,

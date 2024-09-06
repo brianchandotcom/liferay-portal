@@ -1,0 +1,79 @@
+.document-file-list-item {
+	&-container {
+		align-items: center;
+		border: 0.063rem solid #e2e2e4;
+		border-radius: 0.625rem;
+		display: flex;
+		flex-direction: row;
+		height: 6.5rem;
+		justify-content: space-between;
+		margin: 1.5rem 0;
+		padding: 1rem;
+		width: 37.5rem;
+	}
+
+	&-left-content {
+		align-items: center;
+		display: flex;
+		justify-content: center;
+
+		&-icon {
+			height: 1.5rem;
+			width: 1.5rem;
+			filter: invert(35%) sepia(86%) saturate(1411%) hue-rotate(206deg)
+				brightness(102%) contrast(101%);
+		}
+
+		&-icon-container {
+			align-items: center;
+			background-color: var(--color-brand-primary-lighten-5);
+			border-radius: 0.25rem;
+			display: flex;
+			height: 4.5rem;
+			justify-content: center;
+			margin-right: 1rem;
+			width: 4.5rem;
+		}
+
+		&-text {
+			&-container {
+				display: flex;
+				flex-direction: column;
+			}
+
+			&-file-name {
+				color: #282934;
+				font-size: 1rem;
+				font-weight: 400;
+				line-height: 1.5rem;
+			}
+
+			&-file-size {
+				color: #6c6c75;
+				font-size: 0.813rem;
+				font-weight: 400;
+				line-height: 1rem;
+			}
+		}
+	}
+
+	&-button {
+		background-color: transparent;
+		border: 0.095rem solid var(--color-action-neutral-default);
+		border-radius: 0.375rem;
+		color: var(--color-action-neutral-default);
+		font-size: 0.875rem;
+		font-weight: 600;
+		height: 2rem;
+		line-height: 1rem;
+		padding: 0;
+		transition: background-color 0.3s;
+		transition: color 0.3s;
+		width: 6.938rem;
+
+		&:hover {
+			background-color: var(--color-action-neutral-default);
+			color: var(--color-neutral-0);
+		}
+	}
+}

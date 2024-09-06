@@ -1,0 +1,70 @@
+.dropzone-upload {
+	&-container {
+		align-items: center;
+		border: 0.095rem dashed #b1b2b9;
+		border-radius: 0.5rem;
+		display: flex;
+		flex-direction: column;
+		height: 15rem;
+		justify-content: center;
+		transition: border-color 0.3s;
+
+		&-active {
+			background-color: #edf3fe;
+			border-color: var(--color-action-primary-default);
+
+			.dropzone-upload-document-container {
+				background-color: var(--color-neutral-0);
+			}
+		}
+	}
+
+	&-document {
+		&-container {
+			align-items: center;
+			background-color: #e6edfb;
+			border-radius: 0.563rem;
+			display: flex;
+			height: 5rem;
+			justify-content: center;
+			margin-bottom: 1.688rem;
+			width: 8.125rem;
+		}
+
+		&-icon {
+			height: 2rem;
+			width: 2rem;
+			filter: invert(23%) sepia(90%) saturate(3736%) hue-rotate(217deg)
+				brightness(100%) contrast(96%);
+		}
+	}
+
+	&-text {
+		color: #282934;
+		font-size: 1rem;
+		font-weight: 400;
+		line-height: 1.5rem;
+
+		&-container {
+			align-items: center;
+			margin-bottom: 0.813rem;
+		}
+	}
+
+	&-button {
+		background-color: var(--color-neutral-0);
+		font-size: 0.875rem;
+		padding: 0.5rem 0.75rem;
+
+		:hover {
+			background-color: var(--color-neutral-0);
+		}
+	}
+
+	&-description {
+		color: #6c6c75;
+		font-size: 0.813rem;
+		font-weight: 400;
+		line-height: 1rem;
+	}
+}

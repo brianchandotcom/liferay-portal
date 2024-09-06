@@ -36,7 +36,13 @@ function _fetch(url, options = {}, params = {}) {
 				return Promise.resolve();
 			}
 
-			return response.json();
+			return response.json().catch(() => {
+				const contentType = response.headers.get('content-type');
+
+				if (!contentType && response.status === 200) {
+					return response;
+				}
+			});
 		})
 		.catch((error) => Promise.reject(error));
 }

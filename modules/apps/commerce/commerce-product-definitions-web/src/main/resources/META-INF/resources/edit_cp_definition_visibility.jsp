@@ -86,21 +86,3 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 	%>'
 	module="{editCpDefinitionVisibility} from commerce-product-definitions-web"
 />
-
-<aui:script>
-	sessionKey = 'com.liferay.commerce.product.definitions.web.successMessage';
-
-	successMessage = Liferay.Util.SessionStorage.getItem(
-		sessionKey,
-		Liferay.Util.SessionStorage.TYPES.NECESSARY
-	);
-
-	if (successMessage) {
-		Liferay.Util.openToast({
-			message: successMessage,
-			type: 'success',
-		});
-
-		Liferay.Util.SessionStorage.removeItem(sessionKey);
-	}
-</aui:script>

@@ -4,7 +4,7 @@
  */
 
 import {CommerceServiceProvider} from 'commerce-frontend-js';
-import {openSelectionModal, sessionStorage} from 'frontend-js-web';
+import {openSelectionModal, openToast, sessionStorage} from 'frontend-js-web';
 
 function handleEvent({
 	fieldName,
@@ -26,17 +26,25 @@ function handleEvent({
 		[filterFieldName]: true,
 	};
 
-	return AdminCatalogResource.updateProduct(productId, formattedData).finally(
-		() => {
-			sessionStorage.setItem(
-				'com.liferay.commerce.product.definitions.web.successMessage',
-				Liferay.Language.get('your-request-completed-successfully'),
-				sessionStorage.TYPES.NECESSARY
-			);
+	return AdminCatalogResource.updateProduct(productId, formattedData)
+		.then((response) => {
+			if (response.ok) {
+				sessionStorage.setItem(
+					'com.liferay.commerce.product.definitions.web.successMessage',
+					Liferay.Language.get('your-request-completed-successfully'),
+					sessionStorage.TYPES.NECESSARY
+				);
 
-			window.location.reload();
-		}
-	);
+				window.location.reload();
+			}
+		})
+		.catch(() => {
+			openToast({
+				message: Liferay.Language.get('an-unexpected-error-occurred'),
+				title: Liferay.Language.get('error'),
+				type: 'danger',
+			});
+		});
 }
 
 export default function ({
@@ -122,4 +130,21 @@ export default function ({
 			eventHandler.detach();
 		});
 	});
+
+	const sessionKey =
+		'com.liferay.commerce.product.definitions.web.successMessage';
+
+	const successMessage = sessionStorage.getItem(
+		sessionKey,
+		Liferay.Util.SessionStorage.TYPES.NECESSARY
+	);
+
+	if (successMessage) {
+		openToast({
+			message: successMessage,
+			type: 'success',
+		});
+
+		sessionStorage.removeItem(sessionKey);
+	}
 }

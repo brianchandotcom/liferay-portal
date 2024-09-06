@@ -54,9 +54,6 @@ public class AssetFullContentDisplayContext {
 	}
 
 	public PortletURL getPaginationURL() {
-		JournalArticleDisplay journalArticleDisplay =
-			getJournalArticleDisplay();
-
 		String pageRedirect = ParamUtil.getString(
 			_httpServletRequest, "redirect");
 
@@ -71,6 +68,9 @@ public class AssetFullContentDisplayContext {
 		if (portletURL == null) {
 			return null;
 		}
+
+		JournalArticleDisplay journalArticleDisplay =
+			getJournalArticleDisplay();
 
 		return PortletURLBuilder.create(
 			portletURL

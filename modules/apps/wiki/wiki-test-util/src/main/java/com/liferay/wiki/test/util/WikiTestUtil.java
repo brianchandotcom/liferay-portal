@@ -154,6 +154,57 @@ public class WikiTestUtil {
 		}
 	}
 
+	public static File addPageAttachment(
+			long userId, long nodeId, String title, Class<?> clazz)
+		throws Exception {
+
+		String fileName = RandomTestUtil.randomString() + ".docx";
+
+		return addPageAttachment(userId, nodeId, title, fileName, clazz);
+	}
+
+	public static File addPageAttachment(
+			long userId, long nodeId, String title, String fileName,
+			Class<?> clazz)
+		throws Exception {
+
+		byte[] fileBytes = FileUtil.getBytes(
+			clazz, "dependencies/OSX_Test.docx");
+
+		File file = null;
+
+		if (ArrayUtil.isNotEmpty(fileBytes)) {
+			file = FileUtil.createTempFile(fileBytes);
+		}
+
+		String mimeType = MimeTypesUtil.getExtensionContentType("docx");
+
+		WikiPageLocalServiceUtil.addPageAttachment(
+			userId, nodeId, title, fileName, file, mimeType);
+
+		return file;
+	}
+
+	public static File addPageAttachment(
+			long userId, long nodeId, String title, String attachmentFileName,
+			Class<?> clazz, String testFileName)
+		throws Exception {
+
+		byte[] bytes = FileUtil.getBytes(clazz, "dependencies/" + testFileName);
+
+		if (ArrayUtil.isEmpty(bytes)) {
+			throw new RuntimeException("File not found: " + testFileName);
+		}
+
+		File file = FileUtil.createTempFile(bytes);
+
+		WikiPageLocalServiceUtil.addPageAttachment(
+			userId, nodeId, title, attachmentFileName, file,
+			MimeTypesUtil.getContentType(file));
+
+		return file;
+	}
+
 	public static WikiPage[] addPageWithChangedParentPage(
 			long groupId, long nodeId)
 		throws Exception {
@@ -384,57 +435,6 @@ public class WikiTestUtil {
 			grandchildPage.getPageId());
 
 		return new WikiPage[] {parentPage, childPage, grandchildPage};
-	}
-
-	public static File addPageAttachment(
-			long userId, long nodeId, String title, Class<?> clazz)
-		throws Exception {
-
-		String fileName = RandomTestUtil.randomString() + ".docx";
-
-		return addPageAttachment(userId, nodeId, title, fileName, clazz);
-	}
-
-	public static File addPageAttachment(
-			long userId, long nodeId, String title, String fileName,
-			Class<?> clazz)
-		throws Exception {
-
-		byte[] fileBytes = FileUtil.getBytes(
-			clazz, "dependencies/OSX_Test.docx");
-
-		File file = null;
-
-		if (ArrayUtil.isNotEmpty(fileBytes)) {
-			file = FileUtil.createTempFile(fileBytes);
-		}
-
-		String mimeType = MimeTypesUtil.getExtensionContentType("docx");
-
-		WikiPageLocalServiceUtil.addPageAttachment(
-			userId, nodeId, title, fileName, file, mimeType);
-
-		return file;
-	}
-
-	public static File addPageAttachment(
-			long userId, long nodeId, String title, String attachmentFileName,
-			Class<?> clazz, String testFileName)
-		throws Exception {
-
-		byte[] bytes = FileUtil.getBytes(clazz, "dependencies/" + testFileName);
-
-		if (ArrayUtil.isEmpty(bytes)) {
-			throw new RuntimeException("File not found: " + testFileName);
-		}
-
-		File file = FileUtil.createTempFile(bytes);
-
-		WikiPageLocalServiceUtil.addPageAttachment(
-			userId, nodeId, title, attachmentFileName, file,
-			MimeTypesUtil.getContentType(file));
-
-		return file;
 	}
 
 	public static WikiPage copyPage(

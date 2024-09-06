@@ -63,6 +63,60 @@ const COLOR_PICKER_PALETTES = [
 ];
 
 test.describe('Advanced Configuration', () => {
+	test('Add multiple css classes to fragment', async ({
+		apiHelpers,
+		page,
+		pageEditorPage,
+		pageManagementSite,
+	}) => {
+
+		// Create a content page with Wem Site's Apple fragment
+
+		const fragmentDefinition = getFragmentDefinition({
+			fragmentConfig: {
+				color: 'red',
+			},
+			id: getRandomString(),
+			key: 'apple',
+		});
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([fragmentDefinition]),
+			siteId: pageManagementSite.id,
+			title: getRandomString(),
+		});
+
+		// Adds css classes and assert that added to the page
+
+		await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
+
+		await page.getByTitle('Browser').click();
+
+		await page.getByLabel('Select Apple').click();
+
+		await pageEditorPage.goToConfigurationTab('Advanced');
+
+		await page
+			.getByLabel('CSS Classes', {exact: true})
+			.fill('background-color');
+
+		await page.getByLabel('CSS Classes', {exact: true}).press('Enter');
+
+		await page
+			.getByLabel('CSS Classes', {exact: true})
+			.fill('border-color');
+
+		await page.getByLabel('CSS Classes', {exact: true}).press('Enter');
+
+		await expect(
+			page.locator('.page-editor__fragment-content')
+		).toHaveClass(/background-color/);
+
+		await expect(
+			page.locator('.page-editor__fragment-content')
+		).toHaveClass(/border-color/);
+	});
+
 	test('Checks that the fragment is hidden from Site Search Results', async ({
 		apiHelpers,
 		page,

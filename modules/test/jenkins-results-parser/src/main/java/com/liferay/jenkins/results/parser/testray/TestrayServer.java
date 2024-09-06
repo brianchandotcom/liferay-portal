@@ -459,13 +459,20 @@ public class TestrayServer {
 				requestPost(
 					checkCache, "/o/graphql", requestJSONObject.toString()));
 
-			String duration = JenkinsResultsParserUtil.toDurationString(
-				JenkinsResultsParserUtil.getCurrentTimeMillis() - start);
+			long duration =
+				JenkinsResultsParserUtil.getCurrentTimeMillis() - start;
+
+			if (duration > 180000) {
+				_sendCommunicationFailureNotification(
+					"Slow response time: Testray GraphQL query took " +
+						duration + " ms");
+			}
 
 			System.out.println(
 				JenkinsResultsParserUtil.combine(
 					String.valueOf(getURL()), "/o/graphql query: ",
-					sb.toString(), " in ", duration));
+					sb.toString(), " in ",
+					JenkinsResultsParserUtil.toDurationString(duration)));
 
 			try {
 				JSONObject dataJSONObject = responseJSONObject.getJSONObject(

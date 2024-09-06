@@ -6,6 +6,9 @@
 package com.liferay.blogs.web.internal.display.context;
 
 import com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfiguration;
+import com.liferay.asset.entry.rel.model.AssetEntryAssetCategoryRel;
+import com.liferay.asset.entry.rel.service.AssetEntryAssetCategoryRelLocalServiceUtil;
+import com.liferay.asset.entry.rel.util.comparator.AssetEntryAssetCategoryRelAssetEntryAssetCategoryRelIdComparator;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
@@ -29,6 +32,7 @@ import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -603,11 +607,21 @@ public class BlogsEditEntryDisplayContext {
 				_friendlyURLAssetCategoryIds = new long[0];
 			}
 			else {
-				_friendlyURLAssetCategoryIds = ListUtil.toLongArray(
-					AssetCategoryLocalServiceUtil.
-						getEntryCategoriesByCategoryId(
-							assetEntry.getEntryId(), false),
-					AssetCategory.CATEGORY_ID_ACCESSOR);
+				List<AssetEntryAssetCategoryRel> assetEntryAssetCategoryRels =
+					AssetEntryAssetCategoryRelLocalServiceUtil.
+						getAssetEntryAssetCategoryRelsByAssetEntryId(
+							assetEntry.getEntryId(), QueryUtil.ALL_POS,
+							QueryUtil.ALL_POS,
+							AssetEntryAssetCategoryRelAssetEntryAssetCategoryRelIdComparator.
+								getInstance(true));
+
+				for (AssetEntryAssetCategoryRel assetEntryAssetCategoryRel :
+						assetEntryAssetCategoryRels) {
+
+					_friendlyURLAssetCategoryIds = ArrayUtil.append(
+						_friendlyURLAssetCategoryIds,
+						assetEntryAssetCategoryRel.getAssetCategoryId());
+				}
 			}
 		}
 

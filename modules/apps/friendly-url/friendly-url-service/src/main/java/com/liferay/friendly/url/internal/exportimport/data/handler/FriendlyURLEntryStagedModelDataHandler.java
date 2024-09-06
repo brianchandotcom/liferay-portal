@@ -5,6 +5,9 @@
 
 package com.liferay.friendly.url.internal.exportimport.data.handler;
 
+import com.liferay.asset.entry.rel.model.AssetEntryAssetCategoryRel;
+import com.liferay.asset.entry.rel.service.AssetEntryAssetCategoryRelLocalService;
+import com.liferay.asset.entry.rel.util.comparator.AssetEntryAssetCategoryRelAssetEntryAssetCategoryRelIdComparator;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
@@ -17,6 +20,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -211,18 +215,26 @@ public class FriendlyURLEntryStagedModelDataHandler
 			return;
 		}
 
-		List<AssetCategory> assetCategories =
-			_assetCategoryLocalService.getEntryCategoriesByCategoryId(
-				assetEntry.getEntryId(), false);
+		List<AssetEntryAssetCategoryRel> assetEntryAssetCategoryRels =
+			_assetEntryAssetCategoryRelLocalService.
+				getAssetEntryAssetCategoryRelsByAssetEntryId(
+					assetEntry.getEntryId(), QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS,
+					AssetEntryAssetCategoryRelAssetEntryAssetCategoryRelIdComparator.
+						getInstance(true));
 
-		if (ListUtil.isEmpty(assetCategories)) {
-			return;
-		}
+		for (AssetEntryAssetCategoryRel assetEntryAssetCategoryRel :
+				assetEntryAssetCategoryRels) {
 
-		for (AssetCategory assetCategory : assetCategories) {
-			StagedModelDataHandlerUtil.exportReferenceStagedModel(
-				portletDataContext, friendlyURLEntry, assetCategory,
-				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
+			AssetCategory assetCategory =
+				_assetCategoryLocalService.fetchCategory(
+					assetEntryAssetCategoryRel.getAssetCategoryId());
+
+			if (assetCategory != null) {
+				StagedModelDataHandlerUtil.exportReferenceStagedModel(
+					portletDataContext, friendlyURLEntry, assetCategory,
+					PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
+			}
 		}
 	}
 
@@ -288,6 +300,10 @@ public class FriendlyURLEntryStagedModelDataHandler
 
 	@Reference
 	private AssetCategoryLocalService _assetCategoryLocalService;
+
+	@Reference
+	private AssetEntryAssetCategoryRelLocalService
+		_assetEntryAssetCategoryRelLocalService;
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;

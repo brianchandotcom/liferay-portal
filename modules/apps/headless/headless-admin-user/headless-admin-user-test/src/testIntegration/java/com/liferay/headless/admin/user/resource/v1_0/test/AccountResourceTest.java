@@ -594,16 +594,14 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 
 		InputStream inputStream = new UnsyncByteArrayInputStream(bytes);
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(group.getGroupId());
-
 		return localRepository.addFileEntry(
 			null, TestPropsValues.getUserId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), ContentTypes.IMAGE_JPEG,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			StringPool.BLANK, StringPool.BLANK, inputStream, bytes.length, null,
-			null, null, serviceContext);
+			null, null,
+			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 	}
 
 	private void _assertEquals(

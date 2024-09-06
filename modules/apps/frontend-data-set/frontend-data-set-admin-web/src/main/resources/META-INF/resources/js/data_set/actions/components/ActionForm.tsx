@@ -302,7 +302,7 @@ const ActionForm = ({
 			if (!isValidJSON(requestBody)) {
 				valid = false;
 
-				setRequestBodyValidationError(!isValidJSON(requestBody));
+				setRequestBodyValidationError(true);
 			}
 		}
 

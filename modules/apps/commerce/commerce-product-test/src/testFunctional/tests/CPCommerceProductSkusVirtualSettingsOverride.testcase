@@ -880,7 +880,7 @@ definition {
 				productListPriceInactive = "55.00",
 				productMPN = "MPN1",
 				productName = "Virtual Product",
-				productNetPrice = "160.00",
+				productNetPrice = "40.00",
 				productSalePriceInactive = "50.00",
 				productShortDescription = "Short Description",
 				productSKU = "VIRTUALSKU",

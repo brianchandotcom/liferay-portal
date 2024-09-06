@@ -222,7 +222,7 @@ public class UpgradeSQLRecorder {
 					_sqlExecutionTimes.put(sql, duration);
 				}
 				else {
-					if (_DATABASE_PARTITION_ENABLED) {
+					if (DBPartition.isPartitionEnabled()) {
 						_sqlExecutionTimes.put(
 							StringBundler.concat(
 								_upgradeProcessClassName, StringPool.AT,
@@ -382,9 +382,6 @@ public class UpgradeSQLRecorder {
 
 		};
 	}
-
-	private static final boolean _DATABASE_PARTITION_ENABLED =
-		DBPartition.isPartitionEnabled();
 
 	private static boolean _enabled;
 	private static final List<String> _failedSQLs =

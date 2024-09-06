@@ -4,7 +4,7 @@
  */
 
 import {createAssetPublisherAndConfigure} from './createAssetPublisherAndConfigure';
-import {TCategory, createCategories} from './createCategories';
+import {TCategory, createCategories} from '../../../helpers/createCategories';
 import {createDPTandMarkAsDefault} from './createDPTandMarkAsDefault';
 
 import type {ApiHelpers} from '../../../helpers/ApiHelpers';

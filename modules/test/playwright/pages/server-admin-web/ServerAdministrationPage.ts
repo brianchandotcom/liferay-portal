@@ -20,7 +20,7 @@ export class ServerAdministrationPage {
 		this.page = page;
 
 		this.executeButton = page.getByRole('button', {name: 'Execute'});
-		this.scriptBox = page.getByLabel('Script');
+		this.scriptBox = page.getByLabel('Script', {exact: true});
 		this.scriptLink = page.getByRole('link', {name: 'Script'});
 	}
 

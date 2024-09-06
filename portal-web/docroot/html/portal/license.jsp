@@ -642,7 +642,7 @@ dateFormatDateTime.setTimeZone(timeZone);
 						<liferay-ui:message key="product" />
 					</td>
 					<td>
-						<select name="productEntryName" onChange="if (this.value == "basic-cluster") {document.getElementById("maxServers").style.display = "";} else {document.getElementById("maxServers").style.display = "none";}">
+						<select name="productEntryName">
 							<option value=""></option>
 
 							<%
@@ -670,6 +670,17 @@ dateFormatDateTime.setTimeZone(timeZone);
 							%>
 
 						</select>
+
+						<aui:script position="inline">
+							document.querySelector('[name="productEntryName"]').onchange = function() {
+								if (this.value == "basic-cluster") {
+									document.getElementById("maxServers").style.display = "";
+								}
+								else {
+									document.getElementById("maxServers").style.display = "none";
+								}
+							}
+						</aui:script>
 					</td>
 				</tr>
 				<tr id="maxServers" style="display: none;">

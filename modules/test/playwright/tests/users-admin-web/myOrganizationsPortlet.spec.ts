@@ -27,6 +27,11 @@ test('LPD-35306 Breadcrumb in My Organizations does not have a link if user does
 			externalReferenceCode: organization.externalReferenceCode,
 		},
 	});
+	const organization3 = await apiHelpers.headlessAdminUser.postOrganization({
+		parentOrganization: {
+			externalReferenceCode: organization2.externalReferenceCode,
+		},
+	});
 
 	const user = await apiHelpers.headlessAdminUser.postUserAccount();
 
@@ -61,16 +66,23 @@ test('LPD-35306 Breadcrumb in My Organizations does not have a link if user does
 	const newPageUsersAndOrganizationsPage = new UsersAndOrganizationsPage(
 		newPage
 	);
+
 	await newPageUsersAndOrganizationsPage.goToMyOrganizations();
 	await (
 		await newPageUsersAndOrganizationsPage.myOrganizationsTableRowLink(
-			organization2.name
+			organization3.name
 		)
 	).click();
 
 	await expect(
-		await newPageUsersAndOrganizationsPage.myOrganizationsBreadCrumbLink(
+		await newPageUsersAndOrganizationsPage.myOrganizationsBreadcrumbLink(
 			organization.name
 		)
 	).toHaveCount(0);
+
+	await expect(
+		await newPageUsersAndOrganizationsPage.myOrganizationsBreadcrumbLink(
+			organization2.name
+		)
+	).toHaveCount(1);
 });

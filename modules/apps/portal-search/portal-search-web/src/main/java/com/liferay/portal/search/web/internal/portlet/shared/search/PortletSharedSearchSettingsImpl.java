@@ -148,6 +148,16 @@ public class PortletSharedSearchSettingsImpl
 	}
 
 	@Override
+	public Boolean isIncludeAttachments() {
+		return _searchSettings.isIncludeAttachments();
+	}
+
+	@Override
+	public void setIncludeAttachments(boolean includeAttachments) {
+		_searchSettings.setIncludeAttachments(includeAttachments);
+	}
+
+	@Override
 	public void setKeywords(String keywords) {
 		_searchSettings.setKeywords(keywords);
 	}

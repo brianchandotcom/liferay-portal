@@ -68,6 +68,13 @@ public class SearchBarPortletPreferencesImpl
 	}
 
 	@Override
+	public boolean isIncludeAttachments() {
+		return getBoolean(
+			SearchBarPortletPreferences.PREFERENCE_KEY_INCLUDE_ATTACHMENTS,
+			false);
+	}
+
+	@Override
 	public boolean isInvisible() {
 		return getBoolean(
 			SearchBarPortletPreferences.PREFERENCE_KEY_INVISIBLE, false);

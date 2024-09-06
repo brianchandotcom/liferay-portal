@@ -33,6 +33,7 @@ export default function CurrentObjectDefinition({
 			<Input
 				disabled={disabled}
 				error={error}
+				id="lfr-objects__object-relationship-form-base-current-object-definition"
 				label={label}
 				name="currentObjectInput"
 				readOnly={readOnly}

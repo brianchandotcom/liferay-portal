@@ -337,6 +337,7 @@ export function ObjectRelationshipFormBase({
 			<Input
 				disabled={readonly}
 				error={errors.name}
+				id="lfr-objects__object-relationship-form-base-name"
 				label={Liferay.Language.get('name')}
 				name="name"
 				onChange={handleChange}

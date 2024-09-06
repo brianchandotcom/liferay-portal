@@ -340,10 +340,6 @@ public class UsersAdminUtil {
 					httpServletRequest, ancestorOrganization.getName(),
 					portletURL.toString());
 			}
-			else {
-				PortalUtil.addPortletBreadcrumbEntry(
-					httpServletRequest, ancestorOrganization.getName(), null);
-			}
 		}
 
 		Organization unescapedOrganization = organization.toUnescapedModel();

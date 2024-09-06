@@ -67,6 +67,14 @@ public class DocumentMetadataSetResourceTest
 
 	@Override
 	protected DocumentMetadataSet
+			testDeleteDocumentMetadataSet_addDocumentMetadataSet()
+		throws Exception {
+
+		return _addDocumentMetadataSet(testGroup);
+	}
+
+	@Override
+	protected DocumentMetadataSet
 			testGetAssetLibraryDocumentMetadataSetsPage_addDocumentMetadataSet(
 				Long assetLibraryId, DocumentMetadataSet documentMetadataSet)
 		throws Exception {

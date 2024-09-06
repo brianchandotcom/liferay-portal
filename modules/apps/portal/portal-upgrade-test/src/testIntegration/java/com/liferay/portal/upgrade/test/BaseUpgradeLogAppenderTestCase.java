@@ -604,7 +604,10 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 			"upgrade.report.property." + PropsKeys.DL_STORE_IMPL,
 			PropsValues.DL_STORE_IMPL);
 		_assertLogContextContains(
-			"upgrade.report.property.liferay.home", PropsValues.LIFERAY_HOME);
+			"upgrade.report.property.liferay.home",
+			new File(
+				PropsValues.LIFERAY_HOME
+			).getCanonicalPath());
 		_assertLogContextContains(
 			"upgrade.report.property.locales",
 			Arrays.toString(PropsValues.LOCALES));
@@ -613,7 +616,10 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 			Arrays.toString(PropsValues.LOCALES_ENABLED));
 		_assertReport(
 			StringBundler.concat(
-				"Property liferay.home: ", PropsValues.LIFERAY_HOME,
+				"Property liferay.home: ",
+				new File(
+					PropsValues.LIFERAY_HOME
+				).getCanonicalPath(),
 				StringPool.NEW_LINE, "Property locales: ",
 				Arrays.toString(PropsValues.LOCALES), StringPool.NEW_LINE,
 				"Property locales.enabled: ",

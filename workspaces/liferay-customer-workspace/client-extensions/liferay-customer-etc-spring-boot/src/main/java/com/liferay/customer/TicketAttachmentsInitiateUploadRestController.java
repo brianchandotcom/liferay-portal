@@ -19,12 +19,14 @@ import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -39,7 +41,8 @@ public class TicketAttachmentsInitiateUploadRestController
 
 	@PostMapping
 	public ResponseEntity<String> post(
-			@AuthenticationPrincipal Jwt jwt, @RequestBody String json)
+			@AuthenticationPrincipal Jwt jwt, @RequestBody String json,
+			@RequestHeader(name = HttpHeaders.ORIGIN) String origin)
 		throws Exception {
 
 		try {
@@ -80,7 +83,7 @@ public class TicketAttachmentsInitiateUploadRestController
 			responseJSONObject.put(
 				"gcsSessionURL",
 				_googleCloudStorageWebService.getUploadSessionURL(
-					ticketAttachment.getGCSBucketName(),
+					origin, ticketAttachment.getGCSBucketName(),
 					ticketAttachment.getGCSObjectName())
 			).put(
 				"ticketAttachmentId", ticketAttachment.getTicketAttachmentId()

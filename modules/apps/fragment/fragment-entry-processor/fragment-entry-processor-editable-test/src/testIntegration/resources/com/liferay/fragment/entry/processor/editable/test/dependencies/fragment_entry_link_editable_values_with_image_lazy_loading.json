@@ -1,0 +1,13 @@
+{
+	"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor": {
+		"editable_img": {
+			"config": {
+				"lazyLoading": true
+			},
+			"defaultValue": "sample.jpg"
+		},
+		"editable_text": {
+			"defaultValue": "test"
+		}
+	}
+}

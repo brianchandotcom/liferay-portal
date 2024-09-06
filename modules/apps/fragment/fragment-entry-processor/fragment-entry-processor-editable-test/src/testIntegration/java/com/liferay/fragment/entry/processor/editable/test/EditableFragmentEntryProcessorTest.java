@@ -76,6 +76,7 @@ import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.ThemeLocalService;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -975,6 +976,44 @@ public class EditableFragmentEntryProcessorTest {
 				fragmentEntryLink,
 				_getFragmentEntryProcessorContext(
 					LocaleUtil.US, FragmentEntryLinkConstants.EDIT)));
+	}
+
+	@Test
+	@TestInfo("LPS-124056")
+	public void testFragmentEntryProcessorEditableWithImageLazyLoading()
+		throws Exception {
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.createFragmentEntryLink(0);
+
+		FragmentEntry fragmentEntry = _addFragmentEntry("fragment_entry.html");
+
+		fragmentEntryLink.setHtml(fragmentEntry.getHtml());
+
+		fragmentEntryLink.setEditableValues(
+			_readJSONFileToString(
+				"fragment_entry_link_editable_values_without_image_lazy_" +
+					"loading.json"));
+
+		String content =
+			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
+				fragmentEntryLink,
+				_getFragmentEntryProcessorContext(
+					LocaleUtil.US, FragmentEntryLinkConstants.EDIT));
+
+		Assert.assertFalse(content.contains("loading=\"lazy\""));
+
+		fragmentEntryLink.setEditableValues(
+			_readJSONFileToString(
+				"fragment_entry_link_editable_values_with_image_lazy_loading." +
+					"json"));
+
+		content = _fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
+			fragmentEntryLink,
+			_getFragmentEntryProcessorContext(
+				LocaleUtil.US, FragmentEntryLinkConstants.EDIT));
+
+		Assert.assertTrue(content.contains("loading=\"lazy\""));
 	}
 
 	@Test(expected = FragmentEntryContentException.class)

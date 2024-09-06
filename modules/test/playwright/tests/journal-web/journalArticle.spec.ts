@@ -1042,7 +1042,10 @@ translationTest(
 );
 
 translationTest(
-	'LPD-19627: A non-localizabled field is disabled when another translation language is selected',
+	'A non-localizabled field is disabled when another translation language is selected',
+	{
+		tag: 'LPD-19627',
+	},
 	async ({apiHelpers, journalEditArticlePage, page, site}) => {
 		const nonLocalizableFieldName = 'Text1234';
 		const structureName = 'Structure 1';
@@ -1072,11 +1075,15 @@ translationTest(
 			trigger: translationButton,
 		});
 
-		await expect(
-			page.getByRole('textbox', {
-				name: nonLocalizableFieldName,
-			})
-		).toBeDisabled();
+		const textBox = page.getByRole('textbox', {
+			name: nonLocalizableFieldName,
+		});
+
+		if (await textBox.isHidden()) {
+			await page.getByRole('link', {name: 'Fields'}).click();
+		}
+
+		await expect(textBox).toBeDisabled();
 	}
 );
 

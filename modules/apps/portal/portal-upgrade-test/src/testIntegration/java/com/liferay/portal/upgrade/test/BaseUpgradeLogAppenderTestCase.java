@@ -173,12 +173,6 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 		String fileName = serviceFactoryPid + ".config";
 
-		String configDirPath = new File(
-			PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR
-		).getCanonicalPath();
-
-		Path path = Paths.get(configDirPath, fileName);
-
 		Dictionary<String, Object> dictionary =
 			HashMapDictionaryBuilder.<String, Object>put(
 				FileInstallConstants.FELIX_FILE_INSTALL_FILENAME, fileName
@@ -188,15 +182,21 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 				"testKey", "testValue"
 			).build();
 
-		String pid = ConfigurationTestUtil.createFactoryConfiguration(
-			serviceFactoryPid, dictionary);
-
 		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 			new UnsyncByteArrayOutputStream();
 
 		ConfigurationHandler.write(unsyncByteArrayOutputStream, dictionary);
 
+		String configDirPath = new File(
+			PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR
+		).getCanonicalPath();
+
+		Path path = Paths.get(configDirPath, fileName);
+
 		Files.write(path, unsyncByteArrayOutputStream.toByteArray());
+
+		String pid = ConfigurationTestUtil.createFactoryConfiguration(
+			serviceFactoryPid, dictionary);
 
 		try {
 			_appender.start();

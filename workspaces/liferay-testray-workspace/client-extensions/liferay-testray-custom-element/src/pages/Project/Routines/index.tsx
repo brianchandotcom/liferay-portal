@@ -51,8 +51,7 @@ const Routines = () => {
 					columnsFixed: ['name'],
 				}}
 				managementToolbarProps={{
-					applyFilters: true,
-					filterSchema: 'routines',
+					applyFilters: false,
 					title: i18n.translate('routines'),
 				}}
 				resource={`/testray-status-metrics/by-testray-projectId/${projectId}/testray-routines-metrics`}

@@ -36,8 +36,8 @@ import java.io.FileInputStream;
 public class KBTestUtil {
 
 	public static File addAttachment(
-			String attachmentFileName, Class<?> clazz, long resourcePrimKey,
-			String testFileName, long userId)
+			long userId, long resourcePrimKey, String attachmentFileName,
+			Class<?> clazz, String testFileName)
 		throws Exception {
 
 		byte[] bytes = FileUtil.getBytes(clazz, "dependencies/" + testFileName);

@@ -418,8 +418,8 @@ public class WikiTestUtil {
 	}
 
 	public static File addWikiAttachment(
-			String attachmentFileName, Class<?> clazz, long nodeId,
-			String testFileName, String title, long userId)
+			long userId, long nodeId, String title, String attachmentFileName,
+			Class<?> clazz, String testFileName)
 		throws Exception {
 
 		byte[] bytes = FileUtil.getBytes(clazz, "dependencies/" + testFileName);

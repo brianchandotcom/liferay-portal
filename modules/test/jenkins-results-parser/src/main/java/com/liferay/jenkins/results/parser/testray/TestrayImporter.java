@@ -723,7 +723,6 @@ public class TestrayImporter {
 					if (quarterlyReleaseVersionMatcher.find()) {
 						String year = quarterlyReleaseVersionMatcher.group(
 							"year");
-
 						String quarter = quarterlyReleaseVersionMatcher.group(
 							"quarter");
 

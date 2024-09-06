@@ -335,4 +335,72 @@ definition {
 		}
 	}
 
+	@description = "LPD-35740. As a guest user in a B2B site with Guest Checkout enabled, I want to be able to login to start an order as guest, login as an existing user and preserve my order."
+	@priority = 4
+	test CanB2BSiteGuestLoginAsExistingUserAndHaveOrderReconciliation {
+		property custom.properties = "feature.flag.LPD-35678=true";
+		property portal.acceptance = "false";
+
+		task ("Given an account with a user") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And Guest Checkout is enabled for a B2B site") {
+			CommerceConfiguration.setupB2BGuestCheckout(channelName = "Minium Portal");
+		}
+
+		task ("And a guest user navigates to the Minium catalog page") {
+			User.logoutPG();
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/catalog");
+		}
+
+		task ("When the guest adds a product to the cart") {
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = 1);
+		}
+
+		task ("Then can login as the existing user associated to one business account") {
+			CommerceLogin.miniumLogin(
+				password = PropsUtil.get("default.admin.password"),
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And this existing user will find the order started by the guest correctly associated to its business account") {
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Pending Orders");
+
+			AssertElementPresent(
+				key_orderAuthor = "Commerce Account",
+				locator1 = "CommerceAccelerators#ORDERS_ENTRY_VIEW_BUTTON");
+		}
+
+		task ("And this user is able to checkout the order correctly") {
+			CommerceCheckout.gotoCheckoutViaMiniCart();
+
+			CommerceCheckout.initializersCheckout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				productName = "U-Joint",
+				productQuantity = 1,
+				productUnitPrice = 24,
+				shippingMethod = "Standard");
+		}
+	}
+
 }

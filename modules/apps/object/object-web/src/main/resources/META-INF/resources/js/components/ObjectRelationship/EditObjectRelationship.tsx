@@ -5,6 +5,7 @@
 
 import {
 	API,
+	Card,
 	SidePanelForm,
 	openToast,
 	saveAndReload,
@@ -81,6 +82,7 @@ export default function EditObjectRelationship({
 		>
 			<EditObjectRelationshipContent
 				baseResourceURL={baseResourceURL}
+				containerWrapper={Card}
 				errors={errors}
 				handleChange={handleChange}
 				objectDefinitionExternalReferenceCode={

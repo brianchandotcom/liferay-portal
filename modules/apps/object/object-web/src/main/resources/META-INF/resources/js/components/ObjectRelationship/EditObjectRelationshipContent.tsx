@@ -4,7 +4,7 @@
  */
 
 import ClayAlert from '@clayui/alert';
-import {Card, Input, SingleSelect} from '@liferay/object-js-components-web';
+import {Input, SingleSelect} from '@liferay/object-js-components-web';
 import {InputLocalized} from 'frontend-js-components-web';
 import React from 'react';
 
@@ -12,14 +12,16 @@ import {ObjectRelationshipFormBase} from './ObjectRelationshipFormBase';
 import {SelectObjectRelationship} from './SelectObjectRelationship';
 
 import type {FormError} from '@liferay/object-js-components-web';
-import type {ChangeEventHandler} from 'react';
+import type {ChangeEventHandler, ElementType} from 'react';
 
 interface EditObjectRelationshipContentProps {
 	baseResourceURL: string;
+	containerWrapper: ElementType;
 	errors: FormError<ObjectRelationship>;
 	handleChange: ChangeEventHandler<HTMLInputElement>;
 	objectDefinitionExternalReferenceCode: string;
 	objectRelationshipDeletionTypes: LabelValueObject[];
+	onSubmit?: (editedObjectRelationship?: Partial<ObjectRelationship>) => void;
 	parameterRequired: boolean;
 	readOnly?: boolean;
 	restContextPath: string;
@@ -29,10 +31,12 @@ interface EditObjectRelationshipContentProps {
 
 export function EditObjectRelationshipContent({
 	baseResourceURL,
+	containerWrapper: ContainerWrapper,
 	errors,
 	handleChange,
 	objectDefinitionExternalReferenceCode,
 	objectRelationshipDeletionTypes,
+	onSubmit,
 	parameterRequired,
 	readOnly,
 	restContextPath,
@@ -41,7 +45,7 @@ export function EditObjectRelationshipContent({
 }: EditObjectRelationshipContentProps) {
 	return (
 		<>
-			<Card title={Liferay.Language.get('basic-info')}>
+			<ContainerWrapper title={Liferay.Language.get('basic-info')}>
 				{values.reverse && (
 					<ClayAlert
 						displayType="warning"
@@ -58,6 +62,13 @@ export function EditObjectRelationshipContent({
 					error={errors.label}
 					id="lfr-objects__object-relationship-form-base-label"
 					label={Liferay.Language.get('label')}
+					onBlur={(event) => {
+						event.stopPropagation();
+
+						if (onSubmit) {
+							onSubmit();
+						}
+					}}
 					onChange={(label) => setValues({label})}
 					required
 					translations={values.label as LocalizedValue<string>}
@@ -83,16 +94,23 @@ export function EditObjectRelationshipContent({
 					id="lfr-objects__object-relationship-deletion-type"
 					items={objectRelationshipDeletionTypes}
 					label={Liferay.Language.get('deletion-type')}
-					onSelectionChange={(value) =>
-						setValues({deletionType: value as string})
-					}
+					onSelectionChange={(value) => {
+						setValues({deletionType: value as string});
+
+						if (onSubmit) {
+							onSubmit({
+								...values,
+								deletionType: value as string,
+							});
+						}
+					}}
 					required
 					selectedKey={values.deletionType}
 				/>
-			</Card>
+			</ContainerWrapper>
 
 			{parameterRequired && values.type === 'oneToMany' && (
-				<Card title={Liferay.Language.get('parameters')}>
+				<ContainerWrapper title={Liferay.Language.get('parameters')}>
 					<Input
 						id="lfr-objects__object-relationship-api-endpoint"
 						label={Liferay.Language.get('api-endpoint')}
@@ -105,12 +123,19 @@ export function EditObjectRelationshipContent({
 						objectDefinitionExternalReferenceCode1={
 							values.objectDefinitionExternalReferenceCode2 as string
 						}
-						onChange={(parameterObjectFieldName) =>
-							setValues({parameterObjectFieldName})
-						}
+						onChange={(parameterObjectFieldName) => {
+							setValues({parameterObjectFieldName});
+
+							if (onSubmit) {
+								onSubmit({
+									...values,
+									parameterObjectFieldName,
+								});
+							}
+						}}
 						value={values.parameterObjectFieldName}
 					/>
-				</Card>
+				</ContainerWrapper>
 			)}
 		</>
 	);

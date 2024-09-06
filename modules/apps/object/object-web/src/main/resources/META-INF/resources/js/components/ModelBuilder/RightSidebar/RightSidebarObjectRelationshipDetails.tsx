@@ -4,33 +4,26 @@
  */
 
 import {ClayButtonWithIcon} from '@clayui/button';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
+import ClayPanel from '@clayui/panel';
+import {API, openToast, stringUtils} from '@liferay/object-js-components-web';
 import {createResourceURL, sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
-import {Edge, Elements, Node, isEdge, isNode} from 'react-flow-renderer';
+import {isEdge, isNode} from 'react-flow-renderer';
 
+import {defaultLanguageId} from '../../../utils/constants';
+import {EditObjectRelationshipContent} from '../../ObjectRelationship/EditObjectRelationshipContent';
+import {ModalDeleteObjectRelationship} from '../../ObjectRelationship/ModalDeleteObjectRelationship';
+import {useObjectRelationshipForm} from '../../ObjectRelationship/ObjectRelationshipFormBase';
+import {getUpdatedModelBuilderStructurePayload} from '../../ViewObjectDefinitions/objectDefinitionUtil';
+import {useObjectFolderContext} from '../ModelBuilderContext/objectFolderContext';
 import {TYPES} from '../ModelBuilderContext/typesEnum';
 
 import './RightSidebarObjectRelationshipDetails.scss';
 
-import {
-	API,
-	Input,
-	SingleSelect,
-	openToast,
-	stringUtils,
-} from '@liferay/object-js-components-web';
-import {InputLocalized} from 'frontend-js-components-web';
+import type {Edge, Elements, Node} from 'react-flow-renderer';
 
-import {defaultLanguageId} from '../../../utils/constants';
-import {ModalDeleteObjectRelationship} from '../../ObjectRelationship/ModalDeleteObjectRelationship';
-import {
-	OBJECT_RELATIONSHIP_TYPES,
-	useObjectRelationshipForm,
-} from '../../ObjectRelationship/ObjectRelationshipFormBase';
-import SelectObjectRelationship from '../../ObjectRelationship/SelectObjectRelationship';
-import {getUpdatedModelBuilderStructurePayload} from '../../ViewObjectDefinitions/objectDefinitionUtil';
-import {useObjectFolderContext} from '../ModelBuilderContext/objectFolderContext';
-import {ObjectRelationshipEdgeData} from '../types';
+import type {ObjectRelationshipEdgeData} from '../types';
 
 interface RightSidebarObjectRelationshipDetailsProps {
 	objectRelationshipDeletionTypes: LabelValueObject[];
@@ -48,10 +41,7 @@ export function RightSidebarObjectRelationshipDetails({
 		},
 		dispatch,
 	] = useObjectFolderContext();
-	const [objectDefinition1, setObjectDefinition1] =
-		useState<Partial<ObjectDefinition>>();
-	const [objectDefinition2, setObjectDefinition2] =
-		useState<Partial<ObjectDefinition>>();
+	const [loading, setLoading] = useState(false);
 	const [
 		objectRelationshipParameterRequired,
 		setObjectRelationshipParameterRequired,
@@ -66,7 +56,7 @@ export function RightSidebarObjectRelationshipDetails({
 		deleteObjectRelationship: false,
 	});
 
-	const {errors, handleValidate, setValues, values} =
+	const {errors, handleChange, handleValidate, setValues, values} =
 		useObjectRelationshipForm({
 			initialValues: {
 				id: 0,
@@ -80,6 +70,7 @@ export function RightSidebarObjectRelationshipDetails({
 	useEffect(() => {
 		const makeFetch = async () => {
 			if (selectedObjectRelationship) {
+				setLoading(true);
 				const selectedObjectRelationshipResponse =
 					(await API.getObjectRelationship(
 						selectedObjectRelationship.id
@@ -87,20 +78,9 @@ export function RightSidebarObjectRelationshipDetails({
 
 				setValues(selectedObjectRelationshipResponse);
 
-				const objectDefinition1 = await API.getObjectDefinitionById(
-					selectedObjectRelationshipResponse.objectDefinitionId1
-				);
-
-				const objectDefinition2 = await API.getObjectDefinitionById(
-					selectedObjectRelationshipResponse.objectDefinitionId2
-				);
-
-				setObjectDefinition1(objectDefinition1);
-
-				setObjectDefinition2(objectDefinition2);
-
 				const url = createResourceURL(baseResourceURL, {
-					objectDefinitionId: objectDefinition1.id,
+					objectDefinitionId:
+						selectedObjectRelationshipResponse.objectDefinitionId1,
 					p_p_resource_id:
 						'/object_definitions/get_object_relationship_info',
 				}).href;
@@ -130,6 +110,7 @@ export function RightSidebarObjectRelationshipDetails({
 
 					setReadOnly(readOnly);
 				}
+				setLoading(false);
 			}
 		};
 
@@ -247,110 +228,28 @@ export function RightSidebarObjectRelationshipDetails({
 			</div>
 
 			<div className="lfr-objects__model-builder-right-sidebar-object-relationship-content">
-				<InputLocalized
-					disabled={readOnly}
-					error={errors.label}
-					id="lfr-objects__object-relationship-form-base-label"
-					label={Liferay.Language.get('label')}
-					onBlur={(event) => {
-						event.stopPropagation();
-
-						onSubmit();
-					}}
-					onChange={(label) => setValues({label})}
-					required
-					translations={values.label as LocalizedValue<string>}
-				/>
-
-				<Input
-					disabled
-					id="lfr-objects__object-relationship-form-base-name"
-					label={Liferay.Language.get('name')}
-					required
-					value={values.name}
-				/>
-
-				<Input
-					disabled
-					id="lfr-objects__object-relationship-form-base-type"
-					label={Liferay.Language.get('type')}
-					required
-					value={
-						OBJECT_RELATIONSHIP_TYPES.find(
-							({value}) => value === values.type
-						)?.label
-					}
-				/>
-
-				<Input
-					disabled
-					id="lfr-objects__object-relationship-form-base-one-record-of"
-					label={
-						values.type === 'manyToMany'
-							? Liferay.Language.get('many-records-of')
-							: Liferay.Language.get('one-record-of')
-					}
-					required
-					value={objectDefinition1?.name}
-				/>
-
-				<Input
-					disabled
-					id="lfr-objects__object-relationship-form-base-many-records-of"
-					label={Liferay.Language.get('many-records-of')}
-					required
-					value={objectDefinition2?.name}
-				/>
-
-				<SingleSelect
-					className="lfr-objects__model-builder-left-sidebar-object-relationship-single-select"
-					disabled={
-						readOnly ||
-						(Liferay.FeatureFlags['LPS-187142'] && values.edge)
-					}
-					id="lfr-objects__object-relationship-form-base-deletion-type"
-					items={objectRelationshipDeletionTypes}
-					label={Liferay.Language.get('deletion-type')}
-					onSelectionChange={(value) => {
-						setValues({deletionType: value as string});
-
-						onSubmit({
-							...values,
-							deletionType: value as string,
-						});
-					}}
-					required
-					selectedKey={values.deletionType}
-				/>
-
-				{objectRelationshipParameterRequired &&
-					selectedObjectRelationship?.type === 'oneToMany' && (
-						<>
-							<Input
-								label={Liferay.Language.get('api-endpoint')}
-								readOnly
-								value={objectRelationshipRestContextPath}
-							/>
-
-							<SelectObjectRelationship
-								error={errors.parameterObjectFieldName}
-								objectDefinitionExternalReferenceCode1={
-									values.objectDefinitionExternalReferenceCode2 as string
-								}
-								onChange={(parameterObjectFieldName) => {
-									setValues({
-										parameterObjectFieldName,
-									});
-
-									onSubmit({
-										...values,
-										parameterObjectFieldName,
-									});
-								}}
-								value={values.parameterObjectFieldName}
-							/>
-						</>
-					)}
+				{!loading && values.objectDefinitionExternalReferenceCode1 ? (
+					<EditObjectRelationshipContent
+						baseResourceURL={baseResourceURL}
+						containerWrapper={ClayPanel}
+						errors={errors}
+						handleChange={handleChange}
+						objectDefinitionExternalReferenceCode={
+							values.objectDefinitionExternalReferenceCode1
+						}
+						objectRelationshipDeletionTypes={
+							objectRelationshipDeletionTypes
+						}
+						onSubmit={onSubmit}
+						parameterRequired={objectRelationshipParameterRequired}
+						readOnly={readOnly}
+						restContextPath={objectRelationshipRestContextPath}
+						setValues={setValues}
+						values={values}
+					/>
+				) : (
+					<ClayLoadingIndicator displayType="secondary" size="sm" />
+				)}
 			</div>
 
 			{showModal.deleteObjectRelationship && (

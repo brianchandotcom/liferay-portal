@@ -16,7 +16,7 @@ import {
 	ObjectRelationshipFormBase,
 	useObjectRelationshipForm,
 } from './ObjectRelationshipFormBase';
-import SelectObjectRelationship from './SelectObjectRelationship';
+import {SelectObjectRelationship} from './SelectObjectRelationship';
 
 import './ModalAddObjectRelationship.scss';
 

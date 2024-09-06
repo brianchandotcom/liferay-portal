@@ -107,6 +107,9 @@ public class ObjectRelationshipLocalServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
+		_modifiableSystemObjectDefinition =
+			_addAndPublishModifiableSystemObjectDefinition();
+
 		_objectDefinition1 = _addAndPublishCustomObjectDefinition();
 		_objectDefinition2 = _addAndPublishCustomObjectDefinition();
 
@@ -416,6 +419,12 @@ public class ObjectRelationshipLocalServiceTest {
 			_objectDefinition1, _systemObjectDefinition2, true);
 		_testAddObjectRelationshipManyToMany(
 			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
+			_modifiableSystemObjectDefinition, _objectDefinition1, false);
+		_testAddObjectRelationshipManyToMany(
+			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
+			_modifiableSystemObjectDefinition, _objectDefinition1, true);
+		_testAddObjectRelationshipManyToMany(
+			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 			_objectDefinition1, _systemObjectDefinition2, false);
 		_testAddObjectRelationshipManyToMany(
 			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
@@ -426,6 +435,10 @@ public class ObjectRelationshipLocalServiceTest {
 		_testAddObjectRelationshipManyToMany(
 			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 			_systemObjectDefinition2, _objectDefinition1, true);
+		_testAddObjectRelationshipOneToMany(
+			_modifiableSystemObjectDefinition, _objectDefinition1, false);
+		_testAddObjectRelationshipOneToMany(
+			_modifiableSystemObjectDefinition, _objectDefinition1, true);
 		_testAddObjectRelationshipOneToMany(
 			_objectDefinition1, _systemObjectDefinition2, false);
 		_testAddObjectRelationshipOneToMany(
@@ -862,6 +875,27 @@ public class ObjectRelationshipLocalServiceTest {
 			objectDefinition.getObjectDefinitionId());
 	}
 
+	private ObjectDefinition _addAndPublishModifiableSystemObjectDefinition()
+		throws Exception {
+
+		ObjectDefinition modifiableSystemObjectDefinition =
+			ObjectDefinitionTestUtil.addModifiableSystemObjectDefinition(
+				TestPropsValues.getUserId(), null, false,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				"Test", null, null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				ObjectDefinitionConstants.SCOPE_SITE, null, 1,
+				Arrays.asList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING,
+						RandomTestUtil.randomString(), StringUtil.randomId())));
+
+		return _objectDefinitionLocalService.publishSystemObjectDefinition(
+			TestPropsValues.getUserId(),
+			modifiableSystemObjectDefinition.getObjectDefinitionId());
+	}
+
 	private ObjectRelationship _addObjectRelationshipSystemObjectDefinition()
 		throws Exception {
 
@@ -1294,6 +1328,9 @@ public class ObjectRelationshipLocalServiceTest {
 	private static final Pattern _pattern = Pattern.compile(
 		"R_[A-Z][0-9][A-Z][0-9]$");
 	private static ObjectDefinition _systemObjectDefinition1;
+
+	@DeleteAfterTestRun
+	private ObjectDefinition _modifiableSystemObjectDefinition;
 
 	@DeleteAfterTestRun
 	private ObjectDefinition _objectDefinition1;

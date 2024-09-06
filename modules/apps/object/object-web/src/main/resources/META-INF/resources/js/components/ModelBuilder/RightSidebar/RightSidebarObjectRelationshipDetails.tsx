@@ -14,7 +14,7 @@ import {isEdge, isNode} from 'react-flow-renderer';
 import {defaultLanguageId} from '../../../utils/constants';
 import {EditObjectRelationshipContent} from '../../ObjectRelationship/EditObjectRelationshipContent';
 import {ModalDeleteObjectRelationship} from '../../ObjectRelationship/ModalDeleteObjectRelationship';
-import {useObjectRelationshipForm} from '../../ObjectRelationship/ObjectRelationshipFormBase';
+import {useObjectRelationshipForm} from '../../ObjectRelationship/useObjectRelationshipForm';
 import {getUpdatedModelBuilderStructurePayload} from '../../ViewObjectDefinitions/objectDefinitionUtil';
 import {useObjectFolderContext} from '../ModelBuilderContext/objectFolderContext';
 import {TYPES} from '../ModelBuilderContext/typesEnum';

@@ -12,11 +12,9 @@ import React, {useState} from 'react';
 
 import {defaultLanguageId} from '../../utils/constants';
 import {toCamelCase} from '../../utils/string';
-import {
-	ObjectRelationshipFormBase,
-	useObjectRelationshipForm,
-} from './ObjectRelationshipFormBase';
+import {ObjectRelationshipFormBase} from './ObjectRelationshipFormBase';
 import {SelectObjectRelationship} from './SelectObjectRelationship';
+import {useObjectRelationshipForm} from './useObjectRelationshipForm';
 
 import './ModalAddObjectRelationship.scss';
 

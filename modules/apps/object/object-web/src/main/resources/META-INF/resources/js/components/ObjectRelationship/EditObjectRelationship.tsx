@@ -13,7 +13,7 @@ import {
 import React from 'react';
 
 import {EditObjectRelationshipContent} from './EditObjectRelationshipContent';
-import {useObjectRelationshipForm} from './ObjectRelationshipFormBase';
+import {useObjectRelationshipForm} from './useObjectRelationshipForm';
 
 interface EditObjectRelationshipProps {
 	baseResourceURL: string;

@@ -8,15 +8,11 @@ import {
 	FormError,
 	Input,
 	SingleSelect,
-	constantsUtils,
-	invalidateRequired,
 	stringUtils,
-	useForm,
 } from '@liferay/object-js-components-web';
 import {createResourceURL} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
-import {defaultLanguageId} from '../../utils/constants';
 import CurrentObjectDefinition from './CurrentObjectDefinition';
 import SelectObjectDefinition from './SelectObjectDefinition';
 
@@ -31,12 +27,6 @@ interface ObjectRelationshipFormBaseProps {
 	readonly?: boolean;
 	setValues: (values: Partial<ObjectRelationship>) => void;
 	values: Partial<ObjectRelationship>;
-}
-
-interface UseObjectRelationshipFormProps {
-	initialValues: Partial<ObjectRelationship>;
-	onSubmit: (relationship: ObjectRelationship) => void;
-	parameterRequired: boolean;
 }
 
 export type ObjectRelationshipType = 'manyToMany' | 'oneToMany' | 'oneToOne';
@@ -84,70 +74,6 @@ export const OBJECT_RELATIONSHIP_TYPES = [
 	ONE_TO_MANY,
 	ONE_TO_ONE,
 ];
-
-export function useObjectRelationshipForm({
-	initialValues,
-	onSubmit,
-	parameterRequired,
-}: UseObjectRelationshipFormProps) {
-	const validate = (relationship: Partial<ObjectRelationship>) => {
-		const errors: FormError<ObjectRelationship> = {};
-
-		const label = relationship.label?.[defaultLanguageId];
-
-		if (invalidateRequired(label)) {
-			errors.label = constantsUtils.REQUIRED_MSG;
-		}
-
-		if (invalidateRequired(relationship.name ?? label)) {
-			errors.name = constantsUtils.REQUIRED_MSG;
-		}
-
-		if (invalidateRequired(relationship.type)) {
-			errors.type = constantsUtils.REQUIRED_MSG;
-		}
-
-		if (!relationship.objectDefinitionId1) {
-			errors.objectDefinitionId1 = constantsUtils.REQUIRED_MSG;
-		}
-
-		if (!relationship.objectDefinitionId2) {
-			errors.objectDefinitionId2 = constantsUtils.REQUIRED_MSG;
-		}
-
-		if (
-			parameterRequired &&
-			relationship.type === 'oneToMany' &&
-			!relationship.parameterObjectFieldName
-		) {
-			errors.parameterObjectFieldName = constantsUtils.REQUIRED_MSG;
-		}
-
-		return errors;
-	};
-
-	const {
-		errors,
-		handleChange,
-		handleSubmit,
-		handleValidate,
-		setValues,
-		values,
-	} = useForm({
-		initialValues,
-		onSubmit,
-		validate,
-	});
-
-	return {
-		errors,
-		handleChange,
-		handleSubmit,
-		handleValidate,
-		setValues,
-		values,
-	};
-}
 
 export function ObjectRelationshipFormBase({
 	baseResourceURL,

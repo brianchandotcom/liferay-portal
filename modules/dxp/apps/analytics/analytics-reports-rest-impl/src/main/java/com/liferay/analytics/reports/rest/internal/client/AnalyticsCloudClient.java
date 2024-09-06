@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 
+import com.liferay.analytics.reports.rest.dto.v1_0.AssetHistogramMetric;
 import com.liferay.analytics.reports.rest.dto.v1_0.AssetMetric;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.petra.string.StringPool;
@@ -33,6 +34,75 @@ public class AnalyticsCloudClient {
 
 	public AnalyticsCloudClient(Http http) {
 		_http = http;
+	}
+
+	public AssetHistogramMetric getAssetHistogramMetric(
+			AnalyticsConfiguration analyticsConfiguration, String assetId,
+			String assetType, List<Long> channelIds, String identityType,
+			Integer rangeKey)
+		throws Exception {
+
+		try {
+			Http.Options options = _getOptions(analyticsConfiguration);
+
+			String url = String.join(
+				StringPool.BLANK,
+				analyticsConfiguration.liferayAnalyticsFaroBackendURL(),
+				"/api/1.0/asset-metric/", assetType, "/histogram");
+
+			url = HttpComponentsUtil.addParameter(url, "assetId", assetId);
+			url = HttpComponentsUtil.addParameter(
+				url, "channelIds",
+				StringUtil.merge(channelIds, StringPool.COMMA));
+
+			url = HttpComponentsUtil.addParameter(
+				url, "identityType", identityType);
+
+			if (rangeKey != null) {
+				url = HttpComponentsUtil.addParameter(
+					url, "rangeKey", rangeKey);
+			}
+
+			options.setLocation(url);
+
+			String content = _http.URLtoString(options);
+
+			Http.Response response = options.getResponse();
+
+			if (response.getResponseCode() == HttpURLConnection.HTTP_OK) {
+				AssetHistogramMetric assetHistogramMetric = null;
+
+				JsonNode jsonNode = ObjectMapperHolder._objectMapper.readTree(
+					content);
+
+				if (jsonNode != null) {
+					TypeFactory typeFactory = TypeFactory.defaultInstance();
+
+					ObjectReader objectReader =
+						ObjectMapperHolder._objectMapper.readerFor(
+							typeFactory.constructType(
+								AssetHistogramMetric.class));
+
+					assetHistogramMetric = objectReader.readValue(jsonNode);
+				}
+
+				return assetHistogramMetric;
+			}
+
+			if (_log.isDebugEnabled()) {
+				_log.debug("Response code " + response.getResponseCode());
+			}
+
+			throw new PortalException("Unable to get asset histogram metric");
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+
+			throw new PortalException(
+				"Unable to get asset histogram metric", exception);
+		}
 	}
 
 	public AssetMetric getAssetMetric(

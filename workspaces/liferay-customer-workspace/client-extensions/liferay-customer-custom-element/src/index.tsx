@@ -18,6 +18,7 @@ import useApollo from './common/hooks/useApollo';
 import useGlobalNetworkIndicator from './common/hooks/useGlobalNetworkIndicator';
 import {Liferay} from './common/services/liferay';
 import getIconSpriteMap from './common/utils/getIconSpriteMap';
+import AttachFile from './routes/attach-file';
 import CustomerPortal from './routes/customer-portal';
 import Home from './routes/home';
 import Onboarding from './routes/onboarding';
@@ -25,6 +26,7 @@ import Onboarding from './routes/onboarding';
 const ELEMENT_ID = 'liferay-customer-custom-element';
 
 const AppRoutes = {
+	attachtofile: AttachFile,
 	home: Home,
 	onboarding: Onboarding,
 	portal: CustomerPortal,

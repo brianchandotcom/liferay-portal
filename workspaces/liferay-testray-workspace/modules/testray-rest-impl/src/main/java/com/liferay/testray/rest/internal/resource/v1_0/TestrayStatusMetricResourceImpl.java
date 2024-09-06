@@ -482,7 +482,7 @@ public class TestrayStatusMetricResourceImpl
 
 		if (Validator.isNotNull(testrayProductVersion)) {
 			sb.append("and pv.c_productVersionId_ = ? ");
-			params.add(testrayProductVersion);
+			params.add(GetterUtil.getLong(testrayProductVersion));
 		}
 
 		if (Validator.isNotNull(testrayBuildName)) {
@@ -536,7 +536,7 @@ public class TestrayStatusMetricResourceImpl
 
 		if (Validator.isNotNull(testrayProductVersion)) {
 			sb.append("and pv.c_productVersionId_ = ? ");
-			params.add(testrayProductVersion);
+			params.add(GetterUtil.getLong(testrayProductVersion));
 		}
 
 		if (Validator.isNotNull(testrayBuildName)) {

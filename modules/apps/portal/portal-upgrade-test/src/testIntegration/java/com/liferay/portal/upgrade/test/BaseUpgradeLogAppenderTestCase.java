@@ -203,14 +203,6 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 			_appender.stop();
 
-			_assertReport(configDirPath);
-
-			_assertReport(fileName);
-
-			_assertReport("testKey=\"testValue\"");
-
-			_assertReport("password=\"********\"");
-
 			_assertLogContextContains(
 				"upgrade.report.configurations.set.by.user", configDirPath);
 
@@ -219,11 +211,19 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 			_assertLogContextContains(
 				"upgrade.report.configurations.set.by.user",
-				"testKey=\"testValue\"");
+				"password=\"********\"");
 
 			_assertLogContextContains(
 				"upgrade.report.configurations.set.by.user",
-				"password=\"********\"");
+				"testKey=\"testValue\"");
+
+			_assertReport(configDirPath);
+
+			_assertReport(fileName);
+
+			_assertReport("password=\"********\"");
+
+			_assertReport("testKey=\"testValue\"");
 		}
 		finally {
 			ConfigurationTestUtil.deleteFactoryConfiguration(

@@ -1,0 +1,8 @@
+@import '../../common/styles/global';
+@import './components/AttachmentUploader/attachment-uploader';
+
+.container-attach {
+	align-items: center;
+	display: flex;
+	justify-content: center;
+}

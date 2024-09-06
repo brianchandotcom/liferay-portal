@@ -30,7 +30,7 @@ export async function blogsCategorizedFriendlyUrlSetup({
 }) {
 	const categories = await createCategories({
 		apiHelpers,
-		friendlyUrlCategories,
+		categoryNames: friendlyUrlCategories,
 		site,
 		vocabularyName,
 	});

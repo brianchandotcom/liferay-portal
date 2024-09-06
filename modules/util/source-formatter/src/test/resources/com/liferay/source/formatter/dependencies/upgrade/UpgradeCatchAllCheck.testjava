@@ -1171,6 +1171,11 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		_assetDisplayPageFriendlyURLProvider.getFriendlyURL("test123", 123, themeDisplay);
 	}
 
+	public void method(String name, String type) {
+		_listTypeLocalService.addListType("test123", type);
+		_listTypeLocalService.addListType(name, type);
+	}
+
 	public void method(String name, String label, BigDecimal amount) {
 		CommerceShippingOption(name, label, amount);
 	}
@@ -1286,6 +1291,9 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 
 	@Reference
 	private LayoutService _layoutService;
+
+	@Reference
+	private ListTypeLocalService _listTypeLocalService;
 
 	private ServiceTrackerList<Class<T>, Class<E>> _serviceTrackerList;
 

@@ -13,6 +13,7 @@ import com.liferay.portal.configuration.module.configuration.ConfigurationProvid
 import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
 import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.HtmlParser;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
@@ -1180,6 +1181,11 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		_assetDisplayPageFriendlyURLProvider.getFriendlyURL("test123", 123, themeDisplay);
 	}
 
+	public void method(String name, String type) {
+		_listTypeLocalService.addListType("test123", type);
+		_listTypeLocalService.addListType(CompanyThreadLocal.getCompanyId(), name, type);
+	}
+
 	public void method(String name, String label, BigDecimal amount) {
 		CommerceShippingOption(amount, "", name, name, 0);
 	}
@@ -1298,6 +1304,9 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 
 	@Reference
 	private LayoutService _layoutService;
+
+	@Reference
+	private ListTypeLocalService _listTypeLocalService;
 
 	private ServiceTrackerList<Class<E>> _serviceTrackerList;
 

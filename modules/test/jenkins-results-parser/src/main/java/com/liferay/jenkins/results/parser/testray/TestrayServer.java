@@ -299,9 +299,9 @@ public class TestrayServer {
 
 	public String requestGet(String urlPath) throws IOException {
 		return JenkinsResultsParserUtil.toString(
-			getTestrayURL(urlPath), true,
-			JenkinsResultsParserUtil.HttpRequestMethod.GET, null,
-			getHTTPAuthorization());
+			getTestrayURL(urlPath), true, 2,
+			JenkinsResultsParserUtil.HttpRequestMethod.GET, null, 5,
+			_MILLIS_REQUEST_TIMEOUT_DEFAULT, getHTTPAuthorization(), true);
 	}
 
 	public String requestPost(
@@ -309,9 +309,9 @@ public class TestrayServer {
 		throws IOException {
 
 		return JenkinsResultsParserUtil.toString(
-			getTestrayURL(urlPath), checkCache,
-			JenkinsResultsParserUtil.HttpRequestMethod.POST, requestData,
-			getHTTPAuthorization());
+			getTestrayURL(urlPath), checkCache, 2,
+			JenkinsResultsParserUtil.HttpRequestMethod.POST, requestData, 5,
+			_MILLIS_REQUEST_TIMEOUT_DEFAULT, getHTTPAuthorization(), false);
 	}
 
 	public String requestPost(String urlPath, String requestData)
@@ -627,6 +627,8 @@ public class TestrayServer {
 		testrayS3Bucket.createTestrayS3Object(
 			"inbox/" + resultsTarGzFile.getName(), resultsTarGzFile);
 	}
+
+	private static final int _MILLIS_REQUEST_TIMEOUT_DEFAULT = 60000;
 
 	private static final Map<Long, TestrayBuild> _testrayBuilds =
 		new HashMap<>();

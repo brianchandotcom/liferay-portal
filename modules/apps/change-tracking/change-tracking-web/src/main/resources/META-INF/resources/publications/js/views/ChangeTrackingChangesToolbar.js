@@ -41,6 +41,7 @@ export default function ChangeTrackingChangesToolbar({
 }) {
 	const commentsCacheRef = useRef({});
 	const [showComments, setShowComments] = useState(false);
+	const [publishButtonDisabled, setPublishButtonDisabled] = useState(false);
 
 	const setParameter = useCallback(
 		(url, name, value) => {
@@ -63,7 +64,9 @@ export default function ChangeTrackingChangesToolbar({
 						'btn btn-' + displayType + ' btn-sm',
 						{
 							disabled:
-								(!total && !ctMappingInfos.length) || expired,
+								publishButtonDisabled ||
+								(!total && !ctMappingInfos.length) ||
+								expired,
 						}
 					)}
 					href={setParameter(
@@ -71,6 +74,7 @@ export default function ChangeTrackingChangesToolbar({
 						'redirect',
 						window.location.pathname + window.location.search
 					)}
+					onClick={() => setPublishButtonDisabled(true)}
 				>
 					<span className="inline-item inline-item-before">
 						<ClayIcon spritemap={spritemap} symbol={symbol} />

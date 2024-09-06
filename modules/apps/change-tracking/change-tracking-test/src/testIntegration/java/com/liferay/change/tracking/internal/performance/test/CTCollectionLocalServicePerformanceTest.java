@@ -62,7 +62,11 @@ public class CTCollectionLocalServicePerformanceTest {
 			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
 			0, RandomTestUtil.randomString(), null);
 
-		_group = GroupTestUtil.addGroup();
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setProductionModeWithSafeCloseable()) {
+
+			_group = GroupTestUtil.addGroup();
+		}
 	}
 
 	@After
@@ -70,7 +74,11 @@ public class CTCollectionLocalServicePerformanceTest {
 		_ctCollectionLocalService.deleteCTCollection(_ctCollection1);
 		_ctCollectionLocalService.deleteCTCollection(_ctCollection2);
 
-		GroupTestUtil.deleteGroup(_group);
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setProductionModeWithSafeCloseable()) {
+
+			GroupTestUtil.deleteGroup(_group);
+		}
 	}
 
 	@Test
@@ -124,7 +132,11 @@ public class CTCollectionLocalServicePerformanceTest {
 			_ctCollectionLocalService.checkConflicts(_ctCollection1);
 		}
 
-		GroupTestUtil.deleteGroup(group);
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setProductionModeWithSafeCloseable()) {
+
+			GroupTestUtil.deleteGroup(group);
+		}
 	}
 
 	@Test
@@ -158,6 +170,9 @@ public class CTCollectionLocalServicePerformanceTest {
 	@Test
 	public void testDiscardCTEntryLayout() throws Exception {
 		Layout layout = null;
+
+		ServiceContextThreadLocal.pushServiceContext(
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(

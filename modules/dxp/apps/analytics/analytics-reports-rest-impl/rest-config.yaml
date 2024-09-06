@@ -3,7 +3,7 @@ apiPackagePath: "com.liferay.analytics.reports.rest"
 application:
     baseURI: "/analytics-reports-rest"
     className: "AnalyticsReportsRESTApplication"
-    name: "Liferay.Analytyics.Reports.REST"
+    name: "Liferay.Analytics.Reports.REST"
 author: "Marcos Martins"
 clientDir: "../analytics-reports-rest-client/src/main/java"
 compatibilityVersion: 6

@@ -225,15 +225,11 @@ public class DBSchemaImporterProcess {
 			DataSource targetDataSource)
 		throws Exception {
 
-		Set<String> sourceTableNames = _getDBTableNames(
-			sourceDataSource, "TABLE");
-		Set<String> sourceViewNames = _getDBTableNames(
-			sourceDataSource, "VIEW");
+		Set<String> sourceTableNames = _getElement(sourceDataSource, "TABLE");
+		Set<String> sourceViewNames = _getElement(sourceDataSource, "VIEW");
 
-		Set<String> targetTableNames = _getDBTableNames(
-			targetDataSource, "TABLE");
-		Set<String> targetViewNames = _getDBTableNames(
-			targetDataSource, "VIEW");
+		Set<String> targetTableNames = _getElement(targetDataSource, "TABLE");
+		Set<String> targetViewNames = _getElement(targetDataSource, "VIEW");
 
 		if (Validator.isNull(partitionName)) {
 			partitionName = "Default";
@@ -275,10 +271,10 @@ public class DBSchemaImporterProcess {
 			StringPool.NEW_LINE);
 	}
 
-	private Set<String> _getDBTableNames(DataSource dataSource, String type)
+	private Set<String> _getElement(DataSource dataSource, String type)
 		throws Exception {
 
-		Set<String> tableNames = new HashSet<>();
+		Set<String> elementNames = new HashSet<>();
 
 		try (Connection connection = dataSource.getConnection()) {
 			DatabaseMetaData databaseMetaData = connection.getMetaData();
@@ -288,14 +284,14 @@ public class DBSchemaImporterProcess {
 					new String[] {type})) {
 
 				while (resultSet.next()) {
-					tableNames.add(
+					elementNames.add(
 						StringUtil.toLowerCase(
 							resultSet.getString("TABLE_NAME")));
 				}
 			}
 		}
 
-		return tableNames;
+		return elementNames;
 	}
 
 	private String _getSessionCharsetEncoding(DataSource dataSource)

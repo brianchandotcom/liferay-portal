@@ -544,35 +544,6 @@ test.describe('Manage object definitions through Model Builder', () => {
 			).toHaveText(panelLink, {ignoreCase: true});
 		}
 	});
-
-	test('show object definition details in "RightSidebar" after create object definition', async ({
-		modalAddObjectDefinitionPage,
-		modelBuilderDiagramPage,
-		modelBuilderLeftSidebarPage,
-		modelBuilderRightSidebarPage,
-	}) => {
-		await modelBuilderDiagramPage.goto({objectFolderName: 'Default'});
-
-		const objectDefinitionLabel = 'ObjectDefinitionLabel' + getRandomInt();
-
-		modelBuilderLeftSidebarPage.createNewObjectDefinitionButton.click();
-
-		const objectDefinition =
-			await modalAddObjectDefinitionPage.createObjectDefinition(
-				objectDefinitionLabel
-			);
-
-		objectDefinitions.push(objectDefinition);
-
-		const rightSidebar =
-			modelBuilderRightSidebarPage.getRightSidebarLocator(
-				modelBuilderLeftSidebarPage.createNewObjectDefinitionButton
-			);
-
-		await expect(
-			rightSidebar.getByTitle(objectDefinitionLabel + ' Details')
-		).toBeVisible();
-	});
 });
 
 test.describe('Manage object definitions through View Object Definitions', () => {

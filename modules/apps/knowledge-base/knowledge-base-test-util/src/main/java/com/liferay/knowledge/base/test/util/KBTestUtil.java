@@ -35,7 +35,7 @@ import java.io.FileInputStream;
  */
 public class KBTestUtil {
 
-	public static File addAttachment(
+	public static File addKBArticleAttachment(
 			long userId, long resourcePrimKey, String attachmentFileName,
 			Class<?> clazz, String testFileName)
 		throws Exception {

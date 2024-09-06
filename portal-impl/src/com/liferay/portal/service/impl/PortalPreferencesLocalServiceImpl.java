@@ -343,6 +343,13 @@ public class PortalPreferencesLocalServiceImpl
 						portalPreferenceKey.getNamespace());
 					portalPreferenceValue.setValue(value);
 
+					if (portalPreferences.getOwnerType() ==
+							PortletKeys.PREFS_OWNER_TYPE_COMPANY) {
+
+						portalPreferenceValue.setCompanyId(
+							portalPreferences.getOwnerId());
+					}
+
 					_portalPreferenceValuePersistence.update(
 						portalPreferenceValue);
 				}

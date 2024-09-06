@@ -10,6 +10,7 @@ import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.db.partition.util.DBPartitionUtil;
 import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -57,8 +58,10 @@ import java.sql.PreparedStatement;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -93,8 +96,11 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
-		_db.runSQL("DROP_TABLE_IF_EXISTS(UpgradeReportTable1)");
-		_db.runSQL("DROP_TABLE_IF_EXISTS(UpgradeReportTable2)");
+		DBPartitionUtil.forEachCompanyId(
+			companyId -> {
+				_db.runSQL("DROP_TABLE_IF_EXISTS(UpgradeReportTable1)");
+				_db.runSQL("DROP_TABLE_IF_EXISTS(UpgradeReportTable2)");
+			});
 
 		ReflectionTestUtil.setFieldValue(
 			DBUpgrader.class, "_upgradeClient", _originalUpgradeClient);
@@ -694,14 +700,26 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 		String upgradeProcess2ClassName = upgradeProcess2.getClass(
 		).getName();
 
-		if (DBPartition.isPartitionEnabled()) {
-			upgradeProcess1ClassName =
-				upgradeProcess1ClassName + StringPool.AT +
-					CompanyThreadLocal.getCompanyId();
-			upgradeProcess2ClassName =
-				upgradeProcess2ClassName + StringPool.AT +
-					CompanyThreadLocal.getCompanyId();
-		}
+		List<String> upgradeProcess1ClassNames = new CopyOnWriteArrayList<>();
+		List<String> upgradeProcess2ClassNames = new CopyOnWriteArrayList<>();
+
+		DBPartitionUtil.forEachCompanyId(
+			companyId -> {
+				if (DBPartition.isPartitionEnabled()) {
+					upgradeProcess1ClassNames.add(
+						upgradeProcess1ClassName + StringPool.AT +
+							CompanyThreadLocal.getCompanyId());
+
+					upgradeProcess2ClassNames.add(
+						upgradeProcess2ClassName + StringPool.AT +
+							CompanyThreadLocal.getCompanyId());
+				}
+				else {
+					upgradeProcess1ClassNames.add(upgradeProcess1ClassName);
+
+					upgradeProcess2ClassNames.add(upgradeProcess2ClassName);
+				}
+			});
 
 		_appender.start();
 
@@ -715,23 +733,27 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 			_reportContent = _getReportContent();
 		}
 
-		_assertLogContextContains(
-			"upgrade.report.longest.running.sqls",
-			String.format("%s:%s", upgradeProcess1ClassName, statement1));
+		for (String upgradeProcessClassName : upgradeProcess1ClassNames) {
+			_assertLogContextContains(
+				"upgrade.report.longest.running.sqls",
+				String.format("%s:%s", upgradeProcessClassName, statement1));
 
-		_assertLogContextContains(
-			"upgrade.report.longest.running.sqls",
-			String.format("%s:%s", upgradeProcess2ClassName, statement2));
+			_assertReport(
+				String.format(
+					"Upgrade Process: %s\nSQL: %s", upgradeProcessClassName,
+					statement1));
+		}
 
-		_assertReport(
-			String.format(
-				"Upgrade Process: %s\nSQL: %s", upgradeProcess1ClassName,
-				statement1));
+		for (String upgradeProcessClassName : upgradeProcess2ClassNames) {
+			_assertLogContextContains(
+				"upgrade.report.longest.running.sqls",
+				String.format("%s:%s", upgradeProcessClassName, statement2));
 
-		_assertReport(
-			String.format(
-				"Upgrade Process: %s\nSQL: %s", upgradeProcess2ClassName,
-				statement2));
+			_assertReport(
+				String.format(
+					"Upgrade Process: %s\nSQL: %s", upgradeProcessClassName,
+					statement2));
+		}
 
 		Map<String, Long> sqlExecutionTimes = ReflectionTestUtil.invoke(
 			_upgradeRecorder, "getSQLExecutionTimes", new Class<?>[0]);
@@ -800,10 +822,15 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 	protected static void setUpClass(boolean upgradeClient) throws Exception {
 		_db = DBManagerUtil.getDB();
 
-		_db.runSQL(
-			"create table UpgradeReportTable1 (id_ LONG not null primary key)");
-		_db.runSQL(
-			"create table UpgradeReportTable2 (id_ LONG not null primary key)");
+		DBPartitionUtil.forEachCompanyId(
+			companyId -> {
+				_db.runSQL(
+					"create table UpgradeReportTable1 (id_ LONG not null " +
+						"primary key)");
+				_db.runSQL(
+					"create table UpgradeReportTable2 (id_ LONG not null " +
+						"primary key)");
+			});
 
 		_originalNewRelease = ReflectionTestUtil.getFieldValue(
 			StartupHelperUtil.class, "_newRelease");

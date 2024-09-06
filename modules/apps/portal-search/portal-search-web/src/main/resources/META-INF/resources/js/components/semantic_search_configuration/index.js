@@ -786,6 +786,25 @@ export default function ({
 								</ClayForm.Text>
 							</ClayForm.FeedbackGroup>
 						)}
+
+						{formik.values
+							.textEmbeddingProviderConfigurationJSONs?.[index]
+							?.providerName ===
+							TEXT_EMBEDDING_PROVIDER_TYPES.VERTEX_AI && (
+							<ClayForm.FeedbackGroup>
+								<ClayForm.Text>
+									{Liferay.Language.get(
+										'text-embedding-provider-vertex-ai-authentication-help'
+									)}
+
+									<LearnMessageWithoutContext
+										className="ml-1"
+										learnMessages={learnMessages}
+										resourceKey="semantic-search"
+									/>
+								</ClayForm.Text>
+							</ClayForm.FeedbackGroup>
+						)}
 					</Input>
 
 					{formik.values.textEmbeddingProviderConfigurationJSONs?.[

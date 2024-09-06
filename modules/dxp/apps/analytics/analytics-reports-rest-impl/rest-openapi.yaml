@@ -1,5 +1,11 @@
 components:
     schemas:
+        AssetHistogramMetric:
+            properties:
+                histograms:
+                    items:
+                        $ref: "#/components/schemas/Histogram"
+                    type: array
         AssetMetric:
             properties:
                 assetId:
@@ -16,6 +22,17 @@ components:
                     items:
                         $ref: "#/components/schemas/Metric"
                     type: array
+        Histogram:
+            properties:
+                metrics:
+                    items:
+                        $ref: "#/components/schemas/Metric"
+                    type: array
+                metricName:
+                    type: string
+                total:
+                    format: double
+                    type: number
         Metric:
             properties:
                 metricType:
@@ -90,3 +107,39 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/AssetMetric"
             tags: ["AssetMetric"]
+    "{groupId}/asset-metrics/{assetType}/histogram":
+        get:
+            operationId: getGroupAssetMetricAssetTypeHistogram
+            parameters:
+                - in: path
+                  name: groupId
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: assetType
+                  schema:
+                      type: string
+                - in: query
+                  name: assetId
+                  schema:
+                      type: string
+                - in: query
+                  name: identityType
+                  schema:
+                      enum: [ALL, KNOWN, UNKNOWN]
+                      type: string
+                - in: query
+                  name: rangeKey
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/AssetHistogramMetric"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/AssetHistogramMetric"
+            tags: ["AssetHistogramMetric"]

@@ -59,6 +59,7 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestName;
 import org.junit.runner.RunWith;
 
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -134,7 +135,7 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 					)
 				).toString());
 
-		JSONObject searchBarSuggestionsJSONObject = JSONUtil.put(
+		JSONObject searchBarSuggestionsLargeValueJSONObject = JSONUtil.put(
 			"attributes",
 			JSONUtil.put(
 				"includeAssetSearchSummary", true
@@ -153,7 +154,7 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 
 		PortletPreferenceValue searchBarSuggestionsPortletPreferenceValue =
 			_addPortletPreferenceValue(
-				searchBarSuggestionsJSONObject.toString(),
+				searchBarSuggestionsLargeValueJSONObject.toString(),
 				"suggestionsContributorConfigurations", _SEARCH_BAR_PORTLET_ID,
 				null);
 
@@ -183,12 +184,12 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 			lowLevelSearchOptionsPortletPreferenceValue.
 				getPortletPreferenceValueId());
 
-		searchBarSuggestionsJSONObject.getJSONObject(
+		searchBarSuggestionsLargeValueJSONObject.getJSONObject(
 			"attributes"
 		).remove(
 			"sxpBlueprintId"
 		);
-		searchBarSuggestionsJSONObject.getJSONObject(
+		searchBarSuggestionsLargeValueJSONObject.getJSONObject(
 			"attributes"
 		).put(
 			"sxpBlueprintExternalReferenceCode",
@@ -196,7 +197,7 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 		);
 
 		_assertPortletPreferenceValue(
-			searchBarSuggestionsJSONObject.toString(),
+			searchBarSuggestionsLargeValueJSONObject.toString(),
 			"suggestionsContributorConfigurations", StringPool.BLANK,
 			searchBarSuggestionsPortletPreferenceValue.
 				getPortletPreferenceValueId());
@@ -212,30 +213,27 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 	public void testUpgradeSXPBlueprintAndSXPElement() throws Exception {
 		SXPBlueprint sxpBlueprint = _addSXPBlueprint(
 			_sxpBlueprintConfigurationJSONObject.toString(),
-			_read("elementInstancesJSON.json"), null);
-		SXPElement sxpElement = _addSXPElement(
-			_read("elementDefinitionJSON.json"));
+			_read("elementInstances"), null);
+		SXPElement sxpElement = _addSXPElement(_read("elementDefinition"));
 
 		_runAllUpgrades();
 
 		_assertSXPBlueprint(
-			_read("updatedElementInstancesJSON.json"),
-			sxpBlueprint.getSXPBlueprintId());
+			_read("elementInstancesUpdated"), sxpBlueprint.getSXPBlueprintId());
 		_assertSXPElement(
-			_read("updatedElementDefinitionJSON.json"),
-			sxpElement.getSXPElementId());
+			_read("elementDefinitionUpdated"), sxpElement.getSXPElementId());
 	}
 
 	@Test
 	public void testUpgradeSXPBlueprintWithEnableAndDisableContributors()
 		throws Exception {
 
-		SXPBlueprint sxpBlueprintAllContributorsDisabled = _addSXPBlueprint(
-			_read("configurationJSONDisableAllContributors.json"), null, "1.0");
-		SXPBlueprint sxpBlueprintAllContributorsEnabled = _addSXPBlueprint(
-			_read("configurationJSONEnableAllContributors.json"), null, "1.0");
-		SXPBlueprint sxpBlueprintSomeContributorsEnabled = _addSXPBlueprint(
-			_read("configurationJSONEnableSomeContributors.json"), null, "1.0");
+		SXPBlueprint disableAllContributorsSXPBlueprint = _addSXPBlueprint(
+			_read("disableAllContributors"), null, "1.0");
+		SXPBlueprint enableAllContributorsSXPBlueprint = _addSXPBlueprint(
+			_read("enableAllContributors"), null, "1.0");
+		SXPBlueprint enableSomeContributorsSXPBlueprint = _addSXPBlueprint(
+			_read("enableSomeContributors"), null, "1.0");
 
 		_runUpgrade("v3_1_2.SXPBlueprintUpgradeProcess");
 
@@ -243,10 +241,10 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 
 		_assertGeneralConfigurationExcludesAndIncludes(
 			wildcardArray, new String[0],
-			sxpBlueprintAllContributorsDisabled.getSXPBlueprintId());
+			disableAllContributorsSXPBlueprint.getSXPBlueprintId());
 		_assertGeneralConfigurationExcludesAndIncludes(
 			new String[0], wildcardArray,
-			sxpBlueprintAllContributorsEnabled.getSXPBlueprintId());
+			enableAllContributorsSXPBlueprint.getSXPBlueprintId());
 
 		_assertGeneralConfigurationExcludesAndIncludes(
 			new String[0],
@@ -256,8 +254,11 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 				"com.liferay.journal.internal.search.spi.model.query." +
 					"contributor.JournalFolderKeywordQueryContributor"
 			},
-			sxpBlueprintSomeContributorsEnabled.getSXPBlueprintId());
+			enableSomeContributorsSXPBlueprint.getSXPBlueprintId());
 	}
+
+	@Rule
+	public TestName testName = new TestName();
 
 	private PortletPreferenceValue _addPortletPreferenceValue(
 			String largeValue, String name, String portletId, String smallValue)
@@ -433,7 +434,7 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 			clazz,
 			StringBundler.concat(
 				"dependencies/", clazz.getSimpleName(), StringPool.PERIOD,
-				name));
+				testName.getMethodName(), StringPool.DASH, name, ".json"));
 	}
 
 	private void _runAllUpgrades() throws Exception {

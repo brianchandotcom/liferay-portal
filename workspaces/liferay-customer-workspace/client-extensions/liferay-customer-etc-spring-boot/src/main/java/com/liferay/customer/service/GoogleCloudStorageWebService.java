@@ -86,7 +86,8 @@ public class GoogleCloudStorageWebService {
 		}
 	}
 
-	public String getUploadSessionURL(String bucketName, String objectName)
+	public String getUploadSessionURL(
+			String origin, String bucketName, String objectName)
 		throws Exception {
 
 		StringBundler sb = new StringBundler(4);
@@ -104,6 +105,8 @@ public class GoogleCloudStorageWebService {
 			MediaType.APPLICATION_JSON
 		).header(
 			HttpHeaders.AUTHORIZATION, "Bearer " + _getAccessToken()
+		).header(
+			HttpHeaders.ORIGIN, origin
 		).retrieve(
 		).toEntity(
 			String.class

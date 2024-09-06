@@ -26,6 +26,7 @@ import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestHelper;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.fragment.constants.FragmentConstants;
+import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
@@ -1132,6 +1133,66 @@ public class RenderLayoutStructureTagTest {
 		}
 	}
 
+	@Test
+	@TestInfo("LPS-120348")
+	public void testRenderFragmentEntryLinkWithLinkToURL() throws Exception {
+		String languageId = LocaleUtil.toLanguageId(
+			_portal.getSiteDefaultLocale(_group));
+
+		String expectedContent = RandomTestUtil.randomString();
+
+		FragmentEntry fragmentEntry =
+			_fragmentCollectionContributorRegistry.getFragmentEntry(
+				"BASIC_COMPONENT-heading");
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+				JSONUtil.put(
+					"element-text",
+					JSONUtil.put(
+						languageId, expectedContent
+					).put(
+						"config",
+						JSONUtil.put(
+							"href",
+							JSONUtil.put(languageId, "https://www.liferay.com/")
+						).put(
+							"mapperType", "link"
+						).put(
+							"target", "_blank"
+						)
+					).put(
+						"defaultValue", "Heading Example"
+					))
+			).toString(),
+			fragmentEntry.getCss(), fragmentEntry.getConfiguration(),
+			fragmentEntry.getFragmentEntryId(), fragmentEntry.getHtml(),
+			fragmentEntry.getJs(), layout.fetchDraftLayout(),
+			fragmentEntry.getFragmentEntryKey(), fragmentEntry.getType(), null,
+			0,
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				layout.getPlid()));
+
+		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
+
+		String content = _getRenderLayoutHTML(layout);
+
+		Assert.assertTrue(
+			content,
+			StringUtil.contains(
+				content,
+				StringBundler.concat(
+					"data-lfr-editable-id=\"element-text\" ",
+					"data-lfr-editable-type=\"text\"><a target=\"_blank\" ",
+					"href=\"https://www.liferay.com/\">", expectedContent,
+					"</a></h1></div>"),
+				StringPool.BLANK));
+	}
+
 	private List<AssetEntry> _addAssetEntries(AssetListEntry assetListEntry)
 		throws Exception {
 
@@ -1613,6 +1674,10 @@ public class RenderLayoutStructureTagTest {
 
 	@Inject
 	private EntityCache _entityCache;
+
+	@Inject
+	private FragmentCollectionContributorRegistry
+		_fragmentCollectionContributorRegistry;
 
 	@Inject
 	private FragmentCollectionLocalService _fragmentCollectionLocalService;

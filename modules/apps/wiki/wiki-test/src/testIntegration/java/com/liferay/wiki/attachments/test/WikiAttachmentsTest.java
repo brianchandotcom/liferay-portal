@@ -319,7 +319,7 @@ public class WikiAttachmentsTest {
 			addWikiPage();
 		}
 
-		WikiTestUtil.addWikiAttachment(
+		WikiTestUtil.addPageAttachment(
 			_page.getUserId(), _page.getNodeId(), _page.getTitle(), getClass());
 	}
 
@@ -342,7 +342,7 @@ public class WikiAttachmentsTest {
 			addWikiPage();
 		}
 
-		WikiTestUtil.addWikiAttachment(
+		WikiTestUtil.addPageAttachment(
 			_page.getUserId(), _page.getNodeId(), _page.getTitle(), fileName,
 			getClass());
 	}
@@ -371,7 +371,7 @@ public class WikiAttachmentsTest {
 
 		String fileName = RandomTestUtil.randomString() + ".docx";
 
-		WikiTestUtil.addWikiAttachment(
+		WikiTestUtil.addPageAttachment(
 			TestPropsValues.getUserId(), _node.getNodeId(), _page.getTitle(),
 			fileName, getClass());
 

@@ -387,7 +387,7 @@ public class WikiPageLocalServiceTest {
 		WikiPage page = WikiTestUtil.addPage(
 			_group.getGroupId(), _node.getNodeId(), true);
 
-		WikiTestUtil.addWikiAttachment(
+		WikiTestUtil.addPageAttachment(
 			page.getUserId(), page.getNodeId(), page.getTitle(), getClass());
 
 		List<FileEntry> attachmentsFileEntries =
@@ -1379,7 +1379,7 @@ public class WikiPageLocalServiceTest {
 		WikiPage approvedPage = WikiTestUtil.addPage(
 			_group.getGroupId(), _node.getNodeId(), true);
 
-		WikiTestUtil.addWikiAttachment(
+		WikiTestUtil.addPageAttachment(
 			approvedPage.getUserId(), approvedPage.getNodeId(),
 			approvedPage.getTitle(), getClass());
 
@@ -1393,7 +1393,7 @@ public class WikiPageLocalServiceTest {
 			approvedPage, approvedPage.getUserId(), approvedPage.getTitle(),
 			approvedPage.getContent(), true, serviceContext);
 
-		WikiTestUtil.addWikiAttachment(
+		WikiTestUtil.addPageAttachment(
 			approvedPage.getUserId(), approvedPage.getNodeId(),
 			approvedPage.getTitle(), getClass());
 

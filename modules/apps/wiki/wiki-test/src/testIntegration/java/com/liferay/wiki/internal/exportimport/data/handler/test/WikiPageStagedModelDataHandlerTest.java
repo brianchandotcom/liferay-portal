@@ -192,7 +192,7 @@ public class WikiPageStagedModelDataHandlerTest
 			RandomTestUtil.randomString(), true,
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 
-		WikiTestUtil.addWikiAttachment(
+		WikiTestUtil.addPageAttachment(
 			TestPropsValues.getUserId(), node.getNodeId(), page.getTitle(),
 			WikiAttachmentsTest.class);
 

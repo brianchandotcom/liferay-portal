@@ -386,16 +386,16 @@ public class WikiTestUtil {
 		return new WikiPage[] {parentPage, childPage, grandchildPage};
 	}
 
-	public static File addWikiAttachment(
+	public static File addPageAttachment(
 			long userId, long nodeId, String title, Class<?> clazz)
 		throws Exception {
 
 		String fileName = RandomTestUtil.randomString() + ".docx";
 
-		return addWikiAttachment(userId, nodeId, title, fileName, clazz);
+		return addPageAttachment(userId, nodeId, title, fileName, clazz);
 	}
 
-	public static File addWikiAttachment(
+	public static File addPageAttachment(
 			long userId, long nodeId, String title, String fileName,
 			Class<?> clazz)
 		throws Exception {
@@ -417,7 +417,7 @@ public class WikiTestUtil {
 		return file;
 	}
 
-	public static File addWikiAttachment(
+	public static File addPageAttachment(
 			long userId, long nodeId, String title, String attachmentFileName,
 			Class<?> clazz, String testFileName)
 		throws Exception {

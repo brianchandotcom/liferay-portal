@@ -48,7 +48,7 @@ public class WikiActivityInterpreterTest
 
 		_attachmentFileName = RandomTestUtil.randomString() + ".docx";
 
-		WikiTestUtil.addWikiAttachment(
+		WikiTestUtil.addPageAttachment(
 			_page.getUserId(), _page.getNodeId(), _page.getTitle(),
 			_attachmentFileName, getClass());
 	}

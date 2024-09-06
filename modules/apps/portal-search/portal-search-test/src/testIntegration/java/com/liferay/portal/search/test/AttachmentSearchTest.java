@@ -67,7 +67,7 @@ public class AttachmentSearchTest {
 		WikiPage wikiPage = WikiTestUtil.addPage(
 			_group.getGroupId(), wikiNode.getNodeId(), true);
 
-		WikiTestUtil.addWikiAttachment(
+		WikiTestUtil.addPageAttachment(
 			wikiPage.getUserId(), wikiPage.getNodeId(), wikiPage.getTitle(),
 			wikiPage.getTitle(), getClass(), "Test.docx");
 

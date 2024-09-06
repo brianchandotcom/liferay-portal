@@ -41,6 +41,17 @@ public class DocumentMetadataSetResourceImpl
 	extends BaseDocumentMetadataSetResourceImpl {
 
 	@Override
+	public void deleteDocumentMetadataSet(Long documentMetadataSetId)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-32247")) {
+			throw new UnsupportedOperationException();
+		}
+
+		_ddmStructureService.deleteStructure(documentMetadataSetId);
+	}
+
+	@Override
 	public Page<DocumentMetadataSet> getAssetLibraryDocumentMetadataSetsPage(
 			Long assetLibraryId, Pagination pagination)
 		throws Exception {

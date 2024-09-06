@@ -70,7 +70,7 @@ public class DBSchemaImporter {
 			dbSchemaImporterProcess.run();
 
 			_generateReport(
-				commandLine.getOptionValue("path"), dbSchemaImporterProcess);
+				dbSchemaImporterProcess, commandLine.getOptionValue("path"));
 
 			System.exit(_LIFERAY_COMMON_EXIT_CODE_OK);
 		}
@@ -82,7 +82,7 @@ public class DBSchemaImporter {
 	}
 
 	private static void _generateReport(
-			String dirName, DBSchemaImporterProcess dbSchemaImporterProcess)
+			DBSchemaImporterProcess dbSchemaImporterProcess, String dirName)
 		throws Exception {
 
 		try (PrintWriter printWriter = new PrintWriter(

@@ -76,6 +76,7 @@ const FrontendDataSet = ({
 	onSelect,
 	overrideEmptyResultView,
 	pagination,
+	parameters,
 	portletId,
 	selectedItems: initialSelectedItemsValues,
 	selectedItemsKey,
@@ -219,7 +220,8 @@ const FrontendDataSet = ({
 			searchParam,
 			paginationDelta,
 			pageNumber,
-			activeSorts
+			activeSorts,
+			parameters
 		);
 	}, [
 		apiURL,
@@ -227,6 +229,7 @@ const FrontendDataSet = ({
 		paginationDelta,
 		filters,
 		pageNumber,
+		parameters,
 		searchParam,
 		sorts,
 	]);

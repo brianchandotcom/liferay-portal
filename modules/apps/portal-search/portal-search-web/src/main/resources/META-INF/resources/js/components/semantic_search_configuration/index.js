@@ -6,6 +6,8 @@
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayCheckbox} from '@clayui/form';
+import ClayIcon from '@clayui/icon';
+import {ClayTooltipProvider} from '@clayui/tooltip';
 import {useFormik} from 'formik';
 import {fetch} from 'frontend-js-web';
 import React, {useMemo, useState} from 'react';
@@ -20,6 +22,7 @@ import {TEXT_EMBEDDING_PROVIDER_TYPES} from './constants';
 const DEFAULT_TEXT_EMBEDDING_PROVIDER_CONFIGURATIONS = {
 	attributes: {
 		accessToken: '',
+		autoTruncate: true,
 		hostAddress: '',
 		maxCharacterCount: 500,
 		model: '',
@@ -1235,7 +1238,21 @@ export default function ({
 									]?.attributes?.autoTruncate
 								}
 								disabled={formik.isSubmitting}
-								label={Liferay.Language.get('auto-truncate')}
+								label={
+									<>
+										{Liferay.Language.get('auto-truncate')}
+										<ClayTooltipProvider>
+											<span
+												className="ml-2"
+												title={Liferay.Language.get(
+													'text-embedding-provider-vertex-ai-auto-truncate-help'
+												)}
+											>
+												<ClayIcon symbol="question-circle-full" />
+											</span>
+										</ClayTooltipProvider>
+									</>
+								}
 								name={`textEmbeddingProviderConfigurationJSONs[${index}].attributes.autoTruncate`}
 								onChange={_handleCheckboxChange(
 									`textEmbeddingProviderConfigurationJSONs[${index}].attributes.autoTruncate`

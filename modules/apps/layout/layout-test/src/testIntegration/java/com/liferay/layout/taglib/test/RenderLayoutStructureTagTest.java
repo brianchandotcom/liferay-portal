@@ -179,15 +179,7 @@ public class RenderLayoutStructureTagTest {
 
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
-		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
-			null, TestPropsValues.getUserId(), _group.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			RandomTestUtil.randomString() + ".jpg", ContentTypes.IMAGE_JPEG,
-			FileUtil.getBytes(
-				RenderLayoutStructureTagTest.class, "dependencies/liferay.jpg"),
-			null, null, null,
-			ServiceContextTestUtil.getServiceContext(
-				_group, TestPropsValues.getUserId()));
+		FileEntry fileEntry = _addFileEntry();
 
 		String url = _dlURLHelper.getPreviewURL(
 			fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK,
@@ -737,16 +729,7 @@ public class RenderLayoutStructureTagTest {
 						layoutStructure.addContainerStyledLayoutStructureItem(
 							layoutStructure.getMainItemId(), 0);
 
-			FileEntry fileEntry = _dlAppLocalService.addFileEntry(
-				null, TestPropsValues.getUserId(), _group.getGroupId(),
-				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				RandomTestUtil.randomString() + ".jpg", ContentTypes.IMAGE_JPEG,
-				FileUtil.getBytes(
-					RenderLayoutStructureTagTest.class,
-					"dependencies/liferay.jpg"),
-				null, null, null,
-				ServiceContextTestUtil.getServiceContext(
-					_group, TestPropsValues.getUserId()));
+			FileEntry fileEntry = _addFileEntry();
 
 			String url = _dlURLHelper.getPreviewURL(
 				fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK,
@@ -1141,39 +1124,27 @@ public class RenderLayoutStructureTagTest {
 
 		String expectedContent = RandomTestUtil.randomString();
 
-		FragmentEntry fragmentEntry =
-			_fragmentCollectionContributorRegistry.getFragmentEntry(
-				"BASIC_COMPONENT-heading");
-
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
-		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+		_addFragmentEntryLinkToLayout(
 			JSONUtil.put(
-				FragmentEntryProcessorConstants.
-					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+				"element-text",
 				JSONUtil.put(
-					"element-text",
+					languageId, expectedContent
+				).put(
+					"config",
 					JSONUtil.put(
-						languageId, expectedContent
+						"href",
+						JSONUtil.put(languageId, "https://www.liferay.com/")
 					).put(
-						"config",
-						JSONUtil.put(
-							"href",
-							JSONUtil.put(languageId, "https://www.liferay.com/")
-						).put(
-							"mapperType", "link"
-						).put(
-							"target", "_blank"
-						)
+						"mapperType", "link"
 					).put(
-						"defaultValue", "Heading Example"
-					))
-			).toString(),
-			fragmentEntry.getCss(), fragmentEntry.getConfiguration(),
-			fragmentEntry.getFragmentEntryId(), fragmentEntry.getHtml(),
-			fragmentEntry.getJs(), layout.fetchDraftLayout(),
-			fragmentEntry.getFragmentEntryKey(), fragmentEntry.getType(), null,
-			0,
+						"target", "_blank"
+					)
+				).put(
+					"defaultValue", "Heading Example"
+				)),
+			"BASIC_COMPONENT-heading", layout.fetchDraftLayout(),
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
 				layout.getPlid()));
 
@@ -1331,6 +1302,18 @@ public class RenderLayoutStructureTagTest {
 		return _layoutLocalService.getLayout(layout.getPlid());
 	}
 
+	private FileEntry _addFileEntry() throws Exception {
+		return _dlAppLocalService.addFileEntry(
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString() + ".jpg", ContentTypes.IMAGE_JPEG,
+			FileUtil.getBytes(
+				RenderLayoutStructureTagTest.class, "dependencies/liferay.jpg"),
+			null, null, null,
+			ServiceContextTestUtil.getServiceContext(
+				_group, TestPropsValues.getUserId()));
+	}
+
 	private FragmentEntry _addFragmentEntry() throws Exception {
 		FragmentCollection fragmentCollection =
 			_fragmentCollectionLocalService.addFragmentCollection(
@@ -1393,6 +1376,27 @@ public class RenderLayoutStructureTagTest {
 		return _addFragmentEntryLinkToLayout(
 			JSONUtil.put("element-text", elemenTextJSONObject), fragmentEntry,
 			layout, parentItemId, 0, segmentsExperienceId);
+	}
+
+	private FragmentEntryLink _addFragmentEntryLinkToLayout(
+			JSONObject editableFragmentEntryProcessorJSONObject,
+			String fragmentEntryKey, Layout layout, long segmentsExperienceId)
+		throws Exception {
+
+		FragmentEntry fragmentEntry =
+			_fragmentCollectionContributorRegistry.getFragmentEntry(
+				fragmentEntryKey);
+
+		return ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+				editableFragmentEntryProcessorJSONObject
+			).toString(),
+			fragmentEntry.getCss(), fragmentEntry.getConfiguration(),
+			fragmentEntry.getFragmentEntryId(), fragmentEntry.getHtml(),
+			fragmentEntry.getJs(), layout, fragmentEntry.getFragmentEntryKey(),
+			fragmentEntry.getType(), null, 0, segmentsExperienceId);
 	}
 
 	private JournalArticle _addJournalArticle(DDMStructure ddmStructure)

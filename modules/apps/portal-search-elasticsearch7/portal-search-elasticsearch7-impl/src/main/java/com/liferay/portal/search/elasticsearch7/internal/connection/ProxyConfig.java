@@ -54,9 +54,11 @@ public class ProxyConfig {
 			ProxyConfig proxyConfig = new ProxyConfig();
 
 			proxyConfig._host = getHost();
+			proxyConfig._password = getPassword();
 			proxyConfig._port = getPort();
 			proxyConfig._shouldApplyConfig = shouldApplyConfig();
 			proxyConfig._shouldApplyCredentials = shouldApplyCredentials();
+			proxyConfig._userName = getUserName();
 
 			return proxyConfig;
 		}
@@ -99,8 +101,16 @@ public class ProxyConfig {
 			return _host;
 		}
 
+		protected String getPassword() {
+			return _password;
+		}
+
 		protected int getPort() {
 			return _port;
+		}
+
+		protected String getUserName() {
+			return _userName;
 		}
 
 		protected boolean hasHostAndPort() {

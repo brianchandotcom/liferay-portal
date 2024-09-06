@@ -187,16 +187,16 @@ public class AttachmentManagerImpl implements AttachmentManager {
 		_validateFile(
 			fileContent, fileName, objectFieldId, serviceContext.getUserId());
 
-		long folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 		long repositoryId = groupId;
+		long folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 
 		if (Validator.isNotNull(folderExternalReferenceCode)) {
 			DLFolder dlFolder =
 				_dlFolderService.getDLFolderByExternalReferenceCode(
 					folderExternalReferenceCode, groupId);
 
-			folderId = dlFolder.getFolderId();
 			repositoryId = dlFolder.getRepositoryId();
+			folderId = dlFolder.getFolderId();
 		}
 
 		ServiceContext cloneServiceContext =

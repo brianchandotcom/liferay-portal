@@ -133,7 +133,7 @@ public class DBSchemaImporterProcess {
 						_reportInfo.add(
 							0,
 							_getDataSourceInfo(
-								_sourceDataSource, _targetDataSource, null));
+								null, _sourceDataSource, _targetDataSource));
 					}
 					catch (Exception exception) {
 						throwableCollector.collect(exception);
@@ -163,8 +163,8 @@ public class DBSchemaImporterProcess {
 
 							_reportInfo.add(
 								_getDataSourceInfo(
-									sourceDataSource, targetDataSource,
-									partitionName));
+									partitionName, sourceDataSource,
+									targetDataSource));
 						}
 						catch (Exception exception) {
 							throwableCollector.collect(exception);
@@ -221,17 +221,17 @@ public class DBSchemaImporterProcess {
 	}
 
 	private String _getDataSourceInfo(
-			DataSource sourceDataSource, DataSource targetDataSource,
-			String partitionName)
+			String partitionName, DataSource sourceDataSource,
+			DataSource targetDataSource)
 		throws Exception {
 
 		Set<String> sourceTableNames = _getDBTableNames(
 			sourceDataSource, "TABLE");
-		Set<String> targetTableNames = _getDBTableNames(
-			targetDataSource, "TABLE");
-
 		Set<String> sourceViewNames = _getDBTableNames(
 			sourceDataSource, "VIEW");
+
+		Set<String> targetTableNames = _getDBTableNames(
+			targetDataSource, "TABLE");
 		Set<String> targetViewNames = _getDBTableNames(
 			targetDataSource, "VIEW");
 
@@ -242,11 +242,11 @@ public class DBSchemaImporterProcess {
 		String asymmetricDifferenceTargetSourceTables = StringUtil.merge(
 			SetUtil.asymmetricDifference(targetTableNames, sourceTableNames),
 			StringPool.COMMA_AND_SPACE);
-		String asymmetricDifferenceSourceTargetTables = StringUtil.merge(
-			SetUtil.asymmetricDifference(sourceTableNames, targetTableNames),
-			StringPool.COMMA_AND_SPACE);
 		String asymmetricDifferenceTargetSourceViews = StringUtil.merge(
 			SetUtil.asymmetricDifference(targetViewNames, sourceViewNames),
+			StringPool.COMMA_AND_SPACE);
+		String asymmetricDifferenceSourceTargetTables = StringUtil.merge(
+			SetUtil.asymmetricDifference(sourceTableNames, targetTableNames),
 			StringPool.COMMA_AND_SPACE);
 		String asymmetricDifferenceSourceTargetViews = StringUtil.merge(
 			SetUtil.asymmetricDifference(sourceViewNames, targetViewNames),
@@ -256,18 +256,18 @@ public class DBSchemaImporterProcess {
 			new Object[] {
 				partitionName + " partition source tables: " +
 					sourceTableNames.size(),
-				partitionName + " partition target tables: " +
-					targetTableNames.size(),
 				partitionName + " partition source views: " +
 					sourceViewNames.size(),
+				partitionName + " partition target tables: " +
+					targetTableNames.size(),
 				partitionName + " partition target views: " +
 					targetViewNames.size(),
 				partitionName + " partition missing source tables: " +
 					asymmetricDifferenceTargetSourceTables,
-				partitionName + " partition missing target tables: " +
-					asymmetricDifferenceSourceTargetTables,
 				partitionName + " partition missing source views: " +
 					asymmetricDifferenceTargetSourceViews,
+				partitionName + " partition missing target tables: " +
+					asymmetricDifferenceSourceTargetTables,
 				partitionName + " partition missing target views: " +
 					asymmetricDifferenceSourceTargetViews,
 				StringPool.NEW_LINE

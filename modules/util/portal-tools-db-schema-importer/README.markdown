@@ -17,19 +17,19 @@ network.
 
 Import parameters:
 
-- `--jdbc-batch-size <arg>` Set the target JDBC batch size. Default, 2500.
-- `--jdbc-fetch-size <arg>` Set the source JDBC fetch size. Default, 2500.
+- `--jdbc-batch-size <arg>` Set the JDBC batch size. Default 2500.
+- `--jdbc-fetch-size <arg>` Set the JDBC result set fetch size. Default 2500.
+- `--path <arg>` Set the path of the source SQL files.
 - `--source-jdbc-url <arg>` Set the source JDBC URL.
-- `--source-user <arg>` Set the source database user.
 - `--source-password <arg>` Set the source database user password.
+- `--source-user <arg>` Set the source database user.
 - `--target-jdbc-url <arg>` Set the target JDBC URL.
-- `--target-user <arg>` Set the target database user.
 - `--target-password <arg>` Set the target database user password.
-- `--path <arg>` Set the input directory with tables.sql, *indexes.sql files.
+- `--target-user <arg>` Set the target database user.
 
 ## Examples
 
 ```
-./db_schema_importer.sh --source-jdbc-url "jdbc:mysql://localhost:3306/schema" --source-user "xyz123" --source-password "xyz123" --target-jdbc-url "jdbc:postgresql://localhost:5432/schema" --target-user "xyz321" --target-password "xyz321" --path "/directory/"
-./db_schema_importer.sh --source-jdbc-url "jdbc:mysql://localhost:3306/schema" --source-user "xyz123" --source-password "xyz123" --target-jdbc-url "jdbc:postgresql://localhost:5432/schema" --target-user "xyz321" --target-password "xyz321" --path "/directory/" --jdbc-fetch-size 1600 --jdbc-batch-size 600
+./db_schema_importer.sh --path "/directory/" --source-jdbc-url "jdbc:mysql://localhost:3306/schema" --source-password "xyz123" --source-user "xyz123" --target-jdbc-url "jdbc:postgresql://localhost:5432/schema" --target-password "xyz321" --target-user "xyz321"
+./db_schema_importer.sh --jdbc-batch-size 600 --jdbc-fetch-size 1600 --path "/directory/" --source-jdbc-url "jdbc:mysql://localhost:3306/schema" --source-password "xyz123" --source-user "xyz123" --target-jdbc-url "jdbc:postgresql://localhost:5432/schema" --target-password "xyz321" --target-user "xyz321"
 ```

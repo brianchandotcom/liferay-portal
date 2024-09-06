@@ -9016,6 +9016,23 @@ paths:
                                 $ref: "#/components/schemas/DocumentFolder"
             tags: ["DocumentFolder"]
     "/document-metadata-sets/{documentMetadataSetId}":
+        delete:
+            description:
+                Deletes the document metadata set and returns a 204 if the operation succeeds.
+            operationId: deleteDocumentMetadataSet
+            parameters:
+                - in: path
+                  name: documentMetadataSetId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["DocumentMetadataSet"]
         get:
             description:
                 Retrieves the document metadata set.

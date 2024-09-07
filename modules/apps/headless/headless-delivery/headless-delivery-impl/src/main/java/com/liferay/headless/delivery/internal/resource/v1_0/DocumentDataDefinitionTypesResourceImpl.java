@@ -65,19 +65,17 @@ public class DocumentDataDefinitionTypesResourceImpl
 			throw new UnsupportedOperationException();
 		}
 
-		DataDefinitionResource.Builder dataDefinitionResourceBuilder =
+		DataDefinitionResource.Builder builder =
 			_dataDefinitionResourceFactory.create();
 
-		DataDefinitionResource dataDefinitionResource =
-			dataDefinitionResourceBuilder.user(
-				contextUser
-			).build();
+		DataDefinitionResource dataDefinitionResource = builder.user(
+			contextUser
+		).build();
 
 		Map<Locale, String> descriptionMap = LocalizedMapUtil.getLocalizedMap(
 			contextAcceptLanguage.getPreferredLocale(),
 			documentDataDefinitionType.getDescription(),
 			documentDataDefinitionType.getDescription_i18n());
-
 		Map<Locale, String> nameMap = LocalizedMapUtil.getLocalizedMap(
 			contextAcceptLanguage.getPreferredLocale(),
 			documentDataDefinitionType.getName(),

@@ -20,7 +20,7 @@ import org.osgi.service.component.annotations.Component;
 		"liferay.jackson=false",
 		"osgi.jaxrs.application.base=/analytics-reports-rest",
 		"osgi.jaxrs.extension.select=(osgi.jaxrs.name=Liferay.Vulcan)",
-		"osgi.jaxrs.name=Liferay.Analytyics.Reports.REST"
+		"osgi.jaxrs.name=Liferay.Analytics.Reports.REST"
 	},
 	service = Application.class
 )

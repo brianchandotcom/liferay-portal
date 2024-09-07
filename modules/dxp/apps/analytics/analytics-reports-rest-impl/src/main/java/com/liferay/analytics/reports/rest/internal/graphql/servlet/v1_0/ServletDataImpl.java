@@ -43,7 +43,7 @@ public class ServletDataImpl implements ServletData {
 	}
 
 	public String getApplicationName() {
-		return "Liferay.Analytyics.Reports.REST";
+		return "Liferay.Analytics.Reports.REST";
 	}
 
 	@Override

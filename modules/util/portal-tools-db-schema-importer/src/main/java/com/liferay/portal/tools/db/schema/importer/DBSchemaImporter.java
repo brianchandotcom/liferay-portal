@@ -106,10 +106,10 @@ public class DBSchemaImporter {
 		options.addOption(null, "help", false, "Print help message.");
 		options.addOption(
 			null, "jdbc-batch-size", true,
-			"Set the JDBC batch size. Default 2500.");
+			"Set the JDBC batch size. The default value is 2500.");
 		options.addOption(
 			null, "jdbc-fetch-size", true,
-			"Set the JDBC result set fetch size. Default 2500.");
+			"Set the JDBC result set fetch size. The default value is 2500.");
 		options.addRequiredOption(
 			null, "path", true, "Set the path of the source SQL files.");
 		options.addRequiredOption(

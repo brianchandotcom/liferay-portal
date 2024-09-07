@@ -17,8 +17,8 @@ network.
 
 Import parameters:
 
-- `--jdbc-batch-size <arg>` Set the JDBC batch size. Default 2500.
-- `--jdbc-fetch-size <arg>` Set the JDBC result set fetch size. Default 2500.
+- `--jdbc-batch-size <arg>` Set the JDBC batch size. The default value is 2500.
+- `--jdbc-fetch-size <arg>` Set the JDBC result set fetch size. The default value is 2500.
 - `--path <arg>` Set the path of the source SQL files.
 - `--source-jdbc-url <arg>` Set the source JDBC URL.
 - `--source-password <arg>` Set the source database user password.

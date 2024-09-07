@@ -851,7 +851,7 @@ test('Verify a Message context is not authenticated when Require Authn Request S
 	await updateRuntimeMetadataRefreshInterval(localhostAdminPage, '4');
 });
 
-test('Verify Custom Fields can be used for user matching in SAML, see LPS-128600', async ({
+test('Verify Custom Fields can be used for user matching in SAML, see LPS-128600 and LPD-34973', async ({
 	browser,
 	searchAdminPage,
 }) => {

@@ -737,7 +737,6 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 			_assertLogContextContains(
 				"upgrade.report.longest.running.sqls",
 				String.format("%s:%s", upgradeProcessClassName, sql1));
-
 			_assertReport(
 				String.format(
 					"Upgrade Process: %s\nSQL: %s", upgradeProcessClassName,
@@ -748,7 +747,6 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 			_assertLogContextContains(
 				"upgrade.report.longest.running.sqls",
 				String.format("%s:%s", upgradeProcessClassName, sql2));
-
 			_assertReport(
 				String.format(
 					"Upgrade Process: %s\nSQL: %s", upgradeProcessClassName,
@@ -763,22 +761,18 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 			String sql = entry.getKey();
 
-			String[] splitKey = sql.split("\\|");
-
-			String storedSql = splitKey[1];
-
-			String storedUpgradeProcessClassName = splitKey[0];
+			String[] parts = sql.split("\\|");
 
 			_assertLogContextContains(
 				"upgrade.report.longest.running.sqls",
 				String.format(
-					"%s:%s:%d ms", storedUpgradeProcessClassName, storedSql,
+					"%s:%s:%d ms", parts[0], parts[1],
 					duration));
 
 			_assertReport(
 				String.format(
 					"Upgrade Process: %s\nSQL: %s\nDuration: %d ms",
-					storedUpgradeProcessClassName, storedSql, duration));
+					parts[0], parts[1], duration));
 		}
 	}
 

@@ -535,7 +535,7 @@ public class UpgradeReport {
 				Map<String, Long> sqlExecutionTimes =
 					upgradeRecorder.getSQLExecutionTimes();
 
-				List<RunningSQLQuery> longestRunningSQLQueries =
+				List<RunningSQL> longestRunningSQLs =
 					new ArrayList<>();
 
 				List<Map.Entry<String, Long>> entries = new ArrayList<>(
@@ -565,12 +565,12 @@ public class UpgradeReport {
 						sql = key.substring(separatorIndex + 1);
 					}
 
-					longestRunningSQLQueries.add(
-						new RunningSQLQuery(
+					longestRunningSQLs.add(
+						new RunningSQL(
 							upgradeProcessClassName, sql, duration));
 				}
 
-				return longestRunningSQLQueries;
+				return longestRunningSQLs;
 			}
 		).put(
 			"failed.sqls", upgradeRecorder.getFailedSQLs()
@@ -1000,9 +1000,9 @@ public class UpgradeReport {
 
 	}
 
-	private class RunningSQLQuery {
+	private class RunningSQL {
 
-		public RunningSQLQuery(
+		public RunningSQL(
 			String upgradeProcessClassName, String sql, long duration) {
 
 			_upgradeProcessClassName = upgradeProcessClassName;

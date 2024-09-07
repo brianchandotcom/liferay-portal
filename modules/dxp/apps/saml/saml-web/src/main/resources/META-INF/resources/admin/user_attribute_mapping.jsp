@@ -126,7 +126,10 @@ String userIdentifierExpression = attributeMappingDisplayContext.getUserIdentifi
 		var radioTarget = row.querySelector('input[type="radio"]');
 		var selectTarget = row.querySelector('select');
 
-		if (event == null || event.target == radioTarget) {
+		if (
+			userIdentifierExpressionIsAttributeMapping &&
+			(event == null || event.target == radioTarget)
+		) {
 			if (radioTarget.checked) {
 				document.querySelector(
 					'input[name="<portlet:namespace />attribute:userIdentifierExpressionIndex"]'

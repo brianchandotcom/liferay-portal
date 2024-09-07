@@ -3238,6 +3238,12 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 							<fail message="The portal environment is not available" />
 						</then>
 					</if>
+
+					<antcall inheritAll="false" target="setup-sdk" />
+
+					<antcall inheritAll="false" target="compile" />
+
+					<ant target="install-portal-snapshots" />
 				</else>
 			</if>
 		</sequential>

@@ -1125,8 +1125,6 @@ public class RenderLayoutStructureTagTest {
 		String languageId = LocaleUtil.toLanguageId(
 			_portal.getSiteDefaultLocale(_group));
 
-		String expectedContent = RandomTestUtil.randomString();
-
 		FileEntry fileEntry = _addFileEntry();
 
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
@@ -1135,7 +1133,7 @@ public class RenderLayoutStructureTagTest {
 			JSONUtil.put(
 				"image-square",
 				JSONUtil.put(
-					languageId, expectedContent
+					languageId, RandomTestUtil.randomString()
 				).put(
 					languageId,
 					JSONUtil.put(

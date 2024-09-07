@@ -90,6 +90,14 @@ String userIdentifierExpression = attributeMappingDisplayContext.getUserIdentifi
 </aui:fieldset>
 
 <aui:script>
+	function <portlet:namespace />deselectAttributeMappingRow(row, target) {
+		var radioTarget = row.querySelector('input[type="radio"]');
+
+		if (target != radioTarget) {
+			radioTarget.checked = false;
+		}
+	}
+
 	function <portlet:namespace />evaluateAttributeMappingRows() {
 		document.querySelector(
 			'input[name="<portlet:namespace />attribute:userIdentifierExpressionIndex"]'
@@ -127,6 +135,17 @@ String userIdentifierExpression = attributeMappingDisplayContext.getUserIdentifi
 				document.querySelector(
 					'input[name="<portlet:namespace />attribute:userIdentifierExpressionPrefix"]'
 				).value = row.dataset.prefix;
+
+				if (event != null) {
+					document
+						.querySelectorAll('.user-attribute-mapping-row')
+						.forEach((row) =>
+							<portlet:namespace />deselectAttributeMappingRow(
+								row,
+								event.target
+							)
+						);
+				}
 			}
 		}
 

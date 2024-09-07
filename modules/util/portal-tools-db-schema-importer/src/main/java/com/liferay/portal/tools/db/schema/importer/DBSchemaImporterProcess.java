@@ -75,6 +75,10 @@ public class DBSchemaImporterProcess {
 		_targetCharsetEncoding = _getSessionCharsetEncoding(_targetDataSource);
 	}
 
+	public List<String> getPartitionsReportInfo() {
+		return _partitionsReportInfo;
+	}
+
 	public String getReleaseInfo() throws Exception {
 		StringBundler sb = new StringBundler();
 
@@ -97,10 +101,6 @@ public class DBSchemaImporterProcess {
 		}
 
 		return sb.toString();
-	}
-
-	public List<String> getReportInfo() {
-		return _reportInfo;
 	}
 
 	public void run() throws Exception {
@@ -130,7 +130,7 @@ public class DBSchemaImporterProcess {
 							_sourceDataSource, _targetDataSource
 						).run();
 
-						_reportInfo.add(
+						_partitionsReportInfo.add(
 							0,
 							_getDataSourceInfo(
 								null, _sourceDataSource, _targetDataSource));
@@ -161,7 +161,7 @@ public class DBSchemaImporterProcess {
 								sourceDataSource, targetDataSource
 							).run();
 
-							_reportInfo.add(
+							_partitionsReportInfo.add(
 								_getDataSourceInfo(
 									partitionName, sourceDataSource,
 									targetDataSource));
@@ -476,9 +476,9 @@ public class DBSchemaImporterProcess {
 	private final ExecutorService _executorService =
 		Executors.newFixedThreadPool(5);
 	private final List<String> _partitionNames = new ArrayList<>();
+	private final List<String> _partitionsReportInfo =
+		Collections.synchronizedList(new ArrayList<>());
 	private final String _path;
-	private final List<String> _reportInfo = Collections.synchronizedList(
-		new ArrayList<>());
 	private final DataSource _sourceDataSource;
 	private final String _sourceJDBCURL;
 	private final String _sourcePassword;

@@ -133,11 +133,12 @@ public class DBSchemaImporter {
 	private static String _getReportInfo(
 		DBSchemaImporterProcess dbSchemaImporterProcess) {
 
-		List<String> reportInfo = dbSchemaImporterProcess.getReportInfo();
+		List<String> partitionsReportInfo =
+			dbSchemaImporterProcess.getPartitionsReportInfo();
 
-		StringBundler sb = new StringBundler(reportInfo.size() * 2);
+		StringBundler sb = new StringBundler(partitionsReportInfo.size() * 2);
 
-		for (String partitionReportInfo : reportInfo) {
+		for (String partitionReportInfo : partitionsReportInfo) {
 			sb.append(partitionReportInfo);
 			sb.append(StringPool.NEW_LINE);
 		}

@@ -686,14 +686,15 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 	@Test
 	public void testSQLStatementsWithClassNameAndDuration() throws Exception {
 		String sql1 = "insert into UpgradeReportTable1 (id_) values (2)";
-		String sql2 = "delete from UpgradeReportTable1 where id_ = 2";
 
 		UpgradeProcess upgradeProcess1 = UpgradeProcessFactory.runSQL(sql1);
 
-		UpgradeProcess upgradeProcess2 = UpgradeProcessFactory.runSQL(sql2);
-
 		String upgradeProcess1ClassName = upgradeProcess1.getClass(
 		).getName();
+
+		String sql2 = "delete from UpgradeReportTable1 where id_ = 2";
+
+		UpgradeProcess upgradeProcess2 = UpgradeProcessFactory.runSQL(sql2);
 
 		String upgradeProcess2ClassName = upgradeProcess2.getClass(
 		).getName();

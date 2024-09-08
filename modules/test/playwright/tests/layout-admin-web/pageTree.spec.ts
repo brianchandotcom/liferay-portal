@@ -10,7 +10,9 @@ import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {liferayConfig} from '../../liferay.config';
+import {getRandomInt} from '../../utils/getRandomInt';
 import getRandomString from '../../utils/getRandomString';
+import performLogin, {performLogout, userData} from '../../utils/performLogin';
 import {openProductMenu} from '../../utils/productMenu';
 
 const test = mergeTests(
@@ -72,3 +74,104 @@ test('Checks the correct label for restricted page in the Page Tree', async ({
 			.getByLabel('Restricted Page')
 	).toBeVisible();
 });
+
+test(
+	'Checks unprivileged users can not add a page via Page Tree',
+	{
+		tag: '@LPS-129406',
+	},
+	async ({apiHelpers, page}) => {
+		await page.goto(`${liferayConfig.environment.baseUrl}`);
+
+		// Open the Product Menu
+
+		await openProductMenu(page);
+
+		// Open tree if it's not already open
+
+		if (!(await page.locator('.treeview').isVisible())) {
+			await page
+				.getByRole('button', {exact: true, name: 'Page Tree'})
+				.click();
+
+			await page.locator('.treeview').waitFor();
+		}
+
+		// Assert add page button is visible for admin user
+
+		await expect(
+			page
+				.locator('.page-type-selector')
+				.getByTitle('Add Page', {exact: true})
+		).toBeVisible();
+
+		// Add new user with permissions
+
+		const company =
+			await apiHelpers.jsonWebServicesCompany.getCompanyByWebId(
+				'liferay.com'
+			);
+
+		const role = await apiHelpers.headlessAdminUser.postRole({
+			name: 'role' + getRandomInt(),
+			rolePermissions: [
+				{
+					actionIds: ['ACCESS_IN_CONTROL_PANEL'],
+					primaryKey: company.companyId,
+					resourceName:
+						'com_liferay_layout_admin_web_portlet_GroupPagesPortlet',
+					scope: 1,
+				},
+				{
+					actionIds: ['VIEW_SITE_ADMINISTRATION'],
+					primaryKey: company.companyId,
+					resourceName: 'com.liferay.portal.kernel.model.Group',
+					scope: 1,
+				},
+			],
+		});
+
+		const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		userData[user.alternateName] = {
+			name: user.givenName,
+			password: 'test',
+			surname: user.familyName,
+		};
+
+		await apiHelpers.headlessAdminUser.assignUserToRole(
+			role.externalReferenceCode,
+			user.id
+		);
+
+		// Logout and Login with the new user
+
+		await performLogout(page);
+
+		await performLogin(page, user.alternateName);
+
+		// Open the Product Menu
+
+		await page.goto(`${liferayConfig.environment.baseUrl}`);
+
+		await openProductMenu(page);
+
+		// Open tree if it's not already open
+
+		if (!(await page.locator('.treeview').isVisible())) {
+			await page
+				.getByRole('button', {exact: true, name: 'Page Tree'})
+				.click();
+
+			await page.locator('.treeview').waitFor();
+		}
+
+		// Assert add page button is not visible
+
+		await expect(
+			page
+				.locator('.page-type-selector')
+				.getByTitle('Add Page', {exact: true})
+		).not.toBeVisible();
+	}
+);

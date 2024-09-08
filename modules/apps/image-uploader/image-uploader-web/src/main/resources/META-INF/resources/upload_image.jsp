@@ -9,7 +9,7 @@
 
 <%
 int aspectRatio = ParamUtil.getInteger(request, "aspectRatio");
-long ctCollectionId = ParamUtil.getLong(request, "ctCollectionId");
+long ctCollectionId = ParamUtil.getLong(request, "ctCollectionId", CTCollectionThreadLocal.getCTCollectionId());
 String currentImageURL = ParamUtil.getString(request, "currentLogoURL");
 long maxFileSize = UploadImageUtil.getMaxFileSize(renderRequest);
 boolean preserveRatio = ParamUtil.getBoolean(request, "preserveRatio");

@@ -5,8 +5,10 @@
 
 package com.liferay.petra.reflect;
 
+import com.liferay.portal.kernel.test.SwappableSecurityManager;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
+import com.liferay.portal.kernel.test.rule.NewEnv;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.lang.reflect.Field;
@@ -16,7 +18,10 @@ import java.lang.reflect.Modifier;
 import java.net.URL;
 import java.net.URLClassLoader;
 
+import java.security.Permission;
+
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 
 import org.junit.Assert;
@@ -34,6 +39,37 @@ public class ReflectionUtilTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			CodeCoverageAssertor.INSTANCE, LiferayUnitTestRule.INSTANCE);
+
+	@NewEnv(type = NewEnv.Type.JVM)
+	@Test
+	public void testClassInitializationFailure() throws Exception {
+		SecurityException securityException = new SecurityException();
+
+		try (SwappableSecurityManager swappableSecurityManager =
+				new SwappableSecurityManager() {
+
+					@Override
+					public void checkPermission(Permission permission) {
+						if (Objects.equals(
+								permission.getName(),
+								"accessDeclaredMembers")) {
+
+							throw securityException;
+						}
+					}
+
+				}) {
+
+			swappableSecurityManager.install();
+
+			Class.forName(ReflectionUtil.class.getName());
+
+			Assert.fail();
+		}
+		catch (ExceptionInInitializerError eiie) {
+			Assert.assertSame(securityException, eiie.getCause());
+		}
+	}
 
 	@Test
 	public void testConstructor() {
@@ -86,6 +122,11 @@ public class ReflectionUtilTest {
 
 		Assert.assertTrue(method.isAccessible());
 		Assert.assertSame(TestClass._privateStaticObject, method.invoke(null));
+	}
+
+	@Test
+	public void testGetImplLookup() {
+		Assert.assertNotNull(ReflectionUtil.getImplLookup());
 	}
 
 	@Test

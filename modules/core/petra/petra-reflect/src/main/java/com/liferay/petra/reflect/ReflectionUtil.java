@@ -5,6 +5,7 @@
 
 package com.liferay.petra.reflect;
 
+import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
@@ -48,6 +49,10 @@ public class ReflectionUtil {
 		method.setAccessible(true);
 
 		return method;
+	}
+
+	public static MethodHandles.Lookup getImplLookup() {
+		return _implLookup;
 	}
 
 	public static Class<?>[] getInterfaces(Object object) {
@@ -103,6 +108,22 @@ public class ReflectionUtil {
 		throws E {
 
 		throw (E)throwable;
+	}
+
+	private static final MethodHandles.Lookup _implLookup;
+
+	static {
+		try {
+			Field field = MethodHandles.Lookup.class.getDeclaredField(
+				"IMPL_LOOKUP");
+
+			field.setAccessible(true);
+
+			_implLookup = (MethodHandles.Lookup)field.get(null);
+		}
+		catch (Exception exception) {
+			throw new ExceptionInInitializerError(exception);
+		}
 	}
 
 }

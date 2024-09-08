@@ -314,25 +314,27 @@ public class ViewChangesDisplayContext {
 		boolean showHideable = ParamUtil.getBoolean(
 			_renderRequest, "showHideable");
 
-		Map<Long, String> siteNames = DisplayContextUtil.getSiteNames(
-			_ctCollection.getCtCollectionId(), showHideable, _themeDisplay);
-
-		siteNames.put((long)-1, "System Changes");
+		Map<Long, String> siteNames = HashMapBuilder.put(
+			-1L, _language.get(_httpServletRequest, "system")
+		).putAll(
+			DisplayContextUtil.getSiteNames(
+				_ctCollection.getCtCollectionId(), showHideable, _themeDisplay)
+		).build();
 
 		JSONArray itemsOverviewJSONArray = JSONFactoryUtil.createJSONArray();
 
-		for (Map.Entry<Long, String> site : siteNames.entrySet()) {
-			List<String> siteCount = DisplayContextUtil.getTypeNamesBySite(
-				_ctCollection.getCtCollectionId(), site.getKey(), showHideable,
-				_themeDisplay);
+		for (Map.Entry<Long, String> siteName : siteNames.entrySet()) {
+			List<String> typeNames = DisplayContextUtil.getTypeNamesBySite(
+				_ctCollection.getCtCollectionId(), siteName.getKey(),
+				showHideable, _themeDisplay);
 
-			if (siteCount.isEmpty()) {
+			if (typeNames.isEmpty()) {
 				continue;
 			}
 
 			Map<String, Integer> typeNameCounts = new HashMap<>();
 
-			for (String typeName : siteCount) {
+			for (String typeName : typeNames) {
 				typeNameCounts.put(
 					typeName, typeNameCounts.getOrDefault(typeName, 0) + 1);
 			}
@@ -348,9 +350,9 @@ public class ViewChangesDisplayContext {
 
 			itemsOverviewJSONArray.put(
 				JSONUtil.put(
-					"siteCount", siteCount.size()
+					"siteCount", typeNames.size()
 				).put(
-					"siteName", site.getValue()
+					"siteName", siteName.getValue()
 				).put(
 					"typeNameAndCount", typeNameAndCountJSONArray
 				));

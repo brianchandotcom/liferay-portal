@@ -1862,7 +1862,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.oauth2.provider.rest.jar!jose4j.jar</file-name>
-				<version>0.9.3</version>
+				<version>0.9.4</version>
 				<project-name>jose4j</project-name>
 				<project-url>https://bitbucket.org/b_c/jose4j/</project-url>
 				<licenses>
@@ -1954,9 +1954,9 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.configuration.metatype.api.jar!asm.jar</file-name>
-				<version>7.0</version>
+				<version>9.7</version>
 				<project-name>org.objectweb.asm</project-name>
-				<project-url>http://asm.ow2.org/</project-url>
+				<project-url>http://asm.ow2.org</project-url>
 				<licenses>
 					<license>
 						<license-name>The Apache Software License, Version 2.0</license-name>
@@ -2347,29 +2347,31 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.k8s.agent.impl.jar!logging-interceptor.jar</file-name>
-				<version>3.12.12</version>
-				<project-name>OkHttp Logging Interceptor</project-name>
+				<version>4.12.0</version>
+				<project-name>okhttp-logging-interceptor</project-name>
+				<project-url>https://square.github.io/okhttp/</project-url>
 				<licenses>
 					<license>
-						<license-name>Apache 2.0</license-name>
+						<license-name>The Apache Software License, Version 2.0</license-name>
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.k8s.agent.impl.jar!okhttp.jar</file-name>
-				<version>3.12.12</version>
-				<project-name>OkHttp</project-name>
+				<version>4.12.0</version>
+				<project-name>okhttp</project-name>
+				<project-url>https://square.github.io/okhttp/</project-url>
 				<licenses>
 					<license>
-						<license-name>Apache 2.0</license-name>
+						<license-name>The Apache Software License, Version 2.0</license-name>
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.k8s.agent.impl.jar!okio-jvm.jar</file-name>
-				<version>3.4.0</version>
+				<version>3.6.0</version>
 				<project-name>com.squareup.okio</project-name>
 				<project-url>https://github.com/square/okio/</project-url>
 				<licenses>
@@ -2569,10 +2571,10 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.portal.search.elasticsearch7.impl.jar!asm-debug-all.jar</file-name>
-				<version>5.2</version>
-				<project-name>ASM all classes with debug info</project-name>
-				<project-url>http://asm.objectweb.org</project-url>
+				<file-name>com.liferay.portal.search.elasticsearch7.impl.jar!asm.jar</file-name>
+				<version>9.7</version>
+				<project-name>org.objectweb.asm</project-name>
+				<project-url>http://asm.ow2.org</project-url>
 				<licenses>
 					<license>
 						<license-name>The Apache Software License, Version 2.0</license-name>
@@ -4122,18 +4124,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.portal.url.rewrite.filter.jar!urlrewritefilter.jar</file-name>
-				<version>4.0.4</version>
-				<project-name>UrlRewriteFilter</project-name>
-				<project-url>http://www.tuckey.org/urlrewrite/</project-url>
-				<licenses>
-					<license>
-						<license-name>BSD</license-name>
-						<license-url>http://www.opensource.org/licenses/bsd-license.php</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>com.liferay.portal.vulcan.api.jar!jackson-dataformat-xml.jar</file-name>
 				<version>2.10.3</version>
 				<project-name>Jackson-dataformat-XML</project-name>
@@ -4846,9 +4836,9 @@
 			</library>
 			<library>
 				<file-name>com.liferay.shared.dependencies.asm.jar!asm-analysis.jar</file-name>
-				<version>7.0</version>
+				<version>9.7</version>
 				<project-name>org.objectweb.asm.tree.analysis</project-name>
-				<project-url>http://asm.ow2.org/</project-url>
+				<project-url>http://asm.ow2.org</project-url>
 				<licenses>
 					<license>
 						<license-name>The Apache Software License, Version 2.0</license-name>
@@ -4858,9 +4848,9 @@
 			</library>
 			<library>
 				<file-name>com.liferay.shared.dependencies.asm.jar!asm-commons.jar</file-name>
-				<version>7.0</version>
+				<version>9.7</version>
 				<project-name>org.objectweb.asm.commons</project-name>
-				<project-url>http://asm.ow2.org/</project-url>
+				<project-url>http://asm.ow2.org</project-url>
 				<licenses>
 					<license>
 						<license-name>The Apache Software License, Version 2.0</license-name>
@@ -4870,9 +4860,9 @@
 			</library>
 			<library>
 				<file-name>com.liferay.shared.dependencies.asm.jar!asm-tree.jar</file-name>
-				<version>7.0</version>
+				<version>9.7</version>
 				<project-name>org.objectweb.asm.tree</project-name>
-				<project-url>http://asm.ow2.org/</project-url>
+				<project-url>http://asm.ow2.org</project-url>
 				<licenses>
 					<license>
 						<license-name>The Apache Software License, Version 2.0</license-name>
@@ -4882,9 +4872,9 @@
 			</library>
 			<library>
 				<file-name>com.liferay.shared.dependencies.asm.jar!asm-util.jar</file-name>
-				<version>7.0</version>
+				<version>9.7</version>
 				<project-name>org.objectweb.asm.util</project-name>
-				<project-url>http://asm.ow2.org/</project-url>
+				<project-url>http://asm.ow2.org</project-url>
 				<licenses>
 					<license>
 						<license-name>The Apache Software License, Version 2.0</license-name>
@@ -4894,9 +4884,9 @@
 			</library>
 			<library>
 				<file-name>com.liferay.shared.dependencies.asm.jar!asm.jar</file-name>
-				<version>7.0</version>
+				<version>9.7</version>
 				<project-name>org.objectweb.asm</project-name>
-				<project-url>http://asm.ow2.org/</project-url>
+				<project-url>http://asm.ow2.org</project-url>
 				<licenses>
 					<license>
 						<license-name>The Apache Software License, Version 2.0</license-name>
@@ -5708,7 +5698,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/asm-commons.jar</file-name>
-				<version>7.0</version>
+				<version>9.7</version>
 				<project-name>ASM</project-name>
 				<project-url>http://asm.ow2.io</project-url>
 				<licenses>
@@ -5720,7 +5710,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/asm-tree.jar</file-name>
-				<version>7.0</version>
+				<version>9.7</version>
 				<project-name>ASM</project-name>
 				<project-url>http://asm.ow2.io</project-url>
 				<licenses>
@@ -5732,7 +5722,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/asm.jar</file-name>
-				<version>7.0</version>
+				<version>9.7</version>
 				<project-name>ASM</project-name>
 				<project-url>http://asm.ow2.io</project-url>
 				<licenses>

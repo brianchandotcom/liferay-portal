@@ -94,7 +94,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/asm-commons.jar</file-name>
-				<version>7.0</version>
+				<version>9.7</version>
 				<project-name>ASM</project-name>
 				<project-url>http://asm.ow2.io</project-url>
 				<licenses>
@@ -106,7 +106,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/asm-tree.jar</file-name>
-				<version>7.0</version>
+				<version>9.7</version>
 				<project-name>ASM</project-name>
 				<project-url>http://asm.ow2.io</project-url>
 				<licenses>
@@ -118,7 +118,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/asm.jar</file-name>
-				<version>7.0</version>
+				<version>9.7</version>
 				<project-name>ASM</project-name>
 				<project-url>http://asm.ow2.io</project-url>
 				<licenses>

@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
-import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
@@ -39,7 +38,6 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ImageLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ListTypeLocalService;
-import com.liferay.portal.kernel.service.ListTypeServiceUtil;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -227,11 +225,6 @@ public class UsersAdminPortletTest {
 	public void testEditOrganizationDoesNotAddCTEntry() throws Exception {
 		Organization organization = OrganizationTestUtil.addOrganization();
 
-		ListType listType = ListTypeServiceUtil.getListType(
-			TestPropsValues.getCompanyId(),
-			ListTypeConstants.ORGANIZATION_STATUS_DEFAULT,
-			ListTypeConstants.ORGANIZATION_STATUS);
-
 		String newOrganizationName = RandomTestUtil.randomString();
 
 		_processActionRequestInPublication(
@@ -244,7 +237,7 @@ public class UsersAdminPortletTest {
 				"organizationId",
 				String.valueOf(organization.getOrganizationId())
 			).put(
-				"statusId", String.valueOf(listType.getListTypeId())
+				"statusId", String.valueOf(organization.getStatusListTypeId())
 			).put(
 				"type", organization.getType()
 			).build());
@@ -276,11 +269,6 @@ public class UsersAdminPortletTest {
 
 		long oldLogoId = organization.getLogoId();
 
-		ListType listType = ListTypeServiceUtil.getListType(
-			TestPropsValues.getCompanyId(),
-			ListTypeConstants.ORGANIZATION_STATUS_DEFAULT,
-			ListTypeConstants.ORGANIZATION_STATUS);
-
 		_processActionRequestInPublication(
 			_ctCollection, "/users_admin/edit_organization",
 			HashMapBuilder.put(
@@ -305,7 +293,7 @@ public class UsersAdminPortletTest {
 				"organizationId",
 				String.valueOf(organization.getOrganizationId())
 			).put(
-				"statusId", String.valueOf(listType.getListTypeId())
+				"statusId", String.valueOf(organization.getStatusListTypeId())
 			).put(
 				"type", organization.getType()
 			).build());

@@ -5,6 +5,7 @@
 
 package com.liferay.portal.language;
 
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.module.service.Snapshot;
@@ -15,6 +16,10 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+
+import java.lang.invoke.MethodHandle;
+import java.lang.invoke.MethodHandles;
+import java.lang.invoke.MethodType;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -238,7 +243,13 @@ public class LanguageResources {
 				_locale);
 
 			if (overrideResourceBundle != null) {
-				return overrideResourceBundle.getObject(key);
+				try {
+					return _handleGetObjectMethodHandle.invokeExact(
+						overrideResourceBundle, key);
+				}
+				catch (Throwable throwable) {
+					ReflectionUtil.throwException(throwable);
+				}
 			}
 
 			return null;
@@ -250,7 +261,13 @@ public class LanguageResources {
 				_locale);
 
 			if (overrideResourceBundle != null) {
-				return overrideResourceBundle.keySet();
+				try {
+					return (Set<String>)_handleKeySetMethodHandle.invokeExact(
+						overrideResourceBundle);
+				}
+				catch (Throwable throwable) {
+					ReflectionUtil.throwException(throwable);
+				}
 			}
 
 			return Collections.emptySet();
@@ -258,6 +275,27 @@ public class LanguageResources {
 
 		private DynamicOverrideResourceBundle(Locale locale) {
 			_locale = locale;
+		}
+
+		private static final MethodHandle _handleGetObjectMethodHandle;
+		private static final MethodHandle _handleKeySetMethodHandle;
+
+		static {
+			try {
+				MethodHandles.Lookup lookup = ReflectionUtil.getImplLookup();
+
+				_handleGetObjectMethodHandle = lookup.findVirtual(
+					ResourceBundle.class, "handleGetObject",
+					MethodType.methodType(Object.class, String.class));
+
+				_handleKeySetMethodHandle = lookup.findVirtual(
+					ResourceBundle.class, "handleKeySet",
+					MethodType.methodType(Set.class));
+			}
+			catch (ReflectiveOperationException reflectiveOperationException) {
+				throw new ExceptionInInitializerError(
+					reflectiveOperationException);
+			}
 		}
 
 		private final Locale _locale;

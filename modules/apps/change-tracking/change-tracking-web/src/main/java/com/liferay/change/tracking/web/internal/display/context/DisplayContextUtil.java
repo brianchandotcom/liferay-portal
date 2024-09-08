@@ -184,7 +184,7 @@ public class DisplayContextUtil {
 			).emptySearchEnabled(
 				true
 			).fields(
-				"modelClassNameId", "typeName", Field.GROUP_ID
+				"typeName"
 			).sorts(
 				sorts.field(
 					Field.getSortableFieldName(

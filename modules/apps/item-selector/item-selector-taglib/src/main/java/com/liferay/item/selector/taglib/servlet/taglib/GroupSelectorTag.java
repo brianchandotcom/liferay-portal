@@ -23,6 +23,7 @@ import com.liferay.taglib.util.IncludeTag;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
@@ -90,15 +91,15 @@ public class GroupSelectorTag extends IncludeTag {
 	}
 
 	private List<Group> _getGroups(HttpServletRequest httpServletRequest) {
-		String groupType = _getGroupType(httpServletRequest);
-
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
 		Group group = _getGroup(themeDisplay);
 
-		if (_isScopeGroupType(httpServletRequest) && groupType.equals("site")) {
+		if (_isScopeGroupType(httpServletRequest) &&
+			Objects.equals(_getGroupType(httpServletRequest), "site")) {
+
 			_groups = new ArrayList<>();
 
 			if (!group.isCompany()) {
@@ -121,7 +122,7 @@ public class GroupSelectorTag extends IncludeTag {
 
 		GroupItemSelectorProvider groupItemSelectorProvider =
 			GroupItemSelectorProviderRegistryUtil.getGroupItemSelectorProvider(
-				groupType);
+				_getGroupType(httpServletRequest));
 
 		if (groupItemSelectorProvider == null) {
 			_groups = Collections.emptyList();
@@ -155,15 +156,15 @@ public class GroupSelectorTag extends IncludeTag {
 	}
 
 	private int _getGroupsCount(HttpServletRequest httpServletRequest) {
-		String groupType = _getGroupType(httpServletRequest);
-
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
 		Group group = _getGroup(themeDisplay);
 
-		if (_isScopeGroupType(httpServletRequest) && groupType.equals("site")) {
+		if (_isScopeGroupType(httpServletRequest) &&
+			Objects.equals(_getGroupType(httpServletRequest), "site")) {
+
 			if (group.isCompany()) {
 				_groupsCount = 1;
 			}
@@ -176,7 +177,7 @@ public class GroupSelectorTag extends IncludeTag {
 
 		GroupItemSelectorProvider groupSelectorProvider =
 			GroupItemSelectorProviderRegistryUtil.getGroupItemSelectorProvider(
-				groupType);
+				_getGroupType(httpServletRequest));
 
 		if (groupSelectorProvider == null) {
 			_groupsCount = 0;

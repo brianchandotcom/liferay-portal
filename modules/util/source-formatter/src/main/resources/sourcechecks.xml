@@ -1254,6 +1254,10 @@
 			<category name="Naming Conventions" />
 			<description name="Check if the names of functions in `.jsp` files follow naming conventions." />
 		</check>
+		<check name="JSPIllegalTagsCheck">
+			<category name="Bug Prevention" />
+			<description name="Finds cases of incorrect use of certain tags." />
+		</check>
 		<check name="JSPLanguageKeysCheck">
 			<category name="Bug Prevention" />
 			<description name="Finds missing language keys in `Language.properties`." />

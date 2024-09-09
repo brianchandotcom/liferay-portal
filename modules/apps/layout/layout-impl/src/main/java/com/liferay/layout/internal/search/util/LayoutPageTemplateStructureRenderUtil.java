@@ -5,6 +5,7 @@
 
 package com.liferay.layout.internal.search.util;
 
+import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
 import com.liferay.fragment.renderer.FragmentRendererController;
@@ -34,8 +35,8 @@ public class LayoutPageTemplateStructureRenderUtil {
 		FragmentRendererController fragmentRendererController,
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse,
-		LayoutPageTemplateStructure layoutPageTemplateStructure, String mode,
-		Locale locale, long segmentsExperienceId) {
+		LayoutPageTemplateStructure layoutPageTemplateStructure, Locale locale,
+		long segmentsExperienceId) {
 
 		if (fragmentRendererController == null) {
 			return StringPool.BLANK;
@@ -58,7 +59,7 @@ public class LayoutPageTemplateStructureRenderUtil {
 		_renderLayoutStructure(
 			layoutStructureItem.getChildrenItemIds(),
 			fragmentRendererController, httpServletRequest, httpServletResponse,
-			layoutStructure, locale, mode, sb);
+			layoutStructure, locale, sb);
 
 		return sb.toString();
 	}
@@ -67,7 +68,7 @@ public class LayoutPageTemplateStructureRenderUtil {
 		long fragmentEntryLinkId,
 		FragmentRendererController fragmentRendererController,
 		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse, String mode, Locale locale) {
+		HttpServletResponse httpServletResponse, Locale locale) {
 
 		FragmentEntryLink fragmentEntryLink =
 			FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(
@@ -81,7 +82,7 @@ public class LayoutPageTemplateStructureRenderUtil {
 			new DefaultFragmentRendererContext(fragmentEntryLink);
 
 		fragmentRendererContext.setLocale(locale);
-		fragmentRendererContext.setMode(mode);
+		fragmentRendererContext.setMode(FragmentEntryLinkConstants.INDEX);
 
 		return fragmentRendererController.render(
 			fragmentRendererContext, httpServletRequest, httpServletResponse);
@@ -92,8 +93,7 @@ public class LayoutPageTemplateStructureRenderUtil {
 		FragmentRendererController fragmentRendererController,
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse,
-		LayoutStructure layoutStructure, Locale locale, String mode,
-		StringBundler sb) {
+		LayoutStructure layoutStructure, Locale locale, StringBundler sb) {
 
 		for (String childrenItemId : childrenItemIds) {
 			LayoutStructureItem layoutStructureItem =
@@ -138,7 +138,7 @@ public class LayoutPageTemplateStructureRenderUtil {
 							fragmentStyledLayoutStructureItem.
 								getFragmentEntryLinkId(),
 							fragmentRendererController, httpServletRequest,
-							httpServletResponse, mode, locale));
+							httpServletResponse, locale));
 				}
 
 				continue;
@@ -147,7 +147,7 @@ public class LayoutPageTemplateStructureRenderUtil {
 			_renderLayoutStructure(
 				layoutStructureItem.getChildrenItemIds(),
 				fragmentRendererController, httpServletRequest,
-				httpServletResponse, layoutStructure, locale, mode, sb);
+				httpServletResponse, layoutStructure, locale, sb);
 		}
 	}
 

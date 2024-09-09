@@ -5,7 +5,6 @@
 
 package com.liferay.layout.internal.content;
 
-import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.layout.content.LayoutContentProvider;
 import com.liferay.layout.crawler.LayoutCrawler;
@@ -139,8 +138,7 @@ public class LayoutContentProviderImpl implements LayoutContentProvider {
 							renderLayoutContent(
 								_fragmentRendererController, httpServletRequest,
 								httpServletResponse,
-								layoutPageTemplateStructure,
-								FragmentEntryLinkConstants.INDEX, locale,
+								layoutPageTemplateStructure, locale,
 								segmentsExperienceId);
 				}
 				catch (Exception exception) {

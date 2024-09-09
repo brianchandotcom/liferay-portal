@@ -19,6 +19,7 @@ import com.liferay.commerce.payment.model.CommercePaymentEntryTable;
 import com.liferay.commerce.payment.service.CommercePaymentEntryAuditLocalService;
 import com.liferay.commerce.payment.service.base.CommercePaymentEntryLocalServiceBaseImpl;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.portal.aop.AopService;
@@ -56,6 +57,7 @@ import com.liferay.portal.search.searcher.Searcher;
 
 import java.math.BigDecimal;
 
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -290,6 +292,39 @@ public class CommercePaymentEntryLocalServiceImpl
 			).where(
 				_getPredicate(companyId, classNameId, classPK)
 			));
+	}
+
+	@Override
+	public BigDecimal getRefundedAmount(
+		long companyId, long classNameId, long classPK) {
+
+		Iterable<BigDecimal> iterable = dslQuery(
+			DSLQueryFactoryUtil.select(
+				DSLFunctionFactoryUtil.sum(
+					CommercePaymentEntryTable.INSTANCE.amount
+				).as(
+					"SUM_VALUE"
+				)
+			).from(
+				CommercePaymentEntryTable.INSTANCE
+			).where(
+				_getPredicate(
+					companyId, classNameId, classPK
+				).and(
+					CommercePaymentEntryTable.INSTANCE.paymentStatus.eq(
+						CommercePaymentEntryConstants.STATUS_REFUNDED)
+				)
+			));
+
+		Iterator<BigDecimal> iterator = iterable.iterator();
+
+		BigDecimal refundedAmount = iterator.next();
+
+		if (refundedAmount == null) {
+			return BigDecimal.ZERO;
+		}
+
+		return refundedAmount;
 	}
 
 	@Override

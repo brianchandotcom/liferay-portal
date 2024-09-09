@@ -3,12 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {expect, mergeTests} from '@playwright/test';
+import {Page, expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageViewModePagesTest} from '../../fixtures/pageViewModePagesTest';
+import {WidgetPagePage} from '../../pages/layout-admin-web/WidgetPagePage';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {expandSection} from '../../utils/expandSection';
 import getRandomString from '../../utils/getRandomString';
@@ -21,7 +22,11 @@ const test = mergeTests(
 	pageViewModePagesTest
 );
 
-const selectCustomTemplate = async (page, templateName, widgetPagePage) => {
+const selectCustomTemplate = async (
+	page: Page,
+	templateName: string,
+	widgetPagePage: WidgetPagePage
+) => {
 	await widgetPagePage.clickOnAction('Language Selector', 'Configuration');
 
 	const configurationIFrame = page.frameLocator(

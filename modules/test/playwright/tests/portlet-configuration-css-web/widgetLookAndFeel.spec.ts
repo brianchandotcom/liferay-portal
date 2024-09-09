@@ -79,16 +79,18 @@ test(
 
 		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
 
-		await expect(
-			page.locator('.portlet-asset-publisher').first()
-		).toHaveClass(/portlet-decorate/);
+		const portlet = page.locator('.portlet-asset-publisher');
 
-		await expect(
-			page.locator('.portlet-asset-publisher .portlet-content').first()
-		).toHaveCSS('font-family', 'Verdana');
+		await expect(portlet).toHaveClass(/portlet-decorate/);
 
-		await expect(
-			page.locator('.portlet-asset-publisher .portlet-content').first()
-		).toHaveCSS('text-align', 'center');
+		await expect(portlet.locator('.portlet-content')).toHaveCSS(
+			'font-family',
+			'Verdana'
+		);
+
+		await expect(portlet.locator('.portlet-content')).toHaveCSS(
+			'text-align',
+			'center'
+		);
 	}
 );

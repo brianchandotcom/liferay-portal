@@ -12139,9 +12139,8 @@ public class ObjectEntryResourceTest {
 					StringBundler.concat(
 						"/documents/", repositoryId, "/", folderId, "/",
 						URLCodec.encodeURL(fileEntry.getName()), "/",
-						serviceBuilderFileEntry.getExternalReferenceCode(),
-						"?version=", fileVersion.getVersion(), "&t=",
-						modifiedDate.getTime(),
+						serviceBuilderFileEntry.getUuid(), "?version=",
+						fileVersion.getVersion(), "&t=", modifiedDate.getTime(),
 						"&download=true&objectDefinitionExternalReferenceCode=",
 						objectDefinition.getExternalReferenceCode(),
 						"&objectEntryExternalReferenceCode=",
@@ -13262,7 +13261,7 @@ public class ObjectEntryResourceTest {
 
 		_testPostCustomObjectEntryWithAttachmentField(
 			fileEntry -> JSONUtil.put(
-				_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_SOURCE_1,
+				_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_SOURCE_2,
 				() -> {
 					JSONObject jsonObject = _getFileEntryJSONObject(
 						_getDLFolder(objectDefinition, true), fileEntry,
@@ -13274,7 +13273,7 @@ public class ObjectEntryResourceTest {
 					return jsonObject;
 				}),
 			testFileEntry, null, objectDefinition,
-			_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_SOURCE_1);
+			_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_SOURCE_2);
 
 		serviceBuilderFileEntry = _dlAppLocalService.getFileEntry(
 			_testDLFileEntryModelListener.getLastFileEntryId());
@@ -13514,7 +13513,7 @@ public class ObjectEntryResourceTest {
 
 		_testPostCustomObjectEntryWithAttachmentField(
 			fileEntry -> JSONUtil.put(
-				_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_SOURCE_1,
+				_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_SOURCE_2,
 				() -> {
 					JSONObject jsonObject = _getFileEntryJSONObject(
 						_getDLFolder(objectDefinition, true), fileEntry,
@@ -13526,7 +13525,7 @@ public class ObjectEntryResourceTest {
 					return jsonObject;
 				}),
 			testFileEntry, null, objectDefinition,
-			_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_SOURCE_1);
+			_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_SOURCE_2);
 
 		// File with an existing name
 

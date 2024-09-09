@@ -132,6 +132,14 @@ public class CommercePaymentEntryServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
+	public static java.math.BigDecimal getRefundCommercePaymentEntryTotalAmount(
+			long companyId, long classNameId, long classPK)
+		throws PortalException {
+
+		return getService().getRefundCommercePaymentEntryTotalAmount(
+			companyId, classNameId, classPK);
+	}
+
 	public static List<CommercePaymentEntry> search(
 			long companyId, long[] classNameIds, long[] classPKs,
 			String[] currencyCodes, String keywords,

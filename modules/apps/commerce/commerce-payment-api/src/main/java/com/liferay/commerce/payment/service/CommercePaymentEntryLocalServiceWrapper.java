@@ -463,6 +463,15 @@ public class CommercePaymentEntryLocalServiceWrapper
 	}
 
 	@Override
+	public java.math.BigDecimal getRefundCommercePaymentEntryTotalAmount(
+		long companyId, long classNameId, long classPK) {
+
+		return _commercePaymentEntryLocalService.
+			getRefundCommercePaymentEntryTotalAmount(
+				companyId, classNameId, classPK);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.search.BaseModelSearchResult
 		<com.liferay.commerce.payment.model.CommercePaymentEntry>
 			searchCommercePaymentEntries(

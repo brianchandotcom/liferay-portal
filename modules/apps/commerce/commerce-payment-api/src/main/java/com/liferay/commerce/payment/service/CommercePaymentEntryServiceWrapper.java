@@ -157,6 +157,16 @@ public class CommercePaymentEntryServiceWrapper
 	}
 
 	@Override
+	public java.math.BigDecimal getRefundCommercePaymentEntryTotalAmount(
+			long companyId, long classNameId, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commercePaymentEntryService.
+			getRefundCommercePaymentEntryTotalAmount(
+				companyId, classNameId, classPK);
+	}
+
+	@Override
 	public java.util.List
 		<com.liferay.commerce.payment.model.CommercePaymentEntry> search(
 				long companyId, long[] classNameIds, long[] classPKs,

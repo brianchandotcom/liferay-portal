@@ -114,6 +114,31 @@ describe('Grid', () => {
 		expect(container).toMatchSnapshot();
 	});
 
+	it('renders data-option-reference for rows and columns', () => {
+		const columns = [
+			{reference: 'col1OptionReference'},
+			{reference: 'col2OptionReference'},
+		];
+		const rows = [
+			{reference: 'row1OptionReference'},
+			{reference: 'row2OptionReference'},
+		];
+
+		const {container} = render(
+			<GridWithProvider columns={columns} rows={rows} />
+		);
+
+		columns.forEach((column) => {
+			rows.forEach((row) => {
+				const radioInputElement = container.querySelector(
+					`input[value][type="radio"][data-option-reference-column=${column.reference}][data-option-reference-row=${row.reference}]`
+				);
+
+				expect(radioInputElement).toBeTruthy();
+			});
+		});
+	});
+
 	it('renders rows', () => {
 		const {container} = render(
 			<GridWithProvider

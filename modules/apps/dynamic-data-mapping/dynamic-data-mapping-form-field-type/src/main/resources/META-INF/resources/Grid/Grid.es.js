@@ -50,6 +50,8 @@ const TableBodyColumns = ({
 					checked={column.value === value[row.value]}
 					className="form-builder-grid-field"
 					data-name={row.value}
+					data-option-reference-column={column.reference}
+					data-option-reference-row={row.reference}
 					disabled={disabled}
 					name={name}
 					onBlur={onBlur}

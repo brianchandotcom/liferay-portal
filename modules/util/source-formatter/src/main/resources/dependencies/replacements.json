@@ -3169,6 +3169,14 @@
 	},
 	{
 		"classNames": [
+			"Country"
+		],
+		"from": "getCommerceCountryId",
+		"issueKey": "LPD-35065",
+		"to": "getCountryId"
+	},
+	{
+		"classNames": [
 			"IndexWriterHelper",
 			"IndexWriterHelperUtil"
 		],

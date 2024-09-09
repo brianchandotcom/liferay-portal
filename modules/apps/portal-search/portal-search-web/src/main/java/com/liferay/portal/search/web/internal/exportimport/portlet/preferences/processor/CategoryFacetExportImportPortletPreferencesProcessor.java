@@ -9,6 +9,7 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.portlet.preferences.processor.Capability;
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessor;
 import com.liferay.exportimport.portlet.preferences.processor.base.BaseExportImportPortletPreferencesProcessor;
@@ -24,6 +25,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.search.web.internal.category.facet.constants.CategoryFacetPortletKeys;
 import com.liferay.portal.search.web.internal.category.facet.portlet.CategoryFacetPortletPreferences;
 
@@ -140,6 +142,8 @@ public class CategoryFacetExportImportPortletPreferencesProcessor
 			String portletPreferencesOldValue)
 		throws Exception {
 
+		_importReferenceStagedModel(portletDataContext);
+
 		if (Validator.isNumber(portletPreferencesOldValue)) {
 			long oldPrimaryKey = GetterUtil.getLong(portletPreferencesOldValue);
 
@@ -190,6 +194,36 @@ public class CategoryFacetExportImportPortletPreferencesProcessor
 
 	@Reference(target = "(name=PortletDisplayTemplateImporter)")
 	protected Capability importCapability;
+
+	private void _importReferenceStagedModel(
+			PortletDataContext portletDataContext)
+		throws Exception {
+
+		Element importDataRootElement =
+			portletDataContext.getImportDataRootElement();
+
+		Element referencesElement = importDataRootElement.element("references");
+
+		if (referencesElement == null) {
+			return;
+		}
+
+		for (Element referenceElement : referencesElement.elements()) {
+			String className = referenceElement.attributeValue("class-name");
+
+			if ((className == null) ||
+				!className.equals(AssetVocabulary.class.getName())) {
+
+				continue;
+			}
+
+			long classPK = GetterUtil.getLong(
+				referenceElement.attributeValue("class-pk"));
+
+			StagedModelDataHandlerUtil.importReferenceStagedModel(
+				portletDataContext, className, Long.valueOf(classPK));
+		}
+	}
 
 	private PortletPreferences _updateExportPortletPreferences(
 			PortletDataContext portletDataContext,

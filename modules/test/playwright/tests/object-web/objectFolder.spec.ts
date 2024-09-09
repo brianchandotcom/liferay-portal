@@ -13,51 +13,6 @@ import {getRandomInt} from '../../utils/getRandomInt';
 export const test = mergeTests(apiHelpersTest, loginTest(), objectPagesTest);
 
 test.describe('manage object definitions through model builder', () => {
-	test('navigate between object folders on model builder page', async ({
-		apiHelpers,
-		modelBuilderDiagramPage,
-		modelBuilderLeftSidebarPage,
-	}) => {
-		const objectFolders: ObjectFolder[] = await Promise.all(
-			Array.apply(null, Array(5)).map(async () => {
-				return await apiHelpers.objectAdmin.postRandomObjectFolder();
-			})
-		);
-
-		await modelBuilderDiagramPage.goto({objectFolderName: 'Default'});
-
-		for (const objectFolder of objectFolders) {
-			await expect(
-				modelBuilderLeftSidebarPage.otherObjectFolders
-			).toBeVisible();
-
-			const otherObjectFolderLocator =
-				modelBuilderLeftSidebarPage.getOtherObjectFolderLocator(
-					objectFolder.label['en_US']
-				);
-
-			await otherObjectFolderLocator.hover();
-
-			await otherObjectFolderLocator
-				.getByRole('button', {name: 'Go to Folder'})
-				.click();
-
-			await expect(otherObjectFolderLocator).toBeHidden();
-
-			await expect(
-				modelBuilderDiagramPage.getObjectFolderLabelHeaderLocator(
-					objectFolder.label['en_US']
-				)
-			).toBeVisible();
-		}
-
-		// Clean up
-
-		for (const objectFolder of objectFolders) {
-			await apiHelpers.objectAdmin.deleteObjectFolder(objectFolder.id);
-		}
-	});
-
 	test('can edit object folder label and ERC by Model Builder', async ({
 		apiHelpers,
 		modalEditObjectFolderPage,
@@ -175,6 +130,51 @@ test.describe('manage object definitions through model builder', () => {
 		await apiHelpers.objectAdmin.deleteObjectDefinition(
 			objectDefinition.id
 		);
+	});
+
+	test('navigate between object folders on model builder page', async ({
+		apiHelpers,
+		modelBuilderDiagramPage,
+		modelBuilderLeftSidebarPage,
+	}) => {
+		const objectFolders: ObjectFolder[] = await Promise.all(
+			Array.apply(null, Array(5)).map(async () => {
+				return await apiHelpers.objectAdmin.postRandomObjectFolder();
+			})
+		);
+
+		await modelBuilderDiagramPage.goto({objectFolderName: 'Default'});
+
+		for (const objectFolder of objectFolders) {
+			await expect(
+				modelBuilderLeftSidebarPage.otherObjectFolders
+			).toBeVisible();
+
+			const otherObjectFolderLocator =
+				modelBuilderLeftSidebarPage.getOtherObjectFolderLocator(
+					objectFolder.label['en_US']
+				);
+
+			await otherObjectFolderLocator.hover();
+
+			await otherObjectFolderLocator
+				.getByRole('button', {name: 'Go to Folder'})
+				.click();
+
+			await expect(otherObjectFolderLocator).toBeHidden();
+
+			await expect(
+				modelBuilderDiagramPage.getObjectFolderLabelHeaderLocator(
+					objectFolder.label['en_US']
+				)
+			).toBeVisible();
+		}
+
+		// Clean up
+
+		for (const objectFolder of objectFolders) {
+			await apiHelpers.objectAdmin.deleteObjectFolder(objectFolder.id);
+		}
 	});
 });
 

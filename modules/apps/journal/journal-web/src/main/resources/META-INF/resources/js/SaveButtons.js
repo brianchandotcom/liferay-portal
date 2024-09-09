@@ -94,15 +94,7 @@ export default function SaveButtons({
 			);
 		}
 		else {
-			Liferay.Form.get(formId).formValidator.validate();
-			Liferay.componentReady(
-				`${portletNamespace}dataEngineLayoutRenderer`
-			).then((dataEngineLayoutRenderer) => {
-				const dataEngineLayoutRendererRef =
-					dataEngineLayoutRenderer?.reactComponentRef;
-
-				return dataEngineLayoutRendererRef.current.validate();
-			});
+			validateRequiredFields();
 		}
 	};
 
@@ -172,6 +164,18 @@ export default function SaveButtons({
 				}
 			}
 		);
+	};
+
+	const validateRequiredFields = () => {
+		Liferay.Form.get(formId).formValidator.validate();
+		Liferay.componentReady(
+			`${portletNamespace}dataEngineLayoutRenderer`
+		).then((dataEngineLayoutRenderer) => {
+			const dataEngineLayoutRendererRef =
+				dataEngineLayoutRenderer?.reactComponentRef;
+
+			return dataEngineLayoutRendererRef.current.validate();
+		});
 	};
 
 	useEffect(() => {
@@ -294,17 +298,7 @@ export default function SaveButtons({
 								);
 							}
 							else {
-								Liferay.Form.get(
-									formId
-								).formValidator.validate();
-								Liferay.componentReady(
-									`${portletNamespace}dataEngineLayoutRenderer`
-								).then((dataEngineLayoutRenderer) => {
-									const dataEngineLayoutRendererRef =
-										dataEngineLayoutRenderer?.reactComponentRef;
-
-									return dataEngineLayoutRendererRef.current.validate();
-								});
+								validateRequiredFields();
 							}
 						}}
 						symbolLeft="date-time"

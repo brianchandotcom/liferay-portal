@@ -226,11 +226,14 @@ const ActionForm = ({
 			modalSize,
 			permissionKey,
 			[relationship]: dataSet.id,
-			requestBody,
 			title_i18n: titleTranslations,
 			type,
 			url,
 		} as any;
+
+		if (Liferay.FeatureFlags['LPD-34636']) {
+			body.requestBody = requestBody;
+		}
 
 		if (Object.keys(confirmationMessageTranslations).length) {
 			body.confirmationMessageType = confirmationMessageType;
@@ -298,7 +301,10 @@ const ActionForm = ({
 			setURLValidationError(true);
 		}
 
-		if (type === EActionType.ASYNC || type === EActionType.HEADLESS) {
+		if (
+			Liferay.FeatureFlags['LPD-34636'] &&
+			(type === EActionType.ASYNC || type === EActionType.HEADLESS)
+		) {
 			if (!isValidJSON(requestBody)) {
 				valid = false;
 
@@ -714,61 +720,67 @@ const ActionForm = ({
 						</ClayLayout.Row>
 					)}
 
-					{(actionData.type === EActionType.HEADLESS ||
-						actionData.type === EActionType.ASYNC) && (
-						<ClayLayout.Row justify="start">
-							<ClayLayout.Col lg>
-								<ClayForm.Group
-									className={classNames({
-										'has-error': requestBodyValidationError,
-									})}
-								>
-									<label htmlFor={requestBodyFormElementId}>
-										{Liferay.Language.get('request-body')}
-
-										<span
-											className="label-icon lfr-portal-tooltip ml-2"
-											title={Liferay.Language.get(
-												'item-actions-how-to-use-request-body-field'
-											)}
+					{Liferay.FeatureFlags['LPD-34636'] &&
+						(actionData.type === EActionType.HEADLESS ||
+							actionData.type === EActionType.ASYNC) && (
+							<ClayLayout.Row justify="start">
+								<ClayLayout.Col lg>
+									<ClayForm.Group
+										className={classNames({
+											'has-error':
+												requestBodyValidationError,
+										})}
+									>
+										<label
+											htmlFor={requestBodyFormElementId}
 										>
-											<ClayIcon symbol="question-circle-full" />
-										</span>
-									</label>
-
-									<ClayInput
-										component="textarea"
-										id={requestBodyFormElementId}
-										onChange={(event) => {
-											const requestBody =
-												event.target.value;
-
-											setActionData({
-												...actionData,
-												requestBody,
-											});
-
-											setRequestBodyValidationError(
-												!isValidJSON(requestBody)
-											);
-										}}
-										placeholder={Liferay.Language.get(
-											'add-a-request-body-here'
-										)}
-										value={actionData.requestBody}
-									/>
-
-									{requestBodyValidationError && (
-										<ValidationFeedback
-											message={Liferay.Language.get(
-												'this-field-must-contain-a-valid-json'
+											{Liferay.Language.get(
+												'request-body'
 											)}
+
+											<span
+												className="label-icon lfr-portal-tooltip ml-2"
+												title={Liferay.Language.get(
+													'item-actions-how-to-use-request-body-field'
+												)}
+											>
+												<ClayIcon symbol="question-circle-full" />
+											</span>
+										</label>
+
+										<ClayInput
+											component="textarea"
+											id={requestBodyFormElementId}
+											onChange={(event) => {
+												const requestBody =
+													event.target.value;
+
+												setActionData({
+													...actionData,
+													requestBody,
+												});
+
+												setRequestBodyValidationError(
+													!isValidJSON(requestBody)
+												);
+											}}
+											placeholder={Liferay.Language.get(
+												'add-a-request-body-here'
+											)}
+											value={actionData.requestBody}
 										/>
-									)}
-								</ClayForm.Group>
-							</ClayLayout.Col>
-						</ClayLayout.Row>
-					)}
+
+										{requestBodyValidationError && (
+											<ValidationFeedback
+												message={Liferay.Language.get(
+													'this-field-must-contain-a-valid-json'
+												)}
+											/>
+										)}
+									</ClayForm.Group>
+								</ClayLayout.Col>
+							</ClayLayout.Row>
+						)}
 
 					<ClayLayout.Row justify="start">
 						<ClayLayout.Col>

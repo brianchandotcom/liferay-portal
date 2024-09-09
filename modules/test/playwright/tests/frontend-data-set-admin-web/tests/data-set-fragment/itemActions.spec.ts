@@ -367,7 +367,7 @@ test.describe('Item Actions in Data Set fragment', () => {
 		});
 
 		const datasetRow =
-			await test.step('Checkt that the Item Actions dropdown (only 2 items) is present in table row', async () => {
+			await test.step('Check data set items have two item actions', async () => {
 				const tableRow = await page
 					.locator('.dnd-td.item-actions')
 					.first();
@@ -395,9 +395,13 @@ test.describe('Item Actions in Data Set fragment', () => {
 					.waitFor();
 
 				await expect(
-					page.locator(`#${dropdownId}`).getByRole('menuitem')
-				).toHaveCount(2);
-
+					page.locator(`#${dropdownId}`).getByRole('menuitem', { name: asyncItemActionName })
+				).toBeVisible();
+	
+				await expect(
+					page.locator(`#${dropdownId}`).getByRole('menuitem', { name: headlessItemActionName })
+				).toBeVisible();
+		
 				await expect(
 					page.locator(`#${dropdownId}`).getByRole('menuitem', {
 						name: nonAvailableHeadlessItemActionName,
@@ -509,45 +513,50 @@ test.describe('Item Actions in Data Set fragment', () => {
 			});
 		});
 
-		const datasetRow =
-			await test.step('Checkt that the Item Actions dropdown (only 2 items) is present in table row', async () => {
-				const tableRow = await page
+		await test.step('Check data set items have two item actions', async () => {
+			const tableRow = await page
+				.locator('.dnd-td.item-actions')
+				.first();
+
+			await expect(
+				tableRow.getByRole('button', {
+					exact: true,
+					name: 'Actions',
+				})
+			).toBeVisible;
+
+			const button = await tableRow.getByRole('button', {
+				exact: true,
+				name: 'Actions',
+			});
+			const dropdownId = await button.evaluate((node) =>
+				node.getAttribute('aria-controls')
+			);
+
+			await button.click();
+
+			await page
+				.locator(`#${dropdownId}`)
+				.filter({has: page.getByRole('menu')})
+				.waitFor();
+
+			await expect(
+				page.locator(`#${dropdownId}`).getByRole('menuitem', { name: asyncItemActionName })
+			).toBeVisible();
+
+			await expect(
+				page.locator(`#${dropdownId}`).getByRole('menuitem', { name: headlessItemActionName })
+			).toBeVisible();
+		
+			await page.keyboard.press('Escape');
+		});
+
+		await test.step('Click in the headless item action executes the action', async () => {
+			const tableRow = await page
 					.locator('.dnd-td.item-actions')
 					.first();
 
-				await expect(
-					tableRow.getByRole('button', {
-						exact: true,
-						name: 'Actions',
-					})
-				).toBeVisible;
-
-				const button = await tableRow.getByRole('button', {
-					exact: true,
-					name: 'Actions',
-				});
-				const dropdownId = await button.evaluate((node) =>
-					node.getAttribute('aria-controls')
-				);
-
-				await button.click();
-
-				await page
-					.locator(`#${dropdownId}`)
-					.filter({has: page.getByRole('menu')})
-					.waitFor();
-
-				await expect(
-					page.locator(`#${dropdownId}`).getByRole('menuitem')
-				).toHaveCount(2);
-
-				await page.keyboard.press('Escape');
-
-				return tableRow;
-			});
-
-		await test.step('Click in the headless item action executes the action', async () => {
-			const button = await datasetRow.getByRole('button', {
+			const button = await tableRow.getByRole('button', {
 				exact: true,
 				name: 'Actions',
 			});

@@ -321,20 +321,6 @@ public class ObjectEntryResourceTest {
 							ObjectFieldSettingConstants.NAME_MAX_FILE_SIZE
 						).value(
 							String.valueOf(_MAX_FILE_SIZE_VALUE)
-						).build(),
-						new ObjectFieldSettingBuilder(
-						).name(
-							ObjectFieldSettingConstants.
-								NAME_SHOW_FILES_IN_DOCS_AND_MEDIA
-						).value(
-							Boolean.TRUE.toString()
-						).build(),
-						new ObjectFieldSettingBuilder(
-						).name(
-							ObjectFieldSettingConstants.
-								NAME_STORAGE_DL_FOLDER_PATH
-						).value(
-							StringPool.SLASH + objectDefinitionName
 						).build()),
 					false),
 				ObjectFieldUtil.createObjectField(
@@ -367,7 +353,14 @@ public class ObjectEntryResourceTest {
 							ObjectFieldSettingConstants.
 								NAME_SHOW_FILES_IN_DOCS_AND_MEDIA
 						).value(
-							StringPool.FALSE
+							Boolean.TRUE.toString()
+						).build(),
+						new ObjectFieldSettingBuilder(
+						).name(
+							ObjectFieldSettingConstants.
+								NAME_STORAGE_DL_FOLDER_PATH
+						).value(
+							StringPool.SLASH + objectDefinitionName
 						).build()),
 					false),
 				ObjectFieldUtil.createObjectField(
@@ -739,20 +732,6 @@ public class ObjectEntryResourceTest {
 								ObjectFieldSettingConstants.NAME_MAX_FILE_SIZE
 							).value(
 								String.valueOf(_MAX_FILE_SIZE_VALUE)
-							).build(),
-							new ObjectFieldSettingBuilder(
-							).name(
-								ObjectFieldSettingConstants.
-									NAME_SHOW_FILES_IN_DOCS_AND_MEDIA
-							).value(
-								StringPool.TRUE
-							).build(),
-							new ObjectFieldSettingBuilder(
-							).name(
-								ObjectFieldSettingConstants.
-									NAME_STORAGE_DL_FOLDER_PATH
-							).value(
-								StringPool.SLASH + objectDefinitionName
 							).build()),
 						false),
 					ObjectFieldUtil.createObjectField(
@@ -785,7 +764,14 @@ public class ObjectEntryResourceTest {
 								ObjectFieldSettingConstants.
 									NAME_SHOW_FILES_IN_DOCS_AND_MEDIA
 							).value(
-								StringPool.FALSE
+								Boolean.TRUE.toString()
+							).build(),
+							new ObjectFieldSettingBuilder(
+							).name(
+								ObjectFieldSettingConstants.
+									NAME_STORAGE_DL_FOLDER_PATH
+							).value(
+								StringPool.SLASH + objectDefinitionName
 							).build()),
 						false)),
 				ObjectDefinitionConstants.SCOPE_SITE);
@@ -5978,31 +5964,6 @@ public class ObjectEntryResourceTest {
 			null, Base64.encode(content.getBytes()),
 			jsonObject.getJSONObject(
 				_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_SOURCE_1),
-			scopeJSONObject);
-
-		fileEntry = _addTempFileEntry(
-			content, _objectDefinition1, RandomTestUtil.randomString());
-
-		jsonObject = HTTPTestUtil.invokeToJSONObject(
-			JSONUtil.put(
-				_OBJECT_FIELD_NAME_1, "value3"
-			).put(
-				_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_SOURCE_2,
-				fileEntry.getFileEntryId()
-			).toString(),
-			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
-
-		jsonObject = HTTPTestUtil.invokeToJSONObject(
-			null,
-			_objectDefinition1.getRESTContextPath() +
-				"/by-external-reference-code/" +
-					jsonObject.getString("externalReferenceCode"),
-			Http.Method.GET);
-
-		_assertAttachmentJSONObject(
-			null, Base64.encode(content.getBytes()),
-			jsonObject.getJSONObject(
-				_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_SOURCE_2),
 			scopeJSONObject);
 
 		content = RandomTestUtil.randomString();
@@ -12178,8 +12139,9 @@ public class ObjectEntryResourceTest {
 					StringBundler.concat(
 						"/documents/", repositoryId, "/", folderId, "/",
 						URLCodec.encodeURL(fileEntry.getName()), "/",
-						serviceBuilderFileEntry.getUuid(), "?version=",
-						fileVersion.getVersion(), "&t=", modifiedDate.getTime(),
+						serviceBuilderFileEntry.getExternalReferenceCode(),
+						"?version=", fileVersion.getVersion(), "&t=",
+						modifiedDate.getTime(),
 						"&download=true&objectDefinitionExternalReferenceCode=",
 						objectDefinition.getExternalReferenceCode(),
 						"&objectEntryExternalReferenceCode=",
@@ -12813,7 +12775,7 @@ public class ObjectEntryResourceTest {
 			fileEntry -> JSONUtil.put(
 				_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_SOURCE_1,
 				_getFileEntryJSONObject(
-					_getDLFolder(objectDefinition, true), fileEntry,
+					_getDLFolder(objectDefinition, false), fileEntry,
 					objectDefinition)),
 			_toFileEntry(
 				Base64::encode, RandomTestUtil.randomString(),
@@ -12825,7 +12787,7 @@ public class ObjectEntryResourceTest {
 			fileEntry -> JSONUtil.put(
 				_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_SOURCE_1,
 				_getFileEntryJSONObject(
-					_getDLFolder(objectDefinition, true), fileEntry,
+					_getDLFolder(objectDefinition, false), fileEntry,
 					objectDefinition)),
 			_toFileEntry(
 				Base64::encode, RandomTestUtil.randomString(),
@@ -12837,14 +12799,9 @@ public class ObjectEntryResourceTest {
 		_testPatchPutCustomObjectEntryWithAttachmentField(
 			fileEntry -> JSONUtil.put(
 				_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_SOURCE_2,
-				() -> {
-					JSONObject jsonObject = _getFileEntryJSONObject(
-						_getDLFolder(objectDefinition, false), fileEntry,
-						objectDefinition);
-
-					return jsonObject.put(
-						"fileBase64", fileEntry.getFileBase64());
-				}),
+				_getFileEntryJSONObject(
+					_getDLFolder(objectDefinition, true), fileEntry,
+					objectDefinition)),
 			_toFileEntry(
 				Base64::encode, RandomTestUtil.randomString(),
 				RandomTestUtil.randomString() + ".txt", null, null),
@@ -12854,14 +12811,9 @@ public class ObjectEntryResourceTest {
 		_testPatchPutCustomObjectEntryWithAttachmentField(
 			fileEntry -> JSONUtil.put(
 				_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_SOURCE_2,
-				() -> {
-					JSONObject jsonObject = _getFileEntryJSONObject(
-						_getDLFolder(objectDefinition, false), fileEntry,
-						objectDefinition);
-
-					return jsonObject.put(
-						"fileBase64", fileEntry.getFileBase64());
-				}),
+				_getFileEntryJSONObject(
+					_getDLFolder(objectDefinition, true), fileEntry,
+					objectDefinition)),
 			_toFileEntry(
 				Base64::encode, RandomTestUtil.randomString(),
 				RandomTestUtil.randomString() + ".txt",
@@ -12906,7 +12858,7 @@ public class ObjectEntryResourceTest {
 				_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_SOURCE_1,
 				() -> {
 					JSONObject jsonObject = _getFileEntryJSONObject(
-						_getDLFolder(objectDefinition, true), fileEntry,
+						_getDLFolder(objectDefinition, false), fileEntry,
 						objectDefinition);
 
 					return jsonObject.put(
@@ -12923,7 +12875,7 @@ public class ObjectEntryResourceTest {
 				_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_SOURCE_2,
 				() -> {
 					JSONObject jsonObject = _getFileEntryJSONObject(
-						_getDLFolder(objectDefinition, false), fileEntry,
+						_getDLFolder(objectDefinition, true), fileEntry,
 						objectDefinition);
 
 					return jsonObject.put(
@@ -12946,7 +12898,7 @@ public class ObjectEntryResourceTest {
 			fileEntry -> JSONUtil.put(
 				_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_SOURCE_1,
 				_getFileEntryJSONObject(
-					_getDLFolder(objectDefinition, true), fileEntry,
+					_getDLFolder(objectDefinition, false), fileEntry,
 					objectDefinition)),
 			testFileEntry, httpMethod, null, objectDefinition,
 			_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_SOURCE_1,
@@ -12960,7 +12912,7 @@ public class ObjectEntryResourceTest {
 				return JSONUtil.put(
 					_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_SOURCE_1,
 					_getFileEntryJSONObject(
-						_getDLFolder(objectDefinition, true), fileEntry,
+						_getDLFolder(objectDefinition, false), fileEntry,
 						objectDefinition));
 			},
 			testFileEntry, httpMethod, null, objectDefinition,
@@ -12974,14 +12926,9 @@ public class ObjectEntryResourceTest {
 		_testPatchPutCustomObjectEntryWithAttachmentField(
 			fileEntry -> JSONUtil.put(
 				_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_SOURCE_2,
-				() -> {
-					JSONObject jsonObject = _getFileEntryJSONObject(
-						_getDLFolder(objectDefinition, false), fileEntry,
-						objectDefinition);
-
-					return jsonObject.put(
-						"fileBase64", fileEntry.getFileBase64());
-				}),
+				_getFileEntryJSONObject(
+					_getDLFolder(objectDefinition, true), fileEntry,
+					objectDefinition)),
 			testFileEntry, httpMethod, null, objectDefinition,
 			_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_SOURCE_2,
 			useExternalReferenceCode);
@@ -12993,14 +12940,9 @@ public class ObjectEntryResourceTest {
 
 				return JSONUtil.put(
 					_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_SOURCE_2,
-					() -> {
-						JSONObject jsonObject = _getFileEntryJSONObject(
-							_getDLFolder(objectDefinition, false), fileEntry,
-							objectDefinition);
-
-						return jsonObject.put(
-							"fileBase64", fileEntry.getFileBase64());
-					});
+					_getFileEntryJSONObject(
+						_getDLFolder(objectDefinition, true), fileEntry,
+						objectDefinition));
 			},
 			testFileEntry, httpMethod, null, objectDefinition,
 			_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_SOURCE_2,
@@ -13412,7 +13354,7 @@ public class ObjectEntryResourceTest {
 			fileEntry -> JSONUtil.put(
 				_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_SOURCE_1,
 				_getFileEntryJSONObject(
-					_getDLFolder(objectDefinition, true), fileEntry,
+					_getDLFolder(objectDefinition, false), fileEntry,
 					objectDefinition)),
 			_toFileEntry(
 				Base64::encode, RandomTestUtil.randomString(),
@@ -13423,7 +13365,7 @@ public class ObjectEntryResourceTest {
 			fileEntry -> JSONUtil.put(
 				_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_SOURCE_1,
 				_getFileEntryJSONObject(
-					_getDLFolder(objectDefinition, true), fileEntry,
+					_getDLFolder(objectDefinition, false), fileEntry,
 					objectDefinition)),
 			_toFileEntry(
 				Base64::encode, RandomTestUtil.randomString(),
@@ -13434,14 +13376,9 @@ public class ObjectEntryResourceTest {
 		_testPostCustomObjectEntryWithAttachmentField(
 			fileEntry -> JSONUtil.put(
 				_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_SOURCE_2,
-				() -> {
-					JSONObject jsonObject = _getFileEntryJSONObject(
-						_getDLFolder(objectDefinition, false), fileEntry,
-						objectDefinition);
-
-					return jsonObject.put(
-						"fileBase64", fileEntry.getFileBase64());
-				}),
+				_getFileEntryJSONObject(
+					_getDLFolder(objectDefinition, true), fileEntry,
+					objectDefinition)),
 			_toFileEntry(
 				Base64::encode, RandomTestUtil.randomString(),
 				RandomTestUtil.randomString() + ".txt", null, null),
@@ -13450,14 +13387,9 @@ public class ObjectEntryResourceTest {
 		_testPostCustomObjectEntryWithAttachmentField(
 			fileEntry -> JSONUtil.put(
 				_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_SOURCE_2,
-				() -> {
-					JSONObject jsonObject = _getFileEntryJSONObject(
-						_getDLFolder(objectDefinition, false), fileEntry,
-						objectDefinition);
-
-					return jsonObject.put(
-						"fileBase64", fileEntry.getFileBase64());
-				}),
+				_getFileEntryJSONObject(
+					_getDLFolder(objectDefinition, true), fileEntry,
+					objectDefinition)),
 			_toFileEntry(
 				Base64::encode, RandomTestUtil.randomString(),
 				RandomTestUtil.randomString() + ".txt",
@@ -13500,7 +13432,7 @@ public class ObjectEntryResourceTest {
 				_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_SOURCE_1,
 				() -> {
 					JSONObject jsonObject = _getFileEntryJSONObject(
-						_getDLFolder(objectDefinition, true), fileEntry,
+						_getDLFolder(objectDefinition, false), fileEntry,
 						objectDefinition);
 
 					return jsonObject.put(
@@ -13516,7 +13448,7 @@ public class ObjectEntryResourceTest {
 				_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_SOURCE_2,
 				() -> {
 					JSONObject jsonObject = _getFileEntryJSONObject(
-						_getDLFolder(objectDefinition, false), fileEntry,
+						_getDLFolder(objectDefinition, true), fileEntry,
 						objectDefinition);
 
 					return jsonObject.put(
@@ -13606,7 +13538,7 @@ public class ObjectEntryResourceTest {
 			fileEntry -> JSONUtil.put(
 				_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_SOURCE_1,
 				_getFileEntryJSONObject(
-					_getDLFolder(objectDefinition, true), fileEntry,
+					_getDLFolder(objectDefinition, false), fileEntry,
 					objectDefinition)),
 			testFileEntry, null, objectDefinition,
 			_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_SOURCE_1);
@@ -13619,7 +13551,7 @@ public class ObjectEntryResourceTest {
 				return JSONUtil.put(
 					_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_SOURCE_1,
 					_getFileEntryJSONObject(
-						_getDLFolder(objectDefinition, true), fileEntry,
+						_getDLFolder(objectDefinition, false), fileEntry,
 						objectDefinition));
 			},
 			testFileEntry, null, objectDefinition,
@@ -13632,14 +13564,9 @@ public class ObjectEntryResourceTest {
 		_testPostCustomObjectEntryWithAttachmentField(
 			fileEntry -> JSONUtil.put(
 				_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_SOURCE_2,
-				() -> {
-					JSONObject jsonObject = _getFileEntryJSONObject(
-						_getDLFolder(objectDefinition, false), fileEntry,
-						objectDefinition);
-
-					return jsonObject.put(
-						"fileBase64", fileEntry.getFileBase64());
-				}),
+				_getFileEntryJSONObject(
+					_getDLFolder(objectDefinition, true), fileEntry,
+					objectDefinition)),
 			testFileEntry, null, objectDefinition,
 			_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_SOURCE_2);
 		_testPostCustomObjectEntryWithAttachmentField(
@@ -13648,15 +13575,11 @@ public class ObjectEntryResourceTest {
 					StringUtil.replace(
 						fileEntry.getName(), ".txt", " (1).txt"));
 
-				JSONObject jsonObject = _getFileEntryJSONObject(
-					_getDLFolder(objectDefinition, false), fileEntry,
-					objectDefinition);
-
-				jsonObject.put("fileBase64", fileEntry.getFileBase64());
-
 				return JSONUtil.put(
 					_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_SOURCE_2,
-					jsonObject);
+					_getFileEntryJSONObject(
+						_getDLFolder(objectDefinition, true), fileEntry,
+						objectDefinition));
 			},
 			testFileEntry, null, objectDefinition,
 			_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_SOURCE_2);

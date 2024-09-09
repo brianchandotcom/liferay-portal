@@ -48,7 +48,9 @@
 			encoding="${javac.encoding}"
 			includeAntRuntime="false"
 			nowarn="${javac.nowarn}"
+			source="${ant.build.javac.source}"
 			srcdir="${javac.srcdir}"
+			target="${ant.build.javac.target}"
 		/>
 
 		<echo file="${javac.destdir}/.touch"></echo>

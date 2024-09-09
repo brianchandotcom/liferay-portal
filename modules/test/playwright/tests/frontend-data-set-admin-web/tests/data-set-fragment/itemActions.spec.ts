@@ -17,6 +17,7 @@ import {
 	EModalActionVariant,
 } from '../../utils/types';
 import {fdsFragmentPageTest} from './fixtures/fdsFragmentPageTest';
+import { waitForSuccessAlert } from '../../../../utils/waitForSuccessAlert';
 
 const LINK_ITEM_ACTION_NAME = 'Link item action';
 const LINK_ITEM_ACTION_CONFIRMATION_MESSAGE =
@@ -433,13 +434,7 @@ test.describe('Item Actions in Data Set fragment', () => {
 				})
 				.click();
 
-			await page.getByRole('alert').waitFor();
-
-			const alert = await page.getByRole('alert').first();
-
-			await expect(alert).toHaveText(
-				'Success:Your request completed successfully.'
-			);
+			await waitForSuccessAlert(page);
 		});
 
 		await test.step('Click in the async item action executes the action', async () => {
@@ -471,13 +466,7 @@ test.describe('Item Actions in Data Set fragment', () => {
 				})
 				.click();
 
-			await page.getByRole('alert').waitFor();
-
-			const alert = await page.getByRole('alert').first();
-
-			await expect(alert).toHaveText(
-				'Success:Your request completed successfully.'
-			);
+			await waitForSuccessAlert(page);
 		});
 	});
 
@@ -582,13 +571,7 @@ test.describe('Item Actions in Data Set fragment', () => {
 				})
 				.click();
 
-			await page.getByRole('alert').waitFor();
-
-			const alert = await page.getByRole('alert').first();
-
-			await expect(alert).toHaveText(
-				'Success:Your request completed successfully.' 
-			);
+			await waitForSuccessAlert(page);
 
 			await expect(page.getByText(headlessItemNewLabel)).toBeVisible();
 		});
@@ -622,13 +605,7 @@ test.describe('Item Actions in Data Set fragment', () => {
 				})
 				.click();
 
-			await page.getByRole('alert').waitFor();
-
-			const alert = await page.getByRole('alert').first();
-
-			await expect(alert).toHaveText(
-				'Success:Your request completed successfully.'
-			);
+			await waitForSuccessAlert(page);
 
 			await expect(page.getByText(asyncItemNewLabel)).toBeVisible();
 		});

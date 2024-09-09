@@ -11,6 +11,7 @@ import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
 import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
+import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
@@ -20,8 +21,9 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -48,107 +50,92 @@ public class LayoutPageTemplateStructureRenderUtil {
 			return StringPool.BLANK;
 		}
 
-		LayoutStructure layoutStructure = LayoutStructure.of(data);
-
-		LayoutStructureItem layoutStructureItem =
-			layoutStructure.getLayoutStructureItem(
-				layoutStructure.getMainItemId());
-
 		StringBundler sb = new StringBundler();
 
-		_renderLayoutStructure(
-			layoutStructureItem.getChildrenItemIds(),
-			fragmentRendererController, httpServletRequest, httpServletResponse,
-			layoutStructure, locale, sb);
+		LayoutStructure layoutStructure = LayoutStructure.of(data);
 
-		return sb.toString();
-	}
+		Map<Long, LayoutStructureItem> fragmentEntryLinkIdMap =
+			layoutStructure.getFragmentLayoutStructureItems();
 
-	private static String _renderFragmentEntryLink(
-		long fragmentEntryLinkId,
-		FragmentRendererController fragmentRendererController,
-		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse, Locale locale) {
+		for (LayoutStructureItem layoutStructureItem :
+				fragmentEntryLinkIdMap.values()) {
 
-		FragmentEntryLink fragmentEntryLink =
-			FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(
-				fragmentEntryLinkId);
+			FragmentStyledLayoutStructureItem
+				fragmentStyledLayoutStructureItem =
+					(FragmentStyledLayoutStructureItem)layoutStructureItem;
 
-		if (fragmentEntryLink == null) {
-			return StringPool.BLANK;
-		}
-
-		DefaultFragmentRendererContext fragmentRendererContext =
-			new DefaultFragmentRendererContext(fragmentEntryLink);
-
-		fragmentRendererContext.setLocale(locale);
-		fragmentRendererContext.setMode(FragmentEntryLinkConstants.INDEX);
-
-		return fragmentRendererController.render(
-			fragmentRendererContext, httpServletRequest, httpServletResponse);
-	}
-
-	private static void _renderLayoutStructure(
-		List<String> childrenItemIds,
-		FragmentRendererController fragmentRendererController,
-		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse,
-		LayoutStructure layoutStructure, Locale locale, StringBundler sb) {
-
-		for (String childrenItemId : childrenItemIds) {
-			LayoutStructureItem layoutStructureItem =
-				layoutStructure.getLayoutStructureItem(childrenItemId);
-
-			if (layoutStructureItem instanceof
-					ContainerStyledLayoutStructureItem) {
-
-				ContainerStyledLayoutStructureItem
-					containerStyledLayoutStructureItem =
-						(ContainerStyledLayoutStructureItem)layoutStructureItem;
-
-				if (!containerStyledLayoutStructureItem.isIndexed()) {
-					continue;
-				}
-			}
-			else if (layoutStructureItem instanceof
-						FormStyledLayoutStructureItem) {
-
-				FormStyledLayoutStructureItem formStyledLayoutStructureItem =
-					(FormStyledLayoutStructureItem)layoutStructureItem;
-
-				if (!formStyledLayoutStructureItem.isIndexed()) {
-					continue;
-				}
-			}
-			else if (layoutStructureItem instanceof
-						FragmentStyledLayoutStructureItem) {
-
-				FragmentStyledLayoutStructureItem
-					fragmentStyledLayoutStructureItem =
-						(FragmentStyledLayoutStructureItem)layoutStructureItem;
-
-				long fragmentEntryLinkId =
-					fragmentStyledLayoutStructureItem.getFragmentEntryLinkId();
-
-				if (fragmentStyledLayoutStructureItem.isIndexed() &&
-					(fragmentEntryLinkId > 0)) {
-
-					sb.append(
-						_renderFragmentEntryLink(
-							fragmentStyledLayoutStructureItem.
-								getFragmentEntryLinkId(),
-							fragmentRendererController, httpServletRequest,
-							httpServletResponse, locale));
-				}
+			if (!fragmentStyledLayoutStructureItem.isIndexed() ||
+				_hasNonindexableAncestor(
+					fragmentStyledLayoutStructureItem.getItemId(),
+					layoutStructure)) {
 
 				continue;
 			}
 
-			_renderLayoutStructure(
-				layoutStructureItem.getChildrenItemIds(),
-				fragmentRendererController, httpServletRequest,
-				httpServletResponse, layoutStructure, locale, sb);
+			FragmentEntryLink fragmentEntryLink =
+				FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(
+					fragmentStyledLayoutStructureItem.getFragmentEntryLinkId());
+
+			if (fragmentEntryLink == null) {
+				return StringPool.BLANK;
+			}
+
+			DefaultFragmentRendererContext fragmentRendererContext =
+				new DefaultFragmentRendererContext(fragmentEntryLink);
+
+			fragmentRendererContext.setLocale(locale);
+			fragmentRendererContext.setMode(FragmentEntryLinkConstants.INDEX);
+
+			sb.append(
+				fragmentRendererController.render(
+					fragmentRendererContext, httpServletRequest,
+					httpServletResponse));
 		}
+
+		return sb.toString();
+	}
+
+	private static boolean _hasNonindexableAncestor(
+		String itemId, LayoutStructure layoutStructure) {
+
+		LayoutStructureItem layoutStructureItem =
+			layoutStructure.getLayoutStructureItem(itemId);
+
+		LayoutStructureItem parentLayoutStructureItem =
+			layoutStructure.getLayoutStructureItem(
+				layoutStructureItem.getParentItemId());
+
+		if (parentLayoutStructureItem == null) {
+			return false;
+		}
+
+		if (layoutStructureItem instanceof ContainerStyledLayoutStructureItem) {
+			ContainerStyledLayoutStructureItem
+				containerStyledLayoutStructureItem =
+					(ContainerStyledLayoutStructureItem)layoutStructureItem;
+
+			if (!containerStyledLayoutStructureItem.isIndexed()) {
+				return true;
+			}
+		}
+		else if (layoutStructureItem instanceof FormStyledLayoutStructureItem) {
+			FormStyledLayoutStructureItem formStyledLayoutStructureItem =
+				(FormStyledLayoutStructureItem)layoutStructureItem;
+
+			if (!formStyledLayoutStructureItem.isIndexed()) {
+				return true;
+			}
+		}
+
+		if (Objects.equals(
+				parentLayoutStructureItem.getItemType(),
+				LayoutDataItemTypeConstants.TYPE_ROOT)) {
+
+			return false;
+		}
+
+		return _hasNonindexableAncestor(
+			parentLayoutStructureItem.getItemId(), layoutStructure);
 	}
 
 }

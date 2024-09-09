@@ -4,157 +4,250 @@
 			{
 				"definition": {
 					"indexed": true,
-					"layout": {
-						"borderWidth": 0,
-						"marginBottom": 0,
-						"marginLeft": 0,
-						"marginRight": 0,
-						"marginTop": 0,
-						"opacity": 100,
-						"paddingBottom": 0,
-						"paddingLeft": 0,
-						"paddingRight": 0,
-						"paddingTop": 0,
-						"widthType": "Fluid"
-					}
+					"layout": {}
 				},
 				"pageElements": [
 					{
 						"definition": {
-							"fragment": {
-								"key": "content-welcome-banner"
+							"fragmentStyle": {
+								"backgroundColor": "colorNeutral1",
+								"borderRadius": "borderRadiusLg",
+								"paddingBottom": "3",
+								"paddingLeft": "5",
+								"paddingRight": "5",
+								"paddingTop": "3"
 							},
-							"fragmentConfig": {
-							},
-							"fragmentFields": [
-								{
-									"id": "first-welcome-banner-title",
-									"value": {
-										"fragmentLink": {
-										},
-										"text": {
-											"value_i18n": {
-												"ar_SA": "Request a Demo Instance",
-												"ca_ES": "Request a Demo Instance",
-												"de_DE": "Request a Demo Instance",
-												"en_US": "Request a Demo Instance",
-												"es_ES": "Request a Demo Instance",
-												"fi_FI": "Request a Demo Instance",
-												"fr_FR": "Request a Demo Instance",
-												"hu_HU": "Request a Demo Instance",
-												"ja_JP": "Request a Demo Instance",
-												"nl_NL": "Request a Demo Instance",
-												"pt_BR": "Request a Demo Instance",
-												"sv_SE": "Request a Demo Instance",
-												"zh_CN": "Request a Demo Instance"
-											}
-										}
-									}
-								},
-								{
-									"id": "first-welcome-banner-description",
-									"value": {
-										"fragmentLink": {
-										},
-										"text": {
-											"value_i18n": {
-												"ar_SA": "Demos are available for you to showcase Liferay's benefits, features, and solutions for your prospect's unique business challenges.&nbsp;&nbsp;",
-												"ca_ES": "Demos are available for you to showcase Liferay's benefits, features, and solutions for your prospect's unique business challenges.&nbsp;&nbsp;",
-												"de_DE": "Demos are available for you to showcase Liferay's benefits, features, and solutions for your prospect's unique business challenges.&nbsp;&nbsp;",
-												"en_US": "Demos are available for you to showcase Liferay's benefits, features, and solutions for your prospect's unique business challenges.&nbsp;&nbsp;",
-												"es_ES": "Demos are available for you to showcase Liferay's benefits, features, and solutions for your prospect's unique business challenges.&nbsp;&nbsp;",
-												"fi_FI": "Demos are available for you to showcase Liferay's benefits, features, and solutions for your prospect's unique business challenges.&nbsp;&nbsp;",
-												"fr_FR": "Demos are available for you to showcase Liferay's benefits, features, and solutions for your prospect's unique business challenges.&nbsp;&nbsp;",
-												"hu_HU": "Demos are available for you to showcase Liferay's benefits, features, and solutions for your prospect's unique business challenges.&nbsp;&nbsp;",
-												"ja_JP": "Demos are available for you to showcase Liferay's benefits, features, and solutions for your prospect's unique business challenges.&nbsp;&nbsp;",
-												"nl_NL": "Demos are available for you to showcase Liferay's benefits, features, and solutions for your prospect's unique business challenges.&nbsp;&nbsp;",
-												"pt_BR": "Demos are available for you to showcase Liferay's benefits, features, and solutions for your prospect's unique business challenges.&nbsp;&nbsp;",
-												"sv_SE": "Demos are available for you to showcase Liferay's benefits, features, and solutions for your prospect's unique business challenges.&nbsp;&nbsp;",
-												"zh_CN": "Demos are available for you to showcase Liferay's benefits, features, and solutions for your prospect's unique business challenges.&nbsp;&nbsp;"
-											}
-										}
-									}
-								},
-								{
-									"id": "second-welcome-banner-title",
-									"value": {
-										"fragmentLink": {
-										}
-									}
-								}
-							],
-							"indexed": true
+							"indexed": true,
+							"layout": {
+								"paddingBottom": 1,
+								"paddingLeft": 4,
+								"paddingRight": 4,
+								"paddingTop": 1
+							}
 						},
 						"pageElements": [
 							{
 								"definition": {
-								},
-								"type": "FragmentDropZone"
-							},
-							{
-								"definition": {
-								},
-								"type": "FragmentDropZone"
-							},
-							{
-								"definition": {
+									"gutters": true,
+									"indexed": true,
+									"modulesPerRow": 2,
+									"numberOfColumns": 2,
+									"reverseOrder": false,
+									"rowViewports": [
+										{
+											"id": "landscapeMobile",
+											"rowViewportDefinition": {
+												"modulesPerRow": 1
+											}
+										},
+										{
+											"id": "portraitMobile",
+											"rowViewportDefinition": {}
+										},
+										{
+											"id": "tablet",
+											"rowViewportDefinition": {}
+										}
+									],
+									"verticalAlignment": "middle"
 								},
 								"pageElements": [
 									{
 										"definition": {
-											"fragment": {
-												"key": "BASIC_COMPONENT-image"
-											},
-											"fragmentConfig": {
-												"imageSize": "w-100"
-											},
-											"fragmentFields": [
+											"columnViewports": [
 												{
-													"id": "image-square",
-													"value": {
-														"fragmentImage": {
-															"title": {
-																"value": "sales-welcome-banner-bg.png"
-															},
-															"url": {
-																"mapping": {
-																	"fieldKey": "FileEntry_previewImage",
-																	"itemReference": {
-																		"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																		"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/content-welcome-banner-resources/sales-welcome-banner-bg.png#]"
+													"columnViewportDefinition": {
+														"size": 12
+													},
+													"id": "landscapeMobile"
+												},
+												{
+													"columnViewportDefinition": {},
+													"id": "portraitMobile"
+												},
+												{
+													"columnViewportDefinition": {},
+													"id": "tablet"
+												}
+											],
+											"size": 6
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "dialect-dialect-text"
+													},
+													"fragmentConfig": {
+														"textType": "h1"
+													},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {},
+																"text": {
+																	"value_i18n": {
+																		"ar_SA": "Request a Demo Instance",
+																		"ca_ES": "Request a Demo Instance",
+																		"de_DE": "Request a Demo Instance",
+																		"en_US": "Request a Demo Instance",
+																		"es_ES": "Request a Demo Instance",
+																		"fi_FI": "Request a Demo Instance",
+																		"fr_FR": "Request a Demo Instance",
+																		"hu_HU": "Request a Demo Instance",
+																		"ja_JP": "Request a Demo Instance",
+																		"nl_NL": "Request a Demo Instance",
+																		"pt_BR": "Request a Demo Instance",
+																		"sv_SE": "Request a Demo Instance",
+																		"zh_CN": "Request a Demo Instance"
 																	}
 																}
 															}
-														},
-														"fragmentLink": {
 														}
-													}
+													],
+													"fragmentStyle": {
+														"fontWeight": "fontWeightBold",
+														"marginBottom": "3",
+														"textColor": "colorNeutral10"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "dialect-dialect-text"
+													},
+													"fragmentConfig": {
+														"textType": "text-paragraph"
+													},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {},
+																"text": {
+																	"value_i18n": {
+																		"ar_SA": "Demos are available to showcase Liferay's benefits, features, and solutions for your prospect's unique business challenges.&nbsp;",
+																		"ca_ES": "Demos are available to showcase Liferay's benefits, features, and solutions for your prospect's unique business challenges.&nbsp;",
+																		"de_DE": "Demos are available to showcase Liferay's benefits, features, and solutions for your prospect's unique business challenges.&nbsp;",
+																		"en_US": "Demos are available to showcase Liferay's benefits, features, and solutions for your prospect's unique business challenges.&nbsp;",
+																		"es_ES": "Demos are available to showcase Liferay's benefits, features, and solutions for your prospect's unique business challenges.&nbsp;",
+																		"fi_FI": "Demos are available to showcase Liferay's benefits, features, and solutions for your prospect's unique business challenges.&nbsp;",
+																		"fr_FR": "Demos are available to showcase Liferay's benefits, features, and solutions for your prospect's unique business challenges.&nbsp;",
+																		"hu_HU": "Demos are available to showcase Liferay's benefits, features, and solutions for your prospect's unique business challenges.&nbsp;",
+																		"ja_JP": "Demos are available to showcase Liferay's benefits, features, and solutions for your prospect's unique business challenges.&nbsp;",
+																		"nl_NL": "Demos are available to showcase Liferay's benefits, features, and solutions for your prospect's unique business challenges.&nbsp;",
+																		"pt_BR": "Demos are available to showcase Liferay's benefits, features, and solutions for your prospect's unique business challenges.&nbsp;",
+																		"sv_SE": "Demos are available to showcase Liferay's benefits, features, and solutions for your prospect's unique business challenges.&nbsp;",
+																		"zh_CN": "Demos are available to showcase Liferay's benefits, features, and solutions for your prospect's unique business challenges.&nbsp;"
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"marginBottom": "3"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											}
+										],
+										"type": "Column"
+									},
+									{
+										"definition": {
+											"columnViewports": [
+												{
+													"columnViewportDefinition": {
+														"size": 12
+													},
+													"id": "landscapeMobile"
+												},
+												{
+													"columnViewportDefinition": {},
+													"id": "portraitMobile"
+												},
+												{
+													"columnViewportDefinition": {},
+													"id": "tablet"
 												}
 											],
-											"indexed": true
+											"size": 6
 										},
-										"type": "Fragment"
+										"pageElements": [
+											{
+												"definition": {
+													"indexed": true,
+													"layout": {
+														"align": "Center",
+														"contentDisplay": "FlexRow",
+														"justify": "Center"
+													}
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "BASIC_COMPONENT-image"
+															},
+															"fragmentConfig": {
+																"imageSize": "w-100"
+															},
+															"fragmentFields": [
+																{
+																	"id": "image-square",
+																	"value": {
+																		"fragmentImage": {
+																			"description": {
+																				"value_i18n": {
+																					"en_US": ""
+																				}
+																			},
+																			"url": {
+																				"mapping": {
+																					"fieldKey": "FileEntry_previewImage",
+																					"itemReference": {
+																						"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																						"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/technical/demo-request-banner.png#]"
+																					}
+																				}
+																			}
+																		},
+																		"fragmentLink": {}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"maxWidth": "300px",
+																"paddingBottom": "4",
+																"paddingLeft": "4",
+																"paddingRight": "4",
+																"paddingTop": "4"
+															},
+															"indexed": true
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "Section"
+											}
+										],
+										"type": "Column"
 									}
 								],
-								"type": "FragmentDropZone"
-							},
-							{
-								"definition": {
-								},
-								"type": "FragmentDropZone"
-							},
-							{
-								"definition": {
-								},
-								"type": "FragmentDropZone"
+								"type": "Row"
 							}
 						],
-						"type": "Fragment"
+						"type": "Section"
 					},
 					{
 						"definition": {
 							"fragmentStyle": {
-								"marginTop": "5"
+								"marginTop": "4"
 							},
 							"gutters": true,
 							"indexed": true,
@@ -170,13 +263,11 @@
 								},
 								{
 									"id": "portraitMobile",
-									"rowViewportDefinition": {
-									}
+									"rowViewportDefinition": {}
 								},
 								{
 									"id": "tablet",
-									"rowViewportDefinition": {
-									}
+									"rowViewportDefinition": {}
 								}
 							],
 							"verticalAlignment": "top"
@@ -192,13 +283,11 @@
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {
-											},
+											"columnViewportDefinition": {},
 											"id": "portraitMobile"
 										},
 										{
-											"columnViewportDefinition": {
-											},
+											"columnViewportDefinition": {},
 											"id": "tablet"
 										}
 									],
@@ -210,29 +299,27 @@
 											"fragment": {
 												"key": "BASIC_COMPONENT-paragraph"
 											},
-											"fragmentConfig": {
-											},
+											"fragmentConfig": {},
 											"fragmentFields": [
 												{
 													"id": "element-text",
 													"value": {
-														"fragmentLink": {
-														},
+														"fragmentLink": {},
 														"text": {
 															"value_i18n": {
-																"ar_SA": "<h4 dir=\"ltr\"><strong>Getting Started</strong></h4>\n\n<p dir=\"ltr\">Demo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;<u>7 days&nbsp;</u>per request.&nbsp;<br />\n<br />\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.</p>\n\n<p dir=\"ltr\">For questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;<a href=\"mailto:sales-engineering-channels@liferay.com\" target=\"_blank\">sales-engineering-channels@liferay.com</a>.</p>\n\n<p> </p>\n\n<h4 dir=\"ltr\"><strong>Demo Recordings</strong></h4>\n\n<p dir=\"ltr\">It is recommended that you first watch the relevant demo recording to determine if the use case will be relevant to your presentation.&nbsp;</p>\n",
-																"ca_ES": "<h4 dir=\"ltr\"><strong>Getting Started</strong></h4>\n\n<p dir=\"ltr\">Demo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;<u>7 days&nbsp;</u>per request.&nbsp;<br />\n<br />\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.</p>\n\n<p dir=\"ltr\">For questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;<a href=\"mailto:sales-engineering-channels@liferay.com\" target=\"_blank\">sales-engineering-channels@liferay.com</a>.</p>\n\n<p> </p>\n\n<h4 dir=\"ltr\"><strong>Demo Recordings</strong></h4>\n\n<p dir=\"ltr\">It is recommended that you first watch the relevant demo recording to determine if the use case will be relevant to your presentation.&nbsp;</p>\n",
-																"de_DE": "<h4 dir=\"ltr\"><strong>Getting Started</strong></h4>\n\n<p dir=\"ltr\">Demo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;<u>7 days&nbsp;</u>per request.&nbsp;<br />\n<br />\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.</p>\n\n<p dir=\"ltr\">For questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;<a href=\"mailto:sales-engineering-channels@liferay.com\" target=\"_blank\">sales-engineering-channels@liferay.com</a>.</p>\n\n<p> </p>\n\n<h4 dir=\"ltr\"><strong>Demo Recordings</strong></h4>\n\n<p dir=\"ltr\">It is recommended that you first watch the relevant demo recording to determine if the use case will be relevant to your presentation.&nbsp;</p>\n",
-																"en_US": "<h4 dir=\"ltr\"><strong>Getting Started</strong></h4>\n\n<p dir=\"ltr\">Demo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;<u>7 days&nbsp;</u>per request.&nbsp;<br />\n<br />\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.</p>\n\n<p dir=\"ltr\">For questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;<a href=\"mailto:sales-engineering-channels@liferay.com\" target=\"_blank\">sales-engineering-channels@liferay.com</a>.</p>\n\n<p> </p>\n\n<h4 dir=\"ltr\"><strong>Demo Recordings</strong></h4>\n\n<p dir=\"ltr\">It is recommended that you first watch the relevant demo recording to determine if the use case will be relevant to your presentation.&nbsp;</p>\n",
-																"es_ES": "<h4 dir=\"ltr\"><strong>Getting Started</strong></h4>\n\n<p dir=\"ltr\">Demo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;<u>7 days&nbsp;</u>per request.&nbsp;<br />\n<br />\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.</p>\n\n<p dir=\"ltr\">For questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;<a href=\"mailto:sales-engineering-channels@liferay.com\" target=\"_blank\">sales-engineering-channels@liferay.com</a>.</p>\n\n<p> </p>\n\n<h4 dir=\"ltr\"><strong>Demo Recordings</strong></h4>\n\n<p dir=\"ltr\">It is recommended that you first watch the relevant demo recording to determine if the use case will be relevant to your presentation.&nbsp;</p>\n",
-																"fi_FI": "<h4 dir=\"ltr\"><strong>Getting Started</strong></h4>\n\n<p dir=\"ltr\">Demo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;<u>7 days&nbsp;</u>per request.&nbsp;<br />\n<br />\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.</p>\n\n<p dir=\"ltr\">For questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;<a href=\"mailto:sales-engineering-channels@liferay.com\" target=\"_blank\">sales-engineering-channels@liferay.com</a>.</p>\n\n<p> </p>\n\n<h4 dir=\"ltr\"><strong>Demo Recordings</strong></h4>\n\n<p dir=\"ltr\">It is recommended that you first watch the relevant demo recording to determine if the use case will be relevant to your presentation.&nbsp;</p>\n",
-																"fr_FR": "<h4 dir=\"ltr\"><strong>Getting Started</strong></h4>\n\n<p dir=\"ltr\">Demo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;<u>7 days&nbsp;</u>per request.&nbsp;<br />\n<br />\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.</p>\n\n<p dir=\"ltr\">For questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;<a href=\"mailto:sales-engineering-channels@liferay.com\" target=\"_blank\">sales-engineering-channels@liferay.com</a>.</p>\n\n<p> </p>\n\n<h4 dir=\"ltr\"><strong>Demo Recordings</strong></h4>\n\n<p dir=\"ltr\">It is recommended that you first watch the relevant demo recording to determine if the use case will be relevant to your presentation.&nbsp;</p>\n",
-																"hu_HU": "<h4 dir=\"ltr\"><strong>Getting Started</strong></h4>\n\n<p dir=\"ltr\">Demo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;<u>7 days&nbsp;</u>per request.&nbsp;<br />\n<br />\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.</p>\n\n<p dir=\"ltr\">For questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;<a href=\"mailto:sales-engineering-channels@liferay.com\" target=\"_blank\">sales-engineering-channels@liferay.com</a>.</p>\n\n<p> </p>\n\n<h4 dir=\"ltr\"><strong>Demo Recordings</strong></h4>\n\n<p dir=\"ltr\">It is recommended that you first watch the relevant demo recording to determine if the use case will be relevant to your presentation.&nbsp;</p>\n",
-																"ja_JP": "<h4 dir=\"ltr\"><strong>Getting Started</strong></h4>\n\n<p dir=\"ltr\">Demo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;<u>7 days&nbsp;</u>per request.&nbsp;<br />\n<br />\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.</p>\n\n<p dir=\"ltr\">For questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;<a href=\"mailto:sales-engineering-channels@liferay.com\" target=\"_blank\">sales-engineering-channels@liferay.com</a>.</p>\n\n<p> </p>\n\n<h4 dir=\"ltr\"><strong>Demo Recordings</strong></h4>\n\n<p dir=\"ltr\">It is recommended that you first watch the relevant demo recording to determine if the use case will be relevant to your presentation.&nbsp;</p>\n",
-																"nl_NL": "<h4 dir=\"ltr\"><strong>Getting Started</strong></h4>\n\n<p dir=\"ltr\">Demo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;<u>7 days&nbsp;</u>per request.&nbsp;<br />\n<br />\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.</p>\n\n<p dir=\"ltr\">For questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;<a href=\"mailto:sales-engineering-channels@liferay.com\" target=\"_blank\">sales-engineering-channels@liferay.com</a>.</p>\n\n<p> </p>\n\n<h4 dir=\"ltr\"><strong>Demo Recordings</strong></h4>\n\n<p dir=\"ltr\">It is recommended that you first watch the relevant demo recording to determine if the use case will be relevant to your presentation.&nbsp;</p>\n",
-																"pt_BR": "<h4 dir=\"ltr\"><strong>Getting Started</strong></h4>\n\n<p dir=\"ltr\">Demo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;<u>7 days&nbsp;</u>per request.&nbsp;<br />\n<br />\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.</p>\n\n<p dir=\"ltr\">For questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;<a href=\"mailto:sales-engineering-channels@liferay.com\" target=\"_blank\">sales-engineering-channels@liferay.com</a>.</p>\n\n<p> </p>\n\n<h4 dir=\"ltr\"><strong>Demo Recordings</strong></h4>\n\n<p dir=\"ltr\">It is recommended that you first watch the relevant demo recording to determine if the use case will be relevant to your presentation.&nbsp;</p>\n",
-																"sv_SE": "<h4 dir=\"ltr\"><strong>Getting Started</strong></h4>\n\n<p dir=\"ltr\">Demo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;<u>7 days&nbsp;</u>per request.&nbsp;<br />\n<br />\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.</p>\n\n<p dir=\"ltr\">For questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;<a href=\"mailto:sales-engineering-channels@liferay.com\" target=\"_blank\">sales-engineering-channels@liferay.com</a>.</p>\n\n<p> </p>\n\n<h4 dir=\"ltr\"><strong>Demo Recordings</strong></h4>\n\n<p dir=\"ltr\">It is recommended that you first watch the relevant demo recording to determine if the use case will be relevant to your presentation.&nbsp;</p>\n",
-																"zh_CN": "<h4 dir=\"ltr\"><strong>Getting Started</strong></h4>\n\n<p dir=\"ltr\">Demo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;<u>7 days&nbsp;</u>per request.&nbsp;<br />\n<br />\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.</p>\n\n<p dir=\"ltr\">For questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;<a href=\"mailto:sales-engineering-channels@liferay.com\" target=\"_blank\">sales-engineering-channels@liferay.com</a>.</p>\n\n<p> </p>\n\n<h4 dir=\"ltr\"><strong>Demo Recordings</strong></h4>\n\n<p dir=\"ltr\">It is recommended that you first watch the relevant demo recording to determine if the use case will be relevant to your presentation.&nbsp;</p>\n"
+																"ar_SA": "\u003Ch4 dir=\"ltr\"\u003E\u003Cstrong\u003EGetting Started\u003C/strong\u003E\u003C/h4\u003E\n\n\u003Cp dir=\"ltr\"\u003EDemo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;\u003Cstrong\u003E\u003Cu\u003E7 days\u003C/u\u003E\u003C/strong\u003E&nbsp;per request.&nbsp;\u003Cbr /\u003E\n\u003Cbr /\u003E\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003EFor questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;\u003Ca href=\"mailto:partner-enablement@liferay.com\"\u003Epartner-enablement@liferay.com\u003C/a\u003E.\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003E \u003C/p\u003E\n",
+																"ca_ES": "\u003Ch4 dir=\"ltr\"\u003E\u003Cstrong\u003EGetting Started\u003C/strong\u003E\u003C/h4\u003E\n\n\u003Cp dir=\"ltr\"\u003EDemo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;\u003Cstrong\u003E\u003Cu\u003E7 days\u003C/u\u003E\u003C/strong\u003E&nbsp;per request.&nbsp;\u003Cbr /\u003E\n\u003Cbr /\u003E\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003EFor questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;\u003Ca href=\"mailto:partner-enablement@liferay.com\"\u003Epartner-enablement@liferay.com\u003C/a\u003E.\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003E \u003C/p\u003E\n",
+																"de_DE": "\u003Ch4 dir=\"ltr\"\u003E\u003Cstrong\u003EGetting Started\u003C/strong\u003E\u003C/h4\u003E\n\n\u003Cp dir=\"ltr\"\u003EDemo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;\u003Cstrong\u003E\u003Cu\u003E7 days\u003C/u\u003E\u003C/strong\u003E&nbsp;per request.&nbsp;\u003Cbr /\u003E\n\u003Cbr /\u003E\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003EFor questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;\u003Ca href=\"mailto:partner-enablement@liferay.com\"\u003Epartner-enablement@liferay.com\u003C/a\u003E.\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003E \u003C/p\u003E\n",
+																"en_US": "\u003Ch4 dir=\"ltr\"\u003E\u003Cstrong\u003EGetting Started\u003C/strong\u003E\u003C/h4\u003E\n\n\u003Cp dir=\"ltr\"\u003EDemo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;\u003Cstrong\u003E\u003Cu\u003E7 days\u003C/u\u003E\u003C/strong\u003E&nbsp;per request.&nbsp;\u003Cbr /\u003E\n\u003Cbr /\u003E\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003EFor questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;\u003Ca href=\"mailto:partner-enablement@liferay.com\"\u003Epartner-enablement@liferay.com\u003C/a\u003E.\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003E \u003C/p\u003E\n",
+																"es_ES": "\u003Ch4 dir=\"ltr\"\u003E\u003Cstrong\u003EGetting Started\u003C/strong\u003E\u003C/h4\u003E\n\n\u003Cp dir=\"ltr\"\u003EDemo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;\u003Cstrong\u003E\u003Cu\u003E7 days\u003C/u\u003E\u003C/strong\u003E&nbsp;per request.&nbsp;\u003Cbr /\u003E\n\u003Cbr /\u003E\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003EFor questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;\u003Ca href=\"mailto:partner-enablement@liferay.com\"\u003Epartner-enablement@liferay.com\u003C/a\u003E.\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003E \u003C/p\u003E\n",
+																"fi_FI": "\u003Ch4 dir=\"ltr\"\u003E\u003Cstrong\u003EGetting Started\u003C/strong\u003E\u003C/h4\u003E\n\n\u003Cp dir=\"ltr\"\u003EDemo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;\u003Cstrong\u003E\u003Cu\u003E7 days\u003C/u\u003E\u003C/strong\u003E&nbsp;per request.&nbsp;\u003Cbr /\u003E\n\u003Cbr /\u003E\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003EFor questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;\u003Ca href=\"mailto:partner-enablement@liferay.com\"\u003Epartner-enablement@liferay.com\u003C/a\u003E.\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003E \u003C/p\u003E\n",
+																"fr_FR": "\u003Ch4 dir=\"ltr\"\u003E\u003Cstrong\u003EGetting Started\u003C/strong\u003E\u003C/h4\u003E\n\n\u003Cp dir=\"ltr\"\u003EDemo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;\u003Cstrong\u003E\u003Cu\u003E7 days\u003C/u\u003E\u003C/strong\u003E&nbsp;per request.&nbsp;\u003Cbr /\u003E\n\u003Cbr /\u003E\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003EFor questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;\u003Ca href=\"mailto:partner-enablement@liferay.com\"\u003Epartner-enablement@liferay.com\u003C/a\u003E.\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003E \u003C/p\u003E\n",
+																"hu_HU": "\u003Ch4 dir=\"ltr\"\u003E\u003Cstrong\u003EGetting Started\u003C/strong\u003E\u003C/h4\u003E\n\n\u003Cp dir=\"ltr\"\u003EDemo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;\u003Cstrong\u003E\u003Cu\u003E7 days\u003C/u\u003E\u003C/strong\u003E&nbsp;per request.&nbsp;\u003Cbr /\u003E\n\u003Cbr /\u003E\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003EFor questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;\u003Ca href=\"mailto:partner-enablement@liferay.com\"\u003Epartner-enablement@liferay.com\u003C/a\u003E.\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003E \u003C/p\u003E\n",
+																"ja_JP": "\u003Ch4 dir=\"ltr\"\u003E\u003Cstrong\u003EGetting Started\u003C/strong\u003E\u003C/h4\u003E\n\n\u003Cp dir=\"ltr\"\u003EDemo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;\u003Cstrong\u003E\u003Cu\u003E7 days\u003C/u\u003E\u003C/strong\u003E&nbsp;per request.&nbsp;\u003Cbr /\u003E\n\u003Cbr /\u003E\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003EFor questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;\u003Ca href=\"mailto:partner-enablement@liferay.com\"\u003Epartner-enablement@liferay.com\u003C/a\u003E.\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003E \u003C/p\u003E\n",
+																"nl_NL": "\u003Ch4 dir=\"ltr\"\u003E\u003Cstrong\u003EGetting Started\u003C/strong\u003E\u003C/h4\u003E\n\n\u003Cp dir=\"ltr\"\u003EDemo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;\u003Cstrong\u003E\u003Cu\u003E7 days\u003C/u\u003E\u003C/strong\u003E&nbsp;per request.&nbsp;\u003Cbr /\u003E\n\u003Cbr /\u003E\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003EFor questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;\u003Ca href=\"mailto:partner-enablement@liferay.com\"\u003Epartner-enablement@liferay.com\u003C/a\u003E.\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003E \u003C/p\u003E\n",
+																"pt_BR": "\u003Ch4 dir=\"ltr\"\u003E\u003Cstrong\u003EGetting Started\u003C/strong\u003E\u003C/h4\u003E\n\n\u003Cp dir=\"ltr\"\u003EDemo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;\u003Cstrong\u003E\u003Cu\u003E7 days\u003C/u\u003E\u003C/strong\u003E&nbsp;per request.&nbsp;\u003Cbr /\u003E\n\u003Cbr /\u003E\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003EFor questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;\u003Ca href=\"mailto:partner-enablement@liferay.com\"\u003Epartner-enablement@liferay.com\u003C/a\u003E.\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003E \u003C/p\u003E\n",
+																"sv_SE": "\u003Ch4 dir=\"ltr\"\u003E\u003Cstrong\u003EGetting Started\u003C/strong\u003E\u003C/h4\u003E\n\n\u003Cp dir=\"ltr\"\u003EDemo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;\u003Cstrong\u003E\u003Cu\u003E7 days\u003C/u\u003E\u003C/strong\u003E&nbsp;per request.&nbsp;\u003Cbr /\u003E\n\u003Cbr /\u003E\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003EFor questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;\u003Ca href=\"mailto:partner-enablement@liferay.com\"\u003Epartner-enablement@liferay.com\u003C/a\u003E.\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003E \u003C/p\u003E\n",
+																"zh_CN": "\u003Ch4 dir=\"ltr\"\u003E\u003Cstrong\u003EGetting Started\u003C/strong\u003E\u003C/h4\u003E\n\n\u003Cp dir=\"ltr\"\u003EDemo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;\u003Cstrong\u003E\u003Cu\u003E7 days\u003C/u\u003E\u003C/strong\u003E&nbsp;per request.&nbsp;\u003Cbr /\u003E\n\u003Cbr /\u003E\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003EFor questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;\u003Ca href=\"mailto:partner-enablement@liferay.com\"\u003Epartner-enablement@liferay.com\u003C/a\u003E.\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003E \u003C/p\u003E\n"
 															}
 														}
 													}
@@ -241,6 +328,1362 @@
 											"indexed": true
 										},
 										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"fragment": {
+												"key": "BASIC_COMPONENT-heading"
+											},
+											"fragmentConfig": {
+												"headingLevel": "h4"
+											},
+											"fragmentFields": [
+												{
+													"id": "element-text",
+													"value": {
+														"fragmentLink": {},
+														"text": {
+															"value_i18n": {
+																"ar_SA": "Demo Descriptions",
+																"ca_ES": "Demo Descriptions",
+																"de_DE": "Demo Descriptions",
+																"en_US": "Demo Descriptions",
+																"es_ES": "Demo Descriptions",
+																"fi_FI": "Demo Descriptions",
+																"fr_FR": "Demo Descriptions",
+																"hu_HU": "Demo Descriptions",
+																"ja_JP": "Demo Descriptions",
+																"nl_NL": "Demo Descriptions",
+																"pt_BR": "Demo Descriptions",
+																"sv_SE": "Demo Descriptions",
+																"zh_CN": "Demo Descriptions"
+															}
+														}
+													}
+												}
+											],
+											"fragmentStyle": {
+												"marginTop": "3"
+											},
+											"indexed": true
+										},
+										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"fragment": {
+												"key": "BASIC_COMPONENT-paragraph"
+											},
+											"fragmentConfig": {},
+											"fragmentFields": [
+												{
+													"id": "element-text",
+													"value": {
+														"fragmentLink": {},
+														"text": {
+															"value_i18n": {
+																"ar_SA": "The 'Demo Required' list provides the names of the demos which are available to be provisioned. For more information read the following description.",
+																"ca_ES": "The 'Demo Required' list provides the names of the demos which are available to be provisioned. For more information read the following description.",
+																"de_DE": "The 'Demo Required' list provides the names of the demos which are available to be provisioned. For more information read the following description.",
+																"en_US": "The 'Demo Required' list provides the names of the demos which are available to be provisioned. For more information read the following description.",
+																"es_ES": "The 'Demo Required' list provides the names of the demos which are available to be provisioned. For more information read the following description.",
+																"fi_FI": "The 'Demo Required' list provides the names of the demos which are available to be provisioned. For more information read the following description.",
+																"fr_FR": "The 'Demo Required' list provides the names of the demos which are available to be provisioned. For more information read the following description.",
+																"hu_HU": "The 'Demo Required' list provides the names of the demos which are available to be provisioned. For more information read the following description.",
+																"ja_JP": "The 'Demo Required' list provides the names of the demos which are available to be provisioned. For more information read the following description.",
+																"nl_NL": "The 'Demo Required' list provides the names of the demos which are available to be provisioned. For more information read the following description.",
+																"pt_BR": "The 'Demo Required' list provides the names of the demos which are available to be provisioned. For more information read the following description.",
+																"sv_SE": "The 'Demo Required' list provides the names of the demos which are available to be provisioned. For more information read the following description.",
+																"zh_CN": "The 'Demo Required' list provides the names of the demos which are available to be provisioned. For more information read the following description."
+															}
+														}
+													}
+												}
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"fragmentStyle": {
+												"marginTop": "5"
+											},
+											"gutters": true,
+											"indexed": true,
+											"modulesPerRow": 2,
+											"numberOfColumns": 2,
+											"reverseOrder": false,
+											"rowViewports": [
+												{
+													"id": "landscapeMobile",
+													"rowViewportDefinition": {
+														"modulesPerRow": 1
+													}
+												},
+												{
+													"id": "portraitMobile",
+													"rowViewportDefinition": {}
+												},
+												{
+													"id": "tablet",
+													"rowViewportDefinition": {}
+												}
+											],
+											"verticalAlignment": "top"
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"columnViewports": [
+														{
+															"columnViewportDefinition": {
+																"size": 12
+															},
+															"id": "landscapeMobile"
+														},
+														{
+															"columnViewportDefinition": {},
+															"id": "portraitMobile"
+														},
+														{
+															"columnViewportDefinition": {},
+															"id": "tablet"
+														}
+													],
+													"size": 6
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "BASIC_COMPONENT-image"
+															},
+															"fragmentConfig": {
+																"imageSize": "w-100"
+															},
+															"fragmentFields": [
+																{
+																	"id": "image-square",
+																	"value": {
+																		"fragmentImage": {
+																			"url": {
+																				"mapping": {
+																					"fieldKey": "FileEntry_previewImage",
+																					"itemReference": {
+																						"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																						"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/technical/commerce-and-mk.png#]"
+																					}
+																				}
+																			}
+																		},
+																		"fragmentLink": {}
+																	}
+																}
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "Column"
+											},
+											{
+												"definition": {
+													"columnViewports": [
+														{
+															"columnViewportDefinition": {
+																"size": 12
+															},
+															"id": "landscapeMobile"
+														},
+														{
+															"columnViewportDefinition": {},
+															"id": "portraitMobile"
+														},
+														{
+															"columnViewportDefinition": {},
+															"id": "tablet"
+														}
+													],
+													"size": 6
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "BASIC_COMPONENT-heading"
+															},
+															"fragmentConfig": {
+																"headingLevel": "h4"
+															},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {},
+																		"text": {
+																			"value_i18n": {
+																				"ar_SA": "Commerce and Marketers",
+																				"ca_ES": "Commerce and Marketers",
+																				"de_DE": "Commerce and Marketers",
+																				"en_US": "Commerce and Marketers",
+																				"es_ES": "Commerce and Marketers",
+																				"fi_FI": "Commerce and Marketers",
+																				"fr_FR": "Commerce and Marketers",
+																				"hu_HU": "Commerce and Marketers",
+																				"ja_JP": "Commerce and Marketers",
+																				"nl_NL": "Commerce and Marketers",
+																				"pt_BR": "Commerce and Marketers",
+																				"sv_SE": "Commerce and Marketers",
+																				"zh_CN": "Commerce and Marketers"
+																			}
+																		}
+																	}
+																}
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "BASIC_COMPONENT-paragraph"
+															},
+															"fragmentConfig": {},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {},
+																		"text": {
+																			"value_i18n": {
+																				"ar_SA": "B2B Commerce and public website demo in the manufacturing/retail space, focusing on B2B buyers and company marketers.",
+																				"ca_ES": "B2B Commerce and public website demo in the manufacturing/retail space, focusing on B2B buyers and company marketers.",
+																				"de_DE": "B2B Commerce and public website demo in the manufacturing/retail space, focusing on B2B buyers and company marketers.",
+																				"en_US": "B2B Commerce and public website demo in the manufacturing/retail space, focusing on B2B buyers and company marketers.",
+																				"es_ES": "B2B Commerce and public website demo in the manufacturing/retail space, focusing on B2B buyers and company marketers.",
+																				"fi_FI": "B2B Commerce and public website demo in the manufacturing/retail space, focusing on B2B buyers and company marketers.",
+																				"fr_FR": "B2B Commerce and public website demo in the manufacturing/retail space, focusing on B2B buyers and company marketers.",
+																				"hu_HU": "B2B Commerce and public website demo in the manufacturing/retail space, focusing on B2B buyers and company marketers.",
+																				"ja_JP": "B2B Commerce and public website demo in the manufacturing/retail space, focusing on B2B buyers and company marketers.",
+																				"nl_NL": "B2B Commerce and public website demo in the manufacturing/retail space, focusing on B2B buyers and company marketers.",
+																				"pt_BR": "B2B Commerce and public website demo in the manufacturing/retail space, focusing on B2B buyers and company marketers.",
+																				"sv_SE": "B2B Commerce and public website demo in the manufacturing/retail space, focusing on B2B buyers and company marketers.",
+																				"zh_CN": "B2B Commerce and public website demo in the manufacturing/retail space, focusing on B2B buyers and company marketers."
+																			}
+																		}
+																	}
+																}
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "Column"
+											}
+										],
+										"type": "Row"
+									},
+									{
+										"definition": {
+											"fragmentStyle": {
+												"marginTop": "3"
+											},
+											"gutters": true,
+											"indexed": true,
+											"modulesPerRow": 2,
+											"numberOfColumns": 2,
+											"reverseOrder": false,
+											"rowViewports": [
+												{
+													"id": "landscapeMobile",
+													"rowViewportDefinition": {
+														"modulesPerRow": 1
+													}
+												},
+												{
+													"id": "portraitMobile",
+													"rowViewportDefinition": {}
+												},
+												{
+													"id": "tablet",
+													"rowViewportDefinition": {}
+												}
+											],
+											"verticalAlignment": "top"
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"columnViewports": [
+														{
+															"columnViewportDefinition": {
+																"size": 12
+															},
+															"id": "landscapeMobile"
+														},
+														{
+															"columnViewportDefinition": {},
+															"id": "portraitMobile"
+														},
+														{
+															"columnViewportDefinition": {},
+															"id": "tablet"
+														}
+													],
+													"size": 6
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "BASIC_COMPONENT-image"
+															},
+															"fragmentConfig": {
+																"imageSize": "w-100"
+															},
+															"fragmentFields": [
+																{
+																	"id": "image-square",
+																	"value": {
+																		"fragmentImage": {
+																			"url": {
+																				"mapping": {
+																					"fieldKey": "FileEntry_previewImage",
+																					"itemReference": {
+																						"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																						"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/technical/financial-demos-thumbnail.jpg#]"
+																					}
+																				}
+																			}
+																		},
+																		"fragmentLink": {}
+																	}
+																}
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "Column"
+											},
+											{
+												"definition": {
+													"columnViewports": [
+														{
+															"columnViewportDefinition": {
+																"size": 12
+															},
+															"id": "landscapeMobile"
+														},
+														{
+															"columnViewportDefinition": {},
+															"id": "portraitMobile"
+														},
+														{
+															"columnViewportDefinition": {},
+															"id": "tablet"
+														}
+													],
+													"size": 6
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "BASIC_COMPONENT-heading"
+															},
+															"fragmentConfig": {
+																"headingLevel": "h4"
+															},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {},
+																		"text": {
+																			"value_i18n": {
+																				"ar_SA": "Financial Demo",
+																				"ca_ES": "Financial Demo",
+																				"de_DE": "Financial Demo",
+																				"en_US": "Financial Demo",
+																				"es_ES": "Financial Demo",
+																				"fi_FI": "Financial Demo",
+																				"fr_FR": "Financial Demo",
+																				"hu_HU": "Financial Demo",
+																				"ja_JP": "Financial Demo",
+																				"nl_NL": "Financial Demo",
+																				"pt_BR": "Financial Demo",
+																				"sv_SE": "Financial Demo",
+																				"zh_CN": "Financial Demo"
+																			}
+																		}
+																	}
+																}
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "BASIC_COMPONENT-paragraph"
+															},
+															"fragmentConfig": {},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {},
+																		"text": {
+																			"value_i18n": {
+																				"ar_SA": "Financials Demos is a template including a retail banking demo with Lifebank and a private banking (wealth management) demo with Pillar. Both demos include public and private web sites using remote apps and objects to manage bank accounts, transactions etc.",
+																				"ca_ES": "Financials Demos is a template including a retail banking demo with Lifebank and a private banking (wealth management) demo with Pillar. Both demos include public and private web sites using remote apps and objects to manage bank accounts, transactions etc.",
+																				"de_DE": "Financials Demos is a template including a retail banking demo with Lifebank and a private banking (wealth management) demo with Pillar. Both demos include public and private web sites using remote apps and objects to manage bank accounts, transactions etc.",
+																				"en_US": "Financials Demos is a template including a retail banking demo with Lifebank and a private banking (wealth management) demo with Pillar. Both demos include public and private web sites using remote apps and objects to manage bank accounts, transactions etc.",
+																				"es_ES": "Financials Demos is a template including a retail banking demo with Lifebank and a private banking (wealth management) demo with Pillar. Both demos include public and private web sites using remote apps and objects to manage bank accounts, transactions etc.",
+																				"fi_FI": "Financials Demos is a template including a retail banking demo with Lifebank and a private banking (wealth management) demo with Pillar. Both demos include public and private web sites using remote apps and objects to manage bank accounts, transactions etc.",
+																				"fr_FR": "Financials Demos is a template including a retail banking demo with Lifebank and a private banking (wealth management) demo with Pillar. Both demos include public and private web sites using remote apps and objects to manage bank accounts, transactions etc.",
+																				"hu_HU": "Financials Demos is a template including a retail banking demo with Lifebank and a private banking (wealth management) demo with Pillar. Both demos include public and private web sites using remote apps and objects to manage bank accounts, transactions etc.",
+																				"ja_JP": "Financials Demos is a template including a retail banking demo with Lifebank and a private banking (wealth management) demo with Pillar. Both demos include public and private web sites using remote apps and objects to manage bank accounts, transactions etc.",
+																				"nl_NL": "Financials Demos is a template including a retail banking demo with Lifebank and a private banking (wealth management) demo with Pillar. Both demos include public and private web sites using remote apps and objects to manage bank accounts, transactions etc.",
+																				"pt_BR": "Financials Demos is a template including a retail banking demo with Lifebank and a private banking (wealth management) demo with Pillar. Both demos include public and private web sites using remote apps and objects to manage bank accounts, transactions etc.",
+																				"sv_SE": "Financials Demos is a template including a retail banking demo with Lifebank and a private banking (wealth management) demo with Pillar. Both demos include public and private web sites using remote apps and objects to manage bank accounts, transactions etc.",
+																				"zh_CN": "Financials Demos is a template including a retail banking demo with Lifebank and a private banking (wealth management) demo with Pillar. Both demos include public and private web sites using remote apps and objects to manage bank accounts, transactions etc."
+																			}
+																		}
+																	}
+																}
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "Column"
+											}
+										],
+										"type": "Row"
+									},
+									{
+										"definition": {
+											"fragmentStyle": {
+												"marginTop": "3"
+											},
+											"gutters": true,
+											"indexed": true,
+											"modulesPerRow": 2,
+											"numberOfColumns": 2,
+											"reverseOrder": false,
+											"rowViewports": [
+												{
+													"id": "landscapeMobile",
+													"rowViewportDefinition": {
+														"modulesPerRow": 1
+													}
+												},
+												{
+													"id": "portraitMobile",
+													"rowViewportDefinition": {}
+												},
+												{
+													"id": "tablet",
+													"rowViewportDefinition": {}
+												}
+											],
+											"verticalAlignment": "top"
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"columnViewports": [
+														{
+															"columnViewportDefinition": {
+																"size": 12
+															},
+															"id": "landscapeMobile"
+														},
+														{
+															"columnViewportDefinition": {},
+															"id": "portraitMobile"
+														},
+														{
+															"columnViewportDefinition": {},
+															"id": "tablet"
+														}
+													],
+													"size": 6
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "BASIC_COMPONENT-image"
+															},
+															"fragmentConfig": {
+																"imageSize": "w-100"
+															},
+															"fragmentFields": [
+																{
+																	"id": "image-square",
+																	"value": {
+																		"fragmentImage": {
+																			"url": {
+																				"mapping": {
+																					"fieldKey": "FileEntry_previewImage",
+																					"itemReference": {
+																						"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																						"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/technical/life-insurance.png#]"
+																					}
+																				}
+																			}
+																		},
+																		"fragmentLink": {}
+																	}
+																}
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "Column"
+											},
+											{
+												"definition": {
+													"columnViewports": [
+														{
+															"columnViewportDefinition": {
+																"size": 12
+															},
+															"id": "landscapeMobile"
+														},
+														{
+															"columnViewportDefinition": {},
+															"id": "portraitMobile"
+														},
+														{
+															"columnViewportDefinition": {},
+															"id": "tablet"
+														}
+													],
+													"size": 6
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "BASIC_COMPONENT-heading"
+															},
+															"fragmentConfig": {
+																"headingLevel": "h4"
+															},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {},
+																		"text": {
+																			"value_i18n": {
+																				"ar_SA": "LIFE Insurances",
+																				"ca_ES": "LIFE Insurances",
+																				"de_DE": "LIFE Insurances",
+																				"en_US": "LIFE Insurances",
+																				"es_ES": "LIFE Insurances",
+																				"fi_FI": "LIFE Insurances",
+																				"fr_FR": "LIFE Insurances",
+																				"hu_HU": "LIFE Insurances",
+																				"ja_JP": "LIFE Insurances",
+																				"nl_NL": "LIFE Insurances",
+																				"pt_BR": "LIFE Insurances",
+																				"sv_SE": "LIFE Insurances",
+																				"zh_CN": "LIFE Insurances"
+																			}
+																		}
+																	}
+																}
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "BASIC_COMPONENT-paragraph"
+															},
+															"fragmentConfig": {},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {},
+																		"text": {
+																			"value_i18n": {
+																				"ar_SA": "An insurance company portal demo. It includes a public portal, a customer portal and an agent portal. You will find a complete Customer Journey from a lead from a Social Network to becoming a customer and purchasing LIFE's products.",
+																				"ca_ES": "An insurance company portal demo. It includes a public portal, a customer portal and an agent portal. You will find a complete Customer Journey from a lead from a Social Network to becoming a customer and purchasing LIFE's products.",
+																				"de_DE": "An insurance company portal demo. It includes a public portal, a customer portal and an agent portal. You will find a complete Customer Journey from a lead from a Social Network to becoming a customer and purchasing LIFE's products.",
+																				"en_US": "An insurance company portal demo. It includes a public portal, a customer portal and an agent portal. You will find a complete Customer Journey from a lead from a Social Network to becoming a customer and purchasing LIFE's products.",
+																				"es_ES": "An insurance company portal demo. It includes a public portal, a customer portal and an agent portal. You will find a complete Customer Journey from a lead from a Social Network to becoming a customer and purchasing LIFE's products.",
+																				"fi_FI": "An insurance company portal demo. It includes a public portal, a customer portal and an agent portal. You will find a complete Customer Journey from a lead from a Social Network to becoming a customer and purchasing LIFE's products.",
+																				"fr_FR": "An insurance company portal demo. It includes a public portal, a customer portal and an agent portal. You will find a complete Customer Journey from a lead from a Social Network to becoming a customer and purchasing LIFE's products.",
+																				"hu_HU": "An insurance company portal demo. It includes a public portal, a customer portal and an agent portal. You will find a complete Customer Journey from a lead from a Social Network to becoming a customer and purchasing LIFE's products.",
+																				"ja_JP": "An insurance company portal demo. It includes a public portal, a customer portal and an agent portal. You will find a complete Customer Journey from a lead from a Social Network to becoming a customer and purchasing LIFE's products.",
+																				"nl_NL": "An insurance company portal demo. It includes a public portal, a customer portal and an agent portal. You will find a complete Customer Journey from a lead from a Social Network to becoming a customer and purchasing LIFE's products.",
+																				"pt_BR": "An insurance company portal demo. It includes a public portal, a customer portal and an agent portal. You will find a complete Customer Journey from a lead from a Social Network to becoming a customer and purchasing LIFE's products.",
+																				"sv_SE": "An insurance company portal demo. It includes a public portal, a customer portal and an agent portal. You will find a complete Customer Journey from a lead from a Social Network to becoming a customer and purchasing LIFE's products.",
+																				"zh_CN": "An insurance company portal demo. It includes a public portal, a customer portal and an agent portal. You will find a complete Customer Journey from a lead from a Social Network to becoming a customer and purchasing LIFE's products."
+																			}
+																		}
+																	}
+																}
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "Column"
+											}
+										],
+										"type": "Row"
+									},
+									{
+										"definition": {
+											"fragmentStyle": {
+												"marginTop": "3"
+											},
+											"gutters": true,
+											"indexed": true,
+											"modulesPerRow": 2,
+											"numberOfColumns": 2,
+											"reverseOrder": false,
+											"rowViewports": [
+												{
+													"id": "landscapeMobile",
+													"rowViewportDefinition": {
+														"modulesPerRow": 1
+													}
+												},
+												{
+													"id": "portraitMobile",
+													"rowViewportDefinition": {}
+												},
+												{
+													"id": "tablet",
+													"rowViewportDefinition": {}
+												}
+											],
+											"verticalAlignment": "top"
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"columnViewports": [
+														{
+															"columnViewportDefinition": {
+																"size": 12
+															},
+															"id": "landscapeMobile"
+														},
+														{
+															"columnViewportDefinition": {},
+															"id": "portraitMobile"
+														},
+														{
+															"columnViewportDefinition": {},
+															"id": "tablet"
+														}
+													],
+													"size": 6
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "BASIC_COMPONENT-image"
+															},
+															"fragmentConfig": {
+																"imageSize": "w-100"
+															},
+															"fragmentFields": [
+																{
+																	"id": "image-square",
+																	"value": {
+																		"fragmentImage": {
+																			"url": {
+																				"mapping": {
+																					"fieldKey": "FileEntry_previewImage",
+																					"itemReference": {
+																						"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																						"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/technical/up-section-dashboard-citizen-site.png#]"
+																					}
+																				}
+																			}
+																		},
+																		"fragmentLink": {}
+																	}
+																}
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "Column"
+											},
+											{
+												"definition": {
+													"columnViewports": [
+														{
+															"columnViewportDefinition": {
+																"size": 12
+															},
+															"id": "landscapeMobile"
+														},
+														{
+															"columnViewportDefinition": {},
+															"id": "portraitMobile"
+														},
+														{
+															"columnViewportDefinition": {},
+															"id": "tablet"
+														}
+													],
+													"size": 6
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "BASIC_COMPONENT-heading"
+															},
+															"fragmentConfig": {
+																"headingLevel": "h4"
+															},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {},
+																		"text": {
+																			"value_i18n": {
+																				"ar_SA": "Government",
+																				"ca_ES": "Government",
+																				"de_DE": "Government",
+																				"en_US": "Government",
+																				"es_ES": "Government",
+																				"fi_FI": "Government",
+																				"fr_FR": "Government",
+																				"hu_HU": "Government",
+																				"ja_JP": "Government",
+																				"nl_NL": "Government",
+																				"pt_BR": "Government",
+																				"sv_SE": "Government",
+																				"zh_CN": "Government"
+																			}
+																		}
+																	}
+																}
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "BASIC_COMPONENT-paragraph"
+															},
+															"fragmentConfig": {},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {},
+																		"text": {
+																			"value_i18n": {
+																				"ar_SA": "Government Demo is about how Liferay can help in a Government Entity such as a city hall. The demoo contains: profile configuration, access to my services, my tickets for events, integration and more!",
+																				"ca_ES": "Government Demo is about how Liferay can help in a Government Entity such as a city hall. The demoo contains: profile configuration, access to my services, my tickets for events, integration and more!",
+																				"de_DE": "Government Demo is about how Liferay can help in a Government Entity such as a city hall. The demoo contains: profile configuration, access to my services, my tickets for events, integration and more!",
+																				"en_US": "Government Demo is about how Liferay can help in a Government Entity such as a city hall. The demoo contains: profile configuration, access to my services, my tickets for events, integration and more!",
+																				"es_ES": "Government Demo is about how Liferay can help in a Government Entity such as a city hall. The demoo contains: profile configuration, access to my services, my tickets for events, integration and more!",
+																				"fi_FI": "Government Demo is about how Liferay can help in a Government Entity such as a city hall. The demoo contains: profile configuration, access to my services, my tickets for events, integration and more!",
+																				"fr_FR": "Government Demo is about how Liferay can help in a Government Entity such as a city hall. The demoo contains: profile configuration, access to my services, my tickets for events, integration and more!",
+																				"hu_HU": "Government Demo is about how Liferay can help in a Government Entity such as a city hall. The demoo contains: profile configuration, access to my services, my tickets for events, integration and more!",
+																				"ja_JP": "Government Demo is about how Liferay can help in a Government Entity such as a city hall. The demoo contains: profile configuration, access to my services, my tickets for events, integration and more!",
+																				"nl_NL": "Government Demo is about how Liferay can help in a Government Entity such as a city hall. The demoo contains: profile configuration, access to my services, my tickets for events, integration and more!",
+																				"pt_BR": "Government Demo is about how Liferay can help in a Government Entity such as a city hall. The demoo contains: profile configuration, access to my services, my tickets for events, integration and more!",
+																				"sv_SE": "Government Demo is about how Liferay can help in a Government Entity such as a city hall. The demoo contains: profile configuration, access to my services, my tickets for events, integration and more!",
+																				"zh_CN": "Government Demo is about how Liferay can help in a Government Entity such as a city hall. The demoo contains: profile configuration, access to my services, my tickets for events, integration and more!"
+																			}
+																		}
+																	}
+																}
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "Column"
+											}
+										],
+										"type": "Row"
+									},
+									{
+										"definition": {
+											"fragmentStyle": {
+												"marginTop": "3"
+											},
+											"gutters": true,
+											"indexed": true,
+											"modulesPerRow": 2,
+											"numberOfColumns": 2,
+											"reverseOrder": false,
+											"rowViewports": [
+												{
+													"id": "landscapeMobile",
+													"rowViewportDefinition": {
+														"modulesPerRow": 1
+													}
+												},
+												{
+													"id": "portraitMobile",
+													"rowViewportDefinition": {}
+												},
+												{
+													"id": "tablet",
+													"rowViewportDefinition": {}
+												}
+											],
+											"verticalAlignment": "top"
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"columnViewports": [
+														{
+															"columnViewportDefinition": {
+																"size": 12
+															},
+															"id": "landscapeMobile"
+														},
+														{
+															"columnViewportDefinition": {},
+															"id": "portraitMobile"
+														},
+														{
+															"columnViewportDefinition": {},
+															"id": "tablet"
+														}
+													],
+													"size": 6
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "BASIC_COMPONENT-image"
+															},
+															"fragmentConfig": {
+																"imageSize": "w-100"
+															},
+															"fragmentFields": [
+																{
+																	"id": "image-square",
+																	"value": {
+																		"fragmentImage": {
+																			"url": {
+																				"mapping": {
+																					"fieldKey": "FileEntry_previewImage",
+																					"itemReference": {
+																						"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																						"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/technical/liferay-botics.jpg#]"
+																					}
+																				}
+																			}
+																		},
+																		"fragmentLink": {}
+																	}
+																}
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "Column"
+											},
+											{
+												"definition": {
+													"columnViewports": [
+														{
+															"columnViewportDefinition": {
+																"size": 12
+															},
+															"id": "landscapeMobile"
+														},
+														{
+															"columnViewportDefinition": {},
+															"id": "portraitMobile"
+														},
+														{
+															"columnViewportDefinition": {},
+															"id": "tablet"
+														}
+													],
+													"size": 6
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "BASIC_COMPONENT-heading"
+															},
+															"fragmentConfig": {
+																"headingLevel": "h4"
+															},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {},
+																		"text": {
+																			"value_i18n": {
+																				"ar_SA": "Liferaybotics&nbsp; Manufacturing Commerce",
+																				"ca_ES": "Liferaybotics&nbsp; Manufacturing Commerce",
+																				"de_DE": "Liferaybotics&nbsp; Manufacturing Commerce",
+																				"en_US": "Liferaybotics&nbsp; Manufacturing Commerce",
+																				"es_ES": "Liferaybotics&nbsp; Manufacturing Commerce",
+																				"fi_FI": "Liferaybotics&nbsp; Manufacturing Commerce",
+																				"fr_FR": "Liferaybotics&nbsp; Manufacturing Commerce",
+																				"hu_HU": "Liferaybotics&nbsp; Manufacturing Commerce",
+																				"ja_JP": "Liferaybotics&nbsp; Manufacturing Commerce",
+																				"nl_NL": "Liferaybotics&nbsp; Manufacturing Commerce",
+																				"pt_BR": "Liferaybotics&nbsp; Manufacturing Commerce",
+																				"sv_SE": "Liferaybotics&nbsp; Manufacturing Commerce",
+																				"zh_CN": "Liferaybotics&nbsp; Manufacturing Commerce"
+																			}
+																		}
+																	}
+																}
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "BASIC_COMPONENT-paragraph"
+															},
+															"fragmentConfig": {},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {},
+																		"text": {
+																			"value_i18n": {
+																				"ar_SA": "A B2B focused commerce demo in the manufacturing space. Including B2B self service journey, such as knowledgebase, IOT information and several form based journey.",
+																				"ca_ES": "A B2B focused commerce demo in the manufacturing space. Including B2B self service journey, such as knowledgebase, IOT information and several form based journey.",
+																				"de_DE": "A B2B focused commerce demo in the manufacturing space. Including B2B self service journey, such as knowledgebase, IOT information and several form based journey.",
+																				"en_US": "A B2B focused commerce demo in the manufacturing space. Including B2B self service journey, such as knowledgebase, IOT information and several form based journey.",
+																				"es_ES": "A B2B focused commerce demo in the manufacturing space. Including B2B self service journey, such as knowledgebase, IOT information and several form based journey.",
+																				"fi_FI": "A B2B focused commerce demo in the manufacturing space. Including B2B self service journey, such as knowledgebase, IOT information and several form based journey.",
+																				"fr_FR": "A B2B focused commerce demo in the manufacturing space. Including B2B self service journey, such as knowledgebase, IOT information and several form based journey.",
+																				"hu_HU": "A B2B focused commerce demo in the manufacturing space. Including B2B self service journey, such as knowledgebase, IOT information and several form based journey.",
+																				"ja_JP": "A B2B focused commerce demo in the manufacturing space. Including B2B self service journey, such as knowledgebase, IOT information and several form based journey.",
+																				"nl_NL": "A B2B focused commerce demo in the manufacturing space. Including B2B self service journey, such as knowledgebase, IOT information and several form based journey.",
+																				"pt_BR": "A B2B focused commerce demo in the manufacturing space. Including B2B self service journey, such as knowledgebase, IOT information and several form based journey.",
+																				"sv_SE": "A B2B focused commerce demo in the manufacturing space. Including B2B self service journey, such as knowledgebase, IOT information and several form based journey.",
+																				"zh_CN": "A B2B focused commerce demo in the manufacturing space. Including B2B self service journey, such as knowledgebase, IOT information and several form based journey."
+																			}
+																		}
+																	}
+																}
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "Column"
+											}
+										],
+										"type": "Row"
+									},
+									{
+										"definition": {
+											"fragmentStyle": {
+												"marginTop": "3"
+											},
+											"gutters": true,
+											"indexed": true,
+											"modulesPerRow": 2,
+											"numberOfColumns": 2,
+											"reverseOrder": false,
+											"rowViewports": [
+												{
+													"id": "landscapeMobile",
+													"rowViewportDefinition": {
+														"modulesPerRow": 1
+													}
+												},
+												{
+													"id": "portraitMobile",
+													"rowViewportDefinition": {}
+												},
+												{
+													"id": "tablet",
+													"rowViewportDefinition": {}
+												}
+											],
+											"verticalAlignment": "top"
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"columnViewports": [
+														{
+															"columnViewportDefinition": {
+																"size": 12
+															},
+															"id": "landscapeMobile"
+														},
+														{
+															"columnViewportDefinition": {},
+															"id": "portraitMobile"
+														},
+														{
+															"columnViewportDefinition": {},
+															"id": "tablet"
+														}
+													],
+													"size": 6
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "BASIC_COMPONENT-image"
+															},
+															"fragmentConfig": {
+																"imageSize": "w-100"
+															},
+															"fragmentFields": [
+																{
+																	"id": "image-square",
+																	"value": {
+																		"fragmentImage": {
+																			"url": {
+																				"mapping": {
+																					"fieldKey": "FileEntry_previewImage",
+																					"itemReference": {
+																						"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																						"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/technical/modern-intranet-u60.png#]"
+																					}
+																				}
+																			}
+																		},
+																		"fragmentLink": {}
+																	}
+																}
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "Column"
+											},
+											{
+												"definition": {
+													"columnViewports": [
+														{
+															"columnViewportDefinition": {
+																"size": 12
+															},
+															"id": "landscapeMobile"
+														},
+														{
+															"columnViewportDefinition": {},
+															"id": "portraitMobile"
+														},
+														{
+															"columnViewportDefinition": {},
+															"id": "tablet"
+														}
+													],
+													"size": 6
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "BASIC_COMPONENT-heading"
+															},
+															"fragmentConfig": {
+																"headingLevel": "h4"
+															},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {},
+																		"text": {
+																			"value_i18n": {
+																				"ar_SA": "Modern Intranet",
+																				"ca_ES": "Modern Intranet",
+																				"de_DE": "Modern Intranet",
+																				"en_US": "Modern Intranet",
+																				"es_ES": "Modern Intranet",
+																				"fi_FI": "Modern Intranet",
+																				"fr_FR": "Modern Intranet",
+																				"hu_HU": "Modern Intranet",
+																				"ja_JP": "Modern Intranet",
+																				"nl_NL": "Modern Intranet",
+																				"pt_BR": "Modern Intranet",
+																				"sv_SE": "Modern Intranet",
+																				"zh_CN": "Modern Intranet"
+																			}
+																		}
+																	}
+																}
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "BASIC_COMPONENT-paragraph"
+															},
+															"fragmentConfig": {},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {},
+																		"text": {
+																			"value_i18n": {
+																				"ar_SA": "This is a demo focused in the Modern intranet / Digital Workplace use case. As usual, this is a general purpose demo, so you can use to show any Liferay's feature or use it as a basis to build your own demo.",
+																				"ca_ES": "This is a demo focused in the Modern intranet / Digital Workplace use case. As usual, this is a general purpose demo, so you can use to show any Liferay's feature or use it as a basis to build your own demo.",
+																				"de_DE": "This is a demo focused in the Modern intranet / Digital Workplace use case. As usual, this is a general purpose demo, so you can use to show any Liferay's feature or use it as a basis to build your own demo.",
+																				"en_US": "This is a demo focused in the Modern intranet / Digital Workplace use case. As usual, this is a general purpose demo, so you can use to show any Liferay's feature or use it as a basis to build your own demo.",
+																				"es_ES": "This is a demo focused in the Modern intranet / Digital Workplace use case. As usual, this is a general purpose demo, so you can use to show any Liferay's feature or use it as a basis to build your own demo.",
+																				"fi_FI": "This is a demo focused in the Modern intranet / Digital Workplace use case. As usual, this is a general purpose demo, so you can use to show any Liferay's feature or use it as a basis to build your own demo.",
+																				"fr_FR": "This is a demo focused in the Modern intranet / Digital Workplace use case. As usual, this is a general purpose demo, so you can use to show any Liferay's feature or use it as a basis to build your own demo.",
+																				"hu_HU": "This is a demo focused in the Modern intranet / Digital Workplace use case. As usual, this is a general purpose demo, so you can use to show any Liferay's feature or use it as a basis to build your own demo.",
+																				"ja_JP": "This is a demo focused in the Modern intranet / Digital Workplace use case. As usual, this is a general purpose demo, so you can use to show any Liferay's feature or use it as a basis to build your own demo.",
+																				"nl_NL": "This is a demo focused in the Modern intranet / Digital Workplace use case. As usual, this is a general purpose demo, so you can use to show any Liferay's feature or use it as a basis to build your own demo.",
+																				"pt_BR": "This is a demo focused in the Modern intranet / Digital Workplace use case. As usual, this is a general purpose demo, so you can use to show any Liferay's feature or use it as a basis to build your own demo.",
+																				"sv_SE": "This is a demo focused in the Modern intranet / Digital Workplace use case. As usual, this is a general purpose demo, so you can use to show any Liferay's feature or use it as a basis to build your own demo.",
+																				"zh_CN": "This is a demo focused in the Modern intranet / Digital Workplace use case. As usual, this is a general purpose demo, so you can use to show any Liferay's feature or use it as a basis to build your own demo."
+																			}
+																		}
+																	}
+																}
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "Column"
+											}
+										],
+										"type": "Row"
+									},
+									{
+										"definition": {
+											"fragmentStyle": {
+												"marginTop": "3"
+											},
+											"gutters": true,
+											"indexed": true,
+											"modulesPerRow": 2,
+											"numberOfColumns": 2,
+											"reverseOrder": false,
+											"rowViewports": [
+												{
+													"id": "landscapeMobile",
+													"rowViewportDefinition": {
+														"modulesPerRow": 1
+													}
+												},
+												{
+													"id": "portraitMobile",
+													"rowViewportDefinition": {}
+												},
+												{
+													"id": "tablet",
+													"rowViewportDefinition": {}
+												}
+											],
+											"verticalAlignment": "top"
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"columnViewports": [
+														{
+															"columnViewportDefinition": {
+																"size": 12
+															},
+															"id": "landscapeMobile"
+														},
+														{
+															"columnViewportDefinition": {},
+															"id": "portraitMobile"
+														},
+														{
+															"columnViewportDefinition": {},
+															"id": "tablet"
+														}
+													],
+													"size": 6
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "BASIC_COMPONENT-image"
+															},
+															"fragmentConfig": {
+																"imageSize": "w-100"
+															},
+															"fragmentFields": [
+																{
+																	"id": "image-square",
+																	"value": {
+																		"fragmentImage": {
+																			"url": {
+																				"mapping": {
+																					"fieldKey": "FileEntry_previewImage",
+																					"itemReference": {
+																						"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																						"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/technical/parter-portal.png#]"
+																					}
+																				}
+																			}
+																		},
+																		"fragmentLink": {}
+																	}
+																}
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "Column"
+											},
+											{
+												"definition": {
+													"columnViewports": [
+														{
+															"columnViewportDefinition": {
+																"size": 12
+															},
+															"id": "landscapeMobile"
+														},
+														{
+															"columnViewportDefinition": {},
+															"id": "portraitMobile"
+														},
+														{
+															"columnViewportDefinition": {},
+															"id": "tablet"
+														}
+													],
+													"size": 6
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "BASIC_COMPONENT-heading"
+															},
+															"fragmentConfig": {
+																"headingLevel": "h4"
+															},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {},
+																		"text": {
+																			"value_i18n": {
+																				"ar_SA": "Partner Portal",
+																				"ca_ES": "Partner Portal",
+																				"de_DE": "Partner Portal",
+																				"en_US": "Partner Portal",
+																				"es_ES": "Partner Portal",
+																				"fi_FI": "Partner Portal",
+																				"fr_FR": "Partner Portal",
+																				"hu_HU": "Partner Portal",
+																				"ja_JP": "Partner Portal",
+																				"nl_NL": "Partner Portal",
+																				"pt_BR": "Partner Portal",
+																				"sv_SE": "Partner Portal",
+																				"zh_CN": "Partner Portal"
+																			}
+																		}
+																	}
+																}
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "BASIC_COMPONENT-paragraph"
+															},
+															"fragmentConfig": {},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {},
+																		"text": {
+																			"value_i18n": {
+																				"ar_SA": "This is a general purpose demo focused on partners / dealers. It covers use cases such as a visual public site, partner/vendor onboarding, vendor experience, and customer purchasing experience.",
+																				"ca_ES": "This is a general purpose demo focused on partners / dealers. It covers use cases such as a visual public site, partner/vendor onboarding, vendor experience, and customer purchasing experience.",
+																				"de_DE": "This is a general purpose demo focused on partners / dealers. It covers use cases such as a visual public site, partner/vendor onboarding, vendor experience, and customer purchasing experience.",
+																				"en_US": "This is a general purpose demo focused on partners / dealers. It covers use cases such as a visual public site, partner/vendor onboarding, vendor experience, and customer purchasing experience.",
+																				"es_ES": "This is a general purpose demo focused on partners / dealers. It covers use cases such as a visual public site, partner/vendor onboarding, vendor experience, and customer purchasing experience.",
+																				"fi_FI": "This is a general purpose demo focused on partners / dealers. It covers use cases such as a visual public site, partner/vendor onboarding, vendor experience, and customer purchasing experience.",
+																				"fr_FR": "This is a general purpose demo focused on partners / dealers. It covers use cases such as a visual public site, partner/vendor onboarding, vendor experience, and customer purchasing experience.",
+																				"hu_HU": "This is a general purpose demo focused on partners / dealers. It covers use cases such as a visual public site, partner/vendor onboarding, vendor experience, and customer purchasing experience.",
+																				"ja_JP": "This is a general purpose demo focused on partners / dealers. It covers use cases such as a visual public site, partner/vendor onboarding, vendor experience, and customer purchasing experience.",
+																				"nl_NL": "This is a general purpose demo focused on partners / dealers. It covers use cases such as a visual public site, partner/vendor onboarding, vendor experience, and customer purchasing experience.",
+																				"pt_BR": "This is a general purpose demo focused on partners / dealers. It covers use cases such as a visual public site, partner/vendor onboarding, vendor experience, and customer purchasing experience.",
+																				"sv_SE": "This is a general purpose demo focused on partners / dealers. It covers use cases such as a visual public site, partner/vendor onboarding, vendor experience, and customer purchasing experience.",
+																				"zh_CN": "This is a general purpose demo focused on partners / dealers. It covers use cases such as a visual public site, partner/vendor onboarding, vendor experience, and customer purchasing experience."
+																			}
+																		}
+																	}
+																}
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "Column"
+											}
+										],
+										"type": "Row"
 									}
 								],
 								"type": "Column"
@@ -255,19 +1698,53 @@
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {
-											},
+											"columnViewportDefinition": {},
 											"id": "portraitMobile"
 										},
 										{
-											"columnViewportDefinition": {
-											},
+											"columnViewportDefinition": {},
 											"id": "tablet"
 										}
 									],
 									"size": 6
 								},
 								"pageElements": [
+									{
+										"definition": {
+											"widgetInstance": {
+												"widgetConfig": {
+													"groupId": "15095646",
+													"formInstanceId": "25468243"
+												},
+												"widgetName": "com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormPortlet",
+												"widgetPermissions": [
+													{
+														"actionKeys": [
+															"PERMISSIONS",
+															"PREFERENCES",
+															"CONFIGURATION",
+															"VIEW",
+															"ADD_TO_PAGE"
+														],
+														"roleKey": "Owner"
+													},
+													{
+														"actionKeys": [
+															"VIEW"
+														],
+														"roleKey": "Site Member"
+													},
+													{
+														"actionKeys": [
+															"VIEW"
+														],
+														"roleKey": "Guest"
+													}
+												]
+											}
+										},
+										"type": "Widget"
+									}
 								],
 								"type": "Column"
 							}

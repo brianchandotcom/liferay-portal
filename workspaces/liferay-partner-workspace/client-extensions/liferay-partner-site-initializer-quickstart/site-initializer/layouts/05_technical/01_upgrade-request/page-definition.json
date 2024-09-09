@@ -1,0 +1,714 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+				  "indexed": true,
+				  "layout": {
+			  
+				  }
+				},
+				"pageElements": [
+				  {
+					"definition": {
+					  "indexed": true,
+					  "layout": {
+			  
+					  }
+					},
+					"pageElements": [
+					  {
+						"definition": {
+						  "fragmentStyle": {
+							"backgroundColor": "colorNeutral1",
+							"borderRadius": "borderRadiusLg",
+							"paddingBottom": "3",
+							"paddingLeft": "5",
+							"paddingRight": "5",
+							"paddingTop": "3"
+						  },
+						  "indexed": true,
+						  "layout": {
+							"paddingBottom": 1,
+							"paddingLeft": 4,
+							"paddingRight": 4,
+							"paddingTop": 1
+						  }
+						},
+						"pageElements": [
+						  {
+							"definition": {
+							  "gutters": true,
+							  "indexed": true,
+							  "modulesPerRow": 2,
+							  "numberOfColumns": 2,
+							  "reverseOrder": false,
+							  "rowViewports": [
+								{
+								  "id": "landscapeMobile",
+								  "rowViewportDefinition": {
+									"modulesPerRow": 1
+								  }
+								},
+								{
+								  "id": "portraitMobile",
+								  "rowViewportDefinition": {
+			  
+								  }
+								},
+								{
+								  "id": "tablet",
+								  "rowViewportDefinition": {
+			  
+								  }
+								}
+							  ],
+							  "verticalAlignment": "middle"
+							},
+							"pageElements": [
+							  {
+								"definition": {
+								  "columnViewports": [
+									{
+									  "columnViewportDefinition": {
+										"size": 12
+									  },
+									  "id": "landscapeMobile"
+									},
+									{
+									  "columnViewportDefinition": {
+			  
+									  },
+									  "id": "portraitMobile"
+									},
+									{
+									  "columnViewportDefinition": {
+			  
+									  },
+									  "id": "tablet"
+									}
+								  ],
+								  "size": 6
+								},
+								"pageElements": [
+								  {
+									"definition": {
+									  "indexed": true,
+									  "layout": {
+										"widthType": "Fixed"
+									  }
+									},
+									"pageElements": [
+									  {
+										"definition": {
+										  "fragment": {
+											"key": "dialect-dialect-text"
+										  },
+										  "fragmentConfig": {
+											"textType": "h2"
+										  },
+										  "fragmentFields": [
+											{
+											  "id": "element-text",
+											  "value": {
+												"fragmentLink": {
+			  
+												},
+												"text": {
+													"value_i18n": {
+														"ar_SA": "\u003Cp\u003ERequest a core upgrade for your client\u003C/p\u003E\n",
+														"ca_ES": "\u003Cp\u003ERequest a core upgrade for your client\u003C/p\u003E\n",
+														"de_DE": "\u003Cp\u003ERequest a core upgrade for your client\u003C/p\u003E\n",
+														"en_US": "\u003Cp\u003ERequest a core upgrade for your client\u003C/p\u003E\n",
+														"es_ES": "\u003Cp\u003ERequest a core upgrade for your client\u003C/p\u003E\n",
+														"fi_FI": "\u003Cp\u003ERequest a core upgrade for your client\u003C/p\u003E\n",
+														"fr_FR": "\u003Cp\u003ERequest a core upgrade for your client\u003C/p\u003E\n",
+														"hu_HU": "\u003Cp\u003ERequest a core upgrade for your client\u003C/p\u003E\n",
+														"ja_JP": "\u003Cp\u003ERequest a core upgrade for your client\u003C/p\u003E\n",
+														"nl_NL": "\u003Cp\u003ERequest a core upgrade for your client\u003C/p\u003E\n",
+														"pt_BR": "\u003Cp\u003ERequest a core upgrade for your client\u003C/p\u003E\n",
+														"sv_SE": "\u003Cp\u003ERequest a core upgrade for your client\u003C/p\u003E\n",
+														"zh_CN": "\u003Cp\u003ERequest a core upgrade for your client\u003C/p\u003E\n"
+													}
+												}
+											  }
+											}
+										  ],
+										  "fragmentStyle": {
+											"fontWeight": "fontWeightBold",
+											"marginBottom": "3",
+											"textColor": "colorNeutral10"
+										  },
+										  "indexed": true
+										},
+										"type": "Fragment"
+									  },
+									  {
+										"definition": {
+										  "fragment": {
+											"key": "BASIC_COMPONENT-paragraph"
+										  },
+										  "fragmentConfig": {
+			  
+										  },
+										  "fragmentFields": [
+											{
+											  "id": "element-text",
+											  "value": {
+												"fragmentLink": {
+			  
+												},
+												"text": {
+													"value_i18n": {
+														"ar_SA": "\u003Cp\u003ELiferay has created the upgrade program to help partners upgrade customers while keeping costs to a minimum. As part of this program Liferay offers to help upgrade customers to the latest quarterly release at no cost. As a Liferay Solutions Partner you can then choose to pass on these savings to the customer or use the savings to offset other costs.\u003C/p\u003E\n",
+														"ca_ES": "\u003Cp\u003ELiferay has created the upgrade program to help partners upgrade customers while keeping costs to a minimum. As part of this program Liferay offers to help upgrade customers to the latest quarterly release at no cost. As a Liferay Solutions Partner you can then choose to pass on these savings to the customer or use the savings to offset other costs.\u003C/p\u003E\n",
+														"de_DE": "\u003Cp\u003ELiferay has created the upgrade program to help partners upgrade customers while keeping costs to a minimum. As part of this program Liferay offers to help upgrade customers to the latest quarterly release at no cost. As a Liferay Solutions Partner you can then choose to pass on these savings to the customer or use the savings to offset other costs.\u003C/p\u003E\n",
+														"en_US": "\u003Cp\u003ELiferay has created the upgrade program to help partners upgrade customers while keeping costs to a minimum. As part of this program Liferay offers to help upgrade customers to the latest quarterly release at no cost. As a Liferay Solutions Partner you can then choose to pass on these savings to the customer or use the savings to offset other costs.\u003C/p\u003E\n",
+														"es_ES": "\u003Cp\u003ELiferay has created the upgrade program to help partners upgrade customers while keeping costs to a minimum. As part of this program Liferay offers to help upgrade customers to the latest quarterly release at no cost. As a Liferay Solutions Partner you can then choose to pass on these savings to the customer or use the savings to offset other costs.\u003C/p\u003E\n",
+														"fi_FI": "\u003Cp\u003ELiferay has created the upgrade program to help partners upgrade customers while keeping costs to a minimum. As part of this program Liferay offers to help upgrade customers to the latest quarterly release at no cost. As a Liferay Solutions Partner you can then choose to pass on these savings to the customer or use the savings to offset other costs.\u003C/p\u003E\n",
+														"fr_FR": "\u003Cp\u003ELiferay has created the upgrade program to help partners upgrade customers while keeping costs to a minimum. As part of this program Liferay offers to help upgrade customers to the latest quarterly release at no cost. As a Liferay Solutions Partner you can then choose to pass on these savings to the customer or use the savings to offset other costs.\u003C/p\u003E\n",
+														"hu_HU": "\u003Cp\u003ELiferay has created the upgrade program to help partners upgrade customers while keeping costs to a minimum. As part of this program Liferay offers to help upgrade customers to the latest quarterly release at no cost. As a Liferay Solutions Partner you can then choose to pass on these savings to the customer or use the savings to offset other costs.\u003C/p\u003E\n",
+														"ja_JP": "\u003Cp\u003ELiferay has created the upgrade program to help partners upgrade customers while keeping costs to a minimum. As part of this program Liferay offers to help upgrade customers to the latest quarterly release at no cost. As a Liferay Solutions Partner you can then choose to pass on these savings to the customer or use the savings to offset other costs.\u003C/p\u003E\n",
+														"nl_NL": "\u003Cp\u003ELiferay has created the upgrade program to help partners upgrade customers while keeping costs to a minimum. As part of this program Liferay offers to help upgrade customers to the latest quarterly release at no cost. As a Liferay Solutions Partner you can then choose to pass on these savings to the customer or use the savings to offset other costs.\u003C/p\u003E\n",
+														"pt_BR": "\u003Cp\u003ELiferay has created the upgrade program to help partners upgrade customers while keeping costs to a minimum. As part of this program Liferay offers to help upgrade customers to the latest quarterly release at no cost. As a Liferay Solutions Partner you can then choose to pass on these savings to the customer or use the savings to offset other costs.\u003C/p\u003E\n",
+														"sv_SE": "\u003Cp\u003ELiferay has created the upgrade program to help partners upgrade customers while keeping costs to a minimum. As part of this program Liferay offers to help upgrade customers to the latest quarterly release at no cost. As a Liferay Solutions Partner you can then choose to pass on these savings to the customer or use the savings to offset other costs.\u003C/p\u003E\n",
+														"zh_CN": "\u003Cp\u003ELiferay has created the upgrade program to help partners upgrade customers while keeping costs to a minimum. As part of this program Liferay offers to help upgrade customers to the latest quarterly release at no cost. As a Liferay Solutions Partner you can then choose to pass on these savings to the customer or use the savings to offset other costs.\u003C/p\u003E\n"
+													}
+												}
+											  }
+											}
+										  ],
+										  "indexed": true
+										},
+										"type": "Fragment"
+									  },
+									  {
+										"definition": {
+										  "fragment": {
+											"key": "dialect-dialect-button"
+										  },
+										  "fragmentConfig": {
+											"uppercase": false,
+											"style": "primary",
+											"type": "solid",
+											"inverted": false,
+											"buttonSize": ""
+										  },
+										  "fragmentFields": [
+											{
+											  "id": "link",
+											  "value": {
+												"fragmentLink": {
+												  "value": {
+												  }
+												},
+												"text": {
+													"value_i18n": {
+														"ar_SA": "\u003Cp\u003EView Upgrade Guide\u003C/p\u003E\n",
+														"ca_ES": "\u003Cp\u003EView Upgrade Guide\u003C/p\u003E\n",
+														"de_DE": "\u003Cp\u003EView Upgrade Guide\u003C/p\u003E\n",
+														"en_US": "\u003Cp\u003EView Upgrade Guide\u003C/p\u003E\n",
+														"es_ES": "\u003Cp\u003EView Upgrade Guide\u003C/p\u003E\n",
+														"fi_FI": "\u003Cp\u003EView Upgrade Guide\u003C/p\u003E\n",
+														"fr_FR": "\u003Cp\u003EView Upgrade Guide\u003C/p\u003E\n",
+														"hu_HU": "\u003Cp\u003EView Upgrade Guide\u003C/p\u003E\n",
+														"ja_JP": "\u003Cp\u003EView Upgrade Guide\u003C/p\u003E\n",
+														"nl_NL": "\u003Cp\u003EView Upgrade Guide\u003C/p\u003E\n",
+														"pt_BR": "\u003Cp\u003EView Upgrade Guide\u003C/p\u003E\n",
+														"sv_SE": "\u003Cp\u003EView Upgrade Guide\u003C/p\u003E\n",
+														"zh_CN": "\u003Cp\u003EView Upgrade Guide\u003C/p\u003E\n"
+													}
+												}
+											  }
+											}
+										  ],
+										  "indexed": true
+										},
+										"type": "Fragment"
+									  }
+									],
+									"type": "Section"
+								  }
+								],
+								"type": "Column"
+							  },
+							  {
+								"definition": {
+								  "columnViewports": [
+									{
+									  "columnViewportDefinition": {
+										"size": 12
+									  },
+									  "id": "landscapeMobile"
+									},
+									{
+									  "columnViewportDefinition": {
+			  
+									  },
+									  "id": "portraitMobile"
+									},
+									{
+									  "columnViewportDefinition": {
+			  
+									  },
+									  "id": "tablet"
+									}
+								  ],
+								  "size": 6
+								},
+								"pageElements": [
+								  {
+									"definition": {
+									  "indexed": true,
+									  "layout": {
+										"align": "Center",
+										"contentDisplay": "FlexRow",
+										"justify": "Center"
+									  }
+									},
+									"pageElements": [
+									  {
+										"definition": {
+										  "fragment": {
+											"key": "BASIC_COMPONENT-image"
+										  },
+										  "fragmentConfig": {
+											"imageSize": "w-100"
+										  },
+										  "fragmentFields": [
+											{
+												"id": "image-square",
+												"value": {
+													"fragmentImage": {
+														"url": {
+															"mapping": {
+																"fieldKey": "FileEntry_previewImage",
+																"itemReference": {
+																	"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																	"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/home.png#]"
+																}
+															}
+														}
+													},
+													"fragmentLink": {}
+												}
+											}
+										  ],
+										  "fragmentStyle": {
+											"maxWidth": "300px",
+											"paddingBottom": "4",
+											"paddingLeft": "4",
+											"paddingRight": "4",
+											"paddingTop": "4"
+										  },
+										  "indexed": true
+										},
+										"type": "Fragment"
+									  }
+									],
+									"type": "Section"
+								  }
+								],
+								"type": "Column"
+							  }
+							],
+							"type": "Row"
+						  }
+						],
+						"type": "Section"
+					  }
+					],
+					"type": "Section"
+				  },
+				  {
+					"definition": {
+					  "fragmentStyle": {
+						"marginBottom": "5",
+						"marginTop": "5"
+					  },
+					  "indexed": true,
+					  "layout": {
+						"marginBottom": 4,
+						"marginTop": 4
+					  }
+					},
+					"pageElements": [
+					  {
+						"definition": {
+						  "fragment": {
+							"key": "dialect-dialect-text"
+						  },
+						  "fragmentConfig": {
+							"textType": "h2"
+						  },
+						  "fragmentFields": [
+							{
+							  "id": "element-text",
+							  "value": {
+								"fragmentLink": {
+			  
+								},
+								"text": {
+									"value_i18n": {
+										"ar_SA": "\u003Cp\u003EThe Program Basics\u003C/p\u003E\n",
+										"ca_ES": "\u003Cp\u003EThe Program Basics\u003C/p\u003E\n",
+										"de_DE": "\u003Cp\u003EThe Program Basics\u003C/p\u003E\n",
+										"en_US": "\u003Cp\u003EThe Program Basics\u003C/p\u003E\n",
+										"es_ES": "\u003Cp\u003EThe Program Basics\u003C/p\u003E\n",
+										"fi_FI": "\u003Cp\u003EThe Program Basics\u003C/p\u003E\n",
+										"fr_FR": "\u003Cp\u003EThe Program Basics\u003C/p\u003E\n",
+										"hu_HU": "\u003Cp\u003EThe Program Basics\u003C/p\u003E\n",
+										"ja_JP": "\u003Cp\u003EThe Program Basics\u003C/p\u003E\n",
+										"nl_NL": "\u003Cp\u003EThe Program Basics\u003C/p\u003E\n",
+										"pt_BR": "\u003Cp\u003EThe Program Basics\u003C/p\u003E\n",
+										"sv_SE": "\u003Cp\u003EThe Program Basics\u003C/p\u003E\n",
+										"zh_CN": "\u003Cp\u003EThe Program Basics\u003C/p\u003E\n"
+									}
+								}
+							  }
+							}
+						  ],
+						  "fragmentStyle": {
+							"fontWeight": "fontWeightBold",
+							"marginBottom": "3"
+						  },
+						  "indexed": true
+						},
+						"type": "Fragment"
+					  },
+					  {
+						"definition": {
+						  "fragment": {
+							"key": "BASIC_COMPONENT-paragraph"
+						  },
+						  "fragmentConfig": {
+			  
+						  },
+						  "fragmentFields": [
+							{
+							  "id": "element-text",
+							  "value": {
+								"fragmentLink": {
+			  
+								},
+								"text": {
+									"value_i18n": {
+										"ar_SA": "\u003Cul\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EPartners will be able to submit up to 5 clients who they deem suitable for the upgrade program&nbsp;\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EThe upgrade program is a great expansion opportunity for our partners.\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EThis project is scheduled to run through 2024\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EPartners should familiarize themselves with the full program document to ensure they are identifying the right clients for the upgrade project before submitting.\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EOnce the application form has been submitted, a Liferay Team member will review the information provided and reach out with further questions or a decision on whether the application has been approved or denied within 2 working weeks.\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EIf approved the core upgrade is available at no additional cost to the partner. It is down to the partner’s discretion as to whether costs are transferred to the client.&nbsp;\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EAny work out of scope of the core upgrade will need to be costed separately and may incur cost to the partner. If approved project timelines, SOW/ contracting and next steps will be defined between you and the Liferay project manager.\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\u003C/ul\u003E\n",
+										"ca_ES": "\u003Cul\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EPartners will be able to submit up to 5 clients who they deem suitable for the upgrade program&nbsp;\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EThe upgrade program is a great expansion opportunity for our partners.\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EThis project is scheduled to run through 2024\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EPartners should familiarize themselves with the full program document to ensure they are identifying the right clients for the upgrade project before submitting.\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EOnce the application form has been submitted, a Liferay Team member will review the information provided and reach out with further questions or a decision on whether the application has been approved or denied within 2 working weeks.\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EIf approved the core upgrade is available at no additional cost to the partner. It is down to the partner’s discretion as to whether costs are transferred to the client.&nbsp;\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EAny work out of scope of the core upgrade will need to be costed separately and may incur cost to the partner. If approved project timelines, SOW/ contracting and next steps will be defined between you and the Liferay project manager.\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\u003C/ul\u003E\n",
+										"de_DE": "\u003Cul\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EPartners will be able to submit up to 5 clients who they deem suitable for the upgrade program&nbsp;\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EThe upgrade program is a great expansion opportunity for our partners.\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EThis project is scheduled to run through 2024\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EPartners should familiarize themselves with the full program document to ensure they are identifying the right clients for the upgrade project before submitting.\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EOnce the application form has been submitted, a Liferay Team member will review the information provided and reach out with further questions or a decision on whether the application has been approved or denied within 2 working weeks.\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EIf approved the core upgrade is available at no additional cost to the partner. It is down to the partner’s discretion as to whether costs are transferred to the client.&nbsp;\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EAny work out of scope of the core upgrade will need to be costed separately and may incur cost to the partner. If approved project timelines, SOW/ contracting and next steps will be defined between you and the Liferay project manager.\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\u003C/ul\u003E\n",
+										"en_US": "\u003Cul\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EPartners will be able to submit up to 5 clients who they deem suitable for the upgrade program&nbsp;\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EThe upgrade program is a great expansion opportunity for our partners.\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EThis project is scheduled to run through 2024\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EPartners should familiarize themselves with the full program document to ensure they are identifying the right clients for the upgrade project before submitting.\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EOnce the application form has been submitted, a Liferay Team member will review the information provided and reach out with further questions or a decision on whether the application has been approved or denied within 2 working weeks.\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EIf approved the core upgrade is available at no additional cost to the partner. It is down to the partner’s discretion as to whether costs are transferred to the client.&nbsp;\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EAny work out of scope of the core upgrade will need to be costed separately and may incur cost to the partner. If approved project timelines, SOW/ contracting and next steps will be defined between you and the Liferay project manager.\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\u003C/ul\u003E\n",
+										"es_ES": "\u003Cul\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EPartners will be able to submit up to 5 clients who they deem suitable for the upgrade program&nbsp;\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EThe upgrade program is a great expansion opportunity for our partners.\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EThis project is scheduled to run through 2024\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EPartners should familiarize themselves with the full program document to ensure they are identifying the right clients for the upgrade project before submitting.\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EOnce the application form has been submitted, a Liferay Team member will review the information provided and reach out with further questions or a decision on whether the application has been approved or denied within 2 working weeks.\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EIf approved the core upgrade is available at no additional cost to the partner. It is down to the partner’s discretion as to whether costs are transferred to the client.&nbsp;\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EAny work out of scope of the core upgrade will need to be costed separately and may incur cost to the partner. If approved project timelines, SOW/ contracting and next steps will be defined between you and the Liferay project manager.\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\u003C/ul\u003E\n",
+										"fi_FI": "\u003Cul\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EPartners will be able to submit up to 5 clients who they deem suitable for the upgrade program&nbsp;\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EThe upgrade program is a great expansion opportunity for our partners.\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EThis project is scheduled to run through 2024\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EPartners should familiarize themselves with the full program document to ensure they are identifying the right clients for the upgrade project before submitting.\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EOnce the application form has been submitted, a Liferay Team member will review the information provided and reach out with further questions or a decision on whether the application has been approved or denied within 2 working weeks.\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EIf approved the core upgrade is available at no additional cost to the partner. It is down to the partner’s discretion as to whether costs are transferred to the client.&nbsp;\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EAny work out of scope of the core upgrade will need to be costed separately and may incur cost to the partner. If approved project timelines, SOW/ contracting and next steps will be defined between you and the Liferay project manager.\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\u003C/ul\u003E\n",
+										"fr_FR": "\u003Cul\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EPartners will be able to submit up to 5 clients who they deem suitable for the upgrade program&nbsp;\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EThe upgrade program is a great expansion opportunity for our partners.\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EThis project is scheduled to run through 2024\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EPartners should familiarize themselves with the full program document to ensure they are identifying the right clients for the upgrade project before submitting.\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EOnce the application form has been submitted, a Liferay Team member will review the information provided and reach out with further questions or a decision on whether the application has been approved or denied within 2 working weeks.\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EIf approved the core upgrade is available at no additional cost to the partner. It is down to the partner’s discretion as to whether costs are transferred to the client.&nbsp;\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EAny work out of scope of the core upgrade will need to be costed separately and may incur cost to the partner. If approved project timelines, SOW/ contracting and next steps will be defined between you and the Liferay project manager.\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\u003C/ul\u003E\n",
+										"hu_HU": "\u003Cul\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EPartners will be able to submit up to 5 clients who they deem suitable for the upgrade program&nbsp;\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EThe upgrade program is a great expansion opportunity for our partners.\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EThis project is scheduled to run through 2024\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EPartners should familiarize themselves with the full program document to ensure they are identifying the right clients for the upgrade project before submitting.\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EOnce the application form has been submitted, a Liferay Team member will review the information provided and reach out with further questions or a decision on whether the application has been approved or denied within 2 working weeks.\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EIf approved the core upgrade is available at no additional cost to the partner. It is down to the partner’s discretion as to whether costs are transferred to the client.&nbsp;\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EAny work out of scope of the core upgrade will need to be costed separately and may incur cost to the partner. If approved project timelines, SOW/ contracting and next steps will be defined between you and the Liferay project manager.\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\u003C/ul\u003E\n",
+										"ja_JP": "\u003Cul\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EPartners will be able to submit up to 5 clients who they deem suitable for the upgrade program&nbsp;\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EThe upgrade program is a great expansion opportunity for our partners.\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EThis project is scheduled to run through 2024\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EPartners should familiarize themselves with the full program document to ensure they are identifying the right clients for the upgrade project before submitting.\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EOnce the application form has been submitted, a Liferay Team member will review the information provided and reach out with further questions or a decision on whether the application has been approved or denied within 2 working weeks.\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EIf approved the core upgrade is available at no additional cost to the partner. It is down to the partner’s discretion as to whether costs are transferred to the client.&nbsp;\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EAny work out of scope of the core upgrade will need to be costed separately and may incur cost to the partner. If approved project timelines, SOW/ contracting and next steps will be defined between you and the Liferay project manager.\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\u003C/ul\u003E\n",
+										"nl_NL": "\u003Cul\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EPartners will be able to submit up to 5 clients who they deem suitable for the upgrade program&nbsp;\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EThe upgrade program is a great expansion opportunity for our partners.\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EThis project is scheduled to run through 2024\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EPartners should familiarize themselves with the full program document to ensure they are identifying the right clients for the upgrade project before submitting.\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EOnce the application form has been submitted, a Liferay Team member will review the information provided and reach out with further questions or a decision on whether the application has been approved or denied within 2 working weeks.\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EIf approved the core upgrade is available at no additional cost to the partner. It is down to the partner’s discretion as to whether costs are transferred to the client.&nbsp;\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EAny work out of scope of the core upgrade will need to be costed separately and may incur cost to the partner. If approved project timelines, SOW/ contracting and next steps will be defined between you and the Liferay project manager.\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\u003C/ul\u003E\n",
+										"pt_BR": "\u003Cul\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EPartners will be able to submit up to 5 clients who they deem suitable for the upgrade program&nbsp;\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EThe upgrade program is a great expansion opportunity for our partners.\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EThis project is scheduled to run through 2024\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EPartners should familiarize themselves with the full program document to ensure they are identifying the right clients for the upgrade project before submitting.\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EOnce the application form has been submitted, a Liferay Team member will review the information provided and reach out with further questions or a decision on whether the application has been approved or denied within 2 working weeks.\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EIf approved the core upgrade is available at no additional cost to the partner. It is down to the partner’s discretion as to whether costs are transferred to the client.&nbsp;\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EAny work out of scope of the core upgrade will need to be costed separately and may incur cost to the partner. If approved project timelines, SOW/ contracting and next steps will be defined between you and the Liferay project manager.\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\u003C/ul\u003E\n",
+										"sv_SE": "\u003Cul\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EPartners will be able to submit up to 5 clients who they deem suitable for the upgrade program&nbsp;\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EThe upgrade program is a great expansion opportunity for our partners.\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EThis project is scheduled to run through 2024\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EPartners should familiarize themselves with the full program document to ensure they are identifying the right clients for the upgrade project before submitting.\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EOnce the application form has been submitted, a Liferay Team member will review the information provided and reach out with further questions or a decision on whether the application has been approved or denied within 2 working weeks.\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EIf approved the core upgrade is available at no additional cost to the partner. It is down to the partner’s discretion as to whether costs are transferred to the client.&nbsp;\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EAny work out of scope of the core upgrade will need to be costed separately and may incur cost to the partner. If approved project timelines, SOW/ contracting and next steps will be defined between you and the Liferay project manager.\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\u003C/ul\u003E\n",
+										"zh_CN": "\u003Cul\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EPartners will be able to submit up to 5 clients who they deem suitable for the upgrade program&nbsp;\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EThe upgrade program is a great expansion opportunity for our partners.\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EThis project is scheduled to run through 2024\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EPartners should familiarize themselves with the full program document to ensure they are identifying the right clients for the upgrade project before submitting.\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EOnce the application form has been submitted, a Liferay Team member will review the information provided and reach out with further questions or a decision on whether the application has been approved or denied within 2 working weeks.\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EIf approved the core upgrade is available at no additional cost to the partner. It is down to the partner’s discretion as to whether costs are transferred to the client.&nbsp;\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cp dir=\"ltr\" role=\"presentation\"\u003E\u003Cb id=\"docs-internal-guid-71ef1892-7fff-db8d-506b-0ea040f658ab\"\u003EAny work out of scope of the core upgrade will need to be costed separately and may incur cost to the partner. If approved project timelines, SOW/ contracting and next steps will be defined between you and the Liferay project manager.\u003C/b\u003E\u003C/p\u003E\n\t\u003C/li\u003E\n\u003C/ul\u003E\n"
+									}
+								}
+							  }
+							}
+						  ],
+						  "indexed": true
+						},
+						"type": "Fragment"
+					  }
+					],
+					"type": "Section"
+				  },
+				  {
+					"definition": {
+					  "fragment": {
+						"key": "pricing-warning"
+					  },
+					  "fragmentConfig": {
+			  
+					  },
+					  "fragmentFields": [
+						{
+						  "id": "alert-text",
+						  "value": {
+							"fragmentLink": {
+			  
+							},
+							"text": {
+								"value_i18n": {
+									"ar_SA": "\u003Cp\u003EPlease note: The core upgrade program is on a first come first serve basis and is subject to the availability of Liferay resources at any given time.\u003C/p\u003E\n",
+									"ca_ES": "\u003Cp\u003EPlease note: The core upgrade program is on a first come first serve basis and is subject to the availability of Liferay resources at any given time.\u003C/p\u003E\n",
+									"de_DE": "\u003Cp\u003EPlease note: The core upgrade program is on a first come first serve basis and is subject to the availability of Liferay resources at any given time.\u003C/p\u003E\n",
+									"en_US": "\u003Cp\u003EPlease note: The core upgrade program is on a first come first serve basis and is subject to the availability of Liferay resources at any given time.\u003C/p\u003E\n",
+									"es_ES": "\u003Cp\u003EPlease note: The core upgrade program is on a first come first serve basis and is subject to the availability of Liferay resources at any given time.\u003C/p\u003E\n",
+									"fi_FI": "\u003Cp\u003EPlease note: The core upgrade program is on a first come first serve basis and is subject to the availability of Liferay resources at any given time.\u003C/p\u003E\n",
+									"fr_FR": "\u003Cp\u003EPlease note: The core upgrade program is on a first come first serve basis and is subject to the availability of Liferay resources at any given time.\u003C/p\u003E\n",
+									"hu_HU": "\u003Cp\u003EPlease note: The core upgrade program is on a first come first serve basis and is subject to the availability of Liferay resources at any given time.\u003C/p\u003E\n",
+									"ja_JP": "\u003Cp\u003EPlease note: The core upgrade program is on a first come first serve basis and is subject to the availability of Liferay resources at any given time.\u003C/p\u003E\n",
+									"nl_NL": "\u003Cp\u003EPlease note: The core upgrade program is on a first come first serve basis and is subject to the availability of Liferay resources at any given time.\u003C/p\u003E\n",
+									"pt_BR": "\u003Cp\u003EPlease note: The core upgrade program is on a first come first serve basis and is subject to the availability of Liferay resources at any given time.\u003C/p\u003E\n",
+									"sv_SE": "\u003Cp\u003EPlease note: The core upgrade program is on a first come first serve basis and is subject to the availability of Liferay resources at any given time.\u003C/p\u003E\n",
+									"zh_CN": "\u003Cp\u003EPlease note: The core upgrade program is on a first come first serve basis and is subject to the availability of Liferay resources at any given time.\u003C/p\u003E\n"
+								}
+							}
+						  }
+						}
+					  ],
+					  "indexed": true
+					},
+					"type": "Fragment"
+				  },
+				  {
+					"definition": {
+					  "fragment": {
+						"key": "BASIC_COMPONENT-image"
+					  },
+					  "fragmentConfig": {
+						"imageSize": "w-100"
+					  },
+					  "fragmentFields": [
+						{
+							"id": "image-square",
+							"value": {
+								"fragmentImage": {
+									"url": {
+										"mapping": {
+											"fieldKey": "FileEntry_previewImage",
+											"itemReference": {
+												"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+												"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/technical/upgrade-macro-flow.jpg#]"
+											}
+										}
+									}
+								},
+								"fragmentLink": {}
+							}
+						}
+					  ],
+					  "indexed": true
+					},
+					"type": "Fragment"
+				  },
+				  {
+					"definition": {
+					  "gutters": true,
+					  "indexed": true,
+					  "modulesPerRow": 2,
+					  "numberOfColumns": 2,
+					  "reverseOrder": false,
+					  "rowViewports": [
+						{
+						  "id": "landscapeMobile",
+						  "rowViewportDefinition": {
+							"modulesPerRow": 1
+						  }
+						},
+						{
+						  "id": "portraitMobile",
+						  "rowViewportDefinition": {
+			  
+						  }
+						},
+						{
+						  "id": "tablet",
+						  "rowViewportDefinition": {
+			  
+						  }
+						}
+					  ],
+					  "verticalAlignment": "top"
+					},
+					"pageElements": [
+					  {
+						"definition": {
+						  "columnViewports": [
+							{
+							  "columnViewportDefinition": {
+								"size": 12
+							  },
+							  "id": "landscapeMobile"
+							},
+							{
+							  "columnViewportDefinition": {
+			  
+							  },
+							  "id": "portraitMobile"
+							},
+							{
+							  "columnViewportDefinition": {
+			  
+							  },
+							  "id": "tablet"
+							}
+						  ],
+						  "size": 4
+						},
+						"pageElements": [
+						  {
+							"definition": {
+							  "fragment": {
+								"key": "dialect-dialect-text"
+							  },
+							  "fragmentConfig": {
+								"textType": "h2"
+							  },
+							  "fragmentFields": [
+								{
+								  "id": "element-text",
+								  "value": {
+									"fragmentLink": {
+			  
+									},
+									"text": {
+										"value_i18n": {
+											"ar_SA": "\u003Cp\u003EReady to get started ?\u003C/p\u003E\n",
+											"ca_ES": "\u003Cp\u003EReady to get started ?\u003C/p\u003E\n",
+											"de_DE": "\u003Cp\u003EReady to get started ?\u003C/p\u003E\n",
+											"en_US": "\u003Cp\u003EReady to get started ?\u003C/p\u003E\n",
+											"es_ES": "\u003Cp\u003EReady to get started ?\u003C/p\u003E\n",
+											"fi_FI": "\u003Cp\u003EReady to get started ?\u003C/p\u003E\n",
+											"fr_FR": "\u003Cp\u003EReady to get started ?\u003C/p\u003E\n",
+											"hu_HU": "\u003Cp\u003EReady to get started ?\u003C/p\u003E\n",
+											"ja_JP": "\u003Cp\u003EReady to get started ?\u003C/p\u003E\n",
+											"nl_NL": "\u003Cp\u003EReady to get started ?\u003C/p\u003E\n",
+											"pt_BR": "\u003Cp\u003EReady to get started ?\u003C/p\u003E\n",
+											"sv_SE": "\u003Cp\u003EReady to get started ?\u003C/p\u003E\n",
+											"zh_CN": "\u003Cp\u003EReady to get started ?\u003C/p\u003E\n"
+										}
+									}
+								  }
+								}
+							  ],
+							  "fragmentStyle": {
+								"fontWeight": "fontWeightBold",
+								"marginTop": "4"
+							  },
+							  "indexed": true
+							},
+							"type": "Fragment"
+						  },
+						  {
+							"definition": {
+							  "fragment": {
+								"key": "BASIC_COMPONENT-paragraph"
+							  },
+							  "fragmentConfig": {
+			  
+							  },
+							  "fragmentFields": [
+								{
+								  "id": "element-text",
+								  "value": {
+									"fragmentLink": {
+			  
+									},
+									"text": {
+										"value_i18n": {
+											"ar_SA": "\u003Cp dir=\"ltr\"\u003E\u003Cb id=\"docs-internal-guid-abcd50db-7fff-2f59-2430-19a409677c9f\"\u003EPlease complete the application form on this page ensuring you provide all of the required information.\u003C/b\u003E\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003E\u003Cb id=\"docs-internal-guid-abcd50db-7fff-2f59-2430-19a409677c9f\"\u003EIf you require assistance, please contact \u003Ca href=\"mailto:partner-operations@liferay.com\"\u003Epartner-operations@liferay.com\u003C/a\u003E or your CAM.\u003C/b\u003E\u003C/p\u003E\n",
+											"ca_ES": "\u003Cp dir=\"ltr\"\u003E\u003Cb id=\"docs-internal-guid-abcd50db-7fff-2f59-2430-19a409677c9f\"\u003EPlease complete the application form on this page ensuring you provide all of the required information.\u003C/b\u003E\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003E\u003Cb id=\"docs-internal-guid-abcd50db-7fff-2f59-2430-19a409677c9f\"\u003EIf you require assistance, please contact \u003Ca href=\"mailto:partner-operations@liferay.com\"\u003Epartner-operations@liferay.com\u003C/a\u003E or your CAM.\u003C/b\u003E\u003C/p\u003E\n",
+											"de_DE": "\u003Cp dir=\"ltr\"\u003E\u003Cb id=\"docs-internal-guid-abcd50db-7fff-2f59-2430-19a409677c9f\"\u003EPlease complete the application form on this page ensuring you provide all of the required information.\u003C/b\u003E\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003E\u003Cb id=\"docs-internal-guid-abcd50db-7fff-2f59-2430-19a409677c9f\"\u003EIf you require assistance, please contact \u003Ca href=\"mailto:partner-operations@liferay.com\"\u003Epartner-operations@liferay.com\u003C/a\u003E or your CAM.\u003C/b\u003E\u003C/p\u003E\n",
+											"en_US": "\u003Cp dir=\"ltr\"\u003E\u003Cb id=\"docs-internal-guid-abcd50db-7fff-2f59-2430-19a409677c9f\"\u003EPlease complete the application form on this page ensuring you provide all of the required information.\u003C/b\u003E\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003E\u003Cb id=\"docs-internal-guid-abcd50db-7fff-2f59-2430-19a409677c9f\"\u003EIf you require assistance, please contact \u003Ca href=\"mailto:partner-operations@liferay.com\"\u003Epartner-operations@liferay.com\u003C/a\u003E or your CAM.\u003C/b\u003E\u003C/p\u003E\n",
+											"es_ES": "\u003Cp dir=\"ltr\"\u003E\u003Cb id=\"docs-internal-guid-abcd50db-7fff-2f59-2430-19a409677c9f\"\u003EPlease complete the application form on this page ensuring you provide all of the required information.\u003C/b\u003E\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003E\u003Cb id=\"docs-internal-guid-abcd50db-7fff-2f59-2430-19a409677c9f\"\u003EIf you require assistance, please contact \u003Ca href=\"mailto:partner-operations@liferay.com\"\u003Epartner-operations@liferay.com\u003C/a\u003E or your CAM.\u003C/b\u003E\u003C/p\u003E\n",
+											"fi_FI": "\u003Cp dir=\"ltr\"\u003E\u003Cb id=\"docs-internal-guid-abcd50db-7fff-2f59-2430-19a409677c9f\"\u003EPlease complete the application form on this page ensuring you provide all of the required information.\u003C/b\u003E\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003E\u003Cb id=\"docs-internal-guid-abcd50db-7fff-2f59-2430-19a409677c9f\"\u003EIf you require assistance, please contact \u003Ca href=\"mailto:partner-operations@liferay.com\"\u003Epartner-operations@liferay.com\u003C/a\u003E or your CAM.\u003C/b\u003E\u003C/p\u003E\n",
+											"fr_FR": "\u003Cp dir=\"ltr\"\u003E\u003Cb id=\"docs-internal-guid-abcd50db-7fff-2f59-2430-19a409677c9f\"\u003EPlease complete the application form on this page ensuring you provide all of the required information.\u003C/b\u003E\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003E\u003Cb id=\"docs-internal-guid-abcd50db-7fff-2f59-2430-19a409677c9f\"\u003EIf you require assistance, please contact \u003Ca href=\"mailto:partner-operations@liferay.com\"\u003Epartner-operations@liferay.com\u003C/a\u003E or your CAM.\u003C/b\u003E\u003C/p\u003E\n",
+											"hu_HU": "\u003Cp dir=\"ltr\"\u003E\u003Cb id=\"docs-internal-guid-abcd50db-7fff-2f59-2430-19a409677c9f\"\u003EPlease complete the application form on this page ensuring you provide all of the required information.\u003C/b\u003E\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003E\u003Cb id=\"docs-internal-guid-abcd50db-7fff-2f59-2430-19a409677c9f\"\u003EIf you require assistance, please contact \u003Ca href=\"mailto:partner-operations@liferay.com\"\u003Epartner-operations@liferay.com\u003C/a\u003E or your CAM.\u003C/b\u003E\u003C/p\u003E\n",
+											"ja_JP": "\u003Cp dir=\"ltr\"\u003E\u003Cb id=\"docs-internal-guid-abcd50db-7fff-2f59-2430-19a409677c9f\"\u003EPlease complete the application form on this page ensuring you provide all of the required information.\u003C/b\u003E\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003E\u003Cb id=\"docs-internal-guid-abcd50db-7fff-2f59-2430-19a409677c9f\"\u003EIf you require assistance, please contact \u003Ca href=\"mailto:partner-operations@liferay.com\"\u003Epartner-operations@liferay.com\u003C/a\u003E or your CAM.\u003C/b\u003E\u003C/p\u003E\n",
+											"nl_NL": "\u003Cp dir=\"ltr\"\u003E\u003Cb id=\"docs-internal-guid-abcd50db-7fff-2f59-2430-19a409677c9f\"\u003EPlease complete the application form on this page ensuring you provide all of the required information.\u003C/b\u003E\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003E\u003Cb id=\"docs-internal-guid-abcd50db-7fff-2f59-2430-19a409677c9f\"\u003EIf you require assistance, please contact \u003Ca href=\"mailto:partner-operations@liferay.com\"\u003Epartner-operations@liferay.com\u003C/a\u003E or your CAM.\u003C/b\u003E\u003C/p\u003E\n",
+											"pt_BR": "\u003Cp dir=\"ltr\"\u003E\u003Cb id=\"docs-internal-guid-abcd50db-7fff-2f59-2430-19a409677c9f\"\u003EPlease complete the application form on this page ensuring you provide all of the required information.\u003C/b\u003E\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003E\u003Cb id=\"docs-internal-guid-abcd50db-7fff-2f59-2430-19a409677c9f\"\u003EIf you require assistance, please contact \u003Ca href=\"mailto:partner-operations@liferay.com\"\u003Epartner-operations@liferay.com\u003C/a\u003E or your CAM.\u003C/b\u003E\u003C/p\u003E\n",
+											"sv_SE": "\u003Cp dir=\"ltr\"\u003E\u003Cb id=\"docs-internal-guid-abcd50db-7fff-2f59-2430-19a409677c9f\"\u003EPlease complete the application form on this page ensuring you provide all of the required information.\u003C/b\u003E\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003E\u003Cb id=\"docs-internal-guid-abcd50db-7fff-2f59-2430-19a409677c9f\"\u003EIf you require assistance, please contact \u003Ca href=\"mailto:partner-operations@liferay.com\"\u003Epartner-operations@liferay.com\u003C/a\u003E or your CAM.\u003C/b\u003E\u003C/p\u003E\n",
+											"zh_CN": "\u003Cp dir=\"ltr\"\u003E\u003Cb id=\"docs-internal-guid-abcd50db-7fff-2f59-2430-19a409677c9f\"\u003EPlease complete the application form on this page ensuring you provide all of the required information.\u003C/b\u003E\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003E\u003Cb id=\"docs-internal-guid-abcd50db-7fff-2f59-2430-19a409677c9f\"\u003EIf you require assistance, please contact \u003Ca href=\"mailto:partner-operations@liferay.com\"\u003Epartner-operations@liferay.com\u003C/a\u003E or your CAM.\u003C/b\u003E\u003C/p\u003E\n"
+										}
+									}
+								  }
+								}
+							  ],
+							  "fragmentStyle": {
+								"marginTop": "4",
+								"paddingRight": "5"
+							  },
+							  "indexed": true
+							},
+							"type": "Fragment"
+						  }
+						],
+						"type": "Column"
+					  },
+					  {
+						"definition": {
+						  "columnViewports": [
+							{
+							  "columnViewportDefinition": {
+								"size": 12
+							  },
+							  "id": "landscapeMobile"
+							},
+							{
+							  "columnViewportDefinition": {
+			  
+							  },
+							  "id": "portraitMobile"
+							},
+							{
+							  "columnViewportDefinition": {
+			  
+							  },
+							  "id": "tablet"
+							}
+						  ],
+						  "size": 8
+						},
+						"pageElements": [
+						  {
+							"definition": {
+							  "widgetInstance": {
+								"widgetConfig": {
+								  "groupId": "15095646",
+								  "formInstanceId": "20092211"
+								},
+								"widgetName": "com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormPortlet",
+								"widgetPermissions": [
+								  {
+									"actionKeys": [
+									  "PERMISSIONS",
+									  "PREFERENCES",
+									  "CONFIGURATION",
+									  "VIEW",
+									  "ADD_TO_PAGE"
+									],
+									"roleKey": "Owner"
+								  },
+								  {
+									"actionKeys": [
+									  "VIEW"
+									],
+									"roleKey": "Site Member"
+								  },
+								  {
+									"actionKeys": [
+									  "VIEW"
+									],
+									"roleKey": "Guest"
+								  }
+								]
+							  }
+							},
+							"type": "Widget"
+						  }
+						],
+						"type": "Column"
+					  }
+					],
+					"type": "Row"
+				  }
+				],
+				"type": "Section"
+			  }
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"masterPage": {
+			"key": "main-template"
+		}
+	},
+	"version": 1.1
+}

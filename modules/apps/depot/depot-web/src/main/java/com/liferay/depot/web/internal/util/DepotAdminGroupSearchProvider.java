@@ -45,7 +45,9 @@ public class DepotAdminGroupSearchProvider {
 			PortletRequest portletRequest, PortletURL portletURL)
 		throws PortalException {
 
-		if (!groupItemSelectorCriterion.isIncludeAllVisibleGroups()) {
+		if (Validator.isNull(ParamUtil.getString(portletRequest, "keywords")) &&
+			!groupItemSelectorCriterion.isIncludeAllVisibleGroups()) {
+
 			return _getGroupConnectedDepotGroupsGroupSearch(
 				portletRequest, portletURL);
 		}

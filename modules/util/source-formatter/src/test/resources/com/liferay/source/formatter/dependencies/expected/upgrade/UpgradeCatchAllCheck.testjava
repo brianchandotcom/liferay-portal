@@ -1139,12 +1139,12 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 	}
 
 	public void method(
-		String searchEngineId, long companyId, Collection<Document> documents,
+		String searchEngineId, long companyId, Document document,
 		boolean commitImmediately) {
 
 		IndexWriterHelperUtil.updateDocument("test123", 123, null, null);
-		IndexWriterHelperUtil.updateDocument(companyId, documents);
-		_indexWriterHelper.updateDocument(companyId, documents);
+		IndexWriterHelperUtil.updateDocument(companyId, document);
+		_indexWriterHelper.updateDocument(companyId, document);
 	}
 
 	public void method(

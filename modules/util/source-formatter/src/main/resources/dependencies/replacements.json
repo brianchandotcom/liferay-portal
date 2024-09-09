@@ -51,7 +51,7 @@
 			"IndexWriterHelper",
 			"IndexWriterHelperUtil"
 		],
-		"from": "updateDocument(String paramName, long paramName, Collection<Document> paramName, boolean paramName)",
+		"from": "updateDocument(String paramName, long paramName, Document paramName, boolean paramName)",
 		"issueKey": "LPD-8003",
 		"to": "updateDocument(param#1#, param#2#)"
 	},

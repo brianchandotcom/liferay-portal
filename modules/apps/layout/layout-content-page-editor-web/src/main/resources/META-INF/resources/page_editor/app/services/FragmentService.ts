@@ -262,12 +262,12 @@ export default {
 	pasteItem({
 		itemIds,
 		onNetworkStatus,
-		parentItemIds,
+		parentItemId,
 		segmentsExperienceId,
 	}: {
 		itemIds: string[];
 		onNetworkStatus: OnNetworkStatus;
-		parentItemIds: string[];
+		parentItemId: string;
 		segmentsExperienceId: string;
 	}) {
 		return draftServiceFetch<{
@@ -280,7 +280,7 @@ export default {
 			{
 				body: {
 					itemIds,
-					parentItemIds,
+					parentItemId,
 					segmentsExperienceId,
 				},
 			},

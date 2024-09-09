@@ -278,7 +278,7 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 					dispatch(
 						pasteItem({
 							copyItemIds: copiedNodeIds,
-							itemIds: [item.id],
+							parentItemId: item.id,
 							selectItems,
 						})
 					);

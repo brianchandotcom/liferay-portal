@@ -158,7 +158,7 @@ export default function ShortcutManager() {
 		dispatch(
 			pasteItem({
 				copyItemIds: copiedNodeIds,
-				itemIds: activeItemIds,
+				parentItemId: activeItemIds[0],
 				selectItems,
 			})
 		);

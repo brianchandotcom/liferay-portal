@@ -1048,7 +1048,7 @@ translationTest(
 translationTest(
 	'A non-localizabled field is disabled when another translation language is selected',
 	{
-		tag: 'LPD-19627',
+		tag: '@LPD-19627',
 	},
 	async ({apiHelpers, journalEditArticlePage, page, site}) => {
 		const nonLocalizableFieldName = 'Text1234';

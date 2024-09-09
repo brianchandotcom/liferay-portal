@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-function isObject(value) {
+function isObject(value: unknown) {
 	if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
 		return true;
 	}
@@ -11,7 +11,7 @@ function isObject(value) {
 	return false;
 }
 
-function isObjectEmpty(object) {
+function isObjectEmpty(object: Record<string, unknown>) {
 	if (!Object.keys(object).length) {
 		return true;
 	}
@@ -19,11 +19,11 @@ function isObjectEmpty(object) {
 	return false;
 }
 
-function removeNewLine(string) {
+function removeNewLine(string: string) {
 	return string.replace(/\r?\n|\r/g, '');
 }
 
-function repeatSymbol(symbol, repetionNumber) {
+function repeatSymbol(symbol: string, repetionNumber: number) {
 	let string = '';
 
 	for (let i = repetionNumber; i > 0; i--) {
@@ -33,11 +33,11 @@ function repeatSymbol(symbol, repetionNumber) {
 	return string;
 }
 
-function replaceTabSpaces(string) {
+function replaceTabSpaces(string: string) {
 	return string.replace(/\t/g, ' ').trimStart().trimEnd();
 }
 
-function stringToBoolean(string) {
+function stringToBoolean(string: string) {
 	if (string === 'false') {
 		return false;
 	}
@@ -45,11 +45,11 @@ function stringToBoolean(string) {
 		return true;
 	}
 	else {
-		return string;
+		return false;
 	}
 }
 
-function titleCase(string) {
+function titleCase(string: string) {
 	return string
 		.toLowerCase()
 		.split(' ')
@@ -59,7 +59,7 @@ function titleCase(string) {
 		.join(' ');
 }
 
-function uncamelize(string, separator) {
+function uncamelize(string: string, separator: string) {
 	if (!separator) {
 		separator = '_';
 	}

@@ -389,7 +389,7 @@ public class SkuResourceImpl extends BaseSkuResourceImpl {
 			_commerceChannelLocalService.getCommerceChannel(channelId);
 
 		for (CPInstance cpInstance : cpInstances) {
-			String unitOfMeasureKey = _getDefaultUnitOfMeasureKey(
+			String defaultUnitOfMeasureKey = _getDefaultUnitOfMeasureKey(
 				cpInstance.getCPInstanceId());
 
 			skus.add(
@@ -398,9 +398,10 @@ public class SkuResourceImpl extends BaseSkuResourceImpl {
 						_getCommerceContext(accountId, commerceChannel),
 						contextCompany.getCompanyId(), cpDefinition,
 						contextAcceptLanguage.getPreferredLocale(),
-						_getDefaultQuantity(cpInstance, unitOfMeasureKey),
-						cpInstance.getCPInstanceId(), null, unitOfMeasureKey,
-						contextUriInfo, contextUser)));
+						_getDefaultQuantity(
+							cpInstance, defaultUnitOfMeasureKey),
+						cpInstance.getCPInstanceId(), null,
+						defaultUnitOfMeasureKey, contextUriInfo, contextUser)));
 		}
 
 		return skus;

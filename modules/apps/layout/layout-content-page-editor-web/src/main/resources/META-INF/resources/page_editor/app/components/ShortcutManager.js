@@ -277,7 +277,9 @@ export default function ShortcutManager() {
 				),
 
 			isKeyCombination: (event) =>
-				isCtrlOrMeta(event) && event.code === D_KEY_CODE,
+				isCtrlOrMeta(event) &&
+				event.altKey &&
+				event.code === D_KEY_CODE,
 		},
 		hideShow: {
 			action: hideShow,

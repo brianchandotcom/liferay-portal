@@ -359,4 +359,8 @@ html#{$cadmin-selector} {
 			outline: solid $editablesBorderWidth $cadmin-primary;
 		}
 	}
+
+	.custom-height .page-editor__no-fragments-state {
+		padding: 0;
+	}
 }

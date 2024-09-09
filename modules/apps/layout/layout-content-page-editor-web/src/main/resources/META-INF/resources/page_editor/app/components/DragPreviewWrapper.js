@@ -4,9 +4,11 @@
  */
 
 import {DragPreview} from '@liferay/layout-js-components-web';
+import {sub} from 'frontend-js-web';
 import React from 'react';
 
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
+import {useActiveItemIds} from '../contexts/ControlsContext';
 import {useSelector} from '../contexts/StoreContext';
 import getWidget from '../utils/getWidget';
 
@@ -40,6 +42,7 @@ function getItemIcon(fragmentEntryLinks, fragments, item, widgets) {
 }
 
 export default function DragPreviewWrapper() {
+	const activeItemIds = useActiveItemIds();
 	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
 	const fragments = useSelector((state) => state.fragments);
 	const widgets = useSelector((state) => state.widgets);
@@ -52,6 +55,11 @@ export default function DragPreviewWrapper() {
 					getItemIcon(fragmentEntryLinks, fragments, item, widgets)
 				);
 			}}
+			getLabel={(item) =>
+				activeItemIds.length > 1
+					? sub(Liferay.Language.get('x-items'), activeItemIds.length)
+					: item?.name
+			}
 		/>
 	);
 }

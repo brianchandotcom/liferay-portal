@@ -189,10 +189,10 @@ public class HtmlContentTransformerImplTest {
 	}
 
 	@Test
-	public void testTheAttributeIsCaseInsensitive() throws Exception {
+	public void testTheAttributeIsCaseSensitive() throws Exception {
 		Mockito.when(
 			_amImageHTMLTagFactory.create(
-				"<img data-fileentryid=\"1989\" src=\"adaptable\"/>",
+				"<img data-fileEntryId=\"1989\" src=\"adaptable\"/>",
 				_pngFileEntry)
 		).thenReturn(
 			"<whatever></whatever>"
@@ -201,14 +201,13 @@ public class HtmlContentTransformerImplTest {
 		StringBundler originalSB = new StringBundler(4);
 
 		originalSB.append("<div><div>");
-		originalSB.append("<img data-fileentryid=\"1989\" ");
+		originalSB.append("<img data-fileEntryId=\"1989\" ");
 		originalSB.append("src=\"adaptable\"/>");
 		originalSB.append("</div></div><br/>");
 
 		Assert.assertEquals(
-			"<div><div><whatever></whatever></div></div><br/>",
-			_htmlContentTransformerImpl.transform(
-				StringUtil.toLowerCase(originalSB.toString())));
+			originalSB.toString(),
+			_htmlContentTransformerImpl.transform(originalSB.toString()));
 	}
 
 	private String _duplicateWithNewLine(String text) {

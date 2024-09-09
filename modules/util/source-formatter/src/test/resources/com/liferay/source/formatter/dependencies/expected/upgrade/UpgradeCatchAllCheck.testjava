@@ -685,6 +685,7 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		CommerceAddress commerceAddress, Country country, Region region) {
 
 		commerceAddress.getCountry().getA2();
+		country.getCountryId();
 		country.getA2();
 		country.setA2();
 		country.getA3();

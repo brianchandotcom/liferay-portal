@@ -67,54 +67,46 @@ test.describe('Advanced Configuration', () => {
 		apiHelpers,
 		page,
 		pageEditorPage,
-		pageManagementSite,
+		site,
 	}) => {
 
-		// Create a content page with Wem Site's Apple fragment
+		// Create a content page with a Heading fragment
+
+		const fragmentId = getRandomString();
 
 		const fragmentDefinition = getFragmentDefinition({
-			fragmentConfig: {
-				color: 'red',
-			},
-			id: getRandomString(),
-			key: 'apple',
+			id: fragmentId,
+			key: 'BASIC_COMPONENT-heading',
 		});
 
 		const layout = await apiHelpers.headlessDelivery.createSitePage({
 			pageDefinition: getPageDefinition([fragmentDefinition]),
-			siteId: pageManagementSite.id,
+			siteId: site.id,
 			title: getRandomString(),
 		});
 
 		// Adds css classes and assert that added to the page
 
-		await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
-		await page.getByTitle('Browser').click();
+		await pageEditorPage.changeFragmentConfiguration({
+			fieldLabel: 'CSS Classes',
+			fragmentId,
+			tab: 'Advanced',
+			value: 'background-color',
+		});
 
-		await page.getByLabel('Select Apple').click();
+		await pageEditorPage.changeFragmentConfiguration({
+			fieldLabel: 'CSS Classes',
+			fragmentId,
+			tab: 'Advanced',
+			value: 'border-color',
+		});
 
-		await pageEditorPage.goToConfigurationTab('Advanced');
+		const fragmentContent = page.locator('.page-editor__fragment-content');
 
-		await page
-			.getByLabel('CSS Classes', {exact: true})
-			.fill('background-color');
-
-		await page.getByLabel('CSS Classes', {exact: true}).press('Enter');
-
-		await page
-			.getByLabel('CSS Classes', {exact: true})
-			.fill('border-color');
-
-		await page.getByLabel('CSS Classes', {exact: true}).press('Enter');
-
-		await expect(
-			page.locator('.page-editor__fragment-content')
-		).toHaveClass(/background-color/);
-
-		await expect(
-			page.locator('.page-editor__fragment-content')
-		).toHaveClass(/border-color/);
+		await expect(fragmentContent).toHaveClass(/background-color/);
+		await expect(fragmentContent).toHaveClass(/border-color/);
 	});
 
 	test('Checks that the fragment is hidden from Site Search Results', async ({
@@ -190,17 +182,12 @@ test.describe('Advanced Configuration', () => {
 
 		await pageEditorPage.goto(layouts.fragment, site.friendlyUrlPath);
 
-		await pageEditorPage.selectFragment(headingId);
-
-		await pageEditorPage.goToConfigurationTab('Advanced');
-
-		const hideFromSiteSearchResultsInput = page.getByLabel(
-			'Hide from Site Search Results'
-		);
-
-		await hideFromSiteSearchResultsInput.check();
-
-		await expect(hideFromSiteSearchResultsInput).toBeChecked();
+		await pageEditorPage.changeFragmentConfiguration({
+			fieldLabel: 'Hide from Site Search Results',
+			fragmentId: headingId,
+			tab: 'Advanced',
+			value: true,
+		});
 
 		await pageEditorPage.publishPage();
 

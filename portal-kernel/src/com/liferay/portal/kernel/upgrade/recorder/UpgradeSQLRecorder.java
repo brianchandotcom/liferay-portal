@@ -213,31 +213,29 @@ public class UpgradeSQLRecorder {
 
 			String sql = _extractSQL(object);
 
-			if (sql == null) {
-				return;
-			}
+			if (sql != null) {
+				long duration = endTime - startTime;
 
-			sql += StringPool.SEMICOLON;
+				sql += StringPool.SEMICOLON;
 
-			long duration = endTime - startTime;
-
-			if (Validator.isBlank(_upgradeProcessClassName)) {
-				_sqlExecutionTimes.put(sql, duration);
-			}
-			else {
-				if (DBPartition.isPartitionEnabled()) {
-					_sqlExecutionTimes.put(
-						StringBundler.concat(
-							_upgradeProcessClassName, StringPool.AT,
-							String.valueOf(
-								CompanyThreadLocal.getCompanyId()),
-							StringPool.PIPE, sql),
-						duration);
+				if (Validator.isBlank(_upgradeProcessClassName)) {
+					_sqlExecutionTimes.put(sql, duration);
 				}
 				else {
-					_sqlExecutionTimes.put(
-						_upgradeProcessClassName + StringPool.PIPE + sql,
-						duration);
+					if (DBPartition.isPartitionEnabled()) {
+						_sqlExecutionTimes.put(
+							StringBundler.concat(
+								_upgradeProcessClassName, StringPool.AT,
+								String.valueOf(
+									CompanyThreadLocal.getCompanyId()),
+								StringPool.PIPE, sql),
+							duration);
+					}
+					else {
+						_sqlExecutionTimes.put(
+							_upgradeProcessClassName + StringPool.PIPE + sql,
+							duration);
+					}
 				}
 			}
 		}

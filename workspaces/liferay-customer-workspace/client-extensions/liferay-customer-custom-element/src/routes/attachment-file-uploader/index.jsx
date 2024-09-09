@@ -7,7 +7,7 @@ import AttachmentUploader from './components/AttachmentUploader';
 import './app.scss';
 
 
-const AttachFile = () => {
+const AttachmentFileUploader = () => {
 	return (
 		<div className='container-attach'>
 			<AttachmentUploader />
@@ -15,4 +15,4 @@ const AttachFile = () => {
 	);
 };
 
-export default AttachFile;
+export default AttachmentFileUploader;

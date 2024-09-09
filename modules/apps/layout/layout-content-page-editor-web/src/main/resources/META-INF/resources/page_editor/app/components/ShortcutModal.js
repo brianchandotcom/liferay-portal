@@ -29,7 +29,7 @@ export default function ShortcutModal({onCloseModal}) {
 
 				<KeyboardShorcut
 					description={Liferay.Language.get('duplicate-fragment')}
-					keyCombinations={[KEY_LABEL, 'D']}
+					keyCombinations={[KEY_LABEL, OPTION_KEY_LABEL, 'D']}
 				/>
 
 				<KeyboardShorcut

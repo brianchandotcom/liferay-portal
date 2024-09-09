@@ -8,14 +8,14 @@ import {MOVE_ITEM} from './types';
 import type {LayoutData} from '../../types/layout_data/LayoutData';
 
 export default function moveItem({
-	itemId,
+	itemIds,
 	layoutData,
 }: {
-	itemId: string;
+	itemIds: string[];
 	layoutData: LayoutData;
 }) {
 	return {
-		itemId,
+		itemIds,
 		layoutData,
 		type: MOVE_ITEM,
 	} as const;

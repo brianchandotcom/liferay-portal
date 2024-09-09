@@ -6,25 +6,30 @@
 import moveItem from '../../thunks/moveItem';
 
 function undoAction({action}) {
-	const {itemId, parentItemId, position} = action;
+	const {itemIds, parentItemIds, positions} = action;
 
-	return moveItem({itemId, parentItemId, position});
+	return moveItem({itemIds, parentItemIds, positions});
 }
 
 function getDerivedStateForUndo({action, state}) {
-	const {itemId} = action;
+	const {itemIds} = action;
 	const {layoutData} = state;
 
-	const item = layoutData.items[itemId];
+	const positions = [];
+	const parentItemIds = [];
 
-	const parent = layoutData.items[item.parentId];
+	for (const itemId of itemIds) {
+		const item = layoutData.items[itemId];
+		const parent = layoutData.items[item.parentId];
 
-	const position = parent.children.indexOf(itemId);
+		parentItemIds.push(parent.itemId);
+		positions.push(parent.children.indexOf(itemId));
+	}
 
 	return {
-		itemId: action.itemId,
-		parentItemId: parent.itemId,
-		position,
+		itemIds,
+		parentItemIds,
+		positions,
 	};
 }
 

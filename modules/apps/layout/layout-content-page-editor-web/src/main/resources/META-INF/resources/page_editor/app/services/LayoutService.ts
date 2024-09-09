@@ -136,25 +136,25 @@ export default {
 	},
 
 	moveItem({
-		itemId,
+		itemIds,
 		onNetworkStatus,
-		parentItemId,
-		position,
+		parentItemIds,
+		positions,
 		segmentsExperienceId,
 	}: {
-		itemId: string;
+		itemIds: string[];
 		onNetworkStatus: OnNetworkStatus;
-		parentItemId: string;
-		position: number;
+		parentItemIds: string[];
+		positions: number[];
 		segmentsExperienceId: string;
 	}) {
 		return draftServiceFetch<LayoutData>(
 			config.moveItemURL,
 			{
 				body: {
-					itemId,
-					parentItemId,
-					position,
+					itemIds,
+					parentItemIds,
+					positions,
 					segmentsExperienceId,
 				},
 			},

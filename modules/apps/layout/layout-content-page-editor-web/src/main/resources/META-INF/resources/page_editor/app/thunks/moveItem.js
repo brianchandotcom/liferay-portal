@@ -6,16 +6,16 @@
 import moveItemAction from '../actions/moveItem';
 import LayoutService from '../services/LayoutService';
 
-export default function moveItem({itemId, parentItemId, position}) {
+export default function moveItem({itemIds, parentItemIds, positions}) {
 	return (dispatch, getState) => {
 		return LayoutService.moveItem({
-			itemId,
+			itemIds,
 			onNetworkStatus: dispatch,
-			parentItemId,
-			position,
+			parentItemIds,
+			positions,
 			segmentsExperienceId: getState().segmentsExperienceId,
 		}).then((layoutData) => {
-			dispatch(moveItemAction({itemId, layoutData}));
+			dispatch(moveItemAction({itemIds, layoutData}));
 		});
 	};
 }

@@ -88,6 +88,10 @@ public class DepotAssetRendererFactoryWrapper<T>
 
 		Group group = _getGroup();
 
+		if (group == null) {
+			return null;
+		}
+
 		if (ArrayUtil.contains(
 				_siteConnectedGroupGroupProvider.
 					getCurrentAndAncestorSiteAndDepotGroupIds(

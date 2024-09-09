@@ -77,8 +77,11 @@ export class WidgetPagePage {
 		);
 	}
 
-	async clickOnAction(action: string, locator: Locator) {
-		await locator.getByLabel('Options').click();
+	async clickOnAction(portletName: string, action: string) {
+		await this.page
+			.locator('.portlet-topper', {hasText: portletName})
+			.getByLabel('Options')
+			.click();
 
 		await this.page
 			.getByRole('menuitem', {exact: true, name: action})

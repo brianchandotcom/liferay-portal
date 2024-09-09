@@ -22,10 +22,7 @@ const test = mergeTests(
 );
 
 const selectCustomTemplate = async (page, templateName, widgetPagePage) => {
-	await widgetPagePage.clickOnAction(
-		'Configuration',
-		page.locator('.portlet-language').first()
-	);
+	await widgetPagePage.clickOnAction('Language Selector', 'Configuration');
 
 	const configurationIFrame = page.frameLocator(
 		'iframe[title*="Language Selector"]'
@@ -63,10 +60,7 @@ test('The user can choose which languages will be available to site via language
 
 	await widgetPagePage.addPortlet('Language Selector');
 
-	await widgetPagePage.clickOnAction(
-		'Configuration',
-		page.locator('.portlet-language').first()
-	);
+	await widgetPagePage.clickOnAction('Language Selector', 'Configuration');
 
 	const configurationIFrame = page.frameLocator(
 		'iframe[title*="Language Selector"]'

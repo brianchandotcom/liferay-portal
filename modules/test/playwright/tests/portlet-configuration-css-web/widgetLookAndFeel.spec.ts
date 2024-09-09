@@ -41,8 +41,8 @@ test(
 		// Open Look and Feel Configuration
 
 		await widgetPagePage.clickOnAction(
-			'Look and Feel Configuration',
-			page.locator('.portlet-asset-publisher').first()
+			'Asset Publisher',
+			'Look and Feel Configuration'
 		);
 
 		const lookAndFeelIFrame = page.frameLocator(

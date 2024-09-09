@@ -38,10 +38,7 @@ test('User can nest a widget inside nested portlets widget', async ({
 
 	await widgetPagePage.addPortlet('Nested Applications');
 
-	await widgetPagePage.clickOnAction(
-		'Configuration',
-		page.locator('.portlet-nested-portlets').first()
-	);
+	await widgetPagePage.clickOnAction('Nested Applications', 'Configuration');
 
 	const configurationIFrame = page.frameLocator(
 		'iframe[title*="Nested Applications"]'

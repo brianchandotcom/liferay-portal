@@ -38,7 +38,10 @@ import '../../../../css/TableVisualizationMode.scss';
 
 import ClayAlert from '@clayui/alert';
 import ClayIcon from '@clayui/icon';
+import classNames from 'classnames';
 
+import RequiredMark from '../../../components/RequiredMark';
+import ValidationFeedback from '../../../components/ValidationFeedback';
 import sortItems from '../../../utils/sortItems';
 import {
 	EFieldType,
@@ -80,6 +83,89 @@ const getRendererLabel = ({
 
 		return rendererName;
 	}
+};
+
+const NewFieldModalContent = ({
+	closeModal,
+	namespace,
+	onSaveButtonClick,
+}: {
+	closeModal: Function;
+	namespace: string;
+	onSaveButtonClick: Function;
+}) => {
+	const [fieldName, setFieldName] = useState<string>();
+	const [
+		requiredFieldNameValidationError,
+		setRequiredFieldNameValidationError,
+	] = useState<boolean>();
+
+	return (
+		<>
+			<ClayModal.Header>
+				{Liferay.Language.get('add-field-manually')}
+			</ClayModal.Header>
+
+			<ClayModal.Body>
+				<ClayForm.Group
+					className={classNames({
+						'has-error': requiredFieldNameValidationError,
+					})}
+				>
+					<label htmlFor={`${namespace}FieldNameInput`}>
+						{Liferay.Language.get('field-name')}
+
+						<RequiredMark />
+					</label>
+
+					<ClayInput
+						id=""
+						onChange={(event) => {
+							setRequiredFieldNameValidationError(false);
+							setFieldName(event.target.value);
+						}}
+						placeholder={Liferay.Language.get('type-field-here')}
+						type="text"
+					/>
+
+					{requiredFieldNameValidationError && (
+						<ValidationFeedback
+							message={Liferay.Language.get(
+								'alert-you-must-enter-a-field-name'
+							)}
+						/>
+					)}
+				</ClayForm.Group>
+			</ClayModal.Body>
+			<ClayModal.Footer
+				last={
+					<ClayButton.Group spaced>
+						<ClayButton
+							displayType="secondary"
+							onClick={() => closeModal()}
+						>
+							{Liferay.Language.get('cancel')}
+						</ClayButton>
+
+						<ClayButton
+							onClick={() => {
+								if (!fieldName) {
+									setRequiredFieldNameValidationError(true);
+								}
+								else {
+									onSaveButtonClick({
+										fieldName,
+									});
+								}
+							}}
+						>
+							{Liferay.Language.get('add')}
+						</ClayButton>
+					</ClayButton.Group>
+				}
+			/>
+		</>
+	);
 };
 
 interface IRendererLabelCellRendererComponentProps {
@@ -464,7 +550,6 @@ function Table(props: IDataSetSectionProps & {title?: string}) {
 			sortable: boolean;
 			type: string;
 		}> = [];
-		const deletionIds: Array<number> = [];
 
 		fields.forEach((field) => {
 			if (!field.id) {
@@ -476,22 +561,12 @@ function Table(props: IDataSetSectionProps & {title?: string}) {
 			}
 		});
 
-		fdsFields?.forEach((fdsField) => {
-			if (!fields.find((field) => field.name === fdsField.name)) {
-				deletionIds.push(fdsField.id);
-			}
-		});
-
 		const formData = new FormData();
 
 		formData.append(
 			`${namespace}creationData`,
 			JSON.stringify(creationData)
 		);
-
-		deletionIds.forEach((id) => {
-			formData.append(`${namespace}deletionIds`, String(id));
-		});
 
 		formData.append(`${namespace}dataSetId`, dataSet.id);
 
@@ -508,23 +583,9 @@ function Table(props: IDataSetSectionProps & {title?: string}) {
 			return;
 		}
 
-		const createdFDSFields: Array<IFDSField> = await response.json();
+		getFDSFields();
 
 		closeModal();
-
-		const newFDSFields: Array<IFDSField> = [];
-
-		fdsFields?.forEach((fdsField) => {
-			if (!deletionIds.includes(fdsField.id)) {
-				newFDSFields.push(fdsField);
-			}
-		});
-
-		createdFDSFields.forEach((fdsField) => {
-			newFDSFields.push(fdsField);
-		});
-
-		setFDSFields(newFDSFields);
 
 		openDefaultSuccessToast();
 	};
@@ -579,7 +640,7 @@ function Table(props: IDataSetSectionProps & {title?: string}) {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
-	const onCreationButtonClick = () => {
+	const onCreationFromDataSourceButtonClick = () => {
 		openModal({
 			className: 'modal-height-full',
 			contentComponent: ({closeModal}: {closeModal: Function}) => (
@@ -607,6 +668,24 @@ function Table(props: IDataSetSectionProps & {title?: string}) {
 				/>
 			),
 			size: 'lg',
+		});
+	};
+
+	const onCreationFieldButtonClick = () => {
+		openModal({
+			contentComponent: ({closeModal}: {closeModal: Function}) => (
+				<NewFieldModalContent
+					{...props}
+					closeModal={closeModal}
+					onSaveButtonClick={({fieldName}: {fieldName: string}) => {
+						saveFDSFields({
+							closeModal,
+							fields: [{name: fieldName, sortable: true}] as IField[],
+						});
+					}}
+				/>
+			),
+			title: Liferay.Language.get('delete-data-set'),
 		});
 	};
 
@@ -669,8 +748,14 @@ function Table(props: IDataSetSectionProps & {title?: string}) {
 				]}
 				creationMenuItems={[
 					{
-						label: Liferay.Language.get('add-fields'),
-						onClick: onCreationButtonClick,
+						label: Liferay.Language.get('assign-from-data-source'),
+						onClick: onCreationFromDataSourceButtonClick,
+						symbolLeft: 'fieldset',
+					},
+					{
+						label: Liferay.Language.get('assign-field-manually'),
+						onClick: onCreationFieldButtonClick,
+						symbolLeft: 'custom-field',
 					},
 				]}
 				fields={[

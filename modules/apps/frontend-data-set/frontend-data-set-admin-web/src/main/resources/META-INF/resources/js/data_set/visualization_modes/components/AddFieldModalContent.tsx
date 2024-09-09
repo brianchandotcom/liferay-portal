@@ -1,0 +1,96 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import ClayButton from '@clayui/button';
+import ClayForm, {ClayInput} from '@clayui/form';
+import ClayModal from '@clayui/modal';
+import classNames from 'classnames';
+import RequiredMark from 'js/components/RequiredMark';
+import ValidationFeedback from 'js/components/ValidationFeedback';
+import {IField} from 'js/utils/types';
+import React, {useState} from 'react';
+
+const AddFieldModalContent = ({
+	closeModal,
+	namespace,
+	onSaveButtonClick,
+}: {
+	closeModal: Function;
+	namespace: string;
+	onSaveButtonClick: (selectedField: IField) => void;
+}) => {
+	const [fieldName, setFieldName] = useState<string>();
+	const [
+		requiredFieldNameValidationError,
+		setRequiredFieldNameValidationError,
+	] = useState<boolean>();
+
+	return (
+		<>
+			<ClayModal.Header>
+				{Liferay.Language.get('add-field-manually')}
+			</ClayModal.Header>
+
+			<ClayModal.Body>
+				<ClayForm.Group
+					className={classNames({
+						'has-error': requiredFieldNameValidationError,
+					})}
+				>
+					<label htmlFor={`${namespace}FieldNameInput`}>
+						{Liferay.Language.get('field-name')}
+
+						<RequiredMark />
+					</label>
+
+					<ClayInput
+						id=""
+						onChange={(event) => {
+							setRequiredFieldNameValidationError(false);
+							setFieldName(event.target.value);
+						}}
+						placeholder={Liferay.Language.get('type-field-here')}
+						type="text"
+					/>
+
+					{requiredFieldNameValidationError && (
+						<ValidationFeedback
+							message={Liferay.Language.get(
+								'alert-you-must-enter-a-field-name'
+							)}
+						/>
+					)}
+				</ClayForm.Group>
+			</ClayModal.Body>
+			<ClayModal.Footer
+				last={
+					<ClayButton.Group spaced>
+						<ClayButton
+							displayType="secondary"
+							onClick={() => closeModal()}
+						>
+							{Liferay.Language.get('cancel')}
+						</ClayButton>
+
+						<ClayButton
+							onClick={() => {
+								if (!fieldName) {
+									setRequiredFieldNameValidationError(true);
+								}
+								else {
+									onSaveButtonClick({name: fieldName});
+								}
+							}}
+						>
+							{Liferay.Language.get('add')}
+						</ClayButton>
+					</ClayButton.Group>
+				}
+			/>
+		</>
+	);
+};
+
+export default AddFieldModalContent;

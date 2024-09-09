@@ -22,6 +22,7 @@ import openDefaultFailureToast from '../../../utils/openDefaultFailureToast';
 import openDefaultSuccessToast from '../../../utils/openDefaultSuccessToast';
 import {IField, IFieldTreeItem} from '../../../utils/types';
 import {IDataSetSectionProps} from '../../DataSet';
+import AddFieldModalContent from '../components/AddFieldModalContent';
 import FieldAssignmentControls from '../components/FieldAssignmentControls';
 
 interface IFDSListSection {
@@ -303,6 +304,23 @@ function ListSection({
 }: IListSectionProps) {
 	const {field, fieldTreeItems, label} = listSection;
 
+	const openAddFieldModal = () => {
+		openModal({
+			contentComponent: ({closeModal}: {closeModal: Function}) => (
+				<AddFieldModalContent
+					{...modalProps}
+					closeModal={closeModal}
+					onSaveButtonClick={(selectedField: IField) => {
+						onSelect({
+							closeModal,
+							selectedField,
+						});
+					}}
+				/>
+			),
+		});
+	};
+
 	const openSelectFieldModal = () => {
 		openModal({
 			className: 'modal-height-full',
@@ -355,6 +373,7 @@ function ListSection({
 							field={field}
 							label={label}
 							onClearSelection={onClearSelection}
+							openAddFieldModal={openAddFieldModal}
 							openSelectFieldModal={openSelectFieldModal}
 						/>
 					</ClayInput.GroupItem>

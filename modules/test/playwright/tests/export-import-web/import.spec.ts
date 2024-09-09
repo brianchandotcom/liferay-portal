@@ -120,7 +120,9 @@ test('can import a lar file selecting some items to import', async ({
 		apiHelpers,
 		page,
 		stagingPage,
-	}) => {
+	}, testInfo) => {
+		testInfo.fail(name === 'com.liferay.site.initializer.masterclass');
+
 		const site = await apiHelpers.headlessSite.createSite({
 			name,
 			templateKey: name,

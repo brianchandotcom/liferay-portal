@@ -84,6 +84,7 @@ const Radio = ({
 							containerProps={{
 								'data-checked': currentValue === option.value,
 							}}
+							data-option-reference={option.reference}
 							disabled={disabled}
 							key={option.value}
 							label={option.label}

@@ -11,7 +11,7 @@ import filterSelectedItems from './filterSelectedItems';
 
 export default function pasteItem({
 	copyItemIds = [],
-	itemIds,
+	parentItemId,
 	selectItems = () => {},
 }) {
 	return (dispatch, getState) => {
@@ -20,7 +20,7 @@ export default function pasteItem({
 		FragmentService.pasteItem({
 			itemIds: filterSelectedItems(copyItemIds, layoutData),
 			onNetworkStatus: dispatch,
-			parentItemIds: filterSelectedItems(itemIds, layoutData),
+			parentItemId,
 			segmentsExperienceId: getState().segmentsExperienceId,
 		}).then(
 			({

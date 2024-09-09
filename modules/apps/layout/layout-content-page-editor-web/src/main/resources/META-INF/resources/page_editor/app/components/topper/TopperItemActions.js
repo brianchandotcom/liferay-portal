@@ -162,7 +162,7 @@ export default function TopperItemActions({disabled, item}) {
 					dispatch(
 						pasteItem({
 							copyItemIds: copiedNodeIds,
-							itemIds: [item.itemId],
+							parentItemId: item.itemId,
 							selectItems,
 						})
 					),

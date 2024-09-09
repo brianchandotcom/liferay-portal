@@ -463,6 +463,14 @@ export default function ChangeTrackingIndicator({
 								displayType="unstyled"
 								onClick={() => {
 									setShowWarning(false);
+
+									if (popoverCheckbox) {
+										savePortalPreferences(
+											'hideContextChangeWarningDuration',
+											saveDisplayPreferenceURL,
+											hideContextChangeWarningDuration
+										);
+									}
 								}}
 								size="xs"
 								symbol="times"
@@ -471,7 +479,17 @@ export default function ChangeTrackingIndicator({
 						</ClayLayout.ContentCol>
 					</ClayLayout.ContentRow>
 				}
-				onShowChange={setShowWarning}
+				onShowChange={(value) => {
+					setShowWarning(value);
+
+					if (popoverCheckbox) {
+						savePortalPreferences(
+							'hideContextChangeWarningDuration',
+							saveDisplayPreferenceURL,
+							hideContextChangeWarningDuration
+						);
+					}
+				}}
 				show={showWarning}
 				style={{maxWidth: contextChangeButtons ? '711px' : '421px'}}
 				trigger={renderTrigger}

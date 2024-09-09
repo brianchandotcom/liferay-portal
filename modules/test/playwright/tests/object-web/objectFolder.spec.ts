@@ -5,18 +5,12 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {accountSettingsPagesTest} from '../../fixtures/accountSettingsPagesTest';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {objectPagesTest} from '../../fixtures/objectPagesTest';
 import {getRandomInt} from '../../utils/getRandomInt';
 
-export const test = mergeTests(
-	accountSettingsPagesTest,
-	apiHelpersTest,
-	loginTest(),
-	objectPagesTest
-);
+export const test = mergeTests(apiHelpersTest, loginTest(), objectPagesTest);
 
 test.describe('manage object definitions through model builder', () => {
 	test('navigate between object folders on model builder page', async ({
@@ -106,20 +100,81 @@ test.describe('manage object definitions through model builder', () => {
 		await apiHelpers.objectAdmin.deleteObjectFolder(objectFolder.id);
 	});
 
-	test('can navigate from Model Builder to Account Settings', async ({
-		accountSettingsPage,
+	test('ensure the back url button redirects to the correct folder', async ({
+		apiHelpers,
 		modelBuilderDiagramPage,
+		modelBuilderLeftSidebarPage,
 		page,
+		viewObjectDefinitionsPage,
 	}) => {
-		await modelBuilderDiagramPage.goto({objectFolderName: 'Default'});
+		const objectFolder =
+			await apiHelpers.objectAdmin.postRandomObjectFolder();
+
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFolderExternalReferenceCode:
+					objectFolder.externalReferenceCode,
+				status: {code: 0},
+			});
+
+		await viewObjectDefinitionsPage.goto();
+
+		await viewObjectDefinitionsPage.viewInModelBuilderButton.click();
+
+		const otherObjectFolderLocator =
+			modelBuilderLeftSidebarPage.getOtherObjectFolderLocator(
+				objectFolder.label['en_US']
+			);
+
+		await otherObjectFolderLocator.hover();
+
+		await otherObjectFolderLocator
+			.getByRole('button', {name: 'Go to Folder'})
+			.click();
 
 		await modelBuilderDiagramPage.toggleSidebarsButton.click();
 
 		await page.getByTitle('User Profile Menu').click();
 
-		await accountSettingsPage.accountSettingsMenuItem.click();
+		await page
+			.getByRole('menuitem', {
+				name: 'Notifications',
+			})
+			.click();
 
-		await expect(accountSettingsPage.userDisplayData).toBeVisible();
+		await expect(
+			page.getByRole('heading', {level: 1, name: 'Notifications'})
+		).toBeVisible();
+
+		await page.getByTitle('Back', {exact: true}).click();
+
+		await expect(
+			viewObjectDefinitionsPage.getObjectFolderCardHeaderERC(
+				objectFolder.externalReferenceCode
+			)
+		).toBeVisible();
+
+		await viewObjectDefinitionsPage.frontendDataSetEntries
+			.filter({
+				hasText: objectDefinition.label['en_US'],
+			})
+			.click();
+
+		await page.getByTitle('Back', {exact: true}).click();
+
+		await expect(
+			viewObjectDefinitionsPage.getObjectFolderCardHeaderERC(
+				objectFolder.externalReferenceCode
+			)
+		).toBeVisible();
+
+		// Clean Up
+
+		await apiHelpers.objectAdmin.deleteObjectFolder(objectFolder.id);
+
+		await apiHelpers.objectAdmin.deleteObjectDefinition(
+			objectDefinition.id
+		);
 	});
 });
 

@@ -6,13 +6,17 @@
 import {Page, expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
+import {assetPublisherPagesTest} from '../../fixtures/assetPublisherPagesTest';
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginAnalyticsCloudTest} from '../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {liferayConfig} from '../../liferay.config';
 import getRandomString from '../../utils/getRandomString';
 import {syncAnalyticsCloud} from '../analytics-settings-web/utils/analytics-settings';
+import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
+import getWidgetDefinition from '../layout-content-page-editor-web/utils/getWidgetDefinition';
 import {createChannel, switchChannel} from './utils/channel';
 import {createIndividuals, generateIndividual} from './utils/individuals';
 import {Nanites, runNanites} from './utils/nanites';
@@ -47,6 +51,8 @@ import {
 export const test = mergeTests(
 	apiHelpersTest,
 	dataApiHelpersTest,
+	assetPublisherPagesTest,
+	pageEditorPagesTest,
 	featureFlagsTest({
 		'LPS-178052': true,
 	}),
@@ -292,6 +298,137 @@ test(
 		});
 
 		await test.step('delete site on DXP side', async () => {
+			await navigateToDXPandDeleteSite({apiHelpers, page, site});
+		});
+	}
+);
+
+test(
+	'Assert page view accuracy between cards Visitor Behavior, Audience, and Page List number',
+	{
+		tag: '@LRAC-14813',
+	},
+
+	async ({apiHelpers, assetPublisherPage, page, pageEditorPage}) => {
+		const channelName = 'My Property ' + getRandomString();
+
+		const siteName = 'My Site ' + getRandomString();
+
+		const blogName = 'My Blog ' + getRandomString();
+
+		const pageName = 'My Blog Page ' + getRandomString();
+
+		const site = await apiHelpers.headlessSite.createSite({
+			name: siteName,
+		});
+
+		await test.step('Connect the DXP to AC', async () => {
+			await syncAnalyticsCloud({
+				apiHelpers,
+				channelName,
+				page,
+				siteName,
+			});
+		});
+
+		await test.step('Create a page with an Asset Publisher Widget and access to the configuration of the widget from the page editor', async () => {
+			const widgetId = getRandomString();
+
+			const widgetDefinition = getWidgetDefinition({
+				id: widgetId,
+				widgetName:
+					'com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet',
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([widgetDefinition]),
+				siteId: site.id,
+				title: pageName,
+			});
+
+			await navigateToSitePage({
+				page,
+				pageName,
+				siteName,
+			});
+
+			await pageEditorPage.goToWidgetConfiguration(
+				layout,
+				site,
+				widgetId
+			);
+
+			await assetPublisherPage.changeAssetSelection('Dynamic');
+
+			await page.keyboard.press('Escape');
+
+			await pageEditorPage.publishPage();
+		});
+
+		await test.step('Create a Blog', async () => {
+			await apiHelpers.headlessDelivery.postBlog(site.id, {
+				headline: blogName,
+			});
+			await page.waitForTimeout(3000);
+		});
+
+		await test.step('Go to My Blog Page', async () => {
+			await navigateToSitePage({
+				page,
+				pageName,
+				siteName,
+			});
+
+			await page.locator('.asset-title').getByText(blogName).click();
+
+			await page.waitForTimeout(10000);
+		});
+
+		await test.step('Go to Analytics Cloud and Switch the property', async () => {
+			await navigateToACWorkspace({page});
+			await switchChannel({
+				channelName,
+				page,
+			});
+		});
+
+		await test.step('Go to Pages Tab', async () => {
+			await navigateTo({
+				page,
+				pageName: 'Pages',
+			});
+		});
+
+		await test.step('Change the time filter to Last 24 hours', async () => {
+			await changeTimeFilter({
+				page,
+				timeFilterPeriod: 'Last 24 hours',
+			});
+		});
+
+		await test.step('Access one of the pages on the list', async () => {
+			await navigateTo({
+				page,
+				pageName: blogName,
+			});
+		});
+
+		await test.step('View Unique Visitors metric value in Visitors Behavior card', async () => {
+			await expect(
+				page.getByRole('button', {name: 'Unique Visitors'})
+			).toContainText('1');
+		});
+
+		await test.step('View Visitors metric value in Audience card', async () => {
+			await expect(
+				page
+					.locator('[id="container\\.report\\.audienceCard"]')
+					.getByText('1')
+					.nth(1)
+			).toBeVisible();
+		});
+
+		await test.step('Delete site on DXP side', async () => {
 			await navigateToDXPandDeleteSite({apiHelpers, page, site});
 		});
 	}

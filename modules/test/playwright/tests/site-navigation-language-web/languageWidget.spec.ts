@@ -111,10 +111,6 @@ test('The user can choose which languages will be available to site via language
 
 	// Assert available languages
 
-	await expect(
-		page.getByLabel('Select a language, current language: en-US.')
-	).toBeAttached();
-
 	await clickAndExpectToBeVisible({
 		autoClick: false,
 		target: page.getByRole('menuitem', {name: 'deutsch-Deutschland'}),

@@ -734,6 +734,11 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		_commerceOrderItemLocalService.deleteCommerceOrderItems(commerceOrderId);
 	}
 
+	public void method(long companyId, boolean readOnly) {
+		PrefsPropsUtil.getPreferences(123, readOnly);
+		PrefsPropsUtil.getPreferences(companyId, readOnly);
+	}
+
 	public void method(
 		long groupId, boolean privateLayout, long layoutId, long parentLayoutId,
 		Map<java.util.Locale, String> nameMap,
@@ -1298,6 +1303,9 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 
 	@Reference
 	private ListTypeLocalService _listTypeLocalService;
+
+	@Reference
+	private PrefsProps _prefsProps;
 
 	private ServiceTrackerList<Class<T>, Class<E>> _serviceTrackerList;
 

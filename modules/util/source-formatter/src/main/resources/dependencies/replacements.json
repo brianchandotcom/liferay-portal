@@ -3178,6 +3178,14 @@
 		"to": "addListType(CompanyThreadLocal.getCompanyId(), param#0#, param#1#)"
 	},
 	{
+		"classNames": [
+			"PrefsPropsUtil"
+		],
+		"from": "getPreferences(long paramName, boolean paramName)",
+		"issueKey": "LPD-35897",
+		"to": "getPreferences(param#0#)"
+	},
+	{
 		"from": "CookieKeys.COMMERCE_CONTINUE_AS_GUEST",
 		"issueKey": "LPS-159679",
 		"newImports": [

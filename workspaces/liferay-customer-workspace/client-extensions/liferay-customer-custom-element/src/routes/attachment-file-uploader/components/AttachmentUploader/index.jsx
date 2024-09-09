@@ -13,7 +13,7 @@ const AttachmentUploader = () => {
 	const [ticketAttachmentId, setTicketAttachmentId] = useState(null);
 	const [gcsSessionURL, setGcsSessionURL] = useState('');
 
-	const zendeskTicketId = 378777;
+	const ticketId = 378777;
 
 	const handleUpload = (file) => {
 		const newUploadedFile = {
@@ -34,7 +34,7 @@ const AttachmentUploader = () => {
 		try {
 			const response = await Liferay.OAuth2Client.FromUserAgentApplication('liferay-customer-etc-spring-boot-oauth-application-user-agent').fetch("/ticket-attachments/initiate-upload", {
 				body: JSON.stringify({
-					zendeskTicketId,
+					zendeskTicketId: ticketId,
 					fileName: fileUploaded.fileName,
 					fileSize: String(fileUploaded.file.size),
 				}),
@@ -78,7 +78,7 @@ const AttachmentUploader = () => {
 		}
 	};
 	
-	const zendeskCommentUpload = async () => {
+	const ticketCommentUpload = async () => {
 		if (!ticketAttachmentId) {
 			return;
 		}
@@ -92,7 +92,7 @@ const AttachmentUploader = () => {
 			});
 
 			if (!response.ok) {
-				throw new Error(`Failed to Zendesk comment upload:  ${response.statusText}`);
+				throw new Error(`Failed to ticket comment upload:  ${response.statusText}`);
 			}
 			
 		} catch (error) {
@@ -106,7 +106,7 @@ const AttachmentUploader = () => {
 		}
 
 		if (gcsSessionURL && ticketAttachmentId) {
-			zendeskCommentUpload();
+			ticketCommentUpload();
 		}
 	}, [gcsSessionURL, fileAttached, ticketAttachmentId]);
 

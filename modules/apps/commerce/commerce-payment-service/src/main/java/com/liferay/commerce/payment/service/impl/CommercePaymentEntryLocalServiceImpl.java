@@ -19,6 +19,7 @@ import com.liferay.commerce.payment.model.CommercePaymentEntryTable;
 import com.liferay.commerce.payment.service.CommercePaymentEntryAuditLocalService;
 import com.liferay.commerce.payment.service.base.CommercePaymentEntryLocalServiceBaseImpl;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.portal.aop.AopService;
@@ -290,6 +291,35 @@ public class CommercePaymentEntryLocalServiceImpl
 			).where(
 				_getPredicate(companyId, classNameId, classPK)
 			));
+	}
+
+	@Override
+	public BigDecimal getRefundCommercePaymentEntryTotalAmount(
+		long companyId, long classNameId, long classPK) {
+
+		List<BigDecimal> result = dslQuery(
+			DSLQueryFactoryUtil.select(
+				DSLFunctionFactoryUtil.sum(
+					CommercePaymentEntryTable.INSTANCE.amount
+				).as(
+					"SUM_VALUE"
+				)
+			).from(
+				CommercePaymentEntryTable.INSTANCE
+			).where(
+				_getPredicate(
+					companyId, classNameId, classPK
+				).and(
+					CommercePaymentEntryTable.INSTANCE.paymentStatus.eq(
+						CommercePaymentEntryConstants.STATUS_REFUNDED)
+				)
+			));
+
+		if (result.get(0) == null) {
+			return BigDecimal.ZERO;
+		}
+
+		return result.get(0);
 	}
 
 	@Override

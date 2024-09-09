@@ -42,6 +42,11 @@ public interface SitemapCompanyConfiguration {
 	public boolean includeWebContent();
 
 	@Meta.AD(
+		deflt = "true", name = "xml-sitemap-index-enabled", required = false
+	)
+	public boolean xmlSitemapIndexEnabled();
+
+	@Meta.AD(
 		deflt = "", name = "sites-included-in-the-xml-sitemap", required = false
 	)
 	public String[] companySitemapGroupIds();

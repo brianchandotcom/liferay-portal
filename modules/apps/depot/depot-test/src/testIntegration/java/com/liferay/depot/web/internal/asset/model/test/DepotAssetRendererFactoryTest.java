@@ -127,6 +127,35 @@ public class DepotAssetRendererFactoryTest {
 	}
 
 	@Test
+	public void testGetAssetRendererJournalArticleWithInvalidGroup()
+		throws Exception {
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_depotEntry.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			Collections.emptyMap());
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setScopeGroupId(RandomTestUtil.randomLong());
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		try {
+			AssetRendererFactory<JournalArticle> assetRendererFactory =
+				AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(
+					JournalArticle.class);
+
+			Assert.assertNull(
+				assetRendererFactory.getAssetRenderer(
+					journalArticle.getResourcePrimKey()));
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+	}
+
+	@Test
 	public void testGetAssetRendererJournalArticleWithRelatedGroup()
 		throws Exception {
 

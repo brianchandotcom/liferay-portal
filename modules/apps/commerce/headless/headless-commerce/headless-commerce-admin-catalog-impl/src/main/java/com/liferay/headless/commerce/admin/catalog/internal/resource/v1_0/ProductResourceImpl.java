@@ -464,7 +464,7 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 		CommerceCatalog commerceCatalog = null;
 
 		if (product.getCatalogId() != null) {
-			commerceCatalog = _commerceCatalogLocalService.fetchCommerceCatalog(
+			commerceCatalog = _commerceCatalogLocalService.getCommerceCatalog(
 				product.getCatalogId());
 		}
 		else if (product.getCatalogExternalReferenceCode() != null) {
@@ -473,6 +473,10 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 					getCommerceCatalogByExternalReferenceCode(
 						product.getCatalogExternalReferenceCode(),
 						contextCompany.getCompanyId());
+		}
+
+		if (commerceCatalog == null) {
+			throw new NoSuchCatalogException();
 		}
 
 		ServiceContext serviceContext = _serviceContextHelper.getServiceContext(

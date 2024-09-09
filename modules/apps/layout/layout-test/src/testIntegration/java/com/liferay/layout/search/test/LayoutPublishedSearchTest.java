@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.test.util.IndexerFixture;
 import com.liferay.portal.test.rule.Inject;
@@ -154,6 +155,127 @@ public class LayoutPublishedSearchTest {
 
 		_layoutIndexerFixture.searchNoOne(
 			assetCategory.getTitle(LocaleUtil.getDefault()));
+	}
+
+	@Test
+	public void testContentLayoutWithInlineContentInADropZone()
+		throws Exception {
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			_layoutPageTemplateStructureLocalService.
+				fetchLayoutPageTemplateStructure(
+					_group.getGroupId(), draftLayout.getPlid());
+
+		LayoutStructure layoutStructure = LayoutStructure.of(
+			layoutPageTemplateStructure.getDefaultSegmentsExperienceData());
+
+		LayoutStructureItem rowStyledLayoutStructureItem =
+			layoutStructure.addRowStyledLayoutStructureItem(
+				layoutStructure.getMainItemId(), 0, 1);
+
+		LayoutStructureItem columnLayoutStructureItem =
+			layoutStructure.addColumnLayoutStructureItem(
+				rowStyledLayoutStructureItem.getItemId(), 0);
+
+		FragmentCollection fragmentCollection =
+			_fragmentCollectionLocalService.addFragmentCollection(
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), null,
+				ServiceContextTestUtil.getServiceContext());
+
+		FragmentEntry fragmentEntry =
+			_fragmentEntryLocalService.addFragmentEntry(
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
+				fragmentCollection.getFragmentCollectionId(),
+				StringUtil.randomString(), StringUtil.randomString(),
+				RandomTestUtil.randomString(),
+				"<div class=\"fragment_1\"><h1> Drop Zone 1 </h1>" +
+					"<lfr-drop-zone></lfr-drop-zone></div>",
+				RandomTestUtil.randomString(), false, "{fieldSets: []}", null,
+				0, false, FragmentConstants.TYPE_COMPONENT, null,
+				WorkflowConstants.STATUS_APPROVED,
+				ServiceContextTestUtil.getServiceContext(
+					_group.getGroupId(), TestPropsValues.getUserId()));
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkService.addFragmentEntryLink(
+				null, _group.getGroupId(), 0,
+				fragmentEntry.getFragmentEntryId(),
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(draftLayout.getPlid()),
+				draftLayout.getPlid(), fragmentEntry.getCss(),
+				fragmentEntry.getHtml(), fragmentEntry.getJs(),
+				fragmentEntry.getConfiguration(), StringPool.BLANK,
+				StringPool.BLANK, 0, fragmentEntry.getFragmentEntryKey(),
+				fragmentEntry.getType(),
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		LayoutStructureItem fragmentStyledLayoutStructureItem =
+			layoutStructure.addFragmentStyledLayoutStructureItem(
+				fragmentEntryLink.getFragmentEntryLinkId(),
+				columnLayoutStructureItem.getItemId(), 0);
+
+		LayoutStructureItem fragmentDropZoneLayoutStructureItem =
+			layoutStructure.addFragmentDropZoneLayoutStructureItem(
+				fragmentStyledLayoutStructureItem.getItemId(), 0);
+
+		FragmentEntry contributedFragmentEntry =
+			_fragmentCollectionContributorRegistry.getFragmentEntry(
+				"BASIC_COMPONENT-heading");
+
+		String deutschContent = RandomTestUtil.randomString();
+
+		FragmentEntryLink inlineFragmentEntryLink =
+			_fragmentEntryLinkService.addFragmentEntryLink(
+				null, _group.getGroupId(), 0,
+				contributedFragmentEntry.getFragmentEntryId(),
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(draftLayout.getPlid()),
+				draftLayout.getPlid(), contributedFragmentEntry.getCss(),
+				contributedFragmentEntry.getHtml(),
+				contributedFragmentEntry.getJs(),
+				contributedFragmentEntry.getConfiguration(),
+				JSONUtil.put(
+					FragmentEntryProcessorConstants.
+						KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+					JSONUtil.put(
+						"element-text",
+						JSONUtil.put(
+							"config", JSONFactoryUtil.createJSONObject()
+						).put(
+							"defaultValue", "default value"
+						).put(
+							draftLayout.getDefaultLanguageId(),
+							RandomTestUtil.randomString()
+						).put(
+							"de_DE", deutschContent
+						))
+				).toString(),
+				StringPool.BLANK, 0,
+				contributedFragmentEntry.getFragmentEntryKey(),
+				contributedFragmentEntry.getType(),
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		layoutStructure.addFragmentStyledLayoutStructureItem(
+			inlineFragmentEntryLink.getFragmentEntryLinkId(),
+			fragmentDropZoneLayoutStructureItem.getItemId(), 0);
+
+		_layoutPageTemplateStructureLocalService.
+			updateLayoutPageTemplateStructureData(
+				_group.getGroupId(), draftLayout.getPlid(),
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(draftLayout.getPlid()),
+				layoutStructure.toString());
+
+		_layoutIndexerFixture.searchNoOne(deutschContent, LocaleUtil.GERMANY);
+
+		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
+
+		_layoutIndexerFixture.searchOnlyOne(deutschContent, LocaleUtil.GERMANY);
 	}
 
 	@Test

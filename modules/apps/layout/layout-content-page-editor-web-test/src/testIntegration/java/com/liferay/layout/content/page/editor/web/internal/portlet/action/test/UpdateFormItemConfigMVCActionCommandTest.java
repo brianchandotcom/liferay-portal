@@ -378,7 +378,6 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 			layoutStructureItem instanceof ContainerStyledLayoutStructureItem);
 	}
 
-	@FeatureFlags("LPD-20213")
 	@Test
 	public void testUpdateFormItemConfigMVCActionCommandMappingFormChangingFormTypeSimple()
 		throws Exception {

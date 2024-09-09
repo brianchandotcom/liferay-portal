@@ -11,8 +11,20 @@ import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.test.util.CommerceTestUtil;
+import com.liferay.expando.kernel.model.ExpandoColumn;
+import com.liferay.expando.kernel.model.ExpandoColumnConstants;
+import com.liferay.expando.kernel.model.ExpandoTable;
+import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
+import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.headless.commerce.delivery.catalog.client.dto.v1_0.Product;
+import com.liferay.headless.commerce.delivery.catalog.client.pagination.Page;
+import com.liferay.headless.commerce.delivery.catalog.client.pagination.Pagination;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -20,13 +32,17 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.test.rule.Inject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
+import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -48,6 +64,14 @@ public class ProductResourceTest extends BaseProductResourceTestCase {
 
 		_commerceChannel = CommerceTestUtil.addCommerceChannel(
 			testGroup.getGroupId(), RandomTestUtil.randomString());
+	}
+
+	@Override
+	@Test
+	public void testGetChannelProductsPage() throws Exception {
+		super.testGetChannelProductsPage();
+
+		_testGetChannelProductsPageWithCustomFields();
 	}
 
 	@Override
@@ -145,6 +169,104 @@ public class ProductResourceTest extends BaseProductResourceTestCase {
 		};
 	}
 
+	private Product _randomProductWithCustomFields(
+			String customFieldName, String customFieldValue)
+		throws Exception {
+
+		CPDefinition cpDefinition1 = CPTestUtil.addCPDefinition(
+			testGroup.getGroupId(), "simple", true, false);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(testGroup.getGroupId());
+
+		serviceContext.setExpandoBridgeAttributes(
+			Collections.singletonMap(customFieldName, customFieldValue));
+
+		cpDefinition1.setExpandoBridgeAttributes(serviceContext);
+
+		CPDefinition cpDefinition2 =
+			_cpDefinitionLocalService.updateCPDefinition(cpDefinition1);
+
+		return new Product() {
+			{
+				createDate = cpDefinition2.getCreateDate();
+				id = cpDefinition2.getCProductId();
+				metaDescription = cpDefinition2.getMetaDescription();
+				metaKeyword = cpDefinition2.getMetaKeywords();
+				metaTitle = cpDefinition2.getMetaTitle();
+				modifiedDate = cpDefinition2.getModifiedDate();
+				productId = cpDefinition2.getCProductId();
+				productType = cpDefinition2.getProductTypeName();
+			}
+		};
+	}
+
+	private void _testGetChannelProductsPageWithCustomFields()
+		throws Exception {
+
+		User adminUser = UserTestUtil.getAdminUser(testGroup.getCompanyId());
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(adminUser));
+
+		PrincipalThreadLocal.setName(adminUser.getUserId());
+
+		ExpandoTable expandoTable = _expandoTableLocalService.addTable(
+			testGroup.getCompanyId(),
+			_classNameLocalService.getClassNameId(CPDefinition.class),
+			"CUSTOM_FIELDS");
+
+		ExpandoColumn expandoColumn = _expandoColumnLocalService.addColumn(
+			expandoTable.getTableId(), "A" + RandomTestUtil.randomString(),
+			ExpandoColumnConstants.STRING);
+
+		UnicodeProperties unicodeProperties =
+			expandoColumn.getTypeSettingsProperties();
+
+		unicodeProperties.setProperty(
+			ExpandoColumnConstants.INDEX_TYPE,
+			String.valueOf(ExpandoColumnConstants.INDEX_TYPE_KEYWORD));
+
+		expandoColumn.setTypeSettingsProperties(unicodeProperties);
+
+		expandoColumn = _expandoColumnLocalService.updateExpandoColumn(
+			expandoColumn);
+
+		String customFieldValue = RandomTestUtil.randomString();
+
+		Long channelId = testGetChannelProductsPage_getChannelId();
+
+		Product randomProduct = _randomProductWithCustomFields(
+			expandoColumn.getName(), customFieldValue);
+
+		Product product = testGetChannelProductsPage_addProduct(
+			channelId, randomProduct);
+
+		Page<Product> page = productResource.getChannelProductsPage(
+			channelId, null, null,
+			StringBundler.concat(
+				"(customFields/", expandoColumn.getName(), " eq '",
+				RandomTestUtil.randomString(), "')"),
+			Pagination.of(1, 2), null);
+
+		Assert.assertEquals(0, page.getTotalCount());
+
+		page = productResource.getChannelProductsPage(
+			channelId, null, null,
+			StringBundler.concat(
+				"(customFields/", expandoColumn.getName(), " eq '",
+				customFieldValue, "')"),
+			Pagination.of(1, 2), null);
+
+		Assert.assertEquals(1, page.getTotalCount());
+
+		assertEquals(
+			Collections.singletonList(product), (List<Product>)page.getItems());
+	}
+
+	@Inject
+	private ClassNameLocalService _classNameLocalService;
+
 	@DeleteAfterTestRun
 	private CommerceChannel _commerceChannel;
 
@@ -153,6 +275,12 @@ public class ProductResourceTest extends BaseProductResourceTestCase {
 
 	@DeleteAfterTestRun
 	private final List<CPDefinition> _cpDefinitions = new ArrayList<>();
+
+	@Inject
+	private ExpandoColumnLocalService _expandoColumnLocalService;
+
+	@Inject
+	private ExpandoTableLocalService _expandoTableLocalService;
 
 	private ServiceContext _serviceContext;
 

@@ -234,6 +234,26 @@ public class CommercePaymentEntryServiceImpl
 	}
 
 	@Override
+	public BigDecimal getRefundedAmount(
+			long companyId, long classNameId, long classPK)
+		throws PortalException {
+
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		if (!permissionChecker.hasPermission(
+				null, CommercePaymentEntry.class.getName(), companyId,
+				ActionKeys.VIEW)) {
+
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, CommercePaymentEntry.class.getName(), 0,
+				ActionKeys.VIEW);
+		}
+
+		return commercePaymentEntryLocalService.getRefundedAmount(
+			companyId, classNameId, classPK);
+	}
+
+	@Override
 	public List<CommercePaymentEntry> search(
 			long companyId, long[] classNameIds, long[] classPKs,
 			String[] currencyCodes, String keywords,

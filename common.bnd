@@ -13,6 +13,9 @@ Liferay-Portal-Release-Info: ${release.info.release.info}
 Liferay-Portal-Server-Info: ${release.info.server.info}
 Liferay-Portal-Version: ${release.info.version}
 Liferay-Portal-Version-Display-Name: ${release.info.version.display.name}
+Require-Capability:\
+	osgi.ee;\
+		filter:="(&(osgi.ee=JavaSE)(version=${ant.build.javac.target}))"
 -donotcopy: (\.touch)
 -fixupmessages.deprecated=annotations are deprecated
 -sources: false

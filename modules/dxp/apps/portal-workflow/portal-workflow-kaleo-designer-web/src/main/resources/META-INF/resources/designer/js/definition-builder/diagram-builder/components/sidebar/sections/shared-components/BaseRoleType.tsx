@@ -17,7 +17,83 @@ import {
 } from '../../../../../util/fetchUtil';
 import {stringToBoolean, titleCase} from '../../../../../util/utils';
 
-const BaseRoleType = ({
+import type {ChangeEvent} from 'react';
+
+import type {NodeInformationError} from '../utils';
+
+interface AccountRole {
+	accountId: number;
+	description: string;
+	displayName: string;
+	externalReferenceCode: string;
+	id: number;
+	name: string;
+	roleId: number;
+}
+
+interface AccountRoleItem {
+	roleName: string;
+	roleType: string;
+}
+
+type AssignmentsSectionDefaultSection = {
+	identifier: string;
+};
+
+type AssignmentsSectionUserSection = {
+	emailAddress: string;
+	identifier: string;
+	name: string;
+	screenName: string;
+	userId: number;
+};
+
+type AssignmentsSectionRoleTypeSection = {
+	autoCreate: boolean;
+	identifier: string;
+	roleName: string;
+	roleType: string;
+};
+
+type AssignmentsSections =
+	| AssignmentsSectionDefaultSection[]
+	| AssignmentsSectionUserSection[]
+	| AssignmentsSectionRoleTypeSection[];
+
+interface BaseRoleTypeErrors extends NodeInformationError {
+	roleName: boolean[][];
+}
+
+interface BaseRoleTypeProps {
+	autoCreate: boolean;
+	buttonName: string;
+	errors: BaseRoleTypeErrors;
+	identifier: string;
+	index: number;
+	inputLabel: string;
+	notificationIndex: number;
+	roleName: string;
+	roleType: string;
+	sectionsLength: number;
+	setErrors: (value: BaseRoleTypeErrors) => void;
+	setSections: React.Dispatch<React.SetStateAction<AssignmentsSections>>;
+	updateSelectedItem: (value: AssignmentsSections) => void;
+}
+
+interface Role {
+	availableLanguages: Liferay.Language.Locale[];
+	dateCreated: string;
+	dateModified: string;
+	description: string;
+	description_i18n: Liferay.Language.FullyLocalizedValue<string>;
+	externalReferenceCode: string;
+	id: number;
+	name: string;
+	name_i18n: Liferay.Language.FullyLocalizedValue<string>;
+	roleType: string;
+}
+
+export function BaseRoleType({
 	autoCreate = false,
 	buttonName,
 	errors,
@@ -31,59 +107,42 @@ const BaseRoleType = ({
 	setSections,
 	notificationIndex,
 	updateSelectedItem = () => {},
-}) => {
+}: BaseRoleTypeProps) {
 	const {accountEntryId} = useContext(DefinitionBuilderContext);
-	const [accountRoles, setAccountRoles] = useState([]);
+	const [accountRoles, setAccountRoles] = useState<AccountRoleItem[]>([]);
 	const [filterRoleName, setFilterRoleName] = useState(true);
 	const [filterRoleType, setFilterRoleType] = useState(true);
 	const [loading, setLoading] = useState(false);
 	const [roleNameDropdownActive, setRoleNameDropdownActive] = useState(false);
 	const [roleTypeDropdownActive, setRoleTypeDropdownActive] = useState(false);
-	const [roles, setRoles] = useState([]);
-	const [selectedRoleName, setSelectedRoleName] = useState(roleName);
-	const [selectedRoleType, setSelectedRoleType] = useState(
+	const [roles, setRoles] = useState<Role[]>([]);
+	const [selectedRoleName, setSelectedRoleName] = useState<string>(roleName);
+	const [selectedRoleType, setSelectedRoleType] = useState<string>(
 		titleCase(roleType)
 	);
-	const [checked, setChecked] = useState(stringToBoolean(autoCreate));
+	const [checked, setChecked] = useState(stringToBoolean(String(autoCreate)));
 
-	const checkRoleTypeErrors = (errors, selectedRoleName) => {
+	const checkRoleTypeErrors = (
+		errors: BaseRoleTypeErrors,
+		selectedRoleName: string
+	) => {
 		const temp = errors?.roleName ? [...errors.roleName] : [];
 
 		if (!temp[notificationIndex]) {
 			temp[notificationIndex] = [];
 		}
+
 		if (!temp[notificationIndex][index]) {
-			temp[notificationIndex][index] = [];
+			temp[notificationIndex][index] = false;
 		}
+
 		temp[notificationIndex][index] = selectedRoleName === '';
 
 		return {...errors, roleName: temp};
 	};
 
-	useEffect(() => {
-		if (selectedRoleName !== null) {
-			setErrors(checkRoleTypeErrors(errors, selectedRoleName));
-		}
-
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [selectedRoleName]);
-
-	useEffect(() => {
-		setChecked(stringToBoolean(autoCreate));
-		setSelectedRoleName(roleName);
-		setSelectedRoleType(titleCase(roleType));
-
-		roleNameItemUpdate({
-			autoCreate,
-			roleName,
-			roleType: roleType.toLowerCase(),
-		});
-
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [autoCreate, roleName, roleType]);
-
 	const deleteSection = () => {
-		setSections((prevSections) => {
+		setSections((prevSections: AssignmentsSections) => {
 			const newSections = prevSections.filter(
 				(prevSection) => prevSection.identifier !== identifier
 			);
@@ -95,10 +154,15 @@ const BaseRoleType = ({
 	};
 
 	const getRolesInfo = () => {
-		const rolesInfo = {};
+		const rolesInfo = {} as {
+			[key: string]: {
+				roleName: string;
+				roleType: string;
+			}[];
+		};
 
-		roles.items.forEach((item) => {
-			const roleType = titleCase(item.roleType);
+		roles.forEach((item) => {
+			const roleType = titleCase(item.roleType) as string;
 
 			if (!rolesInfo[roleType]) {
 				rolesInfo[roleType] = [];
@@ -143,14 +207,18 @@ const BaseRoleType = ({
 		setRoleNameDropdownActive(true);
 	};
 
-	const roleNameInputChange = (event) => {
+	const roleNameInputChange = (event: ChangeEvent<HTMLInputElement>) => {
 		event.persist();
 
 		setFilterRoleName(true);
 		setSelectedRoleName(event.target.value);
 	};
 
-	const roleNameItemUpdate = (item) => {
+	const roleNameItemUpdate = (item: {
+		autoCreate: boolean;
+		roleName: string;
+		roleType: string;
+	}) => {
 		if (item.roleName) {
 			setSelectedRoleName(item.roleName);
 			setRoleNameDropdownActive(false);
@@ -175,7 +243,7 @@ const BaseRoleType = ({
 		setRoleTypeDropdownActive(true);
 	};
 
-	const roleTypeInputChange = (event) => {
+	const roleTypeInputChange = (event: ChangeEvent<HTMLInputElement>) => {
 		event.persist();
 
 		setFilterRoleType(true);
@@ -183,20 +251,44 @@ const BaseRoleType = ({
 		setSelectedRoleName('');
 	};
 
-	const roleTypeItemClick = (item) => {
+	const roleTypeItemClick = (item: string) => {
 		setSelectedRoleType(item);
 		setRoleTypeDropdownActive(false);
 		setSelectedRoleName('');
 	};
 
 	useEffect(() => {
+		if (selectedRoleName !== null) {
+			setErrors(checkRoleTypeErrors(errors, selectedRoleName));
+		}
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [selectedRoleName]);
+
+	useEffect(() => {
+		setChecked(stringToBoolean(String(autoCreate)));
+		setSelectedRoleName(roleName);
+		setSelectedRoleType(titleCase(roleType));
+
+		roleNameItemUpdate({
+			autoCreate,
+			roleName,
+			roleType: roleType.toLowerCase(),
+		});
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [autoCreate, roleName, roleType]);
+
+	useEffect(() => {
 		const makeFetch = async () => {
 			setLoading(true);
 
-			const accountRolesResponse =
-				await retrieveAccountRoles(accountEntryId);
+			const accountRolesResponse = await retrieveAccountRoles(
+				Number(accountEntryId)
+			);
 
-			const accountRolesResponseJSON = await accountRolesResponse.json();
+			const accountRolesResponseJSON =
+				(await accountRolesResponse.json()) as {items: AccountRole[]};
 
 			const accountRoleItems = accountRolesResponseJSON.items.map(
 				({name}) => {
@@ -211,9 +303,9 @@ const BaseRoleType = ({
 
 			const rolesResponse = await retrieveRoles();
 
-			const rolesResponseJSON = await rolesResponse.json();
+			const {items} = (await rolesResponse.json()) as {items: Role[]};
 
-			setRoles(rolesResponseJSON);
+			setRoles(items);
 
 			setLoading(false);
 		};
@@ -237,7 +329,7 @@ const BaseRoleType = ({
 							<ClayAutocomplete.Input
 								autoComplete="off"
 								id="role-type"
-								onChange={(event) => roleTypeInputChange(event)}
+								onChange={roleTypeInputChange}
 								onFocus={() => roleTypeInputFocus()}
 								value={selectedRoleType}
 							/>
@@ -248,7 +340,7 @@ const BaseRoleType = ({
 								onSetActive={setRoleTypeDropdownActive}
 							>
 								<ClayDropDown.ItemList>
-									{roles && roles.error && (
+									{!roles.length && (
 										<ClayDropDown.Item className="disabled">
 											{Liferay.Language.get(
 												'no-results-found'
@@ -256,7 +348,7 @@ const BaseRoleType = ({
 										</ClayDropDown.Item>
 									)}
 
-									{!!roles.items &&
+									{!!roles &&
 										filteredRoleTypes().map(
 											(item, index) => (
 												<ClayAutocomplete.Item
@@ -319,7 +411,7 @@ const BaseRoleType = ({
 										)
 									);
 								}}
-								onChange={(event) => roleNameInputChange(event)}
+								onChange={roleNameInputChange}
 								onFocus={() => roleNameInputFocus()}
 								value={selectedRoleName}
 							/>
@@ -330,7 +422,7 @@ const BaseRoleType = ({
 								onSetActive={setRoleNameDropdownActive}
 							>
 								<ClayDropDown.ItemList>
-									{roles && roles.error && (
+									{!roles.length && (
 										<ClayDropDown.Item className="disabled">
 											{Liferay.Language.get(
 												'no-results-found'
@@ -338,7 +430,7 @@ const BaseRoleType = ({
 										</ClayDropDown.Item>
 									)}
 
-									{!!roles.items &&
+									{!!roles &&
 										filteredRoleNames().map(
 											(item, index) => (
 												<ClayAutocomplete.Item
@@ -379,7 +471,7 @@ const BaseRoleType = ({
 							checked={checked}
 							className="mt-2"
 							onChange={() => {
-								setChecked((value) => {
+								setChecked((value: boolean) => {
 									setSections((prev) => {
 										const newSections = [...prev];
 
@@ -408,6 +500,7 @@ const BaseRoleType = ({
 
 					{sectionsLength > 1 && (
 						<ClayButtonWithIcon
+							aria-label={Liferay.Language.get('delete')}
 							className="delete-button"
 							displayType="unstyled"
 							onClick={deleteSection}
@@ -418,6 +511,7 @@ const BaseRoleType = ({
 			</ClayForm.Group>
 			<div className="section-buttons-area">
 				<ClayButton
+					aria-label={buttonName}
 					className="mr-3"
 					displayType="secondary"
 					onClick={() =>
@@ -434,6 +528,4 @@ const BaseRoleType = ({
 			</div>
 		</>
 	);
-};
-
-export default BaseRoleType;
+}

@@ -7,7 +7,7 @@ import React, {useContext} from 'react';
 
 import {DiagramBuilderContext} from '../../../../../DiagramBuilderContext';
 import SidebarPanel from '../../../SidebarPanel';
-import BaseRoleType from '../../shared-components/BaseRoleType';
+import {BaseRoleType} from '../../shared-components/BaseRoleType';
 
 const RoleType = (props) => {
 	const {setSelectedItem} = useContext(DiagramBuilderContext);

@@ -14,7 +14,7 @@ import {
 	userBaseURL,
 } from '../../../../../../util/fetchUtil';
 import SidebarPanel from '../../../SidebarPanel';
-import BaseRoleType from '../../shared-components/BaseRoleType';
+import {BaseRoleType} from '../../shared-components/BaseRoleType';
 
 const RoleType = ({subSectionIdentifier, subSectionsLength, ...otherProps}) => {
 	const {accountEntryId} = useContext(DefinitionBuilderContext);

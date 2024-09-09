@@ -149,6 +149,17 @@ public class SitemapConfigurationManagerImpl
 			).build());
 	}
 
+	@Override
+	public boolean xmlSitemapIndexCompanyEnabled(long companyId)
+		throws ConfigurationException {
+
+		SitemapCompanyConfiguration sitemapCompanyConfiguration =
+			_configurationProvider.getCompanyConfiguration(
+				SitemapCompanyConfiguration.class, companyId);
+
+		return sitemapCompanyConfiguration.xmlSitemapIndexEnabled();
+	}
+
 	@Reference
 	private ConfigurationProvider _configurationProvider;
 

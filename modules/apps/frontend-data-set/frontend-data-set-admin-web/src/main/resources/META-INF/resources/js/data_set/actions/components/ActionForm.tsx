@@ -741,7 +741,7 @@ const ActionForm = ({
 											<span
 												className="label-icon lfr-portal-tooltip ml-2"
 												title={Liferay.Language.get(
-													'item-actions-how-to-use-request-body-field'
+													'request-body-help'
 												)}
 											>
 												<ClayIcon symbol="question-circle-full" />

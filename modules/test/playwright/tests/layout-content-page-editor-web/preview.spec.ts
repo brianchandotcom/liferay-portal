@@ -12,6 +12,7 @@ import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../utils/getRandomString';
+import getFragmentDefinition from './utils/getFragmentDefinition';
 import getPageDefinition from './utils/getPageDefinition';
 
 const test = mergeTests(
@@ -31,21 +32,24 @@ test(
 	},
 	async ({apiHelpers, context, page, pageEditorPage, site}) => {
 
-		// Create page and go to edit mode
+		// Create page with a Heading fragment and go to edit mode
+
+		const headingId = getRandomString();
+
+		const headingFragment = getFragmentDefinition({
+			id: headingId,
+			key: 'BASIC_COMPONENT-heading',
+		});
 
 		const layout = await apiHelpers.headlessDelivery.createSitePage({
-			pageDefinition: getPageDefinition(),
+			pageDefinition: getPageDefinition([headingFragment]),
 			siteId: site.id,
 			title: getRandomString(),
 		});
 
 		await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
-		// Add heading fragment
-
-		await pageEditorPage.addFragment('Basic Components', 'Heading');
-
-		const headingId = await pageEditorPage.getFragmentId('Heading');
+		// Edit Heading text
 
 		await pageEditorPage.editTextEditable(
 			headingId,

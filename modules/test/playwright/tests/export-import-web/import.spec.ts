@@ -113,15 +113,15 @@ test('can import a lar file selecting some items to import', async ({
 });
 
 [
-	{name: 'com.liferay.site.initializer.masterclass'},
+	{name: 'com.liferay.site.initializer.masterclass', shouldFail: true},
 	{name: 'com.liferay.site.initializer.welcome'},
-].forEach(({name}) => {
+].forEach(({name, shouldFail}) => {
 	test(`site initializer ${name} can be exported and imported`, async ({
 		apiHelpers,
 		page,
 		stagingPage,
 	}, testInfo) => {
-		testInfo.fail(name === 'com.liferay.site.initializer.masterclass');
+		testInfo.fail(shouldFail);
 
 		const site = await apiHelpers.headlessSite.createSite({
 			name,

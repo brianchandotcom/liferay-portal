@@ -48,6 +48,7 @@
 	},
 	{
 		"classNames": [
+			"IndexWriterHelper",
 			"IndexWriterHelperUtil"
 		],
 		"from": "updateDocument(String paramName, long paramName, Collection<Document> paramName, boolean paramName)",

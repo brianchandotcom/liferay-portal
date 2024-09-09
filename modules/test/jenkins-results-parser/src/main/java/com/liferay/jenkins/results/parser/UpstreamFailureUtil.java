@@ -26,21 +26,6 @@ import org.json.JSONObject;
  */
 public class UpstreamFailureUtil {
 
-	public static String getUpstreamComparison(String jobName) {
-		try {
-			Properties buildProperties =
-				JenkinsResultsParserUtil.getBuildProperties();
-
-			return buildProperties.getProperty(
-				"upstream.comparison[" + jobName + "]", "true");
-		}
-		catch (Exception exception) {
-			exception.printStackTrace();
-
-			return "true";
-		}
-	}
-
 	public static synchronized List<String> getUpstreamJobFailures(
 		String type, TopLevelBuild topLevelBuild) {
 
@@ -236,7 +221,7 @@ public class UpstreamFailureUtil {
 		}
 
 		if (Objects.equals(
-				getUpstreamComparison(topLevelBuild.getJobName()), "false")) {
+				_getUpstreamComparison(topLevelBuild.getJobName()), "false")) {
 
 			_upstreamComparisonAvailable = false;
 
@@ -322,6 +307,21 @@ public class UpstreamFailureUtil {
 		jobVariant = jobVariant.replaceAll("(.*)/.*", "$1");
 
 		return jobVariant.replaceAll("_stable$", "");
+	}
+
+	private static String _getUpstreamComparison(String jobName) {
+		try {
+			Properties buildProperties =
+				JenkinsResultsParserUtil.getBuildProperties();
+
+			return buildProperties.getProperty(
+				"upstream.comparison[" + jobName + "]", "true");
+		}
+		catch (Exception exception) {
+			exception.printStackTrace();
+
+			return "true";
+		}
 	}
 
 	private static String _getUpstreamJobFailuresSHA(

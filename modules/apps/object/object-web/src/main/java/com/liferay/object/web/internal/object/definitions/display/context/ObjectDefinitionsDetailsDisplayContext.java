@@ -13,9 +13,11 @@ import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectWebKeys;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
+import com.liferay.object.model.ObjectFolder;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
+import com.liferay.object.service.ObjectFolderLocalService;
 import com.liferay.object.web.internal.display.context.helper.ObjectRequestHelper;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -55,12 +57,14 @@ public class ObjectDefinitionsDetailsDisplayContext
 		ModelResourcePermission<ObjectDefinition>
 			objectDefinitionModelResourcePermission,
 		ObjectEntryManagerRegistry objectEntryManagerRegistry,
+		ObjectFolderLocalService objectFolderLocalService,
 		ObjectScopeProviderRegistry objectScopeProviderRegistry) {
 
 		super(httpServletRequest, objectDefinitionModelResourcePermission);
 
 		_configurationProvider = configurationProvider;
 		_objectEntryManagerRegistry = objectEntryManagerRegistry;
+		_objectFolderLocalService = objectFolderLocalService;
 		_objectScopeProviderRegistry = objectScopeProviderRegistry;
 
 		_objectRequestHelper = new ObjectRequestHelper(httpServletRequest);
@@ -112,6 +116,17 @@ public class ObjectDefinitionsDetailsDisplayContext
 
 		return (List<ObjectField>)httpServletRequest.getAttribute(
 			ObjectWebKeys.OBJECT_FIELDS);
+	}
+
+	public String getObjectFolderName() throws PortalException {
+		ObjectDefinition objectDefinition = getObjectDefinition();
+
+		ObjectFolder objectFolder = _objectFolderLocalService.getObjectFolder(
+			objectDefinition.getObjectFolderId());
+
+		return ParamUtil.getString(
+			objectRequestHelper.getRequest(), "objectFolderName",
+			objectFolder.getName());
 	}
 
 	public String getPermissionsURL(String modelResource) throws Exception {
@@ -230,6 +245,7 @@ public class ObjectDefinitionsDetailsDisplayContext
 
 	private final ConfigurationProvider _configurationProvider;
 	private final ObjectEntryManagerRegistry _objectEntryManagerRegistry;
+	private final ObjectFolderLocalService _objectFolderLocalService;
 	private final ObjectRequestHelper _objectRequestHelper;
 	private final ObjectScopeProviderRegistry _objectScopeProviderRegistry;
 

@@ -8,10 +8,17 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String backURL = ParamUtil.getString(request, "backURL", String.valueOf(renderResponse.createRenderURL()));
-
 ObjectDefinition objectDefinition = (ObjectDefinition)request.getAttribute(ObjectWebKeys.OBJECT_DEFINITION);
+
 ObjectDefinitionsDetailsDisplayContext objectDefinitionsDetailsDisplayContext = (ObjectDefinitionsDetailsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+
+String backURL = ParamUtil.getString(
+	request, "backURL",
+	URLBuilder.create(
+		String.valueOf(renderResponse.createRenderURL())
+	).setParameter(
+		"objectFolderName", objectDefinitionsDetailsDisplayContext.getObjectFolderName()
+	).build());
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
@@ -24,7 +31,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 		module="{EditObjectDetails} from object-web"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
-				"backURL", ParamUtil.getString(request, "backURL", String.valueOf(renderResponse.createRenderURL()))
+				"backURL", backURL
 			).put(
 				"companies", objectDefinitionsDetailsDisplayContext.getScopeJSONArray("company")
 			).put(

@@ -15,6 +15,7 @@ import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectFieldService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
+import com.liferay.object.service.ObjectFolderLocalService;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
 import com.liferay.object.web.internal.object.definitions.display.context.ObjectDefinitionsDetailsDisplayContext;
 import com.liferay.object.web.internal.object.definitions.display.context.ObjectDefinitionsFieldsDisplayContext;
@@ -54,7 +55,8 @@ public class ViewModelBuilderMVCRenderCommand implements MVCRenderCommand {
 				_configurationProvider,
 				_portal.getHttpServletRequest(renderRequest),
 				_objectDefinitionModelResourcePermission,
-				_objectEntryManagerRegistry, _objectScopeProviderRegistry));
+				_objectEntryManagerRegistry, _objectFolderLocalService,
+				_objectScopeProviderRegistry));
 		renderRequest.setAttribute(
 			ObjectWebKeys.OBJECT_DEFINITIONS_FIELD_DISPLAY_CONTEXT,
 			new ObjectDefinitionsFieldsDisplayContext(
@@ -100,6 +102,9 @@ public class ViewModelBuilderMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private ObjectFieldSettingLocalService _objectFieldSettingLocalService;
+
+	@Reference
+	private ObjectFolderLocalService _objectFolderLocalService;
 
 	@Reference
 	private ObjectScopeProviderRegistry _objectScopeProviderRegistry;

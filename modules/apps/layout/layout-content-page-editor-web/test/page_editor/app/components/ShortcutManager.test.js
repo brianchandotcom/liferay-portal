@@ -19,6 +19,7 @@ import {
 	useSetEditedNodeId,
 } from '../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ShortcutContext';
 import deleteItem from '../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/deleteItem';
+import duplicateItem from '../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/duplicateItem';
 import pasteItem from '../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/pasteItem';
 import updateItemStyle from '../../../../src/main/resources/META-INF/resources/page_editor/app/utils/updateItemStyle';
 import StoreMother from '../../../../src/main/resources/META-INF/resources/page_editor/test_utils/StoreMother';
@@ -49,6 +50,16 @@ jest.mock(
 			useSetEditedNodeId: () => setEditedNodeId,
 		};
 	}
+);
+
+jest.mock(
+	'../../../../src/main/resources/META-INF/resources/page_editor/app/utils/canBeDuplicated',
+	() => jest.fn(() => true)
+);
+
+jest.mock(
+	'../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/duplicateItem',
+	() => jest.fn()
 );
 
 jest.mock(
@@ -314,5 +325,25 @@ describe('ShortcutManager', () => {
 		);
 
 		Liferay.FeatureFlags['LPD-18221'] = false;
+	});
+
+	it('sets the node id to be duplicated when pressing ctrl + alt + D', () => {
+		renderComponent({
+			activeItemIds: ['fragment01'],
+		});
+
+		document.body.dispatchEvent(
+			new KeyboardEvent('keydown', {
+				altKey: true,
+				code: 'KeyD',
+				ctrlKey: true,
+			})
+		);
+
+		expect(duplicateItem).toBeCalledWith(
+			expect.objectContaining({
+				itemIds: ['fragment01'],
+			})
+		);
 	});
 });

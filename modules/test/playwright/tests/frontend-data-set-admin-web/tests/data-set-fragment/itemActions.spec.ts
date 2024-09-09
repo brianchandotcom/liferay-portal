@@ -161,10 +161,10 @@ test.describe('Item Actions in Data Set fragment', () => {
 		layout,
 		page,
 	}) => {
-		const MODAL_ITEM_ACTION_NAME = 'Modal item action';
-		const MODAL_ITEM_ACTION_TITLE = 'Modal title';
-		const SIDE_PANEL_ITEM_ACTION_NAME = 'SidePanel item action';
-		const SIDE_PANEL_ITEM_ACTION_URL = liferayConfig.environment.baseUrl;
+		const modalItemActionName = 'Modal item action';
+		const modalItemActionTitle = 'Modal title';
+		const sidePanelItemActionName = 'SidePanel item action';
+		const sidePanelItemActionUrl = liferayConfig.environment.baseUrl;
 
 		await test.step('Create Item Actions', async () => {
 			await dataSetManagerApiHelpers.createDataSetItemAction({
@@ -175,18 +175,18 @@ test.describe('Item Actions in Data Set fragment', () => {
 
 			await dataSetManagerApiHelpers.createDataSetItemAction({
 				dataSetERC,
-				label_i18n: {en_US: MODAL_ITEM_ACTION_NAME},
+				label_i18n: {en_US: modalItemActionName},
 				modalSize: EModalActionVariant.SMALL,
-				title_i18n: {en_US: MODAL_ITEM_ACTION_TITLE},
+				title_i18n: {en_US: modalItemActionTitle},
 				type: EItemActionType.MODAL,
 				url: liferayConfig.environment.baseUrl,
 			});
 
 			await dataSetManagerApiHelpers.createDataSetItemAction({
 				dataSetERC,
-				label_i18n: {en_US: SIDE_PANEL_ITEM_ACTION_NAME},
+				label_i18n: {en_US: sidePanelItemActionName},
 				modalSize: EModalActionVariant.SMALL,
-				title_i18n: {en_US: SIDE_PANEL_ITEM_ACTION_NAME},
+				title_i18n: {en_US: sidePanelItemActionName},
 				type: EItemActionType.SIDE_PANEL,
 				url: liferayConfig.environment.baseUrl,
 			});
@@ -257,7 +257,7 @@ test.describe('Item Actions in Data Set fragment', () => {
 				.locator(`#${dropdownId}`)
 				.getByRole('menuitem', {
 					exact: true,
-					name: MODAL_ITEM_ACTION_NAME,
+					name: modalItemActionName,
 				})
 				.click();
 
@@ -266,7 +266,7 @@ test.describe('Item Actions in Data Set fragment', () => {
 			const dialog = page.getByRole('dialog');
 
 			await expect(dialog.getByRole('heading')).toHaveText(
-				MODAL_ITEM_ACTION_TITLE
+				modalItemActionTitle
 			);
 
 			await dialog.getByRole('button', {name: 'close'}).click();
@@ -295,7 +295,7 @@ test.describe('Item Actions in Data Set fragment', () => {
 				.locator(`#${dropdownId}`)
 				.getByRole('menuitem', {
 					exact: true,
-					name: SIDE_PANEL_ITEM_ACTION_NAME,
+					name: sidePanelItemActionName,
 				})
 				.click();
 
@@ -310,7 +310,7 @@ test.describe('Item Actions in Data Set fragment', () => {
 			const frame = await iframeElement.contentFrame();
 
 			await frame.waitForURL(
-				new RegExp(`.*${SIDE_PANEL_ITEM_ACTION_URL}`, 'i')
+				new RegExp(`.*${sidePanelItemActionUrl}`, 'i')
 			);
 
 			await page.keyboard.press('Escape');
@@ -325,33 +325,33 @@ test.describe('Item Actions in Data Set fragment', () => {
 		layout,
 		page,
 	}) => {
-		const ASYNC_ITEM_ACTION_NAME = 'Async item action';
-		const ASYNC_ITEM_ACTION_URL = '/o/data-set-manager/table-sections/{id}';
-		const HEADLESS_ITEM_ACTION_NAME = 'Headless item action';
-		const HEADLESS_ITEM_ACTION_PERMISSION_KEY = 'delete';
-		const NON_AVAILABLE_HEADLESS_ITEM_ACTION_NAME =
+		const asyncItemActionName = 'Async item action';
+		const asyncItemActionUrl = '/o/data-set-manager/table-sections/{id}';
+		const headlessItemActionName = 'Headless item action';
+		const headlessItemActionPermissionKey = 'delete';
+		const nonAvailableHeadlessItemActionName =
 			'Useless Headless Item Action';
 
 		await test.step('Create Item Actions', async () => {
 			await dataSetManagerApiHelpers.createDataSetItemAction({
 				dataSetERC,
-				label_i18n: {en_US: HEADLESS_ITEM_ACTION_NAME},
-				permissionKey: HEADLESS_ITEM_ACTION_PERMISSION_KEY,
+				label_i18n: {en_US: headlessItemActionName},
+				permissionKey: headlessItemActionPermissionKey,
 				type: EItemActionType.HEADLESS,
 			});
 
 			await dataSetManagerApiHelpers.createDataSetItemAction({
 				dataSetERC,
-				label_i18n: {en_US: ASYNC_ITEM_ACTION_NAME},
+				label_i18n: {en_US: asyncItemActionName},
 				method: EAsyncActionMethod.DELETE,
 				type: EItemActionType.ASYNC,
-				url: ASYNC_ITEM_ACTION_URL,
+				url: asyncItemActionUrl,
 			});
 
 			await dataSetManagerApiHelpers.createDataSetItemAction({
 				dataSetERC,
 				label_i18n: {
-					en_US: NON_AVAILABLE_HEADLESS_ITEM_ACTION_NAME,
+					en_US: nonAvailableHeadlessItemActionName,
 				},
 				permissionKey: 'remove',
 				type: EItemActionType.HEADLESS,
@@ -399,7 +399,7 @@ test.describe('Item Actions in Data Set fragment', () => {
 
 				await expect(
 					page.locator(`#${dropdownId}`).getByRole('menuitem', {
-						name: NON_AVAILABLE_HEADLESS_ITEM_ACTION_NAME,
+						name: nonAvailableHeadlessItemActionName,
 					})
 				).not.toBeVisible();
 
@@ -429,7 +429,7 @@ test.describe('Item Actions in Data Set fragment', () => {
 				.locator(`#${dropdownId}`)
 				.getByRole('menuitem', {
 					exact: true,
-					name: HEADLESS_ITEM_ACTION_NAME,
+					name: headlessItemActionName,
 				})
 				.click();
 
@@ -467,7 +467,7 @@ test.describe('Item Actions in Data Set fragment', () => {
 				.locator(`#${dropdownId}`)
 				.getByRole('menuitem', {
 					exact: true,
-					name: ASYNC_ITEM_ACTION_NAME,
+					name: asyncItemActionName,
 				})
 				.click();
 
@@ -487,29 +487,29 @@ test.describe('Item Actions in Data Set fragment', () => {
 		layout,
 		page,
 	}) => {
-		const ASYNC_ITEM_ACTION_NAME = 'Async item action';
-		const ASYNC_ITEM_ACTION_URL = '/o/data-set-manager/table-sections/{id}';
-		const ASYNC_ITEM_NEW_LABEL = getRandomString();
-		const HEADLESS_ITEM_ACTION_NAME = 'Headless item action';
-		const HEADLESS_ITEM_ACTION_PERMISSION_KEY = 'update';
-		const HEADLESS_ITEM_NEW_LABEL = getRandomString();
+		const asyncItemActionName = 'Async item action';
+		const asyncItemActionUrl = '/o/data-set-manager/table-sections/{id}';
+		const asyncItemNewLabel = getRandomString();
+		const headlessItemActionName = 'Headless item action';
+		const headlessItemActionPermissionKey = 'update';
+		const headlessItemNewLabel = getRandomString();
 
 		await test.step('Create Item Actions', async () => {
 			await dataSetManagerApiHelpers.createDataSetItemAction({
 				dataSetERC,
-				label_i18n: {en_US: HEADLESS_ITEM_ACTION_NAME},
-				permissionKey: HEADLESS_ITEM_ACTION_PERMISSION_KEY,
-				requestBody: `{"name": "${HEADLESS_ITEM_NEW_LABEL}"}`,
+				label_i18n: {en_US: headlessItemActionName},
+				permissionKey: headlessItemActionPermissionKey,
+				requestBody: `{"name": "${headlessItemNewLabel}"}`,
 				type: EItemActionType.HEADLESS,
 			});
 
 			await dataSetManagerApiHelpers.createDataSetItemAction({
 				dataSetERC,
-				label_i18n: {en_US: ASYNC_ITEM_ACTION_NAME},
+				label_i18n: {en_US: asyncItemActionName},
 				method: EAsyncActionMethod.PATCH,
-				requestBody: `{"name": "${ASYNC_ITEM_NEW_LABEL}"}`,
+				requestBody: `{"name": "${asyncItemNewLabel}"}`,
 				type: EItemActionType.ASYNC,
-				url: ASYNC_ITEM_ACTION_URL,
+				url: asyncItemActionUrl,
 			});
 		});
 
@@ -578,7 +578,7 @@ test.describe('Item Actions in Data Set fragment', () => {
 				.locator(`#${dropdownId}`)
 				.getByRole('menuitem', {
 					exact: true,
-					name: HEADLESS_ITEM_ACTION_NAME,
+					name: headlessItemActionName,
 				})
 				.click();
 
@@ -590,7 +590,7 @@ test.describe('Item Actions in Data Set fragment', () => {
 				'Success:Your request completed successfully.' 
 			);
 
-			await expect(page.getByText(HEADLESS_ITEM_NEW_LABEL)).toBeVisible();
+			await expect(page.getByText(headlessItemNewLabel)).toBeVisible();
 		});
 
 		await test.step('Click in the async item action executes the action', async () => {
@@ -618,7 +618,7 @@ test.describe('Item Actions in Data Set fragment', () => {
 				.locator(`#${dropdownId}`)
 				.getByRole('menuitem', {
 					exact: true,
-					name: ASYNC_ITEM_ACTION_NAME,
+					name: asyncItemActionName,
 				})
 				.click();
 
@@ -630,7 +630,7 @@ test.describe('Item Actions in Data Set fragment', () => {
 				'Success:Your request completed successfully.'
 			);
 
-			await expect(page.getByText(ASYNC_ITEM_NEW_LABEL)).toBeVisible();
+			await expect(page.getByText(asyncItemNewLabel)).toBeVisible();
 		});
 	});
 
@@ -640,17 +640,17 @@ test.describe('Item Actions in Data Set fragment', () => {
 		layout,
 		page,
 	}) => {
-		const ASYNC_ITEM_ACTION_NAME = 'Async item action';
-		const ASYNC_ITEM_ACTION_WRONG_URL =
+		const asyncItemActionName = 'Async item action';
+		const asyncItemActionWrongUrl =
 			'/o/data-set-manager/table-sections/{foo}';
 
 		await test.step('Create Item Actions', async () => {
 			await dataSetManagerApiHelpers.createDataSetItemAction({
 				dataSetERC,
-				label_i18n: {en_US: ASYNC_ITEM_ACTION_NAME},
+				label_i18n: {en_US: asyncItemActionName},
 				method: EAsyncActionMethod.DELETE,
 				type: EItemActionType.ASYNC,
-				url: ASYNC_ITEM_ACTION_WRONG_URL,
+				url: asyncItemActionWrongUrl,
 			});
 		});
 
@@ -674,7 +674,7 @@ test.describe('Item Actions in Data Set fragment', () => {
 
 		await test.step('Click in the async Item Action shows an error toast.', async () => {
 			await datasetRow
-				.getByRole('button', {name: ASYNC_ITEM_ACTION_NAME})
+				.getByRole('button', {name: asyncItemActionName})
 				.click();
 
 			await page.getByRole('alert').waitFor();

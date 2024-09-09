@@ -71,6 +71,7 @@ JSONPackageJSONDependencyVersionCheck | .ipynb, .json or .npmbridgerc | Checks t
 [JSPArrowFunctionCheck](check/jsp_arrow_function_check.markdown#jsparrowfunctioncheck) | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks that there are no array functions. |
 JSPGetStaticResourceURLCheck | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks calls to `PortalUtil.getStaticResourceURL` and `getContextPath` without `getPathProxy`. |
 [JSPIllegalSyntaxCheck](check/jsp_illegal_syntax_check.markdown#jspillegalsyntaxcheck) | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds incorrect use of `System.out.print`, `console.log` or `debugger.*` in `.jsp` files. |
+JSPIllegalTagsCheck | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds cases of incorrect use of certain tags. |
 [JSPIncludeCheck](check/jsp_include_check.markdown#jspincludecheck) | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Validates values of `include` in `.jsp` files. |
 JSPLanguageKeysCheck | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds missing language keys in `Language.properties`. |
 JSPLanguageUtilCheck | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds incorrect use of `LanguageUtil.get` in `.jsp` files. |

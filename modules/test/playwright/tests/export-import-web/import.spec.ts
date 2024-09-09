@@ -117,7 +117,7 @@ test('can import a folder with document type restrictions and workflow', async (
 		path.join(__dirname, 'dependencies', 'folder.portlet.lar')
 	);
 	await exportImportFramePage.close();
-	await documentLibraryPage.editEntry('LPS-205933');
+	await documentLibraryPage.goToEditFolder('LPS-205933');
 
 	expect(
 		await documentLibraryEditFolderPage.getSelectedWorkflowDefinition()

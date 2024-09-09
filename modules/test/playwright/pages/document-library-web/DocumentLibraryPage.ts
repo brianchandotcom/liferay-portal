@@ -107,7 +107,7 @@ export class DocumentLibraryPage {
 			.click();
 	}
 
-	async editEntry(entryTitle: string) {
+	async goToEditFolder(entryTitle: string) {
 		await this.page
 			.locator(`.card-body:has-text('${entryTitle}')`)
 			.getByLabel('More actions')

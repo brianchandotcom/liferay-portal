@@ -28,7 +28,11 @@ test('displays second dropdown level for Size item with Small, Medium and Large 
 
 	await sizeMenuItem.hover();
 
-	for (const size of ['Small', 'Medium', 'Large']) {
+	for (const size of [
+		'Small (up to 150 kb)',
+		'Medium (from 150 kb to 1 mb)',
+		'Large (from 1 mb)',
+	]) {
 		await expect(page.getByText(size)).toBeVisible();
 	}
 });

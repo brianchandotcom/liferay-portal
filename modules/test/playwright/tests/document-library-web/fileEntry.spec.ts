@@ -4,6 +4,7 @@
  */
 
 import {expect, mergeTests} from '@playwright/test';
+import {createReadStream} from 'fs';
 import moment from 'moment';
 import path from 'path';
 
@@ -12,6 +13,7 @@ import {documentLibraryPagesTest} from '../../fixtures/documentLibraryPages.fixt
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {createCategories} from '../../helpers/CreateCategories';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../utils/getRandomString';
 import {performLogout} from '../../utils/performLogin';
@@ -20,6 +22,7 @@ import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDe
 import getWidgetDefinition from '../layout-content-page-editor-web/utils/getWidgetDefinition';
 
 const baseTest = mergeTests(
+	apiHelpersTest,
 	documentLibraryPagesTest,
 	isolatedSiteTest,
 	loginTest()
@@ -309,5 +312,84 @@ testSearchInDlPortlet(
 				.locator('.portlet-document-library')
 				.getByRole('link', {name: title})
 		).toBeVisible();
+	}
+);
+
+baseTest(
+	'Replace option does not work on Categories Selector',
+	{
+		tag: '@LPD-27899',
+	},
+
+	async ({apiHelpers, documentLibraryPage, page, site}) => {
+		const vocabularyName = getRandomString();
+
+		const categories = await createCategories({
+			apiHelpers,
+			categoryNames: [
+				{name: 'Books'},
+				{name: 'Plants'},
+				{name: 'Pets'},
+				{name: 'Furniture'},
+			],
+			site,
+			vocabularyName,
+		});
+
+		const document1 = await apiHelpers.headlessDelivery.postDocument(
+			site.id,
+			createReadStream(path.join(__dirname, '/dependencies/image1.jpeg')),
+			{
+				description: getRandomString(),
+				fileName: getRandomString(),
+				taxonomyCategoryIds: [categories[0].id, categories[1].id],
+				title: getRandomString(),
+			}
+		);
+
+		const document2 = await apiHelpers.headlessDelivery.postDocument(
+			site.id,
+			createReadStream(path.join(__dirname, '/dependencies/image1.jpeg')),
+			{
+				description: getRandomString(),
+				fileName: getRandomString(),
+				taxonomyCategoryIds: [categories[0].id, categories[2].id],
+				title: getRandomString(),
+			}
+		);
+
+		await documentLibraryPage.goto(site.friendlyUrlPath);
+
+		await documentLibraryPage.openBulkEditCategoriesModal([
+			document1.title,
+			document2.title,
+		]);
+
+		const locator = await page.locator(
+			'div.field-content span.label-item-expand'
+		);
+
+		await expect(await locator.count()).toBe(1);
+
+		await expect(await locator.textContent()).toBe('Books');
+
+		await documentLibraryPage.goto(site.friendlyUrlPath);
+
+		await documentLibraryPage.replaceCategoriesUsingBulkEditCategoriesModal(
+			[document1.title, document2.title],
+			[{categoryNames: ['Furniture'], vocabularyName}]
+		);
+
+		await expect(page.getByText('Success:Changes Saved')).toBeVisible();
+
+		for (const document of [document1, document2]) {
+			await documentLibraryPage.goto(site.friendlyUrlPath);
+
+			await documentLibraryPage.goToEditEntry(document.title);
+
+			await page.getByText(vocabularyName).waitFor();
+
+			await expect(await page.getByText(document.title)).toBeVisible();
+		}
 	}
 );

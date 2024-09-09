@@ -3,16 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useResource} from '@clayui/data-provider';
 import React, {useContext, useEffect, useState} from 'react';
 
-import {DefinitionBuilderContext} from '../../../../../DefinitionBuilderContext';
-import {contextUrl} from '../../../../../constants';
-import {
-	HEADERS,
-	retrieveAccountRoles,
-	userBaseURL,
-} from '../../../../../util/fetchUtil';
 import {DiagramBuilderContext} from '../../../../DiagramBuilderContext';
 import AssetCreator from './select-assignment/AssetCreator';
 import ResourceActions from './select-assignment/ResourceActions';
@@ -34,44 +26,15 @@ const assignmentSectionComponents = {
 
 const Assignments = (props) => {
 	const {selectedItem} = useContext(DiagramBuilderContext);
-	const {accountEntryId} = useContext(DefinitionBuilderContext);
 	const assignments = selectedItem?.data?.assignments;
 
 	const assignmentType = getAssignmentType(assignments);
-
-	const [accountRoles, setAccountRoles] = useState([]);
-	const [networkStatus, setNetworkStatus] = useState(4);
 	const [section, setSection] = useState(assignmentType || 'assetCreator');
 	const [sections, setSections] = useState([{identifier: `${Date.now()}-0`}]);
 
 	const AssignmentSectionComponent = assignmentSectionComponents[section];
 
-	const {resource} = useResource({
-		fetchOptions: {
-			headers: HEADERS,
-		},
-		fetchPolicy: 'cache-first',
-		link: `${window.location.origin}${contextUrl}${userBaseURL}/roles?restrictFields=rolePermissions`,
-		onNetworkStatusChange: setNetworkStatus,
-		variables: {
-			pageSize: -1,
-		},
-	});
-
 	useEffect(() => {
-		retrieveAccountRoles(accountEntryId)
-			.then((response) => response.json())
-			.then(({items}) => {
-				const accountRoleItems = items.map(({name}) => {
-					return {
-						roleName: name,
-						roleType: 'Account',
-					};
-				});
-
-				setAccountRoles(accountRoleItems);
-			});
-
 		if (assignmentType === 'roleType') {
 			const sectionsData = [];
 
@@ -107,12 +70,9 @@ const Assignments = (props) => {
 						<AssignmentSectionComponent
 							{...props}
 							{...restProps}
-							accountRoles={accountRoles}
 							identifier={identifier}
 							index={index}
 							key={`section-${identifier}`}
-							networkStatus={networkStatus}
-							resource={resource}
 							sectionsLength={sections?.length}
 							setSections={setSections}
 						/>

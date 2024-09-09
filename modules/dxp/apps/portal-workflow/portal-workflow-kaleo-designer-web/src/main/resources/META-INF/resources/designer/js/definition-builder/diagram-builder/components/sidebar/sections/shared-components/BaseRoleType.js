@@ -7,20 +7,23 @@ import ClayAutocomplete from '@clayui/autocomplete';
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayForm, {ClayCheckbox} from '@clayui/form';
-import React, {useEffect, useState} from 'react';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
+import React, {useContext, useEffect, useState} from 'react';
 
+import {DefinitionBuilderContext} from '../../../../../DefinitionBuilderContext';
+import {
+	retrieveAccountRoles,
+	retrieveRoles,
+} from '../../../../../util/fetchUtil';
 import {stringToBoolean, titleCase} from '../../../../../util/utils';
 
 const BaseRoleType = ({
-	accountRoles,
 	autoCreate = false,
 	buttonName,
 	errors,
 	identifier,
 	index,
 	inputLabel,
-	networkStatus,
-	resource,
 	roleName,
 	roleType = '',
 	sectionsLength,
@@ -29,10 +32,14 @@ const BaseRoleType = ({
 	notificationIndex,
 	updateSelectedItem = () => {},
 }) => {
+	const {accountEntryId} = useContext(DefinitionBuilderContext);
+	const [accountRoles, setAccountRoles] = useState([]);
 	const [filterRoleName, setFilterRoleName] = useState(true);
 	const [filterRoleType, setFilterRoleType] = useState(true);
+	const [loading, setLoading] = useState(false);
 	const [roleNameDropdownActive, setRoleNameDropdownActive] = useState(false);
 	const [roleTypeDropdownActive, setRoleTypeDropdownActive] = useState(false);
+	const [roles, setRoles] = useState([]);
 	const [selectedRoleName, setSelectedRoleName] = useState(roleName);
 	const [selectedRoleType, setSelectedRoleType] = useState(
 		titleCase(roleType)
@@ -88,24 +95,24 @@ const BaseRoleType = ({
 	};
 
 	const getRolesInfo = () => {
-		const roles = {};
+		const rolesInfo = {};
 
-		resource.items.forEach((item) => {
+		roles.items.forEach((item) => {
 			const roleType = titleCase(item.roleType);
 
-			if (!roles[roleType]) {
-				roles[roleType] = [];
+			if (!rolesInfo[roleType]) {
+				rolesInfo[roleType] = [];
 			}
 
-			roles[roleType].push({
+			rolesInfo[roleType].push({
 				roleName: item.name,
 				roleType,
 			});
 		});
 
-		roles['Account'] = accountRoles;
+		rolesInfo['Account'] = accountRoles;
 
-		return roles;
+		return rolesInfo;
 	};
 
 	const filteredRoleNames = () => {
@@ -182,9 +189,37 @@ const BaseRoleType = ({
 		setSelectedRoleName('');
 	};
 
-	const initialLoading = networkStatus === 1;
-	const loading = networkStatus < 4;
-	const error = networkStatus === 5;
+	useEffect(() => {
+		const makeFetch = async () => {
+			setLoading(true);
+
+			const accountRolesResponse =
+				await retrieveAccountRoles(accountEntryId);
+
+			const accountRolesResponseJSON = await accountRolesResponse.json();
+
+			const accountRoleItems = accountRolesResponseJSON.items.map(
+				({name}) => {
+					return {
+						roleName: name,
+						roleType: 'Account',
+					};
+				}
+			);
+
+			setAccountRoles(accountRoleItems);
+
+			const rolesResponse = await retrieveRoles();
+
+			const rolesResponseJSON = await rolesResponse.json();
+
+			setRoles(rolesResponseJSON);
+
+			setLoading(false);
+		};
+
+		makeFetch();
+	}, [accountEntryId]);
 
 	return (
 		<>
@@ -192,44 +227,51 @@ const BaseRoleType = ({
 				<ClayAutocomplete>
 					<label htmlFor="role-type">{inputLabel}</label>
 
-					<ClayAutocomplete.Input
-						autoComplete="off"
-						id="role-type"
-						onChange={(event) => roleTypeInputChange(event)}
-						onFocus={() => roleTypeInputFocus()}
-						value={selectedRoleType}
-					/>
+					{loading ? (
+						<ClayLoadingIndicator
+							displayType="secondary"
+							size="sm"
+						/>
+					) : (
+						<>
+							<ClayAutocomplete.Input
+								autoComplete="off"
+								id="role-type"
+								onChange={(event) => roleTypeInputChange(event)}
+								onFocus={() => roleTypeInputFocus()}
+								value={selectedRoleType}
+							/>
 
-					<ClayAutocomplete.DropDown
-						active={
-							(!!resource && roleTypeDropdownActive) ||
-							initialLoading
-						}
-						closeOnClickOutside
-						onSetActive={setRoleTypeDropdownActive}
-					>
-						<ClayDropDown.ItemList>
-							{(error || (resource && resource.error)) && (
-								<ClayDropDown.Item className="disabled">
-									{Liferay.Language.get('no-results-found')}
-								</ClayDropDown.Item>
-							)}
+							<ClayAutocomplete.DropDown
+								active={roleTypeDropdownActive}
+								closeOnClickOutside
+								onSetActive={setRoleTypeDropdownActive}
+							>
+								<ClayDropDown.ItemList>
+									{roles && roles.error && (
+										<ClayDropDown.Item className="disabled">
+											{Liferay.Language.get(
+												'no-results-found'
+											)}
+										</ClayDropDown.Item>
+									)}
 
-							{!error &&
-								resource?.items &&
-								filteredRoleTypes().map((item, index) => (
-									<ClayAutocomplete.Item
-										key={index}
-										onClickCapture={() =>
-											roleTypeItemClick(item)
-										}
-										value={item}
-									/>
-								))}
-						</ClayDropDown.ItemList>
-					</ClayAutocomplete.DropDown>
-
-					{loading && <ClayAutocomplete.LoadingIndicator />}
+									{!!roles.items &&
+										filteredRoleTypes().map(
+											(item, index) => (
+												<ClayAutocomplete.Item
+													key={index}
+													onClickCapture={() =>
+														roleTypeItemClick(item)
+													}
+													value={item}
+												/>
+											)
+										)}
+								</ClayDropDown.ItemList>
+							</ClayAutocomplete.DropDown>
+						</>
+					)}
 				</ClayAutocomplete>
 			</ClayForm.Group>
 			<ClayForm.Group
@@ -246,64 +288,78 @@ const BaseRoleType = ({
 						<span className="ml-1 mr-1 text-warning">*</span>
 					</label>
 
-					<ClayAutocomplete.Input
-						autoComplete="off"
-						disabled={!selectedRoleType}
-						id="role-name"
-						onBlur={(event) => {
-							const roleName = titleCase(event.target.value);
+					{loading ? (
+						<ClayLoadingIndicator
+							displayType="secondary"
+							size="sm"
+						/>
+					) : (
+						<>
+							<ClayAutocomplete.Input
+								autoComplete="off"
+								disabled={!selectedRoleType}
+								id="role-name"
+								onBlur={(event) => {
+									const roleName = titleCase(
+										event.target.value
+									);
 
-							if (selectedRoleName !== '') {
-								roleNameItemUpdate({
-									autoCreate: checked,
-									roleName,
-									roleType: selectedRoleType.toLowerCase(),
-								});
-							}
-							setErrors(
-								checkRoleTypeErrors(errors, selectedRoleName)
-							);
-						}}
-						onChange={(event) => roleNameInputChange(event)}
-						onFocus={() => roleNameInputFocus()}
-						value={selectedRoleName}
-					/>
+									if (selectedRoleName !== '') {
+										roleNameItemUpdate({
+											autoCreate: checked,
+											roleName,
+											roleType:
+												selectedRoleType.toLowerCase(),
+										});
+									}
+									setErrors(
+										checkRoleTypeErrors(
+											errors,
+											selectedRoleName
+										)
+									);
+								}}
+								onChange={(event) => roleNameInputChange(event)}
+								onFocus={() => roleNameInputFocus()}
+								value={selectedRoleName}
+							/>
 
-					<ClayAutocomplete.DropDown
-						active={
-							(!!resource && roleNameDropdownActive) ||
-							initialLoading
-						}
-						closeOnClickOutside
-						onSetActive={setRoleNameDropdownActive}
-					>
-						<ClayDropDown.ItemList>
-							{(error || (resource && resource.error)) && (
-								<ClayDropDown.Item className="disabled">
-									{Liferay.Language.get('no-results-found')}
-								</ClayDropDown.Item>
-							)}
+							<ClayAutocomplete.DropDown
+								active={roleNameDropdownActive}
+								closeOnClickOutside
+								onSetActive={setRoleNameDropdownActive}
+							>
+								<ClayDropDown.ItemList>
+									{roles && roles.error && (
+										<ClayDropDown.Item className="disabled">
+											{Liferay.Language.get(
+												'no-results-found'
+											)}
+										</ClayDropDown.Item>
+									)}
 
-							{!error &&
-								resource?.items &&
-								filteredRoleNames().map((item, index) => (
-									<ClayAutocomplete.Item
-										key={index}
-										onMouseDown={() =>
-											roleNameItemUpdate({
-												autoCreate: checked,
-												roleName: item.roleName,
-												roleType:
-													item.roleType.toLowerCase(),
-											})
-										}
-										value={item.roleName}
-									/>
-								))}
-						</ClayDropDown.ItemList>
-					</ClayAutocomplete.DropDown>
-
-					{loading && <ClayAutocomplete.LoadingIndicator />}
+									{!!roles.items &&
+										filteredRoleNames().map(
+											(item, index) => (
+												<ClayAutocomplete.Item
+													key={index}
+													onMouseDown={() =>
+														roleNameItemUpdate({
+															autoCreate: checked,
+															roleName:
+																item.roleName,
+															roleType:
+																item.roleType.toLowerCase(),
+														})
+													}
+													value={item.roleName}
+												/>
+											)
+										)}
+								</ClayDropDown.ItemList>
+							</ClayAutocomplete.DropDown>
+						</>
+					)}
 				</ClayAutocomplete>
 
 				<ClayForm.FeedbackItem>

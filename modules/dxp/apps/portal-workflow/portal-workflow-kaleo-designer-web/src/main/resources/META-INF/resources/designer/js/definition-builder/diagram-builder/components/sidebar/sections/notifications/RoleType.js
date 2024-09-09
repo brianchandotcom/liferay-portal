@@ -5,7 +5,7 @@
 
 import React from 'react';
 
-import BaseRoleType from '../shared-components/BaseRoleType';
+import {BaseRoleType} from '../shared-components/BaseRoleType';
 
 const RoleType = ({
 	accountRoles,

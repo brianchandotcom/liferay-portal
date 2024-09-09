@@ -111,6 +111,11 @@ public interface CommercePaymentEntryService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BigDecimal getRefundedAmount(
+			long companyId, long classNameId, long classPK)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommercePaymentEntry> search(
 			long companyId, long[] classNameIds, long[] classPKs,
 			String[] currencyCodes, String keywords,

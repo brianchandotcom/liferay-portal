@@ -386,6 +386,12 @@ public class CommercePaymentEntryLocalServiceUtil {
 			companyId, classNameId, classPK);
 	}
 
+	public static java.math.BigDecimal getRefundedAmount(
+		long companyId, long classNameId, long classPK) {
+
+		return getService().getRefundedAmount(companyId, classNameId, classPK);
+	}
+
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult
 		<CommercePaymentEntry> searchCommercePaymentEntries(
 			long companyId, String keywords,

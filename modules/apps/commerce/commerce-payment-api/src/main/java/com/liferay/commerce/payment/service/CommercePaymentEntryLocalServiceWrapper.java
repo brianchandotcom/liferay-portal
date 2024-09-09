@@ -463,6 +463,14 @@ public class CommercePaymentEntryLocalServiceWrapper
 	}
 
 	@Override
+	public java.math.BigDecimal getRefundedAmount(
+		long companyId, long classNameId, long classPK) {
+
+		return _commercePaymentEntryLocalService.getRefundedAmount(
+			companyId, classNameId, classPK);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.search.BaseModelSearchResult
 		<com.liferay.commerce.payment.model.CommercePaymentEntry>
 			searchCommercePaymentEntries(

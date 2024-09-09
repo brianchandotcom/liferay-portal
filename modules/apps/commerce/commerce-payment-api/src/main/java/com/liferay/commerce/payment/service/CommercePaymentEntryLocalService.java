@@ -324,6 +324,10 @@ public interface CommercePaymentEntryLocalService
 		long companyId, long classNameId, long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BigDecimal getRefundedAmount(
+		long companyId, long classNameId, long classPK);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<CommercePaymentEntry>
 		searchCommercePaymentEntries(
 			long companyId, String keywords,

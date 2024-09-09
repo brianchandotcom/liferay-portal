@@ -165,7 +165,7 @@ const ActionForm = ({
 		url: initialValues?.url ?? '',
 	} as IAction);
 
-	const isValidJSON = (value: string | undefined) => {
+	const isRequestBodyInputValid = (value: string | undefined) => {
 		if (!value) {
 			return true;
 		}
@@ -305,7 +305,7 @@ const ActionForm = ({
 			Liferay.FeatureFlags['LPD-34636'] &&
 			(type === EActionType.ASYNC || type === EActionType.HEADLESS)
 		) {
-			if (!isValidJSON(requestBody)) {
+			if (!isRequestBodyInputValid(requestBody)) {
 				valid = false;
 
 				setRequestBodyValidationError(true);
@@ -761,7 +761,9 @@ const ActionForm = ({
 												});
 
 												setRequestBodyValidationError(
-													!isValidJSON(requestBody)
+													!isRequestBodyInputValid(
+														requestBody
+													)
 												);
 											}}
 											placeholder={Liferay.Language.get(

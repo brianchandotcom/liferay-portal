@@ -146,6 +146,14 @@ export class DocumentLibraryPage {
 		});
 	}
 
+	async openBulkEditCategoriesModal(titles: string[]) {
+		await this.selectFileEntries(titles);
+		await this.page.getByRole('button', {name: 'Edit Categories'}).click();
+		await this.page
+			.getByRole('heading', {name: 'Edit Categories'})
+			.waitFor();
+	}
+
 	async openCreateAIImage() {
 		await this.openNewButton();
 

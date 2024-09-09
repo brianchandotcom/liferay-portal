@@ -141,6 +141,11 @@ public class SitemapCompanyConfigurationDisplayContext {
 			_themeDisplay.getCompanyId());
 	}
 
+	public boolean xmlSitemapIndexEnabled() throws ConfigurationException {
+		return _sitemapConfigurationManager.xmlSitemapIndexCompanyEnabled(
+			_themeDisplay.getCompanyId());
+	}
+
 	private Group _getGuestGroup() throws Exception {
 		if (_guestGroup != null) {
 			return _guestGroup;

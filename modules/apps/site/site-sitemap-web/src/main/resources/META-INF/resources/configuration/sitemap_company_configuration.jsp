@@ -29,6 +29,39 @@ SitemapCompanyConfigurationDisplayContext sitemapCompanyConfigurationDisplayCont
 </clay:content-row>
 
 <clay:sheet-section
+	aria-labelledby='<%= liferayPortletResponse.getNamespace() + "xmlSitemapIndexTitle" %>'
+	role="group"
+>
+	<clay:content-row
+		containerElement="h3"
+		cssClass="c-mb-3 sheet-subtitle"
+	>
+		<clay:content-col
+			expand="<%= true %>"
+		>
+			<span class="heading-text text-secondary" id="<portlet:namespace />xmlSitemapIndexTitle"><liferay-ui:message key="xml-sitemap-index" /></span>
+		</clay:content-col>
+	</clay:content-row>
+
+	<clay:content-row
+		cssClass="c-mt-2"
+	>
+		<clay:content-col
+			expand="<%= true %>"
+		>
+			<clay:checkbox
+				checked="<%= sitemapCompanyConfigurationDisplayContext.xmlSitemapIndexEnabled() %>"
+				id='<%= liferayPortletResponse.getNamespace() + "xmlSitemapIndexEnabled" %>'
+				label='<%= LanguageUtil.get(request, "xml-sitemap-index-enabled") %>'
+				name='<%= liferayPortletResponse.getNamespace() + "xmlSitemapIndexEnabled" %>'
+			/>
+
+			<p class="c-mb-0 c-mt-2 small text-secondary"><liferay-ui:message arguments="https://www.sitemaps.org/protocol.html" key="when-this-configuration-is-enabled,-a-sitemap-index-is-created" /></p>
+		</clay:content-col>
+	</clay:content-row>
+</clay:sheet-section>
+
+<clay:sheet-section
 	aria-labelledby='<%= liferayPortletResponse.getNamespace() + "sitesIncludedTitle" %>'
 	cssClass="c-mb-0"
 	role="group"

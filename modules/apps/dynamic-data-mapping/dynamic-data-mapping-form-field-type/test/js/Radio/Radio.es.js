@@ -111,6 +111,49 @@ describe('Field Radio', () => {
 		expect(container).toMatchSnapshot();
 	});
 
+	it('renders option elements with data-option-reference attribute', () => {
+		const {container} = render(
+			<RadioWithProvider
+				{...defaultRadioConfig}
+				options={[
+					{
+						checked: false,
+						disabled: false,
+						id: 'id',
+						inline: false,
+						label: 'label',
+						name: 'name',
+						reference: 'option1Reference',
+						showLabel: true,
+						value: 'item',
+					},
+					{
+						checked: false,
+						disabled: false,
+						id: 'id',
+						inline: false,
+						label: 'label2',
+						name: 'name',
+						reference: 'option2Reference',
+						showLabel: true,
+						value: 'item2',
+					},
+				]}
+			/>
+		);
+
+		const radioInputElement1 = container.querySelector(
+			`input[value][type="radio"][data-option-reference="option1Reference"]`
+		);
+
+		const radioInputElement2 = container.querySelector(
+			`input[value][type="radio"][data-option-reference="option2Reference"]`
+		);
+
+		expect(radioInputElement1).toBeTruthy();
+		expect(radioInputElement2).toBeTruthy();
+	});
+
 	it('renders no options when options is empty', () => {
 		const {container} = render(
 			<RadioWithProvider {...defaultRadioConfig} options={[]} />

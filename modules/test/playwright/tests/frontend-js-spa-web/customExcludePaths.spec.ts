@@ -52,8 +52,16 @@ test('@LPD-26354 Custom Exclude Path', async ({
 			name: 'Update',
 		});
 
-		await updateButton.isVisible();
-		await updateButton.click();
+		const saveButton = page.getByRole('button', {
+			name: 'Save',
+		});
+
+		if (await saveButton.isVisible()) {
+			await saveButton.click();
+		}
+		else if (await updateButton.isVisible()) {
+			await updateButton.click();
+		}
 
 		await waitForSuccessAlert(page);
 	});
@@ -62,6 +70,8 @@ test('@LPD-26354 Custom Exclude Path', async ({
 		await page.goto(layout.friendlyURL);
 
 		await page.reload();
+
+		await page.locator('#content').waitFor({state: 'visible'});
 
 		// @ts-ignore
 

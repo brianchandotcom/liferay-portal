@@ -8,6 +8,11 @@ import {FrameLocator, Locator, Page, expect} from '@playwright/test';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {PORTLET_URLS} from '../../utils/portletUrls';
 
+export type TVocabularyCategory = {
+	categoryNames: string[];
+	vocabularyName: string;
+};
+
 export class DocumentLibraryPage {
 	readonly exportImportOptionsMenuItem: Locator;
 	readonly optionsMenu: Locator;
@@ -184,6 +189,27 @@ export class DocumentLibraryPage {
 			target: this.page.getByRole('menuitem', {name}),
 			trigger: this.orderMenu,
 		});
+	}
+
+	async replaceCategoriesUsingBulkEditCategoriesModal(
+		fileNames: string[],
+		vocabularyCategories: TVocabularyCategory[]
+	) {
+		await this.openBulkEditCategoriesModal(fileNames);
+		await this.page.getByLabel('ReplaceThese categories').check();
+		for (const vocabularyCategory of vocabularyCategories) {
+			for (const categoryName of vocabularyCategory.categoryNames) {
+				await this.page
+					.getByLabel(vocabularyCategory.vocabularyName, {
+						exact: true,
+					})
+					.fill(categoryName);
+				await this.page
+					.getByRole('option', {name: categoryName})
+					.click();
+			}
+		}
+		await this.page.getByRole('button', {name: 'Save'}).click();
 	}
 
 	async searchFor(entryTitle: string) {

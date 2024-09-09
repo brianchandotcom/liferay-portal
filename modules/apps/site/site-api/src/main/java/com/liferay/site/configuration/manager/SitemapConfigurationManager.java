@@ -45,4 +45,7 @@ public interface SitemapConfigurationManager {
 			boolean includeWebContent)
 		throws ConfigurationException;
 
+	public boolean xmlSitemapIndexCompanyEnabled(long companyId)
+		throws ConfigurationException;
+
 }

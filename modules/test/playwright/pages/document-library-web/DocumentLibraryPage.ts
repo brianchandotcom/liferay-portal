@@ -190,6 +190,12 @@ export class DocumentLibraryPage {
 		await this.searchButton.click();
 	}
 
+	async selectFileEntries(entryTitles: string[]) {
+		for (const entryTitle of entryTitles) {
+			await this.selectFileEntry(entryTitle);
+		}
+	}
+
 	async selectFileEntry(entryTitle: string) {
 		const fileEntryCheckbox = this.page
 			.locator(`.card:has-text('${entryTitle}')`)

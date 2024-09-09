@@ -5,23 +5,21 @@
 
 package com.liferay.adaptive.media.content.transformer.internal;
 
-import com.liferay.adaptive.media.content.transformer.BaseRegexStringContentTransformer;
+import com.liferay.adaptive.media.content.transformer.ContentTransformer;
 import com.liferay.adaptive.media.image.html.AMImageHTMLTagFactory;
 import com.liferay.adaptive.media.image.html.constants.AMImageHTMLConstants;
 import com.liferay.adaptive.media.image.mime.type.AMImageMimeTypeProvider;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.GetterUtil;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 /**
  * @author Alejandro Tardín
  */
-public class HtmlContentTransformerImpl
-	extends BaseRegexStringContentTransformer {
+public class HtmlContentTransformerImpl implements ContentTransformer {
 
 	public HtmlContentTransformerImpl(
 		AMImageHTMLTagFactory amImageHTMLTagFactory,
@@ -39,42 +37,90 @@ public class HtmlContentTransformerImpl
 			return null;
 		}
 
-		if (!html.contains(AMImageHTMLConstants.ATTRIBUTE_NAME_FILE_ENTRY_ID)) {
-			return html;
+		StringBundler sb = new StringBundler();
+
+		int i = 0;
+
+		while (i < html.length()) {
+			int imgStart = html.indexOf(_OPEN_TAG_TOKEN_IMG, i);
+
+			if (imgStart == -1) {
+				sb.append(html.substring(i));
+
+				break;
+			}
+
+			int imgEnd = html.indexOf(
+				CharPool.GREATER_THAN, imgStart + _OPEN_TAG_TOKEN_IMG.length());
+
+			if (imgEnd == -1) {
+				sb.append(html.substring(i));
+
+				break;
+			}
+
+			imgEnd++;
+
+			int attributeStart = html.indexOf(
+				AMImageHTMLConstants.ATTRIBUTE_NAME_FILE_ENTRY_ID, imgStart);
+
+			if (attributeStart == -1) {
+				sb.append(html.substring(i));
+
+				break;
+			}
+
+			if (attributeStart > imgEnd) {
+				sb.append(html.substring(i, imgEnd));
+
+				i = imgEnd;
+
+				continue;
+			}
+
+			int fileEntryIdStart =
+				attributeStart +
+					AMImageHTMLConstants.ATTRIBUTE_NAME_FILE_ENTRY_ID.length() +
+						2;
+
+			int fileEntryIdEnd = html.indexOf(CharPool.QUOTE, fileEntryIdStart);
+
+			if ((fileEntryIdEnd == -1) || (fileEntryIdEnd > imgEnd)) {
+				sb.append(html.substring(i, imgEnd));
+
+				i = imgEnd;
+
+				continue;
+			}
+
+			long fileEntryId = GetterUtil.getLong(
+				html.substring(fileEntryIdStart, fileEntryIdEnd));
+
+			FileEntry fileEntry = _dlAppLocalService.getFileEntry(fileEntryId);
+
+			if (!_amImageMimeTypeProvider.isMimeTypeSupported(
+					fileEntry.getMimeType())) {
+
+				sb.append(html.substring(i, imgEnd));
+
+				i = imgEnd;
+
+				continue;
+			}
+
+			String replacement = _amImageHTMLTagFactory.create(
+				html.substring(imgStart, imgEnd), fileEntry);
+
+			sb.append(html.substring(i, imgStart));
+			sb.append(replacement);
+
+			i = imgEnd;
 		}
 
-		return super.transform(html);
+		return sb.toString();
 	}
 
-	@Override
-	protected FileEntry getFileEntry(Matcher matcher) throws PortalException {
-		long fileEntryId = GetterUtil.getLong(matcher.group(1));
-
-		return _dlAppLocalService.getFileEntry(fileEntryId);
-	}
-
-	@Override
-	protected Pattern getPattern() {
-		return _pattern;
-	}
-
-	@Override
-	protected String getReplacement(String originalImgTag, FileEntry fileEntry)
-		throws PortalException {
-
-		return _amImageHTMLTagFactory.create(originalImgTag, fileEntry);
-	}
-
-	@Override
-	protected boolean isSupported(FileEntry fileEntry) {
-		return _amImageMimeTypeProvider.isMimeTypeSupported(
-			fileEntry.getMimeType());
-	}
-
-	private static final Pattern _pattern = Pattern.compile(
-		"<img [^>]*?\\s*" + AMImageHTMLConstants.ATTRIBUTE_NAME_FILE_ENTRY_ID +
-			"=\"(\\d+)\".*?/?>",
-		Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
+	private static final String _OPEN_TAG_TOKEN_IMG = "<img ";
 
 	private final AMImageHTMLTagFactory _amImageHTMLTagFactory;
 	private final AMImageMimeTypeProvider _amImageMimeTypeProvider;

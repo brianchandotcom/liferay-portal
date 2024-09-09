@@ -52,6 +52,10 @@ public class DropZoneDocumentFragmentEntryProcessor
 			FragmentEntryProcessorContext fragmentEntryProcessorContext)
 		throws PortalException {
 
+		if (fragmentEntryProcessorContext.isIndexMode()) {
+			return;
+		}
+
 		Elements elements = document.getElementsByTag("lfr-drop-zone");
 
 		if (elements.isEmpty()) {

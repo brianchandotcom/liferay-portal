@@ -8,6 +8,7 @@
 		"@clayui/loading-indicator": "3.111.0",
 		"@clayui/shared": "3.119.0",
 		"@liferay/frontend-data-set-web": "*",
+		"@liferay/object-js-components-web": "*",
 		"data-engine-js-components-web": "*",
 		"dynamic-data-mapping-form-field-type": "*",
 		"frontend-js-web": "*",

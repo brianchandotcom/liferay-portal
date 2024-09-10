@@ -495,21 +495,25 @@ export class PagesAdminPage {
 	async selectClientExtension({
 		clientExtensionName,
 		layoutTitle,
+		openConfiguration = true,
 		siteUrl,
 		type,
 	}: {
 		clientExtensionName: string;
 		layoutTitle?: string;
+		openConfiguration?: boolean;
 		siteUrl?: Site['friendlyUrlPath'];
-		type?: string;
+		type?: 'globalCSS' | 'globalJS' | 'themeFavicon';
 	}) {
-		if (!layoutTitle) {
-			await this.gotoPagesConfiguration(siteUrl);
-		}
-		else {
-			await this.goto(siteUrl);
+		if (openConfiguration) {
+			if (!layoutTitle) {
+				await this.gotoPagesConfiguration(siteUrl);
+			}
+			else {
+				await this.goto(siteUrl);
 
-			await this.clickOnAction('Configure', layoutTitle);
+				await this.clickOnAction('Configure', layoutTitle);
+			}
 		}
 
 		if (type && type === 'globalCSS') {

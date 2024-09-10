@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {openToast} from 'frontend-js-web';
 import React, {useEffect, useRef, useState} from 'react';
 
 import {ITEM_ACTIVATION_ORIGINS} from '../config/constants/itemActivationOrigins';
@@ -220,6 +221,21 @@ export default function ShortcutManager() {
 		}
 	};
 
+	function isOnlyOneParentSelected(activeItemIds) {
+		if (activeItemIds?.length !== 1) {
+			openToast({
+				message: Liferay.Language.get(
+					'it-is-not-possible-to-paste-on-two-destinations-at-the-same-time-try-again-with-only-one-destination-selected'
+				),
+				type: 'danger',
+			});
+
+			return false;
+		}
+
+		return true;
+	}
+
 	const keymapRef = useRef(null);
 
 	keymapRef.current = {
@@ -328,7 +344,7 @@ export default function ShortcutManager() {
 				action: paste,
 				canBeExecuted: () =>
 					canUpdatePageStructure &&
-					activeItemIds?.length === 1 &&
+					isOnlyOneParentSelected(activeItemIds) &&
 					copiedNodeIds.every(
 						(copiedNodeId) =>
 							!!layoutData.items[copiedNodeId] &&

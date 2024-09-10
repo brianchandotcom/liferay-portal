@@ -10,6 +10,7 @@ import com.liferay.account.exception.AccountEntryStatusException;
 import com.liferay.account.exception.AccountEntryTypeException;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
+import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.pricing.constants.CommercePricingConstants;
 import com.liferay.commerce.product.channel.CommerceChannelTypeRegistry;
 import com.liferay.commerce.product.constants.CommerceChannelAccountEntryRelConstants;
@@ -39,6 +40,7 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
@@ -52,6 +54,7 @@ import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.RepositoryLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -150,6 +153,15 @@ public class CommerceChannelLocalServiceImpl
 			_updateGroupTypeSettings(group, siteGroupId);
 		}
 
+		// Repository
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+
+		PortletFileRepositoryUtil.addPortletRepository(
+			commerceChannel.getGroupId(),
+			CommerceConstants.SERVICE_NAME_COMMERCE_ORDER, serviceContext);
+
 		// Resources
 
 		_resourceLocalService.addModelResources(
@@ -216,6 +228,7 @@ public class CommerceChannelLocalServiceImpl
 
 		if (group != null) {
 			_groupLocalService.deleteGroup(group);
+			_repositoryLocalService.deleteRepositories(group.getGroupId());
 		}
 
 		_commerceChannelAccountEntryRelLocalService.
@@ -711,6 +724,9 @@ public class CommerceChannelLocalServiceImpl
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private RepositoryLocalService _repositoryLocalService;
 
 	@Reference
 	private ResourceLocalService _resourceLocalService;

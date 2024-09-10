@@ -57,6 +57,7 @@ import com.liferay.commerce.term.model.CommerceTermEntry;
 import com.liferay.commerce.term.service.CommerceTermEntryLocalService;
 import com.liferay.commerce.util.CommerceShippingEngineRegistry;
 import com.liferay.commerce.util.CommerceUtil;
+import com.liferay.document.library.kernel.util.DLAppHelperThreadLocal;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
@@ -64,6 +65,7 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -77,6 +79,9 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserConstants;
+import com.liferay.portal.kernel.repository.LocalRepository;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
@@ -99,8 +104,10 @@ import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -112,6 +119,9 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 
 import java.math.BigDecimal;
@@ -143,6 +153,71 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class CommerceOrderLocalServiceImpl
 	extends CommerceOrderLocalServiceBaseImpl {
+
+	@Override
+	public FileEntry addAttachmentFileEntry(
+			String externalReferenceCode, long userId, long commerceOrderId,
+			String fileName, InputStream inputStream)
+		throws PortalException {
+
+		if (Validator.isNull(fileName)) {
+			return null;
+		}
+
+		File file = null;
+
+		try {
+			CommerceOrder commerceOrder =
+				commerceOrderLocalService.getCommerceOrder(commerceOrderId);
+
+			DLAppHelperThreadLocal.setEnabled(false);
+
+			LocalRepository localRepository =
+				commerceOrder.getLocalRepository();
+
+			Folder folder = commerceOrder.getFolder(localRepository);
+
+			if (folder == null) {
+				ServiceContext serviceContext = new ServiceContext();
+
+				serviceContext.setAddGroupPermissions(true);
+				serviceContext.setAddGuestPermissions(true);
+				serviceContext.setCompanyId(commerceOrder.getCompanyId());
+				serviceContext.setUserId(commerceOrder.getUserId());
+
+				folder = localRepository.addFolder(
+					"order-" + commerceOrderId, commerceOrder.getUserId(), 0,
+					String.valueOf(commerceOrderId), StringPool.BLANK,
+					serviceContext);
+			}
+
+			file = FileUtil.createTempFile(inputStream);
+
+			ServiceContext serviceContext = new ServiceContext();
+
+			serviceContext.setAddGroupPermissions(true);
+			serviceContext.setAddGuestPermissions(true);
+			serviceContext.setAttribute(
+				"className", CommerceOrder.class.getName());
+			serviceContext.setAttribute(
+				"classPK", String.valueOf(commerceOrderId));
+			serviceContext.setIndexingEnabled(false);
+
+			return localRepository.addFileEntry(
+				externalReferenceCode, userId, folder.getFolderId(), fileName,
+				MimeTypesUtil.getContentType(file, fileName), fileName,
+				fileName, StringPool.BLANK, StringPool.BLANK, file, null, null,
+				null, serviceContext);
+		}
+		catch (IOException ioException) {
+			throw new SystemException(
+				"Unable to write temporary file", ioException);
+		}
+		finally {
+			DLAppHelperThreadLocal.setEnabled(true);
+			FileUtil.delete(file);
+		}
+	}
 
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x)
@@ -304,6 +379,17 @@ public class CommerceOrderLocalServiceImpl
 		commerceOrder.setExpandoBridgeAttributes(serviceContext);
 
 		commerceOrder = commerceOrderPersistence.update(commerceOrder);
+
+		// Add folder
+
+		LocalRepository localRepository = commerceOrder.getLocalRepository();
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+
+		localRepository.addFolder(
+			"order-" + commerceOrderId, user.getUserId(), 0,
+			String.valueOf(commerceOrderId), StringPool.BLANK, serviceContext);
 
 		// Workflow
 
@@ -467,6 +553,19 @@ public class CommerceOrderLocalServiceImpl
 
 		return commerceOrderLocalService.recalculatePrice(
 			commerceOrderId, commerceContext);
+	}
+
+	@Override
+	public void deleteAttachmentFileEntry(
+			long attachmentFileEntryId, long commerceOrderId)
+		throws PortalException {
+
+		CommerceOrder commerceOrder =
+			commerceOrderLocalService.getCommerceOrder(commerceOrderId);
+
+		LocalRepository localRepository = commerceOrder.getLocalRepository();
+
+		localRepository.deleteFileEntry(attachmentFileEntryId);
 	}
 
 	@Indexable(type = IndexableType.DELETE)

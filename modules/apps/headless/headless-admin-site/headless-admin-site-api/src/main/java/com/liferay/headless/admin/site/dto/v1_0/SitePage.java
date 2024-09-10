@@ -598,6 +598,49 @@ public class SitePage implements Serializable {
 	@JsonIgnore
 	private Supplier<Keyword[]> _keywordsSupplier;
 
+	@Schema(description = "The localized page's names.")
+	@Valid
+	public Map<String, String> getName_i18n() {
+		if (_name_i18nSupplier != null) {
+			name_i18n = _name_i18nSupplier.get();
+
+			_name_i18nSupplier = null;
+		}
+
+		return name_i18n;
+	}
+
+	public void setName_i18n(Map<String, String> name_i18n) {
+		this.name_i18n = name_i18n;
+
+		_name_i18nSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setName_i18n(
+		UnsafeSupplier<Map<String, String>, Exception>
+			name_i18nUnsafeSupplier) {
+
+		_name_i18nSupplier = () -> {
+			try {
+				return name_i18nUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(description = "The localized page's names.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Map<String, String> name_i18n;
+
+	@JsonIgnore
+	private Supplier<Map<String, String>> _name_i18nSupplier;
+
 	@Schema(description = "Settings of the page, such as SEO or OpenGraph.")
 	@Valid
 	public PageSettings getPageSettings() {
@@ -885,49 +928,6 @@ public class SitePage implements Serializable {
 	@JsonIgnore
 	private Supplier<ItemExternalReference[]>
 		_taxonomyCategoryItemExternalReferencesSupplier;
-
-	@Schema(description = "The localized page's titles.")
-	@Valid
-	public Map<String, String> getTitle_i18n() {
-		if (_title_i18nSupplier != null) {
-			title_i18n = _title_i18nSupplier.get();
-
-			_title_i18nSupplier = null;
-		}
-
-		return title_i18n;
-	}
-
-	public void setTitle_i18n(Map<String, String> title_i18n) {
-		this.title_i18n = title_i18n;
-
-		_title_i18nSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setTitle_i18n(
-		UnsafeSupplier<Map<String, String>, Exception>
-			title_i18nUnsafeSupplier) {
-
-		_title_i18nSupplier = () -> {
-			try {
-				return title_i18nUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField(description = "The localized page's titles.")
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Map<String, String> title_i18n;
-
-	@JsonIgnore
-	private Supplier<Map<String, String>> _title_i18nSupplier;
 
 	@JsonGetter("type")
 	@Schema
@@ -1319,6 +1319,18 @@ public class SitePage implements Serializable {
 			sb.append("]");
 		}
 
+		Map<String, String> name_i18n = getName_i18n();
+
+		if (name_i18n != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"name_i18n\": ");
+
+			sb.append(_toJSON(name_i18n));
+		}
+
 		PageSettings pageSettings = getPageSettings();
 
 		if (pageSettings != null) {
@@ -1432,18 +1444,6 @@ public class SitePage implements Serializable {
 			}
 
 			sb.append("]");
-		}
-
-		Map<String, String> title_i18n = getTitle_i18n();
-
-		if (title_i18n != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"title_i18n\": ");
-
-			sb.append(_toJSON(title_i18n));
 		}
 
 		Type type = getType();

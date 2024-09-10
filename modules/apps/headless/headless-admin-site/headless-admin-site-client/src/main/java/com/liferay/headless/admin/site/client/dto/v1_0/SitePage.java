@@ -291,6 +291,28 @@ public class SitePage implements Cloneable, Serializable {
 
 	protected Keyword[] keywords;
 
+	public Map<String, String> getName_i18n() {
+		return name_i18n;
+	}
+
+	public void setName_i18n(Map<String, String> name_i18n) {
+		this.name_i18n = name_i18n;
+	}
+
+	public void setName_i18n(
+		UnsafeSupplier<Map<String, String>, Exception>
+			name_i18nUnsafeSupplier) {
+
+		try {
+			name_i18n = name_i18nUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Map<String, String> name_i18n;
+
 	public PageSettings getPageSettings() {
 		return pageSettings;
 	}
@@ -430,28 +452,6 @@ public class SitePage implements Cloneable, Serializable {
 	}
 
 	protected ItemExternalReference[] taxonomyCategoryItemExternalReferences;
-
-	public Map<String, String> getTitle_i18n() {
-		return title_i18n;
-	}
-
-	public void setTitle_i18n(Map<String, String> title_i18n) {
-		this.title_i18n = title_i18n;
-	}
-
-	public void setTitle_i18n(
-		UnsafeSupplier<Map<String, String>, Exception>
-			title_i18nUnsafeSupplier) {
-
-		try {
-			title_i18n = title_i18nUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Map<String, String> title_i18n;
 
 	public Type getType() {
 		return type;

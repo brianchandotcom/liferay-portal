@@ -47,13 +47,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 @JsonSubTypes(
 	{
 		@JsonSubTypes.Type(
-			name = "CollectionPage", value = CollectionPageSettings.class
+			name = "CollectionPageSettings",
+			value = CollectionPageSettings.class
 		),
 		@JsonSubTypes.Type(
-			name = "ContentPage", value = ContentPageSettings.class
+			name = "ContentPageSettings", value = ContentPageSettings.class
 		),
 		@JsonSubTypes.Type(
-			name = "WidgetPage", value = WidgetPageSettings.class
+			name = "WidgetPageSettings", value = WidgetPageSettings.class
 		)
 	}
 )

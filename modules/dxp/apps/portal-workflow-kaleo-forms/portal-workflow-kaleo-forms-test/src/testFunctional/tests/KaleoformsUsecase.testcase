@@ -3358,6 +3358,7 @@ definition {
 		Workflow.viewPendingTasks(
 			workflowAssetTitle = "Kaleo Forms Process",
 			workflowAssetType = ${workflowAssetType},
+			workflowNavTab = "Assigned to Me",
 			workflowTask = "Review");
 
 		Workflow.gotoCompletedTaskAssignedToMePreview(workflowAssetTitle = "Kaleo Forms Process");
@@ -3598,6 +3599,7 @@ definition {
 		Workflow.viewPendingTasks(
 			workflowAssetTitle = "Kaleo Forms Process",
 			workflowAssetType = ${workflowAssetType},
+			workflowNavTab = "Assigned to Me",
 			workflowTask = "Update");
 
 		Workflow.resubmitTaskByActions(

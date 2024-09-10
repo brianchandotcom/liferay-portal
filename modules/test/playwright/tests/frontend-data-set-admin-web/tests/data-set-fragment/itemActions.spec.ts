@@ -10,6 +10,7 @@ import {isolatedLayoutTest} from '../../../../fixtures/isolatedLayoutTest';
 import {loginTest} from '../../../../fixtures/loginTest';
 import {liferayConfig} from '../../../../liferay.config';
 import getRandomString from '../../../../utils/getRandomString';
+import {waitForSuccessAlert} from '../../../../utils/waitForSuccessAlert';
 import {dataSetManagerApiHelpersTest} from '../../fixtures/dataSetManagerApiHelpersTest';
 import {
 	EAsyncActionMethod,
@@ -17,7 +18,6 @@ import {
 	EModalActionVariant,
 } from '../../utils/types';
 import {fdsFragmentPageTest} from './fixtures/fdsFragmentPageTest';
-import { waitForSuccessAlert } from '../../../../utils/waitForSuccessAlert';
 
 const LINK_ITEM_ACTION_NAME = 'Link item action';
 const LINK_ITEM_ACTION_CONFIRMATION_MESSAGE =
@@ -395,13 +395,17 @@ test.describe('Item Actions in Data Set fragment', () => {
 					.waitFor();
 
 				await expect(
-					page.locator(`#${dropdownId}`).getByRole('menuitem', { name: asyncItemActionName })
+					page
+						.locator(`#${dropdownId}`)
+						.getByRole('menuitem', {name: asyncItemActionName})
 				).toBeVisible();
-	
+
 				await expect(
-					page.locator(`#${dropdownId}`).getByRole('menuitem', { name: headlessItemActionName })
+					page
+						.locator(`#${dropdownId}`)
+						.getByRole('menuitem', {name: headlessItemActionName})
 				).toBeVisible();
-		
+
 				await expect(
 					page.locator(`#${dropdownId}`).getByRole('menuitem', {
 						name: nonAvailableHeadlessItemActionName,
@@ -514,9 +518,7 @@ test.describe('Item Actions in Data Set fragment', () => {
 		});
 
 		await test.step('Check data set items have two item actions', async () => {
-			const tableRow = await page
-				.locator('.dnd-td.item-actions')
-				.first();
+			const tableRow = await page.locator('.dnd-td.item-actions').first();
 
 			await expect(
 				tableRow.getByRole('button', {
@@ -541,20 +543,22 @@ test.describe('Item Actions in Data Set fragment', () => {
 				.waitFor();
 
 			await expect(
-				page.locator(`#${dropdownId}`).getByRole('menuitem', { name: asyncItemActionName })
+				page
+					.locator(`#${dropdownId}`)
+					.getByRole('menuitem', {name: asyncItemActionName})
 			).toBeVisible();
 
 			await expect(
-				page.locator(`#${dropdownId}`).getByRole('menuitem', { name: headlessItemActionName })
+				page
+					.locator(`#${dropdownId}`)
+					.getByRole('menuitem', {name: headlessItemActionName})
 			).toBeVisible();
-		
+
 			await page.keyboard.press('Escape');
 		});
 
 		await test.step('Click in the headless item action executes the action', async () => {
-			const tableRow = await page
-					.locator('.dnd-td.item-actions')
-					.first();
+			const tableRow = await page.locator('.dnd-td.item-actions').first();
 
 			const button = await tableRow.getByRole('button', {
 				exact: true,

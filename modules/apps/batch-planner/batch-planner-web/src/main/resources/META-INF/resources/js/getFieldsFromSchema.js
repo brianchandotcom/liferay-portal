@@ -14,11 +14,16 @@ const getFieldsFromSchema = (schema) => {
 	}
 
 	schema.forEach((field) => {
-		if (field.required) {
-			dbFields.required.push(field);
-		}
-		else {
-			dbFields.optional.push(field);
+		if (
+			!field.anyOfGroup ||
+			(field.type !== 'array' && field.type !== 'object')
+		) {
+			if (field.required) {
+				dbFields.required.push(field);
+			}
+			else {
+				dbFields.optional.push(field);
+			}
 		}
 	});
 

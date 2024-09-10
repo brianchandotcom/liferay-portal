@@ -172,60 +172,11 @@ public class UpstreamFailureUtil {
 		return null;
 	}
 
-	public static void init(TopLevelBuild topLevelBuild) {
-		if (_upstreamComparisonAvailable != null) {
-			return;
-		}
-
-		if (!(topLevelBuild instanceof PortalBranchInformationBuild) ||
-			Objects.equals(
-				_getUpstreamComparison(topLevelBuild.getJobName()), "false")) {
-
-			_upstreamComparisonAvailable = false;
-
-			return;
-		}
-
-		_setUpstreamTestrayRoutine(topLevelBuild);
-
-		if (_upstreamTestrayRoutine == null) {
-			_upstreamComparisonAvailable = false;
-
-			return;
-		}
-
-		_setUpstreamTestrayBuild(topLevelBuild);
-
-		if (_upstreamTestrayBuild == null) {
-			_upstreamComparisonAvailable = false;
-
-			return;
-		}
-
-		_setUpstreamTopLevelBuildReport(topLevelBuild);
-
-		if (_upstreamTopLevelBuildReport == null) {
-			_upstreamComparisonAvailable = false;
-
-			return;
-		}
-
-		_setUpstreamJobFailuresSHA(topLevelBuild);
-
-		if (JenkinsResultsParserUtil.isNullOrEmpty(_upstreamJobFailuresSHA)) {
-			_upstreamComparisonAvailable = false;
-
-			return;
-		}
-
-		_upstreamComparisonAvailable = true;
-	}
-
 	public static boolean isUpstreamComparisonAvailable(
 		TopLevelBuild topLevelBuild) {
 
 		try {
-			init(topLevelBuild);
+			_init(topLevelBuild);
 		}
 		catch (Exception exception) {
 			exception.printStackTrace();
@@ -343,6 +294,55 @@ public class UpstreamFailureUtil {
 				JenkinsResultsParserUtil.delete(testResultsJSONFile);
 			}
 		}
+	}
+
+	private static void _init(TopLevelBuild topLevelBuild) {
+		if (_upstreamComparisonAvailable != null) {
+			return;
+		}
+
+		if (!(topLevelBuild instanceof PortalBranchInformationBuild) ||
+			Objects.equals(
+				_getUpstreamComparison(topLevelBuild.getJobName()), "false")) {
+
+			_upstreamComparisonAvailable = false;
+
+			return;
+		}
+
+		_setUpstreamTestrayRoutine(topLevelBuild);
+
+		if (_upstreamTestrayRoutine == null) {
+			_upstreamComparisonAvailable = false;
+
+			return;
+		}
+
+		_setUpstreamTestrayBuild(topLevelBuild);
+
+		if (_upstreamTestrayBuild == null) {
+			_upstreamComparisonAvailable = false;
+
+			return;
+		}
+
+		_setUpstreamTopLevelBuildReport(topLevelBuild);
+
+		if (_upstreamTopLevelBuildReport == null) {
+			_upstreamComparisonAvailable = false;
+
+			return;
+		}
+
+		_setUpstreamJobFailuresSHA(topLevelBuild);
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(_upstreamJobFailuresSHA)) {
+			_upstreamComparisonAvailable = false;
+
+			return;
+		}
+
+		_upstreamComparisonAvailable = true;
 	}
 
 	private static void _setUpstreamJobFailuresSHA(

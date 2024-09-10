@@ -851,6 +851,44 @@ export class PageEditorPage {
 		await expect(editable).toHaveClass(/page-editor__editable--active/);
 	}
 
+	async selectVideo({
+		fragmentId,
+		isDesktop = true,
+		title,
+		videoURL,
+	}: {
+		fragmentId: string;
+		isDesktop?: boolean;
+		title?: string;
+		videoURL?: string;
+	}) {
+		await this.selectFragment(fragmentId, isDesktop);
+
+		await this.page.getByTitle('Select Video', {exact: true}).click();
+
+		const selectIframe = this.page.frameLocator('iframe[title="Select"]');
+
+		if (title) {
+			await selectIframe
+				.getByRole('link', {exact: true, name: 'Documents and Media'})
+				.click();
+
+			await selectIframe.getByTitle(title, {exact: true}).click();
+		}
+		else if (videoURL) {
+			await selectIframe.getByLabel('Video URL').fill(videoURL);
+
+			const addButton = selectIframe.getByRole('button', {
+				exact: true,
+				name: 'Add',
+			});
+
+			await addButton.isEnabled();
+
+			await addButton.click();
+		}
+	}
+
 	async setMappedItem({
 		entity,
 		entry,

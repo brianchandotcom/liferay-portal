@@ -7,6 +7,7 @@ import {Page, expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {displayPageTemplatesPagesTest} from '../../fixtures/displayPageTemplatesPagesTest';
+import {documentLibraryPagesTest} from '../../fixtures/documentLibraryPages.fixtures';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
@@ -40,6 +41,7 @@ import getPageDefinition from './utils/getPageDefinition';
 const test = mergeTests(
 	apiHelpersTest,
 	displayPageTemplatesPagesTest,
+	documentLibraryPagesTest,
 	featureFlagsTest({
 		'LPS-178052': true,
 	}),
@@ -658,6 +660,140 @@ test.describe('Dropdown Fragment', () => {
 			'0px'
 		);
 	});
+});
+
+test.describe('External Video', () => {
+	test(
+		'Uses External Video fragment and display a video from document library',
+		{
+			tag: '@LPS-130453',
+		},
+		async ({
+			apiHelpers,
+			documentLibraryEditFilePage,
+			documentLibraryPage,
+			page,
+			pageEditorPage,
+			site,
+		}) => {
+
+			// Add document library external video shortcut
+
+			await documentLibraryPage.goto(site.friendlyUrlPath);
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('menuitem', {
+					exact: true,
+					name: 'External Video Shortcut',
+				}),
+				trigger: page.getByRole('button', {exact: true, name: 'New'}),
+			});
+
+			await page
+				.getByLabel('Video URL')
+				.fill('https://www.youtube.com/watch?v=2EPZxIC5ogU');
+
+			await expect(page.getByLabel('Title')).toHaveValue(
+				'Life at Liferay - A Look into Liferay Culture'
+			);
+
+			await documentLibraryEditFilePage.publishFileEntry();
+
+			// Create page with a Video URL fragment and go to edit mode
+
+			const fragmentId = getRandomString();
+
+			const fragment = getFragmentDefinition({
+				id: fragmentId,
+				key: 'BASIC_COMPONENT-external-video',
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([fragment]),
+				siteId: site.id,
+				title: getRandomString(),
+			});
+
+			await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+			// Edit video URL and publish the page
+
+			await pageEditorPage.selectVideo({
+				fragmentId,
+				title: 'Life at Liferay - A Look into Liferay Culture',
+			});
+
+			await pageEditorPage.publishPage();
+
+			// Go to view mode and assert video
+
+			await page.goto(
+				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			const videoIframeLocator = page
+				.locator('.video-container')
+				.frameLocator('iframe');
+
+			await expect(
+				videoIframeLocator.getByText(
+					'Life at Liferay - A Look into Liferay Culture'
+				)
+			).toBeVisible();
+		}
+	);
+
+	test(
+		'Uses External Video fragment and display a video from URL',
+		{
+			tag: '@LPS-130453',
+		},
+		async ({apiHelpers, page, pageEditorPage, site}) => {
+
+			// Create page with a Video URL fragment and go to edit mode
+
+			const fragmentId = getRandomString();
+
+			const fragment = getFragmentDefinition({
+				id: fragmentId,
+				key: 'BASIC_COMPONENT-external-video',
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([fragment]),
+				siteId: site.id,
+				title: getRandomString(),
+			});
+
+			await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+			await pageEditorPage.selectVideo({
+				fragmentId,
+				videoURL: 'https://www.youtube.com/watch?v=2EPZxIC5ogU',
+			});
+
+			// Select video URL and publish the page
+
+			await pageEditorPage.publishPage();
+
+			// Go to view mode and assert video
+
+			await page.goto(
+				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			const videoIframeLocator = page
+				.locator('.video-container')
+				.frameLocator('iframe');
+
+			await expect(
+				videoIframeLocator.getByText(
+					'Life at Liferay - A Look into Liferay Culture'
+				)
+			).toBeVisible();
+		}
+	);
 });
 
 test.describe('HTML Fragment', () => {

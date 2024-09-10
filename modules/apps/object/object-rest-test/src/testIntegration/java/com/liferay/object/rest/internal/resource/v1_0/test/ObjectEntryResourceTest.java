@@ -5563,6 +5563,8 @@ public class ObjectEntryResourceTest {
 			).toString(),
 			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
 
+		_assertFilteredObjectEntries(2, "status eq 0");
+		_assertFilteredObjectEntries(1, "status eq 2");
 		_assertFilteredObjectEntries(2, "status/any(k:k eq 0)");
 		_assertFilteredObjectEntries(1, "status/any(k:k eq 2)");
 	}

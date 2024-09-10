@@ -5,7 +5,7 @@
 
 import {useLayoutEffect} from 'react';
 
-const usePublishSolutionHeader = () => {
+const usePublishHeader = () => {
 	useLayoutEffect(() => {
 		const marketplaceHeader = document.querySelector('.marketplace-header');
 		const marketplacePublisherContainer = document.querySelector(
@@ -31,4 +31,4 @@ const usePublishSolutionHeader = () => {
 	}, []);
 };
 
-export default usePublishSolutionHeader;
+export default usePublishHeader;

@@ -554,14 +554,18 @@ test.describe('Multistep', () => {
 
 				// Check Next button works
 
-				await page.locator('.btn', {hasText: 'Next'}).click();
+				await page
+					.locator('.btn', {hasText: 'Next'})
+					.click({position: {x: 10, y: 10}});
 
 				await expect(heading).not.toBeVisible();
 				await expect(button).toBeVisible();
 
 				// Check Previous button works
 
-				await page.locator('.btn', {hasText: 'Previous'}).click();
+				await page
+					.locator('.btn', {hasText: 'Previous'})
+					.click({position: {x: 10, y: 10}});
 
 				await expect(heading).toBeVisible();
 				await expect(button).not.toBeVisible();

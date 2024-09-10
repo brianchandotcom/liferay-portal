@@ -1161,6 +1161,15 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 	}
 
 	public void method(
+		String searchEngineId, long companyId, String className,
+		boolean commitImmediately) {
+
+	IndexWriterHelperUtil.deleteEntityDocuments("test123", 123, null, null);
+	IndexWriterHelperUtil.deleteEntityDocuments(searchEngineId, companyId, className, commitImmediately);
+	_indexWriterHelper.deleteEntityDocuments(searchEngineId, companyId, className, commitImmediately);
+	}
+
+	public void method(
 		String externalReferenceCode, long cProductId, String cpInstanceUuid,
 		long commercePriceListId, BigDecimal price, BigDecimal promoPrice,
 		ServiceContext serviceContext) {
@@ -1212,7 +1221,8 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 	private AssetCategoryLocalService _assetCategoryLocalService;
 
 	@Reference
-	private AssetDisplayPageFriendlyURLProvider _assetDisplayPageFriendlyURLProvider;
+	private AssetDisplayPageFriendlyURLProvider
+		_assetDisplayPageFriendlyURLProvider;
 
 	@Reference
 	private AssetVocabularyLocalService _assetVocabularyLocalService;

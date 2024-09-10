@@ -2287,6 +2287,37 @@ public class Mutation {
 						fieldNames));
 	}
 
+	@GraphQLField(
+		description = "Deletes the document metadata set and returns a 204 if the operation succeeds."
+	)
+	public boolean deleteDocumentMetadataSet(
+			@GraphQLName("documentMetadataSetId") Long documentMetadataSetId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_documentMetadataSetResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentMetadataSetResource ->
+				documentMetadataSetResource.deleteDocumentMetadataSet(
+					documentMetadataSetId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public Response deleteDocumentMetadataSetBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_documentMetadataSetResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentMetadataSetResource ->
+				documentMetadataSetResource.deleteDocumentMetadataSetBatch(
+					callbackURL, object));
+	}
+
 	@GraphQLField
 	public Response createSiteDocumentMetadataSetsPageExportBatch(
 			@GraphQLName("siteKey") @NotEmpty String siteKey,

@@ -226,6 +226,10 @@ public class ConfigurationImpl
 		return _EMPTY_ARRAY;
 	}
 
+	public List<String> getLoadedSources() {
+		return _classLoaderAggregateProperties.loadedSources();
+	}
+
 	@Override
 	public Properties getProperties() {
 		if (_properties != null) {
@@ -259,10 +263,6 @@ public class ConfigurationImpl
 	public Properties getProperties(String prefix, boolean removePrefix) {
 		return PropertiesUtil.getProperties(
 			getProperties(), prefix, removePrefix);
-	}
-
-	public List<String> getLoadedSources() {
-		return _classLoaderAggregateProperties.loadedSources();
 	}
 
 	@Override

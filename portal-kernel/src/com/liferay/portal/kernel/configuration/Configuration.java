@@ -27,11 +27,11 @@ public interface Configuration {
 
 	public String[] getArray(String key, Filter filter);
 
+	public List<String> getLoadedSources();
+
 	public Properties getProperties();
 
 	public Properties getProperties(String prefix, boolean removePrefix);
-
-	public List<String> getLoadedSources();
 
 	public void removeProperties(Properties properties);
 

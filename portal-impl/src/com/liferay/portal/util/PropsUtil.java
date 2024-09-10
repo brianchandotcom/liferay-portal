@@ -130,6 +130,12 @@ public class PropsUtil {
 		return configuration.getArray(key, filter);
 	}
 
+	public static List<String> getLoadedSources() {
+		Configuration configuration = _getConfiguration();
+
+		return configuration.getLoadedSources();
+	}
+
 	public static Properties getProperties() {
 		return getProperties(false);
 	}
@@ -192,12 +198,6 @@ public class PropsUtil {
 		Configuration configuration = _getConfiguration();
 
 		return configuration.getProperties(prefix, removePrefix);
-	}
-
-	public static List<String> getLoadedSources() {
-		Configuration configuration = _getConfiguration();
-
-		return configuration.getLoadedSources();
 	}
 
 	public static void removeProperties(

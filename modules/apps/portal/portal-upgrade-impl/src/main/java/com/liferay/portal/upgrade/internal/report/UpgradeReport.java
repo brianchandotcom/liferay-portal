@@ -310,6 +310,8 @@ public class UpgradeReport {
 					StringPool.PERIOD, db.getMinorVersion());
 			}
 		).put(
+			"jvm.arguments", _getJVMArguments()
+		).put(
 			"property",
 			() -> {
 				if (StringUtil.equals(
@@ -405,8 +407,6 @@ public class UpgradeReport {
 
 				return new PropertiesPrinter(propertiesMap);
 			}
-		).put(
-			"jvm.arguments", _getJVMArguments()
 		).put(
 			"document.library.storage.size",
 			() -> {

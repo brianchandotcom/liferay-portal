@@ -8,14 +8,19 @@ import {sub} from 'frontend-js-web';
 export const FORM_ERROR_TYPES = {
 	deletedFragment: 'deletedFragment',
 	draftNotAvailable: 'draftNotAvailable',
+	emptySteps: 'emptySteps',
 	hiddenFields: 'hiddenFields',
 	hiddenFragment: 'hiddenFragment',
 	missingFields: 'missingFields',
 	missingFragments: 'missingFragments',
+	missingNextButton: 'missingNextButton',
+	missingPreviousButton: 'missingPreviousButton',
 	missingSubmit: 'missingSubmit',
 };
 
-export function getFormErrorDescription({name = null, type}) {
+export function getFormErrorDescription(error) {
+	const {name = null, type} = error;
+
 	switch (type) {
 		case FORM_ERROR_TYPES.deletedFragment:
 			return {
@@ -34,6 +39,39 @@ export function getFormErrorDescription({name = null, type}) {
 				),
 				title: Liferay.Language.get('save-as-draft-not-available'),
 			};
+
+		case FORM_ERROR_TYPES.emptySteps: {
+			const steps = [...error.steps];
+
+			const lastStep = sub(Liferay.Language.get('step-x'), steps.pop());
+
+			const firstSteps = steps
+				.map((index) => sub(Liferay.Language.get('step-x'), index))
+				.join(', ');
+
+			return {
+				message: firstSteps.length
+					? sub(
+							Liferay.Language.get('x-and-x-of-x-form-are-empty'),
+							firstSteps,
+							lastStep,
+							name
+						)
+					: sub(
+							Liferay.Language.get('x-of-x-form-is-empty'),
+							lastStep,
+							name
+						),
+				summary: firstSteps.length
+					? sub(
+							Liferay.Language.get('x-and-x-are-empty'),
+							firstSteps,
+							lastStep
+						)
+					: sub(Liferay.Language.get('x-is-empty'), lastStep),
+				title: Liferay.Language.get('empty-steps'),
+			};
+		}
 
 		case FORM_ERROR_TYPES.hiddenFields:
 			return {
@@ -83,6 +121,94 @@ export function getFormErrorDescription({name = null, type}) {
 				),
 				title: Liferay.Language.get('fragment-mapping-missing'),
 			};
+
+		case FORM_ERROR_TYPES.missingNextButton: {
+			const steps = [...error.steps];
+
+			const lastStep = sub(Liferay.Language.get('step-x'), steps.pop());
+
+			const firstSteps = steps
+				.map((index) => sub(Liferay.Language.get('step-x'), index))
+				.join(', ');
+
+			return {
+				message: firstSteps.length
+					? sub(
+							Liferay.Language.get(
+								'next-button-is-hidden-or-missing-in-x-and-x-of-x-form'
+							),
+							firstSteps,
+							lastStep,
+							name
+						)
+					: sub(
+							Liferay.Language.get(
+								'next-button-is-hidden-or-missing-in-x-of-x-form'
+							),
+							lastStep,
+							name
+						),
+				summary: firstSteps.length
+					? sub(
+							Liferay.Language.get(
+								'next-button-is-hidden-or-missing-in-x-and-x'
+							),
+							firstSteps,
+							lastStep
+						)
+					: sub(
+							Liferay.Language.get(
+								'next-button-is-hidden-or-missing-in-x'
+							),
+							lastStep
+						),
+				title: Liferay.Language.get('next-button-missing'),
+			};
+		}
+
+		case FORM_ERROR_TYPES.missingPreviousButton: {
+			const steps = [...error.steps];
+
+			const lastStep = sub(Liferay.Language.get('step-x'), steps.pop());
+
+			const firstSteps = steps
+				.map((index) => sub(Liferay.Language.get('step-x'), index))
+				.join(', ');
+
+			return {
+				message: firstSteps.length
+					? sub(
+							Liferay.Language.get(
+								'previous-button-is-hidden-or-missing-in-x-and-x-of-x-form'
+							),
+							firstSteps,
+							lastStep,
+							name
+						)
+					: sub(
+							Liferay.Language.get(
+								'previous-button-is-hidden-or-missing-in-x-of-x-form'
+							),
+							lastStep,
+							name
+						),
+				summary: firstSteps.length
+					? sub(
+							Liferay.Language.get(
+								'previous-button-is-hidden-or-missing-in-x-and-x'
+							),
+							firstSteps,
+							lastStep
+						)
+					: sub(
+							Liferay.Language.get(
+								'previous-button-is-hidden-or-missing-in-x'
+							),
+							lastStep
+						),
+				title: Liferay.Language.get('previous-button-missing'),
+			};
+		}
 
 		case FORM_ERROR_TYPES.missingSubmit:
 			return {

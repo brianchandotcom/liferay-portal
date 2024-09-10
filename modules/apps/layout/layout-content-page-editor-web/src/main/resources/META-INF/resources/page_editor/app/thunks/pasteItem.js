@@ -15,13 +15,13 @@ export default function pasteItem({
 	selectItems = () => {},
 }) {
 	return (dispatch, getState) => {
-		const {layoutData} = getState();
+		const {layoutData, segmentsExperienceId} = getState();
 
 		FragmentService.pasteItem({
 			itemIds: filterSelectedItems(copyItemIds, layoutData),
 			onNetworkStatus: dispatch,
 			parentItemId,
-			segmentsExperienceId: getState().segmentsExperienceId,
+			segmentsExperienceId,
 		}).then(
 			({
 				copiedFragmentEntryLinks,

@@ -31,7 +31,7 @@ public interface Configuration {
 
 	public Properties getProperties(String prefix, boolean removePrefix);
 
-	public List<String> loadedSources();
+	public List<String> getLoadedSources();
 
 	public void removeProperties(Properties properties);
 

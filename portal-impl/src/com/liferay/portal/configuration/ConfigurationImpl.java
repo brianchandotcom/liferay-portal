@@ -261,7 +261,7 @@ public class ConfigurationImpl
 			getProperties(), prefix, removePrefix);
 	}
 
-	public List<String> loadedSources() {
+	public List<String> getLoadedSources() {
 		return _classLoaderAggregateProperties.loadedSources();
 	}
 

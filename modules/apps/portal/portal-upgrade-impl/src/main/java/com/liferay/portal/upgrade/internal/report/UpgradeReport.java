@@ -124,7 +124,7 @@ public class UpgradeReport {
 	}
 
 	private List<String> _getFilePaths() {
-		List<String> loadedSources = PropsUtil.loadedSources();
+		List<String> loadedSources = PropsUtil.getLoadedSources();
 
 		List<String> sourcePaths = new ArrayList<>();
 

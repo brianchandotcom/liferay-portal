@@ -194,10 +194,10 @@ public class PropsUtil {
 		return configuration.getProperties(prefix, removePrefix);
 	}
 
-	public static List<String> loadedSources() {
+	public static List<String> getLoadedSources() {
 		Configuration configuration = _getConfiguration();
 
-		return configuration.loadedSources();
+		return configuration.getLoadedSources();
 	}
 
 	public static void removeProperties(

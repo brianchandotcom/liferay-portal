@@ -1196,6 +1196,15 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 	}
 
 	public void method(
+		String searchEngineId, long companyId, String className,
+		boolean commitImmediately) {
+
+		IndexWriterHelperUtil.deleteEntityDocuments("test123", companyId, className, commitImmediately);
+		IndexWriterHelperUtil.deleteEntityDocuments(companyId, className, commitImmediately);
+		_indexWriterHelper.deleteEntityDocuments(companyId, className, commitImmediately);
+	}
+
+	public void method(
 		String externalReferenceCode, long cProductId, String cpInstanceUuid,
 		long commercePriceListId, BigDecimal price, BigDecimal promoPrice,
 		ServiceContext serviceContext) {

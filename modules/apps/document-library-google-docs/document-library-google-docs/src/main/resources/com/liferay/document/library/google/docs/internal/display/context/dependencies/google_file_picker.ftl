@@ -65,8 +65,8 @@ GoogleFilePicker.prototype = {
 
 		var tokenClient = google.accounts.oauth2.initTokenClient({
 			client_id: GoogleFilePicker.CLIENT_ID,
-			'immediate': false,
-			scope: GoogleFilePicker.SCOPE[0],
+			immediate: false,
+			scope: GoogleFilePicker.SCOPE,
 			callback: (authResult) => {
 				if (authResult && authResult.error !== undefined) {
 					throw (authResult);
@@ -79,7 +79,9 @@ GoogleFilePicker.prototype = {
 				instance._createPicker();
 			},
 			error_callback: function(error) {
-				console.error(error);
+				if (process.env.NODE_ENV === 'development') {
+					console.error(error);
+				}
 			}
 		});
 
@@ -118,9 +120,7 @@ GoogleFilePicker.API_KEY = '${htmlUtil.escapeJS(googleAppsAPIKey)}';
 
 GoogleFilePicker.CLIENT_ID = '${htmlUtil.escapeJS(googleClientId)}';
 
-GoogleFilePicker.SCOPE = [
-	'https://www.googleapis.com/auth/drive.readonly'
-];
+GoogleFilePicker.SCOPE = 'https://www.googleapis.com/auth/drive.readonly';
 
 window.onGisAPILoad = function() {
 	Liferay.fire('gisAPILoaded');

@@ -215,8 +215,7 @@ public class ObjectEntryEntityModel implements EntityModel {
 						"keywords", locale -> "assetTagNames.lowercase"))
 			).put(
 				"status",
-				new CollectionEntityField(
-					new IntegerEntityField("status", locale -> Field.STATUS))
+				new IntegerEntityField("status", locale -> Field.STATUS)
 			).put(
 				"taxonomyCategoryIds",
 				new CollectionEntityField(

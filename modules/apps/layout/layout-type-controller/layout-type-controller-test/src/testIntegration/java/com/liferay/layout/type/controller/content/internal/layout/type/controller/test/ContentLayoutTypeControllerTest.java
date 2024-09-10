@@ -14,6 +14,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
+import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.utility.page.kernel.constants.LayoutUtilityPageEntryConstants;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
@@ -37,6 +38,7 @@ import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -104,6 +106,26 @@ public class ContentLayoutTypeControllerTest {
 		_includeDraftLayoutContent(
 			ActionKeys.PREVIEW_DRAFT,
 			LayoutTestUtil.addTypeContentLayout(_group), Constants.EDIT);
+	}
+
+	@Test
+	@TestInfo("LPS-125516")
+	public void testContentLayoutTypeControllerDraftEditWithViewPermission()
+		throws Exception {
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
+
+		LayoutTypeController layoutTypeController =
+			LayoutTypeControllerTracker.getLayoutTypeController(
+				layout.getType());
+
+		Assert.assertFalse(
+			layoutTypeController.includeLayoutContent(
+				_getHttpServletRequest(
+					Constants.EDIT, _getUser(ActionKeys.VIEW)),
+				new MockHttpServletResponse(), layout));
 	}
 
 	@Test

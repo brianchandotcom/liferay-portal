@@ -1784,56 +1784,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-125388. The new user can edit specific content page as site member with update permission."
-	@priority = 4
-	test EditSpecificContentPageAsSiteMemberWithUpdatePermission {
-		task ("Grant Update permission of specific content page to Site Member") {
-			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
-
-			PagesAdmin.gotoPageEllipsisMenuItem(
-				menuItem = "Permissions",
-				pageName = "Test Content Page Name");
-
-			IFrame.selectPermissionsFrame();
-
-			Check.checkNotVisible(
-				key_actionName = "UPDATE",
-				key_roleTitle = "site-member",
-				locator1 = "Permissions#PERMISSIONS_MODAL_CHECKBOX");
-
-			PortletEntry.save();
-		}
-
-		task ("Sign in as new user") {
-			User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
-		}
-
-		task ("Add a Paragraph fragment to content page") {
-			ContentPagesNavigator.openViewContentPage(
-				pageName = "Test Content Page Name",
-				siteName = ${randomSiteName});
-
-			ContentPages.gotoPageEditor();
-
-			PageEditor.addFragment(
-				collectionName = "Basic Components",
-				fragmentName = "Paragraph");
-		}
-
-		task ("Publish the content page") {
-			PageEditor.publish();
-		}
-
-		task ("View the Paragraph shown on content page at view mode") {
-			WaitForVisible(locator1 = "Icon#EDIT_PENCIL");
-
-			ContentPages.viewFragmentText(
-				fragmentName = "paragraph",
-				id = "element-text",
-				text = "A paragraph is a self-contained unit of a discourse in writing dealing with a particular point or idea. Paragraphs are usually an expected part of formal writing, used to organize longer prose.");
-		}
-	}
-
 	@description = "This is a test for LPS-105109. Content author having permissions to update page content can introduce new inline content after clicking edit icon in content page."
 	@priority = 5
 	test MapContentWithUpdatePageContentPermission {

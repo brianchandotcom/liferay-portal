@@ -14,23 +14,23 @@ import React, {
 type ItemIds = [];
 
 const INITIAL_STATE: {
-	copiedNodeIds: ItemIds;
-	setCopiedNodeIds: Dispatch<SetStateAction<ItemIds>>;
+	copiedItemIds: ItemIds;
+	setCopiedItemIds: Dispatch<SetStateAction<ItemIds>>;
 } = {
-	copiedNodeIds: [],
-	setCopiedNodeIds: () => [],
+	copiedItemIds: [],
+	setCopiedItemIds: () => [],
 };
 
 const ClipboardContext = React.createContext(INITIAL_STATE);
 
 function ClipboardContextProvider({children}: {children: ReactNode}) {
-	const [copiedNodeIds, setCopiedNodeIds] = useState<ItemIds>([]);
+	const [copiedItemIds, setCopiedItemIds] = useState<ItemIds>([]);
 
 	return (
 		<ClipboardContext.Provider
 			value={{
-				copiedNodeIds,
-				setCopiedNodeIds,
+				copiedItemIds,
+				setCopiedItemIds,
 			}}
 		>
 			{children}
@@ -38,12 +38,12 @@ function ClipboardContextProvider({children}: {children: ReactNode}) {
 	);
 }
 
-function useCopiedNodeIds() {
-	return useContext(ClipboardContext).copiedNodeIds;
+function useCopiedItemIds() {
+	return useContext(ClipboardContext).copiedItemIds;
 }
 
-function useSetCopiedNodeIds() {
-	return useContext(ClipboardContext).setCopiedNodeIds;
+function useSetCopiedItemIds() {
+	return useContext(ClipboardContext).setCopiedItemIds;
 }
 
-export {ClipboardContextProvider, useCopiedNodeIds, useSetCopiedNodeIds};
+export {ClipboardContextProvider, useCopiedItemIds, useSetCopiedItemIds};

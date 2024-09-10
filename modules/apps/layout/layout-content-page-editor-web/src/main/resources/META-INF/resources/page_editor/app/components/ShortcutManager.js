@@ -22,8 +22,8 @@ import {
 } from '../config/constants/keyboardCodes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import {
-	useCopiedNodeIds,
-	useSetCopiedNodeIds,
+	useCopiedItemIds,
+	useSetCopiedItemIds,
 } from '../contexts/ClipboardContext';
 import {
 	useActiveItemIds,
@@ -77,19 +77,19 @@ const isWithinIframe = () => {
 export default function ShortcutManager() {
 	const activeItemIds = useActiveItemIds();
 	const activeItemType = useActiveItemType();
-	const dispatch = useDispatch();
 	const canUpdatePageStructure = useSelector(selectCanUpdatePageStructure);
-	const copiedNodeIds = useCopiedNodeIds();
-	const {onRedo, onUndo} = useUndoRedoActions();
+	const copiedItemIds = useCopiedItemIds();
+	const dispatch = useDispatch();
 	const [openSaveModal, setOpenSaveModal] = useState(false);
 	const openShortcutModal = useOpenShorcutModal();
 	const selectItem = useSelectItem();
 	const selectMultipleItems = useSelectMultipleItems();
+	const setCopiedItemIds = useSetCopiedItemIds();
 	const setEditedNodeId = useSetEditedNodeId();
-	const setCopiedNodeIds = useSetCopiedNodeIds();
 	const setOpenShorcutModal = useSetOpenShorcutModal();
 	const state = useSelector((state) => state);
 	const sidebarHidden = state.sidebar.hidden;
+	const {onRedo, onUndo} = useUndoRedoActions();
 	const {widgets} = state;
 
 	const selectItems = Liferay.FeatureFlags['LPD-18221']
@@ -114,11 +114,11 @@ export default function ShortcutManager() {
 	);
 
 	const copy = () => {
-		setCopiedNodeIds(activeItemIds);
+		setCopiedItemIds(activeItemIds);
 	};
 
 	const cut = () => {
-		setCopiedNodeIds(activeItemIds);
+		setCopiedItemIds(activeItemIds);
 
 		dispatch(
 			deleteItem({
@@ -158,7 +158,7 @@ export default function ShortcutManager() {
 	const paste = () => {
 		dispatch(
 			pasteItem({
-				copyItemIds: copiedNodeIds,
+				copyItemIds: copiedItemIds,
 				parentItemId: activeItemIds[0],
 				selectItems,
 			})
@@ -345,12 +345,12 @@ export default function ShortcutManager() {
 				canBeExecuted: () =>
 					canUpdatePageStructure &&
 					isOnlyOneParentSelected(activeItemIds) &&
-					copiedNodeIds.every(
-						(copiedNodeId) =>
-							!!layoutData.items[copiedNodeId] &&
+					copiedItemIds.every(
+						(copiedItemId) =>
+							!!layoutData.items[copiedItemId] &&
 							canBeDuplicated(
 								fragmentEntryLinks,
-								layoutData.items[copiedNodeId],
+								layoutData.items[copiedItemId],
 								layoutData,
 								widgets
 							)

@@ -38,6 +38,7 @@ import {
 	setSegmentName,
 } from './utils/segments';
 import {CardSelectors, SegmentConditions} from './utils/selectors';
+import {closeSessions} from './utils/sessions';
 import {changeTimeFilter} from './utils/time-filter';
 import {
 	viewNameNotPresentOnTableList,
@@ -695,6 +696,104 @@ test(
 				`[${channel.id}]`,
 				project.groupId
 			);
+		});
+	}
+);
+
+test(
+	'Page profile views by technology shows which browsers are being used',
+	{
+		tag: '@Legacy',
+	},
+
+	async ({apiHelpers, page}) => {
+		const randomString = getRandomString();
+		const channelName = 'My Property ' + randomString;
+		const siteName = 'My Site ' + randomString;
+		const pageTitle = 'My Page ' + randomString;
+
+		const site = await apiHelpers.headlessSite.createSite({
+			name: siteName,
+		});
+
+		await createSitePage({
+			apiHelpers,
+			pageTitle,
+			siteName,
+		});
+
+		const {channel, project} = await syncAnalyticsCloud({
+			apiHelpers,
+			channelName,
+			page,
+			siteName,
+		});
+
+		await test.step('Go to My Page', async () => {
+			await navigateToSitePage({
+				page,
+				pageName: pageTitle,
+				siteName,
+			});
+			await page.waitForTimeout(10000);
+
+			await closeSessions(apiHelpers, page);
+		});
+
+		await test.step('Go to Analytics Cloud and Switch the property', async () => {
+			await navigateToACWorkspace({page});
+			await switchChannel({
+				channelName,
+				page,
+			});
+		});
+
+		await test.step('Go to Pages Tab', async () => {
+			await navigateTo({
+				page,
+				pageName: 'Pages',
+			});
+		});
+
+		await test.step('Change the time filter to Last 24 hours', async () => {
+			await changeTimeFilter({
+				page,
+				timeFilterPeriod: 'Last 24 hours',
+			});
+		});
+
+		await test.step('Access one of the pages on the list', async () => {
+			await navigateTo({
+				page,
+				pageName: pageTitle,
+			});
+		});
+
+		await test.step('View Technology Browsers Metrics', async () => {
+			await page
+				.getByText('Views by Technology')
+				.scrollIntoViewIfNeeded();
+
+			await page.getByRole('button', {name: 'Browsers'}).click();
+
+			await expect(page.getByText('Views by Technology')).toBeVisible();
+
+			await expect(page.getByText('Chrome')).toBeVisible();
+
+			await expect(page.locator('.legend-percentage')).toContainText(
+				'100%'
+			);
+		});
+
+		await test.step('Delete channel', async () => {
+			await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
+				`[${channel.id}]`,
+				project.groupId
+			);
+		});
+
+		await test.step('Delete site on DXP side', async () => {
+			await navigateToDXPandDeleteSite({apiHelpers, page, site});
 		});
 	}
 );

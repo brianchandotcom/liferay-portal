@@ -14,6 +14,7 @@ import {pageViewModePagesTest} from '../../fixtures/pageViewModePagesTest';
 import {pagesAdminPagesTest} from '../../fixtures/pagesAdminPagesTest';
 import {productMenuPageTest} from '../../fixtures/productMenuPageTest';
 import {serverAdministrationPageTest} from '../../fixtures/serverAdministrationPageTest';
+import {sitesPageTest} from '../../fixtures/sitesPageTest';
 import {systemSettingsPageTest} from '../../fixtures/systemSettingsPageTest';
 import {uiElementsPageTest} from '../../fixtures/uiElementsTest';
 import {webContentDisplayPageTest} from '../../fixtures/webContentDisplayPageTest';
@@ -47,6 +48,7 @@ export const test = mergeTests(
 	pageViewModePagesTest,
 	webContentDisplayPageTest,
 	pageEditorPagesTest,
+	sitesPageTest,
 	serverAdministrationPageTest,
 	systemSettingsPageTest,
 	loginTest(),
@@ -90,9 +92,10 @@ test(
 			await applicationsMenuPage.goToGlobalSite();
 			await productMenuPage.checkIfAdecuateProductMenu('Global');
 			await productMenuPage.openProductMenuIfClosed();
+
 			await productMenuPage.goToWebContent();
 			await journalPage.goToCreateArticle();
-			await journalPage.fillArticleData(webContentName, text);
+			await journalPage.fillArticleDataSiteTemplate(webContentName, text);
 			await journalPage.publishArticle();
 
 			await createSiteTemplateWithContentPageAndAssetPublisher({
@@ -129,14 +132,14 @@ test(
 			await productMenuPage.openProductMenuIfClosed();
 
 			await productMenuPage.goToPages();
-			await page
-				.locator('.control-menu-level-1-heading')
-				.filter({hasText: 'Pages'})
-				.waitFor();
-
-			await pagesAdminPage.addWidgetPage({
-				addButtonLabel: 'Add Site Template Page',
+			await pagesAdminPage.newButton.click();
+			await layoutSetPrototypePage.addTemplatePageButton.waitFor({
+				state: 'visible',
+			});
+			await layoutSetPrototypePage.addTemplatePageButton.click();
+			await pagesAdminPage.addPage({
 				name: secondPageNameOnSiteTemplate,
+				successMessage: 'Success:The page was created successfully.',
 			});
 
 			await journalPage.goto('/global');
@@ -545,7 +548,6 @@ async function createSiteTemplateWithContentPageAndAssetPublisher({
 	pagesAdminPage,
 	productMenuPage,
 	templateName,
-	uiElementsPage,
 }: {
 	applicationsMenuPage: ApplicationsMenuPage;
 	layoutSetPrototypePage: LayoutSetPrototypePage;
@@ -567,22 +569,14 @@ async function createSiteTemplateWithContentPageAndAssetPublisher({
 	await productMenuPage.openProductMenuIfClosed();
 
 	await productMenuPage.goToPages();
-	await uiElementsPage.clickNewButton();
-	if (!layoutSetPrototypePage.addTemplatePageButton.isVisible) {
-		await uiElementsPage.clickNewButton();
-		await layoutSetPrototypePage.addTemplatePageButton.waitFor({
-			state: 'visible',
-		});
-	}
+	await pagesAdminPage.newButton.click();
+	await layoutSetPrototypePage.addTemplatePageButton.waitFor({
+		state: 'visible',
+	});
 	await layoutSetPrototypePage.addTemplatePageButton.click();
-	await page
-		.locator('.control-menu-level-1-heading')
-		.filter({hasText: 'Pages'})
-		.waitFor();
-
-	await pagesAdminPage.addWidgetPage({
-		addButtonLabel: 'Add Site Template Page',
+	await pagesAdminPage.addPage({
 		name: templateName,
+		successMessage: 'Success:The page was created successfully.',
 	});
 	await pageEditorPage.addWidget('Content Management', 'Asset Publisher');
 

@@ -8,6 +8,7 @@ package com.liferay.commerce.model.impl;
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalServiceUtil;
+import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.model.CommerceMoney;
@@ -22,9 +23,16 @@ import com.liferay.commerce.service.CommerceOrderItemLocalServiceUtil;
 import com.liferay.commerce.service.CommerceShippingMethodLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Repository;
+import com.liferay.portal.kernel.repository.LocalRepository;
+import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.service.RepositoryLocalServiceUtil;
 
 import java.math.BigDecimal;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -44,6 +52,26 @@ public class CommerceOrderImpl extends CommerceOrderBaseImpl {
 
 		return AccountEntryLocalServiceUtil.getAccountEntry(
 			getCommerceAccountId());
+	}
+
+	@Override
+	public List<FileEntry> getAttachmentFileEntries(int start, int end)
+		throws PortalException {
+
+		LocalRepository localRepository = getLocalRepository();
+
+		if (localRepository == null) {
+			return Collections.emptyList();
+		}
+
+		Folder folder = getFolder(localRepository);
+
+		if (folder == null) {
+			return Collections.emptyList();
+		}
+
+		return localRepository.getFileEntries(
+			folder.getFolderId(), start, end, null);
 	}
 
 	@Override
@@ -118,6 +146,29 @@ public class CommerceOrderImpl extends CommerceOrderBaseImpl {
 	public int getCustomerCommerceOrderIdsCount() {
 		return CommerceOrderItemLocalServiceUtil.
 			getCustomerCommerceOrderIdsCount(getCommerceOrderId());
+	}
+
+	@Override
+	public Folder getFolder(LocalRepository localRepository) {
+		if (localRepository == null) {
+			return null;
+		}
+
+		return localRepository.fetchFolderByExternalReferenceCode(
+			"order-" + getCommerceOrderId());
+	}
+
+	@Override
+	public LocalRepository getLocalRepository() throws PortalException {
+		Repository repository = RepositoryLocalServiceUtil.fetchRepository(
+			getGroupId(), CommerceConstants.SERVICE_NAME_COMMERCE_ORDER);
+
+		if (repository == null) {
+			return null;
+		}
+
+		return RepositoryProviderUtil.getLocalRepository(
+			repository.getRepositoryId());
 	}
 
 	@Override

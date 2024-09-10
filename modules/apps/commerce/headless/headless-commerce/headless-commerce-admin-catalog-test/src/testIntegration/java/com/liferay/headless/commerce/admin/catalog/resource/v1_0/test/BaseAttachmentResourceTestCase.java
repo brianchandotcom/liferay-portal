@@ -166,6 +166,8 @@ public abstract class BaseAttachmentResourceTestCase {
 		attachment.setCdnURL(regex);
 		attachment.setContentType(regex);
 		attachment.setExternalReferenceCode(regex);
+		attachment.setFileEntryExternalReferenceCode(regex);
+		attachment.setFileEntryGroupExternalReferenceCode(regex);
 		attachment.setSrc(regex);
 
 		String json = AttachmentSerDes.toJSON(attachment);
@@ -178,6 +180,10 @@ public abstract class BaseAttachmentResourceTestCase {
 		Assert.assertEquals(regex, attachment.getCdnURL());
 		Assert.assertEquals(regex, attachment.getContentType());
 		Assert.assertEquals(regex, attachment.getExternalReferenceCode());
+		Assert.assertEquals(
+			regex, attachment.getFileEntryExternalReferenceCode());
+		Assert.assertEquals(
+			regex, attachment.getFileEntryGroupExternalReferenceCode());
 		Assert.assertEquals(regex, attachment.getSrc());
 	}
 
@@ -192,10 +198,189 @@ public abstract class BaseAttachmentResourceTestCase {
 			attachmentResource.
 				deleteAttachmentByExternalReferenceCodeHttpResponse(
 					attachment.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			attachmentResource.getAttachmentByExternalReferenceCodeHttpResponse(
+				attachment.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			attachmentResource.getAttachmentByExternalReferenceCodeHttpResponse(
+				attachment.getExternalReferenceCode()));
 	}
 
 	protected Attachment
 			testDeleteAttachmentByExternalReferenceCode_addAttachment()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGetAttachmentByExternalReferenceCode() throws Exception {
+		Attachment postAttachment =
+			testGetAttachmentByExternalReferenceCode_addAttachment();
+
+		Attachment getAttachment =
+			attachmentResource.getAttachmentByExternalReferenceCode(
+				postAttachment.getExternalReferenceCode());
+
+		assertEquals(postAttachment, getAttachment);
+		assertValid(getAttachment);
+	}
+
+	protected Attachment
+			testGetAttachmentByExternalReferenceCode_addAttachment()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetAttachmentByExternalReferenceCode()
+		throws Exception {
+
+		Attachment attachment =
+			testGraphQLGetAttachmentByExternalReferenceCode_addAttachment();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				attachment,
+				AttachmentSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"attachmentByExternalReferenceCode",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"externalReferenceCode",
+											"\"" +
+												attachment.
+													getExternalReferenceCode() +
+														"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/attachmentByExternalReferenceCode"))));
+
+		// Using the namespace headlessCommerceAdminCatalog_v1_0
+
+		Assert.assertTrue(
+			equals(
+				attachment,
+				AttachmentSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceAdminCatalog_v1_0",
+								new GraphQLField(
+									"attachmentByExternalReferenceCode",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"externalReferenceCode",
+												"\"" +
+													attachment.
+														getExternalReferenceCode() +
+															"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceAdminCatalog_v1_0",
+						"Object/attachmentByExternalReferenceCode"))));
+	}
+
+	@Test
+	public void testGraphQLGetAttachmentByExternalReferenceCodeNotFound()
+		throws Exception {
+
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"attachmentByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceAdminCatalog_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceAdminCatalog_v1_0",
+						new GraphQLField(
+							"attachmentByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										irrelevantExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected Attachment
+			testGraphQLGetAttachmentByExternalReferenceCode_addAttachment()
+		throws Exception {
+
+		return testGraphQLAttachment_addAttachment();
+	}
+
+	@Test
+	public void testPatchAttachmentByExternalReferenceCode() throws Exception {
+		Attachment postAttachment =
+			testPatchAttachmentByExternalReferenceCode_addAttachment();
+
+		Attachment randomPatchAttachment = randomPatchAttachment();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Attachment patchAttachment =
+			attachmentResource.patchAttachmentByExternalReferenceCode(
+				postAttachment.getExternalReferenceCode(),
+				randomPatchAttachment);
+
+		Attachment expectedPatchAttachment = postAttachment.clone();
+
+		BeanTestUtil.copyProperties(
+			randomPatchAttachment, expectedPatchAttachment);
+
+		Attachment getAttachment =
+			attachmentResource.getAttachmentByExternalReferenceCode(
+				patchAttachment.getExternalReferenceCode());
+
+		assertEquals(expectedPatchAttachment, getAttachment);
+		assertValid(getAttachment);
+	}
+
+	protected Attachment
+			testPatchAttachmentByExternalReferenceCode_addAttachment()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -1360,6 +1545,30 @@ public abstract class BaseAttachmentResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"fileEntryExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (attachment.getFileEntryExternalReferenceCode() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"fileEntryGroupExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (attachment.getFileEntryGroupExternalReferenceCode() ==
+						null) {
+
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("fileEntryId", additionalAssertFieldName)) {
 				if (attachment.getFileEntryId() == null) {
 					valid = false;
@@ -1631,6 +1840,34 @@ public abstract class BaseAttachmentResourceTestCase {
 				if (!Objects.deepEquals(
 						attachment1.getExternalReferenceCode(),
 						attachment2.getExternalReferenceCode())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"fileEntryExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						attachment1.getFileEntryExternalReferenceCode(),
+						attachment2.getFileEntryExternalReferenceCode())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"fileEntryGroupExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						attachment1.getFileEntryGroupExternalReferenceCode(),
+						attachment2.getFileEntryGroupExternalReferenceCode())) {
 
 					return false;
 				}
@@ -2106,6 +2343,98 @@ public abstract class BaseAttachmentResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("fileEntryExternalReferenceCode")) {
+			Object object = attachment.getFileEntryExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("fileEntryGroupExternalReferenceCode")) {
+			Object object = attachment.getFileEntryGroupExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("fileEntryId")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -2253,6 +2582,10 @@ public abstract class BaseAttachmentResourceTestCase {
 				displayDate = RandomTestUtil.nextDate();
 				expirationDate = RandomTestUtil.nextDate();
 				externalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				fileEntryExternalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				fileEntryGroupExternalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				fileEntryId = RandomTestUtil.randomLong();
 				galleryEnabled = RandomTestUtil.randomBoolean();

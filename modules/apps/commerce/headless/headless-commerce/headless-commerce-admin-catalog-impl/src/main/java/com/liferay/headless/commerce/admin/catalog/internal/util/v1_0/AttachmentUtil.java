@@ -19,6 +19,7 @@ import com.liferay.commerce.product.service.CPDefinitionOptionValueRelService;
 import com.liferay.commerce.product.service.CPOptionService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Attachment;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.AttachmentBase64;
@@ -27,16 +28,19 @@ import com.liferay.headless.commerce.admin.catalog.internal.util.DateConfigUtil;
 import com.liferay.headless.commerce.core.util.DateConfig;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
@@ -198,8 +202,9 @@ public class AttachmentUtil {
 			GetterUtil.get(attachmentBase64.getGalleryEnabled(), true),
 			getTitleMap(null, attachmentBase64.getTitle()),
 			_getJSON(
-				cpDefinitionOptionRelService, cpDefinitionOptionValueRelService,
-				cpOptionService, attachmentBase64.getOptions(), classPK,
+				null, cpDefinitionOptionRelService,
+				cpDefinitionOptionValueRelService, cpOptionService,
+				attachmentBase64.getOptions(), classPK,
 				serviceContext.getCompanyId()),
 			GetterUtil.getDouble(attachmentBase64.getPriority()), type,
 			serviceContext);
@@ -259,8 +264,9 @@ public class AttachmentUtil {
 			GetterUtil.get(attachmentUrl.getGalleryEnabled(), true),
 			getTitleMap(null, attachmentUrl.getTitle()),
 			_getJSON(
-				cpDefinitionOptionRelService, cpDefinitionOptionValueRelService,
-				cpOptionService, attachmentUrl.getOptions(), classPK,
+				null, cpDefinitionOptionRelService,
+				cpDefinitionOptionValueRelService, cpOptionService,
+				attachmentUrl.getOptions(), classPK,
 				serviceContext.getCompanyId()),
 			GetterUtil.getDouble(attachmentUrl.getPriority()), type,
 			serviceContext);
@@ -272,8 +278,10 @@ public class AttachmentUtil {
 			CPDefinitionOptionRelService cpDefinitionOptionRelService,
 			CPDefinitionOptionValueRelService cpDefinitionOptionValueRelService,
 			CPOptionService cpOptionService,
+			DLAppLocalService dlAppLocalService,
 			ModelResourcePermission<DLFileEntry>
 				dlFileEntryModelResourcePermission,
+			GroupLocalService groupLocalService,
 			UniqueFileNameProvider uniqueFileNameProvider,
 			Attachment attachment, long classNameId, long classPK, int type,
 			ServiceContext serviceContext)
@@ -291,15 +299,38 @@ public class AttachmentUtil {
 		long fileEntryId = GetterUtil.getLong(attachment.getFileEntryId());
 
 		if (fileEntryId == 0) {
-			FileEntry fileEntry = addFileEntry(
-				attachment, uniqueFileNameProvider,
-				dlFileEntryCloneServiceContext);
+			String fileEntryExternalReferenceCode = GetterUtil.getString(
+				attachment.getFileEntryExternalReferenceCode());
 
-			if (fileEntry != null) {
+			if (Validator.isNull(fileEntryExternalReferenceCode)) {
+				FileEntry fileEntry = addFileEntry(
+					attachment, uniqueFileNameProvider,
+					dlFileEntryCloneServiceContext);
+
 				fileEntryId = fileEntry.getFileEntryId();
 			}
+			else {
+				Group group =
+					groupLocalService.fetchGroupByExternalReferenceCode(
+						attachment.getFileEntryGroupExternalReferenceCode(),
+						serviceContext.getCompanyId());
+
+				if (group == null) {
+					throw new NoSuchGroupException();
+				}
+
+				FileEntry fileEntry =
+					dlAppLocalService.fetchFileEntryByExternalReferenceCode(
+						group.getGroupId(),
+						attachment.getFileEntryExternalReferenceCode());
+
+				if (fileEntry != null) {
+					fileEntryId = fileEntry.getFileEntryId();
+				}
+			}
 		}
-		else {
+
+		if (fileEntryId > 0) {
 			dlFileEntryModelResourcePermission.check(
 				PermissionThreadLocal.getPermissionChecker(), fileEntryId,
 				ActionKeys.VIEW);
@@ -347,8 +378,9 @@ public class AttachmentUtil {
 			GetterUtil.get(attachment.getGalleryEnabled(), true),
 			getTitleMap(null, attachment.getTitle()),
 			_getJSON(
-				cpDefinitionOptionRelService, cpDefinitionOptionValueRelService,
-				cpOptionService, attachment.getOptions(), classPK,
+				null, cpDefinitionOptionRelService,
+				cpDefinitionOptionValueRelService, cpOptionService,
+				attachment.getOptions(), classPK,
 				serviceContext.getCompanyId()),
 			GetterUtil.getDouble(attachment.getPriority()), type,
 			cloneServiceContext);
@@ -368,6 +400,103 @@ public class AttachmentUtil {
 		}
 
 		return cpAttachmentFileEntry.getTitleMap();
+	}
+
+	public static CPAttachmentFileEntry updateCPAttachmentFileEntry(
+			CPAttachmentFileEntry cpAttachmentFileEntry,
+			CPAttachmentFileEntryService cpAttachmentFileEntryService,
+			CPDefinitionOptionRelService cpDefinitionOptionRelService,
+			CPDefinitionOptionValueRelService cpDefinitionOptionValueRelService,
+			CPOptionService cpOptionService,
+			DLAppLocalService dlAppLocalService,
+			ModelResourcePermission<DLFileEntry>
+				dlFileEntryModelResourcePermission,
+			GroupLocalService groupLocalService, Attachment attachment,
+			long classPK, int type, ServiceContext serviceContext)
+		throws Exception {
+
+		long fileEntryId = GetterUtil.getLong(attachment.getFileEntryId());
+
+		if (fileEntryId == 0) {
+			String fileEntryExternalReferenceCode = GetterUtil.getString(
+				attachment.getFileEntryExternalReferenceCode());
+
+			if (Validator.isNull(fileEntryExternalReferenceCode)) {
+				fileEntryId = cpAttachmentFileEntry.getFileEntryId();
+			}
+			else {
+				Group group =
+					groupLocalService.fetchGroupByExternalReferenceCode(
+						attachment.getFileEntryGroupExternalReferenceCode(),
+						serviceContext.getCompanyId());
+
+				if (group == null) {
+					throw new NoSuchGroupException();
+				}
+
+				FileEntry fileEntry =
+					dlAppLocalService.fetchFileEntryByExternalReferenceCode(
+						group.getGroupId(),
+						GetterUtil.getString(
+							attachment.getFileEntryExternalReferenceCode()));
+
+				if (fileEntry != null) {
+					fileEntryId = fileEntry.getFileEntryId();
+				}
+			}
+		}
+
+		if (fileEntryId > 0) {
+			dlFileEntryModelResourcePermission.check(
+				PermissionThreadLocal.getPermissionChecker(), fileEntryId,
+				ActionKeys.VIEW);
+		}
+
+		Calendar displayCalendar = CalendarFactoryUtil.getCalendar(
+			serviceContext.getTimeZone());
+
+		if (attachment.getDisplayDate() != null) {
+			displayCalendar = DateConfigUtil.convertDateToCalendar(
+				attachment.getDisplayDate());
+		}
+
+		DateConfig displayDateConfig = new DateConfig(displayCalendar);
+
+		Calendar expirationCalendar = CalendarFactoryUtil.getCalendar(
+			serviceContext.getTimeZone());
+
+		expirationCalendar.add(Calendar.MONTH, 1);
+
+		if (attachment.getExpirationDate() != null) {
+			expirationCalendar = DateConfigUtil.convertDateToCalendar(
+				attachment.getExpirationDate());
+		}
+
+		DateConfig expirationDateConfig = new DateConfig(expirationCalendar);
+
+		String options = _getJSON(
+			cpAttachmentFileEntry, cpDefinitionOptionRelService,
+			cpDefinitionOptionValueRelService, cpOptionService,
+			attachment.getOptions(), classPK, serviceContext.getCompanyId());
+
+		return cpAttachmentFileEntryService.updateCPAttachmentFileEntry(
+			GetterUtil.getLong(
+				attachment.getId(),
+				cpAttachmentFileEntry.getCPAttachmentFileEntryId()),
+			fileEntryId, GetterUtil.get(attachment.getCdnEnabled(), false),
+			GetterUtil.getString(
+				attachment.getCdnURL(), cpAttachmentFileEntry.getCDNURL()),
+			displayDateConfig.getMonth(), displayDateConfig.getDay(),
+			displayDateConfig.getYear(), displayDateConfig.getHour(),
+			displayDateConfig.getMinute(), expirationDateConfig.getMonth(),
+			expirationDateConfig.getDay(), expirationDateConfig.getYear(),
+			expirationDateConfig.getHour(), expirationDateConfig.getMinute(),
+			GetterUtil.get(attachment.getNeverExpire(), false),
+			GetterUtil.get(attachment.getGalleryEnabled(), true),
+			getTitleMap(cpAttachmentFileEntry, attachment.getTitle()), options,
+			GetterUtil.getDouble(
+				attachment.getPriority(), cpAttachmentFileEntry.getPriority()),
+			type, serviceContext);
 	}
 
 	private static FileEntry _addFileEntry(
@@ -440,12 +569,17 @@ public class AttachmentUtil {
 	}
 
 	private static String _getJSON(
+		CPAttachmentFileEntry cpAttachmentFileEntry,
 		CPDefinitionOptionRelService cpDefinitionOptionRelService,
 		CPDefinitionOptionValueRelService cpDefinitionOptionValueRelService,
 		CPOptionService cpOptionService, Map<String, String> options,
 		long classPK, long companyId) {
 
 		if (options == null) {
+			if (cpAttachmentFileEntry != null) {
+				return GetterUtil.getString(cpAttachmentFileEntry.getJson());
+			}
+
 			return StringPool.BLANK;
 		}
 

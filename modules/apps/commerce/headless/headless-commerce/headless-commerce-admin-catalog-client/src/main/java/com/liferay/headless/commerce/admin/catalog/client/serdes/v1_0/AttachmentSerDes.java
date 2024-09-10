@@ -167,6 +167,35 @@ public class AttachmentSerDes {
 			sb.append("\"");
 		}
 
+		if (attachment.getFileEntryExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"fileEntryExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(attachment.getFileEntryExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
+		if (attachment.getFileEntryGroupExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"fileEntryGroupExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				_escape(attachment.getFileEntryGroupExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (attachment.getFileEntryId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -365,6 +394,25 @@ public class AttachmentSerDes {
 				String.valueOf(attachment.getExternalReferenceCode()));
 		}
 
+		if (attachment.getFileEntryExternalReferenceCode() == null) {
+			map.put("fileEntryExternalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"fileEntryExternalReferenceCode",
+				String.valueOf(attachment.getFileEntryExternalReferenceCode()));
+		}
+
+		if (attachment.getFileEntryGroupExternalReferenceCode() == null) {
+			map.put("fileEntryGroupExternalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"fileEntryGroupExternalReferenceCode",
+				String.valueOf(
+					attachment.getFileEntryGroupExternalReferenceCode()));
+		}
+
 		if (attachment.getFileEntryId() == null) {
 			map.put("fileEntryId", null);
 		}
@@ -481,6 +529,18 @@ public class AttachmentSerDes {
 
 				return false;
 			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"fileEntryExternalReferenceCode")) {
+
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"fileEntryGroupExternalReferenceCode")) {
+
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "fileEntryId")) {
 				return false;
 			}
@@ -573,6 +633,24 @@ public class AttachmentSerDes {
 
 				if (jsonParserFieldValue != null) {
 					attachment.setExternalReferenceCode(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"fileEntryExternalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					attachment.setFileEntryExternalReferenceCode(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"fileEntryGroupExternalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					attachment.setFileEntryGroupExternalReferenceCode(
 						(String)jsonParserFieldValue);
 				}
 			}

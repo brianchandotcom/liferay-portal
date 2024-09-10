@@ -368,6 +368,20 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public Attachment patchAttachmentByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("attachment") Attachment attachment)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_attachmentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			attachmentResource ->
+				attachmentResource.patchAttachmentByExternalReferenceCode(
+					externalReferenceCode, attachment));
+	}
+
+	@GraphQLField
 	public boolean deleteAttachment(@GraphQLName("id") Long id)
 		throws Exception {
 

@@ -296,3 +296,34 @@ test(
 		await pagesAdminPage.goto(site.friendlyUrlPath);
 	}
 );
+
+test(
+	'toastData parameter is escaped to avoid Javascript execution',
+	{
+		tag: '@LPD-35827',
+	},
+	async ({page}) => {
+
+		// Add listener with expect so it fails when a browser dialog is shown
+
+		page.on('dialog', async (dialog) => {
+			dialog.accept();
+
+			expect(
+				dialog.message(),
+				'This alert should not be shown'
+			).toBeNull();
+		});
+
+		const data = {
+			message: '<img src=x onerror=alert(123)>',
+			title: 'test',
+		};
+
+		const url = page.url();
+
+		await page.goto(
+			`${url}?toastData=${encodeURIComponent(JSON.stringify(data))}`
+		);
+	}
+);

@@ -2,7 +2,7 @@ sourceCompatibility = "1.8"
 targetCompatibility = "1.8"
 
 dependencies {
-	compileInclude group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "142.0.0"
+	compileInclude group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileInclude group: "com.mysql", name: "mysql-connector-j", version: "8.3.0"
 	compileInclude group: "com.zaxxer", name: "HikariCP", version: "4.0.3"
 	compileInclude group: "commons-cli", name: "commons-cli", version: "1.4"

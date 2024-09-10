@@ -54,6 +54,7 @@ import com.liferay.commerce.shop.by.diagram.service.CSDiagramEntryService;
 import com.liferay.commerce.shop.by.diagram.service.CSDiagramPinService;
 import com.liferay.commerce.shop.by.diagram.service.CSDiagramSettingService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
@@ -106,9 +107,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -116,6 +114,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RepositoryLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.settings.SystemSettingsLocator;
@@ -1129,8 +1128,8 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 					cpDefinition.getGroupId(), _cpAttachmentFileEntryService,
 					_cpDefinitionOptionRelService,
 					_cpDefinitionOptionValueRelService, _cpOptionService,
-					_dlFileEntryModelResourcePermission,
-					_uniqueFileNameProvider, attachment,
+					_dlAppLocalService, _dlFileEntryModelResourcePermission,
+					_groupLocalService, _uniqueFileNameProvider, attachment,
 					_classNameLocalService.getClassNameId(
 						cpDefinition.getModelClassName()),
 					cpDefinition.getCPDefinitionId(),
@@ -1152,8 +1151,8 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 					cpDefinition.getGroupId(), _cpAttachmentFileEntryService,
 					_cpDefinitionOptionRelService,
 					_cpDefinitionOptionValueRelService, _cpOptionService,
-					_dlFileEntryModelResourcePermission,
-					_uniqueFileNameProvider, attachment,
+					_dlAppLocalService, _dlFileEntryModelResourcePermission,
+					_groupLocalService, _uniqueFileNameProvider, attachment,
 					_classNameLocalService.getClassNameId(
 						cpDefinition.getModelClassName()),
 					cpDefinition.getCPDefinitionId(),
@@ -1176,35 +1175,20 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 				CPDefinition.class.getName(), cpDefinition.getCPDefinitionId());
 
 			for (ProductChannel productChannel : productChannels) {
-				if (productChannel.getExternalReferenceCode() == null) {
-					Long commerceChannelId = productChannel.getChannelId();
-
-					if (commerceChannelId != null) {
-						_commerceChannelRelService.addCommerceChannelRel(
-							CPDefinition.class.getName(),
-							cpDefinition.getCPDefinitionId(), commerceChannelId,
-							serviceContext);
-					}
-
-					continue;
-				}
-
-				CommerceChannel commerceChannel = null;
-
-				try {
-					commerceChannel =
-						_commerceChannelService.fetchByExternalReferenceCode(
-							productChannel.getExternalReferenceCode(),
-							contextCompany.getCompanyId());
-				}
-				catch (PortalException portalException) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(portalException);
-					}
-				}
+				CommerceChannel commerceChannel =
+					_commerceChannelService.fetchByExternalReferenceCode(
+						GetterUtil.getString(
+							productChannel.getExternalReferenceCode()),
+						contextCompany.getCompanyId());
 
 				if (commerceChannel == null) {
-					continue;
+					commerceChannel =
+						_commerceChannelService.fetchCommerceChannel(
+							GetterUtil.getLong(productChannel.getChannelId()));
+
+					if (commerceChannel == null) {
+						continue;
+					}
 				}
 
 				_commerceChannelRelService.addCommerceChannelRel(
@@ -1233,39 +1217,21 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 			for (ProductAccountGroup productAccountGroup :
 					productAccountGroups) {
 
-				String externalReferenceCode =
-					productAccountGroup.getExternalReferenceCode();
-
-				if (externalReferenceCode == null) {
-					Long accountGroupId =
-						productAccountGroup.getAccountGroupId();
-
-					if (accountGroupId != null) {
-						_accountGroupRelService.addAccountGroupRel(
-							accountGroupId, CPDefinition.class.getName(),
-							cpDefinition.getCPDefinitionId());
-					}
-
-					continue;
-				}
-
-				AccountGroup accountGroup = null;
-
-				try {
-					accountGroup =
-						_accountGroupService.
-							fetchAccountGroupByExternalReferenceCode(
-								productAccountGroup.getExternalReferenceCode(),
-								contextCompany.getCompanyId());
-				}
-				catch (PortalException portalException) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(portalException);
-					}
-				}
+				AccountGroup accountGroup =
+					_accountGroupService.
+						fetchAccountGroupByExternalReferenceCode(
+							GetterUtil.getString(
+								productAccountGroup.getExternalReferenceCode()),
+							contextCompany.getCompanyId());
 
 				if (accountGroup == null) {
-					continue;
+					accountGroup = _accountGroupService.fetchAccountGroup(
+						GetterUtil.getLong(
+							productAccountGroup.getAccountGroupId()));
+
+					if (accountGroup == null) {
+						continue;
+					}
 				}
 
 				_accountGroupRelService.addAccountGroupRel(
@@ -1528,9 +1494,6 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 		return _updateNestedResources(product, cpDefinition, serviceContext);
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		ProductResourceImpl.class);
-
 	@Reference
 	private AccountGroupRelLocalService _accountGroupRelLocalService;
 
@@ -1638,6 +1601,9 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 	private CSDiagramSettingService _csDiagramSettingService;
 
 	@Reference
+	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
 	private DLAppService _dlAppService;
 
 	@Reference(
@@ -1657,6 +1623,9 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 
 	@Reference
 	private ExpandoTableLocalService _expandoTableLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private Portal _portal;

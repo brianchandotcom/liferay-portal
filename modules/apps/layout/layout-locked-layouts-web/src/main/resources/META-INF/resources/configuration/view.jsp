@@ -77,7 +77,7 @@ LockedLayoutsConfigurationDisplayContext lockedLayoutsConfigurationDisplayContex
 	</clay:content-row>
 </clay:sheet-section>
 
-<script>
+<aui:script>
 	const numericInput = document.getElementById(
 		'<portlet:namespace />autosaveMinutes'
 	);
@@ -91,4 +91,4 @@ LockedLayoutsConfigurationDisplayContext lockedLayoutsConfigurationDisplayContex
 			}
 		});
 	}
-</script>
+</aui:script>

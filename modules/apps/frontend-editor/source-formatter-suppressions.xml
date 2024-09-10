@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<source-check>
+		<suppress checks="JSPIllegalTagsCheck" files="frontend-editor-ckeditor-sample-web/src/main/resources/META-INF/resources/view_xss.jsp" />
+	</source-check>
+</suppressions>

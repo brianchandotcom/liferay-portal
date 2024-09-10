@@ -77,6 +77,17 @@ export class WidgetPagePage {
 		);
 	}
 
+	async clickOnAction(portletName: string, action: string) {
+		await this.page
+			.locator('.portlet-topper', {hasText: portletName})
+			.getByLabel('Options')
+			.click();
+
+		await this.page
+			.getByRole('menuitem', {exact: true, name: action})
+			.click();
+	}
+
 	async deletePortlet(portletName: string) {
 		this.page.on('dialog', async (dialog) => {
 			await dialog.accept();
@@ -129,6 +140,24 @@ export class WidgetPagePage {
 		if (!isOpen) {
 			await this.addButton.click();
 		}
+	}
+
+	async saveAndClose(title: string) {
+		const configurationIFrame = this.page.frameLocator(
+			`iframe[title*="${title}"]`
+		);
+
+		await configurationIFrame.getByRole('button', {name: 'Save'}).click();
+
+		await waitForSuccessAlert(
+			configurationIFrame,
+			'Success:You have successfully updated the setup.'
+		);
+
+		await this.page
+			.locator('.modal-header')
+			.getByLabel('close', {exact: true})
+			.click();
 	}
 
 	async toggleControls(state: 'visible' | 'hidden') {

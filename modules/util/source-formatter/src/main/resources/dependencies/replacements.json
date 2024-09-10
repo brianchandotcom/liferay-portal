@@ -3168,6 +3168,17 @@
 		"to": "CPTaxCategoryCreateDateComparator.getInstance(param#0#)"
 	},
 	{
+		"classNames": [
+			"ListTypeLocalService"
+		],
+		"from": "addListType(String paramName, String paramName)",
+		"issueKey": "LPD-35238",
+		"newImports": [
+			"com.liferay.portal.kernel.security.auth.CompanyThreadLocal"
+		],
+		"to": "addListType(CompanyThreadLocal.getCompanyId(), param#0#, param#1#)"
+	},
+	{
 		"from": "CookieKeys.COMMERCE_CONTINUE_AS_GUEST",
 		"issueKey": "LPS-159679",
 		"newImports": [

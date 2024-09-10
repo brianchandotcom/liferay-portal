@@ -15,9 +15,9 @@
 		<video class="video-js" controls id="fragmentVideoJsURL" preload="auto">
 		</video>
 
-		<script src="https://vjs.zencdn.net/8.6.1/video.min.js"></script>
+		<aui:script src="https://vjs.zencdn.net/8.6.1/video.min.js"></aui:script>
 
-		<script src="https://unpkg.com/videojs-quality-selector-hls@1.1.1/dist/videojs-quality-selector-hls.js" type="text/javascript"></script>
+		<aui:script src="https://unpkg.com/videojs-quality-selector-hls@1.1.1/dist/videojs-quality-selector-hls.js" type="text/javascript"></aui:script>
 	</div>
 </div>
 

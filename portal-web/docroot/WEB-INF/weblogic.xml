@@ -16,7 +16,6 @@
 	<container-descriptor>
 		<prefer-application-packages>
 			<package-name>antlr.*</package-name>
-			<package-name>com.ctc.wstx.*</package-name>
 			<package-name>com.google.common.*</package-name>
 			<package-name>com.sun.xml.ws.*</package-name>
 			<package-name>javax.validation.*</package-name>

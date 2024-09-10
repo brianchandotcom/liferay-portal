@@ -396,6 +396,24 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {attachmentByExternalReferenceCode(externalReferenceCode: ___){attachment, cdnEnabled, cdnURL, contentType, customFields, displayDate, expirationDate, externalReferenceCode, fileEntryExternalReferenceCode, fileEntryGroupExternalReferenceCode, fileEntryId, galleryEnabled, id, neverExpire, options, priority, src, tags, title, type}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public Attachment attachmentByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_attachmentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			attachmentResource ->
+				attachmentResource.getAttachmentByExternalReferenceCode(
+					externalReferenceCode));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {productByExternalReferenceCodeAttachments(externalReferenceCode: ___, page: ___, pageSize: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
@@ -2181,13 +2199,13 @@ public class Query {
 				id));
 	}
 
-	@GraphQLTypeExtension(Catalog.class)
+	@GraphQLTypeExtension(Attachment.class)
 	public class GetProductByExternalReferenceCodeConfigurationTypeExtension {
 
 		public GetProductByExternalReferenceCodeConfigurationTypeExtension(
-			Catalog catalog) {
+			Attachment attachment) {
 
-			_catalog = catalog;
+			_attachment = attachment;
 		}
 
 		@GraphQLField
@@ -2201,18 +2219,20 @@ public class Query {
 				productConfigurationResource ->
 					productConfigurationResource.
 						getProductByExternalReferenceCodeConfiguration(
-							_catalog.getExternalReferenceCode()));
+							_attachment.getExternalReferenceCode()));
 		}
 
-		private Catalog _catalog;
+		private Attachment _attachment;
 
 	}
 
-	@GraphQLTypeExtension(Catalog.class)
+	@GraphQLTypeExtension(Attachment.class)
 	public class GetProductByExternalReferenceCodeTypeExtension {
 
-		public GetProductByExternalReferenceCodeTypeExtension(Catalog catalog) {
-			_catalog = catalog;
+		public GetProductByExternalReferenceCodeTypeExtension(
+			Attachment attachment) {
+
+			_attachment = attachment;
 		}
 
 		@GraphQLField
@@ -2222,20 +2242,20 @@ public class Query {
 				Query.this::_populateResourceContext,
 				productResource ->
 					productResource.getProductByExternalReferenceCode(
-						_catalog.getExternalReferenceCode()));
+						_attachment.getExternalReferenceCode()));
 		}
 
-		private Catalog _catalog;
+		private Attachment _attachment;
 
 	}
 
-	@GraphQLTypeExtension(Catalog.class)
+	@GraphQLTypeExtension(Attachment.class)
 	public class GetProductByExternalReferenceCodeCategoriesPageTypeExtension {
 
 		public GetProductByExternalReferenceCodeCategoriesPageTypeExtension(
-			Catalog catalog) {
+			Attachment attachment) {
 
-			_catalog = catalog;
+			_attachment = attachment;
 		}
 
 		@GraphQLField
@@ -2250,22 +2270,22 @@ public class Query {
 				categoryResource -> new CategoryPage(
 					categoryResource.
 						getProductByExternalReferenceCodeCategoriesPage(
-							_catalog.getExternalReferenceCode(),
+							_attachment.getExternalReferenceCode(),
 							Pagination.of(page, pageSize))));
 		}
 
-		private Catalog _catalog;
+		private Attachment _attachment;
 
 	}
 
-	@GraphQLTypeExtension(Catalog.class)
+	@GraphQLTypeExtension(Attachment.class)
 	public class
 		GetProductByExternalReferenceCodeGroupedProductsPageTypeExtension {
 
 		public GetProductByExternalReferenceCodeGroupedProductsPageTypeExtension(
-			Catalog catalog) {
+			Attachment attachment) {
 
-			_catalog = catalog;
+			_attachment = attachment;
 		}
 
 		@GraphQLField
@@ -2280,22 +2300,22 @@ public class Query {
 				groupedProductResource -> new GroupedProductPage(
 					groupedProductResource.
 						getProductByExternalReferenceCodeGroupedProductsPage(
-							_catalog.getExternalReferenceCode(),
+							_attachment.getExternalReferenceCode(),
 							Pagination.of(page, pageSize))));
 		}
 
-		private Catalog _catalog;
+		private Attachment _attachment;
 
 	}
 
-	@GraphQLTypeExtension(Catalog.class)
+	@GraphQLTypeExtension(Attachment.class)
 	public class
 		GetProductByExternalReferenceCodeProductChannelsPageTypeExtension {
 
 		public GetProductByExternalReferenceCodeProductChannelsPageTypeExtension(
-			Catalog catalog) {
+			Attachment attachment) {
 
-			_catalog = catalog;
+			_attachment = attachment;
 		}
 
 		@GraphQLField
@@ -2310,22 +2330,22 @@ public class Query {
 				productChannelResource -> new ProductChannelPage(
 					productChannelResource.
 						getProductByExternalReferenceCodeProductChannelsPage(
-							_catalog.getExternalReferenceCode(),
+							_attachment.getExternalReferenceCode(),
 							Pagination.of(page, pageSize))));
 		}
 
-		private Catalog _catalog;
+		private Attachment _attachment;
 
 	}
 
-	@GraphQLTypeExtension(Catalog.class)
+	@GraphQLTypeExtension(Attachment.class)
 	public class
 		GetSkuByExternalReferenceCodeSkuSubscriptionConfigurationTypeExtension {
 
 		public GetSkuByExternalReferenceCodeSkuSubscriptionConfigurationTypeExtension(
-			Catalog catalog) {
+			Attachment attachment) {
 
-			_catalog = catalog;
+			_attachment = attachment;
 		}
 
 		@GraphQLField
@@ -2339,20 +2359,20 @@ public class Query {
 				skuSubscriptionConfigurationResource ->
 					skuSubscriptionConfigurationResource.
 						getSkuByExternalReferenceCodeSkuSubscriptionConfiguration(
-							_catalog.getExternalReferenceCode()));
+							_attachment.getExternalReferenceCode()));
 		}
 
-		private Catalog _catalog;
+		private Attachment _attachment;
 
 	}
 
-	@GraphQLTypeExtension(Catalog.class)
+	@GraphQLTypeExtension(Attachment.class)
 	public class GetOptionValueByExternalReferenceCodeTypeExtension {
 
 		public GetOptionValueByExternalReferenceCodeTypeExtension(
-			Catalog catalog) {
+			Attachment attachment) {
 
-			_catalog = catalog;
+			_attachment = attachment;
 		}
 
 		@GraphQLField
@@ -2364,20 +2384,20 @@ public class Query {
 				Query.this::_populateResourceContext,
 				optionValueResource ->
 					optionValueResource.getOptionValueByExternalReferenceCode(
-						_catalog.getExternalReferenceCode()));
+						_attachment.getExternalReferenceCode()));
 		}
 
-		private Catalog _catalog;
+		private Attachment _attachment;
 
 	}
 
-	@GraphQLTypeExtension(Catalog.class)
+	@GraphQLTypeExtension(Attachment.class)
 	public class GetProductByExternalReferenceCodeCatalogTypeExtension {
 
 		public GetProductByExternalReferenceCodeCatalogTypeExtension(
-			Catalog catalog) {
+			Attachment attachment) {
 
-			_catalog = catalog;
+			_attachment = attachment;
 		}
 
 		@GraphQLField
@@ -2391,19 +2411,21 @@ public class Query {
 				Query.this::_populateResourceContext,
 				catalogResource ->
 					catalogResource.getProductByExternalReferenceCodeCatalog(
-						_catalog.getExternalReferenceCode(),
+						_attachment.getExternalReferenceCode(),
 						Pagination.of(page, pageSize)));
 		}
 
-		private Catalog _catalog;
+		private Attachment _attachment;
 
 	}
 
-	@GraphQLTypeExtension(Option.class)
+	@GraphQLTypeExtension(Attachment.class)
 	public class GetCatalogByExternalReferenceCodeTypeExtension {
 
-		public GetCatalogByExternalReferenceCodeTypeExtension(Option option) {
-			_option = option;
+		public GetCatalogByExternalReferenceCodeTypeExtension(
+			Attachment attachment) {
+
+			_attachment = attachment;
 		}
 
 		@GraphQLField
@@ -2413,20 +2435,20 @@ public class Query {
 				Query.this::_populateResourceContext,
 				catalogResource ->
 					catalogResource.getCatalogByExternalReferenceCode(
-						_option.getExternalReferenceCode()));
+						_attachment.getExternalReferenceCode()));
 		}
 
-		private Option _option;
+		private Attachment _attachment;
 
 	}
 
-	@GraphQLTypeExtension(Catalog.class)
+	@GraphQLTypeExtension(Attachment.class)
 	public class GetSpecificationByExternalReferenceCodeTypeExtension {
 
 		public GetSpecificationByExternalReferenceCodeTypeExtension(
-			Catalog catalog) {
+			Attachment attachment) {
 
-			_catalog = catalog;
+			_attachment = attachment;
 		}
 
 		@GraphQLField
@@ -2439,21 +2461,21 @@ public class Query {
 				specificationResource ->
 					specificationResource.
 						getSpecificationByExternalReferenceCode(
-							_catalog.getExternalReferenceCode()));
+							_attachment.getExternalReferenceCode()));
 		}
 
-		private Catalog _catalog;
+		private Attachment _attachment;
 
 	}
 
-	@GraphQLTypeExtension(Catalog.class)
+	@GraphQLTypeExtension(Attachment.class)
 	public class
 		GetProductByExternalReferenceCodeMappedProductsPageTypeExtension {
 
 		public GetProductByExternalReferenceCodeMappedProductsPageTypeExtension(
-			Catalog catalog) {
+			Attachment attachment) {
 
-			_catalog = catalog;
+			_attachment = attachment;
 		}
 
 		@GraphQLField
@@ -2470,23 +2492,23 @@ public class Query {
 				mappedProductResource -> new MappedProductPage(
 					mappedProductResource.
 						getProductByExternalReferenceCodeMappedProductsPage(
-							_catalog.getExternalReferenceCode(), search,
+							_attachment.getExternalReferenceCode(), search,
 							Pagination.of(page, pageSize),
 							_sortsBiFunction.apply(
 								mappedProductResource, sortsString))));
 		}
 
-		private Catalog _catalog;
+		private Attachment _attachment;
 
 	}
 
-	@GraphQLTypeExtension(Catalog.class)
+	@GraphQLTypeExtension(Attachment.class)
 	public class GetSkuByExternalReferenceCodeSkuVirtualSettingsTypeExtension {
 
 		public GetSkuByExternalReferenceCodeSkuVirtualSettingsTypeExtension(
-			Catalog catalog) {
+			Attachment attachment) {
 
-			_catalog = catalog;
+			_attachment = attachment;
 		}
 
 		@GraphQLField
@@ -2499,20 +2521,20 @@ public class Query {
 				skuVirtualSettingsResource ->
 					skuVirtualSettingsResource.
 						getSkuByExternalReferenceCodeSkuVirtualSettings(
-							_catalog.getExternalReferenceCode()));
+							_attachment.getExternalReferenceCode()));
 		}
 
-		private Catalog _catalog;
+		private Attachment _attachment;
 
 	}
 
-	@GraphQLTypeExtension(Catalog.class)
+	@GraphQLTypeExtension(Attachment.class)
 	public class GetProductByExternalReferenceCodeDiagramTypeExtension {
 
 		public GetProductByExternalReferenceCodeDiagramTypeExtension(
-			Catalog catalog) {
+			Attachment attachment) {
 
-			_catalog = catalog;
+			_attachment = attachment;
 		}
 
 		@GraphQLField
@@ -2524,21 +2546,21 @@ public class Query {
 				Query.this::_populateResourceContext,
 				diagramResource ->
 					diagramResource.getProductByExternalReferenceCodeDiagram(
-						_catalog.getExternalReferenceCode()));
+						_attachment.getExternalReferenceCode()));
 		}
 
-		private Catalog _catalog;
+		private Attachment _attachment;
 
 	}
 
-	@GraphQLTypeExtension(Catalog.class)
+	@GraphQLTypeExtension(Attachment.class)
 	public class
 		GetProductByExternalReferenceCodeProductAccountGroupsPageTypeExtension {
 
 		public GetProductByExternalReferenceCodeProductAccountGroupsPageTypeExtension(
-			Catalog catalog) {
+			Attachment attachment) {
 
-			_catalog = catalog;
+			_attachment = attachment;
 		}
 
 		@GraphQLField
@@ -2554,21 +2576,21 @@ public class Query {
 				productAccountGroupResource -> new ProductAccountGroupPage(
 					productAccountGroupResource.
 						getProductByExternalReferenceCodeProductAccountGroupsPage(
-							_catalog.getExternalReferenceCode(),
+							_attachment.getExternalReferenceCode(),
 							Pagination.of(page, pageSize))));
 		}
 
-		private Catalog _catalog;
+		private Attachment _attachment;
 
 	}
 
-	@GraphQLTypeExtension(Catalog.class)
+	@GraphQLTypeExtension(Attachment.class)
 	public class GetProductByExternalReferenceCodeSkusPageTypeExtension {
 
 		public GetProductByExternalReferenceCodeSkusPageTypeExtension(
-			Catalog catalog) {
+			Attachment attachment) {
 
-			_catalog = catalog;
+			_attachment = attachment;
 		}
 
 		@GraphQLField
@@ -2582,22 +2604,45 @@ public class Query {
 				Query.this::_populateResourceContext,
 				skuResource -> new SkuPage(
 					skuResource.getProductByExternalReferenceCodeSkusPage(
-						_catalog.getExternalReferenceCode(),
+						_attachment.getExternalReferenceCode(),
 						Pagination.of(page, pageSize))));
+		}
+
+		private Attachment _attachment;
+
+	}
+
+	@GraphQLTypeExtension(Catalog.class)
+	public class GetAttachmentByExternalReferenceCodeTypeExtension {
+
+		public GetAttachmentByExternalReferenceCodeTypeExtension(
+			Catalog catalog) {
+
+			_catalog = catalog;
+		}
+
+		@GraphQLField
+		public Attachment attachmentByExternalReferenceCode() throws Exception {
+			return _applyComponentServiceObjects(
+				_attachmentResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				attachmentResource ->
+					attachmentResource.getAttachmentByExternalReferenceCode(
+						_catalog.getExternalReferenceCode()));
 		}
 
 		private Catalog _catalog;
 
 	}
 
-	@GraphQLTypeExtension(Catalog.class)
+	@GraphQLTypeExtension(Attachment.class)
 	public class
 		GetProductByExternalReferenceCodeShippingConfigurationTypeExtension {
 
 		public GetProductByExternalReferenceCodeShippingConfigurationTypeExtension(
-			Catalog catalog) {
+			Attachment attachment) {
 
-			_catalog = catalog;
+			_attachment = attachment;
 		}
 
 		@GraphQLField
@@ -2611,18 +2656,20 @@ public class Query {
 				productShippingConfigurationResource ->
 					productShippingConfigurationResource.
 						getProductByExternalReferenceCodeShippingConfiguration(
-							_catalog.getExternalReferenceCode()));
+							_attachment.getExternalReferenceCode()));
 		}
 
-		private Catalog _catalog;
+		private Attachment _attachment;
 
 	}
 
-	@GraphQLTypeExtension(Catalog.class)
+	@GraphQLTypeExtension(Attachment.class)
 	public class GetSkuByExternalReferenceCodeTypeExtension {
 
-		public GetSkuByExternalReferenceCodeTypeExtension(Catalog catalog) {
-			_catalog = catalog;
+		public GetSkuByExternalReferenceCodeTypeExtension(
+			Attachment attachment) {
+
+			_attachment = attachment;
 		}
 
 		@GraphQLField
@@ -2631,20 +2678,20 @@ public class Query {
 				_skuResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,
 				skuResource -> skuResource.getSkuByExternalReferenceCode(
-					_catalog.getExternalReferenceCode()));
+					_attachment.getExternalReferenceCode()));
 		}
 
-		private Catalog _catalog;
+		private Attachment _attachment;
 
 	}
 
-	@GraphQLTypeExtension(Catalog.class)
+	@GraphQLTypeExtension(Attachment.class)
 	public class GetProductByExternalReferenceCodeByVersionTypeExtension {
 
 		public GetProductByExternalReferenceCodeByVersionTypeExtension(
-			Catalog catalog) {
+			Attachment attachment) {
 
-			_catalog = catalog;
+			_attachment = attachment;
 		}
 
 		@GraphQLField
@@ -2657,20 +2704,20 @@ public class Query {
 				Query.this::_populateResourceContext,
 				productResource ->
 					productResource.getProductByExternalReferenceCodeByVersion(
-						_catalog.getExternalReferenceCode(), version));
+						_attachment.getExternalReferenceCode(), version));
 		}
 
-		private Catalog _catalog;
+		private Attachment _attachment;
 
 	}
 
-	@GraphQLTypeExtension(Catalog.class)
+	@GraphQLTypeExtension(Attachment.class)
 	public class GetProductByExternalReferenceCodeAttachmentsPageTypeExtension {
 
 		public GetProductByExternalReferenceCodeAttachmentsPageTypeExtension(
-			Catalog catalog) {
+			Attachment attachment) {
 
-			_catalog = catalog;
+			_attachment = attachment;
 		}
 
 		@GraphQLField
@@ -2685,21 +2732,21 @@ public class Query {
 				attachmentResource -> new AttachmentPage(
 					attachmentResource.
 						getProductByExternalReferenceCodeAttachmentsPage(
-							_catalog.getExternalReferenceCode(),
+							_attachment.getExternalReferenceCode(),
 							Pagination.of(page, pageSize))));
 		}
 
-		private Catalog _catalog;
+		private Attachment _attachment;
 
 	}
 
-	@GraphQLTypeExtension(Catalog.class)
+	@GraphQLTypeExtension(Attachment.class)
 	public class GetOptionByExternalReferenceCodeOptionValuesPageTypeExtension {
 
 		public GetOptionByExternalReferenceCodeOptionValuesPageTypeExtension(
-			Catalog catalog) {
+			Attachment attachment) {
 
-			_catalog = catalog;
+			_attachment = attachment;
 		}
 
 		@GraphQLField
@@ -2716,24 +2763,24 @@ public class Query {
 				optionValueResource -> new OptionValuePage(
 					optionValueResource.
 						getOptionByExternalReferenceCodeOptionValuesPage(
-							_catalog.getExternalReferenceCode(), search,
+							_attachment.getExternalReferenceCode(), search,
 							Pagination.of(page, pageSize),
 							_sortsBiFunction.apply(
 								optionValueResource, sortsString))));
 		}
 
-		private Catalog _catalog;
+		private Attachment _attachment;
 
 	}
 
-	@GraphQLTypeExtension(Catalog.class)
+	@GraphQLTypeExtension(Attachment.class)
 	public class
 		GetProductGroupByExternalReferenceCodeProductGroupProductsPageTypeExtension {
 
 		public GetProductGroupByExternalReferenceCodeProductGroupProductsPageTypeExtension(
-			Catalog catalog) {
+			Attachment attachment) {
 
-			_catalog = catalog;
+			_attachment = attachment;
 		}
 
 		@GraphQLField
@@ -2749,22 +2796,22 @@ public class Query {
 				productGroupProductResource -> new ProductGroupProductPage(
 					productGroupProductResource.
 						getProductGroupByExternalReferenceCodeProductGroupProductsPage(
-							_catalog.getExternalReferenceCode(),
+							_attachment.getExternalReferenceCode(),
 							Pagination.of(page, pageSize))));
 		}
 
-		private Catalog _catalog;
+		private Attachment _attachment;
 
 	}
 
-	@GraphQLTypeExtension(Catalog.class)
+	@GraphQLTypeExtension(Attachment.class)
 	public class
 		GetProductByExternalReferenceCodeProductOptionsPageTypeExtension {
 
 		public GetProductByExternalReferenceCodeProductOptionsPageTypeExtension(
-			Catalog catalog) {
+			Attachment attachment) {
 
-			_catalog = catalog;
+			_attachment = attachment;
 		}
 
 		@GraphQLField
@@ -2781,24 +2828,24 @@ public class Query {
 				productOptionResource -> new ProductOptionPage(
 					productOptionResource.
 						getProductByExternalReferenceCodeProductOptionsPage(
-							_catalog.getExternalReferenceCode(), search,
+							_attachment.getExternalReferenceCode(), search,
 							Pagination.of(page, pageSize),
 							_sortsBiFunction.apply(
 								productOptionResource, sortsString))));
 		}
 
-		private Catalog _catalog;
+		private Attachment _attachment;
 
 	}
 
-	@GraphQLTypeExtension(Catalog.class)
+	@GraphQLTypeExtension(Attachment.class)
 	public class
 		GetProductByExternalReferenceCodeRelatedProductsPageTypeExtension {
 
 		public GetProductByExternalReferenceCodeRelatedProductsPageTypeExtension(
-			Catalog catalog) {
+			Attachment attachment) {
 
-			_catalog = catalog;
+			_attachment = attachment;
 		}
 
 		@GraphQLField
@@ -2814,22 +2861,22 @@ public class Query {
 				relatedProductResource -> new RelatedProductPage(
 					relatedProductResource.
 						getProductByExternalReferenceCodeRelatedProductsPage(
-							_catalog.getExternalReferenceCode(), type,
+							_attachment.getExternalReferenceCode(), type,
 							Pagination.of(page, pageSize))));
 		}
 
-		private Catalog _catalog;
+		private Attachment _attachment;
 
 	}
 
-	@GraphQLTypeExtension(Catalog.class)
+	@GraphQLTypeExtension(Attachment.class)
 	public class
 		GetProductByExternalReferenceCodeMappedProductBySequenceTypeExtension {
 
 		public GetProductByExternalReferenceCodeMappedProductBySequenceTypeExtension(
-			Catalog catalog) {
+			Attachment attachment) {
 
-			_catalog = catalog;
+			_attachment = attachment;
 		}
 
 		@GraphQLField
@@ -2844,21 +2891,21 @@ public class Query {
 				mappedProductResource ->
 					mappedProductResource.
 						getProductByExternalReferenceCodeMappedProductBySequence(
-							_catalog.getExternalReferenceCode(), sequence));
+							_attachment.getExternalReferenceCode(), sequence));
 		}
 
-		private Catalog _catalog;
+		private Attachment _attachment;
 
 	}
 
-	@GraphQLTypeExtension(Catalog.class)
+	@GraphQLTypeExtension(Attachment.class)
 	public class
 		GetProductByExternalReferenceCodeTaxConfigurationTypeExtension {
 
 		public GetProductByExternalReferenceCodeTaxConfigurationTypeExtension(
-			Catalog catalog) {
+			Attachment attachment) {
 
-			_catalog = catalog;
+			_attachment = attachment;
 		}
 
 		@GraphQLField
@@ -2872,20 +2919,20 @@ public class Query {
 				productTaxConfigurationResource ->
 					productTaxConfigurationResource.
 						getProductByExternalReferenceCodeTaxConfiguration(
-							_catalog.getExternalReferenceCode()));
+							_attachment.getExternalReferenceCode()));
 		}
 
-		private Catalog _catalog;
+		private Attachment _attachment;
 
 	}
 
-	@GraphQLTypeExtension(Catalog.class)
+	@GraphQLTypeExtension(Attachment.class)
 	public class GetProductByExternalReferenceCodeImagesPageTypeExtension {
 
 		public GetProductByExternalReferenceCodeImagesPageTypeExtension(
-			Catalog catalog) {
+			Attachment attachment) {
 
-			_catalog = catalog;
+			_attachment = attachment;
 		}
 
 		@GraphQLField
@@ -2900,21 +2947,21 @@ public class Query {
 				attachmentResource -> new AttachmentPage(
 					attachmentResource.
 						getProductByExternalReferenceCodeImagesPage(
-							_catalog.getExternalReferenceCode(),
+							_attachment.getExternalReferenceCode(),
 							Pagination.of(page, pageSize))));
 		}
 
-		private Catalog _catalog;
+		private Attachment _attachment;
 
 	}
 
-	@GraphQLTypeExtension(Catalog.class)
+	@GraphQLTypeExtension(Attachment.class)
 	public class GetProductByExternalReferenceCodePinsPageTypeExtension {
 
 		public GetProductByExternalReferenceCodePinsPageTypeExtension(
-			Catalog catalog) {
+			Attachment attachment) {
 
-			_catalog = catalog;
+			_attachment = attachment;
 		}
 
 		@GraphQLField
@@ -2930,20 +2977,22 @@ public class Query {
 				Query.this::_populateResourceContext,
 				pinResource -> new PinPage(
 					pinResource.getProductByExternalReferenceCodePinsPage(
-						_catalog.getExternalReferenceCode(), search,
+						_attachment.getExternalReferenceCode(), search,
 						Pagination.of(page, pageSize),
 						_sortsBiFunction.apply(pinResource, sortsString))));
 		}
 
-		private Catalog _catalog;
+		private Attachment _attachment;
 
 	}
 
-	@GraphQLTypeExtension(Catalog.class)
+	@GraphQLTypeExtension(Attachment.class)
 	public class GetOptionByExternalReferenceCodeTypeExtension {
 
-		public GetOptionByExternalReferenceCodeTypeExtension(Catalog catalog) {
-			_catalog = catalog;
+		public GetOptionByExternalReferenceCodeTypeExtension(
+			Attachment attachment) {
+
+			_attachment = attachment;
 		}
 
 		@GraphQLField
@@ -2953,20 +3002,20 @@ public class Query {
 				Query.this::_populateResourceContext,
 				optionResource ->
 					optionResource.getOptionByExternalReferenceCode(
-						_catalog.getExternalReferenceCode()));
+						_attachment.getExternalReferenceCode()));
 		}
 
-		private Catalog _catalog;
+		private Attachment _attachment;
 
 	}
 
-	@GraphQLTypeExtension(Catalog.class)
+	@GraphQLTypeExtension(Attachment.class)
 	public class GetProductGroupByExternalReferenceCodeTypeExtension {
 
 		public GetProductGroupByExternalReferenceCodeTypeExtension(
-			Catalog catalog) {
+			Attachment attachment) {
 
-			_catalog = catalog;
+			_attachment = attachment;
 		}
 
 		@GraphQLField
@@ -2978,21 +3027,21 @@ public class Query {
 				Query.this::_populateResourceContext,
 				productGroupResource ->
 					productGroupResource.getProductGroupByExternalReferenceCode(
-						_catalog.getExternalReferenceCode()));
+						_attachment.getExternalReferenceCode()));
 		}
 
-		private Catalog _catalog;
+		private Attachment _attachment;
 
 	}
 
-	@GraphQLTypeExtension(Catalog.class)
+	@GraphQLTypeExtension(Attachment.class)
 	public class
 		GetProductByExternalReferenceCodeSubscriptionConfigurationTypeExtension {
 
 		public GetProductByExternalReferenceCodeSubscriptionConfigurationTypeExtension(
-			Catalog catalog) {
+			Attachment attachment) {
 
-			_catalog = catalog;
+			_attachment = attachment;
 		}
 
 		@GraphQLField
@@ -3006,21 +3055,21 @@ public class Query {
 				productSubscriptionConfigurationResource ->
 					productSubscriptionConfigurationResource.
 						getProductByExternalReferenceCodeSubscriptionConfiguration(
-							_catalog.getExternalReferenceCode()));
+							_attachment.getExternalReferenceCode()));
 		}
 
-		private Catalog _catalog;
+		private Attachment _attachment;
 
 	}
 
-	@GraphQLTypeExtension(Catalog.class)
+	@GraphQLTypeExtension(Attachment.class)
 	public class
 		GetSkuByExternalReferenceCodeSkuUnitOfMeasuresPageTypeExtension {
 
 		public GetSkuByExternalReferenceCodeSkuUnitOfMeasuresPageTypeExtension(
-			Catalog catalog) {
+			Attachment attachment) {
 
-			_catalog = catalog;
+			_attachment = attachment;
 		}
 
 		@GraphQLField
@@ -3035,22 +3084,22 @@ public class Query {
 				skuUnitOfMeasureResource -> new SkuUnitOfMeasurePage(
 					skuUnitOfMeasureResource.
 						getSkuByExternalReferenceCodeSkuUnitOfMeasuresPage(
-							_catalog.getExternalReferenceCode(),
+							_attachment.getExternalReferenceCode(),
 							Pagination.of(page, pageSize))));
 		}
 
-		private Catalog _catalog;
+		private Attachment _attachment;
 
 	}
 
-	@GraphQLTypeExtension(Catalog.class)
+	@GraphQLTypeExtension(Attachment.class)
 	public class
 		GetProductByExternalReferenceCodeProductVirtualSettingsTypeExtension {
 
 		public GetProductByExternalReferenceCodeProductVirtualSettingsTypeExtension(
-			Catalog catalog) {
+			Attachment attachment) {
 
-			_catalog = catalog;
+			_attachment = attachment;
 		}
 
 		@GraphQLField
@@ -3064,20 +3113,20 @@ public class Query {
 				productVirtualSettingsResource ->
 					productVirtualSettingsResource.
 						getProductByExternalReferenceCodeProductVirtualSettings(
-							_catalog.getExternalReferenceCode()));
+							_attachment.getExternalReferenceCode()));
 		}
 
-		private Catalog _catalog;
+		private Attachment _attachment;
 
 	}
 
-	@GraphQLTypeExtension(Catalog.class)
+	@GraphQLTypeExtension(Attachment.class)
 	public class GetOptionCategoryByExternalReferenceCodeTypeExtension {
 
 		public GetOptionCategoryByExternalReferenceCodeTypeExtension(
-			Catalog catalog) {
+			Attachment attachment) {
 
-			_catalog = catalog;
+			_attachment = attachment;
 		}
 
 		@GraphQLField
@@ -3090,10 +3139,10 @@ public class Query {
 				optionCategoryResource ->
 					optionCategoryResource.
 						getOptionCategoryByExternalReferenceCode(
-							_catalog.getExternalReferenceCode()));
+							_attachment.getExternalReferenceCode()));
 		}
 
-		private Catalog _catalog;
+		private Attachment _attachment;
 
 	}
 

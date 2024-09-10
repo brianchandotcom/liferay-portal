@@ -101,7 +101,7 @@ String oAuth2ApplicationName = GetterUtil.getString(request.getAttribute(ScimWeb
 	module="{InfoPanel} from scim-configuration-web"
 />
 
-<script>
+<aui:script>
 	var copyAccessToken = document.getElementById(
 		'<portlet:namespace />copyAccessToken'
 	);
@@ -179,4 +179,4 @@ String oAuth2ApplicationName = GetterUtil.getString(request.getAttribute(ScimWeb
 			});
 		});
 	}
-</script>
+</aui:script>

@@ -150,7 +150,7 @@ export class JournalEditArticlePage {
 
 	async fillContent(content: string) {
 		await this.journalPage.articleContentTextBox.fill(content);
-		await this.journalPage.articleContentTextBox.press('Backspace');
+		await this.journalPage.articleContentTextBox.press('Enter');
 	}
 
 	async fillFriendlyURL(friendlyURL: string) {

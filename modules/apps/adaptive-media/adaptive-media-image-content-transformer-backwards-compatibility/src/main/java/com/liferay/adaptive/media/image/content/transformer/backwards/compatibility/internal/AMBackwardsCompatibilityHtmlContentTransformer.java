@@ -5,13 +5,14 @@
 
 package com.liferay.adaptive.media.image.content.transformer.backwards.compatibility.internal;
 
-import com.liferay.adaptive.media.content.transformer.BaseRegexStringContentTransformer;
 import com.liferay.adaptive.media.content.transformer.ContentTransformer;
 import com.liferay.adaptive.media.image.html.AMImageHTMLTagFactory;
 import com.liferay.adaptive.media.image.html.constants.AMImageHTMLConstants;
 import com.liferay.adaptive.media.image.mime.type.AMImageMimeTypeProvider;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -30,11 +31,6 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.nodes.Node;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -43,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = ContentTransformer.class)
 public class AMBackwardsCompatibilityHtmlContentTransformer
-	extends BaseRegexStringContentTransformer {
+	implements ContentTransformer {
 
 	@Override
 	public String transform(String html) throws PortalException {
@@ -51,32 +47,50 @@ public class AMBackwardsCompatibilityHtmlContentTransformer
 			return null;
 		}
 
-		if (!html.contains("/documents/") || !_hasStandaloneImgTag(html)) {
+		if (!html.contains("/documents/") ||
+			!html.contains(_OPEN_TAG_TOKEN_IMG)) {
+
 			return html;
 		}
 
-		Document document = _parseDocument(html);
+		StringBundler sb = new StringBundler();
 
-		for (Element imgElement : document.select("img:not(picture > img)")) {
-			String imgElementString = imgElement.toString();
+		int lastIndex = 0;
 
-			String replacement = _transform(
-				imgElementString, imgElement.attr("src"));
+		while (lastIndex < html.length()) {
+			int pictureStart = html.indexOf(_OPEN_TAG_TOKEN_PICTURE, lastIndex);
 
-			imgElement.replaceWith(_parseNode(replacement));
+			if (pictureStart == -1) {
+				pictureStart = html.length();
+			}
+
+			_transformImgTags(html, lastIndex, pictureStart, sb);
+
+			if (pictureStart < html.length()) {
+				int pictureEnd = html.indexOf(
+					_CLOSE_TAG_TOKEN_PICTURE,
+					pictureStart + _OPEN_TAG_TOKEN_PICTURE.length());
+
+				if (pictureEnd == -1) {
+					pictureEnd = html.length();
+				}
+				else {
+					pictureEnd += _CLOSE_TAG_TOKEN_PICTURE.length();
+				}
+
+				sb.append(html.substring(pictureStart, pictureEnd));
+
+				lastIndex = pictureEnd;
+			}
+			else {
+				lastIndex = pictureStart;
+			}
 		}
 
-		if (html.contains("<html>") || html.contains("<head>")) {
-			return document.html();
-		}
-
-		Element body = document.body();
-
-		return body.html();
+		return sb.toString();
 	}
 
-	@Override
-	protected FileEntry getFileEntry(Matcher matcher) throws PortalException {
+	private FileEntry _getFileEntry(Matcher matcher) throws PortalException {
 		if (Objects.equals(
 				FriendlyURLResolverConstants.URL_SEPARATOR_Y_FILE_ENTRY,
 				matcher.group(7))) {
@@ -118,31 +132,6 @@ public class AMBackwardsCompatibilityHtmlContentTransformer
 		}
 	}
 
-	@Override
-	protected Pattern getPattern() {
-		return _pattern;
-	}
-
-	@Override
-	protected String getReplacement(String originalImgTag, FileEntry fileEntry)
-		throws PortalException {
-
-		if ((fileEntry == null) ||
-			!_amImageMimeTypeProvider.isMimeTypeSupported(
-				fileEntry.getMimeType())) {
-
-			return originalImgTag;
-		}
-
-		return _amImageHTMLTagFactory.create(originalImgTag, fileEntry);
-	}
-
-	@Override
-	protected boolean isSupported(FileEntry fileEntry) {
-		return _amImageMimeTypeProvider.isMimeTypeSupported(
-			fileEntry.getMimeType());
-	}
-
 	private Group _getGroup(long companyId, String name)
 		throws PortalException {
 
@@ -158,47 +147,17 @@ public class AMBackwardsCompatibilityHtmlContentTransformer
 		return user.getGroup();
 	}
 
-	private boolean _hasStandaloneImgTag(String html) {
-		int index = -1;
+	private String _getReplacement(String originalImgTag, FileEntry fileEntry)
+		throws PortalException {
 
-		while ((index = html.indexOf("<img", index)) != -1) {
-			int openStart = html.lastIndexOf("<picture", index);
+		if ((fileEntry == null) ||
+			!_amImageMimeTypeProvider.isMimeTypeSupported(
+				fileEntry.getMimeType())) {
 
-			if (openStart == -1) {
-				return true;
-			}
-
-			int closeStart = html.lastIndexOf("</picture>", index);
-
-			if ((closeStart != -1) && (openStart > closeStart)) {
-				return true;
-			}
-
-			index += 4;
+			return originalImgTag;
 		}
 
-		return false;
-	}
-
-	private Document _parseDocument(String html) {
-		Document document = Jsoup.parseBodyFragment(html);
-
-		Document.OutputSettings outputSettings = new Document.OutputSettings();
-
-		outputSettings.prettyPrint(false);
-		outputSettings.syntax(Document.OutputSettings.Syntax.xml);
-
-		document.outputSettings(outputSettings);
-
-		return document;
-	}
-
-	private Node _parseNode(String tag) {
-		Document document = _parseDocument(tag);
-
-		Node bodyNode = document.body();
-
-		return bodyNode.childNode(0);
+		return _amImageHTMLTagFactory.create(originalImgTag, fileEntry);
 	}
 
 	private FileEntry _resolveFileEntry(String friendlyURL, String groupName)
@@ -236,9 +195,7 @@ public class AMBackwardsCompatibilityHtmlContentTransformer
 
 		StringBuffer sb = null;
 
-		Pattern pattern = getPattern();
-
-		Matcher matcher = pattern.matcher(src);
+		Matcher matcher = _pattern.matcher(src);
 
 		while (matcher.find()) {
 			if (sb == null) {
@@ -250,10 +207,10 @@ public class AMBackwardsCompatibilityHtmlContentTransformer
 			if (!imgElementString.contains(
 					AMImageHTMLConstants.ATTRIBUTE_NAME_FILE_ENTRY_ID)) {
 
-				fileEntry = getFileEntry(matcher);
+				fileEntry = _getFileEntry(matcher);
 			}
 
-			replacement = getReplacement(imgElementString, fileEntry);
+			replacement = _getReplacement(imgElementString, fileEntry);
 
 			matcher.appendReplacement(
 				sb, Matcher.quoteReplacement(replacement));
@@ -268,13 +225,65 @@ public class AMBackwardsCompatibilityHtmlContentTransformer
 		return replacement;
 	}
 
+	private void _transformImgTags(
+			String html, int start, int end, StringBundler sb)
+		throws PortalException {
+
+		int lastIndex = start;
+
+		while (lastIndex < end) {
+			int imgStart = html.indexOf(_OPEN_TAG_TOKEN_IMG, lastIndex);
+
+			if ((imgStart == -1) || (imgStart > end)) {
+				sb.append(html.substring(lastIndex, end));
+
+				return;
+			}
+
+			sb.append(html.substring(lastIndex, imgStart));
+
+			int imgEnd = html.indexOf(CharPool.GREATER_THAN, imgStart) + 1;
+
+			int attributeListPos = imgStart + _OPEN_TAG_TOKEN_IMG.length();
+
+			int srcStart = html.indexOf(_ATTRIBUTE_TOKEN_SRC, attributeListPos);
+
+			if ((srcStart == -1) || (srcStart > imgEnd)) {
+				sb.append(html.substring(imgStart, imgEnd));
+
+				lastIndex = imgEnd;
+
+				continue;
+			}
+
+			int quotePos = srcStart + _ATTRIBUTE_TOKEN_SRC.length();
+
+			int srcEnd = html.indexOf(html.charAt(quotePos), quotePos + 1);
+
+			sb.append(
+				_transform(
+					html.substring(imgStart, imgEnd),
+					html.substring(quotePos + 1, srcEnd)));
+
+			lastIndex = imgEnd;
+		}
+	}
+
+	private static final String _ATTRIBUTE_TOKEN_SRC = "src=";
+
+	private static final String _CLOSE_TAG_TOKEN_PICTURE = "</picture>";
+
+	private static final String _OPEN_TAG_TOKEN_IMG = "<img";
+
+	private static final String _OPEN_TAG_TOKEN_PICTURE = "<picture";
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		AMBackwardsCompatibilityHtmlContentTransformer.class);
 
 	private static final Pattern _pattern = Pattern.compile(
 		"((?:/?[^\\s]*)/documents/(\\d+)/(\\d+)/([^/?]+)(?:/([-0-9a-fA-F]+))?" +
-			"(?:\\?t=\\d+)?)|((?:/?[^\\s]*)/documents/(d)/(.*)/" +
-				"([_A-Za-z0-9-]+)?)");
+			"(?:\\?.*$)?)|((?:/?[^\\s]*)/documents/(d)/(.*)/" +
+				"([_A-Za-z0-9-]+)?(?:\\?.*$)?)");
 
 	@Reference
 	private AMImageHTMLTagFactory _amImageHTMLTagFactory;

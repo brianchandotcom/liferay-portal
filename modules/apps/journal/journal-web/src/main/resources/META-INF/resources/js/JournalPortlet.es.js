@@ -177,10 +177,7 @@ export default function _JournalPortlet({
 			`${namespace}titleMapAsXML`
 		);
 
-		if (
-			!titleInputComponent?.getValue(defaultLanguageId) &&
-			!Liferay.FeatureFlags['LPS-114700']
-		) {
+		if (!titleInputComponent?.getValue(defaultLanguageId)) {
 			showAlert(
 				sub(
 					Liferay.Language.get(
@@ -248,7 +245,7 @@ export default function _JournalPortlet({
 				form.submit();
 			}
 		}
-		else if (showErrors && !Liferay.FeatureFlags['LPS-114700']) {
+		else if (showErrors) {
 			showAlert(
 				sub(
 					Liferay.Language.get(

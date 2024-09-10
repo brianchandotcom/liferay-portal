@@ -219,10 +219,7 @@ export function Field({field, itemPath, loc, ...otherProps}) {
 				<div
 					className="ddm-field"
 					data-ddm-localizable-field-id={
-						(Liferay.FeatureFlags['LPS-114700'] &&
-							field.localizable &&
-							field.instanceId) ||
-						null
+						(field.localizable && field.instanceId) || null
 					}
 					data-field-name={field.fieldName}
 					data-qa-id={field.fieldName}

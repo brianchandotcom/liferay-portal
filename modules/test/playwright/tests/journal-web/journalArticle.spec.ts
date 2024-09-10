@@ -85,7 +85,6 @@ const translationTest = mergeTests(
 	baseTest,
 	featureFlagsTest({
 		'LPD-11253': true,
-		'LPS-114700': true,
 	})
 );
 
@@ -1648,7 +1647,7 @@ scheduleTest(
 );
 
 translationAndAutosaveTest(
-	'Web Content is published when Feature Flags LPS-114700, LPD-11228 and LPD-15596 are active',
+	'Web Content is published when Feature Flags LPD-11228 and LPD-15596 are active',
 	{
 		tag: '@LPD-33570',
 	},

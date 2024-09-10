@@ -56,90 +56,83 @@ journalEditArticleDisplayContext.setViewAttributes();
 		<clay:container-fluid>
 			<ul class="tbar-nav">
 				<li class="tbar-item tbar-item-expand">
-					<c:choose>
-						<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPS-114700") %>'>
-							<div class="autofit-row sidebar-section">
-								<div class="<%= FeatureFlagManagerUtil.isEnabled("LPD-11253") ? "autofit-col d-flex flex-row" : "autofit-col translation-manager" %>">
-									<c:choose>
-										<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPD-11253") %>'>
-											<div class="inline-item px-6 py-2">
-												<span aria-hidden="true" class="loading-animation"></span>
-											</div>
-										</c:when>
-										<c:otherwise>
-											<div class="inline-item px-5 py-2">
-												<span aria-hidden="true" class="loading-animation"></span>
-											</div>
-										</c:otherwise>
-									</c:choose>
+					<div class="autofit-row sidebar-section">
+						<div class="<%= FeatureFlagManagerUtil.isEnabled("LPD-11253") ? "autofit-col d-flex flex-row" : "autofit-col translation-manager" %>">
+							<c:choose>
+								<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPD-11253") %>'>
+									<div class="inline-item px-6 py-2">
+										<span aria-hidden="true" class="loading-animation"></span>
+									</div>
+								</c:when>
+								<c:otherwise>
+									<div class="inline-item px-5 py-2">
+										<span aria-hidden="true" class="loading-animation"></span>
+									</div>
+								</c:otherwise>
+							</c:choose>
 
-									<react:component
-										module="{TranslationManager} from journal-web"
-										props='<%=
-											HashMapBuilder.<String, Object>put(
-												"defaultLanguageId", journalEditArticleDisplayContext.getDefaultArticleLanguageId()
-											).put(
-												"fields", journalEditArticleDisplayContext.getFieldMap()
-											).put(
-												"locales", journalEditArticleDisplayContext.getLocales()
-											).put(
-												"namespace", liferayPortletResponse.getNamespace()
-											).put(
-												"selectedLanguageId", journalEditArticleDisplayContext.getSelectedLanguageId()
-											).build()
-										%>'
-									/>
+							<react:component
+								module="{TranslationManager} from journal-web"
+								props='<%=
+									HashMapBuilder.<String, Object>put(
+										"defaultLanguageId", journalEditArticleDisplayContext.getDefaultArticleLanguageId()
+									).put(
+										"fields", journalEditArticleDisplayContext.getFieldMap()
+									).put(
+										"locales", journalEditArticleDisplayContext.getLocales()
+									).put(
+										"namespace", liferayPortletResponse.getNamespace()
+									).put(
+										"selectedLanguageId", journalEditArticleDisplayContext.getSelectedLanguageId()
+									).build()
+								%>'
+							/>
+						</div>
+
+						<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-11253") %>'>
+							<div class="c-ml-2">
+								<div class="inline-item my-5 p-5 w-100">
+									<span aria-hidden="true" class="loading-animation"></span>
 								</div>
 
-								<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-11253") %>'>
-									<div class="c-ml-2">
-										<div class="inline-item my-5 p-5 w-100">
-											<span aria-hidden="true" class="loading-animation"></span>
-										</div>
-
-										<react:component
-											module="{TranslationOptions} from journal-web"
-											props='<%=
-												HashMapBuilder.<String, Object>put(
-													"defaultLanguageId", journalEditArticleDisplayContext.getDefaultArticleLanguageId()
-												).put(
-													"fields", journalEditArticleDisplayContext.getFieldMap()
-												).put(
-													"locales", journalEditArticleDisplayContext.getLocales()
-												).put(
-													"namespace", liferayPortletResponse.getNamespace()
-												).put(
-													"selectedLanguageId", journalEditArticleDisplayContext.getSelectedLanguageId()
-												).build()
-											%>'
-										/>
-									</div>
-
-									<div class="autofit-col c-ml-2">
-										<react:component
-											module="{TranslationFilter} from journal-web"
-											props='<%=
-												HashMapBuilder.<String, Object>put(
-													"defaultLanguageId", journalEditArticleDisplayContext.getDefaultArticleLanguageId()
-												).put(
-													"fields", journalEditArticleDisplayContext.getFieldMap()
-												).put(
-													"locales", journalEditArticleDisplayContext.getLocales()
-												).put(
-													"namespace", liferayPortletResponse.getNamespace()
-												).put(
-													"selectedLanguageId", journalEditArticleDisplayContext.getSelectedLanguageId()
-												).build()
-											%>'
-										/>
-									</div>
-								</c:if>
+								<react:component
+									module="{TranslationOptions} from journal-web"
+									props='<%=
+										HashMapBuilder.<String, Object>put(
+											"defaultLanguageId", journalEditArticleDisplayContext.getDefaultArticleLanguageId()
+										).put(
+											"fields", journalEditArticleDisplayContext.getFieldMap()
+										).put(
+											"locales", journalEditArticleDisplayContext.getLocales()
+										).put(
+											"namespace", liferayPortletResponse.getNamespace()
+										).put(
+											"selectedLanguageId", journalEditArticleDisplayContext.getSelectedLanguageId()
+										).build()
+									%>'
+								/>
 							</div>
-						</c:when>
-						<c:otherwise>
-							<aui:input cssClass="form-control-inline" defaultLanguageId="<%= journalEditArticleDisplayContext.getDefaultArticleLanguageId() %>" label='<%= LanguageUtil.get(request, "name") %>' labelCssClass="sr-only" languagesDropdownDirection="down" localized="<%= true %>" name="titleMapAsXML" placeholder='<%= LanguageUtil.format(request, "untitled-x", HtmlUtil.escape(ddmStructure.getName(locale))) %>' required="<%= journalEditArticleDisplayContext.getClassNameId() == JournalArticleConstants.CLASS_NAME_ID_DEFAULT %>" selectedLanguageId="<%= journalEditArticleDisplayContext.getSelectedLanguageId() %>" type="text" wrapperCssClass="article-content-title mb-0" />
-						</c:otherwise>
-					</c:choose>
+
+							<div class="autofit-col c-ml-2">
+								<react:component
+									module="{TranslationFilter} from journal-web"
+									props='<%=
+										HashMapBuilder.<String, Object>put(
+											"defaultLanguageId", journalEditArticleDisplayContext.getDefaultArticleLanguageId()
+										).put(
+											"fields", journalEditArticleDisplayContext.getFieldMap()
+										).put(
+											"locales", journalEditArticleDisplayContext.getLocales()
+										).put(
+											"namespace", liferayPortletResponse.getNamespace()
+										).put(
+											"selectedLanguageId", journalEditArticleDisplayContext.getSelectedLanguageId()
+										).build()
+									%>'
+								/>
+							</div>
+						</c:if>
+					</div>
 				</li>
 				<li class="tbar-item">
 					<div class="c-gap-3 form-group-sm journal-article-button-row mb-0 tbar-section text-right">
@@ -314,114 +307,106 @@ journalEditArticleDisplayContext.setViewAttributes();
 		>
 			<div class="article-content-content">
 				<%@ include file="/edit_article_exceptions.jspf" %>
+				<div id="<portlet:namespace />metadata">
+					<clay:panel
+						displayTitle='<%= LanguageUtil.get(request, "metadata") %>'
+						displayType="block"
+						expanded="<%= true %>"
+					>
+						<div class="c-gap-4 d-flex flex-column panel-body">
+							<div id="<portlet:namespace />titleMapAsXMLWrapper">
+								<label for="<portlet:namespace />titleMapAsXML" id="<portlet:namespace />Aria"><liferay-ui:message key="title" /></label>
 
-				<c:choose>
-					<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPS-114700") %>'>
-						<div id="<portlet:namespace />metadata">
-							<clay:panel
-								displayTitle='<%= LanguageUtil.get(request, "metadata") %>'
-								displayType="block"
-								expanded="<%= true %>"
-							>
-								<div class="c-gap-4 d-flex flex-column panel-body">
-									<div id="<portlet:namespace />titleMapAsXMLWrapper">
-										<label for="<portlet:namespace />titleMapAsXML" id="<portlet:namespace />Aria"><liferay-ui:message key="title" /></label>
+								<aui:input cssClass="form-control-inline form-control-sm" defaultLanguageId="<%= journalEditArticleDisplayContext.getDefaultArticleLanguageId() %>" label='<%= LanguageUtil.get(request, "title") %>' labelCssClass="sr-only" languagesDropdownDirection="down" languagesDropdownVisible="<%= false %>" localized="<%= true %>" name="titleMapAsXML" placeholder='<%= LanguageUtil.format(request, "untitled-x", HtmlUtil.escape(ddmStructure.getName(locale))) %>' required="<%= journalEditArticleDisplayContext.getClassNameId() == JournalArticleConstants.CLASS_NAME_ID_DEFAULT %>" selectedLanguageId="<%= journalEditArticleDisplayContext.getSelectedLanguageId() %>" type="text" wrapperCssClass="article-content-title mb-0" />
+							</div>
 
-										<aui:input cssClass="form-control-inline form-control-sm" defaultLanguageId="<%= journalEditArticleDisplayContext.getDefaultArticleLanguageId() %>" label='<%= LanguageUtil.get(request, "title") %>' labelCssClass="sr-only" languagesDropdownDirection="down" languagesDropdownVisible="<%= false %>" localized="<%= true %>" name="titleMapAsXML" placeholder='<%= LanguageUtil.format(request, "untitled-x", HtmlUtil.escape(ddmStructure.getName(locale))) %>' required="<%= journalEditArticleDisplayContext.getClassNameId() == JournalArticleConstants.CLASS_NAME_ID_DEFAULT %>" selectedLanguageId="<%= journalEditArticleDisplayContext.getSelectedLanguageId() %>" type="text" wrapperCssClass="article-content-title mb-0" />
-									</div>
+							<div id="<portlet:namespace />descriptionMapAsXMLWrapper">
+								<label for="<portlet:namespace />descriptionMapAsXML" id="<portlet:namespace />Aria"><liferay-ui:message key="description" /></label>
 
-									<div id="<portlet:namespace />descriptionMapAsXMLWrapper">
-										<label for="<portlet:namespace />descriptionMapAsXML" id="<portlet:namespace />Aria"><liferay-ui:message key="description" /></label>
+								<liferay-ui:input-localized
+									availableLocales="<%= journalEditArticleDisplayContext.getAvailableLocales() %>"
+									defaultLanguageId="<%= journalEditArticleDisplayContext.getDefaultArticleLanguageId() %>"
+									editorName="ckeditor"
+									formName="fm"
+									ignoreRequestValue="<%= journalEditArticleDisplayContext.isChangeStructure() %>"
+									languagesDropdownVisible="<%= false %>"
+									name="descriptionMapAsXML"
+									selectedLanguageId="<%= journalEditArticleDisplayContext.getSelectedLanguageId() %>"
+									type="editor"
+									xml="<%= (article != null) ? article.getDescriptionMapAsXML() : StringPool.BLANK %>"
+								/>
 
-										<liferay-ui:input-localized
-											availableLocales="<%= journalEditArticleDisplayContext.getAvailableLocales() %>"
-											defaultLanguageId="<%= journalEditArticleDisplayContext.getDefaultArticleLanguageId() %>"
-											editorName="ckeditor"
-											formName="fm"
-											ignoreRequestValue="<%= journalEditArticleDisplayContext.isChangeStructure() %>"
-											languagesDropdownVisible="<%= false %>"
-											name="descriptionMapAsXML"
-											selectedLanguageId="<%= journalEditArticleDisplayContext.getSelectedLanguageId() %>"
-											type="editor"
-											xml="<%= (article != null) ? article.getDescriptionMapAsXML() : StringPool.BLANK %>"
+								<p class="text-3 text-secondary" id="<portlet:namespace />descriptionNotTranslatableMessage" hidden>
+									<liferay-ui:message arguments="description" key="the-x-will-not-count-as-a-translatable-field" />
+								</p>
+							</div>
+
+							<c:if test="<%= !JournalUtil.isEditDefaultValues(article) %>">
+								<div id="<portlet:namespace />friendlyURLWrapper">
+									<c:if test="<%= Validator.isNotNull(journalEditArticleDisplayContext.getFriendlyURLDuplicatedWarningMessage()) %>">
+										<clay:alert
+											dismissible="<%= true %>"
+											displayType="warning"
+											message="<%= journalEditArticleDisplayContext.getFriendlyURLDuplicatedWarningMessage() %>"
 										/>
-
-										<p class="text-3 text-secondary" id="<portlet:namespace />descriptionNotTranslatableMessage" hidden>
-											<liferay-ui:message arguments="description" key="the-x-will-not-count-as-a-translatable-field" />
-										</p>
-									</div>
-
-									<c:if test="<%= !JournalUtil.isEditDefaultValues(article) %>">
-										<div id="<portlet:namespace />friendlyURLWrapper">
-											<c:if test="<%= Validator.isNotNull(journalEditArticleDisplayContext.getFriendlyURLDuplicatedWarningMessage()) %>">
-												<clay:alert
-													dismissible="<%= true %>"
-													displayType="warning"
-													message="<%= journalEditArticleDisplayContext.getFriendlyURLDuplicatedWarningMessage() %>"
-												/>
-											</c:if>
-
-											<label for="<portlet:namespace />friendlyURL">
-												<liferay-ui:message key="friendly-url" />
-
-												<%
-												StringBundler sb = new StringBundler(3);
-
-												sb.append(LanguageUtil.get(request, "changing-the-friendly-url-will-affect-all-web-content-article-versions-even-when-autosaving"));
-												sb.append(StringPool.SPACE);
-												sb.append(LanguageUtil.get(request, "the-friendly-url-may-be-modified-to-ensure-uniqueness"));
-												%>
-
-											</label>
-
-											<span class="d-inline-block lfr-portal-tooltip text-4 text-secondary" tabindex="0" title="<%= sb.toString() %>">
-												<clay:icon
-													symbol="question-circle-full"
-												/>
-											</span>
-
-											<liferay-friendly-url:input
-												className="<%= JournalArticle.class.getName() %>"
-												classPK="<%= (article == null) || (article.getPrimaryKey() == 0) ? 0 : article.getResourcePrimKey() %>"
-												inputAddon="<%= journalEditArticleDisplayContext.getFriendlyURLBase() %>"
-												languagesDropdownVisible="<%= false %>"
-												name="friendlyURL"
-												showHistory="<%= false %>"
-												showLabel="<%= false %>"
-											/>
-
-											<p class="text-3 text-secondary" id="<portlet:namespace />friendlyURLNotTranslatableMessage" hidden>
-												<liferay-ui:message arguments="friendly-url" key="the-x-will-not-count-as-a-translatable-field" />
-											</p>
-										</div>
 									</c:if>
-								</div>
-							</clay:panel>
-						</div>
 
-						<div id="<portlet:namespace />content">
-							<liferay-frontend:fieldset
-								collapsed="<%= false %>"
-								collapsible="<%= true %>"
-								cssClass="edit-article-panel"
-								label="fields"
-							>
-								<div class="c-px-2 panel-body">
-									<%@ include file="/article_content.jspf" %>
-								</div>
-							</liferay-frontend:fieldset>
-						</div>
+									<label for="<portlet:namespace />friendlyURL">
+										<liferay-ui:message key="friendly-url" />
 
-						<div>
-							<react:component
-								module="{EmptyStatePlaceholder} from journal-web"
-							/>
+										<%
+										StringBundler sb = new StringBundler(3);
+
+										sb.append(LanguageUtil.get(request, "changing-the-friendly-url-will-affect-all-web-content-article-versions-even-when-autosaving"));
+										sb.append(StringPool.SPACE);
+										sb.append(LanguageUtil.get(request, "the-friendly-url-may-be-modified-to-ensure-uniqueness"));
+										%>
+
+									</label>
+
+									<span class="d-inline-block lfr-portal-tooltip text-4 text-secondary" tabindex="0" title="<%= sb.toString() %>">
+										<clay:icon
+											symbol="question-circle-full"
+										/>
+									</span>
+
+									<liferay-friendly-url:input
+										className="<%= JournalArticle.class.getName() %>"
+										classPK="<%= (article == null) || (article.getPrimaryKey() == 0) ? 0 : article.getResourcePrimKey() %>"
+										inputAddon="<%= journalEditArticleDisplayContext.getFriendlyURLBase() %>"
+										languagesDropdownVisible="<%= false %>"
+										name="friendlyURL"
+										showHistory="<%= false %>"
+										showLabel="<%= false %>"
+									/>
+
+									<p class="text-3 text-secondary" id="<portlet:namespace />friendlyURLNotTranslatableMessage" hidden>
+										<liferay-ui:message arguments="friendly-url" key="the-x-will-not-count-as-a-translatable-field" />
+									</p>
+								</div>
+							</c:if>
 						</div>
-					</c:when>
-					<c:otherwise>
-						<%@ include file="/article_content.jspf" %>
-					</c:otherwise>
-				</c:choose>
+					</clay:panel>
+				</div>
+
+				<div id="<portlet:namespace />content">
+					<liferay-frontend:fieldset
+						collapsed="<%= false %>"
+						collapsible="<%= true %>"
+						cssClass="edit-article-panel"
+						label="fields"
+					>
+						<div class="c-px-2 panel-body">
+							<%@ include file="/article_content.jspf" %>
+						</div>
+					</liferay-frontend:fieldset>
+				</div>
+
+				<div>
+					<react:component
+						module="{EmptyStatePlaceholder} from journal-web"
+					/>
+				</div>
 			</div>
 		</clay:container-fluid>
 	</div>

@@ -235,8 +235,6 @@ describe('ReactFieldBase', () => {
 	});
 
 	it('renders the hidden inputs with data-languageid and data-field-name', () => {
-		Liferay.FeatureFlags['LPS-114700'] = true;
-
 		const localizedValue = {ca_ES: 'test_ca_ES', en_US: 'test_en_US'};
 
 		render(
@@ -260,13 +258,9 @@ describe('ReactFieldBase', () => {
 				Object.keys(localizedValue)[i]
 			);
 		});
-
-		Liferay.FeatureFlags['LPS-114700'] = false;
 	});
 
 	it('renders the label with info icon and its corresponding styles when the field is non-localizable', () => {
-		Liferay.FeatureFlags['LPS-114700'] = true;
-
 		const {getByLabelText, getByTitle} = render(
 			<FieldBaseWithProvider
 				editOnlyInDefaultLanguage
@@ -280,8 +274,6 @@ describe('ReactFieldBase', () => {
 		).toBeInTheDocument();
 
 		expect(getByLabelText('my-label')).toHaveClass('text-muted');
-
-		Liferay.FeatureFlags['LPS-114700'] = false;
 	});
 
 	describe('Hide Field', () => {

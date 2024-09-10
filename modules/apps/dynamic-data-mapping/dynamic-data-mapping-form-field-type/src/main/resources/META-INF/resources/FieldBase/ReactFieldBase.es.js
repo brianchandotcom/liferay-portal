@@ -117,7 +117,7 @@ const RequiredProperty = () => {
 const FieldInformation = ({popover, tooltip}) => {
 	return popover ? (
 		<Popover {...popover} />
-	) : Liferay.FeatureFlags['LPS-114700'] ? (
+	) : (
 		<span
 			className="c-ml-2 text-4 text-secondary"
 			tabIndex={0}
@@ -125,14 +125,10 @@ const FieldInformation = ({popover, tooltip}) => {
 		>
 			<ClayIcon symbol="question-circle-full" />
 		</span>
-	) : (
-		<span className="ddm-tooltip" title={tooltip}>
-			<ClayIcon symbol="question-circle-full" />
-		</span>
 	);
 };
 
-const Popover = ({alignPosition, content, header, hideOnTriggerOut, image}) => {
+const Popover = ({alignPosition, content, header, image}) => {
 	const [isPopoverVisible, setIsPopoverVisible] = useState(false);
 
 	const POPOVER_MAX_WIDTH = 256;
@@ -148,26 +144,14 @@ const Popover = ({alignPosition, content, header, hideOnTriggerOut, image}) => {
 			show={isPopoverVisible}
 			style={{maxWidth: POPOVER_MAX_WIDTH}}
 			trigger={
-				Liferay.FeatureFlags['LPS-114700'] ? (
-					<ClayButtonWithIcon
-						aria-label={Liferay.Language.get('more-information')}
-						className="c-ml-2 text-secondary"
-						displayType="unstyled"
-						monospaced={false}
-						size="sm"
-						symbol="question-circle-full"
-					/>
-				) : (
-					<span
-						className="ddm-tooltip"
-						onMouseOut={() =>
-							hideOnTriggerOut && setIsPopoverVisible(false)
-						}
-						onMouseOver={() => setIsPopoverVisible(true)}
-					>
-						<ClayIcon symbol="question-circle-full" />
-					</span>
-				)
+				<ClayButtonWithIcon
+					aria-label={Liferay.Language.get('more-information')}
+					className="c-ml-2 text-secondary"
+					displayType="unstyled"
+					monospaced={false}
+					size="sm"
+					symbol="question-circle-full"
+				/>
 			}
 		>
 			<p
@@ -252,13 +236,6 @@ export default function FieldBase({
 		}
 
 		return Object.entries(localizedValue).map(([locale, value]) => {
-			if (
-				!Liferay.FeatureFlags['LPS-114700'] &&
-				locale === editingLanguageId
-			) {
-				return null;
-			}
-
 			return (
 				<input
 					data-field-name={`${fieldName}${instanceId}`}
@@ -290,10 +267,7 @@ export default function FieldBase({
 	const renderLabel =
 		(label && showLabel) || hideField || repeatable || required || tooltip;
 	const showDisabledFieldIcon =
-		Liferay.FeatureFlags['LPS-114700'] &&
-		editOnlyInDefaultLanguage &&
-		showLabel &&
-		readOnly;
+		editOnlyInDefaultLanguage && showLabel && readOnly;
 	const showGroup =
 		type === 'checkbox_multiple' ||
 		type === 'grid' ||

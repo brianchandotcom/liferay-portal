@@ -13,7 +13,7 @@
 	dataDefinitionId="<%= ddmStructure.getStructureId() %>"
 	dataRecordValues="<%= journalEditArticleDisplayContext.getValues() %>"
 	defaultLanguageId="<%= journalEditArticleDisplayContext.getDefaultArticleLanguageId() %>"
-	displayType='<%= FeatureFlagManagerUtil.isEnabled("LPS-114700") ? "borderless" : StringPool.BLANK %>'
+	displayType="borderless"
 	languageId="<%= journalEditArticleDisplayContext.getSelectedLanguageId() %>"
 	namespace="<%= liferayPortletResponse.getNamespace() %>"
 	persisted="<%= article != null %>"

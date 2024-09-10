@@ -356,8 +356,6 @@ describe('TranslationAdminSelector', () => {
 	});
 
 	it('renders horizontal selector when the display type is HORIZONTAL', () => {
-		Liferay.FeatureFlags['LPS-114700'] = true;
-
 		render(
 			<TranslationAdminSelector
 				displayType="HORIZONTAL"
@@ -371,8 +369,6 @@ describe('TranslationAdminSelector', () => {
 		);
 
 		expect(horizontalSelector).toBeInTheDocument();
-
-		Liferay.FeatureFlags['LPS-114700'] = false;
 	});
 
 	it('calls onSelectorActiveChange when the trigger is clicked', () => {

@@ -504,43 +504,6 @@ public class UpstreamFailureUtil {
 			upstreamTestrayBuild.getTopLevelBuildReport();
 	}
 
-	private static TestrayRoutine _getUpstreamTestrayRoutine(
-		TopLevelBuild topLevelBuild) {
-
-		if (_upstreamTestrayRoutine != null) {
-			return _upstreamTestrayRoutine;
-		}
-
-		if (!(topLevelBuild instanceof PortalBranchInformationBuild)) {
-			return null;
-		}
-
-		PortalBranchInformationBuild portalBranchInformationBuild =
-			(PortalBranchInformationBuild)topLevelBuild;
-
-		Build.BranchInformation branchInformation =
-			portalBranchInformationBuild.getPortalBranchInformation();
-
-		try {
-			String testHistoryRoutineURL = JenkinsResultsParserUtil.getProperty(
-				JenkinsResultsParserUtil.getBuildProperties(),
-				"test.history.routine.url",
-				branchInformation.getUpstreamBranchName());
-
-			if (JenkinsResultsParserUtil.isNullOrEmpty(testHistoryRoutineURL)) {
-				return null;
-			}
-
-			_upstreamTestrayRoutine = TestrayFactory.newTestrayRoutine(
-				testHistoryRoutineURL);
-
-			return _upstreamTestrayRoutine;
-		}
-		catch (IOException ioException) {
-			return null;
-		}
-	}
-
 	private static Boolean _upstreamComparisonAvailable;
 	private static final Map<String, List<String>> _upstreamFailures =
 		new HashMap<>();

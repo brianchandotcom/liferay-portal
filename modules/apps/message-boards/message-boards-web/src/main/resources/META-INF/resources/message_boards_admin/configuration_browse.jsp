@@ -408,7 +408,7 @@ portletDisplay.setURLBackTitle("message-boards");
 	</clay:row>
 </clay:container-fluid>
 
-<script>
+<aui:script>
 	window.<portlet:namespace />ranksChanged = false;
 	window.<portlet:namespace />ranksLastLanguageId = '<%= currentLanguageId %>';
 
@@ -423,4 +423,4 @@ portletDisplay.setURLBackTitle("message-boards");
 	function <portlet:namespace />onPrioritiesChanged() {
 		<portlet:namespace />prioritiesChanged = true;
 	}
-</script>
+</aui:script>

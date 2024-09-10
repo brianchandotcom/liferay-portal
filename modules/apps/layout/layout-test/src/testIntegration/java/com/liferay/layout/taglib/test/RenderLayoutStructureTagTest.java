@@ -1230,6 +1230,28 @@ public class RenderLayoutStructureTagTest {
 				StringPool.BLANK));
 	}
 
+	@Test
+	@TestInfo("LPS-151738")
+	public void testViewCommonStylesClassesGeneratedInOuterDivForFragmentEntryWithoutStylingAttribute()
+		throws Exception {
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+			"{}", draftLayout,
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				draftLayout.getPlid()));
+
+		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
+
+		String content = _getRenderLayoutHTML(layout);
+
+		Assert.assertTrue(
+			content.startsWith("<div class=\"lfr-layout-structure-item-"));
+	}
+
 	private List<AssetEntry> _addAssetEntries(AssetListEntry assetListEntry)
 		throws Exception {
 

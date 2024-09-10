@@ -1,5 +1,30 @@
 components:
     schemas:
+        AppearsOnHistogram:
+            properties:
+                metrics:
+                    items:
+                        $ref: "#/components/schemas/Metric"
+                    type: array
+                pageTitle:
+                    type: string
+                total:
+                    format: double
+                    type: number
+        AssetAppearsOnHistogram:
+            properties:
+                appearsOnHistograms:
+                    items:
+                        $ref: "#/components/schemas/AppearsOnHistogram"
+                    type: array
+                metricName:
+                    type: string
+        AssetAppearsOnHistogramMetric:
+            properties:
+                assetAppearsOnHistograms:
+                    items:
+                        $ref: "#/components/schemas/AssetAppearsOnHistogram"
+                    type: array
         AssetHistogramMetric:
             properties:
                 histograms:
@@ -107,6 +132,42 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/AssetMetric"
             tags: ["AssetMetric"]
+    "{groupId}/asset-metrics/{assetType}/appears-on/histogram":
+        get:
+            operationId: getGroupAssetMetricAssetTypeAppearsOnHistogram
+            parameters:
+                - in: path
+                  name: groupId
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: assetType
+                  schema:
+                      type: string
+                - in: query
+                  name: assetId
+                  schema:
+                      type: string
+                - in: query
+                  name: identityType
+                  schema:
+                      enum: [ALL, KNOWN, UNKNOWN]
+                      type: string
+                - in: query
+                  name: rangeKey
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/AssetAppearsOnHistogramMetric"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/AssetAppearsOnHistogramMetric"
+            tags: ["AssetAppearsOnHistogramMetric"]
     "{groupId}/asset-metrics/{assetType}/histogram":
         get:
             operationId: getGroupAssetMetricAssetTypeHistogram

@@ -64,7 +64,7 @@ public class JSImportMapsExtenderTopHeadDynamicInclude
 		PrintWriter printWriter = httpServletResponse.getWriter();
 
 		if (_jsImportMapsConfiguration.enableImportMaps() &&
-			((_dynamicJSImportMapsContributors.size() != 0) ||
+			(!_dynamicJSImportMapsContributors.isEmpty() ||
 			 !_globalImportMapJSONObjects.isEmpty() ||
 			 !_scopedImportMapJSONObjects.isEmpty())) {
 

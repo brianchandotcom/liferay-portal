@@ -36,7 +36,19 @@ const getURLPreview = ({
 }) => {
 	const encodedParameters = encodeURI(parameters.trim());
 
-	return restApplication + restEndpoint + '?' + encodedParameters;
+	// This also removes the version (for example: `/v1.0`) in the rest endpoint
+	// to avoid repeating the version when combining the restApplication and
+	// restEndpoint.
+
+	return (
+		restApplication +
+		restEndpoint
+			.split('/')
+			.filter((_, index) => index !== 1)
+			.join('/') +
+		'?' +
+		encodedParameters
+	);
 };
 
 const Details = ({

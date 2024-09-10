@@ -36,13 +36,13 @@ public class JSONResourcePermissionsFileCheck extends BaseFileCheck {
 
 		JSONArray jsonArray = new JSONArrayImpl(content);
 
-		List<Object> objectList = JSONUtil.toObjectList(jsonArray);
+		List<Object> objects = JSONUtil.toObjectList(jsonArray);
 
-		Collections.sort(objectList, new ResourceNameComparator());
+		Collections.sort(objects, new ResourceNameComparator());
 
 		jsonArray = new JSONArrayImpl();
 
-		for (Object object : objectList) {
+		for (Object object : objects) {
 			jsonArray.put(object);
 		}
 

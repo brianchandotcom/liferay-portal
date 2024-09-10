@@ -46,13 +46,13 @@ public class JSONPageFileCheck extends BaseFileCheck {
 
 		JSONArray jsonArray = new JSONArrayImpl(permissions);
 
-		List<Object> objectList = JSONUtil.toObjectList(jsonArray);
+		List<Object> objects = JSONUtil.toObjectList(jsonArray);
 
-		Collections.sort(objectList, new PageComparator());
+		Collections.sort(objects, new PageComparator());
 
 		jsonArray = new JSONArrayImpl();
 
-		for (Object object : objectList) {
+		for (Object object : objects) {
 			jsonArray.put(object);
 		}
 

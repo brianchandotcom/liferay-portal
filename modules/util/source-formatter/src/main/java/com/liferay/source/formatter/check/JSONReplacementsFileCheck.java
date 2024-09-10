@@ -42,13 +42,13 @@ public class JSONReplacementsFileCheck extends BaseFileCheck {
 
 		JSONArray jsonArray = new JSONArrayImpl(content);
 
-		List<Object> objectList = JSONUtil.toObjectList(jsonArray);
+		List<Object> objects = JSONUtil.toObjectList(jsonArray);
 
-		Collections.sort(objectList, new ReplacementComparator());
+		Collections.sort(objects, new ReplacementComparator());
 
 		jsonArray = new JSONArrayImpl();
 
-		for (Object object : objectList) {
+		for (Object object : objects) {
 			jsonArray.put(object);
 		}
 

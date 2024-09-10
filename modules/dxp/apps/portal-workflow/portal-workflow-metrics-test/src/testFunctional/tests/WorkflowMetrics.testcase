@@ -710,6 +710,7 @@ definition {
 			Workflow.viewPendingTasks(
 				workflowAssetTitle = "Blogs Entry Title ${blogNumber}",
 				workflowAssetType = "Blogs Entry",
+				workflowNavTab = "Assigned to Me",
 				workflowTask = "Review");
 
 			Workflow.gotoTaskDetails(workflowAssetTitle = "Blogs Entry Title ${blogNumber}");
@@ -2000,6 +2001,7 @@ definition {
 		Workflow.viewPendingTasks(
 			workflowAssetTitle = "Blogs Entry Title",
 			workflowAssetType = "Blogs Entry",
+			workflowNavTab = "Assigned to Me",
 			workflowTask = "Review");
 
 		Workflow.gotoTaskDetails(workflowAssetTitle = "Blogs Entry Title");

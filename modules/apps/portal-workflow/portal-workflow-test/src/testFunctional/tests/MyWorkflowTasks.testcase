@@ -686,6 +686,7 @@ definition {
 		Workflow.viewPendingTasks(
 			workflowAssetTitle = "Blogs Entry Title 2",
 			workflowAssetType = "Blogs Entry",
+			workflowNavTab = "Assigned to Me",
 			workflowTask = "Review");
 
 		Workflow.gotoCompletedFilter();

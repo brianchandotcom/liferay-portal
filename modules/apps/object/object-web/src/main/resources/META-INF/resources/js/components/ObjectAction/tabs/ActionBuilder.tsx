@@ -319,7 +319,6 @@ export default function ActionBuilder({
 					)}
 				</ClayAlert>
 			)}
-
 			<ActionContainer
 				currentObjectDefinitionFields={currentObjectDefinitionFields}
 				disableGroovyAction={disableGroovyAction}

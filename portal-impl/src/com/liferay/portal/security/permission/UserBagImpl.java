@@ -30,35 +30,35 @@ import java.util.Set;
 public class UserBagImpl implements UserBag {
 
 	public UserBagImpl(
-		long userId, long[] userGroupIds, Collection<Organization> userOrgs,
-		Collection<Long> userOrgGroups, Collection<UserGroup> userUserGroups,
-		long[] userUserGroupGroupIds, Collection<Role> userRoles) {
+		long userId, long[] userGroupIds, Collection<Organization> userOrgIds,
+		Collection<Long> userOrgGroupIds,
+		Collection<UserGroup> userUserGroupIds, long[] userUserGroupGroupIds,
+		Collection<Role> userRoleIds) {
 
 		_userId = userId;
 		_userGroupIds = _toSortedLongArray(userGroupIds);
-		_userUserGroupGroupIds = _toSortedLongArray(userUserGroupGroupIds);
-
-		_userOrgIds = _toSortedLongArray(userOrgs);
+		_userOrgIds = _toSortedLongArray(userOrgIds);
 		_userOrgGroupIds = _toSortedLongArray(
-			ArrayUtil.toLongArray(userOrgGroups));
-		_userUserGroupIds = _toSortedLongArray(userUserGroups);
-		_userRoleIds = _toSortedLongArray(userRoles);
+			ArrayUtil.toLongArray(userOrgGroupIds));
+		_userUserGroupIds = _toSortedLongArray(userUserGroupIds);
+		_userUserGroupGroupIds = _toSortedLongArray(userUserGroupGroupIds);
+		_userRoleIds = _toSortedLongArray(userRoleIds);
 	}
 
 	public UserBagImpl(
-		long userId, long[] userGroupIds, Collection<Organization> userOrgs,
-		Collection<Long> userOrgGroups, Collection<UserGroup> userUserGroups,
-		long[] userUserGroupGroupIds, long[] userRoleIds) {
+		long userId, long[] userGroupIds, Collection<Organization> userOrgIds,
+		Collection<Long> userOrgGroupIds,
+		Collection<UserGroup> userUserGroupIds, long[] userUserGroupGroupIds,
+		long[] userRoleIds) {
 
 		_userId = userId;
 		_userGroupIds = _toSortedLongArray(userGroupIds);
+		_userOrgIds = _toSortedLongArray(userOrgIds);
+		_userOrgGroupIds = _toSortedLongArray(
+			ArrayUtil.toLongArray(userOrgGroupIds));
+		_userUserGroupIds = _toSortedLongArray(userUserGroupIds);
 		_userUserGroupGroupIds = _toSortedLongArray(userUserGroupGroupIds);
 		_userRoleIds = _toSortedLongArray(userRoleIds);
-
-		_userOrgIds = _toSortedLongArray(userOrgs);
-		_userOrgGroupIds = _toSortedLongArray(
-			ArrayUtil.toLongArray(userOrgGroups));
-		_userUserGroupIds = _toSortedLongArray(userUserGroups);
 	}
 
 	@Override

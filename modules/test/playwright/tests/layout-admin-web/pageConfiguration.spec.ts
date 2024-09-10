@@ -542,12 +542,12 @@ test.describe('CSS Client Extensions', () => {
 
 			// Apply CSS client extension to master page
 
-			await masterPagesPage.goto(site.friendlyUrlPath);
-			await masterPagesPage.gotoConfiguration(
-				layoutPageTemplateEntryName
-			);
-
-			await pagesAdminPage.addCSSClientExtension(clientExtensionName);
+			await masterPagesPage.selectClientExtension({
+				clientExtensionName,
+				layoutTitle: layoutPageTemplateEntryName,
+				siteUrl: site.friendlyUrlPath,
+				type: 'globalCSS',
+			});
 
 			// Publish master page
 
@@ -739,14 +739,12 @@ test.describe('JavaScript Client Extensions', () => {
 
 			// Apply JS client extension to master page
 
-			await masterPagesPage.goto(site.friendlyUrlPath);
-			await masterPagesPage.gotoConfiguration(
-				layoutPageTemplateEntryName
-			);
-
-			await pagesAdminPage.addJavaScriptClientExtension(
-				clientExtensionName
-			);
+			await masterPagesPage.selectClientExtension({
+				clientExtensionName,
+				layoutTitle: layoutPageTemplateEntryName,
+				siteUrl: site.friendlyUrlPath,
+				type: 'globalJS',
+			});
 
 			// Publish master page
 

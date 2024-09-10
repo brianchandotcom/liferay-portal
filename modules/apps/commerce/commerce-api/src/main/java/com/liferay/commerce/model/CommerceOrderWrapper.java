@@ -756,6 +756,14 @@ public class CommerceOrderWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry>
+			getAttachmentFileEntries(int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getAttachmentFileEntries(start, end);
+	}
+
+	@Override
 	public CommerceAddress getBillingAddress()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -951,6 +959,13 @@ public class CommerceOrderWrapper
 		return model.getExternalReferenceCode();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.repository.model.Folder getFolder(
+		com.liferay.portal.kernel.repository.LocalRepository localRepository) {
+
+		return model.getFolder(localRepository);
+	}
+
 	/**
 	 * Returns the group ID of this commerce order.
 	 *
@@ -969,6 +984,14 @@ public class CommerceOrderWrapper
 	@Override
 	public Date getLastPriceUpdateDate() {
 		return model.getLastPriceUpdateDate();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.repository.LocalRepository
+			getLocalRepository()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getLocalRepository();
 	}
 
 	/**

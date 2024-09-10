@@ -50,6 +50,10 @@ public interface CommerceOrder extends CommerceOrderModel, PersistedModel {
 	public com.liferay.account.model.AccountEntry getAccountEntry()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry>
+			getAttachmentFileEntries(int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 	public CommerceAddress getBillingAddress()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
@@ -73,6 +77,13 @@ public interface CommerceOrder extends CommerceOrderModel, PersistedModel {
 	public java.util.List<Long> getCustomerCommerceOrderIds();
 
 	public int getCustomerCommerceOrderIdsCount();
+
+	public com.liferay.portal.kernel.repository.model.Folder getFolder(
+		com.liferay.portal.kernel.repository.LocalRepository localRepository);
+
+	public com.liferay.portal.kernel.repository.LocalRepository
+			getLocalRepository()
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public long getScopeGroupId()
 		throws com.liferay.portal.kernel.exception.PortalException;

@@ -7,6 +7,7 @@ import ClayBreadcrumb from '@clayui/breadcrumb';
 import {ReactPortal} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
+import {useDragLayer} from 'react-dnd';
 
 import {ITEM_ACTIVATION_ORIGINS} from '../config/constants/itemActivationOrigins';
 import {ITEM_TYPES} from '../config/constants/itemTypes';
@@ -33,7 +34,14 @@ const ELLIPSIS_BUFFER_MARGIN = 4;
 export function LayoutBreadcrumbs() {
 	const activeItemIds = useActiveItemIds();
 
-	if (Liferay.FeatureFlags['LPD-18221'] && activeItemIds.length > 1) {
+	const {isDragging} = useDragLayer((monitor) => ({
+		isDragging: monitor.isDragging(),
+	}));
+
+	if (
+		isDragging ||
+		(Liferay.FeatureFlags['LPD-18221'] && activeItemIds.length > 1)
+	) {
 		return null;
 	}
 

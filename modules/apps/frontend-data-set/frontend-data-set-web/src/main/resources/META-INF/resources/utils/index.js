@@ -163,7 +163,87 @@ export async function loadData(
 		parametersArray.forEach((parameter) => {
 			const [key, value] = parameter.split('=');
 
-			url.searchParams.append(key, value);
+			if (key === 'filter' && url.searchParams.get('filter')) {
+
+				// Add new filters to the end of the existing filter.
+
+				const existingFilters = url.searchParams.get('filter');
+
+				url.searchParams.delete('filter');
+
+				url.searchParams.append(
+					'filter',
+					existingFilters + ' and ' + value
+				);
+			}
+			else if (key === 'sort' && url.searchParams.get('sort')) {
+
+				// Add new sort values to the end of the existing sort.
+				// Don't add new sort values for any already existing fields.
+
+				const newSortParams = [];
+
+				const existingSortArray = url.searchParams
+					.get('sort')
+					.split(',');
+
+				const existingSortParamFields = existingSortArray.map(
+					(sort) => sort.split(':')[0]
+				);
+
+				const parametersSortValueArray = value.split(',');
+
+				parametersSortValueArray.forEach((parametersSortValueItem) => {
+					if (
+						!existingSortParamFields.includes(
+							parametersSortValueItem.split(':')[0]
+						)
+					) {
+						newSortParams.push(parametersSortValueItem);
+					}
+				});
+
+				url.searchParams.delete('sort');
+
+				url.searchParams.append(
+					'sort',
+					existingSortArray.concat(newSortParams).join(',')
+				);
+			}
+			else if (
+				key === 'nestedFields' &&
+				url.searchParams.get('nestedFields')
+			) {
+
+				// Merge nestedFields and don't add any fields already in the
+				// existing nestedFields.
+
+				const existingNestedFieldsArray = url.searchParams
+					.get('nestedFields')
+					.split(',');
+				const parametersNestedFieldsValueArray = value.split(',');
+
+				const newNestedFields = [...existingNestedFieldsArray];
+
+				parametersNestedFieldsValueArray.forEach(
+					(parametersNestedFieldsItem) => {
+						if (
+							!existingNestedFieldsArray.includes(
+								parametersNestedFieldsItem
+							)
+						) {
+							newNestedFields.push(parametersNestedFieldsItem);
+						}
+					}
+				);
+
+				url.searchParams.delete('nestedFields');
+
+				url.searchParams.append('nestedFields', newNestedFields);
+			}
+			else {
+				url.searchParams.append(key, value);
+			}
 		});
 	}
 

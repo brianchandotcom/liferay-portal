@@ -1352,3 +1352,58 @@ test.describe('Tags Fragment', () => {
 		});
 	});
 });
+
+test.describe('Video URL', () => {
+	test(
+		'Uses Video URL fragment and display a video',
+		{
+			tag: '@LPS-99176',
+		},
+		async ({apiHelpers, page, pageEditorPage, site}) => {
+
+			// Create page with a Video URL fragment and go to edit mode
+
+			const fragmentId = getRandomString();
+
+			const fragment = getFragmentDefinition({
+				id: fragmentId,
+				key: 'BASIC_COMPONENT-video',
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([fragment]),
+				siteId: site.id,
+				title: getRandomString(),
+			});
+
+			await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+			// Edit video URL and publish the page
+
+			await pageEditorPage.changeFragmentConfiguration({
+				fieldLabel: 'URL',
+				fragmentId,
+				tab: 'General',
+				value: 'https://www.youtube.com/watch?v=2EPZxIC5ogU',
+			});
+
+			await pageEditorPage.publishPage();
+
+			// Go to view mode and assert video
+
+			await page.goto(
+				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			const videoIframeLocator = page.frameLocator(
+				'iframe[title="Life at Liferay - A Look into Liferay Culture"]'
+			);
+
+			await expect(
+				videoIframeLocator.getByText(
+					'Life at Liferay - A Look into Liferay Culture'
+				)
+			).toBeVisible();
+		}
+	);
+});

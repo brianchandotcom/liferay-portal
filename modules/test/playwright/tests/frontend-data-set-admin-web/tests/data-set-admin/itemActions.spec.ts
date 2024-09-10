@@ -271,7 +271,7 @@ test(
 
 		await test.step('Validate valid JSON in request body', async () => {
 			const requestBodyInput = form.requestBodyInput;
-			
+
 			await form.typeSelect.selectOption('Headless');
 
 			await requestBodyInput.fill(getRandomString());
@@ -279,14 +279,18 @@ test(
 			const parent = page
 				.locator('.form-group.has-error')
 				.filter({has: requestBodyInput});
-	
+
 			expect(parent).toBeVisible();
-	
-			expect(parent.getByText('This field must contain a valid JSON.')).toBeVisible();
+
+			expect(
+				parent.getByText('This field must contain a valid JSON.')
+			).toBeVisible();
 
 			await requestBodyInput.fill('{}');
 
-			expect(parent.getByText('This field must contain a valid JSON.')).not.toBeVisible();
+			expect(
+				parent.getByText('This field must contain a valid JSON.')
+			).not.toBeVisible();
 
 			await requestBodyInput.clear();
 		});
@@ -305,7 +309,7 @@ test(
 		let icon: string = 'catalog';
 		let label: string = getRandomString();
 		let method: EAsyncActionMethod = EAsyncActionMethod.GET;
-		let requestBody: string = '{"Async": "async"}';
+		const requestBody: string = '{"Async": "async"}';
 		let successStatusMessage: string = getRandomString();
 		const type: EItemActionType = EItemActionType.ASYNC;
 		let url: string = getRandomString();
@@ -454,7 +458,7 @@ test(
 		let headlessActionKey: string = getRandomString();
 		let icon: string = 'heading';
 		let label: string = getRandomString();
-		let requestBody: string = '{"Headless": "sdfs"}';
+		const requestBody: string = '{"Headless": "sdfs"}';
 		let successStatusMessage: string = getRandomString();
 		const type: EItemActionType = EItemActionType.HEADLESS;
 

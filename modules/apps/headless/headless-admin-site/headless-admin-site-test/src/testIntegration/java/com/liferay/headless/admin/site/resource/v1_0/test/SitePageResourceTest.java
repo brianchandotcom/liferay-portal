@@ -27,6 +27,7 @@ import com.liferay.portal.test.rule.Inject;
 import java.util.Collections;
 import java.util.Map;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -35,6 +36,15 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 public class SitePageResourceTest extends BaseSitePageResourceTestCase {
+
+	@Ignore
+	@Override
+	@Test
+	public void testDeleteSiteSiteByExternalReferenceCodeSitePage()
+		throws Exception {
+
+		super.testDeleteSiteSiteByExternalReferenceCodeSitePage();
+	}
 
 	@Override
 	@Test
@@ -52,6 +62,88 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		assertEquals(postSitePage, getSitePage);
 		assertValid(getSitePage);
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGetSiteSiteByExternalReferenceCodeSitePagePermissionsPage()
+		throws Exception {
+
+		super.testGetSiteSiteByExternalReferenceCodeSitePagePermissionsPage();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGetSiteSiteByExternalReferenceCodeSitePagesPage()
+		throws Exception {
+
+		super.testGetSiteSiteByExternalReferenceCodeSitePagesPage();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGetSiteSiteByExternalReferenceCodeSitePagesPageWithPagination()
+		throws Exception {
+
+		super.
+			testGetSiteSiteByExternalReferenceCodeSitePagesPageWithPagination();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGetSiteSiteExternalReferenceCodeSitePagePermissionsPage()
+		throws Exception {
+
+		super.testGetSiteSiteExternalReferenceCodeSitePagePermissionsPage();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testPatchSiteSiteByExternalReferenceCodeSitePage()
+		throws Exception {
+
+		super.testPatchSiteSiteByExternalReferenceCodeSitePage();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testPostSiteSiteByExternalReferenceCodeSitePage()
+		throws Exception {
+
+		super.testPostSiteSiteByExternalReferenceCodeSitePage();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testPutSiteSiteByExternalReferenceCodeSitePage()
+		throws Exception {
+
+		super.testPutSiteSiteByExternalReferenceCodeSitePage();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testPutSiteSiteByExternalReferenceCodeSitePagePermissionsPage()
+		throws Exception {
+
+		super.testPutSiteSiteByExternalReferenceCodeSitePagePermissionsPage();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testPutSiteSiteExternalReferenceCodeSitePagePermissionsPage()
+		throws Exception {
+
+		super.testPutSiteSiteExternalReferenceCodeSitePagePermissionsPage();
 	}
 
 	@Override

@@ -51,7 +51,7 @@ const usePublishNavigation = ({
 		onClickContinue,
 		onClickPrevious,
 		onExit,
-		steps,
+		steps: publishAppSteps,
 	};
 };
 

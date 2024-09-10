@@ -33,12 +33,21 @@ import {
 	Submit,
 } from './pages/Solutions/NewSolutionFlow/pages';
 import SolutionsDetails from './pages/Solutions/Solution';
+import NewAppContextProvider from '../../context/NewAppContext';
+import PublishAppOutlet from './pages/NewAppFlow/PublishAppOutlet';
+import {Profile as AppProfile, Build} from './pages/NewAppFlow/pages';
+import Storefront from './pages/NewAppFlow/pages/Storefront';
+import Version from './pages/NewAppFlow/pages/Version';
+import Pricing from './pages/NewAppFlow/pages/Pricing';
+import Support from './pages/NewAppFlow/pages/Support';
+import LicensePrices from './pages/NewAppFlow/pages/Licensing/LicensePrices';
+import Licensing from './pages/NewAppFlow/pages/Licensing';
 
 const PublisherDashboardRouter = () => {
 	const {accountId} = Liferay.CommerceContext.account || {};
+	const {data, isValidating} = useAccount();
 	const {data: catalogs = []} = useCatalogs();
 	const accountsSearch = useSupplierAccounts();
-	const {data, isValidating} = useAccount();
 
 	useEffect(() => {
 		const checkAccount = async (accountId: number) => {
@@ -65,6 +74,36 @@ const PublisherDashboardRouter = () => {
 	return (
 		<HashRouter>
 			<Routes>
+				<Route path="newapp">
+					<Route
+						element={
+							<NewAppContextProvider
+								catalogId={catalogId as number}
+							>
+								<Outlet />
+							</NewAppContextProvider>
+						}
+						path=":productId?"
+					>
+						<Route element={<PublishAppOutlet />} path="publisher">
+							<Route element={<AppProfile />} path="profile" />
+							<Route element={<Build />} path="build" />
+							<Route element={<Create />} index />
+							<Route element={<Licensing />} path="licensing" />
+							<Route element={<Pricing />} path="pricing" />
+							<Route element={<Storefront />} path="storefront" />
+							<Route element={<Version />} path="version" />
+
+							<Route
+								element={<LicensePrices />}
+								path="licensing-prices"
+							/>
+
+							<Route element={<Support />} path="support" />
+						</Route>
+					</Route>
+				</Route>
+
 				<Route
 					element={
 						<AppContextProvider>

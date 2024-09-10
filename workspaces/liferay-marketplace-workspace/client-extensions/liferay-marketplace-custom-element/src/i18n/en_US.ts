@@ -10,7 +10,10 @@ export default {
 	'a-request-will-be-sent-to-deactivate-the-selected-activation-key-from-now-on-it-will-be-hidden-and-no-longer-be-visible':
 		'A request will be sent to deactivate the selected activation key. From now on It will be hidden and no longer be visible.',
 	'access-console': 'Access Console',
+	'app-installation-and-uninstallation-guide-url':
+		'App installation and uninstallation guide URL',
 	'account': 'Account',
+	'app-documentation-url': 'App Documentation URL',
 	'account-name': 'Account Name',
 	'accounts': 'Accounts',
 	'activation-status': 'Activation Status',
@@ -39,6 +42,8 @@ export default {
 	'app-build': 'App Build',
 	'app-name': 'App Name',
 	'app-type': 'App Type',
+	'app-storefront': 'App Storefront',
+	'app-support-and-help': 'App Support and Help',
 	'app-x-submitted': 'App <b>{0}</b> submitted',
 	'apply-to-your-use-of-this-service-the-name-on-your-liferay-account-will-be-used-in-this-liferay-marketplace-publisher-profile-it-may-appear-where-you-contribute-and-be-changed-at-any-time':
 		'apply to your use of this service. The name on your Liferay account will be used in this Liferay Marketplace Publisher Profile. It may appear where you contribute and be changed at any time',
@@ -112,6 +117,8 @@ export default {
 	'define-profile-company-information-for-your-solution-this-will-inform-users-about-this-versions-updates-on-the-storefront':
 		'Define profile company information for your solution. This will inform users about this version’s updates on the storefront.',
 	'define-the-solution-profile': 'Define the solution profile',
+	'define-the-support-and-help-references-users-can-access-these-resources-pre-and-post-purchase-to-find-out-more-information-about-your-app-or-solution':
+		'Define the support and help references. Users can access these resources pre and post purchase to find out more information about your app or solution.',
 	'delete': 'Delete',
 	'deleting': 'Deleting',
 	'description': 'Description',
@@ -207,6 +214,9 @@ export default {
 	'licenses': 'Licenses',
 	'liferay-learn': 'Liferay Learn',
 	'liferay-s': 'Liferay’s',
+	'liferay-saas': 'Liferay SaaS',
+	'liferay-self-hosted': 'Liferay Self-Hosted',
+	'liferay-paas': 'Liferay PaaS',
 	'limit-reached': 'Limit Reached',
 	'list-with-latest-published-apps': 'List with latest published apps',
 	'lorem-ipsum-dolor-sit-amet-consectetur':
@@ -310,7 +320,6 @@ export default {
 		'Select the offering of Liferay your app is compatible with. The compatibility selections will determine on what platforms your app is tested.',
 	'select-the-versions-of-liferay-that-your-app-is-compatible-with':
 		'Select the versions of Liferay that your app is compatible with.',
-	'self-hosted': 'Self-Hosted',
 	'self-managed': 'Self-Managed',
 	'send-request': 'Send Request',
 	'sign-in-with-a-different-account': 'Sign in with a different Account',
@@ -332,6 +341,9 @@ export default {
 	'success': 'success',
 	'summary': 'Summary',
 	'supported-version': 'Supported Version',
+	'support-email': 'Support Email',
+	'support-phone': 'Support Phone',
+	'support-url': 'Support URL',
 	'tags': 'Tags',
 	'tags-help-to-describe-your-solution-in-the-marketplace-select-the-tags-most-relevant-to-your-solution-they-can-be-changed-if-needed':
 		'Tags help to describe your solution in the Marketplace. Select the tags most relevant to your solution. They can be changed if needed.',

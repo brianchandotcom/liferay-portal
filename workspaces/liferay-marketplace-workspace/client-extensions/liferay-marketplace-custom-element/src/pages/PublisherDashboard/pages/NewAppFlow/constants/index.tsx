@@ -6,15 +6,13 @@
 import ReactDOMServer from 'react-dom/server';
 
 import {NewAppInitialState} from '../../../../../context/NewAppContext';
-import {ProductType} from '../../../../../enums/ProductType';
 import {ProductUploadType} from '../../../../../enums/ProductUploadType';
 import i18n from '../../../../../i18n';
 import zodSchema from '../../../../../schema/zod';
 
+export const LIFERAY_VERSION_PICKLIST = 'LIFERAY-VERSIONS';
 export const MAX_IMAGE_QUANTITY = 5;
 export const MAX_SIZE_5MBS = 5_000_000;
-
-export const LIFERAY_VERSION_PICKLIST = 'LIFERAY-VERSIONS';
 
 export const APP_FLOW_ITEMS = [
 	{
@@ -29,7 +27,7 @@ export const APP_FLOW_ITEMS = [
 			'Enter your new app details. This information will be used for submission, presentation, customer support, and search capabilities.',
 		label: i18n.translate('profile'),
 		parseSchema: (context: NewAppInitialState) =>
-			zodSchema.solutionPublishing.profile.safeParse(context.profile),
+			zodSchema.appPublishing.profile.safeParse(context.profile),
 		path: 'profile',
 		title: 'Define the app profile',
 	},
@@ -38,9 +36,59 @@ export const APP_FLOW_ITEMS = [
 			'Use one of the following methods to provide your app builds.',
 		label: 'Build',
 		parseSchema: (context: NewAppInitialState) =>
-			zodSchema.solutionPublishing.profile.safeParse(context.build),
+			zodSchema.appPublishing.build.safeParse(context.build),
 		path: 'build',
 		title: 'Provide app build',
+	},
+	{
+		description:
+			'Design the storefront for your app. This will set the information displayed on the app page in the Marketplace.',
+		label: 'Storefront',
+		parseSchema: (context: NewAppInitialState) =>
+			zodSchema.appPublishing.storefront.safeParse(context.storefront),
+		path: 'storefront',
+		title: 'Customize app storefront',
+	},
+	{
+		description: `Define version information for your app. This will inform users about this version's updates on the storefront.`,
+		label: 'Version',
+		parseSchema: (context: NewAppInitialState) =>
+			zodSchema.appPublishing.version.safeParse(context.version),
+		path: 'version',
+		title: 'Provide version details',
+	},
+	{
+		description:
+			'Select one of the pricing models for your app. This will define how much users will pay. To enable paid apps, you must be a business and enter payment information in your Marketplace account profile.',
+		label: 'Pricing',
+		path: 'pricing',
+		title: 'Choose pricing model',
+	},
+	{
+		description: `Define the licensing approach for your app. This will impact users' licensing renewal experience.`,
+		label: 'Licensing',
+		path: 'licensing',
+		title: 'Select licensing terms',
+	},
+	{
+		hide: true,
+		description: `Define the licensing approach for your app. This will impact users' licensing renewal experience.`,
+		label: 'Licensing',
+		path: 'licensing-prices',
+		title: 'Select licensing terms',
+	},
+	{
+		description: `Inform the support and help references. This will impact how users will experience this app’s customer support and learning.`,
+		label: 'Support',
+		path: 'support',
+		title: 'Provide app support and help',
+	},
+	{
+		description:
+			'Please, review before submitting. Once sent, you will not be able to edit any information until this submission is completely reviewed by Liferay.',
+		label: 'Submit',
+		path: 'submit',
+		title: 'Review and submit app',
 	},
 ];
 
@@ -65,7 +113,7 @@ export const COMPATIBLE_OFFERING_CARDS = [
 				.
 			</span>
 		),
-		value: ProductType.CLOUD,
+		value: true,
 	},
 	{
 		description: i18n.translate(
@@ -76,7 +124,7 @@ export const COMPATIBLE_OFFERING_CARDS = [
 		tooltip: i18n.translate(
 			'the-app-submission-is-integrates-with-liferay-dxp-version-7-4-or-later'
 		),
-		value: ProductType.DXP,
+		value: false,
 	},
 ];
 
@@ -168,3 +216,53 @@ export const BUILD_UPLOAD_OPTIONS = {
 		},
 	],
 };
+
+export const LICENSING_OPTIONS = [
+	{
+		description: 'The app version is offered in perpetuity.',
+		icon: 'time',
+		title: 'Perpetual License',
+		value: 'Perpetual',
+		tooltip: 'A perpetual license requires no renewal and never expires.',
+	},
+	{
+		description: 'App License must be renewed annually.',
+		icon: 'document-pending',
+		title: 'Subscription License',
+		value: 'Subscription',
+		tooltip: 'A subscription license that must be renewed annually.',
+	},
+] as const;
+
+export const LICENSING_30_DAYS_TRIAL_OPTIONS = [
+	{
+		description: 'Offer a 30-day free trial for this app.',
+		icon: 'check-circle',
+		title: 'Yes',
+		value: true,
+		tooltip: 'Offer a 30-day free trial for this app.',
+	},
+	{
+		description: 'Do not offer a 30-day free trial.',
+		icon: 'times-circle',
+		title: 'No',
+		value: false,
+		tooltip: 'Do not offer a 30-day trial for this app.',
+	},
+] as const;
+
+export const PRICING_OPTIONS = [
+	{
+		description: 'The app is offered in the Marketplace with no charge.',
+		title: 'Free',
+		tooltip: 'The app is offered in the Marketplace with no charge.',
+	},
+	{
+		description:
+			'To enable paid apps, you must be a business and enter payment information in your Marketplace account profile.',
+		title: 'Paid',
+		icon: 'credit-card',
+		tooltip:
+			'For paid apps, you can choose the subscription model you want to use on the next screen.',
+	},
+] as const;

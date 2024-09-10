@@ -59,6 +59,13 @@ public interface DocumentMetadataSetResource {
 			String fieldNames)
 		throws Exception;
 
+	public void deleteDocumentMetadataSet(Long documentMetadataSetId)
+		throws Exception;
+
+	public Response deleteDocumentMetadataSetBatch(
+			String callbackURL, Object object)
+		throws Exception;
+
 	public DocumentMetadataSet getDocumentMetadataSet(
 			Long documentMetadataSetId)
 		throws Exception;

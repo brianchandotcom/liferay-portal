@@ -57,6 +57,14 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	}
 
 	@Override
+	protected String[] getAdditionalAssertFieldNames() {
+		return new String[] {
+			"externalReferenceCode", "friendlyUrlPath_i18n", "name_i18n",
+			"pageSettings", "type", "uuid"
+		};
+	}
+
+	@Override
 	protected SitePage randomSitePage() throws Exception {
 		SitePage sitePage = super.randomSitePage();
 

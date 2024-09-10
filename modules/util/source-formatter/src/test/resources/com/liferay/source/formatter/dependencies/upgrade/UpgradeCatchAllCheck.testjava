@@ -1178,6 +1178,9 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 	}
 
 	public void method(String name, String type) {
+		ListTypeServiceUtil.getListTypes("test123");
+		ListTypeServiceUtil.getListTypes(type);
+
 		_listTypeLocalService.addListType("test123", type);
 		_listTypeLocalService.addListType(name, type);
 	}

@@ -32,12 +32,6 @@ export const testSearchInDlPortlet = mergeTests(
 		'LPS-178052': true,
 	})
 );
-export const testFeatureFlagsEnabled = mergeTests(
-	baseTest,
-	featureFlagsTest({
-		'LPD-10701': true,
-	})
-);
 
 export const testUploadMultipleFieldsWithCustomDocumentType =
 	mergeTests(baseTest);
@@ -117,7 +111,7 @@ baseTest(
 	}
 );
 
-testFeatureFlagsEnabled(
+baseTest(
 	'LPD-16658 Show a success message after scheduling a new file',
 	async ({documentLibraryEditFilePage, documentLibraryPage, page}) => {
 		const scheduleDate = `01/01/${new Date().getFullYear() + 1}`;
@@ -145,7 +139,7 @@ testFeatureFlagsEnabled(
 	}
 );
 
-testFeatureFlagsEnabled(
+baseTest(
 	'LPD-16313 Identify at a glance if a Document is visible for guests',
 	async ({documentLibraryEditFilePage, documentLibraryPage}) => {
 		const title = getRandomString();
@@ -170,7 +164,7 @@ testFeatureFlagsEnabled(
 	}
 );
 
-testFeatureFlagsEnabled(
+baseTest(
 	'LPD-16313 Show icon in the content admin and content editor',
 	async ({documentLibraryEditFilePage, documentLibraryPage, page}) => {
 		const title = getRandomString();
@@ -195,7 +189,7 @@ testFeatureFlagsEnabled(
 	}
 );
 
-testFeatureFlagsEnabled(
+baseTest(
 	'LPD-16313 Show icon in the DL item selector',
 	async ({
 		documentLibraryEditDocumentTypesPage,

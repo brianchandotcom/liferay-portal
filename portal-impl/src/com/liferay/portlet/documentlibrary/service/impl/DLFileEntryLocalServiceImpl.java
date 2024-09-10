@@ -77,7 +77,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.interval.IntervalActionProcessor;
 import com.liferay.portal.kernel.io.ByteArrayFileInputStream;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -404,9 +403,7 @@ public class DLFileEntryLocalServiceImpl
 
 		long userId = _getActiveCompanyAdminUserId(companyId);
 
-		if (FeatureFlagManagerUtil.isEnabled(companyId, "LPD-10701")) {
-			_checkFileEntriesByDisplayDate(companyId, date, userId);
-		}
+		_checkFileEntriesByDisplayDate(companyId, date, userId);
 
 		_checkFileVersionsByExpirationDate(companyId, date, userId);
 
@@ -3057,12 +3054,6 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	private int _getStatus(Date date, DLFileVersion dlFileVersion, int status) {
-		if (!FeatureFlagManagerUtil.isEnabled(
-				dlFileVersion.getCompanyId(), "LPD-10701")) {
-
-			return status;
-		}
-
 		if ((status == WorkflowConstants.STATUS_APPROVED) &&
 			(dlFileVersion.getDisplayDate() != null) &&
 			date.before(dlFileVersion.getDisplayDate())) {

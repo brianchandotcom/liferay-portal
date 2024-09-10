@@ -25,7 +25,6 @@ import com.liferay.document.library.web.internal.security.permission.resource.DL
 import com.liferay.document.library.web.internal.security.permission.resource.DLFolderPermission;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
@@ -296,12 +295,6 @@ public class DLViewEntriesDisplayContext {
 	}
 
 	public boolean hasApprovedVersion(long fileEntryId) {
-		if (!FeatureFlagManagerUtil.isEnabled(
-				_themeDisplay.getCompanyId(), "LPD-10701")) {
-
-			return false;
-		}
-
 		DLFileVersion dlFileVersion =
 			DLFileVersionLocalServiceUtil.fetchLatestFileVersion(
 				fileEntryId, false, WorkflowConstants.STATUS_APPROVED);

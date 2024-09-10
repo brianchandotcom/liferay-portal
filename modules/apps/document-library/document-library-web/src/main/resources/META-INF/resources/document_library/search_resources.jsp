@@ -200,7 +200,7 @@ entriesChecker.setRememberCheckBoxStateURLRegex("^(?!.*" + liferayPortletRespons
 														</div>
 
 														<div class="card-detail">
-															<c:if test='<%= FeatureFlagManagerUtil.isEnabled(latestFileVersion.getCompanyId(), "LPD-10701") && !latestFileVersion.isApproved() && dlViewFileVersionDisplayContext.hasApprovedVersion() %>'>
+															<c:if test="<%= !latestFileVersion.isApproved() && dlViewFileVersionDisplayContext.hasApprovedVersion() %>">
 																<liferay-portal-workflow:status
 																	showStatusLabel="<%= false %>"
 																	status="<%= WorkflowConstants.STATUS_APPROVED %>"
@@ -212,7 +212,7 @@ entriesChecker.setRememberCheckBoxStateURLRegex("^(?!.*" + liferayPortletRespons
 																status="<%= latestFileVersion.getStatus() %>"
 															/>
 
-															<c:if test='<%= FeatureFlagManagerUtil.isEnabled(latestFileVersion.getCompanyId(), "LPD-10701") && latestFileVersion.isScheduled() %>'>
+															<c:if test="<%= latestFileVersion.isScheduled() %>">
 
 																<%
 																String displayDateString = StringPool.BLANK;
@@ -370,7 +370,7 @@ entriesChecker.setRememberCheckBoxStateURLRegex("^(?!.*" + liferayPortletRespons
 												cssClass="table-cell-expand-smallest"
 												name="status"
 											>
-												<c:if test='<%= FeatureFlagManagerUtil.isEnabled(latestFileVersion.getCompanyId(), "LPD-10701") && !latestFileVersion.isApproved() && dlViewFileVersionDisplayContext.hasApprovedVersion() %>'>
+												<c:if test="<%= !latestFileVersion.isApproved() && dlViewFileVersionDisplayContext.hasApprovedVersion() %>">
 													<liferay-portal-workflow:status
 														showStatusLabel="<%= false %>"
 														status="<%= WorkflowConstants.STATUS_APPROVED %>"
@@ -382,7 +382,7 @@ entriesChecker.setRememberCheckBoxStateURLRegex("^(?!.*" + liferayPortletRespons
 													status="<%= latestFileVersion.getStatus() %>"
 												/>
 
-												<c:if test='<%= FeatureFlagManagerUtil.isEnabled(latestFileVersion.getCompanyId(), "LPD-10701") && latestFileVersion.isScheduled() %>'>
+												<c:if test="<%= latestFileVersion.isScheduled() %>">
 
 													<%
 													String displayDateString = StringPool.BLANK;

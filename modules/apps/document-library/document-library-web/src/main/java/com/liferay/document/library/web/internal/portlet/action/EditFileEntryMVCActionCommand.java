@@ -50,7 +50,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -518,9 +517,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 		ActionRequest actionRequest, FileVersion fileVersion,
 		ThemeDisplay themeDisplay) {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-10701") ||
-			!fileVersion.isScheduled()) {
-
+		if (!fileVersion.isScheduled()) {
 			String portletResource = ParamUtil.getString(
 				actionRequest, "portletResource");
 
@@ -996,9 +993,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			TimeZone timeZone)
 		throws PortalException {
 
-		if (addDynamic || !PropsValues.SCHEDULER_ENABLED ||
-			!FeatureFlagManagerUtil.isEnabled("LPD-10701")) {
-
+		if (addDynamic || !PropsValues.SCHEDULER_ENABLED) {
 			return null;
 		}
 

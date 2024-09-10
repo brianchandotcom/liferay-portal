@@ -50,7 +50,6 @@ import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.events.ServicePreAction;
 import com.liferay.portal.events.ThemeServicePreAction;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -382,13 +381,7 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 			fileName = document.getFileName();
 			title = document.getTitle();
 			description = document.getDescription();
-
-			if (FeatureFlagManagerUtil.isEnabled(
-					contextCompany.getCompanyId(), "LPD-10701")) {
-
-				displayDate = document.getDatePublished();
-			}
-
+			displayDate = document.getDatePublished();
 			expirationDate = document.getDateExpired();
 		}
 
@@ -590,13 +583,7 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 			fileName = document.getFileName();
 			title = document.getTitle();
 			description = document.getDescription();
-
-			if (FeatureFlagManagerUtil.isEnabled(
-					contextCompany.getCompanyId(), "LPD-10701")) {
-
-				displayDate = document.getDatePublished();
-			}
-
+			displayDate = document.getDatePublished();
 			expirationDate = document.getDateExpired();
 		}
 
@@ -1045,13 +1032,7 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 			fileName = document.getFileName();
 			title = document.getTitle();
 			description = document.getDescription();
-
-			if (FeatureFlagManagerUtil.isEnabled(
-					contextCompany.getCompanyId(), "LPD-10701")) {
-
-				displayDate = document.getDatePublished();
-			}
-
+			displayDate = document.getDatePublished();
 			expirationDate = document.getDateExpired();
 		}
 

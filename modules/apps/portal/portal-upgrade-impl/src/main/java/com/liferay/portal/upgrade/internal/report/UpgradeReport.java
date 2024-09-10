@@ -42,6 +42,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.lang.management.ManagementFactory;
+import java.lang.management.RuntimeMXBean;
+
 import java.nio.file.Files;
 
 import java.sql.Connection;
@@ -114,6 +117,51 @@ public class UpgradeReport {
 		}
 
 		return 0;
+	}
+
+	private List<String> _getJVMArguments() {
+		List<String> filteredArguments = new ArrayList<>();
+
+		String[] passwordKeywords = {
+			"password", "secret", "securitycredential"
+		};
+
+		RuntimeMXBean runtimeMXBean = ManagementFactory.getRuntimeMXBean();
+
+		for (String inputArgument : runtimeMXBean.getInputArguments()) {
+			if (inputArgument.startsWith("-D") &&
+				inputArgument.contains(StringPool.EQUAL)) {
+
+				String keyValueString = inputArgument.substring(2);
+
+				String[] keyValuePair = keyValueString.split(
+					StringPool.EQUAL, 2);
+
+				String key = keyValuePair[0];
+
+				String value = keyValuePair[1];
+
+				String lowerCaseKey = StringUtil.toLowerCase(key);
+
+				for (String keyword : passwordKeywords) {
+					if (lowerCaseKey.contains(keyword)) {
+						value = StringPool.EIGHT_STARS;
+
+						break;
+					}
+				}
+
+				filteredArguments.add(
+					StringBundler.concat("-D", key, StringPool.EQUAL, value));
+			}
+			else {
+				filteredArguments.add(inputArgument);
+			}
+		}
+
+		Collections.sort(filteredArguments);
+
+		return filteredArguments;
 	}
 
 	private List<MessagesPrinter> _getMessagesPrinters(
@@ -361,6 +409,8 @@ public class UpgradeReport {
 
 				return new PropertiesPrinter(propertiesMap);
 			}
+		).put(
+			"jvm.arguments", _getJVMArguments()
 		).put(
 			"document.library.storage.size",
 			() -> {

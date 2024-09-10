@@ -63,10 +63,10 @@ export class PagesAdminPage {
 		);
 	}
 
-	async addCSSClientExtension(clientExtensionName: string) {
+	private async addCSSClientExtension(clientExtensionName: string) {
 		await this.page
-			.locator('.portlet-body li', {
-				has: this.page.getByText('Design'),
+			.getByRole('link', {
+				name: 'Design',
 			})
 			.click();
 
@@ -78,7 +78,7 @@ export class PagesAdminPage {
 
 		// Wait for "Select Items" checkbox label to be visible which occurs when JavaScript hydration is complete.
 
-		await iframe.getByText('Select Items').waitFor({state: 'visible'});
+		await iframe.getByLabel(clientExtensionName).check({trial: true});
 
 		await iframe.getByLabel(clientExtensionName).check();
 
@@ -99,10 +99,10 @@ export class PagesAdminPage {
 		await this.configurationSaveButton.click();
 	}
 
-	async addJavaScriptClientExtension(clientExtensionName: string) {
+	private async addJavaScriptClientExtension(clientExtensionName: string) {
 		await this.page
-			.locator('.portlet-body li', {
-				has: this.page.getByText('Design'),
+			.getByRole('link', {
+				name: 'Design',
 			})
 			.click();
 
@@ -225,16 +225,12 @@ export class PagesAdminPage {
 		await waitForSuccessAlert(this.page, successMessage);
 	}
 
-	async addThemeFaviconClientExtension(clientExtensionName: string) {
+	private async addThemeFaviconClientExtension(clientExtensionName: string) {
 		await this.page
-			.locator('.portlet-body li', {
-				has: this.page.getByText('Design'),
+			.getByRole('link', {
+				name: 'Design',
 			})
 			.click();
-
-		await this.page
-			.getByLabel('Select Favicon', {exact: true})
-			.waitFor({state: 'visible'});
 
 		await this.page.getByLabel('Select Favicon', {exact: true}).click();
 
@@ -243,8 +239,6 @@ export class PagesAdminPage {
 		await iframe
 			.getByRole('link', {exact: true, name: 'Client Extension'})
 			.click();
-
-		await iframe.getByText(clientExtensionName).waitFor({state: 'visible'});
 
 		await iframe.getByText(clientExtensionName).click();
 

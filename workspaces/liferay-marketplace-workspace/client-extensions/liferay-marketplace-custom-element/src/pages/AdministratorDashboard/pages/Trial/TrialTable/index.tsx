@@ -41,8 +41,6 @@ const ORDER_STATUS_LABEL = {
 	processing: 'secondary',
 };
 
-const CONSOLE_CLOUD_URL = 'https://console.liferay.cloud';
-
 const safeRunner = async (promise: any) => {
 	try {
 		await promise;
@@ -75,7 +73,15 @@ const TrialTable: React.FC<TrialTableProps> = ({items, revalidate}) => {
 
 	const itemsDropdown = [
 		{
-			id: 1,
+			name: i18n.translate('go-to-trial'),
+			onClick: (order: Order) =>
+				window.open(
+					`https://${
+						order?.customFields?.['trial-virtualhost'] as string
+					}`
+				),
+		},
+		{
 			name: i18n.translate('customer-dashboard'),
 			onClick: (order: Order) =>
 				CommerceSelectAccountImpl.selectAccount(order?.accountId).then(
@@ -94,22 +100,6 @@ const TrialTable: React.FC<TrialTableProps> = ({items, revalidate}) => {
 				),
 		},
 		{
-			id: 1,
-			name: i18n.translate('go-to-trial'),
-			onClick: (order: Order) =>
-				window.open(
-					`https://${
-						order?.customFields?.['trial-virtualhost'] as string
-					}`
-				),
-		},
-		{
-			id: 2,
-			name: i18n.translate('go-to-console'),
-			onClick: () => window.open(CONSOLE_CLOUD_URL),
-		},
-		{
-			id: 3,
 			name: i18n.translate('delete'),
 			onClick: async (order: Order) => {
 				modal.onOpenChange(true);

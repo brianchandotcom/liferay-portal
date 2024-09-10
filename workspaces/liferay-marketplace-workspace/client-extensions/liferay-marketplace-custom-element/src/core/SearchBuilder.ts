@@ -16,9 +16,9 @@ export type Operators =
 	| 'ne'
 	| 'startsWith';
 
-export interface SearchBuilderConstructor {
+export type SearchBuilderConstructor = {
 	useURIEncode?: boolean;
-}
+};
 
 export default class SearchBuilder {
 	private lock: boolean = false;
@@ -130,8 +130,12 @@ export default class SearchBuilder {
 		return this.setContext(parseFn(SearchBuilder.eq(key, value)));
 	}
 
-	public lambda(key: Key, value: Value) {
-		return this.setContext(SearchBuilder.lambda(key, value));
+	public lambda(key: Key, value: Value, options = {unquote: false}) {
+		const parseFn = options.unquote
+			? SearchBuilder.unquote
+			: (fn: any) => fn;
+
+		return this.setContext(parseFn(SearchBuilder.lambda(key, value)));
 	}
 
 	public gt(key: Key, values: Value) {

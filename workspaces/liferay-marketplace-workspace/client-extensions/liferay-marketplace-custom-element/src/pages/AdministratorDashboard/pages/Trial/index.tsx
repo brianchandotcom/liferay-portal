@@ -8,7 +8,6 @@ import ClayLabel from '@clayui/label';
 import classNames from 'classnames';
 
 import Page from '../../../../components/Page';
-import {ORDER_WORKFLOW_STATUS_CODE} from '../../../../enums/Order';
 import i18n from '../../../../i18n';
 import InfoCard from '../../components/InfoCard';
 import useTrialMetrics from '../../hooks/useTrialMetrics';
@@ -23,13 +22,8 @@ const getAvailabilityResourceLabel = (availability: Availability) => {
 };
 
 const Trial = () => {
-	const {availability, expired, isLoading, mutate, orderTableData, orders} =
+	const {availability, isLoading, mutate, orderTableData, totalCount} =
 		useTrialMetrics('week');
-
-	const expiredTrials = orderTableData?.items?.filter(
-		(status: PlacedOrder) =>
-			status.orderStatusInfo.code === ORDER_WORKFLOW_STATUS_CODE.COMPLETED
-	);
 
 	return (
 		<Page pageRendererProps={{isLoading}}>
@@ -96,7 +90,7 @@ const Trial = () => {
 									</span>
 
 									<h2 className="align-items-center d-flex justify-content-center my-0">
-										{availability?.onHold ?? 0}
+										{totalCount.onHold}
 									</h2>
 								</div>
 								<span className="align-items-end d-flex">
@@ -112,20 +106,17 @@ const Trial = () => {
 
 					<InfoCard
 						className="col-2"
-						growth={orders.growth ?? 0}
-						growthContext={`+${orders?.lastPeriod ?? 0} this week`}
 						symbol="shopping-cart"
 						title={i18n.translate('all-orders')}
-						value={orders.totalCount ?? 0}
+						value={totalCount.all}
 					/>
 
 					<InfoCard
 						className="col-2"
-						growth={expired.growth ?? 0}
-						growthContext={`+${expired?.lastPeriod ?? 0} this week`}
+						growth={0}
 						symbol="date-time"
 						title={i18n.translate('expired')}
-						value={expiredTrials?.length ?? 0}
+						value={totalCount.expired}
 					/>
 				</div>
 

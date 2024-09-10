@@ -33,7 +33,7 @@ import org.junit.runner.RunWith;
  * @author Drew Brokke
  */
 @RunWith(Arquillian.class)
-public class UserServiceWhenAddingOrRemovingPasswordPolicyUsersTest {
+public class UserServiceWhenPasswordPolicyConflictsWithUserStateTest {
 
 	@ClassRule
 	@Rule
@@ -76,7 +76,7 @@ public class UserServiceWhenAddingOrRemovingPasswordPolicyUsersTest {
 	}
 
 	@Test
-	public void testAuthenticateByEmailAddress() throws Exception {
+	public void testAuthenticateWhenUserMustPasswordReset() throws Exception {
 		_user = UserTestUtil.addUser();
 
 		Assert.assertEquals(_defaultPasswordPolicy, _user.getPasswordPolicy());

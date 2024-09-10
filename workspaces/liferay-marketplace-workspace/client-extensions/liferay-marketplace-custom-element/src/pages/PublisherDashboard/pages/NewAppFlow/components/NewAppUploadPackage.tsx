@@ -6,6 +6,7 @@
 import {filesize} from 'filesize';
 
 import {DropzoneUpload} from '../../../../../components/DropzoneUpload/DropzoneUpload';
+import {FileList} from '../../../../../components/FileList/FileList';
 import {
 	NewAppTypes,
 	useNewAppContext,
@@ -13,7 +14,6 @@ import {
 import {ProductType} from '../../../../../enums/ProductType';
 import i18n from '../../../../../i18n';
 import {getRandomID} from '../../../../../utils/string';
-import {FileList} from '../../../../../components/FileList/FileList';
 
 type NewAppUploadAppPackagesComponentProps = {
 	isProcessing: boolean;

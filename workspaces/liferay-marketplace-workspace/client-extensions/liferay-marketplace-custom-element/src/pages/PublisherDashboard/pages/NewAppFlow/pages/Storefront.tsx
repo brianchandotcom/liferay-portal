@@ -1,17 +1,22 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import {filesize} from 'filesize';
 
 import {DropzoneUpload} from '../../../../../components/DropzoneUpload/DropzoneUpload';
 import {FileList} from '../../../../../components/FileList/FileList';
+import {Section} from '../../../../../components/Section/Section';
 import {
-	useNewAppContext,
 	NewAppTypes,
+	useNewAppContext,
 } from '../../../../../context/NewAppContext';
 import i18n from '../../../../../i18n';
 import {getRandomID} from '../../../../../utils/string';
+import {swapImageElements} from '../../../constants';
 import {ACCEPT_FILE_TYPES} from '../../Apps/AppCreationFlow/StorefrontPage/CustomizeAppStorefrontPage';
 import {MAX_IMAGE_QUANTITY, MAX_SIZE_5MBS} from '../constants';
-import {swapImageElements} from '../../../constants';
-import {Section} from '../../../../../components/Section/Section';
 
 const Storefront = () => {
 	const [

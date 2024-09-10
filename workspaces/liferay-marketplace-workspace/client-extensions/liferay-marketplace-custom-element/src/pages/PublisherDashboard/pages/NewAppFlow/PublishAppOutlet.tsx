@@ -8,6 +8,7 @@ import {useModal} from '@clayui/modal';
 import {useMemo} from 'react';
 import {Link, Outlet} from 'react-router-dom';
 
+import AppPublish from '../../../../components/AppPublish';
 import Modal from '../../../../components/Modal';
 import {useNewAppContext} from '../../../../context/NewAppContext';
 import {PRODUCT_WORKFLOW_STATUS_CODE} from '../../../../enums/Product';
@@ -16,7 +17,6 @@ import i18n from '../../../../i18n';
 import usePublishHeader from '../../hooks/usePublishHeader';
 import usePublishNavigation from '../../hooks/usePublishNavigation';
 import {APP_FLOW_ITEMS} from './constants';
-import AppPublish from '../../../../components/AppPublish';
 
 import './PublishAppOutlet.scss';
 import usePublishAppSubmission from '../../hooks/usePublishAppSubmission';

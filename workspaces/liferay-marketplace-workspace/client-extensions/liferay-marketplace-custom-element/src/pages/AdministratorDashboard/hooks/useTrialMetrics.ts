@@ -140,17 +140,17 @@ const useTrialMetrics = (param: FilterType) => {
 				availabilityResponse?.max - availabilityResponse?.available
 			} / ${availabilityResponse?.max}`,
 		},
+		error,
+		inProgressCount: inProgressResponse?.totalCount,
+		isLoading,
+		mutate,
+		orderTableData,
 		totalCount: {
 			all: orderTableData?.totalCount ?? 0,
 			expired: expiredResponse?.totalCount ?? 0,
 			inProgress: inProgressResponse?.totalCount ?? 0,
 			onHold: onHoldResponse?.totalCount ?? 0,
 		},
-		error,
-		inProgressCount: inProgressResponse?.totalCount,
-		isLoading,
-		mutate,
-		orderTableData,
 	};
 };
 

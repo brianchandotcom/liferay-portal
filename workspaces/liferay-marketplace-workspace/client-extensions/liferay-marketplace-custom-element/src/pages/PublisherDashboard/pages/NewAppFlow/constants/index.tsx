@@ -71,14 +71,14 @@ export const APP_FLOW_ITEMS = [
 		title: 'Select licensing terms',
 	},
 	{
-		hide: true,
 		description: `Define the licensing approach for your app. This will impact users' licensing renewal experience.`,
+		hide: true,
 		label: 'Licensing',
 		path: 'licensing-prices',
 		title: 'Select licensing terms',
 	},
 	{
-		description: `Inform the support and help references. This will impact how users will experience this app’s customer support and learning.`,
+		description: `Inform the support and help references. This will impact how users will experience this app's customer support and learning.`,
 		label: 'Support',
 		path: 'support',
 		title: 'Provide app support and help',
@@ -222,15 +222,15 @@ export const LICENSING_OPTIONS = [
 		description: 'The app version is offered in perpetuity.',
 		icon: 'time',
 		title: 'Perpetual License',
-		value: 'Perpetual',
 		tooltip: 'A perpetual license requires no renewal and never expires.',
+		value: 'Perpetual',
 	},
 	{
 		description: 'App License must be renewed annually.',
 		icon: 'document-pending',
 		title: 'Subscription License',
-		value: 'Subscription',
 		tooltip: 'A subscription license that must be renewed annually.',
+		value: 'Subscription',
 	},
 ] as const;
 
@@ -239,15 +239,15 @@ export const LICENSING_30_DAYS_TRIAL_OPTIONS = [
 		description: 'Offer a 30-day free trial for this app.',
 		icon: 'check-circle',
 		title: 'Yes',
-		value: true,
 		tooltip: 'Offer a 30-day free trial for this app.',
+		value: true,
 	},
 	{
 		description: 'Do not offer a 30-day free trial.',
 		icon: 'times-circle',
 		title: 'No',
-		value: false,
 		tooltip: 'Do not offer a 30-day trial for this app.',
+		value: false,
 	},
 ] as const;
 
@@ -260,8 +260,8 @@ export const PRICING_OPTIONS = [
 	{
 		description:
 			'To enable paid apps, you must be a business and enter payment information in your Marketplace account profile.',
-		title: 'Paid',
 		icon: 'credit-card',
+		title: 'Paid',
 		tooltip:
 			'For paid apps, you can choose the subscription model you want to use on the next screen.',
 	},

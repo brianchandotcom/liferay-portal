@@ -14,16 +14,16 @@ import 'react-quill/dist/quill.snow.css';
 import {useModal} from '@clayui/modal';
 import {useMemo} from 'react';
 
+import AppPublish from '../../../../../components/AppPublish';
+import PublishNav from '../../../../../components/AppPublish/Sidebar';
 import Modal from '../../../../../components/Modal';
 import {useSolutionContext} from '../../../../../context/SolutionContext';
 import {PRODUCT_WORKFLOW_STATUS_CODE} from '../../../../../enums/Product';
 import i18n from '../../../../../i18n';
-import usePublishNavigation from '../../../hooks/usePublishNavigation';
 import usePublishHeader from '../../../hooks/usePublishHeader';
+import usePublishNavigation from '../../../hooks/usePublishNavigation';
 import usePublishSolutionSubmission from '../../../hooks/usePublishSolutionSubmission';
-import PublishNav from '../../../../../components/AppPublish/Sidebar';
 import {SOLUTION_FLOW_ITEMS} from '../constants';
-import AppPublish from '../../../../../components/AppPublish';
 
 const PublishSolutionOutlet = () => {
 	usePublishHeader();

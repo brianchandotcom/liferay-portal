@@ -10,10 +10,7 @@ export default {
 	'a-request-will-be-sent-to-deactivate-the-selected-activation-key-from-now-on-it-will-be-hidden-and-no-longer-be-visible':
 		'A request will be sent to deactivate the selected activation key. From now on It will be hidden and no longer be visible.',
 	'access-console': 'Access Console',
-	'app-installation-and-uninstallation-guide-url':
-		'App installation and uninstallation guide URL',
 	'account': 'Account',
-	'app-documentation-url': 'App Documentation URL',
 	'account-name': 'Account Name',
 	'accounts': 'Accounts',
 	'activation-status': 'Activation Status',
@@ -40,10 +37,13 @@ export default {
 	'an-unexpected-error-occurred': 'An unexpected error ocurred',
 	'and': 'and',
 	'app-build': 'App Build',
+	'app-documentation-url': 'App Documentation URL',
+	'app-installation-and-uninstallation-guide-url':
+		'App installation and uninstallation guide URL',
 	'app-name': 'App Name',
-	'app-type': 'App Type',
 	'app-storefront': 'App Storefront',
 	'app-support-and-help': 'App Support and Help',
+	'app-type': 'App Type',
 	'app-x-submitted': 'App <b>{0}</b> submitted',
 	'apply-to-your-use-of-this-service-the-name-on-your-liferay-account-will-be-used-in-this-liferay-marketplace-publisher-profile-it-may-appear-where-you-contribute-and-be-changed-at-any-time':
 		'apply to your use of this service. The name on your Liferay account will be used in this Liferay Marketplace Publisher Profile. It may appear where you contribute and be changed at any time',
@@ -213,10 +213,10 @@ export default {
 	'license-type': 'License Type',
 	'licenses': 'Licenses',
 	'liferay-learn': 'Liferay Learn',
+	'liferay-paas': 'Liferay PaaS',
 	'liferay-s': 'Liferay’s',
 	'liferay-saas': 'Liferay SaaS',
 	'liferay-self-hosted': 'Liferay Self-Hosted',
-	'liferay-paas': 'Liferay PaaS',
 	'limit-reached': 'Limit Reached',
 	'list-with-latest-published-apps': 'List with latest published apps',
 	'lorem-ipsum-dolor-sit-amet-consectetur':
@@ -340,10 +340,10 @@ export default {
 	'subtotal-discount': 'Subtotal Discount',
 	'success': 'success',
 	'summary': 'Summary',
-	'supported-version': 'Supported Version',
 	'support-email': 'Support Email',
 	'support-phone': 'Support Phone',
 	'support-url': 'Support URL',
+	'supported-version': 'Supported Version',
 	'tags': 'Tags',
 	'tags-help-to-describe-your-solution-in-the-marketplace-select-the-tags-most-relevant-to-your-solution-they-can-be-changed-if-needed':
 		'Tags help to describe your solution in the Marketplace. Select the tags most relevant to your solution. They can be changed if needed.',

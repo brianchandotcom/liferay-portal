@@ -8,6 +8,7 @@ import ClayIcon from '@clayui/icon';
 import {useCallback, useState} from 'react';
 
 import {RadioCard} from '../../../../../components/RadioCard/RadioCard';
+import {Section} from '../../../../../components/Section/Section';
 import {
 	NewAppTypes,
 	useNewAppContext,
@@ -20,7 +21,6 @@ import CloudResourceRequirements from '../components/CloudResourceRequirements';
 import {NewAppPackageVersionModal} from '../components/NewAppPackagesModal';
 import NewAppUploadAppPackagesComponent from '../components/NewAppUploadPackage';
 import {BUILD_UPLOAD_OPTIONS, COMPATIBLE_OFFERING_CARDS} from '../constants';
-import {Section} from '../../../../../components/Section/Section';
 
 const Content = () => {
 	const [selectedCheckboxValue, setSelectedCheckboxValue] = useState<
@@ -29,8 +29,8 @@ const Content = () => {
 
 	const [
 		{
-			loading,
 			build: {cloudCompatible, compatibleOffering, liferayPackages},
+			loading,
 		},
 		dispatch,
 	] = useNewAppContext();
@@ -75,7 +75,7 @@ const Content = () => {
 
 			{cloudCompatible && (
 				<Section
-					className="mt-4 d-flex justify-content-between"
+					className="d-flex justify-content-between mt-4"
 					label={i18n.translate('resource-requirements')}
 				>
 					<CloudResourceRequirements />

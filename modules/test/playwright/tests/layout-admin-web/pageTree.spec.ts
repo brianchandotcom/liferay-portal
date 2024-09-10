@@ -81,7 +81,7 @@ test(
 		tag: '@LPS-129406',
 	},
 	async ({apiHelpers, page}) => {
-		await page.goto(`${liferayConfig.environment.baseUrl}`);
+		await page.goto('/');
 
 		// Open the Product Menu
 
@@ -89,12 +89,20 @@ test(
 
 		// Open tree if it's not already open
 
-		if (!(await page.locator('.treeview').isVisible())) {
+		if (
+			!(await page
+				.getByLabel('Product Menu')
+				.locator('.treeview')
+				.isVisible())
+		) {
 			await page
 				.getByRole('button', {exact: true, name: 'Page Tree'})
 				.click();
 
-			await page.locator('.treeview').waitFor();
+			await page
+				.getByLabel('Product Menu')
+				.locator('.treeview')
+				.waitFor();
 		}
 
 		// Assert add page button is visible for admin user
@@ -152,18 +160,26 @@ test(
 
 		// Open the Product Menu
 
-		await page.goto(`${liferayConfig.environment.baseUrl}`);
+		await page.goto('/');
 
 		await openProductMenu(page);
 
 		// Open tree if it's not already open
 
-		if (!(await page.locator('.treeview').isVisible())) {
+		if (
+			!(await page
+				.getByLabel('Product Menu')
+				.locator('.treeview')
+				.isVisible())
+		) {
 			await page
 				.getByRole('button', {exact: true, name: 'Page Tree'})
 				.click();
 
-			await page.locator('.treeview').waitFor();
+			await page
+				.getByLabel('Product Menu')
+				.locator('.treeview')
+				.waitFor();
 		}
 
 		// Assert add page button is not visible

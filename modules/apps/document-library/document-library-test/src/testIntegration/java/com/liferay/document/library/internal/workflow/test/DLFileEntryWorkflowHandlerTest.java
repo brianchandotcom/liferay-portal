@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -145,7 +144,6 @@ public class DLFileEntryWorkflowHandlerTest {
 		Assert.assertNull(fileVersion.getExpirationDate());
 	}
 
-	@FeatureFlags("LPD-10701")
 	@Test
 	public void testWorkflowApprovesFileEntryScheduledFutureDate()
 		throws PortalException {
@@ -168,7 +166,6 @@ public class DLFileEntryWorkflowHandlerTest {
 			WorkflowConstants.STATUS_SCHEDULED, fileVersion.getStatus());
 	}
 
-	@FeatureFlags("LPD-10701")
 	@Test
 	public void testWorkflowApprovesFileEntryScheduledPastDate()
 		throws PortalException {

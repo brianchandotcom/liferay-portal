@@ -56,7 +56,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -113,7 +112,6 @@ public class DocumentResourceTest extends BaseDocumentResourceTestCase {
 				irrelevantDocument.getId()));
 	}
 
-	@FeatureFlags("LPD-10701")
 	@Override
 	@Test
 	public void testGetDocument() throws Exception {

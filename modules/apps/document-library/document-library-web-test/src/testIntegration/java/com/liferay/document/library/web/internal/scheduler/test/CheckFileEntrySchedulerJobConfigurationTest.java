@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -66,7 +65,6 @@ public class CheckFileEntrySchedulerJobConfigurationTest {
 		UserTestUtil.setUser(TestPropsValues.getUser());
 	}
 
-	@FeatureFlags("LPD-10701")
 	@Test
 	public void testCheckFileEntriesAnExpiredFileEntryCanBePublishedWithDisplayDate()
 		throws Exception {
@@ -384,7 +382,6 @@ public class CheckFileEntrySchedulerJobConfigurationTest {
 		Assert.assertEquals(fileVersions.toString(), 2, fileVersions.size());
 	}
 
-	@FeatureFlags("LPD-10701")
 	@Test
 	public void testPublishFileEntry() throws Exception {
 		Date displayDate = new Date(System.currentTimeMillis() + Time.DAY);

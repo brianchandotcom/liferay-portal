@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -43,7 +42,6 @@ import org.junit.runner.RunWith;
 /**
  * @author Alicia García
  */
-@FeatureFlags("LPD-10701")
 @RunWith(Arquillian.class)
 @Sync
 public class DLFileEntrySearchByStatusTest {

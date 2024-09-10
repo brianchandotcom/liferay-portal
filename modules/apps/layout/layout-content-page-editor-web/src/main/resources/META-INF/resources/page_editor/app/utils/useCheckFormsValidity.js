@@ -158,14 +158,14 @@ export default function useCheckFormsValidity() {
 	};
 }
 
-function addError(validations, formItem, type) {
+function addError(validations, formItem, type, steps) {
 	if (formIsRestricted(formItem)) {
 		return;
 	}
 
 	const formValidation = validations.get(formItem.itemId);
 	const errors = formValidation ? formValidation.errors : [];
-	const nextFormErrors = [...errors, type];
+	const nextFormErrors = [...errors, {steps, type}];
 
 	validations.set(formItem.itemId, {
 		classNameId: formItem.config.classNameId,

@@ -9,6 +9,7 @@ import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
@@ -45,10 +46,6 @@ public class JournalArticleFriendlyURLFormatUpgradeProcess
 				"resourcePrimKey = ?"
 			);
 
-			PreparedStatement preparedStatement3 = connection.prepareStatement(
-				"update JournalArticle set urlTitle = ? where " +
-				"resourcePrimKey = ? and ctCollectionId = ?"
-			)
 		) {
 
 			long classNameId = _classNameLocalService.getClassNameId(
@@ -90,22 +87,40 @@ public class JournalArticleFriendlyURLFormatUpgradeProcess
 				if (defaultLanguageId.equals(languageId)) {
 					long ctCollectionId = resultSet1.getLong(2);
 
-					preparedStatement3.setString(1, urlTitle);
-					preparedStatement3.setLong(2, classPK);
-					preparedStatement3.setLong(3, ctCollectionId);
-
-					preparedStatement3.addBatch();
-					preparedStatement3.executeBatch();
+					_updateURLTitle(classPK, ctCollectionId, urlTitle);
 				}
 
-				FriendlyURLEntry friendlyURLEntry =
-					_friendlyURLEntryLocalService.fetchFriendlyURLEntry(
-						friendlyURLEntryId);
-
-				_friendlyURLEntryLocalService.
-					updateFriendlyURLEntryLocalization(
-						friendlyURLEntry, languageId, urlTitle);
+				_updateFriendlyURLEntry(
+					friendlyURLEntryId, languageId, urlTitle);
 			}
+		}
+	}
+
+	private void _updateFriendlyURLEntry(
+			long friendlyURLEntryId, String languageId, String urlTitle)
+		throws PortalException {
+
+		FriendlyURLEntry friendlyURLEntry =
+			_friendlyURLEntryLocalService.fetchFriendlyURLEntry(
+				friendlyURLEntryId);
+
+		_friendlyURLEntryLocalService.updateFriendlyURLEntryLocalization(
+			friendlyURLEntry, languageId, urlTitle);
+	}
+
+	private void _updateURLTitle(
+			long classPK, long ctCollectionId, String urlTitle)
+		throws Exception {
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"update JournalArticle set urlTitle = ? where " +
+					"resourcePrimKey = ? and ctCollectionId = ?")) {
+
+			preparedStatement.setString(1, urlTitle);
+			preparedStatement.setLong(2, classPK);
+			preparedStatement.setLong(3, ctCollectionId);
+
+			preparedStatement.executeUpdate();
 		}
 	}
 

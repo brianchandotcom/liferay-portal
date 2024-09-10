@@ -7,8 +7,10 @@
 	[/#if]
 
 	<div class="component-button text-break">
-		<button class="btn btn-${configuration.buttonSize} btn-${buttonType}" data-lfr-editable-id="previous-button-text" data-lfr-editable-type="text" id="fragment-${fragmentEntryLinkNamespace}-form-button" type="button">
-			Previous
+		<button class="btn btn-${configuration.buttonSize} btn-${buttonType}" id="fragment-${fragmentEntryLinkNamespace}-form-button" type="button">
+			<span data-lfr-editable-id="previous-button-text" data-lfr-editable-type="text">
+				Previous
+			</span>
 		</button>
 	</div>
 [#elseif configuration.type == "next"]
@@ -17,8 +19,10 @@
 	[/#if]
 
 	<div class="component-button text-break">
-		<button class="btn btn-${configuration.buttonSize} btn-${buttonType}" data-lfr-editable-id="next-button-text" data-lfr-editable-type="text" id="fragment-${fragmentEntryLinkNamespace}-form-button" type="button">
-			Next
+		<button class="btn btn-${configuration.buttonSize} btn-${buttonType}" id="fragment-${fragmentEntryLinkNamespace}-form-button" type="button">
+			<span data-lfr-editable-id="next-button-text" data-lfr-editable-type="text">
+				Next
+			</span>
 		</button>
 	</div>
 [#else]

@@ -6,6 +6,7 @@
 package com.liferay.headless.commerce.admin.catalog.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.commerce.product.constants.CPAttachmentFileEntryConstants;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.test.util.CPTestUtil;
@@ -187,11 +188,19 @@ public class AttachmentResourceTest extends BaseAttachmentResourceTestCase {
 		super.testPostProductByExternalReferenceCodeAttachmentByUrl();
 	}
 
-	@Ignore
 	@Override
 	@Test
 	public void testPostProductByExternalReferenceCodeImage() throws Exception {
-		super.testPostProductByExternalReferenceCodeImage();
+		Attachment randomAttachment = _randomImageAttachment();
+
+		Attachment postAttachment =
+			testPostProductByExternalReferenceCodeImage_addAttachment(
+				randomAttachment);
+
+		assertEquals(randomAttachment, postAttachment);
+		assertValid(postAttachment);
+
+		_testPostProductByExternalReferenceCodeImageWithFileEntryExternalReferenceCode();
 	}
 
 	@Ignore
@@ -234,11 +243,18 @@ public class AttachmentResourceTest extends BaseAttachmentResourceTestCase {
 		super.testPostProductIdAttachmentByUrl();
 	}
 
-	@Ignore
 	@Override
 	@Test
 	public void testPostProductIdImage() throws Exception {
-		super.testPostProductIdImage();
+		Attachment randomAttachment = _randomImageAttachment();
+
+		Attachment postAttachment = testPostProductIdImage_addAttachment(
+			randomAttachment);
+
+		assertEquals(randomAttachment, postAttachment);
+		assertValid(postAttachment);
+
+		_testPostProductIdImageWithFileEntryExternalReferenceCode();
 	}
 
 	@Ignore
@@ -330,12 +346,61 @@ public class AttachmentResourceTest extends BaseAttachmentResourceTestCase {
 	}
 
 	@Override
+	protected Attachment
+			testPostProductByExternalReferenceCodeImage_addAttachment(
+				Attachment attachment)
+		throws Exception {
+
+		return attachmentResource.postProductByExternalReferenceCodeImage(
+			_cProduct.getExternalReferenceCode(), attachment);
+	}
+
+	@Override
 	protected Attachment testPostProductIdAttachment_addAttachment(
 			Attachment attachment)
 		throws Exception {
 
 		return attachmentResource.postProductIdAttachment(
 			_cProduct.getCProductId(), randomAttachment());
+	}
+
+	@Override
+	protected Attachment testPostProductIdImage_addAttachment(
+			Attachment attachment)
+		throws Exception {
+
+		return attachmentResource.postProductIdImage(
+			_cpDefinition.getCProductId(), attachment);
+	}
+
+	private Attachment _randomImageAttachment() throws Exception {
+		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
+			null, TestPropsValues.getUserId(), testGroup.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			TempFileEntryUtil.getTempFileName(
+				RandomTestUtil.randomString() + ".jpg"),
+			ContentTypes.IMAGE_JPEG, RandomTestUtil.randomString(),
+			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
+			new ByteArrayInputStream(RandomTestUtil.randomBytes()), 0, null,
+			null, null, _serviceContext);
+
+		return new Attachment() {
+			{
+				cdnEnabled = false;
+				cdnURL = RandomTestUtil.randomString();
+				externalReferenceCode = RandomTestUtil.randomString();
+				fileEntryGroupExternalReferenceCode =
+					testGroup.getExternalReferenceCode();
+				fileEntryId = fileEntry.getFileEntryId();
+				galleryEnabled = true;
+				neverExpire = true;
+				priority = RandomTestUtil.randomDouble();
+				title = HashMapBuilder.put(
+					"en_US", RandomTestUtil.randomString(5)
+				).build();
+				type = CPAttachmentFileEntryConstants.TYPE_IMAGE;
+			}
+		};
 	}
 
 	private void _testPatchAttachmentByExternalReferenceCodeWithFileEntryExternalReferenceCode()
@@ -410,6 +475,33 @@ public class AttachmentResourceTest extends BaseAttachmentResourceTestCase {
 			GetterUtil.getLong(postAttachment.getFileEntryId()));
 	}
 
+	private void _testPostProductByExternalReferenceCodeImageWithFileEntryExternalReferenceCode()
+		throws Exception {
+
+		Attachment randomAttachment = _randomImageAttachment();
+
+		FileEntry fileEntry = _dlAppLocalService.getFileEntry(
+			randomAttachment.getFileEntryId());
+
+		randomAttachment.setFileEntryExternalReferenceCode(
+			fileEntry.getExternalReferenceCode());
+
+		randomAttachment.setFileEntryId(0L);
+
+		Attachment postAttachment =
+			attachmentResource.postProductByExternalReferenceCodeImage(
+				_cProduct.getExternalReferenceCode(), randomAttachment);
+
+		assertEquals(randomAttachment, postAttachment);
+		assertValid(postAttachment);
+		Assert.assertEquals(
+			fileEntry.getExternalReferenceCode(),
+			postAttachment.getFileEntryExternalReferenceCode());
+		Assert.assertEquals(
+			fileEntry.getFileEntryId(),
+			GetterUtil.getLong(postAttachment.getFileEntryId()));
+	}
+
 	private void _testPostProductIdAttachmentWithFileEntryExternalReferenceCode()
 		throws Exception {
 
@@ -424,6 +516,32 @@ public class AttachmentResourceTest extends BaseAttachmentResourceTestCase {
 		randomAttachment.setFileEntryId(0L);
 
 		Attachment postAttachment = attachmentResource.postProductIdAttachment(
+			_cProduct.getCProductId(), randomAttachment);
+
+		assertEquals(randomAttachment, postAttachment);
+		assertValid(postAttachment);
+		Assert.assertEquals(
+			fileEntry.getExternalReferenceCode(),
+			postAttachment.getFileEntryExternalReferenceCode());
+		Assert.assertEquals(
+			fileEntry.getFileEntryId(),
+			GetterUtil.getLong(postAttachment.getFileEntryId()));
+	}
+
+	private void _testPostProductIdImageWithFileEntryExternalReferenceCode()
+		throws Exception {
+
+		Attachment randomAttachment = _randomImageAttachment();
+
+		FileEntry fileEntry = _dlAppLocalService.getFileEntry(
+			randomAttachment.getFileEntryId());
+
+		randomAttachment.setFileEntryExternalReferenceCode(
+			fileEntry.getExternalReferenceCode());
+
+		randomAttachment.setFileEntryId(0L);
+
+		Attachment postAttachment = attachmentResource.postProductIdImage(
 			_cProduct.getCProductId(), randomAttachment);
 
 		assertEquals(randomAttachment, postAttachment);

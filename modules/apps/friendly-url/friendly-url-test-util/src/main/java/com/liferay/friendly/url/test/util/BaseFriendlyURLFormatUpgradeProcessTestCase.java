@@ -5,14 +5,13 @@
 
 package com.liferay.friendly.url.test.util;
 
+import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.friendly.url.service.persistence.FriendlyURLEntryLocalizationPersistence;
 import com.liferay.friendly.url.service.persistence.FriendlyURLEntryLocalizationUtil;
-import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -24,20 +23,11 @@ import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 
 /**
  * @author Joao Victor Alves
  */
-public abstract class BaseFriendlyURLFormatUpgradeProcessTestCase
-	<T extends BaseModel<T>> {
-
-	@BeforeClass
-	public static void setUpClass() {
-		languageId = LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault());
-		_friendlyURLEntryLocalizationPersistence =
-			FriendlyURLEntryLocalizationUtil.getPersistence();
-	}
+public abstract class BaseFriendlyURLFormatUpgradeProcessTestCase {
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
@@ -47,52 +37,56 @@ public abstract class BaseFriendlyURLFormatUpgradeProcessTestCase
 	@Before
 	public void setUp() throws Exception {
 		group = GroupTestUtil.addGroup();
+
+		defaultLanguageId = LocaleUtil.toLanguageId(
+			LocaleUtil.getSiteDefault());
+
+		_persistence = FriendlyURLEntryLocalizationUtil.getPersistence();
 	}
 
 	@After
 	public void tearDown() throws Exception {
 		for (long friendlyURLEntryId : friendlyURLEntryIds) {
 			friendlyURLEntryLocalService.deleteFriendlyURLLocalizationEntry(
-				friendlyURLEntryId,
-				LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()));
+				friendlyURLEntryId, defaultLanguageId);
 		}
 
 		friendlyURLEntryIds.clear();
 	}
 
-	protected void createFriendlyURLEntryLocalization(
-		String urlTitle, Class<T> modelClass) {
-
-		modelId = RandomTestUtil.randomLong();
-
+	protected void createFriendlyURLEntry(long classPK, long classNameId) {
 		long friendlyURLEntryId = RandomTestUtil.randomLong();
 
 		friendlyURLEntryIds.add(friendlyURLEntryId);
 
-		FriendlyURLEntry friendlyURLEntry =
-			friendlyURLEntryLocalService.createFriendlyURLEntry(
-				friendlyURLEntryId);
+		_friendlyURLEntry = friendlyURLEntryLocalService.createFriendlyURLEntry(
+			friendlyURLEntryId);
 
-		friendlyURLEntry.setDefaultLanguageId(languageId);
+		_friendlyURLEntry.setDefaultLanguageId(defaultLanguageId);
+		_friendlyURLEntry.setGroupId(group.getGroupId());
+		_friendlyURLEntry.setClassNameId(classNameId);
+		_friendlyURLEntry.setClassPK(classPK);
 
-		friendlyURLEntryLocalService.addFriendlyURLEntry(friendlyURLEntry);
+		friendlyURLEntryLocalService.addFriendlyURLEntry(_friendlyURLEntry);
+	}
 
-		friendlyURLEntryLocalization =
-			_friendlyURLEntryLocalizationPersistence.create(
-				RandomTestUtil.randomInt());
+	protected void createFriendlyURLEntryLocalization(
+		long classNameId, long classPK, String languageId, String urlTitle) {
 
-		friendlyURLEntryLocalization.setFriendlyURLEntryId(friendlyURLEntryId);
+		FriendlyURLEntryLocalization friendlyURLEntryLocalization =
+			_persistence.create(RandomTestUtil.randomInt());
+
+		friendlyURLEntryLocalization.setFriendlyURLEntryId(
+			_friendlyURLEntry.getFriendlyURLEntryId());
 
 		friendlyURLEntryLocalization.setLanguageId(languageId);
 		friendlyURLEntryLocalization.setUrlTitle(urlTitle);
 		friendlyURLEntryLocalization.setGroupId(group.getGroupId());
-		friendlyURLEntryLocalization.setClassNameId(
-			_classNameLocalService.getClassNameId(modelClass));
-		friendlyURLEntryLocalization.setClassPK(modelId);
+		friendlyURLEntryLocalization.setClassNameId(classNameId);
+		friendlyURLEntryLocalization.setClassPK(classPK);
 
-		friendlyURLEntryLocalization =
-			friendlyURLEntryLocalService.updateFriendlyURLLocalization(
-				friendlyURLEntryLocalization);
+		friendlyURLEntryLocalService.updateFriendlyURLLocalization(
+			friendlyURLEntryLocalization);
 	}
 
 	protected static final List<Long> friendlyURLEntryIds = new ArrayList<>();
@@ -101,15 +95,14 @@ public abstract class BaseFriendlyURLFormatUpgradeProcessTestCase
 	protected static FriendlyURLEntryLocalService friendlyURLEntryLocalService;
 
 	protected static Group group;
-	protected static String languageId;
-
-	protected FriendlyURLEntryLocalization friendlyURLEntryLocalization;
-	protected long modelId;
-
-	private static FriendlyURLEntryLocalizationPersistence
-		_friendlyURLEntryLocalizationPersistence;
 
 	@Inject
-	private ClassNameLocalService _classNameLocalService;
+	protected CounterLocalService counterLocalService;
+
+	protected String defaultLanguageId;
+
+	private static FriendlyURLEntryLocalizationPersistence _persistence;
+
+	private FriendlyURLEntry _friendlyURLEntry;
 
 }

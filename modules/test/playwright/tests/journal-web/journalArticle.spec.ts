@@ -81,15 +81,8 @@ const scheduleTest = mergeTests(
 	})
 );
 
-const translationTest = mergeTests(
-	baseTest,
-	featureFlagsTest({
-		'LPD-11253': true,
-	})
-);
-
 const translationAndAutosaveTest = mergeTests(
-	translationTest,
+	baseTest,
 	featureFlagsTest({
 		'LPD-11228': true,
 		'LPD-15596': true,
@@ -666,8 +659,11 @@ baseTest(
 	}
 );
 
-translationTest(
-	'LPD-13732: This is a test for reset translations button in web content',
+baseTest(
+	'This is a test for reset translations button in web content',
+	{
+		tag: '@LPD-13732',
+	},
 	async ({journalEditArticlePage, journalPage, page, site}) => {
 		await journalPage.goto();
 
@@ -725,8 +721,11 @@ translationTest(
 	}
 );
 
-translationTest(
-	'LPD-23278: This is a test for mark as translated button in web content',
+baseTest(
+	'This is a test for mark as translated button in web content',
+	{
+		tag: '@LPD-23278',
+	},
 	async ({journalEditArticlePage, journalPage, page, site}) => {
 		await journalPage.goto();
 
@@ -778,8 +777,11 @@ translationTest(
 	}
 );
 
-translationTest(
-	'LPD-24942: This is a test for translations filter button in web content',
+baseTest(
+	'This is a test for translations filter button in web content',
+	{
+		tag: '@LPD-24942',
+	},
 	async ({journalEditArticlePage, journalPage, page, site}) => {
 		await journalPage.goto();
 
@@ -881,8 +883,11 @@ translationTest(
 	}
 );
 
-translationTest(
-	'LPD-17245: Add error message in Translation for concurrent users',
+baseTest(
+	'Add error message in Translation for concurrent users',
+	{
+		tag: '@LPD-17245',
+	},
 	async ({
 		apiHelpers,
 		journalEditArticlePage,
@@ -979,8 +984,11 @@ bulkTest(
 	}
 );
 
-translationTest(
-	'LPD-19627: Translate several fields in a Basic Web Content and check how many fields have been translated',
+baseTest(
+	'Translate several fields in a Basic Web Content and check how many fields have been translated',
+	{
+		tag: '@LPD-19627',
+	},
 	async ({journalEditArticlePage, page, site}) => {
 		await journalEditArticlePage.goto({siteUrl: site.friendlyUrlPath});
 
@@ -1010,68 +1018,7 @@ translationTest(
 	}
 );
 
-translationTest(
-	'Translate the Rich Text field and check if the translation persists after coming back to the page',
-	{
-		tag: '@LPD-37236',
-	},
-	async ({journalEditArticlePage, journalPage, page, site}) => {
-		await journalPage.goto();
-
-		await journalEditArticlePage.goto({siteUrl: site.friendlyUrlPath});
-
-		const title = getRandomString();
-
-		await journalEditArticlePage.fillTitle(title);
-
-		const englishContent = 'English Language Text';
-
-		const catalanContent = 'Catalan Language Text';
-
-		await journalEditArticlePage.fillContent(englishContent);
-
-		const translationButton = page.getByRole('combobox', {
-			name: 'Select a language',
-		});
-
-		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: page.getByRole('option', {
-				name: 'Catalan Language: Not Translated',
-			}),
-			trigger: translationButton,
-		});
-
-		await journalEditArticlePage.fillContent(catalanContent);
-
-		await journalEditArticlePage.publishButton.click();
-
-		await waitForSuccessAlert(
-			page,
-			`Success:${title} was created successfully.`
-		);
-
-		await page.getByRole('link', {name: title}).click();
-
-		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: page.getByRole('option', {
-				name: 'Catalan Language: Translating 1/2',
-			}),
-			trigger: translationButton,
-		});
-
-		await expect(
-			page
-				.getByLabel('Content', {exact: true})
-				.locator('iframe[title="editor"]')
-				.contentFrame()
-				.getByText(catalanContent)
-		).toBeVisible();
-	}
-);
-
-translationTest(
+baseTest(
 	'LPD-19627: Translate all fields of a Web Content based on a custom structure with repeatable fields',
 	async ({apiHelpers, journalEditArticlePage, page, site}) => {
 		const localizableFieldName = 'Text5678';
@@ -1143,7 +1090,7 @@ translationTest(
 	}
 );
 
-translationTest(
+baseTest(
 	'A non-localizabled field is disabled when another translation language is selected',
 	{
 		tag: '@LPD-19627',

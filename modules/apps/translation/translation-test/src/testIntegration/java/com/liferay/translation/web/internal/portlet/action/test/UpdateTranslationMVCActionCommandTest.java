@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -139,7 +138,6 @@ public class UpdateTranslationMVCActionCommandTest {
 		}
 	}
 
-	@FeatureFlags("LPD-11253")
 	@Test
 	public void testDoProcessActionWithConcurrentUsers() throws Exception {
 		JournalArticle expectedJournalArticle = _addArticle();

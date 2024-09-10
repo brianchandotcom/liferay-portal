@@ -142,22 +142,3 @@ DDMStructure ddmStructure = journalEditArticleDisplayContext.getDDMStructure();
 		</c:choose>
 	</c:otherwise>
 </c:choose>
-
-<c:if test='<%= !FeatureFlagManagerUtil.isEnabled("LPS-114700") %>'>
-	<div>
-		<label for="<portlet:namespace />descriptionMapAsXML" id="<portlet:namespace />Aria"><liferay-ui:message key="description" /></label>
-
-		<liferay-ui:input-localized
-			availableLocales="<%= journalEditArticleDisplayContext.getAvailableLocales() %>"
-			cssClass="form-control"
-			defaultLanguageId="<%= journalEditArticleDisplayContext.getDefaultArticleLanguageId() %>"
-			editorName="ckeditor"
-			formName="fm"
-			ignoreRequestValue="<%= journalEditArticleDisplayContext.isChangeStructure() %>"
-			name="descriptionMapAsXML"
-			selectedLanguageId="<%= journalEditArticleDisplayContext.getSelectedLanguageId() %>"
-			type="editor"
-			xml="<%= (article != null) ? article.getDescriptionMapAsXML() : StringPool.BLANK %>"
-		/>
-	</div>
-</c:if>

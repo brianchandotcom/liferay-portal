@@ -59,8 +59,6 @@ describe('TranslationAdminStatusLabel', () => {
 	});
 
 	it('renders translating status', () => {
-		Liferay.FeatureFlags['LPS-114700'] = true;
-
 		renderComponent({
 			translationProgress: {
 				totalItems: 3,
@@ -71,7 +69,5 @@ describe('TranslationAdminStatusLabel', () => {
 		expect(
 			screen.getByText('Arabic-language-translating-1-3')
 		).toBeInTheDocument();
-
-		Liferay.FeatureFlags['LPS-114700'] = false;
 	});
 });

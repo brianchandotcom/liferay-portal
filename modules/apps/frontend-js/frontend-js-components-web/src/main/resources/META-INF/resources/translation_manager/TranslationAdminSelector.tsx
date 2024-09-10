@@ -63,8 +63,7 @@ const TriggerButton = React.forwardRef(
 			selectedItem.displayName
 		);
 
-		return Liferay.FeatureFlags['LPS-114700'] &&
-			displayType === DISPLAY_TYPE.HORIZONTAL ? (
+		return displayType === DISPLAY_TYPE.HORIZONTAL ? (
 			<ClayButton
 				{...props}
 				aria-label={ariaLabelButton}
@@ -175,7 +174,7 @@ export default function TranslationAdminSelector({
 		setSelectedLanguageId(initialSelectedLanguageId);
 	}, [initialSelectedLanguageId]);
 
-	if (Liferay.FeatureFlags['LPS-114700'] && !adminMode) {
+	if (!adminMode) {
 		return (
 			<Picker
 				active={selectorDropdownActive}

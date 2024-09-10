@@ -80,6 +80,25 @@ public class ProductSpecificationSerDes {
 			sb.append(_toJSON(productSpecification.getLabel()));
 		}
 
+		if (productSpecification.getOptionCategoryExternalReferenceCode() !=
+				null) {
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"optionCategoryExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				_escape(
+					productSpecification.
+						getOptionCategoryExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (productSpecification.getOptionCategoryId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -108,6 +127,25 @@ public class ProductSpecificationSerDes {
 			sb.append("\"productId\": ");
 
 			sb.append(productSpecification.getProductId());
+		}
+
+		if (productSpecification.getSpecificationExternalReferenceCode() !=
+				null) {
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"specificationExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				_escape(
+					productSpecification.
+						getSpecificationExternalReferenceCode()));
+
+			sb.append("\"");
 		}
 
 		if (productSpecification.getSpecificationId() != null) {
@@ -196,6 +234,19 @@ public class ProductSpecificationSerDes {
 			map.put("label", String.valueOf(productSpecification.getLabel()));
 		}
 
+		if (productSpecification.getOptionCategoryExternalReferenceCode() ==
+				null) {
+
+			map.put("optionCategoryExternalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"optionCategoryExternalReferenceCode",
+				String.valueOf(
+					productSpecification.
+						getOptionCategoryExternalReferenceCode()));
+		}
+
 		if (productSpecification.getOptionCategoryId() == null) {
 			map.put("optionCategoryId", null);
 		}
@@ -220,6 +271,19 @@ public class ProductSpecificationSerDes {
 			map.put(
 				"productId",
 				String.valueOf(productSpecification.getProductId()));
+		}
+
+		if (productSpecification.getSpecificationExternalReferenceCode() ==
+				null) {
+
+			map.put("specificationExternalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"specificationExternalReferenceCode",
+				String.valueOf(
+					productSpecification.
+						getSpecificationExternalReferenceCode()));
 		}
 
 		if (productSpecification.getSpecificationId() == null) {
@@ -284,6 +348,12 @@ public class ProductSpecificationSerDes {
 			else if (Objects.equals(jsonParserFieldName, "label")) {
 				return true;
 			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"optionCategoryExternalReferenceCode")) {
+
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "optionCategoryId")) {
 				return false;
 			}
@@ -291,6 +361,12 @@ public class ProductSpecificationSerDes {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "productId")) {
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"specificationExternalReferenceCode")) {
+
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "specificationId")) {
@@ -333,6 +409,15 @@ public class ProductSpecificationSerDes {
 						(Map<String, String>)jsonParserFieldValue);
 				}
 			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"optionCategoryExternalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					productSpecification.setOptionCategoryExternalReferenceCode(
+						(String)jsonParserFieldValue);
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "optionCategoryId")) {
 				if (jsonParserFieldValue != null) {
 					productSpecification.setOptionCategoryId(
@@ -349,6 +434,15 @@ public class ProductSpecificationSerDes {
 				if (jsonParserFieldValue != null) {
 					productSpecification.setProductId(
 						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"specificationExternalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					productSpecification.setSpecificationExternalReferenceCode(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "specificationId")) {

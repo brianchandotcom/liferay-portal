@@ -2109,6 +2109,24 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public ProductSpecification
+			createProductByExternalReferenceCodeProductSpecification(
+				@GraphQLName("externalReferenceCode") String
+					externalReferenceCode,
+				@GraphQLName("productSpecification") ProductSpecification
+					productSpecification)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_productSpecificationResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			productSpecificationResource ->
+				productSpecificationResource.
+					postProductByExternalReferenceCodeProductSpecification(
+						externalReferenceCode, productSpecification));
+	}
+
+	@GraphQLField
 	public ProductSpecification createProductIdProductSpecification(
 			@GraphQLName("id") Long id,
 			@GraphQLName("productSpecification") ProductSpecification

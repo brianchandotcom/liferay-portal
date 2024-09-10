@@ -885,6 +885,11 @@ public class ServletDataImpl implements ServletData {
 							ProductSpecificationResourceImpl.class,
 							"patchProductSpecification"));
 					put(
+						"mutation#createProductByExternalReferenceCodeProductSpecification",
+						new ObjectValuePair<>(
+							ProductSpecificationResourceImpl.class,
+							"postProductByExternalReferenceCodeProductSpecification"));
+					put(
 						"mutation#createProductIdProductSpecification",
 						new ObjectValuePair<>(
 							ProductSpecificationResourceImpl.class,
@@ -1391,6 +1396,11 @@ public class ServletDataImpl implements ServletData {
 							ProductSpecificationResourceImpl.class,
 							"getProductSpecification"));
 					put(
+						"query#productByExternalReferenceCodeProductSpecifications",
+						new ObjectValuePair<>(
+							ProductSpecificationResourceImpl.class,
+							"getProductByExternalReferenceCodeProductSpecificationsPage"));
+					put(
 						"query#productIdProductSpecifications",
 						new ObjectValuePair<>(
 							ProductSpecificationResourceImpl.class,
@@ -1656,6 +1666,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							RelatedProductResourceImpl.class,
 							"getProductByExternalReferenceCodeRelatedProductsPage"));
+					put(
+						"query#Attachment.productByExternalReferenceCodeProductSpecifications",
+						new ObjectValuePair<>(
+							ProductSpecificationResourceImpl.class,
+							"getProductByExternalReferenceCodeProductSpecificationsPage"));
 					put(
 						"query#Attachment.productByExternalReferenceCodeMappedProductBySequence",
 						new ObjectValuePair<>(

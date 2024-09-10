@@ -1605,7 +1605,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {productSpecification(id: ___){id, key, label, optionCategoryId, priority, productId, specificationId, specificationKey, specificationPriority, value}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {productSpecification(id: ___){id, key, label, optionCategoryExternalReferenceCode, optionCategoryId, priority, productId, specificationExternalReferenceCode, specificationId, specificationKey, specificationPriority, value}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public ProductSpecification productSpecification(@GraphQLName("id") Long id)
@@ -1616,6 +1616,29 @@ public class Query {
 			this::_populateResourceContext,
 			productSpecificationResource ->
 				productSpecificationResource.getProductSpecification(id));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {productByExternalReferenceCodeProductSpecifications(externalReferenceCode: ___, page: ___, pageSize: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public ProductSpecificationPage
+			productByExternalReferenceCodeProductSpecifications(
+				@GraphQLName("externalReferenceCode") String
+					externalReferenceCode,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_productSpecificationResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			productSpecificationResource -> new ProductSpecificationPage(
+				productSpecificationResource.
+					getProductByExternalReferenceCodeProductSpecificationsPage(
+						externalReferenceCode, Pagination.of(page, pageSize))));
 	}
 
 	/**
@@ -2862,6 +2885,37 @@ public class Query {
 					relatedProductResource.
 						getProductByExternalReferenceCodeRelatedProductsPage(
 							_attachment.getExternalReferenceCode(), type,
+							Pagination.of(page, pageSize))));
+		}
+
+		private Attachment _attachment;
+
+	}
+
+	@GraphQLTypeExtension(Attachment.class)
+	public class
+		GetProductByExternalReferenceCodeProductSpecificationsPageTypeExtension {
+
+		public GetProductByExternalReferenceCodeProductSpecificationsPageTypeExtension(
+			Attachment attachment) {
+
+			_attachment = attachment;
+		}
+
+		@GraphQLField
+		public ProductSpecificationPage
+				productByExternalReferenceCodeProductSpecifications(
+					@GraphQLName("pageSize") int pageSize,
+					@GraphQLName("page") int page)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_productSpecificationResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				productSpecificationResource -> new ProductSpecificationPage(
+					productSpecificationResource.
+						getProductByExternalReferenceCodeProductSpecificationsPage(
+							_attachment.getExternalReferenceCode(),
 							Pagination.of(page, pageSize))));
 		}
 

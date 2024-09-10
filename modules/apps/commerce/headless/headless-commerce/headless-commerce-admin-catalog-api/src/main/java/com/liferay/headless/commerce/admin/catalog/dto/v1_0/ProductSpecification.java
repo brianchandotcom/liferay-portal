@@ -30,7 +30,6 @@ import javax.annotation.Generated;
 
 import javax.validation.Valid;
 import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -42,7 +41,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Generated("")
 @GraphQLName("ProductSpecification")
 @JsonFilter("Liferay.Vulcan")
-@Schema(requiredProperties = {"specificationKey", "value"})
+@Schema(requiredProperties = {"value"})
 @XmlRootElement(name = "ProductSpecification")
 public class ProductSpecification implements Serializable {
 
@@ -178,6 +177,52 @@ public class ProductSpecification implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, String>> _labelSupplier;
 
+	@Schema(example = "AB-34098-789-N")
+	public String getOptionCategoryExternalReferenceCode() {
+		if (_optionCategoryExternalReferenceCodeSupplier != null) {
+			optionCategoryExternalReferenceCode =
+				_optionCategoryExternalReferenceCodeSupplier.get();
+
+			_optionCategoryExternalReferenceCodeSupplier = null;
+		}
+
+		return optionCategoryExternalReferenceCode;
+	}
+
+	public void setOptionCategoryExternalReferenceCode(
+		String optionCategoryExternalReferenceCode) {
+
+		this.optionCategoryExternalReferenceCode =
+			optionCategoryExternalReferenceCode;
+
+		_optionCategoryExternalReferenceCodeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setOptionCategoryExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			optionCategoryExternalReferenceCodeUnsafeSupplier) {
+
+		_optionCategoryExternalReferenceCodeSupplier = () -> {
+			try {
+				return optionCategoryExternalReferenceCodeUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String optionCategoryExternalReferenceCode;
+
+	@JsonIgnore
+	private Supplier<String> _optionCategoryExternalReferenceCodeSupplier;
+
 	@DecimalMin("0")
 	@Schema(example = "30129")
 	public Long getOptionCategoryId() {
@@ -304,6 +349,52 @@ public class ProductSpecification implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _productIdSupplier;
 
+	@Schema(example = "AB-34098-789-N")
+	public String getSpecificationExternalReferenceCode() {
+		if (_specificationExternalReferenceCodeSupplier != null) {
+			specificationExternalReferenceCode =
+				_specificationExternalReferenceCodeSupplier.get();
+
+			_specificationExternalReferenceCodeSupplier = null;
+		}
+
+		return specificationExternalReferenceCode;
+	}
+
+	public void setSpecificationExternalReferenceCode(
+		String specificationExternalReferenceCode) {
+
+		this.specificationExternalReferenceCode =
+			specificationExternalReferenceCode;
+
+		_specificationExternalReferenceCodeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setSpecificationExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			specificationExternalReferenceCodeUnsafeSupplier) {
+
+		_specificationExternalReferenceCodeSupplier = () -> {
+			try {
+				return specificationExternalReferenceCodeUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String specificationExternalReferenceCode;
+
+	@JsonIgnore
+	private Supplier<String> _specificationExternalReferenceCodeSupplier;
+
 	@DecimalMin("0")
 	@Schema(example = "30129")
 	public Long getSpecificationId() {
@@ -382,7 +473,6 @@ public class ProductSpecification implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	@NotEmpty
 	protected String specificationKey;
 
 	@JsonIgnore
@@ -540,6 +630,23 @@ public class ProductSpecification implements Serializable {
 			sb.append(_toJSON(label));
 		}
 
+		String optionCategoryExternalReferenceCode =
+			getOptionCategoryExternalReferenceCode();
+
+		if (optionCategoryExternalReferenceCode != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"optionCategoryExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(optionCategoryExternalReferenceCode));
+
+			sb.append("\"");
+		}
+
 		Long optionCategoryId = getOptionCategoryId();
 
 		if (optionCategoryId != null) {
@@ -574,6 +681,23 @@ public class ProductSpecification implements Serializable {
 			sb.append("\"productId\": ");
 
 			sb.append(productId);
+		}
+
+		String specificationExternalReferenceCode =
+			getSpecificationExternalReferenceCode();
+
+		if (specificationExternalReferenceCode != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"specificationExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(specificationExternalReferenceCode));
+
+			sb.append("\"");
 		}
 
 		Long specificationId = getSpecificationId();

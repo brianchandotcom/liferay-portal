@@ -61,6 +61,17 @@ public interface ProductSpecificationResource {
 			Long id, ProductSpecification productSpecification)
 		throws Exception;
 
+	public Page<ProductSpecification>
+			getProductByExternalReferenceCodeProductSpecificationsPage(
+				String externalReferenceCode, Pagination pagination)
+		throws Exception;
+
+	public ProductSpecification
+			postProductByExternalReferenceCodeProductSpecification(
+				String externalReferenceCode,
+				ProductSpecification productSpecification)
+		throws Exception;
+
 	public Page<ProductSpecification> getProductIdProductSpecificationsPage(
 			Long id, Pagination pagination)
 		throws Exception;

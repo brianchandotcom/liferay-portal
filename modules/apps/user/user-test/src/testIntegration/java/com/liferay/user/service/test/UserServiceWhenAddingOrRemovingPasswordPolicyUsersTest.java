@@ -76,7 +76,7 @@ public class UserServiceWhenAddingOrRemovingPasswordPolicyUsersTest {
 	}
 
 	@Test
-	public void testShouldRemovePasswordResetIfPolicyDoesNotAllowChanging()
+	public void testPasswordResetStillPersistsIfNewPolicyDoesNotAllowChanging()
 		throws Exception {
 
 		_user = UserTestUtil.addUser();
@@ -91,7 +91,7 @@ public class UserServiceWhenAddingOrRemovingPasswordPolicyUsersTest {
 
 		_user = _userLocalService.getUser(_user.getUserId());
 
-		Assert.assertFalse(_user.isPasswordReset());
+		Assert.assertTrue(_user.isPasswordReset());
 	}
 
 	@DeleteAfterTestRun

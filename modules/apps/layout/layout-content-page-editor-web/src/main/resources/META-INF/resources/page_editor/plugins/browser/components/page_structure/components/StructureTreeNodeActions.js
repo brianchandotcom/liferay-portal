@@ -17,8 +17,8 @@ import hasDropZoneChild from '../../../../../app/components/layout_data_items/ha
 import {ITEM_ACTIVATION_ORIGINS} from '../../../../../app/config/constants/itemActivationOrigins';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../app/config/constants/layoutDataItemTypes';
 import {
-	useCopiedNodeIds,
-	useSetCopiedNodeIds,
+	useCopiedItemIds,
+	useSetCopiedItemIds,
 } from '../../../../../app/contexts/ClipboardContext';
 import {
 	useSelectItem,
@@ -137,14 +137,14 @@ export default function StructureTreeNodeActions({disabled, item, visible}) {
 }
 
 const ActionList = ({item, setActive, setOpenSaveModal}) => {
+	const copiedItemIds = useCopiedItemIds();
 	const dispatch = useDispatch();
 	const hasRequiredChild = useHasRequiredChild(item.id);
 	const selectItem = useSelectItem();
 	const selectMultipleItems = useSelectMultipleItems();
+	const setCopiedItemIds = useSetCopiedItemIds();
 	const setEditedNodeId = useSetEditedNodeId();
 	const setText = useSetMovementText();
-	const copiedNodeIds = useCopiedNodeIds();
-	const setCopiedNodeIds = useSetCopiedNodeIds();
 	const widgets = useSelector((state) => state.widgets);
 
 	const selectItems = Liferay.FeatureFlags['LPD-18221']
@@ -223,7 +223,7 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 		) {
 			items.push({
 				action: () => {
-					setCopiedNodeIds([item.id]);
+					setCopiedItemIds([item.id]);
 					dispatch(
 						deleteItem({
 							itemIds: [item.id],
@@ -243,7 +243,7 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 		) {
 			items.push({
 				action: () => {
-					setCopiedNodeIds([item.id]);
+					setCopiedItemIds([item.id]);
 
 					setText(Liferay.Language.get('item-copied'));
 				},
@@ -277,7 +277,7 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 				action: () => {
 					dispatch(
 						pasteItem({
-							copyItemIds: copiedNodeIds,
+							copyItemIds: copiedItemIds,
 							parentItemId: item.id,
 							selectItems,
 						})
@@ -285,7 +285,7 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 
 					setText(Liferay.Language.get('item-pasted'));
 				},
-				disabled: !copiedNodeIds?.length,
+				disabled: !copiedItemIds?.length,
 				icon: 'paste',
 				label: Liferay.Language.get('paste'),
 			});
@@ -323,7 +323,7 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 
 		return items;
 	}, [
-		copiedNodeIds,
+		copiedItemIds,
 		dispatch,
 		fragmentEntryLinks,
 		hasRequiredChild,
@@ -332,7 +332,7 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 		selectedViewportSize,
 		selectItem,
 		widgets,
-		setCopiedNodeIds,
+		setCopiedItemIds,
 		setEditedNodeId,
 		setOpenSaveModal,
 		setText,

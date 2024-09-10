@@ -12,7 +12,7 @@ import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../../../../src/main/resources
 import {VIEWPORT_SIZES} from '../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/viewportSizes';
 import {
 	ClipboardContextProvider,
-	useSetCopiedNodeIds,
+	useSetCopiedItemIds,
 } from '../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ClipboardContext';
 import deleteItem from '../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/deleteItem';
 import duplicateItem from '../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/duplicateItem';
@@ -23,13 +23,13 @@ import StoreMother from '../../../../../../../../src/main/resources/META-INF/res
 jest.mock(
 	'../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ClipboardContext',
 	() => {
-		const setCopiedNodeIds = jest.fn();
+		const setCopiedItemIds = jest.fn();
 
 		return {
 			...jest.requireActual(
 				'../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ClipboardContext'
 			),
-			useSetCopiedNodeIds: () => setCopiedNodeIds,
+			useSetCopiedItemIds: () => setCopiedItemIds,
 		};
 	}
 );
@@ -209,8 +209,8 @@ describe('PageStructureSidebarToolbar', () => {
 		);
 	});
 
-	it('calls setCopiedNodeIds and deleteItem when Cut action is pressed', () => {
-		const setCopiedNodeIds = useSetCopiedNodeIds();
+	it('calls setCopiedItemIds and deleteItem when Cut action is pressed', () => {
+		const setCopiedItemIds = useSetCopiedItemIds();
 
 		renderComponent({
 			activeItemIds: ['fragment01', 'fragment02'],
@@ -224,13 +224,13 @@ describe('PageStructureSidebarToolbar', () => {
 			})
 		);
 
-		expect(setCopiedNodeIds).toBeCalledWith(
+		expect(setCopiedItemIds).toBeCalledWith(
 			expect.objectContaining(['fragment01', 'fragment02'])
 		);
 	});
 
-	it('calls setCopiedNodeIds when Copy action is pressed', () => {
-		const setCopiedNodeIds = useSetCopiedNodeIds();
+	it('calls setCopiedItemIds when Copy action is pressed', () => {
+		const setCopiedItemIds = useSetCopiedItemIds();
 
 		renderComponent({
 			activeItemIds: ['fragment01', 'fragment02'],
@@ -238,7 +238,7 @@ describe('PageStructureSidebarToolbar', () => {
 
 		userEvent.click(screen.getByText('copy'));
 
-		expect(setCopiedNodeIds).toBeCalledWith(
+		expect(setCopiedItemIds).toBeCalledWith(
 			expect.objectContaining(['fragment01', 'fragment02'])
 		);
 	});

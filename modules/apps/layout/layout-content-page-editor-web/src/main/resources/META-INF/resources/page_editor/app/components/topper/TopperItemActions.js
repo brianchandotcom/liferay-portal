@@ -13,8 +13,8 @@ import React, {useMemo, useState} from 'react';
 import {getLayoutDataItemPropTypes} from '../../../prop_types/index';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import {
-	useCopiedNodeIds,
-	useSetCopiedNodeIds,
+	useCopiedItemIds,
+	useSetCopiedItemIds,
 } from '../../contexts/ClipboardContext';
 import {
 	useSelectItem,
@@ -39,12 +39,12 @@ import hasDropZoneChild from '../layout_data_items/hasDropZoneChild';
 
 export default function TopperItemActions({disabled, item}) {
 	const [active, setActive] = useState(false);
+	const copiedItemIds = useCopiedItemIds();
 	const dispatch = useDispatch();
 	const hasRequiredChild = useHasRequiredChild(item.itemId);
-	const copiedNodeIds = useCopiedNodeIds();
 	const selectItem = useSelectItem();
 	const selectMultipleItems = useSelectMultipleItems();
-	const setCopiedNodeIds = useSetCopiedNodeIds();
+	const setCopiedItemIds = useSetCopiedItemIds();
 	const widgets = useSelector((state) => state.widgets);
 
 	const selectItems = Liferay.FeatureFlags['LPD-18221']
@@ -110,7 +110,7 @@ export default function TopperItemActions({disabled, item}) {
 		) {
 			items.push({
 				action: () => {
-					setCopiedNodeIds([item.itemId]);
+					setCopiedItemIds([item.itemId]);
 					dispatch(
 						deleteItem({
 							itemIds: [item.itemId],
@@ -126,7 +126,7 @@ export default function TopperItemActions({disabled, item}) {
 				canBeDuplicated(fragmentEntryLinks, item, layoutData, widgets)
 			) {
 				items.push({
-					action: () => setCopiedNodeIds([item.itemId]),
+					action: () => setCopiedItemIds([item.itemId]),
 					icon: 'copy',
 					label: Liferay.Language.get('copy'),
 				});
@@ -161,12 +161,12 @@ export default function TopperItemActions({disabled, item}) {
 				action: () =>
 					dispatch(
 						pasteItem({
-							copyItemIds: copiedNodeIds,
+							copyItemIds: copiedItemIds,
 							parentItemId: item.itemId,
 							selectItems,
 						})
 					),
-				disabled: !copiedNodeIds?.length,
+				disabled: !copiedItemIds?.length,
 				icon: 'paste',
 				label: Liferay.Language.get('paste'),
 			});
@@ -192,14 +192,14 @@ export default function TopperItemActions({disabled, item}) {
 
 		return items;
 	}, [
-		copiedNodeIds,
+		copiedItemIds,
 		dispatch,
 		fragmentEntryLinks,
 		hasRequiredChild,
 		item,
 		layoutData,
 		selectedViewportSize,
-		setCopiedNodeIds,
+		setCopiedItemIds,
 		selectItems,
 		widgets,
 	]);

@@ -11,7 +11,7 @@ import ShortcutManager from '../../../../src/main/resources/META-INF/resources/p
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/layoutDataItemTypes';
 import {
 	ClipboardContextProvider,
-	useSetCopiedNodeIds,
+	useSetCopiedItemIds,
 } from '../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ClipboardContext';
 import {ControlsProvider} from '../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ControlsContext';
 import {
@@ -27,13 +27,13 @@ import StoreMother from '../../../../src/main/resources/META-INF/resources/page_
 jest.mock(
 	'../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ClipboardContext',
 	() => {
-		const setCopiedNodeIds = jest.fn();
+		const setCopiedItemIds = jest.fn();
 
 		return {
 			...jest.requireActual(
 				'../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ClipboardContext'
 			),
-			useSetCopiedNodeIds: () => setCopiedNodeIds,
+			useSetCopiedItemIds: () => setCopiedItemIds,
 		};
 	}
 );
@@ -258,7 +258,7 @@ describe('ShortcutManager', () => {
 	it('sets the node id to be cut when pressing ctrl + X', () => {
 		Liferay.FeatureFlags['LPD-18221'] = true;
 
-		const setCopiedNodeIds = useSetCopiedNodeIds();
+		const setCopiedItemIds = useSetCopiedItemIds();
 
 		renderComponent({
 			activeItemIds: ['fragment01'],
@@ -277,7 +277,7 @@ describe('ShortcutManager', () => {
 			})
 		);
 
-		expect(setCopiedNodeIds).toBeCalledWith(['fragment01']);
+		expect(setCopiedItemIds).toBeCalledWith(['fragment01']);
 
 		Liferay.FeatureFlags['LPD-18221'] = false;
 	});
@@ -285,7 +285,7 @@ describe('ShortcutManager', () => {
 	it('sets the node id to be copied when pressing ctrl + C', () => {
 		Liferay.FeatureFlags['LPD-18221'] = true;
 
-		const setCopiedNodeIds = useSetCopiedNodeIds();
+		const setCopiedItemIds = useSetCopiedItemIds();
 
 		renderComponent({
 			activeItemIds: ['fragment01'],
@@ -298,7 +298,7 @@ describe('ShortcutManager', () => {
 			})
 		);
 
-		expect(setCopiedNodeIds).toBeCalledWith(['fragment01']);
+		expect(setCopiedItemIds).toBeCalledWith(['fragment01']);
 
 		Liferay.FeatureFlags['LPD-18221'] = false;
 	});

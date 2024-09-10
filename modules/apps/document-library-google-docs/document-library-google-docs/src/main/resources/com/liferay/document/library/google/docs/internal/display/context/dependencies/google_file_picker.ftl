@@ -63,22 +63,27 @@ GoogleFilePicker.prototype = {
 	_onAuthAPILoad: function() {
 		var instance = this;
 
-		window.gapi.auth.authorize(
-			{
-				'client_id': GoogleFilePicker.CLIENT_ID,
-				'immediate': false,
-				'scope': GoogleFilePicker.SCOPE
-			},
-			function(authResult) {
-				if (authResult && !authResult.error) {
-					instance._oauthToken = authResult.access_token;
-
-					instance._authAPILoaded = true;
-
-					instance._createPicker();
+		var tokenClient = google.accounts.oauth2.initTokenClient({
+			client_id: GoogleFilePicker.CLIENT_ID,
+			'immediate': false,
+			scope: GoogleFilePicker.SCOPE[0],
+			callback: (authResult) => {
+				if (authResult && authResult.error !== undefined) {
+					throw (authResult);
 				}
+
+				instance._oauthToken = authResult.access_token;
+
+				instance._authAPILoaded = true;
+
+				instance._createPicker();
+			},
+			error_callback: function(error) {
+				console.error(error);
 			}
-		);
+		});
+
+		tokenClient.requestAccessToken();
 	},
 
 	_onPickerAPILoad: function() {
@@ -131,6 +136,15 @@ if (!window.gapi && !document.getElementById('googleAPILoader')) {
 }
 else if (window.gapi) {
 	Liferay.fire('googleAPILoaded');
+}
+
+if (!google) {
+	var scriptNodeGis = document.createElement('script');
+
+	scriptNodeGis.id = 'gisAPILoader';
+	scriptNodeGis.src = 'https://accounts.google.com/gsi/client';
+
+	document.body.appendChild(scriptNodeGis);
 }
 
 var FilePicker = GoogleFilePicker;

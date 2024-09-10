@@ -86,8 +86,6 @@ public class CategoryFacetExportImportPortletPreferencesProcessorTest
 		_portletPreferences =
 			PortletPreferencesFactoryUtil.getStrictPortletSetup(
 				_layout, CategoryFacetPortletKeys.CATEGORY_FACET);
-
-		_portletPreferences.setValue("selectionStyle", "manual");
 	}
 
 	@Test

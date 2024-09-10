@@ -6,6 +6,8 @@
 import '@testing-library/jest-dom/extend-expect';
 import {render, screen} from '@testing-library/react';
 import React from 'react';
+import {DndProvider} from 'react-dnd';
+import {HTML5Backend} from 'react-dnd-html5-backend';
 
 import {LayoutBreadcrumbs} from '../../../../src/main/resources/META-INF/resources/page_editor/app/components/LayoutBreadcrumbs';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/layoutDataItemTypes';
@@ -94,16 +96,18 @@ const renderComponent = ({multiSelect, activeItemId, activeItemIds = []}) => {
 				},
 			})}
 		>
-			<ControlsProvider
-				activeInitialState={{
-					activeItemIds,
-					multiSelect,
-				}}
-			>
-				<AutoSelect itemId={activeItemId} />
+			<DndProvider backend={HTML5Backend}>
+				<ControlsProvider
+					activeInitialState={{
+						activeItemIds,
+						multiSelect,
+					}}
+				>
+					<AutoSelect itemId={activeItemId} />
 
-				<LayoutBreadcrumbs />
-			</ControlsProvider>
+					<LayoutBreadcrumbs />
+				</ControlsProvider>
+			</DndProvider>
 		</StoreMother.Component>
 	);
 };

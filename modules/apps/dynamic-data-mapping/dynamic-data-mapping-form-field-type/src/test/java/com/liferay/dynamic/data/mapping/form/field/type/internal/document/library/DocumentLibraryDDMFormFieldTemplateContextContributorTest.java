@@ -14,7 +14,6 @@ import com.liferay.dynamic.data.mapping.form.item.selector.criterion.DDMUserPers
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalService;
-import com.liferay.dynamic.data.mapping.test.util.BaseDDMFormFieldTypeSettingsTestCase;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion;
 import com.liferay.petra.string.StringPool;
@@ -73,8 +72,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
 /**
  * @author Pedro Queiroz
  */
-public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
-	extends BaseDDMFormFieldTypeSettingsTestCase {
+public class DocumentLibraryDDMFormFieldTemplateContextContributorTest {
 
 	@ClassRule
 	@Rule
@@ -82,10 +80,7 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 		LiferayUnitTestRule.INSTANCE;
 
 	@Before
-	@Override
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_setUpCompanyLocalService();
 		_setUpDDMFormInstanceLocalService();
 		_setUpDLAppLocalService();

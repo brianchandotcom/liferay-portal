@@ -760,6 +760,16 @@ public class ServletDataImpl implements ServletData {
 							DocumentMetadataSetResourceImpl.class,
 							"postAssetLibraryDocumentMetadataSetsPageExportBatch"));
 					put(
+						"mutation#deleteDocumentMetadataSet",
+						new ObjectValuePair<>(
+							DocumentMetadataSetResourceImpl.class,
+							"deleteDocumentMetadataSet"));
+					put(
+						"mutation#deleteDocumentMetadataSetBatch",
+						new ObjectValuePair<>(
+							DocumentMetadataSetResourceImpl.class,
+							"deleteDocumentMetadataSetBatch"));
+					put(
 						"mutation#createSiteDocumentMetadataSetsPageExportBatch",
 						new ObjectValuePair<>(
 							DocumentMetadataSetResourceImpl.class,

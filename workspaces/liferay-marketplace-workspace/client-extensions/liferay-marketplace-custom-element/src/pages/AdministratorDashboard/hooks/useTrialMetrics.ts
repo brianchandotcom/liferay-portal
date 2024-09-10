@@ -12,6 +12,8 @@ import {ORDER_TYPES, ORDER_WORKFLOW_STATUS_CODE} from '../../../enums/Order';
 import useMarketplaceSpringBootOAuth2 from '../../../hooks/useMarketplaceSpringBootOAuth2';
 import HeadlessCommerceAdminOrderImpl from '../../../services/rest/HeadlessCommerceAdminOrder';
 
+type FilterType = 'month' | 'q1' | 'q2' | 'q3' | 'q4' | 'week';
+
 export const METRIC_PARAMETER = {
 	month: 30,
 	q1: 1,
@@ -21,41 +23,12 @@ export const METRIC_PARAMETER = {
 	week: 7,
 };
 
+const ACTIVE_REFRESH_INTERVAL = 60 * 1000;
+const DEFAULT_REFRESH_INTERVAL = 240 * 1000;
+
 const trialSearchBuilder = new SearchBuilder()
 	.eq('orderTypeExternalReferenceCode', ORDER_TYPES.SOLUTIONS7)
 	.and();
-
-const getPeriodMetrics = (
-	lastPeriodValue: number,
-	beforeLastPeriodvalue: number
-) => {
-	const newOrders = lastPeriodValue - beforeLastPeriodvalue;
-
-	let growth = Number(((newOrders / lastPeriodValue) * 100).toFixed(3));
-
-	if (Number.isNaN(growth)) {
-		growth = 0;
-	}
-
-	return {
-		beforeLastPeriod: beforeLastPeriodvalue,
-		growth,
-		lastPeriod: lastPeriodValue,
-		totalCount: lastPeriodValue,
-	};
-};
-
-const getExiredQuantity = (orderLastPeriod: Order[]) =>
-	orderLastPeriod?.filter(
-		(order: Order) =>
-			new Date() >
-			new Date(order?.customFields?.['trial-end-date'] as string)
-	).length;
-
-type FilterType = 'month' | 'q1' | 'q2' | 'q3' | 'q4' | 'week';
-
-const ACTIVE_REFRESH_INTERVAL = 60 * 1000;
-const DEFAULT_REFRESH_INTERVAL = 240 * 1000;
 
 const useTrialMetrics = (param: FilterType) => {
 	const [refreshInterval, setRefreshInterval] = useState(
@@ -79,37 +52,41 @@ const useTrialMetrics = (param: FilterType) => {
 
 	const requestsParams = [
 		new URLSearchParams({
-			fields: 'id,account,orderStatusInfo,createDate,customFields,name,accountId,orderItems',
+			fields: 'account,accountId,createDate,customFields,id,name,orderItems,orderStatusInfo',
 			filter: trialSearchBuilder.clone().build(),
 			nestedFields: 'account,orderItems',
-			pageSize: '30',
-			sort: 'createDate:desc',
-		}),
-		new URLSearchParams({
-			fields: 'id,orderStatus,customFields',
-			filter: trialSearchBuilder
-				.clone()
-				.gt('createDate', lastPeriod.toISOString())
-				.build(),
-			pageSize: '-1',
-			sort: 'createDate:desc',
-		}),
-		new URLSearchParams({
-			fields: 'orderStatus,customFields',
-			filter: trialSearchBuilder
-				.clone()
-				.lt('createDate', lastPeriod.toISOString())
-				.and()
-				.gt('createDate', beforeLastPeriod.toISOString())
-				.build(),
-			nestedFields: 'account,orderItems',
-			pageSize: '-1',
+			pageSize: '60',
 			sort: 'createDate:desc',
 		}),
 		new URLSearchParams({
 			fields: 'orderStatus',
-			filter: trialSearchBuilder.clone().build(),
-			pageSize: '-1',
+			filter: trialSearchBuilder
+				.clone()
+				.lambda('orderStatus', ORDER_WORKFLOW_STATUS_CODE.COMPLETED, {
+					unquote: true,
+				})
+				.build(),
+			pageSize: '1',
+		}),
+		new URLSearchParams({
+			fields: 'orderStatus',
+			filter: trialSearchBuilder
+				.clone()
+				.lambda('orderStatus', ORDER_WORKFLOW_STATUS_CODE.IN_PROGRESS, {
+					unquote: true,
+				})
+				.build(),
+			pageSize: '1',
+		}),
+		new URLSearchParams({
+			fields: 'orderStatus',
+			filter: trialSearchBuilder
+				.clone()
+				.lambda('orderStatus', ORDER_WORKFLOW_STATUS_CODE.ON_HOLD, {
+					unquote: true,
+				})
+				.build(),
+			pageSize: '1',
 		}),
 	];
 
@@ -133,9 +110,9 @@ const useTrialMetrics = (param: FilterType) => {
 	const [
 		availabilityResponse,
 		orderTableData,
-		orderLastPeriod,
-		orderBeforeLastPeriod,
-		ordersTrial,
+		expiredResponse,
+		inProgressResponse,
+		onHoldResponse,
 	] = trialDataResponse;
 
 	const orderItems = useMemo(
@@ -156,39 +133,24 @@ const useTrialMetrics = (param: FilterType) => {
 		);
 	}, [orderItems]);
 
-	const resourcesAvailable = `${
-		availabilityResponse?.max - availabilityResponse?.available
-	} / ${availabilityResponse?.max}`;
-
-	const onHold = ordersTrial?.items?.filter(
-		(order: Order) =>
-			order.orderStatus === ORDER_WORKFLOW_STATUS_CODE.ON_HOLD
-	).length;
-
-	const expiredTrialsLastPeriod = getExiredQuantity(orderLastPeriod?.items);
-
-	const expiredTrialsBeforeLastPeriod = getExiredQuantity(
-		orderBeforeLastPeriod?.items
-	);
-
 	return {
 		availability: {
 			...availabilityResponse,
-			onHold,
-			resourcesAvailable,
+			resourcesAvailable: `${
+				availabilityResponse?.max - availabilityResponse?.available
+			} / ${availabilityResponse?.max}`,
+		},
+		totalCount: {
+			all: orderTableData?.totalCount ?? 0,
+			expired: expiredResponse?.totalCount ?? 0,
+			inProgress: inProgressResponse?.totalCount ?? 0,
+			onHold: onHoldResponse?.totalCount ?? 0,
 		},
 		error,
-		expired: getPeriodMetrics(
-			expiredTrialsLastPeriod,
-			expiredTrialsBeforeLastPeriod
-		),
+		inProgressCount: inProgressResponse?.totalCount,
 		isLoading,
 		mutate,
 		orderTableData,
-		orders: getPeriodMetrics(
-			orderLastPeriod?.totalCount,
-			orderBeforeLastPeriod?.totalCount
-		),
 	};
 };
 

@@ -9,6 +9,7 @@ import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
@@ -42,9 +43,6 @@ public class BlogsFriendlyURLFormatUpgradeProcess extends UpgradeProcess {
 			"select distinct ctCollectionId, entryId from BlogsEntry where " +
 			"urlTitle = ?");
 
-		 PreparedStatement preparedStatement3 = connection.prepareStatement(
-			 "update BlogsEntry set urlTitle = ? where ctCollectionId = ? " +
-			 "and entryId = ? and groupId = ?")
 		) {
 
 			preparedStatement1.setLong(
@@ -84,22 +82,40 @@ public class BlogsFriendlyURLFormatUpgradeProcess extends UpgradeProcess {
 						classPK, urlTitle, languageId);
 				}
 
-				preparedStatement3.setString(1, urlTitle);
-				preparedStatement3.setLong(2, ctCollectionId);
-				preparedStatement3.setLong(3, classPK);
-				preparedStatement3.setLong(4, groupId);
+				_updateURLTitle(classPK, ctCollectionId, groupId, urlTitle);
 
-				preparedStatement3.addBatch();
-				preparedStatement3.executeBatch();
-
-				FriendlyURLEntry friendlyURLEntry =
-					_friendlyURLEntryLocalService.fetchFriendlyURLEntry(
-						friendlyURLEntryId);
-
-				_friendlyURLEntryLocalService.
-					updateFriendlyURLEntryLocalization(
-						friendlyURLEntry, languageId, urlTitle);
+				_updateFriendlyURLEntry(
+					friendlyURLEntryId, languageId, urlTitle);
 			}
+		}
+	}
+
+	private void _updateFriendlyURLEntry(
+			long friendlyURLEntryId, String languageId, String urlTitle)
+		throws PortalException {
+
+		FriendlyURLEntry friendlyURLEntry =
+			_friendlyURLEntryLocalService.fetchFriendlyURLEntry(
+				friendlyURLEntryId);
+
+		_friendlyURLEntryLocalService.updateFriendlyURLEntryLocalization(
+			friendlyURLEntry, languageId, urlTitle);
+	}
+
+	private void _updateURLTitle(
+			long classPK, long ctCollectionId, long groupId, String urlTitle)
+		throws Exception {
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"update BlogsEntry set urlTitle = ? where ctCollectionId = ? " +
+					"and entryId = ? and groupId = ?")) {
+
+			preparedStatement.setString(1, urlTitle);
+			preparedStatement.setLong(2, ctCollectionId);
+			preparedStatement.setLong(3, classPK);
+			preparedStatement.setLong(4, groupId);
+
+			preparedStatement.executeUpdate();
 		}
 	}
 

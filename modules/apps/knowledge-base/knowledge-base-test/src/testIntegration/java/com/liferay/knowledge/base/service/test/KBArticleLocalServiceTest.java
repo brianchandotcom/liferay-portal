@@ -255,7 +255,6 @@ public class KBArticleLocalServiceTest {
 			null, _serviceContext);
 	}
 
-	@FeatureFlags("LPS-188058")
 	@Test
 	public void testAddKBArticleDisplayDateKBArticleStatusScheduled()
 		throws Exception {
@@ -465,7 +464,6 @@ public class KBArticleLocalServiceTest {
 		}
 	}
 
-	@FeatureFlags("LPS-188058")
 	@Test
 	public void testAddKBArticleWithDisplayDateExpirationDateReviewDate()
 		throws Exception {
@@ -790,7 +788,6 @@ public class KBArticleLocalServiceTest {
 			originalKBArticleTreePath, kbArticle.buildTreePath());
 	}
 
-	@FeatureFlags("LPS-188058")
 	@Test(expected = KBArticleStatusException.class)
 	public void testCheckKBArticlesFailsWhenPublishingAndParentKBArticleIsScheduled()
 		throws Exception {
@@ -821,7 +818,6 @@ public class KBArticleLocalServiceTest {
 		_kbArticleLocalService.checkKBArticles(_group.getCompanyId());
 	}
 
-	@FeatureFlags("LPS-188058")
 	@Test
 	public void testCheckKBArticlesWhenChildKBArticleIsPublishedAfterParentKBArticleIsPublished()
 		throws Exception {
@@ -884,7 +880,6 @@ public class KBArticleLocalServiceTest {
 			WorkflowConstants.STATUS_APPROVED, parentKBArticle.getStatus());
 	}
 
-	@FeatureFlags("LPS-188058")
 	@Test
 	public void testCheckKBArticlesWhenChildKBArticleIsPublishedOnlyAfterParentKBArticleIsPublished()
 		throws Exception {
@@ -1625,7 +1620,6 @@ public class KBArticleLocalServiceTest {
 			null, _serviceContext);
 	}
 
-	@FeatureFlags("LPS-188058")
 	@Test
 	public void testUpdateKBArticleDisplayDateExpiredKBArticleCanBePublished()
 		throws Exception {
@@ -1672,7 +1666,6 @@ public class KBArticleLocalServiceTest {
 			WorkflowConstants.STATUS_APPROVED, kbArticle.getStatus());
 	}
 
-	@FeatureFlags("LPS-188058")
 	@Test
 	public void testUpdateKBArticleDisplayDateOnDraftKBArticleUpdatesStatusToScheduled()
 		throws Exception {
@@ -1706,7 +1699,6 @@ public class KBArticleLocalServiceTest {
 			WorkflowConstants.STATUS_SCHEDULED, kbArticle.getStatus());
 	}
 
-	@FeatureFlags("LPS-188058")
 	@Test
 	public void testUpdateKBArticleDisplayDateUpdatesKBArticleStatusToApproved()
 		throws Exception {
@@ -1736,7 +1728,6 @@ public class KBArticleLocalServiceTest {
 			WorkflowConstants.STATUS_APPROVED, kbArticle.getStatus());
 	}
 
-	@FeatureFlags("LPS-188058")
 	@Test
 	public void testUpdateKBArticleDisplayDateUpdatesKBArticleStatusToScheduled()
 		throws Exception {

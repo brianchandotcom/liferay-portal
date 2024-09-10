@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.trash.TrashHelper;
@@ -40,7 +39,6 @@ import org.junit.runner.RunWith;
 /**
  * @author Marco Galluzzi
  */
-@FeatureFlags("LPS-188058")
 @RunWith(Arquillian.class)
 public class KBFolderTrashHandlerTest
 	extends BaseTrashHandlerTestCase

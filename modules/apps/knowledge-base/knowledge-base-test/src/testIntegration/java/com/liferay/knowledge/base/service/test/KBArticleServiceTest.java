@@ -110,7 +110,6 @@ public class KBArticleServiceTest {
 		}
 	}
 
-	@FeatureFlags("LPS-188058")
 	@Test
 	public void testGetKBArticlesByStatus() throws PortalException {
 		_serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);

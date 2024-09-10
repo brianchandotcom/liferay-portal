@@ -29,14 +29,12 @@ const testFeatureFlagsDisabled = mergeTests(
 	baseTest,
 	featureFlagsTest({
 		'LPD-11003': false,
-		'LPS-188058': false,
 	})
 );
 const testFeatureFlagsEnabled = mergeTests(
 	baseTest,
 	featureFlagsTest({
 		'LPD-11003': true,
-		'LPS-188058': true,
 	})
 );
 
@@ -131,35 +129,7 @@ testFeatureFlagsEnabled(
 	}
 );
 
-testFeatureFlagsDisabled(
-	'can publish and delete an article with scheduling disabled',
-	async ({knowledgeBaseEditArticlePage, knowledgeBasePage, page, site}) => {
-		const content = getRandomString();
-		const title = getRandomString();
-
-		const kbArticle = page.getByRole('link', {name: title});
-
-		await knowledgeBaseEditArticlePage.goto(site.friendlyUrlPath);
-		await knowledgeBaseEditArticlePage.publishNewKnowledgeBaseArticle(
-			content,
-			title
-		);
-
-		await waitForSuccessAlert(
-			page,
-			`Success:${title} was successfully published.`
-		);
-
-		await expect(kbArticle).toBeVisible();
-
-		await knowledgeBasePage.goto(site.friendlyUrlPath);
-		await knowledgeBasePage.deleteKnowledgeBaseArticle(title);
-
-		await expect(kbArticle).toBeHidden();
-	}
-);
-
-testFeatureFlagsEnabled(
+baseTest(
 	'can publish and delete an article with scheduling enabled',
 	async ({
 		knowledgeBaseEditArticlePage,
@@ -255,7 +225,7 @@ testFeatureFlagsEnabled(
 	}
 );
 
-testFeatureFlagsEnabled(
+baseTest(
 	'can schedule and delete an article with scheduling enabled',
 	async ({
 		knowledgeBaseEditArticlePage,

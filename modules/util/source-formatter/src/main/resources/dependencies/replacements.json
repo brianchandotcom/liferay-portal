@@ -3213,6 +3213,18 @@
 		"to": "getPreferences(param#0#)"
 	},
 	{
+		"from": "regex:DLUtil\\.(?<methodName>getDownloadURL|getImagePreviewURL)",
+		"issueKey": "LPD-35983",
+		"newImports": [
+			"com.liferay.document.library.util.DLURLHelperUtil"
+		],
+		"to": "DLURLHelperUtil.${methodName}",
+		"validExtensions": [
+			"java",
+			"jsp"
+		]
+	},
+	{
 		"from": "CookieKeys.COMMERCE_CONTINUE_AS_GUEST",
 		"issueKey": "LPS-159679",
 		"newImports": [
@@ -3334,18 +3346,6 @@
 			"com.liferay.portal.kernel.service.ServiceContextThreadLocal"
 		],
 		"to": "updateCommerceAddress(param#0#.getCommerceAddressId(), param#0#.getName(), param#0#.getDescription(), param#0#.getStreet1(), param#0#.getStreet2(), param#0#.getStreet3(), param#0#.getCity(), param#0#.getZip(), param#0#.getRegionId(), param#0#.getCountryId(), param#0#.getPhoneNumber(), param#0#.getType(), ServiceContextThreadLocal.getServiceContext())"
-	},
-	{
-		"from": "DLUtil.getImagePreviewURL",
-		"issueKey": "LPS-187531",
-		"newImports": [
-			"com.liferay.document.library.util.DLURLHelperUtil"
-		],
-		"to": "DLURLHelperUtil.getImagePreviewURL",
-		"validExtensions": [
-			"java",
-			"jsp"
-		]
 	},
 	{
 		"classNames": [

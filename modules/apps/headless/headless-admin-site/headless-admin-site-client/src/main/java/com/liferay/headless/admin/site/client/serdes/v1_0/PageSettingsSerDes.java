@@ -51,17 +51,17 @@ public class PageSettingsSerDes {
 		if (type != null) {
 			String typeString = type.toString();
 
-			if (typeString.equals("CollectionPage")) {
+			if (typeString.equals("CollectionPageSettings")) {
 				return CollectionPageSettingsSerDes.toJSON(
 					(CollectionPageSettings)pageSettings);
 			}
 
-			if (typeString.equals("ContentPage")) {
+			if (typeString.equals("ContentPageSettings")) {
 				return ContentPageSettingsSerDes.toJSON(
 					(ContentPageSettings)pageSettings);
 			}
 
-			if (typeString.equals("WidgetPage")) {
+			if (typeString.equals("WidgetPageSettings")) {
 				return WidgetPageSettingsSerDes.toJSON(
 					(WidgetPageSettings)pageSettings);
 			}
@@ -191,15 +191,15 @@ public class PageSettingsSerDes {
 			if (type != null) {
 				String typeString = type.toString();
 
-				if (typeString.equals("CollectionPage")) {
+				if (typeString.equals("CollectionPageSettings")) {
 					return CollectionPageSettings.toDTO(json);
 				}
 
-				if (typeString.equals("ContentPage")) {
+				if (typeString.equals("ContentPageSettings")) {
 					return ContentPageSettings.toDTO(json);
 				}
 
-				if (typeString.equals("WidgetPage")) {
+				if (typeString.equals("WidgetPageSettings")) {
 					return WidgetPageSettings.toDTO(json);
 				}
 

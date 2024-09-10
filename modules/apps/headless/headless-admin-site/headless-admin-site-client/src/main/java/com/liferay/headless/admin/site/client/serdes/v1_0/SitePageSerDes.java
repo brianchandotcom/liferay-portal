@@ -244,6 +244,16 @@ public class SitePageSerDes {
 			sb.append("]");
 		}
 
+		if (sitePage.getName_i18n() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"name_i18n\": ");
+
+			sb.append(_toJSON(sitePage.getName_i18n()));
+		}
+
 		if (sitePage.getPageSettings() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -351,16 +361,6 @@ public class SitePageSerDes {
 			}
 
 			sb.append("]");
-		}
-
-		if (sitePage.getTitle_i18n() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"title_i18n\": ");
-
-			sb.append(_toJSON(sitePage.getTitle_i18n()));
 		}
 
 		if (sitePage.getType() != null) {
@@ -528,6 +528,13 @@ public class SitePageSerDes {
 			map.put("keywords", String.valueOf(sitePage.getKeywords()));
 		}
 
+		if (sitePage.getName_i18n() == null) {
+			map.put("name_i18n", null);
+		}
+		else {
+			map.put("name_i18n", String.valueOf(sitePage.getName_i18n()));
+		}
+
 		if (sitePage.getPageSettings() == null) {
 			map.put("pageSettings", null);
 		}
@@ -580,13 +587,6 @@ public class SitePageSerDes {
 				"taxonomyCategoryItemExternalReferences",
 				String.valueOf(
 					sitePage.getTaxonomyCategoryItemExternalReferences()));
-		}
-
-		if (sitePage.getTitle_i18n() == null) {
-			map.put("title_i18n", null);
-		}
-		else {
-			map.put("title_i18n", String.valueOf(sitePage.getTitle_i18n()));
 		}
 
 		if (sitePage.getType() == null) {
@@ -673,6 +673,9 @@ public class SitePageSerDes {
 			else if (Objects.equals(jsonParserFieldName, "keywords")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "name_i18n")) {
+				return true;
+			}
 			else if (Objects.equals(jsonParserFieldName, "pageSettings")) {
 				return false;
 			}
@@ -702,9 +705,6 @@ public class SitePageSerDes {
 						"taxonomyCategoryItemExternalReferences")) {
 
 				return false;
-			}
-			else if (Objects.equals(jsonParserFieldName, "title_i18n")) {
-				return true;
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {
 				return false;
@@ -841,6 +841,12 @@ public class SitePageSerDes {
 					sitePage.setKeywords(keywordsArray);
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "name_i18n")) {
+				if (jsonParserFieldValue != null) {
+					sitePage.setName_i18n(
+						(Map<String, String>)jsonParserFieldValue);
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "pageSettings")) {
 				if (jsonParserFieldValue != null) {
 					sitePage.setPageSettings(
@@ -926,12 +932,6 @@ public class SitePageSerDes {
 
 					sitePage.setTaxonomyCategoryItemExternalReferences(
 						taxonomyCategoryItemExternalReferencesArray);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "title_i18n")) {
-				if (jsonParserFieldValue != null) {
-					sitePage.setTitle_i18n(
-						(Map<String, String>)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {

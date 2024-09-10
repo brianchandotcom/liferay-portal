@@ -7,6 +7,7 @@ import {Locator, Page} from '@playwright/test';
 
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {PORTLET_URLS} from '../../utils/portletUrls';
+import {PagesAdminPage} from '../layout-admin-web/PagesAdminPage';
 import {PageEditorPage} from '../layout-content-page-editor-web/PageEditorPage';
 
 export class MasterPagesPage {
@@ -14,12 +15,39 @@ export class MasterPagesPage {
 
 	readonly newButton: Locator;
 	readonly pageEditorPage: PageEditorPage;
+	readonly pageAdminPage: PagesAdminPage;
 
 	constructor(page: Page) {
 		this.page = page;
 
 		this.newButton = page.getByText('New', {exact: true});
+		this.pageAdminPage = new PagesAdminPage(this.page);
 		this.pageEditorPage = new PageEditorPage(this.page);
+	}
+
+	async selectClientExtension({
+		clientExtensionName,
+		layoutTitle,
+		siteUrl,
+		type,
+	}: {
+		clientExtensionName: string;
+		layoutTitle: string;
+		openConfiguration?: boolean;
+		siteUrl?: Site['friendlyUrlPath'];
+		type?: 'globalCSS' | 'globalJS' | 'themeFavicon';
+	}) {
+		await this.goto(siteUrl);
+
+		await this.gotoConfiguration(layoutTitle);
+
+		await this.pageAdminPage.selectClientExtension({
+			clientExtensionName,
+			layoutTitle,
+			openConfiguration: false,
+			siteUrl,
+			type,
+		});
 	}
 
 	async goto(siteUrl?: Site['friendlyUrlPath']) {

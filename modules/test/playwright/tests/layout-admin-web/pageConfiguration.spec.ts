@@ -1051,14 +1051,12 @@ test.describe('Theme Favicon', () => {
 
 			// Apply theme favicon client extension to master page
 
-			await masterPagesPage.goto(site.friendlyUrlPath);
-			await masterPagesPage.gotoConfiguration(
-				layoutPageTemplateEntryName
-			);
-
-			await pagesAdminPage.addThemeFaviconClientExtension(
-				clientExtensionName1
-			);
+			await masterPagesPage.selectClientExtension({
+				clientExtensionName: clientExtensionName1,
+				layoutTitle: layoutPageTemplateEntryName,
+				siteUrl: site.friendlyUrlPath,
+				type: 'themeFavicon',
+			});
 
 			// Publish master page
 

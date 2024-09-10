@@ -17,22 +17,12 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
 
 /**
  * @author Joao Victor Alves
  */
 public abstract class BaseFriendlyURLFormatUpgradeProcessTestCase {
-
-	@AfterClass
-	public static void tearDownClass() throws Exception {
-		GroupTestUtil.deleteGroup(group);
-	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -44,20 +34,8 @@ public abstract class BaseFriendlyURLFormatUpgradeProcessTestCase {
 		_persistence = FriendlyURLEntryLocalizationUtil.getPersistence();
 	}
 
-	@After
-	public void tearDown() throws Exception {
-		for (long friendlyURLEntryId : friendlyURLEntryIds) {
-			friendlyURLEntryLocalService.deleteFriendlyURLLocalizationEntry(
-				friendlyURLEntryId, defaultLanguageId);
-		}
-
-		friendlyURLEntryIds.clear();
-	}
-
 	protected void createFriendlyURLEntry(long classPK, long classNameId) {
 		long friendlyURLEntryId = RandomTestUtil.randomLong();
-
-		friendlyURLEntryIds.add(friendlyURLEntryId);
 
 		_friendlyURLEntry = friendlyURLEntryLocalService.createFriendlyURLEntry(
 			friendlyURLEntryId);
@@ -88,8 +66,6 @@ public abstract class BaseFriendlyURLFormatUpgradeProcessTestCase {
 		friendlyURLEntryLocalService.updateFriendlyURLLocalization(
 			friendlyURLEntryLocalization);
 	}
-
-	protected static final List<Long> friendlyURLEntryIds = new ArrayList<>();
 
 	@Inject
 	protected static FriendlyURLEntryLocalService friendlyURLEntryLocalService;

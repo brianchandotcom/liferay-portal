@@ -28,6 +28,18 @@ public class CommerceOrderServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.repository.model.FileEntry
+			addAttachmentFileEntry(
+				String externalReferenceCode, long userId, long commerceOrderId,
+				String fileName, java.io.InputStream inputStream)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceOrderService.addAttachmentFileEntry(
+			externalReferenceCode, userId, commerceOrderId, fileName,
+			inputStream);
+	}
+
+	@Override
 	public com.liferay.commerce.model.CommerceOrder addCommerceOrder(
 			long groupId, long commerceAccountId, long commerceCurrencyId,
 			long commerceOrderTypeId)
@@ -105,6 +117,15 @@ public class CommerceOrderServiceWrapper
 
 		return _commerceOrderService.applyCouponCode(
 			commerceOrderId, couponCode, commerceContext);
+	}
+
+	@Override
+	public void deleteAttachmentFileEntry(
+			long attachmentFileEntryId, long commerceOrderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_commerceOrderService.deleteAttachmentFileEntry(
+			attachmentFileEntryId, commerceOrderId);
 	}
 
 	@Override

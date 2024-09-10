@@ -10,6 +10,7 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
@@ -18,6 +19,8 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.InputStream;
 
 import java.math.BigDecimal;
 
@@ -49,6 +52,11 @@ public interface CommerceOrderService extends BaseService {
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.commerce.service.impl.CommerceOrderServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the commerce order remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link CommerceOrderServiceUtil} if injection and service tracking are not available.
 	 */
+	public FileEntry addAttachmentFileEntry(
+			String externalReferenceCode, long userId, long commerceOrderId,
+			String fileName, InputStream inputStream)
+		throws PortalException;
+
 	public CommerceOrder addCommerceOrder(
 			long groupId, long commerceAccountId, long commerceCurrencyId,
 			long commerceOrderTypeId)
@@ -87,6 +95,10 @@ public interface CommerceOrderService extends BaseService {
 	public CommerceOrder applyCouponCode(
 			long commerceOrderId, String couponCode,
 			CommerceContext commerceContext)
+		throws PortalException;
+
+	public void deleteAttachmentFileEntry(
+			long attachmentFileEntryId, long commerceOrderId)
 		throws PortalException;
 
 	public void deleteCommerceOrder(long commerceOrderId)

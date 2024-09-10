@@ -51,6 +51,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.Writer;
 
+import java.lang.management.ManagementFactory;
+import java.lang.management.RuntimeMXBean;
 import java.lang.reflect.Field;
 
 import java.sql.Connection;
@@ -417,6 +419,22 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 		Assert.assertTrue(
 			longestUpgradeProcessesValue.indexOf(slowerUpgradeProcessName) <
 				longestUpgradeProcessesValue.indexOf(fasterUpgradeProcessName));
+	}
+
+	@Test
+	public void testJVMArguments() throws Exception {
+		_appender.start();
+
+		_appender.stop();
+
+		RuntimeMXBean runtimeMXBean = ManagementFactory.getRuntimeMXBean();
+
+		List<String> inputArguments = runtimeMXBean.getInputArguments();
+
+		_assertLogContextContains(
+			"upgrade.report.jvm.arguments", inputArguments.get(0));
+
+		_assertReport(inputArguments.get(0));
 	}
 
 	@Test

@@ -264,23 +264,72 @@ public class UpstreamFailureUtil {
 		return null;
 	}
 
+	public static void init(TopLevelBuild topLevelBuild) {
+		if (_upstreamComparisonAvailable != null) {
+			return;
+		}
+
+		if (!(topLevelBuild instanceof PortalBranchInformationBuild) ||
+			Objects.equals(
+				_getUpstreamComparison(topLevelBuild.getJobName()), "false")) {
+
+			_upstreamComparisonAvailable = false;
+
+			return;
+		}
+
+		_setUpstreamTestrayRoutine(topLevelBuild);
+
+		if (_upstreamTestrayRoutine == null) {
+			_upstreamComparisonAvailable = false;
+
+			return;
+		}
+
+		_setUpstreamTestrayBuild(topLevelBuild);
+
+		if (_upstreamTestrayBuild == null) {
+			_upstreamComparisonAvailable = false;
+
+			return;
+		}
+
+		_setUpstreamTopLevelBuildReport(topLevelBuild);
+
+		if (_upstreamTopLevelBuildReport == null) {
+			_upstreamComparisonAvailable = false;
+
+			return;
+		}
+
+		_setUpstreamJobFailuresSHA(topLevelBuild);
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(_upstreamJobFailuresSHA)) {
+			_upstreamComparisonAvailable = false;
+
+			return;
+		}
+
+		_upstreamComparisonAvailable = true;
+	}
+
 	public static boolean isUpstreamComparisonAvailable(
 		TopLevelBuild topLevelBuild) {
 
 		try {
-			getUpstreamTopLevelBuildReport(topLevelBuild);
+			init(topLevelBuild);
 		}
 		catch (Exception exception) {
 			exception.printStackTrace();
 
-			return false;
+			_upstreamComparisonAvailable = false;
 		}
 
 		return _upstreamComparisonAvailable;
 	}
 
 	public static void reset() {
-		_upstreamComparisonAvailable = true;
+		_upstreamComparisonAvailable = null;
 		_upstreamJobFailuresSHA = null;
 		_upstreamTestrayBuild = null;
 		_upstreamTestrayRoutine = null;
@@ -388,6 +437,165 @@ public class UpstreamFailureUtil {
 		}
 	}
 
+	private static void _setUpstreamJobFailuresSHA(
+		TopLevelBuild topLevelBuild) {
+
+		TopLevelBuildReport upstreamTopLevelBuildReport =
+			getUpstreamTopLevelBuildReport(topLevelBuild);
+
+		if (upstreamTopLevelBuildReport == null) {
+			System.out.println(
+				"Unable to get upstream acceptance failure data");
+
+			_upstreamJobFailuresSHA = "";
+		}
+
+		Map<String, String> buildParameters =
+			upstreamTopLevelBuildReport.getBuildParameters();
+
+		_upstreamJobFailuresSHA = buildParameters.get("PORTAL_GIT_COMMIT");
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(_upstreamJobFailuresSHA)) {
+			return;
+		}
+
+		_upstreamJobFailuresSHA = JenkinsResultsParserUtil.getBuildParameter(
+			String.valueOf(upstreamTopLevelBuildReport.getBuildURL()),
+			"PORTAL_GIT_COMMIT");
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(_upstreamJobFailuresSHA)) {
+			return;
+		}
+
+		File testResultsJSONFile = new File(
+			System.getenv("WORKSPACE"), "test.results.json");
+
+		try {
+			JenkinsResultsParserUtil.toFile(
+				upstreamTopLevelBuildReport.getTestResultsJSONUserContentURL(),
+				testResultsJSONFile);
+
+			JSONObject upstreamJobFailuresJSONObject = new JSONObject(
+				JenkinsResultsParserUtil.read(testResultsJSONFile));
+
+			_upstreamJobFailuresSHA = upstreamJobFailuresJSONObject.getString(
+				"SHA");
+		}
+		catch (Exception exception) {
+			System.out.println(
+				"Unable to get upstream acceptance failure data");
+
+			_upstreamJobFailuresSHA = "";
+		}
+		finally {
+			if (testResultsJSONFile.exists()) {
+				JenkinsResultsParserUtil.delete(testResultsJSONFile);
+			}
+		}
+	}
+
+	private static void _setUpstreamTestrayBuild(TopLevelBuild topLevelBuild) {
+		int buildCount = 0;
+
+		String upstreamBranchName = topLevelBuild.getBranchName();
+
+		if (topLevelBuild instanceof PullRequestSubrepositoryTopLevelBuild) {
+			PullRequestSubrepositoryTopLevelBuild
+				pullRequestSubrepositoryTopLevelBuild =
+					(PullRequestSubrepositoryTopLevelBuild)topLevelBuild;
+
+			upstreamBranchName =
+				pullRequestSubrepositoryTopLevelBuild.
+					getPortalUpstreamBranchName();
+		}
+
+		GitWorkingDirectory gitWorkingDirectory =
+			GitWorkingDirectoryFactory.newGitWorkingDirectory(
+				upstreamBranchName, (File)null, "liferay-portal");
+
+		TestrayRoutine testrayRoutine = _upstreamTestrayRoutine;
+
+		for (TestrayBuild testrayBuild : testrayRoutine.getTestrayBuilds(25)) {
+			if (buildCount > 25) {
+				break;
+			}
+
+			buildCount++;
+
+			if (!gitWorkingDirectory.refContainsSHA(
+					"HEAD", testrayBuild.getPortalSHA())) {
+
+				continue;
+			}
+
+			TopLevelBuildReport topLevelBuildReport =
+				testrayBuild.getTopLevelBuildReport();
+
+			if (topLevelBuildReport == null) {
+				continue;
+			}
+
+			List<DownstreamBuildReport> downstreamBuildReports =
+				topLevelBuildReport.getDownstreamBuildReports();
+
+			if ((downstreamBuildReports == null) ||
+				downstreamBuildReports.isEmpty()) {
+
+				continue;
+			}
+
+			System.out.println(
+				JenkinsResultsParserUtil.combine(
+					"Comparing with test results from ",
+					String.valueOf(topLevelBuildReport.getBuildURL()),
+					" at SHA ",
+					_getUpstreamJobFailuresSHA(topLevelBuildReport)));
+
+			_upstreamTestrayBuild = testrayBuild;
+		}
+	}
+
+	private static void _setUpstreamTestrayRoutine(
+		TopLevelBuild topLevelBuild) {
+
+		PortalBranchInformationBuild portalBranchInformationBuild =
+			(PortalBranchInformationBuild)topLevelBuild;
+
+		Build.BranchInformation branchInformation =
+			portalBranchInformationBuild.getPortalBranchInformation();
+
+		try {
+			String testHistoryRoutineURL = JenkinsResultsParserUtil.getProperty(
+				JenkinsResultsParserUtil.getBuildProperties(),
+				"test.history.routine.url",
+				branchInformation.getUpstreamBranchName());
+
+			if (JenkinsResultsParserUtil.isNullOrEmpty(testHistoryRoutineURL)) {
+				return;
+			}
+
+			_upstreamTestrayRoutine = TestrayFactory.newTestrayRoutine(
+				testHistoryRoutineURL);
+		}
+		catch (IOException ioException) {
+			System.out.println("Unable to set upstream Testray routine");
+		}
+	}
+
+	private static void _setUpstreamTopLevelBuildReport(
+		TopLevelBuild topLevelBuild) {
+
+		TestrayBuild upstreamTestrayBuild = getUpstreamTestrayBuild(
+			topLevelBuild);
+
+		if (upstreamTestrayBuild == null) {
+			return;
+		}
+
+		_upstreamTopLevelBuildReport =
+			upstreamTestrayBuild.getTopLevelBuildReport();
+	}
+
 	private static TestrayRoutine _getUpstreamTestrayRoutine(
 		TopLevelBuild topLevelBuild) {
 
@@ -425,7 +633,7 @@ public class UpstreamFailureUtil {
 		}
 	}
 
-	private static boolean _upstreamComparisonAvailable = true;
+	private static Boolean _upstreamComparisonAvailable;
 	private static final Map<String, List<String>> _upstreamFailures =
 		new HashMap<>();
 	private static String _upstreamJobFailuresSHA;

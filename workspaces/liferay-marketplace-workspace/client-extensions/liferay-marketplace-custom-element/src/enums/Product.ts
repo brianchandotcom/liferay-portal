@@ -18,6 +18,20 @@ export enum PRODUCT_PRICE_MODEL {
 }
 
 export enum PRODUCT_SPECIFICATION_KEY {
+	APP_BUILD_CLOUD_COMPATIBLE = 'type',
+	APP_BUILD_NUMBER_OF_CPUS = 'cpu',
+	APP_BUILD_RAM_IN_GBS = 'ram',
+	APP_LICENSING_TYPE = 'license-type',
+	APP_PRICING_MODEL = 'price-model',
+	APP_SUPPORT_DOCUMENTATION_URL = 'appdocumentationurl',
+	APP_SUPPORT_EMAIL = 'supportemailaddress',
+	APP_SUPPORT_INSTALLATION_GUIDE_URL = 'appinstallationguideurl',
+	APP_SUPPORT_PHONE = 'supportphone',
+	APP_SUPPORT_PUBLISHER_WEBSITE_URL = 'publisherwebsiteurl',
+	APP_SUPPORT_URL = 'supporturl',
+	APP_SUPPORT_USAGE_TERMS_URL = 'appusagetermsurl',
+	APP_VERSION = 'latest-version',
+	APP_VERSION_NOTES = 'product-notes',
 	SOLUTION_COMPANY_DESCRIPTION = 'solution-company-description',
 	SOLUTION_COMPANY_EMAIL = 'solution-company-email',
 	SOLUTION_COMPANY_PHONE = 'solution-company-phone',
@@ -41,6 +55,7 @@ export enum PRODUCT_SUPPORT_SPECIFICATION_KEY {
 }
 
 export enum PRODUCT_TAGS {
+	APP_ICON = 'app-icon',
 	SOLUTION_PROFILE_APP_ICON = 'solution-profile-app-icon',
 	SOLUTION_DETAILS = 'solution-details',
 	SOLUTION_HEADER = 'solution-header',

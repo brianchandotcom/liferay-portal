@@ -11,6 +11,7 @@ import com.liferay.portal.json.JSONArrayImpl;
 import com.liferay.portal.json.JSONObjectImpl;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.check.comparator.PropertyValueComparator;
@@ -22,8 +23,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
-
-import org.json.JSONObject;
 
 /**
  * @author Alan Huang
@@ -57,7 +56,7 @@ public class JSONPackageJSONCheck extends BaseFileCheck {
 			return content;
 		}
 
-		JSONObject jsonObject = new JSONObject(content);
+		JSONObject jsonObject = new JSONObjectImpl(content);
 
 		if (jsonObject.isNull("scripts")) {
 			return content;
@@ -110,11 +109,9 @@ public class JSONPackageJSONCheck extends BaseFileCheck {
 	}
 
 	private String _checkJest(String content) throws JSONException {
-		com.liferay.portal.kernel.json.JSONObject jsonObject =
-			new JSONObjectImpl(content);
+		JSONObject jsonObject = new JSONObjectImpl(content);
 
-		com.liferay.portal.kernel.json.JSONObject jestJSONObject =
-			jsonObject.getJSONObject("jest");
+		JSONObject jestJSONObject = jsonObject.getJSONObject("jest");
 
 		if (jestJSONObject == null) {
 			return content;

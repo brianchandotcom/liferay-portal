@@ -176,6 +176,7 @@ public abstract class BaseUserAccountResourceTestCase {
 		userAccount.setHonorificPrefix(regex);
 		userAccount.setHonorificSuffix(regex);
 		userAccount.setImage(regex);
+		userAccount.setImageExternalReferenceCode(regex);
 		userAccount.setJobTitle(regex);
 		userAccount.setLanguageDisplayName(regex);
 		userAccount.setLanguageId(regex);
@@ -200,6 +201,7 @@ public abstract class BaseUserAccountResourceTestCase {
 		Assert.assertEquals(regex, userAccount.getHonorificPrefix());
 		Assert.assertEquals(regex, userAccount.getHonorificSuffix());
 		Assert.assertEquals(regex, userAccount.getImage());
+		Assert.assertEquals(regex, userAccount.getImageExternalReferenceCode());
 		Assert.assertEquals(regex, userAccount.getJobTitle());
 		Assert.assertEquals(regex, userAccount.getLanguageDisplayName());
 		Assert.assertEquals(regex, userAccount.getLanguageId());
@@ -4780,6 +4782,16 @@ public abstract class BaseUserAccountResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"imageExternalReferenceCode", additionalAssertFieldName)) {
+
+				if (userAccount.getImageExternalReferenceCode() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("imageId", additionalAssertFieldName)) {
 				if (userAccount.getImageId() == null) {
 					valid = false;
@@ -5217,6 +5229,19 @@ public abstract class BaseUserAccountResourceTestCase {
 			if (Objects.equals("image", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						userAccount1.getImage(), userAccount2.getImage())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"imageExternalReferenceCode", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						userAccount1.getImageExternalReferenceCode(),
+						userAccount2.getImageExternalReferenceCode())) {
 
 					return false;
 				}
@@ -6119,6 +6144,52 @@ public abstract class BaseUserAccountResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("imageExternalReferenceCode")) {
+			Object object = userAccount.getImageExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("imageId")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -6537,6 +6608,8 @@ public abstract class BaseUserAccountResourceTestCase {
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
 				image = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				imageExternalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				imageId = RandomTestUtil.randomLong();
 				jobTitle = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());

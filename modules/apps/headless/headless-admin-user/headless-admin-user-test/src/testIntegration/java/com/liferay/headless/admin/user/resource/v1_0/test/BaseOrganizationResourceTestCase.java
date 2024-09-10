@@ -170,6 +170,7 @@ public abstract class BaseOrganizationResourceTestCase {
 		organization.setExternalReferenceCode(regex);
 		organization.setId(regex);
 		organization.setImage(regex);
+		organization.setImageExternalReferenceCode(regex);
 		organization.setName(regex);
 		organization.setTreePath(regex);
 
@@ -183,6 +184,8 @@ public abstract class BaseOrganizationResourceTestCase {
 		Assert.assertEquals(regex, organization.getExternalReferenceCode());
 		Assert.assertEquals(regex, organization.getId());
 		Assert.assertEquals(regex, organization.getImage());
+		Assert.assertEquals(
+			regex, organization.getImageExternalReferenceCode());
 		Assert.assertEquals(regex, organization.getName());
 		Assert.assertEquals(regex, organization.getTreePath());
 	}
@@ -3637,6 +3640,16 @@ public abstract class BaseOrganizationResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"imageExternalReferenceCode", additionalAssertFieldName)) {
+
+				if (organization.getImageExternalReferenceCode() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("imageId", additionalAssertFieldName)) {
 				if (organization.getImageId() == null) {
 					valid = false;
@@ -3935,6 +3948,16 @@ public abstract class BaseOrganizationResourceTestCase {
 
 			if (Objects.equals("image", additionalAssertFieldName)) {
 				if (userAccount.getImage() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"imageExternalReferenceCode", additionalAssertFieldName)) {
+
+				if (userAccount.getImageExternalReferenceCode() == null) {
 					valid = false;
 				}
 
@@ -4242,6 +4265,19 @@ public abstract class BaseOrganizationResourceTestCase {
 			if (Objects.equals("image", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						organization1.getImage(), organization2.getImage())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"imageExternalReferenceCode", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						organization1.getImageExternalReferenceCode(),
+						organization2.getImageExternalReferenceCode())) {
 
 					return false;
 				}
@@ -4634,6 +4670,19 @@ public abstract class BaseOrganizationResourceTestCase {
 			if (Objects.equals("image", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						userAccount1.getImage(), userAccount2.getImage())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"imageExternalReferenceCode", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						userAccount1.getImageExternalReferenceCode(),
+						userAccount2.getImageExternalReferenceCode())) {
 
 					return false;
 				}
@@ -5152,6 +5201,52 @@ public abstract class BaseOrganizationResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("imageExternalReferenceCode")) {
+			Object object = organization.getImageExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("imageId")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -5354,6 +5449,8 @@ public abstract class BaseOrganizationResourceTestCase {
 					RandomTestUtil.randomString());
 				id = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				image = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				imageExternalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				imageId = RandomTestUtil.randomLong();
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				numberOfAccounts = RandomTestUtil.randomInt();
@@ -5393,6 +5490,7 @@ public abstract class BaseOrganizationResourceTestCase {
 				honorificSuffix = RandomTestUtil.randomString();
 				id = RandomTestUtil.randomLong();
 				image = RandomTestUtil.randomString();
+				imageExternalReferenceCode = RandomTestUtil.randomString();
 				imageId = RandomTestUtil.randomLong();
 				jobTitle = RandomTestUtil.randomString();
 				languageDisplayName = RandomTestUtil.randomString();

@@ -317,6 +317,20 @@ public class UserAccountSerDes {
 			sb.append("\"");
 		}
 
+		if (userAccount.getImageExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"imageExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(userAccount.getImageExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (userAccount.getImageId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -725,6 +739,15 @@ public class UserAccountSerDes {
 			map.put("image", String.valueOf(userAccount.getImage()));
 		}
 
+		if (userAccount.getImageExternalReferenceCode() == null) {
+			map.put("imageExternalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"imageExternalReferenceCode",
+				String.valueOf(userAccount.getImageExternalReferenceCode()));
+		}
+
 		if (userAccount.getImageId() == null) {
 			map.put("imageId", null);
 		}
@@ -914,6 +937,11 @@ public class UserAccountSerDes {
 			else if (Objects.equals(jsonParserFieldName, "image")) {
 				return false;
 			}
+			else if (Objects.equals(
+						jsonParserFieldName, "imageExternalReferenceCode")) {
+
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "imageId")) {
 				return false;
 			}
@@ -1095,6 +1123,14 @@ public class UserAccountSerDes {
 			else if (Objects.equals(jsonParserFieldName, "image")) {
 				if (jsonParserFieldValue != null) {
 					userAccount.setImage((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "imageExternalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					userAccount.setImageExternalReferenceCode(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "imageId")) {

@@ -811,6 +811,53 @@ public class UserAccount implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _imageSupplier;
 
+	@Schema(description = "The user's profile image external reference code.")
+	public String getImageExternalReferenceCode() {
+		if (_imageExternalReferenceCodeSupplier != null) {
+			imageExternalReferenceCode =
+				_imageExternalReferenceCodeSupplier.get();
+
+			_imageExternalReferenceCodeSupplier = null;
+		}
+
+		return imageExternalReferenceCode;
+	}
+
+	public void setImageExternalReferenceCode(
+		String imageExternalReferenceCode) {
+
+		this.imageExternalReferenceCode = imageExternalReferenceCode;
+
+		_imageExternalReferenceCodeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setImageExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			imageExternalReferenceCodeUnsafeSupplier) {
+
+		_imageExternalReferenceCodeSupplier = () -> {
+			try {
+				return imageExternalReferenceCodeUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(
+		description = "The user's profile image external reference code."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String imageExternalReferenceCode;
+
+	@JsonIgnore
+	private Supplier<String> _imageExternalReferenceCodeSupplier;
+
 	@Schema(description = "The user's profile image id.")
 	public Long getImageId() {
 		if (_imageIdSupplier != null) {
@@ -1767,6 +1814,22 @@ public class UserAccount implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(image));
+
+			sb.append("\"");
+		}
+
+		String imageExternalReferenceCode = getImageExternalReferenceCode();
+
+		if (imageExternalReferenceCode != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"imageExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(imageExternalReferenceCode));
 
 			sb.append("\"");
 		}

@@ -4,12 +4,12 @@
  */
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
-import ClayManagementToolbar from '@clayui/management-toolbar';
 import ClayIcon from '@clayui/icon';
+import ClayManagementToolbar from '@clayui/management-toolbar';
 import {ComponentProps} from 'react';
 
-import {getAccountImage} from '../../../utils/util';
 import i18n from '../../../i18n';
+import {getAccountImage} from '../../../utils/util';
 
 import './index.scss';
 

@@ -6,6 +6,7 @@
 import {useEffect} from 'react';
 import {HashRouter, Outlet, Route, Routes} from 'react-router-dom';
 
+import NewAppContextProvider from '../../context/NewAppContext';
 import SolutionContextProvider from '../../context/SolutionContext';
 import withProviders from '../../hoc/withProviders';
 import {useAccount} from '../../hooks/data/useAccounts';
@@ -20,6 +21,14 @@ import App from './pages/Apps/App';
 import {AppContextProvider} from './pages/Apps/AppCreationFlow/AppContext/AppManageState';
 import {AppCreationFlow} from './pages/Apps/AppCreationFlow/AppCreationFlow';
 import Members from './pages/Members';
+import PublishAppOutlet from './pages/NewAppFlow/PublishAppOutlet';
+import {Build, Profile as AppProfile} from './pages/NewAppFlow/pages';
+import Licensing from './pages/NewAppFlow/pages/Licensing';
+import LicensePrices from './pages/NewAppFlow/pages/Licensing/LicensePrices';
+import Pricing from './pages/NewAppFlow/pages/Pricing';
+import Storefront from './pages/NewAppFlow/pages/Storefront';
+import Support from './pages/NewAppFlow/pages/Support';
+import Version from './pages/NewAppFlow/pages/Version';
 import Projects from './pages/Projects';
 import Solutions from './pages/Solutions';
 import PublishSolutionOutlet from './pages/Solutions/NewSolutionFlow/PublishSolutionOutlet';
@@ -33,15 +42,6 @@ import {
 	Submit,
 } from './pages/Solutions/NewSolutionFlow/pages';
 import SolutionsDetails from './pages/Solutions/Solution';
-import NewAppContextProvider from '../../context/NewAppContext';
-import PublishAppOutlet from './pages/NewAppFlow/PublishAppOutlet';
-import {Profile as AppProfile, Build} from './pages/NewAppFlow/pages';
-import Storefront from './pages/NewAppFlow/pages/Storefront';
-import Version from './pages/NewAppFlow/pages/Version';
-import Pricing from './pages/NewAppFlow/pages/Pricing';
-import Support from './pages/NewAppFlow/pages/Support';
-import LicensePrices from './pages/NewAppFlow/pages/Licensing/LicensePrices';
-import Licensing from './pages/NewAppFlow/pages/Licensing';
 
 const PublisherDashboardRouter = () => {
 	const {accountId} = Liferay.CommerceContext.account || {};

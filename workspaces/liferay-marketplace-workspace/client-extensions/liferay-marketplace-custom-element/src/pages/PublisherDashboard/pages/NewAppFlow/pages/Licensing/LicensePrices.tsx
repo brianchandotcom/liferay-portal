@@ -1,10 +1,14 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import {Section} from '../../../../../../components/Section/Section';
 import {
 	NewAppTypes,
 	useNewAppContext,
 } from '../../../../../../context/NewAppContext';
 import {LicenseTier} from '../../../../../../enums/licenseTier';
-import {TYPES} from '../../../Apps/AppCreationFlow/AppContext/actionTypes';
 import {LicensePrice} from '../../../Apps/AppCreationFlow/AppContext/AppManageState';
 import IconButton from '../../../Apps/AppCreationFlow/InformLicensingTermsPage/components/IconButton';
 import LicensePriceCard from '../../../Apps/AppCreationFlow/InformLicensingTermsPage/components/LicensePriceCard';
@@ -12,10 +16,10 @@ import LicensePriceCard from '../../../Apps/AppCreationFlow/InformLicensingTerms
 const LicensePrices = () => {
 	const [
 		{
+			build: {cloudCompatible},
 			licensing: {
 				prices: {developer: developerPrices, standard: standardPrices},
 			},
-			build: {cloudCompatible},
 		},
 		dispatch,
 	] = useNewAppContext();

@@ -70,12 +70,12 @@ const zodSchema = {
 			name: z.string().min(3),
 			tags: z.array(z.any()).nonempty(),
 		}),
+		storefront: z.object({images: z.array(z.any()).min(1).max(10)}),
+		termsAndConditions: z.boolean().refine((data) => data === true),
 		version: z.object({
 			notes: z.string(),
 			version: z.string(),
 		}),
-		storefront: z.object({images: z.array(z.any()).min(1).max(10)}),
-		termsAndConditions: z.boolean().refine((data) => data === true),
 	},
 	becomePublisherForm: z.object({
 		emailAddress: z.string().email('Please fill in valid email'),

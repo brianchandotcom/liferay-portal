@@ -16,8 +16,8 @@ import {UploadedFile} from '../components/FileList/FileList';
 import Loading from '../components/Loading';
 import {PRODUCT_TAGS} from '../enums/Product';
 import {ProductVocabulary} from '../enums/ProductVocabulary';
-import {useGetVocabulariesAndCategories} from '../hooks/data/useGetVocabulariesAndCategories';
 import {LicenseTier} from '../enums/licenseTier';
+import {useGetVocabulariesAndCategories} from '../hooks/data/useGetVocabulariesAndCategories';
 
 export type LicensePrice = {key: number; value: number};
 export type LicenseType = 'Perpetual' | 'Subscription';
@@ -62,7 +62,15 @@ export type NewAppInitialState = {
 		};
 	};
 	catalogId: number;
+	licensing: {
+		licenseType: LicenseType;
+		prices: LicensingPrices;
+		trial30Day: boolean;
+	};
 	loading: boolean;
+	pricing: {
+		priceModel: 'Free' | 'Paid';
+	};
 	productId: number;
 	profile: {
 		categories: {
@@ -76,14 +84,6 @@ export type NewAppInitialState = {
 			label: string;
 			value: string;
 		}[];
-	};
-	pricing: {
-		priceModel: 'Free' | 'Paid';
-	};
-	licensing: {
-		licenseType: LicenseType;
-		trial30Day: boolean;
-		prices: LicensingPrices;
 	};
 	references: {
 		imagesToDelete: string[];
@@ -113,6 +113,7 @@ type NewAppPayload = {
 	[NewAppTypes.SET_CLEANUP]: undefined;
 	[NewAppTypes.SET_CONTEXT]: Product;
 	[NewAppTypes.SET_DELETE_IMAGE]: string;
+	[NewAppTypes.SET_LICENSING]: Partial<NewAppInitialState['licensing']>;
 	[NewAppTypes.SET_LICENSING_ADD_PRICE]: {licenseTier: LicenseTier};
 	[NewAppTypes.SET_LICENSING_DELETE_PRICE]: {
 		key: number;
@@ -120,14 +121,13 @@ type NewAppPayload = {
 	};
 	[NewAppTypes.SET_LICENSING_UPDATE_PRICES]: {
 		index: number;
-		price: LicensePrice;
 		licenseTier: LicenseTier;
+		price: LicensePrice;
 	};
-	[NewAppTypes.SET_LICENSING]: Partial<NewAppInitialState['licensing']>;
 	[NewAppTypes.SET_LOADING]: boolean;
 	[NewAppTypes.SET_PRICING]: Partial<NewAppInitialState['pricing']>;
-	[NewAppTypes.SET_PRODUCT_ID]: number;
 	[NewAppTypes.SET_PRODUCT]: Product;
+	[NewAppTypes.SET_PRODUCT_ID]: number;
 	[NewAppTypes.SET_PROFILE]: Partial<NewAppInitialState['profile']>;
 	[NewAppTypes.SET_STOREFRONT]: Partial<NewAppInitialState['storefront']>;
 	[NewAppTypes.SET_SUPPORT]: Partial<NewAppInitialState['support']>;
@@ -146,7 +146,18 @@ const newAppInitialState: NewAppInitialState = {
 		},
 	},
 	catalogId: 0,
+	licensing: {
+		licenseType: 'Perpetual',
+		prices: {
+			developer: [],
+			standard: [{key: 1, value: 0}],
+		},
+		trial30Day: false,
+	},
 	loading: false,
+	pricing: {
+		priceModel: '' as 'Free',
+	},
 	productId: 0,
 	profile: {
 		categories: [],
@@ -154,21 +165,6 @@ const newAppInitialState: NewAppInitialState = {
 		file: {} as UploadedFile,
 		name: '',
 		tags: [],
-	},
-	pricing: {
-		priceModel: '' as 'Free',
-	},
-	licensing: {
-		licenseType: 'Perpetual',
-		trial30Day: false,
-		prices: {
-			developer: [],
-			standard: [{key: 1, value: 0}],
-		},
-	},
-	version: {
-		notes: '',
-		version: '',
 	},
 	references: {imagesToDelete: [], vocabulariesAndCategories: {}},
 	storefront: {images: []},
@@ -182,6 +178,10 @@ const newAppInitialState: NewAppInitialState = {
 		url: '',
 	},
 	termsAndConditions: false,
+	version: {
+		notes: '',
+		version: '',
+	},
 };
 
 export type AppActions =
@@ -449,7 +449,7 @@ const reducer = (state: NewAppInitialState, action: AppActions) => {
 };
 
 export const NewAppContext = createContext<
-	[NewAppInitialState, (param: AppActions) => void]
+	[NewAppInitialState, (_param: AppActions) => void]
 >([newAppInitialState, () => null]);
 
 type NewAppContextProviderProps = {

@@ -15,7 +15,7 @@ type Sidebar = {
 
 const Sidebar: React.FC<Sidebar> = ({activeIndex, items}) => (
 	<ul className="app-flow-list-container app-flow-list-ul pt-6">
-		{items.map(({label, hide}, index) => {
+		{items.map(({hide, label}, index) => {
 			if (hide) {
 				return null;
 			}

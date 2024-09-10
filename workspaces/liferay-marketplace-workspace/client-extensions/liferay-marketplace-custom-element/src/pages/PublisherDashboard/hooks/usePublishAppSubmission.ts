@@ -9,21 +9,21 @@ import {useLocation, useNavigate, useParams} from 'react-router-dom';
 import {UploadedFile} from '../../../components/FileList/FileList';
 import {
 	AppActions,
-	NewAppTypes,
 	NewAppInitialState,
+	NewAppTypes,
 } from '../../../context/NewAppContext';
 import {
 	PRODUCT_SPECIFICATION_KEY,
 	PRODUCT_TAGS,
 	PRODUCT_WORKFLOW_STATUS_CODE,
 } from '../../../enums/Product';
+import {ProductType} from '../../../enums/ProductType';
 import {ProductVocabulary} from '../../../enums/ProductVocabulary';
 import useFeaturePreview from '../../../hooks/useFeaturePreview';
 import i18n from '../../../i18n';
 import {Liferay} from '../../../liferay/liferay';
 import headlessCommerceAdminCatalogImpl from '../../../services/rest/HeadlessCommerceAdminCatalog';
 import {base64ToText, fileToBase64} from '../../../utils/file';
-import {ProductType} from '../../../enums/ProductType';
 
 type ProductConfig = {
 	isDraft: boolean;
@@ -279,12 +279,7 @@ const usePublishAppSubmission = (
 
 	const syncBuild = async (product: Product) => {
 		const {
-			build: {
-				cloudCompatible,
-				compatibleOffering,
-				liferayPackages,
-				resourceRequirements,
-			},
+			build: {cloudCompatible, compatibleOffering, resourceRequirements},
 		} = context;
 
 		const specifications = [
@@ -360,7 +355,7 @@ const usePublishAppSubmission = (
 
 	const syncLicensing = async (product: Product) => {
 		const {
-			licensing: {licenseType, trial30Day},
+			licensing: {licenseType},
 		} = context;
 
 		await updateSpecification(

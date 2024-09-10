@@ -1,3 +1,8 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import {RadioCard} from '../../../../../components/RadioCard/RadioCard';
 import {Section} from '../../../../../components/Section/Section';
 import {
@@ -23,10 +28,11 @@ const Pricing = () => {
 			tooltip="Choose Free or Paid. Apps that are free have no further payment obligations once installed."
 			tooltipText={i18n.translate('more-info')}
 		>
-			{PRICING_OPTIONS.map((pricingOption) => (
+			{PRICING_OPTIONS.map((pricingOption, index) => (
 				<RadioCard
 					{...pricingOption}
 					className="mb-5"
+					key={index}
 					onChange={() => {
 						dispatch({
 							payload: {priceModel: pricingOption.title},

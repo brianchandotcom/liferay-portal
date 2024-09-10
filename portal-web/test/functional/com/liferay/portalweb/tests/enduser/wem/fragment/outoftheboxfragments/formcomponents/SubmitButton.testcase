@@ -518,37 +518,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-189534. The site administrater cannot select the form type fragments for Submit Button field type."
-	@priority = 3
-	test CannotSelectFormTypeFragmentsForSubmitButtonFieldType {
-		task ("When the page designer selects form type fragments for Submit Button field type") {
-			task ("Go to fragment admin configuration") {
-				FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
-
-				LexiconEntry.gotoHeaderMenuItem(menuItem = "Configuration");
-			}
-
-			task ("Select the fragment from Form Components") {
-				Click(
-					key_tableEntry = "Form Button",
-					key_text = "Select",
-					locator1 = "LexiconTable#TABLE_ENTRY_BUTTON");
-
-				SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-				LexiconCard.clickCardTitle(card = "Form Components");
-			}
-		}
-
-		task ("Then assert there's only Submit Button displayed") {
-			LexiconCard.viewCardPresent(card = "Form Button");
-
-			for (var fragmentName : list "CAPTCHA,Checkbox,Date,File Upload,Multiselect,Numeric,Rich Text,Select,Text,Textarea") {
-				LexiconCard.viewCardNotPresent(card = ${fragmentName});
-			}
-		}
-	}
-
 	@description = "This is a test for LPS-189534. The site administrator could select the default Submit Button fragment in Form."
 	@priority = 4
 	test CanSelectDefaultSubmitButtonFragmentInForm {

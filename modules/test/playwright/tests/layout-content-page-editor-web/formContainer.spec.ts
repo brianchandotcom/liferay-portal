@@ -788,4 +788,73 @@ test.describe('Form errors', () => {
 			});
 		}
 	);
+
+	test(
+		'Show errors for empty steps and missing Next/Previous buttons',
+		{tag: '@LPD-10727'},
+		async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
+
+			// Get the id of Lemon object from the site initializer
+
+			const {id: objectDefinitionId} =
+				await apiHelpers.objectAdmin.getObjectDefinitionByExternalReferenceCode(
+					LEMON_OBJECT_ERC
+				);
+
+			// Create a forms with three steps, forcing errors
+
+			const nextButton = getFragmentDefinition({
+				fragmentConfig: {
+					type: 'next',
+				},
+				id: getRandomString(),
+				key: 'INPUTS-submit-button',
+			});
+
+			const previousButton = getFragmentDefinition({
+				fragmentConfig: {
+					type: 'previous',
+				},
+				id: getRandomString(),
+				key: 'INPUTS-submit-button',
+			});
+
+			const formDefinition = getFormContainerDefinition({
+				id: getRandomString(),
+				objectDefinitionId,
+				steps: [[nextButton], [previousButton], [], [nextButton]],
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([formDefinition]),
+				siteId: pageManagementSite.id,
+				title: getRandomString(),
+			});
+
+			// Go to edit mode
+
+			await pageEditorPage.goto(
+				layout,
+				pageManagementSite.friendlyUrlPath
+			);
+
+			// Publish and check errors
+
+			await clickAndExpectToBeVisible({
+				target: page.locator('.modal-title', {hasText: 'Form Errors'}),
+				timeout: 3000,
+				trigger: pageEditorPage.publishButton,
+			});
+
+			await expect(
+				page.getByText('Next button is hidden or missing in Step 2')
+			).toBeVisible();
+
+			await expect(
+				page.getByText('Previous button is hidden or missing in Step 4')
+			).toBeVisible();
+
+			await expect(page.getByText('Step 3 is empty')).toBeVisible();
+		}
+	);
 });

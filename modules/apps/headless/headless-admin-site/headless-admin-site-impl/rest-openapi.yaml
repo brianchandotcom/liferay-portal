@@ -2091,9 +2091,9 @@ components:
         PageSettings:
             discriminator:
                 mapping:
-                    CollectionPage: "#/components/schemas/CollectionPageSettings"
-                    ContentPage: "#/components/schemas/ContentPageSettings"
-                    WidgetPage: "#/components/schemas/WidgetPageSettings"
+                    CollectionPageSettings: "#/components/schemas/CollectionPageSettings"
+                    ContentPageSettings: "#/components/schemas/ContentPageSettings"
+                    WidgetPageSettings: "#/components/schemas/WidgetPageSettings"
                 propertyName: type
             properties:
                 customMetaTags:

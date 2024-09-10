@@ -5,6 +5,7 @@
 
 import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import {FrontendDataSet} from '@liferay/frontend-data-set-web';
 import {
@@ -15,9 +16,29 @@ import {
 	openToast,
 	stringUtils,
 } from '@liferay/object-js-components-web';
-import React, {useEffect, useMemo} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 
 import './PredefinedValuesTable.scss';
+
+interface PredefinedValueTableProps {
+	creationLanguageId: Liferay.Language.Locale;
+	currentObjectDefinitionFields: ObjectField[];
+	disableRequiredChecked?: boolean;
+	errors: {[key: string]: string};
+	objectFieldsMap: Map<string, ObjectField>;
+	predefinedValues?: PredefinedValue[];
+	setValues: (params: Partial<ObjectAction>) => void;
+	title?: string;
+	validateExpressionURL: string;
+	values: Partial<ObjectAction>;
+}
+
+interface PredefinedValueTableItem {
+	inputAsValue: JSX.Element;
+	label: JSX.Element;
+	name: string;
+	newValue: JSX.Element;
+}
 
 export default function PredefinedValuesTable({
 	creationLanguageId,
@@ -29,7 +50,8 @@ export default function PredefinedValuesTable({
 	title,
 	validateExpressionURL,
 	values,
-}: IProps) {
+}: PredefinedValueTableProps) {
+	const [reloadFDS, setReloadFDS] = useState(false);
 	const {predefinedValues = []} = values.parameters as ObjectActionParameters;
 
 	const items = useMemo(() => {
@@ -218,6 +240,12 @@ export default function PredefinedValuesTable({
 		values.system,
 	]);
 
+	const handleReloadFDS = () => {
+		setReloadFDS(true);
+
+		setTimeout(() => setReloadFDS(false), 200);
+	};
+
 	useEffect(() => {
 		const getSelectedObjectFields = () => {
 			const objectFields: ObjectField[] = [];
@@ -238,7 +266,7 @@ export default function PredefinedValuesTable({
 		const deletePredefinedValueObjectField = ({
 			itemData,
 		}: {
-			itemData: Item;
+			itemData: PredefinedValueTableItem;
 		}) => {
 			const {name} = itemData;
 
@@ -348,6 +376,14 @@ export default function PredefinedValuesTable({
 		values.parameters,
 	]);
 
+	useEffect(() => {
+		Liferay.on('reloadFDS', handleReloadFDS);
+
+		return () => {
+			Liferay.detach('reloadFDS', handleReloadFDS);
+		};
+	}, []);
+
 	return (
 		<>
 			<Card
@@ -356,96 +392,85 @@ export default function PredefinedValuesTable({
 				viewMode="no-margin"
 			>
 				<div className="lfr-object-web__predefined-values-table">
-					<FrontendDataSet
-						creationMenu={{
-							primaryItems: !values.system
-								? [
-										{
-											href: 'handleAddObjectFields',
-											id: 'handleAddObjectFields',
-											label: Liferay.Language.get(
-												'add-fields'
-											),
-											target: 'event',
-										},
-									]
-								: [],
-						}}
-						id="PredefinedValuesTable"
-						items={items}
-						itemsActions={
-							!values.system
-								? [
-										{
-											href: 'deletePredefinedValueObjectField',
-											icon: 'trash',
-											id: 'deletePredefinedValueObjectField',
-											label: Liferay.Language.get(
-												'delete'
-											),
-											target: 'event',
-										},
-									]
-								: []
-						}
-						onActionDropdownItemClick={onActionDropdownItemClick}
-						selectedItemsKey="name"
-						showManagementBar={true}
-						showPagination={false}
-						showSearch={false}
-						views={[
-							{
-								contentRenderer: 'table',
-								label: 'Table',
-								name: 'table',
-								schema: {
-									fields: [
-										{
-											fieldName: 'label',
-											label: Liferay.Language.get(
-												'field'
-											),
-										},
-										{
-											fieldName: 'inputAsValue',
-											label: Liferay.Language.get(
-												'input-method'
-											),
-										},
-										{
-											fieldName: 'newValue',
-											label: Liferay.Language.get(
-												'new-value'
-											),
-										},
-									],
+					{reloadFDS ? (
+						<ClayLoadingIndicator
+							displayType="secondary"
+							size="sm"
+						/>
+					) : (
+						<FrontendDataSet
+							creationMenu={{
+								primaryItems: !values.system
+									? [
+											{
+												href: 'handleAddObjectFields',
+												id: 'handleAddObjectFields',
+												label: Liferay.Language.get(
+													'add-fields'
+												),
+												target: 'event',
+											},
+										]
+									: [],
+							}}
+							id="PredefinedValuesTable"
+							items={items}
+							itemsActions={
+								!values.system
+									? [
+											{
+												href: 'deletePredefinedValueObjectField',
+												icon: 'trash',
+												id: 'deletePredefinedValueObjectField',
+												label: Liferay.Language.get(
+													'delete'
+												),
+												target: 'event',
+											},
+										]
+									: []
+							}
+							onActionDropdownItemClick={
+								onActionDropdownItemClick
+							}
+							selectedItemsKey="name"
+							showManagementBar={true}
+							showPagination={false}
+							showSearch={false}
+							views={[
+								{
+									contentRenderer: 'table',
+									label: 'Table',
+									name: 'table',
+									schema: {
+										fields: [
+											{
+												fieldName: 'label',
+												label: Liferay.Language.get(
+													'field'
+												),
+											},
+											{
+												fieldName: 'inputAsValue',
+												label: Liferay.Language.get(
+													'input-method'
+												),
+											},
+											{
+												fieldName: 'newValue',
+												label: Liferay.Language.get(
+													'new-value'
+												),
+											},
+										],
+									},
+									thumbnail: 'table',
 								},
-								thumbnail: 'table',
-							},
-						]}
-					/>
+							]}
+						/>
+					)}
 				</div>
 			</Card>
 		</>
 	);
-}
-
-interface IProps {
-	creationLanguageId: Liferay.Language.Locale;
-	currentObjectDefinitionFields: ObjectField[];
-	disableRequiredChecked?: boolean;
-	errors: {[key: string]: string};
-	objectFieldsMap: Map<string, ObjectField>;
-	predefinedValues?: PredefinedValue[];
-	setValues: (params: Partial<ObjectAction>) => void;
-	title?: string;
-	validateExpressionURL: string;
-	values: Partial<ObjectAction>;
-}
-
-interface Item {
-	inputAsValue: JSX.Element;
-	label: JSX.Element;
-	name: string;
-	newValue: JSX.Element;
 }

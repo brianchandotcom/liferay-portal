@@ -26,7 +26,7 @@ const tooltipInfo = {
 	tags: 'tootip',
 };
 
-const NewAppProfile = () => {
+const Profile = () => {
 	const [
 		{
 			profile: {categories, description, file, name, tags},
@@ -119,7 +119,7 @@ const NewAppProfile = () => {
 		);
 
 	return (
-		<div className="mb-4 new-app-form-profile">
+		<div className="new-app-form-profile">
 			<h5>App Info</h5>
 			<hr />
 
@@ -146,7 +146,6 @@ const NewAppProfile = () => {
 					name="name"
 					onChange={onChange}
 					placeholder="Enter app name"
-					type="text"
 					value={name}
 				/>
 			</Form.FormControl>
@@ -251,4 +250,4 @@ const NewAppProfile = () => {
 	);
 };
 
-export default NewAppProfile;
+export default Profile;

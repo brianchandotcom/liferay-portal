@@ -21,7 +21,7 @@ import './AppCreationFlow.scss';
 
 import {useNavigate} from 'react-router-dom';
 
-import AppToolbar from '../../../../../components/AppToolBar/AppToolBar';
+import AppToolbar from '../../../../../components/AppPublish/Navbar';
 import Loading from '../../../../../components/Loading';
 import {useAccount} from '../../../../../hooks/data/useAccounts';
 import {Liferay} from '../../../../../liferay/liferay';

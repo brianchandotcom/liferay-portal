@@ -17,52 +17,40 @@ import Loading from '../components/Loading';
 import {PRODUCT_TAGS} from '../enums/Product';
 import {ProductVocabulary} from '../enums/ProductVocabulary';
 import {useGetVocabulariesAndCategories} from '../hooks/data/useGetVocabulariesAndCategories';
+import {LicenseTier} from '../enums/licenseTier';
+
+export type LicensePrice = {key: number; value: number};
+export type LicenseType = 'Perpetual' | 'Subscription';
+
+type LicensingPrices = {
+	developer: {key: number; value: number}[];
+	standard: {key: number; value: number}[];
+};
 
 export enum NewAppTypes {
 	SET_BUILD = 'SET_BUILD',
 	SET_CLEANUP = 'SET_CLEANUP',
 	SET_CONTEXT = 'SET_CONTEXT',
 	SET_DELETE_IMAGE = 'SET_DELETE_IMAGE',
+	SET_LICENSING = 'SET_LICENSING',
+	SET_LICENSING_ADD_PRICE = 'SET_LICENSING_ADD_PRICE',
+	SET_LICENSING_DELETE_PRICE = 'SET_LICENSING_DELETE_PRICE',
+	SET_LICENSING_UPDATE_PRICES = 'SET_LICENSING_UPDATE_PRICES',
 	SET_LOADING = 'SET_LOADING',
+	SET_PRICING = 'SET_PRICING',
 	SET_PRODUCT = 'SET_PRODUCT',
 	SET_PRODUCT_ID = 'SET_PRODUCT_ID',
 	SET_PROFILE = 'SET_PROFILE',
+	SET_STOREFRONT = 'SET_STOREFRONT',
+	SET_SUPPORT = 'SET_SUPPORT',
 	SET_TERMS_AND_CONDITIONS = 'SET_TERMS_AND_CONDITIONS',
+	SET_VERSION = 'SET_VERSION',
 }
-
-type NewAppPayload = {
-	[NewAppTypes.SET_BUILD]: Partial<{
-		cloudCompatible: boolean;
-		compatibleOffering: any[];
-		liferayPackages: {
-			file: any[];
-			version: string;
-		}[];
-		resourceRequirements: {
-			cpu?: string;
-			ram?: string;
-		};
-	}>;
-	[NewAppTypes.SET_CLEANUP]: undefined;
-	[NewAppTypes.SET_CONTEXT]: Product;
-	[NewAppTypes.SET_DELETE_IMAGE]: string;
-	[NewAppTypes.SET_LOADING]: boolean;
-	[NewAppTypes.SET_PRODUCT]: Product;
-	[NewAppTypes.SET_PRODUCT_ID]: number;
-	[NewAppTypes.SET_PROFILE]: Partial<{
-		categories: any[];
-		description: string;
-		file: UploadedFile;
-		name: string;
-		tags: any[];
-	}>;
-	[NewAppTypes.SET_TERMS_AND_CONDITIONS]: boolean;
-};
 
 export type NewAppInitialState = {
 	_product?: Product;
 	build: {
-		cloudCompatible?: boolean;
+		cloudCompatible: boolean;
 		compatibleOffering: string[];
 		liferayPackages: {
 			file: any[];
@@ -89,15 +77,67 @@ export type NewAppInitialState = {
 			value: string;
 		}[];
 	};
+	pricing: {
+		priceModel: 'Free' | 'Paid';
+	};
+	licensing: {
+		licenseType: LicenseType;
+		trial30Day: boolean;
+		prices: LicensingPrices;
+	};
 	references: {
 		imagesToDelete: string[];
 		vocabulariesAndCategories: any;
 	};
+	storefront: {
+		images: UploadedFile[];
+	};
+	support: {
+		appUsageTermsURL: string;
+		documentationURL: string;
+		email: string;
+		installationGuideURL: string;
+		phone: string;
+		publisherWebsiteURL: string;
+		url: string;
+	};
 	termsAndConditions: boolean;
+	version: {
+		notes: string;
+		version: string;
+	};
+};
+
+type NewAppPayload = {
+	[NewAppTypes.SET_BUILD]: Partial<NewAppInitialState['build']>;
+	[NewAppTypes.SET_CLEANUP]: undefined;
+	[NewAppTypes.SET_CONTEXT]: Product;
+	[NewAppTypes.SET_DELETE_IMAGE]: string;
+	[NewAppTypes.SET_LICENSING_ADD_PRICE]: {licenseTier: LicenseTier};
+	[NewAppTypes.SET_LICENSING_DELETE_PRICE]: {
+		key: number;
+		licenseTier: LicenseTier;
+	};
+	[NewAppTypes.SET_LICENSING_UPDATE_PRICES]: {
+		index: number;
+		price: LicensePrice;
+		licenseTier: LicenseTier;
+	};
+	[NewAppTypes.SET_LICENSING]: Partial<NewAppInitialState['licensing']>;
+	[NewAppTypes.SET_LOADING]: boolean;
+	[NewAppTypes.SET_PRICING]: Partial<NewAppInitialState['pricing']>;
+	[NewAppTypes.SET_PRODUCT_ID]: number;
+	[NewAppTypes.SET_PRODUCT]: Product;
+	[NewAppTypes.SET_PROFILE]: Partial<NewAppInitialState['profile']>;
+	[NewAppTypes.SET_STOREFRONT]: Partial<NewAppInitialState['storefront']>;
+	[NewAppTypes.SET_SUPPORT]: Partial<NewAppInitialState['support']>;
+	[NewAppTypes.SET_TERMS_AND_CONDITIONS]: boolean;
+	[NewAppTypes.SET_VERSION]: Partial<NewAppInitialState['version']>;
 };
 
 const newAppInitialState: NewAppInitialState = {
 	build: {
+		cloudCompatible: null as unknown as boolean,
 		compatibleOffering: [],
 		liferayPackages: [],
 		resourceRequirements: {
@@ -115,12 +155,44 @@ const newAppInitialState: NewAppInitialState = {
 		name: '',
 		tags: [],
 	},
+	pricing: {
+		priceModel: '' as 'Free',
+	},
+	licensing: {
+		licenseType: 'Perpetual',
+		trial30Day: false,
+		prices: {
+			developer: [],
+			standard: [{key: 1, value: 0}],
+		},
+	},
+	version: {
+		notes: '',
+		version: '',
+	},
 	references: {imagesToDelete: [], vocabulariesAndCategories: {}},
+	storefront: {images: []},
+	support: {
+		appUsageTermsURL: '',
+		documentationURL: '',
+		email: '',
+		installationGuideURL: '',
+		phone: '',
+		publisherWebsiteURL: '',
+		url: '',
+	},
 	termsAndConditions: false,
 };
 
 export type AppActions =
 	ActionMap<NewAppPayload>[keyof ActionMap<NewAppPayload>];
+
+const sortLicenses = (
+	firstPriceTier: LicensePrice,
+	secondPriceTier: LicensePrice
+) => {
+	return firstPriceTier.key - secondPriceTier.key;
+};
 
 const filterProductVocabularies = (product: Product, vocabulary: string) =>
 	product.categories
@@ -228,6 +300,145 @@ const reducer = (state: NewAppInitialState, action: AppActions) => {
 			};
 		}
 
+		case NewAppTypes.SET_VERSION: {
+			return {
+				...state,
+				version: {
+					...state.version,
+					...action.payload,
+				},
+			};
+		}
+
+		case NewAppTypes.SET_PRICING: {
+			return {
+				...state,
+				pricing: {
+					...state.pricing,
+					...action.payload,
+				},
+			};
+		}
+
+		case NewAppTypes.SET_SUPPORT: {
+			return {
+				...state,
+				support: {
+					...state.support,
+					...action.payload,
+				},
+			};
+		}
+
+		case NewAppTypes.SET_STOREFRONT: {
+			return {
+				...state,
+				storefront: {
+					...state.storefront,
+					...action.payload,
+				},
+			};
+		}
+
+		case NewAppTypes.SET_LICENSING: {
+			return {
+				...state,
+				licensing: {
+					...state.licensing,
+					...action.payload,
+				},
+			};
+		}
+
+		case NewAppTypes.SET_LICENSING_ADD_PRICE: {
+			const licenseTier: LicenseTier = action.payload.licenseTier;
+
+			const sortedOldLicensePrice = {
+				developer: state.licensing.prices.developer.sort(sortLicenses),
+				standard: state.licensing.prices.standard.sort(sortLicenses),
+			};
+
+			if (!sortedOldLicensePrice[licenseTier].length) {
+				return {
+					...state,
+					licensing: {
+						...state.licensing,
+						prices: {
+							...state.licensing.prices,
+							...sortedOldLicensePrice,
+							[licenseTier]: [{key: 1, value: 0}],
+						},
+					},
+				};
+			}
+
+			const newKey =
+				sortedOldLicensePrice[licenseTier].slice(-1)[0].key + 1;
+			const newPriceTier = {key: newKey, value: 0};
+
+			return {
+				...state,
+				licensing: {
+					...state.licensing,
+					prices: {
+						...state.licensing.prices,
+						...sortedOldLicensePrice,
+						[licenseTier]: [
+							...sortedOldLicensePrice[licenseTier],
+							newPriceTier,
+						],
+					},
+				},
+			};
+		}
+
+		case NewAppTypes.SET_LICENSING_DELETE_PRICE: {
+			const licenseTier: LicenseTier = action.payload.licenseTier;
+
+			const sortedOldLicensePrice = {
+				developer: state.licensing.prices.developer.sort(sortLicenses),
+				standard: state.licensing.prices.standard.sort(sortLicenses),
+			};
+
+			const filteredLicensePriceTier = sortedOldLicensePrice[
+				licenseTier
+			].filter(
+				(priceTier: {key: any}) => priceTier.key !== action.payload.key
+			);
+
+			return {
+				...state,
+				licensing: {
+					...state.licensing,
+					prices: {
+						...state.licensing.prices,
+						...sortedOldLicensePrice,
+						[licenseTier]: filteredLicensePriceTier,
+					},
+				},
+			};
+		}
+
+		case NewAppTypes.SET_LICENSING_UPDATE_PRICES: {
+			const licenseTier: LicenseTier = action.payload.licenseTier;
+			const oldLicensePrice = state.licensing.prices;
+
+			const newLicensePrices = [...(oldLicensePrice[licenseTier] ?? [])];
+			newLicensePrices[action.payload.index] = action.payload.price;
+
+			return {
+				...state,
+				licensing: {
+					...state.licensing,
+					prices: {
+						...state.licensing.prices,
+						...oldLicensePrice,
+						[licenseTier]: newLicensePrices,
+					},
+				},
+			};
+		}
+
 		case NewAppTypes.SET_TERMS_AND_CONDITIONS: {
 			return {...state, termsAndConditions: action.payload};
 		}
@@ -253,9 +464,10 @@ export default function NewAppContextProvider({
 	const [state, dispatch] = useReducer(reducer, newAppInitialState);
 	const {productId} = useParams();
 	const {data = {}, isLoading} = useGetVocabulariesAndCategories([
-		ProductVocabulary.PRODUCT_TYPE,
 		ProductVocabulary.APP_CATEGORY,
 		ProductVocabulary.APP_TAGS,
+		ProductVocabulary.LIFERAY_PLATFORM_OFFERING,
+		ProductVocabulary.PRODUCT_TYPE,
 	]);
 
 	useEffect(() => {

@@ -15,7 +15,9 @@ import com.liferay.notification.term.evaluator.NotificationTermEvaluatorTracker;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 
@@ -28,16 +30,14 @@ import java.util.regex.Pattern;
 /**
  * @author Feliphe Marinho
  */
-public class TermUsersProvider
-	extends BaseUsersProvider implements UsersProvider {
+public class TermUsersProvider implements UsersProvider {
 
 	public TermUsersProvider(
 		PermissionCheckerFactory permissionCheckerFactory,
 		NotificationTermEvaluatorTracker notificationTermEvaluatorTracker,
 		UserLocalService userLocalService) {
 
-		super(permissionCheckerFactory);
-
+		_permissionCheckerFactory = permissionCheckerFactory;
 		_notificationTermEvaluatorTracker = notificationTermEvaluatorTracker;
 		_userLocalService = userLocalService;
 	}
@@ -83,9 +83,12 @@ public class TermUsersProvider
 					User user = _userLocalService.getUserByScreenName(
 						notificationRecipient.getCompanyId(), screenName);
 
-					if (!hasViewPermission(
+					if (!ModelResourcePermissionUtil.contains(
+							_permissionCheckerFactory.create(user),
+							notificationContext.getGroupId(),
 							notificationContext.getClassName(),
-							notificationContext.getClassPK(), user)) {
+							notificationContext.getClassPK(),
+							ActionKeys.VIEW)) {
 
 						return null;
 					}
@@ -112,9 +115,12 @@ public class TermUsersProvider
 						User user = _userLocalService.getUser(
 							GetterUtil.getLong(termValue));
 
-						if (!hasViewPermission(
+						if (!ModelResourcePermissionUtil.contains(
+								_permissionCheckerFactory.create(user),
+								notificationContext.getGroupId(),
 								notificationContext.getClassName(),
-								notificationContext.getClassPK(), user)) {
+								notificationContext.getClassPK(),
+								ActionKeys.VIEW)) {
 
 							return null;
 						}
@@ -131,6 +137,7 @@ public class TermUsersProvider
 
 	private final NotificationTermEvaluatorTracker
 		_notificationTermEvaluatorTracker;
+	private final PermissionCheckerFactory _permissionCheckerFactory;
 	private final UserLocalService _userLocalService;
 
 }

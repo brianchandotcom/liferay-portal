@@ -12,7 +12,9 @@ import com.liferay.notification.model.NotificationTemplate;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
 
 import java.util.List;
@@ -20,15 +22,13 @@ import java.util.List;
 /**
  * @author Feliphe Marinho
  */
-public class DefaultUsersProvider
-	extends BaseUsersProvider implements UsersProvider {
+public class DefaultUsersProvider implements UsersProvider {
 
 	public DefaultUsersProvider(
 		PermissionCheckerFactory permissionCheckerFactory,
 		UserLocalService userLocalService) {
 
-		super(permissionCheckerFactory);
-
+		_permissionCheckerFactory = permissionCheckerFactory;
 		_userLocalService = userLocalService;
 	}
 
@@ -54,9 +54,11 @@ public class DefaultUsersProvider
 					notificationRecipientSetting.getCompanyId(),
 					notificationRecipientSetting.getValue());
 
-				if (!hasViewPermission(
+				if (!ModelResourcePermissionUtil.contains(
+						_permissionCheckerFactory.create(user),
+						notificationContext.getGroupId(),
 						notificationContext.getClassName(),
-						notificationContext.getClassPK(), user)) {
+						notificationContext.getClassPK(), ActionKeys.VIEW)) {
 
 					return null;
 				}
@@ -65,6 +67,7 @@ public class DefaultUsersProvider
 			});
 	}
 
+	private final PermissionCheckerFactory _permissionCheckerFactory;
 	private final UserLocalService _userLocalService;
 
 }

@@ -1,9 +1,9 @@
 function GoogleFilePicker(callback) {
-	if (window.gapi) {
+	if (window.google) {
 		callback();
 	}
 	else {
-		Liferay.once('googleAPILoaded', callback);
+		Liferay.once('gisAPILoaded', callback);
 	}
 }
 
@@ -122,8 +122,8 @@ GoogleFilePicker.SCOPE = [
 	'https://www.googleapis.com/auth/drive.readonly'
 ];
 
-window.onGoogleAPILoad = function() {
-	Liferay.fire('googleAPILoaded');
+window.onGisAPILoad = function() {
+	Liferay.fire('gisAPILoaded');
 };
 
 if (!window.gapi && !document.getElementById('googleAPILoader')) {
@@ -134,14 +134,12 @@ if (!window.gapi && !document.getElementById('googleAPILoader')) {
 
 	document.body.appendChild(scriptNode);
 }
-else if (window.gapi) {
-	Liferay.fire('googleAPILoaded');
-}
 
-if (!google) {
+if (!window.google) {
 	var scriptNodeGis = document.createElement('script');
 
 	scriptNodeGis.id = 'gisAPILoader';
+	scriptNodeGis.onload = onGisAPILoad;
 	scriptNodeGis.src = 'https://accounts.google.com/gsi/client';
 
 	document.body.appendChild(scriptNodeGis);

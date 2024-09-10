@@ -9,6 +9,7 @@ import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -31,61 +32,41 @@ public class BlogsFriendlyURLFormatUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				StringBundler.concat(
+					"select distinct classPK, ctCollectionId, ",
+					"friendlyURLEntryId, groupId, languageId, urlTitle from ",
+					"FriendlyURLEntryLocalization where urlTitle like '%/' ",
+					"and classNameId = ?"))) {
 
-			StringBundler.concat("select distinct classPK, ctCollectionId, ",
-								 "friendlyURLEntryId, groupId, languageId, ",
-								 "urlTitle from FriendlyURLEntryLocalization ",
-								 "where urlTitle like '%/' and classNameId = ?")
-				);
+			long classNameId = _classNameLocalService.getClassNameId(
+				BlogsEntry.class);
 
-		PreparedStatement preparedStatement2 = connection.prepareStatement(
-			"select distinct ctCollectionId, entryId from BlogsEntry where " +
-			"urlTitle = ?");
+			preparedStatement.setLong(1, classNameId);
 
-		) {
+			ResultSet resultSet = preparedStatement.executeQuery();
 
-			preparedStatement1.setLong(
-				1, _classNameLocalService.getClassNameId(BlogsEntry.class));
+			while (resultSet.next()) {
+				long classPK = resultSet.getLong("classPK");
+				long groupId = resultSet.getLong("groupId");
+				String languageId = resultSet.getString("languageId");
 
-			preparedStatement1.addBatch();
+				String urlTitle = resultSet.getString("urlTitle");
 
-			ResultSet resultSet1 = preparedStatement1.executeQuery();
-
-			while (resultSet1.next()) {
-				long classPK = resultSet1.getLong(1);
-
-				long ctCollectionId = resultSet1.getLong(2);
-
-				long friendlyURLEntryId = resultSet1.getLong(3);
-
-				long groupId = resultSet1.getLong(4);
-
-				String languageId = resultSet1.getString(5);
-
-				String urlTitle = resultSet1.getString(6);
-
-				while (urlTitle.endsWith("/")) {
+				while (urlTitle.endsWith(StringPool.SLASH)) {
 					urlTitle = urlTitle.substring(0, urlTitle.length() - 1);
 				}
 
-				preparedStatement2.setString(1, urlTitle);
+				urlTitle = _friendlyURLEntryLocalService.getUniqueUrlTitle(
+					groupId, classNameId, classPK, urlTitle, languageId);
 
-				preparedStatement2.addBatch();
-
-				ResultSet resultSet2 = preparedStatement2.executeQuery();
-
-				if (resultSet2.next()) {
-					urlTitle = _friendlyURLEntryLocalService.getUniqueUrlTitle(
-						groupId,
-						_classNameLocalService.getClassNameId(BlogsEntry.class),
-						classPK, urlTitle, languageId);
-				}
-
-				_updateURLTitle(classPK, ctCollectionId, groupId, urlTitle);
+				_updateURLTitle(
+					classPK, resultSet.getLong("ctCollectionId"), groupId,
+					urlTitle);
 
 				_updateFriendlyURLEntry(
-					friendlyURLEntryId, languageId, urlTitle);
+					resultSet.getLong("friendlyURLEntryId"), languageId,
+					urlTitle);
 			}
 		}
 	}

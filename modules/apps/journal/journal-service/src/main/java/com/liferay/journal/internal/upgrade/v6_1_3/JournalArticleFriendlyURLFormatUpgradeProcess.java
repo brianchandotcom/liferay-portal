@@ -9,6 +9,7 @@ import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -32,43 +33,31 @@ public class JournalArticleFriendlyURLFormatUpgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try (
-			PreparedStatement preparedStatement1 = connection.prepareStatement(
+		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				StringBundler.concat(
 					"select distinct classPK, ctCollectionId, ",
 					"friendlyURLEntryId, groupId, languageId, urlTitle from ",
 					"FriendlyURLEntryLocalization where urlTitle like '%/' ",
-					"and classNameId = ?")
-			);
-
+					"and classNameId = ?"));
 			PreparedStatement preparedStatement2 = connection.prepareStatement(
 				"select defaultLanguageId from JournalArticle where " +
-				"resourcePrimKey = ?"
-			);
-
-		) {
+					"resourcePrimKey = ?")) {
 
 			long classNameId = _classNameLocalService.getClassNameId(
 				JournalArticle.class);
 
 			preparedStatement1.setLong(1, classNameId);
 
-			preparedStatement1.addBatch();
-
 			ResultSet resultSet1 = preparedStatement1.executeQuery();
 
 			while (resultSet1.next()) {
-				long classPK = resultSet1.getLong(1);
+				long classPK = resultSet1.getLong("classPK");
+				long groupId = resultSet1.getLong("groupId");
+				String languageId = resultSet1.getString("languageId");
 
-				long friendlyURLEntryId = resultSet1.getLong(3);
+				String urlTitle = resultSet1.getString("urlTitle");
 
-				long groupId = resultSet1.getLong(4);
-
-				String languageId = resultSet1.getString(5);
-
-				String urlTitle = resultSet1.getString(6);
-
-				while (urlTitle.endsWith("/")) {
+				while (urlTitle.endsWith(StringPool.SLASH)) {
 					urlTitle = urlTitle.substring(0, urlTitle.length() - 1);
 				}
 
@@ -76,22 +65,23 @@ public class JournalArticleFriendlyURLFormatUpgradeProcess
 					groupId, classNameId, classPK, urlTitle, languageId);
 
 				preparedStatement2.setLong(1, classPK);
-				preparedStatement2.addBatch();
 
 				ResultSet resultSet2 = preparedStatement2.executeQuery();
 
-				resultSet2.next();
+				if (resultSet2.next()) {
+					String defaultLanguageId = resultSet2.getString(
+						"defaultLanguageId");
 
-				String defaultLanguageId = resultSet2.getString(1);
+					if (defaultLanguageId.equals(languageId)) {
+						_updateURLTitle(
+							classPK, resultSet1.getLong("ctCollectionId"),
+							urlTitle);
+					}
 
-				if (defaultLanguageId.equals(languageId)) {
-					long ctCollectionId = resultSet1.getLong(2);
-
-					_updateURLTitle(classPK, ctCollectionId, urlTitle);
+					_updateFriendlyURLEntry(
+						resultSet1.getLong("friendlyURLEntryId"), languageId,
+						urlTitle);
 				}
-
-				_updateFriendlyURLEntry(
-					friendlyURLEntryId, languageId, urlTitle);
 			}
 		}
 	}

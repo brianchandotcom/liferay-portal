@@ -3169,6 +3169,15 @@
 	},
 	{
 		"classNames": [
+			"IndexWriterHelper",
+			"IndexWriterHelperUtil"
+		],
+		"from": "updateDocuments(String paramName, long paramName, Collection<Document> paramName, boolean paramName)",
+		"issueKey": "LPD-35137",
+		"to": "updateDocuments(param#1#, param#2#, param#3#)"
+	},
+	{
+		"classNames": [
 			"ListTypeLocalService"
 		],
 		"from": "addListType(String paramName, String paramName)",

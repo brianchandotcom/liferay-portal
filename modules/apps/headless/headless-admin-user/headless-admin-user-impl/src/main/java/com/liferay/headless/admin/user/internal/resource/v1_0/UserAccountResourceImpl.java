@@ -1082,6 +1082,12 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 			_getServiceBuilderPhones(null, userAccount),
 			_getWebsites(null, userAccount), false, serviceContext);
 
+		byte[] portraitBytes = _getPortraitBytes(true, user, userAccount);
+
+		if (ArrayUtil.isNotEmpty(portraitBytes)) {
+			user = _userService.updatePortrait(user.getUserId(), portraitBytes);
+		}
+
 		user = _updateStatus(serviceContext, user, userAccount);
 
 		UserAccountContactInformation userAccountContactInformation =
@@ -1401,13 +1407,23 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 			boolean useUserDefault, User user, UserAccount userAccount)
 		throws Exception {
 
-		Long imageId = userAccount.getImageId();
+		long imageId = GetterUtil.getLong(userAccount.getImageId());
 
-		if ((user != null) && (imageId == null) && useUserDefault) {
-			imageId = user.getPortraitId();
+		if (imageId == 0) {
+			FileEntry fileEntry =
+				_dlAppLocalService.fetchFileEntryByExternalReferenceCode(
+					contextCompany.getGroupId(),
+					userAccount.getImageExternalReferenceCode());
+
+			if (fileEntry != null) {
+				imageId = fileEntry.getFileEntryId();
+			}
+			else if ((user != null) && useUserDefault) {
+				imageId = user.getPortraitId();
+			}
 		}
 
-		if ((imageId != null) && (imageId != 0) &&
+		if ((imageId > 0) &&
 			((user == null) || (user.getPortraitId() != imageId))) {
 
 			FileEntry fileEntry = _dlAppLocalService.getFileEntry(imageId);
@@ -1581,14 +1597,26 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 			Objects::nonNull);
 	}
 
-	private boolean _hasPortrait(User user, UserAccount userAccount) {
-		Long imageId = userAccount.getImageId();
+	private boolean _hasPortrait(User user, UserAccount userAccount)
+		throws Exception {
 
-		if ((user != null) && (imageId == null)) {
-			imageId = user.getPortraitId();
+		long imageId = GetterUtil.getLong(userAccount.getImageId());
+
+		if (imageId == 0) {
+			FileEntry fileEntry =
+				_dlAppLocalService.fetchFileEntryByExternalReferenceCode(
+					contextCompany.getGroupId(),
+					userAccount.getImageExternalReferenceCode());
+
+			if (fileEntry != null) {
+				imageId = fileEntry.getFileEntryId();
+			}
+			else if (user != null) {
+				imageId = user.getPortraitId();
+			}
 		}
 
-		if ((imageId == null) || (imageId == 0)) {
+		if (imageId == 0) {
 			return false;
 		}
 

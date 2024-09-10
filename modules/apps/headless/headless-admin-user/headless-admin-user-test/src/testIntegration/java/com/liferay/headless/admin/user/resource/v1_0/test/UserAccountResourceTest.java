@@ -11,6 +11,7 @@ import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.captcha.simplecaptcha.SimpleCaptchaImpl;
+import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.model.ExpandoTable;
@@ -36,13 +37,16 @@ import com.liferay.headless.admin.user.client.serdes.v1_0.UserAccountSerDes;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.captcha.Captcha;
 import com.liferay.portal.kernel.captcha.CaptchaException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -50,6 +54,9 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.repository.LocalRepository;
+import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.security.auth.Authenticator;
@@ -59,6 +66,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
@@ -80,6 +88,7 @@ import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -98,6 +107,8 @@ import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
+
+import java.io.InputStream;
 
 import java.util.Arrays;
 import java.util.Calendar;
@@ -734,6 +745,8 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 					givenName = RandomTestUtil.randomString();
 				}
 			});
+
+		_testPatchUserAccountWithImageExternalReferenceCodes();
 	}
 
 	@Override
@@ -880,56 +893,9 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	public void testPostUserAccount() throws Exception {
 		super.testPostUserAccount();
 
-		UserAccount userAccount = randomUserAccount();
+		_testPostUserAccountWithImageExternalReferenceCodes();
 
-		String password = RandomTestUtil.randomString();
-
-		userAccount.setPassword(password);
-
-		UserAccount postUserAccount = userAccountResource.postUserAccount(
-			userAccount);
-
-		assertEquals(userAccount, postUserAccount);
-		assertValid(postUserAccount);
-
-		_assertAuthenticationResult(
-			Authenticator.SUCCESS, postUserAccount.getEmailAddress(), password);
-
-		SAPEntry sapEntry = _sapEntryLocalService.addSAPEntry(
-			TestPropsValues.getUserId(),
-			"com.liferay.headless.admin.user.internal.resource.v1_0." +
-				"UserAccountResourceImpl#postUserAccount",
-			true, true, "Guest",
-			HashMapBuilder.put(
-				LocaleUtil.getDefault(), "Guest"
-			).build(),
-			ServiceContextTestUtil.getServiceContext());
-
-		_testPostUserAccount(new TestSimpleCaptchaImpl(Assert::fail), false);
-		_testPostUserAccount(
-			new TestSimpleCaptchaImpl(
-				() -> {
-				}),
-			true);
-
-		try {
-			_testPostUserAccount(
-				new TestSimpleCaptchaImpl(
-					() -> {
-						throw new CaptchaException();
-					}),
-				true);
-
-			Assert.fail();
-		}
-		catch (Problem.ProblemException problemException) {
-			Problem problem = problemException.getProblem();
-
-			Assert.assertEquals(
-				"The captcha value is invalid", problem.getTitle());
-		}
-
-		_sapEntryLocalService.deleteSAPEntry(sapEntry);
+		_testPostUserAccountWithSAPEntry();
 	}
 
 	@Override
@@ -1006,6 +972,8 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 					userAccount.setCurrentPassword(() -> null);
 					userAccount.setPassword(() -> null);
 				}));
+
+		_testPutUserAccountWithImageExternalReferenceCodes();
 	}
 
 	@Override
@@ -1066,6 +1034,8 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 					userAccount.setCurrentPassword(() -> null);
 					userAccount.setPassword(() -> null);
 				}));
+
+		_testPutUserAccountByExternalReferenceCodeWithImageExternalReferenceCodes();
 	}
 
 	@Override
@@ -1516,6 +1486,29 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 			accountId, userAccount);
 	}
 
+	private FileEntry _addImageFileEntry() throws Exception {
+		Company company = _companyLocalService.getCompany(
+			TestPropsValues.getCompanyId());
+
+		Group group = company.getGroup();
+
+		LocalRepository localRepository =
+			RepositoryProviderUtil.getLocalRepository(group.getGroupId());
+
+		byte[] bytes = FileUtil.getBytes(getClass(), "/images/liferay.png");
+
+		InputStream inputStream = new UnsyncByteArrayInputStream(bytes);
+
+		return localRepository.addFileEntry(
+			null, TestPropsValues.getUserId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(), ContentTypes.IMAGE_JPEG,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			StringPool.BLANK, StringPool.BLANK, inputStream, bytes.length, null,
+			null, null,
+			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+	}
+
 	private UserAccount _addUserAccount(
 			long siteId, AccountEntry accountEntry, UserAccount userAccount)
 		throws Exception {
@@ -1888,6 +1881,26 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		}
 	}
 
+	private void _testPatchUserAccountWithImageExternalReferenceCodes()
+		throws Exception {
+
+		UserAccount postUserAccount = testPatchUserAccount_addUserAccount();
+
+		UserAccount randomPatchUserAccount = randomPatchUserAccount();
+
+		FileEntry fileEntry = _addImageFileEntry();
+
+		randomPatchUserAccount.setImageExternalReferenceCode(
+			fileEntry.getExternalReferenceCode());
+
+		randomPatchUserAccount.setImageId(0L);
+
+		UserAccount patchUserAccount = userAccountResource.patchUserAccount(
+			postUserAccount.getId(), randomPatchUserAccount);
+
+		Assert.assertTrue(patchUserAccount.getImageId() > 0);
+	}
+
 	private void _testPostUserAccount(Captcha captcha, boolean enableCaptcha)
 		throws Exception {
 
@@ -1936,6 +1949,120 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		}
 	}
 
+	private void _testPostUserAccountWithImageExternalReferenceCodes()
+		throws Exception {
+
+		UserAccount randomUserAccount = randomUserAccount();
+
+		FileEntry fileEntry = _addImageFileEntry();
+
+		randomUserAccount.setImageExternalReferenceCode(
+			fileEntry.getExternalReferenceCode());
+
+		randomUserAccount.setImageId(0L);
+
+		UserAccount postUserAccount = userAccountResource.postUserAccount(
+			randomUserAccount);
+
+		Assert.assertTrue(postUserAccount.getImageId() > 0);
+	}
+
+	private void _testPostUserAccountWithSAPEntry() throws Exception {
+		UserAccount userAccount = randomUserAccount();
+
+		String password = RandomTestUtil.randomString();
+
+		userAccount.setPassword(password);
+
+		UserAccount postUserAccount = userAccountResource.postUserAccount(
+			userAccount);
+
+		assertEquals(userAccount, postUserAccount);
+		assertValid(postUserAccount);
+
+		_assertAuthenticationResult(
+			Authenticator.SUCCESS, postUserAccount.getEmailAddress(), password);
+
+		SAPEntry sapEntry = _sapEntryLocalService.addSAPEntry(
+			TestPropsValues.getUserId(),
+			"com.liferay.headless.admin.user.internal.resource.v1_0." +
+				"UserAccountResourceImpl#postUserAccount",
+			true, true, "Guest",
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), "Guest"
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		_testPostUserAccount(new TestSimpleCaptchaImpl(Assert::fail), false);
+		_testPostUserAccount(
+			new TestSimpleCaptchaImpl(
+				() -> {
+				}),
+			true);
+
+		try {
+			_testPostUserAccount(
+				new TestSimpleCaptchaImpl(
+					() -> {
+						throw new CaptchaException();
+					}),
+				true);
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals(
+				"The captcha value is invalid", problem.getTitle());
+		}
+
+		_sapEntryLocalService.deleteSAPEntry(sapEntry);
+	}
+
+	private void _testPutUserAccountByExternalReferenceCodeWithImageExternalReferenceCodes()
+		throws Exception {
+
+		UserAccount postUserAccount =
+			testPutUserAccountByExternalReferenceCode_addUserAccount();
+
+		UserAccount randomPutUserAccount = randomUserAccount();
+
+		FileEntry fileEntry = _addImageFileEntry();
+
+		randomPutUserAccount.setImageExternalReferenceCode(
+			fileEntry.getExternalReferenceCode());
+
+		randomPutUserAccount.setImageId(0L);
+
+		UserAccount putUserAccount =
+			userAccountResource.putUserAccountByExternalReferenceCode(
+				postUserAccount.getExternalReferenceCode(),
+				randomPutUserAccount);
+
+		Assert.assertTrue(putUserAccount.getImageId() > 0);
+	}
+
+	private void _testPutUserAccountWithImageExternalReferenceCodes()
+		throws Exception {
+
+		UserAccount postUserAccount = testPutUserAccount_addUserAccount();
+
+		UserAccount randomPutUserAccount = randomUserAccount();
+
+		FileEntry fileEntry = _addImageFileEntry();
+
+		randomPutUserAccount.setImageExternalReferenceCode(
+			fileEntry.getExternalReferenceCode());
+
+		randomPutUserAccount.setImageId(0L);
+
+		UserAccount putUserAccount = userAccountResource.putUserAccount(
+			postUserAccount.getId(), randomPutUserAccount);
+
+		Assert.assertTrue(putUserAccount.getImageId() > 0);
+	}
+
 	private String[] _toEmailAddresses(List<User> users) {
 		return TransformUtil.transformToArray(
 			users, User::getEmailAddress, String.class);
@@ -1955,6 +2082,9 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 	@Inject
 	private ExpandoColumnLocalService _expandoColumnLocalService;

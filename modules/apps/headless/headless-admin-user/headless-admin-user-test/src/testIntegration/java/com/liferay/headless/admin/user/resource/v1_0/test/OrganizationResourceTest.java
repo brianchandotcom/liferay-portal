@@ -10,11 +10,20 @@ import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.headless.admin.user.client.dto.v1_0.Organization;
 import com.liferay.headless.admin.user.client.pagination.Page;
 import com.liferay.headless.admin.user.client.pagination.Pagination;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.repository.LocalRepository;
+import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.DataGuard;
@@ -23,11 +32,15 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
+
+import java.io.InputStream;
 
 import java.util.Arrays;
 import java.util.List;
@@ -261,6 +274,24 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 
 	@Override
 	@Test
+	public void testPatchOrganization() throws Exception {
+		super.testPatchOrganization();
+
+		_testPatchOrganizationWithImageExternalReferenceCodes();
+	}
+
+	@Override
+	@Test
+	public void testPatchOrganizationByExternalReferenceCode()
+		throws Exception {
+
+		super.testPatchOrganizationByExternalReferenceCode();
+
+		_testPatchOrganizationByExternalReferenceCodeWithImageExternalReferenceCodes();
+	}
+
+	@Override
+	@Test
 	public void testPostAccountByExternalReferenceCodeOrganization()
 		throws Exception {
 
@@ -304,6 +335,7 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 		super.testPostOrganization();
 
 		_testPostOrganizationWithNameOverMaximumLength();
+		_testPostOrganizationWithImageExternalReferenceCodes();
 	}
 
 	@Override
@@ -351,6 +383,22 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 				_userLocalService.hasOrganizationUser(
 					organizationId, user.getUserId()));
 		}
+	}
+
+	@Override
+	@Test
+	public void testPutOrganization() throws Exception {
+		super.testPutOrganization();
+
+		_testPutOrganizationWithImageExternalReferenceCodes();
+	}
+
+	@Override
+	@Test
+	public void testPutOrganizationByExternalReferenceCode() throws Exception {
+		super.testPutOrganizationByExternalReferenceCode();
+
+		_testPutOrganizationByExternalReferenceCodeWithImageExternalReferenceCodes();
 	}
 
 	@Override
@@ -593,6 +641,29 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 			randomOrganization());
 	}
 
+	private FileEntry _addImageFileEntry() throws Exception {
+		Company company = _companyLocalService.getCompany(
+			TestPropsValues.getCompanyId());
+
+		Group group = company.getGroup();
+
+		LocalRepository localRepository =
+			RepositoryProviderUtil.getLocalRepository(group.getGroupId());
+
+		byte[] bytes = FileUtil.getBytes(getClass(), "/images/liferay.png");
+
+		InputStream inputStream = new UnsyncByteArrayInputStream(bytes);
+
+		return localRepository.addFileEntry(
+			null, TestPropsValues.getUserId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(), ContentTypes.IMAGE_JPEG,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			StringPool.BLANK, StringPool.BLANK, inputStream, bytes.length, null,
+			null, null,
+			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+	}
+
 	private com.liferay.portal.kernel.model.Organization _addOrganization(
 			Organization organization, String parentOrganizationId)
 		throws Exception {
@@ -625,6 +696,67 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 		return parentOrganization;
 	}
 
+	private void _testPatchOrganizationByExternalReferenceCodeWithImageExternalReferenceCodes()
+		throws Exception {
+
+		Organization postOrganization =
+			testPatchOrganizationByExternalReferenceCode_addOrganization();
+
+		Organization randomPatchOrganization = randomPatchOrganization();
+
+		FileEntry fileEntry = _addImageFileEntry();
+
+		randomPatchOrganization.setImageExternalReferenceCode(
+			fileEntry.getExternalReferenceCode());
+
+		randomPatchOrganization.setImageId(0L);
+
+		Organization patchOrganization =
+			organizationResource.patchOrganizationByExternalReferenceCode(
+				postOrganization.getExternalReferenceCode(),
+				randomPatchOrganization);
+
+		Assert.assertTrue(patchOrganization.getImageId() > 0);
+	}
+
+	private void _testPatchOrganizationWithImageExternalReferenceCodes()
+		throws Exception {
+
+		Organization postOrganization = testPatchOrganization_addOrganization();
+
+		Organization randomPatchOrganization = randomPatchOrganization();
+
+		FileEntry fileEntry = _addImageFileEntry();
+
+		randomPatchOrganization.setImageExternalReferenceCode(
+			fileEntry.getExternalReferenceCode());
+
+		randomPatchOrganization.setImageId(0L);
+
+		Organization patchOrganization = organizationResource.patchOrganization(
+			postOrganization.getId(), randomPatchOrganization);
+
+		Assert.assertTrue(patchOrganization.getImageId() > 0);
+	}
+
+	private void _testPostOrganizationWithImageExternalReferenceCodes()
+		throws Exception {
+
+		Organization randomOrganization = randomOrganization();
+
+		FileEntry fileEntry = _addImageFileEntry();
+
+		randomOrganization.setImageExternalReferenceCode(
+			fileEntry.getExternalReferenceCode());
+
+		randomOrganization.setImageId(0L);
+
+		Organization postOrganization = organizationResource.postOrganization(
+			randomOrganization);
+
+		Assert.assertTrue(postOrganization.getImageId() > 0);
+	}
+
 	private void _testPostOrganizationWithNameOverMaximumLength()
 		throws Exception {
 
@@ -635,6 +767,49 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 		assertHttpResponseStatusCode(
 			400,
 			organizationResource.postOrganizationHttpResponse(organization));
+	}
+
+	private void _testPutOrganizationByExternalReferenceCodeWithImageExternalReferenceCodes()
+		throws Exception {
+
+		Organization postOrganization =
+			testPutOrganizationByExternalReferenceCode_addOrganization();
+
+		Organization randomPutOrganization = randomOrganization();
+
+		FileEntry fileEntry = _addImageFileEntry();
+
+		randomPutOrganization.setImageExternalReferenceCode(
+			fileEntry.getExternalReferenceCode());
+
+		randomPutOrganization.setImageId(0L);
+
+		Organization putOrganization =
+			organizationResource.putOrganizationByExternalReferenceCode(
+				postOrganization.getExternalReferenceCode(),
+				randomPutOrganization);
+
+		Assert.assertTrue(putOrganization.getImageId() > 0);
+	}
+
+	private void _testPutOrganizationWithImageExternalReferenceCodes()
+		throws Exception {
+
+		Organization postOrganization = testPutOrganization_addOrganization();
+
+		Organization randomPutOrganization = randomOrganization();
+
+		FileEntry fileEntry = _addImageFileEntry();
+
+		randomPutOrganization.setImageExternalReferenceCode(
+			fileEntry.getExternalReferenceCode());
+
+		randomPutOrganization.setImageId(0L);
+
+		Organization putOrganization = organizationResource.putOrganization(
+			postOrganization.getId(), randomPutOrganization);
+
+		Assert.assertTrue(putOrganization.getImageId() > 0);
 	}
 
 	private String[] _toEmailAddresses(List<User> users) {
@@ -664,6 +839,9 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 	@Inject
 	private AccountEntryOrganizationRelLocalService
 		_accountEntryOrganizationRelLocalService;
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 	@Inject
 	private OrganizationLocalService _organizationLocalService;

@@ -467,6 +467,13 @@ public class OrganizationResourceImpl extends BaseOrganizationResourceImpl {
 				_getWebsites(organization, null),
 				_createServiceContext(organization));
 
+		byte[] logoBytes = _getLogoBytes(organization, null, false);
+
+		if (ArrayUtil.isNotEmpty(logoBytes)) {
+			serviceBuilderOrganization = _organizationService.updateLogo(
+				serviceBuilderOrganization.getOrganizationId(), logoBytes);
+		}
+
 		return _organizationResourceDTOConverter.toDTO(
 			_getDTOConverterContext(
 				String.valueOf(serviceBuilderOrganization.getOrganizationId())),
@@ -855,15 +862,25 @@ public class OrganizationResourceImpl extends BaseOrganizationResourceImpl {
 			boolean useOrganizationDefault)
 		throws Exception {
 
-		Long imageId = organization.getImageId();
+		long imageId = GetterUtil.getLong(organization.getImageId());
 
-		if ((serviceBuilderOrganization != null) && (imageId == null) &&
-			useOrganizationDefault) {
+		if (imageId == 0) {
+			FileEntry fileEntry =
+				_dlAppLocalService.fetchFileEntryByExternalReferenceCode(
+					contextCompany.getGroupId(),
+					organization.getImageExternalReferenceCode());
 
-			imageId = serviceBuilderOrganization.getLogoId();
+			if (fileEntry != null) {
+				imageId = fileEntry.getFileEntryId();
+			}
+			else if ((serviceBuilderOrganization != null) &&
+					 useOrganizationDefault) {
+
+				imageId = serviceBuilderOrganization.getLogoId();
+			}
 		}
 
-		if ((imageId != null) && (imageId != 0) &&
+		if ((imageId > 0) &&
 			((serviceBuilderOrganization == null) ||
 			 (serviceBuilderOrganization.getLogoId() != imageId))) {
 
@@ -1038,17 +1055,28 @@ public class OrganizationResourceImpl extends BaseOrganizationResourceImpl {
 	}
 
 	private boolean _hasLogo(
-		Organization organization,
-		com.liferay.portal.kernel.model.Organization
-			serviceBuilderOrganization) {
+			Organization organization,
+			com.liferay.portal.kernel.model.Organization
+				serviceBuilderOrganization)
+		throws Exception {
 
-		Long imageId = organization.getImageId();
+		long imageId = GetterUtil.getLong(organization.getImageId());
 
-		if ((serviceBuilderOrganization != null) && (imageId == null)) {
-			imageId = serviceBuilderOrganization.getLogoId();
+		if (imageId == 0) {
+			FileEntry fileEntry =
+				_dlAppLocalService.fetchFileEntryByExternalReferenceCode(
+					contextCompany.getGroupId(),
+					organization.getImageExternalReferenceCode());
+
+			if (fileEntry != null) {
+				imageId = fileEntry.getFileEntryId();
+			}
+			else if (serviceBuilderOrganization != null) {
+				imageId = serviceBuilderOrganization.getLogoId();
+			}
 		}
 
-		if ((imageId == null) || (imageId == 0)) {
+		if (imageId == 0) {
 			return false;
 		}
 

@@ -37,6 +37,10 @@ public class UpstreamFailureUtil {
 
 		_upstreamFailures.put(type, upstreamFailures);
 
+		if (!isUpstreamComparisonAvailable(topLevelBuild)) {
+			return upstreamFailures;
+		}
+
 		TopLevelBuildReport topLevelBuildReport =
 			getUpstreamTopLevelBuildReport(topLevelBuild);
 
@@ -96,92 +100,19 @@ public class UpstreamFailureUtil {
 	public static String getUpstreamJobFailuresSHA(
 		TopLevelBuild topLevelBuild) {
 
-		return _getUpstreamJobFailuresSHA(
-			getUpstreamTopLevelBuildReport(topLevelBuild));
+		if (isUpstreamComparisonAvailable(topLevelBuild)) {
+			return _upstreamJobFailuresSHA;
+		}
+
+		return "";
 	}
 
 	public static TestrayBuild getUpstreamTestrayBuild(
 		TopLevelBuild topLevelBuild) {
 
-		if (_upstreamTestrayBuild != null) {
+		if (isUpstreamComparisonAvailable(topLevelBuild)) {
 			return _upstreamTestrayBuild;
 		}
-
-		if (!_upstreamComparisonAvailable) {
-			return null;
-		}
-
-		TestrayRoutine testrayRoutine = _getUpstreamTestrayRoutine(
-			topLevelBuild);
-
-		if ((testrayRoutine == null) ||
-			!(topLevelBuild instanceof PortalBranchInformationBuild)) {
-
-			_upstreamComparisonAvailable = false;
-
-			return null;
-		}
-
-		int buildCount = 0;
-
-		String upstreamBranchName = topLevelBuild.getBranchName();
-
-		if (topLevelBuild instanceof PullRequestSubrepositoryTopLevelBuild) {
-			PullRequestSubrepositoryTopLevelBuild
-				pullRequestSubrepositoryTopLevelBuild =
-					(PullRequestSubrepositoryTopLevelBuild)topLevelBuild;
-
-			upstreamBranchName =
-				pullRequestSubrepositoryTopLevelBuild.
-					getPortalUpstreamBranchName();
-		}
-
-		GitWorkingDirectory gitWorkingDirectory =
-			GitWorkingDirectoryFactory.newGitWorkingDirectory(
-				upstreamBranchName, (File)null, "liferay-portal");
-
-		for (TestrayBuild testrayBuild : testrayRoutine.getTestrayBuilds(25)) {
-			if (buildCount > 25) {
-				break;
-			}
-
-			buildCount++;
-
-			if (!gitWorkingDirectory.refContainsSHA(
-					"HEAD", testrayBuild.getPortalSHA())) {
-
-				continue;
-			}
-
-			_upstreamTestrayBuild = testrayBuild;
-
-			TopLevelBuildReport topLevelBuildReport =
-				testrayBuild.getTopLevelBuildReport();
-
-			if (topLevelBuildReport == null) {
-				continue;
-			}
-
-			List<DownstreamBuildReport> downstreamBuildReports =
-				topLevelBuildReport.getDownstreamBuildReports();
-
-			if ((downstreamBuildReports == null) ||
-				downstreamBuildReports.isEmpty()) {
-
-				continue;
-			}
-
-			System.out.println(
-				JenkinsResultsParserUtil.combine(
-					"Comparing with test results from ",
-					String.valueOf(topLevelBuildReport.getBuildURL()),
-					" at SHA ",
-					_getUpstreamJobFailuresSHA(topLevelBuildReport)));
-
-			return _upstreamTestrayBuild;
-		}
-
-		_upstreamComparisonAvailable = false;
 
 		return null;
 	}
@@ -189,8 +120,7 @@ public class UpstreamFailureUtil {
 	public static TestrayBuild getUpstreamTestrayBuild(
 		TopLevelBuild topLevelBuild, String upstreamBranchSHA) {
 
-		TestrayRoutine testrayRoutine = _getUpstreamTestrayRoutine(
-			topLevelBuild);
+		TestrayRoutine testrayRoutine = _upstreamTestrayRoutine;
 
 		if (testrayRoutine == null) {
 			return null;
@@ -212,33 +142,11 @@ public class UpstreamFailureUtil {
 	public static TopLevelBuildReport getUpstreamTopLevelBuildReport(
 		TopLevelBuild topLevelBuild) {
 
-		if (_upstreamTopLevelBuildReport != null) {
+		if (isUpstreamComparisonAvailable(topLevelBuild)) {
 			return _upstreamTopLevelBuildReport;
 		}
 
-		if (!_upstreamComparisonAvailable) {
-			return null;
-		}
-
-		if (Objects.equals(
-				_getUpstreamComparison(topLevelBuild.getJobName()), "false")) {
-
-			_upstreamComparisonAvailable = false;
-
-			return null;
-		}
-
-		TestrayBuild upstreamTestrayBuild = getUpstreamTestrayBuild(
-			topLevelBuild);
-
-		if (upstreamTestrayBuild == null) {
-			return null;
-		}
-
-		_upstreamTopLevelBuildReport =
-			upstreamTestrayBuild.getTopLevelBuildReport();
-
-		return _upstreamTopLevelBuildReport;
+		return null;
 	}
 
 	public static TopLevelBuildReport getUpstreamTopLevelBuildReport(

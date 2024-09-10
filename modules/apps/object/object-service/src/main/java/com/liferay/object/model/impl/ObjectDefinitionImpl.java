@@ -108,6 +108,11 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 	}
 
 	@Override
+	public String getPreviousRESTContextPath() {
+		return _previousRESTContextPath;
+	}
+
+	@Override
 	public String getResourceName() {
 		if (isUnmodifiableSystemObject()) {
 			throw new UnsupportedOperationException();
@@ -263,5 +268,12 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 
 		return false;
 	}
+
+	@Override
+	public void setPreviousRESTContextPath(String previousRESTContextPath) {
+		_previousRESTContextPath = previousRESTContextPath;
+	}
+
+	private String _previousRESTContextPath;
 
 }

@@ -17,8 +17,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.check.comparator.PropertyValueComparator;
 import com.liferay.source.formatter.util.FileUtil;
 
-import java.io.IOException;
-
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -38,7 +36,7 @@ public class JSONPackageJSONCheck extends BaseFileCheck {
 	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
-		throws IOException, JSONException {
+		throws JSONException {
 
 		if (!absolutePath.endsWith("/package.json") ||
 			(!absolutePath.contains("/modules/apps/") &&

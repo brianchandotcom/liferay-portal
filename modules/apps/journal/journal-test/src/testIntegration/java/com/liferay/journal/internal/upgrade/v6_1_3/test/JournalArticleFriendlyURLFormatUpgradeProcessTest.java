@@ -45,7 +45,7 @@ public class JournalArticleFriendlyURLFormatUpgradeProcessTest
 			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Test
-	public void testGetFriendlyURLWithoutTrailingSlash() throws Exception {
+	public void testUpgradeWithTrailingSlash() throws Exception {
 		_addJournalArticle("test/");
 
 		_runUpgrade();
@@ -57,7 +57,7 @@ public class JournalArticleFriendlyURLFormatUpgradeProcessTest
 	}
 
 	@Test
-	public void testGetFriendlyURLWithUniqueURL() throws Exception {
+	public void testUpgradeWithDuplicateFriendlyURL() throws Exception {
 		_addJournalArticle("test");
 		_addJournalArticle("test/");
 

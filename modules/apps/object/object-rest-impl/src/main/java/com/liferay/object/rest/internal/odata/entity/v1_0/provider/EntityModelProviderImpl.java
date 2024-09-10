@@ -27,7 +27,22 @@ public class EntityModelProviderImpl implements EntityModelProvider {
 			return new ObjectEntryEntityModel(
 				objectDefinition,
 				_objectFieldLocalService.getObjectFields(
-					objectDefinition.getObjectDefinitionId()));
+					objectDefinition.getObjectDefinitionId()),
+				false);
+		}
+		catch (Exception exception) {
+			throw new SystemException(exception);
+		}
+	}
+
+	@Override
+	public EntityModel getLegacyEntityModel(ObjectDefinition objectDefinition) {
+		try {
+			return new ObjectEntryEntityModel(
+				objectDefinition,
+				_objectFieldLocalService.getObjectFields(
+					objectDefinition.getObjectDefinitionId()),
+				true);
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);

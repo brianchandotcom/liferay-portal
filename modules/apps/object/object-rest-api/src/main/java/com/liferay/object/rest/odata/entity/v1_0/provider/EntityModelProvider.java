@@ -15,4 +15,10 @@ public interface EntityModelProvider {
 
 	public EntityModel getEntityModel(ObjectDefinition objectDefinition);
 
+	public default EntityModel getLegacyEntityModel(
+		ObjectDefinition objectDefinition) {
+
+		return null;
+	}
+
 }

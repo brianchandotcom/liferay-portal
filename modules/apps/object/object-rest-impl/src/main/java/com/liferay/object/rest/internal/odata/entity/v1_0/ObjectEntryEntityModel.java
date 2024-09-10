@@ -45,7 +45,10 @@ import javax.ws.rs.BadRequestException;
 public class ObjectEntryEntityModel implements EntityModel {
 
 	public ObjectEntryEntityModel(
-		ObjectDefinition objectDefinition, List<ObjectField> objectFields) {
+		ObjectDefinition objectDefinition, List<ObjectField> objectFields,
+		boolean useLegacyStatus) {
+
+		_useLegacyStatus = useLegacyStatus;
 
 		_entityFieldsMap = _getStringEntityFieldsMap(
 			objectDefinition, objectFields);
@@ -215,7 +218,17 @@ public class ObjectEntryEntityModel implements EntityModel {
 						"keywords", locale -> "assetTagNames.lowercase"))
 			).put(
 				"status",
-				new IntegerEntityField("status", locale -> Field.STATUS)
+				() -> {
+					IntegerEntityField statusEntityField =
+						new IntegerEntityField(
+							"status", locale -> Field.STATUS);
+
+					if (_useLegacyStatus) {
+						return new CollectionEntityField(statusEntityField);
+					}
+
+					return statusEntityField;
+				}
 			).put(
 				"taxonomyCategoryIds",
 				new CollectionEntityField(
@@ -288,5 +301,6 @@ public class ObjectEntryEntityModel implements EntityModel {
 		ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT,
 		ObjectFieldConstants.BUSINESS_TYPE_FORMULA,
 		ObjectFieldConstants.BUSINESS_TYPE_RICH_TEXT);
+	private final boolean _useLegacyStatus;
 
 }

@@ -57,9 +57,21 @@ public class ObjectDefinitionFilterParserImpl
 			return null;
 		}
 
-		return parse(
-			_entityModelProvider.getEntityModel(objectDefinition), filterString,
-			objectDefinition);
+		try {
+			return parse(
+				_entityModelProvider.getEntityModel(objectDefinition),
+				filterString, objectDefinition);
+		}
+		catch (Exception exception) {
+			EntityModel entityModel = _entityModelProvider.getLegacyEntityModel(
+				objectDefinition);
+
+			if (entityModel == null) {
+				throw exception;
+			}
+
+			return parse(entityModel, filterString, objectDefinition);
+		}
 	}
 
 	@Reference

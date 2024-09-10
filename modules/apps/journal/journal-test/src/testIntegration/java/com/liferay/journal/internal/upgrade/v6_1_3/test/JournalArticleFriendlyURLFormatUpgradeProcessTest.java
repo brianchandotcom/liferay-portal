@@ -6,6 +6,7 @@
 package com.liferay.journal.internal.upgrade.v6_1_3.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.test.util.BaseFriendlyURLFormatUpgradeProcessTestCase;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
@@ -13,6 +14,7 @@ import com.liferay.journal.service.JournalArticleResourceLocalService;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
@@ -56,16 +58,48 @@ public class JournalArticleFriendlyURLFormatUpgradeProcessTest
 	}
 
 	@Test
+	public void testUpgradeContainingSlash() throws Exception {
+		_addJournalArticle("test/test");
+
+		_runUpgrade();
+
+		_assertURLTitle("test/test");
+	}
+
+	@Test
 	public void testUpgradeWithDuplicateFriendlyURL() throws Exception {
 		_addJournalArticle("test");
 		_addJournalArticle("test/");
 
 		_runUpgrade();
 
-		_journalArticle = _journalArticleLocalService.fetchJournalArticle(
-			_journalArticle.getPrimaryKey());
+		_assertURLTitle("test-1");
+	}
 
-		Assert.assertEquals("test-1", _journalArticle.getUrlTitle());
+	@Test
+	public void testUpgradeWithMultipleLocales() throws Exception {
+		String languageId = LocaleUtil.toLanguageId(LocaleUtil.SPAIN);
+
+		_addJournalArticle("english/");
+
+		createFriendlyURLEntryLocalization(
+			_classNameId, _journalArticle.getResourcePrimKey(), languageId,
+			"spanish/");
+
+		_runUpgrade();
+
+		_assertURLTitle("english");
+
+		_assertFriendlyURLEntryLocalization(languageId, "spanish");
+	}
+
+	@Test
+	public void testUpgradeWithMultipleTrailingSlashes() throws Exception {
+		_addJournalArticle("test///");
+
+		_runUpgrade();
+
+		_assertURLTitle("test");
 	}
 
 	@Test
@@ -74,10 +108,7 @@ public class JournalArticleFriendlyURLFormatUpgradeProcessTest
 
 		_runUpgrade();
 
-		_journalArticle = _journalArticleLocalService.fetchJournalArticle(
-			_journalArticle.getPrimaryKey());
-
-		Assert.assertEquals("test", _journalArticle.getUrlTitle());
+		_assertURLTitle("test");
 	}
 
 	private void _addJournalArticle(String urlTitle) {
@@ -101,6 +132,26 @@ public class JournalArticleFriendlyURLFormatUpgradeProcessTest
 		createFriendlyURLEntryLocalization(
 			_classNameId, _journalArticle.getResourcePrimKey(),
 			defaultLanguageId, urlTitle);
+	}
+
+	private void _assertFriendlyURLEntryLocalization(
+		String languageId, String urlTitle) {
+
+		FriendlyURLEntryLocalization friendlyURLEntryLocalization =
+			friendlyURLEntryLocalService.fetchFriendlyURLEntryLocalization(
+				group.getGroupId(), _classNameId, languageId, urlTitle);
+
+		Assert.assertEquals(
+			urlTitle, friendlyURLEntryLocalization.getUrlTitle());
+	}
+
+	private void _assertURLTitle(String urlTitle) {
+		_journalArticle = _journalArticleLocalService.fetchJournalArticle(
+			_journalArticle.getPrimaryKey());
+
+		Assert.assertEquals(urlTitle, _journalArticle.getUrlTitle());
+
+		_assertFriendlyURLEntryLocalization(defaultLanguageId, urlTitle);
 	}
 
 	private void _runUpgrade() throws Exception {

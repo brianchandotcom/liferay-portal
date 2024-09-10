@@ -8,6 +8,7 @@ package com.liferay.blogs.internal.upgrade.v3_1_1.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
+import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.test.util.BaseFriendlyURLFormatUpgradeProcessTestCase;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -51,16 +52,31 @@ public class BlogsFriendlyURLFormatUpgradeProcessTest
 	}
 
 	@Test
+	public void testUpgradeContainingSlash() throws Exception {
+		_addBlogsEntry("test/test");
+
+		_runUpgrade();
+
+		_assertURLTitle("test/test");
+	}
+
+	@Test
 	public void testUpgradeWithDuplicateFriendlyURL() throws Exception {
 		_addBlogsEntry("test");
 		_addBlogsEntry("test/");
 
 		_runUpgrade();
 
-		_blogsEntry = _blogsEntryLocalService.fetchBlogsEntry(
-			_blogsEntry.getEntryId());
+		_assertURLTitle("test-1");
+	}
 
-		Assert.assertEquals("test-1", _blogsEntry.getUrlTitle());
+	@Test
+	public void testUpgradeWithMultipleTrailingSlashes() throws Exception {
+		_addBlogsEntry("test///");
+
+		_runUpgrade();
+
+		_assertURLTitle("test");
 	}
 
 	@Test
@@ -69,10 +85,7 @@ public class BlogsFriendlyURLFormatUpgradeProcessTest
 
 		_runUpgrade();
 
-		_blogsEntry = _blogsEntryLocalService.fetchBlogsEntry(
-			_blogsEntry.getEntryId());
-
-		Assert.assertEquals("test", _blogsEntry.getUrlTitle());
+		_assertURLTitle("test");
 	}
 
 	private void _addBlogsEntry(String urlTitle) {
@@ -90,6 +103,20 @@ public class BlogsFriendlyURLFormatUpgradeProcessTest
 		createFriendlyURLEntryLocalization(
 			_classNameId, _blogsEntry.getEntryId(), defaultLanguageId,
 			urlTitle);
+	}
+
+	private void _assertURLTitle(String urlTitle) {
+		_blogsEntry = _blogsEntryLocalService.fetchBlogsEntry(
+			_blogsEntry.getEntryId());
+
+		Assert.assertEquals(urlTitle, _blogsEntry.getUrlTitle());
+
+		FriendlyURLEntryLocalization friendlyURLEntryLocalization =
+			friendlyURLEntryLocalService.fetchFriendlyURLEntryLocalization(
+				group.getGroupId(), _classNameId, _blogsEntry.getUrlTitle());
+
+		Assert.assertEquals(
+			urlTitle, friendlyURLEntryLocalization.getUrlTitle());
 	}
 
 	private void _runUpgrade() throws Exception {

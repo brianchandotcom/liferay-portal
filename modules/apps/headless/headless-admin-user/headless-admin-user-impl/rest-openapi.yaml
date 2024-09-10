@@ -438,6 +438,10 @@ components:
                     format: uri
                     readOnly: true
                     type: string
+                imageExternalReferenceCode:
+                    description:
+                        The organization's image external reference code.
+                    type: string
                 imageId:
                     description:
                         The organization's image id.
@@ -1116,6 +1120,10 @@ components:
                         A relative URL to the user's profile image.
                     format: uri
                     readOnly: true
+                    type: string
+                imageExternalReferenceCode:
+                    description:
+                        The user's profile image external reference code.
                     type: string
                 imageId:
                     description:

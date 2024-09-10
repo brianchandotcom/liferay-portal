@@ -3180,6 +3180,17 @@
 	},
 	{
 		"classNames": [
+			"ListTypeServiceUtil"
+		],
+		"from": "getListTypes(String paramName)",
+		"issueKey": "LPD-35890",
+		"newImports": [
+			"com.liferay.portal.kernel.security.auth.CompanyThreadLocal"
+		],
+		"to": "getListTypes(CompanyThreadLocal.getCompanyId(), param#0#)"
+	},
+	{
+		"classNames": [
 			"PrefsPropsUtil"
 		],
 		"from": "getPreferences(long paramName, boolean paramName)",

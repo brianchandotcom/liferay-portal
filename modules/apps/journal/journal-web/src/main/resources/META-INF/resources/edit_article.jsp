@@ -57,19 +57,10 @@ journalEditArticleDisplayContext.setViewAttributes();
 			<ul class="tbar-nav">
 				<li class="tbar-item tbar-item-expand">
 					<div class="autofit-row sidebar-section">
-						<div class="<%= FeatureFlagManagerUtil.isEnabled("LPD-11253") ? "autofit-col d-flex flex-row" : "autofit-col translation-manager" %>">
-							<c:choose>
-								<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPD-11253") %>'>
-									<div class="inline-item px-6 py-2">
-										<span aria-hidden="true" class="loading-animation"></span>
-									</div>
-								</c:when>
-								<c:otherwise>
-									<div class="inline-item px-5 py-2">
-										<span aria-hidden="true" class="loading-animation"></span>
-									</div>
-								</c:otherwise>
-							</c:choose>
+						<div class="autofit-col d-flex flex-row">
+							<div class="inline-item px-6 py-2">
+								<span aria-hidden="true" class="loading-animation"></span>
+							</div>
 
 							<react:component
 								module="{TranslationManager} from journal-web"
@@ -89,49 +80,47 @@ journalEditArticleDisplayContext.setViewAttributes();
 							/>
 						</div>
 
-						<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-11253") %>'>
-							<div class="c-ml-2">
-								<div class="inline-item my-5 p-5 w-100">
-									<span aria-hidden="true" class="loading-animation"></span>
-								</div>
-
-								<react:component
-									module="{TranslationOptions} from journal-web"
-									props='<%=
-										HashMapBuilder.<String, Object>put(
-											"defaultLanguageId", journalEditArticleDisplayContext.getDefaultArticleLanguageId()
-										).put(
-											"fields", journalEditArticleDisplayContext.getFieldMap()
-										).put(
-											"locales", journalEditArticleDisplayContext.getLocales()
-										).put(
-											"namespace", liferayPortletResponse.getNamespace()
-										).put(
-											"selectedLanguageId", journalEditArticleDisplayContext.getSelectedLanguageId()
-										).build()
-									%>'
-								/>
+						<div class="c-ml-2">
+							<div class="inline-item my-5 p-5 w-100">
+								<span aria-hidden="true" class="loading-animation"></span>
 							</div>
 
-							<div class="autofit-col c-ml-2">
-								<react:component
-									module="{TranslationFilter} from journal-web"
-									props='<%=
-										HashMapBuilder.<String, Object>put(
-											"defaultLanguageId", journalEditArticleDisplayContext.getDefaultArticleLanguageId()
-										).put(
-											"fields", journalEditArticleDisplayContext.getFieldMap()
-										).put(
-											"locales", journalEditArticleDisplayContext.getLocales()
-										).put(
-											"namespace", liferayPortletResponse.getNamespace()
-										).put(
-											"selectedLanguageId", journalEditArticleDisplayContext.getSelectedLanguageId()
-										).build()
-									%>'
-								/>
-							</div>
-						</c:if>
+							<react:component
+								module="{TranslationOptions} from journal-web"
+								props='<%=
+									HashMapBuilder.<String, Object>put(
+										"defaultLanguageId", journalEditArticleDisplayContext.getDefaultArticleLanguageId()
+									).put(
+										"fields", journalEditArticleDisplayContext.getFieldMap()
+									).put(
+										"locales", journalEditArticleDisplayContext.getLocales()
+									).put(
+										"namespace", liferayPortletResponse.getNamespace()
+									).put(
+										"selectedLanguageId", journalEditArticleDisplayContext.getSelectedLanguageId()
+									).build()
+								%>'
+							/>
+						</div>
+
+						<div class="autofit-col c-ml-2">
+							<react:component
+								module="{TranslationFilter} from journal-web"
+								props='<%=
+									HashMapBuilder.<String, Object>put(
+										"defaultLanguageId", journalEditArticleDisplayContext.getDefaultArticleLanguageId()
+									).put(
+										"fields", journalEditArticleDisplayContext.getFieldMap()
+									).put(
+										"locales", journalEditArticleDisplayContext.getLocales()
+									).put(
+										"namespace", liferayPortletResponse.getNamespace()
+									).put(
+										"selectedLanguageId", journalEditArticleDisplayContext.getSelectedLanguageId()
+									).build()
+								%>'
+							/>
+						</div>
 					</div>
 				</li>
 				<li class="tbar-item">

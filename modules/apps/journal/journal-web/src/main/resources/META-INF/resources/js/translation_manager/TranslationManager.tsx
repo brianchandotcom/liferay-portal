@@ -59,11 +59,7 @@ export default function TranslationManager({
 	};
 
 	return (
-		<div
-			className={classNames({
-				'translation-manager': Liferay.FeatureFlags['LPD-11253'],
-			})}
-		>
+		<div className={classNames({'translation-manager': true})}>
 			<TranslationAdminSelector
 				activeLanguageIds={locales.map(({id}) => id)}
 				availableLocales={locales}

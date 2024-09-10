@@ -46,8 +46,6 @@ const DEFAULT_PROPS = {
 const renderDefaultComponent = () =>
 	render(<TranslationOptions {...DEFAULT_PROPS} />);
 describe('TranslationOptions', () => {
-	Liferay.FeatureFlags['LPD-11253'] = true;
-
 	it('translations options ellipsis not rendered when default language is selected', () => {
 		renderDefaultComponent();
 

@@ -19,7 +19,6 @@ import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
@@ -122,8 +121,7 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 			InfoItemFieldValues sourceInfoItemFieldValues =
 				_getInfoItemFieldValues(className, infoItem);
 
-			if (FeatureFlagManagerUtil.isEnabled("LPD-11253") &&
-				(modifiedDateTime > 0) &&
+			if ((modifiedDateTime > 0) &&
 				(workflowAction == WorkflowConstants.ACTION_PUBLISH)) {
 
 				Object infoItemFieldValue = _getInfoItemFieldValue(

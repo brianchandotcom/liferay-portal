@@ -120,7 +120,7 @@ public class UpgradeReport {
 	}
 
 	private List<String> _getJVMArguments() {
-		List<String> filteredArguments = new ArrayList<>();
+		List<String> jvmArguments = new ArrayList<>();
 
 		String[] passwordKeywords = {
 			"password", "secret", "securitycredential"
@@ -134,34 +134,30 @@ public class UpgradeReport {
 
 				String keyValueString = inputArgument.substring(2);
 
-				String[] keyValuePair = keyValueString.split(
-					StringPool.EQUAL, 2);
+				String[] keyValue = keyValueString.split(StringPool.EQUAL, 2);
 
-				String key = keyValuePair[0];
-
-				String value = keyValuePair[1];
-
-				String lowerCaseKey = StringUtil.toLowerCase(key);
+				String key = keyValue[0];
+				String value = keyValue[1];
 
 				for (String keyword : passwordKeywords) {
-					if (lowerCaseKey.contains(keyword)) {
+					if (StringUtil.containsIgnoreCase(
+							key, keyword, StringPool.BLANK)) {
+
 						value = StringPool.EIGHT_STARS;
 
 						break;
 					}
 				}
 
-				filteredArguments.add(
+				jvmArguments.add(
 					StringBundler.concat("-D", key, StringPool.EQUAL, value));
 			}
 			else {
-				filteredArguments.add(inputArgument);
+				jvmArguments.add(inputArgument);
 			}
 		}
 
-		Collections.sort(filteredArguments);
-
-		return filteredArguments;
+		return ListUtil.sort(jvmArguments);
 	}
 
 	private List<MessagesPrinter> _getMessagesPrinters(

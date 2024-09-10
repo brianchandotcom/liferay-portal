@@ -76,6 +76,30 @@ public class UserServiceWhenAddingOrRemovingPasswordPolicyUsersTest {
 	}
 
 	@Test
+	public void testAuthenticateByEmailAddress() throws Exception {
+		_user = UserTestUtil.addUser();
+
+		Assert.assertEquals(_defaultPasswordPolicy, _user.getPasswordPolicy());
+
+		String password = "password";
+
+		_user = _userLocalService.updatePassword(
+			_user.getUserId(), password, password, true, true);
+
+		_userLocalService.addPasswordPolicyUsers(
+			_testPasswordPolicy.getPasswordPolicyId(),
+			new long[] {_user.getUserId()});
+
+		_userLocalService.authenticateByEmailAddress(
+			_user.getCompanyId(), _user.getEmailAddress(), password, null, null,
+			null);
+
+		_user = _userLocalService.getUser(_user.getUserId());
+
+		Assert.assertTrue(_user.isPasswordReset());
+	}
+
+	@Test
 	public void testPasswordResetStillPersistsIfNewPolicyDoesNotAllowChanging()
 		throws Exception {
 

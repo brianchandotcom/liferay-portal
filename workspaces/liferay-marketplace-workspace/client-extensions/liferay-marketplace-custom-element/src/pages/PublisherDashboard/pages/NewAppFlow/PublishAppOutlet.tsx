@@ -4,32 +4,28 @@
  */
 
 import ClayButton from '@clayui/button';
-import {Link, Outlet} from 'react-router-dom';
-
-import {useAccount} from '../../../../../hooks/data/useAccounts';
-
-import './PublishSolutionOutlet.scss';
-
-import 'react-quill/dist/quill.snow.css';
 import {useModal} from '@clayui/modal';
 import {useMemo} from 'react';
+import {Link, Outlet} from 'react-router-dom';
 
-import Modal from '../../../../../components/Modal';
-import {useSolutionContext} from '../../../../../context/SolutionContext';
-import {PRODUCT_WORKFLOW_STATUS_CODE} from '../../../../../enums/Product';
-import i18n from '../../../../../i18n';
-import usePublishNavigation from '../../../hooks/usePublishNavigation';
-import usePublishHeader from '../../../hooks/usePublishHeader';
-import usePublishSolutionSubmission from '../../../hooks/usePublishSolutionSubmission';
-import PublishNav from '../../../../../components/AppPublish/Sidebar';
-import {SOLUTION_FLOW_ITEMS} from '../constants';
-import AppPublish from '../../../../../components/AppPublish';
+import Modal from '../../../../components/Modal';
+import {useNewAppContext} from '../../../../context/NewAppContext';
+import {PRODUCT_WORKFLOW_STATUS_CODE} from '../../../../enums/Product';
+import {useAccount} from '../../../../hooks/data/useAccounts';
+import i18n from '../../../../i18n';
+import usePublishHeader from '../../hooks/usePublishHeader';
+import usePublishNavigation from '../../hooks/usePublishNavigation';
+import {APP_FLOW_ITEMS} from './constants';
+import AppPublish from '../../../../components/AppPublish';
 
-const PublishSolutionOutlet = () => {
+import './PublishAppOutlet.scss';
+import usePublishAppSubmission from '../../hooks/usePublishAppSubmission';
+
+const PublishAppOutlet = () => {
 	usePublishHeader();
 
 	const {data: account} = useAccount();
-	const [context, dispatch] = useSolutionContext();
+	const [context, dispatch] = useNewAppContext();
 
 	const {
 		activeIndex,
@@ -39,15 +35,9 @@ const PublishSolutionOutlet = () => {
 		onClickPrevious,
 		onExit,
 		steps,
-	} = usePublishNavigation({
-		exitLink: '/solutions',
-		flowItems: SOLUTION_FLOW_ITEMS,
-	});
+	} = usePublishNavigation({exitLink: '/apps', flowItems: APP_FLOW_ITEMS});
 
-	const {onSave, onSaveAsDraft} = usePublishSolutionSubmission(
-		context,
-		dispatch
-	);
+	const {onSave, onSaveAsDraft} = usePublishAppSubmission(context, dispatch);
 
 	const {observer, onOpenChange, open} = useModal();
 	const onExitModal = useModal();
@@ -99,22 +89,25 @@ const PublishSolutionOutlet = () => {
 					disabled: isDisabled,
 					onClick: onSaveAsDraft,
 				}}
-				submitProps={{
-					onClick: onSave,
-				}}
 			/>
 
 			<AppPublish.Body>
-				<PublishNav activeIndex={activeIndex} items={steps} />
+				<AppPublish.Sidebar activeIndex={activeIndex} items={steps} />
 
 				<AppPublish.Content>
+					<details>
+						<pre>{JSON.stringify(context, null, 2)}</pre>
+					</details>
+
 					<h1 className="header-title mb-4">{activeRoute.title}</h1>
 					{activeRoute.description}
 
-					<div className="mt-6 solutions-form">
+					<div className="mt-6 new-app-form">
 						<Outlet />
 					</div>
+
 					<hr className="my-6" />
+
 					<div className="d-flex justify-content-end">
 						{activeIndex !== 0 && (
 							<ClayButton
@@ -129,7 +122,7 @@ const PublishSolutionOutlet = () => {
 						<ClayButton
 							disabled={isDisabled}
 							displayType="primary"
-							onClick={async () => {
+							onClick={() => {
 								if (isLastStep) {
 									return onSave().then(onExit);
 								}
@@ -137,9 +130,7 @@ const PublishSolutionOutlet = () => {
 								onClickContinue();
 							}}
 						>
-							{i18n.translate(
-								isLastStep ? 'submit-solution' : 'continue'
-							)}
+							{i18n.translate(isLastStep ? 'submit' : 'continue')}
 						</ClayButton>
 					</div>
 				</AppPublish.Content>
@@ -148,26 +139,23 @@ const PublishSolutionOutlet = () => {
 			<Modal
 				last={
 					<>
-						<ClayButton
-							displayType="secondary"
-							onClick={() => onSaveAsDraft().then(onExit)}
-						>
+						<ClayButton displayType="secondary">
 							{i18n.translate('save-as-a-draft-exit')}
 						</ClayButton>
 
-						<Link className="btn btn-primary ml-2" to="/solutions">
+						<Link className="btn btn-primary ml-2" to="/">
 							{i18n.translate('exit')}
 						</Link>
 					</>
 				}
 				observer={observer}
 				size={'md' as any}
-				title="Exit from creating a solution"
+				title="Exit from creating an app"
 				visible={open}
 			>
 				<p>
 					{i18n.translate(
-						'all-progress-and-information-related-to-the-creation-of-the-solution-will-be-lost-unless-you-save-the-solution-as-a-draft-do-you-still-want-to-exit'
+						'all-progress-and-information-related-to-the-creation-of-the-app-will-be-lost-unless-you-save-the-app-as-a-draft-do-you-still-want-to-exit'
 					)}
 				</p>
 			</Modal>
@@ -175,24 +163,22 @@ const PublishSolutionOutlet = () => {
 			{onExitModal.open && (
 				<Modal
 					last={
-						<>
-							<ClayButton
-								className="btn btn-primary ml-2"
-								displayType="primary"
-								onClick={onExit}
-							>
-								{i18n.translate('exit')}
-							</ClayButton>
-						</>
+						<ClayButton
+							className="btn btn-primary ml-2"
+							displayType="primary"
+							onClick={onExit}
+						>
+							{i18n.translate('exit')}
+						</ClayButton>
 					}
 					observer={onExitModal.observer}
 					size={'md' as any}
-					title="Exit from creating a solution"
+					title="Exit from creating an App"
 					visible={onExitModal.open}
 				>
 					<p>
 						{i18n.translate(
-							'all-progress-and-information-related-to-the-creation-of-the-solution-will-be-lost-do-you-still-want-to-exit'
+							'all-progress-and-information-related-to-the-creation-of-the-app-will-be-lost-do-you-still-want-to-exit'
 						)}
 					</p>
 				</Modal>
@@ -201,4 +187,4 @@ const PublishSolutionOutlet = () => {
 	);
 };
 
-export default PublishSolutionOutlet;
+export default PublishAppOutlet;

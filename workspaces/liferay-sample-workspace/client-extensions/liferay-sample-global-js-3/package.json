@@ -1,0 +1,12 @@
+{
+	"devDependencies": {
+		"webpack": "5.90.1",
+		"webpack-cli": "5.1.4"
+	},
+	"name": "@liferay/liferay-sample-global-js-3",
+	"private": true,
+	"scripts": {
+		"build": "webpack"
+	},
+	"version": "0.0.0"
+}

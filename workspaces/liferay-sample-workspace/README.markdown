@@ -114,6 +114,10 @@ For `liferay-sample-etc-cron` and `liferay-sample-etc-spring-boot` the third typ
 
 	Add a global script element with attributes to a page.
 
+- *liferay-sample-global-js-3*
+
+	Add a global script element to an entire instance.
+
 - *liferay-sample-iframe-1*
 
 	Add an IFrame widget with an interactive counter app.

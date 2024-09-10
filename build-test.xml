@@ -1148,7 +1148,7 @@ jdbc.default.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 
 					<if>
 						<not>
-							<isset property="${java.jdk.home}" />
+							<isset property="java.jdk.home" />
 						</not>
 						<then>
 							<fail>Unable to get the property "java.jdk.home" for jdk version: @{version} type: @{type}</fail>

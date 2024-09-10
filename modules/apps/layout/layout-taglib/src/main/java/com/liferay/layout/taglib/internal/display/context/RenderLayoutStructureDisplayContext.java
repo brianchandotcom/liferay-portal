@@ -635,8 +635,17 @@ public class RenderLayoutStructureDisplayContext {
 	public boolean includeCommonStyles(FragmentEntryLink fragmentEntryLink)
 		throws Exception {
 
+		String editableValues = fragmentEntryLink.getEditableValues();
+
+		if (!editableValues.contains(
+				FragmentEntryProcessorConstants.
+					KEY_STYLES_FRAGMENT_ENTRY_PROCESSOR)) {
+
+			return false;
+		}
+
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			fragmentEntryLink.getEditableValues());
+			editableValues);
 
 		JSONObject stylesFragmentEntryEntryProcessorJSONObject =
 			jsonObject.getJSONObject(

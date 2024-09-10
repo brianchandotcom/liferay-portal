@@ -10,6 +10,7 @@ import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {pageManagementSiteTest} from '../../fixtures/pageManagementSiteTest';
+import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../utils/getRandomString';
 import {LEMON_OBJECT_ERC} from '../setup/page-management-site/constants';
 import getFormContainerDefinition from './utils/getFormContainerDefinition';
@@ -738,6 +739,53 @@ test.describe('Multistep', () => {
 			await pageEditorPage.addFragment('Form Components', 'Stepper');
 
 			await expect(page.locator('.multi-step-indicator')).toHaveCount(4);
+		}
+	);
+});
+
+test.describe('Form errors', () => {
+	test(
+		'Show an error when there is no Submit Button',
+		{tag: '@LPS-151754'},
+		async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
+
+			// Get the id of Lemon object from the site initializer
+
+			const {id: objectDefinitionId} =
+				await apiHelpers.objectAdmin.getObjectDefinitionByExternalReferenceCode(
+					LEMON_OBJECT_ERC
+				);
+
+			// Create a page with a Form fragment
+
+			const formId = getRandomString();
+
+			const formDefinition = getFormContainerDefinition({
+				id: formId,
+				objectDefinitionId,
+				pageElements: [],
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([formDefinition]),
+				siteId: pageManagementSite.id,
+				title: getRandomString(),
+			});
+
+			// Go to edit mode
+
+			await pageEditorPage.goto(
+				layout,
+				pageManagementSite.friendlyUrlPath
+			);
+
+			// Publish and check it shows Submit Button error
+
+			await clickAndExpectToBeVisible({
+				target: page.getByText('Submit Button Missing'),
+				timeout: 3000,
+				trigger: pageEditorPage.publishButton,
+			});
 		}
 	);
 });

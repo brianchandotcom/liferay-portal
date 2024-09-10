@@ -7,6 +7,8 @@ import {State} from '../../types/State';
 import moveItemsAction from '../actions/moveItems';
 import updateNetwork from '../actions/updateNetwork';
 import LayoutService from '../services/LayoutService';
+import sortItemIds from '../utils/sortItemIds';
+import filterSelectedItems from './filterSelectedItems';
 
 type Props = {
 	itemIds: string[];
@@ -21,14 +23,21 @@ export default function moveItems({itemIds, parentItemIds, positions}: Props) {
 		) => void,
 		getState: () => State
 	) => {
+		const {layoutData, segmentsExperienceId} = getState();
+
+		const sortedItemIds = sortItemIds(
+			filterSelectedItems(itemIds, layoutData.items),
+			layoutData
+		);
+
 		return LayoutService.moveItems({
-			itemIds,
+			itemIds: sortedItemIds,
 			onNetworkStatus: dispatch,
 			parentItemIds,
 			positions,
-			segmentsExperienceId: getState().segmentsExperienceId,
+			segmentsExperienceId,
 		}).then((layoutData) => {
-			dispatch(moveItemsAction({itemIds, layoutData}));
+			dispatch(moveItemsAction({itemIds: sortedItemIds, layoutData}));
 		});
 	};
 }

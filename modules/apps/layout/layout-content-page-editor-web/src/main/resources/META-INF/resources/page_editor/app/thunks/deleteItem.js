@@ -138,7 +138,7 @@ async function markItemForDeletion({
 
 	// We just need to remove the parents of the selected items
 
-	const selectedItemIds = filterSelectedItems(itemIds, layoutData);
+	const selectedItemIds = filterSelectedItems(itemIds, layoutData.items);
 
 	const portletIds = selectedItemIds.flatMap((itemId) =>
 		findPortletIds(itemId, layoutData, fragmentEntryLinks)

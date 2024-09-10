@@ -18,7 +18,7 @@ export default function pasteItem({
 		const {layoutData, segmentsExperienceId} = getState();
 
 		FragmentService.pasteItem({
-			itemIds: filterSelectedItems(copiedItemIds, layoutData),
+			itemIds: filterSelectedItems(copiedItemIds, layoutData.items),
 			onNetworkStatus: dispatch,
 			parentItemId,
 			segmentsExperienceId,

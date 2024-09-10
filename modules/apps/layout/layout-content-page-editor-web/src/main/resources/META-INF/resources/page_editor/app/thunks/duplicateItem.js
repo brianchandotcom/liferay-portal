@@ -14,7 +14,7 @@ export default function duplicateItem({itemIds, selectItems = () => {}}) {
 		const {layoutData, segmentsExperienceId} = getState();
 
 		FragmentService.duplicateItem({
-			itemIds: filterSelectedItems(itemIds, layoutData),
+			itemIds: filterSelectedItems(itemIds, layoutData.items),
 			onNetworkStatus: dispatch,
 			segmentsExperienceId,
 		}).then(

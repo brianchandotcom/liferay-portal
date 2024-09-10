@@ -14,10 +14,8 @@ import {LayoutData} from '../../types/layout_data/LayoutData';
 
 export default function filterSelectedItems(
 	itemIds: string[],
-	layoutData: LayoutData
+	layoutDataItems: LayoutData['items']
 ): string[] {
-	const {items: layoutDataItems} = layoutData;
-
 	const hasParentSelected = (itemId: string): boolean => {
 		const parentId = layoutDataItems[itemId].parentId;
 

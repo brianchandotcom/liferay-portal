@@ -31,8 +31,8 @@ public class OpenIdConnectAuthenticationHandlerImplTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
-	public void testWhenEmailIsInJWTClaimSet() throws Exception {
-		Map<String, Object> claims = _processClaimSet(
+	public void testGetUserInfoClaims() throws Exception {
+		Map<String, Object> claims = _getUserInfoClaims(
 			JSONUtil.put(
 				"email", "exists@test.com"
 			).put(
@@ -42,11 +42,8 @@ public class OpenIdConnectAuthenticationHandlerImplTest {
 			).toString());
 
 		Assert.assertEquals("exists@test.com", claims.get("email"));
-	}
 
-	@Test
-	public void testWhenEmailIsNotInJWTClaimSet() throws Exception {
-		Map<String, Object> claims = _processClaimSet(
+		claims = _getUserInfoClaims(
 			JSONUtil.put(
 				"name", "test_account"
 			).put(
@@ -56,8 +53,12 @@ public class OpenIdConnectAuthenticationHandlerImplTest {
 		Assert.assertNull(claims.get("email"));
 	}
 
-	private Map<String, Object> _processClaimSet(String claimSetJSON)
+	private Map<String, Object> _getUserInfoClaims(String claimSetJSON)
 		throws Exception {
+
+		OpenIdConnectAuthenticationHandlerImpl
+			openIdConnectAuthenticationHandlerImpl =
+				new OpenIdConnectAuthenticationHandlerImpl();
 
 		JWT mockJWT = Mockito.mock(JWT.class);
 
@@ -67,12 +68,8 @@ public class OpenIdConnectAuthenticationHandlerImplTest {
 			JWTClaimsSet.parse(claimSetJSON)
 		);
 
-		return _openIdConnectAuthenticationHandlerImpl.getUserInfoClaims(
+		return openIdConnectAuthenticationHandlerImpl.getUserInfoClaims(
 			mockJWT);
 	}
-
-	private OpenIdConnectAuthenticationHandlerImpl
-		_openIdConnectAuthenticationHandlerImpl =
-			new OpenIdConnectAuthenticationHandlerImpl();
 
 }

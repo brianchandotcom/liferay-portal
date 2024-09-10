@@ -7,7 +7,6 @@ package com.liferay.dynamic.data.mapping.form.field.type.internal.captcha;
 
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
-import com.liferay.dynamic.data.mapping.test.util.BaseDDMFormFieldTypeSettingsTestCase;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -23,8 +22,7 @@ import org.mockito.Mockito;
 /**
  * @author Carolina Barbosa
  */
-public class CaptchaDDMFormFieldTemplateContextContributorTest
-	extends BaseDDMFormFieldTypeSettingsTestCase {
+public class CaptchaDDMFormFieldTemplateContextContributorTest {
 
 	@ClassRule
 	@Rule

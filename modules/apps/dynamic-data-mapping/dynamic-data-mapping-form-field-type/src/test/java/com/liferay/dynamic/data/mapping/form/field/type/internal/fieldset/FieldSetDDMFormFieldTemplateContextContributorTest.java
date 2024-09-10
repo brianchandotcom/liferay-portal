@@ -5,7 +5,6 @@
 
 package com.liferay.dynamic.data.mapping.form.field.type.internal.fieldset;
 
-import com.liferay.dynamic.data.mapping.test.util.BaseDDMFormFieldTypeSettingsTestCase;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -23,8 +22,7 @@ import org.junit.Test;
 /**
  * @author Leonardo Barros
  */
-public class FieldSetDDMFormFieldTemplateContextContributorTest
-	extends BaseDDMFormFieldTypeSettingsTestCase {
+public class FieldSetDDMFormFieldTemplateContextContributorTest {
 
 	@ClassRule
 	@Rule
@@ -32,10 +30,7 @@ public class FieldSetDDMFormFieldTemplateContextContributorTest
 		LiferayUnitTestRule.INSTANCE;
 
 	@Before
-	@Override
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_fieldSetDDMFormFieldTemplateContextContributor.jsonFactory =
 			new JSONFactoryImpl();
 	}

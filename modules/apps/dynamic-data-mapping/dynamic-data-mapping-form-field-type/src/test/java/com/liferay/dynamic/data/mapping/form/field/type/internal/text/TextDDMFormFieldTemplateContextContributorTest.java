@@ -9,7 +9,6 @@ import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldOptionsFacto
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
-import com.liferay.dynamic.data.mapping.test.util.BaseDDMFormFieldTypeSettingsTestCase;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormFieldOptionsTestUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -27,8 +26,7 @@ import org.mockito.Mockito;
 /**
  * @author Carolina Barbosa
  */
-public class TextDDMFormFieldTemplateContextContributorTest
-	extends BaseDDMFormFieldTypeSettingsTestCase {
+public class TextDDMFormFieldTemplateContextContributorTest {
 
 	@ClassRule
 	@Rule
@@ -36,10 +34,7 @@ public class TextDDMFormFieldTemplateContextContributorTest
 		LiferayUnitTestRule.INSTANCE;
 
 	@Before
-	@Override
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_setUpDDMFormFieldOptionsFactory();
 	}
 

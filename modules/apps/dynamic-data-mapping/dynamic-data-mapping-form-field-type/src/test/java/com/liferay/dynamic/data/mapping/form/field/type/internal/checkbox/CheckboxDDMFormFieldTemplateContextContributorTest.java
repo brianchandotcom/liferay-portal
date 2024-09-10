@@ -8,7 +8,6 @@ package com.liferay.dynamic.data.mapping.form.field.type.internal.checkbox;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
-import com.liferay.dynamic.data.mapping.test.util.BaseDDMFormFieldTypeSettingsTestCase;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
@@ -41,8 +40,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
 /**
  * @author Marcellus Tavares
  */
-public class CheckboxDDMFormFieldTemplateContextContributorTest
-	extends BaseDDMFormFieldTypeSettingsTestCase {
+public class CheckboxDDMFormFieldTemplateContextContributorTest {
 
 	@ClassRule
 	@Rule
@@ -50,10 +48,7 @@ public class CheckboxDDMFormFieldTemplateContextContributorTest
 		LiferayUnitTestRule.INSTANCE;
 
 	@Before
-	@Override
 	public void setUp() throws Exception {
-		super.setUp();
-
 		PortletURLFactoryUtil portletURLFactoryUtil =
 			new PortletURLFactoryUtil();
 

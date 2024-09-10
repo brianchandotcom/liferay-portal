@@ -8,7 +8,6 @@ package com.liferay.dynamic.data.mapping.form.field.type.internal.paragraph;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
-import com.liferay.dynamic.data.mapping.test.util.BaseDDMFormFieldTypeSettingsTestCase;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Map;
@@ -21,8 +20,7 @@ import org.junit.Test;
 /**
  * @author Pedro Queiroz
  */
-public class ParagraphDDMFormFieldTemplateContextContributorTest
-	extends BaseDDMFormFieldTypeSettingsTestCase {
+public class ParagraphDDMFormFieldTemplateContextContributorTest {
 
 	@ClassRule
 	@Rule

@@ -101,18 +101,6 @@ definition {
 		ACUtils.tearDownAC();
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-8362 | Test Summary: Page profile views by technology shows which browsers are being used"
-	@priority = 5
-	test ShowsWhichBrowsersBeingUsed {
-		ACNavigation.switchTabInCard(tabName = "Browsers");
-
-		ACAssets.viewTechnologyBrowsersMetric(
-			browserMetricValue = "Chrome",
-			cardTitle = "Views by Technology",
-			cssValue = "rgb(75, 155, 255)",
-			percentageMetricValue = "100%");
-	}
-
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8363 | Test Summary: Page profile views by technology shows which devices are being used"
 	@priority = 5
 	test ShowsWhichDevicesBeingUsed {

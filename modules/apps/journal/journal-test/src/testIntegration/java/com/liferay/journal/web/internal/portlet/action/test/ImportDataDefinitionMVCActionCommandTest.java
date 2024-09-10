@@ -229,6 +229,13 @@ public class ImportDataDefinitionMVCActionCommandTest {
 			SessionMessages.get(
 				mockLiferayPortletActionRequest,
 				"importDataDefinitionSuccessMessage"));
+
+		DataDefinition dataDefinition = _getImportedDataDefinition();
+
+		DataDefinitionField[] dataDefinitionFields =
+			dataDefinition.getDataDefinitionFields();
+
+		Assert.assertEquals("Text32861154", dataDefinitionFields[0].getName());
 	}
 
 	private void _assertFailure(

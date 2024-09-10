@@ -5,10 +5,12 @@
 
 import {Page, expect, mergeTests} from '@playwright/test';
 
+import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {localizationSiteSettingsPageTest} from '../../fixtures/localizationSiteSettingsPageTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pagesAdminPagesTest} from '../../fixtures/pagesAdminPagesTest';
+import {styleBookPageTest} from '../../fixtures/styleBookPageTest';
 import {PagesAdminPage} from '../../pages/layout-admin-web/PagesAdminPage';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../utils/getRandomString';
@@ -28,6 +30,11 @@ const SAMPLES = [
 		erc: 'LXC:liferay-sample-global-js-2',
 		name: 'Liferay Sample Global JS 2',
 		url: '/o/liferay-sample-global-js-2/global.a0ff2e4a08889609cd1e.js',
+	},
+	{
+		erc: 'LXC:liferay-sample-global-js-3',
+		name: 'Liferay Sample Global JS 3',
+		url: '/o/liferay-sample-global-js-3/global.8c51c23d2fbc94a8abfa.js',
 	},
 ];
 
@@ -57,6 +64,51 @@ for (const sample of SAMPLES) {
 		}
 	);
 }
+
+export const testInstanceScoped = mergeTests(
+	clientExtensionsPageTest,
+	featureFlagsTest({
+		'LPD-30371': true,
+	}),
+	loginTest(),
+	styleBookPageTest
+);
+
+testInstanceScoped(
+	'Assert that instance scoped client extensions are injected into site pages, site control panel pages and instance control panel pages',
+	async ({clientExtensionsPage, page, styleBooksPage}) => {
+		const scriptLocator = page.locator(
+			`script[src="/o/liferay-sample-global-js-3/global.8c51c23d2fbc94a8abfa.js"]`
+		);
+
+		await testInstanceScoped.step(
+			'Assert that client extension is imported into a site page',
+			async () => {
+				await page.goto('/');
+
+				await expect(scriptLocator).toBeAttached();
+			}
+		);
+
+		await testInstanceScoped.step(
+			"Assert that client extension is imported into an instance's control panel page",
+			async () => {
+				await clientExtensionsPage.goto();
+
+				await expect(scriptLocator).toBeAttached();
+			}
+		);
+
+		await testInstanceScoped.step(
+			"Assert that client extension is imported into a sites's control panel page",
+			async () => {
+				await styleBooksPage.goto();
+
+				await expect(scriptLocator).toBeAttached();
+			}
+		);
+	}
+);
 
 export const test = mergeTests(
 	clientExtensionsPageTest,

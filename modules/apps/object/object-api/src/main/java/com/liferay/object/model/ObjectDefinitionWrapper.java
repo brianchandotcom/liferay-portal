@@ -786,6 +786,11 @@ public class ObjectDefinitionWrapper
 		return model.getPortletId();
 	}
 
+	@Override
+	public String getPreviousRESTContextPath() {
+		return model.getPreviousRESTContextPath();
+	}
+
 	/**
 	 * Returns the primary key of this object definition.
 	 *
@@ -1488,6 +1493,11 @@ public class ObjectDefinitionWrapper
 	@Override
 	public void setPortlet(boolean portlet) {
 		model.setPortlet(portlet);
+	}
+
+	@Override
+	public void setPreviousRESTContextPath(String previousRESTContextPath) {
+		model.setPreviousRESTContextPath(previousRESTContextPath);
 	}
 
 	/**

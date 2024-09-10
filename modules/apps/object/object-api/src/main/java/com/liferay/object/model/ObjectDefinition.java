@@ -62,6 +62,8 @@ public interface ObjectDefinition
 
 	public String getPortletId();
 
+	public String getPreviousRESTContextPath();
+
 	public String getResourceName();
 
 	public String getRESTContextPath();
@@ -85,5 +87,7 @@ public interface ObjectDefinition
 	public boolean isRootNode();
 
 	public boolean isUnmodifiableSystemObject();
+
+	public void setPreviousRESTContextPath(String previousRESTContextPath);
 
 }

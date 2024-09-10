@@ -11,8 +11,10 @@ import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.test.performance.PerformanceTimer;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.AssumeTestRule;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.URLUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.io.InputStream;
@@ -34,6 +36,7 @@ import javax.servlet.Servlet;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -56,7 +59,12 @@ public class JspServletPerformanceTest {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
+		new AggregateTestRule(
+			new AssumeTestRule("assume"), new LiferayIntegrationTestRule());
+
+	public static void assume() {
+		Assume.assumeTrue(Validator.isNull(System.getenv("JENKINS_HOME")));
+	}
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {

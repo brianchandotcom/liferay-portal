@@ -13,6 +13,7 @@ import com.liferay.journal.service.JournalArticleResourceLocalService;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
@@ -25,6 +26,7 @@ import com.liferay.portal.upgrade.test.util.UpgradeTestUtil;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -35,7 +37,7 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 public class JournalArticleFriendlyURLFormatUpgradeProcessTest
-	extends BaseFriendlyURLFormatUpgradeProcessTestCase<JournalArticle> {
+	extends BaseFriendlyURLFormatUpgradeProcessTestCase {
 
 	@ClassRule
 	@Rule
@@ -44,16 +46,13 @@ public class JournalArticleFriendlyURLFormatUpgradeProcessTest
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
-	@Test
-	public void testUpgradeWithTrailingSlash() throws Exception {
-		_addJournalArticle("test/");
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
 
-		_runUpgrade();
-
-		_journalArticle = _journalArticleLocalService.fetchJournalArticle(
-			modelId);
-
-		Assert.assertEquals("test", _journalArticle.getUrlTitle());
+		_classNameId = PortalUtil.getClassNameId(
+			JournalArticle.class.getName());
 	}
 
 	@Test
@@ -64,30 +63,44 @@ public class JournalArticleFriendlyURLFormatUpgradeProcessTest
 		_runUpgrade();
 
 		_journalArticle = _journalArticleLocalService.fetchJournalArticle(
-			modelId);
+			_journalArticle.getPrimaryKey());
 
 		Assert.assertEquals("test-1", _journalArticle.getUrlTitle());
 	}
 
+	@Test
+	public void testUpgradeWithTrailingSlash() throws Exception {
+		_addJournalArticle("test/");
+
+		_runUpgrade();
+
+		_journalArticle = _journalArticleLocalService.fetchJournalArticle(
+			_journalArticle.getPrimaryKey());
+
+		Assert.assertEquals("test", _journalArticle.getUrlTitle());
+	}
+
 	private void _addJournalArticle(String urlTitle) {
-		createFriendlyURLEntryLocalization(urlTitle, JournalArticle.class);
-
 		_journalArticle = _journalArticleLocalService.createJournalArticle(
-			modelId);
+			counterLocalService.increment(JournalArticle.class.getName()));
 
-		_journalArticle.setDefaultLanguageId(languageId);
-
+		_journalArticle.setResourcePrimKey(_journalArticle.getPrimaryKey());
 		_journalArticle.setGroupId(group.getGroupId());
-
 		_journalArticle.setUrlTitle(urlTitle);
-
-		_journalArticle.setResourcePrimKey(modelId);
+		_journalArticle.setDefaultLanguageId(defaultLanguageId);
 
 		_journalArticleLocalService.addJournalArticle(_journalArticle);
 
 		_journalArticleResourceLocalService.addJournalArticleResource(
 			_journalArticleResourceLocalService.createJournalArticleResource(
-				modelId));
+				_journalArticle.getResourcePrimKey()));
+
+		createFriendlyURLEntry(
+			_journalArticle.getResourcePrimKey(), _classNameId);
+
+		createFriendlyURLEntryLocalization(
+			_classNameId, _journalArticle.getResourcePrimKey(),
+			defaultLanguageId, urlTitle);
 	}
 
 	private void _runUpgrade() throws Exception {
@@ -120,6 +133,7 @@ public class JournalArticleFriendlyURLFormatUpgradeProcessTest
 	)
 	private static UpgradeStepRegistrator _upgradeStepRegistrator;
 
+	private long _classNameId;
 	private JournalArticle _journalArticle;
 
 	@Inject

@@ -12,6 +12,7 @@ import com.liferay.friendly.url.test.util.BaseFriendlyURLFormatUpgradeProcessTes
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
@@ -23,6 +24,7 @@ import com.liferay.portal.upgrade.test.util.UpgradeTestUtil;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -33,22 +35,19 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 public class BlogsFriendlyURLFormatUpgradeProcessTest
-	extends BaseFriendlyURLFormatUpgradeProcessTestCase<BlogsEntry> {
+	extends BaseFriendlyURLFormatUpgradeProcessTestCase {
 
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@Test
-	public void testUpgradeWithTrailingSlash() throws Exception {
-		_addBlogsEntry("test/");
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
 
-		_runUpgrade();
-
-		_blogsEntry = _blogsEntryLocalService.fetchBlogsEntry(modelId);
-
-		Assert.assertEquals("test", _blogsEntry.getUrlTitle());
+		_classNameId = PortalUtil.getClassNameId(BlogsEntry.class.getName());
 	}
 
 	@Test
@@ -58,23 +57,39 @@ public class BlogsFriendlyURLFormatUpgradeProcessTest
 
 		_runUpgrade();
 
-		_blogsEntry = _blogsEntryLocalService.fetchBlogsEntry(modelId);
+		_blogsEntry = _blogsEntryLocalService.fetchBlogsEntry(
+			_blogsEntry.getEntryId());
 
 		Assert.assertEquals("test-1", _blogsEntry.getUrlTitle());
 	}
 
+	@Test
+	public void testUpgradeWithTrailingSlash() throws Exception {
+		_addBlogsEntry("test/");
+
+		_runUpgrade();
+
+		_blogsEntry = _blogsEntryLocalService.fetchBlogsEntry(
+			_blogsEntry.getEntryId());
+
+		Assert.assertEquals("test", _blogsEntry.getUrlTitle());
+	}
+
 	private void _addBlogsEntry(String urlTitle) {
-		createFriendlyURLEntryLocalization(urlTitle, BlogsEntry.class);
-
-		_blogsEntry = _blogsEntryLocalService.createBlogsEntry(modelId);
-
-		_blogsEntry.setContent("test");
+		_blogsEntry = _blogsEntryLocalService.createBlogsEntry(
+			counterLocalService.increment(BlogsEntry.class.getName()));
 
 		_blogsEntry.setGroupId(group.getGroupId());
-
 		_blogsEntry.setUrlTitle(urlTitle);
+		_blogsEntry.setContent("test");
 
 		_blogsEntryLocalService.addBlogsEntry(_blogsEntry);
+
+		createFriendlyURLEntry(_blogsEntry.getEntryId(), _classNameId);
+
+		createFriendlyURLEntryLocalization(
+			_classNameId, _blogsEntry.getEntryId(), defaultLanguageId,
+			urlTitle);
 	}
 
 	private void _runUpgrade() throws Exception {
@@ -107,6 +122,8 @@ public class BlogsFriendlyURLFormatUpgradeProcessTest
 
 	@Inject
 	private BlogsEntryLocalService _blogsEntryLocalService;
+
+	private long _classNameId;
 
 	@Inject
 	private MultiVMPool _multiVMPool;

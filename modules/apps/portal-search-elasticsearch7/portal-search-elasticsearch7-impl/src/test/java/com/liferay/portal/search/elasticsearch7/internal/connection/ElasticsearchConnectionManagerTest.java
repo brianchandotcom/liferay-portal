@@ -6,6 +6,8 @@
 package com.liferay.portal.search.elasticsearch7.internal.connection;
 
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.search.elasticsearch7.configuration.RESTClientLoggerLevel;
 import com.liferay.portal.search.elasticsearch7.internal.configuration.ElasticsearchConfigurationWrapper;
@@ -269,6 +271,54 @@ public class ElasticsearchConnectionManagerTest {
 		Mockito.verify(
 			elasticsearchConnection, Mockito.never()
 		).connect();
+	}
+
+	@Test
+	public void testApplyProxyConfigurationInElasticsearchConnection() {
+		_enableRemoteMode();
+
+		String[] networkHostAddresses = RandomTestUtil.randomStrings(10);
+		String proxyHost = RandomTestUtil.randomString();
+		String proxyPassword = RandomTestUtil.randomString();
+		int proxyPort = RandomTestUtil.randomInt();
+		String proxyUserName = RandomTestUtil.randomString();
+
+		Mockito.when(
+			_elasticsearchConfigurationWrapper.networkHostAddresses()
+		).thenReturn(
+			networkHostAddresses
+		);
+		Mockito.when(
+			_elasticsearchConfigurationWrapper.proxyHost()
+		).thenReturn(
+			proxyHost
+		);
+		Mockito.when(
+			_elasticsearchConfigurationWrapper.proxyPassword()
+		).thenReturn(
+			proxyPassword
+		);
+		Mockito.when(
+			_elasticsearchConfigurationWrapper.proxyPort()
+		).thenReturn(
+			proxyPort
+		);
+		Mockito.when(
+			_elasticsearchConfigurationWrapper.proxyUserName()
+		).thenReturn(
+			proxyUserName
+		);
+
+		_elasticsearchConnectionManager.applyConfigurations();
+
+		ProxyConfig proxyConfig = ReflectionTestUtil.getFieldValue(
+			_elasticsearchConnectionManager.getElasticsearchConnection(),
+			"_proxyConfig");
+
+		Assert.assertEquals(proxyHost, proxyConfig.getHost());
+		Assert.assertEquals(proxyPassword, proxyConfig.getPassword());
+		Assert.assertEquals(proxyPort, proxyConfig.getPort());
+		Assert.assertEquals(proxyUserName, proxyConfig.getUserName());
 	}
 
 	@Test

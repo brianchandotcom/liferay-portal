@@ -480,6 +480,12 @@ export class DataApiHelpers extends ApiHelpers {
 					);
 
 					break;
+				case 'wishList':
+					await this.headlessCommerceDeliveryCatalog.deleteWishList(
+						item.id
+					);
+
+					break;
 				default:
 					break;
 			}

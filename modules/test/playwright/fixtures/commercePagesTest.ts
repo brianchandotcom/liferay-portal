@@ -44,6 +44,7 @@ import {CommerceInstanceSettingsPage} from '../pages/commerce/commerceInstanceSe
 import {CommerceLayoutsPage} from '../pages/commerce/commerceLayoutsPage';
 import {CommerceMiniCartPage} from '../pages/commerce/commerceMiniCartPage';
 import {CommercePaymentsPage} from '../pages/commerce/commercePaymentsPage';
+import {CommerceWishListPage} from '../pages/commerce/commerceWishListPage';
 
 const commercePagesTest = test.extend<{
 	attachmentsPage: AttachmentsPage;
@@ -77,6 +78,7 @@ const commercePagesTest = test.extend<{
 	commerceProductSpecificationsPage: CommerceProductSpecificationsPage;
 	commerceThemeMiniumCatalogPage: CommerceThemeMiniumCatalogPage;
 	commerceThemeMiniumPage: CommerceThemeMiniumPage;
+	commerceWishListPage: CommerceWishListPage;
 	organizationManagementPage: OrganizationManagementPage;
 	pendingOrdersPage: PendingOrdersPage;
 	placedOrdersPage: PlacedOrdersPage;
@@ -178,6 +180,9 @@ const commercePagesTest = test.extend<{
 	},
 	commerceThemeMiniumPage: async ({page}, use) => {
 		await use(new CommerceThemeMiniumPage(page));
+	},
+	commerceWishListPage: async ({page}, use) => {
+		await use(new CommerceWishListPage(page));
 	},
 	organizationManagementPage: async ({page}, use) => {
 		await use(new OrganizationManagementPage(page));

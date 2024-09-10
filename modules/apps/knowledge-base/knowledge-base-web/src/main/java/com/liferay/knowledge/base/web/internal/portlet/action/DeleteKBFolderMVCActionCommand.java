@@ -7,7 +7,6 @@ package com.liferay.knowledge.base.web.internal.portlet.action;
 
 import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.service.KBFolderService;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -43,9 +42,7 @@ public class DeleteKBFolderMVCActionCommand extends BaseMVCActionCommand {
 
 		long kbFolderId = ParamUtil.getLong(actionRequest, "kbFolderId");
 
-		if (cmd.equals(Constants.MOVE_TO_TRASH) &&
-			FeatureFlagManagerUtil.isEnabled("LPS-188058")) {
-
+		if (cmd.equals(Constants.MOVE_TO_TRASH)) {
 			addDeleteSuccessData(
 				actionRequest,
 				HashMapBuilder.<String, Object>put(

@@ -59,7 +59,7 @@ if (editKBArticleDisplayContext.isPortletTitleBasedNavigation()) {
 						/>
 
 						<c:choose>
-							<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPS-188058") && editKBArticleDisplayContext.isSchedulerEnabled() %>'>
+							<c:when test="<%= editKBArticleDisplayContext.isSchedulerEnabled() %>">
 								<c:choose>
 									<c:when test="<%= editKBArticleDisplayContext.isScheduled() %>">
 										<span class="lfr-portal-tooltip">
@@ -381,7 +381,7 @@ if (editKBArticleDisplayContext.isPortletTitleBasedNavigation()) {
 		).put(
 			"publishAction", WorkflowConstants.ACTION_PUBLISH
 		).put(
-			"schedulerEnabled", FeatureFlagManagerUtil.isEnabled("LPS-188058") && editKBArticleDisplayContext.isSchedulerEnabled()
+			"schedulerEnabled", editKBArticleDisplayContext.isSchedulerEnabled()
 		).build()
 	%>'
 	module="{EditKBArticle} from knowledge-base-web"

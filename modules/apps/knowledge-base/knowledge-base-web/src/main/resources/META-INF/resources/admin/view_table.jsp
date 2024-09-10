@@ -210,7 +210,7 @@ KBArticleViewDisplayContext kbArticleViewDisplayContext = new KBArticleViewDispl
 					name="status"
 				>
 					<c:choose>
-						<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPS-188058") && kbArticle.isScheduled() %>'>
+						<c:when test="<%= kbArticle.isScheduled() %>">
 
 							<%
 							String displayDateString = StringPool.BLANK;

@@ -9,7 +9,6 @@ import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.exception.LockedKBArticleException;
 import com.liferay.knowledge.base.service.KBArticleService;
 import com.liferay.knowledge.base.util.KnowledgeBaseUtil;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -62,9 +61,7 @@ public class DeleteKBArticleMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		try {
-			if (cmd.equals(Constants.MOVE_TO_TRASH) &&
-				FeatureFlagManagerUtil.isEnabled("LPS-188058")) {
-
+			if (cmd.equals(Constants.MOVE_TO_TRASH)) {
 				addDeleteSuccessData(
 					actionRequest,
 					HashMapBuilder.<String, Object>put(

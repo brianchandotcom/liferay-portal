@@ -30,7 +30,6 @@ import com.liferay.knowledge.base.web.internal.security.permission.resource.KBFo
 import com.liferay.knowledge.base.web.internal.security.permission.resource.KBTemplatePermission;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -417,9 +416,7 @@ public class KBDropdownItemsProvider {
 			KBArticle kbArticle, List<Long> selectedItemAncestorIds) {
 
 		return dropdownItem -> {
-			if (FeatureFlagManagerUtil.isEnabled("LPS-188058") &&
-				_trashHelper.isTrashEnabled(kbArticle.getGroupId())) {
-
+			if (_trashHelper.isTrashEnabled(kbArticle.getGroupId())) {
 				dropdownItem.setHref(
 					_getDeleteActionURL(
 						Constants.MOVE_TO_TRASH, kbArticle,
@@ -467,9 +464,7 @@ public class KBDropdownItemsProvider {
 			KBFolder kbFolder, List<Long> selectedItemAncestorIds) {
 
 		return dropdownItem -> {
-			if (FeatureFlagManagerUtil.isEnabled("LPS-188058") &&
-				_trashHelper.isTrashEnabled(kbFolder.getGroupId())) {
-
+			if (_trashHelper.isTrashEnabled(kbFolder.getGroupId())) {
 				dropdownItem.setHref(
 					_getDeleteActionURL(
 						Constants.MOVE_TO_TRASH, kbFolder,

@@ -102,6 +102,7 @@ const MultipleSelection = ({
 									aria-label={item.label}
 									checked={values?.includes(item.value)!}
 									data-itemValue={item.value}
+									data-option-reference={item.reference}
 									data-testid={`labelItem-${item.value}`}
 									label={item.label}
 									onChange={(event) => {

@@ -6,7 +6,6 @@
 package com.liferay.frontend.js.web.internal.servlet;
 
 import com.liferay.frontend.js.web.internal.LanguageState;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
@@ -29,10 +28,7 @@ public class ResourceBundleServiceTrackerCustomizer
 
 		if (languageId != null) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					StringBundler.concat(
-						"Resource bundle for language  '", languageId,
-						"' was added"));
+				_log.debug("Adding language " + languageId);
 			}
 
 			LanguageState.reload();
@@ -52,10 +48,7 @@ public class ResourceBundleServiceTrackerCustomizer
 		}
 
 		if (_log.isDebugEnabled()) {
-			_log.debug(
-				StringBundler.concat(
-					"Resource bundle for language  '", languageId,
-					"' was modified"));
+			_log.debug("Modified language " + languageId);
 		}
 
 		LanguageState.reload();
@@ -70,10 +63,7 @@ public class ResourceBundleServiceTrackerCustomizer
 		}
 
 		if (_log.isDebugEnabled()) {
-			_log.debug(
-				StringBundler.concat(
-					"Resource bundle for language  '", languageId,
-					"' was removed"));
+			_log.debug("Removed language " + languageId);
 		}
 
 		LanguageState.reload();

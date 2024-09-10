@@ -58,20 +58,20 @@ public class ServletContextServiceTrackerCustomizer
 			String webContextPath = contextPath.substring(
 				_WEB_CONTEXT_PATH_PREFIX.length());
 
-			List<String> keys = _getLanguageKeys(servletContext);
+			List<String> keys = _getKeys(servletContext);
 
 			if (keys != null) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						StringBundler.concat(
-							"Web context path '", webContextPath,
-							"' added, contains ", keys.size(), " keys"));
+							"Adding ", keys.size(), " language keys for ",
+							webContextPath));
 				}
 
 				synchronized (this) {
-					_webContextPathKeysMap.put(webContextPath, keys);
+					_keysMap.put(webContextPath, keys);
 
-					LanguageState.update(_webContextPathKeysMap);
+					LanguageState.update(_keysMap);
 				}
 			}
 
@@ -94,19 +94,17 @@ public class ServletContextServiceTrackerCustomizer
 		String webContextPath) {
 
 		if (_log.isDebugEnabled()) {
-			_log.debug(
-				StringBundler.concat(
-					"Web context path '", webContextPath, "' removed"));
+			_log.debug("Removed " + webContextPath);
 		}
 
 		synchronized (this) {
-			_webContextPathKeysMap.remove(webContextPath);
+			_keysMap.remove(webContextPath);
 
-			LanguageState.update(_webContextPathKeysMap);
+			LanguageState.update(_keysMap);
 		}
 	}
 
-	private List<String> _getLanguageKeys(ServletContext servletContext) {
+	private List<String> _getKeys(ServletContext servletContext) {
 		try {
 			URL url = servletContext.getResource("/language.json");
 
@@ -121,7 +119,7 @@ public class ServletContextServiceTrackerCustomizer
 		}
 		catch (Exception exception) {
 			_log.error(
-				"Unable to get language.json keys from servlet context " +
+				"Unable to get language.json for " +
 					servletContext.getContextPath(),
 				exception);
 
@@ -137,7 +135,6 @@ public class ServletContextServiceTrackerCustomizer
 
 	private final BundleContext _bundleContext;
 	private final JSONFactory _jsonFactory;
-	private final Map<String, List<String>> _webContextPathKeysMap =
-		new HashMap<>();
+	private final Map<String, List<String>> _keysMap = new HashMap<>();
 
 }

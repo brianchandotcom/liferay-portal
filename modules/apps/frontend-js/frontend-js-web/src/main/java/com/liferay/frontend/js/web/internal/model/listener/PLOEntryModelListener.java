@@ -6,7 +6,6 @@
 package com.liferay.frontend.js.web.internal.model.listener;
 
 import com.liferay.frontend.js.web.internal.LanguageState;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -25,11 +24,7 @@ public class PLOEntryModelListener extends BaseModelListener<PLOEntry> {
 	@Override
 	public void onAfterCreate(PLOEntry ploEntry) throws ModelListenerException {
 		if (_log.isDebugEnabled()) {
-			_log.debug(
-				StringBundler.concat(
-					"Language override entry '", ploEntry.getPloEntryId(),
-					"' for language '", ploEntry.getLanguageId(),
-					"' was created"));
+			_log.debug("Created " + ploEntry);
 		}
 
 		LanguageState.reload();
@@ -38,11 +33,7 @@ public class PLOEntryModelListener extends BaseModelListener<PLOEntry> {
 	@Override
 	public void onAfterRemove(PLOEntry ploEntry) throws ModelListenerException {
 		if (_log.isDebugEnabled()) {
-			_log.debug(
-				StringBundler.concat(
-					"Language override entry '", ploEntry.getPloEntryId(),
-					"' for language '", ploEntry.getLanguageId(),
-					"' was removed"));
+			_log.debug("Removed " + ploEntry);
 		}
 
 		LanguageState.reload();
@@ -53,11 +44,7 @@ public class PLOEntryModelListener extends BaseModelListener<PLOEntry> {
 		throws ModelListenerException {
 
 		if (_log.isDebugEnabled()) {
-			_log.debug(
-				StringBundler.concat(
-					"Language override entry '", ploEntry.getPloEntryId(),
-					"' for language '", ploEntry.getLanguageId(),
-					"' was modified"));
+			_log.debug("Updated " + ploEntry);
 		}
 
 		LanguageState.reload();

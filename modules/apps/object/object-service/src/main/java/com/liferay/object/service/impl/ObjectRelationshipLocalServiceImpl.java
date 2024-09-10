@@ -951,7 +951,7 @@ public class ObjectRelationshipLocalServiceImpl
 			_objectDefinitionPersistence.findByPrimaryKey(
 				objectRelationship.getObjectDefinitionId2()),
 			parameterObjectFieldId, objectRelationship.getType());
-		_validateDeletionType(deletionType, edge);
+		_validateDeletionType(deletionType, edge, objectRelationship);
 		_validateEdge(edge, objectRelationship);
 
 		if (objectRelationship.compareType(
@@ -962,7 +962,7 @@ public class ObjectRelationshipLocalServiceImpl
 
 			_updateObjectRelationship(
 				reverseObjectRelationship.getExternalReferenceCode(),
-				parameterObjectFieldId, deletionType, false, labelMap,
+				parameterObjectFieldId, deletionType, labelMap,
 				reverseObjectRelationship);
 
 			Indexer<ObjectRelationship> indexer =
@@ -1003,7 +1003,7 @@ public class ObjectRelationshipLocalServiceImpl
 		}
 
 		objectRelationship = _updateObjectRelationship(
-			externalReferenceCode, parameterObjectFieldId, deletionType, edge,
+			externalReferenceCode, parameterObjectFieldId, deletionType,
 			labelMap, objectRelationship);
 
 		if ((objectRelationship.getObjectFieldId2() != 0) &&
@@ -1013,6 +1013,10 @@ public class ObjectRelationshipLocalServiceImpl
 
 			_objectFieldLocalService.updateRequired(
 				objectRelationship.getObjectFieldId2(), false);
+		}
+
+		if (edge && !objectRelationship.isEdge()) {
+			_bindObjectDefinitions(objectRelationship);
 		}
 
 		return objectRelationship;
@@ -1270,6 +1274,67 @@ public class ObjectRelationshipLocalServiceImpl
 			objectRelationship);
 	}
 
+	private void _bindObjectDefinitions(ObjectRelationship objectRelationship)
+		throws PortalException {
+
+		objectRelationship.setDeletionType(
+			ObjectRelationshipConstants.DELETION_TYPE_CASCADE);
+		objectRelationship.setEdge(true);
+
+		objectRelationship =
+			objectRelationshipLocalService.updateObjectRelationship(
+				objectRelationship);
+
+		_objectFieldLocalService.updateRequired(
+			objectRelationship.getObjectFieldId2(), true);
+
+		ObjectDefinition objectDefinition1 =
+			_objectDefinitionPersistence.findByPrimaryKey(
+				objectRelationship.getObjectDefinitionId1());
+
+		String objectDefinition1PreviousRESTContextPath =
+			objectDefinition1.getRESTContextPath();
+
+		objectDefinition1.setRootObjectDefinitionId(
+			objectDefinition1.getObjectDefinitionId());
+
+		ObjectDefinitionLocalService objectDefinitionLocalService =
+			_objectDefinitionLocalServiceSnapshot.get();
+
+		objectDefinition1 = objectDefinitionLocalService.updateObjectDefinition(
+			objectDefinition1);
+
+		ObjectDefinition objectDefinition2 =
+			_objectDefinitionPersistence.findByPrimaryKey(
+				objectRelationship.getObjectDefinitionId2());
+
+		String objectDefinition2PreviousRESTContextPath =
+			objectDefinition2.getRESTContextPath();
+
+		objectDefinition2.setRootObjectDefinitionId(
+			objectDefinition1.getObjectDefinitionId());
+		objectDefinition2.setPortlet(false);
+
+		objectDefinition2 = objectDefinitionLocalService.updateObjectDefinition(
+			objectDefinition2);
+
+		if (objectDefinition1.isApproved()) {
+			objectDefinition1.setPreviousRESTContextPath(
+				objectDefinition1PreviousRESTContextPath);
+
+			objectDefinitionLocalService.deployObjectDefinition(
+				objectDefinition1);
+		}
+
+		if (objectDefinition2.isApproved()) {
+			objectDefinition2.setPreviousRESTContextPath(
+				objectDefinition2PreviousRESTContextPath);
+
+			objectDefinitionLocalService.deployObjectDefinition(
+				objectDefinition2);
+		}
+	}
+
 	private void _deleteObjectFields(
 			long objectDefinitionId, ObjectRelationship objectRelationship)
 		throws PortalException {
@@ -1372,25 +1437,27 @@ public class ObjectRelationshipLocalServiceImpl
 
 	private ObjectRelationship _updateObjectRelationship(
 		String externalReferenceCode, long parameterObjectFieldId,
-		String deletionType, boolean edge, Map<Locale, String> labelMap,
+		String deletionType, Map<Locale, String> labelMap,
 		ObjectRelationship objectRelationship) {
 
 		objectRelationship.setExternalReferenceCode(externalReferenceCode);
 		objectRelationship.setParameterObjectFieldId(parameterObjectFieldId);
 		objectRelationship.setDeletionType(deletionType);
-		objectRelationship.setEdge(edge);
 		objectRelationship.setLabelMap(labelMap);
 
 		return objectRelationshipPersistence.update(objectRelationship);
 	}
 
-	private void _validateDeletionType(String deletionType, boolean edge)
+	private void _validateDeletionType(
+			String deletionType, boolean edge,
+			ObjectRelationship objectRelationship)
 		throws PortalException {
 
 		if (edge &&
 			!StringUtil.equals(
 				deletionType,
-				ObjectRelationshipConstants.DELETION_TYPE_CASCADE)) {
+				ObjectRelationshipConstants.DELETION_TYPE_CASCADE) &&
+			objectRelationship.isEdge()) {
 
 			throw new ObjectRelationshipDeletionTypeException.
 				MustHaveCascadeDeletionType();

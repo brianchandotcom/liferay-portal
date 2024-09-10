@@ -9,7 +9,7 @@ import {FieldBase} from '../FieldBase';
 
 import './Section.scss';
 
-interface SectionProps {
+type SectionProps = {
 	children: ReactNode;
 	className?: string;
 	description?: string;
@@ -18,7 +18,7 @@ interface SectionProps {
 	required?: boolean;
 	tooltip?: string;
 	tooltipText?: string;
-}
+};
 
 export function Section({
 	children,
@@ -32,7 +32,6 @@ export function Section({
 }: SectionProps) {
 	return (
 		<FieldBase
-			className={className}
 			description={description}
 			label={label}
 			required={required}
@@ -41,7 +40,7 @@ export function Section({
 		>
 			{!disabled && <div className="section-divider"></div>}
 
-			{children}
+			<div className={className}>{children}</div>
 		</FieldBase>
 	);
 }

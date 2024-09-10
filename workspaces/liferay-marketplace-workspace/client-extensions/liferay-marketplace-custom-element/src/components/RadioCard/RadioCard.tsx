@@ -17,6 +17,7 @@ import ClayIcon from '@clayui/icon';
 import {Tooltip} from '../Tooltip/Tooltip';
 
 interface RadioCardProps {
+	className?: string;
 	description?: string;
 	disabled?: boolean;
 	icon?: string;
@@ -30,6 +31,7 @@ interface RadioCardProps {
 }
 
 export function RadioCard({
+	className = '',
 	description,
 	disabled = false,
 	icon,
@@ -43,11 +45,15 @@ export function RadioCard({
 }: RadioCardProps) {
 	return (
 		<label
-			className={classNames('radio-card radio-card-container', {
-				'radio-card-container-disabled': disabled,
-				'radio-card-container-selected': selected,
-				'radio-card-container-small': small,
-			})}
+			className={classNames(
+				'radio-card radio-card-container',
+				className,
+				{
+					'radio-card-container-disabled': disabled,
+					'radio-card-container-selected': selected,
+					'radio-card-container-small': small,
+				}
+			)}
 			htmlFor={title}
 		>
 			<div className="radio-card-main-info">

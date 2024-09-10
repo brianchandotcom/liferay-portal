@@ -5,8 +5,10 @@
 
 package com.liferay.analytics.reports.rest.internal.graphql.query.v1_0;
 
+import com.liferay.analytics.reports.rest.dto.v1_0.AssetAppearsOnHistogramMetric;
 import com.liferay.analytics.reports.rest.dto.v1_0.AssetHistogramMetric;
 import com.liferay.analytics.reports.rest.dto.v1_0.AssetMetric;
+import com.liferay.analytics.reports.rest.resource.v1_0.AssetAppearsOnHistogramMetricResource;
 import com.liferay.analytics.reports.rest.resource.v1_0.AssetHistogramMetricResource;
 import com.liferay.analytics.reports.rest.resource.v1_0.AssetMetricResource;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -39,6 +41,15 @@ import org.osgi.service.component.ComponentServiceObjects;
 @Generated("")
 public class Query {
 
+	public static void
+		setAssetAppearsOnHistogramMetricResourceComponentServiceObjects(
+			ComponentServiceObjects<AssetAppearsOnHistogramMetricResource>
+				assetAppearsOnHistogramMetricResourceComponentServiceObjects) {
+
+		_assetAppearsOnHistogramMetricResourceComponentServiceObjects =
+			assetAppearsOnHistogramMetricResourceComponentServiceObjects;
+	}
+
 	public static void setAssetHistogramMetricResourceComponentServiceObjects(
 		ComponentServiceObjects<AssetHistogramMetricResource>
 			assetHistogramMetricResourceComponentServiceObjects) {
@@ -53,6 +64,30 @@ public class Query {
 
 		_assetMetricResourceComponentServiceObjects =
 			assetMetricResourceComponentServiceObjects;
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {groupAssetMetricAssetTypeAppearsOnHistogram(assetId: ___, assetType: ___, groupId: ___, identityType: ___, rangeKey: ___){assetAppearsOnHistograms}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public AssetAppearsOnHistogramMetric
+			groupAssetMetricAssetTypeAppearsOnHistogram(
+				@GraphQLName("groupId") Long groupId,
+				@GraphQLName("assetType") String assetType,
+				@GraphQLName("assetId") String assetId,
+				@GraphQLName("identityType") String identityType,
+				@GraphQLName("rangeKey") Integer rangeKey)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_assetAppearsOnHistogramMetricResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			assetAppearsOnHistogramMetricResource ->
+				assetAppearsOnHistogramMetricResource.
+					getGroupAssetMetricAssetTypeAppearsOnHistogram(
+						groupId, assetType, assetId, identityType, rangeKey));
 	}
 
 	/**
@@ -99,6 +134,41 @@ public class Query {
 			assetMetricResource -> assetMetricResource.getGroupAssetMetric(
 				groupId, assetType, assetId, identityType, rangeKey,
 				selectedMetrics));
+	}
+
+	@GraphQLName("AssetAppearsOnHistogramMetricPage")
+	public class AssetAppearsOnHistogramMetricPage {
+
+		public AssetAppearsOnHistogramMetricPage(
+			Page assetAppearsOnHistogramMetricPage) {
+
+			actions = assetAppearsOnHistogramMetricPage.getActions();
+
+			items = assetAppearsOnHistogramMetricPage.getItems();
+			lastPage = assetAppearsOnHistogramMetricPage.getLastPage();
+			page = assetAppearsOnHistogramMetricPage.getPage();
+			pageSize = assetAppearsOnHistogramMetricPage.getPageSize();
+			totalCount = assetAppearsOnHistogramMetricPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map<String, String>> actions;
+
+		@GraphQLField
+		protected java.util.Collection<AssetAppearsOnHistogramMetric> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
 	}
 
 	@GraphQLName("AssetHistogramMetricPage")
@@ -187,6 +257,26 @@ public class Query {
 	}
 
 	private void _populateResourceContext(
+			AssetAppearsOnHistogramMetricResource
+				assetAppearsOnHistogramMetricResource)
+		throws Exception {
+
+		assetAppearsOnHistogramMetricResource.setContextAcceptLanguage(
+			_acceptLanguage);
+		assetAppearsOnHistogramMetricResource.setContextCompany(_company);
+		assetAppearsOnHistogramMetricResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		assetAppearsOnHistogramMetricResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		assetAppearsOnHistogramMetricResource.setContextUriInfo(_uriInfo);
+		assetAppearsOnHistogramMetricResource.setContextUser(_user);
+		assetAppearsOnHistogramMetricResource.setGroupLocalService(
+			_groupLocalService);
+		assetAppearsOnHistogramMetricResource.setRoleLocalService(
+			_roleLocalService);
+	}
+
+	private void _populateResourceContext(
 			AssetHistogramMetricResource assetHistogramMetricResource)
 		throws Exception {
 
@@ -216,6 +306,9 @@ public class Query {
 		assetMetricResource.setRoleLocalService(_roleLocalService);
 	}
 
+	private static ComponentServiceObjects
+		<AssetAppearsOnHistogramMetricResource>
+			_assetAppearsOnHistogramMetricResourceComponentServiceObjects;
 	private static ComponentServiceObjects<AssetHistogramMetricResource>
 		_assetHistogramMetricResourceComponentServiceObjects;
 	private static ComponentServiceObjects<AssetMetricResource>

@@ -125,7 +125,7 @@ public class JSONPackageJSONCheck extends BaseFileCheck {
 
 		jsonObject.put("jest", jestJSONObject);
 
-		return JSONUtil.toString(jsonObject);
+		return JSONUtil.toString(jsonObject) + "\n";
 	}
 
 	private void _checkScript(

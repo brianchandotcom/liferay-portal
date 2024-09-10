@@ -36,6 +36,8 @@ import com.liferay.object.system.SystemObjectDefinitionManager;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.test.util.ObjectRelationshipTestUtil;
 import com.liferay.object.test.util.TreeTestUtil;
+import com.liferay.object.tree.TreeFactory;
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DBInspector;
@@ -49,6 +51,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.test.rule.FeatureFlags;
@@ -438,6 +441,79 @@ public class ObjectRelationshipLocalServiceTest {
 			_systemObjectDefinition2, true);
 
 		_testSystemObjectRelationshipOneToMany();
+	}
+
+	@Test
+	public void testBindDraftObjectDefinitionAndPublishedObjectDefinition()
+		throws Exception {
+
+		ObjectDefinition objectDefinitionAA =
+			ObjectDefinitionTestUtil.addCustomObjectDefinition("AA");
+
+		_testBindObjectDefinitions(
+			ObjectDefinitionTestUtil.addCustomObjectDefinition("A"),
+			_objectDefinitionLocalService.publishCustomObjectDefinition(
+				TestPropsValues.getUserId(),
+				objectDefinitionAA.getObjectDefinitionId()),
+			(objectDefinition1, objectDefinition2) -> {
+				TreeTestUtil.assertObjectDefinitionTree(
+					LinkedHashMapBuilder.put(
+						"A", new String[0]
+					).build(),
+					_treeFactory.createObjectDefinitionTree(
+						objectDefinition1.getObjectDefinitionId()),
+					_objectDefinitionLocalService);
+				TreeTestUtil.assertObjectDefinitionTree(
+					LinkedHashMapBuilder.put(
+						"AA", new String[0]
+					).build(),
+					_treeFactory.createObjectDefinitionTree(
+						objectDefinition2.getObjectDefinitionId()),
+					_objectDefinitionLocalService);
+			});
+	}
+
+	@Test
+	public void testBindDraftObjectDefinitions() throws Exception {
+		_testBindObjectDefinitions(
+			ObjectDefinitionTestUtil.addCustomObjectDefinition("A"),
+			ObjectDefinitionTestUtil.addCustomObjectDefinition("AA"),
+			(objectDefinition1, objectDefinition2) ->
+				TreeTestUtil.assertObjectDefinitionTree(
+					LinkedHashMapBuilder.put(
+						"A", new String[] {"AA"}
+					).put(
+						"AA", new String[0]
+					).build(),
+					_treeFactory.createObjectDefinitionTree(
+						objectDefinition1.getObjectDefinitionId()),
+					_objectDefinitionLocalService));
+	}
+
+	@Test
+	public void testBindPublishedObjectDefinitions() throws Exception {
+		ObjectDefinition objectDefinitionA =
+			ObjectDefinitionTestUtil.addCustomObjectDefinition("A");
+		ObjectDefinition objectDefinitionAA =
+			ObjectDefinitionTestUtil.addCustomObjectDefinition("AA");
+
+		_testBindObjectDefinitions(
+			_objectDefinitionLocalService.publishCustomObjectDefinition(
+				TestPropsValues.getUserId(),
+				objectDefinitionA.getObjectDefinitionId()),
+			_objectDefinitionLocalService.publishCustomObjectDefinition(
+				TestPropsValues.getUserId(),
+				objectDefinitionAA.getObjectDefinitionId()),
+			(objectDefinition1, objectDefinition2) ->
+				TreeTestUtil.assertObjectDefinitionTree(
+					LinkedHashMapBuilder.put(
+						"A", new String[] {"AA"}
+					).put(
+						"AA", new String[0]
+					).build(),
+					_treeFactory.createObjectDefinitionTree(
+						objectDefinition1.getObjectDefinitionId()),
+					_objectDefinitionLocalService));
 	}
 
 	@Test
@@ -1004,6 +1080,51 @@ public class ObjectRelationshipLocalServiceTest {
 			objectRelationship);
 	}
 
+	private void _testBindObjectDefinitions(
+			ObjectDefinition objectDefinition1,
+			ObjectDefinition objectDefinition2,
+			UnsafeBiConsumer<ObjectDefinition, ObjectDefinition, Exception>
+				biConsumer)
+		throws Exception {
+
+		ObjectRelationship objectRelationship =
+			_objectRelationshipLocalService.addObjectRelationship(
+				StringUtil.randomId(), TestPropsValues.getUserId(),
+				objectDefinition1.getObjectDefinitionId(),
+				objectDefinition2.getObjectDefinitionId(), 0,
+				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				StringUtil.randomId(), false,
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
+
+		objectRelationship =
+			_objectRelationshipLocalService.updateObjectRelationship(
+				objectRelationship.getExternalReferenceCode(),
+				objectRelationship.getObjectRelationshipId(), 0,
+				objectRelationship.getDeletionType(), true,
+				objectRelationship.getLabelMap(), null);
+
+		Assert.assertTrue(objectRelationship.isEdge());
+		Assert.assertEquals(
+			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+			objectRelationship.getDeletionType());
+
+		ObjectField objectField = _objectFieldLocalService.getObjectField(
+			objectRelationship.getObjectFieldId2());
+
+		Assert.assertTrue(objectField.isRequired());
+
+		biConsumer.accept(
+			_objectDefinitionLocalService.getObjectDefinition(
+				objectDefinition1.getObjectDefinitionId()),
+			_objectDefinitionLocalService.getObjectDefinition(
+				objectDefinition2.getObjectDefinitionId()));
+
+		TreeTestUtil.deleteObjectDefinitionHierarchy(
+			_objectDefinitionLocalService, new String[] {"C_A", "C_AA"},
+			_objectEntryLocalService);
+	}
+
 	private void _testCreateManyToManyObjectRelationshipTable(
 			ObjectDefinition objectDefinition, boolean system)
 		throws Exception {
@@ -1194,5 +1315,8 @@ public class ObjectRelationshipLocalServiceTest {
 
 	@DeleteAfterTestRun
 	private ObjectDefinition _systemObjectDefinition2;
+
+	@Inject
+	private TreeFactory _treeFactory;
 
 }

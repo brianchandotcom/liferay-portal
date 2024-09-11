@@ -103,7 +103,7 @@ public class JspCompiler extends Jsr199JavaCompiler {
 			throw new JasperException(ioException);
 		}
 
-		try (JavaFileManager javaFileManager = getJavaFileManager(
+		try (JavaFileManager javaFileManager = new JavaFileManagerWrapper(
 				new BundleJavaFileManager(
 					_classLoader, standardJavaFileManager,
 					_javaFileObjectResolvers))) {
@@ -236,63 +236,6 @@ public class JspCompiler extends Jsr199JavaCompiler {
 			servletContext, jspCompilationContext.getTagFileJarUrls());
 
 		super.init(jspCompilationContext, errorDispatcher, suppressLogging);
-	}
-
-	@Override
-	protected JavaFileManager getJavaFileManager(
-		JavaFileManager javaFileManager) {
-
-		return new ForwardingJavaFileManager<JavaFileManager>(javaFileManager) {
-
-			@Override
-			public JavaFileObject getJavaFileForOutput(
-				Location location, String className, JavaFileObject.Kind kind,
-				FileObject fileObject) {
-
-				return getOutputFile(
-					className,
-					URI.create(
-						"file:///" + StringUtil.replace(className, '.', '/') +
-							kind));
-			}
-
-			@Override
-			public String inferBinaryName(
-				Location location, JavaFileObject javaFileObject) {
-
-				if (javaFileObject instanceof BytecodeFile) {
-					BytecodeFile bytecodeFile = (BytecodeFile)javaFileObject;
-
-					return bytecodeFile.getClassName();
-				}
-
-				return super.inferBinaryName(location, javaFileObject);
-			}
-
-			@Override
-			public Iterable<JavaFileObject> list(
-					Location location, String packageName,
-					Set<JavaFileObject.Kind> kinds, boolean recurse)
-				throws IOException {
-
-				if ((location == StandardLocation.CLASS_PATH) &&
-					packageName.startsWith(Constants.JSP_PACKAGE_NAME)) {
-
-					Map<String, Map<String, JavaFileObject>> packageMap =
-						rtctxt.getPackageMap();
-
-					Map<String, JavaFileObject> javaFileObjectsMap =
-						packageMap.get(packageName);
-
-					if (javaFileObjectsMap != null) {
-						return javaFileObjectsMap.values();
-					}
-				}
-
-				return super.list(location, packageName, kinds, recurse);
-			}
-
-		};
 	}
 
 	@Override
@@ -544,5 +487,62 @@ public class JspCompiler extends Jsr199JavaCompiler {
 	private final List<File> _classPath = new ArrayList<>();
 	private final List<JavaFileObjectResolver> _javaFileObjectResolvers =
 		new ArrayList<>();
+
+	private class JavaFileManagerWrapper
+		extends ForwardingJavaFileManager<JavaFileManager> {
+
+		public JavaFileManagerWrapper(JavaFileManager javaFileManager) {
+			super(javaFileManager);
+		}
+
+		@Override
+		public JavaFileObject getJavaFileForOutput(
+			Location location, String className, JavaFileObject.Kind kind,
+			FileObject fileObject) {
+
+			return getOutputFile(
+				className,
+				URI.create(
+					"file:///" + StringUtil.replace(className, '.', '/') +
+						kind));
+		}
+
+		@Override
+		public String inferBinaryName(
+			Location location, JavaFileObject javaFileObject) {
+
+			if (javaFileObject instanceof BytecodeFile) {
+				BytecodeFile bytecodeFile = (BytecodeFile)javaFileObject;
+
+				return bytecodeFile.getClassName();
+			}
+
+			return super.inferBinaryName(location, javaFileObject);
+		}
+
+		@Override
+		public Iterable<JavaFileObject> list(
+				Location location, String packageName,
+				Set<JavaFileObject.Kind> kinds, boolean recurse)
+			throws IOException {
+
+			if ((location == StandardLocation.CLASS_PATH) &&
+				packageName.startsWith(Constants.JSP_PACKAGE_NAME)) {
+
+				Map<String, Map<String, JavaFileObject>> packageMap =
+					rtctxt.getPackageMap();
+
+				Map<String, JavaFileObject> javaFileObjectsMap = packageMap.get(
+					packageName);
+
+				if (javaFileObjectsMap != null) {
+					return javaFileObjectsMap.values();
+				}
+			}
+
+			return super.list(location, packageName, kinds, recurse);
+		}
+
+	}
 
 }

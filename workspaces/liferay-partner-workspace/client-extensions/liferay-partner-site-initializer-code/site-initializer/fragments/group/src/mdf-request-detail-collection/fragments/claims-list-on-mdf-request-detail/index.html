@@ -1,5 +1,5 @@
 [#assign mdf_request_id = (request.getAttribute("INFO_ITEM").objectEntryId)! /]
-[#assign siteURL = (themeDisplay.getURLCurrent()?keep_before("/l"))! /]
+[#assign siteURL = (themeDisplay.getURLCurrent()?keep_before("/l/"))! /]
 
 [#assign claim_status_style = {"draft": "label label-tonal-dark ml-md-2", "pendingMarketingReview": "label label-tonal-warning ml-md-2", "approved": "label label-tonal-success ml-md-2", "moreInfoRequested": "label label-tonal-warning ml-md-2", "rejected": "label label-tonal-danger ml-md-2", "expired": "label label-tonal-danger ml-md-2", "claimPaid": "label label-tonal-info ml-md-2", "inFinanceReview": "label label-tonal-light ml-md-2", "canceled": "label label-tonal-danger ml-md-2"}]
 

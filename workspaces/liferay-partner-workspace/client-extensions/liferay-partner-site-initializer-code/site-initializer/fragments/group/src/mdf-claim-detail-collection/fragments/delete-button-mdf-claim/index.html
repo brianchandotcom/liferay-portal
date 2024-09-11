@@ -1,5 +1,5 @@
 [#assign mdfClaimId = (request.getAttribute("INFO_ITEM").objectEntryId)! /]
-[#assign siteURL = (themeDisplay.getURLCurrent()?keep_before("/l"))! /]
+[#assign siteURL = (themeDisplay.getURLCurrent()?keep_before("/l/"))! /]
 
 [#if mdfClaimId?has_content]
 	[#assign mdfClaim = (restClient.get("/c/mdfclaims/${mdfClaimId}"))! /]

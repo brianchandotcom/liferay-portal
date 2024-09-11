@@ -1,5 +1,5 @@
 [#assign mdfRequestId = (request.getAttribute("INFO_ITEM").objectEntryId)! /]
-[#assign siteURL = (themeDisplay.getURLCurrent()?keep_before("/l"))! /]
+[#assign siteURL = (themeDisplay.getURLCurrent()?keep_before("/l/"))! /]
 
 [#if mdfRequestId?has_content]
 	[#assign myUserAccount = restClient.get("/headless-admin-user/v1.0/my-user-account") /]

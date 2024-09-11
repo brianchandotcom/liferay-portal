@@ -261,6 +261,11 @@ public class LayoutsAdminManagementToolbarDisplayContext
 	}
 
 	@Override
+	public String getSortingURL() {
+		return null;
+	}
+
+	@Override
 	public Boolean isDisabled() {
 		if (Objects.equals(
 				_layoutsAdminDisplayContext.getDisplayStyle(),

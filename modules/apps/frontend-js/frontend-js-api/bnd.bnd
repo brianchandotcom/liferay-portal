@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Frontend JS API
-Bundle-SymbolicName: com.liferay.frontend.js.api
-Bundle-Version: 1.0.0
-Export-Package: com.liferay.frontend.js

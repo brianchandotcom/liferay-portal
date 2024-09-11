@@ -61,7 +61,6 @@ import org.apache.jasper.Options;
 import org.apache.jasper.compiler.ErrorDispatcher;
 import org.apache.jasper.compiler.JavacErrorDetail;
 import org.apache.jasper.compiler.JspRuntimeContext;
-import org.apache.jasper.compiler.Jsr199JavaCompiler;
 import org.apache.jasper.compiler.Node;
 
 import org.osgi.framework.Bundle;
@@ -77,9 +76,8 @@ import org.osgi.util.tracker.ServiceTracker;
  * @author Raymond Augé
  * @author Miguel Pastor
  */
-public class JspCompiler extends Jsr199JavaCompiler {
+public class JspCompiler {
 
-	@Override
 	public JavacErrorDetail[] compile(String className, Node.Nodes pageNodes)
 		throws JasperException {
 
@@ -160,7 +158,6 @@ public class JspCompiler extends Jsr199JavaCompiler {
 		return javacErrorDetails;
 	}
 
-	@Override
 	public void doJavaFile(boolean keep) throws JasperException {
 		if (!keep) {
 			_charArrayWriter = null;
@@ -189,13 +186,11 @@ public class JspCompiler extends Jsr199JavaCompiler {
 		}
 	}
 
-	@Override
 	public long getClassLastModified() {
 		return _jspRuntimeContext.getBytecodeBirthTime(
 			_jspCompilationContext.getFullClassName());
 	}
 
-	@Override
 	public Writer getJavaWriter(String javaFileName, String javaEncoding) {
 		_javaFileName = javaFileName;
 		_javaEncoding = javaEncoding;
@@ -205,7 +200,6 @@ public class JspCompiler extends Jsr199JavaCompiler {
 		return _charArrayWriter;
 	}
 
-	@Override
 	public void init(
 		JspCompilationContext jspCompilationContext,
 		ErrorDispatcher errorDispatcher, boolean suppressLogging) {
@@ -294,12 +288,10 @@ public class JspCompiler extends Jsr199JavaCompiler {
 			servletContext, jspCompilationContext.getTagFileJarUrls());
 	}
 
-	@Override
 	public void release() {
 		_bytecodeJavaFileObjects = null;
 	}
 
-	@Override
 	public void saveClassFile(String className, String classFileName) {
 		for (BytecodeJavaFileObject bytecodeJavaFileObject :
 				_bytecodeJavaFileObjects) {
@@ -335,11 +327,9 @@ public class JspCompiler extends Jsr199JavaCompiler {
 		}
 	}
 
-	@Override
 	public void setClassPath(List<File> classPath) {
 	}
 
-	@Override
 	public void setDebug(boolean debug) {
 		if (debug) {
 			_compilerOptions.add("-g");
@@ -349,19 +339,16 @@ public class JspCompiler extends Jsr199JavaCompiler {
 		}
 	}
 
-	@Override
 	public void setExtdirs(String extdirs) {
 		_compilerOptions.add("-extdirs");
 		_compilerOptions.add(extdirs);
 	}
 
-	@Override
 	public void setSourceVM(String sourceVM) {
 		_compilerOptions.add("-source");
 		_compilerOptions.add(sourceVM);
 	}
 
-	@Override
 	public void setTargetVM(String targetVM) {
 		_compilerOptions.add("-target");
 		_compilerOptions.add(targetVM);

@@ -3178,6 +3178,14 @@
 	},
 	{
 		"classNames": [
+			"WorkflowTaskManager"
+		],
+		"from": "getWorkflowTask(long paramName, long paramName)",
+		"issueKey": "LPD-30629",
+		"to": "getWorkflowTask(param#1#)"
+	},
+	{
+		"classNames": [
 			"Country"
 		],
 		"from": "getCommerceCountryId",

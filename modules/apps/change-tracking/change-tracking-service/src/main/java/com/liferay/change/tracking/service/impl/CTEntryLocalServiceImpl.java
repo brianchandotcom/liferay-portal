@@ -12,6 +12,8 @@ import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.model.CTEntryTable;
 import com.liferay.change.tracking.service.base.CTEntryLocalServiceBaseImpl;
 import com.liferay.change.tracking.service.persistence.CTCollectionPersistence;
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.model.JournalArticleTable;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
@@ -22,6 +24,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -98,8 +101,51 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 	public CTEntry fetchCTEntry(
 		long ctCollectionId, long modelClassNameId, long modelClassPK) {
 
-		return ctEntryPersistence.fetchByC_MCNI_MCPK(
+		CTEntry ctEntry = ctEntryPersistence.fetchByC_MCNI_MCPK(
 			ctCollectionId, modelClassNameId, modelClassPK);
+
+		if ((ctEntry != null) ||
+			(modelClassNameId != _classNameLocalService.getClassNameId(
+				JournalArticle.class))) {
+
+			return ctEntry;
+		}
+
+		List<Long> resourcePrimKey = ctEntryPersistence.dslQuery(
+			DSLQueryFactoryUtil.select(
+				JournalArticleTable.INSTANCE.resourcePrimKey
+			).from(
+				JournalArticleTable.INSTANCE
+			).where(
+				JournalArticleTable.INSTANCE.id.eq(modelClassPK)
+			));
+
+		if (resourcePrimKey.isEmpty()) {
+			return null;
+		}
+
+		List<Long> journalArticleIds = ctEntryPersistence.dslQuery(
+			DSLQueryFactoryUtil.select(
+				JournalArticleTable.INSTANCE.id
+			).from(
+				JournalArticleTable.INSTANCE
+			).where(
+				JournalArticleTable.INSTANCE.resourcePrimKey.eq(
+					resourcePrimKey.get(0)
+				).and(
+					JournalArticleTable.INSTANCE.ctCollectionId.eq(
+						ctCollectionId)
+				)
+			).orderBy(
+				JournalArticleTable.INSTANCE.modifiedDate.descending()
+			));
+
+		if (journalArticleIds.isEmpty()) {
+			return null;
+		}
+
+		return ctEntryPersistence.fetchByC_MCNI_MCPK(
+			ctCollectionId, modelClassNameId, journalArticleIds.get(0));
 	}
 
 	@Override
@@ -300,6 +346,9 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 
 		return ctEntryPersistence.update(ctEntry);
 	}
+
+	@Reference
+	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
 	private CTCollectionPersistence _ctCollectionPersistence;

@@ -12,10 +12,6 @@ import com.liferay.change.tracking.rest.internal.odata.entity.v1_0.CTEntryEntity
 import com.liferay.change.tracking.rest.resource.v1_0.CTEntryResource;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.spi.display.CTDisplayRendererRegistry;
-import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.model.JournalArticleTable;
-import com.liferay.journal.service.JournalArticleLocalService;
-import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.sql.CTSQLModeThreadLocal;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -25,7 +21,6 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
@@ -37,7 +32,6 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.util.Collections;
-import java.util.List;
 
 import javax.ws.rs.core.MultivaluedMap;
 
@@ -89,47 +83,9 @@ public class CTEntryResourceImpl extends BaseCTEntryResourceImpl {
 				Long ctCollectionId, Long modelClassNameId, Long modelClassPK)
 		throws Exception {
 
-		com.liferay.change.tracking.model.CTEntry ctEntry;
-
-		if (modelClassNameId == _classNameLocalService.getClassNameId(
-				JournalArticle.class.getName())) {
-
-			JournalArticle journalArticle =
-				_journalArticleLocalService.getJournalArticle(modelClassPK);
-
-			List<Long> journalArticleClassPK = _ctEntryLocalService.dslQuery(
-				DSLQueryFactoryUtil.select(
-					JournalArticleTable.INSTANCE.id
-				).from(
-					JournalArticleTable.INSTANCE
-				).where(
-					JournalArticleTable.INSTANCE.resourcePrimKey.eq(
-						journalArticle.getResourcePrimKey()
-					).and(
-						JournalArticleTable.INSTANCE.ctCollectionId.eq(
-							ctCollectionId)
-					)
-				));
-
-			if (journalArticleClassPK.size() != 1) {
-				throw new Exception(
-					StringBundler.concat(
-						"More than 1 result received from query for entity ",
-						"with modelClassNamePK: ", modelClassPK,
-						" of modelClassNameId: ", modelClassNameId, " (",
-						_classNameLocalService.getClassName(
-							modelClassNameId
-						).getModelClassName(),
-						") in ctCollectionId: ", ctCollectionId));
-			}
-
-			ctEntry = _ctEntryLocalService.fetchCTEntry(
-				ctCollectionId, modelClassNameId, journalArticleClassPK.get(0));
-		}
-		else {
-			ctEntry = _ctEntryLocalService.fetchCTEntry(
+		com.liferay.change.tracking.model.CTEntry ctEntry =
+			_ctEntryLocalService.fetchCTEntry(
 				ctCollectionId, modelClassNameId, modelClassPK);
-		}
 
 		if (ctEntry == null) {
 			throw new NoSuchEntryException(
@@ -211,9 +167,6 @@ public class CTEntryResourceImpl extends BaseCTEntryResourceImpl {
 
 	private static final EntityModel _entityModel = new CTEntryEntityModel();
 
-	@Reference
-	private ClassNameLocalService _classNameLocalService;
-
 	@Reference(
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY,
@@ -233,8 +186,5 @@ public class CTEntryResourceImpl extends BaseCTEntryResourceImpl {
 
 	@Reference
 	private CTEntryLocalService _ctEntryLocalService;
-
-	@Reference
-	private JournalArticleLocalService _journalArticleLocalService;
 
 }

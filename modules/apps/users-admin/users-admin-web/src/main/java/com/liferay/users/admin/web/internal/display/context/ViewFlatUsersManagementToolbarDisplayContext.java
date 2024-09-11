@@ -210,7 +210,9 @@ public class ViewFlatUsersManagementToolbarDisplayContext
 
 	@Override
 	protected String[] getOrderByKeys() {
-		String[] orderColumns = {"first-name", "last-name", "screen-name"};
+		String[] orderColumns = {
+			"first-name", "last-login-date", "last-name", "screen-name"
+		};
 
 		if (searchContainer.isSearch()) {
 			orderColumns = ArrayUtil.append(orderColumns, "relevance");

@@ -62,6 +62,13 @@
 			property="screenName"
 		/>
 
+		<liferay-ui:search-container-column-date
+			cssClass="table-cell-expand-small table-cell-minw-150"
+			name="last-login-date"
+			orderable="<%= true %>"
+			value="<%= user2.getLastLoginDate() %>"
+		/>
+
 		<c:if test="<%= !portletName.equals(UsersAdminPortletKeys.SERVICE_ACCOUNTS) %>">
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-expand-small table-cell-minw-150"

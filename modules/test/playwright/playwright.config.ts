@@ -30,7 +30,6 @@ import {config as frontendDataSetAdminWebConfig} from './tests/frontend-data-set
 import {config as frontendDataSetWebConfig} from './tests/frontend-data-set-web/config';
 import {config as frontendEditorCKEditorSampleWebConfig} from './tests/frontend-editor-ckeditor-sample-web/config';
 import {config as frontendJsSpaWebConfig} from './tests/frontend-js-spa-web/config';
-import {config as frontendJsWebConfig} from './tests/frontend-js-web/config';
 import {config as frontendTaglibClayConfig} from './tests/frontend-taglib-clay/config';
 import {config as headlessBuilderImplConfig} from './tests/headless-builder-impl/config';
 import {config as headlessBuilderWebConfig} from './tests/headless-builder-web/config';
@@ -121,7 +120,6 @@ export default defineConfig({
 		frontendDataSetWebConfig,
 		frontendEditorCKEditorSampleWebConfig,
 		frontendJsSpaWebConfig,
-		frontendJsWebConfig,
 		frontendTaglibClayConfig,
 		headlessBuilderImplConfig,
 		headlessBuilderWebConfig,

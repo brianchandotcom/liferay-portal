@@ -788,6 +788,190 @@ public class LockUtil {
 	}
 
 	/**
+	 * Returns all the locks where companyId = &#63; and className = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param className the class name
+	 * @return the matching locks
+	 */
+	public static List<Lock> findByC_C(long companyId, String className) {
+		return getPersistence().findByC_C(companyId, className);
+	}
+
+	/**
+	 * Returns a range of all the locks where companyId = &#63; and className = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LockModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param className the class name
+	 * @param start the lower bound of the range of locks
+	 * @param end the upper bound of the range of locks (not inclusive)
+	 * @return the range of matching locks
+	 */
+	public static List<Lock> findByC_C(
+		long companyId, String className, int start, int end) {
+
+		return getPersistence().findByC_C(companyId, className, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the locks where companyId = &#63; and className = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LockModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param className the class name
+	 * @param start the lower bound of the range of locks
+	 * @param end the upper bound of the range of locks (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching locks
+	 */
+	public static List<Lock> findByC_C(
+		long companyId, String className, int start, int end,
+		OrderByComparator<Lock> orderByComparator) {
+
+		return getPersistence().findByC_C(
+			companyId, className, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the locks where companyId = &#63; and className = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LockModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param className the class name
+	 * @param start the lower bound of the range of locks
+	 * @param end the upper bound of the range of locks (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching locks
+	 */
+	public static List<Lock> findByC_C(
+		long companyId, String className, int start, int end,
+		OrderByComparator<Lock> orderByComparator, boolean useFinderCache) {
+
+		return getPersistence().findByC_C(
+			companyId, className, start, end, orderByComparator,
+			useFinderCache);
+	}
+
+	/**
+	 * Returns the first lock in the ordered set where companyId = &#63; and className = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param className the class name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching lock
+	 * @throws NoSuchLockException if a matching lock could not be found
+	 */
+	public static Lock findByC_C_First(
+			long companyId, String className,
+			OrderByComparator<Lock> orderByComparator)
+		throws com.liferay.portal.lock.exception.NoSuchLockException {
+
+		return getPersistence().findByC_C_First(
+			companyId, className, orderByComparator);
+	}
+
+	/**
+	 * Returns the first lock in the ordered set where companyId = &#63; and className = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param className the class name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching lock, or <code>null</code> if a matching lock could not be found
+	 */
+	public static Lock fetchByC_C_First(
+		long companyId, String className,
+		OrderByComparator<Lock> orderByComparator) {
+
+		return getPersistence().fetchByC_C_First(
+			companyId, className, orderByComparator);
+	}
+
+	/**
+	 * Returns the last lock in the ordered set where companyId = &#63; and className = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param className the class name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching lock
+	 * @throws NoSuchLockException if a matching lock could not be found
+	 */
+	public static Lock findByC_C_Last(
+			long companyId, String className,
+			OrderByComparator<Lock> orderByComparator)
+		throws com.liferay.portal.lock.exception.NoSuchLockException {
+
+		return getPersistence().findByC_C_Last(
+			companyId, className, orderByComparator);
+	}
+
+	/**
+	 * Returns the last lock in the ordered set where companyId = &#63; and className = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param className the class name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching lock, or <code>null</code> if a matching lock could not be found
+	 */
+	public static Lock fetchByC_C_Last(
+		long companyId, String className,
+		OrderByComparator<Lock> orderByComparator) {
+
+		return getPersistence().fetchByC_C_Last(
+			companyId, className, orderByComparator);
+	}
+
+	/**
+	 * Returns the locks before and after the current lock in the ordered set where companyId = &#63; and className = &#63;.
+	 *
+	 * @param lockId the primary key of the current lock
+	 * @param companyId the company ID
+	 * @param className the class name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next lock
+	 * @throws NoSuchLockException if a lock with the primary key could not be found
+	 */
+	public static Lock[] findByC_C_PrevAndNext(
+			long lockId, long companyId, String className,
+			OrderByComparator<Lock> orderByComparator)
+		throws com.liferay.portal.lock.exception.NoSuchLockException {
+
+		return getPersistence().findByC_C_PrevAndNext(
+			lockId, companyId, className, orderByComparator);
+	}
+
+	/**
+	 * Removes all the locks where companyId = &#63; and className = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param className the class name
+	 */
+	public static void removeByC_C(long companyId, String className) {
+		getPersistence().removeByC_C(companyId, className);
+	}
+
+	/**
+	 * Returns the number of locks where companyId = &#63; and className = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param className the class name
+	 * @return the number of matching locks
+	 */
+	public static int countByC_C(long companyId, String className) {
+		return getPersistence().countByC_C(companyId, className);
+	}
+
+	/**
 	 * Returns the lock where className = &#63; and key = &#63; or throws a <code>NoSuchLockException</code> if it could not be found.
 	 *
 	 * @param className the class name

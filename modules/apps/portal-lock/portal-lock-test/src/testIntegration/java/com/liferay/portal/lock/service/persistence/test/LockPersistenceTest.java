@@ -199,6 +199,15 @@ public class LockPersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_C() throws Exception {
+		_persistence.countByC_C(RandomTestUtil.nextLong(), "");
+
+		_persistence.countByC_C(0L, "null");
+
+		_persistence.countByC_C(0L, (String)null);
+	}
+
+	@Test
 	public void testCountByC_K() throws Exception {
 		_persistence.countByC_K("", "");
 

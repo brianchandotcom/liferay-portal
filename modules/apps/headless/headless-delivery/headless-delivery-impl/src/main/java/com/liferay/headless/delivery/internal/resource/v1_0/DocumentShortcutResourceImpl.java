@@ -52,7 +52,7 @@ public class DocumentShortcutResourceImpl
 			Long siteId, String externalReferenceCode)
 		throws Exception {
 
-		_dlAppService.deleteFileEntryByExternalReferenceCode(
+		_dlAppService.deleteFileShortcutByExternalReferenceCode(
 			externalReferenceCode, siteId);
 	}
 

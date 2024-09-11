@@ -907,6 +907,20 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		repository.deleteFileShortcut(fileShortcutId);
 	}
 
+	@Override
+	public void deleteFileShortcutByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		Repository repository = getRepository(groupId);
+
+		FileShortcut fileShortcut =
+			repository.getFileShortcutByExternalReferenceCode(
+				externalReferenceCode);
+
+		repository.deleteFileShortcut(fileShortcut.getFileShortcutId());
+	}
+
 	/**
 	 * Deletes the file version. File versions can only be deleted if it is
 	 * approved and there are other approved file versions available.

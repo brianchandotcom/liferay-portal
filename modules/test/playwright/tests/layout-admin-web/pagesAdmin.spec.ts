@@ -327,3 +327,29 @@ test(
 		);
 	}
 );
+
+test(
+	'The sort button for pages is not shown',
+	{
+		tag: '@LPD-36041',
+	},
+	async ({apiHelpers, page, pagesAdminPage, site}) => {
+
+		// Create a page
+
+		await apiHelpers.jsonWebServicesLayout.addLayout({
+			groupId: site.id,
+			title: getRandomString(),
+		});
+
+		// Go to admin page
+
+		await pagesAdminPage.goto(site.friendlyUrlPath);
+
+		// Check the button is not shown
+
+		await expect(
+			page.getByLabel('Reverse Order Direction:')
+		).not.toBeAttached();
+	}
+);

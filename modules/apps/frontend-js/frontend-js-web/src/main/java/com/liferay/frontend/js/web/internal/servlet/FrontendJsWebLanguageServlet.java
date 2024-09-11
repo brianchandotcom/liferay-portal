@@ -70,13 +70,13 @@ public class FrontendJsWebLanguageServlet extends HttpServlet {
 
 	@Deactivate
 	protected void deactivate() {
-		_resourceBundleServiceTracker.close();
-
-		_resourceBundleServiceTracker = null;
-
 		_servletContextServiceTracker.close();
 
 		_servletContextServiceTracker = null;
+
+		_resourceBundleServiceTracker.close();
+
+		_resourceBundleServiceTracker = null;
 	}
 
 	@Override

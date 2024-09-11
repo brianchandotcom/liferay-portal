@@ -47,6 +47,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.sql.CTSQLModeThreadLocal;
 import com.liferay.portal.kernel.dao.orm.ORMException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -74,6 +75,7 @@ import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -278,9 +280,14 @@ public class ViewChangesDisplayContext {
 		return fdsActionDropdownItems;
 	}
 
-	public List<FDSFilter> getFDSFilters() {
+	public List<FDSFilter> getFDSFilters() throws PortalException {
 		boolean showHideable = ParamUtil.getBoolean(
 			_renderRequest, "showHideable");
+
+		long groupId = ParamUtil.getLong(_renderRequest, "groupId");
+
+		long modelClassNameId = ParamUtil.getLong(
+			_renderRequest, "modelClassNameId");
 
 		Map<Long, String> siteNames = DisplayContextUtil.getSiteNames(
 			_ctCollection.getCtCollectionId(), showHideable, _themeDisplay);
@@ -295,8 +302,8 @@ public class ViewChangesDisplayContext {
 
 		return ListUtil.fromArray(
 			new ChangeTypeSelectionFDSFilter(),
-			new SiteSelectionFDSFilter(siteNames),
-			new TypeNameSelectionFDSFilter(typeNames),
+			new SiteSelectionFDSFilter(siteNames, groupId),
+			new TypeNameSelectionFDSFilter(typeNames, modelClassNameId),
 			new UserSelectionFDSFilter(usersJSONObject.toMap()));
 	}
 
@@ -345,7 +352,7 @@ public class ViewChangesDisplayContext {
 			for (Map.Entry<String, Integer> entry : typeNameCounts.entrySet()) {
 				typeNameAndCountJSONArray.put(
 					StringBundler.concat(
-						entry.getKey(), "+", entry.getValue()));
+						entry.getKey(), " (", entry.getValue(), ")"));
 			}
 
 			itemsOverviewJSONArray.put(

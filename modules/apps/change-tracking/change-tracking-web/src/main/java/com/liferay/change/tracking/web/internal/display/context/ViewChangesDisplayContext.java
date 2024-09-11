@@ -345,7 +345,7 @@ public class ViewChangesDisplayContext {
 			for (Map.Entry<String, Integer> entry : typeNameCounts.entrySet()) {
 				typeNameAndCountJSONArray.put(
 					StringBundler.concat(
-						entry.getKey(), " (", entry.getValue(), ")"));
+						entry.getKey(), "+", entry.getValue()));
 			}
 
 			itemsOverviewJSONArray.put(

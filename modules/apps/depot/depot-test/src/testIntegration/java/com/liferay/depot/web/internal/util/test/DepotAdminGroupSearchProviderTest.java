@@ -187,7 +187,8 @@ public class DepotAdminGroupSearchProviderTest {
 	}
 
 	private static final String[] _DEPOT_ENTRY_NAMES = {
-		"depot 1", "depot 2", "depot 3", "toped"
+		RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+		RandomTestUtil.randomString(), RandomTestUtil.randomString()
 	};
 
 	private Company _company;

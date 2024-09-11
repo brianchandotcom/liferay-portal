@@ -25,6 +25,8 @@ import canBeRemoved from '../../../../../app/utils/canBeRemoved';
 import isInputFragment from '../../../../../app/utils/isInputFragment';
 import updateItemStyle from '../../../../../app/utils/updateItemStyle';
 
+import './PageStructureSidebarToolbar.scss';
+
 export default function PageStructureSidebarToolbar({activeItemIds}) {
 	const dispatch = useDispatch();
 	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
@@ -126,20 +128,12 @@ export default function PageStructureSidebarToolbar({activeItemIds}) {
 			symbolLeft: 'copy',
 		},
 		{
-			type: 'divider',
-		},
-		{
-			label: Liferay.Language.get('delete'),
-			onClick: () => {
-				if (itemsCanBeDeleted()) {
-					dispatch(
-						deleteItem({
-							itemIds: activeItemIds,
-							selectItems,
-						})
-					);
-				}
-			},
+			className: 'keyboard-only',
+			isBetaFeature: true,
+			label: sub(
+				Liferay.Language.get('move-x-items'),
+				activeItemIds.length
+			),
 			symbolLeft: 'trash',
 		},
 	];
@@ -178,6 +172,7 @@ export default function PageStructureSidebarToolbar({activeItemIds}) {
 								<ClayDropDown.Divider />
 							) : (
 								<ClayDropDown.Item
+									className={item.className}
 									onClick={() => item.onClick()}
 									symbolLeft={item.symbolLeft}
 								>

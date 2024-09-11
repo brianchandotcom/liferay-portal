@@ -38,11 +38,13 @@
 								},
 								{
 									"id": "portraitMobile",
-									"rowViewportDefinition": {}
+									"rowViewportDefinition": {
+									}
 								},
 								{
 									"id": "tablet",
-									"rowViewportDefinition": {}
+									"rowViewportDefinition": {
+									}
 								}
 							],
 							"verticalAlignment": "middle"
@@ -58,11 +60,13 @@
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "portraitMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "tablet"
 										}
 									],
@@ -81,7 +85,8 @@
 												{
 													"id": "element-text",
 													"value": {
-														"fragmentLink": {},
+														"fragmentLink": {
+														},
 														"text": {
 															"value_i18n": {
 																"ar_SA": "Welcome to Partner Portal",
@@ -131,7 +136,8 @@
 														{
 															"id": "first-banner-primary-button-text",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"value_i18n": {
 																		"ar_SA": "Watch a Video Tour",
@@ -162,11 +168,11 @@
 														"key": "DIALECT-dialect-button"
 													},
 													"fragmentConfig": {
-														"uppercase": false,
+														"buttonSize": "",
+														"inverted": false,
 														"style": "primary",
 														"type": "ghost",
-														"inverted": false,
-														"buttonSize": ""
+														"uppercase": false
 													},
 													"fragmentFields": [
 														{
@@ -234,11 +240,13 @@
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "portraitMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "tablet"
 										}
 									],
@@ -298,7 +306,8 @@
 																		}
 																	}
 																},
-																"fragmentLink": {}
+																"fragmentLink": {
+																}
 															}
 														}
 													],
@@ -346,7 +355,8 @@
 						}
 					],
 					"indexed": true,
-					"layout": {}
+					"layout": {
+					}
 				},
 				"pageElements": [
 					{
@@ -376,7 +386,8 @@
 								},
 								{
 									"id": "portraitMobile",
-									"rowViewportDefinition": {}
+									"rowViewportDefinition": {
+									}
 								},
 								{
 									"id": "tablet",
@@ -399,7 +410,8 @@
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "portraitMobile"
 										},
 										{
@@ -417,12 +429,14 @@
 											"fragment": {
 												"key": "announcements-subscribe"
 											},
-											"fragmentConfig": {},
+											"fragmentConfig": {
+											},
 											"fragmentFields": [
 												{
 													"id": "announcements-heading",
 													"value": {
-														"fragmentLink": {},
+														"fragmentLink": {
+														},
 														"text": {
 															"value_i18n": {
 																"ar_SA": "Announcements",
@@ -450,7 +464,8 @@
 										},
 										"pageElements": [
 											{
-												"definition": {},
+												"definition": {
+												},
 												"pageElements": [
 													{
 														"definition": {
@@ -460,16 +475,16 @@
 															},
 															"widgetInstance": {
 																"widgetConfig": {
-																	"enableComments": "false",
 																	"displayStyle": "ddmTemplate_ANNOUNCEMENTS-ENTRIES",
-																	"pageDelta": "4",
-																	"enableCommentRatings": "false",
-																	"enableRelatedAssets": "false",
-																	"lfrScopeType": "",
-																	"enableFlags": "false",
-																	"lfrScopeLayoutUuid": "",
-																	"enableRatings": "false",
 																	"displayStyleGroupId": "[$GROUP_ID$]",
+																	"enableCommentRatings": "false",
+																	"enableComments": "false",
+																	"enableFlags": "false",
+																	"enableRatings": "false",
+																	"enableRelatedAssets": "false",
+																	"lfrScopeLayoutUuid": "",
+																	"lfrScopeType": "",
+																	"pageDelta": "4",
 																	"socialBookmarksTypes": "twitter,facebook,linkedin"
 																},
 																"widgetName": "com_liferay_blogs_web_portlet_BlogsPortlet",
@@ -517,11 +532,11 @@
 												"key": "DIALECT-dialect-button"
 											},
 											"fragmentConfig": {
-												"uppercase": false,
+												"buttonSize": "",
+												"inverted": false,
 												"style": "primary",
 												"type": "borderless",
-												"inverted": false,
-												"buttonSize": ""
+												"uppercase": false
 											},
 											"fragmentFields": [
 												{
@@ -554,19 +569,19 @@
 														},
 														"text": {
 															"value_i18n": {
-																"sv_SE": "View All Announcements",
-																"pt_BR": "View All Announcements",
-																"fr_FR": "View All Announcements",
-																"ja_JP": "View All Announcements",
+																"ar_SA": "View All Announcements",
 																"ca_ES": "View All Announcements",
 																"de_DE": "View All Announcements",
-																"hu_HU": "View All Announcements",
-																"ar_SA": "View All Announcements",
-																"fi_FI": "View All Announcements",
 																"en_US": "View All Announcements",
 																"es_ES": "View All Announcements",
-																"zh_CN": "View All Announcements",
-																"nl_NL": "View All Announcements"
+																"fi_FI": "View All Announcements",
+																"fr_FR": "View All Announcements",
+																"hu_HU": "View All Announcements",
+																"ja_JP": "View All Announcements",
+																"nl_NL": "View All Announcements",
+																"pt_BR": "View All Announcements",
+																"sv_SE": "View All Announcements",
+																"zh_CN": "View All Announcements"
 															}
 														}
 													}
@@ -593,7 +608,8 @@
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "portraitMobile"
 										},
 										{
@@ -614,7 +630,8 @@
 											"fragmentConfig": {
 												"height": "py-4"
 											},
-											"fragmentFields": [],
+											"fragmentFields": [
+											],
 											"fragmentStyle": {
 												"marginBottom": "2"
 											},
@@ -698,7 +715,8 @@
 																		}
 																	}
 																},
-																"fragmentLink": {}
+																"fragmentLink": {
+																}
 															}
 														}
 													],
@@ -721,7 +739,8 @@
 														{
 															"id": "element-text",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"value_i18n": {
 																		"ar_SA": "Deal Registrations",
@@ -828,7 +847,8 @@
 																		}
 																	}
 																},
-																"fragmentLink": {}
+																"fragmentLink": {
+																}
 															}
 														}
 													],
@@ -851,7 +871,8 @@
 														{
 															"id": "element-text",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"value_i18n": {
 																		"ar_SA": "Renewals",
@@ -958,7 +979,8 @@
 																		}
 																	}
 																},
-																"fragmentLink": {}
+																"fragmentLink": {
+																}
 															}
 														}
 													],
@@ -981,7 +1003,8 @@
 														{
 															"id": "element-text",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"value_i18n": {
 																		"ar_SA": "MDFs",
@@ -1088,7 +1111,8 @@
 																		}
 																	}
 																},
-																"fragmentLink": {}
+																"fragmentLink": {
+																}
 															}
 														}
 													],
@@ -1111,7 +1135,8 @@
 														{
 															"id": "element-text",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"value_i18n": {
 																		"ar_SA": "Pricing",
@@ -1157,7 +1182,8 @@
 						"borderWidth": "0"
 					},
 					"indexed": true,
-					"layout": {}
+					"layout": {
+					}
 				},
 				"pageElements": [
 					{
@@ -1176,7 +1202,8 @@
 								},
 								{
 									"id": "portraitMobile",
-									"rowViewportDefinition": {}
+									"rowViewportDefinition": {
+									}
 								},
 								{
 									"id": "tablet",
@@ -1198,7 +1225,8 @@
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "portraitMobile"
 										},
 										{
@@ -1235,7 +1263,8 @@
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "portraitMobile"
 										},
 										{
@@ -1272,7 +1301,8 @@
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "portraitMobile"
 										},
 										{
@@ -1309,7 +1339,8 @@
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "portraitMobile"
 										},
 										{

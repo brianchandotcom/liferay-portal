@@ -4,7 +4,8 @@
 			{
 				"definition": {
 					"indexed": true,
-					"layout": {}
+					"layout": {
+					}
 				},
 				"pageElements": [
 					{
@@ -44,11 +45,13 @@
 										},
 										{
 											"id": "portraitMobile",
-											"rowViewportDefinition": {}
+											"rowViewportDefinition": {
+											}
 										},
 										{
 											"id": "tablet",
-											"rowViewportDefinition": {}
+											"rowViewportDefinition": {
+											}
 										}
 									],
 									"verticalAlignment": "middle"
@@ -64,11 +67,13 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],
@@ -87,7 +92,8 @@
 														{
 															"id": "element-text",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"value_i18n": {
 																		"ar_SA": "Marketing Resources",
@@ -128,7 +134,8 @@
 														{
 															"id": "element-text",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"value_i18n": {
 																		"ar_SA": "Establish your brand as a Liferay partner, drive demand for your services, and expand your reach in the market.",
@@ -173,11 +180,11 @@
 																"key": "dialect-dialect-button"
 															},
 															"fragmentConfig": {
-																"uppercase": false,
+																"buttonSize": "",
+																"inverted": false,
 																"style": "primary",
 																"type": "solid",
-																"inverted": false,
-																"buttonSize": ""
+																"uppercase": false
 															},
 															"fragmentFields": [
 																{
@@ -248,11 +255,13 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],
@@ -292,7 +301,8 @@
 																				}
 																			}
 																		},
-																		"fragmentLink": {}
+																		"fragmentLink": {
+																		}
 																	}
 																}
 															],
@@ -341,7 +351,8 @@
 										{
 											"id": "element-text",
 											"value": {
-												"fragmentLink": {},
+												"fragmentLink": {
+												},
 												"text": {
 													"value_i18n": {
 														"ar_SA": "Liferay Brand Guidelines",
@@ -374,27 +385,29 @@
 									"fragment": {
 										"key": "BASIC_COMPONENT-paragraph"
 									},
-									"fragmentConfig": {},
+									"fragmentConfig": {
+									},
 									"fragmentFields": [
 										{
 											"id": "element-text",
 											"value": {
-												"fragmentLink": {},
+												"fragmentLink": {
+												},
 												"text": {
 													"value_i18n": {
-														"ar_SA": "Liferay's approach is SaaS first. This pricing model supports Endless Solutions on Liferay Experience Cloud, the three plans provide different levels of capabilities. Pro, Business &amp; Enterprise. With each of these models, it is essential to include a MALU Band and an APV band. \u003Cstrong\u003E\u003Cu\u003E\u003Ca href=\"https://learn.liferay.com/w/courses/selling-liferay/level-1-business/liferay-pricing/liferay-pricing-saas-malus-apvs\" rel=\"noopener noreferrer\"\u003EClick here\u003C/a\u003E\u003C/u\u003E\u003C/strong\u003E to learn more about how to calculate MALU and APV bands.",
-														"ca_ES": "Liferay's approach is SaaS first. This pricing model supports Endless Solutions on Liferay Experience Cloud, the three plans provide different levels of capabilities. Pro, Business &amp; Enterprise. With each of these models, it is essential to include a MALU Band and an APV band. \u003Cstrong\u003E\u003Cu\u003E\u003Ca href=\"https://learn.liferay.com/w/courses/selling-liferay/level-1-business/liferay-pricing/liferay-pricing-saas-malus-apvs\" rel=\"noopener noreferrer\"\u003EClick here\u003C/a\u003E\u003C/u\u003E\u003C/strong\u003E to learn more about how to calculate MALU and APV bands.",
-														"de_DE": "Liferay's approach is SaaS first. This pricing model supports Endless Solutions on Liferay Experience Cloud, the three plans provide different levels of capabilities. Pro, Business &amp; Enterprise. With each of these models, it is essential to include a MALU Band and an APV band. \u003Cstrong\u003E\u003Cu\u003E\u003Ca href=\"https://learn.liferay.com/w/courses/selling-liferay/level-1-business/liferay-pricing/liferay-pricing-saas-malus-apvs\" rel=\"noopener noreferrer\"\u003EClick here\u003C/a\u003E\u003C/u\u003E\u003C/strong\u003E to learn more about how to calculate MALU and APV bands.",
-														"en_US": "Liferay's approach is SaaS first. This pricing model supports Endless Solutions on Liferay Experience Cloud, the three plans provide different levels of capabilities. Pro, Business &amp; Enterprise. With each of these models, it is essential to include a MALU Band and an APV band. \u003Cstrong\u003E\u003Cu\u003E\u003Ca href=\"https://learn.liferay.com/w/courses/selling-liferay/level-1-business/liferay-pricing/liferay-pricing-saas-malus-apvs\" rel=\"noopener noreferrer\"\u003EClick here\u003C/a\u003E\u003C/u\u003E\u003C/strong\u003E to learn more about how to calculate MALU and APV bands.",
-														"es_ES": "Liferay's approach is SaaS first. This pricing model supports Endless Solutions on Liferay Experience Cloud, the three plans provide different levels of capabilities. Pro, Business &amp; Enterprise. With each of these models, it is essential to include a MALU Band and an APV band. \u003Cstrong\u003E\u003Cu\u003E\u003Ca href=\"https://learn.liferay.com/w/courses/selling-liferay/level-1-business/liferay-pricing/liferay-pricing-saas-malus-apvs\" rel=\"noopener noreferrer\"\u003EClick here\u003C/a\u003E\u003C/u\u003E\u003C/strong\u003E to learn more about how to calculate MALU and APV bands.",
-														"fi_FI": "Liferay's approach is SaaS first. This pricing model supports Endless Solutions on Liferay Experience Cloud, the three plans provide different levels of capabilities. Pro, Business &amp; Enterprise. With each of these models, it is essential to include a MALU Band and an APV band. \u003Cstrong\u003E\u003Cu\u003E\u003Ca href=\"https://learn.liferay.com/w/courses/selling-liferay/level-1-business/liferay-pricing/liferay-pricing-saas-malus-apvs\" rel=\"noopener noreferrer\"\u003EClick here\u003C/a\u003E\u003C/u\u003E\u003C/strong\u003E to learn more about how to calculate MALU and APV bands.",
-														"fr_FR": "Liferay's approach is SaaS first. This pricing model supports Endless Solutions on Liferay Experience Cloud, the three plans provide different levels of capabilities. Pro, Business &amp; Enterprise. With each of these models, it is essential to include a MALU Band and an APV band. \u003Cstrong\u003E\u003Cu\u003E\u003Ca href=\"https://learn.liferay.com/w/courses/selling-liferay/level-1-business/liferay-pricing/liferay-pricing-saas-malus-apvs\" rel=\"noopener noreferrer\"\u003EClick here\u003C/a\u003E\u003C/u\u003E\u003C/strong\u003E to learn more about how to calculate MALU and APV bands.",
-														"hu_HU": "Liferay's approach is SaaS first. This pricing model supports Endless Solutions on Liferay Experience Cloud, the three plans provide different levels of capabilities. Pro, Business &amp; Enterprise. With each of these models, it is essential to include a MALU Band and an APV band. \u003Cstrong\u003E\u003Cu\u003E\u003Ca href=\"https://learn.liferay.com/w/courses/selling-liferay/level-1-business/liferay-pricing/liferay-pricing-saas-malus-apvs\" rel=\"noopener noreferrer\"\u003EClick here\u003C/a\u003E\u003C/u\u003E\u003C/strong\u003E to learn more about how to calculate MALU and APV bands.",
-														"ja_JP": "Liferay's approach is SaaS first. This pricing model supports Endless Solutions on Liferay Experience Cloud, the three plans provide different levels of capabilities. Pro, Business &amp; Enterprise. With each of these models, it is essential to include a MALU Band and an APV band. \u003Cstrong\u003E\u003Cu\u003E\u003Ca href=\"https://learn.liferay.com/w/courses/selling-liferay/level-1-business/liferay-pricing/liferay-pricing-saas-malus-apvs\" rel=\"noopener noreferrer\"\u003EClick here\u003C/a\u003E\u003C/u\u003E\u003C/strong\u003E to learn more about how to calculate MALU and APV bands.",
-														"nl_NL": "Liferay's approach is SaaS first. This pricing model supports Endless Solutions on Liferay Experience Cloud, the three plans provide different levels of capabilities. Pro, Business &amp; Enterprise. With each of these models, it is essential to include a MALU Band and an APV band. \u003Cstrong\u003E\u003Cu\u003E\u003Ca href=\"https://learn.liferay.com/w/courses/selling-liferay/level-1-business/liferay-pricing/liferay-pricing-saas-malus-apvs\" rel=\"noopener noreferrer\"\u003EClick here\u003C/a\u003E\u003C/u\u003E\u003C/strong\u003E to learn more about how to calculate MALU and APV bands.",
-														"pt_BR": "Liferay's approach is SaaS first. This pricing model supports Endless Solutions on Liferay Experience Cloud, the three plans provide different levels of capabilities. Pro, Business &amp; Enterprise. With each of these models, it is essential to include a MALU Band and an APV band. \u003Cstrong\u003E\u003Cu\u003E\u003Ca href=\"https://learn.liferay.com/w/courses/selling-liferay/level-1-business/liferay-pricing/liferay-pricing-saas-malus-apvs\" rel=\"noopener noreferrer\"\u003EClick here\u003C/a\u003E\u003C/u\u003E\u003C/strong\u003E to learn more about how to calculate MALU and APV bands.",
-														"sv_SE": "Liferay's approach is SaaS first. This pricing model supports Endless Solutions on Liferay Experience Cloud, the three plans provide different levels of capabilities. Pro, Business &amp; Enterprise. With each of these models, it is essential to include a MALU Band and an APV band. \u003Cstrong\u003E\u003Cu\u003E\u003Ca href=\"https://learn.liferay.com/w/courses/selling-liferay/level-1-business/liferay-pricing/liferay-pricing-saas-malus-apvs\" rel=\"noopener noreferrer\"\u003EClick here\u003C/a\u003E\u003C/u\u003E\u003C/strong\u003E to learn more about how to calculate MALU and APV bands.",
-														"zh_CN": "Liferay's approach is SaaS first. This pricing model supports Endless Solutions on Liferay Experience Cloud, the three plans provide different levels of capabilities. Pro, Business &amp; Enterprise. With each of these models, it is essential to include a MALU Band and an APV band. \u003Cstrong\u003E\u003Cu\u003E\u003Ca href=\"https://learn.liferay.com/w/courses/selling-liferay/level-1-business/liferay-pricing/liferay-pricing-saas-malus-apvs\" rel=\"noopener noreferrer\"\u003EClick here\u003C/a\u003E\u003C/u\u003E\u003C/strong\u003E to learn more about how to calculate MALU and APV bands."
+														"ar_SA": "Liferay's approach is SaaS first. This pricing model supports Endless Solutions on Liferay Experience Cloud, the three plans provide different levels of capabilities. Pro, Business &amp; Enterprise. With each of these models, it is essential to include a MALU Band and an APV band. <strong><u><a href=\"https://learn.liferay.com/w/courses/selling-liferay/level-1-business/liferay-pricing/liferay-pricing-saas-malus-apvs\" rel=\"noopener noreferrer\">Click here</a></u></strong> to learn more about how to calculate MALU and APV bands.",
+														"ca_ES": "Liferay's approach is SaaS first. This pricing model supports Endless Solutions on Liferay Experience Cloud, the three plans provide different levels of capabilities. Pro, Business &amp; Enterprise. With each of these models, it is essential to include a MALU Band and an APV band. <strong><u><a href=\"https://learn.liferay.com/w/courses/selling-liferay/level-1-business/liferay-pricing/liferay-pricing-saas-malus-apvs\" rel=\"noopener noreferrer\">Click here</a></u></strong> to learn more about how to calculate MALU and APV bands.",
+														"de_DE": "Liferay's approach is SaaS first. This pricing model supports Endless Solutions on Liferay Experience Cloud, the three plans provide different levels of capabilities. Pro, Business &amp; Enterprise. With each of these models, it is essential to include a MALU Band and an APV band. <strong><u><a href=\"https://learn.liferay.com/w/courses/selling-liferay/level-1-business/liferay-pricing/liferay-pricing-saas-malus-apvs\" rel=\"noopener noreferrer\">Click here</a></u></strong> to learn more about how to calculate MALU and APV bands.",
+														"en_US": "Liferay's approach is SaaS first. This pricing model supports Endless Solutions on Liferay Experience Cloud, the three plans provide different levels of capabilities. Pro, Business &amp; Enterprise. With each of these models, it is essential to include a MALU Band and an APV band. <strong><u><a href=\"https://learn.liferay.com/w/courses/selling-liferay/level-1-business/liferay-pricing/liferay-pricing-saas-malus-apvs\" rel=\"noopener noreferrer\">Click here</a></u></strong> to learn more about how to calculate MALU and APV bands.",
+														"es_ES": "Liferay's approach is SaaS first. This pricing model supports Endless Solutions on Liferay Experience Cloud, the three plans provide different levels of capabilities. Pro, Business &amp; Enterprise. With each of these models, it is essential to include a MALU Band and an APV band. <strong><u><a href=\"https://learn.liferay.com/w/courses/selling-liferay/level-1-business/liferay-pricing/liferay-pricing-saas-malus-apvs\" rel=\"noopener noreferrer\">Click here</a></u></strong> to learn more about how to calculate MALU and APV bands.",
+														"fi_FI": "Liferay's approach is SaaS first. This pricing model supports Endless Solutions on Liferay Experience Cloud, the three plans provide different levels of capabilities. Pro, Business &amp; Enterprise. With each of these models, it is essential to include a MALU Band and an APV band. <strong><u><a href=\"https://learn.liferay.com/w/courses/selling-liferay/level-1-business/liferay-pricing/liferay-pricing-saas-malus-apvs\" rel=\"noopener noreferrer\">Click here</a></u></strong> to learn more about how to calculate MALU and APV bands.",
+														"fr_FR": "Liferay's approach is SaaS first. This pricing model supports Endless Solutions on Liferay Experience Cloud, the three plans provide different levels of capabilities. Pro, Business &amp; Enterprise. With each of these models, it is essential to include a MALU Band and an APV band. <strong><u><a href=\"https://learn.liferay.com/w/courses/selling-liferay/level-1-business/liferay-pricing/liferay-pricing-saas-malus-apvs\" rel=\"noopener noreferrer\">Click here</a></u></strong> to learn more about how to calculate MALU and APV bands.",
+														"hu_HU": "Liferay's approach is SaaS first. This pricing model supports Endless Solutions on Liferay Experience Cloud, the three plans provide different levels of capabilities. Pro, Business &amp; Enterprise. With each of these models, it is essential to include a MALU Band and an APV band. <strong><u><a href=\"https://learn.liferay.com/w/courses/selling-liferay/level-1-business/liferay-pricing/liferay-pricing-saas-malus-apvs\" rel=\"noopener noreferrer\">Click here</a></u></strong> to learn more about how to calculate MALU and APV bands.",
+														"ja_JP": "Liferay's approach is SaaS first. This pricing model supports Endless Solutions on Liferay Experience Cloud, the three plans provide different levels of capabilities. Pro, Business &amp; Enterprise. With each of these models, it is essential to include a MALU Band and an APV band. <strong><u><a href=\"https://learn.liferay.com/w/courses/selling-liferay/level-1-business/liferay-pricing/liferay-pricing-saas-malus-apvs\" rel=\"noopener noreferrer\">Click here</a></u></strong> to learn more about how to calculate MALU and APV bands.",
+														"nl_NL": "Liferay's approach is SaaS first. This pricing model supports Endless Solutions on Liferay Experience Cloud, the three plans provide different levels of capabilities. Pro, Business &amp; Enterprise. With each of these models, it is essential to include a MALU Band and an APV band. <strong><u><a href=\"https://learn.liferay.com/w/courses/selling-liferay/level-1-business/liferay-pricing/liferay-pricing-saas-malus-apvs\" rel=\"noopener noreferrer\">Click here</a></u></strong> to learn more about how to calculate MALU and APV bands.",
+														"pt_BR": "Liferay's approach is SaaS first. This pricing model supports Endless Solutions on Liferay Experience Cloud, the three plans provide different levels of capabilities. Pro, Business &amp; Enterprise. With each of these models, it is essential to include a MALU Band and an APV band. <strong><u><a href=\"https://learn.liferay.com/w/courses/selling-liferay/level-1-business/liferay-pricing/liferay-pricing-saas-malus-apvs\" rel=\"noopener noreferrer\">Click here</a></u></strong> to learn more about how to calculate MALU and APV bands.",
+														"sv_SE": "Liferay's approach is SaaS first. This pricing model supports Endless Solutions on Liferay Experience Cloud, the three plans provide different levels of capabilities. Pro, Business &amp; Enterprise. With each of these models, it is essential to include a MALU Band and an APV band. <strong><u><a href=\"https://learn.liferay.com/w/courses/selling-liferay/level-1-business/liferay-pricing/liferay-pricing-saas-malus-apvs\" rel=\"noopener noreferrer\">Click here</a></u></strong> to learn more about how to calculate MALU and APV bands.",
+														"zh_CN": "Liferay's approach is SaaS first. This pricing model supports Endless Solutions on Liferay Experience Cloud, the three plans provide different levels of capabilities. Pro, Business &amp; Enterprise. With each of these models, it is essential to include a MALU Band and an APV band. <strong><u><a href=\"https://learn.liferay.com/w/courses/selling-liferay/level-1-business/liferay-pricing/liferay-pricing-saas-malus-apvs\" rel=\"noopener noreferrer\">Click here</a></u></strong> to learn more about how to calculate MALU and APV bands."
 													}
 												}
 											}
@@ -413,9 +426,9 @@
 										"key": "BASIC_COMPONENT-button"
 									},
 									"fragmentConfig": {
+										"buttonSize": "sm",
 										"buttonType": "outline-primary",
-										"type": "link",
-										"buttonSize": "sm"
+										"type": "link"
 									},
 									"fragmentFields": [
 										{
@@ -497,7 +510,8 @@
 										{
 											"id": "element-text",
 											"value": {
-												"fragmentLink": {},
+												"fragmentLink": {
+												},
 												"text": {
 													"value_i18n": {
 														"ar_SA": "Liferay Partner Brand Collateral",
@@ -537,7 +551,8 @@
 										{
 											"id": "element-text",
 											"value": {
-												"fragmentLink": {},
+												"fragmentLink": {
+												},
 												"text": {
 													"value_i18n": {
 														"ar_SA": "Find Liferay creative files to identify and promote your Liferay partnership in print and digital formats.",
@@ -578,7 +593,8 @@
 										{
 											"id": "element-text",
 											"value": {
-												"fragmentLink": {},
+												"fragmentLink": {
+												},
 												"text": {
 													"value_i18n": {
 														"ar_SA": "Partner Brand Guidelines",
@@ -620,7 +636,8 @@
 										{
 											"id": "element-text",
 											"value": {
-												"fragmentLink": {},
+												"fragmentLink": {
+												},
 												"text": {
 													"value_i18n": {
 														"ar_SA": "The Liferay logo is the most visible and recognizable expression of the Liferay brand. We understand and appreciate that our partners may want to show affiliation with Liferay. Use the brand guidelines to ensure that Liferay logo is shown properly with your partner logo on external sites, events, and campaigns.",
@@ -661,7 +678,8 @@
 										{
 											"id": "element-text",
 											"value": {
-												"fragmentLink": {},
+												"fragmentLink": {
+												},
 												"text": {
 													"value_i18n": {
 														"ar_SA": "Partner Logos",
@@ -703,7 +721,8 @@
 										{
 											"id": "element-text",
 											"value": {
-												"fragmentLink": {},
+												"fragmentLink": {
+												},
 												"text": {
 													"value_i18n": {
 														"ar_SA": "To show your affiliation with Liferay, download&nbsp;the Liferay Partner Program logo&nbsp;for your current partnership level using the brand guidelines.&nbsp;",
@@ -738,9 +757,9 @@
 										"key": "BASIC_COMPONENT-button"
 									},
 									"fragmentConfig": {
+										"buttonSize": "sm",
 										"buttonType": "outline-primary",
-										"type": "link",
-										"buttonSize": "sm"
+										"type": "link"
 									},
 									"fragmentFields": [
 										{
@@ -816,11 +835,13 @@
 										},
 										{
 											"id": "portraitMobile",
-											"rowViewportDefinition": {}
+											"rowViewportDefinition": {
+											}
 										},
 										{
 											"id": "tablet",
-											"rowViewportDefinition": {}
+											"rowViewportDefinition": {
+											}
 										}
 									],
 									"verticalAlignment": "top"
@@ -836,11 +857,13 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],
@@ -859,7 +882,8 @@
 														{
 															"id": "element-text",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"value_i18n": {
 																		"ar_SA": "Authorized",
@@ -935,7 +959,8 @@
 																		"iconLink": "",
 																		"iconName": "check-circle"
 																	},
-																	"fragmentFields": [],
+																	"fragmentFields": [
+																	],
 																	"fragmentStyle": {
 																		"paddingRight": "2",
 																		"textColor": "colorBrandPrimary"
@@ -956,7 +981,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"ar_SA": "Brand guidelines",
@@ -1008,7 +1034,8 @@
 																		"iconLink": "",
 																		"iconName": "check-circle"
 																	},
-																	"fragmentFields": [],
+																	"fragmentFields": [
+																	],
 																	"fragmentStyle": {
 																		"paddingRight": "2",
 																		"textColor": "colorBrandPrimary"
@@ -1029,7 +1056,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"ar_SA": "PNG logos",
@@ -1081,7 +1109,8 @@
 																		"iconLink": "",
 																		"iconName": "check-circle"
 																	},
-																	"fragmentFields": [],
+																	"fragmentFields": [
+																	],
 																	"fragmentStyle": {
 																		"paddingRight": "2",
 																		"textColor": "colorBrandPrimary"
@@ -1102,7 +1131,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"ar_SA": "SVG logos",
@@ -1139,17 +1169,18 @@
 														"key": "dialect-dialect-button"
 													},
 													"fragmentConfig": {
-														"uppercase": false,
+														"buttonSize": "",
+														"inverted": false,
 														"style": "primary",
 														"type": "solid",
-														"inverted": false,
-														"buttonSize": ""
+														"uppercase": false
 													},
 													"fragmentFields": [
 														{
 															"id": "link",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"value_i18n": {
 																		"ar_SA": "Download&nbsp; Brand Assets",
@@ -1190,11 +1221,13 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],
@@ -1213,7 +1246,8 @@
 														{
 															"id": "element-text",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"value_i18n": {
 																		"ar_SA": "Silver",
@@ -1289,7 +1323,8 @@
 																		"iconLink": "",
 																		"iconName": "check-circle"
 																	},
-																	"fragmentFields": [],
+																	"fragmentFields": [
+																	],
 																	"fragmentStyle": {
 																		"paddingRight": "2",
 																		"textColor": "colorBrandPrimary"
@@ -1310,7 +1345,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"ar_SA": "Brand guidelines",
@@ -1362,7 +1398,8 @@
 																		"iconLink": "",
 																		"iconName": "check-circle"
 																	},
-																	"fragmentFields": [],
+																	"fragmentFields": [
+																	],
 																	"fragmentStyle": {
 																		"paddingRight": "2",
 																		"textColor": "colorBrandPrimary"
@@ -1383,7 +1420,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"ar_SA": "PNG logos",
@@ -1435,7 +1473,8 @@
 																		"iconLink": "",
 																		"iconName": "check-circle"
 																	},
-																	"fragmentFields": [],
+																	"fragmentFields": [
+																	],
 																	"fragmentStyle": {
 																		"paddingRight": "2",
 																		"textColor": "colorBrandPrimary"
@@ -1456,7 +1495,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"ar_SA": "SVG logos",
@@ -1493,17 +1533,18 @@
 														"key": "dialect-dialect-button"
 													},
 													"fragmentConfig": {
-														"uppercase": false,
+														"buttonSize": "",
+														"inverted": false,
 														"style": "primary",
 														"type": "solid",
-														"inverted": false,
-														"buttonSize": ""
+														"uppercase": false
 													},
 													"fragmentFields": [
 														{
 															"id": "link",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"value_i18n": {
 																		"ar_SA": "Download&nbsp; Brand Assets",
@@ -1544,11 +1585,13 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],
@@ -1567,7 +1610,8 @@
 														{
 															"id": "element-text",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"value_i18n": {
 																		"ar_SA": "Gold",
@@ -1650,7 +1694,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"ar_SA": "*115,000/yr",
@@ -1705,7 +1750,8 @@
 																		"iconLink": "",
 																		"iconName": "check-circle"
 																	},
-																	"fragmentFields": [],
+																	"fragmentFields": [
+																	],
 																	"fragmentStyle": {
 																		"paddingRight": "2",
 																		"textColor": "colorBrandPrimary"
@@ -1726,7 +1772,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"ar_SA": "Brand guidelines",
@@ -1778,7 +1825,8 @@
 																		"iconLink": "",
 																		"iconName": "check-circle"
 																	},
-																	"fragmentFields": [],
+																	"fragmentFields": [
+																	],
 																	"fragmentStyle": {
 																		"paddingRight": "2",
 																		"textColor": "colorBrandPrimary"
@@ -1799,7 +1847,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"ar_SA": "PNG logos",
@@ -1851,7 +1900,8 @@
 																		"iconLink": "",
 																		"iconName": "check-circle"
 																	},
-																	"fragmentFields": [],
+																	"fragmentFields": [
+																	],
 																	"fragmentStyle": {
 																		"paddingRight": "2",
 																		"textColor": "colorBrandPrimary"
@@ -1872,7 +1922,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"ar_SA": "SVG logos",
@@ -1909,17 +1960,18 @@
 														"key": "dialect-dialect-button"
 													},
 													"fragmentConfig": {
-														"uppercase": false,
+														"buttonSize": "",
+														"inverted": false,
 														"style": "primary",
 														"type": "solid",
-														"inverted": false,
-														"buttonSize": ""
+														"uppercase": false
 													},
 													"fragmentFields": [
 														{
 															"id": "link",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"value_i18n": {
 																		"ar_SA": "Download&nbsp; Brand Assets",
@@ -1960,11 +2012,13 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],
@@ -1983,7 +2037,8 @@
 														{
 															"id": "element-text",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"value_i18n": {
 																		"ar_SA": "Platinum",
@@ -2059,7 +2114,8 @@
 																		"iconLink": "",
 																		"iconName": "check-circle"
 																	},
-																	"fragmentFields": [],
+																	"fragmentFields": [
+																	],
 																	"fragmentStyle": {
 																		"paddingRight": "2",
 																		"textColor": "colorBrandPrimary"
@@ -2080,7 +2136,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"ar_SA": "Brand guidelines",
@@ -2132,7 +2189,8 @@
 																		"iconLink": "",
 																		"iconName": "check-circle"
 																	},
-																	"fragmentFields": [],
+																	"fragmentFields": [
+																	],
 																	"fragmentStyle": {
 																		"paddingRight": "2",
 																		"textColor": "colorBrandPrimary"
@@ -2153,7 +2211,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"ar_SA": "PNG logos",
@@ -2205,7 +2264,8 @@
 																		"iconLink": "",
 																		"iconName": "check-circle"
 																	},
-																	"fragmentFields": [],
+																	"fragmentFields": [
+																	],
 																	"fragmentStyle": {
 																		"paddingRight": "2",
 																		"textColor": "colorBrandPrimary"
@@ -2226,7 +2286,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"ar_SA": "SVG logos",
@@ -2263,17 +2324,18 @@
 														"key": "dialect-dialect-button"
 													},
 													"fragmentConfig": {
-														"uppercase": false,
+														"buttonSize": "",
+														"inverted": false,
 														"style": "primary",
 														"type": "solid",
-														"inverted": false,
-														"buttonSize": ""
+														"uppercase": false
 													},
 													"fragmentFields": [
 														{
 															"id": "link",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"value_i18n": {
 																		"ar_SA": "Download&nbsp; Brand Assets",
@@ -2316,10 +2378,11 @@
 								"key": "BASIC_COMPONENT-separator"
 							},
 							"fragmentConfig": {
-								"separatorColor": "",
-								"bottomSpacing": "3"
+								"bottomSpacing": "3",
+								"separatorColor": ""
 							},
-							"fragmentFields": [],
+							"fragmentFields": [
+							],
 							"indexed": true
 						},
 						"type": "Fragment"
@@ -2351,7 +2414,8 @@
 										{
 											"id": "element-text",
 											"value": {
-												"fragmentLink": {},
+												"fragmentLink": {
+												},
 												"text": {
 													"value_i18n": {
 														"ar_SA": "New Partner Collateral: Announce Your Liferay Partnership",
@@ -2391,7 +2455,8 @@
 										{
 											"id": "element-text",
 											"value": {
-												"fragmentLink": {},
+												"fragmentLink": {
+												},
 												"text": {
 													"value_i18n": {
 														"ar_SA": "Find resources below to share your partnership with Liferay.",
@@ -2432,7 +2497,8 @@
 										{
 											"id": "element-text",
 											"value": {
-												"fragmentLink": {},
+												"fragmentLink": {
+												},
 												"text": {
 													"value_i18n": {
 														"ar_SA": "Partnership Announcement Toolkit",
@@ -2467,27 +2533,29 @@
 									"fragment": {
 										"key": "BASIC_COMPONENT-paragraph"
 									},
-									"fragmentConfig": {},
+									"fragmentConfig": {
+									},
 									"fragmentFields": [
 										{
 											"id": "element-text",
 											"value": {
-												"fragmentLink": {},
+												"fragmentLink": {
+												},
 												"text": {
 													"value_i18n": {
-														"ar_SA": "\u003Cp\u003EGet an overview of you can announce your new partnership using these assets:&nbsp;\u003C/p\u003E\n\n\u003Cul\u003E\n\t\u003Cli\u003EPress release template (customizable)\u003C/li\u003E\n\t\u003Cli\u003ESocial media banners (customizable)\u003C/li\u003E\n\t\u003Cli\u003EAuthorized partner logo\u003C/li\u003E\n\t\u003Cli\u003EBrand guidelines\u003C/li\u003E\n\u003C/ul\u003E\n",
-														"ca_ES": "\u003Cp\u003EGet an overview of you can announce your new partnership using these assets:&nbsp;\u003C/p\u003E\n\n\u003Cul\u003E\n\t\u003Cli\u003EPress release template (customizable)\u003C/li\u003E\n\t\u003Cli\u003ESocial media banners (customizable)\u003C/li\u003E\n\t\u003Cli\u003EAuthorized partner logo\u003C/li\u003E\n\t\u003Cli\u003EBrand guidelines\u003C/li\u003E\n\u003C/ul\u003E\n",
-														"de_DE": "\u003Cp\u003EGet an overview of you can announce your new partnership using these assets:&nbsp;\u003C/p\u003E\n\n\u003Cul\u003E\n\t\u003Cli\u003EPress release template (customizable)\u003C/li\u003E\n\t\u003Cli\u003ESocial media banners (customizable)\u003C/li\u003E\n\t\u003Cli\u003EAuthorized partner logo\u003C/li\u003E\n\t\u003Cli\u003EBrand guidelines\u003C/li\u003E\n\u003C/ul\u003E\n",
-														"en_US": "\u003Cp\u003EGet an overview of you can announce your new partnership using these assets:&nbsp;\u003C/p\u003E\n\n\u003Cul\u003E\n\t\u003Cli\u003EPress release template (customizable)\u003C/li\u003E\n\t\u003Cli\u003ESocial media banners (customizable)\u003C/li\u003E\n\t\u003Cli\u003EAuthorized partner logo\u003C/li\u003E\n\t\u003Cli\u003EBrand guidelines\u003C/li\u003E\n\u003C/ul\u003E\n",
-														"es_ES": "\u003Cp\u003EGet an overview of you can announce your new partnership using these assets:&nbsp;\u003C/p\u003E\n\n\u003Cul\u003E\n\t\u003Cli\u003EPress release template (customizable)\u003C/li\u003E\n\t\u003Cli\u003ESocial media banners (customizable)\u003C/li\u003E\n\t\u003Cli\u003EAuthorized partner logo\u003C/li\u003E\n\t\u003Cli\u003EBrand guidelines\u003C/li\u003E\n\u003C/ul\u003E\n",
-														"fi_FI": "\u003Cp\u003EGet an overview of you can announce your new partnership using these assets:&nbsp;\u003C/p\u003E\n\n\u003Cul\u003E\n\t\u003Cli\u003EPress release template (customizable)\u003C/li\u003E\n\t\u003Cli\u003ESocial media banners (customizable)\u003C/li\u003E\n\t\u003Cli\u003EAuthorized partner logo\u003C/li\u003E\n\t\u003Cli\u003EBrand guidelines\u003C/li\u003E\n\u003C/ul\u003E\n",
-														"fr_FR": "\u003Cp\u003EGet an overview of you can announce your new partnership using these assets:&nbsp;\u003C/p\u003E\n\n\u003Cul\u003E\n\t\u003Cli\u003EPress release template (customizable)\u003C/li\u003E\n\t\u003Cli\u003ESocial media banners (customizable)\u003C/li\u003E\n\t\u003Cli\u003EAuthorized partner logo\u003C/li\u003E\n\t\u003Cli\u003EBrand guidelines\u003C/li\u003E\n\u003C/ul\u003E\n",
-														"hu_HU": "\u003Cp\u003EGet an overview of you can announce your new partnership using these assets:&nbsp;\u003C/p\u003E\n\n\u003Cul\u003E\n\t\u003Cli\u003EPress release template (customizable)\u003C/li\u003E\n\t\u003Cli\u003ESocial media banners (customizable)\u003C/li\u003E\n\t\u003Cli\u003EAuthorized partner logo\u003C/li\u003E\n\t\u003Cli\u003EBrand guidelines\u003C/li\u003E\n\u003C/ul\u003E\n",
-														"ja_JP": "\u003Cp\u003EGet an overview of you can announce your new partnership using these assets:&nbsp;\u003C/p\u003E\n\n\u003Cul\u003E\n\t\u003Cli\u003EPress release template (customizable)\u003C/li\u003E\n\t\u003Cli\u003ESocial media banners (customizable)\u003C/li\u003E\n\t\u003Cli\u003EAuthorized partner logo\u003C/li\u003E\n\t\u003Cli\u003EBrand guidelines\u003C/li\u003E\n\u003C/ul\u003E\n",
-														"nl_NL": "\u003Cp\u003EGet an overview of you can announce your new partnership using these assets:&nbsp;\u003C/p\u003E\n\n\u003Cul\u003E\n\t\u003Cli\u003EPress release template (customizable)\u003C/li\u003E\n\t\u003Cli\u003ESocial media banners (customizable)\u003C/li\u003E\n\t\u003Cli\u003EAuthorized partner logo\u003C/li\u003E\n\t\u003Cli\u003EBrand guidelines\u003C/li\u003E\n\u003C/ul\u003E\n",
-														"pt_BR": "\u003Cp\u003EGet an overview of you can announce your new partnership using these assets:&nbsp;\u003C/p\u003E\n\n\u003Cul\u003E\n\t\u003Cli\u003EPress release template (customizable)\u003C/li\u003E\n\t\u003Cli\u003ESocial media banners (customizable)\u003C/li\u003E\n\t\u003Cli\u003EAuthorized partner logo\u003C/li\u003E\n\t\u003Cli\u003EBrand guidelines\u003C/li\u003E\n\u003C/ul\u003E\n",
-														"sv_SE": "\u003Cp\u003EGet an overview of you can announce your new partnership using these assets:&nbsp;\u003C/p\u003E\n\n\u003Cul\u003E\n\t\u003Cli\u003EPress release template (customizable)\u003C/li\u003E\n\t\u003Cli\u003ESocial media banners (customizable)\u003C/li\u003E\n\t\u003Cli\u003EAuthorized partner logo\u003C/li\u003E\n\t\u003Cli\u003EBrand guidelines\u003C/li\u003E\n\u003C/ul\u003E\n",
-														"zh_CN": "\u003Cp\u003EGet an overview of you can announce your new partnership using these assets:&nbsp;\u003C/p\u003E\n\n\u003Cul\u003E\n\t\u003Cli\u003EPress release template (customizable)\u003C/li\u003E\n\t\u003Cli\u003ESocial media banners (customizable)\u003C/li\u003E\n\t\u003Cli\u003EAuthorized partner logo\u003C/li\u003E\n\t\u003Cli\u003EBrand guidelines\u003C/li\u003E\n\u003C/ul\u003E\n"
+														"ar_SA": "<p>Get an overview of you can announce your new partnership using these assets:&nbsp;</p>\n\n<ul>\n\t<li>Press release template (customizable)</li>\n\t<li>Social media banners (customizable)</li>\n\t<li>Authorized partner logo</li>\n\t<li>Brand guidelines</li>\n</ul>\n",
+														"ca_ES": "<p>Get an overview of you can announce your new partnership using these assets:&nbsp;</p>\n\n<ul>\n\t<li>Press release template (customizable)</li>\n\t<li>Social media banners (customizable)</li>\n\t<li>Authorized partner logo</li>\n\t<li>Brand guidelines</li>\n</ul>\n",
+														"de_DE": "<p>Get an overview of you can announce your new partnership using these assets:&nbsp;</p>\n\n<ul>\n\t<li>Press release template (customizable)</li>\n\t<li>Social media banners (customizable)</li>\n\t<li>Authorized partner logo</li>\n\t<li>Brand guidelines</li>\n</ul>\n",
+														"en_US": "<p>Get an overview of you can announce your new partnership using these assets:&nbsp;</p>\n\n<ul>\n\t<li>Press release template (customizable)</li>\n\t<li>Social media banners (customizable)</li>\n\t<li>Authorized partner logo</li>\n\t<li>Brand guidelines</li>\n</ul>\n",
+														"es_ES": "<p>Get an overview of you can announce your new partnership using these assets:&nbsp;</p>\n\n<ul>\n\t<li>Press release template (customizable)</li>\n\t<li>Social media banners (customizable)</li>\n\t<li>Authorized partner logo</li>\n\t<li>Brand guidelines</li>\n</ul>\n",
+														"fi_FI": "<p>Get an overview of you can announce your new partnership using these assets:&nbsp;</p>\n\n<ul>\n\t<li>Press release template (customizable)</li>\n\t<li>Social media banners (customizable)</li>\n\t<li>Authorized partner logo</li>\n\t<li>Brand guidelines</li>\n</ul>\n",
+														"fr_FR": "<p>Get an overview of you can announce your new partnership using these assets:&nbsp;</p>\n\n<ul>\n\t<li>Press release template (customizable)</li>\n\t<li>Social media banners (customizable)</li>\n\t<li>Authorized partner logo</li>\n\t<li>Brand guidelines</li>\n</ul>\n",
+														"hu_HU": "<p>Get an overview of you can announce your new partnership using these assets:&nbsp;</p>\n\n<ul>\n\t<li>Press release template (customizable)</li>\n\t<li>Social media banners (customizable)</li>\n\t<li>Authorized partner logo</li>\n\t<li>Brand guidelines</li>\n</ul>\n",
+														"ja_JP": "<p>Get an overview of you can announce your new partnership using these assets:&nbsp;</p>\n\n<ul>\n\t<li>Press release template (customizable)</li>\n\t<li>Social media banners (customizable)</li>\n\t<li>Authorized partner logo</li>\n\t<li>Brand guidelines</li>\n</ul>\n",
+														"nl_NL": "<p>Get an overview of you can announce your new partnership using these assets:&nbsp;</p>\n\n<ul>\n\t<li>Press release template (customizable)</li>\n\t<li>Social media banners (customizable)</li>\n\t<li>Authorized partner logo</li>\n\t<li>Brand guidelines</li>\n</ul>\n",
+														"pt_BR": "<p>Get an overview of you can announce your new partnership using these assets:&nbsp;</p>\n\n<ul>\n\t<li>Press release template (customizable)</li>\n\t<li>Social media banners (customizable)</li>\n\t<li>Authorized partner logo</li>\n\t<li>Brand guidelines</li>\n</ul>\n",
+														"sv_SE": "<p>Get an overview of you can announce your new partnership using these assets:&nbsp;</p>\n\n<ul>\n\t<li>Press release template (customizable)</li>\n\t<li>Social media banners (customizable)</li>\n\t<li>Authorized partner logo</li>\n\t<li>Brand guidelines</li>\n</ul>\n",
+														"zh_CN": "<p>Get an overview of you can announce your new partnership using these assets:&nbsp;</p>\n\n<ul>\n\t<li>Press release template (customizable)</li>\n\t<li>Social media banners (customizable)</li>\n\t<li>Authorized partner logo</li>\n\t<li>Brand guidelines</li>\n</ul>\n"
 													}
 												}
 											}
@@ -2506,17 +2574,18 @@
 										"key": "dialect-dialect-button"
 									},
 									"fragmentConfig": {
-										"uppercase": false,
+										"buttonSize": "",
+										"inverted": false,
 										"style": "primary",
 										"type": "solid",
-										"inverted": false,
-										"buttonSize": ""
+										"uppercase": false
 									},
 									"fragmentFields": [
 										{
 											"id": "link",
 											"value": {
-												"fragmentLink": {},
+												"fragmentLink": {
+												},
 												"text": {
 													"value_i18n": {
 														"ar_SA": "Download Announcement Toolkit",
@@ -2547,9 +2616,9 @@
 										"key": "BASIC_COMPONENT-button"
 									},
 									"fragmentConfig": {
+										"buttonSize": "sm",
 										"buttonType": "outline-primary",
-										"type": "link",
-										"buttonSize": "sm"
+										"type": "link"
 									},
 									"fragmentFields": [
 										{

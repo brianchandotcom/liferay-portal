@@ -7,7 +7,8 @@
 						"borderWidth": "0"
 					},
 					"indexed": true,
-					"layout": {},
+					"layout": {
+					},
 					"name": "Resources Container"
 				},
 				"pageElements": [
@@ -64,22 +65,23 @@
 										{
 											"id": "element-text",
 											"value": {
-												"fragmentLink": {},
+												"fragmentLink": {
+												},
 												"text": {
 													"value_i18n": {
-														"sv_SE": "Library",
-														"pt_BR": "Library",
-														"fr_FR": "Library",
-														"ja_JP": "Library",
+														"ar_SA": "Library",
 														"ca_ES": "Library",
 														"de_DE": "Library",
-														"hu_HU": "Library",
-														"ar_SA": "Library",
-														"fi_FI": "Library",
-														"en_US": "\u003Cp\u003ELibrary\u003C/p\u003E\n",
+														"en_US": "<p>Library</p>\n",
 														"es_ES": "Library",
-														"zh_CN": "Library",
-														"nl_NL": "Library"
+														"fi_FI": "Library",
+														"fr_FR": "Library",
+														"hu_HU": "Library",
+														"ja_JP": "Library",
+														"nl_NL": "Library",
+														"pt_BR": "Library",
+														"sv_SE": "Library",
+														"zh_CN": "Library"
 													}
 												}
 											}
@@ -108,22 +110,23 @@
 										{
 											"id": "element-text",
 											"value": {
-												"fragmentLink": {},
+												"fragmentLink": {
+												},
 												"text": {
 													"value_i18n": {
-														"sv_SE": "Library",
-														"pt_BR": "Library",
-														"fr_FR": "Library",
-														"ja_JP": "Library",
+														"ar_SA": "Library",
 														"ca_ES": "Library",
 														"de_DE": "Library",
-														"hu_HU": "Library",
-														"ar_SA": "Library",
-														"fi_FI": "Library",
-														"en_US": "\u003Cp\u003EThe Library is under maintenance\u003C/p\u003E\n",
+														"en_US": "<p>The Library is under maintenance</p>\n",
 														"es_ES": "Library",
-														"zh_CN": "Library",
-														"nl_NL": "Library"
+														"fi_FI": "Library",
+														"fr_FR": "Library",
+														"hu_HU": "Library",
+														"ja_JP": "Library",
+														"nl_NL": "Library",
+														"pt_BR": "Library",
+														"sv_SE": "Library",
+														"zh_CN": "Library"
 													}
 												}
 											}
@@ -148,18 +151,18 @@
 									},
 									"widgetInstance": {
 										"widgetConfig": {
+											"destination": "",
+											"displayStyle": "default",
+											"displayStyleGroupId": "11760433",
 											"federatedSearchKey": "",
-											"suggestionsContributorConfigurations": "{\"contributorName\":\"basic\",\"displayGroupName\":\"suggestions\",\"size\":5}",
+											"invisible": "false",
+											"keywordsParameterName": "q",
+											"scopeParameterName": "scope",
 											"searchScope": "this-site",
 											"showStagedResults": "false",
-											"destination": "",
-											"suggestionsEnabled": "false",
-											"invisible": "false",
-											"displayStyleGroupId": "11760433",
+											"suggestionsContributorConfigurations": "{\"contributorName\":\"basic\",\"displayGroupName\":\"suggestions\",\"size\":5}",
 											"suggestionsDisplayThreshold": "2",
-											"displayStyle": "default",
-											"scopeParameterName": "scope",
-											"keywordsParameterName": "q",
+											"suggestionsEnabled": "false",
 											"useAdvancedSearchSyntax": "false"
 										},
 										"widgetName": "com_liferay_portal_search_web_search_bar_portlet_SearchBarPortlet"
@@ -186,11 +189,13 @@
 								},
 								{
 									"id": "portraitMobile",
-									"rowViewportDefinition": {}
+									"rowViewportDefinition": {
+									}
 								},
 								{
 									"id": "tablet",
-									"rowViewportDefinition": {}
+									"rowViewportDefinition": {
+									}
 								}
 							],
 							"verticalAlignment": "top"
@@ -206,11 +211,13 @@
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "portraitMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "tablet"
 										}
 									],
@@ -245,9 +252,9 @@
 													},
 													"widgetInstance": {
 														"widgetConfig": {
-															"federatedSearchKey": "",
 															"allowEmptySearches": "true",
-															"basicFacetSelection": "false"
+															"basicFacetSelection": "false",
+															"federatedSearchKey": ""
 														},
 														"widgetName": "com_liferay_portal_search_web_search_options_portlet_SearchOptionsPortlet"
 													}
@@ -278,14 +285,14 @@
 													},
 													"widgetInstance": {
 														"widgetConfig": {
-															"vocabularyIds": "15292493,15292519,15292538,15292576,15292601,15292605,15292615,15292634,15564154",
 															"displayStyle": "ddmTemplate_CATEGORY-FACET-VOCABULARY-FTL",
-															"maxTerms": "100",
-															"frequencyThreshold": "1",
-															"frequenciesVisible": "true",
-															"parameterName": "filters",
 															"displayStyleGroupId": "15078019",
-															"order": "key:asc"
+															"frequenciesVisible": "true",
+															"frequencyThreshold": "1",
+															"maxTerms": "100",
+															"order": "key:asc",
+															"parameterName": "filters",
+															"vocabularyIds": "15292493,15292519,15292538,15292576,15292601,15292605,15292615,15292634,15564154"
 														},
 														"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
 													}
@@ -308,11 +315,13 @@
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "portraitMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "tablet"
 										}
 									],
@@ -323,18 +332,18 @@
 										"definition": {
 											"widgetInstance": {
 												"widgetConfig": {
+													"displayInDocumentForm": "false",
 													"displayStyle": "ddmTemplate_RESOURCES-SEARCH-RESULT",
+													"displayStyleGroupId": "15095646",
 													"federatedSearchKey": "",
 													"fieldsToDisplay": "",
-													"viewInContext": "true",
-													"displayInDocumentForm": "false",
+													"highlightEnabled": "false",
 													"paginationDelta": "20",
+													"paginationDeltaParameterName": "delta",
 													"paginationStartParameterName": "start",
 													"showEmptyResultMessage": "true",
 													"showPagination": "true",
-													"displayStyleGroupId": "15095646",
-													"paginationDeltaParameterName": "delta",
-													"highlightEnabled": "false"
+													"viewInContext": "true"
 												},
 												"widgetName": "com_liferay_portal_search_web_search_results_portlet_SearchResultsPortlet",
 												"widgetPermissions": [

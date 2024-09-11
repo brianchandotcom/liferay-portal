@@ -7,7 +7,8 @@
 						"borderWidth": "0"
 					},
 					"indexed": true,
-					"layout": {},
+					"layout": {
+					},
 					"name": "Resources Container"
 				},
 				"pageElements": [
@@ -64,22 +65,23 @@
 										{
 											"id": "element-text",
 											"value": {
-												"fragmentLink": {},
+												"fragmentLink": {
+												},
 												"text": {
 													"value_i18n": {
-														"sv_SE": "Search Results",
-														"pt_BR": "Search Results",
-														"fr_FR": "Search Results",
-														"ja_JP": "Search Results",
+														"ar_SA": "Search Results",
 														"ca_ES": "Search Results",
 														"de_DE": "Search Results",
-														"hu_HU": "Search Results",
-														"ar_SA": "Search Results",
-														"fi_FI": "Search Results",
 														"en_US": "Search Results",
 														"es_ES": "Search Results",
-														"zh_CN": "Search Results",
-														"nl_NL": "Search Results"
+														"fi_FI": "Search Results",
+														"fr_FR": "Search Results",
+														"hu_HU": "Search Results",
+														"ja_JP": "Search Results",
+														"nl_NL": "Search Results",
+														"pt_BR": "Search Results",
+														"sv_SE": "Search Results",
+														"zh_CN": "Search Results"
 													}
 												}
 											}
@@ -108,22 +110,23 @@
 										{
 											"id": "element-text",
 											"value": {
-												"fragmentLink": {},
+												"fragmentLink": {
+												},
 												"text": {
 													"value_i18n": {
-														"sv_SE": "Search Results",
-														"pt_BR": "Search Results",
-														"fr_FR": "Search Results",
-														"ja_JP": "Search Results",
+														"ar_SA": "Search Results",
 														"ca_ES": "Search Results",
 														"de_DE": "Search Results",
-														"hu_HU": "Search Results",
-														"ar_SA": "Search Results",
-														"fi_FI": "Search Results",
 														"en_US": "The Search is&nbsp;under maintenance",
 														"es_ES": "Search Results",
-														"zh_CN": "Search Results",
-														"nl_NL": "Search Results"
+														"fi_FI": "Search Results",
+														"fr_FR": "Search Results",
+														"hu_HU": "Search Results",
+														"ja_JP": "Search Results",
+														"nl_NL": "Search Results",
+														"pt_BR": "Search Results",
+														"sv_SE": "Search Results",
+														"zh_CN": "Search Results"
 													}
 												}
 											}
@@ -151,18 +154,18 @@
 									},
 									"widgetInstance": {
 										"widgetConfig": {
-											"federatedSearchKey": "",
-											"suggestionsContributorConfigurations": "{\"contributorName\":\"basic\",\"displayGroupName\":\"suggestions\",\"size\":5}",
-											"showStagedResults": "false",
-											"searchScope": "everything",
-											"suggestionsEnabled": "false",
 											"destination": "",
-											"invisible": "false",
-											"displayStyleGroupId": "15078019",
-											"suggestionsDisplayThreshold": "2",
 											"displayStyle": "default",
-											"scopeParameterName": "scope",
+											"displayStyleGroupId": "15078019",
+											"federatedSearchKey": "",
+											"invisible": "false",
 											"keywordsParameterName": "q",
+											"scopeParameterName": "scope",
+											"searchScope": "everything",
+											"showStagedResults": "false",
+											"suggestionsContributorConfigurations": "{\"contributorName\":\"basic\",\"displayGroupName\":\"suggestions\",\"size\":5}",
+											"suggestionsDisplayThreshold": "2",
+											"suggestionsEnabled": "false",
 											"useAdvancedSearchSyntax": "false"
 										},
 										"widgetName": "com_liferay_portal_search_web_search_bar_portlet_SearchBarPortlet"
@@ -183,24 +186,24 @@
 									},
 									"widgetInstance": {
 										"widgetConfig": {
-											"com.liferay.portal.search.web.internal.facet.AssetCategoriesSearchFacet": "true",
-											"com.liferay.portal.search.web.internal.facet.AssetTagsSearchFacet": "false",
-											"querySuggestionEnabled": "false",
-											"searchScope": "this-site",
 											"collatedSpellCheckResultEnabled": "false",
-											"com.liferay.portal.search.web.internal.facet.FolderSearchFacet": "false",
+											"com.liferay.portal.search.web.internal.facet.AssetCategoriesSearchFacet": "true",
 											"com.liferay.portal.search.web.internal.facet.AssetEntriesSearchFacet": "false",
-											"displayResultsInDocumentForm": "false",
+											"com.liferay.portal.search.web.internal.facet.AssetTagsSearchFacet": "false",
+											"com.liferay.portal.search.web.internal.facet.FolderSearchFacet": "false",
 											"com.liferay.portal.search.web.internal.facet.ModifiedSearchFacet": "false",
-											"highlightEnabled": "false",
 											"com.liferay.portal.search.web.internal.facet.ScopeSearchFacet": "false",
-											"viewInContext": "true",
 											"com.liferay.portal.search.web.internal.facet.UserSearchFacet": "false",
-											"displayOpenSearchResults": "false",
 											"displayMainQuery": "false",
+											"displayOpenSearchResults": "false",
+											"displayResultsInDocumentForm": "false",
+											"highlightEnabled": "false",
 											"queryIndexingEnabled": "false",
+											"querySuggestionEnabled": "false",
 											"searchConfiguration": "{\"facets\":[{\"fieldName\":\"assetVocabularyCategoryIds\",\"static\":false,\"data\":{\"displayStyle\":\"list\",\"maxTerms\":10,\"showAssetCount\":true,\"frequencyThreshold\":1},\"weight\":1.3,\"className\":\"assetVocabularyCategoryIds\",\"id\":\"com.liferay.portal.search.web.internal.facet.AssetCategoriesSearchFacet\",\"label\":\"any-category\",\"order\":\"OrderHitsDesc\"},{\"fieldName\":\"entryClassName\",\"static\":false,\"data\":{\"frequencyThreshold\":1,\"values\":[\"com.liferay.document.library.kernel.model.DLFileEntry\"]},\"weight\":1.5,\"className\":\"entryClassName\",\"id\":\"com.liferay.portal.search.web.internal.facet.AssetEntriesSearchFacet\",\"label\":\"any-asset\",\"order\":\"OrderHitsDesc\"},{\"fieldName\":\"assetTagNames.raw\",\"static\":false,\"data\":{\"displayStyle\":\"list\",\"maxTerms\":10,\"showAssetCount\":true,\"frequencyThreshold\":1},\"weight\":1.4,\"className\":\"assetTagNames.raw\",\"id\":\"com.liferay.portal.search.web.internal.facet.AssetTagsSearchFacet\",\"label\":\"any-tag\",\"order\":\"OrderHitsDesc\"},{\"fieldName\":\"folderId\",\"static\":false,\"data\":{\"maxTerms\":10,\"showAssetCount\":true,\"frequencyThreshold\":1},\"weight\":1.2,\"className\":\"folderId\",\"id\":\"com.liferay.portal.search.web.internal.facet.FolderSearchFacet\",\"label\":\"any-folder\",\"order\":\"OrderHitsDesc\"},{\"fieldName\":\"modified\",\"static\":false,\"data\":{\"ranges\":[{\"range\":\"[past-hour TO *]\",\"label\":\"past-hour\"},{\"range\":\"[past-24-hours TO *]\",\"label\":\"past-24-hours\"},{\"range\":\"[past-week TO *]\",\"label\":\"past-week\"},{\"range\":\"[past-month TO *]\",\"label\":\"past-month\"},{\"range\":\"[past-year TO *]\",\"label\":\"past-year\"}],\"frequencyThreshold\":1},\"weight\":1,\"className\":\"modified\",\"id\":\"com.liferay.portal.search.web.internal.facet.ModifiedSearchFacet\",\"label\":\"any-time\",\"order\":\"OrderHitsDesc\"},{\"fieldName\":\"groupId\",\"static\":false,\"data\":{\"maxTerms\":10,\"showAssetCount\":true,\"frequencyThreshold\":1},\"weight\":1.6,\"className\":\"groupId\",\"id\":\"com.liferay.portal.search.web.internal.facet.ScopeSearchFacet\",\"label\":\"any-site\",\"order\":\"OrderHitsDesc\"},{\"fieldName\":\"userId\",\"static\":false,\"data\":{\"maxTerms\":10,\"showAssetCount\":true,\"frequencyThreshold\":1},\"weight\":1.1,\"className\":\"userId\",\"id\":\"com.liferay.portal.search.web.internal.facet.UserSearchFacet\",\"label\":\"any-user\",\"order\":\"OrderHitsDesc\"}]}",
-											"useAdvancedSearchSyntax": "false"
+											"searchScope": "this-site",
+											"useAdvancedSearchSyntax": "false",
+											"viewInContext": "true"
 										},
 										"widgetName": "com_liferay_portal_search_web_portlet_SearchPortlet"
 									}
@@ -226,11 +229,13 @@
 								},
 								{
 									"id": "portraitMobile",
-									"rowViewportDefinition": {}
+									"rowViewportDefinition": {
+									}
 								},
 								{
 									"id": "tablet",
-									"rowViewportDefinition": {}
+									"rowViewportDefinition": {
+									}
 								}
 							],
 							"verticalAlignment": "top"
@@ -246,11 +251,13 @@
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "portraitMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "tablet"
 										}
 									],
@@ -285,9 +292,9 @@
 													},
 													"widgetInstance": {
 														"widgetConfig": {
-															"federatedSearchKey": "",
 															"allowEmptySearches": "true",
 															"basicFacetSelection": "false",
+															"federatedSearchKey": "",
 															"retainFacetSelections": "false"
 														},
 														"widgetName": "com_liferay_portal_search_web_search_options_portlet_SearchOptionsPortlet"
@@ -302,15 +309,15 @@
 													},
 													"widgetInstance": {
 														"widgetConfig": {
-															"lfrWidgetShowAddAppLink": "false",
-															"lfrFacebookApiKey": "",
 															"federatedSearchKey": "",
-															"lfrFacebookCanvasPageUrl": "",
-															"sxpBlueprintExternalReferenceCode": "b5e144d8-c5fc-3bae-33d4-5a3e06b03c42",
-															"lfrFacebookShowAddAppLink": "false",
 															"lfrAppShowShareWithFriendsLink": "false",
+															"lfrFacebookApiKey": "",
+															"lfrFacebookCanvasPageUrl": "",
+															"lfrFacebookShowAddAppLink": "false",
+															"lfrIgoogleShowAddAppLink": "false",
 															"lfrNetvibesShowAddAppLink": "false",
-															"lfrIgoogleShowAddAppLink": "false"
+															"lfrWidgetShowAddAppLink": "false",
+															"sxpBlueprintExternalReferenceCode": "b5e144d8-c5fc-3bae-33d4-5a3e06b03c42"
 														},
 														"widgetName": "com_liferay_search_experiences_web_internal_blueprint_options_portlet_SXPBlueprintOptionsPortlet"
 													}
@@ -325,7 +332,8 @@
 														"marginBottom": "3"
 													},
 													"widgetInstance": {
-														"widgetConfig": {},
+														"widgetConfig": {
+														},
 														"widgetName": "com_liferay_portal_search_web_internal_sort_portlet_SortPortlet"
 													}
 												},
@@ -341,14 +349,14 @@
 													},
 													"widgetInstance": {
 														"widgetConfig": {
-															"vocabularyIds": "",
 															"displayStyle": "ddmTemplate_CATEGORY-FACET-VOCABULARY-FTL",
-															"maxTerms": "10",
-															"frequencyThreshold": "1",
-															"frequenciesVisible": "true",
-															"parameterName": "filters",
 															"displayStyleGroupId": "15078019",
-															"order": "key:desc"
+															"frequenciesVisible": "true",
+															"frequencyThreshold": "1",
+															"maxTerms": "10",
+															"order": "key:desc",
+															"parameterName": "filters",
+															"vocabularyIds": ""
 														},
 														"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
 													}
@@ -363,7 +371,8 @@
 														"marginBottom": "3"
 													},
 													"widgetInstance": {
-														"widgetConfig": {},
+														"widgetConfig": {
+														},
 														"widgetName": "com_liferay_portal_search_web_tag_facet_portlet_TagFacetPortlet"
 													}
 												},
@@ -377,7 +386,8 @@
 														"marginBottom": "3"
 													},
 													"widgetInstance": {
-														"widgetConfig": {},
+														"widgetConfig": {
+														},
 														"widgetName": "com_liferay_portal_search_web_type_facet_portlet_TypeFacetPortlet"
 													}
 												},
@@ -390,7 +400,8 @@
 														"borderRadius": "borderRadiusSm"
 													},
 													"widgetInstance": {
-														"widgetConfig": {},
+														"widgetConfig": {
+														},
 														"widgetName": "com_liferay_portal_search_web_modified_facet_portlet_ModifiedFacetPortlet"
 													}
 												},
@@ -412,11 +423,13 @@
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "portraitMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "tablet"
 										}
 									],
@@ -427,18 +440,18 @@
 										"definition": {
 											"widgetInstance": {
 												"widgetConfig": {
-													"displayStyle": "ddmTemplate_SEARCH-RESULTS-LIST-FTL",
-													"viewInContext": "true",
-													"fieldsToDisplay": "",
-													"federatedSearchKey": "",
 													"displayInDocumentForm": "false",
+													"displayStyle": "ddmTemplate_SEARCH-RESULTS-LIST-FTL",
+													"displayStyleGroupId": "15078019",
+													"federatedSearchKey": "",
+													"fieldsToDisplay": "",
+													"highlightEnabled": "false",
 													"paginationDelta": "20",
+													"paginationDeltaParameterName": "delta",
 													"paginationStartParameterName": "start",
 													"showEmptyResultMessage": "true",
 													"showPagination": "true",
-													"displayStyleGroupId": "15078019",
-													"paginationDeltaParameterName": "delta",
-													"highlightEnabled": "false"
+													"viewInContext": "true"
 												},
 												"widgetName": "com_liferay_portal_search_web_search_results_portlet_SearchResultsPortlet",
 												"widgetPermissions": [

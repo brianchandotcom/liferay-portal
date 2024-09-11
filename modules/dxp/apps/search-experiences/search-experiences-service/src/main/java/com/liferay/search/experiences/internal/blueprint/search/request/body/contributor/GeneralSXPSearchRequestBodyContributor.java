@@ -32,7 +32,9 @@ public class GeneralSXPSearchRequestBodyContributor
 			return;
 		}
 
-		if (generalConfiguration.getClauseContributorsExcludes() != null) {
+		if (!ArrayUtil.isEmpty(
+				generalConfiguration.getClauseContributorsExcludes())) {
+
 			searchRequestBuilder.withSearchContext(
 				searchContext -> searchContext.setAttribute(
 					"search.full.query.clause.contributors.excludes",
@@ -40,7 +42,9 @@ public class GeneralSXPSearchRequestBodyContributor
 						generalConfiguration.getClauseContributorsExcludes())));
 		}
 
-		if (generalConfiguration.getClauseContributorsIncludes() != null) {
+		if (!ArrayUtil.isEmpty(
+				generalConfiguration.getClauseContributorsIncludes())) {
+
 			searchRequestBuilder.withSearchContext(
 				searchContext -> searchContext.setAttribute(
 					"search.full.query.clause.contributors.includes",

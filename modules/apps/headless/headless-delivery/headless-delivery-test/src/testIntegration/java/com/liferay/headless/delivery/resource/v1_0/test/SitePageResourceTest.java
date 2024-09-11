@@ -293,15 +293,15 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		Layout nodeLayout = _layoutLocalService.addLayout(
 			null, serviceContext.getUserId(), testGroup.getGroupId(), false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "Node", StringPool.BLANK,
-			StringPool.BLANK, LayoutConstants.TYPE_NODE, false,
-			StringPool.BLANK, serviceContext);
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
+			LayoutConstants.TYPE_NODE, false, StringPool.BLANK, serviceContext);
 
 		_layoutLocalService.addLayout(
 			null, serviceContext.getUserId(), testGroup.getGroupId(), false,
-			nodeLayout.getLayoutId(), "Child Layout", StringPool.BLANK,
-			StringPool.BLANK, LayoutConstants.TYPE_PORTLET, false,
-			StringPool.BLANK, serviceContext);
+			nodeLayout.getLayoutId(), RandomTestUtil.randomString(),
+			StringPool.BLANK, StringPool.BLANK, LayoutConstants.TYPE_PORTLET,
+			false, StringPool.BLANK, serviceContext);
 
 		Page<SitePage> sitePagePage = sitePageResource.getSiteSitePagesPage(
 			testGroup.getGroupId(), null, null, null, null, null);

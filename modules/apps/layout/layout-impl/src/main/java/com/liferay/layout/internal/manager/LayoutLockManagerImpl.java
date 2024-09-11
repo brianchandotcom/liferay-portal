@@ -345,10 +345,11 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 		throws PortalException {
 
 		for (com.liferay.portal.lock.model.Lock lock :
-				_lockLocalService.getLocks(
-					companyId, userId, _CLASS_NAME_LAYOUT)) {
+				_lockLocalService.getLocks(companyId, _CLASS_NAME_LAYOUT)) {
 
-			_lockLocalService.unlock(_CLASS_NAME_LAYOUT, lock.getKey());
+			if (lock.getUserId() == userId) {
+				_lockLocalService.unlock(_CLASS_NAME_LAYOUT, lock.getKey());
+			}
 		}
 	}
 

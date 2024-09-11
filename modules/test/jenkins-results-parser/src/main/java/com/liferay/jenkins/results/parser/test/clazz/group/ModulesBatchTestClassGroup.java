@@ -111,7 +111,7 @@ public abstract class ModulesBatchTestClassGroup extends BatchTestClassGroup {
 
 			excludesJobProperties.add(
 				getJobProperty(
-					"modules.excludes.private", modulesDir,
+					"modules.excludes.private", testSuiteName, modulesDir,
 					JobProperty.Type.EXCLUDE_GLOB));
 
 			if (includeStableTestSuite && isStableTestSuiteBatch()) {
@@ -124,7 +124,7 @@ public abstract class ModulesBatchTestClassGroup extends BatchTestClassGroup {
 		else {
 			excludesJobProperties.add(
 				getJobProperty(
-					"modules.excludes.public", modulesDir,
+					"modules.excludes.public", testSuiteName, modulesDir,
 					JobProperty.Type.EXCLUDE_GLOB));
 
 			if (includeStableTestSuite && isStableTestSuiteBatch()) {
@@ -137,7 +137,8 @@ public abstract class ModulesBatchTestClassGroup extends BatchTestClassGroup {
 
 		excludesJobProperties.add(
 			getJobProperty(
-				"modules.excludes", modulesDir, JobProperty.Type.EXCLUDE_GLOB));
+				"modules.excludes", testSuiteName, modulesDir,
+				JobProperty.Type.EXCLUDE_GLOB));
 
 		excludesJobProperties.add(
 			getJobProperty(
@@ -163,7 +164,7 @@ public abstract class ModulesBatchTestClassGroup extends BatchTestClassGroup {
 
 			includesJobProperties.add(
 				getJobProperty(
-					"modules.includes.private", modulesDir,
+					"modules.includes.private", testSuiteName, modulesDir,
 					JobProperty.Type.INCLUDE_GLOB));
 
 			if (includeStableTestSuite && isStableTestSuiteBatch()) {
@@ -176,7 +177,7 @@ public abstract class ModulesBatchTestClassGroup extends BatchTestClassGroup {
 		else {
 			includesJobProperties.add(
 				getJobProperty(
-					"modules.includes.public", modulesDir,
+					"modules.includes.public", testSuiteName, modulesDir,
 					JobProperty.Type.INCLUDE_GLOB));
 
 			if (includeStableTestSuite && isStableTestSuiteBatch()) {
@@ -189,12 +190,13 @@ public abstract class ModulesBatchTestClassGroup extends BatchTestClassGroup {
 
 		includesJobProperties.add(
 			getJobProperty(
-				"modules.includes", modulesDir, JobProperty.Type.INCLUDE_GLOB));
+				"modules.includes", testSuiteName, modulesDir,
+				JobProperty.Type.INCLUDE_GLOB));
 
 		includesJobProperties.add(
 			getJobProperty(
 				"modules.includes." + portalTestClassJob.getBuildProfile(),
-				modulesDir, JobProperty.Type.INCLUDE_GLOB));
+				testSuiteName, modulesDir, JobProperty.Type.INCLUDE_GLOB));
 
 		recordJobProperties(includesJobProperties);
 

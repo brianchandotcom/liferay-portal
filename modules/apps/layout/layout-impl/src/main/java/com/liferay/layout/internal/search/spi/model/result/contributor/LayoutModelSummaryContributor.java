@@ -75,8 +75,11 @@ public class LayoutModelSummaryContributor implements ModelSummaryContributor {
 			locale, Field.TITLE);
 
 		if (Validator.isNull(document.getField(localizedFieldTitle))) {
-			locale = LocaleUtil.fromLanguageId(
-				document.get(Field.DEFAULT_LANGUAGE_ID));
+			return document.get(
+				LocaleUtil.fromLanguageId(
+					document.get(Field.DEFAULT_LANGUAGE_ID)),
+				Field.SNIPPET + StringPool.UNDERLINE + Field.TITLE,
+				Field.TITLE);
 		}
 
 		return document.get(

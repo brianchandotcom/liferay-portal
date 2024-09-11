@@ -14,7 +14,11 @@ import getCN from 'classnames';
 import {PropTypes} from 'prop-types';
 import React, {useContext, useEffect, useState} from 'react';
 
-import {ASSET_CATEGORY_ID, GROUP_ID} from '../../utils/constants';
+import {
+	ASSET_CATEGORY_ID,
+	GROUP_EXTERNAL_REFERENCE_CODE,
+	GROUP_ID,
+} from '../../utils/constants';
 import {DEFAULT_SXP_ELEMENT_ICON} from '../../utils/data';
 import isDefined from '../../utils/functions/is_defined';
 import cleanUIConfiguration from '../../utils/sxp_element/clean_ui_configuration';
@@ -210,7 +214,10 @@ function SXPElement({
 					);
 				}
 
-				if (config.name.includes(`${GROUP_ID}s`)) {
+				if (
+					config.name.includes(`${GROUP_ID}s`) ||
+					config.name.includes(`${GROUP_EXTERNAL_REFERENCE_CODE}s`)
+				) {
 					return (
 						<SiteSelectorInput
 							disabled={disabled}
@@ -336,6 +343,21 @@ function SXPElement({
 					/>
 				);
 			default:
+				if (config.name.includes(GROUP_EXTERNAL_REFERENCE_CODE)) {
+					return (
+						<SiteSelectorInput
+							disabled={disabled}
+							id={inputId}
+							label={config.labelLocalized || config.label}
+							multiple={false}
+							name={inputName}
+							setFieldTouched={setFieldTouched}
+							setFieldValue={setFieldValue}
+							value={uiConfigurationValues[config.name]}
+						/>
+					);
+				}
+
 				return (
 					<TextInput
 						disabled={disabled}

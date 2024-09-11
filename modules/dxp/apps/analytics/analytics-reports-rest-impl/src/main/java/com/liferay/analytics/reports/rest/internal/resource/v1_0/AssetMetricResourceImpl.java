@@ -85,6 +85,7 @@ public class AssetMetricResourceImpl extends BaseAssetMetricResourceImpl {
 	@Reference
 	private AnalyticsSettingsManager _analyticsSettingsManager;
 
+	@Reference
 	private DepotEntryGroupRelLocalService _depotEntryGroupRelLocalService;
 
 	@Reference

@@ -289,7 +289,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
-				TestPropsValues.getGroupId(), TestPropsValues.getUserId());
+				testGroup.getGroupId(), TestPropsValues.getUserId());
 
 		Layout nodeLayout = _layoutLocalService.addLayout(
 			null, serviceContext.getUserId(), testGroup.getGroupId(), false,

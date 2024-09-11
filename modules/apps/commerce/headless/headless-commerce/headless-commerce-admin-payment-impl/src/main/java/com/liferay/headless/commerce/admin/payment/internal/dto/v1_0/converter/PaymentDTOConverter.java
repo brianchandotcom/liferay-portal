@@ -73,6 +73,7 @@ public class PaymentDTOConverter
 					() -> _formatAmount(
 						commercePaymentEntry.getAmount(), commerceCurrency,
 						locale));
+				setAuthor(commercePaymentEntry::getUserName);
 				setCallbackURL(commercePaymentEntry::getCallbackURL);
 				setCancelURL(commercePaymentEntry::getCancelURL);
 				setChannelId(commercePaymentEntry::getCommerceChannelId);

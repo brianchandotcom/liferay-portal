@@ -12,7 +12,6 @@ import com.liferay.petra.memory.FinalizeManager;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
@@ -28,13 +27,16 @@ import java.io.Writer;
 
 import java.net.URL;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 import java.security.AccessController;
 import java.security.CodeSource;
 import java.security.PrivilegedAction;
 import java.security.ProtectionDomain;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -113,7 +115,7 @@ public class JspCompiler extends Jsr199JavaCompiler {
 			JavaCompiler.CompilationTask compilationTask = javaCompiler.getTask(
 				null, javaFileManager, diagnosticCollector, _compilerOptions,
 				null,
-				Arrays.asList(
+				Collections.singletonList(
 					new StringJavaFileObject(
 						className.substring(
 							className.lastIndexOf(CharPool.PERIOD) + 1),
@@ -124,7 +126,9 @@ public class JspCompiler extends Jsr199JavaCompiler {
 			}
 
 			if (compilationTask.call()) {
-				for (BytecodeJavaFileObject bytecodeJavaFileObject : _bytecodeJavaFileObjects) {
+				for (BytecodeJavaFileObject bytecodeJavaFileObject :
+						_bytecodeJavaFileObjects) {
+
 					_jspRuntimeContext.setBytecode(
 						bytecodeJavaFileObject.getClassName(),
 						bytecodeJavaFileObject.getBytecode());
@@ -165,18 +169,23 @@ public class JspCompiler extends Jsr199JavaCompiler {
 		}
 
 		try (Writer writer = new OutputStreamWriter(
-				new FileOutputStream(_javaFileName), _javaEncoding)) {
+				Files.newOutputStream(Paths.get(_javaFileName)),
+				_javaEncoding)) {
 
 			writer.write(_charArrayWriter.toString());
 
 			_charArrayWriter = null;
 		}
-		catch (UnsupportedEncodingException uee) {
+		catch (UnsupportedEncodingException unsupportedEncodingException) {
 			_errorDispatcher.jspError(
 				"jsp.error.needAlternateJavaEncoding", _javaEncoding);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(unsupportedEncodingException);
+			}
 		}
-		catch (IOException ioe) {
-			throw new JasperException(ioe);
+		catch (IOException ioException) {
+			throw new JasperException(ioException);
 		}
 	}
 
@@ -276,7 +285,7 @@ public class JspCompiler extends Jsr199JavaCompiler {
 		jspCompilationContext.setClassLoader(jspBundleClassloader);
 
 		_initClassPath();
-		initTLDMappings(
+		_initTLDMappings(
 			servletContext, jspCompilationContext.getTagFileJarUrls());
 
 		_jspCompilationContext = jspCompilationContext;
@@ -295,8 +304,11 @@ public class JspCompiler extends Jsr199JavaCompiler {
 
 	@Override
 	public void saveClassFile(String className, String classFileName) {
-		for (BytecodeJavaFileObject bytecodeJavaFileObject : _bytecodeJavaFileObjects) {
-			String bytecodeFileClassName = bytecodeJavaFileObject.getClassName();
+		for (BytecodeJavaFileObject bytecodeJavaFileObject :
+				_bytecodeJavaFileObjects) {
+
+			String bytecodeFileClassName =
+				bytecodeJavaFileObject.getClassName();
 			String outputFileName = classFileName;
 
 			if (!className.equals(bytecodeFileClassName)) {
@@ -317,11 +329,11 @@ public class JspCompiler extends Jsr199JavaCompiler {
 				StreamUtil.transfer(
 					bytecodeJavaFileObject.openInputStream(), fileOutputStream);
 			}
-			catch (IOException ioe) {
+			catch (IOException ioException) {
 				ServletContext servletContext =
 					_jspCompilationContext.getServletContext();
 
-				servletContext.log("Unable to save class file", ioe);
+				servletContext.log("Unable to save class file", ioException);
 			}
 		}
 	}
@@ -356,44 +368,6 @@ public class JspCompiler extends Jsr199JavaCompiler {
 	public void setTargetVM(String targetVM) {
 		_compilerOptions.add("-target");
 		_compilerOptions.add(targetVM);
-	}
-
-	@SuppressWarnings("unchecked")
-	protected void initTLDMappings(
-		ServletContext servletContext, Map<String, URL> tagFileJarUrls) {
-
-		Map<String, String[]> tldMappings =
-			(Map<String, String[]>)servletContext.getAttribute(
-				Constants.JSP_TLD_URI_TO_LOCATION_MAP);
-
-		if (tldMappings != null) {
-			return;
-		}
-
-		tldMappings = new HashMap<>();
-
-		try {
-			for (Bundle bundle : _allParticipatingBundles) {
-				_collectTLDMappings(tldMappings, tagFileJarUrls, bundle);
-			}
-		}
-		catch (Exception exception) {
-			_log.error(exception);
-		}
-
-		Map<String, String> map =
-			(Map<String, String>)servletContext.getAttribute(
-				"jsp.taglib.mappings");
-
-		if (map != null) {
-			for (Map.Entry<String, String> entry : map.entrySet()) {
-				tldMappings.put(
-					entry.getKey(), new String[] {entry.getValue(), null});
-			}
-		}
-
-		servletContext.setAttribute(
-			Constants.JSP_TLD_URI_TO_LOCATION_MAP, tldMappings);
 	}
 
 	private static Set<String> _collectPackageNames(BundleWiring bundleWiring) {
@@ -517,21 +491,53 @@ public class JspCompiler extends Jsr199JavaCompiler {
 	private void _initClassPath() {
 		if (System.getSecurityManager() != null) {
 			AccessController.doPrivileged(
-				new PrivilegedAction<Void>() {
+				(PrivilegedAction<Void>)() -> {
+					_addDependenciesToClassPath();
 
-					@Override
-					public Void run() {
-						_addDependenciesToClassPath();
-
-						return null;
-					}
-
-					;
+					return null;
 				});
 		}
 		else {
 			_addDependenciesToClassPath();
 		}
+	}
+
+	@SuppressWarnings("unchecked")
+	private void _initTLDMappings(
+		ServletContext servletContext, Map<String, URL> tagFileJarUrls) {
+
+		Map<String, String[]> tldMappings =
+			(Map<String, String[]>)servletContext.getAttribute(
+				Constants.JSP_TLD_URI_TO_LOCATION_MAP);
+
+		if (tldMappings != null) {
+			return;
+		}
+
+		tldMappings = new HashMap<>();
+
+		try {
+			for (Bundle bundle : _allParticipatingBundles) {
+				_collectTLDMappings(tldMappings, tagFileJarUrls, bundle);
+			}
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+		}
+
+		Map<String, String> map =
+			(Map<String, String>)servletContext.getAttribute(
+				"jsp.taglib.mappings");
+
+		if (map != null) {
+			for (Map.Entry<String, String> entry : map.entrySet()) {
+				tldMappings.put(
+					entry.getKey(), new String[] {entry.getValue(), null});
+			}
+		}
+
+		servletContext.setAttribute(
+			Constants.JSP_TLD_URI_TO_LOCATION_MAP, tldMappings);
 	}
 
 	private static final String[] _JSP_COMPILER_DEPENDENCIES = {

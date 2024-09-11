@@ -8,7 +8,6 @@ import ClayDropDown, {Align} from '@clayui/drop-down';
 import ClayLayout from '@clayui/layout';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayModal, {useModal} from '@clayui/modal';
-import ClayPanel from '@clayui/panel';
 import {FrontendDataSet} from '@liferay/frontend-data-set-web';
 import {createPortletURL, fetch, getPortletId} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
@@ -180,102 +179,96 @@ const PublicationTimeline = ({
 
 	const renderTimelineItemRow = (timelineItem) => {
 		return (
-			<ClayLayout.ContentRow
-				key={timelineItem.id}
-				style={{marginBottom: '8px'}}
-			>
-				<ClayLayout.ContentCol expand>
-					<div>
-						<span
-							style={{
-								paddingRight: '10px',
-							}}
-						>
-							{timelineItem.name}
-						</span>
+			<ClayDropDown.Item key={timelineItem.id}>
+				<ClayLayout.ContentRow className="c-mb-1">
+					<ClayLayout.ContentCol expand>
+						<div>
+							<span className="c-pr-2">{timelineItem.name}</span>
 
-						<WorkflowStatusLabel
-							workflowStatus={timelineItem.status.code}
-						/>
-					</div>
+							<WorkflowStatusLabel
+								workflowStatus={timelineItem.status.code}
+							/>
+						</div>
 
-					<div className="text-secondary">
-						{timelineItem.description}
-					</div>
+						<div className="text-secondary">
+							{timelineItem.description}
+						</div>
 
-					<div className="text-secondary">
-						{timelineItem.statusMessage}
-					</div>
-				</ClayLayout.ContentCol>
+						<div className="text-secondary">
+							{timelineItem.statusMessage}
+						</div>
+					</ClayLayout.ContentCol>
 
-				<ClayLayout.ContentCol>
-					{Liferay.FeatureFlags['LPD-20556'] ? (
-						<>
-							{timelineItem.actions.get ? (
-								<ClayDropDown
-									alignmentPosition={Align.BottomLeft}
-									renderMenuOnClick
-									spritemap={spritemap}
-									trigger={
-										<ClayButtonWithIcon
-											aria-label="timeline-actions"
-											displayType="unstyled"
-											size="sm"
-											spritemap={spritemap}
-											symbol="ellipsis-v"
-										/>
-									}
-								>
-									<TimelineDropdownMenu
-										namespace={namespace}
-										navigate={navigate}
-										timelineClassNameId={
-											timelineClassNameId
+					<ClayLayout.ContentCol>
+						{Liferay.FeatureFlags['LPD-20556'] ? (
+							<>
+								{timelineItem.actions.get ? (
+									<ClayDropDown
+										alignmentPosition={Align.BottomLeft}
+										renderMenuOnClick
+										spritemap={spritemap}
+										trigger={
+											<ClayButtonWithIcon
+												aria-label="timeline-actions"
+												displayType="unstyled"
+												size="sm"
+												spritemap={spritemap}
+												symbol="ellipsis-v"
+											/>
 										}
-										timelineClassPK={timelineClassPK}
-										timelineEditURL={timelineEditURL}
-										timelineItem={timelineItem}
+									>
+										<TimelineDropdownMenu
+											namespace={namespace}
+											navigate={navigate}
+											timelineClassNameId={
+												timelineClassNameId
+											}
+											timelineClassPK={timelineClassPK}
+											timelineEditURL={timelineEditURL}
+											timelineItem={timelineItem}
+										/>
+									</ClayDropDown>
+								) : null}
+							</>
+						) : (
+							<>
+								{timelineItem.actions ? (
+									<TimelineDropdownMenu
+										deleteURL={
+											timelineItem.status.code ===
+												WORKFLOW_STATUS_DRAFT &&
+											!!timelineItem.actions.delete
+												? timelineItem.actions.delete
+														.href
+												: undefined
+										}
+										editURL={
+											timelineItem.status.code ===
+												WORKFLOW_STATUS_DRAFT &&
+											!!timelineItem.actions.update
+												? getEditURL(timelineItem.id)
+												: undefined
+										}
+										revertURL={
+											timelineItem.status.code ===
+											WORKFLOW_STATUS_APPROVED
+												? getRevertURL(timelineItem.id)
+												: undefined
+										}
+										reviewURL={
+											timelineItem.status.code !==
+												WORKFLOW_STATUS_PENDING &&
+											!!timelineItem.actions.get
+												? getReviewURL(timelineItem.id)
+												: undefined
+										}
 									/>
-								</ClayDropDown>
-							) : null}
-						</>
-					) : (
-						<>
-							{timelineItem.actions ? (
-								<TimelineDropdownMenu
-									deleteURL={
-										timelineItem.status.code ===
-											WORKFLOW_STATUS_DRAFT &&
-										!!timelineItem.actions.delete
-											? timelineItem.actions.delete.href
-											: undefined
-									}
-									editURL={
-										timelineItem.status.code ===
-											WORKFLOW_STATUS_DRAFT &&
-										!!timelineItem.actions.update
-											? getEditURL(timelineItem.id)
-											: undefined
-									}
-									revertURL={
-										timelineItem.status.code ===
-										WORKFLOW_STATUS_APPROVED
-											? getRevertURL(timelineItem.id)
-											: undefined
-									}
-									reviewURL={
-										timelineItem.status.code !==
-											WORKFLOW_STATUS_PENDING &&
-										!!timelineItem.actions.get
-											? getReviewURL(timelineItem.id)
-											: undefined
-									}
-								/>
-							) : null}
-						</>
-					)}
-				</ClayLayout.ContentCol>
-			</ClayLayout.ContentRow>
+								) : null}
+							</>
+						)}
+					</ClayLayout.ContentCol>
+				</ClayLayout.ContentRow>
+			</ClayDropDown.Item>
 		);
 	};
 
@@ -307,48 +300,33 @@ const PublicationTimeline = ({
 				{renderModal()}
 
 				<div className="publication-timeline">
-					<ClayPanel
-						style={{
-							borderBottomColor: '#e7e7ed',
-							marginBottom: 0,
-						}}
-					>
-						<ClayPanel.Body>
-							{Liferay.FeatureFlags['LPD-20556']
-								? timelineItems
-										.slice(0, MAX_DROPDOWN_ITEMS_SHOWN)
-										.map((timelineItem) =>
-											renderTimelineItemRow(timelineItem)
-										)
-								: timelineItems.map((timelineItem) =>
+					<ClayDropDown.ItemList className="c-mb-0">
+						{Liferay.FeatureFlags['LPD-20556']
+							? timelineItems
+									.slice(0, MAX_DROPDOWN_ITEMS_SHOWN)
+									.map((timelineItem) =>
 										renderTimelineItemRow(timelineItem)
-									)}
+									)
+							: timelineItems.map((timelineItem) =>
+									renderTimelineItemRow(timelineItem)
+								)}
+					</ClayDropDown.ItemList>
 
-							{timelineItems.length > MAX_DROPDOWN_ITEMS_SHOWN &&
-							Liferay.FeatureFlags['LPD-20556'] ? (
-								<ClayLayout.SheetFooter
-									className="align-items-center"
-									style={{
-										marginBottom: '0px',
-										marginTop: '0px',
-									}}
-								>
-									<ClayButton
-										aria-label={Liferay.Language.get(
-											'view-more'
-										)}
-										className="btn-block"
-										displayType="secondary"
-										onClick={() => {
-											setShowModal(true);
-										}}
-									>
-										{Liferay.Language.get('view-more')}
-									</ClayButton>
-								</ClayLayout.SheetFooter>
-							) : null}
-						</ClayPanel.Body>
-					</ClayPanel>
+					{timelineItems.length > MAX_DROPDOWN_ITEMS_SHOWN &&
+					Liferay.FeatureFlags['LPD-20556'] ? (
+						<div className="dropdown-section" role="presentation">
+							<ClayButton
+								aria-label={Liferay.Language.get('view-more')}
+								className="btn-block"
+								displayType="secondary"
+								onClick={() => {
+									setShowModal(true);
+								}}
+							>
+								{Liferay.Language.get('view-more')}
+							</ClayButton>
+						</div>
+					) : null}
 				</div>
 			</>
 		);

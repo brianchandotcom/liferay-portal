@@ -1071,7 +1071,7 @@ jdbc.default.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 			<propertyregex
 				input="${test.batch.name}"
 				property="java.jdk.bundle.type"
-				regexp="-jdk[0-9]+_(\w+)"
+				regexp="-jdk[0-9]+_([a-zA-Z0-9.-]+)"
 				select="\1"
 			/>
 

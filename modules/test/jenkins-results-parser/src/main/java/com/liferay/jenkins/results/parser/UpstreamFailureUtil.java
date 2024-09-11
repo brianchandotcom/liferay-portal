@@ -201,10 +201,6 @@ public class UpstreamFailureUtil {
 		_upstreamTopLevelBuildReport = null;
 	}
 
-	public static void resetUpstreamJobFailuresJSONObject() {
-		reset();
-	}
-
 	private static String _formatUpstreamBuildFailure(
 		String batchName, String testResult) {
 
@@ -235,70 +231,6 @@ public class UpstreamFailureUtil {
 			exception.printStackTrace();
 
 			return "true";
-		}
-	}
-
-	private static String _getUpstreamJobFailuresSHA(
-		TopLevelBuildReport upstreamTopLevelBuildReport) {
-
-		if (!JenkinsResultsParserUtil.isNullOrEmpty(_upstreamJobFailuresSHA)) {
-			return _upstreamJobFailuresSHA;
-		}
-
-		if (upstreamTopLevelBuildReport == null) {
-			System.out.println(
-				"Unable to get upstream acceptance failure data");
-
-			_upstreamJobFailuresSHA = "";
-
-			return _upstreamJobFailuresSHA;
-		}
-
-		Map<String, String> buildParameters =
-			upstreamTopLevelBuildReport.getBuildParameters();
-
-		_upstreamJobFailuresSHA = buildParameters.get("PORTAL_GIT_COMMIT");
-
-		if (!JenkinsResultsParserUtil.isNullOrEmpty(_upstreamJobFailuresSHA)) {
-			return _upstreamJobFailuresSHA;
-		}
-
-		_upstreamJobFailuresSHA = JenkinsResultsParserUtil.getBuildParameter(
-			String.valueOf(upstreamTopLevelBuildReport.getBuildURL()),
-			"PORTAL_GIT_COMMIT");
-
-		if (!JenkinsResultsParserUtil.isNullOrEmpty(_upstreamJobFailuresSHA)) {
-			return _upstreamJobFailuresSHA;
-		}
-
-		File testResultsJSONFile = new File(
-			System.getenv("WORKSPACE"), "test.results.json");
-
-		try {
-			JenkinsResultsParserUtil.toFile(
-				upstreamTopLevelBuildReport.getTestResultsJSONUserContentURL(),
-				testResultsJSONFile);
-
-			JSONObject upstreamJobFailuresJSONObject = new JSONObject(
-				JenkinsResultsParserUtil.read(testResultsJSONFile));
-
-			_upstreamJobFailuresSHA = upstreamJobFailuresJSONObject.getString(
-				"SHA");
-
-			return _upstreamJobFailuresSHA;
-		}
-		catch (Exception exception) {
-			System.out.println(
-				"Unable to get upstream acceptance failure data");
-
-			_upstreamJobFailuresSHA = "";
-
-			return _upstreamJobFailuresSHA;
-		}
-		finally {
-			if (testResultsJSONFile.exists()) {
-				JenkinsResultsParserUtil.delete(testResultsJSONFile);
-			}
 		}
 	}
 

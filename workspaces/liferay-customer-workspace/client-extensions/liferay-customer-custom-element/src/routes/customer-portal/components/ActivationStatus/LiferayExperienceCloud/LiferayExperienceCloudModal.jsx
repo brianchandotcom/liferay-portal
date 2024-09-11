@@ -70,6 +70,7 @@ const LiferayExperienceCloudModal = ({
 	const updateProjectId = async () => {
 		getUpdateProjectId(
 			projectIdValue,
+			project.id,
 			lxcEnvironment,
 			updateLiferayExperienceCloudEnvironment
 		);

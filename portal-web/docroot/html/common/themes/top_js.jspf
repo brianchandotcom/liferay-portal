@@ -6,432 +6,420 @@
 --%>
 
 <aui:script senna="temporary" type="text/javascript">
-
 	// <![CDATA[
+		var Liferay = Liferay || {};
 
-	var Liferay = Liferay || {};
-
-	Liferay.Browser = {
-		acceptsGzip: function () {
-			return <%= BrowserSnifferUtil.acceptsGzip(request) %>;
-		},
-
-		<%
-		String version = BrowserSnifferUtil.getVersion(request);
-
-		String majorVersion = version;
-
-		if (version.isEmpty()) {
-			majorVersion = "0";
-		}
-		%>
-
-		getMajorVersion: function () {
-			return <%= majorVersion %>;
-		},
-
-		getRevision: function () {
-			return '<%= BrowserSnifferUtil.getRevision(request) %>';
-		},
-		getVersion: function () {
-			return '<%= version %>';
-		},
-
-		<%
-		BrowserMetadata browserMetadata = BrowserSnifferUtil.getBrowserMetadata(request);
-		%>
-
-		isAir: function () {
-			return <%= browserMetadata.isAir() %>;
-		},
-		isChrome: function () {
-			return <%= browserMetadata.isChrome() %>;
-		},
-		isEdge: function () {
-			return <%= BrowserSnifferUtil.isEdge(request) %>;
-		},
-		isFirefox: function () {
-			return <%= browserMetadata.isFirefox() %>;
-		},
-		isGecko: function () {
-			return <%= browserMetadata.isGecko() %>;
-		},
-		isIe: function () {
-			return <%= browserMetadata.isIe() %>;
-		},
-		isIphone: function () {
-			return <%= browserMetadata.isIphone() %>;
-		},
-		isLinux: function () {
-			return <%= browserMetadata.isLinux() %>;
-		},
-		isMac: function () {
-			return <%= browserMetadata.isMac() %>;
-		},
-		isMobile: function () {
-			return <%= browserMetadata.isMobile() %>;
-		},
-		isMozilla: function () {
-			return <%= browserMetadata.isMozilla() %>;
-		},
-		isOpera: function () {
-			return <%= browserMetadata.isOpera() %>;
-		},
-		isRtf: function () {
-			return <%= browserMetadata.isRtf(version) %>;
-		},
-		isSafari: function () {
-			return <%= browserMetadata.isSafari() %>;
-		},
-		isSun: function () {
-			return <%= browserMetadata.isSun() %>;
-		},
-		isWebKit: function () {
-			return <%= browserMetadata.isWebKit() %>;
-		},
-		isWindows: function () {
-			return <%= browserMetadata.isWindows() %>;
-		},
-	};
-
-	Liferay.Data = Liferay.Data || {};
-
-	Liferay.Data.ICONS_INLINE_SVG = true;
-
-	Liferay.Data.NAV_SELECTOR = '#navigation';
-
-	Liferay.Data.NAV_SELECTOR_MOBILE = '#navigationCollapse';
-
-	Liferay.Data.isCustomizationView = function () {
-		return <%= layoutTypePortlet.isCustomizable() && LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.CUSTOMIZE) %>;
-	};
-
-	Liferay.Data.notices = [
-		<c:if test="<%= ShutdownUtil.isInProcess() %>">
-			{
-				title: '<liferay-ui:message key="maintenance-alert" /> <span class="mx-2"><%= FastDateFormatFactoryUtil.getTime(locale).format(Time.getDate(CalendarFactoryUtil.getCalendar(timeZone))) %> <%= timeZone.getDisplayName(false, TimeZone.SHORT, locale) %></span>',
-				message:
-					'<liferay-ui:message arguments="<%= String.valueOf((ShutdownUtil.getInProcess() / Time.MINUTE) + 1) %>" key="the-portal-will-shutdown-for-maintenance-in-x-minutes" translateArguments="<%= false %>" />' +
-					<c:if test="<%= Validator.isNotNull(ShutdownUtil.getMessage()) %>">
-						'<span class="custom-shutdown-message"><%= HtmlUtil.escape(ShutdownUtil.getMessage()) %></span>',
-				</c:if> type: 'warning',
+		Liferay.Browser = {
+			acceptsGzip: function() {
+				return <%= BrowserSnifferUtil.acceptsGzip(request) %>;
 			},
-		</c:if>
-	];
 
-	(function () {
-		var available = {};
+			<%
+			String version = BrowserSnifferUtil.getVersion(request);
 
-		var direction = {};
+			String majorVersion = version;
 
-		<%
-		for (Locale curLocale : LanguageUtil.getAvailableLocales()) {
-			String selLanguageId = LocaleUtil.toLanguageId(curLocale);
-		%>
+			if (version.isEmpty()) {
+				majorVersion = "0";
+			}
+			%>
 
-			available['<%= selLanguageId %>'] =
-				'<%= HtmlUtil.escapeJS(curLocale.getDisplayName(locale)) %>';
-			direction['<%= selLanguageId %>'] =
-				'<%= LanguageUtil.get(curLocale, "lang.dir") %>';
-
-		<%
-		}
-		%>
-
-		let _cache = {};
-
-		if (Liferay && Liferay.Language && Liferay.Language._cache) {
-			_cache = Liferay.Language._cache;
-		}
-
-		Liferay.Language = {
-			_cache,
-			available,
-			direction,
-			get: function (key) {
-				let value = Liferay.Language._cache[key];
-
-				if (value === undefined) {
-					value = key;
-				}
-
-				return value;
+			getMajorVersion: function() {
+				return <%= majorVersion %>;
 			},
+
+			getRevision: function() {
+				return '<%= BrowserSnifferUtil.getRevision(request) %>';
+			},
+			getVersion: function() {
+				return '<%= version %>';
+			},
+
+			<%
+			BrowserMetadata browserMetadata = BrowserSnifferUtil.getBrowserMetadata(request);
+			%>
+
+			isAir: function() {
+				return <%= browserMetadata.isAir() %>;
+			},
+			isChrome: function() {
+				return <%= browserMetadata.isChrome() %>;
+			},
+			isEdge: function() {
+				return <%= BrowserSnifferUtil.isEdge(request) %>;
+			},
+			isFirefox: function() {
+				return <%= browserMetadata.isFirefox() %>;
+			},
+			isGecko: function() {
+				return <%= browserMetadata.isGecko() %>;
+			},
+			isIe: function() {
+				return <%= browserMetadata.isIe() %>;
+			},
+			isIphone: function() {
+				return <%= browserMetadata.isIphone() %>;
+			},
+			isLinux: function() {
+				return <%= browserMetadata.isLinux() %>;
+			},
+			isMac: function() {
+				return <%= browserMetadata.isMac() %>;
+			},
+			isMobile: function() {
+				return <%= browserMetadata.isMobile() %>;
+			},
+			isMozilla: function() {
+				return <%= browserMetadata.isMozilla() %>;
+			},
+			isOpera: function() {
+				return <%= browserMetadata.isOpera() %>;
+			},
+			isRtf: function() {
+				return <%= browserMetadata.isRtf(version) %>;
+			},
+			isSafari: function() {
+				return <%= browserMetadata.isSafari() %>;
+			},
+			isSun: function() {
+				return <%= browserMetadata.isSun() %>;
+			},
+			isWebKit: function() {
+				return <%= browserMetadata.isWebKit() %>;
+			},
+			isWindows: function() {
+				return <%= browserMetadata.isWindows() %>;
+			}
 		};
-	})();
 
-	var featureFlags =
-		<%= FeatureFlagManagerUtil.getJSON(themeDisplay.getCompanyId()) %>;
+		Liferay.Data = Liferay.Data || {};
 
-	Liferay.FeatureFlags = Object.keys(featureFlags).reduce(
-		(acc, key) => ({
-			...acc,
-			[key]: featureFlags[key] === 'true' || featureFlags[key] === true,
-		}),
-		{}
-	);
+		Liferay.Data.ICONS_INLINE_SVG = true;
 
-	Liferay.PortletKeys = {
-		DOCUMENT_LIBRARY: '<%= PortletKeys.DOCUMENT_LIBRARY %>',
-		DYNAMIC_DATA_MAPPING:
-			'com_liferay_dynamic_data_mapping_web_portlet_DDMPortlet',
-		ITEM_SELECTOR: '<%= PortletKeys.ITEM_SELECTOR %>',
-	};
+		Liferay.Data.NAV_SELECTOR = '#navigation';
 
-	Liferay.PropsValues = {
-		JAVASCRIPT_SINGLE_PAGE_APPLICATION_TIMEOUT:
-			<%= PrefsPropsUtil.getInteger(themeDisplay.getCompanyId(), PropsKeys.JAVASCRIPT_SINGLE_PAGE_APPLICATION_TIMEOUT, PropsValues.JAVASCRIPT_SINGLE_PAGE_APPLICATION_TIMEOUT) %>,
-		UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE:
-			<%= UploadServletRequestConfigurationProviderUtil.getMaxSize() %>,
-	};
+		Liferay.Data.NAV_SELECTOR_MOBILE = '#navigationCollapse';
 
-	Liferay.ThemeDisplay = {
+		Liferay.Data.isCustomizationView = function() {
+			return <%= layoutTypePortlet.isCustomizable() && LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.CUSTOMIZE) %>;
+		};
 
-		<%
-		Group scopeGroup = themeDisplay.getScopeGroup();
+		Liferay.Data.notices = [
+			<c:if test="<%= ShutdownUtil.isInProcess() %>">
+				{
+					title: '<liferay-ui:message key="maintenance-alert" /> <span class="mx-2"><%= FastDateFormatFactoryUtil.getTime(locale).format(Time.getDate(CalendarFactoryUtil.getCalendar(timeZone))) %> <%= timeZone.getDisplayName(false, TimeZone.SHORT, locale) %></span>',
+					message: '<liferay-ui:message arguments="<%= String.valueOf((ShutdownUtil.getInProcess() / Time.MINUTE) + 1) %>" key="the-portal-will-shutdown-for-maintenance-in-x-minutes" translateArguments="<%= false %>" />'
+						<c:if test="<%= Validator.isNotNull(ShutdownUtil.getMessage()) %>">
+							+ '<span class="custom-shutdown-message"><%= HtmlUtil.escape(ShutdownUtil.getMessage()) %></span>'
+						</c:if>,
+					type: 'warning'
+				},
+			</c:if>
+		];
 
-		Group liveGroup = StagingUtil.getLiveGroup(scopeGroup);
-		%>
+		(function () {
+			var available = {};
 
-		<c:if test="<%= layout != null %>">
-			getLayoutId: function () {
-				return '<%= layout.getLayoutId() %>';
-			},
+			var direction = {};
 
 			<%
-			Layout controlPanelLayout = themeDisplay.getControlPanelLayout();
+			for (Locale curLocale : LanguageUtil.getAvailableLocales()) {
+				String selLanguageId = LocaleUtil.toLanguageId(curLocale);
 			%>
 
-			getLayoutRelativeControlPanelURL: function () {
-				return '<%= PortalUtil.getLayoutRelativeURL(new VirtualLayout(controlPanelLayout, scopeGroup), themeDisplay) %>';
-			},
-
-			getLayoutRelativeURL: function () {
-				return '<%= PortalUtil.getLayoutRelativeURL(layout, themeDisplay) %>';
-			},
-			getLayoutURL: function () {
-				return '<%= PortalUtil.getLayoutURL(layout, themeDisplay) %>';
-			},
-			getParentLayoutId: function () {
-				return '<%= layout.getParentLayoutId() %>';
-			},
-			isControlPanel: function () {
-				return <%= layout.isTypeControlPanel() %>;
-			},
-			isPrivateLayout: function () {
-				return '<%= layout.isPrivateLayout() %>';
-			},
-			isVirtualLayout: function () {
-				return <%= layout instanceof VirtualLayout %>;
-			},
-		</c:if>
-
-		getBCP47LanguageId: function () {
-			return '<%= LanguageUtil.getBCP47LanguageId(request) %>';
-		},
-		getCanonicalURL: function () {
+				available['<%= selLanguageId %>'] = '<%= HtmlUtil.escapeJS(curLocale.getDisplayName(locale)) %>';
+				direction['<%= selLanguageId %>'] = '<%= LanguageUtil.get(curLocale, "lang.dir") %>';
 
 			<%
-			LayoutSEOLinkManager layoutSEOLinkManager = LayoutSEOLinkManagerUtil.getLayoutSEOLinkManager();
-
-			String completeURL = PortalUtil.getCurrentCompleteURL(request);
-
-			LayoutSEOLink layoutSEOLink = layoutSEOLinkManager.getCanonicalLayoutSEOLink(layout, themeDisplay.getLocale(), PortalUtil.getCanonicalURL(completeURL, themeDisplay, layout, false, false), themeDisplay);
+			}
 			%>
 
-			return '<%= HtmlUtil.escapeJS(layoutSEOLink.getHref()) %>';
-		},
-		getCDNBaseURL: function () {
-			return '<%= themeDisplay.getCDNBaseURL() %>';
-		},
-		getCDNDynamicResourcesHost: function () {
-			return '<%= themeDisplay.getCDNDynamicResourcesHost() %>';
-		},
-		getCDNHost: function () {
-			return '<%= themeDisplay.getCDNHost() %>';
-		},
-		getCompanyGroupId: function () {
-			return '<%= themeDisplay.getCompanyGroupId() %>';
-		},
-		getCompanyId: function () {
-			return '<%= themeDisplay.getCompanyId() %>';
-		},
-		getDefaultLanguageId: function () {
-			return '<%= LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()) %>';
-		},
-		getDoAsUserIdEncoded: function () {
-			return '<%= UnicodeFormatter.toString(themeDisplay.getDoAsUserId()) %>';
-		},
-		getLanguageId: function () {
-			return '<%= LanguageUtil.getLanguageId(request) %>';
-		},
-		getParentGroupId: function () {
-			return '<%= themeDisplay.getSiteGroupId() %>';
-		},
-		getPathContext: function () {
-			return '<%= themeDisplay.getPathContext() %>';
-		},
-		getPathImage: function () {
-			return '<%= themeDisplay.getPathImage() %>';
-		},
-		getPathJavaScript: function () {
-			return '<%= themeDisplay.getPathJavaScript() %>';
-		},
-		getPathMain: function () {
-			return '<%= themeDisplay.getPathMain() %>';
-		},
-		getPathThemeImages: function () {
-			return '<%= themeDisplay.getPathThemeImages() %>';
-		},
-		getPathThemeRoot: function () {
-			return '<%= themeDisplay.getPathThemeRoot() %>';
-		},
-		getPlid: function () {
-			return '<%= themeDisplay.getPlid() %>';
-		},
-		getPortalURL: function () {
-			return '<%= themeDisplay.getPortalURL() %>';
-		},
-		getRealUserId: function () {
-			return '<%= themeDisplay.getRealUserId() %>';
-		},
-		getRemoteAddr: function () {
-			return '<%= themeDisplay.getRemoteAddr() %>';
-		},
-		getRemoteHost: function () {
-			return '<%= themeDisplay.getRemoteHost() %>';
-		},
-		getScopeGroupId: function () {
-			return '<%= scopeGroup.getGroupId() %>';
-		},
-		getScopeGroupIdOrLiveGroupId: function () {
-			return '<%= liveGroup.getGroupId() %>';
-		},
-		getSessionId: function () {
-			return '<%= PropsValues.SESSION_ENABLE_URL_WITH_SESSION_ID ? session.getId() : StringPool.BLANK %>';
-		},
-		getSiteAdminURL: function () {
-			return '<%= PortalUtil.getSiteAdminURL(themeDisplay, StringPool.BLANK, null) %>';
-		},
-		getSiteGroupId: function () {
-			return '<%= themeDisplay.getSiteGroupId() %>';
-		},
-		getURLControlPanel: function () {
-			return '<%= themeDisplay.getURLControlPanel() %>';
-		},
-		getURLHome: function () {
-			return '<%= HtmlUtil.escapeJS(themeDisplay.getURLHome()) %>';
-		},
-		getUserEmailAddress: function () {
-			return '<%= themeDisplay.isSignedIn() ? HtmlUtil.escapeJS(user.getEmailAddress()) : StringPool.BLANK %>';
-		},
-		getUserId: function () {
-			return '<%= themeDisplay.getUserId() %>';
-		},
-		getUserName: function () {
-			return '<%= themeDisplay.isSignedIn() ? UnicodeFormatter.toString(user.getFullName()) : StringPool.BLANK %>';
-		},
-		isAddSessionIdToURL: function () {
-			return <%= themeDisplay.isAddSessionIdToURL() %>;
-		},
-		isImpersonated: function () {
-			return <%= themeDisplay.isImpersonated() %>;
-		},
-		isSignedIn: function () {
-			return <%= themeDisplay.isSignedIn() %>;
-		},
+			let _cache = {};
 
-		isStagedPortlet: function () {
-			<c:choose>
-				<c:when test="<%= Validator.isNotNull(themeDisplay.getPpid()) %>">
-					return <%= liveGroup.isStagedPortlet(themeDisplay.getPpid()) %>;
-				</c:when>
-				<c:otherwise>
-					return false;
-				</c:otherwise>
-			</c:choose>
-		},
-
-		isStateExclusive: function () {
-			return <%= themeDisplay.isStateExclusive() %>;
-		},
-		isStateMaximized: function () {
-			return <%= themeDisplay.isStateMaximized() %>;
-		},
-		isStatePopUp: function () {
-			return <%= themeDisplay.isStatePopUp() %>;
-		},
-	};
-
-	var themeDisplay = Liferay.ThemeDisplay;
-
-	Liferay.AUI = {
-
-		<%
-		long jsLastModified = PortalWebResourcesUtil.getLastModified(PortalWebResourceConstants.RESOURCE_TYPE_JS);
-		%>
-
-		getCombine: function () {
-			return <%= themeDisplay.isThemeJsFastLoad() %>;
-		},
-		getComboPath: function () {
-			return '<%= PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNDynamicResourcesHost() + themeDisplay.getPathContext() + "/combo/", "minifierType=", jsLastModified) %>&';
-		},
-		getDateFormat: function () {
-			return '<%= _getDateFormatPattern(locale) %>';
-		},
-		getEditorCKEditorPath: function () {
-			return '<%= PortalWebResourcesUtil.getContextPath(PortalWebResourceConstants.RESOURCE_TYPE_EDITOR_CKEDITOR) %>';
-		},
-		getFilter: function () {
-			var filter = 'raw';
-
-			<c:choose>
-				<c:when test="<%= themeDisplay.isThemeJsFastLoad() %>">
-					filter = 'min';
-				</c:when>
-				<c:when test="<%= PropsValues.JAVASCRIPT_LOG_ENABLED %>">
-					filter = 'debug';
-				</c:when>
-			</c:choose>
-
-			return filter;
-		},
-		getFilterConfig: function () {
-			var instance = this;
-
-			var filterConfig = null;
-
-			if (!instance.getCombine()) {
-				filterConfig = {
-					replaceStr: '.js' + instance.getStaticResourceURLParams(),
-					searchExp: '\\.js$',
-				};
+			if (Liferay && Liferay.Language && Liferay.Language._cache) {
+				_cache = Liferay.Language._cache;
 			}
 
-			return filterConfig;
-		},
-		getJavaScriptRootPath: function () {
-			return '<%= themeDisplay.getPathJavaScript() %>';
-		},
-		getPortletRootPath: function () {
-			return '<%= themeDisplay.getPathContext() %>/html/portlet';
-		},
-		getStaticResourceURLParams: function () {
-			return '<%= PortalUtil.getStaticResourceURL(request, StringPool.BLANK, "minifierType=", jsLastModified) %>';
-		},
-	};
+			Liferay.Language = {
+				_cache,
+				available,
+				direction,
+				get: function(key) {
+					let value = Liferay.Language._cache[key];
 
-	Liferay.authToken = '<%= AuthTokenUtil.getToken(request) %>';
+					if (value === undefined) {
+						value = key;
+					}
 
-	<%
-	String currentURL = PortalUtil.getCurrentURL(request);
-	%>
+					return value;
+				}
+			};
+		})();
 
-	Liferay.currentURL = '<%= HtmlUtil.escapeJS(currentURL) %>';
-	Liferay.currentURLEncoded =
-		'<%= HtmlUtil.escapeJS(URLCodec.encodeURL(currentURL)) %>';
+		var featureFlags = <%= FeatureFlagManagerUtil.getJSON(themeDisplay.getCompanyId()) %>;
 
+		Liferay.FeatureFlags = Object.keys(featureFlags).reduce(
+			(acc, key) => ({
+				...acc, [key]: featureFlags[key] === 'true' || featureFlags[key] === true
+			}), {}
+		);
+
+		Liferay.PortletKeys = {
+			DOCUMENT_LIBRARY: '<%= PortletKeys.DOCUMENT_LIBRARY %>',
+			DYNAMIC_DATA_MAPPING: 'com_liferay_dynamic_data_mapping_web_portlet_DDMPortlet',
+			ITEM_SELECTOR: '<%= PortletKeys.ITEM_SELECTOR %>'
+		};
+
+		Liferay.PropsValues = {
+			JAVASCRIPT_SINGLE_PAGE_APPLICATION_TIMEOUT: <%= PrefsPropsUtil.getInteger(themeDisplay.getCompanyId(), PropsKeys.JAVASCRIPT_SINGLE_PAGE_APPLICATION_TIMEOUT, PropsValues.JAVASCRIPT_SINGLE_PAGE_APPLICATION_TIMEOUT) %>,
+			UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE: <%= UploadServletRequestConfigurationProviderUtil.getMaxSize() %>
+		};
+
+		Liferay.ThemeDisplay = {
+
+			<%
+			Group scopeGroup = themeDisplay.getScopeGroup();
+
+			Group liveGroup = StagingUtil.getLiveGroup(scopeGroup);
+			%>
+
+			<c:if test="<%= layout != null %>">
+				getLayoutId: function() {
+					return '<%= layout.getLayoutId() %>';
+				},
+
+				<%
+				Layout controlPanelLayout = themeDisplay.getControlPanelLayout();
+				%>
+
+				getLayoutRelativeControlPanelURL: function() {
+					return '<%= PortalUtil.getLayoutRelativeURL(new VirtualLayout(controlPanelLayout, scopeGroup), themeDisplay) %>';
+				},
+
+				getLayoutRelativeURL: function() {
+					return '<%= PortalUtil.getLayoutRelativeURL(layout, themeDisplay) %>';
+				},
+				getLayoutURL: function() {
+					return '<%= PortalUtil.getLayoutURL(layout, themeDisplay) %>';
+				},
+				getParentLayoutId: function() {
+					return '<%= layout.getParentLayoutId() %>';
+				},
+				isControlPanel: function() {
+					return <%= layout.isTypeControlPanel() %>;
+				},
+				isPrivateLayout: function() {
+					return '<%= layout.isPrivateLayout() %>';
+				},
+				isVirtualLayout: function() {
+					return <%= layout instanceof VirtualLayout %>;
+				},
+			</c:if>
+
+			getBCP47LanguageId: function() {
+				return '<%= LanguageUtil.getBCP47LanguageId(request) %>';
+			},
+			getCanonicalURL: function() {
+
+				<%
+				LayoutSEOLinkManager layoutSEOLinkManager = LayoutSEOLinkManagerUtil.getLayoutSEOLinkManager();
+
+				String completeURL = PortalUtil.getCurrentCompleteURL(request);
+
+				LayoutSEOLink layoutSEOLink = layoutSEOLinkManager.getCanonicalLayoutSEOLink(layout, themeDisplay.getLocale(), PortalUtil.getCanonicalURL(completeURL, themeDisplay, layout, false, false), themeDisplay);
+				%>
+
+				return '<%= HtmlUtil.escapeJS(layoutSEOLink.getHref()) %>';
+			},
+			getCDNBaseURL: function() {
+				return '<%= themeDisplay.getCDNBaseURL() %>';
+			},
+			getCDNDynamicResourcesHost: function() {
+				return '<%= themeDisplay.getCDNDynamicResourcesHost() %>';
+			},
+			getCDNHost: function() {
+				return '<%= themeDisplay.getCDNHost() %>';
+			},
+			getCompanyGroupId: function() {
+				return '<%= themeDisplay.getCompanyGroupId() %>';
+			},
+			getCompanyId: function() {
+				return '<%= themeDisplay.getCompanyId() %>';
+			},
+			getDefaultLanguageId: function() {
+				return '<%= LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()) %>';
+			},
+			getDoAsUserIdEncoded: function() {
+				return '<%= UnicodeFormatter.toString(themeDisplay.getDoAsUserId()) %>';
+			},
+			getLanguageId: function() {
+				return '<%= LanguageUtil.getLanguageId(request) %>';
+			},
+			getParentGroupId: function() {
+				return '<%= themeDisplay.getSiteGroupId() %>';
+			},
+			getPathContext: function() {
+				return '<%= themeDisplay.getPathContext() %>';
+			},
+			getPathImage: function() {
+				return '<%= themeDisplay.getPathImage() %>';
+			},
+			getPathJavaScript: function() {
+				return '<%= themeDisplay.getPathJavaScript() %>';
+			},
+			getPathMain: function() {
+				return '<%= themeDisplay.getPathMain() %>';
+			},
+			getPathThemeImages: function() {
+				return '<%= themeDisplay.getPathThemeImages() %>';
+			},
+			getPathThemeRoot: function() {
+				return '<%= themeDisplay.getPathThemeRoot() %>';
+			},
+			getPlid: function() {
+				return '<%= themeDisplay.getPlid() %>';
+			},
+			getPortalURL: function() {
+				return '<%= themeDisplay.getPortalURL() %>';
+			},
+			getRealUserId: function() {
+				return '<%= themeDisplay.getRealUserId() %>';
+			},
+			getRemoteAddr: function() {
+				return '<%= themeDisplay.getRemoteAddr() %>';
+			},
+			getRemoteHost: function() {
+				return '<%= themeDisplay.getRemoteHost() %>';
+			},
+			getScopeGroupId: function() {
+				return '<%= scopeGroup.getGroupId() %>';
+			},
+			getScopeGroupIdOrLiveGroupId: function() {
+				return '<%= liveGroup.getGroupId() %>';
+			},
+			getSessionId: function() {
+				return '<%= PropsValues.SESSION_ENABLE_URL_WITH_SESSION_ID ? session.getId() : StringPool.BLANK %>';
+			},
+			getSiteAdminURL: function() {
+				return '<%= PortalUtil.getSiteAdminURL(themeDisplay, StringPool.BLANK, null) %>';
+			},
+			getSiteGroupId: function() {
+				return '<%= themeDisplay.getSiteGroupId() %>';
+			},
+			getURLControlPanel: function() {
+				return '<%= themeDisplay.getURLControlPanel() %>';
+			},
+			getURLHome: function() {
+				return '<%= HtmlUtil.escapeJS(themeDisplay.getURLHome()) %>';
+			},
+			getUserEmailAddress: function() {
+				return '<%= themeDisplay.isSignedIn() ? HtmlUtil.escapeJS(user.getEmailAddress()) : StringPool.BLANK %>';
+			},
+			getUserId: function() {
+				return '<%= themeDisplay.getUserId() %>';
+			},
+			getUserName: function() {
+				return '<%= themeDisplay.isSignedIn() ? UnicodeFormatter.toString(user.getFullName()) : StringPool.BLANK %>';
+			},
+			isAddSessionIdToURL: function() {
+				return <%= themeDisplay.isAddSessionIdToURL() %>;
+			},
+			isImpersonated: function() {
+				return <%= themeDisplay.isImpersonated() %>;
+			},
+			isSignedIn: function() {
+				return <%= themeDisplay.isSignedIn() %>;
+			},
+
+			isStagedPortlet: function() {
+				<c:choose>
+					<c:when test="<%= Validator.isNotNull(themeDisplay.getPpid()) %>">
+						return <%= liveGroup.isStagedPortlet(themeDisplay.getPpid()) %>;
+					</c:when>
+					<c:otherwise>
+						return false;
+					</c:otherwise>
+				</c:choose>
+			},
+
+			isStateExclusive: function() {
+				return <%= themeDisplay.isStateExclusive() %>;
+			},
+			isStateMaximized: function() {
+				return <%= themeDisplay.isStateMaximized() %>;
+			},
+			isStatePopUp: function() {
+				return <%= themeDisplay.isStatePopUp() %>;
+			}
+		};
+
+		var themeDisplay = Liferay.ThemeDisplay;
+
+		Liferay.AUI = {
+
+			<%
+			long jsLastModified = PortalWebResourcesUtil.getLastModified(PortalWebResourceConstants.RESOURCE_TYPE_JS);
+			%>
+
+			getCombine: function() {
+				return <%= themeDisplay.isThemeJsFastLoad() %>;
+			},
+			getComboPath: function() {
+				return '<%= PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNDynamicResourcesHost() + themeDisplay.getPathContext() + "/combo/", "minifierType=", jsLastModified) %>&';
+			},
+			getDateFormat: function() {
+				return '<%= _getDateFormatPattern(locale) %>';
+			},
+			getEditorCKEditorPath: function() {
+				return '<%= PortalWebResourcesUtil.getContextPath(PortalWebResourceConstants.RESOURCE_TYPE_EDITOR_CKEDITOR) %>';
+			},
+			getFilter: function() {
+				var filter = 'raw';
+
+				<c:choose>
+					<c:when test="<%= themeDisplay.isThemeJsFastLoad() %>">
+						filter = 'min';
+					</c:when>
+					<c:when test="<%= PropsValues.JAVASCRIPT_LOG_ENABLED %>">
+						filter = 'debug';
+					</c:when>
+				</c:choose>
+
+				return filter;
+			},
+			getFilterConfig: function() {
+				var instance = this;
+
+				var filterConfig = null;
+
+				if (!instance.getCombine()) {
+					filterConfig = {
+						replaceStr: '.js' + instance.getStaticResourceURLParams(),
+						searchExp: '\\.js$'
+					};
+				}
+
+				return filterConfig;
+			},
+			getJavaScriptRootPath: function() {
+				return '<%= themeDisplay.getPathJavaScript() %>';
+			},
+			getPortletRootPath: function() {
+				return '<%= themeDisplay.getPathContext() %>/html/portlet';
+			},
+			getStaticResourceURLParams: function() {
+				return '<%= PortalUtil.getStaticResourceURL(request, StringPool.BLANK, "minifierType=", jsLastModified) %>';
+			}
+		};
+
+		Liferay.authToken = '<%= AuthTokenUtil.getToken(request) %>';
+
+		<%
+		String currentURL = PortalUtil.getCurrentURL(request);
+		%>
+
+		Liferay.currentURL = '<%= HtmlUtil.escapeJS(currentURL) %>';
+		Liferay.currentURLEncoded = '<%= HtmlUtil.escapeJS(URLCodec.encodeURL(currentURL)) %>';
 	// ]]>
 </aui:script>
 
@@ -446,33 +434,28 @@ if (layout != null) {
 %>
 
 <aui:script senna="temporary" type="text/javascript">
-
 	// <![CDATA[
-	<c:if test="<%= layoutTypePortlet != null %>">
-		<c:choose>
-			<c:when test="<%= layoutTypePortlet.hasStateMax() %>">
-				Liferay.Portlet.register(
-					'<%= HtmlUtil.escapeJS(layoutTypePortlet.getStateMaxPortletId()) %>'
-				);
-			</c:when>
-			<c:when test="<%= themeDisplay.isStatePopUp() %>">
-				Liferay.Portlet.register('<%= HtmlUtil.escapeJS(themeDisplay.getPpid()) %>');
-			</c:when>
-		</c:choose>
-	</c:if>
+		<c:if test="<%= layoutTypePortlet != null %>">
+			<c:choose>
+				<c:when test="<%= layoutTypePortlet.hasStateMax() %>">
+					Liferay.Portlet.register('<%= HtmlUtil.escapeJS(layoutTypePortlet.getStateMaxPortletId()) %>');
+				</c:when>
+				<c:when test="<%= themeDisplay.isStatePopUp() %>">
+					Liferay.Portlet.register('<%= HtmlUtil.escapeJS(themeDisplay.getPpid()) %>');
+				</c:when>
+			</c:choose>
+		</c:if>
 
-	<c:if test="<%= themeDisplay.isSignedIn() %>">
-		<c:choose>
-			<c:when test="<%= (group != null) && group.isControlPanel() && !LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.UPDATE) && !(layoutTypePortlet.isCustomizable() && layoutTypePortlet.isCustomizedView() && LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.CUSTOMIZE)) %>">
-				Liferay._editControlsState = 'visible';
-			</c:when>
-			<c:otherwise>
-				Liferay._editControlsState =
-					'<%= HtmlUtil.escapeJS(GetterUtil.getString(SessionClicks.get(request, "com.liferay.frontend.js.web_toggleControls", "visible"), "visible")) %>';
-			</c:otherwise>
-		</c:choose>
-	</c:if>
-
+		<c:if test="<%= themeDisplay.isSignedIn() %>">
+			<c:choose>
+				<c:when test="<%= (group != null) && group.isControlPanel() && !LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.UPDATE) && !(layoutTypePortlet.isCustomizable() && layoutTypePortlet.isCustomizedView() && LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.CUSTOMIZE)) %>">
+					Liferay._editControlsState = 'visible';
+				</c:when>
+				<c:otherwise>
+					Liferay._editControlsState = '<%= HtmlUtil.escapeJS(GetterUtil.getString(SessionClicks.get(request, "com.liferay.frontend.js.web_toggleControls", "visible"), "visible")) %>';
+				</c:otherwise>
+			</c:choose>
+		</c:if>
 	// ]]>
 </aui:script>
 
@@ -495,18 +478,16 @@ for (String analyticsType : analyticsTypes) {
 
 			<c:if test="<%= Validator.isNotNull(googleAnalyticsId) %>">
 				<aui:script id="googleAnalyticsScript" senna="permanent" type="text/javascript">
-					(function (i, s, o, g, r, a, m) {
+					(function(i, s, o, g, r, a, m) {
 						i['GoogleAnalyticsObject'] = r;
 
-						i[r] =
-							i[r] ||
-							function () {
-								var arrayValue = i[r].q || [];
+						i[r] = i[r] || function() {
+							var arrayValue = i[r].q || [];
 
-								i[r].q = arrayValue;
+							i[r].q = arrayValue;
 
-								i[r].q.push(arguments);
-							};
+							(i[r].q).push(arguments);
+						};
 
 						i[r].l = 1 * new Date();
 
@@ -523,12 +504,7 @@ for (String analyticsType : analyticsTypes) {
 
 					<c:choose>
 						<c:when test="<%= Validator.isNotNull(googleAnalyticsCreateCustomConfiguration) %>">
-							ga(
-								'create',
-								'<%= HtmlUtil.escapeJS(googleAnalyticsId) %>',
-								'auto',
-								<%= googleAnalyticsCreateCustomConfiguration %>
-							);
+							ga('create', '<%= HtmlUtil.escapeJS(googleAnalyticsId) %>', 'auto', <%= googleAnalyticsCreateCustomConfiguration %>);
 						</c:when>
 						<c:otherwise>
 							ga('create', '<%= HtmlUtil.escapeJS(googleAnalyticsId) %>', 'auto');
@@ -540,18 +516,21 @@ for (String analyticsType : analyticsTypes) {
 					%>
 
 					<c:if test="<%= Validator.isNotNull(googleAnalyticsCustomConfiguration) %>">
-						(function (ga) {
-							<%= googleAnalyticsCustomConfiguration %>;
+						(function(ga) {
+							<%= googleAnalyticsCustomConfiguration %>
 						})(ga);
 					</c:if>
 
 					ga('send', 'pageview');
 
 					<c:if test="<%= PropsValues.JAVASCRIPT_SINGLE_PAGE_APPLICATION_ENABLED %>">
-						Liferay.on('endNavigate', function (event) {
-							ga('set', 'page', Liferay.ThemeDisplay.getLayoutRelativeURL());
-							ga('send', 'pageview');
-						});
+						Liferay.on(
+							'endNavigate',
+							function(event) {
+								ga('set', 'page', Liferay.ThemeDisplay.getLayoutRelativeURL());
+								ga('send', 'pageview');
+							}
+						);
 					</c:if>
 				</aui:script>
 			</c:if>
@@ -567,9 +546,7 @@ for (String analyticsType : analyticsTypes) {
 
 				<aui:script>
 					window.dataLayer = window.dataLayer || [];
-					function gtag() {
-						dataLayer.push(arguments);
-					}
+					function gtag(){dataLayer.push(arguments);}
 					gtag('js', new Date());
 					gtag('config', '<%= HtmlUtil.escapeJS(googleAnalytics4Id) %>');
 
@@ -578,7 +555,7 @@ for (String analyticsType : analyticsTypes) {
 					%>
 
 					<c:if test="<%= Validator.isNotNull(googleAnalytics4CustomConfiguration) %>">
-						<%= googleAnalytics4CustomConfiguration %>;
+						<%= googleAnalytics4CustomConfiguration %>
 					</c:if>
 				</aui:script>
 			</c:if>

@@ -58,20 +58,20 @@ public class ServletContextServiceTrackerCustomizer
 			String webContextPath = contextPath.substring(
 				_WEB_CONTEXT_PATH_PREFIX.length());
 
-			List<String> keys = _getKeys(servletContext);
+			List<String> keys = _getLanguageKeys(servletContext);
 
 			if (keys != null) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						StringBundler.concat(
-							"Adding ", keys.size(), " language keys for ",
-							webContextPath));
+							"Web context path '", webContextPath,
+							"' added, contains ", keys.size(), " keys"));
 				}
 
 				synchronized (this) {
-					_keysMap.put(webContextPath, keys);
+					_webContextPathKeysMap.put(webContextPath, keys);
 
-					LanguageState.update(_keysMap);
+					LanguageState.update(_webContextPathKeysMap);
 				}
 			}
 
@@ -94,17 +94,19 @@ public class ServletContextServiceTrackerCustomizer
 		String webContextPath) {
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Removed " + webContextPath);
+			_log.debug(
+				StringBundler.concat(
+					"Web context path '", webContextPath, "' removed"));
 		}
 
 		synchronized (this) {
-			_keysMap.remove(webContextPath);
+			_webContextPathKeysMap.remove(webContextPath);
 
-			LanguageState.update(_keysMap);
+			LanguageState.update(_webContextPathKeysMap);
 		}
 	}
 
-	private List<String> _getKeys(ServletContext servletContext) {
+	private List<String> _getLanguageKeys(ServletContext servletContext) {
 		try {
 			URL url = servletContext.getResource("/language.json");
 
@@ -119,7 +121,7 @@ public class ServletContextServiceTrackerCustomizer
 		}
 		catch (Exception exception) {
 			_log.error(
-				"Unable to get language.json for " +
+				"Unable to get language.json keys from servlet context " +
 					servletContext.getContextPath(),
 				exception);
 
@@ -135,6 +137,7 @@ public class ServletContextServiceTrackerCustomizer
 
 	private final BundleContext _bundleContext;
 	private final JSONFactory _jsonFactory;
-	private final Map<String, List<String>> _keysMap = new HashMap<>();
+	private final Map<String, List<String>> _webContextPathKeysMap =
+		new HashMap<>();
 
 }

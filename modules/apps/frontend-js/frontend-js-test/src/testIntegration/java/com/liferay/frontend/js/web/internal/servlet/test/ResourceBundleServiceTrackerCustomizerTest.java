@@ -59,13 +59,17 @@ public class ResourceBundleServiceTrackerCustomizerTest {
 				).build());
 
 		try {
-			Assert.assertNotEquals(hash, _jsLanguage.getHash());
+			Assert.assertNotEquals(
+				"Hash did not change after deployment of ResourceBundle", hash,
+				_jsLanguage.getHash());
 		}
 		finally {
 			serviceRegistration.unregister();
 		}
 
-		Assert.assertEquals(hash, _jsLanguage.getHash());
+		Assert.assertEquals(
+			"Hash change was not reverted after undeployment of ResourceBundle",
+			hash, _jsLanguage.getHash());
 	}
 
 	@Inject

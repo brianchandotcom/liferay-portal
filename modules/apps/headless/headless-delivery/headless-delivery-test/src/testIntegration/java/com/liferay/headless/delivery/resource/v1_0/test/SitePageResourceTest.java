@@ -70,6 +70,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -309,7 +310,11 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		List<String> pageTypes = TransformUtil.transform(
 			sitePagePage.getItems(), SitePage::getPageType);
 
-		Assert.assertTrue(pageTypes.contains("Page Set"));
+		Assert.assertTrue(
+			pageTypes.contains(
+				_language.get(
+					LocaleUtil.getSiteDefault(),
+					"layout.types." + layout.getType())));
 	}
 
 	@Override
@@ -1972,6 +1977,9 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 	@Inject
 	private GroupLocalService _groupLocalService;
+
+	@Inject
+	private Language _language;
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;

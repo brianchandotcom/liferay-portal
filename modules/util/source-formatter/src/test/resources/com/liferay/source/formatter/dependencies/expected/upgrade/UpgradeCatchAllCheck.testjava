@@ -49,6 +49,7 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		DestinationNames.COMMERCE_STOCK_QUANTITY;
 		DestinationNames.COMMERCE_SUBSCRIPTION_STATUS;
 
+		DLURLHelperUtil.getDownloadURL(null, null, null, null, null, null);
 		DLURLHelperUtil.getImagePreviewURL(null, null, null);
 
 		FDSTableSchemaBuilder fDSTableSchemaBuilder = _fDSTableSchemaBuilderFactory.create();

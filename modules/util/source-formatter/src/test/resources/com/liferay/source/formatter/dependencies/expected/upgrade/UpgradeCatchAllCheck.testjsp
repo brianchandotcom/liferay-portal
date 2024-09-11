@@ -21,6 +21,7 @@ for (CommerceOrderItem commerceOrderItem : commerceOrder.getCommerceOrderItems()
 
 PortalUtil.getCurrentAndAncestorSiteGroupIds(themeDisplay.getScopeGroupId());
 
+DLURLHelperUtil.getDownloadURL(null, null, null, null, null, null);
 DLURLHelperUtil.getImagePreviewURL(null, null);
 
 JSONUtil.isJSONObject("test123");

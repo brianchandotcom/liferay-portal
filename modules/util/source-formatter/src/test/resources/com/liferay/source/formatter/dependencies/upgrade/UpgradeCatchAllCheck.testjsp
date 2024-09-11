@@ -16,6 +16,7 @@ for (CommerceOrderItem commerceOrderItem : commerceOrder.getCommerceOrderItems()
 
 DLUtil.getGroupIds(themeDisplay);
 
+DLUtil.getDownloadURL(null, null, null, null, null, null);
 DLUtil.getImagePreviewURL(null, null);
 
 JSONUtil.isValid("test123");

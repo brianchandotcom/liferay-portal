@@ -1,0 +1,39 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+				  "indexed": true,
+				  "layout": {
+			  
+				  }
+				},
+				"pageElements": [
+				  {
+					"definition": {
+					  "fragmentStyle": {
+						"maxWidth": "600px"
+					  },
+					  "widgetInstance": {
+						"widgetConfig": {
+						  "groupId": "15095646",
+						  "formInstanceId": "15807611"
+						},
+						"widgetName": "com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormPortlet"
+					  }
+					},
+					"type": "Widget"
+				  }
+				],
+				"type": "Section"
+			  }
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"masterPage": {
+			"key": "main-template"
+		}
+	},
+	"version": 1.1
+}

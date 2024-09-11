@@ -1,0 +1,657 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"indexed": true,
+					"layout": {}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"fragmentStyle": {
+								"backgroundColor": "colorNeutral1",
+								"borderRadius": "borderRadiusLg",
+								"marginBottom": "4",
+								"paddingBottom": "3",
+								"paddingLeft": "5",
+								"paddingRight": "5",
+								"paddingTop": "3"
+							},
+							"indexed": true,
+							"layout": {
+								"marginBottom": 2,
+								"paddingBottom": 1,
+								"paddingLeft": 4,
+								"paddingRight": 4,
+								"paddingTop": 1
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"gutters": true,
+									"indexed": true,
+									"modulesPerRow": 2,
+									"numberOfColumns": 2,
+									"reverseOrder": false,
+									"rowViewports": [
+										{
+											"id": "landscapeMobile",
+											"rowViewportDefinition": {
+												"modulesPerRow": 1
+											}
+										},
+										{
+											"id": "portraitMobile",
+											"rowViewportDefinition": {}
+										},
+										{
+											"id": "tablet",
+											"rowViewportDefinition": {}
+										}
+									],
+									"verticalAlignment": "middle"
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"columnViewports": [
+												{
+													"columnViewportDefinition": {
+														"size": 12
+													},
+													"id": "landscapeMobile"
+												},
+												{
+													"columnViewportDefinition": {},
+													"id": "portraitMobile"
+												},
+												{
+													"columnViewportDefinition": {},
+													"id": "tablet"
+												}
+											],
+											"size": 6
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "dialect-dialect-text"
+													},
+													"fragmentConfig": {
+														"textType": "h1"
+													},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {},
+																"text": {
+																	"value_i18n": {
+																		"ar_SA": "Rules of Engagement",
+																		"ca_ES": "Rules of Engagement",
+																		"de_DE": "Rules of Engagement",
+																		"en_US": "Rules of Engagement",
+																		"es_ES": "Rules of Engagement",
+																		"fi_FI": "Rules of Engagement",
+																		"fr_FR": "Rules of Engagement",
+																		"hu_HU": "Rules of Engagement",
+																		"ja_JP": "Rules of Engagement",
+																		"nl_NL": "Rules of Engagement",
+																		"pt_BR": "Rules of Engagement",
+																		"sv_SE": "Rules of Engagement",
+																		"zh_CN": "Rules of Engagement"
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"fontWeight": "fontWeightBold",
+														"marginBottom": "3"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "dialect-dialect-text"
+													},
+													"fragmentConfig": {
+														"textType": "text-paragraph"
+													},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {},
+																"text": {
+																	"value_i18n": {
+																		"ar_SA": "Liferay is dedicated to promoting the growth and success of its partner ecosystem. We have formalized Rules of Engagement (“RoE”) and Deal Registration / Protection procedures in order to manage channel conflict and provide a disciplined approach to pursuing sales opportunities with our channel partners.",
+																		"ca_ES": "Liferay is dedicated to promoting the growth and success of its partner ecosystem. We have formalized Rules of Engagement (“RoE”) and Deal Registration / Protection procedures in order to manage channel conflict and provide a disciplined approach to pursuing sales opportunities with our channel partners.",
+																		"de_DE": "Liferay is dedicated to promoting the growth and success of its partner ecosystem. We have formalized Rules of Engagement (“RoE”) and Deal Registration / Protection procedures in order to manage channel conflict and provide a disciplined approach to pursuing sales opportunities with our channel partners.",
+																		"en_US": "Liferay is dedicated to promoting the growth and success of its partner ecosystem. We have formalized Rules of Engagement (“RoE”) and Deal Registration / Protection procedures in order to manage channel conflict and provide a disciplined approach to pursuing sales opportunities with our channel partners.",
+																		"es_ES": "Liferay is dedicated to promoting the growth and success of its partner ecosystem. We have formalized Rules of Engagement (“RoE”) and Deal Registration / Protection procedures in order to manage channel conflict and provide a disciplined approach to pursuing sales opportunities with our channel partners.",
+																		"fi_FI": "Liferay is dedicated to promoting the growth and success of its partner ecosystem. We have formalized Rules of Engagement (“RoE”) and Deal Registration / Protection procedures in order to manage channel conflict and provide a disciplined approach to pursuing sales opportunities with our channel partners.",
+																		"fr_FR": "Liferay is dedicated to promoting the growth and success of its partner ecosystem. We have formalized Rules of Engagement (“RoE”) and Deal Registration / Protection procedures in order to manage channel conflict and provide a disciplined approach to pursuing sales opportunities with our channel partners.",
+																		"hu_HU": "Liferay is dedicated to promoting the growth and success of its partner ecosystem. We have formalized Rules of Engagement (“RoE”) and Deal Registration / Protection procedures in order to manage channel conflict and provide a disciplined approach to pursuing sales opportunities with our channel partners.",
+																		"ja_JP": "Liferay is dedicated to promoting the growth and success of its partner ecosystem. We have formalized Rules of Engagement (“RoE”) and Deal Registration / Protection procedures in order to manage channel conflict and provide a disciplined approach to pursuing sales opportunities with our channel partners.",
+																		"nl_NL": "Liferay is dedicated to promoting the growth and success of its partner ecosystem. We have formalized Rules of Engagement (“RoE”) and Deal Registration / Protection procedures in order to manage channel conflict and provide a disciplined approach to pursuing sales opportunities with our channel partners.",
+																		"pt_BR": "Liferay is dedicated to promoting the growth and success of its partner ecosystem. We have formalized Rules of Engagement (“RoE”) and Deal Registration / Protection procedures in order to manage channel conflict and provide a disciplined approach to pursuing sales opportunities with our channel partners.",
+																		"sv_SE": "Liferay is dedicated to promoting the growth and success of its partner ecosystem. We have formalized Rules of Engagement (“RoE”) and Deal Registration / Protection procedures in order to manage channel conflict and provide a disciplined approach to pursuing sales opportunities with our channel partners.",
+																		"zh_CN": "Liferay is dedicated to promoting the growth and success of its partner ecosystem. We have formalized Rules of Engagement (“RoE”) and Deal Registration / Protection procedures in order to manage channel conflict and provide a disciplined approach to pursuing sales opportunities with our channel partners."
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"marginBottom": "3"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											}
+										],
+										"type": "Column"
+									},
+									{
+										"definition": {
+											"columnViewports": [
+												{
+													"columnViewportDefinition": {
+														"size": 12
+													},
+													"id": "landscapeMobile"
+												},
+												{
+													"columnViewportDefinition": {},
+													"id": "portraitMobile"
+												},
+												{
+													"columnViewportDefinition": {},
+													"id": "tablet"
+												}
+											],
+											"size": 6
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"indexed": true,
+													"layout": {
+														"align": "Center",
+														"contentDisplay": "FlexRow",
+														"justify": "Center"
+													}
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "BASIC_COMPONENT-image"
+															},
+															"fragmentConfig": {
+																"imageSize": "w-100"
+															},
+															"fragmentFields": [
+																{
+																	"id": "image-square",
+																	"value": {
+																		"fragmentImage": {
+																			"url": {
+																				"mapping": {
+																					"fieldKey": "FileEntry_previewImage",
+																					"itemReference": {
+																						"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																						"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/sales/business-sales-banner.png#]"
+																					}
+																				}
+																			}
+																		},
+																		"fragmentLink": {}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"maxWidth": "300px"
+															},
+															"indexed": true
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "Section"
+											}
+										],
+										"type": "Column"
+									}
+								],
+								"type": "Row"
+							}
+						],
+						"type": "Section"
+					},
+					{
+						"definition": {
+							"indexed": true,
+							"layout": {}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"gutters": true,
+									"indexed": true,
+									"modulesPerRow": 4,
+									"numberOfColumns": 4,
+									"reverseOrder": false,
+									"rowViewports": [
+										{
+											"id": "landscapeMobile",
+											"rowViewportDefinition": {
+												"modulesPerRow": 1
+											}
+										},
+										{
+											"id": "portraitMobile",
+											"rowViewportDefinition": {}
+										},
+										{
+											"id": "tablet",
+											"rowViewportDefinition": {}
+										}
+									],
+									"verticalAlignment": "top"
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"columnViewports": [
+												{
+													"columnViewportDefinition": {
+														"size": 12
+													},
+													"id": "landscapeMobile"
+												},
+												{
+													"columnViewportDefinition": {},
+													"id": "portraitMobile"
+												},
+												{
+													"columnViewportDefinition": {},
+													"id": "tablet"
+												}
+											],
+											"size": 1
+										},
+										"type": "Column"
+									},
+									{
+										"definition": {
+											"columnViewports": [
+												{
+													"columnViewportDefinition": {
+														"size": 12
+													},
+													"id": "landscapeMobile"
+												},
+												{
+													"columnViewportDefinition": {},
+													"id": "portraitMobile"
+												},
+												{
+													"columnViewportDefinition": {},
+													"id": "tablet"
+												}
+											],
+											"size": 5
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "dialect-dialect-text"
+													},
+													"fragmentConfig": {
+														"textType": "h3"
+													},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {},
+																"text": {
+																	"value_i18n": {
+																		"ar_SA": "Read the Guide",
+																		"ca_ES": "Read the Guide",
+																		"de_DE": "Read the Guide",
+																		"en_US": "Read the Guide",
+																		"es_ES": "Read the Guide",
+																		"fi_FI": "Read the Guide",
+																		"fr_FR": "Read the Guide",
+																		"hu_HU": "Read the Guide",
+																		"ja_JP": "Read the Guide",
+																		"nl_NL": "Read the Guide",
+																		"pt_BR": "Read the Guide",
+																		"sv_SE": "Read the Guide",
+																		"zh_CN": "Read the Guide"
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"marginBottom": "2"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "dialect-dialect-text"
+													},
+													"fragmentConfig": {
+														"textType": "text-paragraph"
+													},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {},
+																"text": {
+																	"value_i18n": {
+																		"ar_SA": "For specific information about&nbsp;the defined&nbsp;code of conduct and deal registration process,&nbsp;download the guide&nbsp;to the Liferay Solution Partner Program Rules of Engagement.&nbsp;",
+																		"ca_ES": "For specific information about&nbsp;the defined&nbsp;code of conduct and deal registration process,&nbsp;download the guide&nbsp;to the Liferay Solution Partner Program Rules of Engagement.&nbsp;",
+																		"de_DE": "For specific information about&nbsp;the defined&nbsp;code of conduct and deal registration process,&nbsp;download the guide&nbsp;to the Liferay Solution Partner Program Rules of Engagement.&nbsp;",
+																		"en_US": "For specific information about&nbsp;the defined&nbsp;code of conduct and deal registration process,&nbsp;download the guide&nbsp;to the Liferay Solution Partner Program Rules of Engagement.&nbsp;",
+																		"es_ES": "For specific information about&nbsp;the defined&nbsp;code of conduct and deal registration process,&nbsp;download the guide&nbsp;to the Liferay Solution Partner Program Rules of Engagement.&nbsp;",
+																		"fi_FI": "For specific information about&nbsp;the defined&nbsp;code of conduct and deal registration process,&nbsp;download the guide&nbsp;to the Liferay Solution Partner Program Rules of Engagement.&nbsp;",
+																		"fr_FR": "For specific information about&nbsp;the defined&nbsp;code of conduct and deal registration process,&nbsp;download the guide&nbsp;to the Liferay Solution Partner Program Rules of Engagement.&nbsp;",
+																		"hu_HU": "For specific information about&nbsp;the defined&nbsp;code of conduct and deal registration process,&nbsp;download the guide&nbsp;to the Liferay Solution Partner Program Rules of Engagement.&nbsp;",
+																		"ja_JP": "For specific information about&nbsp;the defined&nbsp;code of conduct and deal registration process,&nbsp;download the guide&nbsp;to the Liferay Solution Partner Program Rules of Engagement.&nbsp;",
+																		"nl_NL": "For specific information about&nbsp;the defined&nbsp;code of conduct and deal registration process,&nbsp;download the guide&nbsp;to the Liferay Solution Partner Program Rules of Engagement.&nbsp;",
+																		"pt_BR": "For specific information about&nbsp;the defined&nbsp;code of conduct and deal registration process,&nbsp;download the guide&nbsp;to the Liferay Solution Partner Program Rules of Engagement.&nbsp;",
+																		"sv_SE": "For specific information about&nbsp;the defined&nbsp;code of conduct and deal registration process,&nbsp;download the guide&nbsp;to the Liferay Solution Partner Program Rules of Engagement.&nbsp;",
+																		"zh_CN": "For specific information about&nbsp;the defined&nbsp;code of conduct and deal registration process,&nbsp;download the guide&nbsp;to the Liferay Solution Partner Program Rules of Engagement.&nbsp;"
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"marginBottom": "2",
+														"maxWidth": "500px"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "dialect-dialect-button"
+													},
+													"fragmentConfig": {
+														"uppercase": false,
+														"style": "primary",
+														"type": "solid",
+														"inverted": false,
+														"buttonSize": ""
+													},
+													"fragmentFields": [
+														{
+															"id": "link",
+															"value": {
+																"fragmentLink": {
+																	"value": {}
+																},
+																"text": {
+																	"value_i18n": {
+																		"ar_SA": "Download Rules of Engagement",
+																		"ca_ES": "Download Rules of Engagement",
+																		"de_DE": "Download Rules of Engagement",
+																		"en_US": "Download Rules of Engagement",
+																		"es_ES": "Download Rules of Engagement",
+																		"fi_FI": "Download Rules of Engagement",
+																		"fr_FR": "Download Rules of Engagement",
+																		"hu_HU": "Download Rules of Engagement",
+																		"ja_JP": "Download Rules of Engagement",
+																		"nl_NL": "Download Rules of Engagement",
+																		"pt_BR": "Download Rules of Engagement",
+																		"sv_SE": "Download Rules of Engagement",
+																		"zh_CN": "Download Rules of Engagement"
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"marginTop": "4"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											}
+										],
+										"type": "Column"
+									},
+									{
+										"definition": {
+											"columnViewports": [
+												{
+													"columnViewportDefinition": {
+														"size": 12
+													},
+													"id": "landscapeMobile"
+												},
+												{
+													"columnViewportDefinition": {},
+													"id": "portraitMobile"
+												},
+												{
+													"columnViewportDefinition": {},
+													"id": "tablet"
+												}
+											],
+											"size": 5
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "dialect-dialect-text"
+													},
+													"fragmentConfig": {
+														"textType": "h3"
+													},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {},
+																"text": {
+																	"value_i18n": {
+																		"ar_SA": "Resolving Violations to the Rules of Engagement",
+																		"ca_ES": "Resolving Violations to the Rules of Engagement",
+																		"de_DE": "Resolving Violations to the Rules of Engagement",
+																		"en_US": "Resolving Violations to the Rules of Engagement",
+																		"es_ES": "Resolving Violations to the Rules of Engagement",
+																		"fi_FI": "Resolving Violations to the Rules of Engagement",
+																		"fr_FR": "Resolving Violations to the Rules of Engagement",
+																		"hu_HU": "Resolving Violations to the Rules of Engagement",
+																		"ja_JP": "Resolving Violations to the Rules of Engagement",
+																		"nl_NL": "Resolving Violations to the Rules of Engagement",
+																		"pt_BR": "Resolving Violations to the Rules of Engagement",
+																		"sv_SE": "Resolving Violations to the Rules of Engagement",
+																		"zh_CN": "Resolving Violations to the Rules of Engagement"
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"marginBottom": "2"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "dialect-dialect-text"
+													},
+													"fragmentConfig": {
+														"textType": "text-paragraph"
+													},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {},
+																"text": {
+																	"value_i18n": {
+																		"ar_SA": "Partners&nbsp;should first report direct violations to their Channel Account&nbsp;Manager. If the matter requires escalation, and upon the&nbsp;direction&nbsp;of the Channel Account Manager, partners can report the issue by&nbsp;submitting&nbsp;the&nbsp;Rules of Engagement Violation&nbsp;form.&nbsp;",
+																		"ca_ES": "Partners&nbsp;should first report direct violations to their Channel Account&nbsp;Manager. If the matter requires escalation, and upon the&nbsp;direction&nbsp;of the Channel Account Manager, partners can report the issue by&nbsp;submitting&nbsp;the&nbsp;Rules of Engagement Violation&nbsp;form.&nbsp;",
+																		"de_DE": "Partners&nbsp;should first report direct violations to their Channel Account&nbsp;Manager. If the matter requires escalation, and upon the&nbsp;direction&nbsp;of the Channel Account Manager, partners can report the issue by&nbsp;submitting&nbsp;the&nbsp;Rules of Engagement Violation&nbsp;form.&nbsp;",
+																		"en_US": "Partners&nbsp;should first report direct violations to their Channel Account&nbsp;Manager. If the matter requires escalation, and upon the&nbsp;direction&nbsp;of the Channel Account Manager, partners can report the issue by&nbsp;submitting&nbsp;the&nbsp;Rules of Engagement Violation&nbsp;form.&nbsp;",
+																		"es_ES": "Partners&nbsp;should first report direct violations to their Channel Account&nbsp;Manager. If the matter requires escalation, and upon the&nbsp;direction&nbsp;of the Channel Account Manager, partners can report the issue by&nbsp;submitting&nbsp;the&nbsp;Rules of Engagement Violation&nbsp;form.&nbsp;",
+																		"fi_FI": "Partners&nbsp;should first report direct violations to their Channel Account&nbsp;Manager. If the matter requires escalation, and upon the&nbsp;direction&nbsp;of the Channel Account Manager, partners can report the issue by&nbsp;submitting&nbsp;the&nbsp;Rules of Engagement Violation&nbsp;form.&nbsp;",
+																		"fr_FR": "Partners&nbsp;should first report direct violations to their Channel Account&nbsp;Manager. If the matter requires escalation, and upon the&nbsp;direction&nbsp;of the Channel Account Manager, partners can report the issue by&nbsp;submitting&nbsp;the&nbsp;Rules of Engagement Violation&nbsp;form.&nbsp;",
+																		"hu_HU": "Partners&nbsp;should first report direct violations to their Channel Account&nbsp;Manager. If the matter requires escalation, and upon the&nbsp;direction&nbsp;of the Channel Account Manager, partners can report the issue by&nbsp;submitting&nbsp;the&nbsp;Rules of Engagement Violation&nbsp;form.&nbsp;",
+																		"ja_JP": "Partners&nbsp;should first report direct violations to their Channel Account&nbsp;Manager. If the matter requires escalation, and upon the&nbsp;direction&nbsp;of the Channel Account Manager, partners can report the issue by&nbsp;submitting&nbsp;the&nbsp;Rules of Engagement Violation&nbsp;form.&nbsp;",
+																		"nl_NL": "Partners&nbsp;should first report direct violations to their Channel Account&nbsp;Manager. If the matter requires escalation, and upon the&nbsp;direction&nbsp;of the Channel Account Manager, partners can report the issue by&nbsp;submitting&nbsp;the&nbsp;Rules of Engagement Violation&nbsp;form.&nbsp;",
+																		"pt_BR": "Partners&nbsp;should first report direct violations to their Channel Account&nbsp;Manager. If the matter requires escalation, and upon the&nbsp;direction&nbsp;of the Channel Account Manager, partners can report the issue by&nbsp;submitting&nbsp;the&nbsp;Rules of Engagement Violation&nbsp;form.&nbsp;",
+																		"sv_SE": "Partners&nbsp;should first report direct violations to their Channel Account&nbsp;Manager. If the matter requires escalation, and upon the&nbsp;direction&nbsp;of the Channel Account Manager, partners can report the issue by&nbsp;submitting&nbsp;the&nbsp;Rules of Engagement Violation&nbsp;form.&nbsp;",
+																		"zh_CN": "Partners&nbsp;should first report direct violations to their Channel Account&nbsp;Manager. If the matter requires escalation, and upon the&nbsp;direction&nbsp;of the Channel Account Manager, partners can report the issue by&nbsp;submitting&nbsp;the&nbsp;Rules of Engagement Violation&nbsp;form.&nbsp;"
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"marginBottom": "2",
+														"maxWidth": "500px"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "dialect-dialect-button"
+													},
+													"fragmentConfig": {
+														"uppercase": false,
+														"style": "primary",
+														"type": "solid",
+														"inverted": false,
+														"buttonSize": ""
+													},
+													"fragmentFields": [
+														{
+															"id": "link",
+															"value": {
+																"fragmentLink": {
+																	"value": {
+																		"href": {
+																			"mapping": {
+																				"itemReference": {
+																					"className": "com.liferay.portal.kernel.model.Layout",
+																					"fields": [
+																						{
+																							"fieldName": "friendlyURL",
+																							"fieldValue": "/rules-of-engagement-violation"
+																						},
+																						{
+																							"fieldName": "privatePage",
+																							"fieldValue": "false"
+																						},
+																						{
+																							"fieldName": "siteKey",
+																							"fieldValue": "[$GROUP_KEY$]"
+																						}
+																					]
+																				}
+																			}
+																		}
+																	}
+																},
+																"text": {
+																	"value_i18n": {
+																		"ar_SA": "Submit Rules of Engagement Violation",
+																		"ca_ES": "Submit Rules of Engagement Violation",
+																		"de_DE": "Submit Rules of Engagement Violation",
+																		"en_US": "Submit Rules of Engagement Violation",
+																		"es_ES": "Submit Rules of Engagement Violation",
+																		"fi_FI": "Submit Rules of Engagement Violation",
+																		"fr_FR": "Submit Rules of Engagement Violation",
+																		"hu_HU": "Submit Rules of Engagement Violation",
+																		"ja_JP": "Submit Rules of Engagement Violation",
+																		"nl_NL": "Submit Rules of Engagement Violation",
+																		"pt_BR": "Submit Rules of Engagement Violation",
+																		"sv_SE": "Submit Rules of Engagement Violation",
+																		"zh_CN": "Submit Rules of Engagement Violation"
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"marginTop": "4"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											}
+										],
+										"type": "Column"
+									},
+									{
+										"definition": {
+											"columnViewports": [
+												{
+													"columnViewportDefinition": {
+														"size": 12
+													},
+													"id": "landscapeMobile"
+												},
+												{
+													"columnViewportDefinition": {},
+													"id": "portraitMobile"
+												},
+												{
+													"columnViewportDefinition": {},
+													"id": "tablet"
+												}
+											],
+											"size": 1
+										},
+										"type": "Column"
+									}
+								],
+								"type": "Row"
+							}
+						],
+						"type": "Section"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"masterPage": {
+			"key": "main-template"
+		}
+	},
+	"version": 1.1
+}

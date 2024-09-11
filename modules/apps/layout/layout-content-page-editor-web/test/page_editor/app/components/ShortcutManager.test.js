@@ -33,6 +33,7 @@ jest.mock(
 			...jest.requireActual(
 				'../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ClipboardContext'
 			),
+			useCopiedItemIds: () => ['fragment02'],
 			useSetCopiedItemIds: () => setCopiedItemIds,
 		};
 	}
@@ -87,6 +88,17 @@ const DEFAULT_STATE = {
 				itemId: 'fragment01',
 				type: LAYOUT_DATA_ITEM_TYPES.fragment,
 			},
+			fragment02: {
+				itemId: 'fragment02',
+				type: LAYOUT_DATA_ITEM_TYPES.fragment,
+			},
+			root01: {
+				itemId: 'root01',
+				type: LAYOUT_DATA_ITEM_TYPES.root,
+			},
+		},
+		rootItems: {
+			main: 'root01',
 		},
 	},
 	permissions: {
@@ -124,6 +136,10 @@ describe('ShortcutManager', () => {
 				isMac: () => true,
 			},
 		};
+	});
+
+	beforeEach(() => {
+		jest.clearAllMocks();
 	});
 
 	it('triggers hide sidebar action when pressing cmd + shift + .', () => {
@@ -202,7 +218,7 @@ describe('ShortcutManager', () => {
 		screen.getByText('keyboard-shortcuts');
 	});
 
-	it('sets the node id to be renamed when pressing ctrl + alt + R', () => {
+	it('sets the item id to be renamed when pressing ctrl + alt + R', () => {
 		const setEditedNodeId = useSetEditedNodeId();
 
 		renderComponent({
@@ -255,7 +271,7 @@ describe('ShortcutManager', () => {
 		);
 	});
 
-	it('sets the node id to be cut when pressing ctrl + X', () => {
+	it('sets the item Id and calls deleteItem to be cut when pressing ctrl + X', () => {
 		Liferay.FeatureFlags['LPD-18221'] = true;
 
 		const setCopiedItemIds = useSetCopiedItemIds();
@@ -282,7 +298,7 @@ describe('ShortcutManager', () => {
 		Liferay.FeatureFlags['LPD-18221'] = false;
 	});
 
-	it('sets the node id to be copied when pressing ctrl + C', () => {
+	it('sets the item id to be copied when pressing ctrl + C', () => {
 		Liferay.FeatureFlags['LPD-18221'] = true;
 
 		const setCopiedItemIds = useSetCopiedItemIds();
@@ -303,7 +319,7 @@ describe('ShortcutManager', () => {
 		Liferay.FeatureFlags['LPD-18221'] = false;
 	});
 
-	it('sets the node id to be pasted when pressing ctrl + V', () => {
+	it('calls pasteItem when pressing ctrl + V', () => {
 		Liferay.FeatureFlags['LPD-18221'] = true;
 
 		renderComponent({
@@ -319,7 +335,7 @@ describe('ShortcutManager', () => {
 
 		expect(pasteItem).toBeCalledWith(
 			expect.objectContaining({
-				copyItemIds: [],
+				copiedItemIds: ['fragment02'],
 				parentItemId: 'fragment01',
 			})
 		);
@@ -327,7 +343,50 @@ describe('ShortcutManager', () => {
 		Liferay.FeatureFlags['LPD-18221'] = false;
 	});
 
-	it('sets the node id to be duplicated when pressing ctrl + alt + D', () => {
+	it('item id will be pasted to the root because no parents are selected', () => {
+		Liferay.FeatureFlags['LPD-18221'] = true;
+
+		renderComponent({
+			activeItemIds: [],
+		});
+
+		document.body.dispatchEvent(
+			new KeyboardEvent('keydown', {
+				code: 'KeyV',
+				ctrlKey: true,
+			})
+		);
+
+		expect(pasteItem).toBeCalledWith(
+			expect.objectContaining({
+				copiedItemIds: ['fragment02'],
+				parentItemId: 'root01',
+			})
+		);
+
+		Liferay.FeatureFlags['LPD-18221'] = false;
+	});
+
+	it('cannot paste items because multiple parents are selected', () => {
+		Liferay.FeatureFlags['LPD-18221'] = true;
+
+		renderComponent({
+			activeItemIds: ['fragment01', 'fragment02'],
+		});
+
+		document.body.dispatchEvent(
+			new KeyboardEvent('keydown', {
+				code: 'KeyV',
+				ctrlKey: true,
+			})
+		);
+
+		expect(pasteItem).toBeCalledTimes(0);
+
+		Liferay.FeatureFlags['LPD-18221'] = false;
+	});
+
+	it('calls duplicateItem when pressing ctrl + alt + D', () => {
 		renderComponent({
 			activeItemIds: ['fragment01'],
 		});

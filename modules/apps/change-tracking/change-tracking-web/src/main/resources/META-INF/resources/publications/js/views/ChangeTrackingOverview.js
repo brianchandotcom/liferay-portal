@@ -4,6 +4,7 @@
  */
 
 import ClayEmptyState from '@clayui/empty-state';
+import ClayLink from '@clayui/link';
 import ClayPanel from '@clayui/panel';
 import React from 'react';
 
@@ -27,7 +28,13 @@ export default function ChangeTrackingOverview({itemsOverview}) {
 									{item.siteName} ({item.siteCount}):{' '}
 								</b>
 
-								{item.typeNameAndCount.join(', ')} <br />
+								{item.typeNameAndCount.map((item) => (
+									<ClayLink href={item.href} key={i}>
+										{item.label}
+									</ClayLink>
+								))}
+
+								<br />
 							</div>
 						))
 					) : (

@@ -152,6 +152,10 @@ public class UpstreamFailureUtil {
 	public static TopLevelBuildReport getUpstreamTopLevelBuildReport(
 		TopLevelBuild topLevelBuild, String upstreamBranchSHA) {
 
+		if (upstreamBranchSHA == null) {
+			return getUpstreamTopLevelBuildReport(topLevelBuild);
+		}
+
 		JobReport jobReport = JobReport.getInstance(
 			topLevelBuild.getAcceptanceUpstreamJobURL());
 

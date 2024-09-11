@@ -48,6 +48,8 @@ import java.lang.management.RuntimeMXBean;
 import java.net.URI;
 
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -131,14 +133,10 @@ public class UpgradeReport {
 				URI uri = new URI(loadedSource);
 
 				if (StringUtil.equals("file", uri.getScheme())) {
-					String sourcePath = uri.getPath();
+					Path uriPath = Paths.get(uri);
 
-					if ((sourcePath != null) && sourcePath.startsWith("/") &&
-						(sourcePath.length() > 2) &&
-						(sourcePath.charAt(2) == ':')) {
-
-						sourcePath = sourcePath.substring(1);
-					}
+					String sourcePath = StringUtil.replace(
+						uriPath.toString(), "\\", "/");
 
 					sourcePaths.add(sourcePath);
 				}

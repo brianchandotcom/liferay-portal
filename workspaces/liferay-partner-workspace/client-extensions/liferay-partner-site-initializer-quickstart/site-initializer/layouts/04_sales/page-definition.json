@@ -189,7 +189,7 @@
 														"fieldKey": "FileEntry_downloadURL",
 														"itemReference": {
 															"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-															"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/sales-resources-pdf/referral-program-guide.pdf#]"
+															"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/sales/sales-resources-pdf/referral-program-guide.pdf#]"
 														}
 													}
 												},
@@ -350,7 +350,7 @@
 														"fieldKey": "FileEntry_downloadURL",
 														"itemReference": {
 															"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-															"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/sales-resources-pdf/program-rules-of-engagement.pdf#]"
+															"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/sales/sales-resources-pdf/program-rules-of-engagement.pdf#]"
 														}
 													}
 												},

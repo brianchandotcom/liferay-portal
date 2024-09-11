@@ -228,7 +228,7 @@
 																							"fieldKey": "FileEntry_previewImage",
 																							"itemReference": {
 																								"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																								"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/marketing-partner-awards/partner-awards-illustration.svg#]"
+																								"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/marketing/marketing-partner-awards/partner-awards-illustration.svg#]"
 																							}
 																						}
 																					}
@@ -985,7 +985,7 @@
 																											"fieldKey": "FileEntry_previewImage",
 																											"itemReference": {
 																												"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																												"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/marketing-partner-awards/unified-experience.png#]"
+																												"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/marketing/marketing-partner-awards/unified-experience.png#]"
 																											}
 																										}
 																									}
@@ -1494,7 +1494,7 @@
 																											"fieldKey": "FileEntry_previewImage",
 																											"itemReference": {
 																												"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																												"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/marketing-partner-awards/customer-self-service-sites.png#]"
+																												"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/marketing/marketing-partner-awards/customer-self-service-sites.png#]"
 																											}
 																										}
 																									}

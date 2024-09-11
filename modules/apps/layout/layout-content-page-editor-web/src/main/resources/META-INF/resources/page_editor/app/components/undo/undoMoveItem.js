@@ -3,12 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import moveItem from '../../thunks/moveItem';
+import moveItems from '../../thunks/moveItems';
 
 function undoAction({action}) {
 	const {itemIds, parentItemIds, positions} = action;
 
-	return moveItem({itemIds, parentItemIds, positions});
+	return moveItems({itemIds, parentItemIds, positions});
 }
 
 function getDerivedStateForUndo({action, state}) {

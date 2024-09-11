@@ -14,7 +14,7 @@ import {
 	useDisableKeyboardMovement,
 	useSetMovementTarget,
 } from '../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/KeyboardMovementContext';
-import moveItem from '../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/moveItem';
+import moveItems from '../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/moveItems';
 import StoreMother from '../../../../src/main/resources/META-INF/resources/page_editor/test_utils/StoreMother';
 
 jest.mock(
@@ -49,7 +49,7 @@ jest.mock(
 );
 
 jest.mock(
-	'../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/moveItem',
+	'../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/moveItems',
 	() => jest.fn()
 );
 
@@ -188,7 +188,7 @@ describe('KeyboardMovementManager', () => {
 			})
 		);
 
-		expect(moveItem).toBeCalledWith(
+		expect(moveItems).toBeCalledWith(
 			expect.objectContaining({
 				itemId: 'item-3',
 				parentItemId: 'root-id',

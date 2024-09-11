@@ -45,7 +45,7 @@ import {
 	useSelectorRef,
 } from '../../../../../app/contexts/StoreContext';
 import selectCanUpdatePageStructure from '../../../../../app/selectors/selectCanUpdatePageStructure';
-import moveItem from '../../../../../app/thunks/moveItem';
+import moveItems from '../../../../../app/thunks/moveItems';
 import moveStepper from '../../../../../app/thunks/moveStepper';
 import updateItemConfig from '../../../../../app/thunks/updateItemConfig';
 import canBeRenamed from '../../../../../app/utils/canBeRenamed';
@@ -224,10 +224,10 @@ function StructureTreeNodeContent({
 						parentItemId,
 						position,
 					})
-				: moveItem({
-						itemId: node.id,
-						parentItemId,
-						position,
+				: moveItems({
+						itemIds: [node.id],
+						parentItemIds: [parentItemId],
+						positions: [position],
 					});
 
 			dispatch(thunk);

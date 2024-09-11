@@ -34,7 +34,7 @@ import addFragment from '../../thunks/addFragment';
 import addItem from '../../thunks/addItem';
 import addStepper from '../../thunks/addStepper';
 import addWidget from '../../thunks/addWidget';
-import moveItem from '../../thunks/moveItem';
+import moveItems from '../../thunks/moveItems';
 import moveStepper from '../../thunks/moveStepper';
 import checkAllowedChild from '../../utils/drag_and_drop/checkAllowedChild';
 import {TARGET_POSITIONS} from '../../utils/drag_and_drop/constants/targetPositions';
@@ -115,10 +115,10 @@ export default function KeyboardMovementManager() {
 								parentItemId: dropItemId,
 								position,
 							})
-						: moveItem({
-								itemId: source.itemId,
-								parentItemId: dropItemId,
-								position,
+						: moveItems({
+								itemIds: [source.itemId],
+								parentItemIds: [dropItemId],
+								positions: [position],
 							});
 				}
 				else if (actionType === ACTION_TYPES.add) {

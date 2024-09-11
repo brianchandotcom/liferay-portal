@@ -43,26 +43,39 @@ const renderComponent = ({
 	render(
 		<StoreMother.Component
 			getState={() => ({
-				fragmentEntryLinks: {},
+				fragmentEntryLinks: {
+					fragment01: {editableValues: {}},
+					fragment02: {editableValues: {}},
+					fragment03: {editableValues: {}},
+				},
 				layoutData: {
 					items: {
 						fragment01: {
 							children: [],
-							config: {styles: {display: 'block'}},
+							config: {
+								fragmentEntryLinkId: 'fragment01',
+								styles: {display: 'block'},
+							},
 							itemId: 'fragment01',
 							parentId: 'root',
 							type: LAYOUT_DATA_ITEM_TYPES.fragment,
 						},
 						fragment02: {
 							children: [],
-							config: {styles: {display: 'none'}},
+							config: {
+								fragmentEntryLinkId: 'fragment02',
+								styles: {display: 'none'},
+							},
 							itemId: 'fragment02',
 							parentId: 'root',
 							type: LAYOUT_DATA_ITEM_TYPES.fragment,
 						},
 						fragment03: {
 							children: [],
-							config: {styles: {display: 'block'}},
+							config: {
+								fragmentEntryLinkId: 'fragment03',
+								styles: {display: 'block'},
+							},
 							itemId: 'fragment03',
 							parentId: 'root',
 							type: LAYOUT_DATA_ITEM_TYPES.fragment,

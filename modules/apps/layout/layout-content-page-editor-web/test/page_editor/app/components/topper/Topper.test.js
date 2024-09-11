@@ -56,6 +56,7 @@ const LAYOUT_DATA = {
 const renderTopper = ({
 	Component = Row,
 	activeItemIds = [],
+	fragmentEntryLinks = {},
 	hasUpdatePermissions = true,
 	isActive = true,
 	itemId = 'itemId',
@@ -69,7 +70,7 @@ const renderTopper = ({
 			<ControlsProvider activeInitialState={{activeItemIds}}>
 				<StoreAPIContextProvider
 					getState={() => ({
-						fragmentEntryLinks: {},
+						fragmentEntryLinks,
 						layoutData,
 						permissions: {
 							LOCKED_SEGMENTS_EXPERIMENT: lockedExperience,
@@ -149,7 +150,10 @@ describe('Topper', () => {
 			items: {
 				fragment: {
 					children: [],
-					config: {name: 'customName'},
+					config: {
+						fragmentEntryLinkId: 'fragment',
+						name: 'customName',
+					},
 					itemId: 'fragment',
 					parentId: null,
 					type: LAYOUT_DATA_ITEM_TYPES.fragment,
@@ -157,8 +161,13 @@ describe('Topper', () => {
 			},
 		};
 
+		const fragmentEntryLinks = {
+			fragment: {editableValues: {}},
+		};
+
 		const params = {
 			activeItemIds: ['item-1'],
+			fragmentEntryLinks,
 			isActive: true,
 			itemId: 'fragment',
 			layoutData,

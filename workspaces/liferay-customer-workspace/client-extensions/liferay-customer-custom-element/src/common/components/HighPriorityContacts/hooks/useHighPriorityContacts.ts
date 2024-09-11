@@ -50,7 +50,7 @@ const useHighPriorityContacts = ({
 		return contactsWithoutCategory.map((newContact) => ({
 			...newContact,
 			category: highPriorityContactsCategory.contactsCategory,
-			filterId: rolesId.filter(
+			filterId: rolesId?.filter(
 				(role) =>
 					role.displayName ===
 					highPriorityContactsCategory.contactsCategory.role

@@ -15,7 +15,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.osgi.web.servlet.jsp.compiler.internal.util.ClassPathUtil;
 
 import java.io.ByteArrayInputStream;
@@ -90,7 +89,7 @@ public class JspCompiler extends Jsr199JavaCompiler {
 	public JavacErrorDetail[] compile(String className, Node.Nodes pageNodes)
 		throws JasperException {
 
-		_bytecodeFiles = new ArrayList<>();
+		_bytecodeJavaFileObjects = new ArrayList<>();
 
 		JavaCompiler javaCompiler = ToolProvider.getSystemJavaCompiler();
 
@@ -133,10 +132,10 @@ public class JspCompiler extends Jsr199JavaCompiler {
 			}
 
 			if (compilationTask.call()) {
-				for (BytecodeFile bytecodeFile : _bytecodeFiles) {
+				for (BytecodeJavaFileObject bytecodeJavaFileObject : _bytecodeJavaFileObjects) {
 					_jspRuntimeContext.setBytecode(
-						bytecodeFile.getClassName(),
-						bytecodeFile.getBytecode());
+						bytecodeJavaFileObject.getClassName(),
+						bytecodeJavaFileObject.getBytecode());
 				}
 
 				return null;
@@ -300,13 +299,13 @@ public class JspCompiler extends Jsr199JavaCompiler {
 
 	@Override
 	public void release() {
-		_bytecodeFiles = null;
+		_bytecodeJavaFileObjects = null;
 	}
 
 	@Override
 	public void saveClassFile(String className, String classFileName) {
-		for (BytecodeFile bytecodeFile : _bytecodeFiles) {
-			String bytecodeFileClassName = bytecodeFile.getClassName();
+		for (BytecodeJavaFileObject bytecodeJavaFileObject : _bytecodeJavaFileObjects) {
+			String bytecodeFileClassName = bytecodeJavaFileObject.getClassName();
 			String outputFileName = classFileName;
 
 			if (!className.equals(bytecodeFileClassName)) {
@@ -578,7 +577,7 @@ public class JspCompiler extends Jsr199JavaCompiler {
 	private Bundle[] _allParticipatingBundles;
 	private final Map<BundleWiring, Set<String>> _bundleWiringPackageNames =
 		new HashMap<>(_jspBundleWiringPackageNames);
-	private List<BytecodeFile> _bytecodeFiles;
+	private List<BytecodeJavaFileObject> _bytecodeJavaFileObjects;
 	private CharArrayWriter _charArrayWriter;
 	private ClassLoader _classLoader;
 	private final List<File> _classPath = new ArrayList<>();
@@ -591,7 +590,7 @@ public class JspCompiler extends Jsr199JavaCompiler {
 	private JspCompilationContext _jspCompilationContext;
 	private JspRuntimeContext _jspRuntimeContext;
 
-	private static class BytecodeFile extends SimpleJavaFileObject {
+	private static class BytecodeJavaFileObject extends SimpleJavaFileObject {
 
 		public byte[] getBytecode() {
 			return _bytecode;
@@ -617,7 +616,7 @@ public class JspCompiler extends Jsr199JavaCompiler {
 			};
 		}
 
-		private BytecodeFile(URI uri, String className) {
+		private BytecodeJavaFileObject(URI uri, String className) {
 			super(uri, Kind.CLASS);
 
 			_className = className;
@@ -649,7 +648,7 @@ public class JspCompiler extends Jsr199JavaCompiler {
 			Map<String, JavaFileObject> javaFileObjectsMap = packageMap.get(
 				packageName);
 
-			BytecodeFile bytecodeFile = new BytecodeFile(
+			BytecodeJavaFileObject bytecodeJavaFileObject = new BytecodeJavaFileObject(
 				URI.create(
 					"file:///" + StringUtil.replace(className, '.', '/') +
 						kind),
@@ -661,21 +660,21 @@ public class JspCompiler extends Jsr199JavaCompiler {
 				packageMap.put(packageName, javaFileObjectsMap);
 			}
 
-			javaFileObjectsMap.put(className, bytecodeFile);
+			javaFileObjectsMap.put(className, bytecodeJavaFileObject);
 
-			_bytecodeFiles.add(bytecodeFile);
+			_bytecodeJavaFileObjects.add(bytecodeJavaFileObject);
 
-			return bytecodeFile;
+			return bytecodeJavaFileObject;
 		}
 
 		@Override
 		public String inferBinaryName(
 			Location location, JavaFileObject javaFileObject) {
 
-			if (javaFileObject instanceof BytecodeFile) {
-				BytecodeFile bytecodeFile = (BytecodeFile)javaFileObject;
+			if (javaFileObject instanceof BytecodeJavaFileObject) {
+				BytecodeJavaFileObject bytecodeJavaFileObject = (BytecodeJavaFileObject)javaFileObject;
 
-				return bytecodeFile.getClassName();
+				return bytecodeJavaFileObject.getClassName();
 			}
 
 			return super.inferBinaryName(location, javaFileObject);

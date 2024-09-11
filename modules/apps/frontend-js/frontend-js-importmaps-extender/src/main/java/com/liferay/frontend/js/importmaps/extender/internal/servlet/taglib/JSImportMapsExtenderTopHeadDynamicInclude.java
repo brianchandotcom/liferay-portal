@@ -64,9 +64,9 @@ public class JSImportMapsExtenderTopHeadDynamicInclude
 		PrintWriter printWriter = httpServletResponse.getWriter();
 
 		if (_jsImportMapsConfiguration.enableImportMaps() &&
-			(!_dynamicJSImportMapsContributors.isEmpty() ||
-			 !_globalImportMapJSONObjects.isEmpty() ||
-			 !_scopedImportMapJSONObjects.isEmpty())) {
+			(!_globalImportMapJSONObjects.isEmpty() ||
+			 !_scopedImportMapJSONObjects.isEmpty() ||
+			 (_dynamicJSImportMapsContributors.size() != 0))) {
 
 			printWriter.print("<script");
 			printWriter.write(
@@ -81,7 +81,7 @@ public class JSImportMapsExtenderTopHeadDynamicInclude
 				printWriter.print("importmap");
 			}
 
-			printWriter.print("\">{\"imports\": {");
+			printWriter.print("\">{\"imports\":{");
 
 			String importMapsImports = _importMapsImports.get();
 
@@ -101,7 +101,7 @@ public class JSImportMapsExtenderTopHeadDynamicInclude
 				dynamicJSImportMapsContributor.writeGlobalImports(printWriter);
 			}
 
-			printWriter.print("}, \"scopes\": {");
+			printWriter.print("},\"scopes\":{");
 
 			String importMapsScopes = _importMapsScopes.get();
 
@@ -163,20 +163,18 @@ public class JSImportMapsExtenderTopHeadDynamicInclude
 
 		_rebuildImportMaps();
 
-		_dynamicJSImportMapsContributors = ServiceTrackerListFactory.open(
-			bundleContext, DynamicJSImportMapsContributor.class);
-
 		_serviceTracker = new ServiceTracker<>(
 			bundleContext, JSImportMapsContributor.class,
 			_serviceTrackerCustomizer);
 
 		_serviceTracker.open();
+
+		_dynamicJSImportMapsContributors = ServiceTrackerListFactory.open(
+			bundleContext, DynamicJSImportMapsContributor.class);
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_bundleContext = null;
-
 		_dynamicJSImportMapsContributors.close();
 
 		_dynamicJSImportMapsContributors = null;
@@ -184,6 +182,8 @@ public class JSImportMapsExtenderTopHeadDynamicInclude
 		_serviceTracker.close();
 
 		_serviceTracker = null;
+
+		_bundleContext = null;
 	}
 
 	@Modified
@@ -216,9 +216,8 @@ public class JSImportMapsExtenderTopHeadDynamicInclude
 			}
 		}
 
-		_importMapsImports.set(
-			_removeOuterCurlyBraces(
-				_jsonFactory.looseSerializeDeep(importsJSONObject)));
+		String importMapsImports = _removeOuterCurlyBraces(
+			_jsonFactory.looseSerializeDeep(importsJSONObject));
 
 		JSONObject scopesJSONObject = _jsonFactory.createJSONObject();
 
@@ -228,9 +227,11 @@ public class JSImportMapsExtenderTopHeadDynamicInclude
 			scopesJSONObject.put(entry.getKey(), entry.getValue());
 		}
 
-		_importMapsScopes.set(
-			_removeOuterCurlyBraces(
-				_jsonFactory.looseSerializeDeep(scopesJSONObject)));
+		String importMapsScopes = _removeOuterCurlyBraces(
+			_jsonFactory.looseSerializeDeep(scopesJSONObject));
+
+		_importMapsImports.set(importMapsImports);
+		_importMapsScopes.set(importMapsScopes);
 	}
 
 	private JSImportMapsRegistration _register(
@@ -268,11 +269,13 @@ public class JSImportMapsExtenderTopHeadDynamicInclude
 	}
 
 	private String _removeOuterCurlyBraces(String string) {
-		string = string.substring(
-			string.indexOf(StringPool.OPEN_CURLY_BRACE) + 1);
+		int i = string.indexOf(StringPool.OPEN_CURLY_BRACE);
 
-		return string.substring(
-			0, string.lastIndexOf(StringPool.CLOSE_CURLY_BRACE));
+		string = string.substring(i + 1);
+
+		i = string.lastIndexOf(StringPool.CLOSE_CURLY_BRACE);
+
+		return string.substring(0, i);
 	}
 
 	@Reference

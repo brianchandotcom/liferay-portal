@@ -270,6 +270,7 @@ components:
                         The image's title text.
                     type: string
                 viewableBy:
+                    deprecated: true
                     description:
                         A write-only property that specifies the default permissions.
                     enum: [Anyone, Members, Owner]

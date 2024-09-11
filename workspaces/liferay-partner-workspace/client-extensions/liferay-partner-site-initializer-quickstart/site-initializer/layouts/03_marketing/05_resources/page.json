@@ -1,8 +1,8 @@
 {
-	"friendlyURL": "/marketing/events",
+	"friendlyURL": "/marketing/resources",
 	"hidden": true,
 	"name_i18n": {
-		"en_US": "Events"
+		"en_US": "Resources"
 	},
 	"permissions": [
 		{

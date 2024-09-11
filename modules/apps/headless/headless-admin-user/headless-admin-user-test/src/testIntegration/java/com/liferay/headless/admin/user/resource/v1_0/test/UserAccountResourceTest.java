@@ -169,14 +169,14 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		otherUser = _userLocalService.updatePassword(
 			otherUser.getUserId(), "test", "test", false, true);
 
-		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+		_role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
-		_userLocalService.addRoleUser(role.getRoleId(), otherUser);
+		_userLocalService.addRoleUser(_role.getRoleId(), otherUser);
 
 		_resourcePermissionLocalService.addResourcePermission(
 			TestPropsValues.getCompanyId(), User.class.getName(),
 			ResourceConstants.SCOPE_COMPANY,
-			String.valueOf(TestPropsValues.getCompanyId()), role.getRoleId(),
+			String.valueOf(TestPropsValues.getCompanyId()), _role.getRoleId(),
 			ActionKeys.VIEW);
 
 		UserAccountResource.Builder builder = UserAccountResource.builder();
@@ -408,6 +408,8 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 			PermissionThreadLocal.setPermissionChecker(
 				originalPermissionChecker);
 		}
+
+		_testGetUserAccountWithMoreExternalReferenceCodes();
 	}
 
 	@Override
@@ -1837,6 +1839,51 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 			userAccount);
 	}
 
+	private void _testGetUserAccountWithMoreExternalReferenceCodes()
+		throws Exception {
+
+		User user = UserTestUtil.addUser();
+
+		_userLocalService.addGroupUser(
+			testGroup.getGroupId(), user.getUserId());
+
+		_userLocalService.addOrganizationUser(
+			_organization.getOrganizationId(), user.getUserId());
+
+		_userLocalService.addRoleUser(_role.getRoleId(), user.getUserId());
+
+		_userLocalService.addUserGroupUser(
+			_userGroup.getUserGroupId(), user.getUserId());
+
+		UserAccount userAccount = userAccountResource.getUserAccount(
+			user.getUserId());
+
+		Assert.assertTrue(
+			ArrayUtil.exists(
+				userAccount.getOrganizationBriefs(),
+				organizationBrief -> Objects.equals(
+					organizationBrief.getExternalReferenceCode(),
+					_organization.getExternalReferenceCode())));
+		Assert.assertTrue(
+			ArrayUtil.exists(
+				userAccount.getRoleBriefs(),
+				roleBrief -> Objects.equals(
+					roleBrief.getExternalReferenceCode(),
+					_role.getExternalReferenceCode())));
+		Assert.assertTrue(
+			ArrayUtil.exists(
+				userAccount.getSiteBriefs(),
+				siteBrief -> Objects.equals(
+					siteBrief.getExternalReferenceCode(),
+					testGroup.getExternalReferenceCode())));
+		Assert.assertTrue(
+			ArrayUtil.exists(
+				userAccount.getUserGroupBriefs(),
+				userGroupBrief -> Objects.equals(
+					userGroupBrief.getExternalReferenceCode(),
+					_userGroup.getExternalReferenceCode())));
+	}
+
 	private void _testGetUserAccountWithRoles(
 			Group group, UnsafeRunnable<Exception> unsafeRunnable, User user)
 		throws Exception {
@@ -1980,6 +2027,8 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	private Role _role;
 
 	@Inject
 	private RoleLocalService _roleLocalService;

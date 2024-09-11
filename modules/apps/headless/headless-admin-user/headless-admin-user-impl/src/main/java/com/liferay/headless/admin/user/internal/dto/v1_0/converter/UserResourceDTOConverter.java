@@ -330,6 +330,8 @@ public class UserResourceDTOConverter
 
 		return new OrganizationBrief() {
 			{
+				setExternalReferenceCode(
+					organization::getExternalReferenceCode);
 				setId(organization::getOrganizationId);
 				setName(organization::getName);
 				setRoleBriefs(
@@ -349,6 +351,7 @@ public class UserResourceDTOConverter
 
 		return new RoleBrief() {
 			{
+				setExternalReferenceCode(accountRole::getExternalReferenceCode);
 				setId(accountRole::getAccountRoleId);
 				setName(accountRole::getRoleName);
 				setName_i18n(
@@ -364,6 +367,7 @@ public class UserResourceDTOConverter
 
 		return new RoleBrief() {
 			{
+				setExternalReferenceCode(role::getExternalReferenceCode);
 				setId(role::getRoleId);
 				setName(() -> role.getTitle(dtoConverterContext.getLocale()));
 				setName_i18n(
@@ -404,6 +408,7 @@ public class UserResourceDTOConverter
 					() -> LocalizedMapUtil.getI18nMap(
 						dtoConverterContext.isAcceptAllLanguages(),
 						group.getDescriptiveNameMap()));
+				setExternalReferenceCode(group::getExternalReferenceCode);
 				setId(group::getGroupId);
 				setName(() -> group.getName(dtoConverterContext.getLocale()));
 				setName_i18n(
@@ -423,6 +428,7 @@ public class UserResourceDTOConverter
 		return new UserGroupBrief() {
 			{
 				setDescription(userGroup::getDescription);
+				setExternalReferenceCode(userGroup::getExternalReferenceCode);
 				setId(userGroup::getGroupId);
 				setName(userGroup::getName);
 			}

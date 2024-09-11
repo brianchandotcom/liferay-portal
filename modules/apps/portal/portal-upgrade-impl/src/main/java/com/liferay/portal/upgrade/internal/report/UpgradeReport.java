@@ -123,40 +123,6 @@ public class UpgradeReport {
 		return 0;
 	}
 
-	private List<String> _getFilePaths() {
-		List<String> loadedSources = PropsUtil.getLoadedSources();
-
-		List<String> sourcePaths = new ArrayList<>();
-
-		for (String loadedSource : loadedSources) {
-			try {
-				URI uri = new URI(loadedSource);
-
-				if (StringUtil.equals("file", uri.getScheme())) {
-					Path uriPath = Paths.get(uri);
-
-					String sourcePath = StringUtil.replace(
-						uriPath.toString(), "\\", "/");
-
-					sourcePaths.add(sourcePath);
-				}
-			}
-			catch (Exception exception) {
-				_log.error("Unable to process file path", exception);
-			}
-		}
-
-		List<String> includeAndOverrideEntries = ListUtil.fromArray(
-			PropsUtil.getArray("include-and-override"));
-
-		List<String> filePaths = ListUtil.concat(
-			sourcePaths, includeAndOverrideEntries);
-
-		ListUtil.distinct(filePaths);
-
-		return filePaths;
-	}
-
 	private List<MessagesPrinter> _getMessagesPrinters(
 		Map<String, Map<String, Integer>> map1) {
 
@@ -187,6 +153,35 @@ public class UpgradeReport {
 		}
 
 		return messagesPrinters;
+	}
+
+	private List<String> _getPropertiesFilePaths() {
+		List<String> propertiesFilePaths = new ArrayList<>();
+
+		for (String loadedSource : PropsUtil.getLoadedSources()) {
+			try {
+				URI uri = new URI(loadedSource);
+
+				if (StringUtil.equals("file", uri.getScheme())) {
+					Path uriPath = Paths.get(uri);
+
+					propertiesFilePaths.add(
+						StringUtil.replace(uriPath.toString(), "\\", "/"));
+				}
+			}
+			catch (Exception exception) {
+				_log.error(
+					"Unable to process properties file paths", exception);
+			}
+		}
+
+		propertiesFilePaths = ListUtil.concat(
+			propertiesFilePaths,
+			ListUtil.fromArray(PropsUtil.getArray("include-and-override")));
+
+		ListUtil.distinct(propertiesFilePaths);
+
+		return propertiesFilePaths;
 	}
 
 	private Map<String, Object> _getReportData(
@@ -395,30 +390,30 @@ public class UpgradeReport {
 			() -> {
 				Map<String, Properties> propertiesMap = new LinkedHashMap<>();
 
-				for (String filePath : _getFilePaths()) {
-					if (!FileUtil.exists(filePath)) {
+				for (String propertiesFilePath : _getPropertiesFilePaths()) {
+					if (!FileUtil.exists(propertiesFilePath)) {
 						continue;
 					}
 
 					Properties properties = new Properties();
 
 					try (InputStream inputStream = new FileInputStream(
-							filePath)) {
+							propertiesFilePath)) {
 
 						properties.load(inputStream);
 					}
 					catch (IOException ioException) {
 						if (_log.isWarnEnabled()) {
 							_log.warn(
-								"Unable to load properties from file: " +
-									filePath,
+								"Unable to load properties file from: " +
+									propertiesFilePath,
 								ioException);
 						}
 
 						continue;
 					}
 
-					propertiesMap.put(filePath, properties);
+					propertiesMap.put(propertiesFilePath, properties);
 				}
 
 				String envPrefix = "LIFERAY_";

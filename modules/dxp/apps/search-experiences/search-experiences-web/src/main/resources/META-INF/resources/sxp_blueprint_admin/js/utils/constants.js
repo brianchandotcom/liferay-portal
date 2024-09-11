@@ -11,6 +11,7 @@ export const ASCENDING = Liferay.Language.get('ascending');
 export const DESCENDING = Liferay.Language.get('descending');
 
 export const ASSET_CATEGORY_ID = 'asset_category_id';
+export const GROUP_EXTERNAL_REFERENCE_CODE = 'group_external_reference_code';
 export const GROUP_ID = 'group_id';
 
 export const CONFIG_PREFIX = 'configuration';

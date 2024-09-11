@@ -65,6 +65,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocal
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -123,7 +124,6 @@ import java.io.Serializable;
 
 import java.net.URLEncoder;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -306,11 +306,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		Page<SitePage> sitePagePage = sitePageResource.getSiteSitePagesPage(
 			testGroup.getGroupId(), null, null, null, null, null);
 
-		Collection<SitePage> sitePagePageItems = sitePagePage.getItems();
-
-		List<String> pageTypes = new ArrayList<>();
-
-		sitePagePageItems.forEach(page -> pageTypes.add(page.getPageType()));
+		List<String> pageTypes = TransformUtil.transform(
+			sitePagePage.getItems(), SitePage::getPageType);
 
 		Assert.assertTrue(pageTypes.contains("Page Set"));
 	}

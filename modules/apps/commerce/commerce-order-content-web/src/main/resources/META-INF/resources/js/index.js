@@ -18,3 +18,4 @@ export {default as editCommerceReturnItem} from './editCommerceReturnItem';
 export {default as commerceReturnItemsPropsTransformer} from './commerceReturnItemsPropsTransformer';
 export {default as commerceReturnPropsTransformer} from './commerceReturnPropsTransformer';
 export {default as InfoBox} from './InfoBox';
+export {default as StepTracker} from './StepTracker';

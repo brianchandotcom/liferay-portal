@@ -155,6 +155,23 @@ export default function PageStructureSidebarToolbar({activeItemIds}) {
 			},
 			symbolLeft: 'move',
 		},
+		{
+			type: 'divider',
+		},
+		{
+			label: Liferay.Language.get('delete'),
+			onClick: () => {
+				if (itemsCanBeDeleted()) {
+					dispatch(
+						deleteItem({
+							itemIds: activeItemIds,
+							selectItems,
+						})
+					);
+				}
+			},
+			symbolLeft: 'trash',
+		},
 	];
 
 	return (

@@ -266,6 +266,7 @@
 					"com.liferay.portal.search.internal.spi.model.query.contributor.UserIdQueryPreFilterContributor"
 				],
 				"searchableAssetTypes": [
+					"com.liferay.document.library.kernel.model.DLFileEntry"
 				]
 			},
 			"highlightConfiguration": {

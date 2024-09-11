@@ -6787,17 +6787,22 @@ information. Make sure to commit in all format-javadoc results.
 						StringBuilder sb = new StringBuilder();
 
 						for (String task : modulesCompileTaskGroupList) {
-							String taskPathString = "/opt/dev/projects/github/liferay-portal/modules/" + task.replace(":", "/");
+							String convertedTaskString = task.replace(":assemble", "");
+
+							convertedTaskString = convertedTaskString.replace(":compileTestIntegrationJava", "");
+
+							convertedTaskString = convertedTaskString.replace(":", "/");
+
+							String taskPathString = "/opt/dev/projects/github/liferay-portal/modules" + convertedTaskString;
 
 							File taskPathFile = new File(taskPathString + "/" + ".lfrbuild-portal");
 
 							File taskPath = new File(taskPathString);
 
-							if (taskPath.isDirectory() && !taskPathFile.exists()); {
+							if (taskPath.isDirectory() && !taskPathFile.exists()) {
 								sb.append(task + " ");
 							}
 						}
-
 						project.setProperty("modules.compile.processed.task.groups", sb.toString());
 					]]>
 				</beanshell>

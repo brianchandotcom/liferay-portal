@@ -395,3 +395,19 @@ test('LPD-31645 Search by Organizations when setting a users organization roles'
 			.length
 	).toEqual(2);
 });
+
+test('LPD-33048 Last login visibility', async ({usersAndOrganizationsPage}) => {
+	await usersAndOrganizationsPage.goToUsers();
+
+	await expect(
+		(
+			await usersAndOrganizationsPage.usersTableRow(2, 'test', true)
+		).row.getByText('ago')
+	).toHaveCount(1);
+
+	await usersAndOrganizationsPage.tableOrderMenu.click();
+
+	await expect(
+		usersAndOrganizationsPage.tableOrderLastLoginDateItem
+	).toBeVisible();
+});

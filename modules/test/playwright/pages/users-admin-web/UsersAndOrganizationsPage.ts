@@ -47,11 +47,9 @@ export class UsersAndOrganizationsPage {
 	readonly assignUsersCheckbox: (userName: string) => Promise<Locator>;
 	readonly assignUsersDoneButton: Locator;
 	readonly deletePersonalDataMenuItem: Locator;
-	readonly optionsMenu: Locator;
-	readonly page: Page;
-	readonly pageTitle: Locator;
-	readonly exportUsersOptionsMenuItem: Locator;
+	readonly exportImportOptionsMenuItem: Locator;
 	readonly exportPersonalDataItem: Locator;
+	readonly exportUsersOptionsMenuItem: Locator;
 	readonly impersonateUserMenuItem: Locator;
 	readonly manageCustomFieldsOptionsMenuItem: Locator;
 	readonly myOrganizationsBreadcrumbLink: (
@@ -70,6 +68,7 @@ export class UsersAndOrganizationsPage {
 	readonly organizationActionsMenu: (
 		organizationName: string
 	) => Promise<Locator>;
+	readonly optionsMenu: Locator;
 	readonly organizationChartLink: Locator;
 	readonly organizationsLink: Locator;
 	readonly organizationsTable: Locator;
@@ -90,7 +89,10 @@ export class UsersAndOrganizationsPage {
 	readonly organizationUsersTableRowLink: (
 		screenName: string
 	) => Promise<Locator>;
-	readonly exportImportOptionsMenuItem: Locator;
+	readonly page: Page;
+	readonly pageTitle: Locator;
+	readonly tableOrderMenu: Locator;
+	readonly tableOrderLastLoginDateItem: Locator;
 	readonly usersTableRow: (
 		colPosition: number,
 		value: string,
@@ -304,6 +306,12 @@ export class UsersAndOrganizationsPage {
 				strictEqual
 			);
 		};
+		this.tableOrderMenu = page
+			.locator('.management-bar')
+			.getByLabel('Order');
+		this.tableOrderLastLoginDateItem = page.getByRole('menuitem', {
+			name: 'Last Login Date',
+		});
 		this.usersTableRowLink = async (screenName: string) => {
 			const usersTableRow = await this.usersTableRow(2, screenName, true);
 

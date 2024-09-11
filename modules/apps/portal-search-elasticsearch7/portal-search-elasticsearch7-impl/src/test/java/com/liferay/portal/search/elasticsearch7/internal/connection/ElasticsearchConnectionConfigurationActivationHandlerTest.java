@@ -136,22 +136,22 @@ public class ElasticsearchConnectionConfigurationActivationHandlerTest {
 	private ElasticsearchConnectionManager
 		_createElasticsearchConnectionManager() {
 
-		ElasticsearchConfigurationWrapper configurationWrapper = Mockito.mock(
-			ElasticsearchConfigurationWrapper.class);
+		ElasticsearchConnectionManager elasticsearchConnectionManager =
+			new ElasticsearchConnectionManager();
+
+		ElasticsearchConfigurationWrapper elasticsearchConfigurationWrapper =
+			Mockito.mock(ElasticsearchConfigurationWrapper.class);
 
 		Mockito.when(
-			configurationWrapper.restClientLoggerLevel()
+			elasticsearchConfigurationWrapper.restClientLoggerLevel()
 		).thenReturn(
 			RESTClientLoggerLevel.ERROR
 		);
 
-		ElasticsearchConnectionManager elasticsearchConnectionManager =
-			new ElasticsearchConnectionManager() {
-				{
-					elasticsearchConfigurationWrapper = configurationWrapper;
-					http = _http;
-				}
-			};
+		elasticsearchConnectionManager.elasticsearchConfigurationWrapper =
+			elasticsearchConfigurationWrapper;
+
+		elasticsearchConnectionManager.http = _http;
 
 		elasticsearchConnectionManager.activate(
 			SystemBundleUtil.getBundleContext());
@@ -166,7 +166,7 @@ public class ElasticsearchConnectionConfigurationActivationHandlerTest {
 	private final ElasticsearchConnectionConfiguration
 		_elasticsearchConnectionConfiguration = Mockito.mock(
 			ElasticsearchConnectionConfiguration.class);
-	private ElasticsearchConnectionConfigurationActivationHandler
+	private final ElasticsearchConnectionConfigurationActivationHandler
 		_elasticsearchConnectionConfigurationActivationHandler =
 			new ElasticsearchConnectionConfigurationActivationHandler();
 	private ElasticsearchConnectionManager _elasticsearchConnectionManager;

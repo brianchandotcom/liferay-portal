@@ -84,7 +84,7 @@ export class ViewObjectDefinitionsPage {
 			.click();
 	}
 
-	async createObjectFolder(objectFolderLabel: string) {
+	async createObjectFolder(objectFolderLabel: string): Promise<ObjectFolder> {
 		await this.addObjectFolderButton.click();
 		await this.objectFolderLabelInput.click();
 		await this.objectFolderLabelInput.fill(objectFolderLabel);

@@ -152,24 +152,47 @@ if (commerceOrder != null) {
 	</div>
 </div>
 
-<c:if test="<%= commerceOrderContentDisplayContext.isShowPurchaseOrderNumber() %>">
-	<div class="row">
-		<div class="col-md-12">
-			<div class="commerce-panel">
-				<div class="commerce-panel__title"><liferay-ui:message key="purchase-order-number" /></div>
-				<div class="commerce-panel__content">
-					<div class="row">
-						<div class="col-md-6">
-							<dl class="commerce-list">
-								<%= HtmlUtil.escape(commerceOrder.getPurchaseOrderNumber()) %>
-							</dl>
-						</div>
+<c:choose>
+	<c:when test="<%= commerceOrderContentDisplayContext.isShowPurchaseOrderNumber() %>">
+		<div class="row">
+			<div class="col-md-6">
+				<div class="commerce-panel">
+					<div class="commerce-panel__title"><liferay-ui:message key="name" /></div>
+					<div class="commerce-panel__content">
+						<dl class="commerce-list">
+							<%= HtmlUtil.escape(commerceOrder.getName()) %>
+						</dl>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-6">
+				<div class="commerce-panel">
+					<div class="commerce-panel__title"><liferay-ui:message key="purchase-order-number" /></div>
+					<div class="commerce-panel__content">
+						<dl class="commerce-list">
+							<%= HtmlUtil.escape(commerceOrder.getPurchaseOrderNumber()) %>
+						</dl>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-</c:if>
+	</c:when>
+	<c:otherwise>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="commerce-panel">
+					<div class="commerce-panel__title"><liferay-ui:message key="name" /></div>
+					<div class="commerce-panel__content">
+						<dl class="commerce-list">
+							<%= HtmlUtil.escape(commerceOrder.getName()) %>
+						</dl>
+					</div>
+				</div>
+			</div>
+		</div>
+	</c:otherwise>
+</c:choose>
 
 <div class="row">
 	<div class="col-md-6">

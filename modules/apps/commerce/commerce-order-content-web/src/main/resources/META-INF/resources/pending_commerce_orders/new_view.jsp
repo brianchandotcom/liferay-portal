@@ -28,21 +28,41 @@ CommerceOrder commerceOrder = commerceOrderContentDisplayContext.getCommerceOrde
 	url="<%= commerceOrder.isOpen() ? selectBillingAddressURL : editBillingAddressURL %>"
 />
 
-<liferay-portlet:renderURL var="editShippingAddressURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-	<portlet:param name="mvcRenderCommandName" value="/commerce_open_order_content/edit_commerce_order_shipping_address" />
-	<portlet:param name="commerceOrderId" value="<%= String.valueOf(commerceOrderContentDisplayContext.getCommerceOrderId()) %>" />
-</liferay-portlet:renderURL>
-
-<liferay-portlet:renderURL var="selectShippingAddressURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-	<portlet:param name="mvcRenderCommandName" value="/commerce_open_order_content/select_commerce_order_shipping_address" />
+<liferay-portlet:renderURL var="viewDeliveryTermsURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+	<portlet:param name="mvcRenderCommandName" value="/commerce_order_content/view_commerce_order_delivery_terms" />
 	<portlet:param name="commerceOrderId" value="<%= String.valueOf(commerceOrderContentDisplayContext.getCommerceOrderId()) %>" />
 </liferay-portlet:renderURL>
 
 <commerce-ui:modal
-	id="shipping-address-modal"
+	id="delivery-terms-modal"
+	refreshPageOnClose="<%= true %>"
+	size="xl"
+	url="<%= viewDeliveryTermsURL %>"
+/>
+
+<liferay-portlet:renderURL var="editNameURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+	<portlet:param name="mvcRenderCommandName" value="/commerce_open_order_content/edit_commerce_order_name" />
+	<portlet:param name="commerceOrderId" value="<%= String.valueOf(commerceOrderContentDisplayContext.getCommerceOrderId()) %>" />
+</liferay-portlet:renderURL>
+
+<commerce-ui:modal
+	id="name-modal"
 	refreshPageOnClose="<%= true %>"
 	size="lg"
-	url="<%= commerceOrder.isOpen() ? selectShippingAddressURL : editShippingAddressURL %>"
+	title='<%= LanguageUtil.get(request, "name") %>'
+	url="<%= editNameURL %>"
+/>
+
+<liferay-portlet:renderURL var="viewPaymentTermsURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+	<portlet:param name="mvcRenderCommandName" value="/commerce_order_content/view_commerce_order_payment_terms" />
+	<portlet:param name="commerceOrderId" value="<%= String.valueOf(commerceOrderContentDisplayContext.getCommerceOrderId()) %>" />
+</liferay-portlet:renderURL>
+
+<commerce-ui:modal
+	id="payment-terms-modal"
+	refreshPageOnClose="<%= true %>"
+	size="xl"
+	url="<%= viewPaymentTermsURL %>"
 />
 
 <liferay-portlet:renderURL var="editPurchaseOrderNumberURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
@@ -71,28 +91,21 @@ CommerceOrder commerceOrder = commerceOrderContentDisplayContext.getCommerceOrde
 	url="<%= editRequestedDeliveryDateURL %>"
 />
 
-<liferay-portlet:renderURL var="viewPaymentTermsURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-	<portlet:param name="mvcRenderCommandName" value="/commerce_order_content/view_commerce_order_payment_terms" />
+<liferay-portlet:renderURL var="editShippingAddressURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+	<portlet:param name="mvcRenderCommandName" value="/commerce_open_order_content/edit_commerce_order_shipping_address" />
+	<portlet:param name="commerceOrderId" value="<%= String.valueOf(commerceOrderContentDisplayContext.getCommerceOrderId()) %>" />
+</liferay-portlet:renderURL>
+
+<liferay-portlet:renderURL var="selectShippingAddressURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+	<portlet:param name="mvcRenderCommandName" value="/commerce_open_order_content/select_commerce_order_shipping_address" />
 	<portlet:param name="commerceOrderId" value="<%= String.valueOf(commerceOrderContentDisplayContext.getCommerceOrderId()) %>" />
 </liferay-portlet:renderURL>
 
 <commerce-ui:modal
-	id="payment-terms-modal"
+	id="shipping-address-modal"
 	refreshPageOnClose="<%= true %>"
-	size="xl"
-	url="<%= viewPaymentTermsURL %>"
-/>
-
-<liferay-portlet:renderURL var="viewDeliveryTermsURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-	<portlet:param name="mvcRenderCommandName" value="/commerce_order_content/view_commerce_order_delivery_terms" />
-	<portlet:param name="commerceOrderId" value="<%= String.valueOf(commerceOrderContentDisplayContext.getCommerceOrderId()) %>" />
-</liferay-portlet:renderURL>
-
-<commerce-ui:modal
-	id="delivery-terms-modal"
-	refreshPageOnClose="<%= true %>"
-	size="xl"
-	url="<%= viewDeliveryTermsURL %>"
+	size="lg"
+	url="<%= commerceOrder.isOpen() ? selectShippingAddressURL : editShippingAddressURL %>"
 />
 
 <liferay-ui:error embed="<%= false %>" exception="<%= CommerceOrderBillingAddressException.class %>" message="the-order-selected-needs-a-billing-address" />
@@ -132,6 +145,28 @@ CommerceOrder commerceOrder = commerceOrderContentDisplayContext.getCommerceOrde
 		>
 			<div class="row vertically-divided">
 				<div class="col-xl-4">
+
+					<%
+					String commerceOrderName = commerceOrder.getName();
+					%>
+
+					<commerce-ui:info-box
+						actionLabel='<%= LanguageUtil.get(request, Validator.isNull(commerceOrderName) ? "add" : "edit") %>'
+						actionTargetId="name-modal"
+						elementClasses="py-3"
+						title='<%= LanguageUtil.get(request, "name") %>'
+					>
+						<c:choose>
+							<c:when test="<%= Validator.isNull(commerceOrderName) %>">
+								<span class="text-muted">
+									<liferay-ui:message key="click-add-to-insert" />
+								</span>
+							</c:when>
+							<c:otherwise>
+								<%= HtmlUtil.escape(commerceOrderName) %>
+							</c:otherwise>
+						</c:choose>
+					</commerce-ui:info-box>
 
 					<%
 					AccountEntry accountEntry = commerceOrder.getAccountEntry();

@@ -68,6 +68,17 @@ CommerceOrder commerceOrder = commerceOrderContentDisplayContext.getCommerceOrde
 				<div class="col-xl-4">
 
 					<%
+					String commerceOrderName = commerceOrder.getName();
+					%>
+
+					<commerce-ui:info-box
+						elementClasses="py-3"
+						title='<%= LanguageUtil.get(request, "name") %>'
+					>
+						<%= HtmlUtil.escape(commerceOrderName) %>
+					</commerce-ui:info-box>
+
+					<%
 					AccountEntry accountEntry = commerceOrder.getAccountEntry();
 					%>
 
@@ -285,8 +296,12 @@ CommerceOrder commerceOrder = commerceOrderContentDisplayContext.getCommerceOrde
 						"portletId", portletDisplay.getRootPortletId()
 					).build()
 				%>'
-				module="{newViews} from commerce-order-content-web"
+				module="{newView} from commerce-order-content-web"
 			/>
 		</commerce-ui:panel>
 	</div>
 </div>
+
+<liferay-frontend:component
+	module="{view} from commerce-order-content-web"
+/>

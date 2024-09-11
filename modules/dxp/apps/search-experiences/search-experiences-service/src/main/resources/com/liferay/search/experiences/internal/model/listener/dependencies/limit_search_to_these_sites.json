@@ -14,7 +14,7 @@
 								"occur": "filter",
 								"query": {
 									"terms": {
-										"scopeGroupId": "${configuration.scope_group_ids}"
+										"scopeGroupExternalReferenceCode": "${configuration.scope_group_external_reference_codes}"
 									}
 								}
 							}
@@ -29,9 +29,9 @@
 				{
 					"fields": [
 						{
-							"helpText": "group-ids-help",
-							"label": "group-ids",
-							"name": "scope_group_ids",
+							"helpText": "scope-group-external-reference-codes-help",
+							"label": "scope-group-external-reference-codes",
+							"name": "scope_group_external_reference_codes",
 							"type": "multiselect"
 						}
 					]

@@ -815,6 +815,11 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		_userService.updateStatus(userId, status, ServiceContextThreadLocal.getServiceContext());
 	}
 
+	public void method(long companyId, long workflowTaskId) {
+		_workflowTaskManager.getWorkflowTask(123, workflowTaskId);
+		_workflowTaskManager.getWorkflowTask(workflowTaskId);
+	}
+
 	public void method(
 		long userId, long groupId, boolean privateLayout, long parentLayoutId,
 		long classNameId, long classPK, Map<java.util.Locale, String> nameMap,
@@ -1337,5 +1342,8 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 
 	@Reference
 	private UserService _userService;
+
+	@Reference
+	private WorkflowTaskManager _workflowTaskManager;
 
 }

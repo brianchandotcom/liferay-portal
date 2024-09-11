@@ -5,31 +5,36 @@
 
 package com.liferay.frontend.js.web.internal.js.importmaps.extender;
 
-import com.liferay.frontend.js.importmaps.extender.DynamicJSImportMapsContributor;
-import com.liferay.frontend.js.web.internal.language.LanguageState;
+import com.liferay.frontend.js.importmaps.extender.JSImportMapsContributor;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 
-import java.io.PrintWriter;
-
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Iván Zaera Avellón
  */
-@Component(service = DynamicJSImportMapsContributor.class)
+@Component(service = JSImportMapsContributor.class)
 public class FrontendJsWebJSImportMapsContributor
-	implements DynamicJSImportMapsContributor {
+	implements JSImportMapsContributor {
 
 	@Override
-	public void writeGlobalImports(PrintWriter printWriter) {
-		LanguageState languageState = LanguageState.get();
-
-		printWriter.write("\"@liferay/language/\":\"/o/js/language/");
-		printWriter.write(languageState.getHash());
-		printWriter.write("/\"");
+	public JSONObject getImportMapsJSONObject() {
+		return _importMapsJSONObject;
 	}
 
-	@Override
-	public void writeScopedImports(PrintWriter printWriter) {
+	@Activate
+	protected void activate() {
+		_importMapsJSONObject = _jsonFactory.createJSONObject();
+
+		_importMapsJSONObject.put("@liferay/language/", "/o/js/language/");
 	}
+
+	private JSONObject _importMapsJSONObject;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 }

@@ -177,6 +177,24 @@ public class UserResourceTest extends BaseUserResourceTestCase {
 		assertEquals(
 			postUser1, _getUser(String.valueOf(portalUser1.getUserId())));
 
+		// Provision an existing inactive user with SCIM client ID set
+
+		_userLocalService.updateStatus(
+			portalUser1, WorkflowConstants.STATUS_INACTIVE,
+			new ServiceContext());
+
+		Assert.assertFalse(portalUser1.isActive());
+
+		postUser1.setActive(true);
+
+		userResource.postV2User(postUser1);
+
+		com.liferay.portal.kernel.model.User updatedPortalUser1 =
+			_userLocalService.getUserByExternalReferenceCode(
+				postUser1.getExternalId(), TestPropsValues.getCompanyId());
+
+		Assert.assertTrue(updatedPortalUser1.isActive());
+
 		// Provision an existing inactive user with no SCIM client ID set
 
 		com.liferay.portal.kernel.model.User portalUser2 =
@@ -209,23 +227,6 @@ public class UserResourceTest extends BaseUserResourceTestCase {
 		Assert.assertEquals(
 			postUser2.getExternalId(),
 			updatedPortalUser2.getExternalReferenceCode());
-
-		// Provision an existing inactive user with SCIM client ID set
-
-		updatedPortalUser2 = _userLocalService.updateStatus(
-			updatedPortalUser2, WorkflowConstants.STATUS_INACTIVE,
-			new ServiceContext());
-
-		Assert.assertFalse(updatedPortalUser2.isActive());
-
-		postUser2.setActive(true);
-
-		userResource.postV2User(postUser2);
-
-		updatedPortalUser2 = _userLocalService.getUserByExternalReferenceCode(
-			postUser2.getExternalId(), TestPropsValues.getCompanyId());
-
-		Assert.assertTrue(updatedPortalUser2.isActive());
 
 		// Provision an existing user provided by another SCIM client
 

@@ -37,6 +37,8 @@ public class PlacedCommerceOrderTableFDSView extends BaseTableFDSView {
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"actionLink")
 		).add(
+			"name", "name"
+		).add(
 			"orderType", "order-type"
 		).add(
 			"externalReferenceCode", "erc"

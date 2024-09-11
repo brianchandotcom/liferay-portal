@@ -215,15 +215,16 @@ public class CommerceOrderFDSUtil {
 				new Order(
 					commerceOrder.getExternalReferenceCode(),
 					commerceOrder.getCommerceOrderId(),
-					commerceOrder.getCommerceAccountName(),
+					commerceOrder.getCommerceAccountName(), amount,
+					commerceOrder.getUserName(),
 					_formatCommerceOrderCreateDate(
 						themeDisplay.getLocale(), orderDate,
 						showCommerceOrderCreateTime,
 						themeDisplay.getTimeZone()),
-					commerceOrder.getUserName(), commerceOrderStatusLabel,
+					commerceOrder.getName(), commerceOrderStatusLabel,
 					commerceOrderTypeName,
-					commerceOrder.getPurchaseOrderNumber(), workflowStatusLabel,
-					amount));
+					commerceOrder.getPurchaseOrderNumber(),
+					workflowStatusLabel));
 		}
 
 		return orders;

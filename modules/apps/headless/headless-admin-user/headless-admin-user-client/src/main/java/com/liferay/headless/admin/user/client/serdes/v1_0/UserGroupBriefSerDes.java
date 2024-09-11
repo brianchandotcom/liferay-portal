@@ -60,6 +60,20 @@ public class UserGroupBriefSerDes {
 			sb.append("\"");
 		}
 
+		if (userGroupBrief.getExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(userGroupBrief.getExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (userGroupBrief.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -111,6 +125,15 @@ public class UserGroupBriefSerDes {
 				"description", String.valueOf(userGroupBrief.getDescription()));
 		}
 
+		if (userGroupBrief.getExternalReferenceCode() == null) {
+			map.put("externalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"externalReferenceCode",
+				String.valueOf(userGroupBrief.getExternalReferenceCode()));
+		}
+
 		if (userGroupBrief.getId() == null) {
 			map.put("id", null);
 		}
@@ -146,6 +169,11 @@ public class UserGroupBriefSerDes {
 			if (Objects.equals(jsonParserFieldName, "description")) {
 				return false;
 			}
+			else if (Objects.equals(
+						jsonParserFieldName, "externalReferenceCode")) {
+
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
 				return false;
 			}
@@ -164,6 +192,14 @@ public class UserGroupBriefSerDes {
 			if (Objects.equals(jsonParserFieldName, "description")) {
 				if (jsonParserFieldValue != null) {
 					userGroupBrief.setDescription((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "externalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					userGroupBrief.setExternalReferenceCode(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {

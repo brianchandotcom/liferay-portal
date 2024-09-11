@@ -47,6 +47,20 @@ public class OrganizationBriefSerDes {
 
 		sb.append("{");
 
+		if (organizationBrief.getExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(organizationBrief.getExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (organizationBrief.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -112,6 +126,15 @@ public class OrganizationBriefSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
+		if (organizationBrief.getExternalReferenceCode() == null) {
+			map.put("externalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"externalReferenceCode",
+				String.valueOf(organizationBrief.getExternalReferenceCode()));
+		}
+
 		if (organizationBrief.getId() == null) {
 			map.put("id", null);
 		}
@@ -153,7 +176,10 @@ public class OrganizationBriefSerDes {
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(jsonParserFieldName, "id")) {
+			if (Objects.equals(jsonParserFieldName, "externalReferenceCode")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "id")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {
@@ -171,7 +197,13 @@ public class OrganizationBriefSerDes {
 			OrganizationBrief organizationBrief, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "id")) {
+			if (Objects.equals(jsonParserFieldName, "externalReferenceCode")) {
+				if (jsonParserFieldValue != null) {
+					organizationBrief.setExternalReferenceCode(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "id")) {
 				if (jsonParserFieldValue != null) {
 					organizationBrief.setId(
 						Long.valueOf((String)jsonParserFieldValue));

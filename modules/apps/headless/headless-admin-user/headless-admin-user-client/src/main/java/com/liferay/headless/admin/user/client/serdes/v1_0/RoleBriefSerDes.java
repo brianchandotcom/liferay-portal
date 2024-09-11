@@ -44,6 +44,20 @@ public class RoleBriefSerDes {
 
 		sb.append("{");
 
+		if (roleBrief.getExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(roleBrief.getExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (roleBrief.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -96,6 +110,15 @@ public class RoleBriefSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
+		if (roleBrief.getExternalReferenceCode() == null) {
+			map.put("externalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"externalReferenceCode",
+				String.valueOf(roleBrief.getExternalReferenceCode()));
+		}
+
 		if (roleBrief.getId() == null) {
 			map.put("id", null);
 		}
@@ -134,7 +157,10 @@ public class RoleBriefSerDes {
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(jsonParserFieldName, "id")) {
+			if (Objects.equals(jsonParserFieldName, "externalReferenceCode")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "id")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {
@@ -152,7 +178,13 @@ public class RoleBriefSerDes {
 			RoleBrief roleBrief, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "id")) {
+			if (Objects.equals(jsonParserFieldName, "externalReferenceCode")) {
+				if (jsonParserFieldValue != null) {
+					roleBrief.setExternalReferenceCode(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "id")) {
 				if (jsonParserFieldValue != null) {
 					roleBrief.setId(Long.valueOf((String)jsonParserFieldValue));
 				}

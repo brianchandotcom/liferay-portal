@@ -176,6 +176,10 @@ public class AssetListEntryAssetEntryRelStagedModelDataHandler
 					portletDataContext, importedAssetListEntryAssetEntryRel);
 		}
 
+		if (importedAssetListEntryAssetEntryRel == null) {
+			return;
+		}
+
 		portletDataContext.importClassedModel(
 			assetListEntryAssetEntryRel, importedAssetListEntryAssetEntryRel);
 	}

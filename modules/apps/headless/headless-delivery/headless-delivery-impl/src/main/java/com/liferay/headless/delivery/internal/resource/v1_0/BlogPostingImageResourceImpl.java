@@ -62,6 +62,22 @@ public class BlogPostingImageResourceImpl
 	}
 
 	@Override
+	public void deleteSiteBlogPostingImageByExternalReferenceCode(
+			Long siteId, String externalReferenceCode)
+		throws Exception {
+
+		super.deleteSiteBlogPostingImageByExternalReferenceCode(
+			siteId, externalReferenceCode);
+
+		FileEntry fileEntry = _dlAppService.getFileEntryByExternalReferenceCode(
+			externalReferenceCode, siteId);
+
+		_validate(fileEntry);
+
+		_dlAppService.deleteFileEntry(fileEntry.getFileEntryId());
+	}
+
+	@Override
 	public BlogPostingImage getBlogPostingImage(Long blogPostingImageId)
 		throws Exception {
 
@@ -75,6 +91,19 @@ public class BlogPostingImageResourceImpl
 	@Override
 	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
 		return _entityModel;
+	}
+
+	@Override
+	public BlogPostingImage getSiteBlogPostingImageByExternalReferenceCode(
+			Long siteId, String externalReferenceCode)
+		throws Exception {
+
+		FileEntry fileEntry = _dlAppService.getFileEntryByExternalReferenceCode(
+			externalReferenceCode, siteId);
+
+		_validate(fileEntry);
+
+		return _toBlogPostingImage(fileEntry);
 	}
 
 	@Override
@@ -121,6 +150,7 @@ public class BlogPostingImageResourceImpl
 			throw new BadRequestException("No file found in body");
 		}
 
+		String externalReferenceCode = null;
 		String title = null;
 		String viewableBy = null;
 
@@ -129,6 +159,7 @@ public class BlogPostingImageResourceImpl
 				"blogPostingImage", BlogPostingImage.class);
 
 		if (blogPostingImage != null) {
+			externalReferenceCode = blogPostingImage.getExternalReferenceCode();
 			title = blogPostingImage.getTitle();
 			viewableBy = blogPostingImage.getViewableByAsString();
 		}
@@ -142,9 +173,10 @@ public class BlogPostingImageResourceImpl
 		}
 
 		FileEntry fileEntry = _dlAppService.addFileEntry(
-			null, siteId, folder.getFolderId(), binaryFile.getFileName(),
-			binaryFile.getContentType(), title, null, null, null,
-			binaryFile.getInputStream(), binaryFile.getSize(), null, null, null,
+			externalReferenceCode, siteId, folder.getFolderId(),
+			binaryFile.getFileName(), binaryFile.getContentType(), title, null,
+			null, null, binaryFile.getInputStream(), binaryFile.getSize(), null,
+			null, null,
 			ServiceContextBuilder.create(
 				siteId, contextHttpServletRequest, viewableBy
 			).build());
@@ -165,6 +197,7 @@ public class BlogPostingImageResourceImpl
 						"contentValue", fileEntry::getContentStream,
 						contextUriInfo));
 				setEncodingFormat(fileEntry::getMimeType);
+				setExternalReferenceCode(fileEntry::getExternalReferenceCode);
 				setFileExtension(fileEntry::getExtension);
 				setId(fileEntry::getFileEntryId);
 				setSizeInBytes(fileEntry::getSize);

@@ -5,6 +5,7 @@
 
 package com.liferay.search.experiences.internal.blueprint.search.request.body.contributor;
 
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
@@ -66,7 +67,9 @@ public class GeneralSXPSearchRequestBodyContributor
 				generalConfiguration.getQueryString());
 		}
 
-		if (generalConfiguration.getSearchableAssetTypes() != null) {
+		if (!ArrayUtil.isEmpty(
+				generalConfiguration.getSearchableAssetTypes())) {
+
 			searchRequestBuilder.entryClassNames(
 				generalConfiguration.getSearchableAssetTypes());
 			searchRequestBuilder.modelIndexerClassNames(

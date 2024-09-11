@@ -11,6 +11,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -35,10 +36,12 @@ public class ServletContextServiceTrackerCustomizer
 	implements ServiceTrackerCustomizer<ServletContext, String> {
 
 	public ServletContextServiceTrackerCustomizer(
-		BundleContext bundleContext, JSONFactory jsonFactory) {
+		BundleContext bundleContext, JSONFactory jsonFactory,
+		Language language) {
 
 		_bundleContext = bundleContext;
 		_jsonFactory = jsonFactory;
+		_language = language;
 	}
 
 	@Override
@@ -71,7 +74,8 @@ public class ServletContextServiceTrackerCustomizer
 				synchronized (this) {
 					_webContextPathKeysMap.put(webContextPath, keys);
 
-					LanguageState.update(_webContextPathKeysMap);
+					LanguageState.set(
+						new LanguageState(_webContextPathKeysMap, _language));
 				}
 			}
 
@@ -102,7 +106,8 @@ public class ServletContextServiceTrackerCustomizer
 		synchronized (this) {
 			_webContextPathKeysMap.remove(webContextPath);
 
-			LanguageState.update(_webContextPathKeysMap);
+			LanguageState.set(
+				new LanguageState(_webContextPathKeysMap, _language));
 		}
 	}
 
@@ -137,6 +142,7 @@ public class ServletContextServiceTrackerCustomizer
 
 	private final BundleContext _bundleContext;
 	private final JSONFactory _jsonFactory;
+	private final Language _language;
 	private final Map<String, List<String>> _webContextPathKeysMap =
 		new HashMap<>();
 

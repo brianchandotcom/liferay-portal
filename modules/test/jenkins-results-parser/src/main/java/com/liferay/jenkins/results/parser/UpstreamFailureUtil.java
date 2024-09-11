@@ -336,7 +336,7 @@ public class UpstreamFailureUtil {
 			return;
 		}
 
-		_setUpstreamTopLevelBuildReport(topLevelBuild);
+		_setUpstreamTopLevelBuildReport();
 
 		if (_upstreamTopLevelBuildReport == null) {
 			_upstreamComparisonAvailable = false;
@@ -346,7 +346,7 @@ public class UpstreamFailureUtil {
 			return;
 		}
 
-		_setUpstreamJobFailuresSHA(topLevelBuild);
+		_setUpstreamJobFailuresSHA();
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(_upstreamJobFailuresSHA)) {
 			_upstreamComparisonAvailable = false;
@@ -359,11 +359,9 @@ public class UpstreamFailureUtil {
 		_upstreamComparisonAvailable = true;
 	}
 
-	private static void _setUpstreamJobFailuresSHA(
-		TopLevelBuild topLevelBuild) {
-
+	private static void _setUpstreamJobFailuresSHA() {
 		TopLevelBuildReport upstreamTopLevelBuildReport =
-			getUpstreamTopLevelBuildReport(topLevelBuild);
+			_upstreamTopLevelBuildReport;
 
 		if (upstreamTopLevelBuildReport == null) {
 			System.out.println(
@@ -504,13 +502,10 @@ public class UpstreamFailureUtil {
 		}
 	}
 
-	private static void _setUpstreamTopLevelBuildReport(
-		TopLevelBuild topLevelBuild) {
+	private static void _setUpstreamTopLevelBuildReport() {
+		TestrayBuild upstreamTestrayBuild = _upstreamTestrayBuild;
 
-		TestrayBuild upstreamTestrayBuild = getUpstreamTestrayBuild(
-			topLevelBuild);
-
-		if (upstreamTestrayBuild == null) {
+		if (_upstreamTestrayBuild == null) {
 			return;
 		}
 

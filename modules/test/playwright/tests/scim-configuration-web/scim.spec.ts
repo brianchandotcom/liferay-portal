@@ -5,8 +5,10 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {serverAdministrationPageTest} from '../../fixtures/serverAdministrationPageTest';
 import {ApiHelpers} from '../../helpers/ApiHelpers';
 import {liferayConfig} from '../../liferay.config';
 import {VirtualInstancesPage} from '../../pages/portal-instances-web/VirtualInstancesPage';
@@ -19,7 +21,9 @@ export const test = mergeTests(
 	featureFlagsTest({
 		'LPS-96845': true,
 	}),
-	loginTest()
+	loginTest(),
+	applicationsMenuPageTest,
+	serverAdministrationPageTest
 );
 
 const DEFAULT_VIRTUAL_INSTANCE_NAME = 'www.able.com';
@@ -358,4 +362,51 @@ test('LPS-190119 (TC-2 & TC-5). Admin User can Generate and Revoke SCIM Access T
 	await virtualInstancesPage.deleteVirtualInstance(
 		DEFAULT_VIRTUAL_INSTANCE_NAME
 	);
+});
+
+test('LPD-34644: Check if the token expiration warning message appears in the SCIM configuration UI.', async ({
+	applicationsMenuPage,
+	page,
+	serverAdministrationPage,
+}) => {
+	const scimConfigurationPage = new SCIMConfigurationPage(page);
+
+	await scimConfigurationPage.goTo();
+
+	await scimConfigurationPage.configureSCIM('email', 'Test SCIM Client');
+
+	await scimConfigurationPage.generateToken();
+
+	// Execute script to change the expiration date of the SCIM client access token to 10 days from current day
+
+	await applicationsMenuPage.goToServerAdministration();
+
+	const script = `
+		import com.liferay.portal.kernel.dao.orm.QueryUtil;
+		import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+		import com.liferay.portal.kernel.util.Time;
+		import com.liferay.oauth2.provider.model.OAuth2Application;
+		import com.liferay.oauth2.provider.model.OAuth2Authorization;
+		import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalServiceUtil;
+		import com.liferay.oauth2.provider.service.OAuth2AuthorizationLocalServiceUtil;
+		import java.util.Date;
+		import java.util.List;
+		OAuth2Application oAuth2Application =
+			OAuth2ApplicationLocalServiceUtil.getOAuth2Application(
+			CompanyThreadLocal.getCompanyId(), "SCIM_test-scim-client");
+		List<OAuth2Authorization> oAuth2Authorizations =
+			OAuth2AuthorizationLocalServiceUtil.getOAuth2Authorizations(
+			oAuth2Application.getOAuth2ApplicationId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+		OAuth2Authorization oAuth2Authorization = oAuth2Authorizations.get(0);
+		oAuth2Authorization.setAccessTokenExpirationDate(new Date(System.currentTimeMillis() + (Time.DAY * 10)));
+		OAuth2AuthorizationLocalServiceUtil.updateOAuth2Authorization(oAuth2Authorization);
+	`;
+
+	await serverAdministrationPage.executeScript(script);
+
+	await scimConfigurationPage.goTo();
+
+	await expect(scimConfigurationPage.alertMessage).toBeVisible();
+
+	await scimConfigurationPage.resetClientData();
 });

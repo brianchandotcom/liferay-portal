@@ -11,6 +11,7 @@ import {ApplicationsMenuPage} from '../product-navigation-applications-menu/Appl
 
 export class SCIMConfigurationPage {
 	readonly accessTokenField: Locator;
+	readonly alertMessage: Locator;
 	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly errorMessage: Locator;
 	readonly instanceSettingsPage: InstanceSettingsPage;
@@ -23,6 +24,9 @@ export class SCIMConfigurationPage {
 
 	constructor(page: Page) {
 		this.accessTokenField = page.getByLabel('Access Token', {exact: true});
+		this.alertMessage = page.getByText(
+			'The access token for the SCIM client will expire at'
+		);
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);
 		this.errorMessage = page.getByText('Your request failed to complete');
 		this.instanceSettingsPage = new InstanceSettingsPage(page);

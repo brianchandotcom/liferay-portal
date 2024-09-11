@@ -12,6 +12,7 @@ import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.frontend.model.HeaderActionModel;
 import com.liferay.commerce.frontend.model.StepModel;
+import com.liferay.commerce.frontend.util.CommerceStepTrackerHelper;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
@@ -55,14 +56,12 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.math.BigDecimal;
 
@@ -104,6 +103,7 @@ public class CommerceOrderEditDisplayContext {
 				commercePaymentMethodGroupRelLocalService,
 			CommercePriceFormatter commercePriceFormatter,
 			CommerceShipmentService commerceShipmentService,
+			CommerceStepTrackerHelper commerceStepTrackerHelper,
 			CommerceTermEntryLocalService commerceTermEntryLocalService,
 			CPMeasurementUnitService cpMeasurementUnitService,
 			ModelResourcePermission<CommerceOrder> modelResourcePermission,
@@ -129,6 +129,7 @@ public class CommerceOrderEditDisplayContext {
 			commercePaymentMethodGroupRelLocalService;
 		_commercePriceFormatter = commercePriceFormatter;
 		_commerceShipmentService = commerceShipmentService;
+		_commerceStepTrackerHelper = commerceStepTrackerHelper;
 		_commerceTermEntryLocalService = commerceTermEntryLocalService;
 		_cpMeasurementUnitService = cpMeasurementUnitService;
 		_modelResourcePermission = modelResourcePermission;
@@ -628,80 +629,8 @@ public class CommerceOrderEditDisplayContext {
 	}
 
 	public List<StepModel> getOrderSteps() throws PortalException {
-		List<StepModel> steps = new ArrayList<>();
-
-		CommerceOrderStatus currentCommerceOrderStatus =
-			_commerceOrderEngine.getCurrentCommerceOrderStatus(_commerceOrder);
-
-		if ((_commerceOrder == null) || (currentCommerceOrderStatus == null) ||
-			(currentCommerceOrderStatus.getPriority() == -1)) {
-
-			return steps;
-		}
-
-		if ((currentCommerceOrderStatus != null) &&
-			currentCommerceOrderStatus.isWorkflowEnabled(_commerceOrder)) {
-
-			return _getWorkflowSteps();
-		}
-
-		if (ArrayUtil.contains(
-				CommerceOrderConstants.ORDER_STATUSES_OPEN,
-				_commerceOrder.getOrderStatus())) {
-
-			return steps;
-		}
-
-		List<CommerceOrderStatus> commerceOrderStatuses =
-			_commerceOrderStatusRegistry.getCommerceOrderStatuses(
-				_commerceOrder);
-
-		for (CommerceOrderStatus commerceOrderStatus : commerceOrderStatuses) {
-			if (((commerceOrderStatus.getKey() ==
-					CommerceOrderConstants.ORDER_STATUS_PARTIALLY_SHIPPED) &&
-				 (_commerceOrder.getOrderStatus() !=
-					 CommerceOrderConstants.ORDER_STATUS_PARTIALLY_SHIPPED)) ||
-				!commerceOrderStatus.isValidForOrder(_commerceOrder) ||
-				ArrayUtil.contains(
-					CommerceOrderConstants.ORDER_STATUSES_OPEN,
-					commerceOrderStatus.getKey()) ||
-				(commerceOrderStatus.getPriority() == -1)) {
-
-				continue;
-			}
-
-			StepModel step = new StepModel();
-
-			step.setId(
-				CommerceOrderConstants.getOrderStatusLabel(
-					commerceOrderStatus.getKey()));
-			step.setLabel(
-				commerceOrderStatus.getLabel(
-					_commerceOrderRequestHelper.getLocale()));
-
-			if (commerceOrderStatus.equals(currentCommerceOrderStatus) &&
-				(commerceOrderStatus.getKey() !=
-					CommerceOrderConstants.ORDER_STATUS_COMPLETED) &&
-				(commerceOrderStatus.getKey() !=
-					CommerceOrderConstants.ORDER_STATUS_QUOTE_PROCESSED)) {
-
-				step.setState("active");
-			}
-			else if ((currentCommerceOrderStatus != null) &&
-					 (commerceOrderStatus.getPriority() <=
-						 currentCommerceOrderStatus.getPriority()) &&
-					 commerceOrderStatus.isComplete(_commerceOrder)) {
-
-				step.setState("completed");
-			}
-			else {
-				step.setState("inactive");
-			}
-
-			steps.add(step);
-		}
-
-		return steps;
+		return _commerceStepTrackerHelper.getOrderSteps(
+			_commerceOrder, _commerceOrderRequestHelper.getLocale());
 	}
 
 	public List<CommerceTermEntry> getPaymentTermsEntries() {
@@ -787,42 +716,6 @@ public class CommerceOrderEditDisplayContext {
 			themeDisplay.getPermissionChecker(), commerceOrder, actionId);
 	}
 
-	private List<StepModel> _getWorkflowSteps() {
-		List<StepModel> steps = new ArrayList<>();
-
-		int[] workflowStatuses = {
-			WorkflowConstants.STATUS_DRAFT, WorkflowConstants.STATUS_PENDING,
-			WorkflowConstants.STATUS_APPROVED
-		};
-
-		for (int workflowStatus : workflowStatuses) {
-			StepModel step = new StepModel();
-
-			String workflowStatusLabel = WorkflowConstants.getStatusLabel(
-				workflowStatus);
-
-			step.setId(workflowStatusLabel);
-			step.setLabel(
-				LanguageUtil.get(
-					_commerceOrderRequestHelper.getLocale(),
-					workflowStatusLabel));
-
-			if (_commerceOrder.getStatus() == workflowStatus) {
-				step.setState("active");
-			}
-			else if (_commerceOrder.getStatus() < workflowStatus) {
-				step.setState("completed");
-			}
-			else {
-				step.setState("inactive");
-			}
-
-			steps.add(step);
-		}
-
-		return steps;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceOrderEditDisplayContext.class);
 
@@ -850,6 +743,7 @@ public class CommerceOrderEditDisplayContext {
 	private final CommercePriceFormatter _commercePriceFormatter;
 	private CommerceShipment _commerceShipment;
 	private final CommerceShipmentService _commerceShipmentService;
+	private final CommerceStepTrackerHelper _commerceStepTrackerHelper;
 	private final CommerceTermEntryLocalService _commerceTermEntryLocalService;
 	private final CPMeasurementUnitService _cpMeasurementUnitService;
 	private final ModelResourcePermission<CommerceOrder>

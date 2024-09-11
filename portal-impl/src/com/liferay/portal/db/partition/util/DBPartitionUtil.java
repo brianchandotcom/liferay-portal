@@ -358,7 +358,7 @@ public class DBPartitionUtil {
 			DBInspector dbInspector = new DBInspector(connection);
 
 			try (ResultSet resultSet = databaseMetaData.getTables(
-					dbInspector.getCatalog(), dbInspector.getSchema(), null,
+					_defaultPartitionName, dbInspector.getSchema(), null,
 					new String[] {"TABLE"});
 				Statement statement = connection.createStatement()) {
 

@@ -90,6 +90,7 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -122,6 +123,7 @@ import java.io.Serializable;
 
 import java.net.URLEncoder;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -278,6 +280,25 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		Assert.assertEquals(
 			_layoutLocalService.getLayoutsCount(testGroup.getGroupId(), false),
 			sitePagePage.getTotalCount());
+	}
+
+	@Test
+	@TestInfo("LPD-35928")
+	public void testGetSiteSitePagesPageSet() throws Exception {
+		_addLayout(testGroup);
+
+		_addTypeNodeLayoutWithPortletChild(testGroup);
+
+		Page<SitePage> sitePagePage = sitePageResource.getSiteSitePagesPage(
+			testGroup.getGroupId(), null, null, null, null, null);
+
+		Collection<SitePage> sitePagePageItems = sitePagePage.getItems();
+
+		List<String> pageTypes = new ArrayList<>();
+
+		sitePagePageItems.forEach(page -> pageTypes.add(page.getPageType()));
+
+		Assert.assertTrue(pageTypes.contains("Page Set"));
 	}
 
 	@Override
@@ -488,6 +509,28 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				layoutPageTemplateStructureRel);
 
 		return segmentsExperience;
+	}
+
+	private Layout _addTypeNodeLayoutWithPortletChild(Group group)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				TestPropsValues.getGroupId(), TestPropsValues.getUserId());
+
+		Layout nodeLayout = _layoutLocalService.addLayout(
+			null, serviceContext.getUserId(), group.getGroupId(), false,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "Node", StringPool.BLANK,
+			StringPool.BLANK, LayoutConstants.TYPE_NODE, false,
+			StringPool.BLANK, serviceContext);
+
+		_layoutLocalService.addLayout(
+			null, serviceContext.getUserId(), group.getGroupId(), false,
+			nodeLayout.getLayoutId(), "Child Layout", StringPool.BLANK,
+			StringPool.BLANK, LayoutConstants.TYPE_PORTLET, false,
+			StringPool.BLANK, serviceContext);
+
+		return nodeLayout;
 	}
 
 	private void _assertEqualsIgnoringOrder(

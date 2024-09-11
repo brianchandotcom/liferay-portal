@@ -291,7 +291,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			ServiceContextTestUtil.getServiceContext(
 				testGroup.getGroupId(), TestPropsValues.getUserId());
 
-		Layout nodeLayout = _layoutLocalService.addLayout(
+		Layout layout = _layoutLocalService.addLayout(
 			null, serviceContext.getUserId(), testGroup.getGroupId(), false,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
 			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
@@ -299,7 +299,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		_layoutLocalService.addLayout(
 			null, serviceContext.getUserId(), testGroup.getGroupId(), false,
-			nodeLayout.getLayoutId(), RandomTestUtil.randomString(),
+			layout.getLayoutId(), RandomTestUtil.randomString(),
 			StringPool.BLANK, StringPool.BLANK, LayoutConstants.TYPE_PORTLET,
 			false, StringPool.BLANK, serviceContext);
 

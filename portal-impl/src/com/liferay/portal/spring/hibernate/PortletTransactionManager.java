@@ -293,6 +293,11 @@ public class PortletTransactionManager implements PlatformTransactionManager {
 		public void reset() {
 			try {
 				_portletSession.flush();
+
+				if (DBPartition.isPartitionEnabled()) {
+					LastSessionRecorderUtil.removePortletSession(
+						_portletSession);
+				}
 			}
 			finally {
 				SpringHibernateThreadLocalUtil.setResource(

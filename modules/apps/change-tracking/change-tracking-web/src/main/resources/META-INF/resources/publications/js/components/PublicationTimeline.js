@@ -124,16 +124,14 @@ const PublicationTimeline = ({
 											),
 											sortable: true,
 										},
-										timelineItems[0].ctEntryStatus
-											? {
-													contentRenderer: 'status',
-													fieldName: 'ctEntryStatus',
-													label: Liferay.Language.get(
-														'status'
-													),
-													sortable: true,
-												}
-											: null,
+										{
+											contentRenderer: 'status',
+											fieldName: 'status',
+											label: Liferay.Language.get(
+												'status'
+											),
+											sortable: true,
+										},
 										{
 											fieldName: 'ctEntryUser',
 											label: Liferay.Language.get('user'),
@@ -187,13 +185,9 @@ const PublicationTimeline = ({
 						<div>
 							<span className="c-pr-2">{timelineItem.name}</span>
 
-							{timelineItem.ctEntryStatus ? (
-								<WorkflowStatusLabel
-									workflowStatus={
-										timelineItem.ctEntryStatus.code
-									}
-								/>
-							) : null}
+							<WorkflowStatusLabel
+								workflowStatus={timelineItem.status.code}
+							/>
 						</div>
 
 						<div className="text-secondary">
@@ -304,8 +298,6 @@ const PublicationTimeline = ({
 							tempTimelineItems[i].ctEntryDateModified =
 								jsonResponse.dateModified;
 							tempTimelineItems[i].ctEntryId = jsonResponse.id;
-							tempTimelineItems[i].ctEntryStatus =
-								jsonResponse.status;
 							tempTimelineItems[i].ctEntryStatusMessage =
 								jsonResponse.statusMessage;
 							tempTimelineItems[i].ctEntryUser =

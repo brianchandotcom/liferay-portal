@@ -392,6 +392,7 @@ public class BlogPostingImage implements Serializable {
 
 	@JsonGetter("viewableBy")
 	@Schema(
+		deprecated = true,
 		description = "A write-only property that specifies the default permissions."
 	)
 	@Valid
@@ -439,6 +440,7 @@ public class BlogPostingImage implements Serializable {
 		};
 	}
 
+	@Deprecated
 	@GraphQLField(
 		description = "A write-only property that specifies the default permissions."
 	)

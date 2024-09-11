@@ -128,7 +128,7 @@ public class FrontendJsWebLanguageServlet extends HttpServlet {
 					StringBundler.concat(
 						"Invalid hash received in language servlet: got '",
 						parts[1], "' but expected '", languageState.getHash(),
-						"' (will send a non cacheable response as fallback)"));
+						StringPool.APOSTROPHE));
 			}
 		}
 

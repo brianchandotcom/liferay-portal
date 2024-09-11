@@ -68,7 +68,7 @@ function ImportForm({
 		}
 
 		const requiredFieldNotFilled = dbFields.required.some(
-			(dbField) => !fieldsSelections[dbField.name]
+			(dbField) => !fieldsSelections[dbField.name] && !dbField.anyOfGroup
 		);
 
 		const relationshipGroups = {};

@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 
 import java.util.Collections;
@@ -34,6 +35,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Rubén Pulido
  */
+@FeatureFlags("LPD-35443")
 @RunWith(Arquillian.class)
 public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 

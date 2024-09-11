@@ -287,7 +287,21 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	public void testGetSiteSitePagesPageSet() throws Exception {
 		_addLayout(testGroup);
 
-		_addTypeNodeLayoutWithPortletChild(testGroup);
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				TestPropsValues.getGroupId(), TestPropsValues.getUserId());
+
+		Layout nodeLayout = _layoutLocalService.addLayout(
+			null, serviceContext.getUserId(), testGroup.getGroupId(), false,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "Node", StringPool.BLANK,
+			StringPool.BLANK, LayoutConstants.TYPE_NODE, false,
+			StringPool.BLANK, serviceContext);
+
+		_layoutLocalService.addLayout(
+			null, serviceContext.getUserId(), testGroup.getGroupId(), false,
+			nodeLayout.getLayoutId(), "Child Layout", StringPool.BLANK,
+			StringPool.BLANK, LayoutConstants.TYPE_PORTLET, false,
+			StringPool.BLANK, serviceContext);
 
 		Page<SitePage> sitePagePage = sitePageResource.getSiteSitePagesPage(
 			testGroup.getGroupId(), null, null, null, null, null);
@@ -509,28 +523,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				layoutPageTemplateStructureRel);
 
 		return segmentsExperience;
-	}
-
-	private Layout _addTypeNodeLayoutWithPortletChild(Group group)
-		throws Exception {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				TestPropsValues.getGroupId(), TestPropsValues.getUserId());
-
-		Layout nodeLayout = _layoutLocalService.addLayout(
-			null, serviceContext.getUserId(), group.getGroupId(), false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "Node", StringPool.BLANK,
-			StringPool.BLANK, LayoutConstants.TYPE_NODE, false,
-			StringPool.BLANK, serviceContext);
-
-		_layoutLocalService.addLayout(
-			null, serviceContext.getUserId(), group.getGroupId(), false,
-			nodeLayout.getLayoutId(), "Child Layout", StringPool.BLANK,
-			StringPool.BLANK, LayoutConstants.TYPE_PORTLET, false,
-			StringPool.BLANK, serviceContext);
-
-		return nodeLayout;
 	}
 
 	private void _assertEqualsIgnoringOrder(

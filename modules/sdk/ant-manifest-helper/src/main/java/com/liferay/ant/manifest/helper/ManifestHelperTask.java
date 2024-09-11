@@ -5,11 +5,11 @@
 
 package com.liferay.ant.manifest.helper;
 
+import com.liferay.ant.manifest.helper.util.Validator;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.OSDetector;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
 

@@ -23,6 +23,7 @@ import './NextSteps.scss';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 
 import {useMarketplaceContext} from '../../context/MarketplaceContext';
+import {ORDER_TYPES} from '../../enums/Order';
 import withProviders from '../../hoc/withProviders';
 import i18n from '../../i18n';
 import CommerceSelectAccountImpl from '../../services/rest/CommerceSelectAccount';
@@ -83,6 +84,7 @@ export function NextSteps({
 	);
 
 	const paymentStatus = cart?.paymentStatusLabel;
+	const orderTypeExternalReferenceCode = cart?.orderTypeExternalReferenceCode;
 
 	const {isPaidApp} = getProductPriceModel(product);
 
@@ -90,7 +92,21 @@ export function NextSteps({
 		[PaymentStatus.PAID]: (
 			<Header
 				description={
-					isPaidApp ? (
+					properties.featureFlags?.includes('LPD-34129') &&
+					orderTypeExternalReferenceCode === ORDER_TYPES.CLOUDAPP ? (
+						<span>
+							<p>
+								Congratulations on the purchase of{' '}
+								<strong>{appName}</strong>. You will now need to
+								install the app by clicking on the
+								&quot;Continue to Install&quot; button below.
+							</p>
+
+							<p>
+								Your Order ID is: <strong>{orderId}</strong>
+							</p>
+						</span>
+					) : isPaidApp ? (
 						<span>
 							<p>
 								Congratulations on the purchase of{' '}
@@ -213,12 +229,21 @@ export function NextSteps({
 				</div>
 
 				<NewAppPageFooterButtons
-					backButtonText="Go to Dashboard"
+					backButtonText={i18n.translate(
+						properties.featureFlags?.includes('LPD-34129') &&
+							orderTypeExternalReferenceCode ===
+								ORDER_TYPES.CLOUDAPP
+							? 'go-to-my-apps'
+							: 'go-to-dashboard'
+					)}
 					continueButtonText={i18n.translate(
 						properties.featureFlags?.includes('LPD-21582') &&
-							cart.orderTypeExternalReferenceCode === 'DXPAPP'
+							orderTypeExternalReferenceCode ===
+								ORDER_TYPES.DXPAPP
 							? 'download-app'
-							: 'go-to-console'
+							: properties.featureFlags?.includes('LPD-34129')
+								? 'continue-to-install'
+								: 'go-to-console'
 					)}
 					onClickBack={() => {
 						return CommerceSelectAccountImpl.selectAccount(
@@ -239,7 +264,8 @@ export function NextSteps({
 					onClickContinue={() => {
 						if (
 							properties.featureFlags?.includes('LPD-21582') &&
-							cart.orderTypeExternalReferenceCode === 'DXPAPP'
+							orderTypeExternalReferenceCode ===
+								ORDER_TYPES.DXPAPP
 						) {
 							Liferay.Util.navigate(
 								Liferay.ThemeDisplay.getLayoutURL().replace(
@@ -250,12 +276,24 @@ export function NextSteps({
 						}
 
 						if (
-							cart.orderTypeExternalReferenceCode ===
-								'CLOUDAPP' &&
+							orderTypeExternalReferenceCode ===
+								ORDER_TYPES.CLOUDAPP &&
 							onClickContinue
 						) {
-							window.location.href =
-								'https://console.liferay.cloud/projects';
+							if (
+								properties.featureFlags?.includes('LPD-34129')
+							) {
+								Liferay.Util.navigate(
+									Liferay.ThemeDisplay.getLayoutURL().replace(
+										'/next-steps',
+										`/customer-dashboard#/order/${orderId}/cloud-provisioning`
+									)
+								);
+							}
+							else {
+								window.location.href =
+									'https://console.liferay.cloud/projects';
+							}
 						}
 					}}
 					showBackButton={showBackButton}

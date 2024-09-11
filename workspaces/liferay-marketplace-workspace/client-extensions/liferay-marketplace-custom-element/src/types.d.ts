@@ -359,6 +359,7 @@ type Order = {
 	};
 	orderTypeExternalReferenceCode?: string;
 	orderTypeId?: number;
+	placedOrderItems?: any;
 	shippingAmount?: number;
 	shippingWithTaxAmount?: number;
 	totalAmount?: number;

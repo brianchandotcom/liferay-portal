@@ -14,6 +14,7 @@ import AppOutlet from './pages/Apps/App/AppOutlet';
 import Download from './pages/Apps/App/Download/Download';
 import CreateLicense from './pages/Apps/App/Licenses/CreateLicense';
 import Licenses from './pages/Apps/App/Licenses/Licenses';
+import Provisioning from './pages/Apps/App/Provisioning/Provisioning';
 import Members from './pages/Members';
 import Solutions from './pages/Solutions';
 import Solution from './pages/Solutions/Solution';
@@ -35,6 +36,13 @@ const CustomerDashboardRouter = () => {
 						)}
 
 						<Route element={<Licenses />} path="licenses" />
+
+						{properties.featureFlags?.includes('LPD-34129') && (
+							<Route
+								element={<Provisioning />}
+								path="cloud-provisioning"
+							/>
+						)}
 					</Route>
 					<Route element={<Members />} path="members" />
 					<Route element={<Solutions />} path="solutions" />

@@ -24,6 +24,8 @@ type BaseOutletProps = {
 	routes: NavbarProps['routes'] | ((data: any) => NavbarProps['routes']);
 };
 
+const CLOUD_APP = 'cloud';
+
 const BaseOutlet: React.FC<BaseOutletProps> = ({
 	backTitle,
 	backURL = '..',
@@ -80,35 +82,62 @@ const AppOutlet = () => {
 	return (
 		<BaseOutlet
 			backTitle={i18n.translate('back-to-my-apps')}
-			routes={({data, placedOrderItems, product}: any) => [
-				{
-					name: i18n.translate('details'),
-					path: '',
-				},
-				{
-					name: i18n.translate('download'),
-					path: 'download',
-					visible:
-						properties.featureFlags?.includes('LPD-21582') &&
-						data?.placedOrder.workflowStatusInfo.code ===
-							ORDER_WORKFLOW_STATUS_CODE.COMPLETED &&
-						placedOrderItems.some(
-							(item: PlacedOrderItems) =>
-								item.virtualItems?.length
-						),
-				},
-				{
-					name: i18n.translate('licenses'),
-					path: 'licenses',
-					visible: !(
-						getProductPriceModel(product).isFreeApp ||
-						(placedOrderItems[0]?.price?.price === 0 &&
-							product?.skus?.some((sku: any) =>
-								isTrialSKU(sku as unknown as SKU)
-							))
-					),
-				},
-			]}
+			routes={({data, placedOrderItems, product}: any) => {
+				function verifyProductType(product: any) {
+					const specification = product?.productSpecifications?.find(
+						(speficication: ProductSpecification) =>
+							speficication?.specificationKey === 'type'
+					);
+
+					const value = specification?.value;
+
+					return value ? value : '';
+				}
+
+				const tabs = [
+					{
+						name: i18n.translate('details'),
+						path: '',
+					},
+					{
+						name: i18n.translate('download'),
+						path: 'download',
+						visible:
+							properties.featureFlags?.includes('LPD-34129') &&
+							verifyProductType(product) !== CLOUD_APP &&
+							properties.featureFlags?.includes('LPD-21582') &&
+							data?.placedOrder.workflowStatusInfo.code ===
+								ORDER_WORKFLOW_STATUS_CODE.COMPLETED &&
+							placedOrderItems.some(
+								(item: PlacedOrderItems) =>
+									item.virtualItems?.length
+							),
+					},
+					{
+						name: i18n.translate('licenses'),
+						path: 'licenses',
+						visible:
+							properties.featureFlags?.includes('LPD-34129') &&
+							verifyProductType(product) !== CLOUD_APP &&
+							!(
+								getProductPriceModel(product).isFreeApp ||
+								(placedOrderItems[0]?.price?.price === 0 &&
+									product?.skus?.some((sku: any) =>
+										isTrialSKU(sku as unknown as SKU)
+									))
+							),
+					},
+					{
+						name: i18n.translate('app-provisioning'),
+						path: 'cloud-provisioning',
+						visible:
+							properties.featureFlags?.includes('LPD-34129') &&
+							verifyProductType(product) === CLOUD_APP,
+					},
+				];
+
+				return tabs;
+			}}
 		/>
 	);
 };

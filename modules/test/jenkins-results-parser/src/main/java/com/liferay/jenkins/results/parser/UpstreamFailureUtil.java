@@ -446,8 +446,10 @@ public class UpstreamFailureUtil {
 
 			buildCount++;
 
-			if (!gitWorkingDirectory.refContainsSHA(
-					"HEAD", testrayBuild.getPortalSHA())) {
+			String portalSHA = testrayBuild.getPortalSHA();
+
+			if (JenkinsResultsParserUtil.isNullOrEmpty(portalSHA) ||
+				!gitWorkingDirectory.refContainsSHA("HEAD", portalSHA)) {
 
 				continue;
 			}
@@ -472,10 +474,11 @@ public class UpstreamFailureUtil {
 				JenkinsResultsParserUtil.combine(
 					"Comparing with test results from ",
 					String.valueOf(topLevelBuildReport.getBuildURL()),
-					" at SHA ",
-					_getUpstreamJobFailuresSHA(topLevelBuildReport)));
+					" at SHA ", portalSHA));
 
 			_upstreamTestrayBuild = testrayBuild;
+
+			break;
 		}
 	}
 

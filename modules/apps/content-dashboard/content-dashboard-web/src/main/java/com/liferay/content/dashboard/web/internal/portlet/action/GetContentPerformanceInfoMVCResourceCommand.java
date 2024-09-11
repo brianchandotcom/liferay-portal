@@ -16,6 +16,8 @@ import com.liferay.depot.model.DepotEntryGroupRel;
 import com.liferay.depot.service.DepotEntryGroupRelLocalService;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -132,7 +134,7 @@ public class GetContentPerformanceInfoMVCResourceCommand
 						"configurationScreenKey", "analytics-cloud-connection"
 					).buildString()
 				).put(
-					"assetId", assetEntry.getClassPK()
+					"assetId", _getClassPK(className, assetEntry.getClassPK())
 				).put(
 					"assetLibrary", assetLibrary
 				).put(
@@ -217,6 +219,19 @@ public class GetContentPerformanceInfoMVCResourceCommand
 		return className;
 	}
 
+	private String _getClassPK(String className, long classPK)
+		throws Exception {
+
+		if (!StringUtil.equals(className, JournalArticle.class.getName())) {
+			return String.valueOf(classPK);
+		}
+
+		JournalArticle journalArticle =
+			_journalArticleLocalService.getLatestArticle(classPK);
+
+		return journalArticle.getArticleId();
+	}
+
 	private List<Long> _getDepotEntryGroupRelToGroupId(DepotEntry depotEntry)
 		throws PortalException {
 
@@ -263,6 +278,9 @@ public class GetContentPerformanceInfoMVCResourceCommand
 
 	@Reference
 	private DepotEntryLocalService _depotEntryLocalService;
+
+	@Reference
+	private JournalArticleLocalService _journalArticleLocalService;
 
 	@Reference
 	private Portal _portal;

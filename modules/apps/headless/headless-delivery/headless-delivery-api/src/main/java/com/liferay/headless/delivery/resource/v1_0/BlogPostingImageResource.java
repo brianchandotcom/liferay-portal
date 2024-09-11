@@ -81,6 +81,14 @@ public interface BlogPostingImageResource {
 			Object object)
 		throws Exception;
 
+	public void deleteSiteBlogPostingImageByExternalReferenceCode(
+			Long siteId, String externalReferenceCode)
+		throws Exception;
+
+	public BlogPostingImage getSiteBlogPostingImageByExternalReferenceCode(
+			Long siteId, String externalReferenceCode)
+		throws Exception;
+
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {
 	}

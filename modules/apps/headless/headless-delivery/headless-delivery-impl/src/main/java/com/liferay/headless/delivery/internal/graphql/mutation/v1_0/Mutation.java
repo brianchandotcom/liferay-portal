@@ -653,6 +653,25 @@ public class Mutation {
 					Long.valueOf(siteKey), multipartBody, callbackURL, object));
 	}
 
+	@GraphQLField(
+		description = "Deletes the site's blog post image by external reference code."
+	)
+	public boolean deleteSiteBlogPostingImageByExternalReferenceCode(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_blogPostingImageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			blogPostingImageResource ->
+				blogPostingImageResource.
+					deleteSiteBlogPostingImageByExternalReferenceCode(
+						Long.valueOf(siteKey), externalReferenceCode));
+
+		return true;
+	}
+
 	@GraphQLField
 	public Response createBlogPostingCommentsPageExportBatch(
 			@GraphQLName("blogPostingId") Long blogPostingId,

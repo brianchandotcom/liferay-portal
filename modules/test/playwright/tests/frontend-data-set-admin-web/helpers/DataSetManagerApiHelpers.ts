@@ -359,12 +359,14 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 		erc = DEFAULT_DATA_SET_ERC,
 		label,
 		listOfItemsPerPage,
+		parameters,
 	}: {
 		defaultItemsPerPage?: number;
 		defaultVisualizationMode?: string;
 		erc?: string;
 		label?: string;
 		listOfItemsPerPage?: string;
+		parameters?: string;
 	}) {
 		const url = `${this.baseUrl}data-set-manager/data-sets/by-external-reference-code/${erc}`;
 
@@ -373,6 +375,7 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 			defaultVisualizationMode,
 			label,
 			listOfItemsPerPage,
+			parameters,
 		};
 
 		return this.patch(url, data);

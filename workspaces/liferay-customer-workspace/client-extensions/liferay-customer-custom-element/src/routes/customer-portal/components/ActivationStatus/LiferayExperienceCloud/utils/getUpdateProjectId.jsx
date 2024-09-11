@@ -5,6 +5,7 @@
 
 export default function getUpdateProjectId(
 	projectIdValue,
+	projectAccountId,
 	lxcEnvironment,
 	updateLiferayExperienceCloudEnvironment
 ) {
@@ -13,6 +14,7 @@ export default function getUpdateProjectId(
 			variables: {
 				LiferayExperienceCloudEnvironment: {
 					projectId: projectIdValue,
+					r_accountEntryToDXPCloudEnvironment_accountEntryId: projectAccountId
 				},
 				liferayExperienceCloudEnvironmentId:
 					lxcEnvironment?.liferayExperienceCloudEnvironmentId,

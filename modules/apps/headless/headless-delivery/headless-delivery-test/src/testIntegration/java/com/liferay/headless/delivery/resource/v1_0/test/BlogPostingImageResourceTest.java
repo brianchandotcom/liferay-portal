@@ -99,10 +99,34 @@ public class BlogPostingImageResourceTest
 	}
 
 	@Override
+	protected Long
+			testDeleteSiteBlogPostingImageByExternalReferenceCode_getSiteId()
+		throws Exception {
+
+		return testGroup.getGroupId();
+	}
+
+	@Override
+	protected Long
+			testGetSiteBlogPostingImageByExternalReferenceCode_getSiteId()
+		throws Exception {
+
+		return testGroup.getGroupId();
+	}
+
+	@Override
 	protected BlogPostingImage testGraphQLBlogPostingImage_addBlogPostingImage()
 		throws Exception {
 
 		return testDeleteBlogPostingImage_addBlogPostingImage();
+	}
+
+	@Override
+	protected Long
+			testGraphQLGetSiteBlogPostingImageByExternalReferenceCode_getSiteId()
+		throws Exception {
+
+		return testGroup.getGroupId();
 	}
 
 	private String _read(String url) throws Exception {

@@ -88,6 +88,7 @@ public class AssetAppearsOnHistogramMetricResourceImpl
 	@Reference
 	private AnalyticsSettingsManager _analyticsSettingsManager;
 
+	@Reference
 	private DepotEntryGroupRelLocalService _depotEntryGroupRelLocalService;
 
 	@Reference

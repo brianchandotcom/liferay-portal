@@ -244,6 +244,10 @@ components:
                         The image's content type (e.g., `application/png`, etc.).
                     readOnly: true
                     type: string
+                externalReferenceCode:
+                    description:
+                        The image's external reference code.
+                    type: string
                 fileExtension:
                     description:
                         The image's file extension.
@@ -11981,6 +11985,70 @@ paths:
                                     format: binary
                                     type: string
                             type: object
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/BlogPostingImage"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/BlogPostingImage"
+            tags: ["BlogPostingImage"]
+    "/sites/{siteId}/blog-posting-images/by-external-reference-code/{externalReferenceCode}":
+        delete:
+            # @review
+            description:
+                Deletes the site's blog post image by external reference code.
+            operationId: deleteSiteBlogPostingImageByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["BlogPostingImage"]
+        get:
+            # @review
+            description:
+                Retrieves the site's blog post image by external reference code. The binary image is returned as a
+                relative URL to the image itself.
+            operationId: getSiteBlogPostingImageByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: nestedFields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
             responses:
                 200:
                     content:

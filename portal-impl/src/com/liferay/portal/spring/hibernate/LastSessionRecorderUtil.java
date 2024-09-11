@@ -60,6 +60,12 @@ public class LastSessionRecorderUtil {
 		sessions.add(session);
 	}
 
+	protected static void removePortletSession(Session session) {
+		List<Session> sessions = _portletSessionsThreadLocal.get();
+
+		sessions.remove(session);
+	}
+
 	protected static void setLastSession(Session session) {
 		_lastSessionThreadLocal.set(session);
 	}

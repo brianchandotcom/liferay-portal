@@ -1,8 +1,8 @@
 {
-	"friendlyURL": "/sales/pricing-calculator",
+	"friendlyURL": "/sales/rules-of-engagement-violation",
 	"hidden": true,
 	"name_i18n": {
-		"en_US": "Pricing Calculator"
+		"en_US": "Rules of Engagement Violation"
 	},
 	"permissions": [
 		{

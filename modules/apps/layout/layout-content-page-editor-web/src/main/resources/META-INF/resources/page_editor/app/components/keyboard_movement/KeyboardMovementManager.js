@@ -181,7 +181,7 @@ export default function KeyboardMovementManager() {
 					);
 
 					if (actionType === ACTION_TYPES.move) {
-						selectItem(source.itemId);
+						selectItems(sources.map(({itemId}) => itemId));
 					}
 				};
 

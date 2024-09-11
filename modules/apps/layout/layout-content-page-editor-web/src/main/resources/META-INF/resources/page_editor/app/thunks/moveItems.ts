@@ -4,7 +4,7 @@
  */
 
 import {State} from '../../types/State';
-import moveItemAction from '../actions/moveItem';
+import moveItemsAction from '../actions/moveItems';
 import updateNetwork from '../actions/updateNetwork';
 import LayoutService from '../services/LayoutService';
 
@@ -14,21 +14,21 @@ type Props = {
 	positions: number[];
 };
 
-export default function moveItem({itemIds, parentItemIds, positions}: Props) {
+export default function moveItems({itemIds, parentItemIds, positions}: Props) {
 	return (
 		dispatch: (
-			action: ReturnType<typeof updateNetwork | typeof moveItemAction>
+			action: ReturnType<typeof updateNetwork | typeof moveItemsAction>
 		) => void,
 		getState: () => State
 	) => {
-		return LayoutService.moveItem({
+		return LayoutService.moveItems({
 			itemIds,
 			onNetworkStatus: dispatch,
 			parentItemIds,
 			positions,
 			segmentsExperienceId: getState().segmentsExperienceId,
 		}).then((layoutData) => {
-			dispatch(moveItemAction({itemIds, layoutData}));
+			dispatch(moveItemsAction({itemIds, layoutData}));
 		});
 	};
 }

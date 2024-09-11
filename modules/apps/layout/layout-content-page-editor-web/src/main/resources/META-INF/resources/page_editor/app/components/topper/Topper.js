@@ -40,7 +40,7 @@ import {useLayoutKeyboardNavigation} from '../../hooks/app_hooks/useLayoutKeyboa
 import selectCanUpdateItemConfiguration from '../../selectors/selectCanUpdateItemConfiguration';
 import selectCanUpdatePageStructure from '../../selectors/selectCanUpdatePageStructure';
 import selectLayoutDataItemLabel from '../../selectors/selectLayoutDataItemLabel';
-import moveItem from '../../thunks/moveItem';
+import moveItems from '../../thunks/moveItems';
 import moveStepper from '../../thunks/moveStepper';
 import switchSidebarPanel from '../../thunks/switchSidebarPanel';
 import {deepEqual} from '../../utils/checkDeepEqual';
@@ -173,7 +173,7 @@ function TopperContent({
 					parentItemId,
 					position,
 				})
-			: moveItem({
+			: moveItems({
 					itemIds: activeItemIds,
 					parentItemIds: [parentItemId],
 					positions: [position],

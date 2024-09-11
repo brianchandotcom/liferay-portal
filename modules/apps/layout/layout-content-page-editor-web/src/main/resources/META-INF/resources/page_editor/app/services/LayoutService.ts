@@ -135,7 +135,7 @@ export default {
 		);
 	},
 
-	moveItem({
+	moveItems({
 		itemIds,
 		onNetworkStatus,
 		parentItemIds,

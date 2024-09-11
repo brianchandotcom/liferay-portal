@@ -114,11 +114,11 @@ public class FrontendJsWebLanguageServlet extends HttpServlet {
 		httpServletResponse.setCharacterEncoding(StringPool.UTF8);
 		httpServletResponse.setContentType(ContentTypes.TEXT_JAVASCRIPT_UTF8);
 
-		// If the hash is different from the current hash, then return the
-		// current translations as a fallback while telling agents not to cache
-		// it since that would break HTTP semantics
-
 		String cacheControl = "max-age=315360000, public, immutable";
+
+		// If the hash is different from the current hash we are using return
+		// a the current translations as fallback, but tell agents not to cache
+		// it since that would break HTTP semantics.
 
 		if (!parts[1].equals(languageState.getHash())) {
 			cacheControl = HttpHeaders.CACHE_CONTROL_NO_CACHE_VALUE;
@@ -126,8 +126,9 @@ public class FrontendJsWebLanguageServlet extends HttpServlet {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					StringBundler.concat(
-						"Send noncacheable response as a fallback because ",
-						parts[1], " does not match ", languageState.getHash()));
+						"Invalid hash received in language servlet: got '",
+						parts[1], "' but expected '", languageState.getHash(),
+						"' (will send a non cacheable response as fallback)"));
 			}
 		}
 

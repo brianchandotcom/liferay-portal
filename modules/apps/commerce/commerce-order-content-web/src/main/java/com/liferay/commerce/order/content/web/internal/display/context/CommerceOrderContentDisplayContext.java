@@ -143,14 +143,14 @@ public class CommerceOrderContentDisplayContext {
 			CommercePaymentMethodGroupRelLocalService
 				commercePaymentMethodGroupRelLocalService,
 			CommercePaymentMethodRegistry commercePaymentMethodRegistry,
+			CommerceStepTrackerHelper commerceStepTrackerHelper,
 			CommerceTermEntryService commerceTermEntryService,
 			ConfigurationProvider configurationProvider,
 			DLAppLocalService dlAppLocalService,
 			HttpServletRequest httpServletRequest, ItemSelector itemSelector,
 			ModelResourcePermission<CommerceOrder> modelResourcePermission,
 			PercentageFormatter percentageFormatter,
-			PortletResourcePermission portletResourcePermission,
-			CommerceStepTrackerHelper commerceStepTrackerHelper)
+			PortletResourcePermission portletResourcePermission)
 		throws PortalException {
 
 		_commerceAddressService = commerceAddressService;
@@ -168,6 +168,7 @@ public class CommerceOrderContentDisplayContext {
 		_commercePaymentMethodGroupRelLocalService =
 			commercePaymentMethodGroupRelLocalService;
 		_commercePaymentMethodRegistry = commercePaymentMethodRegistry;
+		_commerceStepTrackerHelper = commerceStepTrackerHelper;
 		_commerceTermEntryService = commerceTermEntryService;
 		_configurationProvider = configurationProvider;
 		_dlAppLocalService = dlAppLocalService;
@@ -176,7 +177,6 @@ public class CommerceOrderContentDisplayContext {
 		_modelResourcePermission = modelResourcePermission;
 		_percentageFormatter = percentageFormatter;
 		_portletResourcePermission = portletResourcePermission;
-		_commerceStepTrackerHelper = commerceStepTrackerHelper;
 
 		_cpRequestHelper = new CPRequestHelper(httpServletRequest);
 

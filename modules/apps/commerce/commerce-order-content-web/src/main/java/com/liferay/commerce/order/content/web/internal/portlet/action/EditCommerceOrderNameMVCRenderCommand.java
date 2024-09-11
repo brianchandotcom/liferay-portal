@@ -8,6 +8,7 @@ package com.liferay.commerce.order.content.web.internal.portlet.action;
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.exception.NoSuchOrderException;
+import com.liferay.commerce.frontend.util.CommerceStepTrackerHelper;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.order.content.web.internal.display.context.CommerceOrderContentDisplayContext;
@@ -73,8 +74,8 @@ public class EditCommerceOrderNameMVCRenderCommand implements MVCRenderCommand {
 						_commercePaymentIntegrationRegistry,
 						_commercePaymentMethodGroupRelLocalService,
 						_commercePaymentMethodRegistry,
-						_commerceTermEntryService, _configurationProvider,
-						_dlAppLocalService,
+						_commerceStepTrackerHelper, _commerceTermEntryService,
+						_configurationProvider, _dlAppLocalService,
 						_portal.getHttpServletRequest(renderRequest),
 						_itemSelector, _modelResourcePermission,
 						_percentageFormatter, _portletResourcePermission);
@@ -139,6 +140,9 @@ public class EditCommerceOrderNameMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private CommercePaymentMethodRegistry _commercePaymentMethodRegistry;
+
+	@Reference
+	private CommerceStepTrackerHelper _commerceStepTrackerHelper;
 
 	@Reference
 	private CommerceTermEntryService _commerceTermEntryService;

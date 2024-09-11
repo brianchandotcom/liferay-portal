@@ -7,6 +7,7 @@ package com.liferay.source.formatter.check;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.poshi.core.util.StringUtil;
 
 import java.util.List;
@@ -35,36 +36,27 @@ public class JSPIllegalTagsCheck extends BaseFileCheck {
 			lowerCaseFileName.endsWith(".jspx")) {
 
 			for (String illegalTagName : illegalTagNames) {
-				int x = -1;
+				int searchIndex = 0;
 
 				while (true) {
-					x = content.indexOf(
-						CharPool.LESS_THAN + illegalTagName, x + 1);
+					TagOccurrence tagOccurrence = _getNextTagOccurrence(
+						illegalTagName, content, searchIndex);
 
-					if (x == -1) {
+					if (tagOccurrence == null) {
 						break;
 					}
 
-					int nextCharPosition = x + illegalTagName.length() + 1;
+					addMessage(
+						fileName,
+						StringBundler.concat(
+							"Do not use <", illegalTagName, "> tag (use ",
+							"<aui:", illegalTagName, "> instead), see ",
+							"LPD-18227"),
+						getLineNumber(content, tagOccurrence.searchIndex));
 
-					if (nextCharPosition >= content.length()) {
-						break;
-					}
+					String tag = tagOccurrence.tag;
 
-					char nextChar = content.charAt(nextCharPosition);
-
-					if ((nextChar == CharPool.GREATER_THAN) ||
-						(nextChar == CharPool.NEW_LINE) ||
-						(nextChar == CharPool.SPACE)) {
-
-						addMessage(
-							fileName,
-							StringBundler.concat(
-								"Do not use <", illegalTagName, "> tag (use ",
-								"<aui:", illegalTagName, "> instead), see ",
-								"LPD-18227"),
-							getLineNumber(content, x));
-					}
+					searchIndex += tagOccurrence.searchIndex + tag.length();
 				}
 			}
 		}
@@ -85,35 +77,96 @@ public class JSPIllegalTagsCheck extends BaseFileCheck {
 		List<String> illegalTagNames) {
 
 		for (String illegalTagName : illegalTagNames) {
-			int x = -1;
+			int searchIndex = 0;
 
 			while (true) {
-				x = content.indexOf(CharPool.LESS_THAN + illegalTagName, x + 1);
+				TagOccurrence tagOccurrence = _getNextTagOccurrence(
+					illegalTagName, content, searchIndex);
 
-				if (x == -1) {
+				if (tagOccurrence == null) {
 					break;
 				}
 
-				int y = content.indexOf(CharPool.GREATER_THAN, x + 1);
+				String tag = tagOccurrence.tag;
 
-				if (y == -1) {
-					y = content.length() - 1;
-				}
-
-				String tagSubstring = content.substring(x, y);
-
-				if (!tagSubstring.contains(attribute)) {
+				if (!tag.contains(attribute)) {
 					addMessage(
 						fileName,
 						StringBundler.concat(
 							"Tag <", illegalTagName, "> is missing attribute '",
 							attribute, "', see LPD-18227"),
-						getLineNumber(content, x));
+						getLineNumber(content, tagOccurrence.searchIndex));
 				}
+
+				searchIndex += tagOccurrence.searchIndex + tag.length();
 			}
 		}
 	}
 
+	private TagOccurrence _getNextTagOccurrence(
+		String illegalTagName, String content, int searchIndex) {
+
+		String requiredAttribute = null;
+
+		int openBracketIndex = illegalTagName.indexOf(StringPool.OPEN_BRACKET);
+
+		if (openBracketIndex != -1) {
+			requiredAttribute = illegalTagName.substring(
+				openBracketIndex + 1,
+				illegalTagName.indexOf(StringPool.CLOSE_BRACKET));
+
+			illegalTagName = illegalTagName.substring(0, openBracketIndex);
+		}
+
+		while (true) {
+			searchIndex = content.indexOf(
+				CharPool.LESS_THAN + illegalTagName, searchIndex + 1);
+
+			if (searchIndex == -1) {
+				return null;
+			}
+
+			int greaterThanIndex = searchIndex + 1;
+
+			// Instead of correctly parsing the content, which would require
+			// treating escaping correctly and would take way more time, we will
+			// detect exceptions for > characters inside the tag we are
+			// extracting.
+
+			do {
+				greaterThanIndex = content.indexOf(
+					CharPool.GREATER_THAN, greaterThanIndex + 1);
+
+				if (greaterThanIndex == -1) {
+					return null;
+				}
+			}
+			while (content.charAt(greaterThanIndex - 1) == CharPool.PERCENT);
+
+			String tag = content.substring(searchIndex, greaterThanIndex + 1);
+
+			if ((requiredAttribute != null) &&
+				!tag.contains(requiredAttribute)) {
+
+				continue;
+			}
+
+			return new TagOccurrence(searchIndex, tag);
+		}
+	}
+
 	private static final String _ILLEGAL_TAG_NAMES_KEY = "illegalTagNames";
+
+	private static class TagOccurrence {
+
+		public TagOccurrence(int searchIndex, String tag) {
+			this.searchIndex = searchIndex;
+			this.tag = tag;
+		}
+
+		public final int searchIndex;
+		public final String tag;
+
+	}
 
 }

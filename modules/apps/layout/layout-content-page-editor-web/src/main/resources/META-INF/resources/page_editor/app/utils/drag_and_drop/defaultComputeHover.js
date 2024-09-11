@@ -67,19 +67,27 @@ export default function defaultComputeHover({
 	const validDropInsideTarget = (() => {
 		const targetIsColumn =
 			targetItem.type === LAYOUT_DATA_ITEM_TYPES.column;
+
 		const targetIsCollectionNotMapped =
 			targetItem.type === LAYOUT_DATA_ITEM_TYPES.collection &&
 			!collectionIsMapped(targetItem);
+
 		const targetIsContainerFlex = isItemContainerFlex(targetItem);
+
 		const targetIsFragment =
 			targetItem.type === LAYOUT_DATA_ITEM_TYPES.fragment;
+
 		const targetIsFormNotMapped =
 			targetItem.type === LAYOUT_DATA_ITEM_TYPES.form &&
 			!formIsMapped(targetItem);
+
 		const targetIsEmpty = isItemEmpty(
 			layoutDataRef.current.items[targetItem.itemId],
 			layoutDataRef.current
 		);
+
+		const targetIsFormStep =
+			targetItem.type === LAYOUT_DATA_ITEM_TYPES.formStep;
 
 		return (
 			targetPositionWithMiddle === TARGET_POSITIONS.MIDDLE &&
@@ -87,7 +95,8 @@ export default function defaultComputeHover({
 				targetIsColumn ||
 				targetIsContainerFlex ||
 				targetIsCollectionNotMapped ||
-				targetIsFormNotMapped) &&
+				targetIsFormNotMapped ||
+				targetIsFormStep) &&
 			!targetIsFragment
 		);
 	})();

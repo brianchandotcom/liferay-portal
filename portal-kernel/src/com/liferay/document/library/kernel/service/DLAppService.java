@@ -531,6 +531,10 @@ public interface DLAppService extends BaseService {
 	 */
 	public void deleteFileShortcut(long fileShortcutId) throws PortalException;
 
+	public void deleteFileShortcutByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException;
+
 	/**
 	 * Deletes the file version. File versions can only be deleted if it is
 	 * approved and there are other approved file versions available.

@@ -618,6 +618,14 @@ public class DLAppServiceUtil {
 		getService().deleteFileShortcut(fileShortcutId);
 	}
 
+	public static void deleteFileShortcutByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		getService().deleteFileShortcutByExternalReferenceCode(
+			externalReferenceCode, groupId);
+	}
+
 	/**
 	 * Deletes the file version. File versions can only be deleted if it is
 	 * approved and there are other approved file versions available.

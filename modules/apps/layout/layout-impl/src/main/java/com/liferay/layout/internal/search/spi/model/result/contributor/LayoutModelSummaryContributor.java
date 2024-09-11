@@ -43,7 +43,7 @@ public class LayoutModelSummaryContributor implements ModelSummaryContributor {
 				document.get(Field.DEFAULT_LANGUAGE_ID));
 		}
 
-		String name = document.get(
+		String title = document.get(
 			locale, Field.SNIPPET + StringPool.UNDERLINE + Field.TITLE,
 			Field.TITLE);
 
@@ -70,10 +70,10 @@ public class LayoutModelSummaryContributor implements ModelSummaryContributor {
 			HighlightUtil.HIGHLIGHT_TAG_CLOSE);
 
 		if (Validator.isBlank(snippet)) {
-			summary = new Summary(locale, name, content);
+			summary = new Summary(locale, title, content);
 		}
 		else {
-			summary = new Summary(locale, name, snippet);
+			summary = new Summary(locale, title, snippet);
 		}
 
 		summary.setMaxContentLength(200);

@@ -86,6 +86,20 @@ public class PaymentSerDes {
 			sb.append("\"");
 		}
 
+		if (payment.getAuthor() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"author\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(payment.getAuthor()));
+
+			sb.append("\"");
+		}
+
 		if (payment.getCallbackURL() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -434,6 +448,13 @@ public class PaymentSerDes {
 				String.valueOf(payment.getAmountFormatted()));
 		}
 
+		if (payment.getAuthor() == null) {
+			map.put("author", null);
+		}
+		else {
+			map.put("author", String.valueOf(payment.getAuthor()));
+		}
+
 		if (payment.getCallbackURL() == null) {
 			map.put("callbackURL", null);
 		}
@@ -647,6 +668,9 @@ public class PaymentSerDes {
 			else if (Objects.equals(jsonParserFieldName, "amountFormatted")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "author")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "callbackURL")) {
 				return false;
 			}
@@ -753,6 +777,11 @@ public class PaymentSerDes {
 			else if (Objects.equals(jsonParserFieldName, "amountFormatted")) {
 				if (jsonParserFieldValue != null) {
 					payment.setAmountFormatted((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "author")) {
+				if (jsonParserFieldValue != null) {
+					payment.setAuthor((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "callbackURL")) {

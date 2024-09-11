@@ -166,6 +166,7 @@ public abstract class BasePaymentResourceTestCase {
 		Payment payment = randomPayment();
 
 		payment.setAmountFormatted(regex);
+		payment.setAuthor(regex);
 		payment.setCallbackURL(regex);
 		payment.setCancelURL(regex);
 		payment.setComment(regex);
@@ -189,6 +190,7 @@ public abstract class BasePaymentResourceTestCase {
 		payment = PaymentSerDes.toDTO(json);
 
 		Assert.assertEquals(regex, payment.getAmountFormatted());
+		Assert.assertEquals(regex, payment.getAuthor());
 		Assert.assertEquals(regex, payment.getCallbackURL());
 		Assert.assertEquals(regex, payment.getCancelURL());
 		Assert.assertEquals(regex, payment.getComment());
@@ -1158,6 +1160,14 @@ public abstract class BasePaymentResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("author", additionalAssertFieldName)) {
+				if (payment.getAuthor() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("callbackURL", additionalAssertFieldName)) {
 				if (payment.getCallbackURL() == null) {
 					valid = false;
@@ -1493,6 +1503,16 @@ public abstract class BasePaymentResourceTestCase {
 				if (!Objects.deepEquals(
 						payment1.getAmountFormatted(),
 						payment2.getAmountFormatted())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("author", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						payment1.getAuthor(), payment2.getAuthor())) {
 
 					return false;
 				}
@@ -1879,6 +1899,52 @@ public abstract class BasePaymentResourceTestCase {
 
 		if (entityFieldName.equals("amountFormatted")) {
 			Object object = payment.getAmountFormatted();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("author")) {
+			Object object = payment.getAuthor();
 
 			String value = String.valueOf(object);
 
@@ -2734,6 +2800,7 @@ public abstract class BasePaymentResourceTestCase {
 			{
 				amountFormatted = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+				author = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				callbackURL = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				cancelURL = StringUtil.toLowerCase(

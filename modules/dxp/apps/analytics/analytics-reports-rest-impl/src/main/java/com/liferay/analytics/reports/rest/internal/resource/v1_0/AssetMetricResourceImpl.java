@@ -10,7 +10,6 @@ import com.liferay.analytics.reports.rest.internal.client.AnalyticsCloudClient;
 import com.liferay.analytics.reports.rest.resource.v1_0.AssetMetricResource;
 import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.depot.model.DepotEntry;
-import com.liferay.depot.model.DepotEntryGroupRel;
 import com.liferay.depot.service.DepotEntryGroupRelLocalService;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.portal.kernel.model.Group;
@@ -49,9 +48,23 @@ public class AssetMetricResourceImpl extends BaseAssetMetricResourceImpl {
 			groupId);
 
 		if (depotEntry != null) {
-			analyticsCloudChannelIds = _getAnalyticsCloudChannelIds(
+			analyticsCloudChannelIds = transform(
 				_depotEntryGroupRelLocalService.getDepotEntryGroupRels(
-					depotEntry));
+					depotEntry),
+				depotEntryGroupRel -> {
+					Group depotEntryGroup = _groupLocalService.getGroup(
+						depotEntryGroupRel.getToGroupId());
+
+					String analyticsChannelId =
+						depotEntryGroup.getTypeSettingsProperty(
+							"analyticsChannelId");
+
+					if (Validator.isNull(analyticsChannelId)) {
+						return null;
+					}
+
+					return Long.valueOf(analyticsChannelId);
+				});
 		}
 		else {
 			analyticsCloudChannelIds = Collections.singletonList(
@@ -67,27 +80,6 @@ public class AssetMetricResourceImpl extends BaseAssetMetricResourceImpl {
 				group.getCompanyId()),
 			assetId, assetType, analyticsCloudChannelIds, identityType,
 			rangeKey, selectedMetrics);
-	}
-
-	private List<Long> _getAnalyticsCloudChannelIds(
-			List<DepotEntryGroupRel> depotEntryGroupRels)
-		throws Exception {
-
-		List<Long> analyticsCloudChannelIds = new ArrayList<>();
-
-		for (DepotEntryGroupRel depotEntryGroupRel : depotEntryGroupRels) {
-			Group group = _groupLocalService.getGroup(
-				depotEntryGroupRel.getToGroupId());
-
-			String analyticsChannelId = group.getTypeSettingsProperty(
-				"analyticsChannelId");
-
-			if (Validator.isNotNull(analyticsChannelId)) {
-				analyticsCloudChannelIds.add(Long.valueOf(analyticsChannelId));
-			}
-		}
-
-		return analyticsCloudChannelIds;
 	}
 
 	@Reference

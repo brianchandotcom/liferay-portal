@@ -300,27 +300,10 @@ Error-Prone was automatically installed. Please rerun your task.
 		</then>
 	</if>
 
-	<property name="ant.options.add.opens" value="--add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.lang.invoke=ALL-UNNAMED --add-opens=java.base/java.lang.reflect=ALL-UNNAMED --add-opens=java.base/java.net=ALL-UNNAMED --add-opens=java.base/sun.net.www.protocol.http=ALL-UNNAMED --add-opens=java.base/sun.net.www.protocol.https=ALL-UNNAMED --add-opens=java.base/sun.util.calendar=ALL-UNNAMED --add-opens=jdk.zipfs/jdk.nio.zipfs=ALL-UNNAMED" />
-
-	<fail message=".${line.separator}Please update the environment variable ANT_OPTS to open packages for deep reflection${line.separator}&quot;${ant.options.add.opens}&quot;.">
-		<condition>
-			<and>
-				<not>
-					<equals arg1="${java.specification.version}" arg2="1.8" />
-				</not>
-				<not>
-					<contains string="${env.ANT_OPTS}" substring="${ant.options.add.opens}" />
-				</not>
-			</and>
-		</condition>
-	</fail>
-
-	<property name="ant.options.jvm.memory" value="-Xmx2560m" />
-
-	<fail message=".${line.separator}Please update the environment variable ANT_OPTS to allocate extra memory for the JVM${line.separator}&quot;${ant.options.jvm.memory}&quot;.">
+	<fail message=".${line.separator}Please set the environment variable ANT_OPTS to the recommended value of${line.separator}&quot;-Xmx2560m&quot;.">
 		<condition>
 			<not>
-				<contains string="${env.ANT_OPTS}" substring="-Xmx" />
+				<isset property="env.ANT_OPTS" />
 			</not>
 		</condition>
 	</fail>

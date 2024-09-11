@@ -165,17 +165,7 @@
                                                             "id": "link",
                                                             "value": {
                                                                 "fragmentLink": {
-                                                                    "value": {
-                                                                        "href": {
-                                                                            "mapping": {
-                                                                                "fieldKey": "FileEntry_downloadURL",
-                                                                                "itemReference": {
-                                                                                    "className": "com.liferay.portal.kernel.repository.model.FileEntry",
-                                                                                    "classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/campaign/CIAB-do-more-with-less.zip#]"
-                                                                                }
-                                                                            }
-                                                                        }
-                                                                    }
+                                                                   
                                                                 },
                                                                 "text": {
                                                                     "value_i18n": {
@@ -263,7 +253,7 @@
                                                                             "fieldKey": "FileEntry_previewImage",
                                                                             "itemReference": {
                                                                                 "className": "com.liferay.portal.kernel.repository.model.FileEntry",
-                                                                                "classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/marketing-campaign/marketing-banner.png#]"
+                                                                                "classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/marketing/marketing-campaign/marketing-banner.png#]"
                                                                             }
                                                                         }
                                                                     }

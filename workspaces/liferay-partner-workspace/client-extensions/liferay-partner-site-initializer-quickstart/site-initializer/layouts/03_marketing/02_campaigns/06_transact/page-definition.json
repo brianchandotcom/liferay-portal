@@ -314,7 +314,7 @@
                                               "fieldKey": "FileEntry_previewImage",
                                               "itemReference": {
                                                 "className": "com.liferay.portal.kernel.repository.model.FileEntry",
-                                                "classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/marketing-campaign/marketing-banner.png#]"
+                                                "classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/marketing/marketing-campaign/marketing-banner.png#]"
                                               }
                                             }
                                           }
@@ -699,23 +699,7 @@
                           "id": "link",
                           "value": {
                             "fragmentLink": {
-                                "href": {
-                                    "value_i18n": {
-                                      "ar_SA": "[$DOCUMENT_URL:/site-initializer/documents/group/campaign/CIAB-Transact-2023.zip$]",
-                                      "ca_ES": "[$DOCUMENT_URL:/site-initializer/documents/group/campaign/CIAB-Transact-2023.zip$]",
-                                      "de_DE": "[$DOCUMENT_URL:/site-initializer/documents/group/campaign/CIAB-Transact-2023.zip$]",
-                                      "en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/campaign/CIAB-Transact-2023.zip$]",
-                                      "es_ES": "[$DOCUMENT_URL:/site-initializer/documents/group/campaign/CIAB-Transact-2023.zip$]",
-                                      "fi_FI": "[$DOCUMENT_URL:/site-initializer/documents/group/campaign/CIAB-Transact-2023.zip$]",
-                                      "fr_FR": "[$DOCUMENT_URL:/site-initializer/documents/group/campaign/CIAB-Transact-2023.zip$]",
-                                      "hu_HU": "[$DOCUMENT_URL:/site-initializer/documents/group/campaign/CIAB-Transact-2023.zip$]",
-                                      "ja_JP": "[$DOCUMENT_URL:/site-initializer/documents/group/campaign/CIAB-Transact-2023.zip$]",
-                                      "nl_NL": "[$DOCUMENT_URL:/site-initializer/documents/group/campaign/CIAB-Transact-2023.zip$]",
-                                      "pt_BR": "[$DOCUMENT_URL:/site-initializer/documents/group/campaign/CIAB-Transact-2023.zip$]",
-                                      "sv_SE": "[$DOCUMENT_URL:/site-initializer/documents/group/campaign/CIAB-Transact-2023.zip$]",
-                                      "zh_CN": "[$DOCUMENT_URL:/site-initializer/documents/group/campaign/CIAB-Transact-2023.zip$]"
-                                    }
-                                }
+                                
                             },
                             "text": {
                               "value_i18n": {

@@ -8,14 +8,13 @@ package com.liferay.headless.delivery.internal.resource.v1_0;
 import com.liferay.blogs.constants.BlogsConstants;
 import com.liferay.blogs.service.BlogsEntryService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
-import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.util.DLURLHelper;
-import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.headless.delivery.dto.v1_0.BlogPostingImage;
 import com.liferay.headless.delivery.dto.v1_0.util.ContentValueUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.BlogPostingImageEntityModel;
 import com.liferay.headless.delivery.resource.v1_0.BlogPostingImageResource;
 import com.liferay.portal.kernel.change.tracking.CTAware;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.search.Field;
@@ -31,6 +30,7 @@ import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
+import com.liferay.upload.UniqueFileNameProvider;
 
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.core.MultivaluedMap;
@@ -54,11 +54,13 @@ public class BlogPostingImageResourceImpl
 	public void deleteBlogPostingImage(Long blogPostingImageId)
 		throws Exception {
 
-		FileEntry fileEntry = _dlAppService.getFileEntry(blogPostingImageId);
+		FileEntry fileEntry = _portletFileRepository.getPortletFileEntry(
+			blogPostingImageId);
 
 		_validate(fileEntry);
 
-		_dlAppService.deleteFileEntry(fileEntry.getFileEntryId());
+		_portletFileRepository.deletePortletFileEntry(
+			fileEntry.getFileEntryId());
 	}
 
 	@Override
@@ -69,19 +71,22 @@ public class BlogPostingImageResourceImpl
 		super.deleteSiteBlogPostingImageByExternalReferenceCode(
 			siteId, externalReferenceCode);
 
-		FileEntry fileEntry = _dlAppService.getFileEntryByExternalReferenceCode(
-			externalReferenceCode, siteId);
+		FileEntry fileEntry =
+			_portletFileRepository.getPortletFileEntryByExternalReferenceCode(
+				externalReferenceCode, siteId);
 
 		_validate(fileEntry);
 
-		_dlAppService.deleteFileEntry(fileEntry.getFileEntryId());
+		_portletFileRepository.deletePortletFileEntry(
+			fileEntry.getFileEntryId());
 	}
 
 	@Override
 	public BlogPostingImage getBlogPostingImage(Long blogPostingImageId)
 		throws Exception {
 
-		FileEntry fileEntry = _dlAppService.getFileEntry(blogPostingImageId);
+		FileEntry fileEntry = _portletFileRepository.getPortletFileEntry(
+			blogPostingImageId);
 
 		_validate(fileEntry);
 
@@ -98,8 +103,9 @@ public class BlogPostingImageResourceImpl
 			Long siteId, String externalReferenceCode)
 		throws Exception {
 
-		FileEntry fileEntry = _dlAppService.getFileEntryByExternalReferenceCode(
-			externalReferenceCode, siteId);
+		FileEntry fileEntry =
+			_portletFileRepository.getPortletFileEntryByExternalReferenceCode(
+				externalReferenceCode, siteId);
 
 		_validate(fileEntry);
 
@@ -133,7 +139,7 @@ public class BlogPostingImageResourceImpl
 			},
 			sorts,
 			document -> _toBlogPostingImage(
-				_dlAppService.getFileEntry(
+				_portletFileRepository.getPortletFileEntry(
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
 	}
 
@@ -152,7 +158,6 @@ public class BlogPostingImageResourceImpl
 
 		String externalReferenceCode = null;
 		String title = null;
-		String viewableBy = null;
 
 		BlogPostingImage blogPostingImage =
 			multipartBody.getValueAsNullableInstance(
@@ -161,27 +166,35 @@ public class BlogPostingImageResourceImpl
 		if (blogPostingImage != null) {
 			externalReferenceCode = blogPostingImage.getExternalReferenceCode();
 			title = blogPostingImage.getTitle();
-			viewableBy = blogPostingImage.getViewableByAsString();
 		}
 
 		if (title == null) {
 			title = binaryFile.getFileName();
 		}
 
-		if (viewableBy == null) {
-			viewableBy = BlogPostingImage.ViewableBy.ANYONE.getValue();
+		return _toBlogPostingImage(
+			_portletFileRepository.addPortletFileEntry(
+				externalReferenceCode, siteId, contextUser.getUserId(), null, 0,
+				BlogsConstants.SERVICE_NAME, folder.getFolderId(),
+				binaryFile.getInputStream(),
+				_uniqueFileNameProvider.provide(
+					title,
+					fileName -> _hasFileEntry(
+						siteId, folder.getFolderId(), fileName)),
+				binaryFile.getContentType(), true));
+	}
+
+	private boolean _hasFileEntry(
+		long groupId, long folderId, String fileName) {
+
+		FileEntry fileEntry = _portletFileRepository.fetchPortletFileEntry(
+			groupId, folderId, fileName);
+
+		if (fileEntry == null) {
+			return false;
 		}
 
-		FileEntry fileEntry = _dlAppService.addFileEntry(
-			externalReferenceCode, siteId, folder.getFolderId(),
-			binaryFile.getFileName(), binaryFile.getContentType(), title, null,
-			null, null, binaryFile.getInputStream(), binaryFile.getSize(), null,
-			null, null,
-			ServiceContextBuilder.create(
-				siteId, contextHttpServletRequest, viewableBy
-			).build());
-
-		return _toBlogPostingImage(fileEntry);
+		return true;
 	}
 
 	private BlogPostingImage _toBlogPostingImage(FileEntry fileEntry)
@@ -224,9 +237,12 @@ public class BlogPostingImageResourceImpl
 	private BlogsEntryService _blogsEntryService;
 
 	@Reference
-	private DLAppService _dlAppService;
+	private DLURLHelper _dlURLHelper;
 
 	@Reference
-	private DLURLHelper _dlURLHelper;
+	private PortletFileRepository _portletFileRepository;
+
+	@Reference
+	private UniqueFileNameProvider _uniqueFileNameProvider;
 
 }

@@ -897,6 +897,12 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	@Override
+	public int getObjectEntriesCount(long objectDefinitionId) {
+		return objectEntryPersistence.countByObjectDefinitionId(
+			objectDefinitionId);
+	}
+
+	@Override
 	public long getObjectEntriesCount(
 			long userId, Date createDate, long objectDefinitionId)
 		throws PortalException {

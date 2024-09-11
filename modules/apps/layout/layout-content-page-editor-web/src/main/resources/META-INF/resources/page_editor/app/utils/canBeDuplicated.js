@@ -38,6 +38,10 @@ export default function canBeDuplicated(
 				return false;
 			}
 
+			if (fragmentEntryLink.fieldTypes?.includes('stepper')) {
+				return false;
+			}
+
 			return true;
 		}
 

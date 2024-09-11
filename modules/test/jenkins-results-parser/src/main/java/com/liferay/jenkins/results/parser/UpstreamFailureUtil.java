@@ -179,6 +179,8 @@ public class UpstreamFailureUtil {
 			_init(topLevelBuild);
 		}
 		catch (Exception exception) {
+			System.out.println("Unable to initialize upstream comparison");
+
 			exception.printStackTrace();
 
 			_upstreamComparisonAvailable = false;
@@ -307,6 +309,10 @@ public class UpstreamFailureUtil {
 
 			_upstreamComparisonAvailable = false;
 
+			System.out.println(
+				"Upstream comparison is disabled for " +
+					topLevelBuild.getJobName());
+
 			return;
 		}
 
@@ -314,6 +320,8 @@ public class UpstreamFailureUtil {
 
 		if (_upstreamTestrayRoutine == null) {
 			_upstreamComparisonAvailable = false;
+
+			System.out.println("Unable to get upstream Testray routine");
 
 			return;
 		}
@@ -323,6 +331,8 @@ public class UpstreamFailureUtil {
 		if (_upstreamTestrayBuild == null) {
 			_upstreamComparisonAvailable = false;
 
+			System.out.println("Unable to get upstream Testray build");
+
 			return;
 		}
 
@@ -331,6 +341,8 @@ public class UpstreamFailureUtil {
 		if (_upstreamTopLevelBuildReport == null) {
 			_upstreamComparisonAvailable = false;
 
+			System.out.println("Unable to get upstream top level build report");
+
 			return;
 		}
 
@@ -338,6 +350,8 @@ public class UpstreamFailureUtil {
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(_upstreamJobFailuresSHA)) {
 			_upstreamComparisonAvailable = false;
+
+			System.out.println("Unable to get upstream acceptance build SHA");
 
 			return;
 		}

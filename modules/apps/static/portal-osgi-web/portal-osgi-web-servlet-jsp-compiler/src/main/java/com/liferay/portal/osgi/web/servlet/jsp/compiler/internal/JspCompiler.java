@@ -238,31 +238,6 @@ public class JspCompiler extends Jsr199JavaCompiler {
 		super.init(jspCompilationContext, errorDispatcher, suppressLogging);
 	}
 
-	@Override
-	protected JavaFileObject getOutputFile(String className, URI uri) {
-		Map<String, Map<String, JavaFileObject>> packageMap =
-			rtctxt.getPackageMap();
-
-		String packageName = className.substring(
-			0, className.lastIndexOf(CharPool.PERIOD));
-
-		// Swap the parent class's packageJavaFileObjects reference from a plain
-		// HashMap to a thread safe ConcurrentHashMap
-
-		Map<String, JavaFileObject> packageJavaFileObjects = packageMap.get(
-			packageName);
-
-		JavaFileObject javaFileObject = super.getOutputFile(className, uri);
-
-		if (packageJavaFileObjects == null) {
-			packageMap.put(
-				packageName,
-				new ConcurrentHashMap<>(packageMap.get(packageName)));
-		}
-
-		return javaFileObject;
-	}
-
 	@SuppressWarnings("unchecked")
 	protected void initTLDMappings(
 		ServletContext servletContext, Map<String, URL> tagFileJarUrls) {
@@ -500,11 +475,31 @@ public class JspCompiler extends Jsr199JavaCompiler {
 			Location location, String className, JavaFileObject.Kind kind,
 			FileObject fileObject) {
 
-			return getOutputFile(
+			Map<String, Map<String, JavaFileObject>> packageMap =
+				rtctxt.getPackageMap();
+
+			String packageName = className.substring(
+				0, className.lastIndexOf(CharPool.PERIOD));
+
+			// Swap the parent class's packageJavaFileObjects reference from a
+			// plain HashMap to a thread safe ConcurrentHashMap
+
+			Map<String, JavaFileObject> javaFileObjectsMap = packageMap.get(
+				packageName);
+
+			JavaFileObject javaFileObject = getOutputFile(
 				className,
 				URI.create(
 					"file:///" + StringUtil.replace(className, '.', '/') +
 						kind));
+
+			if (javaFileObjectsMap == null) {
+				packageMap.put(
+					packageName,
+					new ConcurrentHashMap<>(packageMap.get(packageName)));
+			}
+
+			return javaFileObject;
 		}
 
 		@Override

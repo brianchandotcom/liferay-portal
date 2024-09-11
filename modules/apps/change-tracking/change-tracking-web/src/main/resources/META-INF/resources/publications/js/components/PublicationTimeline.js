@@ -182,7 +182,7 @@ const PublicationTimeline = ({
 			<ClayDropDown.Item key={timelineItem.id}>
 				<ClayLayout.ContentRow className="c-mb-1">
 					<ClayLayout.ContentCol expand>
-						<div>
+						<div className="align-items-center d-flex">
 							<span className="c-pr-2">{timelineItem.name}</span>
 
 							<WorkflowStatusLabel

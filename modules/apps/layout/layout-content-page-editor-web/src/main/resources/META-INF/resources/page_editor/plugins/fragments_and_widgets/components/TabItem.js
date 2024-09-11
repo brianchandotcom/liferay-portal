@@ -52,14 +52,16 @@ export default function TabItem({displayStyle, item, onRemoveHighlighted}) {
 		if (event.key === 'Enter' || event.key === ' ') {
 			event.preventDefault();
 
-			setMovementSource({
-				...item.data,
-				fragmentEntryType: item.data.type,
-				icon: item.icon,
-				isWidget: Boolean(item.data.portletId),
-				name: item.label,
-				type: item.type,
-			});
+			setMovementSource([
+				{
+					...item.data,
+					fragmentEntryType: item.data.type,
+					icon: item.icon,
+					isWidget: Boolean(item.data.portletId),
+					name: item.label,
+					type: item.type,
+				},
+			]);
 		}
 	};
 
@@ -393,14 +395,16 @@ const AddButton = ({isNavigationTarget, item, setItemActive}) => {
 				disableMovement();
 			}}
 			onClick={() =>
-				setMovementSource({
-					...item.data,
-					fragmentEntryType: item.data.type,
-					icon: item.icon,
-					isWidget: Boolean(item.data.portletId),
-					name: item.label,
-					type: item.type,
-				})
+				setMovementSource([
+					{
+						...item.data,
+						fragmentEntryType: item.data.type,
+						icon: item.icon,
+						isWidget: Boolean(item.data.portletId),
+						name: item.label,
+						type: item.type,
+					},
+				])
 			}
 			onFocus={() => setItemActive(true)}
 			onKeyDown={(event) => event.stopPropagation()}

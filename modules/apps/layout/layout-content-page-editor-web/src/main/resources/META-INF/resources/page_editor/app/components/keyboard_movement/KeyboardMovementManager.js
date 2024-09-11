@@ -56,8 +56,10 @@ const ACTION_TYPES = {
 };
 
 export default function KeyboardMovementManager() {
-	const source = useMovementSource();
+	const sources = useMovementSource();
 	const target = useMovementTarget();
+
+	const lastSource = sources[sources.length - 1];
 
 	const fragmentEntryLinksRef = useSelectorRef(
 		(state) => state.fragmentEntryLinks
@@ -86,14 +88,14 @@ export default function KeyboardMovementManager() {
 		},
 		executeAction: {
 			action: () => {
-				const actionType = source.itemId
+				const actionType = lastSource.itemId
 					? ACTION_TYPES.move
 					: ACTION_TYPES.add;
 
 				const {dropItemId, position} = getDropData({
 					isElevation: target.position !== TARGET_POSITIONS.MIDDLE,
 					layoutDataRef,
-					sourceItemId: source.itemId,
+					sourceItemId: lastSource.itemId,
 					targetItemId: target.itemId,
 					targetPosition: target.position,
 				});
@@ -101,7 +103,7 @@ export default function KeyboardMovementManager() {
 				let thunk;
 
 				if (actionType === ACTION_TYPES.move) {
-					if (source.itemId === target.itemId) {
+					if (lastSource.itemId === target.itemId) {
 						setText(null);
 
 						disableMovement();
@@ -109,19 +111,21 @@ export default function KeyboardMovementManager() {
 						return;
 					}
 
-					thunk = source.fieldTypes?.includes('stepper')
+					thunk = lastSource.fieldTypes?.includes('stepper')
 						? moveStepper({
-								itemId: source.itemId,
+								itemId: lastSource.itemId,
 								parentItemId: dropItemId,
 								position,
 							})
 						: moveItems({
-								itemIds: [source.itemId],
+								itemIds: sources.map(({itemId}) => itemId),
 								parentItemIds: [dropItemId],
 								positions: [position],
 							});
 				}
 				else if (actionType === ACTION_TYPES.add) {
+					const [source] = sources;
+
 					if (source.type === LAYOUT_DATA_ITEM_TYPES.fragment) {
 						if (source.isWidget) {
 							thunk = addWidget({
@@ -164,6 +168,8 @@ export default function KeyboardMovementManager() {
 				}
 
 				const executeAction = () => {
+					const [source] = sources;
+
 					dispatch(thunk);
 
 					setText(
@@ -187,7 +193,9 @@ export default function KeyboardMovementManager() {
 
 				if (
 					formParent &&
-					source.fieldTypes?.includes('stepper') &&
+					sources.every((source) =>
+						source.fieldTypes?.includes('stepper')
+					) &&
 					!isMultistepForm(formParent)
 				) {
 					openFormConversionModal({
@@ -207,7 +215,7 @@ export default function KeyboardMovementManager() {
 		moveDown: {
 			action: () => {
 				const nextTarget = getNextTarget(
-					source,
+					lastSource,
 					target,
 					fragmentEntryLinksRef,
 					layoutDataRef,
@@ -230,7 +238,7 @@ export default function KeyboardMovementManager() {
 		moveToEnd: {
 			action: () => {
 				const nextTarget = getInitialTarget(
-					source,
+					sources,
 					layoutDataRef,
 					fragmentEntryLinksRef
 				);
@@ -254,7 +262,7 @@ export default function KeyboardMovementManager() {
 					];
 
 				const nextTarget = getNextTarget(
-					source,
+					lastSource,
 					{
 						itemId: root.itemId,
 						position: TARGET_POSITIONS.TOP,
@@ -280,7 +288,7 @@ export default function KeyboardMovementManager() {
 		moveUp: {
 			action: () => {
 				const nextTarget = getNextTarget(
-					source,
+					lastSource,
 					target,
 					fragmentEntryLinksRef,
 					layoutDataRef,
@@ -324,7 +332,7 @@ export default function KeyboardMovementManager() {
 
 	useEffect(() => {
 		const initialTarget = getInitialTarget(
-			source,
+			sources,
 			layoutDataRef,
 			fragmentEntryLinksRef
 		);
@@ -346,32 +354,38 @@ export default function KeyboardMovementManager() {
 		else {
 			disableMovement();
 
-			showErrorToast(source);
+			showErrorToast(lastSource);
 		}
 	}, [
 		disableMovement,
 		fragmentEntryLinksRef,
+		lastSource,
 		layoutDataRef,
 		selectItem,
 		setTarget,
 		setText,
-		source,
+		sources,
 	]);
 
 	return null;
 }
 
-export function getInitialTarget(source, layoutDataRef, fragmentEntryLinksRef) {
+export function getInitialTarget(
+	sources,
+	layoutDataRef,
+	fragmentEntryLinksRef
+) {
 	const layoutData = layoutDataRef.current;
 	const fragmentEntryLinks = fragmentEntryLinksRef.current;
+	const lastSource = sources[sources.length - 1];
 
-	const actionType = source.itemId ? ACTION_TYPES.move : ACTION_TYPES.add;
+	const actionType = lastSource.itemId ? ACTION_TYPES.move : ACTION_TYPES.add;
 
 	if (actionType === ACTION_TYPES.add) {
 		const root = layoutData.items[layoutData.rootItems.main];
 
 		const canDropInRoot = checkAllowedChild(
-			source,
+			lastSource,
 			root,
 			layoutDataRef.current,
 			fragmentEntryLinksRef.current
@@ -410,7 +424,7 @@ export function getInitialTarget(source, layoutDataRef, fragmentEntryLinksRef) {
 
 				else {
 					return getNextTarget(
-						source,
+						lastSource,
 						target,
 						fragmentEntryLinksRef,
 						layoutDataRef,
@@ -434,8 +448,11 @@ export function getInitialTarget(source, layoutDataRef, fragmentEntryLinksRef) {
 	}
 	else if (actionType === ACTION_TYPES.move) {
 		return {
-			itemId: source.itemId,
-			name: source.name,
+			itemId: lastSource.itemId,
+			name:
+				sources.length > 1
+					? sub(Liferay.Language.get('x-items'), sources.length)
+					: lastSource.name,
 			position: TARGET_POSITIONS.BOTTOM,
 		};
 	}

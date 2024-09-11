@@ -6,7 +6,7 @@
 import ClayIcon from '@clayui/icon';
 import {useEventListener} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
-import {debounce} from 'frontend-js-web';
+import {debounce, sub} from 'frontend-js-web';
 import React, {useEffect, useRef, useState} from 'react';
 
 import {
@@ -103,7 +103,7 @@ export default function KeyboardMovementPreview() {
 	const {itemId} = useMovementTarget();
 	const position = useMovementTargetPosition();
 
-	const source = useMovementSource();
+	const sources = useMovementSource();
 
 	const [style, setStyle] = useState(INITIAL_STYLE);
 
@@ -134,9 +134,19 @@ export default function KeyboardMovementPreview() {
 		document
 	);
 
-	if (!itemId) {
+	if (!itemId || !sources) {
 		return null;
 	}
+
+	const lastSource = sources[sources.length - 1];
+
+	const previewItem =
+		sources.length > 1
+			? {
+					icon: null,
+					label: sub(Liferay.Language.get('x-items'), sources.length),
+				}
+			: {icon: lastSource?.icon, label: lastSource?.name};
 
 	return (
 		<div className="cadmin">
@@ -147,15 +157,15 @@ export default function KeyboardMovementPreview() {
 					style={style}
 				>
 					<div className="align-items-center d-flex h-100">
-						<ClayIcon className="mt-0" symbol={source?.icon} />
+						<ClayIcon className="mt-0" symbol={previewItem.icon} />
 					</div>
 
 					<span
 						className={classNames('text-truncate', {
-							'ml-3': source?.icon,
+							'ml-3': previewItem.icon,
 						})}
 					>
-						{source?.name}
+						{previewItem.label}
 					</span>
 				</div>
 			</div>

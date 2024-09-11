@@ -242,9 +242,11 @@ function StructureTreeNodeContent({
 	const dropTargetPosition = targetPosition || keyboardMovementPosition;
 
 	const keyboardMovementSource = useMovementSource();
+	const lastSource =
+		keyboardMovementSource[keyboardMovementSource.length - 1];
 
 	const isDraggingSource =
-		itemIsDraggingSource || keyboardMovementSource?.itemId === item.itemId;
+		itemIsDraggingSource || lastSource?.itemId === item.itemId;
 
 	const isDroppable = useIsDroppable();
 
@@ -586,15 +588,17 @@ const MoveButton = ({
 			displayType="unstyled"
 			onBlur={(event) => event.stopPropagation()}
 			onClick={() =>
-				setMovementSource({
-					fieldTypes,
-					fragmentEntryType,
-					icon: node.icon,
-					isWidget,
-					itemId: node.id,
-					name: node.name,
-					type: node.type,
-				})
+				setMovementSource([
+					{
+						fieldTypes,
+						fragmentEntryType,
+						icon: node.icon,
+						isWidget,
+						itemId: node.id,
+						name: node.name,
+						type: node.type,
+					},
+				])
 			}
 			onFocus={(event) => {
 				buttonRef.current

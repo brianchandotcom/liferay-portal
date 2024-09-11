@@ -194,11 +194,11 @@ function TopperContent({
 		useDragItem(dragSource, onDragEnd, onDragBegin);
 
 	const keyboardMovementSource = useMovementSource();
+	const lastSource =
+		keyboardMovementSource[keyboardMovementSource.length - 1];
 
 	const isDraggingSource =
-		draggingItem ||
-		draggingTopper ||
-		keyboardMovementSource?.itemId === item.itemId;
+		draggingItem || draggingTopper || lastSource?.itemId === item.itemId;
 
 	const {elementRef, isFocusable} = useLayoutKeyboardNavigation(item);
 

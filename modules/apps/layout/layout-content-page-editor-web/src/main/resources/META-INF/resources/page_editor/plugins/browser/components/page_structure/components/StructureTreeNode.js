@@ -649,20 +649,29 @@ function computeHover({
 		const targetIsCollectionNotMapped =
 			targetItem.type === LAYOUT_DATA_ITEM_TYPES.collection &&
 			!collectionIsMapped(targetItem);
+
 		const targetIsColumn =
 			targetItem.type === LAYOUT_DATA_ITEM_TYPES.column;
+
 		const targetIsFragment =
 			targetItem.type === LAYOUT_DATA_ITEM_TYPES.fragment;
+
 		const targetIsContainer =
 			targetItem.type === LAYOUT_DATA_ITEM_TYPES.container ||
 			targetItem.type === LAYOUT_DATA_ITEM_TYPES.form;
+
 		const targetIsEmpty =
 			layoutDataRef.current.items[targetItem.itemId]?.children.length ===
 			0;
+
 		const targetIsFormNotMapped =
 			targetItem.type === LAYOUT_DATA_ITEM_TYPES.form &&
 			!formIsMapped(targetItem);
+
 		const targetIsParent = sourceItem.parentId === targetItem.itemId;
+
+		const targetIsFormStep =
+			targetItem.type === LAYOUT_DATA_ITEM_TYPES.formStep;
 
 		return (
 			targetPositionWithMiddle === TARGET_POSITIONS.MIDDLE &&
@@ -670,7 +679,8 @@ function computeHover({
 				targetIsCollectionNotMapped ||
 				targetIsColumn ||
 				targetIsContainer ||
-				targetIsFormNotMapped) &&
+				targetIsFormNotMapped ||
+				targetIsFormStep) &&
 			!targetIsFragment &&
 			!targetIsParent
 		);

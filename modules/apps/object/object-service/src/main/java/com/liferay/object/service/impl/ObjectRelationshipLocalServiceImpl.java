@@ -1326,7 +1326,7 @@ public class ObjectRelationshipLocalServiceImpl
 				objectDefinition1);
 		}
 
-		if (objectDefinition2.isApproved()) {
+		if (objectDefinition1.isApproved() && objectDefinition2.isApproved()) {
 			objectDefinition2.setPreviousRESTContextPath(
 				objectDefinition2PreviousRESTContextPath);
 

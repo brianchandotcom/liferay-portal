@@ -1504,6 +1504,23 @@ public class ObjectRelationshipLocalServiceImpl
 				"Object relationship must not be between unmodifiable system " +
 					"object definitions to be an edge of a root context");
 		}
+
+		int objectDefinition1ObjectEntriesCount =
+			_objectEntryLocalService.getObjectEntriesCount(
+				objectDefinition1.getObjectDefinitionId());
+		int objectDefinition2ObjectEntriesCount =
+			_objectEntryLocalService.getObjectEntriesCount(
+				objectDefinition2.getObjectDefinitionId());
+
+		if ((objectDefinition1ObjectEntriesCount > 0) ||
+			(objectDefinition2ObjectEntriesCount > 0)) {
+
+			throw new ObjectRelationshipEdgeException(
+				StringBundler.concat(
+					"Object relationship must not be between object ",
+					"definitions that contains object entries to be an edge ",
+					"of a root context"));
+		}
 	}
 
 	private void _validateExternalReferenceCode(

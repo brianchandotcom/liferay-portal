@@ -3,107 +3,106 @@
 		"pageElements": [
 			{
 				"definition": {
-				  "indexed": true,
-				  "layout": {
-			  
-				  }
+					"indexed": true,
+					"layout": {
+					}
 				},
 				"pageElements": [
-				  {
-					"definition": {
-					  "fragment": {
-						"key": "pricing-warning",
-						"siteKey": "[$GROUP_KEY$]"
-					  },
-					  "fragmentConfig": {
-			  
-					  },
-					  "fragmentFields": [
-						{
-							"id": "alert-text",
-							"value": {
-								"fragmentLink": {},
-								"text": {
-									"value_i18n": {
-										"ar_SA": "Please note: The information provided on pricing is for your reference only. Quotes can not be shared with clients until a Liferay account representative provides official pricing on an approved deal registration.",
-										"ca_ES": "Please note: The information provided on pricing is for your reference only. Quotes can not be shared with clients until a Liferay account representative provides official pricing on an approved deal registration.",
-										"de_DE": "Please note: The information provided on pricing is for your reference only. Quotes can not be shared with clients until a Liferay account representative provides official pricing on an approved deal registration.",
-										"en_US": "Please note: The information provided on pricing is for your reference only. Quotes can not be shared with clients until a Liferay account representative provides official pricing on an approved deal registration.",
-										"es_ES": "Please note: The information provided on pricing is for your reference only. Quotes can not be shared with clients until a Liferay account representative provides official pricing on an approved deal registration.",
-										"fi_FI": "Please note: The information provided on pricing is for your reference only. Quotes can not be shared with clients until a Liferay account representative provides official pricing on an approved deal registration.",
-										"fr_FR": "Please note: The information provided on pricing is for your reference only. Quotes can not be shared with clients until a Liferay account representative provides official pricing on an approved deal registration.",
-										"hu_HU": "Please note: The information provided on pricing is for your reference only. Quotes can not be shared with clients until a Liferay account representative provides official pricing on an approved deal registration.",
-										"ja_JP": "Please note: The information provided on pricing is for your reference only. Quotes can not be shared with clients until a Liferay account representative provides official pricing on an approved deal registration.",
-										"nl_NL": "Please note: The information provided on pricing is for your reference only. Quotes can not be shared with clients until a Liferay account representative provides official pricing on an approved deal registration.",
-										"pt_BR": "Please note: The information provided on pricing is for your reference only. Quotes can not be shared with clients until a Liferay account representative provides official pricing on an approved deal registration.",
-										"sv_SE": "Please note: The information provided on pricing is for your reference only. Quotes can not be shared with clients until a Liferay account representative provides official pricing on an approved deal registration.",
-										"zh_CN": "Please note: The information provided on pricing is for your reference only. Quotes can not be shared with clients until a Liferay account representative provides official pricing on an approved deal registration."
+					{
+						"definition": {
+							"fragment": {
+								"key": "pricing-warning",
+								"siteKey": "[$GROUP_KEY$]"
+							},
+							"fragmentConfig": {
+							},
+							"fragmentFields": [
+								{
+									"id": "alert-text",
+									"value": {
+										"fragmentLink": {
+										},
+										"text": {
+											"value_i18n": {
+												"ar_SA": "Please note: The information provided on pricing is for your reference only. Quotes can not be shared with clients until a Liferay account representative provides official pricing on an approved deal registration.",
+												"ca_ES": "Please note: The information provided on pricing is for your reference only. Quotes can not be shared with clients until a Liferay account representative provides official pricing on an approved deal registration.",
+												"de_DE": "Please note: The information provided on pricing is for your reference only. Quotes can not be shared with clients until a Liferay account representative provides official pricing on an approved deal registration.",
+												"en_US": "Please note: The information provided on pricing is for your reference only. Quotes can not be shared with clients until a Liferay account representative provides official pricing on an approved deal registration.",
+												"es_ES": "Please note: The information provided on pricing is for your reference only. Quotes can not be shared with clients until a Liferay account representative provides official pricing on an approved deal registration.",
+												"fi_FI": "Please note: The information provided on pricing is for your reference only. Quotes can not be shared with clients until a Liferay account representative provides official pricing on an approved deal registration.",
+												"fr_FR": "Please note: The information provided on pricing is for your reference only. Quotes can not be shared with clients until a Liferay account representative provides official pricing on an approved deal registration.",
+												"hu_HU": "Please note: The information provided on pricing is for your reference only. Quotes can not be shared with clients until a Liferay account representative provides official pricing on an approved deal registration.",
+												"ja_JP": "Please note: The information provided on pricing is for your reference only. Quotes can not be shared with clients until a Liferay account representative provides official pricing on an approved deal registration.",
+												"nl_NL": "Please note: The information provided on pricing is for your reference only. Quotes can not be shared with clients until a Liferay account representative provides official pricing on an approved deal registration.",
+												"pt_BR": "Please note: The information provided on pricing is for your reference only. Quotes can not be shared with clients until a Liferay account representative provides official pricing on an approved deal registration.",
+												"sv_SE": "Please note: The information provided on pricing is for your reference only. Quotes can not be shared with clients until a Liferay account representative provides official pricing on an approved deal registration.",
+												"zh_CN": "Please note: The information provided on pricing is for your reference only. Quotes can not be shared with clients until a Liferay account representative provides official pricing on an approved deal registration."
+											}
+										}
 									}
 								}
-							}
-						}
-					  ],
-					  "fragmentStyle": {
-						"marginTop": "4"
-					  },
-					  "indexed": true
-					},
-					"type": "Fragment"
-				  },
-				  {
-					"definition": {
-					  "fragment": {
-						"key": "dialect-dialect-text"
-					  },
-					  "fragmentConfig": {
-						"textType": "h1"
-					  },
-					  "fragmentFields": [
-						{
-							"id": "element-text",
-							"value": {
-								"fragmentLink": {},
-								"text": {
-									"value_i18n": {
-										"ar_SA": "Pricing Calculator",
-										"ca_ES": "Pricing Calculator",
-										"de_DE": "Pricing Calculator",
-										"en_US": "Pricing Calculator",
-										"es_ES": "Pricing Calculator",
-										"fi_FI": "Pricing Calculator",
-										"fr_FR": "Pricing Calculator",
-										"hu_HU": "Pricing Calculator",
-										"ja_JP": "Pricing Calculator",
-										"nl_NL": "Pricing Calculator",
-										"pt_BR": "Pricing Calculator",
-										"sv_SE": "Pricing Calculator",
-										"zh_CN": "Pricing Calculator"
-									}
-								}
-							}
-						}
-					  ],
-					  "fragmentStyle": {
-						"marginTop": "5"
-					  },
-					  "indexed": true
-					},
-					"type": "Fragment"
-				  },
-				  {
-					"definition": {
-					  "widgetInstance": {
-						"widgetConfig": {
-			  
+							],
+							"fragmentStyle": {
+								"marginTop": "4"
+							},
+							"indexed": true
 						},
-						"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet"
-					  }
+						"type": "Fragment"
 					},
-					"type": "Widget"
-				  }
+					{
+						"definition": {
+							"fragment": {
+								"key": "dialect-dialect-text"
+							},
+							"fragmentConfig": {
+								"textType": "h1"
+							},
+							"fragmentFields": [
+								{
+									"id": "element-text",
+									"value": {
+										"fragmentLink": {
+										},
+										"text": {
+											"value_i18n": {
+												"ar_SA": "Pricing Calculator",
+												"ca_ES": "Pricing Calculator",
+												"de_DE": "Pricing Calculator",
+												"en_US": "Pricing Calculator",
+												"es_ES": "Pricing Calculator",
+												"fi_FI": "Pricing Calculator",
+												"fr_FR": "Pricing Calculator",
+												"hu_HU": "Pricing Calculator",
+												"ja_JP": "Pricing Calculator",
+												"nl_NL": "Pricing Calculator",
+												"pt_BR": "Pricing Calculator",
+												"sv_SE": "Pricing Calculator",
+												"zh_CN": "Pricing Calculator"
+											}
+										}
+									}
+								}
+							],
+							"fragmentStyle": {
+								"marginTop": "5"
+							},
+							"indexed": true
+						},
+						"type": "Fragment"
+					},
+					{
+						"definition": {
+							"widgetInstance": {
+								"widgetConfig": {
+								},
+								"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet"
+							}
+						},
+						"type": "Widget"
+					}
 				],
 				"type": "Section"
-			  }
+			}
 		],
 		"type": "Root"
 	},

@@ -3,30 +3,29 @@
 		"pageElements": [
 			{
 				"definition": {
-				  "indexed": true,
-				  "layout": {
-			  
-				  }
+					"indexed": true,
+					"layout": {
+					}
 				},
 				"pageElements": [
-				  {
-					"definition": {
-					  "fragmentStyle": {
-						"maxWidth": "600px"
-					  },
-					  "widgetInstance": {
-						"widgetConfig": {
-						  "groupId": "15095646",
-						  "formInstanceId": "15807611"
+					{
+						"definition": {
+							"fragmentStyle": {
+								"maxWidth": "600px"
+							},
+							"widgetInstance": {
+								"widgetConfig": {
+									"formInstanceId": "15807611",
+									"groupId": "15095646"
+								},
+								"widgetName": "com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormPortlet"
+							}
 						},
-						"widgetName": "com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormPortlet"
-					  }
-					},
-					"type": "Widget"
-				  }
+						"type": "Widget"
+					}
 				],
 				"type": "Section"
-			  }
+			}
 		],
 		"type": "Root"
 	},

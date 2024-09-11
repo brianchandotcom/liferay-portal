@@ -3,73 +3,72 @@
 		"pageElements": [
 			{
 				"definition": {
-				  "fragmentStyle": {
-					"borderWidth": "0"
-				  },
-				  "indexed": true,
-				  "layout": {
-			  
-				  }
+					"fragmentStyle": {
+						"borderWidth": "0"
+					},
+					"indexed": true,
+					"layout": {
+					}
 				},
 				"pageElements": [
-				  {
-					"definition": {
-					  "widgetInstance": {
-						"widgetConfig": {
-						  "displaySchedulerHeader": "true",
-						  "showMonthView": "true",
-						  "showAgendaView": "false",
-						  "timeZoneId": "",
-						  "defaultDuration": "60",
-						  "showWeekView": "false",
-						  "eventsPerPage": "60",
-						  "rssTimeInterval": "604800000",
-						  "showDayView": "false",
-						  "defaultView": "month",
-						  "displaySchedulerOnly": "true",
-						  "enableRss": "true",
-						  "rssFeedType": "atom_1.0",
-						  "timeFormat": "locale",
-						  "maxDaysDisplayed": "31",
-						  "rssDelta": "20",
-						  "rssDisplayStyle": "full-content",
-						  "showUserEvents": "false",
-						  "weekStartsOn": "0",
-						  "usePortalTimeZone": "true"
+					{
+						"definition": {
+							"widgetInstance": {
+								"widgetConfig": {
+									"defaultDuration": "60",
+									"defaultView": "month",
+									"displaySchedulerHeader": "true",
+									"displaySchedulerOnly": "true",
+									"enableRss": "true",
+									"eventsPerPage": "60",
+									"maxDaysDisplayed": "31",
+									"rssDelta": "20",
+									"rssDisplayStyle": "full-content",
+									"rssFeedType": "atom_1.0",
+									"rssTimeInterval": "604800000",
+									"showAgendaView": "false",
+									"showDayView": "false",
+									"showMonthView": "true",
+									"showUserEvents": "false",
+									"showWeekView": "false",
+									"timeFormat": "locale",
+									"timeZoneId": "",
+									"usePortalTimeZone": "true",
+									"weekStartsOn": "0"
+								},
+								"widgetName": "com_liferay_calendar_web_portlet_CalendarPortlet",
+								"widgetPermissions": [
+									{
+										"actionKeys": [
+											"VIEW"
+										],
+										"roleKey": "Site Member"
+									},
+									{
+										"actionKeys": [
+											"VIEW"
+										],
+										"roleKey": "Guest"
+									},
+									{
+										"actionKeys": [
+											"PERMISSIONS",
+											"PREFERENCES",
+											"CONFIGURATION",
+											"ACCESS_IN_CONTROL_PANEL",
+											"VIEW",
+											"ADD_TO_PAGE"
+										],
+										"roleKey": "Owner"
+									}
+								]
+							}
 						},
-						"widgetName": "com_liferay_calendar_web_portlet_CalendarPortlet",
-						"widgetPermissions": [
-						  {
-							"actionKeys": [
-							  "VIEW"
-							],
-							"roleKey": "Site Member"
-						  },
-						  {
-							"actionKeys": [
-							  "VIEW"
-							],
-							"roleKey": "Guest"
-						  },
-						  {
-							"actionKeys": [
-							  "PERMISSIONS",
-							  "PREFERENCES",
-							  "CONFIGURATION",
-							  "ACCESS_IN_CONTROL_PANEL",
-							  "VIEW",
-							  "ADD_TO_PAGE"
-							],
-							"roleKey": "Owner"
-						  }
-						]
-					  }
-					},
-					"type": "Widget"
-				  }
+						"type": "Widget"
+					}
 				],
 				"type": "Section"
-			  }
+			}
 		],
 		"type": "Root"
 	},

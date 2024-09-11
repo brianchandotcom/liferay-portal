@@ -4,7 +4,8 @@
 			{
 				"definition": {
 					"indexed": true,
-					"layout": {}
+					"layout": {
+					}
 				},
 				"pageElements": [
 					{
@@ -42,11 +43,13 @@
 										},
 										{
 											"id": "portraitMobile",
-											"rowViewportDefinition": {}
+											"rowViewportDefinition": {
+											}
 										},
 										{
 											"id": "tablet",
-											"rowViewportDefinition": {}
+											"rowViewportDefinition": {
+											}
 										}
 									],
 									"verticalAlignment": "middle"
@@ -62,11 +65,13 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],
@@ -85,7 +90,8 @@
 														{
 															"id": "element-text",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"value_i18n": {
 																		"ar_SA": "Request a Demo Instance",
@@ -127,7 +133,8 @@
 														{
 															"id": "element-text",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"value_i18n": {
 																		"ar_SA": "Demos are available to showcase Liferay's benefits, features, and solutions for your prospect's unique business challenges.&nbsp;",
@@ -168,11 +175,13 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],
@@ -217,7 +226,8 @@
 																				}
 																			}
 																		},
-																		"fragmentLink": {}
+																		"fragmentLink": {
+																		}
 																	}
 																}
 															],
@@ -263,11 +273,13 @@
 								},
 								{
 									"id": "portraitMobile",
-									"rowViewportDefinition": {}
+									"rowViewportDefinition": {
+									}
 								},
 								{
 									"id": "tablet",
-									"rowViewportDefinition": {}
+									"rowViewportDefinition": {
+									}
 								}
 							],
 							"verticalAlignment": "top"
@@ -283,11 +295,13 @@
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "portraitMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "tablet"
 										}
 									],
@@ -299,27 +313,29 @@
 											"fragment": {
 												"key": "BASIC_COMPONENT-paragraph"
 											},
-											"fragmentConfig": {},
+											"fragmentConfig": {
+											},
 											"fragmentFields": [
 												{
 													"id": "element-text",
 													"value": {
-														"fragmentLink": {},
+														"fragmentLink": {
+														},
 														"text": {
 															"value_i18n": {
-																"ar_SA": "\u003Ch4 dir=\"ltr\"\u003E\u003Cstrong\u003EGetting Started\u003C/strong\u003E\u003C/h4\u003E\n\n\u003Cp dir=\"ltr\"\u003EDemo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;\u003Cstrong\u003E\u003Cu\u003E7 days\u003C/u\u003E\u003C/strong\u003E&nbsp;per request.&nbsp;\u003Cbr /\u003E\n\u003Cbr /\u003E\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003EFor questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;\u003Ca href=\"mailto:partner-enablement@liferay.com\"\u003Epartner-enablement@liferay.com\u003C/a\u003E.\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003E \u003C/p\u003E\n",
-																"ca_ES": "\u003Ch4 dir=\"ltr\"\u003E\u003Cstrong\u003EGetting Started\u003C/strong\u003E\u003C/h4\u003E\n\n\u003Cp dir=\"ltr\"\u003EDemo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;\u003Cstrong\u003E\u003Cu\u003E7 days\u003C/u\u003E\u003C/strong\u003E&nbsp;per request.&nbsp;\u003Cbr /\u003E\n\u003Cbr /\u003E\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003EFor questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;\u003Ca href=\"mailto:partner-enablement@liferay.com\"\u003Epartner-enablement@liferay.com\u003C/a\u003E.\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003E \u003C/p\u003E\n",
-																"de_DE": "\u003Ch4 dir=\"ltr\"\u003E\u003Cstrong\u003EGetting Started\u003C/strong\u003E\u003C/h4\u003E\n\n\u003Cp dir=\"ltr\"\u003EDemo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;\u003Cstrong\u003E\u003Cu\u003E7 days\u003C/u\u003E\u003C/strong\u003E&nbsp;per request.&nbsp;\u003Cbr /\u003E\n\u003Cbr /\u003E\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003EFor questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;\u003Ca href=\"mailto:partner-enablement@liferay.com\"\u003Epartner-enablement@liferay.com\u003C/a\u003E.\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003E \u003C/p\u003E\n",
-																"en_US": "\u003Ch4 dir=\"ltr\"\u003E\u003Cstrong\u003EGetting Started\u003C/strong\u003E\u003C/h4\u003E\n\n\u003Cp dir=\"ltr\"\u003EDemo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;\u003Cstrong\u003E\u003Cu\u003E7 days\u003C/u\u003E\u003C/strong\u003E&nbsp;per request.&nbsp;\u003Cbr /\u003E\n\u003Cbr /\u003E\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003EFor questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;\u003Ca href=\"mailto:partner-enablement@liferay.com\"\u003Epartner-enablement@liferay.com\u003C/a\u003E.\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003E \u003C/p\u003E\n",
-																"es_ES": "\u003Ch4 dir=\"ltr\"\u003E\u003Cstrong\u003EGetting Started\u003C/strong\u003E\u003C/h4\u003E\n\n\u003Cp dir=\"ltr\"\u003EDemo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;\u003Cstrong\u003E\u003Cu\u003E7 days\u003C/u\u003E\u003C/strong\u003E&nbsp;per request.&nbsp;\u003Cbr /\u003E\n\u003Cbr /\u003E\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003EFor questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;\u003Ca href=\"mailto:partner-enablement@liferay.com\"\u003Epartner-enablement@liferay.com\u003C/a\u003E.\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003E \u003C/p\u003E\n",
-																"fi_FI": "\u003Ch4 dir=\"ltr\"\u003E\u003Cstrong\u003EGetting Started\u003C/strong\u003E\u003C/h4\u003E\n\n\u003Cp dir=\"ltr\"\u003EDemo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;\u003Cstrong\u003E\u003Cu\u003E7 days\u003C/u\u003E\u003C/strong\u003E&nbsp;per request.&nbsp;\u003Cbr /\u003E\n\u003Cbr /\u003E\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003EFor questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;\u003Ca href=\"mailto:partner-enablement@liferay.com\"\u003Epartner-enablement@liferay.com\u003C/a\u003E.\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003E \u003C/p\u003E\n",
-																"fr_FR": "\u003Ch4 dir=\"ltr\"\u003E\u003Cstrong\u003EGetting Started\u003C/strong\u003E\u003C/h4\u003E\n\n\u003Cp dir=\"ltr\"\u003EDemo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;\u003Cstrong\u003E\u003Cu\u003E7 days\u003C/u\u003E\u003C/strong\u003E&nbsp;per request.&nbsp;\u003Cbr /\u003E\n\u003Cbr /\u003E\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003EFor questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;\u003Ca href=\"mailto:partner-enablement@liferay.com\"\u003Epartner-enablement@liferay.com\u003C/a\u003E.\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003E \u003C/p\u003E\n",
-																"hu_HU": "\u003Ch4 dir=\"ltr\"\u003E\u003Cstrong\u003EGetting Started\u003C/strong\u003E\u003C/h4\u003E\n\n\u003Cp dir=\"ltr\"\u003EDemo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;\u003Cstrong\u003E\u003Cu\u003E7 days\u003C/u\u003E\u003C/strong\u003E&nbsp;per request.&nbsp;\u003Cbr /\u003E\n\u003Cbr /\u003E\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003EFor questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;\u003Ca href=\"mailto:partner-enablement@liferay.com\"\u003Epartner-enablement@liferay.com\u003C/a\u003E.\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003E \u003C/p\u003E\n",
-																"ja_JP": "\u003Ch4 dir=\"ltr\"\u003E\u003Cstrong\u003EGetting Started\u003C/strong\u003E\u003C/h4\u003E\n\n\u003Cp dir=\"ltr\"\u003EDemo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;\u003Cstrong\u003E\u003Cu\u003E7 days\u003C/u\u003E\u003C/strong\u003E&nbsp;per request.&nbsp;\u003Cbr /\u003E\n\u003Cbr /\u003E\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003EFor questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;\u003Ca href=\"mailto:partner-enablement@liferay.com\"\u003Epartner-enablement@liferay.com\u003C/a\u003E.\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003E \u003C/p\u003E\n",
-																"nl_NL": "\u003Ch4 dir=\"ltr\"\u003E\u003Cstrong\u003EGetting Started\u003C/strong\u003E\u003C/h4\u003E\n\n\u003Cp dir=\"ltr\"\u003EDemo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;\u003Cstrong\u003E\u003Cu\u003E7 days\u003C/u\u003E\u003C/strong\u003E&nbsp;per request.&nbsp;\u003Cbr /\u003E\n\u003Cbr /\u003E\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003EFor questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;\u003Ca href=\"mailto:partner-enablement@liferay.com\"\u003Epartner-enablement@liferay.com\u003C/a\u003E.\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003E \u003C/p\u003E\n",
-																"pt_BR": "\u003Ch4 dir=\"ltr\"\u003E\u003Cstrong\u003EGetting Started\u003C/strong\u003E\u003C/h4\u003E\n\n\u003Cp dir=\"ltr\"\u003EDemo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;\u003Cstrong\u003E\u003Cu\u003E7 days\u003C/u\u003E\u003C/strong\u003E&nbsp;per request.&nbsp;\u003Cbr /\u003E\n\u003Cbr /\u003E\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003EFor questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;\u003Ca href=\"mailto:partner-enablement@liferay.com\"\u003Epartner-enablement@liferay.com\u003C/a\u003E.\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003E \u003C/p\u003E\n",
-																"sv_SE": "\u003Ch4 dir=\"ltr\"\u003E\u003Cstrong\u003EGetting Started\u003C/strong\u003E\u003C/h4\u003E\n\n\u003Cp dir=\"ltr\"\u003EDemo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;\u003Cstrong\u003E\u003Cu\u003E7 days\u003C/u\u003E\u003C/strong\u003E&nbsp;per request.&nbsp;\u003Cbr /\u003E\n\u003Cbr /\u003E\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003EFor questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;\u003Ca href=\"mailto:partner-enablement@liferay.com\"\u003Epartner-enablement@liferay.com\u003C/a\u003E.\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003E \u003C/p\u003E\n",
-																"zh_CN": "\u003Ch4 dir=\"ltr\"\u003E\u003Cstrong\u003EGetting Started\u003C/strong\u003E\u003C/h4\u003E\n\n\u003Cp dir=\"ltr\"\u003EDemo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;\u003Cstrong\u003E\u003Cu\u003E7 days\u003C/u\u003E\u003C/strong\u003E&nbsp;per request.&nbsp;\u003Cbr /\u003E\n\u003Cbr /\u003E\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003EFor questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;\u003Ca href=\"mailto:partner-enablement@liferay.com\"\u003Epartner-enablement@liferay.com\u003C/a\u003E.\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003E \u003C/p\u003E\n"
+																"ar_SA": "<h4 dir=\"ltr\"><strong>Getting Started</strong></h4>\n\n<p dir=\"ltr\">Demo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;<strong><u>7 days</u></strong>&nbsp;per request.&nbsp;<br />\n<br />\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.</p>\n\n<p dir=\"ltr\">For questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;<a href=\"mailto:partner-enablement@liferay.com\">partner-enablement@liferay.com</a>.</p>\n\n<p dir=\"ltr\"> </p>\n",
+																"ca_ES": "<h4 dir=\"ltr\"><strong>Getting Started</strong></h4>\n\n<p dir=\"ltr\">Demo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;<strong><u>7 days</u></strong>&nbsp;per request.&nbsp;<br />\n<br />\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.</p>\n\n<p dir=\"ltr\">For questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;<a href=\"mailto:partner-enablement@liferay.com\">partner-enablement@liferay.com</a>.</p>\n\n<p dir=\"ltr\"> </p>\n",
+																"de_DE": "<h4 dir=\"ltr\"><strong>Getting Started</strong></h4>\n\n<p dir=\"ltr\">Demo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;<strong><u>7 days</u></strong>&nbsp;per request.&nbsp;<br />\n<br />\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.</p>\n\n<p dir=\"ltr\">For questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;<a href=\"mailto:partner-enablement@liferay.com\">partner-enablement@liferay.com</a>.</p>\n\n<p dir=\"ltr\"> </p>\n",
+																"en_US": "<h4 dir=\"ltr\"><strong>Getting Started</strong></h4>\n\n<p dir=\"ltr\">Demo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;<strong><u>7 days</u></strong>&nbsp;per request.&nbsp;<br />\n<br />\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.</p>\n\n<p dir=\"ltr\">For questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;<a href=\"mailto:partner-enablement@liferay.com\">partner-enablement@liferay.com</a>.</p>\n\n<p dir=\"ltr\"> </p>\n",
+																"es_ES": "<h4 dir=\"ltr\"><strong>Getting Started</strong></h4>\n\n<p dir=\"ltr\">Demo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;<strong><u>7 days</u></strong>&nbsp;per request.&nbsp;<br />\n<br />\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.</p>\n\n<p dir=\"ltr\">For questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;<a href=\"mailto:partner-enablement@liferay.com\">partner-enablement@liferay.com</a>.</p>\n\n<p dir=\"ltr\"> </p>\n",
+																"fi_FI": "<h4 dir=\"ltr\"><strong>Getting Started</strong></h4>\n\n<p dir=\"ltr\">Demo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;<strong><u>7 days</u></strong>&nbsp;per request.&nbsp;<br />\n<br />\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.</p>\n\n<p dir=\"ltr\">For questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;<a href=\"mailto:partner-enablement@liferay.com\">partner-enablement@liferay.com</a>.</p>\n\n<p dir=\"ltr\"> </p>\n",
+																"fr_FR": "<h4 dir=\"ltr\"><strong>Getting Started</strong></h4>\n\n<p dir=\"ltr\">Demo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;<strong><u>7 days</u></strong>&nbsp;per request.&nbsp;<br />\n<br />\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.</p>\n\n<p dir=\"ltr\">For questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;<a href=\"mailto:partner-enablement@liferay.com\">partner-enablement@liferay.com</a>.</p>\n\n<p dir=\"ltr\"> </p>\n",
+																"hu_HU": "<h4 dir=\"ltr\"><strong>Getting Started</strong></h4>\n\n<p dir=\"ltr\">Demo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;<strong><u>7 days</u></strong>&nbsp;per request.&nbsp;<br />\n<br />\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.</p>\n\n<p dir=\"ltr\">For questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;<a href=\"mailto:partner-enablement@liferay.com\">partner-enablement@liferay.com</a>.</p>\n\n<p dir=\"ltr\"> </p>\n",
+																"ja_JP": "<h4 dir=\"ltr\"><strong>Getting Started</strong></h4>\n\n<p dir=\"ltr\">Demo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;<strong><u>7 days</u></strong>&nbsp;per request.&nbsp;<br />\n<br />\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.</p>\n\n<p dir=\"ltr\">For questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;<a href=\"mailto:partner-enablement@liferay.com\">partner-enablement@liferay.com</a>.</p>\n\n<p dir=\"ltr\"> </p>\n",
+																"nl_NL": "<h4 dir=\"ltr\"><strong>Getting Started</strong></h4>\n\n<p dir=\"ltr\">Demo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;<strong><u>7 days</u></strong>&nbsp;per request.&nbsp;<br />\n<br />\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.</p>\n\n<p dir=\"ltr\">For questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;<a href=\"mailto:partner-enablement@liferay.com\">partner-enablement@liferay.com</a>.</p>\n\n<p dir=\"ltr\"> </p>\n",
+																"pt_BR": "<h4 dir=\"ltr\"><strong>Getting Started</strong></h4>\n\n<p dir=\"ltr\">Demo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;<strong><u>7 days</u></strong>&nbsp;per request.&nbsp;<br />\n<br />\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.</p>\n\n<p dir=\"ltr\">For questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;<a href=\"mailto:partner-enablement@liferay.com\">partner-enablement@liferay.com</a>.</p>\n\n<p dir=\"ltr\"> </p>\n",
+																"sv_SE": "<h4 dir=\"ltr\"><strong>Getting Started</strong></h4>\n\n<p dir=\"ltr\">Demo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;<strong><u>7 days</u></strong>&nbsp;per request.&nbsp;<br />\n<br />\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.</p>\n\n<p dir=\"ltr\">For questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;<a href=\"mailto:partner-enablement@liferay.com\">partner-enablement@liferay.com</a>.</p>\n\n<p dir=\"ltr\"> </p>\n",
+																"zh_CN": "<h4 dir=\"ltr\"><strong>Getting Started</strong></h4>\n\n<p dir=\"ltr\">Demo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;<strong><u>7 days</u></strong>&nbsp;per request.&nbsp;<br />\n<br />\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.</p>\n\n<p dir=\"ltr\">For questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;<a href=\"mailto:partner-enablement@liferay.com\">partner-enablement@liferay.com</a>.</p>\n\n<p dir=\"ltr\"> </p>\n"
 															}
 														}
 													}
@@ -341,7 +357,8 @@
 												{
 													"id": "element-text",
 													"value": {
-														"fragmentLink": {},
+														"fragmentLink": {
+														},
 														"text": {
 															"value_i18n": {
 																"ar_SA": "Demo Descriptions",
@@ -374,12 +391,14 @@
 											"fragment": {
 												"key": "BASIC_COMPONENT-paragraph"
 											},
-											"fragmentConfig": {},
+											"fragmentConfig": {
+											},
 											"fragmentFields": [
 												{
 													"id": "element-text",
 													"value": {
-														"fragmentLink": {},
+														"fragmentLink": {
+														},
 														"text": {
 															"value_i18n": {
 																"ar_SA": "The 'Demo Required' list provides the names of the demos which are available to be provisioned. For more information read the following description.",
@@ -423,11 +442,13 @@
 												},
 												{
 													"id": "portraitMobile",
-													"rowViewportDefinition": {}
+													"rowViewportDefinition": {
+													}
 												},
 												{
 													"id": "tablet",
-													"rowViewportDefinition": {}
+													"rowViewportDefinition": {
+													}
 												}
 											],
 											"verticalAlignment": "top"
@@ -443,11 +464,13 @@
 															"id": "landscapeMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "portraitMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "tablet"
 														}
 													],
@@ -477,7 +500,8 @@
 																				}
 																			}
 																		},
-																		"fragmentLink": {}
+																		"fragmentLink": {
+																		}
 																	}
 																}
 															],
@@ -498,11 +522,13 @@
 															"id": "landscapeMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "portraitMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "tablet"
 														}
 													],
@@ -521,7 +547,8 @@
 																{
 																	"id": "element-text",
 																	"value": {
-																		"fragmentLink": {},
+																		"fragmentLink": {
+																		},
 																		"text": {
 																			"value_i18n": {
 																				"ar_SA": "Commerce and Marketers",
@@ -551,12 +578,14 @@
 															"fragment": {
 																"key": "BASIC_COMPONENT-paragraph"
 															},
-															"fragmentConfig": {},
+															"fragmentConfig": {
+															},
 															"fragmentFields": [
 																{
 																	"id": "element-text",
 																	"value": {
-																		"fragmentLink": {},
+																		"fragmentLink": {
+																		},
 																		"text": {
 																			"value_i18n": {
 																				"ar_SA": "B2B Commerce and public website demo in the manufacturing/retail space, focusing on B2B buyers and company marketers.",
@@ -606,11 +635,13 @@
 												},
 												{
 													"id": "portraitMobile",
-													"rowViewportDefinition": {}
+													"rowViewportDefinition": {
+													}
 												},
 												{
 													"id": "tablet",
-													"rowViewportDefinition": {}
+													"rowViewportDefinition": {
+													}
 												}
 											],
 											"verticalAlignment": "top"
@@ -626,11 +657,13 @@
 															"id": "landscapeMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "portraitMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "tablet"
 														}
 													],
@@ -660,7 +693,8 @@
 																				}
 																			}
 																		},
-																		"fragmentLink": {}
+																		"fragmentLink": {
+																		}
 																	}
 																}
 															],
@@ -681,11 +715,13 @@
 															"id": "landscapeMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "portraitMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "tablet"
 														}
 													],
@@ -704,7 +740,8 @@
 																{
 																	"id": "element-text",
 																	"value": {
-																		"fragmentLink": {},
+																		"fragmentLink": {
+																		},
 																		"text": {
 																			"value_i18n": {
 																				"ar_SA": "Financial Demo",
@@ -734,12 +771,14 @@
 															"fragment": {
 																"key": "BASIC_COMPONENT-paragraph"
 															},
-															"fragmentConfig": {},
+															"fragmentConfig": {
+															},
 															"fragmentFields": [
 																{
 																	"id": "element-text",
 																	"value": {
-																		"fragmentLink": {},
+																		"fragmentLink": {
+																		},
 																		"text": {
 																			"value_i18n": {
 																				"ar_SA": "Financials Demos is a template including a retail banking demo with Lifebank and a private banking (wealth management) demo with Pillar. Both demos include public and private web sites using remote apps and objects to manage bank accounts, transactions etc.",
@@ -789,11 +828,13 @@
 												},
 												{
 													"id": "portraitMobile",
-													"rowViewportDefinition": {}
+													"rowViewportDefinition": {
+													}
 												},
 												{
 													"id": "tablet",
-													"rowViewportDefinition": {}
+													"rowViewportDefinition": {
+													}
 												}
 											],
 											"verticalAlignment": "top"
@@ -809,11 +850,13 @@
 															"id": "landscapeMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "portraitMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "tablet"
 														}
 													],
@@ -843,7 +886,8 @@
 																				}
 																			}
 																		},
-																		"fragmentLink": {}
+																		"fragmentLink": {
+																		}
 																	}
 																}
 															],
@@ -864,11 +908,13 @@
 															"id": "landscapeMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "portraitMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "tablet"
 														}
 													],
@@ -887,7 +933,8 @@
 																{
 																	"id": "element-text",
 																	"value": {
-																		"fragmentLink": {},
+																		"fragmentLink": {
+																		},
 																		"text": {
 																			"value_i18n": {
 																				"ar_SA": "LIFE Insurances",
@@ -917,12 +964,14 @@
 															"fragment": {
 																"key": "BASIC_COMPONENT-paragraph"
 															},
-															"fragmentConfig": {},
+															"fragmentConfig": {
+															},
 															"fragmentFields": [
 																{
 																	"id": "element-text",
 																	"value": {
-																		"fragmentLink": {},
+																		"fragmentLink": {
+																		},
 																		"text": {
 																			"value_i18n": {
 																				"ar_SA": "An insurance company portal demo. It includes a public portal, a customer portal and an agent portal. You will find a complete Customer Journey from a lead from a Social Network to becoming a customer and purchasing LIFE's products.",
@@ -972,11 +1021,13 @@
 												},
 												{
 													"id": "portraitMobile",
-													"rowViewportDefinition": {}
+													"rowViewportDefinition": {
+													}
 												},
 												{
 													"id": "tablet",
-													"rowViewportDefinition": {}
+													"rowViewportDefinition": {
+													}
 												}
 											],
 											"verticalAlignment": "top"
@@ -992,11 +1043,13 @@
 															"id": "landscapeMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "portraitMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "tablet"
 														}
 													],
@@ -1026,7 +1079,8 @@
 																				}
 																			}
 																		},
-																		"fragmentLink": {}
+																		"fragmentLink": {
+																		}
 																	}
 																}
 															],
@@ -1047,11 +1101,13 @@
 															"id": "landscapeMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "portraitMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "tablet"
 														}
 													],
@@ -1070,7 +1126,8 @@
 																{
 																	"id": "element-text",
 																	"value": {
-																		"fragmentLink": {},
+																		"fragmentLink": {
+																		},
 																		"text": {
 																			"value_i18n": {
 																				"ar_SA": "Government",
@@ -1100,12 +1157,14 @@
 															"fragment": {
 																"key": "BASIC_COMPONENT-paragraph"
 															},
-															"fragmentConfig": {},
+															"fragmentConfig": {
+															},
 															"fragmentFields": [
 																{
 																	"id": "element-text",
 																	"value": {
-																		"fragmentLink": {},
+																		"fragmentLink": {
+																		},
 																		"text": {
 																			"value_i18n": {
 																				"ar_SA": "Government Demo is about how Liferay can help in a Government Entity such as a city hall. The demoo contains: profile configuration, access to my services, my tickets for events, integration and more!",
@@ -1155,11 +1214,13 @@
 												},
 												{
 													"id": "portraitMobile",
-													"rowViewportDefinition": {}
+													"rowViewportDefinition": {
+													}
 												},
 												{
 													"id": "tablet",
-													"rowViewportDefinition": {}
+													"rowViewportDefinition": {
+													}
 												}
 											],
 											"verticalAlignment": "top"
@@ -1175,11 +1236,13 @@
 															"id": "landscapeMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "portraitMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "tablet"
 														}
 													],
@@ -1209,7 +1272,8 @@
 																				}
 																			}
 																		},
-																		"fragmentLink": {}
+																		"fragmentLink": {
+																		}
 																	}
 																}
 															],
@@ -1230,11 +1294,13 @@
 															"id": "landscapeMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "portraitMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "tablet"
 														}
 													],
@@ -1253,7 +1319,8 @@
 																{
 																	"id": "element-text",
 																	"value": {
-																		"fragmentLink": {},
+																		"fragmentLink": {
+																		},
 																		"text": {
 																			"value_i18n": {
 																				"ar_SA": "Liferaybotics&nbsp; Manufacturing Commerce",
@@ -1283,12 +1350,14 @@
 															"fragment": {
 																"key": "BASIC_COMPONENT-paragraph"
 															},
-															"fragmentConfig": {},
+															"fragmentConfig": {
+															},
 															"fragmentFields": [
 																{
 																	"id": "element-text",
 																	"value": {
-																		"fragmentLink": {},
+																		"fragmentLink": {
+																		},
 																		"text": {
 																			"value_i18n": {
 																				"ar_SA": "A B2B focused commerce demo in the manufacturing space. Including B2B self service journey, such as knowledgebase, IOT information and several form based journey.",
@@ -1338,11 +1407,13 @@
 												},
 												{
 													"id": "portraitMobile",
-													"rowViewportDefinition": {}
+													"rowViewportDefinition": {
+													}
 												},
 												{
 													"id": "tablet",
-													"rowViewportDefinition": {}
+													"rowViewportDefinition": {
+													}
 												}
 											],
 											"verticalAlignment": "top"
@@ -1358,11 +1429,13 @@
 															"id": "landscapeMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "portraitMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "tablet"
 														}
 													],
@@ -1392,7 +1465,8 @@
 																				}
 																			}
 																		},
-																		"fragmentLink": {}
+																		"fragmentLink": {
+																		}
 																	}
 																}
 															],
@@ -1413,11 +1487,13 @@
 															"id": "landscapeMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "portraitMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "tablet"
 														}
 													],
@@ -1436,7 +1512,8 @@
 																{
 																	"id": "element-text",
 																	"value": {
-																		"fragmentLink": {},
+																		"fragmentLink": {
+																		},
 																		"text": {
 																			"value_i18n": {
 																				"ar_SA": "Modern Intranet",
@@ -1466,12 +1543,14 @@
 															"fragment": {
 																"key": "BASIC_COMPONENT-paragraph"
 															},
-															"fragmentConfig": {},
+															"fragmentConfig": {
+															},
 															"fragmentFields": [
 																{
 																	"id": "element-text",
 																	"value": {
-																		"fragmentLink": {},
+																		"fragmentLink": {
+																		},
 																		"text": {
 																			"value_i18n": {
 																				"ar_SA": "This is a demo focused in the Modern intranet / Digital Workplace use case. As usual, this is a general purpose demo, so you can use to show any Liferay's feature or use it as a basis to build your own demo.",
@@ -1521,11 +1600,13 @@
 												},
 												{
 													"id": "portraitMobile",
-													"rowViewportDefinition": {}
+													"rowViewportDefinition": {
+													}
 												},
 												{
 													"id": "tablet",
-													"rowViewportDefinition": {}
+													"rowViewportDefinition": {
+													}
 												}
 											],
 											"verticalAlignment": "top"
@@ -1541,11 +1622,13 @@
 															"id": "landscapeMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "portraitMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "tablet"
 														}
 													],
@@ -1575,7 +1658,8 @@
 																				}
 																			}
 																		},
-																		"fragmentLink": {}
+																		"fragmentLink": {
+																		}
 																	}
 																}
 															],
@@ -1596,11 +1680,13 @@
 															"id": "landscapeMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "portraitMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "tablet"
 														}
 													],
@@ -1619,7 +1705,8 @@
 																{
 																	"id": "element-text",
 																	"value": {
-																		"fragmentLink": {},
+																		"fragmentLink": {
+																		},
 																		"text": {
 																			"value_i18n": {
 																				"ar_SA": "Partner Portal",
@@ -1649,12 +1736,14 @@
 															"fragment": {
 																"key": "BASIC_COMPONENT-paragraph"
 															},
-															"fragmentConfig": {},
+															"fragmentConfig": {
+															},
 															"fragmentFields": [
 																{
 																	"id": "element-text",
 																	"value": {
-																		"fragmentLink": {},
+																		"fragmentLink": {
+																		},
 																		"text": {
 																			"value_i18n": {
 																				"ar_SA": "This is a general purpose demo focused on partners / dealers. It covers use cases such as a visual public site, partner/vendor onboarding, vendor experience, and customer purchasing experience.",
@@ -1698,11 +1787,13 @@
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "portraitMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "tablet"
 										}
 									],
@@ -1713,8 +1804,8 @@
 										"definition": {
 											"widgetInstance": {
 												"widgetConfig": {
-													"groupId": "15095646",
-													"formInstanceId": "25468243"
+													"formInstanceId": "25468243",
+													"groupId": "15095646"
 												},
 												"widgetName": "com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormPortlet",
 												"widgetPermissions": [

@@ -4,7 +4,8 @@
 			{
 				"definition": {
 					"indexed": true,
-					"layout": {}
+					"layout": {
+					}
 				},
 				"pageElements": [
 					{
@@ -44,11 +45,13 @@
 										},
 										{
 											"id": "portraitMobile",
-											"rowViewportDefinition": {}
+											"rowViewportDefinition": {
+											}
 										},
 										{
 											"id": "tablet",
-											"rowViewportDefinition": {}
+											"rowViewportDefinition": {
+											}
 										}
 									],
 									"verticalAlignment": "middle"
@@ -64,11 +67,13 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],
@@ -87,7 +92,8 @@
 														{
 															"id": "element-text",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"value_i18n": {
 																		"ar_SA": "Rules of Engagement",
@@ -128,7 +134,8 @@
 														{
 															"id": "element-text",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"value_i18n": {
 																		"ar_SA": "Liferay is dedicated to promoting the growth and success of its partner ecosystem. We have formalized Rules of Engagement (“RoE”) and Deal Registration / Protection procedures in order to manage channel conflict and provide a disciplined approach to pursuing sales opportunities with our channel partners.",
@@ -169,11 +176,13 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],
@@ -213,7 +222,8 @@
 																				}
 																			}
 																		},
-																		"fragmentLink": {}
+																		"fragmentLink": {
+																		}
 																	}
 																}
 															],
@@ -239,7 +249,8 @@
 					{
 						"definition": {
 							"indexed": true,
-							"layout": {}
+							"layout": {
+							}
 						},
 						"pageElements": [
 							{
@@ -258,11 +269,13 @@
 										},
 										{
 											"id": "portraitMobile",
-											"rowViewportDefinition": {}
+											"rowViewportDefinition": {
+											}
 										},
 										{
 											"id": "tablet",
-											"rowViewportDefinition": {}
+											"rowViewportDefinition": {
+											}
 										}
 									],
 									"verticalAlignment": "top"
@@ -278,11 +291,13 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],
@@ -300,11 +315,13 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],
@@ -323,7 +340,8 @@
 														{
 															"id": "element-text",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"value_i18n": {
 																		"ar_SA": "Read the Guide",
@@ -363,7 +381,8 @@
 														{
 															"id": "element-text",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"value_i18n": {
 																		"ar_SA": "For specific information about&nbsp;the defined&nbsp;code of conduct and deal registration process,&nbsp;download the guide&nbsp;to the Liferay Solution Partner Program Rules of Engagement.&nbsp;",
@@ -398,18 +417,19 @@
 														"key": "dialect-dialect-button"
 													},
 													"fragmentConfig": {
-														"uppercase": false,
+														"buttonSize": "",
+														"inverted": false,
 														"style": "primary",
 														"type": "solid",
-														"inverted": false,
-														"buttonSize": ""
+														"uppercase": false
 													},
 													"fragmentFields": [
 														{
 															"id": "link",
 															"value": {
 																"fragmentLink": {
-																	"value": {}
+																	"value": {
+																	}
 																},
 																"text": {
 																	"value_i18n": {
@@ -451,11 +471,13 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],
@@ -474,7 +496,8 @@
 														{
 															"id": "element-text",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"value_i18n": {
 																		"ar_SA": "Resolving Violations to the Rules of Engagement",
@@ -514,7 +537,8 @@
 														{
 															"id": "element-text",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"value_i18n": {
 																		"ar_SA": "Partners&nbsp;should first report direct violations to their Channel Account&nbsp;Manager. If the matter requires escalation, and upon the&nbsp;direction&nbsp;of the Channel Account Manager, partners can report the issue by&nbsp;submitting&nbsp;the&nbsp;Rules of Engagement Violation&nbsp;form.&nbsp;",
@@ -549,11 +573,11 @@
 														"key": "dialect-dialect-button"
 													},
 													"fragmentConfig": {
-														"uppercase": false,
+														"buttonSize": "",
+														"inverted": false,
 														"style": "primary",
 														"type": "solid",
-														"inverted": false,
-														"buttonSize": ""
+														"uppercase": false
 													},
 													"fragmentFields": [
 														{
@@ -624,11 +648,13 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],

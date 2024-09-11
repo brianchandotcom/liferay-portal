@@ -4,7 +4,8 @@
 			{
 				"definition": {
 					"indexed": true,
-					"layout": {}
+					"layout": {
+					}
 				},
 				"pageElements": [
 					{
@@ -42,11 +43,13 @@
 										},
 										{
 											"id": "portraitMobile",
-											"rowViewportDefinition": {}
+											"rowViewportDefinition": {
+											}
 										},
 										{
 											"id": "tablet",
-											"rowViewportDefinition": {}
+											"rowViewportDefinition": {
+											}
 										}
 									],
 									"verticalAlignment": "middle"
@@ -62,11 +65,13 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],
@@ -85,22 +90,23 @@
 														{
 															"id": "element-text",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"value_i18n": {
-																		"ar_SA": "\u003Cp\u003ECertifications\u003C/p\u003E\n",
-																		"ca_ES": "\u003Cp\u003ECertifications\u003C/p\u003E\n",
-																		"de_DE": "\u003Cp\u003ECertifications\u003C/p\u003E\n",
-																		"en_US": "\u003Cp\u003ECertifications\u003C/p\u003E\n",
-																		"es_ES": "\u003Cp\u003ECertifications\u003C/p\u003E\n",
-																		"fi_FI": "\u003Cp\u003ECertifications\u003C/p\u003E\n",
-																		"fr_FR": "\u003Cp\u003ECertifications\u003C/p\u003E\n",
-																		"hu_HU": "\u003Cp\u003ECertifications\u003C/p\u003E\n",
-																		"ja_JP": "\u003Cp\u003ECertifications\u003C/p\u003E\n",
-																		"nl_NL": "\u003Cp\u003ECertifications\u003C/p\u003E\n",
-																		"pt_BR": "\u003Cp\u003ECertifications\u003C/p\u003E\n",
-																		"sv_SE": "\u003Cp\u003ECertifications\u003C/p\u003E\n",
-																		"zh_CN": "\u003Cp\u003ECertifications\u003C/p\u003E\n"
+																		"ar_SA": "<p>Certifications</p>\n",
+																		"ca_ES": "<p>Certifications</p>\n",
+																		"de_DE": "<p>Certifications</p>\n",
+																		"en_US": "<p>Certifications</p>\n",
+																		"es_ES": "<p>Certifications</p>\n",
+																		"fi_FI": "<p>Certifications</p>\n",
+																		"fr_FR": "<p>Certifications</p>\n",
+																		"hu_HU": "<p>Certifications</p>\n",
+																		"ja_JP": "<p>Certifications</p>\n",
+																		"nl_NL": "<p>Certifications</p>\n",
+																		"pt_BR": "<p>Certifications</p>\n",
+																		"sv_SE": "<p>Certifications</p>\n",
+																		"zh_CN": "<p>Certifications</p>\n"
 																	}
 																}
 															}
@@ -119,27 +125,29 @@
 													"fragment": {
 														"key": "BASIC_COMPONENT-paragraph"
 													},
-													"fragmentConfig": {},
+													"fragmentConfig": {
+													},
 													"fragmentFields": [
 														{
 															"id": "element-text",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"value_i18n": {
-																		"ar_SA": "\u003Cp\u003E\u003Cstrong\u003EFor Business Sales and Technical Presales Job Roles\u003C/strong\u003E:\u003Cbr /\u003E\nA new, role-based \u003Cem\u003Esales certification program\u003C/em\u003E will launch for partners to maintain the minimum number of trained and certified presales and sales staff in accordance with their partner level.&nbsp;\u003C/p\u003E\n\n\u003Cp\u003E\u003Cstrong\u003EFor Technical Job Roles\u003C/strong\u003E:\u003Cbr /\u003E\nA new \u003Cem\u003ELiferay Practitioner certification program\u003C/em\u003E will launch for staff who are in technical support, software or sales engineering, or developer roles. As the first component of technical practitioner certification, the required headcount will need to attend and pass the\u003Cstrong\u003E \u003Ca href=\"https://partner.liferay.com/technical-certification\" rel=\"noopener noreferrer\" target=\"_blank\"\u003Ein-person partner bootcamp\u003C/a\u003E\u003C/strong\u003E&nbsp;with its exercises (taking place from May 2024 to September 2024.)\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003E\u003Cstrong\u003EWhat this means for your team\u003C/strong\u003E:\u003C/p\u003E\n\n\u003Cul\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cdiv dir=\"ltr\" role=\"presentation\"\u003E\u003Cem\u003ESales &amp; Presales\u003C/em\u003E: Watch for information on&nbsp;the new certification program and how to complete it within the 12-month window.\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cdiv dir=\"ltr\" role=\"presentation\"\u003E\u003Cem\u003ETechnical Staff\u003C/em\u003E: Get ready for the&nbsp;partner bootcamps, which will be easiest path towards technical certification.&nbsp;Training and registration information will be available soon. Later this year, after the bootcamp sessions have concluded, there will be an option to take a certification exam through a third&nbsp;party testing service. More details and cost for that exam will be published soon. &nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv\u003E\u003Cem\u003EOn-Demand Resources\u003C/em\u003E: Prepare now by watching the&nbsp;Learning Path recordings&nbsp;for \u003Cu\u003EBusiness Sales\u003C/u\u003E, \u003Cu\u003ETechnical Sales\u003C/u\u003E,&nbsp;and \u003Cu\u003EPractitioner\u003C/u\u003E sessions.\u003C/div\u003E\n\t\u003C/li\u003E\n\u003C/ul\u003E\n",
-																		"ca_ES": "\u003Cp\u003E\u003Cstrong\u003EFor Business Sales and Technical Presales Job Roles\u003C/strong\u003E:\u003Cbr /\u003E\nA new, role-based \u003Cem\u003Esales certification program\u003C/em\u003E will launch for partners to maintain the minimum number of trained and certified presales and sales staff in accordance with their partner level.&nbsp;\u003C/p\u003E\n\n\u003Cp\u003E\u003Cstrong\u003EFor Technical Job Roles\u003C/strong\u003E:\u003Cbr /\u003E\nA new \u003Cem\u003ELiferay Practitioner certification program\u003C/em\u003E will launch for staff who are in technical support, software or sales engineering, or developer roles. As the first component of technical practitioner certification, the required headcount will need to attend and pass the\u003Cstrong\u003E \u003Ca href=\"https://partner.liferay.com/technical-certification\" rel=\"noopener noreferrer\" target=\"_blank\"\u003Ein-person partner bootcamp\u003C/a\u003E\u003C/strong\u003E&nbsp;with its exercises (taking place from May 2024 to September 2024.)\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003E\u003Cstrong\u003EWhat this means for your team\u003C/strong\u003E:\u003C/p\u003E\n\n\u003Cul\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cdiv dir=\"ltr\" role=\"presentation\"\u003E\u003Cem\u003ESales &amp; Presales\u003C/em\u003E: Watch for information on&nbsp;the new certification program and how to complete it within the 12-month window.\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cdiv dir=\"ltr\" role=\"presentation\"\u003E\u003Cem\u003ETechnical Staff\u003C/em\u003E: Get ready for the&nbsp;partner bootcamps, which will be easiest path towards technical certification.&nbsp;Training and registration information will be available soon. Later this year, after the bootcamp sessions have concluded, there will be an option to take a certification exam through a third&nbsp;party testing service. More details and cost for that exam will be published soon. &nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv\u003E\u003Cem\u003EOn-Demand Resources\u003C/em\u003E: Prepare now by watching the&nbsp;Learning Path recordings&nbsp;for \u003Cu\u003EBusiness Sales\u003C/u\u003E, \u003Cu\u003ETechnical Sales\u003C/u\u003E,&nbsp;and \u003Cu\u003EPractitioner\u003C/u\u003E sessions.\u003C/div\u003E\n\t\u003C/li\u003E\n\u003C/ul\u003E\n",
-																		"de_DE": "\u003Cp\u003E\u003Cstrong\u003EFor Business Sales and Technical Presales Job Roles\u003C/strong\u003E:\u003Cbr /\u003E\nA new, role-based \u003Cem\u003Esales certification program\u003C/em\u003E will launch for partners to maintain the minimum number of trained and certified presales and sales staff in accordance with their partner level.&nbsp;\u003C/p\u003E\n\n\u003Cp\u003E\u003Cstrong\u003EFor Technical Job Roles\u003C/strong\u003E:\u003Cbr /\u003E\nA new \u003Cem\u003ELiferay Practitioner certification program\u003C/em\u003E will launch for staff who are in technical support, software or sales engineering, or developer roles. As the first component of technical practitioner certification, the required headcount will need to attend and pass the\u003Cstrong\u003E \u003Ca href=\"https://partner.liferay.com/technical-certification\" rel=\"noopener noreferrer\" target=\"_blank\"\u003Ein-person partner bootcamp\u003C/a\u003E\u003C/strong\u003E&nbsp;with its exercises (taking place from May 2024 to September 2024.)\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003E\u003Cstrong\u003EWhat this means for your team\u003C/strong\u003E:\u003C/p\u003E\n\n\u003Cul\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cdiv dir=\"ltr\" role=\"presentation\"\u003E\u003Cem\u003ESales &amp; Presales\u003C/em\u003E: Watch for information on&nbsp;the new certification program and how to complete it within the 12-month window.\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cdiv dir=\"ltr\" role=\"presentation\"\u003E\u003Cem\u003ETechnical Staff\u003C/em\u003E: Get ready for the&nbsp;partner bootcamps, which will be easiest path towards technical certification.&nbsp;Training and registration information will be available soon. Later this year, after the bootcamp sessions have concluded, there will be an option to take a certification exam through a third&nbsp;party testing service. More details and cost for that exam will be published soon. &nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv\u003E\u003Cem\u003EOn-Demand Resources\u003C/em\u003E: Prepare now by watching the&nbsp;Learning Path recordings&nbsp;for \u003Cu\u003EBusiness Sales\u003C/u\u003E, \u003Cu\u003ETechnical Sales\u003C/u\u003E,&nbsp;and \u003Cu\u003EPractitioner\u003C/u\u003E sessions.\u003C/div\u003E\n\t\u003C/li\u003E\n\u003C/ul\u003E\n",
-																		"en_US": "\u003Cp\u003E\u003Cstrong\u003EFor Business Sales and Technical Presales Job Roles\u003C/strong\u003E:\u003Cbr /\u003E\nA new, role-based \u003Cem\u003Esales certification program\u003C/em\u003E will launch for partners to maintain the minimum number of trained and certified presales and sales staff in accordance with their partner level.&nbsp;\u003C/p\u003E\n\n\u003Cp\u003E\u003Cstrong\u003EFor Technical Job Roles\u003C/strong\u003E:\u003Cbr /\u003E\nA new \u003Cem\u003ELiferay Practitioner certification program\u003C/em\u003E will launch for staff who are in technical support, software or sales engineering, or developer roles. As the first component of technical practitioner certification, the required headcount will need to attend and pass the\u003Cstrong\u003E \u003Ca href=\"https://partner.liferay.com/technical-certification\" rel=\"noopener noreferrer\" target=\"_blank\"\u003Ein-person partner bootcamp\u003C/a\u003E\u003C/strong\u003E&nbsp;with its exercises (taking place from May 2024 to September 2024.)\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003E\u003Cstrong\u003EWhat this means for your team\u003C/strong\u003E:\u003C/p\u003E\n\n\u003Cul\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cdiv dir=\"ltr\" role=\"presentation\"\u003E\u003Cem\u003ESales &amp; Presales\u003C/em\u003E: Watch for information on&nbsp;the new certification program and how to complete it within the 12-month window.\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cdiv dir=\"ltr\" role=\"presentation\"\u003E\u003Cem\u003ETechnical Staff\u003C/em\u003E: Get ready for the&nbsp;partner bootcamps, which will be easiest path towards technical certification.&nbsp;Training and registration information will be available soon. Later this year, after the bootcamp sessions have concluded, there will be an option to take a certification exam through a third&nbsp;party testing service. More details and cost for that exam will be published soon. &nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv\u003E\u003Cem\u003EOn-Demand Resources\u003C/em\u003E: Prepare now by watching the&nbsp;Learning Path recordings&nbsp;for \u003Cu\u003EBusiness Sales\u003C/u\u003E, \u003Cu\u003ETechnical Sales\u003C/u\u003E,&nbsp;and \u003Cu\u003EPractitioner\u003C/u\u003E sessions.\u003C/div\u003E\n\t\u003C/li\u003E\n\u003C/ul\u003E\n",
-																		"es_ES": "\u003Cp\u003E\u003Cstrong\u003EFor Business Sales and Technical Presales Job Roles\u003C/strong\u003E:\u003Cbr /\u003E\nA new, role-based \u003Cem\u003Esales certification program\u003C/em\u003E will launch for partners to maintain the minimum number of trained and certified presales and sales staff in accordance with their partner level.&nbsp;\u003C/p\u003E\n\n\u003Cp\u003E\u003Cstrong\u003EFor Technical Job Roles\u003C/strong\u003E:\u003Cbr /\u003E\nA new \u003Cem\u003ELiferay Practitioner certification program\u003C/em\u003E will launch for staff who are in technical support, software or sales engineering, or developer roles. As the first component of technical practitioner certification, the required headcount will need to attend and pass the\u003Cstrong\u003E \u003Ca href=\"https://partner.liferay.com/technical-certification\" rel=\"noopener noreferrer\" target=\"_blank\"\u003Ein-person partner bootcamp\u003C/a\u003E\u003C/strong\u003E&nbsp;with its exercises (taking place from May 2024 to September 2024.)\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003E\u003Cstrong\u003EWhat this means for your team\u003C/strong\u003E:\u003C/p\u003E\n\n\u003Cul\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cdiv dir=\"ltr\" role=\"presentation\"\u003E\u003Cem\u003ESales &amp; Presales\u003C/em\u003E: Watch for information on&nbsp;the new certification program and how to complete it within the 12-month window.\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cdiv dir=\"ltr\" role=\"presentation\"\u003E\u003Cem\u003ETechnical Staff\u003C/em\u003E: Get ready for the&nbsp;partner bootcamps, which will be easiest path towards technical certification.&nbsp;Training and registration information will be available soon. Later this year, after the bootcamp sessions have concluded, there will be an option to take a certification exam through a third&nbsp;party testing service. More details and cost for that exam will be published soon. &nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv\u003E\u003Cem\u003EOn-Demand Resources\u003C/em\u003E: Prepare now by watching the&nbsp;Learning Path recordings&nbsp;for \u003Cu\u003EBusiness Sales\u003C/u\u003E, \u003Cu\u003ETechnical Sales\u003C/u\u003E,&nbsp;and \u003Cu\u003EPractitioner\u003C/u\u003E sessions.\u003C/div\u003E\n\t\u003C/li\u003E\n\u003C/ul\u003E\n",
-																		"fi_FI": "\u003Cp\u003E\u003Cstrong\u003EFor Business Sales and Technical Presales Job Roles\u003C/strong\u003E:\u003Cbr /\u003E\nA new, role-based \u003Cem\u003Esales certification program\u003C/em\u003E will launch for partners to maintain the minimum number of trained and certified presales and sales staff in accordance with their partner level.&nbsp;\u003C/p\u003E\n\n\u003Cp\u003E\u003Cstrong\u003EFor Technical Job Roles\u003C/strong\u003E:\u003Cbr /\u003E\nA new \u003Cem\u003ELiferay Practitioner certification program\u003C/em\u003E will launch for staff who are in technical support, software or sales engineering, or developer roles. As the first component of technical practitioner certification, the required headcount will need to attend and pass the\u003Cstrong\u003E \u003Ca href=\"https://partner.liferay.com/technical-certification\" rel=\"noopener noreferrer\" target=\"_blank\"\u003Ein-person partner bootcamp\u003C/a\u003E\u003C/strong\u003E&nbsp;with its exercises (taking place from May 2024 to September 2024.)\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003E\u003Cstrong\u003EWhat this means for your team\u003C/strong\u003E:\u003C/p\u003E\n\n\u003Cul\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cdiv dir=\"ltr\" role=\"presentation\"\u003E\u003Cem\u003ESales &amp; Presales\u003C/em\u003E: Watch for information on&nbsp;the new certification program and how to complete it within the 12-month window.\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cdiv dir=\"ltr\" role=\"presentation\"\u003E\u003Cem\u003ETechnical Staff\u003C/em\u003E: Get ready for the&nbsp;partner bootcamps, which will be easiest path towards technical certification.&nbsp;Training and registration information will be available soon. Later this year, after the bootcamp sessions have concluded, there will be an option to take a certification exam through a third&nbsp;party testing service. More details and cost for that exam will be published soon. &nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv\u003E\u003Cem\u003EOn-Demand Resources\u003C/em\u003E: Prepare now by watching the&nbsp;Learning Path recordings&nbsp;for \u003Cu\u003EBusiness Sales\u003C/u\u003E, \u003Cu\u003ETechnical Sales\u003C/u\u003E,&nbsp;and \u003Cu\u003EPractitioner\u003C/u\u003E sessions.\u003C/div\u003E\n\t\u003C/li\u003E\n\u003C/ul\u003E\n",
-																		"fr_FR": "\u003Cp\u003E\u003Cstrong\u003EFor Business Sales and Technical Presales Job Roles\u003C/strong\u003E:\u003Cbr /\u003E\nA new, role-based \u003Cem\u003Esales certification program\u003C/em\u003E will launch for partners to maintain the minimum number of trained and certified presales and sales staff in accordance with their partner level.&nbsp;\u003C/p\u003E\n\n\u003Cp\u003E\u003Cstrong\u003EFor Technical Job Roles\u003C/strong\u003E:\u003Cbr /\u003E\nA new \u003Cem\u003ELiferay Practitioner certification program\u003C/em\u003E will launch for staff who are in technical support, software or sales engineering, or developer roles. As the first component of technical practitioner certification, the required headcount will need to attend and pass the\u003Cstrong\u003E \u003Ca href=\"https://partner.liferay.com/technical-certification\" rel=\"noopener noreferrer\" target=\"_blank\"\u003Ein-person partner bootcamp\u003C/a\u003E\u003C/strong\u003E&nbsp;with its exercises (taking place from May 2024 to September 2024.)\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003E\u003Cstrong\u003EWhat this means for your team\u003C/strong\u003E:\u003C/p\u003E\n\n\u003Cul\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cdiv dir=\"ltr\" role=\"presentation\"\u003E\u003Cem\u003ESales &amp; Presales\u003C/em\u003E: Watch for information on&nbsp;the new certification program and how to complete it within the 12-month window.\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cdiv dir=\"ltr\" role=\"presentation\"\u003E\u003Cem\u003ETechnical Staff\u003C/em\u003E: Get ready for the&nbsp;partner bootcamps, which will be easiest path towards technical certification.&nbsp;Training and registration information will be available soon. Later this year, after the bootcamp sessions have concluded, there will be an option to take a certification exam through a third&nbsp;party testing service. More details and cost for that exam will be published soon. &nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv\u003E\u003Cem\u003EOn-Demand Resources\u003C/em\u003E: Prepare now by watching the&nbsp;Learning Path recordings&nbsp;for \u003Cu\u003EBusiness Sales\u003C/u\u003E, \u003Cu\u003ETechnical Sales\u003C/u\u003E,&nbsp;and \u003Cu\u003EPractitioner\u003C/u\u003E sessions.\u003C/div\u003E\n\t\u003C/li\u003E\n\u003C/ul\u003E\n",
-																		"hu_HU": "\u003Cp\u003E\u003Cstrong\u003EFor Business Sales and Technical Presales Job Roles\u003C/strong\u003E:\u003Cbr /\u003E\nA new, role-based \u003Cem\u003Esales certification program\u003C/em\u003E will launch for partners to maintain the minimum number of trained and certified presales and sales staff in accordance with their partner level.&nbsp;\u003C/p\u003E\n\n\u003Cp\u003E\u003Cstrong\u003EFor Technical Job Roles\u003C/strong\u003E:\u003Cbr /\u003E\nA new \u003Cem\u003ELiferay Practitioner certification program\u003C/em\u003E will launch for staff who are in technical support, software or sales engineering, or developer roles. As the first component of technical practitioner certification, the required headcount will need to attend and pass the\u003Cstrong\u003E \u003Ca href=\"https://partner.liferay.com/technical-certification\" rel=\"noopener noreferrer\" target=\"_blank\"\u003Ein-person partner bootcamp\u003C/a\u003E\u003C/strong\u003E&nbsp;with its exercises (taking place from May 2024 to September 2024.)\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003E\u003Cstrong\u003EWhat this means for your team\u003C/strong\u003E:\u003C/p\u003E\n\n\u003Cul\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cdiv dir=\"ltr\" role=\"presentation\"\u003E\u003Cem\u003ESales &amp; Presales\u003C/em\u003E: Watch for information on&nbsp;the new certification program and how to complete it within the 12-month window.\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cdiv dir=\"ltr\" role=\"presentation\"\u003E\u003Cem\u003ETechnical Staff\u003C/em\u003E: Get ready for the&nbsp;partner bootcamps, which will be easiest path towards technical certification.&nbsp;Training and registration information will be available soon. Later this year, after the bootcamp sessions have concluded, there will be an option to take a certification exam through a third&nbsp;party testing service. More details and cost for that exam will be published soon. &nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv\u003E\u003Cem\u003EOn-Demand Resources\u003C/em\u003E: Prepare now by watching the&nbsp;Learning Path recordings&nbsp;for \u003Cu\u003EBusiness Sales\u003C/u\u003E, \u003Cu\u003ETechnical Sales\u003C/u\u003E,&nbsp;and \u003Cu\u003EPractitioner\u003C/u\u003E sessions.\u003C/div\u003E\n\t\u003C/li\u003E\n\u003C/ul\u003E\n",
-																		"ja_JP": "\u003Cp\u003E\u003Cstrong\u003EFor Business Sales and Technical Presales Job Roles\u003C/strong\u003E:\u003Cbr /\u003E\nA new, role-based \u003Cem\u003Esales certification program\u003C/em\u003E will launch for partners to maintain the minimum number of trained and certified presales and sales staff in accordance with their partner level.&nbsp;\u003C/p\u003E\n\n\u003Cp\u003E\u003Cstrong\u003EFor Technical Job Roles\u003C/strong\u003E:\u003Cbr /\u003E\nA new \u003Cem\u003ELiferay Practitioner certification program\u003C/em\u003E will launch for staff who are in technical support, software or sales engineering, or developer roles. As the first component of technical practitioner certification, the required headcount will need to attend and pass the\u003Cstrong\u003E \u003Ca href=\"https://partner.liferay.com/technical-certification\" rel=\"noopener noreferrer\" target=\"_blank\"\u003Ein-person partner bootcamp\u003C/a\u003E\u003C/strong\u003E&nbsp;with its exercises (taking place from May 2024 to September 2024.)\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003E\u003Cstrong\u003EWhat this means for your team\u003C/strong\u003E:\u003C/p\u003E\n\n\u003Cul\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cdiv dir=\"ltr\" role=\"presentation\"\u003E\u003Cem\u003ESales &amp; Presales\u003C/em\u003E: Watch for information on&nbsp;the new certification program and how to complete it within the 12-month window.\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cdiv dir=\"ltr\" role=\"presentation\"\u003E\u003Cem\u003ETechnical Staff\u003C/em\u003E: Get ready for the&nbsp;partner bootcamps, which will be easiest path towards technical certification.&nbsp;Training and registration information will be available soon. Later this year, after the bootcamp sessions have concluded, there will be an option to take a certification exam through a third&nbsp;party testing service. More details and cost for that exam will be published soon. &nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv\u003E\u003Cem\u003EOn-Demand Resources\u003C/em\u003E: Prepare now by watching the&nbsp;Learning Path recordings&nbsp;for \u003Cu\u003EBusiness Sales\u003C/u\u003E, \u003Cu\u003ETechnical Sales\u003C/u\u003E,&nbsp;and \u003Cu\u003EPractitioner\u003C/u\u003E sessions.\u003C/div\u003E\n\t\u003C/li\u003E\n\u003C/ul\u003E\n",
-																		"nl_NL": "\u003Cp\u003E\u003Cstrong\u003EFor Business Sales and Technical Presales Job Roles\u003C/strong\u003E:\u003Cbr /\u003E\nA new, role-based \u003Cem\u003Esales certification program\u003C/em\u003E will launch for partners to maintain the minimum number of trained and certified presales and sales staff in accordance with their partner level.&nbsp;\u003C/p\u003E\n\n\u003Cp\u003E\u003Cstrong\u003EFor Technical Job Roles\u003C/strong\u003E:\u003Cbr /\u003E\nA new \u003Cem\u003ELiferay Practitioner certification program\u003C/em\u003E will launch for staff who are in technical support, software or sales engineering, or developer roles. As the first component of technical practitioner certification, the required headcount will need to attend and pass the\u003Cstrong\u003E \u003Ca href=\"https://partner.liferay.com/technical-certification\" rel=\"noopener noreferrer\" target=\"_blank\"\u003Ein-person partner bootcamp\u003C/a\u003E\u003C/strong\u003E&nbsp;with its exercises (taking place from May 2024 to September 2024.)\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003E\u003Cstrong\u003EWhat this means for your team\u003C/strong\u003E:\u003C/p\u003E\n\n\u003Cul\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cdiv dir=\"ltr\" role=\"presentation\"\u003E\u003Cem\u003ESales &amp; Presales\u003C/em\u003E: Watch for information on&nbsp;the new certification program and how to complete it within the 12-month window.\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cdiv dir=\"ltr\" role=\"presentation\"\u003E\u003Cem\u003ETechnical Staff\u003C/em\u003E: Get ready for the&nbsp;partner bootcamps, which will be easiest path towards technical certification.&nbsp;Training and registration information will be available soon. Later this year, after the bootcamp sessions have concluded, there will be an option to take a certification exam through a third&nbsp;party testing service. More details and cost for that exam will be published soon. &nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv\u003E\u003Cem\u003EOn-Demand Resources\u003C/em\u003E: Prepare now by watching the&nbsp;Learning Path recordings&nbsp;for \u003Cu\u003EBusiness Sales\u003C/u\u003E, \u003Cu\u003ETechnical Sales\u003C/u\u003E,&nbsp;and \u003Cu\u003EPractitioner\u003C/u\u003E sessions.\u003C/div\u003E\n\t\u003C/li\u003E\n\u003C/ul\u003E\n",
-																		"pt_BR": "\u003Cp\u003E\u003Cstrong\u003EFor Business Sales and Technical Presales Job Roles\u003C/strong\u003E:\u003Cbr /\u003E\nA new, role-based \u003Cem\u003Esales certification program\u003C/em\u003E will launch for partners to maintain the minimum number of trained and certified presales and sales staff in accordance with their partner level.&nbsp;\u003C/p\u003E\n\n\u003Cp\u003E\u003Cstrong\u003EFor Technical Job Roles\u003C/strong\u003E:\u003Cbr /\u003E\nA new \u003Cem\u003ELiferay Practitioner certification program\u003C/em\u003E will launch for staff who are in technical support, software or sales engineering, or developer roles. As the first component of technical practitioner certification, the required headcount will need to attend and pass the\u003Cstrong\u003E \u003Ca href=\"https://partner.liferay.com/technical-certification\" rel=\"noopener noreferrer\" target=\"_blank\"\u003Ein-person partner bootcamp\u003C/a\u003E\u003C/strong\u003E&nbsp;with its exercises (taking place from May 2024 to September 2024.)\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003E\u003Cstrong\u003EWhat this means for your team\u003C/strong\u003E:\u003C/p\u003E\n\n\u003Cul\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cdiv dir=\"ltr\" role=\"presentation\"\u003E\u003Cem\u003ESales &amp; Presales\u003C/em\u003E: Watch for information on&nbsp;the new certification program and how to complete it within the 12-month window.\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cdiv dir=\"ltr\" role=\"presentation\"\u003E\u003Cem\u003ETechnical Staff\u003C/em\u003E: Get ready for the&nbsp;partner bootcamps, which will be easiest path towards technical certification.&nbsp;Training and registration information will be available soon. Later this year, after the bootcamp sessions have concluded, there will be an option to take a certification exam through a third&nbsp;party testing service. More details and cost for that exam will be published soon. &nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv\u003E\u003Cem\u003EOn-Demand Resources\u003C/em\u003E: Prepare now by watching the&nbsp;Learning Path recordings&nbsp;for \u003Cu\u003EBusiness Sales\u003C/u\u003E, \u003Cu\u003ETechnical Sales\u003C/u\u003E,&nbsp;and \u003Cu\u003EPractitioner\u003C/u\u003E sessions.\u003C/div\u003E\n\t\u003C/li\u003E\n\u003C/ul\u003E\n",
-																		"sv_SE": "\u003Cp\u003E\u003Cstrong\u003EFor Business Sales and Technical Presales Job Roles\u003C/strong\u003E:\u003Cbr /\u003E\nA new, role-based \u003Cem\u003Esales certification program\u003C/em\u003E will launch for partners to maintain the minimum number of trained and certified presales and sales staff in accordance with their partner level.&nbsp;\u003C/p\u003E\n\n\u003Cp\u003E\u003Cstrong\u003EFor Technical Job Roles\u003C/strong\u003E:\u003Cbr /\u003E\nA new \u003Cem\u003ELiferay Practitioner certification program\u003C/em\u003E will launch for staff who are in technical support, software or sales engineering, or developer roles. As the first component of technical practitioner certification, the required headcount will need to attend and pass the\u003Cstrong\u003E \u003Ca href=\"https://partner.liferay.com/technical-certification\" rel=\"noopener noreferrer\" target=\"_blank\"\u003Ein-person partner bootcamp\u003C/a\u003E\u003C/strong\u003E&nbsp;with its exercises (taking place from May 2024 to September 2024.)\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003E\u003Cstrong\u003EWhat this means for your team\u003C/strong\u003E:\u003C/p\u003E\n\n\u003Cul\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cdiv dir=\"ltr\" role=\"presentation\"\u003E\u003Cem\u003ESales &amp; Presales\u003C/em\u003E: Watch for information on&nbsp;the new certification program and how to complete it within the 12-month window.\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cdiv dir=\"ltr\" role=\"presentation\"\u003E\u003Cem\u003ETechnical Staff\u003C/em\u003E: Get ready for the&nbsp;partner bootcamps, which will be easiest path towards technical certification.&nbsp;Training and registration information will be available soon. Later this year, after the bootcamp sessions have concluded, there will be an option to take a certification exam through a third&nbsp;party testing service. More details and cost for that exam will be published soon. &nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv\u003E\u003Cem\u003EOn-Demand Resources\u003C/em\u003E: Prepare now by watching the&nbsp;Learning Path recordings&nbsp;for \u003Cu\u003EBusiness Sales\u003C/u\u003E, \u003Cu\u003ETechnical Sales\u003C/u\u003E,&nbsp;and \u003Cu\u003EPractitioner\u003C/u\u003E sessions.\u003C/div\u003E\n\t\u003C/li\u003E\n\u003C/ul\u003E\n",
-																		"zh_CN": "\u003Cp\u003E\u003Cstrong\u003EFor Business Sales and Technical Presales Job Roles\u003C/strong\u003E:\u003Cbr /\u003E\nA new, role-based \u003Cem\u003Esales certification program\u003C/em\u003E will launch for partners to maintain the minimum number of trained and certified presales and sales staff in accordance with their partner level.&nbsp;\u003C/p\u003E\n\n\u003Cp\u003E\u003Cstrong\u003EFor Technical Job Roles\u003C/strong\u003E:\u003Cbr /\u003E\nA new \u003Cem\u003ELiferay Practitioner certification program\u003C/em\u003E will launch for staff who are in technical support, software or sales engineering, or developer roles. As the first component of technical practitioner certification, the required headcount will need to attend and pass the\u003Cstrong\u003E \u003Ca href=\"https://partner.liferay.com/technical-certification\" rel=\"noopener noreferrer\" target=\"_blank\"\u003Ein-person partner bootcamp\u003C/a\u003E\u003C/strong\u003E&nbsp;with its exercises (taking place from May 2024 to September 2024.)\u003C/p\u003E\n\n\u003Cp dir=\"ltr\"\u003E\u003Cstrong\u003EWhat this means for your team\u003C/strong\u003E:\u003C/p\u003E\n\n\u003Cul\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cdiv dir=\"ltr\" role=\"presentation\"\u003E\u003Cem\u003ESales &amp; Presales\u003C/em\u003E: Watch for information on&nbsp;the new certification program and how to complete it within the 12-month window.\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli aria-level=\"1\" dir=\"ltr\"\u003E\n\t\u003Cdiv dir=\"ltr\" role=\"presentation\"\u003E\u003Cem\u003ETechnical Staff\u003C/em\u003E: Get ready for the&nbsp;partner bootcamps, which will be easiest path towards technical certification.&nbsp;Training and registration information will be available soon. Later this year, after the bootcamp sessions have concluded, there will be an option to take a certification exam through a third&nbsp;party testing service. More details and cost for that exam will be published soon. &nbsp;\u003C/div\u003E\n\t\u003C/li\u003E\n\t\u003Cli\u003E\n\t\u003Cdiv\u003E\u003Cem\u003EOn-Demand Resources\u003C/em\u003E: Prepare now by watching the&nbsp;Learning Path recordings&nbsp;for \u003Cu\u003EBusiness Sales\u003C/u\u003E, \u003Cu\u003ETechnical Sales\u003C/u\u003E,&nbsp;and \u003Cu\u003EPractitioner\u003C/u\u003E sessions.\u003C/div\u003E\n\t\u003C/li\u003E\n\u003C/ul\u003E\n"
+																		"ar_SA": "<p><strong>For Business Sales and Technical Presales Job Roles</strong>:<br />\nA new, role-based <em>sales certification program</em> will launch for partners to maintain the minimum number of trained and certified presales and sales staff in accordance with their partner level.&nbsp;</p>\n\n<p><strong>For Technical Job Roles</strong>:<br />\nA new <em>Liferay Practitioner certification program</em> will launch for staff who are in technical support, software or sales engineering, or developer roles. As the first component of technical practitioner certification, the required headcount will need to attend and pass the<strong> <a href=\"https://partner.liferay.com/technical-certification\" rel=\"noopener noreferrer\" target=\"_blank\">in-person partner bootcamp</a></strong>&nbsp;with its exercises (taking place from May 2024 to September 2024.)</p>\n\n<p dir=\"ltr\"><strong>What this means for your team</strong>:</p>\n\n<ul>\n\t<li aria-level=\"1\" dir=\"ltr\">\n\t<div dir=\"ltr\" role=\"presentation\"><em>Sales &amp; Presales</em>: Watch for information on&nbsp;the new certification program and how to complete it within the 12-month window.</div>\n\t</li>\n\t<li aria-level=\"1\" dir=\"ltr\">\n\t<div dir=\"ltr\" role=\"presentation\"><em>Technical Staff</em>: Get ready for the&nbsp;partner bootcamps, which will be easiest path towards technical certification.&nbsp;Training and registration information will be available soon. Later this year, after the bootcamp sessions have concluded, there will be an option to take a certification exam through a third&nbsp;party testing service. More details and cost for that exam will be published soon. &nbsp;</div>\n\t</li>\n\t<li>\n\t<div><em>On-Demand Resources</em>: Prepare now by watching the&nbsp;Learning Path recordings&nbsp;for <u>Business Sales</u>, <u>Technical Sales</u>,&nbsp;and <u>Practitioner</u> sessions.</div>\n\t</li>\n</ul>\n",
+																		"ca_ES": "<p><strong>For Business Sales and Technical Presales Job Roles</strong>:<br />\nA new, role-based <em>sales certification program</em> will launch for partners to maintain the minimum number of trained and certified presales and sales staff in accordance with their partner level.&nbsp;</p>\n\n<p><strong>For Technical Job Roles</strong>:<br />\nA new <em>Liferay Practitioner certification program</em> will launch for staff who are in technical support, software or sales engineering, or developer roles. As the first component of technical practitioner certification, the required headcount will need to attend and pass the<strong> <a href=\"https://partner.liferay.com/technical-certification\" rel=\"noopener noreferrer\" target=\"_blank\">in-person partner bootcamp</a></strong>&nbsp;with its exercises (taking place from May 2024 to September 2024.)</p>\n\n<p dir=\"ltr\"><strong>What this means for your team</strong>:</p>\n\n<ul>\n\t<li aria-level=\"1\" dir=\"ltr\">\n\t<div dir=\"ltr\" role=\"presentation\"><em>Sales &amp; Presales</em>: Watch for information on&nbsp;the new certification program and how to complete it within the 12-month window.</div>\n\t</li>\n\t<li aria-level=\"1\" dir=\"ltr\">\n\t<div dir=\"ltr\" role=\"presentation\"><em>Technical Staff</em>: Get ready for the&nbsp;partner bootcamps, which will be easiest path towards technical certification.&nbsp;Training and registration information will be available soon. Later this year, after the bootcamp sessions have concluded, there will be an option to take a certification exam through a third&nbsp;party testing service. More details and cost for that exam will be published soon. &nbsp;</div>\n\t</li>\n\t<li>\n\t<div><em>On-Demand Resources</em>: Prepare now by watching the&nbsp;Learning Path recordings&nbsp;for <u>Business Sales</u>, <u>Technical Sales</u>,&nbsp;and <u>Practitioner</u> sessions.</div>\n\t</li>\n</ul>\n",
+																		"de_DE": "<p><strong>For Business Sales and Technical Presales Job Roles</strong>:<br />\nA new, role-based <em>sales certification program</em> will launch for partners to maintain the minimum number of trained and certified presales and sales staff in accordance with their partner level.&nbsp;</p>\n\n<p><strong>For Technical Job Roles</strong>:<br />\nA new <em>Liferay Practitioner certification program</em> will launch for staff who are in technical support, software or sales engineering, or developer roles. As the first component of technical practitioner certification, the required headcount will need to attend and pass the<strong> <a href=\"https://partner.liferay.com/technical-certification\" rel=\"noopener noreferrer\" target=\"_blank\">in-person partner bootcamp</a></strong>&nbsp;with its exercises (taking place from May 2024 to September 2024.)</p>\n\n<p dir=\"ltr\"><strong>What this means for your team</strong>:</p>\n\n<ul>\n\t<li aria-level=\"1\" dir=\"ltr\">\n\t<div dir=\"ltr\" role=\"presentation\"><em>Sales &amp; Presales</em>: Watch for information on&nbsp;the new certification program and how to complete it within the 12-month window.</div>\n\t</li>\n\t<li aria-level=\"1\" dir=\"ltr\">\n\t<div dir=\"ltr\" role=\"presentation\"><em>Technical Staff</em>: Get ready for the&nbsp;partner bootcamps, which will be easiest path towards technical certification.&nbsp;Training and registration information will be available soon. Later this year, after the bootcamp sessions have concluded, there will be an option to take a certification exam through a third&nbsp;party testing service. More details and cost for that exam will be published soon. &nbsp;</div>\n\t</li>\n\t<li>\n\t<div><em>On-Demand Resources</em>: Prepare now by watching the&nbsp;Learning Path recordings&nbsp;for <u>Business Sales</u>, <u>Technical Sales</u>,&nbsp;and <u>Practitioner</u> sessions.</div>\n\t</li>\n</ul>\n",
+																		"en_US": "<p><strong>For Business Sales and Technical Presales Job Roles</strong>:<br />\nA new, role-based <em>sales certification program</em> will launch for partners to maintain the minimum number of trained and certified presales and sales staff in accordance with their partner level.&nbsp;</p>\n\n<p><strong>For Technical Job Roles</strong>:<br />\nA new <em>Liferay Practitioner certification program</em> will launch for staff who are in technical support, software or sales engineering, or developer roles. As the first component of technical practitioner certification, the required headcount will need to attend and pass the<strong> <a href=\"https://partner.liferay.com/technical-certification\" rel=\"noopener noreferrer\" target=\"_blank\">in-person partner bootcamp</a></strong>&nbsp;with its exercises (taking place from May 2024 to September 2024.)</p>\n\n<p dir=\"ltr\"><strong>What this means for your team</strong>:</p>\n\n<ul>\n\t<li aria-level=\"1\" dir=\"ltr\">\n\t<div dir=\"ltr\" role=\"presentation\"><em>Sales &amp; Presales</em>: Watch for information on&nbsp;the new certification program and how to complete it within the 12-month window.</div>\n\t</li>\n\t<li aria-level=\"1\" dir=\"ltr\">\n\t<div dir=\"ltr\" role=\"presentation\"><em>Technical Staff</em>: Get ready for the&nbsp;partner bootcamps, which will be easiest path towards technical certification.&nbsp;Training and registration information will be available soon. Later this year, after the bootcamp sessions have concluded, there will be an option to take a certification exam through a third&nbsp;party testing service. More details and cost for that exam will be published soon. &nbsp;</div>\n\t</li>\n\t<li>\n\t<div><em>On-Demand Resources</em>: Prepare now by watching the&nbsp;Learning Path recordings&nbsp;for <u>Business Sales</u>, <u>Technical Sales</u>,&nbsp;and <u>Practitioner</u> sessions.</div>\n\t</li>\n</ul>\n",
+																		"es_ES": "<p><strong>For Business Sales and Technical Presales Job Roles</strong>:<br />\nA new, role-based <em>sales certification program</em> will launch for partners to maintain the minimum number of trained and certified presales and sales staff in accordance with their partner level.&nbsp;</p>\n\n<p><strong>For Technical Job Roles</strong>:<br />\nA new <em>Liferay Practitioner certification program</em> will launch for staff who are in technical support, software or sales engineering, or developer roles. As the first component of technical practitioner certification, the required headcount will need to attend and pass the<strong> <a href=\"https://partner.liferay.com/technical-certification\" rel=\"noopener noreferrer\" target=\"_blank\">in-person partner bootcamp</a></strong>&nbsp;with its exercises (taking place from May 2024 to September 2024.)</p>\n\n<p dir=\"ltr\"><strong>What this means for your team</strong>:</p>\n\n<ul>\n\t<li aria-level=\"1\" dir=\"ltr\">\n\t<div dir=\"ltr\" role=\"presentation\"><em>Sales &amp; Presales</em>: Watch for information on&nbsp;the new certification program and how to complete it within the 12-month window.</div>\n\t</li>\n\t<li aria-level=\"1\" dir=\"ltr\">\n\t<div dir=\"ltr\" role=\"presentation\"><em>Technical Staff</em>: Get ready for the&nbsp;partner bootcamps, which will be easiest path towards technical certification.&nbsp;Training and registration information will be available soon. Later this year, after the bootcamp sessions have concluded, there will be an option to take a certification exam through a third&nbsp;party testing service. More details and cost for that exam will be published soon. &nbsp;</div>\n\t</li>\n\t<li>\n\t<div><em>On-Demand Resources</em>: Prepare now by watching the&nbsp;Learning Path recordings&nbsp;for <u>Business Sales</u>, <u>Technical Sales</u>,&nbsp;and <u>Practitioner</u> sessions.</div>\n\t</li>\n</ul>\n",
+																		"fi_FI": "<p><strong>For Business Sales and Technical Presales Job Roles</strong>:<br />\nA new, role-based <em>sales certification program</em> will launch for partners to maintain the minimum number of trained and certified presales and sales staff in accordance with their partner level.&nbsp;</p>\n\n<p><strong>For Technical Job Roles</strong>:<br />\nA new <em>Liferay Practitioner certification program</em> will launch for staff who are in technical support, software or sales engineering, or developer roles. As the first component of technical practitioner certification, the required headcount will need to attend and pass the<strong> <a href=\"https://partner.liferay.com/technical-certification\" rel=\"noopener noreferrer\" target=\"_blank\">in-person partner bootcamp</a></strong>&nbsp;with its exercises (taking place from May 2024 to September 2024.)</p>\n\n<p dir=\"ltr\"><strong>What this means for your team</strong>:</p>\n\n<ul>\n\t<li aria-level=\"1\" dir=\"ltr\">\n\t<div dir=\"ltr\" role=\"presentation\"><em>Sales &amp; Presales</em>: Watch for information on&nbsp;the new certification program and how to complete it within the 12-month window.</div>\n\t</li>\n\t<li aria-level=\"1\" dir=\"ltr\">\n\t<div dir=\"ltr\" role=\"presentation\"><em>Technical Staff</em>: Get ready for the&nbsp;partner bootcamps, which will be easiest path towards technical certification.&nbsp;Training and registration information will be available soon. Later this year, after the bootcamp sessions have concluded, there will be an option to take a certification exam through a third&nbsp;party testing service. More details and cost for that exam will be published soon. &nbsp;</div>\n\t</li>\n\t<li>\n\t<div><em>On-Demand Resources</em>: Prepare now by watching the&nbsp;Learning Path recordings&nbsp;for <u>Business Sales</u>, <u>Technical Sales</u>,&nbsp;and <u>Practitioner</u> sessions.</div>\n\t</li>\n</ul>\n",
+																		"fr_FR": "<p><strong>For Business Sales and Technical Presales Job Roles</strong>:<br />\nA new, role-based <em>sales certification program</em> will launch for partners to maintain the minimum number of trained and certified presales and sales staff in accordance with their partner level.&nbsp;</p>\n\n<p><strong>For Technical Job Roles</strong>:<br />\nA new <em>Liferay Practitioner certification program</em> will launch for staff who are in technical support, software or sales engineering, or developer roles. As the first component of technical practitioner certification, the required headcount will need to attend and pass the<strong> <a href=\"https://partner.liferay.com/technical-certification\" rel=\"noopener noreferrer\" target=\"_blank\">in-person partner bootcamp</a></strong>&nbsp;with its exercises (taking place from May 2024 to September 2024.)</p>\n\n<p dir=\"ltr\"><strong>What this means for your team</strong>:</p>\n\n<ul>\n\t<li aria-level=\"1\" dir=\"ltr\">\n\t<div dir=\"ltr\" role=\"presentation\"><em>Sales &amp; Presales</em>: Watch for information on&nbsp;the new certification program and how to complete it within the 12-month window.</div>\n\t</li>\n\t<li aria-level=\"1\" dir=\"ltr\">\n\t<div dir=\"ltr\" role=\"presentation\"><em>Technical Staff</em>: Get ready for the&nbsp;partner bootcamps, which will be easiest path towards technical certification.&nbsp;Training and registration information will be available soon. Later this year, after the bootcamp sessions have concluded, there will be an option to take a certification exam through a third&nbsp;party testing service. More details and cost for that exam will be published soon. &nbsp;</div>\n\t</li>\n\t<li>\n\t<div><em>On-Demand Resources</em>: Prepare now by watching the&nbsp;Learning Path recordings&nbsp;for <u>Business Sales</u>, <u>Technical Sales</u>,&nbsp;and <u>Practitioner</u> sessions.</div>\n\t</li>\n</ul>\n",
+																		"hu_HU": "<p><strong>For Business Sales and Technical Presales Job Roles</strong>:<br />\nA new, role-based <em>sales certification program</em> will launch for partners to maintain the minimum number of trained and certified presales and sales staff in accordance with their partner level.&nbsp;</p>\n\n<p><strong>For Technical Job Roles</strong>:<br />\nA new <em>Liferay Practitioner certification program</em> will launch for staff who are in technical support, software or sales engineering, or developer roles. As the first component of technical practitioner certification, the required headcount will need to attend and pass the<strong> <a href=\"https://partner.liferay.com/technical-certification\" rel=\"noopener noreferrer\" target=\"_blank\">in-person partner bootcamp</a></strong>&nbsp;with its exercises (taking place from May 2024 to September 2024.)</p>\n\n<p dir=\"ltr\"><strong>What this means for your team</strong>:</p>\n\n<ul>\n\t<li aria-level=\"1\" dir=\"ltr\">\n\t<div dir=\"ltr\" role=\"presentation\"><em>Sales &amp; Presales</em>: Watch for information on&nbsp;the new certification program and how to complete it within the 12-month window.</div>\n\t</li>\n\t<li aria-level=\"1\" dir=\"ltr\">\n\t<div dir=\"ltr\" role=\"presentation\"><em>Technical Staff</em>: Get ready for the&nbsp;partner bootcamps, which will be easiest path towards technical certification.&nbsp;Training and registration information will be available soon. Later this year, after the bootcamp sessions have concluded, there will be an option to take a certification exam through a third&nbsp;party testing service. More details and cost for that exam will be published soon. &nbsp;</div>\n\t</li>\n\t<li>\n\t<div><em>On-Demand Resources</em>: Prepare now by watching the&nbsp;Learning Path recordings&nbsp;for <u>Business Sales</u>, <u>Technical Sales</u>,&nbsp;and <u>Practitioner</u> sessions.</div>\n\t</li>\n</ul>\n",
+																		"ja_JP": "<p><strong>For Business Sales and Technical Presales Job Roles</strong>:<br />\nA new, role-based <em>sales certification program</em> will launch for partners to maintain the minimum number of trained and certified presales and sales staff in accordance with their partner level.&nbsp;</p>\n\n<p><strong>For Technical Job Roles</strong>:<br />\nA new <em>Liferay Practitioner certification program</em> will launch for staff who are in technical support, software or sales engineering, or developer roles. As the first component of technical practitioner certification, the required headcount will need to attend and pass the<strong> <a href=\"https://partner.liferay.com/technical-certification\" rel=\"noopener noreferrer\" target=\"_blank\">in-person partner bootcamp</a></strong>&nbsp;with its exercises (taking place from May 2024 to September 2024.)</p>\n\n<p dir=\"ltr\"><strong>What this means for your team</strong>:</p>\n\n<ul>\n\t<li aria-level=\"1\" dir=\"ltr\">\n\t<div dir=\"ltr\" role=\"presentation\"><em>Sales &amp; Presales</em>: Watch for information on&nbsp;the new certification program and how to complete it within the 12-month window.</div>\n\t</li>\n\t<li aria-level=\"1\" dir=\"ltr\">\n\t<div dir=\"ltr\" role=\"presentation\"><em>Technical Staff</em>: Get ready for the&nbsp;partner bootcamps, which will be easiest path towards technical certification.&nbsp;Training and registration information will be available soon. Later this year, after the bootcamp sessions have concluded, there will be an option to take a certification exam through a third&nbsp;party testing service. More details and cost for that exam will be published soon. &nbsp;</div>\n\t</li>\n\t<li>\n\t<div><em>On-Demand Resources</em>: Prepare now by watching the&nbsp;Learning Path recordings&nbsp;for <u>Business Sales</u>, <u>Technical Sales</u>,&nbsp;and <u>Practitioner</u> sessions.</div>\n\t</li>\n</ul>\n",
+																		"nl_NL": "<p><strong>For Business Sales and Technical Presales Job Roles</strong>:<br />\nA new, role-based <em>sales certification program</em> will launch for partners to maintain the minimum number of trained and certified presales and sales staff in accordance with their partner level.&nbsp;</p>\n\n<p><strong>For Technical Job Roles</strong>:<br />\nA new <em>Liferay Practitioner certification program</em> will launch for staff who are in technical support, software or sales engineering, or developer roles. As the first component of technical practitioner certification, the required headcount will need to attend and pass the<strong> <a href=\"https://partner.liferay.com/technical-certification\" rel=\"noopener noreferrer\" target=\"_blank\">in-person partner bootcamp</a></strong>&nbsp;with its exercises (taking place from May 2024 to September 2024.)</p>\n\n<p dir=\"ltr\"><strong>What this means for your team</strong>:</p>\n\n<ul>\n\t<li aria-level=\"1\" dir=\"ltr\">\n\t<div dir=\"ltr\" role=\"presentation\"><em>Sales &amp; Presales</em>: Watch for information on&nbsp;the new certification program and how to complete it within the 12-month window.</div>\n\t</li>\n\t<li aria-level=\"1\" dir=\"ltr\">\n\t<div dir=\"ltr\" role=\"presentation\"><em>Technical Staff</em>: Get ready for the&nbsp;partner bootcamps, which will be easiest path towards technical certification.&nbsp;Training and registration information will be available soon. Later this year, after the bootcamp sessions have concluded, there will be an option to take a certification exam through a third&nbsp;party testing service. More details and cost for that exam will be published soon. &nbsp;</div>\n\t</li>\n\t<li>\n\t<div><em>On-Demand Resources</em>: Prepare now by watching the&nbsp;Learning Path recordings&nbsp;for <u>Business Sales</u>, <u>Technical Sales</u>,&nbsp;and <u>Practitioner</u> sessions.</div>\n\t</li>\n</ul>\n",
+																		"pt_BR": "<p><strong>For Business Sales and Technical Presales Job Roles</strong>:<br />\nA new, role-based <em>sales certification program</em> will launch for partners to maintain the minimum number of trained and certified presales and sales staff in accordance with their partner level.&nbsp;</p>\n\n<p><strong>For Technical Job Roles</strong>:<br />\nA new <em>Liferay Practitioner certification program</em> will launch for staff who are in technical support, software or sales engineering, or developer roles. As the first component of technical practitioner certification, the required headcount will need to attend and pass the<strong> <a href=\"https://partner.liferay.com/technical-certification\" rel=\"noopener noreferrer\" target=\"_blank\">in-person partner bootcamp</a></strong>&nbsp;with its exercises (taking place from May 2024 to September 2024.)</p>\n\n<p dir=\"ltr\"><strong>What this means for your team</strong>:</p>\n\n<ul>\n\t<li aria-level=\"1\" dir=\"ltr\">\n\t<div dir=\"ltr\" role=\"presentation\"><em>Sales &amp; Presales</em>: Watch for information on&nbsp;the new certification program and how to complete it within the 12-month window.</div>\n\t</li>\n\t<li aria-level=\"1\" dir=\"ltr\">\n\t<div dir=\"ltr\" role=\"presentation\"><em>Technical Staff</em>: Get ready for the&nbsp;partner bootcamps, which will be easiest path towards technical certification.&nbsp;Training and registration information will be available soon. Later this year, after the bootcamp sessions have concluded, there will be an option to take a certification exam through a third&nbsp;party testing service. More details and cost for that exam will be published soon. &nbsp;</div>\n\t</li>\n\t<li>\n\t<div><em>On-Demand Resources</em>: Prepare now by watching the&nbsp;Learning Path recordings&nbsp;for <u>Business Sales</u>, <u>Technical Sales</u>,&nbsp;and <u>Practitioner</u> sessions.</div>\n\t</li>\n</ul>\n",
+																		"sv_SE": "<p><strong>For Business Sales and Technical Presales Job Roles</strong>:<br />\nA new, role-based <em>sales certification program</em> will launch for partners to maintain the minimum number of trained and certified presales and sales staff in accordance with their partner level.&nbsp;</p>\n\n<p><strong>For Technical Job Roles</strong>:<br />\nA new <em>Liferay Practitioner certification program</em> will launch for staff who are in technical support, software or sales engineering, or developer roles. As the first component of technical practitioner certification, the required headcount will need to attend and pass the<strong> <a href=\"https://partner.liferay.com/technical-certification\" rel=\"noopener noreferrer\" target=\"_blank\">in-person partner bootcamp</a></strong>&nbsp;with its exercises (taking place from May 2024 to September 2024.)</p>\n\n<p dir=\"ltr\"><strong>What this means for your team</strong>:</p>\n\n<ul>\n\t<li aria-level=\"1\" dir=\"ltr\">\n\t<div dir=\"ltr\" role=\"presentation\"><em>Sales &amp; Presales</em>: Watch for information on&nbsp;the new certification program and how to complete it within the 12-month window.</div>\n\t</li>\n\t<li aria-level=\"1\" dir=\"ltr\">\n\t<div dir=\"ltr\" role=\"presentation\"><em>Technical Staff</em>: Get ready for the&nbsp;partner bootcamps, which will be easiest path towards technical certification.&nbsp;Training and registration information will be available soon. Later this year, after the bootcamp sessions have concluded, there will be an option to take a certification exam through a third&nbsp;party testing service. More details and cost for that exam will be published soon. &nbsp;</div>\n\t</li>\n\t<li>\n\t<div><em>On-Demand Resources</em>: Prepare now by watching the&nbsp;Learning Path recordings&nbsp;for <u>Business Sales</u>, <u>Technical Sales</u>,&nbsp;and <u>Practitioner</u> sessions.</div>\n\t</li>\n</ul>\n",
+																		"zh_CN": "<p><strong>For Business Sales and Technical Presales Job Roles</strong>:<br />\nA new, role-based <em>sales certification program</em> will launch for partners to maintain the minimum number of trained and certified presales and sales staff in accordance with their partner level.&nbsp;</p>\n\n<p><strong>For Technical Job Roles</strong>:<br />\nA new <em>Liferay Practitioner certification program</em> will launch for staff who are in technical support, software or sales engineering, or developer roles. As the first component of technical practitioner certification, the required headcount will need to attend and pass the<strong> <a href=\"https://partner.liferay.com/technical-certification\" rel=\"noopener noreferrer\" target=\"_blank\">in-person partner bootcamp</a></strong>&nbsp;with its exercises (taking place from May 2024 to September 2024.)</p>\n\n<p dir=\"ltr\"><strong>What this means for your team</strong>:</p>\n\n<ul>\n\t<li aria-level=\"1\" dir=\"ltr\">\n\t<div dir=\"ltr\" role=\"presentation\"><em>Sales &amp; Presales</em>: Watch for information on&nbsp;the new certification program and how to complete it within the 12-month window.</div>\n\t</li>\n\t<li aria-level=\"1\" dir=\"ltr\">\n\t<div dir=\"ltr\" role=\"presentation\"><em>Technical Staff</em>: Get ready for the&nbsp;partner bootcamps, which will be easiest path towards technical certification.&nbsp;Training and registration information will be available soon. Later this year, after the bootcamp sessions have concluded, there will be an option to take a certification exam through a third&nbsp;party testing service. More details and cost for that exam will be published soon. &nbsp;</div>\n\t</li>\n\t<li>\n\t<div><em>On-Demand Resources</em>: Prepare now by watching the&nbsp;Learning Path recordings&nbsp;for <u>Business Sales</u>, <u>Technical Sales</u>,&nbsp;and <u>Practitioner</u> sessions.</div>\n\t</li>\n</ul>\n"
 																	}
 																}
 															}
@@ -162,11 +170,13 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],
@@ -206,7 +216,8 @@
 																				}
 																			}
 																		},
-																		"fragmentLink": {}
+																		"fragmentLink": {
+																		}
 																	}
 																}
 															],
@@ -232,7 +243,8 @@
 					{
 						"definition": {
 							"indexed": true,
-							"layout": {}
+							"layout": {
+							}
 						},
 						"pageElements": [
 							{
@@ -256,11 +268,13 @@
 										},
 										{
 											"id": "portraitMobile",
-											"rowViewportDefinition": {}
+											"rowViewportDefinition": {
+											}
 										},
 										{
 											"id": "tablet",
-											"rowViewportDefinition": {}
+											"rowViewportDefinition": {
+											}
 										}
 									],
 									"verticalAlignment": "top"
@@ -276,11 +290,13 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],
@@ -299,22 +315,23 @@
 														{
 															"id": "element-text",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"value_i18n": {
-																		"ar_SA": "\u003Cp\u003EMaintenance Notice\u003C/p\u003E\n",
-																		"ca_ES": "\u003Cp\u003EMaintenance Notice\u003C/p\u003E\n",
-																		"de_DE": "\u003Cp\u003EMaintenance Notice\u003C/p\u003E\n",
-																		"en_US": "\u003Cp\u003EMaintenance Notice\u003C/p\u003E\n",
-																		"es_ES": "\u003Cp\u003EMaintenance Notice\u003C/p\u003E\n",
-																		"fi_FI": "\u003Cp\u003EMaintenance Notice\u003C/p\u003E\n",
-																		"fr_FR": "\u003Cp\u003EMaintenance Notice\u003C/p\u003E\n",
-																		"hu_HU": "\u003Cp\u003EMaintenance Notice\u003C/p\u003E\n",
-																		"ja_JP": "\u003Cp\u003EMaintenance Notice\u003C/p\u003E\n",
-																		"nl_NL": "\u003Cp\u003EMaintenance Notice\u003C/p\u003E\n",
-																		"pt_BR": "\u003Cp\u003EMaintenance Notice\u003C/p\u003E\n",
-																		"sv_SE": "\u003Cp\u003EMaintenance Notice\u003C/p\u003E\n",
-																		"zh_CN": "\u003Cp\u003EMaintenance Notice\u003C/p\u003E\n"
+																		"ar_SA": "<p>Maintenance Notice</p>\n",
+																		"ca_ES": "<p>Maintenance Notice</p>\n",
+																		"de_DE": "<p>Maintenance Notice</p>\n",
+																		"en_US": "<p>Maintenance Notice</p>\n",
+																		"es_ES": "<p>Maintenance Notice</p>\n",
+																		"fi_FI": "<p>Maintenance Notice</p>\n",
+																		"fr_FR": "<p>Maintenance Notice</p>\n",
+																		"hu_HU": "<p>Maintenance Notice</p>\n",
+																		"ja_JP": "<p>Maintenance Notice</p>\n",
+																		"nl_NL": "<p>Maintenance Notice</p>\n",
+																		"pt_BR": "<p>Maintenance Notice</p>\n",
+																		"sv_SE": "<p>Maintenance Notice</p>\n",
+																		"zh_CN": "<p>Maintenance Notice</p>\n"
 																	}
 																}
 															}
@@ -333,27 +350,29 @@
 													"fragment": {
 														"key": "BASIC_COMPONENT-paragraph"
 													},
-													"fragmentConfig": {},
+													"fragmentConfig": {
+													},
 													"fragmentFields": [
 														{
 															"id": "element-text",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"value_i18n": {
-																		"ar_SA": "\u003Cp\u003ELearning path course pages for \u003Cstrong\u003ESelling Liferay \u003C/strong\u003E(both Business Sales and Technical Sales roles)&nbsp;are temporarily unavailable while we perform scheduled maintenance. We apologize for any inconvenience this may cause.&nbsp;\u003C/p\u003E\n",
-																		"ca_ES": "\u003Cp\u003ELearning path course pages for \u003Cstrong\u003ESelling Liferay \u003C/strong\u003E(both Business Sales and Technical Sales roles)&nbsp;are temporarily unavailable while we perform scheduled maintenance. We apologize for any inconvenience this may cause.&nbsp;\u003C/p\u003E\n",
-																		"de_DE": "\u003Cp\u003ELearning path course pages for \u003Cstrong\u003ESelling Liferay \u003C/strong\u003E(both Business Sales and Technical Sales roles)&nbsp;are temporarily unavailable while we perform scheduled maintenance. We apologize for any inconvenience this may cause.&nbsp;\u003C/p\u003E\n",
-																		"en_US": "\u003Cp\u003ELearning path course pages for \u003Cstrong\u003ESelling Liferay \u003C/strong\u003E(both Business Sales and Technical Sales roles)&nbsp;are temporarily unavailable while we perform scheduled maintenance. We apologize for any inconvenience this may cause.&nbsp;\u003C/p\u003E\n",
-																		"es_ES": "\u003Cp\u003ELearning path course pages for \u003Cstrong\u003ESelling Liferay \u003C/strong\u003E(both Business Sales and Technical Sales roles)&nbsp;are temporarily unavailable while we perform scheduled maintenance. We apologize for any inconvenience this may cause.&nbsp;\u003C/p\u003E\n",
-																		"fi_FI": "\u003Cp\u003ELearning path course pages for \u003Cstrong\u003ESelling Liferay \u003C/strong\u003E(both Business Sales and Technical Sales roles)&nbsp;are temporarily unavailable while we perform scheduled maintenance. We apologize for any inconvenience this may cause.&nbsp;\u003C/p\u003E\n",
-																		"fr_FR": "\u003Cp\u003ELearning path course pages for \u003Cstrong\u003ESelling Liferay \u003C/strong\u003E(both Business Sales and Technical Sales roles)&nbsp;are temporarily unavailable while we perform scheduled maintenance. We apologize for any inconvenience this may cause.&nbsp;\u003C/p\u003E\n",
-																		"hu_HU": "\u003Cp\u003ELearning path course pages for \u003Cstrong\u003ESelling Liferay \u003C/strong\u003E(both Business Sales and Technical Sales roles)&nbsp;are temporarily unavailable while we perform scheduled maintenance. We apologize for any inconvenience this may cause.&nbsp;\u003C/p\u003E\n",
-																		"ja_JP": "\u003Cp\u003ELearning path course pages for \u003Cstrong\u003ESelling Liferay \u003C/strong\u003E(both Business Sales and Technical Sales roles)&nbsp;are temporarily unavailable while we perform scheduled maintenance. We apologize for any inconvenience this may cause.&nbsp;\u003C/p\u003E\n",
-																		"nl_NL": "\u003Cp\u003ELearning path course pages for \u003Cstrong\u003ESelling Liferay \u003C/strong\u003E(both Business Sales and Technical Sales roles)&nbsp;are temporarily unavailable while we perform scheduled maintenance. We apologize for any inconvenience this may cause.&nbsp;\u003C/p\u003E\n",
-																		"pt_BR": "\u003Cp\u003ELearning path course pages for \u003Cstrong\u003ESelling Liferay \u003C/strong\u003E(both Business Sales and Technical Sales roles)&nbsp;are temporarily unavailable while we perform scheduled maintenance. We apologize for any inconvenience this may cause.&nbsp;\u003C/p\u003E\n",
-																		"sv_SE": "\u003Cp\u003ELearning path course pages for \u003Cstrong\u003ESelling Liferay \u003C/strong\u003E(both Business Sales and Technical Sales roles)&nbsp;are temporarily unavailable while we perform scheduled maintenance. We apologize for any inconvenience this may cause.&nbsp;\u003C/p\u003E\n",
-																		"zh_CN": "\u003Cp\u003ELearning path course pages for \u003Cstrong\u003ESelling Liferay \u003C/strong\u003E(both Business Sales and Technical Sales roles)&nbsp;are temporarily unavailable while we perform scheduled maintenance. We apologize for any inconvenience this may cause.&nbsp;\u003C/p\u003E\n"
+																		"ar_SA": "<p>Learning path course pages for <strong>Selling Liferay </strong>(both Business Sales and Technical Sales roles)&nbsp;are temporarily unavailable while we perform scheduled maintenance. We apologize for any inconvenience this may cause.&nbsp;</p>\n",
+																		"ca_ES": "<p>Learning path course pages for <strong>Selling Liferay </strong>(both Business Sales and Technical Sales roles)&nbsp;are temporarily unavailable while we perform scheduled maintenance. We apologize for any inconvenience this may cause.&nbsp;</p>\n",
+																		"de_DE": "<p>Learning path course pages for <strong>Selling Liferay </strong>(both Business Sales and Technical Sales roles)&nbsp;are temporarily unavailable while we perform scheduled maintenance. We apologize for any inconvenience this may cause.&nbsp;</p>\n",
+																		"en_US": "<p>Learning path course pages for <strong>Selling Liferay </strong>(both Business Sales and Technical Sales roles)&nbsp;are temporarily unavailable while we perform scheduled maintenance. We apologize for any inconvenience this may cause.&nbsp;</p>\n",
+																		"es_ES": "<p>Learning path course pages for <strong>Selling Liferay </strong>(both Business Sales and Technical Sales roles)&nbsp;are temporarily unavailable while we perform scheduled maintenance. We apologize for any inconvenience this may cause.&nbsp;</p>\n",
+																		"fi_FI": "<p>Learning path course pages for <strong>Selling Liferay </strong>(both Business Sales and Technical Sales roles)&nbsp;are temporarily unavailable while we perform scheduled maintenance. We apologize for any inconvenience this may cause.&nbsp;</p>\n",
+																		"fr_FR": "<p>Learning path course pages for <strong>Selling Liferay </strong>(both Business Sales and Technical Sales roles)&nbsp;are temporarily unavailable while we perform scheduled maintenance. We apologize for any inconvenience this may cause.&nbsp;</p>\n",
+																		"hu_HU": "<p>Learning path course pages for <strong>Selling Liferay </strong>(both Business Sales and Technical Sales roles)&nbsp;are temporarily unavailable while we perform scheduled maintenance. We apologize for any inconvenience this may cause.&nbsp;</p>\n",
+																		"ja_JP": "<p>Learning path course pages for <strong>Selling Liferay </strong>(both Business Sales and Technical Sales roles)&nbsp;are temporarily unavailable while we perform scheduled maintenance. We apologize for any inconvenience this may cause.&nbsp;</p>\n",
+																		"nl_NL": "<p>Learning path course pages for <strong>Selling Liferay </strong>(both Business Sales and Technical Sales roles)&nbsp;are temporarily unavailable while we perform scheduled maintenance. We apologize for any inconvenience this may cause.&nbsp;</p>\n",
+																		"pt_BR": "<p>Learning path course pages for <strong>Selling Liferay </strong>(both Business Sales and Technical Sales roles)&nbsp;are temporarily unavailable while we perform scheduled maintenance. We apologize for any inconvenience this may cause.&nbsp;</p>\n",
+																		"sv_SE": "<p>Learning path course pages for <strong>Selling Liferay </strong>(both Business Sales and Technical Sales roles)&nbsp;are temporarily unavailable while we perform scheduled maintenance. We apologize for any inconvenience this may cause.&nbsp;</p>\n",
+																		"zh_CN": "<p>Learning path course pages for <strong>Selling Liferay </strong>(both Business Sales and Technical Sales roles)&nbsp;are temporarily unavailable while we perform scheduled maintenance. We apologize for any inconvenience this may cause.&nbsp;</p>\n"
 																	}
 																}
 															}
@@ -376,11 +395,13 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],
@@ -410,11 +431,13 @@
 										},
 										{
 											"id": "portraitMobile",
-											"rowViewportDefinition": {}
+											"rowViewportDefinition": {
+											}
 										},
 										{
 											"id": "tablet",
-											"rowViewportDefinition": {}
+											"rowViewportDefinition": {
+											}
 										}
 									],
 									"verticalAlignment": "top"
@@ -430,11 +453,13 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],
@@ -522,7 +547,8 @@
 																},
 																{
 																	"id": "tablet",
-																	"rowViewportDefinition": {}
+																	"rowViewportDefinition": {
+																	}
 																}
 															],
 															"verticalAlignment": "middle"
@@ -544,7 +570,8 @@
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "tablet"
 																		}
 																	],
@@ -602,7 +629,8 @@
 																										}
 																									}
 																								},
-																								"fragmentLink": {}
+																								"fragmentLink": {
+																								}
 																							}
 																						}
 																					],
@@ -661,7 +689,8 @@
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "tablet"
 																		}
 																	],
@@ -710,7 +739,8 @@
 																						{
 																							"id": "element-text",
 																							"value": {
-																								"fragmentLink": {},
+																								"fragmentLink": {
+																								},
 																								"text": {
 																									"value_i18n": {
 																										"ar_SA": "Business Sales",
@@ -776,7 +806,8 @@
 																						{
 																							"id": "element-text",
 																							"value": {
-																								"fragmentLink": {},
+																								"fragmentLink": {
+																								},
 																								"text": {
 																									"value_i18n": {
 																										"ar_SA": "Learning paths for Account Executives, BDRs, SDRs, and other business sales roles.",
@@ -926,7 +957,8 @@
 																								"iconLink": "",
 																								"iconName": "order-arrow-right"
 																							},
-																							"fragmentFields": [],
+																							"fragmentFields": [
+																							],
 																							"fragmentStyle": {
 																								"borderRadius": "",
 																								"shadow": "",
@@ -1033,7 +1065,8 @@
 																},
 																{
 																	"id": "tablet",
-																	"rowViewportDefinition": {}
+																	"rowViewportDefinition": {
+																	}
 																}
 															],
 															"verticalAlignment": "middle"
@@ -1055,7 +1088,8 @@
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "tablet"
 																		}
 																	],
@@ -1118,7 +1152,8 @@
 																										}
 																									}
 																								},
-																								"fragmentLink": {}
+																								"fragmentLink": {
+																								}
 																							}
 																						}
 																					],
@@ -1177,7 +1212,8 @@
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "tablet"
 																		}
 																	],
@@ -1226,22 +1262,23 @@
 																						{
 																							"id": "element-text",
 																							"value": {
-																								"fragmentLink": {},
+																								"fragmentLink": {
+																								},
 																								"text": {
 																									"value_i18n": {
-																										"ar_SA": "\u003Cp\u003ETechnical Practitioner\u003C/p\u003E\n",
-																										"ca_ES": "\u003Cp\u003ETechnical Practitioner\u003C/p\u003E\n",
-																										"de_DE": "\u003Cp\u003ETechnical Practitioner\u003C/p\u003E\n",
-																										"en_US": "\u003Cp\u003ETechnical Practitioner\u003C/p\u003E\n",
-																										"es_ES": "\u003Cp\u003ETechnical Practitioner\u003C/p\u003E\n",
-																										"fi_FI": "\u003Cp\u003ETechnical Practitioner\u003C/p\u003E\n",
-																										"fr_FR": "\u003Cp\u003ETechnical Practitioner\u003C/p\u003E\n",
-																										"hu_HU": "\u003Cp\u003ETechnical Practitioner\u003C/p\u003E\n",
-																										"ja_JP": "\u003Cp\u003ETechnical Practitioner\u003C/p\u003E\n",
-																										"nl_NL": "\u003Cp\u003ETechnical Practitioner\u003C/p\u003E\n",
-																										"pt_BR": "\u003Cp\u003ETechnical Practitioner\u003C/p\u003E\n",
-																										"sv_SE": "\u003Cp\u003ETechnical Practitioner\u003C/p\u003E\n",
-																										"zh_CN": "\u003Cp\u003ETechnical Practitioner\u003C/p\u003E\n"
+																										"ar_SA": "<p>Technical Practitioner</p>\n",
+																										"ca_ES": "<p>Technical Practitioner</p>\n",
+																										"de_DE": "<p>Technical Practitioner</p>\n",
+																										"en_US": "<p>Technical Practitioner</p>\n",
+																										"es_ES": "<p>Technical Practitioner</p>\n",
+																										"fi_FI": "<p>Technical Practitioner</p>\n",
+																										"fr_FR": "<p>Technical Practitioner</p>\n",
+																										"hu_HU": "<p>Technical Practitioner</p>\n",
+																										"ja_JP": "<p>Technical Practitioner</p>\n",
+																										"nl_NL": "<p>Technical Practitioner</p>\n",
+																										"pt_BR": "<p>Technical Practitioner</p>\n",
+																										"sv_SE": "<p>Technical Practitioner</p>\n",
+																										"zh_CN": "<p>Technical Practitioner</p>\n"
 																									}
 																								}
 																							}
@@ -1292,22 +1329,23 @@
 																						{
 																							"id": "element-text",
 																							"value": {
-																								"fragmentLink": {},
+																								"fragmentLink": {
+																								},
 																								"text": {
 																									"value_i18n": {
-																										"ar_SA": "\u003Cp\u003ELearning paths for Developers, Architects and Administrator roles.\u003C/p\u003E\n",
-																										"ca_ES": "\u003Cp\u003ELearning paths for Developers, Architects and Administrator roles.\u003C/p\u003E\n",
-																										"de_DE": "\u003Cp\u003ELearning paths for Developers, Architects and Administrator roles.\u003C/p\u003E\n",
-																										"en_US": "\u003Cp\u003ELearning paths for Developers, Architects and Administrator roles.\u003C/p\u003E\n",
-																										"es_ES": "\u003Cp\u003ELearning paths for Developers, Architects and Administrator roles.\u003C/p\u003E\n",
-																										"fi_FI": "\u003Cp\u003ELearning paths for Developers, Architects and Administrator roles.\u003C/p\u003E\n",
-																										"fr_FR": "\u003Cp\u003ELearning paths for Developers, Architects and Administrator roles.\u003C/p\u003E\n",
-																										"hu_HU": "\u003Cp\u003ELearning paths for Developers, Architects and Administrator roles.\u003C/p\u003E\n",
-																										"ja_JP": "\u003Cp\u003ELearning paths for Developers, Architects and Administrator roles.\u003C/p\u003E\n",
-																										"nl_NL": "\u003Cp\u003ELearning paths for Developers, Architects and Administrator roles.\u003C/p\u003E\n",
-																										"pt_BR": "\u003Cp\u003ELearning paths for Developers, Architects and Administrator roles.\u003C/p\u003E\n",
-																										"sv_SE": "\u003Cp\u003ELearning paths for Developers, Architects and Administrator roles.\u003C/p\u003E\n",
-																										"zh_CN": "\u003Cp\u003ELearning paths for Developers, Architects and Administrator roles.\u003C/p\u003E\n"
+																										"ar_SA": "<p>Learning paths for Developers, Architects and Administrator roles.</p>\n",
+																										"ca_ES": "<p>Learning paths for Developers, Architects and Administrator roles.</p>\n",
+																										"de_DE": "<p>Learning paths for Developers, Architects and Administrator roles.</p>\n",
+																										"en_US": "<p>Learning paths for Developers, Architects and Administrator roles.</p>\n",
+																										"es_ES": "<p>Learning paths for Developers, Architects and Administrator roles.</p>\n",
+																										"fi_FI": "<p>Learning paths for Developers, Architects and Administrator roles.</p>\n",
+																										"fr_FR": "<p>Learning paths for Developers, Architects and Administrator roles.</p>\n",
+																										"hu_HU": "<p>Learning paths for Developers, Architects and Administrator roles.</p>\n",
+																										"ja_JP": "<p>Learning paths for Developers, Architects and Administrator roles.</p>\n",
+																										"nl_NL": "<p>Learning paths for Developers, Architects and Administrator roles.</p>\n",
+																										"pt_BR": "<p>Learning paths for Developers, Architects and Administrator roles.</p>\n",
+																										"sv_SE": "<p>Learning paths for Developers, Architects and Administrator roles.</p>\n",
+																										"zh_CN": "<p>Learning paths for Developers, Architects and Administrator roles.</p>\n"
 																									}
 																								}
 																							}
@@ -1389,19 +1427,19 @@
 																										},
 																										"text": {
 																											"value_i18n": {
-																												"ar_SA": "\u003Cp\u003EView Practitioner Certification\u003C/p\u003E\n",
-																												"ca_ES": "\u003Cp\u003EView Practitioner Certification\u003C/p\u003E\n",
-																												"de_DE": "\u003Cp\u003EView Practitioner Certification\u003C/p\u003E\n",
-																												"en_US": "\u003Cp\u003EView Practitioner Certification\u003C/p\u003E\n",
-																												"es_ES": "\u003Cp\u003EView Practitioner Certification\u003C/p\u003E\n",
-																												"fi_FI": "\u003Cp\u003EView Practitioner Certification\u003C/p\u003E\n",
-																												"fr_FR": "\u003Cp\u003EView Practitioner Certification\u003C/p\u003E\n",
-																												"hu_HU": "\u003Cp\u003EView Practitioner Certification\u003C/p\u003E\n",
-																												"ja_JP": "\u003Cp\u003EView Practitioner Certification\u003C/p\u003E\n",
-																												"nl_NL": "\u003Cp\u003EView Practitioner Certification\u003C/p\u003E\n",
-																												"pt_BR": "\u003Cp\u003EView Practitioner Certification\u003C/p\u003E\n",
-																												"sv_SE": "\u003Cp\u003EView Practitioner Certification\u003C/p\u003E\n",
-																												"zh_CN": "\u003Cp\u003EView Practitioner Certification\u003C/p\u003E\n"
+																												"ar_SA": "<p>View Practitioner Certification</p>\n",
+																												"ca_ES": "<p>View Practitioner Certification</p>\n",
+																												"de_DE": "<p>View Practitioner Certification</p>\n",
+																												"en_US": "<p>View Practitioner Certification</p>\n",
+																												"es_ES": "<p>View Practitioner Certification</p>\n",
+																												"fi_FI": "<p>View Practitioner Certification</p>\n",
+																												"fr_FR": "<p>View Practitioner Certification</p>\n",
+																												"hu_HU": "<p>View Practitioner Certification</p>\n",
+																												"ja_JP": "<p>View Practitioner Certification</p>\n",
+																												"nl_NL": "<p>View Practitioner Certification</p>\n",
+																												"pt_BR": "<p>View Practitioner Certification</p>\n",
+																												"sv_SE": "<p>View Practitioner Certification</p>\n",
+																												"zh_CN": "<p>View Practitioner Certification</p>\n"
 																											}
 																										}
 																									}
@@ -1438,7 +1476,8 @@
 																								"iconLink": "",
 																								"iconName": "order-arrow-right"
 																							},
-																							"fragmentFields": [],
+																							"fragmentFields": [
+																							],
 																							"fragmentStyle": {
 																								"borderRadius": "",
 																								"shadow": "",
@@ -1477,11 +1516,13 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],
@@ -1569,7 +1610,8 @@
 																},
 																{
 																	"id": "tablet",
-																	"rowViewportDefinition": {}
+																	"rowViewportDefinition": {
+																	}
 																}
 															],
 															"verticalAlignment": "middle"
@@ -1591,7 +1633,8 @@
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "tablet"
 																		}
 																	],
@@ -1649,7 +1692,8 @@
 																										}
 																									}
 																								},
-																								"fragmentLink": {}
+																								"fragmentLink": {
+																								}
 																							}
 																						}
 																					],
@@ -1708,7 +1752,8 @@
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "tablet"
 																		}
 																	],
@@ -1757,7 +1802,8 @@
 																						{
 																							"id": "element-text",
 																							"value": {
-																								"fragmentLink": {},
+																								"fragmentLink": {
+																								},
 																								"text": {
 																									"value_i18n": {
 																										"ar_SA": "Technical Sales",
@@ -1823,7 +1869,8 @@
 																						{
 																							"id": "element-text",
 																							"value": {
-																								"fragmentLink": {},
+																								"fragmentLink": {
+																								},
 																								"text": {
 																									"value_i18n": {
 																										"ar_SA": "Learning paths for Sales Engineers, Pre-Sales Consultants and other technical sales roles.",
@@ -1972,7 +2019,8 @@
 																								"iconLink": "",
 																								"iconName": "order-arrow-right"
 																							},
-																							"fragmentFields": [],
+																							"fragmentFields": [
+																							],
 																							"fragmentStyle": {
 																								"borderRadius": "",
 																								"shadow": "",

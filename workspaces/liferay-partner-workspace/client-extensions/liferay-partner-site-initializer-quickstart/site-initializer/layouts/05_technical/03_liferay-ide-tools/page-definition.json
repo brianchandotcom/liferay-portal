@@ -3,255 +3,239 @@
 		"pageElements": [
 			{
 				"definition": {
-				  "indexed": true,
-				  "layout": {
-			  
-				  }
+					"indexed": true,
+					"layout": {
+					}
 				},
 				"pageElements": [
-				  {
-					"definition": {
-					  "gutters": true,
-					  "indexed": true,
-					  "modulesPerRow": 2,
-					  "numberOfColumns": 2,
-					  "reverseOrder": false,
-					  "rowViewports": [
-						{
-						  "id": "landscapeMobile",
-						  "rowViewportDefinition": {
-							"modulesPerRow": 1
-						  }
-						},
-						{
-						  "id": "portraitMobile",
-						  "rowViewportDefinition": {
-			  
-						  }
-						},
-						{
-						  "id": "tablet",
-						  "rowViewportDefinition": {
-			  
-						  }
-						}
-					  ],
-					  "verticalAlignment": "top"
-					},
-					"pageElements": [
-					  {
+					{
 						"definition": {
-						  "columnViewports": [
-							{
-							  "columnViewportDefinition": {
-								"size": 12
-							  },
-							  "id": "landscapeMobile"
-							},
-							{
-							  "columnViewportDefinition": {
-			  
-							  },
-							  "id": "portraitMobile"
-							},
-							{
-							  "columnViewportDefinition": {
-			  
-							  },
-							  "id": "tablet"
-							}
-						  ],
-						  "size": 9
-						},
-						"pageElements": [
-						  {
-							"definition": {
-							  "fragment": {
-								"key": "BASIC_COMPONENT-paragraph"
-							  },
-							  "fragmentConfig": {
-			  
-							  },
-							  "fragmentFields": [
+							"gutters": true,
+							"indexed": true,
+							"modulesPerRow": 2,
+							"numberOfColumns": 2,
+							"reverseOrder": false,
+							"rowViewports": [
 								{
-								  "id": "element-text",
-								  "value": {
-									"fragmentLink": {
-			  
-									},
-									"text": {
-										"value_i18n": {
-											"ar_SA": "\u003Ch3\u003EThe IDE Tools Survey has now closed. Thanks for your participation.\u003C/h3\u003E\n",
-											"ca_ES": "\u003Ch3\u003EThe IDE Tools Survey has now closed. Thanks for your participation.\u003C/h3\u003E\n",
-											"de_DE": "\u003Ch3\u003EThe IDE Tools Survey has now closed. Thanks for your participation.\u003C/h3\u003E\n",
-											"en_US": "\u003Ch3\u003EThe IDE Tools Survey has now closed. Thanks for your participation.\u003C/h3\u003E\n",
-											"es_ES": "\u003Ch3\u003EThe IDE Tools Survey has now closed. Thanks for your participation.\u003C/h3\u003E\n",
-											"fi_FI": "\u003Ch3\u003EThe IDE Tools Survey has now closed. Thanks for your participation.\u003C/h3\u003E\n",
-											"fr_FR": "\u003Ch3\u003EThe IDE Tools Survey has now closed. Thanks for your participation.\u003C/h3\u003E\n",
-											"hu_HU": "\u003Ch3\u003EThe IDE Tools Survey has now closed. Thanks for your participation.\u003C/h3\u003E\n",
-											"ja_JP": "\u003Ch3\u003EThe IDE Tools Survey has now closed. Thanks for your participation.\u003C/h3\u003E\n",
-											"nl_NL": "\u003Ch3\u003EThe IDE Tools Survey has now closed. Thanks for your participation.\u003C/h3\u003E\n",
-											"pt_BR": "\u003Ch3\u003EThe IDE Tools Survey has now closed. Thanks for your participation.\u003C/h3\u003E\n",
-											"sv_SE": "\u003Ch3\u003EThe IDE Tools Survey has now closed. Thanks for your participation.\u003C/h3\u003E\n",
-											"zh_CN": "\u003Ch3\u003EThe IDE Tools Survey has now closed. Thanks for your participation.\u003C/h3\u003E\n"
-										}
+									"id": "landscapeMobile",
+									"rowViewportDefinition": {
+										"modulesPerRow": 1
 									}
-								  }
+								},
+								{
+									"id": "portraitMobile",
+									"rowViewportDefinition": {
+									}
+								},
+								{
+									"id": "tablet",
+									"rowViewportDefinition": {
+									}
 								}
-							  ],
-							  "fragmentStyle": {
-								"paddingTop": "3"
-							  },
-							  "indexed": true
-							},
-							"type": "Fragment"
-						  }
-						],
-						"type": "Column"
-					  },
-					  {
-						"definition": {
-						  "columnViewports": [
-							{
-							  "columnViewportDefinition": {
-								"size": 12
-							  },
-							  "id": "landscapeMobile"
-							},
-							{
-							  "columnViewportDefinition": {
-			  
-							  },
-							  "id": "portraitMobile"
-							},
-							{
-							  "columnViewportDefinition": {
-			  
-							  },
-							  "id": "tablet"
-							}
-						  ],
-						  "size": 3
-						},
-						"type": "Column"
-					  }
-					],
-					"type": "Row"
-				  },
-				  {
-					"definition": {
-					  "gutters": true,
-					  "indexed": true,
-					  "modulesPerRow": 2,
-					  "numberOfColumns": 2,
-					  "reverseOrder": false,
-					  "rowViewports": [
-						{
-						  "id": "landscapeMobile",
-						  "rowViewportDefinition": {
-							"modulesPerRow": 1
-						  }
-						},
-						{
-						  "id": "portraitMobile",
-						  "rowViewportDefinition": {
-			  
-						  }
-						},
-						{
-						  "id": "tablet",
-						  "rowViewportDefinition": {
-			  
-						  }
-						}
-					  ],
-					  "verticalAlignment": "top"
-					},
-					"pageElements": [
-					  {
-						"definition": {
-						  "columnViewports": [
-							{
-							  "columnViewportDefinition": {
-								"size": 12
-							  },
-							  "id": "landscapeMobile"
-							},
-							{
-							  "columnViewportDefinition": {
-			  
-							  },
-							  "id": "portraitMobile"
-							},
-							{
-							  "columnViewportDefinition": {
-			  
-							  },
-							  "id": "tablet"
-							}
-						  ],
-						  "size": 9
+							],
+							"verticalAlignment": "top"
 						},
 						"pageElements": [
-						  {
-							"definition": {
-							  "fragmentStyle": {
-								"hidden": true
-							  },
-							  "widgetInstance": {
-								"widgetConfig": {
-								  "groupId": "15095646",
-								  "formInstanceId": "23565329"
+							{
+								"definition": {
+									"columnViewports": [
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "landscapeMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "tablet"
+										}
+									],
+									"size": 9
 								},
-								"widgetName": "com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormPortlet"
-							  }
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "BASIC_COMPONENT-paragraph"
+											},
+											"fragmentConfig": {
+											},
+											"fragmentFields": [
+												{
+													"id": "element-text",
+													"value": {
+														"fragmentLink": {
+														},
+														"text": {
+															"value_i18n": {
+																"ar_SA": "<h3>The IDE Tools Survey has now closed. Thanks for your participation.</h3>\n",
+																"ca_ES": "<h3>The IDE Tools Survey has now closed. Thanks for your participation.</h3>\n",
+																"de_DE": "<h3>The IDE Tools Survey has now closed. Thanks for your participation.</h3>\n",
+																"en_US": "<h3>The IDE Tools Survey has now closed. Thanks for your participation.</h3>\n",
+																"es_ES": "<h3>The IDE Tools Survey has now closed. Thanks for your participation.</h3>\n",
+																"fi_FI": "<h3>The IDE Tools Survey has now closed. Thanks for your participation.</h3>\n",
+																"fr_FR": "<h3>The IDE Tools Survey has now closed. Thanks for your participation.</h3>\n",
+																"hu_HU": "<h3>The IDE Tools Survey has now closed. Thanks for your participation.</h3>\n",
+																"ja_JP": "<h3>The IDE Tools Survey has now closed. Thanks for your participation.</h3>\n",
+																"nl_NL": "<h3>The IDE Tools Survey has now closed. Thanks for your participation.</h3>\n",
+																"pt_BR": "<h3>The IDE Tools Survey has now closed. Thanks for your participation.</h3>\n",
+																"sv_SE": "<h3>The IDE Tools Survey has now closed. Thanks for your participation.</h3>\n",
+																"zh_CN": "<h3>The IDE Tools Survey has now closed. Thanks for your participation.</h3>\n"
+															}
+														}
+													}
+												}
+											],
+											"fragmentStyle": {
+												"paddingTop": "3"
+											},
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "Column"
 							},
-							"type": "Widget"
-						  }
-						],
-						"type": "Column"
-					  },
-					  {
-						"definition": {
-						  "columnViewports": [
 							{
-							  "columnViewportDefinition": {
-								"size": 12
-							  },
-							  "id": "landscapeMobile"
-							},
-							{
-							  "columnViewportDefinition": {
-			  
-							  },
-							  "id": "portraitMobile"
-							},
-							{
-							  "columnViewportDefinition": {
-			  
-							  },
-							  "id": "tablet"
+								"definition": {
+									"columnViewports": [
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "landscapeMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "tablet"
+										}
+									],
+									"size": 3
+								},
+								"type": "Column"
 							}
-						  ],
-						  "size": 3
-						},
-						"type": "Column"
-					  }
-					],
-					"type": "Row"
-				  },
-				  {
-					"definition": {
-					  "indexed": true,
-					  "layout": {
-			  
-					  }
+						],
+						"type": "Row"
 					},
-					"type": "Section"
-				  }
+					{
+						"definition": {
+							"gutters": true,
+							"indexed": true,
+							"modulesPerRow": 2,
+							"numberOfColumns": 2,
+							"reverseOrder": false,
+							"rowViewports": [
+								{
+									"id": "landscapeMobile",
+									"rowViewportDefinition": {
+										"modulesPerRow": 1
+									}
+								},
+								{
+									"id": "portraitMobile",
+									"rowViewportDefinition": {
+									}
+								},
+								{
+									"id": "tablet",
+									"rowViewportDefinition": {
+									}
+								}
+							],
+							"verticalAlignment": "top"
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"columnViewports": [
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "landscapeMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "tablet"
+										}
+									],
+									"size": 9
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragmentStyle": {
+												"hidden": true
+											},
+											"widgetInstance": {
+												"widgetConfig": {
+													"formInstanceId": "23565329",
+													"groupId": "15095646"
+												},
+												"widgetName": "com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormPortlet"
+											}
+										},
+										"type": "Widget"
+									}
+								],
+								"type": "Column"
+							},
+							{
+								"definition": {
+									"columnViewports": [
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "landscapeMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "tablet"
+										}
+									],
+									"size": 3
+								},
+								"type": "Column"
+							}
+						],
+						"type": "Row"
+					},
+					{
+						"definition": {
+							"indexed": true,
+							"layout": {
+							}
+						},
+						"type": "Section"
+					}
 				],
 				"type": "Section"
-			  }
+			}
 		],
 		"type": "Root"
 	},

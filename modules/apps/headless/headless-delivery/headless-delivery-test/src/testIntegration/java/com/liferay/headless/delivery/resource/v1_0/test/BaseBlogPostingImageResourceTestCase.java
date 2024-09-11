@@ -173,6 +173,7 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 		blogPostingImage.setContentUrl(regex);
 		blogPostingImage.setContentValue(regex);
 		blogPostingImage.setEncodingFormat(regex);
+		blogPostingImage.setExternalReferenceCode(regex);
 		blogPostingImage.setFileExtension(regex);
 		blogPostingImage.setTitle(regex);
 
@@ -185,6 +186,7 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 		Assert.assertEquals(regex, blogPostingImage.getContentUrl());
 		Assert.assertEquals(regex, blogPostingImage.getContentValue());
 		Assert.assertEquals(regex, blogPostingImage.getEncodingFormat());
+		Assert.assertEquals(regex, blogPostingImage.getExternalReferenceCode());
 		Assert.assertEquals(regex, blogPostingImage.getFileExtension());
 		Assert.assertEquals(regex, blogPostingImage.getTitle());
 	}
@@ -983,6 +985,227 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 			multipartFiles);
 	}
 
+	@Test
+	public void testDeleteSiteBlogPostingImageByExternalReferenceCode()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		BlogPostingImage blogPostingImage =
+			testDeleteSiteBlogPostingImageByExternalReferenceCode_addBlogPostingImage();
+
+		assertHttpResponseStatusCode(
+			204,
+			blogPostingImageResource.
+				deleteSiteBlogPostingImageByExternalReferenceCodeHttpResponse(
+					testDeleteSiteBlogPostingImageByExternalReferenceCode_getSiteId(),
+					blogPostingImage.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			blogPostingImageResource.
+				getSiteBlogPostingImageByExternalReferenceCodeHttpResponse(
+					testDeleteSiteBlogPostingImageByExternalReferenceCode_getSiteId(),
+					blogPostingImage.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			blogPostingImageResource.
+				getSiteBlogPostingImageByExternalReferenceCodeHttpResponse(
+					testDeleteSiteBlogPostingImageByExternalReferenceCode_getSiteId(),
+					blogPostingImage.getExternalReferenceCode()));
+	}
+
+	protected Long
+			testDeleteSiteBlogPostingImageByExternalReferenceCode_getSiteId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected BlogPostingImage
+			testDeleteSiteBlogPostingImageByExternalReferenceCode_addBlogPostingImage()
+		throws Exception {
+
+		return blogPostingImageResource.postSiteBlogPostingImage(
+			testGroup.getGroupId(), randomBlogPostingImage(),
+			getMultipartFiles());
+	}
+
+	@Test
+	public void testGetSiteBlogPostingImageByExternalReferenceCode()
+		throws Exception {
+
+		BlogPostingImage postBlogPostingImage =
+			testGetSiteBlogPostingImageByExternalReferenceCode_addBlogPostingImage();
+
+		BlogPostingImage getBlogPostingImage =
+			blogPostingImageResource.
+				getSiteBlogPostingImageByExternalReferenceCode(
+					testGetSiteBlogPostingImageByExternalReferenceCode_getSiteId(),
+					postBlogPostingImage.getExternalReferenceCode());
+
+		assertEquals(postBlogPostingImage, getBlogPostingImage);
+		assertValid(getBlogPostingImage);
+	}
+
+	protected Long
+			testGetSiteBlogPostingImageByExternalReferenceCode_getSiteId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected BlogPostingImage
+			testGetSiteBlogPostingImageByExternalReferenceCode_addBlogPostingImage()
+		throws Exception {
+
+		return blogPostingImageResource.postSiteBlogPostingImage(
+			testGroup.getGroupId(), randomBlogPostingImage(),
+			getMultipartFiles());
+	}
+
+	@Test
+	public void testGraphQLGetSiteBlogPostingImageByExternalReferenceCode()
+		throws Exception {
+
+		BlogPostingImage blogPostingImage =
+			testGraphQLGetSiteBlogPostingImageByExternalReferenceCode_addBlogPostingImage();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				blogPostingImage,
+				BlogPostingImageSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"blogPostingImageByExternalReferenceCode",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"siteKey",
+											"\"" +
+												testGraphQLGetSiteBlogPostingImageByExternalReferenceCode_getSiteId() +
+													"\"");
+
+										put(
+											"externalReferenceCode",
+											"\"" +
+												blogPostingImage.
+													getExternalReferenceCode() +
+														"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/blogPostingImageByExternalReferenceCode"))));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		Assert.assertTrue(
+			equals(
+				blogPostingImage,
+				BlogPostingImageSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessDelivery_v1_0",
+								new GraphQLField(
+									"blogPostingImageByExternalReferenceCode",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"siteKey",
+												"\"" +
+													testGraphQLGetSiteBlogPostingImageByExternalReferenceCode_getSiteId() +
+														"\"");
+
+											put(
+												"externalReferenceCode",
+												"\"" +
+													blogPostingImage.
+														getExternalReferenceCode() +
+															"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+						"Object/blogPostingImageByExternalReferenceCode"))));
+	}
+
+	protected Long
+			testGraphQLGetSiteBlogPostingImageByExternalReferenceCode_getSiteId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetSiteBlogPostingImageByExternalReferenceCodeNotFound()
+		throws Exception {
+
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"blogPostingImageByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"siteKey",
+									"\"" + irrelevantGroup.getGroupId() + "\"");
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessDelivery_v1_0",
+						new GraphQLField(
+							"blogPostingImageByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"siteKey",
+										"\"" + irrelevantGroup.getGroupId() +
+											"\"");
+									put(
+										"externalReferenceCode",
+										irrelevantExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected BlogPostingImage
+			testGraphQLGetSiteBlogPostingImageByExternalReferenceCode_addBlogPostingImage()
+		throws Exception {
+
+		return testGraphQLBlogPostingImage_addBlogPostingImage();
+	}
+
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
@@ -1069,6 +1292,8 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 		sb.append("}");
 
 		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		graphQLFields.add(new GraphQLField("externalReferenceCode"));
 
 		graphQLFields.add(new GraphQLField("id"));
 
@@ -1195,6 +1420,16 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 
 			if (Objects.equals("encodingFormat", additionalAssertFieldName)) {
 				if (blogPostingImage.getEncodingFormat() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (blogPostingImage.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 
@@ -1388,6 +1623,19 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 				if (!Objects.deepEquals(
 						blogPostingImage1.getEncodingFormat(),
 						blogPostingImage2.getEncodingFormat())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						blogPostingImage1.getExternalReferenceCode(),
+						blogPostingImage2.getExternalReferenceCode())) {
 
 					return false;
 				}
@@ -1695,6 +1943,52 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("externalReferenceCode")) {
+			Object object = blogPostingImage.getExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("fileExtension")) {
 			Object object = blogPostingImage.getFileExtension();
 
@@ -1857,6 +2151,8 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 				contentValue = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				encodingFormat = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				externalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				fileExtension = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());

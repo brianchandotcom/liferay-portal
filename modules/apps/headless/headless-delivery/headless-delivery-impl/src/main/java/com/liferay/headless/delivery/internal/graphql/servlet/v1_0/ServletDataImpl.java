@@ -332,6 +332,11 @@ public class ServletDataImpl implements ServletData {
 							BlogPostingImageResourceImpl.class,
 							"postSiteBlogPostingImageBatch"));
 					put(
+						"mutation#deleteSiteBlogPostingImageByExternalReferenceCode",
+						new ObjectValuePair<>(
+							BlogPostingImageResourceImpl.class,
+							"deleteSiteBlogPostingImageByExternalReferenceCode"));
+					put(
 						"mutation#createBlogPostingCommentsPageExportBatch",
 						new ObjectValuePair<>(
 							CommentResourceImpl.class,
@@ -1798,6 +1803,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							BlogPostingImageResourceImpl.class,
 							"getSiteBlogPostingImagesPage"));
+					put(
+						"query#blogPostingImageByExternalReferenceCode",
+						new ObjectValuePair<>(
+							BlogPostingImageResourceImpl.class,
+							"getSiteBlogPostingImageByExternalReferenceCode"));
 					put(
 						"query#blogPostingComments",
 						new ObjectValuePair<>(

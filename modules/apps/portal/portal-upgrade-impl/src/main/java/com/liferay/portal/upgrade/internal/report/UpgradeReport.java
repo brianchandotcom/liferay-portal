@@ -119,47 +119,6 @@ public class UpgradeReport {
 		return 0;
 	}
 
-	private List<String> _getJVMArguments() {
-		List<String> jvmArguments = new ArrayList<>();
-
-		String[] passwordKeywords = {
-			"password", "secret", "securitycredential"
-		};
-
-		RuntimeMXBean runtimeMXBean = ManagementFactory.getRuntimeMXBean();
-
-		for (String inputArgument : runtimeMXBean.getInputArguments()) {
-			if (inputArgument.startsWith("-D") &&
-				inputArgument.contains(StringPool.EQUAL)) {
-
-				String keyValueString = inputArgument.substring(2);
-
-				String[] keyValue = keyValueString.split(StringPool.EQUAL, 2);
-
-				String key = keyValue[0];
-				String value = keyValue[1];
-
-				for (String keyword : passwordKeywords) {
-					if (StringUtil.containsIgnoreCase(
-							key, keyword, StringPool.BLANK)) {
-
-						value = StringPool.EIGHT_STARS;
-
-						break;
-					}
-				}
-
-				jvmArguments.add(
-					StringBundler.concat("-D", key, StringPool.EQUAL, value));
-			}
-			else {
-				jvmArguments.add(inputArgument);
-			}
-		}
-
-		return ListUtil.sort(jvmArguments);
-	}
-
 	private List<MessagesPrinter> _getMessagesPrinters(
 		Map<String, Map<String, Integer>> map1) {
 
@@ -310,7 +269,50 @@ public class UpgradeReport {
 					StringPool.PERIOD, db.getMinorVersion());
 			}
 		).put(
-			"jvm.arguments", _getJVMArguments()
+			"jvm.arguments",
+			() -> {
+				List<String> jvmArguments = new ArrayList<>();
+
+				String[] passwordKeywords = {
+					"password", "secret", "securitycredential"
+				};
+
+				RuntimeMXBean runtimeMXBean =
+					ManagementFactory.getRuntimeMXBean();
+
+				for (String inputArgument : runtimeMXBean.getInputArguments()) {
+					if (inputArgument.startsWith("-D") &&
+						inputArgument.contains(StringPool.EQUAL)) {
+
+						String keyValueString = inputArgument.substring(2);
+
+						String[] keyValue = keyValueString.split(
+							StringPool.EQUAL, 2);
+
+						String key = keyValue[0];
+						String value = keyValue[1];
+
+						for (String keyword : passwordKeywords) {
+							if (StringUtil.containsIgnoreCase(
+									key, keyword, StringPool.BLANK)) {
+
+								value = StringPool.EIGHT_STARS;
+
+								break;
+							}
+						}
+
+						jvmArguments.add(
+							StringBundler.concat(
+								"-D", key, StringPool.EQUAL, value));
+					}
+					else {
+						jvmArguments.add(inputArgument);
+					}
+				}
+
+				return ListUtil.sort(jvmArguments);
+			}
 		).put(
 			"property",
 			() -> {

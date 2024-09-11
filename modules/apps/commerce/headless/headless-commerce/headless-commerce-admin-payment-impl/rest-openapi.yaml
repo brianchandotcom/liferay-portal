@@ -47,6 +47,9 @@ components:
                     example: $ 101.00
                     readOnly: true
                     type: string
+                author:
+                    readOnly: true
+                    type: string
                 callbackURL:
                     type: string
                 cancelURL:

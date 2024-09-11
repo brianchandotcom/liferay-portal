@@ -156,10 +156,14 @@ export default function ShortcutManager() {
 	};
 
 	const paste = () => {
+		const rootItem = layoutData.items[layoutData.rootItems.main];
+
 		dispatch(
 			pasteItem({
 				copyItemIds: copiedItemIds,
-				parentItemId: activeItemIds[0],
+				parentItemId: !activeItemIds?.length
+					? rootItem.itemId
+					: activeItemIds[0],
 				selectItems,
 			})
 		);
@@ -222,7 +226,7 @@ export default function ShortcutManager() {
 	};
 
 	function isOnlyOneParentSelected(activeItemIds) {
-		if (activeItemIds?.length !== 1) {
+		if (activeItemIds?.length > 1) {
 			openToast({
 				message: Liferay.Language.get(
 					'it-is-not-possible-to-paste-on-two-destinations-at-the-same-time-try-again-with-only-one-destination-selected'

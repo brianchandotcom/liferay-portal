@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.constants.TestDataConstants;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
@@ -42,20 +43,11 @@ public class BlogPostingImageResourceTest
 
 		BlogPostingImage blogPostingImage = randomBlogPostingImage();
 
+		blogPostingImage.setTitle("*,?" + blogPostingImage.getTitle());
+
 		try {
 			testPostSiteBlogPostingImage_addBlogPostingImage(
-				blogPostingImage,
-				HashMapBuilder.put(
-					"file",
-					() -> {
-						File tempFile = FileUtil.createTempFile("*,?", "txt");
-
-						FileUtil.write(
-							tempFile, TestDataConstants.TEST_BYTE_ARRAY);
-
-						return tempFile;
-					}
-				).build());
+				blogPostingImage, getMultipartFiles());
 
 			Assert.fail();
 		}
@@ -68,6 +60,54 @@ public class BlogPostingImageResourceTest
 			testGroup.getGroupId());
 
 		Assert.assertNull(folder);
+	}
+
+	@Test(expected = Problem.ProblemException.class)
+	public void testPostSiteBlogPostingImageWithDuplicatedExternalReferenceCode()
+		throws Exception {
+
+		Map<String, File> multipartFiles = getMultipartFiles();
+
+		BlogPostingImage randomBlogPostingImage1 = randomBlogPostingImage();
+
+		testPostSiteBlogPostingImage_addBlogPostingImage(
+			randomBlogPostingImage1, multipartFiles);
+
+		BlogPostingImage randomBlogPostingImage2 = randomBlogPostingImage();
+
+		randomBlogPostingImage2.setExternalReferenceCode(
+			randomBlogPostingImage1.getExternalReferenceCode());
+
+		testPostSiteBlogPostingImage_addBlogPostingImage(
+			randomBlogPostingImage2, multipartFiles);
+	}
+
+	@Test
+	public void testPostSiteBlogPostingImageWithDuplicatedTitle()
+		throws Exception {
+
+		Map<String, File> multipartFiles = getMultipartFiles();
+
+		BlogPostingImage randomBlogPostingImage1 = randomBlogPostingImage();
+
+		BlogPostingImage blogPostingImage =
+			testPostSiteBlogPostingImage_addBlogPostingImage(
+				randomBlogPostingImage1, multipartFiles);
+
+		Assert.assertEquals(
+			randomBlogPostingImage1.getTitle(), blogPostingImage.getTitle());
+
+		BlogPostingImage randomBlogPostingImage2 = randomBlogPostingImage();
+
+		randomBlogPostingImage2.setTitle(randomBlogPostingImage1.getTitle());
+
+		blogPostingImage = testPostSiteBlogPostingImage_addBlogPostingImage(
+			randomBlogPostingImage2, multipartFiles);
+
+		Assert.assertEquals(
+			StringUtil.appendParentheticalSuffix(
+				randomBlogPostingImage2.getTitle(), 1),
+			blogPostingImage.getTitle());
 	}
 
 	@Override

@@ -217,6 +217,7 @@ public class FragmentEntryProcessorHelperTest {
 	}
 
 	@Test
+	@TestInfo("LPS-162223")
 	public void testGetFieldValueFromStringValueDateDDMFormFieldType()
 		throws Exception {
 

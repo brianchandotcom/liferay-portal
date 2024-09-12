@@ -12,6 +12,7 @@ import com.liferay.info.item.InfoItemReference;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
 import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
+import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -864,11 +865,11 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		long[] organizationIds, long[] roleIds, long[] userGroupIds,
 		boolean sendEmail, ServiceContext serviceContext) {
 
-		UserLocalServiceUtil.addUser(creatorUserId, companyId, autoPassword, password1, password2, autoScreenName, screenName, emailAddress, locale, firstName, middleName, lastName, prefixId, suffixId, male, birthdayMonth, birthdayDay, birthdayYear, jobTitle, 0, groupIds, organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
+		UserLocalServiceUtil.addUser(creatorUserId, companyId, autoPassword, password1, password2, autoScreenName, screenName, emailAddress, locale, firstName, middleName, lastName, prefixId, suffixId, male, birthdayMonth, birthdayDay, birthdayYear, jobTitle, UserConstants.TYPE_REGULAR, groupIds, organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
 		UserServiceUtil.addUser(123, companyId, autoPassword, password1, password2, autoScreenName, screenName, emailAddress, facebookId, openId, locale, firstName, middleName, lastName, prefixId, suffixId, male, birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
-		UserServiceUtil.addUser(creatorUserId, companyId, autoPassword, password1, password2, autoScreenName, screenName, emailAddress, locale, firstName, middleName, lastName, prefixId, suffixId, male, birthdayMonth, birthdayDay, birthdayYear, jobTitle, 0, groupIds, organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
-		_userLocalService.addUser(creatorUserId, companyId, autoPassword, password1, password2, autoScreenName, screenName, emailAddress, locale, firstName, middleName, lastName, prefixId, suffixId, male, birthdayMonth, birthdayDay, birthdayYear, jobTitle, 0, groupIds, organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
-		_userService.addUser(creatorUserId, companyId, autoPassword, password1, password2, autoScreenName, screenName, emailAddress, locale, firstName, middleName, lastName, prefixId, suffixId, male, birthdayMonth, birthdayDay, birthdayYear, jobTitle, 0, groupIds, organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
+		UserServiceUtil.addUser(creatorUserId, companyId, autoPassword, password1, password2, autoScreenName, screenName, emailAddress, locale, firstName, middleName, lastName, prefixId, suffixId, male, birthdayMonth, birthdayDay, birthdayYear, jobTitle, UserConstants.TYPE_REGULAR, groupIds, organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
+		_userLocalService.addUser(creatorUserId, companyId, autoPassword, password1, password2, autoScreenName, screenName, emailAddress, locale, firstName, middleName, lastName, prefixId, suffixId, male, birthdayMonth, birthdayDay, birthdayYear, jobTitle, UserConstants.TYPE_REGULAR, groupIds, organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
+		_userService.addUser(creatorUserId, companyId, autoPassword, password1, password2, autoScreenName, screenName, emailAddress, locale, firstName, middleName, lastName, prefixId, suffixId, male, birthdayMonth, birthdayDay, birthdayYear, jobTitle, UserConstants.TYPE_REGULAR, groupIds, organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
 	}
 
 	public void method(

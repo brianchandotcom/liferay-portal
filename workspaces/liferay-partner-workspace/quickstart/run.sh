@@ -17,7 +17,7 @@ function check_health {
 }
 
 function check_logs {
-	docker logs -f "${container}" | grep -q "${1}"
+	docker logs -f "${container_id}" | grep -q "${1}"
 
 	if [[ $? -eq 0 ]]; then
 		echo "Text ${1} found in logs."
@@ -33,15 +33,15 @@ function check_logs {
 }
 
 function deploy {
-	./gradlew :client-extensions:${1}:clean :client-extensions:${1}:deploy "-Ddeploy.docker.container.id=${container}"
+	./gradlew :client-extensions:${1}:clean :client-extensions:${1}:deploy "-Ddeploy.docker.container.id=${container_id}"
 }
 
 function main {
-	local container="liferay-partner-workspace-liferay"
+	local container_id="liferay-partner-workspace-liferay"
 
 	docker compose up -d
 
-	check_health ${container}
+	check_health ${container_id}
 
 	pushd .. > /dev/null
 

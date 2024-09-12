@@ -202,6 +202,9 @@ public class InfoBoxFragmentRenderer implements FragmentRenderer {
 				_getFieldValue(
 					commerceOrder, field, fragmentRendererContext.getLocale()));
 			httpServletRequest.setAttribute(
+				"liferay-commerce:info-box:fieldValueType",
+				_getEditableFieldValueType(field));
+			httpServletRequest.setAttribute(
 				"liferay-commerce:info-box:hasPermission",
 				_commerceOrderModelResourcePermission.contains(
 					PermissionThreadLocal.getPermissionChecker(), commerceOrder,
@@ -256,6 +259,14 @@ public class InfoBoxFragmentRenderer implements FragmentRenderer {
 				fragmentEntryLink.getConfiguration(),
 				fragmentEntryLink.getEditableValues(),
 				fragmentRendererContext.getLocale(), name));
+	}
+
+	private String _getEditableFieldValueType(String field) {
+		if (field.equals("requestedDeliveryDate")) {
+			return "date";
+		}
+
+		return "text";
 	}
 
 	private String _getFieldLabel(
@@ -344,6 +355,13 @@ public class InfoBoxFragmentRenderer implements FragmentRenderer {
 		}
 		else if (field.equals("purchaseOrderNumber")) {
 			return commerceOrder.getPurchaseOrderNumber();
+		}
+		else if (field.equals("requestedDeliveryDate")) {
+			if (commerceOrder.getRequestedDeliveryDate() == null) {
+				return StringPool.BLANK;
+			}
+
+			return String.valueOf(commerceOrder.getRequestedDeliveryDate());
 		}
 
 		return StringPool.BLANK;

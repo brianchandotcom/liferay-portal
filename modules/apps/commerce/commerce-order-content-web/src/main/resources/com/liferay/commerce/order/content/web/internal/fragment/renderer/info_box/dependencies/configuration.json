@@ -50,6 +50,10 @@
 							{
 								"label": "purchase-order-number",
 								"value": "purchaseOrderNumber"
+							},
+							{
+								"label": "requested-delivery-date",
+								"value": "requestedDeliveryDate"
 							}
 						]
 					}

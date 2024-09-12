@@ -19,6 +19,8 @@
 		).put(
 			"fieldValue", HtmlUtil.escape(fieldValue)
 		).put(
+			"fieldValueType", HtmlUtil.escape(fieldValueType)
+		).put(
 			"hasPermission", hasPermission
 		).put(
 			"isOpen", open

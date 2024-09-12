@@ -680,7 +680,9 @@ function Table(props: IDataSetSectionProps & {title?: string}) {
 					onSaveButtonClick={({fieldName}: {fieldName: string}) => {
 						saveFDSFields({
 							closeModal,
-							fields: [{name: fieldName, sortable: true}] as IField[],
+							fields: [
+								{name: fieldName, sortable: true},
+							] as IField[],
 						});
 					}}
 				/>

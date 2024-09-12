@@ -4,6 +4,7 @@ create index IX_48814BBA on MBBan (userId);
 create unique index IX_6F119354 on MBBan (uuid_[$COLUMN_LENGTH:75$], groupId, ctCollectionId);
 
 create index IX_BC735DCF on MBCategory (companyId);
+create unique index IX_ED533FEE on MBCategory (groupId, ctCollectionId, externalReferenceCode[$COLUMN_LENGTH:75$]);
 create unique index IX_B73EC7E5 on MBCategory (groupId, ctCollectionId, friendlyURL[$COLUMN_LENGTH:255$]);
 create index IX_72DC3FF5 on MBCategory (groupId, parentCategoryId, categoryId);
 create index IX_F69FCDDB on MBCategory (groupId, parentCategoryId, status, categoryId);

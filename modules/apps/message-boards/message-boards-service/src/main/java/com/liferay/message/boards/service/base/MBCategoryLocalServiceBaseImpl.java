@@ -265,6 +265,23 @@ public abstract class MBCategoryLocalServiceBaseImpl
 		return mbCategoryPersistence.fetchByUUID_G(uuid, groupId);
 	}
 
+	@Override
+	public MBCategory fetchMBCategoryByExternalReferenceCode(
+		String externalReferenceCode, long groupId) {
+
+		return mbCategoryPersistence.fetchByERC_G(
+			externalReferenceCode, groupId);
+	}
+
+	@Override
+	public MBCategory getMBCategoryByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return mbCategoryPersistence.findByERC_G(
+			externalReferenceCode, groupId);
+	}
+
 	/**
 	 * Returns the message boards category with the primary key.
 	 *

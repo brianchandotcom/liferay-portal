@@ -8,6 +8,7 @@ package com.liferay.message.boards.model;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ContainerModel;
+import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
@@ -33,8 +34,8 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface MBCategoryModel
 	extends BaseModel<MBCategory>, ContainerModel, CTModel<MBCategory>,
-			MVCCModel, ShardedModel, StagedGroupedModel, TrashedModel,
-			WorkflowedModel {
+			ExternalReferenceCodeModel, MVCCModel, ShardedModel,
+			StagedGroupedModel, TrashedModel, WorkflowedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -106,6 +107,23 @@ public interface MBCategoryModel
 	 */
 	@Override
 	public void setUuid(String uuid);
+
+	/**
+	 * Returns the external reference code of this message boards category.
+	 *
+	 * @return the external reference code of this message boards category
+	 */
+	@AutoEscape
+	@Override
+	public String getExternalReferenceCode();
+
+	/**
+	 * Sets the external reference code of this message boards category.
+	 *
+	 * @param externalReferenceCode the external reference code of this message boards category
+	 */
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode);
 
 	/**
 	 * Returns the category ID of this message boards category.

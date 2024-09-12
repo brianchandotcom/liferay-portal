@@ -38,6 +38,7 @@ import groovy.lang.Closure;
 import java.io.File;
 import java.io.IOException;
 
+import java.nio.charset.StandardCharsets;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -58,6 +59,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.gradle.api.Action;
+import org.gradle.api.DefaultTask;
 import org.gradle.api.GradleException;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
@@ -313,6 +315,113 @@ public class ClientExtensionProjectConfigurator
 			createClientExtensionConfigTaskProvider, workspaceExtension);
 
 		_configureLiferayRoutes(project, workspaceExtension);
+
+		if (_isSpecialLanguageProject(project)) {
+			createClientExtensionConfigTaskProvider.configure(
+				createClientExtensionConfigTask -> {
+					ClientExtension languageBatchClientExtension =
+						new ClientExtension();
+
+					String languageOAuthClientExtensionId =
+						"language-oauth-application-headless-server";
+
+					languageBatchClientExtension.id = "language-batch";
+					languageBatchClientExtension.name = "Language Batch";
+					languageBatchClientExtension.type = "batch";
+					languageBatchClientExtension.projectName =
+						"project.language";
+					languageBatchClientExtension.typeSettings.put(
+						"oAuthApplicationHeadlessServer",
+						languageOAuthClientExtensionId);
+
+					createClientExtensionConfigTask.addClientExtension(
+						languageBatchClientExtension);
+
+					_registerClientExtensionId(
+						project, languageBatchClientExtension.id);
+
+					ClientExtension languageOAuthClientExtension =
+						new ClientExtension();
+
+					languageOAuthClientExtension.id =
+						languageOAuthClientExtensionId;
+					languageOAuthClientExtension.name = "Language OAuth";
+					languageOAuthClientExtension.type =
+						"oAuthApplicationHeadlessServer";
+					languageOAuthClientExtension.typeSettings.put(
+						".serviceAddress", "localhost:8080");
+					languageOAuthClientExtension.typeSettings.put(
+						".serviceScheme", "http");
+					languageOAuthClientExtension.typeSettings.put(
+						"scopes",
+						new String[] {
+							"Liferay.Headless.Admin.Workflow.everything",
+							"Liferay.Headless.Batch.Engine.everything",
+							"Liferay.Object.Admin.REST.everything"
+						});
+
+					createClientExtensionConfigTask.addClientExtension(
+						languageOAuthClientExtension);
+
+					_registerClientExtensionId(
+						project, languageOAuthClientExtension.id);
+				});
+
+			TaskProvider<DefaultTask> generateLangBatchTaskProvider =
+				GradleUtil.addTaskProvider(
+					project, "generateLangBatch", DefaultTask.class);
+
+			generateLangBatchTaskProvider.configure(
+				generateLangBatchTask -> {
+					File projectDir = project.getProjectDir();
+
+					Path outputDir = Paths.get(
+						projectDir.getPath(), "build", "generateLangBatch");
+
+					Path outputPath = outputDir.resolve("batch.json");
+
+					TaskOutputs taskOutputs =
+						generateLangBatchTask.getOutputs();
+
+					taskOutputs.file(project.provider(() -> outputPath));
+
+					generateLangBatchTask.doFirst(
+						new Action<Task>() {
+
+							@Override
+							public void execute(Task task) {
+								String jsonString = "{}";
+
+								try {
+									if (!Files.exists(outputDir)) {
+										outputDir.toFile(
+										).mkdirs();
+									}
+
+									if (!Files.exists(outputPath)) {
+										Files.createFile(outputPath);
+									}
+
+									Files.write(
+										outputPath,
+										jsonString.getBytes(
+											StandardCharsets.UTF_8));
+								}
+								catch (IOException ioException) {
+									throw new GradleException(
+										"Could not write batch file",
+										ioException);
+								}
+							}
+
+						});
+				});
+
+			assembleClientExtensionTaskProvider.configure(
+				assembleClientExtensionTask -> assembleClientExtensionTask.from(
+					generateLangBatchTaskProvider,
+					copySpec -> copySpec.into("batch")));
+		}
 	}
 
 	private boolean _isSpecialLanguageProject(Path dirpath) {

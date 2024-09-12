@@ -41,6 +41,7 @@ import java.io.IOException;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
@@ -1119,6 +1120,24 @@ public class ClientExtensionProjectConfigurator
 		return false;
 	}
 
+	private boolean _isSpecialLanguageProject(File rootDir, File projectDir) {
+		Path dirPath = projectDir.toPath();
+
+		if (Objects.equals(rootDir.toPath(), dirPath.getParent()) &&
+			dirPath.endsWith(Paths.get("language")) &&
+			Files.exists(
+				Paths.get(dirPath.toString(), "Language.properties"))) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isSpecialLanguageProject(Project project) {
+		return _isSpecialLanguageProject(
+			project.getRootDir(), project.getProjectDir());
+	}
 	private void _validateClientExtension(
 		ClientExtension clientExtension, Project project) {
 

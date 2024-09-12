@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.search.internal.indexer;
+package com.liferay.portal.search.internal.osgi.util.tracker;
 
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
@@ -37,6 +37,15 @@ import com.liferay.portal.search.indexer.IndexerSearcher;
 import com.liferay.portal.search.indexer.IndexerSummaryBuilder;
 import com.liferay.portal.search.indexer.IndexerWriter;
 import com.liferay.portal.search.internal.expando.helper.ExpandoQueryContributorHelper;
+import com.liferay.portal.search.internal.indexer.DefaultIndexer;
+import com.liferay.portal.search.internal.indexer.IndexerDocumentBuilderImpl;
+import com.liferay.portal.search.internal.indexer.IndexerPermissionPostFilterImpl;
+import com.liferay.portal.search.internal.indexer.IndexerQueryBuilderImpl;
+import com.liferay.portal.search.internal.indexer.IndexerSearcherImpl;
+import com.liferay.portal.search.internal.indexer.IndexerSummaryBuilderImpl;
+import com.liferay.portal.search.internal.indexer.IndexerWriterImpl;
+import com.liferay.portal.search.internal.indexer.ModelKeywordQueryContributorsRegistryImpl;
+import com.liferay.portal.search.internal.indexer.ModelSearchSettingsImpl;
 import com.liferay.portal.search.internal.indexer.helper.AddSearchKeywordsQueryContributorHelper;
 import com.liferay.portal.search.internal.indexer.helper.PreFilterContributorHelper;
 import com.liferay.portal.search.internal.searcher.helper.IndexSearcherHelper;

@@ -6780,6 +6780,9 @@ information. Make sure to commit in all format-javadoc results.
 					<![CDATA[
 						import java.io.File;
 
+						import java.util.regex.Pattern;
+						import java.util.regex.Matcher;
+
 						String modulesCompileTaskGroup = project.getProperty("modules.compile.task.groups");
 
 						String[] modulesCompileTaskGroupList = modulesCompileTaskGroup.split(" ");
@@ -6787,9 +6790,18 @@ information. Make sure to commit in all format-javadoc results.
 						StringBuilder sb = new StringBuilder();
 
 						for (String task : modulesCompileTaskGroupList) {
-							String convertedTaskString = task.replace(":assemble", "");
 
-							convertedTaskString = convertedTaskString.replace(":compileTestIntegrationJava", "");
+							Pattern pattern = Pattern.compile("(.*):.*");
+
+							Matcher matcher = pattern.matcher(task);
+
+							String convertedTaskString = "";
+
+							if (matcher.find()) {
+								convertedTaskString = matcher.group(1);
+							} else {
+								continue;
+							}
 
 							convertedTaskString = convertedTaskString.replace(":", "/");
 

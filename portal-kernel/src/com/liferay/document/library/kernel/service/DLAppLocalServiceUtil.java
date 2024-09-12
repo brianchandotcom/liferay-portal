@@ -428,6 +428,13 @@ public class DLAppLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.repository.model.FileShortcut
+			fetchFileShortcut(long fileShortcutId)
+		throws PortalException {
+
+		return getService().fetchFileShortcut(fileShortcutId);
+	}
+
+	public static com.liferay.portal.kernel.repository.model.FileShortcut
 			fetchFileShortcutByExternalReferenceCode(
 				String externalReferenceCode, long groupId)
 		throws PortalException {

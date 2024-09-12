@@ -441,6 +441,14 @@ public class DLAppLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.repository.model.FileShortcut
+			fetchFileShortcut(long fileShortcutId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _dlAppLocalService.fetchFileShortcut(fileShortcutId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.repository.model.FileShortcut
 			fetchFileShortcutByExternalReferenceCode(
 				String externalReferenceCode, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {

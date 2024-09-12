@@ -5,36 +5,39 @@
 
 import {UPDATE_FORM_ITEM_CONFIG} from './types';
 
-import type {
-	DeletedLayoutDataItem,
-	LayoutData,
-} from '../../types/layout_data/LayoutData';
+import type {LayoutData} from '../../types/layout_data/LayoutData';
 import type {FragmentEntryLinkMap} from './addFragmentEntryLinks';
 
 export default function updateFormItemConfig({
 	addedFragmentEntryLinks = null,
-	deletedItems = [],
+	addedItemIds = [],
 	isMapping,
 	itemIds,
 	layoutData,
+	movedItemIds = [],
 	removedFragmentEntryLinkIds = [],
+	removedItemIds = [],
 	restoredFragmentEntryLinkIds = [],
 }: {
 	addedFragmentEntryLinks?: FragmentEntryLinkMap | null;
-	deletedItems?: DeletedLayoutDataItem[];
+	addedItemIds: string[];
 	isMapping: boolean;
 	itemIds: string[];
 	layoutData: LayoutData;
+	movedItemIds: {itemId: string; parentId: string}[];
 	removedFragmentEntryLinkIds?: string[];
+	removedItemIds?: string[];
 	restoredFragmentEntryLinkIds?: string[];
 }) {
 	return {
 		addedFragmentEntryLinks,
-		deletedItems,
+		addedItemIds,
 		isMapping,
 		itemIds,
 		layoutData,
+		movedItemIds,
 		removedFragmentEntryLinkIds,
+		removedItemIds,
 		restoredFragmentEntryLinkIds,
 		type: UPDATE_FORM_ITEM_CONFIG,
 	} as const;

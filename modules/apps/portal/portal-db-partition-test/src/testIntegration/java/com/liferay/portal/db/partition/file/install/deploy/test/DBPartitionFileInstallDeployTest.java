@@ -17,8 +17,8 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 import com.liferay.portal.db.partition.test.util.BaseDBPartitionTestCase;
 import com.liferay.portal.db.partition.util.DBPartitionUtil;
 import com.liferay.portal.file.install.FileInstaller;
+import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.util.PropsValues;
 
@@ -54,8 +54,6 @@ public class DBPartitionFileInstallDeployTest extends BaseDBPartitionTestCase {
 		BaseDBPartitionTestCase.setUpClass();
 
 		BaseDBPartitionTestCase.setUpDBPartitions();
-
-		_companyId = TestPropsValues.getCompanyId();
 
 		Bundle bundle = FrameworkUtil.getBundle(
 			DBPartitionFileInstallDeployTest.class);
@@ -138,8 +136,10 @@ public class DBPartitionFileInstallDeployTest extends BaseDBPartitionTestCase {
 	public void testSystemScopedConfiguration() throws Exception {
 		_testScopedConfiguration(
 			null, null,
-			() -> _checkConfigurationExists(_companyId, _TEST_VALUE_1),
-			() -> _checkConfigurationExists(_companyId, _TEST_VALUE_2),
+			() -> _checkConfigurationExists(
+				PortalInstancePool.getDefaultCompanyId(), _TEST_VALUE_1),
+			() -> _checkConfigurationExists(
+				PortalInstancePool.getDefaultCompanyId(), _TEST_VALUE_2),
 			unsupportedOperationException -> Assert.fail(), true);
 	}
 
@@ -353,7 +353,6 @@ public class DBPartitionFileInstallDeployTest extends BaseDBPartitionTestCase {
 
 	private static final String _TEST_VALUE_2 = "testValue2";
 
-	private static long _companyId;
 	private static DataSource _dataSource;
 	private static FileInstaller _fileInstaller;
 

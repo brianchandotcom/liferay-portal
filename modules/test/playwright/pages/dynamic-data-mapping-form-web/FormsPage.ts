@@ -40,13 +40,17 @@ export class FormsPage {
 		this.productMenuPage = new ProductMenuPage(page);
 	}
 
+	async clickEmptyResultNewFormButton() {
+		await this.emptyResultNewFormButton.click();
+	}
+
+	async clickFormTitle(formTitle: string) {
+		await this.page.getByText(formTitle).click();
+	}
+
 	async clickManagementToolbarNewButton() {
 		await this.managementToolbarSearchForButton.isEnabled();
 		await this.managementToolbarNewButton.click();
-	}
-
-	async clickEmptyResultNewFormButton() {
-		await this.emptyResultNewFormButton.click();
 	}
 
 	async goTo() {

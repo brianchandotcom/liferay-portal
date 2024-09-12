@@ -11,8 +11,10 @@ import {FormSettingsModalPage} from '../pages/dynamic-data-mapping-form-web/Form
 import {FormWidgetPage} from '../pages/dynamic-data-mapping-form-web/FormWidgetPage';
 import {FormsPage} from '../pages/dynamic-data-mapping-form-web/FormsPage';
 import {PageEditorPage} from '../pages/layout-content-page-editor-web/PageEditorPage';
+import {ConfigurationTabPage} from '../pages/portal-workflow-kaleo-designer-web/ConfigurationTabPage';
 
 const formsPagesTest = test.extend<{
+	configurationTabPage: ConfigurationTabPage;
 	formBuilderPage: FormBuilderPage;
 	formBuilderSidePanelPage: FormBuilderSidePanelPage;
 	formSettingsModalPage: FormSettingsModalPage;
@@ -20,6 +22,9 @@ const formsPagesTest = test.extend<{
 	formsPage: FormsPage;
 	pageEditorPage: PageEditorPage;
 }>({
+	configurationTabPage: async ({page}, use) => {
+		await use(new ConfigurationTabPage(page));
+	},
 	formBuilderPage: async ({page}, use) => {
 		await use(new FormBuilderPage(page));
 	},

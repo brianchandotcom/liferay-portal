@@ -29,6 +29,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Carolina Barbosa
@@ -40,8 +42,14 @@ public class DateParameterUtil {
 			return null;
 		}
 
+		Matcher matcher = _pattern.matcher(dateString);
+
+		if (!matcher.find()) {
+			return null;
+		}
+
 		return LocalDate.parse(
-			dateString, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+			matcher.group(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 	}
 
 	public static LocalDateTime getLocalDateTime(String dateTimeString) {
@@ -207,5 +215,7 @@ public class DateParameterUtil {
 	private static final List<String> _dateTimePatterns = Arrays.asList(
 		"yyyy-MM-dd H:mm", "yyyy-MM-dd HH:mm:ss",
 		"EEE MMM dd HH:mm:ss zzz yyyy");
+	private static final Pattern _pattern = Pattern.compile(
+		"^\\d{4}-\\d{2}-\\d{2}");
 
 }

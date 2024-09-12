@@ -143,8 +143,7 @@ public class OpenIdConnectAuthenticationHandlerImpl
 
 		if (oidcProviderMetadata.getUserInfoEndpointURI() == null) {
 			UserInfo userInfo = new UserInfo(
-				JWTClaimsSet.parse(
-					_getUserInfoClaims(oidcTokens.getIDToken())));
+				JWTClaimsSet.parse(getUserInfoClaims(oidcTokens.getIDToken())));
 
 			userInfoJSON = userInfo.toJSONString();
 		}
@@ -260,6 +259,20 @@ public class OpenIdConnectAuthenticationHandlerImpl
 				_portal.getCompanyId(httpServletRequest),
 				openIdConnectProviderName, _oAuthClientEntryLocalService),
 			httpServletRequest, httpServletResponse);
+	}
+
+	protected Map<String, Object> getUserInfoClaims(JWT jwt)
+		throws java.text.ParseException {
+
+		JWTClaimsSet jwtClaimsSet = jwt.getJWTClaimsSet();
+
+		Map<String, Object> claims = jwtClaimsSet.toJSONObject();
+
+		claims.put("email", jwtClaimsSet.getStringClaim("email"));
+		claims.put("family_name", jwtClaimsSet.getStringClaim("family_name"));
+		claims.put("given_name", jwtClaimsSet.getStringClaim("given_name"));
+
+		return claims;
 	}
 
 	private URI _getAuthenticationRequestURI(
@@ -382,20 +395,6 @@ public class OpenIdConnectAuthenticationHandlerImpl
 					uriSyntaxException.getMessage(),
 				uriSyntaxException);
 		}
-	}
-
-	private Map<String, Object> _getUserInfoClaims(JWT jwt)
-		throws java.text.ParseException {
-
-		JWTClaimsSet jwtClaimsSet = jwt.getJWTClaimsSet();
-
-		Map<String, Object> claims = jwtClaimsSet.toJSONObject();
-
-		claims.put("email", jwtClaimsSet.getStringClaim("email"));
-		claims.put("family_name", jwtClaimsSet.getStringClaim("family_name"));
-		claims.put("given_name", jwtClaimsSet.getStringClaim("given_name"));
-
-		return claims;
 	}
 
 	private String _requestUserInfoJSON(

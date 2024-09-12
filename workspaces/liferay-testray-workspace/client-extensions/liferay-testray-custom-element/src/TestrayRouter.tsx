@@ -47,7 +47,7 @@ import Teams from './pages/Project/Routines/Builds/Inner/Teams';
 import BuildTemplates from './pages/Project/Routines/Builds/Templates';
 import Routine from './pages/Project/Routines/Routine';
 import RoutineArchived from './pages/Project/Routines/RoutineArchived';
-import RoutineDuration from './pages/Project/Routines/RoutineDuration';
+import RoutineDurationReport from './pages/Project/Routines/RoutineDurationReport';
 import RoutineForm from './pages/Project/Routines/RoutineForm';
 import RoutineOutlet from './pages/Project/Routines/RoutineOutlet';
 import Suites from './pages/Project/Suites';
@@ -189,7 +189,7 @@ const TestrayRoute = () => (
 									/>
 
 									<Route
-										element={<RoutineDuration />}
+										element={<RoutineDurationReport />}
 										path="duration"
 									/>
 

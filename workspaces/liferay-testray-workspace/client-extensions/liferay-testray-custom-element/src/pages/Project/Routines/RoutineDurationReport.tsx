@@ -15,7 +15,7 @@ import i18n from '~/i18n';
 import {DATA_COLORS, Statuses} from '~/util/constants';
 import {getDurationTime} from '~/util/date';
 
-const RoutineDuration = () => {
+const RoutineDurationReport = () => {
 	const {routineId} = useParams();
 
 	return (
@@ -30,7 +30,7 @@ const RoutineDuration = () => {
 					title: i18n.translate('duration-report'),
 					visible: true,
 				}}
-				resource={`/testray-duration-report/${routineId}`}
+				resource={`/testray-routine-duration-report/${routineId}`}
 				tableProps={{
 					columns: [
 						{
@@ -210,4 +210,4 @@ const RoutineDuration = () => {
 	);
 };
 
-export default RoutineDuration;
+export default RoutineDurationReport;

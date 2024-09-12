@@ -40,8 +40,6 @@ export class AICreatorInstanceSettingsPage {
 		await this.saveButton.click();
 
 		await waitForSuccessAlert(this.page);
-
-		await this.page.waitForLoadState();
 	}
 
 	async disableDalleCreateImages() {
@@ -51,8 +49,6 @@ export class AICreatorInstanceSettingsPage {
 		await this.saveButton.click();
 
 		await waitForSuccessAlert(this.page);
-
-		await this.page.waitForLoadState();
 	}
 
 	async addApiKey() {
@@ -68,6 +64,6 @@ export class AICreatorInstanceSettingsPage {
 
 		await this.apiKeyInput.fill(apikey);
 		await this.saveButton.click();
-		await this.page.waitForLoadState();
+		await waitForSuccessAlert(this.page);
 	}
 }

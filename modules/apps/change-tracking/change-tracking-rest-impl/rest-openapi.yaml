@@ -728,6 +728,21 @@ paths:
                                 type: array
             tags: ["CTProcess"]
     "/ct-processes/{ctProcessId}":
+        delete:
+            operationId: deleteCTProcess
+            parameters:
+                - in: path
+                  name: ctProcessId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["CTProcess"]
         get:
             operationId: getCTProcess
             parameters:

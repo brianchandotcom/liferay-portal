@@ -22,17 +22,35 @@ export default function updateFormItemConfig({fields, itemConfig, itemIds}) {
 		}).then(
 			({
 				addedFragmentEntryLinks,
+				addedItemIds,
 				errorMessage,
 				layoutData,
-				removedFragmentEntryLinkIds,
+				movedItemIds,
+				removedItemIds,
 			}) => {
 				dispatch(
 					updateFormItemConfigAction({
 						addedFragmentEntryLinks,
+						addedItemIds,
 						isMapping,
 						itemIds: [itemId],
 						layoutData,
-						removedFragmentEntryLinkIds,
+						movedItemIds,
+						removedFragmentEntryLinkIds: removedItemIds
+							.map((itemId) => {
+								const item = layoutData.items[itemId];
+
+								return item?.config?.fragmentEntryLinkId;
+							})
+							.filter(Boolean),
+						removedItemIds,
+						restoredFragmentEntryLinkIds: addedItemIds
+							.map((itemId) => {
+								const item = layoutData.items[itemId];
+
+								return item?.config?.fragmentEntryLinkId;
+							})
+							.filter(Boolean),
 					})
 				);
 

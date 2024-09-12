@@ -154,29 +154,6 @@ public class UpgradeReport {
 		return messagesPrinters;
 	}
 
-	private List<String> _getPropertiesFilePaths() {
-		List<String> propertiesFilePaths = new ArrayList<>();
-
-		for (String loadedSource : PropsUtil.getLoadedSources()) {
-			try {
-				URI uri = new URI(loadedSource);
-
-				if (StringUtil.equals("file", uri.getScheme())) {
-					propertiesFilePaths.add(
-						Paths.get(
-							uri
-						).toString());
-				}
-			}
-			catch (Exception exception) {
-				_log.error(
-					"Unable to process properties file paths", exception);
-			}
-		}
-
-		return propertiesFilePaths;
-	}
-
 	private Map<String, Object> _getReportData(
 		UpgradeRecorder upgradeRecorder) {
 
@@ -383,7 +360,17 @@ public class UpgradeReport {
 			() -> {
 				Map<String, Properties> propertiesMap = new LinkedHashMap<>();
 
-				for (String propertiesFilePath : _getPropertiesFilePaths()) {
+				for (String loadedSource : PropsUtil.getLoadedSources()) {
+					URI uri = new URI(loadedSource);
+
+					String propertiesFilePath = StringPool.BLANK;
+
+					if (StringUtil.equals("file", uri.getScheme())) {
+						propertiesFilePath = Paths.get(
+							uri
+						).toString();
+					}
+
 					if (!FileUtil.exists(propertiesFilePath)) {
 						continue;
 					}

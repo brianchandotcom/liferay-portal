@@ -86,7 +86,7 @@ public class DepotAdminGroupSearchProviderTest {
 			WebKeys.THEME_DISPLAY, _getThemeDisplay());
 
 		_assertDepotEntries(
-			_DEPOT_ENTRY_NAMES.length,
+			4,
 			ReflectionTestUtil.invoke(
 				_depotAdminGroupSearchProvider, "getGroupSearch",
 				new Class<?>[] {
@@ -110,7 +110,7 @@ public class DepotAdminGroupSearchProviderTest {
 		mockLiferayPortletActionRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, _getThemeDisplay());
 
-		mockLiferayPortletActionRequest.setParameter("keywords", "depot");
+		mockLiferayPortletActionRequest.setParameter("keywords", _keywords);
 
 		_assertDepotEntries(
 			3,
@@ -125,21 +125,31 @@ public class DepotAdminGroupSearchProviderTest {
 	}
 
 	private void _addDepotEntries() throws Exception {
-		for (String name : _DEPOT_ENTRY_NAMES) {
-			DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
-				Collections.singletonMap(LocaleUtil.getDefault(), name),
-				Collections.singletonMap(
-					LocaleUtil.getDefault(), RandomTestUtil.randomString()),
-				ServiceContextTestUtil.getServiceContext());
+		_keywords = RandomTestUtil.randomString();
 
-			_depotEntries.add(depotEntry);
-
-			_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
-				depotEntry.getDepotEntryId(), _group.getGroupId());
+		for (int i = 0; i < 3; i++) {
+			_addDepotEntry(_keywords + i);
 		}
+
+		_addDepotEntry(RandomTestUtil.randomString());
 	}
 
-	private void _assertDepotEntries(int total, GroupSearch groupSearch) {
+	private void _addDepotEntry(String depotEntryName) throws Exception {
+		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
+			Collections.singletonMap(LocaleUtil.getDefault(), depotEntryName),
+			Collections.singletonMap(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
+			ServiceContextTestUtil.getServiceContext());
+
+		_depotEntries.add(depotEntry);
+
+		_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
+			depotEntry.getDepotEntryId(), _group.getGroupId());
+	}
+
+	private void _assertDepotEntries(int total, GroupSearch groupSearch)
+		throws Exception {
+
 		Assert.assertEquals(total, groupSearch.getTotal());
 
 		List<Group> groups = groupSearch.getResults();
@@ -147,8 +157,13 @@ public class DepotAdminGroupSearchProviderTest {
 		for (int i = 0; i < total; i++) {
 			Group group = groups.get(i);
 
+			DepotEntry depotEntry = _depotEntries.get(i);
+
+			Group depotEntryGroup = depotEntry.getGroup();
+
 			Assert.assertEquals(
-				_DEPOT_ENTRY_NAMES[i], group.getName(LocaleUtil.getDefault()));
+				depotEntryGroup.getName(LocaleUtil.getDefault()),
+				group.getName(LocaleUtil.getDefault()));
 		}
 	}
 
@@ -186,10 +201,6 @@ public class DepotAdminGroupSearchProviderTest {
 		return themeDisplay;
 	}
 
-	private static final String[] _DEPOT_ENTRY_NAMES = {
-		"depot 1", "depot 2", "depot 3", "toped"
-	};
-
 	private Company _company;
 
 	@Inject
@@ -207,6 +218,7 @@ public class DepotAdminGroupSearchProviderTest {
 	private DepotEntryLocalService _depotEntryLocalService;
 
 	private Group _group;
+	private String _keywords;
 
 	@Inject(
 		filter = "component.name=com.liferay.depot.web.internal.portlet.action.ViewMVCRenderCommand"

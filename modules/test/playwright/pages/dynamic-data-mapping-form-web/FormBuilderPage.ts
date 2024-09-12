@@ -8,7 +8,7 @@ import {Locator, Page, expect} from '@playwright/test';
 import {FormsPage} from './FormsPage';
 
 export class FormBuilderPage {
-	readonly formPage: FormsPage;
+	readonly formsPage: FormsPage;
 	readonly formSettingsButton: Locator;
 	readonly formTitle: Locator;
 	readonly page: Page;
@@ -18,7 +18,7 @@ export class FormBuilderPage {
 	readonly newPageButton: Locator;
 
 	constructor(page: Page) {
-		this.formPage = new FormsPage(page);
+		this.formsPage = new FormsPage(page);
 		this.formSettingsButton = page.getByRole('button', {name: 'Settings'});
 		this.formTitle = page.getByPlaceholder('Untitled Form');
 		this.page = page;
@@ -37,10 +37,10 @@ export class FormBuilderPage {
 	}
 
 	async goToNew() {
-		await this.formPage.goTo();
+		await this.formsPage.goTo();
 
-		await expect(this.formPage.formsHeader).toBeVisible();
+		await expect(this.formsPage.formsHeader).toBeVisible();
 
-		await this.formPage.clickManagementToolbarNewButton();
+		await this.formsPage.clickManagementToolbarNewButton();
 	}
 }

@@ -7,9 +7,11 @@ package com.liferay.change.tracking.internal.upgrade.registry;
 
 import com.liferay.change.tracking.internal.upgrade.v2_10_0.CTCollectionUpgradeProcess;
 import com.liferay.change.tracking.internal.upgrade.v2_12_3.CTMessageCompanyIdUpgradeProcess;
+import com.liferay.change.tracking.internal.upgrade.v2_12_4.CTProcessResourceUpgradeProcess;
 import com.liferay.change.tracking.internal.upgrade.v2_3_0.UpgradeCompanyId;
 import com.liferay.change.tracking.internal.upgrade.v2_4_0.CTSchemaVersionUpgradeProcess;
 import com.liferay.change.tracking.internal.upgrade.v2_7_0.CTProcessUpgradeProcess;
+import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.BaseUuidUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
@@ -17,6 +19,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Daniel Kocsis
@@ -131,6 +134,13 @@ public class ChangeTrackingServiceUpgradeStepRegistrator
 
 		registry.register(
 			"2.12.2", "2.12.3", new CTMessageCompanyIdUpgradeProcess());
+
+		registry.register(
+			"2.12.3", "2.12.4",
+			new CTProcessResourceUpgradeProcess(_resourceLocalService));
 	}
+
+	@Reference
+	private ResourceLocalService _resourceLocalService;
 
 }

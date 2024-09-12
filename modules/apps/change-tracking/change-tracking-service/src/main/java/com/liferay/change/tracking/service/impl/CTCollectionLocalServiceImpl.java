@@ -32,11 +32,9 @@ import com.liferay.change.tracking.model.CTCollectionTable;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.model.CTEntryTable;
 import com.liferay.change.tracking.model.CTPreferences;
-import com.liferay.change.tracking.model.CTProcess;
 import com.liferay.change.tracking.model.CTSchemaVersion;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
-import com.liferay.change.tracking.service.CTProcessLocalService;
 import com.liferay.change.tracking.service.CTSchemaVersionLocalService;
 import com.liferay.change.tracking.service.base.CTCollectionLocalServiceBaseImpl;
 import com.liferay.change.tracking.service.persistence.CTAutoResolutionInfoPersistence;
@@ -44,7 +42,6 @@ import com.liferay.change.tracking.service.persistence.CTCommentPersistence;
 import com.liferay.change.tracking.service.persistence.CTEntryPersistence;
 import com.liferay.change.tracking.service.persistence.CTMessagePersistence;
 import com.liferay.change.tracking.service.persistence.CTPreferencesPersistence;
-import com.liferay.change.tracking.service.persistence.CTProcessPersistence;
 import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
 import com.liferay.change.tracking.spi.resolver.ConstraintResolver;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
@@ -512,14 +509,6 @@ public class CTCollectionLocalServiceImpl
 
 		_ctMessagePersistence.removeByCtCollectionId(
 			ctCollection.getCtCollectionId());
-
-		List<CTProcess> ctProcesses =
-			_ctProcessPersistence.findByCtCollectionId(
-				ctCollection.getCtCollectionId());
-
-		for (CTProcess ctProcess : ctProcesses) {
-			_ctProcessLocalService.deleteCTProcess(ctProcess);
-		}
 
 		Group group = _groupLocalService.fetchGroup(
 			ctCollection.getCompanyId(),
@@ -1589,12 +1578,6 @@ public class CTCollectionLocalServiceImpl
 
 	@Reference
 	private CTPreferencesPersistence _ctPreferencesPersistence;
-
-	@Reference
-	private CTProcessLocalService _ctProcessLocalService;
-
-	@Reference
-	private CTProcessPersistence _ctProcessPersistence;
 
 	@Reference
 	private CTSchemaVersionLocalService _ctSchemaVersionLocalService;

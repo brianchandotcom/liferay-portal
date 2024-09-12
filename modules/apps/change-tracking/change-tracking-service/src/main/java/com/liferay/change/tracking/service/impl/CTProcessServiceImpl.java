@@ -22,6 +22,7 @@ import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -42,6 +43,16 @@ import org.osgi.service.component.annotations.Reference;
 	service = AopService.class
 )
 public class CTProcessServiceImpl extends CTProcessServiceBaseImpl {
+
+	@Override
+	public CTProcess deleteCTProcess(long ctProcessId) throws PortalException {
+		_ctProcessModelResourcePermission.check(
+			getPermissionChecker(), ctProcessId, ActionKeys.DELETE);
+
+		CTProcess ctProcess = ctProcessLocalService.getCTProcess(ctProcessId);
+
+		return ctProcessLocalService.deleteCTProcess(ctProcess);
+	}
 
 	@Override
 	public List<CTProcess> getCTProcesses(
@@ -199,6 +210,12 @@ public class CTProcessServiceImpl extends CTProcessServiceBaseImpl {
 
 		return predicate.and(keywordsPredicate.withParentheses());
 	}
+
+	@Reference(
+		target = "(model.class.name=com.liferay.change.tracking.model.CTProcess)"
+	)
+	private ModelResourcePermission<CTProcess>
+		_ctProcessModelResourcePermission;
 
 	@Reference
 	private CustomSQL _customSQL;

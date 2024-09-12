@@ -9,21 +9,22 @@ import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.internal.background.task.CTPublishBackgroundTaskExecutor;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTProcess;
+import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.change.tracking.service.base.CTProcessLocalServiceBaseImpl;
-import com.liferay.change.tracking.service.persistence.CTCollectionPersistence;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.background.task.model.BackgroundTask;
 import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
+import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -63,7 +64,7 @@ public class CTProcessLocalServiceImpl extends CTProcessLocalServiceBaseImpl {
 			long[] ctEntryIds)
 		throws PortalException {
 
-		CTCollection ctCollection = _ctCollectionPersistence.findByPrimaryKey(
+		CTCollection ctCollection = _ctCollectionLocalService.fetchCTCollection(
 			fromCTCollectionId);
 
 		if (ctCollection.getStatus() == WorkflowConstants.STATUS_APPROVED) {
@@ -80,7 +81,8 @@ public class CTProcessLocalServiceImpl extends CTProcessLocalServiceBaseImpl {
 		if (toCTCollectionId == CTConstants.CT_COLLECTION_ID_PRODUCTION) {
 			ctCollection.setStatus(WorkflowConstants.STATUS_PENDING);
 
-			ctCollection = _ctCollectionPersistence.update(ctCollection);
+			ctCollection = _ctCollectionLocalService.updateCTCollection(
+				ctCollection);
 
 			_ctPreferencesLocalService.resetCTPreferences(
 				ctCollection.getCtCollectionId());
@@ -134,27 +136,53 @@ public class CTProcessLocalServiceImpl extends CTProcessLocalServiceBaseImpl {
 			ctProcess.setBackgroundTaskId(backgroundTask.getBackgroundTaskId());
 		}
 
+		_resourceLocalService.addResources(
+			ctProcess.getCompanyId(), 0, ctProcess.getUserId(),
+			CTProcess.class.getName(), ctProcess.getCtProcessId(), false, false,
+			false);
+
 		return ctProcessPersistence.update(ctProcess);
 	}
 
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public CTProcess deleteCTProcess(CTProcess ctProcess) {
+	public CTProcess deleteCTProcess(CTProcess ctProcess)
+		throws PortalException {
+
 		BackgroundTask backgroundTask =
 			_backgroundTaskLocalService.fetchBackgroundTask(
 				ctProcess.getBackgroundTaskId());
 
 		if (backgroundTask != null) {
-			try {
-				_backgroundTaskLocalService.deleteBackgroundTask(
-					backgroundTask);
+			if (backgroundTask.getStatus() ==
+					BackgroundTaskConstants.STATUS_SUCCESSFUL) {
+
+				CTCollection ctCollection =
+					_ctCollectionLocalService.fetchCTCollection(
+						ctProcess.getCtCollectionId());
+
+				if (ctCollection != null) {
+					_ctCollectionLocalService.deleteCTCollection(ctCollection);
+				}
 			}
-			catch (PortalException portalException) {
-				_log.error(portalException);
-			}
+
+			_backgroundTaskLocalService.deleteBackgroundTask(backgroundTask);
 		}
 
+		_resourceLocalService.deleteResource(
+			ctProcess.getCompanyId(), CTProcess.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL, ctProcess.getCtProcessId());
+
 		return ctProcessPersistence.remove(ctProcess);
+	}
+
+	@Indexable(type = IndexableType.DELETE)
+	@Override
+	public CTProcess deleteCTProcess(long ctProcessId) throws PortalException {
+		CTProcess ctProcess = ctProcessPersistence.findByPrimaryKey(
+			ctProcessId);
+
+		return deleteCTProcess(ctProcess);
 	}
 
 	@Override
@@ -167,9 +195,6 @@ public class CTProcessLocalServiceImpl extends CTProcessLocalServiceBaseImpl {
 		return ctProcessPersistence.findByCtCollectionId(ctCollectionId);
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		CTProcessLocalServiceImpl.class);
-
 	@Reference
 	private BackgroundTaskLocalService _backgroundTaskLocalService;
 
@@ -177,9 +202,12 @@ public class CTProcessLocalServiceImpl extends CTProcessLocalServiceBaseImpl {
 	private CompanyLocalService _companyLocalService;
 
 	@Reference
-	private CTCollectionPersistence _ctCollectionPersistence;
+	private CTCollectionLocalService _ctCollectionLocalService;
 
 	@Reference
 	private CTPreferencesLocalService _ctPreferencesLocalService;
+
+	@Reference
+	private ResourceLocalService _resourceLocalService;
 
 }

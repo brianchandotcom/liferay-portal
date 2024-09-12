@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.osgi.web.portlet.tracker.internal;
+package com.liferay.portal.osgi.web.portlet.tracker.internal.osgi.util.tracker;
 
 import com.liferay.osgi.util.StringPlus;
 import com.liferay.petra.concurrent.DCLSingleton;
@@ -62,6 +62,9 @@ import com.liferay.portal.kernel.xml.SAXReader;
 import com.liferay.portal.model.impl.EventDefinitionImpl;
 import com.liferay.portal.model.impl.PortletURLListenerImpl;
 import com.liferay.portal.model.impl.PublicRenderParameterImpl;
+import com.liferay.portal.osgi.web.portlet.tracker.internal.BundlePluginPackage;
+import com.liferay.portal.osgi.web.portlet.tracker.internal.BundlePortletAppDelegate;
+import com.liferay.portal.osgi.web.portlet.tracker.internal.PortletPropertyValidator;
 import com.liferay.portal.osgi.web.servlet.context.helper.ServletContextHelperFactory;
 import com.liferay.portal.osgi.web.servlet.context.helper.ServletContextHelperRegistration;
 import com.liferay.portal.service.impl.ResourcePermissionLocalServiceImpl.IndividualPortletResourcePermissionProvider;

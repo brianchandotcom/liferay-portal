@@ -2,6 +2,6 @@
 
 <suppressions>
 	<checkstyle>
-		<suppress checks="CompanyIterationCheck" files="src/main/java/com/liferay/portal/osgi/web/portlet/tracker/internal/PortletTracker\.java" />
+		<suppress checks="CompanyIterationCheck" files="src/main/java/com/liferay/portal/osgi/web/portlet/tracker/internal/osgi/util/tracker/PortletTracker\.java" />
 	</checkstyle>
 </suppressions>

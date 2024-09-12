@@ -46,6 +46,7 @@ import com.liferay.commerce.service.CommerceShippingMethodLocalService;
 import com.liferay.commerce.util.CommerceAccountHelper;
 import com.liferay.commerce.util.CommerceCheckoutStep;
 import com.liferay.commerce.util.CommerceCheckoutStepRegistry;
+import com.liferay.headless.commerce.core.util.DateConfig;
 import com.liferay.headless.commerce.core.util.ExpandoUtil;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.Address;
@@ -83,6 +84,7 @@ import com.liferay.portal.kernel.servlet.DummyHttpServletResponse;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.BigDecimalUtil;
+import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.URLCodec;
@@ -100,6 +102,7 @@ import java.math.BigDecimal;
 import java.security.Key;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
@@ -1102,10 +1105,34 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 			commerceOrder.getTotalDiscountAmount(),
 			commerceOrder.getTotalWithTaxAmount(), commerceContext, true);
 
-		commerceOrder = _commerceOrderService.updatePrintedNote(
-			commerceOrder.getCommerceOrderId(),
-			GetterUtil.get(
-				cart.getPrintedNote(), commerceOrder.getPrintedNote()));
+		ServiceContext serviceContext = _serviceContextHelper.getServiceContext(
+			commerceOrder.getGroupId());
+
+		if (cart.getRequestedDeliveryDate() != null) {
+			Calendar requestedDeliveryDateCalendar =
+				CalendarFactoryUtil.getCalendar(serviceContext.getTimeZone());
+
+			requestedDeliveryDateCalendar.setTime(
+				cart.getRequestedDeliveryDate());
+
+			DateConfig requestedDeliveryDate = new DateConfig(
+				requestedDeliveryDateCalendar);
+
+			_commerceOrderService.updateInfo(
+				commerceOrder.getCommerceOrderId(),
+				GetterUtil.getString(
+					cart.getPrintedNote(), commerceOrder.getPrintedNote()),
+				requestedDeliveryDate.getMonth(),
+				requestedDeliveryDate.getDay(), requestedDeliveryDate.getYear(),
+				requestedDeliveryDate.getHour(),
+				requestedDeliveryDate.getMinute(), serviceContext);
+		}
+		else {
+			_commerceOrderService.updatePrintedNote(
+				commerceOrder.getCommerceOrderId(),
+				GetterUtil.getString(
+					cart.getPrintedNote(), commerceOrder.getPrintedNote()));
+		}
 
 		Map<String, ?> customFields = cart.getCustomFields();
 

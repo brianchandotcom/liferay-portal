@@ -5,8 +5,8 @@
 
 package com.liferay.osgi.service.tracker.collections.list;
 
-import com.liferay.osgi.service.tracker.collections.internal.DefaultServiceTrackerCustomizer;
 import com.liferay.osgi.service.tracker.collections.internal.list.ServiceTrackerListImpl;
+import com.liferay.osgi.service.tracker.collections.internal.osgi.util.tracker.DefaultServiceTrackerCustomizer;
 
 import java.util.Comparator;
 

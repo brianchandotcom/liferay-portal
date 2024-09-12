@@ -7,6 +7,7 @@ import com.liferay.testray.rest.internal.graphql.query.v1_0.Query;
 import com.liferay.testray.rest.internal.resource.v1_0.TestrayBuildAutofillResourceImpl;
 import com.liferay.testray.rest.internal.resource.v1_0.TestrayBuildResourceImpl;
 import com.liferay.testray.rest.internal.resource.v1_0.TestrayCaseResultResourceImpl;
+import com.liferay.testray.rest.internal.resource.v1_0.TestrayRoutineDurationReportResourceImpl;
 import com.liferay.testray.rest.internal.resource.v1_0.TestrayRunComparisonResourceImpl;
 import com.liferay.testray.rest.internal.resource.v1_0.TestrayStatusMetricResourceImpl;
 import com.liferay.testray.rest.internal.resource.v1_0.TestrayTestFlowResourceImpl;
@@ -14,6 +15,7 @@ import com.liferay.testray.rest.internal.resource.v1_0.TestrayTestSuiteResourceI
 import com.liferay.testray.rest.resource.v1_0.TestrayBuildAutofillResource;
 import com.liferay.testray.rest.resource.v1_0.TestrayBuildResource;
 import com.liferay.testray.rest.resource.v1_0.TestrayCaseResultResource;
+import com.liferay.testray.rest.resource.v1_0.TestrayRoutineDurationReportResource;
 import com.liferay.testray.rest.resource.v1_0.TestrayRunComparisonResource;
 import com.liferay.testray.rest.resource.v1_0.TestrayStatusMetricResource;
 import com.liferay.testray.rest.resource.v1_0.TestrayTestFlowResource;
@@ -52,6 +54,8 @@ public class ServletDataImpl implements ServletData {
 
 		Query.setTestrayCaseResultResourceComponentServiceObjects(
 			_testrayCaseResultResourceComponentServiceObjects);
+		Query.setTestrayRoutineDurationReportResourceComponentServiceObjects(
+			_testrayRoutineDurationReportResourceComponentServiceObjects);
 		Query.setTestrayRunComparisonResourceComponentServiceObjects(
 			_testrayRunComparisonResourceComponentServiceObjects);
 		Query.setTestrayStatusMetricResourceComponentServiceObjects(
@@ -151,6 +155,11 @@ public class ServletDataImpl implements ServletData {
 							TestrayCaseResultResourceImpl.class,
 							"getTestrayExportCaseResultTestrayBuild"));
 					put(
+						"query#testrayRoutineDurationReportsTestrayRoutine",
+						new ObjectValuePair<>(
+							TestrayRoutineDurationReportResourceImpl.class,
+							"getTestrayRoutineDurationReportsTestrayRoutinePage"));
+					put(
 						"query#testrayRunComparisonByTestrayRoutineIdTestrayRoutine",
 						new ObjectValuePair<>(
 							TestrayRunComparisonResourceImpl.class,
@@ -227,6 +236,10 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<TestrayCaseResultResource>
 		_testrayCaseResultResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<TestrayRoutineDurationReportResource>
+		_testrayRoutineDurationReportResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<TestrayRunComparisonResource>

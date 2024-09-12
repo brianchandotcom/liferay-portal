@@ -385,7 +385,7 @@ baseTest(
 		for (const document of [document1, document2]) {
 			await documentLibraryPage.goto(site.friendlyUrlPath);
 
-			await documentLibraryPage.goToEditEntry(document.title);
+			await documentLibraryPage.editFileEntry(document.title);
 
 			await page.getByText(vocabularyName).waitFor();
 

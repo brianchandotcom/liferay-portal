@@ -311,6 +311,33 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public boolean deleteCTProcess(@GraphQLName("ctProcessId") Long ctProcessId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_ctProcessResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			ctProcessResource -> ctProcessResource.deleteCTProcess(
+				ctProcessId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public Response deleteCTProcessBatch(
+			@GraphQLName("ctProcessId") Long ctProcessId,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_ctProcessResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			ctProcessResource -> ctProcessResource.deleteCTProcessBatch(
+				ctProcessId, callbackURL, object));
+	}
+
+	@GraphQLField
 	public boolean createCTProcessRevert(
 			@GraphQLName("ctProcessId") Long ctProcessId,
 			@GraphQLName("description") String description,

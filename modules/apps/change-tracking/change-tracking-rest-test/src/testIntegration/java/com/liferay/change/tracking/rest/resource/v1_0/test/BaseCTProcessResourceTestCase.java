@@ -23,6 +23,7 @@ import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -200,6 +201,10 @@ public abstract class BaseCTProcessResourceTestCase {
 		assertContains(ctProcess1, (List<CTProcess>)page.getItems());
 		assertContains(ctProcess2, (List<CTProcess>)page.getItems());
 		assertValid(page, testGetCTProcessesPage_getExpectedActions());
+
+		ctProcessResource.deleteCTProcess(ctProcess1.getId());
+
+		ctProcessResource.deleteCTProcess(ctProcess2.getId());
 	}
 
 	protected Map<String, Map<String, String>>
@@ -505,6 +510,102 @@ public abstract class BaseCTProcessResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testDeleteCTProcess() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		CTProcess ctProcess = testDeleteCTProcess_addCTProcess();
+
+		assertHttpResponseStatusCode(
+			204,
+			ctProcessResource.deleteCTProcessHttpResponse(ctProcess.getId()));
+
+		assertHttpResponseStatusCode(
+			404, ctProcessResource.getCTProcessHttpResponse(ctProcess.getId()));
+
+		assertHttpResponseStatusCode(
+			404, ctProcessResource.getCTProcessHttpResponse(0L));
+	}
+
+	protected CTProcess testDeleteCTProcess_addCTProcess() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteCTProcess() throws Exception {
+
+		// No namespace
+
+		CTProcess ctProcess1 = testGraphQLDeleteCTProcess_addCTProcess();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteCTProcess",
+						new HashMap<String, Object>() {
+							{
+								put("ctProcessId", ctProcess1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteCTProcess"));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"cTProcess",
+					new HashMap<String, Object>() {
+						{
+							put("ctProcessId", ctProcess1.getId());
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace changeTracking_v1_0
+
+		CTProcess ctProcess2 = testGraphQLDeleteCTProcess_addCTProcess();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"changeTracking_v1_0",
+						new GraphQLField(
+							"deleteCTProcess",
+							new HashMap<String, Object>() {
+								{
+									put("ctProcessId", ctProcess2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/changeTracking_v1_0",
+				"Object/deleteCTProcess"));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"changeTracking_v1_0",
+					new GraphQLField(
+						"cTProcess",
+						new HashMap<String, Object>() {
+							{
+								put("ctProcessId", ctProcess2.getId());
+							}
+						},
+						new GraphQLField("id")))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected CTProcess testGraphQLDeleteCTProcess_addCTProcess()
+		throws Exception {
+
+		return testGraphQLCTProcess_addCTProcess();
 	}
 
 	@Test

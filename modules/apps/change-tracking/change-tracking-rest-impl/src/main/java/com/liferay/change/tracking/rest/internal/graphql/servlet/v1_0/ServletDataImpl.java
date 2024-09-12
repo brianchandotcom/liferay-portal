@@ -171,6 +171,15 @@ public class ServletDataImpl implements ServletData {
 							CTProcessResourceImpl.class,
 							"postCTProcessesPageExportBatch"));
 					put(
+						"mutation#deleteCTProcess",
+						new ObjectValuePair<>(
+							CTProcessResourceImpl.class, "deleteCTProcess"));
+					put(
+						"mutation#deleteCTProcessBatch",
+						new ObjectValuePair<>(
+							CTProcessResourceImpl.class,
+							"deleteCTProcessBatch"));
+					put(
 						"mutation#createCTProcessRevert",
 						new ObjectValuePair<>(
 							CTProcessResourceImpl.class,

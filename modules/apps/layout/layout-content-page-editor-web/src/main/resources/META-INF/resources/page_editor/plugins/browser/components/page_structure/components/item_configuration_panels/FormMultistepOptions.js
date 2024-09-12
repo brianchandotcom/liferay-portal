@@ -26,7 +26,7 @@ import {getStepperChild} from '../../../../../../app/utils/getStepperChild';
 
 const FORM_TYPE_OPTIONS = [
 	{label: Liferay.Language.get('simple'), value: 'simple'},
-	{label: Liferay.Language.get('multi-step'), value: 'multistep'},
+	{label: Liferay.Language.get('multistep'), value: 'multistep'},
 ];
 
 export default function FormMultistepOptions({item, onValueSelect}) {

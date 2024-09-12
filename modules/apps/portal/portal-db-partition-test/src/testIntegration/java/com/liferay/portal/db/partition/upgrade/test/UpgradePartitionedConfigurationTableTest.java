@@ -260,19 +260,20 @@ public class UpgradePartitionedConfigurationTableTest
 			}
 		}
 		finally {
-			try (PreparedStatement preparedStatement =
-					connection.prepareStatement(
-						"delete from Configuration_ where configurationId = " +
-							"?")) {
+			DBPartitionUtil.forEachCompanyId(
+				currentCompanyId -> {
+					try (PreparedStatement preparedStatement =
+							connection.prepareStatement(
+								StringBundler.concat(
+									"delete from Configuration_ where ",
+									"configurationId like '%",
+									UpgradePartitionedConfigurationTableTest.
+										class.getName(),
+									"%'"))) {
 
-				for (ConfigurationEntry configurationEntry :
-						validConfigurationEntries.values()) {
-
-					preparedStatement.setString(1, configurationEntry.getPid());
-
-					preparedStatement.executeUpdate();
-				}
-			}
+						preparedStatement.executeUpdate();
+					}
+				});
 		}
 	}
 

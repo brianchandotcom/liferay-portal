@@ -71,7 +71,30 @@ function ImportForm({
 			(dbField) => !fieldsSelections[dbField.name]
 		);
 
-		return !requiredFieldNotFilled;
+		const relationshipGroups = {};
+
+		dbFields.required.forEach((dbField) => {
+			const {anyOfGroup, name} = dbField;
+
+			if (anyOfGroup) {
+				if (!relationshipGroups[anyOfGroup]) {
+					relationshipGroups[anyOfGroup] = [];
+				}
+
+				relationshipGroups[anyOfGroup].push(name);
+			}
+		});
+
+		const anyOfGroupNotFilled = Object.keys(relationshipGroups).some(
+			(group) =>
+				!relationshipGroups[group].some((value) =>
+					Object.keys(fieldsSelections).some(
+						(field) => field === value
+					)
+				)
+		);
+
+		return !requiredFieldNotFilled && !anyOfGroupNotFilled;
 	}, [fieldsSelections, dbFields]);
 
 	const updateFieldMapping = (fileField, dbFieldName) => {

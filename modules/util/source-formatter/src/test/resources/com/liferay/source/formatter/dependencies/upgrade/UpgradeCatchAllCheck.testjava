@@ -691,6 +691,11 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		contact.setSuffixId();
 	}
 
+	public void method(DDMStructure ddmStructure, Fields ddmFields) {
+		_journalConverter.getContent(ddmStructure, null);
+		_journalConverter.getContent(ddmStructure, ddmFields);
+	}
+
 	public void method(HttpServletRequest httpServletRequest) {
 		_commerceAccountHelper.getCurrentCommerceAccount(httpServletRequest);
 		_commerceAccountHelper.getCurrentCommerceAccount(null);
@@ -1315,6 +1320,9 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 
 	@Reference
 	private IndexWriterHelper _indexWriterHelper;
+
+	@Reference
+	private JournalConverter _journalConverter;
 
 	@Reference
 	private JournalFolderLocalService _journalFolderLocalService;

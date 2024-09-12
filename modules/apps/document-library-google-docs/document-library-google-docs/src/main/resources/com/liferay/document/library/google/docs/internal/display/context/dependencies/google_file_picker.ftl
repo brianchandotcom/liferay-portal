@@ -64,9 +64,6 @@ GoogleFilePicker.prototype = {
 		var instance = this;
 
 		var tokenClient = google.accounts.oauth2.initTokenClient({
-			client_id: GoogleFilePicker.CLIENT_ID,
-			immediate: false,
-			scope: GoogleFilePicker.SCOPE,
 			callback: (authResult) => {
 				if (authResult && authResult.error !== undefined) {
 					throw (authResult);
@@ -78,11 +75,14 @@ GoogleFilePicker.prototype = {
 
 				instance._createPicker();
 			},
+			client_id: GoogleFilePicker.CLIENT_ID,
 			error_callback: function(error) {
 				if (process.env.NODE_ENV === 'development') {
 					console.error(error);
 				}
-			}
+			},
+			immediate: false,
+			scope: GoogleFilePicker.SCOPE
 		});
 
 		tokenClient.requestAccessToken();

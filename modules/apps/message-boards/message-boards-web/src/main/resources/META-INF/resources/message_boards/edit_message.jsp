@@ -275,19 +275,9 @@ if (portletTitleBasedNavigation) {
 											<portlet:param name="fileName" value="<%= HtmlUtil.unescape(fileEntry.getTitle()) %>" />
 										</liferay-portlet:actionURL>
 
-										<liferay-ui:icon-menu
-											direction="left-side"
-											icon="<%= StringPool.BLANK %>"
-											markupView="lexicon"
-											message="actions"
-										>
-											<div class="delete-attachment" data-rowid="<%= fileEntry.getFileEntryId() %>" data-url="<%= deleteURL.toString() %>">
-												<liferay-ui:icon-delete
-													trash="<%= trashHelper.isTrashEnabled(scopeGroupId) %>"
-													url="javascript:void(0);"
-												/>
-											</div>
-										</liferay-ui:icon-menu>
+										<a class="delete-attachment" data-rowid="<%= fileEntry.getFileEntryId() %>" href="<%= deleteURL.toString() %>">
+											<liferay-ui:message key="delete" />
+										</a>
 									</liferay-ui:search-container-column-text>
 								</liferay-ui:search-container-row>
 

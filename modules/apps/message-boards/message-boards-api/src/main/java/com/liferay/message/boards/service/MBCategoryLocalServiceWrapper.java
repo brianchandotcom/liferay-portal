@@ -33,33 +33,35 @@ public class MBCategoryLocalServiceWrapper
 
 	@Override
 	public MBCategory addCategory(
-			long userId, long parentCategoryId, String name, String description,
+			String externalReferenceCode, long userId, long parentCategoryId,
+			String name, String description,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _mbCategoryLocalService.addCategory(
-			userId, parentCategoryId, name, description, serviceContext);
+			externalReferenceCode, userId, parentCategoryId, name, description,
+			serviceContext);
 	}
 
 	@Override
 	public MBCategory addCategory(
-			long userId, long parentCategoryId, String name, String description,
-			String displayStyle, String emailAddress, String inProtocol,
-			String inServerName, int inServerPort, boolean inUseSSL,
-			String inUserName, String inPassword, int inReadInterval,
-			String outEmailAddress, boolean outCustom, String outServerName,
-			int outServerPort, boolean outUseSSL, String outUserName,
-			String outPassword, boolean allowAnonymous,
-			boolean mailingListActive,
+			String externalReferenceCode, long userId, long parentCategoryId,
+			String name, String description, String displayStyle,
+			String emailAddress, String inProtocol, String inServerName,
+			int inServerPort, boolean inUseSSL, String inUserName,
+			String inPassword, int inReadInterval, String outEmailAddress,
+			boolean outCustom, String outServerName, int outServerPort,
+			boolean outUseSSL, String outUserName, String outPassword,
+			boolean allowAnonymous, boolean mailingListActive,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _mbCategoryLocalService.addCategory(
-			userId, parentCategoryId, name, description, displayStyle,
-			emailAddress, inProtocol, inServerName, inServerPort, inUseSSL,
-			inUserName, inPassword, inReadInterval, outEmailAddress, outCustom,
-			outServerName, outServerPort, outUseSSL, outUserName, outPassword,
-			allowAnonymous, mailingListActive, serviceContext);
+			externalReferenceCode, userId, parentCategoryId, name, description,
+			displayStyle, emailAddress, inProtocol, inServerName, inServerPort,
+			inUseSSL, inUserName, inPassword, inReadInterval, outEmailAddress,
+			outCustom, outServerName, outServerPort, outUseSSL, outUserName,
+			outPassword, allowAnonymous, mailingListActive, serviceContext);
 	}
 
 	@Override
@@ -168,6 +170,13 @@ public class MBCategoryLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_mbCategoryLocalService.deleteCategory(category, includeTrashedEntries);
+	}
+
+	@Override
+	public void deleteCategory(String externalReferenceCode, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_mbCategoryLocalService.deleteCategory(externalReferenceCode, groupId);
 	}
 
 	/**

@@ -11,11 +11,31 @@ import React, {useState} from 'react';
 
 import InfoBoxModal from '../InfoBoxModal';
 
+const formatValue = (value, type) => {
+	if (type === 'date' && value) {
+		return new Intl.DateTimeFormat(
+			Liferay.ThemeDisplay.getBCP47LanguageId(),
+			{dateStyle: 'short'}
+		).format(new Date(value));
+	}
+
+	return value;
+};
+
+const isEditable = (field, isOpen) => {
+	if (field === 'requestedDeliveryDate' && !isOpen) {
+		return false;
+	}
+
+	return true;
+};
+
 const DefaultView = ({
 	buttonDisplayType,
 	elementId,
 	field,
 	fieldValue,
+	fieldValueType,
 	hasPermission,
 	isOpen,
 	label,
@@ -60,7 +80,7 @@ const DefaultView = ({
 				<div className="align-items-center d-flex">
 					<div className="h5 info-box-label m-0">{label}</div>
 
-					{hasPermission && !readOnly ? (
+					{hasPermission && !readOnly && isEditable(field, isOpen) ? (
 						<ClayButton
 							aria-controls={`${namespace}infoBoxModal`}
 							aria-label={
@@ -83,10 +103,13 @@ const DefaultView = ({
 			) : null}
 
 			<div>
-				<p className="info-box-value">{value}</p>
+				<p className="info-box-value">
+					{formatValue(value, fieldValueType)}
+				</p>
 			</div>
 
 			<InfoBoxModal
+				fieldValueType={fieldValueType}
 				handleSubmit={handleSubmit}
 				id={`${namespace}infoBoxModal`}
 				inputValue={inputValue}

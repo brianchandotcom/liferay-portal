@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -54,6 +53,8 @@ import java.io.Writer;
 import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
 import java.lang.reflect.Field;
+
+import java.nio.file.Path;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -597,14 +598,16 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 	public void testPropertiesSetByUserWithFile() throws Exception {
 		File propertiesFile = temporaryFolder.newFile("test.properties");
 
-		String[] originalIncludeAndOverride = PropsUtil.getArray(
-			"include-and-override");
+		List<String> loadedSources = PropsUtil.getLoadedSources();
 
-		String[] includeAndOverride = ArrayUtil.append(
-			originalIncludeAndOverride, propertiesFile.getAbsolutePath());
+		Path path = propertiesFile.toPath();
 
-		PropsUtil.set(
-			"include-and-override", StringUtil.merge(includeAndOverride));
+		String propertiesFileSourcePath = path.toUri(
+		).getPath();
+
+		propertiesFileSourcePath = "file:" + propertiesFileSourcePath;
+
+		loadedSources.add(propertiesFileSourcePath);
 
 		Properties properties = new Properties();
 
@@ -627,9 +630,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 			_assertReport("my.property: my property value");
 		}
 		finally {
-			PropsUtil.set(
-				"include-and-override",
-				StringUtil.merge(originalIncludeAndOverride));
+			loadedSources.remove(propertiesFileSourcePath);
 		}
 	}
 

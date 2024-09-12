@@ -103,7 +103,7 @@ public class OpenAPIUtil {
 			fields.put(
 				propertyName,
 				Field.of(
-					propertySchema.getDescription(), propertyName,
+					null, propertySchema.getDescription(), propertyName,
 					propertySchema.isReadOnly(), null,
 					requiredPropertySchemaNames.contains(propertyName),
 					propertySchema.getType(),

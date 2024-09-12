@@ -1,19 +1,6 @@
 <#if entries?has_content>
 	<#assign languageId = localeUtil.toLanguageId(locale) />
 
-	<style>
-		.taglib-language-option {
-			background: none no-repeat 5px center;
-			padding-left: 25px;
-		}
-
-		<#list entries as entry>
-			.taglib-language-option-${entry.getW3cLanguageId()} {
-				background-image: url(${themeDisplay.getPathThemeImages()}/language/${entry.getLanguageId()}.png);
-			}
-		</#list>
-	</style>
-
 	<@liferay_aui["form"]
 		action=formAction
 		method="post"

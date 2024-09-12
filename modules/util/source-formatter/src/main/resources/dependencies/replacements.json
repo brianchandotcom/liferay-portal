@@ -3213,6 +3213,14 @@
 		"to": "getPreferences(param#0#)"
 	},
 	{
+		"classNames": [
+			"JournalConverter"
+		],
+		"from": "getContent(DDMStructure paramName, Fields paramName)",
+		"issueKey": "LPD-36121",
+		"to": "getContent(param#0#, param#1#, param#0#.getGroupId())"
+	},
+	{
 		"from": "CookieKeys.COMMERCE_CONTINUE_AS_GUEST",
 		"issueKey": "LPS-159679",
 		"newImports": [

@@ -1380,7 +1380,6 @@ pre[class*='language-'] {
 }
 
 @media (max-width: 767.98px) {
-
 	:not(pre) > code[class*='language-'],
 	pre[class*='language-'] {
 		font-size: 0.8rem;

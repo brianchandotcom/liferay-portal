@@ -365,6 +365,9 @@ public class LayoutStructure {
 		fragmentStyledLayoutStructureItem.setFragmentEntryLinkId(
 			fragmentEntryLinkId);
 
+		_fragmentLayoutStructureItems.put(
+			fragmentEntryLinkId, fragmentStyledLayoutStructureItem);
+
 		return fragmentStyledLayoutStructureItem;
 	}
 

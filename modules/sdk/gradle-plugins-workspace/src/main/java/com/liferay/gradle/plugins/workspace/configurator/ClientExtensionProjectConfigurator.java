@@ -244,17 +244,7 @@ public class ClientExtensionProjectConfigurator
 
 								}));
 
-						_clientExtensionIds.compute(
-							clientExtension.id,
-							(key, value) -> {
-								if (value == null) {
-									value = new HashSet<>();
-								}
-
-								value.add(project);
-
-								return value;
-							});
+						_registerClientExtensionId(project, clientExtension.id);
 
 						createClientExtensionConfigTaskProvider.configure(
 							createClientExtensionConfigTask -> {
@@ -1138,6 +1128,23 @@ public class ClientExtensionProjectConfigurator
 		return _isSpecialLanguageProject(
 			project.getRootDir(), project.getProjectDir());
 	}
+
+	private void _registerClientExtensionId(
+		Project project, String clientExtensionId) {
+
+		_clientExtensionIds.compute(
+			clientExtensionId,
+			(key, value) -> {
+				if (value == null) {
+					value = new HashSet<>();
+				}
+
+				value.add(project);
+
+				return value;
+			});
+	}
+
 	private void _validateClientExtension(
 		ClientExtension clientExtension, Project project) {
 

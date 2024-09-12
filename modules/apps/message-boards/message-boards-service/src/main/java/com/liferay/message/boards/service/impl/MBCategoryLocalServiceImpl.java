@@ -307,6 +307,14 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 	}
 
 	@Override
+	public void deleteCategory(String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		mbCategoryLocalService.deleteCategory(
+			mbCategoryPersistence.findByERC_G(externalReferenceCode, groupId));
+	}
+
+	@Override
 	public MBCategory fetchMBCategory(long groupId, String friendlyURL) {
 		return mbCategoryPersistence.fetchByG_F(
 			groupId,

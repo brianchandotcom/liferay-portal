@@ -73,7 +73,7 @@ public class MBSubscriptionBaseModelTest
 			serviceContext, Constants.ADD);
 
 		_category = MBCategoryLocalServiceUtil.addCategory(
-			userId, containerModelId, RandomTestUtil.randomString(),
+			null, userId, containerModelId, RandomTestUtil.randomString(),
 			StringPool.BLANK, serviceContext);
 
 		return _category.getCategoryId();

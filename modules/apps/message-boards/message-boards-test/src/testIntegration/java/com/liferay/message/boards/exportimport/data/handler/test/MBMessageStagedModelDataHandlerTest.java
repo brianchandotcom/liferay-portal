@@ -135,7 +135,7 @@ public class MBMessageStagedModelDataHandlerTest
 		exportImportStagedModel(mbMessage);
 
 		MBCategory mbCategory = MBCategoryServiceUtil.addCategory(
-			TestPropsValues.getUserId(),
+			null, TestPropsValues.getUserId(),
 			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
 			RandomTestUtil.randomString(), StringPool.BLANK,
 			ServiceContextTestUtil.getServiceContext(
@@ -170,7 +170,7 @@ public class MBMessageStagedModelDataHandlerTest
 			new HashMap<>();
 
 		MBCategory category = MBCategoryServiceUtil.addCategory(
-			TestPropsValues.getUserId(),
+			null, TestPropsValues.getUserId(),
 			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
 			RandomTestUtil.randomString(), StringPool.BLANK,
 			ServiceContextTestUtil.getServiceContext(

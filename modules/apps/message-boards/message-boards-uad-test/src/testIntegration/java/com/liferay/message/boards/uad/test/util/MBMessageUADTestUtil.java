@@ -35,7 +35,7 @@ public class MBMessageUADTestUtil {
 		throws Exception {
 
 		MBCategory mbCategory = mbCategoryLocalService.addCategory(
-			userId, 0, RandomTestUtil.randomString(),
+			null, userId, 0, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(),
 			ServiceContextTestUtil.getServiceContext(
 				TestPropsValues.getGroupId()));

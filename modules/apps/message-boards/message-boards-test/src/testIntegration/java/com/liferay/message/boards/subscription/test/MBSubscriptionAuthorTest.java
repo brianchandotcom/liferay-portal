@@ -64,7 +64,7 @@ public class MBSubscriptionAuthorTest extends BaseSubscriptionAuthorTestCase {
 				group.getGroupId(), userId);
 
 		MBCategory category = MBCategoryLocalServiceUtil.addCategory(
-			userId, containerModelId, RandomTestUtil.randomString(),
+			null, userId, containerModelId, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), serviceContext);
 
 		return category.getCategoryId();

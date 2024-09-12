@@ -20,6 +20,7 @@ import com.liferay.message.boards.internal.upgrade.v3_0_0.MBMessageTreePathUpgra
 import com.liferay.message.boards.internal.upgrade.v3_1_0.UrlSubjectUpgradeProcess;
 import com.liferay.message.boards.internal.upgrade.v6_3_0.util.MBSuspiciousActivityTable;
 import com.liferay.message.boards.internal.upgrade.v6_5_0.FriendlyURLUpgradeProcess;
+import com.liferay.message.boards.internal.upgrade.v6_6_0.MBCategoryExternalReferenceCodeUpgradeProcess;
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
@@ -158,6 +159,10 @@ public class MBServiceUpgradeStepRegistrator implements UpgradeStepRegistrator {
 			"6.5.0", "6.5.1",
 			UpgradeProcessFactory.alterColumnType(
 				"MBCategory", "name", "VARCHAR(255) null"));
+
+		registry.register(
+			"6.5.1", "6.6.0",
+			new MBCategoryExternalReferenceCodeUpgradeProcess());
 	}
 
 	@Reference(

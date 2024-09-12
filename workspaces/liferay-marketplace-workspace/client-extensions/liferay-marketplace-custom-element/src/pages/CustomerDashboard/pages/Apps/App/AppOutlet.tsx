@@ -14,7 +14,10 @@ import './App.scss';
 import Navbar, {NavbarProps} from '../../../../../components/Navbar';
 import {PageRenderer} from '../../../../../components/Page';
 import {useMarketplaceContext} from '../../../../../context/MarketplaceContext';
-import {ORDER_WORKFLOW_STATUS_CODE} from '../../../../../enums/Order';
+import {
+	ORDER_WORKFLOW_STATUS_CODE,
+	PRODUCT_TYPE_SPECIFICATION,
+} from '../../../../../enums/Order';
 import {isTrialSKU} from '../../../../../utils/productUtils';
 import getProductPriceModel from '../../../../GetApp/utils/getProductPriceModel';
 
@@ -23,8 +26,6 @@ type BaseOutletProps = {
 	backURL?: string;
 	routes: NavbarProps['routes'] | ((data: any) => NavbarProps['routes']);
 };
-
-const CLOUD_APP = 'cloud';
 
 const BaseOutlet: React.FC<BaseOutletProps> = ({
 	backTitle,
@@ -83,16 +84,28 @@ const AppOutlet = () => {
 		<BaseOutlet
 			backTitle={i18n.translate('back-to-my-apps')}
 			routes={({data, placedOrderItems, product}: any) => {
-				function verifyProductType(product: any) {
-					const specification = product?.productSpecifications?.find(
-						(speficication: ProductSpecification) =>
-							speficication?.specificationKey === 'type'
+				const isPaidApp = !getProductPriceModel(product).isFreeApp;
+				const isPaidOrder = !(
+					placedOrderItems[0]?.price?.price === 0 &&
+					product?.skus?.some((sku: SKU) => isTrialSKU(sku))
+				);
+
+				const productType = product?.productSpecifications?.find(
+					(speficication: ProductSpecification) =>
+						speficication?.specificationKey === 'type'
+				)?.value;
+
+				const hasFeatureFlags = (flags: string[]) =>
+					flags.every((flag) =>
+						properties.featureFlags?.includes(flag)
 					);
 
-					const value = specification?.value;
-
-					return value ? value : '';
-				}
+				const isCompletedOrderWithVirtualItems = () =>
+					data?.placedOrder.workflowStatusInfo.code ===
+						ORDER_WORKFLOW_STATUS_CODE.COMPLETED &&
+					placedOrderItems.some(
+						(item: PlacedOrderItems) => item.virtualItems?.length
+					);
 
 				const tabs = [
 					{
@@ -102,37 +115,29 @@ const AppOutlet = () => {
 					{
 						name: i18n.translate('download'),
 						path: 'download',
-						visible:
-							properties.featureFlags?.includes('LPD-34129') &&
-							verifyProductType(product) !== CLOUD_APP &&
-							properties.featureFlags?.includes('LPD-21582') &&
-							data?.placedOrder.workflowStatusInfo.code ===
-								ORDER_WORKFLOW_STATUS_CODE.COMPLETED &&
-							placedOrderItems.some(
-								(item: PlacedOrderItems) =>
-									item.virtualItems?.length
-							),
+						visible: hasFeatureFlags(['LPD-34129', 'LPD-21582'])
+							? productType !==
+									PRODUCT_TYPE_SPECIFICATION.CLOUDAPP &&
+								isCompletedOrderWithVirtualItems()
+							: hasFeatureFlags(['LPD-21582']) &&
+								isCompletedOrderWithVirtualItems(),
 					},
 					{
 						name: i18n.translate('licenses'),
 						path: 'licenses',
-						visible:
-							properties.featureFlags?.includes('LPD-34129') &&
-							verifyProductType(product) !== CLOUD_APP &&
-							!(
-								getProductPriceModel(product).isFreeApp ||
-								(placedOrderItems[0]?.price?.price === 0 &&
-									product?.skus?.some((sku: any) =>
-										isTrialSKU(sku as unknown as SKU)
-									))
-							),
+						visible: hasFeatureFlags(['LPD-34129'])
+							? productType !==
+									PRODUCT_TYPE_SPECIFICATION.CLOUDAPP &&
+								isPaidApp &&
+								isPaidOrder
+							: isPaidApp && isPaidOrder,
 					},
 					{
 						name: i18n.translate('app-provisioning'),
 						path: 'cloud-provisioning',
 						visible:
-							properties.featureFlags?.includes('LPD-34129') &&
-							verifyProductType(product) === CLOUD_APP,
+							hasFeatureFlags(['LPD-34129']) &&
+							productType === PRODUCT_TYPE_SPECIFICATION.CLOUDAPP,
 					},
 				];
 

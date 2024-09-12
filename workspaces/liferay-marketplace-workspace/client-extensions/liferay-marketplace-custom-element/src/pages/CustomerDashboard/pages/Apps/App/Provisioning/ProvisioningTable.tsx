@@ -218,15 +218,17 @@ const ProvisioningTable: React.FC<ProvisioningTableProps> = ({orderInfo}) => {
 						onClick={() => {}}
 						size="sm"
 					>
-						test
+						{i18n.translate('sign-in-with-a-different-account')}
 					</ClayButton>
 				}
 				observer={modal.observer}
 				size={'md' as any}
-				title="test"
+				title={i18n.translate('no-cloud-projects-available')}
 				visible={modal.open}
 			>
-				test
+				{i18n.translate(
+					'you-currently-do-not-have-access-to-any-cloud-projects-please-login-as-a-user-that-has-access-to-a-project-or-contact-your-project-administrator-to-add-you-to-a-project'
+				)}
 			</Modal>
 		</>
 	);

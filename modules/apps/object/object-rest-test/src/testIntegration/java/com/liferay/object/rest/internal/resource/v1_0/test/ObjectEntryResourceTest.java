@@ -7232,7 +7232,7 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
-	public void testPostCustomObjectEntryWithCodeSubfield() throws Exception {
+	public void testPostCustomObjectEntryWithStatus() throws Exception {
 
 		// Without status field
 

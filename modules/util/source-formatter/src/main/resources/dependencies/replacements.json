@@ -3244,6 +3244,15 @@
 		]
 	},
 	{
+		"classNames": [
+			"ExpandoColumnLocalService",
+			"ExpandoColumnLocalServiceUtil"
+		],
+		"from": "getColumn",
+		"issueKey": "LPD-36261",
+		"to": "fetchColumn"
+	},	
+	{
 		"from": "CookieKeys.COMMERCE_CONTINUE_AS_GUEST",
 		"issueKey": "LPS-159679",
 		"newImports": [

@@ -155,6 +155,30 @@ public class ProjectUsageDisplay {
 				"totalSinceLastAnniversary");
 		}
 
+		@Override
+		public boolean equals(Object object) {
+			if (this == object) {
+				return true;
+			}
+
+			if (!(object instanceof CountsDisplay)) {
+				return false;
+			}
+
+			CountsDisplay countsDisplay = (CountsDisplay)object;
+
+			if (Objects.equals(_monthlyValues, countsDisplay._monthlyValues) &&
+				Objects.equals(_total, countsDisplay._total) &&
+				Objects.equals(
+					_totalSinceLastAnniversary,
+					countsDisplay._totalSinceLastAnniversary)) {
+
+				return true;
+			}
+
+			return false;
+		}
+
 		public Map<String, MonthlyValue> getMonthlyValues() {
 			return _monthlyValues;
 		}
@@ -165,6 +189,12 @@ public class ProjectUsageDisplay {
 
 		public int getTotalSinceLastAnniversary() {
 			return _totalSinceLastAnniversary;
+		}
+
+		@Override
+		public int hashCode() {
+			return Objects.hash(
+				_monthlyValues, _total, _totalSinceLastAnniversary);
 		}
 
 		private Map<String, MonthlyValue> _monthlyValues;
@@ -180,12 +210,40 @@ public class ProjectUsageDisplay {
 			_countSinceLastAnniversary = countSinceLastAnniversary;
 		}
 
+		@Override
+		public boolean equals(Object object) {
+			if (this == object) {
+				return true;
+			}
+
+			if (!(object instanceof MonthlyValue)) {
+				return false;
+			}
+
+			MonthlyValue monthlyValue = (MonthlyValue)object;
+
+			if (Objects.equals(_count, monthlyValue._count) &&
+				Objects.equals(
+					_countSinceLastAnniversary,
+					monthlyValue._countSinceLastAnniversary)) {
+
+				return true;
+			}
+
+			return false;
+		}
+
 		public int getCount() {
 			return _count;
 		}
 
 		public int getCountSinceLastAnniversary() {
 			return _countSinceLastAnniversary;
+		}
+
+		@Override
+		public int hashCode() {
+			return Objects.hash(_count, _countSinceLastAnniversary);
 		}
 
 		private final int _count;

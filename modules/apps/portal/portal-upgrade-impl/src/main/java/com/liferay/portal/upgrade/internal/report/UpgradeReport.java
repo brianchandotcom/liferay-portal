@@ -48,7 +48,6 @@ import java.lang.management.RuntimeMXBean;
 import java.net.URI;
 
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import java.sql.Connection;
@@ -163,10 +162,10 @@ public class UpgradeReport {
 				URI uri = new URI(loadedSource);
 
 				if (StringUtil.equals("file", uri.getScheme())) {
-					Path uriPath = Paths.get(uri);
-
 					propertiesFilePaths.add(
-						StringUtil.replace(uriPath.toString(), "\\", "/"));
+						Paths.get(
+							uri
+						).toString());
 				}
 			}
 			catch (Exception exception) {
@@ -174,12 +173,6 @@ public class UpgradeReport {
 					"Unable to process properties file paths", exception);
 			}
 		}
-
-		propertiesFilePaths = ListUtil.concat(
-			propertiesFilePaths,
-			ListUtil.fromArray(PropsUtil.getArray("include-and-override")));
-
-		ListUtil.distinct(propertiesFilePaths);
 
 		return propertiesFilePaths;
 	}

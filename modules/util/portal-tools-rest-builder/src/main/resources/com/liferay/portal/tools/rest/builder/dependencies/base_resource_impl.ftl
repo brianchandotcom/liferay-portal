@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -1615,7 +1616,23 @@ public abstract class Base${schemaName}ResourceImpl
 >
 	PermissionServiceUtil.checkPermission(${groupId}, ${resourceName}, ${resourceId});
 
-	resourcePermissionLocalService.updateResourcePermissions(contextCompany.getCompanyId(), ${groupId}, ${resourceName}, String.valueOf(${resourceId}), ModelPermissionsUtil.toModelPermissions(contextCompany.getCompanyId(), permissions, ${resourceId}, ${resourceName}, resourceActionLocalService, resourcePermissionLocalService, roleLocalService));
+	ModelPermissions modelPermissions = ModelPermissionsUtil.toModelPermissions(contextCompany.getCompanyId(), permissions, ${resourceId}, ${resourceName}, resourceActionLocalService, resourcePermissionLocalService, roleLocalService);
+
+	Collection<String> roleNames = modelPermissions.getRoleNames();
+
+	for (ResourcePermission resourcePermission : resourcePermissionLocalService.getResourcePermissions(contextCompany.getCompanyId(), ${resourceName}, ResourceConstants.SCOPE_INDIVIDUAL, String.valueOf(${resourceId}))) {
+		com.liferay.portal.kernel.model.Role role = roleLocalService.fetchRole(resourcePermission.getRoleId());
+
+		if ((role == null) || roleNames.contains(role.getName())) {
+			continue;
+		}
+
+		for (ResourceAction resourceAction : resourceActionLocalService.getResourceActions(${resourceName})) {
+			resourcePermissionLocalService.removeResourcePermission(contextCompany.getCompanyId(), ${resourceName}, ResourceConstants.SCOPE_INDIVIDUAL, String.valueOf(${resourceId}), role.getRoleId(), resourceAction.getActionId());
+		}
+	}
+
+	resourcePermissionLocalService.updateResourcePermissions(contextCompany.getCompanyId(), ${groupId}, ${resourceName}, String.valueOf(${resourceId}), modelPermissions);
 
 	return toPermissionPage(<#nested>, ${resourceId}, ${resourceName}, null);
 </#macro>

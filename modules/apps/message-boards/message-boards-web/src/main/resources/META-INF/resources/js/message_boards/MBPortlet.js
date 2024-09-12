@@ -159,22 +159,34 @@ class MBPortlet {
 	 * @param {Event} event The click event that triggered the remove action
 	 */
 	_removeAttachment(event) {
-		const link = event.currentTarget;
+		event.preventDefault();
 
-		const deleteURL = link.getAttribute('data-url');
-
-		fetch(deleteURL).then(() => {
-			Liferay.componentReady(this.searchContainerId).then(
-				(searchContainer) => {
-					searchContainer.deleteRow(
-						link.ancestor('tr'),
-						link.getAttribute('data-rowid')
-					);
-					searchContainer.updateDataStore();
+		openConfirmModal({
+			message: Liferay.Language.get(
+				'are-you-sure-you-want-to-delete-this'
+			),
+			onConfirm: (isConfirmed) => {
+				if (!isConfirmed) {
+					return;
 				}
-			);
 
-			this._updateRemovedAttachments();
+				const link = event.currentTarget;
+				const deleteURL = link.getAttribute('href');
+
+				fetch(deleteURL).then(() => {
+					Liferay.componentReady(this.searchContainerId).then(
+						(searchContainer) => {
+							searchContainer.deleteRow(
+								link.ancestor('tr'),
+								link.getAttribute('data-rowid')
+							);
+							searchContainer.updateDataStore();
+						}
+					);
+
+					this._updateRemovedAttachments();
+				});
+			},
 		});
 	}
 
@@ -270,9 +282,9 @@ class MBPortlet {
 											attachment.size,
 											`<a class="delete-attachment" data-rowId="${
 												attachment.id
-											}" data-url="${
+											}" href="${
 												attachment.deleteURL
-											}" href="javascript:void(0);">${Liferay.Language.get(
+											}">${Liferay.Language.get(
 												'delete'
 											)}</a>`,
 										],

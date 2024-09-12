@@ -6789,9 +6789,9 @@ information. Make sure to commit in all format-javadoc results.
 
 						StringBuilder sb = new StringBuilder();
 
-						for (String modulesCompileTaskGroup : modulesCompileTaskGroups) {
+						Pattern pattern = Pattern.compile("(.*):.*");
 
-							Pattern pattern = Pattern.compile("(.*):.*");
+						for (String modulesCompileTaskGroup : modulesCompileTaskGroups) {
 
 							Matcher matcher = pattern.matcher(modulesCompileTaskGroup);
 

@@ -4,12 +4,12 @@ function check_health {
 	docker inspect --format='{{.State.Health.Status}}' "${1}" | grep -q "healthy"
 
 	if [[ $? -eq 0 ]]; then
-		echo "Container '${1}' is healthy."
+		echo "Container ${1} is healthy."
 
 		return 0
 	fi
 
-	echo "Container '${1}' is not healthy."
+	echo "Container ${1} is not healthy."
 
 	sleep 10
 
@@ -20,12 +20,12 @@ function check_logs {
 	docker logs -f "${container}" | grep -q "${1}"
 
 	if [[ $? -eq 0 ]]; then
-		echo "Text '${1}' found in logs."
+		echo "Text ${1} found in logs."
 
 		return 0
 	fi
 
-	echo "Text '${1}' not found in logs."
+	echo "Text ${1} not found in logs."
 
 	sleep 10
 

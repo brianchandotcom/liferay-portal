@@ -1911,6 +1911,16 @@ public abstract class BaseCartResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"requestedDeliveryDate", additionalAssertFieldName)) {
+
+				if (cart.getRequestedDeliveryDate() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("shippingAddress", additionalAssertFieldName)) {
 				if (cart.getShippingAddress() == null) {
 					valid = false;
@@ -2428,6 +2438,19 @@ public abstract class BaseCartResourceTestCase {
 				if (!Objects.deepEquals(
 						cart1.getPurchaseOrderNumber(),
 						cart2.getPurchaseOrderNumber())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"requestedDeliveryDate", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						cart1.getRequestedDeliveryDate(),
+						cart2.getRequestedDeliveryDate())) {
 
 					return false;
 				}
@@ -3452,6 +3475,37 @@ public abstract class BaseCartResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("requestedDeliveryDate")) {
+			if (operator.equals("between")) {
+				Date date = cart.getRequestedDeliveryDate();
+
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+				sb.append(" gt ");
+				sb.append(
+					_dateFormat.format(date.getTime() - (2 * Time.SECOND)));
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(
+					_dateFormat.format(date.getTime() + (2 * Time.SECOND)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(_dateFormat.format(cart.getRequestedDeliveryDate()));
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("shippingAddress")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -3745,6 +3799,7 @@ public abstract class BaseCartResourceTestCase {
 					RandomTestUtil.randomString());
 				purchaseOrderNumber = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+				requestedDeliveryDate = RandomTestUtil.nextDate();
 				shippingAddressExternalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				shippingAddressId = RandomTestUtil.randomLong();

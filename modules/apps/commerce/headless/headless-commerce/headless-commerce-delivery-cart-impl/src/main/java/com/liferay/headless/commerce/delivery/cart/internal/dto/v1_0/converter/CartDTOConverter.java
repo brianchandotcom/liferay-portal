@@ -167,6 +167,8 @@ public class CartDTOConverter implements DTOConverter<CommerceOrder, Cart> {
 								commerceOrder.getPaymentStatus()));
 				setPrintedNote(commerceOrder::getPrintedNote);
 				setPurchaseOrderNumber(commerceOrder::getPurchaseOrderNumber);
+				setRequestedDeliveryDate(
+					commerceOrder::getRequestedDeliveryDate);
 				setShippingAddressExternalReferenceCode(
 					() -> {
 						CommerceAddress shippingCommerceAddress =

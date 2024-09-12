@@ -451,6 +451,22 @@ public class CartSerDes {
 			sb.append("\"");
 		}
 
+		if (cart.getRequestedDeliveryDate() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"requestedDeliveryDate\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				liferayToJSONDateFormat.format(
+					cart.getRequestedDeliveryDate()));
+
+			sb.append("\"");
+		}
+
 		if (cart.getShippingAddress() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -820,6 +836,16 @@ public class CartSerDes {
 				String.valueOf(cart.getPurchaseOrderNumber()));
 		}
 
+		if (cart.getRequestedDeliveryDate() == null) {
+			map.put("requestedDeliveryDate", null);
+		}
+		else {
+			map.put(
+				"requestedDeliveryDate",
+				liferayToJSONDateFormat.format(
+					cart.getRequestedDeliveryDate()));
+		}
+
 		if (cart.getShippingAddress() == null) {
 			map.put("shippingAddress", null);
 		}
@@ -1017,6 +1043,11 @@ public class CartSerDes {
 			}
 			else if (Objects.equals(
 						jsonParserFieldName, "purchaseOrderNumber")) {
+
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "requestedDeliveryDate")) {
 
 				return false;
 			}
@@ -1262,6 +1293,14 @@ public class CartSerDes {
 
 				if (jsonParserFieldValue != null) {
 					cart.setPurchaseOrderNumber((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "requestedDeliveryDate")) {
+
+				if (jsonParserFieldValue != null) {
+					cart.setRequestedDeliveryDate(
+						toDate((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "shippingAddress")) {

@@ -5,10 +5,13 @@
 
 package com.liferay.object.internal.tree;
 
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.object.service.impl.ObjectRelationshipLocalServiceImpl;
 import com.liferay.object.tree.Edge;
 import com.liferay.object.tree.Node;
 import com.liferay.object.tree.Tree;
@@ -17,6 +20,7 @@ import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.ArrayList;
@@ -37,14 +41,33 @@ public class TreeFactoryImpl implements TreeFactory {
 	public Tree createObjectDefinitionTree(long objectDefinitionId)
 		throws PortalException {
 
+		ObjectDefinitionLocalService objectDefinitionLocalService =
+			_objectDefinitionLocalServiceSnapshot.get();
+
 		return _create(
 			objectDefinitionId,
 			node -> TransformUtil.transform(
 				_objectRelationshipLocalService.getObjectRelationships(
 					node.getPrimaryKey(), true),
-				objectRelationship -> new Node(
-					new Edge(objectRelationship.getObjectRelationshipId()),
-					node, objectRelationship.getObjectDefinitionId2())));
+				objectRelationship -> {
+					ObjectDefinition objectDefinition1 =
+						objectDefinitionLocalService.getObjectDefinition(
+							node.getPrimaryKey());
+
+					ObjectDefinition objectDefinition2 =
+						objectDefinitionLocalService.getObjectDefinition(
+							objectRelationship.getObjectDefinitionId2());
+
+					if (objectDefinition1.isApproved() !=
+							objectDefinition2.isApproved()) {
+
+						return null;
+					}
+
+					return new Node(
+						new Edge(objectRelationship.getObjectRelationshipId()),
+						node, objectRelationship.getObjectDefinitionId2());
+				}));
 	}
 
 	@Override
@@ -108,6 +131,11 @@ public class TreeFactoryImpl implements TreeFactory {
 
 		return new Tree(rootNode);
 	}
+
+	private static final Snapshot<ObjectDefinitionLocalService>
+		_objectDefinitionLocalServiceSnapshot = new Snapshot<>(
+		ObjectRelationshipLocalServiceImpl.class,
+		ObjectDefinitionLocalService.class, null, true);
 
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;

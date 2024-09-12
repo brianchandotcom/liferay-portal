@@ -699,10 +699,14 @@ public class ClientExtensionProjectConfigurator
 					VALIDATE_CLIENT_EXTENSION_IDS_TASK_NAME,
 					VALIDATE_CLIENT_EXTENSIONS_TASK_NAME);
 
-				TaskInputs taskInputs =
-					createClientExtensionConfigTask.getInputs();
+				if (!_isSpecialLanguageProject(
+						createClientExtensionConfigTask.getProject())) {
 
-				taskInputs.file(clientExtensionYamlFile);
+					TaskInputs taskInputs =
+						createClientExtensionConfigTask.getInputs();
+
+					taskInputs.file(clientExtensionYamlFile);
+				}
 			});
 
 		File clientExtensionBuildDir = new File(
@@ -710,9 +714,11 @@ public class ClientExtensionProjectConfigurator
 
 		assembleClientExtensionTaskProvider.configure(
 			copy -> {
-				TaskInputs taskInputs = copy.getInputs();
+				if (!_isSpecialLanguageProject(copy.getProject())) {
+					TaskInputs taskInputs = copy.getInputs();
 
-				taskInputs.file(clientExtensionYamlFile);
+					taskInputs.file(clientExtensionYamlFile);
+				}
 
 				copy.into(clientExtensionBuildDir);
 
@@ -793,9 +799,11 @@ public class ClientExtensionProjectConfigurator
 						"unique among all projects.");
 				task.setGroup(LifecycleBasePlugin.VERIFICATION_GROUP);
 
-				TaskInputs taskInputs = task.getInputs();
+				if (!_isSpecialLanguageProject(task.getProject())) {
+					TaskInputs taskInputs = task.getInputs();
 
-				taskInputs.file(clientExtensionYamlFile);
+					taskInputs.file(clientExtensionYamlFile);
+				}
 
 				TaskOutputs taskOutputs = task.getOutputs();
 

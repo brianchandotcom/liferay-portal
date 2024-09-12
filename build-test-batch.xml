@@ -6793,7 +6793,7 @@ information. Make sure to commit in all format-javadoc results.
 
 							convertedTaskString = convertedTaskString.replace(":", "/");
 
-							String taskPathString = "/opt/dev/projects/github/liferay-portal/modules" + convertedTaskString;
+							String taskPathString = project.getProperty("project.dir") + "/modules" + convertedTaskString;
 
 							File taskPathFile = new File(taskPathString + "/" + ".lfrbuild-portal");
 

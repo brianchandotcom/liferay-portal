@@ -69,7 +69,14 @@ public class ViewHistoryDisplayContext {
 				).buildString(),
 				"list-ul", "review-changes",
 				_language.get(_httpServletRequest, "review-changes"), "get",
-				"get", null));
+				"get", null),
+			new FDSActionDropdownItem(
+				_language.get(
+					_httpServletRequest,
+					"are-you-sure-you-want-to-delete-this-publication-history"),
+				null, "times-circle", "delete",
+				_language.get(_httpServletRequest, "delete"), "post", "delete",
+				"headless"));
 	}
 
 	public List<NavigationItem> getViewNavigationItems() {

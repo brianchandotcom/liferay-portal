@@ -28,6 +28,8 @@ import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
+import javax.validation.constraints.NotNull;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -37,6 +39,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Generated("")
 @GraphQLName("Status")
 @JsonFilter("Liferay.Vulcan")
+@Schema(requiredProperties = {"code"})
 @XmlRootElement(name = "Status")
 public class Status implements Serializable {
 
@@ -82,6 +85,7 @@ public class Status implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@NotNull
 	protected Integer code;
 
 	@JsonIgnore

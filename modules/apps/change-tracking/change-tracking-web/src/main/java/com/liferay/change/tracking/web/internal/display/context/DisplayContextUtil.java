@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
@@ -38,7 +39,6 @@ import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.search.sort.Sorts;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -162,11 +162,10 @@ public class DisplayContextUtil {
 		return typeNames;
 	}
 
-	public static List<String> getTypeNamesBySite(
-		long ctCollectionId, long groupId, boolean showHideable,
-		ThemeDisplay themeDisplay) {
-
-		List<String> typeNames = new ArrayList<>();
+	public static Map<Long, ObjectValuePair<String, Integer>>
+		getTypeNamesBySiteObjectValuePairs(
+			long ctCollectionId, long groupId, boolean showHideable,
+			ThemeDisplay themeDisplay) {
 
 		Searcher searcher = _searcherSnapshot.get();
 		Sorts sorts = _sortsSnapshot.get();
@@ -183,7 +182,7 @@ public class DisplayContextUtil {
 			).emptySearchEnabled(
 				true
 			).fields(
-				"typeName"
+				"modelClassNameId", "typeName"
 			).sorts(
 				sorts.field(
 					Field.getSortableFieldName(
@@ -225,8 +224,21 @@ public class DisplayContextUtil {
 		SearchResponse searchResponse = searcher.search(
 			searchRequestBuilder.build());
 
+		Map<Long, ObjectValuePair<String, Integer>> typeNames =
+			new LinkedHashMap<>();
+
 		for (Document document : searchResponse.getDocuments()) {
-			typeNames.add(document.getString("typeName"));
+			ObjectValuePair<String, Integer> objectValuePair = typeNames.get(
+				document.getLong("modelClassNameId"));
+
+			if (objectValuePair != null) {
+				objectValuePair.setValue(objectValuePair.getValue() + 1);
+			}
+			else {
+				typeNames.put(
+					document.getLong("modelClassNameId"),
+					new ObjectValuePair(document.getString("typeName"), 1));
+			}
 		}
 
 		return typeNames;

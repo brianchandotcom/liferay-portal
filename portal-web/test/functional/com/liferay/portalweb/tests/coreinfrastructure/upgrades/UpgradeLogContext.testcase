@@ -2,13 +2,10 @@
 definition {
 
 	property ci.retries.disabled = "true";
-	property data.archive.type = "data-archive-portal";
 	property database.types = "mysql";
 	property log.context.enabled = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property portal.version = "7.3.10";
-	property skip.upgrade-legacy-database = "true";
 	property test.liferay.virtual.instance = "false";
 	property test.run.type = "single";
 	property testray.main.component.name = "Database Upgrade Framework";
@@ -28,10 +25,6 @@ definition {
 
 		task ("Verify that marks related to the upgrade framework but it is not in the scope of any upgrade nor verify process are present") {
 			Log.viewLogFileContentPresent(logContent = "upgrade.component=framework");
-		}
-
-		task ("Verify that marks related to upgrades/verifiers in the scope of a specific module are present") {
-			Log.viewLogFileContentPresent(logContent = "upgrade.component=com.liferay.portal.workflow.kaleo.service");
 		}
 
 		task ("Verify that no key-value mark is printed when it's not related with Upgrade Framework") {

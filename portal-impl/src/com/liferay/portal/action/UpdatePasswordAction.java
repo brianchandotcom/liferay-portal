@@ -313,6 +313,9 @@ public class UpdatePasswordAction implements Action {
 				user.getCompanyId(), User.class.getName(), userId,
 				ticket.getType());
 
+			user = UserLocalServiceUtil.updateLastLogin(
+				user, httpServletRequest.getRemoteAddr());
+
 			UserLocalServiceUtil.updateLockout(user, false);
 
 			UserLocalServiceUtil.updatePasswordReset(userId, false);

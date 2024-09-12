@@ -3245,6 +3245,14 @@
 	},
 	{
 		"classNames": [
+			"JournalConverter"
+		],
+		"from": "getContent(DDMStructure paramName, Fields paramName)",
+		"issueKey": "LPD-36121",
+		"to": "getContent(param#0#, param#1#, param#0#.getGroupId())"
+	},
+	{
+		"classNames": [
 			"ExpandoColumnLocalService",
 			"ExpandoColumnLocalServiceUtil"
 		],

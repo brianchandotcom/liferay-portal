@@ -298,13 +298,17 @@ class MBPortlet {
 					);
 				}
 
-				const deletedAttachmentsElement = document.getElementById(
+				const viewRemovedAttachmentsLink = document.getElementById(
 					'view-removed-attachments-link'
 				);
 
+				if (!viewRemovedAttachmentsLink) {
+					return;
+				}
+
 				if (attachments.deleted.length) {
-					deletedAttachmentsElement.style.display = 'initial';
-					deletedAttachmentsElement.innerHTML =
+					viewRemovedAttachmentsLink.style.display = 'initial';
+					viewRemovedAttachmentsLink.innerText =
 						sub(
 							attachments.deleted.length > 1
 								? RECENTLY_REMOVED_ATTACHMENTS.multiple
@@ -313,7 +317,7 @@ class MBPortlet {
 						) + ' &raquo';
 				}
 				else {
-					deletedAttachmentsElement.style.display = 'none';
+					viewRemovedAttachmentsLink.style.display = 'none';
 				}
 			});
 	}

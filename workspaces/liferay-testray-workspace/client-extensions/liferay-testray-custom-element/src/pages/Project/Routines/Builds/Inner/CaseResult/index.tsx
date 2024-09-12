@@ -25,7 +25,7 @@ import {
 	testrayCaseResultImpl,
 } from '../../../../../../services/rest';
 import {safeJSONParse} from '../../../../../../util';
-import {getTimeFromNow} from '../../../../../../util/date';
+import {getDurationTime, getTimeFromNow} from '../../../../../../util/date';
 import CaseResultHeaderActions from './CaseResultHeaderActions';
 
 type OutletContext = {
@@ -134,14 +134,8 @@ const CaseResult = () => {
 									),
 								},
 								{
-									title: i18n.translate('git-hash'),
-									value: '',
-								},
-								{
-									title: i18n.translate(
-										'github-compare-urls'
-									),
-									value: '',
+									title: i18n.translate('duration'),
+									value: getDurationTime(caseResult.duration),
 								},
 							]}
 						/>

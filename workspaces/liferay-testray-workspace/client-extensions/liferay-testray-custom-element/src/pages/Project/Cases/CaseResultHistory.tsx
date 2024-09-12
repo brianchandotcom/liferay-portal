@@ -13,7 +13,7 @@ import StatusBadge from '../../../components/StatusBadge';
 import {StatusBadgeType} from '../../../components/StatusBadge/StatusBadge';
 import {TableProps} from '../../../components/Table';
 import i18n from '../../../i18n';
-import dayjs from '../../../util/date';
+import dayjs, {getDurationTime} from '../../../util/date';
 
 type CaseResultHistoryProps = {
 	caseId: string;
@@ -58,6 +58,12 @@ const CaseResultHistory: React.FC<CaseResultHistoryProps> = ({
 						render: (gitHash) =>
 							gitHash === 'null' || '' ? '-' : gitHash,
 						value: i18n.translate('git-hash'),
+					},
+					{
+						clickable: true,
+						key: 'duration',
+						render: (duration) => getDurationTime(duration),
+						value: i18n.translate('duration'),
 					},
 					{
 						clickable: true,

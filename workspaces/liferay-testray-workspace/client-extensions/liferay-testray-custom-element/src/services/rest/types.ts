@@ -200,6 +200,7 @@ export type TestrayCaseResult = {
 	dateCreated: string;
 	dateModified: string;
 	dueStatus: PickList;
+	duration: number;
 	error?: string;
 	errors: string;
 	id: number;

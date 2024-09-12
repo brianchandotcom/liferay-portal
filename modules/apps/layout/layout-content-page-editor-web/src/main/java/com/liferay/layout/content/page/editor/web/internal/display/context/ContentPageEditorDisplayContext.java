@@ -682,6 +682,10 @@ public class ContentPageEditorDisplayContext {
 			).put(
 				"themeColorsCssClasses", _getThemeColorsCssClasses()
 			).put(
+				"undoUpdateFormConfigURL",
+				getFragmentEntryActionURL(
+					"/layout_content_page_editor/undo_update_form_config")
+			).put(
 				"unmarkItemsForDeletionURL",
 				getFragmentEntryActionURL(
 					"/layout_content_page_editor/unmark_items_for_deletion")

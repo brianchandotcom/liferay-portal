@@ -6811,7 +6811,7 @@ information. Make sure to commit in all format-javadoc results.
 
 							File lfrBuildPortalFile = new File(modulesCompileTaskGroupDir, ".lfrbuild-portal");
 
-							if (taskPathFile.exists()) {
+							if (lfrBuildPortalFile.exists()) {
 								continue;
 							}
 

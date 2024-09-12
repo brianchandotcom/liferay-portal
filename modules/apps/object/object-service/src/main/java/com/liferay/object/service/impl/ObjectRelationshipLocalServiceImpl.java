@@ -1311,7 +1311,7 @@ public class ObjectRelationshipLocalServiceImpl
 		String objectDefinition2PreviousRESTContextPath =
 			objectDefinition2.getRESTContextPath();
 
-		if (!objectDefinition1.isApproved() && objectDefinition2.isApproved()) {
+		if (objectDefinition1.isApproved() != objectDefinition2.isApproved()) {
 			objectDefinition2.setRootObjectDefinitionId(
 				objectDefinition2.getObjectDefinitionId());
 		}

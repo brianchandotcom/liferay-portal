@@ -10,7 +10,6 @@ import com.liferay.headless.portal.instances.client.dto.v1_0.Admin;
 import com.liferay.headless.portal.instances.client.dto.v1_0.PortalInstance;
 import com.liferay.headless.portal.instances.client.pagination.Page;
 import com.liferay.headless.portal.instances.client.problem.Problem;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.instances.service.PortalInstancesLocalService;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -284,11 +283,7 @@ public class PortalInstanceResourceTest
 			Problem problem = problemException.getProblem();
 
 			Assert.assertEquals("NOT_FOUND", problem.getStatus());
-			Assert.assertEquals(
-				StringBundler.concat(
-					"No portal instance exists with the key {webId=",
-					portalInstanceId, "}"),
-				problem.getTitle());
+			Assert.assertNull(problem.getTitle());
 		}
 	}
 

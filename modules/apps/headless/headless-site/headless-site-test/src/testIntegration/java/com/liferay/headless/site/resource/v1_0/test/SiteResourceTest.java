@@ -99,9 +99,7 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 			Problem problem = problemException.getProblem();
 
 			Assert.assertEquals("NOT_FOUND", problem.getStatus());
-			Assert.assertEquals(
-				"Unable to get a valid site with ID " + siteId,
-				problem.getTitle());
+			Assert.assertNull(problem.getTitle());
 		}
 	}
 
@@ -124,10 +122,7 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 			Problem problem = problemException.getProblem();
 
 			Assert.assertEquals("NOT_FOUND", problem.getStatus());
-			Assert.assertEquals(
-				"No site exists with external reference code " +
-					externalReferenceCode,
-				problem.getTitle());
+			Assert.assertNull(problem.getTitle());
 		}
 	}
 
@@ -337,9 +332,7 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 			Problem problem = problemException.getProblem();
 
 			Assert.assertEquals("NOT_FOUND", problem.getStatus());
-			Assert.assertEquals(
-				"No site exists for site key " + randomSite.getParentSiteKey(),
-				problem.getTitle());
+			Assert.assertNull(problem.getTitle());
 		}
 	}
 

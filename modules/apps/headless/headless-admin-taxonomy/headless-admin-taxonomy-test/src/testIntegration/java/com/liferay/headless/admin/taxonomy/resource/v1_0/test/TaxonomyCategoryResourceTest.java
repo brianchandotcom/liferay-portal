@@ -279,12 +279,7 @@ public class TaxonomyCategoryResourceTest
 			Problem problem = problemException.getProblem();
 
 			Assert.assertEquals("NOT_FOUND", problem.getStatus());
-			Assert.assertEquals(
-				StringBundler.concat(
-					"No AssetCategory exists with the key {",
-					"externalReferenceCode=", externalReferenceCode,
-					", groupId=", taxonomyCategory.getSiteId(), "}"),
-				problem.getTitle());
+			Assert.assertNull(problem.getTitle());
 		}
 	}
 

@@ -65,12 +65,7 @@ public class TaxonomyVocabularyResourceTest
 			Problem problem = problemException.getProblem();
 
 			Assert.assertEquals("NOT_FOUND", problem.getStatus());
-			Assert.assertEquals(
-				StringBundler.concat(
-					"No AssetVocabulary exists with the key {",
-					"externalReferenceCode=", externalReferenceCode,
-					", groupId=", testDepotEntry.getGroupId(), "}"),
-				problem.getTitle());
+			Assert.assertNull(problem.getTitle());
 		}
 	}
 
@@ -196,12 +191,7 @@ public class TaxonomyVocabularyResourceTest
 			Problem problem = problemException.getProblem();
 
 			Assert.assertEquals("NOT_FOUND", problem.getStatus());
-			Assert.assertEquals(
-				StringBundler.concat(
-					"No AssetVocabulary exists with the key {",
-					"externalReferenceCode=", externalReferenceCode,
-					", groupId=", testDepotEntry.getGroupId(), "}"),
-				problem.getTitle());
+			Assert.assertNull(problem.getTitle());
 		}
 	}
 

@@ -170,8 +170,6 @@ import javax.ws.rs.Priorities;
 import javax.ws.rs.container.ContainerResponseFilter;
 import javax.ws.rs.core.Feature;
 
-import org.hamcrest.CoreMatchers;
-
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -7755,10 +7753,6 @@ public class ObjectEntryResourceTest {
 		JSONAssert.assertEquals(
 			JSONUtil.put(
 				"status", "NOT_FOUND"
-			).put(
-				"title",
-				"No ObjectEntry exists with the primary key " +
-					randomObjectEntryId
 			).toString(),
 			HTTPTestUtil.invokeToJSONObject(
 				objectEntryJSONObject.toString(),
@@ -7784,9 +7778,6 @@ public class ObjectEntryResourceTest {
 		JSONAssert.assertEquals(
 			JSONUtil.put(
 				"status", "NOT_FOUND"
-			).put(
-				"title",
-				"No User exists with the primary key " + randomObjectEntryId
 			).toString(),
 			HTTPTestUtil.invokeToJSONObject(
 				objectEntryJSONObject.toString(),
@@ -8177,9 +8168,7 @@ public class ObjectEntryResourceTest {
 				RandomTestUtil.randomString()),
 			Http.Method.PUT);
 
-		Assert.assertThat(
-			jsonObject.getString("title"),
-			CoreMatchers.containsString("No ObjectEntry exists with the key"));
+		Assert.assertNull(jsonObject.get("title"));
 	}
 
 	@Test
@@ -12097,6 +12086,7 @@ public class ObjectEntryResourceTest {
 
 	private void _assertNotFound(JSONObject jsonObject) {
 		Assert.assertEquals("NOT_FOUND", jsonObject.getString("status"));
+		Assert.assertNull(jsonObject.get("title"));
 	}
 
 	private void _assertObjectEntryField(
@@ -12854,15 +12844,7 @@ public class ObjectEntryResourceTest {
 		String randomExternalReferenceCode = RandomTestUtil.randomString();
 
 		_testPatchPutCustomObjectEntryWithAttachmentField(
-			fileEntry -> JSONUtil.put(
-				"status", "NOT_FOUND"
-			).put(
-				"title",
-				StringBundler.concat(
-					"No DLFolder exists with the key {externalReferenceCode=",
-					randomExternalReferenceCode, ", groupId=",
-					TestPropsValues.getGroupId(), "}")
-			),
+			fileEntry -> JSONUtil.put("status", "NOT_FOUND"),
 			_toFileEntry(
 				Base64::encode, RandomTestUtil.randomString(),
 				RandomTestUtil.randomString() + ".txt",
@@ -13355,15 +13337,7 @@ public class ObjectEntryResourceTest {
 		String randomExternalReferenceCode = RandomTestUtil.randomString();
 
 		_testPostCustomObjectEntryWithAttachmentField(
-			fileEntry -> JSONUtil.put(
-				"status", "NOT_FOUND"
-			).put(
-				"title",
-				StringBundler.concat(
-					"No DLFolder exists with the key {externalReferenceCode=",
-					randomExternalReferenceCode, ", groupId=",
-					TestPropsValues.getGroupId(), "}")
-			),
+			fileEntry -> JSONUtil.put("status", "NOT_FOUND"),
 			_toFileEntry(
 				Base64::encode, RandomTestUtil.randomString(),
 				RandomTestUtil.randomString() + ".txt",

@@ -68,7 +68,7 @@ export default function getLiferayLanguageGetPlugin(
 							continue;
 						}
 
-						languageJSON.keys.push(key);
+						languageJSON.keys.push(key.slice(1, key.length - 1));
 					}
 
 					if (languageJSON.keys.length) {

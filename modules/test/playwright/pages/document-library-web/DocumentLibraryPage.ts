@@ -63,9 +63,11 @@ export class DocumentLibraryPage {
 
 	async deleteAllFileEntries() {
 		await this.goto();
-		await this.page
+		for (const checkbox of await this.page
 			.locator('input[data-modelclassname="FileEntry"]')
-			.check();
+			.all()) {
+			await checkbox.check();
+		}
 		await this.page.getByRole('button', {name: 'Delete'}).click();
 	}
 

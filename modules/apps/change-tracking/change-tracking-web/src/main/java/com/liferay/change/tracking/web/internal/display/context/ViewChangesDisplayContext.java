@@ -64,7 +64,15 @@ import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserTable;
 import com.liferay.portal.kernel.model.WorkflowInstanceLink;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.search.BooleanClause;
+import com.liferay.portal.kernel.search.BooleanClauseFactoryUtil;
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.filter.ExistsFilter;
+import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -75,6 +83,7 @@ import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -87,6 +96,13 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
+import com.liferay.portal.search.document.Document;
+import com.liferay.portal.search.searcher.SearchRequestBuilder;
+import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
+import com.liferay.portal.search.searcher.SearchResponse;
+import com.liferay.portal.search.searcher.Searcher;
+import com.liferay.portal.search.sort.SortOrder;
+import com.liferay.portal.search.sort.Sorts;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.Serializable;
@@ -99,6 +115,7 @@ import java.util.Date;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
@@ -331,33 +348,55 @@ public class ViewChangesDisplayContext {
 		JSONArray itemsOverviewJSONArray = JSONFactoryUtil.createJSONArray();
 
 		for (Map.Entry<Long, String> siteName : siteNames.entrySet()) {
-			List<String> typeNames = DisplayContextUtil.getTypeNamesBySite(
-				_ctCollection.getCtCollectionId(), siteName.getKey(),
-				showHideable, _themeDisplay);
+			Map<Long, ObjectValuePair<String, Integer>> objectValuePairsMap =
+				_getObjectValuePairs(
+					_ctCollection.getCtCollectionId(), siteName.getKey(),
+					showHideable, _themeDisplay);
 
-			if (typeNames.isEmpty()) {
+			if (objectValuePairsMap.isEmpty()) {
 				continue;
-			}
-
-			Map<String, Integer> typeNameCounts = new HashMap<>();
-
-			for (String typeName : typeNames) {
-				typeNameCounts.put(
-					typeName, typeNameCounts.getOrDefault(typeName, 0) + 1);
 			}
 
 			JSONArray typeNameAndCountJSONArray =
 				JSONFactoryUtil.createJSONArray();
 
-			for (Map.Entry<String, Integer> entry : typeNameCounts.entrySet()) {
+			int siteCount = 0;
+
+			for (Map.Entry<Long, ObjectValuePair<String, Integer>> entry :
+					objectValuePairsMap.entrySet()) {
+
+				ObjectValuePair<String, Integer> objectValuePair =
+					entry.getValue();
+
 				typeNameAndCountJSONArray.put(
-					StringBundler.concat(
-						entry.getKey(), " (", entry.getValue(), ")"));
+					JSONUtil.put(
+						"href",
+						PortletURLBuilder.createRenderURL(
+							_renderResponse
+						).setMVCRenderCommandName(
+							"/change_tracking/view_changes"
+						).setParameter(
+							"ctCollectionId", _ctCollection.getCtCollectionId()
+						).setParameter(
+							"groupId", siteName.getKey()
+						).setParameter(
+							"modelClassNameId", entry.getKey()
+						).setParameter(
+							"showHideable", showHideable
+						).buildString()
+					).put(
+						"label",
+						StringBundler.concat(
+							objectValuePair.getKey(), " (",
+							objectValuePair.getValue(), ") ")
+					));
+
+				siteCount = siteCount + objectValuePair.getValue();
 			}
 
 			itemsOverviewJSONArray.put(
 				JSONUtil.put(
-					"siteCount", typeNames.size()
+					"siteCount", siteCount
 				).put(
 					"siteName", siteName.getValue()
 				).put(
@@ -1290,6 +1329,87 @@ public class ViewChangesDisplayContext {
 			", modelClassNameId=", modelClassNameId, "}");
 	}
 
+	private Map<Long, ObjectValuePair<String, Integer>> _getObjectValuePairs(
+		long ctCollectionId, long groupId, boolean showHideable,
+		ThemeDisplay themeDisplay) {
+
+		Searcher searcher = _searcherSnapshot.get();
+		Sorts sorts = _sortsSnapshot.get();
+
+		SearchRequestBuilderFactory searchRequestBuilderFactory =
+			_searchRequestBuilderFactorySnapshot.get();
+
+		SearchRequestBuilder searchRequestBuilder =
+			searchRequestBuilderFactory.builder(
+			).companyId(
+				themeDisplay.getCompanyId()
+			).entryClassNames(
+				CTEntry.class.getName()
+			).emptySearchEnabled(
+				true
+			).fields(
+				"modelClassNameId", "typeName"
+			).sorts(
+				sorts.field(
+					Field.getSortableFieldName(
+						"typeName_".concat(
+							LocaleUtil.toLanguageId(themeDisplay.getLocale()))),
+					SortOrder.ASC)
+			).withSearchContext(
+				searchContext -> {
+					searchContext.setAttribute(
+						"ctCollectionId", ctCollectionId);
+					searchContext.setAttribute("showHideable", showHideable);
+
+					if (groupId == -1) {
+						BooleanQueryImpl booleanQueryImpl =
+							new BooleanQueryImpl();
+
+						BooleanFilter booleanFilter = new BooleanFilter();
+
+						booleanFilter.add(
+							new ExistsFilter(Field.GROUP_ID),
+							BooleanClauseOccur.MUST_NOT);
+
+						booleanQueryImpl.setPreBooleanFilter(booleanFilter);
+
+						searchContext.setBooleanClauses(
+							new BooleanClause[] {
+								BooleanClauseFactoryUtil.create(
+									booleanQueryImpl,
+									BooleanClauseOccur.MUST.getName())
+							});
+					}
+					else {
+						searchContext.setAttribute(
+							Field.GROUP_ID, new long[] {groupId});
+					}
+				}
+			);
+
+		SearchResponse searchResponse = searcher.search(
+			searchRequestBuilder.build());
+
+		Map<Long, ObjectValuePair<String, Integer>> objectValuePairs =
+			new LinkedHashMap<>();
+
+		for (Document document : searchResponse.getDocuments()) {
+			ObjectValuePair<String, Integer> objectValuePair =
+				objectValuePairs.get(document.getLong("modelClassNameId"));
+
+			if (objectValuePair != null) {
+				objectValuePair.setValue(objectValuePair.getValue() + 1);
+			}
+			else {
+				objectValuePairs.put(
+					document.getLong("modelClassNameId"),
+					new ObjectValuePair(document.getString("typeName"), 1));
+			}
+		}
+
+		return objectValuePairs;
+	}
+
 	private Map<Long, List<Long>> _getRootPKsMap(CTClosure ctClosure) {
 		if ((_modelClassNameId > 0) && (_modelClassPK > 0)) {
 			return CTClosureUtil.getFamilyPKsMap(
@@ -1669,6 +1789,14 @@ public class ViewChangesDisplayContext {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ViewChangesDisplayContext.class);
+
+	private static final Snapshot<Searcher> _searcherSnapshot = new Snapshot<>(
+		DisplayContextUtil.class, Searcher.class);
+	private static final Snapshot<SearchRequestBuilderFactory>
+		_searchRequestBuilderFactorySnapshot = new Snapshot<>(
+			DisplayContextUtil.class, SearchRequestBuilderFactory.class);
+	private static final Snapshot<Sorts> _sortsSnapshot = new Snapshot<>(
+		DisplayContextUtil.class, Sorts.class);
 
 	private final long _activeCTCollectionId;
 	private final BasePersistenceRegistry _basePersistenceRegistry;

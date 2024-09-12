@@ -38,7 +38,6 @@ import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.search.sort.Sorts;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -157,76 +156,6 @@ public class DisplayContextUtil {
 			typeNames.put(
 				document.getLong("modelClassNameId"),
 				document.getString("typeName"));
-		}
-
-		return typeNames;
-	}
-
-	public static List<String> getTypeNamesBySite(
-		long ctCollectionId, long groupId, boolean showHideable,
-		ThemeDisplay themeDisplay) {
-
-		List<String> typeNames = new ArrayList<>();
-
-		Searcher searcher = _searcherSnapshot.get();
-		Sorts sorts = _sortsSnapshot.get();
-
-		SearchRequestBuilderFactory searchRequestBuilderFactory =
-			_searchRequestBuilderFactorySnapshot.get();
-
-		SearchRequestBuilder searchRequestBuilder =
-			searchRequestBuilderFactory.builder(
-			).companyId(
-				themeDisplay.getCompanyId()
-			).entryClassNames(
-				CTEntry.class.getName()
-			).emptySearchEnabled(
-				true
-			).fields(
-				"typeName"
-			).sorts(
-				sorts.field(
-					Field.getSortableFieldName(
-						"typeName_".concat(
-							LocaleUtil.toLanguageId(themeDisplay.getLocale()))),
-					SortOrder.ASC)
-			).withSearchContext(
-				searchContext -> {
-					searchContext.setAttribute(
-						"ctCollectionId", ctCollectionId);
-					searchContext.setAttribute("showHideable", showHideable);
-
-					if (groupId == -1) {
-						BooleanQueryImpl booleanQueryImpl =
-							new BooleanQueryImpl();
-
-						BooleanFilter booleanFilter = new BooleanFilter();
-
-						booleanFilter.add(
-							new ExistsFilter(Field.GROUP_ID),
-							BooleanClauseOccur.MUST_NOT);
-
-						booleanQueryImpl.setPreBooleanFilter(booleanFilter);
-
-						searchContext.setBooleanClauses(
-							new BooleanClause[] {
-								BooleanClauseFactoryUtil.create(
-									booleanQueryImpl,
-									BooleanClauseOccur.MUST.getName())
-							});
-					}
-					else {
-						searchContext.setAttribute(
-							Field.GROUP_ID, new long[] {groupId});
-					}
-				}
-			);
-
-		SearchResponse searchResponse = searcher.search(
-			searchRequestBuilder.build());
-
-		for (Document document : searchResponse.getDocuments()) {
-			typeNames.add(document.getString("typeName"));
 		}
 
 		return typeNames;

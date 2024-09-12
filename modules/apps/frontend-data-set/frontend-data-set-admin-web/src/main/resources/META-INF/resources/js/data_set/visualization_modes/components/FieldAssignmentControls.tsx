@@ -13,8 +13,8 @@ import {IField} from '../../../utils/types';
 interface IFieldAssignmentControlsProps {
 	field?: IField;
 	label: string;
-	openAddFieldModal: () => void;
 	onClearSelection: () => void;
+	openAddFieldModal: () => void;
 	openSelectFieldModal: () => void;
 }
 

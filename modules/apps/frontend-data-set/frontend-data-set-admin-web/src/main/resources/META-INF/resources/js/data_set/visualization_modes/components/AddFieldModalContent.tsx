@@ -7,10 +7,11 @@ import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayModal from '@clayui/modal';
 import classNames from 'classnames';
-import RequiredMark from 'js/components/RequiredMark';
-import ValidationFeedback from 'js/components/ValidationFeedback';
-import {IField} from 'js/utils/types';
 import React, {useState} from 'react';
+
+import RequiredMark from '../../../components/RequiredMark';
+import ValidationFeedback from '../../../components/ValidationFeedback';
+import {IField} from '../../../utils/types';
 
 const AddFieldModalContent = ({
 	closeModal,

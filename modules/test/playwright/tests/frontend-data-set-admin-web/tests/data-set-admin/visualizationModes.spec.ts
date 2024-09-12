@@ -106,7 +106,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 			const container =
 				visualizationModesPage.cardsVisualizationModeContainer;
 
-			await visualizationModesPage.openAssignFieldModal({
+			await visualizationModesPage.openAssignFieldFromDataSourceModal({
 				container,
 				sectionLabel,
 			});
@@ -134,7 +134,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 			const container =
 				visualizationModesPage.cardsVisualizationModeContainer;
 
-			await visualizationModesPage.openChangeFieldModal({
+			await visualizationModesPage.openChangeFieldFromDataSourceModal({
 				container,
 				sectionLabel,
 			});
@@ -199,7 +199,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 			const container =
 				visualizationModesPage.listVisualizationModeContainer;
 
-			await visualizationModesPage.openAssignFieldModal({
+			await visualizationModesPage.openAssignFieldFromDataSourceModal({
 				container,
 				sectionLabel,
 			});
@@ -227,7 +227,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 			const container =
 				visualizationModesPage.listVisualizationModeContainer;
 
-			await visualizationModesPage.openChangeFieldModal({
+			await visualizationModesPage.openChangeFieldFromDataSourceModal({
 				container,
 				sectionLabel,
 			});
@@ -276,7 +276,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 		});
 
 		await test.step('Add fields', async () => {
-			await visualizationModesPage.openAddFieldsModal();
+			await visualizationModesPage.openAddFieldsFromDataSourceModal();
 
 			await visualizationModesPage.selectField({
 				fieldName: SAMPLE_SCALAR_FIELD,
@@ -392,7 +392,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 		});
 
 		await test.step('Add fields', async () => {
-			await visualizationModesPage.openAddFieldsModal();
+			await visualizationModesPage.openAddFieldsFromDataSourceModal();
 
 			await visualizationModesPage.selectField({
 				fieldName: SAMPLE_SCALAR_FIELD,
@@ -414,7 +414,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 		});
 
 		await test.step('Add a new field', async () => {
-			await visualizationModesPage.openAddFieldsModal();
+			await visualizationModesPage.openAddFieldsFromDataSourceModal();
 
 			await visualizationModesPage.selectField({
 				fieldName: SAMPLE_FIELD,
@@ -516,7 +516,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 		});
 
 		await test.step('Add scalar array field', async () => {
-			await visualizationModesPage.openAddFieldsModal();
+			await visualizationModesPage.openAddFieldsFromDataSourceModal();
 
 			await visualizationModesPage.searchAndSelectField(
 				SAMPLE_SCALAR_ARRAY_FIELD
@@ -604,7 +604,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 		});
 
 		await test.step('Add one field, but cancel the operation @LPS-185230', async () => {
-			await visualizationModesPage.openAddFieldsModal();
+			await visualizationModesPage.openAddFieldsFromDataSourceModal();
 
 			await visualizationModesPage.selectField({
 				fieldName: SAMPLE_SCALAR_FIELD,
@@ -616,7 +616,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 		});
 
 		await test.step('Add one field, save', async () => {
-			await visualizationModesPage.openAddFieldsModal();
+			await visualizationModesPage.openAddFieldsFromDataSourceModal();
 
 			await visualizationModesPage.selectField({
 				fieldName: SAMPLE_SCALAR_FIELD,
@@ -628,7 +628,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 		});
 
 		await test.step('Unselect selected field. Select another. Cancel @LPS-185230', async () => {
-			await visualizationModesPage.openAddFieldsModal();
+			await visualizationModesPage.openAddFieldsFromDataSourceModal();
 
 			await visualizationModesPage.unSelectField({
 				fieldName: SAMPLE_SCALAR_FIELD,
@@ -724,7 +724,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 		});
 
 		await test.step('Add one field, save', async () => {
-			await visualizationModesPage.openAddFieldsModal();
+			await visualizationModesPage.openAddFieldsFromDataSourceModal();
 
 			await visualizationModesPage.selectField({
 				fieldName: SAMPLE_SCALAR_FIELD,
@@ -747,7 +747,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 		});
 
 		await test.step('Add another field, save', async () => {
-			await visualizationModesPage.openAddFieldsModal();
+			await visualizationModesPage.openAddFieldsFromDataSourceModal();
 
 			await visualizationModesPage.selectField({
 				fieldName: SAMPLE_FIELD,
@@ -907,7 +907,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 			});
 
 			await test.step('Add field', async () => {
-				await visualizationModesPage.openAddFieldsModal();
+				await visualizationModesPage.openAddFieldsFromDataSourceModal();
 
 				await visualizationModesPage.selectField({
 					fieldName: SAMPLE_FIELD,
@@ -1140,7 +1140,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 		});
 
 		await test.step('Can check and uncheck fields in the field selection modal', async () => {
-			await visualizationModesPage.openAddFieldsModal();
+			await visualizationModesPage.openAddFieldsFromDataSourceModal();
 
 			await visualizationModesPage.selectField({fieldName: SAMPLE_FIELD});
 
@@ -1161,7 +1161,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 		});
 
 		await test.step('Can check some fields and uncheck all selected fields using Deselect All button', async () => {
-			await visualizationModesPage.openAddFieldsModal();
+			await visualizationModesPage.openAddFieldsFromDataSourceModal();
 
 			await visualizationModesPage.selectField({fieldName: SAMPLE_FIELD});
 

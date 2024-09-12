@@ -62,10 +62,10 @@ public class TestrayCaseResultResourceImpl
 		StringBundler sb = new StringBundler(43);
 
 		sb.append("select b.c_buildId_, b.dueDate_ as executionDate, ");
-		sb.append("b.gitHash_,  cr.c_caseResultId_, cr.dueStatus_, ");
-		sb.append("cr.errors_, cr.issues_, cr.warnings_, pv.name_ as ");
-		sb.append("productVersion, r.name_ as runName, ro.name_ as ");
-		sb.append("routineName, ro.c_routineId_, t.name_ as teamName from ");
+		sb.append("b.gitHash_,  cr.c_caseResultId_, cr.dueStatus_,");
+		sb.append("cr.duration_, cr.errors_, cr.issues_, cr.warnings_, ");
+		sb.append("pv.name_ as productVersion, r.name_ as runName, ro.name_ ");
+		sb.append("as routineName, ro.c_routineId_, t.name_ as teamName from ");
 		sb.append("O_[%COMPANY_ID%]_Build b, O_[%COMPANY_ID%]_CaseResult cr, ");
 		sb.append("O_[%COMPANY_ID%]_Case c, O_[%COMPANY_ID%]_CaseType ct, ");
 		sb.append("O_[%COMPANY_ID%]_Component co, O_[%COMPANY_ID%]_Run r, ");
@@ -117,10 +117,7 @@ public class TestrayCaseResultResourceImpl
 
 		if (Validator.isNotNull(status)) {
 			sb.append("and cr.dueStatus_ in (");
-			sb.append(
-				TestrayUtil.interpolateParams(
-					params,
-					ArrayUtil.toLongArray(StringUtil.split(status, ",", 0L))));
+			sb.append(TestrayUtil.interpolateParams(params, status));
 			sb.append(") ");
 		}
 
@@ -193,6 +190,7 @@ public class TestrayCaseResultResourceImpl
 				value -> new TestrayCaseResult() {
 					{
 						error = GetterUtil.getString(value.get("errors_"));
+						duration = GetterUtil.getLong(value.get("duration_"));
 						gitHash = GetterUtil.getString(value.get("githash_"));
 						issues = GetterUtil.getString(value.get("issues_"));
 						status = GetterUtil.getString(value.get("duestatus_"));

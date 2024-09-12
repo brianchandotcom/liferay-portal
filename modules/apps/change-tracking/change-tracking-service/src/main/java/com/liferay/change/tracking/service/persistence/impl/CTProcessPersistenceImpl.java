@@ -21,11 +21,13 @@ import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -512,6 +514,330 @@ public class CTProcessPersistenceImpl
 	}
 
 	/**
+	 * Returns all the ct processes that the user has permission to view where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @return the matching ct processes that the user has permission to view
+	 */
+	@Override
+	public List<CTProcess> filterFindByCompanyId(long companyId) {
+		return filterFindByCompanyId(
+			companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the ct processes that the user has permission to view where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CTProcessModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of ct processes
+	 * @param end the upper bound of the range of ct processes (not inclusive)
+	 * @return the range of matching ct processes that the user has permission to view
+	 */
+	@Override
+	public List<CTProcess> filterFindByCompanyId(
+		long companyId, int start, int end) {
+
+		return filterFindByCompanyId(companyId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the ct processes that the user has permissions to view where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CTProcessModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of ct processes
+	 * @param end the upper bound of the range of ct processes (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching ct processes that the user has permission to view
+	 */
+	@Override
+	public List<CTProcess> filterFindByCompanyId(
+		long companyId, int start, int end,
+		OrderByComparator<CTProcess> orderByComparator) {
+
+		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+			return findByCompanyId(companyId, start, end, orderByComparator);
+		}
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				3 + (orderByComparator.getOrderByFields().length * 2));
+		}
+		else {
+			sb = new StringBundler(4);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			sb.append(_FILTER_SQL_SELECT_CTPROCESS_WHERE);
+		}
+		else {
+			sb.append(_FILTER_SQL_SELECT_CTPROCESS_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		sb.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			sb.append(_FILTER_SQL_SELECT_CTPROCESS_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				sb.append(CTProcessModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+			}
+			else {
+				sb.append(CTProcessModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			sb.toString(), CTProcess.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				sqlQuery.addEntity(_FILTER_ENTITY_ALIAS, CTProcessImpl.class);
+			}
+			else {
+				sqlQuery.addEntity(_FILTER_ENTITY_TABLE, CTProcessImpl.class);
+			}
+
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
+
+			queryPos.add(companyId);
+
+			return (List<CTProcess>)QueryUtil.list(
+				sqlQuery, getDialect(), start, end);
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the ct processes before and after the current ct process in the ordered set of ct processes that the user has permission to view where companyId = &#63;.
+	 *
+	 * @param ctProcessId the primary key of the current ct process
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next ct process
+	 * @throws NoSuchProcessException if a ct process with the primary key could not be found
+	 */
+	@Override
+	public CTProcess[] filterFindByCompanyId_PrevAndNext(
+			long ctProcessId, long companyId,
+			OrderByComparator<CTProcess> orderByComparator)
+		throws NoSuchProcessException {
+
+		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+			return findByCompanyId_PrevAndNext(
+				ctProcessId, companyId, orderByComparator);
+		}
+
+		CTProcess ctProcess = findByPrimaryKey(ctProcessId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			CTProcess[] array = new CTProcessImpl[3];
+
+			array[0] = filterGetByCompanyId_PrevAndNext(
+				session, ctProcess, companyId, orderByComparator, true);
+
+			array[1] = ctProcess;
+
+			array[2] = filterGetByCompanyId_PrevAndNext(
+				session, ctProcess, companyId, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected CTProcess filterGetByCompanyId_PrevAndNext(
+		Session session, CTProcess ctProcess, long companyId,
+		OrderByComparator<CTProcess> orderByComparator, boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				5 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(4);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			sb.append(_FILTER_SQL_SELECT_CTPROCESS_WHERE);
+		}
+		else {
+			sb.append(_FILTER_SQL_SELECT_CTPROCESS_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		sb.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			sb.append(_FILTER_SQL_SELECT_CTPROCESS_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					sb.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_ALIAS, orderByConditionFields[i],
+							true));
+				}
+				else {
+					sb.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_TABLE, orderByConditionFields[i],
+							true));
+				}
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					sb.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_ALIAS, orderByFields[i], true));
+				}
+				else {
+					sb.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_TABLE, orderByFields[i], true));
+				}
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				sb.append(CTProcessModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+			}
+			else {
+				sb.append(CTProcessModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			sb.toString(), CTProcess.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+
+		SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+		sqlQuery.setFirstResult(0);
+		sqlQuery.setMaxResults(2);
+
+		if (getDB().isSupportsInlineDistinct()) {
+			sqlQuery.addEntity(_FILTER_ENTITY_ALIAS, CTProcessImpl.class);
+		}
+		else {
+			sqlQuery.addEntity(_FILTER_ENTITY_TABLE, CTProcessImpl.class);
+		}
+
+		QueryPos queryPos = QueryPos.getInstance(sqlQuery);
+
+		queryPos.add(companyId);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(ctProcess)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<CTProcess> list = sqlQuery.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
 	 * Removes all the ct processes where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -573,6 +899,54 @@ public class CTProcessPersistenceImpl
 		}
 
 		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of ct processes that the user has permission to view where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @return the number of matching ct processes that the user has permission to view
+	 */
+	@Override
+	public int filterCountByCompanyId(long companyId) {
+		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+			return countByCompanyId(companyId);
+		}
+
+		StringBundler sb = new StringBundler(2);
+
+		sb.append(_FILTER_SQL_COUNT_CTPROCESS_WHERE);
+
+		sb.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			sb.toString(), CTProcess.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+			sqlQuery.addScalar(
+				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
+
+			queryPos.add(companyId);
+
+			Long count = (Long)sqlQuery.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
 	}
 
 	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 =
@@ -1009,6 +1383,331 @@ public class CTProcessPersistenceImpl
 	}
 
 	/**
+	 * Returns all the ct processes that the user has permission to view where ctCollectionId = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @return the matching ct processes that the user has permission to view
+	 */
+	@Override
+	public List<CTProcess> filterFindByCtCollectionId(long ctCollectionId) {
+		return filterFindByCtCollectionId(
+			ctCollectionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the ct processes that the user has permission to view where ctCollectionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CTProcessModelImpl</code>.
+	 * </p>
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param start the lower bound of the range of ct processes
+	 * @param end the upper bound of the range of ct processes (not inclusive)
+	 * @return the range of matching ct processes that the user has permission to view
+	 */
+	@Override
+	public List<CTProcess> filterFindByCtCollectionId(
+		long ctCollectionId, int start, int end) {
+
+		return filterFindByCtCollectionId(ctCollectionId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the ct processes that the user has permissions to view where ctCollectionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CTProcessModelImpl</code>.
+	 * </p>
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param start the lower bound of the range of ct processes
+	 * @param end the upper bound of the range of ct processes (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching ct processes that the user has permission to view
+	 */
+	@Override
+	public List<CTProcess> filterFindByCtCollectionId(
+		long ctCollectionId, int start, int end,
+		OrderByComparator<CTProcess> orderByComparator) {
+
+		if (!InlineSQLHelperUtil.isEnabled()) {
+			return findByCtCollectionId(
+				ctCollectionId, start, end, orderByComparator);
+		}
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				3 + (orderByComparator.getOrderByFields().length * 2));
+		}
+		else {
+			sb = new StringBundler(4);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			sb.append(_FILTER_SQL_SELECT_CTPROCESS_WHERE);
+		}
+		else {
+			sb.append(_FILTER_SQL_SELECT_CTPROCESS_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		sb.append(_FINDER_COLUMN_CTCOLLECTIONID_CTCOLLECTIONID_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			sb.append(_FILTER_SQL_SELECT_CTPROCESS_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				sb.append(CTProcessModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+			}
+			else {
+				sb.append(CTProcessModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			sb.toString(), CTProcess.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				sqlQuery.addEntity(_FILTER_ENTITY_ALIAS, CTProcessImpl.class);
+			}
+			else {
+				sqlQuery.addEntity(_FILTER_ENTITY_TABLE, CTProcessImpl.class);
+			}
+
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
+
+			queryPos.add(ctCollectionId);
+
+			return (List<CTProcess>)QueryUtil.list(
+				sqlQuery, getDialect(), start, end);
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the ct processes before and after the current ct process in the ordered set of ct processes that the user has permission to view where ctCollectionId = &#63;.
+	 *
+	 * @param ctProcessId the primary key of the current ct process
+	 * @param ctCollectionId the ct collection ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next ct process
+	 * @throws NoSuchProcessException if a ct process with the primary key could not be found
+	 */
+	@Override
+	public CTProcess[] filterFindByCtCollectionId_PrevAndNext(
+			long ctProcessId, long ctCollectionId,
+			OrderByComparator<CTProcess> orderByComparator)
+		throws NoSuchProcessException {
+
+		if (!InlineSQLHelperUtil.isEnabled()) {
+			return findByCtCollectionId_PrevAndNext(
+				ctProcessId, ctCollectionId, orderByComparator);
+		}
+
+		CTProcess ctProcess = findByPrimaryKey(ctProcessId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			CTProcess[] array = new CTProcessImpl[3];
+
+			array[0] = filterGetByCtCollectionId_PrevAndNext(
+				session, ctProcess, ctCollectionId, orderByComparator, true);
+
+			array[1] = ctProcess;
+
+			array[2] = filterGetByCtCollectionId_PrevAndNext(
+				session, ctProcess, ctCollectionId, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected CTProcess filterGetByCtCollectionId_PrevAndNext(
+		Session session, CTProcess ctProcess, long ctCollectionId,
+		OrderByComparator<CTProcess> orderByComparator, boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				5 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(4);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			sb.append(_FILTER_SQL_SELECT_CTPROCESS_WHERE);
+		}
+		else {
+			sb.append(_FILTER_SQL_SELECT_CTPROCESS_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		sb.append(_FINDER_COLUMN_CTCOLLECTIONID_CTCOLLECTIONID_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			sb.append(_FILTER_SQL_SELECT_CTPROCESS_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					sb.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_ALIAS, orderByConditionFields[i],
+							true));
+				}
+				else {
+					sb.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_TABLE, orderByConditionFields[i],
+							true));
+				}
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					sb.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_ALIAS, orderByFields[i], true));
+				}
+				else {
+					sb.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_TABLE, orderByFields[i], true));
+				}
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				sb.append(CTProcessModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+			}
+			else {
+				sb.append(CTProcessModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			sb.toString(), CTProcess.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+
+		SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+		sqlQuery.setFirstResult(0);
+		sqlQuery.setMaxResults(2);
+
+		if (getDB().isSupportsInlineDistinct()) {
+			sqlQuery.addEntity(_FILTER_ENTITY_ALIAS, CTProcessImpl.class);
+		}
+		else {
+			sqlQuery.addEntity(_FILTER_ENTITY_TABLE, CTProcessImpl.class);
+		}
+
+		QueryPos queryPos = QueryPos.getInstance(sqlQuery);
+
+		queryPos.add(ctCollectionId);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(ctProcess)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<CTProcess> list = sqlQuery.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
 	 * Removes all the ct processes where ctCollectionId = &#63; from the database.
 	 *
 	 * @param ctCollectionId the ct collection ID
@@ -1071,6 +1770,54 @@ public class CTProcessPersistenceImpl
 		}
 
 		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of ct processes that the user has permission to view where ctCollectionId = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @return the number of matching ct processes that the user has permission to view
+	 */
+	@Override
+	public int filterCountByCtCollectionId(long ctCollectionId) {
+		if (!InlineSQLHelperUtil.isEnabled()) {
+			return countByCtCollectionId(ctCollectionId);
+		}
+
+		StringBundler sb = new StringBundler(2);
+
+		sb.append(_FILTER_SQL_COUNT_CTPROCESS_WHERE);
+
+		sb.append(_FINDER_COLUMN_CTCOLLECTIONID_CTCOLLECTIONID_2);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			sb.toString(), CTProcess.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+			sqlQuery.addScalar(
+				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
+
+			queryPos.add(ctCollectionId);
+
+			Long count = (Long)sqlQuery.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
 	}
 
 	private static final String _FINDER_COLUMN_CTCOLLECTIONID_CTCOLLECTIONID_2 =
@@ -1538,6 +2285,345 @@ public class CTProcessPersistenceImpl
 	}
 
 	/**
+	 * Returns all the ct processes that the user has permission to view where ctCollectionId = &#63; and type = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param type the type
+	 * @return the matching ct processes that the user has permission to view
+	 */
+	@Override
+	public List<CTProcess> filterFindByC_T(long ctCollectionId, int type) {
+		return filterFindByC_T(
+			ctCollectionId, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the ct processes that the user has permission to view where ctCollectionId = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CTProcessModelImpl</code>.
+	 * </p>
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param type the type
+	 * @param start the lower bound of the range of ct processes
+	 * @param end the upper bound of the range of ct processes (not inclusive)
+	 * @return the range of matching ct processes that the user has permission to view
+	 */
+	@Override
+	public List<CTProcess> filterFindByC_T(
+		long ctCollectionId, int type, int start, int end) {
+
+		return filterFindByC_T(ctCollectionId, type, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the ct processes that the user has permissions to view where ctCollectionId = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CTProcessModelImpl</code>.
+	 * </p>
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param type the type
+	 * @param start the lower bound of the range of ct processes
+	 * @param end the upper bound of the range of ct processes (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching ct processes that the user has permission to view
+	 */
+	@Override
+	public List<CTProcess> filterFindByC_T(
+		long ctCollectionId, int type, int start, int end,
+		OrderByComparator<CTProcess> orderByComparator) {
+
+		if (!InlineSQLHelperUtil.isEnabled()) {
+			return findByC_T(
+				ctCollectionId, type, start, end, orderByComparator);
+		}
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				4 + (orderByComparator.getOrderByFields().length * 2));
+		}
+		else {
+			sb = new StringBundler(5);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			sb.append(_FILTER_SQL_SELECT_CTPROCESS_WHERE);
+		}
+		else {
+			sb.append(_FILTER_SQL_SELECT_CTPROCESS_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		sb.append(_FINDER_COLUMN_C_T_CTCOLLECTIONID_2);
+
+		sb.append(_FINDER_COLUMN_C_T_TYPE_2_SQL);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			sb.append(_FILTER_SQL_SELECT_CTPROCESS_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				sb.append(CTProcessModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+			}
+			else {
+				sb.append(CTProcessModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			sb.toString(), CTProcess.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				sqlQuery.addEntity(_FILTER_ENTITY_ALIAS, CTProcessImpl.class);
+			}
+			else {
+				sqlQuery.addEntity(_FILTER_ENTITY_TABLE, CTProcessImpl.class);
+			}
+
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
+
+			queryPos.add(ctCollectionId);
+
+			queryPos.add(type);
+
+			return (List<CTProcess>)QueryUtil.list(
+				sqlQuery, getDialect(), start, end);
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the ct processes before and after the current ct process in the ordered set of ct processes that the user has permission to view where ctCollectionId = &#63; and type = &#63;.
+	 *
+	 * @param ctProcessId the primary key of the current ct process
+	 * @param ctCollectionId the ct collection ID
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next ct process
+	 * @throws NoSuchProcessException if a ct process with the primary key could not be found
+	 */
+	@Override
+	public CTProcess[] filterFindByC_T_PrevAndNext(
+			long ctProcessId, long ctCollectionId, int type,
+			OrderByComparator<CTProcess> orderByComparator)
+		throws NoSuchProcessException {
+
+		if (!InlineSQLHelperUtil.isEnabled()) {
+			return findByC_T_PrevAndNext(
+				ctProcessId, ctCollectionId, type, orderByComparator);
+		}
+
+		CTProcess ctProcess = findByPrimaryKey(ctProcessId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			CTProcess[] array = new CTProcessImpl[3];
+
+			array[0] = filterGetByC_T_PrevAndNext(
+				session, ctProcess, ctCollectionId, type, orderByComparator,
+				true);
+
+			array[1] = ctProcess;
+
+			array[2] = filterGetByC_T_PrevAndNext(
+				session, ctProcess, ctCollectionId, type, orderByComparator,
+				false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected CTProcess filterGetByC_T_PrevAndNext(
+		Session session, CTProcess ctProcess, long ctCollectionId, int type,
+		OrderByComparator<CTProcess> orderByComparator, boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				6 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(5);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			sb.append(_FILTER_SQL_SELECT_CTPROCESS_WHERE);
+		}
+		else {
+			sb.append(_FILTER_SQL_SELECT_CTPROCESS_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		sb.append(_FINDER_COLUMN_C_T_CTCOLLECTIONID_2);
+
+		sb.append(_FINDER_COLUMN_C_T_TYPE_2_SQL);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			sb.append(_FILTER_SQL_SELECT_CTPROCESS_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					sb.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_ALIAS, orderByConditionFields[i],
+							true));
+				}
+				else {
+					sb.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_TABLE, orderByConditionFields[i],
+							true));
+				}
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					sb.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_ALIAS, orderByFields[i], true));
+				}
+				else {
+					sb.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_TABLE, orderByFields[i], true));
+				}
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				sb.append(CTProcessModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+			}
+			else {
+				sb.append(CTProcessModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			sb.toString(), CTProcess.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+
+		SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+		sqlQuery.setFirstResult(0);
+		sqlQuery.setMaxResults(2);
+
+		if (getDB().isSupportsInlineDistinct()) {
+			sqlQuery.addEntity(_FILTER_ENTITY_ALIAS, CTProcessImpl.class);
+		}
+		else {
+			sqlQuery.addEntity(_FILTER_ENTITY_TABLE, CTProcessImpl.class);
+		}
+
+		QueryPos queryPos = QueryPos.getInstance(sqlQuery);
+
+		queryPos.add(ctCollectionId);
+
+		queryPos.add(type);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(ctProcess)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<CTProcess> list = sqlQuery.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
 	 * Removes all the ct processes where ctCollectionId = &#63; and type = &#63; from the database.
 	 *
 	 * @param ctCollectionId the ct collection ID
@@ -1608,11 +2694,67 @@ public class CTProcessPersistenceImpl
 		return count.intValue();
 	}
 
+	/**
+	 * Returns the number of ct processes that the user has permission to view where ctCollectionId = &#63; and type = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param type the type
+	 * @return the number of matching ct processes that the user has permission to view
+	 */
+	@Override
+	public int filterCountByC_T(long ctCollectionId, int type) {
+		if (!InlineSQLHelperUtil.isEnabled()) {
+			return countByC_T(ctCollectionId, type);
+		}
+
+		StringBundler sb = new StringBundler(3);
+
+		sb.append(_FILTER_SQL_COUNT_CTPROCESS_WHERE);
+
+		sb.append(_FINDER_COLUMN_C_T_CTCOLLECTIONID_2);
+
+		sb.append(_FINDER_COLUMN_C_T_TYPE_2_SQL);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			sb.toString(), CTProcess.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+			sqlQuery.addScalar(
+				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
+
+			queryPos.add(ctCollectionId);
+
+			queryPos.add(type);
+
+			Long count = (Long)sqlQuery.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
 	private static final String _FINDER_COLUMN_C_T_CTCOLLECTIONID_2 =
 		"ctProcess.ctCollectionId = ? AND ";
 
 	private static final String _FINDER_COLUMN_C_T_TYPE_2 =
 		"ctProcess.type = ?";
+
+	private static final String _FINDER_COLUMN_C_T_TYPE_2_SQL =
+		"ctProcess.type_ = ?";
 
 	public CTProcessPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
@@ -2258,7 +3400,30 @@ public class CTProcessPersistenceImpl
 	private static final String _SQL_COUNT_CTPROCESS_WHERE =
 		"SELECT COUNT(ctProcess) FROM CTProcess ctProcess WHERE ";
 
+	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
+		"ctProcess.ctProcessId";
+
+	private static final String _FILTER_SQL_SELECT_CTPROCESS_WHERE =
+		"SELECT DISTINCT {ctProcess.*} FROM CTProcess ctProcess WHERE ";
+
+	private static final String
+		_FILTER_SQL_SELECT_CTPROCESS_NO_INLINE_DISTINCT_WHERE_1 =
+			"SELECT {CTProcess.*} FROM (SELECT DISTINCT ctProcess.ctProcessId FROM CTProcess ctProcess WHERE ";
+
+	private static final String
+		_FILTER_SQL_SELECT_CTPROCESS_NO_INLINE_DISTINCT_WHERE_2 =
+			") TEMP_TABLE INNER JOIN CTProcess ON TEMP_TABLE.ctProcessId = CTProcess.ctProcessId";
+
+	private static final String _FILTER_SQL_COUNT_CTPROCESS_WHERE =
+		"SELECT COUNT(DISTINCT ctProcess.ctProcessId) AS COUNT_VALUE FROM CTProcess ctProcess WHERE ";
+
+	private static final String _FILTER_ENTITY_ALIAS = "ctProcess";
+
+	private static final String _FILTER_ENTITY_TABLE = "CTProcess";
+
 	private static final String _ORDER_BY_ENTITY_ALIAS = "ctProcess.";
+
+	private static final String _ORDER_BY_ENTITY_TABLE = "CTProcess.";
 
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
 		"No CTProcess exists with the primary key ";

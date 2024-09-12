@@ -43,6 +43,8 @@ public interface CTProcessService extends BaseService {
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.change.tracking.service.impl.CTProcessServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the ct process remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link CTProcessServiceUtil} if injection and service tracking are not available.
 	 */
+	public CTProcess deleteCTProcess(long ctProcessId) throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CTProcess> getCTProcesses(
 			long companyId, long userId, String keywords, int status, int type,

@@ -95,8 +95,11 @@ public class CTProcessLocalServiceUtil {
 	 *
 	 * @param ctProcess the ct process
 	 * @return the ct process that was removed
+	 * @throws PortalException
 	 */
-	public static CTProcess deleteCTProcess(CTProcess ctProcess) {
+	public static CTProcess deleteCTProcess(CTProcess ctProcess)
+		throws PortalException {
+
 		return getService().deleteCTProcess(ctProcess);
 	}
 

@@ -100,9 +100,11 @@ public interface CTProcessLocalService
 	 *
 	 * @param ctProcess the ct process
 	 * @return the ct process that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
-	public CTProcess deleteCTProcess(CTProcess ctProcess);
+	public CTProcess deleteCTProcess(CTProcess ctProcess)
+		throws PortalException;
 
 	/**
 	 * Deletes the ct process with the primary key from the database. Also notifies the appropriate model listeners.

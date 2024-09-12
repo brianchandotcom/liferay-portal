@@ -30,7 +30,7 @@ public class MBCategoryUADTestUtil {
 		throws Exception {
 
 		return mbCategoryLocalService.addCategory(
-			userId, parentMBCategoryId, RandomTestUtil.randomString(),
+			null, userId, parentMBCategoryId, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(),
 			ServiceContextTestUtil.getServiceContext(
 				TestPropsValues.getGroupId()));

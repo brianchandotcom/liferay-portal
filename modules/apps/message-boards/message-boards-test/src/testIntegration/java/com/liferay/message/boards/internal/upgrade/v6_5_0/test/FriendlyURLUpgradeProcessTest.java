@@ -61,7 +61,7 @@ public class FriendlyURLUpgradeProcessTest {
 				CTCollectionThreadLocal.setProductionModeWithSafeCloseable()) {
 
 			productionMBCategory = _mbCategoryLocalService.addCategory(
-				TestPropsValues.getUserId(),
+				null, TestPropsValues.getUserId(),
 				MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
 				StringUtil.randomString(), StringUtil.randomString(),
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));

@@ -51,7 +51,7 @@ public class MBCategoryStagedModelDataHandlerTest
 			new HashMap<>();
 
 		MBCategory category = MBCategoryServiceUtil.addCategory(
-			TestPropsValues.getUserId(),
+			null, TestPropsValues.getUserId(),
 			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
 			RandomTestUtil.randomString(), StringPool.BLANK,
 			ServiceContextTestUtil.getServiceContext(
@@ -75,7 +75,7 @@ public class MBCategoryStagedModelDataHandlerTest
 		MBCategory category = (MBCategory)dependentStagedModels.get(0);
 
 		return MBCategoryServiceUtil.addCategory(
-			TestPropsValues.getUserId(), category.getCategoryId(),
+			null, TestPropsValues.getUserId(), category.getCategoryId(),
 			RandomTestUtil.randomString(), StringPool.BLANK,
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), TestPropsValues.getUserId()));

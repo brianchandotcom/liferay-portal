@@ -276,7 +276,7 @@ public class MessageBoardSectionResourceImpl
 
 		return _toMessageBoardSection(
 			_mbCategoryService.addCategory(
-				contextUser.getUserId(), parentMessageBoardSectionId,
+				null, contextUser.getUserId(), parentMessageBoardSectionId,
 				messageBoardSection.getTitle(),
 				messageBoardSection.getDescription(),
 				_createServiceContext(

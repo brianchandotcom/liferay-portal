@@ -124,8 +124,8 @@ public class MBCategoryTrashHandlerTest
 		MBCategory parentCategory = (MBCategory)parentBaseModel;
 
 		return MBCategoryLocalServiceUtil.addCategory(
-			TestPropsValues.getUserId(), parentCategory.getCategoryId(), _TITLE,
-			StringPool.BLANK, serviceContext);
+			null, TestPropsValues.getUserId(), parentCategory.getCategoryId(),
+			_TITLE, StringPool.BLANK, serviceContext);
 	}
 
 	@Override
@@ -134,7 +134,7 @@ public class MBCategoryTrashHandlerTest
 		throws Exception {
 
 		return MBCategoryLocalServiceUtil.addCategory(
-			TestPropsValues.getUserId(),
+			null, TestPropsValues.getUserId(),
 			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, _TITLE,
 			StringPool.BLANK, serviceContext);
 	}
@@ -176,7 +176,7 @@ public class MBCategoryTrashHandlerTest
 		throws Exception {
 
 		return MBCategoryLocalServiceUtil.addCategory(
-			TestPropsValues.getUserId(), parentBaseModelId, _TITLE,
+			null, TestPropsValues.getUserId(), parentBaseModelId, _TITLE,
 			StringPool.BLANK, serviceContext);
 	}
 

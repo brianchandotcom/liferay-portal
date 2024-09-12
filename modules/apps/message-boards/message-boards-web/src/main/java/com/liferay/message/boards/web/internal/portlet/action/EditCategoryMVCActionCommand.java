@@ -244,10 +244,10 @@ public class EditCategoryMVCActionCommand extends BaseMVCActionCommand {
 			// Add category
 
 			_mbCategoryService.addCategory(
-				parentCategoryId, name, description, displayStyle, emailAddress,
-				inProtocol, inServerName, inServerPort, inUseSSL, inUserName,
-				inPassword, inReadInterval, outEmailAddress, outCustom,
-				outServerName, outServerPort, outUseSSL, outUserName,
+				null, parentCategoryId, name, description, displayStyle,
+				emailAddress, inProtocol, inServerName, inServerPort, inUseSSL,
+				inUserName, inPassword, inReadInterval, outEmailAddress,
+				outCustom, outServerName, outServerPort, outUseSSL, outUserName,
 				outPassword, allowAnonymous, mailingListActive, serviceContext);
 		}
 		else {

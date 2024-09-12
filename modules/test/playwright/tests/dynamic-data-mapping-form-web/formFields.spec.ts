@@ -11,6 +11,22 @@ import {getRandomInt} from '../../utils/getRandomInt';
 
 export const test = mergeTests(loginTest(), formsPagesTest);
 
+test.afterEach(async ({formsPage, page}) => {
+	await formsPage.goTo();
+
+	await page.waitForTimeout(1000);
+
+	if (await formsPage.managementToolbarSelectAllItems.isEnabled()) {
+		await formsPage.managementToolbarSelectAllItems.click();
+
+		page.once('dialog', (dialog) => {
+			dialog.accept();
+		});
+
+		await formsPage.managementToolbarDeleteButton.click();
+	}
+});
+
 test.describe('Can configure a HTML autocomplete attribute in Date, Numeric and Text field types', () => {
 	test('LPD-12824 HTML autocomplete attribute is rendered and has the configured value limited to 20 non-special characters', async ({
 		formBuilderPage,
@@ -85,5 +101,7 @@ test.describe('Can configure a HTML autocomplete attribute in Date, Numeric and 
 				newTabPage.getByLabel(data.fieldTitle)
 			).toHaveAttribute('autocomplete', data.expectedValue);
 		}
+
+		await newTabPage.close();
 	});
 });

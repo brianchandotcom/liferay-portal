@@ -43,7 +43,7 @@
 				},
 				{
 					"dataType": "string",
-					"defaultValue": "",
+					"defaultValue": "primary",
 					"label": "style",
 					"name": "buttonType",
 					"type": "select",

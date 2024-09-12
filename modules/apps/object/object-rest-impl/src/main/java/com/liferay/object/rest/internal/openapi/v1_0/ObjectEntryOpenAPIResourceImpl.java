@@ -21,9 +21,11 @@ import com.liferay.object.rest.internal.vulcan.openapi.contributor.ObjectEntryOp
 import com.liferay.object.rest.openapi.v1_0.ObjectEntryOpenAPIResource;
 import com.liferay.object.rest.openapi.v1_0.ObjectEntryOpenAPIResourceProvider;
 import com.liferay.object.service.ObjectActionLocalService;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.TreeMapBuilder;
@@ -65,6 +67,7 @@ public class ObjectEntryOpenAPIResourceImpl
 		BundleContext bundleContext, DTOConverterRegistry dtoConverterRegistry,
 		ObjectActionLocalService objectActionLocalService,
 		ObjectDefinition objectDefinition,
+		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectEntryOpenAPIResourceProvider objectEntryOpenAPIResourceProvider,
 		ObjectFieldLocalService objectFieldLocalService,
 		ObjectRelationshipLocalService objectRelationshipLocalService,
@@ -76,6 +79,7 @@ public class ObjectEntryOpenAPIResourceImpl
 		_dtoConverterRegistry = dtoConverterRegistry;
 		_objectActionLocalService = objectActionLocalService;
 		_objectDefinition = objectDefinition;
+		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectEntryOpenAPIResourceProvider =
 			objectEntryOpenAPIResourceProvider;
 		_objectFieldLocalService = objectFieldLocalService;
@@ -103,14 +107,64 @@ public class ObjectEntryOpenAPIResourceImpl
 
 		Map<String, Schema> properties = schema.getProperties();
 
+		List<ObjectRelationship> objectRelationships =
+			_objectRelationshipLocalService.
+				getObjectRelationshipsByObjectDefinitionId2(
+					_objectDefinition.getObjectDefinitionId());
+
 		for (Map.Entry<String, Schema> schemaEntry : properties.entrySet()) {
 			String propertyName = schemaEntry.getKey();
+
+			String anyOfGroup = null;
+
+			for (ObjectRelationship objectRelationship : objectRelationships) {
+				if (Objects.equals(
+						objectRelationship.getName(), propertyName)) {
+
+					anyOfGroup = objectRelationship.getName();
+
+					break;
+				}
+
+				ObjectDefinition parentObjectDefinition =
+					_objectDefinitionLocalService.getObjectDefinition(
+						objectRelationship.getObjectDefinitionId1());
+
+				String objectRelationshipIdFieldName = StringBundler.concat(
+					"r_", objectRelationship.getName(), "_",
+					parentObjectDefinition.getPKObjectFieldName());
+
+				if (Objects.equals(
+						objectRelationship.getName(), propertyName) ||
+					Objects.equals(
+						objectRelationshipIdFieldName, propertyName)) {
+
+					anyOfGroup = objectRelationship.getName();
+
+					break;
+				}
+
+				String objectRelationshipERCFieldName =
+					ObjectFieldSettingUtil.getValue(
+						ObjectFieldSettingConstants.
+							NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME,
+						_objectFieldLocalService.getObjectField(
+							_objectDefinition.getObjectDefinitionId(),
+							objectRelationshipIdFieldName));
+
+				if (Objects.equals(
+						objectRelationshipERCFieldName, propertyName)) {
+
+					anyOfGroup = objectRelationship.getName();
+				}
+			}
+
 			Schema propertySchema = schemaEntry.getValue();
 
 			fields.put(
 				propertyName,
 				Field.of(
-					propertySchema.getDescription(), propertyName,
+					anyOfGroup, propertySchema.getDescription(), propertyName,
 					GetterUtil.getBoolean(propertySchema.getReadOnly()),
 					_getRef(propertySchema),
 					requiredPropertySchemaNames.contains(propertyName),
@@ -444,6 +498,7 @@ public class ObjectEntryOpenAPIResourceImpl
 	).build();
 	private final ObjectActionLocalService _objectActionLocalService;
 	private final ObjectDefinition _objectDefinition;
+	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final ObjectEntryOpenAPIResourceProvider
 		_objectEntryOpenAPIResourceProvider;
 	private final ObjectFieldLocalService _objectFieldLocalService;

@@ -342,6 +342,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 							new ObjectEntryOpenAPIResourceImpl(
 								_bundleContext, _dtoConverterRegistry,
 								_objectActionLocalService, objectDefinition,
+								_objectDefinitionLocalService,
 								_objectEntryOpenAPIResourceProvider,
 								_objectFieldLocalService,
 								_objectRelationshipLocalService,

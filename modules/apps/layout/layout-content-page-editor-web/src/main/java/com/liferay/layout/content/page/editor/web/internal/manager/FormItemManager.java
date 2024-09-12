@@ -29,7 +29,6 @@ import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructureItemUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
@@ -61,7 +60,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = FormItemManager.class)
 public class FormItemManager {
 
-	public void addFormStepLayoutStructureItems(
+	public LayoutStructureItemChanges addFormStepLayoutStructureItems(
 		FormStyledLayoutStructureItem formStyledLayoutStructureItem,
 		LayoutStructure layoutStructure, int numberOfSteps) {
 
@@ -70,8 +69,10 @@ public class FormItemManager {
 				formStyledLayoutStructureItem, layoutStructure);
 
 		if (formStepContainerStyledLayoutStructureItem == null) {
-			return;
+			return new LayoutStructureItemChanges();
 		}
+
+		List<String> addedItemIds = new ArrayList<>();
 
 		List<String> childrenItemIds =
 			formStepContainerStyledLayoutStructureItem.getChildrenItemIds();
@@ -79,9 +80,15 @@ public class FormItemManager {
 		int numberOfStepsNeeded = numberOfSteps - childrenItemIds.size();
 
 		for (int i = 0; i < numberOfStepsNeeded; i++) {
-			layoutStructure.addFormStepLayoutStructureItem(
-				formStepContainerStyledLayoutStructureItem.getItemId(), -1);
+			LayoutStructureItem layoutStructureItem =
+				layoutStructure.addFormStepLayoutStructureItem(
+					formStepContainerStyledLayoutStructureItem.getItemId(), -1);
+
+			addedItemIds.add(layoutStructureItem.getItemId());
 		}
+
+		return new LayoutStructureItemChanges(
+			addedItemIds, Collections.emptyList(), Collections.emptyList());
 	}
 
 	public List<FragmentEntryLink> addFragmentEntryLinks(
@@ -202,9 +209,13 @@ public class FormItemManager {
 		return addedFragmentEntryLinks;
 	}
 
-	public void changeToMultistepFormType(
+	public LayoutStructureItemChanges changeToMultistepFormType(
 		FormStyledLayoutStructureItem formStyledLayoutStructureItem,
 		LayoutStructure layoutStructure, Locale locale, int numberOfSteps) {
+
+		List<String> addedItemIds = new ArrayList<>();
+		List<LayoutStructureItemChanges.MovedItem> movedItems =
+			new ArrayList<>();
 
 		List<String> childrenItemIds = new ArrayList<>(
 			formStyledLayoutStructureItem.getChildrenItemIds());
@@ -212,6 +223,9 @@ public class FormItemManager {
 		LayoutStructureItem formStepContainerStyledLayoutStructureItem =
 			layoutStructure.addFormStepContainerStyledLayoutStructureItem(
 				formStyledLayoutStructureItem.getItemId(), -1);
+
+		addedItemIds.add(
+			formStepContainerStyledLayoutStructureItem.getItemId());
 
 		LayoutStructureItem firstFormStepLayoutStructureItem =
 			layoutStructure.addFormStepLayoutStructureItem(
@@ -239,6 +253,10 @@ public class FormItemManager {
 				}
 			}
 
+			movedItems.add(
+				new LayoutStructureItemChanges.MovedItem(
+					childrenItemId, formStyledLayoutStructureItem.getItemId()));
+
 			layoutStructure.moveLayoutStructureItem(
 				childrenItemId, firstFormStepLayoutStructureItem.getItemId(),
 				-1);
@@ -248,9 +266,12 @@ public class FormItemManager {
 			layoutStructure.addFormStepLayoutStructureItem(
 				formStepContainerStyledLayoutStructureItem.getItemId(), i);
 		}
+
+		return new LayoutStructureItemChanges(
+			addedItemIds, movedItems, Collections.emptyList());
 	}
 
-	public void changeToSimpleFormType(
+	public LayoutStructureItemChanges changeToSimpleFormType(
 		FormStyledLayoutStructureItem formStyledLayoutStructureItem,
 		LayoutStructure layoutStructure, Locale locale) {
 
@@ -259,8 +280,13 @@ public class FormItemManager {
 				formStyledLayoutStructureItem, layoutStructure);
 
 		if (formStepContainerStyledLayoutStructureItem == null) {
-			return;
+			return new LayoutStructureItemChanges();
 		}
+
+		List<LayoutStructureItemChanges.MovedItem> movedItems =
+			new ArrayList<>();
+
+		List<String> removedItemIds = new ArrayList<>();
 
 		for (String childrenItemId :
 				new ArrayList<>(
@@ -291,6 +317,8 @@ public class FormItemManager {
 			layoutStructure.markLayoutStructureItemForDeletion(
 				Collections.singletonList(childrenItemId),
 				Collections.emptyList());
+
+			removedItemIds.add(childrenItemId);
 		}
 
 		for (String childrenItemId :
@@ -305,6 +333,15 @@ public class FormItemManager {
 					new ArrayList<>(
 						formStepLayoutStructureItem.getChildrenItemIds())) {
 
+				LayoutStructureItem layoutStructureItem =
+					layoutStructure.getLayoutStructureItem(
+						formStepLayoutStructureItemChildrenItemId);
+
+				movedItems.add(
+					new LayoutStructureItemChanges.MovedItem(
+						formStepLayoutStructureItemChildrenItemId,
+						layoutStructureItem.getParentItemId()));
+
 				layoutStructure.moveLayoutStructureItem(
 					formStepLayoutStructureItemChildrenItemId,
 					formStyledLayoutStructureItem.getItemId(), -1);
@@ -315,9 +352,15 @@ public class FormItemManager {
 			Collections.singletonList(
 				formStepContainerStyledLayoutStructureItem.getItemId()),
 			Collections.emptyList());
+
+		removedItemIds.add(
+			formStepContainerStyledLayoutStructureItem.getItemId());
+
+		return new LayoutStructureItemChanges(
+			Collections.emptyList(), movedItems, removedItemIds);
 	}
 
-	public void removeFormStepLayoutStructureItems(
+	public LayoutStructureItemChanges removeFormStepLayoutStructureItems(
 		FormStyledLayoutStructureItem formStyledLayoutStructureItem,
 		LayoutStructure layoutStructure, int numberOfSteps) {
 
@@ -326,8 +369,12 @@ public class FormItemManager {
 				formStyledLayoutStructureItem, layoutStructure);
 
 		if (formStepContainerStyledLayoutStructureItem == null) {
-			return;
+			return new LayoutStructureItemChanges();
 		}
+
+		List<LayoutStructureItemChanges.MovedItem> movedItems =
+			new ArrayList<>();
+		List<String> removedItemIds = new ArrayList<>();
 
 		List<String> childrenItemIds = new ArrayList<>(
 			formStepContainerStyledLayoutStructureItem.getChildrenItemIds());
@@ -344,32 +391,44 @@ public class FormItemManager {
 					new ArrayList<>(
 						formStepLayoutStructureItem.getChildrenItemIds())) {
 
+				LayoutStructureItem layoutStructureItem =
+					layoutStructure.getLayoutStructureItem(childrenItemId);
+
+				movedItems.add(
+					new LayoutStructureItemChanges.MovedItem(
+						layoutStructureItem.getItemId(),
+						layoutStructureItem.getParentItemId()));
+
 				layoutStructure.moveLayoutStructureItem(
 					childrenItemId,
 					previousFormStepLayoutStructureItem.getItemId(), -1);
 			}
+
+			removedItemIds.add(formStepLayoutStructureItem.getItemId());
 
 			layoutStructure.markLayoutStructureItemForDeletion(
 				Collections.singletonList(
 					formStepLayoutStructureItem.getItemId()),
 				Collections.emptyList());
 		}
+
+		return new LayoutStructureItemChanges(
+			Collections.emptyList(), movedItems, removedItemIds);
 	}
 
-	public JSONArray removeLayoutStructureItemsJSONArray(
+	public LayoutStructureItemChanges removeLayoutStructureItemsJSONArray(
 		FormStyledLayoutStructureItem formStyledLayoutStructureItem,
-		LayoutStructure layoutStructure, List<String> removedItemIds) {
+		LayoutStructure layoutStructure, List<String> initialRemovedItemIds) {
 
-		JSONArray fragmentEntryLinkIdsJSONArray =
-			_jsonFactory.createJSONArray();
+		List<String> removedItemIds = new ArrayList<>();
 
 		for (String itemId :
 				LayoutStructureItemUtil.getChildrenItemIds(
 					formStyledLayoutStructureItem.getItemId(),
 					layoutStructure)) {
 
-			if (ListUtil.isNotEmpty(removedItemIds) &&
-				!removedItemIds.contains(itemId)) {
+			if (ListUtil.isNotEmpty(initialRemovedItemIds) &&
+				!initialRemovedItemIds.contains(itemId)) {
 
 				continue;
 			}
@@ -377,27 +436,11 @@ public class FormItemManager {
 			layoutStructure.markLayoutStructureItemForDeletion(
 				Collections.singletonList(itemId), Collections.emptyList());
 
-			LayoutStructureItem removedLayoutStructureItem =
-				layoutStructure.getLayoutStructureItem(itemId);
-
-			if (!(removedLayoutStructureItem instanceof
-					FragmentStyledLayoutStructureItem)) {
-
-				continue;
-			}
-
-			FragmentStyledLayoutStructureItem
-				fragmentStyledLayoutStructureItem =
-					(FragmentStyledLayoutStructureItem)
-						removedLayoutStructureItem;
-
-			fragmentEntryLinkIdsJSONArray.put(
-				String.valueOf(
-					fragmentStyledLayoutStructureItem.
-						getFragmentEntryLinkId()));
+			removedItemIds.add(itemId);
 		}
 
-		return fragmentEntryLinkIdsJSONArray;
+		return new LayoutStructureItemChanges(
+			Collections.emptyList(), Collections.emptyList(), removedItemIds);
 	}
 
 	public static class LayoutStructureItemChanges {

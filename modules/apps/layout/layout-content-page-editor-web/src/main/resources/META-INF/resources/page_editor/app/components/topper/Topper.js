@@ -50,7 +50,7 @@ import {
 	useDropTarget,
 	useIsDroppable,
 } from '../../utils/drag_and_drop/useDragAndDrop';
-import isItemWidget from '../../utils/isItemWidget';
+import getNormalizedDragItems from '../../utils/getNormalizedDragItems';
 import useDropContainerId from '../../utils/useDropContainerId';
 import TopperItemActions from './TopperItemActions';
 import {TopperLabel} from './TopperLabel';
@@ -135,28 +135,19 @@ function TopperContent({
 		[item]
 	);
 
-	const isWidget = useSelectorCallback(
-		(state) => isItemWidget(item, state.fragmentEntryLinks),
-		[item]
-	);
-
-	const {fieldTypes, fragmentEntryType} = useSelectorCallback(
-		(state) => {
-			if (!item.type === LAYOUT_DATA_ITEM_TYPES.fragment) {
-				return null;
-			}
-
-			const fragmentEntryLink =
-				state.fragmentEntryLinks[item.config?.fragmentEntryLinkId];
-
-			return {
-				fieldTypes: fragmentEntryLink?.fieldTypes ?? [],
-				fragmentEntryType: fragmentEntryLink?.fragmentEntryType ?? null,
-			};
-		},
-		[item],
+	const dragSources = useSelectorCallback(
+		(state) =>
+			getNormalizedDragItems(
+				item,
+				activeItemIds,
+				state.layoutData,
+				state.fragmentEntryLinks
+			),
+		[item, activeItemIds],
 		deepEqual
 	);
+
+	const lastDragSource = dragSources[dragSources.length - 1];
 
 	const onDragBegin = () => {
 		if (!isActive) {
@@ -167,14 +158,14 @@ function TopperContent({
 	};
 
 	const onDragEnd = (parentItemId, position) => {
-		const thunk = fieldTypes?.includes('stepper')
+		const thunk = lastDragSource.fieldTypes?.includes('stepper')
 			? moveStepper({
 					itemId: item.itemId,
 					parentItemId,
 					position,
 				})
 			: moveItems({
-					itemIds: activeItemIds,
+					itemIds: dragSources.map((item) => item.itemId),
 					parentItemIds: [parentItemId],
 					positions: [position],
 				});
@@ -182,16 +173,14 @@ function TopperContent({
 		dispatch(thunk);
 	};
 
-	const dragSource = {...item, fieldTypes, fragmentEntryType, isWidget, name};
-
 	const {handlerRef: itemRef, isDraggingSource: draggingItem} = useDragItem(
-		dragSource,
+		dragSources,
 		onDragEnd,
 		onDragBegin
 	);
 
 	const {handlerRef: topperRef, isDraggingSource: draggingTopper} =
-		useDragItem(dragSource, onDragEnd, onDragBegin);
+		useDragItem(dragSources, onDragEnd, onDragBegin);
 
 	const keyboardMovementSource = useMovementSource();
 	const lastSource =

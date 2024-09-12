@@ -515,6 +515,22 @@ export default function UndoRedo({
 					</ClayDropDown.Item>
 				</ClayDropDown.ItemList>
 			</ClayDropDown>
+
+			<ClayButtonWithIcon
+				aria-label={Liferay.Language.get('undo-all')}
+				className="btn-monospaced"
+				disabled={history.length <= 1}
+				displayType="secondary"
+				onClick={() => {
+					handleUndo(0);
+					Liferay.fire('journal:goto', {
+						step: 0,
+					});
+				}}
+				size="sm"
+				symbol="time"
+				title={Liferay.Language.get('undo-all')}
+			/>
 		</div>
 	);
 }

@@ -15,7 +15,9 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Marcos Martins
@@ -132,7 +134,19 @@ public class ProjectUsageDisplay {
 					"monthlyValues");
 
 				if (monthlyValuesJSONObject != null) {
-					_monthlyValues = monthlyValuesJSONObject.toMap();
+					_monthlyValues = new LinkedHashMap<>();
+
+					for (String key : monthlyValuesJSONObject.keySet()) {
+						JSONObject monthlyValueJSONObject =
+							monthlyValuesJSONObject.getJSONObject(key);
+
+						_monthlyValues.put(
+							key,
+							new MonthlyValue(
+								monthlyValueJSONObject.getInt("count"),
+								monthlyValueJSONObject.getInt(
+									"countSinceLastAnniversary")));
+					}
 				}
 			}
 
@@ -141,7 +155,7 @@ public class ProjectUsageDisplay {
 				"totalSinceLastAnniversary");
 		}
 
-		public Map<String, Object> getMonthlyValues() {
+		public Map<String, MonthlyValue> getMonthlyValues() {
 			return _monthlyValues;
 		}
 
@@ -153,9 +167,29 @@ public class ProjectUsageDisplay {
 			return _totalSinceLastAnniversary;
 		}
 
-		private Map<String, Object> _monthlyValues;
+		private Map<String, MonthlyValue> _monthlyValues;
 		private int _total;
 		private int _totalSinceLastAnniversary;
+
+	}
+
+	public static class MonthlyValue {
+
+		public MonthlyValue(int count, int countSinceLastAnniversary) {
+			_count = count;
+			_countSinceLastAnniversary = countSinceLastAnniversary;
+		}
+
+		public int getCount() {
+			return _count;
+		}
+
+		public int getCountSinceLastAnniversary() {
+			return _countSinceLastAnniversary;
+		}
+
+		private final int _count;
+		private final int _countSinceLastAnniversary;
 
 	}
 

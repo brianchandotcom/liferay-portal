@@ -54,7 +54,7 @@ import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
 import java.lang.reflect.Field;
 
-import java.nio.file.Path;
+import java.net.URI;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -598,16 +598,13 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 	public void testPropertiesSetByUserWithFile() throws Exception {
 		File propertiesFile = temporaryFolder.newFile("test.properties");
 
+		URI propertiesFileURI = propertiesFile.toURI();
+
+		String propertiesFilePath = "file:" + propertiesFileURI.getPath();
+
 		List<String> loadedSources = PropsUtil.getLoadedSources();
 
-		Path path = propertiesFile.toPath();
-
-		String propertiesFileSourcePath = path.toUri(
-		).getPath();
-
-		propertiesFileSourcePath = "file:" + propertiesFileSourcePath;
-
-		loadedSources.add(propertiesFileSourcePath);
+		loadedSources.add(propertiesFilePath);
 
 		Properties properties = new Properties();
 
@@ -630,7 +627,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 			_assertReport("my.property: my property value");
 		}
 		finally {
-			loadedSources.remove(propertiesFileSourcePath);
+			loadedSources.remove(propertiesFilePath);
 		}
 	}
 

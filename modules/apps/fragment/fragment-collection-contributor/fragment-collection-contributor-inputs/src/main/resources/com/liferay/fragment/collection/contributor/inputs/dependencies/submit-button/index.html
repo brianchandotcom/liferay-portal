@@ -1,36 +1,24 @@
 [#assign type=configuration.type!'submit']
-[#assign buttonType=configuration.buttonType]
 
 [#if configuration.type == "previous"]
-	[#if !buttonType?has_content]
-		[#assign buttonType="secondary"]
-	[/#if]
-
 	<div class="component-button text-break">
-		<button class="btn btn-${configuration.buttonSize} btn-${buttonType}" id="fragment-${fragmentEntryLinkNamespace}-form-button" type="button">
+		<button class="btn btn-${configuration.buttonSize} btn-${configuration.buttonType}" id="fragment-${fragmentEntryLinkNamespace}-form-button" type="button">
 			<span data-lfr-editable-id="previous-button-text" data-lfr-editable-type="text">
 				Previous
 			</span>
 		</button>
 	</div>
 [#elseif configuration.type == "next"]
-	[#if !buttonType?has_content]
-		[#assign buttonType="primary"]
-	[/#if]
-
 	<div class="component-button text-break">
-		<button class="btn btn-${configuration.buttonSize} btn-${buttonType}" id="fragment-${fragmentEntryLinkNamespace}-form-button" type="button">
+		<button class="btn btn-${configuration.buttonSize} btn-${configuration.buttonType}" id="fragment-${fragmentEntryLinkNamespace}-form-button" type="button">
 			<span data-lfr-editable-id="next-button-text" data-lfr-editable-type="text">
 				Next
 			</span>
 		</button>
 	</div>
 [#else]
-	[#if !buttonType?has_content]
-		[#assign buttonType="primary"]
-	[/#if]
 	<div class="component-button text-break">
-		<button class="btn btn-${configuration.buttonSize} btn-${buttonType}" data-lfr-editable-id="submit-button-text" data-lfr-editable-type="text" id="fragment-${fragmentEntryLinkNamespace}-submit-button" name="status" type="submit" value="${configuration.submittedEntryStatus}">
+		<button class="btn btn-${configuration.buttonSize} btn-${configuration.buttonType}" data-lfr-editable-id="submit-button-text" data-lfr-editable-type="text" id="fragment-${fragmentEntryLinkNamespace}-submit-button" name="status" type="submit" value="${configuration.submittedEntryStatus}">
 			Submit
 		</button>
 	</div>

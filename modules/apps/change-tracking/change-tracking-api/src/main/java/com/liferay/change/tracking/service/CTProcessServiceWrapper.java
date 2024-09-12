@@ -26,6 +26,14 @@ public class CTProcessServiceWrapper
 	}
 
 	@Override
+	public com.liferay.change.tracking.model.CTProcess deleteCTProcess(
+			long ctProcessId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _ctProcessService.deleteCTProcess(ctProcessId);
+	}
+
+	@Override
 	public java.util.List<com.liferay.change.tracking.model.CTProcess>
 			getCTProcesses(
 				long companyId, long userId, String keywords, int status,

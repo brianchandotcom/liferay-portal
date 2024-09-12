@@ -41,6 +41,46 @@ import com.liferay.portal.kernel.util.MethodKey;
  */
 public class CTProcessServiceHttp {
 
+	public static com.liferay.change.tracking.model.CTProcess deleteCTProcess(
+			HttpPrincipal httpPrincipal, long ctProcessId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CTProcessServiceUtil.class, "deleteCTProcess",
+				_deleteCTProcessParameterTypes0);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, ctProcessId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.change.tracking.model.CTProcess)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static java.util.List<com.liferay.change.tracking.model.CTProcess>
 			getCTProcesses(
 				HttpPrincipal httpPrincipal, long companyId, long userId,
@@ -53,7 +93,7 @@ public class CTProcessServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CTProcessServiceUtil.class, "getCTProcesses",
-				_getCTProcessesParameterTypes0);
+				_getCTProcessesParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, userId, keywords, status, type, start,
@@ -100,7 +140,7 @@ public class CTProcessServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CTProcessServiceUtil.class, "getCTProcesses",
-				_getCTProcessesParameterTypes1);
+				_getCTProcessesParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, userId, keywords, status, start, end,
@@ -142,7 +182,7 @@ public class CTProcessServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CTProcessServiceUtil.class, "getCTProcessesCount",
-				_getCTProcessesCountParameterTypes2);
+				_getCTProcessesCountParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, userId, keywords, status);
@@ -175,7 +215,7 @@ public class CTProcessServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CTProcessServiceUtil.class, "getCTProcessesCount",
-				_getCTProcessesCountParameterTypes3);
+				_getCTProcessesCountParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, userId, keywords, status, type);
@@ -203,20 +243,22 @@ public class CTProcessServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(CTProcessServiceHttp.class);
 
-	private static final Class<?>[] _getCTProcessesParameterTypes0 =
+	private static final Class<?>[] _deleteCTProcessParameterTypes0 =
+		new Class[] {long.class};
+	private static final Class<?>[] _getCTProcessesParameterTypes1 =
 		new Class[] {
 			long.class, long.class, String.class, int.class, int.class,
 			int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getCTProcessesParameterTypes1 =
+	private static final Class<?>[] _getCTProcessesParameterTypes2 =
 		new Class[] {
 			long.class, long.class, String.class, int.class, int.class,
 			int.class, com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getCTProcessesCountParameterTypes2 =
-		new Class[] {long.class, long.class, String.class, int.class};
 	private static final Class<?>[] _getCTProcessesCountParameterTypes3 =
+		new Class[] {long.class, long.class, String.class, int.class};
+	private static final Class<?>[] _getCTProcessesCountParameterTypes4 =
 		new Class[] {
 			long.class, long.class, String.class, int.class, int.class
 		};

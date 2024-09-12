@@ -96,10 +96,12 @@ public class CTProcessLocalServiceWrapper
 	 *
 	 * @param ctProcess the ct process
 	 * @return the ct process that was removed
+	 * @throws PortalException
 	 */
 	@Override
 	public com.liferay.change.tracking.model.CTProcess deleteCTProcess(
-		com.liferay.change.tracking.model.CTProcess ctProcess) {
+			com.liferay.change.tracking.model.CTProcess ctProcess)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ctProcessLocalService.deleteCTProcess(ctProcess);
 	}

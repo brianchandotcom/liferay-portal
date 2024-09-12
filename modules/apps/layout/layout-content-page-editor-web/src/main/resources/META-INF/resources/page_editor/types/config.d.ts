@@ -211,6 +211,7 @@ export interface Config {
 	themeColorsCssClasses: string[];
 	toolbarId: string;
 
+	undoUpdateFormConfigURL: string;
 	unmarkItemsForDeletionURL: string;
 	updateCollectionDisplayConfigURL: string;
 	updateConfigurationValuesURL: string;

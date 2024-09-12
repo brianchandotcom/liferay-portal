@@ -5,10 +5,10 @@
 
 package com.liferay.osgi.service.tracker.collections.map;
 
-import com.liferay.osgi.service.tracker.collections.internal.DefaultServiceTrackerCustomizer;
 import com.liferay.osgi.service.tracker.collections.internal.map.MultiValueServiceTrackerBucketFactory;
 import com.liferay.osgi.service.tracker.collections.internal.map.ServiceTrackerMapImpl;
 import com.liferay.osgi.service.tracker.collections.internal.map.SingleValueServiceTrackerBucketFactory;
+import com.liferay.osgi.service.tracker.collections.internal.osgi.util.tracker.DefaultServiceTrackerCustomizer;
 
 import java.util.Comparator;
 import java.util.List;

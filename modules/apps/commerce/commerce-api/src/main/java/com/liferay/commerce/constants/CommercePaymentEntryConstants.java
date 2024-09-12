@@ -38,6 +38,10 @@ public class CommercePaymentEntryConstants {
 		STATUS_FAILED, STATUS_PENDING, STATUS_REFUNDED
 	};
 
+	public static final int[] STATUSES_REFUND = {
+		STATUS_CREATED, STATUS_FAILED, STATUS_PENDING, STATUS_REFUNDED
+	};
+
 	public static final int TYPE_PAYMENT = 0;
 
 	public static final int TYPE_REFUND = 1;

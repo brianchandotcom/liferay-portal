@@ -6,6 +6,8 @@
 package com.liferay.commerce.payment.web.internal.portlet;
 
 import com.liferay.commerce.constants.CommercePortletKeys;
+import com.liferay.commerce.currency.service.CommerceCurrencyService;
+import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.payment.entry.CommercePaymentEntryRefundTypeRegistry;
 import com.liferay.commerce.payment.model.CommercePaymentEntry;
 import com.liferay.commerce.payment.service.CommercePaymentEntryService;
@@ -15,6 +17,7 @@ import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -63,11 +66,13 @@ public class CommercePaymentPortlet extends MVCPortlet {
 			CommercePaymentEntryDisplayContext
 				commercePaymentEntryDisplayContext =
 					new CommercePaymentEntryDisplayContext(
-						_commerceChannelService,
+						_classNameLocalService, _commerceChannelService,
+						_commerceCurrencyService,
 						_commercePaymentEntryModelResourcePermission,
 						_commercePaymentEntryRefundTypeRegistry,
 						_commercePaymentEntryService,
 						_commercePaymentMethodGroupRelService,
+						_commercePriceFormatter,
 						_portal.getHttpServletRequest(renderRequest), _language,
 						_portal);
 
@@ -83,7 +88,13 @@ public class CommercePaymentPortlet extends MVCPortlet {
 	}
 
 	@Reference
+	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
 	private CommerceChannelService _commerceChannelService;
+
+	@Reference
+	private CommerceCurrencyService _commerceCurrencyService;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.commerce.payment.model.CommercePaymentEntry)"
@@ -101,6 +112,9 @@ public class CommercePaymentPortlet extends MVCPortlet {
 	@Reference
 	private CommercePaymentMethodGroupRelService
 		_commercePaymentMethodGroupRelService;
+
+	@Reference
+	private CommercePriceFormatter _commercePriceFormatter;
 
 	@Reference
 	private Language _language;

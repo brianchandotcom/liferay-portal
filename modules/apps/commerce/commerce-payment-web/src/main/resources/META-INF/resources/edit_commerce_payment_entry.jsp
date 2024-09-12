@@ -127,6 +127,29 @@ portletDisplay.setURLBack(backURL);
 						<div class="col-6">
 							<commerce-ui:info-box
 								elementClasses="py-3"
+								title='<%= LanguageUtil.get(request, "total-amount") %>'
+							>
+								<p class="mb-0"><%= commercePaymentEntryDisplayContext.getTotalAmountFormatted() %></p>
+							</commerce-ui:info-box>
+
+							<commerce-ui:info-box
+								elementClasses="py-3"
+								title='<%= LanguageUtil.get(request, "delivery") %>'
+							>
+								<p class="mb-0"><%= commercePaymentEntryDisplayContext.getDeliveryFormatted() %></p>
+							</commerce-ui:info-box>
+
+							<commerce-ui:info-box
+								elementClasses="py-3"
+								title='<%= LanguageUtil.get(request, "refund-already-completed") %>'
+							>
+								<p class="mb-0"><%= commercePaymentEntryDisplayContext.getRefundAlreadyCompleted() %></p>
+							</commerce-ui:info-box>
+						</div>
+
+						<div class="col-6">
+							<commerce-ui:info-box
+								elementClasses="py-3"
 								title='<%= LanguageUtil.get(request, "refund-status") %>'
 							>
 								<span class="mb-0">
@@ -136,9 +159,7 @@ portletDisplay.setURLBack(backURL);
 									/>
 								</span>
 							</commerce-ui:info-box>
-						</div>
 
-						<div class="col-6">
 							<liferay-portlet:renderURL var="editCommercePaymentEntryNoteURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 								<portlet:param name="mvcRenderCommandName" value="/commerce_payment/edit_commerce_payment_entry_note" />
 								<portlet:param name="commercePaymentEntryId" value="<%= String.valueOf(commercePaymentEntryDisplayContext.getCommercePaymentEntryId()) %>" />
@@ -186,7 +207,7 @@ portletDisplay.setURLBack(backURL);
 				>
 					<div class="row">
 						<div class="col-12">
-							<aui:input disabled="<%= commercePaymentEntryDisplayContext.isDisabled() %>" ignoreRequestValue="<%= true %>" name="amount" required="<%= true %>" suffix="<%= commercePaymentEntryDisplayContext.getCurrencyCode() %>" type="text" value="<%= commercePaymentEntryDisplayContext.getAmount() %>" />
+							<aui:input disabled="<%= commercePaymentEntryDisplayContext.isDisabled() %>" ignoreRequestValue="<%= true %>" name="amount" required="<%= true %>" suffix="<%= commercePaymentEntryDisplayContext.getCurrencyCode() %>" type="text" value="<%= commercePaymentEntryDisplayContext.getFormattedValue(commercePaymentEntryDisplayContext.getAmount()) %>" />
 						</div>
 					</div>
 				</commerce-ui:panel>
@@ -215,6 +236,24 @@ portletDisplay.setURLBack(backURL);
 							</aui:select>
 						</div>
 					</div>
+				</commerce-ui:panel>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-12">
+				<commerce-ui:panel
+					bodyClasses="p-0"
+					elementClasses="flex-fill"
+					title='<%= LanguageUtil.get(request, "refund-history") %>'
+				>
+					<frontend-data-set:headless-display
+						apiURL="<%= commercePaymentEntryDisplayContext.getAPIURL() %>"
+						formName="fm"
+						id="<%= CommercePaymentsFDSNames.REFUNDS %>"
+						propsTransformer="{commercePaymentPropsTransformer} from commerce-payment-web"
+						style="fluid"
+					/>
 				</commerce-ui:panel>
 			</div>
 		</div>

@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Locale;
@@ -73,7 +74,16 @@ public class CommercePaymentEntryRefundTypeImpl
 		LocalizedValuesMap localizedValuesMap =
 			_commercePaymentEntryRefundTypeConfiguration.name();
 
-		return localizedValuesMap.getValues();
+		Map<Locale, String> localizedValuesMapValues =
+			localizedValuesMap.getValues();
+
+		if (localizedValuesMapValues.isEmpty()) {
+			localizedValuesMapValues.put(
+				LocaleThreadLocal.getDefaultLocale(),
+				localizedValuesMap.getDefaultValue());
+		}
+
+		return localizedValuesMapValues;
 	}
 
 	@Override

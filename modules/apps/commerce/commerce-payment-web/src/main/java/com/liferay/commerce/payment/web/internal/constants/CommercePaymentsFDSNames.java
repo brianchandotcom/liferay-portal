@@ -15,4 +15,7 @@ public class CommercePaymentsFDSNames {
 	public static final String PAYMENTS =
 		CommercePortletKeys.COMMERCE_PAYMENT + "-payment";
 
+	public static final String REFUNDS =
+		CommercePortletKeys.COMMERCE_PAYMENT + "-refunds";
+
 }

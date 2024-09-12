@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -21,10 +21,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Crescenzo Rega
  */
 @Component(
-	property = "frontend.data.set.name=" + CommercePaymentsFDSNames.PAYMENTS,
+	property = "frontend.data.set.name=" + CommercePaymentsFDSNames.REFUNDS,
 	service = FDSView.class
 )
-public class CommercePaymentTableFDSView extends BaseTableFDSView {
+public class CommerceRefundTableFDSView extends BaseTableFDSView {
 
 	@Override
 	public FDSTableSchema getFDSTableSchema(Locale locale) {
@@ -32,30 +32,28 @@ public class CommercePaymentTableFDSView extends BaseTableFDSView {
 			_fdsTableSchemaBuilderFactory.create();
 
 		return fdsTableSchemaBuilder.add(
-			"id", "id",
-			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"actionLink")
+			"id", "refund-id"
 		).add(
-			"typeLabel", "type"
+			"amountFormatted", "refund-amount",
+			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)
 		).add(
-			"externalReferenceCode", "erc"
-		).add(
-			"createDate", "date",
+			"createDate", "refund-date",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"dateTime"
 			).setSortable(
 				true
 			)
 		).add(
-			"amountFormatted", "amount"
+			"reasonName.LANG", "refund-reason"
 		).add(
-			"relatedItemNameLabel", "related-to"
-		).add(
-			"relatedItemId", "related-id"
-		).add(
-			"paymentStatusStatus", "status",
+			"paymentStatusStatus", "refund-status",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"CommercePaymentStatusDataRenderer")
+				"CommercePaymentStatusDataRenderer"
+			).setSortable(
+				true
+			)
+		).add(
+			"author", "refunded-by"
 		).build();
 	}
 

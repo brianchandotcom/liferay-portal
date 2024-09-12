@@ -1,0 +1,16 @@
+assemble:
+    - from: batch
+      into: batch
+liferay-language-batch:
+    name: Liferay Language Batch
+    oAuthApplicationHeadlessServer: liferay-language-batch-oauth-application-headless-server
+    type: batch
+liferay-language-batch-oauth-application-headless-server:
+    .serviceAddress: localhost:8080
+    .serviceScheme: http
+    name: Liferay Language OAuth Application Headless Server
+    scopes:
+        - Liferay.Headless.Admin.Workflow.everything
+        - Liferay.Headless.Batch.Engine.everything
+        - Liferay.Message.Admin.REST.everything
+    type: oAuthApplicationHeadlessServer

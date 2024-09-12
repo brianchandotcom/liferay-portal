@@ -3178,6 +3178,20 @@
 	},
 	{
 		"classNames": [
+			"UserLocalService",
+			"UserLocalServiceUtil",
+			"UserService",
+			"UserServiceUtil"
+		],
+		"from": "addUser(long paramName, long paramName, boolean paramName, String paramName, String paramName, boolean paramName, String paramName, String paramName, long paramName, String paramName, Locale paramName, String paramName, String paramName, String paramName, long paramName, long paramName, boolean paramName, int paramName, int paramName, int paramName, String paramName, long[] paramName, long[] paramName, long[] paramName, long[] paramName, boolean paramName, ServiceContext paramName)",
+		"issueKey": "LPD-30564",
+		"newImports": [
+			"com.liferay.portal.kernel.model.UserConstants"
+		],
+		"to": "addUser(param#0#, param#1#, param#2#, param#3#, param#4#, param#5#, param#6#, param#7#, param#10#, param#11#, param#12#, param#13#, param#14#, param#15#, param#16#, param#17#, param#18#, param#19#, param#20#, UserConstants.TYPE_REGULAR, param#21#, param#22#, param#23#, param#24#, param#25#, param#26#)"
+	},
+	{
+		"classNames": [
 			"WorkflowTaskManager"
 		],
 		"from": "getWorkflowTask(long paramName, long paramName)",
@@ -3539,17 +3553,6 @@
 		"from": "addUser(long paramName, boolean paramName, String paramName, String paramName, boolean paramName, String paramName, String paramName, long paramName, String paramName, Locale paramName, String paramName, String paramName, String paramName, long paramName, long paramName, boolean paramName, int paramName, int paramName, int paramName, String paramName, long[] paramName, long[] paramName, long[] paramName, long[] paramName, List<Address> paramName, List<EmailAddress> paramName, List<Phone> paramName, List<Website> paramName, List<AnnouncementsDelivery> paramName, boolean paramName, ServiceContext paramName)",
 		"issueKey": "LPS-192661",
 		"to": "addUser(param#0#, param#1#, param#2#, param#3#, param#4#, param#5#, param#6#, param#9#, param#10#, param#11#, param#12#, param#13#, param#14#, param#15#, param#16#, param#17#, param#18#, param#19#, param#20#, param#21#, param#22#, param#23#, param#24#, param#25#, param#26#, param#27#, param#28#, param#29#, param#30#)"
-	},
-	{
-		"classNames": [
-			"UserLocalService",
-			"UserLocalServiceUtil",
-			"UserService",
-			"UserServiceUtil"
-		],
-		"from": "addUser(long paramName, long paramName, boolean paramName, String paramName, String paramName, boolean paramName, String paramName, String paramName, long paramName, String paramName, Locale paramName, String paramName, String paramName, String paramName, long paramName, long paramName, boolean paramName, int paramName, int paramName, int paramName, String paramName, long[] paramName, long[] paramName, long[] paramName, long[] paramName, boolean paramName, ServiceContext paramName)",
-		"issueKey": "LPS-192661",
-		"to": "addUser(param#0#, param#1#, param#2#, param#3#, param#4#, param#5#, param#6#, param#7#, param#10#, param#11#, param#12#, param#13#, param#14#, param#15#, param#16#, param#17#, param#18#, param#19#, param#20#, 0, param#21#, param#22#, param#23#, param#24#, param#25#, param#26#)"
 	},
 	{
 		"classNames": [

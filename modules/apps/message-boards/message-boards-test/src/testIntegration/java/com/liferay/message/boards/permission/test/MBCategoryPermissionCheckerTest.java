@@ -66,12 +66,12 @@ public class MBCategoryPermissionCheckerTest extends BasePermissionTestCase {
 				group.getGroupId(), TestPropsValues.getUserId());
 
 		_category = MBCategoryLocalServiceUtil.addCategory(
-			TestPropsValues.getUserId(),
+			null, TestPropsValues.getUserId(),
 			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
 			RandomTestUtil.randomString(), StringPool.BLANK, serviceContext);
 
 		_subcategory = MBCategoryLocalServiceUtil.addCategory(
-			TestPropsValues.getUserId(), _category.getCategoryId(),
+			null, TestPropsValues.getUserId(), _category.getCategoryId(),
 			RandomTestUtil.randomString(), StringPool.BLANK, serviceContext);
 	}
 

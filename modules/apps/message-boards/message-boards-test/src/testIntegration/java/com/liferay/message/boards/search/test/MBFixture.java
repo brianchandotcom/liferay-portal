@@ -47,7 +47,7 @@ public class MBFixture {
 
 	public MBCategory createMBCategory() throws Exception {
 		MBCategory mbCategory = MBCategoryLocalServiceUtil.addCategory(
-			getUserId(), 0, RandomTestUtil.randomString(),
+			null, getUserId(), 0, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), getServiceContext());
 
 		_mbCategories.add(mbCategory);

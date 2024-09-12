@@ -74,12 +74,12 @@ public class MBPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 				group.getGroupId(), TestPropsValues.getUserId());
 
 		MBCategory parentCategory = MBCategoryServiceUtil.addCategory(
-			TestPropsValues.getUserId(),
+			null, TestPropsValues.getUserId(),
 			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
 			RandomTestUtil.randomString(), StringPool.BLANK, serviceContext);
 
 		MBCategory childCategory = MBCategoryServiceUtil.addCategory(
-			TestPropsValues.getUserId(), parentCategory.getCategoryId(),
+			null, TestPropsValues.getUserId(), parentCategory.getCategoryId(),
 			RandomTestUtil.randomString(), StringPool.BLANK, serviceContext);
 
 		MBCategoryLocalServiceUtil.moveCategoryToTrash(
@@ -113,7 +113,7 @@ public class MBPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 				stagingGroup.getGroupId(), TestPropsValues.getUserId());
 
 		MBCategory category = MBCategoryServiceUtil.addCategory(
-			TestPropsValues.getUserId(),
+			null, TestPropsValues.getUserId(),
 			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
 			RandomTestUtil.randomString(), StringPool.BLANK, serviceContext);
 

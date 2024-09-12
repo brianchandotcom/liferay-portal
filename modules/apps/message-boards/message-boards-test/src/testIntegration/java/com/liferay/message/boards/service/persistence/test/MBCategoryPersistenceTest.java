@@ -6,6 +6,7 @@
 package com.liferay.message.boards.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.message.boards.exception.DuplicateMBCategoryExternalReferenceCodeException;
 import com.liferay.message.boards.exception.NoSuchCategoryException;
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.service.MBCategoryLocalServiceUtil;
@@ -125,6 +126,8 @@ public class MBCategoryPersistenceTest {
 
 		newMBCategory.setUuid(RandomTestUtil.randomString());
 
+		newMBCategory.setExternalReferenceCode(RandomTestUtil.randomString());
+
 		newMBCategory.setGroupId(RandomTestUtil.nextLong());
 
 		newMBCategory.setCompanyId(RandomTestUtil.nextLong());
@@ -171,6 +174,9 @@ public class MBCategoryPersistenceTest {
 		Assert.assertEquals(
 			existingMBCategory.getUuid(), newMBCategory.getUuid());
 		Assert.assertEquals(
+			existingMBCategory.getExternalReferenceCode(),
+			newMBCategory.getExternalReferenceCode());
+		Assert.assertEquals(
 			existingMBCategory.getCategoryId(), newMBCategory.getCategoryId());
 		Assert.assertEquals(
 			existingMBCategory.getGroupId(), newMBCategory.getGroupId());
@@ -214,6 +220,26 @@ public class MBCategoryPersistenceTest {
 		Assert.assertEquals(
 			Time.getShortTimestamp(existingMBCategory.getStatusDate()),
 			Time.getShortTimestamp(newMBCategory.getStatusDate()));
+	}
+
+	@Test(expected = DuplicateMBCategoryExternalReferenceCodeException.class)
+	public void testUpdateWithExistingExternalReferenceCode() throws Exception {
+		MBCategory mbCategory = addMBCategory();
+
+		MBCategory newMBCategory = addMBCategory();
+
+		newMBCategory.setGroupId(mbCategory.getGroupId());
+
+		newMBCategory = _persistence.update(newMBCategory);
+
+		Session session = _persistence.getCurrentSession();
+
+		session.evict(newMBCategory);
+
+		newMBCategory.setExternalReferenceCode(
+			mbCategory.getExternalReferenceCode());
+
+		_persistence.update(newMBCategory);
 	}
 
 	@Test
@@ -367,6 +393,15 @@ public class MBCategoryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByERC_G() throws Exception {
+		_persistence.countByERC_G("", RandomTestUtil.nextLong());
+
+		_persistence.countByERC_G("null", 0L);
+
+		_persistence.countByERC_G((String)null, 0L);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		MBCategory newMBCategory = addMBCategory();
 
@@ -416,12 +451,13 @@ public class MBCategoryPersistenceTest {
 	protected OrderByComparator<MBCategory> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
 			"MBCategory", "mvccVersion", true, "ctCollectionId", true, "uuid",
-			true, "categoryId", true, "groupId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "parentCategoryId", true, "name", true,
-			"description", true, "displayStyle", true, "friendlyURL", true,
-			"lastPublishDate", true, "status", true, "statusByUserId", true,
-			"statusByUserName", true, "statusDate", true);
+			true, "externalReferenceCode", true, "categoryId", true, "groupId",
+			true, "companyId", true, "userId", true, "userName", true,
+			"createDate", true, "modifiedDate", true, "parentCategoryId", true,
+			"name", true, "description", true, "displayStyle", true,
+			"friendlyURL", true, "lastPublishDate", true, "status", true,
+			"statusByUserId", true, "statusByUserName", true, "statusDate",
+			true);
 	}
 
 	@Test
@@ -705,6 +741,17 @@ public class MBCategoryPersistenceTest {
 			ReflectionTestUtil.invoke(
 				mbCategory, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "friendlyURL"));
+
+		Assert.assertEquals(
+			mbCategory.getExternalReferenceCode(),
+			ReflectionTestUtil.invoke(
+				mbCategory, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "externalReferenceCode"));
+		Assert.assertEquals(
+			Long.valueOf(mbCategory.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(
+				mbCategory, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 	}
 
 	protected MBCategory addMBCategory() throws Exception {
@@ -717,6 +764,8 @@ public class MBCategoryPersistenceTest {
 		mbCategory.setCtCollectionId(RandomTestUtil.nextLong());
 
 		mbCategory.setUuid(RandomTestUtil.randomString());
+
+		mbCategory.setExternalReferenceCode(RandomTestUtil.randomString());
 
 		mbCategory.setGroupId(RandomTestUtil.nextLong());
 

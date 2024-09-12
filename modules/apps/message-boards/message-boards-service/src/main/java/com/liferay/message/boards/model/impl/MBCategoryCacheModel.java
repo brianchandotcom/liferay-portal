@@ -68,7 +68,7 @@ public class MBCategoryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(41);
+		StringBundler sb = new StringBundler(43);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -76,6 +76,8 @@ public class MBCategoryCacheModel
 		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
+		sb.append(", externalReferenceCode=");
+		sb.append(externalReferenceCode);
 		sb.append(", categoryId=");
 		sb.append(categoryId);
 		sb.append(", groupId=");
@@ -127,6 +129,13 @@ public class MBCategoryCacheModel
 		}
 		else {
 			mbCategoryImpl.setUuid(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			mbCategoryImpl.setExternalReferenceCode("");
+		}
+		else {
+			mbCategoryImpl.setExternalReferenceCode(externalReferenceCode);
 		}
 
 		mbCategoryImpl.setCategoryId(categoryId);
@@ -220,6 +229,7 @@ public class MBCategoryCacheModel
 
 		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
+		externalReferenceCode = objectInput.readUTF();
 
 		categoryId = objectInput.readLong();
 
@@ -257,6 +267,13 @@ public class MBCategoryCacheModel
 		}
 		else {
 			objectOutput.writeUTF(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(externalReferenceCode);
 		}
 
 		objectOutput.writeLong(categoryId);
@@ -326,6 +343,7 @@ public class MBCategoryCacheModel
 	public long mvccVersion;
 	public long ctCollectionId;
 	public String uuid;
+	public String externalReferenceCode;
 	public long categoryId;
 	public long groupId;
 	public long companyId;

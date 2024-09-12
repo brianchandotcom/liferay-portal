@@ -94,7 +94,8 @@ export default function fieldChange({
 			if (
 				fieldInstance.type === 'numeric' ||
 				fieldInstance.type === 'text' ||
-				fieldInstance.type === 'rich_text'
+				fieldInstance.type === 'rich_text' ||
+				fieldInstance.type === 'image'
 			) {
 				dispatch({type: EVENT_TYPES.HISTORY.EDITED});
 			}
@@ -184,7 +185,8 @@ export default function fieldChange({
 			if (
 				fieldInstance.type !== 'numeric' &&
 				fieldInstance.type !== 'text' &&
-				fieldInstance.type !== 'rich_text'
+				fieldInstance.type !== 'rich_text' &&
+				fieldInstance.type !== 'image'
 			) {
 				setTimeout(
 					() =>

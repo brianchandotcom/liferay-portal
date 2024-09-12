@@ -119,7 +119,9 @@ const ImagePicker = ({
 		}
 
 		openSelectionModal({
-			onClose: () => onBlur(event),
+			onClose: () => {
+				setTimeout(() => onBlur(event), 100);
+			},
 			onSelect: handleFieldChanged,
 			selectEventName: `${portletNamespace}selectDocumentLibrary`,
 			title: sub(
@@ -256,6 +258,7 @@ const ImagePicker = ({
 								disabled={readOnly}
 								lang={editingLanguageId}
 								name={`${name}-description`}
+								onBlur={onBlur}
 								onChange={({event, target: {value}}) =>
 									dispatchValue(
 										{value: {description: value, event}},

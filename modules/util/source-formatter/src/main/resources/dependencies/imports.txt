@@ -68,7 +68,6 @@ com.liferay.commerce.account.service.CommerceAccountGroupRelService=com.liferay.
 com.liferay.commerce.account.service.CommerceAccountGroupRelServiceUtil=com.liferay.account.service.AccountGroupRelServiceUtil
 com.liferay.commerce.account.service.CommerceAccountLocalServiceUtil=com.liferay.account.service.AccountEntryLocalServiceUtil
 com.liferay.commerce.constants.CommerceDestinationNames=com.liferay.portal.kernel.messaging.DestinationNames
-com.liferay.commerce.constants.CommerceOrderConstants=com.liferay.commerce.constants.CommerceOrderPaymentConstants
 com.liferay.commerce.model.CommerceCountry=com.liferay.portal.kernel.model.Country
 com.liferay.commerce.model.CommerceRegion=com.liferay.portal.kernel.model.Region
 com.liferay.commerce.product.content.util.CPContentHelper=com.liferay.commerce.product.content.helper.CPContentHelper

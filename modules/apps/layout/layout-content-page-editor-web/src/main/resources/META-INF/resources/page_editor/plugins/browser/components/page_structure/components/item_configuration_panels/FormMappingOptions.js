@@ -51,7 +51,9 @@ export default function FormMappingOptions({
 						classNameId,
 						classTypeId,
 						formConfig: FORM_MAPPING_SOURCES.otherContentType,
-						formType: 'simple',
+						formType: item.config.formType
+							? item.config.formType
+							: 'simple',
 					},
 					fields.map(({uniqueId}) => uniqueId)
 				);

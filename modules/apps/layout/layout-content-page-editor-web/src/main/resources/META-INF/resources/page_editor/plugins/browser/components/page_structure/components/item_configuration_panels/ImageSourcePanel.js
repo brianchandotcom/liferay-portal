@@ -260,11 +260,9 @@ function DirectImagePanel({item}) {
 				<CheckboxField
 					field={{
 						defaultValue: false,
-						description: Liferay.FeatureFlags['LPS-187285']
-							? Liferay.Language.get(
-									'lazy-loading-can-help-to-improve-page-performance'
-								)
-							: undefined,
+						description: Liferay.Language.get(
+							'lazy-loading-can-help-to-improve-page-performance'
+						),
 						label: Liferay.Language.get('enable-lazy-loading'),
 						name: 'lazyLoading',
 					}}

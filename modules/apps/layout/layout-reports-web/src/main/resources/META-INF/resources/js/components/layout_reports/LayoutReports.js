@@ -6,13 +6,11 @@
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
-import classNames from 'classnames';
 import {fetch, sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useCallback, useContext, useEffect} from 'react';
 
 import {LOAD_DATA, SET_DATA, SET_ERROR} from '../../constants/actionTypes';
-import {ConstantsContext} from '../../context/ConstantsContext';
 import {
 	StoreDispatchContext,
 	StoreStateContext,
@@ -20,18 +18,14 @@ import {
 import loadIssues from '../../utils/loadIssues';
 import BasicInformation from './BasicInformation';
 import ErrorAlert from './ErrorAlert';
-import IssueDetail from './IssueDetail';
 import IssuesList from './IssuesList';
 import NotConfigured from './NotConfigured';
 
-export default function LayoutReports({eventTriggered, url}) {
+export default function LayoutReports({url}) {
 	const isMounted = useIsMounted();
 
 	const {data, error, languageId, loading, selectedItem} =
 		useContext(StoreStateContext);
-
-	const {isPanelStateOpen, layoutReportsDataURL} =
-		useContext(ConstantsContext);
 
 	const dispatch = useContext(StoreDispatchContext);
 
@@ -100,19 +94,10 @@ export default function LayoutReports({eventTriggered, url}) {
 	};
 
 	useEffect(() => {
-		if (Liferay.FeatureFlags['LPS-187284'] && !data && !loading) {
+		if (!data && !loading) {
 			getData(url);
 		}
-		else if (isPanelStateOpen && !data && !loading) {
-			getData(layoutReportsDataURL);
-		}
-	}, [data, isPanelStateOpen, layoutReportsDataURL, loading, getData, url]);
-
-	useEffect(() => {
-		if (!Liferay.FeatureFlags['LPS-187284'] && eventTriggered && !data) {
-			getData(layoutReportsDataURL);
-		}
-	}, [eventTriggered, data, layoutReportsDataURL, getData]);
+	}, [data, loading, getData, url]);
 
 	if (!data) {
 		return null;
@@ -137,9 +122,6 @@ export default function LayoutReports({eventTriggered, url}) {
 		else if (notConfigured) {
 			return <NotConfigured />;
 		}
-		else if (selectedItem && !Liferay.FeatureFlags['LPS-187284']) {
-			return <IssueDetail />;
-		}
 		else {
 			return <IssuesList />;
 		}
@@ -149,7 +131,7 @@ export default function LayoutReports({eventTriggered, url}) {
 		<>
 			{hasApiKey && (
 				<>
-					{Liferay.FeatureFlags['LPS-187284'] && showAlert ? (
+					{showAlert ? (
 						<ClayAlert
 							className="c-mb-4"
 							displayType="info"
@@ -172,11 +154,7 @@ export default function LayoutReports({eventTriggered, url}) {
 						</ClayAlert>
 					) : null}
 
-					<div
-						className={classNames('c-pb-3', {
-							'c-px-3': !Liferay.FeatureFlags['LPS-187284'],
-						})}
-					>
+					<div className="c-pb-3">
 						<BasicInformation
 							defaultLanguageId={data.defaultLanguageId}
 							pageURLs={data.pageURLs}

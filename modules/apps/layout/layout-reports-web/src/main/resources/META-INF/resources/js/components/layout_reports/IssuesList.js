@@ -3,14 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayAlert from '@clayui/alert';
 import ClayBadge from '@clayui/badge';
 import ClayButton from '@clayui/button';
 import ClayLayout from '@clayui/layout';
 import ClayList from '@clayui/list';
 import ClayPanel from '@clayui/panel';
 import ClayProgressBar from '@clayui/progress-bar';
-import classNames from 'classnames';
 import {sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useContext, useEffect, useMemo, useState} from 'react';
@@ -53,27 +51,7 @@ export default function IssuesList() {
 
 	return (
 		<>
-			{!Liferay.FeatureFlags['LPS-187284'] &&
-				localizedIssues &&
-				!loading && (
-					<ClayAlert
-						className="c-mb-4"
-						displayType="info"
-						variant="stripe"
-					>
-						{sub(
-							Liferay.Language.get(
-								'showing-data-from-x-relaunch-to-update-data'
-							),
-							localizedIssues.date
-						)}
-					</ClayAlert>
-				)}
-			<div
-				className={classNames('c-pb-3', {
-					'c-px-3': !Liferay.FeatureFlags['LPS-187284'],
-				})}
-			>
+			<div className="c-pb-3">
 				{loading ? (
 					<LoadingProgressBar percentage={percentage} />
 				) : localizedIssues ? (

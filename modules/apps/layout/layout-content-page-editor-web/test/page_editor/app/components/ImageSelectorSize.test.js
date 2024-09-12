@@ -62,8 +62,6 @@ const imageSizesPromise = Promise.resolve([
 
 describe('ImageSelectorSize', () => {
 	beforeEach(() => {
-		Liferay.FeatureFlags['LPS-187285'] = true;
-
 		useGlobalContext.mockReturnValue({
 			document: {
 				body: {
@@ -86,8 +84,6 @@ describe('ImageSelectorSize', () => {
 	});
 
 	afterEach(() => {
-		Liferay.FeatureFlags['LPS-187285'] = false;
-
 		useGlobalContext.mockClear();
 		ImageService.getAvailableImageConfigurations.mockClear();
 	});

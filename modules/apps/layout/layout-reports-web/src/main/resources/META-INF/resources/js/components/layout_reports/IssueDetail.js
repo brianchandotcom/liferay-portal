@@ -8,45 +8,10 @@ import ClayButton from '@clayui/button';
 import ClayLayout from '@clayui/layout';
 import ClayList from '@clayui/list';
 import ClayPanel from '@clayui/panel';
-import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React, {useContext, useState} from 'react';
+import React, {useState} from 'react';
 
-import {StoreStateContext} from '../../context/StoreContext';
 import normalizeFailingElements from '../../utils/normalizeFailingElements';
-
-export default function IssueDetail() {
-	const {selectedItem} = useContext(StoreStateContext);
-
-	if (Liferay.FeatureFlags['LPS-187284']) {
-		return null;
-	}
-
-	return (
-		<div
-			className={classNames('c-pb-3', {
-				'c-px-3': !Liferay.FeatureFlags['LPS-187284'],
-			})}
-		>
-			<ClayPanel.Group className="panel-group-flush panel-group-sm">
-				<HtmlPanel
-					content={selectedItem.description}
-					title={Liferay.Language.get('description')}
-				/>
-
-				<HtmlPanel
-					content={selectedItem.tips}
-					title={Liferay.Language.get('tips')}
-				/>
-
-				<FailingElementsPanel
-					failingElements={selectedItem.failingElements}
-					issueType={selectedItem.key}
-				/>
-			</ClayPanel.Group>
-		</div>
-	);
-}
 
 const HtmlPanel = ({content, title}) => (
 	<ClayPanel

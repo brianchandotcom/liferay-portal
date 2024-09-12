@@ -51,9 +51,7 @@ export default function NoIssuesLoaded() {
 			</p>
 
 			<ClayButton displayType="secondary" onClick={onLaunchButtonClick}>
-				{Liferay.FeatureFlags['LPS-187284']
-					? Liferay.Language.get('launch')
-					: Liferay.Language.get('launch-page-audit')}
+				{Liferay.Language.get('launch')}
 			</ClayButton>
 		</div>
 	);

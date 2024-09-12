@@ -150,14 +150,6 @@ const renderIssuesList = ({
 };
 
 describe('IssuesList', () => {
-	beforeAll(() => {
-		Liferay.FeatureFlags['LPS-187284'] = true;
-	});
-
-	afterAll(() => {
-		Liferay.FeatureFlags['LPS-187284'] = false;
-	});
-
 	it('renders accessibility and seo sections with issues count', () => {
 		const {getByText} = renderIssuesList({
 			layoutReportsIssues: mockLayoutReportsIssues,

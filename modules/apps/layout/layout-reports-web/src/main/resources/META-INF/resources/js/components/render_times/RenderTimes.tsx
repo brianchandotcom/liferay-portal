@@ -10,7 +10,6 @@ import {
 	SearchResultsMessage,
 	SegmentExperience,
 } from '@liferay/layout-js-components-web';
-import {FeatureIndicator} from 'frontend-js-components-web';
 import {fetch} from 'frontend-js-web';
 import React, {useContext, useEffect, useMemo, useState} from 'react';
 
@@ -66,15 +65,6 @@ export default function RenderTimes({
 
 	return (
 		<>
-			<div className="c-mb-3">
-				<FeatureIndicator
-					interactive
-					learnResourceContext={learnResources}
-					tooltipAlign="top-left"
-					type="beta"
-				/>
-			</div>
-
 			{segmentsExperiences.length > 1 ? (
 				<ExperienceSelector
 					className="page-audit__experience-selector"

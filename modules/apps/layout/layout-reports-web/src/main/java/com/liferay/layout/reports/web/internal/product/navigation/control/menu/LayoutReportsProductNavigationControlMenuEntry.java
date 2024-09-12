@@ -18,7 +18,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProviderUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -119,13 +118,7 @@ public class LayoutReportsProductNavigationControlMenuEntry
 			IconTag iconTag = new IconTag();
 
 			iconTag.setCssClass("icon-monospaced");
-
-			if (FeatureFlagManagerUtil.isEnabled("LPS-187284")) {
-				iconTag.setSymbol("search-experiences");
-			}
-			else {
-				iconTag.setSymbol("info-circle");
-			}
+			iconTag.setSymbol("search-experiences");
 
 			writer.write(
 				StringUtil.replace(
@@ -170,17 +163,9 @@ public class LayoutReportsProductNavigationControlMenuEntry
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-187284") &&
-			!_layoutReportsGooglePageSpeedConfigurationProvider.isEnabled(
-				themeDisplay.getScopeGroup())) {
-
-			return false;
-		}
-
 		Layout layout = themeDisplay.getLayout();
 
-		if (FeatureFlagManagerUtil.isEnabled("LPS-187284") &&
-			!_layoutReportsGooglePageSpeedConfigurationProvider.isEnabled(
+		if (!_layoutReportsGooglePageSpeedConfigurationProvider.isEnabled(
 				themeDisplay.getScopeGroup()) &&
 			!layout.isTypeContent() && !layout.isTypeAssetDisplay()) {
 
@@ -346,36 +331,27 @@ public class LayoutReportsProductNavigationControlMenuEntry
 							(ThemeDisplay)httpServletRequest.getAttribute(
 								WebKeys.THEME_DISPLAY);
 
-						if (FeatureFlagManagerUtil.isEnabled("LPS-187284")) {
-							String layoutReportsDataURL =
-								HttpComponentsUtil.addParameters(
-									StringBundler.concat(
-										themeDisplay.getPortalURL(),
-										themeDisplay.getPathMain(),
-										"/layout_reports",
-										"/get_layout_reports_data"),
-									"p_l_id", themeDisplay.getPlid());
+						String layoutReportsDataURL =
+							HttpComponentsUtil.addParameters(
+								StringBundler.concat(
+									themeDisplay.getPortalURL(),
+									themeDisplay.getPathMain(),
+									"/layout_reports",
+									"/get_layout_reports_data"),
+								"p_l_id", themeDisplay.getPlid());
 
-							long segmentsExperienceId = ParamUtil.getLong(
-								_portal.getOriginalServletRequest(
-									httpServletRequest),
-								"segmentsExperienceId", -1);
+						long segmentsExperienceId = ParamUtil.getLong(
+							_portal.getOriginalServletRequest(
+								httpServletRequest),
+							"segmentsExperienceId", -1);
 
-							if (segmentsExperienceId == -1) {
-								return layoutReportsDataURL;
-							}
-
-							return HttpComponentsUtil.addParameter(
-								layoutReportsDataURL, "segmentsExperienceId",
-								segmentsExperienceId);
+						if (segmentsExperienceId == -1) {
+							return layoutReportsDataURL;
 						}
 
-						return HttpComponentsUtil.addParameters(
-							StringBundler.concat(
-								themeDisplay.getPortalURL(),
-								themeDisplay.getPathMain(), "/layout_reports",
-								"/get_google_page_speed_data"),
-							"p_l_id", themeDisplay.getPlid());
+						return HttpComponentsUtil.addParameter(
+							layoutReportsDataURL, "segmentsExperienceId",
+							segmentsExperienceId);
 					}
 				).put(
 					"learnResources",

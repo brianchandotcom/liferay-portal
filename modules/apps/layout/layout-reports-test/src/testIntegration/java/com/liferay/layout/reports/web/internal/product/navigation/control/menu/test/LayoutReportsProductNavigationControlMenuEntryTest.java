@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -86,7 +85,6 @@ public class LayoutReportsProductNavigationControlMenuEntryTest {
 							PermissionCheckerFactoryUtil.create(user), user))));
 	}
 
-	@FeatureFlags("LPS-187284")
 	@Test
 	public void testIsShowWithGooglePageSpeedDisabledAndLayoutTypeAssetDisplay()
 		throws Exception {
@@ -106,7 +104,6 @@ public class LayoutReportsProductNavigationControlMenuEntryTest {
 							PermissionCheckerFactoryUtil.create(user), user))));
 	}
 
-	@FeatureFlags("LPS-187284")
 	@Test
 	public void testIsShowWithGooglePageSpeedDisabledAndLayoutTypeContent()
 		throws Exception {
@@ -126,7 +123,6 @@ public class LayoutReportsProductNavigationControlMenuEntryTest {
 							PermissionCheckerFactoryUtil.create(user), user))));
 	}
 
-	@FeatureFlags("LPS-187284")
 	@Test
 	public void testIsShowWithGooglePageSpeedDisabledAndLayoutTypePortlet()
 		throws Exception {

@@ -139,8 +139,6 @@ describe('LayoutReports renders proper component', () => {
 	});
 
 	it('shows an alert with last load date and a button to reload when there is cached data', () => {
-		Liferay.FeatureFlags['LPS-187284'] = true;
-
 		render(getLayoutReportsComponent({layoutReportsIssues}));
 
 		expect(
@@ -148,7 +146,5 @@ describe('LayoutReports renders proper component', () => {
 		).toBeInTheDocument();
 
 		expect(screen.getByText('relaunch-to-update-data')).toBeInTheDocument();
-
-		Liferay.FeatureFlags['LPS-187284'] = false;
 	});
 });

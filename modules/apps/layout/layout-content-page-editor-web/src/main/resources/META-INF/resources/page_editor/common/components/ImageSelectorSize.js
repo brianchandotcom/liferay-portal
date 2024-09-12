@@ -55,10 +55,6 @@ export function ImageSelectorSize({
 	);
 
 	const showImageSizeWarning = useMemo(() => {
-		if (!Liferay.FeatureFlags['LPS-187285']) {
-			return false;
-		}
-
 		if (isNullOrUndefined(imageSizeLimit)) {
 			return false;
 		}

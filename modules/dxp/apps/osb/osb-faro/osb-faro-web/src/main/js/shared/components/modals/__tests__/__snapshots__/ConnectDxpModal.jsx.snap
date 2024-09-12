@@ -158,24 +158,14 @@ exports[`ConnectDXPModal renders 1`] = `
                 class="form-control select-root mt-1"
               >
                 <option
-                  value="dxp-70-fixpack-98"
+                  value="dxp-2024-q-1-1"
                 >
-                  DXP 7.0 Fix Pack 98
+                  DXP 2024.Q1.1 Quarterly Release
                 </option>
                 <option
-                  value="dxp-71-fixpack-22"
+                  value="dxp-73-u30"
                 >
-                  DXP 7.1 Fix Pack 22
-                </option>
-                <option
-                  value="dxp-72-fixpack-1"
-                >
-                  DXP 7.2 Fix Pack 11
-                </option>
-                <option
-                  value="dxp-73-fixpack-1"
-                >
-                  DXP 7.3 Fix Pack 1
+                  DXP Version 7.3 U30 + and above with hotfix
                 </option>
               </select>
             </div>
@@ -184,7 +174,7 @@ exports[`ConnectDXPModal renders 1`] = `
             >
               <a
                 class="btn btn-secondary button-root more-information-link mt-4"
-                href="https://customer.liferay.com/downloads/-/download/liferay-dxp-7-0-fix-pack-98"
+                href="https://customer.liferay.com/downloads/-/download/dxp-2024-q1-1-quarterly-release"
                 rel="noreferrer noopener"
                 target="_blank"
               >

@@ -39,21 +39,13 @@ import {withHistory} from 'shared/hoc';
 const TIMEOUT_INTERVAL = 5000;
 
 const DXP_VERSIONS = {
-	'dxp-70-fixpack-98': {
-		label: 'DXP 7.0 Fix Pack 98',
-		url: URLConstants.DownloadDXP70FixPack98
+	'dxp-2024-q-1-1': {
+		label: 'DXP 2024.Q1.1 Quarterly Release',
+		url: URLConstants.DownloadDXP2024Q11
 	},
-	'dxp-71-fixpack-22': {
-		label: 'DXP 7.1 Fix Pack 22',
-		url: URLConstants.DownloadDXP71FixPack22
-	},
-	'dxp-72-fixpack-1': {
-		label: 'DXP 7.2 Fix Pack 11',
-		url: URLConstants.DownloadDXP72FixPack11
-	},
-	'dxp-73-fixpack-1': {
-		label: 'DXP 7.3 Fix Pack 1',
-		url: URLConstants.DownloadDXP73FixPack1
+	'dxp-73-u30': {
+		label: 'DXP Version 7.3 U30 + and above with hotfix',
+		url: URLConstants.DownloadDXP73U30
 	}
 };
 

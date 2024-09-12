@@ -1,0 +1,9 @@
+dependencies {
+	testIntegrationImplementation group: "org.apache.felix", name: "org.apache.felix.http.servlet-api", version: "1.1.2"
+	testIntegrationImplementation group: "org.osgi", name: "org.osgi.service.component", version: "1.4.0"
+	testIntegrationImplementation group: "org.osgi", name: "osgi.core", version: "6.0.0"
+	testIntegrationImplementation project(":apps:oauth2-provider:oauth2-provider-api")
+	testIntegrationImplementation project(":apps:portal-configuration:portal-configuration-test-util")
+	testIntegrationImplementation project(":dxp:apps:scim:scim-rest-api")
+	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
+}

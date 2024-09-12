@@ -6,6 +6,7 @@
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
+import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
@@ -25,6 +26,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portlet.documentlibrary.constants.DLConstants;
 
+import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -53,6 +55,17 @@ public class DocumentMetadataSetResourceImpl
 			documentMetadataSetId);
 
 		_ddmStructureLocalService.deleteStructure(documentMetadataSetId);
+
+		List<DLFileEntryMetadata> dlFileEntryMetadataList =
+			_dlFileEntryMetadataLocalService.
+				getNoStructuresFileEntryMetadatas();
+
+		for (DLFileEntryMetadata dlFileEntryMetadata :
+				dlFileEntryMetadataList) {
+
+			_dlFileEntryMetadataLocalService.deleteDLFileEntryMetadata(
+				dlFileEntryMetadata);
+		}
 	}
 
 	@Override
@@ -159,6 +172,9 @@ public class DocumentMetadataSetResourceImpl
 
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;
+
+	@Reference
+	private DLFileEntryMetadataLocalService _dlFileEntryMetadataLocalService;
 
 	@Reference(
 		target = "(component.name=com.liferay.headless.delivery.internal.dto.v1_0.converter.DocumentMetadataSetDTOConverter)"

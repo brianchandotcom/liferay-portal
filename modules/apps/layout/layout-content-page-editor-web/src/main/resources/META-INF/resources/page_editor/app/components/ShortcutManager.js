@@ -349,6 +349,7 @@ export default function ShortcutManager() {
 				canBeExecuted: () =>
 					canUpdatePageStructure &&
 					isOnlyOneParentSelected(activeItemIds) &&
+					!!copiedItemIds.length &&
 					copiedItemIds.every(
 						(copiedItemId) =>
 							!!layoutData.items[copiedItemId] &&

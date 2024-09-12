@@ -105,6 +105,20 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 	}
 
 	@Override
+	public void deleteCategory(String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		MBCategory category =
+			mbCategoryLocalService.getMBCategoryByExternalReferenceCode(
+				externalReferenceCode, groupId);
+
+		_categoryModelResourcePermission.check(
+			getPermissionChecker(), category, ActionKeys.DELETE);
+
+		mbCategoryLocalService.deleteCategory(category);
+	}
+
+	@Override
 	public MBCategory fetchMBCategory(long groupId, String friendlyURL)
 		throws PortalException {
 

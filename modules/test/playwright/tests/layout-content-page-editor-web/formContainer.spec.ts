@@ -355,13 +355,13 @@ test.describe('Multistep', () => {
 				0
 			);
 
-			// Change to Multi Step and check first step is displayed
+			// Change to Multistep and check first step is displayed
 
 			await pageEditorPage.changeFragmentConfiguration({
 				fieldLabel: 'Form Type',
 				fragmentId: formId,
 				tab: 'General',
-				value: 'Multi Step',
+				value: 'Multistep',
 			});
 
 			await expect(page.locator('.page-editor__form-step')).toHaveCount(

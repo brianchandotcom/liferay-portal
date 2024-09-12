@@ -36,6 +36,6 @@ export function openFormConversionModal({onContinue}: Props) {
 			},
 		],
 		status: 'info',
-		title: Liferay.Language.get('convert-to-multi-step-form'),
+		title: Liferay.Language.get('convert-to-multistep-form'),
 	});
 }

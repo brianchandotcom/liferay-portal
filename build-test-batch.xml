@@ -6783,37 +6783,41 @@ information. Make sure to commit in all format-javadoc results.
 						import java.util.regex.Pattern;
 						import java.util.regex.Matcher;
 
-						String modulesCompileTaskGroup = project.getProperty("modules.compile.task.groups");
+						String modulesCompileTaskGroupsString = project.getProperty("modules.compile.task.groups");
 
-						String[] modulesCompileTaskGroupList = modulesCompileTaskGroup.split(" ");
+						String[] modulesCompileTaskGroups = modulesCompileTaskGroupsString.split(" ");
 
 						StringBuilder sb = new StringBuilder();
 
-						for (String task : modulesCompileTaskGroupList) {
+						for (String modulesCompileTaskGroup : modulesCompileTaskGroups) {
 
 							Pattern pattern = Pattern.compile("(.*):.*");
 
-							Matcher matcher = pattern.matcher(task);
+							Matcher matcher = pattern.matcher(modulesCompileTaskGroup);
 
-							String convertedTaskString = "";
-
-							if (matcher.find()) {
-								convertedTaskString = matcher.group(1);
-							} else {
+							if (!matcher.find()) {
 								continue;
 							}
 
-							convertedTaskString = convertedTaskString.replace(":", "/");
+							String modulesCompileTaskGroupPath = matcher.group(1);
 
-							String taskPathString = project.getProperty("project.dir") + "/modules" + convertedTaskString;
+							modulesCompileTaskGroupDirPath = project.getProperty("project.dir") + "/modules" + modulesCompileTaskGroupPath.replace(":", "/");
 
-							File taskPathFile = new File(taskPathString + "/" + ".lfrbuild-portal");
+							File modulesCompileTaskGroupDir = new File(modulesCompileTaskGroupDirPath);
 
-							File taskPath = new File(taskPathString);
-
-							if (taskPath.isDirectory() && !taskPathFile.exists()) {
-								sb.append(task + " ");
+							if (!modulesCompileTaskGroupDir.isDirectory()) {
+								continue;
 							}
+
+							File lfrBuildPortalFile = new File(modulesCompileTaskGroupDir, ".lfrbuild-portal");
+
+							if (taskPathFile.exists()) {
+								continue;
+							}
+
+							sb.append(modulesCompileTaskGroup);
+
+							sb.append(" ");
 						}
 						project.setProperty("modules.compile.processed.task.groups", sb.toString());
 					]]>

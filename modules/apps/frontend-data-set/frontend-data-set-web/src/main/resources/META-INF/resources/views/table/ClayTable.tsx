@@ -434,7 +434,6 @@ export function ClayTable({
 function HeadCellResizer({
 	children,
 	columnName,
-	resizable = true,
 	...otherProps
 }: React.ComponentProps<typeof Cell> & {
 	columnName: string;
@@ -465,12 +464,12 @@ function HeadCellResizer({
 				type: VIEWS_ACTION_TYPES.UPDATE_FIELD,
 				value: {
 					name: columnName,
-					resizable,
+					resizable: true,
 					width: boundingClientRect.width,
 				},
 			});
 		}
-	}, [columnName, isFixed, resizable, viewsDispatch]);
+	}, [columnName, isFixed, viewsDispatch]);
 
 	const handleDrag = useMemo(() => {
 		return throttle((event) => {
@@ -511,22 +510,18 @@ function HeadCellResizer({
 	return (
 		<Cell
 			{...otherProps}
+			UNSAFE_resizable
+			UNSAFE_resizerClassName={classNames('dnd-th-resizer', {
+				'is-active': columnName === draggingColumnName,
+				'is-allowed': draggingAllowed,
+			})}
+			UNSAFE_resizerOnMouseDown={initializeDrag}
 			ref={cellRef}
 			scope="col"
 			style={{width: width || 'auto'}}
 			width={width || 'auto'}
 		>
 			{children}
-
-			{resizable && (
-				<span
-					className={classNames('dnd-th-resizer', {
-						'is-active': columnName === draggingColumnName,
-						'is-allowed': draggingAllowed,
-					})}
-					onMouseDown={initializeDrag}
-				/>
-			)}
 		</Cell>
 	);
 }

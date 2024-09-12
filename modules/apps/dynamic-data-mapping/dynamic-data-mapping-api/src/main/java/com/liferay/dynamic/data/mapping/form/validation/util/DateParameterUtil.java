@@ -46,11 +46,11 @@ public class DateParameterUtil {
 
 		try {
 			DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
-				_PATTERN);
+				_PATTERN_DATE);
 
 			return LocalDate.parse(
 				dateFormat.format(dateFormat.parse(dateString)),
-				DateTimeFormatter.ofPattern(_PATTERN));
+				DateTimeFormatter.ofPattern(_PATTERN_DATE));
 		}
 		catch (ParseException parseException) {
 			_log.error(parseException);
@@ -216,7 +216,7 @@ public class DateParameterUtil {
 		return null;
 	}
 
-	private static final String _PATTERN = "yyyy-MM-dd";
+	private static final String _PATTERN_DATE = "yyyy-MM-dd";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DateParameterUtil.class);

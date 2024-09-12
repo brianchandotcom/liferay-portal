@@ -389,6 +389,7 @@ com.liferay.portal.kernel.scheduler.JobStateSerializeUtil=com.liferay.portal.sch
 com.liferay.portal.kernel.scripting.BaseScriptingExecutor=com.liferay.portal.scripting.BaseScriptingExecutor
 com.liferay.portal.kernel.search.FacetedSearcher=com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcher
 com.liferay.portal.kernel.search.util.SearchUtil=com.liferay.portal.vulcan.util.SearchUtil
+com.liferay.portal.kernel.security.auth.session.AuthenticatedSessionManager=com.liferay.portal.security.auth.session.AuthenticatedSessionManagerUtil
 com.liferay.portal.kernel.security.auth.session.AuthenticatedSessionManagerUtil=com.liferay.portal.security.auth.session.AuthenticatedSessionManagerUtil
 com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionHelper=com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionUtil
 com.liferay.portal.kernel.servlet.BrowserSnifferUtil=com.liferay.portal.servlet.BrowserSnifferUtil

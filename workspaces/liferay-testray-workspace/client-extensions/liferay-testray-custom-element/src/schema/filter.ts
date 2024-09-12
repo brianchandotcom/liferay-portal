@@ -963,6 +963,55 @@ const filterSchema = {
 		] as RendererFields[],
 		name: 'requirements',
 	},
+	routineDuration: {
+		fields: [
+			{
+				isCustomFilter: true,
+				label: i18n.translate('flaky'),
+				name: 'flaky',
+				options: [
+					{
+						label: i18n.translate('true'),
+						value: true,
+					},
+					{
+						label: i18n.translate('false'),
+						value: false,
+					},
+				],
+				removeQuoteMark: true,
+				type: 'select',
+			},
+			overrides(baseFilters.priority, {
+				isCustomFilter: true,
+				name: 'priority',
+				removeQuoteMark: true,
+				type: 'multiselect',
+			}),
+			{
+				isCustomFilter: true,
+				label: i18n.translate('case-name'),
+				name: 'testrayCaseName',
+				type: 'text',
+			},
+			overrides(baseFilters.caseType, {
+				isCustomFilter: true,
+				name: 'testrayCaseTypeIds',
+				type: 'multiselect',
+			}),
+			overrides(baseFilters.component, {
+				isCustomFilter: true,
+				name: 'testrayComponentIds',
+				type: 'multiselect',
+			}),
+			overrides(baseFilters.team, {
+				isCustomFilter: true,
+				name: 'testrayTeamIds',
+				type: 'multiselect',
+			}),
+		] as RendererFields[],
+		name: 'routineDuration',
+	},
 	routines: {
 		fields: [
 			overrides(baseFilters.priority, {

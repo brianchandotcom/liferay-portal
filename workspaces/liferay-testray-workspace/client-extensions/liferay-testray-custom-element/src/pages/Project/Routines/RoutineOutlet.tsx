@@ -53,9 +53,14 @@ const RoutineOutlet = () => {
 				title: i18n.translate('current'),
 			},
 			{
-				active: pathname !== basePath,
+				active: pathname === `${basePath}/archived`,
 				path: `${basePath}/archived`,
 				title: i18n.translate('archived'),
+			},
+			{
+				active: pathname === `${basePath}/duration`,
+				path: `${basePath}/duration`,
+				title: i18n.translate('duration'),
 			},
 		]);
 	}, [basePath, pathname, setTabs]);

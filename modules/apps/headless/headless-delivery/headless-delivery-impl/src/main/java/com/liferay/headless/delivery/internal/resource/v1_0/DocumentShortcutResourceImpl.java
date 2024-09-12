@@ -7,6 +7,7 @@ package com.liferay.headless.delivery.internal.resource.v1_0;
 
 import com.liferay.document.library.kernel.model.DLFileShortcut;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLFileShortcutService;
 import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
@@ -157,12 +158,23 @@ public class DocumentShortcutResourceImpl
 			Long documentShortcutId, DocumentShortcut documentShortcut)
 		throws Exception {
 
-		FileShortcut fileShortcut = _dlAppService.getFileShortcut(
+		FileShortcut fileShortcut = _dlAppLocalService.fetchFileShortcut(
 			documentShortcutId);
 
+		if (fileShortcut != null) {
+			return _toDocumentShortcut(
+				_dlAppService.updateFileShortcut(
+					documentShortcutId, documentShortcut.getFolderId(),
+					documentShortcut.getTargetDocumentId(),
+					_createServiceContext(
+						fileShortcut.getGroupId(),
+						documentShortcut.getViewableByAsString())));
+		}
+
 		return _toDocumentShortcut(
-			_dlAppService.updateFileShortcut(
-				documentShortcutId, documentShortcut.getFolderId(),
+			_dlAppService.addFileShortcut(
+				null, documentShortcut.getSiteId(),
+				documentShortcut.getFolderId(),
 				documentShortcut.getTargetDocumentId(),
 				_createServiceContext(
 					fileShortcut.getGroupId(),
@@ -176,17 +188,26 @@ public class DocumentShortcutResourceImpl
 		throws Exception {
 
 		FileShortcut fileShortcut =
-			_dlAppService.getFileShortcutByExternalReferenceCode(
+			_dlAppLocalService.fetchFileShortcutByExternalReferenceCode(
 				externalReferenceCode, siteId);
 
+		if (fileShortcut != null) {
+			return _toDocumentShortcut(
+				_dlAppService.updateFileShortcut(
+					fileShortcut.getFileShortcutId(),
+					documentShortcut.getFolderId(),
+					documentShortcut.getTargetDocumentId(),
+					_createServiceContext(
+						fileShortcut.getGroupId(),
+						documentShortcut.getViewableByAsString())));
+		}
+
 		return _toDocumentShortcut(
-			_dlAppService.updateFileShortcut(
-				fileShortcut.getFileShortcutId(),
-				documentShortcut.getFolderId(),
+			_dlAppService.addFileShortcut(
+				externalReferenceCode, siteId, documentShortcut.getFolderId(),
 				documentShortcut.getTargetDocumentId(),
 				_createServiceContext(
-					fileShortcut.getGroupId(),
-					documentShortcut.getViewableByAsString())));
+					siteId, documentShortcut.getViewableByAsString())));
 	}
 
 	private ServiceContext _createServiceContext(
@@ -236,6 +257,9 @@ public class DocumentShortcutResourceImpl
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 				contextUser));
 	}
+
+	@Reference
+	private DLAppLocalService _dlAppLocalService;
 
 	@Reference
 	private DLAppService _dlAppService;

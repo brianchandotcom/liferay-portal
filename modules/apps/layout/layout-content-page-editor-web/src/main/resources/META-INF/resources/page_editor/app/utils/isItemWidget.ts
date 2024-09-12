@@ -3,7 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-export default function isItemWidget(item, fragmentEntryLinks) {
+import {FragmentLayoutDataItem} from '../..//types/layout_data/FragmentLayoutDataItem';
+import {FragmentEntryLinkMap} from '../actions/addFragmentEntryLinks';
+
+export default function isItemWidget(
+	item: FragmentLayoutDataItem,
+	fragmentEntryLinks: FragmentEntryLinkMap
+) {
 	if (!item.config) {
 		return false;
 	}

@@ -114,7 +114,7 @@ export async function loadData(
 	delta,
 	page = 1,
 	sorts = [],
-	parameters
+	queryString
 ) {
 	const fullUrl = apiURL.startsWith('/')
 		? themeDisplay.getPortalURL() + themeDisplay.getPathContext() + apiURL
@@ -157,10 +157,10 @@ export async function loadData(
 		);
 	}
 
-	if (Liferay.FeatureFlags['LPD-25230'] && parameters) {
-		const parametersArray = parameters.split('&');
+	if (Liferay.FeatureFlags['LPD-25230'] && queryString) {
+		const queryStringArray = queryString.split('&');
 
-		parametersArray.forEach((parameter) => {
+		queryStringArray.forEach((parameter) => {
 			const [key, value] = parameter.split('=');
 
 			if (key === 'filter' && url.searchParams.get('filter')) {
@@ -191,17 +191,19 @@ export async function loadData(
 					(sort) => sort.split(':')[0]
 				);
 
-				const parametersSortValueArray = value.split(',');
+				const queryStringSortValueArray = value.split(',');
 
-				parametersSortValueArray.forEach((parametersSortValueItem) => {
-					if (
-						!existingSortParamFields.includes(
-							parametersSortValueItem.split(':')[0]
-						)
-					) {
-						newSortParams.push(parametersSortValueItem);
+				queryStringSortValueArray.forEach(
+					(queryStringSortValueItem) => {
+						if (
+							!existingSortParamFields.includes(
+								queryStringSortValueItem.split(':')[0]
+							)
+						) {
+							newSortParams.push(queryStringSortValueItem);
+						}
 					}
-				});
+				);
 
 				url.searchParams.delete('sort');
 
@@ -221,18 +223,18 @@ export async function loadData(
 				const existingNestedFieldsArray = url.searchParams
 					.get('nestedFields')
 					.split(',');
-				const parametersNestedFieldsValueArray = value.split(',');
+				const queryStringNestedFieldsValueArray = value.split(',');
 
 				const newNestedFields = [...existingNestedFieldsArray];
 
-				parametersNestedFieldsValueArray.forEach(
-					(parametersNestedFieldsItem) => {
+				queryStringNestedFieldsValueArray.forEach(
+					(queryStringNestedFieldsItem) => {
 						if (
 							!existingNestedFieldsArray.includes(
-								parametersNestedFieldsItem
+								queryStringNestedFieldsItem
 							)
 						) {
-							newNestedFields.push(parametersNestedFieldsItem);
+							newNestedFields.push(queryStringNestedFieldsItem);
 						}
 					}
 				);

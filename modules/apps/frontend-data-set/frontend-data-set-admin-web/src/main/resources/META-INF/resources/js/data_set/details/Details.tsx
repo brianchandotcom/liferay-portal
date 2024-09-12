@@ -26,15 +26,15 @@ import openDefaultSuccessToast from '../../utils/openDefaultSuccessToast';
 import {IDataSetSectionProps} from '../DataSet';
 
 const getURLPreview = ({
-	parameters = '',
+	queryString = '',
 	restApplication,
 	restEndpoint,
 }: {
-	parameters: string;
+	queryString: string;
 	restApplication: string;
 	restEndpoint: string;
 }) => {
-	const encodedParameters = encodeURI(parameters.trim());
+	const encodedQueryString = encodeURI(queryString.trim());
 
 	// This also removes the version (for example: `/v1.0`) in the rest endpoint
 	// to avoid repeating the version when combining the restApplication and
@@ -47,7 +47,7 @@ const getURLPreview = ({
 			.filter((_, index) => index !== 1)
 			.join('/') +
 		'?' +
-		encodedParameters
+		encodedQueryString
 	);
 };
 
@@ -63,7 +63,7 @@ const Details = ({
 
 	const [urlPreview, setURLPreview] = useState(
 		getURLPreview({
-			parameters: dataSetAsIDataSet.parameters,
+			queryString: dataSetAsIDataSet.queryString,
 			restApplication: dataSetAsIDataSet.restApplication,
 			restEndpoint: dataSetAsIDataSet.restEndpoint,
 		})
@@ -78,7 +78,7 @@ const Details = ({
 	) => {
 		setURLPreview(
 			getURLPreview({
-				parameters: event.currentTarget.value,
+				queryString: event.currentTarget.value,
 				restApplication: dataSetAsIDataSet.restApplication,
 				restEndpoint: dataSetAsIDataSet.restEndpoint,
 			})
@@ -89,7 +89,7 @@ const Details = ({
 		const body = {
 			description: descriptionRef.current?.value,
 			label: labelRef.current?.value,
-			parameters: parametersRef.current?.value,
+			queryString: parametersRef.current?.value,
 		};
 
 		const response = await fetch(
@@ -267,7 +267,7 @@ const Details = ({
 
 						<ClayInput
 							component="textarea"
-							defaultValue={dataSet.parameters}
+							defaultValue={dataSet.queryString}
 							id={`${namespace}dataSetParametersInput`}
 							onChange={handleKeyUpParameters}
 							placeholder={Liferay.Language.get(

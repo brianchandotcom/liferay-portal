@@ -42,7 +42,7 @@
 			<finder-column name="banUserId" />
 		</finder>
 	</entity>
-	<entity human-name="message boards category" local-service="true" name="MBCategory" remote-service="true" trash-enabled="true" uuid="true">
+	<entity external-reference-code="group" human-name="message boards category" local-service="true" name="MBCategory" remote-service="true" trash-enabled="true" uuid="true">
 
 		<!-- PK fields -->
 

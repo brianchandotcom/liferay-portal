@@ -14,8 +14,11 @@ import com.liferay.exportimport.kernel.lar.StagedModelModifiedDateComparator;
 import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.service.MBCategoryLocalService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
@@ -149,8 +152,15 @@ public class MBCategoryStagedModelDataHandler
 		MBCategory importedCategory = null;
 
 		if (portletDataContext.isDataStrategyMirror()) {
-			MBCategory existingCategory = fetchStagedModelByUuidAndGroupId(
-				category.getUuid(), portletDataContext.getScopeGroupId());
+			MBCategory existingCategory =
+				_fetchMBCategoryByExternalReferenceCode(
+					category.getExternalReferenceCode(),
+					portletDataContext.getScopeGroupId());
+
+			if (existingCategory == null) {
+				existingCategory = fetchStagedModelByUuidAndGroupId(
+					category.getUuid(), portletDataContext.getScopeGroupId());
+			}
 
 			if (existingCategory == null) {
 				serviceContext.setUuid(category.getUuid());
@@ -210,6 +220,36 @@ public class MBCategoryStagedModelDataHandler
 				existingCategory.getCategoryId());
 		}
 	}
+
+	private MBCategory _fetchMBCategoryByExternalReferenceCode(
+		String externalReferenceCode, long groupId) {
+
+		MBCategory mbCategory =
+			_mbCategoryLocalService.fetchMBCategoryByExternalReferenceCode(
+				externalReferenceCode, groupId);
+
+		if (mbCategory == null) {
+			if (_log.isDebugEnabled()) {
+				StringBundler sb = new StringBundler(6);
+
+				sb.append("No MBCategory exists with the key {");
+				sb.append("externalReferenceCode=");
+				sb.append(externalReferenceCode);
+				sb.append(", groupId=");
+				sb.append(groupId);
+				sb.append("}");
+
+				_log.debug(sb.toString());
+			}
+
+			return null;
+		}
+
+		return mbCategory;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		MBCategoryStagedModelDataHandler.class);
 
 	@Reference
 	private MBCategoryLocalService _mbCategoryLocalService;

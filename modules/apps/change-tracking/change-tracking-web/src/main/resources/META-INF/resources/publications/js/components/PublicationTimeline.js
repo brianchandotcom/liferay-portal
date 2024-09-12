@@ -195,7 +195,9 @@ const PublicationTimeline = ({
 						</div>
 
 						<div className="text-secondary">
-							{timelineItem.ctEntryStatusMessage}
+							{Liferay.FeatureFlags['LPD-20556']
+								? timelineItem.ctEntryStatusMessage
+								: timelineItem.statusMessage}
 						</div>
 					</ClayLayout.ContentCol>
 

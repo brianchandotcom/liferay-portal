@@ -45,6 +45,60 @@ const selectCustomTemplate = async (
 	await widgetPagePage.saveAndClose('Language Selector');
 };
 
+test(
+	'Select box template is not redirecting to the correct page after changing the language',
+	{
+		tag: '@LPD-36184',
+	},
+	async ({apiHelpers, page, site, widgetPagePage}) => {
+
+		// Add widget page and navigate to view
+
+		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+			groupId: site.id,
+			title: getRandomString(),
+		});
+
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
+
+		// Add language widget and configure select box
+
+		await widgetPagePage.addPortlet('Language Selector');
+
+		await selectCustomTemplate(page, 'Select Box', widgetPagePage);
+
+		// Add account manager widget
+
+		await widgetPagePage.addPortlet('Account Management');
+
+		// Navigate to add new account manager
+
+		await page.getByRole('link', {name: 'Add Account'}).click();
+
+		await expect(
+			page.getByText('Add Account', {exact: true})
+		).toBeVisible();
+
+		// Change language
+
+		await page
+			.locator('select[id*="languageId"]')
+			.selectOption({label: 'español'});
+
+		await expect(
+			page.getByText('Añadir cuenta', {exact: true})
+		).toBeVisible();
+
+		await page
+			.locator('select[id*="languageId"]')
+			.selectOption({label: 'english'});
+
+		await expect(
+			page.getByText('Add Account', {exact: true})
+		).toBeVisible();
+	}
+);
+
 test('The user can choose which languages will be available to site via language selector widget', async ({
 	apiHelpers,
 	page,

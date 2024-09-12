@@ -72,6 +72,19 @@ autoSaveTest(
 	}
 );
 
+const autoSaveUndoRedoTest = mergeTests(
+	apiHelpersTest,
+	applicationsMenuPageTest,
+	featureFlagsTest({
+		'LPD-11228': true,
+		'LPD-15596': true,
+		'LPD-36053': true,
+	}),
+	isolatedSiteTest,
+	journalPagesTest,
+	loginTest()
+);
+
 autoSaveTest(
 	'LockIndicator should have an errorState',
 	{
@@ -164,7 +177,7 @@ autoSaveTest(
 		);
 	}
 );
-autoSaveTest(
+autoSaveUndoRedoTest(
 	'Translation is removed when using Undo and restored when using Redo',
 	{
 		tag: '@LPD-31072',
@@ -217,7 +230,7 @@ autoSaveTest(
 		});
 	}
 );
-autoSaveTest(
+autoSaveUndoRedoTest(
 	'Undo/Redo buttons work with metadata fields',
 	{
 		tag: '@LPD-26863',
@@ -251,7 +264,7 @@ autoSaveTest(
 	}
 );
 
-autoSaveTest(
+autoSaveUndoRedoTest(
 	'Undo/Redo buttons work with content field',
 	{
 		tag: '@LPD-26863',
@@ -307,7 +320,7 @@ autoSaveTest(
 	}
 );
 
-autoSaveTest(
+autoSaveUndoRedoTest(
 	'History button test',
 	{
 		tag: '@LPD-31063',

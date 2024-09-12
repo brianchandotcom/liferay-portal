@@ -26,6 +26,7 @@ import com.liferay.dynamic.data.mapping.util.DDMFormValuesMerger;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException;
 import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
@@ -225,10 +226,11 @@ public class DDMFormPortlet extends MVCPortlet {
 				DDMFormWebConfiguration.class,
 				CompanyThreadLocal.getCompanyId()),
 			_ddmStorageAdapterRegistry, _groupLocalService, _jsonFactory,
-			_npmResolver, _objectFieldLocalService,
-			_objectFieldSettingLocalService, _objectRelationshipLocalService,
-			_portal, renderRequest, renderResponse, _roleLocalService,
-			_userLocalService, _workflowDefinitionLinkLocalService);
+			_npmResolver, _objectDefinitionLocalService,
+			_objectFieldLocalService, _objectFieldSettingLocalService,
+			_objectRelationshipLocalService, _portal, renderRequest,
+			renderResponse, _roleLocalService, _userLocalService,
+			_workflowDefinitionLinkLocalService);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, ddmFormDisplayContext);
@@ -317,6 +319,9 @@ public class DDMFormPortlet extends MVCPortlet {
 
 	@Reference
 	private NPMResolver _npmResolver;
+
+	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;

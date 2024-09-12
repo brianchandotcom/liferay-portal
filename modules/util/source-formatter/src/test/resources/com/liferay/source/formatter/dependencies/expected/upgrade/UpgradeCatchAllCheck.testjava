@@ -52,6 +52,9 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		DLURLHelperUtil.getDownloadURL(null, null, null, null, null, null);
 		DLURLHelperUtil.getImagePreviewURL(null, null, null);
 
+		ExpandoColumnLocalServiceUtil.fetchColumn(123, "test123");
+		_expandoColumnLocalService.fetchColumn(123, "test123");
+
 		FDSTableSchemaBuilder fDSTableSchemaBuilder = _fDSTableSchemaBuilderFactory.create();
 
 		fDSTableSchemaBuilder.add("test123", "test123");
@@ -1310,6 +1313,9 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 
 	@Reference
 	private DLFolderService _dlFolderService;
+
+	@Reference
+	private ExpandoColumnLocalService _expandoColumnLocalService;
 
 	@Reference
 	private FDSTableSchemaBuilderFactory _fDSTableSchemaBuilderFactory;

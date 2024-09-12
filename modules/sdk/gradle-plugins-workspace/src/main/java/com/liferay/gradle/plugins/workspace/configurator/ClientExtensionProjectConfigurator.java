@@ -456,6 +456,14 @@ public class ClientExtensionProjectConfigurator
 						return FileVisitResult.SKIP_SUBTREE;
 					}
 
+					if (_isSpecialLanguageProject(rootDir, dirPath.toFile())) {
+						System.out.println("FOUND A LANGUAGE DIR");
+
+						projectDirs.add(dirPath.toFile());
+
+						return FileVisitResult.SKIP_SUBTREE;
+					}
+
 					Path clientExtensionPath = dirPath.resolve(
 						_CLIENT_EXTENSION_YAML);
 

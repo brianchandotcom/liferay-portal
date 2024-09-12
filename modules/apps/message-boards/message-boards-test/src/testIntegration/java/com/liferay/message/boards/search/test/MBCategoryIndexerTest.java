@@ -87,8 +87,8 @@ public class MBCategoryIndexerTest {
 				GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
 			MBCategory mbCategory = MBCategoryLocalServiceUtil.addCategory(
-				TestPropsValues.getUserId(), 0, RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(),
+				null, TestPropsValues.getUserId(), 0,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				ServiceContextTestUtil.getServiceContext(
 					_group.getGroupId(), TestPropsValues.getUserId()));
 

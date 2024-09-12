@@ -536,7 +536,7 @@ public class MBCategoryLocalServiceTest {
 
 	protected MBCategory addCategory(long parentCategoryId) throws Exception {
 		return MBCategoryServiceUtil.addCategory(
-			TestPropsValues.getUserId(), parentCategoryId,
+			null, TestPropsValues.getUserId(), parentCategoryId,
 			RandomTestUtil.randomString(), StringPool.BLANK,
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId()));

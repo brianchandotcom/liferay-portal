@@ -296,7 +296,7 @@ public class MBAttachmentsTest {
 		}
 
 		_category = MBCategoryServiceUtil.addCategory(
-			TestPropsValues.getUserId(),
+			null, TestPropsValues.getUserId(),
 			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
 			RandomTestUtil.randomString(), StringPool.BLANK,
 			ServiceContextTestUtil.getServiceContext(

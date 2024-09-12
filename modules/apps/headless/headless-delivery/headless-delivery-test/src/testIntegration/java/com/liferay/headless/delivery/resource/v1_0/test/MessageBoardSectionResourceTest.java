@@ -42,7 +42,7 @@ public class MessageBoardSectionResourceTest
 		serviceContext.setScopeGroupId(testGroup.getGroupId());
 
 		MBCategory mbCategory = MBCategoryLocalServiceUtil.addCategory(
-			UserLocalServiceUtil.getGuestUserId(testGroup.getCompanyId()),
+			null, UserLocalServiceUtil.getGuestUserId(testGroup.getCompanyId()),
 			testGroup.getGroupId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), serviceContext);
 

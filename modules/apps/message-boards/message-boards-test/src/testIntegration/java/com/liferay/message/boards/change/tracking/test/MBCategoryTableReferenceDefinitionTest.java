@@ -38,7 +38,7 @@ public class MBCategoryTableReferenceDefinitionTest
 	@Override
 	protected CTModel<?> addCTModel() throws Exception {
 		return _mbCategoryLocalService.addCategory(
-			TestPropsValues.getUserId(),
+			null, TestPropsValues.getUserId(),
 			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
 			MBCategoryTableReferenceDefinitionTest.class.getSimpleName(),
 			MBCategoryTableReferenceDefinitionTest.class.getName(),

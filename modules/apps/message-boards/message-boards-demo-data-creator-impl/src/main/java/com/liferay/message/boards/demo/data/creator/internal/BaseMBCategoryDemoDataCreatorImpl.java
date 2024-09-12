@@ -39,7 +39,7 @@ public abstract class BaseMBCategoryDemoDataCreatorImpl
 		serviceContext.setScopeGroupId(groupId);
 
 		MBCategory category = mbCategoryLocalService.addCategory(
-			userId, categoryId, name, description, serviceContext);
+			null, userId, categoryId, name, description, serviceContext);
 
 		categoryIds.add(category.getCategoryId());
 

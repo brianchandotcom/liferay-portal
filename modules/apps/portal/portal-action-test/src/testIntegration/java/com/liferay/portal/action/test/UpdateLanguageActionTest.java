@@ -152,6 +152,9 @@ public class UpdateLanguageActionTest {
 
 		_testGetRedirectWithFriendlyURL(false);
 		_testGetRedirectWithFriendlyURL(true);
+
+		_testGetRedirectWithPortletURLMapping(null);
+		_testGetRedirectWithPortletURLMapping(_sourceLocale);
 	}
 
 	@Test
@@ -469,6 +472,13 @@ public class UpdateLanguageActionTest {
 
 		_assertGetRedirectWithLayoutFriendlyURL(
 			path, sourceLocale, _targetLocale, false);
+	}
+
+	private void _testGetRedirectWithPortletURLMapping(Locale sourceLocale)
+		throws Exception {
+
+		_assertGetRedirectWithLayoutFriendlyURL(
+			"/tags/tagname", sourceLocale, _targetLocale, false);
 	}
 
 	private void _updateLayoutFriendlyURL(String suffix) throws Exception {

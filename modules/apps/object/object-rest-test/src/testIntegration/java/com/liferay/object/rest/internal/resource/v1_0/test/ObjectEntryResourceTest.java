@@ -7232,6 +7232,44 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
+	public void testPostCustomObjectEntryWithCodeSubfield() throws Exception {
+
+		// Without status field
+
+		Assert.assertEquals(
+			200,
+			HTTPTestUtil.invokeToHttpCode(
+				JSONUtil.put(
+					_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
+				).toString(),
+				_objectDefinition1.getRESTContextPath(), Http.Method.POST));
+
+		// With code subfield inside status
+
+		Assert.assertEquals(
+			200,
+			HTTPTestUtil.invokeToHttpCode(
+				JSONUtil.put(
+					_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
+				).put(
+					"status", JSONUtil.put("code", 0)
+				).toString(),
+				_objectDefinition1.getRESTContextPath(), Http.Method.POST));
+
+		// Without code subfield inside status
+
+		Assert.assertEquals(
+			400,
+			HTTPTestUtil.invokeToHttpCode(
+				JSONUtil.put(
+					_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
+				).put(
+					"status", JSONUtil.put("label", "approved")
+				).toString(),
+				_objectDefinition1.getRESTContextPath(), Http.Method.POST));
+	}
+
+	@Test
 	public void testPostCustomObjectEntryWithDuplicateExternalReferenceCode()
 		throws Exception {
 

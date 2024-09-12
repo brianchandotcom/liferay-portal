@@ -134,8 +134,8 @@ public class TreeFactoryImpl implements TreeFactory {
 
 	private static final Snapshot<ObjectDefinitionLocalService>
 		_objectDefinitionLocalServiceSnapshot = new Snapshot<>(
-		ObjectRelationshipLocalServiceImpl.class,
-		ObjectDefinitionLocalService.class, null, true);
+			ObjectRelationshipLocalServiceImpl.class,
+			ObjectDefinitionLocalService.class, null, true);
 
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;

@@ -1311,8 +1311,15 @@ public class ObjectRelationshipLocalServiceImpl
 		String objectDefinition2PreviousRESTContextPath =
 			objectDefinition2.getRESTContextPath();
 
-		objectDefinition2.setRootObjectDefinitionId(
-			objectDefinition1.getObjectDefinitionId());
+		if (!objectDefinition1.isApproved() && objectDefinition2.isApproved()) {
+			objectDefinition2.setRootObjectDefinitionId(
+				objectDefinition2.getObjectDefinitionId());
+		}
+		else {
+			objectDefinition2.setRootObjectDefinitionId(
+				objectDefinition1.getObjectDefinitionId());
+		}
+
 		objectDefinition2.setPortlet(false);
 
 		objectDefinition2 = objectDefinitionLocalService.updateObjectDefinition(

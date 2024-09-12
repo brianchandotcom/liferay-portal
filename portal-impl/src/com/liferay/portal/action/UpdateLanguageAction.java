@@ -15,8 +15,10 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.VirtualLayoutConstants;
+import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolverRegistryUtil;
 import com.liferay.portal.kernel.portlet.LayoutFriendlyURLSeparatorComposite;
+import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -32,6 +34,7 @@ import com.liferay.portal.struts.Action;
 import com.liferay.portal.struts.model.ActionForward;
 import com.liferay.portal.struts.model.ActionMapping;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -185,6 +188,23 @@ public class UpdateLanguageAction implements Action {
 			layoutURL = layoutURL.substring(0, friendlyURLSeparatorIndex);
 		}
 
+		String mappingPart = StringPool.BLANK;
+
+		List<FriendlyURLMapper> friendlyURLMappers =
+			PortletLocalServiceUtil.getFriendlyURLMappers();
+
+		for (FriendlyURLMapper friendlyURLMapper : friendlyURLMappers) {
+			if (!friendlyURLMapper.isCheckMappingWithPrefix()) {
+				int mappingIndex = layoutURL.indexOf(
+					friendlyURLMapper.getMapping());
+
+				if (mappingIndex != -1) {
+					mappingPart =
+						StringPool.SLASH + layoutURL.substring(mappingIndex);
+				}
+			}
+		}
+
 		Locale currentLocale = themeDisplay.getLocale();
 
 		if (themeDisplay.isI18n()) {
@@ -249,6 +269,10 @@ public class UpdateLanguageAction implements Action {
 
 			if (Validator.isNotNull(friendlyURLSeparatorPart)) {
 				redirect += friendlyURLSeparatorPart;
+			}
+
+			if (Validator.isNotNull(mappingPart)) {
+				redirect += mappingPart;
 			}
 		}
 

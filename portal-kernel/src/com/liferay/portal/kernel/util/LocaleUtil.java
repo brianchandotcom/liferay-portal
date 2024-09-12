@@ -189,6 +189,38 @@ public class LocaleUtil {
 		return _localeUtil._toLanguageIds(locales);
 	}
 
+	public static Map<String, Object> toPropertyMap(Locale locale) {
+		return HashMapBuilder.<String, Object>put(
+			"country", locale.getCountry()
+		).put(
+			"displayCountry", locale.getDisplayCountry()
+		).put(
+			"displayLanguage", locale.getDisplayLanguage()
+		).put(
+			"displayName", locale.getDisplayName()
+		).put(
+			"displayScript", locale.getDisplayScript()
+		).put(
+			"displayVariant", locale.getDisplayVariant()
+		).put(
+			"extensionKeys", locale.getExtensionKeys()
+		).put(
+			"ISO3Country", locale.getISO3Country()
+		).put(
+			"ISO3Language", locale.getISO3Language()
+		).put(
+			"language", locale.getLanguage()
+		).put(
+			"script", locale.getScript()
+		).put(
+			"unicodeLocaleAttributes", locale.getUnicodeLocaleAttributes()
+		).put(
+			"unicodeLocaleKeys", locale.getUnicodeLocaleKeys()
+		).put(
+			"variant", locale.getVariant()
+		).build();
+	}
+
 	public static String toW3cLanguageId(Locale locale) {
 		return _localeUtil._toW3cLanguageId(locale);
 	}

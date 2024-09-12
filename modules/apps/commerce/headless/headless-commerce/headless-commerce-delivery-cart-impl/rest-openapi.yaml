@@ -205,6 +205,10 @@ components:
                     type: string
                 purchaseOrderNumber:
                     type: string
+                requestedDeliveryDate:
+                    example: 2017-07-21
+                    format: date
+                    type: string
                 shippingAddress:
                     $ref: "#/components/schemas/Address"
                 shippingAddressExternalReferenceCode:

@@ -30,6 +30,7 @@ import com.liferay.gradle.plugins.workspace.internal.util.JsonNodeUtil;
 import com.liferay.gradle.plugins.workspace.internal.util.StringUtil;
 import com.liferay.gradle.plugins.workspace.internal.util.copy.HashifyAction;
 import com.liferay.gradle.plugins.workspace.task.CreateClientExtensionConfigTask;
+import com.liferay.gradle.plugins.workspace.task.GenerateLanguageBatchConfigTask;
 import com.liferay.gradle.util.ArrayUtil;
 import com.liferay.gradle.util.Validator;
 
@@ -37,8 +38,8 @@ import groovy.lang.Closure;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
-import java.nio.charset.StandardCharsets;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -46,6 +47,7 @@ import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -59,7 +61,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.gradle.api.Action;
-import org.gradle.api.DefaultTask;
 import org.gradle.api.GradleException;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
@@ -106,6 +107,9 @@ public class ClientExtensionProjectConfigurator
 
 	public static final String CREATE_CLIENT_EXTENSION_CONFIG_TASK_NAME =
 		"createClientExtensionConfig";
+
+	public static final String GENERATE_LANGUAGE_BATCH_TASK_NAME =
+		"generateLanguageBatch";
 
 	public static final String VALIDATE_CLIENT_EXTENSION_IDS_TASK_NAME =
 		"validateClientExtensionIds";
@@ -170,16 +174,6 @@ public class ClientExtensionProjectConfigurator
 			createClientExtensionConfigTaskProvider,
 			validateClientExtensionIdsTaskProvider,
 			validateClientExtensionTaskProvider, workspaceExtension);
-
-		// if (parent is root project && has Langauge.properties file in the right place)
-			// clientExtension = new ClientExtension()
-			// - add metadata here
-			// clientExtension.type = "batch"
-			// clientExtension.name = "root-lang-reserved-name"
-			// createClientExtensionConfigTask.addClientExtension(clientExtension);
-			// transform Language.properties file to batch file with PLOEntries
-
-// ---------------------------
 
 		AtomicBoolean hasThemeCSSClientExtension = new AtomicBoolean(false);
 
@@ -300,8 +294,6 @@ public class ClientExtensionProjectConfigurator
 				});
 		}
 
-		// Special lang config here
-
 		if (hasThemeCSSClientExtension.get()) {
 			_themeCSSTypeConfigurer.apply(
 				project, assembleClientExtensionTaskProvider);
@@ -317,115 +309,80 @@ public class ClientExtensionProjectConfigurator
 		_configureLiferayRoutes(project, workspaceExtension);
 
 		if (_isSpecialLanguageProject(project)) {
+			TaskProvider<GenerateLanguageBatchConfigTask>
+				generateLanguageBatchConfigTaskProvider =
+					GradleUtil.addTaskProvider(
+						project, GENERATE_LANGUAGE_BATCH_TASK_NAME,
+						GenerateLanguageBatchConfigTask.class);
+
 			createClientExtensionConfigTaskProvider.configure(
 				createClientExtensionConfigTask -> {
-					ClientExtension languageBatchClientExtension =
-						new ClientExtension();
+					createClientExtensionConfigTask.setVirtualInstanceId(
+						workspaceExtension.getVirtualInstanceId());
 
-					String languageOAuthClientExtensionId =
-						"language-oauth-application-headless-server";
+					Class<? extends GenerateLanguageBatchConfigTask> clazz =
+						GenerateLanguageBatchConfigTask.class;
 
-					languageBatchClientExtension.id = "language-batch";
-					languageBatchClientExtension.name = "Language Batch";
-					languageBatchClientExtension.type = "batch";
-					languageBatchClientExtension.projectName =
-						"project.language";
-					languageBatchClientExtension.typeSettings.put(
-						"oAuthApplicationHeadlessServer",
-						languageOAuthClientExtensionId);
+					InputStream inputStream = clazz.getResourceAsStream(
+						"dependencies/templates/language/client-extension." +
+							"yaml");
 
-					createClientExtensionConfigTask.addClientExtension(
-						languageBatchClientExtension);
+					try {
+						JsonNode jsonNode = _yamlObjectMapper.readTree(
+							inputStream);
 
-					_registerClientExtensionId(
-						project, languageBatchClientExtension.id);
+						String languageBatchId = "liferay-language-batch";
 
-					ClientExtension languageOAuthClientExtension =
-						new ClientExtension();
+						String languageOAuthId =
+							"liferay-language-batch-oauth-application-" +
+								"headless-server";
 
-					languageOAuthClientExtension.id =
-						languageOAuthClientExtensionId;
-					languageOAuthClientExtension.name = "Language OAuth";
-					languageOAuthClientExtension.type =
-						"oAuthApplicationHeadlessServer";
-					languageOAuthClientExtension.typeSettings.put(
-						".serviceAddress", "localhost:8080");
-					languageOAuthClientExtension.typeSettings.put(
-						".serviceScheme", "http");
-					languageOAuthClientExtension.typeSettings.put(
-						"scopes",
-						new String[] {
-							"Liferay.Headless.Admin.Workflow.everything",
-							"Liferay.Headless.Batch.Engine.everything",
-							"Liferay.Object.Admin.REST.everything"
-						});
+						ClientExtension languageBatchClientExtension =
+							_yamlObjectMapper.treeToValue(
+								jsonNode.get(languageBatchId),
+								ClientExtension.class);
 
-					createClientExtensionConfigTask.addClientExtension(
-						languageOAuthClientExtension);
+						ClientExtension languageOAuthClientExtension =
+							_yamlObjectMapper.treeToValue(
+								jsonNode.get(languageOAuthId),
+								ClientExtension.class);
 
-					_registerClientExtensionId(
-						project, languageOAuthClientExtension.id);
-				});
+						String projectId = "languagebatch";
 
-			TaskProvider<DefaultTask> generateLangBatchTaskProvider =
-				GradleUtil.addTaskProvider(
-					project, "generateLangBatch", DefaultTask.class);
+						languageBatchClientExtension.id = languageBatchId;
+						languageBatchClientExtension.projectId = projectId;
+						languageBatchClientExtension.projectName =
+							languageBatchId;
 
-			generateLangBatchTaskProvider.configure(
-				generateLangBatchTask -> {
-					File projectDir = project.getProjectDir();
+						createClientExtensionConfigTask.addClientExtension(
+							languageBatchClientExtension);
 
-					Path outputDir = Paths.get(
-						projectDir.getPath(), "build", "generateLangBatch");
+						_registerClientExtensionId(
+							project, languageBatchClientExtension.id);
 
-					Path outputPath = outputDir.resolve("batch.json");
+						languageOAuthClientExtension.projectId = projectId;
+						languageOAuthClientExtension.id = languageOAuthId;
+						languageOAuthClientExtension.projectName =
+							languageOAuthId;
 
-					TaskOutputs taskOutputs =
-						generateLangBatchTask.getOutputs();
+						createClientExtensionConfigTask.addClientExtension(
+							languageOAuthClientExtension);
 
-					taskOutputs.file(project.provider(() -> outputPath));
-
-					generateLangBatchTask.doFirst(
-						new Action<Task>() {
-
-							@Override
-							public void execute(Task task) {
-								String jsonString = "{}";
-
-								try {
-									if (!Files.exists(outputDir)) {
-										outputDir.toFile(
-										).mkdirs();
-									}
-
-									if (!Files.exists(outputPath)) {
-										Files.createFile(outputPath);
-									}
-
-									Files.write(
-										outputPath,
-										jsonString.getBytes(
-											StandardCharsets.UTF_8));
-								}
-								catch (IOException ioException) {
-									throw new GradleException(
-										"Could not write batch file",
-										ioException);
-								}
-							}
-
-						});
+						_registerClientExtensionId(
+							project, languageOAuthClientExtension.id);
+					}
+					catch (Exception exception) {
+						throw new GradleException(
+							"Unable to create language client extension",
+							exception);
+					}
 				});
 
 			assembleClientExtensionTaskProvider.configure(
 				assembleClientExtensionTask -> assembleClientExtensionTask.from(
-					generateLangBatchTaskProvider,
+					generateLanguageBatchConfigTaskProvider,
 					copySpec -> copySpec.into("batch")));
 		}
-	}
-
-	private boolean _isSpecialLanguageProject(Path dirpath) {
-		return true;
 	}
 
 	@Override
@@ -457,8 +414,6 @@ public class ClientExtensionProjectConfigurator
 					}
 
 					if (_isSpecialLanguageProject(rootDir, dirPath.toFile())) {
-						System.out.println("FOUND A LANGUAGE DIR");
-
 						projectDirs.add(dirPath.toFile());
 
 						return FileVisitResult.SKIP_SUBTREE;
@@ -469,16 +424,6 @@ public class ClientExtensionProjectConfigurator
 
 					if (Files.exists(clientExtensionPath) &&
 						!Objects.equals(dirPath, rootDir.toPath())) {
-
-						projectDirs.add(dirPath.toFile());
-
-						return FileVisitResult.SKIP_SUBTREE;
-					}
-
-					Path langPropertiesFile = dirPath.resolve("Language.properties");
-
-					if (dirPath.getName() == "language" && Files.exists(langPropertiesFile) &&
-						Objects.equals(dirPath.getParent(), rootDir.toPath())) {
 
 						projectDirs.add(dirPath.toFile());
 
@@ -737,13 +682,13 @@ public class ClientExtensionProjectConfigurator
 	private Map<String, JsonNode> _configureClientExtensionJsonNodes(
 		Project project, TaskProvider<?>... taskProviders) {
 
-		Map<String, JsonNode> profileJsonNodes = new HashMap<>();
-
 		File clientExtensionYamlFile = project.file(_CLIENT_EXTENSION_YAML);
 
 		if (!clientExtensionYamlFile.exists()) {
 			return Collections.emptyMap();
 		}
+
+		Map<String, JsonNode> profileJsonNodes = new HashMap<>();
 
 		JsonNode rootJsonNode = _getJsonNode(clientExtensionYamlFile);
 

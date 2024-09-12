@@ -493,6 +493,61 @@ public class FormItemManager {
 		return fragmentEntryLinkIdsJSONArray;
 	}
 
+	public static class LayoutStructureItemChanges {
+
+		public LayoutStructureItemChanges() {
+			this(
+				Collections.emptyList(), Collections.emptyList(),
+				Collections.emptyList());
+		}
+
+		public LayoutStructureItemChanges(
+			List<String> addedItemIds, List<MovedItem> movedItemIds,
+			List<String> removedItemIds) {
+
+			_addedItemIds = addedItemIds;
+			_movedItemIds = movedItemIds;
+			_removedItemIds = removedItemIds;
+		}
+
+		public List<String> getAddedItemIds() {
+			return _addedItemIds;
+		}
+
+		public List<MovedItem> getMovedItemIds() {
+			return _movedItemIds;
+		}
+
+		public List<String> getRemovedItemIds() {
+			return _removedItemIds;
+		}
+
+		public static class MovedItem {
+
+			public MovedItem(String itemId, String parentId) {
+				_itemId = itemId;
+				_parentId = parentId;
+			}
+
+			public String getItemId() {
+				return _itemId;
+			}
+
+			public String getParentId() {
+				return _parentId;
+			}
+
+			private final String _itemId;
+			private final String _parentId;
+
+		}
+
+		private final List<String> _addedItemIds;
+		private final List<MovedItem> _movedItemIds;
+		private final List<String> _removedItemIds;
+
+	}
+
 	private FragmentEntryLink _addFormButtonFragmentEntryLink(
 			Layout layout, Locale locale, String type,
 			long segmentsExperienceId, ServiceContext serviceContext)

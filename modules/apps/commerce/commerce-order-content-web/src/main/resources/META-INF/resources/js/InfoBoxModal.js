@@ -8,9 +8,11 @@ import ClayForm from '@clayui/form';
 import ClayModal from '@clayui/modal';
 import React from 'react';
 
+import InfoBoxModalDateInput from './info_box/modal/InfoBoxModalDateInput';
 import InfoBoxModalTextInput from './info_box/modal/InfoBoxModalTextInput';
 
 const InfoBoxModal = ({
+	fieldValueType,
 	handleSubmit,
 	id,
 	inputValue,
@@ -35,11 +37,21 @@ const InfoBoxModal = ({
 
 						<ClayModal.Body>
 							<ClayForm.Group>
-								<InfoBoxModalTextInput
-									inputValue={inputValue}
-									label={label}
-									setInputValue={setInputValue}
-								/>
+								{fieldValueType === 'date' && (
+									<InfoBoxModalDateInput
+										inputValue={inputValue}
+										label={label}
+										setInputValue={setInputValue}
+									/>
+								)}
+
+								{fieldValueType === 'text' && (
+									<InfoBoxModalTextInput
+										inputValue={inputValue}
+										label={label}
+										setInputValue={setInputValue}
+									/>
+								)}
 							</ClayForm.Group>
 						</ClayModal.Body>
 

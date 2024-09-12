@@ -158,6 +158,8 @@ components:
                     type: string
                 label_i18n:
                     type: string
+            required:
+                - code
             type: object
         TaxonomyCategoryBrief:
             properties:

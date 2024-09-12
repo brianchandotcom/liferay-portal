@@ -105,3 +105,49 @@ test.describe('Can configure a HTML autocomplete attribute in Date, Numeric and 
 		await newTabPage.close();
 	});
 });
+
+test('make sure the aria-labelledby reference is present in the captcha form view', async ({
+	formBuilderPage,
+	formBuilderSidePanelPage,
+}) => {
+	await formBuilderPage.goToNew();
+
+	await formBuilderPage.fillFormTitle('Form' + getRandomInt());
+
+	await formBuilderSidePanelPage.addFieldByDoubleClick('Text');
+
+	await formBuilderPage.formSettingsButton.click();
+
+	await formBuilderPage.requireCaptchaToggle.click();
+
+	await formBuilderPage.formSettingsDoneButton.click();
+
+	const newTabPagePromise = new Promise<Page>((resolve) =>
+		formBuilderPage.page.once('popup', resolve)
+	);
+
+	await formBuilderPage.previewButton.click();
+
+	const newTabPage = await newTabPagePromise;
+
+	await newTabPage.waitForLoadState('domcontentloaded');
+
+	const captchaContainer = newTabPage.locator(
+		"[data-field-reference='_CAPTCHA_']"
+	);
+
+	await expect(captchaContainer).toBeVisible();
+
+	const captchaContainerAriaLabelledby =
+		await captchaContainer.getAttribute('aria-labelledby');
+
+	const screenReaderOnlyCaptchaSpan = newTabPage.locator(
+		`span[id='${captchaContainerAriaLabelledby}']`
+	);
+
+	await expect(screenReaderOnlyCaptchaSpan).toHaveClass('sr-only');
+
+	await expect(screenReaderOnlyCaptchaSpan).toContainText('captcha');
+
+	await newTabPage.close();
+});

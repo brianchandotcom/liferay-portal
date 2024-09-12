@@ -16,5 +16,6 @@ CommercePaymentEntryDisplayContext commercePaymentEntryDisplayContext = (Commerc
 	fdsActionDropdownItems="<%= commercePaymentEntryDisplayContext.getFDSActionDropdownItems() %>"
 	formName="fm"
 	id="<%= CommercePaymentsFDSNames.PAYMENTS %>"
+	propsTransformer="{commercePaymentPropsTransformer} from commerce-payment-web"
 	style="fluid"
 />

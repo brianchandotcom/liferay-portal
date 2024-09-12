@@ -358,8 +358,10 @@ public class DBPartitionUtil {
 			DBInspector dbInspector = new DBInspector(connection);
 
 			try (ResultSet resultSet = databaseMetaData.getTables(
-					_defaultPartitionName, dbInspector.getSchema(), null,
-					new String[] {"TABLE"});
+					_dbPartitionDB.getCatalog(
+						connection, _defaultPartitionName),
+					_dbPartitionDB.getSchema(connection, _defaultPartitionName),
+					null, new String[] {"TABLE"});
 				Statement statement = connection.createStatement()) {
 
 				while (resultSet.next()) {

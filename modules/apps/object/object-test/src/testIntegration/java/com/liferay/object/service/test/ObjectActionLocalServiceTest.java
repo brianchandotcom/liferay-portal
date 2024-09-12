@@ -2012,6 +2012,26 @@ public class ObjectActionLocalServiceTest {
 					"usePreferredLanguageForGuests", "true"
 				).build(),
 				false));
+
+		ObjectAction objectAction = _addObjectAction(
+			RandomTestUtil.randomString(),
+			ObjectActionExecutorConstants.KEY_NOTIFICATION,
+			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
+			UnicodePropertiesBuilder.put(
+				"notificationTemplateExternalReferenceCode",
+				RandomTestUtil.randomString()
+			).put(
+				"type", NotificationConstants.TYPE_EMAIL
+			).build(),
+			false);
+
+		UnicodeProperties parametersUnicodeProperties =
+			objectAction.getParametersUnicodeProperties();
+
+		Assert.assertTrue(
+			GetterUtil.getBoolean(
+				parametersUnicodeProperties.get(
+					"usePreferredLanguageForGuests")));
 	}
 
 	@Test
@@ -2133,6 +2153,8 @@ public class ObjectActionLocalServiceTest {
 	public void testExecuteObjectActionWithUsePreferredLanguageForGuestsParameter()
 		throws Exception {
 
+		// Use default language for guest users
+
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionTestUtil.publishObjectDefinition(
 				Collections.singletonList(
@@ -2176,7 +2198,14 @@ public class ObjectActionLocalServiceTest {
 						null, "Subject", "en_US"),
 					NotificationConstants.TYPE_EMAIL, Collections.emptyList()));
 
-		_objectActionLocalService.addObjectAction(
+		UnicodeProperties unicodeProperties = UnicodePropertiesBuilder.put(
+			"notificationTemplateId",
+			String.valueOf(notificationTemplate.getNotificationTemplateId())
+		).put(
+			"usePreferredLanguageForGuests", "false"
+		).build();
+
+		ObjectAction objectAction = _objectActionLocalService.addObjectAction(
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 			objectDefinition.getObjectDefinitionId(), true, StringPool.BLANK,
 			RandomTestUtil.randomString(),
@@ -2184,13 +2213,7 @@ public class ObjectActionLocalServiceTest {
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			RandomTestUtil.randomString(),
 			ObjectActionExecutorConstants.KEY_NOTIFICATION,
-			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
-			UnicodePropertiesBuilder.put(
-				"notificationTemplateId",
-				String.valueOf(notificationTemplate.getNotificationTemplateId())
-			).put(
-				"usePreferredLanguageForGuests", "true"
-			).build(),
+			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD, unicodeProperties,
 			false);
 
 		ServiceContext serviceContext =
@@ -2214,19 +2237,62 @@ public class ObjectActionLocalServiceTest {
 			guestUser.getUserId(), 0, objectDefinition.getObjectDefinitionId(),
 			Collections.emptyMap(), serviceContext);
 
-		List<NotificationQueueEntry> notificationQueueEntries =
-			_notificationQueueEntryLocalService.getNotificationEntries(
-				NotificationConstants.TYPE_EMAIL,
-				NotificationQueueEntryConstants.STATUS_SENT);
+		_assertNotificationSubject("Subject");
 
-		Assert.assertEquals(
-			notificationQueueEntries.toString(), 1,
-			notificationQueueEntries.size());
+		User user = UserTestUtil.addUser();
 
-		NotificationQueueEntry notificationQueueEntry =
-			notificationQueueEntries.get(0);
+		_userLocalService.updateLanguageId(
+			user.getUserId(), LocaleUtil.BRAZIL.toLanguageTag());
 
-		Assert.assertEquals("Assunto", notificationQueueEntry.getSubject());
+		_objectEntryLocalService.addObjectEntry(
+			user.getUserId(), 0, objectDefinition.getObjectDefinitionId(),
+			Collections.emptyMap(), serviceContext);
+
+		_assertNotificationSubject("Assunto");
+
+		// Use preferred language for guest users
+
+		unicodeProperties.put("usePreferredLanguageForGuests", "true");
+
+		_objectActionLocalService.updateObjectAction(
+			objectAction.getExternalReferenceCode(),
+			objectAction.getObjectActionId(), true,
+			objectAction.getConditionExpression(), StringPool.BLANK,
+			objectAction.getErrorMessageMap(), objectAction.getLabelMap(),
+			objectAction.getName(), objectAction.getObjectActionExecutorKey(),
+			objectAction.getObjectActionTriggerKey(), unicodeProperties);
+
+		_objectEntryLocalService.addObjectEntry(
+			guestUser.getUserId(), 0, objectDefinition.getObjectDefinitionId(),
+			Collections.emptyMap(), serviceContext);
+
+		_assertNotificationSubject("Assunto");
+
+		_userLocalService.updateLanguageId(
+			user.getUserId(), LocaleUtil.US.toLanguageTag());
+
+		_objectEntryLocalService.addObjectEntry(
+			user.getUserId(), 0, objectDefinition.getObjectDefinitionId(),
+			Collections.emptyMap(), serviceContext);
+
+		_assertNotificationSubject("Subject");
+
+		serviceContext.setLanguageId(LocaleUtil.HUNGARY.toLanguageTag());
+
+		_objectEntryLocalService.addObjectEntry(
+			guestUser.getUserId(), 0, objectDefinition.getObjectDefinitionId(),
+			Collections.emptyMap(), serviceContext);
+
+		_assertNotificationSubject("Subject");
+
+		_objectEntryLocalService.addObjectEntry(
+			user.getUserId(), 0, objectDefinition.getObjectDefinitionId(),
+			Collections.emptyMap(), serviceContext);
+
+		_assertNotificationSubject("Subject");
+
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
+		_userLocalService.deleteUser(user);
 	}
 
 	@Test
@@ -2707,6 +2773,28 @@ public class ObjectActionLocalServiceTest {
 
 		Assert.assertEquals(Collections.emptySet(), arguments[1]);
 		Assert.assertEquals("println \"Hello World\"", arguments[2]);
+	}
+
+	private void _assertNotificationSubject(String expectedSubject)
+		throws Exception {
+
+		List<NotificationQueueEntry> notificationQueueEntries =
+			_notificationQueueEntryLocalService.getNotificationEntries(
+				NotificationConstants.TYPE_EMAIL,
+				NotificationQueueEntryConstants.STATUS_SENT);
+
+		Assert.assertEquals(
+			notificationQueueEntries.toString(), 1,
+			notificationQueueEntries.size());
+
+		NotificationQueueEntry notificationQueueEntry =
+			notificationQueueEntries.get(0);
+
+		Assert.assertEquals(
+			expectedSubject, notificationQueueEntry.getSubject());
+
+		_notificationQueueEntryLocalService.deleteNotificationQueueEntry(
+			notificationQueueEntry);
 	}
 
 	private void _assertObjectAction(

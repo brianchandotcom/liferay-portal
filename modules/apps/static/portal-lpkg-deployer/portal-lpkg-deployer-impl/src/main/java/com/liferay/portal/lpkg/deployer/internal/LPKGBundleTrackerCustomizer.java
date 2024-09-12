@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.lpkg.deployer.internal.wrapper.bundle.URLStreamHandlerServiceServiceTrackerCustomizer;
+import com.liferay.portal.lpkg.deployer.internal.osgi.util.tracker.URLStreamHandlerServiceServiceTrackerCustomizer;
 import com.liferay.portal.lpkg.deployer.internal.wrapper.bundle.activator.WARBundleWrapperBundleActivator;
 
 import java.io.File;

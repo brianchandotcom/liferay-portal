@@ -19,8 +19,7 @@ public class NotFoundExceptionMapper
 
 	@Override
 	protected Problem getProblem(NotFoundException notFoundException) {
-		return new Problem(
-			Response.Status.NOT_FOUND, notFoundException.getMessage());
+		return new Problem(Response.Status.NOT_FOUND, null);
 	}
 
 }

@@ -1,0 +1,13 @@
+{
+	"configuration": {
+		"className": "com.liferay.portal.language.rest.dto.v1_0.Message",
+		"parameters": {
+			"containsHeaders": "true",
+			"importStrategy": "ON_ERROR_FAIL",
+			"updateStrategy": "UPDATE"
+		},
+		"taskItemDelegateName": "DEFAULT"
+	},
+	"items": [
+	]
+}

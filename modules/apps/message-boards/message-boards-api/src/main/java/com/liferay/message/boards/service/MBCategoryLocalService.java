@@ -65,19 +65,20 @@ public interface MBCategoryLocalService
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.message.boards.service.impl.MBCategoryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the message boards category local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link MBCategoryLocalServiceUtil} if injection and service tracking are not available.
 	 */
 	public MBCategory addCategory(
-			long userId, long parentCategoryId, String name, String description,
-			ServiceContext serviceContext)
+			String externalReferenceCode, long userId, long parentCategoryId,
+			String name, String description, ServiceContext serviceContext)
 		throws PortalException;
 
 	public MBCategory addCategory(
-			long userId, long parentCategoryId, String name, String description,
-			String displayStyle, String emailAddress, String inProtocol,
-			String inServerName, int inServerPort, boolean inUseSSL,
-			String inUserName, String inPassword, int inReadInterval,
-			String outEmailAddress, boolean outCustom, String outServerName,
-			int outServerPort, boolean outUseSSL, String outUserName,
-			String outPassword, boolean allowAnonymous,
-			boolean mailingListActive, ServiceContext serviceContext)
+			String externalReferenceCode, long userId, long parentCategoryId,
+			String name, String description, String displayStyle,
+			String emailAddress, String inProtocol, String inServerName,
+			int inServerPort, boolean inUseSSL, String inUserName,
+			String inPassword, int inReadInterval, String outEmailAddress,
+			boolean outCustom, String outServerName, int outServerPort,
+			boolean outUseSSL, String outUserName, String outPassword,
+			boolean allowAnonymous, boolean mailingListActive,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	public void addCategoryResources(
@@ -138,6 +139,9 @@ public interface MBCategoryLocalService
 	)
 	public void deleteCategory(
 			MBCategory category, boolean includeTrashedEntries)
+		throws PortalException;
+
+	public void deleteCategory(String externalReferenceCode, long groupId)
 		throws PortalException;
 
 	/**

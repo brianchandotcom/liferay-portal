@@ -162,6 +162,11 @@ public class LocalRepositoryWrapper implements LocalRepository {
 	}
 
 	@Override
+	public FileShortcut fetchFileShortcut(long fileShortcutId) {
+		return _localRepository.fetchFileShortcut(fileShortcutId);
+	}
+
+	@Override
 	public FileShortcut fetchFileShortcutByExternalReferenceCode(
 		String externalReferenceCode) {
 

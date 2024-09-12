@@ -602,6 +602,17 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	}
 
 	@Override
+	public FileShortcut fetchFileShortcut(long fileShortcutId)
+		throws PortalException {
+
+		LocalRepository localRepository =
+			RepositoryProviderUtil.getFileShortcutLocalRepository(
+				fileShortcutId);
+
+		return localRepository.fetchFileShortcut(fileShortcutId);
+	}
+
+	@Override
 	public FileShortcut fetchFileShortcutByExternalReferenceCode(
 			String externalReferenceCode, long groupId)
 		throws PortalException {

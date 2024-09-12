@@ -94,6 +94,11 @@ public interface DocumentRepository extends CapabilityProvider {
 			"This method needs to be implemented");
 	}
 
+	public default FileShortcut fetchFileShortcut(long fileShortcutId) {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	public default FileShortcut fetchFileShortcutByExternalReferenceCode(
 		String externalReferenceCode) {
 

@@ -260,6 +260,11 @@ public class CapabilityLocalRepository
 	}
 
 	@Override
+	public FileShortcut fetchFileShortcut(long fileShortcutId) {
+		return getRepository().fetchFileShortcut(fileShortcutId);
+	}
+
+	@Override
 	public FileShortcut fetchFileShortcutByExternalReferenceCode(
 		String externalReferenceCode) {
 

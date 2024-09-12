@@ -70,6 +70,7 @@ import {formIsRestricted} from '../../../../../app/utils/formIsRestricted';
 import {formIsUnavailable} from '../../../../../app/utils/formIsUnavailable';
 import getFirstControlsId from '../../../../../app/utils/getFirstControlsId';
 import getMappingFieldsKey from '../../../../../app/utils/getMappingFieldsKey';
+import getNormalizedDragItems from '../../../../../app/utils/getNormalizedDragItems';
 import isItemWidget from '../../../../../app/utils/isItemWidget';
 import loadCollectionFields from '../../../../../app/utils/loadCollectionFields';
 
@@ -133,6 +134,7 @@ export default function StructureTreeNode({node}) {
 	return (
 		<MemoizedStructureTreeNodeContent
 			activationOrigin={isSelected ? activationOrigin : null}
+			activeItemIds={activeItemIds}
 			isActive={node.activable && isSelected}
 			isMapped={node.mapped}
 			node={node}
@@ -155,6 +157,7 @@ const MemoizedStructureTreeNodeContent = React.memo(
 
 function StructureTreeNodeContent({
 	activationOrigin,
+	activeItemIds,
 	isActive,
 	isMapped,
 	node,
@@ -205,18 +208,25 @@ function StructureTreeNodeContent({
 		deepEqual
 	);
 
-	const isWidget = useSelectorCallback(
-		(state) => isItemWidget(item, state.fragmentEntryLinks),
-		[item]
-	);
-
 	const {isOverTarget, targetPosition, targetRef} = useDropTarget(
 		item,
 		computeHover
 	);
 
+	const dragItems = useSelectorCallback(
+		(state) =>
+			getNormalizedDragItems(
+				item,
+				activeItemIds,
+				state.layoutData,
+				state.fragmentEntryLinks
+			),
+		[item, activeItemIds],
+		deepEqual
+	);
+
 	const {handlerRef, isDraggingSource: itemIsDraggingSource} = useDragItem(
-		{...item, fieldTypes, fragmentEntryType, isWidget},
+		dragItems,
 		(parentItemId, position) => {
 			const thunk = fieldTypes?.includes('stepper')
 				? moveStepper({
@@ -225,13 +235,14 @@ function StructureTreeNodeContent({
 						position,
 					})
 				: moveItems({
-						itemIds: [node.id],
+						itemIds: dragItems.map((item) => item.itemId),
 						parentItemIds: [parentItemId],
 						positions: [position],
 					});
 
 			dispatch(thunk);
-		}
+		},
+		() => {}
 	);
 
 	const {
@@ -380,7 +391,7 @@ function StructureTreeNodeContent({
 				canUpdate={canUpdatePageStructure}
 				fieldTypes={fieldTypes}
 				fragmentEntryType={fragmentEntryType}
-				isWidget={isWidget}
+				item={item}
 				node={node}
 				nodeRef={nodeRef}
 				onKeyDown={handleButtonsKeyDown}
@@ -545,7 +556,7 @@ const MoveButton = ({
 	canUpdate,
 	fieldTypes,
 	fragmentEntryType,
-	isWidget,
+	item,
 	node,
 	nodeRef,
 	onKeyDown,
@@ -553,6 +564,11 @@ const MoveButton = ({
 }) => {
 	const setMovementSource = useSetMovementSource();
 	const disableMovement = useDisableKeyboardMovement();
+
+	const isWidget = useSelectorCallback(
+		(state) => isItemWidget(item, state.fragmentEntryLinks),
+		[item]
+	);
 
 	const buttonRef = useRef(null);
 

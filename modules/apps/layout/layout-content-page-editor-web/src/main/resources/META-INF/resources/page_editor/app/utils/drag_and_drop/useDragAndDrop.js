@@ -31,6 +31,7 @@ import {openFormConversionModal} from '../../utils/openFormConversionModal';
 import {formIsMapped} from '../formIsMapped';
 import {getFormParent} from '../getFormParent';
 import {getStepperChild} from '../getStepperChild';
+import checkAllowedChild from './checkAllowedChild';
 import {DRAG_DROP_TARGET_TYPE} from './constants/dragDropTargetType';
 import defaultComputeHover from './defaultComputeHover';
 import getDropData from './getDropData';
@@ -134,18 +135,19 @@ export function NotDraggableArea({children}) {
 	);
 }
 
-export function useDragItem(sourceItem, onDragEnd, onBegin = () => {}) {
+export function useDragItem(sourceItems, onDragEnd, onBegin = () => {}) {
 	const {canDrag, dispatch, fragmentEntryLinksRef, layoutDataRef, state} =
 		useContext(DragAndDropContext);
 	const sourceRef = useRef(null);
+	const lastSourceItem = sourceItems[sourceItems.length - 1];
 
 	const item = {
-		...sourceItem,
-		id: sourceItem.itemId,
+		...lastSourceItem,
+		id: lastSourceItem.itemId,
 		namespace: config.portletNamespace,
 	};
 
-	if (!sourceItem.origin) {
+	if (!lastSourceItem.origin) {
 		delete item.origin;
 	}
 
@@ -166,6 +168,7 @@ export function useDragItem(sourceItem, onDragEnd, onBegin = () => {}) {
 				fragmentEntryLinksRef,
 				layoutDataRef,
 				onDragEnd,
+				sourceItems,
 				state,
 			});
 		},
@@ -190,22 +193,24 @@ export function useDragSymbol(
 ) {
 	const selectItem = useSelectItem();
 
-	const sourceItem = useMemo(
-		() => ({
-			fieldTypes,
-			fragmentEntryType,
-			icon,
-			isSymbol: true,
-			isWidget,
-			itemId: label,
-			name: label,
-			type,
-		}),
+	const sourceItems = useMemo(
+		() => [
+			{
+				fieldTypes,
+				fragmentEntryType,
+				icon,
+				isSymbol: true,
+				isWidget,
+				itemId: label,
+				name: label,
+				type,
+			},
+		],
 		[fieldTypes, fragmentEntryType, icon, isWidget, label, type]
 	);
 
 	const {handlerRef, isDraggingSource, sourceRef} = useDragItem(
-		sourceItem,
+		sourceItems,
 		onDragEnd,
 		() => selectItem(null)
 	);
@@ -365,12 +370,47 @@ function computeDrop({
 	fragmentEntryLinksRef,
 	layoutDataRef,
 	onDragEnd,
+	sourceItems,
 	state,
 }) {
-	const {dropItem, dropTargetItem, droppable, targetPositionWithoutMiddle} =
-		state;
+	const {
+		dropItem,
+		dropTargetItem,
+		droppable: dropItemIsDroppable,
+		targetPositionWithoutMiddle,
+	} = state;
 
-	if (!droppable) {
+	if (!dropItem) {
+		return;
+	}
+
+	// Get the definitive parent id (dropItemId) where the dragged item drops
+
+	const {dropItemId, position} = getDropData({
+		isElevation: state.elevate,
+		layoutDataRef,
+		sourceItemId: dropItem.itemId,
+		targetItemId: dropTargetItem.itemId,
+		targetPosition: targetPositionWithoutMiddle,
+	});
+
+	let sourceItemsAreDroppable = true;
+
+	if (sourceItems.length > 1) {
+
+		// Check that all items being dragged can be dropped
+
+		sourceItemsAreDroppable = sourceItems.every((item) =>
+			checkAllowedChild(
+				item,
+				layoutDataRef.current.items[dropItemId],
+				layoutDataRef,
+				fragmentEntryLinksRef
+			)
+		);
+	}
+
+	if (!dropItemIsDroppable || !sourceItemsAreDroppable) {
 		let message = '';
 
 		if (dropTargetItem.type === LAYOUT_DATA_ITEM_TYPES.dropZone) {
@@ -391,12 +431,18 @@ function computeDrop({
 				'fragments-cannot-be-placed-inside-an-unmapped-form-container'
 			);
 		}
-		else if (dropItem.fragmentEntryType === FRAGMENT_ENTRY_TYPES.input) {
+		else if (
+			sourceItems.some(
+				(item) => item.fragmentEntryType === FRAGMENT_ENTRY_TYPES.input
+			)
+		) {
 			message = Liferay.Language.get(
 				'form-components-can-only-be-placed-inside-a-mapped-form-container'
 			);
 
-			if (dropItem.fieldTypes?.includes('stepper')) {
+			if (
+				sourceItems.some((item) => item.fieldTypes?.includes('stepper'))
+			) {
 				const form = getFormParent(
 					dropTargetItem,
 					layoutDataRef.current
@@ -417,14 +463,16 @@ function computeDrop({
 			}
 		}
 		else if (
-			dropItem.isWidget &&
+			sourceItems.some((item) => item.isWidget) &&
 			getFormParent(dropTargetItem, layoutDataRef.current)
 		) {
 			message = Liferay.Language.get(
 				'widgets-cannot-be-placed-inside-a-form-container'
 			);
 		}
-		else if (dropItem.parentId !== dropTargetItem.itemId) {
+		else if (
+			sourceItems.some((item) => item.parentId !== dropTargetItem.itemId)
+		) {
 			message = Liferay.Language.get('an-unexpected-error-occurred');
 		}
 
@@ -441,20 +489,12 @@ function computeDrop({
 	}
 
 	if (dropItem && dropTargetItem) {
-		const {dropItemId, position} = getDropData({
-			isElevation: state.elevate,
-			layoutDataRef,
-			sourceItemId: dropItem.itemId,
-			targetItemId: dropTargetItem.itemId,
-			targetPosition: targetPositionWithoutMiddle,
-		});
-
 		const targetItem = layoutDataRef.current.items[dropTargetItem.itemId];
 		const formParent = getFormParent(targetItem, layoutDataRef.current);
 
 		if (
 			formParent &&
-			dropItem.fieldTypes?.includes('stepper') &&
+			sourceItems.some((item) => item.fieldTypes?.includes('stepper')) &&
 			!isMultistepForm(formParent)
 		) {
 			openFormConversionModal({

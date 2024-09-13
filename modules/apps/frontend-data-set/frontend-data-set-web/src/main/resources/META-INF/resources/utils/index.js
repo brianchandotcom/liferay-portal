@@ -149,9 +149,7 @@ export async function loadData(
 	}
 
 	if (sorts.length) {
-		url.searchParams.delete('sort');
-
-		url.searchParams.append(
+		url.searchParams.set(
 			'sort',
 			sorts.map((item) => `${item.key}:${item.direction}`).join(',')
 		);
@@ -169,9 +167,7 @@ export async function loadData(
 
 				const existingFilters = url.searchParams.get('filter');
 
-				url.searchParams.delete('filter');
-
-				url.searchParams.append(
+				url.searchParams.set(
 					'filter',
 					existingFilters + ' and ' + value
 				);
@@ -205,9 +201,7 @@ export async function loadData(
 					}
 				);
 
-				url.searchParams.delete('sort');
-
-				url.searchParams.append(
+				url.searchParams.set(
 					'sort',
 					existingSortArray.concat(newSortParams).join(',')
 				);
@@ -239,9 +233,7 @@ export async function loadData(
 					}
 				);
 
-				url.searchParams.delete('nestedFields');
-
-				url.searchParams.append('nestedFields', newNestedFields);
+				url.searchParams.set('nestedFields', newNestedFields);
 			}
 			else {
 				url.searchParams.append(key, value);

@@ -28,6 +28,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateStructureServi
 import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.LockedLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -165,9 +166,10 @@ public class AddStepperFragmentEntryLinkMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		List<String> addedItemIds = new ArrayList<>();
+		List<LayoutStructureItem> addedLayoutStructureItems = new ArrayList<>();
 		List<LayoutStructureItem> movedLayoutStructureItems = new ArrayList<>();
-		List<String> removedItemIds = new ArrayList<>();
+		List<LayoutStructureItem> removedLayoutStructureItems =
+			new ArrayList<>();
 
 		FragmentEntryLink stepperFragmentEntryLink = addFragmentEntryLink(
 			actionRequest);
@@ -196,7 +198,7 @@ public class AddStepperFragmentEntryLinkMVCActionCommand
 
 		jsonObject.put("addedItemId", layoutStructureItem.getItemId());
 
-		addedItemIds.add(layoutStructureItem.getItemId());
+		addedLayoutStructureItems.add(layoutStructureItem);
 
 		FormStyledLayoutStructureItem formStyledLayoutStructureItem =
 			(FormStyledLayoutStructureItem)
@@ -215,11 +217,12 @@ public class AddStepperFragmentEntryLinkMVCActionCommand
 						formStyledLayoutStructureItem, layoutStructure,
 						themeDisplay.getLocale(), numberOfSteps);
 
-			addedItemIds.addAll(layoutStructureItemChanges.getAddedItemIds());
+			addedLayoutStructureItems.addAll(
+				layoutStructureItemChanges.getAddedLayoutStructureItems());
 			movedLayoutStructureItems.addAll(
 				layoutStructureItemChanges.getMovedLayoutStructureItems());
-			removedItemIds.addAll(
-				layoutStructureItemChanges.getRemovedItemIds());
+			removedLayoutStructureItems.addAll(
+				layoutStructureItemChanges.getRemovedLayoutStructureItems());
 		}
 
 		_layoutPageTemplateStructureService.
@@ -283,7 +286,10 @@ public class AddStepperFragmentEntryLinkMVCActionCommand
 		}
 
 		return jsonObject.put(
-			"addedItemIds", _jsonFactory.createJSONArray(addedItemIds)
+			"addedItemIds",
+			_jsonFactory.createJSONArray(
+				TransformUtil.transform(
+					addedLayoutStructureItems, LayoutStructureItem::getItemId))
 		).put(
 			"fragmentEntryLinks",
 			JSONUtil.put(
@@ -314,7 +320,11 @@ public class AddStepperFragmentEntryLinkMVCActionCommand
 				return jsonArray;
 			}
 		).put(
-			"removedItemIds", _jsonFactory.createJSONArray(removedItemIds)
+			"removedItemIds",
+			_jsonFactory.createJSONArray(
+				TransformUtil.transform(
+					removedLayoutStructureItems,
+					LayoutStructureItem::getItemId))
 		);
 	}
 

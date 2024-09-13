@@ -5,7 +5,9 @@
 
 package com.liferay.client.extension.type.item.selector.web.internal.item.selector;
 
+import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.type.CET;
+import com.liferay.client.extension.type.GlobalJSCET;
 import com.liferay.client.extension.type.item.selector.CETItemSelectorReturnType;
 import com.liferay.client.extension.type.item.selector.criterion.CETItemSelectorCriterion;
 import com.liferay.client.extension.type.manager.CETManager;
@@ -18,6 +20,10 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.vulcan.pagination.Pagination;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -67,11 +73,29 @@ public class CETItemSelectorViewDescriptor
 				JavaConstants.JAVAX_PORTLET_REQUEST),
 			_portletURL, null, "there-are-no-items-to-display");
 
-		searchContainer.setResultsAndTotal(
-			_cetManager.getCETs(
-				themeDisplay.getCompanyId(), null,
+		List<CET> cets = _cetManager.getCETs(
+			themeDisplay.getCompanyId(), null,
+			_cetItemSelectorCriterion.getType(),
+			Pagination.of(QueryUtil.ALL_POS, QueryUtil.ALL_POS), null);
+
+		if (Objects.equals(
 				_cetItemSelectorCriterion.getType(),
-				Pagination.of(QueryUtil.ALL_POS, QueryUtil.ALL_POS), null));
+				ClientExtensionEntryConstants.TYPE_GLOBAL_JS)) {
+
+			List<CET> filteredCETs = new ArrayList<>();
+
+			for (CET cet : cets) {
+				GlobalJSCET globalJSCET = (GlobalJSCET)cet;
+
+				if (!Objects.equals(globalJSCET.getScope(), "instance")) {
+					filteredCETs.add(cet);
+				}
+			}
+
+			cets = filteredCETs;
+		}
+
+		searchContainer.setResultsAndTotal(cets);
 
 		return searchContainer;
 	}

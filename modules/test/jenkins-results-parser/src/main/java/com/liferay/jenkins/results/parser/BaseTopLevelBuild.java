@@ -2041,6 +2041,10 @@ public abstract class BaseTopLevelBuild
 	protected boolean isEligibleForReevaluation(
 		String result, String upstreamBranchSHA) {
 
+		if (JenkinsResultsParserUtil.isNullOrEmpty(upstreamBranchSHA)) {
+			return false;
+		}
+
 		if ((result != null) && !result.matches("(APPROVED|SUCCESS)") &&
 			hasDownstreamBuilds() &&
 			!upstreamBranchSHA.equals(

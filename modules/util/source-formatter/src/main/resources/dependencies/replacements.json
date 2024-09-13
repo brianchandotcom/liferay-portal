@@ -3284,6 +3284,15 @@
 		"to": "fetchStructure"
 	},
 	{
+		"classNames": [
+			"DLAppLocalService",
+			"DLAppService"
+		],
+		"from": "addFileEntry(long paramName, long paramName, long paramName, String paramName, String paramName, byte[] paramName, ServiceContext paramName)",
+		"issueKey": "LPD-36311",
+		"to": "addFileEntry(null, param#0#, param#1#, param#2#, param#3#, param#4#, param#5#, null, null, param#6#)"
+	},
+	{
 		"from": "CookieKeys.COMMERCE_CONTINUE_AS_GUEST",
 		"issueKey": "LPS-159679",
 		"newImports": [

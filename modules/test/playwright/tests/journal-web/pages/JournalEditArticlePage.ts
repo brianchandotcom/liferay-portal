@@ -154,9 +154,6 @@ export class JournalEditArticlePage {
 	}
 
 	async fillFriendlyURL(friendlyURL: string) {
-		if (await this.friendlyURLInput.isHidden()) {
-			await this.friendlyUrlToggle.click();
-		}
 		await this.friendlyURLInput.fill(friendlyURL);
 	}
 

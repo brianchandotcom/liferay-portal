@@ -214,8 +214,7 @@ public class FormItemManager {
 		LayoutStructure layoutStructure, Locale locale, int numberOfSteps) {
 
 		List<String> addedItemIds = new ArrayList<>();
-		List<LayoutStructureItemChanges.MovedItem> movedItems =
-			new ArrayList<>();
+		List<LayoutStructureItem> movedLayoutStructureItems = new ArrayList<>();
 
 		List<String> childrenItemIds = new ArrayList<>(
 			formStyledLayoutStructureItem.getChildrenItemIds());
@@ -253,9 +252,7 @@ public class FormItemManager {
 				}
 			}
 
-			movedItems.add(
-				new LayoutStructureItemChanges.MovedItem(
-					childrenItemId, formStyledLayoutStructureItem.getItemId()));
+			movedLayoutStructureItems.add(layoutStructureItem.clone());
 
 			layoutStructure.moveLayoutStructureItem(
 				childrenItemId, firstFormStepLayoutStructureItem.getItemId(),
@@ -268,7 +265,7 @@ public class FormItemManager {
 		}
 
 		return new LayoutStructureItemChanges(
-			addedItemIds, movedItems, Collections.emptyList());
+			addedItemIds, movedLayoutStructureItems, Collections.emptyList());
 	}
 
 	public LayoutStructureItemChanges changeToSimpleFormType(
@@ -283,8 +280,7 @@ public class FormItemManager {
 			return new LayoutStructureItemChanges();
 		}
 
-		List<LayoutStructureItemChanges.MovedItem> movedItems =
-			new ArrayList<>();
+		List<LayoutStructureItem> movedLayoutStructureItems = new ArrayList<>();
 
 		List<String> removedItemIds = new ArrayList<>();
 
@@ -337,10 +333,7 @@ public class FormItemManager {
 					layoutStructure.getLayoutStructureItem(
 						formStepLayoutStructureItemChildrenItemId);
 
-				movedItems.add(
-					new LayoutStructureItemChanges.MovedItem(
-						formStepLayoutStructureItemChildrenItemId,
-						layoutStructureItem.getParentItemId()));
+				movedLayoutStructureItems.add(layoutStructureItem.clone());
 
 				layoutStructure.moveLayoutStructureItem(
 					formStepLayoutStructureItemChildrenItemId,
@@ -357,7 +350,7 @@ public class FormItemManager {
 			formStepContainerStyledLayoutStructureItem.getItemId());
 
 		return new LayoutStructureItemChanges(
-			Collections.emptyList(), movedItems, removedItemIds);
+			Collections.emptyList(), movedLayoutStructureItems, removedItemIds);
 	}
 
 	public LayoutStructureItemChanges removeFormStepLayoutStructureItems(
@@ -372,8 +365,7 @@ public class FormItemManager {
 			return new LayoutStructureItemChanges();
 		}
 
-		List<LayoutStructureItemChanges.MovedItem> movedItems =
-			new ArrayList<>();
+		List<LayoutStructureItem> movedLayoutStructureItems = new ArrayList<>();
 		List<String> removedItemIds = new ArrayList<>();
 
 		List<String> childrenItemIds = new ArrayList<>(
@@ -394,10 +386,7 @@ public class FormItemManager {
 				LayoutStructureItem layoutStructureItem =
 					layoutStructure.getLayoutStructureItem(childrenItemId);
 
-				movedItems.add(
-					new LayoutStructureItemChanges.MovedItem(
-						layoutStructureItem.getItemId(),
-						layoutStructureItem.getParentItemId()));
+				movedLayoutStructureItems.add(layoutStructureItem.clone());
 
 				layoutStructure.moveLayoutStructureItem(
 					childrenItemId,
@@ -413,7 +402,7 @@ public class FormItemManager {
 		}
 
 		return new LayoutStructureItemChanges(
-			Collections.emptyList(), movedItems, removedItemIds);
+			Collections.emptyList(), movedLayoutStructureItems, removedItemIds);
 	}
 
 	public LayoutStructureItemChanges removeLayoutStructureItemsJSONArray(
@@ -452,11 +441,12 @@ public class FormItemManager {
 		}
 
 		public LayoutStructureItemChanges(
-			List<String> addedItemIds, List<MovedItem> movedItemIds,
+			List<String> addedItemIds,
+			List<LayoutStructureItem> movedLayoutStructureItems,
 			List<String> removedItemIds) {
 
 			_addedItemIds = addedItemIds;
-			_movedItemIds = movedItemIds;
+			_movedLayoutStructureItems = movedLayoutStructureItems;
 			_removedItemIds = removedItemIds;
 		}
 
@@ -464,36 +454,16 @@ public class FormItemManager {
 			return _addedItemIds;
 		}
 
-		public List<MovedItem> getMovedItemIds() {
-			return _movedItemIds;
+		public List<LayoutStructureItem> getMovedLayoutStructureItems() {
+			return _movedLayoutStructureItems;
 		}
 
 		public List<String> getRemovedItemIds() {
 			return _removedItemIds;
 		}
 
-		public static class MovedItem {
-
-			public MovedItem(String itemId, String parentId) {
-				_itemId = itemId;
-				_parentId = parentId;
-			}
-
-			public String getItemId() {
-				return _itemId;
-			}
-
-			public String getParentId() {
-				return _parentId;
-			}
-
-			private final String _itemId;
-			private final String _parentId;
-
-		}
-
 		private final List<String> _addedItemIds;
-		private final List<MovedItem> _movedItemIds;
+		private final List<LayoutStructureItem> _movedLayoutStructureItems;
 		private final List<String> _removedItemIds;
 
 	}

@@ -162,18 +162,22 @@ public class DefaultCommerceCheckoutStepHttpHelper
 				defaultShippingCommerceAddress.getCommerceAddressId();
 		}
 
-		CommerceAddress shippingAddress = commerceOrder.getShippingAddress();
-		CommerceAddress billingAddress = commerceOrder.getBillingAddress();
+		CommerceAddress billingCommerceAddress =
+			commerceOrder.getBillingAddress();
+		CommerceAddress shippingCommerceAddress =
+			commerceOrder.getShippingAddress();
 
 		if (((accountEntry != null) && (defaultBillingCommerceAddressId != 0) &&
 			 (defaultShippingCommerceAddressId != 0) &&
 			 (defaultBillingCommerceAddressId ==
 				 defaultShippingCommerceAddressId) &&
-			 (billingAddress == null) && (shippingAddress == null) &&
+			 (billingCommerceAddress == null) &&
+			 (shippingCommerceAddress == null) &&
 			 commerceOrder.isShippable()) ||
-			((billingAddress != null) && (shippingAddress != null) &&
-			 (billingAddress.getCommerceAddressId() ==
-				 shippingAddress.getCommerceAddressId()))) {
+			((billingCommerceAddress != null) &&
+			 (shippingCommerceAddress != null) &&
+			 (billingCommerceAddress.getCommerceAddressId() ==
+				 shippingCommerceAddress.getCommerceAddressId()))) {
 
 			return false;
 		}

@@ -131,14 +131,17 @@ public class CommerceOrderAddressNotificationTermTest {
 	}
 
 	private String _getExpectedContent() throws Exception {
-		CommerceAddress shippingCommerceAddress =
-			_commerceOrder.getShippingAddress();
 		CommerceAddress billingCommerceAddress =
 			_commerceOrder.getBillingAddress();
-		Country shippingCountry = shippingCommerceAddress.getCountry();
+
 		Country billingCountry = billingCommerceAddress.getCountry();
-		Region shippingRegion = shippingCommerceAddress.getRegion();
 		Region billingRegion = billingCommerceAddress.getRegion();
+
+		CommerceAddress shippingCommerceAddress =
+			_commerceOrder.getShippingAddress();
+
+		Country shippingCountry = shippingCommerceAddress.getCountry();
+		Region shippingRegion = shippingCommerceAddress.getRegion();
 
 		return StringBundler.concat(
 			billingCommerceAddress.getCity(), " | ", billingCountry.getTitle(),

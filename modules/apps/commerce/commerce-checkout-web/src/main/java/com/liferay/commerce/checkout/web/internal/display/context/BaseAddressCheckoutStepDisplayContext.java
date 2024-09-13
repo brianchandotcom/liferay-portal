@@ -236,22 +236,28 @@ public abstract class BaseAddressCheckoutStepDisplayContext {
 				defaultShippingCommerceAddress.getCommerceAddressId();
 		}
 
-		CommerceAddress shippingAddress = _commerceOrder.getShippingAddress();
-		CommerceAddress billingAddress = _commerceOrder.getBillingAddress();
+		CommerceAddress billingCommerceAddress =
+			_commerceOrder.getBillingAddress();
+		CommerceAddress shippingCommerceAddress =
+			_commerceOrder.getShippingAddress();
 
 		if (((accountEntry != null) &&
 			 (defaultBillingCommerceAddressId ==
 				 defaultShippingCommerceAddressId) &&
-			 (billingAddress == null) && (shippingAddress == null)) ||
-			((billingAddress != null) && (shippingAddress != null) &&
-			 (billingAddress.getCommerceAddressId() ==
-				 shippingAddress.getCommerceAddressId())) ||
-			((billingAddress != null) && (shippingAddress == null) &&
+			 (billingCommerceAddress == null) &&
+			 (shippingCommerceAddress == null)) ||
+			((billingCommerceAddress != null) &&
+			 (shippingCommerceAddress != null) &&
+			 (billingCommerceAddress.getCommerceAddressId() ==
+				 shippingCommerceAddress.getCommerceAddressId())) ||
+			((billingCommerceAddress != null) &&
+			 (shippingCommerceAddress == null) &&
 			 (defaultShippingCommerceAddressId ==
-				 billingAddress.getCommerceAddressId())) ||
-			((billingAddress == null) && (shippingAddress != null) &&
+				 billingCommerceAddress.getCommerceAddressId())) ||
+			((billingCommerceAddress == null) &&
+			 (shippingCommerceAddress != null) &&
 			 (defaultBillingCommerceAddressId ==
-				 shippingAddress.getCommerceAddressId()))) {
+				 shippingCommerceAddress.getCommerceAddressId()))) {
 
 			return true;
 		}

@@ -75,10 +75,12 @@ public class ShippingMethodCheckoutStepDisplayContext {
 	public List<CommerceShippingMethod> getCommerceShippingMethods()
 		throws PortalException {
 
-		CommerceAddress shippingAddress = _commerceOrder.getShippingAddress();
+		CommerceAddress shippingCommerceAddress =
+			_commerceOrder.getShippingAddress();
 
 		return _commerceShippingMethodLocalService.getCommerceShippingMethods(
-			_commerceOrder.getGroupId(), shippingAddress.getCountryId(), true);
+			_commerceOrder.getGroupId(), shippingCommerceAddress.getCountryId(),
+			true);
 	}
 
 	public String getCommerceShippingOptionKey(

@@ -73,21 +73,23 @@ public class ExportCommerceOrderReportMVCResourceCommand
 		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
 			commerceOrderId);
 
-		CommerceAddress billingAddress = commerceOrder.getBillingAddress();
-		CommerceAddress shippingAddress = commerceOrder.getShippingAddress();
+		CommerceAddress billingCommerceAddress =
+			commerceOrder.getBillingAddress();
+		CommerceAddress shippingCommerceAddress =
+			commerceOrder.getShippingAddress();
 
 		HashMapBuilder.HashMapWrapper<String, Object> hashMapWrapper =
 			new HashMapBuilder.HashMapWrapper<>();
 
 		AccountEntry accountEntry = commerceOrder.getAccountEntry();
 
-		if (billingAddress != null) {
+		if (billingCommerceAddress != null) {
 			hashMapWrapper.put(
-				"billingAddressCity", billingAddress.getCity()
+				"billingAddressCity", billingCommerceAddress.getCity()
 			).put(
 				"billingAddressCountry",
 				() -> {
-					Country country = billingAddress.getCountry();
+					Country country = billingCommerceAddress.getCountry();
 
 					if (country == null) {
 						return StringPool.BLANK;
@@ -96,13 +98,14 @@ public class ExportCommerceOrderReportMVCResourceCommand
 					return country.getName(themeDisplay.getLocale());
 				}
 			).put(
-				"billingAddressName", billingAddress.getName()
+				"billingAddressName", billingCommerceAddress.getName()
 			).put(
-				"billingAddressPhoneNumber", billingAddress.getPhoneNumber()
+				"billingAddressPhoneNumber",
+				billingCommerceAddress.getPhoneNumber()
 			).put(
 				"billingAddressRegion",
 				() -> {
-					Region region = billingAddress.getRegion();
+					Region region = billingCommerceAddress.getRegion();
 
 					if (region == null) {
 						return StringPool.BLANK;
@@ -111,13 +114,13 @@ public class ExportCommerceOrderReportMVCResourceCommand
 					return region.getName();
 				}
 			).put(
-				"billingAddressStreet1", billingAddress.getStreet1()
+				"billingAddressStreet1", billingCommerceAddress.getStreet1()
 			).put(
-				"billingAddressStreet2", billingAddress.getStreet2()
+				"billingAddressStreet2", billingCommerceAddress.getStreet2()
 			).put(
-				"billingAddressStreet3", billingAddress.getStreet3()
+				"billingAddressStreet3", billingCommerceAddress.getStreet3()
 			).put(
-				"billingAddressZip", billingAddress.getZip()
+				"billingAddressZip", billingCommerceAddress.getZip()
 			);
 		}
 
@@ -179,13 +182,13 @@ public class ExportCommerceOrderReportMVCResourceCommand
 			}
 		);
 
-		if (shippingAddress != null) {
+		if (shippingCommerceAddress != null) {
 			hashMapWrapper.put(
-				"shippingAddressCity", shippingAddress.getCity()
+				"shippingAddressCity", shippingCommerceAddress.getCity()
 			).put(
 				"shippingAddressCountry",
 				() -> {
-					Country country = shippingAddress.getCountry();
+					Country country = shippingCommerceAddress.getCountry();
 
 					if (country == null) {
 						return StringPool.BLANK;
@@ -196,13 +199,14 @@ public class ExportCommerceOrderReportMVCResourceCommand
 			).put(
 				"shippingAmountMoney", commerceOrder.getShippingMoney()
 			).put(
-				"shippingAddressName", shippingAddress.getName()
+				"shippingAddressName", shippingCommerceAddress.getName()
 			).put(
-				"shippingAddressPhoneNumber", shippingAddress.getPhoneNumber()
+				"shippingAddressPhoneNumber",
+				shippingCommerceAddress.getPhoneNumber()
 			).put(
 				"shippingAddressRegion",
 				() -> {
-					Region region = shippingAddress.getRegion();
+					Region region = shippingCommerceAddress.getRegion();
 
 					if (region == null) {
 						return StringPool.BLANK;
@@ -211,13 +215,13 @@ public class ExportCommerceOrderReportMVCResourceCommand
 					return region.getName();
 				}
 			).put(
-				"shippingAddressStreet1", shippingAddress.getStreet1()
+				"shippingAddressStreet1", shippingCommerceAddress.getStreet1()
 			).put(
-				"shippingAddressStreet2", shippingAddress.getStreet2()
+				"shippingAddressStreet2", shippingCommerceAddress.getStreet2()
 			).put(
-				"shippingAddressStreet3", shippingAddress.getStreet3()
+				"shippingAddressStreet3", shippingCommerceAddress.getStreet3()
 			).put(
-				"shippingAddressZip", shippingAddress.getZip()
+				"shippingAddressZip", shippingCommerceAddress.getZip()
 			).put(
 				"shippingDiscountAmount",
 				_commercePriceFormatter.format(

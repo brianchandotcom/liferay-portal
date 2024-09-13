@@ -680,15 +680,16 @@ public class CommerceReturnContentDisplayContext {
 			return StringPool.BLANK;
 		}
 
-		CommerceAddress shippingAddress = commerceOrder.getShippingAddress();
+		CommerceAddress shippingCommerceAddress =
+			commerceOrder.getShippingAddress();
 
 		StringBundler sb = new StringBundler(5);
 
-		sb.append(shippingAddress.getCity());
+		sb.append(shippingCommerceAddress.getCity());
 		sb.append(StringPool.COMMA_AND_SPACE);
 
 		try {
-			Region region = shippingAddress.getRegion();
+			Region region = shippingCommerceAddress.getRegion();
 
 			if (region != null) {
 				sb.append(region.getName());
@@ -701,7 +702,7 @@ public class CommerceReturnContentDisplayContext {
 			}
 		}
 
-		sb.append(shippingAddress.getZip());
+		sb.append(shippingCommerceAddress.getZip());
 
 		return sb.toString();
 	}

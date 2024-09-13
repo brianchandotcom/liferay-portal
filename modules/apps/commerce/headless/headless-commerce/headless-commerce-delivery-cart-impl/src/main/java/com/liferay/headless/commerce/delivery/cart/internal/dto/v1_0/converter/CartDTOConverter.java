@@ -76,14 +76,15 @@ public class CartDTOConverter implements DTOConverter<CommerceOrder, Cart> {
 				setAuthor(commerceOrder::getUserName);
 				setBillingAddressExternalReferenceCode(
 					() -> {
-						CommerceAddress billingAddress =
+						CommerceAddress billingCommerceAddress =
 							commerceOrder.getBillingAddress();
 
-						if (billingAddress == null) {
+						if (billingCommerceAddress == null) {
 							return null;
 						}
 
-						return billingAddress.getExternalReferenceCode();
+						return billingCommerceAddress.
+							getExternalReferenceCode();
 					});
 				setBillingAddressId(commerceOrder::getBillingAddressId);
 				setCouponCode(commerceOrder::getCouponCode);
@@ -168,14 +169,15 @@ public class CartDTOConverter implements DTOConverter<CommerceOrder, Cart> {
 				setPurchaseOrderNumber(commerceOrder::getPurchaseOrderNumber);
 				setShippingAddressExternalReferenceCode(
 					() -> {
-						CommerceAddress shippingAddress =
+						CommerceAddress shippingCommerceAddress =
 							commerceOrder.getShippingAddress();
 
-						if (shippingAddress == null) {
+						if (shippingCommerceAddress == null) {
 							return null;
 						}
 
-						return shippingAddress.getExternalReferenceCode();
+						return shippingCommerceAddress.
+							getExternalReferenceCode();
 					});
 				setShippingAddressId(commerceOrder::getShippingAddressId);
 				setStatus(

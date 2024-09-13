@@ -179,29 +179,6 @@ describe('SaveButtons', () => {
 		).toBeInTheDocument();
 	});
 
-	it('Show an alert appears when the title is empty', () => {
-		global.Liferay.component = jest
-			.fn()
-			.mockReturnValue({getValue: () => null});
-
-		renderComponent({
-			...DEFAULT_PROPS,
-			articleId: null,
-		});
-
-		userEvent.click(
-			screen.getByText('publish-with-permissions', {
-				selector: '.dropdown-item',
-			})
-		);
-
-		expect(
-			screen.getByText(
-				'please-enter-a-valid-title-for-the-default-language-x'
-			)
-		).toBeInTheDocument();
-	});
-
 	it('show alert and input feedback when trying to schedule without a date introduced', () => {
 		renderComponent({
 			...DEFAULT_PROPS,

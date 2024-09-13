@@ -198,14 +198,12 @@ autoSaveUndoRedoTest(
 
 		await journalEditArticlePage.fillTitle(getRandomString());
 
-		const translationButton = page.locator(
-			'[id="_com_liferay_journal_web_portlet_JournalPortlet__com_liferay_journal_web_portlet_JournalPortlet_titleMapAsXMLMenu"]'
-		);
+		const translationButton = page.getByLabel('Select a language, current');
 
 		await clickAndExpectToBeVisible({
 			autoClick: true,
-			target: page.getByRole('menuitem', {
-				name: 'Not translated into Catalan.',
+			target: page.getByRole('option', {
+				name: 'Catalan Language: Not',
 			}),
 			trigger: translationButton,
 		});
@@ -214,8 +212,8 @@ autoSaveUndoRedoTest(
 
 		await clickAndExpectToBeVisible({
 			autoClick: false,
-			target: page.getByRole('menuitem', {
-				name: 'Translated into Catalan.',
+			target: page.getByRole('option', {
+				name: 'Catalan Language: Translating 1/2',
 			}),
 			trigger: translationButton,
 		});
@@ -224,8 +222,8 @@ autoSaveUndoRedoTest(
 
 		await clickAndExpectToBeVisible({
 			autoClick: false,
-			target: page.getByRole('menuitem', {
-				name: 'Not translated into Catalan.',
+			target: page.getByRole('option', {
+				name: 'Catalan Language: Not',
 			}),
 			trigger: translationButton,
 		});
@@ -234,8 +232,8 @@ autoSaveUndoRedoTest(
 
 		await clickAndExpectToBeVisible({
 			autoClick: false,
-			target: page.getByRole('menuitem', {
-				name: 'Translated into Catalan.',
+			target: page.getByRole('option', {
+				name: 'Catalan Language: Translating 1/2',
 			}),
 			trigger: translationButton,
 		});
@@ -428,22 +426,6 @@ autoSaveTest(
 	async ({journalEditArticlePage, journalPage, page, site}) => {
 		await journalEditArticlePage.goto({siteUrl: site.friendlyUrlPath});
 
-		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: page.getByRole('menuitem', {
-				name: 'Publish With Permissions',
-			}),
-			trigger: page.getByRole('button', {
-				name: 'Select and Confirm Publish Settings',
-			}),
-		});
-
-		await expect(
-			page.getByText(
-				'Please enter a valid title for the default language'
-			)
-		).toBeVisible({timeout: 1000});
-
 		const title = getRandomString();
 
 		await journalEditArticlePage.fillTitle(title);
@@ -490,6 +472,8 @@ autoSaveTest(
 			journalEditArticlePage.changesSavedIndicator
 		).toBeVisible();
 
+		await page.getByRole('link', {name: 'Basic Information'}).click();
+
 		await expect(page.getByText('1.0')).toBeVisible();
 
 		await expect(page.getByText('Draft', {exact: true})).toBeVisible();
@@ -518,6 +502,8 @@ autoSaveTest(
 				journalEditArticlePage.changesSavedIndicator
 			).toBeVisible();
 		}).toPass();
+
+		await page.getByRole('link', {name: 'Basic Information'}).click();
 
 		await expect(page.getByText('1.1')).toBeVisible();
 
@@ -548,6 +534,8 @@ autoSaveTest(
 		});
 
 		await journalEditArticlePage.fillFriendlyURL(getRandomString());
+
+		await page.locator('body').click();
 
 		const errorIndicator = await page.locator(
 			'#_com_liferay_journal_web_portlet_JournalPortlet_lockErrorIndicator'

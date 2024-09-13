@@ -120,6 +120,7 @@ const FieldInformation = ({popover, tooltip}) => {
 	) : (
 		<span
 			className="c-ml-2 text-4 text-secondary"
+			data-testid="tooltip"
 			tabIndex={0}
 			title={tooltip}
 		>
@@ -147,6 +148,7 @@ const Popover = ({alignPosition, content, header, image}) => {
 				<ClayButtonWithIcon
 					aria-label={Liferay.Language.get('more-information')}
 					className="c-ml-2 text-secondary"
+					data-testid="tooltip"
 					displayType="unstyled"
 					monospaced={false}
 					size="sm"

@@ -171,4 +171,5 @@ public class BlogsAggregatorExportImportPortletPreferencesProcessorTest {
 
 	@Inject
 	private PortletLocalService _portletLocalService;
+
 }

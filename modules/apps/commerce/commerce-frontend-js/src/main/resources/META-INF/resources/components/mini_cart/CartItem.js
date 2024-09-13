@@ -56,6 +56,21 @@ const deboncedUpdateItemQuantity = debouncePromise(
 	1000
 );
 
+const isValidMedia = (adaptiveMediaImageHTMLTag) => {
+	if (adaptiveMediaImageHTMLTag) {
+		const testElement = window.document.createElement('div');
+
+		testElement.innerHTML = adaptiveMediaImageHTMLTag;
+
+		const imgElement = testElement.querySelector('img');
+		const srcAttribute = imgElement.getAttribute('src');
+
+		return !!srcAttribute;
+	}
+
+	return false;
+};
+
 function CartItem({
 	adaptiveMediaImageHTMLTag,
 	cartItems: childItems,
@@ -193,7 +208,7 @@ function CartItem({
 					</span>
 				</a>
 
-				{!!adaptiveMediaImageHTMLTag && (
+				{isValidMedia(adaptiveMediaImageHTMLTag) && (
 					<div
 						className="mini-cart-item-thumbnail"
 						dangerouslySetInnerHTML={{

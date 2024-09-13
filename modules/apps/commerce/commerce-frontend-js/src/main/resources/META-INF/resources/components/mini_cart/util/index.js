@@ -197,12 +197,15 @@ export function generateProductPageURL(
 
 	if (!productLocalizedURL) {
 		const defaultLang = themeDisplay.getDefaultLanguageId();
+
 		productLocalizedURL = productRelativeURLs[defaultLang];
 	}
 
-	return [baseURL, productURLSeparator, productLocalizedURL]
-		.map((url) => url.replace(/^\//, '').replace(/\/$/, ''))
-		.join('/');
+	return productLocalizedURL
+		? [baseURL, productURLSeparator, productLocalizedURL]
+				.map((url) => url.replace(/^\//, '').replace(/\/$/, ''))
+				.join('/')
+		: '';
 }
 
 export function hasErrors(cartItems) {

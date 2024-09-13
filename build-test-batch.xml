@@ -5524,6 +5524,23 @@ information. Make sure to commit in all format-javadoc results.
 		<antcall target="functional-bundle-tomcat-mysql57-jdk11_open" />
 	</target>
 
+	<target name="functional-smoke-bundle-tomcat-mysql57-jdk21_zulu">
+		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
+
+		<run-functional-test
+			app.server.type="tomcat"
+			database.type="mysql"
+			database.version="5.7"
+			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
+			test.fix.pack.base.url="${test.fix.pack.base.url}"
+			test.license.xml.url="${test.license.xml.url}"
+			test.portal.bundle.version="${test.portal.bundle.version}"
+			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
+			test.portal.log.assert="true"
+			test.sql.zip.url="${test.sql.zip.url}"
+		/>
+	</target>
+
 	<target name="functional-smoke-bundle-tomcat-oracle193-jdk8">
 		<antcall target="functional-bundle-tomcat-oracle193-jdk8" />
 	</target>

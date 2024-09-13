@@ -166,8 +166,7 @@ public class AddStepperFragmentEntryLinkMVCActionCommand
 		throws Exception {
 
 		List<String> addedItemIds = new ArrayList<>();
-		List<FormItemManager.LayoutStructureItemChanges.MovedItem> movedItems =
-			new ArrayList<>();
+		List<LayoutStructureItem> movedLayoutStructureItems = new ArrayList<>();
 		List<String> removedItemIds = new ArrayList<>();
 
 		FragmentEntryLink stepperFragmentEntryLink = addFragmentEntryLink(
@@ -217,7 +216,8 @@ public class AddStepperFragmentEntryLinkMVCActionCommand
 						themeDisplay.getLocale(), numberOfSteps);
 
 			addedItemIds.addAll(layoutStructureItemChanges.getAddedItemIds());
-			movedItems.addAll(layoutStructureItemChanges.getMovedItemIds());
+			movedLayoutStructureItems.addAll(
+				layoutStructureItemChanges.getMovedLayoutStructureItems());
 			removedItemIds.addAll(
 				layoutStructureItemChanges.getRemovedItemIds());
 		}
@@ -299,14 +299,15 @@ public class AddStepperFragmentEntryLinkMVCActionCommand
 			() -> {
 				JSONArray jsonArray = _jsonFactory.createJSONArray();
 
-				for (FormItemManager.LayoutStructureItemChanges.MovedItem
-						movedItem : movedItems) {
+				for (LayoutStructureItem movedLayoutStructureItem :
+						movedLayoutStructureItems) {
 
 					jsonArray.put(
 						JSONUtil.put(
-							"itemId", movedItem.getItemId()
+							"itemId", movedLayoutStructureItem.getItemId()
 						).put(
-							"parentId", movedItem.getParentId()
+							"parentId",
+							movedLayoutStructureItem.getParentItemId()
 						));
 				}
 

@@ -293,8 +293,7 @@ public class UpdateFormItemConfigMVCActionCommand
 			layoutPageTemplateStructure.getData(segmentsExperienceId));
 
 		List<String> addedItemIds = new ArrayList<>();
-		List<FormItemManager.LayoutStructureItemChanges.MovedItem> movedItems =
-			new ArrayList<>();
+		List<LayoutStructureItem> movedLayoutStructureItems = new ArrayList<>();
 		List<String> removedItemIds = new ArrayList<>();
 		JSONObject addedFragmentEntryLinksJSONObject =
 			_jsonFactory.createJSONObject();
@@ -319,7 +318,8 @@ public class UpdateFormItemConfigMVCActionCommand
 				layoutStructureItemChange : layoutStructureItemChanges) {
 
 			addedItemIds.addAll(layoutStructureItemChange.getAddedItemIds());
-			movedItems.addAll(layoutStructureItemChange.getMovedItemIds());
+			movedLayoutStructureItems.addAll(
+				layoutStructureItemChange.getMovedLayoutStructureItems());
 			removedItemIds.addAll(
 				layoutStructureItemChange.getRemovedItemIds());
 		}
@@ -335,14 +335,15 @@ public class UpdateFormItemConfigMVCActionCommand
 			() -> {
 				JSONArray jsonArray = _jsonFactory.createJSONArray();
 
-				for (FormItemManager.LayoutStructureItemChanges.MovedItem
-						movedItem : movedItems) {
+				for (LayoutStructureItem movedLayoutStructureItem :
+						movedLayoutStructureItems) {
 
 					jsonArray.put(
 						JSONUtil.put(
-							"itemId", movedItem.getItemId()
+							"itemId", movedLayoutStructureItem.getItemId()
 						).put(
-							"parentId", movedItem.getParentId()
+							"parentId",
+							movedLayoutStructureItem.getParentItemId()
 						));
 				}
 

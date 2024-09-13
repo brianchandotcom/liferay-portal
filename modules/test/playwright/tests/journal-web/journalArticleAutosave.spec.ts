@@ -10,6 +10,7 @@ import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest'
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {pagesAdminPagesTest} from '../../fixtures/pagesAdminPagesTest';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import fillAndClickOutside from '../../utils/fillAndClickOutside';
 import getRandomString from '../../utils/getRandomString';
@@ -35,7 +36,40 @@ const autoSaveTest = mergeTests(
 	}),
 	isolatedSiteTest,
 	journalPagesTest,
-	loginTest()
+	loginTest(),
+	pagesAdminPagesTest
+);
+
+autoSaveTest(
+	'UndoRedo Should not appear when editing default values',
+	{
+		tag: '@LPD-36442',
+	},
+	async ({
+		apiHelpers,
+		journalEditArticlePage,
+		journalEditStructureDefaultValuesPage,
+		site,
+	}) => {
+		const fieldName = 'Text1';
+		const structureName = 'Structure1';
+
+		const dataDefinition = getDataStructureDefinition({
+			defaultLanguageId: 'en_US',
+			fields: [{name: fieldName, repeatable: true}],
+			name: structureName,
+		});
+
+		await apiHelpers.dataEngine.createStructure(site.id, dataDefinition);
+
+		await journalEditStructureDefaultValuesPage.goto({
+			siteUrl: site.friendlyUrlPath,
+			structureName,
+		});
+
+		expect(journalEditArticlePage.undoButton).not.toBeVisible();
+		expect(journalEditArticlePage.redoButton).not.toBeVisible();
+	}
 );
 
 autoSaveTest(

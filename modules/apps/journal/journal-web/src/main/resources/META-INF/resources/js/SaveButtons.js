@@ -82,7 +82,7 @@ export default function SaveButtons({
 			}
 		}
 		else {
-			validateRequiredFields();
+			validateRequiredFields(formId);
 		}
 	};
 
@@ -154,7 +154,7 @@ export default function SaveButtons({
 		);
 	};
 
-	const validateRequiredFields = () => {
+	const validateRequiredFields = (formId) => {
 		Liferay.Form.get(formId).formValidator.validate();
 		Liferay.componentReady(
 			`${portletNamespace}dataEngineLayoutRenderer`
@@ -276,7 +276,7 @@ export default function SaveButtons({
 								});
 							}
 							else {
-								validateRequiredFields();
+								validateRequiredFields(formId);
 							}
 						}}
 						symbolLeft="date-time"

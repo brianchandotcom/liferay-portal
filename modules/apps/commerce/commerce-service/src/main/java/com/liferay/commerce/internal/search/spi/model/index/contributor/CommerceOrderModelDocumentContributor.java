@@ -97,7 +97,7 @@ public class CommerceOrderModelDocumentContributor
 			document.addDate("orderDate", commerceOrder.getOrderDate());
 			document.addDateSortable("orderDate", commerceOrder.getOrderDate());
 			document.addKeyword(
-				"orderItemsName", _getCommerceOrderItemNames(commerceOrder));
+				"orderItemNames", _getCommerceOrderItemNames(commerceOrder));
 			document.addKeyword("orderStatus", commerceOrder.getOrderStatus());
 			document.addKeyword(
 				"purchaseOrderNumber", commerceOrder.getPurchaseOrderNumber());

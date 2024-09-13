@@ -32,6 +32,7 @@ import {useDispatch, useSelectorRef} from '../../contexts/StoreContext';
 import selectLayoutDataItemLabel from '../../selectors/selectLayoutDataItemLabel';
 import addFragment from '../../thunks/addFragment';
 import addItem from '../../thunks/addItem';
+import addStepper from '../../thunks/addStepper';
 import addWidget from '../../thunks/addWidget';
 import moveItem from '../../thunks/moveItem';
 import checkAllowedChild from '../../utils/drag_and_drop/checkAllowedChild';
@@ -124,9 +125,18 @@ export default function KeyboardMovementManager() {
 								selectItems,
 							});
 						}
+						else if (source.fieldTypes.includes('stepper')) {
+							thunk = addStepper({
+								fragmentEntryKey: source.fragmentEntryKey,
+								groupId: source.groupId,
+								parentItemId: dropItemId,
+								position,
+								selectItems,
+								type: source.type,
+							});
+						}
 						else {
 							thunk = addFragment({
-								fieldTypes: source.fieldTypes,
 								fragmentEntryKey: source.fragmentEntryKey,
 								groupId: source.groupId,
 								parentItemId: dropItemId,

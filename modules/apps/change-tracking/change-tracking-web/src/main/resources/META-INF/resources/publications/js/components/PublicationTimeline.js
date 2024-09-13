@@ -3,8 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayAlert from '@clayui/alert';
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown, {Align} from '@clayui/drop-down';
+import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayModal, {useModal} from '@clayui/modal';
@@ -28,6 +30,7 @@ const PublicationTimeline = ({
 	timelineClassPK,
 	timelineEditURL,
 	timelineItemsURL,
+	warningIcon,
 }) => {
 	const MAX_DROPDOWN_ITEMS_SHOWN = 6;
 	const [timelineItems, setTimelineItems] = useState([]);
@@ -185,6 +188,17 @@ const PublicationTimeline = ({
 						<div className="align-items-center d-flex">
 							<span className="c-pr-2">{timelineItem.name}</span>
 
+							{Liferay.FeatureFlags['LPD-20556'] &&
+							!!warningIcon &&
+							timelineItem.status.code ===
+								WORKFLOW_STATUS_DRAFT ? (
+								<ClayIcon
+									className={warningIcon.conflictIconClass}
+									style={{fontSize: 'medium'}}
+									symbol={warningIcon.conflictIconName}
+								/>
+							) : null}
+
 							<WorkflowStatusLabel
 								workflowStatus={timelineItem.status.code}
 							/>
@@ -326,15 +340,30 @@ const PublicationTimeline = ({
 
 				<div className="publication-timeline">
 					<ClayDropDown.ItemList className="c-mb-0">
-						{Liferay.FeatureFlags['LPD-20556']
-							? timelineItems
+						{Liferay.FeatureFlags['LPD-20556'] ? (
+							<>
+								{warningIcon ? (
+									<ClayAlert
+										displayType="warning"
+										spritemap={spritemap}
+										title={Liferay.Language.get('warning')}
+									>
+										{Liferay.Language.get(
+											warningIcon.conflictIconLabel
+										)}
+									</ClayAlert>
+								) : null}
+								{timelineItems
 									.slice(0, MAX_DROPDOWN_ITEMS_SHOWN)
 									.map((timelineItem) =>
 										renderTimelineItemRow(timelineItem)
-									)
-							: timelineItems.map((timelineItem) =>
-									renderTimelineItemRow(timelineItem)
-								)}
+									)}
+							</>
+						) : (
+							timelineItems.map((timelineItem) =>
+								renderTimelineItemRow(timelineItem)
+							)
+						)}
 					</ClayDropDown.ItemList>
 
 					{timelineItems.length > MAX_DROPDOWN_ITEMS_SHOWN &&

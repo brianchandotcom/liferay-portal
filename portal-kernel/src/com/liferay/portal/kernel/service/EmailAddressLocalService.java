@@ -79,8 +79,9 @@ public interface EmailAddressLocalService
 	public EmailAddress addEmailAddress(EmailAddress emailAddress);
 
 	public EmailAddress addEmailAddress(
-			long userId, String className, long classPK, String address,
-			long listTypeId, boolean primary, ServiceContext serviceContext)
+			String externalReferenceCode, long userId, String className,
+			long classPK, String address, long listTypeId, boolean primary,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -215,6 +216,10 @@ public interface EmailAddressLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public EmailAddress fetchEmailAddress(long emailAddressId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public EmailAddress fetchEmailAddressByExternalReferenceCode(
+		String externalReferenceCode, long companyId);
+
 	/**
 	 * Returns the email address with the matching UUID and company.
 	 *
@@ -238,6 +243,11 @@ public interface EmailAddressLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public EmailAddress getEmailAddress(long emailAddressId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public EmailAddress getEmailAddressByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
 		throws PortalException;
 
 	/**
@@ -318,8 +328,8 @@ public interface EmailAddressLocalService
 	public EmailAddress updateEmailAddress(EmailAddress emailAddress);
 
 	public EmailAddress updateEmailAddress(
-			long emailAddressId, String address, long listTypeId,
-			boolean primary)
+			String externalReferenceCode, long emailAddressId, String address,
+			long listTypeId, boolean primary)
 		throws PortalException;
 
 	@Override

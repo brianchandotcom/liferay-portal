@@ -1,23 +1,29 @@
-.fragment-type-cards {
-	gap: 12px;
+.add-fragment-modal {
+	.modal-content {
+		max-height: 80vh;
+	}
 
-	.fragment-type-card {
-		flex: 1;
+	.fragment-type-cards {
+		gap: 12px;
 
-		&-basic .card-item-first {
-			background-color: $teal;
-		}
+		.fragment-type-card {
+			flex: 1;
 
-		&-form .card-item-first {
-			background-color: $orange;
-		}
+			&-basic .card-item-first {
+				background-color: $teal;
+			}
 
-		.custom-control-label {
-			opacity: 0;
-		}
+			&-form .card-item-first {
+				background-color: $orange;
+			}
 
-		.lexicon-icon {
-			fill: $white;
+			.custom-control-label {
+				opacity: 0;
+			}
+
+			.lexicon-icon {
+				fill: $white;
+			}
 		}
 	}
 }

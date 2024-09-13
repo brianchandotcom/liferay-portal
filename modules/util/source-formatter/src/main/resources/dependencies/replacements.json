@@ -3228,6 +3228,15 @@
 	},
 	{
 		"classNames": [
+			"IndexWriterHelper",
+			"IndexWriterHelperUtil"
+		],
+		"from": "deleteEntityDocuments(String paramName, long paramName, String paramName, boolean paramName)",
+		"issueKey": "LPD-35275",
+		"to": "deleteEntityDocuments(param#1#, param#2#, param#3#)"
+	},
+	{
+		"classNames": [
 			"ListTypeServiceUtil"
 		],
 		"from": "getListTypes(String paramName)",

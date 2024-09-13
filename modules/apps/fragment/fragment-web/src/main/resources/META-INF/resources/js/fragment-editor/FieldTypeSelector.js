@@ -9,6 +9,8 @@ import ClayLink from '@clayui/link';
 import classNames from 'classnames';
 import React from 'react';
 
+const UNIQUE_INPUT_TYPES = new Set(['captcha', 'formButton', 'stepper']);
+
 export function FieldTypeSelector({
 	availableFieldTypes,
 	description,
@@ -22,7 +24,7 @@ export function FieldTypeSelector({
 	title,
 }) {
 	const handleChange = (key, checked) => {
-		if (key === 'captcha' && checked) {
+		if (UNIQUE_INPUT_TYPES.has(key) && checked) {
 			onChangeFieldTypes([key]);
 
 			return;
@@ -74,8 +76,9 @@ export function FieldTypeSelector({
 								aria-label={label}
 								checked={fieldTypes.includes(key)}
 								disabled={
-									fieldTypes.includes('captcha') &&
-									key !== 'captcha'
+									fieldTypes.some((fieldType) =>
+										UNIQUE_INPUT_TYPES.has(fieldType)
+									) && key !== fieldTypes[0]
 								}
 								key={key}
 								label={label}

@@ -12,7 +12,7 @@ import FileList from './components/FileList';
 
 const AttachmentUploader = () => {
 	const [fileAttached, setFileAttached] = useState(null);
-	const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
+	const [isNoPersonalDataChecked, setisNoPersonalDataChecked] = useState(false);
 	const [attachmentComment, setAttachmentComment] = useState('');
 	const [ticketAttachmentId, setTicketAttachmentId] = useState(null);
 	const [gcsSessionURL, setGcsSessionURL] = useState('');
@@ -42,9 +42,9 @@ const AttachmentUploader = () => {
 					'liferay-customer-etc-spring-boot-oauth-application-user-agent'
 				).fetch('/ticket-attachments/initiate-upload', {
 					body: JSON.stringify({
-						zendeskTicketId: ticketId,
 						fileName: fileUploaded.fileName,
 						fileSize: String(fileUploaded.file.size),
+						zendeskTicketId: ticketId,
 					}),
 					method: 'POST',
 				});
@@ -73,11 +73,11 @@ const AttachmentUploader = () => {
 
 		try {
 			const response = await fetch(gcsSessionURL, {
-				method: 'PUT',
 				body: fileAttached.file,
 				headers: {
 					'Content-Length': fileAttached.file.size.toString(),
 				},
+				method: 'PUT',
 			});
 
 			if (!response.ok) {
@@ -140,7 +140,7 @@ const AttachmentUploader = () => {
 	return (
 		<div className="attachment-uploader">
 			<div className="d-flex mt-4 text-neutral-10">
-				<h2 className="">{i18n.translate('attach-file-to-ticket')}</h2>
+				<h2>{i18n.translate('attach-file-to-ticket')}</h2>
 			</div>
 
 			<div className="mt-4">
@@ -176,9 +176,9 @@ const AttachmentUploader = () => {
 
 				<AttachmentComment
 					attachmentComment={attachmentComment}
-					isCheckboxChecked={isCheckboxChecked}
+					isNoPersonalDataChecked={isNoPersonalDataChecked}
 					setAttachmentComment={setAttachmentComment}
-					setIsCheckboxChecked={setIsCheckboxChecked}
+					setisNoPersonalDataChecked={setisNoPersonalDataChecked}
 				/>
 
 				<div className="d-flex my-4 px-4">
@@ -197,7 +197,7 @@ const AttachmentUploader = () => {
 
 					<ClayButton
 						aria-label="Upload"
-						disabled={!fileAttached || !isCheckboxChecked}
+						disabled={!fileAttached || !isNoPersonalDataChecked}
 						displayType="primary ml-3 mt-2"
 						onClick={handleClickUpload}
 					>

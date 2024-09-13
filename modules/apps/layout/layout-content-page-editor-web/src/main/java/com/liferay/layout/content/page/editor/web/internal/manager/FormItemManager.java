@@ -68,11 +68,12 @@ public class FormItemManager {
 			_findFormStepContainerStyledLayoutStructureItem(
 				formStyledLayoutStructureItem, layoutStructure);
 
-		if (formStepContainerStyledLayoutStructureItem == null) {
-			return new LayoutStructureItemChanges();
-		}
+		LayoutStructureItemChanges layoutStructureItemChanges =
+			new LayoutStructureItemChanges();
 
-		List<LayoutStructureItem> addedLayoutStructureItems = new ArrayList<>();
+		if (formStepContainerStyledLayoutStructureItem == null) {
+			return layoutStructureItemChanges;
+		}
 
 		List<String> childrenItemIds =
 			formStepContainerStyledLayoutStructureItem.getChildrenItemIds();
@@ -84,12 +85,11 @@ public class FormItemManager {
 				layoutStructure.addFormStepLayoutStructureItem(
 					formStepContainerStyledLayoutStructureItem.getItemId(), -1);
 
-			addedLayoutStructureItems.add(layoutStructureItem);
+			layoutStructureItemChanges.addAddedLayoutStructureItems(
+				layoutStructureItem);
 		}
 
-		return new LayoutStructureItemChanges(
-			addedLayoutStructureItems, Collections.emptyList(),
-			Collections.emptyList());
+		return layoutStructureItemChanges;
 	}
 
 	public List<FragmentEntryLink> addFragmentEntryLinks(
@@ -214,8 +214,8 @@ public class FormItemManager {
 		FormStyledLayoutStructureItem formStyledLayoutStructureItem,
 		LayoutStructure layoutStructure, Locale locale, int numberOfSteps) {
 
-		List<LayoutStructureItem> addedLayoutStructureItems = new ArrayList<>();
-		List<LayoutStructureItem> movedLayoutStructureItems = new ArrayList<>();
+		LayoutStructureItemChanges layoutStructureItemChanges =
+			new LayoutStructureItemChanges();
 
 		List<String> childrenItemIds = new ArrayList<>(
 			formStyledLayoutStructureItem.getChildrenItemIds());
@@ -224,7 +224,7 @@ public class FormItemManager {
 			layoutStructure.addFormStepContainerStyledLayoutStructureItem(
 				formStyledLayoutStructureItem.getItemId(), -1);
 
-		addedLayoutStructureItems.add(
+		layoutStructureItemChanges.addAddedLayoutStructureItems(
 			formStepContainerStyledLayoutStructureItem);
 
 		LayoutStructureItem firstFormStepLayoutStructureItem =
@@ -253,7 +253,8 @@ public class FormItemManager {
 				}
 			}
 
-			movedLayoutStructureItems.add(layoutStructureItem.clone());
+			layoutStructureItemChanges.addMovedLayoutStructureItems(
+				layoutStructureItem.clone());
 
 			layoutStructure.moveLayoutStructureItem(
 				childrenItemId, firstFormStepLayoutStructureItem.getItemId(),
@@ -265,9 +266,7 @@ public class FormItemManager {
 				formStepContainerStyledLayoutStructureItem.getItemId(), i);
 		}
 
-		return new LayoutStructureItemChanges(
-			addedLayoutStructureItems, movedLayoutStructureItems,
-			Collections.emptyList());
+		return layoutStructureItemChanges;
 	}
 
 	public LayoutStructureItemChanges changeToSimpleFormType(
@@ -282,10 +281,8 @@ public class FormItemManager {
 			return new LayoutStructureItemChanges();
 		}
 
-		List<LayoutStructureItem> movedLayoutStructureItems = new ArrayList<>();
-
-		List<LayoutStructureItem> removedLayoutStructureItems =
-			new ArrayList<>();
+		LayoutStructureItemChanges layoutStructureItemChanges =
+			new LayoutStructureItemChanges();
 
 		for (String childrenItemId :
 				new ArrayList<>(
@@ -317,7 +314,8 @@ public class FormItemManager {
 				Collections.singletonList(childrenItemId),
 				Collections.emptyList());
 
-			removedLayoutStructureItems.add(layoutStructureItem);
+			layoutStructureItemChanges.addRemovedLayoutStructureItems(
+				layoutStructureItem);
 		}
 
 		for (String childrenItemId :
@@ -336,7 +334,8 @@ public class FormItemManager {
 					layoutStructure.getLayoutStructureItem(
 						formStepLayoutStructureItemChildrenItemId);
 
-				movedLayoutStructureItems.add(layoutStructureItem.clone());
+				layoutStructureItemChanges.addMovedLayoutStructureItems(
+					layoutStructureItem.clone());
 
 				layoutStructure.moveLayoutStructureItem(
 					formStepLayoutStructureItemChildrenItemId,
@@ -349,12 +348,10 @@ public class FormItemManager {
 				formStepContainerStyledLayoutStructureItem.getItemId()),
 			Collections.emptyList());
 
-		removedLayoutStructureItems.add(
+		layoutStructureItemChanges.addRemovedLayoutStructureItems(
 			formStepContainerStyledLayoutStructureItem);
 
-		return new LayoutStructureItemChanges(
-			Collections.emptyList(), movedLayoutStructureItems,
-			removedLayoutStructureItems);
+		return layoutStructureItemChanges;
 	}
 
 	public LayoutStructureItemChanges removeFormStepLayoutStructureItems(
@@ -365,13 +362,12 @@ public class FormItemManager {
 			_findFormStepContainerStyledLayoutStructureItem(
 				formStyledLayoutStructureItem, layoutStructure);
 
-		if (formStepContainerStyledLayoutStructureItem == null) {
-			return new LayoutStructureItemChanges();
-		}
+		LayoutStructureItemChanges layoutStructureItemChanges =
+			new LayoutStructureItemChanges();
 
-		List<LayoutStructureItem> movedLayoutStructureItems = new ArrayList<>();
-		List<LayoutStructureItem> removedLayoutStructureItems =
-			new ArrayList<>();
+		if (formStepContainerStyledLayoutStructureItem == null) {
+			return layoutStructureItemChanges;
+		}
 
 		List<String> childrenItemIds = new ArrayList<>(
 			formStepContainerStyledLayoutStructureItem.getChildrenItemIds());
@@ -391,14 +387,16 @@ public class FormItemManager {
 				LayoutStructureItem layoutStructureItem =
 					layoutStructure.getLayoutStructureItem(childrenItemId);
 
-				movedLayoutStructureItems.add(layoutStructureItem.clone());
+				layoutStructureItemChanges.addMovedLayoutStructureItems(
+					layoutStructureItem.clone());
 
 				layoutStructure.moveLayoutStructureItem(
 					childrenItemId,
 					previousFormStepLayoutStructureItem.getItemId(), -1);
 			}
 
-			removedLayoutStructureItems.add(formStepLayoutStructureItem);
+			layoutStructureItemChanges.addRemovedLayoutStructureItems(
+				formStepLayoutStructureItem);
 
 			layoutStructure.markLayoutStructureItemForDeletion(
 				Collections.singletonList(
@@ -406,17 +404,15 @@ public class FormItemManager {
 				Collections.emptyList());
 		}
 
-		return new LayoutStructureItemChanges(
-			Collections.emptyList(), movedLayoutStructureItems,
-			removedLayoutStructureItems);
+		return layoutStructureItemChanges;
 	}
 
 	public LayoutStructureItemChanges removeLayoutStructureItemsJSONArray(
 		FormStyledLayoutStructureItem formStyledLayoutStructureItem,
 		LayoutStructure layoutStructure, List<String> initialRemovedItemIds) {
 
-		List<LayoutStructureItem> removedLayoutStructureItems =
-			new ArrayList<>();
+		LayoutStructureItemChanges layoutStructureItemChanges =
+			new LayoutStructureItemChanges();
 
 		for (String itemId :
 				LayoutStructureItemUtil.getChildrenItemIds(
@@ -432,31 +428,31 @@ public class FormItemManager {
 			layoutStructure.markLayoutStructureItemForDeletion(
 				Collections.singletonList(itemId), Collections.emptyList());
 
-			removedLayoutStructureItems.add(
+			layoutStructureItemChanges.addRemovedLayoutStructureItems(
 				layoutStructure.getLayoutStructureItem(itemId));
 		}
 
-		return new LayoutStructureItemChanges(
-			Collections.emptyList(), Collections.emptyList(),
-			removedLayoutStructureItems);
+		return layoutStructureItemChanges;
 	}
 
 	public static class LayoutStructureItemChanges {
 
-		public LayoutStructureItemChanges() {
-			this(
-				Collections.emptyList(), Collections.emptyList(),
-				Collections.emptyList());
+		public void addAddedLayoutStructureItems(
+			LayoutStructureItem layoutStructureItem) {
+
+			_addedLayoutStructureItems.add(layoutStructureItem);
 		}
 
-		public LayoutStructureItemChanges(
-			List<LayoutStructureItem> addedLayoutStructureItems,
-			List<LayoutStructureItem> movedLayoutStructureItems,
-			List<LayoutStructureItem> removedLayoutStructureItems) {
+		public void addMovedLayoutStructureItems(
+			LayoutStructureItem layoutStructureItem) {
 
-			_addedLayoutStructureItems = addedLayoutStructureItems;
-			_movedLayoutStructureItems = movedLayoutStructureItems;
-			_removedLayoutStructureItems = removedLayoutStructureItems;
+			_movedLayoutStructureItems.add(layoutStructureItem);
+		}
+
+		public void addRemovedLayoutStructureItems(
+			LayoutStructureItem layoutStructureItem) {
+
+			_removedLayoutStructureItems.add(layoutStructureItem);
 		}
 
 		public List<LayoutStructureItem> getAddedLayoutStructureItems() {
@@ -471,9 +467,12 @@ public class FormItemManager {
 			return _removedLayoutStructureItems;
 		}
 
-		private final List<LayoutStructureItem> _addedLayoutStructureItems;
-		private final List<LayoutStructureItem> _movedLayoutStructureItems;
-		private final List<LayoutStructureItem> _removedLayoutStructureItems;
+		private final List<LayoutStructureItem> _addedLayoutStructureItems =
+			new ArrayList<>();
+		private final List<LayoutStructureItem> _movedLayoutStructureItems =
+			new ArrayList<>();
+		private final List<LayoutStructureItem> _removedLayoutStructureItems =
+			new ArrayList<>();
 
 	}
 

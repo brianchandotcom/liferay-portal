@@ -8,9 +8,9 @@ import i18n from '~/common/I18n';
 
 const AttachmentComment = ({
 	attachmentComment,
-	isCheckboxChecked,
+	isNoPersonalDataChecked,
 	setAttachmentComment,
-	setIsCheckboxChecked,
+	setIsNoPersonalDataChecked,
 }) => {
 	return (
 		<>
@@ -34,12 +34,12 @@ const AttachmentComment = ({
 
 			<div className="attachment-uploader-support-text ml-2">
 				<ClayCheckbox
-					checked={isCheckboxChecked}
+					checked={isNoPersonalDataChecked}
 					label={i18n.translate(
 						'please-check-this-box-if-the-file-you-upload-does-not-contain-any-personal-data-and-therefore-can-be-uploaded-to-and-accessed-from-any-liferay-support-location-globally'
 					)}
 					onChange={() =>
-						setIsCheckboxChecked(
+						setIsNoPersonalDataChecked(
 							(previousAcknowledgmentChecked) =>
 								!previousAcknowledgmentChecked
 						)

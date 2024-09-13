@@ -32,11 +32,11 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"javax.portlet.name=" + ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
-		"mvc.command.name=/layout_content_page_editor/undo_update_form_config"
+		"mvc.command.name=/layout_content_page_editor/undo_form_item_config"
 	},
 	service = MVCActionCommand.class
 )
-public class UndoUpdateFormConfigMVCActionCommand
+public class UndoFormItemConfigMVCActionCommand
 	extends BaseContentPageEditorTransactionalMVCActionCommand {
 
 	@Override

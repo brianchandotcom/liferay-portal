@@ -31,7 +31,7 @@ export function hasVisibleFormButtonChild({
 
 			if (
 				fragment.editableValues[FREEMARKER_FRAGMENT_ENTRY_PROCESSOR]
-					.type === type
+					?.type === type
 			) {
 				return true;
 			}

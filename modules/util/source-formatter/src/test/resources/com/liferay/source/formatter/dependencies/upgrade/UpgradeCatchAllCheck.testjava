@@ -922,6 +922,16 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 	}
 
 	public void method(
+		long userId, long repositoryId, long folderId,
+		String sourceFileName, String mimeType, byte[] bytes,
+		ServiceContext serviceContext) {
+		
+		_dlAppLocalService.addFileEntry(123, repositoryId, folderId, sourceFileName, mimeType, bytes, serviceContext);
+		_dlAppLocalService.addFileEntry(userId, repositoryId, folderId, sourceFileName, mimeType, bytes, serviceContext);
+		_dlAppService.addFileEntry(userId, repositoryId, folderId, sourceFileName, mimeType, bytes, serviceContext);
+	}
+
+	public void method(
 		long userId, long repositoryId, long parentFolderId, String name,
 		String description, com.liferay.portal.kernel.service.ServiceContext
 		serviceContext) {

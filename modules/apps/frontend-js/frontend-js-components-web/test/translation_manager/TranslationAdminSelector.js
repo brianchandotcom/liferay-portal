@@ -95,12 +95,15 @@ const availableLocales = [
 
 const defaultLanguageId = 'en_US';
 
+const selectedLanguageId = 'en_US';
+
 const props = {
 	activeLanguageIds,
 	availableLocales,
 	defaultLanguageId,
 	onActiveLanguageIdsChange: jest.fn(),
 	onSelectedLanguageIdChange: jest.fn(),
+	selectedLanguageId,
 };
 
 jest.mock(

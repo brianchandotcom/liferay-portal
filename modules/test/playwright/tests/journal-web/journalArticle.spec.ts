@@ -589,44 +589,26 @@ baseTest(
 
 		await journalEditArticlePage.fillTitle(title);
 
-		const translationButton = page.locator(
-			'[id="_com_liferay_journal_web_portlet_JournalPortlet__com_liferay_journal_web_portlet_JournalPortlet_titleMapAsXMLMenu"]'
-		);
+		const translationButton = page.getByLabel('Select a language, current');
 
 		for (const language of ['Finnish', 'French', 'German']) {
 			await clickAndExpectToBeVisible({
 				autoClick: true,
-				target: page.getByRole('menuitem', {
-					name:
-						'Not translated into ' +
-						language +
-						'. Press enter to edit ' +
-						language +
-						' translation.',
+				target: page.getByRole('option', {
+					name: language + ' Language: Not Translated',
 				}),
 				trigger: translationButton,
 			});
 
-			await expect(async () => {
-				await fillAndClickOutside(
-					page,
-					journalEditArticlePage.titleInput
-				);
+			await fillAndClickOutside(page, journalEditArticlePage.titleInput);
 
-				await translationButton.click();
-
-				await expect(
-					page.getByRole('menuitem', {
-						exact: true,
-						name:
-							'Translated into ' +
-							language +
-							'. Press enter to edit ' +
-							language +
-							' translation.',
-					})
-				).toBeVisible();
-			}).toPass();
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('option', {
+					name: language + ' Language: Translated 1/',
+				}),
+				trigger: translationButton,
+			});
 		}
 
 		await journalEditArticlePage.publishButton.click();
@@ -1234,29 +1216,28 @@ baseTest(
 			content
 		);
 
-		const translationButton = page.locator(
-			'[id="_com_liferay_journal_web_portlet_JournalPortlet__com_liferay_journal_web_portlet_JournalPortlet_titleMapAsXMLMenu"]'
-		);
+		const translationButton = page.getByLabel('Select a language, current');
 
 		await clickAndExpectToBeVisible({
 			autoClick: true,
-			target: page.getByRole('menuitem', {
-				name: 'Not translated into Catalan. Press enter to edit Catalan translation.',
+			target: page.getByRole('option', {
+				name: 'Catalan Language: Not',
 			}),
 			trigger: translationButton,
 		});
 
 		await expect(async () => {
-			await journalEditArticlePage.fillTitle(title);
+			await journalEditArticlePage.fillTitle('new Title');
 
 			await translationButton.click();
 
-			await expect(
-				page.getByRole('menuitem', {
-					exact: true,
-					name: 'Translated into Catalan. Press enter to edit Catalan translation.',
-				})
-			).toBeVisible();
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('option', {
+					name: 'Catalan Language: Translated',
+				}),
+				trigger: translationButton,
+			});
 		}).toPass();
 
 		await journalEditArticlePage.publishButton.click();
@@ -1283,8 +1264,8 @@ baseTest(
 
 		await clickAndExpectToBeVisible({
 			autoClick: true,
-			target: page.getByRole('menuitem', {
-				name: 'Not translated into Catalan. Press enter to edit Catalan translation.',
+			target: page.getByRole('option', {
+				name: 'Catalan Language, Not Translated',
 			}),
 			trigger: translationButton,
 		});

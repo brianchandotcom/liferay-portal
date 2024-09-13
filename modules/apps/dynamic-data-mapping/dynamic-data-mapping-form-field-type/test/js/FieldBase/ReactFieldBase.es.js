@@ -118,7 +118,7 @@ describe('ReactFieldBase', () => {
 	});
 
 	it('renders the FieldBase with tooltip', () => {
-		const {container} = render(
+		const {findByTestId} = render(
 			<FieldBaseWithProvider spritemap={spritemap} tooltip="Tooltip" />
 		);
 
@@ -126,7 +126,7 @@ describe('ReactFieldBase', () => {
 			jest.runAllTimers();
 		});
 
-		expect(container.querySelector('.ddm-tooltip')).not.toBeNull();
+		expect(findByTestId('tooltip')).not.toBeNull();
 	});
 
 	it('does not render the label if showLabel is false', () => {
@@ -195,14 +195,13 @@ describe('ReactFieldBase', () => {
 	});
 
 	it('shows the popover for Format field when hovering over the tooltip icon', async () => {
-		const {container, findByTestId, getByRole, getByText} = render(
+		const {findByTestId, getByRole, getByText} = render(
 			<FieldBaseWithProvider
 				fieldName="inputMaskFormat"
 				popover={{
 					alignPosition: 'right-bottom',
 					content: 'Tooltip Description',
 					header: 'input-mask-format',
-					hideOnTriggerOut: true,
 					image: {
 						alt: 'input-mask-format',
 						height: 170,
@@ -215,9 +214,9 @@ describe('ReactFieldBase', () => {
 			/>
 		);
 
-		const tooltipIcon = container.querySelector('.ddm-tooltip');
+		const tooltipIcon = await findByTestId('tooltip');
 
-		fireEvent.mouseOver(tooltipIcon);
+		fireEvent.click(tooltipIcon);
 
 		const clayPopover = await findByTestId('clayPopover');
 

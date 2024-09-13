@@ -46,7 +46,8 @@ const DEFAULT_PROPS = {
 			symbol: 'ca-es',
 		},
 	],
-	selectedLanguageId: 'ar_SA',
+	namespace: 'test',
+	selectedLanguageId: 'en_US',
 };
 
 const renderComponent = () => render(<TranslationManager {...DEFAULT_PROPS} />);
@@ -76,7 +77,7 @@ describe('TranslationManager', () => {
 	it('attaches inputLocalized:updateTranslationStatus event when the button is clicked', () => {
 		renderComponent();
 
-		userEvent.click(screen.getByRole('button'));
+		userEvent.click(screen.getByRole('combobox'));
 
 		expect(global.Liferay.on).toHaveBeenCalledWith(
 			'inputLocalized:updateTranslationStatus',
@@ -99,7 +100,7 @@ describe('TranslationManager', () => {
 		const renderComponent = () =>
 			render(
 				<>
-					<div data-languageid="ar_SA" data-value="ar_SA" />
+					<div data-languageid="en_US" data-value="en_US" />
 
 					<TranslationManager {...DEFAULT_PROPS} />
 				</>
@@ -108,8 +109,8 @@ describe('TranslationManager', () => {
 		renderComponent();
 
 		const item = document.createElement('div');
-		item.dataset.value = 'ar_SA';
-		item.dataset.languageid = 'ar_SA';
+		item.dataset.value = 'en_US';
+		item.dataset.languageid = 'en_US';
 
 		expect(global.Liferay.fire).toHaveBeenCalledWith(
 			'inputLocalized:localeChanged',

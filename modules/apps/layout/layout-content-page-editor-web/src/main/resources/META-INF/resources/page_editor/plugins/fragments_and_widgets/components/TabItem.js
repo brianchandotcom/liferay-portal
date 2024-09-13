@@ -25,6 +25,7 @@ import {
 import {useDispatch} from '../../../app/contexts/StoreContext';
 import addFragment from '../../../app/thunks/addFragment';
 import addItem from '../../../app/thunks/addItem';
+import addStepper from '../../../app/thunks/addStepper';
 import addWidget from '../../../app/thunks/addWidget';
 import toggleFragmentHighlighted from '../../../app/thunks/toggleFragmentHighlighted';
 import toggleWidgetHighlighted from '../../../app/thunks/toggleWidgetHighlighted';
@@ -102,6 +103,9 @@ export default function TabItem({displayStyle, item, onRemoveHighlighted}) {
 			if (item.type === LAYOUT_DATA_ITEM_TYPES.fragment) {
 				if (item.data.portletId) {
 					thunk = addWidget;
+				}
+				else if (item.data.fieldTypes.includes('stepper')) {
+					thunk = addStepper;
 				}
 				else {
 					thunk = addFragment;

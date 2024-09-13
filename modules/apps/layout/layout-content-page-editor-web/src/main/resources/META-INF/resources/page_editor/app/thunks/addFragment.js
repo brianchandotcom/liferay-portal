@@ -4,13 +4,11 @@
  */
 
 import addFragmentEntryLinks from '../actions/addFragmentEntryLinks';
-import {FORM_DEFAULT_NUMBER_OF_STEPS} from '../config/constants/formDefaultNumberOfSteps';
 import {FRAGMENT_ENTRY_TYPES} from '../config/constants/fragmentEntryTypes';
 import FragmentService from '../services/FragmentService';
 import selectFirstControlsItem from '../utils/selectFirstControlsItem';
 
 export default function addFragment({
-	fieldTypes,
 	fragmentEntryKey,
 	groupId,
 	parentItemId,
@@ -57,25 +55,6 @@ export default function addFragment({
 			);
 		}
 		else {
-			if (fieldTypes.includes('stepper')) {
-				const form = getState().layoutData.items[parentItemId];
-
-				params.numberOfSteps =
-					form.config.formType === 'simple'
-						? FORM_DEFAULT_NUMBER_OF_STEPS
-						: form.config.numberOfSteps;
-
-				return FragmentService.addStepperFragmentEntryLink(params).then(
-					({addedItemId, fragmentEntryLinks, layoutData}) => {
-						updateState(
-							fragmentEntryLinks,
-							layoutData,
-							addedItemId
-						);
-					}
-				);
-			}
-
 			return FragmentService.addFragmentEntryLink(params).then(
 				({addedItemId, fragmentEntryLink, layoutData}) => {
 					updateState([fragmentEntryLink], layoutData, addedItemId);

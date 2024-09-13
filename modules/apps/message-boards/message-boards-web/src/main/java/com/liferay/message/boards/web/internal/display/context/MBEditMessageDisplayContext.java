@@ -12,13 +12,18 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.trash.TrashHelper;
 
 import java.util.Map;
 
 import javax.portlet.ResourceURL;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Ambrín Chaudhary
@@ -26,12 +31,18 @@ import javax.portlet.ResourceURL;
 public class MBEditMessageDisplayContext {
 
 	public MBEditMessageDisplayContext(
+		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse, MBMessage message) {
+		LiferayPortletResponse liferayPortletResponse, MBMessage message,
+		TrashHelper trashHelper) {
 
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 		_message = message;
+		_trashHelper = trashHelper;
+
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	public Map<String, Object> getMBPortletComponentContext() throws Exception {
@@ -55,6 +66,9 @@ public class MBEditMessageDisplayContext {
 		).put(
 			"rootNodeId",
 			_liferayPortletResponse.getNamespace() + "mbEditPageContainer"
+		).put(
+			"trashEnabled",
+			() -> _trashHelper.isTrashEnabled(_themeDisplay.getScopeGroupId())
 		).build();
 
 		if (_message != null) {
@@ -90,5 +104,7 @@ public class MBEditMessageDisplayContext {
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private MBMessage _message;
+	private final ThemeDisplay _themeDisplay;
+	private final TrashHelper _trashHelper;
 
 }

@@ -457,7 +457,7 @@ if (portletTitleBasedNavigation) {
 </clay:container-fluid>
 
 <%
-MBEditMessageDisplayContext mbEditMessageDisplayContext = new MBEditMessageDisplayContext(liferayPortletRequest, liferayPortletResponse, message);
+MBEditMessageDisplayContext mbEditMessageDisplayContext = new MBEditMessageDisplayContext(request, liferayPortletRequest, liferayPortletResponse, message, trashHelper);
 %>
 
 <liferay-frontend:component

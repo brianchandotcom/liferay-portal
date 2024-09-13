@@ -31,6 +31,7 @@ class MBPortlet {
 			confirmDiscardImages: CONFIRM_DISCARD_IMAGES,
 		},
 		viewTrashAttachmentsURL,
+		trashEnabled,
 	}) {
 		this._namespace = namespace;
 		this._constants = constants;
@@ -39,6 +40,7 @@ class MBPortlet {
 		this._replyToMessageId = replyToMessageId;
 		this._strings = strings;
 		this._viewTrashAttachmentsURL = viewTrashAttachmentsURL;
+		this._trashEnabled = trashEnabled;
 
 		this.rootNode = document.getElementById(rootNodeId);
 
@@ -104,7 +106,7 @@ class MBPortlet {
 				.get('contentBox')
 				.delegate(
 					'click',
-					this._removeAttachment.bind(this),
+					this._confirmRemoveAttachment.bind(this),
 					'.delete-attachment'
 				);
 		});
@@ -154,39 +156,53 @@ class MBPortlet {
 	}
 
 	/**
+	 * Show a confimation modal if trash is enabled
+	 *
+	 * @param {Event} event The click event that triggered the remove action
+	 */
+	_confirmRemoveAttachment(event) {
+		event.preventDefault();
+
+		if (this._trashEnabled) {
+			this._removeAttachment(event);
+		}
+		else {
+			openConfirmModal({
+				message: Liferay.Language.get(
+					'are-you-sure-you-want-to-delete-this'
+				),
+				onConfirm: (isConfirmed) => {
+					if (!isConfirmed) {
+						return;
+					}
+
+					this._removeAttachment(event);
+				},
+			});
+		}
+	}
+
+	/**
 	 * Sends a request to remove the selected attachment.
 	 *
 	 * @param {Event} event The click event that triggered the remove action
 	 */
 	_removeAttachment(event) {
-		event.preventDefault();
+		const link = event.currentTarget;
+		const deleteURL = link.getAttribute('href');
 
-		openConfirmModal({
-			message: Liferay.Language.get(
-				'are-you-sure-you-want-to-delete-this'
-			),
-			onConfirm: (isConfirmed) => {
-				if (!isConfirmed) {
-					return;
-				}
-
-				const link = event.currentTarget;
-				const deleteURL = link.getAttribute('href');
-
-				fetch(deleteURL).then(() => {
-					Liferay.componentReady(this.searchContainerId).then(
-						(searchContainer) => {
-							searchContainer.deleteRow(
-								link.ancestor('tr'),
-								link.getAttribute('data-rowid')
-							);
-							searchContainer.updateDataStore();
-						}
+		fetch(deleteURL).then(() => {
+			Liferay.componentReady(this.searchContainerId).then(
+				(searchContainer) => {
+					searchContainer.deleteRow(
+						link.ancestor('tr'),
+						link.getAttribute('data-rowid')
 					);
+					searchContainer.updateDataStore();
+				}
+			);
 
-					this._updateRemovedAttachments();
-				});
-			},
+			this._updateRemovedAttachments();
 		});
 	}
 

@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.Searcher;
@@ -180,15 +182,22 @@ public class PortletSharedSearchRequestImpl
 
 		List<Portlet> instantiatedPortlets = new ArrayList<>();
 
+		List<PortletPreferences> portletPreferencesList =
+			portletPreferencesLocalService.getPortletPreferences(
+				PortletKeys.PREFS_OWNER_ID_DEFAULT,
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid());
+
 		Set<String> segmentExperiencePortletIds =
 			_getPortletIdsForSegmentExperience(layout, segmentsExperienceId);
 
-		for (String segmentExperiencePortletId : segmentExperiencePortletIds) {
+		for (PortletPreferences portletPreferences : portletPreferencesList) {
 			Portlet portlet = portletLocalService.getPortletById(
-				companyId, segmentExperiencePortletId);
+				companyId, portletPreferences.getPortletId());
 
 			if (portlet.isInstanceable() &&
-				Validator.isNotNull(portlet.getInstanceId())) {
+				Validator.isNotNull(portlet.getInstanceId()) &&
+				segmentExperiencePortletIds.contains(
+					portletPreferences.getPortletId())) {
 
 				instantiatedPortlets.add(portlet);
 			}

@@ -6,22 +6,15 @@
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import {useModal} from '@clayui/modal';
-import {SWRResponse} from 'swr';
 
 import Modal from '../../../../../../components/Modal';
 import OrderStatus from '../../../../../../components/OrderStatus';
 import Table from '../../../../../../components/Table/Table';
+import useGetProductByOrderId from '../../../../../../hooks/useGetProductByOrderId';
 import i18n from '../../../../../../i18n';
 
 type ProvisioningTableProps = {
-	orderInfo: SWRResponse<
-		{
-			placedOrder: any;
-			product: DeliveryProduct;
-		},
-		any,
-		any
-	>;
+	orderInfo: ReturnType<typeof useGetProductByOrderId>;
 };
 
 const ProvisioningTable: React.FC<ProvisioningTableProps> = ({orderInfo}) => {
@@ -29,13 +22,12 @@ const ProvisioningTable: React.FC<ProvisioningTableProps> = ({orderInfo}) => {
 
 	const modal = useModal();
 
-	const provisioningData = [
+	const provisioningRows = [
 		{
 			environment: '',
 			expirationDate: new Date().toDateString(),
 			host: '',
 			id: 0,
-			productId: 0,
 			project: '',
 			startDate: order.createDate,
 			status: 'installed',
@@ -46,7 +38,6 @@ const ProvisioningTable: React.FC<ProvisioningTableProps> = ({orderInfo}) => {
 			expirationDate: new Date().toDateString(),
 			host: 'PLPRIWS318.Hourglass-portal.com',
 			id: 1,
-			productId: 0,
 			project: 'Klabindw',
 			startDate: new Date().toDateString(),
 			status: 'installed',
@@ -57,7 +48,6 @@ const ProvisioningTable: React.FC<ProvisioningTableProps> = ({orderInfo}) => {
 			expirationDate: new Date().toDateString(),
 			host: 'PLPRIWS318.Hourglass-portal.com',
 			id: 2,
-			productId: 0,
 			project: 'Klabindw',
 			startDate: new Date().toDateString(),
 			status: 'installed',
@@ -68,7 +58,6 @@ const ProvisioningTable: React.FC<ProvisioningTableProps> = ({orderInfo}) => {
 			expirationDate: new Date().toDateString(),
 			host: 'PLPRIWS318.Hourglass-portal.com',
 			id: 3,
-			productId: 0,
 			project: 'Klabindw',
 			startDate: new Date().toDateString(),
 			status: 'installed',
@@ -79,7 +68,6 @@ const ProvisioningTable: React.FC<ProvisioningTableProps> = ({orderInfo}) => {
 			expirationDate: new Date().toDateString(),
 			host: 'PLPRIWS318.Hourglass-portal.com',
 			id: 4,
-			productId: 0,
 			project: 'Klabindw',
 			startDate: new Date().toDateString(),
 			status: 'installed',
@@ -94,22 +82,16 @@ const ProvisioningTable: React.FC<ProvisioningTableProps> = ({orderInfo}) => {
 				columns={[
 					{
 						key: 'type',
-						render: (type, provisioning) => {
-							const isInslled = provisioning.host;
-
-							return (
-								<>
-									<div className="dashboard-table-row-type font-weight-bold">
-										{type}
-									</div>
-									<div className="dashboard-table-row-type">
-										{isInslled
-											? provisioning.host
-											: 'Not Installed'}
-									</div>
-								</>
-							);
-						},
+						render: (type, provisioning) => (
+							<>
+								<div className="dashboard-table-row-type font-weight-bold">
+									{type}
+								</div>
+								<div className="dashboard-table-row-type">
+									{provisioning.host || 'Not Installed'}
+								</div>
+							</>
+						),
 						title: (
 							<>
 								<div className="text-dark">Type</div>
@@ -199,7 +181,7 @@ const ProvisioningTable: React.FC<ProvisioningTableProps> = ({orderInfo}) => {
 						),
 					},
 				]}
-				rows={provisioningData}
+				rows={provisioningRows}
 			/>
 
 			<Modal

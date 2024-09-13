@@ -6,20 +6,17 @@
 import ClayIcon from '@clayui/icon';
 import {Link, Outlet, useNavigate, useParams} from 'react-router-dom';
 
-import useGetProductByOrderId from '../../../../../hooks/useGetProductByOrderId';
-import i18n from '../../../../../i18n';
-import OrderDetailsHeader from '../../../components/OrderDetailsHeader';
-
-import './App.scss';
 import Navbar, {NavbarProps} from '../../../../../components/Navbar';
 import {PageRenderer} from '../../../../../components/Page';
 import {useMarketplaceContext} from '../../../../../context/MarketplaceContext';
-import {
-	ORDER_WORKFLOW_STATUS_CODE,
-	PRODUCT_TYPE_SPECIFICATION,
-} from '../../../../../enums/Order';
-import {isTrialSKU} from '../../../../../utils/productUtils';
+import {ORDER_WORKFLOW_STATUS_CODE} from '../../../../../enums/Order';
+import {ProductType} from '../../../../../enums/ProductType';
+import useGetProductByOrderId from '../../../../../hooks/useGetProductByOrderId';
+import i18n from '../../../../../i18n';
 import getProductPriceModel from '../../../../GetApp/utils/getProductPriceModel';
+import OrderDetailsHeader from '../../../components/OrderDetailsHeader';
+
+import './App.scss';
 
 type BaseOutletProps = {
 	backTitle: string;
@@ -32,11 +29,10 @@ const BaseOutlet: React.FC<BaseOutletProps> = ({
 	backURL = '..',
 	routes,
 }) => {
+	const navigate = useNavigate();
 	const {orderId} = useParams();
 	const {data, error, isLoading} = useGetProductByOrderId(orderId as string);
 	const product = data?.product;
-
-	const navigate = useNavigate();
 
 	const placedOrderItems = data?.placedOrder.placedOrderItems ?? [];
 	const productCreatorAccountName = data?.product?.catalogName || '';
@@ -84,23 +80,14 @@ const AppOutlet = () => {
 		<BaseOutlet
 			backTitle={i18n.translate('back-to-my-apps')}
 			routes={({data, placedOrderItems, product}: any) => {
-				const isPaidApp = !getProductPriceModel(product).isFreeApp;
-				const isPaidOrder = !(
-					placedOrderItems[0]?.price?.price === 0 &&
-					product?.skus?.some((sku: SKU) => isTrialSKU(sku))
-				);
+				const {isPaidApp} = getProductPriceModel(product);
 
 				const productType = product?.productSpecifications?.find(
 					(speficication: ProductSpecification) =>
 						speficication?.specificationKey === 'type'
 				)?.value;
 
-				const hasFeatureFlags = (flags: string[]) =>
-					flags.every((flag) =>
-						properties.featureFlags?.includes(flag)
-					);
-
-				const isCompletedOrderWithVirtualItems = () =>
+				const isCompletedOrderWithVirtualItems =
 					data?.placedOrder.workflowStatusInfo.code ===
 						ORDER_WORKFLOW_STATUS_CODE.COMPLETED &&
 					placedOrderItems.some(
@@ -112,34 +99,37 @@ const AppOutlet = () => {
 						name: i18n.translate('details'),
 						path: '',
 					},
-					{
-						name: i18n.translate('download'),
-						path: 'download',
-						visible: hasFeatureFlags(['LPD-34129', 'LPD-21582'])
-							? productType !==
-									PRODUCT_TYPE_SPECIFICATION.CLOUDAPP &&
-								isCompletedOrderWithVirtualItems()
-							: hasFeatureFlags(['LPD-21582']) &&
-								isCompletedOrderWithVirtualItems(),
-					},
-					{
-						name: i18n.translate('licenses'),
-						path: 'licenses',
-						visible: hasFeatureFlags(['LPD-34129'])
-							? productType !==
-									PRODUCT_TYPE_SPECIFICATION.CLOUDAPP &&
-								isPaidApp &&
-								isPaidOrder
-							: isPaidApp && isPaidOrder,
-					},
-					{
-						name: i18n.translate('app-provisioning'),
-						path: 'cloud-provisioning',
-						visible:
-							hasFeatureFlags(['LPD-34129']) &&
-							productType === PRODUCT_TYPE_SPECIFICATION.CLOUDAPP,
-					},
 				];
+
+				if (productType === ProductType.CLOUD) {
+					return [
+						...tabs,
+						{
+							name: i18n.translate('app-provisioning'),
+							path: 'cloud-provisioning',
+							visible:
+								properties.featureFlags.includes('LPD-34129'),
+						},
+					];
+				}
+
+				if (productType === ProductType.DXP) {
+					return [
+						...tabs,
+						{
+							name: i18n.translate('download'),
+							path: 'download',
+							visible:
+								properties.featureFlags.includes('LPD-21582') &&
+								isCompletedOrderWithVirtualItems,
+						},
+						{
+							name: i18n.translate('licenses'),
+							path: 'licenses',
+							visible: isPaidApp,
+						},
+					];
+				}
 
 				return tabs;
 			}}

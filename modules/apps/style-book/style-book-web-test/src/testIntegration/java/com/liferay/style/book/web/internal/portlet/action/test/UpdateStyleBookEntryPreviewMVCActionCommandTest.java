@@ -98,7 +98,7 @@ public class UpdateStyleBookEntryPreviewMVCActionCommandTest {
 			_styleBookEntryLocalService.addStyleBookEntry(
 				null, TestPropsValues.getUserId(), _group.getGroupId(), false,
 				StringPool.BLANK, RandomTestUtil.randomString(),
-				StringPool.BLANK, _serviceContext);
+				StringPool.BLANK, _serviceContext, StringPool.BLANK);
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			new MockLiferayPortletActionRequest();
@@ -184,7 +184,7 @@ public class UpdateStyleBookEntryPreviewMVCActionCommandTest {
 			_styleBookEntryLocalService.addStyleBookEntry(
 				null, TestPropsValues.getUserId(), _group.getGroupId(), false,
 				StringPool.BLANK, RandomTestUtil.randomString(),
-				StringPool.BLANK, _serviceContext);
+				StringPool.BLANK, _serviceContext, StringPool.BLANK);
 
 		FileEntry tempFileEntry = _addFileEntry(
 			"thumbnail.png", styleBookEntry);

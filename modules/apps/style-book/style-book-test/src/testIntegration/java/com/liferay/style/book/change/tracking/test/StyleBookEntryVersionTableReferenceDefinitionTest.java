@@ -47,7 +47,7 @@ public class StyleBookEntryVersionTableReferenceDefinitionTest
 			null, TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
 			false, StringPool.BLANK, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(),
-			ServiceContextTestUtil.getServiceContext());
+			ServiceContextTestUtil.getServiceContext(), StringPool.BLANK);
 	}
 
 	@Override

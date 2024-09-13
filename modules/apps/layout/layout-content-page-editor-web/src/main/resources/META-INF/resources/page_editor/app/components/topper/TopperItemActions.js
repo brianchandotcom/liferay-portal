@@ -161,7 +161,7 @@ export default function TopperItemActions({disabled, item}) {
 				action: () =>
 					dispatch(
 						pasteItem({
-							copyItemIds: copiedItemIds,
+							copiedItemIds,
 							parentItemId: item.itemId,
 							selectItems,
 						})

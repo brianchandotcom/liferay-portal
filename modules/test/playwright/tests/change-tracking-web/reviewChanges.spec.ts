@@ -10,13 +10,17 @@ import path from 'path';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {changeTrackingPagesTest} from '../../fixtures/changeTrackingPagesTest';
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
+import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import getRandomString from '../../utils/getRandomString';
 import {PORTLET_URLS} from '../../utils/portletUrls';
 
 export const test = mergeTests(
 	apiHelpersTest,
 	changeTrackingPagesTest,
-	dataApiHelpersTest
+	dataApiHelpersTest,
+	featureFlagsTest({
+		'LPD-20131': true,
+	})
 );
 
 test('LPD-28276 Assert tag data persists in parent tab', async ({
@@ -111,7 +115,7 @@ test('LPD-29088 Assert Publication Overview panel is visible', async ({
 	await expect(
 		page.getByText(
 			site1.name +
-				' (5):  Message Boards Message (1), Message Boards Thread (1), Document (3)'
+				' (5): Document (3) Message Boards Message (1) Message Boards Thread (1)'
 		)
 	).toBeVisible();
 	await expect(
@@ -128,10 +132,36 @@ test('LPD-29088 Assert Publication Overview panel is visible', async ({
 	await expect(
 		page.getByText(
 			site1.name +
-				' (5):  Message Boards Message (1), Message Boards Thread (1), Document (3)'
+				' (5): Document (3) Message Boards Message (1) Message Boards Thread (1)'
 		)
 	).toBeVisible();
 	await expect(
 		page.getByText(site2.name + ' (3):   Blogs Entry (3)')
 	).toBeVisible();
+});
+
+test('LPD-29089 Assert Publication Overview filter', async ({
+	apiHelpers,
+	changeTrackingPage,
+	ctCollection,
+	page,
+}) => {
+	const site =
+		await apiHelpers.headlessAdminUser.getSiteByFriendlyUrlPath('guest');
+
+	await apiHelpers.headlessDelivery.postBlog(site.id);
+
+	await apiHelpers.headlessDelivery.postWikiNode(site.id);
+
+	await changeTrackingPage.goToReviewChanges(ctCollection.name);
+
+	await page.getByRole('link', {name: 'Blogs Entry (1)'}).click();
+
+	await expect(
+		changeTrackingPage.frontendDataSetEntries.getByText('Blogs Entry')
+	).toBeVisible();
+
+	await expect(
+		changeTrackingPage.frontendDataSetEntries.getByText('Wiki Node')
+	).toBeHidden();
 });

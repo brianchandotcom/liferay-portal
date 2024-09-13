@@ -13,12 +13,16 @@ import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
 import {InstanceSettingsPage} from '../configuration-admin-web/InstanceSettingsPage';
 
 export class ChangeTrackingPage {
+	readonly frontendDataSetEntries: Locator;
 	readonly instanceSettingsPage: InstanceSettingsPage;
 	readonly page: Page;
 	readonly reviewChangesButton: Locator;
 	readonly tabsContainer: Locator;
 
 	constructor(page: Page) {
+		this.frontendDataSetEntries = page.locator(
+			'[data-testid="visualization-mode-table"]'
+		);
 		this.instanceSettingsPage = new InstanceSettingsPage(page);
 		this.page = page;
 		this.reviewChangesButton = page.getByRole('menuitem', {

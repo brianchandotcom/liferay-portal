@@ -162,6 +162,7 @@ function Select({
 						>
 							{(item) => (
 								<Option
+									data-option-reference={item.reference}
 									disabled={item.disabled}
 									key={item.value}
 								>

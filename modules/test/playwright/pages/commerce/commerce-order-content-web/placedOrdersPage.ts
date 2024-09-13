@@ -5,9 +5,10 @@
 
 import {FrameLocator, Locator, Page} from '@playwright/test';
 
+import {CommerceDNDTablePage} from '../commerceDNDTablePage';
 import {CommerceLayoutsPage} from '../commerceLayoutsPage';
 
-export class PlacedOrdersPage {
+export class PlacedOrdersPage extends CommerceDNDTablePage {
 	readonly billingAddress: Locator;
 	readonly configurationIFrame: FrameLocator;
 	readonly configurationIFrameSaveButton: Locator;
@@ -29,6 +30,11 @@ export class PlacedOrdersPage {
 	readonly viewButton: Locator;
 
 	constructor(page: Page) {
+		super(
+			page,
+			'#portlet_com_liferay_commerce_order_content_web_internal_portlet_CommerceOrderContentPortlet .dnd-table'
+		);
+
 		this.billingAddress = page.getByTestId('commerceBillingAddress');
 		this.configurationIFrame = page.frameLocator(
 			'iframe[id="modalIframe"]'

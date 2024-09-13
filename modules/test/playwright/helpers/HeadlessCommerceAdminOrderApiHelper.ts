@@ -24,6 +24,7 @@ type TOrder = {
 	channelId?: number;
 	currencyCode?: string;
 	id?: number;
+	name?: string;
 	orderItems?: TOrderItem[];
 	orderStatus?: string;
 	orderStatusInfo?: number;

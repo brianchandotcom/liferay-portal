@@ -52,7 +52,7 @@ public class ReflectionUtil {
 	}
 
 	public static MethodHandles.Lookup getImplLookup() {
-		return _implLookup;
+		return _lookup;
 	}
 
 	public static Class<?>[] getInterfaces(Object object) {
@@ -110,7 +110,7 @@ public class ReflectionUtil {
 		throw (E)throwable;
 	}
 
-	private static final MethodHandles.Lookup _implLookup;
+	private static final MethodHandles.Lookup _lookup;
 
 	static {
 		try {
@@ -119,7 +119,7 @@ public class ReflectionUtil {
 
 			field.setAccessible(true);
 
-			_implLookup = (MethodHandles.Lookup)field.get(null);
+			_lookup = (MethodHandles.Lookup)field.get(null);
 		}
 		catch (Exception exception) {
 			throw new ExceptionInInitializerError(exception);

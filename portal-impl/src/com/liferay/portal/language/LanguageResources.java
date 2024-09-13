@@ -287,7 +287,6 @@ public class LanguageResources {
 				_handleGetObjectMethodHandle = lookup.findVirtual(
 					ResourceBundle.class, "handleGetObject",
 					MethodType.methodType(Object.class, String.class));
-
 				_handleKeySetMethodHandle = lookup.findVirtual(
 					ResourceBundle.class, "handleKeySet",
 					MethodType.methodType(Set.class));

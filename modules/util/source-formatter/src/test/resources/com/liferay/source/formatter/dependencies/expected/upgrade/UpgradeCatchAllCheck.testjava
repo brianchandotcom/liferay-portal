@@ -395,6 +395,9 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 
 		PortletDisplayTemplateConstants.DISPLAY_STYLE_PREFIX;
 		PortletDisplayTemplateConstants.ENTRIES;
+		
+		RoleLocalServiceUtil.fetchRole(123, "test123");
+		_roleLocalService.fetchRole(123, "test123");
 
 		ServiceTrackerList<Class<E>> serviceTrackerList = ServiceTrackerListFactory.open(null, null);
 
@@ -1386,6 +1389,9 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 
 	@Reference
 	private PrefsProps _prefsProps;
+
+	@Reference
+	private RoleLocalService _roleLocalService;
 
 	private ServiceTrackerList<Class<E>> _serviceTrackerList;
 

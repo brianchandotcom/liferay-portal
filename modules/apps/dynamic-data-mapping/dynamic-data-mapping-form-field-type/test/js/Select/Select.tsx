@@ -42,22 +42,46 @@ describe('Select', () => {
 		}));
 	});
 
+	const options = [
+		{
+			label: 'Option 1',
+			reference: 'Option1Reference',
+			value: 'value1',
+		},
+		{
+			label: 'Option 2',
+			reference: 'Option2Reference',
+			value: 'value2',
+		},
+	];
+
+	it('renders data-option-reference in option elements', () => {
+		const props = {
+			multiple: false,
+			name: 'selectName',
+			options,
+		};
+
+		const {getAllByRole, getByRole} = render(
+			<SelectWithProvider {...props} />
+		);
+
+		userEvent.click(getByRole('combobox'));
+
+		const optionElements = getAllByRole('option');
+
+		optionElements.forEach((optionElement, index) => {
+			expect(optionElement.getAttribute('data-option-reference')).toEqual(
+				options[index].reference
+			);
+		});
+	});
+
 	it('renders data-option-reference in option elements when allowing multiple selections', () => {
 		const props = {
 			multiple: true,
 			name: 'selectName',
-			options: [
-				{
-					label: 'Option 1',
-					reference: 'Option1Reference',
-					value: 'value1',
-				},
-				{
-					label: 'Option 2',
-					reference: 'Option2Reference',
-					value: 'value2',
-				},
-			],
+			options,
 		};
 
 		const {getByLabelText, getByRole} = render(

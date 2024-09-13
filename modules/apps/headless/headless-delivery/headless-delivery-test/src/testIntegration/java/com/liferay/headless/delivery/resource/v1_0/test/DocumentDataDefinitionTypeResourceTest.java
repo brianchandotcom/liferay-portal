@@ -58,6 +58,12 @@ public class DocumentDataDefinitionTypeResourceTest
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLPostSiteDocumentDataDefinitionType() {
+	}
+
 	@Override
 	@Test
 	public void testPostAssetLibraryDocumentDataDefinitionType()

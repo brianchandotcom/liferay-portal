@@ -9,7 +9,10 @@ import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {fragmentsPagesTest} from '../../fixtures/fragmentPagesTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {clickAndExpectToBeHidden} from '../../utils/clickAndExpectToBeHidden';
+import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../utils/getRandomString';
+import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
 
 const test = mergeTests(
 	apiHelpersTest,
@@ -269,5 +272,95 @@ test(
 		await fragmentsPage.goto(site.friendlyUrlPath);
 
 		expect(await apiHelpers.headlessSite.deleteSite(site.id)).toBeOK();
+	}
+);
+
+test(
+	'Can select default fragment for form button type',
+	{
+		tag: '@LPD-31703',
+	},
+	async ({fragmentEditorPage, fragmentsPage, page, site}) => {
+
+		// Go to fragment administration
+
+		await fragmentsPage.goto(site.friendlyUrlPath);
+
+		// Create a form button fragment
+
+		const fragmentSetName = getRandomString();
+
+		await fragmentsPage.createFragmentSet(fragmentSetName);
+
+		const fragmentName = getRandomString();
+
+		await fragmentsPage.createFragment(
+			fragmentSetName,
+			fragmentName,
+			'form',
+			['Form Button']
+		);
+
+		await fragmentEditorPage.publish();
+
+		// Go to configuration
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {name: 'Configuration'}),
+			trigger: page.getByLabel('Options', {exact: true}),
+		});
+
+		// Change default form button fragment
+
+		await page
+			.locator('tr')
+			.filter({hasText: 'Form Button'})
+			.getByRole('button', {name: 'Select'})
+			.click();
+
+		const frameLocator = page.frameLocator(
+			'iframe[title="Select Fragment"]'
+		);
+
+		const siteLink = frameLocator
+			.locator('.nav-link')
+			.filter({hasText: site.name});
+
+		const fragmentSetCard = frameLocator
+			.locator('.card-horizontal')
+			.filter({hasText: fragmentSetName});
+
+		const fragmentCard = frameLocator
+			.locator('.card-page-item-asset')
+			.filter({hasText: fragmentName});
+
+		await clickAndExpectToBeVisible({
+			target: fragmentSetCard,
+			trigger: siteLink,
+		});
+
+		await clickAndExpectToBeVisible({
+			target: fragmentCard,
+			trigger: fragmentSetCard,
+		});
+
+		await clickAndExpectToBeHidden({
+			target: page.locator('.modal-dialog'),
+			trigger: fragmentCard,
+		});
+
+		// Save and check that the fragment is selected
+
+		await page.getByRole('button', {name: 'Save'}).click();
+
+		await waitForSuccessAlert(page);
+
+		const fragmentInput = page
+			.locator('tr')
+			.filter({hasText: 'Form Button'})
+			.locator('input');
+
+		await expect(fragmentInput).toHaveValue(fragmentName);
 	}
 );

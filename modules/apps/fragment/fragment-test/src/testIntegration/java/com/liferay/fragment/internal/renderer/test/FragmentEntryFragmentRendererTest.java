@@ -169,6 +169,28 @@ public class FragmentEntryFragmentRendererTest {
 	}
 
 	@Test
+	@TestInfo("LPS-101333")
+	public void testCannotExecuteFreemarkerCodeInHTMLFragment()
+		throws Exception {
+
+		FragmentEntryLink fragmentEntryLink = _addHTMLFragmentEntryLink(
+			JSONUtil.put(
+				"element-html",
+				JSONUtil.put(
+					"defaultValue",
+					"<div class=\"fragment-html-test\">${test}</div>")));
+
+		MockHttpServletResponse mockHttpServletResponse =
+			_renderFragmentEntryLink(fragmentEntryLink);
+
+		String content = mockHttpServletResponse.getContentAsString();
+
+		Assert.assertTrue(
+			content.contains(
+				"<div class=\"fragment-html-test\">${test}</div>"));
+	}
+
+	@Test
 	public void testJavascriptModuleConfiguration() throws Exception {
 		FragmentEntry fragmentEntry = _getFragmentEntry(false);
 
@@ -515,6 +537,27 @@ public class FragmentEntryFragmentRendererTest {
 		FragmentEntry fragmentEntry =
 			_fragmentCollectionContributorRegistry.getFragmentEntry(
 				"BASIC_COMPONENT-heading");
+
+		return _fragmentEntryLinkLocalService.addFragmentEntryLink(
+			null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
+			fragmentEntry.getFragmentEntryId(), _defaultSegmentsExperienceId,
+			_layout.getPlid(), fragmentEntry.getCss(), fragmentEntry.getHtml(),
+			fragmentEntry.getJs(), fragmentEntry.getConfiguration(),
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+				jsonObject
+			).toString(),
+			StringPool.BLANK, 0, fragmentEntry.getFragmentEntryKey(),
+			fragmentEntry.getType(), _serviceContext);
+	}
+
+	private FragmentEntryLink _addHTMLFragmentEntryLink(JSONObject jsonObject)
+		throws Exception {
+
+		FragmentEntry fragmentEntry =
+			_fragmentCollectionContributorRegistry.getFragmentEntry(
+				"BASIC_COMPONENT-html");
 
 		return _fragmentEntryLinkLocalService.addFragmentEntryLink(
 			null, TestPropsValues.getUserId(), _group.getGroupId(), 0,

@@ -64,7 +64,7 @@ public class DeleteStyleBookEntryPreviewMVCActionCommandTest {
 			_styleBookEntryLocalService.addStyleBookEntry(
 				null, TestPropsValues.getUserId(), _group.getGroupId(), false,
 				StringPool.BLANK, RandomTestUtil.randomString(),
-				StringPool.BLANK, _serviceContext);
+				StringPool.BLANK, _serviceContext, StringPool.BLANK);
 
 		FileEntry fileEntry = _addFileEntry(styleBookEntry);
 

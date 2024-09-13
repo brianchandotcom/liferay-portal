@@ -41,7 +41,8 @@ public class StyleBookEntryTableReferenceDefinitionTest
 		return _styleBookEntryLocalService.addStyleBookEntry(
 			null, TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
 			false, StringPool.BLANK, RandomTestUtil.randomString(),
-			StringPool.BLANK, ServiceContextTestUtil.getServiceContext());
+			StringPool.BLANK, ServiceContextTestUtil.getServiceContext(),
+			StringPool.BLANK);
 	}
 
 	@Inject

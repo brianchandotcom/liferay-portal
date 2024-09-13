@@ -56,7 +56,7 @@ public class StyleBookEntryLocalServiceTest {
 			_styleBookEntryLocalService.addStyleBookEntry(
 				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 				_group.getGroupId(), false, null, RandomTestUtil.randomString(),
-				null, _serviceContext);
+				null, _serviceContext, null);
 
 		Assert.assertTrue(
 			Validator.isNotNull(styleBookEntry.getExternalReferenceCode()));
@@ -73,11 +73,11 @@ public class StyleBookEntryLocalServiceTest {
 		_styleBookEntryLocalService.addStyleBookEntry(
 			externalReferenceCode, TestPropsValues.getUserId(),
 			_group.getGroupId(), false, null, RandomTestUtil.randomString(),
-			null, _serviceContext);
+			null, _serviceContext, null);
 		_styleBookEntryLocalService.addStyleBookEntry(
 			externalReferenceCode, TestPropsValues.getUserId(),
 			_group.getGroupId(), false, null, RandomTestUtil.randomString(),
-			null, _serviceContext);
+			null, _serviceContext, null);
 	}
 
 	@Test
@@ -88,7 +88,7 @@ public class StyleBookEntryLocalServiceTest {
 			_styleBookEntryLocalService.addStyleBookEntry(
 				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 				_group.getGroupId(), false, null, RandomTestUtil.randomString(),
-				null, _serviceContext);
+				null, _serviceContext, null);
 
 		_styleBookEntryLocalService.deleteStyleBookEntry(
 			styleBookEntry.getExternalReferenceCode(),

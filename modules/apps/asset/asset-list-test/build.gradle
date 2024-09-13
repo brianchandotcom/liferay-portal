@@ -4,6 +4,7 @@ dependencies {
 	testImplementation project(":apps:asset:asset-api")
 	testImplementation project(":apps:asset:asset-list-api")
 	testImplementation project(":apps:asset:asset-list-service")
+	testImplementation project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
 	testImplementation project(":apps:export-import:export-import-api")
 	testImplementation project(":apps:segments:segments-api")
 

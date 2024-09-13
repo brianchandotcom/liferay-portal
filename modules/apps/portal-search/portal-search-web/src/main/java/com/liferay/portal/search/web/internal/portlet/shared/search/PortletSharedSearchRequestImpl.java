@@ -5,23 +5,10 @@
 
 package com.liferay.portal.search.web.internal.portlet.shared.search;
 
-import com.liferay.fragment.model.FragmentEntryLink;
-import com.liferay.fragment.service.FragmentEntryLinkLocalService;
-import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
-import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
-import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
-import com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelLocalService;
-import com.liferay.layout.util.structure.LayoutStructure;
-import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
@@ -56,7 +43,6 @@ import com.liferay.portal.search.web.search.request.SearchSettingsContributor;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 import javax.portlet.PortletRequest;
@@ -184,8 +170,7 @@ public class PortletSharedSearchRequestImpl
 	}
 
 	private List<Portlet> _getInstantiatedPortlets(
-		Layout layout, long companyId, long groupId,
-		long[] segmentsExperienceIds) {
+		Layout layout, long companyId) {
 
 		List<Portlet> portlets = new ArrayList<>();
 
@@ -194,87 +179,9 @@ public class PortletSharedSearchRequestImpl
 				PortletKeys.PREFS_OWNER_ID_DEFAULT,
 				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid());
 
-		List<String> portletIdsToFilter = new ArrayList<>();
-		List<String> instanceIdsToKeep = new ArrayList<>();
-
-		if ((segmentsExperienceIds != null) &&
-			(segmentsExperienceIds.length > 0)) {
-
-			LayoutPageTemplateStructure layoutPageTemplateStructure =
-				_layoutPageTemplateStructureLocalService.
-					fetchLayoutPageTemplateStructure(groupId, layout.getPlid());
-
-			if (layoutPageTemplateStructure != null) {
-				LayoutPageTemplateStructureRel layoutPageTemplateStructureRel =
-					_layoutPageTemplateStructureRelLocalService.
-						fetchLayoutPageTemplateStructureRel(
-							layoutPageTemplateStructure.
-								getLayoutPageTemplateStructureId(),
-							segmentsExperienceIds[0]);
-
-				if (layoutPageTemplateStructureRel != null) {
-					LayoutStructure layoutStructure = LayoutStructure.of(
-						layoutPageTemplateStructureRel.getData());
-
-					Map<Long, LayoutStructureItem>
-						fragmentLayoutStructureItems =
-							layoutStructure.getFragmentLayoutStructureItems();
-
-					for (Map.Entry<Long, LayoutStructureItem>
-							fragmentLayoutStructureItem :
-								fragmentLayoutStructureItems.entrySet()) {
-
-						Long fragmentEntryLinkId =
-							fragmentLayoutStructureItem.getKey();
-
-						if (fragmentEntryLinkId <= 0) {
-							continue;
-						}
-
-						FragmentEntryLink fragmentEntryLink =
-							_fragmentEntryLinkLocalService.
-								fetchFragmentEntryLink(fragmentEntryLinkId);
-
-						if (fragmentEntryLink == null) {
-							continue;
-						}
-
-						try {
-							JSONObject editableValuesJSONObject =
-								_jsonFactory.createJSONObject(
-									fragmentEntryLink.getEditableValues());
-
-							portletIdsToFilter.add(
-								editableValuesJSONObject.getString(
-									"portletId"));
-
-							instanceIdsToKeep.add(
-								editableValuesJSONObject.getString(
-									"instanceId"));
-						}
-						catch (JSONException jsonException) {
-							if (_log.isDebugEnabled()) {
-								_log.debug(
-									"Error parsing fragment entry link JSON",
-									jsonException);
-							}
-						}
-					}
-				}
-			}
-		}
-
 		for (PortletPreferences portletPreferences : portletPreferencesList) {
 			Portlet portlet = portletLocalService.getPortletById(
 				companyId, portletPreferences.getPortletId());
-
-			if ((segmentsExperienceIds != null) &&
-				(segmentsExperienceIds.length > 0) &&
-				portletIdsToFilter.contains(portlet.getPortletName()) &&
-				!instanceIdsToKeep.contains(portlet.getInstanceId())) {
-
-				continue;
-			}
 
 			if (portlet.isInstanceable() &&
 				Validator.isNotNull(portlet.getInstanceId())) {
@@ -286,10 +193,7 @@ public class PortletSharedSearchRequestImpl
 		return portlets;
 	}
 
-	private List<Portlet> _getPortlets(
-		Layout layout, long companyId, long groupId,
-		long[] segmentsExperienceIds) {
-
+	private List<Portlet> _getPortlets(Layout layout, long companyId) {
 		LayoutTypePortlet layoutTypePortlet =
 			(LayoutTypePortlet)layout.getLayoutType();
 
@@ -300,7 +204,7 @@ public class PortletSharedSearchRequestImpl
 		}
 
 		List<Portlet> instantiatedPortlets = _getInstantiatedPortlets(
-			layout, companyId, groupId, segmentsExperienceIds);
+			layout, companyId);
 
 		for (Portlet instantiatedPortlet : instantiatedPortlets) {
 			if (!portlets.contains(instantiatedPortlet)) {
@@ -322,7 +226,7 @@ public class PortletSharedSearchRequestImpl
 		}
 
 		instantiatedPortlets = _getInstantiatedPortlets(
-			masterLayout, companyId, groupId, segmentsExperienceIds);
+			masterLayout, companyId);
 
 		for (Portlet instantiatedPortlet : instantiatedPortlets) {
 			if (!portlets.contains(instantiatedPortlet)) {
@@ -368,12 +272,8 @@ public class PortletSharedSearchRequestImpl
 		List<SearchSettingsContributor> searchSettingsContributors =
 			new ArrayList<>();
 
-		long[] segmentsExperienceIds = (long[])renderRequest.getAttribute(
-			"SEGMENTS_EXPERIENCE_IDS");
-
 		List<Portlet> portlets = _getPortlets(
-			themeDisplay.getLayout(), themeDisplay.getCompanyId(),
-			themeDisplay.getScopeGroupId(), segmentsExperienceIds);
+			themeDisplay.getLayout(), themeDisplay.getCompanyId());
 
 		for (Portlet portlet : portlets) {
 			SearchSettingsContributor searchSettingsContributor =
@@ -410,25 +310,8 @@ public class PortletSharedSearchRequestImpl
 			searchResponseImpl, portletSharedRequestHelper);
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		PortletSharedSearchRequestImpl.class);
-
-	@Reference
-	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
-
-	@Reference
-	private JSONFactory _jsonFactory;
-
 	@Reference
 	private LayoutLocalService _layoutLocalService;
-
-	@Reference
-	private LayoutPageTemplateStructureLocalService
-		_layoutPageTemplateStructureLocalService;
-
-	@Reference
-	private LayoutPageTemplateStructureRelLocalService
-		_layoutPageTemplateStructureRelLocalService;
 
 	private ServiceTrackerMap<String, PortletSharedSearchContributor>
 		_serviceTrackerMap;

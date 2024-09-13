@@ -209,7 +209,7 @@ export default {
 		movedItemIds: {itemId: string; parentId: string}[];
 		onNetworkStatus: OnNetworkStatus;
 		removedItemIds: string[];
-		segmentsExperienceId: number;
+		segmentsExperienceId: string | null;
 	}) {
 		return draftServiceFetch<{
 			layoutData: LayoutData;

@@ -260,12 +260,12 @@
 				cursor: not-allowed;
 
 				& ~ .toggle-switch-bar {
+					cursor: not-allowed;
+					opacity: 0.4;
+
 					&::before {
 						box-shadow: none;
 					}
-
-					cursor: not-allowed;
-					opacity: 0.4;
 				}
 			}
 

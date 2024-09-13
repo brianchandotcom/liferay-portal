@@ -77,7 +77,7 @@ const KeyValueRow = ({
 
 const PreviewAttributesModal = ({
 	children,
-	title = Liferay.Language.get('attributes'),
+	title,
 	description,
 	onSubmit = () => {},
 }) => {
@@ -118,7 +118,9 @@ const PreviewAttributesModal = ({
 					observer={observer}
 					size="md"
 				>
-					<ClayModal.Header>{title}</ClayModal.Header>
+					<ClayModal.Header>
+						{title || Liferay.Language.get('attributes')}
+					</ClayModal.Header>
 
 					<ClayModal.Body>
 						{description && (

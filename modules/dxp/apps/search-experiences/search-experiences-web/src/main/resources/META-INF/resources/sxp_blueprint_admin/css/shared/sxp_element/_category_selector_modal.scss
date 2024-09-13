@@ -12,11 +12,11 @@
 		}
 
 		.quick-action-item {
+			opacity: 0;
+
 			&:focus {
 				opacity: 1;
 			}
-
-			opacity: 0;
 		}
 
 		.treeview-link:hover {

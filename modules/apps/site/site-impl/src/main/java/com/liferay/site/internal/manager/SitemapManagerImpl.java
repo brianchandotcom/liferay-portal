@@ -199,7 +199,8 @@ public class SitemapManagerImpl implements SitemapManager {
 		throws PortalException {
 
 		if (Validator.isNull(layoutUuid) &&
-			PropsValues.XML_SITEMAP_INDEX_ENABLED) {
+			_sitemapConfigurationManager.xmlSitemapIndexCompanyEnabled(
+				themeDisplay.getCompanyId())) {
 
 			return _getIndexSitemap(groupId, privateLayout, themeDisplay);
 		}

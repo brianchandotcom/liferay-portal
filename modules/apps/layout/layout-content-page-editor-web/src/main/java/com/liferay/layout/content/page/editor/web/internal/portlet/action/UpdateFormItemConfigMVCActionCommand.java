@@ -22,6 +22,7 @@ import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructureItemUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -292,9 +293,10 @@ public class UpdateFormItemConfigMVCActionCommand
 		LayoutStructure updatedLayoutStructure = LayoutStructure.of(
 			layoutPageTemplateStructure.getData(segmentsExperienceId));
 
-		List<String> addedItemIds = new ArrayList<>();
+		List<LayoutStructureItem> addedLayoutStructureItems = new ArrayList<>();
 		List<LayoutStructureItem> movedLayoutStructureItems = new ArrayList<>();
-		List<String> removedItemIds = new ArrayList<>();
+		List<LayoutStructureItem> removedLayoutStructureItems =
+			new ArrayList<>();
 		JSONObject addedFragmentEntryLinksJSONObject =
 			_jsonFactory.createJSONObject();
 
@@ -311,23 +313,27 @@ public class UpdateFormItemConfigMVCActionCommand
 					addedFragmentEntryLink, httpServletRequest,
 					httpServletResponse, updatedLayoutStructure));
 
-			addedItemIds.add(layoutStructureItem.getItemId());
+			addedLayoutStructureItems.add(layoutStructureItem);
 		}
 
 		for (FormItemManager.LayoutStructureItemChanges
 				layoutStructureItemChange : layoutStructureItemChanges) {
 
-			addedItemIds.addAll(layoutStructureItemChange.getAddedItemIds());
+			addedLayoutStructureItems.addAll(
+				layoutStructureItemChange.getAddedLayoutStructureItems());
 			movedLayoutStructureItems.addAll(
 				layoutStructureItemChange.getMovedLayoutStructureItems());
-			removedItemIds.addAll(
-				layoutStructureItemChange.getRemovedItemIds());
+			removedLayoutStructureItems.addAll(
+				layoutStructureItemChange.getRemovedLayoutStructureItems());
 		}
 
 		return jsonObject.put(
 			"addedFragmentEntryLinks", addedFragmentEntryLinksJSONObject
 		).put(
-			"addedItemIds", _jsonFactory.createJSONArray(addedItemIds)
+			"addedItemIds",
+			_jsonFactory.createJSONArray(
+				TransformUtil.transform(
+					addedLayoutStructureItems, LayoutStructureItem::getItemId))
 		).put(
 			"layoutData", updatedLayoutStructure.toJSONObject()
 		).put(
@@ -350,7 +356,11 @@ public class UpdateFormItemConfigMVCActionCommand
 				return jsonArray;
 			}
 		).put(
-			"removedItemIds", _jsonFactory.createJSONArray(removedItemIds)
+			"removedItemIds",
+			_jsonFactory.createJSONArray(
+				TransformUtil.transform(
+					removedLayoutStructureItems,
+					LayoutStructureItem::getItemId))
 		);
 	}
 

@@ -25,14 +25,16 @@ jest.mock(
 			position: 'bottom',
 		};
 
-		const source = {
-			fieldTypes: [],
-			fragmentEntryType: 'component',
-			isWidget: false,
-			itemId: 'item-3',
-			name: 'Item 3',
-			type: 'fragment',
-		};
+		const sources = [
+			{
+				fieldTypes: [],
+				fragmentEntryType: 'component',
+				isWidget: false,
+				itemId: 'item-3',
+				name: 'Item 3',
+				type: 'fragment',
+			},
+		];
 
 		const disableMovement = jest.fn();
 		const setTarget = jest.fn();
@@ -40,7 +42,7 @@ jest.mock(
 
 		return {
 			useDisableKeyboardMovement: () => disableMovement,
-			useMovementSource: () => source,
+			useMovementSource: () => sources,
 			useMovementTarget: () => initialTarget,
 			useSetMovementTarget: () => setTarget,
 			useSetMovementText: () => setText,
@@ -190,9 +192,9 @@ describe('KeyboardMovementManager', () => {
 
 		expect(moveItems).toBeCalledWith(
 			expect.objectContaining({
-				itemId: 'item-3',
-				parentItemId: 'root-id',
-				position: 2,
+				itemIds: ['item-3'],
+				parentItemIds: ['root-id'],
+				positions: [2],
 			})
 		);
 	});
@@ -237,7 +239,7 @@ describe('KeyboardMovementManager', () => {
 
 		expect(
 			getInitialTarget(
-				formInputSource,
+				[formInputSource],
 				layoutDataRef,
 				fragmentEntryLinksRef
 			)

@@ -267,7 +267,7 @@ describe('undoReducer', () => {
 		};
 
 		const action = {
-			itemId: ITEM_ID,
+			itemIds: [ITEM_ID],
 			layoutData: {items: []},
 		};
 
@@ -279,9 +279,9 @@ describe('undoReducer', () => {
 
 		const undoAction = undoHistory[0];
 
-		expect(undoAction.itemId).toBe(ITEM_ID);
-		expect(undoAction.parentItemId).toBe('rootId');
-		expect(undoAction.position).toBe(0);
+		expect(undoAction.itemIds).toStrictEqual([ITEM_ID]);
+		expect(undoAction.parentItemIds).toStrictEqual(['rootId']);
+		expect(undoAction.positions).toStrictEqual([0]);
 	});
 
 	it('saves needed state for undo when dispatching UPDATE_ITEM_CONFIG action', () => {

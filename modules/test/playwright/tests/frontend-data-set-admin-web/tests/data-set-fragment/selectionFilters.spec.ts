@@ -19,6 +19,7 @@ const picklistDefaultOptionLabel = 'Default';
 
 const apiHeadlessName = 'FieldType';
 const apiHeadlessURL = `c/${apiHeadlessName.toLocaleLowerCase()}s`;
+const dataSetERCs: string[] = [];
 let dataSetERC: string;
 let dataSetLabel: string;
 let objectDefinition: any;
@@ -43,6 +44,8 @@ test.beforeEach(
 		dataSetERC = getRandomString();
 		dataSetLabel = getRandomString();
 		picklistName = getRandomString();
+
+		dataSetERCs.push(dataSetERC);
 
 		await dataSetManagerApiHelpers.createDataSet({
 			erc: dataSetERC,
@@ -125,7 +128,13 @@ test.beforeEach(
 
 test.afterEach(
 	async ({apiHelpers, dataSetManagerApiHelpers, picklistApiHelpers}) => {
-		await dataSetManagerApiHelpers.deleteDataSet({erc: dataSetERC});
+		for (const DATA_SET_ERC of dataSetERCs) {
+			await dataSetManagerApiHelpers.deleteDataSet({
+				erc: DATA_SET_ERC,
+			});
+		}
+
+		dataSetERCs.length = 0;
 
 		await picklistApiHelpers.deletePicklist(picklistName);
 
@@ -727,3 +736,108 @@ test('Selection filter of type "API REST Application" is displayed in fragment @
 		).toBeVisible();
 	});
 });
+
+test(
+	'Selection filter of type "API REST Application" with a composed field name is displayed in the fragment',
+	{tag: '@25905'},
+	async ({dataSetManagerApiHelpers, fdsFragmentPage, layout}) => {
+		const filterLabel = getRandomString();
+		const customDataSetLabel = getRandomString();
+		const customDataSetERC = getRandomString();
+		dataSetERCs.push(customDataSetERC);
+
+		await test.step('Create custom data set of Data Sets', async () => {
+			await dataSetManagerApiHelpers.createDataSet({
+				erc: customDataSetERC,
+				label: customDataSetLabel,
+				restApplication: '/data-set-manager/data-sets',
+				restSchema: 'FDSView',
+			});
+		});
+
+		await test.step('Add some card sections', async () => {
+			await dataSetManagerApiHelpers.createDataSetCardsSection({
+				dataSetERC: customDataSetERC,
+				fieldName: 'label',
+				name: 'title',
+			});
+		});
+
+		await test.step('Create a new "API Rest Application" selection filter for card fields', async () => {
+			await dataSetManagerApiHelpers.createDataSetSelectionFilter({
+				dataSetERC: customDataSetERC,
+				fieldName: 'fdsViewFDSCardsSectionRelationship[]fieldName',
+				itemKey: 'fieldName',
+				itemLabel: 'fieldName',
+				label_i18n: {en_US: filterLabel},
+				multiple: true,
+				source: `/o/data-set-manager/cards-sections/`,
+				sourceType: 'API_REST_APPLICATION',
+			});
+		});
+
+		await test.step('Configure Data Set fragment', async () => {
+			await fdsFragmentPage.configureDataSetFragment({
+				dataSetLabel: customDataSetLabel,
+				layout,
+			});
+		});
+
+		await test.step('Check current items in the Frontend Data Set', async () => {
+			await fdsFragmentPage.fdsPaginationResults.scrollIntoViewIfNeeded();
+
+			await expect(
+				fdsFragmentPage.fdsPaginationResults.getByText(
+					'Showing 1 to 2 of 2 entries.'
+				)
+			).toBeVisible();
+		});
+
+		await test.step('Select filter', async () => {
+			await fdsFragmentPage.selectFilter(filterLabel);
+		});
+
+		await test.step('Configure and apply filter', async () => {
+			await expect(
+				fdsFragmentPage.fdsFilterItem.getByRole('checkbox', {
+					name: 'label',
+				})
+			).toBeVisible();
+
+			await fdsFragmentPage.fdsFilterItem
+				.getByRole('checkbox', {name: 'label'})
+				.check();
+			await fdsFragmentPage.fdsFilterItem
+				.getByRole('button', {name: 'Add filter'})
+				.click();
+
+			// Close filter
+
+			await fdsFragmentPage.page.keyboard.press('Escape');
+		});
+
+		await test.step('Check that the filter works', async () => {
+			await fdsFragmentPage.fdsFilterResumeButton.waitFor({
+				state: 'visible',
+			});
+
+			await expect(
+				fdsFragmentPage.page.getByRole('button', {
+					name: `${filterLabel}: label`,
+				})
+			).toBeVisible();
+
+			await fdsFragmentPage.page.locator('.card').first().waitFor();
+
+			const firstCard = fdsFragmentPage.page.locator('.card').first();
+
+			await expect(firstCard.locator('.card-title')).toContainText(
+				customDataSetLabel
+			);
+
+			await expect(
+				fdsFragmentPage.page.getByText('Showing 1 to 1 of 1 entries.')
+			).toBeVisible();
+		});
+	}
+);

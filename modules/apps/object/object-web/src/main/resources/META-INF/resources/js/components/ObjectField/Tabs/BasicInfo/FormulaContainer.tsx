@@ -107,23 +107,15 @@ export function FormulaContainer({
 								});
 							}
 						},
-						placeholder: `<#-- ${Liferay.Util.sub(
-							Liferay.Language.get(
-								'add-formulas-to-calculate-values-based-on-other-fields-type-x-to-use-the-autocomplete-feature'
-							),
-							['"${"']
+						placeholder: `<#-- ${Liferay.Language.get(
+							'add-formulas-to-calculate-values-based-on-other-fields'
 						)} -->`,
 						required: false,
 						source: currentScript?.value ?? '',
 						validateExpressionURL: '',
 					});
 				}}
-				placeholder={`${Liferay.Util.sub(
-					Liferay.Language.get(
-						'type-x-to-use-the-autocomplete-feature'
-					),
-					['"${"']
-				)}`}
+				placeholder={Liferay.Language.get('create-an-expression')}
 				value={(currentScript?.value as string) ?? ''}
 			/>
 		</div>

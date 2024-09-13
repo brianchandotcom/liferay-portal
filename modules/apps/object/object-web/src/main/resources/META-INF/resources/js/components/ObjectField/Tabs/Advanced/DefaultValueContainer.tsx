@@ -294,6 +294,9 @@ export function DefaultValueContainer({
 								}
 							);
 						}}
+						placeholder={Liferay.Language.get(
+							'create-an-expression'
+						)}
 						required
 						value={
 							defaultValueType === 'expressionBuilder'

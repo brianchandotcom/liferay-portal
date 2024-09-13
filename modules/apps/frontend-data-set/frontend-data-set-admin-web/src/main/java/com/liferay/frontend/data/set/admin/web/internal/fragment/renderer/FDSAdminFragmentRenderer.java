@@ -277,6 +277,10 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 		_reactRenderer.renderReact(
 			componentDescriptor,
 			HashMapBuilder.<String, Object>put(
+				"additionalAPIURLParameters",
+				fdsViewObjectEntry.getPropertyValue(
+					"additionalAPIURLParameters")
+			).put(
 				"apiURL",
 				_getAPIURL(
 					_getObjectEntry(
@@ -304,9 +308,6 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 				"namespace", fragmentRendererContext.getFragmentElementId()
 			).put(
 				"pagination", _getPaginationJSONObject(fdsViewObjectEntry)
-			).put(
-				"queryString",
-				fdsViewObjectEntry.getPropertyValue("queryString")
 			).put(
 				"sorts",
 				_getSortsJSONArray(fdsViewObjectDefinition, fdsViewObjectEntry)

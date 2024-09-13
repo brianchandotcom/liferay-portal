@@ -41,6 +41,7 @@ export interface IDataSet {
 			method: string;
 		};
 	};
+	additionalAPIURLParameters: string;
 	defaultItemsPerPage: number;
 	defaultVisualizationMode: string;
 	description: string;
@@ -48,7 +49,6 @@ export interface IDataSet {
 	id: string;
 	label: string;
 	listOfItemsPerPage: string;
-	queryString: string;
 	restApplication: string;
 	restEndpoint: string;
 	restSchema: string;

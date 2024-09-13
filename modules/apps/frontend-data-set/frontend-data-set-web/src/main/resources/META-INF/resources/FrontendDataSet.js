@@ -49,6 +49,7 @@ const DEFAULT_PAGINATION_PAGE_NUMBER = 1;
 const FrontendDataSet = ({
 	actionParameterName,
 	activeViewSettings,
+	additionalAPIURLParameters,
 	apiURL,
 	appURL,
 	bulkActions,
@@ -77,7 +78,6 @@ const FrontendDataSet = ({
 	overrideEmptyResultView,
 	pagination,
 	portletId,
-	queryString,
 	selectedItems: initialSelectedItemsValues,
 	selectedItemsKey,
 	selectionType,
@@ -221,15 +221,15 @@ const FrontendDataSet = ({
 			paginationDelta,
 			pageNumber,
 			activeSorts,
-			queryString
+			additionalAPIURLParameters
 		);
 	}, [
+		additionalAPIURLParameters,
 		apiURL,
 		currentURL,
 		paginationDelta,
 		filters,
 		pageNumber,
-		queryString,
 		searchParam,
 		sorts,
 	]);

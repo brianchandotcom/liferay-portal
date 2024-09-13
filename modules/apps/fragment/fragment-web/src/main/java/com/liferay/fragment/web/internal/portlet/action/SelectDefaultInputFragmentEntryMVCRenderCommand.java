@@ -7,7 +7,6 @@ package com.liferay.fragment.web.internal.portlet.action;
 
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.constants.FragmentPortletKeys;
-import com.liferay.fragment.helper.DefaultInputFragmentEntryConfigurationProvider;
 import com.liferay.fragment.item.selector.FragmentEntryItemSelectorReturnType;
 import com.liferay.fragment.item.selector.criterion.FragmentEntryItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelector;
@@ -24,7 +23,6 @@ import java.io.IOException;
 
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Objects;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -59,19 +57,13 @@ public class SelectDefaultInputFragmentEntryMVCRenderCommand
 		fragmentEntryItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new FragmentEntryItemSelectorReturnType());
 
-		String inputType = ParamUtil.getString(renderRequest, "inputType");
+		fragmentEntryItemSelectorCriterion.setInputTypes(
+			new HashSet<>(
+				Collections.singletonList(
+					ParamUtil.getString(renderRequest, "inputType"))));
 
-		if (!Objects.equals(
-				inputType,
-				DefaultInputFragmentEntryConfigurationProvider.
-					FORM_INPUT_SUBMIT_BUTTON)) {
-
-			fragmentEntryItemSelectorCriterion.setInputTypes(
-				new HashSet<>(Collections.singletonList(inputType)));
-
-			fragmentEntryItemSelectorCriterion.setType(
-				FragmentConstants.TYPE_INPUT);
-		}
+		fragmentEntryItemSelectorCriterion.setType(
+			FragmentConstants.TYPE_INPUT);
 
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
 			RequestBackedPortletURLFactoryUtil.create(renderRequest);

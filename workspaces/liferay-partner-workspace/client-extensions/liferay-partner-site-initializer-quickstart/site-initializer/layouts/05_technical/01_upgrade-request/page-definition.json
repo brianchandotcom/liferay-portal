@@ -460,7 +460,7 @@
 													"fieldKey": "FileEntry_previewImage",
 													"itemReference": {
 														"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-														"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/technical/upgrade-macro-flow.jpg#]"
+														"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/technical/upgrade_macro_flow.jpg#]"
 													}
 												}
 											}

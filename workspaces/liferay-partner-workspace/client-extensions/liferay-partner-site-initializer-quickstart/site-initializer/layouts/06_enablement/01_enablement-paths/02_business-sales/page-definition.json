@@ -219,7 +219,7 @@
 																					"fieldKey": "FileEntry_previewImage",
 																					"itemReference": {
 																						"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																						"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/enablement-resources/business-sales-banner.png#]"
+																						"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/enablement-resources/business_sales_banner.png#]"
 																					}
 																				}
 																			}
@@ -460,7 +460,7 @@
 																									"fieldKey": "FileEntry_previewImage",
 																									"itemReference": {
 																										"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																										"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/enablement-resources/selling-liferay-level-0.svg#]"
+																										"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/enablement-resources/selling_liferay_level_0.svg#]"
 																									}
 																								}
 																							}
@@ -999,7 +999,7 @@
 																									"fieldKey": "FileEntry_previewImage",
 																									"itemReference": {
 																										"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																										"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/enablement-resources/selling-liferay-level-1.svg#]"
+																										"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/enablement-resources/selling_liferay_level_1.svg#]"
 																									}
 																								}
 																							}

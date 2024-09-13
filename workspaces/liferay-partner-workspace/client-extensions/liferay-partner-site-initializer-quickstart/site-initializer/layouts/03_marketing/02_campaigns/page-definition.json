@@ -326,7 +326,7 @@
 																							"fieldKey": "FileEntry_previewImage",
 																							"itemReference": {
 																								"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																								"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/marketing/marketing-campaign/campaign-banner.png#]"
+																								"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/marketing/marketing-campaign/campaign_banner.png#]"
 																							}
 																						}
 																					}
@@ -625,7 +625,7 @@
 																											"fieldKey": "FileEntry_previewImage",
 																											"itemReference": {
 																												"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																												"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/marketing/marketing-campaign/customer-self-service-sites.png#]"
+																												"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/marketing/marketing-campaign/customer_self_service_sites.png#]"
 																											}
 																										}
 																									}
@@ -1139,7 +1139,7 @@
 																								"fragmentImage": {
 																									"url": {
 																										"value_i18n": {
-																											"en_US": "/documents/d/partner-portal/unified-experience?imagePreview=1"
+																											"en_US": "/documents/d/partner-portal/unified_experience?imagePreview=1"
 																										}
 																									}
 																								},

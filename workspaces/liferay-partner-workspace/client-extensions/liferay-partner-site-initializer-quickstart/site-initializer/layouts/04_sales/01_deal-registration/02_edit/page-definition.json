@@ -124,7 +124,7 @@
 																	"fieldKey": "FileEntry_previewImage",
 																	"itemReference": {
 																		"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																		"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/deal-registration-heading-icon.svg#]"
+																		"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/deal_registration_heading_icon.svg#]"
 																	}
 																}
 															}

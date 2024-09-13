@@ -297,7 +297,7 @@
 																					"fieldKey": "FileEntry_previewImage",
 																					"itemReference": {
 																						"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																						"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/technical/technical-banner.png#]"
+																						"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/technical/technical_banner.png#]"
 																					}
 																				}
 																			}
@@ -545,7 +545,7 @@
 																									"fieldKey": "FileEntry_previewImage",
 																									"itemReference": {
 																										"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																										"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/technical/demo-instances.png#]"
+																										"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/technical/demo_instances.png#]"
 																									}
 																								}
 																							}
@@ -1097,7 +1097,7 @@
 																											"fieldKey": "FileEntry_previewImage",
 																											"itemReference": {
 																												"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																												"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/technical/demo-instances.png#]"
+																												"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/technical/demo_instances.png#]"
 																											}
 																										}
 																									}

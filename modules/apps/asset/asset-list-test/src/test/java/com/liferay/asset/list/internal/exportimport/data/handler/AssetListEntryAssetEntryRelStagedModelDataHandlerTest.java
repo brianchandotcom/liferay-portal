@@ -41,8 +41,8 @@ public class AssetListEntryAssetEntryRelStagedModelDataHandlerTest {
 	public void testDoImportStagedModelHandlesNullStagedModelCorrectly()
 		throws Exception {
 
-		_setUpStagedModel();
 		_setUpGroupLocalService();
+		_setUpStagedModel();
 
 		PortletDataContext portletDataContext = Mockito.spy(
 			PortletDataContext.class);

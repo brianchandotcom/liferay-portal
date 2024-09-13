@@ -40,7 +40,8 @@ export function getItemNameFromAction({action, state}) {
 			)
 		: state.fragmentEntryLinks;
 
-	const itemId = action.itemId || action.itemIds?.[0];
+	const itemId =
+		action.itemId || action.itemIds?.[0] || action.addedItemIds?.[0];
 
 	if (action.itemIds?.length > 1) {
 		return Liferay.Language.get('elements');

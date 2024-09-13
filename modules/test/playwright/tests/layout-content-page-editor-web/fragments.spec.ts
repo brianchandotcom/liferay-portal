@@ -835,6 +835,68 @@ test.describe('Heading Fragment', () => {
 });
 
 test.describe('HTML Fragment', () => {
+	const CUSTOM_FRAGMENT_HTML = `<lfr-editable id="element-html" type="html">
+		<h1>HTML Example</h1>
+	</lfr-editable>`;
+
+	test(
+		'Can edit custom html editable with lfr-editable',
+		{tag: '@LPS-98553'},
+		async ({apiHelpers, page, pageEditorPage, site}) => {
+
+			// Create a fragment with lfr-editable
+
+			const {fragmentCollectionId} =
+				await apiHelpers.jsonWebServicesFragmentCollection.addFragmentCollection(
+					{
+						groupId: site.id,
+						name: getRandomString(),
+					}
+				);
+
+			const fragmentEntryName = getRandomString();
+
+			await apiHelpers.jsonWebServicesFragmentEntry.addFragmentEntry({
+				fragmentCollectionId,
+				groupId: site.id,
+				html: CUSTOM_FRAGMENT_HTML,
+				name: fragmentEntryName,
+			});
+
+			// Create a content page with Wem Site's Apple fragment
+
+			const fragmentName = getRandomString();
+
+			const fragmentDefinition = getFragmentDefinition({
+				id: fragmentName,
+				key: fragmentEntryName,
+			});
+
+			// Create a content page and go to edit mode
+
+			const layoutTitle = getRandomString();
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([fragmentDefinition]),
+				siteId: site.id,
+				title: layoutTitle,
+			});
+
+			await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+			// Check html editable can be edited
+
+			await pageEditorPage.editHTMLEditable({
+				editableId: 'element-html',
+				fragmentId: fragmentName,
+				useBackwardCompatibility: true,
+				value: '<div class="text-success"><h1>test html</h1></div>',
+			});
+
+			await expect(page.getByText('test html')).toBeAttached();
+		}
+	);
+
 	test(
 		'Can edit html editable',
 		{tag: '@LPS-98553'},
@@ -859,11 +921,11 @@ test.describe('HTML Fragment', () => {
 
 			// Check html editable can be edited
 
-			await pageEditorPage.editHTMLEditable(
+			await pageEditorPage.editHTMLEditable({
+				editableId: 'element-html',
 				fragmentId,
-				'element-html',
-				'<div class="text-success"><h1>test html</h1></div>'
-			);
+				value: '<div class="text-success"><h1>test html</h1></div>',
+			});
 
 			await expect(page.getByText('test html')).toBeAttached();
 		}

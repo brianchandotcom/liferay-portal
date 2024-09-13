@@ -310,7 +310,10 @@ test.describe('Page Contents Panel', () => {
 
 		await content.click();
 
-		const editable = pageEditorPage.getEditable(headingId, 'element-text');
+		const editable = pageEditorPage.getEditable({
+			editableId: 'element-text',
+			fragmentId: headingId,
+		});
 
 		await editable.locator('.cke_editable_inline').waitFor();
 

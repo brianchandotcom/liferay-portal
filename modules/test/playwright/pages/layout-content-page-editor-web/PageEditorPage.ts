@@ -431,17 +431,27 @@ export class PageEditorPage {
 		await this.waitForChangesSaved();
 	}
 
-	async editHTMLEditable(
-		fragmentId: string,
-		editableId: string,
-		value: string
-	) {
+	async editHTMLEditable({
+		editableId,
+		fragmentId,
+		useBackwardCompatibility = false,
+		value,
+	}: {
+		editableId: string;
+		fragmentId: string;
+		useBackwardCompatibility?: boolean;
+		value: string;
+	}) {
 
 		// Select fragment and editable
 
 		await this.selectEditable(fragmentId, editableId);
 
-		const editable = this.getEditable(fragmentId, editableId);
+		const editable = this.getEditable({
+			editableId,
+			fragmentId,
+			useBackwardCompatibility,
+		});
 
 		// Enable editor
 
@@ -475,7 +485,10 @@ export class PageEditorPage {
 
 		// Click editable again to enable edition
 
-		const editable = this.getEditable(fragmentId, editableId);
+		const editable = this.getEditable({
+			editableId,
+			fragmentId,
+		});
 
 		await editable.click();
 
@@ -846,7 +859,11 @@ export class PageEditorPage {
 	) {
 		await this.selectFragment(fragmentId, isDesktop);
 
-		const editable = this.getEditable(fragmentId, editableId, isDesktop);
+		const editable = this.getEditable({
+			editableId,
+			fragmentId,
+			isDesktop,
+		});
 
 		await editable.click();
 
@@ -1068,10 +1085,27 @@ export class PageEditorPage {
 			.waitFor();
 	}
 
-	getEditable(fragmentId: string, editableId: string, isDesktop = true) {
-		return this.getFragment(fragmentId, isDesktop)
-			.locator(`[data-lfr-editable-id="${editableId}"]`)
-			.first();
+	getEditable({
+		editableId,
+		fragmentId,
+		isDesktop = true,
+		useBackwardCompatibility = false,
+	}: {
+		editableId: string;
+		fragmentId: string;
+		isDesktop?: boolean;
+		useBackwardCompatibility?: boolean;
+	}) {
+		if (useBackwardCompatibility) {
+			return this.getFragment(fragmentId, isDesktop)
+				.locator(`lfr-editable[id="${editableId}"]`)
+				.first();
+		}
+		else {
+			return this.getFragment(fragmentId, isDesktop)
+				.locator(`[data-lfr-editable-id="${editableId}"]`)
+				.first();
+		}
 	}
 
 	getFragment(fragmentId: string, isDesktop = true) {

@@ -148,7 +148,10 @@ test('Allow mapping editables to fields of related object', async ({
 
 	// Check editable is mapped
 
-	const editable = pageEditorPage.getEditable(headingId, 'element-text');
+	const editable = pageEditorPage.getEditable({
+		editableId: 'element-text',
+		fragmentId: headingId,
+	});
 
 	await expect(editable).toHaveClass(/page-editor__editable--mapped/);
 });

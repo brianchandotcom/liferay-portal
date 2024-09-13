@@ -9,6 +9,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.search.experiences.internal.blueprint.parameter.SXPParameterData;
 import com.liferay.search.experiences.rest.dto.v1_0.Configuration;
@@ -66,7 +67,7 @@ public class GeneralSXPSearchRequestBodyContributor
 				generalConfiguration.getIncludeResponseString());
 		}
 
-		if (generalConfiguration.getQueryString() != null) {
+		if (!Validator.isBlank(generalConfiguration.getQueryString())) {
 			searchRequestBuilder.queryString(
 				generalConfiguration.getQueryString());
 		}
@@ -80,13 +81,13 @@ public class GeneralSXPSearchRequestBodyContributor
 				generalConfiguration.getSearchableAssetTypes());
 		}
 
-		if (generalConfiguration.getLanguageId() != null) {
+		if (!Validator.isBlank(generalConfiguration.getLanguageId())) {
 			searchRequestBuilder.locale(
 				LocaleUtil.fromLanguageId(
 					generalConfiguration.getLanguageId()));
 		}
 
-		if (generalConfiguration.getTimeZoneId() != null) {
+		if (!Validator.isBlank(generalConfiguration.getTimeZoneId())) {
 			searchRequestBuilder.withSearchContext(
 				searchContext -> searchContext.setTimeZone(
 					TimeZoneUtil.getTimeZone(

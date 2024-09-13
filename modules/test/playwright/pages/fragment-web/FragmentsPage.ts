@@ -99,16 +99,34 @@ export class FragmentsPage {
 		await waitForSuccessAlert(this.page);
 	}
 
-	async createFragment(setName: string, name: string) {
+	async createFragment(
+		setName: string,
+		name: string,
+		fragmentType?: 'basic' | 'form',
+		fieldTypes?: string[]
+	) {
 		await this.gotoFragmentSet(setName);
 
 		await this.page.getByRole('button', {name: 'Add'}).click();
 
 		await this.page.getByRole('heading', {name: 'Add Fragment'}).waitFor();
 
+		if (fragmentType === 'form') {
+			await this.page
+				.locator('.fragment-type-card')
+				.filter({hasText: 'Form Fragment'})
+				.click();
+		}
+
 		await this.page.getByRole('button', {name: 'Next'}).click();
 
 		await this.page.getByLabel('Name').fill(name);
+
+		if (fragmentType === 'form') {
+			for (const fieldType of fieldTypes) {
+				await this.page.getByLabel(fieldType).check();
+			}
+		}
 
 		await this.page.getByText('Add', {exact: true}).click();
 

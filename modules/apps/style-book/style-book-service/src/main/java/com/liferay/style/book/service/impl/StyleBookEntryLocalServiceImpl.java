@@ -95,6 +95,7 @@ public class StyleBookEntryLocalServiceImpl
 		styleBookEntry.setFrontendTokensValues(frontendTokensValues);
 		styleBookEntry.setName(name);
 		styleBookEntry.setStyleBookEntryKey(styleBookEntryKey);
+		styleBookEntry.setThemeId(themeId);
 
 		return publishDraft(styleBookEntry);
 	}
@@ -113,7 +114,8 @@ public class StyleBookEntryLocalServiceImpl
 		StyleBookEntry targetStyleBookEntry = addStyleBookEntry(
 			null, userId, groupId, false,
 			sourceStyleBookEntry.getFrontendTokensValues(), name,
-			StringPool.BLANK, serviceContext);
+			StringPool.BLANK, serviceContext,
+			sourceStyleBookEntry.getThemeId());
 
 		long previewFileEntryId = _copyStyleBookEntryPreviewFileEntry(
 			userId, groupId, sourceStyleBookEntry, targetStyleBookEntry);

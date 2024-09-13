@@ -50,7 +50,8 @@ public class StylebookEntryStagedModelRepository
 			styleBookEntry.getGroupId(),
 			styleBookEntry.isDefaultStyleBookEntry(),
 			styleBookEntry.getFrontendTokensValues(), styleBookEntry.getName(),
-			styleBookEntry.getStyleBookEntryKey(), serviceContext);
+			styleBookEntry.getStyleBookEntryKey(), serviceContext,
+			styleBookEntry.getThemeId());
 	}
 
 	@Override

@@ -10,6 +10,7 @@ import com.liferay.portal.kernel.model.EmailAddress;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.permission.RolePermissionUtil;
 import com.liferay.portal.service.base.EmailAddressServiceBaseImpl;
 import com.liferay.portal.service.permission.CommonPermissionUtil;
 
@@ -24,8 +25,9 @@ public class EmailAddressServiceImpl extends EmailAddressServiceBaseImpl {
 
 	@Override
 	public EmailAddress addEmailAddress(
-			String className, long classPK, String address, long typeId,
-			boolean primary, ServiceContext serviceContext)
+			String externalReferenceCode, String className, long classPK,
+			String address, long typeId, boolean primary,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		String actionId = ActionKeys.UPDATE;
@@ -40,8 +42,8 @@ public class EmailAddressServiceImpl extends EmailAddressServiceBaseImpl {
 			getPermissionChecker(), className, classPK, actionId);
 
 		return emailAddressLocalService.addEmailAddress(
-			getUserId(), className, classPK, address, typeId, primary,
-			serviceContext);
+			externalReferenceCode, getUserId(), className, classPK, address,
+			typeId, primary, serviceContext);
 	}
 
 	@Override
@@ -90,6 +92,24 @@ public class EmailAddressServiceImpl extends EmailAddressServiceBaseImpl {
 	}
 
 	@Override
+	public EmailAddress fetchEmailAddressByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		EmailAddress emailAddress =
+			emailAddressLocalService.fetchEmailAddressByExternalReferenceCode(
+				externalReferenceCode, companyId);
+
+		if (emailAddress != null) {
+			RolePermissionUtil.check(
+				getPermissionChecker(), emailAddress.getEmailAddressId(),
+				ActionKeys.VIEW);
+		}
+
+		return emailAddress;
+	}
+
+	@Override
 	public EmailAddress getEmailAddress(long emailAddressId)
 		throws PortalException {
 
@@ -118,7 +138,8 @@ public class EmailAddressServiceImpl extends EmailAddressServiceBaseImpl {
 
 	@Override
 	public EmailAddress updateEmailAddress(
-			long emailAddressId, String address, long typeId, boolean primary)
+			String externalReferenceCode, long emailAddressId, String address,
+			long typeId, boolean primary)
 		throws PortalException {
 
 		EmailAddress emailAddress = emailAddressPersistence.findByPrimaryKey(
@@ -138,7 +159,7 @@ public class EmailAddressServiceImpl extends EmailAddressServiceBaseImpl {
 			emailAddress.getClassPK(), actionId);
 
 		return emailAddressLocalService.updateEmailAddress(
-			emailAddressId, address, typeId, primary);
+			externalReferenceCode, emailAddressId, address, typeId, primary);
 	}
 
 }

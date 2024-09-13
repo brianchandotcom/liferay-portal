@@ -182,36 +182,12 @@ public class PortletSharedSearchRequestImpl
 	private List<Portlet> _getInstantiatedPortlets(
 		Layout layout, long companyId, long segmentsExperienceId) {
 
-		List<Portlet> instantiatedPortlets = new ArrayList<>();
+		List<Portlet> portlets = new ArrayList<>();
 
 		List<PortletPreferences> portletPreferencesList =
 			portletPreferencesLocalService.getPortletPreferences(
 				PortletKeys.PREFS_OWNER_ID_DEFAULT,
 				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid());
-
-		Set<String> segmentExperiencePortletIds =
-			_getPortletIdsForSegmentExperience(layout, segmentsExperienceId);
-
-		for (PortletPreferences portletPreferences : portletPreferencesList) {
-			Portlet portlet = portletLocalService.getPortletById(
-				companyId, portletPreferences.getPortletId());
-
-			if (portlet.isInstanceable() &&
-				Validator.isNotNull(portlet.getInstanceId()) &&
-				segmentExperiencePortletIds.contains(
-					portletPreferences.getPortletId())) {
-
-				instantiatedPortlets.add(portlet);
-			}
-		}
-
-		return instantiatedPortlets;
-	}
-
-	private Set<String> _getPortletIdsForSegmentExperience(
-		Layout layout, long segmentsExperienceId) {
-
-		Set<String> portletIdsForSegmentExperience = new HashSet<>();
 
 		List<FragmentEntryLink> fragmentEntryLinks =
 			_fragmentEntryLinkLocalService.
@@ -219,13 +195,27 @@ public class PortletSharedSearchRequestImpl
 					layout.getGroupId(), segmentsExperienceId,
 					layout.getPlid());
 
+		Set<String> portletIds = new HashSet<>();
+
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
-			portletIdsForSegmentExperience.addAll(
+			portletIds.addAll(
 				_portletRegistry.getFragmentEntryLinkPortletIds(
 					fragmentEntryLink));
 		}
 
-		return portletIdsForSegmentExperience;
+		for (PortletPreferences portletPreferences : portletPreferencesList) {
+			Portlet portlet = portletLocalService.getPortletById(
+				companyId, portletPreferences.getPortletId());
+
+			if (portlet.isInstanceable() &&
+				Validator.isNotNull(portlet.getInstanceId()) &&
+				portletIds.contains(portletPreferences.getPortletId())) {
+
+				portlets.add(portlet);
+			}
+		}
+
+		return portlets;
 	}
 
 	private List<Portlet> _getPortlets(

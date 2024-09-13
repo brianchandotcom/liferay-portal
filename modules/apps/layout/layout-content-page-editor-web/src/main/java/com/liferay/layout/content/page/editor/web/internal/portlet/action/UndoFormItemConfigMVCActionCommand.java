@@ -82,9 +82,9 @@ public class UndoFormItemConfigMVCActionCommand
 					layoutStructure.markLayoutStructureItemForDeletion(
 						Arrays.asList(removedItemIds), Collections.emptyList());
 
-					for (String restoredItemId : addedItemIds) {
+					for (String addedItemId : addedItemIds) {
 						layoutStructure.unmarkLayoutStructureItemForDeletion(
-							restoredItemId);
+							addedItemId);
 					}
 				}));
 	}

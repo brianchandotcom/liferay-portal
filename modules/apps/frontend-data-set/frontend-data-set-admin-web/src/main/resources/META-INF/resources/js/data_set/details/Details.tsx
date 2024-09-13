@@ -26,15 +26,17 @@ import openDefaultSuccessToast from '../../utils/openDefaultSuccessToast';
 import {IDataSetSectionProps} from '../DataSet';
 
 const getURLPreview = ({
-	queryString = '',
+	additionalAPIURLParameters = '',
 	restApplication,
 	restEndpoint,
 }: {
-	queryString: string;
+	additionalAPIURLParameters: string;
 	restApplication: string;
 	restEndpoint: string;
 }) => {
-	const encodedQueryString = encodeURI(queryString.trim());
+	const encodedAdditionalAPIURLParameters = encodeURI(
+		additionalAPIURLParameters.trim()
+	);
 
 	// This also removes the version (for example: `/v1.0`) in the rest endpoint
 	// to avoid repeating the version when combining the restApplication and
@@ -47,7 +49,7 @@ const getURLPreview = ({
 			.filter((_, index) => index !== 1)
 			.join('/') +
 		'?' +
-		encodedQueryString
+		encodedAdditionalAPIURLParameters
 	);
 };
 
@@ -63,7 +65,8 @@ const Details = ({
 
 	const [urlPreview, setURLPreview] = useState(
 		getURLPreview({
-			queryString: dataSetAsIDataSet.queryString,
+			additionalAPIURLParameters:
+				dataSetAsIDataSet.additionalAPIURLParameters,
 			restApplication: dataSetAsIDataSet.restApplication,
 			restEndpoint: dataSetAsIDataSet.restEndpoint,
 		})
@@ -78,7 +81,7 @@ const Details = ({
 	) => {
 		setURLPreview(
 			getURLPreview({
-				queryString: event.currentTarget.value,
+				additionalAPIURLParameters: event.currentTarget.value,
 				restApplication: dataSetAsIDataSet.restApplication,
 				restEndpoint: dataSetAsIDataSet.restEndpoint,
 			})
@@ -87,9 +90,9 @@ const Details = ({
 
 	const updateFDSView = async () => {
 		const body = {
+			additionalAPIURLParameters: parametersRef.current?.value,
 			description: descriptionRef.current?.value,
 			label: labelRef.current?.value,
-			queryString: parametersRef.current?.value,
 		};
 
 		const response = await fetch(
@@ -267,7 +270,7 @@ const Details = ({
 
 						<ClayInput
 							component="textarea"
-							defaultValue={dataSet.queryString}
+							defaultValue={dataSet.additionalAPIURLParameters}
 							id={`${namespace}dataSetParametersInput`}
 							onChange={handleKeyUpParameters}
 							placeholder={Liferay.Language.get(

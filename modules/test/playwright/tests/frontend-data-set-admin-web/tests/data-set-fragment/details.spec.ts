@@ -68,8 +68,8 @@ test.describe('Parameters in Data Set Fragment', () => {
 
 		await test.step('Add parameters', async () => {
 			await dataSetManagerApiHelpers.updateDataSet({
+				additionalAPIURLParameters: 'sort=name:desc',
 				erc: dataSetERC,
-				queryString: 'sort=name:desc',
 			});
 		});
 
@@ -118,8 +118,8 @@ test.describe('Parameters in Data Set Fragment', () => {
 
 		await test.step('Add parameters', async () => {
 			await dataSetManagerApiHelpers.updateDataSet({
+				additionalAPIURLParameters: "filter=name eq 'name'",
 				erc: dataSetERC,
-				queryString: "filter=name eq 'name'",
 			});
 		});
 

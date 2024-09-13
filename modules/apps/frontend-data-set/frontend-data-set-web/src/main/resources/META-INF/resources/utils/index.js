@@ -114,7 +114,7 @@ export async function loadData(
 	delta,
 	page = 1,
 	sorts = [],
-	queryString
+	additionalAPIURLParameters
 ) {
 	const fullUrl = apiURL.startsWith('/')
 		? themeDisplay.getPortalURL() + themeDisplay.getPathContext() + apiURL
@@ -155,10 +155,11 @@ export async function loadData(
 		);
 	}
 
-	if (Liferay.FeatureFlags['LPD-25230'] && queryString) {
-		const queryStringArray = queryString.split('&');
+	if (Liferay.FeatureFlags['LPD-25230'] && additionalAPIURLParameters) {
+		const additionalAPIURLParametersArray =
+			additionalAPIURLParameters.split('&');
 
-		queryStringArray.forEach((parameter) => {
+		additionalAPIURLParametersArray.forEach((parameter) => {
 			const [key, value] = parameter.split('=');
 
 			const existingFilter = url.searchParams.get('filter');
@@ -180,16 +181,21 @@ export async function loadData(
 					(sort) => sort.split(':')[0]
 				);
 
-				const queryStringSortValueArray = value.split(',');
+				const additionalAPIURLParametersSortValueArray =
+					value.split(',');
 
-				queryStringSortValueArray.forEach(
-					(queryStringSortValueItem) => {
+				additionalAPIURLParametersSortValueArray.forEach(
+					(additionalAPIURLParametersSortValueItem) => {
 						if (
 							!existingSortParamFields.includes(
-								queryStringSortValueItem.split(':')[0]
+								additionalAPIURLParametersSortValueItem.split(
+									':'
+								)[0]
 							)
 						) {
-							newSortParams.push(queryStringSortValueItem);
+							newSortParams.push(
+								additionalAPIURLParametersSortValueItem
+							);
 						}
 					}
 				);
@@ -206,18 +212,21 @@ export async function loadData(
 				const existingNestedFieldsArray = url.searchParams
 					.get('nestedFields')
 					.split(',');
-				const queryStringNestedFieldsValueArray = value.split(',');
+				const additionalAPIURLParametersNestedFieldsValueArray =
+					value.split(',');
 
 				const newNestedFields = [...existingNestedFieldsArray];
 
-				queryStringNestedFieldsValueArray.forEach(
-					(queryStringNestedFieldsItem) => {
+				additionalAPIURLParametersNestedFieldsValueArray.forEach(
+					(additionalAPIURLParametersNestedFieldsItem) => {
 						if (
 							!existingNestedFieldsArray.includes(
-								queryStringNestedFieldsItem
+								additionalAPIURLParametersNestedFieldsItem
 							)
 						) {
-							newNestedFields.push(queryStringNestedFieldsItem);
+							newNestedFields.push(
+								additionalAPIURLParametersNestedFieldsItem
+							);
 						}
 					}
 				);

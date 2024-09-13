@@ -870,6 +870,59 @@ test.describe('HTML Fragment', () => {
 	);
 });
 
+test.describe('Image Fragment', () => {
+	test(
+		'Select image from document and media',
+		{tag: ['@LPS-95045', '@LPS-101328']},
+		async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
+
+			// Create a page with an image fragment
+
+			const imageId = getRandomString();
+
+			const imageFragment = getFragmentDefinition({
+				id: imageId,
+				key: 'BASIC_COMPONENT-image',
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([imageFragment]),
+				siteId: pageManagementSite.id,
+				title: getRandomString(),
+			});
+
+			await pageEditorPage.goto(
+				layout,
+				pageManagementSite.friendlyUrlPath
+			);
+
+			// Select the image directly
+
+			await pageEditorPage.selectEditable(imageId, 'image-square');
+
+			await page.getByTitle('Select Image').click();
+
+			const imageCard = page
+				.frameLocator('iframe[title="Select"]')
+				.getByText('poodle.jpg');
+
+			await clickAndExpectToBeHidden({
+				target: page.locator('.modal-dialog'),
+				trigger: imageCard,
+			});
+
+			await pageEditorPage.waitForChangesSaved();
+
+			expect(
+				await page
+					.locator('.component-image img')
+					.first()
+					.getAttribute('src')
+			).toContain('poodle-jpg');
+		}
+	);
+});
+
 test.describe('Multiselect Fragment', () => {
 	test(
 		'Allow submit form if the field is required and at least one item is checked',
@@ -965,6 +1018,44 @@ test.describe('Multiselect Fragment', () => {
 					'Thank you. Your information was successfully received.'
 				)
 			).toBeVisible();
+		}
+	);
+});
+
+test.describe('Paragraph Fragment', () => {
+	test(
+		'Can edit text editable',
+		{tag: ['@LPS-127732']},
+		async ({apiHelpers, page, pageEditorPage, site}) => {
+
+			// Create page with a paragraph fragment and go to edit mode
+
+			const fragmentId = getRandomString();
+
+			const fragment = getFragmentDefinition({
+				id: fragmentId,
+				key: 'BASIC_COMPONENT-paragraph',
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([fragment]),
+				siteId: site.id,
+				title: getRandomString(),
+			});
+
+			await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+			// Check paragraph editable can be edited
+
+			await pageEditorPage.editTextEditable(
+				fragmentId,
+				'element-text',
+				'New editable fragment text'
+			);
+
+			await expect(
+				page.getByText('New editable fragment text')
+			).toBeAttached();
 		}
 	);
 });

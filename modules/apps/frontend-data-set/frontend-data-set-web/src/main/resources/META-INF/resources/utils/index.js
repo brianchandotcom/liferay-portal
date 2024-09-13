@@ -162,9 +162,6 @@ export async function loadData(
 			const [key, value] = parameter.split('=');
 
 			if (key === 'filter' && url.searchParams.get('filter')) {
-
-				// Add new filters to the end of the existing filter.
-
 				const existingFilters = url.searchParams.get('filter');
 
 				url.searchParams.set(
@@ -173,10 +170,6 @@ export async function loadData(
 				);
 			}
 			else if (key === 'sort' && url.searchParams.get('sort')) {
-
-				// Add new sort values to the end of the existing sort.
-				// Don't add new sort values for any already existing fields.
-
 				const newSortParams = [];
 
 				const existingSortArray = url.searchParams
@@ -210,10 +203,6 @@ export async function loadData(
 				key === 'nestedFields' &&
 				url.searchParams.get('nestedFields')
 			) {
-
-				// Merge nestedFields and don't add any fields already in the
-				// existing nestedFields.
-
 				const existingNestedFieldsArray = url.searchParams
 					.get('nestedFields')
 					.split(',');

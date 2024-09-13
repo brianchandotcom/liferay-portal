@@ -355,8 +355,23 @@ public class CommerceAccountHelperImpl implements CommerceAccountHelper {
 					httpServletRequest, commerceChannelGroupId,
 					commerceChannelAccountEntryRel.getAccountEntryId());
 
-				return _accountEntryLocalService.getAccountEntry(
+				return accountEntry;
+			}
+
+			commerceChannelAccountEntryRel =
+				_commerceChannelAccountEntryRelLocalService.
+					fetchCommerceChannelAccountEntryRel(
+						accountEntry.getAccountEntryId(),
+						commerceChannel.getCommerceChannelId(),
+						CommerceChannelAccountEntryRelConstants.
+							TYPE_ELIGIBILITY);
+
+			if (commerceChannelAccountEntryRel != null) {
+				setCurrentCommerceAccount(
+					httpServletRequest, commerceChannelGroupId,
 					commerceChannelAccountEntryRel.getAccountEntryId());
+
+				return accountEntry;
 			}
 
 			List<AccountEntry> commerceChannelAccountEntries =
@@ -410,8 +425,6 @@ public class CommerceAccountHelperImpl implements CommerceAccountHelper {
 			long userId, long commerceChannelGroupId)
 		throws PortalException {
 
-		List<AccountEntry> userAccountEntries = new ArrayList<>();
-
 		CommerceChannel commerceChannel =
 			_commerceChannelLocalService.getCommerceChannelByGroupId(
 				commerceChannelGroupId);
@@ -423,16 +436,10 @@ public class CommerceAccountHelperImpl implements CommerceAccountHelper {
 				WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS);
 
-		for (AccountEntry accountEntry : accountEntries) {
-			if (_isChannelAccountEntry(
-					accountEntry, commerceChannel.getCommerceChannelId())) {
-
-				userAccountEntries.add(accountEntry);
-			}
-		}
-
 		return ListUtil.toLongArray(
-			userAccountEntries, AccountEntryModel::getAccountEntryId);
+			_filterAccountEntries(
+				accountEntries, commerceChannel.getCommerceChannelId()),
+			AccountEntryModel::getAccountEntryId);
 	}
 
 	@Override
@@ -517,11 +524,41 @@ public class CommerceAccountHelperImpl implements CommerceAccountHelper {
 		}
 	}
 
+	private List<AccountEntry> _filterAccountEntries(
+		List<AccountEntry> accountEntries, long commerceChannelId) {
+
+		List<CommerceChannelAccountEntryRel> commerceChannelAccountEntryRels =
+			_commerceChannelAccountEntryRelLocalService.
+				getCommerceChannelAccountEntryRels(
+					commerceChannelId, null,
+					CommerceChannelAccountEntryRelConstants.TYPE_ELIGIBILITY,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		if (commerceChannelAccountEntryRels.isEmpty()) {
+			return accountEntries;
+		}
+
+		List<AccountEntry> userAccountEntries = new ArrayList<>();
+
+		Set<Long> channelAccountEntryIds = new HashSet<>(
+			ListUtil.toList(
+				commerceChannelAccountEntryRels,
+				CommerceChannelAccountEntryRel::getAccountEntryId));
+
+		for (AccountEntry accountEntry : accountEntries) {
+			if (channelAccountEntryIds.contains(
+					accountEntry.getAccountEntryId())) {
+
+				userAccountEntries.add(accountEntry);
+			}
+		}
+
+		return userAccountEntries;
+	}
+
 	private List<AccountEntry> _getCommerceChannelAccountEntries(
 			long userId, long commerceChannelId)
 		throws PortalException {
-
-		List<AccountEntry> userAccountEntries = new ArrayList<>();
 
 		CommerceChannel commerceChannel =
 			_commerceChannelLocalService.getCommerceChannel(commerceChannelId);
@@ -555,37 +592,7 @@ public class CommerceAccountHelperImpl implements CommerceAccountHelper {
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 		}
 
-		for (AccountEntry accountEntry : accountEntries) {
-			if (_isChannelAccountEntry(
-					accountEntry, commerceChannel.getCommerceChannelId())) {
-
-				userAccountEntries.add(accountEntry);
-			}
-		}
-
-		return userAccountEntries;
-	}
-
-	private boolean _isChannelAccountEntry(
-		AccountEntry accountEntry, long commerceChannelId) {
-
-		CommerceChannelAccountEntryRel commerceChannelAccountEntryRel =
-			_commerceChannelAccountEntryRelLocalService.
-				fetchCommerceChannelAccountEntryRel(
-					accountEntry.getAccountEntryId(), commerceChannelId,
-					CommerceChannelAccountEntryRelConstants.TYPE_ELIGIBILITY);
-
-		int count =
-			_commerceChannelAccountEntryRelLocalService.
-				getCommerceChannelAccountEntryRelsCount(
-					commerceChannelId, null,
-					CommerceChannelAccountEntryRelConstants.TYPE_ELIGIBILITY);
-
-		if ((commerceChannelAccountEntryRel != null) || (count == 0)) {
-			return true;
-		}
-
-		return false;
+		return _filterAccountEntries(accountEntries, commerceChannelId);
 	}
 
 	@Reference

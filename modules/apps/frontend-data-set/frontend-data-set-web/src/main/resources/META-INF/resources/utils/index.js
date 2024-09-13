@@ -161,12 +161,12 @@ export async function loadData(
 		queryStringArray.forEach((parameter) => {
 			const [key, value] = parameter.split('=');
 
-			if (key === 'filter' && url.searchParams.get('filter')) {
-				const existingFilters = url.searchParams.get('filter');
+			const existingFilter = url.searchParams.get('filter');
 
+			if (key === 'filter' && existingFilter) {
 				url.searchParams.set(
 					'filter',
-					existingFilters + ' and ' + value
+					existingFilter + ' and ' + value
 				);
 			}
 			else if (key === 'sort' && url.searchParams.get('sort')) {

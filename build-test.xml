@@ -12521,27 +12521,14 @@ portal.proxy.path=/${portal.proxy.path}</echo>
 			<equals arg1="${rewrite.batch.statements}" arg2="true" />
 			<then>
 				<if>
-					<or>
-						<equals arg1="${database.type}" arg2="mariadb" />
-						<equals arg1="${database.type}" arg2="mysql" />
-					</or>
+					<equals arg1="${database.type}" arg2="postgresql" />
 					<then>
 						<replace
 							file="portal-impl/src/portal-ext.properties"
 							token="${database.url}"
-							value="${database.url}&amp;rewriteBatchedStatements=true&amp;cachePrepStmts=true&amp;prepStmtCacheSize=1000&amp;prepStmtCacheSqlLimit=2048"
+							value="${database.url}?reWriteBatchedInserts=true"
 						/>
 					</then>
-					<elseif>
-						<equals arg1="${database.type}" arg2="postgresql" />
-						<then>
-							<replace
-								file="portal-impl/src/portal-ext.properties"
-								token="${database.url}"
-								value="${database.url}?reWriteBatchedInserts=true"
-							/>
-						</then>
-					</elseif>
 					<elseif>
 						<equals arg1="${database.type}" arg2="sqlserver" />
 						<then>

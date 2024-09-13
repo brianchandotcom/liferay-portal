@@ -210,7 +210,7 @@ public class EmailAddressResourceTest extends BaseEmailAddressResourceTestCase {
 
 		return _toEmailAddress(
 			EmailAddressLocalServiceUtil.addEmailAddress(
-				_user.getUserId(), className, classPK,
+				null, _user.getUserId(), className, classPK,
 				emailAddress.getEmailAddress(), _getListTypeId(listTypeId),
 				emailAddress.getPrimary(), new ServiceContext()));
 	}

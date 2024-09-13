@@ -98,12 +98,14 @@ public class EmailAddressStagedModelDataHandler
 			serviceContext.setUuid(emailAddress.getUuid());
 
 			importedEmailAddress = _emailAddressLocalService.addEmailAddress(
-				userId, emailAddress.getClassName(), emailAddress.getClassPK(),
+				emailAddress.getExternalReferenceCode(), userId,
+				emailAddress.getClassName(), emailAddress.getClassPK(),
 				emailAddress.getAddress(), emailAddress.getListTypeId(),
 				emailAddress.isPrimary(), serviceContext);
 		}
 		else {
 			importedEmailAddress = _emailAddressLocalService.updateEmailAddress(
+				existingEmailAddress.getExternalReferenceCode(),
 				existingEmailAddress.getEmailAddressId(),
 				emailAddress.getAddress(), emailAddress.getListTypeId(),
 				emailAddress.isPrimary());

@@ -58,9 +58,9 @@ public class EmailAddressContactInfoManager
 	@Override
 	protected EmailAddress doAdd(EmailAddress emailAddress) throws Exception {
 		return _emailAddressService.addEmailAddress(
-			_className, _classPK, emailAddress.getAddress(),
-			emailAddress.getListTypeId(), emailAddress.isPrimary(),
-			new ServiceContext());
+			emailAddress.getExternalReferenceCode(), _className, _classPK,
+			emailAddress.getAddress(), emailAddress.getListTypeId(),
+			emailAddress.isPrimary(), new ServiceContext());
 	}
 
 	@Override
@@ -71,6 +71,7 @@ public class EmailAddressContactInfoManager
 	@Override
 	protected void doUpdate(EmailAddress emailAddress) throws Exception {
 		_emailAddressService.updateEmailAddress(
+			emailAddress.getExternalReferenceCode(),
 			emailAddress.getEmailAddressId(), emailAddress.getAddress(),
 			emailAddress.getListTypeId(), emailAddress.isPrimary());
 	}

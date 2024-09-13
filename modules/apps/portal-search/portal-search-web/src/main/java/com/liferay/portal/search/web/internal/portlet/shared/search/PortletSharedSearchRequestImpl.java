@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.Validator;
@@ -195,80 +194,70 @@ public class PortletSharedSearchRequestImpl
 				PortletKeys.PREFS_OWNER_ID_DEFAULT,
 				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid());
 
-		if (ArrayUtil.isEmpty(segmentsExperienceIds)) {
-			for (PortletPreferences portletPreferences :
-					portletPreferencesList) {
-
-				Portlet portlet = portletLocalService.getPortletById(
-					companyId, portletPreferences.getPortletId());
-
-				if (portlet.isInstanceable() &&
-					Validator.isNotNull(portlet.getInstanceId())) {
-
-					portlets.add(portlet);
-				}
-			}
-
-			return portlets;
-		}
-
 		List<String> portletIdsToFilter = new ArrayList<>();
 		List<String> instanceIdsToKeep = new ArrayList<>();
 
-		LayoutPageTemplateStructure layoutPageTemplateStructure =
-			_layoutPageTemplateStructureLocalService.
-				fetchLayoutPageTemplateStructure(groupId, layout.getPlid());
+		if ((segmentsExperienceIds != null) &&
+			(segmentsExperienceIds.length > 0)) {
 
-		if (layoutPageTemplateStructure != null) {
-			LayoutPageTemplateStructureRel layoutPageTemplateStructureRel =
-				_layoutPageTemplateStructureRelLocalService.
-					fetchLayoutPageTemplateStructureRel(
-						layoutPageTemplateStructure.
-							getLayoutPageTemplateStructureId(),
-						segmentsExperienceIds[0]);
+			LayoutPageTemplateStructure layoutPageTemplateStructure =
+				_layoutPageTemplateStructureLocalService.
+					fetchLayoutPageTemplateStructure(groupId, layout.getPlid());
 
-			if (layoutPageTemplateStructureRel != null) {
-				LayoutStructure layoutStructure = LayoutStructure.of(
-					layoutPageTemplateStructureRel.getData());
+			if (layoutPageTemplateStructure != null) {
+				LayoutPageTemplateStructureRel layoutPageTemplateStructureRel =
+					_layoutPageTemplateStructureRelLocalService.
+						fetchLayoutPageTemplateStructureRel(
+							layoutPageTemplateStructure.
+								getLayoutPageTemplateStructureId(),
+							segmentsExperienceIds[0]);
 
-				Map<Long, LayoutStructureItem> fragmentLayoutStructureItems =
-					layoutStructure.getFragmentLayoutStructureItems();
+				if (layoutPageTemplateStructureRel != null) {
+					LayoutStructure layoutStructure = LayoutStructure.of(
+						layoutPageTemplateStructureRel.getData());
 
-				for (Map.Entry<Long, LayoutStructureItem>
-						fragmentLayoutStructureItem :
-							fragmentLayoutStructureItems.entrySet()) {
+					Map<Long, LayoutStructureItem>
+						fragmentLayoutStructureItems =
+							layoutStructure.getFragmentLayoutStructureItems();
 
-					Long fragmentEntryLinkId =
-						fragmentLayoutStructureItem.getKey();
+					for (Map.Entry<Long, LayoutStructureItem>
+							fragmentLayoutStructureItem :
+								fragmentLayoutStructureItems.entrySet()) {
 
-					if (fragmentEntryLinkId <= 0) {
-						continue;
-					}
+						Long fragmentEntryLinkId =
+							fragmentLayoutStructureItem.getKey();
 
-					FragmentEntryLink fragmentEntryLink =
-						_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
-							fragmentEntryLinkId);
+						if (fragmentEntryLinkId <= 0) {
+							continue;
+						}
 
-					if (fragmentEntryLink == null) {
-						continue;
-					}
+						FragmentEntryLink fragmentEntryLink =
+							_fragmentEntryLinkLocalService.
+								fetchFragmentEntryLink(fragmentEntryLinkId);
 
-					try {
-						JSONObject editableValuesJSONObject =
-							_jsonFactory.createJSONObject(
-								fragmentEntryLink.getEditableValues());
+						if (fragmentEntryLink == null) {
+							continue;
+						}
 
-						portletIdsToFilter.add(
-							editableValuesJSONObject.getString("portletId"));
+						try {
+							JSONObject editableValuesJSONObject =
+								_jsonFactory.createJSONObject(
+									fragmentEntryLink.getEditableValues());
 
-						instanceIdsToKeep.add(
-							editableValuesJSONObject.getString("instanceId"));
-					}
-					catch (JSONException jsonException) {
-						if (_log.isDebugEnabled()) {
-							_log.debug(
-								"Error parsing fragment entry link JSON",
-								jsonException);
+							portletIdsToFilter.add(
+								editableValuesJSONObject.getString(
+									"portletId"));
+
+							instanceIdsToKeep.add(
+								editableValuesJSONObject.getString(
+									"instanceId"));
+						}
+						catch (JSONException jsonException) {
+							if (_log.isDebugEnabled()) {
+								_log.debug(
+									"Error parsing fragment entry link JSON",
+									jsonException);
+							}
 						}
 					}
 				}
@@ -279,7 +268,9 @@ public class PortletSharedSearchRequestImpl
 			Portlet portlet = portletLocalService.getPortletById(
 				companyId, portletPreferences.getPortletId());
 
-			if (portletIdsToFilter.contains(portlet.getPortletName()) &&
+			if ((segmentsExperienceIds != null) &&
+				(segmentsExperienceIds.length > 0) &&
+				portletIdsToFilter.contains(portlet.getPortletName()) &&
 				!instanceIdsToKeep.contains(portlet.getInstanceId())) {
 
 				continue;

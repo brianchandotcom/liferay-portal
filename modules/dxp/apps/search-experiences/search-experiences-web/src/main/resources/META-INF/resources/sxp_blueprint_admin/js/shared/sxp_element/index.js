@@ -16,8 +16,11 @@ import React, {useContext, useEffect, useState} from 'react';
 
 import {
 	ASSET_CATEGORY_ID,
+	ASSET_CATEGORY_IDS,
 	GROUP_EXTERNAL_REFERENCE_CODE,
+	GROUP_EXTERNAL_REFERENCE_CODES,
 	GROUP_ID,
+	GROUP_IDS,
 } from '../../utils/constants';
 import {DEFAULT_SXP_ELEMENT_ICON} from '../../utils/data';
 import isDefined from '../../utils/functions/is_defined';
@@ -199,7 +202,7 @@ function SXPElement({
 					/>
 				);
 			case INPUT_TYPES.MULTISELECT:
-				if (config.name === `${ASSET_CATEGORY_ID}s`) {
+				if (config.name === ASSET_CATEGORY_IDS) {
 					return (
 						<CategorySelectorInput
 							disabled={disabled}
@@ -215,8 +218,8 @@ function SXPElement({
 				}
 
 				if (
-					config.name.includes(`${GROUP_ID}s`) ||
-					config.name.includes(`${GROUP_EXTERNAL_REFERENCE_CODE}s`)
+					config.name.includes(GROUP_IDS) ||
+					config.name.includes(GROUP_EXTERNAL_REFERENCE_CODES)
 				) {
 					return (
 						<SiteSelectorInput

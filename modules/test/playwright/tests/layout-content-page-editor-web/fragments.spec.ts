@@ -796,41 +796,78 @@ test.describe('External Video', () => {
 	);
 });
 
+test.describe('Heading Fragment', () => {
+	test(
+		'Can edit text editable',
+		{tag: ['@LPS-78726', '@LPS-85872']},
+		async ({apiHelpers, page, pageEditorPage, site}) => {
+
+			// Create page with a heading fragment and go to edit mode
+
+			const fragmentId = getRandomString();
+
+			const fragment = getFragmentDefinition({
+				id: fragmentId,
+				key: 'BASIC_COMPONENT-heading',
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([fragment]),
+				siteId: site.id,
+				title: getRandomString(),
+			});
+
+			await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+			// Check heading editable can be edited
+
+			await pageEditorPage.editTextEditable(
+				fragmentId,
+				'element-text',
+				'New editable fragment text'
+			);
+
+			await expect(
+				page.getByText('New editable fragment text')
+			).toBeAttached();
+		}
+	);
+});
+
 test.describe('HTML Fragment', () => {
-	test('Can edit html editable', async ({
-		apiHelpers,
-		page,
-		pageEditorPage,
-		site,
-	}) => {
+	test(
+		'Can edit html editable',
+		{tag: '@LPS-98553'},
+		async ({apiHelpers, page, pageEditorPage, site}) => {
 
-		// Create page with a HTML fragment and go to edit mode
+			// Create page with a HTML fragment and go to edit mode
 
-		const fragmentId = getRandomString();
+			const fragmentId = getRandomString();
 
-		const fragment = getFragmentDefinition({
-			id: fragmentId,
-			key: 'BASIC_COMPONENT-html',
-		});
+			const fragment = getFragmentDefinition({
+				id: fragmentId,
+				key: 'BASIC_COMPONENT-html',
+			});
 
-		const layout = await apiHelpers.headlessDelivery.createSitePage({
-			pageDefinition: getPageDefinition([fragment]),
-			siteId: site.id,
-			title: getRandomString(),
-		});
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([fragment]),
+				siteId: site.id,
+				title: getRandomString(),
+			});
 
-		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+			await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
-		// Check html editable can be edited
+			// Check html editable can be edited
 
-		await pageEditorPage.editHTMLEditable(
-			fragmentId,
-			'element-html',
-			'<div class="text-success"><h1>test html</h1></div>'
-		);
+			await pageEditorPage.editHTMLEditable(
+				fragmentId,
+				'element-html',
+				'<div class="text-success"><h1>test html</h1></div>'
+			);
 
-		await expect(page.getByText('test html')).toBeAttached();
-	});
+			await expect(page.getByText('test html')).toBeAttached();
+		}
+	);
 });
 
 test.describe('Multiselect Fragment', () => {

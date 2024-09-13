@@ -369,7 +369,7 @@ definition {
 
 						AssertElementPresent(
 							key_cartItemSku = "MIN55861",
-							key_messageError = "The specified quantity is not a multiple of 1.5",
+							key_messageError = "The specified quantity is not a multiple of 0.5",
 							locator1 = "CommerceAccelerators#MINI_CART_ITEM_GENERIC_ERROR");
 
 						AssertElementPresent(

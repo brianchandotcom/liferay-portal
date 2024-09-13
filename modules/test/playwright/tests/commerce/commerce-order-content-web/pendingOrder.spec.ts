@@ -852,6 +852,67 @@ test('LPD-3259 As a buyer with approval workflow, when I click review order in m
 	await expect(pendingOrdersPage.orderItemsTable).toBeVisible();
 });
 
+test('LPD-33783 Pending orders table displays correct fields', async ({
+	apiHelpers,
+	applicationsMenuPage,
+	commerceLayoutsPage,
+	page,
+	pendingOrdersPage,
+}) => {
+	const site = await apiHelpers.headlessSite.createSite({
+		name: 'Pending order',
+	});
+
+	apiHelpers.data.push({id: site.id, type: 'site'});
+
+	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
+		name: 'Pending order Channel',
+		siteGroupId: site.id,
+	});
+
+	const account = await apiHelpers.headlessAdminUser.postAccount({
+		name: getRandomString(),
+		type: 'person',
+	});
+
+	apiHelpers.data.push({id: account.id, type: 'account'});
+
+	await apiHelpers.headlessCommerceAdminOrder.postOrder({
+		accountId: account.id,
+		channelId: channel.id,
+		name: 'order1',
+		orderStatus: '2',
+	});
+
+	await applicationsMenuPage.goToSite('Pending order');
+
+	await commerceLayoutsPage.goToPages(false);
+	await commerceLayoutsPage.createWidgetPage('Pending Orders Page');
+
+	await page.goto(`/web/${site.name}`);
+
+	await pendingOrdersPage.addPendingOrdersWidget();
+
+	await expect(pendingOrdersPage.orderItemsTable).toBeVisible();
+
+	const tableHeaderLabels = [
+		'Order ID',
+		'Name',
+		'Order Type',
+		'ERC',
+		'Purchase Order Number',
+		'Create Date',
+		'Account',
+		'Created By',
+		'Status',
+		'Amount',
+	];
+
+	await expect(await pendingOrdersPage.tableHeaders.innerText()).toEqual(
+		tableHeaderLabels.join('\n')
+	);
+});
+
 test('LPD-3440 As a order manager with buyer approval workflow, I can approve orders on pending orders page', async ({
 	apiHelpers,
 	commerceAdminChannelDetailsPage,

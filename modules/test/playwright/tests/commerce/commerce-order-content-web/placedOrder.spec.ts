@@ -625,3 +625,64 @@ test('LPD-30856 Can update order status by deleting unshipped items', async ({
 		}
 	}
 });
+
+test('LPD-33783 Placed orders table displays correct fields', async ({
+	apiHelpers,
+	applicationsMenuPage,
+	commerceLayoutsPage,
+	page,
+	placedOrdersPage,
+}) => {
+	const site = await apiHelpers.headlessSite.createSite({
+		name: 'Placed order',
+	});
+
+	apiHelpers.data.push({id: site.id, type: 'site'});
+
+	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
+		name: 'Placed order Channel',
+		siteGroupId: site.id,
+	});
+
+	const account = await apiHelpers.headlessAdminUser.postAccount({
+		name: getRandomString(),
+		type: 'person',
+	});
+
+	apiHelpers.data.push({id: account.id, type: 'account'});
+
+	await apiHelpers.headlessCommerceAdminOrder.postOrder({
+		accountId: account.id,
+		channelId: channel.id,
+		name: 'order1',
+		orderStatus: '0',
+	});
+
+	await applicationsMenuPage.goToSite(site.name);
+
+	await commerceLayoutsPage.goToPages(false);
+	await commerceLayoutsPage.createWidgetPage('Placed Orders Page');
+
+	await page.goto(`/web/${site.name}`);
+
+	await placedOrdersPage.addPlacedOrdersWidget();
+
+	await expect(placedOrdersPage.table).toBeVisible();
+
+	const tableHeaderLabels = [
+		'Order ID',
+		'Name',
+		'Order Type',
+		'ERC',
+		'Purchase Order Number',
+		'Order Date',
+		'Account',
+		'Submitted By',
+		'Status',
+		'Amount',
+	];
+
+	await expect(await placedOrdersPage.tableHeaders.innerText()).toEqual(
+		tableHeaderLabels.join('\n')
+	);
+});

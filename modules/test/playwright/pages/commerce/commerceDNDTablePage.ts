@@ -35,6 +35,7 @@ export const searchTableRowByValue = async function (
 export class CommerceDNDTablePage {
 	readonly emptyTableMessage: Locator;
 	readonly table: Locator;
+	readonly tableHeaders: Locator;
 	readonly tableRow: (
 		colPosition: number,
 		value: number | string,
@@ -46,6 +47,7 @@ export class CommerceDNDTablePage {
 	constructor(page: Page, tableIdentifier: string) {
 		this.emptyTableMessage = page.getByText('No Results Found');
 		this.table = page.locator(tableIdentifier);
+		this.tableHeaders = this.table.locator('div.dnd-tr').first();
 		this.tableRow = async (
 			colPosition: number,
 			value: number | string,

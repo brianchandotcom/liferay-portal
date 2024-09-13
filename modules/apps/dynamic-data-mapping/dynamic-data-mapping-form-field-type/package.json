@@ -44,6 +44,9 @@
 		"testMatch": [
 			"<rootDir>/test/**/*.js",
 			"<rootDir>/test/**/*.spec.js"
+		],
+		"testPathIgnorePatterns": [
+			"\\.d\\.ts$"
 		]
 	},
 	"main": "index.ts",

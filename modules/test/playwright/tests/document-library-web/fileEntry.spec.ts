@@ -321,7 +321,13 @@ baseTest(
 		tag: '@LPD-27899',
 	},
 
-	async ({apiHelpers, documentLibraryPage, page, site}) => {
+	async ({
+		apiHelpers,
+		documentLibraryEditFilePage,
+		documentLibraryPage,
+		page,
+		site,
+	}) => {
 		const vocabularyName = getRandomString();
 
 		const categories = await createCategories({
@@ -384,9 +390,8 @@ baseTest(
 
 		for (const document of [document1, document2]) {
 			await documentLibraryPage.goto(site.friendlyUrlPath);
-
 			await documentLibraryPage.editFileEntry(document.title);
-
+			await documentLibraryEditFilePage.openFieldset('Categorization');
 			await page.getByText(vocabularyName).waitFor();
 
 			await expect(await page.getByText(document.title)).toBeVisible();

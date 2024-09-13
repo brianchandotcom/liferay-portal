@@ -80,6 +80,16 @@ export class DocumentLibraryEditFilePage {
 		await this.documentLibraryPage.goToCreateNewFileWithDifferentType(type);
 	}
 
+	async openFieldset(name: 'Categorization') {
+		const fieldset = await this.page.getByRole('group', {
+			name,
+		});
+
+		if (await fieldset.locator('.panel-body').isHidden()) {
+			await fieldset.getByRole('button', {name}).click();
+		}
+	}
+
 	async publishFileEntry() {
 		if (await this.saveButton.isVisible()) {
 			await this.saveButton.click();

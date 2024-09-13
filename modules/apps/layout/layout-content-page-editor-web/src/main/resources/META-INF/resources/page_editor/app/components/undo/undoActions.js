@@ -8,6 +8,7 @@ import {
 	ADD_FRAGMENT_ENTRY_LINKS,
 	ADD_ITEM,
 	ADD_RULE,
+	ADD_STEPPER,
 	CHANGE_MASTER_LAYOUT,
 	DELETE_ITEM,
 	DELETE_RULE,
@@ -30,6 +31,7 @@ import {getItemNameFromAction} from './getItemNameFromAction';
 import * as undoAddFragmentEntryLinks from './undoAddFragmentEntryLinks';
 import * as undoAddItem from './undoAddItem';
 import * as undoAddRule from './undoAddRule';
+import * as undoAddStepper from './undoAddStepper';
 import * as undoChangeMasterLayout from './undoChangeMasterLayout';
 import * as undoDeleteItem from './undoDeleteItem';
 import * as undoDeleteRule from './undoDeleteRule';
@@ -53,6 +55,7 @@ const UNDO_ACTIONS = {
 	[ADD_FRAGMENT_ENTRY_LINKS]: undoAddFragmentEntryLinks,
 	[ADD_ITEM]: undoAddItem,
 	[ADD_RULE]: undoAddRule,
+	[ADD_STEPPER]: undoAddStepper,
 	[CHANGE_MASTER_LAYOUT]: undoChangeMasterLayout,
 	[DELETE_ITEM]: undoDeleteItem,
 	[DELETE_RULE]: undoDeleteRule,

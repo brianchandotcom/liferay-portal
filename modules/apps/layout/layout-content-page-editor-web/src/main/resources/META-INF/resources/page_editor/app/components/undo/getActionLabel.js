@@ -10,6 +10,7 @@ import {
 	ADD_FRAGMENT_ENTRY_LINKS,
 	ADD_ITEM,
 	ADD_RULE,
+	ADD_STEPPER,
 	CHANGE_MASTER_LAYOUT,
 	DELETE_ITEM,
 	DELETE_RULE,
@@ -41,6 +42,7 @@ export default function getActionLabel(
 		case ADD_FRAGMENT_ENTRY_LINKS:
 		case ADD_ITEM:
 		case ADD_RULE:
+		case ADD_STEPPER:
 			return sub(Liferay.Language.get('add-x'), action.itemName);
 		case CHANGE_MASTER_LAYOUT:
 			return type === UNDO_TYPES.undo

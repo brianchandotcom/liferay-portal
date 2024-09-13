@@ -11,8 +11,8 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.site.constants.LegacySitemapIndexPropsKeys;
 
 import java.util.Dictionary;
 
@@ -36,7 +36,7 @@ public class XMLSitemapIndexEnabledConfigurationUpgradeProcess
 	@Override
 	protected void doUpgrade() throws Exception {
 		String xmlSitemapIndexEnabled = PropsUtil.get(
-			PropsKeys.XML_SITEMAP_INDEX_ENABLED);
+			LegacySitemapIndexPropsKeys.XML_SITEMAP_INDEX_ENABLED);
 
 		if (xmlSitemapIndexEnabled == null) {
 			return;

@@ -2065,7 +2065,7 @@ public class VerifyProperties {
 		"verify.process.concurrency.threshold", "webdav.storage.class",
 		"webdav.storage.show.edit.url", "webdav.storage.show.view.url",
 		"webdav.storage.tokens", "wiki.email.page.added.signature",
-		"wiki.email.page.updated.signature",
+		"wiki.email.page.updated.signature", "xml.sitemap.index.enabled",
 		"xsl.template.secure.processing.enabled", "xss.allow",
 		"xuggler.enabled", "xuggler.jar.file", "xuggler.jar.url",
 		"xuggler.jar.options", "xuggler.ffpreset.8x8dct", "xuggler.ffpreset.bf",

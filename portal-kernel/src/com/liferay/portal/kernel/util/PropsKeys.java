@@ -2965,6 +2965,10 @@ public interface PropsKeys {
 
 	public static final String XML_SECURITY_ENABLED = "xml.security.enabled";
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final String XML_SITEMAP_INDEX_ENABLED =
 		"xml.sitemap.index.enabled";
 

@@ -25,6 +25,9 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		CookieKeys.COMMERCE_CONTINUE_AS_GUEST;
 		CookieKeys.ID;
 		CookieKeys.SCREEN_NAME;
+		
+		DDMStructureManagerUtil.getStructure(123, 123, "test123");
+		_ddmStructureManager.getStructure(123, 123, "test123");
 
 		DestinationNames.BASE_PRICE_LIST;
 		DestinationNames.ORDER_STATUS;
@@ -1296,6 +1299,9 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 
 	@Reference
 	private CPInstanceService _cpInstanceService;
+
+	@Reference
+	private DDMStructureManager _ddmStructureManager;
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;

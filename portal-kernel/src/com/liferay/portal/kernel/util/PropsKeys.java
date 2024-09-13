@@ -2965,9 +2965,6 @@ public interface PropsKeys {
 
 	public static final String XML_SECURITY_ENABLED = "xml.security.enabled";
 
-	public static final String XML_SITEMAP_INDEX_ENABLED =
-		"xml.sitemap.index.enabled";
-
 	public static final String XML_VALIDATION_ENABLED =
 		"xml.validation.enabled";
 

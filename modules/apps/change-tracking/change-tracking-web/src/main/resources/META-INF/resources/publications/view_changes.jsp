@@ -31,12 +31,14 @@ renderResponse.setTitle(LanguageUtil.get(request, "review-changes"));
 	</div>
 
 	<clay:container-fluid>
-		<div>
-			<react:component
-				module="{ChangeTrackingOverview} from change-tracking-web"
-				props="<%= viewChangesDisplayContext.getItemsOverview() %>"
-			/>
-		</div>
+		<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-20131") %>'>
+			<div>
+				<react:component
+					module="{ChangeTrackingOverview} from change-tracking-web"
+					props="<%= viewChangesDisplayContext.getItemsOverview() %>"
+				/>
+			</div>
+		</c:if>
 
 		<clay:navigation-bar
 			navigationItems="<%= viewChangesDisplayContext.getViewNavigationItems() %>"

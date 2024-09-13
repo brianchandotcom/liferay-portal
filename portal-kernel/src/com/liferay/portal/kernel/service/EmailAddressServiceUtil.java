@@ -30,12 +30,14 @@ public class EmailAddressServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portal.service.impl.EmailAddressServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static EmailAddress addEmailAddress(
-			String className, long classPK, String address, long typeId,
-			boolean primary, ServiceContext serviceContext)
+			String externalReferenceCode, String className, long classPK,
+			String address, long typeId, boolean primary,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addEmailAddress(
-			className, classPK, address, typeId, primary, serviceContext);
+			externalReferenceCode, className, classPK, address, typeId, primary,
+			serviceContext);
 	}
 
 	public static void deleteEmailAddress(long emailAddressId)
@@ -56,6 +58,14 @@ public class EmailAddressServiceUtil {
 		throws PortalException {
 
 		return getService().fetchEmailAddress(emailAddressId);
+	}
+
+	public static EmailAddress fetchEmailAddressByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return getService().fetchEmailAddressByExternalReferenceCode(
+			externalReferenceCode, companyId);
 	}
 
 	public static EmailAddress getEmailAddress(long emailAddressId)
@@ -81,11 +91,12 @@ public class EmailAddressServiceUtil {
 	}
 
 	public static EmailAddress updateEmailAddress(
-			long emailAddressId, String address, long typeId, boolean primary)
+			String externalReferenceCode, long emailAddressId, String address,
+			long typeId, boolean primary)
 		throws PortalException {
 
 		return getService().updateEmailAddress(
-			emailAddressId, address, typeId, primary);
+			externalReferenceCode, emailAddressId, address, typeId, primary);
 	}
 
 	public static EmailAddressService getService() {

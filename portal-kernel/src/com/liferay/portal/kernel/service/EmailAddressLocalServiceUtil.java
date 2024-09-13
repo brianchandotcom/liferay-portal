@@ -51,13 +51,14 @@ public class EmailAddressLocalServiceUtil {
 	}
 
 	public static EmailAddress addEmailAddress(
-			long userId, String className, long classPK, String address,
-			long listTypeId, boolean primary, ServiceContext serviceContext)
+			String externalReferenceCode, long userId, String className,
+			long classPK, String address, long listTypeId, boolean primary,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addEmailAddress(
-			userId, className, classPK, address, listTypeId, primary,
-			serviceContext);
+			externalReferenceCode, userId, className, classPK, address,
+			listTypeId, primary, serviceContext);
 	}
 
 	/**
@@ -216,6 +217,13 @@ public class EmailAddressLocalServiceUtil {
 		return getService().fetchEmailAddress(emailAddressId);
 	}
 
+	public static EmailAddress fetchEmailAddressByExternalReferenceCode(
+		String externalReferenceCode, long companyId) {
+
+		return getService().fetchEmailAddressByExternalReferenceCode(
+			externalReferenceCode, companyId);
+	}
+
 	/**
 	 * Returns the email address with the matching UUID and company.
 	 *
@@ -247,6 +255,14 @@ public class EmailAddressLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getEmailAddress(emailAddressId);
+	}
+
+	public static EmailAddress getEmailAddressByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return getService().getEmailAddressByExternalReferenceCode(
+			externalReferenceCode, companyId);
 	}
 
 	/**
@@ -346,12 +362,13 @@ public class EmailAddressLocalServiceUtil {
 	}
 
 	public static EmailAddress updateEmailAddress(
-			long emailAddressId, String address, long listTypeId,
-			boolean primary)
+			String externalReferenceCode, long emailAddressId, String address,
+			long listTypeId, boolean primary)
 		throws PortalException {
 
 		return getService().updateEmailAddress(
-			emailAddressId, address, listTypeId, primary);
+			externalReferenceCode, emailAddressId, address, listTypeId,
+			primary);
 	}
 
 	public static EmailAddressLocalService getService() {

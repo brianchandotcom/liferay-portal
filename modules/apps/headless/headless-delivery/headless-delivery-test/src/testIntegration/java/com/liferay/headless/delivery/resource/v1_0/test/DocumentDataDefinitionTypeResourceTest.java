@@ -100,6 +100,42 @@ public class DocumentDataDefinitionTypeResourceTest
 			testGroup.getGroupId());
 	}
 
+	@Override
+	protected String[] getAdditionalAssertFieldNames() {
+		return new String[] {"availableLanguages", "description", "name"};
+	}
+
+	@Override
+	protected DocumentDataDefinitionType randomDocumentDataDefinitionType()
+		throws Exception {
+
+		DocumentDataDefinitionType documentDataDefinitionType =
+			super.randomDocumentDataDefinitionType();
+
+		documentDataDefinitionType.setAvailableLanguages(
+			() -> LocaleUtil.toW3cLanguageIds(
+				new Locale[] {LocaleUtil.getDefault()}));
+		documentDataDefinitionType.setDataDefinitionFields(
+			new DataDefinitionField[0]);
+		documentDataDefinitionType.setDataLayout(new DataLayout());
+
+		return documentDataDefinitionType;
+	}
+
+	protected DocumentDataDefinitionType
+			testGraphQLDocumentDataDefinitionType_addDocumentDataDefinitionType()
+		throws Exception {
+
+		DDMStructure ddmStructure1 = DDMStructureTestUtil.addStructure(
+			testGroup.getGroupId(), DLFileEntryMetadata.class.getName());
+
+		return documentDataDefinitionTypeResource.
+			postSiteDocumentDataDefinitionType(
+				testGroup.getGroupId(),
+				_createDocumentDataDefinitionType(
+					new Long[] {ddmStructure1.getStructureId()}));
+	}
+
 	private void _assertDataDefinitionField(
 		DataDefinitionField actualDataDefinitionField,
 		DataDefinitionField expectedDataDefinitionField) {

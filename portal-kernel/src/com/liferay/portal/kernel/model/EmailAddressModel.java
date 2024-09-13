@@ -26,7 +26,8 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface EmailAddressModel
 	extends AttachedModel, BaseModel<EmailAddress>, CTModel<EmailAddress>,
-			MVCCModel, ShardedModel, StagedAuditedModel {
+			ExternalReferenceCodeModel, MVCCModel, ShardedModel,
+			StagedAuditedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -98,6 +99,23 @@ public interface EmailAddressModel
 	 */
 	@Override
 	public void setUuid(String uuid);
+
+	/**
+	 * Returns the external reference code of this email address.
+	 *
+	 * @return the external reference code of this email address
+	 */
+	@AutoEscape
+	@Override
+	public String getExternalReferenceCode();
+
+	/**
+	 * Sets the external reference code of this email address.
+	 *
+	 * @param externalReferenceCode the external reference code of this email address
+	 */
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode);
 
 	/**
 	 * Returns the email address ID of this email address.

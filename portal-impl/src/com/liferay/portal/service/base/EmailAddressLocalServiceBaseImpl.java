@@ -256,6 +256,23 @@ public abstract class EmailAddressLocalServiceBaseImpl
 			uuid, companyId, null);
 	}
 
+	@Override
+	public EmailAddress fetchEmailAddressByExternalReferenceCode(
+		String externalReferenceCode, long companyId) {
+
+		return emailAddressPersistence.fetchByERC_C(
+			externalReferenceCode, companyId);
+	}
+
+	@Override
+	public EmailAddress getEmailAddressByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return emailAddressPersistence.findByERC_C(
+			externalReferenceCode, companyId);
+	}
+
 	/**
 	 * Returns the email address with the primary key.
 	 *

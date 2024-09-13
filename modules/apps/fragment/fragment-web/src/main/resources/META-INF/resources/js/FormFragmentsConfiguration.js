@@ -23,7 +23,7 @@ export default function FormFragmentsConfiguration({
 }) {
 	const [values, setValues] = useState({});
 
-	const onClick = (name) => {
+	const onClick = ({inputType, name}) => {
 		openSelectionModal({
 			onSelect: ({fragmententrykey, fragmententryname, groupkey}) => {
 				setValues((previousValues) => ({
@@ -41,7 +41,7 @@ export default function FormFragmentsConfiguration({
 				Liferay.Language.get('fragment')
 			),
 			url: createPortletURL(selectFragmentEntryURL, {
-				inputType: name,
+				inputType,
 				p_p_id: getPortletId(portletNamespace),
 			}),
 		});
@@ -79,48 +79,56 @@ export default function FormFragmentsConfiguration({
 						</ClayTable.Head>
 
 						<ClayTable.Body>
-							{formTypes.map(({fragmentName, label, name}) => (
-								<ClayTable.Row key={label}>
-									<ClayTable.Cell>{label}</ClayTable.Cell>
+							{formTypes.map(
+								({fragmentName, inputType, label, name}) => (
+									<ClayTable.Row key={label}>
+										<ClayTable.Cell>{label}</ClayTable.Cell>
 
-									<ClayTable.Cell>
-										<ClayForm.Group
-											className="c-mb-0"
-											small
-										>
-											<ClayInput.Group>
-												<ClayInput.GroupItem>
-													<ClayInput
-														onClick={() =>
-															onClick(name)
-														}
-														readOnly
-														value={
-															values[name]
-																?.fragmentEntryName ||
-															fragmentName
-														}
-													/>
-												</ClayInput.GroupItem>
+										<ClayTable.Cell>
+											<ClayForm.Group
+												className="c-mb-0"
+												small
+											>
+												<ClayInput.Group>
+													<ClayInput.GroupItem>
+														<ClayInput
+															onClick={() =>
+																onClick({
+																	inputType,
+																	name,
+																})
+															}
+															readOnly
+															value={
+																values[name]
+																	?.fragmentEntryName ||
+																fragmentName
+															}
+														/>
+													</ClayInput.GroupItem>
 
-												<ClayInput.GroupItem shrink>
-													<ClayButton
-														displayType="secondary"
-														onClick={() =>
-															onClick(name)
-														}
-														size="sm"
-													>
-														{Liferay.Language.get(
-															'select'
-														)}
-													</ClayButton>
-												</ClayInput.GroupItem>
-											</ClayInput.Group>
-										</ClayForm.Group>
-									</ClayTable.Cell>
-								</ClayTable.Row>
-							))}
+													<ClayInput.GroupItem shrink>
+														<ClayButton
+															displayType="secondary"
+															onClick={() =>
+																onClick({
+																	inputType,
+																	name,
+																})
+															}
+															size="sm"
+														>
+															{Liferay.Language.get(
+																'select'
+															)}
+														</ClayButton>
+													</ClayInput.GroupItem>
+												</ClayInput.Group>
+											</ClayForm.Group>
+										</ClayTable.Cell>
+									</ClayTable.Row>
+								)
+							)}
 						</ClayTable.Body>
 					</ClayTable>
 

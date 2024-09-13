@@ -585,6 +585,13 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 			(ObjectEntry objectEntry) -> {
 				Map<String, Object> properties = objectEntry.getProperties();
 
+				String fieldName = StringUtil.replace(
+					String.valueOf(properties.get("fieldName")), "[]",
+					StringPool.FORWARD_SLASH);
+
+				fieldName = StringUtil.replace(fieldName, StringPool.PERIOD,
+					StringPool.FORWARD_SLASH);
+
 				String type = MapUtil.getString(properties, "type");
 
 				if (Objects.equals(type, "date") ||
@@ -606,7 +613,7 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 							FDSEntityFieldTypes.DATE :
 								FDSEntityFieldTypes.DATE_TIME
 					).put(
-						"id", properties.get("fieldName")
+						"id", fieldName
 					).put(
 						"label", _getValue("label", "fieldName", properties)
 					).put(
@@ -638,14 +645,25 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 					).put(
 						"entityFieldType", FDSEntityFieldTypes.STRING
 					).put(
-						"id", properties.get("fieldName")
-					).put(
 						"label", _getValue("label", "fieldName", properties)
 					).put(
 						"multiple", properties.get("multiple")
 					).put(
 						"type", "selection"
 					);
+
+					if (Objects.equals(sourceType, "API_REST_APPLICATION")) {
+						selectionFilterJSONObject.put(
+							"id", fieldName
+						);
+					}
+					else {
+
+						selectionFilterJSONObject.put(
+							"id", fieldName.indexOf(StringPool.FORWARD_SLASH) > 0 ? fieldName.substring(0,
+								fieldName.lastIndexOf(StringPool.FORWARD_SLASH)) : fieldName
+						);
+					}
 
 					if (Validator.isNotNull(sourceType) &&
 						Objects.equals(sourceType, "API_REST_APPLICATION")) {
@@ -756,7 +774,7 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 					).put(
 						"entityFieldType", FDSEntityFieldTypes.STRING
 					).put(
-						"id", properties.get("fieldName")
+						"id", fieldName
 					).put(
 						"label", _getValue("label", "fieldName", properties)
 					).put(

@@ -25,9 +25,7 @@ import com.liferay.layout.util.structure.LayoutStructureItemUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -40,7 +38,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -175,15 +172,12 @@ public class UpdateFormItemConfigMVCActionCommand
 
 		List<FragmentEntryLink> addedFragmentEntryLinks = new ArrayList<>();
 
-		addedFragmentEntryLinks.addAll(
-			_updateFormStyledLayoutStructureItemFormType(
-				formStyledLayoutStructureItem,
-				formStyledLayoutStructureItem.getFormType(),
-				themeDisplay.getLayout(), layoutStructure,
-				themeDisplay.getLocale(),
-				formStyledLayoutStructureItem.getNumberOfSteps(),
-				previousFormType, previousNumberOfSteps, segmentsExperienceId,
-				ServiceContextFactory.getInstance(httpServletRequest)));
+		_updateFormStyledLayoutStructureItemFormType(
+			formStyledLayoutStructureItem,
+			formStyledLayoutStructureItem.getFormType(), layoutStructure,
+			themeDisplay.getLocale(),
+			formStyledLayoutStructureItem.getNumberOfSteps(), previousFormType,
+			previousNumberOfSteps);
 
 		if (!Objects.equals(
 				formStyledLayoutStructureItem.getClassNameId(),
@@ -318,42 +312,32 @@ public class UpdateFormItemConfigMVCActionCommand
 		);
 	}
 
-	private List<FragmentEntryLink>
-			_updateFormStyledLayoutStructureItemFormType(
-				FormStyledLayoutStructureItem formStyledLayoutStructureItem,
-				String formType, Layout layout, LayoutStructure layoutStructure,
-				Locale locale, int numberOfSteps, String previousFormType,
-				int previousNumberOfSteps, long segmentsExperienceId,
-				ServiceContext serviceContext)
-		throws Exception {
+	private void _updateFormStyledLayoutStructureItemFormType(
+		FormStyledLayoutStructureItem formStyledLayoutStructureItem,
+		String formType, LayoutStructure layoutStructure, Locale locale,
+		int numberOfSteps, String previousFormType, int previousNumberOfSteps) {
 
 		if (!Objects.equals(formType, previousFormType)) {
 			if (Objects.equals(formType, "multistep")) {
-				return _formItemManager.changeToMultistepFormType(
-					formStyledLayoutStructureItem, layout, layoutStructure,
-					locale, numberOfSteps, segmentsExperienceId,
-					serviceContext);
+				_formItemManager.changeToMultistepFormType(
+					formStyledLayoutStructureItem, layoutStructure, locale,
+					numberOfSteps);
 			}
 
-			return _formItemManager.changeToSimpleFormType(
-				formStyledLayoutStructureItem, layout, layoutStructure, locale,
-				segmentsExperienceId, serviceContext);
+			_formItemManager.changeToSimpleFormType(
+				formStyledLayoutStructureItem, layoutStructure, locale);
 		}
 
 		if (numberOfSteps != previousNumberOfSteps) {
 			if (numberOfSteps > previousNumberOfSteps) {
-				return _formItemManager.addFormButtonsFragmentEntryLinks(
-					formStyledLayoutStructureItem, layout, layoutStructure,
-					locale, numberOfSteps, segmentsExperienceId,
-					serviceContext);
+				_formItemManager.addFormStepLayoutStructureItems(
+					formStyledLayoutStructureItem, layoutStructure,
+					numberOfSteps);
 			}
 
-			return _formItemManager.removeFormButtonsFragmentEntryLinks(
-				formStyledLayoutStructureItem, layout, layoutStructure, locale,
-				numberOfSteps, segmentsExperienceId, serviceContext);
+			_formItemManager.removeFormStepLayoutStructureItems(
+				formStyledLayoutStructureItem, layoutStructure, numberOfSteps);
 		}
-
-		return Collections.emptyList();
 	}
 
 	@Reference

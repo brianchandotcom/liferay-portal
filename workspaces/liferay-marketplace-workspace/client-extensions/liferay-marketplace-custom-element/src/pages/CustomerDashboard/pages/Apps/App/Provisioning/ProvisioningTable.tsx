@@ -90,6 +90,7 @@ const ProvisioningTable: React.FC<ProvisioningTableProps> = ({orderInfo}) => {
 	return (
 		<>
 			<Table
+				className="mt-4"
 				columns={[
 					{
 						key: 'type',

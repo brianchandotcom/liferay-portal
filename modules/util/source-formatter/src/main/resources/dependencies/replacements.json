@@ -3275,6 +3275,15 @@
 		"to": "fetchColumn"
 	},
 	{
+		"classNames": [
+			"DDMStructureManager",
+			"DDMStructureManagerUtil"
+		],
+		"from": "getStructure",
+		"issueKey": "LPD-36506",
+		"to": "fetchStructure"
+	},
+	{
 		"from": "CookieKeys.COMMERCE_CONTINUE_AS_GUEST",
 		"issueKey": "LPS-159679",
 		"newImports": [

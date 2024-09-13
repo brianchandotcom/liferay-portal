@@ -94,8 +94,7 @@ describe('Select', () => {
 			const checkboxElement = getByLabelText(option.label);
 
 			expect(
-				checkboxElement.attributes.getNamedItem('data-option-reference')
-					?.value
+				checkboxElement.getAttribute('data-option-reference')
 			).toEqual(option.reference);
 		});
 	});

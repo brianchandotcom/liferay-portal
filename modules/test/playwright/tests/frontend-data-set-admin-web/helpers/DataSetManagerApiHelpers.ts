@@ -354,28 +354,28 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 	}
 
 	async updateDataSet({
+		additionalAPIURLParameters,
 		defaultItemsPerPage,
 		defaultVisualizationMode,
 		erc = DEFAULT_DATA_SET_ERC,
 		label,
 		listOfItemsPerPage,
-		queryString,
 	}: {
+		additionalAPIURLParameters?: string;
 		defaultItemsPerPage?: number;
 		defaultVisualizationMode?: string;
 		erc?: string;
 		label?: string;
 		listOfItemsPerPage?: string;
-		queryString?: string;
 	}) {
 		const url = `${this.baseUrl}data-set-manager/data-sets/by-external-reference-code/${erc}`;
 
 		const data = {
+			additionalAPIURLParameters,
 			defaultItemsPerPage,
 			defaultVisualizationMode,
 			label,
 			listOfItemsPerPage,
-			queryString,
 		};
 
 		return this.patch(url, data);

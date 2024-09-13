@@ -678,7 +678,7 @@ public class ObjectRelationshipLocalServiceTest {
 				null));
 
 		TreeTestUtil.deleteObjectDefinitionHierarchy(
-			_objectDefinitionLocalService, new String[] {"C_A", "C_AA"},
+			_objectDefinitionLocalService, new String[] {"C_AA", "C_A"},
 			_objectEntryLocalService);
 
 		ObjectRelationship objectRelationship3 =
@@ -1121,7 +1121,7 @@ public class ObjectRelationshipLocalServiceTest {
 				objectDefinition2.getObjectDefinitionId()));
 
 		TreeTestUtil.deleteObjectDefinitionHierarchy(
-			_objectDefinitionLocalService, new String[] {"C_A", "C_AA"},
+			_objectDefinitionLocalService, new String[] {"C_AA", "C_A"},
 			_objectEntryLocalService);
 	}
 

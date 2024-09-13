@@ -81,7 +81,7 @@ public class OrganizationTestUtil {
 		throws Exception {
 
 		return EmailAddressLocalServiceUtil.addEmailAddress(
-			organization.getUserId(), organization.getModelClassName(),
+			null, organization.getUserId(), organization.getModelClassName(),
 			organization.getOrganizationId(), "test@liferay.com",
 			_getListTypeId(
 				organization.getCompanyId(),

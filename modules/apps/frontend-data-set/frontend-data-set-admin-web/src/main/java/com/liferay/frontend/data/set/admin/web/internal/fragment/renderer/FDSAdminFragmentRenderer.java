@@ -589,12 +589,13 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 			(ObjectEntry objectEntry) -> {
 				Map<String, Object> properties = objectEntry.getProperties();
 
-				String fieldName = StringUtil.replace(
-					String.valueOf(properties.get("fieldName")), "[]",
-					StringPool.FORWARD_SLASH);
+				String fieldName = String.valueOf(properties.get("fieldName"));
 
 				fieldName = StringUtil.replace(
-					fieldName, StringPool.PERIOD, StringPool.FORWARD_SLASH);
+					fieldName, "[]", StringPool.FORWARD_SLASH);
+
+				fieldName = StringUtil.replace(
+					fieldName, CharPool.PERIOD, CharPool.FORWARD_SLASH);
 
 				String type = MapUtil.getString(properties, "type");
 
@@ -660,13 +661,17 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 						selectionFilterJSONObject.put("id", fieldName);
 					}
 					else {
-						selectionFilterJSONObject.put(
-							"id",
-							fieldName.indexOf(StringPool.FORWARD_SLASH) > 0 ?
-								fieldName.substring(
-									0,
-									fieldName.lastIndexOf(
-										StringPool.FORWARD_SLASH)) : fieldName);
+						Integer forwardSlashPositionInFieldName =
+							fieldName.indexOf(StringPool.FORWARD_SLASH);
+
+						if (forwardSlashPositionInFieldName > 0) {
+							fieldName = fieldName.substring(
+								0,
+								fieldName.lastIndexOf(
+									StringPool.FORWARD_SLASH));
+						}
+
+						selectionFilterJSONObject.put("id", fieldName);
 					}
 
 					if (Validator.isNotNull(sourceType) &&

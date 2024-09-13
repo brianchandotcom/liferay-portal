@@ -277,7 +277,7 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 				action: () => {
 					dispatch(
 						pasteItem({
-							copyItemIds: copiedItemIds,
+							copiedItemIds,
 							parentItemId: item.id,
 							selectItems,
 						})

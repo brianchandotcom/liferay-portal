@@ -160,7 +160,7 @@ export default function ShortcutManager() {
 
 		dispatch(
 			pasteItem({
-				copyItemIds: copiedItemIds,
+				copiedItemIds,
 				parentItemId: !activeItemIds?.length
 					? rootItem.itemId
 					: activeItemIds[0],

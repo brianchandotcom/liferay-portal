@@ -330,7 +330,7 @@
 			<finder-column name="shippingAllowed" />
 		</finder>
 	</entity>
-	<entity change-tracking-enabled="true" local-service="true" name="EmailAddress" remote-service="true" uuid="true">
+	<entity change-tracking-enabled="true" external-reference-code="company" local-service="true" name="EmailAddress" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 

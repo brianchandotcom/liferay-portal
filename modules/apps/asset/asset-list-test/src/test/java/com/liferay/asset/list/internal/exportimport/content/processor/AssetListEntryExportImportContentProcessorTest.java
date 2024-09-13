@@ -11,10 +11,12 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
+
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+
 import org.mockito.Mockito;
 
 /**
@@ -38,7 +40,7 @@ public class AssetListEntryExportImportContentProcessorTest {
 		PortletDataContext portletDataContext = Mockito.mock(
 			PortletDataContext.class);
 
-		Element rootElement = Mockito.mock(Element.class);
+		Element rootElement = Mockito.spy(Element.class);
 
 		Mockito.doReturn(
 			rootElement
@@ -76,6 +78,12 @@ public class AssetListEntryExportImportContentProcessorTest {
 
 		Mockito.verify(
 			groupIdMappingsElement, Mockito.never()
+		).addElement(
+			Mockito.anyString()
+		);
+
+		Mockito.verify(
+			rootElement, Mockito.atMostOnce()
 		).addElement(
 			Mockito.anyString()
 		);

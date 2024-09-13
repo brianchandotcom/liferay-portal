@@ -745,6 +745,81 @@ test.describe('Multistep', () => {
 			await expect(page.locator('.multi-step-indicator')).toHaveCount(4);
 		}
 	);
+
+	test(
+		'Undoing the action of adding a stepper to a simple form changes the form type to simple again',
+		{tag: '@LPD-10727'},
+		async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
+
+			// Get the id of Lemon object from the site initializer
+
+			const {id: objectDefinitionId} =
+				await apiHelpers.objectAdmin.getObjectDefinitionByExternalReferenceCode(
+					LEMON_OBJECT_ERC
+				);
+
+			// Create a page with a Form fragment
+
+			const formId = getRandomString();
+
+			const formDefinition = getFormContainerDefinition({
+				id: formId,
+				objectDefinitionId,
+				pageElements: [],
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([formDefinition]),
+				siteId: pageManagementSite.id,
+				title: getRandomString(),
+			});
+
+			// Go to edit mode
+
+			await pageEditorPage.goto(
+				layout,
+				pageManagementSite.friendlyUrlPath
+			);
+
+			// Add a Stepper
+
+			await pageEditorPage.addFragment(
+				'Form Components',
+				'Stepper',
+				page.locator('.page-editor__form .page-editor__container')
+			);
+
+			await page
+				.locator('.modal-title', {hasText: 'Convert to Multistep Form'})
+				.waitFor();
+
+			await page.locator('.modal-footer').getByText('Continue').click();
+
+			await pageEditorPage.waitForChangesSaved();
+
+			// Check type changed to Multistep
+
+			await pageEditorPage.selectFragment(formId);
+
+			await expect(
+				page.getByLabel('Form Type', {exact: true})
+			).toHaveValue('multistep');
+
+			// Undo the action
+
+			await pageEditorPage.undoButton.click();
+
+			await pageEditorPage.waitForChangesSaved();
+
+			// Check Stepper disappeared and type changed to Simple again
+
+			await expect(
+				page.getByLabel('Form Type', {exact: true})
+			).toHaveValue('simple');
+
+			await expect(page.locator('.multi-step-nav')).not.toBeVisible();
+		}
+	);
 });
 
 test.describe('Form errors', () => {

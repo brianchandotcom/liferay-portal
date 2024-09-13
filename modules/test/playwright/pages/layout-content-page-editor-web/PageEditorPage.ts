@@ -88,7 +88,9 @@ export class PageEditorPage {
 			await this.page.keyboard.press('Enter');
 		}
 
-		await this.waitForChangesSaved();
+		if (name !== 'Stepper') {
+			await this.waitForChangesSaved();
+		}
 	}
 
 	async addFragmentComment(fragmentId: string, comment: string) {

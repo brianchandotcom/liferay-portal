@@ -3275,6 +3275,15 @@
 		"to": "fetchColumn"
 	},
 	{
+		"classNames": [
+			"RoleLocalService",
+			"RoleLocalServiceUtil"
+		],
+		"from": "loadFetchRole",
+		"issueKey": "LPD-36509",
+		"to": "fetchRole"
+	},
+	{
 		"from": "CookieKeys.COMMERCE_CONTINUE_AS_GUEST",
 		"issueKey": "LPS-159679",
 		"newImports": [

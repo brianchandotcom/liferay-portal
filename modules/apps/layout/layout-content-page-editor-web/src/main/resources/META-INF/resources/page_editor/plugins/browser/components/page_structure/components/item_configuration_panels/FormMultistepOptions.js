@@ -98,17 +98,31 @@ export default function FormMultistepOptions({item, onValueSelect}) {
 						});
 					}
 					else {
-						openWarningModal({
-							onCancel: () => {
-								setFormType('multistep');
-							},
-							onContinue: () => {
-								onValueSelect({
-									formType: 'simple',
-									numberOfSteps: 1,
-								});
-							},
-						});
+						const stepper = getStepperChild(
+							item,
+							layoutData,
+							fragmentEntryLinks
+						);
+
+						if (stepper) {
+							openWarningModal({
+								onCancel: () => {
+									setFormType('multistep');
+								},
+								onContinue: () => {
+									onValueSelect({
+										formType: 'simple',
+										numberOfSteps: 1,
+									});
+								},
+							});
+						}
+						else {
+							onValueSelect({
+								formType: 'simple',
+								numberOfSteps: 1,
+							});
+						}
 					}
 				}}
 				value={formType}

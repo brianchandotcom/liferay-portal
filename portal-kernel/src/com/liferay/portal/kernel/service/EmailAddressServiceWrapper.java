@@ -27,12 +27,14 @@ public class EmailAddressServiceWrapper
 
 	@Override
 	public EmailAddress addEmailAddress(
-			String className, long classPK, String address, long typeId,
-			boolean primary, ServiceContext serviceContext)
+			String externalReferenceCode, String className, long classPK,
+			String address, long typeId, boolean primary,
+			ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _emailAddressService.addEmailAddress(
-			className, classPK, address, typeId, primary, serviceContext);
+			externalReferenceCode, className, classPK, address, typeId, primary,
+			serviceContext);
 	}
 
 	@Override
@@ -55,6 +57,15 @@ public class EmailAddressServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _emailAddressService.fetchEmailAddress(emailAddressId);
+	}
+
+	@Override
+	public EmailAddress fetchEmailAddressByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _emailAddressService.fetchEmailAddressByExternalReferenceCode(
+			externalReferenceCode, companyId);
 	}
 
 	@Override
@@ -84,11 +95,12 @@ public class EmailAddressServiceWrapper
 
 	@Override
 	public EmailAddress updateEmailAddress(
-			long emailAddressId, String address, long typeId, boolean primary)
+			String externalReferenceCode, long emailAddressId, String address,
+			long typeId, boolean primary)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _emailAddressService.updateEmailAddress(
-			emailAddressId, address, typeId, primary);
+			externalReferenceCode, emailAddressId, address, typeId, primary);
 	}
 
 	@Override

@@ -48,13 +48,14 @@ public class EmailAddressLocalServiceWrapper
 
 	@Override
 	public EmailAddress addEmailAddress(
-			long userId, String className, long classPK, String address,
-			long listTypeId, boolean primary, ServiceContext serviceContext)
+			String externalReferenceCode, long userId, String className,
+			long classPK, String address, long listTypeId, boolean primary,
+			ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _emailAddressLocalService.addEmailAddress(
-			userId, className, classPK, address, listTypeId, primary,
-			serviceContext);
+			externalReferenceCode, userId, className, classPK, address,
+			listTypeId, primary, serviceContext);
 	}
 
 	/**
@@ -238,6 +239,15 @@ public class EmailAddressLocalServiceWrapper
 		return _emailAddressLocalService.fetchEmailAddress(emailAddressId);
 	}
 
+	@Override
+	public EmailAddress fetchEmailAddressByExternalReferenceCode(
+		String externalReferenceCode, long companyId) {
+
+		return _emailAddressLocalService.
+			fetchEmailAddressByExternalReferenceCode(
+				externalReferenceCode, companyId);
+	}
+
 	/**
 	 * Returns the email address with the matching UUID and company.
 	 *
@@ -272,6 +282,15 @@ public class EmailAddressLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _emailAddressLocalService.getEmailAddress(emailAddressId);
+	}
+
+	@Override
+	public EmailAddress getEmailAddressByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _emailAddressLocalService.getEmailAddressByExternalReferenceCode(
+			externalReferenceCode, companyId);
 	}
 
 	/**
@@ -385,12 +404,13 @@ public class EmailAddressLocalServiceWrapper
 
 	@Override
 	public EmailAddress updateEmailAddress(
-			long emailAddressId, String address, long listTypeId,
-			boolean primary)
+			String externalReferenceCode, long emailAddressId, String address,
+			long listTypeId, boolean primary)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _emailAddressLocalService.updateEmailAddress(
-			emailAddressId, address, listTypeId, primary);
+			externalReferenceCode, emailAddressId, address, listTypeId,
+			primary);
 	}
 
 	@Override

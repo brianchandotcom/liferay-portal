@@ -38,6 +38,7 @@ public class EmailAddressWrapper
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("ctCollectionId", getCtCollectionId());
 		attributes.put("uuid", getUuid());
+		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put("emailAddressId", getEmailAddressId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
@@ -71,6 +72,13 @@ public class EmailAddressWrapper
 
 		if (uuid != null) {
 			setUuid(uuid);
+		}
+
+		String externalReferenceCode = (String)attributes.get(
+			"externalReferenceCode");
+
+		if (externalReferenceCode != null) {
+			setExternalReferenceCode(externalReferenceCode);
 		}
 
 		Long emailAddressId = (Long)attributes.get("emailAddressId");
@@ -223,6 +231,16 @@ public class EmailAddressWrapper
 	@Override
 	public long getEmailAddressId() {
 		return model.getEmailAddressId();
+	}
+
+	/**
+	 * Returns the external reference code of this email address.
+	 *
+	 * @return the external reference code of this email address
+	 */
+	@Override
+	public String getExternalReferenceCode() {
+		return model.getExternalReferenceCode();
 	}
 
 	@Override
@@ -410,6 +428,16 @@ public class EmailAddressWrapper
 	@Override
 	public void setEmailAddressId(long emailAddressId) {
 		model.setEmailAddressId(emailAddressId);
+	}
+
+	/**
+	 * Sets the external reference code of this email address.
+	 *
+	 * @param externalReferenceCode the external reference code of this email address
+	 */
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		model.setExternalReferenceCode(externalReferenceCode);
 	}
 
 	/**

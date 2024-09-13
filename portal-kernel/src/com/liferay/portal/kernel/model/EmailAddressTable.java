@@ -29,6 +29,10 @@ public class EmailAddressTable extends BaseTable<EmailAddressTable> {
 		"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<EmailAddressTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<EmailAddressTable, String> externalReferenceCode =
+		createColumn(
+			"externalReferenceCode", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<EmailAddressTable, Long> emailAddressId = createColumn(
 		"emailAddressId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<EmailAddressTable, Long> companyId = createColumn(

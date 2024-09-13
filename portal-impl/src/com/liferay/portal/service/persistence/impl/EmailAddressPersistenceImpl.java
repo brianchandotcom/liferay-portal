@@ -18,18 +18,25 @@ import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.exception.DuplicateEmailAddressExternalReferenceCodeException;
 import com.liferay.portal.kernel.exception.NoSuchEmailAddressException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.EmailAddress;
 import com.liferay.portal.kernel.model.EmailAddressTable;
+import com.liferay.portal.kernel.sanitizer.Sanitizer;
+import com.liferay.portal.kernel.sanitizer.SanitizerException;
+import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.EmailAddressPersistence;
 import com.liferay.portal.kernel.service.persistence.EmailAddressUtil;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelperUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -4002,6 +4009,275 @@ public class EmailAddressPersistenceImpl
 	private static final String _FINDER_COLUMN_C_C_C_P_PRIMARY_2 =
 		"emailAddress.primary = ?";
 
+	private FinderPath _finderPathFetchByERC_C;
+	private FinderPath _finderPathCountByERC_C;
+
+	/**
+	 * Returns the email address where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchEmailAddressException</code> if it could not be found.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the matching email address
+	 * @throws NoSuchEmailAddressException if a matching email address could not be found
+	 */
+	@Override
+	public EmailAddress findByERC_C(
+			String externalReferenceCode, long companyId)
+		throws NoSuchEmailAddressException {
+
+		EmailAddress emailAddress = fetchByERC_C(
+			externalReferenceCode, companyId);
+
+		if (emailAddress == null) {
+			StringBundler sb = new StringBundler(6);
+
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			sb.append("externalReferenceCode=");
+			sb.append(externalReferenceCode);
+
+			sb.append(", companyId=");
+			sb.append(companyId);
+
+			sb.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(sb.toString());
+			}
+
+			throw new NoSuchEmailAddressException(sb.toString());
+		}
+
+		return emailAddress;
+	}
+
+	/**
+	 * Returns the email address where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the matching email address, or <code>null</code> if a matching email address could not be found
+	 */
+	@Override
+	public EmailAddress fetchByERC_C(
+		String externalReferenceCode, long companyId) {
+
+		return fetchByERC_C(externalReferenceCode, companyId, true);
+	}
+
+	/**
+	 * Returns the email address where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching email address, or <code>null</code> if a matching email address could not be found
+	 */
+	@Override
+	public EmailAddress fetchByERC_C(
+		String externalReferenceCode, long companyId, boolean useFinderCache) {
+
+		try (SafeCloseable safeCloseable =
+				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
+					EmailAddress.class)) {
+
+			externalReferenceCode = Objects.toString(externalReferenceCode, "");
+
+			Object[] finderArgs = null;
+
+			if (useFinderCache) {
+				finderArgs = new Object[] {externalReferenceCode, companyId};
+			}
+
+			Object result = null;
+
+			if (useFinderCache) {
+				result = FinderCacheUtil.getResult(
+					_finderPathFetchByERC_C, finderArgs, this);
+			}
+
+			if (result instanceof EmailAddress) {
+				EmailAddress emailAddress = (EmailAddress)result;
+
+				if (!Objects.equals(
+						externalReferenceCode,
+						emailAddress.getExternalReferenceCode()) ||
+					(companyId != emailAddress.getCompanyId())) {
+
+					result = null;
+				}
+			}
+
+			if (result == null) {
+				StringBundler sb = new StringBundler(4);
+
+				sb.append(_SQL_SELECT_EMAILADDRESS_WHERE);
+
+				boolean bindExternalReferenceCode = false;
+
+				if (externalReferenceCode.isEmpty()) {
+					sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_3);
+				}
+				else {
+					bindExternalReferenceCode = true;
+
+					sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_2);
+				}
+
+				sb.append(_FINDER_COLUMN_ERC_C_COMPANYID_2);
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					if (bindExternalReferenceCode) {
+						queryPos.add(externalReferenceCode);
+					}
+
+					queryPos.add(companyId);
+
+					List<EmailAddress> list = query.list();
+
+					if (list.isEmpty()) {
+						if (useFinderCache) {
+							FinderCacheUtil.putResult(
+								_finderPathFetchByERC_C, finderArgs, list);
+						}
+					}
+					else {
+						EmailAddress emailAddress = list.get(0);
+
+						result = emailAddress;
+
+						cacheResult(emailAddress);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
+			}
+
+			if (result instanceof List<?>) {
+				return null;
+			}
+			else {
+				return (EmailAddress)result;
+			}
+		}
+	}
+
+	/**
+	 * Removes the email address where externalReferenceCode = &#63; and companyId = &#63; from the database.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the email address that was removed
+	 */
+	@Override
+	public EmailAddress removeByERC_C(
+			String externalReferenceCode, long companyId)
+		throws NoSuchEmailAddressException {
+
+		EmailAddress emailAddress = findByERC_C(
+			externalReferenceCode, companyId);
+
+		return remove(emailAddress);
+	}
+
+	/**
+	 * Returns the number of email addresses where externalReferenceCode = &#63; and companyId = &#63;.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the number of matching email addresses
+	 */
+	@Override
+	public int countByERC_C(String externalReferenceCode, long companyId) {
+		try (SafeCloseable safeCloseable =
+				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
+					EmailAddress.class)) {
+
+			externalReferenceCode = Objects.toString(externalReferenceCode, "");
+
+			FinderPath finderPath = _finderPathCountByERC_C;
+
+			Object[] finderArgs = new Object[] {
+				externalReferenceCode, companyId
+			};
+
+			Long count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+
+			if (count == null) {
+				StringBundler sb = new StringBundler(3);
+
+				sb.append(_SQL_COUNT_EMAILADDRESS_WHERE);
+
+				boolean bindExternalReferenceCode = false;
+
+				if (externalReferenceCode.isEmpty()) {
+					sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_3);
+				}
+				else {
+					bindExternalReferenceCode = true;
+
+					sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_2);
+				}
+
+				sb.append(_FINDER_COLUMN_ERC_C_COMPANYID_2);
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					if (bindExternalReferenceCode) {
+						queryPos.add(externalReferenceCode);
+					}
+
+					queryPos.add(companyId);
+
+					count = (Long)query.uniqueResult();
+
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
+			}
+
+			return count.intValue();
+		}
+	}
+
+	private static final String _FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_2 =
+		"emailAddress.externalReferenceCode = ? AND ";
+
+	private static final String _FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_3 =
+		"(emailAddress.externalReferenceCode IS NULL OR emailAddress.externalReferenceCode = '') AND ";
+
+	private static final String _FINDER_COLUMN_ERC_C_COMPANYID_2 =
+		"emailAddress.companyId = ?";
+
 	public EmailAddressPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
@@ -4031,6 +4307,14 @@ public class EmailAddressPersistenceImpl
 
 			EntityCacheUtil.putResult(
 				EmailAddressImpl.class, emailAddress.getPrimaryKey(),
+				emailAddress);
+
+			FinderCacheUtil.putResult(
+				_finderPathFetchByERC_C,
+				new Object[] {
+					emailAddress.getExternalReferenceCode(),
+					emailAddress.getCompanyId()
+				},
 				emailAddress);
 		}
 	}
@@ -4105,6 +4389,25 @@ public class EmailAddressPersistenceImpl
 
 		for (Serializable primaryKey : primaryKeys) {
 			EntityCacheUtil.removeResult(EmailAddressImpl.class, primaryKey);
+		}
+	}
+
+	protected void cacheUniqueFindersCache(
+		EmailAddressModelImpl emailAddressModelImpl) {
+
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					emailAddressModelImpl.getCtCollectionId())) {
+
+			Object[] args = new Object[] {
+				emailAddressModelImpl.getExternalReferenceCode(),
+				emailAddressModelImpl.getCompanyId()
+			};
+
+			FinderCacheUtil.putResult(
+				_finderPathCountByERC_C, args, Long.valueOf(1));
+			FinderCacheUtil.putResult(
+				_finderPathFetchByERC_C, args, emailAddressModelImpl);
 		}
 	}
 
@@ -4247,6 +4550,68 @@ public class EmailAddressPersistenceImpl
 			emailAddress.setUuid(uuid);
 		}
 
+		if (Validator.isNull(emailAddress.getExternalReferenceCode())) {
+			emailAddress.setExternalReferenceCode(emailAddress.getUuid());
+		}
+		else {
+			if (!Objects.equals(
+					emailAddressModelImpl.getColumnOriginalValue(
+						"externalReferenceCode"),
+					emailAddress.getExternalReferenceCode())) {
+
+				long userId = GetterUtil.getLong(
+					PrincipalThreadLocal.getName());
+
+				if (userId > 0) {
+					long companyId = emailAddress.getCompanyId();
+
+					long groupId = 0;
+
+					long classPK = 0;
+
+					if (!isNew) {
+						classPK = emailAddress.getPrimaryKey();
+					}
+
+					try {
+						emailAddress.setExternalReferenceCode(
+							SanitizerUtil.sanitize(
+								companyId, groupId, userId,
+								EmailAddress.class.getName(), classPK,
+								ContentTypes.TEXT_HTML, Sanitizer.MODE_ALL,
+								emailAddress.getExternalReferenceCode(), null));
+					}
+					catch (SanitizerException sanitizerException) {
+						throw new SystemException(sanitizerException);
+					}
+				}
+			}
+
+			EmailAddress ercEmailAddress = fetchByERC_C(
+				emailAddress.getExternalReferenceCode(),
+				emailAddress.getCompanyId());
+
+			if (isNew) {
+				if (ercEmailAddress != null) {
+					throw new DuplicateEmailAddressExternalReferenceCodeException(
+						"Duplicate email address with external reference code " +
+							emailAddress.getExternalReferenceCode() +
+								" and company " + emailAddress.getCompanyId());
+				}
+			}
+			else {
+				if ((ercEmailAddress != null) &&
+					(emailAddress.getEmailAddressId() !=
+						ercEmailAddress.getEmailAddressId())) {
+
+					throw new DuplicateEmailAddressExternalReferenceCodeException(
+						"Duplicate email address with external reference code " +
+							emailAddress.getExternalReferenceCode() +
+								" and company " + emailAddress.getCompanyId());
+				}
+			}
+		}
+
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
@@ -4298,6 +4663,8 @@ public class EmailAddressPersistenceImpl
 
 		EntityCacheUtil.putResult(
 			EmailAddressImpl.class, emailAddressModelImpl, false, true);
+
+		cacheUniqueFindersCache(emailAddressModelImpl);
 
 		if (isNew) {
 			emailAddress.setNew(false);
@@ -4783,6 +5150,7 @@ public class EmailAddressPersistenceImpl
 		ctControlColumnNames.add("mvccVersion");
 		ctControlColumnNames.add("ctCollectionId");
 		ctStrictColumnNames.add("uuid_");
+		ctStrictColumnNames.add("externalReferenceCode");
 		ctStrictColumnNames.add("companyId");
 		ctStrictColumnNames.add("userId");
 		ctStrictColumnNames.add("userName");
@@ -4802,6 +5170,9 @@ public class EmailAddressPersistenceImpl
 			CTColumnResolutionType.PK, Collections.singleton("emailAddressId"));
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.STRICT, ctStrictColumnNames);
+
+		_uniqueIndexColumnNames.add(
+			new String[] {"externalReferenceCode", "companyId"});
 	}
 
 	/**
@@ -4965,6 +5336,16 @@ public class EmailAddressPersistenceImpl
 			},
 			new String[] {"companyId", "classNameId", "classPK", "primary_"},
 			false);
+
+		_finderPathFetchByERC_C = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"externalReferenceCode", "companyId"}, true);
+
+		_finderPathCountByERC_C = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByERC_C",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"externalReferenceCode", "companyId"}, false);
 
 		EmailAddressUtil.setPersistence(this);
 	}

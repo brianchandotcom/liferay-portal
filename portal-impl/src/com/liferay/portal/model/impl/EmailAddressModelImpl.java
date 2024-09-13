@@ -67,12 +67,13 @@ public class EmailAddressModelImpl
 
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
-		{"uuid_", Types.VARCHAR}, {"emailAddressId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"classNameId", Types.BIGINT},
-		{"classPK", Types.BIGINT}, {"address", Types.VARCHAR},
-		{"listTypeId", Types.BIGINT}, {"primary_", Types.BOOLEAN}
+		{"uuid_", Types.VARCHAR}, {"externalReferenceCode", Types.VARCHAR},
+		{"emailAddressId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
+		{"address", Types.VARCHAR}, {"listTypeId", Types.BIGINT},
+		{"primary_", Types.BOOLEAN}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -82,6 +83,7 @@ public class EmailAddressModelImpl
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("emailAddressId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
@@ -96,7 +98,7 @@ public class EmailAddressModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table EmailAddress (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,emailAddressId LONG not null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,address VARCHAR(254) null,listTypeId LONG,primary_ BOOLEAN,primary key (emailAddressId, ctCollectionId))";
+		"create table EmailAddress (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,emailAddressId LONG not null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,address VARCHAR(254) null,listTypeId LONG,primary_ BOOLEAN,primary key (emailAddressId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table EmailAddress";
 
@@ -152,26 +154,32 @@ public class EmailAddressModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long PRIMARY_COLUMN_BITMASK = 8L;
+	public static final long EXTERNALREFERENCECODE_COLUMN_BITMASK = 8L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long USERID_COLUMN_BITMASK = 16L;
+	public static final long PRIMARY_COLUMN_BITMASK = 16L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long UUID_COLUMN_BITMASK = 32L;
+	public static final long USERID_COLUMN_BITMASK = 32L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long UUID_COLUMN_BITMASK = 64L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long CREATEDATE_COLUMN_BITMASK = 64L;
+	public static final long CREATEDATE_COLUMN_BITMASK = 128L;
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
 		com.liferay.portal.util.PropsUtil.get(
@@ -278,6 +286,9 @@ public class EmailAddressModelImpl
 				"ctCollectionId", EmailAddress::getCtCollectionId);
 			attributeGetterFunctions.put("uuid", EmailAddress::getUuid);
 			attributeGetterFunctions.put(
+				"externalReferenceCode",
+				EmailAddress::getExternalReferenceCode);
+			attributeGetterFunctions.put(
 				"emailAddressId", EmailAddress::getEmailAddressId);
 			attributeGetterFunctions.put(
 				"companyId", EmailAddress::getCompanyId);
@@ -321,6 +332,10 @@ public class EmailAddressModelImpl
 			attributeSetterBiConsumers.put(
 				"uuid",
 				(BiConsumer<EmailAddress, String>)EmailAddress::setUuid);
+			attributeSetterBiConsumers.put(
+				"externalReferenceCode",
+				(BiConsumer<EmailAddress, String>)
+					EmailAddress::setExternalReferenceCode);
 			attributeSetterBiConsumers.put(
 				"emailAddressId",
 				(BiConsumer<EmailAddress, Long>)
@@ -419,6 +434,35 @@ public class EmailAddressModelImpl
 	@Deprecated
 	public String getOriginalUuid() {
 		return getColumnOriginalValue("uuid_");
+	}
+
+	@JSON
+	@Override
+	public String getExternalReferenceCode() {
+		if (_externalReferenceCode == null) {
+			return "";
+		}
+		else {
+			return _externalReferenceCode;
+		}
+	}
+
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_externalReferenceCode = externalReferenceCode;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalExternalReferenceCode() {
+		return getColumnOriginalValue("externalReferenceCode");
 	}
 
 	@JSON
@@ -758,6 +802,7 @@ public class EmailAddressModelImpl
 		emailAddressImpl.setMvccVersion(getMvccVersion());
 		emailAddressImpl.setCtCollectionId(getCtCollectionId());
 		emailAddressImpl.setUuid(getUuid());
+		emailAddressImpl.setExternalReferenceCode(getExternalReferenceCode());
 		emailAddressImpl.setEmailAddressId(getEmailAddressId());
 		emailAddressImpl.setCompanyId(getCompanyId());
 		emailAddressImpl.setUserId(getUserId());
@@ -784,6 +829,8 @@ public class EmailAddressModelImpl
 		emailAddressImpl.setCtCollectionId(
 			this.<Long>getColumnOriginalValue("ctCollectionId"));
 		emailAddressImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		emailAddressImpl.setExternalReferenceCode(
+			this.<String>getColumnOriginalValue("externalReferenceCode"));
 		emailAddressImpl.setEmailAddressId(
 			this.<Long>getColumnOriginalValue("emailAddressId"));
 		emailAddressImpl.setCompanyId(
@@ -892,6 +939,18 @@ public class EmailAddressModelImpl
 
 		if ((uuid != null) && (uuid.length() == 0)) {
 			emailAddressCacheModel.uuid = null;
+		}
+
+		emailAddressCacheModel.externalReferenceCode =
+			getExternalReferenceCode();
+
+		String externalReferenceCode =
+			emailAddressCacheModel.externalReferenceCode;
+
+		if ((externalReferenceCode != null) &&
+			(externalReferenceCode.length() == 0)) {
+
+			emailAddressCacheModel.externalReferenceCode = null;
 		}
 
 		emailAddressCacheModel.emailAddressId = getEmailAddressId();
@@ -1006,6 +1065,7 @@ public class EmailAddressModelImpl
 	private long _mvccVersion;
 	private long _ctCollectionId;
 	private String _uuid;
+	private String _externalReferenceCode;
 	private long _emailAddressId;
 	private long _companyId;
 	private long _userId;
@@ -1052,6 +1112,8 @@ public class EmailAddressModelImpl
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
 		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
 		_columnOriginalValues.put("uuid_", _uuid);
+		_columnOriginalValues.put(
+			"externalReferenceCode", _externalReferenceCode);
 		_columnOriginalValues.put("emailAddressId", _emailAddressId);
 		_columnOriginalValues.put("companyId", _companyId);
 		_columnOriginalValues.put("userId", _userId);
@@ -1093,27 +1155,29 @@ public class EmailAddressModelImpl
 
 		columnBitmasks.put("uuid_", 4L);
 
-		columnBitmasks.put("emailAddressId", 8L);
+		columnBitmasks.put("externalReferenceCode", 8L);
 
-		columnBitmasks.put("companyId", 16L);
+		columnBitmasks.put("emailAddressId", 16L);
 
-		columnBitmasks.put("userId", 32L);
+		columnBitmasks.put("companyId", 32L);
 
-		columnBitmasks.put("userName", 64L);
+		columnBitmasks.put("userId", 64L);
 
-		columnBitmasks.put("createDate", 128L);
+		columnBitmasks.put("userName", 128L);
 
-		columnBitmasks.put("modifiedDate", 256L);
+		columnBitmasks.put("createDate", 256L);
 
-		columnBitmasks.put("classNameId", 512L);
+		columnBitmasks.put("modifiedDate", 512L);
 
-		columnBitmasks.put("classPK", 1024L);
+		columnBitmasks.put("classNameId", 1024L);
 
-		columnBitmasks.put("address", 2048L);
+		columnBitmasks.put("classPK", 2048L);
 
-		columnBitmasks.put("listTypeId", 4096L);
+		columnBitmasks.put("address", 4096L);
 
-		columnBitmasks.put("primary_", 8192L);
+		columnBitmasks.put("listTypeId", 8192L);
+
+		columnBitmasks.put("primary_", 16384L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

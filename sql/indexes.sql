@@ -144,6 +144,7 @@ create index IX_B199E2A6 on DLFolder (status, companyId);
 create index IX_CBC408D8 on DLFolder (uuid_[$COLUMN_LENGTH:75$]);
 
 create index IX_2A2CB130 on EmailAddress (companyId, classNameId, classPK, primary_);
+create unique index IX_B4BA0791 on EmailAddress (companyId, externalReferenceCode[$COLUMN_LENGTH:75$], ctCollectionId);
 create index IX_7B43CD8 on EmailAddress (userId);
 create index IX_D24F3956 on EmailAddress (uuid_[$COLUMN_LENGTH:75$]);
 

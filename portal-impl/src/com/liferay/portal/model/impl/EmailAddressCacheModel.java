@@ -68,7 +68,7 @@ public class EmailAddressCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -76,6 +76,8 @@ public class EmailAddressCacheModel
 		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
+		sb.append(", externalReferenceCode=");
+		sb.append(externalReferenceCode);
 		sb.append(", emailAddressId=");
 		sb.append(emailAddressId);
 		sb.append(", companyId=");
@@ -115,6 +117,13 @@ public class EmailAddressCacheModel
 		}
 		else {
 			emailAddressImpl.setUuid(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			emailAddressImpl.setExternalReferenceCode("");
+		}
+		else {
+			emailAddressImpl.setExternalReferenceCode(externalReferenceCode);
 		}
 
 		emailAddressImpl.setEmailAddressId(emailAddressId);
@@ -166,6 +175,7 @@ public class EmailAddressCacheModel
 
 		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
+		externalReferenceCode = objectInput.readUTF();
 
 		emailAddressId = objectInput.readLong();
 
@@ -197,6 +207,13 @@ public class EmailAddressCacheModel
 		}
 		else {
 			objectOutput.writeUTF(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(externalReferenceCode);
 		}
 
 		objectOutput.writeLong(emailAddressId);
@@ -234,6 +251,7 @@ public class EmailAddressCacheModel
 	public long mvccVersion;
 	public long ctCollectionId;
 	public String uuid;
+	public String externalReferenceCode;
 	public long emailAddressId;
 	public long companyId;
 	public long userId;

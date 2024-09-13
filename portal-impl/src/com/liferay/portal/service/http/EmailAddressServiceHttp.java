@@ -42,8 +42,9 @@ import com.liferay.portal.kernel.util.MethodKey;
 public class EmailAddressServiceHttp {
 
 	public static com.liferay.portal.kernel.model.EmailAddress addEmailAddress(
-			HttpPrincipal httpPrincipal, String className, long classPK,
-			String address, long typeId, boolean primary,
+			HttpPrincipal httpPrincipal, String externalReferenceCode,
+			String className, long classPK, String address, long typeId,
+			boolean primary,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -53,8 +54,8 @@ public class EmailAddressServiceHttp {
 				_addEmailAddressParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, className, classPK, address, typeId, primary,
-				serviceContext);
+				methodKey, externalReferenceCode, className, classPK, address,
+				typeId, primary, serviceContext);
 
 			Object returnObj = null;
 
@@ -160,6 +161,49 @@ public class EmailAddressServiceHttp {
 		}
 	}
 
+	public static com.liferay.portal.kernel.model.EmailAddress
+			fetchEmailAddressByExternalReferenceCode(
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				EmailAddressServiceUtil.class,
+				"fetchEmailAddressByExternalReferenceCode",
+				_fetchEmailAddressByExternalReferenceCodeParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, externalReferenceCode, companyId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.portal.kernel.model.EmailAddress)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static com.liferay.portal.kernel.model.EmailAddress getEmailAddress(
 			HttpPrincipal httpPrincipal, long emailAddressId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -167,7 +211,7 @@ public class EmailAddressServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				EmailAddressServiceUtil.class, "getEmailAddress",
-				_getEmailAddressParameterTypes3);
+				_getEmailAddressParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, emailAddressId);
@@ -208,7 +252,7 @@ public class EmailAddressServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				EmailAddressServiceUtil.class, "getEmailAddresses",
-				_getEmailAddressesParameterTypes4);
+				_getEmailAddressesParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, className, classPK);
@@ -244,17 +288,19 @@ public class EmailAddressServiceHttp {
 
 	public static com.liferay.portal.kernel.model.EmailAddress
 			updateEmailAddress(
-				HttpPrincipal httpPrincipal, long emailAddressId,
-				String address, long typeId, boolean primary)
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				long emailAddressId, String address, long typeId,
+				boolean primary)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
 				EmailAddressServiceUtil.class, "updateEmailAddress",
-				_updateEmailAddressParameterTypes5);
+				_updateEmailAddressParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, emailAddressId, address, typeId, primary);
+				methodKey, externalReferenceCode, emailAddressId, address,
+				typeId, primary);
 
 			Object returnObj = null;
 
@@ -289,18 +335,25 @@ public class EmailAddressServiceHttp {
 
 	private static final Class<?>[] _addEmailAddressParameterTypes0 =
 		new Class[] {
-			String.class, long.class, String.class, long.class, boolean.class,
+			String.class, String.class, long.class, String.class, long.class,
+			boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteEmailAddressParameterTypes1 =
 		new Class[] {long.class};
 	private static final Class<?>[] _fetchEmailAddressParameterTypes2 =
 		new Class[] {long.class};
-	private static final Class<?>[] _getEmailAddressParameterTypes3 =
+	private static final Class<?>[]
+		_fetchEmailAddressByExternalReferenceCodeParameterTypes3 = new Class[] {
+			String.class, long.class
+		};
+	private static final Class<?>[] _getEmailAddressParameterTypes4 =
 		new Class[] {long.class};
-	private static final Class<?>[] _getEmailAddressesParameterTypes4 =
+	private static final Class<?>[] _getEmailAddressesParameterTypes5 =
 		new Class[] {String.class, long.class};
-	private static final Class<?>[] _updateEmailAddressParameterTypes5 =
-		new Class[] {long.class, String.class, long.class, boolean.class};
+	private static final Class<?>[] _updateEmailAddressParameterTypes6 =
+		new Class[] {
+			String.class, long.class, String.class, long.class, boolean.class
+		};
 
 }

@@ -191,6 +191,25 @@ baseTest(
 );
 
 baseTest(
+	'LPD-36441: Navigate in ddm template selector',
+	async ({journalEditArticlePage, page, site}) => {
+		await journalEditArticlePage.goto({siteUrl: site.friendlyUrlPath});
+
+		await page.getByRole('link', {name: 'Default Template'}).click();
+
+		await page.getByRole('button', {exact: true, name: 'Select'}).waitFor();
+
+		await page.getByRole('button', {exact: true, name: 'Select'}).click();
+
+		const breadcrumb = page
+			.frameLocator('iframe[title="Templates"]')
+			.getByRole('link', {name: 'Sites and Libraries'});
+
+		await expect(breadcrumb).toBeVisible();
+	}
+);
+
+baseTest(
 	'LPD-32979: Ensure the presence of the Description column when needed',
 	async ({journalEditArticlePage, journalPage, page, site}) => {
 		page.on('dialog', (dialog) => dialog.accept());

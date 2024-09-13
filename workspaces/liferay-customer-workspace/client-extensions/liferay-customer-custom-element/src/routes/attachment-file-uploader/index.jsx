@@ -6,10 +6,9 @@
 import AttachmentUploader from './components/AttachmentUploader';
 import './app.scss';
 
-
 const AttachmentFileUploader = () => {
 	return (
-		<div className='container-attach'>
+		<div className="container-attach">
 			<AttachmentUploader />
 		</div>
 	);

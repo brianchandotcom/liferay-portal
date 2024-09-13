@@ -1,10 +1,14 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+import {Button as ClayButton} from '@clayui/core';
+import {filesize} from 'filesize';
+import {useEffect, useState} from 'react';
 import i18n from '~/common/I18n';
 import AttachmentComment from './components/AttachmentComment';
 import DropzoneUpload from './components/DropzoneUpload';
-import { filesize } from 'filesize';
-import { useState, useEffect } from 'react';
 import FileList from './components/FileList';
-import { Button as ClayButton } from '@clayui/core';
 
 const AttachmentUploader = () => {
 	const [fileAttached, setFileAttached] = useState(null);
@@ -25,24 +29,30 @@ const AttachmentUploader = () => {
 			readableSize: filesize(file[0].size),
 			uploaded: true,
 		};
-		
+
 		setFileAttached(newUploadedFile);
+
 		return newUploadedFile;
 	};
 
 	const initiateUpload = async (fileUploaded) => {
 		try {
-			const response = await Liferay.OAuth2Client.FromUserAgentApplication('liferay-customer-etc-spring-boot-oauth-application-user-agent').fetch("/ticket-attachments/initiate-upload", {
-				body: JSON.stringify({
-					zendeskTicketId: ticketId,
-					fileName: fileUploaded.fileName,
-					fileSize: String(fileUploaded.file.size),
-				}),
-				method: 'POST',
-			});
-			
+			const response =
+				await Liferay.OAuth2Client.FromUserAgentApplication(
+					'liferay-customer-etc-spring-boot-oauth-application-user-agent'
+				).fetch('/ticket-attachments/initiate-upload', {
+					body: JSON.stringify({
+						zendeskTicketId: ticketId,
+						fileName: fileUploaded.fileName,
+						fileSize: String(fileUploaded.file.size),
+					}),
+					method: 'POST',
+				});
+
 			if (!response.ok) {
-				throw new Error(`Failed to initiate upload: ${response.statusText}`);
+				throw new Error(
+					`Failed to initiate upload: ${response.statusText}`
+				);
 			}
 
 			const responseText = await response.text();
@@ -50,8 +60,8 @@ const AttachmentUploader = () => {
 
 			setTicketAttachmentId(responseJson.ticketAttachmentId || null);
 			setGcsSessionURL(responseJson.gcsSessionURL || '');
-			
-		} catch (error) {
+		}
+		catch (error) {
 			console.error(error);
 		}
 	};
@@ -71,31 +81,42 @@ const AttachmentUploader = () => {
 			});
 
 			if (!response.ok) {
-				throw new Error(`Failed to upload file to GCS: ${response.statusText}`);
+				throw new Error(
+					`Failed to upload file to GCS: ${response.statusText}`
+				);
 			}
-		} catch (error) {
+		}
+		catch (error) {
 			console.error(error);
 		}
 	};
-	
+
 	const ticketCommentUpload = async () => {
 		if (!ticketAttachmentId) {
 			return;
 		}
 
 		try {
-			const response = await Liferay.OAuth2Client.FromUserAgentApplication('liferay-customer-etc-spring-boot-oauth-application-user-agent').fetch(`/ticket-attachments/${ticketAttachmentId}/complete-upload`, {
-				body: JSON.stringify({
-					zendeskTicketCommentBody: attachmentComment,
-				}),
-				method: 'POST',
-			});
+			const response =
+				await Liferay.OAuth2Client.FromUserAgentApplication(
+					'liferay-customer-etc-spring-boot-oauth-application-user-agent'
+				).fetch(
+					`/ticket-attachments/${ticketAttachmentId}/complete-upload`,
+					{
+						body: JSON.stringify({
+							zendeskTicketCommentBody: attachmentComment,
+						}),
+						method: 'POST',
+					}
+				);
 
 			if (!response.ok) {
-				throw new Error(`Failed to ticket comment upload:  ${response.statusText}`);
+				throw new Error(
+					`Failed to ticket comment upload:  ${response.statusText}`
+				);
 			}
-			
-		} catch (error) {
+		}
+		catch (error) {
 			console.error(error);
 		}
 	};
@@ -117,23 +138,27 @@ const AttachmentUploader = () => {
 	};
 
 	return (
-		<div className='attachment-uploader'>
-			<div className='d-flex mt-4 text-neutral-10'>
-				<h2 className=''>{i18n.translate('attach-file-to-ticket')}</h2>
+		<div className="attachment-uploader">
+			<div className="d-flex mt-4 text-neutral-10">
+				<h2 className="">{i18n.translate('attach-file-to-ticket')}</h2>
 			</div>
 
 			<div className="mt-4">
 				<div>
-					<h5 className='text-neutral-9'>{i18n.translate('attachment')}</h5>
+					<h5 className="text-neutral-9">
+						{i18n.translate('attachment')}
+					</h5>
 
-					<span className='text-neutral-8'>
-						{i18n.translate('select-a-local-file-to-upload-only-one-file-can-be-attached-at-a-time')}
+					<span className="text-neutral-8">
+						{i18n.translate(
+							'select-a-local-file-to-upload-only-one-file-can-be-attached-at-a-time'
+						)}
 					</span>
 				</div>
 
 				{!fileAttached && (
-					<DropzoneUpload 
-						buttonText={i18n.translate('select-a-file')}					
+					<DropzoneUpload
+						buttonText={i18n.translate('select-a-file')}
 						onHandleUpload={handleUpload}
 						title={i18n.translate('drag-and-drop-to-upload-or')}
 					/>
@@ -149,7 +174,7 @@ const AttachmentUploader = () => {
 					/>
 				)}
 
-				<AttachmentComment 
+				<AttachmentComment
 					attachmentComment={attachmentComment}
 					isCheckboxChecked={isCheckboxChecked}
 					setAttachmentComment={setAttachmentComment}
@@ -160,12 +185,17 @@ const AttachmentUploader = () => {
 					<ClayButton
 						aria-label="Close"
 						displayType="secondary ml-auto mt-2"
-						onClick={() => window.history.length > 1  ? window.history.back() : window.location.href = window.location.origin}
+						onClick={() =>
+							window.history.length > 1
+								? window.history.back()
+								: (window.location.href =
+										window.location.origin)
+						}
 					>
 						{i18n.translate('close')}
 					</ClayButton>
 
-					<ClayButton 
+					<ClayButton
 						aria-label="Upload"
 						disabled={!fileAttached || !isCheckboxChecked}
 						displayType="primary ml-3 mt-2"

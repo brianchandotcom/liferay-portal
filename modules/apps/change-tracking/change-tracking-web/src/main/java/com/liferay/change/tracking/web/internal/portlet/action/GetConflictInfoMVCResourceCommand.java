@@ -201,10 +201,9 @@ public class GetConflictInfoMVCResourceCommand extends BaseMVCResourceCommand {
 					"conflictIconClass", "change-tracking-conflict-icon-warning"
 				).put(
 					"conflictIconLabel",
-					_language.format(
+					_language.get(
 						themeDisplay.getLocale(),
-						"concurrent-modification-help-x",
-						possibleConflictCollection.getName())
+						"concurrent-modification-help")
 				).put(
 					"conflictIconName", "warning-full"
 				));

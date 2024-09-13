@@ -456,7 +456,9 @@ export default function ChangeTrackingIndicator({
 					<ClayAlert
 						displayType="danger"
 						spritemap={spritemap}
-						title="Publication conflict:"
+						title={
+							Liferay.Language.get('production-conflict') + ': '
+						}
 					>
 						{Liferay.Language.get(dangerIcon.conflictIconLabel)}
 					</ClayAlert>
@@ -806,7 +808,7 @@ export default function ChangeTrackingIndicator({
 								width: '16px',
 							}}
 							tabIndex="-1"
-							title="Production Conflict"
+							title={Liferay.Language.get('production-conflict')}
 						>
 							{renderConflictIcon()}
 						</div>

@@ -684,7 +684,7 @@ public class ContentPageEditorDisplayContext {
 			).put(
 				"undoUpdateFormConfigURL",
 				getFragmentEntryActionURL(
-					"/layout_content_page_editor/undo_update_form_config")
+					"/layout_content_page_editor/undo_form_item_config")
 			).put(
 				"unmarkItemsForDeletionURL",
 				getFragmentEntryActionURL(

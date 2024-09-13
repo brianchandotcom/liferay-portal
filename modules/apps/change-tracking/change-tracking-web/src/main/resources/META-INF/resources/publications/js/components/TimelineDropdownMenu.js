@@ -15,6 +15,75 @@ import {
 	WORKFLOW_STATUS_EXPIRED,
 } from './WorkflowStatusLabel';
 
+const createMVCRenderCommandURL = (
+	ctCollectionId,
+	mvcRenderCommandName,
+	namespace,
+	additionalParams = {}
+) => {
+	return createPortletURL(themeDisplay.getLayoutRelativeControlPanelURL(), {
+		ctCollectionId,
+		mvcRenderCommandName,
+		p_p_id: getPortletId(namespace),
+		...additionalParams,
+	}).toString();
+};
+
+export function createDiscardURL(
+	ctCollectionId,
+	namespace,
+	timelineClassNameId,
+	timelineClassPK
+) {
+	return createMVCRenderCommandURL(
+		ctCollectionId,
+		'/change_tracking/view_discard',
+		namespace,
+		{
+			modelClassNameId: timelineClassNameId,
+			modelClassPK: timelineClassPK,
+		}
+	);
+}
+
+export function createEditURL(ctCollectionId, timelineEditURL) {
+	return createPortletURL(timelineEditURL, {
+		ctCollectionId,
+	}).toString();
+}
+
+export function createMoveURL(
+	ctCollectionId,
+	namespace,
+	timelineClassNameId,
+	timelineClassPK
+) {
+	return createMVCRenderCommandURL(
+		ctCollectionId,
+		'/change_tracking/view_move_changes',
+		namespace,
+		{
+			modelClassNameId: timelineClassNameId,
+			modelClassPK: timelineClassPK,
+		}
+	);
+}
+
+export function createViewURL(
+	ctCollectionId,
+	namespace,
+	timelineItemCtEntryId
+) {
+	return createMVCRenderCommandURL(
+		ctCollectionId,
+		'/change_tracking/view_change',
+		namespace,
+		{
+			ctEntryId: timelineItemCtEntryId,
+		}
+	);
+}
+
 export default function TimelineDropdownMenu({
 	deleteURL,
 	editURL,
@@ -33,45 +102,26 @@ export default function TimelineDropdownMenu({
 	if (Liferay.FeatureFlags['LPD-20556']) {
 		const ctCollectionId = timelineItem.id;
 
-		const createMVCRenderCommandURL = (
-			mvcRenderCommandName,
-			additionalParams = {}
-		) => {
-			return createPortletURL(
-				themeDisplay.getLayoutRelativeControlPanelURL(),
-				{
-					ctCollectionId,
-					mvcRenderCommandName,
-					p_p_id: getPortletId(namespace),
-					...additionalParams,
-				}
-			).toString();
-		};
-
-		const discardURL = createMVCRenderCommandURL(
-			'/change_tracking/view_discard',
-			{
-				modelClassNameId: timelineClassNameId,
-				modelClassPK: timelineClassPK,
-			}
-		);
-
-		const checkoutURL = createPortletURL(timelineEditURL, {
+		const discardURL = createDiscardURL(
 			ctCollectionId,
-		}).toString();
-
-		const moveURL = createMVCRenderCommandURL(
-			'/change_tracking/view_move_changes',
-			{
-				modelClassNameId: timelineClassNameId,
-				modelClassPK: timelineClassPK,
-			}
+			namespace,
+			timelineClassNameId,
+			timelineClassPK
 		);
-		const viewURL = createMVCRenderCommandURL(
-			'/change_tracking/view_change',
-			{
-				ctEntryId: timelineItem.ctEntryId,
-			}
+
+		const checkoutURL = createEditURL(ctCollectionId, timelineEditURL);
+
+		const moveURL = createMoveURL(
+			ctCollectionId,
+			namespace,
+			timelineClassNameId,
+			timelineClassPK
+		);
+
+		const viewURL = createViewURL(
+			ctCollectionId,
+			namespace,
+			timelineItem.ctEntryId
 		);
 
 		if (

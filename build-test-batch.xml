@@ -5494,6 +5494,28 @@ information. Make sure to commit in all format-javadoc results.
 		/>
 	</target>
 
+	<target name="functional-smoke-bundle-jboss-mysql57-jdk21_zulu">
+		<run-functional-test
+			app.server.type="jboss"
+			database.type="mysql"
+			database.version="5.7"
+			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
+			test.fix.pack.base.url="${test.fix.pack.base.url}"
+			test.license.xml.url="${test.license.xml.url}"
+			test.plugin.zip.url="${test.plugin.zip.url}"
+			test.plugins.war.zip.url="${test.plugins.war.zip.url}"
+			test.portal.bundle.dependencies.zip.url="${test.portal.bundle.dependencies.zip.url}"
+			test.portal.bundle.osgi.zip.url="${test.portal.bundle.osgi.zip.url}"
+			test.portal.bundle.tools.zip.url="${test.portal.bundle.tools.zip.url}"
+			test.portal.bundle.version="${test.portal.bundle.version}"
+			test.portal.bundle.war.url="${test.portal.bundle.war.url}"
+			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
+			test.portal.log.assert="true"
+			test.portal.lpkg.name="${test.portal.lpkg.name}"
+			test.sql.zip.url="${test.sql.zip.url}"
+		/>
+	</target>
+
 	<target name="functional-smoke-bundle-jboss73-mysql57-jdk8">
 		<antcall target="functional-bundle-jboss73-mysql57-jdk8" />
 	</target>
@@ -5528,16 +5550,32 @@ information. Make sure to commit in all format-javadoc results.
 		<antcall target="functional-bundle-tomcat-db2111-jdk8" />
 	</target>
 
+	<target name="functional-smoke-bundle-tomcat-db2111-jdk21_zulu">
+		<antcall target="functional-bundle-tomcat-db2111-jdk21_zulu" />
+	</target>
+
 	<target name="functional-smoke-bundle-tomcat-db2115-jdk8">
 		<antcall target="functional-bundle-tomcat-db2115-jdk8" />
+	</target>
+
+	<target name="functional-smoke-bundle-tomcat-db2115-jdk21_zulu">
+		<antcall target="functional-bundle-tomcat-db2115-jdk21_zulu" />
 	</target>
 
 	<target name="functional-smoke-bundle-tomcat-hypersonic20-jdk8">
 		<antcall target="functional-bundle-tomcat-hypersonic20-jdk8" />
 	</target>
 
+	<target name="functional-smoke-bundle-tomcat-hypersonic20-jdk21_zulu">
+		<antcall target="functional-bundle-tomcat-hypersonic20-jdk21_zulu" />
+	</target>
+
 	<target name="functional-smoke-bundle-tomcat-mariadb102-jdk8">
 		<antcall target="functional-bundle-tomcat-mariadb102-jdk8" />
+	</target>
+
+	<target name="functional-smoke-bundle-tomcat-mariadb102-jdk21_zulu">
+		<antcall target="functional-bundle-tomcat-mariadb102-jdk21_zulu" />
 	</target>
 
 	<target name="functional-smoke-bundle-tomcat-mysql56-jdk8">
@@ -5565,6 +5603,10 @@ information. Make sure to commit in all format-javadoc results.
 		<antcall target="functional-bundle-tomcat-mysql57-jdk11_open" />
 	</target>
 
+	<target name="functional-smoke-bundle-tomcat-mysql57-jdk17_open">
+		<antcall target="functional-bundle-tomcat-mysql57-jdk17_open" />
+	</target>
+
 	<target name="functional-smoke-bundle-tomcat-mysql57-jdk21_zulu">
 		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
 
@@ -5586,23 +5628,65 @@ information. Make sure to commit in all format-javadoc results.
 		<antcall target="functional-bundle-tomcat-oracle193-jdk8" />
 	</target>
 
+	<target name="functional-smoke-bundle-tomcat-oracle193-jdk21_zulu">
+		<antcall target="functional-bundle-tomcat-oracle193-jdk21_zulu" />
+	</target>
+
 	<target name="functional-smoke-bundle-tomcat-postgresql134-jdk8">
 		<antcall target="functional-bundle-tomcat-postgresql134-jdk8" />
+	</target>
+
+	<target name="functional-smoke-bundle-tomcat-postgresql134-jdk21_zulu">
+		<antcall target="functional-bundle-tomcat-postgresql134-jdk21_zulu" />
 	</target>
 
 	<target name="functional-smoke-bundle-tomcat-postgresql144-jdk8">
 		<antcall target="functional-bundle-tomcat-postgresql144-jdk8" />
 	</target>
 
+	<target name="functional-smoke-bundle-tomcat-postgresql144-jdk21_zulu">
+		<antcall target="functional-bundle-tomcat-postgresql144-jdk21_zulu" />
+	</target>
+
 	<target name="functional-smoke-bundle-tomcat-postgresql153-jdk8">
 		<antcall target="functional-bundle-tomcat-postgresql153-jdk8" />
+	</target>
+
+	<target name="functional-smoke-bundle-tomcat-postgresql153-jdk21_zulu">
+		<antcall target="functional-bundle-tomcat-postgresql153-jdk21_zulu" />
 	</target>
 
 	<target name="functional-smoke-bundle-tomcat-postgresql163-jdk8">
 		<antcall target="functional-bundle-tomcat-postgresql163-jdk8" />
 	</target>
 
+	<target name="functional-smoke-bundle-tomcat-postgresql163-jdk21_zulu">
+		<antcall target="functional-bundle-tomcat-postgresql163-jdk21_zulu" />
+	</target>
+
 	<target name="functional-smoke-bundle-weblogic122-mysql57-jdk8">
+		<run-functional-test
+			app.server.type="weblogic"
+			database.type="mysql"
+			database.version="5.7"
+			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
+			test.fix.pack.base.url="${test.fix.pack.base.url}"
+			test.license.xml.url="${test.license.xml.url}"
+			test.plugin.zip.url="${test.plugin.zip.url}"
+			test.plugins.war.zip.url="${test.plugins.war.zip.url}"
+			test.portal.bundle.dependencies.zip.url="${test.portal.bundle.dependencies.zip.url}"
+			test.portal.bundle.osgi.zip.url="${test.portal.bundle.osgi.zip.url}"
+			test.portal.bundle.tools.zip.url="${test.portal.bundle.tools.zip.url}"
+			test.portal.bundle.version="${test.portal.bundle.version}"
+			test.portal.bundle.war.url="${test.portal.bundle.war.url}"
+			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
+			test.portal.log.assert="true"
+			test.portal.lpkg.name="${test.portal.lpkg.name}"
+			test.sql.zip.url="${test.sql.zip.url}"
+		/>
+	</target>
+
+	<target name="functional-smoke-bundle-weblogic122-mysql57-jdk21_zulu">
 		<run-functional-test
 			app.server.type="weblogic"
 			database.type="mysql"
@@ -5646,7 +5730,51 @@ information. Make sure to commit in all format-javadoc results.
 		/>
 	</target>
 
+	<target name="functional-smoke-bundle-weblogic141-mysql57-jdk21_zulu">
+		<run-functional-test
+			app.server.type="weblogic"
+			database.type="mysql"
+			database.version="5.7"
+			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
+			test.fix.pack.base.url="${test.fix.pack.base.url}"
+			test.license.xml.url="${test.license.xml.url}"
+			test.plugin.zip.url="${test.plugin.zip.url}"
+			test.plugins.war.zip.url="${test.plugins.war.zip.url}"
+			test.portal.bundle.dependencies.zip.url="${test.portal.bundle.dependencies.zip.url}"
+			test.portal.bundle.osgi.zip.url="${test.portal.bundle.osgi.zip.url}"
+			test.portal.bundle.tools.zip.url="${test.portal.bundle.tools.zip.url}"
+			test.portal.bundle.version="${test.portal.bundle.version}"
+			test.portal.bundle.war.url="${test.portal.bundle.war.url}"
+			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
+			test.portal.log.assert="true"
+			test.portal.lpkg.name="${test.portal.lpkg.name}"
+			test.sql.zip.url="${test.sql.zip.url}"
+		/>
+	</target>
+
 	<target name="functional-smoke-bundle-wildfly-mysql57-jdk8">
+		<run-functional-test
+			app.server.type="wildfly"
+			database.type="mysql"
+			database.version="5.7"
+			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
+			test.fix.pack.base.url="${test.fix.pack.base.url}"
+			test.license.xml.url="${test.license.xml.url}"
+			test.plugin.zip.url="${test.plugin.zip.url}"
+			test.plugins.war.zip.url="${test.plugins.war.zip.url}"
+			test.portal.bundle.dependencies.zip.url="${test.portal.bundle.dependencies.zip.url}"
+			test.portal.bundle.osgi.zip.url="${test.portal.bundle.osgi.zip.url}"
+			test.portal.bundle.tools.zip.url="${test.portal.bundle.tools.zip.url}"
+			test.portal.bundle.version="${test.portal.bundle.version}"
+			test.portal.bundle.war.url="${test.portal.bundle.war.url}"
+			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
+			test.portal.log.assert="true"
+			test.portal.lpkg.name="${test.portal.lpkg.name}"
+			test.sql.zip.url="${test.sql.zip.url}"
+		/>
+	</target>
+
+	<target name="functional-smoke-bundle-wildfly-mysql57-jdk21_zulu">
 		<run-functional-test
 			app.server.type="wildfly"
 			database.type="mysql"

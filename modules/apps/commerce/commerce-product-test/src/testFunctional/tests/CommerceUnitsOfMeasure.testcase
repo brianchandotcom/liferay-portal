@@ -639,21 +639,21 @@ definition {
 		task ("Then assert that the errors are shown in the quantity selector popover") {
 			FrontStore.viewQuantitySelectorPopoverListItem(
 				conditionNotSatisfied = "true",
-				quantity = "0.444",
+				quantity = "2.22",
 				quantityConfiguration = "multiple",
 				quantityConfigurationDecimalText = 3);
 		}
 
-		task ("When the buyer sets the quantity to a valid quantity(0.888)") {
+		task ("When the buyer sets the quantity to a valid quantity(2.22)") {
 			Type(
 				locator1 = "CommerceAccelerators#PRODUCT_DETAILS_QUANTITY_SELECTOR_INPUT_FIELD",
-				value1 = "0.888");
+				value1 = "2.22");
 		}
 
 		task ("Then assert that the popover does not show any error") {
 			FrontStore.viewQuantitySelectorPopoverListItem(
 				conditionNotSatisfied = "false",
-				quantity = "0.444",
+				quantity = "2.22",
 				quantityConfiguration = "multiple");
 		}
 

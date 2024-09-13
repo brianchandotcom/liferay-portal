@@ -24,6 +24,7 @@ import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.test.util.UpgradeTestUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.site.configuration.manager.SitemapConfigurationManager;
+import com.liferay.site.constants.LegacySitemapIndexPropsKeys;
 
 import java.util.Arrays;
 
@@ -61,12 +62,15 @@ public class XMLSitemapIndexEnabledConfigurationUpgradeProcessTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_xmlSitemapIndexEnabled = PropsUtil.get("XML_SITEMAP_INDEX_ENABLED");
+		_xmlSitemapIndexEnabled = PropsUtil.get(
+			LegacySitemapIndexPropsKeys.XML_SITEMAP_INDEX_ENABLED);
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		PropsUtil.set("XML_SITEMAP_INDEX_ENABLED", _xmlSitemapIndexEnabled);
+		PropsUtil.set(
+			LegacySitemapIndexPropsKeys.XML_SITEMAP_INDEX_ENABLED,
+			_xmlSitemapIndexEnabled);
 
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
 			String.format("(%s=%s*)", Constants.SERVICE_PID, _PID));
@@ -82,7 +86,9 @@ public class XMLSitemapIndexEnabledConfigurationUpgradeProcessTest {
 
 	@Test
 	public void testUpgradeWithXMLSitemapIndexDisabled() throws Exception {
-		PropsUtil.set("XML_SITEMAP_INDEX_ENABLED", Boolean.FALSE.toString());
+		PropsUtil.set(
+			LegacySitemapIndexPropsKeys.XML_SITEMAP_INDEX_ENABLED,
+			Boolean.FALSE.toString());
 
 		_runUpgrade();
 
@@ -93,7 +99,9 @@ public class XMLSitemapIndexEnabledConfigurationUpgradeProcessTest {
 	public void testUpgradeWithXMLSitemapIndexDisabledAndNondefaultConfigurations()
 		throws Exception {
 
-		PropsUtil.set("XML_SITEMAP_INDEX_ENABLED", Boolean.FALSE.toString());
+		PropsUtil.set(
+			LegacySitemapIndexPropsKeys.XML_SITEMAP_INDEX_ENABLED,
+			Boolean.FALSE.toString());
 
 		long groupId = RandomTestUtil.randomLong();
 
@@ -116,7 +124,9 @@ public class XMLSitemapIndexEnabledConfigurationUpgradeProcessTest {
 
 	@Test
 	public void testUpgradeWithXMLSitemapIndexEnabled() throws Exception {
-		PropsUtil.set("XML_SITEMAP_INDEX_ENABLED", Boolean.TRUE.toString());
+		PropsUtil.set(
+			LegacySitemapIndexPropsKeys.XML_SITEMAP_INDEX_ENABLED,
+			Boolean.TRUE.toString());
 
 		_runUpgrade();
 

@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayAlert from '@clayui/alert';
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown, {Align, ClayDropDownWithItems} from '@clayui/drop-down';
 import {ClayCheckbox, ClaySelectWithOption} from '@clayui/form';
@@ -399,6 +400,8 @@ export default function ChangeTrackingIndicator({
 	const [conflictIconClass, setConflictIconClass] = useState(null);
 	const [conflictIconLabel, setConflictIconLabel] = useState(null);
 	const [conflictIconName, setConflictIconName] = useState(null);
+	const [dangerIcon, setDangerIcon] = useState(null);
+	const [warningIcon, setWarningIcon] = useState(null);
 
 	useEffect(() => {
 		if (getConflictInfoURL) {
@@ -406,9 +409,19 @@ export default function ChangeTrackingIndicator({
 				.then((response) => response.json())
 				.then((json) => {
 					if (json) {
-						setConflictIconClass(json.conflictIconClass);
-						setConflictIconLabel(json.conflictIconLabel);
-						setConflictIconName(json.conflictIconName);
+						if (Liferay.FeatureFlags['LPD-20556']) {
+							if (json.danger) {
+								setDangerIcon(json.danger);
+							}
+							if (json.warning) {
+								setWarningIcon(json.warning);
+							}
+						}
+						else {
+							setConflictIconClass(json.conflictIconClass);
+							setConflictIconLabel(json.conflictIconLabel);
+							setConflictIconName(json.conflictIconName);
+						}
 					}
 				})
 				.catch(() => {
@@ -422,7 +435,35 @@ export default function ChangeTrackingIndicator({
 	}, [getConflictInfoURL]);
 
 	const renderConflictIcon = () => {
-		if (conflictIconClass && conflictIconName) {
+		if (Liferay.FeatureFlags['LPD-20556'] && !!dangerIcon) {
+			return (
+				<ClayDropDown
+					alignmentPosition={Align.BottomCenter}
+					menuElementAttrs={{style: {maxWidth: '303px'}}}
+					trigger={
+						<ClayButton
+							aria-label="conflict-button"
+							className="change-tracking-conflict-button"
+						>
+							<ClayIcon
+								className={dangerIcon.conflictIconClass}
+								style={{fontSize: 'medium'}}
+								symbol={dangerIcon.conflictIconName}
+							/>
+						</ClayButton>
+					}
+				>
+					<ClayAlert
+						displayType="danger"
+						spritemap={spritemap}
+						title="Publication conflict:"
+					>
+						{Liferay.Language.get(dangerIcon.conflictIconLabel)}
+					</ClayAlert>
+				</ClayDropDown>
+			);
+		}
+		else if (conflictIconClass && conflictIconName) {
 			return (
 				<ClayIcon
 					className={conflictIconClass}
@@ -680,7 +721,13 @@ export default function ChangeTrackingIndicator({
 							className="change-tracking-timeline-button"
 						>
 							<ClayIcon
-								className={timelineIconClass}
+								className={
+									timelineIconClass +
+									(Liferay.FeatureFlags['LPD-20556'] &&
+									!!warningIcon
+										? ' ' + warningIcon.conflictIconClass
+										: '')
+								}
 								symbol={timelineIconName}
 							/>
 						</ClayButton>
@@ -694,6 +741,7 @@ export default function ChangeTrackingIndicator({
 						timelineClassPK={timelineClassPK}
 						timelineEditURL={timelineEditURL}
 						timelineItemsURL={timelineItemsURL}
+						warningIcon={warningIcon}
 					/>
 				</ClayDropDown>
 			);
@@ -705,24 +753,34 @@ export default function ChangeTrackingIndicator({
 			{renderModal()}
 
 			<ClayLayout.ContentRow style={{justifyContent: 'center'}}>
-				<ClayLayout.ContentCol>
-					<div
-						className="c-inner"
-						style={{
-							margin: '2px',
-							padding: '1px',
-							width: '16px',
-						}}
-						tabIndex="-1"
-						title={conflictIconLabel}
-					>
-						{renderConflictIcon()}
-					</div>
-				</ClayLayout.ContentCol>
+				{!Liferay.FeatureFlags['LPD-20556'] ? (
+					<ClayLayout.ContentCol>
+						<div
+							className="c-inner"
+							style={{
+								margin: '2px',
+								padding: '1px',
+								width: '16px',
+							}}
+							tabIndex="-1"
+							title={conflictIconLabel}
+						>
+							{renderConflictIcon()}
+						</div>
+					</ClayLayout.ContentCol>
+				) : null}
 
 				<ClayLayout.ContentCol>
 					{showWarning ? renderWarning() : renderDropdown()}
 				</ClayLayout.ContentCol>
+
+				{Liferay.FeatureFlags['LPD-20556'] && !!timelineItemsURL ? (
+					<ClayLayout.ContentCol>
+						<div className="autofit-col row-divider">
+							<div />
+						</div>
+					</ClayLayout.ContentCol>
+				) : null}
 
 				<ClayLayout.ContentCol>
 					<div
@@ -737,6 +795,23 @@ export default function ChangeTrackingIndicator({
 						{renderTimeline()}
 					</div>
 				</ClayLayout.ContentCol>
+
+				{Liferay.FeatureFlags['LPD-20556'] ? (
+					<ClayLayout.ContentCol>
+						<div
+							className="c-inner"
+							style={{
+								margin: '2px',
+								padding: '1px',
+								width: '16px',
+							}}
+							tabIndex="-1"
+							title="Production Conflict"
+						>
+							{renderConflictIcon()}
+						</div>
+					</ClayLayout.ContentCol>
+				) : null}
 			</ClayLayout.ContentRow>
 		</>
 	);

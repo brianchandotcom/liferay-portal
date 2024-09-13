@@ -14,7 +14,7 @@ html#{$cadmin-selector} .cadmin {
 		.change-tracking-conflict-icon-danger {
 			color: #b95000;
 			margin-right: 0;
-			margin-top: 0;
+			margin-top: 1px;
 		}
 
 		.change-tracking-conflict-icon-warning {
@@ -85,11 +85,50 @@ html#{$cadmin-selector} .cadmin {
 				margin-top: 0;
 			}
 		}
+
+		.change-tracking-conflict-button {
+			align-items: center;
+			background-color: $cadmin-dark-l1;
+			border: none;
+			display: inline-flex;
+			font-weight: 600;
+			justify-content: center;
+			margin: 0 2px 1px;
+			padding: 1px;
+			text-decoration: none;
+			vertical-align: middle;
+		}
+
+		.autofit-row {
+			.autofit-col:nth-child(2) {
+				padding-right: 3px;
+				padding-top: 3px;
+			}
+
+			.row-divider {
+				padding: 0;
+
+				div {
+					background-color: #fff;
+					height: 16px;
+					padding: 0;
+					width: 1px;
+				}
+			}
+		}
 	}
 }
 
 .change-tracking-enabled {
 	--change-tracking-indicator-height: 24px;
+
+	.publication-timeline {
+		.change-tracking-conflict-icon-warning {
+			color: #b95000;
+			margin-right: 0.5rem;
+			margin-top: 0;
+		}
+	}
 }
 
 .publications-loading {

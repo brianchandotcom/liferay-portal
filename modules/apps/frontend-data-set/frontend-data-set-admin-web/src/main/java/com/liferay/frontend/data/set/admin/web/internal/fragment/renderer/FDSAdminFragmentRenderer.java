@@ -593,8 +593,8 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 					String.valueOf(properties.get("fieldName")), "[]",
 					StringPool.FORWARD_SLASH);
 
-				fieldName = StringUtil.replace(fieldName, StringPool.PERIOD,
-					StringPool.FORWARD_SLASH);
+				fieldName = StringUtil.replace(
+					fieldName, StringPool.PERIOD, StringPool.FORWARD_SLASH);
 
 				String type = MapUtil.getString(properties, "type");
 
@@ -657,16 +657,16 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 					);
 
 					if (Objects.equals(sourceType, "API_REST_APPLICATION")) {
-						selectionFilterJSONObject.put(
-							"id", fieldName
-						);
+						selectionFilterJSONObject.put("id", fieldName);
 					}
 					else {
-
 						selectionFilterJSONObject.put(
-							"id", fieldName.indexOf(StringPool.FORWARD_SLASH) > 0 ? fieldName.substring(0,
-								fieldName.lastIndexOf(StringPool.FORWARD_SLASH)) : fieldName
-						);
+							"id",
+							fieldName.indexOf(StringPool.FORWARD_SLASH) > 0 ?
+								fieldName.substring(
+									0,
+									fieldName.lastIndexOf(
+										StringPool.FORWARD_SLASH)) : fieldName);
 					}
 
 					if (Validator.isNotNull(sourceType) &&

@@ -56,11 +56,9 @@ import com.liferay.portal.search.web.search.request.SearchSettings;
 import com.liferay.portal.search.web.search.request.SearchSettingsContributor;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -186,71 +184,6 @@ public class PortletSharedSearchRequestImpl
 			searchRequestBuilderFactory);
 	}
 
-	private void _fetchPortletIdsAndInstanceIds(
-		Layout layout, long groupId, long segmentsExperienceId,
-		Set<String> portletIdsToFilter, Set<String> instanceIdsToKeep) {
-
-		LayoutPageTemplateStructure layoutPageTemplateStructure =
-			_layoutPageTemplateStructureLocalService.
-				fetchLayoutPageTemplateStructure(groupId, layout.getPlid());
-
-		if (layoutPageTemplateStructure == null) {
-			return;
-		}
-
-		LayoutPageTemplateStructureRel layoutPageTemplateStructureRel =
-			_layoutPageTemplateStructureRelLocalService.
-				fetchLayoutPageTemplateStructureRel(
-					layoutPageTemplateStructure.
-						getLayoutPageTemplateStructureId(),
-					segmentsExperienceId);
-
-		if (layoutPageTemplateStructureRel == null) {
-			return;
-		}
-
-		LayoutStructure layoutStructure = LayoutStructure.of(
-			layoutPageTemplateStructureRel.getData());
-
-		for (Map.Entry<Long, LayoutStructureItem> fragmentLayoutStructureItem :
-				layoutStructure.getFragmentLayoutStructureItems(
-				).entrySet()) {
-
-			Long fragmentEntryLinkId = fragmentLayoutStructureItem.getKey();
-
-			if (fragmentEntryLinkId <= 0) {
-				continue;
-			}
-
-			FragmentEntryLink fragmentEntryLink =
-				_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
-					fragmentEntryLinkId);
-
-			if (fragmentEntryLink == null) {
-				continue;
-			}
-
-			try {
-				JSONObject editableValuesJSONObject =
-					_jsonFactory.createJSONObject(
-						fragmentEntryLink.getEditableValues());
-
-				portletIdsToFilter.add(
-					editableValuesJSONObject.getString("portletId"));
-
-				instanceIdsToKeep.add(
-					editableValuesJSONObject.getString("instanceId"));
-			}
-			catch (JSONException jsonException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Error parsing fragment entry link JSON",
-						jsonException);
-				}
-			}
-		}
-	}
-
 	private List<Portlet> _getInstantiatedPortlets(
 		Layout layout, long companyId, long groupId,
 		long[] segmentsExperienceIds) {
@@ -279,12 +212,68 @@ public class PortletSharedSearchRequestImpl
 			return portlets;
 		}
 
-		Set<String> portletIdsToFilter = new HashSet<>();
-		Set<String> instanceIdsToKeep = new HashSet<>();
+		List<String> portletIdsToFilter = new ArrayList<>();
+		List<String> instanceIdsToKeep = new ArrayList<>();
 
-		_fetchPortletIdsAndInstanceIds(
-			layout, groupId, segmentsExperienceIds[0], portletIdsToFilter,
-			instanceIdsToKeep);
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			_layoutPageTemplateStructureLocalService.
+				fetchLayoutPageTemplateStructure(groupId, layout.getPlid());
+
+		if (layoutPageTemplateStructure != null) {
+			LayoutPageTemplateStructureRel layoutPageTemplateStructureRel =
+				_layoutPageTemplateStructureRelLocalService.
+					fetchLayoutPageTemplateStructureRel(
+						layoutPageTemplateStructure.
+							getLayoutPageTemplateStructureId(),
+						segmentsExperienceIds[0]);
+
+			if (layoutPageTemplateStructureRel != null) {
+				LayoutStructure layoutStructure = LayoutStructure.of(
+					layoutPageTemplateStructureRel.getData());
+
+				Map<Long, LayoutStructureItem> fragmentLayoutStructureItems =
+					layoutStructure.getFragmentLayoutStructureItems();
+
+				for (Map.Entry<Long, LayoutStructureItem>
+						fragmentLayoutStructureItem :
+							fragmentLayoutStructureItems.entrySet()) {
+
+					Long fragmentEntryLinkId =
+						fragmentLayoutStructureItem.getKey();
+
+					if (fragmentEntryLinkId <= 0) {
+						continue;
+					}
+
+					FragmentEntryLink fragmentEntryLink =
+						_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
+							fragmentEntryLinkId);
+
+					if (fragmentEntryLink == null) {
+						continue;
+					}
+
+					try {
+						JSONObject editableValuesJSONObject =
+							_jsonFactory.createJSONObject(
+								fragmentEntryLink.getEditableValues());
+
+						portletIdsToFilter.add(
+							editableValuesJSONObject.getString("portletId"));
+
+						instanceIdsToKeep.add(
+							editableValuesJSONObject.getString("instanceId"));
+					}
+					catch (JSONException jsonException) {
+						if (_log.isDebugEnabled()) {
+							_log.debug(
+								"Error parsing fragment entry link JSON",
+								jsonException);
+						}
+					}
+				}
+			}
+		}
 
 		for (PortletPreferences portletPreferences : portletPreferencesList) {
 			Portlet portlet = portletLocalService.getPortletById(

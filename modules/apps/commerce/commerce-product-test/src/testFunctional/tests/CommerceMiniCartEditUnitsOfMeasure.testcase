@@ -116,9 +116,9 @@ definition {
 
 			Type(
 				locator1 = "CommerceAccelerators#MINI_CART_EDIT_ITEM_QUANTITY_SELECTOR_INPUT_FIELD",
-				value1 = "0.6");
+				value1 = 3);
 
-			for (var priceFieldAndValueList : list "List Price:$ 15.50,Price as Configured:$ 15.50") {
+			for (var priceFieldAndValueList : list "List Price:$ 15.50,Price as Configured:$ 77.50") {
 				var priceField = StringUtil.extractFirst(${priceFieldAndValueList}, ":");
 				var priceValue = StringUtil.extractLast(${priceFieldAndValueList}, ":");
 
@@ -152,9 +152,9 @@ definition {
 
 			Type(
 				locator1 = "CommerceAccelerators#MINI_CART_EDIT_ITEM_QUANTITY_SELECTOR_INPUT_FIELD",
-				value1 = "1.5");
+				value1 = 3);
 
-			for (var priceFieldAndValueList : list "List Price:$ 45.00,Discount:22.22%,Price as Configured:$ 35.00") {
+			for (var priceFieldAndValueList : list "List Price:$ 45.00,Discount:22.22%,Price as Configured:$ 70.00") {
 				var priceField = StringUtil.extractFirst(${priceFieldAndValueList}, ":");
 				var priceValue = StringUtil.extractLast(${priceFieldAndValueList}, ":");
 
@@ -163,15 +163,6 @@ definition {
 					key_priceValue = ${priceValue},
 					locator1 = "CommerceAccelerators#MINI_CART_EDIT_ITEM_UOM_PRICE_VALUE");
 			}
-
-			Type(
-				locator1 = "CommerceAccelerators#MINI_CART_EDIT_ITEM_QUANTITY_SELECTOR_INPUT_FIELD",
-				value1 = 3);
-
-			AssertElementPresent(
-				key_priceField = "Price as Configured",
-				key_priceValue = "$ 70.00",
-				locator1 = "CommerceAccelerators#MINI_CART_EDIT_ITEM_UOM_PRICE_VALUE");
 		}
 
 		task ("And can verify the promo price is shown correctly for UOM3") {
@@ -181,11 +172,11 @@ definition {
 
 			Type(
 				locator1 = "CommerceAccelerators#MINI_CART_EDIT_ITEM_QUANTITY_SELECTOR_INPUT_FIELD",
-				value1 = 4);
+				value1 = 6);
 
 			// Update Price as Configured value after the fix of the bug COMMERCE-12578
 
-			for (var priceFieldAndValueList : list "List Price:$ 80.00,Promo Price:$ 72.00,Price as Configured:$ 144.00") {
+			for (var priceFieldAndValueList : list "List Price:$ 80.00,Promo Price:$ 72.00,Price as Configured:$ 216.00") {
 				var priceField = StringUtil.extractFirst(${priceFieldAndValueList}, ":");
 				var priceValue = StringUtil.extractLast(${priceFieldAndValueList}, ":");
 

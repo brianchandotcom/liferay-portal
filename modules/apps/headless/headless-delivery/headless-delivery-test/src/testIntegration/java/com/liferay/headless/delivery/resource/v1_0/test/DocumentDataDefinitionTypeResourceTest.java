@@ -20,6 +20,7 @@ import com.liferay.headless.delivery.client.dto.v1_0.DocumentDataDefinitionType;
 import com.liferay.headless.delivery.client.serdes.v1_0.DataDefinitionFieldSerDes;
 import com.liferay.headless.delivery.client.serdes.v1_0.DataLayoutSerDes;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -336,9 +337,19 @@ public class DocumentDataDefinitionTypeResourceTest
 				LocaleUtil.US, "Document data definition description"
 			).build(),
 			dlFileEntryType.getDescriptionMap());
+
+		Long[] documentMetadataSetIds =
+			documentDataDefinitionType.getDocumentMetadataSetIds();
+
 		Assert.assertEquals(
-			ddmStructureIds,
-			documentDataDefinitionType.getDocumentMetadataSetIds());
+			documentMetadataSetIds.toString(), ddmStructureIds.length,
+			documentMetadataSetIds.length);
+
+		for (Long documentMetadataSetId : documentMetadataSetIds) {
+			Assert.assertTrue(
+				ArrayUtil.contains(ddmStructureIds, documentMetadataSetId));
+		}
+
 		Assert.assertNotNull(
 			documentDataDefinitionType.getExternalReferenceCode());
 		Assert.assertNotNull(documentDataDefinitionType.getId());

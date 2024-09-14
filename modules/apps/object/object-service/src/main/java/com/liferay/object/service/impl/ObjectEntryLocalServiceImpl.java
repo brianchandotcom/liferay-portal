@@ -239,6 +239,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.crypto.spec.SecretKeySpec;
 
@@ -536,8 +537,6 @@ public class ObjectEntryLocalServiceImpl
 	public ObjectEntry deleteObjectEntry(ObjectEntry objectEntry)
 		throws PortalException {
 
-		Map<String, Serializable> values = objectEntry.getValues();
-
 		ObjectActionThreadLocal.clearObjectEntryIdsMap();
 
 		objectEntry = objectEntryPersistence.remove(objectEntry);
@@ -556,6 +555,10 @@ public class ObjectEntryLocalServiceImpl
 		_workflowInstanceLinkLocalService.deleteWorkflowInstanceLinks(
 			objectEntry.getCompanyId(), objectEntry.getNonzeroGroupId(),
 			objectDefinition.getClassName(), objectEntry.getObjectEntryId());
+
+		_deleteFileEntries(
+			Collections.emptyMap(), objectDefinition.getObjectDefinitionId(),
+			objectEntry::getValues);
 
 		_deleteFromTable(
 			objectDefinition.getDBTableName(),
@@ -576,10 +579,6 @@ public class ObjectEntryLocalServiceImpl
 		deleteRelatedObjectEntries(
 			objectEntry.getGroupId(), objectDefinition.getObjectDefinitionId(),
 			objectEntry.getPrimaryKey());
-
-		_deleteFileEntries(
-			Collections.emptyMap(), objectDefinition.getObjectDefinitionId(),
-			values);
 
 		if (!objectDefinition.isActive() ||
 			!objectDefinition.isEnableIndexSearch()) {
@@ -1989,21 +1988,35 @@ public class ObjectEntryLocalServiceImpl
 		Map<String, Serializable> newValues, long objectDefinitionId,
 		Map<String, Serializable> oldValues) {
 
+		_deleteFileEntries(newValues, objectDefinitionId, () -> oldValues);
+	}
+
+	private void _deleteFileEntries(
+		Map<String, Serializable> newValues, long objectDefinitionId,
+		Supplier<Map<String, Serializable>> oldValuesSupplier) {
+
 		List<ObjectField> objectFields =
 			_objectFieldPersistence.findByObjectDefinitionId(
 				objectDefinitionId);
 
+		Map<String, Serializable> oldValues = null;
+
 		for (ObjectField objectField : objectFields) {
-			if (objectField.isSystem()) {
+			if (objectField.isSystem() ||
+				!Objects.equals(
+					objectField.getBusinessType(),
+					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
+
 				continue;
+			}
+
+			if (oldValues == null) {
+				oldValues = oldValuesSupplier.get();
 			}
 
 			String objectFieldName = objectField.getName();
 
-			if (!Objects.equals(
-					objectField.getBusinessType(),
-					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT) ||
-				Objects.equals(
+			if (Objects.equals(
 					GetterUtil.getLong(newValues.get(objectFieldName)),
 					GetterUtil.getLong(oldValues.get(objectFieldName)))) {
 

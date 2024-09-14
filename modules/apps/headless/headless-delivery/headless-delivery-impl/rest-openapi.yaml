@@ -6461,6 +6461,7 @@ paths:
             tags: ["ContentTemplate"]
     "/asset-libraries/{assetLibraryId}/document-data-definition-types":
         get:
+            operationId: getAssetLibraryDocumentDataDefinitionTypesPage
             parameters:
                 - in: path
                   name: assetLibraryId
@@ -8470,6 +8471,7 @@ paths:
             tags: ["StructuredContent"]
     "/document-data-definition-types/{documentDataDefinitionTypeId}":
         get:
+            operationId: getDocumentDataDefinitionType
             parameters:
                 - in: path
                   name: documentDataDefinitionTypeId
@@ -12994,6 +12996,7 @@ paths:
             tags: ["ContentTemplate"]
     "/sites/{siteId}/document-data-definition-types":
         get:
+            operationId: getSiteDocumentDataDefinitionTypesPage
             parameters:
                 - in: path
                   name: siteId

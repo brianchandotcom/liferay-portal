@@ -1724,6 +1724,32 @@ public class Mutation {
 			});
 	}
 
+	@GraphQLField
+	public Response
+			createAssetLibraryDocumentDataDefinitionTypesPageExportBatch(
+				@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
+				@GraphQLName("search") String search,
+				@GraphQLName("filter") String filterString,
+				@GraphQLName("sort") String sortsString,
+				@GraphQLName("callbackURL") String callbackURL,
+				@GraphQLName("contentType") String contentType,
+				@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_documentDataDefinitionTypeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentDataDefinitionTypeResource ->
+				documentDataDefinitionTypeResource.
+					postAssetLibraryDocumentDataDefinitionTypesPageExportBatch(
+						Long.valueOf(assetLibraryId), search,
+						_filterBiFunction.apply(
+							documentDataDefinitionTypeResource, filterString),
+						_sortsBiFunction.apply(
+							documentDataDefinitionTypeResource, sortsString),
+						callbackURL, contentType, fieldNames));
+	}
+
 	@GraphQLField(description = "Creates a new document data definition type.")
 	public DocumentDataDefinitionType
 			createAssetLibraryDocumentDataDefinitionType(
@@ -1756,6 +1782,31 @@ public class Mutation {
 				documentDataDefinitionTypeResource.
 					postAssetLibraryDocumentDataDefinitionTypeBatch(
 						Long.valueOf(assetLibraryId), callbackURL, object));
+	}
+
+	@GraphQLField
+	public Response createSiteDocumentDataDefinitionTypesPageExportBatch(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("sort") String sortsString,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_documentDataDefinitionTypeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentDataDefinitionTypeResource ->
+				documentDataDefinitionTypeResource.
+					postSiteDocumentDataDefinitionTypesPageExportBatch(
+						Long.valueOf(siteKey), search,
+						_filterBiFunction.apply(
+							documentDataDefinitionTypeResource, filterString),
+						_sortsBiFunction.apply(
+							documentDataDefinitionTypeResource, sortsString),
+						callbackURL, contentType, fieldNames));
 	}
 
 	@GraphQLField(description = "Creates a new document data definition type.")

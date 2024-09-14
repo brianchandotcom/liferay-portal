@@ -19,6 +19,8 @@ import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTaskResource;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.Collections;
 import java.util.List;
@@ -48,6 +50,18 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface DocumentDataDefinitionTypeResource {
 
+	public Page<DocumentDataDefinitionType>
+			getAssetLibraryDocumentDataDefinitionTypesPage(
+				Long assetLibraryId, String search,
+				com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
+				Filter filter, Pagination pagination, Sort[] sorts)
+		throws Exception;
+
+	public Response postAssetLibraryDocumentDataDefinitionTypesPageExportBatch(
+			Long assetLibraryId, String search, Filter filter, Sort[] sorts,
+			String callbackURL, String contentType, String fieldNames)
+		throws Exception;
+
 	public DocumentDataDefinitionType
 			postAssetLibraryDocumentDataDefinitionType(
 				Long assetLibraryId,
@@ -56,6 +70,22 @@ public interface DocumentDataDefinitionTypeResource {
 
 	public Response postAssetLibraryDocumentDataDefinitionTypeBatch(
 			Long assetLibraryId, String callbackURL, Object object)
+		throws Exception;
+
+	public DocumentDataDefinitionType getDocumentDataDefinitionType(
+			Long documentDataDefinitionTypeId)
+		throws Exception;
+
+	public Page<DocumentDataDefinitionType>
+			getSiteDocumentDataDefinitionTypesPage(
+				Long siteId, String search,
+				com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
+				Filter filter, Pagination pagination, Sort[] sorts)
+		throws Exception;
+
+	public Response postSiteDocumentDataDefinitionTypesPageExportBatch(
+			Long siteId, String search, Filter filter, Sort[] sorts,
+			String callbackURL, String contentType, String fieldNames)
 		throws Exception;
 
 	public DocumentDataDefinitionType postSiteDocumentDataDefinitionType(

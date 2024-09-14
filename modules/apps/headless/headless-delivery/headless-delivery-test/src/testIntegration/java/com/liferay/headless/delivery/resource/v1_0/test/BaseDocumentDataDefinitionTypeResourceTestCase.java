@@ -19,8 +19,10 @@ import com.liferay.headless.delivery.client.dto.v1_0.DocumentDataDefinitionType;
 import com.liferay.headless.delivery.client.dto.v1_0.Field;
 import com.liferay.headless.delivery.client.http.HttpInvoker;
 import com.liferay.headless.delivery.client.pagination.Page;
+import com.liferay.headless.delivery.client.pagination.Pagination;
 import com.liferay.headless.delivery.client.resource.v1_0.DocumentDataDefinitionTypeResource;
 import com.liferay.headless.delivery.client.serdes.v1_0.DocumentDataDefinitionTypeSerDes;
+import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -36,11 +38,13 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.search.test.rule.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
@@ -208,6 +212,517 @@ public abstract class BaseDocumentDataDefinitionTypeResourceTestCase {
 	}
 
 	@Test
+	public void testGetAssetLibraryDocumentDataDefinitionTypesPage()
+		throws Exception {
+
+		Long assetLibraryId =
+			testGetAssetLibraryDocumentDataDefinitionTypesPage_getAssetLibraryId();
+		Long irrelevantAssetLibraryId =
+			testGetAssetLibraryDocumentDataDefinitionTypesPage_getIrrelevantAssetLibraryId();
+
+		Page<DocumentDataDefinitionType> page =
+			documentDataDefinitionTypeResource.
+				getAssetLibraryDocumentDataDefinitionTypesPage(
+					assetLibraryId, null, null, null, Pagination.of(1, 10),
+					null);
+
+		long totalCount = page.getTotalCount();
+
+		if (irrelevantAssetLibraryId != null) {
+			DocumentDataDefinitionType irrelevantDocumentDataDefinitionType =
+				testGetAssetLibraryDocumentDataDefinitionTypesPage_addDocumentDataDefinitionType(
+					irrelevantAssetLibraryId,
+					randomIrrelevantDocumentDataDefinitionType());
+
+			page =
+				documentDataDefinitionTypeResource.
+					getAssetLibraryDocumentDataDefinitionTypesPage(
+						irrelevantAssetLibraryId, null, null, null,
+						Pagination.of(1, (int)totalCount + 1), null);
+
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
+
+			assertContains(
+				irrelevantDocumentDataDefinitionType,
+				(List<DocumentDataDefinitionType>)page.getItems());
+			assertValid(
+				page,
+				testGetAssetLibraryDocumentDataDefinitionTypesPage_getExpectedActions(
+					irrelevantAssetLibraryId));
+		}
+
+		DocumentDataDefinitionType documentDataDefinitionType1 =
+			testGetAssetLibraryDocumentDataDefinitionTypesPage_addDocumentDataDefinitionType(
+				assetLibraryId, randomDocumentDataDefinitionType());
+
+		DocumentDataDefinitionType documentDataDefinitionType2 =
+			testGetAssetLibraryDocumentDataDefinitionTypesPage_addDocumentDataDefinitionType(
+				assetLibraryId, randomDocumentDataDefinitionType());
+
+		page =
+			documentDataDefinitionTypeResource.
+				getAssetLibraryDocumentDataDefinitionTypesPage(
+					assetLibraryId, null, null, null, Pagination.of(1, 10),
+					null);
+
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
+
+		assertContains(
+			documentDataDefinitionType1,
+			(List<DocumentDataDefinitionType>)page.getItems());
+		assertContains(
+			documentDataDefinitionType2,
+			(List<DocumentDataDefinitionType>)page.getItems());
+		assertValid(
+			page,
+			testGetAssetLibraryDocumentDataDefinitionTypesPage_getExpectedActions(
+				assetLibraryId));
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetAssetLibraryDocumentDataDefinitionTypesPage_getExpectedActions(
+				Long assetLibraryId)
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		Map createBatchAction = new HashMap<>();
+		createBatchAction.put("method", "POST");
+		createBatchAction.put(
+			"href",
+			"http://localhost:8080/o/headless-delivery/v1.0/asset-libraries/{assetLibraryId}/document-data-definition-types/batch".
+				replace("{assetLibraryId}", String.valueOf(assetLibraryId)));
+
+		expectedActions.put("createBatch", createBatchAction);
+
+		return expectedActions;
+	}
+
+	@Test
+	public void testGetAssetLibraryDocumentDataDefinitionTypesPageWithFilterDateTimeEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DATE_TIME);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long assetLibraryId =
+			testGetAssetLibraryDocumentDataDefinitionTypesPage_getAssetLibraryId();
+
+		DocumentDataDefinitionType documentDataDefinitionType1 =
+			randomDocumentDataDefinitionType();
+
+		documentDataDefinitionType1 =
+			testGetAssetLibraryDocumentDataDefinitionTypesPage_addDocumentDataDefinitionType(
+				assetLibraryId, documentDataDefinitionType1);
+
+		for (EntityField entityField : entityFields) {
+			Page<DocumentDataDefinitionType> page =
+				documentDataDefinitionTypeResource.
+					getAssetLibraryDocumentDataDefinitionTypesPage(
+						assetLibraryId, null, null,
+						getFilterString(
+							entityField, "between",
+							documentDataDefinitionType1),
+						Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(documentDataDefinitionType1),
+				(List<DocumentDataDefinitionType>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetAssetLibraryDocumentDataDefinitionTypesPageWithFilterDoubleEquals()
+		throws Exception {
+
+		testGetAssetLibraryDocumentDataDefinitionTypesPageWithFilter(
+			"eq", EntityField.Type.DOUBLE);
+	}
+
+	@Test
+	public void testGetAssetLibraryDocumentDataDefinitionTypesPageWithFilterStringContains()
+		throws Exception {
+
+		testGetAssetLibraryDocumentDataDefinitionTypesPageWithFilter(
+			"contains", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetAssetLibraryDocumentDataDefinitionTypesPageWithFilterStringEquals()
+		throws Exception {
+
+		testGetAssetLibraryDocumentDataDefinitionTypesPageWithFilter(
+			"eq", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetAssetLibraryDocumentDataDefinitionTypesPageWithFilterStringStartsWith()
+		throws Exception {
+
+		testGetAssetLibraryDocumentDataDefinitionTypesPageWithFilter(
+			"startswith", EntityField.Type.STRING);
+	}
+
+	protected void testGetAssetLibraryDocumentDataDefinitionTypesPageWithFilter(
+			String operator, EntityField.Type type)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long assetLibraryId =
+			testGetAssetLibraryDocumentDataDefinitionTypesPage_getAssetLibraryId();
+
+		DocumentDataDefinitionType documentDataDefinitionType1 =
+			testGetAssetLibraryDocumentDataDefinitionTypesPage_addDocumentDataDefinitionType(
+				assetLibraryId, randomDocumentDataDefinitionType());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		DocumentDataDefinitionType documentDataDefinitionType2 =
+			testGetAssetLibraryDocumentDataDefinitionTypesPage_addDocumentDataDefinitionType(
+				assetLibraryId, randomDocumentDataDefinitionType());
+
+		for (EntityField entityField : entityFields) {
+			Page<DocumentDataDefinitionType> page =
+				documentDataDefinitionTypeResource.
+					getAssetLibraryDocumentDataDefinitionTypesPage(
+						assetLibraryId, null, null,
+						getFilterString(
+							entityField, operator, documentDataDefinitionType1),
+						Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(documentDataDefinitionType1),
+				(List<DocumentDataDefinitionType>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetAssetLibraryDocumentDataDefinitionTypesPageWithPagination()
+		throws Exception {
+
+		Long assetLibraryId =
+			testGetAssetLibraryDocumentDataDefinitionTypesPage_getAssetLibraryId();
+
+		Page<DocumentDataDefinitionType> documentDataDefinitionTypePage =
+			documentDataDefinitionTypeResource.
+				getAssetLibraryDocumentDataDefinitionTypesPage(
+					assetLibraryId, null, null, null, null, null);
+
+		int totalCount = GetterUtil.getInteger(
+			documentDataDefinitionTypePage.getTotalCount());
+
+		DocumentDataDefinitionType documentDataDefinitionType1 =
+			testGetAssetLibraryDocumentDataDefinitionTypesPage_addDocumentDataDefinitionType(
+				assetLibraryId, randomDocumentDataDefinitionType());
+
+		DocumentDataDefinitionType documentDataDefinitionType2 =
+			testGetAssetLibraryDocumentDataDefinitionTypesPage_addDocumentDataDefinitionType(
+				assetLibraryId, randomDocumentDataDefinitionType());
+
+		DocumentDataDefinitionType documentDataDefinitionType3 =
+			testGetAssetLibraryDocumentDataDefinitionTypesPage_addDocumentDataDefinitionType(
+				assetLibraryId, randomDocumentDataDefinitionType());
+
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
+
+		int pageSizeLimit = 500;
+
+		if (totalCount >= (pageSizeLimit - 2)) {
+			Page<DocumentDataDefinitionType> page1 =
+				documentDataDefinitionTypeResource.
+					getAssetLibraryDocumentDataDefinitionTypesPage(
+						assetLibraryId, null, null, null,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
+
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
+
+			assertContains(
+				documentDataDefinitionType1,
+				(List<DocumentDataDefinitionType>)page1.getItems());
+
+			Page<DocumentDataDefinitionType> page2 =
+				documentDataDefinitionTypeResource.
+					getAssetLibraryDocumentDataDefinitionTypesPage(
+						assetLibraryId, null, null, null,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
+
+			assertContains(
+				documentDataDefinitionType2,
+				(List<DocumentDataDefinitionType>)page2.getItems());
+
+			Page<DocumentDataDefinitionType> page3 =
+				documentDataDefinitionTypeResource.
+					getAssetLibraryDocumentDataDefinitionTypesPage(
+						assetLibraryId, null, null, null,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
+
+			assertContains(
+				documentDataDefinitionType3,
+				(List<DocumentDataDefinitionType>)page3.getItems());
+		}
+		else {
+			Page<DocumentDataDefinitionType> page1 =
+				documentDataDefinitionTypeResource.
+					getAssetLibraryDocumentDataDefinitionTypesPage(
+						assetLibraryId, null, null, null,
+						Pagination.of(1, totalCount + 2), null);
+
+			List<DocumentDataDefinitionType> documentDataDefinitionTypes1 =
+				(List<DocumentDataDefinitionType>)page1.getItems();
+
+			Assert.assertEquals(
+				documentDataDefinitionTypes1.toString(), totalCount + 2,
+				documentDataDefinitionTypes1.size());
+
+			Page<DocumentDataDefinitionType> page2 =
+				documentDataDefinitionTypeResource.
+					getAssetLibraryDocumentDataDefinitionTypesPage(
+						assetLibraryId, null, null, null,
+						Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<DocumentDataDefinitionType> documentDataDefinitionTypes2 =
+				(List<DocumentDataDefinitionType>)page2.getItems();
+
+			Assert.assertEquals(
+				documentDataDefinitionTypes2.toString(), 1,
+				documentDataDefinitionTypes2.size());
+
+			Page<DocumentDataDefinitionType> page3 =
+				documentDataDefinitionTypeResource.
+					getAssetLibraryDocumentDataDefinitionTypesPage(
+						assetLibraryId, null, null, null,
+						Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(
+				documentDataDefinitionType1,
+				(List<DocumentDataDefinitionType>)page3.getItems());
+			assertContains(
+				documentDataDefinitionType2,
+				(List<DocumentDataDefinitionType>)page3.getItems());
+			assertContains(
+				documentDataDefinitionType3,
+				(List<DocumentDataDefinitionType>)page3.getItems());
+		}
+	}
+
+	@Test
+	public void testGetAssetLibraryDocumentDataDefinitionTypesPageWithSortDateTime()
+		throws Exception {
+
+		testGetAssetLibraryDocumentDataDefinitionTypesPageWithSort(
+			EntityField.Type.DATE_TIME,
+			(entityField, documentDataDefinitionType1,
+			 documentDataDefinitionType2) -> {
+
+				BeanTestUtil.setProperty(
+					documentDataDefinitionType1, entityField.getName(),
+					new Date(System.currentTimeMillis() - (2 * Time.MINUTE)));
+			});
+	}
+
+	@Test
+	public void testGetAssetLibraryDocumentDataDefinitionTypesPageWithSortDouble()
+		throws Exception {
+
+		testGetAssetLibraryDocumentDataDefinitionTypesPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, documentDataDefinitionType1,
+			 documentDataDefinitionType2) -> {
+
+				BeanTestUtil.setProperty(
+					documentDataDefinitionType1, entityField.getName(), 0.1);
+				BeanTestUtil.setProperty(
+					documentDataDefinitionType2, entityField.getName(), 0.5);
+			});
+	}
+
+	@Test
+	public void testGetAssetLibraryDocumentDataDefinitionTypesPageWithSortInteger()
+		throws Exception {
+
+		testGetAssetLibraryDocumentDataDefinitionTypesPageWithSort(
+			EntityField.Type.INTEGER,
+			(entityField, documentDataDefinitionType1,
+			 documentDataDefinitionType2) -> {
+
+				BeanTestUtil.setProperty(
+					documentDataDefinitionType1, entityField.getName(), 0);
+				BeanTestUtil.setProperty(
+					documentDataDefinitionType2, entityField.getName(), 1);
+			});
+	}
+
+	@Test
+	public void testGetAssetLibraryDocumentDataDefinitionTypesPageWithSortString()
+		throws Exception {
+
+		testGetAssetLibraryDocumentDataDefinitionTypesPageWithSort(
+			EntityField.Type.STRING,
+			(entityField, documentDataDefinitionType1,
+			 documentDataDefinitionType2) -> {
+
+				Class<?> clazz = documentDataDefinitionType1.getClass();
+
+				String entityFieldName = entityField.getName();
+
+				Method method = clazz.getMethod(
+					"get" + StringUtil.upperCaseFirstLetter(entityFieldName));
+
+				Class<?> returnType = method.getReturnType();
+
+				if (returnType.isAssignableFrom(Map.class)) {
+					BeanTestUtil.setProperty(
+						documentDataDefinitionType1, entityFieldName,
+						Collections.singletonMap("Aaa", "Aaa"));
+					BeanTestUtil.setProperty(
+						documentDataDefinitionType2, entityFieldName,
+						Collections.singletonMap("Bbb", "Bbb"));
+				}
+				else if (entityFieldName.contains("email")) {
+					BeanTestUtil.setProperty(
+						documentDataDefinitionType1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+					BeanTestUtil.setProperty(
+						documentDataDefinitionType2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+				}
+				else {
+					BeanTestUtil.setProperty(
+						documentDataDefinitionType1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+					BeanTestUtil.setProperty(
+						documentDataDefinitionType2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+				}
+			});
+	}
+
+	protected void testGetAssetLibraryDocumentDataDefinitionTypesPageWithSort(
+			EntityField.Type type,
+			UnsafeTriConsumer
+				<EntityField, DocumentDataDefinitionType,
+				 DocumentDataDefinitionType, Exception> unsafeTriConsumer)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long assetLibraryId =
+			testGetAssetLibraryDocumentDataDefinitionTypesPage_getAssetLibraryId();
+
+		DocumentDataDefinitionType documentDataDefinitionType1 =
+			randomDocumentDataDefinitionType();
+		DocumentDataDefinitionType documentDataDefinitionType2 =
+			randomDocumentDataDefinitionType();
+
+		for (EntityField entityField : entityFields) {
+			unsafeTriConsumer.accept(
+				entityField, documentDataDefinitionType1,
+				documentDataDefinitionType2);
+		}
+
+		documentDataDefinitionType1 =
+			testGetAssetLibraryDocumentDataDefinitionTypesPage_addDocumentDataDefinitionType(
+				assetLibraryId, documentDataDefinitionType1);
+
+		documentDataDefinitionType2 =
+			testGetAssetLibraryDocumentDataDefinitionTypesPage_addDocumentDataDefinitionType(
+				assetLibraryId, documentDataDefinitionType2);
+
+		Page<DocumentDataDefinitionType> page =
+			documentDataDefinitionTypeResource.
+				getAssetLibraryDocumentDataDefinitionTypesPage(
+					assetLibraryId, null, null, null, null, null);
+
+		for (EntityField entityField : entityFields) {
+			Page<DocumentDataDefinitionType> ascPage =
+				documentDataDefinitionTypeResource.
+					getAssetLibraryDocumentDataDefinitionTypesPage(
+						assetLibraryId, null, null, null,
+						Pagination.of(1, (int)page.getTotalCount() + 1),
+						entityField.getName() + ":asc");
+
+			assertContains(
+				documentDataDefinitionType1,
+				(List<DocumentDataDefinitionType>)ascPage.getItems());
+			assertContains(
+				documentDataDefinitionType2,
+				(List<DocumentDataDefinitionType>)ascPage.getItems());
+
+			Page<DocumentDataDefinitionType> descPage =
+				documentDataDefinitionTypeResource.
+					getAssetLibraryDocumentDataDefinitionTypesPage(
+						assetLibraryId, null, null, null,
+						Pagination.of(1, (int)page.getTotalCount() + 1),
+						entityField.getName() + ":desc");
+
+			assertContains(
+				documentDataDefinitionType2,
+				(List<DocumentDataDefinitionType>)descPage.getItems());
+			assertContains(
+				documentDataDefinitionType1,
+				(List<DocumentDataDefinitionType>)descPage.getItems());
+		}
+	}
+
+	protected DocumentDataDefinitionType
+			testGetAssetLibraryDocumentDataDefinitionTypesPage_addDocumentDataDefinitionType(
+				Long assetLibraryId,
+				DocumentDataDefinitionType documentDataDefinitionType)
+		throws Exception {
+
+		return documentDataDefinitionTypeResource.
+			postAssetLibraryDocumentDataDefinitionType(
+				assetLibraryId, documentDataDefinitionType);
+	}
+
+	protected Long
+			testGetAssetLibraryDocumentDataDefinitionTypesPage_getAssetLibraryId()
+		throws Exception {
+
+		return testDepotEntry.getDepotEntryId();
+	}
+
+	protected Long
+			testGetAssetLibraryDocumentDataDefinitionTypesPage_getIrrelevantAssetLibraryId()
+		throws Exception {
+
+		return null;
+	}
+
+	@Test
 	public void testPostAssetLibraryDocumentDataDefinitionType()
 		throws Exception {
 
@@ -230,8 +745,722 @@ public abstract class BaseDocumentDataDefinitionTypeResourceTestCase {
 
 		return documentDataDefinitionTypeResource.
 			postAssetLibraryDocumentDataDefinitionType(
-				testGetAssetLibraryDocumentDataDefinitionType_getAssetLibraryId(
-					documentDataDefinitionType));
+				testGetAssetLibraryDocumentDataDefinitionTypesPage_getAssetLibraryId(),
+				documentDataDefinitionType);
+	}
+
+	@Test
+	public void testGetDocumentDataDefinitionType() throws Exception {
+		DocumentDataDefinitionType postDocumentDataDefinitionType =
+			testGetDocumentDataDefinitionType_addDocumentDataDefinitionType();
+
+		DocumentDataDefinitionType getDocumentDataDefinitionType =
+			documentDataDefinitionTypeResource.getDocumentDataDefinitionType(
+				postDocumentDataDefinitionType.getId());
+
+		assertEquals(
+			postDocumentDataDefinitionType, getDocumentDataDefinitionType);
+		assertValid(getDocumentDataDefinitionType);
+	}
+
+	protected DocumentDataDefinitionType
+			testGetDocumentDataDefinitionType_addDocumentDataDefinitionType()
+		throws Exception {
+
+		return documentDataDefinitionTypeResource.
+			postSiteDocumentDataDefinitionType(
+				testGroup.getGroupId(), randomDocumentDataDefinitionType());
+	}
+
+	@Test
+	public void testGraphQLGetDocumentDataDefinitionType() throws Exception {
+		DocumentDataDefinitionType documentDataDefinitionType =
+			testGraphQLGetDocumentDataDefinitionType_addDocumentDataDefinitionType();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				documentDataDefinitionType,
+				DocumentDataDefinitionTypeSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"documentDataDefinitionType",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"documentDataDefinitionTypeId",
+											documentDataDefinitionType.getId());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/documentDataDefinitionType"))));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		Assert.assertTrue(
+			equals(
+				documentDataDefinitionType,
+				DocumentDataDefinitionTypeSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessDelivery_v1_0",
+								new GraphQLField(
+									"documentDataDefinitionType",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"documentDataDefinitionTypeId",
+												documentDataDefinitionType.
+													getId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+						"Object/documentDataDefinitionType"))));
+	}
+
+	@Test
+	public void testGraphQLGetDocumentDataDefinitionTypeNotFound()
+		throws Exception {
+
+		Long irrelevantDocumentDataDefinitionTypeId =
+			RandomTestUtil.randomLong();
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"documentDataDefinitionType",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"documentDataDefinitionTypeId",
+									irrelevantDocumentDataDefinitionTypeId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessDelivery_v1_0",
+						new GraphQLField(
+							"documentDataDefinitionType",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"documentDataDefinitionTypeId",
+										irrelevantDocumentDataDefinitionTypeId);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected DocumentDataDefinitionType
+			testGraphQLGetDocumentDataDefinitionType_addDocumentDataDefinitionType()
+		throws Exception {
+
+		return testGraphQLDocumentDataDefinitionType_addDocumentDataDefinitionType();
+	}
+
+	@Test
+	public void testGetSiteDocumentDataDefinitionTypesPage() throws Exception {
+		Long siteId = testGetSiteDocumentDataDefinitionTypesPage_getSiteId();
+		Long irrelevantSiteId =
+			testGetSiteDocumentDataDefinitionTypesPage_getIrrelevantSiteId();
+
+		Page<DocumentDataDefinitionType> page =
+			documentDataDefinitionTypeResource.
+				getSiteDocumentDataDefinitionTypesPage(
+					siteId, null, null, null, Pagination.of(1, 10), null);
+
+		long totalCount = page.getTotalCount();
+
+		if (irrelevantSiteId != null) {
+			DocumentDataDefinitionType irrelevantDocumentDataDefinitionType =
+				testGetSiteDocumentDataDefinitionTypesPage_addDocumentDataDefinitionType(
+					irrelevantSiteId,
+					randomIrrelevantDocumentDataDefinitionType());
+
+			page =
+				documentDataDefinitionTypeResource.
+					getSiteDocumentDataDefinitionTypesPage(
+						irrelevantSiteId, null, null, null,
+						Pagination.of(1, (int)totalCount + 1), null);
+
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
+
+			assertContains(
+				irrelevantDocumentDataDefinitionType,
+				(List<DocumentDataDefinitionType>)page.getItems());
+			assertValid(
+				page,
+				testGetSiteDocumentDataDefinitionTypesPage_getExpectedActions(
+					irrelevantSiteId));
+		}
+
+		DocumentDataDefinitionType documentDataDefinitionType1 =
+			testGetSiteDocumentDataDefinitionTypesPage_addDocumentDataDefinitionType(
+				siteId, randomDocumentDataDefinitionType());
+
+		DocumentDataDefinitionType documentDataDefinitionType2 =
+			testGetSiteDocumentDataDefinitionTypesPage_addDocumentDataDefinitionType(
+				siteId, randomDocumentDataDefinitionType());
+
+		page =
+			documentDataDefinitionTypeResource.
+				getSiteDocumentDataDefinitionTypesPage(
+					siteId, null, null, null, Pagination.of(1, 10), null);
+
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
+
+		assertContains(
+			documentDataDefinitionType1,
+			(List<DocumentDataDefinitionType>)page.getItems());
+		assertContains(
+			documentDataDefinitionType2,
+			(List<DocumentDataDefinitionType>)page.getItems());
+		assertValid(
+			page,
+			testGetSiteDocumentDataDefinitionTypesPage_getExpectedActions(
+				siteId));
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetSiteDocumentDataDefinitionTypesPage_getExpectedActions(
+				Long siteId)
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		Map createBatchAction = new HashMap<>();
+		createBatchAction.put("method", "POST");
+		createBatchAction.put(
+			"href",
+			"http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/document-data-definition-types/batch".
+				replace("{siteId}", String.valueOf(siteId)));
+
+		expectedActions.put("createBatch", createBatchAction);
+
+		return expectedActions;
+	}
+
+	@Test
+	public void testGetSiteDocumentDataDefinitionTypesPageWithFilterDateTimeEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DATE_TIME);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long siteId = testGetSiteDocumentDataDefinitionTypesPage_getSiteId();
+
+		DocumentDataDefinitionType documentDataDefinitionType1 =
+			randomDocumentDataDefinitionType();
+
+		documentDataDefinitionType1 =
+			testGetSiteDocumentDataDefinitionTypesPage_addDocumentDataDefinitionType(
+				siteId, documentDataDefinitionType1);
+
+		for (EntityField entityField : entityFields) {
+			Page<DocumentDataDefinitionType> page =
+				documentDataDefinitionTypeResource.
+					getSiteDocumentDataDefinitionTypesPage(
+						siteId, null, null,
+						getFilterString(
+							entityField, "between",
+							documentDataDefinitionType1),
+						Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(documentDataDefinitionType1),
+				(List<DocumentDataDefinitionType>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetSiteDocumentDataDefinitionTypesPageWithFilterDoubleEquals()
+		throws Exception {
+
+		testGetSiteDocumentDataDefinitionTypesPageWithFilter(
+			"eq", EntityField.Type.DOUBLE);
+	}
+
+	@Test
+	public void testGetSiteDocumentDataDefinitionTypesPageWithFilterStringContains()
+		throws Exception {
+
+		testGetSiteDocumentDataDefinitionTypesPageWithFilter(
+			"contains", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetSiteDocumentDataDefinitionTypesPageWithFilterStringEquals()
+		throws Exception {
+
+		testGetSiteDocumentDataDefinitionTypesPageWithFilter(
+			"eq", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetSiteDocumentDataDefinitionTypesPageWithFilterStringStartsWith()
+		throws Exception {
+
+		testGetSiteDocumentDataDefinitionTypesPageWithFilter(
+			"startswith", EntityField.Type.STRING);
+	}
+
+	protected void testGetSiteDocumentDataDefinitionTypesPageWithFilter(
+			String operator, EntityField.Type type)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long siteId = testGetSiteDocumentDataDefinitionTypesPage_getSiteId();
+
+		DocumentDataDefinitionType documentDataDefinitionType1 =
+			testGetSiteDocumentDataDefinitionTypesPage_addDocumentDataDefinitionType(
+				siteId, randomDocumentDataDefinitionType());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		DocumentDataDefinitionType documentDataDefinitionType2 =
+			testGetSiteDocumentDataDefinitionTypesPage_addDocumentDataDefinitionType(
+				siteId, randomDocumentDataDefinitionType());
+
+		for (EntityField entityField : entityFields) {
+			Page<DocumentDataDefinitionType> page =
+				documentDataDefinitionTypeResource.
+					getSiteDocumentDataDefinitionTypesPage(
+						siteId, null, null,
+						getFilterString(
+							entityField, operator, documentDataDefinitionType1),
+						Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(documentDataDefinitionType1),
+				(List<DocumentDataDefinitionType>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetSiteDocumentDataDefinitionTypesPageWithPagination()
+		throws Exception {
+
+		Long siteId = testGetSiteDocumentDataDefinitionTypesPage_getSiteId();
+
+		Page<DocumentDataDefinitionType> documentDataDefinitionTypePage =
+			documentDataDefinitionTypeResource.
+				getSiteDocumentDataDefinitionTypesPage(
+					siteId, null, null, null, null, null);
+
+		int totalCount = GetterUtil.getInteger(
+			documentDataDefinitionTypePage.getTotalCount());
+
+		DocumentDataDefinitionType documentDataDefinitionType1 =
+			testGetSiteDocumentDataDefinitionTypesPage_addDocumentDataDefinitionType(
+				siteId, randomDocumentDataDefinitionType());
+
+		DocumentDataDefinitionType documentDataDefinitionType2 =
+			testGetSiteDocumentDataDefinitionTypesPage_addDocumentDataDefinitionType(
+				siteId, randomDocumentDataDefinitionType());
+
+		DocumentDataDefinitionType documentDataDefinitionType3 =
+			testGetSiteDocumentDataDefinitionTypesPage_addDocumentDataDefinitionType(
+				siteId, randomDocumentDataDefinitionType());
+
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
+
+		int pageSizeLimit = 500;
+
+		if (totalCount >= (pageSizeLimit - 2)) {
+			Page<DocumentDataDefinitionType> page1 =
+				documentDataDefinitionTypeResource.
+					getSiteDocumentDataDefinitionTypesPage(
+						siteId, null, null, null,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
+
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
+
+			assertContains(
+				documentDataDefinitionType1,
+				(List<DocumentDataDefinitionType>)page1.getItems());
+
+			Page<DocumentDataDefinitionType> page2 =
+				documentDataDefinitionTypeResource.
+					getSiteDocumentDataDefinitionTypesPage(
+						siteId, null, null, null,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
+
+			assertContains(
+				documentDataDefinitionType2,
+				(List<DocumentDataDefinitionType>)page2.getItems());
+
+			Page<DocumentDataDefinitionType> page3 =
+				documentDataDefinitionTypeResource.
+					getSiteDocumentDataDefinitionTypesPage(
+						siteId, null, null, null,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
+
+			assertContains(
+				documentDataDefinitionType3,
+				(List<DocumentDataDefinitionType>)page3.getItems());
+		}
+		else {
+			Page<DocumentDataDefinitionType> page1 =
+				documentDataDefinitionTypeResource.
+					getSiteDocumentDataDefinitionTypesPage(
+						siteId, null, null, null,
+						Pagination.of(1, totalCount + 2), null);
+
+			List<DocumentDataDefinitionType> documentDataDefinitionTypes1 =
+				(List<DocumentDataDefinitionType>)page1.getItems();
+
+			Assert.assertEquals(
+				documentDataDefinitionTypes1.toString(), totalCount + 2,
+				documentDataDefinitionTypes1.size());
+
+			Page<DocumentDataDefinitionType> page2 =
+				documentDataDefinitionTypeResource.
+					getSiteDocumentDataDefinitionTypesPage(
+						siteId, null, null, null,
+						Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<DocumentDataDefinitionType> documentDataDefinitionTypes2 =
+				(List<DocumentDataDefinitionType>)page2.getItems();
+
+			Assert.assertEquals(
+				documentDataDefinitionTypes2.toString(), 1,
+				documentDataDefinitionTypes2.size());
+
+			Page<DocumentDataDefinitionType> page3 =
+				documentDataDefinitionTypeResource.
+					getSiteDocumentDataDefinitionTypesPage(
+						siteId, null, null, null,
+						Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(
+				documentDataDefinitionType1,
+				(List<DocumentDataDefinitionType>)page3.getItems());
+			assertContains(
+				documentDataDefinitionType2,
+				(List<DocumentDataDefinitionType>)page3.getItems());
+			assertContains(
+				documentDataDefinitionType3,
+				(List<DocumentDataDefinitionType>)page3.getItems());
+		}
+	}
+
+	@Test
+	public void testGetSiteDocumentDataDefinitionTypesPageWithSortDateTime()
+		throws Exception {
+
+		testGetSiteDocumentDataDefinitionTypesPageWithSort(
+			EntityField.Type.DATE_TIME,
+			(entityField, documentDataDefinitionType1,
+			 documentDataDefinitionType2) -> {
+
+				BeanTestUtil.setProperty(
+					documentDataDefinitionType1, entityField.getName(),
+					new Date(System.currentTimeMillis() - (2 * Time.MINUTE)));
+			});
+	}
+
+	@Test
+	public void testGetSiteDocumentDataDefinitionTypesPageWithSortDouble()
+		throws Exception {
+
+		testGetSiteDocumentDataDefinitionTypesPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, documentDataDefinitionType1,
+			 documentDataDefinitionType2) -> {
+
+				BeanTestUtil.setProperty(
+					documentDataDefinitionType1, entityField.getName(), 0.1);
+				BeanTestUtil.setProperty(
+					documentDataDefinitionType2, entityField.getName(), 0.5);
+			});
+	}
+
+	@Test
+	public void testGetSiteDocumentDataDefinitionTypesPageWithSortInteger()
+		throws Exception {
+
+		testGetSiteDocumentDataDefinitionTypesPageWithSort(
+			EntityField.Type.INTEGER,
+			(entityField, documentDataDefinitionType1,
+			 documentDataDefinitionType2) -> {
+
+				BeanTestUtil.setProperty(
+					documentDataDefinitionType1, entityField.getName(), 0);
+				BeanTestUtil.setProperty(
+					documentDataDefinitionType2, entityField.getName(), 1);
+			});
+	}
+
+	@Test
+	public void testGetSiteDocumentDataDefinitionTypesPageWithSortString()
+		throws Exception {
+
+		testGetSiteDocumentDataDefinitionTypesPageWithSort(
+			EntityField.Type.STRING,
+			(entityField, documentDataDefinitionType1,
+			 documentDataDefinitionType2) -> {
+
+				Class<?> clazz = documentDataDefinitionType1.getClass();
+
+				String entityFieldName = entityField.getName();
+
+				Method method = clazz.getMethod(
+					"get" + StringUtil.upperCaseFirstLetter(entityFieldName));
+
+				Class<?> returnType = method.getReturnType();
+
+				if (returnType.isAssignableFrom(Map.class)) {
+					BeanTestUtil.setProperty(
+						documentDataDefinitionType1, entityFieldName,
+						Collections.singletonMap("Aaa", "Aaa"));
+					BeanTestUtil.setProperty(
+						documentDataDefinitionType2, entityFieldName,
+						Collections.singletonMap("Bbb", "Bbb"));
+				}
+				else if (entityFieldName.contains("email")) {
+					BeanTestUtil.setProperty(
+						documentDataDefinitionType1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+					BeanTestUtil.setProperty(
+						documentDataDefinitionType2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+				}
+				else {
+					BeanTestUtil.setProperty(
+						documentDataDefinitionType1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+					BeanTestUtil.setProperty(
+						documentDataDefinitionType2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+				}
+			});
+	}
+
+	protected void testGetSiteDocumentDataDefinitionTypesPageWithSort(
+			EntityField.Type type,
+			UnsafeTriConsumer
+				<EntityField, DocumentDataDefinitionType,
+				 DocumentDataDefinitionType, Exception> unsafeTriConsumer)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long siteId = testGetSiteDocumentDataDefinitionTypesPage_getSiteId();
+
+		DocumentDataDefinitionType documentDataDefinitionType1 =
+			randomDocumentDataDefinitionType();
+		DocumentDataDefinitionType documentDataDefinitionType2 =
+			randomDocumentDataDefinitionType();
+
+		for (EntityField entityField : entityFields) {
+			unsafeTriConsumer.accept(
+				entityField, documentDataDefinitionType1,
+				documentDataDefinitionType2);
+		}
+
+		documentDataDefinitionType1 =
+			testGetSiteDocumentDataDefinitionTypesPage_addDocumentDataDefinitionType(
+				siteId, documentDataDefinitionType1);
+
+		documentDataDefinitionType2 =
+			testGetSiteDocumentDataDefinitionTypesPage_addDocumentDataDefinitionType(
+				siteId, documentDataDefinitionType2);
+
+		Page<DocumentDataDefinitionType> page =
+			documentDataDefinitionTypeResource.
+				getSiteDocumentDataDefinitionTypesPage(
+					siteId, null, null, null, null, null);
+
+		for (EntityField entityField : entityFields) {
+			Page<DocumentDataDefinitionType> ascPage =
+				documentDataDefinitionTypeResource.
+					getSiteDocumentDataDefinitionTypesPage(
+						siteId, null, null, null,
+						Pagination.of(1, (int)page.getTotalCount() + 1),
+						entityField.getName() + ":asc");
+
+			assertContains(
+				documentDataDefinitionType1,
+				(List<DocumentDataDefinitionType>)ascPage.getItems());
+			assertContains(
+				documentDataDefinitionType2,
+				(List<DocumentDataDefinitionType>)ascPage.getItems());
+
+			Page<DocumentDataDefinitionType> descPage =
+				documentDataDefinitionTypeResource.
+					getSiteDocumentDataDefinitionTypesPage(
+						siteId, null, null, null,
+						Pagination.of(1, (int)page.getTotalCount() + 1),
+						entityField.getName() + ":desc");
+
+			assertContains(
+				documentDataDefinitionType2,
+				(List<DocumentDataDefinitionType>)descPage.getItems());
+			assertContains(
+				documentDataDefinitionType1,
+				(List<DocumentDataDefinitionType>)descPage.getItems());
+		}
+	}
+
+	protected DocumentDataDefinitionType
+			testGetSiteDocumentDataDefinitionTypesPage_addDocumentDataDefinitionType(
+				Long siteId,
+				DocumentDataDefinitionType documentDataDefinitionType)
+		throws Exception {
+
+		return documentDataDefinitionTypeResource.
+			postSiteDocumentDataDefinitionType(
+				siteId, documentDataDefinitionType);
+	}
+
+	protected Long testGetSiteDocumentDataDefinitionTypesPage_getSiteId()
+		throws Exception {
+
+		return testGroup.getGroupId();
+	}
+
+	protected Long
+			testGetSiteDocumentDataDefinitionTypesPage_getIrrelevantSiteId()
+		throws Exception {
+
+		return irrelevantGroup.getGroupId();
+	}
+
+	@Test
+	public void testGraphQLGetSiteDocumentDataDefinitionTypesPage()
+		throws Exception {
+
+		Long siteId = testGetSiteDocumentDataDefinitionTypesPage_getSiteId();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"documentDataDefinitionTypes",
+			new HashMap<String, Object>() {
+				{
+					put("page", 1);
+					put("pageSize", 10);
+
+					put("siteKey", "\"" + siteId + "\"");
+				}
+			},
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
+
+		JSONObject documentDataDefinitionTypesJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/documentDataDefinitionTypes");
+
+		long totalCount = documentDataDefinitionTypesJSONObject.getLong(
+			"totalCount");
+
+		DocumentDataDefinitionType documentDataDefinitionType1 =
+			testGraphQLGetSiteDocumentDataDefinitionTypesPage_addDocumentDataDefinitionType();
+		DocumentDataDefinitionType documentDataDefinitionType2 =
+			testGraphQLGetSiteDocumentDataDefinitionTypesPage_addDocumentDataDefinitionType();
+
+		documentDataDefinitionTypesJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/documentDataDefinitionTypes");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			documentDataDefinitionTypesJSONObject.getLong("totalCount"));
+
+		assertContains(
+			documentDataDefinitionType1,
+			Arrays.asList(
+				DocumentDataDefinitionTypeSerDes.toDTOs(
+					documentDataDefinitionTypesJSONObject.getString("items"))));
+		assertContains(
+			documentDataDefinitionType2,
+			Arrays.asList(
+				DocumentDataDefinitionTypeSerDes.toDTOs(
+					documentDataDefinitionTypesJSONObject.getString("items"))));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		documentDataDefinitionTypesJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(
+				new GraphQLField("headlessDelivery_v1_0", graphQLField)),
+			"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+			"JSONObject/documentDataDefinitionTypes");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			documentDataDefinitionTypesJSONObject.getLong("totalCount"));
+
+		assertContains(
+			documentDataDefinitionType1,
+			Arrays.asList(
+				DocumentDataDefinitionTypeSerDes.toDTOs(
+					documentDataDefinitionTypesJSONObject.getString("items"))));
+		assertContains(
+			documentDataDefinitionType2,
+			Arrays.asList(
+				DocumentDataDefinitionTypeSerDes.toDTOs(
+					documentDataDefinitionTypesJSONObject.getString("items"))));
+	}
+
+	protected DocumentDataDefinitionType
+			testGraphQLGetSiteDocumentDataDefinitionTypesPage_addDocumentDataDefinitionType()
+		throws Exception {
+
+		return testGraphQLDocumentDataDefinitionType_addDocumentDataDefinitionType();
 	}
 
 	@Test
@@ -255,8 +1484,8 @@ public abstract class BaseDocumentDataDefinitionTypeResourceTestCase {
 
 		return documentDataDefinitionTypeResource.
 			postSiteDocumentDataDefinitionType(
-				testGetSiteDocumentDataDefinitionType_getSiteId(
-					documentDataDefinitionType));
+				testGetSiteDocumentDataDefinitionTypesPage_getSiteId(),
+				documentDataDefinitionType);
 	}
 
 	@Test
@@ -274,6 +1503,9 @@ public abstract class BaseDocumentDataDefinitionTypeResourceTestCase {
 			equals(
 				randomDocumentDataDefinitionType, documentDataDefinitionType));
 	}
+
+	@Rule
+	public SearchTestRule searchTestRule = new SearchTestRule();
 
 	protected void appendGraphQLFieldValue(StringBuilder sb, Object value)
 		throws Exception {

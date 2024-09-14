@@ -7,12 +7,15 @@ package com.liferay.headless.delivery.client.resource.v1_0;
 
 import com.liferay.headless.delivery.client.dto.v1_0.DocumentDataDefinitionType;
 import com.liferay.headless.delivery.client.http.HttpInvoker;
+import com.liferay.headless.delivery.client.pagination.Page;
+import com.liferay.headless.delivery.client.pagination.Pagination;
 import com.liferay.headless.delivery.client.problem.Problem;
 import com.liferay.headless.delivery.client.serdes.v1_0.DocumentDataDefinitionTypeSerDes;
 
 import java.net.URL;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -31,6 +34,31 @@ public interface DocumentDataDefinitionTypeResource {
 	public static Builder builder() {
 		return new Builder();
 	}
+
+	public Page<DocumentDataDefinitionType>
+			getAssetLibraryDocumentDataDefinitionTypesPage(
+				Long assetLibraryId, String search, List<String> aggregations,
+				String filterString, Pagination pagination, String sortString)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			getAssetLibraryDocumentDataDefinitionTypesPageHttpResponse(
+				Long assetLibraryId, String search, List<String> aggregations,
+				String filterString, Pagination pagination, String sortString)
+		throws Exception;
+
+	public void postAssetLibraryDocumentDataDefinitionTypesPageExportBatch(
+			Long assetLibraryId, String search, String filterString,
+			String sortString, String callbackURL, String contentType,
+			String fieldNames)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			postAssetLibraryDocumentDataDefinitionTypesPageExportBatchHttpResponse(
+				Long assetLibraryId, String search, String filterString,
+				String sortString, String callbackURL, String contentType,
+				String fieldNames)
+		throws Exception;
 
 	public DocumentDataDefinitionType
 			postAssetLibraryDocumentDataDefinitionType(
@@ -51,6 +79,38 @@ public interface DocumentDataDefinitionTypeResource {
 	public HttpInvoker.HttpResponse
 			postAssetLibraryDocumentDataDefinitionTypeBatchHttpResponse(
 				Long assetLibraryId, String callbackURL, Object object)
+		throws Exception;
+
+	public DocumentDataDefinitionType getDocumentDataDefinitionType(
+			Long documentDataDefinitionTypeId)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse getDocumentDataDefinitionTypeHttpResponse(
+			Long documentDataDefinitionTypeId)
+		throws Exception;
+
+	public Page<DocumentDataDefinitionType>
+			getSiteDocumentDataDefinitionTypesPage(
+				Long siteId, String search, List<String> aggregations,
+				String filterString, Pagination pagination, String sortString)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			getSiteDocumentDataDefinitionTypesPageHttpResponse(
+				Long siteId, String search, List<String> aggregations,
+				String filterString, Pagination pagination, String sortString)
+		throws Exception;
+
+	public void postSiteDocumentDataDefinitionTypesPageExportBatch(
+			Long siteId, String search, String filterString, String sortString,
+			String callbackURL, String contentType, String fieldNames)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			postSiteDocumentDataDefinitionTypesPageExportBatchHttpResponse(
+				Long siteId, String search, String filterString,
+				String sortString, String callbackURL, String contentType,
+				String fieldNames)
 		throws Exception;
 
 	public DocumentDataDefinitionType postSiteDocumentDataDefinitionType(
@@ -180,6 +240,266 @@ public interface DocumentDataDefinitionTypeResource {
 
 	public static class DocumentDataDefinitionTypeResourceImpl
 		implements DocumentDataDefinitionTypeResource {
+
+		public Page<DocumentDataDefinitionType>
+				getAssetLibraryDocumentDataDefinitionTypesPage(
+					Long assetLibraryId, String search,
+					List<String> aggregations, String filterString,
+					Pagination pagination, String sortString)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				getAssetLibraryDocumentDataDefinitionTypesPageHttpResponse(
+					assetLibraryId, search, aggregations, filterString,
+					pagination, sortString);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				Problem.ProblemException problemException = null;
+
+				if (Objects.equals(
+						httpResponse.getContentType(), "application/json")) {
+
+					problemException = new Problem.ProblemException(
+						Problem.toDTO(content));
+				}
+				else {
+					_logger.log(
+						Level.WARNING,
+						"Unable to process content type: " +
+							httpResponse.getContentType());
+
+					Problem problem = new Problem();
+
+					problem.setStatus(
+						String.valueOf(httpResponse.getStatusCode()));
+
+					problemException = new Problem.ProblemException(problem);
+				}
+
+				throw problemException;
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return Page.of(
+					content, DocumentDataDefinitionTypeSerDes::toDTO);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				getAssetLibraryDocumentDataDefinitionTypesPageHttpResponse(
+					Long assetLibraryId, String search,
+					List<String> aggregations, String filterString,
+					Pagination pagination, String sortString)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (search != null) {
+				httpInvoker.parameter("search", String.valueOf(search));
+			}
+
+			if (filterString != null) {
+				httpInvoker.parameter("filter", filterString);
+			}
+
+			if (pagination != null) {
+				httpInvoker.parameter(
+					"page", String.valueOf(pagination.getPage()));
+				httpInvoker.parameter(
+					"pageSize", String.valueOf(pagination.getPageSize()));
+			}
+
+			if (sortString != null) {
+				httpInvoker.parameter("sort", sortString);
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/headless-delivery/v1.0/asset-libraries/{assetLibraryId}/document-data-definition-types");
+
+			httpInvoker.path("assetLibraryId", assetLibraryId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public void postAssetLibraryDocumentDataDefinitionTypesPageExportBatch(
+				Long assetLibraryId, String search, String filterString,
+				String sortString, String callbackURL, String contentType,
+				String fieldNames)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				postAssetLibraryDocumentDataDefinitionTypesPageExportBatchHttpResponse(
+					assetLibraryId, search, filterString, sortString,
+					callbackURL, contentType, fieldNames);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				Problem.ProblemException problemException = null;
+
+				if (Objects.equals(
+						httpResponse.getContentType(), "application/json")) {
+
+					problemException = new Problem.ProblemException(
+						Problem.toDTO(content));
+				}
+				else {
+					_logger.log(
+						Level.WARNING,
+						"Unable to process content type: " +
+							httpResponse.getContentType());
+
+					Problem problem = new Problem();
+
+					problem.setStatus(
+						String.valueOf(httpResponse.getStatusCode()));
+
+					problemException = new Problem.ProblemException(problem);
+				}
+
+				throw problemException;
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				postAssetLibraryDocumentDataDefinitionTypesPageExportBatchHttpResponse(
+					Long assetLibraryId, String search, String filterString,
+					String sortString, String callbackURL, String contentType,
+					String fieldNames)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body("[]", "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+			if (search != null) {
+				httpInvoker.parameter("search", String.valueOf(search));
+			}
+
+			if (filterString != null) {
+				httpInvoker.parameter("filter", filterString);
+			}
+
+			if (sortString != null) {
+				httpInvoker.parameter("sort", sortString);
+			}
+
+			if (callbackURL != null) {
+				httpInvoker.parameter(
+					"callbackURL", String.valueOf(callbackURL));
+			}
+
+			if (contentType != null) {
+				httpInvoker.parameter(
+					"contentType", String.valueOf(contentType));
+			}
+
+			if (fieldNames != null) {
+				httpInvoker.parameter("fieldNames", String.valueOf(fieldNames));
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/headless-delivery/v1.0/asset-libraries/{assetLibraryId}/document-data-definition-types/export-batch");
+
+			httpInvoker.path("assetLibraryId", assetLibraryId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
 
 		public DocumentDataDefinitionType
 				postAssetLibraryDocumentDataDefinitionType(
@@ -388,6 +708,373 @@ public interface DocumentDataDefinitionTypeResource {
 						"/o/headless-delivery/v1.0/asset-libraries/{assetLibraryId}/document-data-definition-types/batch");
 
 			httpInvoker.path("assetLibraryId", assetLibraryId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public DocumentDataDefinitionType getDocumentDataDefinitionType(
+				Long documentDataDefinitionTypeId)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				getDocumentDataDefinitionTypeHttpResponse(
+					documentDataDefinitionTypeId);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				Problem.ProblemException problemException = null;
+
+				if (Objects.equals(
+						httpResponse.getContentType(), "application/json")) {
+
+					problemException = new Problem.ProblemException(
+						Problem.toDTO(content));
+				}
+				else {
+					_logger.log(
+						Level.WARNING,
+						"Unable to process content type: " +
+							httpResponse.getContentType());
+
+					Problem problem = new Problem();
+
+					problem.setStatus(
+						String.valueOf(httpResponse.getStatusCode()));
+
+					problemException = new Problem.ProblemException(problem);
+				}
+
+				throw problemException;
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return DocumentDataDefinitionTypeSerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				getDocumentDataDefinitionTypeHttpResponse(
+					Long documentDataDefinitionTypeId)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/headless-delivery/v1.0/document-data-definition-types/{documentDataDefinitionTypeId}");
+
+			httpInvoker.path(
+				"documentDataDefinitionTypeId", documentDataDefinitionTypeId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public Page<DocumentDataDefinitionType>
+				getSiteDocumentDataDefinitionTypesPage(
+					Long siteId, String search, List<String> aggregations,
+					String filterString, Pagination pagination,
+					String sortString)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				getSiteDocumentDataDefinitionTypesPageHttpResponse(
+					siteId, search, aggregations, filterString, pagination,
+					sortString);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				Problem.ProblemException problemException = null;
+
+				if (Objects.equals(
+						httpResponse.getContentType(), "application/json")) {
+
+					problemException = new Problem.ProblemException(
+						Problem.toDTO(content));
+				}
+				else {
+					_logger.log(
+						Level.WARNING,
+						"Unable to process content type: " +
+							httpResponse.getContentType());
+
+					Problem problem = new Problem();
+
+					problem.setStatus(
+						String.valueOf(httpResponse.getStatusCode()));
+
+					problemException = new Problem.ProblemException(problem);
+				}
+
+				throw problemException;
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return Page.of(
+					content, DocumentDataDefinitionTypeSerDes::toDTO);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				getSiteDocumentDataDefinitionTypesPageHttpResponse(
+					Long siteId, String search, List<String> aggregations,
+					String filterString, Pagination pagination,
+					String sortString)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (search != null) {
+				httpInvoker.parameter("search", String.valueOf(search));
+			}
+
+			if (filterString != null) {
+				httpInvoker.parameter("filter", filterString);
+			}
+
+			if (pagination != null) {
+				httpInvoker.parameter(
+					"page", String.valueOf(pagination.getPage()));
+				httpInvoker.parameter(
+					"pageSize", String.valueOf(pagination.getPageSize()));
+			}
+
+			if (sortString != null) {
+				httpInvoker.parameter("sort", sortString);
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/headless-delivery/v1.0/sites/{siteId}/document-data-definition-types");
+
+			httpInvoker.path("siteId", siteId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public void postSiteDocumentDataDefinitionTypesPageExportBatch(
+				Long siteId, String search, String filterString,
+				String sortString, String callbackURL, String contentType,
+				String fieldNames)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				postSiteDocumentDataDefinitionTypesPageExportBatchHttpResponse(
+					siteId, search, filterString, sortString, callbackURL,
+					contentType, fieldNames);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				Problem.ProblemException problemException = null;
+
+				if (Objects.equals(
+						httpResponse.getContentType(), "application/json")) {
+
+					problemException = new Problem.ProblemException(
+						Problem.toDTO(content));
+				}
+				else {
+					_logger.log(
+						Level.WARNING,
+						"Unable to process content type: " +
+							httpResponse.getContentType());
+
+					Problem problem = new Problem();
+
+					problem.setStatus(
+						String.valueOf(httpResponse.getStatusCode()));
+
+					problemException = new Problem.ProblemException(problem);
+				}
+
+				throw problemException;
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				postSiteDocumentDataDefinitionTypesPageExportBatchHttpResponse(
+					Long siteId, String search, String filterString,
+					String sortString, String callbackURL, String contentType,
+					String fieldNames)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body("[]", "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+			if (search != null) {
+				httpInvoker.parameter("search", String.valueOf(search));
+			}
+
+			if (filterString != null) {
+				httpInvoker.parameter("filter", filterString);
+			}
+
+			if (sortString != null) {
+				httpInvoker.parameter("sort", sortString);
+			}
+
+			if (callbackURL != null) {
+				httpInvoker.parameter(
+					"callbackURL", String.valueOf(callbackURL));
+			}
+
+			if (contentType != null) {
+				httpInvoker.parameter(
+					"contentType", String.valueOf(contentType));
+			}
+
+			if (fieldNames != null) {
+				httpInvoker.parameter("fieldNames", String.valueOf(fieldNames));
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/headless-delivery/v1.0/sites/{siteId}/document-data-definition-types/export-batch");
+
+			httpInvoker.path("siteId", siteId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

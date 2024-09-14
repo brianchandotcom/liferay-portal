@@ -13,6 +13,7 @@ import com.liferay.headless.delivery.dto.v1_0.ContentSetElement;
 import com.liferay.headless.delivery.dto.v1_0.ContentStructure;
 import com.liferay.headless.delivery.dto.v1_0.ContentTemplate;
 import com.liferay.headless.delivery.dto.v1_0.Document;
+import com.liferay.headless.delivery.dto.v1_0.DocumentDataDefinitionType;
 import com.liferay.headless.delivery.dto.v1_0.DocumentFolder;
 import com.liferay.headless.delivery.dto.v1_0.DocumentMetadataSet;
 import com.liferay.headless.delivery.dto.v1_0.DocumentShortcut;
@@ -40,6 +41,7 @@ import com.liferay.headless.delivery.resource.v1_0.ContentElementResource;
 import com.liferay.headless.delivery.resource.v1_0.ContentSetElementResource;
 import com.liferay.headless.delivery.resource.v1_0.ContentStructureResource;
 import com.liferay.headless.delivery.resource.v1_0.ContentTemplateResource;
+import com.liferay.headless.delivery.resource.v1_0.DocumentDataDefinitionTypeResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentFolderResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentMetadataSetResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentResource;
@@ -159,6 +161,15 @@ public class Query {
 
 		_documentResourceComponentServiceObjects =
 			documentResourceComponentServiceObjects;
+	}
+
+	public static void
+		setDocumentDataDefinitionTypeResourceComponentServiceObjects(
+			ComponentServiceObjects<DocumentDataDefinitionTypeResource>
+				documentDataDefinitionTypeResourceComponentServiceObjects) {
+
+		_documentDataDefinitionTypeResourceComponentServiceObjects =
+			documentDataDefinitionTypeResourceComponentServiceObjects;
 	}
 
 	public static void setDocumentFolderResourceComponentServiceObjects(
@@ -1462,6 +1473,99 @@ public class Query {
 			documentResource -> new DocumentPage(
 				documentResource.getSiteDocumentsRatedByMePage(
 					Long.valueOf(siteKey), Pagination.of(page, pageSize))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {assetLibraryDocumentDataDefinitionTypes(aggregation: ___, assetLibraryId: ___, filter: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public DocumentDataDefinitionTypePage
+			assetLibraryDocumentDataDefinitionTypes(
+				@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
+				@GraphQLName("search") String search,
+				@GraphQLName("aggregation") List<String> aggregations,
+				@GraphQLName("filter") String filterString,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page,
+				@GraphQLName("sort") String sortsString)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_documentDataDefinitionTypeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentDataDefinitionTypeResource ->
+				new DocumentDataDefinitionTypePage(
+					documentDataDefinitionTypeResource.
+						getAssetLibraryDocumentDataDefinitionTypesPage(
+							Long.valueOf(assetLibraryId), search,
+							_aggregationBiFunction.apply(
+								documentDataDefinitionTypeResource,
+								aggregations),
+							_filterBiFunction.apply(
+								documentDataDefinitionTypeResource,
+								filterString),
+							Pagination.of(page, pageSize),
+							_sortsBiFunction.apply(
+								documentDataDefinitionTypeResource,
+								sortsString))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {documentDataDefinitionType(documentDataDefinitionTypeId: ___){actions, assetLibraryKey, availableLanguages, creator, dataDefinitionFields, dataLayout, dateCreated, dateModified, description, description_i18n, documentMetadataSetIds, externalReferenceCode, id, name, name_i18n, siteId, viewableBy}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public DocumentDataDefinitionType documentDataDefinitionType(
+			@GraphQLName("documentDataDefinitionTypeId") Long
+				documentDataDefinitionTypeId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_documentDataDefinitionTypeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentDataDefinitionTypeResource ->
+				documentDataDefinitionTypeResource.
+					getDocumentDataDefinitionType(
+						documentDataDefinitionTypeId));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {documentDataDefinitionTypes(aggregation: ___, filter: ___, page: ___, pageSize: ___, search: ___, siteKey: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public DocumentDataDefinitionTypePage documentDataDefinitionTypes(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("search") String search,
+			@GraphQLName("aggregation") List<String> aggregations,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_documentDataDefinitionTypeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentDataDefinitionTypeResource ->
+				new DocumentDataDefinitionTypePage(
+					documentDataDefinitionTypeResource.
+						getSiteDocumentDataDefinitionTypesPage(
+							Long.valueOf(siteKey), search,
+							_aggregationBiFunction.apply(
+								documentDataDefinitionTypeResource,
+								aggregations),
+							_filterBiFunction.apply(
+								documentDataDefinitionTypeResource,
+								filterString),
+							Pagination.of(page, pageSize),
+							_sortsBiFunction.apply(
+								documentDataDefinitionTypeResource,
+								sortsString))));
 	}
 
 	/**
@@ -5917,6 +6021,46 @@ public class Query {
 
 	}
 
+	@GraphQLName("DocumentDataDefinitionTypePage")
+	public class DocumentDataDefinitionTypePage {
+
+		public DocumentDataDefinitionTypePage(
+			Page documentDataDefinitionTypePage) {
+
+			actions = documentDataDefinitionTypePage.getActions();
+
+			facets = documentDataDefinitionTypePage.getFacets();
+
+			items = documentDataDefinitionTypePage.getItems();
+			lastPage = documentDataDefinitionTypePage.getLastPage();
+			page = documentDataDefinitionTypePage.getPage();
+			pageSize = documentDataDefinitionTypePage.getPageSize();
+			totalCount = documentDataDefinitionTypePage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map<String, String>> actions;
+
+		@GraphQLField
+		protected List<Facet> facets;
+
+		@GraphQLField
+		protected java.util.Collection<DocumentDataDefinitionType> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
 	@GraphQLName("DocumentFolderPage")
 	public class DocumentFolderPage {
 
@@ -6966,6 +7110,26 @@ public class Query {
 	}
 
 	private void _populateResourceContext(
+			DocumentDataDefinitionTypeResource
+				documentDataDefinitionTypeResource)
+		throws Exception {
+
+		documentDataDefinitionTypeResource.setContextAcceptLanguage(
+			_acceptLanguage);
+		documentDataDefinitionTypeResource.setContextCompany(_company);
+		documentDataDefinitionTypeResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		documentDataDefinitionTypeResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		documentDataDefinitionTypeResource.setContextUriInfo(_uriInfo);
+		documentDataDefinitionTypeResource.setContextUser(_user);
+		documentDataDefinitionTypeResource.setGroupLocalService(
+			_groupLocalService);
+		documentDataDefinitionTypeResource.setRoleLocalService(
+			_roleLocalService);
+	}
+
+	private void _populateResourceContext(
 			DocumentFolderResource documentFolderResource)
 		throws Exception {
 
@@ -7262,6 +7426,8 @@ public class Query {
 		_contentTemplateResourceComponentServiceObjects;
 	private static ComponentServiceObjects<DocumentResource>
 		_documentResourceComponentServiceObjects;
+	private static ComponentServiceObjects<DocumentDataDefinitionTypeResource>
+		_documentDataDefinitionTypeResourceComponentServiceObjects;
 	private static ComponentServiceObjects<DocumentFolderResource>
 		_documentFolderResourceComponentServiceObjects;
 	private static ComponentServiceObjects<DocumentMetadataSetResource>

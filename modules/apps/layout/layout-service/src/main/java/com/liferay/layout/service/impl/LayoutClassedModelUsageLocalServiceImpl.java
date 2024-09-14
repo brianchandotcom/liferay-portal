@@ -15,11 +15,14 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.BulkDeleteCacheThreadLocal;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -75,7 +78,32 @@ public class LayoutClassedModelUsageLocalServiceImpl
 
 	@Override
 	public void deleteLayoutClassedModelUsages(long classNameId, long classPK) {
-		layoutClassedModelUsagePersistence.removeByCN_CPK(classNameId, classPK);
+		List<LayoutClassedModelUsage> layoutClassedModelUsages =
+			BulkDeleteCacheThreadLocal.getBulkDeleteCache(
+				LayoutClassedModelUsageLocalServiceImpl.class.getName(),
+				() -> layoutClassedModelUsagePersistence.findByC_CN(
+					CompanyThreadLocal.getCompanyId(), classNameId));
+
+		if (layoutClassedModelUsages == null) {
+			layoutClassedModelUsagePersistence.removeByCN_CPK(
+				classNameId, classPK);
+
+			return;
+		}
+
+		Iterator<LayoutClassedModelUsage> iterator =
+			layoutClassedModelUsages.iterator();
+
+		while (iterator.hasNext()) {
+			LayoutClassedModelUsage layoutClassedModelUsage = iterator.next();
+
+			if (layoutClassedModelUsage.getClassPK() == classPK) {
+				layoutClassedModelUsagePersistence.remove(
+					layoutClassedModelUsage);
+
+				iterator.remove();
+			}
+		}
 	}
 
 	@Override

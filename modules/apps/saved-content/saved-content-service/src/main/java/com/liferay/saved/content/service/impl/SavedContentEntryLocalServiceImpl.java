@@ -5,6 +5,7 @@
 
 package com.liferay.saved.content.service.impl;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
@@ -14,10 +15,15 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.BulkDeleteCacheThreadLocal;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.saved.content.exception.DuplicateSavedContentEntryException;
 import com.liferay.saved.content.exception.NoSuchSavedContentEntryException;
 import com.liferay.saved.content.model.SavedContentEntry;
 import com.liferay.saved.content.service.base.SavedContentEntryLocalServiceBaseImpl;
+
+import java.util.List;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -92,8 +98,31 @@ public class SavedContentEntryLocalServiceImpl
 	public void deleteSavedContentEntries(
 		long groupId, long classNameId, long classPK) {
 
-		savedContentEntryPersistence.removeByG_C_C(
-			groupId, classNameId, classPK);
+		Map<Long, List<SavedContentEntry>> partitionSavedContentEntries =
+			BulkDeleteCacheThreadLocal.getBulkDeleteCache(
+				StringBundler.concat(
+					SavedContentEntryLocalServiceImpl.class.getName(),
+					".deleteSavedContentEntries#", groupId, classNameId),
+				() -> MapUtil.toPartitionMap(
+					savedContentEntryPersistence.findByG_CN(
+						groupId, classNameId),
+					SavedContentEntry::getClassPK));
+
+		if (partitionSavedContentEntries == null) {
+			savedContentEntryPersistence.removeByG_C_C(
+				groupId, classNameId, classPK);
+
+			return;
+		}
+
+		List<SavedContentEntry> savedContentEntries =
+			partitionSavedContentEntries.remove(classPK);
+
+		if (savedContentEntries != null) {
+			for (SavedContentEntry savedContentEntry : savedContentEntries) {
+				savedContentEntryPersistence.remove(savedContentEntry);
+			}
+		}
 	}
 
 	@Override

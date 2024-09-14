@@ -19,6 +19,7 @@ import com.liferay.asset.kernel.validator.AssetEntryValidatorExclusionRule;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -57,6 +58,7 @@ import com.liferay.portal.kernel.view.count.ViewCountManagerUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.service.base.AssetEntryLocalServiceBaseImpl;
 import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
+import com.liferay.portlet.asset.util.DeletedAssetEntryThreadLocal;
 import com.liferay.social.kernel.model.SocialActivityConstants;
 import com.liferay.social.kernel.service.SocialActivityCounterLocalService;
 
@@ -103,7 +105,11 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 		// Social
 
-		SocialActivityManagerUtil.deleteActivities(entry);
+		try (SafeCloseable safeCloseable =
+				DeletedAssetEntryThreadLocal.setWithSafeCloseable(entry)) {
+
+			SocialActivityManagerUtil.deleteActivities(entry);
+		}
 	}
 
 	@Override

@@ -28,6 +28,8 @@ import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.BulkDeleteCacheThreadLocal;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portlet.asset.util.DeletedAssetEntryThreadLocal;
 import com.liferay.portlet.social.service.base.SocialActivityLocalServiceBaseImpl;
 import com.liferay.portlet.social.util.SocialActivityHierarchyEntry;
 import com.liferay.portlet.social.util.SocialActivityHierarchyEntryThreadLocal;
@@ -1176,8 +1178,15 @@ public class SocialActivityLocalServiceImpl
 			}
 		}
 
-		_socialActivityCounterLocalService.deleteActivityCounters(
-			classNameId, classPK);
+		String className = PortalUtil.getClassName(classNameId);
+
+		if (!className.equals(User.class.getName()) &&
+			!DeletedAssetEntryThreadLocal.isDeletedAssetEntry(
+				classNameId, classPK)) {
+
+			_socialActivityCounterLocalService.deleteActivityCounters(
+				classNameId, classPK);
+		}
 	}
 
 	protected boolean isLogActivity(SocialActivity activity) {

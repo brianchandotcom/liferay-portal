@@ -218,6 +218,16 @@ public class ResourcePermissionPersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_N_S() throws Exception {
+		_persistence.countByC_N_S(
+			RandomTestUtil.nextLong(), "", RandomTestUtil.nextInt());
+
+		_persistence.countByC_N_S(0L, "null", 0);
+
+		_persistence.countByC_N_S(0L, (String)null, 0);
+	}
+
+	@Test
 	public void testCountByC_S_P() throws Exception {
 		_persistence.countByC_S_P(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextInt(), "");

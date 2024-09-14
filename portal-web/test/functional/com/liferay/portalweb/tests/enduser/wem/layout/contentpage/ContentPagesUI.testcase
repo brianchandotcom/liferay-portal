@@ -31,34 +31,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-146373. The page creator could access to Look and Feel settings via the configuration icon."
-	@priority = 4
-	test AccessToLookAndFeelSettings {
-		task ("Given a page creator accesses to the Page Design Options panel") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Page Name",
-				siteName = ${randomSiteName});
-
-			PageEditor.gotoTab(tabName = "Page Design Options");
-		}
-
-		task ("When the page creator click the configuration icon") {
-			Click(locator1 = "PageEditor#MORE_LINK");
-		}
-
-		task ("Then the page creator accesses to the Look and Feel settings") {
-			AssertElementPresent(
-				key_title = "Design",
-				locator1 = "Header#H2_TITLE");
-
-			for (var sectionName : list "Theme,Basic Settings,Customization") {
-				AssertElementPresent(
-					key_sectionTitle = ${sectionName},
-					locator1 = "PagesAdmin#SECTION_TITLE");
-			}
-		}
-	}
-
 	@description = "This is a test for LPS-153383. The page creator cannot resize editor sidebar to an invalid size."
 	@priority = 4
 	test CannotResizeLeftSidebarPanelBeyoundLimitation {

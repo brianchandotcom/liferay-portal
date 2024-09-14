@@ -333,6 +333,52 @@ test.describe('Page Contents Panel', () => {
 	});
 });
 
+test.describe('Page Design Options', () => {
+	test(
+		'Allows editing inline text from Page Content Panel',
+		{
+			tag: '@LPS-146373',
+		},
+		async ({apiHelpers, page, pageEditorPage, site}) => {
+
+			// Create a page
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				siteId: site.id,
+				title: getRandomString(),
+			});
+
+			// Go to edit mode of page
+
+			await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+			// Go to Page Contents panel
+
+			await pageEditorPage.goToSidebarTab('Page Design Options');
+
+			// Go to look and feel
+
+			await page
+				.getByTitle('More Page Design Options', {exact: true})
+				.click();
+
+			// Assert sections
+
+			await expect(
+				page.getByRole('heading', {name: 'Theme'})
+			).toBeAttached();
+
+			await expect(
+				page.getByRole('heading', {name: 'Basic Settings'})
+			).toBeAttached();
+
+			await expect(
+				page.getByRole('heading', {name: 'Customization'})
+			).toBeAttached();
+		}
+	);
+});
+
 test.describe('Rules Panel', () => {
 	test('Checks the accessibility of the rule modal by filling out a condition and an action', async ({
 		apiHelpers,

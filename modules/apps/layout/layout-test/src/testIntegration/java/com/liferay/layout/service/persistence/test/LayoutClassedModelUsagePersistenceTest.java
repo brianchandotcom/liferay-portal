@@ -251,6 +251,14 @@ public class LayoutClassedModelUsagePersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_CN() throws Exception {
+		_persistence.countByC_CN(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+
+		_persistence.countByC_CN(0L, 0L);
+	}
+
+	@Test
 	public void testCountByCN_CPK() throws Exception {
 		_persistence.countByCN_CPK(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());

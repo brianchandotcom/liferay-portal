@@ -43,5 +43,6 @@ dependencies {
 	testIntegrationImplementation project(":apps:portlet-display-template:portlet-display-template-api")
 	testIntegrationImplementation project(":apps:segments:segments-api")
 	testIntegrationImplementation project(":apps:segments:segments-test-util")
+	testIntegrationImplementation project(":apps:style-book:style-book-api")
 	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

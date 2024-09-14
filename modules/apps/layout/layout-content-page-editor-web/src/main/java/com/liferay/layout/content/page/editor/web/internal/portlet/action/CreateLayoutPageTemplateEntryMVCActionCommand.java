@@ -120,6 +120,9 @@ public class CreateLayoutPageTemplateEntryMVCActionCommand
 					layoutPageTemplateCollectionId, serviceContext);
 
 		return JSONUtil.put(
+			"layoutPageTemplateEntryId",
+			layoutPageTemplateEntry.getLayoutPageTemplateEntryId()
+		).put(
 			"url",
 			PortletURLBuilder.create(
 				_portal.getControlPanelPortletURL(
@@ -134,7 +137,8 @@ public class CreateLayoutPageTemplateEntryMVCActionCommand
 				layoutPageTemplateEntry.getLayoutPageTemplateCollectionId()
 			).setParameter(
 				"orderByType", "desc"
-			).buildString());
+			).buildString()
+		);
 	}
 
 	@Override

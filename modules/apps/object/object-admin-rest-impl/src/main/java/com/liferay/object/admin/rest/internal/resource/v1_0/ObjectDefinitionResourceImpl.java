@@ -115,8 +115,7 @@ public class ObjectDefinitionResourceImpl
 		long startTime = 0;
 
 		if (_log.isInfoEnabled()) {
-			_log.info(
-				"Started object definition deletion " + objectDefinitionId);
+			_log.info("Deleting object definition " + objectDefinitionId);
 
 			startTime = System.currentTimeMillis();
 		}
@@ -126,7 +125,7 @@ public class ObjectDefinitionResourceImpl
 		if (_log.isInfoEnabled()) {
 			_log.info(
 				StringBundler.concat(
-					"Finished object definition deletion ", objectDefinitionId,
+					"Deleted object definition ", objectDefinitionId,
 					" in ", System.currentTimeMillis() - startTime, "ms"));
 		}
 	}

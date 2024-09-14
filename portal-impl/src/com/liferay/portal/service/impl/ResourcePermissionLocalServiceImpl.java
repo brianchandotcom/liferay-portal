@@ -57,8 +57,10 @@ import com.liferay.portal.kernel.service.persistence.RolePersistence;
 import com.liferay.portal.kernel.spring.aop.Property;
 import com.liferay.portal.kernel.spring.aop.Retry;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.BulkDeleteCacheThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.impl.ResourceImpl;
@@ -643,13 +645,35 @@ public class ResourcePermissionLocalServiceImpl
 			long companyId, String name, int scope, String primKey)
 		throws PortalException {
 
-		List<ResourcePermission> resourcePermissions =
-			resourcePermissionPersistence.findByC_N_S_P(
-				companyId, name, scope, primKey);
+		Map<String, List<ResourcePermission>> partitionResourcePermissions =
+			BulkDeleteCacheThreadLocal.getBulkDeleteCache(
+				StringBundler.concat(
+					ResourcePermissionLocalServiceImpl.class.getName(),
+					".deleteResourcePermissions#", companyId, name, scope),
+				() -> MapUtil.toPartitionMap(
+					resourcePermissionPersistence.findByC_N_S(
+						companyId, name, scope),
+					ResourcePermission::getPrimKey));
 
-		for (ResourcePermission resourcePermission : resourcePermissions) {
-			deleteResourcePermission(
-				resourcePermission.getResourcePermissionId());
+		if (partitionResourcePermissions == null) {
+			for (ResourcePermission resourcePermission :
+					resourcePermissionPersistence.findByC_N_S_P(
+						companyId, name, scope, primKey)) {
+
+				deleteResourcePermission(
+					resourcePermission.getResourcePermissionId());
+			}
+
+			return;
+		}
+
+		List<ResourcePermission> resourcePermissions =
+			partitionResourcePermissions.remove(primKey);
+
+		if (resourcePermissions != null) {
+			for (ResourcePermission resourcePermission : resourcePermissions) {
+				resourcePermissionPersistence.remove(resourcePermission);
+			}
 		}
 	}
 

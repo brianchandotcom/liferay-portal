@@ -6487,7 +6487,7 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/DocumentDataDefinitionType"
-            tags: ["DocumentDataDefinitionTypes"]
+            tags: ["DocumentDataDefinitionType"]
     "/asset-libraries/{assetLibraryId}/document-folders":
         get:
             operationId: getAssetLibraryDocumentFoldersPage
@@ -12932,7 +12932,7 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/DocumentDataDefinitionType"
-            tags: ["DocumentDataDefinitionTypes"]
+            tags: ["DocumentDataDefinitionType"]
     "/sites/{siteId}/document-folders":
         get:
             description:

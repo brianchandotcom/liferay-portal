@@ -26,57 +26,50 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public interface DocumentDataDefinitionTypesResource {
+public interface DocumentDataDefinitionTypeResource {
 
 	public static Builder builder() {
 		return new Builder();
 	}
 
 	public DocumentDataDefinitionType
-			postAssetLibraryDocumentDataDefinitionTypes(
+			postAssetLibraryDocumentDataDefinitionType(
 				Long assetLibraryId,
 				DocumentDataDefinitionType documentDataDefinitionType)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			postAssetLibraryDocumentDataDefinitionTypesHttpResponse(
+			postAssetLibraryDocumentDataDefinitionTypeHttpResponse(
 				Long assetLibraryId,
 				DocumentDataDefinitionType documentDataDefinitionType)
 		throws Exception;
 
-	public void postAssetLibraryDocumentDataDefinitionTypesBatch(
-			Long assetLibraryId,
-			DocumentDataDefinitionType documentDataDefinitionType,
-			String callbackURL, Object object)
+	public void postAssetLibraryDocumentDataDefinitionTypeBatch(
+			Long assetLibraryId, String callbackURL, Object object)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			postAssetLibraryDocumentDataDefinitionTypesBatchHttpResponse(
-				Long assetLibraryId,
-				DocumentDataDefinitionType documentDataDefinitionType,
-				String callbackURL, Object object)
+			postAssetLibraryDocumentDataDefinitionTypeBatchHttpResponse(
+				Long assetLibraryId, String callbackURL, Object object)
 		throws Exception;
 
-	public DocumentDataDefinitionType postSiteDocumentDataDefinitionTypes(
+	public DocumentDataDefinitionType postSiteDocumentDataDefinitionType(
 			Long siteId, DocumentDataDefinitionType documentDataDefinitionType)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			postSiteDocumentDataDefinitionTypesHttpResponse(
+			postSiteDocumentDataDefinitionTypeHttpResponse(
 				Long siteId,
 				DocumentDataDefinitionType documentDataDefinitionType)
 		throws Exception;
 
-	public void postSiteDocumentDataDefinitionTypesBatch(
-			Long siteId, DocumentDataDefinitionType documentDataDefinitionType,
-			String callbackURL, Object object)
+	public void postSiteDocumentDataDefinitionTypeBatch(
+			Long siteId, String callbackURL, Object object)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			postSiteDocumentDataDefinitionTypesBatchHttpResponse(
-				Long siteId,
-				DocumentDataDefinitionType documentDataDefinitionType,
-				String callbackURL, Object object)
+			postSiteDocumentDataDefinitionTypeBatchHttpResponse(
+				Long siteId, String callbackURL, Object object)
 		throws Exception;
 
 	public static class Builder {
@@ -92,8 +85,8 @@ public interface DocumentDataDefinitionTypesResource {
 			return header("Authorization", "Bearer " + token);
 		}
 
-		public DocumentDataDefinitionTypesResource build() {
-			return new DocumentDataDefinitionTypesResourceImpl(this);
+		public DocumentDataDefinitionTypeResource build() {
+			return new DocumentDataDefinitionTypeResourceImpl(this);
 		}
 
 		public Builder contextPath(String contextPath) {
@@ -185,17 +178,17 @@ public interface DocumentDataDefinitionTypesResource {
 
 	}
 
-	public static class DocumentDataDefinitionTypesResourceImpl
-		implements DocumentDataDefinitionTypesResource {
+	public static class DocumentDataDefinitionTypeResourceImpl
+		implements DocumentDataDefinitionTypeResource {
 
 		public DocumentDataDefinitionType
-				postAssetLibraryDocumentDataDefinitionTypes(
+				postAssetLibraryDocumentDataDefinitionType(
 					Long assetLibraryId,
 					DocumentDataDefinitionType documentDataDefinitionType)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postAssetLibraryDocumentDataDefinitionTypesHttpResponse(
+				postAssetLibraryDocumentDataDefinitionTypeHttpResponse(
 					assetLibraryId, documentDataDefinitionType);
 
 			String content = httpResponse.getContent();
@@ -258,7 +251,7 @@ public interface DocumentDataDefinitionTypesResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				postAssetLibraryDocumentDataDefinitionTypesHttpResponse(
+				postAssetLibraryDocumentDataDefinitionTypeHttpResponse(
 					Long assetLibraryId,
 					DocumentDataDefinitionType documentDataDefinitionType)
 			throws Exception {
@@ -300,16 +293,13 @@ public interface DocumentDataDefinitionTypesResource {
 			return httpInvoker.invoke();
 		}
 
-		public void postAssetLibraryDocumentDataDefinitionTypesBatch(
-				Long assetLibraryId,
-				DocumentDataDefinitionType documentDataDefinitionType,
-				String callbackURL, Object object)
+		public void postAssetLibraryDocumentDataDefinitionTypeBatch(
+				Long assetLibraryId, String callbackURL, Object object)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postAssetLibraryDocumentDataDefinitionTypesBatchHttpResponse(
-					assetLibraryId, documentDataDefinitionType, callbackURL,
-					object);
+				postAssetLibraryDocumentDataDefinitionTypeBatchHttpResponse(
+					assetLibraryId, callbackURL, object);
 
 			String content = httpResponse.getContent();
 
@@ -360,10 +350,8 @@ public interface DocumentDataDefinitionTypesResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				postAssetLibraryDocumentDataDefinitionTypesBatchHttpResponse(
-					Long assetLibraryId,
-					DocumentDataDefinitionType documentDataDefinitionType,
-					String callbackURL, Object object)
+				postAssetLibraryDocumentDataDefinitionTypeBatchHttpResponse(
+					Long assetLibraryId, String callbackURL, Object object)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -407,13 +395,13 @@ public interface DocumentDataDefinitionTypesResource {
 			return httpInvoker.invoke();
 		}
 
-		public DocumentDataDefinitionType postSiteDocumentDataDefinitionTypes(
+		public DocumentDataDefinitionType postSiteDocumentDataDefinitionType(
 				Long siteId,
 				DocumentDataDefinitionType documentDataDefinitionType)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postSiteDocumentDataDefinitionTypesHttpResponse(
+				postSiteDocumentDataDefinitionTypeHttpResponse(
 					siteId, documentDataDefinitionType);
 
 			String content = httpResponse.getContent();
@@ -476,7 +464,7 @@ public interface DocumentDataDefinitionTypesResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				postSiteDocumentDataDefinitionTypesHttpResponse(
+				postSiteDocumentDataDefinitionTypeHttpResponse(
 					Long siteId,
 					DocumentDataDefinitionType documentDataDefinitionType)
 			throws Exception {
@@ -518,15 +506,13 @@ public interface DocumentDataDefinitionTypesResource {
 			return httpInvoker.invoke();
 		}
 
-		public void postSiteDocumentDataDefinitionTypesBatch(
-				Long siteId,
-				DocumentDataDefinitionType documentDataDefinitionType,
-				String callbackURL, Object object)
+		public void postSiteDocumentDataDefinitionTypeBatch(
+				Long siteId, String callbackURL, Object object)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postSiteDocumentDataDefinitionTypesBatchHttpResponse(
-					siteId, documentDataDefinitionType, callbackURL, object);
+				postSiteDocumentDataDefinitionTypeBatchHttpResponse(
+					siteId, callbackURL, object);
 
 			String content = httpResponse.getContent();
 
@@ -577,10 +563,8 @@ public interface DocumentDataDefinitionTypesResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				postSiteDocumentDataDefinitionTypesBatchHttpResponse(
-					Long siteId,
-					DocumentDataDefinitionType documentDataDefinitionType,
-					String callbackURL, Object object)
+				postSiteDocumentDataDefinitionTypeBatchHttpResponse(
+					Long siteId, String callbackURL, Object object)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -624,12 +608,12 @@ public interface DocumentDataDefinitionTypesResource {
 			return httpInvoker.invoke();
 		}
 
-		private DocumentDataDefinitionTypesResourceImpl(Builder builder) {
+		private DocumentDataDefinitionTypeResourceImpl(Builder builder) {
 			_builder = builder;
 		}
 
 		private static final Logger _logger = Logger.getLogger(
-			DocumentDataDefinitionTypesResource.class.getName());
+			DocumentDataDefinitionTypeResource.class.getName());
 
 		private Builder _builder;
 

@@ -14,6 +14,7 @@ import com.liferay.headless.delivery.internal.resource.v1_0.ContentElementResour
 import com.liferay.headless.delivery.internal.resource.v1_0.ContentSetElementResourceImpl;
 import com.liferay.headless.delivery.internal.resource.v1_0.ContentStructureResourceImpl;
 import com.liferay.headless.delivery.internal.resource.v1_0.ContentTemplateResourceImpl;
+import com.liferay.headless.delivery.internal.resource.v1_0.DocumentDataDefinitionTypeResourceImpl;
 import com.liferay.headless.delivery.internal.resource.v1_0.DocumentFolderResourceImpl;
 import com.liferay.headless.delivery.internal.resource.v1_0.DocumentMetadataSetResourceImpl;
 import com.liferay.headless.delivery.internal.resource.v1_0.DocumentResourceImpl;
@@ -40,6 +41,7 @@ import com.liferay.headless.delivery.resource.v1_0.ContentElementResource;
 import com.liferay.headless.delivery.resource.v1_0.ContentSetElementResource;
 import com.liferay.headless.delivery.resource.v1_0.ContentStructureResource;
 import com.liferay.headless.delivery.resource.v1_0.ContentTemplateResource;
+import com.liferay.headless.delivery.resource.v1_0.DocumentDataDefinitionTypeResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentFolderResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentMetadataSetResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentResource;
@@ -98,6 +100,8 @@ public class ServletDataImpl implements ServletData {
 			_contentTemplateResourceComponentServiceObjects);
 		Mutation.setDocumentResourceComponentServiceObjects(
 			_documentResourceComponentServiceObjects);
+		Mutation.setDocumentDataDefinitionTypeResourceComponentServiceObjects(
+			_documentDataDefinitionTypeResourceComponentServiceObjects);
 		Mutation.setDocumentFolderResourceComponentServiceObjects(
 			_documentFolderResourceComponentServiceObjects);
 		Mutation.setDocumentMetadataSetResourceComponentServiceObjects(
@@ -593,6 +597,26 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							DocumentResourceImpl.class,
 							"putSiteDocumentPermissionsPage"));
+					put(
+						"mutation#createAssetLibraryDocumentDataDefinitionType",
+						new ObjectValuePair<>(
+							DocumentDataDefinitionTypeResourceImpl.class,
+							"postAssetLibraryDocumentDataDefinitionType"));
+					put(
+						"mutation#createAssetLibraryDocumentDataDefinitionTypeBatch",
+						new ObjectValuePair<>(
+							DocumentDataDefinitionTypeResourceImpl.class,
+							"postAssetLibraryDocumentDataDefinitionTypeBatch"));
+					put(
+						"mutation#createSiteDocumentDataDefinitionType",
+						new ObjectValuePair<>(
+							DocumentDataDefinitionTypeResourceImpl.class,
+							"postSiteDocumentDataDefinitionType"));
+					put(
+						"mutation#createSiteDocumentDataDefinitionTypeBatch",
+						new ObjectValuePair<>(
+							DocumentDataDefinitionTypeResourceImpl.class,
+							"postSiteDocumentDataDefinitionTypeBatch"));
 					put(
 						"mutation#createAssetLibraryDocumentFoldersPageExportBatch",
 						new ObjectValuePair<>(
@@ -2875,6 +2899,10 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<DocumentResource>
 		_documentResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<DocumentDataDefinitionTypeResource>
+		_documentDataDefinitionTypeResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<DocumentFolderResource>

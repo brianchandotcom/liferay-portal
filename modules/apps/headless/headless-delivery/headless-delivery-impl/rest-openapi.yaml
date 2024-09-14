@@ -6463,6 +6463,7 @@ paths:
         post:
             description:
                 Creates a new document data definition type.
+            operationId: postAssetLibraryDocumentDataDefinitionType
             parameters:
                 - in: path
                   name: assetLibraryId
@@ -12908,6 +12909,7 @@ paths:
         post:
             description:
                 Creates a new document data definition type.
+            operationId: postSiteDocumentDataDefinitionType
             parameters:
                 - in: path
                   name: siteId

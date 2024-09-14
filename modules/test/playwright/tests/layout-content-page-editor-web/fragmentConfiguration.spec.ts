@@ -323,67 +323,71 @@ test.describe('Styles Configuration', () => {
 		).toBe('0px');
 	});
 
-	test('Renders all selectors with correct default values', async ({
-		apiHelpers,
-		page,
-		pageEditorPage,
-		site,
-	}) => {
-		await page.goto('/');
+	test(
+		'Renders all selectors with correct default values',
+		{
+			tag: '@LPS-136412',
+		},
+		async ({apiHelpers, page, pageEditorPage, site}) => {
+			await page.goto('/');
 
-		// Create a page with a Heading fragment
+			// Create a page with a Heading fragment
 
-		const headingId = getRandomString();
+			const headingId = getRandomString();
 
-		const headingFragment = getFragmentDefinition({
-			id: headingId,
-			key: 'BASIC_COMPONENT-heading',
-		});
+			const headingFragment = getFragmentDefinition({
+				id: headingId,
+				key: 'BASIC_COMPONENT-heading',
+			});
 
-		const layout = await apiHelpers.headlessDelivery.createSitePage({
-			pageDefinition: getPageDefinition([headingFragment]),
-			siteId: site.id,
-			title: getRandomString(),
-		});
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([headingFragment]),
+				siteId: site.id,
+				title: getRandomString(),
+			});
 
-		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+			await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
-		await pageEditorPage.selectFragment(headingId);
+			await pageEditorPage.selectFragment(headingId);
 
-		await pageEditorPage.goToConfigurationTab('Styles');
+			await pageEditorPage.goToConfigurationTab('Styles');
 
-		// Check correct default values are rendered
+			// Check correct default values are rendered
 
-		for (const {defaultValue, label, type} of STYLES) {
-			if (type === 'button') {
-				await expect(
-					page.getByRole('button', {exact: true, name: defaultValue})
-				).toHaveAttribute('aria-pressed', 'true');
-			}
-			else if (type === 'color') {
-				await expect(
-					page
-						.getByLabel(label, {exact: true})
-						.getByLabel('Color', {exact: true})
-				).toHaveValue(defaultValue);
-			}
-			else if (type === 'select') {
-				expect(
-					await page
-						.getByLabel(label, {exact: true})
-						.evaluate(
-							(node: HTMLSelectElement) =>
-								node.options[node.selectedIndex].text
-						)
-				).toBe(defaultValue);
-			}
-			else {
-				await expect(page.getByLabel(label, {exact: true})).toHaveValue(
-					defaultValue
-				);
+			for (const {defaultValue, label, type} of STYLES) {
+				if (type === 'button') {
+					await expect(
+						page.getByRole('button', {
+							exact: true,
+							name: defaultValue,
+						})
+					).toHaveAttribute('aria-pressed', 'true');
+				}
+				else if (type === 'color') {
+					await expect(
+						page
+							.getByLabel(label, {exact: true})
+							.getByLabel('Color', {exact: true})
+					).toHaveValue(defaultValue);
+				}
+				else if (type === 'select') {
+					expect(
+						await page
+							.getByLabel(label, {exact: true})
+							.evaluate(
+								(node: HTMLSelectElement) =>
+									node.options[node.selectedIndex].text
+							)
+					).toBe(defaultValue);
+				}
+				else {
+					await expect(
+						page.getByLabel(label, {exact: true})
+					).toHaveValue(defaultValue);
+				}
 			}
 		}
-	});
+	);
 
 	test('Renders correct sections in color picker', async ({
 		apiHelpers,

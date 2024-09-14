@@ -314,52 +314,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-136412. View collapse style changes in fragment configuration."
-	@priority = 5
-	test ViewCollapseStyleInFragmentConfiguration {
-		property portal.acceptance = "true";
-
-		task ("Add a dropdown fragment to a content page") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Page Name",
-				siteName = ${randomSiteName});
-
-			PageEditor.addFragment(
-				collectionName = "Basic Components",
-				fragmentName = "Dropdown");
-		}
-
-		task ("Go to configuration") {
-			PageEditor.gotoConfiguration(fragmentName = "Dropdown");
-		}
-
-		task ("Assert the styles are collapsible and are listed in groups") {
-			Panel.collapsePanel(panel = "Dropdown Options");
-
-			Panel.collapsePanel(panel = "Frame");
-
-			AssertNotVisible(locator1 = "//div[contains(@class,'fieldset')]");
-
-			Panel.expandPanel(panel = "Dropdown Options");
-
-			Panel.expandPanel(panel = "Frame");
-		}
-
-		task ("Go to Styles and assert the styles are collapsible and are listed in groups") {
-			Navigator.gotoNavTab(navTab = "Styles");
-
-			for (var key_panel : list "Spacing,Text,Background,Borders,Effects") {
-				Panel.collapsePanel(panel = ${key_panel});
-			}
-
-			AssertNotVisible(locator1 = "//div[contains(@class,'fieldset')]");
-
-			for (var key_panel : list "Spacing,Text,Background,Borders,Effects") {
-				Panel.expandPanel(panel = ${key_panel});
-			}
-		}
-	}
-
 	@description = "This is a test for LPS-158746. The favorite fragment is hidden if it is not allowed on master page."
 	@priority = 3
 	test ViewFavoriteFragmentIsHiddenWhenItIsNotAllowedOnMasterPage {

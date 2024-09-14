@@ -20,11 +20,14 @@ import com.liferay.portal.kernel.messaging.async.Async;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
+import com.liferay.portal.kernel.util.BulkDeleteCacheThreadLocal;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portlet.social.service.base.SocialActivityLocalServiceBaseImpl;
 import com.liferay.portlet.social.util.SocialActivityHierarchyEntry;
 import com.liferay.portlet.social.util.SocialActivityHierarchyEntryThreadLocal;
@@ -43,6 +46,7 @@ import com.liferay.social.kernel.service.persistence.SocialActivitySettingPersis
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Callable;
 
 /**
@@ -1143,10 +1147,34 @@ public class SocialActivityLocalServiceImpl
 	protected void deleteActivities(long classNameId, long classPK)
 		throws PortalException {
 
-		_socialActivitySetLocalService.decrementActivityCount(
-			classNameId, classPK);
+		Map<Long, List<SocialActivity>> partitionSocialActivities =
+			BulkDeleteCacheThreadLocal.getBulkDeleteCache(
+				SocialActivityLocalServiceImpl.class.getName() +
+					".deleteActivities#" + classNameId,
+				() -> MapUtil.toPartitionMap(
+					socialActivityPersistence.findByC_CN(
+						CompanyThreadLocal.getCompanyId(), classNameId),
+					SocialActivity::getClassPK));
 
-		socialActivityPersistence.removeByC_C(classNameId, classPK);
+		if (partitionSocialActivities == null) {
+			_socialActivitySetLocalService.decrementActivityCount(
+				classNameId, classPK);
+
+			socialActivityPersistence.removeByC_C(classNameId, classPK);
+		}
+		else {
+			List<SocialActivity> socialActivities =
+				partitionSocialActivities.remove(classPK);
+
+			if (socialActivities != null) {
+				for (SocialActivity socialActivity : socialActivities) {
+					_socialActivitySetLocalService.decrementActivityCount(
+						classNameId, classPK);
+
+					socialActivityPersistence.remove(socialActivity);
+				}
+			}
+		}
 
 		_socialActivityCounterLocalService.deleteActivityCounters(
 			classNameId, classPK);

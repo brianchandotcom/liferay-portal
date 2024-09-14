@@ -17,6 +17,8 @@ import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTaskResource;
+import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
 
 import java.util.Collections;
 import java.util.List;
@@ -44,27 +46,24 @@ import org.osgi.annotation.versioning.ProviderType;
 @CTAware
 @Generated("")
 @ProviderType
-public interface DocumentDataDefinitionTypesResource {
+public interface DocumentDataDefinitionTypeResource {
 
 	public DocumentDataDefinitionType
-			postAssetLibraryDocumentDataDefinitionTypes(
+			postAssetLibraryDocumentDataDefinitionType(
 				Long assetLibraryId,
 				DocumentDataDefinitionType documentDataDefinitionType)
 		throws Exception;
 
-	public Response postAssetLibraryDocumentDataDefinitionTypesBatch(
-			Long assetLibraryId,
-			DocumentDataDefinitionType documentDataDefinitionType,
-			String callbackURL, Object object)
+	public Response postAssetLibraryDocumentDataDefinitionTypeBatch(
+			Long assetLibraryId, String callbackURL, Object object)
 		throws Exception;
 
-	public DocumentDataDefinitionType postSiteDocumentDataDefinitionTypes(
+	public DocumentDataDefinitionType postSiteDocumentDataDefinitionType(
 			Long siteId, DocumentDataDefinitionType documentDataDefinitionType)
 		throws Exception;
 
-	public Response postSiteDocumentDataDefinitionTypesBatch(
-			Long siteId, DocumentDataDefinitionType documentDataDefinitionType,
-			String callbackURL, Object object)
+	public Response postSiteDocumentDataDefinitionTypeBatch(
+			Long siteId, String callbackURL, Object object)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(
@@ -106,6 +105,14 @@ public interface DocumentDataDefinitionTypesResource {
 
 	public void setSortParserProvider(SortParserProvider sortParserProvider);
 
+	public void setVulcanBatchEngineExportTaskResource(
+		VulcanBatchEngineExportTaskResource
+			vulcanBatchEngineExportTaskResource);
+
+	public void setVulcanBatchEngineImportTaskResource(
+		VulcanBatchEngineImportTaskResource
+			vulcanBatchEngineImportTaskResource);
+
 	public default Filter toFilter(String filterString) {
 		return toFilter(
 			filterString, Collections.<String, List<String>>emptyMap());
@@ -124,7 +131,7 @@ public interface DocumentDataDefinitionTypesResource {
 	@ProviderType
 	public interface Builder {
 
-		public DocumentDataDefinitionTypesResource build();
+		public DocumentDataDefinitionTypeResource build();
 
 		public Builder checkPermissions(boolean checkPermissions);
 

@@ -6,7 +6,7 @@
 package com.liferay.headless.delivery.internal.resource.v1_0.factory;
 
 import com.liferay.headless.delivery.internal.security.permission.LiberalPermissionChecker;
-import com.liferay.headless.delivery.resource.v1_0.DocumentDataDefinitionTypesResource;
+import com.liferay.headless.delivery.resource.v1_0.DocumentDataDefinitionTypeResource;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -55,29 +55,29 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @generated
  */
 @Component(
-	property = "resource.locator.key=/headless-delivery/v1.0/DocumentDataDefinitionTypes",
-	service = DocumentDataDefinitionTypesResource.Factory.class
+	property = "resource.locator.key=/headless-delivery/v1.0/DocumentDataDefinitionType",
+	service = DocumentDataDefinitionTypeResource.Factory.class
 )
 @Generated("")
-public class DocumentDataDefinitionTypesResourceFactoryImpl
-	implements DocumentDataDefinitionTypesResource.Factory {
+public class DocumentDataDefinitionTypeResourceFactoryImpl
+	implements DocumentDataDefinitionTypeResource.Factory {
 
 	@Override
-	public DocumentDataDefinitionTypesResource.Builder create() {
-		return new DocumentDataDefinitionTypesResource.Builder() {
+	public DocumentDataDefinitionTypeResource.Builder create() {
+		return new DocumentDataDefinitionTypeResource.Builder() {
 
 			@Override
-			public DocumentDataDefinitionTypesResource build() {
+			public DocumentDataDefinitionTypeResource build() {
 				if (_user == null) {
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				Function<InvocationHandler, DocumentDataDefinitionTypesResource>
-					documentDataDefinitionTypesResourceProxyProviderFunction =
+				Function<InvocationHandler, DocumentDataDefinitionTypeResource>
+					documentDataDefinitionTypeResourceProxyProviderFunction =
 						ResourceProxyProviderFunctionHolder.
-							_documentDataDefinitionTypesResourceProxyProviderFunction;
+							_documentDataDefinitionTypeResourceProxyProviderFunction;
 
-				return documentDataDefinitionTypesResourceProxyProviderFunction.
+				return documentDataDefinitionTypeResourceProxyProviderFunction.
 					apply(
 						(proxy, method, arguments) -> _invoke(
 							method, arguments, _checkPermissions,
@@ -86,7 +86,7 @@ public class DocumentDataDefinitionTypesResourceFactoryImpl
 			}
 
 			@Override
-			public DocumentDataDefinitionTypesResource.Builder checkPermissions(
+			public DocumentDataDefinitionTypeResource.Builder checkPermissions(
 				boolean checkPermissions) {
 
 				_checkPermissions = checkPermissions;
@@ -95,7 +95,7 @@ public class DocumentDataDefinitionTypesResourceFactoryImpl
 			}
 
 			@Override
-			public DocumentDataDefinitionTypesResource.Builder
+			public DocumentDataDefinitionTypeResource.Builder
 				httpServletRequest(HttpServletRequest httpServletRequest) {
 
 				_httpServletRequest = httpServletRequest;
@@ -104,7 +104,7 @@ public class DocumentDataDefinitionTypesResourceFactoryImpl
 			}
 
 			@Override
-			public DocumentDataDefinitionTypesResource.Builder
+			public DocumentDataDefinitionTypeResource.Builder
 				httpServletResponse(HttpServletResponse httpServletResponse) {
 
 				_httpServletResponse = httpServletResponse;
@@ -113,7 +113,7 @@ public class DocumentDataDefinitionTypesResourceFactoryImpl
 			}
 
 			@Override
-			public DocumentDataDefinitionTypesResource.Builder preferredLocale(
+			public DocumentDataDefinitionTypeResource.Builder preferredLocale(
 				Locale preferredLocale) {
 
 				_preferredLocale = preferredLocale;
@@ -122,7 +122,7 @@ public class DocumentDataDefinitionTypesResourceFactoryImpl
 			}
 
 			@Override
-			public DocumentDataDefinitionTypesResource.Builder uriInfo(
+			public DocumentDataDefinitionTypeResource.Builder uriInfo(
 				UriInfo uriInfo) {
 
 				_uriInfo = uriInfo;
@@ -131,7 +131,7 @@ public class DocumentDataDefinitionTypesResourceFactoryImpl
 			}
 
 			@Override
-			public DocumentDataDefinitionTypesResource.Builder user(User user) {
+			public DocumentDataDefinitionTypeResource.Builder user(User user) {
 				_user = user;
 
 				return this;
@@ -148,16 +148,16 @@ public class DocumentDataDefinitionTypesResourceFactoryImpl
 	}
 
 	private static Function
-		<InvocationHandler, DocumentDataDefinitionTypesResource>
+		<InvocationHandler, DocumentDataDefinitionTypeResource>
 			_getProxyProviderFunction() {
 
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			DocumentDataDefinitionTypesResource.class.getClassLoader(),
-			DocumentDataDefinitionTypesResource.class);
+			DocumentDataDefinitionTypeResource.class.getClassLoader(),
+			DocumentDataDefinitionTypeResource.class);
 
 		try {
-			Constructor<DocumentDataDefinitionTypesResource> constructor =
-				(Constructor<DocumentDataDefinitionTypesResource>)
+			Constructor<DocumentDataDefinitionTypeResource> constructor =
+				(Constructor<DocumentDataDefinitionTypeResource>)
 					proxyClass.getConstructor(InvocationHandler.class);
 
 			return invocationHandler -> {
@@ -199,48 +199,46 @@ public class DocumentDataDefinitionTypesResourceFactoryImpl
 				new LiberalPermissionChecker(user));
 		}
 
-		DocumentDataDefinitionTypesResource
-			documentDataDefinitionTypesResource =
-				_componentServiceObjects.getService();
+		DocumentDataDefinitionTypeResource documentDataDefinitionTypeResource =
+			_componentServiceObjects.getService();
 
-		documentDataDefinitionTypesResource.setContextAcceptLanguage(
+		documentDataDefinitionTypeResource.setContextAcceptLanguage(
 			new AcceptLanguageImpl(httpServletRequest, preferredLocale, user));
 
 		Company company = _companyLocalService.getCompany(user.getCompanyId());
 
-		documentDataDefinitionTypesResource.setContextCompany(company);
+		documentDataDefinitionTypeResource.setContextCompany(company);
 
-		documentDataDefinitionTypesResource.setContextHttpServletRequest(
+		documentDataDefinitionTypeResource.setContextHttpServletRequest(
 			httpServletRequest);
-		documentDataDefinitionTypesResource.setContextHttpServletResponse(
+		documentDataDefinitionTypeResource.setContextHttpServletResponse(
 			httpServletResponse);
-		documentDataDefinitionTypesResource.setContextUriInfo(uriInfo);
-		documentDataDefinitionTypesResource.setContextUser(user);
-		documentDataDefinitionTypesResource.setExpressionConvert(
+		documentDataDefinitionTypeResource.setContextUriInfo(uriInfo);
+		documentDataDefinitionTypeResource.setContextUser(user);
+		documentDataDefinitionTypeResource.setExpressionConvert(
 			_expressionConvert);
-		documentDataDefinitionTypesResource.setFilterParserProvider(
+		documentDataDefinitionTypeResource.setFilterParserProvider(
 			_filterParserProvider);
-		documentDataDefinitionTypesResource.setGroupLocalService(
+		documentDataDefinitionTypeResource.setGroupLocalService(
 			_groupLocalService);
-		documentDataDefinitionTypesResource.setResourceActionLocalService(
+		documentDataDefinitionTypeResource.setResourceActionLocalService(
 			_resourceActionLocalService);
-		documentDataDefinitionTypesResource.setResourcePermissionLocalService(
+		documentDataDefinitionTypeResource.setResourcePermissionLocalService(
 			_resourcePermissionLocalService);
-		documentDataDefinitionTypesResource.setRoleLocalService(
+		documentDataDefinitionTypeResource.setRoleLocalService(
 			_roleLocalService);
-		documentDataDefinitionTypesResource.setSortParserProvider(
+		documentDataDefinitionTypeResource.setSortParserProvider(
 			_sortParserProvider);
 
 		try {
-			return method.invoke(
-				documentDataDefinitionTypesResource, arguments);
+			return method.invoke(documentDataDefinitionTypeResource, arguments);
 		}
 		catch (InvocationTargetException invocationTargetException) {
 			throw invocationTargetException.getTargetException();
 		}
 		finally {
 			_componentServiceObjects.ungetService(
-				documentDataDefinitionTypesResource);
+				documentDataDefinitionTypeResource);
 
 			PrincipalThreadLocal.setName(name);
 
@@ -252,7 +250,7 @@ public class DocumentDataDefinitionTypesResourceFactoryImpl
 	private CompanyLocalService _companyLocalService;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<DocumentDataDefinitionTypesResource>
+	private ComponentServiceObjects<DocumentDataDefinitionTypeResource>
 		_componentServiceObjects;
 
 	@Reference
@@ -287,8 +285,8 @@ public class DocumentDataDefinitionTypesResourceFactoryImpl
 	private static class ResourceProxyProviderFunctionHolder {
 
 		private static final Function
-			<InvocationHandler, DocumentDataDefinitionTypesResource>
-				_documentDataDefinitionTypesResourceProxyProviderFunction =
+			<InvocationHandler, DocumentDataDefinitionTypeResource>
+				_documentDataDefinitionTypeResourceProxyProviderFunction =
 					_getProxyProviderFunction();
 
 	}

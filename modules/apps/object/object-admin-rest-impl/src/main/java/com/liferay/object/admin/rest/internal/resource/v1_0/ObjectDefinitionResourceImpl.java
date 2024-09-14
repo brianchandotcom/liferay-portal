@@ -64,6 +64,9 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -120,13 +123,25 @@ public class ObjectDefinitionResourceImpl
 			startTime = System.currentTimeMillis();
 		}
 
-		_objectDefinitionService.deleteObjectDefinition(objectDefinitionId);
+		try {
+			TransactionInvokerUtil.invoke(
+				_transactionConfig,
+				() -> {
+					_objectDefinitionService.deleteObjectDefinition(
+						objectDefinitionId);
+
+					return null;
+				});
+		}
+		catch (Throwable throwable) {
+			throw new Exception(throwable);
+		}
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
 				StringBundler.concat(
-					"Deleted object definition ", objectDefinitionId,
-					" in ", System.currentTimeMillis() - startTime, "ms"));
+					"Deleted object definition ", objectDefinitionId, " in ",
+					System.currentTimeMillis() - startTime, "ms"));
 		}
 	}
 
@@ -1442,6 +1457,9 @@ public class ObjectDefinitionResourceImpl
 
 	private static final EntityModel _entityModel =
 		new ObjectDefinitionEntityModel();
+	private static final TransactionConfig _transactionConfig =
+		TransactionConfig.Factory.create(
+			Propagation.REQUIRES_NEW, new Class<?>[] {Exception.class});
 
 	@Reference
 	private Language _language;

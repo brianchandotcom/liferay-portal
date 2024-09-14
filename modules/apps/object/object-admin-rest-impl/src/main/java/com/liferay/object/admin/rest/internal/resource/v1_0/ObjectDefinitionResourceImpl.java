@@ -60,6 +60,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
@@ -123,7 +124,7 @@ public class ObjectDefinitionResourceImpl
 			startTime = System.currentTimeMillis();
 		}
 
-		try {
+		try (SafeCloseable safeCloseable = SearchContext.openBatchMode()) {
 			TransactionInvokerUtil.invoke(
 				_transactionConfig,
 				() -> {

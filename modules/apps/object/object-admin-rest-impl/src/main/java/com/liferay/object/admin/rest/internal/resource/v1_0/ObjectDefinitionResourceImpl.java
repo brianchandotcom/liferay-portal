@@ -54,6 +54,7 @@ import com.liferay.object.service.ObjectValidationRuleLocalService;
 import com.liferay.object.service.ObjectViewLocalService;
 import com.liferay.object.service.ObjectViewService;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -65,6 +66,7 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.BulkDeleteCacheThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -121,7 +123,11 @@ public class ObjectDefinitionResourceImpl
 			startTime = System.currentTimeMillis();
 		}
 
-		_objectDefinitionService.deleteObjectDefinition(objectDefinitionId);
+		try (SafeCloseable safeCloseable =
+				BulkDeleteCacheThreadLocal.openBulkDeleteMode()) {
+
+			_objectDefinitionService.deleteObjectDefinition(objectDefinitionId);
+		}
 
 		if (_log.isInfoEnabled()) {
 			_log.info(

@@ -360,6 +360,7 @@ create index IX_F542E9BC on SocialActivity (activitySetId);
 create unique index IX_7E6A9AAD on SocialActivity (classNameId, classPK, groupId, userId, type_, receiverUserId, ctCollectionId, createDate);
 create index IX_85370BF4 on SocialActivity (classNameId, classPK, mirrorActivityId);
 create index IX_D0E9029E on SocialActivity (classNameId, classPK, type_);
+create index IX_F885EA9C on SocialActivity (classNameId, companyId);
 create index IX_64B1BC66 on SocialActivity (companyId);
 create index IX_2A2468 on SocialActivity (groupId);
 create index IX_1271F25F on SocialActivity (mirrorActivityId);

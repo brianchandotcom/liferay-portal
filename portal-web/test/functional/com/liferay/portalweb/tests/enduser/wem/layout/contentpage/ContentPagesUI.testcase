@@ -378,34 +378,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-158746. Favorite session is hidden when no favorite fragment is chosen."
-	@priority = 4
-	test ViewFavoriteSessionIsHiddenWhenNoFavoriteFragmentIsChosen {
-		task ("Given go to edit content page") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Page Name",
-				siteName = ${randomSiteName});
-		}
-
-		task ("Then assert favorite session is hidden") {
-			AssertElementNotPresent(
-				key_panel = "Favorites",
-				locator1 = "Panel#PANEL");
-		}
-
-		task ("When switch to card view") {
-			Click(
-				key_switchTo = "card",
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON");
-		}
-
-		task ("And then assert favorite session is hidden") {
-			AssertElementNotPresent(
-				key_panel = "Favorites",
-				locator1 = "Panel#PANEL");
-		}
-	}
-
 	@description = "This is a test for LPS-158746. Different users keep their own favorites list."
 	@priority = 4
 	test ViewFavoritesListInDifferentUsers {

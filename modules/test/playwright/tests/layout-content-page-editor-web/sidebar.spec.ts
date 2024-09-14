@@ -262,6 +262,33 @@ test.describe('Fragments Panel', () => {
 
 		await expect(searchInput).toHaveValue('Headin');
 	});
+
+	test('Favorite section', async ({
+		apiHelpers,
+		page,
+		pageEditorPage,
+		site,
+	}) => {
+
+		// Create content page and go to edit mode
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		// Open the "Fragments and Widgets" panel
+
+		await pageEditorPage.goToSidebarTab('Fragments and Widgets');
+
+		// Assert favorite section is empty
+
+		await expect(
+			page.getByRole('menuitem', {name: 'Favorites'})
+		).not.toBeVisible();
+	});
 });
 
 test.describe('Page Contents Panel', () => {

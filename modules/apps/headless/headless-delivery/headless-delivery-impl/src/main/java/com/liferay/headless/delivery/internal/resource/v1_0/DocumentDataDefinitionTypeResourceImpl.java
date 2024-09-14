@@ -15,12 +15,20 @@ import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.headless.delivery.dto.v1_0.DocumentDataDefinitionType;
 import com.liferay.headless.delivery.resource.v1_0.DocumentDataDefinitionTypeResource;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -40,6 +48,44 @@ import org.osgi.service.component.annotations.ServiceScope;
 )
 public class DocumentDataDefinitionTypeResourceImpl
 	extends BaseDocumentDataDefinitionTypeResourceImpl {
+
+	@Override
+	public Page<DocumentDataDefinitionType>
+			getAssetLibraryDocumentDataDefinitionTypesPage(
+				Long assetLibraryId, String search, Aggregation aggregation,
+				Filter filter, Pagination pagination, Sort[] sorts)
+		throws Exception {
+
+		return _getDocumentDataDefinitionTypePage(
+			assetLibraryId, search, aggregation, filter, pagination, sorts);
+	}
+
+	@Override
+	public DocumentDataDefinitionType getDocumentDataDefinitionType(
+			Long documentDataDefinitionTypeId)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-32247")) {
+			throw new UnsupportedOperationException();
+		}
+
+		DLFileEntryType dlFileEntryType =
+			_dlFileEntryTypeService.getFileEntryType(
+				documentDataDefinitionTypeId);
+
+		return _toDocumentDataDefinitionType(dlFileEntryType);
+	}
+
+	@Override
+	public Page<DocumentDataDefinitionType>
+			getSiteDocumentDataDefinitionTypesPage(
+				Long siteId, String search, Aggregation aggregation,
+				Filter filter, Pagination pagination, Sort[] sorts)
+		throws Exception {
+
+		return _getDocumentDataDefinitionTypePage(
+			siteId, search, aggregation, filter, pagination, sorts);
+	}
 
 	@Override
 	public DocumentDataDefinitionType
@@ -123,6 +169,33 @@ public class DocumentDataDefinitionTypeResourceImpl
 		}
 
 		return _toDocumentDataDefinitionType(dlFileEntryType);
+	}
+
+	private Page<DocumentDataDefinitionType> _getDocumentDataDefinitionTypePage(
+			Long siteId, String search, Aggregation aggregation, Filter filter,
+			Pagination pagination, Sort[] sorts)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-32247")) {
+			throw new UnsupportedOperationException();
+		}
+
+		return SearchUtil.search(
+			new HashMap<>(),
+			booleanQuery -> {
+			},
+			filter, DLFileEntryType.class.getName(), search, pagination,
+			queryConfig -> queryConfig.setSelectedFieldNames(
+				Field.ENTRY_CLASS_PK),
+			searchContext -> {
+				searchContext.addVulcanAggregation(aggregation);
+				searchContext.setCompanyId(contextCompany.getCompanyId());
+				searchContext.setGroupIds(new long[] {siteId});
+			},
+			sorts,
+			document -> _toDocumentDataDefinitionType(
+				_dlFileEntryTypeService.getFileEntryType(
+					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
 	}
 
 	private DocumentDataDefinitionType _toDocumentDataDefinitionType(

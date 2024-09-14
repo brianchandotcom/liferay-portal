@@ -12,14 +12,17 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.lang.reflect.Constructor;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * @author Brian Wing Shun Chan
@@ -367,6 +370,25 @@ public class MapUtil {
 		}
 
 		return (LinkedHashMap<String, T>)map;
+	}
+
+	public static <K, V> Map<K, List<V>> toPartitionMap(
+		List<V> list, Function<V, K> keyExtractor) {
+
+		if (list.isEmpty()) {
+			return Collections.emptyMap();
+		}
+
+		Map<K, List<V>> map = new HashMap<>();
+
+		for (V v : list) {
+			List<V> partitionList = map.computeIfAbsent(
+				keyExtractor.apply(v), key -> new ArrayList<>());
+
+			partitionList.add(v);
+		}
+
+		return map;
 	}
 
 	public static String toString(Map<?, ?> map) {

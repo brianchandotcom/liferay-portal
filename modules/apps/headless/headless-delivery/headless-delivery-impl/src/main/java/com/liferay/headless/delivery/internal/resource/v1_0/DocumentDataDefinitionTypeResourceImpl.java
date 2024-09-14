@@ -18,8 +18,10 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -29,8 +31,8 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
+import com.liferay.portlet.documentlibrary.constants.DLConstants;
 
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -57,6 +59,19 @@ public class DocumentDataDefinitionTypeResourceImpl
 		throws Exception {
 
 		return _getDocumentDataDefinitionTypePage(
+			HashMapBuilder.put(
+				"create",
+				addAction(
+					ActionKeys.ADD_DOCUMENT_TYPE,
+					"postAssetLibraryDocumentDataDefinitionType",
+					DLConstants.RESOURCE_NAME, assetLibraryId)
+			).put(
+				"createBatch",
+				addAction(
+					ActionKeys.ADD_DOCUMENT_TYPE,
+					"postAssetLibraryDocumentDataDefinitionTypeBatch",
+					DLConstants.RESOURCE_NAME, assetLibraryId)
+			).build(),
 			assetLibraryId, search, aggregation, filter, pagination, sorts);
 	}
 
@@ -84,6 +99,19 @@ public class DocumentDataDefinitionTypeResourceImpl
 		throws Exception {
 
 		return _getDocumentDataDefinitionTypePage(
+			HashMapBuilder.put(
+				"create",
+				addAction(
+					ActionKeys.ADD_DOCUMENT_TYPE,
+					"postSiteDocumentDataDefinitionType",
+					DLConstants.RESOURCE_NAME, siteId)
+			).put(
+				"createBatch",
+				addAction(
+					ActionKeys.ADD_DOCUMENT_TYPE,
+					"postSiteDocumentDataDefinitionTypeBatch",
+					DLConstants.RESOURCE_NAME, siteId)
+			).build(),
 			siteId, search, aggregation, filter, pagination, sorts);
 	}
 
@@ -172,7 +200,8 @@ public class DocumentDataDefinitionTypeResourceImpl
 	}
 
 	private Page<DocumentDataDefinitionType> _getDocumentDataDefinitionTypePage(
-			Long siteId, String search, Aggregation aggregation, Filter filter,
+			Map<String, Map<String, String>> actions, Long siteId,
+			String search, Aggregation aggregation, Filter filter,
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
@@ -181,7 +210,7 @@ public class DocumentDataDefinitionTypeResourceImpl
 		}
 
 		return SearchUtil.search(
-			new HashMap<>(),
+			actions,
 			booleanQuery -> {
 			},
 			filter, DLFileEntryType.class.getName(), search, pagination,
@@ -204,7 +233,16 @@ public class DocumentDataDefinitionTypeResourceImpl
 
 		return _documentDataDefinitionTypeDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				contextAcceptLanguage.isAcceptAllLanguages(), new HashMap<>(),
+				contextAcceptLanguage.isAcceptAllLanguages(),
+				HashMapBuilder.put(
+					"get",
+					addAction(
+						ActionKeys.VIEW, dlFileEntryType.getFileEntryTypeId(),
+						"getDocumentDataDefinitionType",
+						dlFileEntryType.getUserId(),
+						DLFileEntryType.class.getName(),
+						dlFileEntryType.getGroupId())
+				).build(),
 				_dtoConverterRegistry, dlFileEntryType.getFileEntryTypeId(),
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 				contextUser),

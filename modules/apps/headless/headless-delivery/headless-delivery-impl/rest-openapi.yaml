@@ -6460,6 +6460,66 @@ paths:
                                 type: array
             tags: ["ContentTemplate"]
     "/asset-libraries/{assetLibraryId}/document-data-definition-types":
+        get:
+            parameters:
+                - in: path
+                  name: assetLibraryId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: aggregationTerms
+                  schema:
+                      items:
+                          type: string
+                      type: array
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
+                - in: query
+                  name: nestedFields
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
+                - in: query
+                  name: search
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/DocumentDataDefinitionType"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/DocumentDataDefinitionType"
+                                type: array
+            tags: ["DocumentDataDefinitionType"]
         post:
             description:
                 Creates a new document data definition type.
@@ -8408,6 +8468,33 @@ paths:
                                     $ref: "#/components/schemas/StructuredContent"
                                 type: array
             tags: ["StructuredContent"]
+    "/document-data-definition-types/{documentDataDefinitionTypeId}":
+        get:
+            parameters:
+                - in: path
+                  name: documentDataDefinitionTypeId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/DocumentDataDefinitionType"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/DocumentDataDefinitionType"
+            tags: ["DocumentDataDefinitionType"]
     "/document-folders/{documentFolderId}":
         delete:
             description:
@@ -12906,6 +12993,66 @@ paths:
                                 $ref: "#/components/schemas/ContentTemplate"
             tags: ["ContentTemplate"]
     "/sites/{siteId}/document-data-definition-types":
+        get:
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: aggregationTerms
+                  schema:
+                      items:
+                          type: string
+                      type: array
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
+                - in: query
+                  name: nestedFields
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
+                - in: query
+                  name: search
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/DocumentDataDefinitionType"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/DocumentDataDefinitionType"
+                                type: array
+            tags: ["DocumentDataDefinitionType"]
         post:
             description:
                 Creates a new document data definition type.

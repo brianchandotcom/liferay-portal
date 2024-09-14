@@ -235,6 +235,14 @@ public class SavedContentEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_CN() throws Exception {
+		_persistence.countByG_CN(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+
+		_persistence.countByG_CN(0L, 0L);
+	}
+
+	@Test
 	public void testCountByU_C() throws Exception {
 		_persistence.countByU_C(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());

@@ -190,64 +190,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-90586: Validate if all experiences were deleted, only the Default experience will appear"
-	@priority = 5
-	test CheckDefaultAfterDeletingExperiences {
-		property portal.acceptance = "true";
-
-		task ("Create Name Segment") {
-			JSONSegmentsentry.addSegment(
-				fieldName = "Screen Name",
-				groupName = "Test Site Name",
-				operator = "contains",
-				segmentName = "Name Segment",
-				text = "Test");
-		}
-
-		task ("Create Email Segment") {
-			JSONSegmentsentry.addSegment(
-				fieldName = "Email Address",
-				groupName = "Test Site Name",
-				operator = "contains",
-				segmentName = "Segment Email Address",
-				text = "test@liferay.com");
-		}
-
-		task ("Go to Experience Content Page") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Experience Content Page",
-				siteName = "Test Site Name");
-		}
-
-		task ("Create an experience and add on content page") {
-			PageEditor.addExperience(
-				experienceName = "Segment Name Experience",
-				segmentName = "Name Segment");
-		}
-
-		task ("Create an experience with Segment Email") {
-			PageEditor.addExperience(
-				experienceName = "Segment Email Experience",
-				segmentName = "Segment Email Address");
-		}
-
-		task ("Delete all experiences") {
-			PageEditor.deleteAllExperiences();
-
-			AssertElementNotPresent(
-				key_experienceName = "Segment Name Experience",
-				locator1 = "PageEditor#EXPERIENCE_SELECT_ITEM");
-
-			AssertElementNotPresent(
-				key_experienceName = "Segment Email Experience",
-				locator1 = "PageEditor#EXPERIENCE_SELECT_ITEM");
-		}
-
-		task ("Assert that Experience Default button is present") {
-			AssertElementPresent(locator1 = "PageEditor#EXPERIENCE_DEFAULT_BUTTON_NAME");
-		}
-	}
-
 	@description = "LPS-90585: Validate in the list of Experiences if the decrease priority button working properly"
 	@priority = 4
 	test DecreaseExperiencePriority {

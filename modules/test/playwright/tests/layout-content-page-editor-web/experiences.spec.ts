@@ -307,39 +307,48 @@ test(
 	}
 );
 
-test('Allows editing and deleting an experience', async ({
-	apiHelpers,
-	page,
-	pageEditorPage,
-	site,
-}) => {
+test(
+	'Allows editing and deleting an experience',
+	{
+		tag: '@LPS-90586',
+	},
+	async ({apiHelpers, page, pageEditorPage, site}) => {
 
-	// Create a page and go to edit mode
+		// Create a page and go to edit mode
 
-	const layout = await apiHelpers.headlessDelivery.createSitePage({
-		siteId: site.id,
-		title: getRandomString(),
-	});
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			siteId: site.id,
+			title: getRandomString(),
+		});
 
-	await pageEditorPage.goto(layout, site.friendlyUrlPath);
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
-	// Create new experience
+		// Create new experience
 
-	await pageEditorPage.createExperience('E1');
+		await pageEditorPage.createExperience('E1');
 
-	// Edit it
+		// Edit it
 
-	await pageEditorPage.editExperienceName('E1', 'E2');
+		await pageEditorPage.editExperienceName('E1', 'E2');
 
-	// Delete it
+		// Delete it
 
-	await pageEditorPage.deleteExperience('E2');
+		await pageEditorPage.deleteExperience('E2');
 
-	await pageEditorPage.openExperienceSelector();
+		await pageEditorPage.openExperienceSelector();
 
-	await expect(
-		page.locator('.dropdown-menu__experience', {
-			hasText: 'E2',
-		})
-	).not.toBeVisible();
-});
+		await expect(
+			page.locator('.dropdown-menu__experience', {
+				hasText: 'E2',
+			})
+		).not.toBeVisible();
+
+		// Validate if all experiences were deleted, only the Default experience will appear
+
+		await expect(
+			page.locator('.dropdown-menu__experience', {
+				hasText: 'Default',
+			})
+		).not.toBeVisible();
+	}
+);

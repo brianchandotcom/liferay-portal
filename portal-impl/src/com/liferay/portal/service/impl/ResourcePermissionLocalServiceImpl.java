@@ -52,6 +52,7 @@ import com.liferay.portal.kernel.service.SQLStateAcceptor;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.service.permission.ModelPermissionsFactory;
+import com.liferay.portal.kernel.service.persistence.LongPKRemoveFunction;
 import com.liferay.portal.kernel.service.persistence.ResourceActionPersistence;
 import com.liferay.portal.kernel.service.persistence.RolePersistence;
 import com.liferay.portal.kernel.spring.aop.Property;
@@ -64,6 +65,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.impl.ResourceImpl;
+import com.liferay.portal.model.impl.ResourcePermissionModelImpl;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.service.base.ResourcePermissionLocalServiceBaseImpl;
 import com.liferay.portal.service.persistence.impl.ResourcePermissionPersistenceImpl;
@@ -542,6 +544,10 @@ public class ResourcePermissionLocalServiceImpl
 		catch (Exception exception) {
 			_log.error(exception);
 		}
+
+		_resourcePermissionLongPKRemoveFunction = new LongPKRemoveFunction<>(
+			resourcePermissionPersistence,
+			ResourcePermissionModelImpl.TABLE_NAME, "resourcePermissionId");
 	}
 
 	@Override
@@ -672,7 +678,9 @@ public class ResourcePermissionLocalServiceImpl
 
 		if (resourcePermissions != null) {
 			for (ResourcePermission resourcePermission : resourcePermissions) {
-				resourcePermissionPersistence.remove(resourcePermission);
+				resourcePermissionPersistence.removeByFunction(
+					resourcePermission,
+					_resourcePermissionLongPKRemoveFunction);
 			}
 		}
 	}
@@ -2423,6 +2431,9 @@ public class ResourcePermissionLocalServiceImpl
 
 	@BeanReference(type = ResourceActionPersistence.class)
 	private ResourceActionPersistence _resourceActionPersistence;
+
+	private LongPKRemoveFunction<ResourcePermission>
+		_resourcePermissionLongPKRemoveFunction;
 
 	@BeanReference(type = RoleLocalService.class)
 	private RoleLocalService _roleLocalService;

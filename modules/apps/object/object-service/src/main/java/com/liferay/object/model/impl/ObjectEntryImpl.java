@@ -5,6 +5,7 @@
 
 package com.liferay.object.model.impl;
 
+import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.entry.util.ObjectEntryValuesUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
@@ -23,6 +24,7 @@ import java.io.Serializable;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Marco Leo
@@ -81,6 +83,17 @@ public class ObjectEntryImpl extends ObjectEntryBaseImpl {
 
 				if (Validator.isNotNull(title)) {
 					return title;
+				}
+
+				if (!Objects.equals(
+						objectField.getBusinessType(),
+						ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT) &&
+					!Objects.equals(
+						objectField.getBusinessType(),
+						ObjectFieldConstants.BUSINESS_TYPE_RICH_TEXT) &&
+					Objects.equals(objectField.getName(), "id")) {
+
+					return String.valueOf(getObjectEntryId());
 				}
 
 				return ObjectEntryValuesUtil.getValueString(

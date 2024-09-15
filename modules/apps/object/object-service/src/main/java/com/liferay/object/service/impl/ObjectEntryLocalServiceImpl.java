@@ -124,6 +124,7 @@ import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnection;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.encryptor.Encryptor;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -2086,10 +2087,26 @@ public class ObjectEntryLocalServiceImpl
 			long primaryKey)
 		throws PortalException {
 
-		runSQL(
-			StringBundler.concat(
-				"delete from ", dbTableName, " where ",
-				pkObjectFieldDBColumnName, " = ", primaryKey));
+		Session session = objectEntryPersistence.openSession();
+
+		try {
+			session.apply(
+				connection -> {
+					try (PreparedStatement preparedStatement =
+							connection.prepareStatement(
+								StringBundler.concat(
+									"delete from ", dbTableName, " where ",
+									pkObjectFieldDBColumnName, " = ?"))) {
+
+						preparedStatement.setLong(1, primaryKey);
+
+						preparedStatement.executeUpdate();
+					}
+				});
+		}
+		finally {
+			objectEntryPersistence.closeSession(session);
+		}
 
 		FinderCacheUtil.clearDSLQueryCache(dbTableName);
 	}
